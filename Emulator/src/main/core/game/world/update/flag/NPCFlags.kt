@@ -121,7 +121,17 @@ sealed class NPCFlags(
     }
 
     class AnimationSequence : NPCFlags(0x100, 7, EntityFlag.AnimSeq) {
-        // TODO: Implement this flag's functionality.
+        override fun writeTo(
+            buffer: IoBuffer,
+            context: Any?,
+        ) {
+            if (context !is Animation) {
+                logInvalidType(context, typeOf<Animation>())
+                return
+            }
+            buffer.p2(context.id)
+            buffer.p1(context.delay)
+        }
     }
 
     class FaceLocation : NPCFlags(0x200, 8, EntityFlag.FaceLocation) {

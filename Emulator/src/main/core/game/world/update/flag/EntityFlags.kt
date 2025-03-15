@@ -1,5 +1,6 @@
 package core.game.world.update.flag
 
+import core.ServerConstants
 import kotlin.reflect.KClass
 import kotlin.reflect.full.primaryConstructor
 
@@ -23,7 +24,7 @@ object EntityFlags {
         type: EFlagType,
         flag: EntityFlag,
     ): EFlagProvider? {
-        val revision = 530 // Hardcoded revision value.
+        val revision = ServerConstants.REVISION
         return flagProviders[getMapToken(revision, type, flag)]
     }
 

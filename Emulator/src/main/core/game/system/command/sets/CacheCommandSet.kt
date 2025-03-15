@@ -526,7 +526,34 @@ class CacheCommandSet : CommandSet(Privilege.ADMIN) {
                     writer.println("${item.id},${item.name},${item.value}")
                 }
             }
-            player.sendMessage("Item price index dumped to ${file.absolutePath}")
+            player.debug("Item price index dumped to $file.")
+        }
+
+        /*
+         * Commands to prints Animation definitions.
+         */
+
+        define(
+            name = "animdefs",
+            privilege = Privilege.ADMIN,
+            usage = "::animdefs",
+            description = "Dumps animation definitions to a file."
+        ) { player, _ ->
+            val file = File("animation_dump.txt")
+            BufferedWriter(FileWriter(file)).use { writer ->
+                for ((animationId, animationDef) in AnimationDefinition.getDefinition()) {
+                    val frameIds = animationDef.anIntArray2139
+                    val frameLengths = animationDef.durations ?: intArrayOf()
+                    val cycleLength = animationDef.durationTicks
+                    writer.write("Animation ID: $animationId\n")
+                    writer.write("Cycle Length: $cycleLength\n")
+                    writer.write("Frame IDs: ${frameIds.joinToString(",")}\n")
+                    writer.write("Frame Lengths: ${frameLengths.joinToString(",")}\n")
+                    writer.write("-----\n")
+                }
+            }
+            player.debug("Animation definitions have been dumped to $file.")
+            return@define
         }
     }
 }

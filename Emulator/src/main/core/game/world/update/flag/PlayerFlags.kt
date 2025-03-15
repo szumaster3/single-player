@@ -233,7 +233,17 @@ sealed class PlayerFlags(
     }
 
     class AnimationSequence : PlayerFlags(0x800, 8, EntityFlag.AnimSeq) {
-        // TODO: Implement animation sequence handling
+        override fun writeTo(
+            buffer: IoBuffer,
+            context: Any?,
+        ) {
+            if (context !is Animation) {
+                logInvalidType(context, typeOf<Animation>())
+                return
+            }
+            buffer.p2(context.id)
+            buffer.p1(context.delay)
+        }
     }
 
     class SpotAnim : PlayerFlags(0x100, 9, EntityFlag.SpotAnim) {
