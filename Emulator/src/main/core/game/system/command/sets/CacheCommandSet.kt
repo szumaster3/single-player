@@ -8,10 +8,7 @@ import core.cache.def.impl.*
 import core.game.component.ComponentDefinition
 import core.game.system.command.Privilege
 import core.plugin.Initializable
-import java.io.BufferedWriter
-import java.io.File
-import java.io.FileWriter
-import java.io.IOException
+import java.io.*
 import java.lang.reflect.Modifier
 import kotlin.reflect.full.memberProperties
 import kotlin.reflect.jvm.isAccessible
@@ -512,5 +509,24 @@ class CacheCommandSet : CommandSet(Privilege.ADMIN) {
             player.debug("The region name for region ID [$regionId] is: [$regionName].")
         }
 
+        /*
+         * Commands to prints cache item values.
+         */
+
+        define(
+            name = "itemprices",
+            privilege = Privilege.ADMIN,
+            usage = "::itemprices",
+            description = "Creates an item price index."
+        ) { player, _ ->
+            val file = File("530_cache_item_values_from_client.csv")
+            PrintWriter(file).use { writer ->
+                writer.println("id,name,cost")
+                for (item in ItemDefinition.getDefinitions().values) {
+                    writer.println("${item.id},${item.name},${item.value}")
+                }
+            }
+            player.sendMessage("Item price index dumped to ${file.absolutePath}")
+        }
     }
 }
