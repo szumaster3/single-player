@@ -11,6 +11,7 @@ import core.game.world.update.flag.context.Graphics;
 import core.plugin.Initializable;
 import core.plugin.Plugin;
 import core.tools.RandomFunction;
+import org.rs.consts.Items;
 import org.rs.consts.Sounds;
 
 import static core.api.ContentAPIKt.playGlobalAudio;
@@ -25,7 +26,7 @@ public final class PunctureSpecialHandler extends MeleeSwingHandler implements P
 
     private static final Animation ANIMATION = new Animation(1062, Priority.HIGH);
 
-    private static final Graphics GRAPHICS = new Graphics(252, 96);
+    private static final Graphics GRAPHICS = new Graphics(org.rs.consts.Graphics.DRAGON_DAGGER_SPECIAL_252, 96);
 
     @Override
     public Object fireEvent(String identifier, Object... args) {
@@ -40,7 +41,7 @@ public final class PunctureSpecialHandler extends MeleeSwingHandler implements P
 
     @Override
     public Plugin<Object> newInstance(Object arg) throws Throwable {
-        if (CombatStyle.MELEE.getSwingHandler().register(1215, this) && CombatStyle.MELEE.getSwingHandler().register(1231, this) && CombatStyle.MELEE.getSwingHandler().register(5680, this) && CombatStyle.MELEE.getSwingHandler().register(5698, this) && CombatStyle.MELEE.getSwingHandler().register(13465, this) && CombatStyle.MELEE.getSwingHandler().register(13466, this) && CombatStyle.MELEE.getSwingHandler().register(13467, this) && CombatStyle.MELEE.getSwingHandler().register(13468, this))
+        if (CombatStyle.MELEE.getSwingHandler().register(Items.DRAGON_DAGGER_1215, this) && CombatStyle.MELEE.getSwingHandler().register(1231, this) && CombatStyle.MELEE.getSwingHandler().register(5680, this) && CombatStyle.MELEE.getSwingHandler().register(5698, this) && CombatStyle.MELEE.getSwingHandler().register(13465, this) && CombatStyle.MELEE.getSwingHandler().register(13466, this) && CombatStyle.MELEE.getSwingHandler().register(13467, this) && CombatStyle.MELEE.getSwingHandler().register(13468, this))
             ;
         return this;
     }

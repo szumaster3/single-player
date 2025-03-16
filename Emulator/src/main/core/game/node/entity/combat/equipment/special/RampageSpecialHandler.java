@@ -11,6 +11,7 @@ import core.game.world.update.flag.context.Animation;
 import core.game.world.update.flag.context.Graphics;
 import core.plugin.Initializable;
 import core.plugin.Plugin;
+import org.rs.consts.Items;
 import org.rs.consts.Sounds;
 
 import static core.api.ContentAPIKt.playAudio;
@@ -39,7 +40,7 @@ public final class RampageSpecialHandler extends MeleeSwingHandler implements Pl
 
     @Override
     public Plugin<Object> newInstance(Object arg) throws Throwable {
-        CombatStyle.MELEE.getSwingHandler().register(1377, this);
+        CombatStyle.MELEE.getSwingHandler().register(Items.DRAGON_BATTLEAXE_1377, this);
         return this;
     }
 
