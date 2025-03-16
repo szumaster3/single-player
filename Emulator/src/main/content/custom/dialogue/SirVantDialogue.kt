@@ -8,9 +8,10 @@ import core.game.node.entity.player.Player
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import org.rs.consts.Components
+import org.rs.consts.NPCs
 
 @Initializable
-class PerduDialogue(
+class SirVantDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
     override fun open(vararg args: Any): Boolean {
@@ -47,6 +48,6 @@ class PerduDialogue(
     }
 
     override fun getIds(): IntArray {
-        return intArrayOf(8591)
+        return intArrayOf(NPCs.SIR_VANT_7941)
     }
 }

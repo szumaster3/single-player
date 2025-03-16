@@ -40,13 +40,7 @@ class StormOfArmadylSpell :
             sendMessage(player, "You need to wield the Armadyl Battlestaff to cast this spell.")
             return false
         }
-        /*
-         * For casting in FOG mini-game.
-         */
-        if (!player.inventory.contains(Items.CATALYTIC_RUNE_12851, 1)) {
-            return false
-        }
-        return super.cast(entity, target)
+        return true
     }
 
     @Throws(Throwable::class)

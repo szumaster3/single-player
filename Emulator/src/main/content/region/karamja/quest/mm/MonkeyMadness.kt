@@ -12,7 +12,7 @@ import org.rs.consts.Items
 import org.rs.consts.Quests
 import org.rs.consts.Vars
 
-@Initializable
+//@Initializable
 class MonkeyMadness : Quest(Quests.MONKEY_MADNESS, 88, 87, 3, Vars.VARP_QUEST_MONKEY_MADNESS_PROGRESS_365, 0, 1, 9) {
     override fun drawJournal(
         player: Player,
