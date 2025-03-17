@@ -27,7 +27,7 @@ class StormOfArmadylSpell :
         0.0,
         -1,
         -1,
-        Animation(10546, Priority.HIGH),
+        null,
         null,
         Projectile.create(null as Entity?, null, 1333, 20, 0, 52, 75, 15, 11),
         Graphics(1334, 96),
@@ -51,5 +51,10 @@ class StormOfArmadylSpell :
 
     override fun getMaximumImpact(entity: Entity, victim: Entity, state: BattleState): Int {
         return type.getImpactAmount(entity, victim, 20)
+    }
+
+    override fun visualize(entity: Entity, target: Node) {
+        entity.visualize(Animation(10546, Priority.HIGH), Graphics(-1))
+        super.visualize(entity, target)
     }
 }

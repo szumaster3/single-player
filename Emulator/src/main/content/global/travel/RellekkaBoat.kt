@@ -82,7 +82,9 @@ class RellekkaBoat : OptionHandler() {
 
                         1 ->
                             when (buttonID) {
-                                1 -> sail(player, TravelDestination.RELLEKKA_TO_ICEBERG)
+                                1 -> end().also {
+                                    sail(player, TravelDestination.RELLEKKA_TO_ICEBERG)
+                                }
                                 2 -> end()
                             }
                     }
