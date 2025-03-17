@@ -9,6 +9,7 @@ import core.game.node.entity.player.Player
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
+import org.rs.consts.Quests
 
 @Initializable
 class TiadecheDialogue(
@@ -23,7 +24,7 @@ class TiadecheDialogue(
 
     override fun open(vararg args: Any): Boolean {
         npc = args[0] as NPC
-        if (!hasRequirement(player, "Tai Bwo Wannai Trio", false)) {
+        if (!hasRequirement(player, Quests.TAI_BWO_WANNAI_TRIO, false)) {
             npcl(FaceAnim.NEUTRAL, randomConversation.random()).also { stage = END_DIALOGUE }
         } else {
             player("Hello, Tiadeche.")

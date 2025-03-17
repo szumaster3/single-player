@@ -39,7 +39,7 @@ class ShiloVillageListener : InteractionListener {
         }
 
         on(Scenery.BROKEN_CART_2216, IntType.SCENERY, "look-at") { player, node ->
-            if (!hasRequirement(player, "Shilo Village")) return@on true
+            if (!hasRequirement(player, Quests.SHILO_VILLAGE)) return@on true
             var location = Location(0, 0)
             val playerloc = Location(player.location.x, player.location.y)
             if (node.id == 2216 && getUsedOption(player) == "look-at") {

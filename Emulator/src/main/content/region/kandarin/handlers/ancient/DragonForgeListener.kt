@@ -16,7 +16,7 @@ import org.rs.consts.*
 class DragonForgeListener : InteractionListener {
     override fun defineListeners() {
         onUseWith(IntType.SCENERY, DRAGON_ANVIL, *RUINED_PIECES) { player, _, _ ->
-            if (!hasRequirement(player, "While Guthix Sleeps")) return@onUseWith false
+            if (!hasRequirement(player, Quests.WHILE_GUTHIX_SLEEPS)) return@onUseWith false
             if (getStatLevel(player, Skills.SMITHING) < 92) {
                 sendMessage(player, "You need at least 92 smithing level to do this.")
                 return@onUseWith false
@@ -101,7 +101,7 @@ class DragonForgeListener : InteractionListener {
             if (player.inventory.containItems(*STRANGE_KEYS) &&
                 player.equipment.containsAtLeastOneItem(REQUIRED_SHIELD)
             ) {
-                if (!hasRequirement(player, "While Guthix Sleeps", false)) {
+                if (!hasRequirement(player, Quests.WHILE_GUTHIX_SLEEPS, false)) {
                     sendMessage(player, "You cannot currently use any items on that dragon.")
                     return@onUseWith true
                 }

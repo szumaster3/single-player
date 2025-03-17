@@ -9,6 +9,7 @@ import core.game.node.entity.player.Player
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
+import org.rs.consts.Quests
 
 @Initializable
 class QuarterMasterDialogue(
@@ -36,7 +37,7 @@ class QuarterMasterDialogue(
                 }
 
             2 -> {
-                if (!hasRequirement(player, "Regicide")) {
+                if (!hasRequirement(player, Quests.REGICIDE)) {
                     end()
                 } else {
                     end()

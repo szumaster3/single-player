@@ -440,19 +440,19 @@ public enum MiningNode {
     /**
      * Limestone 0 mining node.
      */
-    LIMESTONE_0(Scenery.PILE_OF_ROCK_4027, Scenery.PILE_OF_ROCK_12564, (byte) 4),
+    LIMESTONE_0(Scenery.PILE_OF_ROCK_4027, Scenery.PILE_OF_ROCK_4028, (byte) 4),
     /**
      * Limestone 1 mining node.
      */
-    LIMESTONE_1(Scenery.PILE_OF_ROCK_4028, Scenery.PILE_OF_ROCK_12565, (byte) 4),
+    LIMESTONE_1(Scenery.PILE_OF_ROCK_4028, Scenery.PILE_OF_ROCK_4029, (byte) 4),
     /**
      * Limestone 2 mining node.
      */
-    LIMESTONE_2(Scenery.PILE_OF_ROCK_4029, Scenery.PILE_OF_ROCK_12566, (byte) 4),
+    LIMESTONE_2(Scenery.PILE_OF_ROCK_4029, Scenery.PILE_OF_ROCK_4030, (byte) 4),
     /**
      * Limestone 3 mining node.
      */
-    LIMESTONE_3(Scenery.PILE_OF_ROCK_4030, Scenery.PILE_OF_ROCK_12567, (byte) 4),
+    LIMESTONE_3(Scenery.PILE_OF_ROCK_4030, Scenery.PILE_OF_ROCK_4027, (byte) 4),
 
     /**
      * Blurite ore 0 mining node.

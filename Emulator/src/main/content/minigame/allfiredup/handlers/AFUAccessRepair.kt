@@ -14,6 +14,7 @@ import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import org.rs.consts.Animations
 import org.rs.consts.Items
+import org.rs.consts.Quests
 import org.rs.consts.Scenery
 import kotlin.random.Random
 
@@ -24,7 +25,7 @@ class AFURepairClimbHandler : InteractionListener {
 
     override fun defineListeners() {
         on(repairIDs, IntType.SCENERY, "repair") { player, _ ->
-            if (hasRequirement(player, "All Fired Up")) {
+            if (hasRequirement(player, Quests.ALL_FIRED_UP)) {
                 getClimbingObject(player)?.let { repair(player, it) }
                 return@on true
             } else {

@@ -192,7 +192,7 @@ class KaramjaListener : InteractionListener {
         }
 
         on(NPCs.TIADECHE_1164, IntType.NPC, "trade") { player, _ ->
-            if (!hasRequirement(player, "Tai Bwo Wannai Trio")) return@on true
+            if (!hasRequirement(player, Quests.TAI_BWO_WANNAI_TRIO)) return@on true
             openNpcShop(player, NPCs.TIADECHE_1164)
             return@on true
         }

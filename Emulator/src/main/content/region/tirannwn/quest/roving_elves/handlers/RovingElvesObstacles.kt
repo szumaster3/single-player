@@ -13,6 +13,7 @@ import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.plugin.Plugin
 import org.rs.consts.Animations
+import org.rs.consts.Quests
 import org.rs.consts.Scenery
 
 class RovingElvesObstacles : OptionHandler() {
@@ -83,7 +84,7 @@ class RovingElvesObstacles : OptionHandler() {
 
         when (node.id) {
             8742 -> {
-                if (!hasRequirement(player, "Mourning's End Part I")) return true
+                if (!hasRequirement(player, Quests.MOURNINGS_END_PART_I)) return true
                 player.teleport(player.location.transform(EAST_WEST, 2))
             }
 

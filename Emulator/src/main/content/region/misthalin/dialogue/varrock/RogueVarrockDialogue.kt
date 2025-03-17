@@ -11,6 +11,7 @@ import core.game.node.entity.player.Player
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
+import org.rs.consts.Quests
 
 @Initializable
 class RogueVarrockDialogue(
@@ -18,7 +19,7 @@ class RogueVarrockDialogue(
 ) : Dialogue(player) {
     override fun open(vararg args: Any): Boolean {
         npc = args[0] as NPC
-        if (!hasRequirement(player, "Summer's End")) return true
+        if (!hasRequirement(player, Quests.SUMMERS_END)) return true
         if (inBorders(player, 3282, 3934, 3287, 3942)) {
             end()
             openDialogue(player, RogueCastleDialogue())

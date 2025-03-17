@@ -13,6 +13,7 @@ import core.tools.END_DIALOGUE
 import core.tools.RandomFunction
 import org.rs.consts.Items
 import org.rs.consts.NPCs
+import org.rs.consts.Quests
 
 @Initializable
 class CaptainShanksDialogue(
@@ -22,7 +23,7 @@ class CaptainShanksDialogue(
 
     override fun open(vararg args: Any): Boolean {
         npc = args[0] as NPC
-        if (!hasRequirement(player, "Shilo Village", false)) {
+        if (!hasRequirement(player, Quests.SHILO_VILLAGE, false)) {
             npcl(
                 FaceAnim.HALF_GUILTY,
                 "Oh dear, this ship is in a terrible state. And I just can't get the items I need to repair it because Shilo village is overrun with zombies.",

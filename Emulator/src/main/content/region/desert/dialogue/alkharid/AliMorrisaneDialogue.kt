@@ -8,6 +8,7 @@ import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.plugin.Initializable
 import org.rs.consts.NPCs
+import org.rs.consts.Quests
 
 @Initializable
 class AliMorrisaneDialogue(
@@ -47,7 +48,7 @@ class AliMorrisaneDialogue(
                         }
                     2 -> {
                         end()
-                        if (!hasRequirement(player, "The Feud")) {
+                        if (!hasRequirement(player, Quests.THE_FEUD)) {
                             return true
                         }
                         openNpcShop(player, NPCs.ALI_MORRISANE_1862)
@@ -100,7 +101,7 @@ class AliMorrisaneDialogue(
                     1 -> end()
                     2 -> {
                         end()
-                        if (!hasRequirement(player, "The Feud")) {
+                        if (!hasRequirement(player,Quests.THE_FEUD)) {
                             return true
                         }
                         openNpcShop(player, NPCs.ALI_MORRISANE_1862)
