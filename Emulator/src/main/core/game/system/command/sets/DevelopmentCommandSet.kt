@@ -205,26 +205,6 @@ class DevelopmentCommandSet : CommandSet(Privilege.ADMIN) {
         }
 
         /*
-         * Command for retrieving and logging the definition of a Struct based on the given ID.
-         */
-
-        define(name = "struct", Privilege.ADMIN) { _, args ->
-            val mapId = args[1].toIntOrNull() ?: return@define
-            val def = Struct.get(mapId)
-            log(this::class.java, Log.FINE, def.toString())
-        }
-
-        /*
-         * Command for retrieving and logging CS2 mapping data for a given ID.
-         */
-
-        define(name = "datamap", Privilege.ADMIN) { _, args ->
-            val mapId = args[1].toIntOrNull() ?: return@define
-            val def = CS2Mapping.forId(mapId)
-            log(this::class.java, Log.FINE, def.toString())
-        }
-
-        /*
          * Command for rolling the drop table of a specified NPC a given number of times.
          */
 

@@ -246,9 +246,14 @@ class CacheCommandSet : CommandSet(Privilege.ADMIN) {
                     for (fileId in 0 until archive) {
                         val fileData = Cache.getData(CacheIndex.CONFIGURATION, archiveId, fileId)
 
-                        fileData?.let {
-                            val def = DataMap.parse(archiveId shl 8 or fileId, it)
+                        if (fileData == null || fileData.isEmpty()) {
+                            // Skip invalid or empty files
+                            continue
+                        }
 
+                        // Parse the file data
+                        try {
+                            val def = DataMap.parse(archiveId shl 8 or fileId, fileData)
 
                             val dataMap = mapOf(
                                 "id" to def.id,
@@ -264,10 +269,13 @@ class CacheCommandSet : CommandSet(Privilege.ADMIN) {
                             )
 
                             dataMapsList.add(dataMap)
+                        } catch (e: Exception) {
+
                         }
                     }
                 }
 
+                // Write the data to a JSON file
                 dump.writeText(gson.toJson(dataMapsList))
                 player.debug("Data maps successfully dumped to $dump.")
             } catch (e: IOException) {

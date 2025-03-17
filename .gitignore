@@ -67,3 +67,4 @@ out/**
 pyvenv.cfg
 share/
 logs.txt
+Tools/cache_location.txt
