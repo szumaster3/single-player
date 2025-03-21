@@ -11,18 +11,38 @@ import org.rs.consts.Components
 import java.text.NumberFormat
 import java.util.*
 
+/**
+ * Manages the history of Grand Exchange offers for a player, including tracking their active and completed offers.
+ * This class handles loading, saving, and displaying offer history and provides methods to interact with a player's
+ * Grand Exchange history and offer records.
+ */
 class ExchangeHistory(
     private val player: Player? = null,
 ) : PersistPlayer,
     LoginListener {
+
+    // Stores the player's history of completed Grand Exchange offers (maximum 5 records).
     var history = arrayOfNulls<GrandExchangeOffer>(5)
+
+    // Stores the records of the player's Grand Exchange offers, including both active and completed offers.
     val offerRecords = arrayOfNulls<OfferRecord>(6)
 
+    /**
+     * Called when the player logs in. Initializes the player's Grand Exchange history.
+     *
+     * @param player The player who is logging in.
+     */
     override fun login(player: Player) {
         val instance = ExchangeHistory(player)
         player.setAttribute("ge-records", instance)
     }
 
+    /**
+     * Parses the player's Grand Exchange history from a JSON object and populates the `history` array.
+     *
+     * @param player The player whose data is being loaded.
+     * @param data The JSON object containing the player's saved Grand Exchange data.
+     */
     override fun parsePlayer(
         player: Player,
         data: JSONObject,
@@ -86,6 +106,12 @@ class ExchangeHistory(
         instance.init()
     }
 
+    /**
+     * Saves the player's Grand Exchange history to a JSON object.
+     *
+     * @param player The player whose data is being saved.
+     * @param save The JSON object to save the player's data to.
+     */
     override fun savePlayer(
         player: Player,
         save: JSONObject,
@@ -104,6 +130,10 @@ class ExchangeHistory(
         save["ge-history"] = history
     }
 
+    /**
+     * Opens the collection box interface for the player.
+     * If the player's bank pin is not unlocked, it will prompt them to unlock it first.
+     */
     fun openCollectionBox() {
         if (!player!!.bankPinManager.isUnlocked) {
             player.bankPinManager.openType(3)
@@ -120,6 +150,9 @@ class ExchangeHistory(
         visualizeRecords()
     }
 
+    /**
+     * Visualizes the player's Grand Exchange offer records by sending them to the client interface.
+     */
     fun visualizeRecords() {
         GEDatabase.run { conn ->
             val stmt = conn.createStatement()
@@ -139,11 +172,23 @@ class ExchangeHistory(
         }
     }
 
+    /**
+     * Retrieves the Grand Exchange offer at a specific index.
+     *
+     * @param index The index of the offer to retrieve.
+     * @return The Grand Exchange offer at the specified index, or null if no offer exists at that index.
+     */
     fun getOffer(index: Int): GrandExchangeOffer? {
         if (index == -1) return getOffer(null)
         return getOffer(offerRecords[index])
     }
 
+    /**
+     * Retrieves the Grand Exchange offer for a specific record.
+     *
+     * @param record The offer record containing the offer UID and slot.
+     * @return The Grand Exchange offer corresponding to the provided record, or null if not found.
+     */
     fun getOffer(record: OfferRecord?): GrandExchangeOffer? {
         record ?: return null
         var offerToReturn: GrandExchangeOffer? = null
@@ -161,6 +206,11 @@ class ExchangeHistory(
         return offerToReturn
     }
 
+    /**
+     * Opens the player's Grand Exchange history log interface.
+     *
+     * @param p The player whose history log is being opened.
+     */
     fun openHistoryLog(p: Player) {
         p.interfaceManager.open(Component(643))
         for (i in history.indices) {
@@ -188,6 +238,10 @@ class ExchangeHistory(
         }
     }
 
+    /**
+     * Initializes the player's Grand Exchange offers, visualizing any updated offers.
+     * If an offer has been updated, a message is sent to the player.
+     */
     fun init() {
         var updated = false
         for (record in offerRecords) {
@@ -205,6 +259,11 @@ class ExchangeHistory(
         }
     }
 
+    /**
+     * Checks if the player has any active Grand Exchange offers.
+     *
+     * @return True if the player has at least one active offer, otherwise false.
+     */
     fun hasActiveOffer(): Boolean {
         for (i in offerRecords) {
             if (i != null) {
@@ -214,6 +273,11 @@ class ExchangeHistory(
         return false
     }
 
+    /**
+     * Formats the player's Grand Exchange offers into a string representation.
+     *
+     * @return A string representation of the player's offers.
+     */
     fun format(): String {
         var log = ""
         for (record in offerRecords) {
@@ -228,12 +292,25 @@ class ExchangeHistory(
         return log
     }
 
+    /**
+     * Data class representing an individual offer record in the Grand Exchange.
+     *
+     * @param uid The unique identifier of the offer.
+     * @param slot The slot of the offer in the player's record.
+     */
     data class OfferRecord(
         val uid: Long,
         val slot: Int,
     )
 
     companion object {
+
+        /**
+         * Retrieves the instance of `ExchangeHistory` for a player.
+         *
+         * @param player The player whose instance of `ExchangeHistory` is being retrieved.
+         * @return The `ExchangeHistory` instance associated with the player.
+         */
         @JvmStatic
         fun getInstance(player: Player? = null): ExchangeHistory =
             player?.getAttribute("ge-records", ExchangeHistory()) ?: ExchangeHistory()

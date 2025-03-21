@@ -16,37 +16,114 @@ import kotlin.math.min
 
 // import core.services.discord.Discord
 
+/**
+ * Represents a Grand Exchange offer made by a player or a bot.
+ * Offers can either be a sale or purchase of items, with various states and attributes.
+ */
 class GrandExchangeOffer {
+    /**
+     * The ID of the item being offered.
+     */
     var itemID = 0
+
+    /**
+     * The amount of the item that has been completed (sold or bought).
+     */
     var completedAmount = 0
+
+    /**
+     * The offered value per item.
+     */
     var offeredValue = 0
+
+    /**
+     * The index (slot) of the offer in the Grand Exchange.
+     */
     var index = 0
+
+    /**
+     * True if the offer is a sale, false if it is a purchase.
+     */
     var sell = false
+
+    /**
+     * The current state of the offer.
+     */
     var offerState = OfferState.PENDING
+
+    /**
+     * Unique identifier for the offer.
+     */
     var uid: Long = 0
+
+    /**
+     * The timestamp when the offer was created or updated.
+     */
     var timeStamp: Long = 0
+
+    /**
+     * Array holding the withdrawable items from the offer.
+     */
     var withdraw = arrayOfNulls<Item>(2)
+
+    /**
+     * The total value of coins exchanged for this offer.
+     */
     var totalCoinExchange = 0
+
+    /**
+     * The player associated with the offer.
+     */
     var player: Player? = null
+
+    /**
+     * The unique identifier of the player who made the offer.
+     */
     var playerUID = 0
+
+    /**
+     * Flag indicating if there are trade restrictions on the offer.
+     */
     var tradeRestriction = false
+
+    /**
+     * True if the offer is made by a bot.
+     */
     var isBot = false
+
+    /**
+     * The total amount of the item involved in the offer.
+     */
     var amount: Int = 0
         get() = if (isBot) min(field, ServerConstants.BOTSTOCK_LIMIT) else field
 
+    /**
+     * The total value of the offer (offered value * amount).
+     */
     val totalValue: Int
         get() = offeredValue * amount
 
+    /**
+     * The amount of the item still left to complete in the offer.
+     */
     val amountLeft: Int
         get() = if (isBot) min(ServerConstants.BOTSTOCK_LIMIT, amount - completedAmount) else amount - completedAmount
 
+    /**
+     * Returns true if the offer is still active (not completed, aborted, or removed).
+     */
     val isActive: Boolean
         get() =
             offerState != OfferState.ABORTED &&
-                offerState != OfferState.PENDING &&
-                offerState != OfferState.COMPLETED &&
-                offerState != OfferState.REMOVED
+                    offerState != OfferState.PENDING &&
+                    offerState != OfferState.COMPLETED &&
+                    offerState != OfferState.REMOVED
 
+    /**
+     * Adds an item to the withdraw list of this offer.
+     * @param id The ID of the item being added.
+     * @param amount The amount of the item to be added.
+     */
     fun addWithdrawItem(
         id: Int,
         amount: Int,
@@ -71,6 +148,10 @@ class GrandExchangeOffer {
         }
     }
 
+    /**
+     * Visualizes the Grand Exchange offer to the specified player by sending packets.
+     * @param player The player to whom the offer should be visualized.
+     */
     fun visualize(player: Player?) {
         player ?: return
         PacketRepository.send(
@@ -93,6 +174,9 @@ class GrandExchangeOffer {
         )
     }
 
+    /**
+     * Updates the Grand Exchange offer in the database.
+     */
     fun update() {
         GEDatabase.run { conn ->
             if (isBot) {
@@ -118,6 +202,9 @@ class GrandExchangeOffer {
         }
     }
 
+    /**
+     * Writes a new Grand Exchange offer to the database.
+     */
     fun writeNew() {
         GEDatabase.run { conn ->
             if (isBot) {
@@ -136,7 +223,7 @@ class GrandExchangeOffer {
                 val stmt = conn.createStatement()
                 stmt.executeUpdate(
                     "INSERT INTO player_offers(player_uid, item_id, amount_total, offered_value, time_stamp, offer_state, is_sale, slot_index) " +
-                        "values($playerUID,$itemID,$amount,$offeredValue,${System.currentTimeMillis()},${offerState.ordinal},${if (sell) 1 else 0}, $index)",
+                            "values($playerUID,$itemID,$amount,$offeredValue,${System.currentTimeMillis()},${offerState.ordinal},${if (sell) 1 else 0}, $index)",
                 )
                 val nowuid = stmt.executeQuery("SELECT last_insert_rowid()")
                 uid = nowuid.getLong(1)
@@ -158,6 +245,10 @@ class GrandExchangeOffer {
         }
     }
 
+    /**
+     * Encodes the withdraw items as a string to be stored in the database.
+     * @return The encoded withdraw items string.
+     */
     private fun encodeWithdraw(): String {
         val sb = StringBuilder()
         for ((index, item) in withdraw.withIndex()) {
@@ -183,27 +274,36 @@ class GrandExchangeOffer {
         return sb.toString()
     }
 
+    /**
+     * Returns a string representation of the Grand Exchange offer.
+     * @return A string describing the offer.
+     */
     override fun toString(): String =
         "[name=" + ItemDefinition.forId(itemID).name + ", itemId=" + itemID + ", amount=" + amount +
-            ", completedAmount=" +
-            completedAmount +
-            ", offeredValue=" +
-            offeredValue +
-            ", index=" +
-            index +
-            ", sell=" +
-            sell +
-            ", state=" +
-            offerState +
-            ", withdraw=" +
-            withdraw.contentToString() +
-            ", totalCoinExchange=" +
-            totalCoinExchange +
-            ", playerUID=" +
-            playerUID +
-            "]"
+                ", completedAmount=" +
+                completedAmount +
+                ", offeredValue=" +
+                offeredValue +
+                ", index=" +
+                index +
+                ", sell=" +
+                sell +
+                ", state=" +
+                offerState +
+                ", withdraw=" +
+                withdraw.contentToString() +
+                ", totalCoinExchange=" +
+                totalCoinExchange +
+                ", playerUID=" +
+                playerUID +
+                "]"
 
     companion object {
+        /**
+         * Creates a `GrandExchangeOffer` from a database query result.
+         * @param result The result set from the database query.
+         * @return A new `GrandExchangeOffer` object.
+         */
         fun fromQuery(result: ResultSet): GrandExchangeOffer {
             val o = GrandExchangeOffer()
             o.itemID = result.getInt("item_id")
@@ -235,6 +335,11 @@ class GrandExchangeOffer {
             return o
         }
 
+        /**
+         * Creates a `GrandExchangeOffer` from a bot-related database query result.
+         * @param result The result set from the database query.
+         * @return A new `GrandExchangeOffer` for a bot.
+         */
         fun fromBotQuery(result: ResultSet): GrandExchangeOffer {
             val o = GrandExchangeOffer()
             o.sell = true
@@ -247,6 +352,13 @@ class GrandExchangeOffer {
             return o
         }
 
+        /**
+         * Creates a new bot Grand Exchange offer.
+         * @param itemId The ID of the item being offered.
+         * @param amount The amount of the item being offered.
+         * @param sale Whether the offer is a sale or not (default is true).
+         * @return A new `GrandExchangeOffer` for the bot.
+         */
         fun createBotOffer(
             itemId: Int,
             amount: Int,
@@ -263,6 +375,10 @@ class GrandExchangeOffer {
         }
     }
 
+    /**
+     * Calculates the cached value of the Grand Exchange offer.
+     * @return The total value of the offer, including coins and withdraw items.
+     */
     fun cacheValue(): Int {
         var value = 0
         if (sell) {

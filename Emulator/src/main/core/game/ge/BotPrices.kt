@@ -3,14 +3,33 @@ package core.game.ge
 import core.cache.def.impl.ItemDefinition
 import org.rs.consts.Items
 
+/**
+ * This class handles getting item prices, including both standard prices and custom price overrides for specific items.
+ * It provides a method to get the price of an item by its ID, either from custom overrides or from the item definition.
+ */
 class BotPrices {
     companion object {
+
+        /**
+         * Gets the price of an item by its ID. If a price override exists, it returns the overridden price.
+         * Otherwise, it returns the price defined in the item definition.
+         *
+         * @param id The item ID.
+         * @return The price of the item.
+         */
         @JvmStatic
         fun getPrice(id: Int): Int = getPriceOverrides(id) ?: ItemDefinition.forId(id).value
 
+        /**
+         * Gets the custom price override for an item if it exists. If no override exists, returns null.
+         *
+         * @param id The item ID.
+         * @return The overridden price if it exists, otherwise null.
+         */
         @JvmStatic
         fun getPriceOverrides(id: Int): Int? =
             when (id) {
+                // List of item ID overrides with their corresponding prices.
                 Items.PURE_ESSENCE_7936 -> 50
                 Items.BOW_STRING_1777 -> 250
                 Items.MAGIC_LOGS_1513 -> 750
@@ -35,6 +54,7 @@ class BotPrices {
                 Items.RAW_SWORDFISH_371 -> 390
                 Items.SHARK_385 -> 720
                 Items.RAW_SHARK_383 -> 710
+                // If no custom override is available, return null.
                 else -> null
             }
     }
