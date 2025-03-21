@@ -18,7 +18,7 @@ enum class TeleportTablet(
     val location: Location,
     val exp: Double,
 ) {
-    ADDOUGNE_TELEPORT(
+    ARDOUGNE_TELEPORT(
         item = Items.ARDOUGNE_TP_8011,
         location = Location.create(2662, 3307, 0),
         exp = 61.0,
@@ -121,8 +121,7 @@ enum class TeleportTablet(
     ;
 
     companion object {
-        val idMap = values().map { it.item to it }.toMap()
-
+        val idMap = values().associateBy { it.item }
         fun forId(id: Int): TeleportTablet? = idMap[id]
     }
 }

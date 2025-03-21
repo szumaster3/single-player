@@ -10,7 +10,7 @@ class NewComerMapListener : InteractionListener {
     private val newcomerMapContent = 270
 
     override fun defineListeners() {
-        on(newcomerMap, IntType.ITEM, "read") { player, node ->
+        on(newcomerMap, IntType.ITEM, "read") { player, _ ->
             openInterface(player, newcomerMapContent)
             return@on true
         }

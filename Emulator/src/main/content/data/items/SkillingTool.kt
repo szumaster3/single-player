@@ -5,6 +5,9 @@ import core.game.node.entity.skill.Skills
 import org.rs.consts.Animations
 import org.rs.consts.Items
 
+/**
+ * Represents a skilling tool items.
+ */
 enum class SkillingTool(
     @JvmField val id: Int,
     val level: Int,

@@ -5,8 +5,7 @@ import core.cache.def.impl.ItemDefinition
 import org.rs.consts.Items
 
 /**
- * Enum class representing various charged items and their respective item IDs for different charge levels.
- * Each enum value corresponds to an item that can have multiple charge levels, and the associated IDs for each level are defined.
+ * Represents various charged items and their respective item IDs for different charge levels.
  */
 enum class ChargedItem(
     val ids: IntArray,

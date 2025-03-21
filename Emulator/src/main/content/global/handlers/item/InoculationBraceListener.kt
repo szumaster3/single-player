@@ -59,7 +59,7 @@ class InoculationBraceListener :
             val targetPlayer = Repository.getPlayerByName(targetName)
 
             if (targetPlayer == null) {
-                sendMessage(player, "Player $targetName does not exist.")
+                sendMessage(player, "Player [$targetName] does not exist.")
                 return@define
             }
 
@@ -69,7 +69,7 @@ class InoculationBraceListener :
             }
 
             applyDisease(targetPlayer, targetPlayer, damage)
-            sendMessage(player, "Applied $damage disease damage to $targetName.")
+            sendMessage(player, "Applied [$damage] disease damage to [$targetName].")
         }
     }
 }

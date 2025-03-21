@@ -36,7 +36,7 @@ class LecternPlugin : OptionHandler() {
             2,
             51,
             61.0,
-            Item(TeleportTablet.ADDOUGNE_TELEPORT.item),
+            Item(TeleportTablet.ARDOUGNE_TELEPORT.item),
             arrayOf(Decoration.TEAK_EAGLE_LECTERN, Decoration.MAHOGANY_EAGLE_LECTERN),
             SOFT_CLAY,
             Item(Items.LAW_RUNE_563, 2),

@@ -10,7 +10,7 @@ import org.rs.consts.Items
 
 class SatchelListener : InteractionListener {
     companion object {
-        val BASE_CHARGE_AMOUNT = 1000
+        const val BASE_CHARGE_AMOUNT = 1000
         val SATCHEL_RESOURCES = intArrayOf(Items.CAKE_1891, Items.BANANA_1963, Items.TRIANGLE_SANDWICH_6962)
         val SATCHEL_IDS =
             intArrayOf(

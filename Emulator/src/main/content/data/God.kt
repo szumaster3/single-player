@@ -2,6 +2,9 @@ package content.data
 
 import org.rs.consts.Items
 
+/**
+ * Represents the GOD items.
+ */
 enum class God(
     vararg val validItems: Int,
 ) {

@@ -19,6 +19,9 @@ import core.game.world.update.flag.context.Graphics
 import org.rs.consts.Items
 import org.rs.consts.Sounds
 
+/**
+ * Represents enchanted jewellery items and their corresponding teleport options.
+ */
 enum class EnchantedJewellery(
     val options: Array<String>,
     val locations: Array<Location>,
@@ -199,6 +202,14 @@ enum class EnchantedJewellery(
     ),
     ;
 
+    /**
+     * Handles the use of the enchanted jewellery item by the player.
+     *
+     * @param player The player using the jewellery.
+     * @param item The item being used (the jewellery item).
+     * @param buttonID The button ID clicked by the player.
+     * @param isEquipped Whether the item is equipped or not.
+     */
     fun use(
         player: Player,
         item: Item,
@@ -214,6 +225,15 @@ enum class EnchantedJewellery(
         attemptTeleport(player, item, buttonID, isEquipped)
     }
 
+    /**
+     * Attempts to teleport the player to a location using the enchanted jewellery item.
+     *
+     * @param player The player attempting the teleport.
+     * @param item The item being used to teleport.
+     * @param buttonID The button ID clicked by the player.
+     * @param isEquipped Whether the item is equipped.
+     * @return Boolean indicating if the teleport was successful.
+     */
     fun attemptTeleport(
         player: Player,
         item: Item,
@@ -255,6 +275,16 @@ enum class EnchantedJewellery(
         return true
     }
 
+    /**
+     * Handles the usage of the jewellery after teleportation.
+     *
+     * @param player The player using the jewellery.
+     * @param item The item being used.
+     * @param nextID The next jewellery ID.
+     * @param itemIndex The current item index.
+     * @param isEquipped Whether the item is equipped.
+     * @param location The location the player is teleporting to.
+     */
     private fun handleJewelleryUsage(
         player: Player,
         item: Item,
@@ -288,6 +318,14 @@ enum class EnchantedJewellery(
         player.dispatch(TeleportEvent(TeleportManager.TeleportType.NORMAL, TeleportMethod.JEWELRY, item, location))
     }
 
+    /**
+     * Replaces the current jewellery item with the next one.
+     *
+     * @param player The player whose inventory is being updated.
+     * @param item The current item.
+     * @param nextID The next jewellery item.
+     * @param isEquipped Whether the item is equipped or not.
+     */
     private fun replaceJewellery(
         player: Player,
         item: Item,
@@ -301,6 +339,13 @@ enum class EnchantedJewellery(
         }
     }
 
+    /**
+     * Crumbles the jewellery item and removes it from the player's inventory.
+     *
+     * @param player The player whose jewellery is crumbling.
+     * @param item The item being crumbled.
+     * @param isEquipped Whether the item is equipped or not.
+     */
     private fun crumbleJewellery(
         player: Player,
         item: Item,
@@ -317,8 +362,19 @@ enum class EnchantedJewellery(
         }
     }
 
+    /**
+     * Checks if the item is a Slayer Ring.
+     *
+     * @param item The item to check.
+     * @return Boolean indicating if the item is a Slayer Ring.
+     */
     private fun isSlayerRing(item: Item): Boolean = item.id in RING_OF_SLAYING.ids
 
+    /**
+     * Sends the Slayer progress dialogue to the player.
+     *
+     * @param player The player for whom the dialogue is being sent.
+     */
     private fun slayerProgressDialogue(player: Player) {
         val slayerManager = SlayerManager.getInstance(player)
         if (!slayerManager.hasTask()) {
@@ -341,17 +397,48 @@ enum class EnchantedJewellery(
         setVarp(player, 2502, slayerManager.flags.taskFlags shr 4)
     }
 
+    /**
+     * Checks if the player can teleport using the item.
+     *
+     * @param player The player attempting the teleport.
+     * @param item The item being used.
+     * @return Boolean indicating if the teleport is possible.
+     */
     private fun canTeleport(
         player: Player,
         item: Item,
     ): Boolean = player.zoneMonitor.teleport(1, item)
 
+    /**
+     * Retrieves the next item in the sequence.
+     *
+     * @param index The current index.
+     * @return The ID of the next item.
+     */
     private fun getNext(index: Int): Int = if (index + 1 > ids.size - 1) ids.last() else ids[index + 1]
 
+    /**
+     * Retrieves the location associated with the given index.
+     *
+     * @param index The index for which to get the location.
+     * @return The corresponding location.
+     */
     private fun getLocation(index: Int): Location = if (index >= locations.size) locations.last() else locations[index]
 
+    /**
+     * Retrieves the name of the jewellery item, with any suffix removed.
+     *
+     * @param item The item for which to retrieve the name.
+     * @return The name of the jewellery item.
+     */
     fun getJewelleryName(item: Item): String = item.name.replace(""" ?\(t?[0-9]?\)""".toRegex(), "")
 
+    /**
+     * Retrieves the type of jewellery item based on its ID.
+     *
+     * @param item The item for which to get the type.
+     * @return The type of the jewellery.
+     */
     fun getJewelleryType(item: Item): String =
         when {
             this == GAMES_NECKLACE -> "games necklace"
@@ -364,8 +451,20 @@ enum class EnchantedJewellery(
             else -> item.name.split(" ")[0].lowercase()
         }
 
+    /**
+     * Checks if the given index is the last item index in the sequence.
+     *
+     * @param index The index to check.
+     * @return Boolean indicating if the index is the last.
+     */
     fun isLastItemIndex(index: Int): Boolean = index == ids.size - 1
 
+    /**
+     * Retrieves the index of the item in the jewellery sequence.
+     *
+     * @param item The item whose index is being retrieved.
+     * @return The index of the item.
+     */
     fun getItemIndex(item: Item): Int = ids.indexOf(item.id)
 
     companion object {
