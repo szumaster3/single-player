@@ -33697,14 +33697,64 @@
     "id": "4512"
   },
   {
+    "examine": "An old woman who lives in a very strange house.",
+    "name": "Baba Yaga",
+    "id": "4513"
+  },
+  {
+    "examine": "She has a certain twinkle in her eye.",
+    "name": "Pauline Polaris",
+    "id": "4514"
+  },
+  {
+    "examine": "As beautiful as a fallen star... I feel sick.",
+    "name": "Meteora",
+    "id": "4515"
+  },
+  {
+    "examine": "Did she just wink at me?",
+    "name": "Melana Moonlander",
+    "id": "4516"
+  },
+  {
+    "examine": "In a world of her own.",
+    "name": "Selene",
+    "id": "4517"
+  },
+  {
+    "examine": "She will tan your suqah hides.",
+    "name": "Rimae Sirsalis",
+    "id": "4518"
+  },
+  {
+    "examine": "Glad to be one of only three men on the island.",
+    "name": "Sirsal Banker",
+    "id": "4519"
+  },
+  {
+    "examine": "He smells a bit funny.",
+    "name": "Clan Guard",
+    "id": "4520"
+  },
+  {
     "examine": "How does it see where to sweep?",
     "name": "Enchanted Broom",
     "id": "4521"
   },
   {
+    "examine": "How does it see where to sweep?",
+    "name": "Enchanted Broom",
+    "id": "4522"
+  },
+  {
     "examine": "I'm not sure if it's actually doing anything of use.",
     "name": "Enchanted Bucket",
     "id": "4524"
+  },
+  {
+    "examine": "Should I pronounce it 'bucket'?",
+    "name": "Bouquet Mac Hyacinth",
+    "id": "4526"
   },
   {
     "examine": "A strange creature unique to Lunar Isle.",
@@ -42701,6 +42751,7 @@
     "defence_animation": "6091"
   },
   {
+    "examine": "A travelling trader.",
     "name": "Rat Burgiss",
     "lifepoints": "10",
     "combat_audio": "703,705,704",
@@ -42713,9 +42764,39 @@
     "id": "5834"
   },
   {
+    "examine": "Leader of the Dagon'hai order.",
+    "name": "Surok Magis",
+    "id": "5835"
+  },
+  {
+    "examine": "Sells superior staffs.",
+    "name": "Zaff",
+    "id": "5836"
+  },
+  {
     "examine": "An archeologist.",
     "name": "Anna Jones",
     "id": "5837"
+  },
+  {
+    "examine": "Varrock's resident monarch. He looks strangely evil!",
+    "name": "King Roald",
+    "id": "5838"
+  },
+  {
+    "examine": "A monk of the Dagon'hai Order.",
+    "name": "Mishkal'un Dorn",
+    "id": "5839"
+  },
+  {
+    "examine": "A monk of the Dagon'Hai Order.",
+    "name": "Dakh'thoulan Aegis",
+    "id": "5840"
+  },
+  {
+    "examine": "A monk of the Dagon'hai Order.",
+    "name": "Sil'as Dahcsnu",
+    "id": "5841"
   },
   {
     "examine": "A mean looking outlaw. Don't get too close!",
@@ -42905,6 +42986,11 @@
     "attack_level": "60"
   },
   {
+    "examine": "A powerful wizard.",
+    "name": "Surok Magis",
+    "id": "5853"
+  },
+  {
     "examine": "For sitting on.",
     "name": "Bench",
     "id": "5854"
@@ -42912,18 +42998,24 @@
   {
     "name": "Goblin",
     "lifepoints": "10",
-    "combat_audio": "469,472,471",
-    "strength_level": "1",
-    "id": "5855",
-    "clue_level": "0"
+    "id": "5855"
   },
   {
     "name": "Goblin",
     "lifepoints": "10",
-    "combat_audio": "469,472,471",
-    "strength_level": "1",
-    "id": "5856",
-    "clue_level": "0"
+    "id": "5856"
+  },
+  {
+    "examine": "An eager cave goblin on her first trip to the surface.",
+    "name": "Zanik",
+    "lifepoints": "10",
+    "id": "5857"
+  },
+  {
+    "examine": "He's the head of the Dorgeshuun Council.",
+    "name": "Ur-tag",
+    "lifepoints": "10",
+    "id": "5858"
   },
   {
     "examine": "He looks pretty skilled with that bow.",
@@ -42980,6 +43072,11 @@
     "attack_level": "85"
   },
   {
+    "examine": "Sigmund holding Zanik hostage.",
+    "name": "Sigmund and Zanik",
+    "id": "5862"
+  },
+  {
     "examine": "The dwarf ambassador to Dorgesh-Kaan.",
     "name": "Ambassador Alvijar",
     "id": "5863"
@@ -43005,9 +43102,24 @@
     "id": "5867"
   },
   {
+    "examine": "He's digging up cave goblin history!",
+    "name": "Tegdak",
+    "id": "5868"
+  },
+  {
+    "examine": "",
+    "name": "Zanik",
+    "id": "5870"
+  },
+  {
     "examine": "An ugly green creature...But don't say that to his face!",
     "name": "Sergeant Mossfists",
     "id": "5871"
+  },
+  {
+    "examine": "An ugly green creature...But don't say that to his face!",
+    "name": "Sergeant Mossfists",
+    "id": "5872"
   },
   {
     "examine": "A goblin with big bulging eyes.",
@@ -43098,9 +43210,34 @@
     "id": "5886"
   },
   {
-    "examine": "I hope he's not dead!",
+    "examine": "He's alive... just.",
     "name": "Cyrisus",
     "id": "5893"
+  },
+  {
+    "examine": "I hope he's not dead!",
+    "name": "Cyrisus",
+    "id": "5894"
+  },
+  {
+    "examine": "He's a ranger - light and accurate.",
+    "name": "Cyrisus",
+    "id": "5895"
+  },
+  {
+    "examine": "He's a meleer - prepared to go face-to-face.",
+    "name": "Cyrisus",
+    "id": "5896"
+  },
+  {
+    "examine": "He's a mage - mystical and calculating.",
+    "name": "Cyrisus",
+    "id": "5897"
+  },
+  {
+    "examine": "A pirate-banker. You don't see one of those every day!",
+    "name": "'Bird's-Eye' Jack",
+    "id": "5898"
   },
   {
     "examine": "Are you good enough to fight?",

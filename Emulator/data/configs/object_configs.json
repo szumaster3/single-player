@@ -15146,5 +15146,9 @@
   {
     "examine": "The skull is back in there.",
     "ids": "15053,15061"
+  },
+  {
+    "examine": "I can store my items here.",
+    "ids": "27663"
   }
 ]
