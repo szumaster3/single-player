@@ -33,7 +33,7 @@ class DrezelMonumentDialogue(
         }
         if (quest.getStage(player) == 18) {
             stage =
-                if (player.inventory.contains(1436, 1) || player.inventory.contains(7936, 1)) {
+                if (player.inventory.contains(Items.RUNE_ESSENCE_1436, 1) || player.inventory.contains(Items.PURE_ESSENCE_7936, 1)) {
                     player(FaceAnim.HALF_GUILTY, "I brought you some Rune Essence.")
                     100
                 } else {

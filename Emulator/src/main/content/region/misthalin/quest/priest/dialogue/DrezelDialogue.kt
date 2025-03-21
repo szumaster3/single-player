@@ -3,6 +3,7 @@ package content.region.misthalin.quest.priest.dialogue
 import core.api.addItem
 import core.api.inInventory
 import core.api.quest.setQuestStage
+import core.api.removeItem
 import core.api.sendMessage
 import core.cache.def.impl.NPCDefinition
 import core.game.dialogue.Dialogue
@@ -640,7 +641,7 @@ class DrezelDialogue(
                 if (!inInventory(player, Items.BUCKET_OF_WATER_2953)) {
                     return true
                 }
-                if (inInventory(player, Items.BUCKET_OF_WATER_2953)) {
+                if (removeItem(player, Items.BUCKET_OF_WATER_2953)) {
                     sendMessage(player, "The priest blesses the water for you.")
                     addItem(player, Items.BUCKET_OF_WATER_2954, 1)
                 }
