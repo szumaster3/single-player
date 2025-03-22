@@ -27,6 +27,10 @@ import java.math.BigInteger
 import java.nio.BufferUnderflowException
 import java.nio.ByteBuffer
 
+/**
+ * Handles the login process, including packet decoding, authentication,
+ * session handling, and account verification.
+ */
 object Login {
     private const val ENCRYPTION_VERIFICATION_BYTE: Int = 10
     private const val NORMAL_LOGIN_OP = 16
@@ -36,6 +40,12 @@ object Login {
     private var exceptionData: Toml? = null
     private var lastModifiedData = 0L
 
+    /**
+     * Decodes login data from the provided [ByteBuffer].
+     *
+     * @param buffer The buffer containing login data.
+     * @return A pair containing an [AuthResponse] and optionally a [LoginInfo] object.
+     */
     fun decodeFromBuffer(buffer: ByteBuffer): Pair<AuthResponse, LoginInfo?> {
         try {
             val info = LoginInfo.createDefault()
@@ -95,6 +105,12 @@ object Login {
         }
     }
 
+    /**
+     * Generates an [ISAACPair] for encrypting and decrypting communication.
+     *
+     * @param buffer The buffer containing encryption seeds.
+     * @return The generated [ISAACPair].
+     */
     private fun produceISAACPairFrom(buffer: ByteBuffer): ISAACPair {
         val incomingSeed = IntArray(4)
         for (i in incomingSeed.indices) {
@@ -108,6 +124,14 @@ object Login {
         return ISAACPair(inCipher, outCipher)
     }
 
+    /**
+     * Decrypts an RSA-encrypted buffer.
+     *
+     * @param buffer The encrypted buffer.
+     * @param exponent The RSA exponent.
+     * @param modulus The RSA modulus.
+     * @return A decrypted [ByteBuffer].
+     */
     @JvmStatic
     fun decryptRSABuffer(
         buffer: ByteBuffer,
@@ -125,6 +149,12 @@ object Login {
             ByteBuffer.wrap(byteArrayOf(-1))
         }
 
+    /**
+     * Skips over a given number of bytes in the buffer.
+     *
+     * @param buffer The buffer to modify.
+     * @param amount The number of bytes to skip (default is 1).
+     */
     private fun noop(
         buffer: ByteBuffer,
         amount: Int = 1,
@@ -132,6 +162,13 @@ object Login {
         buffer.get(ByteArray(amount))
     }
 
+    /**
+     * Proceeds with a player's login session.
+     *
+     * @param session The player's session.
+     * @param details The player's details.
+     * @param opcode The login opcode.
+     */
     fun proceedWith(
         session: IoSession,
         details: PlayerDetails,
@@ -163,9 +200,22 @@ object Login {
         }
     }
 
+    /**
+     * Checks if a player can bypass account login limits.
+     *
+     * @param player The player to check.
+     * @return `true` if they can bypass limits, otherwise `false`.
+     */
     private fun canBypassAccountLimitCheck(player: Player): Boolean =
         player.rights == Rights.ADMINISTRATOR || player.rights == Rights.PLAYER_MODERATOR
 
+    /**
+     * Completes the login process for a validated player.
+     *
+     * @param session The player's session.
+     * @param player The player object.
+     * @param opcode The login opcode.
+     */
     private fun proceedWithAcceptableLogin(
         session: IoSession,
         player: Player,
@@ -216,6 +266,11 @@ object Login {
         return true
     }
 
+    /**
+     * Sends management service events for the player.
+     *
+     * @param details The player's details.
+     */
     private fun sendMSEvents(details: PlayerDetails) {
         val statusEvent = PlayerStatusUpdate.newBuilder()
         statusEvent.username = details.username

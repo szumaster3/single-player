@@ -4,7 +4,19 @@ import core.api.*
 import core.game.dialogue.InputType
 import core.game.node.entity.player.Player
 
+/**
+ * Handles script-based input processing for a player.
+ * This function validates and processes the input based on the player's attributes
+ * and invokes the provided script function with the processed input.
+ */
 object RunScript {
+    /**
+     * Processes input provided by the player, validating and converting it as necessary.
+     *
+     * @param player The player providing input.
+     * @param value The raw input value, which can be an [Int] or a [String].
+     * @param script A function to execute with the processed input, returning a [Boolean].
+     */
     fun processInput(
         player: Player,
         value: Any,

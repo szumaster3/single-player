@@ -6,27 +6,41 @@ import core.game.world.repository.Repository
 import java.lang.Long.max
 import java.sql.*
 
+/**
+ * Provides SQL-based storage for user accounts.
+ */
 class SQLStorageProvider : AccountStorageProvider {
     var connectionString = ""
     var connectionUsername = ""
     var connectionPassword = ""
 
+    /**
+     * Establishes a connection to the database.
+     * @return A [Connection] object.
+     */
     fun getConnection(): Connection {
         Class.forName("com.mysql.cj.jdbc.Driver")
         return DriverManager.getConnection(connectionString, connectionUsername, connectionPassword)
     }
 
-    fun configure(
-        host: String,
-        databaseName: String,
-        username: String,
-        password: String,
-    ) {
+    /**
+     * Configures database connection parameters.
+     * @param host Database host.
+     * @param databaseName Name of the database.
+     * @param username Database username.
+     * @param password Database password.
+     */
+    fun configure(host: String, databaseName: String, username: String, password: String) {
         connectionString = "jdbc:mysql://$host/$databaseName?useTimezone=true&serverTimezone=UTC"
         connectionUsername = username
         connectionPassword = password
     }
 
+    /**
+     * Checks if a given username is already taken.
+     * @param username The username to check.
+     * @return `true` if the username exists, otherwise `false`.
+     */
     override fun checkUsernameTaken(username: String): Boolean {
         val conn = getConnection()
         conn.use {
@@ -37,6 +51,11 @@ class SQLStorageProvider : AccountStorageProvider {
         }
     }
 
+    /**
+     * Retrieves account information for a given username.
+     * @param username The username to retrieve information for.
+     * @return A [UserAccountInfo] object containing user details.
+     */
     override fun getAccountInfo(username: String): UserAccountInfo {
         val conn = getConnection()
         conn.use { con ->
