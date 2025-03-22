@@ -135,23 +135,28 @@ class CrystalBallsSpace : InteractionListener {
         onUseWith(IntType.SCENERY, Staff.ALL_STAFFS, *crystalBallObjects) { player, staff, scenery ->
             val staff = Staff.MAP[staff.id] ?: return@onUseWith false
             val staffType = staff.type
-
-            if (scenery.id == Scenery.CRYSTAL_BALL_13659 &&
-                staffType == StaffType.MYSTIC ||
-                staffType == StaffType.BATTLE
-            ) {
-                sendMessage(player, "You can only change the element of basic staves on this crystal ball.")
-                return@onUseWith false
+            val requiredCost = when (scenery.id) {
+                Scenery.CRYSTAL_BALL_13659 -> if (staffType == StaffType.REGULAR) null else {
+                    sendMessage(player, "You can only change the element of basic staves on this crystal ball.")
+                    return@onUseWith false
+                }
+                Scenery.ELEMENTAL_SPHERE_13660 -> when (staffType) {
+                    StaffType.REGULAR -> null
+                    StaffType.BATTLE -> Item(Items.AIR_RUNE_556, 100)
+                    else -> {
+                        sendMessage(player, "You can only change the element of basic staves and battlestaves on this sphere.")
+                        return@onUseWith false
+                    }
+                }
+                Scenery.CRYSTAL_OF_POWER_13661 -> when (staffType) {
+                    StaffType.REGULAR -> null
+                    StaffType.BATTLE -> Item(Items.AIR_RUNE_556, 100)
+                    StaffType.MYSTIC -> Item(Items.AIR_RUNE_556, 1000)
+                }
+                else -> return@onUseWith false
             }
-            if (scenery.id == Scenery.ELEMENTAL_SPHERE_13660 && staffType == StaffType.MYSTIC) {
-                sendMessage(
-                    player,
-                    "You can only change the element of basic staves and battlestaves on this elemental sphere.",
-                )
-                return@onUseWith false
-            }
 
-            handleElementSelection(player, staff)
+            handleElementSelection(player, staff, requiredCost)
             return@onUseWith true
         }
     }
@@ -159,6 +164,7 @@ class CrystalBallsSpace : InteractionListener {
     private fun handleElementSelection(
         player: Player,
         staff: Staff,
+        cost: Item?
     ) {
         val elements = arrayOf("Air", "Water", "Earth", "Fire")
         sendDialogueOptions(player, "Select an element", *elements)
@@ -176,11 +182,21 @@ class CrystalBallsSpace : InteractionListener {
         staff: Staff,
         element: String,
     ) {
-        val product = Staff.getProduct(staff.type, element) ?: return
-        val cost = Staff.getCost(product) ?: return
+        val elementRunes = mapOf(
+            "Air" to Items.AIR_RUNE_556,
+            "Water" to Items.WATER_RUNE_555,
+            "Earth" to Items.EARTH_RUNE_557,
+            "Fire" to Items.FIRE_RUNE_554
+        )
 
-        if (!player.inventory.contains(cost.id, cost.amount)) {
-            sendMessage(player, "You need ${cost.amount} runes of the new element to change this staff.")
+        val runeId = elementRunes[element] ?: return
+        val product = Staff.getProduct(staff.type, element) ?: return
+        val baseCost = staff.cost?.amount ?: 0
+
+        val requiredRunes = if (baseCost > 0) Item(runeId, baseCost) else null
+
+        if (requiredRunes != null && !player.inventory.contains(requiredRunes.id, requiredRunes.amount)) {
+            sendMessage(player, "You need ${requiredRunes.amount} ${element.lowercase()} runes to change this staff.")
             return
         }
 
@@ -188,9 +204,11 @@ class CrystalBallsSpace : InteractionListener {
         player.animate(staff.start)
         player.animate(staff.end, 2)
 
-        player.inventory.remove(Item(cost.id, cost.amount))
+        requiredRunes?.let { player.inventory.remove(it) }
         player.inventory.remove(Item(staff.staffId))
         player.inventory.add(Item(product))
+
         sendMessage(player, "The staff feels very light for a moment.")
     }
+
 }
