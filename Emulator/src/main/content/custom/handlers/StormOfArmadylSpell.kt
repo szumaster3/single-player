@@ -37,8 +37,7 @@ class StormOfArmadylSpell :
     ): Boolean {
         if (entity is Player) {
             val player = entity.asPlayer()
-            if (player.equipment.getNew(EquipmentContainer.SLOT_WEAPON).id != Items.ARMADYL_BATTLESTAFF_14696 &&
-                player.interfaceManager.opened.id != 90
+            if (player.equipment.getNew(EquipmentContainer.SLOT_WEAPON).id != Items.ARMADYL_BATTLESTAFF_14696
             ) {
                 sendMessage(player, "You need to wield the Armadyl Battlestaff to cast this spell.")
                 return false
@@ -49,7 +48,7 @@ class StormOfArmadylSpell :
 
     @Throws(Throwable::class)
     override fun newInstance(arg: SpellType?): Plugin<SpellType?>? {
-        SpellBookManager.SpellBook.forInterface(90)?.register(5, this)
+        SpellBookManager.SpellBook.MODERN.register(5, this)
         return this
     }
 

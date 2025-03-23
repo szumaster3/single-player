@@ -1,7 +1,7 @@
 <component name="ProjectRunConfigurationManager">
     <configuration default="false" name="[Windows] Cache Editor" type="JarApplication">
         <option name="JAR_PATH" value="$PROJECT_DIR$/Tools/CacheEditor/530-Editor.jar"/>
-        <option name="WORKING_DIRECTORY" value="Tools"/>
+        <option name="WORKING_DIRECTORY" value="Tools/CacheEditor/"/>
         <option name="ALTERNATIVE_JRE_PATH"/>
         <method v="2"/>
     </configuration>
