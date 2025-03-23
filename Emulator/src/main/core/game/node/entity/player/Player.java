@@ -1,5 +1,7 @@
 package core.game.node.entity.player;
 
+import content.custom.handlers.item.armadyl.ArmadylBattlestaffHandler;
+import content.custom.handlers.item.armadyl.StormOfArmadylSpell;
 import content.global.handlers.item.equipment.EquipmentDegrade;
 import content.global.skill.construction.HouseManager;
 import content.global.skill.runecrafting.PouchManager;
@@ -81,6 +83,7 @@ import core.tools.TickUtilsKt;
 import core.worker.ManagementEvents;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
+import org.rs.consts.Components;
 import org.rs.consts.Items;
 import org.rs.consts.Sounds;
 import proto.management.ClanLeaveNotification;
@@ -128,7 +131,7 @@ public class Player extends Entity {
     /**
      * Manages equipment degradation for the player.
      */
-    public EquipmentDegrade degrader = new EquipmentDegrade();
+    public EquipmentDegrade degrade = new EquipmentDegrade();
 
     /**
      * Manages pouches for storing resources.
@@ -456,7 +459,7 @@ public class Player extends Entity {
                         @Override
                         public boolean pulse() {
                             player.getAnimator().reset();
-                            player.packetDispatch.sendInterfaceConfig(548, 69, false);
+                            player.packetDispatch.sendInterfaceConfig(Components.TOPLEVEL_548, 69, false);
                             return true;
                         }
                     });
@@ -465,7 +468,7 @@ public class Player extends Entity {
             }
         }
         if (intoWardrobe) {
-            packetDispatch.sendInterfaceConfig(548, 69, true);
+            packetDispatch.sendInterfaceConfig(Components.TOPLEVEL_548, 69, true);
             GameWorld.getPulser().submit(new wardrobePulse(this));
             inWardrobe = true;
         } else {
@@ -617,10 +620,13 @@ public class Player extends Entity {
                 packetDispatch.sendMessage("Unhandled special attack for item " + weaponId + "!");
             }
         }
-        if (style == CombatStyle.RANGE && weaponId == 10033 || weaponId == 10034) {
+        if (style == CombatStyle.RANGE && weaponId == Items.CHINCHOMPA_10033 || weaponId == Items.RED_CHINCHOMPA_10034) {
             return ChinchompaSwingHandler.getInstance();
         }
-        if (weaponId >= 10146 && weaponId <= 10149) {
+        if (weaponId == Items.ARMADYL_BATTLESTAFF_14696) {
+            return ArmadylBattlestaffHandler.INSTANCE;
+        }
+        if (weaponId >= Items.ORANGE_SALAMANDER_10146 && weaponId <= Items.SWAMP_LIZARD_10149) {
             return SalamanderSwingHandler.Companion.getINSTANCE();
         }
         return style.getSwingHandler();
@@ -638,7 +644,8 @@ public class Player extends Entity {
     @Override
     public void finalizeDeath(Entity killer) {
         if (!isPlaying())
-            return; //if the player has already been full cleared, it has already disconnected. This code is probably getting called because something is maintaining a stale reference.
+            return;
+
         GlobalStatistics.incrementDeathCount();
         settings.setSpecialEnergy(100);
         settings.updateRunEnergy(settings.getRunEnergy() - 100);
@@ -724,14 +731,14 @@ public class Player extends Entity {
         skullManager.setSkulled(false);
         removeAttribute("combat-time");
         getPrayer().reset();
-        removeAttribute("original-loc"); //in case you died inside a random event
-        interfaceManager.openDefaultTabs(); //in case you died inside a random that had blanked them
-        setComponentVisibility(this, 548, 69, false); //reenable the logout button (SD)
-        setComponentVisibility(this, 746, 12, false); //re-enable the logout button (HD)
+        removeAttribute("original-loc");
+        interfaceManager.openDefaultTabs();
+        setComponentVisibility(this, Components.TOPLEVEL_548, 69, false);
+        setComponentVisibility(this, Components.TOPLEVEL_FULLSCREEN_746, 12, false);
         super.finalizeDeath(killer);
         appearance.sync();
         if (!getSavedData().globalData.isDeathScreenDisabled()) {
-            getInterfaceManager().open(new Component(153));
+            getInterfaceManager().open(new Component(Components.AIDE_DEATH_153));
         }
     }
 
@@ -752,7 +759,7 @@ public class Player extends Entity {
             }
         }
         Item item = equipment.get(EquipmentContainer.SLOT_SHIELD);
-        if (item != null && (item.getId() == 11283 || item.getId() == 11284 || (fire && (item.getId() == 1540) || (!fire && (item.getId() == 2890 || item.getId() == 9731))))) {
+        if (item != null && (item.getId() == Items.DRAGONFIRE_SHIELD_11283 || item.getId() == Items.DRAGONFIRE_SHIELD_11284 || (fire && (item.getId() == Items.ANTI_DRAGON_SHIELD_1540) || (!fire && (item.getId() == 2890 || item.getId() == 9731))))) {
             value |= 0x4;
         }
         if (prayer.get(PrayerType.PROTECT_FROM_MAGIC)) {
@@ -823,7 +830,7 @@ public class Player extends Entity {
                 getImpactHandler().handleRecoilEffect(entity, state.getSecondaryHit());
             }
         }
-        degrader.checkArmourDegrades(this);
+        degrade.checkArmourDegrades(this);
     }
 
     /**

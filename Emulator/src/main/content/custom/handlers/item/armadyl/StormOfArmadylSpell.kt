@@ -1,4 +1,4 @@
-package content.custom.handlers
+package content.custom.handlers.item.armadyl
 
 import core.api.sendMessage
 import core.game.container.impl.EquipmentContainer

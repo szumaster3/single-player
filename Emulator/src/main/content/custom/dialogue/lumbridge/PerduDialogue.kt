@@ -1,4 +1,4 @@
-package content.custom.dialogue
+package content.custom.dialogue.lumbridge
 
 import core.api.openInterface
 import core.game.dialogue.Dialogue

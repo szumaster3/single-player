@@ -1,4 +1,4 @@
-package content.custom.handlers
+package content.custom.handlers.iface
 
 import core.api.*
 import core.api.item.itemDefinition

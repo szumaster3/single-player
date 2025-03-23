@@ -1,4 +1,4 @@
-package content.custom.handlers
+package content.custom.handlers.item.armadyl
 
 import core.api.*
 import core.game.interaction.IntType

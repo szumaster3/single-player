@@ -398,7 +398,7 @@ abstract class CombatSwingHandler(
             totalHit += state.secondaryHit
         }
         if (entity is Player) {
-            entity.degrader.checkWeaponDegrades(entity)
+            entity.degrade.checkWeaponDegrades(entity)
             if (totalHit > 0 && entity.prayer[PrayerType.SMITE] && victim.skills.prayerPoints > 0) {
                 victim.skills.decrementPrayerPoints(totalHit * 0.25)
             }
