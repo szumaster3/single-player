@@ -60244,6 +60244,26 @@
     "attack_level": "85"
   },
   {
+    "examine": "It appears to be the head of a dragon.",
+    "name": "Dragon head",
+    "id": "8425"
+  },
+  {
+    "examine": "It appears to be the head of a dragon.",
+    "name": "Dragon head",
+    "id": "8426"
+  },
+  {
+    "examine": "It appears to be the head of a dragon.",
+    "name": "Dragon head",
+    "id": "8427"
+  },
+  {
+    "examine": "He's washing clothes carefully.",
+    "name": "Khazard launderer",
+    "id": "8428"
+  },
+  {
     "examine": "An ancient looking gnome.",
     "name": "Hazelmere",
     "id": "8490"
@@ -60387,26 +60407,6 @@
     "examine": "He seems at ease on an iceberg.",
     "name": "Jack Frost",
     "id": "8520"
-  },
-  {
-    "examine": "It appears to be the head of a dragon.",
-    "name": "Dragon head",
-    "id": "8425"
-  },
-  {
-    "examine": "It appears to be the head of a dragon.",
-    "name": "Dragon head",
-    "id": "8426"
-  },
-  {
-    "examine": "It appears to be the head of a dragon.",
-    "name": "Dragon head",
-    "id": "8427"
-  },
-  {
-    "examine": "He's washing clothes carefully.",
-    "name": "Khazard launderer",
-    "id": "8428"
   },
   {
     "examine": "Small, blue and mischievous - it's a snow imp all right.",
