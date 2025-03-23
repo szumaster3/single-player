@@ -58,26 +58,6 @@ object Server {
             throw e
         }
 
-        // val path = "data/cache"
-        // var cache = CacheLibrary(path, true, null)
-
-        // val models = cache.index(7)
-        // val sprites = cache.index(8)
-        // models.remove(45468)
-        // models.remove(45469)
-        // models.remove(45470)
-        // models.remove(45471)
-        // sprites.remove(1707)
-        // sprites.remove(1708)
-
-        // for (i in 0..28)
-        //     cache.index(i).update()
-
-        // models.update()
-        // sprites.update()
-
-        // cache.rebuild(File("data/cache/rebuild"))
-
         // WorldCommunicator.connect()
 
         AutoStock.autostock()
