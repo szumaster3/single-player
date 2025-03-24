@@ -14637,8 +14637,8 @@ id,name,cost
 14635,Antique lamp,1
 14636,Slayer helmet (e),650
 14637,Slayer helmet (charged),650
-14638,Zamorakian hasta,300000
-14639,Zamorakian hasta,300000
+14638,null,1
+14639,null,1
 14640,Seer's headband 2,1
 14641,Seer's headband 3,1
 14642,Granite mace,40000
@@ -14695,17 +14695,17 @@ id,name,cost
 14693,Taupe afro,50
 14694,Black afro,50
 14695,Black afro,50
-14696,Armadyl battlestaff,200000
-14697,Armadyl battlestaff,200000
-14698,Dust of Armadyl,200
-14699,Dust of Armadyl,200
-14700,Armadyl rune,200
-14701,Shards of Armadyl,200
+14696,null,1
+14697,null,1
+14698,null,1
+14699,null,1
+14700,null,1
+14701,null,1
 14702,null,1
 14703,null,1
 14704,null,1
 14705,null,1
-14706,Orb of Armadyl,1
+14706,null,1
 14707,Agile top,1
 14708,Agile top,1
 14709,Agile legs,1

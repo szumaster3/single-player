@@ -45,7 +45,6 @@ public final class ShoveSpecialHandler extends MeleeSwingHandler implements Plug
         CombatStyle.MELEE.getSwingHandler().register(Items.DRAGON_SPEARP_PLUS_5716, this);
         CombatStyle.MELEE.getSwingHandler().register(Items.DRAGON_SPEARP_PLUS_PLUS_5730, this);
         CombatStyle.MELEE.getSwingHandler().register(Items.ZAMORAKIAN_SPEAR_11716, this);
-        CombatStyle.MELEE.getSwingHandler().register(Items.ZAMORAKIAN_HASTA_14638, this);
         return this;
     }
 
