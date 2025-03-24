@@ -30,10 +30,6 @@ class IceGiantNPC(
         super.finalizeDeath(killer)
         if (killer is Player) {
             val player = killer.asPlayer()
-            val random = Random.nextInt(1, 10)
-            if (random == 1) {
-                GroundItemManager.create(Item(Items.SHARDS_OF_ARMADYL_14701, 1), getLocation(), killer.asPlayer())
-            }
             if (withinDistance(player, Location(3052, 9573, 0), 100) &&
                 !hasDiaryTaskComplete(player, DiaryType.FALADOR, 1, 4)
             ) {

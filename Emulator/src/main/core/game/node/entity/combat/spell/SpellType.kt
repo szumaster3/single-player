@@ -143,23 +143,6 @@ enum class SpellType(
         ): Int = 25
     },
 
-    STORM_OF_ARMADYL(1.4) {
-        override fun getImpactAmount(
-            e: Entity,
-            victim: Entity?,
-            base: Int,
-        ): Int {
-            val level = (e as Player).skills.getLevel(Skills.MAGIC)
-
-            val hitRange = (level - 77) * 0.5
-            val maxHit = 16.0 + hitRange
-
-            val averageHit = (maxHit + hitRange) / 2
-
-            return (averageHit * 1.4).toInt() + base
-        }
-    },
-
     TELEBLOCK(1.3),
 
     NULL(0.0),

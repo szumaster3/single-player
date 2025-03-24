@@ -1,6 +1,5 @@
 package core.game.node.entity.player;
 
-import content.custom.handlers.item.armadyl.ArmadylBattlestaffHandler;
 import content.global.handlers.item.equipment.EquipmentDegrade;
 import content.global.skill.construction.HouseManager;
 import content.global.skill.runecrafting.PouchManager;
@@ -621,9 +620,6 @@ public class Player extends Entity {
         }
         if (style == CombatStyle.RANGE && weaponId == Items.CHINCHOMPA_10033 || weaponId == Items.RED_CHINCHOMPA_10034) {
             return ChinchompaSwingHandler.getInstance();
-        }
-        if (weaponId == Items.ARMADYL_BATTLESTAFF_14696) {
-            return ArmadylBattlestaffHandler.INSTANCE;
         }
         if (weaponId >= Items.ORANGE_SALAMANDER_10146 && weaponId <= Items.SWAMP_LIZARD_10149) {
             return SalamanderSwingHandler.Companion.getINSTANCE();

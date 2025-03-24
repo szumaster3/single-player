@@ -24,12 +24,6 @@ class IceSpiderNPC(
 
     override fun finalizeDeath(killer: Entity) {
         super.finalizeDeath(killer)
-        if (killer is Player) {
-            val random = Random.nextInt(1, 10)
-            if (random == 1) {
-                GroundItemManager.create(Item(Items.SHARDS_OF_ARMADYL_14701, 1), getLocation(), killer.asPlayer())
-            }
-        }
     }
 
     override fun getIds(): IntArray =

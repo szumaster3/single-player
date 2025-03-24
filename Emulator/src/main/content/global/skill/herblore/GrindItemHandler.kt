@@ -84,12 +84,6 @@ class GrindItemHandler : UseWithHandler(Items.PESTLE_AND_MORTAR_233) {
                                         }
                                     }
 
-                                    ARMADYL_SHARDS -> {
-                                        if (removeItem(player, Item(node.id, 1))) {
-                                            addItem(player, GrindItem.forItem(node)!!.product.id, 8)
-                                        }
-                                    }
-
                                     else -> {
                                         if (removeItem(player, Item(node.id, 1))) {
                                             addItem(player, GrindItem.forItem(node)!!.product.id)
@@ -117,6 +111,5 @@ class GrindItemHandler : UseWithHandler(Items.PESTLE_AND_MORTAR_233) {
     companion object {
         private val ANIMATION = Animation(Animations.PESTLE_MORTAR_364)
         private const val FISHING_BAIT = Items.FISHING_BAIT_313
-        private const val ARMADYL_SHARDS = Items.SHARDS_OF_ARMADYL_14701
     }
 }
