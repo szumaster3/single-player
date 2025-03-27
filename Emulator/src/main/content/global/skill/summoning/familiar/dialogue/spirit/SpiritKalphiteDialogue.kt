@@ -15,9 +15,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class SpiritKalphiteDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return SpiritKalphiteDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = SpiritKalphiteDialogue(player)
 
     /**
      * Instantiates a new Spirit kalphite dialogue.
@@ -141,9 +139,7 @@ class SpiritKalphiteDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.SPIRIT_KALPHITE_6994, NPCs.SPIRIT_KALPHITE_6995)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.SPIRIT_KALPHITE_6994, NPCs.SPIRIT_KALPHITE_6995)
 
     companion object {
         private val kerisIDs =

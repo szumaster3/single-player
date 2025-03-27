@@ -14,9 +14,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class IceTitanDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return IceTitanDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = IceTitanDialogue(player)
 
     /**
      * Instantiates a new Ice titan dialogue.
@@ -307,7 +305,5 @@ class IceTitanDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.ICE_TITAN_7359, NPCs.ICE_TITAN_7360)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.ICE_TITAN_7359, NPCs.ICE_TITAN_7360)
 }

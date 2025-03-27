@@ -13,9 +13,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class GiantEntDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return GiantEntDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = GiantEntDialogue(player)
 
     /**
      * Instantiates a new Giant ent dialogue.
@@ -108,7 +106,5 @@ class GiantEntDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.GIANT_ENT_6800, NPCs.GIANT_ENT_6801)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.GIANT_ENT_6800, NPCs.GIANT_ENT_6801)
 }

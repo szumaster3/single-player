@@ -13,9 +13,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class MagpieDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return MagpieDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = MagpieDialogue(player)
 
     /**
      * Instantiates a new Magpie dialogue.
@@ -88,7 +86,5 @@ class MagpieDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.MAGPIE_6824)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.MAGPIE_6824)
 }

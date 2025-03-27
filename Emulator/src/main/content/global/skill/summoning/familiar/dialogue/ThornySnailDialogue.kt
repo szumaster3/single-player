@@ -16,9 +16,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class ThornySnailDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return ThornySnailDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = ThornySnailDialogue(player)
 
     /**
      * Instantiates a new Thorny snail dialogue.
@@ -188,9 +186,7 @@ class ThornySnailDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.THORNY_SNAIL_6806, NPCs.THORNY_SNAIL_6807)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.THORNY_SNAIL_6806, NPCs.THORNY_SNAIL_6807)
 
     companion object {
         private val snelmID =

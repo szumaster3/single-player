@@ -13,9 +13,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class StrangerPlantDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return StrangerPlantDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = StrangerPlantDialogue(player)
 
     /**
      * Instantiates a new Stranger plant dialogue.
@@ -220,7 +218,5 @@ class StrangerPlantDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.STRANGER_PLANT_6827, NPCs.STRANGER_PLANT_6828)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.STRANGER_PLANT_6827, NPCs.STRANGER_PLANT_6828)
 }

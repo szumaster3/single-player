@@ -13,9 +13,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class AbyssalLurkerDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return AbyssalLurkerDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = AbyssalLurkerDialogue(player)
 
     /**
      * Instantiates a new Abyssal lurker dialogue.
@@ -83,7 +81,5 @@ class AbyssalLurkerDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.ABYSSAL_LURKER_6820, NPCs.ABYSSAL_LURKER_6821)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.ABYSSAL_LURKER_6820, NPCs.ABYSSAL_LURKER_6821)
 }

@@ -25,8 +25,7 @@ class CorpController :
 
     override fun defineAreaBorders(): Array<ZoneBorders> = arrayOf(borders)
 
-    override fun getRestrictions(): Array<ZoneRestriction> =
-        arrayOf(ZoneRestriction.GRAVES, ZoneRestriction.RANDOM_EVENTS)
+    override fun getRestrictions(): Array<ZoneRestriction> = arrayOf(ZoneRestriction.GRAVES, ZoneRestriction.RANDOM_EVENTS)
 
     override fun areaEnter(entity: Entity) {
         if (entity is Player) {

@@ -13,9 +13,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class TalonBeastDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return TalonBeastDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = TalonBeastDialogue(player)
 
     /**
      * Instantiates a new Talon beast dialogue.
@@ -153,7 +151,5 @@ class TalonBeastDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.TALON_BEAST_7347, NPCs.TALON_BEAST_7348)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.TALON_BEAST_7347, NPCs.TALON_BEAST_7348)
 }

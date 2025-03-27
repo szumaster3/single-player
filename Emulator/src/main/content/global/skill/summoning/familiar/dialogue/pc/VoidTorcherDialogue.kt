@@ -13,9 +13,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class VoidTorcherDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return VoidTorcherDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = VoidTorcherDialogue(player)
 
     /**
      * Instantiates a new Void torcher dialogue.
@@ -127,7 +125,5 @@ class VoidTorcherDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.VOID_TORCHER_7351, NPCs.VOID_TORCHER_7352)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.VOID_TORCHER_7351, NPCs.VOID_TORCHER_7352)
 }

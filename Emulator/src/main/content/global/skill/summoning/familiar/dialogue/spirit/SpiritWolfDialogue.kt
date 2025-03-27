@@ -15,9 +15,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class SpiritWolfDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return SpiritWolfDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = SpiritWolfDialogue(player)
 
     /**
      * Instantiates a new Spirit wolf dialogue.
@@ -103,9 +101,7 @@ class SpiritWolfDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.SPIRIT_WOLF_6829, NPCs.SPIRIT_WOLF_6830)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.SPIRIT_WOLF_6829, NPCs.SPIRIT_WOLF_6830)
 
     companion object {
         private val bones: MutableList<Int> = ArrayList()

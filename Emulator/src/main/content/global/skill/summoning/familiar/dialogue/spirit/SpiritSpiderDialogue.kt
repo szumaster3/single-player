@@ -13,9 +13,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class SpiritSpiderDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return SpiritSpiderDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = SpiritSpiderDialogue(player)
 
     /**
      * Instantiates a new Spirit spider dialogue.
@@ -203,7 +201,5 @@ class SpiritSpiderDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.SPIRIT_SPIDER_6841, NPCs.SPIRIT_SPIDER_6842)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.SPIRIT_SPIDER_6841, NPCs.SPIRIT_SPIDER_6842)
 }

@@ -27,7 +27,10 @@ class Query {
     /**
      * Adds a key-value pair to the query.
      */
-    fun add(key: String, value: String): StringBuilder {
+    fun add(
+        key: String,
+        value: String,
+    ): StringBuilder {
         content.append("$key='$value',")
         return content
     }
@@ -35,7 +38,10 @@ class Query {
     /**
      * Adds a key-int pair to the query.
      */
-    fun add(key: String, value: Int): StringBuilder {
+    fun add(
+        key: String,
+        value: Int,
+    ): StringBuilder {
         content.append("$key='$value',")
         return content
     }
@@ -43,7 +49,10 @@ class Query {
     /**
      * Adds a key-boolean pair to the query.
      */
-    fun add(key: String, value: Boolean): StringBuilder {
+    fun add(
+        key: String,
+        value: Boolean,
+    ): StringBuilder {
         content.append("$key='${if (value) 1 else 0}',")
         return content
     }
@@ -51,11 +60,10 @@ class Query {
     /**
      * Builds and returns the full query.
      */
-    fun total(): String {
-        return buildString {
+    fun total(): String =
+        buildString {
             append(start)
             append(content.dropLast(1))
             append(end)
         }
-    }
 }

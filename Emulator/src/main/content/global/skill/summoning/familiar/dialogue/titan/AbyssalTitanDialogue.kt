@@ -13,9 +13,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class AbyssalTitanDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return AbyssalTitanDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = AbyssalTitanDialogue(player)
 
     /**
      * Instantiates a new Abyssal titan dialogue.
@@ -40,7 +38,5 @@ class AbyssalTitanDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.ABYSSAL_TITAN_7349, NPCs.ABYSSAL_TITAN_7350)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.ABYSSAL_TITAN_7349, NPCs.ABYSSAL_TITAN_7350)
 }

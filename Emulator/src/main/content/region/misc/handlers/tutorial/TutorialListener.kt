@@ -19,7 +19,8 @@ class TutorialListener : InteractionListener {
     override fun defineListeners() {
         on(RS_GUIDE_DOOR, IntType.SCENERY, "open") { player, node ->
             if (getAttribute(player, TutorialStage.TUTORIAL_STAGE, 0) != 3) {
-                Component.setUnclosable(
+                Component
+                    .setUnclosable(
                         player,
                         player.dialogueInterpreter.sendPlainMessage(
                             false,
@@ -45,7 +46,8 @@ class TutorialListener : InteractionListener {
 
         on(WOODEN_GATE, IntType.SCENERY, "open") { player, node ->
             if (getAttribute(player, TutorialStage.TUTORIAL_STAGE, 0) != 16) {
-                Component.setUnclosable(
+                Component
+                    .setUnclosable(
                         player,
                         player.dialogueInterpreter.sendPlainMessage(
                             false,
@@ -71,7 +73,8 @@ class TutorialListener : InteractionListener {
 
         on(COOK_GUIDE_DOOR, IntType.SCENERY, "open") { player, node ->
             if (getAttribute(player, TutorialStage.TUTORIAL_STAGE, 0) != 17) {
-                Component.setUnclosable(
+                Component
+                    .setUnclosable(
                         player,
                         player.dialogueInterpreter.sendPlainMessage(
                             false,
@@ -92,7 +95,8 @@ class TutorialListener : InteractionListener {
 
         on(COOK_GUIDE_DOOR_EXIT, IntType.SCENERY, "open") { player, node ->
             if (getAttribute(player, TutorialStage.TUTORIAL_STAGE, 0) < 21) {
-                Component.setUnclosable(
+                Component
+                    .setUnclosable(
                         player,
                         player.dialogueInterpreter.sendPlainMessage(
                             false,
@@ -105,7 +109,8 @@ class TutorialListener : InteractionListener {
                     }
                 return@on true
             } else if (getAttribute(player, TutorialStage.TUTORIAL_STAGE, 0) > 22) {
-                Component.setUnclosable(
+                Component
+                    .setUnclosable(
                         player,
                         player.dialogueInterpreter.sendPlainMessage(
                             false,
@@ -125,7 +130,8 @@ class TutorialListener : InteractionListener {
 
         on(QUEST_GUIDE_DOOR, IntType.SCENERY, "open") { player, node ->
             if (getAttribute(player, TutorialStage.TUTORIAL_STAGE, 0) != 26) {
-                Component.setUnclosable(
+                Component
+                    .setUnclosable(
                         player,
                         player.dialogueInterpreter.sendPlainMessage(
                             false,
@@ -175,26 +181,26 @@ class TutorialListener : InteractionListener {
             val stage = getAttribute(player, TutorialStage.TUTORIAL_STAGE, -1)
             if (stage < 42) {
                 Component.setUnclosable(
-                        player,
-                        player.dialogueInterpreter.sendPlainMessage(
-                            false,
-                            "",
-                            "You may not pass this door yet. Try following the instructions.",
-                            "",
-                        ),
-                    )
+                    player,
+                    player.dialogueInterpreter.sendPlainMessage(
+                        false,
+                        "",
+                        "You may not pass this door yet. Try following the instructions.",
+                        "",
+                    ),
+                )
                 return@on true
             }
             if (stage >= 44) {
                 Component.setUnclosable(
-                        player,
-                        player.dialogueInterpreter.sendPlainMessage(
-                            false,
-                            "",
-                            "Follow the path to the Combat Instructor.",
-                            "",
-                        ),
-                    )
+                    player,
+                    player.dialogueInterpreter.sendPlainMessage(
+                        false,
+                        "",
+                        "Follow the path to the Combat Instructor.",
+                        "",
+                    ),
+                )
                 return@on true
             }
             setAttribute(player, TutorialStage.TUTORIAL_STAGE, 44)
@@ -205,7 +211,8 @@ class TutorialListener : InteractionListener {
         on(GIANT_RAT_GATE, IntType.SCENERY, "open") { player, node ->
             val stage = getAttribute(player, TutorialStage.TUTORIAL_STAGE, 0)
             if (stage !in 50..53) {
-                player.dialogueInterpreter.sendDialogues(
+                player.dialogueInterpreter
+                    .sendDialogues(
                         NPCs.COMBAT_INSTRUCTOR_944,
                         FaceAnim.NEUTRAL,
                         "Oi, get away from there!",
@@ -243,7 +250,8 @@ class TutorialListener : InteractionListener {
 
         on(BANK_GUIDE_DOOR, IntType.SCENERY, "open") { player, node ->
             if (getAttribute(player, TutorialStage.TUTORIAL_STAGE, 0) != 57) {
-                Component.setUnclosable(
+                Component
+                    .setUnclosable(
                         player,
                         player.dialogueInterpreter.sendPlainMessage(
                             false,
@@ -263,7 +271,8 @@ class TutorialListener : InteractionListener {
 
         on(FINANCE_GUIDE_DOOR, IntType.SCENERY, "open") { player, node ->
             if (getAttribute(player, TutorialStage.TUTORIAL_STAGE, 0) != 59) {
-                Component.setUnclosable(
+                Component
+                    .setUnclosable(
                         player,
                         player.dialogueInterpreter.sendPlainMessage(
                             false,
@@ -283,7 +292,8 @@ class TutorialListener : InteractionListener {
 
         on(CHURCH_DOOR_EXIT, IntType.SCENERY, "open") { player, node ->
             if (getAttribute(player, TutorialStage.TUTORIAL_STAGE, 0) != 66) {
-                Component.setUnclosable(
+                Component
+                    .setUnclosable(
                         player,
                         player.dialogueInterpreter.sendPlainMessage(
                             false,

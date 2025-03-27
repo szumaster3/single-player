@@ -13,9 +13,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class VoidShifterDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return VoidShifterDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = VoidShifterDialogue(player)
 
     /**
      * Instantiates a new Void shifter dialogue.
@@ -141,7 +139,5 @@ class VoidShifterDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.VOID_SHIFTER_7367, NPCs.VOID_SHIFTER_7368, NPCs.VOID_SHIFTER_7369)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.VOID_SHIFTER_7367, NPCs.VOID_SHIFTER_7368, NPCs.VOID_SHIFTER_7369)
 }

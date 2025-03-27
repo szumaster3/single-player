@@ -16,9 +16,7 @@ import java.util.*
  */
 @Initializable
 class BeaverDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return BeaverDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = BeaverDialogue(player)
 
     /**
      * Instantiates a new Beaver dialogue.
@@ -136,9 +134,7 @@ class BeaverDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.BEAVER_6808)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.BEAVER_6808)
 
     companion object {
         private val logs = IntArray(Log.values().size)

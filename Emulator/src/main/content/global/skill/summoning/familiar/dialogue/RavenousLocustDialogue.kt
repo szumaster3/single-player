@@ -14,9 +14,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class RavenousLocustDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return RavenousLocustDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = RavenousLocustDialogue(player)
 
     /**
      * Instantiates a new Ravenous locust dialogue.
@@ -178,7 +176,5 @@ class RavenousLocustDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.RAVENOUS_LOCUST_7372, NPCs.RAVENOUS_LOCUST_7373)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.RAVENOUS_LOCUST_7372, NPCs.RAVENOUS_LOCUST_7373)
 }

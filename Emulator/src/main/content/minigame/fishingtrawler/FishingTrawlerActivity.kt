@@ -111,6 +111,5 @@ class FishingTrawlerActivity :
 
     override fun defineAreaBorders(): Array<ZoneBorders> = ftWaitingArea
 
-    override fun getRestrictions(): Array<ZoneRestriction> =
-        arrayOf(ZoneRestriction.RANDOM_EVENTS, ZoneRestriction.TELEPORT)
+    override fun getRestrictions(): Array<ZoneRestriction> = arrayOf(ZoneRestriction.RANDOM_EVENTS, ZoneRestriction.TELEPORT)
 }

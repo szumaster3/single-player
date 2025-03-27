@@ -15,9 +15,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class SpiritVulatriceDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return SpiritVulatriceDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = SpiritVulatriceDialogue(player)
 
     /**
      * Instantiates a new Spirit vulatrice dialogue.
@@ -210,7 +208,5 @@ class SpiritVulatriceDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.SPIRIT_VULATRICE_6887, NPCs.SPIRIT_VULATRICE_6888)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.SPIRIT_VULATRICE_6887, NPCs.SPIRIT_VULATRICE_6888)
 }

@@ -13,9 +13,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class SpiritTzKihDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return SpiritTzKihDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = SpiritTzKihDialogue(player)
 
     /**
      * Instantiates a new Spirit tz kih dialogue.
@@ -174,7 +172,5 @@ class SpiritTzKihDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.SPIRIT_TZ_KIH_7361, NPCs.SPIRIT_TZ_KIH_7362)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.SPIRIT_TZ_KIH_7361, NPCs.SPIRIT_TZ_KIH_7362)
 }

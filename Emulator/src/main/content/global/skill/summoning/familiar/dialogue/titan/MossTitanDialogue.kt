@@ -13,9 +13,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class MossTitanDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return MossTitanDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = MossTitanDialogue(player)
 
     /**
      * Instantiates a new Moss titan dialogue.
@@ -248,7 +246,5 @@ class MossTitanDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.MOSS_TITAN_7357, NPCs.MOSS_TITAN_7358)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.MOSS_TITAN_7357, NPCs.MOSS_TITAN_7358)
 }

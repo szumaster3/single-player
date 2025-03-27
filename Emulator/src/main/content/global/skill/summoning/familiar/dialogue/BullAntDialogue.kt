@@ -14,9 +14,7 @@ import java.util.*
  */
 @Initializable
 class BullAntDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return BullAntDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = BullAntDialogue(player)
 
     /**
      * Instantiates a new Bull ant dialogue.
@@ -175,7 +173,5 @@ class BullAntDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.BULL_ANT_6867, NPCs.BULL_ANT_6868)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.BULL_ANT_6867, NPCs.BULL_ANT_6868)
 }

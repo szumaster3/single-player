@@ -17,9 +17,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class FruitBatDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return FruitBatDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = FruitBatDialogue(player)
 
     /**
      * Instantiates a new Fruit bat dialogue.
@@ -132,7 +130,5 @@ class FruitBatDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.FRUIT_BAT_6817)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.FRUIT_BAT_6817)
 }

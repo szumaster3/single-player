@@ -82,8 +82,7 @@ class NpcLNode(
     val expression: FaceAnim,
     val value: String,
 ) : DialogueNode {
-    override fun toString(): String =
-        "[label=\"npcl(FacialExpression.${expression.name}, \\\"${value}\\\")\"]; @index -> @indexPlus;"
+    override fun toString(): String = "[label=\"npcl(FacialExpression.${expression.name}, \\\"${value}\\\")\"]; @index -> @indexPlus;"
 
     override fun handle(
         df: DialogueFile,
@@ -118,8 +117,7 @@ class ItemNode(
     val item: Int,
     val values: Array<String>,
 ) : DialogueNode {
-    override fun toString(): String =
-        "[label=\"item($item, \\\"${values.contentDeepToString()}\\\")\"]; @index -> @indexPlus;"
+    override fun toString(): String = "[label=\"item($item, \\\"${values.contentDeepToString()}\\\")\"]; @index -> @indexPlus;"
 
     override fun handle(
         df: DialogueFile,
@@ -136,8 +134,7 @@ class PlayerLNode(
     val expression: FaceAnim,
     val value: String,
 ) : DialogueNode {
-    override fun toString(): String =
-        "[label=\"playerl(FacialExpression.${expression.name}, \\\"${value}\\\")\"]; @index -> @indexPlus;"
+    override fun toString(): String = "[label=\"playerl(FacialExpression.${expression.name}, \\\"${value}\\\")\"]; @index -> @indexPlus;"
 
     override fun handle(
         df: DialogueFile,
@@ -171,8 +168,7 @@ class PlayerNode(
 class BetweenStageNode(
     val f: (DialogueFile, Player, Int, Int) -> Unit,
 ) : DialogueNode {
-    override fun toString(): String =
-        "[label=\"betweenstage(${(f as Object).getClass().getName()})\"]; @index -> @indexPlus"
+    override fun toString(): String = "[label=\"betweenstage(${(f as Object).getClass().getName()})\"]; @index -> @indexPlus"
 
     override fun handle(
         df: DialogueFile,
@@ -190,8 +186,7 @@ class BetweenStageNode(
 class ManualStageNode(
     val f: (DialogueFile, Player, Int, Int) -> Unit,
 ) : DialogueNode {
-    override fun toString(): String =
-        "[label=\"manualstage(${(f as Object).getClass().getName()})\"]; @index -> @indexPlus"
+    override fun toString(): String = "[label=\"manualstage(${(f as Object).getClass().getName()})\"]; @index -> @indexPlus"
 
     override fun handle(
         df: DialogueFile,
@@ -208,8 +203,7 @@ class ManualStageWithGotoNode(
     val f: (DialogueFile, Player, Int, Int, Int) -> Int,
     g: (Int) -> Int,
 ) : DialogueNode {
-    override fun toString(): String =
-        "[label=\"manualstagewithgoto(${(f as Object).getClass().getName()})\"]; @index -> @indexPlus"
+    override fun toString(): String = "[label=\"manualstagewithgoto(${(f as Object).getClass().getName()})\"]; @index -> @indexPlus"
 
     override fun handle(
         df: DialogueFile,

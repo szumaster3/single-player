@@ -218,8 +218,7 @@ class FletchingListener : InteractionListener {
                         )
                     }
 
-                    override fun getAll(index: Int): Int =
-                        min(amountInInventory(player, used.id), amountInInventory(player, with.id))
+                    override fun getAll(index: Int): Int = min(amountInInventory(player, used.id), amountInInventory(player, with.id))
                 }
             handler.open()
             return@onUseWith true

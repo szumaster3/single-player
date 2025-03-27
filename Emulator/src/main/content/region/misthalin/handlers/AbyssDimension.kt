@@ -406,8 +406,7 @@ class AbyssLoc(
             }
         }
 
-        override fun getIds(): IntArray =
-            intArrayOf(NPCs.ABYSSAL_LEECH_2263, NPCs.ABYSSAL_GUARDIAN_2264, NPCs.ABYSSAL_WALKER_2265)
+        override fun getIds(): IntArray = intArrayOf(NPCs.ABYSSAL_LEECH_2263, NPCs.ABYSSAL_GUARDIAN_2264, NPCs.ABYSSAL_WALKER_2265)
     }
 
     @Initializable

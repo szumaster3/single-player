@@ -418,8 +418,7 @@ class WaterbirthDungeon :
             return style !== CombatStyle.MELEE
         }
 
-        override fun getIds(): IntArray =
-            intArrayOf(NPCs.DOOR_SUPPORT_2440, NPCs.DOOR_SUPPORT_2443, NPCs.DOOR_SUPPORT_2446)
+        override fun getIds(): IntArray = intArrayOf(NPCs.DOOR_SUPPORT_2440, NPCs.DOOR_SUPPORT_2443, NPCs.DOOR_SUPPORT_2446)
     }
 
     companion object {

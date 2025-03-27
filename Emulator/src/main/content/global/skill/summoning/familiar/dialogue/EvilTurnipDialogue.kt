@@ -13,9 +13,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class EvilTurnipDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return EvilTurnipDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = EvilTurnipDialogue(player)
 
     /**
      * Instantiates a new Evil turnip dialogue.
@@ -101,7 +99,5 @@ class EvilTurnipDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.EVIL_TURNIP_6833, NPCs.EVIL_TURNIP_6834)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.EVIL_TURNIP_6833, NPCs.EVIL_TURNIP_6834)
 }

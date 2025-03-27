@@ -13,9 +13,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class SpiritMosquitoDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return SpiritMosquitoDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = SpiritMosquitoDialogue(player)
 
     /**
      * Instantiates a new Spirit mosquito dialogue.
@@ -151,7 +149,5 @@ class SpiritMosquitoDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.SPIRIT_MOSQUITO_7331, NPCs.SPIRIT_MOSQUITO_7332)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.SPIRIT_MOSQUITO_7331, NPCs.SPIRIT_MOSQUITO_7332)
 }

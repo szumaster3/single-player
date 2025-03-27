@@ -13,9 +13,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class ForgeRegentDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return ForgeRegentDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = ForgeRegentDialogue(player)
 
     /**
      * Instantiates a new Forge regent dialogue.
@@ -235,7 +233,5 @@ class ForgeRegentDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.FORGE_REGENT_7335, NPCs.FORGE_REGENT_7336)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.FORGE_REGENT_7335, NPCs.FORGE_REGENT_7336)
 }

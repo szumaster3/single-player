@@ -13,9 +13,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class PackYakDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return PackYakDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = PackYakDialogue(player)
 
     /**
      * Instantiates a new Pack yak dialogue.
@@ -177,7 +175,5 @@ class PackYakDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.PACK_YAK_6873, NPCs.PACK_YAK_6874)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.PACK_YAK_6873, NPCs.PACK_YAK_6874)
 }

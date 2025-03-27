@@ -13,9 +13,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class DreadfowlDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return DreadfowlDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = DreadfowlDialogue(player)
 
     /**
      * Instantiates a new Dreadfowl dialogue.
@@ -73,7 +71,5 @@ class DreadfowlDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.DREADFOWL_6825, NPCs.DREADFOWL_6826)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.DREADFOWL_6825, NPCs.DREADFOWL_6826)
 }

@@ -101,9 +101,7 @@ object PCHelper {
         return false
     }
 
-    fun getMyPestControlSession1(p: PestControlNoviceBot): PestControlSession? =
-        p.getExtension(PestControlSession::class.java)
+    fun getMyPestControlSession1(p: PestControlNoviceBot): PestControlSession? = p.getExtension(PestControlSession::class.java)
 
-    fun getMyPestControlSession2(p: PestControlIntermediateBot): PestControlSession? =
-        p.getExtension(PestControlSession::class.java)
+    fun getMyPestControlSession2(p: PestControlIntermediateBot): PestControlSession? = p.getExtension(PestControlSession::class.java)
 }

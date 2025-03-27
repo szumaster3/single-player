@@ -15,9 +15,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class IronTitanDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return IronTitanDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = IronTitanDialogue(player)
 
     /**
      * Instantiates a new Iron titan dialogue.
@@ -244,7 +242,5 @@ class IronTitanDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.IRON_TITAN_7375, NPCs.IRON_TITAN_7376)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.IRON_TITAN_7375, NPCs.IRON_TITAN_7376)
 }

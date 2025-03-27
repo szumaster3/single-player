@@ -25,8 +25,7 @@ class SheepShearer : Quest(Quests.SHEEP_SHEARER, 28, 27, 1, Vars.VARP_QUEST_SHEE
         fun getBallsOfWoolToRemove(player: Player): Int =
             min(getBallsOfWoolRequired(player), amountInInventory(player, Items.BALL_OF_WOOL_1759))
 
-        fun getBallsOfWoolToCollect(player: Player): Int =
-            getBallsOfWoolRequired(player) - getBallsOfWoolToRemove(player)
+        fun getBallsOfWoolToCollect(player: Player): Int = getBallsOfWoolRequired(player) - getBallsOfWoolToRemove(player)
 
         fun deliverBallsOfWool(player: Player): Int {
             val removeAmount = getBallsOfWoolToRemove(player)

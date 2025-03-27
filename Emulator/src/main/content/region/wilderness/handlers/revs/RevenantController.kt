@@ -247,8 +247,7 @@ class RevenantController :
 
     private fun getRandomSpawnLocation(): Location = spawnLocations.random()
 
-    private fun assignRandomTask(npc: RevenantsNPC): RevenantTask =
-        RevenantTask.values().random().also { it.assign(npc) }
+    private fun assignRandomTask(npc: RevenantsNPC): RevenantTask = RevenantTask.values().random().also { it.assign(npc) }
 
     override fun defineCommands() {
         define("setrevcap", Privilege.ADMIN) { _, strings ->

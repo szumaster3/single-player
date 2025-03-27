@@ -13,9 +13,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class SpiritDagannothDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return SpiritDagannothDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = SpiritDagannothDialogue(player)
 
     /**
      * Instantiates a new Spirit dagannoth dialogue.
@@ -179,7 +177,5 @@ class SpiritDagannothDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.SPIRIT_DAGANNOTH_6804, NPCs.SPIRIT_DAGANNOTH_6805)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.SPIRIT_DAGANNOTH_6804, NPCs.SPIRIT_DAGANNOTH_6805)
 }

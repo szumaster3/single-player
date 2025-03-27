@@ -11,9 +11,7 @@ import org.rs.consts.Items
 import org.rs.consts.Sounds
 
 class LunarSpellbookTeleport : SpellListener("lunar") {
-
     override fun defineListeners() {
-
         /*
          * handles home teleport.
          */

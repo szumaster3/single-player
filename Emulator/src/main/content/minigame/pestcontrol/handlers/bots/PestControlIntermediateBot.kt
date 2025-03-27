@@ -191,7 +191,6 @@ class PestControlIntermediateBot(
     }
 
     companion object {
-        fun legitimizeLocation(l: Location): Location =
-            if (PCHelper.landerContainsLoc(l)) Location(2648, 2648, 0) else l
+        fun legitimizeLocation(l: Location): Location = if (PCHelper.landerContainsLoc(l)) Location(2648, 2648, 0) else l
     }
 }

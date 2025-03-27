@@ -50,9 +50,7 @@ class AirSpell : CombatSpell {
         entity: Entity,
         victim: Entity,
         state: BattleState,
-    ): Int {
-        return getType().getImpactAmount(entity, victim, 1)
-    }
+    ): Int = getType().getImpactAmount(entity, victim, 1)
 
     @Throws(Throwable::class)
     override fun newInstance(type: SpellType?): Plugin<SpellType?> {

@@ -13,9 +13,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class GraniteLobsterDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return GraniteLobsterDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = GraniteLobsterDialogue(player)
 
     /**
      * Instantiates a new Granite lobster dialogue.
@@ -122,7 +120,5 @@ class GraniteLobsterDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.GRANITE_LOBSTER_6849, NPCs.GRANITE_LOBSTER_6850)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.GRANITE_LOBSTER_6849, NPCs.GRANITE_LOBSTER_6850)
 }

@@ -15,9 +15,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class SpiritGuthatriceDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return SpiritGuthatriceDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = SpiritGuthatriceDialogue(player)
 
     /**
      * Instantiates a new Spirit guthatrice dialogue.
@@ -230,7 +228,5 @@ class SpiritGuthatriceDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.SPIRIT_GUTHATRICE_6877, NPCs.SPIRIT_GUTHATRICE_6878)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.SPIRIT_GUTHATRICE_6877, NPCs.SPIRIT_GUTHATRICE_6878)
 }

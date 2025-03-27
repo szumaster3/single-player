@@ -13,9 +13,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class SpiritLarupiaDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return SpiritLarupiaDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = SpiritLarupiaDialogue(player)
 
     /**
      * Instantiates a new Spirit larupia dialogue.
@@ -164,7 +162,5 @@ class SpiritLarupiaDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.SPIRIT_LARUPIA_7337, NPCs.SPIRIT_LARUPIA_7338)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.SPIRIT_LARUPIA_7337, NPCs.SPIRIT_LARUPIA_7338)
 }

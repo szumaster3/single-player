@@ -2,30 +2,26 @@ package content.region.fremennik.dialogue.lighthouse
 
 import content.data.GodBook
 import core.api.*
+import core.api.addItemOrDrop
+import core.api.hasAnItem
 import core.game.dialogue.Dialogue
+import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.plugin.Initializable
-import org.rs.consts.NPCs
-
-import core.api.addItemOrDrop
-import core.api.hasAnItem
-import core.game.dialogue.FaceAnim
 import org.rs.consts.Items
+import org.rs.consts.NPCs
 import java.util.*
 
 @Initializable
 class JossikDialogue : Dialogue {
-
     private var uncompleted: MutableList<GodBook>? = null
 
     constructor()
     constructor(player: Player) : super(player)
 
-    override fun newInstance(player: Player): Dialogue {
-        return JossikDialogue(player)
-    }
+    override fun newInstance(player: Player): Dialogue = JossikDialogue(player)
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
@@ -34,7 +30,10 @@ class JossikDialogue : Dialogue {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(
+        interfaceId: Int,
+        buttonId: Int,
+    ): Boolean {
         when (stage) {
             0 -> {
                 options("Can I see your wares?", "Have you found any prayerbooks?")
@@ -70,7 +69,7 @@ class JossikDialogue : Dialogue {
                 if (missing) {
                     npc(
                         "As a matter of fact, I did! This book washed up on the",
-                        "beach, and I recognised it as yours!"
+                        "beach, and I recognised it as yours!",
                     )
                     stage = 23
                     return true
@@ -91,17 +90,20 @@ class JossikDialogue : Dialogue {
                 npc(
                     "Funnily enough I have! I found some books in caskets",
                     "just the other day! I'll sell one to you for 5000 coins;",
-                    "what do you say?"
+                    "what do you say?",
                 )
                 stage++
             }
 
             21 -> {
-                val names = uncompleted!!.map {
-                    it.name.lowercase()
-                        .replace("_", " ", ignoreCase = true)
-                        .replaceFirstChar { ch -> ch.titlecase(Locale.getDefault()) }
-                }.toMutableList()
+                val names =
+                    uncompleted!!
+                        .map {
+                            it.name
+                                .lowercase()
+                                .replace("_", " ", ignoreCase = true)
+                                .replaceFirstChar { ch -> ch.titlecase(Locale.getDefault()) }
+                        }.toMutableList()
 
                 names.add("Don't buy anything.")
                 options(*names.toTypedArray())

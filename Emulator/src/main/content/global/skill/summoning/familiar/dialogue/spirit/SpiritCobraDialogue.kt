@@ -19,9 +19,7 @@ import java.util.*
  */
 @Initializable
 class SpiritCobraDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return SpiritCobraDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = SpiritCobraDialogue(player)
 
     /**
      * Instantiates a new Spirit cobra dialogue.
@@ -183,7 +181,5 @@ class SpiritCobraDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.SPIRIT_COBRA_6802, NPCs.SPIRIT_COBRA_6803)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.SPIRIT_COBRA_6802, NPCs.SPIRIT_COBRA_6803)
 }

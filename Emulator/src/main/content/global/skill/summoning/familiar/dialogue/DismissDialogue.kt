@@ -12,9 +12,7 @@ import core.plugin.Initializable
  */
 @Initializable
 class DismissDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return DismissDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = DismissDialogue(player)
 
     /**
      * Instantiates a new Dismiss dialogue.
@@ -62,7 +60,5 @@ class DismissDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(DialogueInterpreter.getDialogueKey("dismiss_dial"))
-    }
+    override fun getIds(): IntArray = intArrayOf(DialogueInterpreter.getDialogueKey("dismiss_dial"))
 }

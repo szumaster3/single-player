@@ -15,9 +15,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class SpiritCockatriceDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return SpiritCockatriceDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = SpiritCockatriceDialogue(player)
 
     /**
      * Instantiates a new Spirit cockatrice dialogue.
@@ -212,7 +210,5 @@ class SpiritCockatriceDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.SPIRIT_COCKATRICE_6875, NPCs.SPIRIT_COCKATRICE_6876)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.SPIRIT_COCKATRICE_6875, NPCs.SPIRIT_COCKATRICE_6876)
 }

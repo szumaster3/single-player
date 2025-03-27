@@ -15,7 +15,6 @@ import org.rs.consts.Sounds
 
 class LunarGroupTeleport : SpellListener("lunar") {
     override fun defineListeners() {
-
         /*
          * Handles moonclan group teleport.
          */

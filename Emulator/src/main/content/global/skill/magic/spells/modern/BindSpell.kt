@@ -84,9 +84,7 @@ class BindSpell : CombatSpell {
         entity: Entity,
         victim: Entity,
         state: BattleState,
-    ): Int {
-        return if (getType() === SpellType.ENTANGLE) 5 else 3
-    }
+    ): Int = if (getType() === SpellType.ENTANGLE) 5 else 3
 
     @Throws(Throwable::class)
     override fun newInstance(type: SpellType?): Plugin<SpellType?> {

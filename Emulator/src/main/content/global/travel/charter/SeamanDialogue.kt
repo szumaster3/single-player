@@ -119,6 +119,5 @@ class SeamanDialogue(
         Charter.PORT_SARIM_TO_KARAMJA.sail(player)
     }
 
-    override fun getIds(): IntArray =
-        intArrayOf(NPCs.CAPTAIN_TOBIAS_376, NPCs.SEAMAN_LORRIS_377, NPCs.SEAMAN_THRESNOR_378)
+    override fun getIds(): IntArray = intArrayOf(NPCs.CAPTAIN_TOBIAS_376, NPCs.SEAMAN_LORRIS_377, NPCs.SEAMAN_THRESNOR_378)
 }

@@ -89,8 +89,7 @@ class FishbowlOptionHandler : OptionHandler() {
             return this
         }
 
-        override fun handle(event: NodeUsageEvent): Boolean =
-            event.player.dialogueInterpreter.open("fishbowl-options", "feed")
+        override fun handle(event: NodeUsageEvent): Boolean = event.player.dialogueInterpreter.open("fishbowl-options", "feed")
     }
 
     inner class FishbowlDialogue(

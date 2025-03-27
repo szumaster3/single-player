@@ -13,9 +13,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class WolpertingerDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return WolpertingerDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = WolpertingerDialogue(player)
 
     /**
      * Instantiates a new Wolpertinger dialogue.
@@ -39,11 +37,7 @@ class WolpertingerDialogue : Dialogue {
     override fun handle(
         interfaceId: Int,
         buttonId: Int,
-    ): Boolean {
-        return true
-    }
+    ): Boolean = true
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.WOLPERTINGER_6869, NPCs.WOLPERTINGER_6870)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.WOLPERTINGER_6869, NPCs.WOLPERTINGER_6870)
 }

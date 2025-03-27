@@ -14,9 +14,7 @@ import java.util.*
  */
 @Initializable
 class AlbinoRatDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return AlbinoRatDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = AlbinoRatDialogue(player)
 
     /**
      * Instantiates a new Albino rat dialogue.
@@ -162,7 +160,5 @@ class AlbinoRatDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.ALBINO_RAT_6847, NPCs.ALBINO_RAT_6848)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.ALBINO_RAT_6847, NPCs.ALBINO_RAT_6848)
 }

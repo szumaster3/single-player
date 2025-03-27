@@ -14,9 +14,7 @@ import java.util.*
  */
 @Initializable
 class BarkerToadDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return BarkerToadDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = BarkerToadDialogue(player)
 
     /**
      * Instantiates a new Barker toad dialogue.
@@ -212,7 +210,5 @@ class BarkerToadDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.BARKER_TOAD_6889, NPCs.BARKER_TOAD_6890)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.BARKER_TOAD_6889, NPCs.BARKER_TOAD_6890)
 }

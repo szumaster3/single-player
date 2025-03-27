@@ -80,9 +80,7 @@ class DoublingMoney : Script() {
             } to {
                 stateString = "Doing nothing"
             },
-            fun(): Int {
-                return 1
-            } to {
+            fun(): Int = 1 to {
                 stateString = "Saying Doubling money"
                 when (effort) {
                     Effort.LOW -> {

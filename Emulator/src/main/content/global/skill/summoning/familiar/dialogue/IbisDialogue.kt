@@ -13,9 +13,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class IbisDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return IbisDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = IbisDialogue(player)
 
     /**
      * Instantiates a new Ibis dialogue.
@@ -123,7 +121,5 @@ class IbisDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.IBIS_6991)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.IBIS_6991)
 }

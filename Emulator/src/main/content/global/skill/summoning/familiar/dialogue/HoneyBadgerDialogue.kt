@@ -13,9 +13,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class HoneyBadgerDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return HoneyBadgerDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = HoneyBadgerDialogue(player)
 
     /**
      * Instantiates a new Honey badger dialogue.
@@ -71,7 +69,5 @@ class HoneyBadgerDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.HONEY_BADGER_6845, NPCs.HONEY_BADGER_6846)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.HONEY_BADGER_6845, NPCs.HONEY_BADGER_6846)
 }

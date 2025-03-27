@@ -15,9 +15,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class FireGiantDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return FireGiantDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = FireGiantDialogue(player)
 
     /**
      * Instantiates a new Fire giant dialogue.
@@ -198,7 +196,5 @@ class FireGiantDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.FIRE_GIANT_7003, NPCs.FIRE_GIANT_7004)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.FIRE_GIANT_7003, NPCs.FIRE_GIANT_7004)
 }

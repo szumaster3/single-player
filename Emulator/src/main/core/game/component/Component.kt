@@ -133,9 +133,7 @@ open class Component {
      * @param player The player closing the component.
      * @return `true` if the component was closed successfully, otherwise `false`.
      */
-    open fun close(player: Player): Boolean {
-        return (closeEvent == null || closeEvent!!.close(player, this)) && runClose(player, this)
-    }
+    open fun close(player: Player): Boolean = (closeEvent == null || closeEvent!!.close(player, this)) && runClose(player, this)
 
     /**
      * Handles slot switching within the component.
@@ -149,9 +147,7 @@ open class Component {
         player: Player,
         sourceSlot: Int,
         destSlot: Int,
-    ): Boolean {
-        return runSlotSwitch(player, this, sourceSlot, destSlot)
-    }
+    ): Boolean = runSlotSwitch(player, this, sourceSlot, destSlot)
 
     /**
      * Adds a new slot to this component.
@@ -171,9 +167,7 @@ open class Component {
      *
      * @return A list of slots.
      */
-    fun getSlots(): List<Slot> {
-        return slots
-    }
+    fun getSlots(): List<Slot> = slots
 
     /**
      * Sets the close event for this component.

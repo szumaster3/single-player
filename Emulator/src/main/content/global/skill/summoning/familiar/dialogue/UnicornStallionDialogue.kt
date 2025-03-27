@@ -13,9 +13,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class UnicornStallionDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return UnicornStallionDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = UnicornStallionDialogue(player)
 
     /**
      * Instantiates a new Unicorn stallion dialogue.
@@ -180,7 +178,5 @@ class UnicornStallionDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.UNICORN_STALLION_6822, NPCs.UNICORN_STALLION_6823)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.UNICORN_STALLION_6822, NPCs.UNICORN_STALLION_6823)
 }

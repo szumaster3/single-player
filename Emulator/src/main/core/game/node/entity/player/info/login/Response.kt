@@ -28,9 +28,7 @@ enum class Response(
     BANNED(26),
     ;
 
-    fun opcode(): Int {
-        return opcode
-    }
+    fun opcode(): Int = opcode
 
     companion object {
         @JvmStatic

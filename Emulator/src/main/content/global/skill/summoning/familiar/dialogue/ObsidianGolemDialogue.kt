@@ -15,9 +15,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class ObsidianGolemDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return ObsidianGolemDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = ObsidianGolemDialogue(player)
 
     /**
      * Instantiates a new Obsidian golem dialogue.
@@ -166,7 +164,5 @@ class ObsidianGolemDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.OBSIDIAN_GOLEM_7345, NPCs.OBSIDIAN_GOLEM_7346)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.OBSIDIAN_GOLEM_7345, NPCs.OBSIDIAN_GOLEM_7346)
 }

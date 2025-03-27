@@ -52,9 +52,7 @@ class CurseSpell : CombatSpell {
         entity: Entity,
         victim: Entity,
         state: BattleState,
-    ): Int {
-        return 1
-    }
+    ): Int = 1
 
     override fun fireEffect(
         entity: Entity,

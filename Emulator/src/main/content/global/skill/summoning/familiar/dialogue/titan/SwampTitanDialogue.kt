@@ -15,9 +15,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class SwampTitanDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return SwampTitanDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = SwampTitanDialogue(player)
 
     /**
      * Instantiates a new Swamp titan dialogue.
@@ -248,7 +246,5 @@ class SwampTitanDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.SWAMP_TITAN_7329, NPCs.SWAMP_TITAN_7330)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.SWAMP_TITAN_7329, NPCs.SWAMP_TITAN_7330)
 }

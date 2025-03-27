@@ -21,7 +21,6 @@ import org.rs.consts.Quests
 
 class ModernSpellbookTeleport : SpellListener("modern") {
     override fun defineListeners() {
-
         /*
          * Handles home teleport.
          */

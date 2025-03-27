@@ -285,11 +285,9 @@ object LoginConfiguration {
      * @param player The player to check.
      * @return True if the tutorial is completed, otherwise false.
      */
-    private fun isTutorialCompleted(player: Player): Boolean =
-        player.getAttribute(GameAttributes.TUTORIAL_COMPLETE, false)
+    private fun isTutorialCompleted(player: Player): Boolean = player.getAttribute(GameAttributes.TUTORIAL_COMPLETE, false)
 
-    private fun Player.isNotReconnecting(): Boolean =
-        getAttribute("login_type", LoginType.NORMAL_LOGIN) != LoginType.RECONNECT_TYPE
+    private fun Player.isNotReconnecting(): Boolean = getAttribute("login_type", LoginType.NORMAL_LOGIN) != LoginType.RECONNECT_TYPE
 
     private fun checkEmotes(player: Player) {
         if (player.globalData.getPlayerTestStage() == 3 && !player.emoteManager.isUnlocked(Emotes.SAFETY_FIRST)) {

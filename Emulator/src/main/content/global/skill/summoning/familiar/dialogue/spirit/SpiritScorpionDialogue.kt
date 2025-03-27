@@ -13,9 +13,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class SpiritScorpionDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return SpiritScorpionDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = SpiritScorpionDialogue(player)
 
     /**
      * Instantiates a new Spirit scorpion dialogue.
@@ -173,7 +171,5 @@ class SpiritScorpionDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.SPIRIT_SCORPION_6837, NPCs.SPIRIT_SCORPION_6838)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.SPIRIT_SCORPION_6837, NPCs.SPIRIT_SCORPION_6838)
 }

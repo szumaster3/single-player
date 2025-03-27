@@ -17,8 +17,7 @@ object DemonSlayerUtils {
     @JvmField val THIRD_KEY = Item(2399)
 
     @JvmStatic
-    fun getIncantation(player: Player): String =
-        player.getAttribute("demon-slayer:incantation", generateIncantation(player))
+    fun getIncantation(player: Player): String = player.getAttribute("demon-slayer:incantation", generateIncantation(player))
 
     @JvmStatic
     fun generateIncantation(player: Player): String {

@@ -7,7 +7,7 @@ class Database(
     private val host: String,
     private val name: String,
     private val username: String,
-    private val password: String
+    private val password: String,
 ) {
     /**
      * Returns the database host.

@@ -26,7 +26,7 @@ class GenericItemSelect : InterfaceListener {
             return@onOpen true
         }
 
-        on(GENERIC_ITEM_SELECT_IFACE) { player, _, opcode, buttonID, slot, _ ->
+        on(GENERIC_ITEM_SELECT_IFACE) { player, _, opcode, _, slot, _ ->
             processResponse(player, opcode, slot)
             return@on true
         }

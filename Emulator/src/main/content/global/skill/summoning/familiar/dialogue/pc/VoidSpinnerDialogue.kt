@@ -15,9 +15,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class VoidSpinnerDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return VoidSpinnerDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = VoidSpinnerDialogue(player)
 
     /**
      * Instantiates a new Void spinner dialogue.
@@ -164,7 +162,5 @@ class VoidSpinnerDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.VOID_SPINNER_7333, NPCs.VOID_SPINNER_7334)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.VOID_SPINNER_7333, NPCs.VOID_SPINNER_7334)
 }

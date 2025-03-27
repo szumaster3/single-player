@@ -15,9 +15,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class MinotaurDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return MinotaurDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = MinotaurDialogue(player)
 
     /**
      * Instantiates a new Minotaur dialogue.
@@ -189,8 +187,8 @@ class MinotaurDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(
+    override fun getIds(): IntArray =
+        intArrayOf(
             NPCs.BRONZE_MINOTAUR_6853,
             NPCs.BRONZE_MINOTAUR_6854,
             NPCs.IRON_MINOTAUR_6855,
@@ -204,5 +202,4 @@ class MinotaurDialogue : Dialogue {
             NPCs.RUNE_MINOTAUR_6863,
             NPCs.RUNE_MINOTAUR_6864,
         )
-    }
 }

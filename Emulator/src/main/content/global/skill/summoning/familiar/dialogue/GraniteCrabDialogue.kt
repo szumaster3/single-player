@@ -16,9 +16,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class GraniteCrabDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return GraniteCrabDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = GraniteCrabDialogue(player)
 
     /**
      * Instantiates a new Granite crab dialogue.
@@ -115,9 +113,7 @@ class GraniteCrabDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.GRANITE_CRAB_6796, NPCs.GRANITE_CRAB_6797)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.GRANITE_CRAB_6796, NPCs.GRANITE_CRAB_6797)
 
     companion object {
         private val fishes: IntArray =

@@ -19,9 +19,7 @@ import java.util.*
  */
 @Initializable
 class CompostMoundDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return CompostMoundDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = CompostMoundDialogue(player)
 
     /**
      * Instantiates a new Compost mound dialogue.
@@ -265,7 +263,5 @@ class CompostMoundDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.COMPOST_MOUND_6871, NPCs.COMPOST_MOUND_6872)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.COMPOST_MOUND_6871, NPCs.COMPOST_MOUND_6872)
 }

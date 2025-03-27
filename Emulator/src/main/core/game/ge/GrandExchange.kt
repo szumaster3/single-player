@@ -308,8 +308,16 @@ class GrandExchange :
                 playAudio(seller.player!!, Sounds.GE_COLLECT_COINS_4042)
             }
 
-            seller.addWithdrawItem(Items.COINS_995, amount * if (sellerBias) buyer.offeredValue else seller
-                .offeredValue)
+            seller.addWithdrawItem(
+                Items.COINS_995,
+                amount *
+                    if (sellerBias) {
+                        buyer.offeredValue
+                    } else {
+                        seller
+                            .offeredValue
+                    },
+            )
             buyer.addWithdrawItem(seller.itemID, amount)
 
             if (!sellerBias) {

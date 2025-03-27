@@ -405,7 +405,7 @@ class StockMarket : InterfaceListener {
         ) {
             val item = offer.withdraw[index]
             if (item == null) {
-                log(this::class.java, Log.WARN, "Offer withdraw[$index] is null!")
+                log(this::class.java, Log.WARN, "Offer withdraw $index is null!")
                 return
             }
 

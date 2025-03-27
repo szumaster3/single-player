@@ -13,9 +13,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class VoidRavagerDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return VoidRavagerDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = VoidRavagerDialogue(player)
 
     /**
      * Instantiates a new Void ravager dialogue.
@@ -146,7 +144,5 @@ class VoidRavagerDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.VOID_RAVAGER_7370, NPCs.VOID_RAVAGER_7371)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.VOID_RAVAGER_7370, NPCs.VOID_RAVAGER_7371)
 }

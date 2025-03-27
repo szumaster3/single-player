@@ -38,8 +38,7 @@ class DeadfallSetting :
         return false
     }
 
-    override fun createHook(wrapper: TrapWrapper): TrapHook =
-        TrapHook(wrapper, getLocations(wrapper.`object`).toTypedArray())
+    override fun createHook(wrapper: TrapWrapper): TrapHook = TrapHook(wrapper, getLocations(wrapper.`object`).toTypedArray())
 
     override fun reward(
         player: Player,

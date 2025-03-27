@@ -14,9 +14,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class VampyreBatDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return VampyreBatDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = VampyreBatDialogue(player)
 
     /**
      * Instantiates a new Vampyre bat dialogue.
@@ -95,7 +93,5 @@ class VampyreBatDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.VAMPIRE_BAT_6835, NPCs.VAMPIRE_BAT_6836)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.VAMPIRE_BAT_6835, NPCs.VAMPIRE_BAT_6836)
 }

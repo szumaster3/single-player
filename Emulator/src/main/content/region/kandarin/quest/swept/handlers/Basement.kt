@@ -11,8 +11,7 @@ import org.rs.consts.Items
 class Basement : MapArea {
     override fun defineAreaBorders(): Array<ZoneBorders> = arrayOf(bettyBasement, hettyBasement)
 
-    override fun getRestrictions(): Array<ZoneRestriction> =
-        arrayOf(ZoneRestriction.CANNON, ZoneRestriction.RANDOM_EVENTS)
+    override fun getRestrictions(): Array<ZoneRestriction> = arrayOf(ZoneRestriction.CANNON, ZoneRestriction.RANDOM_EVENTS)
 
     override fun areaEnter(entity: Entity) {
         super.areaEnter(entity)

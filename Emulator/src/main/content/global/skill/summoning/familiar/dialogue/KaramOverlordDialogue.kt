@@ -13,9 +13,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class KaramOverlordDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return KaramOverlordDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = KaramOverlordDialogue(player)
 
     /**
      * Instantiates a new Karam overlord dialogue.
@@ -255,7 +253,5 @@ class KaramOverlordDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.KARAMTHULHU_OVERLORD_6809, NPCs.KARAMTHULHU_OVERLORD_6810)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.KARAMTHULHU_OVERLORD_6809, NPCs.KARAMTHULHU_OVERLORD_6810)
 }

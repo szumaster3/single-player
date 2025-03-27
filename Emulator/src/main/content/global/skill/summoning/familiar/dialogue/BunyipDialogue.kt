@@ -17,9 +17,7 @@ import java.util.*
  */
 @Initializable
 class BunyipDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return BunyipDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = BunyipDialogue(player)
 
     /**
      * Instantiates a new Bunyip dialogue.
@@ -168,9 +166,7 @@ class BunyipDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.BUNYIP_6813, NPCs.BUNYIP_6814)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.BUNYIP_6813, NPCs.BUNYIP_6814)
 
     companion object {
         private val fishes: IntArray =

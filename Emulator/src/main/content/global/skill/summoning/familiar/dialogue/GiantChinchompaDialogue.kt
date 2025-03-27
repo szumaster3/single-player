@@ -13,9 +13,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class GiantChinchompaDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return GiantChinchompaDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = GiantChinchompaDialogue(player)
 
     /**
      * Instantiates a new Giant chinchompa dialogue.
@@ -200,7 +198,5 @@ class GiantChinchompaDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.GIANT_CHINCHOMPA_7353, NPCs.GIANT_CHINCHOMPA_7354)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.GIANT_CHINCHOMPA_7353, NPCs.GIANT_CHINCHOMPA_7354)
 }

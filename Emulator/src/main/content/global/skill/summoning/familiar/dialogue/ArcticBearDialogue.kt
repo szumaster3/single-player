@@ -14,9 +14,7 @@ import java.util.*
  */
 @Initializable
 class ArcticBearDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return ArcticBearDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = ArcticBearDialogue(player)
 
     /**
      * Instantiates a new Arctic bear dialogue.
@@ -186,7 +184,5 @@ class ArcticBearDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.ARCTIC_BEAR_6839, NPCs.ARCTIC_BEAR_6840)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.ARCTIC_BEAR_6839, NPCs.ARCTIC_BEAR_6840)
 }

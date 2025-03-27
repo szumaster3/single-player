@@ -15,9 +15,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class PrayingMantisDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return PrayingMantisDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = PrayingMantisDialogue(player)
 
     /**
      * Instantiates a new Praying mantis dialogue.
@@ -222,7 +220,5 @@ class PrayingMantisDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.PRAYING_MANTIS_6798, NPCs.PRAYING_MANTIS_6799)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.PRAYING_MANTIS_6798, NPCs.PRAYING_MANTIS_6799)
 }

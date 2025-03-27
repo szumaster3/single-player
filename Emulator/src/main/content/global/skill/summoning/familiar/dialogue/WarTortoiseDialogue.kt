@@ -13,9 +13,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class WarTortoiseDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return WarTortoiseDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = WarTortoiseDialogue(player)
 
     /**
      * Instantiates a new War tortoise dialogue.
@@ -198,7 +196,5 @@ class WarTortoiseDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.WAR_TORTOISE_6815, NPCs.WAR_TORTOISE_6816)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.WAR_TORTOISE_6815, NPCs.WAR_TORTOISE_6816)
 }

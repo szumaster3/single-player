@@ -16,9 +16,7 @@ import java.util.*
  */
 @Initializable
 class DesertWyrmDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return DesertWyrmDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = DesertWyrmDialogue(player)
 
     /**
      * Instantiates a new Desert wyrm dialogue.
@@ -177,9 +175,7 @@ class DesertWyrmDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.DESERT_WYRM_6831, NPCs.DESERT_WYRM_6832)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.DESERT_WYRM_6831, NPCs.DESERT_WYRM_6832)
 
     companion object {
         /**

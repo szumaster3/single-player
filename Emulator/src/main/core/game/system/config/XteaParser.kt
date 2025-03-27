@@ -13,9 +13,7 @@ class XteaParser {
         val REGION_XTEA = HashMap<Int, IntArray>()
         private val DEFAULT_REGION_KEYS = intArrayOf(0, 0, 0, 0)
 
-        fun getRegionXTEA(regionId: Int): IntArray {
-            return REGION_XTEA.getOrDefault(regionId, DEFAULT_REGION_KEYS)
-        }
+        fun getRegionXTEA(regionId: Int): IntArray = REGION_XTEA.getOrDefault(regionId, DEFAULT_REGION_KEYS)
     }
 
     val parser = JSONParser()

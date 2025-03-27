@@ -18,9 +18,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class LavaTitanDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return LavaTitanDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = LavaTitanDialogue(player)
 
     /**
      * Instantiates a new Lava titan dialogue.
@@ -66,7 +64,5 @@ class LavaTitanDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.LAVA_TITAN_7341, NPCs.LAVA_TITAN_7342)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.LAVA_TITAN_7341, NPCs.LAVA_TITAN_7342)
 }

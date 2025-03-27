@@ -14,9 +14,7 @@ import java.util.*
  */
 @Initializable
 class BloatedLeechDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return BloatedLeechDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = BloatedLeechDialogue(player)
 
     /**
      * Instantiates a new Bloated leech dialogue.
@@ -137,7 +135,5 @@ class BloatedLeechDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.BLOATED_LEECH_6843, NPCs.BLOATED_LEECH_6844)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.BLOATED_LEECH_6843, NPCs.BLOATED_LEECH_6844)
 }

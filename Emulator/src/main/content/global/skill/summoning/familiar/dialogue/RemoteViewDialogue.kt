@@ -14,9 +14,7 @@ import core.plugin.Initializable
 class RemoteViewDialogue : Dialogue {
     private var familiar: Familiar? = null
 
-    override fun newInstance(player: Player?): Dialogue {
-        return RemoteViewDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = RemoteViewDialogue(player)
 
     /**
      * Instantiates a new Remote view dialogue.
@@ -51,7 +49,5 @@ class RemoteViewDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(DialogueInterpreter.getDialogueKey(RemoteViewer.DIALOGUE_NAME))
-    }
+    override fun getIds(): IntArray = intArrayOf(DialogueInterpreter.getDialogueKey(RemoteViewer.DIALOGUE_NAME))
 }

@@ -13,9 +13,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class SpiritJellyDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return SpiritJellyDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = SpiritJellyDialogue(player)
 
     /**
      * Instantiates a new Spirit jelly dialogue.
@@ -166,7 +164,5 @@ class SpiritJellyDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.SPIRIT_JELLY_6992, NPCs.SPIRIT_JELLY_6993)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.SPIRIT_JELLY_6992, NPCs.SPIRIT_JELLY_6993)
 }

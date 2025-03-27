@@ -12,8 +12,7 @@ import org.rs.consts.Quests
 import org.rs.consts.Vars
 
 @Initializable
-class HorrorFromTheDeep :
-    Quest(Quests.HORROR_FROM_THE_DEEP, 77, 76, 2, Vars.VARBIT_QUEST_HORROR_FROM_THE_DEEP_PROGRESS_34, 0, 1, 10) {
+class HorrorFromTheDeep : Quest(Quests.HORROR_FROM_THE_DEEP, 77, 76, 2, Vars.VARBIT_QUEST_HORROR_FROM_THE_DEEP_PROGRESS_34, 0, 1, 10) {
     override fun drawJournal(
         player: Player,
         stage: Int,

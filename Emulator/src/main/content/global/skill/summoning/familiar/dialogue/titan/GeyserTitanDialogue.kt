@@ -16,9 +16,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class GeyserTitanDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return GeyserTitanDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = GeyserTitanDialogue(player)
 
     /**
      * Instantiates a new Geyser titan dialogue.
@@ -183,7 +181,5 @@ class GeyserTitanDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.GEYSER_TITAN_7339, NPCs.GEYSER_TITAN_7340)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.GEYSER_TITAN_7339, NPCs.GEYSER_TITAN_7340)
 }

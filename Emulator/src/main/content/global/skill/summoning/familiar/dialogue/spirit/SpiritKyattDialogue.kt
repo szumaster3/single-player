@@ -19,9 +19,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class SpiritKyattDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return SpiritKyattDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = SpiritKyattDialogue(player)
 
     /**
      * Instantiates a new Spirit kyatt dialogue.
@@ -67,7 +65,5 @@ class SpiritKyattDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.SPIRIT_KYATT_7365, NPCs.SPIRIT_KYATT_7366)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.SPIRIT_KYATT_7365, NPCs.SPIRIT_KYATT_7366)
 }

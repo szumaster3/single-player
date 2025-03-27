@@ -526,6 +526,5 @@ enum class Pickpocket(
         fun forID(id: Int): Pickpocket? = idMap[id]
     }
 
-    fun getSuccessChance(player: Player): Double =
-        RandomFunction.getSkillSuccessChance(low, high, player.skills.getLevel(Skills.THIEVING))
+    fun getSuccessChance(player: Player): Double = RandomFunction.getSkillSuccessChance(low, high, player.skills.getLevel(Skills.THIEVING))
 }

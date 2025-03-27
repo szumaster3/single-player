@@ -13,9 +13,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class HydraDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return HydraDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = HydraDialogue(player)
 
     /**
      * Instantiates a new Hydra dialogue.
@@ -163,7 +161,5 @@ class HydraDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.HYDRA_6811, NPCs.HYDRA_6812)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.HYDRA_6811, NPCs.HYDRA_6812)
 }

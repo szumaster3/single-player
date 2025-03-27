@@ -118,9 +118,7 @@ enum class BrawlingGloves(
          * @return the brawling gloves
          */
         @JvmStatic
-        fun forId(id: Int): BrawlingGloves? {
-            return glovesMap[id]
-        }
+        fun forId(id: Int): BrawlingGloves? = glovesMap[id]
 
         /**
          * For indicator brawling gloves.
@@ -129,9 +127,7 @@ enum class BrawlingGloves(
          * @return the brawling gloves
          */
         @JvmStatic
-        fun forIndicator(indicator: Int): BrawlingGloves? {
-            return indicatorMap[indicator]
-        }
+        fun forIndicator(indicator: Int): BrawlingGloves? = indicatorMap[indicator]
 
         /**
          * For skill brawling gloves.
@@ -140,8 +136,6 @@ enum class BrawlingGloves(
          * @return the brawling gloves
          */
         @JvmStatic
-        fun forSkill(skillSlot: Int): BrawlingGloves? {
-            return skillMap[skillSlot]
-        }
+        fun forSkill(skillSlot: Int): BrawlingGloves? = skillMap[skillSlot]
     }
 }

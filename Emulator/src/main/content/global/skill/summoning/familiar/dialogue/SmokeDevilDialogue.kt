@@ -13,9 +13,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class SmokeDevilDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return SmokeDevilDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = SmokeDevilDialogue(player)
 
     /**
      * Instantiates a new Smoke devil dialogue.
@@ -204,7 +202,5 @@ class SmokeDevilDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.SMOKE_DEVIL_6865, NPCs.SMOKE_DEVIL_6866)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.SMOKE_DEVIL_6865, NPCs.SMOKE_DEVIL_6866)
 }

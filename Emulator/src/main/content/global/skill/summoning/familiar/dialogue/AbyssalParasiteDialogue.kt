@@ -14,9 +14,7 @@ import java.util.*
  */
 @Initializable
 class AbyssalParasiteDialogue : Dialogue {
-    override fun newInstance(player: Player?): Dialogue {
-        return AbyssalParasiteDialogue(player)
-    }
+    override fun newInstance(player: Player?): Dialogue = AbyssalParasiteDialogue(player)
 
     /**
      * Instantiates a new Abyssal parasite dialogue.
@@ -147,7 +145,5 @@ class AbyssalParasiteDialogue : Dialogue {
         return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.ABYSSAL_PARASITE_6818, NPCs.ABYSSAL_PARASITE_6819)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.ABYSSAL_PARASITE_6818, NPCs.ABYSSAL_PARASITE_6819)
 }

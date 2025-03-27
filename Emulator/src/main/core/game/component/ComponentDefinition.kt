@@ -60,9 +60,7 @@ class ComponentDefinition {
      * @param resizable Whether the interface is resizable.
      * @return The corresponding window pane ID.
      */
-    fun getWindowPaneId(resizable: Boolean): Int {
-        return if (resizable) type.resizablePaneId else type.fixedPaneId
-    }
+    fun getWindowPaneId(resizable: Boolean): Int = if (resizable) type.resizablePaneId else type.fixedPaneId
 
     /**
      * Retrieves the child ID based on the resizable state.
@@ -70,13 +68,9 @@ class ComponentDefinition {
      * @param resizable Whether the interface is resizable.
      * @return The corresponding child ID.
      */
-    fun getChildId(resizable: Boolean): Int {
-        return if (resizable) type.resizableChildId else type.fixedChildId
-    }
+    fun getChildId(resizable: Boolean): Int = if (resizable) type.resizableChildId else type.fixedChildId
 
-    override fun toString(): String {
-        return "ComponentDefinition [type=$type, walkable=$isWalkable, tabIndex=$tabIndex, plugin=$plugin]"
-    }
+    override fun toString(): String = "ComponentDefinition [type=$type, walkable=$isWalkable, tabIndex=$tabIndex, plugin=$plugin]"
 
     companion object {
         private val DEFINITIONS: MutableMap<Int, ComponentDefinition> = HashMap()
@@ -89,9 +83,7 @@ class ComponentDefinition {
          * @return The corresponding {@code ComponentDefinition}.
          */
         @JvmStatic
-        fun forId(componentId: Int): ComponentDefinition {
-            return DEFINITIONS.computeIfAbsent(componentId) { ComponentDefinition() }
-        }
+        fun forId(componentId: Int): ComponentDefinition = DEFINITIONS.computeIfAbsent(componentId) { ComponentDefinition() }
 
         /**
          * Associates a plugin with a component definition.

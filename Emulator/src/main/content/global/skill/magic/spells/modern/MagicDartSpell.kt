@@ -73,7 +73,5 @@ class MagicDartSpell :
         entity: Entity,
         victim: Entity,
         state: BattleState,
-    ): Int {
-        return type.getImpactAmount(entity, victim, 0)
-    }
+    ): Int = type.getImpactAmount(entity, victim, 0)
 }
