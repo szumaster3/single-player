@@ -14,7 +14,6 @@ import java.io.FileReader
  * This is triggered on server startup.
  */
 class AutoStock : StartupListener {
-
     /**
      * Called when the server starts. It triggers the autostock process.
      */

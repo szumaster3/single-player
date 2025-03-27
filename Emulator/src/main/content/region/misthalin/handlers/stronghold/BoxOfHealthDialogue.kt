@@ -12,7 +12,7 @@ import org.rs.consts.Items
 class BoxOfHealthDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         sendDialogue(player, "The box hinges creak and appear to be forming audible words....")
         stage = 0
         return true

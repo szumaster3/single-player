@@ -17,7 +17,7 @@ import org.rs.consts.Sounds
 class IsidorDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc("Oh, hello there! Can I do anything for you?")
         return true
@@ -94,7 +94,7 @@ class IsidorDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = IsidorDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = IsidorDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.ISIDOR_8544)
 }

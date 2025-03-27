@@ -18,13 +18,25 @@ import org.rs.consts.Sounds
 
 class AlchemySpell : SpellListener("modern") {
     private val lowAlchemySpellAnimation = Animation(9623, Animator.Priority.HIGH)
-    private val lowAlchemyGraphics = core.game.world.update.flag.context.Graphics(org.rs.consts.Graphics.LOW_ALCHEMY_BY_HAND_763)
-    private val lowAlchemyStaffSpellAnimation = Animation(Animations.HUMAN_CAST_LOW_ALCH_SPELL_9625, Animator.Priority.HIGH)
-    private val lowAlchemyStaffGraphics = core.game.world.update.flag.context.Graphics(org.rs.consts.Graphics.LOW_ALCH_WITH_STAFF_1692,)
+    private val lowAlchemyGraphics =
+        core.game.world.update.flag.context.Graphics(
+            org.rs.consts.Graphics.LOW_ALCHEMY_BY_HAND_763,
+        )
+    private val lowAlchemyStaffSpellAnimation =
+        Animation(Animations.HUMAN_CAST_LOW_ALCH_SPELL_9625, Animator.Priority.HIGH)
+    private val lowAlchemyStaffGraphics =
+        core.game.world.update.flag.context.Graphics(
+            org.rs.consts.Graphics.LOW_ALCH_WITH_STAFF_1692,
+        )
     private val highAlchemyAnimation = Animation(9631, Animator.Priority.HIGH)
-    private val highAlchemyGraphics = core.game.world.update.flag.context.Graphics(org.rs.consts.Graphics.ALCH_1691)
+    private val highAlchemyGraphics =
+        core.game.world.update.flag.context
+            .Graphics(org.rs.consts.Graphics.ALCH_1691)
     private val highAlchemyStaffAnimation = Animation(Animations.ALCH_WITH_STAFF_9633, Animator.Priority.HIGH)
-    private val highAlchemyStaffGraphics = core.game.world.update.flag.context.Graphics(org.rs.consts.Graphics.HIGH_ALCH_WITH_STAFF_1693,)
+    private val highAlchemyStaffGraphics =
+        core.game.world.update.flag.context.Graphics(
+            org.rs.consts.Graphics.HIGH_ALCH_WITH_STAFF_1693,
+        )
 
     override fun defineListeners() {
         onCast(ModernSpells.LOW_ALCHEMY, ITEM) { player, node ->

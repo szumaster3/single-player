@@ -16,7 +16,7 @@ import org.rs.consts.Quests
 class PeksaDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(FaceAnim.HALF_GUILTY, "Are you interested in buying or selling a helmet?")
         return true
@@ -50,7 +50,7 @@ class PeksaDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = PeksaDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = PeksaDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.PEKSA_538)
 }

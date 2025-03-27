@@ -91,9 +91,9 @@ class UriNPC : AbstractNPC {
 
         constructor(player: Player?) : super(player)
 
-        override fun newInstance(player: Player): Dialogue = UriDialogue(player)
+        override fun newInstance(player: Player?): Dialogue = UriDialogue(player)
 
-        override fun open(vararg args: Any): Boolean {
+        override fun open(vararg args: Any?): Boolean {
             npc = args[0] as NPC
             if (!canSpeak()) {
                 npc("I do not believe we have any business, Comrade.")

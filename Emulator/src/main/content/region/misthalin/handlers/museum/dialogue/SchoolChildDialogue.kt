@@ -36,7 +36,7 @@ class SchoolChildDialogue(
             return forceChat[randomIndex]
         }
 
-    override fun newInstance(player: Player): Dialogue = SchoolChildDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = SchoolChildDialogue(player)
 
     override fun getIds(): IntArray =
         intArrayOf(

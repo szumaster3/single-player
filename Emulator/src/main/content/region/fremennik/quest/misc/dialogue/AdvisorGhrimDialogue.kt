@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
 class AdvisorGhrimDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npcl(FaceAnim.HALF_GUILTY, "Greetings, ${if (player.isMale) "Sir" else "Madam"}").also { stage = 0 }
         return true
     }

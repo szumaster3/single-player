@@ -12,7 +12,8 @@ import org.rs.consts.Quests
 import org.rs.consts.Vars
 
 @Initializable
-class HorrorFromTheDeep : Quest(Quests.HORROR_FROM_THE_DEEP, 77, 76, 2, Vars.VARBIT_QUEST_HORROR_FROM_THE_DEEP_PROGRESS_34, 0, 1, 10) {
+class HorrorFromTheDeep :
+    Quest(Quests.HORROR_FROM_THE_DEEP, 77, 76, 2, Vars.VARBIT_QUEST_HORROR_FROM_THE_DEEP_PROGRESS_34, 0, 1, 10) {
     override fun drawJournal(
         player: Player,
         stage: Int,
@@ -26,7 +27,11 @@ class HorrorFromTheDeep : Quest(Quests.HORROR_FROM_THE_DEEP, 77, 76, 2, Vars.VAR
             line(player, "I can start this quest by speaking to !!Larrissa?? at the", line++)
             line(player, "!!Lighthouse?? to the !!North?? of the !!Barbarian Outpost??.", line++)
             line(player, "To complete this quest I need:", line++)
-            line(player, if (hasLevelStat(player, Skills.AGILITY, 35)) "---Level 35 agility/--" else "!!Level 35 agility??", line++)
+            line(
+                player,
+                if (hasLevelStat(player, Skills.AGILITY, 35)) "---Level 35 agility/--" else "!!Level 35 agility??",
+                line++,
+            )
             line(
                 player,
                 if (hasLevelStat(
@@ -46,7 +51,12 @@ class HorrorFromTheDeep : Quest(Quests.HORROR_FROM_THE_DEEP, 77, 76, 2, Vars.VAR
             line++
         }
         if (progress >= 1) {
-            line(player, "I travelled to an isolated !!Lighthouse?? north of the !!Barbarian outpost??, ", line++, stage >= 2)
+            line(
+                player,
+                "I travelled to an isolated !!Lighthouse?? north of the !!Barbarian outpost??, ",
+                line++,
+                stage >= 2,
+            )
             line(player, "to find a !!Fremennik?? girl called !!Larrissa?? locked outside, ", line++, stage >= 2)
             line(player, "and worried about her boyfriend !!Jossik??.", line++, stage >= 2)
             line++
@@ -95,8 +105,18 @@ class HorrorFromTheDeep : Quest(Quests.HORROR_FROM_THE_DEEP, 77, 76, 2, Vars.VAR
             line++
         }
         if (stage >= 40 && getAttribute(player, GameAttributes.QUEST_HFTD_STRANGE_WALL_DISCOVER, false)) {
-            line(player, "After I entered the !!lighthouse??, and repaired the !!lighting mechanism??,", line++, stage >= 55)
-            line(player, "I discovered a !!strange wall?? that blocked the entrance to an underground", line++, stage >= 55)
+            line(
+                player,
+                "After I entered the !!lighthouse??, and repaired the !!lighting mechanism??,",
+                line++,
+                stage >= 55,
+            )
+            line(
+                player,
+                "I discovered a !!strange wall?? that blocked the entrance to an underground",
+                line++,
+                stage >= 55,
+            )
             line(player, "cavern, where !!Jossik?? was.", line++, stage >= 55)
             line++
         }

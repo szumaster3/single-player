@@ -29,7 +29,8 @@ class MineSlaveNPC : AbstractNPC {
         super.tick()
     }
 
-    override fun getIds(): IntArray = intArrayOf(NPCs.MALE_SLAVE_4975, NPCs.MALE_SLAVE_4976, NPCs.FEMALE_SLAVE_4977, NPCs.FEMALE_SLAVE_4978)
+    override fun getIds(): IntArray =
+        intArrayOf(NPCs.MALE_SLAVE_4975, NPCs.MALE_SLAVE_4976, NPCs.FEMALE_SLAVE_4977, NPCs.FEMALE_SLAVE_4978)
 
     companion object {
         private val CHATS =

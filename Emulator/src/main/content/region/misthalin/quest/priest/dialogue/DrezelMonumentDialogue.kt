@@ -18,7 +18,7 @@ import org.rs.consts.Quests
 class DrezelMonumentDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         var quest = player.getQuestRepository().getQuest(Quests.PRIEST_IN_PERIL)
         if (quest.getStage(player) == 17) {
@@ -33,7 +33,9 @@ class DrezelMonumentDialogue(
         }
         if (quest.getStage(player) == 18) {
             stage =
-                if (player.inventory.contains(Items.RUNE_ESSENCE_1436, 1) || player.inventory.contains(Items.PURE_ESSENCE_7936, 1)) {
+                if (player.inventory.contains(Items.RUNE_ESSENCE_1436, 1) ||
+                    player.inventory.contains(Items.PURE_ESSENCE_7936, 1)
+                ) {
                     player(FaceAnim.HALF_GUILTY, "I brought you some Rune Essence.")
                     100
                 } else {

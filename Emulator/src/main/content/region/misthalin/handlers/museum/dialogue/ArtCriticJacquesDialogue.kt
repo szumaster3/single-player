@@ -12,7 +12,7 @@ import org.rs.consts.NPCs
 class ArtCriticJacquesDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npcl(FaceAnim.HALF_GUILTY, "I sit in the sky like a sphinx misunderstood")
         return true
@@ -42,7 +42,7 @@ class ArtCriticJacquesDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = ArtCriticJacquesDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = ArtCriticJacquesDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.ART_CRITIC_JACQUES_5930)
 }

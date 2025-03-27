@@ -5,7 +5,6 @@ import core.api.inInventory
 import core.api.quest.setQuestStage
 import core.api.removeItem
 import core.api.sendMessage
-import core.cache.def.impl.NPCDefinition
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
@@ -19,10 +18,8 @@ import org.rs.consts.Quests
 class DrezelDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
-        npc.name = "Drezel"
-        NPCDefinition.forId(ids[0]).name = "Drezel"
         val quest = player.getQuestRepository().getQuest(Quests.PRIEST_IN_PERIL)
         if (quest.getStage(player) == 13) {
             npc(FaceAnim.HALF_GUILTY, "Hello.")

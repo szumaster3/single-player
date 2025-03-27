@@ -28,7 +28,7 @@ class ChieftanBrundtDialogue(
         }
     val fName = player?.getAttribute("fremennikname", "fremmyname")
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         if (inInventory(player, Items.TRACKING_MAP_3701, 1)) {
             playerl(FaceAnim.HAPPY, "I got Sigli's hunting map for you.")
             stage = 515

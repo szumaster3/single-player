@@ -20,7 +20,7 @@ class StankersDiaryDialogue(
 ) : Dialogue(player) {
     var diaryLevel = 1
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(FaceAnim.OLD_DEFAULT, "Hello bold adventurer.")
         return true

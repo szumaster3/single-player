@@ -10,27 +10,28 @@ import core.game.node.scenery.Scenery;
 import core.plugin.Initializable;
 import core.plugin.Plugin;
 import core.tools.Log;
+import org.rs.consts.Components;
 
 import static core.api.ContentAPIKt.log;
 
 /**
- * The type Construction interface.
+ * The Construction interface.
  */
 @Initializable
 public final class ConstructionInterface extends ComponentPlugin {
 
 	@Override
 	public Plugin<Object> newInstance(Object arg) {
-		ComponentDefinition.put(396, this);
-		ComponentDefinition.put(398, this);
-		ComponentDefinition.put(402, this);
+		ComponentDefinition.put(Components.POH_BUILD_FURNITURE_396, this);
+		ComponentDefinition.put(Components.POH_HOUSE_OPTIONS_398, this);
+		ComponentDefinition.put(Components.POH_BUILD_SCREEN_402, this);
 		return this;
 	}
 
 	@Override
 	public boolean handle(Player player, Component component, int opcode, int button, int slot, int itemId) {
-		switch (component.getId()) {
-			case 396:
+		switch (component.id) {
+			case Components.POH_BUILD_FURNITURE_396:
 				switch (button) {
 					case 132:
 						player.getInterfaceManager().close();
@@ -96,7 +97,7 @@ public final class ConstructionInterface extends ComponentPlugin {
 						return true;
 				}
 				break;
-			case 398:
+			case Components.POH_HOUSE_OPTIONS_398:
 				switch (button) {
 					case 14:
 						player.getHouseManager().toggleBuildingMode(player, true);
@@ -116,7 +117,7 @@ public final class ConstructionInterface extends ComponentPlugin {
 						return true;
 				}
 				break;
-			case 402:
+			case Components.POH_BUILD_SCREEN_402:
 				int index = button - 160;
 				log(this.getClass(), Log.FINE, "BuildRoom Interface Index: " + index);
 				if (index > -1 && index < RoomProperties.values().length) {

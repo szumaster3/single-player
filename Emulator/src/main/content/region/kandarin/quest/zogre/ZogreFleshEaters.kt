@@ -13,7 +13,8 @@ import org.rs.consts.Quests
 import org.rs.consts.Vars
 
 @Initializable
-class ZogreFleshEaters : Quest(Quests.ZOGRE_FLESH_EATERS, 40, 39, 1, Vars.VARBIT_QUEST_ZORGE_FLESH_EATERS_PROGRESS_487, 0, 1, 13) {
+class ZogreFleshEaters :
+    Quest(Quests.ZOGRE_FLESH_EATERS, 40, 39, 1, Vars.VARBIT_QUEST_ZORGE_FLESH_EATERS_PROGRESS_487, 0, 1, 13) {
     override fun drawJournal(
         player: Player,
         stage: Int,

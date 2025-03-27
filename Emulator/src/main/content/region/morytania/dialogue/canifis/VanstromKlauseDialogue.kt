@@ -14,7 +14,7 @@ import org.rs.consts.Quests
 class VanstromKlauseDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(FaceAnim.HALF_GUILTY, "Hello there, how goes it stranger?")
         return true
@@ -40,7 +40,7 @@ class VanstromKlauseDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = VanstromKlauseDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = VanstromKlauseDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(2020)
 }

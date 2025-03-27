@@ -12,7 +12,7 @@ import org.rs.consts.NPCs
 class CentaurDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         when (npc.id) {
             4438 -> npc(FaceAnim.OLD_HAPPY, "Hello, human, welcome to our valley.").also { stage = END_DIALOGUE }

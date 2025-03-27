@@ -13,7 +13,7 @@ import org.rs.consts.Quests
 class OracleDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         quest = player.getQuestRepository().getQuest(Quests.DRAGON_SLAYER)
         when (quest!!.getStage(player)) {

@@ -18,7 +18,7 @@ class SceneryInteractionListener : InteractionListener {
                 return@on true
             }
             addItem(player, Items.BRONZE_PICKAXE_1265)
-            replaceScenery(node.asScenery(), (node.id + 1), 250)
+            replaceScenery(node.asScenery(), (node.id + 1), 500)
             return@on true
         }
 
@@ -28,7 +28,7 @@ class SceneryInteractionListener : InteractionListener {
                 return@on true
             }
             addItem(player, Items.BRONZE_AXE_1351)
-            replaceScenery(node.asScenery(), (node.id + 1), 250)
+            replaceScenery(node.asScenery(), (node.id + 1), 500)
             return@on true
         }
 
@@ -38,7 +38,7 @@ class SceneryInteractionListener : InteractionListener {
                 return@on true
             }
             addItem(player, Items.BRONZE_AXE_1351)
-            replaceScenery(node.asScenery(), (node.id + 1), 250)
+            replaceScenery(node.asScenery(), (node.id + 1), 500)
             return@on true
         }
 
@@ -48,7 +48,7 @@ class SceneryInteractionListener : InteractionListener {
                 return@on true
             }
             addItem(player, Items.SPADE_952)
-            replaceScenery(node.asScenery(), 0, 250)
+            replaceScenery(node.asScenery(), 0, 500)
             return@on true
         }
     }

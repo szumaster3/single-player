@@ -22,7 +22,7 @@ class SkillDialogue(
      * @param player The player to associate with this dialogue instance.
      * @return A new instance of SkillDialogue.
      */
-    override fun newInstance(player: Player): Dialogue = SkillDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = SkillDialogue(player)
 
     /**
      * Opens the skill dialogue for the player, using the provided arguments.
@@ -31,7 +31,7 @@ class SkillDialogue(
      * @param args The arguments passed to the dialogue, including the handler.
      * @return A boolean indicating if the dialogue was successfully opened.
      */
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         handler = args[0] as SkillDialogueHandler
 
         handler.display()

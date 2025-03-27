@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class SpiritMosquitoDialogue : Dialogue {
-    override fun newInstance(player: Player): Dialogue {
+    override fun newInstance(player: Player?): Dialogue {
         return SpiritMosquitoDialogue(player)
     }
 
@@ -29,7 +29,7 @@ class SpiritMosquitoDialogue : Dialogue {
      */
     constructor(player: Player?) : super(player)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         when ((Math.random() * 4).toInt()) {
             0 -> {
@@ -55,7 +55,10 @@ class SpiritMosquitoDialogue : Dialogue {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(
+        interfaceId: Int,
+        buttonId: Int,
+    ): Boolean {
         when (stage) {
             0 -> {
                 playerl(FaceAnim.FRIENDLY, "Am I meant to be pleased by that?")
@@ -140,7 +143,7 @@ class SpiritMosquitoDialogue : Dialogue {
             16 -> {
                 npcl(
                     FaceAnim.CHILD_NORMAL,
-                    "Tell me about it. Cousin Nigel always makes fun of me. Calls me 'No-teeth'."
+                    "Tell me about it. Cousin Nigel always makes fun of me. Calls me 'No-teeth'.",
                 )
                 stage = END_DIALOGUE
             }

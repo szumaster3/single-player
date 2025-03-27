@@ -16,7 +16,7 @@ import org.rs.consts.NPCs
 class GhostCaptainDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         when {
             !inEquipment(player, Items.GHOSTSPEAK_AMULET_552) -> npc(FaceAnim.FRIENDLY, "Woooo wooo wooooo woooo")

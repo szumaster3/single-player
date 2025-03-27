@@ -14,7 +14,7 @@ import org.rs.consts.NPCs
 class GrandExchangeClerkDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         player(FaceAnim.HALF_GUILTY, "Hi there.")
         stage = 1
         return true
@@ -77,7 +77,7 @@ class GrandExchangeClerkDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = GrandExchangeClerkDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = GrandExchangeClerkDialogue(player)
 
     override fun getIds(): IntArray =
         intArrayOf(

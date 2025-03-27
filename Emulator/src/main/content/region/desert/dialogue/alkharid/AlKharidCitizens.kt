@@ -17,7 +17,14 @@ class AlKharidCitizens(
         val randomDialogue = (1..15).random()
         when (randomDialogue) {
             1 -> npcl(FaceAnim.FRIENDLY, "Well. This beats doing the shopping!").also { stage = END_DIALOGUE }
-            2 -> npcl(FaceAnim.FRIENDLY, "I wouldn't want to be the poor guy that has to clean up after the duels.").also { stage = 2 }
+            2 ->
+                npcl(
+                    FaceAnim.FRIENDLY,
+                    "I wouldn't want to be the poor guy that has to clean up after the duels.",
+                ).also {
+                    stage =
+                        2
+                }
             3 -> npcl(FaceAnim.FRIENDLY, "Hi!").also { stage = END_DIALOGUE }
             4 -> npcl(FaceAnim.FRIENDLY, "What did the skeleton say before it ate?").also { stage = 4 }
             5 -> npcl(FaceAnim.FRIENDLY, "Ooh. This is exciting!").also { stage = 24 }
@@ -30,7 +37,11 @@ class AlKharidCitizens(
             12 -> npcl(FaceAnim.FRIENDLY, "Hi! I'm here to watch the duels!").also { stage = END_DIALOGUE }
             13 -> npcl(FaceAnim.FRIENDLY, "My favourite fighter is Mubariz!").also { stage = 19 }
             14 -> npcl(FaceAnim.NEUTRAL, "Hmph.").also { stage = END_DIALOGUE }
-            15 -> npcl(FaceAnim.HALF_ASKING, "Did you know they think this place dates back to the second age?!").also { stage = 22 }
+            15 ->
+                npcl(FaceAnim.HALF_ASKING, "Did you know they think this place dates back to the second age?!").also {
+                    stage =
+                        22
+                }
         }
         return true
     }
@@ -60,7 +71,11 @@ class AlKharidCitizens(
             20 -> npcl(FaceAnim.FRIENDLY, "Yeah! He rocks!").also { stage++ }
             21 -> playerl(FaceAnim.FRIENDLY, "Takes all sorts, I guess.").also { stage = END_DIALOGUE }
             22 -> playerl(FaceAnim.ASKING, "Really?").also { stage++ }
-            23 -> npcl(FaceAnim.FRIENDLY, "Yeah. The guy at the information kiosk was telling me.").also { stage = END_DIALOGUE }
+            23 ->
+                npcl(FaceAnim.FRIENDLY, "Yeah. The guy at the information kiosk was telling me.").also {
+                    stage =
+                        END_DIALOGUE
+                }
             24 -> playerl(FaceAnim.FRIENDLY, "Yup.").also { stage = END_DIALOGUE }
         }
         return true

@@ -38,7 +38,7 @@ class ProgressHatDialogue(
             listOf("I suppose you want to know your Pizazz Points.", "That would be nice, yes."),
         )
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         if (args.size > 1) {
             progressHat = args[0] as Item
             npc(FaceAnim.OLD_NORMAL, "How dare you destroy me? You'll lose your Pizazz Points!").also { stage = 4 }

@@ -12,7 +12,7 @@ import org.rs.consts.NPCs
 class EoinDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         player(FaceAnim.FRIENDLY, "Hello.")
         return true
@@ -32,7 +32,7 @@ class EoinDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = EoinDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = EoinDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.EOIN_2368)
 }

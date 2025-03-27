@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
 class HeadChefDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         var door = false
         if (args.size == 2) door = args[1] as Boolean
@@ -157,7 +157,7 @@ class HeadChefDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = HeadChefDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = HeadChefDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.HEAD_CHEF_847)
 }

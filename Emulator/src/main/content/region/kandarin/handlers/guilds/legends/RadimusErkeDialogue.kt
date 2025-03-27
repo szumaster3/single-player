@@ -16,7 +16,7 @@ import org.rs.consts.NPCs
 class RadimusErkeDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npcl(FaceAnim.HALF_GUILTY, "Excuse me a moment won't you. Do feel free to explore the rest of the building.")
         stage = 0
@@ -37,7 +37,7 @@ class RadimusErkeDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = RadimusErkeDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = RadimusErkeDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.RADIMUS_ERKLE_400)
 }

@@ -15,7 +15,7 @@ import org.rs.consts.NPCs
 class AliTheCamelDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         val phrase = RandomFunction.random(0, 2)
         when (phrase) {
             0 -> player(FaceAnim.AFRAID, "That beast would probably bite my fingers off", "if I tried to pet it")

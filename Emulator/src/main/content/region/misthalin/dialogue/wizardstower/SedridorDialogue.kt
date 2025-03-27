@@ -755,7 +755,7 @@ class SedridorDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = SedridorDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = SedridorDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.SEDRIDOR_300)
 

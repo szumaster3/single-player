@@ -19,7 +19,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class SpiritKyattDialogue : Dialogue {
-    override fun newInstance(player: Player): Dialogue {
+    override fun newInstance(player: Player?): Dialogue {
         return SpiritKyattDialogue(player)
     }
 
@@ -35,7 +35,7 @@ class SpiritKyattDialogue : Dialogue {
      */
     constructor(player: Player?) : super(player)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (npc !is Familiar) {
             return false
@@ -50,15 +50,19 @@ class SpiritKyattDialogue : Dialogue {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(
+        interfaceId: Int,
+        buttonId: Int,
+    ): Boolean {
         when (buttonId) {
             1 -> openDialogue(player, SpiritKyattDialogueFile())
-            2 -> if (!WildernessZone.checkTeleport(player, 20)) {
-                end()
-            } else {
-                teleport(player, Location(2326, 3634, 0), TeleportManager.TeleportType.NORMAL)
-                end()
-            }
+            2 ->
+                if (!WildernessZone.checkTeleport(player, 20)) {
+                    end()
+                } else {
+                    teleport(player, Location(2326, 3634, 0), TeleportManager.TeleportType.NORMAL)
+                    end()
+                }
         }
         return true
     }

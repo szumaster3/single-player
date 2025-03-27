@@ -12,7 +12,7 @@ import org.rs.consts.NPCs
 class AwusahTheMayorDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         sendDialogue(player, "The mayor doesn't seem interested in talking to you right now.").also {
             stage =

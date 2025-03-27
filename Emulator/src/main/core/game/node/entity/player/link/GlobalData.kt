@@ -21,7 +21,7 @@ class GlobalData {
     private var savedH: Int = 0
     private var taskAmount: Int = 0
     private var taskPoints: Int = 0
-    private var godBook: Int = -1
+    var godBook: Int = -1
     private var zaffAmount: Int = 8
     private var essenceTeleporter: Int = 0
     private var recoilDamage: Int = 40
@@ -387,12 +387,6 @@ class GlobalData {
 
     fun setGodBooks(godBooks: BooleanArray) {
         this.godBooks = godBooks
-    }
-
-    fun getGodBook(): Int = godBook
-
-    fun setGodBook(godBook: Int) {
-        this.godBook = godBook
     }
 
     fun isDisableNews(): Boolean = disableNews

@@ -132,9 +132,6 @@ class ClanSetupInterface : InterfaceListener {
      */
     fun openSettings(player: Player) {
         player.interfaceManager.open(Component(Components.CLANSETUP_590))
-        val c: ClanRepository = ClanRepository.get(player.name)
-        if (c != null) {
-            updateSettings(player)
-        }
+        updateSettings(player)
     }
 }

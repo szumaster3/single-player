@@ -57,7 +57,11 @@ class CombatInstructorDialogue(
                             stage++
                         }
                     1 -> npcl(FaceAnim.FRIENDLY, "I'm Vannaka, the greatest swordsman alive.").also { stage++ }
-                    2 -> npcl(FaceAnim.FRIENDLY, "Let's get started by teaching you to wield a weapon.").also { stage++ }
+                    2 ->
+                        npcl(
+                            FaceAnim.FRIENDLY,
+                            "Let's get started by teaching you to wield a weapon.",
+                        ).also { stage++ }
                     3 -> {
                         end()
                         setAttribute(player, TutorialStage.TUTORIAL_STAGE, 45)

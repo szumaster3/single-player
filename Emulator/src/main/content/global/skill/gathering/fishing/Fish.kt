@@ -239,7 +239,8 @@ enum class Fish(
         fun forItem(item: Item): Fish? = fishMap[item.id]
     }
 
-    fun getSuccessChance(level: Int): Double = (level.toDouble() - 1.0) * ((highChance - lowChance) / (99.0 - 1.0)) + lowChance
+    fun getSuccessChance(level: Int): Double =
+        (level.toDouble() - 1.0) * ((highChance - lowChance) / (99.0 - 1.0)) + lowChance
 
     fun getItem(): Item = this.id.asItem()
 }

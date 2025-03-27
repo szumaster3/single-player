@@ -81,7 +81,13 @@ class PartyPeteDialogue(
                 ).also {
                     stage++
                 }
-            10 -> options("Can you talk to him?", "Christmas is over.", "Aww, that's nice.", "Got any cake?").also { stage++ }
+            10 ->
+                options(
+                    "Can you talk to him?",
+                    "Christmas is over.",
+                    "Aww, that's nice.",
+                    "Got any cake?",
+                ).also { stage++ }
             11 ->
                 when (buttonId) {
                     1 -> player("Can you talk to him?").also { stage++ }
@@ -98,9 +104,16 @@ class PartyPeteDialogue(
                     stage =
                         10
                 }
-            13 -> npcl(FaceAnim.FRIENDLY, "I couldn't chuck the little chappy out! A pet is for life!").also { stage = 10 }
+            13 ->
+                npcl(FaceAnim.FRIENDLY, "I couldn't chuck the little chappy out! A pet is for life!").also {
+                    stage =
+                        10
+                }
             14 ->
-                npcl(FaceAnim.SAD, "Sadly no cake at the moment, try coming back January 1st... But the party never ends!").also {
+                npcl(
+                    FaceAnim.SAD,
+                    "Sadly no cake at the moment, try coming back January 1st... But the party never ends!",
+                ).also {
                     stage =
                         END_DIALOGUE
                 }

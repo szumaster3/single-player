@@ -20,7 +20,7 @@ class SimonTempletonDialogue(
             arrayOf(Item(Items.GOLD_SEAL_9040), Item(Items.GOLDEN_SCARAB_9028), Item(Items.GOLDEN_STATUETTE_9034)),
         )
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
 
         if (args.size == 4) {

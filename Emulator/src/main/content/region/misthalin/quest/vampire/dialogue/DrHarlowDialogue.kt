@@ -23,7 +23,7 @@ class DrHarlowDialogue(
 ) : Dialogue(player) {
     val ITEMS = arrayOf(Item(Items.STAKE_1549), Item(Items.BEER_1917, 1))
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(FaceAnim.HALF_GUILTY, "Buy me a drrink pleassh.")
         return true
@@ -148,7 +148,7 @@ class DrHarlowDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = DrHarlowDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = DrHarlowDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.DR_HARLOW_756)
 }

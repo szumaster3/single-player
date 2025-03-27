@@ -14,7 +14,7 @@ import org.rs.consts.NPCs
 class SheepdogDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (npc.id in intArrayOf(6966, 7253, 7255)) {
             npc(FaceAnim.CHILD_NORMAL, "Yapyap yip yap!", "(Hello!)").also { stage = 0 }

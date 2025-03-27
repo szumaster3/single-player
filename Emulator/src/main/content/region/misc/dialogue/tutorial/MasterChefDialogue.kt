@@ -192,7 +192,11 @@ class MasterChef : DialogueFile() {
                                 END_DIALOGUE
                         }
                     2 ->
-                        sendNPCDialogue(player!!, npc!!.id, "To cook the dough, use it with the range shown by the arrow.").also {
+                        sendNPCDialogue(
+                            player!!,
+                            npc!!.id,
+                            "To cook the dough, use it with the range shown by the arrow.",
+                        ).also {
                             stage =
                                 END_DIALOGUE
                         }

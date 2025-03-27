@@ -14,7 +14,7 @@ import java.util.*
  */
 @Initializable
 class BarkerToadDialogue : Dialogue {
-    override fun newInstance(player: Player): Dialogue {
+    override fun newInstance(player: Player?): Dialogue {
         return BarkerToadDialogue(player)
     }
 
@@ -30,7 +30,7 @@ class BarkerToadDialogue : Dialogue {
      */
     constructor(player: Player?) : super(player)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         val rand = Random()
         when (rand.nextInt(6)) {
@@ -47,7 +47,7 @@ class BarkerToadDialogue : Dialogue {
             2 -> {
                 npcl(
                     FaceAnim.CHILD_NORMAL,
-                    "We need to set up the big top somewhere near here. The locals look friendly enough."
+                    "We need to set up the big top somewhere near here. The locals look friendly enough.",
                 )
                 stage = 11
             }
@@ -70,7 +70,10 @@ class BarkerToadDialogue : Dialogue {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(
+        interfaceId: Int,
+        buttonId: Int,
+    ): Boolean {
         when (stage) {
             0 -> {
                 playerl(FaceAnim.FRIENDLY, "Seen it.")
@@ -146,7 +149,7 @@ class BarkerToadDialogue : Dialogue {
                 npc(
                     FaceAnim.CHILD_NORMAL,
                     "Braap craaaaawk craaaawk.",
-                    "(That, my dear boy, was my world-renowned belching.)"
+                    "(That, my dear boy, was my world-renowned belching.)",
                 )
                 stage++
             }
@@ -160,7 +163,7 @@ class BarkerToadDialogue : Dialogue {
                 npc(
                     FaceAnim.CHILD_NORMAL,
                     "Braaaaaaap craaaaaawk craaaaaaaawk.",
-                    "(My displays have bedazzled the crowned heads of Gielinor.)"
+                    "(My displays have bedazzled the crowned heads of Gielinor.)",
                 )
                 stage++
             }
@@ -201,7 +204,7 @@ class BarkerToadDialogue : Dialogue {
                     "Craaaaawk braaap croak.",
                     "(Weeeeell, I'd hope not! Reminds me of my mama toad.",
                     "She was inflated and fed to a jubbly, you know.",
-                    "A sad, demeaning way to die.)"
+                    "A sad, demeaning way to die.)",
                 )
                 stage = END_DIALOGUE
             }

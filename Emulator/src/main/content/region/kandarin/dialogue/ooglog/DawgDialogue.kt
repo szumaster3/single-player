@@ -52,7 +52,7 @@ class DawgDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = DawgDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = DawgDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.DAWG_7104)
 }

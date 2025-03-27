@@ -241,7 +241,7 @@ class SnertDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = SnertDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = SnertDialogue(player)
 
     override fun getIds(): IntArray =
         intArrayOf(

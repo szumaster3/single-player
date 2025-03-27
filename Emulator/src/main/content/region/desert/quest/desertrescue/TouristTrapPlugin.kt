@@ -589,7 +589,7 @@ class TouristTrapPlugin : OptionHandler() {
     class WinchDialogue(
         player: Player? = null,
     ) : Dialogue(player) {
-        override fun open(vararg args: Any): Boolean {
+        override fun open(vararg args: Any?): Boolean {
             if (args.size >= 1) {
                 interpreter.sendDialogue("The guard notices the barrel (with Ana in it) that you're carrying.")
                 stage = 500
@@ -908,7 +908,7 @@ class TouristTrapPlugin : OptionHandler() {
     class CartDialogue(
         player: Player? = null,
     ) : Dialogue(player) {
-        override fun open(vararg args: Any): Boolean {
+        override fun open(vararg args: Any?): Boolean {
             interpreter.sendDialogue("There is space on the cart for you get on, would you like to try?")
             return true
         }
@@ -986,7 +986,7 @@ class TouristTrapPlugin : OptionHandler() {
             definePlugin(MiningCartCutscene())
         }
 
-        override fun open(vararg args: Any): Boolean {
+        override fun open(vararg args: Any?): Boolean {
             cart = args[0] as Scenery
             if (player.inventory.containsItem(TouristTrap.ANNA_BARREL)) {
                 player("There's not enough room for both of us.")
@@ -1231,7 +1231,7 @@ class TouristTrapPlugin : OptionHandler() {
 
         private var quest: Quest? = null
 
-        override fun open(vararg args: Any): Boolean {
+        override fun open(vararg args: Any?): Boolean {
             barrel = args[0] as Scenery
             quest = player.getQuestRepository().getQuest(Quests.THE_TOURIST_TRAP)
             if ((quest!!.getStage(player) == 70 || quest!!.getStage(player) == 72) &&
@@ -1366,7 +1366,7 @@ class TouristTrapPlugin : OptionHandler() {
             class ProtoTypeDialogue(
                 player: Player? = null,
             ) : Dialogue(player) {
-                override fun open(vararg args: Any): Boolean {
+                override fun open(vararg args: Any?): Boolean {
                     if (!player.inventory.containsItem(FEATHERS)) {
                         interpreter.sendDialogue("You need 10 feathers in order to do this.")
                         stage = 10
@@ -1417,7 +1417,7 @@ class TouristTrapPlugin : OptionHandler() {
         class BedabinAnvilDialogue(
             player: Player? = null,
         ) : Dialogue(player) {
-            override fun open(vararg args: Any): Boolean {
+            override fun open(vararg args: Any?): Boolean {
                 if (!player.inventory.containsItem(TouristTrap.TECHNICAL_PLANS)) {
                     player.packetDispatch.sendMessage("You need the plans to do this.")
                     return false

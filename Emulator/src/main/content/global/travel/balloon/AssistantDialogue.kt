@@ -16,7 +16,7 @@ import org.rs.consts.Quests
 class AssistantDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         val faceExpression = if (npc.id != 5056) FaceAnim.HALF_GUILTY else FaceAnim.OLD_NORMAL
         npcl(

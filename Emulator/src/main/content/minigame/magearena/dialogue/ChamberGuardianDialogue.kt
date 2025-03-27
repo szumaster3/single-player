@@ -18,7 +18,7 @@ class ChamberGuardianDialogue(
 ) : Dialogue(player) {
     private var godType: GodType? = null
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (player.getSavedData().activityData.hasReceivedKolodionReward()) {
             player(FaceAnim.FRIENDLY, "Hello again.")

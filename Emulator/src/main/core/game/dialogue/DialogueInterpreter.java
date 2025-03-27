@@ -232,7 +232,7 @@ public final class DialogueInterpreter {
             player.getPacketDispatch().sendString(messages[i], interfaceId, i + 1);
         }
         player.getInterfaceManager().openChatbox(interfaceId);
-        player.getPacketDispatch().sendInterfaceConfig(player.getInterfaceManager().getChatbox().getId(), 1, false);
+        player.getPacketDispatch().sendInterfaceConfig(player.getInterfaceManager().getChatbox().id, 1, false);
         return player.getInterfaceManager().getChatbox();
     }
 
@@ -284,7 +284,7 @@ public final class DialogueInterpreter {
      */
     public Component sendPlainMessage(final boolean hideContinue, String... messages) {
         sendDialogue(messages);
-        player.getPacketDispatch().sendInterfaceConfig(player.getInterfaceManager().getChatbox().getId(), (messages.length + 1), hideContinue);
+        player.getPacketDispatch().sendInterfaceConfig(player.getInterfaceManager().getChatbox().id, (messages.length + 1), hideContinue);
         return player.getInterfaceManager().getChatbox();
     }
 
@@ -604,7 +604,7 @@ public final class DialogueInterpreter {
             player.getPacketDispatch().sendString(doSubstitutions(player, messages[i]), interfaceId, (i + 4));
         }
         player.getInterfaceManager().openChatbox(interfaceId);
-        player.getPacketDispatch().sendInterfaceConfig(player.getInterfaceManager().getChatbox().getId(), 3, false);
+        player.getPacketDispatch().sendInterfaceConfig(player.getInterfaceManager().getChatbox().id, 3, false);
         return player.getInterfaceManager().getChatbox();
     }
 
@@ -648,7 +648,7 @@ public final class DialogueInterpreter {
                 }
 
                 player.getInterfaceManager().openChatbox(finalInterfaceId);
-                player.getPacketDispatch().sendInterfaceConfig(player.getInterfaceManager().getChatbox().getId(), 3, false);
+                player.getPacketDispatch().sendInterfaceConfig(player.getInterfaceManager().getChatbox().id, 3, false);
 
                 return true;
             }

@@ -30,7 +30,7 @@ class JulietDialogue(
     private var quest: Quest? = null
     private var cutscene: JulietCutscene? = null
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         quest = player.getQuestRepository().getQuest(Quests.ROMEO_JULIET)
         npc = args[0] as NPC
         if (args.size > 1) {
@@ -631,7 +631,7 @@ class JulietDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = JulietDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = JulietDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.JULIET_637)
 

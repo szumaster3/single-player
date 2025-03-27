@@ -17,7 +17,7 @@ import org.rs.consts.NPCs
 class JefferyDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npcl(FaceAnim.HALF_ASKING, "Keep it quick. What do you want?")
         return true
@@ -125,7 +125,7 @@ class JefferyDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = JefferyDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = JefferyDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.JEFFERY_6298)
 }

@@ -103,7 +103,7 @@ class CanifisCitizenDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = CanifisCitizenDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = CanifisCitizenDialogue(player)
 
     override fun getIds(): IntArray =
         intArrayOf(

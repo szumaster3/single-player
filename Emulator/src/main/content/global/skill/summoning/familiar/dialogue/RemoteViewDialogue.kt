@@ -14,7 +14,7 @@ import core.plugin.Initializable
 class RemoteViewDialogue : Dialogue {
     private var familiar: Familiar? = null
 
-    override fun newInstance(player: Player): Dialogue {
+    override fun newInstance(player: Player?): Dialogue {
         return RemoteViewDialogue(player)
     }
 
@@ -30,20 +30,24 @@ class RemoteViewDialogue : Dialogue {
      */
     constructor(player: Player?) : super(player)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         familiar = args[0] as Familiar
         options("North", "East", "South", "West", "Straight up")
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(
+        interfaceId: Int,
+        buttonId: Int,
+    ): Boolean {
         end()
-        RemoteViewer.create(
-            player,
-            familiar,
-            familiar!!.viewAnimation,
-            RemoteViewer.ViewType.values()[buttonId - 1]
-        ).startViewing()
+        RemoteViewer
+            .create(
+                player,
+                familiar,
+                familiar!!.viewAnimation,
+                RemoteViewer.ViewType.values()[buttonId - 1],
+            ).startViewing()
         return true
     }
 

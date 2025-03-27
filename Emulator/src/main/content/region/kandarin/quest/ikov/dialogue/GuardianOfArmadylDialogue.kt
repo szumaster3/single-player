@@ -18,7 +18,7 @@ import org.rs.consts.Quests
 class GuardianOfArmadylDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun newInstance(player: Player): Dialogue = GuardianOfArmadylDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = GuardianOfArmadylDialogue(player)
 
     override fun handle(
         interfaceId: Int,

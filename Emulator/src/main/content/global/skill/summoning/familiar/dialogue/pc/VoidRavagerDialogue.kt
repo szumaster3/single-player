@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class VoidRavagerDialogue : Dialogue {
-    override fun newInstance(player: Player): Dialogue {
+    override fun newInstance(player: Player?): Dialogue {
         return VoidRavagerDialogue(player)
     }
 
@@ -29,7 +29,7 @@ class VoidRavagerDialogue : Dialogue {
      */
     constructor(player: Player?) : super(player)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         val randomIndex = (Math.random() * 4).toInt()
         when (randomIndex) {
@@ -56,7 +56,10 @@ class VoidRavagerDialogue : Dialogue {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(
+        interfaceId: Int,
+        buttonId: Int,
+    ): Boolean {
         when (stage) {
             0 -> {
                 playerl(FaceAnim.FRIENDLY, "Don't make me dismiss you!")
@@ -86,7 +89,7 @@ class VoidRavagerDialogue : Dialogue {
             5 -> {
                 npcl(
                     FaceAnim.CHILD_NORMAL,
-                    "Oh, it's just a trifling thing. Mmm, trifle...you look like trifle...So, will you help?"
+                    "Oh, it's just a trifling thing. Mmm, trifle...you look like trifle...So, will you help?",
                 )
                 stage++
             }
@@ -99,7 +102,7 @@ class VoidRavagerDialogue : Dialogue {
             7 -> {
                 npcl(
                     FaceAnim.CHILD_NORMAL,
-                    "Oh, just be honest. I just want a second opinion...Is this me? Mmm trifle..."
+                    "Oh, just be honest. I just want a second opinion...Is this me? Mmm trifle...",
                 )
                 stage++
             }
@@ -112,7 +115,7 @@ class VoidRavagerDialogue : Dialogue {
             9 -> {
                 npcl(
                     FaceAnim.CHILD_NORMAL,
-                    "Oh! The claws! The whiskers! The single, yellow eye! Oh! Is it me? Is it truly me?"
+                    "Oh! The claws! The whiskers! The single, yellow eye! Oh! Is it me? Is it truly me?",
                 )
                 stage++
             }
@@ -125,7 +128,7 @@ class VoidRavagerDialogue : Dialogue {
             11 -> {
                 npcl(
                     FaceAnim.CHILD_NORMAL,
-                    "Oh, I knew it! You've been an absolute delight. An angel delight! And everyone said it was just a phase!"
+                    "Oh, I knew it! You've been an absolute delight. An angel delight! And everyone said it was just a phase!",
                 )
                 stage = END_DIALOGUE
             }

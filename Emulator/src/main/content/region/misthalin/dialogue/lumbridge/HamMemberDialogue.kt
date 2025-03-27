@@ -12,7 +12,7 @@ import org.rs.consts.NPCs
 class HamMemberDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         player("What are all you people doing here?").also { stage = 1 }
         return true

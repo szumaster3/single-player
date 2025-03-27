@@ -15,7 +15,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class SpiritKalphiteDialogue : Dialogue {
-    override fun newInstance(player: Player): Dialogue {
+    override fun newInstance(player: Player?): Dialogue {
         return SpiritKalphiteDialogue(player)
     }
 
@@ -31,7 +31,7 @@ class SpiritKalphiteDialogue : Dialogue {
      */
     constructor(player: Player?) : super(player)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         val hasKeris = hasAnItem(player, *kerisIDs).container === player.inventory
         if (hasKeris) {
@@ -63,7 +63,10 @@ class SpiritKalphiteDialogue : Dialogue {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(
+        interfaceId: Int,
+        buttonId: Int,
+    ): Boolean {
         when (stage) {
             0 -> {
                 npcl(FaceAnim.CHILD_NORMAL, "That weapon offends us!")
@@ -143,8 +146,12 @@ class SpiritKalphiteDialogue : Dialogue {
     }
 
     companion object {
-        private val kerisIDs = intArrayOf(
-            Items.KERIS_10581, Items.KERISP_10582, Items.KERISP_PLUS_10583, Items.KERISP_PLUS_PLUS_10584
-        )
+        private val kerisIDs =
+            intArrayOf(
+                Items.KERIS_10581,
+                Items.KERISP_10582,
+                Items.KERISP_PLUS_10583,
+                Items.KERISP_PLUS_PLUS_10584,
+            )
     }
 }

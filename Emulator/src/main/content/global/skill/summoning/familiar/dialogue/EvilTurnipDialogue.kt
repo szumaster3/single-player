@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class EvilTurnipDialogue : Dialogue {
-    override fun newInstance(player: Player): Dialogue {
+    override fun newInstance(player: Player?): Dialogue {
         return EvilTurnipDialogue(player)
     }
 
@@ -29,7 +29,7 @@ class EvilTurnipDialogue : Dialogue {
      */
     constructor(player: Player?) : super(player)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         when ((Math.random() * 4).toInt()) {
             0 -> {
@@ -55,7 +55,10 @@ class EvilTurnipDialogue : Dialogue {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(
+        interfaceId: Int,
+        buttonId: Int,
+    ): Boolean {
         when (stage) {
             0 -> {
                 npcl(FaceAnim.OLD_NORMAL, "My roots feel hurty. I thinking it be someone I eated.")
@@ -75,7 +78,7 @@ class EvilTurnipDialogue : Dialogue {
             3 -> {
                 playerl(
                     FaceAnim.FRIENDLY,
-                    "Well, as sinister as it's chuckling is, at least it's happy. That's a good thing, right?"
+                    "Well, as sinister as it's chuckling is, at least it's happy. That's a good thing, right?",
                 )
                 stage = END_DIALOGUE
             }

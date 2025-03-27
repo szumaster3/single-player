@@ -26,7 +26,7 @@ public final class AssistSession extends Pulse implements RequestModule {
 
     private Player partner;
 
-    private final Component component = new Component(Components.REQ_ASSIST_301).setCloseEvent(getCloseEvent());
+    private final Component component = new Component(Components.REQ_ASSIST_301).setUncloseEvent(getCloseEvent());
 
     private static final Animation ANIMATION = Animation.create(7299);
 

@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
 class EudavGethinDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(FaceAnim.FRIENDLY, "Can I help you at all?")
         return true
@@ -37,7 +37,7 @@ class EudavGethinDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = EudavGethinDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = EudavGethinDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.EUDAV_2352, NPCs.GETHIN_2357)
 }

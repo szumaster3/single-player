@@ -44,7 +44,7 @@ class MugghDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = MugghDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = MugghDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.MUGGH_7062)
 }

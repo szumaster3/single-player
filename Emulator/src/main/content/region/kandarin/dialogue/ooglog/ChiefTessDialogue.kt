@@ -285,7 +285,7 @@ class ChiefTessDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = ChiefTessDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = ChiefTessDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.CHIEF_TESS_7051)
 }

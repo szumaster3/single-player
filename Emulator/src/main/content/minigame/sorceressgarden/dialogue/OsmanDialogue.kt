@@ -21,7 +21,7 @@ class OsmanDialogue(
     private var quest: Quest? = null
     private var itemCount = 0
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         quest = player.questRepository.getQuest(Quests.PRINCE_ALI_RESCUE)
         when (quest!!.getStage(player)) {

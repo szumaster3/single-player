@@ -41,14 +41,14 @@ class DropTableParser {
                 log(
                     this::class.java,
                     Log.ERR,
-                    "Error parsing drop tables for NPC [${NPCDefinition.forId(ids[0].toInt()).name}]: ${
+                    "Error parsing drop tables for NPC ${NPCDefinition.forId(ids[0].toInt()).name}: ${
                         exceptionToString(e)
                     }",
                 )
             }
         }
 
-        log(this::class.java, Log.FINE, "Parsed [$count] drop tables.")
+        log(this::class.java, Log.FINE, "Parsed $count drop tables.")
     }
 
     private fun parseTable(

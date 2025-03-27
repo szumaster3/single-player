@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
 class IrwinFeaselbaumDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npcl(FaceAnim.HALF_GUILTY, "Can I help you?")
         return true
@@ -100,7 +100,7 @@ class IrwinFeaselbaumDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = IrwinFeaselbaumDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = IrwinFeaselbaumDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.IRWIN_FEASELBAUM_2066)
 }

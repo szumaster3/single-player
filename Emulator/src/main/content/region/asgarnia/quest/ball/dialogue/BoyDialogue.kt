@@ -22,7 +22,7 @@ import org.rs.consts.Quests
 class BoyDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         val quest = getQuestStage(player, Quests.WITCHS_HOUSE)
 
         if (quest < 10) {

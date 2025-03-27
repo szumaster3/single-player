@@ -14,7 +14,7 @@ import org.rs.consts.NPCs
 class KnightGWDDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if ((getVarp(player, 1048) and 16) != 0) {
             sendMessage(player, "The knight has already died.")

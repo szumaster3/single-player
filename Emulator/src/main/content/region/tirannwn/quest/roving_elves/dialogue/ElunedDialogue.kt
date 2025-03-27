@@ -15,7 +15,7 @@ import org.rs.consts.Quests
 class ElunedDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         if (getQuestStage(player, Quests.ROVING_ELVES) == 10) {
             player(
                 FaceAnim.HALF_GUILTY,

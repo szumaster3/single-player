@@ -17,10 +17,14 @@ class IcyCavernDialogue : Dialogue {
     constructor()
     constructor(player: Player?) : super(player)
 
-    override fun newInstance(player: Player): Dialogue = IcyCavernDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = IcyCavernDialogue(player)
 
-    override fun open(vararg args: Any): Boolean {
-        sendDialogueLines(player, "STOP! The creatures in this cave are VERY Dangerous. Are you", "sure you want to enter?")
+    override fun open(vararg args: Any?): Boolean {
+        sendDialogueLines(
+            player,
+            "STOP! The creatures in this cave are VERY Dangerous. Are you",
+            "sure you want to enter?",
+        )
         stage = 0
         return true
     }

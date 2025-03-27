@@ -2,7 +2,6 @@ package content.region.kandarin.dialogue.stronghold
 
 import content.minigame.gnomecook.handlers.*
 import core.api.*
-import core.game.component.Component
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
@@ -56,21 +55,28 @@ class AluftGianneSnrDialogue(
         tutorialProgress = player.getAttribute("$GC_BASE_ATTRIBUTE:$GC_TUT_PROG", -1)
 
         if (tutorialComplete) {
-            npc("Hello, adventurer. How can I help you?").also { stage = 300 }
+            npcl(FaceAnim.OLD_NORMAL, "Hello, adventurer. How can I help you?").also { stage = 300 }
             return true
         }
 
         if (tutorialProgress == -1) {
-            npc("Who are you and what do you want?").also { stage = END_DIALOGUE }
+            npc(FaceAnim.OLD_NORMAL, "Who are you and what do you want?").also { stage = END_DIALOGUE }
             return true
         }
 
         if (tutorialProgress == 0) {
-            npc("Hello, adventurer. I heard from my son", "that you'd like to do some work.").also { stage = 0 }
+            npc(
+                FaceAnim.OLD_NORMAL,
+                "Hello, adventurer. I heard from my son",
+                "that you'd like to do some work.",
+            ).also {
+                stage =
+                    0
+            }
             return true
         }
 
-        npc("Hello, adventurer. How goes the training?")
+        npcl(FaceAnim.OLD_NORMAL, "Hello, adventurer. How goes the training?")
         stage = tutorialProgress
         return true
     }
@@ -81,16 +87,23 @@ class AluftGianneSnrDialogue(
     ): Boolean {
         when (stage) {
             0 -> player(FaceAnim.HAPPY, "Yes, how do I get started?").also { stage++ }
-            1 -> npc("Well first thing's first I need to teach", "you how to cook!").also { stage++ }
+            1 ->
+                npc(
+                    FaceAnim.OLD_NORMAL,
+                    "Well first thing's first I need to teach",
+                    "you how to cook!",
+                ).also { stage++ }
             2 -> player(FaceAnim.THINKING, "But I already-").also { stage++ }
             3 ->
                 npc(
+                    FaceAnim.OLD_NORMAL,
                     "Stop whatever it is you're saying, no one knows",
                     "how to cook gnome food except gnomes!",
                 ).also { stage++ }
             4 -> player("Alright, go on...").also { stage++ }
             5 ->
                 npc(
+                    FaceAnim.OLD_NORMAL,
                     "Alright, first thing I want you to do is",
                     "make me a toad batta. Here's all the",
                     "ingredients, now get to work!",
@@ -122,7 +135,7 @@ class AluftGianneSnrDialogue(
                 } else {
                     player("Not well, I haven't got the batta yet.").also { stage = END_DIALOGUE }
                 }
-            11 -> npc("Very well, hand it over then!").also { stage++ }
+            11 -> npc(FaceAnim.OLD_NORMAL, "Very well, hand it over then!").also { stage++ }
             12 -> {
                 player.inventory.remove(Item(Items.TOAD_BATTA_2255))
                 setAttribute(player, "/save:$GC_BASE_ATTRIBUTE:$GC_TUT_PROG", 13)
@@ -130,6 +143,7 @@ class AluftGianneSnrDialogue(
             }
             13 ->
                 npc(
+                    FaceAnim.OLD_NORMAL,
                     "Very nicely done. Now I would like you to make me",
                     "toad crunchies. Here's everything you need.",
                 ).also {
@@ -159,7 +173,7 @@ class AluftGianneSnrDialogue(
                     player("Not well, I haven't got the crunchies yet.").also { stage = END_DIALOGUE }
                 }
 
-            16 -> npc("Very well, hand it over then!").also { stage++ }
+            16 -> npc(FaceAnim.OLD_NORMAL, "Very well, hand it over then!").also { stage++ }
             17 -> {
                 player.inventory.remove(Item(Items.TOAD_CRUNCHIES_2217))
                 setAttribute(player, "/save:$GC_BASE_ATTRIBUTE:$GC_TUT_PROG", 18)
@@ -167,7 +181,11 @@ class AluftGianneSnrDialogue(
             }
 
             18 ->
-                npc("Very nice indeed. Now I'd like you to go see my friend", "Blurberry at the bar.").also {
+                npc(
+                    FaceAnim.OLD_NORMAL,
+                    "Very nice indeed. Now I'd like you to go see my friend",
+                    "Blurberry at the bar.",
+                ).also {
                     stage = END_DIALOGUE
                 }
 
@@ -186,8 +204,6 @@ class AluftGianneSnrDialogue(
     }
 
     override fun newInstance(player: Player?): Dialogue = AluftGianneSnrDialogue(player)
-
-    override fun npc(vararg messages: String?): Component = super.npc(FaceAnim.OLD_NORMAL, *messages)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.ALUFT_GIANNE_SNR_850)
 
@@ -211,7 +227,18 @@ class AluftGianneSnrDialogue(
                     "I need to deliver a ${item.name.lowercase()} to ${NPC(job.npc_id).name.lowercase()},",
                     "who is ${job.tip}",
                 )
-                GameWorld.Pulser.submit(GnomeRestaurantPulse(player, if (level == GnomeCookingTipper.LEVEL.HARD) 11L else 6L))
+                GameWorld.Pulser.submit(
+                    GnomeRestaurantPulse(
+                        player,
+                        if (level ==
+                            GnomeCookingTipper.LEVEL.HARD
+                        ) {
+                            11L
+                        } else {
+                            6L
+                        },
+                    ),
+                )
             }
         }
     }

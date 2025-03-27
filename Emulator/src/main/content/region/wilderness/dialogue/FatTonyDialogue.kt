@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
 class FatTonyDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(FaceAnim.HALF_GUILTY, "Go away, I'm very busy.")
         return true
@@ -101,7 +101,7 @@ class FatTonyDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = FatTonyDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = FatTonyDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.FAT_TONY_596)
 }

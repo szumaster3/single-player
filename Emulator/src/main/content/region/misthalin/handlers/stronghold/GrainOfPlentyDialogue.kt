@@ -15,7 +15,7 @@ import org.rs.consts.Items
 class GrainOfPlentyDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         interpreter.sendDialogue("The grain shifts in the sack, sighing audible words....")
         stage = 0
         return true

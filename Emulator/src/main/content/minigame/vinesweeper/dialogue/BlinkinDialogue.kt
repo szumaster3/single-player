@@ -18,7 +18,7 @@ import org.rs.consts.NPCs
 class BlinkinDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         openDialogue(player!!, BlinkinDialogueFile(), npc)
         return true

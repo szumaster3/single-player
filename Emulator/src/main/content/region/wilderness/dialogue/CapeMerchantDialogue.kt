@@ -12,7 +12,7 @@ import org.rs.consts.NPCs
 class CapeMerchantDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc("Hello there, are you interested in buying one of my", "special capes?")
         return true
@@ -56,7 +56,7 @@ class CapeMerchantDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = CapeMerchantDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = CapeMerchantDialogue(player)
 
     override fun getIds(): IntArray =
         intArrayOf(

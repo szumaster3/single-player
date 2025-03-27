@@ -99,7 +99,7 @@ class FairyDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = FairyDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = FairyDialogue(player)
 
     override fun getIds(): IntArray =
         intArrayOf(

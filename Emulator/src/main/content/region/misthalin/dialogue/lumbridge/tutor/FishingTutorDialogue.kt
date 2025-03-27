@@ -15,7 +15,7 @@ import org.rs.consts.NPCs
 class FishingTutorDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         options(
             "Can you teach me the basics of fishing please?",
@@ -206,7 +206,7 @@ class FishingTutorDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = FishingTutorDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = FishingTutorDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.FISHING_TUTOR_4901)
 }

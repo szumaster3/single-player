@@ -16,7 +16,7 @@ import org.rs.consts.NPCs
 class WiseOldManDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (args[1] == true) { // Trick or treat option.
             npc("Don't even think about it.")

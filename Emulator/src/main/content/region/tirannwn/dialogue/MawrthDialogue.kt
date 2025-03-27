@@ -12,7 +12,7 @@ import org.rs.consts.NPCs
 class MawrthDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npcl(
             FaceAnim.FRIENDLY,
@@ -44,7 +44,7 @@ class MawrthDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = MawrthDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = MawrthDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.MAWRTH_2366)
 }

@@ -16,7 +16,6 @@ import java.sql.Timestamp
  * This class is designed for a live or production environment where security and persistence of user data are essential.
  */
 class ProductionAuthenticator : AuthProvider<AccountStorageProvider>() {
-
     /**
      * Configures the authenticator to use the specified [AccountStorageProvider] and sets up the connection for
      * the database if the provider is an instance of [SQLStorageProvider].

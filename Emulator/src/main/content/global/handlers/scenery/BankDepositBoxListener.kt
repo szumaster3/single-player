@@ -43,7 +43,7 @@ class BankDepositBoxListener : InteractionListener {
                 player,
                 player.inventory.toArray(),
                 arrayOf("Deposit-X", "Deposit-All", "Deposit-10", "Deposit-5", "Deposit-1"),
-                11,
+                Components.BANK_DEPOSIT_BOX_11,
                 15,
                 5,
                 7,

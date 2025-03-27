@@ -19,7 +19,7 @@ import org.rs.consts.Quests
 class GertrudeDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         val quest = player.getQuestRepository().getQuest(Quests.GERTRUDES_CAT)
         when (quest.getStage(player)) {
@@ -291,7 +291,7 @@ class GertrudeDialogue(
     val kitten: Item
         get() = Item(RandomFunction.random(Items.PET_KITTEN_1555, Items.PET_KITTEN_1560))
 
-    override fun newInstance(player: Player): Dialogue = GertrudeDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = GertrudeDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.GERTRUDE_780)
 

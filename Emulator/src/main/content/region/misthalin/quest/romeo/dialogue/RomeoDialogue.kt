@@ -28,7 +28,7 @@ class RomeoDialogue(
     private var cutscene: RomeoAndJulietCutscene? = null
     private var phill: NPC? = null
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         val quest = player.getQuestRepository().getQuest(Quests.ROMEO_JULIET)
         npc = args[0] as NPC
         if (args.size > 1) {
@@ -919,7 +919,7 @@ class RomeoDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = RomeoDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = RomeoDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.ROMEO_639)
 }

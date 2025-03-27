@@ -16,7 +16,7 @@ class AliceHusbandDialogue(
 ) : Dialogue(player) {
     private lateinit var quest: Quest
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         quest = player.questRepository.getQuest(Quests.ANIMAL_MAGNETISM)
         npc = args[0] as NPC
         if (!player.equipment.containsAtLeastOneItem(Items.GHOSTSPEAK_AMULET_552)) {

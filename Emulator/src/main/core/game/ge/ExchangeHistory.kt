@@ -20,7 +20,6 @@ class ExchangeHistory(
     private val player: Player? = null,
 ) : PersistPlayer,
     LoginListener {
-
     // Stores the player's history of completed Grand Exchange offers (maximum 5 records).
     var history = arrayOfNulls<GrandExchangeOffer>(5)
 
@@ -304,7 +303,6 @@ class ExchangeHistory(
     )
 
     companion object {
-
         /**
          * Retrieves the instance of `ExchangeHistory` for a player.
          *

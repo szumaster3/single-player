@@ -15,7 +15,7 @@ import org.rs.consts.Quests
 class DesertScoutDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         if (!inEquipment(player, Items.GHOSTSPEAK_AMULET_552)) {
             npc("Whoooo wooo Whooooooooo.").also { stage = END_DIALOGUE }
             return true

@@ -11,7 +11,7 @@ import org.rs.consts.NPCs
 class ArcheologistsDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npcl(FaceAnim.HALF_GUILTY, "Hello there; I see you're qualified. Come to help us out?")
         return true
@@ -29,7 +29,7 @@ class ArcheologistsDialogue(
 
     override fun getIds(): IntArray = ID
 
-    override fun newInstance(player: Player): Dialogue = ArcheologistsDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = ArcheologistsDialogue(player)
 
     companion object {
         val ID =

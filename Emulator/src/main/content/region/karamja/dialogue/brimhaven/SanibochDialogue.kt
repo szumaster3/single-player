@@ -15,7 +15,7 @@ import org.rs.consts.NPCs
 class SanibochDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         stage = if (args.size > 1) args[1] as Int else 0
         if (stage == 0) {

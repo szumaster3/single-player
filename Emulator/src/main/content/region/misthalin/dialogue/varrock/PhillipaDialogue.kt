@@ -12,7 +12,7 @@ import org.rs.consts.NPCs
 class PhillipaDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         player(FaceAnim.HALF_GUILTY, "Hello, who are you?")
         return true
@@ -63,7 +63,7 @@ class PhillipaDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = PhillipaDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = PhillipaDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.PHILLIPA_3325)
 }

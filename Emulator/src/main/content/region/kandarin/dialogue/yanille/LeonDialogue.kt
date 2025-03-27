@@ -18,7 +18,7 @@ import org.rs.consts.NPCs
 class LeonDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         options(
             "What is this place?",
@@ -255,7 +255,7 @@ class LeonDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = LeonDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = LeonDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.LEON_5111)
 }

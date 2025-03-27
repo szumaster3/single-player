@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class ForgeRegentDialogue : Dialogue {
-    override fun newInstance(player: Player): Dialogue {
+    override fun newInstance(player: Player?): Dialogue {
         return ForgeRegentDialogue(player)
     }
 
@@ -29,7 +29,7 @@ class ForgeRegentDialogue : Dialogue {
      */
     constructor(player: Player?) : super(player)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         when ((Math.random() * 4).toInt()) {
             0 -> {
@@ -55,7 +55,10 @@ class ForgeRegentDialogue : Dialogue {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(
+        interfaceId: Int,
+        buttonId: Int,
+    ): Boolean {
         when (stage) {
             0 -> {
                 playerl(FaceAnim.FRIENDLY, "Maybe.")
@@ -161,7 +164,7 @@ class ForgeRegentDialogue : Dialogue {
                 npc(
                     FaceAnim.CHILD_NORMAL,
                     "Sizzley crack hiss spit.",
-                    "(No, I just like walking on them. They burst into flames.)"
+                    "(No, I just like walking on them. They burst into flames.)",
                 )
                 stage++
             }
@@ -200,7 +203,7 @@ class ForgeRegentDialogue : Dialogue {
                 npc(
                     FaceAnim.CHILD_NORMAL,
                     "Hiss crackle spit sizzle crack?",
-                    "(Nah, that's old news - I'm bored of it now.)"
+                    "(Nah, that's old news - I'm bored of it now.)",
                 )
                 stage++
             }
@@ -209,7 +212,7 @@ class ForgeRegentDialogue : Dialogue {
                 npc(
                     FaceAnim.CHILD_NORMAL,
                     "Crackle crickle spit hiss?",
-                    "(Oooooh ooooh oooooh, what's that over there?)"
+                    "(Oooooh ooooh oooooh, what's that over there?)",
                 )
                 stage++
             }

@@ -19,7 +19,7 @@ import org.rs.consts.Quests
 class RoavarDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         player(FaceAnim.HALF_GUILTY, "Hello there!")
         return true
@@ -139,7 +139,7 @@ class RoavarDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = RoavarDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = RoavarDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.ROAVAR_1042)
 }

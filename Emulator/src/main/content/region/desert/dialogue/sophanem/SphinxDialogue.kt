@@ -14,7 +14,7 @@ import org.rs.consts.NPCs
 class SphinxDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (player.familiarManager.hasPet() &&
             player.familiarManager.familiar.id >= 761 &&

@@ -15,7 +15,7 @@ import org.rs.consts.NPCs
 class AbbotLangleyDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         if (args.size >= 1) {
             if (args[0] is NPC) {
                 npc = args[0] as NPC
@@ -107,7 +107,7 @@ class AbbotLangleyDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = AbbotLangleyDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = AbbotLangleyDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.ABBOT_LANGLEY_801)
 }

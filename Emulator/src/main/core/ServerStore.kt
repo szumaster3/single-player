@@ -129,7 +129,8 @@ class ServerStore : PersistWorld {
 
         fun List<Int>.toJSONArray(): JSONArray = JSONArray().apply { this@toJSONArray.forEach { add(it) } }
 
-        inline fun <reified T> JSONObject.getList(key: String): List<T> = (this[key] as? JSONArray)?.mapNotNull { it as? T } ?: emptyList()
+        inline fun <reified T> JSONObject.getList(key: String): List<T> =
+            (this[key] as? JSONArray)?.mapNotNull { it as? T } ?: emptyList()
 
         fun JSONObject.addToList(
             key: String,

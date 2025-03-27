@@ -14,7 +14,7 @@ import org.rs.consts.NPCs
 class ReloboBlinyoDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         player(FaceAnim.HALF_GUILTY, "Hey there.")
         return true
@@ -92,7 +92,7 @@ class ReloboBlinyoDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = ReloboBlinyoDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = ReloboBlinyoDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.RELOBO_BLINYO_LOGS_6526)
 }

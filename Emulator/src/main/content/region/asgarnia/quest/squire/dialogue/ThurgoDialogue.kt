@@ -18,7 +18,7 @@ import org.rs.consts.Quests
 class ThurgoDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         quest = player.getQuestRepository().getQuest(Quests.THE_KNIGHTS_SWORD)
         removeAttribute(player, "thurgo:1")

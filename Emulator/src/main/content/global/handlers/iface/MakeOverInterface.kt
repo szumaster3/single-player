@@ -45,7 +45,7 @@ class MakeOverInterface : ComponentPlugin() {
         sendInterfaceConfig(player, component.id, skincolorButtons.first + currentSkin, true)
 
         player.toggleWardrobe(true)
-        component.setCloseEvent { pl, _ ->
+        component.setUncloseEvent { pl, _ ->
             pl.toggleWardrobe(false)
             if (getAttribute(player, "mm-paid", false)) {
                 val newColor = player.getAttribute("mm-previous", -1)

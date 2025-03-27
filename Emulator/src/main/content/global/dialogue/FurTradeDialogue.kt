@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
 class FurTradeDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(FaceAnim.HALF_GUILTY, "Would you like to trade in fur?")
         return true
@@ -38,7 +38,7 @@ class FurTradeDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = FurTradeDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = FurTradeDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.FUR_TRADER_573)
 }

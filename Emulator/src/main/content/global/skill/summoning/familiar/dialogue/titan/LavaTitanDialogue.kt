@@ -18,7 +18,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class LavaTitanDialogue : Dialogue {
-    override fun newInstance(player: Player): Dialogue {
+    override fun newInstance(player: Player?): Dialogue {
         return LavaTitanDialogue(player)
     }
 
@@ -34,7 +34,7 @@ class LavaTitanDialogue : Dialogue {
      */
     constructor(player: Player?) : super(player)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (npc !is Familiar) {
             return false
@@ -49,15 +49,19 @@ class LavaTitanDialogue : Dialogue {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(
+        interfaceId: Int,
+        buttonId: Int,
+    ): Boolean {
         when (buttonId) {
             1 -> openDialogue(player, LavaTitanDialogueFile())
-            2 -> if (!WildernessZone.checkTeleport(player, 20)) {
-                end()
-            } else {
-                teleport(player, Location(3030, 3842, 0), TeleportType.NORMAL)
-                end()
-            }
+            2 ->
+                if (!WildernessZone.checkTeleport(player, 20)) {
+                    end()
+                } else {
+                    teleport(player, Location(3030, 3842, 0), TeleportType.NORMAL)
+                    end()
+                }
         }
         return true
     }

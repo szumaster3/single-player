@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
 class LekaDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun newInstance(player: Player): Dialogue = LekaDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = LekaDialogue(player)
 
     override fun handle(
         interfaceId: Int,

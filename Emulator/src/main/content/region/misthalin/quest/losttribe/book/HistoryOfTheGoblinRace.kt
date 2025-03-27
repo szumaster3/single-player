@@ -27,7 +27,7 @@ class HistoryOfTheGoblinRace : ComponentPlugin() {
         super.open(player, component)
         sendInterfaceConfig(player, Components.GOBLIN_SYMBOL_BOOK_183, 17, true)
         val qstage = player.questRepository.getQuest(Quests.THE_LOST_TRIBE).getStage(player)
-        component?.setCloseEvent { player, _ ->
+        component?.setUncloseEvent { player, _ ->
             if (qstage == 42 || qstage == 41) {
                 sendPlayerDialogue(
                     player,

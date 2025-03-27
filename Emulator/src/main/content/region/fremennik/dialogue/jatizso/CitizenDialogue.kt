@@ -13,7 +13,7 @@ class CitizenDialogue(
 ) : Dialogue(player) {
     val stages = intArrayOf(0, 100, 200, 300)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         stage = stages.random()
         handle(0, 0)
         return true

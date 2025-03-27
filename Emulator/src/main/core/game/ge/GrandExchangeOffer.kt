@@ -14,8 +14,6 @@ import core.net.packet.out.GrandExchangePacket
 import java.sql.ResultSet
 import kotlin.math.min
 
-// import core.services.discord.Discord
-
 /**
  * Represents a Grand Exchange offer made by a player or a bot.
  * Offers can either be a sale or purchase of items, with various states and attributes.
@@ -115,9 +113,9 @@ class GrandExchangeOffer {
     val isActive: Boolean
         get() =
             offerState != OfferState.ABORTED &&
-                    offerState != OfferState.PENDING &&
-                    offerState != OfferState.COMPLETED &&
-                    offerState != OfferState.REMOVED
+                offerState != OfferState.PENDING &&
+                offerState != OfferState.COMPLETED &&
+                offerState != OfferState.REMOVED
 
     /**
      * Adds an item to the withdraw list of this offer.
@@ -223,7 +221,7 @@ class GrandExchangeOffer {
                 val stmt = conn.createStatement()
                 stmt.executeUpdate(
                     "INSERT INTO player_offers(player_uid, item_id, amount_total, offered_value, time_stamp, offer_state, is_sale, slot_index) " +
-                            "values($playerUID,$itemID,$amount,$offeredValue,${System.currentTimeMillis()},${offerState.ordinal},${if (sell) 1 else 0}, $index)",
+                        "values($playerUID,$itemID,$amount,$offeredValue,${System.currentTimeMillis()},${offerState.ordinal},${if (sell) 1 else 0}, $index)",
                 )
                 val nowuid = stmt.executeQuery("SELECT last_insert_rowid()")
                 uid = nowuid.getLong(1)
@@ -280,23 +278,23 @@ class GrandExchangeOffer {
      */
     override fun toString(): String =
         "[name=" + ItemDefinition.forId(itemID).name + ", itemId=" + itemID + ", amount=" + amount +
-                ", completedAmount=" +
-                completedAmount +
-                ", offeredValue=" +
-                offeredValue +
-                ", index=" +
-                index +
-                ", sell=" +
-                sell +
-                ", state=" +
-                offerState +
-                ", withdraw=" +
-                withdraw.contentToString() +
-                ", totalCoinExchange=" +
-                totalCoinExchange +
-                ", playerUID=" +
-                playerUID +
-                "]"
+            ", completedAmount=" +
+            completedAmount +
+            ", offeredValue=" +
+            offeredValue +
+            ", index=" +
+            index +
+            ", sell=" +
+            sell +
+            ", state=" +
+            offerState +
+            ", withdraw=" +
+            withdraw.contentToString() +
+            ", totalCoinExchange=" +
+            totalCoinExchange +
+            ", playerUID=" +
+            playerUID +
+            "]"
 
     companion object {
         /**

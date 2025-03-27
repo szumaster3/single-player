@@ -137,7 +137,8 @@ object CharterUtils {
             2,
             13,
         ) {
-            override fun checkTravel(player: Player?): Boolean = requireQuest(player!!, Quests.PRIEST_IN_PERIL, "to go there.")
+            override fun checkTravel(player: Player?): Boolean =
+                requireQuest(player!!, Quests.PRIEST_IN_PERIL, "to go there.")
         },
         CRANDOR(
             Location(2792, 3417, 1),

@@ -15,7 +15,7 @@ import org.rs.consts.Quests
 class IngridHradsonDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (!isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS)) {
             npcl(FaceAnim.ANNOYED, "Outlander, I have work to be getting on with... Please stop bothering me.").also {

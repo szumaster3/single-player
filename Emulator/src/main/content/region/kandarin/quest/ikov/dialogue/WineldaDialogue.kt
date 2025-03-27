@@ -20,7 +20,7 @@ import org.rs.consts.Quests
 class WineldaDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun newInstance(player: Player): Dialogue = WineldaDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = WineldaDialogue(player)
 
     override fun handle(
         interfaceId: Int,

@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class AbyssalTitanDialogue : Dialogue {
-    override fun newInstance(player: Player): Dialogue {
+    override fun newInstance(player: Player?): Dialogue {
         return AbyssalTitanDialogue(player)
     }
 
@@ -29,7 +29,10 @@ class AbyssalTitanDialogue : Dialogue {
      */
     constructor(player: Player?) : super(player)
 
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(
+        interfaceId: Int,
+        buttonId: Int,
+    ): Boolean {
         if (stage == START_DIALOGUE) {
             npcl(FaceAnim.CHILD_NORMAL, "Scruunt, scraaan.")
             stage = END_DIALOGUE

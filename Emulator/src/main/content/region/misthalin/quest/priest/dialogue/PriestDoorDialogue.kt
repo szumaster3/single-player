@@ -16,7 +16,7 @@ class PriestDoorDialogue(
 ) : Dialogue(player) {
     private var door: Scenery? = null
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         door = args[0] as Scenery
         if (getQuestStage(player, Quests.PRIEST_IN_PERIL) == 10) {
             sendDialogue(
@@ -153,7 +153,7 @@ class PriestDoorDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = PriestDoorDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = PriestDoorDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(54584)
 }

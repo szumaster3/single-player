@@ -15,7 +15,7 @@ import org.rs.consts.Quests
 class MonasteryMonkDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (getQuestStage(player, Quests.MONKS_FRIEND) < 1) {
             npcl(FaceAnim.NEUTRAL, "Peace brother.")

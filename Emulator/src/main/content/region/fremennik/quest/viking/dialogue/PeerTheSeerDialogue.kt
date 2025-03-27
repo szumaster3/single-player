@@ -72,7 +72,7 @@ class PeerTheSeerDialogue(
         )
     var prediction = RandomFunction.getRandom(5)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         if (inInventory(player, Items.WARRIORS_CONTRACT_3710, 1)) {
             playerl(FaceAnim.HAPPY, "Can I have a weather forecast now please?")
             stage = 15

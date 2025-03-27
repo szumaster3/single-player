@@ -125,7 +125,7 @@ class TenzingDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = TenzingDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = TenzingDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.TENZING_1071)
 }

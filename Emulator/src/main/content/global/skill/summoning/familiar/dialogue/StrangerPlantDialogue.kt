@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class StrangerPlantDialogue : Dialogue {
-    override fun newInstance(player: Player): Dialogue {
+    override fun newInstance(player: Player?): Dialogue {
         return StrangerPlantDialogue(player)
     }
 
@@ -29,7 +29,7 @@ class StrangerPlantDialogue : Dialogue {
      */
     constructor(player: Player?) : super(player)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         val randomChoice = (Math.random() * 4).toInt()
         when (randomChoice) {
@@ -56,7 +56,10 @@ class StrangerPlantDialogue : Dialogue {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(
+        interfaceId: Int,
+        buttonId: Int,
+    ): Boolean {
         when (stage) {
             0 -> {
                 playerl(FaceAnim.FRIENDLY, "I know you are.")
@@ -111,7 +114,7 @@ class StrangerPlantDialogue : Dialogue {
             10 -> {
                 playerl(
                     FaceAnim.FRIENDLY,
-                    "You're trying to remain stealthy and secretive, while looking out for clues."
+                    "You're trying to remain stealthy and secretive, while looking out for clues.",
                 )
                 stage++
             }
@@ -164,7 +167,7 @@ class StrangerPlantDialogue : Dialogue {
             20 -> {
                 playerl(
                     FaceAnim.FRIENDLY,
-                    "If by 'fun' you mean 'sudden heart attacks', then yes, please take them out of my life!"
+                    "If by 'fun' you mean 'sudden heart attacks', then yes, please take them out of my life!",
                 )
                 stage = END_DIALOGUE
             }

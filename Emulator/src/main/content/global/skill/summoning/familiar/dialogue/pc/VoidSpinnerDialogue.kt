@@ -15,7 +15,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class VoidSpinnerDialogue : Dialogue {
-    override fun newInstance(player: Player): Dialogue {
+    override fun newInstance(player: Player?): Dialogue {
         return VoidSpinnerDialogue(player)
     }
 
@@ -31,7 +31,7 @@ class VoidSpinnerDialogue : Dialogue {
      */
     constructor(player: Player?) : super(player)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (anyInInventory(player, Items.PURPLE_SWEETS_4561, Items.PURPLE_SWEETS_10476)) {
             npcl(FaceAnim.CHILD_NORMAL, "You have sweeties for spinner?")
@@ -63,7 +63,10 @@ class VoidSpinnerDialogue : Dialogue {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(
+        interfaceId: Int,
+        buttonId: Int,
+    ): Boolean {
         when (stage) {
             0 -> {
                 playerl(FaceAnim.FRIENDLY, "Sweeties? No sweeties here.")
@@ -113,7 +116,7 @@ class VoidSpinnerDialogue : Dialogue {
             9 -> {
                 playerl(
                     FaceAnim.HALF_ASKING,
-                    "Aren't you meant to be the essence of a spinner? How do you have a mother?"
+                    "Aren't you meant to be the essence of a spinner? How do you have a mother?",
                 )
                 stage++
             }

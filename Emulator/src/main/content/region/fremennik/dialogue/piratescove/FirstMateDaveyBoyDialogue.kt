@@ -12,7 +12,7 @@ import org.rs.consts.NPCs
 class FirstMateDaveyBoyDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         when ((1..2).random()) {
             1 -> playerl(FaceAnim.HALF_ASKING, "What does it take to become first mate on a ship?").also { stage = 0 }

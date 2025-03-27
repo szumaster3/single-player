@@ -410,7 +410,7 @@ class BarlakDialogue(
 
     private fun getSkillForCurItem(): Int = sets[curItem][3]
 
-    override fun newInstance(player: Player): Dialogue = BarlakDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = BarlakDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.BARLAK_5828)
 }

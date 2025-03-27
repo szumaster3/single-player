@@ -12,7 +12,7 @@ import org.rs.consts.NPCs
 class CharmedWarriorDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         when (npc.id) {
             NPCs.CHARMED_WARRIOR_3105, NPCs.CHARMED_WARRIOR_3104 -> player("Is there anybody there?")

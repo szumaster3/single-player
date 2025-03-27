@@ -14,7 +14,7 @@ import org.rs.consts.NPCs
 class MurkyMattDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         player(FaceAnim.HALF_GUILTY, "A pirate!")
         return true
@@ -98,7 +98,7 @@ class MurkyMattDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = MurkyMattDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = MurkyMattDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.MURKY_MATT_RUNES_6525)
 }

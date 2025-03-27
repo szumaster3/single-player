@@ -80,7 +80,7 @@ class UrtagDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = UrtagDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = UrtagDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.UR_TAG_5799)
 }

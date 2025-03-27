@@ -17,7 +17,7 @@ import org.rs.consts.NPCs
 class MatthiasFalconryDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         val quickOption = args.size == 2
 
         when {
@@ -287,7 +287,7 @@ class MatthiasFalconryDialogue(
             )
     }
 
-    override fun newInstance(player: Player): Dialogue = MatthiasFalconryDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = MatthiasFalconryDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.MATTHIAS_5093)
 }

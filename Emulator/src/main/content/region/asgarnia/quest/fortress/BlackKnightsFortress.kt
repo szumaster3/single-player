@@ -104,7 +104,11 @@ class BlackKnightsFortress :
     override fun finish(player: Player) {
         super.finish(player)
         var line = 10
-        player.packetDispatch.sendString("You have completed the Black Knights' Fortress!", Components.QUEST_COMPLETE_SCROLL_277, 4)
+        player.packetDispatch.sendString(
+            "You have completed the Black Knights' Fortress!",
+            Components.QUEST_COMPLETE_SCROLL_277,
+            4,
+        )
         drawReward(player, "3 Quests Points", line++)
         drawReward(player, "2500 Coins", line)
         sendItemZoomOnInterface(player, Components.QUEST_COMPLETE_SCROLL_277, 5, Items.BROKEN_CAULDRON_9591, 240)

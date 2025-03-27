@@ -20,7 +20,7 @@ import org.rs.consts.*
 class ProfessorOddensteinDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         val quest = player.getQuestRepository().getQuest(Quests.ERNEST_THE_CHICKEN)
         when (quest.getStage(player)) {
@@ -326,7 +326,7 @@ class ProfessorOddensteinDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = ProfessorOddensteinDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = ProfessorOddensteinDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.PROFESSOR_ODDENSTEIN_286)
 

@@ -264,7 +264,7 @@ class GrishDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = GrishDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = GrishDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.GRISH_2038)
 }

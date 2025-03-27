@@ -19,7 +19,7 @@ import org.rs.consts.NPCs
 class ManDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (npc == null) return false
         if ((args.size > 1 && args[1] is Item) &&
@@ -78,7 +78,7 @@ class ManDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = ManDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = ManDialogue(player)
 
     override fun getIds(): IntArray =
         intArrayOf(

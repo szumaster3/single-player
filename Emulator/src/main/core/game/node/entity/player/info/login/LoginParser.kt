@@ -39,7 +39,8 @@ class LoginParser(
                 override fun pulse(): Boolean {
                     try {
                         if (details.session.isActive()) {
-                            player.properties.spawnLocation = getAttribute(player, "/save:spawnLocation", ServerConstants.HOME_LOCATION)
+                            player.properties.spawnLocation =
+                                getAttribute(player, "/save:spawnLocation", ServerConstants.HOME_LOCATION)
                             loginListeners.forEach(Consumer { listener: LoginListener -> listener.login(player) }) // Execute login hooks
                             parser.runContentHooks()
                             player.details.session.`object` = (player)

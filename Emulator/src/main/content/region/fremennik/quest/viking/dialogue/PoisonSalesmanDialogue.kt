@@ -19,7 +19,7 @@ import org.rs.consts.Quests
 class PoisonSalesmanDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         options("Talk about the Murder Mystery Quest", "Talk about the Fremennik Trials")
         stage = START_DIALOGUE
         return true

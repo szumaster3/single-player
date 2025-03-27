@@ -90,7 +90,14 @@ class GnomeBowlInterface : InterfaceListener {
             Items.EQUA_LEAVES_2128,
             Items.EQUA_LEAVES_2128,
         ),
-        HALF_MADE_VEG_BA(Items.HALF_MADE_BOWL_9561, 35, Items.POTATO_1942, Items.POTATO_1942, Items.ONION_1957, Items.ONION_1957),
+        HALF_MADE_VEG_BA(
+            Items.HALF_MADE_BOWL_9561,
+            35,
+            Items.POTATO_1942,
+            Items.POTATO_1942,
+            Items.ONION_1957,
+            Items.ONION_1957,
+        ),
         HALF_MADE_WOR_HO(
             Items.HALF_MADE_BOWL_9563,
             30,

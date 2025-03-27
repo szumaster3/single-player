@@ -14,7 +14,7 @@ class LecherousLeeDialogue(
 ) : Dialogue(player) {
     private val conversations = arrayOf(0, 10, 13, 17, 21, 27, 31, 36, 43, 52)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         player(FaceAnim.FRIENDLY, "Hello.").also { stage = conversations.random() }
         return true

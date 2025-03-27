@@ -12,7 +12,7 @@ import org.rs.consts.NPCs
 class JonnytheBeardDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (ShieldofArrav.isPhoenixMission(player)) {
             sendMessage(player, "Johnny the beard is not interested in talking.")
@@ -34,7 +34,7 @@ class JonnytheBeardDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = JonnytheBeardDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = JonnytheBeardDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.JONNY_THE_BEARD_645)
 }

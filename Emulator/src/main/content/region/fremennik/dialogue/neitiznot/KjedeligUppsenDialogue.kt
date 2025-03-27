@@ -12,7 +12,7 @@ import org.rs.consts.NPCs
 class KjedeligUppsenDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npcl(FaceAnim.NEUTRAL, "I'm guarding the king, I cannot speak.")
         return true

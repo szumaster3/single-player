@@ -24,7 +24,6 @@ import org.rs.consts.Sounds
  */
 @Initializable
 class BindSpell : CombatSpell {
-
     constructor()
 
     private constructor(
@@ -36,7 +35,7 @@ class BindSpell : CombatSpell {
         start: Graphics,
         projectile: Projectile,
         end: Graphics,
-        vararg runes: Item
+        vararg runes: Item,
     ) : super(
         type,
         SpellBook.MODERN,
@@ -48,10 +47,14 @@ class BindSpell : CombatSpell {
         start,
         projectile,
         end,
-        *runes
+        *runes,
     )
 
-    override fun fireEffect(entity: Entity, victim: Entity, state: BattleState) {
+    override fun fireEffect(
+        entity: Entity,
+        victim: Entity,
+        state: BattleState,
+    ) {
         if (victim is NPC) {
             if (victim.name.contains("impling")) {
                 state.estimatedHit = -2
@@ -77,7 +80,11 @@ class BindSpell : CombatSpell {
         entity.setAttribute("entangleDelay", ticks + tick + 2)
     }
 
-    override fun getMaximumImpact(entity: Entity, victim: Entity, state: BattleState): Int {
+    override fun getMaximumImpact(
+        entity: Entity,
+        victim: Entity,
+        state: BattleState,
+    ): Int {
         return if (getType() === SpellType.ENTANGLE) 5 else 3
     }
 
@@ -96,8 +103,8 @@ class BindSpell : CombatSpell {
                 BIND_END,
                 Runes.NATURE_RUNE.getItem(2),
                 Runes.EARTH_RUNE.getItem(3),
-                Runes.WATER_RUNE.getItem(3)
-            )
+                Runes.WATER_RUNE.getItem(3),
+            ),
         )
         SpellBook.MODERN.register(
             30,
@@ -112,8 +119,8 @@ class BindSpell : CombatSpell {
                 SNARE_END,
                 Runes.NATURE_RUNE.getItem(3),
                 Runes.EARTH_RUNE.getItem(4),
-                Runes.WATER_RUNE.getItem(4)
-            )
+                Runes.WATER_RUNE.getItem(4),
+            ),
         )
         SpellBook.MODERN.register(
             56,
@@ -128,8 +135,8 @@ class BindSpell : CombatSpell {
                 ENTANGLE_END,
                 Runes.NATURE_RUNE.getItem(4),
                 Runes.EARTH_RUNE.getItem(5),
-                Runes.WATER_RUNE.getItem(5)
-            )
+                Runes.WATER_RUNE.getItem(5),
+            ),
         )
         return this
     }

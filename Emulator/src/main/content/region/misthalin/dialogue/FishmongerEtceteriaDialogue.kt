@@ -37,7 +37,7 @@ class FishmongerEtceteriaDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = FishmongerEtceteriaDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = FishmongerEtceteriaDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.FISHMONGER_1369)
 }

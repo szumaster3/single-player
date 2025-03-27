@@ -19,7 +19,7 @@ import java.util.*
  */
 @Initializable
 class CompostMoundDialogue : Dialogue {
-    override fun newInstance(player: Player): Dialogue {
+    override fun newInstance(player: Player?): Dialogue {
         return CompostMoundDialogue(player)
     }
 
@@ -35,62 +35,67 @@ class CompostMoundDialogue : Dialogue {
      */
     constructor(player: Player?) : super(player)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         options("Chat", "Withdraw", "Farming boost")
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(
+        interfaceId: Int,
+        buttonId: Int,
+    ): Boolean {
         when (stage) {
-            0 -> when (buttonId) {
-                1 -> when (Random().nextInt(6)) {
-                    0 -> {
-                        npc(
-                            FaceAnim.CHILD_NORMAL,
-                            "Schlorp, splort, splort, splutter shclorp?",
-                            "(What we be doin' 'ere, zur?)"
-                        )
-                        stage = 124
-                    }
+            0 ->
+                when (buttonId) {
+                    1 ->
+                        when (Random().nextInt(6)) {
+                            0 -> {
+                                npc(
+                                    FaceAnim.CHILD_NORMAL,
+                                    "Schlorp, splort, splort, splutter shclorp?",
+                                    "(What we be doin' 'ere, zur?)",
+                                )
+                                stage = 124
+                            }
 
-                    1 -> {
-                        npcl(FaceAnim.CHILD_NORMAL, "Oi've gotta braand new comboine 'aarvester!")
-                        stage = 100
-                    }
+                            1 -> {
+                                npcl(FaceAnim.CHILD_NORMAL, "Oi've gotta braand new comboine 'aarvester!")
+                                stage = 100
+                            }
+
+                            2 -> {
+                                npcl(FaceAnim.CHILD_NORMAL, "What we be doin' 'ere, zur?")
+                                stage = 104
+                            }
+
+                            3 -> {
+                                npcl(FaceAnim.CHILD_NORMAL, "Errr...are ye gonna eat that?")
+                                stage = 106
+                            }
+
+                            4 -> {
+                                npcl(FaceAnim.CHILD_NORMAL, "Sigh...")
+                                stage = 113
+                            }
+
+                            5 -> {
+                                npcl(FaceAnim.CHILD_NORMAL, "Oi wus just a-wonderin'...")
+                                stage = 117
+                            }
+                        }
 
                     2 -> {
-                        npcl(FaceAnim.CHILD_NORMAL, "What we be doin' 'ere, zur?")
-                        stage = 104
+                        end()
+                        val forager = player.familiarManager.familiar as Forager
+                        forager.openInterface()
                     }
 
                     3 -> {
-                        npcl(FaceAnim.CHILD_NORMAL, "Errr...are ye gonna eat that?")
-                        stage = 106
-                    }
-
-                    4 -> {
-                        npcl(FaceAnim.CHILD_NORMAL, "Sigh...")
-                        stage = 113
-                    }
-
-                    5 -> {
-                        npcl(FaceAnim.CHILD_NORMAL, "Oi wus just a-wonderin'...")
-                        stage = 117
+                        player("Can you boost my Farming stat, please?")
+                        stage = 30
                     }
                 }
-
-                2 -> {
-                    end()
-                    val forager = player.familiarManager.familiar as Forager
-                    forager.openInterface()
-                }
-
-                3 -> {
-                    player("Can you boost my Farming stat, please?")
-                    stage = 30
-                }
-            }
 
             30 -> {
                 npc("Schlup glorp sputter!", "(Oi do believe oi can!)")
@@ -103,7 +108,8 @@ class CompostMoundDialogue : Dialogue {
                     sendMessage(player, "Your stat cannot be boosted this way right now.")
                     return true
                 }
-                player.getSkills()
+                player
+                    .getSkills()
                     .updateLevel(Skills.FARMING, (1 + (getStatLevel(player, Skills.FARMING) * 0.02)).toInt())
                 sendMessage(player, "The Compost mound has boosted your Farming stat.")
                 end()
@@ -117,7 +123,7 @@ class CompostMoundDialogue : Dialogue {
             101 -> {
                 npcl(
                     FaceAnim.CHILD_NORMAL,
-                    "Well, it's a flat bit a metal wi' a 'andle that I can use ta 'aarvest all combintions o' plaants."
+                    "Well, it's a flat bit a metal wi' a 'andle that I can use ta 'aarvest all combintions o' plaants.",
                 )
                 stage++
             }
@@ -165,7 +171,7 @@ class CompostMoundDialogue : Dialogue {
             110 -> {
                 playerl(
                     FaceAnim.FRIENDLY,
-                    "No I do not want it! Nor do I want to put my boot in your mouth for you to clean it off."
+                    "No I do not want it! Nor do I want to put my boot in your mouth for you to clean it off.",
                 )
                 stage++
             }
@@ -193,7 +199,7 @@ class CompostMoundDialogue : Dialogue {
             115 -> {
                 playerl(
                     FaceAnim.HALF_ASKING,
-                    "Young'uns? Oh, the buckets of compost! Well, those wooden containers will keep them safe."
+                    "Young'uns? Oh, the buckets of compost! Well, those wooden containers will keep them safe.",
                 )
                 stage++
             }
@@ -231,7 +237,7 @@ class CompostMoundDialogue : Dialogue {
             122 -> {
                 npcl(
                     FaceAnim.CHILD_NORMAL,
-                    "'At's roight. Oi found some mint plaants in a big pile o' muck, and oi 'ad 'em fer me breakfast."
+                    "'At's roight. Oi found some mint plaants in a big pile o' muck, and oi 'ad 'em fer me breakfast.",
                 )
                 stage++
             }
@@ -250,7 +256,7 @@ class CompostMoundDialogue : Dialogue {
                 npc(
                     FaceAnim.CHILD_NORMAL,
                     "Schorp, splutter, splutter. Schlup schorp.",
-                    "(Aye, right ye are, zur. Oi'll be roight there.)"
+                    "(Aye, right ye are, zur. Oi'll be roight there.)",
                 )
                 stage = END_DIALOGUE
             }

@@ -20,7 +20,7 @@ import org.rs.consts.Quests
 class HettyDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         val quest = player.getQuestRepository().getQuest(Quests.WITCHS_POTION)
         if (quest.isCompleted(player)) {
             npc(FaceAnim.ASKING, "How's your magic coming along?")

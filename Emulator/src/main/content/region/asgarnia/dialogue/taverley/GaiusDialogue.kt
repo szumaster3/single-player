@@ -33,7 +33,7 @@ class GaiusDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = GaiusDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = GaiusDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.GAIUS_586)
 }

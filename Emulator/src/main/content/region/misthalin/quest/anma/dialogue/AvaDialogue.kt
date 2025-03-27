@@ -24,9 +24,9 @@ class AvaDialogue(
 ) : Dialogue(player) {
     private var quest: Quest? = null
 
-    override fun newInstance(player: Player): Dialogue = AvaDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = AvaDialogue(player)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         quest = player.getQuestRepository().getQuest(Quests.ANIMAL_MAGNETISM)
         if (!quest!!.hasRequirements(player)) {

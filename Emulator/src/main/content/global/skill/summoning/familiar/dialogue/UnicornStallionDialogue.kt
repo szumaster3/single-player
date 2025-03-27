@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class UnicornStallionDialogue : Dialogue {
-    override fun newInstance(player: Player): Dialogue {
+    override fun newInstance(player: Player?): Dialogue {
         return UnicornStallionDialogue(player)
     }
 
@@ -29,7 +29,7 @@ class UnicornStallionDialogue : Dialogue {
      */
     constructor(player: Player?) : super(player)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         val randomChoice = (Math.random() * 5).toInt()
         when (randomChoice) {
@@ -37,7 +37,7 @@ class UnicornStallionDialogue : Dialogue {
                 npc(
                     FaceAnim.CHILD_NORMAL,
                     "Neigh neigh neighneigh snort?",
-                    "(Isn't everything so awesomely wonderful?)"
+                    "(Isn't everything so awesomely wonderful?)",
                 )
                 stage = 0
             }
@@ -46,7 +46,7 @@ class UnicornStallionDialogue : Dialogue {
                 npc(
                     FaceAnim.CHILD_NORMAL,
                     "Whicker whicker. Neigh, neigh, whinny.",
-                    "(I feel so, like, enlightened. Let's meditate and enhance our auras.)"
+                    "(I feel so, like, enlightened. Let's meditate and enhance our auras.)",
                 )
                 stage = 5
             }
@@ -65,7 +65,7 @@ class UnicornStallionDialogue : Dialogue {
                 npc(
                     FaceAnim.CHILD_NORMAL,
                     "Whicker snort! Whinny whinny whinny.",
-                    "(You're hurt! Let me try to heal you.)"
+                    "(You're hurt! Let me try to heal you.)",
                 )
                 stage = 11
             }
@@ -73,13 +73,16 @@ class UnicornStallionDialogue : Dialogue {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(
+        interfaceId: Int,
+        buttonId: Int,
+    ): Boolean {
         when (stage) {
             0 -> {
                 npc(
                     FaceAnim.CHILD_NORMAL,
                     "Neigh neigh neighneigh snort?",
-                    "(Isn't everything so awesomely wonderful?)"
+                    "(Isn't everything so awesomely wonderful?)",
                 )
                 stage++
             }
@@ -117,7 +120,7 @@ class UnicornStallionDialogue : Dialogue {
             7 -> {
                 playerl(
                     FaceAnim.HALF_ASKING,
-                    "Okay... Hang on. Seeing as I summoned you here, wouldn't that mean you are physically projecting instead?"
+                    "Okay... Hang on. Seeing as I summoned you here, wouldn't that mean you are physically projecting instead?",
                 )
                 stage++
             }
@@ -136,7 +139,7 @@ class UnicornStallionDialogue : Dialogue {
                 npc(
                     FaceAnim.CHILD_NORMAL,
                     "Snuggle whicker",
-                    "(Man, you're totally, like, uncosmic, " + player.username + ".)"
+                    "(Man, you're totally, like, uncosmic, " + player.username + ".)",
                 )
                 stage = END_DIALOGUE
             }
@@ -150,7 +153,7 @@ class UnicornStallionDialogue : Dialogue {
                 npc(
                     FaceAnim.CHILD_NORMAL,
                     "Snuffle whicker whicker neigh neigh...",
-                    "(Okay, we'll begin with acupuncture and some reiki, then I'll get my crystals...)"
+                    "(Okay, we'll begin with acupuncture and some reiki, then I'll get my crystals...)",
                 )
                 stage++
             }
@@ -164,7 +167,7 @@ class UnicornStallionDialogue : Dialogue {
                 npc(
                     FaceAnim.CHILD_NORMAL,
                     "Whicker whinny whinny neigh.",
-                    "(Yes, but I believe in alternative medicine.)"
+                    "(Yes, but I believe in alternative medicine.)",
                 )
                 stage++
             }

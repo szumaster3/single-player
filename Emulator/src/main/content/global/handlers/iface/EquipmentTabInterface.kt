@@ -226,7 +226,7 @@ class EquipmentTabInterface : ComponentPlugin() {
                             }
                         p.interfaceManager
                             .openComponent(Components.EQUIP_SCREEN2_667)
-                            .setCloseEvent { player: Player, c: Component? ->
+                            .setUncloseEvent { player: Player, c: Component? ->
                                 player.removeAttribute("equip_stats_open")
                                 player.interfaceManager.closeSingleTab()
                                 player.inventory.listeners.remove(listener)

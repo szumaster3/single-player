@@ -13,7 +13,7 @@ import org.rs.consts.Items
 class TzhaarMejJalDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         player(FaceAnim.HALF_GUILTY, "I have a fire cape here.")
         stage = 0
@@ -54,7 +54,7 @@ class TzhaarMejJalDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = TzhaarMejJalDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = TzhaarMejJalDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(DialogueInterpreter.getDialogueKey("firecape-exchange"))
 }

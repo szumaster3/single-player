@@ -12,7 +12,7 @@ import org.rs.consts.NPCs
 class TombarDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         player(FaceAnim.HALF_ASKING, "Say, aren't you a bit tall for a dwarf?")
         return true

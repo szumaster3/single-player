@@ -16,7 +16,7 @@ class IlfeenDialogue(
 ) : Dialogue(player) {
     var queststage = 0
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         when (queststage) {
             0 -> npcl(FaceAnim.FRIENDLY, "Good day, what are you doing all the way out here?").also { stage = 0 }
@@ -99,7 +99,7 @@ class IlfeenDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = IlfeenDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = IlfeenDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.ILFEEN_1777)
 }

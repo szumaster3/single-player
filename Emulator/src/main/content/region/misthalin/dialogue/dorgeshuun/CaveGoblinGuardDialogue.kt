@@ -42,7 +42,7 @@ class CaveGoblinGuardDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = CaveGoblinGuardDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = CaveGoblinGuardDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.CAVE_GOBLIN_GUARD_2073, NPCs.CAVE_GOBLIN_GUARD_2074)
 }

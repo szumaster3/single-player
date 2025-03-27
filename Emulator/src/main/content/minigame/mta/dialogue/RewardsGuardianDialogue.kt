@@ -18,7 +18,7 @@ import org.rs.consts.NPCs
 class RewardsGuardianDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         if (args.size > 1) {
             npc(FaceAnim.OLD_NORMAL, "Have you spoken to my fellow guardian downstairs?").also { stage = 3 }
             return true

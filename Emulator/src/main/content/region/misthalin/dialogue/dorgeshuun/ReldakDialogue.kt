@@ -34,7 +34,7 @@ class ReldakDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = ReldakDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = ReldakDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.RELDAK_5780)
 }

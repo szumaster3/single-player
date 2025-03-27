@@ -23,7 +23,7 @@ class DalOgreDialogue(
         buttonId: Int,
     ): Boolean = true
 
-    override fun newInstance(player: Player): Dialogue = DalOgreDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = DalOgreDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.OGRE_TRADER_876)
 }

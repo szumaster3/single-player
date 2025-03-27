@@ -14,7 +14,7 @@ import org.rs.consts.NPCs
 class PrayerTutorDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         options("I already know about the basic prayers, got any tips?", "Tell me about different bones.", "Goodbye.")
         return true

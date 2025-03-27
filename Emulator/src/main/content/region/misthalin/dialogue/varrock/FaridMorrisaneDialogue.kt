@@ -14,7 +14,7 @@ import org.rs.consts.NPCs
 class FaridMorrisaneDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         player(FaceAnim.HALF_GUILTY, "Hello, little boy.")
         return true
@@ -96,7 +96,7 @@ class FaridMorrisaneDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = FaridMorrisaneDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = FaridMorrisaneDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.FARID_MORRISANE_ORES_6523)
 }

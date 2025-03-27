@@ -15,7 +15,7 @@ import org.rs.consts.NPCs
 class VarrockEastBartenderDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(FaceAnim.FRIENDLY, "What can I do yer for?")
         return true
@@ -118,7 +118,7 @@ class VarrockEastBartenderDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = VarrockEastBartenderDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = VarrockEastBartenderDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.BARTENDER_733)
 }

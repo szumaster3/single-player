@@ -15,7 +15,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class SpiritPengatriceDialogue : Dialogue {
-    override fun newInstance(player: Player): Dialogue {
+    override fun newInstance(player: Player?): Dialogue {
         return SpiritPengatriceDialogue(player)
     }
 
@@ -31,7 +31,7 @@ class SpiritPengatriceDialogue : Dialogue {
      */
     constructor(player: Player?) : super(player)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (inEquipment(player, Items.MIRROR_SHIELD_4156, 1)) {
             npcl(FaceAnim.OLD_NORMAL, "You know, I'm sensing some trust issues here.")
@@ -63,7 +63,10 @@ class SpiritPengatriceDialogue : Dialogue {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(
+        interfaceId: Int,
+        buttonId: Int,
+    ): Boolean {
         when (stage) {
             0 -> {
                 playerl(FaceAnim.FRIENDLY, "I'm not sure I know what you are talking about.")

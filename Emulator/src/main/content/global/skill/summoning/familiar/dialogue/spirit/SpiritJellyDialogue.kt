@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class SpiritJellyDialogue : Dialogue {
-    override fun newInstance(player: Player): Dialogue {
+    override fun newInstance(player: Player?): Dialogue {
         return SpiritJellyDialogue(player)
     }
 
@@ -29,7 +29,7 @@ class SpiritJellyDialogue : Dialogue {
      */
     constructor(player: Player?) : super(player)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         when ((Math.random() * 4).toInt()) {
             0 -> {
@@ -55,7 +55,10 @@ class SpiritJellyDialogue : Dialogue {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(
+        interfaceId: Int,
+        buttonId: Int,
+    ): Boolean {
         when (stage) {
             0 -> {
                 playerl(FaceAnim.FRIENDLY, "The only game I have time to play is the 'Staying Very Still' game.")
@@ -70,7 +73,7 @@ class SpiritJellyDialogue : Dialogue {
             2 -> {
                 playerl(
                     FaceAnim.FRIENDLY,
-                    "How about we use the extra house rule, that makes it the 'Staying Very Still and Very Quiet' game."
+                    "How about we use the extra house rule, that makes it the 'Staying Very Still and Very Quiet' game.",
                 )
                 stage++
             }

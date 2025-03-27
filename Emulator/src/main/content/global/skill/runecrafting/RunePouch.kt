@@ -315,9 +315,23 @@ enum class RunePouch(
         return if (charge > NORMAL_BASE) "pure essence" else "normal essence"
     }
 
-    fun getEssenceInPouch(pouch: Item): Item = if (getPouchEssenceName(pouch) == "pure essence") PURE_ESSENCE else NORMAL_ESSENCE
+    fun getEssenceInPouch(pouch: Item): Item =
+        if (getPouchEssenceName(pouch) ==
+            "pure essence"
+        ) {
+            PURE_ESSENCE
+        } else {
+            NORMAL_ESSENCE
+        }
 
-    fun getEssenceName(essence: Item?): String = if (essence!!.id == PURE_ESSENCE.id) "pure essence" else "normal essence"
+    fun getEssenceName(essence: Item?): String =
+        if (essence!!.id ==
+            PURE_ESSENCE.id
+        ) {
+            "pure essence"
+        } else {
+            "normal essence"
+        }
 
     fun getEssenceBase(item: Item): Int = if (getPouchEssenceName(item) == "pure essence") PURE_BASE else NORMAL_BASE
 
@@ -327,7 +341,14 @@ enum class RunePouch(
 
     fun isNormalEssence(essence: Item?): Boolean = essence!!.id == NORMAL_ESSENCE.id
 
-    fun getEssenceType(pouch: Item): Item = if (getPouchEssenceName(pouch) == "pure essence") PURE_ESSENCE else NORMAL_ESSENCE
+    fun getEssenceType(pouch: Item): Item =
+        if (getPouchEssenceName(pouch) ==
+            "pure essence"
+        ) {
+            PURE_ESSENCE
+        } else {
+            NORMAL_ESSENCE
+        }
 
     fun getEssence(player: Player): Item? {
         if (player.inventory.containsItem(PURE_ESSENCE)) {
@@ -338,9 +359,11 @@ enum class RunePouch(
         return null
     }
 
-    fun hasEssence(player: Player): Boolean = player.inventory.containsItem(PURE_ESSENCE) || player.inventory.containsItem(
-        NORMAL_ESSENCE
-    )
+    fun hasEssence(player: Player): Boolean =
+        player.inventory.containsItem(PURE_ESSENCE) ||
+            player.inventory.containsItem(
+                NORMAL_ESSENCE,
+            )
 
     fun isEmpty(item: Item): Boolean = getEssence(item) <= 0
 

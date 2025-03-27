@@ -16,7 +16,7 @@ import org.rs.consts.NPCs
 class EdgevilleMonkDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         if (args.size >= 1) {
             if (args[0] is NPC) {
                 npc = args[0] as NPC
@@ -83,7 +83,7 @@ class EdgevilleMonkDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = EdgevilleMonkDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = EdgevilleMonkDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.MONK_7727)
 }

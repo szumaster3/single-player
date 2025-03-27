@@ -18,7 +18,7 @@ import org.rs.consts.NPCs
 class AliTheSnakeCharmerDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         if (args.size > 0) {
             player("Wow a snake charmer. Can I have a go? Please?").also { stage = 5 }
             return true

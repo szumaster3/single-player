@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
 class TeacherDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (npc.location.z == 0) {
             sendNPCDialogue(
@@ -63,7 +63,7 @@ class TeacherDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = TeacherDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = TeacherDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.TEACHER_AND_PUPIL_5947)
 }

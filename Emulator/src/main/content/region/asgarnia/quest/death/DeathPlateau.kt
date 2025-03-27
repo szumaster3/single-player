@@ -211,8 +211,17 @@ class DeathPlateau : Quest(Quests.DEATH_PLATEAU, 44, 43, 1, 314, 0, 1, 80) {
     override fun finish(player: Player) {
         var ln = 10
         super.finish(player)
-        player.packetDispatch.sendString("You have completed the Death Plateau Quest!", Components.QUEST_COMPLETE_SCROLL_277, 4)
-        player.packetDispatch.sendItemZoomOnInterface(Items.STEEL_CLAWS_3097, 240, Components.QUEST_COMPLETE_SCROLL_277, 5)
+        player.packetDispatch.sendString(
+            "You have completed the Death Plateau Quest!",
+            Components.QUEST_COMPLETE_SCROLL_277,
+            4,
+        )
+        player.packetDispatch.sendItemZoomOnInterface(
+            Items.STEEL_CLAWS_3097,
+            240,
+            Components.QUEST_COMPLETE_SCROLL_277,
+            5,
+        )
 
         drawReward(player, "1 Quest Point", ln++)
         drawReward(player, "3,000 Attack XP", ln++)

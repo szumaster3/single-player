@@ -16,7 +16,7 @@ import java.util.*
  */
 @Initializable
 class BeaverDialogue : Dialogue {
-    override fun newInstance(player: Player): Dialogue {
+    override fun newInstance(player: Player?): Dialogue {
         return BeaverDialogue(player)
     }
 
@@ -32,7 +32,7 @@ class BeaverDialogue : Dialogue {
      */
     constructor(player: Player?) : super(player)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (anyInInventory(player, *logs)) {
             npcl(FaceAnim.CHILD_NORMAL, "'Ere, you 'ave ze logs, now form zem into a mighty dam!")
@@ -45,7 +45,7 @@ class BeaverDialogue : Dialogue {
             0 -> {
                 npcl(
                     FaceAnim.CHILD_NORMAL,
-                    "Vot are you doing 'ere when we could be logging and building mighty dams, alors?"
+                    "Vot are you doing 'ere when we could be logging and building mighty dams, alors?",
                 )
                 stage = 2
             }
@@ -68,7 +68,10 @@ class BeaverDialogue : Dialogue {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(
+        interfaceId: Int,
+        buttonId: Int,
+    ): Boolean {
         when (stage) {
             0 -> {
                 playerl(FaceAnim.FRIENDLY, "Well, I was thinking of burning, selling, or fletching them.")

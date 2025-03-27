@@ -14,7 +14,7 @@ class TunnelEntranceDialogue(
 ) : Dialogue(player) {
     private var index = 0
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         index = args[0] as Int
         sendPlainDialogue(player, false, "You find a hidden tunnel, do you want to enter?")
         return true

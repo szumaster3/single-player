@@ -26,7 +26,7 @@ class PilgDialogue(
         buttonId: Int,
     ): Boolean = true
 
-    override fun newInstance(player: Player): Dialogue = PilgDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = PilgDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.PILG_2040)
 }

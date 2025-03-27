@@ -433,7 +433,8 @@ class DuelArea
             return super.death(e, killer)
         }
 
-        fun isValidLocation(location: Location?): Boolean = isTeleportPermitted(location!!) && getObject(location) == null
+        fun isValidLocation(location: Location?): Boolean =
+            isTeleportPermitted(location!!) && getObject(location) == null
 
         fun checkAttack(
             player: Player,

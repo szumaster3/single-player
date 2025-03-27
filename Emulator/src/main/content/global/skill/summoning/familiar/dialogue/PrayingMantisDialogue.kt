@@ -15,7 +15,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class PrayingMantisDialogue : Dialogue {
-    override fun newInstance(player: Player): Dialogue {
+    override fun newInstance(player: Player?): Dialogue {
         return PrayingMantisDialogue(player)
     }
 
@@ -31,18 +31,19 @@ class PrayingMantisDialogue : Dialogue {
      */
     constructor(player: Player?) : super(player)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
-        if (inEquipmentOrInventory(player, Items.BUTTERFLY_NET_10010, 1) || inEquipmentOrInventory(
+        if (inEquipmentOrInventory(player, Items.BUTTERFLY_NET_10010, 1) ||
+            inEquipmentOrInventory(
                 player,
                 Items.MAGIC_BUTTERFLY_NET_11259,
-                1
+                1,
             )
         ) {
             npc(
                 FaceAnim.CHILD_NORMAL,
                 "Clatter click chitter click?",
-                "(Wouldn't you learn focus better if you used chopsticks?)"
+                "(Wouldn't you learn focus better if you used chopsticks?)",
             )
             stage = 0
             return true
@@ -52,7 +53,7 @@ class PrayingMantisDialogue : Dialogue {
                 npc(
                     FaceAnim.CHILD_NORMAL,
                     "Chitter chirrup chirrup?",
-                    "(Have you been following your training, grasshopper?)"
+                    "(Have you been following your training, grasshopper?)",
                 )
                 stage = 4
             }
@@ -61,7 +62,7 @@ class PrayingMantisDialogue : Dialogue {
                 npc(
                     FaceAnim.CHILD_NORMAL,
                     "Chitterchitter chirrup clatter.",
-                    "(Today, grasshopper, I will teach you to walk on rice paper.)"
+                    "(Today, grasshopper, I will teach you to walk on rice paper.)",
                 )
                 stage = 9
             }
@@ -70,7 +71,7 @@ class PrayingMantisDialogue : Dialogue {
                 npc(
                     FaceAnim.CHILD_NORMAL,
                     "Clatter chirrup chirp chirrup clatter clatter.",
-                    "(A wise man once said; 'Feed your mantis and it will be happy'.)"
+                    "(A wise man once said; 'Feed your mantis and it will be happy'.)",
                 )
                 stage = 13
             }
@@ -83,7 +84,10 @@ class PrayingMantisDialogue : Dialogue {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(
+        interfaceId: Int,
+        buttonId: Int,
+    ): Boolean {
         when (stage) {
             0 -> {
                 playerl(FaceAnim.FRIENDLY, "Huh?")
@@ -124,7 +128,7 @@ class PrayingMantisDialogue : Dialogue {
                 npc(
                     FaceAnim.CHILD_NORMAL,
                     "Chirrup chitter chitter chirrup?",
-                    "(How do you expect to achieve enlightenment at this rate, grasshopper?)"
+                    "(How do you expect to achieve enlightenment at this rate, grasshopper?)",
                 )
                 stage++
             }
@@ -143,7 +147,7 @@ class PrayingMantisDialogue : Dialogue {
                 npc(
                     FaceAnim.CHILD_NORMAL,
                     "Clatter chitter click chitter...",
-                    "(Then we will wander about and punch monsters in the head...)"
+                    "(Then we will wander about and punch monsters in the head...)",
                 )
                 stage++
             }
@@ -167,7 +171,7 @@ class PrayingMantisDialogue : Dialogue {
                 npc(
                     FaceAnim.CHILD_NORMAL,
                     "Clatter chirrupchirrup chirp.",
-                    "(I find that a happy mantis is its own point.)"
+                    "(I find that a happy mantis is its own point.)",
                 )
                 stage = END_DIALOGUE
             }
@@ -191,7 +195,7 @@ class PrayingMantisDialogue : Dialogue {
                 npc(
                     FaceAnim.CHILD_NORMAL,
                     "Clickclatter! Chirrup chirpchirp click chitter...",
-                    "(I do not! Why would I drool when I call you a juicy...)"
+                    "(I do not! Why would I drool when I call you a juicy...)",
                 )
                 stage++
             }
@@ -200,7 +204,7 @@ class PrayingMantisDialogue : Dialogue {
                 npc(
                     FaceAnim.CHILD_NORMAL,
                     "...clickclick chitter clickchitter click...",
-                    "(...succulent, nourishing, crunchy...)"
+                    "(...succulent, nourishing, crunchy...)",
                 )
                 stage++
             }

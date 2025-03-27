@@ -1,88 +1,89 @@
 package content.region.fremennik.dialogue.lighthouse
 
-import content.data.GameAttributes
 import content.data.GodBook
 import core.api.*
 import core.game.dialogue.Dialogue
-import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.plugin.Initializable
-import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+import core.api.addItemOrDrop
+import core.api.hasAnItem
+import core.game.dialogue.FaceAnim
+import org.rs.consts.Items
+import java.util.*
+
 @Initializable
-class JossikDialogue(
-    player: Player? = null,
-) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+class JossikDialogue : Dialogue {
+
+    private var uncompleted: MutableList<GodBook>? = null
+
+    constructor()
+    constructor(player: Player) : super(player)
+
+    override fun newInstance(player: Player): Dialogue {
+        return JossikDialogue(player)
+    }
+
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
-        if (inInventory(player, Items.RUSTY_CASKET_3849, 1)) {
-            playerl(FaceAnim.FRIENDLY, "I see you managed to escape from those monsters intact!")
-            setAttribute(player, GameAttributes.GOD_BOOKS, true)
-            stage = 100
-            return true
-        }
         npc("Hello again, adventurer.", "What brings you this way?")
+        stage = 0
         return true
     }
 
-    override fun handle(
-        interfaceId: Int,
-        buttonId: Int,
-    ): Boolean {
-        var uncompleted: MutableList<GodBook>? = null
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
-            0 -> options("Can I see your wares?", "Have you found any prayerbooks?").also { stage++ }
-            1 ->
-                stage =
-                    if (buttonId == 1) {
-                        player("Can I see your wares?")
-                        10
-                    } else {
-                        player("Have you found any prayerbooks?")
-                        20
-                    }
+            0 -> {
+                options("Can I see your wares?", "Have you found any prayerbooks?")
+                stage++
+            }
+
+            1 -> {
+                if (buttonId == 1) {
+                    player("Can I see your wares?")
+                    stage = 10
+                } else {
+                    player("Have you found any prayerbooks?")
+                    stage = 20
+                }
+            }
 
             20 -> {
                 var missing = false
                 for (book in GodBook.values()) {
-                    if (player.getSavedData().globalData.hasCompletedGodBook(book) && !player.hasItem(book.book)) {
+                    if (player.savedData.globalData.hasCompletedGodBook(book) &&
+                        hasAnItem(player, book.book.id).container == null
+                    ) {
                         missing = true
-                        player.inventory.add(book.book, player)
-                        npc(
-                            "As a matter of fact, I did! This book washed up on the",
-                            "beach, and I recognised it as yours!",
-                        )
+                        addItemOrDrop(player, book.book.id, 1)
                     }
                 }
-                val damaged = player.getSavedData().globalData.getGodBook()
-                if (damaged != -1 && !player.hasItem(GodBook.values()[damaged].damagedBook)) {
+                val damaged = player.savedData.globalData.godBook
+                if (damaged != -1 && hasAnItem(player, GodBook.values()[damaged].damagedBook.id).container == null
+                ) {
                     missing = true
-                    player.inventory.add(GodBook.values()[damaged].damagedBook, player)
-                    npc(
-                        "As a matter of fact, I did! This book washed up on the",
-                        "beach, and I recognised it as yours!",
-                    )
+                    addItemOrDrop(player, GodBook.values()[damaged].damagedBook.id, 1)
                 }
                 if (missing) {
+                    npc(
+                        "As a matter of fact, I did! This book washed up on the",
+                        "beach, and I recognised it as yours!"
+                    )
                     stage = 23
                     return true
                 }
-                uncompleted = ArrayList(5)
+                uncompleted = mutableListOf()
                 for (book in GodBook.values()) {
-                    if (!player.getSavedData().globalData.hasCompletedGodBook(book!!)) {
-                        uncompleted.add(book!!)
+                    if (!player.savedData.globalData.hasCompletedGodBook(book)) {
+                        uncompleted!!.add(book)
                     }
                 }
-                var hasUncompleted = false
-                for (book in GodBook.values()) {
-                    if (player.hasItem(book.damagedBook)) {
-                        hasUncompleted = true
-                    }
-                }
-                if (uncompleted.size == 0 || hasUncompleted) {
+                val hasUncompleted =
+                    GodBook.values().any { hasAnItem(player, it.damagedBook.id).container != null }
+                if (uncompleted!!.isEmpty() || hasUncompleted) {
                     npc("No, sorry adventurer, I haven't.")
                     stage = 23
                     return true
@@ -90,40 +91,42 @@ class JossikDialogue(
                 npc(
                     "Funnily enough I have! I found some books in caskets",
                     "just the other day! I'll sell one to you for 5000 coins;",
-                    "what do you say?",
+                    "what do you say?"
                 )
                 stage++
             }
 
             21 -> {
-                val names = arrayOfNulls<String>(uncompleted!!.size + 1)
-                var i = 0
-                while (i < uncompleted!!.size) {
-                    names[i] = uncompleted!![i].bookName
-                    i++
-                }
-                names[names.size - 1] = "Don't buy anything."
-                options(*names)
+                val names = uncompleted!!.map {
+                    it.name.lowercase()
+                        .replace("_", " ", ignoreCase = true)
+                        .replaceFirstChar { ch -> ch.titlecase(Locale.getDefault()) }
+                }.toMutableList()
+
+                names.add("Don't buy anything.")
+                options(*names.toTypedArray())
                 stage++
             }
 
             22 -> {
                 if (buttonId - 1 > uncompleted!!.size - 1) {
-                    player("Don't buy anything.")
-                    stage = 23
+                    end()
+                    return true
                 }
-                if (!inInventory(player, Items.COINS_995, 5000)) {
+                if (!player.inventory.contains(Items.COINS_995, 5000)) {
                     player("Sorry, I don't seem to have enough coins.")
                     stage = 23
+                    return true
                 }
-                if (freeSlots(player) == 0) {
+                if (player.inventory.freeSlots() == 0) {
                     player("Sorry, I don't have enough inventory space.")
                     stage = 23
+                    return true
                 }
                 val purchase = uncompleted!![buttonId - 1]
-                if (purchase != null && removeItem(player, Item(Items.COINS_995, 5000))) {
+                if (player.inventory.remove(Item(Items.COINS_995, 5000))) {
                     npc("Here you go!")
-                    player.getSavedData().globalData.setGodBook(purchase.ordinal)
+                    player.savedData.globalData.godBook = purchase.ordinal
                     player.inventory.add(purchase.damagedBook, player)
                     stage = 23
                 } else {

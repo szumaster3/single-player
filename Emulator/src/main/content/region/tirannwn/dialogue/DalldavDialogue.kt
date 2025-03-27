@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
 class DalldavDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(FaceAnim.FRIENDLY, "Can I help you at all?")
         return true
@@ -60,7 +60,7 @@ class DalldavDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = DalldavDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = DalldavDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.DALLDAV_7447)
 }

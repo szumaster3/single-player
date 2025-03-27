@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
 class WydinDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         var door = false
         if (args.size == 2) door = args[1] as Boolean
         if (door) {

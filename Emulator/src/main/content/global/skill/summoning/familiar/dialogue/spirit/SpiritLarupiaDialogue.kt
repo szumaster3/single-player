@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class SpiritLarupiaDialogue : Dialogue {
-    override fun newInstance(player: Player): Dialogue {
+    override fun newInstance(player: Player?): Dialogue {
         return SpiritLarupiaDialogue(player)
     }
 
@@ -29,7 +29,7 @@ class SpiritLarupiaDialogue : Dialogue {
      */
     constructor(player: Player?) : super(player)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         when ((Math.random() * 4).toInt()) {
             0 -> {
@@ -55,7 +55,10 @@ class SpiritLarupiaDialogue : Dialogue {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(
+        interfaceId: Int,
+        buttonId: Int,
+    ): Boolean {
         when (stage) {
             0 -> {
                 npcl(FaceAnim.CHILD_NORMAL, "What is your wish master?")
@@ -65,7 +68,7 @@ class SpiritLarupiaDialogue : Dialogue {
             1 -> {
                 playerl(
                     FaceAnim.FRIENDLY,
-                    "Have you ever thought about doing something other than hunting and serving me?"
+                    "Have you ever thought about doing something other than hunting and serving me?",
                 )
                 stage++
             }
@@ -93,7 +96,7 @@ class SpiritLarupiaDialogue : Dialogue {
             6 -> {
                 playerl(
                     FaceAnim.FRIENDLY,
-                    "Friends are people, or animals, who like one another. I think we are friends."
+                    "Friends are people, or animals, who like one another. I think we are friends.",
                 )
                 stage++
             }

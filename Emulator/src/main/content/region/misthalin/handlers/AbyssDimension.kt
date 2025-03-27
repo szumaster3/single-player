@@ -1,9 +1,9 @@
 package content.region.misthalin.handlers
 
 import content.data.items.SkillingTool
+import content.global.skill.runecrafting.Altar
 import content.global.skill.runecrafting.PouchManager.Pouches
 import content.global.skill.runecrafting.RunePouch
-import content.global.skill.runecrafting.Altar
 import core.api.*
 import core.api.quest.isQuestComplete
 import core.api.skill.getTool
@@ -406,7 +406,8 @@ class AbyssLoc(
             }
         }
 
-        override fun getIds(): IntArray = intArrayOf(NPCs.ABYSSAL_LEECH_2263, NPCs.ABYSSAL_GUARDIAN_2264, NPCs.ABYSSAL_WALKER_2265)
+        override fun getIds(): IntArray =
+            intArrayOf(NPCs.ABYSSAL_LEECH_2263, NPCs.ABYSSAL_GUARDIAN_2264, NPCs.ABYSSAL_WALKER_2265)
     }
 
     @Initializable

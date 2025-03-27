@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
 class ShopkeeperDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(FaceAnim.HAPPY, "Can I help you at all?")
         return true
@@ -38,7 +38,7 @@ class ShopkeeperDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = ShopkeeperDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = ShopkeeperDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.SHOPKEEPER_555, NPCs.SHOPKEEPER_532)
 }

@@ -18,7 +18,7 @@ import org.rs.consts.NPCs
 class AjjatDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(
             "Greetings, fellow warrior. I am Ajjat, former Black Knight",

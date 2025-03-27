@@ -15,7 +15,7 @@ import org.rs.consts.Quests
 class JebDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (!isQuestComplete(player, Quests.SEA_SLUG)) {
             npc(FaceAnim.FRIENDLY, "Hello there.").also { stage = END_DIALOGUE }

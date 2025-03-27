@@ -78,7 +78,9 @@ class MiningPulse(
         if (resource!!.id == org.rs.consts.Scenery.ROCKS_2099 && !perfectGoldOreLocations.contains(node.location)) {
             resource = MiningNode.forId(org.rs.consts.Scenery.ROCKS_2098)
         }
-        if (resource!!.id == org.rs.consts.Scenery.RUNE_ESSENCE_2491 || resource!!.id == org.rs.consts.Scenery.ROCK_16684) {
+        if (resource!!.id == org.rs.consts.Scenery.RUNE_ESSENCE_2491 ||
+            resource!!.id == org.rs.consts.Scenery.ROCK_16684
+        ) {
             isMiningEssence = true
         }
         if (resource!!.identifier == MiningNode.GEM_ROCK_0.identifier) {

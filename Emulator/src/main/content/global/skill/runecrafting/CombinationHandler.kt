@@ -1,7 +1,7 @@
 package content.global.skill.runecrafting
 
-import content.global.skill.runecrafting.CombinationRune.forAltar
 import content.global.skill.runecrafting.Altar.forScenery
+import content.global.skill.runecrafting.CombinationRune.forAltar
 import core.game.interaction.NodeUsageEvent
 import core.game.interaction.UseWithHandler
 import core.game.node.scenery.Scenery

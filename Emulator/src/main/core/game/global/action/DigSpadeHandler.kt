@@ -16,7 +16,6 @@ import org.rs.consts.Animations
  * It handles the animation of digging, submitting the task for the action to be processed, and registering actions to specific locations.
  */
 object DigSpadeHandler {
-
     /**
      * A map holding the actions for each location where a digging action is registered.
      * Each location corresponds to a specific `DigAction` that will be executed when a player digs there.
@@ -40,19 +39,15 @@ object DigSpadeHandler {
      */
     @JvmStatic
     fun dig(player: Player): Boolean {
-        // Retrieve the action associated with the player's current location.
         val action = ACTIONS[player.location]
 
-        // Trigger the digging animation and lock the player for a brief moment (1 tick).
         player.animate(ANIMATION)
         player.lock(1)
 
-        // Check if there is a listener associated with the current location and run it if found.
         if (runListener(player.location, player)) {
             return true
         }
 
-        // If an action is found for the current location, submit a pulse to execute the action.
         if (action != null) {
             Pulser.submit(
                 object : Pulse(1, player) {
@@ -80,12 +75,10 @@ object DigSpadeHandler {
         location: Location,
         action: DigAction,
     ): Boolean {
-        // Check if an action is already registered for the location.
         if (ACTIONS.containsKey(location)) {
             log(CommunicationInfo::class.java, Log.ERR, "Already contained dig reward for location $location.")
             return false
         }
-        // Register the new action for the location.
         ACTIONS[location] = action
         return true
     }

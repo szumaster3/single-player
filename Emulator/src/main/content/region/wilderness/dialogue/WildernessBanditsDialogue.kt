@@ -12,7 +12,7 @@ import org.rs.consts.NPCs
 class WildernessBanditsDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         sendDialogue(player, "${npc.name} is not interested in talking.").also { stage = END_DIALOGUE }
         return true
@@ -23,7 +23,7 @@ class WildernessBanditsDialogue(
         buttonId: Int,
     ): Boolean = true
 
-    override fun newInstance(player: Player): Dialogue = WildernessBanditsDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = WildernessBanditsDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.BLACK_HEATHER_202, NPCs.DONNY_THE_LAD_203, NPCs.SPEEDY_KEITH_204)
 }

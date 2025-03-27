@@ -14,7 +14,7 @@ import org.rs.consts.NPCs
 class TowerGuardDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         playerl(FaceAnim.HALF_ASKING, "What are you doing here?")
         return true

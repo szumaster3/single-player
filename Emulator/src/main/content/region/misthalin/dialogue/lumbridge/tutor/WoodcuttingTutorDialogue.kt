@@ -16,7 +16,7 @@ import org.rs.consts.NPCs
 class WoodcuttingTutorDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (getStatLevel(player, Skills.WOODCUTTING) >= 99) {
             npc(
@@ -257,7 +257,7 @@ class WoodcuttingTutorDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = WoodcuttingTutorDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = WoodcuttingTutorDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.WOODCUTTING_TUTOR_4906)
 }

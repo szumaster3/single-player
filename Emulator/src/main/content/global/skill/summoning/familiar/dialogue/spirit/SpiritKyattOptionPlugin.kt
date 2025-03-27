@@ -32,7 +32,11 @@ class SpiritKyattOptionPlugin : OptionHandler() {
     private val BRONZE_AXE = Item(1351, 1)
     private val BRONZE_PICKAXE = Item(1265, 1)
 
-    override fun handle(player: Player, node: Node, option: String): Boolean {
+    override fun handle(
+        player: Player,
+        node: Node,
+        option: String,
+    ): Boolean {
         when (node.id) {
             7365 -> player.dialogueInterpreter.open(7365, node.asNpc())
             28741 -> {

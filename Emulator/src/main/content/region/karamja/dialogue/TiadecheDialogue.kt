@@ -22,7 +22,7 @@ class TiadecheDialogue(
             "Go away! Can't you see I'm concentrating?",
         )
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (!hasRequirement(player, Quests.TAI_BWO_WANNAI_TRIO, false)) {
             npcl(FaceAnim.NEUTRAL, randomConversation.random()).also { stage = END_DIALOGUE }

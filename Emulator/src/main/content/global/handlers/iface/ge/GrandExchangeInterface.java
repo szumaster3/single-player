@@ -18,6 +18,7 @@ import core.net.packet.context.ContainerContext;
 import core.net.packet.out.ContainerPacket;
 import core.plugin.Initializable;
 import core.plugin.Plugin;
+import org.rs.consts.Components;
 import org.rs.consts.Sounds;
 
 import static core.api.ContentAPIKt.playAudio;
@@ -32,13 +33,13 @@ public class GrandExchangeInterface extends ComponentPlugin {
 
     @Override
     public Plugin<Object> newInstance(Object arg) throws Throwable {
-        //ComponentDefinition.put(105, this); // Main interface
-        //ComponentDefinition.put(107, this); // Selling tab
-        ComponentDefinition.put(109, this); // Collection interface
-        ComponentDefinition.put(389, this); // Search interface
-        ComponentDefinition.put(644, this); // Item sets inventory interface
-        ComponentDefinition.put(645, this); // Item sets interface
-        ComponentDefinition.put(642, this); // Guide Prices interface.
+        // ComponentDefinition.put(105, this); // Main interface
+        // ComponentDefinition.put(107, this); // Selling tab
+        ComponentDefinition.put(Components.STOCKCOLLECT_109, this);
+        ComponentDefinition.put(389, this);
+        ComponentDefinition.put(Components.EXCHANGE_SETS_SIDE_644, this);
+        ComponentDefinition.put(Components.EXCHANGE_ITEMSETS_645, this);
+        ComponentDefinition.put(Components.EXCHANGE_GUIDE_PRICE_642, this);
         return this;
     }
 
@@ -47,7 +48,7 @@ public class GrandExchangeInterface extends ComponentPlugin {
         GameWorld.getPulser().submit(new Pulse(1, player) {
             @Override
             public boolean pulse() {
-                switch (component.getId()) {
+                switch (component.id) {
                     case 644:
                     case 645:
                         handleItemSet(player, component, opcode, button, slot, itemId);
@@ -132,7 +133,7 @@ public class GrandExchangeInterface extends ComponentPlugin {
         if (button != 16 && button != 0) {
             return;
         }
-        boolean inventory = component.getId() == 644;
+        boolean inventory = component.id == Components.EXCHANGE_SETS_SIDE_644;
         if (slot < 0 || slot >= (inventory ? 28 : ItemSet.values().length)) {
             return;
         }

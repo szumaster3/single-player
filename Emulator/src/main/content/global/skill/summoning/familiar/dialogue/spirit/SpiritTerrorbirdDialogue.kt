@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class SpiritTerrorbirdDialogue : Dialogue {
-    override fun newInstance(player: Player): Dialogue {
+    override fun newInstance(player: Player?): Dialogue {
         return SpiritTerrorbirdDialogue(player)
     }
 
@@ -29,7 +29,7 @@ class SpiritTerrorbirdDialogue : Dialogue {
      */
     constructor(player: Player?) : super(player)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         when ((Math.random() * 5).toInt()) {
             0 -> {
@@ -60,12 +60,15 @@ class SpiritTerrorbirdDialogue : Dialogue {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(
+        interfaceId: Int,
+        buttonId: Int,
+    ): Boolean {
         when (stage) {
             0 -> {
                 playerl(
                     FaceAnim.FRIENDLY,
-                    "Why do I get the feeling you'll change your tune when I start loading you up with items?"
+                    "Why do I get the feeling you'll change your tune when I start loading you up with items?",
                 )
                 stage = END_DIALOGUE
             }

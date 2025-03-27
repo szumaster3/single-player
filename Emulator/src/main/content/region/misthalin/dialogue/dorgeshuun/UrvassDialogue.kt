@@ -31,7 +31,7 @@ class UrvassDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = UrvassDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = UrvassDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.UR_VASS_5771)
 }

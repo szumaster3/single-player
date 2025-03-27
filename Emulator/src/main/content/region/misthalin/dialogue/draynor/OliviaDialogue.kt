@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
 class OliviaDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         options(
             "Would you like to trade in seeds?",
@@ -101,7 +101,7 @@ class OliviaDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = OliviaDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = OliviaDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.OLIVIA_2233, NPCs.OLIVIA_2572)
 }

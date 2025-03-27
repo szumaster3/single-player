@@ -13,7 +13,7 @@ class WeaponsMasterDialogue(
 ) : Dialogue(player) {
     private var quest: Quest? = null
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         quest = player.getQuestRepository().getQuest(Quests.SHIELD_OF_ARRAV)
         when (quest!!.getStage(player)) {

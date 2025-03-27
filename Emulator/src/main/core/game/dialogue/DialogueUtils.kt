@@ -7,7 +7,6 @@ import kotlin.math.ceil
  * A utility object that provides helper functions for working with dialogues.
  */
 object DialogueUtils {
-
     /**
      * Regular expression pattern used to identify tags in a dialogue message.
      */

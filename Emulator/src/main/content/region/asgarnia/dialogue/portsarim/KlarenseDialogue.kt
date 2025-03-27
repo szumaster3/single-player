@@ -18,7 +18,7 @@ class KlarenseDialogue(
 ) : Dialogue(player) {
     private var quest: Quest? = null
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         quest = player.getQuestRepository().getQuest(Quests.DRAGON_SLAYER)
         if (args.size > 1) {

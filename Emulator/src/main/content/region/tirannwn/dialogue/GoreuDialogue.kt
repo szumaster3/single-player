@@ -12,7 +12,7 @@ import org.rs.consts.NPCs
 class GoreuDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         player(FaceAnim.FRIENDLY, "Hello.")
         return true
@@ -37,7 +37,7 @@ class GoreuDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = GoreuDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = GoreuDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.GOREU_2363)
 }

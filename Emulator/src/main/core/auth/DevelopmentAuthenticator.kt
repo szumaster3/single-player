@@ -12,7 +12,6 @@ import core.storage.AccountStorageProvider
  * This class is used when authentication is not required (e.g., in a development environment or when testing).
  */
 class DevelopmentAuthenticator : AuthProvider<AccountStorageProvider>() {
-
     /**
      * Configures the authenticator to use the specified [AccountStorageProvider].
      *

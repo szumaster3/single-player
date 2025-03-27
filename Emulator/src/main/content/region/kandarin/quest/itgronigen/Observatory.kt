@@ -11,7 +11,8 @@ import org.rs.consts.Quests
 import org.rs.consts.Vars
 
 @Initializable
-class Observatory : Quest(Quests.OBSERVATORY_QUEST, 96, 95, 2, Vars.VARP_QUEST_OBSERVATORY_QUEST_PROGRESS_112, 0, 1, 7) {
+class Observatory :
+    Quest(Quests.OBSERVATORY_QUEST, 96, 95, 2, Vars.VARP_QUEST_OBSERVATORY_QUEST_PROGRESS_112, 0, 1, 7) {
     override fun drawJournal(
         player: Player,
         stage: Int,

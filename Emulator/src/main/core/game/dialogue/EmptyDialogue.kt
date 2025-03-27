@@ -16,7 +16,6 @@ class EmptyDialogue(
     player: Player? = null,
     val file: DialogueFile?,
 ) : Dialogue(player) {
-
     /**
      * Creates a new instance of the EmptyDialogue for the given player.
      *
@@ -33,7 +32,6 @@ class EmptyDialogue(
      * @return A boolean indicating whether the dialogue was successfully opened.
      */
     override fun open(vararg args: Any?): Boolean {
-        // Check if the first argument is an NPC and set it accordingly.
         if (args.isNotEmpty() && args[0] is NPC) {
             npc = args[0] as NPC
         }
@@ -45,7 +43,7 @@ class EmptyDialogue(
         loadFile(file)
 
         // Handle the first stage of the dialogue.
-        interpreter.handle(0, 0)
+        interpreter!!.handle(0, 0)
         return true
     }
 

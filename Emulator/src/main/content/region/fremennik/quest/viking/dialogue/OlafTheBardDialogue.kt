@@ -14,7 +14,7 @@ import org.rs.consts.Quests
 class OlafTheBardDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         if (inInventory(player, Items.STURDY_BOOTS_3700, 1)) {
             playerl(FaceAnim.HAPPY, "Hello Olaf. Do you have a beautiful love song written for me?")
             stage = 65

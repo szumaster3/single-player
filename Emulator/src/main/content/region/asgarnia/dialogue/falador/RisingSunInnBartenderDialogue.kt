@@ -119,7 +119,8 @@ class RisingSunInnBartenderDialogue(
         }
     }
 
-    private fun hasAnyBeerGlasses() = inInventory(player, Items.BEER_GLASS_1919) || inInventory(player, Items.BEER_GLASS_1920)
+    private fun hasAnyBeerGlasses() =
+        inInventory(player, Items.BEER_GLASS_1919) || inInventory(player, Items.BEER_GLASS_1920)
 
     private fun trySellAllBeerGlasses() {
         val regularGlassAmount = amountInInventory(player, Items.BEER_GLASS_1919)

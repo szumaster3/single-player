@@ -18,7 +18,7 @@ import org.rs.consts.Quests
 class GravingasDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         when {
             // If the player has the bedsheet and has completed the quest.
             inEquipment(player, Items.BEDSHEET_4285) && getQuestStage(player, Quests.GHOSTS_AHOY) >= 1 -> {

@@ -21,7 +21,7 @@ class ReldoDialogue(
     private var isDiary = false
     private val level = 1
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         knightSword = player.getQuestRepository().getQuest(Quests.THE_KNIGHTS_SWORD)
         shieldArrav = player.getQuestRepository().getQuest(Quests.SHIELD_OF_ARRAV)

@@ -11,7 +11,7 @@ import org.rs.consts.NPCs
 class SlugHemliggsenDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npcl(FaceAnim.WORRIED, "Shhh. Go away. I'm not allowed to talk to you.")
         return true
     }

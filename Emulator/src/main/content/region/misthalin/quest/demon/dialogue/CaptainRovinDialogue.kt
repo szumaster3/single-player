@@ -17,7 +17,7 @@ class CaptainRovinDialogue(
 ) : Dialogue(player) {
     private var quest: Quest? = null
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         quest = player.getQuestRepository().getQuest(Quests.DEMON_SLAYER)
         when (quest!!.getStage(player)) {
@@ -234,7 +234,7 @@ class CaptainRovinDialogue(
         }
     }
 
-    override fun newInstance(player: Player): Dialogue = CaptainRovinDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = CaptainRovinDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.CAPTAIN_ROVIN_884)
 }

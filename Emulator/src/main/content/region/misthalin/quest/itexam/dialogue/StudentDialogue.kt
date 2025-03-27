@@ -353,7 +353,7 @@ class StudentBrownDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = StudentBrownDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = StudentBrownDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.STUDENT_616)
 }

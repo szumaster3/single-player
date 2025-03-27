@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
 class VarrockSwordShopDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(FaceAnim.HAPPY, "Hello, adventurer. Can I interest you in some swords?").also { stage = 0 }
         return true
@@ -36,7 +36,7 @@ class VarrockSwordShopDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = VarrockSwordShopDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = VarrockSwordShopDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.SHOPKEEPER_551, NPCs.SHOP_ASSISTANT_552)
 }

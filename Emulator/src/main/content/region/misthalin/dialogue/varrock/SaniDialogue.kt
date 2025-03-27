@@ -14,7 +14,7 @@ import org.rs.consts.NPCs
 class SaniDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc("Greetings, " + player.username, "I sell weapons and armour.")
         return true
@@ -130,7 +130,7 @@ class SaniDialogue(
         openId(player, uid)
     }
 
-    override fun newInstance(player: Player): Dialogue = SaniDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = SaniDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.SMITHING_TUTOR_4905)
 }

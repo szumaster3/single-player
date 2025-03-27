@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
 class DalilaAndPerrdurDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npcl(FaceAnim.OLD_NORMAL, "Ooh, lovely view, dear.")
         return true

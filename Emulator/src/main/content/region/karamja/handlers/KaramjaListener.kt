@@ -19,7 +19,8 @@ import core.game.world.update.flag.context.Animation
 import org.rs.consts.*
 
 class KaramjaListener : InteractionListener {
-    private fun checkRequirement(player: Player): Boolean = anyInEquipment(player, *MACHETE_ID) || anyInInventory(player, *MACHETE_ID)
+    private fun checkRequirement(player: Player): Boolean =
+        anyInEquipment(player, *MACHETE_ID) || anyInInventory(player, *MACHETE_ID)
 
     private fun getAnimation(item: Int): Animation =
         when (item) {

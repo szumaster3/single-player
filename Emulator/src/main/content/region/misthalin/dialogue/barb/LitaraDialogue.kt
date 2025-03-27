@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
 class LitaraDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(FaceAnim.HALF_GUILTY, "Hello there. You look lost - are you okay?")
         return true
@@ -69,7 +69,7 @@ class LitaraDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = LitaraDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = LitaraDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.LITARA_4376)
 }

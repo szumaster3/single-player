@@ -22,7 +22,7 @@ class SwensenTheNavigatorDialogue(
         }
     val fName = player?.getAttribute("fremennikname", "fremmyname")
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         if (inInventory(player, Items.WEATHER_FORECAST_3705, 1)) {
             playerl(FaceAnim.HAPPY, "I would like your map of fishing spots.")
             stage = 120

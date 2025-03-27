@@ -15,7 +15,7 @@ import org.rs.consts.NPCs
 class BonzoDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         stage =
             if (args.size < 2) {
                 if (inInventory(player, FishingContest.FISHING_ROD.id)) {

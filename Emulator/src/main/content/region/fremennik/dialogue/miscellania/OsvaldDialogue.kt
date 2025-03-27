@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
 class OsvaldDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(FaceAnim.FRIENDLY, "Welcome to the Miscellania food store.", "We've only opened recently.")
         return true

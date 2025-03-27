@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
 class JatixDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun newInstance(player: Player): Dialogue = JatixDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = JatixDialogue(player)
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC

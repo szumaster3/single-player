@@ -31,9 +31,9 @@ class SmithingEmporiumInterface : InterfaceListener {
         onOpen(Components.REINALD_SMITHING_EMPORIUM_593) { player, component ->
             setAttribute(player, "wrists-look", player.appearance.wrists.look)
             player.toggleWardrobe(true)
-            component.setCloseEvent { p, _ ->
+            component.setUncloseEvent { p, _ ->
                 handleCloseEvent(p)
-                return@setCloseEvent true
+                return@setUncloseEvent true
             }
             return@onOpen true
         }

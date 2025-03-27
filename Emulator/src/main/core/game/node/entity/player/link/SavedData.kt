@@ -37,7 +37,12 @@ class SavedData(
                         when {
                             value.all { it is Int } -> (value as List<Int>).forEach { buffer.putInt(it) }
                             value.all { it is Double } -> (value as List<Double>).forEach { buffer.putDouble(it) }
-                            value.all { it is Boolean } -> (value as List<Boolean>).forEach { buffer.put(if (it) 1 else 0) }
+                            value.all { it is Boolean } ->
+                                (value as List<Boolean>).forEach {
+                                    buffer.put(
+                                        if (it) 1 else 0,
+                                    )
+                                }
                             else -> throw IllegalArgumentException("Unsupported list type: ${value::class}")
                         }
                     else -> throw IllegalArgumentException("Unsupported type: ${value!!::class}")

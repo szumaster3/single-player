@@ -14,7 +14,7 @@ import org.rs.consts.NPCs
 class HofutHandDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         player(FaceAnim.HALF_GUILTY, "Hello!")
         return true
@@ -69,7 +69,7 @@ class HofutHandDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = HofutHandDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = HofutHandDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.HOFUTHAND_ARMOUR_AND_WEAPONS_6527)
 }

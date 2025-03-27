@@ -135,7 +135,7 @@ class CyclopesRoom :
 
         override fun newInstance(player: Player?): Dialogue = KamfreenaCyclopsRoomDialogue(player)
 
-        override fun open(vararg args: Any): Boolean {
+        override fun open(vararg args: Any?): Boolean {
             defenderId = args[0] as Int
             if (defenderId == -1) {
                 npc(4289, "Well, since you haven't shown me a defender to prove", "your prowess as a warrior,")

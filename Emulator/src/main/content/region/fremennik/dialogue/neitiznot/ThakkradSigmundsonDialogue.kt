@@ -11,7 +11,7 @@ import org.rs.consts.NPCs
 class ThakkradSigmundsonDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npcl(FaceAnim.FRIENDLY, "Greetings! I can cure your Yak Hides if you'd like!")
         return true
     }

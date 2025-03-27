@@ -19,9 +19,9 @@ class RemovalDialogue : Dialogue {
 
     constructor(player: Player?) : super(player)
 
-    override fun newInstance(player: Player): Dialogue = RemovalDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = RemovalDialogue(player)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         pos = args[1] as IntArray
         plane = player.location.z
         if (HouseManager.isInDungeon(player)) {

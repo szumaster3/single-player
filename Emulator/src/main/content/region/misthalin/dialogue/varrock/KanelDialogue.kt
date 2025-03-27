@@ -12,7 +12,7 @@ import org.rs.consts.NPCs
 class KanelDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         player(FaceAnim.HALF_GUILTY, "Hello there.")
         return true
@@ -30,7 +30,7 @@ class KanelDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = KanelDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = KanelDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.KANEL_784)
 }

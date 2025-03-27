@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
 class SarbleDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         sendDialogue(player, "This gnome lady appears to be singing ... to her toads.")
         return true

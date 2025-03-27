@@ -15,7 +15,7 @@ import org.rs.consts.NPCs
 class GhostSailorDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (!inEquipment(player, Items.GHOSTSPEAK_AMULET_552)) {
             npcl(FaceAnim.FRIENDLY, "Woooo wooo wooooo woooo").also { stage = 3 }

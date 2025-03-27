@@ -82,7 +82,7 @@ class SpellbookSwapSpell :
 class SpellbookSwapDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         sendDialogueOptions(player, "Select a Spellbook:", "Ancient", "Modern")
         return true
     }

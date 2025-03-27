@@ -12,7 +12,7 @@ import org.rs.consts.NPCs
 class AlchemyGuardianDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         player(FaceAnim.HALF_GUILTY, "Hi.")
         return true

@@ -11,7 +11,7 @@ import org.rs.consts.NPCs
 class SilasDahcsnuDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         player("Hello there.")
         return true

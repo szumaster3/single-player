@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
 class BarkerDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         player(FaceAnim.HAPPY, "Hello.")
         return true
@@ -51,7 +51,7 @@ class BarkerDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = BarkerDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = BarkerDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.BARKER_1039)
 }

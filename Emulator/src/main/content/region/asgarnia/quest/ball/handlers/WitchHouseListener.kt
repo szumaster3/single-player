@@ -127,7 +127,11 @@ class WitchHouseListener : InteractionListener {
             val sadness = RegionManager.getLocalPlayers(player, 1)
 
             if (shed && sadness.isNotEmpty()) {
-                sendPlayerDialogue(player, "I'd better not go in there yet... I think I can hear someone inside!", FaceAnim.THINKING)
+                sendPlayerDialogue(
+                    player,
+                    "I'd better not go in there yet... I think I can hear someone inside!",
+                    FaceAnim.THINKING,
+                )
                 return@on true
             }
 

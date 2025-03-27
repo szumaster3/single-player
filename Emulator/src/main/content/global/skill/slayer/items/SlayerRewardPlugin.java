@@ -35,9 +35,9 @@ public class SlayerRewardPlugin extends ComponentPlugin {
 
     @Override
     public Plugin<Object> newInstance(Object arg) throws Throwable {
-        ComponentDefinition.forId(Components.SMKI_ASSIGNMENT_161).setPlugin(this);
-        ComponentDefinition.forId(Components.SMKI_LEARN_163).setPlugin(this);
-        ComponentDefinition.forId(Components.SMKI_BUY_164).setPlugin(this);
+        ComponentDefinition.forId(Components.SMKI_ASSIGNMENT_161).plugin = this;
+        ComponentDefinition.forId(Components.SMKI_LEARN_163).plugin = this;
+        ComponentDefinition.forId(Components.SMKI_BUY_164).plugin = this;
         ClassScanner.definePlugins(new SlayerMasterPlugin(), new SlayerHelmCraftPlugin());
         return this;
     }
@@ -49,7 +49,7 @@ public class SlayerRewardPlugin extends ComponentPlugin {
 
     @Override
     public boolean handle(Player player, Component component, int opcode, int button, int slot, int itemId) {
-        switch (component.getId()) {
+        switch (component.id) {
             case Components.SMKI_ASSIGNMENT_161:
                 switch (button) {
                     case 23:
@@ -233,37 +233,37 @@ public class SlayerRewardPlugin extends ComponentPlugin {
                 space += " ";
             }
         }
-        switch (open.getId()) {
-            case 161:
+        switch (open.id) {
+            case Components.SMKI_ASSIGNMENT_161:
                 int[] childs = new int[]{35, 30, 31, 32};
                 String[] letters = new String[]{"A", "B", "C", "D"};
                 Tasks task = null;
                 for (int i = 0; i < 4; i++) {
                     task = i > SlayerManager.getInstance(player).getRemoved().size() - 1 ? null : SlayerManager.getInstance(player).getRemoved().get(i);
-                    player.getPacketDispatch().sendString(task == null ? letters[i] : task.getName(), open.getId(), childs[i]);
+                    player.getPacketDispatch().sendString(task == null ? letters[i] : task.getName(), open.id, childs[i]);
                 }
-                player.getPacketDispatch().sendString(space + SlayerManager.getInstance(player).getSlayerPoints(), open.getId(), 19);
+                player.getPacketDispatch().sendString(space + SlayerManager.getInstance(player).getSlayerPoints(), open.id, 19);
                 break;
-            case 163:
+            case Components.SMKI_LEARN_163:
                 for (int i = 0; i < 3; i++) {
                     switch (i) {
                         case 0:
-                            player.getPacketDispatch().sendInterfaceConfig(open.getId(), 25 + i, !SlayerManager.getInstance(player).flags.isBroadsUnlocked());
+                            player.getPacketDispatch().sendInterfaceConfig(open.id, 25 + i, !SlayerManager.getInstance(player).flags.isBroadsUnlocked());
                             break;
                         case 1:
-                            player.getPacketDispatch().sendInterfaceConfig(open.getId(), 25 + i, !SlayerManager.getInstance(player).flags.isRingUnlocked());
+                            player.getPacketDispatch().sendInterfaceConfig(open.id, 25 + i, !SlayerManager.getInstance(player).flags.isRingUnlocked());
                             break;
                         case 2:
-                            player.getPacketDispatch().sendInterfaceConfig(open.getId(), 25 + i, !SlayerManager.getInstance(player).flags.isHelmUnlocked());
+                            player.getPacketDispatch().sendInterfaceConfig(open.id, 25 + i, !SlayerManager.getInstance(player).flags.isHelmUnlocked());
                             break;
                         default:
                             break;
                     }
                 }
-                player.getPacketDispatch().sendString(space + SlayerManager.getInstance(player).getSlayerPoints(), open.getId(), 18);
+                player.getPacketDispatch().sendString(space + SlayerManager.getInstance(player).getSlayerPoints(), open.id, 18);
                 break;
-            case 164:
-                player.getPacketDispatch().sendString(space + SlayerManager.getInstance(player).getSlayerPoints(), open.getId(), 20);
+            case Components.SMKI_BUY_164:
+                player.getPacketDispatch().sendString(space + SlayerManager.getInstance(player).getSlayerPoints(), open.id, 20);
                 break;
         }
     }

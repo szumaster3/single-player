@@ -70,7 +70,9 @@ class BallPlugin : PluginInteraction() {
                     .getSkills()
                     .setLevel(i, if (player.getSkills().getLevel(i) > 5) player.getSkills().getLevel(i) - 5 else 1)
             }
-            player.packetDispatch.sendMessage("<col=ff0000>The experiment glares at you, and you feel yourself weaken.</col>")
+            player.packetDispatch.sendMessage(
+                "<col=ff0000>The experiment glares at you, and you feel yourself weaken.</col>",
+            )
             WitchExperimentNPC(
                 player.getAttribute("witchs_house:experiment_id", 897),
                 Location.create(2936, 3463, 0),

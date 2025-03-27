@@ -12,7 +12,7 @@ import org.rs.consts.NPCs
 class WanderingImplingDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         player("Hello. So, what is this place?")
         return true

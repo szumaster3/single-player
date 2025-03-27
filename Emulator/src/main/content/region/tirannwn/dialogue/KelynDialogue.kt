@@ -12,7 +12,7 @@ import org.rs.consts.NPCs
 class KelynDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         player(FaceAnim.FRIENDLY, "Hello.")
         return true
@@ -44,7 +44,7 @@ class KelynDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = KelynDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = KelynDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.KELYN_2367)
 }

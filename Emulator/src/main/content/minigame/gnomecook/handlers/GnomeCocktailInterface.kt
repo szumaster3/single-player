@@ -79,7 +79,15 @@ class GnomeCocktailInterface : InterfaceListener {
         vararg val requiredItems: Int,
     ) {
         FRUIT_BLAST(6, 50.0, Items.MIXED_BLAST_9568, Items.PINEAPPLE_2114, Items.LEMON_2102, Items.ORANGE_2108),
-        PINEAPPLE_PUNCH(8, 70.0, Items.MIXED_PUNCH_9569, Items.PINEAPPLE_2114, Items.PINEAPPLE_2114, Items.LEMON_2102, Items.ORANGE_2108),
+        PINEAPPLE_PUNCH(
+            8,
+            70.0,
+            Items.MIXED_PUNCH_9569,
+            Items.PINEAPPLE_2114,
+            Items.PINEAPPLE_2114,
+            Items.LEMON_2102,
+            Items.ORANGE_2108,
+        ),
         WIZARD_BLIZZARD(
             18,
             110.0,
@@ -91,7 +99,15 @@ class GnomeCocktailInterface : InterfaceListener {
             Items.LEMON_2102,
             Items.ORANGE_2108,
         ),
-        SHORT_GREEN_GUY(20, 120.0, Items.MIXED_SGG_9567, Items.VODKA_2015, Items.LIME_2120, Items.LIME_2120, Items.LIME_2120),
+        SHORT_GREEN_GUY(
+            20,
+            120.0,
+            Items.MIXED_SGG_9567,
+            Items.VODKA_2015,
+            Items.LIME_2120,
+            Items.LIME_2120,
+            Items.LIME_2120,
+        ),
         DRUNK_DRAGON(32, 160.0, Items.MIXED_DRAGON_9574, Items.VODKA_2015, Items.GIN_2019, Items.DWELLBERRIES_2126),
         CHOC_SATURDAY(
             33,

@@ -16,7 +16,7 @@ import org.rs.consts.NPCs
 class RatpitBarmanDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         when (npc.id) {
             NPCs.RAUBORN_2991 -> npc(FaceAnim.OLD_DEFAULT, "Welcome to the ratpit bar, human traveller.")
@@ -72,7 +72,7 @@ class RatpitBarmanDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = RatpitBarmanDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = RatpitBarmanDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.RAUBORN_2991, NPCs.BARMAN_3000)
 }

@@ -6,6 +6,9 @@ import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.tools.START_DIALOGUE
 
+/**
+ * Represents an abstract dialogue file that handles player and NPC dialogues.
+ */
 abstract class DialogueFile {
     var player: Player? = null
     var npc: NPC? = null
@@ -13,11 +16,18 @@ abstract class DialogueFile {
     open var stage = START_DIALOGUE
     var dialogue: Dialogue? = null
 
+    /**
+     * Handles dialogue interactions based on component and button ID.
+     */
     abstract fun handle(
         componentID: Int,
         buttonID: Int,
     )
 
+    /**
+     * Loads the dialogue file with the provided player, NPC, and interpreter.
+     * @return The loaded dialogue file instance.
+     */
     open fun load(
         player: Player,
         npc: NPC?,
@@ -31,6 +41,9 @@ abstract class DialogueFile {
         return this
     }
 
+    /**
+     * Sends player dialogue with optional facial animation.
+     */
     open fun player(vararg msg: String?): Component? = interpreter!!.sendDialogues(player, null, *msg)
 
     open fun player(
@@ -45,6 +58,9 @@ abstract class DialogueFile {
 
     open fun playerl(msg: String?): Component? = player(*splitLines(msg!!))
 
+    /**
+     * Sends NPC dialogue with optional facial animation.
+     */
     open fun npc(vararg msg: String?): Component? {
         if (npc != null) {
             return interpreter!!.sendDialogues(
@@ -88,6 +104,9 @@ abstract class DialogueFile {
         return chatBoxComponent
     }
 
+    /**
+     * Sends NPC dialogue with line splitting.
+     */
     open fun npcl(
         expr: FaceAnim?,
         msg: String?,
@@ -108,10 +127,16 @@ abstract class DialogueFile {
 
     open fun npcl(msg: String?): Component? = npc(*splitLines(msg!!))
 
+    /**
+     * Ends the current dialogue session.
+     */
     open fun end() {
         interpreter?.close()
     }
 
+    /**
+     * Sends a normal dialogue message.
+     */
     open fun sendNormalDialogue(
         id: Entity?,
         expr: FaceAnim?,
@@ -120,6 +145,9 @@ abstract class DialogueFile {
         interpreter!!.sendDialogues(id, expr, *msg)
     }
 
+    /**
+     * Displays dialogue options.
+     */
     open fun options(
         vararg options: String?,
         title: String = "Select an Option",
@@ -127,28 +155,50 @@ abstract class DialogueFile {
         interpreter!!.sendOptions(title, *options)
     }
 
+    /**
+     * Ends the dialogue file session.
+     */
     fun endFile() {
         interpreter!!.dialogue.file = null
     }
 
+    /**
+     * Returns to a specified dialogue stage.
+     */
     fun returnAtStage(stage: Int) {
         dialogue!!.file = null
         dialogue!!.stage = stage
     }
 
+    /**
+     * Abandons the dialogue file, resetting dialogue state.
+     */
     fun abandonFile() {
         interpreter!!.dialogue.file = null
         player("Nevermind.")
     }
 
+    /**
+     * Retrieves the current dialogue stage.
+     */
     open fun getCurrentStage(): Int = stage
 
+    /**
+     * Creates a substage offset.
+     */
     fun Int.substage(stage: Int): Int = this + stage
 
+    /**
+     * Sends a player dialogue message.
+     */
     fun dialogue(vararg messages: String) {
         player?.dialogueInterpreter?.sendDialogue(*messages)
     }
 
+    /**
+     * Displays selectable dialogue topics.
+     * @return true if no topics are available, otherwise false.
+     */
     fun showTopics(
         vararg topics: Topic<*>,
         title: String = "Select an Option:",
@@ -158,22 +208,28 @@ abstract class DialogueFile {
             interpreter!!.activeTopics.add(topic)
             validTopics.add(topic.text)
         }
-        if (validTopics.size == 0) {
-            return true
-        } else if (validTopics.size == 1) {
-            val topic = topics[0]
-            if (topic.toStage is DialogueFile) {
-                val topicFile = topic.toStage
-                interpreter!!.dialogue.loadFile(topicFile)
-            } else if (topic.toStage is Int) {
-                stage = topic.toStage
+        when (validTopics.size) {
+            0 -> {
+                return true
             }
-            player(topic.text)
-            interpreter!!.activeTopics.clear()
-            return false
-        } else {
-            options(*validTopics.toTypedArray(), title = title)
-            return false
+
+            1 -> {
+                val topic = topics[0]
+                if (topic.toStage is DialogueFile) {
+                    val topicFile = topic.toStage
+                    interpreter!!.dialogue.loadFile(topicFile)
+                } else if (topic.toStage is Int) {
+                    stage = topic.toStage
+                }
+                player(topic.text)
+                interpreter!!.activeTopics.clear()
+                return false
+            }
+
+            else -> {
+                options(*validTopics.toTypedArray(), title = title)
+                return false
+            }
         }
     }
 }

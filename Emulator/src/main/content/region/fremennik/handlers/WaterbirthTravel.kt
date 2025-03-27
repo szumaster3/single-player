@@ -36,7 +36,8 @@ object WaterbirthTravel {
         )
     }
 
-    private fun isDestinationValid(destination: TravelDestination): Boolean = TravelDestination.values().contains(destination)
+    private fun isDestinationValid(destination: TravelDestination): Boolean =
+        TravelDestination.values().contains(destination)
 
     private fun completeJourney(
         player: Player,

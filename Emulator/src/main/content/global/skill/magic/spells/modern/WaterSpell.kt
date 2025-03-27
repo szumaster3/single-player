@@ -21,7 +21,6 @@ import org.rs.consts.Sounds
  */
 @Initializable
 class WaterSpell : CombatSpell {
-
     constructor()
 
     private constructor(
@@ -32,7 +31,7 @@ class WaterSpell : CombatSpell {
         start: Graphics,
         projectile: Projectile,
         end: Graphics,
-        vararg runes: Item
+        vararg runes: Item,
     ) : super(
         type,
         SpellBook.MODERN,
@@ -44,10 +43,14 @@ class WaterSpell : CombatSpell {
         start,
         projectile,
         end,
-        *runes
+        *runes,
     )
 
-    override fun getMaximumImpact(entity: Entity, victim: Entity, state: BattleState): Int {
+    override fun getMaximumImpact(
+        entity: Entity,
+        victim: Entity,
+        state: BattleState,
+    ): Int {
         return getType().getImpactAmount(entity, victim, 2)
     }
 
@@ -65,8 +68,8 @@ class WaterSpell : CombatSpell {
                 STRIKE_END,
                 Runes.MIND_RUNE.getItem(1),
                 Runes.WATER_RUNE.getItem(1),
-                Runes.AIR_RUNE.getItem(1)
-            )
+                Runes.AIR_RUNE.getItem(1),
+            ),
         )
         SpellBook.MODERN.register(
             14,
@@ -80,8 +83,8 @@ class WaterSpell : CombatSpell {
                 BOLT_END,
                 Runes.CHAOS_RUNE.getItem(1),
                 Runes.WATER_RUNE.getItem(2),
-                Runes.AIR_RUNE.getItem(2)
-            )
+                Runes.AIR_RUNE.getItem(2),
+            ),
         )
         SpellBook.MODERN.register(
             27,
@@ -95,8 +98,8 @@ class WaterSpell : CombatSpell {
                 BLAST_END,
                 Runes.DEATH_RUNE.getItem(1),
                 Runes.WATER_RUNE.getItem(3),
-                Runes.AIR_RUNE.getItem(3)
-            )
+                Runes.AIR_RUNE.getItem(3),
+            ),
         )
         SpellBook.MODERN.register(
             48,
@@ -110,64 +113,68 @@ class WaterSpell : CombatSpell {
                 WAVE_END,
                 Runes.BLOOD_RUNE.getItem(1),
                 Runes.WATER_RUNE.getItem(7),
-                Runes.AIR_RUNE.getItem(5)
-            )
+                Runes.AIR_RUNE.getItem(5),
+            ),
         )
         return this
     }
 
     companion object {
         private val STRIKE_START = Graphics(org.rs.consts.Graphics.WATER_STRIKE_CAST_93, 96)
-        private val STRIKE_PROJECTILE: Projectile = Projectile.create(
-            null as Entity?,
-            null,
-            org.rs.consts.Graphics.WATER_STRIKE_PROJECTILE_94,
-            40,
-            36,
-            52,
-            75,
-            15,
-            11
-        )
+        private val STRIKE_PROJECTILE: Projectile =
+            Projectile.create(
+                null as Entity?,
+                null,
+                org.rs.consts.Graphics.WATER_STRIKE_PROJECTILE_94,
+                40,
+                36,
+                52,
+                75,
+                15,
+                11,
+            )
         private val STRIKE_END = Graphics(org.rs.consts.Graphics.WATER_STRIKE_IMPACT_95, 96)
         private val BOLT_START = Graphics(org.rs.consts.Graphics.WATER_BOLT_CAST_120, 96)
-        private val BOLT_PROJECTILE: Projectile = Projectile.create(
-            null as Entity?,
-            null,
-            org.rs.consts.Graphics.WATER_BOLT_PROJECTILE_121,
-            40,
-            36,
-            52,
-            75,
-            15,
-            11
-        )
+        private val BOLT_PROJECTILE: Projectile =
+            Projectile.create(
+                null as Entity?,
+                null,
+                org.rs.consts.Graphics.WATER_BOLT_PROJECTILE_121,
+                40,
+                36,
+                52,
+                75,
+                15,
+                11,
+            )
         private val BOLT_END = Graphics(org.rs.consts.Graphics.WATER_BOLT_IMPACT_122, 96)
         private val BLAST_START = Graphics(org.rs.consts.Graphics.WATER_BLAST_CAST_135, 96)
-        private val BLAST_PROJECTILE: Projectile = Projectile.create(
-            null as Entity?,
-            null,
-            org.rs.consts.Graphics.WATER_BLAST_PROJECTILE_136,
-            40,
-            36,
-            52,
-            75,
-            15,
-            11
-        )
+        private val BLAST_PROJECTILE: Projectile =
+            Projectile.create(
+                null as Entity?,
+                null,
+                org.rs.consts.Graphics.WATER_BLAST_PROJECTILE_136,
+                40,
+                36,
+                52,
+                75,
+                15,
+                11,
+            )
         private val BLAST_END = Graphics(org.rs.consts.Graphics.WATER_BLAST_IMPACT_137, 96)
         private val WAVE_START = Graphics(org.rs.consts.Graphics.WATER_WAVE_CAST_161, 96)
-        private val WAVE_PROJECTILE: Projectile = Projectile.create(
-            null as Entity?,
-            null,
-            org.rs.consts.Graphics.WATER_WAVE_PROJECTILE_162,
-            40,
-            36,
-            52,
-            75,
-            15,
-            11
-        )
+        private val WAVE_PROJECTILE: Projectile =
+            Projectile.create(
+                null as Entity?,
+                null,
+                org.rs.consts.Graphics.WATER_WAVE_PROJECTILE_162,
+                40,
+                36,
+                52,
+                75,
+                15,
+                11,
+            )
         private val WAVE_END = Graphics(org.rs.consts.Graphics.WATER_WAVE_IMPACT_163, 96)
         private val ANIMATION = Animation(Animations.CAST_SPELL_711, Priority.HIGH)
     }

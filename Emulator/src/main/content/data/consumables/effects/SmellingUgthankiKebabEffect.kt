@@ -11,7 +11,14 @@ class SmellingUgthankiKebabEffect : ConsumableEffect() {
         }
     }
 
-    override fun getHealthEffectValue(player: Player): Int = if (RandomFunction.nextInt(100) < PERCENTAGE) HEALING else 0
+    override fun getHealthEffectValue(player: Player): Int =
+        if (RandomFunction.nextInt(100) <
+            PERCENTAGE
+        ) {
+            HEALING
+        } else {
+            0
+        }
 
     companion object {
         private const val PERCENTAGE = 10

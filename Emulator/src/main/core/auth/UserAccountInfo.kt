@@ -90,7 +90,8 @@ class UserAccountInfo(
             joinDate,
         )
 
-    override fun toString(): String = "USER:$username,PASS:$password,UID:$uid,RIGHTS:$rights,CREDITS:$credits,IP:$ip,LASTIP:$lastUsedIp"
+    override fun toString(): String =
+        "USER:$username,PASS:$password,UID:$uid,RIGHTS:$rights,CREDITS:$credits,IP:$ip,LASTIP:$lastUsedIp"
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

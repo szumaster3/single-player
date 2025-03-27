@@ -1,5 +1,6 @@
 package content.region.misthalin.quest.surok.dialogue;
 
+import org.rs.consts.NPCs;
 import org.rs.consts.Quests;
 import content.region.misthalin.quest.surok.WhatLiesBelow;
 import content.region.misthalin.quest.surok.handlers.WhatLiesBelowCutscene;
@@ -501,7 +502,7 @@ public class SurokMagisDialogue extends Dialogue {
 
     @Override
     public int[] getIds() {
-        return new int[]{5834, 5835};
+        return new int[]{NPCs.SUROK_MAGIS_5834, NPCs.SUROK_MAGIS_5835};
     }
 
     /**

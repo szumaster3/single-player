@@ -160,7 +160,7 @@ object CharacterDesign {
         sendAnimationOnInterface(player, 9806, Components.APPEARANCE_771, 79)
         player.appearance.changeGender(player.appearance.gender)
         val c = player.interfaceManager.openComponent(Components.APPEARANCE_771)
-        c?.setCloseEvent { player, c ->
+        c?.setUncloseEvent { player, c ->
             player.getAttribute("char-design:accepted", false)
         }
         reset(player)
@@ -176,7 +176,7 @@ object CharacterDesign {
         sendPlayerOnInterface(player, Components.APPEARANCE_771, 79)
         sendAnimationOnInterface(player, 9806, Components.APPEARANCE_771, 79)
         val c = player.interfaceManager.openComponent(Components.APPEARANCE_771)
-        c?.setCloseEvent { player1: Player, c1: Component? -> player1.getAttribute("char-design:accepted", false) }
+        c?.setUncloseEvent { player1: Player, c1: Component? -> player1.getAttribute("char-design:accepted", false) }
         sendInterfaceConfig(player, Components.APPEARANCE_771, 22, false)
         sendInterfaceConfig(player, Components.APPEARANCE_771, 92, false)
         sendInterfaceConfig(player, Components.APPEARANCE_771, 97, false)

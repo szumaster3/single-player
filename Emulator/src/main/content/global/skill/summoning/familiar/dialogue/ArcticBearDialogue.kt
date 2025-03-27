@@ -14,7 +14,7 @@ import java.util.*
  */
 @Initializable
 class ArcticBearDialogue : Dialogue {
-    override fun newInstance(player: Player): Dialogue {
+    override fun newInstance(player: Player?): Dialogue {
         return ArcticBearDialogue(player)
     }
 
@@ -30,14 +30,14 @@ class ArcticBearDialogue : Dialogue {
      */
     constructor(player: Player?) : super(player)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         val rand = Random()
         when (rand.nextInt(5)) {
             0 -> {
                 npcl(
                     FaceAnim.CHILD_NORMAL,
-                    "Crikey! We're tracking ourselves a real live one here. I call 'em 'Brighteyes'."
+                    "Crikey! We're tracking ourselves a real live one here. I call 'em 'Brighteyes'.",
                 )
                 stage = 0
             }
@@ -49,8 +49,9 @@ class ArcticBearDialogue : Dialogue {
 
             2 -> {
                 npcl(
-                    FaceAnim.CHILD_NORMAL, "We're tracking Brighteyes here as goes about " +
-                            (if (player.isMale) "his" else "her") + " daily routine."
+                    FaceAnim.CHILD_NORMAL,
+                    "We're tracking Brighteyes here as goes about " +
+                        (if (player.isMale) "his" else "her") + " daily routine.",
                 )
                 stage = 8
             }
@@ -63,7 +64,7 @@ class ArcticBearDialogue : Dialogue {
             4 -> {
                 npcl(
                     FaceAnim.CHILD_NORMAL,
-                    "I'm going to use this snow to blend in and get closer to this little feller."
+                    "I'm going to use this snow to blend in and get closer to this little feller.",
                 )
                 stage = 12
             }
@@ -71,7 +72,10 @@ class ArcticBearDialogue : Dialogue {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(
+        interfaceId: Int,
+        buttonId: Int,
+    ): Boolean {
         when (stage) {
             0 -> {
                 playerl(FaceAnim.HALF_ASKING, "Will you stop stalking me like that?")
@@ -131,7 +135,7 @@ class ArcticBearDialogue : Dialogue {
             11 -> {
                 playerl(
                     FaceAnim.HALF_ASKING,
-                    "Who wouldn't be upset with a huge bear tracking along behind them, commenting on everything they do?"
+                    "Who wouldn't be upset with a huge bear tracking along behind them, commenting on everything they do?",
                 )
                 stage = END_DIALOGUE
             }
@@ -169,7 +173,7 @@ class ArcticBearDialogue : Dialogue {
             18 -> {
                 npcl(
                     FaceAnim.CHILD_NORMAL,
-                    "Willya lookit that! Lookit them teeth; I'd be a goner if it got hold of me!"
+                    "Willya lookit that! Lookit them teeth; I'd be a goner if it got hold of me!",
                 )
                 stage++
             }

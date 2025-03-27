@@ -26,7 +26,7 @@ class SigmundDialogue(
         }
     val fName = player?.getAttribute("fremennikname", "fremmyname")
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS)) {
             playerl(FaceAnim.HAPPY, "Hello there!")

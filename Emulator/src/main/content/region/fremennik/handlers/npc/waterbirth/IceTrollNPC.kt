@@ -17,7 +17,8 @@ class IceTrollNPC : AbstractNPC {
         vararg objects: Any?,
     ): AbstractNPC = IceTrollNPC(id, location)
 
-    override fun getIds(): IntArray = intArrayOf(NPCs.ICE_TROLL_MALE_5474, NPCs.ICE_TROLL_RUNT_5473, NPCs.ICE_TROLL_FEMALE_5475)
+    override fun getIds(): IntArray =
+        intArrayOf(NPCs.ICE_TROLL_MALE_5474, NPCs.ICE_TROLL_RUNT_5473, NPCs.ICE_TROLL_FEMALE_5475)
 
     override fun tick() {
         val nearbyMiner = findLocalNPC(this, NPCs.MINER_5497) ?: return super.tick()

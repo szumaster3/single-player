@@ -15,7 +15,7 @@ class GrubfootDialogue(
 ) : Dialogue(player) {
     private var quest: Quest? = null
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         quest = player.getQuestRepository().getQuest(Quests.GOBLIN_DIPLOMACY)
         when (quest!!.getStage(player)) {
@@ -126,5 +126,6 @@ class GrubfootDialogue(
         return true
     }
 
-    override fun getIds(): IntArray = intArrayOf(NPCs.GENERAL_WARTFACE_4495, NPCs.GRUBFOOT_4497, NPCs.GRUBFOOT_4498, NPCs.GRUBFOOT_4496)
+    override fun getIds(): IntArray =
+        intArrayOf(NPCs.GENERAL_WARTFACE_4495, NPCs.GRUBFOOT_4497, NPCs.GRUBFOOT_4498, NPCs.GRUBFOOT_4496)
 }

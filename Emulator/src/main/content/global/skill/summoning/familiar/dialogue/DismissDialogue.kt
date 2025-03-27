@@ -12,7 +12,7 @@ import core.plugin.Initializable
  */
 @Initializable
 class DismissDialogue : Dialogue {
-    override fun newInstance(player: Player): Dialogue {
+    override fun newInstance(player: Player?): Dialogue {
         return DismissDialogue(player)
     }
 
@@ -28,7 +28,7 @@ class DismissDialogue : Dialogue {
      */
     constructor(player: Player?) : super(player)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         if (player.familiarManager.familiar is Pet) {
             sendDialogueOptions(player, "Free pet?", "Yes", "No")
         } else {
@@ -37,21 +37,25 @@ class DismissDialogue : Dialogue {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(
+        interfaceId: Int,
+        buttonId: Int,
+    ): Boolean {
         when (stage) {
-            0 -> if (buttonId == 1) {
-                if (player.familiarManager.familiar is Pet) {
-                    sendDialogue("Run along; I'm setting you free.")
-                    val pet = player.familiarManager.familiar as Pet
-                    player.familiarManager.removeDetails(pet.itemIdHash)
-                } else {
+            0 ->
+                if (buttonId == 1) {
+                    if (player.familiarManager.familiar is Pet) {
+                        sendDialogue("Run along; I'm setting you free.")
+                        val pet = player.familiarManager.familiar as Pet
+                        player.familiarManager.removeDetails(pet.itemIdHash)
+                    } else {
+                        end()
+                    }
+                    player.familiarManager.dismiss()
+                    stage = 1
+                } else if (buttonId == 2) {
                     end()
                 }
-                player.familiarManager.dismiss()
-                stage = 1
-            } else if (buttonId == 2) {
-                end()
-            }
 
             1 -> end()
         }

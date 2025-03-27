@@ -29,7 +29,7 @@ class FairyChefDialogue(
         buttonId: Int,
     ): Boolean = true
 
-    override fun newInstance(player: Player): Dialogue = FairyChefDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = FairyChefDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.FAIRY_CHEF_3322, NPCs.FAIRY_CHEF_3323)
 }

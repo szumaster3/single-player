@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
 class SquireDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         if (args.size == 3) {
             val type = args[1] as Int
             when (type) {

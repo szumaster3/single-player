@@ -126,9 +126,9 @@ public final class GodwarsZone extends MapZone implements Plugin<java.lang.Objec
             Player player = (Player) e;
             Component c = player.getInterfaceManager().getOverlay();
             boolean inZamorakFortress = ZAMORAK_FORTRESS.insideBorder(player.getLocation().getX(), player.getLocation().getY());
-            if ((c == null || c.getId() != 598) && inZamorakFortress) {
+            if ((c == null || c.id != 598) && inZamorakFortress) {
                 openOverlay(player, 598);
-            } else if ((c == null || c.getId() != 597 && c.getId() != 601) && !inZamorakFortress) {
+            } else if ((c == null || c.id != 597 && c.id != 601) && !inZamorakFortress) {
                 openOverlay(player, player.getInterfaceManager().isResizable() ? 597 : 601);
             }
         }

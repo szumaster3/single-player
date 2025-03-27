@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
 class EzekialLovecraftDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npcl(FaceAnim.FRIENDLY, "Well hello there; welcome to our little village. Pray, stay awhile.")
         return true

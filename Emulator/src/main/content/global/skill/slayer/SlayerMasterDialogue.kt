@@ -28,7 +28,7 @@ class SlayerMasterDialogue(
     private var isDiary = false
     private val level = 2
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         if (args[0] is NPC) {
             npc = args[0] as NPC
         }

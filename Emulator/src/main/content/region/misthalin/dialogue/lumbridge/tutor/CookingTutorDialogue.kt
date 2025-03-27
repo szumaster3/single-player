@@ -15,7 +15,7 @@ import org.rs.consts.NPCs
 class CookingTutorDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         options(
             "Can you teach me the basics of cooking please?",

@@ -174,7 +174,9 @@ class VisualCommand : CommandPlugin() {
                 npc.init()
                 npc.isWalks = args.size > 2
                 val npcString =
-                    "{" + npc.location.x + "," + npc.location.y + "," + npc.location.z + "," + (if (npc.isWalks) "1" else "0") + "," +
+                    "{" + npc.location.x + "," + npc.location.y + "," + npc.location.z + "," +
+                        (if (npc.isWalks) "1" else "0") +
+                        "," +
                         npc.direction.ordinal +
                         "}"
                 val clpbrd = Toolkit.getDefaultToolkit().systemClipboard
@@ -296,7 +298,8 @@ class VisualCommand : CommandPlugin() {
                 val hidden = if (args.size > 3) java.lang.Boolean.parseBoolean(args[3]) else true
                 player!!.packetDispatch.sendInterfaceConfig(toInteger(args[1]!!), toInteger(args[2]!!), hidden)
                 player.packetDispatch.sendMessage(
-                    "Interface child (id=" + args[1] + ", child=" + args[2] + ") is " + if (hidden) "hidden." else "visible.",
+                    "Interface child (id=" + args[1] + ", child=" + args[2] + ") is " +
+                        if (hidden) "hidden." else "visible.",
                 )
                 return true
             }

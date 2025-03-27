@@ -14,7 +14,7 @@ import org.rs.consts.Sounds
 class OllieTheCamelDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         player(FaceAnim.HALF_GUILTY, "I wonder if that camel has fleas...")
         return true
@@ -34,7 +34,7 @@ class OllieTheCamelDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = OllieTheCamelDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = OllieTheCamelDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.OLLIE_THE_CAMEL_2811)
 }

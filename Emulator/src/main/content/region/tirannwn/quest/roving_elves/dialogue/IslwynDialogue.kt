@@ -19,7 +19,7 @@ import org.rs.consts.Quests
 class IslwynDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         val quest = player.getQuestRepository().getQuest(Quests.ROVING_ELVES)
         val waterfall = player.getQuestRepository().getQuest(Quests.WATERFALL_QUEST)
         if (quest.getStage(player) == 0 && waterfall.isCompleted(player)) {
@@ -519,7 +519,8 @@ class IslwynDialogue(
         return true
     }
 
-    override fun getIds(): IntArray = intArrayOf(DialogueInterpreter.getDialogueKey("islwyn_dialogue"), NPCs.ISLWYN_1680)
+    override fun getIds(): IntArray =
+        intArrayOf(DialogueInterpreter.getDialogueKey("islwyn_dialogue"), NPCs.ISLWYN_1680)
 
     fun crystalWeaponPrice(timesRecharged: Int): Int = Math.max(900000 - 180000 * timesRecharged, 180000)
 }

@@ -30,7 +30,6 @@ import org.rs.consts.Sounds
  */
 @Initializable
 class GodSpell : CombatSpell {
-
     constructor()
 
     private constructor(
@@ -40,7 +39,7 @@ class GodSpell : CombatSpell {
         start: Graphics?,
         projectile: Projectile?,
         end: Graphics,
-        vararg runes: Item
+        vararg runes: Item,
     ) : super(type, SpellBook.MODERN, 60, 35.0, sound, impactAudio, ANIMATION, start, projectile, end, *runes)
 
     private val spellIndex: Int
@@ -54,7 +53,11 @@ class GodSpell : CombatSpell {
             return index
         }
 
-    override fun meetsRequirements(caster: Entity, message: Boolean, remove: Boolean): Boolean {
+    override fun meetsRequirements(
+        caster: Entity,
+        message: Boolean,
+        remove: Boolean,
+    ): Boolean {
         if (caster is NPC) {
             return true
         }
@@ -67,13 +70,18 @@ class GodSpell : CombatSpell {
             val required = GOD_STAVES[index]
             val p = caster
             if (p.getSavedData().activityData.godCasts[index] < 100 && !p.zoneMonitor.isInZone("mage arena")) {
-                p.sendMessage("You need to cast " + NAMES[index] + " " + (100 - p.getSavedData().activityData.godCasts[index]) + " more times inside the Mage Arena.")
+                p.sendMessage(
+                    "You need to cast " + NAMES[index] + " " + (100 - p.getSavedData().activityData.godCasts[index]) +
+                        " more times inside the Mage Arena.",
+                )
                 return false
             }
 
             if (staffId != required && !(index == 1 && staffId == Items.VOID_KNIGHT_MACE_8841)) {
                 if (message) {
-                    caster.packetDispatch.sendMessage("You need to wear a " + ItemDefinition.forId(required).name + "  to cast this spell.")
+                    caster.packetDispatch.sendMessage(
+                        "You need to wear a " + ItemDefinition.forId(required).name + "  to cast this spell.",
+                    )
                 }
                 return false
             }
@@ -81,7 +89,11 @@ class GodSpell : CombatSpell {
         return super.meetsRequirements(caster, message, remove)
     }
 
-    override fun fireEffect(entity: Entity, victim: Entity, state: BattleState) {
+    override fun fireEffect(
+        entity: Entity,
+        victim: Entity,
+        state: BattleState,
+    ) {
         when (spellIndex) {
             0 -> victim.getSkills().decrementPrayerPoints(1.0)
             1 -> victim.getSkills().drainLevel(Skills.DEFENCE, 0.05, 0.05)
@@ -89,17 +101,27 @@ class GodSpell : CombatSpell {
         }
     }
 
-    override fun visualize(entity: Entity, target: Node) {
+    override fun visualize(
+        entity: Entity,
+        target: Node,
+    ) {
         super.visualize(entity, target)
         if (entity is NPC) {
             val n = entity
-            if (n.id > NPCs.KOLODION_911 && n.id < NPCs.LEELA_915 || (n.id > NPCs.KOLODION_906 && n.id < NPCs.BATTLE_MAGE_912)) {
+            if (n.id > NPCs.KOLODION_911 &&
+                n.id < NPCs.LEELA_915 ||
+                (n.id > NPCs.KOLODION_906 && n.id < NPCs.BATTLE_MAGE_912)
+            ) {
                 n.animator.forceAnimation(n.properties.attackAnimation)
             }
         }
     }
 
-    override fun visualizeImpact(entity: Entity, target: Entity, state: BattleState) {
+    override fun visualizeImpact(
+        entity: Entity,
+        target: Entity,
+        state: BattleState,
+    ) {
         if (entity is Player) {
             val index = spellIndex
             val p = entity
@@ -127,7 +149,11 @@ class GodSpell : CombatSpell {
         playGlobalAudio(target.location, impactAudio)
     }
 
-    override fun getMaximumImpact(entity: Entity, victim: Entity, state: BattleState): Int {
+    override fun getMaximumImpact(
+        entity: Entity,
+        victim: Entity,
+        state: BattleState,
+    ): Int {
         return getType().getImpactAmount(entity, victim, 0)
     }
 
@@ -144,8 +170,8 @@ class GodSpell : CombatSpell {
                 SARA_END,
                 Runes.BLOOD_RUNE.getItem(2),
                 Runes.FIRE_RUNE.getItem(2),
-                Runes.AIR_RUNE.getItem(4)
-            )
+                Runes.AIR_RUNE.getItem(4),
+            ),
         )
         SpellBook.MODERN.register(
             42,
@@ -158,8 +184,8 @@ class GodSpell : CombatSpell {
                 GUTHIX_END,
                 Runes.BLOOD_RUNE.getItem(2),
                 Runes.FIRE_RUNE.getItem(1),
-                Runes.AIR_RUNE.getItem(4)
-            )
+                Runes.AIR_RUNE.getItem(4),
+            ),
         )
         SpellBook.MODERN.register(
             43,
@@ -172,15 +198,16 @@ class GodSpell : CombatSpell {
                 ZAM_END,
                 Runes.BLOOD_RUNE.getItem(2),
                 Runes.FIRE_RUNE.getItem(4),
-                Runes.AIR_RUNE.getItem(1)
-            )
+                Runes.AIR_RUNE.getItem(1),
+            ),
         )
         return this
     }
 
     companion object {
         private val NAMES = arrayOf("Saradomin strike", "Guthix claws", "Flames of Zamorak")
-        private val GOD_STAVES = intArrayOf(Items.SARADOMIN_STAFF_2415, Items.GUTHIX_STAFF_2416, Items.ZAMORAK_STAFF_2417)
+        private val GOD_STAVES =
+            intArrayOf(Items.SARADOMIN_STAFF_2415, Items.GUTHIX_STAFF_2416, Items.ZAMORAK_STAFF_2417)
         private val SARA_START: Graphics? = null
         private val SARA_PROJECTILE: Projectile? = null
         private val SARA_END = Graphics(org.rs.consts.Graphics.SARADOMIN_STRIKE_76, 0)

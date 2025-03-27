@@ -12,7 +12,7 @@ import org.rs.consts.NPCs
 class SkavidDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc(FaceAnim.OLD_NEUTRAL, "Cur bidith...")
         sendMessage(player, "The skavid is trying to communicate...")
         sendMessage(player, "You don't know any skavid words yet!")

@@ -12,7 +12,7 @@ import org.rs.consts.NPCs
 class OutpostSquireDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc("Hi, how can I help you?")
         return true

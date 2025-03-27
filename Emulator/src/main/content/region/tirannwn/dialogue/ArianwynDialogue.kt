@@ -12,7 +12,7 @@ import org.rs.consts.NPCs
 class ArianwynDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         sendDialogue(player, "He doesn't seem interested in talking to you.").also { stage = END_DIALOGUE }
         return true
@@ -23,7 +23,7 @@ class ArianwynDialogue(
         buttonId: Int,
     ): Boolean = true
 
-    override fun newInstance(player: Player): Dialogue = ArianwynDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = ArianwynDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.ARIANWYN_1202)
 }

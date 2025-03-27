@@ -18,7 +18,7 @@ import org.rs.consts.NPCs
 class MonkOfEntranaDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (npc.id in intArrayOf(NPCs.MONK_OF_ENTRANA_2730, NPCs.MONK_OF_ENTRANA_658, NPCs.MONK_OF_ENTRANA_2731)) {
             npc(FaceAnim.HALF_ASKING, "Do you wish to leave holy Entrana?").also { stage = 25 }

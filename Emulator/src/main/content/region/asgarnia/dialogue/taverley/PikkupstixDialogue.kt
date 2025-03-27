@@ -154,7 +154,7 @@ class PikkupstixDialogue(
                     }
 
                     6 -> {
-                        interpreter.sendDialogues(ids[0], FaceAnim.FURIOUS, "Confound you, lapine menace!")
+                        interpreter.sendDialogues(npc, FaceAnim.FURIOUS, "Confound you, lapine menace!")
                         stage = 7
                     }
 
@@ -225,7 +225,7 @@ class PikkupstixDialogue(
                     }
 
                     19 -> {
-                        interpreter.sendDialogues(ids[0], FaceAnim.FURIOUS, "Gah! That better not be my wardrobe!")
+                        interpreter.sendDialogues(npc, FaceAnim.FURIOUS, "Gah! That better not be my wardrobe!")
                         stage = 20
                     }
 
@@ -306,7 +306,7 @@ class PikkupstixDialogue(
 
                     32 -> {
                         interpreter.sendDialogues(
-                            ids[0],
+                            npc,
                             FaceAnim.FURIOUS,
                             "Very well, young fool. You go see how well you do",
                             "against it.",
@@ -1104,7 +1104,7 @@ class PikkupstixDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = PikkupstixDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = PikkupstixDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.PIKKUPSTIX_6970, NPCs.PIKKUPSTIX_6971)
 

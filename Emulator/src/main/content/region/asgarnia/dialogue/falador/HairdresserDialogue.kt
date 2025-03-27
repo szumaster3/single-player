@@ -14,7 +14,7 @@ import org.rs.consts.NPCs
 class HairdresserDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (args.size == 2) {
             if (player.equipment[EquipmentContainer.SLOT_HAT] == null &&

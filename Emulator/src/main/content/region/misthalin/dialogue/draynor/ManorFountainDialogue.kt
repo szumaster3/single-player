@@ -13,7 +13,7 @@ import org.rs.consts.Items
 class ManorFountainDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         if (player.getAttribute("pressure-gauge", false) && player.inventory.containsItem(PRESSURE_GAUGE)) {
             player("It's full of dead fish!")
             stage = 5

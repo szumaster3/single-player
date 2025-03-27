@@ -48,7 +48,7 @@ class DurgokDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = DurgokDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = DurgokDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.DURGOK_5794)
 }

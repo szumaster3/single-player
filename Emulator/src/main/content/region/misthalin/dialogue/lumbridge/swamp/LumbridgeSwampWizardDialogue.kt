@@ -12,7 +12,7 @@ import org.rs.consts.NPCs
 class LumbridgeSwampWizardDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         player(FaceAnim.HALF_GUILTY, "Why are all of you standing around here?").also { stage = 0 }
         return true
@@ -37,7 +37,7 @@ class LumbridgeSwampWizardDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = LumbridgeSwampWizardDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = LumbridgeSwampWizardDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.WIZARD_652)
 }

@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
 class BonesDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         player("Who's a cute little kitty?")
         return true

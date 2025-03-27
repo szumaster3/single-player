@@ -27,7 +27,7 @@ class AnaDialogue(
         super.init()
     }
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         quest = player.getQuestRepository().getQuest(Quests.THE_TOURIST_TRAP)
         if ((quest!!.getStage(player) == 71 || quest!!.getStage(player) == 72) && args.size > 1) {
             sendDialogueLines(

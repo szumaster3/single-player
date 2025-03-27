@@ -159,7 +159,14 @@ data class PlayerScore(
          * @param playerScores the list of scores
          * @return the player with the most deposited resources
          */
-        fun mostDeposited(playerScores: List<PlayerScore>): PlayerScore? = playerScores.maxByOrNull { (it.depositing - it.withdraw) * 2 }
+        fun mostDeposited(playerScores: List<PlayerScore>): PlayerScore? =
+            playerScores.maxByOrNull {
+                (
+                    it.depositing -
+                        it.withdraw
+                ) *
+                    2
+            }
 
         /**
          * Finds the player who dealt the most damage.

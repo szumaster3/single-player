@@ -12,10 +12,12 @@ import org.rs.consts.NPCs
 class BarbarianGuardDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
-        if (!BarcrawlManager.getInstance(player).isStarted()) {
+    override fun open(vararg args: Any?): Boolean {
+        if (!BarcrawlManager.getInstance(player!!).isStarted()) {
             npc("O, waddya want?")
-        } else if (BarcrawlManager.getInstance(player).isFinished && !BarcrawlManager.getInstance(player).isStarted()) {
+        } else if (BarcrawlManager.getInstance(player!!).isFinished &&
+            !BarcrawlManager.getInstance(player).isStarted()
+        ) {
             npc("'Ello friend.").also { stage = END_DIALOGUE }
         } else {
             npc("So, how's the Barcrawl coming along?").also { stage = 12 }
@@ -37,7 +39,7 @@ class BarbarianGuardDialogue(
 
             3 -> npc("Do I look like a bank to you?").also { stage = END_DIALOGUE }
             4 ->
-                if (BarcrawlManager.getInstance(player).isFinished) {
+                if (BarcrawlManager.getInstance(player!!).isFinished) {
                     npc("You may pass if you like. You are a true", "barbarian now.").also { stage = END_DIALOGUE }
                 } else {
                     npc("Barbarians only. Are you a barbarian? You don't look", "like one.").also { stage++ }
@@ -70,9 +72,9 @@ class BarbarianGuardDialogue(
                 ).also { stage++ }
 
             9 -> {
-                BarcrawlManager.getInstance(player).reset()
-                BarcrawlManager.getInstance(player).setStarted(true)
-                player.inventory.add(BarcrawlManager.BARCRAWL_CARD, player)
+                BarcrawlManager.getInstance(player!!).reset()
+                BarcrawlManager.getInstance(player!!).setStarted(true)
+                player!!.inventory.add(BarcrawlManager.BARCRAWL_CARD, player)
                 sendDialogue("The guard hands you a Barcrawl card.")
                 stage++
             }
@@ -92,9 +94,9 @@ class BarbarianGuardDialogue(
                 ).also { stage = END_DIALOGUE }
 
             12 ->
-                if (!BarcrawlManager.getInstance(player).hasCard()) {
+                if (!BarcrawlManager.getInstance(player!!).hasCard()) {
                     player("I've lost my barcrawl card...").also { stage = 14 }
-                } else if (BarcrawlManager.getInstance(player).isFinished) {
+                } else if (BarcrawlManager.getInstance(player!!).isFinished) {
                     player("I tink I jusht 'bout done dem all... but I losht count...").also { stage = 15 }
                 } else {
                     player("I haven't finished it yet.").also { stage++ }
@@ -103,13 +105,13 @@ class BarbarianGuardDialogue(
             13 -> npc("Well come back when you have, you lightweight.").also { stage = END_DIALOGUE }
             14 -> npc("What are you like? You're gonna have to start all over", "now.").also { stage = 9 }
             15 -> {
-                if (!player.inventory.containsItem(BarcrawlManager.BARCRAWL_CARD)) {
+                if (!player!!.inventory.containsItem(BarcrawlManager.BARCRAWL_CARD)) {
                     end()
                 }
-                BarcrawlManager.getInstance(player).setStarted(false)
-                player.bank.remove(BarcrawlManager.BARCRAWL_CARD)
-                player.inventory.remove(BarcrawlManager.BARCRAWL_CARD)
-                sendDialogue(player, "You give the card to the barbarian.").also { stage++ }
+                BarcrawlManager.getInstance(player!!).setStarted(false)
+                player!!.bank.remove(BarcrawlManager.BARCRAWL_CARD)
+                player!!.inventory.remove(BarcrawlManager.BARCRAWL_CARD)
+                sendDialogue(player!!, "You give the card to the barbarian.").also { stage++ }
             }
 
             16 ->
@@ -121,7 +123,7 @@ class BarbarianGuardDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = BarbarianGuardDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = BarbarianGuardDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.BARBARIAN_GUARD_384)
 }

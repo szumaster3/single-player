@@ -17,7 +17,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class FruitBatDialogue : Dialogue {
-    override fun newInstance(player: Player): Dialogue {
+    override fun newInstance(player: Player?): Dialogue {
         return FruitBatDialogue(player)
     }
 
@@ -33,7 +33,7 @@ class FruitBatDialogue : Dialogue {
      */
     constructor(player: Player?) : super(player)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (amountInInventory(player, Items.PAPAYA_FRUIT_5972) >= 5) {
             npc(FaceAnim.CHILD_NORMAL, "Squeeksqueekasqueeksquee?", "(Can I have a papaya?)")
@@ -71,7 +71,10 @@ class FruitBatDialogue : Dialogue {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(
+        interfaceId: Int,
+        buttonId: Int,
+    ): Boolean {
         when (stage) {
             0 -> {
                 playerl(FaceAnim.FRIENDLY, "No, I have a very specific plan for them.")
@@ -121,7 +124,7 @@ class FruitBatDialogue : Dialogue {
             9 -> {
                 playerl(
                     FaceAnim.FRIENDLY,
-                    "Well, there is likely to be some up in those trees, if you go looking for it."
+                    "Well, there is likely to be some up in those trees, if you go looking for it.",
                 )
                 stage = END_DIALOGUE
             }

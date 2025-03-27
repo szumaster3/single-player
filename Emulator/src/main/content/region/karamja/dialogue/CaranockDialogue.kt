@@ -14,7 +14,7 @@ import org.rs.consts.NPCs
 class CaranockDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (player.location.regionId == 11823) {
             openDialogue(player, GLOCaranockDialogue(), npc)

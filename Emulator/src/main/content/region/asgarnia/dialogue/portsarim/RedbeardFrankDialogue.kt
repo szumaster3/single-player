@@ -23,7 +23,7 @@ class RedbeardFrankDialogue(
     private val level = 0
     private var quest: Quest? = null
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         quest = player.getQuestRepository().getQuest(Quests.PIRATES_TREASURE)
         npc("Arr, Matey!")

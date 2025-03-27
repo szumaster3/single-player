@@ -17,7 +17,7 @@ import org.rs.consts.Quests
 class ScavvoDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(FaceAnim.HALF_GUILTY, "'Ello matey! D'ya wanna buy some exiting new toys?")
         return true

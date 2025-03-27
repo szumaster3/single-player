@@ -12,7 +12,7 @@ import core.plugin.Initializable
 class BarcrawlDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npcId = args[0] as Int
         type = args[1] as BarcrawlType
         player("I'm doing Alfred Grimhand's Barcrawl.")
@@ -57,7 +57,7 @@ class BarcrawlDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = BarcrawlDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = BarcrawlDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(DialogueInterpreter.getDialogueKey("barcrawl dialogue"))
 

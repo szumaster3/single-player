@@ -723,7 +723,14 @@ class DuelSession(
 
     fun hasRule(r: DuelRule): Boolean = rules[r.ordinal] != null
 
-    fun getOppositeContainer(player: Player): StakeContainer? = if (player === this.player) targetContainer else playerContainer
+    fun getOppositeContainer(player: Player): StakeContainer? =
+        if (player ===
+            this.player
+        ) {
+            targetContainer
+        } else {
+            playerContainer
+        }
 
     fun getContainer(player: Player): StakeContainer? = if (player === this.player) playerContainer else targetContainer
 
@@ -746,28 +753,28 @@ class DuelSession(
 
     companion object {
         private val FRIENDLY_INTER =
-            Component(637).setCloseEvent { player, c ->
+            Component(637).setUncloseEvent { player, c ->
                 decline(player)
                 true
             }
         private val STAKED_INTER =
-            Component(631).setCloseEvent { player, c ->
+            Component(631).setUncloseEvent { player, c ->
                 decline(player)
                 true
             }
         private val FRIENDLY_RULE_INTER =
-            Component(639).setCloseEvent { player, c ->
+            Component(639).setUncloseEvent { player, c ->
                 decline(player)
                 true
             }
         private val STAKED_RULE_INTER =
-            Component(626).setCloseEvent { player, c ->
+            Component(626).setUncloseEvent { player, c ->
                 decline(player)
                 true
             }
         private val FRIENDLY_VICTORY = Component(633)
         private val STAKE_VICTORY =
-            Component(634).setCloseEvent { player, c ->
+            Component(634).setUncloseEvent { player, c ->
                 reward(player)
                 true
             }

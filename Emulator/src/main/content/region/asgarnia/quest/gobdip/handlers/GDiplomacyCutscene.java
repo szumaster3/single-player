@@ -27,6 +27,7 @@ import core.net.packet.context.CameraContext.CameraType;
 import core.net.packet.out.CameraViewPacket;
 import core.tools.RandomFunction;
 import core.tools.StringUtils;
+import org.rs.consts.NPCs;
 import org.rs.consts.Quests;
 
 import static core.api.ContentAPIKt.setAttribute;
@@ -57,11 +58,11 @@ public final class GDiplomacyCutscene extends CutscenePlugin {
     @Override
     public boolean start(final Player player, final boolean login, Object... args) {
         Quest quest = player.getQuestRepository().getQuest(Quests.GOBLIN_DIPLOMACY);
-        final NPC grubfoot = NPC.create(quest.getStage(player) == 10 ? 4495 : quest.getStage(player) == 20 ? 4497 : quest.getStage(player) == 30 ? 4498 : 4496, getBase().transform(10, 55, 0));
+        final NPC grubfoot = NPC.create(quest.getStage(player) == 10 ? NPCs.GENERAL_WARTFACE_4495 : quest.getStage(player) == 20 ? 4497 : quest.getStage(player) == 30 ? 4498 : 4496, getBase().transform(10, 55, 0));
         grubfoot.setWalks(false);
         npcs.add(grubfoot);
-        npcs.add(NPC.create(4494, getBase().transform(14, 55, 0)));
-        npcs.add(NPC.create(4493, getBase().transform(14, 56, 0)));
+        npcs.add(NPC.create(NPCs.GENERAL_WARTFACE_4494, getBase().transform(14, 55, 0)));
+        npcs.add(NPC.create(NPCs.GENERAL_BENTNOZE_4493, getBase().transform(14, 56, 0)));
         for (NPC npc : npcs) {
             npc.setDirection(Direction.WEST);
             npc.init();
@@ -71,7 +72,7 @@ public final class GDiplomacyCutscene extends CutscenePlugin {
 
     @Override
     public void open() {
-        player.getDialogueInterpreter().open(4494, npcs.get(1), this);
+        player.getDialogueInterpreter().open(NPCs.GENERAL_WARTFACE_4494, npcs.get(1), this);
         PacketRepository.send(CameraViewPacket.class, new CameraContext(player, CameraType.POSITION, player.getLocation().getX() + 4, player.getLocation().getY() + 1, 390, 1, 100));
         PacketRepository.send(CameraViewPacket.class, new CameraContext(player, CameraType.ROTATION, player.getLocation().getX() + 2, player.getLocation().getY(), 390, 1, 100));
     }
@@ -147,7 +148,7 @@ public final class GDiplomacyCutscene extends CutscenePlugin {
             npc = (NPC) args[0];
             type = GrubFoot.forConfig(player);
             dialIndex = RandomFunction.random(DIALOGUES.length);
-            other = Repository.findNPC(npc.getId() == 4494 ? 4493 : 4494);
+            other = Repository.findNPC(npc.getId() == NPCs.GENERAL_WARTFACE_4494 ? NPCs.GENERAL_BENTNOZE_4493 : NPCs.GENERAL_WARTFACE_4494);
             quest = player.getQuestRepository().getQuest(Quests.GOBLIN_DIPLOMACY);
             if (player.getQuestRepository().getQuest(Quests.THE_LOST_TRIBE).getStage(player) == 43) {
                 player("Have you heard of the Dorgeshuun?");
@@ -833,7 +834,7 @@ public final class GDiplomacyCutscene extends CutscenePlugin {
          * @return the color
          */
         public String getColor(final String line) {
-            return npc.getId() == 4494 ? "green" : "red";
+            return npc.getId() == NPCs.GENERAL_WARTFACE_4494 ? "green" : "red";
         }
 
         /**
@@ -843,7 +844,7 @@ public final class GDiplomacyCutscene extends CutscenePlugin {
          * @return the other color
          */
         public String getOtherColor(final String line) {
-            return other.getId() == 4493 ? "red" : "green";
+            return other.getId() == NPCs.GENERAL_BENTNOZE_4493 ? "red" : "green";
         }
 
         /**

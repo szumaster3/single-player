@@ -11,7 +11,7 @@ import org.rs.consts.NPCs
 class BogrogDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(FaceAnim.CHILD_NORMAL, "Hey, yooman, what you wanting?")
         return true
@@ -57,7 +57,7 @@ class BogrogDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = BogrogDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = BogrogDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.BOGROG_4472)
 }

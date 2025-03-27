@@ -14,7 +14,7 @@ import org.rs.consts.Quests
 class WizardMizgogDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (!isQuestComplete(player, Quests.IMP_CATCHER)) {
             openDialogue(
@@ -50,7 +50,7 @@ class WizardMizgogDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = WizardMizgogDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = WizardMizgogDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.WIZARD_MIZGOG_706)
 }

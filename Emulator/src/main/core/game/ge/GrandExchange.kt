@@ -14,6 +14,7 @@ import core.game.world.repository.Repository
 import core.tools.Log
 import core.tools.SystemLogger
 import core.tools.colorize
+import org.rs.consts.Items
 import org.rs.consts.Sounds
 import java.lang.Integer.max
 import java.util.concurrent.LinkedBlockingDeque
@@ -307,11 +308,12 @@ class GrandExchange :
                 playAudio(seller.player!!, Sounds.GE_COLLECT_COINS_4042)
             }
 
-            seller.addWithdrawItem(995, amount * if (sellerBias) buyer.offeredValue else seller.offeredValue)
+            seller.addWithdrawItem(Items.COINS_995, amount * if (sellerBias) buyer.offeredValue else seller
+                .offeredValue)
             buyer.addWithdrawItem(seller.itemID, amount)
 
             if (!sellerBias) {
-                buyer.addWithdrawItem(995, amount * (buyer.offeredValue - seller.offeredValue))
+                buyer.addWithdrawItem(Items.COINS_995, amount * (buyer.offeredValue - seller.offeredValue))
             }
 
             if (seller.amountLeft < 1) {

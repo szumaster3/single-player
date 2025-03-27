@@ -23,7 +23,7 @@ class SquirrelDialogue(
     private val adultSquirrel =
         intArrayOf(NPCs.SQUIRREL_6920, NPCs.SQUIRREL_7302, NPCs.SQUIRREL_7304, NPCs.SQUIRREL_7306, NPCs.SQUIRREL_7308)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (npc.id in babySquirrel) {
             npcl(FaceAnim.CHILD_NORMAL, "Throw a ball for me!").also { stage = 0 }

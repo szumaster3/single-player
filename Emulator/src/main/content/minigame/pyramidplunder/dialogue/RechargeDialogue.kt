@@ -9,7 +9,7 @@ import org.rs.consts.Items
 class RechargeDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         usedSceptre = args[0] as Item
         sendMessage(player, "" + args[0])
         sendDialogueLines(

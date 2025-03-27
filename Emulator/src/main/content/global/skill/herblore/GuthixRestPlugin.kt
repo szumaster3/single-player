@@ -30,9 +30,18 @@ class GuthixRestPlugin : UseWithHandler(Items.CLEAN_GUAM_249, Items.CLEAN_MARREN
         HERB_TEA_MIX_5(listOf(Items.CLEAN_HARRALANDER_255, Items.CLEAN_GUAM_249), Items.HERB_TEA_MIX_4472),
         HERB_TEA_MIX_6(listOf(Items.CLEAN_GUAM_249, Items.CLEAN_GUAM_249), Items.HERB_TEA_MIX_4474),
         HERB_TEA_MIX_7(listOf(Items.CLEAN_GUAM_249, Items.CLEAN_MARRENTILL_251), Items.HERB_TEA_MIX_4476),
-        HERB_TEA_MIX_8(listOf(Items.CLEAN_HARRALANDER_255, Items.CLEAN_MARRENTILL_251, Items.CLEAN_GUAM_249), Items.HERB_TEA_MIX_4478),
-        HERB_TEA_MIX_9(listOf(Items.CLEAN_GUAM_249, Items.CLEAN_GUAM_249, Items.CLEAN_MARRENTILL_251), Items.HERB_TEA_MIX_4480),
-        HERB_TEA_MIX_10(listOf(Items.CLEAN_GUAM_249, Items.CLEAN_GUAM_249, Items.CLEAN_HARRALANDER_255), Items.HERB_TEA_MIX_4482),
+        HERB_TEA_MIX_8(
+            listOf(Items.CLEAN_HARRALANDER_255, Items.CLEAN_MARRENTILL_251, Items.CLEAN_GUAM_249),
+            Items.HERB_TEA_MIX_4478,
+        ),
+        HERB_TEA_MIX_9(
+            listOf(Items.CLEAN_GUAM_249, Items.CLEAN_GUAM_249, Items.CLEAN_MARRENTILL_251),
+            Items.HERB_TEA_MIX_4480,
+        ),
+        HERB_TEA_MIX_10(
+            listOf(Items.CLEAN_GUAM_249, Items.CLEAN_GUAM_249, Items.CLEAN_HARRALANDER_255),
+            Items.HERB_TEA_MIX_4482,
+        ),
         COMPLETE_MIX(
             listOf(Items.CLEAN_GUAM_249, Items.CLEAN_GUAM_249, Items.CLEAN_MARRENTILL_251, Items.CLEAN_HARRALANDER_255),
             Items.GUTHIX_REST3_4419,
@@ -41,7 +50,13 @@ class GuthixRestPlugin : UseWithHandler(Items.CLEAN_GUAM_249, Items.CLEAN_MARREN
 
     override fun handle(event: NodeUsageEvent?): Boolean {
         event ?: return false
-        return handleItemOnItemAction(event.player, event.usedItem, event.baseItem, event.usedItem.slot, event.baseItem.slot)
+        return handleItemOnItemAction(
+            event.player,
+            event.usedItem,
+            event.baseItem,
+            event.usedItem.slot,
+            event.baseItem.slot,
+        )
     }
 
     private fun handleItemOnItemAction(
@@ -51,7 +66,11 @@ class GuthixRestPlugin : UseWithHandler(Items.CLEAN_GUAM_249, Items.CLEAN_MARREN
         fromSlot: Int,
         toSlot: Int,
     ): Boolean {
-        if (!hasRequirement(player, Quests.DRUIDIC_RITUAL) || !hasRequirement(player, Quests.ONE_SMALL_FAVOUR)) return false
+        if (!hasRequirement(player, Quests.DRUIDIC_RITUAL) ||
+            !hasRequirement(player, Quests.ONE_SMALL_FAVOUR)
+        ) {
+            return false
+        }
 
         if (player.skills.getLevel(Skills.HERBLORE) < 18) {
             sendMessage(player, "You need a Herblore level of at least 18 to mix a Guthix Rest Tea.")
@@ -59,7 +78,8 @@ class GuthixRestPlugin : UseWithHandler(Items.CLEAN_GUAM_249, Items.CLEAN_MARREN
         }
 
         val (herb, mix) = if (isHerb(from)) from to to else to to from
-        val existingIngredients = findMatching(PartialTea.values()) { it.teaId == mix.id }?.ingredients?.toMutableList() ?: mutableListOf()
+        val existingIngredients =
+            findMatching(PartialTea.values()) { it.teaId == mix.id }?.ingredients?.toMutableList() ?: mutableListOf()
         existingIngredients.add(herb.id)
 
         val upgradedTea =

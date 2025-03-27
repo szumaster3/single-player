@@ -25,7 +25,7 @@ class ManniDialogue(
 ) : Dialogue(player) {
     private var curNPC: NPC? = NPC(0, Location(0, 0, 0))
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         curNPC = args[0] as? NPC
         if (getQuestStage(player, Quests.THE_FREMENNIK_TRIALS) > 0) {
             if (inInventory(player, Items.LEGENDARY_COCKTAIL_3707, 1)) {

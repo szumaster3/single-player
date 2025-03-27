@@ -18,7 +18,7 @@ import org.rs.consts.Quests
 class SeamanDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (args.size > 1 && isQuestComplete(player, Quests.PIRATES_TREASURE)) {
             if (player.equipment[EquipmentContainer.SLOT_RING] != null &&
@@ -102,7 +102,7 @@ class SeamanDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = SeamanDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = SeamanDialogue(player)
 
     fun pay(price: Int) {
         if (!removeItem(player, Item(Items.COINS_995, price))) {
@@ -119,5 +119,6 @@ class SeamanDialogue(
         Charter.PORT_SARIM_TO_KARAMJA.sail(player)
     }
 
-    override fun getIds(): IntArray = intArrayOf(NPCs.CAPTAIN_TOBIAS_376, NPCs.SEAMAN_LORRIS_377, NPCs.SEAMAN_THRESNOR_378)
+    override fun getIds(): IntArray =
+        intArrayOf(NPCs.CAPTAIN_TOBIAS_376, NPCs.SEAMAN_LORRIS_377, NPCs.SEAMAN_THRESNOR_378)
 }

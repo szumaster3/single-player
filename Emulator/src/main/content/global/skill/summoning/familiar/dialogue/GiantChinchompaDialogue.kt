@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class GiantChinchompaDialogue : Dialogue {
-    override fun newInstance(player: Player): Dialogue {
+    override fun newInstance(player: Player?): Dialogue {
         return GiantChinchompaDialogue(player)
     }
 
@@ -29,7 +29,7 @@ class GiantChinchompaDialogue : Dialogue {
      */
     constructor(player: Player?) : super(player)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         when ((Math.random() * 5).toInt()) {
             0 -> {
@@ -60,7 +60,10 @@ class GiantChinchompaDialogue : Dialogue {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(
+        interfaceId: Int,
+        buttonId: Int,
+    ): Boolean {
         when (stage) {
             0 -> {
                 playerl(FaceAnim.HALF_ASKING, "I hate it when you sing that song.")
@@ -125,7 +128,7 @@ class GiantChinchompaDialogue : Dialogue {
             12 -> {
                 playerl(
                     FaceAnim.HALF_ASKING,
-                    "Well, that was pleasant. You don't smell all that great either, you know."
+                    "Well, that was pleasant. You don't smell all that great either, you know.",
                 )
                 stage++
             }
@@ -148,7 +151,7 @@ class GiantChinchompaDialogue : Dialogue {
             16 -> {
                 npcl(
                     FaceAnim.CHILD_NORMAL,
-                    "Hmmm. Let me see. It seems to be full of some highly sought after, very expensive...chinchompa breath!"
+                    "Hmmm. Let me see. It seems to be full of some highly sought after, very expensive...chinchompa breath!",
                 )
                 stage++
             }
@@ -176,7 +179,7 @@ class GiantChinchompaDialogue : Dialogue {
             21 -> {
                 playerl(
                     FaceAnim.HALF_ASKING,
-                    "I was wondering when you were going to bring up the chinchompa. I'm sure they like it in my inventory."
+                    "I was wondering when you were going to bring up the chinchompa. I'm sure they like it in my inventory.",
                 )
                 stage++
             }
@@ -184,7 +187,7 @@ class GiantChinchompaDialogue : Dialogue {
             22 -> {
                 npcl(
                     FaceAnim.CHILD_NORMAL,
-                    "Did they not teach you anything in school? Chinchompas die in hot bags. You know what happens when chinchompas die. Are you attached to your back?"
+                    "Did they not teach you anything in school? Chinchompas die in hot bags. You know what happens when chinchompas die. Are you attached to your back?",
                 )
                 stage++
             }

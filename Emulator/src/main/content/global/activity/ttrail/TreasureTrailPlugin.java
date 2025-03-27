@@ -18,6 +18,7 @@ import core.game.world.update.flag.context.Animation;
 import core.plugin.ClassScanner;
 import core.plugin.Initializable;
 import core.plugin.Plugin;
+import org.rs.consts.Components;
 
 /**
  * The type Treasure trail plugin.
@@ -148,7 +149,7 @@ public final class TreasureTrailPlugin extends OptionHandler {
 
         @Override
         public Plugin<Object> newInstance(Object arg) throws Throwable {
-            ComponentDefinition.forId(365).setPlugin(this);
+            ComponentDefinition.forId(Components.TRAIL_SEXTANT_365).plugin = this;
             return this;
         }
 

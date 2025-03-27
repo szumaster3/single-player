@@ -12,7 +12,7 @@ import org.rs.consts.Quests
 class FatherLawrenceDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         val quest = player.getQuestRepository().getQuest(Quests.ROMEO_JULIET)
         if (quest.getStage(player) < 30) {
@@ -183,7 +183,7 @@ class FatherLawrenceDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = FatherLawrenceDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = FatherLawrenceDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.FATHER_LAWRENCE_640)
 }

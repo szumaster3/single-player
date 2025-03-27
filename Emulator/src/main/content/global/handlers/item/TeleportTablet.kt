@@ -122,6 +122,7 @@ enum class TeleportTablet(
 
     companion object {
         val idMap = values().associateBy { it.item }
+
         fun forId(id: Int): TeleportTablet? = idMap[id]
     }
 }

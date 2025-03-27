@@ -1,7 +1,6 @@
 package content.region.misc.handlers.tutorial
 
 import content.data.GameAttributes
-import content.region.misc.handlers.tutorial.TutorialStage.TUTORIAL_STAGE
 import core.api.*
 import core.api.ui.closeDialogue
 import core.game.component.Component
@@ -10,73 +9,17 @@ import core.game.global.action.ClimbActionHandler
 import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.link.TeleportManager
 import core.game.system.task.Pulse
 import core.game.world.map.Location
 import core.game.world.repository.Repository
 import org.rs.consts.*
 
-class TutorialListener :
-    InteractionListener,
-    InterfaceListener {
-    override fun defineInterfaceListeners() {
-        onClose(Components.EQUIP_SCREEN2_667) { p, c ->
-            if (!getAttribute(p, GameAttributes.TUTORIAL_COMPLETE, false)) {
-                val currentStage = getAttribute(p, TUTORIAL_STAGE, -1)
-                TutorialStage.load(p, currentStage)
-            }
-            return@onClose true
-        }
-        onClose(Components.GRAPHICS_OPTIONS_742) { p, c ->
-            if (!getAttribute(p, GameAttributes.TUTORIAL_COMPLETE, false)) {
-                val currentStage = getAttribute(p, TUTORIAL_STAGE, -1)
-                TutorialStage.load(p, currentStage)
-            }
-            return@onClose true
-        }
-        onClose(Components.ITEMS_LOSE_ON_DEATH_102) { p, c ->
-            if (!getAttribute(p, GameAttributes.TUTORIAL_COMPLETE, false)) {
-                val currentStage = getAttribute(p, TUTORIAL_STAGE, -1)
-                TutorialStage.load(p, currentStage)
-            }
-            return@onClose true
-        }
-        onClose(Components.STATS_320) { p, c ->
-            if (!getAttribute(p, GameAttributes.TUTORIAL_COMPLETE, false)) {
-                val currentStage = getAttribute(p, TUTORIAL_STAGE, -1)
-                TutorialStage.load(p, currentStage)
-            }
-            return@onClose true
-        }
-        onClose(Components.QUESTJOURNAL_SCROLL_275) { p, c ->
-            if (!getAttribute(p, GameAttributes.TUTORIAL_COMPLETE, false)) {
-                val currentStage = getAttribute(p, TUTORIAL_STAGE, -1)
-                TutorialStage.load(p, currentStage)
-            }
-            return@onClose true
-        }
-        onClose(Components.SOUND_OPTIONS_743) { p, c ->
-            if (!getAttribute(p, GameAttributes.TUTORIAL_COMPLETE, false)) {
-                val currentStage = getAttribute(p, TUTORIAL_STAGE, -1)
-                TutorialStage.load(p, currentStage)
-            }
-            return@onClose true
-        }
-        onClose(Components.BANK_V2_MAIN_762) { p, c ->
-            if (!getAttribute(p, GameAttributes.TUTORIAL_COMPLETE, false)) {
-                val currentStage = getAttribute(p, TUTORIAL_STAGE, -1)
-                TutorialStage.load(p, currentStage)
-            }
-            return@onClose true
-        }
-    }
-
+class TutorialListener : InteractionListener {
     override fun defineListeners() {
         on(RS_GUIDE_DOOR, IntType.SCENERY, "open") { player, node ->
             if (getAttribute(player, TutorialStage.TUTORIAL_STAGE, 0) != 3) {
-                Component
-                    .setUnclosable(
+                Component.setUnclosable(
                         player,
                         player.dialogueInterpreter.sendPlainMessage(
                             false,
@@ -102,8 +45,7 @@ class TutorialListener :
 
         on(WOODEN_GATE, IntType.SCENERY, "open") { player, node ->
             if (getAttribute(player, TutorialStage.TUTORIAL_STAGE, 0) != 16) {
-                Component
-                    .setUnclosable(
+                Component.setUnclosable(
                         player,
                         player.dialogueInterpreter.sendPlainMessage(
                             false,
@@ -129,8 +71,7 @@ class TutorialListener :
 
         on(COOK_GUIDE_DOOR, IntType.SCENERY, "open") { player, node ->
             if (getAttribute(player, TutorialStage.TUTORIAL_STAGE, 0) != 17) {
-                Component
-                    .setUnclosable(
+                Component.setUnclosable(
                         player,
                         player.dialogueInterpreter.sendPlainMessage(
                             false,
@@ -151,8 +92,7 @@ class TutorialListener :
 
         on(COOK_GUIDE_DOOR_EXIT, IntType.SCENERY, "open") { player, node ->
             if (getAttribute(player, TutorialStage.TUTORIAL_STAGE, 0) < 21) {
-                Component
-                    .setUnclosable(
+                Component.setUnclosable(
                         player,
                         player.dialogueInterpreter.sendPlainMessage(
                             false,
@@ -165,8 +105,7 @@ class TutorialListener :
                     }
                 return@on true
             } else if (getAttribute(player, TutorialStage.TUTORIAL_STAGE, 0) > 22) {
-                Component
-                    .setUnclosable(
+                Component.setUnclosable(
                         player,
                         player.dialogueInterpreter.sendPlainMessage(
                             false,
@@ -186,8 +125,7 @@ class TutorialListener :
 
         on(QUEST_GUIDE_DOOR, IntType.SCENERY, "open") { player, node ->
             if (getAttribute(player, TutorialStage.TUTORIAL_STAGE, 0) != 26) {
-                Component
-                    .setUnclosable(
+                Component.setUnclosable(
                         player,
                         player.dialogueInterpreter.sendPlainMessage(
                             false,
@@ -236,8 +174,7 @@ class TutorialListener :
         on(COMBAT_GATE, IntType.SCENERY, "open") { player, node ->
             val stage = getAttribute(player, TutorialStage.TUTORIAL_STAGE, -1)
             if (stage < 42) {
-                Component
-                    .setUnclosable(
+                Component.setUnclosable(
                         player,
                         player.dialogueInterpreter.sendPlainMessage(
                             false,
@@ -249,8 +186,7 @@ class TutorialListener :
                 return@on true
             }
             if (stage >= 44) {
-                Component
-                    .setUnclosable(
+                Component.setUnclosable(
                         player,
                         player.dialogueInterpreter.sendPlainMessage(
                             false,
@@ -269,8 +205,7 @@ class TutorialListener :
         on(GIANT_RAT_GATE, IntType.SCENERY, "open") { player, node ->
             val stage = getAttribute(player, TutorialStage.TUTORIAL_STAGE, 0)
             if (stage !in 50..53) {
-                player.dialogueInterpreter
-                    .sendDialogues(
+                player.dialogueInterpreter.sendDialogues(
                         NPCs.COMBAT_INSTRUCTOR_944,
                         FaceAnim.NEUTRAL,
                         "Oi, get away from there!",
@@ -308,8 +243,7 @@ class TutorialListener :
 
         on(BANK_GUIDE_DOOR, IntType.SCENERY, "open") { player, node ->
             if (getAttribute(player, TutorialStage.TUTORIAL_STAGE, 0) != 57) {
-                Component
-                    .setUnclosable(
+                Component.setUnclosable(
                         player,
                         player.dialogueInterpreter.sendPlainMessage(
                             false,
@@ -329,8 +263,7 @@ class TutorialListener :
 
         on(FINANCE_GUIDE_DOOR, IntType.SCENERY, "open") { player, node ->
             if (getAttribute(player, TutorialStage.TUTORIAL_STAGE, 0) != 59) {
-                Component
-                    .setUnclosable(
+                Component.setUnclosable(
                         player,
                         player.dialogueInterpreter.sendPlainMessage(
                             false,
@@ -350,8 +283,7 @@ class TutorialListener :
 
         on(CHURCH_DOOR_EXIT, IntType.SCENERY, "open") { player, node ->
             if (getAttribute(player, TutorialStage.TUTORIAL_STAGE, 0) != 66) {
-                Component
-                    .setUnclosable(
+                Component.setUnclosable(
                         player,
                         player.dialogueInterpreter.sendPlainMessage(
                             false,

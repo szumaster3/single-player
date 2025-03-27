@@ -10,7 +10,7 @@ import core.game.node.entity.player.Player
 class ChestDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         sendDialogueLines(player, "As you open the chest, you notice an inscription on the lid:")
         return true
     }

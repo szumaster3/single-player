@@ -1,7 +1,6 @@
 package content.region.misthalin.dialogue.monastery
 
 import core.api.inInventory
-import core.game.component.Component
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.player.Player
@@ -14,8 +13,6 @@ import org.rs.consts.NPCs
 class BrotherBordissDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun npc(vararg messages: String?): Component = npc(FaceAnim.OLD_NORMAL, *messages)
-
     override fun open(vararg args: Any?): Boolean {
         player ?: return false
         if (getSigil(player) != null && inInventory(player, Items.BLESSED_SPIRIT_SHIELD_13736, 1)) {
@@ -23,7 +20,7 @@ class BrotherBordissDialogue(
             stage = 10
             return true
         }
-        npc("Lovely day, adventurer.")
+        npc(FaceAnim.OLD_NORMAL, "Lovely day, adventurer.")
         stage = 1000
         return true
     }
@@ -33,7 +30,7 @@ class BrotherBordissDialogue(
         buttonId: Int,
     ): Boolean {
         when (stage) {
-            10 -> npc("I certainly can, for the price of", "1,500,000 coins.").also { stage++ }
+            10 -> npc(FaceAnim.OLD_NORMAL, "I certainly can, for the price of", "1,500,000 coins.").also { stage++ }
             11 -> options("Okay, sounds great!", "No, thanks.").also { stage++ }
             12 ->
                 when (buttonId) {
@@ -49,9 +46,9 @@ class BrotherBordissDialogue(
                     2 -> player("No, thanks").also { stage = 1000 }
                 }
 
-            13 -> npc("That's a shame, then.").also { stage = 1000 }
+            13 -> npc(FaceAnim.OLD_NORMAL, "That's a shame, then.").also { stage = 1000 }
             15 -> {
-                npc("Lovely, here you are.")
+                npc(FaceAnim.OLD_NORMAL, "Lovely, here you are.")
                 val sigil = getSigil(player)
                 if (sigil == null) {
                     end()

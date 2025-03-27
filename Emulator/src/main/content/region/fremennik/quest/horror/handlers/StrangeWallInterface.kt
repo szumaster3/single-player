@@ -25,7 +25,12 @@ class StrangeWallInterface : InterfaceListener {
                 )
 
             runeAttributes.forEach { (attribute, componentIndex) ->
-                setComponentVisibility(player, Components.HORROR_METALDOOR_142, componentIndex, getAttribute(player, attribute, 0) != 1)
+                setComponentVisibility(
+                    player,
+                    Components.HORROR_METALDOOR_142,
+                    componentIndex,
+                    getAttribute(player, attribute, 0) != 1,
+                )
             }
             if (questComplete) return@onOpen true
 

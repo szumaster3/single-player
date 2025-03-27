@@ -16,7 +16,7 @@ import org.rs.consts.NPCs
 class SiegfriedErkleDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npcl(FaceAnim.HALF_GUILTY, "Hello there and welcome to the shop of useful items. Can I help you at all?")
         return true
@@ -57,7 +57,7 @@ class SiegfriedErkleDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = SiegfriedErkleDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = SiegfriedErkleDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.SIEGFRIED_ERKLE_933)
 }

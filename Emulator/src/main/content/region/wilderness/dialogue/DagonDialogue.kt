@@ -11,7 +11,7 @@ class DagonDialogue(
 ) : Dialogue(player) {
     private var cutscene: BorkCutscene? = null
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         cutscene = args[1] as BorkCutscene
         npc(
@@ -41,7 +41,7 @@ class DagonDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = DagonDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = DagonDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(DialogueInterpreter.getDialogueKey("dagon-dialogue"))
 }

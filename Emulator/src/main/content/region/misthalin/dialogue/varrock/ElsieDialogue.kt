@@ -214,7 +214,7 @@ class ElsieDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = ElsieDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = ElsieDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.ELSIE_5915)
 }

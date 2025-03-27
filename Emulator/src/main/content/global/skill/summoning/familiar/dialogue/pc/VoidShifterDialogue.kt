@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class VoidShifterDialogue : Dialogue {
-    override fun newInstance(player: Player): Dialogue {
+    override fun newInstance(player: Player?): Dialogue {
         return VoidShifterDialogue(player)
     }
 
@@ -29,7 +29,7 @@ class VoidShifterDialogue : Dialogue {
      */
     constructor(player: Player?) : super(player)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         val randomIndex = (Math.random() * 4).toInt()
         when (randomIndex) {
@@ -56,7 +56,10 @@ class VoidShifterDialogue : Dialogue {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(
+        interfaceId: Int,
+        buttonId: Int,
+    ): Boolean {
         when (stage) {
             0 -> {
                 playerl(FaceAnim.FRIENDLY, "Yes, it is!")
@@ -91,7 +94,7 @@ class VoidShifterDialogue : Dialogue {
             6 -> {
                 npcl(
                     FaceAnim.CHILD_NORMAL,
-                    "Well, you see, I'm dreadfully out of practice and now I can barely leap, let alone teleport."
+                    "Well, you see, I'm dreadfully out of practice and now I can barely leap, let alone teleport.",
                 )
                 stage++
             }
@@ -104,7 +107,8 @@ class VoidShifterDialogue : Dialogue {
             8 -> {
                 npcl(
                     FaceAnim.CHILD_NORMAL,
-                    "What a beastly world we live in where one " + (if (player.isMale) "gentleman" else "lady") + " will not aid a pest in need..."
+                    "What a beastly world we live in where one " + (if (player.isMale) "gentleman" else "lady") +
+                        " will not aid a pest in need...",
                 )
                 stage = END_DIALOGUE
             }

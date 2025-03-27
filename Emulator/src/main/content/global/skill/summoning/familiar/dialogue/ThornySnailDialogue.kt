@@ -16,7 +16,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class ThornySnailDialogue : Dialogue {
-    override fun newInstance(player: Player): Dialogue {
+    override fun newInstance(player: Player?): Dialogue {
         return ThornySnailDialogue(player)
     }
 
@@ -32,7 +32,7 @@ class ThornySnailDialogue : Dialogue {
      */
     constructor(player: Player?) : super(player)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (anyInInventory(player, *snelmID) || anyInEquipment(player, *snelmID)) {
             npcl(FaceAnim.OLD_NORMAL, "...")
@@ -53,7 +53,7 @@ class ThornySnailDialogue : Dialogue {
                 2 -> {
                     npcl(
                         FaceAnim.CHILD_NORMAL,
-                        "Okay, I have to ask, what are those things you people totter about on?"
+                        "Okay, I have to ask, what are those things you people totter about on?",
                     )
                     stage = 15
                 }
@@ -67,7 +67,10 @@ class ThornySnailDialogue : Dialogue {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(
+        interfaceId: Int,
+        buttonId: Int,
+    ): Boolean {
         when (stage) {
             0 -> {
                 npcl(FaceAnim.CHILD_NORMAL, "...")
@@ -177,7 +180,7 @@ class ThornySnailDialogue : Dialogue {
             21 -> {
                 npcl(
                     FaceAnim.OLD_NORMAL,
-                    "I bet if you had to run on your internal organs you'd want a break now and then!"
+                    "I bet if you had to run on your internal organs you'd want a break now and then!",
                 )
                 stage = END_DIALOGUE
             }
@@ -190,24 +193,25 @@ class ThornySnailDialogue : Dialogue {
     }
 
     companion object {
-        private val snelmID = intArrayOf(
-            Items.BLAMISH_MYRE_SHELL_3345,
-            Items.MYRE_SNELM_3327,
-            Items.BLAMISH_MYRE_SHELL_3355,
-            Items.MYRE_SNELM_3337,
-            Items.BLAMISH_OCHRE_SHELL_3349,
-            Items.OCHRE_SNELM_3341,
-            Items.BLAMISH_OCHRE_SHELL_3359,
-            Items.BLAMISH_RED_SHELL_3347,
-            Items.BLOODNTAR_SNELM_3329,
-            Items.BLAMISH_RED_SHELL_3357,
-            Items.BLOODNTAR_SNELM_3339,
-            Items.BLAMISH_BLUE_SHELL_3351,
-            Items.BRUISE_BLUE_SNELM_3333,
-            Items.BLAMISH_BLUE_SHELL_3361,
-            Items.BRUISE_BLUE_SNELM_3343,
-            Items.BLAMISH_BARK_SHELL_3353,
-            Items.BROKEN_BARK_SNELM_3335
-        )
+        private val snelmID =
+            intArrayOf(
+                Items.BLAMISH_MYRE_SHELL_3345,
+                Items.MYRE_SNELM_3327,
+                Items.BLAMISH_MYRE_SHELL_3355,
+                Items.MYRE_SNELM_3337,
+                Items.BLAMISH_OCHRE_SHELL_3349,
+                Items.OCHRE_SNELM_3341,
+                Items.BLAMISH_OCHRE_SHELL_3359,
+                Items.BLAMISH_RED_SHELL_3347,
+                Items.BLOODNTAR_SNELM_3329,
+                Items.BLAMISH_RED_SHELL_3357,
+                Items.BLOODNTAR_SNELM_3339,
+                Items.BLAMISH_BLUE_SHELL_3351,
+                Items.BRUISE_BLUE_SNELM_3333,
+                Items.BLAMISH_BLUE_SHELL_3361,
+                Items.BRUISE_BLUE_SNELM_3343,
+                Items.BLAMISH_BARK_SHELL_3353,
+                Items.BROKEN_BARK_SNELM_3335,
+            )
     }
 }

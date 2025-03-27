@@ -9,6 +9,7 @@ import core.game.node.item.Item;
 import core.plugin.Initializable;
 import core.plugin.Plugin;
 import kotlin.Unit;
+import org.rs.consts.Components;
 
 import static core.api.ContentAPIKt.sendInputDialogue;
 
@@ -20,8 +21,8 @@ public final class BurdenInterfacePlugin extends ComponentPlugin {
 
 	@Override
 	public Plugin<Object> newInstance(Object arg) throws Throwable {
-		ComponentDefinition.put(665, this);
-		ComponentDefinition.put(671, this);
+		ComponentDefinition.put(Components.LORE_BANK_SIDE_665, this);
+		ComponentDefinition.put(Components.LORE_BANK_671, this);
 		return this;
 	}
 
@@ -31,7 +32,7 @@ public final class BurdenInterfacePlugin extends ComponentPlugin {
 			return false;
 		}
 		final content.global.skill.summoning.familiar.BurdenBeast beast = (BurdenBeast) player.getFamiliarManager().getFamiliar();
-		final boolean withdraw = component.getId() == 671;
+		final boolean withdraw = component.id == Components.LORE_BANK_671;
 		final Container container = withdraw ? beast.getContainer() : player.getInventory();
 		final Item item = slot >= 0 && slot < container.capacity() ? container.get(slot) : null;
 		if (item == null && button != 29) {

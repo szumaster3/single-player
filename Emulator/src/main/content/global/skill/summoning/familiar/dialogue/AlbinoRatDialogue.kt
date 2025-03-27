@@ -14,7 +14,7 @@ import java.util.*
  */
 @Initializable
 class AlbinoRatDialogue : Dialogue {
-    override fun newInstance(player: Player): Dialogue {
+    override fun newInstance(player: Player?): Dialogue {
         return AlbinoRatDialogue(player)
     }
 
@@ -30,7 +30,7 @@ class AlbinoRatDialogue : Dialogue {
      */
     constructor(player: Player?) : super(player)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         val random = Random()
         val randomIndex = random.nextInt(4)
@@ -54,7 +54,7 @@ class AlbinoRatDialogue : Dialogue {
             3 -> {
                 npcl(
                     FaceAnim.CHILD_NORMAL,
-                    "You know, boss, I don't think you're totally into this whole 'evil' thing."
+                    "You know, boss, I don't think you're totally into this whole 'evil' thing.",
                 )
                 stage = 13
             }
@@ -63,7 +63,10 @@ class AlbinoRatDialogue : Dialogue {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(
+        interfaceId: Int,
+        buttonId: Int,
+    ): Boolean {
         when (stage) {
             0 -> {
                 playerl(FaceAnim.FRIENDLY, "Well, I don't know why we would: I tend not to go around being wicked.")

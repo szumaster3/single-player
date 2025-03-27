@@ -66,7 +66,7 @@ public final class PCRewardInterface extends ComponentPlugin {
 
     @Override
     public Plugin<Object> newInstance(Object arg) throws Throwable {
-        ComponentDefinition.forId(267).setPlugin(this);
+        ComponentDefinition.forId(267).plugin = this;
         return this;
     }
 

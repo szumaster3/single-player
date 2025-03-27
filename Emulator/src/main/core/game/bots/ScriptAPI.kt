@@ -426,7 +426,11 @@ class ScriptAPI(
 
         val vec = Vector.betweenLocs(bot.location, loc)
         val norm = vec.normalized()
-        val tiles = kotlin.math.min(kotlin.math.floor(vec.magnitude()).toInt(), ServerConstants.MAX_PATHFIND_DISTANCE - 1)
+        val tiles =
+            kotlin.math.min(
+                kotlin.math.floor(vec.magnitude()).toInt(),
+                ServerConstants.MAX_PATHFIND_DISTANCE - 1,
+            )
         val loc = bot.location.transform(norm * tiles)
         bot.pulseManager.run(
             object : MovementPulse(bot, loc) {

@@ -424,9 +424,9 @@ class BorkNPC : AbstractNPC {
 
         constructor(player: Player?) : super(player)
 
-        override fun newInstance(player: Player): Dialogue = DagonDialogue(player)
+        override fun newInstance(player: Player?): Dialogue = DagonDialogue(player)
 
-        override fun open(vararg args: Any): Boolean {
+        override fun open(vararg args: Any?): Boolean {
             npc = args[0] as NPC
             cutscene = args[1] as BorkCutscene
             npc(

@@ -11,7 +11,7 @@ import org.rs.consts.NPCs
 class BanditDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc(FaceAnim.ANNOYED, "Go away.").also { stage = END_DIALOGUE }
         return true
     }

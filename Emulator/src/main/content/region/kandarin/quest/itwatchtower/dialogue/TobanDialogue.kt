@@ -118,7 +118,7 @@ class TobanDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = TobanDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = TobanDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.TOBAN_855)
 }

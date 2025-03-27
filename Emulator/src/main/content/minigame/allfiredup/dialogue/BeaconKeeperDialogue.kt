@@ -36,7 +36,8 @@ class BeaconKeeperDialogue(
 
     override fun open(vararg args: Any?): Boolean {
         npc = (args[0] as NPC).getShownNPC(player)
-        index = getIndexOf((args[0] as NPC).originalId)
+
+        index = getIndexOf((args[0] as NPC).originalId, listOf(npc.id))
         val faceExpression =
             when (npc.id) {
                 NPCs.STUBTHUMB_8054, NPCs.CRATE_8059, NPCs.NANUQ_8063 -> FaceAnim.OLD_ANGRY2
@@ -155,7 +156,10 @@ class BeaconKeeperDialogue(
 
     override fun newInstance(player: Player?): Dialogue = BeaconKeeperDialogue(player)
 
-    fun getIndexOf(id: Int): Int {
+    fun getIndexOf(
+        id: Int,
+        ids: List<Int>,
+    ): Int {
         if (id == NPCs.NANUQ_8065) return 0
         if (id == NPCs.NANUQ_8066) return 1
         for (index in ids.indices) {

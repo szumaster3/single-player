@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
 class JackSeagullDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(FaceAnim.HALF_GUILTY, "Arrr, matey!")
         // sendNPCDialogue(player, NPCs.LONGBOW_BEN_2691, "")

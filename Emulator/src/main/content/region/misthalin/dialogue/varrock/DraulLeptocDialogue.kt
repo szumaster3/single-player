@@ -12,7 +12,7 @@ import org.rs.consts.NPCs
 class DraulLeptocDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(
             FaceAnim.HALF_GUILTY,
@@ -42,7 +42,7 @@ class DraulLeptocDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = DraulLeptocDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = DraulLeptocDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.DRAUL_LEPTOC_3324)
 }

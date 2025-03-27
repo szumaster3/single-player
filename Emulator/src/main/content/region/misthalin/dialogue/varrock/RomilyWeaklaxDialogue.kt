@@ -29,7 +29,7 @@ class RomilyWeaklaxDialogue(
         definePlugin(RomilyWildPieHandler())
     }
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         pieId = player.getAttribute(keyId, 0)
         pieAmt = player.getAttribute(keyAmt, 0)

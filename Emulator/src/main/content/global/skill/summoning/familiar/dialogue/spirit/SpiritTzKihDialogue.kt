@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class SpiritTzKihDialogue : Dialogue {
-    override fun newInstance(player: Player): Dialogue {
+    override fun newInstance(player: Player?): Dialogue {
         return SpiritTzKihDialogue(player)
     }
 
@@ -29,7 +29,7 @@ class SpiritTzKihDialogue : Dialogue {
      */
     constructor(player: Player?) : super(player)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         when ((Math.random() * 5).toInt()) {
             0 -> {
@@ -60,7 +60,10 @@ class SpiritTzKihDialogue : Dialogue {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(
+        interfaceId: Int,
+        buttonId: Int,
+    ): Boolean {
         when (stage) {
             0 -> {
                 npcl(FaceAnim.CHILD_NORMAL, "Pray pray?")
@@ -105,7 +108,7 @@ class SpiritTzKihDialogue : Dialogue {
             8 -> {
                 npcl(
                     FaceAnim.CHILD_NORMAL,
-                    "Tz-Kih like blood bat, but drink pray pray not blood blood. Blood blood is yuck."
+                    "Tz-Kih like blood bat, but drink pray pray not blood blood. Blood blood is yuck.",
                 )
                 stage++
             }
@@ -138,7 +141,7 @@ class SpiritTzKihDialogue : Dialogue {
             14 -> {
                 npcl(
                     FaceAnim.CHILD_NORMAL,
-                    "You got pray pray pot. Tz-Kih drink pray pray you, you drink pray pray pot."
+                    "You got pray pray pot. Tz-Kih drink pray pray you, you drink pray pray pot.",
                 )
                 stage++
             }

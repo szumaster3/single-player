@@ -14,7 +14,7 @@ import org.rs.consts.NPCs
 class KamfreenaDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc("Why hello there! I'm Kamfreena. Like the look of my pets?", "I think they're eyeing you up.")
         return true

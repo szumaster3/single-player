@@ -19,7 +19,7 @@ import org.rs.consts.Quests
 class MakeOverMageDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (args.size == 2) {
             npc(

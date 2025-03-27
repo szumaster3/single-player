@@ -22,7 +22,7 @@ import org.rs.consts.Quests
 class OldCroneDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         val animalMagnetism = getQuestStage(player, Quests.ANIMAL_MAGNETISM)
         val sweptAway =
             isQuestComplete(player, Quests.SWEPT_AWAY) &&

@@ -15,7 +15,7 @@ import org.rs.consts.NPCs
 class ViggoraDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (!inEquipment(player, Items.GHOSTSPEAK_AMULET_552)) {
             player("All your base are belong to us.")
@@ -596,7 +596,7 @@ class ViggoraDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = ViggoraDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = ViggoraDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.MYSTERIOUS_GHOST_2402)
 }

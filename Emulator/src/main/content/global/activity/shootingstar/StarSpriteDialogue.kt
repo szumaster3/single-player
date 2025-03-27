@@ -24,7 +24,7 @@ class StarSpriteDialogue(
     val COINS = 995
     val AMPLIFIER = 1.0
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (getStoreFile().getBoolean(player.username.lowercase()) ||
             !inInventory(

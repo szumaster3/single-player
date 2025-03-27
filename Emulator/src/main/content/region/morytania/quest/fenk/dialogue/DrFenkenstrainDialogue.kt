@@ -28,7 +28,7 @@ class DrFenkenstrainDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = DrFenkenstrainDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = DrFenkenstrainDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.WEREWOLF_1668, NPCs.WEREWOLF_1669, NPCs.DR_FENKENSTRAIN_1670)
 }

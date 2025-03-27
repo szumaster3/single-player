@@ -16,7 +16,7 @@ import org.rs.consts.Quests
 class MordGunnarsDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (npc.id == NPCs.MORD_GUNNARS_5481) {
             npcl(FaceAnim.FRIENDLY, "Would you like to sail to Jatizso?")

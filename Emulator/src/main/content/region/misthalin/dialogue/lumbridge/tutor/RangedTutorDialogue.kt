@@ -16,7 +16,7 @@ class RangedTutorDialogue(
     private val BOW = Item(9705)
     private val ARROW = Item(9706)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (args.size == 2) {
             if (player.getSavedData().globalData.getTutorClaim() > System.currentTimeMillis()) {

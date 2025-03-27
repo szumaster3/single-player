@@ -17,7 +17,7 @@ import org.rs.consts.NPCs
 class BarmanGrandTreeDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npcl(FaceAnim.OLD_NORMAL, "Good day to you. What can I get you to drink?").also { stage = 0 }
         return true

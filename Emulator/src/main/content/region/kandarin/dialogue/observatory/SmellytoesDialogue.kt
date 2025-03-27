@@ -12,7 +12,7 @@ import org.rs.consts.NPCs
 class SmellytoesDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         player(FaceAnim.FRIENDLY, "Hi there.")
         return true

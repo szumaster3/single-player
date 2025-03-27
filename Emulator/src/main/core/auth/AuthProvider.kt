@@ -15,7 +15,6 @@ import core.storage.AccountStorageProvider
  * storage operations (e.g., SQL or in-memory storage).
  */
 abstract class AuthProvider<T : AccountStorageProvider> {
-
     /**
      * The storage provider used for managing account data.
      * This is typically initialized by calling [configureFor].
@@ -38,8 +37,7 @@ abstract class AuthProvider<T : AccountStorageProvider> {
      * @param info The information for the account to be created, including the username.
      * @return `true` if the username is not taken and the account can be created, `false` otherwise.
      */
-    fun canCreateAccountWith(info: UserAccountInfo): Boolean =
-        !storageProvider.checkUsernameTaken(info.username)
+    fun canCreateAccountWith(info: UserAccountInfo): Boolean = !storageProvider.checkUsernameTaken(info.username)
 
     /**
      * Creates a new account with the provided user account information.

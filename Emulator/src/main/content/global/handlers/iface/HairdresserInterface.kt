@@ -228,7 +228,7 @@ class HairdresserInterface : ComponentPlugin() {
         )
         player.toggleWardrobe(true)
 
-        component?.setCloseEvent { pl, _ ->
+        component?.setUncloseEvent { pl, _ ->
             player.toggleWardrobe(false)
             setAttribute(player, "beard-setting", false)
             if (!pl.getAttribute("hairdresser-paid", false)) {

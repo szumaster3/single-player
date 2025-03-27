@@ -40,7 +40,7 @@ class EvilTwinListener :
                 return@on true
             }
             player.interfaceManager.openSingleTab(
-                Component(240).setCloseEvent { player, c ->
+                Component(240).setUncloseEvent { player, c ->
                     SceneryBuilder.remove(EvilTwinUtils.currentCrane)
                     SceneryBuilder.add(Scenery(66, EvilTwinUtils.currentCrane?.location, 22, 0))
                     EvilTwinUtils.currentCrane =
@@ -53,7 +53,7 @@ class EvilTwinListener :
                     SceneryBuilder.add(EvilTwinUtils.currentCrane)
                     player.interfaceManager.restoreTabs()
                     resetCamera(player)
-                    return@setCloseEvent true
+                    return@setUncloseEvent true
                 },
             )
             player.packetDispatch.sendString("Tries: ${EvilTwinUtils.tries}", 240, 27)

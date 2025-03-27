@@ -25,7 +25,7 @@ class HouseServantDialogue(
     private var sawmill = false
     private var logs: Item? = null
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         val manager = player.houseManager
         val expression = if (npc.id != 4243) FaceAnim.HALF_GUILTY else FaceAnim.OLD_DEFAULT
@@ -739,7 +739,8 @@ class HouseServantDialogue(
         )
     }
 
-    override fun newInstance(player: Player): Dialogue = HouseServantDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = HouseServantDialogue(player)
 
-    override fun getIds(): IntArray = intArrayOf(NPCs.RICK_4235, NPCs.MAID_4237, NPCs.COOK_4239, NPCs.BUTLER_4241, NPCs.DEMON_BUTLER_4243)
+    override fun getIds(): IntArray =
+        intArrayOf(NPCs.RICK_4235, NPCs.MAID_4237, NPCs.COOK_4239, NPCs.BUTLER_4241, NPCs.DEMON_BUTLER_4243)
 }

@@ -17,7 +17,7 @@ class TrufitusDialogue(
 
     private var quest: Quest? = null
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         quest = player.getQuestRepository().getQuest(Quests.JUNGLE_POTION)
         when (quest!!.getStage(player)) {
             0 -> npc("Greetings Bwana! I am Trufitus Shakaya of the Tai", "Bwo Wannai village.")

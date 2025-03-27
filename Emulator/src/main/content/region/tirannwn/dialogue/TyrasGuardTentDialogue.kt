@@ -35,7 +35,7 @@ class TyrasGuardTentDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = TyrasGuardTentDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = TyrasGuardTentDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.TYRAS_GUARD_1206)
 }

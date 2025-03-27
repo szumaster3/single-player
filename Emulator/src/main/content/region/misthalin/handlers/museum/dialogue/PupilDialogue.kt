@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
 class PupilDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         sendNPCDialogue(player, NPCs.SCHOOLBOY_5949, "Teacher! Sir! I need the toilet!", FaceAnim.CHILD_GUILTY)
         stage = 0
@@ -36,7 +36,12 @@ class PupilDialogue(
             }
 
             1 -> {
-                sendNPCDialogue(player, NPCs.SCHOOLBOY_5949, "But sir, I didn't need to go then!", FaceAnim.CHILD_GUILTY)
+                sendNPCDialogue(
+                    player,
+                    NPCs.SCHOOLBOY_5949,
+                    "But sir, I didn't need to go then!",
+                    FaceAnim.CHILD_GUILTY,
+                )
                 stage++
             }
 
@@ -48,7 +53,7 @@ class PupilDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = PupilDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = PupilDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.TEACHER_AND_PUPIL_5944)
 }

@@ -47,7 +47,7 @@ class FairyShopAssistantDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = FairyShopAssistantDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = FairyShopAssistantDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.FAIRY_SHOP_ASSISTANT_535, NPCs.FAIRY_SHOPKEEPER_534)
 }

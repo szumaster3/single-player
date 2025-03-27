@@ -31,6 +31,7 @@ import core.plugin.ClassScanner.definePlugin
 import core.plugin.Initializable
 import core.plugin.Plugin
 import core.tools.RandomFunction
+import org.rs.consts.Components
 import org.rs.consts.Sounds
 
 @Initializable
@@ -104,7 +105,7 @@ class CatapultRoom :
         definePlugin(
             object : ComponentPlugin() {
                 override fun newInstance(arg: Any?): Plugin<Any> {
-                    ComponentDefinition.put(411, this)
+                    ComponentDefinition.put(Components.WARGUILD_DEFENCE_MINI_411, this)
                     return this
                 }
 

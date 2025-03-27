@@ -33,7 +33,7 @@ class SnurghDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = SnurghDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = SnurghDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.SNURGH_7057)
 }

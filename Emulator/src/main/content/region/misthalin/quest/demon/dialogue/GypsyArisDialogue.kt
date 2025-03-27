@@ -29,7 +29,7 @@ class GypsyArisDialogue(
     private var wally: NPC? = null
     private var cutscene: CutscenePlugin? = null
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         quest = player.getQuestRepository().getQuest(Quests.DEMON_SLAYER)
         when (quest!!.getStage(player)) {

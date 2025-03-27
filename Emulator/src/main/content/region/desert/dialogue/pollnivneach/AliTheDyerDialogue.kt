@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
 class AliTheDyerDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         playerl(FaceAnim.AMAZED, "Wow! look at this place, it's so colourful.")
         return true
     }

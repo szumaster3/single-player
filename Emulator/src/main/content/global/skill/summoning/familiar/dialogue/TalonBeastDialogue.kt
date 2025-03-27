@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class TalonBeastDialogue : Dialogue {
-    override fun newInstance(player: Player): Dialogue {
+    override fun newInstance(player: Player?): Dialogue {
         return TalonBeastDialogue(player)
     }
 
@@ -29,7 +29,7 @@ class TalonBeastDialogue : Dialogue {
      */
     constructor(player: Player?) : super(player)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         val randomChoice = (Math.random() * 4).toInt()
         when (randomChoice) {
@@ -56,7 +56,10 @@ class TalonBeastDialogue : Dialogue {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(
+        interfaceId: Int,
+        buttonId: Int,
+    ): Boolean {
         when (stage) {
             0 -> {
                 playerl(FaceAnim.FRIENDLY, "Well, we do a lot of other things, too.")
@@ -106,7 +109,7 @@ class TalonBeastDialogue : Dialogue {
             9 -> {
                 playerl(
                     FaceAnim.FRIENDLY,
-                    "I don't think I'll ever get used to having a huge, ravenous feline sneaking around behind me all the time."
+                    "I don't think I'll ever get used to having a huge, ravenous feline sneaking around behind me all the time.",
                 )
                 stage++
             }
@@ -114,7 +117,7 @@ class TalonBeastDialogue : Dialogue {
             10 -> {
                 npcl(
                     FaceAnim.CHILD_NORMAL,
-                    "That's okay, I doubt I'll get used to following an edible, furless monkey prancing in front of me all the time either."
+                    "That's okay, I doubt I'll get used to following an edible, furless monkey prancing in front of me all the time either.",
                 )
                 stage = END_DIALOGUE
             }
@@ -127,7 +130,7 @@ class TalonBeastDialogue : Dialogue {
             12 -> {
                 npcl(
                     FaceAnim.CHILD_NORMAL,
-                    "I dunno? Giants, monsters, vaguely-defined philosophical concepts. You know: stuff."
+                    "I dunno? Giants, monsters, vaguely-defined philosophical concepts. You know: stuff.",
                 )
                 stage++
             }

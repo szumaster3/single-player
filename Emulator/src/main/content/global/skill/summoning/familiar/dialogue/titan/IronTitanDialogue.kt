@@ -15,7 +15,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class IronTitanDialogue : Dialogue {
-    override fun newInstance(player: Player): Dialogue {
+    override fun newInstance(player: Player?): Dialogue {
         return IronTitanDialogue(player)
     }
 
@@ -31,7 +31,7 @@ class IronTitanDialogue : Dialogue {
      */
     constructor(player: Player?) : super(player)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (inInventory(player, Items.IRON_BAR_2351, 1)) {
             npcl(FaceAnim.CHILD_SAD, "Are you using that iron bar, boss?")
@@ -62,7 +62,10 @@ class IronTitanDialogue : Dialogue {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(
+        interfaceId: Int,
+        buttonId: Int,
+    ): Boolean {
         when (stage) {
             0 -> {
                 playerl(FaceAnim.HALF_ASKING, "Well, not right now, why?")
@@ -97,7 +100,7 @@ class IronTitanDialogue : Dialogue {
             6 -> {
                 npcl(
                     FaceAnim.CHILD_NORMAL,
-                    "You can't go through with a cunning plan without the right headgear, boss!"
+                    "You can't go through with a cunning plan without the right headgear, boss!",
                 )
                 stage = END_DIALOGUE
             }
@@ -120,7 +123,7 @@ class IronTitanDialogue : Dialogue {
             10 -> {
                 npcl(
                     FaceAnim.CHILD_NORMAL,
-                    "This is the prototype for the Iron Titan (tm) action figure. You just pull this string here and he fights crime with real action sounds."
+                    "This is the prototype for the Iron Titan (tm) action figure. You just pull this string here and he fights crime with real action sounds.",
                 )
                 stage++
             }
@@ -168,7 +171,7 @@ class IronTitanDialogue : Dialogue {
             19 -> {
                 npcl(
                     FaceAnim.CHILD_NORMAL,
-                    "Hmm. It was a bit blurry, perhaps the future is having technical issues at the moment."
+                    "Hmm. It was a bit blurry, perhaps the future is having technical issues at the moment.",
                 )
                 stage++
             }

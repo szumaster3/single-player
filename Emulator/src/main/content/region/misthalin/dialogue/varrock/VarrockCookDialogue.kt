@@ -14,7 +14,7 @@ import org.rs.consts.NPCs
 class VarrockCookDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(FaceAnim.HALF_GUILTY, "What do you want? I'm busy!")
         return true
@@ -155,7 +155,7 @@ class VarrockCookDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = VarrockCookDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = VarrockCookDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.COOK_5910)
 }

@@ -11,7 +11,7 @@ import org.rs.consts.NPCs
 class TrogenKonungardeDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npcl(FaceAnim.NEUTRAL, "I'm guarding the king, I cannot speak.")
         return true
     }

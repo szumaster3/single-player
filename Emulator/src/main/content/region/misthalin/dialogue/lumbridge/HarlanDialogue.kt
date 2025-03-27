@@ -19,7 +19,7 @@ import org.rs.consts.NPCs
 class HarlanDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         options("Can you tell me about different weapon types I can use?", "Please tell me about Skillcapes.", "Bye.")
         return true

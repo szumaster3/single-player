@@ -58,7 +58,7 @@ class OgressBankerDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = OgressBankerDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = OgressBankerDialogue(player)
 
     override fun getIds(): IntArray =
         intArrayOf(

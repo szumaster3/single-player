@@ -24,7 +24,7 @@ class IffieDialogue(
         buttonId: Int,
     ): Boolean = true
 
-    override fun newInstance(player: Player): Dialogue = IffieDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = IffieDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.IFFIE_5914)
 }

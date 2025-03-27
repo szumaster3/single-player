@@ -38,7 +38,8 @@ abstract class DiaryEventHookBase(
 
     open val areaTasks get() = arrayOf<DiaryAreaTask>()
 
-    final override fun defineAreaBorders(): Array<ZoneBorders> = areaTasks.map { task -> task.zoneBorders }.toTypedArray()
+    final override fun defineAreaBorders(): Array<ZoneBorders> =
+        areaTasks.map { task -> task.zoneBorders }.toTypedArray()
 
     final override fun areaEnter(entity: Entity) {
         if (entity !is Player) return

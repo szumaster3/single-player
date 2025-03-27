@@ -30,7 +30,7 @@ class BlaecDialogue(
         buttonId: Int,
     ): Boolean = true
 
-    override fun newInstance(player: Player): Dialogue = BlaecDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = BlaecDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.BLAEC_3115)
 }

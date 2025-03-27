@@ -14,7 +14,7 @@ class CaptainBentleyDialogue(
 ) : Dialogue(player) {
     private var onIsle = false
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         onIsle = npc.location.regionId == 8508
         if (!onIsle) {

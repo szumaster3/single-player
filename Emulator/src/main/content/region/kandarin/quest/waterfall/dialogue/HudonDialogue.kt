@@ -121,7 +121,7 @@ class HudonDialogue(
         return true
     }
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         val quest = player.getQuestRepository().getQuest(Quests.WATERFALL_QUEST)
         stage =
             if (quest.getStage(player) >= 20) {

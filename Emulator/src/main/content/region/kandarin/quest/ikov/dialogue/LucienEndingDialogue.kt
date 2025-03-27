@@ -17,7 +17,7 @@ import org.rs.consts.Quests
 class LucienEndingDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun newInstance(player: Player): Dialogue = LucienEndingDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = LucienEndingDialogue(player)
 
     override fun handle(
         interfaceId: Int,

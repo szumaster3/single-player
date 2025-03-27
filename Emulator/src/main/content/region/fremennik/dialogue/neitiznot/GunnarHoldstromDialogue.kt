@@ -12,7 +12,7 @@ import org.rs.consts.NPCs
 class GunnarHoldstromDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npcl(FaceAnim.HAPPY, "Ah, isn't it a lovely day?")
         return true

@@ -36,7 +36,7 @@ class ShotPutRoom(
 ) : Dialogue(player) {
     private var lowWeight = false
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         lowWeight = args[0] as Boolean
         interpreter.sendOptions("Choose your style", "Standing throw", "Step and throw", "Spin and throw")
         return true

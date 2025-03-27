@@ -15,7 +15,7 @@ import org.rs.consts.Quests
 class DorisDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (!isQuestComplete(player, Quests.RECIPE_FOR_DISASTER)) {
             npc("What are you doing in my house?")
@@ -177,7 +177,7 @@ class DorisDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = DorisDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = DorisDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.DORIS_3381)
 

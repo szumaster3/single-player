@@ -9,11 +9,12 @@ import org.json.simple.parser.JSONParser
 import java.io.FileReader
 
 class XteaParser {
-    companion object{
-        val REGION_XTEA = HashMap<Int,IntArray>()
+    companion object {
+        val REGION_XTEA = HashMap<Int, IntArray>()
         private val DEFAULT_REGION_KEYS = intArrayOf(0, 0, 0, 0)
+
         fun getRegionXTEA(regionId: Int): IntArray {
-            return  REGION_XTEA.getOrDefault(regionId, DEFAULT_REGION_KEYS)
+            return REGION_XTEA.getOrDefault(regionId, DEFAULT_REGION_KEYS)
         }
     }
 
@@ -33,6 +34,6 @@ class XteaParser {
             count++
         }
 
-        log(this::class.java, Log.FINE, "Parsed [$count] region keys.")
+        log(this::class.java, Log.FINE, "Parsed $count region keys.")
     }
 }

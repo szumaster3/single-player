@@ -12,7 +12,7 @@ import org.rs.consts.NPCs
 class TaxidermistDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(FaceAnim.HALF_GUILTY, "Oh, hello. Have you got something you want", "preserving?")
         return true
@@ -48,7 +48,7 @@ class TaxidermistDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = TaxidermistDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = TaxidermistDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.TAXIDERMIST_4246)
 }

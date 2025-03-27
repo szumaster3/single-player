@@ -15,7 +15,7 @@ import org.rs.consts.NPCs
 class SasquineHuburnsDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (getAttribute(player, "gnomecopter:unlocked", false)) {
             player("Can I go for a ride on the gnomecopters now, please?").also { stage = 2 }

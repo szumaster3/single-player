@@ -22,10 +22,10 @@ class LoginWriteEvent(
             val buffer = ByteBuffer.allocate(150)
             val player: Player? = session.getPlayer()
             player?.details?.rights?.ordinal?.toByte()?.let {
-                    buffer.put(
-                        it,
-                    )
-                }
+                buffer.put(
+                    it,
+                )
+            }
             buffer.put(0)
             buffer.put(0)
             buffer.put(0)

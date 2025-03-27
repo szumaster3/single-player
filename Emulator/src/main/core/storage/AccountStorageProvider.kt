@@ -7,7 +7,6 @@ import core.auth.UserAccountInfo
  * Implementations of this interface handle storing, retrieving, and managing user accounts.
  */
 interface AccountStorageProvider {
-
     /**
      * Checks if a username is already taken.
      *

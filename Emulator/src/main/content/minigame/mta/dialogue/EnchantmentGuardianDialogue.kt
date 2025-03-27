@@ -11,7 +11,7 @@ import org.rs.consts.NPCs
 class EnchantmentGuardianDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc(FaceAnim.OLD_NORMAL, "Greetings young one. How can I enlighten you?")
         return true
     }

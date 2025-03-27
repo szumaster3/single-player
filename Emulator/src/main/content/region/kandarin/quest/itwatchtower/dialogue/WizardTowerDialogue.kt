@@ -27,7 +27,7 @@ class WizardTowerDialogue(
             Items.UNUSUAL_ARMOUR_2386,
         )
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (npc.id == NPCs.WIZARD_5195) {
             player("What's going on here?").also { stage = 100 }

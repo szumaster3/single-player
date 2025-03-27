@@ -21,7 +21,7 @@ import org.rs.consts.Quests
 class NedDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(
             "Why, hello there, lad. Me friends call me Ned. I was a",
@@ -142,7 +142,7 @@ class NedDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = NedDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = NedDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.NED_743)
 }

@@ -18,7 +18,7 @@ class SirAmikVarzeDialogue(
 ) : Dialogue(player) {
     private var quest: Quest? = null
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         quest = player.getQuestRepository().getQuest(Quests.BLACK_KNIGHTS_FORTRESS)
         when (quest!!.getStage(player)) {
@@ -406,7 +406,7 @@ class SirAmikVarzeDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = SirAmikVarzeDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = SirAmikVarzeDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.SIR_AMIK_VARZE_608)
 }

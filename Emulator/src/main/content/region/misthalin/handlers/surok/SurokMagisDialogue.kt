@@ -16,7 +16,7 @@ import org.rs.consts.NPCs
 class SurokMagisDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc(player.username + "! The meddling adventurer.")
         if (getVarbit(player, 3524) >= 1) {
             player.musicPlayer.unlock(Music.THE_WRONG_PATH_488)

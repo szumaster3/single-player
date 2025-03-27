@@ -14,7 +14,8 @@ class TowerArcherNPC(
     id: Int = 0,
     location: Location? = null,
 ) : AbstractNPC(id, location) {
-    override fun getIds(): IntArray = intArrayOf(NPCs.TOWER_ARCHER_688, NPCs.TOWER_ARCHER_689, NPCs.TOWER_ARCHER_690, NPCs.TOWER_ARCHER_691)
+    override fun getIds(): IntArray =
+        intArrayOf(NPCs.TOWER_ARCHER_688, NPCs.TOWER_ARCHER_689, NPCs.TOWER_ARCHER_690, NPCs.TOWER_ARCHER_691)
 
     override fun construct(
         id: Int,

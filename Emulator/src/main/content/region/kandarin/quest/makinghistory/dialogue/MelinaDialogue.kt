@@ -18,7 +18,7 @@ import org.rs.consts.Quests
 class MelinaDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         val questStage = getQuestStage(player, Quests.MAKING_HISTORY)
         val droalakProgress = getVarbit(player, MakingHistoryUtils.DROALAK_PROGRESS)
 

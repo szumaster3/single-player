@@ -17,7 +17,7 @@ import org.rs.consts.Quests
 class OldManDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         when {
             isQuestComplete(player, Quests.GHOSTS_AHOY) -> player("How is it going?").also { stage = 5 }

@@ -12,7 +12,7 @@ import org.rs.consts.NPCs
 class LumbridgeJailGuardDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         player(FaceAnim.HALF_GUILTY, "Hello.")
         return true
@@ -29,5 +29,6 @@ class LumbridgeJailGuardDialogue(
         return true
     }
 
-    override fun getIds(): IntArray = intArrayOf(NPCs.JAIL_GUARD_917, NPCs.JAIL_GUARD_447, NPCs.JAIL_GUARD_448, NPCs.JAIL_GUARD_449)
+    override fun getIds(): IntArray =
+        intArrayOf(NPCs.JAIL_GUARD_917, NPCs.JAIL_GUARD_447, NPCs.JAIL_GUARD_448, NPCs.JAIL_GUARD_449)
 }

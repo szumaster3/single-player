@@ -12,7 +12,7 @@ import org.rs.consts.NPCs
 class SpangDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npcl(FaceAnim.OLD_NORMAL, "I hate this job. All the other staff are so happy all the time. It depresses me.")
         return true

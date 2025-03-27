@@ -17,7 +17,7 @@ import org.rs.consts.Quests
 class SanfewDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(FaceAnim.HALF_GUILTY, "What can I do for you young 'un?")
         return true

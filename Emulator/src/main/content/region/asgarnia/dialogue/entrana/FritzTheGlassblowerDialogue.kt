@@ -19,7 +19,7 @@ import org.rs.consts.NPCs
 class FritzTheGlassblowerDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (!player.getSavedData().globalData.isFritzGlass()) {
             npc(FaceAnim.HALF_GUILTY, "Hello adventurer, welcome to the Entrana furnace.")

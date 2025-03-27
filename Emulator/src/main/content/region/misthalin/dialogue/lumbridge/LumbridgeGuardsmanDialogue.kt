@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
 class LumbridgeGuardsmanDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (npc == null) return false
         val randomGreetings = listOf("Greetings.", "Good day.", "Howdy.", "Salutations!", "Nice to meet you.")

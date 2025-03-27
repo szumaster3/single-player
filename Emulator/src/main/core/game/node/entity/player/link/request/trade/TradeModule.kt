@@ -61,7 +61,14 @@ class TradeModule(
         getExtension(target)!!.display(stage)
     }
 
-    private fun openInterface(component: Component): TradeModule = if (component === MAIN_INTERFACE) openMain() else openSecond()
+    private fun openInterface(component: Component): TradeModule =
+        if (component ===
+            MAIN_INTERFACE
+        ) {
+            openMain()
+        } else {
+            openSecond()
+        }
 
     private val acceptMessage: String
         get() {
@@ -353,9 +360,9 @@ class TradeModule(
     companion object {
         val OVERLAY_INTERFACE = Component(336)
 
-        val MAIN_INTERFACE: Component = Component(335).setCloseEvent(TradeCloseEvent())
+        val MAIN_INTERFACE: Component = Component(335).setUncloseEvent(TradeCloseEvent())
 
-        val ACCEPT_INTERFACE: Component = Component(334).setCloseEvent(TradeCloseEvent())
+        val ACCEPT_INTERFACE: Component = Component(334).setUncloseEvent(TradeCloseEvent())
 
         val INVENTORY_PARAMS =
             arrayOf<Any>(

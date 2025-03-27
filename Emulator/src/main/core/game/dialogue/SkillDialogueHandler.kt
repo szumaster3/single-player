@@ -121,12 +121,13 @@ open class SkillDialogueHandler(
             override fun getAmount(
                 handler: SkillDialogueHandler,
                 buttonId: Int,
-            ): Int = when (buttonId) {
-                5 -> 1
-                4 -> 5
-                3 -> -1
-                else -> handler.getAll(getIndex(handler, buttonId))
-            }
+            ): Int =
+                when (buttonId) {
+                    5 -> 1
+                    4 -> 5
+                    3 -> -1
+                    else -> handler.getAll(getIndex(handler, buttonId))
+                }
         },
 
         /**
@@ -165,13 +166,14 @@ open class SkillDialogueHandler(
             override fun getAmount(
                 handler: SkillDialogueHandler,
                 buttonId: Int,
-            ): Int = when (buttonId) {
-                5 -> 1
-                4 -> 1
-                3 -> 5
-                2 -> 10
-                else -> 10
-            }
+            ): Int =
+                when (buttonId) {
+                    5 -> 1
+                    4 -> 1
+                    3 -> 5
+                    2 -> 10
+                    else -> 10
+                }
         },
 
         TWO_OPTION(Components.SKILL_MAKE_303, 7, 2) {
@@ -368,13 +370,14 @@ open class SkillDialogueHandler(
         },
 
         FIVE_OPTION(Components.SKILL_MAKE_306, 7, 5) {
-            private val positions = arrayOf(
-                intArrayOf(10, 30),
-                intArrayOf(117, 10),
-                intArrayOf(217, 20),
-                intArrayOf(317, 15),
-                intArrayOf(408, 15),
-            )
+            private val positions =
+                arrayOf(
+                    intArrayOf(10, 30),
+                    intArrayOf(117, 10),
+                    intArrayOf(217, 20),
+                    intArrayOf(317, 15),
+                    intArrayOf(408, 15),
+                )
 
             /**
              * Displays the dialogue for five options.

@@ -16,7 +16,7 @@ class WitchDialogue(
 ) : Dialogue(player) {
     private var quest: Quest? = null
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         quest = player.getQuestRepository().getQuest(Quests.ANIMAL_MAGNETISM)
         when (quest!!.getStage(player)) {
             25 -> npc("Hello, hello, my poppet. What brings you to my little", "room?")

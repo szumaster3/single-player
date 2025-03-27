@@ -32,7 +32,8 @@ class PlayerStatsCounter(
     companion object {
         lateinit var db: SQLiteProvider
 
-        private fun resolveUIDFromPlayerUsername(playerUsername: String): Int = GameWorld.accountStorage.getAccountInfo(playerUsername).uid
+        private fun resolveUIDFromPlayerUsername(playerUsername: String): Int =
+            GameWorld.accountStorage.getAccountInfo(playerUsername).uid
 
         private fun portLegacyKillCounterJsonToSQLite() {
             val file = File(Path(ServerConstants.DATA_PATH ?: "", "global_kill_stats.json").toString())

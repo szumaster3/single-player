@@ -12,7 +12,7 @@ import org.rs.consts.NPCs
 class FullangrDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(FaceAnim.OLD_DEFAULT, "Good day, sir.")
         return true

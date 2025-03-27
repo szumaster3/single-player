@@ -16,7 +16,7 @@ import org.rs.consts.NPCs
 class ThakkradYakDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         options("Cure my yak-hide, please.", "Nothing, thanks.")
         return true
     }

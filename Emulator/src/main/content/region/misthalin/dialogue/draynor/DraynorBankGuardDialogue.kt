@@ -18,7 +18,7 @@ import org.rs.consts.NPCs
 class DraynorBankGuardDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(FaceAnim.HALF_GUILTY, "Yes?")
         return true
@@ -187,7 +187,7 @@ class DraynorBankGuardDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = DraynorBankGuardDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = DraynorBankGuardDialogue(player)
 
     private fun startRecording(player: Player) {
         end()

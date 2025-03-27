@@ -22,7 +22,6 @@ import org.rs.consts.Sounds
  */
 @Initializable
 class CurseSpell : CombatSpell {
-
     constructor()
 
     private constructor(
@@ -34,7 +33,7 @@ class CurseSpell : CombatSpell {
         start: Graphics,
         projectile: Projectile,
         end: Graphics,
-        vararg runes: Item
+        vararg runes: Item,
     ) : super(
         type,
         SpellBook.MODERN,
@@ -46,14 +45,22 @@ class CurseSpell : CombatSpell {
         start,
         projectile,
         end,
-        *runes
+        *runes,
     )
 
-    override fun getMaximumImpact(entity: Entity, victim: Entity, state: BattleState): Int {
+    override fun getMaximumImpact(
+        entity: Entity,
+        victim: Entity,
+        state: BattleState,
+    ): Int {
         return 1
     }
 
-    override fun fireEffect(entity: Entity, victim: Entity, state: BattleState) {
+    override fun fireEffect(
+        entity: Entity,
+        victim: Entity,
+        state: BattleState,
+    ) {
         if (state.estimatedHit == -1) {
             return
         }
@@ -69,7 +76,10 @@ class CurseSpell : CombatSpell {
         }
     }
 
-    override fun addExperience(entity: Entity, hit: Int) {
+    override fun addExperience(
+        entity: Entity,
+        hit: Int,
+    ) {
         entity.getSkills().addExperience(Skills.MAGIC, experience)
     }
 
@@ -88,8 +98,8 @@ class CurseSpell : CombatSpell {
                 CONFUSE_END,
                 Runes.BODY_RUNE.getItem(1),
                 Runes.EARTH_RUNE.getItem(2),
-                Runes.WATER_RUNE.getItem(3)
-            )
+                Runes.WATER_RUNE.getItem(3),
+            ),
         )
         SpellBook.MODERN.register(
             7,
@@ -104,8 +114,8 @@ class CurseSpell : CombatSpell {
                 WEAKEN_END,
                 Runes.BODY_RUNE.getItem(1),
                 Runes.EARTH_RUNE.getItem(2),
-                Runes.WATER_RUNE.getItem(3)
-            )
+                Runes.WATER_RUNE.getItem(3),
+            ),
         )
         SpellBook.MODERN.register(
             11,
@@ -120,8 +130,8 @@ class CurseSpell : CombatSpell {
                 CURSE_END,
                 Runes.BODY_RUNE.getItem(1),
                 Runes.EARTH_RUNE.getItem(3),
-                Runes.WATER_RUNE.getItem(2)
-            )
+                Runes.WATER_RUNE.getItem(2),
+            ),
         )
         SpellBook.MODERN.register(
             50,
@@ -136,8 +146,8 @@ class CurseSpell : CombatSpell {
                 VULNER_END,
                 Runes.SOUL_RUNE.getItem(1),
                 Runes.EARTH_RUNE.getItem(5),
-                Runes.WATER_RUNE.getItem(5)
-            )
+                Runes.WATER_RUNE.getItem(5),
+            ),
         )
         SpellBook.MODERN.register(
             53,
@@ -152,8 +162,8 @@ class CurseSpell : CombatSpell {
                 ENFEEBLE_END,
                 Runes.SOUL_RUNE.getItem(1),
                 Runes.EARTH_RUNE.getItem(8),
-                Runes.WATER_RUNE.getItem(8)
-            )
+                Runes.WATER_RUNE.getItem(8),
+            ),
         )
         SpellBook.MODERN.register(
             57,
@@ -168,30 +178,96 @@ class CurseSpell : CombatSpell {
                 STUN_END,
                 Runes.SOUL_RUNE.getItem(1),
                 Runes.EARTH_RUNE.getItem(12),
-                Runes.WATER_RUNE.getItem(12)
-            )
+                Runes.WATER_RUNE.getItem(12),
+            ),
         )
         return this
     }
 
     companion object {
         private val CONFUSE_START = Graphics(org.rs.consts.Graphics.CONFUSE_CAST_102, 96)
-        private val CONFUSE_PROJECTILE: Projectile = Projectile.create(null as Entity?, null, org.rs.consts.Graphics.CONFUSE_PROJECTILE_103, 40, 36, 52, 75, 15, 11)
+        private val CONFUSE_PROJECTILE: Projectile =
+            Projectile.create(
+                null as Entity?,
+                null,
+                org.rs.consts.Graphics.CONFUSE_PROJECTILE_103,
+                40,
+                36,
+                52,
+                75,
+                15,
+                11,
+            )
         private val CONFUSE_END = Graphics(org.rs.consts.Graphics.CONFUSE_IMPACT_104, 96)
         private val WEAKEN_START = Graphics(org.rs.consts.Graphics.WEAKEN_CAST_105, 96)
-        private val WEAKEN_PROJECTILE: Projectile = Projectile.create(null as Entity?, null, org.rs.consts.Graphics.WEAKEN_PROJECTILE_106, 40, 36, 52, 75, 15, 11)
+        private val WEAKEN_PROJECTILE: Projectile =
+            Projectile.create(
+                null as Entity?,
+                null,
+                org.rs.consts.Graphics.WEAKEN_PROJECTILE_106,
+                40,
+                36,
+                52,
+                75,
+                15,
+                11,
+            )
         private val WEAKEN_END = Graphics(org.rs.consts.Graphics.WEAKEN_IMPACT_107, 96)
         private val CURSE_START = Graphics(org.rs.consts.Graphics.CURSE_CAST_108, 96)
-        private val CURSE_PROJECTILE: Projectile = Projectile.create(null as Entity?, null, org.rs.consts.Graphics.CURSE_PROJECTILE_109, 40, 36, 52, 75, 15, 11)
+        private val CURSE_PROJECTILE: Projectile =
+            Projectile.create(
+                null as Entity?,
+                null,
+                org.rs.consts.Graphics.CURSE_PROJECTILE_109,
+                40,
+                36,
+                52,
+                75,
+                15,
+                11,
+            )
         private val CURSE_END = Graphics(org.rs.consts.Graphics.CURSE_IMPACT_110, 96)
         private val VULNER_START = Graphics(org.rs.consts.Graphics.VULNERABILITY_CAST_167, 96)
-        private val VULNER_PROJECTILE: Projectile = Projectile.create(null as Entity?, null, org.rs.consts.Graphics.VULNERABILITY_PROJECTILE_168, 40, 36, 52, 75, 15, 11)
+        private val VULNER_PROJECTILE: Projectile =
+            Projectile.create(
+                null as Entity?,
+                null,
+                org.rs.consts.Graphics.VULNERABILITY_PROJECTILE_168,
+                40,
+                36,
+                52,
+                75,
+                15,
+                11,
+            )
         private val VULNER_END = Graphics(org.rs.consts.Graphics.VULNERABILITY_IMPACT_169, 96, 1)
         private val ENFEEBLE_START = Graphics(org.rs.consts.Graphics.ENFEEBLE_CAST_170, 96)
-        private val ENFEEBLE_PROJECTILE: Projectile = Projectile.create(null as Entity?, null, org.rs.consts.Graphics.ENFEEBLE_PROJECTILE_171, 40, 36, 52, 75, 15, 11)
+        private val ENFEEBLE_PROJECTILE: Projectile =
+            Projectile.create(
+                null as Entity?,
+                null,
+                org.rs.consts.Graphics.ENFEEBLE_PROJECTILE_171,
+                40,
+                36,
+                52,
+                75,
+                15,
+                11,
+            )
         private val ENFEEBLE_END = Graphics(org.rs.consts.Graphics.ENFEEBLE_IMPACT_172, 96)
         private val STUN_START = Graphics(org.rs.consts.Graphics.STUN_CAST_173, 96)
-        private val STUN_PROJECTILE: Projectile = Projectile.create(null as Entity?, null, org.rs.consts.Graphics.STUN_PROJECTILE_174, 40, 36, 52, 75, 15, 11)
+        private val STUN_PROJECTILE: Projectile =
+            Projectile.create(
+                null as Entity?,
+                null,
+                org.rs.consts.Graphics.STUN_PROJECTILE_174,
+                40,
+                36,
+                52,
+                75,
+                15,
+                11,
+            )
         private val STUN_END = Graphics(org.rs.consts.Graphics.WEAKEN_IMPACT_107, 96)
         private val LOW_ANIMATION = Animation(716, Priority.HIGH)
         private val HIGH_ANIMATION = Animation(Animations.CAST_SPELL_B_729, Priority.HIGH)

@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class SpiritDagannothDialogue : Dialogue {
-    override fun newInstance(player: Player): Dialogue {
+    override fun newInstance(player: Player?): Dialogue {
         return SpiritDagannothDialogue(player)
     }
 
@@ -29,7 +29,7 @@ class SpiritDagannothDialogue : Dialogue {
      */
     constructor(player: Player?) : super(player)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         val randomIndex = (Math.random() * 4).toInt()
         when (randomIndex) {
@@ -38,7 +38,7 @@ class SpiritDagannothDialogue : Dialogue {
                     FaceAnim.CHILD_NORMAL,
                     "Grooooooowl graaaaawl raaaawl?",
                     "(Are you ready to surrender to the power of",
-                    "the Deep Waters?)"
+                    "the Deep Waters?)",
                 )
                 stage = 0
             }
@@ -48,7 +48,7 @@ class SpiritDagannothDialogue : Dialogue {
                     FaceAnim.CHILD_NORMAL,
                     "Groooooowl. Hsssssssssssssss!",
                     "(The Deeps will swallow the lands. None will",
-                    "stand before us!)"
+                    "stand before us!)",
                 )
                 stage = 5
             }
@@ -58,7 +58,7 @@ class SpiritDagannothDialogue : Dialogue {
                     FaceAnim.CHILD_NORMAL,
                     "Hssssss graaaawl grooooowl, growwwwwwwwwl!",
                     "(Oh how the bleak gulfs hunger for the",
-                    "Day of Rising.)"
+                    "Day of Rising.)",
                 )
                 stage = 8
             }
@@ -71,7 +71,10 @@ class SpiritDagannothDialogue : Dialogue {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(
+        interfaceId: Int,
+        buttonId: Int,
+    ): Boolean {
         when (stage) {
             0 -> {
                 playerl(FaceAnim.FRIENDLY, "Err, not really.")
@@ -108,7 +111,7 @@ class SpiritDagannothDialogue : Dialogue {
                     FaceAnim.CHILD_NORMAL,
                     "Hsssssssss groooooowl?",
                     "Hssssshsss grrooooooowl?",
-                    "(What are boats? The tasty wooden containers full of meat?)"
+                    "(What are boats? The tasty wooden containers full of meat?)",
                 )
                 stage++
             }
@@ -127,7 +130,7 @@ class SpiritDagannothDialogue : Dialogue {
                 npc(
                     FaceAnim.CHILD_NORMAL,
                     "Raaaaawl groooowl grrrrawl!",
-                    "(That's the truth biting into your clouded mind!)"
+                    "(That's the truth biting into your clouded mind!)",
                 )
                 stage++
             }
@@ -146,7 +149,7 @@ class SpiritDagannothDialogue : Dialogue {
                 npc(
                     FaceAnim.CHILD_NORMAL,
                     "Hssssssssss rawwwwwl graaaawl!",
-                    "(To the inevitable defeat of all life on the Surface!)"
+                    "(To the inevitable defeat of all life on the Surface!)",
                 )
                 stage++
             }
@@ -154,7 +157,7 @@ class SpiritDagannothDialogue : Dialogue {
             13 -> {
                 playerl(
                     FaceAnim.FRIENDLY,
-                    "I think I'll wait a little longer before I just keep over and submit, thanks."
+                    "I think I'll wait a little longer before I just keep over and submit, thanks.",
                 )
                 stage++
             }
@@ -163,7 +166,7 @@ class SpiritDagannothDialogue : Dialogue {
                 npc(
                     FaceAnim.CHILD_NORMAL,
                     "Hsssss, grooooowl, raaaaawl.",
-                    "(Well, it's your choice, but those that submit first will be eaten first.)"
+                    "(Well, it's your choice, but those that submit first will be eaten first.)",
                 )
                 stage++
             }

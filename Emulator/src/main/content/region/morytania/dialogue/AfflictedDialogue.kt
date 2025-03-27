@@ -29,7 +29,7 @@ class AfflictedDialogue(
             "says",
         )
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         forceChat.shuffle()
         npc(
@@ -54,5 +54,6 @@ class AfflictedDialogue(
         buttonId: Int,
     ): Boolean = true
 
-    override fun getIds(): IntArray = intArrayOf(NPCs.AFFLICTED_1257, NPCs.AFFLICTED_1258, NPCs.AFFLICTED_1261, NPCs.AFFLICTED_1262)
+    override fun getIds(): IntArray =
+        intArrayOf(NPCs.AFFLICTED_1257, NPCs.AFFLICTED_1258, NPCs.AFFLICTED_1261, NPCs.AFFLICTED_1262)
 }

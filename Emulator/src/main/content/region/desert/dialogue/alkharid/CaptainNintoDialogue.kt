@@ -24,7 +24,11 @@ class CaptainNintoDialogue(
     ): Boolean {
         when (stage) {
             0 -> playerl(FaceAnim.DRUNK, "I'm enjoyn' the local hoschpitalieee. hee hee.").also { stage++ }
-            1 -> npcl(FaceAnim.OLD_DEFAULT, "Looks like you've enjoyed more than your fair share of hospitality.").also { stage++ }
+            1 ->
+                npcl(
+                    FaceAnim.OLD_DEFAULT,
+                    "Looks like you've enjoyed more than your fair share of hospitality.",
+                ).also { stage++ }
             2 ->
                 playerl(
                     FaceAnim.DRUNK,
@@ -34,7 +38,11 @@ class CaptainNintoDialogue(
                 }
             3 -> npcl(FaceAnim.OLD_DEFAULT, "I'd go easy on the dwarven stout if I were you.").also { stage++ }
             4 -> playerl(FaceAnim.DRUNK, "I yousht to be a tesht pilot yoo know. I reeel hero.").also { stage++ }
-            5 -> npcl(FaceAnim.OLD_DEFAULT, "But I loscht my bottle. Scho I now ffind scholiss in the bottle.").also { stage++ }
+            5 ->
+                npcl(
+                    FaceAnim.OLD_DEFAULT,
+                    "But I loscht my bottle. Scho I now ffind scholiss in the bottle.",
+                ).also { stage++ }
             6 ->
                 playerl(
                     FaceAnim.DRUNK,

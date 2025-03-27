@@ -15,7 +15,7 @@ class RaccoonDialogue(
     private val babyRaccoon = intArrayOf(NPCs.BABY_RACCOON_6913, NPCs.BABY_RACCOON_7271, NPCs.BABY_RACCOON_7273)
     private val adultRaccoon = intArrayOf(NPCs.RACCOON_6914, NPCs.RACCOON_7272, NPCs.RACCOON_7274)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (npc.id in babyRaccoon) {
             npc(

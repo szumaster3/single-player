@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
 class RanaelDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(
             FaceAnim.HAPPY,
@@ -46,7 +46,7 @@ class RanaelDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = RanaelDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = RanaelDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.RANAEL_544)
 }

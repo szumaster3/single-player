@@ -11,7 +11,7 @@ import org.rs.consts.NPCs
 class GraveyardGuardianDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         player("Hello.")
         return true
     }

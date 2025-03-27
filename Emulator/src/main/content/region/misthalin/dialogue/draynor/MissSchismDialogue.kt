@@ -15,7 +15,7 @@ import org.rs.consts.Quests
 class MissSchismDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(FaceAnim.HALF_GUILTY, "Oooh, my dear, have you heard the news?")
         return true
@@ -136,7 +136,7 @@ class MissSchismDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = MissSchismDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = MissSchismDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.MISS_SCHISM_2634)
 }

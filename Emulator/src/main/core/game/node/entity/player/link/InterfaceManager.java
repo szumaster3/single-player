@@ -94,12 +94,12 @@ public final class InterfaceManager {
      */
     public Component openWindowsPane(Component windowsPane, boolean overlap) {
         this.windowsPane = windowsPane;
-        if (windowsPane.getDefinition().getType() != InterfaceType.WINDOW_PANE) {
-            log(this.getClass(), Log.WARN, "Set interface type to WINDOW_PANE for component " + windowsPane.getId() + ", definition requires updating!");
-            windowsPane.getDefinition().setType(InterfaceType.WINDOW_PANE);
+        if (windowsPane.definition.type != InterfaceType.WINDOW_PANE) {
+            log(this.getClass(), Log.WARN, "Set interface type to WINDOW_PANE for component " + windowsPane.id + ", definition requires updating!");
+            windowsPane.definition.type = InterfaceType.WINDOW_PANE;
         }
 
-        PacketRepository.send(WindowsPane.class, new WindowsPaneContext(player, windowsPane.getId(), overlap ? 1 : 0));
+        PacketRepository.send(WindowsPane.class, new WindowsPaneContext(player, windowsPane.id, overlap ? 1 : 0));
         windowsPane.open(player);
 
         if (opened != null)
@@ -116,12 +116,12 @@ public final class InterfaceManager {
      */
     public void openWindowsPane(Component windowsPane, int type) {
         this.windowsPane = windowsPane;
-        if (windowsPane.getDefinition().getType() != InterfaceType.WINDOW_PANE) {
-            log(this.getClass(), Log.WARN, "Set interface type to WINDOW_PANE for component " + windowsPane.getId() + ", definition requires updating!");
-            windowsPane.getDefinition().setType(InterfaceType.SINGLE_TAB);
+        if (windowsPane.definition.type != InterfaceType.WINDOW_PANE) {
+            log(this.getClass(), Log.WARN, "Set interface type to WINDOW_PANE for component " + windowsPane.id + ", definition requires updating!");
+            windowsPane.definition.type = InterfaceType.SINGLE_TAB;
         }
 
-        PacketRepository.send(WindowsPane.class, new WindowsPaneContext(player, windowsPane.getId(), type));
+        PacketRepository.send(WindowsPane.class, new WindowsPaneContext(player, windowsPane.id, type));
         windowsPane.open(player);
 
         if (opened != null)
@@ -171,7 +171,7 @@ public final class InterfaceManager {
      * @return the boolean
      */
     public boolean hasChatbox() {
-        return chatbox != null && chatbox.getId() != DEFAULT_CHATBOX;
+        return chatbox != null && chatbox.id != DEFAULT_CHATBOX;
     }
 
     /**
@@ -185,12 +185,12 @@ public final class InterfaceManager {
             player.getPacketDispatch().sendRunScript(101, "");
         }
         // Component 333 is an immediate(no-fading) full-screen HD-mode black screen which auto-clears when interrupted.
-        if (overlay != null && overlay.getId() == 333) {
+        if (overlay != null && overlay.id == Components.BLACK_OVERLAY_333) {
             closeOverlay();
         }
         if (opened != null && opened.close(player)) {
-            if (opened != null && (!opened.getDefinition().isWalkable() || opened.getId() == 14)) {
-                PacketRepository.send(CloseInterface.class, new InterfaceContext(player, opened.getDefinition().getWindowPaneId(isResizable()), opened.getDefinition().getChildId(isResizable()), opened.getId(), opened.getDefinition().isWalkable()));
+            if (opened != null && (!opened.definition.isWalkable() || opened.id == 14)) {
+                PacketRepository.send(CloseInterface.class, new InterfaceContext(player, opened.definition.getWindowPaneId(isResizable()), opened.definition.getChildId(isResizable()), opened.id, opened.definition.isWalkable()));
                 player.dispatch(new InterfaceCloseEvent(opened));
             }
             opened = null;
@@ -205,10 +205,10 @@ public final class InterfaceManager {
      */
     public boolean isWalkable() {
         if (opened != null) {
-            if (opened.getId() == Components.OBJDIALOG_389) {
+            if (opened.id == Components.OBJDIALOG_389) {
                 return false;
             }
-            if (opened.getDefinition().isWalkable()) {
+            if (opened.definition.isWalkable()) {
                 return true;
             }
         }
@@ -223,14 +223,14 @@ public final class InterfaceManager {
      */
     public boolean close(Component component) {
         if (component.close(player)) {
-            if (component.getId() == DEFAULT_CHATBOX) {
+            if (component.id == DEFAULT_CHATBOX) {
                 return true;
             }
-            if (component.getDefinition().getType() == InterfaceType.TAB) {
-                PacketRepository.send(CloseInterface.class, new InterfaceContext(player, component.getDefinition().getWindowPaneId(isResizable()), component.getDefinition().getChildId(isResizable()) + component.getDefinition().getTabIndex(), component.getId(), component.getDefinition().isWalkable()));
+            if (component.definition.type == InterfaceType.TAB) {
+                PacketRepository.send(CloseInterface.class, new InterfaceContext(player, component.definition.getWindowPaneId(isResizable()), component.definition.getChildId(isResizable()) + component.definition.tabIndex, component.id, component.definition.isWalkable()));
                 return true;
             }
-            PacketRepository.send(CloseInterface.class, new InterfaceContext(player, component.getDefinition().getWindowPaneId(isResizable()), component.getDefinition().getChildId(isResizable()), component.getId(), component.getDefinition().isWalkable()));
+            PacketRepository.send(CloseInterface.class, new InterfaceContext(player, component.definition.getWindowPaneId(isResizable()), component.definition.getChildId(isResizable()), component.id, component.definition.isWalkable()));
             return true;
         }
         return false;
@@ -240,7 +240,7 @@ public final class InterfaceManager {
      * Close chatbox.
      */
     public void closeChatbox() {
-        if (chatbox != null && chatbox.getId() != DEFAULT_CHATBOX) {
+        if (chatbox != null && chatbox.id != DEFAULT_CHATBOX) {
             if (close(chatbox)) {
                 openChatbox(DEFAULT_CHATBOX);
                 player.getPacketDispatch().sendRunScript(101, "");
@@ -255,9 +255,9 @@ public final class InterfaceManager {
      * @return the component
      */
     public Component openSingleTab(Component component) {
-        if (component.getDefinition().getType() != InterfaceType.SINGLE_TAB) {
-            log(this.getClass(), Log.WARN, "Set interface type to SINGLE_TAB for component " + component.getId() + ", definition requires updating!");
-            component.getDefinition().setType(InterfaceType.SINGLE_TAB);
+        if (component.definition.type != InterfaceType.SINGLE_TAB) {
+            log(this.getClass(), Log.WARN, "Set interface type to SINGLE_TAB for component " + component.id + ", definition requires updating!");
+            component.definition.type = InterfaceType.SINGLE_TAB;
         }
         component.open(player);
         if (component.getCloseEvent() == null) {
@@ -441,16 +441,16 @@ public final class InterfaceManager {
      * @param component the component
      */
     public void openTab(int slot, Component component) {
-        if (component.getId() == Components.WEAPON_FISTS_SEL_92 && !(component instanceof WeaponInterface)) {
+        if (component.id == Components.WEAPON_FISTS_SEL_92 && !(component instanceof WeaponInterface)) {
             throw new IllegalStateException("Attack tab can only be instanced as " + WeaponInterface.class.getCanonicalName() + "!");
         }
-        if (component.getDefinition().getTabIndex() != slot) {
-            log(this.getClass(), Log.WARN, "Set tab index to " + slot + " for component " + component.getId() + ", definition requires updating!");
-            component.getDefinition().setTabIndex(slot);
+        if (component.definition.tabIndex != slot) {
+            log(this.getClass(), Log.WARN, "Set tab index to " + slot + " for component " + component.id + ", definition requires updating!");
+            component.definition.tabIndex = slot;
         }
-        if (component.getDefinition().getType() != InterfaceType.TAB) {
-            log(this.getClass(), Log.WARN, "Set interface type to TAB for component " + component.getId() + ", definition requires updating!");
-            component.getDefinition().setType(InterfaceType.TAB);
+        if (component.definition.type != InterfaceType.TAB) {
+            log(this.getClass(), Log.WARN, "Set interface type to TAB for component " + component.id + ", definition requires updating!");
+            component.definition.type = InterfaceType.TAB;
         }
         component.open(player);
         tabs[slot] = component;
@@ -462,11 +462,11 @@ public final class InterfaceManager {
      * @param component the component
      */
     public void openTab(Component component) {
-        if (component.getDefinition().getTabIndex() < 0) {
-            log(this.getClass(), Log.WARN, "No component definitions found for tab " + component.getId() + "!");
+        if (component.definition.tabIndex < 0) {
+            log(this.getClass(), Log.WARN, "No component definitions found for tab " + component.id + "!");
             return;
         }
-        openTab(component.getDefinition().getTabIndex(), component);
+        openTab(component.definition.tabIndex, component);
     }
 
     /**
@@ -484,8 +484,8 @@ public final class InterfaceManager {
      * @param component the component
      */
     public void openChatbox(Component component) {
-        if (component.getId() == DEFAULT_CHATBOX) {
-            if (chatbox == null || (chatbox.getId() != DEFAULT_CHATBOX && chatbox.getDefinition().getType() == InterfaceType.CHATBOX)) {
+        if (component.id == DEFAULT_CHATBOX) {
+            if (chatbox == null || (chatbox.id != DEFAULT_CHATBOX && chatbox.definition.type == InterfaceType.CHATBOX)) {
                 PacketRepository.send(Interface.class, new InterfaceContext(player, getWindowPaneId(), isResizable() ? 23 : 14, Components.FILTERBUTTONS_751, true));
                 PacketRepository.send(Interface.class, new InterfaceContext(player, getWindowPaneId(), isResizable() ? 70 : 75, Components.CHATTOP_752, true));
                 PacketRepository.send(Interface.class, new InterfaceContext(player, InterfaceType.CHATBOX.fixedPaneId, InterfaceType.CHATBOX.fixedChildId, Components.CHATDEFAULT_137, true));
@@ -494,9 +494,9 @@ public final class InterfaceManager {
             setVarp(player, 334, 1);
         } else {
             chatbox = component;
-            if (chatbox.getDefinition().getType() != InterfaceType.DIALOGUE && chatbox.getDefinition().getType() != InterfaceType.CHATBOX && chatbox.getDefinition().getType() != InterfaceType.CS_CHATBOX) {
-                log(this.getClass(), Log.WARN, "Set interface type to CHATBOX for component " + component.getId() + ", definition requires updating!");
-                chatbox.getDefinition().setType(InterfaceType.DIALOGUE);
+            if (chatbox.definition.type != InterfaceType.DIALOGUE && chatbox.definition.type != InterfaceType.CHATBOX && chatbox.definition.type != InterfaceType.CS_CHATBOX) {
+                log(this.getClass(), Log.WARN, "Set interface type to CHATBOX for component " + component.id + ", definition requires updating!");
+                chatbox.definition.type = InterfaceType.DIALOGUE;
             }
             chatbox.open(player);
         }
@@ -529,23 +529,23 @@ public final class InterfaceManager {
      * @return the component
      */
     public Component getComponent(int componentId) {
-        if (opened != null && opened.getId() == componentId) {
+        if (opened != null && opened.id == componentId) {
             return opened;
         }
-        if (chatbox != null && chatbox.getId() == componentId) {
+        if (chatbox != null && chatbox.id == componentId) {
             return chatbox;
         }
-        if (singleTab != null && singleTab.getId() == componentId) {
+        if (singleTab != null && singleTab.id == componentId) {
             return singleTab;
         }
-        if (overlay != null && overlay.getId() == componentId) {
+        if (overlay != null && overlay.id == componentId) {
             return overlay;
         }
-        if (windowsPane.getId() == componentId) {
+        if (windowsPane.id == componentId) {
             return windowsPane;
         }
         for (Component c : tabs) {
-            if (c != null && c.getId() == componentId) {
+            if (c != null && c.id == componentId) {
                 return c;
             }
         }
@@ -590,7 +590,7 @@ public final class InterfaceManager {
      * @return the boolean
      */
     public boolean hasMainComponent(int id) {
-        return opened != null && opened.getId() == id;
+        return opened != null && opened.id == id;
     }
 
     /**
@@ -603,10 +603,10 @@ public final class InterfaceManager {
             return;
         }
         overlay = component;
-        if (overlay.getDefinition().getType() != InterfaceType.OVERLAY && overlay.getDefinition().getType() != InterfaceType.OVERLAY_B) {
-            log(this.getClass(), Log.WARN, "Set interface type to OVERLAY for component " + component.getId() + ", definition requires updating!");
-            overlay.getDefinition().setType(InterfaceType.OVERLAY);
-            overlay.getDefinition().setWalkable(true);
+        if (overlay.definition.type != InterfaceType.OVERLAY && overlay.definition.type != InterfaceType.OVERLAY_B) {
+            log(this.getClass(), Log.WARN, "Set interface type to OVERLAY for component " + component.id + ", definition requires updating!");
+            overlay.definition.type = InterfaceType.OVERLAY;
+            overlay.definition.setWalkable(true);
         }
         overlay.open(player);
     }
@@ -746,7 +746,7 @@ public final class InterfaceManager {
         if (windowsPane == null) {
             return Components.TOPLEVEL_548;
         }
-        return windowsPane.getId();
+        return windowsPane.id;
     }
 
     /**

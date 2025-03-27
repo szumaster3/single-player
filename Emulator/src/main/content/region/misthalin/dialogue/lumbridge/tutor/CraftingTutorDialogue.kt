@@ -12,7 +12,7 @@ import org.rs.consts.NPCs
 class CraftingTutorDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         player(FaceAnim.HALF_GUILTY, "Can you teach me the basics of crafting please?").also { stage = 0 }
         return true
@@ -47,7 +47,7 @@ class CraftingTutorDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = CraftingTutorDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = CraftingTutorDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.CRAFTING_TUTOR_4900)
 }

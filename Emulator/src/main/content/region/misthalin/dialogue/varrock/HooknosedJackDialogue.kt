@@ -16,7 +16,7 @@ import org.rs.consts.Quests
 class HooknosedJackDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         player(FaceAnim.HALF_GUILTY, "Hello.")
         return true
@@ -517,7 +517,7 @@ class HooknosedJackDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = HooknosedJackDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = HooknosedJackDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.HOOKNOSED_JACK_2948)
 }

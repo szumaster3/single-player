@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class WarTortoiseDialogue : Dialogue {
-    override fun newInstance(player: Player): Dialogue {
+    override fun newInstance(player: Player?): Dialogue {
         return WarTortoiseDialogue(player)
     }
 
@@ -29,7 +29,7 @@ class WarTortoiseDialogue : Dialogue {
      */
     constructor(player: Player?) : super(player)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         val randomChoice = (Math.random() * 4).toInt()
         when (randomChoice) {
@@ -48,7 +48,7 @@ class WarTortoiseDialogue : Dialogue {
                     FaceAnim.OLD_NORMAL,
                     "*The tortoise bobs its head around energetically.*",
                     "Oh, so now you're paying attention to",
-                    "me, are you?"
+                    "me, are you?",
                 )
                 stage = 10
             }
@@ -58,7 +58,7 @@ class WarTortoiseDialogue : Dialogue {
                     FaceAnim.OLD_NORMAL,
                     "*The tortoise exudes an air of reproach.*",
                     "Are you going to keep rushing",
-                    "around all day?"
+                    "around all day?",
                 )
                 stage = 16
             }
@@ -66,7 +66,10 @@ class WarTortoiseDialogue : Dialogue {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(
+        interfaceId: Int,
+        buttonId: Int,
+    ): Boolean {
         when (stage) {
             0 -> {
                 playerl(FaceAnim.FRIENDLY, "Well, I was just going to take care of a few things.")
@@ -78,7 +81,7 @@ class WarTortoiseDialogue : Dialogue {
                     FaceAnim.OLD_NORMAL,
                     "*The tortoise shakes its head.*",
                     "I don't believe it. Stuck here with this young whippersnapper",
-                    "running around having fun."
+                    "running around having fun.",
                 )
                 stage++
             }
@@ -153,7 +156,7 @@ class WarTortoiseDialogue : Dialogue {
                     FaceAnim.OLD_NORMAL,
                     "*The tortoise droops its head.*",
                     "Well, that's what it felt like....",
-                    "*grumble grumble*"
+                    "*grumble grumble*",
                 )
                 stage = END_DIALOGUE
             }
@@ -166,7 +169,7 @@ class WarTortoiseDialogue : Dialogue {
             17 -> {
                 npcl(
                     FaceAnim.OLD_NORMAL,
-                    "Oh. I'm glad that my not being able to keep up with you brings you such great amusement."
+                    "Oh. I'm glad that my not being able to keep up with you brings you such great amusement.",
                 )
                 stage++
             }
@@ -182,7 +185,7 @@ class WarTortoiseDialogue : Dialogue {
                     "*The tortoise waggles its head disapprovingly.*",
                     "Well, when you are QUITE finished laughing at my expense,",
                     "how about you pick up a rock larger than your body",
-                    "and go crawling about with it?"
+                    "and go crawling about with it?",
                 )
                 stage++
             }

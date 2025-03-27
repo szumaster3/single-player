@@ -15,7 +15,7 @@ import org.rs.consts.Quests
 class ApothecaryDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (player.getQuestRepository().getQuest(Quests.ROMEO_JULIET).getStage(player) == 40) {
             player("Apothecary. Father Lawrence sent me.")

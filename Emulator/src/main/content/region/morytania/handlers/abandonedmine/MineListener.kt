@@ -20,7 +20,8 @@ class MineListener : InteractionListener {
         val MINE = intArrayOf(Scenery.CART_TUNNEL_4913, Scenery.CART_TUNNEL_4914, Scenery.CART_TUNNEL_4915)
         val EXIT = intArrayOf(Scenery.CART_TUNNEL_4920, Scenery.CART_TUNNEL_4921, Scenery.CART_TUNNEL_20524)
         val FUNGUS = intArrayOf(Scenery.GLOWING_FUNGUS_4932, Scenery.GLOWING_FUNGUS_4933)
-        val CRYSTALS = intArrayOf(Scenery.CRYSTAL_OUTCROP_4926, Scenery.CRYSTAL_OUTCROP_4927, Scenery.CRYSTAL_OUTCROP_4928)
+        val CRYSTALS =
+            intArrayOf(Scenery.CRYSTAL_OUTCROP_4926, Scenery.CRYSTAL_OUTCROP_4927, Scenery.CRYSTAL_OUTCROP_4928)
         const val CLIMB_OVER_ANIMATION = Animations.CLIMB_OBJECT_839
         val CLIMB_OVER_DURATION = animationCycles(Animations.CLIMB_OBJECT_839)
     }

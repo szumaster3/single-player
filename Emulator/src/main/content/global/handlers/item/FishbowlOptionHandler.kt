@@ -89,7 +89,8 @@ class FishbowlOptionHandler : OptionHandler() {
             return this
         }
 
-        override fun handle(event: NodeUsageEvent): Boolean = event.player.dialogueInterpreter.open("fishbowl-options", "feed")
+        override fun handle(event: NodeUsageEvent): Boolean =
+            event.player.dialogueInterpreter.open("fishbowl-options", "feed")
     }
 
     inner class FishbowlDialogue(
@@ -98,9 +99,9 @@ class FishbowlOptionHandler : OptionHandler() {
         private var fishbowl: Item? = null
         private var option: String? = null
 
-        override fun newInstance(player: Player): Dialogue = FishbowlDialogue(player)
+        override fun newInstance(player: Player?): Dialogue = FishbowlDialogue(player)
 
-        override fun open(vararg args: Any): Boolean {
+        override fun open(vararg args: Any?): Boolean {
             for (arg in args) {
                 if (arg is Item) {
                     this.fishbowl = arg

@@ -1247,14 +1247,14 @@ public class Player extends Entity {
 
         if (openedIface != null) {
             for (int i = 0; i < excludedIds.length; i++) {
-                if (excludedIds[i] == openedIface.getId()) break;
+                if (excludedIds[i] == openedIface.id) break;
                 else if (i == excludedIds.length - 1) hasModal = true;
             }
         }
 
         if (openChatbox != null) {
             for (int i = 0; i < excludedIds.length; i++) {
-                if (excludedIds[i] == openChatbox.getId()) break;
+                if (excludedIds[i] == openChatbox.id) break;
                 else if (i == excludedIds.length - 1) hasModal = true;
             }
         }

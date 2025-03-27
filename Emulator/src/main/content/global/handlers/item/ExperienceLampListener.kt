@@ -60,11 +60,11 @@ class ExperienceLampListener : InteractionListener {
                 }
             }
             player.interfaceManager.open(
-                Component(Components.STATS_ADVANCEMENT_134).setCloseEvent { _: Player?, _: Component? ->
+                Component(Components.STATS_ADVANCEMENT_134).setUncloseEvent { _: Player?, _: Component? ->
                     player.interfaceManager.openDefaultTabs()
                     removeAttribute(player, "xp_reward_item")
                     unlock(player)
-                    return@setCloseEvent true
+                    return@setUncloseEvent true
                 },
             )
             removeTabs(player, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13)

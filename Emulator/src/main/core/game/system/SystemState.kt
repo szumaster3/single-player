@@ -4,7 +4,6 @@ package core.game.system
  * Enum representing the different states of the system.
  */
 enum class SystemState {
-
     /**
      * The system is active and running normally.
      */

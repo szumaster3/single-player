@@ -315,7 +315,7 @@ class AuburyDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = AuburyDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = AuburyDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.AUBURY_553)
 

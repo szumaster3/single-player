@@ -12,7 +12,7 @@ import org.rs.consts.NPCs
 class HiylikMynaDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc("Hello friend. What can I do for you?")
         return true

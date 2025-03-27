@@ -10,7 +10,7 @@ import org.rs.consts.NPCs
 class BarfyBillDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         player("Hello there.")
         return true
@@ -139,7 +139,7 @@ class BarfyBillDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = BarfyBillDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = BarfyBillDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.BARFY_BILL_3331)
 }

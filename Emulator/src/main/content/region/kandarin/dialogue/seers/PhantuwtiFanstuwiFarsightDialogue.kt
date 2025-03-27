@@ -11,7 +11,7 @@ import org.rs.consts.NPCs
 class PhantuwtiFanstuwiFarsightDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         options("Hello, what is this place?", "What do you do here?", "Do you have any quests?", "Ok, thanks.")
         return true

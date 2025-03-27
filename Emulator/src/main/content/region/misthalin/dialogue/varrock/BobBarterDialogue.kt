@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
 class BobBarterDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         player("Hi.")
         return true
@@ -74,7 +74,7 @@ class BobBarterDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = BobBarterDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = BobBarterDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.BOB_BARTER_HERBS_6524)
 }

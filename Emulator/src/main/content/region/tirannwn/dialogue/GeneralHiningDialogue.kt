@@ -12,7 +12,7 @@ import org.rs.consts.NPCs
 class GeneralHiningDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         sendDialogue(player, "General seems too busy to talk.").also { stage = END_DIALOGUE }
         return true
@@ -23,7 +23,7 @@ class GeneralHiningDialogue(
         buttonId: Int,
     ): Boolean = true
 
-    override fun newInstance(player: Player): Dialogue = GeneralHiningDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = GeneralHiningDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.GENERAL_HINING_7121)
 }

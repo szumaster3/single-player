@@ -19,7 +19,7 @@ import org.rs.consts.Quests
 class BaraekDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         showTopics(
             IfTopic(
@@ -193,7 +193,7 @@ class BaraekDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = BaraekDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = BaraekDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.BARAEK_547)
 }

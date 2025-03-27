@@ -30,7 +30,7 @@ enum class BrawlingGloves(
      *
      * @return the skill slot
      */
-    val skillSlot: Int
+    val skillSlot: Int,
 ) {
     /**
      * Melee brawling gloves.
@@ -95,7 +95,8 @@ enum class BrawlingGloves(
     /**
      * Cooking brawling gloves.
      */
-    COOKING(Items.BRAWLING_GLOVES_COOKING_13857, 450, 13, Skills.COOKING);
+    COOKING(Items.BRAWLING_GLOVES_COOKING_13857, 450, 13, Skills.COOKING),
+    ;
 
     companion object {
         private val glovesMap: MutableMap<Int, BrawlingGloves> = HashMap()

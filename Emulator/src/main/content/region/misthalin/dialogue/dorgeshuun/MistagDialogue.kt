@@ -7,7 +7,6 @@ import core.api.getAttribute
 import core.api.inInventory
 import core.api.openDialogue
 import core.api.quest.getQuestStage
-import core.game.component.Component
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
@@ -23,8 +22,6 @@ import org.rs.consts.Quests
 class MistagDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun npc(vararg messages: String?): Component = npc(FaceAnim.OLD_NORMAL, *messages)
-
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         val ltStage = getQuestStage(player, Quests.THE_LOST_TRIBE)
@@ -35,7 +32,7 @@ class MistagDialogue(
             return true
         }
         if (!getAttribute(player, "mistag-greeted", false)) {
-            npc("Who...who are you? How did you get in here?")
+            npc(FaceAnim.OLD_NORMAL, "Who...who are you? How did you get in here?")
             stage = -100
             return true
         }
@@ -58,7 +55,14 @@ class MistagDialogue(
         buttonId: Int,
     ): Boolean {
         when (stage) {
-            -100 -> npc("Help! A surface dweller this deep in our mines? We will", "all be destroyed!").also { stage++ }
+            -100 ->
+                npc(
+                    FaceAnim.OLD_NORMAL,
+                    "Help! A surface dweller this deep in our mines? We will",
+                    "all be destroyed!",
+                ).also {
+                    stage++
+                }
             -99 -> end()
             START_DIALOGUE -> {
                 if (getQuestStage(player, Quests.THE_LOST_TRIBE) == 100 &&
@@ -209,7 +213,7 @@ class MistagDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = MistagDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = MistagDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.MISTAG_2084)
 }

@@ -20,7 +20,7 @@ import org.rs.consts.NPCs
 class ShantayDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         if (args[0] != null && args[0] is NPC) {
             npc = args[0] as NPC
         }

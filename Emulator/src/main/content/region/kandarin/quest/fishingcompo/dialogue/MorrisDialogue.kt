@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
 class MorrisDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         player(FaceAnim.HALF_GUILTY, "What are you sitting around here for?")
         stage = 0

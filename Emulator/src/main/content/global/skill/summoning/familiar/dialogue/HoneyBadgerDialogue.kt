@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class HoneyBadgerDialogue : Dialogue {
-    override fun newInstance(player: Player): Dialogue {
+    override fun newInstance(player: Player?): Dialogue {
         return HoneyBadgerDialogue(player)
     }
 
@@ -29,7 +29,7 @@ class HoneyBadgerDialogue : Dialogue {
      */
     constructor(player: Player?) : super(player)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         when ((Math.random() * 5).toInt()) {
             0 -> {
@@ -60,7 +60,10 @@ class HoneyBadgerDialogue : Dialogue {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(
+        interfaceId: Int,
+        buttonId: Int,
+    ): Boolean {
         if (stage == 0) {
             playerl(FaceAnim.FRIENDLY, "Why do I talk to you again?")
             stage = END_DIALOGUE

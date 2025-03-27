@@ -24,7 +24,7 @@ import org.rs.consts.Quests
 class SorceressApprenticeDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (player.getSavedData().globalData.hasSpokenToApprentice()) {
             player(FaceAnim.HALF_GUILTY, "Hey apprentice, do you want to try out", "your teleport skills again?")

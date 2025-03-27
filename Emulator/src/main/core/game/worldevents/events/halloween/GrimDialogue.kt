@@ -391,7 +391,8 @@ class GrimDialogue(
         addToCandyTotal(player, -amount)
     }
 
-    fun getCandyTotals(player: Player): Int = ServerStore.getArchive("hween2021-candies").getInt(player.username.lowercase())
+    fun getCandyTotals(player: Player): Int =
+        ServerStore.getArchive("hween2021-candies").getInt(player.username.lowercase())
 
     fun addToCandyTotal(
         player: Player,

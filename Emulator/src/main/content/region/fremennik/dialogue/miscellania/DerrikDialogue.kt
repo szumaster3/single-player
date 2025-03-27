@@ -12,7 +12,7 @@ import org.rs.consts.NPCs
 class DerrikDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(FaceAnim.FRIENDLY, "Good day, Sir. Can I help you with anything?")
         return true

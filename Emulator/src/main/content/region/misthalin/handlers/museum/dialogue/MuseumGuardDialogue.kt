@@ -11,7 +11,7 @@ import org.rs.consts.NPCs
 class MuseumGuardDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc(FaceAnim.HALF_GUILTY, "Hello there. Come to see the new museum?")
         return true
     }
@@ -52,7 +52,7 @@ class MuseumGuardDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = MuseumGuardDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = MuseumGuardDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.MUSEUM_GUARD_5943, NPCs.MUSEUM_GUARD_5941)
 }

@@ -23,7 +23,7 @@ class HolgartDialogue(
         female: String = "Madam",
     ) = if (player.isMale) male else female
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         when {
             isQuestComplete(player, Quests.SEA_SLUG) -> player("Hello again Holgart.").also { stage = 4 }

@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
 class TamayuDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (npc.id == NPCs.TAMAYU_1167) {
             npc(FaceAnim.ANNOYED, randomConversation.random()).also { stage = END_DIALOGUE }
@@ -47,7 +47,8 @@ class TamayuDialogue(
         return true
     }
 
-    override fun getIds(): IntArray = intArrayOf(2487, NPCs.TAMAYU_1167, NPCs.TAMAYU_1168, NPCs.TAMAYU_1169, NPCs.TAMAYU_1170)
+    override fun getIds(): IntArray =
+        intArrayOf(2487, NPCs.TAMAYU_1167, NPCs.TAMAYU_1168, NPCs.TAMAYU_1169, NPCs.TAMAYU_1170)
 
     companion object {
         val randomConversation =

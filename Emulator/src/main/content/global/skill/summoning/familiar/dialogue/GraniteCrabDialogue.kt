@@ -16,7 +16,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class GraniteCrabDialogue : Dialogue {
-    override fun newInstance(player: Player): Dialogue {
+    override fun newInstance(player: Player?): Dialogue {
         return GraniteCrabDialogue(player)
     }
 
@@ -32,7 +32,7 @@ class GraniteCrabDialogue : Dialogue {
      */
     constructor(player: Player?) : super(player)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (anyInInventory(player, *fishes)) {
             npcl(FaceAnim.CHILD_NORMAL, "That is not a rock fish...")
@@ -64,7 +64,10 @@ class GraniteCrabDialogue : Dialogue {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(
+        interfaceId: Int,
+        buttonId: Int,
+    ): Boolean {
         when (stage) {
             0 -> {
                 playerl(FaceAnim.FRIENDLY, "No, I have to cook these for later.")
@@ -89,7 +92,7 @@ class GraniteCrabDialogue : Dialogue {
             4 -> {
                 playerl(
                     FaceAnim.FRIENDLY,
-                    "Great...I get stuck with the only granite crab in existence that can't take no for an answer..."
+                    "Great...I get stuck with the only granite crab in existence that can't take no for an answer...",
                 )
                 stage = END_DIALOGUE
             }
@@ -117,6 +120,10 @@ class GraniteCrabDialogue : Dialogue {
     }
 
     companion object {
-        private val fishes: IntArray = fishMap.values.stream().mapToInt { fish: Fish -> fish.id }.toArray()
+        private val fishes: IntArray =
+            fishMap.values
+                .stream()
+                .mapToInt { fish: Fish -> fish.id }
+                .toArray()
     }
 }

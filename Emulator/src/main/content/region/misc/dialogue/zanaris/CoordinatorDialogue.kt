@@ -28,7 +28,7 @@ class CoordinatorDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = CoordinatorDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = CoordinatorDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.CO_ORDINATOR_3302)
 

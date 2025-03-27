@@ -15,7 +15,7 @@ import org.rs.consts.Quests
 class FlorinDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (getQuestStage(player, Quests.IN_AID_OF_THE_MYREQUE) < 1) {
             end()
@@ -89,7 +89,7 @@ class FlorinDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = FlorinDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = FlorinDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.FLORIN_3550)
 }

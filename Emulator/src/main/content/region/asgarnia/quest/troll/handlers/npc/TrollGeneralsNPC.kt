@@ -23,7 +23,8 @@ class TrollGeneralsNPC(
         vararg objects: Any?,
     ): AbstractNPC = TrollGeneralsNPC(id, location)
 
-    override fun getIds(): IntArray = intArrayOf(NPCs.TROLL_GENERAL_1115, NPCs.TROLL_GENERAL_1116, NPCs.TROLL_GENERAL_1117)
+    override fun getIds(): IntArray =
+        intArrayOf(NPCs.TROLL_GENERAL_1115, NPCs.TROLL_GENERAL_1116, NPCs.TROLL_GENERAL_1117)
 
     override fun finalizeDeath(killer: Entity?) {
         if (isQuestInProgress(killer as Player, Quests.TROLL_STRONGHOLD, 1, 7) &&

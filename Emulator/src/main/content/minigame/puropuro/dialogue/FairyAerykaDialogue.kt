@@ -12,7 +12,7 @@ import org.rs.consts.NPCs
 class FairyAerykaDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(FaceAnim.OLD_DEFAULT, "It's still here.")
         return true

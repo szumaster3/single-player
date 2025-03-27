@@ -17,7 +17,7 @@ class LeelaDialogue(
     private var quest: Quest? = null
     private var itemCount = 0
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         quest = player.getQuestRepository().getQuest(Quests.PRINCE_ALI_RESCUE)
         stage =
@@ -358,7 +358,7 @@ class LeelaDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = LeelaDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = LeelaDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.LEELA_915)
 

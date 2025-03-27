@@ -15,7 +15,7 @@ import org.rs.consts.Quests
 class VasileDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (getQuestStage(player, Quests.IN_AID_OF_THE_MYREQUE) < 1) {
             end()
@@ -84,7 +84,7 @@ class VasileDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = VasileDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = VasileDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.VASILE_3563)
 }

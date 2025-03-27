@@ -404,7 +404,7 @@ class SqirkMakingDialogue(
         return true
     }
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         dialogueId = args[0] as Int
         when (dialogueId) {
             0 ->

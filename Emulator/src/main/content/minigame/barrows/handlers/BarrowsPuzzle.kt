@@ -11,6 +11,7 @@ import core.net.packet.context.DisplayModelContext
 import core.net.packet.out.DisplayModel
 import core.plugin.Plugin
 import core.tools.RandomFunction
+import org.rs.consts.Components
 import java.util.*
 
 class BarrowsPuzzle private constructor(
@@ -32,7 +33,7 @@ class BarrowsPuzzle private constructor(
 
     @Throws(Throwable::class)
     override fun newInstance(arg: Any?): Plugin<Any> {
-        ComponentDefinition.put(25, this)
+        ComponentDefinition.put(Components.BARROWS_PUZZLE_25, this)
         return this
     }
 

@@ -17,7 +17,7 @@ import org.rs.consts.Sounds
 class ThessaliaDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         if (args.size == 3) {
             if (player.equipment.isEmpty) {
                 if (player.isMale) {
@@ -200,7 +200,7 @@ class ThessaliaDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = ThessaliaDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = ThessaliaDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.THESSALIA_548)
 }

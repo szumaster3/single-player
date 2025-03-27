@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
 class GnomeTrainerDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         val rand = RandomFunction.random(0, 3)
         when (rand) {

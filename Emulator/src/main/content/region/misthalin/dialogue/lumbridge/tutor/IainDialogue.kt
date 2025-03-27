@@ -12,7 +12,7 @@ import org.rs.consts.NPCs
 class IainDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         sendDialogue(player, "Iain seems too busy to talk.").also { stage = END_DIALOGUE }
         return true
@@ -23,7 +23,7 @@ class IainDialogue(
         buttonId: Int,
     ): Boolean = true
 
-    override fun newInstance(player: Player): Dialogue = IainDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = IainDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.IAIN_7868)
 }

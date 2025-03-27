@@ -45,7 +45,7 @@ class BartakDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = BartakDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = BartakDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.BARTAK_5778)
 }

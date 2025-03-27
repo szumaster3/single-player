@@ -12,7 +12,7 @@ import org.rs.consts.NPCs
 class OlafHradsonDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npcl(FaceAnim.NEUTRAL, "Outlander, I have work to be getting on with... Please stop bothering me.").also {
             stage =

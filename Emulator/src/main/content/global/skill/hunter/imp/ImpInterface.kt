@@ -37,7 +37,7 @@ class ImpInterface : InterfaceListener {
                         }
 
                         impBoxIDs[0] -> {
-                            replaceSlot(player, boxSlot, Item(10025))
+                            replaceSlot(player, boxSlot, Item(Items.MAGIC_BOX_10025))
                             closeInterface(player)
                         }
                     }

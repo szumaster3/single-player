@@ -12,7 +12,7 @@ import org.rs.consts.NPCs
 class ArvelDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npcl(FaceAnim.FRIENDLY, "Good day traveller. You are far from home, what brings you here?")
         return true
@@ -52,7 +52,7 @@ class ArvelDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = ArvelDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = ArvelDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.ARVEL_2365)
 }

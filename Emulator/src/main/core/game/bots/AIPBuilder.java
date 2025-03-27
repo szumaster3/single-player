@@ -83,17 +83,14 @@ public final class AIPBuilder {
         RandomAfkPlayer(new Location(3094, 3491));
         RandomAfkPlayer(new Location(3094, 3493));
         RandomAfkPlayer(new Location(3092, 3497));
-
-        RandomAfkPlayer(new Location(3160, 3492));
+		RandomAfkPlayer(new Location(3160, 3492));
         RandomAfkPlayer(new Location(3161, 3491));
         RandomAfkPlayer(new Location(3165, 3483));
         RandomAfkPlayer(new Location(3168, 3485));
         RandomAfkPlayer(new Location(3165, 3485));
         RandomAfkPlayer(new Location(3164, 3493));
-
-        RandomAfkPlayer(new Location(3189, 3439));
-
-        RandomAfkPlayer(new Location(2099, 3918));
+		RandomAfkPlayer(new Location(3189, 3439));
+		RandomAfkPlayer(new Location(2099, 3918));
     }
 
     private List<Item> ITEMS = new ArrayList<>(Arrays.asList(new Item(286),

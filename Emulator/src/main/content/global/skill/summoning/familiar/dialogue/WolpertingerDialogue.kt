@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class WolpertingerDialogue : Dialogue {
-    override fun newInstance(player: Player): Dialogue {
+    override fun newInstance(player: Player?): Dialogue {
         return WolpertingerDialogue(player)
     }
 
@@ -29,14 +29,17 @@ class WolpertingerDialogue : Dialogue {
      */
     constructor(player: Player?) : super(player)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npcl(FaceAnim.CHILD_NORMAL, "Raaar! Mewble, whurf whurf.")
         stage = END_DIALOGUE
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(
+        interfaceId: Int,
+        buttonId: Int,
+    ): Boolean {
         return true
     }
 

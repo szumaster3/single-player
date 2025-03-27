@@ -21,7 +21,7 @@ import org.rs.consts.Quests
 class DukeHoracioDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if ((
                 player.questRepository.getQuest(Quests.DRAGON_SLAYER).getStage(player) == 100 &&
@@ -33,12 +33,18 @@ class DukeHoracioDialogue(
                     !player.questRepository.getQuest(Quests.DRAGON_SLAYER).isCompleted(player)
             )
         ) {
-            addOption(Quests.DRAGON_SLAYER, DukeDragonSlayerDialogue(player.questRepository.getStage(Quests.DRAGON_SLAYER)))
+            addOption(
+                Quests.DRAGON_SLAYER,
+                DukeDragonSlayerDialogue(player.questRepository.getStage(Quests.DRAGON_SLAYER)),
+            )
         }
         if (!player.questRepository.isComplete(Quests.THE_LOST_TRIBE) &&
             player.questRepository.getQuest(Quests.THE_LOST_TRIBE).isStarted(player)
         ) {
-            addOption(Quests.THE_LOST_TRIBE, DukeHoracioLostTribeDialogue(player.questRepository.getStage(Quests.THE_LOST_TRIBE)))
+            addOption(
+                Quests.THE_LOST_TRIBE,
+                DukeHoracioLostTribeDialogue(player.questRepository.getStage(Quests.THE_LOST_TRIBE)),
+            )
         }
         if (!sendChoices()) {
             interpreter.sendDialogues(npc, FaceAnim.HALF_GUILTY, "Greetings. Welcome to my castle.")
@@ -92,7 +98,7 @@ class DukeHoracioDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = DukeHoracioDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = DukeHoracioDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.DUKE_HORACIO_741)
 }

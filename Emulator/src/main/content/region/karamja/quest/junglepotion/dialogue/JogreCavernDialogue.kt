@@ -12,7 +12,7 @@ import core.game.world.map.Location
 class JogreCavernDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         if (args.size > 1) {
             sendDialogue(player, "You attempt to climb the rocks back out.")
             stage = 13
@@ -69,7 +69,7 @@ class JogreCavernDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = JogreCavernDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = JogreCavernDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(DialogueInterpreter.getDialogueKey("jogre_dialogue"))
 }

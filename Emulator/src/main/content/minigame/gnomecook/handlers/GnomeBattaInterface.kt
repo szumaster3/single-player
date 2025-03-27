@@ -85,7 +85,14 @@ class GnomeBattaInterface : InterfaceListener {
             Items.ORANGE_CHUNKS_2110,
             Items.PINEAPPLE_CHUNKS_2116,
         ),
-        HALF_MADE_TO(Items.HALF_MADE_BATTA_9482, 26, 40.0, Items.EQUA_LEAVES_2128, Items.CHEESE_1985, Items.TOADS_LEGS_2152),
+        HALF_MADE_TO(
+            Items.HALF_MADE_BATTA_9482,
+            26,
+            40.0,
+            Items.EQUA_LEAVES_2128,
+            Items.CHEESE_1985,
+            Items.TOADS_LEGS_2152,
+        ),
         HALF_MADE_VE(
             Items.HALF_MADE_BATTA_9483,
             28,

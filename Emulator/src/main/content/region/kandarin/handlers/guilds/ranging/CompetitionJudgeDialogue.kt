@@ -16,7 +16,7 @@ import org.rs.consts.NPCs
 class CompetitionJudgeDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         if (player.inventory.getAmount(Items.ARCHERY_TICKET_1464) >= 1000 &&
             !hasDiaryTaskComplete(player, DiaryType.SEERS_VILLAGE, 1, 7)
         ) {

@@ -16,7 +16,7 @@ import org.rs.consts.Quests
 class GrewDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         if (getQuestStage(player, Quests.WATCHTOWER) >= 3) {
             npc(FaceAnim.OLD_NEUTRAL, "What do you want, little morsel? You would look good", "on my plate!")
         } else if (!isQuestComplete(player, Quests.WATCHTOWER)) {

@@ -17,7 +17,7 @@ import org.rs.consts.Quests
 class BlaninDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         val questStage = getQuestStage(player, Quests.MAKING_HISTORY)
         val dronProgress = getVarbit(player, MakingHistoryUtils.DRON_PROGRESS)
         when {

@@ -295,7 +295,7 @@ public class BankPinManager {
         } else {
             player.getPacketDispatch().sendString("Please enter your PIN using the buttons below.", 13, 28);
         }
-        player.getInterfaceManager().open(new Component(Components.BANKPIN_MAIN_13).setCloseEvent(new CloseEvent() {
+        player.getInterfaceManager().open(new Component(Components.BANKPIN_MAIN_13).setUncloseEvent(new CloseEvent() {
             @Override
             public boolean close(Player player, Component c) {
                 if (changeState != 0) {

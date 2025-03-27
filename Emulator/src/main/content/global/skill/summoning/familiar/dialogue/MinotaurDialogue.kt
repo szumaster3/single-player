@@ -15,7 +15,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class MinotaurDialogue : Dialogue {
-    override fun newInstance(player: Player): Dialogue {
+    override fun newInstance(player: Player?): Dialogue {
         return MinotaurDialogue(player)
     }
 
@@ -31,7 +31,7 @@ class MinotaurDialogue : Dialogue {
      */
     constructor(player: Player?) : super(player)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (inEquipment(player, Items.GUTHANS_HELM_4724, 1)) {
             npcl(FaceAnim.CHILD_NORMAL, "...")
@@ -62,7 +62,10 @@ class MinotaurDialogue : Dialogue {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(
+        interfaceId: Int,
+        buttonId: Int,
+    ): Boolean {
         when (stage) {
             0 -> {
                 playerl(FaceAnim.HALF_ASKING, "What?")
@@ -82,7 +85,7 @@ class MinotaurDialogue : Dialogue {
             3 -> {
                 npcl(
                     FaceAnim.CHILD_NORMAL,
-                    "Listen, no-horns, you have two choices: take off the horns yourself or I'll headbutt you until they fall off."
+                    "Listen, no-horns, you have two choices: take off the horns yourself or I'll headbutt you until they fall off.",
                 )
                 stage++
             }
@@ -105,7 +108,7 @@ class MinotaurDialogue : Dialogue {
             7 -> {
                 npcl(
                     FaceAnim.CHILD_NORMAL,
-                    "Yeah! There's nothing like getting a good rage on and then working it out on some no-horns."
+                    "Yeah! There's nothing like getting a good rage on and then working it out on some no-horns.",
                 )
                 stage++
             }
@@ -128,7 +131,7 @@ class MinotaurDialogue : Dialogue {
             11 -> {
                 npcl(
                     FaceAnim.CHILD_NORMAL,
-                    "You'd better, no-horns, because that round head of yours is looking mighty axeable."
+                    "You'd better, no-horns, because that round head of yours is looking mighty axeable.",
                 )
                 stage = END_DIALOGUE
             }
@@ -199,7 +202,7 @@ class MinotaurDialogue : Dialogue {
             NPCs.ADAMANT_MINOTAUR_6861,
             NPCs.ADAMANT_MINOTAUR_6862,
             NPCs.RUNE_MINOTAUR_6863,
-            NPCs.RUNE_MINOTAUR_6864
+            NPCs.RUNE_MINOTAUR_6864,
         )
     }
 }

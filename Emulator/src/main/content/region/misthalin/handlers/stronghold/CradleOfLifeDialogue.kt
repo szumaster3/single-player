@@ -16,7 +16,7 @@ import org.rs.consts.Items
 class CradleOfLifeDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         if (player.getSavedData().globalData.getStrongHoldRewards()[3] &&
             player.getSavedData().globalData.getStrongHoldRewards()[2] &&
             player.getSavedData().globalData.getStrongHoldRewards()[1] &&

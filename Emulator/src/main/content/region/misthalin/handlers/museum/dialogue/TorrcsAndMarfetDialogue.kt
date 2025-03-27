@@ -337,7 +337,7 @@ class TorrcsAndMarfetDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = TorrcsAndMarfetDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = TorrcsAndMarfetDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.TORRCS_5939, NPCs.MARFET_5940)
 }

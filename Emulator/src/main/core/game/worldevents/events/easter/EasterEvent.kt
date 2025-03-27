@@ -102,7 +102,8 @@ class EasterEvent :
         return Pair(name, toReturn)
     }
 
-    override fun checkActive(cal: Calendar): Boolean = cal.get(Calendar.MONTH) == Calendar.APRIL || ServerConstants.FORCE_EASTER_EVENTS
+    override fun checkActive(cal: Calendar): Boolean =
+        cal.get(Calendar.MONTH) == Calendar.APRIL || ServerConstants.FORCE_EASTER_EVENTS
 
     private fun onEggBroken(player: Player) {
         val eggsBroken = getAttribute(player, EGGS_BROKEN, 0) + 1

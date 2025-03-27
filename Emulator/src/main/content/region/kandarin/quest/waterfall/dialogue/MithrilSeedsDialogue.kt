@@ -16,7 +16,7 @@ class MithrilSeedsDialogue(
 ) : Dialogue(player) {
     private var flower: Scenery? = null
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         flower = args[0] as Scenery
         options("Pick the flowers.", "Leave the flowers.")
         return true

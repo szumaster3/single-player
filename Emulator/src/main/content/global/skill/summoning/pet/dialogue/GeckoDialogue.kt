@@ -32,7 +32,7 @@ class GeckoDialogue(
             NPCs.GECKO_7284,
         )
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         when ((0..4).random()) {
             0 -> npc(FaceAnim.CHILD_NORMAL, "Moop, Gecko presko!", "(You're nice to me!)").also { stage = END_DIALOGUE }

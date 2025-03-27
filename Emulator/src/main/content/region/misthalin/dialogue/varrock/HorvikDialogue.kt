@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
 class HorvikDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(FaceAnim.HAPPY, "Hello, do you need any help?")
         return true
@@ -44,7 +44,7 @@ class HorvikDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = HorvikDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = HorvikDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.HORVIK_549)
 }

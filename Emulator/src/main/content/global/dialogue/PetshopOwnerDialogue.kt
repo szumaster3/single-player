@@ -11,6 +11,7 @@ import core.game.world.map.RegionManager
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import org.rs.consts.Components
+import org.rs.consts.Items
 import org.rs.consts.NPCs
 
 @Initializable
@@ -23,7 +24,7 @@ class PetshopOwnerDialogue(
     override fun open(vararg args: Any?): Boolean {
         if (args.size > 1) {
             val npcs: List<NPC> = RegionManager.getLocalNpcs(player)
-            for (n in npcs) if (n.id == 6893) npc = n
+            for (n in npcs) if (n.id == NPCs.PET_SHOP_OWNER_6893) npc = n
             dogName = args[0].toString()
             puppy = args[1] as Item
             player("No, the $dogName.")
@@ -136,7 +137,7 @@ class PetshopOwnerDialogue(
                     sendMessage(player, "You don't have enough inventory space.")
                     return true
                 }
-                if (!removeItem(player, (Item(995, 500)))) {
+                if (!removeItem(player, (Item(Items.COINS_995, 500)))) {
                     end()
                     sendMessage(player, "You don't the required coins in order to do this.")
                 } else {

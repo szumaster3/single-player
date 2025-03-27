@@ -30,7 +30,7 @@ public final class GuidePrices {
      */
     public static final void clear(final Player player) {
         for (int i = 135; i < 165; i++) {
-            player.getPacketDispatch().sendInterfaceConfig(COMPONENT.getId(), i, true);
+            player.getPacketDispatch().sendInterfaceConfig(COMPONENT.id, i, true);
         }
     }
 
@@ -150,12 +150,12 @@ public final class GuidePrices {
             if (this != LOGS) {
                 clear(player);
             }
-            player.getPacketDispatch().sendString("Guide Prices: " + StringUtils.formatDisplayName(name()), COMPONENT.getId(), 14);
+            player.getPacketDispatch().sendString("Guide Prices: " + StringUtils.formatDisplayName(name()), COMPONENT.id, 14);
             for (int i = getChildData()[0]; i < getChildData()[1]; i++) {
                 player.getPacketDispatch().sendInterfaceConfig(642, i, false);
             }
             for (GuideItem item : getItems()) {
-                player.getPacketDispatch().sendString("" + GrandExchange.getRecommendedPrice(item.item, false) + " gp", COMPONENT.getId(), item.getChildData()[0]);
+                player.getPacketDispatch().sendString("" + GrandExchange.getRecommendedPrice(item.item, false) + " gp", COMPONENT.id, item.getChildData()[0]);
             }
         }
     }

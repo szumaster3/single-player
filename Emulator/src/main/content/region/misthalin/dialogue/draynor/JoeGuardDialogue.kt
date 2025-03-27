@@ -21,7 +21,7 @@ class JoeGuardDialogue(
 ) : Dialogue(player) {
     private var quest: Quest? = null
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         quest = player.getQuestRepository().getQuest(Quests.PRINCE_ALI_RESCUE)
         when (quest!!.getStage(player)) {
@@ -114,7 +114,7 @@ class JoeGuardDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = JoeGuardDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = JoeGuardDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.JOE_916)
 

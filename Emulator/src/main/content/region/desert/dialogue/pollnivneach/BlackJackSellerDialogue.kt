@@ -11,7 +11,7 @@ import org.rs.consts.NPCs
 class BlackJackSellerDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npcl(FaceAnim.HALF_GUILTY, "Hello. Could I interest you in a blackjack?")
         return true
     }

@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
 class LoweDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(FaceAnim.HAPPY, "Welcome to Lowe's Archery Emporium. Do you want", "to see my wares?")
         return true
@@ -40,7 +40,7 @@ class LoweDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = LoweDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = LoweDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.LOWE_550)
 }

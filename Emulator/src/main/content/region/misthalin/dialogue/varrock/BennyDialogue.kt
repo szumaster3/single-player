@@ -14,7 +14,7 @@ import org.rs.consts.NPCs
 class BennyDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         options(
             "Can I have a newspaper, please?",
@@ -91,7 +91,7 @@ class BennyDialogue(
         return false
     }
 
-    override fun newInstance(player: Player): Dialogue = BennyDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = BennyDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.BENNY_5925)
 }

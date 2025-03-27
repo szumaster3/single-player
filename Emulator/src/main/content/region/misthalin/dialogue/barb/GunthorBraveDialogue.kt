@@ -11,7 +11,7 @@ import org.rs.consts.NPCs
 class GunthorBraveDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         when ((0..5).random()) {
             0 -> npcl(FaceAnim.HAPPY, forceChat[0]).also { stage = 0 }
@@ -36,7 +36,7 @@ class GunthorBraveDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = GunthorBraveDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = GunthorBraveDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.GUNTHOR_THE_BRAVE_199)
 

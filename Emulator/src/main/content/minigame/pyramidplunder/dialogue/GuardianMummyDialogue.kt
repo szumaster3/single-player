@@ -14,7 +14,7 @@ import org.rs.consts.NPCs
 class GuardianMummyDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npcl(FaceAnim.OLD_NOT_INTERESTED, "*sigh* Not another one.")
         return true
     }

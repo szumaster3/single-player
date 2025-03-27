@@ -19,7 +19,7 @@ import java.util.*
  */
 @Initializable
 class SpiritCobraDialogue : Dialogue {
-    override fun newInstance(player: Player): Dialogue {
+    override fun newInstance(player: Player?): Dialogue {
         return SpiritCobraDialogue(player)
     }
 
@@ -35,7 +35,7 @@ class SpiritCobraDialogue : Dialogue {
      */
     constructor(player: Player?) : super(player)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (inInventory(player, Items.RING_OF_CHAROSA_6465, 1) || inEquipment(player, Items.RING_OF_CHAROSA_6465, 1)) {
             npcl(FaceAnim.OLD_NORMAL, "You are under my power!")
@@ -73,7 +73,10 @@ class SpiritCobraDialogue : Dialogue {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(
+        interfaceId: Int,
+        buttonId: Int,
+    ): Boolean {
         when (stage) {
             0 -> {
                 playerl(FaceAnim.FRIENDLY, "Yes, I'm afraid so.")

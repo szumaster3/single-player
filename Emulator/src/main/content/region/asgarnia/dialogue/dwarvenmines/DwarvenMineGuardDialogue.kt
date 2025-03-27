@@ -47,7 +47,7 @@ class DwarvenMineGuardDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = DwarvenMineGuardDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = DwarvenMineGuardDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.GUARD_206)
 }

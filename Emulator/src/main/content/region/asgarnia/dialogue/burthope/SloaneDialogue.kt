@@ -18,7 +18,7 @@ import org.rs.consts.NPCs
 class SloaneDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (!isMaster(player, Skills.STRENGTH)) {
             npc("Ahhh, hello there, " + player.username + ".").also { stage = 10 }

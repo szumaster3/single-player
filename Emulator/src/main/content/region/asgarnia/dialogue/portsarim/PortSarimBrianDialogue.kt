@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
 class PortSarimBrianDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         options("So, are you selling something?", "'Ello.")
         return true

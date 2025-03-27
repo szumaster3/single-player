@@ -18,7 +18,7 @@ import org.rs.consts.NPCs
 class VarrockBartenderDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         player(FaceAnim.HALF_GUILTY, "Hello.")
         return true
@@ -74,7 +74,7 @@ class VarrockBartenderDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = VarrockBartenderDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = VarrockBartenderDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.BARTENDER_732, NPCs.BARTENDER_731)
 }

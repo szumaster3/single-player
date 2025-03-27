@@ -15,7 +15,7 @@ import org.rs.consts.Quests
 class SigliTheHuntsmanDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         if (inInventory(player, Items.CUSTOM_BOW_STRING_3702, 1)) {
             npcl(FaceAnim.HAPPY, "Greetings outerlander.")
             stage = 165

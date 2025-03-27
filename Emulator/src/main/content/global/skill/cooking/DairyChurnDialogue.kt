@@ -19,7 +19,7 @@ class DairyChurnDialogue(
             Item(Items.PAT_OF_BUTTER_6697, 1),
         )
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         val hasMilk = player.inventory.contains(Items.BUCKET_OF_MILK_1927, 1)
         val hasCream = player.inventory.contains(Items.POT_OF_CREAM_2130, 1)
         val hasButter = player.inventory.contains(Items.PAT_OF_BUTTER_6697, 1)
@@ -57,7 +57,7 @@ class DairyChurnDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = DairyChurnDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = DairyChurnDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(984374)
 }

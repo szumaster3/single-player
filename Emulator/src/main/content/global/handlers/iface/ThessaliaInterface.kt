@@ -232,7 +232,7 @@ class ThessaliaInterface : ComponentPlugin() {
         setAttribute(player, "orig-legs-color", player.appearance.legs.color)
         player.packetDispatch?.sendPlayerOnInterface(component.id, PLAYER_MODEL_CHILD_ID)
 
-        component.setCloseEvent { pl, _ ->
+        component.setUncloseEvent { pl, _ ->
             pl?.toggleWardrobe(false)
             pl.attributes.remove("thes-type")
             playJingle(pl, 266)

@@ -59,7 +59,8 @@ fun ByteBuffer.g2s(): Int = short.toInt()
  * G3 - gets an unsigned medium (3 bytes) from the buffer
  * @return value as Int
  */
-fun ByteBuffer.g3(): Int = ((get().toInt() and 0xFF) shl 16) + ((get().toInt() and 0xFF) shl 8) + (get().toInt() and 0xFF)
+fun ByteBuffer.g3(): Int =
+    ((get().toInt() and 0xFF) shl 16) + ((get().toInt() and 0xFF) shl 8) + (get().toInt() and 0xFF)
 
 /**
  * P4 - puts an integer to the buffer

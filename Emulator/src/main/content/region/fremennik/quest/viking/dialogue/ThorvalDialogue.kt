@@ -15,7 +15,7 @@ import org.rs.consts.Quests
 class ThorvalDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         if (inInventory(player, Items.CHAMPIONS_TOKEN_3706, 1)) {
             playerl(FaceAnim.HAPPY, "I would like your contract to offer your services as a bodyguard.")
             stage = 215

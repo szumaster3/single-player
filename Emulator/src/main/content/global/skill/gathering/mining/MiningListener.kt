@@ -404,7 +404,8 @@ class MiningListener : InteractionListener {
         resource: MiningNode?,
         tool: SkillingTool,
     ) {
-        val isEssence = resource!!.id in intArrayOf(org.rs.consts.Scenery.RUNE_ESSENCE_2491, org.rs.consts.Scenery.ROCK_16684)
+        val isEssence =
+            resource!!.id in intArrayOf(org.rs.consts.Scenery.RUNE_ESSENCE_2491, org.rs.consts.Scenery.ROCK_16684)
         if (animationFinished(player)) {
             animate(player, if (!isEssence) tool.animation else tool.animation + 6128, true)
         }

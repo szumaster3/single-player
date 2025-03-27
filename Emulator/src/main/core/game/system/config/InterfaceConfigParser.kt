@@ -20,22 +20,24 @@ class InterfaceConfigParser {
         for (config in configList) {
             val e = config as JSONObject
             val id = e["id"].toString().toInt()
-            if (ComponentDefinition.getDefinitions().containsKey(id)) {
-                ComponentDefinition.getDefinitions()[id]!!.parse(
+            if (ComponentDefinition.definitions.containsKey(id)) {
+                ComponentDefinition.definitions[id]!!.parse(
                     e["interfaceType"].toString(),
                     e["walkable"].toString(),
                     e["tabIndex"].toString(),
                 )
             }
-            ComponentDefinition.getDefinitions()[id] =
+            ComponentDefinition.put(
+                id,
                 ComponentDefinition().parse(
                     e["interfaceType"].toString(),
                     e["walkable"].toString(),
                     e["tabIndex"].toString(),
-                )
+                ),
+            )
             count++
         }
 
-        log(this::class.java, Log.FINE, "Parsed [$count] interface configs.")
+        log(this::class.java, Log.FINE, "Parsed $count interface configs.")
     }
 }

@@ -39,7 +39,7 @@ object Server {
     @JvmStatic
     fun main(args: Array<String>) {
         if (args.isNotEmpty()) {
-            log(this::class.java, Log.INFO, "Using config file: ${args[0]}")
+            log(this::class.java, Log.INFO, "Using config file: [${args[0]}]")
             ServerConfigParser.parse(args[0])
         } else {
             log(this::class.java, Log.INFO, "Using config file: ${"worldprops" + File.separator + "default.conf"}")

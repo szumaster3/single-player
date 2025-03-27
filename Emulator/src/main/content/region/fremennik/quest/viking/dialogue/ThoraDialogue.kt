@@ -20,7 +20,7 @@ class ThoraDialogue(
     val fName = player?.getAttribute("fremennikname", "fremmyname")
     var curNPC: NPC? = NPC(0, Location(0, 0, 0))
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         curNPC = args[0] as? NPC
         npc = args[0] as NPC
         if (inInventory(player, Items.LEGENDARY_COCKTAIL_3707, 1)) {

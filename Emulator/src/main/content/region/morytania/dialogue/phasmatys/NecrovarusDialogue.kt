@@ -18,7 +18,7 @@ import org.rs.consts.Quests
 class NecrovarusDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         if (!inEquipment(player, Items.GHOSTSPEAK_AMULET_552)) {
             core.api.sendDialogue(player, "You cannot understand the ghost.").also { stage = END_DIALOGUE }
             return true

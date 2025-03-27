@@ -20,7 +20,8 @@ import org.rs.consts.Vars
  */
 @Initializable
 class
-TearsOfGuthix : Quest(Quests.TEARS_OF_GUTHIX, 120, 119, 1, 449, Vars.VARBIT_QUEST_TEARS_OF_GUTHIX_PROGRESS_451, 0, 1, 2) {
+TearsOfGuthix :
+    Quest(Quests.TEARS_OF_GUTHIX, 120, 119, 1, 449, Vars.VARBIT_QUEST_TEARS_OF_GUTHIX_PROGRESS_451, 0, 1, 2) {
     companion object {
         fun daysLeft(player: Player): Int {
             val currentTime = System.currentTimeMillis()

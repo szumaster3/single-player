@@ -14,7 +14,7 @@ import org.rs.consts.NPCs
 class HicktonDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(FaceAnim.HAPPY, "Welcome to Hickton's Archery Emporium. Do you", "want to see my wares?")
         return true

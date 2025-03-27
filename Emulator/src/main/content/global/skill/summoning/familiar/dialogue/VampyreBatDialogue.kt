@@ -14,7 +14,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class VampyreBatDialogue : Dialogue {
-    override fun newInstance(player: Player): Dialogue {
+    override fun newInstance(player: Player?): Dialogue {
         return VampyreBatDialogue(player)
     }
 
@@ -30,7 +30,7 @@ class VampyreBatDialogue : Dialogue {
      */
     constructor(player: Player?) : super(player)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (inBorders(player, 3139, 9535, 3306, 9657)) {
             npc(FaceAnim.CHILD_NORMAL, "Ze creatures ov ze dark; vat vonderful music zey make.")
@@ -57,7 +57,10 @@ class VampyreBatDialogue : Dialogue {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(
+        interfaceId: Int,
+        buttonId: Int,
+    ): Boolean {
         when (stage) {
             0 -> {
                 playerl(FaceAnim.FRIENDLY, "Riiight.")

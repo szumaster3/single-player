@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
 class JofridrMordstatterDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npcl(FaceAnim.NEUTRAL, "Hello there. Would you like to see the goods I have for sale?")
         return true

@@ -21,7 +21,7 @@ class CaptainShanksDialogue(
 ) : Dialogue(player) {
     private var coins: Item? = null
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (!hasRequirement(player, Quests.SHILO_VILLAGE, false)) {
             npcl(

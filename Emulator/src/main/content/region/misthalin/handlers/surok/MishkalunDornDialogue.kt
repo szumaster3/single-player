@@ -11,7 +11,7 @@ import org.rs.consts.NPCs
 class MishkalunDornDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc("You are excused. And you are welcome.")
         return true

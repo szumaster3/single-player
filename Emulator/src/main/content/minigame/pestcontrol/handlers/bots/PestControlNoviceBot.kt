@@ -188,6 +188,7 @@ class PestControlNoviceBot(
     }
 
     companion object {
-        fun legitimizeLocation(l: Location): Location = if (PCHelper.landerContainsLoc(l)) Location(2660, 2648, 0) else l
+        fun legitimizeLocation(l: Location): Location =
+            if (PCHelper.landerContainsLoc(l)) Location(2660, 2648, 0) else l
     }
 }

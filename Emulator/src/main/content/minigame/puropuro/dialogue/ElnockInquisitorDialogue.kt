@@ -15,7 +15,7 @@ import org.rs.consts.NPCs
 class ElnockInquisitorDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc("Ah, good day, it's you again. What can I do for you?")
         return true

@@ -58,12 +58,12 @@ class TrackerGnomeDialogue3(
                     8 -> npcl(FaceAnim.OLD_NORMAL, "Who holds the stronghold?").also { stage++ }
                     9 -> playerl(FaceAnim.ASKING, "What?").also { stage++ }
                     10 -> {
-                        if (getAttribute(player!!, "treegnome:xcoord", 0) == 0) {
+                        if (getAttribute(player, "treegnome:xcoord", 0) == 0) {
                             val answer = (1..4).random()
-                            npcl(FaceAnim.OLD_NORMAL, xcoordMap[answer])
-                            setAttribute(player!!, "/save:treegnome:xcoord", answer)
+                            npcl(FaceAnim.OLD_NORMAL, xcoordMap[answer]!!)
+                            setAttribute(player, "/save:treegnome:xcoord", answer)
                         } else {
-                            npcl(FaceAnim.OLD_NORMAL, xcoordMap[getAttribute(player!!, "treegnome:xcoord", 1)])
+                            npcl(FaceAnim.OLD_NORMAL, xcoordMap[getAttribute(player, "treegnome:xcoord", 1)]!!)
                         }
                         stage++
                     }
@@ -71,12 +71,12 @@ class TrackerGnomeDialogue3(
                     11 -> playerl(FaceAnim.HALF_GUILTY, "You're mad").also { stage++ }
                     12 -> npcl(FaceAnim.OLD_NORMAL, "Dance with me, and Khazard's men are beat.").also { stage++ }
 
-                    13 -> sendDialogue(player!!, "The toll of war has affected his mind.").also { stage++ }
+                    13 -> sendDialogue(player, "The toll of war has affected his mind.").also { stage++ }
                     14 -> playerl(FaceAnim.HALF_GUILTY, "I'll pray for you little man.").also { stage++ }
 
                     15 -> {
                         npcl(FaceAnim.OLD_NORMAL, "All day we pray in the hay, hee hee.").also {
-                            setAttribute(player!!, "/save:treegnome:tracker3", true)
+                            setAttribute(player, "/save:treegnome:tracker3", true)
                             stage = END_DIALOGUE
                         }
                     }

@@ -76,7 +76,7 @@ class DartogDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = DartogDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = DartogDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.DARTOG_4314)
 }

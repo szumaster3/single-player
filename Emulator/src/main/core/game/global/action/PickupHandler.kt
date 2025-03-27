@@ -25,7 +25,6 @@ import org.rs.consts.Sounds
  * It checks for conditions like item validity, space in inventory, and whether the player is allowed to pick up the item.
  */
 object PickupHandler {
-
     /**
      * Handles the action of a player picking up a ground item.
      * It checks for validity, if the item still exists, and if the player has enough space and permissions to pick it up.

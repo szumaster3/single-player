@@ -16,7 +16,7 @@ import org.rs.consts.NPCs
 class CabinBoyDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (inInventory(player, Items.EMERALD_LENS_9066, 1) || player.bank.contains(Items.EMERALD_LENS_9066, 1)) {
             playerl(FaceAnim.FRIENDLY, "So you've plucked up the courage to come and confront that girl!").also {

@@ -16,7 +16,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class GeyserTitanDialogue : Dialogue {
-    override fun newInstance(player: Player): Dialogue {
+    override fun newInstance(player: Player?): Dialogue {
         return GeyserTitanDialogue(player)
     }
 
@@ -32,7 +32,7 @@ class GeyserTitanDialogue : Dialogue {
      */
     constructor(player: Player?) : super(player)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (amountInInventory(player, Items.SHARK_385) < 5) {
             npcl(FaceAnim.CHILD_NORMAL, "Hey mate, how are you?")
@@ -53,7 +53,7 @@ class GeyserTitanDialogue : Dialogue {
             2 -> {
                 npcl(
                     FaceAnim.CHILD_NORMAL,
-                    "Unlike most animals, both the shark's upper and lower jaws move when they bite."
+                    "Unlike most animals, both the shark's upper and lower jaws move when they bite.",
                 )
                 stage = 5
             }
@@ -61,7 +61,7 @@ class GeyserTitanDialogue : Dialogue {
             3 -> {
                 npcl(
                     FaceAnim.CHILD_NORMAL,
-                    "Did you know that in one feeding a mosquito can absorb one-and-a-half times its own body weight in blood?"
+                    "Did you know that in one feeding a mosquito can absorb one-and-a-half times its own body weight in blood?",
                 )
                 stage = 7
             }
@@ -69,7 +69,7 @@ class GeyserTitanDialogue : Dialogue {
             4 -> {
                 npcl(
                     FaceAnim.CHILD_NORMAL,
-                    "Did you know that sharks have the most powerful jaws of any animal on the planet?"
+                    "Did you know that sharks have the most powerful jaws of any animal on the planet?",
                 )
                 stage = 8
             }
@@ -77,7 +77,8 @@ class GeyserTitanDialogue : Dialogue {
             5 -> {
                 npcl(
                     FaceAnim.CHILD_NORMAL,
-                    "Did you know that " + settings!!.name + " gets 100 tons heavier every day, due to dust falling from space?"
+                    "Did you know that " + settings!!.name +
+                        " gets 100 tons heavier every day, due to dust falling from space?",
                 )
                 stage = 10
             }
@@ -90,7 +91,10 @@ class GeyserTitanDialogue : Dialogue {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(
+        interfaceId: Int,
+        buttonId: Int,
+    ): Boolean {
         when (stage) {
             0 -> {
                 playerl(FaceAnim.FRIENDLY, "Not so bad.")
@@ -100,7 +104,7 @@ class GeyserTitanDialogue : Dialogue {
             1 -> {
                 npcl(
                     FaceAnim.CHILD_NORMAL,
-                    "Did you know that during the average human life-span the heart will beat approximately 2.5 billion times?"
+                    "Did you know that during the average human life-span the heart will beat approximately 2.5 billion times?",
                 )
                 stage++
             }
@@ -113,7 +117,7 @@ class GeyserTitanDialogue : Dialogue {
             3 -> {
                 playerl(
                     FaceAnim.HALF_ASKING,
-                    "Wow! That is a whole load of teeth. I wonder what the Tooth Fairy would give for those?"
+                    "Wow! That is a whole load of teeth. I wonder what the Tooth Fairy would give for those?",
                 )
                 stage = END_DIALOGUE
             }
@@ -161,7 +165,7 @@ class GeyserTitanDialogue : Dialogue {
             12 -> {
                 npcl(
                     FaceAnim.CHILD_NORMAL,
-                    "Sometimes one feeding shark attracts others and they all try and get a piece of the prey."
+                    "Sometimes one feeding shark attracts others and they all try and get a piece of the prey.",
                 )
                 stage++
             }

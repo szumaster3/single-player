@@ -16,7 +16,7 @@ import org.rs.consts.NPCs
 class EntranceGuardianDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         player("Hi.")
         return true
     }

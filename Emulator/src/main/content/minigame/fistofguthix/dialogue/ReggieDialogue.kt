@@ -12,7 +12,7 @@ import org.rs.consts.NPCs
 class ReggieDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         if (GameWorld.settings?.allow_token_purchase == true) {
             options("Can I see your shop?", "Nevermind.", "Can I buy some tokens?")
         } else {

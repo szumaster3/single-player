@@ -17,7 +17,7 @@ import org.rs.consts.NPCs
 class TownCrierDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(
             "Oh, hello citizen. Are you here to find out about Player",

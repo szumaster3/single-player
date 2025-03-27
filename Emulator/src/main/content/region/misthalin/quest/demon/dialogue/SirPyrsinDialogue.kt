@@ -19,7 +19,7 @@ class SirPyrsinDialogue(
     private var quest: Quest? = null
     private var id = 0
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         if (args[0] is NPC) {
             npc = args[0] as NPC
             id = npc.id

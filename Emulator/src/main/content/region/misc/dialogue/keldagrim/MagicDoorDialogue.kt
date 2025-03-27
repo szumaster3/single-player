@@ -19,7 +19,7 @@ class MagicDoorDialogue(
 ) : Dialogue(player) {
     private var door: Scenery? = null
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         door = args[0] as Scenery
         npc(FaceAnim.OLD_CALM_TALK1, "You may not pass through this door without paying the", "trading tax.")
         return true

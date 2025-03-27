@@ -1,5 +1,6 @@
 package content.region.kandarin.quest.mcannon.handlers;
 
+import org.rs.consts.Components;
 import org.rs.consts.Quests;
 import content.region.kandarin.quest.mcannon.DwarfCannon;
 import core.cache.def.impl.SceneryDefinition;
@@ -254,7 +255,7 @@ public class DwarfCannonPlugin extends OptionHandler {
 
         @Override
         public Plugin<java.lang.Object> newInstance(java.lang.Object arg) throws Throwable {
-            ComponentDefinition.forId(409).setPlugin(this);
+            ComponentDefinition.forId(Components.MCANNON_INTERFACE_409).plugin = this;
             return null;
         }
 

@@ -15,7 +15,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class SwampTitanDialogue : Dialogue {
-    override fun newInstance(player: Player): Dialogue {
+    override fun newInstance(player: Player?): Dialogue {
         return SwampTitanDialogue(player)
     }
 
@@ -31,12 +31,12 @@ class SwampTitanDialogue : Dialogue {
      */
     constructor(player: Player?) : super(player)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (inInventory(player, Items.SWAMP_TAR_1939, 1)) {
             npcl(
                 FaceAnim.CHILD_NORMAL,
-                "Do you smell that? Swamp tar, master. I LOVE the smell of swamp tar in the morning. Smells like...victorin."
+                "Do you smell that? Swamp tar, master. I LOVE the smell of swamp tar in the morning. Smells like...victorin.",
             )
             stage = 0
             return true
@@ -65,7 +65,10 @@ class SwampTitanDialogue : Dialogue {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(
+        interfaceId: Int,
+        buttonId: Int,
+    ): Boolean {
         when (stage) {
             0 -> {
                 playerl(FaceAnim.FRIENDLY, "You actually LIKE the smell of this stuff? It's gross.")
@@ -80,7 +83,7 @@ class SwampTitanDialogue : Dialogue {
             2 -> {
                 playerl(
                     FaceAnim.FRIENDLY,
-                    "Oh, I'm sorry. I didn't mean...I meant the swamp tar itself smells gross, not you. You smell like lavender. Yes, lavender."
+                    "Oh, I'm sorry. I didn't mean...I meant the swamp tar itself smells gross, not you. You smell like lavender. Yes, lavender.",
                 )
                 stage++
             }
@@ -88,7 +91,7 @@ class SwampTitanDialogue : Dialogue {
             3 -> {
                 npcl(
                     FaceAnim.CHILD_NORMAL,
-                    "*sob* Lavender? Lavender! Why would you be so mean? I'm supposed to smell bad."
+                    "*sob* Lavender? Lavender! Why would you be so mean? I'm supposed to smell bad.",
                 )
                 stage = END_DIALOGUE
             }
@@ -106,7 +109,7 @@ class SwampTitanDialogue : Dialogue {
             6 -> {
                 playerl(
                     FaceAnim.HALF_ASKING,
-                    "Surely, you're not the only swamp...thing in the world? What about the other swamp titans?"
+                    "Surely, you're not the only swamp...thing in the world? What about the other swamp titans?",
                 )
                 stage++
             }
@@ -179,7 +182,7 @@ class SwampTitanDialogue : Dialogue {
             20 -> {
                 npcl(
                     FaceAnim.CHILD_NORMAL,
-                    "Oh, that's the nicest thing anyone's ever said to me! Thank you, master, thank you so much."
+                    "Oh, that's the nicest thing anyone's ever said to me! Thank you, master, thank you so much.",
                 )
                 stage++
             }
@@ -202,7 +205,7 @@ class SwampTitanDialogue : Dialogue {
             24 -> {
                 npcl(
                     FaceAnim.CHILD_NORMAL,
-                    "Yes, but that was just to do some fighting. When you're done with me you'll send me back."
+                    "Yes, but that was just to do some fighting. When you're done with me you'll send me back.",
                 )
                 stage++
             }

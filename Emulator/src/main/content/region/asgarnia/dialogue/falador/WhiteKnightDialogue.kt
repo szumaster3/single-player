@@ -11,7 +11,7 @@ import org.rs.consts.NPCs
 class WhiteKnightDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         sendDialogue(player, "He is too busy dancing to talk!").also { stage = END_DIALOGUE }
         return true
     }

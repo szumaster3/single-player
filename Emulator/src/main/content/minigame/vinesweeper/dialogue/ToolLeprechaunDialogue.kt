@@ -17,7 +17,7 @@ import org.rs.consts.NPCs
 class ToolLeprechaunDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         val faceExpressions =
             if (npc.id == NPCs.TECLYN_2861) {
@@ -133,7 +133,7 @@ class ToolLeprechaunDialogue(
 class ToolLeprechaunGothDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(
             FaceAnim.HAPPY,
@@ -224,7 +224,7 @@ class ToolLeprechaunGothDialogue(
 class ToolLeprechaunOnVacationDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(FaceAnim.OLD_HAPPY, "Aye, top o' th' mornin' to ya!", "Are ye wantin' help with th' tool store?")
         stage = 2

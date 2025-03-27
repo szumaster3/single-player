@@ -14,7 +14,7 @@ import org.rs.consts.NPCs
 class DoomsayerDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(FaceAnim.HALF_GUILTY, "Dooooom!")
         return true
@@ -86,7 +86,7 @@ class DoomsayerDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = DoomsayerDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = DoomsayerDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.DOOMSAYER_3777)
 }

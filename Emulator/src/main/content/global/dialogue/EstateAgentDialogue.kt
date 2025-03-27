@@ -22,7 +22,7 @@ import org.rs.consts.NPCs
 class EstateAgentDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc("Hello. Welcome to the " + settings!!.name + " Housing Agency! What", "can I do for you?")
         stage = START_DIALOGUE
@@ -358,7 +358,7 @@ class EstateAgentDialogue(
         }
     }
 
-    override fun newInstance(player: Player): Dialogue = EstateAgentDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = EstateAgentDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.ESTATE_AGENT_4247)
 

@@ -11,7 +11,7 @@ import org.rs.consts.NPCs
 class MortenHoldstromDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npcl(FaceAnim.NEUTRAL, "Good day to you.")
         return true
     }

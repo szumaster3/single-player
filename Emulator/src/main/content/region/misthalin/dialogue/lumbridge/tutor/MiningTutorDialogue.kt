@@ -12,7 +12,7 @@ import org.rs.consts.NPCs
 class MiningTutorDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         options("Can you teach me the basics of mining please?", "Are there any mining related quests?", "Goodbye.")
         return true

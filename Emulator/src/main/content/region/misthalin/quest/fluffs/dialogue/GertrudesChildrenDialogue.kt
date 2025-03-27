@@ -21,7 +21,7 @@ class GertrudesChildrenDialogue(
     private var id = 0
     private var switchId = if (id == NPCs.SHILOP_781) NPCs.WILOUGH_783 else NPCs.SHILOP_781
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         id =
             when (val arg = args[0]) {
                 is NPC -> arg.id
@@ -224,7 +224,7 @@ class GertrudesChildrenDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = GertrudesChildrenDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = GertrudesChildrenDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.SHILOP_781, NPCs.WILOUGH_783)
 }

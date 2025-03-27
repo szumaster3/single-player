@@ -23,31 +23,35 @@ import org.rs.consts.Sounds
  * The type Magic dart spell.
  */
 @Initializable
-class MagicDartSpell : CombatSpell(
-    SpellType.MAGIC_DART,
-    SpellBook.MODERN,
-    50,
-    30.0,
-    Sounds.WINDBOLT_CAST_AND_FIRE_218,
-    Sounds.WINDBOLT_HIT_219,
-    Animation(1576, Priority.HIGH),
-    null,
-    Projectile.create(
-        null as Entity?,
+class MagicDartSpell :
+    CombatSpell(
+        SpellType.MAGIC_DART,
+        SpellBook.MODERN,
+        50,
+        30.0,
+        Sounds.WINDBOLT_CAST_AND_FIRE_218,
+        Sounds.WINDBOLT_HIT_219,
+        Animation(1576, Priority.HIGH),
         null,
-        org.rs.consts.Graphics.SLAYER_DART_PROJECTILE_SLIGHTLY_BETTER_LOOKING_330,
-        40,
-        36,
-        52,
-        75,
-        15,
-        11
-    ),
-    Graphics(org.rs.consts.Graphics.SLAYER_DART_CONTACT_SAME_AS_ABOVE_SLIGHT_COLOR_CHANGE_331, 96),
-    Runes.DEATH_RUNE.getItem(1),
-    Runes.MIND_RUNE.getItem(4)
-) {
-    override fun cast(entity: Entity, target: Node): Boolean {
+        Projectile.create(
+            null as Entity?,
+            null,
+            org.rs.consts.Graphics.SLAYER_DART_PROJECTILE_SLIGHTLY_BETTER_LOOKING_330,
+            40,
+            36,
+            52,
+            75,
+            15,
+            11,
+        ),
+        Graphics(org.rs.consts.Graphics.SLAYER_DART_CONTACT_SAME_AS_ABOVE_SLIGHT_COLOR_CHANGE_331, 96),
+        Runes.DEATH_RUNE.getItem(1),
+        Runes.MIND_RUNE.getItem(4),
+    ) {
+    override fun cast(
+        entity: Entity,
+        target: Node,
+    ): Boolean {
         if (entity.getSkills().getLevel(Skills.SLAYER) < 55) {
             (entity as Player).packetDispatch.sendMessage("You need a Slayer level of 55 to cast this spell.")
             return false
@@ -65,7 +69,11 @@ class MagicDartSpell : CombatSpell(
         return this
     }
 
-    override fun getMaximumImpact(entity: Entity, victim: Entity, state: BattleState): Int {
+    override fun getMaximumImpact(
+        entity: Entity,
+        victim: Entity,
+        state: BattleState,
+    ): Int {
         return type.getImpactAmount(entity, victim, 0)
     }
 }

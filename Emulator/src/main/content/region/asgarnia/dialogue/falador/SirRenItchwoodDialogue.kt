@@ -19,7 +19,7 @@ class SirRenItchwoodDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = SirRenItchwoodDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = SirRenItchwoodDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.SIR_REN_ITCHOOD_2287)
 }

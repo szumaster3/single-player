@@ -15,7 +15,7 @@ import org.rs.consts.Quests
 class AskeladdenDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         player?.let {
             if (inInventory(player, Items.PROMISSORY_NOTE_3709, 1)) {
                 playerl(FaceAnim.ASKING, "I thought you really liked the long hall?")

@@ -19,7 +19,7 @@ import org.rs.consts.Quests
 class OgDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         if (getQuestStage(player, Quests.WATCHTOWER) >= 2) {
             npc(FaceAnim.OLD_DEFAULT, "Why you here, little t'ing?")
         } else if (!isQuestComplete(player, Quests.WATCHTOWER)) {

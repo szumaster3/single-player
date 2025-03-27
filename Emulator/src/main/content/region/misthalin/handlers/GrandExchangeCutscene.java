@@ -455,14 +455,14 @@ public final class GrandExchangeCutscene extends CutscenePlugin {
         public Plugin<Object> newInstance(Object arg) throws Throwable {
             int[] ids = new int[]{106, 108, 110, 646};
             for (int id : ids) {
-                ComponentDefinition.forId(id).setPlugin(this);
+                ComponentDefinition.forId(id).plugin = this;
             }
             return this;
         }
 
         @Override
         public boolean handle(Player player, Component component, int opcode, int button, int slot, int itemId) {
-            switch (component.getId()) {
+            switch (component.id) {
                 case 106:
                     switch (button) {
                         case 145:

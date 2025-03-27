@@ -15,7 +15,7 @@ import org.rs.consts.Quests
 class BjornAndEldgrimDialogues(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS)) {
             npc(FaceAnim.DRUNK, "Hey! Itsh you again! Whatshyerfashe!").also { stage = 10 }

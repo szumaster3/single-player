@@ -24,7 +24,6 @@ import org.rs.consts.Sounds
  * and Slayer equipment flags.
  */
 class EquipHandler : InteractionListener {
-
     /**
      * Defines listeners for item-related interactions like equipping, wielding, wearing, or holding an item.
      * These listeners trigger the respective methods to handle item equipping.
@@ -37,7 +36,6 @@ class EquipHandler : InteractionListener {
     }
 
     companion object {
-
         /**
          * Unequips an item from the player's equipment. It first checks for valid conditions such as
          * ensuring the item is in the player's equipment, the player is not locked from unequipping, and

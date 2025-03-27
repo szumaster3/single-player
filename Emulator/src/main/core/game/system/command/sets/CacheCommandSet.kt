@@ -396,7 +396,7 @@ class CacheCommandSet : CommandSet(Privilege.ADMIN) {
             val dump = File("component_definitions.json")
             val components = mutableListOf<Map<String, Any?>>()
 
-            for ((id, componentDef) in ComponentDefinition.getDefinitions()) {
+            for ((id, componentDef) in ComponentDefinition.definitions) {
                 val componentMap =
                     mapOf(
                         "id" to id,

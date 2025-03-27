@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
 class GrumDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(FaceAnim.HAPPY, "Would you like to buy or sell some gold jewellery?")
         return true

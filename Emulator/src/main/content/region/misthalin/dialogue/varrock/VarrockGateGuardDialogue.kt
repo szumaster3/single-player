@@ -12,7 +12,7 @@ import org.rs.consts.NPCs
 class VarrockGateGuardDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(
             FaceAnim.HALF_GUILTY,
@@ -27,7 +27,7 @@ class VarrockGateGuardDialogue(
         buttonId: Int,
     ): Boolean = true
 
-    override fun newInstance(player: Player): Dialogue = VarrockGateGuardDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = VarrockGateGuardDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.GUARD_368)
 }

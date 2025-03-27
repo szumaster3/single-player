@@ -21,7 +21,7 @@ class SigmundDialogue : Dialogue {
 
     constructor(player: Player?) : super(player)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         interpreter.sendDialogues(npc, FaceAnim.HALF_GUILTY, "Can I help you?")
         if (player
@@ -140,7 +140,7 @@ class SigmundDialogue : Dialogue {
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = SigmundDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = SigmundDialogue(player)
 
     override fun getIds(): IntArray =
         intArrayOf(

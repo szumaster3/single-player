@@ -17,7 +17,7 @@ import org.rs.consts.Quests
 class FatherUhrneyDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc("Go away! I'm meditating!")
         stage = 0
@@ -147,10 +147,18 @@ class FatherUhrneyDialogue(
 
             27 -> sendDialogue(player, "Father Urhney sighs.").also { stage++ }
             28 ->
-                if (inInventory(player, Items.GHOSTSPEAK_AMULET_552, 1) || inEquipment(player, Items.GHOSTSPEAK_AMULET_552, 1)) {
-                    npc("What are you talking about? I can see you've got it", "with you!").also { stage = END_DIALOGUE }
+                if (inInventory(player, Items.GHOSTSPEAK_AMULET_552, 1) ||
+                    inEquipment(player, Items.GHOSTSPEAK_AMULET_552, 1)
+                ) {
+                    npc(
+                        "What are you talking about? I can see you've got it",
+                        "with you!",
+                    ).also { stage = END_DIALOGUE }
                 } else if (inBank(player, Items.GHOSTSPEAK_AMULET_552, 1)) {
-                    npc("What are you talking about? I can see you've got it", "in your bank!").also { stage = END_DIALOGUE }
+                    npc("What are you talking about? I can see you've got it", "in your bank!").also {
+                        stage =
+                            END_DIALOGUE
+                    }
                 } else {
                     npc(
                         "How careless can you get? Those things aren't easy to",

@@ -16,7 +16,7 @@ class GnomeCoachDialogue(
 ) : Dialogue(player) {
     val clue = Items.CLUE_SCROLL_7282
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
 
         npcl(FaceAnim.OLD_NORMAL, "Run faster! Faster!")

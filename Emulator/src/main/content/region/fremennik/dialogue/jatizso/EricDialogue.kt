@@ -12,7 +12,7 @@ import org.rs.consts.NPCs
 class EricDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npcl(FaceAnim.HALF_GUILTY, "Spare us a few coppers mister")
         return true

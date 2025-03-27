@@ -18,7 +18,7 @@ import org.rs.consts.NPCs
 class WysonTheGardenerDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         var birdNest = anyInInventory(player, Items.MOLE_CLAW_7416, Items.MOLE_SKIN_7418)
         if (birdNest) {

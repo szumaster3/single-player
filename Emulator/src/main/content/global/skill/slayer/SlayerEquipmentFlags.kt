@@ -60,16 +60,20 @@ object SlayerEquipmentFlags {
     fun hasFaceMask(player: Player): Boolean = (SlayerManager.getInstance(player).flags.equipmentFlags shr 2) and 1 == 1
 
     @JvmStatic
-    fun hasBlackMask(player: Player): Boolean = (SlayerManager.getInstance(player).flags.equipmentFlags shr 3) and 1 == 1
+    fun hasBlackMask(player: Player): Boolean =
+        (SlayerManager.getInstance(player).flags.equipmentFlags shr 3) and 1 == 1
 
     @JvmStatic
-    fun hasSpinyHelmet(player: Player): Boolean = (SlayerManager.getInstance(player).flags.equipmentFlags shr 4) and 1 == 1
+    fun hasSpinyHelmet(player: Player): Boolean =
+        (SlayerManager.getInstance(player).flags.equipmentFlags shr 4) and 1 == 1
 
     @JvmStatic
-    fun hasWitchwoodIcon(player: Player): Boolean = (SlayerManager.getInstance(player).flags.equipmentFlags shr 7) and 1 == 1
+    fun hasWitchwoodIcon(player: Player): Boolean =
+        (SlayerManager.getInstance(player).flags.equipmentFlags shr 7) and 1 == 1
 
     @JvmStatic
-    fun hasMirrorShield(player: Player): Boolean = (SlayerManager.getInstance(player).flags.equipmentFlags shr 8) and 1 == 1
+    fun hasMirrorShield(player: Player): Boolean =
+        (SlayerManager.getInstance(player).flags.equipmentFlags shr 8) and 1 == 1
 
     @JvmStatic
     fun getDamAccBonus(player: Player): Double {

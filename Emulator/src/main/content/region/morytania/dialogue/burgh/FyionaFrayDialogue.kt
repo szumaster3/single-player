@@ -14,7 +14,7 @@ import org.rs.consts.NPCs
 class FyionaFrayDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         player("Hello there. What are you doing here?")
         return true
@@ -100,7 +100,7 @@ class FyionaFrayDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = FyionaFrayDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = FyionaFrayDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.FYIONA_FRAY_3634)
 }

@@ -28,7 +28,7 @@ class PostiePeteDialogue(
         interfaceId: Int,
         buttonId: Int,
     ): Boolean {
-        when (player!!.viewport.region.id) {
+        when (player.viewport.region.id) {
             11679 -> handleLaughingMiner()
             14647 -> handlePortPhasmatys()
             12854 -> handleVarrockLibrary()

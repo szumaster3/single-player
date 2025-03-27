@@ -13,7 +13,7 @@ import org.rs.consts.Quests
 class GuidorsWifeDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         if (getQuestStage(player, Quests.BIOHAZARD) >= 16) {
             player("Hello again.").also { stage = 2 }
         } else {
@@ -40,7 +40,7 @@ class GuidorsWifeDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = GuidorsWifeDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = GuidorsWifeDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.GUIDORS_WIFE_342)
 }

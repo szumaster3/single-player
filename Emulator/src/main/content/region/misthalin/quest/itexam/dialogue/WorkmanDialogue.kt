@@ -80,7 +80,7 @@ class WorkmanDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = WorkmanDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = WorkmanDialogue(player)
 
     override fun getIds(): IntArray =
         intArrayOf(

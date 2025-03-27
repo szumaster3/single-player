@@ -30,7 +30,12 @@ class SQLStorageProvider : AccountStorageProvider {
      * @param username Database username.
      * @param password Database password.
      */
-    fun configure(host: String, databaseName: String, username: String, password: String) {
+    fun configure(
+        host: String,
+        databaseName: String,
+        username: String,
+        password: String,
+    ) {
         connectionString = "jdbc:mysql://$host/$databaseName?useTimezone=true&serverTimezone=UTC"
         connectionUsername = username
         connectionPassword = password

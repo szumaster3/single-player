@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
 class DiangoDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(
             FaceAnim.HAPPY,
@@ -76,7 +76,7 @@ class DiangoDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = DiangoDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = DiangoDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.DIANGO_970)
 }

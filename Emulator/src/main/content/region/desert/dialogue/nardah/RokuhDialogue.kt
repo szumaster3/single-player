@@ -12,7 +12,7 @@ import org.rs.consts.NPCs
 class RokuhDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(
             "Come one, come all, buy my amazing choc ice invention here!",

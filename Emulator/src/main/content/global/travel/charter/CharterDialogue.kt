@@ -18,7 +18,7 @@ class CharterDialogue(
     private var destination: CharterUtils.Destination? = null
     private var cost = 0
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (args.size > 1) {
             destination = (args[1] as CharterUtils.Destination)
@@ -151,7 +151,7 @@ class CharterDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = CharterDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = CharterDialogue(player)
 
     override fun getIds(): IntArray =
         intArrayOf(

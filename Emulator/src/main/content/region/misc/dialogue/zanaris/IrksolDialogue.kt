@@ -40,7 +40,7 @@ class IrksolDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = IrksolDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = IrksolDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.IRKSOL_566)
 }

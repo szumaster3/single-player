@@ -70,9 +70,9 @@ class WarriorsGuildOption : OptionHandler() {
 
         constructor(player: Player?) : super(player)
 
-        override fun newInstance(player: Player): Dialogue = ClaimTokenDialogue(player)
+        override fun newInstance(player: Player?): Dialogue = ClaimTokenDialogue(player)
 
-        override fun open(vararg args: Any): Boolean {
+        override fun open(vararg args: Any?): Boolean {
             npcId = args[0] as Int
             player("May I claim my tokens please?")
             return true

@@ -15,7 +15,7 @@ import org.rs.consts.Quests
 class CouncilWorkmanDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         end()
         if (getQuestStage(player, Quests.THE_FREMENNIK_TRIALS) in 1..99) {

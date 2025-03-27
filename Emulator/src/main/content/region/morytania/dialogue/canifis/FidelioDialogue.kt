@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
 class FidelioDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         player(FaceAnim.HALF_GUILTY, "Hello there.")
         return true
@@ -79,7 +79,7 @@ class FidelioDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = FidelioDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = FidelioDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.FIDELIO_1040)
 }

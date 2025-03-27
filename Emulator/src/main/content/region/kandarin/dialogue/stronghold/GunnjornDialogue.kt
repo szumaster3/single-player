@@ -17,9 +17,11 @@ import org.rs.consts.Vars
 class GunnjornDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
-        if (getVarbit(player, Vars.VARBIT_QUEST_HORROR_FROM_THE_DEEP_PROGRESS_34) >= 1 && !inInventory(player, Items.LIGHTHOUSE_KEY_3848)) {
+        if (getVarbit(player, Vars.VARBIT_QUEST_HORROR_FROM_THE_DEEP_PROGRESS_34) >= 1 &&
+            !inInventory(player, Items.LIGHTHOUSE_KEY_3848)
+        ) {
             options(
                 "Talk about Horror from the Deep.",
                 "Talk about the Agility course.",

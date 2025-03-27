@@ -31,7 +31,7 @@ class SeegudDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = SeegudDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = SeegudDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.SEEGUD_7052)
 }

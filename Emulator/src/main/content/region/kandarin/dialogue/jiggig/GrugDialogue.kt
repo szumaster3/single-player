@@ -23,7 +23,7 @@ class GrugDialogue(
         buttonId: Int,
     ): Boolean = true
 
-    override fun newInstance(player: Player): Dialogue = GrugDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = GrugDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.GRUG_2041)
 }

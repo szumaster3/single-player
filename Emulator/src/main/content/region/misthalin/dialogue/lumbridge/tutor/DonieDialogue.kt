@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
 class DonieDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(FaceAnim.HALF_GUILTY, "Hello there, can I help you?").also { stage = 0 }
         return true
@@ -59,7 +59,7 @@ class DonieDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = DonieDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = DonieDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.DONIE_2238)
 }

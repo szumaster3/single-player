@@ -60,7 +60,7 @@ class GroundSpawnLoader {
             }
         }
 
-        log(this::class.java, Log.FINE, "Initialized [$count] ground items.")
+        log(this::class.java, Log.FINE, "Initialized $count ground items.")
     }
 
     class GroundSpawn(
@@ -68,7 +68,8 @@ class GroundSpawnLoader {
         item: Item,
         location: Location?,
     ) : GroundItem(item, location) {
-        override fun toString(): String = "GroundSpawn [name=" + getName() + ", respawnRate=" + respawnRate + ", loc=" + getLocation() + "]"
+        override fun toString(): String =
+            "GroundSpawn [name=" + getName() + ", respawnRate=" + respawnRate + ", loc=" + getLocation() + "]"
 
         fun save(buffer: ByteBuffer) {
             buffer.putInt(respawnRate)

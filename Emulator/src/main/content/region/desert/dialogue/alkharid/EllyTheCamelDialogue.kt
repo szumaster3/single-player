@@ -15,7 +15,7 @@ import org.rs.consts.Sounds
 class EllyTheCamelDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         val rand = RandomFunction.random(0, 2)
         when (rand) {

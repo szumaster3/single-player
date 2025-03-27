@@ -12,7 +12,7 @@ import org.rs.consts.NPCs
 class UliziusDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         player(FaceAnim.HALF_GUILTY, "Hello there.")
         return true
@@ -56,7 +56,7 @@ class UliziusDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = UliziusDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = UliziusDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.ULIZIUS_1054)
 }

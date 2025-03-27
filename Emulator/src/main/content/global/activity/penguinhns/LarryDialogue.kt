@@ -69,7 +69,7 @@ class LarryDialogue(
                         setAttribute(player, "caller", this)
                         player.interfaceManager
                             .open(
-                                Component(134).setCloseEvent { _: Player?, _: Component? ->
+                                Component(134).setUncloseEvent { _: Player?, _: Component? ->
                                     player.interfaceManager.openDefaultTabs()
                                     removeAttribute(player, "lamp")
                                     player.unlock()

@@ -3,7 +3,6 @@ package content.region.misc.dialogue.keldagrim
 import content.region.misc.handlers.MinecartTravel
 import core.api.removeItem
 import core.api.sendDialogue
-import core.game.component.Component
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
@@ -21,16 +20,20 @@ private const val KELDAGRIM_CONDUCTOR = 2182
 class CartConductorDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    var visitedKeldagrim = false
+    private var visitedKeldagrim = false
 
     override fun handle(
         interfaceId: Int,
         buttonId: Int,
     ): Boolean {
         when (stage) {
-            0 -> npc("Sorry, but I can only take people", "who have been there before.").also { stage = 1000 }
+            0 ->
+                npc(FaceAnim.OLD_NORMAL, "Sorry, but I can only take people", "who have been there before.").also {
+                    stage =
+                        1000
+                }
 
-            100 -> npc("Alright, that'll cost ye 150gp.").also { stage++ }
+            100 -> npc(FaceAnim.OLD_NORMAL, "Alright, that'll cost ye 150gp.").also { stage++ }
             101 -> options("Okay, sure.", "No, thanks.").also { stage++ }
             102 ->
                 when (buttonId) {
@@ -38,7 +41,7 @@ class CartConductorDialogue(
                     2 -> end()
                 }
 
-            200 -> npc("Alright, that'll cost ye 100gp.").also { stage++ }
+            200 -> npc(FaceAnim.OLD_NORMAL, "Alright, that'll cost ye 100gp.").also { stage++ }
             201 -> options("Okay, sure.", "No, thanks.").also { stage++ }
             202 ->
                 when (buttonId) {
@@ -46,7 +49,7 @@ class CartConductorDialogue(
                     2 -> end()
                 }
 
-            300 -> npc("Alright, where would ye like to go?").also { stage++ }
+            300 -> npc(FaceAnim.OLD_NORMAL, "Alright, where would ye like to go?").also { stage++ }
             301 -> options("Grand Exchange", "White Wolf Mountain", "Ice Mountain").also { stage++ }
             302 ->
                 when (buttonId) {
@@ -60,7 +63,7 @@ class CartConductorDialogue(
         return true
     }
 
-    fun purchaseTrip(
+    private fun purchaseTrip(
         player: Player,
         cost: Int,
     ) {
@@ -71,8 +74,6 @@ class CartConductorDialogue(
             MinecartTravel.goToKeldagrim(player)
         }
     }
-
-    override fun npc(vararg messages: String?): Component = super.npc(FaceAnim.OLD_NORMAL, *messages)
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC

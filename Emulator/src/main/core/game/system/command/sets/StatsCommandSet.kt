@@ -182,8 +182,18 @@ class StatsCommandSet : CommandSet(Privilege.STANDARD) {
                                     "Essence Crafted: ${queryPlayer.getAttribute("$STATS_BASE:$STATS_RC", 0)}",
                                     i,
                                 )
-                            80 -> sendLine(player, "Food Cooked: ${queryPlayer.getAttribute("$STATS_BASE:$STATS_FOOD_COOKED",0)}", i)
-                            81 -> sendLine(player, "Cats Raised: ${queryPlayer.getAttribute("$STATS_BASE:$STATS_CATS_RAISED",0)}", i)
+                            80 ->
+                                sendLine(
+                                    player,
+                                    "Food Cooked: ${queryPlayer.getAttribute("$STATS_BASE:$STATS_FOOD_COOKED",0)}",
+                                    i,
+                                )
+                            81 ->
+                                sendLine(
+                                    player,
+                                    "Cats Raised: ${queryPlayer.getAttribute("$STATS_BASE:$STATS_CATS_RAISED",0)}",
+                                    i,
+                                )
 
                             // Boss KC
                             82 ->

@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
 class NoterazzoDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(FaceAnim.HALF_ASKING, "Hey, wanna trade? I'll give the best deals you can find.")
         return true
@@ -47,7 +47,7 @@ class NoterazzoDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = NoterazzoDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = NoterazzoDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.NOTERAZZO_597)
 }

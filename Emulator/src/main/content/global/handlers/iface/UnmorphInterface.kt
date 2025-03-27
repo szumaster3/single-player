@@ -10,9 +10,9 @@ class UnmorphInterface : InterfaceListener {
     override fun defineInterfaceListeners() {
         onClose(Components.UNMORPH_375) { player, _ ->
             Component(Components.UNMORPH_375)
-                .setCloseEvent { player: Player, c: Component? ->
+                .setUncloseEvent { player: Player, c: Component? ->
                     c?.open(player)
-                    return@setCloseEvent true
+                    return@setUncloseEvent true
                 }.also {
                     player.unlock()
                     player.appearance.transformNPC(-1)

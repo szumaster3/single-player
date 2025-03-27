@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class KaramOverlordDialogue : Dialogue {
-    override fun newInstance(player: Player): Dialogue {
+    override fun newInstance(player: Player?): Dialogue {
         return KaramOverlordDialogue(player)
     }
 
@@ -29,7 +29,7 @@ class KaramOverlordDialogue : Dialogue {
      */
     constructor(player: Player?) : super(player)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         when ((Math.random() * 4).toInt()) {
             0 -> {
@@ -55,7 +55,10 @@ class KaramOverlordDialogue : Dialogue {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(
+        interfaceId: Int,
+        buttonId: Int,
+    ): Boolean {
         when (stage) {
             0 -> {
                 npcl(FaceAnim.OLD_NORMAL, "Silence!")
@@ -125,7 +128,7 @@ class KaramOverlordDialogue : Dialogue {
             13 -> {
                 npcl(
                     FaceAnim.OLD_NORMAL,
-                    "Only? I, radiant in my awesomeness, am 'only' a squid in a bowl? Clearly you need to be shown in your place, lung-user!"
+                    "Only? I, radiant in my awesomeness, am 'only' a squid in a bowl? Clearly you need to be shown in your place, lung-user!",
                 )
                 stage++
             }
@@ -183,7 +186,7 @@ class KaramOverlordDialogue : Dialogue {
             24 -> {
                 playerl(
                     FaceAnim.FRIENDLY,
-                    "Then you will not be surprised to know I was going to ask you what you wanted to do today."
+                    "Then you will not be surprised to know I was going to ask you what you wanted to do today.",
                 )
                 stage++
             }
@@ -196,7 +199,7 @@ class KaramOverlordDialogue : Dialogue {
             26 -> {
                 npcl(
                     FaceAnim.OLD_NORMAL,
-                    "The answer 'be silent' because your puny compressed brain could not even begin to comprehend my needs!"
+                    "The answer 'be silent' because your puny compressed brain could not even begin to comprehend my needs!",
                 )
                 stage++
             }
@@ -209,7 +212,7 @@ class KaramOverlordDialogue : Dialogue {
             28 -> {
                 npcl(
                     FaceAnim.OLD_NORMAL,
-                    "Well, how about I topple your nations into the ocean and dance my tentacle-waving victory dance upon your watery graves?"
+                    "Well, how about I topple your nations into the ocean and dance my tentacle-waving victory dance upon your watery graves?",
                 )
                 stage++
             }

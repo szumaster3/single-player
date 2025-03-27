@@ -14,7 +14,7 @@ import java.util.*
  */
 @Initializable
 class AbyssalParasiteDialogue : Dialogue {
-    override fun newInstance(player: Player): Dialogue {
+    override fun newInstance(player: Player?): Dialogue {
         return AbyssalParasiteDialogue(player)
     }
 
@@ -30,7 +30,7 @@ class AbyssalParasiteDialogue : Dialogue {
      */
     constructor(player: Player?) : super(player)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         val random = Random()
         val randomIndex = random.nextInt(5)
@@ -65,7 +65,10 @@ class AbyssalParasiteDialogue : Dialogue {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(
+        interfaceId: Int,
+        buttonId: Int,
+    ): Boolean {
         when (stage) {
             0 -> {
                 playerl(FaceAnim.HALF_WORRIED, "Oh, I'm not feeling so well.")
@@ -115,7 +118,7 @@ class AbyssalParasiteDialogue : Dialogue {
             9 -> {
                 playerl(
                     FaceAnim.HALF_ASKING,
-                    "I want to help it but, aside from the language gap its noises make me retch!"
+                    "I want to help it but, aside from the language gap its noises make me retch!",
                 )
                 stage = END_DIALOGUE
             }

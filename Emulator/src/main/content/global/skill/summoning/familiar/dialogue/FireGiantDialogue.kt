@@ -15,7 +15,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class FireGiantDialogue : Dialogue {
-    override fun newInstance(player: Player): Dialogue {
+    override fun newInstance(player: Player?): Dialogue {
         return FireGiantDialogue(player)
     }
 
@@ -31,7 +31,7 @@ class FireGiantDialogue : Dialogue {
      */
     constructor(player: Player?) : super(player)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (inInventory(player, Items.TINDERBOX_590, 1)) {
             npcl(FaceAnim.CHILD_NORMAL, "Relight my fire.")
@@ -67,7 +67,10 @@ class FireGiantDialogue : Dialogue {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(
+        interfaceId: Int,
+        buttonId: Int,
+    ): Boolean {
         when (stage) {
             0 -> {
                 npcl(FaceAnim.CHILD_NORMAL, "A tinderbox is my only desire.")
@@ -102,7 +105,7 @@ class FireGiantDialogue : Dialogue {
             6 -> {
                 npcl(
                     FaceAnim.CHILD_NORMAL,
-                    "Oh, you know, just with some other fire titans. Out for a night on the pyres."
+                    "Oh, you know, just with some other fire titans. Out for a night on the pyres.",
                 )
                 stage++
             }
@@ -199,4 +202,3 @@ class FireGiantDialogue : Dialogue {
         return intArrayOf(NPCs.FIRE_GIANT_7003, NPCs.FIRE_GIANT_7004)
     }
 }
-

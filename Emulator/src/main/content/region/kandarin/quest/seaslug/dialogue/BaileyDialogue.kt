@@ -18,7 +18,7 @@ import org.rs.consts.Quests
 class BaileyDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         when {
             getQuestStage(player, Quests.SEA_SLUG) >= 15 -> player("Hello.").also { stage = 100 }

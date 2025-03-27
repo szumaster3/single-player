@@ -23,7 +23,7 @@ class CrateGoblinDialogue(
         buttonId: Int,
     ): Boolean = true
 
-    override fun newInstance(player: Player): Dialogue = CrateGoblinDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = CrateGoblinDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.CRATE_GOBLIN_5784)
 }

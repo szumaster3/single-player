@@ -26,7 +26,11 @@ class CaptainDaerkinDialogue(
         buttonId: Int,
     ): Boolean {
         when (stage) {
-            0 -> playerl(FaceAnim.FRIENDLY, "What are you doing here? Shouldn't you be looking after your glider?").also { stage++ }
+            0 ->
+                playerl(
+                    FaceAnim.FRIENDLY,
+                    "What are you doing here? Shouldn't you be looking after your glider?",
+                ).also { stage++ }
             1 ->
                 npcl(
                     FaceAnim.OLD_DEFAULT,
@@ -34,7 +38,13 @@ class CaptainDaerkinDialogue(
                 ).also {
                     stage++
                 }
-            2 -> playerl(FaceAnim.FRIENDLY, "You're watching the duels then. Are you going to challenge someone yourself?").also { stage++ }
+            2 ->
+                playerl(
+                    FaceAnim.FRIENDLY,
+                    "You're watching the duels then. Are you going to challenge someone yourself?",
+                ).also {
+                    stage++
+                }
             3 ->
                 npcl(
                     FaceAnim.OLD_DEFAULT,

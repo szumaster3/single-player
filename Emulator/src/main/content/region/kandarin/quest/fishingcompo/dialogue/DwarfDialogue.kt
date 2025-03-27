@@ -18,7 +18,7 @@ import org.rs.consts.Quests
 class DwarfDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         val questStage = getQuestStage(player, Quests.FISHING_CONTEST)
         if (questStage in 1..19 && !inInventory(player, FishingContest.FISHING_PASS.id)) {

@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class VoidTorcherDialogue : Dialogue {
-    override fun newInstance(player: Player): Dialogue {
+    override fun newInstance(player: Player?): Dialogue {
         return VoidTorcherDialogue(player)
     }
 
@@ -29,7 +29,7 @@ class VoidTorcherDialogue : Dialogue {
      */
     constructor(player: Player?) : super(player)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         val randomIndex = (Math.random() * 4).toInt()
         when (randomIndex) {
@@ -41,7 +41,7 @@ class VoidTorcherDialogue : Dialogue {
             1 -> {
                 npcl(
                     FaceAnim.CHILD_NORMAL,
-                    "'T' is for torcher, that's good enough for me... 'T' is for torcher, I'm happy you can see."
+                    "'T' is for torcher, that's good enough for me... 'T' is for torcher, I'm happy you can see.",
                 )
                 stage = 7
             }
@@ -59,7 +59,10 @@ class VoidTorcherDialogue : Dialogue {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(
+        interfaceId: Int,
+        buttonId: Int,
+    ): Boolean {
         when (stage) {
             0 -> {
                 npcl(FaceAnim.CHILD_NORMAL, "I not spinner!")

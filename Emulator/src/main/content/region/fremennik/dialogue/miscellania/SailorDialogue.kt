@@ -14,7 +14,7 @@ import org.rs.consts.NPCs
 class SailorDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         playerl(FaceAnim.ASKING, "Hello. Can I get a ride on your ship?")
         return true
     }

@@ -15,7 +15,7 @@ class VoidKnightDialogue(
 ) : Dialogue(player) {
     var reward: Item = Item()
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc("Hi, how can I help you?")
         stage = 0

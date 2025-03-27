@@ -22,7 +22,7 @@ class OdovacarDialogue(
     player: Player? = null,
 ) : Dialogue(player),
     InteractionListener {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         val activeOffer = ExchangeHistory.getInstance(player)
         val hasOffer =
@@ -234,7 +234,7 @@ class OdovacarDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = OdovacarDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = OdovacarDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.ODOVACAR_5383)
 

@@ -21,6 +21,7 @@ import core.game.world.map.zone.MapZone;
 import core.game.world.map.zone.ZoneBorders;
 import core.game.world.map.zone.ZoneRestriction;
 import core.tools.RandomFunction;
+import org.rs.consts.Components;
 import org.rs.consts.Items;
 import org.rs.consts.NPCs;
 
@@ -186,8 +187,8 @@ public final class WildernessZone extends MapZone {
      * @param p the p
      */
     public final void leave(final Player p) {
-        Component overlay = new Component(381);
-        if (overlay.getId() == 381) {
+        Component overlay = new Component(Components.WILDERNESS_OVERLAY_381);
+        if (overlay.id == Components.WILDERNESS_OVERLAY_381) {
             p.getInterfaceManager().close(overlay);
         }
         p.getInteraction().remove(Option._P_ATTACK);
@@ -204,9 +205,9 @@ public final class WildernessZone extends MapZone {
         if (p.getSkullManager().isWildernessDisabled()) {
             return;
         }
-        p.getInterfaceManager().openOverlay(new Component(381));
+        p.getInterfaceManager().openOverlay(new Component(Components.WILDERNESS_OVERLAY_381));
         p.getSkullManager().setLevel(getWilderness(p));
-        p.getPacketDispatch().sendString("Level: " + p.getSkullManager().getLevel(), 381, 1);
+        p.getPacketDispatch().sendString("Level: " + p.getSkullManager().getLevel(), Components.WILDERNESS_OVERLAY_381, 1);
         if (GameWorld.getSettings().getWild_pvp_enabled()) {
             p.getInteraction().set(Option._P_ATTACK);
         }

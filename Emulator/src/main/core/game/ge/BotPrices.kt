@@ -9,7 +9,6 @@ import org.rs.consts.Items
  */
 class BotPrices {
     companion object {
-
         /**
          * Gets the price of an item by its ID. If a price override exists, it returns the overridden price.
          * Otherwise, it returns the price defined in the item definition.

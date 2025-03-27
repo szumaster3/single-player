@@ -48,7 +48,7 @@ class ZaffDialogue : OptionHandler() {
 
         override fun newInstance(player: Player?): Dialogue = ZaffQuestDialogue(player)
 
-        override fun open(vararg args: Any): Boolean {
+        override fun open(vararg args: Any?): Boolean {
             npc = args[0] as NPC
             quest = player.questRepository.getQuest(Quests.WHAT_LIES_BELOW)
             npc(
@@ -338,7 +338,7 @@ class ZaffDialogue : OptionHandler() {
 
         override fun newInstance(player: Player?): Dialogue = ZaffBattlestaffsDialogue(player)
 
-        override fun open(vararg args: Any): Boolean {
+        override fun open(vararg args: Any?): Boolean {
             ammount = getStoreFile().getInt(player.username.lowercase())
             player(FaceAnim.HALF_GUILTY, "Do you have any battlestaves?")
             stage = 0

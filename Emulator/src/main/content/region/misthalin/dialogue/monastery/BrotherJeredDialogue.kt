@@ -18,7 +18,7 @@ import org.rs.consts.NPCs
 class BrotherJeredDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (isMaster(player, Skills.PRAYER)) {
             player("Can I buy a Skillcape of Prayer?")
@@ -258,7 +258,7 @@ class BrotherJeredDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = BrotherJeredDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = BrotherJeredDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.BROTHER_JERED_802)
 }

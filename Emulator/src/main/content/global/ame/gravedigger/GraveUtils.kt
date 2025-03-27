@@ -56,7 +56,8 @@ object GraveUtils {
             Scenery.GRAVESTONE_12720,
         )
 
-    val coffins = intArrayOf(Items.COFFIN_7587, Items.COFFIN_7588, Items.COFFIN_7589, Items.COFFIN_7590, Items.COFFIN_7591)
+    val coffins =
+        intArrayOf(Items.COFFIN_7587, Items.COFFIN_7588, Items.COFFIN_7589, Items.COFFIN_7590, Items.COFFIN_7591)
 
     const val COFFIN_INTERFACE = Components.GRAVEDIGGER_COFFIN_141
     const val GRAVESTONE_INTERFACE = Components.GRAVEDIGGER_GRAVE_143

@@ -26,7 +26,7 @@ class DesertGuardDialogue(
         super.init()
     }
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         quest = player.getQuestRepository().getQuest(Quests.THE_TOURIST_TRAP)
         when (npc.id) {

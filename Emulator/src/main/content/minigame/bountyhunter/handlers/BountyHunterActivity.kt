@@ -36,6 +36,7 @@ import core.plugin.Initializable
 import core.plugin.Plugin
 import core.tools.RandomFunction
 import org.rs.consts.Animations
+import org.rs.consts.Components
 import java.util.*
 
 @Initializable
@@ -110,7 +111,7 @@ class BountyHunterActivity
                     object : ComponentPlugin() {
                         @Throws(Throwable::class)
                         override fun newInstance(arg: Any?): Plugin<Any> {
-                            ComponentDefinition.put(657, this)
+                            ComponentDefinition.put(Components.BOUNTY_WARNING_657, this)
                             return this
                         }
 
@@ -161,7 +162,7 @@ class BountyHunterActivity
             }
             player.addExtension(BountyHunterActivity::class.java, this)
             if (!login) {
-                player.interfaceManager.open(Component(657))
+                player.interfaceManager.open(Component(Components.BOUNTY_WARNING_657))
             } else {
                 enterCrater(player)
             }

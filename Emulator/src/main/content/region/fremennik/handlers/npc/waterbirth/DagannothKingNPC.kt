@@ -66,7 +66,8 @@ class DagannothKingNPC(
         vararg objects: Any,
     ): AbstractNPC = DagannothKingNPC(id, location)
 
-    override fun getIds(): IntArray = intArrayOf(NPCs.DAGANNOTH_SUPREME_2881, NPCs.DAGANNOTH_PRIME_2882, NPCs.DAGANNOTH_REX_2883)
+    override fun getIds(): IntArray =
+        intArrayOf(NPCs.DAGANNOTH_SUPREME_2881, NPCs.DAGANNOTH_PRIME_2882, NPCs.DAGANNOTH_REX_2883)
 
     override fun finalizeDeath(killer: Entity) {
         super.finalizeDeath(killer)

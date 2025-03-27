@@ -20,7 +20,7 @@ class MTAShop : InterfaceListener {
     private val viewers: MutableList<Player> = ArrayList(100)
 
     private val component: Component =
-        Component(Components.MAGICTRAINING_SHOP_197).setCloseEvent(
+        Component(Components.MAGICTRAINING_SHOP_197).setUncloseEvent(
             CloseEvent { player, c ->
                 if (player == null) {
                     return@CloseEvent true

@@ -12,7 +12,7 @@ import org.rs.consts.NPCs
 class SquireTypeDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc("Hi, how can I help you?")
         return true
@@ -93,5 +93,6 @@ class SquireTypeDialogue(
         return true
     }
 
-    override fun getIds(): IntArray = intArrayOf(NPCs.SQUIRE_NOVICE_3802, NPCs.SQUIRE_INTERMEDIATE_6140, NPCs.SQUIRE_VETERAN_6141)
+    override fun getIds(): IntArray =
+        intArrayOf(NPCs.SQUIRE_NOVICE_3802, NPCs.SQUIRE_INTERMEDIATE_6140, NPCs.SQUIRE_VETERAN_6141)
 }

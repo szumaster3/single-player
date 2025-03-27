@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class GraniteLobsterDialogue : Dialogue {
-    override fun newInstance(player: Player): Dialogue {
+    override fun newInstance(player: Player?): Dialogue {
         return GraniteLobsterDialogue(player)
     }
 
@@ -29,7 +29,7 @@ class GraniteLobsterDialogue : Dialogue {
      */
     constructor(player: Player?) : super(player)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         when ((Math.random() * 5).toInt()) {
             0 -> {
@@ -55,7 +55,7 @@ class GraniteLobsterDialogue : Dialogue {
             4 -> {
                 npcl(
                     FaceAnim.CHILD_NORMAL,
-                    "Clonkclonk clonk grind clonk. (Keep walking, outerlander. We have nothing to discuss.)"
+                    "Clonkclonk clonk grind clonk. (Keep walking, outerlander. We have nothing to discuss.)",
                 )
                 stage = 7
             }
@@ -63,7 +63,10 @@ class GraniteLobsterDialogue : Dialogue {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(
+        interfaceId: Int,
+        buttonId: Int,
+    ): Boolean {
         when (stage) {
             0 -> {
                 playerl(FaceAnim.FRIENDLY, "The outerlanders have insulted our heritage for the last time!")
@@ -83,7 +86,7 @@ class GraniteLobsterDialogue : Dialogue {
             3 -> {
                 playerl(
                     FaceAnim.FRIENDLY,
-                    "Crush your enemies, see them driven before you, and hear the lamentation of their women!"
+                    "Crush your enemies, see them driven before you, and hear the lamentation of their women!",
                 )
                 stage++
             }
@@ -111,7 +114,7 @@ class GraniteLobsterDialogue : Dialogue {
             8 -> {
                 npcl(
                     FaceAnim.CHILD_NORMAL,
-                    "Clonkclonkclonk grind clonk grind? (It's nothing personal, you're just an outerlander, you know?)"
+                    "Clonkclonkclonk grind clonk grind? (It's nothing personal, you're just an outerlander, you know?)",
                 )
                 stage = END_DIALOGUE
             }

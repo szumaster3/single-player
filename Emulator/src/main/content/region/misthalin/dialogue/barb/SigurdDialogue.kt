@@ -14,7 +14,7 @@ import org.rs.consts.NPCs
 class SigurdDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(FaceAnim.HALF_GUILTY, "Ha Ha! Hello!")
         return true
@@ -202,7 +202,7 @@ class SigurdDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = SigurdDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = SigurdDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.SIGURD_3329)
 }

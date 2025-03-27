@@ -16,7 +16,7 @@ class ExplorerJackDiaryDialogue(
 ) : Dialogue(player) {
     private val level = 0
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc("What ho! Where did you come from?")
         stage = -1
         return true
@@ -137,7 +137,7 @@ class ExplorerJackDiaryDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = ExplorerJackDiaryDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = ExplorerJackDiaryDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.EXPLORER_JACK_7969)
 }

@@ -52,7 +52,7 @@ class WaterfallTreeDialogue(
         return true
     }
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         player.dialogueInterpreter.sendDialogue(
             "It would be difficult to get down this tree without using a rope",
             "on it first.",

@@ -472,6 +472,7 @@ class TreasureTrailManager :
                 13080,
             )
 
-        fun getInstance(player: Player): TreasureTrailManager = player.getAttribute("tt-manager", TreasureTrailManager())
+        fun getInstance(player: Player): TreasureTrailManager =
+            player.getAttribute("tt-manager", TreasureTrailManager())
     }
 }

@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
 class ValaineDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(FaceAnim.HALF_GUILTY, "Hello there. Want to have a look at what we're selling", "today?")
         return true
@@ -38,7 +38,7 @@ class ValaineDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = ValaineDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = ValaineDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.VALAINE_536)
 }

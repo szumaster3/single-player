@@ -28,7 +28,8 @@ class BarbarianOutpostCourse
     constructor(
         player: Player? = null,
     ) : content.global.skill.agility.AgilityCourse(player, 6, 46.2) {
-        override fun createInstance(player: Player): content.global.skill.agility.AgilityCourse = BarbarianOutpostCourse(player)
+        override fun createInstance(player: Player): content.global.skill.agility.AgilityCourse =
+            BarbarianOutpostCourse(player)
 
         override fun handle(
             player: Player,

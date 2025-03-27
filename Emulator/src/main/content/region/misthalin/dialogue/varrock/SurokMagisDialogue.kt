@@ -12,7 +12,7 @@ import org.rs.consts.NPCs
 class SurokMagisDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         player(FaceAnim.HALF_GUILTY, "Excuse me?")
         return true
@@ -79,7 +79,7 @@ class SurokMagisDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = SurokMagisDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = SurokMagisDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.SUROK_MAGIS_7002)
 }

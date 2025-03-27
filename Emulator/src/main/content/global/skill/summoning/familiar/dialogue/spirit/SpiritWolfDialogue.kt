@@ -15,7 +15,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class SpiritWolfDialogue : Dialogue {
-    override fun newInstance(player: Player): Dialogue {
+    override fun newInstance(player: Player?): Dialogue {
         return SpiritWolfDialogue(player)
     }
 
@@ -31,7 +31,7 @@ class SpiritWolfDialogue : Dialogue {
      */
     constructor(player: Player?) : super(player)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (anyInInventory(player, *bones.stream().mapToInt { obj: Int -> obj.toInt() }.toArray())) {
             npc(FaceAnim.CHILD_NORMAL, "Whuff-Whuff! Arf!", "(Throw the bone! I want to chase it!)")
@@ -62,7 +62,10 @@ class SpiritWolfDialogue : Dialogue {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(
+        interfaceId: Int,
+        buttonId: Int,
+    ): Boolean {
         when (stage) {
             0 -> {
                 playerl(FaceAnim.FRIENDLY, "I can't just throw bones away - I need them to train my Prayer!")
@@ -87,7 +90,7 @@ class SpiritWolfDialogue : Dialogue {
             4 -> {
                 playerl(
                     FaceAnim.FRIENDLY,
-                    "We can go hunting in a moment. I just have to take care of something first."
+                    "We can go hunting in a moment. I just have to take care of something first.",
                 )
                 stage = END_DIALOGUE
             }

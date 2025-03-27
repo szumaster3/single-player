@@ -18,7 +18,7 @@ import org.rs.consts.NPCs
 class MagicTutorDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         if (args.isEmpty() || args[0] !is NPC) {
             throw IllegalArgumentException("Invalid arguments provided. Expected an NPC as the first argument.")
         }

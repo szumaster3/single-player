@@ -270,7 +270,7 @@ public class AnimalMagnetismPlugin extends OptionHandler {
 
         @Override
         public Plugin<java.lang.Object> newInstance(Object arg) {
-            ComponentDefinition.forId(Components.ANMA_RGB_480).setPlugin(this);
+            ComponentDefinition.forId(Components.ANMA_RGB_480).plugin = this;
             return this;
         }
 

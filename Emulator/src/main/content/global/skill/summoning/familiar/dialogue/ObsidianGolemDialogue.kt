@@ -15,7 +15,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class ObsidianGolemDialogue : Dialogue {
-    override fun newInstance(player: Player): Dialogue {
+    override fun newInstance(player: Player?): Dialogue {
         return ObsidianGolemDialogue(player)
     }
 
@@ -31,7 +31,7 @@ class ObsidianGolemDialogue : Dialogue {
      */
     constructor(player: Player?) : super(player)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (inEquipment(player, Items.FIRE_CAPE_6570, 1)) {
             npcl(FaceAnim.CHILD_NORMAL, "Truly, you are a powerful warrior, Master!")
@@ -57,7 +57,10 @@ class ObsidianGolemDialogue : Dialogue {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(
+        interfaceId: Int,
+        buttonId: Int,
+    ): Boolean {
         when (stage) {
             0 -> {
                 npcl(FaceAnim.CHILD_NORMAL, "Let us go forth and prove our strength, Master!")
@@ -72,7 +75,7 @@ class ObsidianGolemDialogue : Dialogue {
             2 -> {
                 npcl(
                     FaceAnim.CHILD_NORMAL,
-                    "The caves of the TzHaar are filled with monsters for us to defeat, Master! TzTok-Jad shall quake in his slippers!"
+                    "The caves of the TzHaar are filled with monsters for us to defeat, Master! TzTok-Jad shall quake in his slippers!",
                 )
                 stage++
             }
@@ -150,7 +153,7 @@ class ObsidianGolemDialogue : Dialogue {
             17 -> {
                 playerl(
                     FaceAnim.FRIENDLY,
-                    "Oh, simple things: the sound of one hand clapping, where the gods come from...Simple things."
+                    "Oh, simple things: the sound of one hand clapping, where the gods come from...Simple things.",
                 )
                 stage++
             }

@@ -124,7 +124,7 @@ public abstract class Quest implements Plugin<Object> {
         player.getQuestRepository().setStage(this, 100);
         player.getQuestRepository().incrementPoints(getQuestPoints());
         player.getQuestRepository().syncronizeTab(player);
-        player.getInterfaceManager().open(new Component(277).setCloseEvent((p, c) -> {
+        player.getInterfaceManager().open(new Component(277).setUncloseEvent((p, c) -> {
             this.questCloseEvent(p, c);
             return true;
         }));

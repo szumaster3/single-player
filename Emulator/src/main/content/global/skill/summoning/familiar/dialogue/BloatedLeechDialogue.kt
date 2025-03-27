@@ -14,7 +14,7 @@ import java.util.*
  */
 @Initializable
 class BloatedLeechDialogue : Dialogue {
-    override fun newInstance(player: Player): Dialogue {
+    override fun newInstance(player: Player?): Dialogue {
         return BloatedLeechDialogue(player)
     }
 
@@ -30,7 +30,7 @@ class BloatedLeechDialogue : Dialogue {
      */
     constructor(player: Player?) : super(player)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         when (Random().nextInt(4)) {
             0 -> {
@@ -56,7 +56,10 @@ class BloatedLeechDialogue : Dialogue {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(
+        interfaceId: Int,
+        buttonId: Int,
+    ): Boolean {
         when (stage) {
             0 -> {
                 playerl(FaceAnim.HALF_ASKING, "What is?")
@@ -86,7 +89,7 @@ class BloatedLeechDialogue : Dialogue {
             5 -> {
                 playerl(
                     FaceAnim.FRIENDLY,
-                    "There are two ways to take that...and I think I'll err on the side of caution."
+                    "There are two ways to take that...and I think I'll err on the side of caution.",
                 )
                 stage = END_DIALOGUE
             }

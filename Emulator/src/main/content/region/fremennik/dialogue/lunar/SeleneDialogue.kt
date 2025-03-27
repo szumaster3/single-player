@@ -19,7 +19,7 @@ class SeleneDialogue(
     private val Rellekka = Location.create(2663, 3644, 0)
     private var teled = false
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (!teled) {
             if (inInventory(player, Items.SEAL_OF_PASSAGE_9083, 1) ||

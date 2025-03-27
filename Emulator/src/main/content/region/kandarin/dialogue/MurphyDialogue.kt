@@ -12,7 +12,7 @@ import org.rs.consts.NPCs
 class MurphyDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         playerl(FaceAnim.FRIENDLY, "Good day to you Sir.")
         return true

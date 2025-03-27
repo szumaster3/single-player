@@ -11,7 +11,7 @@ import core.tools.END_DIALOGUE
 class HoodedMonkDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npcl(FaceAnim.HALF_GUILTY, "Excuse me...oh, wait, I thought you were someone else.")
         return true

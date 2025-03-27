@@ -13,7 +13,7 @@ import org.rs.consts.Quests
 class VeronicaDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         val quest = player.getQuestRepository().getQuest(Quests.ERNEST_THE_CHICKEN)
         when (quest.getStage(player)) {
@@ -195,7 +195,7 @@ class VeronicaDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = VeronicaDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = VeronicaDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.VERONICA_285)
 }

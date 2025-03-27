@@ -18,7 +18,7 @@ import org.rs.consts.Quests
 class DroalakDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean =
+    override fun open(vararg args: Any?): Boolean =
         when {
             !inEquipment(player, Items.GHOSTSPEAK_AMULET_552) -> {
                 npcl(FaceAnim.FRIENDLY, "wooo wooo")

@@ -11,7 +11,8 @@ import org.rs.consts.Quests
 import org.rs.consts.Vars
 
 @Initializable
-class RestlessGhost : Quest(Quests.THE_RESTLESS_GHOST, 25, 24, 1, Vars.VARP_QUEST_RESTLESS_GHOST_PROGRESS_107, 0, 4, 5) {
+class RestlessGhost :
+    Quest(Quests.THE_RESTLESS_GHOST, 25, 24, 1, Vars.VARP_QUEST_RESTLESS_GHOST_PROGRESS_107, 0, 4, 5) {
     override fun drawJournal(
         player: Player,
         stage: Int,

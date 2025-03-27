@@ -11,7 +11,7 @@ import org.rs.consts.NPCs
 class WoodDryadDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         playerl(FaceAnim.LAUGH, "Hi, why do you have twigs growing out of you?")
         return true

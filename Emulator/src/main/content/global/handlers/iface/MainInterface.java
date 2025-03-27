@@ -10,30 +10,31 @@ import core.game.node.entity.player.info.Rights;
 import core.game.world.GameWorld;
 import core.plugin.Initializable;
 import core.plugin.Plugin;
+import org.rs.consts.Components;
 
 /**
- * The type Main interface.
+ * The main game interface.
  */
 @Initializable
 public final class MainInterface extends ComponentPlugin {
 
     @Override
     public Plugin<Object> newInstance(Object arg) throws Throwable {
-        ComponentDefinition.put(740, this);
+        ComponentDefinition.put(Components.GAME_INTERFACE_740, this);
         return this;
     }
 
     @Override
     public boolean handle(final Player player, Component component, int opcode, int button, int slot, int itemId) {
-        switch (component.getId()) {
-            case 740:
+        switch (component.id) {
+            case Components.GAME_INTERFACE_740:
                 switch (button) {
                     case 3:
                         player.getInterfaceManager().closeChatbox();
                         break;
                 }
                 return true;
-            case 746:
+            case Components.TOPLEVEL_FULLSCREEN_746:
                 switch (button) {
                     case 12:
                         player.getPacketDispatch().sendString("When you have finished playing " + GameWorld.getSettings().getName() + ", always use the button below to logout safely. ", 182, 0);
@@ -46,7 +47,7 @@ public final class MainInterface extends ComponentPlugin {
                         break;
                 }
                 return true;
-            case 548:
+            case Components.TOPLEVEL_548:
                 if (button >= 38 && button <= 44 || button >= 20 && button <= 26) {
                     player.getInterfaceManager().setCurrentTabIndex(getTabIndex(button));
                 }
@@ -94,7 +95,7 @@ public final class MainInterface extends ComponentPlugin {
                         break;
                 }
                 return true;
-            case 750:
+            case Components.TOPSTAT_RUN_750:
                 switch (opcode) {
                     case 155:
                         switch (button) {
@@ -105,7 +106,7 @@ public final class MainInterface extends ComponentPlugin {
                         break;
                 }
                 return true;
-            case 751:
+            case Components.FILTERBUTTONS_751:
                 switch (opcode) {
                     case 155:
                         switch (button) {
@@ -129,7 +130,7 @@ public final class MainInterface extends ComponentPlugin {
             player.getPacketDispatch().sendMessage("You can't do this right now.");
             return;
         }
-        player.getInterfaceManager().openWindowsPane(new Component(755));
+        player.getInterfaceManager().openWindowsPane(new Component(Components.WORLDMAP_755));
         int posHash = (player.getLocation().getZ() << 28) | (player.getLocation().getX() << 14) | player.getLocation().getY();
         player.getPacketDispatch().sendScriptConfigs(622, posHash, "", 0);
         player.getPacketDispatch().sendScriptConfigs(674, posHash, "", 0);
@@ -141,7 +142,7 @@ public final class MainInterface extends ComponentPlugin {
      * @param player the player
      */
     public static void openReport(final Player player) {
-        player.getInterfaceManager().open(new Component(553)).setCloseEvent((player1, c) -> {
+        player.getInterfaceManager().open(new Component(Components.SNAPSHOT_MAIN_553)).setCloseEvent((player1, c) -> {
             player1.getPacketDispatch().sendRunScript(80, "");
             player1.getPacketDispatch().sendRunScript(137, "");
             return true;
@@ -149,7 +150,7 @@ public final class MainInterface extends ComponentPlugin {
         player.getPacketDispatch().sendRunScript(508, "");
         if (player.getDetails().getRights() != Rights.REGULAR_PLAYER) {
             for (int i = 0; i < 18; i++) {
-                player.getPacketDispatch().sendInterfaceConfig(553, i, false);
+                player.getPacketDispatch().sendInterfaceConfig(Components.SNAPSHOT_MAIN_553, i, false);
             }
         }
     }

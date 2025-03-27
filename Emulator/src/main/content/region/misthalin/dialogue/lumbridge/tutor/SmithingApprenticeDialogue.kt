@@ -15,7 +15,7 @@ import org.rs.consts.NPCs
 class SmithingApprenticeDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         when (getStatLevel(player, Skills.SMITHING)) {
             in 15..28 -> playerl(FaceAnim.HALF_ASKING, "I already know about the basics of smelting, got any tips?")
@@ -167,7 +167,8 @@ class SmithingApprenticeDialogue(
         return true
     }
 
-    override fun getIds(): IntArray = intArrayOf(NPCs.SMELTING_TUTOR_4904, NPCs.SMITHING_TUTOR_7959, NPCs.SMITHING_TUTOR_7970)
+    override fun getIds(): IntArray =
+        intArrayOf(NPCs.SMELTING_TUTOR_4904, NPCs.SMITHING_TUTOR_7959, NPCs.SMITHING_TUTOR_7970)
 
     companion object {
         private val ores =

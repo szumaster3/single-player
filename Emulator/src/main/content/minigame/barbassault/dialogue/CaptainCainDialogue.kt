@@ -14,7 +14,7 @@ import org.rs.consts.NPCs
 class CaptainCainDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         playerl(FaceAnim.FRIENDLY, "Hello. What's this place?")
         return true

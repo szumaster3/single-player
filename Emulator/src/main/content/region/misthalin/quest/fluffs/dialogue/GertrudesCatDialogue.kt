@@ -21,7 +21,7 @@ class GertrudesCatDialogue(
 ) : Dialogue(player) {
     private val BEND_DOWN = Animation.create(Animations.MULTI_BEND_OVER_827)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         options("Talk-with", "Pick-up", "Stroke")
         return true
@@ -130,7 +130,7 @@ class GertrudesCatDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = GertrudesCatDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = GertrudesCatDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.GERTRUDES_CAT_2997)
 }

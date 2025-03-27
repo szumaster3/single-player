@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class HydraDialogue : Dialogue {
-    override fun newInstance(player: Player): Dialogue {
+    override fun newInstance(player: Player?): Dialogue {
         return HydraDialogue(player)
     }
 
@@ -29,7 +29,7 @@ class HydraDialogue : Dialogue {
      */
     constructor(player: Player?) : super(player)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         when ((Math.random() * 4).toInt()) {
             0 -> {
@@ -55,7 +55,10 @@ class HydraDialogue : Dialogue {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(
+        interfaceId: Int,
+        buttonId: Int,
+    ): Boolean {
         when (stage) {
             0 -> {
                 playerl(FaceAnim.FRIENDLY, "Not really!")
@@ -66,7 +69,7 @@ class HydraDialogue : Dialogue {
                 npc(
                     FaceAnim.CHILD_NORMAL,
                     "Raaasp raaaaap raaaasp?",
-                    "(Well I suppose you work with what you got, right?)"
+                    "(Well I suppose you work with what you got, right?)",
                 )
                 stage++
             }
@@ -75,7 +78,7 @@ class HydraDialogue : Dialogue {
                 npc(
                     FaceAnim.CHILD_NORMAL,
                     "Raaaaaasp raaaasp raaaasp.",
-                    "(At least he doesn't have someone whittering in their ear all the time.)"
+                    "(At least he doesn't have someone whittering in their ear all the time.)",
                 )
                 stage++
             }
@@ -104,7 +107,7 @@ class HydraDialogue : Dialogue {
                 npc(
                     FaceAnim.CHILD_NORMAL,
                     "Raaaaasp sss rassssp.",
-                    "(Don't pay any attention, they are just feeling whiny.)"
+                    "(Don't pay any attention, they are just feeling whiny.)",
                 )
                 stage++
             }
@@ -123,7 +126,7 @@ class HydraDialogue : Dialogue {
                 npc(
                     FaceAnim.CHILD_NORMAL,
                     "Raaaasp rassssp sssssp....",
-                    "(Unless you're the one doing all the heavy thinking....)"
+                    "(Unless you're the one doing all the heavy thinking....)",
                 )
                 stage++
             }
@@ -147,7 +150,7 @@ class HydraDialogue : Dialogue {
                 npc(
                     FaceAnim.CHILD_NORMAL,
                     "Rasssp ssssssp? raaaaasp raaaasp.",
-                    "(Do you mind? This is a private conversation.)"
+                    "(Do you mind? This is a private conversation.)",
                 )
                 stage++
             }

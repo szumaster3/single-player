@@ -109,7 +109,7 @@ class OrbViewingInterface : ComponentPlugin() {
         player: Player,
         interfaceId: Int,
     ) {
-        val component = Component(interfaceId).setCloseEvent(ViewCloseEvent())
+        val component = Component(interfaceId).setUncloseEvent(ViewCloseEvent())
         setAttribute(player, "view-location", player.location)
         player.interfaceManager.openSingleTab(component)
         player.pulseManager.run(

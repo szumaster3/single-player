@@ -14,7 +14,7 @@ import java.util.*
  */
 @Initializable
 class BullAntDialogue : Dialogue {
-    override fun newInstance(player: Player): Dialogue {
+    override fun newInstance(player: Player?): Dialogue {
         return BullAntDialogue(player)
     }
 
@@ -30,7 +30,7 @@ class BullAntDialogue : Dialogue {
      */
     constructor(player: Player?) : super(player)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (player.settings.runEnergy < 50) {
             npcl(FaceAnim.CHILD_NORMAL, "What's the matter, Private? Not enjoying the run?")
@@ -56,7 +56,7 @@ class BullAntDialogue : Dialogue {
             3 -> {
                 npcl(
                     FaceAnim.CHILD_NORMAL,
-                    "What in the name of all the layers of the abyss do you think you're doing, biped?"
+                    "What in the name of all the layers of the abyss do you think you're doing, biped?",
                 )
                 stage = 17
             }
@@ -64,7 +64,10 @@ class BullAntDialogue : Dialogue {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(
+        interfaceId: Int,
+        buttonId: Int,
+    ): Boolean {
         when (stage) {
             0 -> {
                 playerl(FaceAnim.FRIENDLY, "Sir...wheeze...yes Sir!")
@@ -124,7 +127,7 @@ class BullAntDialogue : Dialogue {
             11 -> {
                 npcl(
                     FaceAnim.CHILD_NORMAL,
-                    "What in the name of all the layers of the abyss do you think you're doing, biped?"
+                    "What in the name of all the layers of the abyss do you think you're doing, biped?",
                 )
                 stage++
             }

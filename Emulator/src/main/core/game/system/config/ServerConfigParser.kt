@@ -45,7 +45,11 @@ object ServerConfigParser {
                 } else if (!jvmString.contains(".")) {
                     ServerConstants.JAVA_VERSION = jvmString.toInt()
                 }
-                log(this::class.java, Log.FINE, "It seems we are in a Java [${ServerConstants.JAVA_VERSION}] environment.")
+                log(
+                    this::class.java,
+                    Log.FINE,
+                    "It seems we are in a Java ${ServerConstants.JAVA_VERSION} environment.",
+                )
             } catch (e: java.lang.IllegalStateException) {
                 log(this::class.java, Log.ERR, "Passed config file is not a TOML file. Path: ${confFile.canonicalPath}")
                 log(this::class.java, Log.ERR, "Exception received: $e")

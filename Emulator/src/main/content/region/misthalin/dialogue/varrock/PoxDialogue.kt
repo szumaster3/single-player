@@ -12,7 +12,7 @@ import org.rs.consts.NPCs
 class PoxDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         player(FaceAnim.HALF_GUILTY, "Hi cat!")
         return true
@@ -28,7 +28,7 @@ class PoxDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = PoxDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = PoxDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.POX_2943)
 }

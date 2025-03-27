@@ -13,21 +13,37 @@ import core.game.node.entity.player.link.request.RequestType
 
 class PlayerOption : InteractionListener {
     override fun defineListeners() {
+        /*
+         * Handles attacking the other player.
+         */
+
         on(IntType.PLAYER, _P_ATTACK.name) { player, node ->
             player.attack(node)
             return@on true
         }
+
+        /*
+         * Handles trade with the other player.
+         */
 
         on(IntType.PLAYER, _P_TRADE.name) { player, node ->
             player.requestManager.request((node as Player), RequestType.TRADE)
             return@on true
         }
 
+        /*
+         * Handles assists with the other player.
+         */
+
         on(IntType.PLAYER, _P_ASSIST.name) { player, node ->
             if (node is AIPlayer) AIRepository.sendBotInfo(player, node)
             player.requestManager.request((node as Player), RequestType.ASSIST)
             return@on true
         }
+
+        /*
+         * Handles following the player.
+         */
 
         on(IntType.PLAYER, _P_FOLLOW.name) { player, node ->
             val target = node as Player

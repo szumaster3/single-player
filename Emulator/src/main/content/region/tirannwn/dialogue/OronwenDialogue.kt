@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
 class OronwenDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(FaceAnim.FRIENDLY, "Hello, can I help?")
         return true
@@ -39,7 +39,7 @@ class OronwenDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = OronwenDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = OronwenDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.ORONWEN_2353)
 }

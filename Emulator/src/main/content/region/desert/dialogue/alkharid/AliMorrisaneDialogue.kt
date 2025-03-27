@@ -14,7 +14,7 @@ import org.rs.consts.Quests
 class AliMorrisaneDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npcl(FaceAnim.FRIENDLY, "Good day and welcome back to Al Kharid.")
         return true

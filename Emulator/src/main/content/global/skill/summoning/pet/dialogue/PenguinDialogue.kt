@@ -32,7 +32,7 @@ class PenguinDialogue(
         )
     private val snowyRegion = intArrayOf(11830, 11318, 11066, 11067, 11068)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         when ((0..3).random()) {
             0 -> npc(FaceAnim.CHILD_NORMAL, "Awk Awk!", "(This is fun!)").also { stage = 0 }

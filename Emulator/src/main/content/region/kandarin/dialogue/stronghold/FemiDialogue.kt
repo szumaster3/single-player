@@ -17,7 +17,7 @@ import org.rs.consts.Quests
 class FemiDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (inBorders(player!!, 2456, 3406, 2462, 3410)) {
             if (getQuestStage(player, Quests.THE_GRAND_TREE) == 55) {

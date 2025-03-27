@@ -14,7 +14,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class IceTitanDialogue : Dialogue {
-    override fun newInstance(player: Player): Dialogue {
+    override fun newInstance(player: Player?): Dialogue {
         return IceTitanDialogue(player)
     }
 
@@ -30,7 +30,7 @@ class IceTitanDialogue : Dialogue {
      */
     constructor(player: Player?) : super(player)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (inBorders(player, 3113, 2753, 3391, 3004)) {
             npcl(FaceAnim.CHILD_NORMAL, "I'm melting!")
@@ -61,7 +61,10 @@ class IceTitanDialogue : Dialogue {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(
+        interfaceId: Int,
+        buttonId: Int,
+    ): Boolean {
         when (stage) {
             0 -> {
                 playerl(FaceAnim.FRIENDLY, "I have to admit, I am rather on the hot side myself.")
@@ -281,7 +284,7 @@ class IceTitanDialogue : Dialogue {
             43 -> {
                 npcl(
                     FaceAnim.CHILD_NORMAL,
-                    "Well, it's alright for some. Some of us don't like the heat. I burn easily - well, okay, melt."
+                    "Well, it's alright for some. Some of us don't like the heat. I burn easily - well, okay, melt.",
                 )
                 stage++
             }

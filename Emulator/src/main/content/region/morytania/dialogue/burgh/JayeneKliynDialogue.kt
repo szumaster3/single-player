@@ -14,7 +14,7 @@ import org.rs.consts.NPCs
 class JayeneKliynDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         player("Hello there. What are you doing here?")
         return true
@@ -100,7 +100,7 @@ class JayeneKliynDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = JayeneKliynDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = JayeneKliynDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.JAYENE_KLIYN_3628)
 }

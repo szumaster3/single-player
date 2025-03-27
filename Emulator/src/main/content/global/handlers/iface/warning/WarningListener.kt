@@ -165,9 +165,18 @@ class WarningListener :
                             Components.CWS_WARNING_4_579 -> {
                                 val ladderLocation =
                                     when {
-                                        inBorders(player, ZoneBorders(1836, 5174, 1930, 5257)) -> Location.create(2042, 5245, 0)
-                                        inBorders(player, ZoneBorders(1977, 5176, 2066, 5265)) -> Location.create(2123, 5252, 0)
-                                        inBorders(player, ZoneBorders(2090, 5246, 2197, 5336)) -> Location.create(2358, 5215, 0)
+                                        inBorders(
+                                            player,
+                                            ZoneBorders(1836, 5174, 1930, 5257),
+                                        ) -> Location.create(2042, 5245, 0)
+                                        inBorders(
+                                            player,
+                                            ZoneBorders(1977, 5176, 2066, 5265),
+                                        ) -> Location.create(2123, 5252, 0)
+                                        inBorders(
+                                            player,
+                                            ZoneBorders(2090, 5246, 2197, 5336),
+                                        ) -> Location.create(2358, 5215, 0)
                                         else -> null
                                     }
                                 climb(player, Animation(Animations.MULTI_BEND_OVER_827), ladderLocation)

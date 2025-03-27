@@ -11,7 +11,7 @@ import org.rs.consts.NPCs
 class StreetUrchinDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         sendDialogue(player, "This child doesn't seem interested in you.").also { stage = END_DIALOGUE }
         return true
     }

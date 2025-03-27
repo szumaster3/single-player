@@ -10,7 +10,7 @@ import org.rs.consts.NPCs
 class BankerTutorDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc("Good day, would you like to access your bank account?")
         return true

@@ -12,7 +12,7 @@ import org.rs.consts.NPCs
 class SandyDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(FaceAnim.HALF_GUILTY, "Nice day for sand isn't it?").also { stage = END_DIALOGUE }
         return true

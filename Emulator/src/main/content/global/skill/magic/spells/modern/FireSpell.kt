@@ -21,7 +21,6 @@ import org.rs.consts.Sounds
  */
 @Initializable
 class FireSpell : CombatSpell {
-
     constructor()
 
     private constructor(
@@ -32,7 +31,7 @@ class FireSpell : CombatSpell {
         start: Graphics,
         projectile: Projectile,
         end: Graphics,
-        vararg runes: Item
+        vararg runes: Item,
     ) : super(
         type,
         SpellBook.MODERN,
@@ -44,10 +43,14 @@ class FireSpell : CombatSpell {
         start,
         projectile,
         end,
-        *runes
+        *runes,
     )
 
-    override fun getMaximumImpact(entity: Entity, victim: Entity, state: BattleState): Int {
+    override fun getMaximumImpact(
+        entity: Entity,
+        victim: Entity,
+        state: BattleState,
+    ): Int {
         return getType().getImpactAmount(entity, victim, 4)
     }
 
@@ -65,8 +68,8 @@ class FireSpell : CombatSpell {
                 STRIKE_END,
                 Runes.MIND_RUNE.getItem(1),
                 Runes.FIRE_RUNE.getItem(3),
-                Runes.AIR_RUNE.getItem(2)
-            )
+                Runes.AIR_RUNE.getItem(2),
+            ),
         )
         SpellBook.MODERN.register(
             20,
@@ -80,8 +83,8 @@ class FireSpell : CombatSpell {
                 BOLT_END,
                 Runes.CHAOS_RUNE.getItem(1),
                 Runes.FIRE_RUNE.getItem(4),
-                Runes.AIR_RUNE.getItem(3)
-            )
+                Runes.AIR_RUNE.getItem(3),
+            ),
         )
         SpellBook.MODERN.register(
             38,
@@ -95,8 +98,8 @@ class FireSpell : CombatSpell {
                 BLAST_END,
                 Runes.DEATH_RUNE.getItem(1),
                 Runes.FIRE_RUNE.getItem(5),
-                Runes.AIR_RUNE.getItem(4)
-            )
+                Runes.AIR_RUNE.getItem(4),
+            ),
         )
         SpellBook.MODERN.register(
             55,
@@ -110,64 +113,68 @@ class FireSpell : CombatSpell {
                 WAVE_END,
                 Runes.BLOOD_RUNE.getItem(1),
                 Runes.FIRE_RUNE.getItem(7),
-                Runes.AIR_RUNE.getItem(5)
-            )
+                Runes.AIR_RUNE.getItem(5),
+            ),
         )
         return this
     }
 
     companion object {
         private val STRIKE_START = Graphics(org.rs.consts.Graphics.FIRE_STRIKE_CAST_99, 96)
-        private val STRIKE_PROJECTILE: Projectile = Projectile.create(
-            null as Entity?,
-            null,
-            org.rs.consts.Graphics.FIRE_STRIKE_PROJECTILE_100,
-            40,
-            36,
-            52,
-            75,
-            15,
-            11
-        )
+        private val STRIKE_PROJECTILE: Projectile =
+            Projectile.create(
+                null as Entity?,
+                null,
+                org.rs.consts.Graphics.FIRE_STRIKE_PROJECTILE_100,
+                40,
+                36,
+                52,
+                75,
+                15,
+                11,
+            )
         private val STRIKE_END = Graphics(org.rs.consts.Graphics.FIRE_STRIKE_IMPACT_101, 96)
         private val BOLT_START = Graphics(org.rs.consts.Graphics.FIRE_BOLT_CAST_126, 96)
-        private val BOLT_PROJECTILE: Projectile = Projectile.create(
-            null as Entity?,
-            null,
-            org.rs.consts.Graphics.FIRE_BOLT_PROJECTILE_127,
-            40,
-            36,
-            52,
-            75,
-            15,
-            11
-        )
+        private val BOLT_PROJECTILE: Projectile =
+            Projectile.create(
+                null as Entity?,
+                null,
+                org.rs.consts.Graphics.FIRE_BOLT_PROJECTILE_127,
+                40,
+                36,
+                52,
+                75,
+                15,
+                11,
+            )
         private val BOLT_END = Graphics(org.rs.consts.Graphics.FIRE_BOLT_IMPACT_128, 96)
         private val BLAST_START = Graphics(org.rs.consts.Graphics.FIRE_BLAST_CAST_129, 96)
-        private val BLAST_PROJECTILE: Projectile = Projectile.create(
-            null as Entity?,
-            null,
-            org.rs.consts.Graphics.FIRE_BLAST_PROJECTILE_130,
-            40,
-            36,
-            52,
-            75,
-            15,
-            11
-        )
+        private val BLAST_PROJECTILE: Projectile =
+            Projectile.create(
+                null as Entity?,
+                null,
+                org.rs.consts.Graphics.FIRE_BLAST_PROJECTILE_130,
+                40,
+                36,
+                52,
+                75,
+                15,
+                11,
+            )
         private val BLAST_END = Graphics(org.rs.consts.Graphics.FIRE_BLAST_IMPACT_131, 96)
         private val WAVE_START = Graphics(org.rs.consts.Graphics.FIRE_WAVE_CAST_155, 96)
-        private val WAVE_PROJECTILE: Projectile = Projectile.create(
-            null as Entity?,
-            null,
-            org.rs.consts.Graphics.FIRE_WAVE_PROJECTILE_156,
-            40,
-            36,
-            52,
-            75,
-            15,
-            11
-        )
+        private val WAVE_PROJECTILE: Projectile =
+            Projectile.create(
+                null as Entity?,
+                null,
+                org.rs.consts.Graphics.FIRE_WAVE_PROJECTILE_156,
+                40,
+                36,
+                52,
+                75,
+                15,
+                11,
+            )
         private val WAVE_END = Graphics(org.rs.consts.Graphics.FIRE_WAVE_IMPACT_157, 96)
         private val ANIMATION = Animation(Animations.CAST_SPELL_711, Priority.HIGH)
     }

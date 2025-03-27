@@ -12,7 +12,7 @@ import org.rs.consts.NPCs
 class HariDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(FaceAnim.HALF_GUILTY, "Hello.")
         return true
@@ -90,7 +90,7 @@ class HariDialogue(
         return true
     }
 
-    override fun newInstance(player: Player): Dialogue = HariDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = HariDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.HARI_3330)
 }

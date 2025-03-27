@@ -59,7 +59,7 @@ class ShoeStoreInterface : ComponentPlugin() {
             player.toggleWardrobe(true)
         }
 
-        component.setCloseEvent { p, _ ->
+        component.setUncloseEvent { p, _ ->
             p.toggleWardrobe(false)
             playGlobalAudio(player.location, Sounds.WARDROBE_CLOSE_95, 1)
             if (!getAttribute(player, paymentCheck, false)) {

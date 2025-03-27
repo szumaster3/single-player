@@ -17,7 +17,7 @@ import java.util.*
  */
 @Initializable
 class BunyipDialogue : Dialogue {
-    override fun newInstance(player: Player): Dialogue {
+    override fun newInstance(player: Player?): Dialogue {
         return BunyipDialogue(player)
     }
 
@@ -33,7 +33,7 @@ class BunyipDialogue : Dialogue {
      */
     constructor(player: Player?) : super(player)
 
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (anyInEquipment(player, *fishes)) {
             npcl(FaceAnim.CHILD_NORMAL, "I see you've got some fish there, mate.")
@@ -64,7 +64,10 @@ class BunyipDialogue : Dialogue {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(
+        interfaceId: Int,
+        buttonId: Int,
+    ): Boolean {
         when (stage) {
             0 -> {
                 playerl(FaceAnim.FRIENDLY, "Yeah, but I might cook them up before I give them to you!")
@@ -89,7 +92,7 @@ class BunyipDialogue : Dialogue {
             4 -> {
                 playerl(
                     FaceAnim.FRIENDLY,
-                    "Well, we have a fair few places to go, but I suppose we could go to the beach if we get time."
+                    "Well, we have a fair few places to go, but I suppose we could go to the beach if we get time.",
                 )
                 stage++
             }
@@ -102,7 +105,7 @@ class BunyipDialogue : Dialogue {
             6 -> {
                 playerl(
                     FaceAnim.FRIENDLY,
-                    "Well, even if we do go to the beach I don't know if we'll have time for that."
+                    "Well, even if we do go to the beach I don't know if we'll have time for that.",
                 )
                 stage++
             }
@@ -170,6 +173,10 @@ class BunyipDialogue : Dialogue {
     }
 
     companion object {
-        private val fishes: IntArray = fishMap.values.stream().mapToInt { fish: Fish -> fish.id }.toArray()
+        private val fishes: IntArray =
+            fishMap.values
+                .stream()
+                .mapToInt { fish: Fish -> fish.id }
+                .toArray()
     }
 }

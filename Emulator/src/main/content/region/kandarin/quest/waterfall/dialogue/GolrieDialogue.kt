@@ -16,7 +16,7 @@ import org.rs.consts.NPCs
 class GolrieDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    override fun open(vararg args: Any): Boolean {
+    override fun open(vararg args: Any?): Boolean {
         player(FaceAnim.NEUTRAL, "Hello, is your name Golrie?")
         return true
     }
