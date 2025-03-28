@@ -114,7 +114,7 @@ class RunecraftingPlugin : OptionHandler() {
 
     private fun addNodes() {
         for (altar in Altar.values()) {
-            SceneryDefinition.forId(altar.objs).handlers["option:craft-rune"] = this
+            SceneryDefinition.forId(altar.scenery).handlers["option:craft-rune"] = this
             SceneryDefinition.forId(altar.exit).handlers["option:use"] = this
         }
         for (talisman in Talisman.values()) {

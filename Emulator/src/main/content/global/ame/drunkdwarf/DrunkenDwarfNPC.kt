@@ -9,6 +9,7 @@ import core.api.utils.WeightBasedTable
 import core.game.node.entity.npc.NPC
 import core.game.world.update.flag.context.Animation
 import core.tools.RandomFunction
+import org.rs.consts.Animations
 import org.rs.consts.NPCs
 import org.rs.consts.Sounds
 
@@ -22,7 +23,7 @@ class DrunkenDwarfNPC(
             "I hates you @name!",
             "Aww comeon, talk to ikle me @name!",
         )
-    private val dwarfWave = Animation(105)
+    private val dwarfWave = Animation(Animations.DWARF_WAVE_105)
     private var attackPhrase = false
     private var attackDelay = 0
     private var lastPhraseTime = 0

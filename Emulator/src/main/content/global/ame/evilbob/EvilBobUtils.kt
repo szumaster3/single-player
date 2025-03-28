@@ -9,6 +9,7 @@ import core.game.world.map.zone.ZoneBorders
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
 import core.tools.RandomFunction
+import org.rs.consts.Animations
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Scenery
@@ -24,8 +25,8 @@ object EvilBobUtils {
     val fishlikeThings = intArrayOf(Items.FISHLIKE_THING_6202, Items.FISHLIKE_THING_6206)
     val rawFishlikeThings = intArrayOf(Items.RAW_FISHLIKE_THING_6200, Items.RAW_FISHLIKE_THING_6204)
 
-    val cookAnim = Animation(897)
-    val fishAnim = Animation(1903)
+    val cookAnim = Animation(Animations.OLD_COOK_FIRE_897)
+    val fishAnim = Animation(Animations.NET_FISHING_1903)
     val teleAnim = Animation(714)
     val telegfx = Graphics(308, 100, 50)
 

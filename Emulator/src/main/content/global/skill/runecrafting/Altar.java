@@ -20,127 +20,61 @@ public enum Altar {
     /**
      * Air altar.
      */
-    AIR(
-            org.rs.consts.Scenery.AIR_ALTAR_2478,
-            org.rs.consts.Scenery.AIR_ALTAR_EXIT_2465,
-            org.rs.consts.Scenery.AIR_RIFT_7139,
-            MysteriousRuins.AIR, Rune.AIR
-    ),
+    AIR(org.rs.consts.Scenery.AIR_ALTAR_2478, org.rs.consts.Scenery.AIR_ALTAR_EXIT_2465, org.rs.consts.Scenery.AIR_RIFT_7139, MysteriousRuins.AIR, Rune.AIR),
     /**
      * Mind altar.
      */
-    MIND(
-            org.rs.consts.Scenery.MIND_ALTAR_2479,
-            org.rs.consts.Scenery.MIND_ALTAR_EXIT_2466,
-            org.rs.consts.Scenery.MIND_RIFT_7140,
-            MysteriousRuins.MIND, Rune.MIND
-    ),
+    MIND(org.rs.consts.Scenery.MIND_ALTAR_2479, org.rs.consts.Scenery.MIND_ALTAR_EXIT_2466, org.rs.consts.Scenery.MIND_RIFT_7140, MysteriousRuins.MIND, Rune.MIND),
     /**
      * Water altar.
      */
-    WATER(
-            org.rs.consts.Scenery.WATER_ALTAR_2480,
-            org.rs.consts.Scenery.WATER_ALTAR_EXIT_2467,
-            org.rs.consts.Scenery.WATER_RIFT_7137,
-            MysteriousRuins.WATER, Rune.WATER
-    ),
+    WATER(org.rs.consts.Scenery.WATER_ALTAR_2480, org.rs.consts.Scenery.WATER_ALTAR_EXIT_2467, org.rs.consts.Scenery.WATER_RIFT_7137, MysteriousRuins.WATER, Rune.WATER),
     /**
      * Earth altar.
      */
-    EARTH(
-            org.rs.consts.Scenery.EARTH_ALTAR_2481,
-            org.rs.consts.Scenery.EARTH_ALTAR_EXIT_2468,
-            org.rs.consts.Scenery.EARTH_RIFT_7130,
-            MysteriousRuins.EARTH, Rune.EARTH
-    ),
+    EARTH(org.rs.consts.Scenery.EARTH_ALTAR_2481, org.rs.consts.Scenery.EARTH_ALTAR_EXIT_2468, org.rs.consts.Scenery.EARTH_RIFT_7130, MysteriousRuins.EARTH, Rune.EARTH),
     /**
      * Fire altar.
      */
-    FIRE(
-            org.rs.consts.Scenery.FIRE_ALTAR_2482,
-            org.rs.consts.Scenery.FIRE_ALTAR_EXIT_2469,
-            org.rs.consts.Scenery.FIRE_RIFT_7129,
-            MysteriousRuins.FIRE, Rune.FIRE
-    ),
+    FIRE(org.rs.consts.Scenery.FIRE_ALTAR_2482, org.rs.consts.Scenery.FIRE_ALTAR_EXIT_2469, org.rs.consts.Scenery.FIRE_RIFT_7129, MysteriousRuins.FIRE, Rune.FIRE),
     /**
      * Body altar.
      */
-    BODY(
-            org.rs.consts.Scenery.BODY_ALTAR_2483,
-            org.rs.consts.Scenery.BODY_ALTAR_EXIT_2470,
-            org.rs.consts.Scenery.BODY_RIFT_7131,
-            MysteriousRuins.BODY, Rune.BODY
-    ),
+    BODY(org.rs.consts.Scenery.BODY_ALTAR_2483, org.rs.consts.Scenery.BODY_ALTAR_EXIT_2470, org.rs.consts.Scenery.BODY_RIFT_7131, MysteriousRuins.BODY, Rune.BODY),
     /**
      * Cosmic altar.
      */
-    COSMIC(
-            org.rs.consts.Scenery.COSMIC_ALTAR_2484,
-            org.rs.consts.Scenery.COSMIC_ALTAR_EXIT_2471,
-            org.rs.consts.Scenery.COSMIC_RIFT_7132,
-            MysteriousRuins.COSMIC, Rune.COSMIC
-    ),
+    COSMIC(org.rs.consts.Scenery.COSMIC_ALTAR_2484, org.rs.consts.Scenery.COSMIC_ALTAR_EXIT_2471, org.rs.consts.Scenery.COSMIC_RIFT_7132, MysteriousRuins.COSMIC, Rune.COSMIC),
     /**
      * Chaos altar.
      */
-    CHAOS(
-            org.rs.consts.Scenery.CHAOS_ALTAR_2487,
-            org.rs.consts.Scenery.CHAOS_ALTAR_EXIT_2474,
-            org.rs.consts.Scenery.CHAOS_RIFT_7134,
-            MysteriousRuins.CHAOS, Rune.CHAOS
-    ),
+    CHAOS(org.rs.consts.Scenery.CHAOS_ALTAR_2487, org.rs.consts.Scenery.CHAOS_ALTAR_EXIT_2474, org.rs.consts.Scenery.CHAOS_RIFT_7134, MysteriousRuins.CHAOS, Rune.CHAOS),
     /**
      * Astral altar.
      */
-    ASTRAL(
-            org.rs.consts.Scenery.ALTAR_17010,
-            0, 0, null, Rune.ASTRAL
-    ),
+    ASTRAL(org.rs.consts.Scenery.ALTAR_17010, 0, 0, null, Rune.ASTRAL),
     /**
      * Nature altar.
      */
-    NATURE(
-            org.rs.consts.Scenery.NATURE_ALTAR_2486,
-            org.rs.consts.Scenery.NATURE_ALTAR_EXIT_2473,
-            org.rs.consts.Scenery.NATURE_RIFT_7133,
-            MysteriousRuins.NATURE, Rune.NATURE
-    ),
+    NATURE(org.rs.consts.Scenery.NATURE_ALTAR_2486, org.rs.consts.Scenery.NATURE_ALTAR_EXIT_2473, org.rs.consts.Scenery.NATURE_RIFT_7133, MysteriousRuins.NATURE, Rune.NATURE),
     /**
      * Law altar.
      */
-    LAW(
-            org.rs.consts.Scenery.LAW_ALTAR_2485,
-            org.rs.consts.Scenery.LAW_PORTAL_EXIT_2472,
-            org.rs.consts.Scenery.LAW_RIFT_7135,
-            MysteriousRuins.LAW, Rune.LAW
-    ),
+    LAW(org.rs.consts.Scenery.LAW_ALTAR_2485, org.rs.consts.Scenery.LAW_PORTAL_EXIT_2472, org.rs.consts.Scenery.LAW_RIFT_7135, MysteriousRuins.LAW, Rune.LAW),
     /**
      * Death altar.
      */
-    DEATH(
-            org.rs.consts.Scenery.DEATH_ALTAR_2488,
-            org.rs.consts.Scenery.DEATH_ALTAR_EXIT_2475,
-            org.rs.consts.Scenery.DEATH_RIFT_7136,
-            MysteriousRuins.DEATH, Rune.DEATH
-    ),
+    DEATH(org.rs.consts.Scenery.DEATH_ALTAR_2488, org.rs.consts.Scenery.DEATH_ALTAR_EXIT_2475, org.rs.consts.Scenery.DEATH_RIFT_7136, MysteriousRuins.DEATH, Rune.DEATH),
     /**
      * Blood altar.
      */
-    BLOOD(
-            org.rs.consts.Scenery.BLOOD_ALTAR_30624,
-            org.rs.consts.Scenery.BLOOD_ALTAR_EXIT_2477,
-            org.rs.consts.Scenery.BLOOD_RIFT_7141,
-            MysteriousRuins.BLOOD, Rune.BLOOD
-    ),
+    BLOOD(org.rs.consts.Scenery.BLOOD_ALTAR_30624, org.rs.consts.Scenery.BLOOD_ALTAR_EXIT_2477, org.rs.consts.Scenery.BLOOD_RIFT_7141, MysteriousRuins.BLOOD, Rune.BLOOD),
     /**
      * Ourania altar.
      */
-    OURANIA(
-            org.rs.consts.Scenery.OURANIA_ALTAR_26847,
-            0, 0, null, null
-    );
+    OURANIA(org.rs.consts.Scenery.OURANIA_ALTAR_26847, 0, 0, null, null);
 
-    private final int objs;
+    private final int scenery;
     private final int exit;
     private final int rift;
     private final MysteriousRuins ruin;
@@ -152,14 +86,14 @@ public enum Altar {
 
     static {
         for (Altar altar : values()) {
-            ALTAR_BY_SCENERY.put(altar.objs, altar);
+            ALTAR_BY_SCENERY.put(altar.scenery, altar);
             ALTAR_BY_PORTAL.put(altar.exit, altar);
             ALTAR_BY_RIFT_ID.put(altar.rift, altar);
         }
     }
 
-    Altar(int objs, int exit, int rift, MysteriousRuins ruin, Rune rune) {
-        this.objs = objs;
+    Altar(int scenery, int exit, int rift, MysteriousRuins ruin, Rune rune) {
+        this.scenery = scenery;
         this.exit = exit;
         this.rift = rift;
         this.ruin = ruin;
@@ -173,13 +107,7 @@ public enum Altar {
      * @return the altar
      */
     public static Altar forScenery(Scenery scenery) {
-        return ALTAR_BY_SCENERY.getOrDefault(
-                scenery.getId(),
-                ALTAR_BY_PORTAL.getOrDefault(
-                        scenery.getId(),
-                        ALTAR_BY_RIFT_ID.get(scenery.getId())
-                )
-        );
+        return ALTAR_BY_SCENERY.getOrDefault(scenery.getId(), ALTAR_BY_PORTAL.getOrDefault(scenery.getId(), ALTAR_BY_RIFT_ID.get(scenery.getId())));
     }
 
     /**
@@ -228,12 +156,12 @@ public enum Altar {
     }
 
     /**
-     * Gets objs.
+     * Gets scenery.
      *
-     * @return the objs
+     * @return the scenery
      */
-    public int getObjs() {
-        return objs;
+    public int getScenery() {
+        return scenery;
     }
 
     /**
@@ -278,10 +206,7 @@ public enum Altar {
      * @return the talisman
      */
     public Talisman getTalisman() {
-        return Arrays.stream(Talisman.values())
-                .filter(talisman -> talisman.name().equalsIgnoreCase(this.name()))
-                .findFirst()
-                .orElse(null);
+        return Arrays.stream(Talisman.values()).filter(talisman -> talisman.name().equalsIgnoreCase(this.name())).findFirst().orElse(null);
     }
 
     /**
@@ -290,9 +215,6 @@ public enum Altar {
      * @return the tiara
      */
     public Tiara getTiara() {
-        return Arrays.stream(Tiara.values())
-                .filter(tiara -> tiara.name().equalsIgnoreCase(this.name()))
-                .findFirst()
-                .orElse(null);
+        return Arrays.stream(Tiara.values()).filter(tiara -> tiara.name().equalsIgnoreCase(this.name())).findFirst().orElse(null);
     }
 }

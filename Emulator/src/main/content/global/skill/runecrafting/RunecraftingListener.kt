@@ -49,7 +49,7 @@ class RunecraftingListener : InteractionListener {
         TalismanStaves.values().forEach { item ->
             val altar = map(item)
             altar?.let {
-                onUseWith(IntType.SCENERY, item.items.id, it.objs) { player, used, _ ->
+                onUseWith(IntType.SCENERY, item.items.id, it.scenery) { player, used, _ ->
                     setTitle(player, 2)
                     sendDialogueOptions(player, "Do you want to enchant a tiara or staff?", "Tiara.", "Staff.")
                     addDialogueAction(player) { p, button ->

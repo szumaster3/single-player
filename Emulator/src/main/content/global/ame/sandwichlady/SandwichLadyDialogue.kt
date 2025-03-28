@@ -10,11 +10,12 @@ import core.game.node.item.GroundItemManager
 import core.game.node.item.Item
 import core.game.system.timer.impl.AntiMacro
 import core.tools.END_DIALOGUE
+import org.rs.consts.Components
 
 class SandwichLadyDialogue(
     val isChoice: Boolean,
 ) : DialogueFile() {
-    val SANDWICH_INTERFACE = 297
+    private val sandwichInterface = Components.MACRO_SANDWICH_TRAY_297
 
     override fun handle(
         componentID: Int,
@@ -27,7 +28,7 @@ class SandwichLadyDialogue(
                 0 -> npc("Have a ${ItemDefinition.forId(assigned).name.lowercase()}, dear.").also { stage++ }
                 1 -> {
                     end()
-                    openInterface(player!!, SANDWICH_INTERFACE)
+                    openInterface(player!!, sandwichInterface)
                 }
             }
         } else {

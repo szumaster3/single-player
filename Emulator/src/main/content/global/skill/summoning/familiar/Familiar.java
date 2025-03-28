@@ -29,6 +29,7 @@ import core.game.world.update.flag.context.Graphics;
 import core.plugin.Plugin;
 import core.tools.Log;
 import core.tools.RandomFunction;
+import org.rs.consts.Animations;
 import org.rs.consts.Sounds;
 
 import java.util.ArrayList;
@@ -42,21 +43,21 @@ import static core.api.ContentAPIKt.*;
 public abstract class Familiar extends NPC implements Plugin<Object> {
 
     /**
-     * The constant SMALL_SUMMON_GRAPHICS.
+     * The constant small summon graphics.
      */
-    protected static final Graphics SMALL_SUMMON_GRAPHICS = Graphics.create(1314);
+    protected static final Graphics SMALL_SUMMON_GRAPHICS = Graphics.create(org.rs.consts.Graphics.SMALL_BLUE_SUMMON_FAMILIAR_GRAPHIC_1314);
     /**
-     * The constant LARGE_SUMMON_GRAPHICS.
+     * The constant large summon graphics.
      */
-    protected static final Graphics LARGE_SUMMON_GRAPHICS = Graphics.create(1315);
+    protected static final Graphics LARGE_SUMMON_GRAPHICS = Graphics.create(org.rs.consts.Graphics.BIG_BLUE_SUMMON_FAMILIAR_GRAPHIC_1315);
     /**
-     * The constant SPECIAL_ANIMATION.
+     * The constant special animation.
      */
-    protected static final Animation SPECIAL_ANIMATION = Animation.create(7660);
+    protected static final Animation SPECIAL_ANIMATION = Animation.create(Animations.CAST_FAMILIAR_SCROLL_7660);
     /**
-     * The constant SPECIAL_GRAPHICS.
+     * The constant special graphics.
      */
-    protected static final Graphics SPECIAL_GRAPHICS = Graphics.create(1316);
+    protected static final Graphics SPECIAL_GRAPHICS = Graphics.create(org.rs.consts.Graphics.FRUIT_BAT_SPECIAL_1316);
 
     /**
      * The Owner.

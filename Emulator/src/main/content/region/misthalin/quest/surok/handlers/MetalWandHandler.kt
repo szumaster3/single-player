@@ -14,7 +14,7 @@ import org.rs.consts.Sounds
 class MetalWandHandler : UseWithHandler(WhatLiesBelowListener.WAND) {
     @Throws(Throwable::class)
     override fun newInstance(arg: Any?): Plugin<Any> {
-        addHandler(Altar.CHAOS.objs, OBJECT_TYPE, this)
+        addHandler(Altar.CHAOS.scenery, OBJECT_TYPE, this)
         return this
     }
 

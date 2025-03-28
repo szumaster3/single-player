@@ -20,7 +20,7 @@ class CombinationHandler :
     ) {
     override fun newInstance(arg: Any?): Plugin<Any> {
         for (altar in Altar.values()) {
-            addHandler(altar.objs, OBJECT_TYPE, this)
+            addHandler(altar.scenery, OBJECT_TYPE, this)
         }
         return this
     }
