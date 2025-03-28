@@ -45,7 +45,7 @@ import org.rs.consts.Quests
 
 @Initializable
 class WaterbirthDungeon :
-    MapZone("Water birth dungeon", true, ZoneRestriction.RANDOM_EVENTS),
+    MapZone("Waterbirth dungeon", true, ZoneRestriction.RANDOM_EVENTS),
     Plugin<Any?> {
     init {
         definePlugin(DagannothKingNPC())
