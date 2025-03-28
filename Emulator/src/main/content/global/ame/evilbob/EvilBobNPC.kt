@@ -9,6 +9,7 @@ import core.game.node.entity.npc.NPC
 import core.game.system.timer.impl.AntiMacro
 import core.game.world.GameWorld
 import core.game.world.map.Location
+import org.rs.consts.Music
 import org.rs.consts.NPCs
 import org.rs.consts.Sounds
 
@@ -31,9 +32,10 @@ class EvilBobNPC(
                 }
 
                 1 -> {
-                    sendMessage(player, "Welcome to " + GameWorld.settings!!.name + " Island.")
+                    sendMessage(player, "Welcome to ScapeRune.")
                     setAttribute(player, RandomEvent.save(), player.location)
                     player.properties.teleportLocation = Location.create(3419, 4776, 0)
+                    playAudio(player, Music.EVIL_BOBS_ISLAND_411)
                     resetAnimator(player)
                     openDialogue(player, EvilBobDialogue(), NPCs.EVIL_BOB_2479)
                     AntiMacro.terminateEventNpc(player)

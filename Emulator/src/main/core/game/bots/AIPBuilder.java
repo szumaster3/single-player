@@ -859,9 +859,6 @@ public final class AIPBuilder {
             new Item(14602),
             new Item(14603),
             new Item(14604),
-            new Item(14605),
-            new Item(14812),
-            new Item(14819),
-            new Item(14873),
-            new Item(14874)));
+            new Item(14605))
+    );
 }
