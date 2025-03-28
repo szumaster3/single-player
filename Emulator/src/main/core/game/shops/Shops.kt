@@ -124,7 +124,7 @@ class Shops :
             shopsById[id] = shop
         }
 
-        logShop("Parsed [${shopsById.size}] shops.")
+        logShop("Parsed ${shopsById.size} shops.")
     }
 
     override fun tick() {
