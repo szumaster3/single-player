@@ -205,7 +205,7 @@ public final class InterfaceManager {
      */
     public boolean isWalkable() {
         if (opened != null) {
-            if (opened.id == Components.OBJDIALOG_389) {
+            if (opened.id == Components.EXCHANGE_SEARCH_389) {
                 return false;
             }
             if (opened.definition.isWalkable()) {
@@ -345,7 +345,7 @@ public final class InterfaceManager {
                         break;
                     case 7:
                         if (player.getFamiliarManager().hasFamiliar()) {
-                            openTab(7, new Component(662));
+                            openTab(7, new Component(Components.LORE_STATS_SIDE_662));
                         }
                         break;
                     default:

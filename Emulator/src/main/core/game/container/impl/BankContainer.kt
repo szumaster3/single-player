@@ -457,12 +457,12 @@ class BankContainer(
             if (c is BankContainer) {
                 PacketRepository.send(
                     ContainerPacket::class.java,
-                    ContainerContext(player, 762, -1, 95, event!!.items, false, *event.slots),
+                    ContainerContext(player, 762, 64000, 95, event!!.items, false, *event.slots),
                 )
             } else {
                 PacketRepository.send(
                     ContainerPacket::class.java,
-                    ContainerContext(player, 763, 0, 93, event!!.items, false, *event.slots),
+                    ContainerContext(player, 763, 64000, 93, event!!.items, false, *event.slots),
                 )
             }
             player.bank.setTabConfigurations()
@@ -473,12 +473,12 @@ class BankContainer(
             if (c is BankContainer) {
                 PacketRepository.send(
                     ContainerPacket::class.java,
-                    ContainerContext(player, 762, -1, 95, c.toArray(), c.capacity(), false),
+                    ContainerContext(player, 762, 64000, 95, c.toArray(), c.capacity(), false),
                 )
             } else {
                 PacketRepository.send(
                     ContainerPacket::class.java,
-                    ContainerContext(player, 763, 0, 93, c?.toArray(), 28, false),
+                    ContainerContext(player, 763, 64000, 93, c?.toArray(), 28, false),
                 )
             }
             player.bank.setTabConfigurations()

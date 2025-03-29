@@ -2,6 +2,7 @@ package content.global.skill.slayer;
 
 import core.cache.def.impl.NPCDefinition;
 import core.game.node.entity.player.Player;
+import org.rs.consts.NPCs;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -299,19 +300,19 @@ public enum Tasks {
     /**
      * The Spirtual mages.
      */
-    SPIRTUAL_MAGES(60, new int[]{6221, 6231, 6257, 6278}, new String[]{"They are dangerous, they hit with mage."}, 83, false, false),
+    SPIRTUAL_MAGES(60, new int[]{NPCs.SPIRITUAL_MAGE_6221, NPCs.SPIRITUAL_MAGE_6231, NPCs.SPIRITUAL_MAGE_6257, NPCs.SPIRITUAL_MAGE_6278}, new String[]{"They are dangerous, they hit with mage."}, 83, false, false),
     /**
      * The Spirtual rangers.
      */
-    SPIRTUAL_RANGERS(60, new int[]{6220, 6230, 6256, 6276}, new String[]{"They are dangerous, they hit with range."}, 63, false, false),
+    SPIRTUAL_RANGERS(60, new int[]{NPCs.SPIRITUAL_RANGER_6220, NPCs.SPIRITUAL_RANGER_6230, NPCs.SPIRITUAL_RANGER_6256, NPCs.SPIRITUAL_RANGER_6276}, new String[]{"They are dangerous, they hit with range."}, 63, false, false),
     /**
      * The Spirtual warriors.
      */
-    SPIRTUAL_WARRIORS(60, new int[]{6219, 6229, 6255, 6277,}, new String[]{"They are dangerous, they hit with melee."}, 68, false, false),
+    SPIRTUAL_WARRIORS(60, new int[]{NPCs.SPIRITUAL_WARRIOR_6219, NPCs.SPIRITUAL_WARRIOR_6229, NPCs.SPIRITUAL_WARRIOR_6255, NPCs.SPIRITUAL_WARRIOR_6277,}, new String[]{"They are dangerous, they hit with melee."}, 68, false, false),
     /**
      * The Steel dragons.
      */
-    STEEL_DRAGONS(85, new int[]{1592, 3590}, new String[]{"Steel dragons aren't as strong as other dragons but they're still", "very powerful, watch out for their fiery breath."}, 1, false, true, 10 | 20 << 16),
+    STEEL_DRAGONS(85, new int[]{NPCs.STEEL_DRAGON_1592, NPCs.STEEL_DRAGON_3590}, new String[]{"Steel dragons aren't as strong as other dragons but they're still", "very powerful, watch out for their fiery breath."}, 1, false, true, 10 | 20 << 16),
     /**
      * The Trolls.
      */
@@ -327,27 +328,27 @@ public enum Tasks {
     /**
      * The Zygomites.
      */
-    ZYGOMITES(10, new int[]{3346, 3347}, new String[]{"Mutated zygomites are hard to destroy and attack with mainly magical damage. " + "They regenerate quickly, so you will need to finish them off with fungicide. " + "We have a bit of a problem with them here in Zanaris."}, 1, true, false),
+    ZYGOMITES(10, new int[]{NPCs.ZYGOMITE_3346, NPCs.ZYGOMITE_3347}, new String[]{"Mutated zygomites are hard to destroy and attack with mainly magical damage. " + "They regenerate quickly, so you will need to finish them off with fungicide. " + "We have a bit of a problem with them here in Zanaris."}, 1, true, false),
     /**
      * The Shades.
      */
-    SHADES(30, new int[]{3617, 1241, 1246, 1248, 1250, 428, 1240}, new String[]{"Shades are undead - The town of Mort'ton in Morytania is plagued by these creatures, " + "so help if you can. There are some shades in the Stronghold of Security too, but you won't " + "learn much from fighting those; stick to Mort'ton."}, 1, true, false),
+    SHADES(30, new int[]{NPCs.SHADE_3617, NPCs.LOAR_SHADE_1241, NPCs.RIYL_SHADE_1246, NPCs.ASYN_SHADE_1248, NPCs.FIYR_SHADE_1250, NPCs.SHADE_428, NPCs.LOAR_SHADOW_1240}, new String[]{"Shades are undead - The town of Mort'ton in Morytania is plagued by these creatures, " + "so help if you can. There are some shades in the Stronghold of Security too, but you won't " + "learn much from fighting those; stick to Mort'ton."}, 1, true, false),
     /**
      * The Mogres.
      */
-    MOGRES(1, new int[]{114}, new String[]{"Mogres are a type of aquatic ogre that is often mistaken for a giant mudskipper. " + "You have to force them out of the water with a fishing explosive. " + "You can find them on the peninsula to the south of Port Sarim."}, 32, false, false),
+    MOGRES(1, new int[]{NPCs.MOGRE_114}, new String[]{"Mogres are a type of aquatic ogre that is often mistaken for a giant mudskipper. " + "You have to force them out of the water with a fishing explosive. " + "You can find them on the peninsula to the south of Port Sarim."}, 32, false, false),
     /**
      * The Suqahs.
      */
-    SUQAHS(65, new int[]{4527, 4528, 4529, 4530, 4531, 4532, 4533}, new String[]{"Suquah are big, angry folk that inhabit Lunar Isle."}, 1, "Lunar Diplomacy"),
+    SUQAHS(65, new int[]{NPCs.SUQAH_4527, NPCs.SUQAH_4528, NPCs.SUQAH_4529, NPCs.SUQAH_4530, NPCs.SUQAH_4531, NPCs.SUQAH_4532, NPCs.SUQAH_4533}, new String[]{"Suquah are big, angry folk that inhabit Lunar Isle."}, 1, "Lunar Diplomacy"),
     /**
      * The Vampires.
      */
-    VAMPIRES(35, new int[]{1023, 1220, 1223, 1225, 6214}, new String[]{"Vampires are equipped with large fangs,", "they can do serious damage."}, 1, false, false),
+    VAMPIRES(35, new int[]{NPCs.VAMPIRE_1023, NPCs.VAMPIRE_1220, NPCs.VAMPIRE_1223, NPCs.VAMPIRE_1225, NPCs.VAMPIRE_6214}, new String[]{"Vampires are equipped with large fangs,", "they can do serious damage."}, 1, false, false),
     /**
      * The Waterfiends.
      */
-    WATERFIENDS(75, new int[]{5361}, new String[]{"A waterfiend takes no damage from fire!"}, 1, false, false),
+    WATERFIENDS(75, new int[]{NPCs.WATERFIEND_5361}, new String[]{"A waterfiend takes no damage from fire!"}, 1, false, false),
     /**
      * The Werewolfs.
      */
@@ -363,39 +364,39 @@ public enum Tasks {
     /**
      * The Jad.
      */
-    JAD(90, new int[]{}, new String[]{"TzTok-Jad is the king of the Fight Caves."}, 1, false, false, 1 | 1 << 16),
+    JAD(90, new int[]{NPCs.TZTOK_JAD_2745}, new String[]{"TzTok-Jad is the king of the Fight Caves."}, 1, false, false, 1 | 1 << 16),
     /**
      * The Chaos elemental.
      */
-    CHAOS_ELEMENTAL(90, new int[]{3200}, new String[]{"The Chaos Elemental is located in the deep Wilderness."}, 1, false, false, 5 | 25 << 16),
+    CHAOS_ELEMENTAL(90, new int[]{NPCs.CHAOS_ELEMENTAL_3200}, new String[]{"The Chaos Elemental is located in the deep Wilderness."}, 1, false, false, 5 | 25 << 16),
     /**
      * The Giant mole.
      */
-    GIANT_MOLE(75, new int[]{3340}, new String[]{"Fighting the Giant Mole will require a light source."}, 1, false, false, 5 | 25 << 16),
+    GIANT_MOLE(75, new int[]{NPCs.GIANT_MOLE_3340}, new String[]{"Fighting the Giant Mole will require a light source."}, 1, false, false, 5 | 25 << 16),
     /**
      * The King black dragon.
      */
-    KING_BLACK_DRAGON(75, new int[]{50}, new String[]{"The King Black Dragon is located in the deep wilderness."}, 1, false, true, 5 | 25 << 16),
+    KING_BLACK_DRAGON(75, new int[]{NPCs.KING_BLACK_DRAGON_50}, new String[]{"The King Black Dragon is located in the deep wilderness."}, 1, false, true, 5 | 25 << 16),
     /**
      * The Commander zilyana.
      */
-    COMMANDER_ZILYANA(90, new int[]{6247}, new String[]{"Commander Zilyana is one of the four Godwars bosses."}, 1, false, false, 5 | 25 << 16),
+    COMMANDER_ZILYANA(90, new int[]{NPCs.COMMANDER_ZILYANA_6247}, new String[]{"Commander Zilyana is one of the four Godwars bosses."}, 1, false, false, 5 | 25 << 16),
     /**
      * The General grardoor.
      */
-    GENERAL_GRARDOOR(90, new int[]{6260}, new String[]{"General Grardoor is one of the four Godwars bosses."}, 1, false, false, 5 | 25 << 16),
+    GENERAL_GRARDOOR(90, new int[]{NPCs.GENERAL_GRAARDOR_6260}, new String[]{"General Grardoor is one of the four Godwars bosses."}, 1, false, false, 5 | 25 << 16),
     /**
      * The Kril tsutsaroth.
      */
-    KRIL_TSUTSAROTH(90, new int[]{6203}, new String[]{"Kril Tsutsaroth is one of the four Godwars bosses."}, 1, false, false, 5 | 25 << 16),
+    KRIL_TSUTSAROTH(90, new int[]{NPCs.KRIL_TSUTSAROTH_6203}, new String[]{"Kril Tsutsaroth is one of the four Godwars bosses."}, 1, false, false, 5 | 25 << 16),
     /**
      * The Kree arra.
      */
-    KREE_ARRA(90, new int[]{6222}, new String[]{"Kree'arra is one of the four Godwars bosses."}, 1, false, false, 5 | 25 << 16),
+    KREE_ARRA(90, new int[]{NPCs.KREEARRA_6222}, new String[]{"Kree'arra is one of the four Godwars bosses."}, 1, false, false, 5 | 25 << 16),
     /**
      * The Skeletal wyvern.
      */
-    SKELETAL_WYVERN(70, new int[]{3068, 3069, 3070, 3071}, new String[]{"A skeletal wyvern requires an elemental, mirror", "or dragonfire shield."}, 72, false, false, 24 | 39 << 16);
+    SKELETAL_WYVERN(70, new int[]{NPCs.SKELETAL_WYVERN_3068, NPCs.SKELETAL_WYVERN_3069, NPCs.SKELETAL_WYVERN_3070, NPCs.SKELETAL_WYVERN_3071}, new String[]{"A skeletal wyvern requires an elemental, mirror", "or dragonfire shield."}, 72, false, false, 24 | 39 << 16);
 
     /**
      * The Task map.
