@@ -79,7 +79,7 @@ class PoisonChaliceEffect : ConsumableEffect() {
                         SkillEffect(Skills.DEFENCE, randomValueBoost, 0.0),
                     )
                 effect.activate(player)
-                sendMessage(player, "That tasted a bit dodgy. You feel a bit ill.")
+                sendMessageWithDelay(player, "That tasted a bit dodgy. You feel a bit ill.", 1)
                 impact(player, hitValue, ImpactHandler.HitsplatType.NORMAL)
                 return
             }

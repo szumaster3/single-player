@@ -29,25 +29,52 @@ import io.github.classgraph.ClassInfo
 import io.github.classgraph.ScanResult
 import java.util.function.Consumer
 
+/**
+ * Scans the classpath for plugins and content interfaces, loading them accordingly.
+ */
 object ClassScanner {
+    /**
+     * Stores disabled plugin names.
+     */
     var disabledPlugins = HashMap<String, Boolean>()
 
+    /**
+     * Counter for the number of loaded content interfaces.
+     */
     var amountLoaded = 0
         private set
 
+    /**
+     * Counter for the number of loaded plugins.
+     */
     var numPlugins = 0
         private set
 
+    /**
+     * List of loaded plugin names.
+     */
     private var loadedPlugins: MutableList<String>? = ArrayList()
 
+    /**
+     * Last loaded plugin name (if any).
+     */
     private val lastLoaded: String? = null
 
+    /**
+     * Stores scan results from the classpath.
+     */
     lateinit var scanResults: ScanResult
 
-    @JvmStatic fun scanClasspath() {
+    /**
+     * Performs a classpath scan to gather class and annotation information.
+     */
+    @JvmStatic
+    fun scanClasspath() {
         scanResults = ClassGraph().enableClassInfo().enableAnnotationInfo().scan()
     }
-
+    /**
+     * Loads all content interfaces found in the scan results.
+     */
     @JvmStatic
     fun loadPureInterfaces() {
         try {
@@ -70,6 +97,9 @@ object ClassScanner {
         }
     }
 
+    /**
+     * Loads and registers all timers found in the scan results.
+     */
     fun loadTimers() {
         scanResults.getSubclasses("core.game.system.timer.RSTimer").filter { !it.isAbstract }.forEach {
             try {
@@ -82,6 +112,9 @@ object ClassScanner {
         }
     }
 
+    /**
+     * Loads all content interfaces implementing [ContentInterface].
+     */
     private fun loadContentInterfacesFrom(scanResults: ScanResult) {
         scanResults.getClassesImplementing("core.api.ContentInterface").filter { !it.isAbstract }.forEach {
             try {
@@ -142,6 +175,9 @@ object ClassScanner {
         }
     }
 
+    /**
+     * Loads and registers all side-effectful plugins.
+     */
     @JvmStatic
     fun loadSideEffectfulPlugins() {
         loadedPlugins!!.clear()
@@ -149,6 +185,9 @@ object ClassScanner {
         logStartup("We still have $numPlugins legacy plugins being loaded.")
     }
 
+    /**
+     * Loads all plugins marked with the [Initializable] annotation.
+     */
     private fun loadPluginsFrom(scanResults: ScanResult) {
         scanResults.getClassesWithAnnotation("core.plugin.Initializable").forEach(
             Consumer { p: ClassInfo ->
@@ -167,7 +206,7 @@ object ClassScanner {
                             this::class.java,
                             Log.ERR,
                             "Make sure the constructor signature matches " +
-                                "`${p.simpleName}(player: Player? = null) : Dialogue(player)'.",
+                                    "`${p.simpleName}(player: Player? = null) : Dialogue(player)'.",
                         )
                     }
 
@@ -201,6 +240,9 @@ object ClassScanner {
         }
     }
 
+    /**
+     * Defines multiple plugins at once.
+     */
     @JvmStatic
     fun definePlugins(vararg plugins: Plugin<*>) {
         val pluginsLength = plugins.size
@@ -210,6 +252,9 @@ object ClassScanner {
         }
     }
 
+    /**
+     * Defines a single plugin and registers it appropriately.
+     */
     @JvmStatic
     fun definePlugin(plugin: Plugin<*>) {
         try {
@@ -232,10 +277,12 @@ object ClassScanner {
                         loginPlugins.add(plugin as Plugin<Any>)
                         LoginConfiguration.loginPlugins = loginPlugins
                     }
+
                     PluginType.QUEST -> {
                         plugin.newInstance(null)
                         QuestRepository.register(plugin as Quest)
                     }
+
                     else -> log(this::class.java, Log.WARN, "Unknown Manifest: ${manifest.type}")
                 }
             }

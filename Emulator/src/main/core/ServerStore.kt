@@ -16,7 +16,14 @@ import java.io.FileReader
 import java.io.FileWriter
 import javax.script.ScriptEngineManager
 
+/**
+ * Handles server-wide data persistence using JSON files.
+ * Implements [PersistWorld] for parsing and saving stored data.
+ */
 class ServerStore : PersistWorld {
+    /**
+     * Parses JSON files in the server store directory and loads them into memory.
+     */
     override fun parse() {
         logStartup("Parsing server store...")
         val dir = File(ServerConstants.STORE_PATH!!)
@@ -48,6 +55,9 @@ class ServerStore : PersistWorld {
         logStartup("Initialized $counter store files.")
     }
 
+    /**
+     * Saves all stored JSON data to disk, formatting it for readability.
+     */
     override fun save() {
         logShutdown("Saving server store...")
         val dir = File(ServerConstants.DATA_PATH + File.separator + "serverstore")
@@ -75,32 +85,48 @@ class ServerStore : PersistWorld {
     }
 
     companion object {
+        /**
+         * Stores parsed JSON data mapped by file name.
+         */
         val fileMap = HashMap<String, JSONObject>()
+
+        /**
+         * Counter for the number of successfully loaded store files.
+         */
         var counter = 0
 
+        /**
+         * Retrieves a JSON archive by name, creating a new one if it does not exist.
+         */
         @JvmStatic
         fun getArchive(name: String): JSONObject = fileMap.getOrPut(name) { JSONObject() }
 
-        fun setArchive(
-            name: String,
-            data: JSONObject,
-        ) {
+        /**
+         * Stores a JSON archive under a given name.
+         */
+        fun setArchive(name: String, data: JSONObject) {
             fileMap[name] = data
         }
 
+        /**
+         * Clears all stored daily entries.
+         */
         fun clearDailyEntries() {
             fileMap.keys.filter { it.lowercase().contains("daily") }.forEach { fileMap[it]?.clear() }
         }
 
+        /**
+         * Clears all stored weekly entries.
+         */
         fun clearWeeklyEntries() {
             fileMap.keys.filter { it.lowercase().contains("weekly") }.forEach { fileMap[it]?.clear() }
         }
 
+        /**
+         * Retrieves an integer value from a JSON object.
+         */
         @JvmStatic
-        fun JSONObject.getInt(
-            key: String,
-            default: Int = 0,
-        ): Int =
+        fun JSONObject.getInt(key: String, default: Int = 0): Int =
             when (val value = this[key]) {
                 is Long -> value.toInt()
                 is Double -> value.toInt()
@@ -109,59 +135,65 @@ class ServerStore : PersistWorld {
                 else -> default
             }
 
+        /**
+         * Retrieves a string value from a JSON object.
+         */
         @JvmStatic
-        fun JSONObject.getString(
-            key: String,
-            default: String = "nothing",
-        ): String = this[key] as? String ?: default
+        fun JSONObject.getString(key: String, default: String = "nothing"): String =
+            this[key] as? String ?: default
 
+        /**
+         * Retrieves a long value from a JSON object.
+         */
         @JvmStatic
-        fun JSONObject.getLong(
-            key: String,
-            default: Long = 0L,
-        ): Long = this[key] as? Long ?: default
+        fun JSONObject.getLong(key: String, default: Long = 0L): Long =
+            this[key] as? Long ?: default
 
+        /**
+         * Retrieves a boolean value from a JSON object.
+         */
         @JvmStatic
-        fun JSONObject.getBoolean(
-            key: String,
-            default: Boolean = false,
-        ): Boolean = this[key] as? Boolean ?: default
+        fun JSONObject.getBoolean(key: String, default: Boolean = false): Boolean =
+            this[key] as? Boolean ?: default
 
+        /**
+         * Converts a list of integers into a JSONArray.
+         */
         fun List<Int>.toJSONArray(): JSONArray = JSONArray().apply { this@toJSONArray.forEach { add(it) } }
 
-        inline fun <reified T> JSONObject.getList(key: String): List<T> = (this[key] as? JSONArray)?.mapNotNull { it as? T } ?: emptyList()
+        /**
+         * Retrieves a list of a given type from a JSON object.
+         */
+        inline fun <reified T> JSONObject.getList(key: String): List<T> =
+            (this[key] as? JSONArray)?.mapNotNull { it as? T } ?: emptyList()
 
-        fun JSONObject.addToList(
-            key: String,
-            value: Any,
-        ) {
+        /**
+         * Adds an item to a JSON array stored under a key in a JSON object.
+         */
+        fun JSONObject.addToList(key: String, value: Any) {
             val array = this.getOrPut(key) { JSONArray() } as JSONArray
             array.add(value)
         }
 
-        fun NPCItemFilename(
-            npc: Int,
-            item: Int,
-            period: String = "daily",
-        ): String {
+        /**
+         * Generates a filename for storing NPC item data.
+         */
+        fun NPCItemFilename(npc: Int, item: Int, period: String = "daily"): String {
             val itemName = getItemName(item).lowercase().replace(" ", "-")
             val npcName = NPC(npc).name.lowercase()
             return "$period-$npcName-$itemName"
         }
 
-        fun NPCItemMemory(
-            npc: Int,
-            item: Int,
-            period: String = "daily",
-        ): JSONObject = getArchive(NPCItemFilename(npc, item, period))
+        /**
+         * Retrieves the JSON archive for an NPC item memory.
+         */
+        fun NPCItemMemory(npc: Int, item: Int, period: String = "daily"): JSONObject =
+            getArchive(NPCItemFilename(npc, item, period))
 
-        fun getNPCItemStock(
-            npc: Int,
-            item: Int,
-            limit: Int,
-            player: Player,
-            period: String = "daily",
-        ): Int {
+        /**
+         * Determines the available stock of an NPC item for a player.
+         */
+        fun getNPCItemStock(npc: Int, item: Int, limit: Int, player: Player, period: String = "daily"): Int {
             val itemMemory = NPCItemMemory(npc, item)
             val key = player.name
             var stock = limit - itemMemory.getInt(key)
@@ -169,28 +201,20 @@ class ServerStore : PersistWorld {
             return stock
         }
 
-        fun getNPCItemAmount(
-            npc: Int,
-            item: Int,
-            limit: Int,
-            player: Player,
-            amount: Int,
-            period: String = "daily",
-        ): Int {
+        /**
+         * Determines the maximum amount of an NPC item a player can acquire.
+         */
+        fun getNPCItemAmount(npc: Int, item: Int, limit: Int, player: Player, amount: Int, period: String = "daily"): Int {
             val stock = getNPCItemStock(npc, item, limit, player, period)
             var realamount = minOf(amount, stock)
             realamount = maxOf(realamount, 0)
             return realamount
         }
 
-        fun addNPCItemAmount(
-            npc: Int,
-            item: Int,
-            limit: Int,
-            player: Player,
-            amount: Int,
-            period: String = "daily",
-        ) {
+        /**
+         * Adds a specified amount of an NPC item to a player's memory.
+         */
+        fun addNPCItemAmount(npc: Int, item: Int, limit: Int, player: Player, amount: Int, period: String = "daily") {
             val itemMemory = NPCItemMemory(npc, item, period)
             val key = player.name
             itemMemory[key] = maxOf(minOf(itemMemory.getInt(key) + amount, limit), 0)

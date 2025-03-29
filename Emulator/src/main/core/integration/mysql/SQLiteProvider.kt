@@ -10,6 +10,11 @@ import java.sql.Connection
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.locks.ReentrantLock
 
+/**
+ * Provides an SQLite database connection and utility functions for managing tables and executing queries.
+ * @param path The file path to the SQLite database.
+ * @param expectedTables A map of table names to their creation SQL statements.
+ */
 class SQLiteProvider(
     private val path: String,
     private val expectedTables: HashMap<String, String>? = null,
@@ -21,6 +26,10 @@ class SQLiteProvider(
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
     private lateinit var sqlitePath: String
 
+    /**
+     * Initializes database tables if they do not exist.
+     * @param tableCreatedCallback A callback function invoked when a new table is created.
+     */
     fun initTables(tableCreatedCallback: ((String) -> Unit)? = null) {
         val pathTokens = File(path).absolutePath.split(File.separator)
         val file = pathTokens.last()
@@ -48,6 +57,11 @@ class SQLiteProvider(
         }
     }
 
+    /**
+     * Deletes old records from all expected tables based on the timestamp field.
+     * @param daysToKeep The number of days' worth of data to keep.
+     * @param timestampFieldName The column name that contains the timestamp.
+     */
     fun pruneOldData(
         daysToKeep: Int,
         timestampFieldName: String = "ts",
@@ -66,8 +80,17 @@ class SQLiteProvider(
         }
     }
 
+    /**
+     * Executes a database operation asynchronously.
+     * @param closure The database operation to execute.
+     * @return A [Job] representing the asynchronous execution.
+     */
     fun runAsync(closure: (conn: Connection) -> Unit): Job = coroutineScope.launch { run(closure) }
 
+    /**
+     * Executes a database operation synchronously, ensuring thread safety.
+     * @param closure The database operation to execute.
+     */
     fun run(closure: (conn: Connection) -> Unit) {
         dbRunLock.tryLock(10000L, TimeUnit.MILLISECONDS)
 
@@ -83,6 +106,10 @@ class SQLiteProvider(
         dbRunLock.unlock()
     }
 
+    /**
+     * Establishes a connection to the SQLite database.
+     * @return The active [Connection] instance.
+     */
     private fun connect(): Connection {
         obtainConnectionLock.tryLock(10000L, TimeUnit.MILLISECONDS)
 
@@ -97,6 +124,9 @@ class SQLiteProvider(
     }
 
     companion object {
+        /**
+         * SQL statement to check for the existence of a table.
+         */
         const val TABLE_CHECK = "SELECT name FROM sqlite_master WHERE type='table' AND name=?;"
     }
 }

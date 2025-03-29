@@ -27,12 +27,19 @@ import java.util.*
 import java.util.concurrent.BlockingDeque
 import java.util.concurrent.LinkedBlockingDeque
 
+/**
+ * Handles management events such as player status updates, contact requests,
+ * private messages, clan management, and logging.
+ */
 object ManagementEvents {
     private var isRunning: Boolean = true
     private val eventQueue: BlockingDeque<Message> = LinkedBlockingDeque()
     private val waitingOnClanInfo = HashMap<String, Deque<Message>>()
     private val hasRequestedClanInfo = HashMap<String, Boolean>()
 
+    /**
+     * Coroutine that processes the event queue continuously.
+     */
     val job =
         GlobalScope.launch {
             while (isRunning) {
@@ -45,6 +52,9 @@ object ManagementEvents {
             }
         }
 
+    /**
+     * Logs event-specific messages for debugging.
+     */
     private fun handleLoggingFor(event: Message) {
         when (event) {
             is PlayerStatusUpdate -> SystemLogger.logMS("${event.username} -(WLD)> ${event.world}")
@@ -61,13 +71,23 @@ object ManagementEvents {
         }
     }
 
+    /**
+     * Publishes an event by adding it to the event queue.
+     */
     @JvmStatic
     fun publish(event: Message) {
         eventQueue.offer(event)
     }
 
+    /**
+     * Handles processing of incoming events.
+     */
     private fun handleEvent(event: Message) {
         when (event) {
+
+            /**
+             * Handles player status updates by notifying friends or all players.
+             */
             is PlayerStatusUpdate -> {
                 val notifiablePlayers =
                     if (event.notifyFriendsOnly) {
@@ -90,6 +110,9 @@ object ManagementEvents {
                 }
             }
 
+            /**
+             * Handles requests for contact information and sends back the appropriate response.
+             */
             is RequestContactInfo -> {
                 val response = SendContactInfo.newBuilder()
                 response.username = event.username
@@ -111,6 +134,9 @@ object ManagementEvents {
                 publish(response.build())
             }
 
+            /**
+             * Processes received contact info and updates the player's contacts.
+             */
             is SendContactInfo -> {
                 val p = Repository.getPlayerByName(event.username) ?: return
 
@@ -152,6 +178,9 @@ object ManagementEvents {
                 val world = if (f != null) GameWorld.settings!!.worldId else 0
             }
 
+            /**
+             * Processes private messages between players.
+             */
             is PrivateMessage -> {
                 val sender = Repository.getPlayerByName(event.sender)
                 val receiver = Repository.getPlayerByName(event.receiver)
@@ -177,6 +206,9 @@ object ManagementEvents {
                 }
             }
 
+            /**
+             * Processes a request to join a clan, checking if the clan exists and allowing entry.
+             */
             is JoinClanRequest -> {
                 val p = Repository.getPlayerByName(event.username) ?: return
 
@@ -195,6 +227,9 @@ object ManagementEvents {
                 }
             }
 
+            /**
+             * Handles notifications of players joining a clan.
+             */
             is ClanJoinNotification -> {
                 if (event.world == GameWorld.settings!!.worldId) return
 
@@ -209,6 +244,9 @@ object ManagementEvents {
                 clan.update()
             }
 
+            /**
+             * Processes a request to leave a clan.
+             */
             is LeaveClanRequest -> {
                 val p = Repository.getPlayerByName(event.username) ?: return
 
@@ -227,6 +265,9 @@ object ManagementEvents {
                 }
             }
 
+            /**
+             * Handles notifications of players leaving a clan.
+             */
             is ClanLeaveNotification -> {
                 if (shouldWaitForClanInfo(event.clanName)) {
                     queueUntilClanInfo(event.clanName, event)
@@ -239,6 +280,9 @@ object ManagementEvents {
                 clan.update()
             }
 
+            /**
+             * Processes requests for clan information.
+             */
             is RequestClanInfo -> {
                 val clan = ClanRepository.get(event.clanOwner)
                 val response = SendClanInfo.newBuilder()
@@ -263,6 +307,9 @@ object ManagementEvents {
                 publish(response.build())
             }
 
+            /**
+             * Handles received clan information and updates the repository accordingly.
+             */
             is SendClanInfo -> {
                 if (event.hasInfo) {
                     initializeClanFrom(event)
@@ -297,6 +344,9 @@ object ManagementEvents {
                 }
             }
 
+            /**
+             * Processes messages sent in a clan chat.
+             */
             is ClanMessage -> {
                 if (shouldWaitForClanInfo(event.clanName)) {
                     queueUntilClanInfo(event.clanName, event)
@@ -358,6 +408,9 @@ object ManagementEvents {
         ClanRepository.getClans()[info.username] = c
     }
 
+    /**
+     * Queues events until clan information is available.
+     */
     private fun queueUntilClanInfo(
         clanName: String,
         message: Message,
@@ -374,6 +427,9 @@ object ManagementEvents {
         }
     }
 
+    /**
+     * Determines whether to wait for clan information before processing an event.
+     */
     private fun shouldWaitForClanInfo(clanName: String): Boolean =
         ClanRepository.get(clanName) == null && hasRequestedClanInfo[clanName] == null
 }

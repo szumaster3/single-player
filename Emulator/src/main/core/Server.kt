@@ -21,20 +21,45 @@ import java.util.*
 import kotlin.math.max
 import kotlin.system.exitProcess
 
+/**
+ * The main server object responsible for initializing and managing the game server.
+ */
 object Server {
+    /**
+     * The server's start time in milliseconds.
+     */
     @JvmField
     var startTime: Long = 0
 
+    /**
+     * Timestamp of the last server heartbeat.
+     */
     var lastHeartbeat = System.currentTimeMillis()
 
+    /**
+     * Indicates whether the server is running.
+     */
     @JvmStatic
     var running = false
 
+    /**
+     * The server's networking reactor.
+     */
     @JvmStatic
     var reactor: NioReactor? = null
 
+    /**
+     * Current network reachability status.
+     */
     var networkReachability = NetworkReachability.REACHABLE
 
+    /**
+     * Main entry point for the server.
+     * Parses configuration, starts networking, and manages the game world lifecycle.
+     *
+     * @param args Command-line arguments, where the first argument can be a config file path.
+     * @throws Throwable if there is a critical failure during startup.
+     */
     @Throws(Throwable::class)
     @JvmStatic
     fun main(args: Array<String>) {
@@ -58,19 +83,14 @@ object Server {
             throw e
         }
 
-        // WorldCommunicator.connect()
-
         AutoStock.autostock()
 
-        log(this::class.java, Log.INFO, GameWorld.settings?.name + " flags " + GameWorld.settings?.toString())
-        log(
-            this::class.java,
-            Log.INFO,
-            GameWorld.settings?.name + " started in " + t.duration(false, "") + " milliseconds.",
-        )
-        val scanner = Scanner(System.`in`)
+        log(this::class.java, Log.INFO, "${GameWorld.settings?.name} flags ${GameWorld.settings?.toString()}")
+        log(this::class.java, Log.INFO, "${GameWorld.settings?.name} started in ${t.duration(false, "")} milliseconds.")
 
+        val scanner = Scanner(System.`in`)
         running = true
+
         GlobalScope.launch {
             while (scanner.hasNextLine()) {
                 val command = scanner.nextLine()
@@ -88,10 +108,10 @@ object Server {
                 delay(20000)
                 while (running) {
                     val timeStart = System.currentTimeMillis()
-                    if (!checkConnectivity()) {
-                        networkReachability = NetworkReachability.UNREACHABLE
+                    networkReachability = if (!checkConnectivity()) {
+                        NetworkReachability.UNREACHABLE
                     } else {
-                        networkReachability = NetworkReachability.REACHABLE
+                        NetworkReachability.REACHABLE
                     }
                     if (System.currentTimeMillis() - lastHeartbeat > 7200 && running) {
                         log(this::class.java, Log.ERR, "Triggering reboot due to heartbeat timeout")
@@ -100,12 +120,8 @@ object Server {
 
                         withContext(Dispatchers.IO) {
                             FileWriter("latestdump.txt").use {
-                                if (dump != null) {
-                                    it.write(dump)
-                                }
-
+                                dump?.let(it::write)
                                 it.flush()
-                                it.close()
                             }
                         }
 
@@ -120,11 +136,15 @@ object Server {
         }
     }
 
+    /**
+     * Checks if the server has internet connectivity by pinging predefined URLs.
+     *
+     * @return `true` if the server is online, `false` otherwise.
+     */
     private fun checkConnectivity(): Boolean {
         val urls = ServerConstants.CONNECTIVITY_CHECK_URL.split(",")
         var timeout = ServerConstants.CONNECTIVITY_TIMEOUT
         if (timeout * urls.size > 5000) {
-            // Limit timeout down to 5000ms so other watchdog functions continue as expected.
             timeout = 5000 / urls.size
         }
         for (targetUrl in urls) {
@@ -137,17 +157,22 @@ object Server {
                 return true
             } catch (e: Exception) {
                 log(this::class.java, Log.WARN, "$targetUrl failed to respond. Are we offline?")
-                continue
             }
         }
         return false
     }
 
+    /**
+     * Updates the last heartbeat timestamp.
+     */
     @JvmStatic
     fun heartbeat() {
         lastHeartbeat = System.currentTimeMillis()
     }
 
+    /**
+     * Prints available server commands.
+     */
     fun printCommands() {
         println("stop - stop the server (saves all accounts and such)")
         println("players - show online player count")
@@ -156,23 +181,31 @@ object Server {
         println("restartworker - Reboots the major update worker in case of a travesty.")
     }
 
-    fun autoReconnect() {
-    }
+    /**
+     * Handles automatic reconnection logic (currently unimplemented).
+     */
+    fun autoReconnect() {}
 
+    /**
+     * Returns the server's start time.
+     */
     fun getStartTime(): Long = startTime
 
-    private fun threadDump(
-        lockedMonitors: Boolean,
-        lockedSynchronizers: Boolean,
-    ): String? {
-        val threadDump = StringBuffer(System.lineSeparator())
+    /**
+     * Generates a thread dump.
+     *
+     * @param lockedMonitors Whether to include locked monitors.
+     * @param lockedSynchronizers Whether to include locked synchronizers.
+     * @return The thread dump as a string.
+     */
+    private fun threadDump(lockedMonitors: Boolean, lockedSynchronizers: Boolean): String? {
         val threadMXBean: ThreadMXBean = ManagementFactory.getThreadMXBean()
-        for (threadInfo in threadMXBean.dumpAllThreads(lockedMonitors, lockedSynchronizers)) {
-            threadDump.append(threadInfo.toString())
-        }
-        return threadDump.toString()
+        return threadMXBean.dumpAllThreads(lockedMonitors, lockedSynchronizers).joinToString(System.lineSeparator())
     }
 
+    /**
+     * Sets the server's start time.
+     */
     fun setStartTime(startTime: Long) {
         Server.startTime = startTime
     }
