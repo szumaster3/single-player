@@ -16,35 +16,35 @@ public enum Tasks {
     /**
      * The Aberrant spectres.
      */
-    ABERRANT_SPECTRES(65, new int[]{1604, 1605, 1606, 1607, 7801, 7802, 7803, 7804}, new String[]{"Aberrant spectres have an extremely potent stench that drains", "stats and life points. A nose peg, protects against the stench."}, 60, true, false),
+    ABERRANT_SPECTRES(65, new int[]{NPCs.ABERRANT_SPECTRE_1604, NPCs.ABERRANT_SPECTRE_1605, NPCs.ABERRANT_SPECTRE_1606, NPCs.ABERRANT_SPECTRE_1607, NPCs.ABERRANT_SPECTRE_7801, NPCs.ABERRANT_SPECTRE_7802, NPCs.ABERRANT_SPECTRE_7803, NPCs.ABERRANT_SPECTRE_7804}, new String[]{"Aberrant spectres have an extremely potent stench that drains", "stats and life points. A nose peg, protects against the stench."}, 60, true, false),
     /**
      * The Abyssal demons.
      */
-    ABYSSAL_DEMONS(85, new int[]{1615, 4230}, new String[]{"Abyssal Demons are nasty creatures to deal with, they aren't really part, ", "of this realm, and are able to move very quickly to trap their prey"}, 85, false, false),
+    ABYSSAL_DEMONS(85, new int[]{NPCs.ABYSSAL_DEMON_1615, NPCs.ABYSSAL_DEMON_4230}, new String[]{"Abyssal Demons are nasty creatures to deal with, they aren't really part, ", "of this realm, and are able to move very quickly to trap their prey"}, 85, false, false),
     /**
      * The Ankou.
      */
-    ANKOU(40, new int[]{4381, 4382, 4383}, new String[]{"Neither skeleton nor ghost, but a combination of both."}, 1, true, false),
+    ANKOU(40, new int[]{NPCs.ANKOU_4381, NPCs.ANKOU_4382, NPCs.ANKOU_4383}, new String[]{"Neither skeleton nor ghost, but a combination of both."}, 1, true, false),
     /**
      * The Aviansies.
      */
-    AVIANSIES(60, new int[]{6245, 6243, 6235, 6232, 6244, 6246, 6233, 6241, 6238, 6237, 6240, 6242, 6239, 6234}, new String[]{"Graceful, bird-like creature."}, 1, false, false),
+    AVIANSIES(60, new int[]{NPCs.AVIANSIE_6245, NPCs.AVIANSIE_6243, NPCs.AVIANSIE_6235, NPCs.AVIANSIE_6232, NPCs.AVIANSIE_6244, NPCs.AVIANSIE_6246, NPCs.AVIANSIE_6233, NPCs.AVIANSIE_6241, NPCs.AVIANSIE_6238, NPCs.AVIANSIE_6237, NPCs.AVIANSIE_6240, NPCs.AVIANSIE_6242, NPCs.AVIANSIE_6239, NPCs.AVIANSIE_6234}, new String[]{"Graceful, bird-like creature."}, 1, false, false),
     /**
      * The Banshee.
      */
-    BANSHEE(20, new int[]{1612}, new String[]{"Banshees use a piercing scream to shock their enemies", "you'll need some Earmuffs to protect yourself from them."}, 15, true, false),
+    BANSHEE(20, new int[]{NPCs.BANSHEE_1612}, new String[]{"Banshees use a piercing scream to shock their enemies", "you'll need some Earmuffs to protect yourself from them."}, 15, true, false),
     /**
      * The Basilisks.
      */
-    BASILISKS(40, new int[]{1616, 1617, 4228}, new String[]{"A mirror shield is much necessary when hunting", "these mad creatures."}, 40, false, false),
+    BASILISKS(40, new int[]{NPCs.BASILISK_1616, NPCs.BASILISK_1617, NPCs.BASILISK_4228}, new String[]{"A mirror shield is much necessary when hunting", "these mad creatures."}, 40, false, false),
     /**
      * The Bats.
      */
-    BATS(5, new int[]{412, 78, 1005, 2482, 3711,}, new String[]{"These little creatures are incredibly quick.", "make sure you keep your eye on them at all times."}, 1, false, false),
+    BATS(5, new int[]{NPCs.BAT_412, NPCs.GIANT_BAT_78, NPCs.GIANT_BAT_1005, NPCs.GIANT_BAT_2482, NPCs.GIANT_BAT_3711}, new String[]{"These little creatures are incredibly quick.", "make sure you keep your eye on them at all times."}, 1, false, false),
     /**
      * The Bears.
      */
-    BEARS(13, new int[]{106, 105, 1195, 3645, 3664, 1326, 1327}, new String[]{"A large animal with a crunching punch."}, 1, false, false),
+    BEARS(13, new int[]{NPCs.BLACK_BEAR_106, NPCs.GRIZZLY_BEAR_105, NPCs.GRIZZLY_BEAR_1195, NPCs.ANGRY_BEAR_3645, NPCs.ANGRY_BEAR_3664, NPCs.BEAR_CUB_1326, NPCs.BEAR_CUB_1327}, new String[]{"A large animal with a crunching punch."}, 1, false, false),
     /**
      * The Birds.
      */
@@ -52,87 +52,87 @@ public enum Tasks {
     /**
      * The Black demons.
      */
-    BLACK_DEMONS(80, new int[]{84, 677, 4702, 4703, 4704, 4705, 6208,}, new String[]{"Black Demons are magic creatures that are weak to magic attacks.", "They're the strongest demon and very dangerous."}, 1, false, false),
+    BLACK_DEMONS(80, new int[]{NPCs.BLACK_DEMON_84, NPCs.BLACK_DEMON_677, NPCs.BLACK_DEMON_4702, NPCs.BLACK_DEMON_4703, NPCs.BLACK_DEMON_4704, NPCs.BLACK_DEMON_4705, NPCs.BALFRUG_KREEYATH_6208}, new String[]{"Black Demons are magic creatures that are weak to magic attacks.", "They're the strongest demon and very dangerous."}, 1, false, false),
     /**
      * The Black dragons.
      */
-    BLACK_DRAGONS(80, new int[]{54, 4673, 4674, 4675, 4676, 3376, 50}, new String[]{"Black dragons are the strongest dragons", "watch out for their fiery breath"}, 1, false, true, 40 | 80 << 16),
+    BLACK_DRAGONS(80, new int[]{NPCs.BLACK_DRAGON_54, NPCs.BLACK_DRAGON_4673, NPCs.BLACK_DRAGON_4674, NPCs.BLACK_DRAGON_4675, NPCs.BLACK_DRAGON_4676, NPCs.BABY_BLACK_DRAGON_3376, NPCs.KING_BLACK_DRAGON_50}, new String[]{"Black dragons are the strongest dragons", "watch out for their fiery breath"}, 1, false, true, 40 | 80 << 16),
     /**
      * The Bloodvelds.
      */
-    BLOODVELDS(50, new int[]{1618, 1619, 6215, 7643, 7642}, new String[]{"Bloodvelds are strange demonic creatures, they use their long rasping tongue", "to feed on just about anything they can find."}, 50, false, false),
+    BLOODVELDS(50, new int[]{NPCs.BLOODVELD_1618, NPCs.BLOODVELD_1619, NPCs.BLOODVELD_6215, NPCs.MUTATED_BLOODVELD_7643, NPCs.MUTATED_BLOODVELD_7642}, new String[]{"Bloodvelds are strange demonic creatures, they use their long rasping tongue", "to feed on just about anything they can find."}, 50, false, false),
     /**
      * The Blue dragons.
      */
-    BLUE_DRAGONS(65, new int[]{55, 4681, 4682, 4683, 4684, 5178, 52, 4665, 4666,}, new String[]{"Blue dragons aren't as strong as other dragons but they're still", "very powerful, watch out for their fiery breath."}, 1, false, true),
+    BLUE_DRAGONS(65, new int[]{NPCs.BLUE_DRAGON_55, NPCs.BLUE_DRAGON_4681, NPCs.BLUE_DRAGON_4682, NPCs.BLUE_DRAGON_4683, NPCs.BLUE_DRAGON_4684, NPCs.BLUE_DRAGON_5178, NPCs.BABY_BLUE_DRAGON_52, NPCs.BABY_BLUE_DRAGON_4665, NPCs.BABY_BLUE_DRAGON_4666}, new String[]{"Blue dragons aren't as strong as other dragons but they're still", "very powerful, watch out for their fiery breath."}, 1, false, true),
     /**
      * The Brine rats.
      */
-    BRINE_RATS(45, new int[]{3707}, new String[]{"Small little creatures they are, yet so very", "powerful."}, 47, false, false),
+    BRINE_RATS(45, new int[]{NPCs.BRINE_RAT_3707}, new String[]{"Small little creatures they are, yet so very", "powerful."}, 47, false, false),
     /**
      * The Bronze dragons.
      */
-    BRONZE_DRAGONS(75, new int[]{1590}, new String[]{"Bronze dragons aren't as strong as other dragons but they're still", "very powerful, watch out for their fiery breath."}, 1, false, true, 30 | 60 << 16),
+    BRONZE_DRAGONS(75, new int[]{NPCs.BRONZE_DRAGON_1590}, new String[]{"Bronze dragons aren't as strong as other dragons but they're still", "very powerful, watch out for their fiery breath."}, 1, false, true, 30 | 60 << 16),
     /**
      * The Catablepons.
      */
-    CATABLEPONS(35, new int[]{4397, 4398, 4399,}, new String[]{"They use the magic spell Weaken to drain up to 15% of their", "opponent's maximum Strength level."}, 1, false, false),
+    CATABLEPONS(35, new int[]{NPCs.CATABLEPON_4397, NPCs.CATABLEPON_4398, NPCs.CATABLEPON_4399}, new String[]{"They use the magic spell Weaken to drain up to 15% of their", "opponent's maximum Strength level."}, 1, false, false),
     /**
      * The Cave bug.
      */
-    CAVE_BUG(1, new int[]{1832, 5750,}, new String[]{"It regenerates life points quickly and seems to be a good", "herblore monster."}, 7, false, false),
+    CAVE_BUG(1, new int[]{NPCs.CAVE_BUG_1832, NPCs.CAVE_BUG_5750}, new String[]{"It regenerates life points quickly and seems to be a good", "herblore monster."}, 7, false, false),
     /**
      * The Cave crawlers.
      */
-    CAVE_CRAWLERS(10, new int[]{1600, 1601, 1602, 1603,}, new String[]{"The poisonous parts of them are presumably removed."}, 10, false, false),
+    CAVE_CRAWLERS(10, new int[]{NPCs.CAVE_CRAWLER_1600, NPCs.CAVE_CRAWLER_1601, NPCs.CAVE_CRAWLER_1602, NPCs.CAVE_CRAWLER_1603}, new String[]{"The poisonous parts of them are presumably removed."}, 10, false, false),
     /**
      * The Cave horrors.
      */
-    CAVE_HORRORS(85, new int[]{4353, 4354, 4355, 4356, 4357,}, new String[]{"A Cave horror wears a creepy mask, it is", "preferred to wear a witchwood icon."}, 58, "Cabin Fever"),
+    CAVE_HORRORS(85, new int[]{NPCs.CAVE_HORROR_4353, NPCs.CAVE_HORROR_4354, NPCs.CAVE_HORROR_4355, NPCs.CAVE_HORROR_4356, NPCs.CAVE_HORROR_4357,}, new String[]{"A Cave horror wears a creepy mask, it is", "preferred to wear a witchwood icon."}, 58, "Cabin Fever"),
     /**
      * The Cave slimes.
      */
-    CAVE_SLIMES(15, new int[]{1831}, new String[]{"These are lesser versions of jellies, watch out they can poison you."}, 17, false, false),
+    CAVE_SLIMES(15, new int[]{NPCs.CAVE_SLIME_1831}, new String[]{"These are lesser versions of jellies, watch out they can poison you."}, 17, false, false),
     /**
      * The Cockatrices.
      */
-    COCKATRICES(25, new int[]{1620, 1621, 4227,}, new String[]{"A Mirror shield is necessary when", "fighting these monsters."}, 25, false, false),
+    COCKATRICES(25, new int[]{NPCs.COCKATRICE_1620, NPCs.COCKATRICE_1621, NPCs.COCKATRICE_4227,}, new String[]{"A Mirror shield is necessary when", "fighting these monsters."}, 25, false, false),
     /**
      * The Cows.
      */
-    COWS(5, new int[]{1766, 1768, 2310, 81, 397, 955, 1767, 3309}, new String[]{"Cow's may seem stupid, however they know more then", "you think. Don't under estimate them."}, 1, false, false),
+    COWS(5, new int[]{NPCs.COW_CALF_1766, NPCs.COW_CALF_1768, NPCs.COW_CALF_2310, NPCs.COW_81, NPCs.COW_397, NPCs.COW_955, NPCs.COW_1767, NPCs.COW_3309}, new String[]{"Cow's may seem stupid, however they know more then", "you think. Don't under estimate them."}, 1, false, false),
     /**
      * The Crawling hand.
      */
-    CRAWLING_HAND(1, new int[]{1648, 1649, 1650, 1651, 1652, 1653, 1654, 1655, 1656, 1657, 4226, 7640, 7641}, new String[]{"Crawling Hands are undead severed hands, fast and", "dexterous they claw their victims."}, 5, true, false),
+    CRAWLING_HAND(1, new int[]{NPCs.CRAWLING_HAND_1648, NPCs.CRAWLING_HAND_1649, NPCs.CRAWLING_HAND_1650, NPCs.CRAWLING_HAND_1651, NPCs.CRAWLING_HAND_1652, NPCs.CRAWLING_HAND_1653, NPCs.CRAWLING_HAND_1654, NPCs.CRAWLING_HAND_1655, NPCs.CRAWLING_HAND_1656, NPCs.CRAWLING_HAND_1657, NPCs.CRAWLING_HAND_4226, NPCs.SKELETAL_HAND_7640, NPCs.ZOMBIE_HAND_7641}, new String[]{"Crawling Hands are undead severed hands, fast and", "dexterous they claw their victims."}, 5, true, false),
     /**
      * The Crocodiles.
      */
-    CROCODILES(50, new int[]{1993, 6779}, new String[]{"Crocodiles can be found near water and marshes in and near the Kharidian Desert."}, 1, false, false),
+    CROCODILES(50, new int[]{NPCs.CROCODILE_1993, NPCs.CROCODILE_6779}, new String[]{"Crocodiles can be found near water and marshes in and near the Kharidian Desert."}, 1, false, false),
     /**
      * The Cyclopes.
      */
-    CYCLOPES(25, new int[]{116, 4291, 4292, 6078, 6079, 6080, 6081, 6269, 6270}, new String[]{"Large one eyed creatures who normally wield a", "large mallet."}, 1, false, false),
+    CYCLOPES(25, new int[]{NPCs.CYCLOPS_116, NPCs.CYCLOPS_4291, NPCs.CYCLOPS_4292, NPCs.CYCLOPS_6078, NPCs.CYCLOPS_6079, NPCs.CYCLOPS_6080, NPCs.CYCLOPS_6081, NPCs.CYCLOPS_6269, NPCs.CYCLOPS_6270}, new String[]{"Large one eyed creatures who normally wield a", "large mallet."}, 1, false, false),
     /**
      * The Dagannoths.
      */
-    DAGANNOTHS(75, new int[]{1338, 1339, 1340, 1341, 1342, 1343, 1344, 1345, 1346, 1347, 2454, 2455, 2456, 2881, 2882, 2883, 2887, 2888, 3591,}, new String[]{"There are many types of Dagannoth, the most powerful being the three Dagannoth Kings."}, 1, false, false),
+    DAGANNOTHS(75, new int[]{NPCs.DAGANNOTH_1338, NPCs.DAGANNOTH_MOTHER_1348, NPCs.DAGANNOTH_MOTHER_1349, NPCs.DAGANNOTH_MOTHER_1350, NPCs.DAGANNOTH_MOTHER_1351, NPCs.DAGANNOTH_MOTHER_1352, NPCs.DAGANNOTH_MOTHER_1353, NPCs.DAGANNOTH_MOTHER_1354, NPCs.DAGANNOTH_MOTHER_1355, NPCs.DAGANNOTH_MOTHER_1356, NPCs.DAGANNOTH_1339, NPCs.DAGANNOTH_1340, NPCs.DAGANNOTH_1341, NPCs.DAGANNOTH_1342, NPCs.DAGANNOTH_1343, NPCs.DAGANNOTH_1344, NPCs.DAGANNOTH_1345, NPCs.DAGANNOTH_1346, NPCs.DAGANNOTH_1347, NPCs.DAGANNOTH_SPAWN_2454, NPCs.DAGANNOTH_2455, NPCs.DAGANNOTH_2456, NPCs.DAGANNOTH_SUPREME_2881, NPCs.DAGANNOTH_PRIME_2882, NPCs.DAGANNOTH_REX_2883, NPCs.DAGANNOTH_2887, NPCs.DAGANNOTH_2888, NPCs.DAGANNOTH_3591}, new String[]{"There are many types of Dagannoth, the most powerful being the three Dagannoth Kings."}, 1, false, false),
     /**
      * The Dark beasts.
      */
-    DARK_BEASTS(90, new int[]{2783}, new String[]{"A dark beast can attack using magic or melee."}, 90, false, false),
+    DARK_BEASTS(90, new int[]{NPCs.DARK_BEAST_2783}, new String[]{"A dark beast can attack using magic or melee."}, 90, false, false),
     /**
      * The Desert lizards.
      */
-    DESERT_LIZARDS(15, new int[]{2803, 2804, 2805, 2806, 2807}, new String[]{"Desert lizards are big Slayer monsters found in the Kharidian Desert."}, 22, false, false),
+    DESERT_LIZARDS(15, new int[]{NPCs.LIZARD_2803, NPCs.DESERT_LIZARD_2804, NPCs.DESERT_LIZARD_2805, NPCs.DESERT_LIZARD_2806, NPCs.SMALL_LIZARD_2807}, new String[]{"Desert lizards are big Slayer monsters found in the Kharidian Desert."}, 22, false, false),
     /**
      * The Dog.
      */
-    DOG(15, new int[]{99, 3582, 6374, 1994, 1593, 1594, 3582}, new String[]{"Dogs are much like Wolves, they are", "pack creatures which will hunt in groups."}, 1, false, false),
+    DOG(15, new int[]{NPCs.GUARD_DOG_99, NPCs.GUARD_DOG_3582, NPCs.GUARD_DOG_6374, NPCs.JACKAL_1994, NPCs.WILD_DOG_1593, NPCs.WILD_DOG_1594, NPCs.GUARD_DOG_3582}, new String[]{"Dogs are much like Wolves, they are", "pack creatures which will hunt in groups."}, 1, false, false),
     /**
      * The Dust devils.
      */
-    DUST_DEVILS(70, new int[]{1624}, new String[]{"Dust Devils use clouds of dust, sand, ash and whatever", "else they can inhale to blind and disorientate", "their victims."}, 65, false, false),
+    DUST_DEVILS(70, new int[]{NPCs.DUST_DEVIL_1624}, new String[]{"Dust Devils use clouds of dust, sand, ash and whatever", "else they can inhale to blind and disorientate", "their victims."}, 65, false, false),
     /**
      * The Dwarf.
      */
@@ -140,27 +140,27 @@ public enum Tasks {
     /**
      * The Earth warriors.
      */
-    EARTH_WARRIORS(35, new int[]{124}, new String[]{"An Earth warrior is a monster made of earth", " which fights using melee."}, 1, false, false),
+    EARTH_WARRIORS(35, new int[]{NPCs.EARTH_WARRIOR_124}, new String[]{"An Earth warrior is a monster made of earth", " which fights using melee."}, 1, false, false),
     /**
      * The Elves.
      */
-    ELVES(70, new int[]{1183, 1184, 2359, 2360, 2361, 2362, 7438, 7439, 7440, 7441}, new String[]{"Elves are agile creatures."}, 1, false, false),
+    ELVES(70, new int[]{NPCs.ELF_WARRIOR_1183, NPCs.ELF_WARRIOR_1184, NPCs.ELF_WARRIOR_2359, NPCs.ELF_WARRIOR_2360, NPCs.ELF_WARRIOR_2361, NPCs.ELF_WARRIOR_2362, NPCs.ELF_WARRIOR_7438, NPCs.ELF_WARRIOR_7439, NPCs.ELF_WARRIOR_7440, NPCs.ELF_WARRIOR_7441}, new String[]{"Elves are agile creatures."}, 1, false, false),
     /**
      * The Fire giants.
      */
-    FIRE_GIANTS(65, new int[]{110, 1582, 1583, 1584, 1585, 1586, 7003, 7004}, new String[]{"Like other giants, Fire Giants often wield large weapons", "learn to recognise what kind of weapon it is, and act accordingly."}, 1, false, false),
+    FIRE_GIANTS(65, new int[]{NPCs.FIRE_GIANT_110, NPCs.FIRE_GIANT_1582, NPCs.FIRE_GIANT_1583, NPCs.FIRE_GIANT_1584, NPCs.FIRE_GIANT_1585, NPCs.FIRE_GIANT_1586, NPCs.FIRE_GIANT_7003, NPCs.FIRE_GIANT_7004}, new String[]{"Like other giants, Fire Giants often wield large weapons", "learn to recognise what kind of weapon it is, and act accordingly."}, 1, false, false),
     /**
      * The Frogs.
      */
-    FROGS(1, new int[]{3783, 1829, 1828, 5593, 1997}, new String[]{"Frogs will attack and move faster than the average human. You can find frogs in the Lumbridge swamp and if you venture into the swamp caves you can find giant frogs."}, 1, false, false),
+    FROGS(1, new int[]{NPCs.FROG_3783, NPCs.BIG_FROG_1829, NPCs.GIANT_FROG_1828, NPCs.FROGEEL_5593, NPCs.PLAGUE_FROG_1997}, new String[]{"Frogs will attack and move faster than the average human. You can find frogs in the Lumbridge swamp and if you venture into the swamp caves you can find giant frogs."}, 1, false, false),
     /**
      * The Flesh crawlers.
      */
-    FLESH_CRAWLERS(15, new int[]{4389, 4390, 4391}, new String[]{"Flesh crawlers are medium level monsters found on", "level 2 of the Stronghold of Security."}, 1, false, false),
+    FLESH_CRAWLERS(15, new int[]{NPCs.FLESH_CRAWLER_4389, NPCs.FLESH_CRAWLER_4390, NPCs.FLESH_CRAWLER_4391}, new String[]{"Flesh crawlers are medium level monsters found on", "level 2 of the Stronghold of Security."}, 1, false, false),
     /**
      * The Gargoyles.
      */
-    GARGOYLES(80, new int[]{1610, 1611, 6389}, new String[]{"Gargoyles are winged creatures of stone. You'll need to fight them to", "near death before breaking them apart with a rock hammer."}, 75, false, false),
+    GARGOYLES(80, new int[]{NPCs.GARGOYLE_1610, NPCs.SWARMING_TUROTH_1611, NPCs.GARGOYLE_6389}, new String[]{"Gargoyles are winged creatures of stone. You'll need to fight them to", "near death before breaking them apart with a rock hammer."}, 75, false, false),
     /**
      * The Ghosts.
      */
@@ -168,7 +168,7 @@ public enum Tasks {
     /**
      * The Ghouls.
      */
-    GHOULS(25, new int[]{1218, 3059}, new String[]{"Ghouls are a humanoid race and the descendants of a long-dead society", "that degraded to the point that its people ate their dead."}, 1, false, false),
+    GHOULS(25, new int[]{NPCs.GHOUL_1218, NPCs.GHOUL_CHAMPION_3059}, new String[]{"Ghouls are a humanoid race and the descendants of a long-dead society", "that degraded to the point that its people ate their dead."}, 1, false, false),
     /**
      * The Goblins.
      */
@@ -176,79 +176,79 @@ public enum Tasks {
     /**
      * The Goraks.
      */
-    GORAKS(70, new int[]{4418, 6218}, new String[]{"Goraks can be tough monsters to fight. Be prepared."}, 1, false, false),
+    GORAKS(70, new int[]{NPCs.GORAK_4418, NPCs.GORAK_6218}, new String[]{"Goraks can be tough monsters to fight. Be prepared."}, 1, false, false),
     /**
      * The Greater demons.
      */
-    GREATER_DEMONS(75, new int[]{83, 4698, 4699, 4700, 4701, 6204}, new String[]{"Greater Demons are magic creatures so they are weak to magical attacks.", "They're the strongest demon and very dangerous."}, 1, false, false),
+    GREATER_DEMONS(75, new int[]{NPCs.GREATER_DEMON_83, NPCs.GREATER_DEMON_4698, NPCs.GREATER_DEMON_4699, NPCs.GREATER_DEMON_4700, NPCs.GREATER_DEMON_4701, NPCs.TSTANON_KARLAK_6204}, new String[]{"Greater Demons are magic creatures so they are weak to magical attacks.", "They're the strongest demon and very dangerous."}, 1, false, false),
     /**
      * The Green dragons.
      */
-    GREEN_DRAGONS(52, new int[]{941, 4677, 4678, 4679, 4680, 5362, 742}, new String[]{"Green dragons are very powerful, they have fierce", "fiery breath."}, 1, false, true),
+    GREEN_DRAGONS(52, new int[]{NPCs.GREEN_DRAGON_941, NPCs.GREEN_DRAGON_4677, NPCs.GREEN_DRAGON_4678, NPCs.GREEN_DRAGON_4679, NPCs.GREEN_DRAGON_4680, NPCs.BRUTAL_GREEN_DRAGON_5362, NPCs.ELVARG_742}, new String[]{"Green dragons are very powerful, they have fierce", "fiery breath."}, 1, false, true),
     /**
      * The Harpie bug swarms.
      */
-    HARPIE_BUG_SWARMS(45, new int[]{3153}, new String[]{"Harpie Bug Swarms are insectoid Slayer monsters."}, 33, false, false),
+    HARPIE_BUG_SWARMS(45, new int[]{NPCs.HARPIE_BUG_SWARM_3153}, new String[]{"Harpie Bug Swarms are insectoid Slayer monsters."}, 33, false, false),
     /**
      * The Hellhounds.
      */
-    HELLHOUNDS(75, new int[]{49, 3586, 6210,}, new String[]{"Hellhounds are mid to high level demons."}, 1, false, false),
+    HELLHOUNDS(75, new int[]{NPCs.HELLHOUND_49, NPCs.HELLHOUND_3586, NPCs.HELLHOUND_6210}, new String[]{"Hellhounds are mid to high level demons."}, 1, false, false),
     /**
      * The Hill giants.
      */
-    HILL_GIANTS(25, new int[]{117, 4689, 4690, 3058, 4691, 4692, 4693}, new String[]{"Hill giants can hit up to 19 damage, and they only attack with Melee."}, 1, false, false),
+    HILL_GIANTS(25, new int[]{NPCs.HILL_GIANT_117, NPCs.HILL_GIANT_4689, NPCs.HILL_GIANT_4690, NPCs.GIANT_CHAMPION_3058, NPCs.HILL_GIANT_4691, NPCs.HILL_GIANT_4692, NPCs.HILL_GIANT_4693}, new String[]{"Hill giants can hit up to 19 damage, and they only attack with Melee."}, 1, false, false),
     /**
      * The Hobgoblins.
      */
-    HOBGOBLINS(20, new int[]{122, 123, 2685, 2686, 3061, 6608, 6642, 6661, 6684, 6710, 6722, 6727, 2687, 2688, 3583, 4898, 6275}, new String[]{"Mysterious goblin like creatures."}, 1, false, false),
+    HOBGOBLINS(20, new int[]{NPCs.HOBGOBLIN_122, NPCs.HOBGOBLIN_123, NPCs.HOBGOBLIN_2685, NPCs.HOBGOBLIN_2686, NPCs.HOBGOBLIN_CHAMPION_3061, NPCs.REVENANT_HOBGOBLIN_6608, NPCs.REVENANT_HOBGOBLIN_6642, NPCs.REVENANT_HOBGOBLIN_6661, NPCs.REVENANT_HOBGOBLIN_6684, NPCs.REVENANT_HOBGOBLIN_6710,  NPCs.REVENANT_HOBGOBLIN_6722,  NPCs.REVENANT_HOBGOBLIN_6727,  NPCs.HOBGOBLIN_2687,  NPCs.HOBGOBLIN_2688,  NPCs.HOBGOBLIN_3583,  NPCs.HOBGOBLIN_4898, NPCs.HOBGOBLIN_6275}, new String[]{"Mysterious goblin like creatures."}, 1, false, false),
     /**
      * The Ice fiends.
      */
-    ICE_FIENDS(20, new int[]{3406, 6217, 7714, 7715, 7716}, new String[]{"An Icefiend is a monster found on top of Ice Mountain."}, 1, false, false),
+    ICE_FIENDS(20, new int[]{NPCs.ICEFIEND_3406, NPCs.ICEFIEND_6217, NPCs.ICEFIEND_7714, NPCs.ICEFIEND_7715, NPCs.ICEFIEND_7716}, new String[]{"An Icefiend is a monster found on top of Ice Mountain."}, 1, false, false),
     /**
      * The Ice giants.
      */
-    ICE_GIANTS(50, new int[]{111, 3072, 4685, 4686, 4687}, new String[]{"Ice Giants often wield large weapons, learn to recognise", "what kind of weapon it is, and act accordingly"}, 1, false, false),
+    ICE_GIANTS(50, new int[]{NPCs.ICE_GIANT_111, NPCs.ICE_GIANT_3072, NPCs.ICE_GIANT_4685, NPCs.ICE_GIANT_4686, NPCs.ICE_GIANT_4687}, new String[]{"Ice Giants often wield large weapons, learn to recognise", "what kind of weapon it is, and act accordingly"}, 1, false, false),
     /**
      * The Ice warrior.
      */
-    ICE_WARRIOR(45, new int[]{125, 145, 3073}, new String[]{"Ice warriors, are cold majestic creatures."}, 1, false, false),
+    ICE_WARRIOR(45, new int[]{NPCs.ICE_WARRIOR_125, NPCs.ICE_WARRIOR_145, NPCs.ICE_WARRIOR_3073}, new String[]{"Ice warriors, are cold majestic creatures."}, 1, false, false),
     /**
      * The Infernal mages.
      */
-    INFERNAL_MAGES(40, new int[]{1643, 1644, 1645, 1646, 1647}, new String[]{"Infernal Mages are dangerous spell users, beware of their magic", "spells an go properly prepared"}, 45, false, false),
+    INFERNAL_MAGES(40, new int[]{NPCs.INFERNAL_MAGE_1643, NPCs.INFERNAL_MAGE_1644, NPCs.INFERNAL_MAGE_1645, NPCs.INFERNAL_MAGE_1646, NPCs.INFERNAL_MAGE_1647}, new String[]{"Infernal Mages are dangerous spell users, beware of their magic", "spells an go properly prepared"}, 45, false, false),
     /**
      * The Iron dragons.
      */
-    IRON_DRAGONS(80, new int[]{1591}, new String[]{"Iron dragons aren't as strong as other dragons but they're still", "very powerful, watch out for their fiery breath."}, 1, false, true, 40 | 59 << 16),
+    IRON_DRAGONS(80, new int[]{NPCs.IRON_DRAGON_1591}, new String[]{"Iron dragons aren't as strong as other dragons but they're still", "very powerful, watch out for their fiery breath."}, 1, false, true, 40 | 59 << 16),
     /**
      * The Jellies.
      */
-    JELLIES(57, new int[]{1637, 1638, 1639, 1640, 1641, 1642}, new String[]{"Jellies are nasty cube-like gelatinous creatures which", "absorb everything they come across into themselves."}, 52, false, false),
+    JELLIES(57, new int[]{NPCs.JELLY_1637, NPCs.JELLY_1638, NPCs.JELLY_1639, NPCs.JELLY_1640, NPCs.JELLY_1641, NPCs.JELLY_1642}, new String[]{"Jellies are nasty cube-like gelatinous creatures which", "absorb everything they come across into themselves."}, 52, false, false),
     /**
      * The Jungle horrors.
      */
-    JUNGLE_HORRORS(65, new int[]{4348, 4349, 4350, 4351, 4352}, new String[]{"Jungle Horrors can be found all over Mos Le'Harmless.", "They are strong and aggressive, so watch out!"}, 1, false, false),
+    JUNGLE_HORRORS(65, new int[]{NPCs.JUNGLE_HORROR_4348, NPCs.JUNGLE_HORROR_4349, NPCs.JUNGLE_HORROR_4350, NPCs.JUNGLE_HORROR_4351, NPCs.JUNGLE_HORROR_4352}, new String[]{"Jungle Horrors can be found all over Mos Le'Harmless.", "They are strong and aggressive, so watch out!"}, 1, false, false),
     /**
      * The Kalphites.
      */
-    KALPHITES(15, new int[]{1153, 1154, 1155, 1156, 1157, 1159, 1160, 1161}, new String[]{"Kalaphite are large insects which live in great hives under the desert sands."}, 1, false, false),
+    KALPHITES(15, new int[]{NPCs.KALPHITE_WORKER_1153, NPCs.KALPHITE_SOLDIER_1154, NPCs.KALPHITE_GUARDIAN_1155, NPCs.KALPHITE_WORKER_1156, NPCs.KALPHITE_GUARDIAN_1157, NPCs.KALPHITE_QUEEN_1159, NPCs.KALPHITE_QUEEN_1160, NPCs.KALPHITE_LARVA_1161}, new String[]{"Kalaphite are large insects which live in great hives under the desert sands."}, 1, false, false),
     /**
      * The Kurasks.
      */
-    KURASKS(65, new int[]{1608, 1609, 4229, 7805, 7797}, new String[]{"A kurask is a very quick creature."}, 70, false, false),
+    KURASKS(65, new int[]{NPCs.KURASK_1608, NPCs.KURASK_1609, NPCs.KURASK_4229, NPCs.KURASK_MINION_7805, NPCs.KURASK_OVERLORD_7797}, new String[]{"A kurask is a very quick creature."}, 70, false, false),
     /**
      * The Lesser demons.
      */
-    LESSER_DEMONS(60, new int[]{82, 6203, 3064, 4694, 4695, 6206, 3064, 4696, 4697, 6101}, new String[]{"Lesser Demons are magic creatures so they are weak to magical attacks."}, 1, false, false),
+    LESSER_DEMONS(60, new int[]{NPCs.LESSER_DEMON_82, NPCs.KRIL_TSUTSAROTH_6203, NPCs.LESSER_DEMON_CHAMPION_3064, NPCs.LESSER_DEMON_4694, NPCs.LESSER_DEMON_4695, NPCs.ZAKLN_GRITCH_6206, NPCs.LESSER_DEMON_CHAMPION_3064, NPCs.LESSER_DEMON_4696, NPCs.LESSER_DEMON_4697, NPCs.LESSER_DEMON_6101}, new String[]{"Lesser Demons are magic creatures so they are weak to magical attacks."}, 1, false, false),
     /**
      * The Mithril dragons.
      */
-    MITHRIL_DRAGONS(60, new int[]{5363}, new String[]{"Mithril dragons aren't as strong as other dragons but they're still", "very powerful, watch out for their fiery breath."}, 1, false, true, 5 | 9 << 16),
+    MITHRIL_DRAGONS(60, new int[]{NPCs.MITHRIL_DRAGON_5363}, new String[]{"Mithril dragons aren't as strong as other dragons but they're still", "very powerful, watch out for their fiery breath."}, 1, false, true, 5 | 9 << 16),
     /**
      * The Minotaurs.
      */
-    MINOTAURS(7, new int[]{4404, 4405, 4406}, new String[]{"Minotaurs are large manlike creatures but you'll", "want to be careful of their horns."}, 1, false, false),
+    MINOTAURS(7, new int[]{NPCs.MINOTAUR_4404, NPCs.MINOTAUR_4405, NPCs.MINOTAUR_4406}, new String[]{"Minotaurs are large manlike creatures but you'll", "want to be careful of their horns."}, 1, false, false),
     /**
      * The Monkeys.
      */
@@ -256,11 +256,11 @@ public enum Tasks {
     /**
      * The Moss giants.
      */
-    MOSS_GIANTS(40, new int[]{112, 1587, 1588, 1681, 4534, 4688, 4706}, new String[]{"They are known to carry large sticks."}, 1, false, false),
+    MOSS_GIANTS(40, new int[]{NPCs.MOSS_GIANT_112, NPCs.MOSS_GIANT_1587, NPCs.MOSS_GIANT_1588, NPCs.MOSS_GIANT_1681, NPCs.MOSS_GIANT_4534, NPCs.MOSS_GIANT_4688, NPCs.MOSS_GIANT_4706}, new String[]{"They are known to carry large sticks."}, 1, false, false),
     /**
      * The Nechryaels.
      */
-    NECHRYAELS(85, new int[]{1613}, new String[]{"Nechryael are demons of decay which summon small winged beings which", "help them fight their victims."}, 80, false, false),
+    NECHRYAELS(85, new int[]{NPCs.NECHRYAEL_1613}, new String[]{"Nechryael are demons of decay which summon small winged beings which", "help them fight their victims."}, 80, false, false),
     /**
      * The Ogres.
      */
@@ -268,7 +268,7 @@ public enum Tasks {
     /**
      * The Otherwordly being.
      */
-    OTHERWORDLY_BEING(40, new int[]{126}, new String[]{"A creature filled with everlasting power."}, 1, false, false),
+    OTHERWORDLY_BEING(40, new int[]{NPCs.OTHERWORLDLY_BEING_126}, new String[]{"A creature filled with everlasting power."}, 1, false, false),
     /**
      * The Pyrefiends.
      */
@@ -280,15 +280,15 @@ public enum Tasks {
     /**
      * The Rock slugs.
      */
-    ROCK_SLUGS(20, new int[]{1631, 1632}, new String[]{"A rock slug can leave behind a trail of his presence.."}, 20, false, false),
+    ROCK_SLUGS(20, new int[]{NPCs.ROCKSLUG_1631, NPCs.ROCKSLUG_1632}, new String[]{"A rock slug can leave behind a trail of his presence.."}, 20, false, false),
     /**
      * The Scorpions.
      */
-    SCORPIONS(7, new int[]{107, 1477, 4402, 4403, 144}, new String[]{"A scorpion makes a piercing sound, watch out for", "its long sharp tail."}, 1, false, false),
+    SCORPIONS(7, new int[]{NPCs.SCORPION_107, NPCs.SCORPION_1477, NPCs.SCORPION_4402, NPCs.SCORPION_4403, NPCs.KING_SCORPION_144}, new String[]{"A scorpion makes a piercing sound, watch out for", "its long sharp tail."}, 1, false, false),
     /**
      * The Shade.
      */
-    SHADE(30, new int[]{3617, 1250, 1241, 1246, 1248, 1250, 428, 1240}, new String[]{"Shades are dark and mysterious", "they hide in the shadows so be wary of ambushes."}, 1, true, false),
+    SHADE(30, new int[]{NPCs.SHADE_3617, NPCs.LOAR_SHADE_1241, NPCs.RIYL_SHADE_1246, NPCs.ASYN_SHADE_1248, NPCs.FIYR_SHADE_1250, NPCs.SHADE_428, NPCs.LOAR_SHADOW_1240}, new String[]{"Shades are dark and mysterious", "they hide in the shadows so be wary of ambushes."}, 1, true, false),
     /**
      * The Skeletons.
      */
@@ -320,7 +320,7 @@ public enum Tasks {
     /**
      * The Turoths.
      */
-    TUROTHS(60, new int[]{1611, 1622, 1623, 1626, 1627, 1628, 1629, 1630, 7800}, new String[]{"Turoths are Slayer monsters that require a Slayer level of 55 to kill"}, 55, false, false),
+    TUROTHS(60, new int[]{NPCs.TUROTH_1622, NPCs.SWARMING_TUROTH_1611, NPCs.TUROTH_1623, NPCs.TUROTH_1626, NPCs.TUROTH_1627, NPCs.TUROTH_1628, NPCs.TUROTH_1629, NPCs.TUROTH_1630, NPCs.MIGHTIEST_TUROTH_7800}, new String[]{"Turoths are Slayer monsters that require a Slayer level of 55 to kill"}, 55, false, false),
     /**
      * The Tzhaar.
      */

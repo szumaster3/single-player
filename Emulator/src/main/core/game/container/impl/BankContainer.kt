@@ -126,8 +126,8 @@ class BankContainer(
         }
         player.interfaceManager.openSingleTab(Component(763))
         super.refresh()
-        player.inventory.listeners.add(listener)
         player.inventory.refresh()
+        player.inventory.listeners.add(listener)
         setVarp(player, 1249, lastAmountX)
         val settings =
             IfaceSettingsBuilder()
