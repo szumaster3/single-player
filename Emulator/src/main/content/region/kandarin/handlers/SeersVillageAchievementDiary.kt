@@ -11,8 +11,8 @@ import core.api.quest.isQuestComplete
 import core.game.event.*
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.SpellBookManager
-import core.game.node.entity.player.link.diary.DiaryEventHookBase
-import core.game.node.entity.player.link.diary.DiaryLevel
+import core.game.diary.DiaryEventHookBase
+import core.game.diary.DiaryLevel
 import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.entity.player.link.prayer.PrayerType
 import core.game.node.entity.skill.Skills

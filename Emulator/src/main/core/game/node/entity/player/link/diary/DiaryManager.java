@@ -9,7 +9,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 /**
- * The type Diary manager.
+ * The Diary manager.
  */
 public class DiaryManager {
 
@@ -244,9 +244,9 @@ public class DiaryManager {
     }
 
     /**
-     * Get diarys diary [ ].
+     * Get diarys diary.
      *
-     * @return the diary [ ]
+     * @return the diary
      */
     public Diary[] getDiarys() {
         return diarys;

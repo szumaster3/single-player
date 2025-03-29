@@ -21,7 +21,7 @@ import core.game.world.map.Location;
 import static core.api.ContentAPIKt.playGlobalAudio;
 
 /**
- * The type Death task.
+ * Handles the death process for entities, including players and NPCs.
  */
 public final class DeathTask extends NodeTask {
 
@@ -40,6 +40,7 @@ public final class DeathTask extends NodeTask {
         e.lock(50);
         e.face(null);
         Entity killer = n.length > 0 ? (Entity) n[0] : e;
+
         if (e instanceof NPC) {
             killer.removeAttribute("combat-time");
             Audio audio = e.asNpc().getAudio(2);
@@ -47,6 +48,7 @@ public final class DeathTask extends NodeTask {
                 playGlobalAudio(e.getLocation(), audio.id);
             }
         }
+
         e.graphics(Animator.RESET_G);
         e.visualize(e.getProperties().getDeathAnimation(), e.getProperties().deathGfx);
         e.getAnimator().forceAnimation(e.getProperties().getDeathAnimation());
@@ -68,9 +70,14 @@ public final class DeathTask extends NodeTask {
     public void stop(Node node, Node... n) {
         Entity e = (Entity) node;
         Entity killer = n.length > 0 ? (Entity) n[0] : e;
+
         e.removeAttribute("state:death");
         e.removeAttribute("tick:death");
-        Location spawn = e.getProperties().isSafeZone() ? e.getProperties().safeRespawn : e.getProperties().getSpawnLocation();
+
+        Location spawn = e.getProperties().isSafeZone() ?
+                e.getProperties().safeRespawn :
+                e.getProperties().getSpawnLocation();
+
         e.getAnimator().forceAnimation(Animator.RESET_A);
         e.getProperties().setTeleportLocation(spawn);
         e.unlock();
@@ -87,16 +94,17 @@ public final class DeathTask extends NodeTask {
     }
 
     /**
-     * Get containers container [ ].
+     * Retrieves the player's item containers during death.
      *
-     * @param player the player
-     * @return the container [ ]
+     * @param player the player whose containers are retrieved
+     * @return an array containing the kept items and the full inventory/equipment
      */
     public static Container[] getContainers(Player player) {
         Container[] containers = new Container[2];
         Container wornItems = new Container(42, ContainerType.ALWAYS_STACK);
         wornItems.addAll(player.getInventory());
         wornItems.addAll(player.getEquipment());
+
         int count = 3;
         if (player.getSkullManager().isSkulled()) {
             count -= 3;
@@ -104,8 +112,10 @@ public final class DeathTask extends NodeTask {
         if (player.getPrayer().get(PrayerType.PROTECT_ITEMS)) {
             count += 1;
         }
+
         Container keptItems = new Container(count, ContainerType.NEVER_STACK);
         containers[0] = keptItems;
+
         if (player.getIronmanManager().getMode() != IronmanMode.ULTIMATE) {
             for (int i = 0; i < count; i++) {
                 for (int j = 0; j < 42; j++) {
@@ -113,7 +123,7 @@ public final class DeathTask extends NodeTask {
                     if (item != null) {
                         for (int x = 0; x < count; x++) {
                             Item kept = keptItems.get(x);
-                            if (kept == null || kept != null && kept.getDefinition().getAlchemyValue(true) <= item.getDefinition().getAlchemyValue(true)) {
+                            if (kept == null || kept.getDefinition().getAlchemyValue(true) <= item.getDefinition().getAlchemyValue(true)) {
                                 keptItems.replace(new Item(item.getId(), 1, item.getCharge()), x);
                                 x++;
                                 while (x < count) {
@@ -133,16 +143,17 @@ public final class DeathTask extends NodeTask {
                 }
             }
         }
+
         containers[1] = new Container(42, ContainerType.DEFAULT);
         containers[1].addAll(wornItems);
         return containers;
     }
 
     /**
-     * Start death.
+     * Initiates the death process for an entity.
      *
-     * @param entity the entity
-     * @param killer the killer
+     * @param entity the entity that is dying
+     * @param killer the entity responsible for the death (can be null)
      */
     @SuppressWarnings("deprecation")
     public static void startDeath(Entity entity, Entity killer) {
@@ -156,20 +167,22 @@ public final class DeathTask extends NodeTask {
     }
 
     /**
-     * Is dead boolean.
+     * Checks if an entity is dead.
      *
-     * @param e the e
-     * @return the boolean
+     * @param e the entity to check
+     * @return {@code true} if the entity is dead, otherwise {@code false}
      */
     public static boolean isDead(Entity e) {
-        if (e instanceof NPC) return ((NPC) e).getRespawnTick() > GameWorld.getTicks() || e.getAttribute("state:death", false);
-        else return e.getAttribute("state:death", false);
+        if (e instanceof NPC) {
+            return ((NPC) e).getRespawnTick() > GameWorld.getTicks() || e.getAttribute("state:death", false);
+        }
+        return e.getAttribute("state:death", false);
     }
 
     /**
-     * Gets singleton.
+     * Returns the singleton instance of {@code DeathTask}.
      *
-     * @return the singleton
+     * @return the singleton instance
      */
     public static DeathTask getSingleton() {
         return SINGLETON;

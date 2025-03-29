@@ -512,7 +512,7 @@ public final class WeaponInterface extends Component {
     /**
      * The enum Weapon interfaces.
      */
-    public static enum WeaponInterfaces {
+    public enum WeaponInterfaces {
 
         /**
          * The Unarmed.
@@ -638,7 +638,7 @@ public final class WeaponInterface extends Component {
 
         private final AttackStyle[] attackStyles;
 
-        private WeaponInterfaces(int interfaceId, AttackStyle... attackStyles) {
+        WeaponInterfaces(int interfaceId, AttackStyle... attackStyles) {
             this.interfaceId = interfaceId;
             this.attackStyles = attackStyles;
         }
@@ -653,9 +653,9 @@ public final class WeaponInterface extends Component {
         }
 
         /**
-         * Get attack styles attack style [ ].
+         * Get attack styles attack style.
          *
-         * @return the attack style [ ]
+         * @return the attack style
          */
         public AttackStyle[] getAttackStyles() {
             return attackStyles;

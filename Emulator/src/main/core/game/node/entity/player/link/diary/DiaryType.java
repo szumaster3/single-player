@@ -6,7 +6,7 @@ import org.rs.consts.Items;
 import org.rs.consts.NPCs;
 
 /**
- * The enum Diary type.
+ * The Diary type.
  */
 public enum DiaryType {
     /**
@@ -61,8 +61,6 @@ public enum DiaryType {
                             "Kill a metal dragon in Brimhaven Dungeon."
                     }
             },
-            // Karamja gloves 1-3
-            // 1k xp 30+, 5k xp any?, 10k xp any?
             new Item[][]{
                     {new Item(Items.KARAMJA_GLOVES_1_11136), new Item(Items.ANTIQUE_LAMP_11137)},
                     {new Item(Items.KARAMJA_GLOVES_2_11138), new Item(Items.ANTIQUE_LAMP_11139)},
@@ -76,7 +74,6 @@ public enum DiaryType {
     /**
      * The Varrock.
      */
-// https://2009scape.wiki/w/Varrock_achievements?oldid=891055
     VARROCK("Varrock", 15,
             new String[]{"Easy", "Medium", "Hard"},
             new String[][]{
@@ -146,9 +143,6 @@ public enum DiaryType {
                     {new Item(Items.VARROCK_ARMOUR_3_11758), new Item(Items.ANTIQUE_LAMP_11755)}
             },
             "To start marking off tasks in your journal, speak to<br><br>Rat Burgiss south of the city, Reldo in the palace<br><br>library, or Vannaka in the sewers.",
-            // Varrock Armour 1-3
-            // 1k xp 30 or higher, 5k xp 40 or higher, 10k 50 or higher
-            // Rat Burgiss, Reldo (has an NPC config...), Vannaka
             new int[]{NPCs.RAT_BURGISS_5833, NPCs.RELDO_2660, NPCs.VANNAKA_1597}
 
     ),
@@ -156,7 +150,6 @@ public enum DiaryType {
     /**
      * The Lumbridge.
      */
-// https://2009scape.wiki/w/Lumbridge_achievements?oldid=866361
     LUMBRIDGE("Lumbridge", 2,
             new String[]{"Beginner", "Easy", "Medium"},
             new String[][]{
@@ -219,14 +212,11 @@ public enum DiaryType {
                             "Mine some coal in the Mining spot south-west of Lumbridge<br><br>Swamp"
                     }
             },
-            // Explorer's Rings 1-3
-            // 500 any, 1k xp 30 or higher, 1.5k xp 35 or higher
             new Item[][]{
                     {new Item(Items.EXPLORERS_RING_1_13560), new Item(Items.ANTIQUE_LAMP_11185)},
                     {new Item(Items.EXPLORERS_RING_2_13561), new Item(Items.ANTIQUE_LAMP_11186)},
                     {new Item(Items.EXPLORERS_RING_3_13562), new Item(Items.ANTIQUE_LAMP_11187)}},
             "To start marking off tasks in your journal, speak to<br><br>Explorer Jack near the Lumbridge General Store, Bob<br><br>in his axe store or Ned in his house in Draynor Village.",
-            // Explorer Jack, Bob, Ned
             new int[]{NPCs.EXPLORER_JACK_7969, NPCs.BOB_519, NPCs.NED_743}
 
     ),
@@ -234,7 +224,6 @@ public enum DiaryType {
     /**
      * The Falador.
      */
-// https://2009scape.wiki/w/Falador_achievements?oldid=900390
     FALADOR("Falador", 23,
             new String[]{"Easy", "Medium", "Hard"},
             new String[][]{
@@ -282,15 +271,12 @@ public enum DiaryType {
                             "Summon an Ibis in the Port Sarim fish store"
                     }
             },
-            // Falador Shields 1-3
-            // 1k XP, 5k XP, 10k XP
             new Item[][]{
                     {new Item(Items.FALADOR_SHIELD_1_14577), new Item(Items.ANTIQUE_LAMP_14580)},
                     {new Item(Items.FALADOR_SHIELD_2_14578), new Item(Items.ANTIQUE_LAMP_14581)},
                     {new Item(Items.FALADOR_SHIELD_3_14579), new Item(Items.ANTIQUE_LAMP_14582)}
             },
             "To start marking off tasks in your journal, speak to<br><br>Redbeard Frank outside the bar in Port Sarim, The<br><br>Chemist west of Rimmington, or Sir Vyvin's Squire in the<br><br>Falador Castle courtyard.",
-            // Redbeard Frank, Chemist, Squire
             new int[]{NPCs.REDBEARD_FRANK_375, NPCs.CHEMIST_367, NPCs.SQUIRE_606}
 
     ),
@@ -298,7 +284,6 @@ public enum DiaryType {
     /**
      * The Fremennik.
      */
-// https://2009scape.wiki/w/Fremennik_achievements?oldid=877418
     FREMENNIK("Fremennik", 19,
             new String[]{"Easy", "Medium", "Hard"},
             new String[][]{
@@ -339,15 +324,12 @@ public enum DiaryType {
                             "Get mahogany from your Etceterian subjects"
                     }
             },
-            // Fremennik sea boots 1-3
-            // 5k, 10k, 15k xp
             new Item[][]{
                     {new Item(Items.FREMENNIK_SEA_BOOTS_1_14571), new Item(Items.ANTIQUE_LAMP_14574)},
                     {new Item(Items.FREMENNIK_SEA_BOOTS_2_14572), new Item(Items.ANTIQUE_LAMP_14575)},
                     {new Item(Items.FREMENNIK_SEA_BOOTS_3_14573), new Item(Items.ANTIQUE_LAMP_14576)}
             },
             "To start marking off tasks in your journal, speak to<br><br>Council Workman on the bridge between the Seers' Village<br><br>and Rellekka, Yrsa in Rellekka or Advisor Ghrim on the<br><br>Miscellania.",
-            // Council Workman, Yrsa, Advisor Ghrim
             new int[]{NPCs.COUNCIL_WORKMAN_1287, NPCs.YRSA_1301, NPCs.ADVISOR_GHRIM_1375}
     ),
     /**
@@ -398,14 +380,11 @@ public enum DiaryType {
                             "Use the grapple shortcut to get from the water obelisk<br><br>island to Catherby shore"
                     }
             },
-            // Seers Headbad 1-3
-            // 1k 30 and up, 5k, 10k xp lamps
             new Item[][]{
                     {new Item(Items.SEERS_HEADBAND_1_14631), new Item(Items.ANTIQUE_LAMP_14633)},
                     {new Item(Items.SEERS_HEADBAND_2_14640), new Item(Items.ANTIQUE_LAMP_14634)},
                     {new Item(Items.SEERS_HEADBAND_3_14641), new Item(Items.ANTIQUE_LAMP_14635)}
             }, "To start marking off tasks in your journal, speak to<br><br>any seer in Seers' Village, Stankers by the coal<br><br>trucks or Sir Kay in Camelot.",
-            // Seer, Stankers, Sir Kay
             new int[]{NPCs.SEER_388, NPCs.STANKERS_383, NPCs.SIR_KAY_241}
 
     );
@@ -477,38 +456,38 @@ public enum DiaryType {
     }
 
     /**
-     * Get rewards item [ ].
+     * Get rewards item.
      *
      * @param level the level
-     * @return the item [ ]
+     * @return the item
      */
     public Item[] getRewards(int level) {
         return rewards[level];
     }
 
     /**
-     * Get achievements string [ ].
+     * Get achievements string.
      *
      * @param level the level
-     * @return the string [ ]
+     * @return the string
      */
     public String[] getAchievements(int level) {
         return achievements[level];
     }
 
     /**
-     * Get achievements string [ ] [ ].
+     * Get achievements string.
      *
-     * @return the string [ ] [ ]
+     * @return the string
      */
     public String[][] getAchievements() {
         return achievements;
     }
 
     /**
-     * Get rewards item [ ] [ ].
+     * Get rewards item.
      *
-     * @return the item [ ] [ ]
+     * @return the item
      */
     public Item[][] getRewards() {
         return rewards;
@@ -524,9 +503,9 @@ public enum DiaryType {
     }
 
     /**
-     * Get level names string [ ].
+     * Get level names string.
      *
-     * @return the string [ ]
+     * @return the string
      */
     public String[] getLevelNames() {
         return levelNames;
@@ -551,9 +530,9 @@ public enum DiaryType {
     }
 
     /**
-     * Get npcs int [ ].
+     * Get npcs int.
      *
-     * @return the int [ ]
+     * @return the int
      */
     public int[] getNpcs() {
         return npcs;

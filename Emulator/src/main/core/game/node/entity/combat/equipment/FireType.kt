@@ -10,6 +10,8 @@ import core.game.node.entity.player.Player
 import core.game.system.task.NodeTask
 import core.game.world.update.flag.context.Animation
 import core.tools.RandomFunction
+import org.rs.consts.Animations
+import org.rs.consts.Graphics
 
 enum class FireType(
     val animation: Animation,
@@ -17,8 +19,8 @@ enum class FireType(
     val task: NodeTask,
 ) {
     FIERY_BREATH(
-        Animation(81, Priority.HIGH),
-        393,
+        Animation(Animations.DRAGON_BREATH_81, Priority.HIGH),
+        Graphics.KBD_RED_PROJECTILE_393,
         object : NodeTask(0) {
             override fun exec(
                 node: Node,
@@ -29,7 +31,7 @@ enum class FireType(
 
     SHOCKING_BREATH(
         Animation(84, Priority.HIGH),
-        396,
+        Graphics.KBD_BLUE_PROJECTILE_396,
         object : NodeTask(0) {
             override fun exec(
                 node: Node,
@@ -48,7 +50,7 @@ enum class FireType(
 
     TOXIC_BREATH(
         Animation(82, Priority.HIGH),
-        394,
+        Graphics.KBD_GREEN_PROJECTILE_394,
         object : NodeTask(0) {
             override fun exec(
                 node: Node,
@@ -62,7 +64,7 @@ enum class FireType(
 
     ICY_BREATH(
         Animation(83, Priority.HIGH),
-        395,
+        Graphics.KBD_WHITE_PROJECTILE_395,
         object : NodeTask(0) {
             override fun exec(
                 node: Node,

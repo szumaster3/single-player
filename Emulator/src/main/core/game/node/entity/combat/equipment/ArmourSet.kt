@@ -9,13 +9,14 @@ import core.game.node.item.Item
 import core.game.world.update.flag.context.Graphics
 import core.tools.RandomFunction
 import org.rs.consts.Items
+import org.rs.consts.NPCs
 
 enum class ArmourSet(
     private val endGraphics: Graphics?,
     set: Array<IntArray>,
 ) {
     AHRIM(
-        endGraphics = Graphics(401, 96),
+        endGraphics = Graphics(org.rs.consts.Graphics.KARILS_SPECIAL_401, 96),
         set =
             arrayOf(
                 intArrayOf(
@@ -61,7 +62,7 @@ enum class ArmourSet(
         }
 
         override fun isUsing(e: Entity?): Boolean {
-            if (e is NPC && e.id == 2025) {
+            if (e is NPC && e.id == NPCs.AHRIM_THE_BLIGHTED_2025) {
                 return true
             }
             return super.isUsing(e)
@@ -103,7 +104,7 @@ enum class ArmourSet(
             ),
     ) {
         override fun isUsing(e: Entity?): Boolean {
-            if (e is NPC && e.id == 2026) {
+            if (e is NPC && e.id == NPCs.DHAROK_THE_WRETCHED_2026) {
                 return true
             }
             return super.isUsing(e)
@@ -111,7 +112,7 @@ enum class ArmourSet(
     },
 
     GUTHAN(
-        endGraphics = Graphics(398, 96),
+        endGraphics = Graphics(org.rs.consts.Graphics.GUTHAN_SPECIAL_398, 96),
         set =
             arrayOf(
                 intArrayOf(
@@ -157,7 +158,7 @@ enum class ArmourSet(
         }
 
         override fun isUsing(e: Entity?): Boolean {
-            if (e is NPC && e.id == 2027) {
+            if (e is NPC && e.id == NPCs.GUTHAN_THE_INFESTED_2027) {
                 return true
             }
             return super.isUsing(e)
@@ -165,7 +166,7 @@ enum class ArmourSet(
     },
 
     KARIL(
-        endGraphics = Graphics(400, 96),
+        endGraphics = Graphics(org.rs.consts.Graphics.AHRIMS_SPECIAL_400, 96),
         set =
             arrayOf(
                 intArrayOf(
@@ -211,7 +212,7 @@ enum class ArmourSet(
         }
 
         override fun isUsing(e: Entity?): Boolean {
-            if (e is NPC && e.id == 2028) {
+            if (e is NPC && e.id == NPCs.KARIL_THE_TAINTED_2028) {
                 return true
             }
             return super.isUsing(e)
@@ -219,7 +220,7 @@ enum class ArmourSet(
     },
 
     TORAG(
-        endGraphics = Graphics(399, 96),
+        endGraphics = Graphics(org.rs.consts.Graphics.TORAGS_SPECIAL_399, 96),
         set =
             arrayOf(
                 intArrayOf(
@@ -267,7 +268,7 @@ enum class ArmourSet(
         }
 
         override fun isUsing(e: Entity?): Boolean {
-            if (e is NPC && e.id == 2029) {
+            if (e is NPC && e.id == NPCs.TORAG_THE_CORRUPTED_2029) {
                 return true
             }
             return super.isUsing(e)
@@ -309,7 +310,7 @@ enum class ArmourSet(
             ),
     ) {
         override fun isUsing(e: Entity?): Boolean {
-            if (e is NPC && e.id == 2030) {
+            if (e is NPC && e.id == NPCs.VERAC_THE_DEFILED_2030) {
                 return true
             }
             return super.isUsing(e)

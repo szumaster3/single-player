@@ -19,11 +19,11 @@ import static core.api.ContentAPIKt.setVarp;
 public final class MusicPlayer {
 
     /**
-     * The constant TUTORIAL_MUSIC.
+     * The tutorial music.
      */
     public static final int TUTORIAL_MUSIC = 62;
     /**
-     * The constant DEFAULT_MUSIC_ID.
+     * The default music id.
      */
     public static final int DEFAULT_MUSIC_ID = 76;
     private static final int[] CONFIG_IDS = {20, 21, 22, 23, 24, 25, 298, 311, 346, 414, 464, 598, 662, 721, 906, 1009, 1104, 1136, 1180, 1202};

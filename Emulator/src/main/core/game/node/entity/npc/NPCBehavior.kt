@@ -24,6 +24,7 @@ open class NPCBehavior(
 
         /**
          * Retrieves the NPCBehavior associated with a specific NPC ID.
+         *
          * @param id The ID of the NPC.
          * @return The corresponding NPCBehavior, or a default behavior if none is found.
          */
@@ -32,6 +33,7 @@ open class NPCBehavior(
 
         /**
          * Registers an NPCBehavior for specific NPC IDs.
+         *
          * @param ids The array of NPC IDs.
          * @param behavior The behavior to associate with the given IDs.
          */
@@ -56,6 +58,7 @@ open class NPCBehavior(
 
     /**
      * Called every tick to update NPC behavior.
+     *
      * @param self The NPC instance.
      * @return Whether the tick operation should continue.
      */
@@ -63,6 +66,7 @@ open class NPCBehavior(
 
     /**
      * Called before an NPC receives damage.
+     *
      * @param self The NPC receiving damage.
      * @param attacker The entity causing damage.
      * @param state The battle state containing combat information.
@@ -76,6 +80,7 @@ open class NPCBehavior(
 
     /**
      * Called after an NPC receives damage.
+     *
      * @param self The NPC receiving damage.
      * @param attacker The entity causing damage.
      * @param state The battle state containing combat information.
@@ -89,6 +94,7 @@ open class NPCBehavior(
 
     /**
      * Called before an NPC's attack is finalized.
+     *
      * @param self The NPC attacking.
      * @param victim The entity being attacked.
      * @param state The battle state containing combat information.
@@ -102,24 +108,28 @@ open class NPCBehavior(
 
     /**
      * Called when an NPC is removed from the game world.
+     *
      * @param self The NPC being removed.
      */
     open fun onRemoval(self: NPC) {}
 
     /**
      * Called when an NPC is created in the game world.
+     *
      * @param self The NPC being created.
      */
     open fun onCreation(self: NPC) {}
 
     /**
      * Called when an NPC respawns in the game world.
+     *
      * @param self The NPC respawning.
      */
     open fun onRespawn(self: NPC) {}
 
     /**
      * Called when an NPC's death sequence starts.
+     *
      * @param self The NPC dying.
      * @param killer The entity responsible for the death.
      */
@@ -131,6 +141,7 @@ open class NPCBehavior(
 
     /**
      * Called when an NPC's death sequence finishes.
+     *
      * @param self The NPC that has died.
      * @param killer The entity responsible for the death.
      */
@@ -142,6 +153,7 @@ open class NPCBehavior(
 
     /**
      * Called when an NPC's drop table is rolled for loot.
+     *
      * @param self The NPC that has died.
      * @param killer The entity responsible for the death.
      * @param drops The list of items dropped.
@@ -155,6 +167,7 @@ open class NPCBehavior(
 
     /**
      * Determines if an NPC can be attacked by an entity.
+     *
      * @param self The NPC being attacked.
      * @param attacker The entity initiating the attack.
      * @param style The combat style used.
@@ -175,6 +188,7 @@ open class NPCBehavior(
 
     /**
      * Determines if multi-combat restrictions should be ignored.
+     *
      * @param self The NPC in combat.
      * @param victim The entity the NPC is fighting.
      * @return True if multi-combat restrictions should be ignored, false otherwise.
@@ -186,6 +200,7 @@ open class NPCBehavior(
 
     /**
      * Provides a custom combat swing handler override.
+     *
      * @param self The NPC performing the attack.
      * @param original The original combat swing handler.
      * @return The overridden combat swing handler.
@@ -197,6 +212,7 @@ open class NPCBehavior(
 
     /**
      * Provides a custom pathfinder override.
+     *
      * @param self The NPC for which the pathfinder is being set.
      * @return The overridden pathfinder, or null for default behavior.
      */
@@ -204,6 +220,7 @@ open class NPCBehavior(
 
     /**
      * Provides a custom clipping supplier override.
+     *
      * @param self The NPC for which the clipping supplier is being set.
      * @return The overridden clipping supplier, or the standard one by default.
      */
@@ -211,6 +228,7 @@ open class NPCBehavior(
 
     /**
      * Determines the experience multiplier for an NPC.
+     *
      * @param self The NPC providing experience.
      * @param attacker The entity receiving experience.
      * @return The experience multiplier.

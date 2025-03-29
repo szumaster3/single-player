@@ -28,17 +28,17 @@ import static core.api.ContentAPIKt.playGlobalAudio;
 public abstract class CombatSpell extends MagicSpell {
 
     /**
-     * The constant AUTOCAST_ANIMATION.
+     * The auto-cast animation.
      */
     public static final Animation AUTOCAST_ANIMATION = new Animation(1162, Priority.HIGH);
 
     /**
-     * The constant SPLASH_GRAPHICS.
+     * The splash graphics.
      */
     public static final Graphics SPLASH_GRAPHICS = new Graphics(85, 96);
 
     /**
-     * The Type.
+     * The spell type.
      */
     protected final SpellType type;
 

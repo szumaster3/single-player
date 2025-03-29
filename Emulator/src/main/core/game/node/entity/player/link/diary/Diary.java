@@ -2,6 +2,7 @@ package core.game.node.entity.player.link.diary;
 
 import core.cache.def.impl.NPCDefinition;
 import core.game.component.Component;
+import core.game.diary.DiaryLevel;
 import core.game.node.entity.player.Player;
 import core.game.node.item.Item;
 import org.json.simple.JSONArray;
@@ -11,12 +12,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * The type Diary.
+ * The Diary.
  */
 public class Diary {
 
     /**
-     * The constant DIARY_COMPONENT.
+     * The diary component.
      */
     public static final int DIARY_COMPONENT = 275;
 
@@ -90,10 +91,11 @@ public class Diary {
             }
             child++;
         }
-        //	sendString(player, builder.toString(), 11);
-        //Changes the size of the scroll bar
-        //player.getPacketDispatch().sendRunScript(1207, "i", new Object[] { 330 });
         //sendString(player, builder.toString(), 11);
+        // Changes the size of the scroll bar
+        // player.getPacketDispatch().sendRunScript(1207, "i", new Object[] { 330 });
+        // sendString(player, builder.toString(), 11);
+
         if (!player.getInterfaceManager().isOpened()) {
             player.getInterfaceManager().open(new Component(DIARY_COMPONENT));
         }
@@ -166,13 +168,13 @@ public class Diary {
             taskCompleted[level][index] = true;
             int tempLevel = this.type == DiaryType.LUMBRIDGE ? level - 1 : level;
             player.sendMessages("Well done! You have completed "
-                + (tempLevel == -1 ? "a beginner" : tempLevel == 0 ? "an easy" : tempLevel == 1 ? "a medium" : "a hard")
-                + " task in the " + type.getName() + " area. Your", "Achievement Diary has been updated.");
+                    + (tempLevel == -1 ? "a beginner" : tempLevel == 0 ? "an easy" : tempLevel == 1 ? "a medium" : "a hard")
+                    + " task in the " + type.getName() + " area. Your", "Achievement Diary has been updated.");
         }
         if (isComplete(level)) {
             player.sendMessages("Congratulations! You have completed all of the " + getLevel(level).toLowerCase()
-                + " tasks in the " + type.getName() + " area.", "Speak to "
-                + NPCDefinition.forId(type.getNpc(level)).getName() + " to claim your reward.");
+                    + " tasks in the " + type.getName() + " area.", "Speak to "
+                    + NPCDefinition.forId(type.getNpc(level)).getName() + " to claim your reward.");
         }
         drawStatus(player);
     }
@@ -445,9 +447,9 @@ public class Diary {
         Item[] rewards = type.getRewards(level);
         //lamps are always the 2nd reward for a level, don't remove lamps
         boolean hasRemoved =
-            player.getInventory().remove(rewards[0])
-                || player.getBank().remove(rewards[0])
-                || player.getEquipment().remove(rewards[0]);
+                player.getInventory().remove(rewards[0])
+                        || player.getBank().remove(rewards[0])
+                        || player.getEquipment().remove(rewards[0]);
 
         if (hasRemoved) {
             player.debug("Removed previous reward");
@@ -518,8 +520,8 @@ public class Diary {
     public static boolean canReplaceReward(Player player, DiaryType type, int level) {
         Item reward = type.getRewards(level)[0];
         boolean claimed = hasCompletedLevel(player, type, level)
-            && hasClaimedLevelRewards(player, type, level)
-            && !player.hasItem(reward);
+                && hasClaimedLevelRewards(player, type, level)
+                && !player.hasItem(reward);
         return level == 2 ? claimed : claimed && !hasClaimedLevelRewards(player, type, level + 1);
     }
 

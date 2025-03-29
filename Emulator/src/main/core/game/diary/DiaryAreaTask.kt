@@ -1,4 +1,4 @@
-package core.game.node.entity.player.link.diary
+package core.game.diary
 
 import core.api.inBorders
 import core.game.node.entity.player.Player

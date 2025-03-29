@@ -246,9 +246,9 @@ public enum PrayerType {
     }
 
     /**
-     * Get bonuses skill bonus [ ].
+     * Get bonuses skill bonus.
      *
-     * @return the skill bonus [ ]
+     * @return the skill bonus
      */
     public SkillBonus[] getBonuses() {
         return bonuses;
@@ -426,37 +426,37 @@ public enum PrayerType {
     }
 
     /**
-     * Get melee types prayer type [ ].
+     * Get melee types prayer type.
      *
-     * @return the prayer type [ ]
+     * @return the prayer type
      */
     public static PrayerType[] getMeleeTypes() {
         return getByBonus(Skills.ATTACK, Skills.STRENGTH);
     }
 
     /**
-     * Get range types prayer type [ ].
+     * Get range types prayer type.
      *
-     * @return the prayer type [ ]
+     * @return the prayer type
      */
     public static PrayerType[] getRangeTypes() {
         return getByBonus(Skills.RANGE);
     }
 
     /**
-     * Get magic types prayer type [ ].
+     * Get magic types prayer type.
      *
-     * @return the prayer type [ ]
+     * @return the prayer type
      */
     public static PrayerType[] getMagicTypes() {
         return getByBonus(Skills.MAGIC);
     }
 
     /**
-     * Get by bonus prayer type [ ].
+     * Get by bonus prayer type.
      *
      * @param ids the ids
-     * @return the prayer type [ ]
+     * @return the prayer type
      */
     public static PrayerType[] getByBonus(int... ids) {
         PrayerType[] types = new PrayerType[values().length];
