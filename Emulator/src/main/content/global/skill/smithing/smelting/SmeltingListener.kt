@@ -55,7 +55,7 @@ class SmeltingListener : InteractionListener {
 
         onUseWith(IntType.SCENERY, Items.STEEL_BAR_2353, *FURNACE_IDS) { player, used, _ ->
             val handler: SkillDialogueHandler =
-                object : SkillDialogueHandler(player, SkillDialogue.ONE_OPTION, Item(Items.CANNONBALL_2, 1)) {
+                object : SkillDialogueHandler(player, SkillDialogue.ONE_OPTION, Item(Items.CANNONBALL_2)) {
                     override fun create(
                         amount: Int,
                         index: Int,
