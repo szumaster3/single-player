@@ -233,9 +233,7 @@ class BankContainer(
                 insert(freeSlot(), preferredSlot, false)
                 increaseTabStartSlots(tabIndex)
             }
-            super.add(add, true, preferredSlot)
-            player.inventory.update()
-            player.bank.update()
+            super.add(add, false, preferredSlot)
         }
     }
 
@@ -283,8 +281,6 @@ class BankContainer(
         } else {
             update()
         }
-        player.inventory.update()
-        player.bank.update()
     }
 
     /**
@@ -460,11 +456,13 @@ class BankContainer(
                     ContainerPacket::class.java,
                     ContainerContext(player, Components.BANK_V2_MAIN_762, 64000, 95, event!!.items, false, *event.slots),
                 )
+                player.debug("bank updated")
             } else {
                 PacketRepository.send(
                     ContainerPacket::class.java,
                     ContainerContext(player, Components.BANK_V2_SIDE_763, 64000, 93, event!!.items, false, *event.slots),
                 )
+                player.debug("inventory updated")
             }
             player.bank.setTabConfigurations()
             player.bank.sendBankSpace()
@@ -476,11 +474,13 @@ class BankContainer(
                     ContainerPacket::class.java,
                     ContainerContext(player, Components.BANK_V2_MAIN_762, 64000, 95, c.toArray(), c.capacity(), false),
                 )
+                player.debug("bank refreshed")
             } else {
                 PacketRepository.send(
                     ContainerPacket::class.java,
                     ContainerContext(player, Components.BANK_V2_SIDE_763, 64000, 93, c?.toArray(), 28, false),
                 )
+                player.debug("inventory refreshed")
             }
             player.bank.setTabConfigurations()
             player.bank.sendBankSpace()
