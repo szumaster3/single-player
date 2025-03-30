@@ -1,6 +1,9 @@
-package content.region.fremennik.handlers.general_shadows
+package content.region.fremennik.handlers.general_shadows.dialogue
 
-import core.api.*
+import content.region.fremennik.handlers.general_shadows.GeneralShadow
+import core.api.addItemOrDrop
+import core.api.hasAnItem
+import core.api.sendDialogue
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.player.Player
@@ -14,11 +17,11 @@ class ShadowRealmGhostDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
     override fun open(vararg args: Any?): Boolean {
-        if (!inEquipment(player, Items.GHOSTSPEAK_AMULET_552)) {
-            npc("Whoooo wooo Whooooooooo.").also { stage = END_DIALOGUE }
+        if (!GeneralShadow.hasGhostlySet(player)) {
+            npc("Whoooo wooo Whooooooooo").also { stage = END_DIALOGUE }
             return true
         }
-        if (!getAttribute(player, GeneralShadowUtils.GS_COMPLETE, false)) {
+        if (!GeneralShadow.isQuestComplete(player)) {
             sendDialogue(player, "Ghost seems too busy to talk.").also { stage = END_DIALOGUE }
             return true
         }

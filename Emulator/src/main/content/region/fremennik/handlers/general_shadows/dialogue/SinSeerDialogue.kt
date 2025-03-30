@@ -1,5 +1,6 @@
-package content.region.fremennik.handlers.general_shadows
+package content.region.fremennik.handlers.general_shadows.dialogue
 
+import content.region.fremennik.handlers.general_shadows.GeneralShadow
 import core.api.*
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
@@ -15,11 +16,13 @@ class SinSeerDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
     override fun open(vararg args: Any?): Boolean {
-        if (getAttribute(player, GeneralShadowUtils.GS_SIN_SEER_TALK, false)) {
-            options("I lost the note.", "Yes, I should get to that.").also { stage = 26 }
+        val hasNote = hasAnItem(player, Items.SIN_SEERS_NOTE_10856).container != null
+        if (!hasNote && getAttribute(player, GeneralShadow.GS_RECEIVED_NOTE, false)) {
+            npcl(FaceAnim.HALF_ASKING, "Whatcha lookin' at chicken legs? Don't you have a General you should speak to?")
+            stage = 26
             return true
         }
-        if (getAttribute(player, GeneralShadowUtils.START_GENERAL_SHADOW, false)) {
+        if (GeneralShadow.getShadowProgress(player) >= 0) {
             player("I'm looking for the Sin Seer.")
             return true
         }
@@ -37,6 +40,7 @@ class SinSeerDialogue(
         interfaceId: Int,
         buttonId: Int,
     ): Boolean {
+        val hasNote = hasAnItem(player, Items.SIN_SEERS_NOTE_10856).container != null
         when (stage) {
             0 ->
                 npc(
@@ -143,7 +147,7 @@ class SinSeerDialogue(
                 end()
                 sendItemDialogue(player, Items.SIN_SEERS_NOTE_10856, "You receive a note from the Sin Seer.")
                 addItemOrDrop(player, Items.SIN_SEERS_NOTE_10856)
-                setAttribute(player, GeneralShadowUtils.GS_SIN_SEER_TALK, true)
+                setAttribute(player, GeneralShadow.GS_RECEIVED_NOTE, true)
             }
             18 ->
                 npcl(
@@ -172,21 +176,15 @@ class SinSeerDialogue(
                     }
                 }
             24 -> npc("No, I would not trust you to walk my dog.").also { stage++ }
-            25 -> npc("Give this note to Khazard it will prove you have been to see me.").also { stage++ }
-            26 -> {
-                end()
-                sendItemDialogue(player, Items.SIN_SEERS_NOTE_10856, "You receive a note from the Sin Seer.")
-                addItemOrDrop(player, Items.SIN_SEERS_NOTE_10856)
-                setAttribute(player, GeneralShadowUtils.GS_SIN_SEER_TALK, true)
-            }
-            27 ->
+            25 -> npcl(FaceAnim.FRIENDLY, "Give this note to Khazard it will prove you have been to see me.").also { stage = 17 }
+            26 -> options("I lost the note.", "Yes, I should get to that.").also { stage++ }
+            28 ->
                 when (buttonId) {
                     1 -> player("I lost the note.").also { stage++ }
                     2 -> player("Yes, I should get to that.").also { stage = END_DIALOGUE }
                 }
 
-            28 -> {
-                val hasNote = hasAnItem(player, Items.SIN_SEERS_NOTE_10856).container != null
+            29 -> {
                 end()
                 if (!hasNote) {
                     addItemOrDrop(player, Items.SIN_SEERS_NOTE_10856)

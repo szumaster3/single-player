@@ -1,8 +1,8 @@
-package content.region.fremennik.handlers.general_shadows
+package content.region.fremennik.handlers.general_shadows.dialogue
 
+import content.region.fremennik.handlers.general_shadows.GeneralShadow
 import core.api.*
-import core.api.EquipmentSlot
-import core.api.quest.hasRequirement
+import core.api.quest.isQuestComplete
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.player.Player
@@ -19,17 +19,16 @@ class GeneralKhazardDialogue(
     override fun open(vararg args: Any?): Boolean {
         val hasWeapon = getItemFromEquipment(player, EquipmentSlot.WEAPON)
         val hasShield = getItemFromEquipment(player, EquipmentSlot.SHIELD)
-        val hasGhostSpeakAmulet = inEquipment(player, Items.GHOSTSPEAK_AMULET_552)
         val hasSinSeersNote = inInventory(player, Items.SIN_SEERS_NOTE_10856)
+        val hasLeg = hasAnItem(player, Items.SEVERED_LEG_10857).container != null
 
-        if (!hasRequirement(player, Quests.DESERT_TREASURE)) return true
-
-        if (getAttribute(player, GeneralShadowUtils.GS_COMPLETE, false)) {
+        if (GeneralShadow.isQuestComplete(player)) {
             player("Your dog attacked me. AGAIN!").also { stage = 100 }
             return true
         }
 
-        if (hasWeapon != null || hasShield != null || !hasGhostSpeakAmulet) {
+        // Check requirements and start the mini-quest.
+        if (hasWeapon != null || hasShield != null || !GeneralShadow.hasGhostlySet(player) || !isQuestComplete(player, Quests.FIGHT_ARENA)) {
             npc(
                 FaceAnim.OLD_DISTRESSED2,
                 "You can see into the Shadow Realm and yet you are",
@@ -41,29 +40,28 @@ class GeneralKhazardDialogue(
             return true
         }
 
-        // Handle Sin Seer note.
+        // Handle dialogue after found all the scouts & lost leg.
+        if(GeneralShadow.isQuestComplete(player) && !hasLeg && getAttribute(player, GeneralShadow.GS_RECEIVED_SEVERED_LEG, false)) {
+            options("Sorry, sir. Where was my reward again?", "I lost the key to my reward.", "Never mind.")
+            stage = 200
+        }
+
+        // Handle dialogue after received sin seers note.
         if (hasSinSeersNote) {
             playerl(FaceAnim.FRIENDLY, "I have been to the Sin Seer. She has made her verdict.").also { stage = 23 }
             return true
         }
 
-        // Handle General shadows progress.
+        // Handle dialogue while progressing.
         when {
-            getAttribute(player, GeneralShadowUtils.START_GENERAL_SHADOW, false) -> {
+            GeneralShadow.getShadowProgress(player) == 0 -> {
                 player("Err, what was I supposed to do again?").also { stage = 21 }
             }
-            getAttribute(player, GeneralShadowUtils.GS_START, false) -> {
+            GeneralShadow.getShadowProgress(player) < 5 && GeneralShadow.getShadowProgress(player) > 1 -> {
                 npcl(FaceAnim.OLD_NORMAL, "Do you make progress in finding my scouts?").also { stage = 34 }
             }
-            getAttribute(player, GeneralShadowUtils.GS_PROGRESS, 0) == 4 -> {
-                player(
-                    "I did it, sir! I found all the scouts and delivered",
-                    "your message. The last one said I should report back to",
-                    "you.",
-                ).also {
-                    stage =
-                        41
-                }
+            GeneralShadow.getShadowProgress(player) == 4 && !getAttribute(player, GeneralShadow.GS_RECEIVED_SEVERED_LEG, false) -> {
+                player("I did it, sir! I found all the scouts and delivered", "your message. The last one said I should report back to", "you.").also { stage = 41 }
             }
             else -> {
                 player("Hello, General.")
@@ -76,7 +74,7 @@ class GeneralKhazardDialogue(
         interfaceId: Int,
         buttonId: Int,
     ): Boolean {
-        val progress = getAttribute(player, GeneralShadowUtils.GS_PROGRESS, 0)
+        val progress = GeneralShadow.getShadowProgress(player)
         when (stage) {
             0 ->
                 npc(
@@ -184,7 +182,7 @@ class GeneralKhazardDialogue(
                 ).also { stage++ }
             20 -> {
                 end()
-                setAttribute(player, GeneralShadowUtils.START_GENERAL_SHADOW, true)
+                GeneralShadow.setShadowProgress(player, 0)
             }
             21 ->
                 npc(
@@ -255,8 +253,7 @@ class GeneralKhazardDialogue(
             33 -> {
                 end()
                 removeItem(player, Items.SIN_SEERS_NOTE_10856)
-                setAttribute(player, GeneralShadowUtils.GS_START, true)
-                setAttribute(player, GeneralShadowUtils.GS_PROGRESS, 0)
+                setAttribute(player, GeneralShadow.GS_TRUSTWORTHY, true)
             }
 
             34 ->
@@ -333,7 +330,7 @@ class GeneralKhazardDialogue(
             52 -> {
                 end()
                 addItemOrDrop(player, Items.SEVERED_LEG_10857)
-                setAttribute(player, GeneralShadowUtils.GS_SEVERED_LEG, true)
+                setAttribute(player, GeneralShadow.GS_RECEIVED_SEVERED_LEG, true)
             }
             100 ->
                 npc(
@@ -350,6 +347,36 @@ class GeneralKhazardDialogue(
                     stage =
                         END_DIALOGUE
                 }
+
+
+            200 -> when(buttonId) {
+                1 -> player("Sorry, sir. Where was my reward again?").also { stage++ }
+                2 -> player("I lost the key to my reward.").also { stage = 202 }
+                3 -> player("Never mind.").also { stage = END_DIALOGUE }
+            }
+
+            201 -> npc(
+                FaceAnim.OLD_NORMAL,
+                "There is a cave near where the fish-men gather. Go to",
+                "the east branch of this cave and seek out the one who lives",
+                "in the Shadow Realm. He will reward you well.",
+            ).also { stage = END_DIALOGUE }
+            202 -> npc(FaceAnim.OLD_NORMAL, "Incompetent fool!").also { stage++ }
+            203 -> if(inInventory(player, Items.SEVERED_LEG_10857) || inBank(player, Items.SEVERED_LEG_10857)) {
+                npcl(FaceAnim.OLD_NORMAL, "You already have one. What use could you have for two?").also { stage++ }
+            } else {
+                npcl(FaceAnim.OLD_NORMAL, "Here, take another. They are easy to come by.").also { stage++ }
+            }
+            204 ->  {
+                end()
+                sendItemDialogue(
+                    player,
+                    Items.SEVERED_LEG_10857,
+                    "The General hands you a severed leg.",
+                )
+                addItemOrDrop(player, Items.SEVERED_LEG_10857)
+            }
+
         }
         return true
     }

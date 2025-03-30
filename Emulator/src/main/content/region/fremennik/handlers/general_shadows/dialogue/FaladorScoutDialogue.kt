@@ -1,13 +1,13 @@
-package content.region.fremennik.handlers.general_shadows
+package content.region.fremennik.handlers.general_shadows.dialogue
 
-import core.api.*
+import content.region.fremennik.handlers.general_shadows.GeneralShadow
 import core.api.quest.isQuestComplete
+import core.api.sendDialogue
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.player.Player
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
-import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
@@ -16,15 +16,15 @@ class FaladorScoutDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
     override fun open(vararg args: Any?): Boolean {
-        if (!inEquipment(player, Items.GHOSTSPEAK_AMULET_552)) {
-            npc("Whoooo wooo Whooooooooo.").also { stage = END_DIALOGUE }
+        if (!GeneralShadow.hasGhostlySet(player)) {
+            npc("Whoooo wooo Whooooooooo").also { stage = END_DIALOGUE }
             return true
         }
-        if (getAttribute(player, GeneralShadowUtils.GS_PROGRESS, 0) == 1) {
+        if (GeneralShadow.getShadowProgress(player) == 1) {
             player("Hello there! General Khazard sent me.")
             return true
         }
-        if (getAttribute(player, GeneralShadowUtils.GS_COMPLETE, false)) {
+        if (GeneralShadow.isQuestComplete(player)) {
             player("Hello again.").also { stage = 100 }
             return true
         }
@@ -90,7 +90,7 @@ class FaladorScoutDialogue(
                 }
             12 -> {
                 end()
-                setAttribute(player, GeneralShadowUtils.GS_PROGRESS, 2)
+                GeneralShadow.setShadowProgress(player, 2)
             }
             100 -> npc("I can't speak to you; I must continue on my mission.").also { stage = END_DIALOGUE }
         }

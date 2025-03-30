@@ -1,14 +1,14 @@
-package content.region.fremennik.handlers.general_shadows
+package content.region.fremennik.handlers.general_shadows.dialogue
 
-import core.api.*
+import content.region.fremennik.handlers.general_shadows.GeneralShadow
 import core.api.quest.hasRequirement
 import core.api.quest.isQuestComplete
+import core.api.sendDialogue
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.player.Player
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
-import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
@@ -17,15 +17,15 @@ class TreeGnomeScoutDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
     override fun open(vararg args: Any?): Boolean {
-        if (!inEquipment(player, Items.GHOSTSPEAK_AMULET_552)) {
-            npc("Whoooo wooo Whooooooooo.").also { stage = END_DIALOGUE }
+        if (!GeneralShadow.hasGhostlySet(player)) {
+            npc("Whoooo wooo Whooooooooo").also { stage = END_DIALOGUE }
             return true
         }
-        if (getAttribute(player, GeneralShadowUtils.GS_COMPLETE, false)) {
+        if (GeneralShadow.isQuestComplete(player)) {
             player("Hello again.").also { stage = 100 }
             return true
         }
-        if (getAttribute(player, GeneralShadowUtils.GS_PROGRESS, 0) == 3) {
+        if (GeneralShadow.getShadowProgress(player) >= 3) {
             player("Hello there! General Khazard sent me.")
             return true
         }
@@ -79,7 +79,7 @@ class TreeGnomeScoutDialogue(
                 }
             7 -> player("Discovered anything interesting on your travels?").also { stage++ }
             8 ->
-                if (isQuestComplete(player, Quests.BIOHAZARD) || isQuestComplete(player, Quests.PLAGUE_CITY)) {
+                if (hasRequirement(player, Quests.BIOHAZARD) || isQuestComplete(player, Quests.PLAGUE_CITY)) {
                     npc(
                         "As I passed through Ardougne, I overheard some news.",
                         "The plague in the west grows worse. King Lathas's",
@@ -124,7 +124,7 @@ class TreeGnomeScoutDialogue(
             12 -> npcl(FaceAnim.FRIENDLY, "But I hear Glough has lost his position as advisor.").also { stage++ }
             13 -> {
                 end()
-                setAttribute(player, GeneralShadowUtils.GS_PROGRESS, 4)
+                GeneralShadow.setShadowProgress(player, 4)
             }
             100 ->
                 npcl(FaceAnim.FRIENDLY, "I can't speak to you; I must continue on my mission.").also {

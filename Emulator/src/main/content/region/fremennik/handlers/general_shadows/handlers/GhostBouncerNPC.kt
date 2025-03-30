@@ -1,5 +1,6 @@
-package content.region.fremennik.handlers.general_shadows
+package content.region.fremennik.handlers.general_shadows.handlers
 
+import content.region.fremennik.handlers.general_shadows.GeneralShadow
 import core.api.*
 import core.game.node.entity.Entity
 import core.game.node.entity.impl.Projectile
@@ -11,6 +12,7 @@ import core.game.world.GameWorld
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
+import org.rs.consts.Animations
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
@@ -53,14 +55,15 @@ class GhostBouncerNPC(
 
     override fun finalizeDeath(killer: Entity?) {
         if (killer is Player) {
-            lock(killer.asPlayer(), 100)
-            lockInteractions(killer.asPlayer(), 100)
-            sendMessage(killer.asPlayer(), "You grab the severed leg and throw it to distract the hound.")
-            animate(killer.asPlayer(), Animation(5812))
-            sendChat(killer.asPlayer(), "Away, darn spot!")
+            val player = killer.asPlayer()
+            lock(player, 100)
+            lockInteractions(player, 100)
+            sendMessage(player, "You grab the severed leg and throw it to distract the hound.")
+            animate(player, Animation(Animations.SEVERED_LEG_ATTACK_5812))
+            sendChat(player, "Away, darn spot!")
             spawnProjectile(
                 source = Projectile.getLocation(killer),
-                dest = Location.getRandomLocation(Projectile.getLocation(killer.asPlayer()), 5, true),
+                dest = Location.getRandomLocation(Projectile.getLocation(player), 5, true),
                 projectile = 1024,
                 startHeight = 40,
                 endHeight = 30,
@@ -68,25 +71,22 @@ class GhostBouncerNPC(
                 speed = 250,
                 angle = 0,
             )
-        }
-        if (removeItem(killer!!.asPlayer(), Items.SEVERED_LEG_10857)) {
-            runTask(killer.asPlayer(), 8) {
-                sendItemDialogue(
-                    killer.asPlayer(),
-                    Items.SHADOW_SWORD_10858,
-                    "You receive a shadow sword and 2000 Slayer xp.",
-                )
-                rewardXP(killer.asPlayer(), Skills.SLAYER, 2000.0)
-                addItemOrDrop(killer.asPlayer(), Items.SHADOW_SWORD_10858)
-                removeAttributes(
-                    killer.asPlayer(),
-                    GeneralShadowUtils.START_GENERAL_SHADOW,
-                    GeneralShadowUtils.GS_SIN_SEER_TALK,
-                    GeneralShadowUtils.GS_START,
-                    GeneralShadowUtils.GS_PROGRESS,
-                )
-                setAttribute(killer.asPlayer(), GeneralShadowUtils.GS_COMPLETE, true)
-                unlock(killer.asPlayer())
+            if (removeItem(player, Items.SEVERED_LEG_10857)) {
+                lock(player, 8)
+                runTask(player, 8) {
+                    sendItemDialogue(
+                        killer.asPlayer(),
+                        Items.SHADOW_SWORD_10858,
+                        "You receive a shadow sword and 2000 Slayer xp.",
+                    )
+                    rewardXP(player, Skills.SLAYER, 2000.0)
+                    addItemOrDrop(player, Items.SHADOW_SWORD_10858)
+                    /*
+                     * Finish the general shadows mini-quest.
+                     */
+                    GeneralShadow.setShadowProgress(player, 5)
+                    unlock(player)
+                }
             }
         }
         clear()

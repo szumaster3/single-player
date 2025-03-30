@@ -1,8 +1,7 @@
-package content.region.fremennik.handlers.general_shadows
+package content.region.fremennik.handlers.general_shadows.cutscene
 
-import content.region.fremennik.handlers.general_shadows.GhostBouncerNPC.Companion.spawnGhostBouncer
+import content.region.fremennik.handlers.general_shadows.handlers.GhostBouncerNPC.Companion.spawnGhostBouncer
 import core.api.location
-import core.api.removeAttribute
 import core.api.sendMessageWithDelay
 import core.api.unlock
 import core.game.activity.Cutscene
@@ -65,7 +64,6 @@ class CavernCutscene(
                     "An evil prescence in the cave prevents your prayers from being heard.",
                     10,
                 )
-                removeAttribute(player, GeneralShadowUtils.GS_SEVERED_LEG)
                 spawnGhostBouncer(player)
                 unlock(player)
                 resetCamera()
