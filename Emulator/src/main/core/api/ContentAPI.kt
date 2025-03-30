@@ -3108,14 +3108,14 @@ fun dumpContainer(
                 }
 
                 container.remove(item)
-                bank.add(unnote(item), false)
+                bank.add(unnote(item), true)
                 dumpedCount++
             }
         }
     }
 
-    container.update()
-    bank.update()
+    container.update(true)
+    bank.update(true)
 
     return dumpedCount
 }

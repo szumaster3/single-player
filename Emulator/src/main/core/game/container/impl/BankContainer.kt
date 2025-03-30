@@ -2,6 +2,7 @@ package core.game.container.impl
 
 import core.ServerConstants
 import core.api.*
+import core.game.component.CloseEvent
 import core.game.component.Component
 import core.game.container.Container
 import core.game.container.ContainerEvent
@@ -104,8 +105,8 @@ class BankContainer(
             player.bankPinManager.openType(1)
             return
         }
-        player.interfaceManager.openComponent(Components.BANK_V2_MAIN_762)
-            .setUncloseEvent { player: Player?, c: Component? ->
+        player.interfaceManager.openComponent(Components.BANK_V2_MAIN_762).closeEvent =
+            CloseEvent { player: Player?, c: Component? ->
                 this@BankContainer.close()
                 true
             }
@@ -115,9 +116,10 @@ class BankContainer(
         player.inventory.listeners.add(listener)
         setVarp(player, 1249, lastAmountX)
         val settings = IfaceSettingsBuilder().enableOptions(IntRange(0, 5)).enableExamine().enableSlotSwitch().build()
-        player.packetDispatch.sendIfaceSettings(settings, 0, 763, 0, 27)
+        player.packetDispatch.sendIfaceSettings(settings, 0, Components.BANK_V2_SIDE_763, 0, 27)
         isOpen = true
     }
+
 
     fun open(player: Player) {
         if (isOpen) {
@@ -130,21 +132,23 @@ class BankContainer(
             player.bankPinManager.openType(1)
             return
         }
-        player.interfaceManager.openComponent(762).setUncloseEvent { player1: Player?, c: Component? ->
-            this@BankContainer.close()
-            true
-        }
+        player.interfaceManager.openComponent(Components.BANK_V2_MAIN_762).closeEvent =
+            CloseEvent { player1: Player?, c: Component? ->
+                this@BankContainer.close()
+                true
+            }
         refresh(listener)
-        player.interfaceManager.openSingleTab(Component(763))
+        player.interfaceManager.openSingleTab(Component(Components.BANK_V2_SIDE_763))
         player.inventory.listeners.add(player.bank.listener)
         player.inventory.refresh()
         setVarp(player, 1249, lastAmountX)
-        player.packetDispatch.sendIfaceSettings(1278, 73, 762, 0, SIZE)
+        player.packetDispatch.sendIfaceSettings(1278, 73, Components.BANK_V2_MAIN_762, 0, SIZE)
         val settings = IfaceSettingsBuilder().enableOptions(IntRange(0, 5)).enableExamine().enableSlotSwitch().build()
-        player.packetDispatch.sendIfaceSettings(settings, 0, 763, 0, 27)
+        player.packetDispatch.sendIfaceSettings(settings, 0, Components.BANK_V2_SIDE_763, 0, 27)
         player.packetDispatch.sendRunScript(1451, "")
         isOpen = true
     }
+
 
     /**
      * Closes the bank.
@@ -174,7 +178,7 @@ class BankContainer(
         var item = player.inventory[slot] ?: return
 
         if (!item.definition.getConfiguration(ItemConfigParser.BANKABLE, true)) {
-            player.sendMessage("A magical force prevents you from banking this item.")
+            sendMessage(player, "A magical force prevents you from banking this item.")
             return
         }
 
@@ -184,7 +188,7 @@ class BankContainer(
         }
 
         item = Item(item.id, amount, item.charge)
-        val unnote = !item.definition.isUnnoted
+        val unnote: Boolean = !item.definition.isUnnoted
 
         var add = if (unnote) Item(item.definition.noteId, amount, item.charge) else item
         if (unnote && !add.definition.isUnnoted) {
@@ -196,7 +200,7 @@ class BankContainer(
             add.amount = maxCount
             item.amount = maxCount
             if (maxCount < 1) {
-                player.packetDispatch.sendMessage("There is not enough space left in your bank.")
+                sendMessage(player, "There is not enough space left in your bank.")
                 return
             }
         }
@@ -208,9 +212,11 @@ class BankContainer(
                 insert(freeSlot(), preferredSlot, false)
                 increaseTabStartSlots(tabIndex)
             }
-            super.add(add, false, preferredSlot)
+            super.add(add, true, preferredSlot)
+            player.inventory.update()
         }
     }
+
 
     /**
      * Takes an item from the bank container and adds one to the inventory container.
@@ -218,10 +224,7 @@ class BankContainer(
      * @param slot The slot.
      * @param amount The amount.
      */
-    fun takeItem(
-        slot: Int,
-        amount: Int,
-    ) {
+    fun takeItem(slot: Int, amount: Int) {
         var amount = amount
         if (slot < 0 || slot > super.capacity() || amount <= 0) {
             return
@@ -238,7 +241,7 @@ class BankContainer(
             item.amount = maxCount
             add.amount = maxCount
             if (maxCount < 1) {
-                sendMessage(player, "Not enough space in your inventory.")
+                sendMessage(player,"Not enough space in your inventory.")
                 return
             }
         }
@@ -253,10 +256,10 @@ class BankContainer(
             val tabId = getTabByItemSlot(slot)
             decreaseTabStartSlots(tabId)
             shift()
-        } else {
-            update()
-        }
+        } else update()
+        player.inventory.update()
     }
+
 
     /**
      * Updates the last x-amount entered.
