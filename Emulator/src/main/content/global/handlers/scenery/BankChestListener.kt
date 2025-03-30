@@ -7,6 +7,11 @@ import org.rs.consts.Scenery
 
 class BankChestListener : InteractionListener {
     override fun defineListeners() {
+
+        /*
+         * Bank chests scenery interaction.
+         */
+
         defineInteraction(IntType.SCENERY, BANK_CHESTS, "bank", "use", "open") { player, _, _ ->
             openBankAccount(player)
             return@defineInteraction true

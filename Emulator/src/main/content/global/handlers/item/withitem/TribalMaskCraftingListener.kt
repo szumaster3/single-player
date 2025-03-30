@@ -29,6 +29,9 @@ class TribalMaskCraftingListener : InteractionListener {
 
     override fun defineListeners() {
         itemIDs.forEach { (maskId, shieldId) ->
+            /*
+             * Handles crafting the broodoo shields.
+             */
             onUseWith(IntType.ITEM, Items.HAMMER_2347, maskId) { player, _, _ ->
                 val animation =
                     when (maskId) {

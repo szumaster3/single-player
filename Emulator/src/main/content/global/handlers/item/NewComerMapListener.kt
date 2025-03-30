@@ -3,11 +3,12 @@ package content.global.handlers.item
 import core.api.openInterface
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
+import org.rs.consts.Components
 import org.rs.consts.Items
 
 class NewComerMapListener : InteractionListener {
     private val newcomerMap = Items.NEWCOMER_MAP_550
-    private val newcomerMapContent = 270
+    private val newcomerMapContent = Components.TUTOR_MAP_270
 
     override fun defineListeners() {
         on(newcomerMap, IntType.ITEM, "read") { player, _ ->

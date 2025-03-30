@@ -9,6 +9,9 @@ import org.rs.consts.Items
 
 class DoogleSardineListener : InteractionListener {
     override fun defineListeners() {
+        /*
+         * Handles creating the doogle sardine (Gertrude's cat quest).
+         */
         onUseWith(IntType.ITEM, Items.RAW_SARDINE_327, Items.DOOGLE_LEAVES_1573) { player, used, with ->
             if (removeItem(player, used.asItem()) && removeItem(player, with.asItem())) {
                 sendDialogue(player, "You rub the doogle leaves over the sardine.")

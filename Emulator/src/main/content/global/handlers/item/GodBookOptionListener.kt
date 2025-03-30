@@ -14,20 +14,20 @@ import org.rs.consts.Animations
 import org.rs.consts.Items
 
 class GodBookOptionListener : InteractionListener {
-    val GB_SARADOMIN = Items.HOLY_BOOK_3840
-    val GB_ZAMORAK = Items.UNHOLY_BOOK_3842
-    val GB_GUTHIX = Items.BOOK_OF_BALANCE_3844
+    private val saradominBook = Items.HOLY_BOOK_3840
+    private val zamorakBook = Items.UNHOLY_BOOK_3842
+    private val guthixBook = Items.BOOK_OF_BALANCE_3844
 
     override fun defineListeners() {
-        on(GB_SARADOMIN, IntType.ITEM, "preach") { player, _ ->
+        on(saradominBook, IntType.ITEM, "preach") { player, _ ->
             openDialogue(player, HOLY_DIALOGUE(BOOK.SARA))
             return@on true
         }
-        on(GB_ZAMORAK, IntType.ITEM, "preach") { player, _ ->
+        on(zamorakBook, IntType.ITEM, "preach") { player, _ ->
             openDialogue(player, HOLY_DIALOGUE(BOOK.ZAM))
             return@on true
         }
-        on(GB_GUTHIX, IntType.ITEM, "preach") { player, _ ->
+        on(guthixBook, IntType.ITEM, "preach") { player, _ ->
             openDialogue(player, HOLY_DIALOGUE(BOOK.GUTHIX))
             return@on true
         }
@@ -47,19 +47,19 @@ class GodBookOptionListener : InteractionListener {
                 replaceSlot(player, node.asItem().slot, Item(product), node.asItem())
             }
         }
-        onUseWith(IntType.ITEM, GB_SARADOMIN, Items.UNBLESSED_SYMBOL_1716) { player, _, with ->
+        onUseWith(IntType.ITEM, saradominBook, Items.UNBLESSED_SYMBOL_1716) { player, _, with ->
             bless(player, with, Items.HOLY_SYMBOL_1718)
             return@onUseWith true
         }
-        onUseWith(IntType.ITEM, GB_ZAMORAK, Items.UNPOWERED_SYMBOL_1722) { player, _, with ->
+        onUseWith(IntType.ITEM, zamorakBook, Items.UNPOWERED_SYMBOL_1722) { player, _, with ->
             bless(player, with, Items.UNHOLY_SYMBOL_1724)
             return@onUseWith true
         }
-        onUseWith(IntType.ITEM, GB_GUTHIX, Items.UNBLESSED_SYMBOL_1716) { player, _, with ->
+        onUseWith(IntType.ITEM, guthixBook, Items.UNBLESSED_SYMBOL_1716) { player, _, with ->
             bless(player, with, Items.HOLY_SYMBOL_1718)
             return@onUseWith true
         }
-        onUseWith(IntType.ITEM, GB_GUTHIX, Items.UNPOWERED_SYMBOL_1722) { player, _, with ->
+        onUseWith(IntType.ITEM, guthixBook, Items.UNPOWERED_SYMBOL_1722) { player, _, with ->
             bless(player, with, Items.UNHOLY_SYMBOL_1724)
             return@onUseWith true
         }

@@ -9,6 +9,11 @@ import org.rs.consts.Sounds
 
 class ChestKeyListener : InteractionListener {
     override fun defineListeners() {
+
+        /*
+         * Handles using the chest key (Pirate's Treasure quest).
+         */
+
         onUseWith(IntType.SCENERY, Items.CHEST_KEY_432, Scenery.CHEST_2079) { player, used, with ->
             if (!removeItem(player, used)) {
                 return@onUseWith false

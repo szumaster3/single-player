@@ -10,6 +10,10 @@ import org.rs.consts.Scenery
 
 class SwampHoleRopeListener : InteractionListener {
     override fun defineListeners() {
+        /*
+         * Handles using rope on dark hole (Lumbridge swamp).
+         */
+
         onUseWith(IntType.SCENERY, Items.ROPE_954, Scenery.DARK_HOLE_5947) { player, used, _ ->
             if (player.savedData.globalData.hasTiedLumbridgeRope()) {
                 sendDialogue(player, "There is already a rope tied to the entrance.")

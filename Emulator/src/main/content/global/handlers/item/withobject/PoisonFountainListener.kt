@@ -10,6 +10,11 @@ import org.rs.consts.Scenery
 
 class PoisonFountainListener : InteractionListener {
     override fun defineListeners() {
+
+        /*
+         * Handles use the poisoned fish food on fountain.
+         */
+
         onUseWith(IntType.SCENERY, Items.POISONED_FISH_FOOD_274, Scenery.FOUNTAIN_153) { player, used, _ ->
             if (getAttribute(player, "piranhas-killed", false)) {
                 sendMessage(player, "The piranhas are dead already.")

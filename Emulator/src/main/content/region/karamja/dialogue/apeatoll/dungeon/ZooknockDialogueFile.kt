@@ -30,7 +30,7 @@ class ZooknockDialogueFile(
     val it: Int,
 ) : DialogueFile() {
     var i = ItemsOnZooknockListener()
-    var n = NPC(i.zooknock)
+    var n = NPC(i.zooknockNPC)
     var itemUsed = it
 
     override fun handle(

@@ -6,11 +6,12 @@ import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.plugin.Initializable
 import core.plugin.Plugin
+import org.rs.consts.Items
 
 @Initializable
 class FieldRationUsageHandler : UseWithHandler() {
     override fun newInstance(arg: Any?): Plugin<Any?> {
-        addHandler(7934, PLAYER_TYPE, this)
+        addHandler(Items.FIELD_RATION_7934, PLAYER_TYPE, this)
         return this
     }
 

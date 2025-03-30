@@ -9,6 +9,11 @@ import org.rs.consts.Items
 
 class BlamishSnailSlimeListener : InteractionListener {
     override fun defineListeners() {
+
+        /*
+         * Handles creating the blamish snail slime.
+         */
+
         onUseWith(IntType.ITEM, Items.THIN_SNAIL_3363, Items.PESTLE_AND_MORTAR_233) { player, used, with ->
             val r = arrayOf(13621, 13877, 13876, 13875)
             for (i in r) if (!inBorders(player, getRegionBorders(i))) return@onUseWith false

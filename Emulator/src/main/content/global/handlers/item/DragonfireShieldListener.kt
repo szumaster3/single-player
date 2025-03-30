@@ -27,13 +27,17 @@ import org.rs.consts.Items
 import org.rs.consts.Sounds
 
 class DragonfireShieldListener : InteractionListener {
-    val dragonfireShields = intArrayOf(Items.DRAGONFIRE_SHIELD_11283, Items.DRAGONFIRE_SHIELD_11284)
-    val dfsEmptyAnim = Animations.SHIELD_DRAGONFIRE_6700
-    val dfsEmptyGfx = org.rs.consts.Graphics.DFS_FUSE_DRAGONKIN_KEY_CHARGE_1160
+    private val dragonFireShields = intArrayOf(Items.DRAGONFIRE_SHIELD_11283, Items.DRAGONFIRE_SHIELD_11284)
+    private val dfsEmptyAnim = Animations.SHIELD_DRAGONFIRE_6700
+    private val dfsEmptyGfx = org.rs.consts.Graphics.DFS_FUSE_DRAGONKIN_KEY_CHARGE_1160
     val dfsRecharge = if (ServerConstants.BETTER_DFS) secondsToTicks(30) else minutesToTicks(2)
 
     override fun defineListeners() {
-        on(dragonfireShields, IntType.ITEM, "operate") { player, node ->
+        /*
+         * Handles dfs options.
+         */
+
+        on(dragonFireShields, IntType.ITEM, "operate") { player, node ->
             val usingAttack = !getAttribute(player, "dfs_spec", false)
             if (!usingAttack) {
                 if (!player.settings.isSpecialToggled) {
@@ -130,7 +134,11 @@ class DragonfireShieldListener : InteractionListener {
             return@on true
         }
 
-        on(dragonfireShields, IntType.ITEM, "empty") { player, node ->
+        /*
+         * Handles releasing the charges.
+         */
+
+        on(dragonFireShields, IntType.ITEM, "empty") { player, node ->
             replaceSlot(
                 player,
                 node.asItem().slot,
@@ -143,7 +151,11 @@ class DragonfireShieldListener : InteractionListener {
             return@on true
         }
 
-        on(dragonfireShields, IntType.ITEM, "inspect") { player, node ->
+        /*
+         * Handles inspection of dfs item.
+         */
+
+        on(dragonFireShields, IntType.ITEM, "inspect") { player, node ->
             if (node.asItem().id == Items.DRAGONFIRE_SHIELD_11284) {
                 sendMessage(player, "The shield has no charges.")
                 return@on true
@@ -152,7 +164,11 @@ class DragonfireShieldListener : InteractionListener {
             return@on true
         }
 
-        on(dragonfireShields, IntType.ITEM, "drop") { player, node ->
+        /*
+         * Handles drop dfs option.
+         */
+
+        on(dragonFireShields, IntType.ITEM, "drop") { player, node ->
             var shield = node.asItem()
             val slot = shield.slot
             if (shield.id == Items.DRAGONFIRE_SHIELD_11283) {

@@ -8,6 +8,8 @@ import core.game.interaction.InteractionListener
 import core.game.interaction.QueueStrength
 import core.game.node.entity.skill.Skills
 import core.game.world.map.Location
+import org.rs.consts.Animations
+import org.rs.consts.Components
 import org.rs.consts.Items
 
 private const val SQUASH_GRAPHICS_BEGIN = 767
@@ -28,7 +30,7 @@ class GrandSeedPodListener : InteractionListener {
                 queueScript(player, 3, QueueStrength.SOFT) { stage: Int ->
                     if (stage == 0) {
                         rewardXP(player, Skills.FARMING, 100.0)
-                        openOverlay(player, 115)
+                        openOverlay(player, Components.FADE_TO_BLACK_115)
                         return@queueScript keepRunning(player)
                     }
 
@@ -56,7 +58,7 @@ class GrandSeedPodListener : InteractionListener {
                 delayEntity(player, 12)
                 queueScript(player, 3, QueueStrength.SOFT) { stage: Int ->
                     if (stage == 0) {
-                        animate(player, 1241, true)
+                        animate(player, Animations.INVISIBLE_1241, true)
                         return@queueScript keepRunning(player)
                     }
 
@@ -66,7 +68,7 @@ class GrandSeedPodListener : InteractionListener {
                     }
 
                     if (stage == 2) {
-                        visualize(player, 1241, SQUASH_GRAPHICS_END)
+                        visualize(player, Animations.INVISIBLE_1241, SQUASH_GRAPHICS_END)
                         return@queueScript delayScript(player, 2)
                     }
 

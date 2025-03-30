@@ -47,6 +47,11 @@ class BlessSpiritShieldListener : InteractionListener {
     }
 
     override fun defineListeners() {
+
+        /*
+         * Handles blessing the shields using altar.
+         */
+
         onUseWith(IntType.SCENERY, COMPONENTS, *ALTARS) { player, _, _ ->
             if (!inInventory(player, Items.HOLY_ELIXIR_13754) || !inInventory(player, Items.SPIRIT_SHIELD_13734)) {
                 sendMessage(player, "You need a holy elixir and an unblessed spirit shield in order to do this.")
@@ -70,6 +75,10 @@ class BlessSpiritShieldListener : InteractionListener {
 
             return@onUseWith true
         }
+
+        /*
+         * Handles blessing the shields using altar.
+         */
 
         onUseWith(IntType.SCENERY, SIGIL_MAP.keys.toIntArray(), *ANVILS) { player, used, _ ->
             if (!inInventory(player, Items.BLESSED_SPIRIT_SHIELD_13736)) {

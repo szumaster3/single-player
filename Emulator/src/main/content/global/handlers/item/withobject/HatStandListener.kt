@@ -18,6 +18,11 @@ class HatStandListener : InteractionListener {
             .toIntArray()
 
     override fun defineListeners() {
+
+        /*
+         * Handles basic interaction with hat stand.
+         */
+
         onUseWith(IntType.SCENERY, hats, Scenery.HAT_STAND_374) { player, _, _ ->
             sendDialogue(player, "It'd probably fall off if I tried to do that.")
             return@onUseWith true

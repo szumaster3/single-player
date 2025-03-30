@@ -11,6 +11,10 @@ import org.rs.consts.Quests
 
 class RopeOnLadyKeliListener : InteractionListener {
     override fun defineListeners() {
+
+        /*
+         * Handles using rope on Lady Keli (Prince ali rescue quest).
+         */
         onUseWith(IntType.NPC, Items.ROPE_954, NPCs.LADY_KELI_919) { player, used, _ ->
             if (getQuestStage(player, Quests.PRINCE_ALI_RESCUE) in 40..50 && getAttribute(player, "guard-drunk", false)
             ) {

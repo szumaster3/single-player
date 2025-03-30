@@ -15,6 +15,10 @@ class KaramjaBananaCrateListener : InteractionListener {
     }
 
     override fun defineListeners() {
+        /*
+         * Handles stash the karamjan rum into the crate.
+         */
+
         onUseWith(IntType.SCENERY, Items.KARAMJAN_RUM_431, Scenery.CRATE_2072) { player, used, _ ->
             if (!player.savedData.globalData.isLuthasTask()) {
                 sendMessage(player, "I don't know what goes in there.")
@@ -33,6 +37,10 @@ class KaramjaBananaCrateListener : InteractionListener {
             setAttribute(player, "/save:stashed-rum", true)
             return@onUseWith true
         }
+
+        /*
+         * Handles stash the bananas into the crate.
+         */
 
         onUseWith(IntType.SCENERY, Items.BANANA_1963, Scenery.CRATE_2072) { player, used, _ ->
             if (!player.savedData.globalData.isLuthasTask()) {
@@ -53,6 +61,10 @@ class KaramjaBananaCrateListener : InteractionListener {
             player.savedData.globalData.setKaramjaBannanas(currNumBananasInCrate + 1)
             return@onUseWith true
         }
+
+        /*
+         * Handles search the crate interaction.
+         */
 
         on(Scenery.CRATE_2072, IntType.SCENERY, "search") { player, _ ->
             if (!player.savedData.globalData.isLuthasTask()) {
@@ -75,6 +87,10 @@ class KaramjaBananaCrateListener : InteractionListener {
             )
             return@on true
         }
+
+        /*
+         * Handles fill crate interaction.
+         */
 
         on(Scenery.CRATE_2072, IntType.SCENERY, "fill") { player, _ ->
             if (!player.savedData.globalData.isLuthasTask()) {

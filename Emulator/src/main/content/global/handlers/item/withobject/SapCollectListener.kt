@@ -45,6 +45,11 @@ class SapCollectListener : InteractionListener {
     }
 
     override fun defineListeners() {
+
+        /*
+         * Handles collecting sap.
+         */
+
         onUseWith(IntType.SCENERY, Items.KNIFE_946, *treeIDs) { player, _, _ ->
             if (!inInventory(player, Items.BUCKET_1925)) {
                 sendMessage(player, "You need a bucket to do that.")
@@ -66,6 +71,11 @@ class SapCollectListener : InteractionListener {
             )
             return@onUseWith true
         }
+
+        /*
+         * Handles emptying bucket of sap.
+         */
+
         on(Items.BUCKET_OF_SAP_4687, IntType.ITEM, "empty") { player, node ->
             val item = node as Item
             if (item.slot < 0) {

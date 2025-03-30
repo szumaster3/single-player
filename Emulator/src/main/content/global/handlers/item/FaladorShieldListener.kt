@@ -15,6 +15,11 @@ import java.util.concurrent.TimeUnit
 
 class FaladorShieldListener : InteractionListener {
     override fun defineListeners() {
+
+        /*
+         * Handles interaction with Falador shield.
+         */
+
         on(FALADOR_SHIELD, IntType.ITEM, "prayer-restore", "operate") { player, node ->
             val item = node as Item
             val level = getLevel(item.id)

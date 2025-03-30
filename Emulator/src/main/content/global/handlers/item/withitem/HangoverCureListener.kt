@@ -10,6 +10,11 @@ import org.rs.consts.Items
 
 class HangoverCureListener : InteractionListener {
     override fun defineListeners() {
+
+        /*
+         * Handles creating hangover cure.
+         */
+
         onUseWith(IntType.ITEM, Items.SNAPE_GRASS_231, Items.CHOCOLATEY_MILK_1977) { player, used, with ->
             if (removeItem(player, used.asItem()) && removeItem(player, with.asItem())) {
                 sendItemDialogue(player, Items.HANGOVER_CURE_1504, "You mix the snape grass into the bucket.")

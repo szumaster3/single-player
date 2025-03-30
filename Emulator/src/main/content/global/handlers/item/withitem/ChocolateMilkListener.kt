@@ -9,6 +9,11 @@ import org.rs.consts.Items
 
 class ChocolateMilkListener : InteractionListener {
     override fun defineListeners() {
+
+        /*
+         * Handles creating chocolate milk.
+         */
+
         onUseWith(IntType.ITEM, Items.CHOCOLATE_DUST_1975, Items.BUCKET_OF_MILK_1927) { player, _, _ ->
             if (removeItem(player, Items.CHOCOLATE_DUST_1975) && removeItem(player, Items.BUCKET_OF_MILK_1927)) {
                 sendItemDialogue(player, Items.CHOCOLATEY_MILK_1977, "You mix the chocolate into the bucket.")

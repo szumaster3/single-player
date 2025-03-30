@@ -10,6 +10,11 @@ import org.rs.consts.Scenery
 
 class DoorListener : InteractionListener {
     override fun defineListeners() {
+
+        /*
+         * Handles fremennik doors interaction.
+         */
+
         on(Scenery.DOOR_1531, IntType.SCENERY, "close") { player, node ->
             if (node.location == Location.create(2598, 3404, 0)) {
                 sendMessage(player, "The door appears to be stuck.")
@@ -18,6 +23,10 @@ class DoorListener : InteractionListener {
             DoorActionHandler.handleDoor(player, node.asScenery())
             return@on true
         }
+
+        /*
+         * Handles fremennik doors interaction.
+         */
 
         on(Scenery.DOOR_4250, IntType.SCENERY, "open") { _, node ->
             replaceScenery(node.asScenery(), node.id + 1, -1, node.direction, node.location)

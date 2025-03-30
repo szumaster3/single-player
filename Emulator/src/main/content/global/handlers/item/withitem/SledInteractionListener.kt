@@ -10,6 +10,10 @@ import org.rs.consts.Sounds
 
 class SledInteractionListener : InteractionListener {
     override fun defineListeners() {
+        /*
+         * Handles creating wax.
+         */
+
         onUseWith(IntType.ITEM, Items.SWAMP_TAR_1939, Items.BUCKET_OF_WAX_30) { player, used, with ->
             val itemSlot = with.asItem().slot
             if (!inInventory(player, Items.CAKE_TIN_1887)) {
@@ -25,6 +29,10 @@ class SledInteractionListener : InteractionListener {
             return@onUseWith true
         }
 
+        /*
+         * Handles using wax on sled.
+         */
+
         onUseWith(IntType.ITEM, Items.WAX_4085, Items.SLED_4083) { player, used, with ->
             val itemSlot = used.asItem().slot
             lock(player, 6)
@@ -39,12 +47,20 @@ class SledInteractionListener : InteractionListener {
             return@onUseWith true
         }
 
+        /*
+         * Handles ride interaction with sled.
+         */
+
         on(Items.SLED_4084, IntType.ITEM, "ride") { player, _ ->
             removeItem(player, Items.SLED_4084)
             animate(player, Animations.SITTING_ON_SLED_1461)
             player.equipment.replace(Item(Items.SLED_4084), 3)
             return@on true
         }
+
+        /*
+         * Handles equip interaction with the sled.
+         */
 
         onEquip(Items.SLED_4084) { player, _ ->
             lock(player, 2)
@@ -53,6 +69,10 @@ class SledInteractionListener : InteractionListener {
             animate(player, Animations.SITTING_ON_SLED_1461)
             return@onEquip true
         }
+
+        /*
+         * Handles unequiping interaction with the sled.
+         */
 
         onUnequip(Items.SLED_4084) { _, _ ->
             return@onUnequip true

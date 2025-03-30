@@ -9,6 +9,11 @@ import org.rs.consts.Items
 
 class ScarecrowListener : InteractionListener {
     override fun defineListeners() {
+
+        /*
+         * Handles using hay sack with watermelon to creating scarecrow.
+         */
+
         onUseWith(IntType.ITEM, Items.HAY_SACK_6058, Items.WATERMELON_5982) { player, used, _ ->
             if (getStatLevel(player, Skills.FARMING) < 23) {
                 sendMessage(player, "Your Farming level is not high enough to do this.")

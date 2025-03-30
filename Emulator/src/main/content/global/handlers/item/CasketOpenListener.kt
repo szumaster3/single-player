@@ -2,6 +2,7 @@ package content.global.handlers.item
 
 import core.api.Container
 import core.api.removeItem
+import core.api.sendItemDialogue
 import core.api.utils.WeightBasedTable
 import core.api.utils.WeightedItem
 import core.game.interaction.IntType
@@ -32,7 +33,7 @@ class CasketOpenListener : InteractionListener {
             if (removeItem(player, casket, Container.INVENTORY)) {
                 val finalLoot: ArrayList<Item> = loot.roll()
                 finalLoot.forEach { player.inventory.add(it) }
-                player.dialogueInterpreter.sendItemMessage(
+                sendItemDialogue(player,
                     finalLoot[0],
                     "You open the casket. Inside you find " +
                         (

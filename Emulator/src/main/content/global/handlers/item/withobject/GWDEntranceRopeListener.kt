@@ -9,6 +9,11 @@ import org.rs.consts.Scenery
 
 class GWDEntranceRopeListener : InteractionListener {
     override fun defineListeners() {
+
+        /*
+         * Handles using rope on gwd entrance.
+         */
+
         onUseWith(IntType.SCENERY, Items.ROPE_954, Scenery.HOLE_26340) { player, used, _ ->
             if (!removeItem(player, used)) {
                 return@onUseWith false

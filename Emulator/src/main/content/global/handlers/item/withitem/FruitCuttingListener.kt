@@ -8,6 +8,7 @@ import core.game.node.item.Item
 import core.game.world.update.flag.context.Animation
 import core.tools.START_DIALOGUE
 import org.rs.consts.Animations
+import org.rs.consts.Components
 import org.rs.consts.Items
 import org.rs.consts.Sounds
 
@@ -62,12 +63,12 @@ class FruitCuttingListener : InteractionListener {
                             sendMessage(player!!, "You deftly chop the ${getItemName(fruit).lowercase()} into slices.")
                         }
                     } else {
-                        sendString(player!!, "Would you like to...", 140, 4)
-                        sendItemOnInterface(player!!, 140, 6, chunk, 1)
-                        sendItemOnInterface(player!!, 140, 5, slice.id, 1)
-                        sendString(player!!, "Slice the ${getItemName(fruit).lowercase()}", 140, 2)
-                        sendString(player!!, "Dice the ${getItemName(fruit).lowercase()}", 140, 3)
-                        openInterface(player!!, 140)
+                        sendString(player!!, "Would you like to...", Components.SELECT_AN_OPTION_140, 4)
+                        sendItemOnInterface(player!!, Components.SELECT_AN_OPTION_140, 6, chunk, 1)
+                        sendItemOnInterface(player!!, Components.SELECT_AN_OPTION_140, 5, slice.id, 1)
+                        sendString(player!!, "Slice the ${getItemName(fruit).lowercase()}", Components.SELECT_AN_OPTION_140, 2)
+                        sendString(player!!, "Dice the ${getItemName(fruit).lowercase()}", Components.SELECT_AN_OPTION_140, 3)
+                        openInterface(player!!, Components.SELECT_AN_OPTION_140)
                         when (buttonID) {
                             1 -> {
                                 closeInterface(player!!)

@@ -22,6 +22,7 @@ import core.plugin.Plugin
 import core.tools.RandomFunction
 import org.rs.consts.Animations
 import org.rs.consts.Items
+import org.rs.consts.Scenery
 import org.rs.consts.Sounds
 
 @Initializable
@@ -120,21 +121,15 @@ class FishbowlOptionHandler : OptionHandler() {
                 }
 
                 "feed" -> {
-                    if (player.inventory.containsAtLeastOneItem(Items.FISH_FOOD_272) &&
-                        player.inventory.remove(
-                            Item(
-                                Items.FISH_FOOD_272,
-                            ),
-                        )
-                    ) {
-                        player.inventory.add(Item(Items.AN_EMPTY_BOX_6675))
-                        player.lock(ANIM_FEED.duration)
-                        player.animate(ANIM_FEED)
-                        player.packetDispatch.sendMessage("You feed your fish.")
-                    } else if (player.inventory.containsAtLeastOneItem(Items.POISONED_FISH_FOOD_274)) {
-                        player.packetDispatch.sendMessage("You can't poison your own pet!")
+                    if (inInventory(player, Items.FISH_FOOD_272) && removeItem(player, Item(Items.FISH_FOOD_272))) {
+                        addItem(player, Items.AN_EMPTY_BOX_6675, 1)
+                        lock(player, ANIM_FEED.duration)
+                        animate(player, ANIM_FEED)
+                        sendMessage(player, "You feed your fish.")
+                    } else if (anyInInventory(player, Items.POISONED_FISH_FOOD_274)) {
+                        sendMessage(player,"You can't poison your own pet!")
                     } else {
-                        player.packetDispatch.sendMessage("You don't have any fish food.")
+                        sendMessage(player,"You don't have any fish food.")
                     }
                 }
 
@@ -194,7 +189,7 @@ class FishbowlOptionHandler : OptionHandler() {
 
     class AquariumPlugin : OptionHandler() {
         override fun newInstance(arg: Any?): Plugin<Any?> {
-            SceneryDefinition.forId(10091).handlers["option:fish-in"] = this
+            SceneryDefinition.forId(Scenery.AQUARIUM_10091).handlers["option:fish-in"] = this
             ClassScanner.definePlugin(TinyNetHandler())
             return this
         }
@@ -206,12 +201,12 @@ class FishbowlOptionHandler : OptionHandler() {
         ): Boolean = getFish(player)
 
         fun getFish(player: Player): Boolean {
-            if (!player.inventory.containsAtLeastOneItem(TINY_NET)) {
-                player.packetDispatch.sendMessage("You see some tiny fish swimming around... but how to catch them?")
+            if (!anyInInventory(player, TINY_NET)) {
+                sendMessage(player, "You see some tiny fish swimming around... but how to catch them?")
                 return true
-            } else if (player.inventory.remove(Item(FISHBOWL_SEAWEED))) {
-                player.packetDispatch.sendMessage("You wave the net around...")
-                player.getSkills().addExperience(Skills.FISHING, 1.0, true)
+            } else if (removeItem(player, Item(FISHBOWL_SEAWEED))) {
+                sendMessage(player, "You wave the net around...")
+                rewardXP(player, Skills.FISHING, 1.0)
                 val level = player.getSkills().getLevel(Skills.FISHING)
                 val blueChance = Math.round(Util.clamp(-0.6667 * level.toDouble() + 106.0, 40.0, 60.0)).toInt()
                 val greenChance = Math.round(Util.clamp(0.2941 * level.toDouble() + 19.7059, 20.0, 40.0)).toInt()
@@ -232,18 +227,18 @@ class FishbowlOptionHandler : OptionHandler() {
                     FISHBOWL_GREEN -> msg = "Greenfish"
                     FISHBOWL_SPINE -> msg = "Spinefish"
                 }
-                player.packetDispatch.sendMessage("...and you catch a Tiny $msg!")
-                player.achievementDiaryManager.finishTask(player, DiaryType.SEERS_VILLAGE, 1, 10)
+                sendMessage(player, "...and you catch a Tiny $msg!")
+                finishDiaryTask(player, DiaryType.SEERS_VILLAGE, 1, 10)
                 return true
             } else {
-                player.packetDispatch.sendMessage("You need something to put your catch in!")
+                sendMessage(player, "You need something to put your catch in!")
                 return true
             }
         }
 
         private inner class TinyNetHandler : UseWithHandler(TINY_NET) {
             override fun newInstance(arg: Any?): Plugin<Any?> {
-                addHandler(10091, OBJECT_TYPE, this)
+                addHandler(Scenery.AQUARIUM_10091, OBJECT_TYPE, this)
                 return this
             }
 

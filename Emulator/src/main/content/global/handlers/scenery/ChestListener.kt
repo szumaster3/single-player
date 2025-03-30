@@ -8,7 +8,10 @@ import org.rs.consts.Scenery
 
 class ChestListener : InteractionListener {
     override fun defineListeners() {
-        // Zanaris chest interaction (Fairy bank).
+        /*
+         * Zanaris chest interaction (Fairy bank).
+         */
+
         on(Scenery.OPEN_CHEST_12121, IntType.SCENERY, "shut") { _, node ->
             replaceScenery(node.asScenery(), Scenery.CLOSED_CHEST_12120, -1)
             return@on true
@@ -18,7 +21,11 @@ class ChestListener : InteractionListener {
             replaceScenery(node.asScenery(), Scenery.OPEN_CHEST_12121, -1)
             return@on true
         }
-        // Fred farm house chest interaction.
+
+        /*
+         * Fred farm house chest interaction.
+         */
+
         on(Scenery.CLOSED_CHEST_37009, IntType.SCENERY, "open") { _, node ->
             replaceScenery(node.asScenery(), Scenery.OPEN_CHEST_37010, -1, node.location)
             return@on true

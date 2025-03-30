@@ -22,8 +22,12 @@ class CatOnWendyListener : InteractionListener {
     }
 
     override fun defineListeners() {
+        /*
+         * Handles using cats on Wendy NPC (Purple cats mini-quest).
+         */
+
         onUseWith(IntType.NPC, NPCs.WENDY_8201, *cats) { player, _, _ ->
-            if (isQuestComplete(player, Quests.SWEPT_AWAY)) {
+            if (!isQuestComplete(player, Quests.SWEPT_AWAY)) {
                 sendMessage(player, "You can't use your cat on Wendy.")
                 return@onUseWith false
             }
@@ -31,6 +35,10 @@ class CatOnWendyListener : InteractionListener {
             openDialogue(player, WendyRegularCatDialogueExtension())
             return@onUseWith true
         }
+
+        /*
+         * Handles using purple cats on Wendy NPC.
+         */
 
         onUseWith(IntType.NPC, NPCs.WENDY_8201, *PlagueCityUtils.purpleCats) { player, _, _ ->
             sendMessage(player, "You show your purple cat to Wendy.")

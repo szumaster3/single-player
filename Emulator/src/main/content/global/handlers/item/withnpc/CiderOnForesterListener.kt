@@ -14,6 +14,11 @@ class CiderOnForesterListener : InteractionListener {
     private var init = true
 
     override fun defineListeners() {
+
+        /*
+         * Handles using cider on Forester NPCs.
+         */
+
         onUseWith(IntType.NPC, cider, *ids) { player, _, _ ->
             if (inBorders(player, 2689, 3488, 2700, 3498)) {
                 openDialogue(

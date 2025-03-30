@@ -60,6 +60,11 @@ class EnchantSpellListener : InteractionListener {
         )
 
     override fun defineListeners() {
+
+        /*
+         * Handles breaking the tabs.
+         */
+
         on(IntType.ITEM, "break") { player, node ->
             if (hasTimerActive(player, "teleblock")) {
                 sendMessage(player, "A magical force has stopped you from teleporting.")

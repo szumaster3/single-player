@@ -7,6 +7,11 @@ import org.rs.consts.Scenery
 
 class SlayerDangerSignListener : InteractionListener {
     override fun defineListeners() {
+
+        /*
+         * Handles slayer danger sign interaction.
+         */
+
         on(Scenery.DANGER_SIGN_5127, IntType.SCENERY, "read") { player, _ ->
             sendDialogueLines(
                 player,

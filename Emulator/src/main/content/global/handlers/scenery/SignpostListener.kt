@@ -172,10 +172,10 @@ class SignpostListener : InteractionListener {
         player: Player,
         directions: List<String>,
     ) {
-        sendString(player, directions[0], 135, 3)
-        sendString(player, directions[1], 135, 9)
-        sendString(player, directions[2], 135, 8)
-        sendString(player, directions[3], 135, 12)
+        sendString(player, directions[0], Components.AIDE_COMPASS_135, 3)
+        sendString(player, directions[1], Components.AIDE_COMPASS_135, 9)
+        sendString(player, directions[2], Components.AIDE_COMPASS_135, 8)
+        sendString(player, directions[3], Components.AIDE_COMPASS_135, 12)
         openInterface(player, Components.AIDE_COMPASS_135)
     }
 

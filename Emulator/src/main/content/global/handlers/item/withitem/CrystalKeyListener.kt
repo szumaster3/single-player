@@ -9,6 +9,11 @@ import org.rs.consts.Items
 
 class CrystalKeyListener : InteractionListener {
     override fun defineListeners() {
+
+        /*
+         * Handles creating the crystal key.
+         */
+
         onUseWith(IntType.ITEM, Items.LOOP_HALF_OF_A_KEY_987, Items.TOOTH_HALF_OF_A_KEY_985) { player, used, with ->
             if (removeItem(player, used.asItem()) && removeItem(player, with.asItem())) {
                 addItem(player, Items.CRYSTAL_KEY_989)

@@ -337,7 +337,7 @@ public final class BobDialogue extends Dialogue {
          * @return the formatted cost
          */
         public static int getFormattedCost(String name, Item item) {
-            int ticks = BarrowsEquipmentRegister.TICKS;
+            int ticks = BarrowsEquipmentRegister.Companion.getTICKS();
             int[] degrades = new int[]{100, 75, 50, 25, 0};
             for (int i = 0; i < prices.length; i++) {
                 String check = (String) prices[i][0];
@@ -481,99 +481,99 @@ public final class BobDialogue extends Dialogue {
             /**
              * Verac legs barrows full equipment.
              */
-            VERAC_LEGS(new      Item(Items.VERACS_PLATESKIRT_4759, 1)),
+            VERAC_LEGS(new Item(Items.VERACS_PLATESKIRT_4759, 1)),
             /**
              * Verac top barrows full equipment.
              */
-            VERAC_TOP(new       Item(Items.VERACS_BRASSARD_4757, 1)),
+            VERAC_TOP(new Item(Items.VERACS_BRASSARD_4757, 1)),
             /**
              * Verac weapon barrows full equipment.
              */
-            VERAC_WEAPON(new    Item(Items.VERACS_FLAIL_4755, 1)),
+            VERAC_WEAPON(new Item(Items.VERACS_FLAIL_4755, 1)),
             /**
              * Verac helm barrows full equipment.
              */
-            VERAC_HELM(new      Item(Items.VERACS_HELM_4753, 1)),
+            VERAC_HELM(new Item(Items.VERACS_HELM_4753, 1)),
             /**
              * Torag legs barrows full equipment.
              */
-            TORAG_LEGS(new      Item(Items.TORAGS_PLATELEGS_4751, 1)),
+            TORAG_LEGS(new Item(Items.TORAGS_PLATELEGS_4751, 1)),
             /**
              * Torag body barrows full equipment.
              */
-            TORAG_BODY(new      Item(Items.TORAGS_PLATEBODY_4749, 1)),
+            TORAG_BODY(new Item(Items.TORAGS_PLATEBODY_4749, 1)),
             /**
              * Torag helm barrows full equipment.
              */
-            TORAG_HELM(new      Item(Items.TORAGS_HELM_4745, 1)),
+            TORAG_HELM(new Item(Items.TORAGS_HELM_4745, 1)),
             /**
              * Torag weapon barrows full equipment.
              */
-            TORAG_WEAPON(new    Item(Items.TORAGS_HAMMERS_4747, 1)),
+            TORAG_WEAPON(new Item(Items.TORAGS_HAMMERS_4747, 1)),
             /**
              * Karil helm barrows full equipment.
              */
-            KARIL_HELM(new      Item(Items.KARILS_COIF_4732, 1)),
+            KARIL_HELM(new Item(Items.KARILS_COIF_4732, 1)),
             /**
              * Karil weapon barrows full equipment.
              */
-            KARIL_WEAPON(new    Item(Items.KARILS_CROSSBOW_4734, 1)),
+            KARIL_WEAPON(new Item(Items.KARILS_CROSSBOW_4734, 1)),
             /**
              * Karil body barrows full equipment.
              */
-            KARIL_BODY(new      Item(Items.KARILS_LEATHERTOP_4736, 1)),
+            KARIL_BODY(new Item(Items.KARILS_LEATHERTOP_4736, 1)),
             /**
              * Karil legs barrows full equipment.
              */
-            KARIL_LEGS(new      Item(Items.KARILS_LEATHERSKIRT_4738, 1)),
+            KARIL_LEGS(new Item(Items.KARILS_LEATHERSKIRT_4738, 1)),
             /**
              * Guthan helm barrows full equipment.
              */
-            GUTHAN_HELM(new     Item(Items.GUTHANS_HELM_4724, 1)),
+            GUTHAN_HELM(new Item(Items.GUTHANS_HELM_4724, 1)),
             /**
              * Guthan body barrows full equipment.
              */
-            GUTHAN_BODY(new     Item(Items.GUTHANS_PLATEBODY_4728, 1)),
+            GUTHAN_BODY(new Item(Items.GUTHANS_PLATEBODY_4728, 1)),
             /**
              * Guthan legs barrows full equipment.
              */
-            GUTHAN_LEGS(new     Item(Items.GUTHANS_CHAINSKIRT_4730, 1)),
+            GUTHAN_LEGS(new Item(Items.GUTHANS_CHAINSKIRT_4730, 1)),
             /**
              * Guthan weapon barrows full equipment.
              */
-            GUTHAN_WEAPON(new   Item(Items.GUTHANS_WARSPEAR_4726, 1)),
+            GUTHAN_WEAPON(new Item(Items.GUTHANS_WARSPEAR_4726, 1)),
             /**
              * Dharok helm barrows full equipment.
              */
-            DHAROK_HELM(new     Item(Items.DHAROKS_HELM_4716, 1)),
+            DHAROK_HELM(new Item(Items.DHAROKS_HELM_4716, 1)),
             /**
              * Dharok body barrows full equipment.
              */
-            DHAROK_BODY(new     Item(Items.DHAROKS_PLATEBODY_4720, 1)),
+            DHAROK_BODY(new Item(Items.DHAROKS_PLATEBODY_4720, 1)),
             /**
              * Dharok legs barrows full equipment.
              */
-            DHAROK_LEGS(new     Item(Items.DHAROKS_PLATELEGS_4722, 1)),
+            DHAROK_LEGS(new Item(Items.DHAROKS_PLATELEGS_4722, 1)),
             /**
              * Dharok weapon barrows full equipment.
              */
-            DHAROK_WEAPON(new   Item(Items.DHAROKS_GREATAXE_4718, 1)),
+            DHAROK_WEAPON(new Item(Items.DHAROKS_GREATAXE_4718, 1)),
             /**
              * Ahrim helm barrows full equipment.
              */
-            AHRIM_HELM(new      Item(Items.AHRIMS_HOOD_4708, 1)),
+            AHRIM_HELM(new Item(Items.AHRIMS_HOOD_4708, 1)),
             /**
              * Ahrim body barrows full equipment.
              */
-            AHRIM_BODY(new      Item(Items.AHRIMS_ROBETOP_4712, 1)),
+            AHRIM_BODY(new Item(Items.AHRIMS_ROBETOP_4712, 1)),
             /**
              * Ahrim legs barrows full equipment.
              */
-            AHRIM_LEGS(new      Item(Items.AHRIMS_ROBESKIRT_4714, 1)),
+            AHRIM_LEGS(new Item(Items.AHRIMS_ROBESKIRT_4714, 1)),
             /**
              * Ahrim weapon barrows full equipment.
              */
-            AHRIM_WEAPON(new    Item(Items.AHRIMS_STAFF_4710, 1));
+            AHRIM_WEAPON(new Item(Items.AHRIMS_STAFF_4710, 1));
 
             BarrowsFullEquipment(Item full) {
                 this.full = full;

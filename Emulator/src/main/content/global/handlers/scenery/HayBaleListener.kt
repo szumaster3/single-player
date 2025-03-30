@@ -13,6 +13,11 @@ import org.rs.consts.Scenery
 
 class HayBaleListener : InteractionListener {
     override fun defineListeners() {
+
+        /*
+         * Handles search interaction with hay.
+         */
+
         on(HAY, IntType.SCENERY, "search") { player, node ->
             val rand = RandomFunction.random(50)
             lock(player, 2)
@@ -45,6 +50,10 @@ class HayBaleListener : InteractionListener {
 
             return@on true
         }
+
+        /*
+         * Handles use the empty sack on hay bales.
+         */
 
         onUseWith(IntType.SCENERY, Items.EMPTY_SACK_5418, Scenery.HAY_BALE_8713) { player, used, with ->
             replaceSlot(player, used.asItem().slot, Item(Items.HAY_SACK_6057, 1))

@@ -9,6 +9,11 @@ import org.rs.consts.Items
 
 class ClayBraceletListener : InteractionListener {
     override fun defineListeners() {
+
+        /*
+         * Handles options interaction of clay bracelet.
+         */
+
         on(Items.BRACELET_OF_CLAY_11074, IntType.ITEM, "operate") { player, node ->
             var charge = getCharge(node)
             if (charge > 28) setCharge(node, 28).also { charge = 28 }

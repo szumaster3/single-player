@@ -11,6 +11,10 @@ import org.rs.consts.Items
 
 class WatermelonCuttingListener : InteractionListener {
     override fun defineListeners() {
+        /*
+         * Handles cutting the watermelon.
+         */
+
         onUseWith(IntType.ITEM, Items.KNIFE_946, Items.WATERMELON_5982) { player, _, _ ->
             if (inInventory(player, Items.WATERMELON_5982)) {
                 animate(player, Animations.CUT_WATERMELON_2269)

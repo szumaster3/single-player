@@ -11,6 +11,11 @@ import org.rs.consts.Scenery
 
 class SackOnHayListener : InteractionListener {
     override fun defineListeners() {
+
+        /*
+         * Handles use empty sack on hay.
+         */
+
         onUseWith(IntType.SCENERY, Items.EMPTY_SACK_5418, *hayScenery) { player, used, _ ->
             if (removeItem(player, used.asItem(), Container.INVENTORY)) {
                 addItem(player, Items.HAY_SACK_6057, 1)

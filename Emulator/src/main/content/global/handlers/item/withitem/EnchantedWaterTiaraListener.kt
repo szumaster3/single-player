@@ -14,6 +14,11 @@ class EnchantedWaterTiaraListener : InteractionListener {
     val tiaraIDs = intArrayOf(Items.WATER_TIARA_5531, Items.ENCHANTED_WATER_TIARA_11969)
 
     override fun defineListeners() {
+
+        /*
+         * Handles charging the Enchanted water tiara.
+         */
+
         onUseWith(IntType.ITEM, Items.WATER_RUNE_555, *tiaraIDs) { player, used, with ->
             val tiara = with.asItem()
             val runeAmount = used.asItem().amount
@@ -64,6 +69,10 @@ class EnchantedWaterTiaraListener : InteractionListener {
             return@onUseWith false
         }
 
+        /*
+         * Handles destroying the Enchanted water tiara.
+         */
+
         on(Items.ENCHANTED_WATER_TIARA_11969, IntType.ITEM, "destroy") { player, node ->
             val item = node as Item
             val charges = getCharge(item)
@@ -86,6 +95,10 @@ class EnchantedWaterTiaraListener : InteractionListener {
             }
             return@on true
         }
+
+        /*
+         * Handles checking the charges of Enchanted water tiara.
+         */
 
         on(Items.ENCHANTED_WATER_TIARA_11969, IntType.ITEM, "check-charges") { player, node ->
             val charges = getCharge(node as Item)

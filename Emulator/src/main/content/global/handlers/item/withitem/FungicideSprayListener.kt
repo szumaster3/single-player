@@ -11,6 +11,10 @@ import org.rs.consts.Items
 
 class FungicideSprayListener : InteractionListener {
     override fun defineListeners() {
+        /*
+         * Handles reloading the Fungicide spray.
+         */
+
         onUseWith(
             IntType.ITEM,
             Items.FUNGICIDE_7432,

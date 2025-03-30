@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
 class FoodOnSheepDogListener : InteractionListener {
     companion object {
         private const val SHEEP_DOG_NPC = NPCs.SHEEPDOG_2311
-        private val FEED_ANIMATION = Animations.HUMAN_BURYING_BONES_827
+        private const val FEED_ANIMATION = Animations.HUMAN_BURYING_BONES_827
         private val CONSUMABLE_BONES = Bones.array.filter { it != Items.BURNT_BONES_528 }.toHashSet()
         private val CONSUMABLE_MEATS =
             Meat

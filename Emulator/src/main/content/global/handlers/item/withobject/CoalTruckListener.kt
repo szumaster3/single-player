@@ -60,7 +60,7 @@ class CoalTruckListener : InteractionListener {
 
             if (coalInInventory + coalInTruck >= maxCoalCapacity) {
                 coalInInventory = maxCoalCapacity - coalInTruck
-                sendMessage(player, message)
+                sendMessage(player, "You have filled up the coal truck.")
             }
 
             if (removeItem(player, Item(Items.COAL_453, coalInInventory))) {
@@ -99,6 +99,5 @@ class CoalTruckListener : InteractionListener {
 
     companion object {
         private const val ATTRIBUTE_COAL_TRUCK_INVENTORY = "coal-truck-inventory"
-        val message = "You have filled up the coal truck."
     }
 }

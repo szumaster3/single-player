@@ -7,7 +7,7 @@ import org.rs.consts.Items
 @Initializable
 class BarrowsEquipmentRegister : Plugin<Any> {
     companion object {
-        @JvmField val TICKS = (15 * 6000) / 4
+        val TICKS = (15 * 6000) / 4
     }
 
     val DHAROK_HELM =

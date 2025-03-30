@@ -15,6 +15,11 @@ class SandSourceListener : InteractionListener {
     }
 
     override fun defineListeners() {
+
+        /*
+         * Handles using buckets on sandpits.
+         */
+
         onUseWith(IntType.SCENERY, Items.BUCKET_1925, *SANDPITS) { player, used, _ ->
             val numEmptyBuckets = amountInInventory(player, used.id)
 
@@ -31,6 +36,10 @@ class SandSourceListener : InteractionListener {
             }
             return@onUseWith true
         }
+
+        /*
+         * Handles using buckets on sand piles.
+         */
 
         onUseWith(IntType.SCENERY, Items.BUCKET_1925, *SAND_PILE) { player, used, with ->
             val numEmptyBuckets = amountInInventory(player, used.id)
@@ -69,6 +78,11 @@ class SandSourceListener : InteractionListener {
             }
             return@onUseWith true
         }
+
+        /*
+         * Handles look interaction on sand pile.
+         */
+
         on(SAND_PILE, IntType.SCENERY, "look") { player, node ->
             sendMessage(player, sceneryDefinition(node.id).examine.toString())
             return@on true

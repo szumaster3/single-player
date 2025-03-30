@@ -110,6 +110,11 @@ class WaterSourceListener : InteractionListener {
     }
 
     override fun defineListeners() {
+
+        /*
+         * Handles water sources.
+         */
+
         onUseWith(IntType.SCENERY, WaterVessel.getInputs(), *waterSources) { player, used, with ->
             val vessel = WaterVessel.forId(used.id) ?: return@onUseWith false
             if (with.name.contains("well", ignoreCase = true) && !vessel.wellable) {

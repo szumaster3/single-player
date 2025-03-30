@@ -42,7 +42,7 @@ class PoisonWeaponListener : InteractionListener {
                 sendMessage(
                     player,
                     "You smear the poisonous Karambwan paste over the " +
-                        "${if (!product.name.contains("spear", true)) "hasta" else "spear"}.",
+                            "${if (!product.name.contains("spear", true)) "hasta" else "spear"}.",
                 )
             }
             return@onUseWith true

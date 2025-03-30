@@ -23,6 +23,11 @@ class AxeOnTreeListener : InteractionListener {
     val trees = WoodcuttingNode.values().map { it.id }.toIntArray()
 
     override fun defineListeners() {
+
+        /*
+         * Handles use axe on tree.
+         */
+
         onUseWith(IntType.SCENERY, axes, *trees) { player, _, with ->
             submitIndividualPulse(player, WoodcuttingPulse(player, with.asScenery()))
             return@onUseWith true

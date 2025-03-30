@@ -1,5 +1,6 @@
 package content.global.handlers.item
 
+import core.api.getItemName
 import core.api.sendMessage
 import core.game.interaction.NodeUsageEvent
 import core.game.interaction.UseWithHandler
@@ -10,7 +11,12 @@ import core.tools.StringUtils
 import org.rs.consts.Items
 
 @Initializable
-class GodswordHiltAttachHandler : UseWithHandler(11702, 11704, 11706, 11708) {
+class GodswordHiltAttachHandler : UseWithHandler(
+    Items.ARMADYL_HILT_11702,
+    Items.BANDOS_HILT_11704,
+    Items.SARADOMIN_HILT_11706,
+    Items.ZAMORAK_HILT_11708
+) {
     override fun newInstance(arg: Any?): Plugin<Any> {
         addHandler(Items.GODSWORD_BLADE_11690, ITEM_TYPE, this)
         return this
@@ -35,7 +41,7 @@ class GodswordHiltAttachHandler : UseWithHandler(11702, 11704, 11706, 11708) {
         }
         item = Item(item.id - 8)
         player.inventory.add(item)
-        val name = item.definition.name
+        val name = getItemName(item.id)
         sendMessage(
             player,
             "You attach the hilt to the blade and make a" + (if (StringUtils.isPlusN(name)) "n " else " ") + name + ".",

@@ -9,6 +9,11 @@ import org.rs.consts.Items
 
 class DesertDisguiseListener : InteractionListener {
     override fun defineListeners() {
+
+        /*
+         * Handles creating the Desert Disguise.
+         */
+
         onUseWith(IntType.ITEM, Items.KARIDIAN_HEADPIECE_4591, Items.FAKE_BEARD_4593) { player, used, with ->
             if (removeItem(player, used.asItem()) && removeItem(player, with.asItem())) {
                 replaceSlot(player, used.asItem().slot, Item(Items.DESERT_DISGUISE_4611, 1))

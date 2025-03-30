@@ -11,6 +11,9 @@ import org.rs.consts.Items
 
 class OilyFishingRodListener : InteractionListener {
     override fun defineListeners() {
+        /*
+         * Handles creating oily fishing rod.
+         */
         onUseWith(IntType.ITEM, Items.BLAMISH_OIL_1582, Items.FISHING_ROD_307) { player, used, with ->
             if (removeItem(player, used.asItem()) && removeItem(player, with.asItem())) {
                 replaceSlot(player, with.asItem().slot, Item(Items.OILY_FISHING_ROD_1585, 1))

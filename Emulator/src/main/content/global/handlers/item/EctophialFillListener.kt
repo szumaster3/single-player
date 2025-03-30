@@ -11,13 +11,10 @@ import core.game.node.item.Item
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
-import org.rs.consts.Items
-import org.rs.consts.Quests
-import org.rs.consts.Scenery
-import org.rs.consts.Sounds
+import org.rs.consts.*
 
 class EctophialFillListener : InteractionListener {
-    private val fillAnimation = Animation(832)
+    private val fillAnimation = Animation(Animations.HUMAN_MULTI_USE_832)
     private val emptyAnimation = Animation(9609)
     private val emptyGraphics = Graphics(1688)
 

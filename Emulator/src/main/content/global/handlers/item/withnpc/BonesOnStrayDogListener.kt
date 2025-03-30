@@ -13,9 +13,13 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 
 class BonesOnStrayDogListener : InteractionListener {
+    val bones = Bones.array
+    val dogs = intArrayOf(NPCs.STRAY_DOG_4766, NPCs.STRAY_DOG_4767, NPCs.STRAY_DOG_5917, NPCs.STRAY_DOG_5918)
+
     override fun defineListeners() {
-        val bones = Bones.array
-        val dogs = intArrayOf(NPCs.STRAY_DOG_4766, NPCs.STRAY_DOG_4767, NPCs.STRAY_DOG_5917, NPCs.STRAY_DOG_5918)
+        /*
+         * Handles using bones on stray dogs.
+         */
 
         onUseWith(IntType.NPC, bones, *dogs) { player, used, with ->
             used as Item

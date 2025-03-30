@@ -16,6 +16,10 @@ class ExperienceLampListener : InteractionListener {
     private val xpGainItems = Lamps.values().map { it.item }.toIntArray()
 
     override fun defineListeners() {
+        /*
+         * Handles option interaction with Experience lamps.
+         */
+
         on(xpGainItems, IntType.ITEM, "rub", "read") { player, node ->
             setAttribute(player, "caller") { skill: Int, _: Player ->
                 setAttribute(player, "xp_reward_item", node)

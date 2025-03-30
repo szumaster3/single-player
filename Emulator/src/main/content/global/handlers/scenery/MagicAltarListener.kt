@@ -15,6 +15,11 @@ import org.rs.consts.Sounds
 
 class MagicAltarListener : InteractionListener {
     override fun defineListeners() {
+
+        /*
+         * Handles swaping the spellbooks on altar.
+         */
+
         on(intArrayOf(ANCIENT_ALTAR, LUNAR_ALTAR), IntType.SCENERY, "pray-at", "pray") { player, node ->
             if (meetsRequirements(player, node)) {
                 swapSpellBook(player, node)

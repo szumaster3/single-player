@@ -12,6 +12,11 @@ import org.rs.consts.NPCs
 
 class ChaliceOnKingArthurListener : InteractionListener {
     override fun defineListeners() {
+
+        /*
+         * Handles using Poison chalice on King Arthur NPC.
+         */
+
         onUseWith(IntType.NPC, Items.POISON_CHALICE_197, NPCs.KING_ARTHUR_251) { player, _, with ->
             player.dialogueInterpreter.open(PoisonChaliceOnKingArthurDialogue(), with)
             return@onUseWith true

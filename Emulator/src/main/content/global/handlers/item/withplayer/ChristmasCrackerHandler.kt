@@ -9,11 +9,12 @@ import core.game.world.update.flag.context.Graphics
 import core.plugin.Initializable
 import core.plugin.Plugin
 import core.tools.RandomFunction
+import org.rs.consts.Items
 
 @Initializable
 class ChristmasCrackerHandler : UseWithHandler() {
     override fun newInstance(arg: Any?): Plugin<Any?> {
-        addHandler(962, PLAYER_TYPE, this)
+        addHandler(Items.CHRISTMAS_CRACKER_962, PLAYER_TYPE, this)
         return this
     }
 

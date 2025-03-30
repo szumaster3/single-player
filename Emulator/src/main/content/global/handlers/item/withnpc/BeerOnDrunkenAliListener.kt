@@ -12,6 +12,11 @@ import org.rs.consts.NPCs
 
 class BeerOnDrunkenAliListener : InteractionListener {
     override fun defineListeners() {
+
+        /*
+         * Handles interaction with Drunken Ali.
+         */
+
         onUseWith(IntType.NPC, Items.BEER_1917, NPCs.DRUNKEN_ALI_1863) { player, used, with ->
             if (used.id != Items.BEER_1917) {
                 sendNPCDialogue(player, NPCs.DRUNKEN_ALI_1863, "Eh? What's this? I don't want that, get me a beer.")

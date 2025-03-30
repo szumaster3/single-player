@@ -10,6 +10,10 @@ import org.rs.consts.Scenery
 
 class HairdresserCheeseListener : InteractionListener {
     override fun defineListeners() {
+        /*
+         * Handles using cheese on treadmill. (Falador diaries)
+         */
+
         onUseWith(IntType.SCENERY, Items.CHEESE_1985, Scenery.TREADMILL_11677) { player, used, _ ->
             if (removeItem(player, used)) {
                 sendMessage(player, "You throw the cheese to Ridgeley, for which he appears grateful.")

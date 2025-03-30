@@ -8,6 +8,11 @@ import org.rs.consts.Items
 
 class CadavaPotionListener : InteractionListener {
     override fun defineListeners() {
+
+        /*
+         * Handles options for Cadava potion (Romeo & Juliet quest).
+         */
+
         on(Items.CADAVA_POTION_756, IntType.ITEM, "drink", "look-at") { player, node ->
             val option = getUsedOption(player)
             sendItemDialogue(
