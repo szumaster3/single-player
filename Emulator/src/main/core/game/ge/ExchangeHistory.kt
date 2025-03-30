@@ -139,12 +139,12 @@ class ExchangeHistory(
             return
         }
         player.interfaceManager.openComponent(Components.STOCKCOLLECT_109)
-        player.packetDispatch.sendIfaceSettings(6, 18, 109, 0, 2)
-        player.packetDispatch.sendIfaceSettings(6, 23, 109, 0, 2)
-        player.packetDispatch.sendIfaceSettings(6, 28, 109, 0, 2)
-        player.packetDispatch.sendIfaceSettings(6, 36, 109, 0, 2)
-        player.packetDispatch.sendIfaceSettings(6, 44, 109, 0, 2)
-        player.packetDispatch.sendIfaceSettings(6, 52, 109, 0, 2)
+        player.packetDispatch.sendIfaceSettings(6, 18, Components.STOCKCOLLECT_109, 0, 2)
+        player.packetDispatch.sendIfaceSettings(6, 23, Components.STOCKCOLLECT_109, 0, 2)
+        player.packetDispatch.sendIfaceSettings(6, 28, Components.STOCKCOLLECT_109, 0, 2)
+        player.packetDispatch.sendIfaceSettings(6, 36, Components.STOCKCOLLECT_109, 0, 2)
+        player.packetDispatch.sendIfaceSettings(6, 44, Components.STOCKCOLLECT_109, 0, 2)
+        player.packetDispatch.sendIfaceSettings(6, 52, Components.STOCKCOLLECT_109, 0, 2)
 
         visualizeRecords()
     }
@@ -216,24 +216,14 @@ class ExchangeHistory(
             val o: GrandExchangeOffer? = history[i]
             if (o == null) {
                 for (j in 0..3) {
-                    p.packetDispatch.sendString("-", 643, 25 + i + j * 5)
+                    p.packetDispatch.sendString("-", Components.EXCHANGE_HISTORY_643, 25 + i + j * 5)
                 }
                 continue
             }
-            sendString(player!!, if (o.sell) "You sold" else "You bought", 643, 25 + i)
-            sendString(
-                player,
-                NumberFormat.getNumberInstance(Locale.US).format(o.completedAmount.toLong()),
-                643,
-                30 + i,
-            )
-            sendString(player, ItemDefinition.forId(o.itemID).name, 643, 35 + i)
-            sendString(
-                player,
-                NumberFormat.getNumberInstance(Locale.US).format(o.totalCoinExchange.toLong()) + " gp",
-                643,
-                40 + i,
-            )
+            sendString(player!!, if (o.sell) "You sold" else "You bought", Components.EXCHANGE_HISTORY_643, 25 + i)
+            sendString(player, NumberFormat.getNumberInstance(Locale.US).format(o.completedAmount.toLong()), Components.EXCHANGE_HISTORY_643, 30 + i)
+            sendString(player, ItemDefinition.forId(o.itemID).name, Components.EXCHANGE_HISTORY_643, 35 + i)
+            sendString(player, NumberFormat.getNumberInstance(Locale.US).format(o.totalCoinExchange.toLong()) + " gp", Components.EXCHANGE_HISTORY_643, 40 + i)
         }
     }
 

@@ -37,19 +37,11 @@ class BankContainer(
     private var listener: BankListener? = null
 
     /**
-     * Checks if the bank is opened.
-     * @return `True` if so.
-     */
-    /**
      * If the bank is open.
      */
     var isOpen: Boolean = false
         private set
 
-    /**
-     * Gets the last x-amount.
-     * @return The last x-amount.
-     */
     /**
      * The last x-amount entered.
      */
@@ -62,18 +54,10 @@ class BankContainer(
     private var tabIndex = 10
 
     /**
-     * Gets the tabStartSlot value.
-     * @return The tabStartSlot.
-     */
-    /**
      * The tab start indexes.
      */
     val tabStartSlot: IntArray = IntArray(TAB_SIZE)
 
-    /**
-     * Construct a new `BankContainer` `Object`.
-     * @param player The player reference.
-     */
     init {
         super.register(BankListener(player).also { listener = it })
         this.player = player
@@ -92,8 +76,7 @@ class BankContainer(
     }
 
     /**
-     * Invalidates the visual state of deposit box interface
-     * forcing the client to re-draw the items
+     * Invalidates the visual state of deposit box interface forcing the client to re-draw the items.
      */
     fun refreshDepositBoxInterface() {
         InterfaceContainer.generateItems(
@@ -121,21 +104,17 @@ class BankContainer(
             player.bankPinManager.openType(1)
             return
         }
-        player.interfaceManager.openComponent(Components.BANK_V2_MAIN_762).setUncloseEvent { player: Player?, c: Component? ->
-            this@BankContainer.close()
-            true
-        }
+        player.interfaceManager.openComponent(Components.BANK_V2_MAIN_762)
+            .setUncloseEvent { player: Player?, c: Component? ->
+                this@BankContainer.close()
+                true
+            }
         player.interfaceManager.openSingleTab(Component(Components.BANK_V2_SIDE_763))
         super.refresh()
         player.inventory.refresh()
         player.inventory.listeners.add(listener)
         setVarp(player, 1249, lastAmountX)
-        val settings =
-            IfaceSettingsBuilder()
-                .enableOptions(IntRange(0, 5))
-                .enableExamine()
-                .enableSlotSwitch()
-                .build()
+        val settings = IfaceSettingsBuilder().enableOptions(IntRange(0, 5)).enableExamine().enableSlotSwitch().build()
         player.packetDispatch.sendIfaceSettings(settings, 0, 763, 0, 27)
         isOpen = true
     }
@@ -161,12 +140,7 @@ class BankContainer(
         player.inventory.refresh()
         setVarp(player, 1249, lastAmountX)
         player.packetDispatch.sendIfaceSettings(1278, 73, 762, 0, SIZE)
-        val settings =
-            IfaceSettingsBuilder()
-                .enableOptions(IntRange(0, 5))
-                .enableExamine()
-                .enableSlotSwitch()
-                .build()
+        val settings = IfaceSettingsBuilder().enableOptions(IntRange(0, 5)).enableExamine().enableSlotSwitch().build()
         player.packetDispatch.sendIfaceSettings(settings, 0, 763, 0, 27)
         player.packetDispatch.sendRunScript(1451, "")
         isOpen = true
@@ -185,6 +159,7 @@ class BankContainer(
 
     /**
      * Adds an item to the bank container.
+     *
      * @param slot The item slot.
      * @param amount The amount.
      */
@@ -238,8 +213,8 @@ class BankContainer(
     }
 
     /**
-     * Takes a item from the bank container and adds one to the inventory
-     * container.
+     * Takes an item from the bank container and adds one to the inventory container.
+     *
      * @param slot The slot.
      * @param amount The amount.
      */
@@ -285,6 +260,7 @@ class BankContainer(
 
     /**
      * Updates the last x-amount entered.
+     *
      * @param amount The amount to set.
      */
     fun updateLastAmountX(amount: Int) {
@@ -294,6 +270,7 @@ class BankContainer(
 
     /**
      * Gets the tab the item slot is in.
+     *
      * @param itemSlot The item slot.
      * @return The tab index.
      */
@@ -309,6 +286,7 @@ class BankContainer(
 
     /**
      * Increases a tab's start slot.
+     *
      * @param startId The start id.
      */
     fun increaseTabStartSlots(startId: Int) {
@@ -319,6 +297,7 @@ class BankContainer(
 
     /**
      * Decreases a tab's start slot.
+     *
      * @param startId The start id.
      */
     fun decreaseTabStartSlots(startId: Int) {
@@ -342,6 +321,7 @@ class BankContainer(
 
     /**
      * Collapses a tab.
+     *
      * @param tabId The tab index.
      */
     fun collapseTab(tabId: Int) {
@@ -374,6 +354,7 @@ class BankContainer(
 
     /**
      * Gets the amount of items in one tab.
+     *
      * @param tabId The tab index.
      * @return The amount of items in this tab.
      */
@@ -381,6 +362,7 @@ class BankContainer(
 
     /**
      * Checks if the item can be added.
+     *
      * @param item the item.
      * @return `True` if so.
      */
@@ -389,12 +371,13 @@ class BankContainer(
     var isNoteItems: Boolean
         /**
          * If items have to be noted.
+         *
          * @return If items have to be noted `true`.
          */
         get() = getVarbit(player, Vars.VARBIT_IFACE_BANK_NOTE_MODE_7001) == 1
-
         /**
          * Set if items have to be noted.
+         *
          * @param noteItems If items have to be noted `true`.
          */
         set(noteItems) {
@@ -403,12 +386,14 @@ class BankContainer(
 
     /**
      * Gets the tabIndex value.
+     *
      * @return The tabIndex.
      */
     fun getTabIndex(): Int = tabIndex
 
     /**
      * Sets the tabIndex value.
+     *
      * @param tabIndex The tabIndex to set.
      */
     fun setTabIndex(tabIndex: Int) {
@@ -420,12 +405,13 @@ class BankContainer(
     var isInsertItems: Boolean
         /**
          * Gets the insert items value.
+         *
          * @return `True` if inserting items mode is enabled.
          */
         get() = getVarbit(player, Vars.VARBIT_IFACE_BANK_INSERT_MODE_7000) == 1
-
         /**
          * Sets the insert items value.
+         *
          * @param insertItems The insert items value.
          */
         set(insertItems) {
@@ -434,19 +420,8 @@ class BankContainer(
 
     /**
      * Listens to the bank container.
-     * @author Emperor
      */
-    private class BankListener
-    /**
-     * Construct a new `BankListener` `Object`.
-     * @param player The player reference.
-     */
-    (
-        /**
-         * The player reference.
-         */
-        private val player: Player,
-    ) : ContainerListener {
+    private class BankListener(private val player: Player) : ContainerListener {
         override fun update(
             c: Container?,
             event: ContainerEvent?,
@@ -454,15 +429,17 @@ class BankContainer(
             if (c is BankContainer) {
                 PacketRepository.send(
                     ContainerPacket::class.java,
-                    ContainerContext(player, Components.BANK_V2_MAIN_762, 64000, 95, event!!.items, false, *event.slots),
+                    ContainerContext(
+                        player, Components.BANK_V2_MAIN_762, 64000, 95, event!!.items, false, *event.slots
+                    ),
                 )
-                player.debug("bank updated")
             } else {
                 PacketRepository.send(
                     ContainerPacket::class.java,
-                    ContainerContext(player, Components.BANK_V2_SIDE_763, 64000, 93, event!!.items, false, *event.slots),
+                    ContainerContext(
+                        player, Components.BANK_V2_SIDE_763, 64000, 93, event!!.items, false, *event.slots
+                    ),
                 )
-                player.debug("inventory updated")
             }
             player.bank.setTabConfigurations()
             player.bank.sendBankSpace()
@@ -474,13 +451,11 @@ class BankContainer(
                     ContainerPacket::class.java,
                     ContainerContext(player, Components.BANK_V2_MAIN_762, 64000, 95, c.toArray(), c.capacity(), false),
                 )
-                player.debug("bank refreshed")
             } else {
                 PacketRepository.send(
                     ContainerPacket::class.java,
                     ContainerContext(player, Components.BANK_V2_SIDE_763, 64000, 93, c?.toArray(), 28, false),
                 )
-                player.debug("inventory refreshed")
             }
             player.bank.setTabConfigurations()
             player.bank.sendBankSpace()
@@ -500,6 +475,7 @@ class BankContainer(
 
         /**
          * Gets the array index for a tab.
+         *
          * @param tabId The tab id.
          * @return The array index.
          */

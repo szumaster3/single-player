@@ -36,7 +36,7 @@ public class GrandExchangeInterface extends ComponentPlugin {
         // ComponentDefinition.put(105, this); // Main interface
         // ComponentDefinition.put(107, this); // Selling tab
         ComponentDefinition.put(Components.STOCKCOLLECT_109, this);
-        ComponentDefinition.put(389, this);
+        ComponentDefinition.put(Components.EXCHANGE_SEARCH_389, this);
         ComponentDefinition.put(Components.EXCHANGE_SETS_SIDE_644, this);
         ComponentDefinition.put(Components.EXCHANGE_ITEMSETS_645, this);
         ComponentDefinition.put(Components.EXCHANGE_GUIDE_PRICE_642, this);
@@ -49,17 +49,17 @@ public class GrandExchangeInterface extends ComponentPlugin {
             @Override
             public boolean pulse() {
                 switch (component.id) {
-                    case 644:
-                    case 645:
+                    case Components.EXCHANGE_SETS_SIDE_644:
+                    case Components.EXCHANGE_ITEMSETS_645:
                         handleItemSet(player, component, opcode, button, slot, itemId);
                         return true;
-                    case 389:
+                    case Components.EXCHANGE_SEARCH_389:
                         handleSearchInterface(player, opcode, button, slot, itemId);
                         return true;
-                    case 109:
+                    case Components.STOCKCOLLECT_109:
                         handleCollectionBox(player, opcode, button, slot, itemId);
                         return true;
-                    case 642:
+                    case Components.EXCHANGE_GUIDE_PRICE_642:
                         handleGuidePrice(player, opcode, button, slot, itemId);
                         return true;
                 }
@@ -228,7 +228,7 @@ public class GrandExchangeInterface extends ComponentPlugin {
                 if (buttonId >= 167 && buttonId <= 182) {
                     subtract = 167;
                 }
-                player.getPacketDispatch().sendMessage(ItemDefinition.forId(type.getItems()[buttonId - subtract].getItem()).getExamine());
+                player.getPacketDispatch().sendMessage(ItemDefinition.forId(type.items[buttonId - subtract].item).getExamine());
                 break;
         }
     }
