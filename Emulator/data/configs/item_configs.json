@@ -124140,8 +124140,12 @@
     "attack_anims": "419,419,419,419",
     "destroy_message": "Drop",
     "grand_exchange_price": "219418",
+    "stand_anim": "813",
+    "attack_audios": "2555,0,0,0",
     "name": "Corrupt zuriel's staff (deg)",
+    "run_anim": "1210",
     "archery_ticket_price": "0",
+    "stand_turn_anim": "1209",
     "id": "13943",
     "bonuses": "13,-1,65,18,0,5,7,4,18,0,0,72,0,0,10"
   },
