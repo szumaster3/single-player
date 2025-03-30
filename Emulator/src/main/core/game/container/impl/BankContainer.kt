@@ -188,10 +188,10 @@ class BankContainer(
         }
 
         item = Item(item.id, amount, item.charge)
-        val unnote: Boolean = !item.definition.isUnnoted
+        val unnote: Boolean = !item.definition.isUnnoted()
 
         var add = if (unnote) Item(item.definition.noteId, amount, item.charge) else item
-        if (unnote && !add.definition.isUnnoted) {
+        if (unnote && !add.definition.isUnnoted()) {
             add = item
         }
 

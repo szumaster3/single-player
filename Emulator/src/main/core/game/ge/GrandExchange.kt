@@ -223,7 +223,7 @@ class GrandExchange :
             }
 
             val itemDef = ItemDefinition.forId(itemID)
-            val offer = GrandExchangeOffer.createBotOffer(if (itemDef.isUnnoted) itemID else itemDef.noteId, amount)
+            val offer = GrandExchangeOffer.createBotOffer(if (itemDef.isUnnoted()) itemID else itemDef.noteId, amount)
             pendingOffers.addLast(offer)
 
             return true

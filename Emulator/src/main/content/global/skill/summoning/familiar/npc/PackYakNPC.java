@@ -59,7 +59,7 @@ public class PackYakNPC extends BurdenBeast {
             return false;
         }
         Item remove = item;
-        if (!item.getDefinition().isUnnoted) {
+        if (!item.getDefinition().isUnnoted()) {
             remove = new Item(item.getId(), 1);
             item = new Item(item.getNoteChange(), 1);
         }

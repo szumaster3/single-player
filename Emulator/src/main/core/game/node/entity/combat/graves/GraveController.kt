@@ -218,7 +218,7 @@ class GraveController :
             when (item) {
                 Items.CHINCHOMPA_9976 -> return true
                 Items.CHINCHOMPA_10033 -> return true
-                in Items.BABY_IMPLING_JAR_11238..Items.DRAGON_IMPLING_JAR_11257 -> return itemDefinition(item).isUnnoted
+                in Items.BABY_IMPLING_JAR_11238..Items.DRAGON_IMPLING_JAR_11257 -> return itemDefinition(item).isUnnoted()
             }
 
             return false
