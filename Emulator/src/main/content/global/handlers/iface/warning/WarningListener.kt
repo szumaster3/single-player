@@ -3,6 +3,7 @@ package content.global.handlers.iface.warning
 import content.global.skill.agility.AgilityHandler
 import core.api.*
 import core.api.quest.getQuestStage
+import core.api.quest.hasRequirement
 import core.game.dialogue.FaceAnim
 import core.game.global.action.ClimbActionHandler.climb
 import core.game.global.action.DoorActionHandler
@@ -98,9 +99,13 @@ class WarningListener :
                         closeInterface(player)
                         when (component.id) {
                             Components.CWS_WARNING_30_650 -> {
-                                if (getAttribute(player, "corp-beast-cave-delay", 0) <= GameWorld.ticks) {
-                                    teleport(player, player.location.transform(4, 0, 0))
-                                    setAttribute(player, "corp-beast-cave-delay", GameWorld.ticks + 5)
+                                if (!hasRequirement(player, Quests.SUMMERS_END))
+                                    return@on true
+                                if(player.getAttribute("corp-beast-cave-delay",0) <= GameWorld.ticks) {
+                                    player.properties.teleportLocation = player.location.transform(4, 0, 0).also { closeInterface(player) }
+                                    player.setAttribute("corp-beast-cave-delay", GameWorld.ticks + 5)
+                                } else {
+                                    closeInterface(player)
                                 }
                                 WarningManager.increment(player, component.id)
                             }
@@ -244,21 +249,13 @@ class WarningListener :
          */
 
         on(intArrayOf(Scenery.PASSAGE_37929, Scenery.PASSAGE_38811), IntType.SCENERY, "go-through") { player, node ->
-            if (player.location.x < node.location.x) {
-                if (getAttribute(player, "corp-beast-cave-delay", 0) <= GameWorld.ticks) {
-                    teleport(player, player.location.transform(4, 0, 0))
-                    setAttribute(player, "corp-beast-cave-delay", GameWorld.ticks + 5)
-                } else {
-                    if (!Warnings.CORPOREAL_BEAST_DANGEROUS.isDisabled) {
-                        WarningManager.openWarning(
-                            player,
-                            Warnings.CORPOREAL_BEAST_DANGEROUS,
-                        )
-                    } else {
-                        teleport(player, player.location.transform(4, 0, 0))
-                        setAttribute(player, "corp-beast-cave-delay", GameWorld.ticks + 5)
-                    }
-                }
+            if (player.location.x < node.location.x && !Warnings.CORPOREAL_BEAST_DANGEROUS.isDisabled) {
+                WarningManager.openWarning(
+                    player,
+                    Warnings.CORPOREAL_BEAST_DANGEROUS,
+                )
+            } else {
+                player.teleport(player.location.transform(if (player.location.x < node.location.x) 4 else -4, 0, 0))
             }
             return@on true
         }
