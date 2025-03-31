@@ -6,9 +6,11 @@ import core.api.*
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.game.interaction.QueueStrength
+import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.tools.END_DIALOGUE
 import org.rs.consts.Components
+import org.rs.consts.NPCs
 
 class QuizMasterDialogue : DialogueFile() {
     companion object {
@@ -47,6 +49,7 @@ class QuizMasterDialogue : DialogueFile() {
         componentID: Int,
         buttonID: Int,
     ) {
+        npc = NPC(NPCs.QUIZ_MASTER_2477)
         when (stage) {
             0 ->
                 npc(

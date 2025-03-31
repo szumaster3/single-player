@@ -5,6 +5,7 @@ import content.data.RandomEvent
 import core.api.*
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.TeleportManager
+import core.game.world.map.Direction
 import core.game.world.map.Location
 import org.rs.consts.Animations
 import org.rs.consts.Items
@@ -13,8 +14,7 @@ object QuizMaster {
     const val COINS = Items.COINS_995
     const val MYSTERY_BOX = Items.MYSTERY_BOX_6199
     const val SIT_ANIMATION = Animations.SITTING_IN_THERAPIST_CHAIR_FROM_RANDOM_EVENT_2378
-
-    val EVENT_LOCATION: Location = Location.create(1952, 4764, 1)
+    private val EVENT_LOCATION: Location = Location.create(1952, 4764, 1).transform(Direction.NORTH)
 
     val CORRECT =
         arrayOf(

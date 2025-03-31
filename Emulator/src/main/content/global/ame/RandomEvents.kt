@@ -10,6 +10,7 @@ import content.global.ame.freakyforest.FreakyForesterNPC
 import content.global.ame.frogs.FrogHeraldNPC
 import content.global.ame.genie.GenieNPC
 import content.global.ame.lostandfound.LostAndFoundNPC
+import content.global.ame.maze.MazeNPC
 import content.global.ame.mime.MimeNPC
 import content.global.ame.pillory.PilloryNPC
 import content.global.ame.pinball.PinballNPC
@@ -80,8 +81,7 @@ enum class RandomEvents(
             ),
         loot = CERTER.loot,
     ),
-    // MAZE(npc = MazeNPC()),
-
+    MAZE(npc = MazeNPC()),
     QUIZ_MASTER(
         npc = QuizMasterNPC(),
         skillIds =

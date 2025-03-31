@@ -115,7 +115,7 @@ class ExperienceInterface : ComponentPlugin() {
     private fun checkRunecrafting(player: Player): Boolean = isQuestComplete(player, Quests.RUNE_MYSTERIES)
 
     companion object {
-        private val SOUND = Sounds.TBCU_FINDGEM_1270
-        val COMPONENT_ID = Components.STATS_ADVANCEMENT_134
+        private const val SOUND = Sounds.TBCU_FINDGEM_1270
+        const val COMPONENT_ID = Components.STATS_ADVANCEMENT_134
     }
 }

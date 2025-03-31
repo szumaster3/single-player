@@ -17,23 +17,22 @@ class QuizMasterNPC(
     override fun init() {
         super.init()
         sendChat("It's your lucky day!")
-        QuizMaster.init(player)
+        QuizMaster.init(player).also {
+            AntiMacro.terminateEventNpc(player)
+        }
     }
 
     override fun tick() {
         super.tick()
-        runTask(player, 1) {
-            player.pulseManager.run(
-                object : Pulse(2) {
-                    override fun pulse(): Boolean {
-                        face(player, findLocalNPC(player, NPCs.QUIZ_MASTER_2477)!!)
-                        player.animate(Animation.create(QuizMaster.SIT_ANIMATION))
-                        return false
-                    }
-                },
-            )
-        }
-        AntiMacro.terminateEventNpc(player)
+        player.pulseManager.run(
+            object : Pulse(1) {
+                override fun pulse(): Boolean {
+                    player.animate(Animation.create(QuizMaster.SIT_ANIMATION))
+                    return false
+                }
+            },
+        )
+
     }
 
     override fun talkTo(npc: NPC) {
