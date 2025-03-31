@@ -79,34 +79,27 @@ enum class HolidayRandomEvents(
     ;
 
     companion object {
-        // List to hold Halloween events
         @JvmField
         val halloweenEventsList = ArrayList<HolidayRandomEvents>()
-
-        // List to hold Christmas events
         val christmasEventsList = ArrayList<HolidayRandomEvents>()
-
-        // List of holiday random event IDs
         val holidayRandomIDs = HolidayRandomEvents.values().map { it.npc.id }.toList()
 
         init {
-            // Populate the event lists with corresponding events
             populateMappings()
         }
 
         fun getHolidayRandom(type: String): HolidayRandomEvents =
             when (type) {
-                "halloween" -> halloweenEventsList.random() // Return a random Halloween event
-                "christmas" -> christmasEventsList.random() // Return a random Christmas event
-                else -> throw Exception("Invalid event type!") // Throw an exception for invalid types
+                "halloween" -> halloweenEventsList.random()
+                "christmas" -> christmasEventsList.random()
+                else -> throw Exception("Invalid event type!")
             }
 
-        // Populates the Halloween and Christmas event lists
         private fun populateMappings() {
             for (event in values()) {
                 when (event.type) {
-                    "halloween" -> halloweenEventsList.add(event) // Add Halloween events to the list
-                    "christmas" -> christmasEventsList.add(event) // Add Christmas events to the list
+                    "halloween" -> halloweenEventsList.add(event)
+                    "christmas" -> christmasEventsList.add(event)
                 }
             }
         }

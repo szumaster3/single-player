@@ -1,9 +1,8 @@
 package content.global.ame.quizmaster
 
+import content.data.RandomEvent
 import content.global.ame.RandomEventNPC
-import core.api.face
 import core.api.findLocalNPC
-import core.api.runTask
 import core.api.utils.WeightBasedTable
 import core.game.node.entity.npc.NPC
 import core.game.system.task.Pulse
@@ -25,8 +24,9 @@ class QuizMasterNPC(
     override fun tick() {
         super.tick()
         player.pulseManager.run(
-            object : Pulse(1) {
+            object : Pulse(2) {
                 override fun pulse(): Boolean {
+                    player.face(findLocalNPC(player, NPCs.QUIZ_MASTER_2477))
                     player.animate(Animation.create(QuizMaster.SIT_ANIMATION))
                     return false
                 }

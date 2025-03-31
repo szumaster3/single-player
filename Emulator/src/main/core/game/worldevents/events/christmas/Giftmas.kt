@@ -1,6 +1,5 @@
 package core.game.worldevents.events.christmas
 
-import content.data.GameAttributes
 import core.ServerStore
 import core.ServerStore.Companion.getBoolean
 import core.ServerStore.Companion.getInt
@@ -45,44 +44,19 @@ class Giftmas :
     fun init() {
         try {
             on(Items.MYSTERY_BOX_6199, IntType.ITEM, "open") { player, node ->
-
-                val isRandom = player.getAttribute(GameAttributes.RE_QUIZ_REWARD, false)
-                val enabled = checkActive()
-
-                if (!enabled || !isRandom) {
-                    removeItem(player, node.asItem())
-                    return@on true
-                }
+                val loot = MBOX_LOOT.roll().first()
 
                 if (!removeItem(player, node.asItem())) return@on true
 
-                val loot = MBOX_LOOT.roll().first()
-
-                if (isRandom) {
-                    removeAttribute(player, GameAttributes.RE_QUIZ_REWARD)
-                    MBOX_QUIZ.roll().first()
-                } else {
-                    MBOX_LOOT.roll().first()
-                }
-
-                sendDialogue(
-                    player,
-                    if (loot.id == 956) {
-                        "Inside the box you find a flier! Better luck next time!"
-                    } else {
-                        "You open the mystery box and find ${loot.amount}x ${loot.name.lowercase()}!"
-                    },
-                )
-
+                sendDialogue(player, "You open the mystery box and find ${loot.amount}x ${loot.name.lowercase()}!")
                 addItem(player, loot.id, loot.amount)
                 return@on true
             }
         } catch (ignored: Exception) {
         }
 
-        for (player in Repository.players) {
+        for (player in Repository.players)
             player.hook(Event.XpGained, XpGainHook)
-        }
     }
 
     fun cleanup() {
@@ -170,33 +144,6 @@ class Giftmas :
         private val MESSAGE_DAILYXP_REACHED_COMBAT =
             colorize("%RYou have reached your daily limit of presents from combat!")
         private val MESSAGE_PRESENT_GRANTED = colorize("%GYou find a present while training!")
-
-        /*
-         * Random event gift for completing Quiz Master random event.
-         */
-        val MBOX_QUIZ =
-            WeightBasedTable.create(
-                WeightedItem(Items.MITHRIL_2H_SWORD_1315, 1, 1, 0.15),
-                WeightedItem(Items.BLOOD_RUNE_565, 10, 10, 0.03),
-                WeightedItem(Items.NATURE_RUNE_561, 20, 20, 0.12),
-                WeightedItem(Items.DIAMOND_1601, 1, 1, 0.02),
-                WeightedItem(Items.STEEL_PLATEBODY_1119, 1, 1, 0.1),
-                WeightedItem(Items.UNCUT_EMERALD_1622, 1, 1, 0.03),
-                WeightedItem(Items.TOOTH_HALF_OF_A_KEY_985, 1, 1, 0.09),
-                WeightedItem(Items.LOOP_HALF_OF_A_KEY_987, 1, 1, 0.09),
-                WeightedItem(Items.COINS_995, 500, 500, 1.0),
-                WeightedItem(Items.MITHRIL_SCIMITAR_1329, 1, 1, 0.2),
-                WeightedItem(Items.BLOOD_RUNE_565, 1, 1, 0.04),
-                WeightedItem(Items.BUCKET_1925, 1, 1, 1.0),
-                WeightedItem(Items.CABBAGE_1965, 1, 1, 1.1),
-                WeightedItem(Items.FLIER_956, 1, 1, 0.005),
-                WeightedItem(Items.LEATHER_BOOTS_1061, 1, 1, 1.0),
-                WeightedItem(Items.ONION_1957, 1, 1, 1.1),
-                WeightedItem(Items.OLD_BOOT_685, 1, 1, 1.4),
-                WeightedItem(Items.ASHES_592, 1, 1, 1.1),
-                WeightedItem(Items.RAW_TUNA_359, 1, 1, 0.3),
-                WeightedItem(Items.CASKET_405, 1, 1, 0.28),
-            )
 
         val MBOX_LOOT =
             WeightBasedTable

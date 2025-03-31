@@ -1,20 +1,18 @@
 package content.global.ame.quizmaster
 
-import content.data.GameAttributes
 import content.data.RandomEvent
 import core.api.*
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.TeleportManager
-import core.game.world.map.Direction
 import core.game.world.map.Location
 import org.rs.consts.Animations
 import org.rs.consts.Items
 
 object QuizMaster {
     const val COINS = Items.COINS_995
-    const val MYSTERY_BOX = Items.MYSTERY_BOX_6199
+    const val MYSTERY_BOX = Items.RANDOM_EVENT_GIFT_14645
     const val SIT_ANIMATION = Animations.SITTING_IN_THERAPIST_CHAIR_FROM_RANDOM_EVENT_2378
-    private val EVENT_LOCATION: Location = Location.create(1952, 4764, 1).transform(Direction.NORTH)
+    private val EVENT_LOCATION: Location = Location.create(1952, 4764, 1)
 
     val CORRECT =
         arrayOf(
@@ -40,11 +38,14 @@ object QuizMaster {
         )
 
     fun cleanup(player: Player) {
+        player.unlock()
         player.locks.unlockTeleport()
         player.locks.unlockInteraction()
         player.properties.teleportLocation = getAttribute(player, RandomEvent.save(), null)
         clearLogoutListener(player, RandomEvent.logout())
-        removeAttributes(player, GameAttributes.RE_QUIZ_SCORE, RandomEvent.save())
+        removeAttributes(player, QuizMasterDialogue.QUIZMASTER_ATTRIBUTE_QUESTIONS_CORRECT, RandomEvent.save())
+        player.interfaceManager.restoreTabs()
+        player.animator.reset()
     }
 
     fun init(player: Player) {
@@ -55,4 +56,5 @@ object QuizMaster {
             p.location = getAttribute(p, RandomEvent.save(), player.location)
         }
     }
+
 }
