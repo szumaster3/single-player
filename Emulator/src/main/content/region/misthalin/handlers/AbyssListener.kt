@@ -35,7 +35,7 @@ import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.random.Random
 
-class AbyssDimension : InteractionListener {
+class AbyssListener : InteractionListener {
     override fun defineListeners() {
         on(NPCs.MAGE_OF_ZAMORAK_2259, IntType.NPC, "teleport") { player, node ->
             teleport(player, node as NPC)
@@ -151,44 +151,40 @@ class AbyssDimension : InteractionListener {
 
     private val distractEmotes =
         intArrayOf(
-            855,
-            856,
-            857,
-            858,
-            859,
-            860,
-            861,
-            862,
-            863,
-            864,
-            865,
-            866,
-            2113,
-            2109,
-            2111,
-            2106,
-            2107,
-            2108,
-            0x558,
-            2105,
-            2110,
-            2112,
-            0x84F,
-            0x850,
-            1131,
-            1130,
-            1129,
-            1128,
-            1745,
-            3544,
-            3543,
-            2836,
+            Animations.NOD_HEAD_855,
+            Animations.HUMAN_SHAKE_HEAD_NO_856,
+            Animations.HUMAN_THINK_857,
+            Animations.HUMAN_BOW_858,
+            Animations.HUMAN_ANGRY_859,
+            Animations.HUMAN_CRY_860,
+            Animations.HUMAN_LAUGH_861,
+            Animations.HUMAN_CHEER_862,
+            Animations.HUMAN_WAVE_863,
+            Animations.HUMAN_BECKON_864,
+            Animations.HUMAN_CLAP_865,
+            Animations.HUMAN_DANCE_866,
+            Animations.HUMAN_SHRUG_2113,
+            Animations.HUMAN_JUMP_FOR_JOY_2109,
+            Animations.HUMAN_YAWN_2111,
+            Animations.HUMAN_JIG_2106,
+            Animations.HUMAN_TWIRL_2107,
+            Animations.HUMAN_HEAD_BANG_2108,
+            Animations.HUMAN_PANIC_2105,
+            Animations.HUMAN_BLOW_RASPBERRY_2110,
+            Animations.HUMAN_SALUTE_2112,
+            Animations.HUMAN_GOBLIN_BOW_2127,
+            Animations.HUMAN_GOBLIN_SALUTE_2128,
+            Animations.HUMAN_GLASS_BOX_1131,
+            Animations.HUMAN_CLIMB_ROPE_1130,
+            Animations.HUMAN_LEAN_1129,
+            Animations.HUMAN_GLASS_WALL_1128,
+            Animations.HUMAN_ANGRY_STOMP_1745,
+            Animations.HUMAN_ZOMBIE_WALK_3544,
+            Animations.HUMAN_ZOMBIE_DANCE_3543,
+            Animations.HUMAN_SCARED_2836
         )
 
     companion object {
-        const val ABYSS_OBSTACLES = 18
-        const val VARP_SCENERY_ABYSS = Vars.VARP_SCENERY_ABYSS_491
-
         fun teleport(
             player: Player,
             npc: NPC,
