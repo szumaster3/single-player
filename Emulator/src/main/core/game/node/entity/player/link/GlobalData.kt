@@ -536,6 +536,4 @@ class GlobalData {
     fun getMacroDisabled(): Boolean = this.macroDisabled
 
     fun getAbyssData(): BooleanArray = abyssData
-
-    fun getPlayerTestStage(): Int = playerTestStage
 }

@@ -5,7 +5,7 @@ import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.Player
 import org.rs.consts.Components
 
-class PlayerSafetyInterface : InterfaceListener {
+class PlayerSafetyTestInterface : InterfaceListener {
     companion object {
         /*
          * List of test questions for the player safety exam.

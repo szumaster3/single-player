@@ -11,9 +11,17 @@ import org.rs.consts.Scenery
 
 class EdgevilleListener : InteractionListener {
     override fun defineListeners() {
+        /*
+         * Handles enter to safety dungeon.
+         */
+
         on(Scenery.POSTER_29586, IntType.SCENERY, "pull-back") { player, _ ->
             sendDialogue(player, "There appears to be a tunnel behind this poster.")
-            teleport(player, Location(3140, 4230, 2))
+            addDialogueAction(player) { player, button ->
+                if(button > 0) {
+                    teleport(player, Location(3140, 4230, 2))
+                }
+            }
             return@on true
         }
 
@@ -51,7 +59,7 @@ class EdgevilleListener : InteractionListener {
             intArrayOf(Scenery.ROSES_9261, Scenery.ROSES_9262, Scenery.ROSES_30806),
             IntType.SCENERY,
             "take-seed",
-        ) { player, node ->
+        ) { player, _ ->
             sendMessage(player, "There doesn't seem to be any seeds on this rosebush.")
             return@on true
         }

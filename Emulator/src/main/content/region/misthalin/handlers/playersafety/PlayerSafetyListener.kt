@@ -1,5 +1,6 @@
 package content.region.misthalin.handlers.playersafety
 
+import content.data.GameAttributes
 import core.api.*
 import core.game.activity.Cutscene
 import core.game.component.Component
@@ -17,7 +18,7 @@ import core.game.world.map.zone.MapZone
 import core.game.world.map.zone.ZoneBorders
 import org.rs.consts.*
 
-class PlayerSafety :
+class PlayerSafetyListener :
     MapZone("player-safety", true),
     InteractionListener {
     override fun configure() {
@@ -74,6 +75,10 @@ class PlayerSafety :
     }
 
     override fun defineListeners() {
+        /*
+         * Handles opening exam interface.
+         */
+
         on(Items.TEST_PAPER_12626, IntType.ITEM, "take exam") { player, _ ->
             if (player.savedData.globalData.getTestStage() == 2) {
                 sendDialogue(player, "You have already completed the test. Hand it in to Professor Henry for marking.")
@@ -102,7 +107,7 @@ class PlayerSafety :
         }
 
         on(org.rs.consts.Scenery.STAIRS_29589, IntType.SCENERY, "climb-up") { player, _ ->
-            if (player.globalData.hasReadPlaques()) {
+            if (player.globalData.hasReadPlaques() && getAttribute(player, GameAttributes.PLAYER_SAFETY_TRAINING_CENTRE_ACCESS, false)) {
                 if (!player.musicPlayer.hasUnlocked(Music.EXAM_CONDITIONS_492)) {
                     player.musicPlayer.unlock(Music.EXAM_CONDITIONS_492)
                 }
@@ -127,6 +132,10 @@ class PlayerSafety :
             return@on true
         }
 
+        /*
+         * Handles enter the crevice outside the traning centre.
+         */
+
         on(org.rs.consts.Scenery.CREVICE_29728, IntType.SCENERY, "enter") { player, _ ->
             if (getAttribute(player, ATTRIBUTE_CLIMB_CREVICE, false)) {
                 teleport(player, Location.create(3159, 4279, 3))
@@ -144,6 +153,10 @@ class PlayerSafety :
             return@on true
         }
 
+        /*
+         * Handles reading the jail plaques.
+         */
+
         on(
             (org.rs.consts.Scenery.JAIL_DOOR_29595..org.rs.consts.Scenery.JAIL_DOOR_29601).toIntArray(),
             IntType.SCENERY,
@@ -159,13 +172,19 @@ class PlayerSafety :
             return@on true
         }
 
+        /*
+         * Handles lever interaction.
+         */
+
         on(org.rs.consts.Scenery.AN_OLD_LEVER_29730, IntType.SCENERY, "pull") { player, _ ->
+            animate(player, Animations.PULL_LEVER_798)
             sendMessage(player, "You hear the cogs and gears moving and a distant unlocking sound.")
             setVarp(player, 1203, (1 shl 29) or (1 shl 26), true)
             return@on true
         }
 
         on(org.rs.consts.Scenery.AN_OLD_LEVER_29731, IntType.SCENERY, "pull") { player, _ ->
+            animate(player, Animations.PULL_LEVER_798)
             sendMessage(player, "You hear cogs and gears moving and the sound of heavy locks falling into place.")
             setVarp(player, 1203, 1 shl 29, true)
             return@on true
@@ -231,41 +250,49 @@ class PlayerSafety :
             return@on true
         }
 
+        /*
+         * Handles opening the treasure chest.
+         */
+
         on(org.rs.consts.Scenery.TREASURE_CHEST_29577, IntType.SCENERY, "open") { player, _ ->
             setVarbit(player, 4499, 1, true)
             return@on true
         }
 
+        /*
+         * Handles searching for reward the treasure chest.
+         */
+
         on(org.rs.consts.Scenery.TREASURE_CHEST_29578, IntType.SCENERY, "search") { player, _ ->
+            val hasAnGloves = hasAnItem(player, Items.SAFETY_GLOVES_12629).container != null
+
+            if(freeSlots(player) < 2) {
+                sendDialogue(player, "You do not have enough inventory space!")
+                return@on true
+            }
+
             if (player.globalData.getTestStage() == 3) {
-                if ((freeSlots(player) == 0) or ((freeSlots(player) == 1) and !inInventory(player, Items.COINS_995))) {
-                    sendDialogue(player, "You do not have enough inventory space!")
-                } else {
-                    player.emoteManager.unlock(Emotes.SAFETY_FIRST)
-                    addItem(player, Items.COINS_995, 10000)
-                    addItem(player, Items.SAFETY_GLOVES_12629)
-                    sendItemDialogue(
-                        player,
-                        Items.SAFETY_GLOVES_12629,
-                        "You open the chest to find a large pile of gold, along with a pair of safety gloves. ",
-                    )
-                    player.globalData.setTestStage(4)
-                }
+                player.emoteManager.unlock(Emotes.SAFETY_FIRST)
+                addItemOrDrop(player, Items.COINS_995, 10000)
+                addItemOrDrop(player, Items.SAFETY_GLOVES_12629)
+                sendItemDialogue(
+                    player,
+                    Items.SAFETY_GLOVES_12629,
+                    "You open the chest to find a large pile of gold, along with a pair of safety gloves.",
+                )
+                player.globalData.setTestStage(4)
+                return@on true
+            }
+
+            if(player.globalData.getTestStage() == 4 && !hasAnGloves) {
+                sendItemDialogue(
+                    player,
+                    Items.SAFETY_GLOVES_12629,
+                    "You open the chest to find a pair of safety gloves.",
+                )
+                addItemOrDrop(player, Items.SAFETY_GLOVES_12629)
             } else {
-                if (hasAnItem(player, Items.SAFETY_GLOVES_12629).exists()) {
-                    sendDialogue(player, "The chest is empty")
-                } else {
-                    if (freeSlots(player) == 0) {
-                        sendDialogue(player, "You do not have enough inventory space!")
-                    } else {
-                        sendItemDialogue(
-                            player,
-                            Items.SAFETY_GLOVES_12629,
-                            "You open the chest to find a pair of safety gloves. ",
-                        )
-                        addItem(player, Items.SAFETY_GLOVES_12629)
-                    }
-                }
+                sendDialogue(player, "The chest is empty")
             }
             return@on true
         }

@@ -473,7 +473,7 @@ class PlayerSaver(
         globalData["disableDeathScreen"] = player.savedData.globalData.isDeathScreenDisabled()
         globalData["playerTestStage"] =
             player.savedData.globalData
-                .getPlayerTestStage()
+                .getTestStage()
                 .toString()
         globalData["charmingDelay"] =
             player.savedData.globalData

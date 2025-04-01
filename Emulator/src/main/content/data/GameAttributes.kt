@@ -187,4 +187,7 @@ internal object GameAttributes {
 
     // The lost tribe quest.
     const val QUEST_LOST_TRIBE_LUMBRIDGE_CELLAR = "/save:tlt-hole-cleared"
+
+
+    const val PLAYER_SAFETY_TRAINING_CENTRE_ACCESS = "/save:training-centre-access-unlocked"
 }

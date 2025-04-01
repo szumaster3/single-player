@@ -290,7 +290,7 @@ object LoginConfiguration {
     private fun Player.isNotReconnecting(): Boolean = getAttribute("login_type", LoginType.NORMAL_LOGIN) != LoginType.RECONNECT_TYPE
 
     private fun checkEmotes(player: Player) {
-        if (player.globalData.getPlayerTestStage() == 3 && !player.emoteManager.isUnlocked(Emotes.SAFETY_FIRST)) {
+        if (player.globalData.getTestStage() == 3 && !player.emoteManager.isUnlocked(Emotes.SAFETY_FIRST)) {
             player.emoteManager.unlock(Emotes.SAFETY_FIRST)
         }
     }

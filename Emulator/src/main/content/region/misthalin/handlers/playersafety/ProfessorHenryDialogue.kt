@@ -142,7 +142,7 @@ class ProfessorHenryDialogue(
         /*
          * Show the poster tunnel.
          */
-        setVarp(player, 1203, 1 shl 29, true)
+        setVarbit(player, 4503,1, true)
         player.savedData.globalData.setTestStage(3)
         removeItem(player, Items.TEST_PAPER_12626)
         addItem(player, Items.ANTIQUE_LAMP_4447, 2)

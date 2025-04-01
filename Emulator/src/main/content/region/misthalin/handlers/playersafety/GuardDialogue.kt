@@ -1,8 +1,10 @@
 package content.region.misthalin.handlers.playersafety
 
+import content.data.GameAttributes
 import core.api.openInterface
 import core.api.runTask
 import core.api.sendMessage
+import core.api.setAttribute
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.player.Player
@@ -121,15 +123,15 @@ class GuardDialogue(
                     return@runTask
                 }.also { stage++ }
             }
-            18 ->
+            16 ->
                 npc(
                     "Simply enter the player's name in the box and click the",
                     "rule that the offender was breaking.",
                 ).also {
                     stage++
                 }
-            19 -> player(FaceAnim.FRIENDLY, "Okay. Then what?").also { stage++ }
-            20 ->
+            17 -> player(FaceAnim.FRIENDLY, "Okay. Then what?").also { stage++ }
+            18 ->
                 npc(
                     FaceAnim.HALF_GUILTY,
                     "That's it! It really is that simple and it only takes a",
@@ -138,7 +140,11 @@ class GuardDialogue(
                 ).also {
                     stage++
                 }
-            21 -> player(FaceAnim.HALF_GUILTY, "Thanks!").also { stage = END_DIALOGUE }
+            19 -> {
+                end()
+                setAttribute(player, GameAttributes.PLAYER_SAFETY_TRAINING_CENTRE_ACCESS, true)
+                player(FaceAnim.HALF_GUILTY, "Thanks!").also { stage = END_DIALOGUE }
+            }
         }
         return true
     }
