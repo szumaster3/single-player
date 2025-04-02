@@ -13,66 +13,67 @@ import java.util.List;
 import static core.api.ContentAPIKt.log;
 
 /**
- * The type Option handler.
+ * The {@code OptionHandler} class provides an abstraction for handling various interaction options in the game.
+ * Implementations of this class define how a player interacts with different nodes and objects.
  */
 public abstract class OptionHandler implements Plugin<Object> {
 
     /**
-     * Handle boolean.
+     * Handles a specific interaction option selected by the player.
      *
-     * @param player the player
-     * @param node   the node
-     * @param option the option
-     * @return the boolean
+     * @param player The player performing the interaction.
+     * @param node   The node that the player is interacting with.
+     * @param option The option selected by the player.
+     * @return {@code true} if the interaction is successful, otherwise {@code false}.
      */
     public abstract boolean handle(Player player, Node node, String option);
 
     /**
-     * Is delayed boolean.
+     * Determines whether the interaction should be delayed.
      *
-     * @param player the player
-     * @return the boolean
+     * @param player The player interacting.
+     * @return {@code true} if the interaction is delayed, otherwise {@code false}.
      */
     public boolean isDelayed(Player player) {
         return true;
     }
 
     /**
-     * Is walk boolean.
+     * Determines whether the player should walk to the node before interacting.
      *
-     * @param player the player
-     * @param node   the node
-     * @return the boolean
+     * @param player The player performing the action.
+     * @param node   The node being interacted with.
+     * @return {@code true} if the player should walk to the node, otherwise {@code false}.
      */
     public boolean isWalk(final Player player, final Node node) {
         return false;
     }
 
     /**
-     * Is walk boolean.
+     * Determines whether walking is required for the interaction.
      *
-     * @return the boolean
+     * @return {@code true} if walking is required, otherwise {@code false}.
      */
     public boolean isWalk() {
         return true;
     }
 
     /**
-     * Gets destination.
+     * Gets the destination location for the interaction.
      *
-     * @param n    the n
-     * @param node the node
-     * @return the destination
+     * @param n    The primary node.
+     * @param node The target node.
+     * @return The destination {@link Location}, or {@code null} if not applicable.
      */
     public Location getDestination(Node n, Node node) {
         return null;
     }
 
     /**
-     * Get valid children int [ ].
+     * Retrieves the valid child object IDs for a given wrapper ID.
      *
-     * @param wrapper the wrapper
-     * @return the int [ ]
+     * @param wrapper The wrapper ID to check.
+     * @return An array of valid child object IDs.
      */
     public int[] getValidChildren(int wrapper) {
         final SceneryDefinition definition = SceneryDefinition.forId(wrapper);
@@ -93,6 +94,13 @@ public abstract class OptionHandler implements Plugin<Object> {
         return array;
     }
 
+    /**
+     * Fires an event associated with this option handler.
+     *
+     * @param identifier The event identifier.
+     * @param args       Additional arguments for the event.
+     * @return The result of the event execution, or {@code null} if not applicable.
+     */
     @Override
     public Object fireEvent(String identifier, Object... args) {
         return null;

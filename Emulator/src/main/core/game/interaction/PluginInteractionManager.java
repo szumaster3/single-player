@@ -7,77 +7,100 @@ import core.game.node.scenery.Scenery;
 
 import java.util.HashMap;
 
+/**
+ * Manages interactions between players and various game entities (NPCs, objects, items, etc.).
+ */
 public class PluginInteractionManager {
     private static final HashMap<Integer, PluginInteraction> npcInteractions = new HashMap<>();
     private static final HashMap<Integer, PluginInteraction> objectInteractions = new HashMap<>();
     private static final HashMap<Integer, PluginInteraction> useWithInteractions = new HashMap<>();
     private static final HashMap<Integer, PluginInteraction> groundItemInteractions = new HashMap<>();
 
-    public static void register(PluginInteraction interaction, InteractionType type){
-        switch(type){
+    /**
+     * Registers a new interaction with the specified type.
+     *
+     * @param interaction The interaction to register.
+     * @param type        The type of interaction.
+     */
+    public static void register(PluginInteraction interaction, InteractionType type) {
+        switch (type) {
             case OBJECT:
-                for(int i = 0; i < interaction.ids.length; i++){
-                    objectInteractions.putIfAbsent(interaction.ids[i],interaction);
+                for (int id : interaction.ids) {
+                    objectInteractions.putIfAbsent(id, interaction);
                 }
                 break;
             case USE_WITH:
-                for(int i = 0; i < interaction.ids.length; i++){
-                    useWithInteractions.putIfAbsent(interaction.ids[i],interaction);
+                for (int id : interaction.ids) {
+                    useWithInteractions.putIfAbsent(id, interaction);
                 }
                 break;
             case NPC:
-                for(int i = 0; i < interaction.ids.length; i++){
-                    npcInteractions.putIfAbsent(interaction.ids[i],interaction);
+                for (int id : interaction.ids) {
+                    npcInteractions.putIfAbsent(id, interaction);
                 }
                 break;
             case ITEM:
-                for(int i = 0; i < interaction.ids.length; i++){
-                    groundItemInteractions.putIfAbsent(interaction.ids[i],interaction);
+                for (int id : interaction.ids) {
+                    groundItemInteractions.putIfAbsent(id, interaction);
                 }
                 break;
         }
     }
 
-    public static boolean handle(Player player, Scenery object){
+    /**
+     * Handles interaction with a scenery object.
+     *
+     * @param player The player initiating the interaction.
+     * @param object The scenery object being interacted with.
+     * @return true if the interaction was handled, false otherwise.
+     */
+    public static boolean handle(Player player, Scenery object) {
         PluginInteraction i = objectInteractions.get(object.getId());
-        if(i == null) {
-            return false;
-        } else {
-            return i.handle(player,object);
-        }
+        return i != null && i.handle(player, object);
     }
 
-    public static boolean handle(Player player, NodeUsageEvent event){
+    /**
+     * Handles interaction with an item being used on another entity.
+     *
+     * @param player The player initiating the interaction.
+     * @param event  The event containing usage details.
+     * @return true if the interaction was handled, false otherwise.
+     */
+    public static boolean handle(Player player, NodeUsageEvent event) {
         PluginInteraction i = useWithInteractions.get(event.getUsed().asItem().getId());
-        if(i == null) {
-            return false;
-        } else {
-            return i.handle(player,event);
-        }
+        return i != null && i.handle(player, event);
     }
 
-    public static boolean handle(Player player, NPC npc, Option option){
+    /**
+     * Handles interaction with an NPC.
+     *
+     * @param player The player initiating the interaction.
+     * @param npc    The NPC being interacted with.
+     * @param option The interaction option chosen.
+     * @return true if the interaction was handled, false otherwise.
+     */
+    public static boolean handle(Player player, NPC npc, Option option) {
         PluginInteraction i = npcInteractions.get(npc.getId());
-        if(i == null) {
-            return false;
-        } else {
-            return i.handle(player,npc,option);
-        }
+        return i != null && i.handle(player, npc, option);
     }
 
-    public static boolean handle(Player player, Item item, Option option){
+    /**
+     * Handles interaction with a ground item.
+     *
+     * @param player The player initiating the interaction.
+     * @param item   The item being interacted with.
+     * @param option The interaction option chosen.
+     * @return true if the interaction was handled, false otherwise.
+     */
+    public static boolean handle(Player player, Item item, Option option) {
         PluginInteraction i = groundItemInteractions.get(item.getId());
-        if(i == null){
-            return false;
-        } else {
-            return i.handle(player,item,option);
-        }
+        return i != null && i.handle(player, item, option);
     }
 
-    public enum InteractionType{
-        NPC,
-        OBJECT,
-        USE_WITH,
-        ITEM
+    /**
+     * Defines the types of interactions that can be registered.
+     */
+    public enum InteractionType {
+        NPC, OBJECT, USE_WITH, ITEM
     }
 }

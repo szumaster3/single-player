@@ -7,97 +7,98 @@ import core.game.node.item.Item;
 import core.plugin.Plugin;
 
 /**
- * The type Plugin interaction.
+ * Represents an abstract interaction plugin that can handle various types of interactions
+ * between a player and different game entities such as nodes, NPCs, and items.
  */
 public abstract class PluginInteraction implements Plugin<Object> {
 
     /**
-     * The Ids.
+     * The IDs associated with this interaction, typically used for identifying specific entities.
      */
     int[] ids;
 
     /**
-     * The Item.
+     * The item associated with this interaction, if applicable.
      */
     Item item;
 
     /**
-     * Handle boolean.
+     * Handles an interaction between a player and a node.
      *
-     * @param player the player
-     * @param node   the node
-     * @return the boolean
+     * @param player the player performing the interaction
+     * @param node   the node being interacted with
+     * @return {@code true} if the interaction is successful, otherwise {@code false}
      */
     public boolean handle(Player player, Node node) {
         return false;
     }
 
     /**
-     * Handle boolean.
+     * Handles an interaction between a player and an event.
      *
-     * @param player the player
-     * @param event  the event
-     * @return the boolean
+     * @param player the player performing the interaction
+     * @param event  the event being triggered
+     * @return {@code true} if the interaction is successful, otherwise {@code false}
      */
     public boolean handle(Player player, NodeUsageEvent event) {
         return false;
     }
 
     /**
-     * Handle boolean.
+     * Handles an interaction between a player and an NPC.
      *
-     * @param player the player
-     * @param npc    the npc
-     * @param option the option
-     * @return the boolean
+     * @param player the player performing the interaction
+     * @param npc    the NPC being interacted with
+     * @param option the option selected for the interaction
+     * @return {@code true} if the interaction is successful, otherwise {@code false}
      */
     public boolean handle(Player player, NPC npc, Option option) {
         return false;
     }
 
     /**
-     * Handle boolean.
+     * Handles an interaction between a player and an item.
      *
-     * @param player the player
-     * @param item   the item
-     * @param option the option
-     * @return the boolean
+     * @param player the player performing the interaction
+     * @param item   the item being interacted with
+     * @param option the option selected for the interaction
+     * @return {@code true} if the interaction is successful, otherwise {@code false}
      */
     public boolean handle(Player player, Item item, Option option) {
         return false;
     }
 
     /**
-     * Instantiates a new Plugin interaction.
+     * Constructs a new PluginInteraction with specified entity IDs.
      *
-     * @param ids the ids
+     * @param ids the IDs of entities associated with this interaction
      */
     public PluginInteraction(int... ids) {
         this.ids = ids;
     }
 
     /**
-     * Instantiates a new Plugin interaction.
+     * Constructs a new PluginInteraction with a specific item.
      *
-     * @param item the item
+     * @param item the item associated with this interaction
      */
     public PluginInteraction(Item item) {
         this.item = item;
     }
 
     /**
-     * Sets ids.
+     * Sets the IDs associated with this interaction.
      *
-     * @param ids the ids
+     * @param ids the new IDs to be associated
      */
     public void setIds(int[] ids) {
         this.ids = ids;
     }
 
     /**
-     * Sets item.
+     * Sets the item associated with this interaction.
      *
-     * @param item the item
+     * @param item the new item to be associated
      */
     public void setItem(Item item) {
         this.item = item;

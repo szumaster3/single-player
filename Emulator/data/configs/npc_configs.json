@@ -6699,6 +6699,11 @@
     "id": "584"
   },
   {
+    "examine": "If Crafting's your thing, he's your man.",
+    "name": "Rommik",
+    "id": "585"
+  },
+  {
     "examine": "Ironically, makes a living from swords.",
     "name": "Gaius",
     "id": "586"
@@ -17279,6 +17284,11 @@
     "examine": "It's the Arzinian Being",
     "name": "Arzinian Being of Bordanzan",
     "id": "1859"
+  },
+  {
+    "examine": "He sells ranged equipment.",
+    "name": "Brian",
+    "id": "1860"
   },
   {
     "examine": "Nemarti looks ready to teach you about ranged combat.",
