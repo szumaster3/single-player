@@ -27,9 +27,9 @@ class CharterDialogue(
             core.api.sendDialogue(
                 player,
                 "To sail to " + StringUtils.formatDisplayName(destination!!.name) + " from here will cost you " + cost +
-                    " gold. Are you sure you want to pay that?",
+                        " gold. Are you sure you want to pay that?",
             )
-            stage = 3000
+            stage = 14
             return true
         }
         npc("Can I help you?")
@@ -51,12 +51,14 @@ class CharterDialogue(
                 ).also {
                     stage++
                 }
+
             1 ->
                 when (buttonId) {
-                    1 -> player(FaceAnim.ASKING, "Yes, who are you?").also { stage = 100 }
-                    2 -> player(FaceAnim.FRIENDLY, "Yes, I would like to charter a ship.").also { stage = 2000 }
+                    1 -> player(FaceAnim.ASKING, "Yes, who are you?").also { stage++ }
+                    2 -> player(FaceAnim.FRIENDLY, "Yes, I would like to charter a ship.").also { stage = 12 }
                 }
-            100 ->
+
+            2 ->
                 npc(
                     FaceAnim.FRIENDLY,
                     "I'm one of the Trader Stan's crew; we are all part of the",
@@ -65,7 +67,8 @@ class CharterDialogue(
                 ).also {
                     stage++
                 }
-            101 ->
+
+            3 ->
                 npc(
                     FaceAnim.FRIENDLY,
                     "If you want to get to a port in a hurry then you can",
@@ -74,8 +77,9 @@ class CharterDialogue(
                 ).also {
                     stage++
                 }
-            102 -> player(FaceAnim.HALF_ASKING, "So, where exactly can I go with your ships?").also { stage++ }
-            103 ->
+
+            4 -> player(FaceAnim.HALF_ASKING, "So, where exactly can I go with your ships?").also { stage++ }
+            5 ->
                 npc(
                     FaceAnim.NEUTRAL,
                     "We run ships from Port Phasmatys over to Port Tyras,",
@@ -84,7 +88,8 @@ class CharterDialogue(
                 ).also {
                     stage++
                 }
-            104 ->
+
+            6 ->
                 player(
                     FaceAnim.FRIENDLY,
                     "Wow, that's a lot of ports. I take it you have some exotic",
@@ -92,7 +97,8 @@ class CharterDialogue(
                 ).also {
                     stage++
                 }
-            105 ->
+
+            7 ->
                 npc(
                     FaceAnim.HAPPY,
                     "We certainly do! We have access to items",
@@ -100,27 +106,28 @@ class CharterDialogue(
                 ).also {
                     stage++
                 }
-            106 -> npc(FaceAnim.HALF_ASKING, "Would you like to take a look?").also { stage++ }
-            107 -> options("Yes.", "No.").also { stage++ }
-            108 ->
+
+            8 -> npc(FaceAnim.HALF_ASKING, "Would you like to take a look?").also { stage++ }
+            9 -> options("Yes.", "No.").also { stage++ }
+            10 ->
                 when (buttonId) {
-                    1 -> player(FaceAnim.FRIENDLY, "Yes.").also { stage = 1000 }
+                    1 -> player(FaceAnim.FRIENDLY, "Yes.").also { stage++ }
                     2 -> end()
                 }
 
-            1000 -> {
+            11 -> {
                 end()
                 openNpcShop(player, npc.id)
             }
 
-            2000 -> npc(FaceAnim.HAPPY, "Certainly sir, where would you like to go?").also { stage++ }
-            2001 -> {
+            12 -> npc(FaceAnim.HAPPY, "Certainly sir, where would you like to go?").also { stage++ }
+            13 -> {
                 end()
                 CharterUtils.open(player)
             }
 
-            3000 -> options("Ok", "Choose again", "No").also { stage = 30001 }
-            30001 ->
+            14 -> options("Ok", "Choose again", "No").also { stage++ }
+            15 ->
                 when (buttonId) {
                     1 -> {
                         end()
@@ -129,12 +136,10 @@ class CharterDialogue(
                         }
                         if (!player.inventory.containsItem(Item(Items.COINS_995, cost))) {
                             player(FaceAnim.HALF_GUILTY, "I don't have the money for that.")
-                            end()
                             return true
                         }
                         if (!player.inventory.remove(Item(Items.COINS_995, cost))) {
                             player(FaceAnim.HALF_GUILTY, "I don't have the money for that.")
-                            stage = 30002
                             return true
                         }
                         destination!!.sail(player)
@@ -147,8 +152,6 @@ class CharterDialogue(
 
                     3 -> end()
                 }
-
-            30002 -> end()
         }
         return true
     }

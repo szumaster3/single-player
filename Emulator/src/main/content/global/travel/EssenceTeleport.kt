@@ -16,9 +16,7 @@ import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
 import core.tools.RandomFunction
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
-import org.rs.consts.Sounds
+import org.rs.consts.*
 
 object EssenceTeleport {
     val LOCATIONS =
@@ -32,11 +30,11 @@ object EssenceTeleport {
             Location.create(2931, 4813, 0),
         )
 
-    private const val CURSE_PROJECTILE = 109
+    private const val CURSE_PROJECTILE = org.rs.consts.Graphics.CURSE_PROJECTILE_109
     private val ANIMATION = Animation(437)
     private val OLD_ANIMATION = Animation(198)
-    private val GLOWING_HANDS_GFX = Graphics(108)
-    private val TELEPORT_GFX = Graphics(110, 150)
+    private val GLOWING_HANDS_GFX = Graphics(org.rs.consts.Graphics.CURSE_CAST_108)
+    private val TELEPORT_GFX = Graphics(org.rs.consts.Graphics.CURSE_IMPACT_110, 150)
 
     @JvmStatic
     fun teleport(
@@ -65,8 +63,8 @@ object EssenceTeleport {
                     when (counter++) {
                         0 -> player.graphics(TELEPORT_GFX)
                         1 -> {
-                            if (getStage(player) == 2 && inInventory(player, 5519, 1)) {
-                                val item = player.inventory[player.inventory.getSlot(Item(5519))]
+                            if (getStage(player) == 2 && inInventory(player, Items.SCRYING_ORB_5519, 1)) {
+                                val item = player.inventory[player.inventory.getSlot(Item(Items.SCRYING_ORB_5519))]
                                 if (item != null) {
                                     if (item.charge == 1000) {
                                         player.savedData.globalData.resetAbyss()
@@ -80,8 +78,8 @@ object EssenceTeleport {
                                                 player,
                                                 "Your scrying orb has absorbed enough teleport information.",
                                             )
-                                            removeItem(player, 5519)
-                                            addItemOrDrop(player, 5518)
+                                            removeItem(player, Items.SCRYING_ORB_5519)
+                                            addItemOrDrop(player, Items.SCRYING_ORB_5518)
                                         }
                                     }
                                 }

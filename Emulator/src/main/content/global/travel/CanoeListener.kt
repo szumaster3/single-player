@@ -43,7 +43,7 @@ class CanoeListener :
         val CANOE_TREE_FALLING_ANIMATION = Animation(Animations.CANOE_TREE_FALL_3304)
         val CANOE_PLAYER_PUSHING_ANIMATION = Animation(Animations.HUMAN_PUSH_CANOE_3301)
         val CANOE_PUSHING_ANIMATION = Animation(Animations.CANOE_TREE_FALL_3304)
-        val CANOE_SINKING_ANIMATION = Animation(3305)
+        val CANOE_SINKING_ANIMATION = Animation(Animations.CANOE_SINK_3305)
         val CANOE_TRAVEL_ANIMATIONS =
             arrayOf(
                 arrayOf(0, 9890, 9889, 9888, 9887),

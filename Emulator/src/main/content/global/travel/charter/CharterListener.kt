@@ -12,10 +12,7 @@ import core.game.node.entity.player.Player
 import core.game.world.map.Location
 import core.game.world.repository.Repository.findNPC
 import core.game.world.update.flag.context.Animation
-import org.rs.consts.Components
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
-import org.rs.consts.Scenery
+import org.rs.consts.*
 
 class CharterListener :
     InteractionListener,
@@ -26,11 +23,21 @@ class CharterListener :
             return@on true
         }
 
-        on(LADDER, IntType.SCENERY, "climb-down", "climb-up") { player, _ ->
-            when (getUsedOption(player)) {
-                "climb-up" -> ClimbActionHandler.climb(player, Animation(828), Location(3048, 3208, 1))
-                else -> ClimbActionHandler.climb(player, Animation(828), Location(3048, 9640, 1))
-            }
+        /*
+         * Handles ladder on Dragon slayer ship.
+         */
+
+        on(Scenery.LADDER_2592, IntType.SCENERY, "climb-up") { player, _ ->
+            ClimbActionHandler.climb(player, Animation(Animations.USE_LADDER_828), Location(3048, 3208, 1))
+            return@on true
+        }
+
+        /*
+         * Handles ladder on Dragon slayer ship.
+         */
+
+        on(Scenery.LADDER_2590, IntType.SCENERY, "climb-down") { player, _ ->
+            ClimbActionHandler.climb(player, Animation(Animations.MULTI_BEND_OVER_827), Location(3048, 9640, 1))
             return@on true
         }
 
@@ -62,7 +69,7 @@ class CharterListener :
             return@on true
         }
 
-        on(PLANK, IntType.SCENERY, "cross") { player, node ->
+        on(GANGPLANKS, IntType.SCENERY, "cross") { player, node ->
             lock(player, 1)
             ForceMovement.run(
                 player,
@@ -73,83 +80,114 @@ class CharterListener :
             )
             if (getUsedOption(player) == "cross") {
                 when (node.id) {
-                    Scenery.GANGPLANK_2081 -> cross(player, KARAMJA[0])
-                    Scenery.GANGPLANK_2082 -> cross(player, KARAMJA[1])
-                    Scenery.GANGPLANK_2083 -> cross(player, PORT_SARIM[4])
-                    Scenery.GANGPLANK_2084 -> cross(player, PORT_SARIM[5])
+                    // Karamja A
+                    Scenery.GANGPLANK_2081 -> cross(player, Location(2956, 3143, 1))
+                    // Karamja B
+                    Scenery.GANGPLANK_2082 -> cross(player, Location(2956, 3146, 0))
+                    // Port Sarim A
+                    Scenery.GANGPLANK_2083 -> cross(player, Location(3032, 3217, 1))
+                    // Port Sarim B
+                    Scenery.GANGPLANK_2084 -> cross(player, Location(3029, 3217, 0))
+                    // Ardougne A
                     Scenery.GANGPLANK_2085 ->
-                        cross(player, ARDOUGNE[0]).also {
+                        cross(player, Location(2683, 3268, 1)).also {
                             sendMessage(
                                 player,
                                 "You must speak to Captain Barnaby before it will set sail.",
                             )
                         }
-
-                    Scenery.GANGPLANK_2086 -> cross(player, ARDOUGNE[1])
+                    // Ardougne B
+                    Scenery.GANGPLANK_2086 -> cross(player, Location(2683, 3271, 0))
+                    // Brimhaven A
                     Scenery.GANGPLANK_2087 ->
-                        cross(player, BRIMHAVEN[2]).also {
+                        cross(player, Location(2775, 3234, 1)).also {
                             sendMessage(
                                 player,
                                 "You must speak to the Customs Officer before it will set sail.",
                             )
                         }
-
-                    Scenery.GANGPLANK_2088 -> cross(player, BRIMHAVEN[3])
-                    Scenery.GANGPLANK_2412 -> cross(player, PORT_SARIM[0])
-                    Scenery.GANGPLANK_2413 -> cross(player, PORT_SARIM[1])
-                    Scenery.GANGPLANK_2414 -> cross(player, ENTRANA[0])
-                    Scenery.GANGPLANK_2415 -> cross(player, ENTRANA[1])
+                    // Brimhaven B
+                    Scenery.GANGPLANK_2088 -> cross(player, Location(2772, 3234, 0))
+                    // Port Sarim A
+                    Scenery.GANGPLANK_2412 -> cross(player, Location(3048, 3231, 1))
+                    // Port Sarim B
+                    Scenery.GANGPLANK_2413 -> cross(player, Location(3048, 3234, 0))
+                    // Entrana A
+                    Scenery.GANGPLANK_2414 -> cross(player, Location(2834, 3331, 1))
+                    // Entrana B
+                    Scenery.GANGPLANK_2415 -> cross(player, Location(2834, 3335, 0))
+                    // Port Sarim (Dragon Slayer)
                     Scenery.GANGPLANK_2594 -> cross(player, Location(3047, 3204, 0))
-                    Scenery.GANGPLANK_11211 -> cross(player, MOS_SHIP[0])
-                    Scenery.GANGPLANK_11212 -> cross(player, MOS_SHIP[1])
+                    // Moss A
+                    Scenery.GANGPLANK_11211 -> cross(player, Location(3684, 2950, 1))
+                    // Moss B
+                    Scenery.GANGPLANK_11212 -> cross(player, Location(3684, 2953, 0))
+                    // Port Sarim A
                     Scenery.GANGPLANK_14304 ->
-                        cross(player, PORT_SARIM[6]).also {
+                        cross(player, Location(3041, 3199, 1)).also {
                             sendMessage(player, "You board the ship.")
                         }
-
+                    // Port Sarim B
                     Scenery.GANGPLANK_14305 ->
-                        cross(player, PORT_SARIM[7]).also {
+                        cross(player, Location(3041, 3202, 0)).also {
                             sendMessage(player, "You disembark the ship.")
                         }
-
+                    // Pest control A
                     Scenery.GANGPLANK_14306 ->
-                        cross(player, PEST_CONTROL[0]).also {
+                        cross(player, Location(2662, 2676, 1)).also {
                             sendMessage(player, "You board the ship.")
                         }
-
+                    // Pest control B
                     Scenery.GANGPLANK_14307 ->
-                        cross(player, PEST_CONTROL[1]).also {
+                        cross(player, Location(2659, 2676, 0)).also {
                             sendMessage(player, "You disembark the ship.")
                         }
-
-                    Scenery.GANGPLANK_17392 -> cross(player, PORT_PHASMATYS[0])
-                    Scenery.GANGPLANK_17393 -> cross(player, PORT_PHASMATYS[1])
-                    Scenery.GANGPLANK_17394 -> cross(player, CATHERBY[0])
-                    Scenery.GANGPLANK_17395 -> cross(player, CATHERBY[1])
-                    Scenery.GANGPLANK_17396 -> cross(player, SHIP_YARD[0])
-                    Scenery.GANGPLANK_17397 -> cross(player, SHIP_YARD[1])
+                    // Port Phasmatys A
+                    Scenery.GANGPLANK_17392 -> cross(player, Location(3705, 3503, 1))
+                    // Port Phasmatys B
+                    Scenery.GANGPLANK_17393 -> cross(player, Location(3702, 3503, 0))
+                    // Catherby A
+                    Scenery.GANGPLANK_17394 -> cross(player, Location(2792, 3417, 1))
+                    // Catherby B
+                    Scenery.GANGPLANK_17395 -> cross(player, Location(2792, 3414, 0))
+                    // Shipyard A
+                    Scenery.GANGPLANK_17396 -> cross(player,Location(2998, 3032, 1))
+                    // Shipyard B
+                    Scenery.GANGPLANK_17397 -> cross(player, Location(3000, 3032, 0))
+                    // Karamja A
                     Scenery.GANGPLANK_17398 ->
-                        cross(player, KARAMJA[2]).also {
+                        cross(player, Location(2957, 3158, 1)).also {
                             sendMessage(player, "You must speak to the Customs Officer before it will set sail.")
                         }
-
+                    // Karamja B
                     Scenery.GANGPLANK_17399 ->
-                        cross(player, KARAMJA[3]).also {
+                        cross(player, Location(2954, 3158, 0)).also {
                             sendMessage(player, "You must speak to the Customs Officer before it will set sail.")
                         }
-
-                    Scenery.GANGPLANK_17400 -> cross(player, BRIMHAVEN[0])
-                    Scenery.GANGPLANK_17401 -> cross(player, BRIMHAVEN[1])
-                    Scenery.GANGPLANK_17402 -> cross(player, PORT_KHAZARD[0])
-                    Scenery.GANGPLANK_17403 -> cross(player, PORT_KHAZARD[1])
-                    Scenery.GANGPLANK_17404 -> cross(player, PORT_SARIM[3])
-                    Scenery.GANGPLANK_17405 -> cross(player, PORT_SARIM[2])
-                    Scenery.GANGPLANK_17406 -> cross(player, MOS_LE_HARMESS[0])
-                    Scenery.GANGPLANK_17407 -> cross(player, MOS_LE_HARMESS[1])
-                    Scenery.GANGPLANK_17408 -> cross(player, TYRAS[0])
-                    Scenery.GANGPLANK_17409 -> cross(player, TYRAS[1])
-                    Scenery.GANGPLANK_29168 -> cross(player, OO_GLOG[0])
-                    Scenery.GANGPLANK_29169 -> cross(player, OO_GLOG[1])
+                    // Brimhaven A
+                    Scenery.GANGPLANK_17400 -> cross(player, Location(2763, 3238, 1))
+                    // Brimhaven B
+                    Scenery.GANGPLANK_17401 -> cross(player, Location(2760, 3238, 0))
+                    // Port Khazard A
+                    Scenery.GANGPLANK_17402 -> cross(player, Location(2674, 3141, 1))
+                    // Port Khazard B
+                    Scenery.GANGPLANK_17403 -> cross(player, Location(2674, 3144, 0))
+                    // Port Sarim A
+                    Scenery.GANGPLANK_17404 -> cross(player, Location(3038, 3189, 1))
+                    // Port Sarim B
+                    Scenery.GANGPLANK_17405 -> cross(player, Location(3038, 3192, 0))
+                    // Mos le harmless A
+                    Scenery.GANGPLANK_17406 -> cross(player, Location(3668, 2931, 1))
+                    // Mos le harmless B
+                    Scenery.GANGPLANK_17407 -> cross(player, Location(3671, 2931, 0))
+                    // Tyras A
+                    Scenery.GANGPLANK_17408 -> cross(player, Location(2142, 3125, 1))
+                    // Tyras B
+                    Scenery.GANGPLANK_17409 -> cross(player, Location(2142, 3122, 0))
+                    // Oo-Glog A
+                    Scenery.GANGPLANK_29168 -> cross(player, Location.create(2626, 2857, 1))
+                    // Oo-Glog B
+                    Scenery.GANGPLANK_29169 -> cross(player, Location.create(2623, 2857, 0))
                     else ->
                         sendDialogueLines(
                             player,
@@ -163,78 +201,7 @@ class CharterListener :
     }
 
     companion object {
-        private val PLANK =
-            intArrayOf(
-                Scenery.GANGPLANK_2081,
-                Scenery.GANGPLANK_2082,
-                Scenery.GANGPLANK_2083,
-                Scenery.GANGPLANK_2084,
-                Scenery.GANGPLANK_2085,
-                Scenery.GANGPLANK_2086,
-                Scenery.GANGPLANK_2087,
-                Scenery.GANGPLANK_2088,
-                Scenery.GANGPLANK_2412,
-                Scenery.GANGPLANK_2413,
-                Scenery.GANGPLANK_2414,
-                Scenery.GANGPLANK_2415,
-                Scenery.GANGPLANK_2594,
-                Scenery.GANGPLANK_11211,
-                Scenery.GANGPLANK_11212,
-                Scenery.GANGPLANK_14304,
-                Scenery.GANGPLANK_14305,
-                Scenery.GANGPLANK_14306,
-                Scenery.GANGPLANK_14307,
-                Scenery.GANGPLANK_17392,
-                Scenery.GANGPLANK_17393,
-                Scenery.GANGPLANK_17394,
-                Scenery.GANGPLANK_17395,
-                Scenery.GANGPLANK_17398,
-                Scenery.GANGPLANK_17399,
-                Scenery.GANGPLANK_17400,
-                Scenery.GANGPLANK_17401,
-                Scenery.GANGPLANK_17402,
-                Scenery.GANGPLANK_17403,
-                Scenery.GANGPLANK_17404,
-                Scenery.GANGPLANK_17405,
-                Scenery.GANGPLANK_17406,
-                Scenery.GANGPLANK_17407,
-                Scenery.GANGPLANK_17408,
-                Scenery.GANGPLANK_17409,
-                Scenery.GANGPLANK_29168,
-                Scenery.GANGPLANK_29169,
-            )
-        private val LADDER = intArrayOf(Scenery.LADDER_2590, Scenery.LADDER_2592)
-        private val PORT_SARIM =
-            arrayOf(
-                Location(3048, 3231, 1),
-                Location.create(3048, 3234, 0),
-                Location(3038, 3192, 0),
-                Location(3038, 3189, 1),
-                Location(3032, 3217, 1),
-                Location(3029, 3217, 0),
-                Location(3041, 3199, 1),
-                Location(3041, 3202, 0),
-            )
-        private val ENTRANA = arrayOf(Location(2834, 3331, 1), Location(2834, 3335, 0))
-        private val KARAMJA =
-            arrayOf(Location(2956, 3143, 1), Location(2956, 3146, 0), Location(2957, 3158, 1), Location(2954, 3158, 0))
-        private val CATHERBY = arrayOf(Location(2792, 3417, 1), Location(2792, 3414, 0))
-        private val BRIMHAVEN =
-            arrayOf(
-                Location(2763, 3238, 1),
-                Location.create(2760, 3238, 0),
-                Location(2775, 3234, 1),
-                Location(2772, 3234, 0),
-            )
-        private val ARDOUGNE = arrayOf(Location(2683, 3268, 1), Location(2683, 3271, 0))
-        private val PORT_KHAZARD = arrayOf(Location(2674, 3141, 1), Location(2674, 3144, 0))
-        private val PORT_PHASMATYS = arrayOf(Location(3705, 3503, 1), Location(3702, 3503, 0))
-        private val PEST_CONTROL = arrayOf(Location(2662, 2676, 1), Location(2659, 2676, 0))
-        private val MOS_LE_HARMESS = arrayOf(Location(3668, 2931, 1), Location(3671, 2931, 0))
-        private val MOS_SHIP = arrayOf(Location(3684, 2950, 1), Location(3684, 2953, 0))
-        private val TYRAS = arrayOf(Location(2142, 3125, 1), Location(2142, 3122, 0))
-        private val SHIP_YARD = arrayOf(Location.create(2998, 3032, 1), Location(3000, 3032, 0))
-        private val OO_GLOG = arrayOf(Location.create(2626, 2857, 1), Location.create(2623, 2857, 0))
+        private val GANGPLANKS = intArrayOf(Scenery.GANGPLANK_2081, Scenery.GANGPLANK_2082, Scenery.GANGPLANK_2083, Scenery.GANGPLANK_2084, Scenery.GANGPLANK_2085, Scenery.GANGPLANK_2086, Scenery.GANGPLANK_2087, Scenery.GANGPLANK_2088, Scenery.GANGPLANK_2412, Scenery.GANGPLANK_2413, Scenery.GANGPLANK_2414, Scenery.GANGPLANK_2415, Scenery.GANGPLANK_2594, Scenery.GANGPLANK_11211, Scenery.GANGPLANK_11212, Scenery.GANGPLANK_14304, Scenery.GANGPLANK_14305, Scenery.GANGPLANK_14306, Scenery.GANGPLANK_14307, Scenery.GANGPLANK_17392, Scenery.GANGPLANK_17393, Scenery.GANGPLANK_17394, Scenery.GANGPLANK_17395, Scenery.GANGPLANK_17398, Scenery.GANGPLANK_17399, Scenery.GANGPLANK_17400, Scenery.GANGPLANK_17401, Scenery.GANGPLANK_17402, Scenery.GANGPLANK_17403, Scenery.GANGPLANK_17404, Scenery.GANGPLANK_17405, Scenery.GANGPLANK_17406, Scenery.GANGPLANK_17407, Scenery.GANGPLANK_17408, Scenery.GANGPLANK_17409, Scenery.GANGPLANK_29168, Scenery.GANGPLANK_29169)
 
         private val SAILORS =
             intArrayOf(

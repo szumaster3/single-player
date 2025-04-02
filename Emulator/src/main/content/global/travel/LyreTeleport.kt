@@ -24,15 +24,12 @@ class LyreTeleport(
         @JvmStatic
         fun getStoreFile(): JSONObject = getArchive("daily-lyre-teleport")
 
-        @JvmStatic
-        fun getLyreTeleportFile(): JSONObject = getArchive("daily-lyre-teleport")
-
         fun teleport(player: Player) {
             if (hasTimerActive(player, "teleblock")) {
                 sendMessage(player, "A magical force has stopped you from teleporting.")
             } else {
                 GameWorld.Pulser.submit(LyreTeleport(player))
-                getLyreTeleportFile()[player.username.lowercase()] = true
+                getStoreFile()[player.username.lowercase()] = true
             }
         }
     }

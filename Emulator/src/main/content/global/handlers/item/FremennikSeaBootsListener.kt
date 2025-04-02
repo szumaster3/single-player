@@ -247,7 +247,7 @@ class FremennikSeaBootsListener : InteractionListener {
                             9 ->
                                 when (buttonID) {
                                     1 -> {
-                                        if (LyreTeleport.getLyreTeleportFile().getBoolean(
+                                        if (LyreTeleport.getStoreFile().getBoolean(
                                                 player.username.lowercase(),
                                             )
                                         ) {
