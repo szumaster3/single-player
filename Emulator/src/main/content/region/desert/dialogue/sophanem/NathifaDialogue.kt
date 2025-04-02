@@ -37,7 +37,7 @@ class NathifaDialogue(
             }
 
             3 -> npcl(FaceAnim.FRIENDLY, "Take a look.").also { stage++ }
-            4 -> end().also { openNpcShop(player, npc.id) }
+            4 -> end().also { openNpcShop(player, NPCs.NATHIFA_5264) }
             5 -> npcl(
                 FaceAnim.SAD,
                 "Not great. I'd just gone over there to purchase some goods from the market. When I got back to the gates, they'd been sealed shut."

@@ -37,7 +37,7 @@ class PartyPeteDialogue(
                     "I wanna party!",
                     "More.",
                 ).also {
-                    stage++
+                    stage = 3
                 }
             3 ->
                 when (buttonId) {
@@ -45,21 +45,27 @@ class PartyPeteDialogue(
                     2 -> player(FaceAnim.HALF_GUILTY, "What's the big lever over there for?").also { stage = 55 }
                     3 -> player(FaceAnim.HALF_GUILTY, "What's the gold chest for?").also { stage = 61 }
                     4 -> player(FaceAnim.HALF_GUILTY, "I wanna party!").also { stage = 65 }
-                    5 -> player(FaceAnim.HALF_GUILTY, "More.").also { stage++ }
-                }
-            4 ->
-                options(
-                    "I love your hair!",
-                    "Why's there a chameleon in here?",
-                    "Back.",
-                ).also {
-                    stage++
+                    5 -> options(
+                        "I love your hair!",
+                        "Why's there a chameleon in here?",
+                        "Back.",
+                    ).also {
+                        stage = 5
+                    }
                 }
             5 ->
                 when (buttonId) {
                     1 -> player(FaceAnim.HALF_GUILTY, "I love your hair!").also { stage++ }
                     2 -> player(FaceAnim.HALF_GUILTY, "Why's there a chameleon in here?").also { stage = 9 }
-                    3 -> stage = 1
+                    3 -> options(
+                        "So, what's this room for?",
+                        "What's the big lever over there for?",
+                        "What's the gold chest for?",
+                        "I wanna party!",
+                        "More.",
+                    ).also {
+                        stage = 3
+                    }
                 }
             6 ->
                 npcl(
@@ -90,10 +96,10 @@ class PartyPeteDialogue(
                 ).also { stage++ }
             11 ->
                 when (buttonId) {
-                    1 -> player("Can you talk to him?").also { stage++ }
-                    2 -> player("Christmas is over. Why've you still got him hanging around?").also { stage = 13 }
+                    1 -> player(FaceAnim.HALF_ASKING,"Can you talk to him?").also { stage++ }
+                    2 -> player(FaceAnim.HALF_ASKING, "Christmas is over. Why've you still got him hanging", "around?").also { stage = 13 }
                     3 -> player("Aww, that's nice.").also { stage = 10 }
-                    4 -> player("Got any cake?").also { stage = 14 }
+                    4 -> player(FaceAnim.HALF_ASKING,"Got any cake?").also { stage = 14 }
                 }
 
             12 ->
