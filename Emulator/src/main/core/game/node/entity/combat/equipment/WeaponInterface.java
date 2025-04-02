@@ -278,7 +278,7 @@ public final class WeaponInterface extends Component {
             return;
         }
         boolean defensive = slot == 3;
-        setVarp(player, 43, defensive ? -5 : 0);
+        setVarp(player, 439, defensive ? -5 : 0);
         if (slot > 2) {
             setVarp(player, 43, defensive ? -1 : 3);
         }
