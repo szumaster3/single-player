@@ -1,5 +1,6 @@
 package content.region.asgarnia.dialogue.burthope
 
+import content.region.asgarnia.dialogue.ClaimTokenDialogue
 import core.api.getStatLevel
 import core.api.openDialogue
 import core.game.dialogue.Dialogue
@@ -49,7 +50,7 @@ class AjjatDialogue(
                     3 -> player("What's the dummy room all about?").also { stage = 6 }
                     4 -> {
                         end()
-                        openDialogue(player, "wg:claim-tokens", npc.id)
+                        openDialogue(player, ClaimTokenDialogue(npc))
                     }
                     5 -> player("Bye!").also { stage = 12 }
                 }

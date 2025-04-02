@@ -1,5 +1,6 @@
 package content.region.asgarnia.dialogue.burthope
 
+import content.region.asgarnia.dialogue.ClaimTokenDialogue
 import core.api.*
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
@@ -54,7 +55,7 @@ class GamfredDialoue(
                     3 -> player("No, where is it?").also { stage = 15 }
                     4 -> {
                         end()
-                        openDialogue(player, "wg:claim-tokens", npc.id)
+                        openDialogue(player, ClaimTokenDialogue(npc))
                     }
                     5 -> player("Bye!").also { stage = 16 }
                 }

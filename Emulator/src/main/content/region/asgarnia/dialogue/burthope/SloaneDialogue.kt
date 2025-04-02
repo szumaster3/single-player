@@ -1,5 +1,6 @@
 package content.region.asgarnia.dialogue.burthope
 
+import content.region.asgarnia.dialogue.ClaimTokenDialogue
 import core.api.openDialogue
 import core.game.dialogue.Dialogue
 import core.game.global.Skillcape.isMaster
@@ -51,7 +52,7 @@ class SloaneDialogue(
                     2 -> player("That's a big axe!").also { stage = 30 }
                     3 -> {
                         end()
-                        openDialogue(player, "wg:claim-tokens", npc.id)
+                        openDialogue(player, ClaimTokenDialogue(npc))
                     }
                     4 -> player("Bye!").also { stage = END_DIALOGUE }
                 }
@@ -79,7 +80,7 @@ class SloaneDialogue(
             50 -> npc("Be well, warrior " + player.username + ".").also { stage = END_DIALOGUE }
             40 -> {
                 end()
-                openDialogue(player, "wg:claim-tokens", npc.id)
+                openDialogue(player, ClaimTokenDialogue(npc))
             }
             100 -> npc("Certainly! Right when you give me 99000 coins.").also { stage++ }
             101 -> options("Okay, here you go.", "No, thanks.").also { stage++ }

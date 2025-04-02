@@ -1,5 +1,7 @@
 package content.region.asgarnia.dialogue.burthope
 
+import content.region.asgarnia.dialogue.ClaimTokenDialogue
+import core.api.openDialogue
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
@@ -41,7 +43,7 @@ class ShanomiDialogue(
                     2 -> player(FaceAnim.HALF_GUILTY, "Where do the machines come from?").also { stage = 11 }
                     3 -> {
                         end()
-                        player.dialogueInterpreter.open("wg:claim-tokens", npc.id)
+                        openDialogue(player, ClaimTokenDialogue(npc))
                     }
                     4 -> player(FaceAnim.HALF_GUILTY, "Bye.").also { stage = 16 }
                 }

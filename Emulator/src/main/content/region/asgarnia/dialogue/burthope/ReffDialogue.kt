@@ -1,5 +1,6 @@
 package content.region.asgarnia.dialogue.burthope
 
+import content.region.asgarnia.dialogue.ClaimTokenDialogue
 import core.api.openDialogue
 import core.game.dialogue.Dialogue
 import core.game.node.entity.npc.NPC
@@ -40,7 +41,7 @@ class ReffDialogue(
                     1 -> player("Tell me about the Shot Put area.").also { stage = 10 }
                     2 -> {
                         end()
-                        openDialogue(player, "wg:claim-tokens", npc.id)
+                        openDialogue(player, ClaimTokenDialogue(npc))
                     }
                     3 -> player("Do you have any tips for me?").also { stage = 30 }
                     4 -> player("Bye!").also { stage = 40 }
