@@ -953,6 +953,17 @@ enum class Pets(
         growthRate = 0.0052,
         summoningLevel = 99,
         Items.RAW_BEEF_2132, Items.RAW_RAT_MEAT_2134, Items.RAW_BEAR_MEAT_2136, Items.RAW_CHICKEN_2138, Items.RAW_YAK_MEAT_10816, Items.RAW_BEAST_MEAT_9986, Items.RAW_BIRD_MEAT_9978, Items.RAW_ANCHOVIES_321, Items.RAW_BASS_363, Items.RAW_COD_341, Items.RAW_HERRING_345, Items.RAW_LOBSTER_377, Items.RAW_MACKEREL_353, Items.RAW_MANTA_RAY_389, Items.RAW_MONKFISH_7944, Items.RAW_PIKE_349, Items.RAW_SALMON_331, Items.RAW_SARDINE_327, Items.RAW_SEA_TURTLE_395, Items.RAW_SHARK_383, Items.RAW_SHRIMPS_317, Items.RAW_SWORDFISH_371, Items.RAW_TROUT_335, Items.RAW_TUNA_359
+    ),
+    EEK(
+        babyItemId = Items.SPIDER_14073,
+        grownItemId = -1,
+        overgrownItemId = -1,
+        babyNpcId = -1,
+        grownNpcId = -1,
+        overgrownNpcId = -1,
+        growthRate = 0.0,
+        summoningLevel = -1,
+        -1
     );
 
     /**
