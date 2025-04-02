@@ -18,19 +18,19 @@ public final class FamiliarItemOptionPlugin extends OptionHandler {
     @Override
     public Plugin<Object> newInstance(Object arg) throws Throwable {
         for (Pets p : Pets.values()) {
-            ItemDefinition def = ItemDefinition.forId(p.getBabyItemId());
+            ItemDefinition def = ItemDefinition.forId(p.babyItemId);
             if (def == null) {
                 continue;
             }
             def.getHandlers().put("option:drop", this);
             def.getHandlers().put("option:release", this);
-            if (p.getGrownItemId() > -1) {
-                ItemDefinition.forId(p.getGrownItemId()).getHandlers().put("option:drop", this);
-                ItemDefinition.forId(p.getGrownItemId()).getHandlers().put("option:release", this);
+            if (p.grownItemId > -1) {
+                ItemDefinition.forId(p.grownItemId).getHandlers().put("option:drop", this);
+                ItemDefinition.forId(p.grownItemId).getHandlers().put("option:release", this);
             }
-            if (p.getOvergrownItemId() > -1) {
-                ItemDefinition.forId(p.getOvergrownItemId()).getHandlers().put("option:drop", this);
-                ItemDefinition.forId(p.getOvergrownItemId()).getHandlers().put("option:release", this);
+            if (p.overgrownItemId > -1) {
+                ItemDefinition.forId(p.overgrownItemId).getHandlers().put("option:drop", this);
+                ItemDefinition.forId(p.overgrownItemId).getHandlers().put("option:release", this);
             }
         }
         return this;
