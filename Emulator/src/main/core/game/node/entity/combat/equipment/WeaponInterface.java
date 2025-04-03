@@ -342,19 +342,11 @@ public final class WeaponInterface extends Component {
             selectAutoSpell(-1, false);
             return;
         }
-
-        String autoCast = "autocast_component";
-        registerLogoutListener(player, autoCast, player -> {
-            removeAttribute(player, autoCast);
-            player.getSpellBookManager().update(player);
-            return Unit.INSTANCE;
-        });
-
-        int spellBook = player.getSpellBookManager().getSpellBook();
-        int config = spellBook == SpellBookManager.SpellBook.LUNAR.getInterfaceId() ? 2 : spellBook == SpellBookManager.SpellBook.ANCIENT.getInterfaceId() ? (slot == 3 ? -3 : 1) : (slot == 3 ? -4 : 0);
-
-        setVarp(player, 439, slot == 3 ? -4: config);
-        if (slot > 2) setVarp(player, 43, slot == 3 ? -1 : 3);
+        boolean defensive = slot == 3;
+        setVarp(player, 439, defensive ? -5 : 0);
+        if (slot > 2) {
+            setVarp(player, 43, defensive ? -1 : 3);
+        }
     }
 
     /**
