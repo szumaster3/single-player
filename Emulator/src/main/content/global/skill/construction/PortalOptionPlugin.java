@@ -113,7 +113,7 @@ public final class PortalOptionPlugin extends OptionHandler {
                             sendInputDialogue(player, false, "Enter friend's name:", (value) -> {
                                 Player p = Repository.getPlayerByName((String) value);
                                 if (p == null || !p.isActive()) {
-                                    player.getPacketDispatch().sendMessage("This player is not online.");
+                                    player.getPacketDispatch().sendMessage("That player is currently offline.");
                                     return Unit.INSTANCE;
                                 }
                                 if (p.getUsername().equals(player.getUsername())) {
