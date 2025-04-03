@@ -5,6 +5,7 @@ import content.global.skill.magic.spells.ModernSpells
 import core.api.*
 import core.game.event.ItemAlchemizationEvent
 import core.game.interaction.MovementPulse
+import core.game.node.entity.combat.spell.MagicStaff
 import core.game.node.entity.impl.Animator
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
@@ -86,17 +87,6 @@ class AlchemySpell : SpellListener("modern") {
             player.pulseManager.clear()
         }
 
-        val staves =
-            intArrayOf(
-                Items.STAFF_OF_FIRE_1387,
-                Items.FIRE_BATTLESTAFF_1393,
-                Items.MYSTIC_FIRE_STAFF_1401,
-                Items.LAVA_BATTLESTAFF_3053,
-                Items.MYSTIC_LAVA_STAFF_3054,
-                Items.STEAM_BATTLESTAFF_11736,
-                Items.MYSTIC_STEAM_STAFF_11738,
-            )
-
         val explorersRingGraphics =
             core.game.world.update.flag.context
                 .Graphics(Graphics.EXPLORERS_RING_ALCH_1698)
@@ -104,7 +94,9 @@ class AlchemySpell : SpellListener("modern") {
         if (explorersRing) {
             visualize(entity = player, anim = lowAlchemySpellAnimation, gfx = explorersRingGraphics)
         } else {
-            if (anyInEquipment(player, *staves)) {
+            val weapon = getItemFromEquipment(player, EquipmentSlot.WEAPON)
+            val staff = weapon?.id?.let { MagicStaff.forId(it) }
+            if (weapon != null && weapon == staff) {
                 visualize(
                     player,
                     if (high) highAlchemyStaffAnimation else lowAlchemyStaffSpellAnimation,
