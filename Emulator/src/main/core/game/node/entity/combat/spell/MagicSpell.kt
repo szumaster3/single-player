@@ -17,7 +17,6 @@ import core.game.world.GameWorld.ticks
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
 import core.plugin.Plugin
-import core.tools.RandomFunction
 import java.util.function.Consumer
 
 /**
@@ -137,12 +136,6 @@ abstract class MagicSpell
         }
         if (caster is Player) {
             val p = caster
-            if (p.equipment[3] != null && p.equipment[3].id == 14726) {
-                if (RandomFunction.getRandom(100) < 13) {
-                    p.sendMessage("Your staff negates the rune requirement of the spell.")
-                    return true
-                }
-            }
             if (castRunes == null) {
                 return true
             }
