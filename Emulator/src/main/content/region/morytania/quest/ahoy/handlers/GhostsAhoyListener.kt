@@ -74,7 +74,7 @@ class GhostsAhoyListener :
 
         on(Scenery.COFFIN_5278, IntType.SCENERY, "open") { player, node ->
             sendMessage(player, "The coffin creaks open...")
-            replaceScenery(node.asScenery(), Scenery.COFFIN_5279, 100, node.location)
+            replaceScenery(node.asScenery(), Scenery.COFFIN_5279, -1, node.location)
             return@on true
         }
 
