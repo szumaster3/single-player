@@ -196,7 +196,7 @@ enum class EnchantedJewellery(
     ),
     RING_OF_LIFE(
         options = arrayOf(),
-        locations = arrayOf(Location.create(ServerConstants.HOME_LOCATION)),
+        locations = RespawnPoint.values().map { Location.create(it.location) }.toTypedArray(),
         crumbled = true,
         Items.RING_OF_LIFE_2570,
     ),
