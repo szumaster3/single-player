@@ -4,11 +4,10 @@ import core.api.*
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.player.Player
-
+import core.game.node.entity.player.link.diary.DiaryType
+import org.rs.consts.Animations
 import org.rs.consts.Items
 import org.rs.consts.Scenery
-import org.rs.consts.Vars
-import core.game.node.entity.player.link.diary.DiaryType
 
 class SinclairFlourBarrelListener : InteractionListener {
 
@@ -45,19 +44,20 @@ class SinclairFlourBarrelListener : InteractionListener {
             return
         }
         lock(player, 3)
+        animate(player, Animations.MULTI_TAKE_832)
         addItem(player, Items.POT_OF_FLOUR_1933, 1)
-        sendMessage(player, "You take some flour from the barrel.")
+        sendMessage(player, "You take some flour from the barrel. There's still plenty of flour left.")
         updateDiaryProgress(player)
-        sendMessage(player, "There's still plenty of flour left.")
     }
 
     private fun updateDiaryProgress(player: Player) {
         if (!hasDiaryTaskComplete(player, DiaryType.SEERS_VILLAGE, DIARY_TASK_INDEX, DIARY_TASK_ID)) {
-            val currentFlourCount = getVarbit(player, Vars.VARBIT_FLOUR_BIN_STORAGE_4920)
-            if (currentFlourCount >= MAX_FLOUR_COUNT) {
-                setVarbit(player, Vars.VARBIT_FLOUR_BIN_STORAGE_4920, DIARY_TASK_ID)
+            val flourCount = player.getAttribute("diary:seers:sinclair-flour", 0)
+            if (flourCount >= MAX_FLOUR_COUNT) {
+                setAttribute(player, "/save:diary:seers:sinclair-flour", DIARY_TASK_ID)
+                finishDiaryTask(player, DiaryType.SEERS_VILLAGE, DIARY_TASK_INDEX, DIARY_TASK_ID)
             } else {
-                setVarbit(player, Vars.VARBIT_FLOUR_BIN_STORAGE_4920, currentFlourCount + 1)
+                setAttribute(player, "/save:diary:seers:sinclair-flour", flourCount + 1)
             }
         }
     }

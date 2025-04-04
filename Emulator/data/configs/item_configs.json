@@ -61206,7 +61206,7 @@
     "id": "6669"
   },
   {
-    "examine": "A fishbowl with a Tiny Bluefish  in it.",
+    "examine": "A fishbowl with a tiny bluefish in it.",
     "grand_exchange_price": "619",
     "durability": null,
     "name": "Fishbowl",
@@ -61216,7 +61216,7 @@
     "id": "6670"
   },
   {
-    "examine": "A fishbowl with a Tiny Greenfish in it.",
+    "examine": "A fishbowl with a tiny greenfish in it.",
     "grand_exchange_price": "619",
     "durability": null,
     "name": "Fishbowl",
@@ -61226,7 +61226,7 @@
     "id": "6671"
   },
   {
-    "examine": "A fishbowl with a Tiny Spinefish in it.",
+    "examine": "A fishbowl with a tiny spinefish in it.",
     "grand_exchange_price": "619",
     "durability": null,
     "name": "Fishbowl",
@@ -61255,7 +61255,7 @@
     "id": "6674"
   },
   {
-    "examine": "'Ingredients: Ground Guam and Ground Seaweed.",
+    "examine": "'Ingredients: ground guam and ground seaweed.'",
     "durability": null,
     "name": "An empty box",
     "archery_ticket_price": "0",
@@ -61270,7 +61270,7 @@
     "id": "6677"
   },
   {
-    "examine": "'Ingredients: Ground Guam and Ground Seaweed.' Well, I have the Guam Leaf...",
+    "examine": "'Ingredients: ground guam and ground seaweed.' Well, I have the guam leaf...",
     "durability": null,
     "name": "Guam in a box?",
     "tradeable": "true",
@@ -61286,7 +61286,7 @@
     "id": "6679"
   },
   {
-    "examine": "'Ingredients: Ground Guam and Ground Seaweed.' Well, I have the Seaweed...",
+    "examine": "'Ingredients: ground guam and ground seaweed.' Well, I have the seaweed...",
     "durability": null,
     "name": "Seaweed in a box?",
     "tradeable": "true",
@@ -61333,7 +61333,7 @@
   },
   {
     "ge_buy_limit": "1000",
-    "examine": "A Saradomin Brew.",
+    "examine": "4 doses of Saradomin brew.",
     "grand_exchange_price": "15300",
     "durability": null,
     "name": "Saradomin brew(4)",
@@ -61352,7 +61352,7 @@
   },
   {
     "ge_buy_limit": "1000",
-    "examine": "A Saradomin Brew.",
+    "examine": "3 doses of Saradomin brew.",
     "grand_exchange_price": "11400",
     "durability": null,
     "name": "Saradomin brew(3)",
@@ -61371,7 +61371,7 @@
   },
   {
     "ge_buy_limit": "1000",
-    "examine": "A Saradomin Brew.",
+    "examine": "2 doses of Saradomin brew.",
     "grand_exchange_price": "7566",
     "durability": null,
     "name": "Saradomin brew(2)",
@@ -61390,7 +61390,7 @@
   },
   {
     "ge_buy_limit": "1000",
-    "examine": "A Saradomin Brew.",
+    "examine": "1 dose of Saradomin brew.",
     "grand_exchange_price": "3783",
     "durability": null,
     "name": "Saradomin brew(1)",
@@ -68719,7 +68719,7 @@
     "id": "7536"
   },
   {
-    "examine": "If it is good enough for crabs, it's good enough for me.",
+    "examine": "If it's good enough for crabs, it's good enough for me!",
     "durability": null,
     "name": "Crab claw",
     "weight": "0.9",

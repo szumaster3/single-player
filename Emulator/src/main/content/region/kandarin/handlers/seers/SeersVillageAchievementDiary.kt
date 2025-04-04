@@ -4,6 +4,7 @@ import content.global.handlers.iface.FairyRing
 import content.global.handlers.item.withnpc.ChaliceOnKingArthurListener
 import content.region.kandarin.quest.grail.dialogue.GalahadDialogue
 import content.region.kandarin.quest.scorpcatcher.dialogue.ThormacDialogueFile
+import core.api.getVarbit
 import core.api.hasLevelDyn
 import core.api.inBorders
 import core.api.inEquipment
@@ -386,16 +387,6 @@ class SeersVillageAchievementDiary : DiaryEventHookBase(DiaryType.SEERS_VILLAGE)
                 player,
                 DiaryLevel.HARD,
                 HardTasks.DIAL_FAIRY_RING_MCGRUBORS_WOOD,
-            )
-        }
-    }
-
-    override fun onVarbitSet(player: Player, event: VarbitSetEvent) {
-        if(event.varbit == Vars.VARBIT_FLOUR_BIN_STORAGE_4920 && event.value == 5) {
-            finishTask(
-                player,
-                DiaryLevel.EASY,
-                EasyTasks.SINCLAIR_MANSION_FILL_5_POTS_WITH_FLOUR,
             )
         }
     }

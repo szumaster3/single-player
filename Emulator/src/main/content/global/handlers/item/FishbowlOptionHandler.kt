@@ -116,7 +116,7 @@ class FishbowlOptionHandler : OptionHandler() {
                 }
 
                 "play-with" -> {
-                    player("Jump! 'Cmon " + (if (player.isMale) "girl" else "boy") + ", jump!")
+                    player("Jump! 'Cmon " + (if (player.isMale) "girl" else "boy") + ", Jump!")
                     stage = 2
                 }
 
