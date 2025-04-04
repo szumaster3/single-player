@@ -1,7 +1,10 @@
 package content.region.kandarin.dialogue.camelot
 
+import content.data.RespawnPoint
+import content.data.setRespawnLocation
 import content.region.kandarin.miniquest.knightwave.KnightWaveAttributes
 import content.region.kandarin.quest.merlin.dialogue.MerlinDialogueFile
+import core.ServerConstants
 import core.api.*
 import core.api.quest.getQuestStage
 import core.api.quest.isQuestComplete
@@ -63,6 +66,10 @@ class MerlinDialogue(
                             "My magic powers tell me that you have discovered the Grail! Take it to Arthur immediately!",
                         )
                         stage = END_DIALOGUE
+                    }
+                    // Knight Waves training ground: after completion of Knight Waves.
+                    else if(getAttribute(player!!, KnightWaveAttributes.KW_COMPLETE, false) && player.location.z != 2) {
+                        npc(FaceAnim.FRIENDLY,"Well done, young adventurer. You truly are a worthy knight.").also { stage = 200 }
                     }
                     // Holy Grail: Speaking to Merlin.
                     else {
@@ -138,6 +145,24 @@ class MerlinDialogue(
                         rewardXP(player!!, Skills.DEFENCE, 20.000)
                         setAttribute(player!!, KnightWaveAttributes.KW_COMPLETE, true)
                     }
+                }
+                // Changing the Respawn point.
+                200 -> if (player.properties.spawnLocation == ServerConstants.HOME_LOCATION) {
+                    playerl(FaceAnim.HALF_ASKING, "I was wondering, can I change my respawn point to Camelot?").also { stage++ }
+                } else {
+                    playerl(FaceAnim.HALF_ASKING,"Can I change my respawn point back to Lumbridge?").also { stage = 202 }
+                }
+                201 -> {
+                    npcl(FaceAnim.NEUTRAL, "You have chosen...sensibly")
+                    sendMessage(player, "Merlin set your respawn point to Camelot.")
+                    player.setRespawnLocation(RespawnPoint.CAMELOT)
+                    stage = END_DIALOGUE
+                }
+                202 -> {
+                    npcl(FaceAnim.NEUTRAL, "You have chosen...sensibly")
+                    sendMessage(player, "Merlin set your respawn point back to Lumbridge.")
+                    player.setRespawnLocation(RespawnPoint.LUMBRIDGE)
+                    stage = END_DIALOGUE
                 }
             }
         }
