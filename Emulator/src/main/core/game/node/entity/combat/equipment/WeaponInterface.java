@@ -403,10 +403,6 @@ public final class WeaponInterface extends Component {
                     int previousConfigId = configStart + (2 * index);
                     player.getPacketDispatch().sendInterfaceConfig(Components.WEAPON_STAFF_SEL_90, previousConfigId, true);
                     player.getPacketDispatch().sendInterfaceConfig(Components.WEAPON_STAFF_SEL_90, 100 + previousConfigId, true);
-                } else {
-                    boolean defensive = player.getSettings().getAttackStyleIndex() == 3;
-                    player.getPacketDispatch().sendInterfaceConfig(Components.WEAPON_STAFF_SEL_90, 183, defensive);
-                    player.getPacketDispatch().sendInterfaceConfig(Components.WEAPON_STAFF_SEL_90, 83, !defensive);
                 }
             }
         }
