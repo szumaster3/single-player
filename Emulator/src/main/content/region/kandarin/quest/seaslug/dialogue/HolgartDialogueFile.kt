@@ -20,8 +20,8 @@ class HolgartDialogueFile : DialogueFile() {
     ) {
         val questStage = getQuestStage(player!!, Quests.SEA_SLUG)
         npc = NPC(NPCs.HOLGART_4866)
-        when {
-            (questStage in 2..3) -> {
+        when (questStage) {
+            in 2..3 -> {
                 when (stage) {
                     0 -> player(FaceAnim.FRIENDLY, "Hello.").also { stage++ }
                     1 -> npc(FaceAnim.FRIENDLY, "Hello m'hearty.").also { stage++ }
@@ -30,6 +30,7 @@ class HolgartDialogueFile : DialogueFile() {
                             FaceAnim.FRIENDLY,
                             "I would like a ride on your boat to the fishing platform.",
                         ).also { stage++ }
+
                     3 ->
                         npc(
                             FaceAnim.AFRAID,
@@ -38,12 +39,14 @@ class HolgartDialogueFile : DialogueFile() {
                         ).also {
                             stage++
                         }
+
                     4 -> player(FaceAnim.ASKING, "Swamp paste?").also { stage++ }
                     5 ->
                         npc(
                             FaceAnim.FRIENDLY,
                             "Yes, swamp tar mixed with flour and heated over a fire.",
                         ).also { stage++ }
+
                     6 -> {
                         if (!inInventory(player!!, Items.SWAMP_PASTE_1941)) {
                             player(FaceAnim.HALF_ASKING, "Where can I find swamp paste?").also { stage++ }
@@ -54,6 +57,7 @@ class HolgartDialogueFile : DialogueFile() {
                             }
                         }
                     }
+
                     7 ->
                         npc(
                             FaceAnim.FRIENDLY,
@@ -63,18 +67,21 @@ class HolgartDialogueFile : DialogueFile() {
                         ).also {
                             stage++
                         }
+
                     8 ->
                         npc(
                             FaceAnim.NEUTRAL,
                             "If you make me some swamp paste I'll give you a ride",
                             "in my boat.",
                         ).also { stage++ }
+
                     9 -> player(FaceAnim.FRIENDLY, "I'll see what I can do.").also { stage = 20 }
                     10 ->
                         player(
                             FaceAnim.NOD_YES,
                             "Oh yes, I forgot about that stuff. Can you use it?",
                         ).also { stage++ }
+
                     11 -> npc("Aye lad. That be perfect.").also { stage++ }
                     12 -> {
                         sendDoubleItemDialogue(
@@ -98,8 +105,7 @@ class HolgartDialogueFile : DialogueFile() {
                     }
                 }
             }
-
-            (questStage == 4) -> {
+            4 -> {
                 when (stage) {
                     0 -> player(FaceAnim.FRIENDLY, "Hello Holgart.").also { stage++ }
                     1 ->
@@ -118,9 +124,8 @@ class HolgartDialogueFile : DialogueFile() {
                     }
 
                     3 ->
-                        sendDoubleItemDialogue(
+                        sendItemDialogue(
                             player!!,
-                            -1,
                             Items.SWAMP_PASTE_1941,
                             "You give Holgart the swamp paste.",
                         ).also { stage++ }
@@ -131,8 +136,7 @@ class HolgartDialogueFile : DialogueFile() {
                     }
                 }
             }
-
-            (questStage in 5..99) -> {
+            in 5..99 -> {
                 when (stage) {
                     0 -> player(FaceAnim.FRIENDLY, "Hello Holgart.").also { stage++ }
                     1 ->

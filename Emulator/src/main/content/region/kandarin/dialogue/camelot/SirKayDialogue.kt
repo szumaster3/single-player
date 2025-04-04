@@ -1,4 +1,4 @@
-package content.region.kandarin.dialogue.seers
+package content.region.kandarin.dialogue.camelot
 
 import core.api.quest.getQuestStage
 import core.api.quest.isQuestComplete
@@ -8,6 +8,7 @@ import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.diary.Diary
+import core.game.node.entity.player.link.diary.DiaryManager
 import core.game.node.entity.player.link.diary.DiaryType
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
@@ -15,6 +16,15 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents Sir Kay dialogue.
+ *
+ * **Relations:**
+ * - [Merlin's Crystal][content.region.kandarin.quest.merlin.MerlinCrystal]
+ * - [Holy Grail][content.region.kandarin.quest.grail.HolyGrail]
+ * - [TODO Kings Ransom][content.region.kandarin.quest.kr.KingsRansom]
+ * - [Achievement Diary reward][DiaryType.SEERS_VILLAGE]
+ */
 @Initializable
 class SirKayDialogue(
     player: Player? = null,
@@ -156,14 +166,15 @@ class SirKayDialogue(
                 }
 
                 46 -> {
-                    if (!removeItem(player!!, Items.SEERS_HEADBAND_1_14631)) {
+                    val diaryReward = DiaryManager(player).headband == diaryLevel
+                    if (!removeItem(player!!, diaryReward)) {
                         npcl(FaceAnim.NEUTRAL, "I need your headband. Come back when you have it.")
                         stage = END_DIALOGUE
                     } else {
                         Diary.flagRewarded(player!!, DiaryType.SEERS_VILLAGE, diaryLevel)
                         sendItemDialogue(
                             player!!,
-                            Items.SEERS_HEADBAND_1_14631,
+                            diaryReward,
                             "You hand Sir Kay your headband and he concentrates for a moment. Some mysterious knightly energy passes through his hands and he gives the headband back to you, along with an old lamp.",
                         )
                         stage++

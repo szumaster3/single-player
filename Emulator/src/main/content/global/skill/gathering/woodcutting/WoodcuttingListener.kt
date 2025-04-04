@@ -20,6 +20,7 @@ import core.game.node.Node
 import core.game.node.entity.impl.Projectile
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
+import core.game.node.entity.player.link.diary.DiaryManager
 import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
@@ -303,7 +304,7 @@ class WoodcuttingListener : InteractionListener {
                 .getDiary(DiaryType.SEERS_VILLAGE)!!
                 .isComplete(1) &&
             player.equipment.get(EquipmentContainer.SLOT_HAT) != null &&
-            player.equipment.get(EquipmentContainer.SLOT_HAT).id in intArrayOf(Items.SEERS_HEADBAND_1_14631, Items.SEERS_HEADBAND_2_14640, Items.SEERS_HEADBAND_3_14641)
+            DiaryManager(player).hasHeadband()
         ) {
             experience *= 1.10
         }

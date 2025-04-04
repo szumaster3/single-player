@@ -1,5 +1,6 @@
 package content.region.kandarin.quest.merlin.handlers
 
+import content.data.GameAttributes
 import core.api.removeAttribute
 import core.game.node.entity.npc.AbstractNPC
 import core.game.node.entity.player.Player
@@ -30,7 +31,7 @@ class BeggarNPC(
                 clear()
 
                 player ?: return
-                removeAttribute(player!!, MerlinUtils.TEMP_ATTR_BEGGAR)
+                removeAttribute(player!!, GameAttributes.TEMP_ATTR_BEGGAR)
             }
         }
     }

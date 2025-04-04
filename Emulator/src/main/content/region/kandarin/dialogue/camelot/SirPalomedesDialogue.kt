@@ -1,4 +1,4 @@
-package content.region.kandarin.dialogue.seers
+package content.region.kandarin.dialogue.camelot
 
 import core.api.quest.getQuestStage
 import core.api.quest.isQuestComplete
@@ -10,6 +10,14 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents Sir Gawain dialogue.
+ *
+ * **Related quests:**
+ * - [Merlin's Crystal][content.region.kandarin.quest.merlin.MerlinCrystal]
+ * - [Holy Grail][content.region.kandarin.quest.grail.HolyGrail]
+ * - [TODO Kings Ransom][content.region.kandarin.quest.kr.KingsRansom]
+ */
 @Initializable
 class SirPalomedesDialogue(
     player: Player? = null,

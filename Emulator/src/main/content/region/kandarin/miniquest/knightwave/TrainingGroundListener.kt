@@ -14,7 +14,11 @@ import org.rs.consts.Scenery
 
 class TrainingGroundListener : InteractionListener {
     override fun defineListeners() {
-        on(intArrayOf(Scenery.LARGE_DOOR_25594, Scenery.LARGE_DOOR_25595), IntType.SCENERY, "open") { player, node ->
+        /*
+         * Handles start of activity.
+         */
+
+        on(intArrayOf(Scenery.LARGE_DOOR_25594, Scenery.LARGE_DOOR_25595), IntType.SCENERY, "open") { player, _ ->
             if (!hasRequirement(player, Quests.KINGS_RANSOM)) return@on true
             if (getAttribute(player, KnightWaveAttributes.KW_COMPLETE, false) ||
                 !getAttribute(player, KnightWaveAttributes.KW_BEGIN, false)

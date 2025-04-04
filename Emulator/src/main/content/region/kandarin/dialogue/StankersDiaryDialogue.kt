@@ -8,6 +8,7 @@ import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.diary.Diary
+import core.game.node.entity.player.link.diary.DiaryManager
 import core.game.node.entity.player.link.diary.DiaryType
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
@@ -146,7 +147,7 @@ class StankersDiaryDialogue(
                     stage++
                 }
             201 -> {
-                if (!removeItem(player, Items.SEERS_HEADBAND_1_14631)) {
+                if (!removeItem(player, DiaryManager(player).headband)) {
                     npc(
                         FaceAnim.OLD_DEFAULT,
                         "I need your headband to anoint it! Come back when",

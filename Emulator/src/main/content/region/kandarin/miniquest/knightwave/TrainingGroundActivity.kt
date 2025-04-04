@@ -2,8 +2,6 @@ package content.region.kandarin.miniquest.knightwave
 
 import content.data.GameAttributes
 import core.api.*
-import core.api.Event
-import core.api.MapArea
 import core.game.activity.ActivityManager
 import core.game.activity.ActivityPlugin
 import core.game.node.entity.Entity
@@ -37,7 +35,7 @@ object KnightWaveAttributes {
 }
 
 /**
- * Represents the Training Grounds activity for the Knight's Wave miniquest.
+ * Represents the Training Grounds activity for the Knight's Wave mini-quest.
  * Handles area entry, logout, player deaths, and restrictions.
  */
 @Initializable
@@ -103,12 +101,11 @@ class TrainingGroundActivity :
         super.areaEnter(entity)
         if (entity is Player) {
             setAttribute(entity, GameAttributes.PRAYER_LOCK, true)
-        }
-        entity.hook(Event.PrayerDeactivated, SkillRestore.PrayerDeactivatedHook)
-        registerLogoutListener(player, "/save:${javaClass.simpleName}-logout") { p ->
-            entity.hook(Event.PrayerActivated, SkillRestore.PrayerActivatedHook)
-            teleport(player, Location.create(2751, 3507, 2))
-            removeAttribute(player, "/save:${javaClass.simpleName}-logout")
+            entity.hook(Event.PrayerDeactivated, SkillRestore.PrayerDeactivatedHook)
+            registerLogoutListener(entity, KnightWaveAttributes.ACTIVITY) { _ ->
+                entity.hook(Event.PrayerActivated, SkillRestore.PrayerActivatedHook)
+                teleport(entity, Location.create(2751, 3507, 2))
+            }
         }
     }
 
@@ -166,7 +163,7 @@ class TrainingGroundActivity :
                     properties.combatPulse.attack(it)
                 }
             }
-            if (timer++ > 500) poofClear(this)
+            if (timer++ > 5000) poofClear(this)
         }
 
         /**

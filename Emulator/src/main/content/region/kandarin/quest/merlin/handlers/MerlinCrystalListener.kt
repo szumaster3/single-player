@@ -1,5 +1,6 @@
 package content.region.kandarin.quest.merlin.handlers
 
+import content.data.GameAttributes
 import content.region.kandarin.quest.merlin.dialogue.*
 import core.api.*
 import core.api.quest.getQuestStage
@@ -16,7 +17,7 @@ import org.rs.consts.NPCs
 import org.rs.consts.Quests
 import org.rs.consts.Scenery
 
-class MerlinCrystalListeners : InteractionListener {
+class MerlinCrystalListener : InteractionListener {
     override fun defineListeners() {
         on(intArrayOf(Scenery.LARGE_DOOR_72, Scenery.LARGE_DOOR_71), IntType.SCENERY, "open") { player, node ->
             val door = node.asScenery()
@@ -65,8 +66,8 @@ class MerlinCrystalListeners : InteractionListener {
 
         on(NPCs.BEGGAR_252, IntType.NPC, "talk-to") { player, _ ->
             if (getQuestStage(player, Quests.MERLINS_CRYSTAL) == 40 &&
-                player.getAttribute(MerlinUtils.ATTR_STATE_TALK_LADY, false) == true &&
-                player.getAttribute(MerlinUtils.TEMP_ATTR_BEGGAR, null) != null
+                player.getAttribute(GameAttributes.ATTR_STATE_TALK_LADY, false) == true &&
+                player.getAttribute(GameAttributes.TEMP_ATTR_BEGGAR, null) != null
             ) {
                 openDialogue(player, BeggarDialogueFile(null), NPCs.BEGGAR_252)
                 return@on true
@@ -77,11 +78,11 @@ class MerlinCrystalListeners : InteractionListener {
 
         on(Scenery.CHAOS_ALTAR_61, IntType.SCENERY, "check") { player, _ ->
             if (getQuestStage(player, Quests.MERLINS_CRYSTAL) == 40) {
-                player.dialogueInterpreter.sendDialogue(
+                sendDialogueLines(player,
                     "You find a small inscription at the bottom of the altar. It reads:",
                     "'Snarthon Candtrick Termanto'.",
                 )
-                setAttribute(player, MerlinUtils.ATTR_STATE_ALTAR_FINISH, true)
+                setAttribute(player, GameAttributes.ATTR_STATE_ALTAR_FINISH, true)
                 return@on true
             }
 
@@ -90,11 +91,11 @@ class MerlinCrystalListeners : InteractionListener {
         }
 
         on(Scenery.DOOR_59, IntType.SCENERY, "open") { player, door ->
-            if (player.getAttribute(MerlinUtils.ATTR_STATE_CLAIM_EXCALIBUR, false) == false) {
+            if (player.getAttribute(GameAttributes.ATTR_STATE_CLAIM_EXCALIBUR, false) == false) {
                 if (getQuestStage(player, Quests.MERLINS_CRYSTAL) == 40 &&
-                    player.getAttribute(MerlinUtils.ATTR_STATE_TALK_LADY, false) == true
+                    player.getAttribute(GameAttributes.ATTR_STATE_TALK_LADY, false) == true
                 ) {
-                    val talkedToBeggar = player.getAttribute(MerlinUtils.ATTR_STATE_TALK_BEGGAR, false)
+                    val talkedToBeggar = player.getAttribute(GameAttributes.ATTR_STATE_TALK_BEGGAR, false)
                     val dialogueFile = BeggarDialogueFile(door.asScenery())
 
                     if (talkedToBeggar == true) {
@@ -148,7 +149,7 @@ class MerlinCrystalListeners : InteractionListener {
         on(Items.BAT_BONES_530, IntType.ITEM, "drop") { player, node ->
             val merlinStage = getQuestStage(player, Quests.MERLINS_CRYSTAL)
             var doingQuest =
-                merlinStage == 40 && player.getAttribute(MerlinUtils.ATTR_STATE_ALTAR_FINISH, false) == true
+                merlinStage == 40 && player.getAttribute(GameAttributes.ATTR_STATE_ALTAR_FINISH, false) == true
 
             if (doingQuest) {
                 var hasQuestItems =
@@ -180,6 +181,7 @@ class MerlinCrystalListeners : InteractionListener {
     ) {
         if(isQuestComplete(player, Quests.MERLINS_CRYSTAL)) {
             sendMessage(player, "You have already freed Merlin from the crystal.")
+            return
         }
         if (getQuestStage(player, Quests.MERLINS_CRYSTAL) == 60) {
             sendMessages(
@@ -206,10 +208,10 @@ class MerlinCrystalListeners : InteractionListener {
                     Quests.MERLINS_CRYSTAL,
                 ) == 50
             ) {
-                sendMessage(player, "... and it shatters under the force of Excalibur!")
+                sendMessage(player, "...and it shatters under the force of Excalibur!")
                 openDialogue(player, MerlinDialogueFile(true))
             } else {
-                sendMessage(player, "... but your weapon didn't do any damage at all.")
+                sendMessage(player, "...but your weapon didn't do any damage at all.")
             }
 
             player.unlock()

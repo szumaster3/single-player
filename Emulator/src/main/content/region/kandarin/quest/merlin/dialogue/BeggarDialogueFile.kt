@@ -1,7 +1,7 @@
 package content.region.kandarin.quest.merlin.dialogue
 
+import content.data.GameAttributes
 import content.region.kandarin.quest.merlin.handlers.BeggarNPC
-import content.region.kandarin.quest.merlin.handlers.MerlinUtils
 import core.api.sendDialogue
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
@@ -27,7 +27,7 @@ class BeggarDialogueFile(
 
         when (stage) {
             0 -> {
-                if (player!!.getAttribute(MerlinUtils.ATTR_STATE_TALK_BEGGAR, false) == true) {
+                if (player!!.getAttribute(GameAttributes.ATTR_STATE_TALK_BEGGAR, false) == true) {
                     npcl(FaceAnim.NEUTRAL, "Have you got any bread for me yet?")
                     stage = 30
                 } else {
@@ -48,7 +48,7 @@ class BeggarDialogueFile(
                 )
 
             3 -> {
-                player!!.setAttribute(MerlinUtils.ATTR_STATE_TALK_BEGGAR, true)
+                player!!.setAttribute(GameAttributes.ATTR_STATE_TALK_BEGGAR, true)
 
                 if (player!!.inventory.contains(Items.BREAD_2309, 1)) {
                     sendDialogue(player!!, "You give the bread to the beggar.")
@@ -84,7 +84,7 @@ class BeggarDialogueFile(
             }
 
             8 -> {
-                player!!.setAttribute(MerlinUtils.ATTR_STATE_CLAIM_EXCALIBUR, true)
+                player!!.setAttribute(GameAttributes.ATTR_STATE_CLAIM_EXCALIBUR, true)
 
                 disappearLady(player!!)
                 player!!.inventory.add(Item(Items.EXCALIBUR_35, 1))
@@ -97,7 +97,7 @@ class BeggarDialogueFile(
             }
 
             21 -> {
-                player!!.setAttribute(MerlinUtils.ATTR_STATE_TALK_BEGGAR, true)
+                player!!.setAttribute(GameAttributes.ATTR_STATE_TALK_BEGGAR, true)
                 DoorActionHandler.handleAutowalkDoor(player!!, door!!, Location.create(3015, door!!.location.y, 0))
                 end()
                 stage = END_DIALOGUE
@@ -113,23 +113,23 @@ class BeggarDialogueFile(
     }
 
     private fun disappearLady(player: Player) {
-        val lady = player.getAttribute<NPC>(MerlinUtils.TEMP_ATTR_LADY, null)
+        val lady = player.getAttribute<NPC>(GameAttributes.TEMP_ATTR_LADY, null)
         lady.clear()
-        player.removeAttribute(MerlinUtils.TEMP_ATTR_LADY)
+        player.removeAttribute(GameAttributes.TEMP_ATTR_LADY)
     }
 
     private fun transformToLady(player: Player) {
-        val beggar = player.getAttribute<NPC>(MerlinUtils.TEMP_ATTR_BEGGAR, null)
+        val beggar = player.getAttribute<NPC>(GameAttributes.TEMP_ATTR_BEGGAR, null)
         beggar.transform(NPCs.THE_LADY_OF_THE_LAKE_250)
         beggar.face(player)
 
-        player.removeAttribute(MerlinUtils.TEMP_ATTR_BEGGAR)
-        player.setAttribute(MerlinUtils.TEMP_ATTR_LADY, beggar)
+        player.removeAttribute(GameAttributes.TEMP_ATTR_BEGGAR)
+        player.setAttribute(GameAttributes.TEMP_ATTR_LADY, beggar)
     }
 
     fun initBeggar(player: Player) {
         val beggar = BeggarNPC(NPCs.BEGGAR_252, Location.create(3016, 3247, 0))
-        player.setAttribute(MerlinUtils.TEMP_ATTR_BEGGAR, beggar)
+        player.setAttribute(GameAttributes.TEMP_ATTR_BEGGAR, beggar)
         beggar.player = player
         beggar.lock()
         beggar.face(player)

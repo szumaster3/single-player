@@ -1,6 +1,6 @@
 package content.region.kandarin.quest.merlin.dialogue
 
-import content.region.kandarin.quest.merlin.handlers.MerlinUtils
+import content.data.GameAttributes
 import core.api.quest.getQuest
 import core.api.removeAttribute
 import core.api.sendDialogue
@@ -139,14 +139,14 @@ class MorganLeFayeDialogue : DialogueFile() {
         }
     }
 
-    fun morganDisapear(sendMessage: Boolean) {
-        val morgan = player!!.getAttribute<NPC>(MerlinUtils.TEMP_ATTR_MORGAN, null)
+    private fun morganDisapear(sendMessage: Boolean) {
+        val morgan = player!!.getAttribute<NPC>(GameAttributes.TEMP_ATTR_MORGAN, null)
 
         if (morgan != null) {
             if (sendMessage) {
                 sendDialogue(player!!, "Morgan Le Faye vanishes.")
             }
-            removeAttribute(player!!, MerlinUtils.TEMP_ATTR_MORGAN)
+            removeAttribute(player!!, GameAttributes.TEMP_ATTR_MORGAN)
         } else {
             end()
         }

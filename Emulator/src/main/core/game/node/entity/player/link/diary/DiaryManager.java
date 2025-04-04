@@ -174,6 +174,23 @@ public class DiaryManager {
     }
 
     /**
+     * Gets headband.
+     *
+     * @return the headband
+     */
+    public int getHeadband() {
+        if (!hasHeadband()) {
+            return -1;
+        }
+        for (int i = 0; i < 3; i++) {
+            if (player.getEquipment().containsItem(DiaryType.SEERS_VILLAGE.getRewards()[i][0])) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
      * Check mining reward boolean.
      *
      * @param reward the reward
@@ -222,6 +239,16 @@ public class DiaryManager {
     public boolean hasArmour() {
         Item plate = player.getEquipment().get(EquipmentContainer.SLOT_CHEST);
         return plate != null && (plate.getId() == DiaryType.VARROCK.getRewards()[0][0].getId() || plate.getId() == DiaryType.VARROCK.getRewards()[1][0].getId() || plate.getId() == DiaryType.VARROCK.getRewards()[2][0].getId());
+    }
+
+    /**
+     * Has Seer's headband.
+     *
+     * @return the boolean
+     */
+    public boolean hasHeadband() {
+        Item hat = player.getEquipment().get(EquipmentContainer.SLOT_HAT);
+        return hat != null && (hat.getId() == DiaryType.SEERS_VILLAGE.getRewards()[0][0].getId() || hat.getId() == DiaryType.SEERS_VILLAGE.getRewards()[1][0].getId() || hat.getId() == DiaryType.SEERS_VILLAGE.getRewards()[2][0].getId());
     }
 
     /**

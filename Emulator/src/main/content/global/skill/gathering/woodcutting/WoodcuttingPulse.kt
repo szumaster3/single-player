@@ -12,6 +12,7 @@ import core.game.dialogue.FaceAnim
 import core.game.event.ResourceProducedEvent
 import core.game.node.entity.impl.Projectile
 import core.game.node.entity.player.Player
+import core.game.node.entity.player.link.diary.DiaryManager
 import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.entity.skill.Skills
 import core.game.node.scenery.Scenery
@@ -268,8 +269,8 @@ class WoodcuttingPulse(
         if (reward == Items.MAPLE_LOGS_1517 &&
             player.achievementDiaryManager.getDiary(DiaryType.SEERS_VILLAGE)!!.isComplete(1) &&
             player.equipment[EquipmentContainer.SLOT_HAT] != null &&
-            player.equipment[EquipmentContainer.SLOT_HAT].id in intArrayOf(Items.SEERS_HEADBAND_1_14631, Items.SEERS_HEADBAND_2_14640, Items.SEERS_HEADBAND_3_14641)
-        ) {
+            DiaryManager(player).hasHeadband()
+            ) {
             experience *= 1.10
         }
         return experience * amount

@@ -3,7 +3,7 @@ package content.region.kandarin.quest.seaslug.dialogue
 import core.api.addItemOrDrop
 import core.api.quest.getQuestStage
 import core.api.quest.setQuestStage
-import core.api.sendDoubleItemDialogue
+import core.api.sendItemDialogue
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
@@ -112,7 +112,7 @@ class BaileyDialogue(
                 ).also { stage++ }
             105 -> npc("Here.").also { stage++ }
             106 ->
-                sendDoubleItemDialogue(player, -1, Items.UNLIT_TORCH_596, "Bailey gives you a torch.").also {
+                sendItemDialogue(player, Items.UNLIT_TORCH_596, "Bailey gives you a torch.").also {
                     addItemOrDrop(player, Items.UNLIT_TORCH_596)
                     stage++
                 }

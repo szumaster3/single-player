@@ -71,7 +71,7 @@ class KingLathasDialogue(
                 ).also { stage++ }
 
             4 -> npcl(FaceAnim.FRIENDLY, "I see.").also { stage++ }
-            5 -> sendDoubleItemDialogue(player, -1, Items.LETTER_6756, "The King reads the letter.").also { stage++ }
+            5 -> sendItemDialogue(player, Items.LETTER_6756, "The King reads the letter.").also { stage++ }
             6 ->
                 npcl(
                     FaceAnim.FRIENDLY,
@@ -90,7 +90,6 @@ class KingLathasDialogue(
                 if (removeItem(player, Items.LETTER_6756)) {
                     end()
                     addItemOrDrop(player, Items.LETTER_6757)
-                    sendDoubleItemDialogue(player, -1, Items.LETTER_6757, "Player receives Letter.")
                     setQuestStage(player, Quests.MAKING_HISTORY, 99)
                 }
             }
@@ -100,7 +99,6 @@ class KingLathasDialogue(
             15 -> {
                 end()
                 addItemOrDrop(player, Items.LETTER_6757)
-                sendDoubleItemDialogue(player, -1, Items.LETTER_6757, "Player receives Letter.")
             }
         }
         return true

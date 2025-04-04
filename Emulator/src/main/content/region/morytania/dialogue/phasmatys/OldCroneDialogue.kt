@@ -23,25 +23,20 @@ class OldCroneDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
     override fun open(vararg args: Any?): Boolean {
+        npc = args[0] as NPC
         val animalMagnetism = getQuestStage(player, Quests.ANIMAL_MAGNETISM)
         val sweptAway =
             isQuestComplete(player, Quests.SWEPT_AWAY) &&
-                inInventory(player, Items.BROOMSTICK_14057) &&
-                getDynLevel(player, Skills.MAGIC) >= 53 &&
-                getAttribute(player, GameAttributes.QUEST_SWEPT_AWAY_LABELS_COMPLETE, false)
-
-        npc = args[0] as NPC
-
+                    inInventory(player, Items.BROOMSTICK_14057) &&
+                    getDynLevel(player, Skills.MAGIC) >= 53 &&
+                    getAttribute(player, GameAttributes.QUEST_SWEPT_AWAY_LABELS_COMPLETE, false)
         when {
             // If Ghosts Ahoy quest stage >= 3 and Animal Magnetism quest is either incomplete or completed
-            getQuestStage(player, Quests.GHOSTS_AHOY) >= 3 &&
-                (
-                    animalMagnetism < 16 || isQuestComplete(player, Quests.ANIMAL_MAGNETISM)
-                ) -> {
+            getQuestStage(player, Quests.GHOSTS_AHOY) >= 3 && (animalMagnetism < 16 || isQuestComplete(player, Quests.ANIMAL_MAGNETISM)) -> {
                 openDialogue(player, OldCroneDialogueFile())
             }
 
-            // If Animal Magnetism quest stage is between 16 and 18 and Ghosts Ahoy quest stage >= 3
+            // About quests.
             animalMagnetism in 16..18 && getQuestStage(player, Quests.GHOSTS_AHOY) >= 3 -> {
                 options(
                     "Talk about quest. (Animal Magnetism)",
@@ -50,12 +45,12 @@ class OldCroneDialogue(
                 ).also { stage = 1 }
             }
 
-            // If Animal Magnetism quest stage is between 16 and 18
+            // Animal Magnetism quest
             animalMagnetism in 16..18 -> {
                 openDialogue(player, OldCroneDialogue())
             }
 
-            // If Swept Away quest conditions are met
+            // Swept Away quest.
             sweptAway -> {
                 options(
                     "Hello, old woman.",
@@ -63,7 +58,7 @@ class OldCroneDialogue(
                 ).also { stage = 2 }
             }
 
-            // Default case if none of the above conditions are met
+            // Non-quest dialogue: Default.
             else -> {
                 player("Hello, old woman.")
             }
@@ -77,30 +72,27 @@ class OldCroneDialogue(
         buttonId: Int,
     ): Boolean {
         when (stage) {
-            0 ->
-                npc(FaceAnim.HALF_GUILTY, "I lived here when this was all just fields, you know.").also {
-                    stage = END_DIALOGUE
-                }
-
+            0 -> npc(FaceAnim.HALF_GUILTY, "I lived here when this was all just fields, you know.").also { stage = END_DIALOGUE }
             1 ->
                 when (buttonId) {
-                    1 ->
+                    1 -> end().also {
                         openDialogue(
                             player,
                             OldCroneDialogue(),
                         )
-
-                    2 -> openDialogue(player, OldCroneDialogueFile())
+                    }
+                    2 -> end().also {
+                        openDialogue(
+                            player,
+                            OldCroneDialogueFile()
+                        )
+                    }
                     3 -> end()
                 }
 
             2 ->
                 when (buttonId) {
-                    1 ->
-                        npc(FaceAnim.HALF_GUILTY, "I lived here when this was all just fields, you know.").also {
-                            stage = END_DIALOGUE
-                        }
-
+                    1 -> npc(FaceAnim.HALF_GUILTY, "I lived here when this was all just fields, you know.").also { stage = END_DIALOGUE }
                     2 -> player("Could you enchant this broom for me?").also { stage++ }
                 }
 
@@ -112,6 +104,7 @@ class OldCroneDialogue(
                 ).also {
                     stage++
                 }
+
             4 -> {
                 end()
                 lock(player, 1)

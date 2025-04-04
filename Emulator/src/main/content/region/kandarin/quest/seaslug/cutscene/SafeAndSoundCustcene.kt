@@ -7,6 +7,7 @@ import core.api.sendDialogue
 import core.game.activity.Cutscene
 import core.game.node.entity.player.Player
 import core.game.world.map.Direction
+import org.rs.consts.Animations
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
@@ -43,7 +44,7 @@ class SafeAndSoundCustcene(
             }
 
             3 -> {
-                animate(player, 4795)
+                animate(player, Animations.SEA_SLUG_USE_CRANE_4795)
                 sendDialogue(player, "Kennith scrambles through the broken wall...")
                 teleport(getNPC(NPCs.KENNITH_4864)!!, 16, 25, 1)
                 transformNpc(getNPC(NPCs.KENNITH_4864)!!, NPCs.KENNITH_6373, 3)

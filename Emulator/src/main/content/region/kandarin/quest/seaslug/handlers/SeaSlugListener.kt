@@ -1,6 +1,6 @@
 package content.region.kandarin.quest.seaslug.handlers
 
-import content.region.kandarin.quest.seaslug.SeaSlug
+import content.data.GameAttributes
 import content.region.kandarin.quest.seaslug.cutscene.SafeAndSoundCustcene
 import content.region.kandarin.quest.seaslug.dialogue.KennithDialogueFile
 import core.api.*
@@ -18,7 +18,7 @@ import org.rs.consts.*
 class SeaSlugListener : InteractionListener {
     private fun getSmack(player: Player) {
         lock(player, 7)
-        animate(player, 4785)
+        animate(player, KICK_ANIM)
         runTask(player, 6) {
             sendMessage(player, "The fishermen approach you...")
             sendMessage(player, "and smack you on the head with a fishing rod!")
@@ -37,6 +37,7 @@ class SeaSlugListener : InteractionListener {
             lock(player, 6)
             if (removeItem(player, used.asItem())) {
                 visualize(player, 4809, 791)
+                playAudio(player, Sounds.SLUG_DRY_STICKS_3023)
                 addItemOrDrop(player, DRY_STICK)
             }
             return@onUseWith true
@@ -58,7 +59,6 @@ class SeaSlugListener : InteractionListener {
                 sendMessageWithDelay(player, "You place the smoulding twigs to your torch.", 1)
                 sendMessageWithDelay(player, "Your torch lights.", 1)
                 queueScript(player, 1, QueueStrength.SOFT) {
-                    playAudio(player, Sounds.SLUG_DRY_STICKS_3023)
                     addItemOrDrop(player, LIT_TORCH)
                     setQuestStage(player, Quests.SEA_SLUG, 20)
                     return@queueScript stopExecuting(player)
@@ -108,7 +108,7 @@ class SeaSlugListener : InteractionListener {
         on(LADDER, IntType.SCENERY, "climb-up") { player, _ ->
             sendMessage(player, "You attempt to climb up the ladder.")
             if (getQuestStage(player, Quests.SEA_SLUG) in 5..10) {
-                animate(player, 828)
+                animate(player, Animations.USE_LADDER_828)
                 runTask(player, 2) { teleport(player, location(2784, 3287, 1)) }
                 return@on true
             }
@@ -118,14 +118,14 @@ class SeaSlugListener : InteractionListener {
                 return@on true
             }
 
-            if (getAttribute(player, SeaSlug.ATTRIBUTE_TALK_WITH_KENT, false) &&
+            if (getAttribute(player, GameAttributes.QUEST_SEA_SLUG_TALK_WITH_KENT, false) &&
                 inInventory(
                     player,
                     Items.LIT_TORCH_594,
                 )
             ) {
                 lock(player, 3)
-                animate(player, 828)
+                animate(player, Animations.USE_LADDER_828)
                 runTask(player, 2) {
                     teleport(player, location(2784, 3287, 1))
                     sendMessageWithDelay(player, "The fishermen seem afraid of your torch.", 1)
@@ -143,7 +143,11 @@ class SeaSlugListener : InteractionListener {
         }
 
         onUseWith(IntType.ITEM, POT_OF_FLOUR, SWAMP_TAR) { player, used, with ->
-            if (!hasSpaceFor(player, Item(with.id))) sendDialogue(player, "You do not have enough inventory space.")
+            if (!hasSpaceFor(player, Item(with.id))){
+                sendDialogue(player, "You do not have enough inventory space.")
+                return@onUseWith true
+            }
+
             sendMessage(player, "You mix the flour with the swamp tar.")
             if (removeItem(player, Item(with.id, 1))) {
                 playAudio(player, Sounds.SLUG_SMEAR_PASTE_3026)
@@ -179,7 +183,7 @@ class SeaSlugListener : InteractionListener {
         const val LIT_TORCH = Items.LIT_TORCH_594
         const val SEA_SLUG = NPCs.SEA_SLUG_1006
 
-        const val KICK_ANIM = 4804
+        const val KICK_ANIM = Animations.SEA_SLUG_KICK_WALL_4804
         private const val EMPTY_POT = Items.EMPTY_POT_1931
         private const val POT_OF_FLOUR = Items.POT_OF_FLOUR_1933
         private const val SWAMP_TAR = Items.SWAMP_TAR_1939

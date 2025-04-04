@@ -11,6 +11,7 @@ import core.api.quest.hasRequirement
 import core.game.event.TeleportEvent
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.TeleportManager
+import core.game.node.entity.player.link.diary.DiaryManager
 import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.item.Item
 import core.game.system.task.Pulse
@@ -99,7 +100,7 @@ class ModernSpellbookTeleport : SpellListener("modern") {
                 runes = arrayOf(Item(Items.AIR_RUNE_556, 5), Item(Items.LAW_RUNE_563)),
             )
             // https://runescape.wiki/w/Camelot_Teleport?oldid=1085906
-            val alternateTeleport = inEquipment(player, Items.SEERS_HEADBAND_1_14631)
+            val alternateTeleport = DiaryManager(player).hasHeadband()
             val dest = if (alternateTeleport) Location.create(2731, 3485, 0) else Location.create(2758, 3478, 0)
             sendTeleport(
                 player = player,

@@ -1,6 +1,6 @@
 package content.region.kandarin.quest.grail.handlers
 
-import content.region.kandarin.quest.grail.HolyGrail
+import content.data.GameAttributes
 import content.region.kandarin.quest.grail.dialogue.BlackKnightTitanDialogue
 import core.api.openDialogue
 import core.api.sendMessage
@@ -45,7 +45,7 @@ class BlackKnightTitanNPC :
             }
         }
 
-        setAttribute(killer!!.asPlayer(), HolyGrail.attribute_failed_titan, true)
+        setAttribute(killer!!.asPlayer(), GameAttributes.BLACK_KNIGHT_TITAN, true)
         openDialogue(killer.asPlayer(), BlackKnightTitanDialogue(true), NPCs.BLACK_KNIGHT_TITAN_221)
         return false
     }

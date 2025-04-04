@@ -1,6 +1,9 @@
 package content.region.kandarin.quest.seaslug
 
-import core.api.*
+import core.api.addItemOrDrop
+import core.api.hasLevelStat
+import core.api.rewardXP
+import core.api.sendItemOnInterface
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest
 import core.game.node.entity.skill.Skills
@@ -12,9 +15,6 @@ import org.rs.consts.Vars
 
 @Initializable
 class SeaSlug : Quest(Quests.SEA_SLUG, 109, 108, 1, Vars.VARP_QUEST_SEA_SLUG_PROGRESS_159, 0, 1, 13) {
-    companion object {
-        const val ATTRIBUTE_TALK_WITH_KENT = "seaslug:kent-dialogue"
-    }
 
     override fun drawJournal(
         player: Player,
@@ -22,10 +22,9 @@ class SeaSlug : Quest(Quests.SEA_SLUG, 109, 108, 1, Vars.VARP_QUEST_SEA_SLUG_PRO
     ) {
         super.drawJournal(player, stage)
         var line = 11
-        player ?: return
         if (stage == 0) {
             line(player, "I can start this quest by speaking to !!Caroline?? who is !!East??", line++, false)
-            line(player, "!!of Ardougne??", line++, false)
+            line(player, "!!of Ardougne??.", line++, false)
             line++
             line(player, "Requirements:", line++, false)
             line(
@@ -64,7 +63,7 @@ class SeaSlug : Quest(Quests.SEA_SLUG, 109, 108, 1, Vars.VARP_QUEST_SEA_SLUG_PRO
         if (stage >= 15) {
             line(player, "I've found !!Kent?? on a small island", line++, true)
             line++
-            line(player, "Kent has me to help !!Kennith escape??", line++, stage >= 20)
+            line(player, "Kent has me to help !!Kennith escape??.", line++, stage >= 20)
             line++
         }
 
@@ -83,7 +82,7 @@ class SeaSlug : Quest(Quests.SEA_SLUG, 109, 108, 1, Vars.VARP_QUEST_SEA_SLUG_PRO
         }
 
         if (stage >= 50) {
-            line(player, "I've !!used the Crane?? to lower Kennith into the !!boat??", line++, stage > 50)
+            line(player, "I've !!used the Crane?? to lower Kennith into the !!boat??.", line++, stage > 50)
             line++
         }
 
@@ -105,7 +104,6 @@ class SeaSlug : Quest(Quests.SEA_SLUG, 109, 108, 1, Vars.VARP_QUEST_SEA_SLUG_PRO
         drawReward(player, "Oyster pearls", ln)
         rewardXP(player, Skills.FISHING, 7175.0)
         addItemOrDrop(player, Items.OYSTER_PEARLS_413)
-        removeAttribute(player, ATTRIBUTE_TALK_WITH_KENT)
     }
 
     override fun newInstance(`object`: Any?): Quest = this

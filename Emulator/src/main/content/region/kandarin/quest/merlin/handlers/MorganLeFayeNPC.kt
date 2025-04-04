@@ -1,5 +1,6 @@
 package content.region.kandarin.quest.merlin.handlers
 
+import content.data.GameAttributes
 import core.api.poofClear
 import core.api.removeAttribute
 import core.game.node.entity.npc.AbstractNPC
@@ -11,9 +12,8 @@ class MorganLeFayeNPC(
     id: Int = 0,
     location: Location? = null,
 ) : AbstractNPC(id, location) {
-    var spawnedTicks = 0
     var player: Player? = null
-    var finalized = false
+    private var finalized = false
 
     override fun construct(
         id: Int,
@@ -31,7 +31,7 @@ class MorganLeFayeNPC(
             finalized = true
 
             player ?: return
-            removeAttribute(player!!, MerlinUtils.TEMP_ATTR_MORGAN)
+            removeAttribute(player!!, GameAttributes.TEMP_ATTR_MORGAN)
         }
     }
 }

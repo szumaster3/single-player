@@ -516,10 +516,10 @@ enum class Emotes(
             player: Player,
             buttonId: Int,
         ) {
-            val completeTutorial = getAttribute(player, GameAttributes.TUTORIAL_COMPLETE, false)
+            val tutorialStage = getAttribute(player, GameAttributes.TUTORIAL_STAGE, -1)
             if (player.locks.isLocked("emote")) {
-                if (!completeTutorial) {
-                    sendTutorialMessage(player, "You're already doing an emote!")
+                if (tutorialStage < 71) {
+                    player.dialogueInterpreter.sendBoldInput("You're already doing an emote!")
                 } else {
                     sendMessage(player, "You're already doing an emote!")
                 }

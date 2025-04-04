@@ -10,6 +10,7 @@ import core.game.component.Component
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
+import core.game.node.entity.player.link.diary.DiaryManager
 import core.game.node.entity.skill.Skills
 import core.game.world.GameWorld
 import core.tools.END_DIALOGUE
@@ -38,7 +39,7 @@ class ThormacDialogueFile : DialogueFile() {
                 Items.SCORPION_CAGE_463,
             ).container !=
                 null
-        val wearHeadBand = inEquipment(player!!, Items.SEERS_HEADBAND_1_14631)
+        val hasHeadband = DiaryManager(player).hasHeadband()
         npc = NPC(NPCs.THORMAC_389)
         when (questStage) {
             0 -> {
@@ -252,7 +253,7 @@ class ThormacDialogueFile : DialogueFile() {
                     3 ->
                         npc(
                             FaceAnim.NEUTRAL,
-                            "Yes, although it'll cost you " + (if (wearHeadBand) "27,000" else "40,000") +
+                            "Yes, although it'll cost you " + (if (hasHeadband) "27,000" else "40,000") +
                                 " coins for the",
                             "materials. What kind of staff did you want enchanting?",
                         ).also { stage++ }

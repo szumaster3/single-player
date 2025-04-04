@@ -14,48 +14,24 @@ class CoalTruckListener : InteractionListener {
         player: Player,
         coalInTruck: Int,
     ): Int =
-        if (inEquipment(player, Items.SEERS_HEADBAND_1_14631)) {
-            when {
-                isDiaryComplete(player, DiaryType.SEERS_VILLAGE, 2) -> 196 - coalInTruck
-                isDiaryComplete(player, DiaryType.SEERS_VILLAGE, 1) -> 168 - coalInTruck
-                isDiaryComplete(player, DiaryType.SEERS_VILLAGE, 0) -> 140 - coalInTruck
-                else -> 120 - coalInTruck
-            }
-        } else {
-            120 - coalInTruck
-        }
-
-    private fun calculateMaxCoalCapacity(player: Player): Int =
         when {
-            inEquipment(player, Items.SEERS_HEADBAND_1_14631) &&
-                isDiaryComplete(
-                    player,
-                    DiaryType.SEERS_VILLAGE,
-                    2,
-                ) -> 196
-
-            inEquipment(player, Items.SEERS_HEADBAND_1_14631) &&
-                isDiaryComplete(
-                    player,
-                    DiaryType.SEERS_VILLAGE,
-                    1,
-                ) -> 168
-
-            inEquipment(player, Items.SEERS_HEADBAND_1_14631) &&
-                isDiaryComplete(
-                    player,
-                    DiaryType.SEERS_VILLAGE,
-                    0,
-                ) -> 140
-
-            else -> 120
+            inEquipment(player, Items.SEERS_HEADBAND_3_14641) -> 196 - coalInTruck
+            inEquipment(player, Items.SEERS_HEADBAND_2_14640) -> 168 - coalInTruck
+            inEquipment(player, Items.SEERS_HEADBAND_1_14631) -> 140 - coalInTruck
+            else -> 120 - coalInTruck
         }
+
+    private fun calculateMaxCoalCapacity(player: Player): Int = when {
+        inEquipment(player, Items.SEERS_HEADBAND_3_14641) -> 196
+        inEquipment(player, Items.SEERS_HEADBAND_2_14640) -> 168
+        inEquipment(player, Items.SEERS_HEADBAND_1_14631) -> 140
+        else -> 120
+    }
 
     override fun defineListeners() {
         onUseWith(IntType.SCENERY, Items.COAL_453, Scenery.COAL_TRUCK_2114) { player, _, _ ->
             val coalInTruck = getAttribute(player, ATTRIBUTE_COAL_TRUCK_INVENTORY, 0)
             var coalInInventory = amountInInventory(player, Items.COAL_453)
-
             val maxCoalCapacity = calculateMaxCoalCapacity(player)
 
             if (coalInInventory + coalInTruck >= maxCoalCapacity) {

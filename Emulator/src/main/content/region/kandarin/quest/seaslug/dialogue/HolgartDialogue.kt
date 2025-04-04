@@ -21,7 +21,7 @@ class HolgartDialogue(
         npc = args[0] as NPC
         when {
             isQuestComplete(player, Quests.SEA_SLUG) -> player("Hello Holgart.").also { stage = 100 }
-            npc.id == 699 ->
+            npc.id == NPCs.HOLGART_699 ->
                 player("We'd better get back to the platform so we can see", "what's going on.").also {
                     stage =
                         200

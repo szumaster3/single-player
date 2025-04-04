@@ -1,6 +1,6 @@
 package content.region.kandarin.quest.seaslug.dialogue
 
-import content.region.kandarin.quest.seaslug.SeaSlug
+import content.data.GameAttributes
 import core.api.*
 import core.api.quest.getQuestStage
 import core.api.quest.isQuestComplete
@@ -90,7 +90,7 @@ class KentDialogue(
             8 ->
                 npc(FaceAnim.SCARED, "${player.username} wait!").also {
                     setQuestStage(player!!, Quests.SEA_SLUG, 15)
-                    setAttribute(player, "/save:${SeaSlug.ATTRIBUTE_TALK_WITH_KENT}", true)
+                    setAttribute(player, GameAttributes.QUEST_SEA_SLUG_TALK_WITH_KENT, true)
                     stage++
                 }
             9 -> {

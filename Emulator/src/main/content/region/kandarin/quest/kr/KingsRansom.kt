@@ -1,4 +1,4 @@
-/*package content.region.miscquest.kr
+package content.region.kandarin.quest.kr
 
 import org.rs.consts.Vars
 import core.api.addItemOrDrop
@@ -8,9 +8,11 @@ import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest
 import core.game.node.entity.skill.Skills
 import core.plugin.Initializable
+import org.rs.consts.Items
+import org.rs.consts.Quests
 
-@Initializable
-class KingsRansom : Quest("King's Ransom", 141, 140, 1, Vars.VARBIT_QUEST_KING_RANSOM_3888, 0, 1, 90) {
+// @Initializable
+class KingsRansom : Quest(Quests.KINGS_RANSOM, 141, 140, 1, Vars.VARBIT_QUEST_KING_RANSOM_PROGRESS_3888, 0, 1, 90) {
     override fun drawJournal(player: Player, stage: Int) {
         super.drawJournal(player, stage)
         var line = 11
@@ -37,7 +39,7 @@ class KingsRansom : Quest("King's Ransom", 141, 140, 1, Vars.VARBIT_QUEST_KING_R
         rewardXP(player, Skills.DEFENCE, 3075.0)
 
         addItemOrDrop(player, Items.ANTIQUE_LAMP_11137)
-        setVarbit(player, Vars.VARBIT_QUEST_KING_RANSOM_3888, 90, true)
+        setVarbit(player, Vars.VARBIT_QUEST_KING_RANSOM_PROGRESS_3888, 90, true)
     }
 
 
@@ -46,13 +48,11 @@ class KingsRansom : Quest("King's Ransom", 141, 140, 1, Vars.VARBIT_QUEST_KING_R
     }
 
 }
-//1 quest point
-//33,000 Defence experience
-//5,000 Magic experience
-//An antique lamp granting 5,000 experience in any skill that is level 50 or above
-//The hair clip (a more durable version of the lockpick) if obtained during quest
-//Access to the Knight Waves Training Grounds miniquest
-//Access to the Court Cases Distraction and Diversion
-//2 Treasure Hunter keys (Ironman accounts will not receive these)
-
- */
+// 1 quest point
+// 33,000 Defence experience
+// 5,000 Magic experience
+// An antique lamp granting 5,000 experience in any skill that is level 50 or above
+// The hair clip (a more durable version of the lockpick) if obtained during quest
+// Access to the Knight Waves Training Grounds miniquest
+// Access to the Court Cases Distraction and Diversion
+// 2 Treasure Hunter keys (Ironman accounts will not receive these)

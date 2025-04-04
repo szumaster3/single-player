@@ -1,6 +1,7 @@
 package content.region.kandarin.dialogue.seers
 
 import content.region.kandarin.quest.scorpcatcher.dialogue.SeersDialogueFile
+import core.api.freeSlots
 import core.api.openDialogue
 import core.api.sendItemDialogue
 import core.game.dialogue.Dialogue
@@ -103,18 +104,10 @@ class SeerDialogue(
                 ).also {
                     stage++
                 }
-            201 ->
-                if (!Diary.flagRewarded(player, DiaryType.SEERS_VILLAGE, 0)) {
-                    npc("Come back when you have two free inventory slots.").also { stage = END_DIALOGUE }
-                } else {
-                    sendItemDialogue(
-                        player,
-                        Diary.getRewards(DiaryType.SEERS_VILLAGE, 0)[0],
-                        "The seer hands you a strange-looking headband and a rusty lamp.",
-                    ).also {
-                        stage++
-                    }
-                }
+            201 -> {
+                if (!Diary.flagRewarded(player, DiaryType.SEERS_VILLAGE, 0)) return true
+                sendItemDialogue(player, Diary.getRewards(DiaryType.SEERS_VILLAGE, 0)[0], "The seer hands you a strange-looking headband and a rusty lamp.").also { stage++ }
+            }
             202 ->
                 npc(
                     "You are now an honorary seer and Geoffrey - who",
@@ -155,6 +148,5 @@ class SeerDialogue(
     }
 
     override fun newInstance(player: Player?): Dialogue = SeerDialogue(player)
-
     override fun getIds(): IntArray = intArrayOf(NPCs.SEER_388)
 }

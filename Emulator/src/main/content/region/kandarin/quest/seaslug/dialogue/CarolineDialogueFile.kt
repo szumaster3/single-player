@@ -1,13 +1,12 @@
 package content.region.kandarin.quest.seaslug.dialogue
 
-import core.api.*
 import core.api.quest.finishQuest
 import core.api.quest.getQuestStage
 import core.api.quest.setQuestStage
+import core.api.sendMessage
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
-import core.game.node.entity.skill.Skills
 import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
@@ -19,8 +18,8 @@ class CarolineDialogueFile : DialogueFile() {
     ) {
         val questStage = getQuestStage(player!!, Quests.SEA_SLUG)
         npc = NPC(NPCs.CAROLINE_696)
-        when {
-            (questStage in 0..1) -> {
+        when (questStage) {
+            in 0..1 -> {
                 when (stage) {
                     0 -> playerl(FaceAnim.FRIENDLY, "Hello there.").also { stage++ }
                     1 -> npcl(FaceAnim.HALF_CRYING, "Is there any chance you could help me?").also { stage++ }
@@ -33,6 +32,7 @@ class CarolineDialogueFile : DialogueFile() {
                         ).also {
                             stage++
                         }
+
                     4 ->
                         npc(
                             FaceAnim.WORRIED,
@@ -41,6 +41,7 @@ class CarolineDialogueFile : DialogueFile() {
                         ).also {
                             stage++
                         }
+
                     5 -> player(FaceAnim.ASKING, "Maybe the post was lost!").also { stage++ }
                     6 ->
                         npc(
@@ -51,6 +52,7 @@ class CarolineDialogueFile : DialogueFile() {
                         ).also {
                             stage++
                         }
+
                     7 ->
                         npc(
                             FaceAnim.ASKING,
@@ -59,20 +61,22 @@ class CarolineDialogueFile : DialogueFile() {
                         ).also {
                             stage++
                         }
-                    8 -> {
-                        if (getStatLevel(player!!, Skills.FIREMAKING) >= 30) {
-                            options("I suppose so, how do I get there?", "I'm sorry, I'm too busy.").also { stage++ }
-                        } else {
+
+                    8 ->
+                        if (!core.api.quest.hasRequirement(player!!, Quests.SEA_SLUG, false)) {
                             end()
                             player("I'm sorry, I'm too busy.")
                             sendMessage(player!!, "You do not have the requirements to start Sea Slug.")
+                        } else {
+                            options("I suppose so, how do I get there?", "I'm sorry, I'm too busy.").also { stage++ }
                         }
-                    }
+
                     9 ->
                         when (buttonID) {
                             1 -> player(FaceAnim.ASKING, "I suppose so, how do I get there?").also { stage++ }
                             2 -> player(FaceAnim.NEUTRAL, "I'm sorry, I'm too busy.").also { stage = END_DIALOGUE }
                         }
+
                     10 ->
                         npc(
                             FaceAnim.HALF_GUILTY,
@@ -81,6 +85,7 @@ class CarolineDialogueFile : DialogueFile() {
                         ).also {
                             stage++
                         }
+
                     11 -> player("Ok, I'll go and see if they're ok.").also { stage++ }
                     12 ->
                         npc(
@@ -90,27 +95,27 @@ class CarolineDialogueFile : DialogueFile() {
                         ).also {
                             stage++
                         }
+
                     13 -> {
                         end()
                         setQuestStage(player!!, Quests.SEA_SLUG, 2)
                     }
                 }
             }
-
-            questStage in 2..49 -> {
+            in 2..49 -> {
                 when (stage) {
                     0 ->
                         npcl(
                             FaceAnim.HAPPY,
                             "Brave ${player!!.name}, have you any news about my son and his father?",
                         ).also { stage++ }
+
                     1 -> player(FaceAnim.NEUTRAL, "I'm working on it now Caroline.").also { stage++ }
                     2 -> npcl(FaceAnim.FRIENDLY, "Please bring them back safe and sound.").also { stage++ }
                     3 -> player(FaceAnim.FRIENDLY, "I'll do my best.").also { stage = END_DIALOGUE }
                 }
             }
-
-            questStage == 50 -> {
+            in 50..99 -> {
                 when (stage) {
                     0 -> npc("Brave ${player!!.username}, you've returned!").also { stage++ }
                     1 ->
@@ -120,6 +125,7 @@ class CarolineDialogueFile : DialogueFile() {
                         ).also {
                             stage++
                         }
+
                     2 -> npc("I could have lost my son and my husband if it wasn't", "for you.").also { stage++ }
                     3 -> player("We found Kent stranded on an island.").also { stage++ }
                     4 ->
@@ -130,6 +136,7 @@ class CarolineDialogueFile : DialogueFile() {
                         ).also {
                             stage++
                         }
+
                     5 ->
                         npc(
                             "Here, take these Oyster pearls as a reward. They're",
@@ -138,6 +145,7 @@ class CarolineDialogueFile : DialogueFile() {
                         ).also {
                             stage++
                         }
+
                     6 -> player("Thanks!").also { stage++ }
                     7 -> npc("Thank you. Take care of yourself ${player!!.username}.").also { stage++ }
                     8 -> {

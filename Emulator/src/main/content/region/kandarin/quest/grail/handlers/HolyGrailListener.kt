@@ -171,32 +171,14 @@ class HolyGrailListener : InteractionListener {
             return@on true
         }
 
-        on(HolyGrail.MERLIN_DOOR_ID, IntType.SCENERY, "open") { player, door ->
-            if (!door.location.equals(HolyGrail.MERLIN_DOOR_LOCATION_OPEN) &&
-                !door.location.equals(HolyGrail.MERLIN_DOOR_LOCATION_CLOSED)
-            ) {
-                DoorActionHandler.handleDoor(player, door.asScenery())
-                return@on false
-            }
-
+        on(org.rs.consts.Scenery.DOOR_24, IntType.SCENERY, "open") { player, node ->
             if (getQuestStage(player, Quests.HOLY_GRAIL) == 0) {
                 sendMessage(player, "The door won't open.")
                 return@on false
             }
-
-            val moveToX =
-                if (player.location.x <=
-                    HolyGrail.MERLIN_DOOR_LOCATION_CLOSED.x
-                ) {
-                    HolyGrail.MERLIN_DOOR_LOCATION_OPEN.x
-                } else {
-                    HolyGrail.MERLIN_DOOR_LOCATION_CLOSED.x
-                }
-            DoorActionHandler.handleAutowalkDoor(
-                player,
-                door as Scenery,
-                Location.create(moveToX, HolyGrail.MERLIN_DOOR_LOCATION_OPEN.y, HolyGrail.MERLIN_DOOR_LOCATION_OPEN.z),
-            )
+            if(getQuestStage(player, Quests.HOLY_GRAIL) >= 10) {
+                DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
+            }
             return@on true
         }
 

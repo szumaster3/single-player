@@ -1,6 +1,6 @@
 package content.region.kandarin.quest.merlin
 
-import content.region.kandarin.quest.merlin.handlers.MerlinUtils
+import content.data.GameAttributes
 import core.api.*
 import core.api.quest.updateQuestTab
 import core.game.node.entity.player.Player
@@ -69,7 +69,7 @@ class MerlinCrystal : Quest(Quests.MERLINS_CRYSTAL, 87, 86, 6, Vars.VARP_QUEST_M
                 line(player, "close to the Crystal as I can possibly find.", line++, false)
                 line(player, "To bind !!Thrantax?? to my will I will need the following:", line++, false)
 
-                if (player.getAttribute(MerlinUtils.ATTR_STATE_ALTAR_FINISH, false) == true) {
+                if (player.getAttribute(GameAttributes.ATTR_STATE_ALTAR_FINISH, false) == true) {
                     line(player, "I have the magic words from the Chaos Altar memorised", line++, true)
                 } else {
                     line(player, "Some !!magic words?? from a !!Chaos Altar??", line++, false)
@@ -171,14 +171,6 @@ class MerlinCrystal : Quest(Quests.MERLINS_CRYSTAL, 87, 86, 6, Vars.VARP_QUEST_M
         sendString(player, "6 Quest Points", Components.QUEST_COMPLETE_SCROLL_277, line++)
         sendString(player, "Excalibur", Components.QUEST_COMPLETE_SCROLL_277, line)
         sendItemZoomOnInterface(player, Components.QUEST_COMPLETE_SCROLL_277, 5, Items.EXCALIBUR_35, 235)
-        removeAttributes(
-            player,
-            MerlinUtils.ATTR_STATE_ALTAR_FINISH,
-            MerlinUtils.ATTR_STATE_CLAIM_EXCALIBUR,
-            MerlinUtils.ATTR_STATE_TALK_LADY,
-            MerlinUtils.ATTR_STATE_TALK_BEGGAR,
-            MerlinUtils.ATTR_STATE_TALK_CANDLE,
-        )
         setVarbit(player, Vars.VARBIT_SCENERY_MUSEUM_DISPLAY_9_3655, 1, true)
         updateQuestTab(player)
     }

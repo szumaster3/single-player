@@ -3,6 +3,7 @@ package content.global.skill.crafting.spinning
 import core.api.*
 import core.game.container.impl.EquipmentContainer
 import core.game.node.entity.player.Player
+import core.game.node.entity.player.link.diary.DiaryManager
 import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.entity.skill.SkillPulse
 import core.game.node.entity.skill.Skills
@@ -44,13 +45,10 @@ class SpinningPulse(
         var tickThreshold = 4
         if ((
                 player.achievementDiaryManager.getDiary(DiaryType.SEERS_VILLAGE)!!.isComplete(2) &&
-                    withinDistance(
-                        player,
-                        Location(2711, 3471, 1),
-                    ) &&
+                    withinDistance(player, Location(2711, 3471, 1)) &&
                     player.equipment[EquipmentContainer.SLOT_HAT] != null
             ) &&
-            player.equipment[EquipmentContainer.SLOT_HAT].id == Items.SEERS_HEADBAND_1_14631
+            DiaryManager(player).getHeadband() == 2
         ) {
             tickThreshold = 2
         }

@@ -26,7 +26,7 @@ class PirateJackieDiaryDialogue : DialogueFile() {
                     Diary.canReplaceReward(player!!, DiaryType.KARAMJA, 0) ->
                         playerl(
                             FaceAnim.NEUTRAL,
-                            "I've seemed to have lost my gloves..",
+                            "I've seemed to have lost my gloves...",
                         ).also { stage = 7 }
 
                     else ->

@@ -1,5 +1,6 @@
 package content.region.kandarin.quest.grail
 
+import content.data.GameAttributes
 import core.api.getAttribute
 import core.api.rewardXP
 import core.game.node.entity.player.Player
@@ -16,16 +17,7 @@ class HolyGrail : Quest(Quests.HOLY_GRAIL, 76, 75, 1, 5, 0, 1, 10) {
     override fun newInstance(`object`: Any?): Quest = this
 
     companion object {
-        val MERLIN_DOOR_ID = 24
-        val MERLIN_DOOR_LOCATION_CLOSED = Location.create(2764, 3503, 1)
-        val MERLIN_DOOR_LOCATION_OPEN = Location.create(2765, 3503, 1)
         val DOOR_MAGIC_WHISTLE_LOCATION = Location.create(3106, 3361, 2)
-
-        val attribute_failed_titan = "/save:failed_to_kill_titan"
-
-        const val VARP_INDEX = 1049
-        const val VARP_HIDE_MERLIN_VALUE = 1
-        const val VARP_SHOW_MERLIN_VALUE = 45
     }
 
     override fun drawJournal(
@@ -33,14 +25,13 @@ class HolyGrail : Quest(Quests.HOLY_GRAIL, 76, 75, 1, 5, 0, 1, 10) {
         stage: Int,
     ) {
         super.drawJournal(player, stage)
-        var ln = 11
-        player ?: return
+        var ln = 12
         if (stage == 0) {
             line(player, "I can start this quest by talking to !!King Arthur?? at", ln++)
-            line(player, "!!Camelot Castle,?? just !!North West of Catherby??", ln++)
+            line(player, "!!Camelot Castle??, just !!North West of Catherby??", ln++)
             line(player, "To complete this quest I must be able to !!wield Excalibur??", ln++)
-            line(player, "<blue>(with !!Attack level 20)?? and defeat a !!Level 120 Black Knight??", ln++)
-            line(player, "!!Titan.??", ln)
+            line(player, "(!!with Attack level 20??) and defeat a !!Level 120 Black Knight??", ln++)
+            line(player, "!!Titan??.", ln)
         } else if (stage == 10) {
             line(player, "!!King Arthur?? has sent me questing for the !!Holy Grail?? of", ln++, false)
             line(player, "legend. I should start my quest by speaking to !!Merlin?? in !!his??", ln++, false)
@@ -52,7 +43,7 @@ class HolyGrail : Quest(Quests.HOLY_GRAIL, 76, 75, 1, 5, 0, 1, 10) {
             line(player, "Speak to !!Galahad?? who lives !!West?? of !!McGrubor's Wood??.", ln++, false)
             line(player, "Talk to someone on a '!!Holy Island??' he can't remember.", ln, false)
         } else if (stage == 30) {
-            if (getAttribute(player, attribute_failed_titan, false)) {
+            if (getAttribute(player, GameAttributes.BLACK_KNIGHT_TITAN, false)) {
                 line(player, "I started my Quest for the Holy Grail in Camelot Castle.", ln++, true)
                 line(player, "King Arthur sent me to Merlin for advice on locating it.", ln++, true)
                 line(player, "I spoke to Galahad in his shack West of McGrubor's Wood.", ln++, true)
@@ -146,13 +137,12 @@ class HolyGrail : Quest(Quests.HOLY_GRAIL, 76, 75, 1, 5, 0, 1, 10) {
             line(player, "gratitude he allowed me to take the Grail, which I took to", ln++, true)
             line(player, "King Arthur to prove my prowess as a Knight.", ln++, true)
             ln++
-            line(player, "<col=FF0000>QUEST COMPLETE!", ln, false)
+            line(player, "<col=FF0000>QUEST COMPLETE!</col>", ln, false)
         }
     }
 
     override fun finish(player: Player) {
         super.finish(player)
-        player ?: return
         var ln = 10
         player.packetDispatch.sendItemZoomOnInterface(Items.HOLY_GRAIL_19, 230, 277, 5)
         drawReward(player, "2 Quest Points", ln++)

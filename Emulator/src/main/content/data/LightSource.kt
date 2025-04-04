@@ -110,14 +110,6 @@ enum class LightSource(
         open = false,
         interfaceId = Components.DARKNESS_LIGHT_97,
     ),
-
-    SEERS_HEADBAND(
-        level = 0,
-        raw = Item(Items.SEERS_HEADBAND_1_14631, 1),
-        product = Item(Items.SEERS_HEADBAND_1_14631, 1),
-        open = false,
-        interfaceId = -1,
-    ),
     ;
 
     /**

@@ -2,6 +2,8 @@ package content.region.kandarin.dialogue.witchaven
 
 import content.region.kandarin.quest.seaslug.dialogue.CarolineDialogueFile
 import core.api.openDialogue
+import core.api.quest.getQuestStage
+import core.api.quest.isQuestComplete
 import core.api.quest.isQuestInProgress
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
@@ -18,17 +20,11 @@ class CarolineDialogue(
 ) : Dialogue(player) {
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
-        when {
-            isQuestInProgress(player, Quests.SEA_SLUG, 0, 50) ->
-                end().also {
-                    openDialogue(
-                        player,
-                        CarolineDialogueFile(),
-                    )
-                }
-
-            else -> player(FaceAnim.FRIENDLY, "Hello")
+        if(!isQuestComplete(player, Quests.SEA_SLUG)) {
+            openDialogue(player, CarolineDialogueFile())
+            return true
         }
+        player(FaceAnim.FRIENDLY, "Hello again.")
         return true
     }
 
@@ -47,8 +43,6 @@ class CarolineDialogue(
         }
         return true
     }
-
     override fun newInstance(player: Player?): Dialogue = CarolineDialogue(player)
-
     override fun getIds(): IntArray = intArrayOf(NPCs.CAROLINE_696)
 }

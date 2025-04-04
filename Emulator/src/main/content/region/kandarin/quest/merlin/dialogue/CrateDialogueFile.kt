@@ -1,10 +1,7 @@
 package content.region.kandarin.quest.merlin.dialogue
 
 import content.region.kandarin.quest.merlin.cutscene.CrateCutscene
-import core.api.sendDialogue
-import core.api.sendDialogueLines
-import core.api.sendDialogueOptions
-import core.api.setComponentVisibility
+import core.api.*
 import core.game.dialogue.DialogueFile
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
@@ -145,8 +142,7 @@ class CrateDialogueFile : DialogueFile() {
             }
 
             21 -> {
-                setComponentVisibility(player!!, 228, 6, true)
-                setComponentVisibility(player!!, 228, 9, false)
+                setTitle(player!!, 2)
                 sendDialogueOptions(player!!, "Would you like to get back out of the crate?", "Yes.", "No.")
                 stage++
             }

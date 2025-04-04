@@ -204,4 +204,24 @@ internal object GameAttributes {
     const val GNOME_STRONGHOLD_PERFECT_LAPS = "/save:gnome_stronghold:perfect_laps_counter"
     const val GNOME_STRONGHOLD_LAST_OBSTACLE = "gnome-stronghold-obstacle"
     const val GNOME_STRONGHOLD_COURSE_REWARD = "/save:gnome_stronghold_reward:unlocked"
+
+    // Holy Grail quest.
+    const val BLACK_KNIGHT_TITAN = "/save:failed_to_kill_titan"
+
+    // Merlin Crystal quest.
+    const val TEMP_ATTR_MORGAN = "morgan"
+    const val TEMP_ATTR_BEGGAR = "beggar"
+    const val TEMP_ATTR_THRANTAX = "thrantax"
+    const val TEMP_ATTR_THRANTAX_OWNER = "thrantax_owner"
+    const val TEMP_ATTR_LADY = "temp_lady"
+    const val TEMP_ATTR_MERLIN = "temp_merlin"
+
+    const val ATTR_STATE_ALTAR_FINISH = "/save:finished_altar"
+    const val ATTR_STATE_CLAIM_EXCALIBUR = "/save:received_excalibur"
+    const val ATTR_STATE_TALK_LADY = "/save:mc_talked_lady_lake"
+    const val ATTR_STATE_TALK_BEGGAR = "/save:mc_talked_beggar"
+    const val ATTR_STATE_TALK_CANDLE = "/save:mc_talked_candle_maker"
+
+    // Sea slug quest.
+    const val QUEST_SEA_SLUG_TALK_WITH_KENT = "/save:seaslug:kent-dialogue"
 }

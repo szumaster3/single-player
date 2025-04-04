@@ -1,6 +1,6 @@
 package content.region.kandarin.dialogue.seers
 
-import content.region.kandarin.quest.merlin.handlers.MerlinUtils
+import content.data.GameAttributes
 import core.api.addItemOrDrop
 import core.api.quest.getQuestStage
 import core.api.quest.isQuestComplete
@@ -11,6 +11,7 @@ import core.game.dialogue.FaceAnim
 import core.game.dialogue.IfTopic
 import core.game.dialogue.Topic
 import core.game.node.entity.player.Player
+import core.game.node.entity.player.link.diary.DiaryManager
 import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.item.Item
 import core.plugin.Initializable
@@ -66,8 +67,8 @@ class LadyOfTheLakeDialogue(
                     }
                 16 ->
                     playerl(FaceAnim.NEUTRAL, "Ok. That seems easy enough.").also {
-                        setAttribute(player!!, MerlinUtils.ATTR_STATE_TALK_LADY, true)
-                        setAttribute(player!!, MerlinUtils.ATTR_STATE_TALK_BEGGAR, false)
+                        setAttribute(player!!, GameAttributes.ATTR_STATE_TALK_LADY, true)
+                        setAttribute(player!!, GameAttributes.ATTR_STATE_TALK_BEGGAR, false)
                         stage = END_DIALOGUE
                     }
             }
@@ -75,8 +76,8 @@ class LadyOfTheLakeDialogue(
             when (stage) {
                 0 -> {
                     if (player!!.achievementDiaryManager.getDiary(DiaryType.SEERS_VILLAGE)!!.isComplete(2) &&
-                        player!!.equipment.contains(14631, 1) &&
-                        player!!.equipment.contains(35, 1)
+                        DiaryManager(player).headband == 2 &&
+                        player!!.equipment.contains(Items.EXCALIBUR_35, 1)
                     ) {
                         npcl(FaceAnim.HAPPY, "I am the Lady of the Lake.")
                         stage = 110

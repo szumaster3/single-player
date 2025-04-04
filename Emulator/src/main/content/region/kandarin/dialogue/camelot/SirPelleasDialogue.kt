@@ -1,4 +1,4 @@
-package content.region.kandarin.dialogue.seers
+package content.region.kandarin.dialogue.camelot
 
 import core.api.quest.getQuestStage
 import core.api.quest.isQuestComplete
@@ -10,8 +10,16 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents Sir Pelleas dialogue.
+ *
+ * **Related quests:**
+ * - [Merlin's Crystal][content.region.kandarin.quest.merlin.MerlinCrystal]
+ * - [Holy Grail][content.region.kandarin.quest.grail.HolyGrail]
+ * - [TODO Kings Ransom][content.region.kandarin.quest.kr.KingsRansom]
+ */
 @Initializable
-class SirPellaeasDialogue(
+class SirPelleasDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
     override fun handle(
@@ -21,7 +29,7 @@ class SirPellaeasDialogue(
         if (!isQuestComplete(player, Quests.MERLINS_CRYSTAL)) {
             when (stage) {
                 0 ->
-                    npcl(FaceAnim.NEUTRAL, "Greetings to the court of King Arthur!").also {
+                    npcl(FaceAnim.FRIENDLY, "Greetings to the court of King Arthur!").also {
                         if (getQuestStage(player!!, Quests.MERLINS_CRYSTAL) == 0) {
                             stage = 1
                         } else if (getQuestStage(player!!, Quests.MERLINS_CRYSTAL) == 10) {
@@ -35,7 +43,7 @@ class SirPellaeasDialogue(
                         }
                     }
 
-                1 -> playerl(FaceAnim.NEUTRAL, "Hello. I'm looking for a quest. Who should I talk to?").also { stage++ }
+                1 -> playerl(FaceAnim.HALF_ASKING, "Hello. I'm looking for a quest. Who should I talk to?").also { stage++ }
                 2 ->
                     npcl(
                         FaceAnim.NEUTRAL,
@@ -123,7 +131,7 @@ class SirPellaeasDialogue(
         return true
     }
 
-    override fun newInstance(player: Player?): Dialogue = SirPellaeasDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = SirPelleasDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.SIR_PELLEAS_244)
 }

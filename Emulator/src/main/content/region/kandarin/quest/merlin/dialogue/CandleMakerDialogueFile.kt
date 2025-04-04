@@ -1,6 +1,6 @@
 package content.region.kandarin.quest.merlin.dialogue
 
-import content.region.kandarin.quest.merlin.handlers.MerlinUtils
+import content.data.GameAttributes
 import core.api.sendDialogue
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
@@ -20,7 +20,7 @@ class CandleMakerDialogueFile : DialogueFile() {
 
         when (stage) {
             0 -> {
-                if (player!!.getAttribute(MerlinUtils.ATTR_STATE_TALK_CANDLE, false) == false) {
+                if (player!!.getAttribute(GameAttributes.ATTR_STATE_TALK_CANDLE, false) == false) {
                     npcl(FaceAnim.NEUTRAL, "Hi! Would you be interested in some of my fine candles?")
                     stage++
                 } else {
@@ -56,7 +56,7 @@ class CandleMakerDialogueFile : DialogueFile() {
             7 -> npcl(FaceAnim.THINKING, "Tell you what. I'll supply you with a black candle...").also { stage++ }
             8 ->
                 npcl(FaceAnim.THINKING, "IF you can bring me a bucket FULL of wax.").also {
-                    player!!.setAttribute(MerlinUtils.ATTR_STATE_TALK_CANDLE, true)
+                    player!!.setAttribute(GameAttributes.ATTR_STATE_TALK_CANDLE, true)
                     stage = END_DIALOGUE
                 }
 
@@ -72,7 +72,7 @@ class CandleMakerDialogueFile : DialogueFile() {
                 sendDialogue(player!!, "You exchange the wax with the candle maker for a black candle.").also {
                     player!!.inventory.remove(Item(Items.BUCKET_OF_WAX_30, 1))
                     player!!.inventory.add(Item(Items.BLACK_CANDLE_38, 1))
-                    player!!.setAttribute(MerlinUtils.ATTR_STATE_TALK_CANDLE, false)
+                    player!!.setAttribute(GameAttributes.ATTR_STATE_TALK_CANDLE, false)
                     stage = END_DIALOGUE
                 }
         }

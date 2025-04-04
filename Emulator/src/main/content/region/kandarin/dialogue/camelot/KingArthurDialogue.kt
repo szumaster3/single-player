@@ -1,20 +1,30 @@
-package content.region.kandarin.dialogue.seers
+package content.region.kandarin.dialogue.camelot
 
-import content.region.kandarin.quest.grail.HolyGrail
 import core.api.addItemOrDrop
-import core.api.quest.*
-import core.api.setVarp
+import core.api.quest.finishQuest
+import core.api.quest.getQuestStage
+import core.api.quest.isQuestComplete
+import core.api.quest.setQuestStage
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.dialogue.Topic
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
+import core.game.world.GameWorld
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents King Arthur dialogue.
+ *
+ * **Related quests:**
+ * - [Merlin's Crystal][content.region.kandarin.quest.merlin.MerlinCrystal]
+ * - [Holy Grail][content.region.kandarin.quest.grail.HolyGrail]
+ * - [TODO Kings Ransom][content.region.kandarin.quest.kr.KingsRansom]
+ */
 @Initializable
 class KingArthurDialogue(
     player: Player? = null,
@@ -113,13 +123,12 @@ class KingArthurDialogue(
                         stage = 40
                     } else {
                         npcl(FaceAnim.NEUTRAL, "How goes thy quest?")
-
-                        if (getQuestStage(player!!, Quests.HOLY_GRAIL) == 50 &&
+                        stage = if (getQuestStage(player!!, Quests.HOLY_GRAIL) == 50 &&
                             player!!.hasItem(Item(Items.HOLY_GRAIL_19, 1))
                         ) {
-                            stage = 60
+                            60
                         } else {
-                            stage = 30
+                            30
                         }
                     }
                 }
@@ -140,7 +149,7 @@ class KingArthurDialogue(
                 13 ->
                     npcl(
                         FaceAnim.NEUTRAL,
-                        "Well, we recently found out that the Holy Grail has passed into Gielinor.",
+                        "Well, we recently found out that the Holy Grail has passed into the ${GameWorld.settings?.name} World.",
                     ).also {
                         stage++
                     }
@@ -158,19 +167,17 @@ class KingArthurDialogue(
                         Topic("I may come back and try that later.", 20),
                     )
                 17 ->
-                    npcl(
+                    npc(
                         FaceAnim.NEUTRAL,
-                        "Go speak to Merlin. He may be able to give a better clue as to where it is now you have freed him from that crystal.",
+                        "Go speak to Merlin. He may be able to give a better","clue as to where it is now you have freed him from that","crystal.",
                     ).also {
-                        setQuestStage(player!!, Quests.HOLY_GRAIL, 10)
-                        setVarp(player!!, HolyGrail.VARP_INDEX, HolyGrail.VARP_SHOW_MERLIN_VALUE, true)
                         stage++
                     }
-                18 ->
-                    npcl(FaceAnim.NEUTRAL, "He has set up his workshop in the room next to the library.").also {
-                        stage =
-                            END_DIALOGUE
-                    }
+                18 -> {
+                    end()
+                    setQuestStage(player!!, Quests.HOLY_GRAIL, 10)
+                    npcl(FaceAnim.NEUTRAL, "He has set up his workshop in the room next to the library.")
+                }
                 20 ->
                     npcl(
                         FaceAnim.NEUTRAL,
@@ -232,8 +239,7 @@ class KingArthurDialogue(
                 61 -> npcl(FaceAnim.NEUTRAL, "Wow! Incredible! You truly are a splendid knight!").also { stage++ }
                 62 -> {
                     end()
-                    stage = END_DIALOGUE
-                    getQuest(player!!, Quests.HOLY_GRAIL).finish(player!!)
+                    finishQuest(player!!, Quests.HOLY_GRAIL)
                 }
             }
         }
