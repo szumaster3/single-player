@@ -8,40 +8,54 @@ import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.game.system.task.Pulse
 import core.game.world.update.flag.context.Animation
+
 import org.rs.consts.Animations
 import org.rs.consts.Items
 import org.rs.consts.Scenery
 import org.rs.consts.Sounds
 
 class CookingListeners : InteractionListener {
-    private val potteryId =
-        intArrayOf(
-            Scenery.POTTERY_OVEN_2643,
-            Scenery.POTTERY_OVEN_4308,
-            Scenery.POTTERY_OVEN_11601,
-            Scenery.POTTERY_OVEN_34802,
-        )
 
-    private val churnId =
-        intArrayOf(
-            Scenery.DAIRY_CHURN_10093,
-            Scenery.DAIRY_CHURN_10094,
-            Scenery.DAIRY_CHURN_25720,
-            Scenery.DAIRY_CHURN_34800,
-            Scenery.DAIRY_CHURN_35931,
-        )
+    private val potteryId = intArrayOf(
+        Scenery.POTTERY_OVEN_2643,
+        Scenery.POTTERY_OVEN_4308,
+        Scenery.POTTERY_OVEN_11601,
+        Scenery.POTTERY_OVEN_34802
+    )
 
-    private val kebabId = intArrayOf(Items.KEBAB_1971, Items.UGTHANKI_KEBAB_1883, Items.UGTHANKI_KEBAB_1885)
+    private val churnId = intArrayOf(
+        Scenery.DAIRY_CHURN_10093,
+        Scenery.DAIRY_CHURN_10094,
+        Scenery.DAIRY_CHURN_25720,
+        Scenery.DAIRY_CHURN_34800,
+        Scenery.DAIRY_CHURN_35931
+    )
 
-    val meatId =
-        intArrayOf(
-            Items.RAW_CHOMPY_2876,
-            Items.RAW_RABBIT_3226,
-            Items.RAW_BIRD_MEAT_9978,
-            Items.RAW_BEAST_MEAT_9986,
-        )
+    private val kebabId = intArrayOf(
+        Items.KEBAB_1971,
+        Items.UGTHANKI_KEBAB_1883,
+        Items.UGTHANKI_KEBAB_1885
+    )
+
+    private val meatId = intArrayOf(
+        Items.RAW_CHOMPY_2876,
+        Items.RAW_RABBIT_3226,
+        Items.RAW_BIRD_MEAT_9978,
+        Items.RAW_BEAST_MEAT_9986
+    )
+
+    private val churnInputId = intArrayOf(
+        Items.BUCKET_OF_MILK_1927,
+        Items.POT_OF_CREAM_2130,
+        Items.PAT_OF_BUTTER_6697
+    )
 
     override fun defineListeners() {
+
+        /*
+         * Handles creating an uncooked cake.
+         */
+
         onUseWith(IntType.ITEM, Items.CAKE_TIN_1887, Items.POT_OF_FLOUR_1933) { player, used, _ ->
             val itemSlot = used.asItem().slot
 
@@ -64,12 +78,20 @@ class CookingListeners : InteractionListener {
             return@onUseWith false
         }
 
+        /*
+         * Handles creating a super kebab from a kebab and red-hot sauce.
+         */
+
         onUseWith(IntType.ITEM, Items.RED_HOT_SAUCE_4610, *kebabId) { player, used, with ->
             if (removeItem(player, used.asItem()) && removeItem(player, with.asItem())) {
                 addItemOrDrop(player, Items.SUPER_KEBAB_4608)
             }
             return@onUseWith true
         }
+
+        /*
+         * Handles creating a pie shell from pastry dough and a pie dish.
+         */
 
         onUseWith(IntType.ITEM, Items.PASTRY_DOUGH_1953, Items.PIE_DISH_2313) { player, used, with ->
             if (removeItem(player, used.asItem()) && removeItem(player, with.asItem())) {
@@ -79,6 +101,10 @@ class CookingListeners : InteractionListener {
             return@onUseWith true
         }
 
+        /*
+         * Handles putting nettles into a bowl of water.
+         */
+
         onUseWith(IntType.ITEM, Items.NETTLES_4241, Items.BOWL_OF_WATER_1921) { player, used, with ->
             if (removeItem(player, used.id)) {
                 replaceSlot(player, with.asItem().slot, Item(Items.NETTLE_WATER_4237))
@@ -87,11 +113,19 @@ class CookingListeners : InteractionListener {
             return@onUseWith true
         }
 
+        /*
+         * Handles creating nettle tea (Milk).
+         */
+
         onUseWith(IntType.ITEM, Items.BUCKET_OF_MILK_1927, Items.NETTLE_TEA_4239) { player, used, with ->
             replaceSlot(player, used.asItem().slot, Item(Items.BUCKET_1925))
             replaceSlot(player, with.asItem().slot, Item(Items.NETTLE_TEA_4240))
             return@onUseWith true
         }
+
+        /*
+         * Handles adding milk to cup of tea.
+         */
 
         onUseWith(IntType.ITEM, Items.BUCKET_OF_MILK_1927, Items.CUP_OF_TEA_4245) { player, used, with ->
             replaceSlot(player, used.asItem().slot, Item(Items.BUCKET_1925))
@@ -99,11 +133,19 @@ class CookingListeners : InteractionListener {
             return@onUseWith true
         }
 
+        /*
+         * Handles filling an empty cup with nettle tea.
+         */
+
         onUseWith(IntType.ITEM, Items.NETTLE_TEA_4239, Items.EMPTY_CUP_1980) { player, used, with ->
             replaceSlot(player, used.asItem().slot, Item(Items.BOWL_1923))
             replaceSlot(player, with.asItem().slot, Item(Items.CUP_OF_TEA_4242))
             return@onUseWith true
         }
+
+        /*
+         * Handles filling an empty porcelain cup with nettle tea.
+         */
 
         onUseWith(IntType.ITEM, Items.NETTLE_TEA_4240, Items.EMPTY_CUP_1980) { player, used, with ->
             replaceSlot(player, used.asItem().slot, Item(Items.BOWL_1923))
@@ -111,17 +153,29 @@ class CookingListeners : InteractionListener {
             return@onUseWith true
         }
 
+        /*
+         * Handles filling a porcelain cup with nettle tea.
+         */
+
         onUseWith(IntType.ITEM, Items.NETTLE_TEA_4239, Items.PORCELAIN_CUP_4244) { player, used, with ->
             replaceSlot(player, used.asItem().slot, Item(Items.BOWL_1923))
             replaceSlot(player, with.asItem().slot, Item(Items.CUP_OF_TEA_4245))
             return@onUseWith true
         }
 
+        /*
+         * Handles filling a porcelain cup with nettle tea.
+         */
+
         onUseWith(IntType.ITEM, Items.NETTLE_TEA_4240, Items.PORCELAIN_CUP_4244) { player, used, with ->
             replaceSlot(player, used.asItem().slot, Item(Items.BOWL_1923))
             replaceSlot(player, with.asItem().slot, Item(Items.CUP_OF_TEA_4246))
             return@onUseWith true
         }
+
+        /*
+         * Handles cutting a calquat fruit with a knife.
+         */
 
         onUseWith(IntType.ITEM, Items.KNIFE_946, Items.CALQUAT_FRUIT_5980) { player, used, with ->
             val anim = Animation(Animations.HUMAN_FRUIT_CUTTING_1192)
@@ -135,21 +189,9 @@ class CookingListeners : InteractionListener {
             return@onUseWith true
         }
 
-        on(churnId, IntType.SCENERY, "churn") { player, _ ->
-            if (!inInventory(player, Items.BUCKET_OF_MILK_1927, 1) &&
-                !inInventory(
-                    player,
-                    Items.POT_OF_CREAM_2130,
-                    1,
-                ) &&
-                !inInventory(player, Items.PAT_OF_BUTTER_6697, 1)
-            ) {
-                sendMessage(player, "You need some milk, cream or butter to use in the churn.")
-                return@on true
-            }
-            player.dialogueInterpreter.open(984374)
-            return@on true
-        }
+        /*
+         * Handles cutting a chocolate bar with a knife.
+         */
 
         onUseWith(IntType.ITEM, Items.KNIFE_946, Items.CHOCOLATE_BAR_1973) { player, _, _ ->
             player.pulseManager.run(
@@ -171,6 +213,57 @@ class CookingListeners : InteractionListener {
             )
             return@onUseWith true
         }
+
+        /*
+         * Handles cutting a tuna with a knife to creating chopped tuna.
+         */
+
+        onUseWith(IntType.ITEM, Items.TUNA_361, Items.KNIFE_946) { player, used, with ->
+            if (!inInventory(player, with.id, 1)) {
+                sendDialogue(player, "You need a knife to slice up the tuna.")
+                return@onUseWith false
+            }
+            if (!inInventory(player, Items.BOWL_1923, 1)) {
+                sendDialogue(player, "You need a bowl in order to make it.")
+                return@onUseWith false
+            }
+
+            if (removeItem(player, Item(Items.TUNA_361, 1), Container.INVENTORY)) {
+                replaceSlot(player, used.asItem().slot, Item(Items.CHOPPED_TUNA_7086, 1))
+                sendMessage(player, "You chop the tuna into the bowl.")
+            }
+            return@onUseWith true
+        }
+
+        /*
+         * Handles churn interaction to process milk, cream, or butter.
+         */
+
+        on(churnId, IntType.SCENERY, "churn") { player, _ ->
+            if (!anyInInventory(player, *churnInputId)) {
+                sendMessage(player, "You need some milk, cream or butter to use in the churn.")
+                return@on true
+            }
+            player.dialogueInterpreter.open(984374)
+            return@on true
+        }
+
+        /*
+         * Handles using the item on churn to process milk, cream, or butter.
+         */
+
+        onUseWith(IntType.SCENERY, churnInputId, *churnId) { player, _, _ ->
+            if (!anyInInventory(player, *churnInputId)) {
+                sendMessage(player, "You need some milk, cream or butter to use in the churn.")
+                return@onUseWith true
+            }
+            player.dialogueInterpreter.open(984374)
+            return@onUseWith true
+        }
+
+        /*
+         * Handles cooking meat on an iron spit.
+         */
 
         onUseWith(IntType.ITEM, Items.IRON_SPIT_7225, *meatId) { player, used, with ->
             if (getStatLevel(player, Skills.FIREMAKING) < 20) {
@@ -198,6 +291,10 @@ class CookingListeners : InteractionListener {
             return@onUseWith true
         }
 
+        /*
+         * Handles creating a spider on a stick.
+         */
+
         onUseWith(IntType.ITEM, Items.SKEWER_STICK_6305, Items.SPIDER_CARCASS_6291) { player, used, with ->
             val itemSlot = used.asItem().slot
             if (removeItem(player, used.asItem()) && removeItem(player, with.asItem())) {
@@ -209,28 +306,19 @@ class CookingListeners : InteractionListener {
             return@onUseWith true
         }
 
+        /*
+         * Handles interacting with the pottery oven.
+         */
+
         on(potteryId, IntType.SCENERY, "fire") { player, node ->
             player.faceLocation(node.location)
             player.dialogueInterpreter.open(99843, true, true)
             return@on true
         }
 
-        onUseWith(IntType.ITEM, Items.TUNA_361, Items.KNIFE_946) { player, used, with ->
-            if (!inInventory(player, with.id, 1)) {
-                sendDialogue(player, "You need a knife to slice up the tuna.")
-                return@onUseWith false
-            }
-            if (!inInventory(player, Items.BOWL_1923, 1)) {
-                sendDialogue(player, "You need a bowl in order to make it.")
-                return@onUseWith false
-            }
-
-            if (removeItem(player, Item(Items.TUNA_361, 1), Container.INVENTORY)) {
-                replaceSlot(player, used.asItem().slot, Item(Items.CHOPPED_TUNA_7086, 1))
-                sendMessage(player, "You chop the tuna into the bowl.")
-            }
-            return@onUseWith true
-        }
+        /*
+         * Handles using a jug of water with grapes to create unfermented wine.
+         */
 
         onUseWith(IntType.ITEM, Items.JUG_OF_WATER_1937, Items.GRAPES_1987) { player, used, with ->
             val itemSlot = used.asItem().slot
@@ -245,9 +333,15 @@ class CookingListeners : InteractionListener {
             return@onUseWith true
         }
 
+        /*
+         * Handles attempting to add cheese to a baked potato without butter.
+         */
+
         onUseWith(IntType.ITEM, Items.POTATO_1943, Items.CHEESE_1985) { player, _, _ ->
             sendMessage(player, "You must add butter to the baked potato before adding toppings.")
             return@onUseWith true
         }
+
     }
+
 }

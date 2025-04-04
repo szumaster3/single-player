@@ -1,7 +1,7 @@
 package content.region.fremennik.handlers
 
 import content.global.handlers.iface.FairyRing
-import content.global.skill.cooking.DairyChurnDialogue
+import content.global.skill.cooking.dairy.DairyChurnDialogue
 import content.minigame.barbassault.dialogue.CaptainCainDialogue
 import content.region.fremennik.dialogue.jatizso.TowerGuardDialogue
 import content.region.fremennik.dialogue.rellekka.HuntingExpertRellekkaDialogue
@@ -203,16 +203,6 @@ class FremennikAchievementDiary : DiaryEventHookBase(DiaryType.FREMENNIK) {
                         player,
                         DiaryLevel.MEDIUM,
                         MediumTasks.LEARN_HISTORY_FROM_CHIEFTAIN_BRUNDT,
-                    )
-                }
-            }
-
-            is DairyChurnDialogue -> {
-                if (event.optionId == 12) {
-                    finishTask(
-                        player,
-                        DiaryLevel.MEDIUM,
-                        MediumTasks.MAKE_CHEESE_WITH_CHURN,
                     )
                 }
             }
