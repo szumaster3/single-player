@@ -68,8 +68,8 @@ class FishbowlOptionHandler : OptionHandler() {
                         }
 
                         "play-with" -> {
-                            lock(player, ANIM_TALK.duration)
-                            animate(player, ANIM_TALK)
+                            lock(player, ANIM_PLAY.duration)
+                            animate(player, ANIM_PLAY)
                             return player.dialogueInterpreter.open("fishbowl-options", option)
                         }
 

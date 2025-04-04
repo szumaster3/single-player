@@ -239,6 +239,11 @@ class EmptyOptionListener : InteractionListener {
             Items.FISHBOWL_6667,
             "You empty the contents of the fishbowl onto the floor."
         ),
+        FISHBOWL_WITH_SEAWEED(
+            Items.FISHBOWL_6669,
+            Items.FISHBOWL_6667,
+            "You empty the contents of the fishbowl onto the floor."
+        ),
         VIAL_OF_COCONUT(
             Items.COCONUT_MILK_5935,
             Items.VIAL_229,
