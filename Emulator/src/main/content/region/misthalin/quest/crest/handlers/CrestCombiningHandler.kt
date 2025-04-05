@@ -6,18 +6,19 @@ import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.plugin.Initializable
 import core.plugin.Plugin
+import org.rs.consts.Items
 
 @Initializable
-class CrestCombiningHandler : UseWithHandler(779, 780, 781) {
-    val CREST_AVAN: Item = Item(779)
-    val CREST_CALEB: Item = Item(780)
-    val CREST_JOHNATHON: Item = Item(781)
-    val CREST_FULL: Item = Item(782)
+class CrestCombiningHandler : UseWithHandler(Items.CREST_PART_779, Items.CREST_PART_780, Items.CREST_PART_781) {
+    private val crestAvan: Item = Item(Items.CREST_PART_779)
+    private val crestCaleb: Item = Item(Items.CREST_PART_780)
+    private val crestJonathan: Item = Item(Items.CREST_PART_781)
+    private val crestFull: Item = Item(Items.FAMILY_CREST_782)
 
     override fun newInstance(arg: Any?): Plugin<Any> {
-        addHandler(779, ITEM_TYPE, this)
-        addHandler(780, ITEM_TYPE, this)
-        addHandler(781, ITEM_TYPE, this)
+        addHandler(Items.CREST_PART_779, ITEM_TYPE, this)
+        addHandler(Items.CREST_PART_780, ITEM_TYPE, this)
+        addHandler(Items.CREST_PART_781, ITEM_TYPE, this)
         return this
     }
 
@@ -25,24 +26,24 @@ class CrestCombiningHandler : UseWithHandler(779, 780, 781) {
         event ?: return false
         val used = event.used
         return when (used.id) {
-            779 -> CraftCrest(event.player, event)
-            780 -> CraftCrest(event.player, event)
-            781 -> CraftCrest(event.player, event)
+            Items.CREST_PART_779 -> craftCrest(event.player, event)
+            Items.CREST_PART_780 -> craftCrest(event.player, event)
+            Items.CREST_PART_781 -> craftCrest(event.player, event)
             else -> false
         }
     }
 
-    private fun CraftCrest(
+    private fun craftCrest(
         player: Player,
         event: NodeUsageEvent,
     ): Boolean =
         when (event.usedWith.id) {
-            779, 780, 781 -> {
-                if (player.inventory.containItems(779, 780, 781)) {
-                    player.inventory.remove(CREST_AVAN)
-                    player.inventory.remove(CREST_CALEB)
-                    player.inventory.remove(CREST_JOHNATHON)
-                    player.inventory.add(CREST_FULL)
+            Items.CREST_PART_779, Items.CREST_PART_780, Items.CREST_PART_781 -> {
+                if (player.inventory.containItems(Items.CREST_PART_779, Items.CREST_PART_780, Items.CREST_PART_781)) {
+                    player.inventory.remove(crestAvan)
+                    player.inventory.remove(crestCaleb)
+                    player.inventory.remove(crestJonathan)
+                    player.inventory.add(crestFull)
                     true
                 }
                 false

@@ -141,7 +141,7 @@ class FamilyCrest : Quest(Quests.FAMILY_CREST, 59, 58, 1, Vars.VARP_QUEST_FAMILY
         drawReward(player, "1 Quest Point", ln++)
         drawReward(player, "Family Gauntlets", ln++)
         drawReward(player, "A choice of special abilities for the gauntlets", ln++)
-        drawReward(player, "for the gauntlets", ln++)
+        drawReward(player, "for the gauntlets", ln)
 
         if (!addItem(player, Items.FAMILY_GAUNTLETS_778)) {
             log(

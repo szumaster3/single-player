@@ -112,7 +112,7 @@ class WormbrainDialogue(
 
     override fun getIds(): IntArray = intArrayOf(NPCs.WORMBRAIN_745)
 
-    fun defaultDialogue(buttonId: Int) {
+    private fun defaultDialogue(buttonId: Int) {
         when (stage) {
             -1 -> {
                 options("What are you in for?", "Sorry, thought this was a zoo.")

@@ -2,6 +2,7 @@ package content.region.misthalin.quest.crest.dialogue
 
 import content.region.misthalin.quest.crest.handlers.SwapGauntletsHelper
 import core.api.getAttribute
+import core.api.quest.setQuestStage
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
@@ -77,8 +78,8 @@ class JohnathonDialogue(
                     "I lost a lot of equipment in our last battle when he ",
                     "bested me and forced me away from his den. He probably still has it now.",
                 ).also {
+                    setQuestStage(player, Quests.FAMILY_CREST, 19)
                     stage = 200
-                    player.questRepository.getQuest(Quests.FAMILY_CREST).setStage(player, 19)
                 }
 
             200 ->

@@ -3,18 +3,16 @@ package content.region.misthalin.quest.demon.handlers
 import core.api.setAttribute
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
+import org.rs.consts.Items
 import java.util.*
 
 object DemonSlayerUtils {
-    val INCANTATIONS = arrayOf("Carlem", "Aber", "Purchai", "Camerinthum", "Gabindo")
+    private val INCANTATIONS = arrayOf("Carlem", "Aber", "Purchai", "Camerinthum", "Gabindo")
 
-    @JvmField val SILVERLIGHT = Item(2402)
-
-    @JvmField val FIRST_KEY = Item(2401)
-
-    @JvmField val SECOND_KEY = Item(2400)
-
-    @JvmField val THIRD_KEY = Item(2399)
+    @JvmField val SILVERLIGHT = Item(Items.SILVERLIGHT_2402)
+    @JvmField val FIRST_KEY = Item(Items.SILVERLIGHT_KEY_2401)
+    @JvmField val SECOND_KEY = Item(Items.SILVERLIGHT_KEY_2400)
+    @JvmField val THIRD_KEY = Item(Items.SILVERLIGHT_KEY_2399)
 
     @JvmStatic
     fun getIncantation(player: Player): String = player.getAttribute("demon-slayer:incantation", generateIncantation(player))

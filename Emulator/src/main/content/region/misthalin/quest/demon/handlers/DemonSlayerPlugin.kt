@@ -114,7 +114,6 @@ class DemonSlayerPlugin : OptionHandler() {
 
     companion object {
         const val DRAIN_ID: Int = 17424
-
         private val SEWER_LOCATION = Location(3237, 9858, 0)
     }
 }

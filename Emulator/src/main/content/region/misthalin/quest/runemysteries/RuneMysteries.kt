@@ -94,7 +94,7 @@ class RuneMysteries : Quest(Quests.RUNE_MYSTERIES, 27, 26, 1, Vars.VARP_QUEST_RU
             line(player, "In return for all of my help they taught me how to do this,", line++, true)
             line(player, "and will teleport me to mine blank runes anytime.", line++, true)
             line++
-            line(player, "<col=FF0000>QUEST COMPLETE!", line, false)
+            line(player, "<col=FF0000>QUEST COMPLETE!</col>", line, false)
         }
     }
 
@@ -104,7 +104,7 @@ class RuneMysteries : Quest(Quests.RUNE_MYSTERIES, 27, 26, 1, Vars.VARP_QUEST_RU
         drawReward(player, "You have completed the Rune Mysteries Quest!", 4)
         drawReward(player, "1 Quest Point", line++)
         drawReward(player, "Runecrafting skill", line++)
-        drawReward(player, "Air talisman", line++)
+        drawReward(player, "Air talisman", line)
         sendItemZoomOnInterface(player, Components.QUEST_COMPLETE_SCROLL_277, 5, Items.AIR_TALISMAN_1438, 240)
         setVarbit(player, Vars.VARBIT_SCENERY_MUSEUM_DISPLAY_21_3661, 1, true)
     }

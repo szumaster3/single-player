@@ -1,5 +1,6 @@
 package content.region.misthalin.quest.crest.dialogue
 
+import core.api.quest.setQuestStage
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
@@ -73,8 +74,8 @@ class BootDialogue(
 
             21 ->
                 npc("I don't believe it's exactly easy to get to though...").also {
+                    setQuestStage(player, Quests.FAMILY_CREST, 15)
                     stage = 1000
-                    player.questRepository.getQuest(Quests.FAMILY_CREST).setStage(player, 15)
                 }
 
             1000 -> end()

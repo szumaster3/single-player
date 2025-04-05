@@ -3,46 +3,44 @@ package content.region.misthalin.quest.crest.handlers
 import core.api.*
 import core.api.quest.getQuestStage
 import core.api.quest.setQuestStage
+import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import core.game.node.entity.impl.ForceMovement
-import core.game.node.entity.player.Player
 import core.game.node.scenery.Scenery
-import core.game.world.map.Direction
 import core.game.world.map.RegionManager
 import core.game.world.update.flag.context.Animation
 import core.net.packet.out.ClearScenery
 import core.net.packet.out.ConstructScenery
 import core.net.packet.out.UpdateAreaPosition
+import org.rs.consts.Animations
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
 class FamilyCrestListener : InteractionListener {
-    val POISON = intArrayOf(Items.ANTIPOISON4_2446, Items.ANTIPOISON3_175, Items.ANTIPOISON2_177, Items.ANTIPOISON1_179)
-    val DOWN_ANIMATION = Animation(2140)
-    val UP_ANIMATION = Animation(2139)
-
-    val NORTH_LEVER_A = 2421
-    val NORTH_LEVER_B = 2425
-    val SOUTH_LEVER = 2423
-    val LEVERS =
-        intArrayOf(NORTH_LEVER_A, NORTH_LEVER_A + 1, NORTH_LEVER_B, NORTH_LEVER_B + 1, SOUTH_LEVER, SOUTH_LEVER + 1)
-
-    val NORTH_DOOR = 2431
-    val HELLHOUND_DOOR = 2430
-    val SOUTHWEST_DOOR = 2427
-    val SOUTHEAST_DOOR = 2429
-    val DOORS = intArrayOf(NORTH_DOOR, HELLHOUND_DOOR, SOUTHWEST_DOOR, SOUTHEAST_DOOR)
+    private val poisonId =
+        intArrayOf(Items.ANTIPOISON4_2446, Items.ANTIPOISON3_175, Items.ANTIPOISON2_177, Items.ANTIPOISON1_179)
+    private val pullDownAnimation = Animation(Animations.PULL_DOWN_LEVER_2140)
+    private val pullUpAnimation = Animation(Animations.PULL_UP_LEVER_2139)
+    private val northLeverA = org.rs.consts.Scenery.LEVER_2421
+    private val northLeverB = org.rs.consts.Scenery.LEVER_2425
+    private val southLever = org.rs.consts.Scenery.LEVER_2423
+    private val leverId =
+        intArrayOf(northLeverA, northLeverA + 1, northLeverB, northLeverB + 1, southLever, southLever + 1)
+    private val northDoorId = org.rs.consts.Scenery.DOOR_2431
+    private val hellhoundDoorId = org.rs.consts.Scenery.DOOR_2430
+    private val southwestDoorId = org.rs.consts.Scenery.DOOR_2427
+    private val southEastDoorId = org.rs.consts.Scenery.DOOR_2429
+    private val doorsIDs = intArrayOf(northDoorId, hellhoundDoorId, southwestDoorId, southEastDoorId)
 
     override fun defineListeners() {
-        onUseWith(IntType.NPC, POISON, NPCs.JOHNATHON_668) { player, used, with ->
+        onUseWith(IntType.NPC, poisonId, NPCs.JOHNATHON_668) { player, used, with ->
             val npc = with.asNpc()
             val antip = used.asItem()
             val stage = getQuestStage(player, Quests.FAMILY_CREST)
 
-            val index = POISON.indexOf(used.id)
-            val returnItem = if (index + 1 == POISON.size) Items.VIAL_229 else POISON[index + 1]
+            val index = poisonId.indexOf(used.id)
+            val returnItem = if (index + 1 == poisonId.size) Items.VIAL_229 else poisonId[index + 1]
 
             if (stage == 17 && removeItem(player, antip)) {
                 addItem(player, returnItem)
@@ -55,41 +53,33 @@ class FamilyCrestListener : InteractionListener {
             return@onUseWith true
         }
 
-        on(LEVERS, IntType.SCENERY, "pull") { player, node ->
-            val baseId =
-                if (node.id % 2 == 0) {
-                    node.id - 1
-                } else {
-                    node.id
-                }
-            if (player.questRepository.getQuest(Quests.FAMILY_CREST).getStage(player) == 0) {
+        on(leverId, IntType.SCENERY, "pull") { player, node ->
+            val baseId = if (node.id % 2 == 0) {
+                node.id - 1
+            } else {
+                node.id
+            }
+            if (getQuestStage(player, Quests.FAMILY_CREST) == 0) {
                 sendMessage(player, "Nothing interesting happens.")
             }
             val old = player.getAttribute("family-crest:witchaven-lever:$baseId", false)
             setAttribute(player, "family-crest:witchaven-lever:$baseId", !old)
-            val direction =
-                if (old) {
-                    "down"
-                } else {
-                    "up"
-                }
+            val direction = if (old) "down" else "up"
             sendMessage(player, "You pull the lever $direction.")
             sendMessage(player, "You hear a clunk.")
-            player.animate(
+            animate(player,
                 if (old) {
-                    DOWN_ANIMATION
+                    pullDownAnimation
                 } else {
-                    UP_ANIMATION
+                    pullUpAnimation
                 },
             )
             val downLever = (node as Scenery).transform(baseId)
             val upLever = node.transform(baseId + 1)
-            player.debug("lever: ${downLever.id} ${upLever.id}")
-            val buffer =
-                UpdateAreaPosition.getChunkUpdateBuffer(
-                    player,
-                    RegionManager.getRegionChunk(player.location).currentBase,
-                )
+            val buffer = UpdateAreaPosition.getChunkUpdateBuffer(
+                player,
+                RegionManager.getRegionChunk(player.location).currentBase,
+            )
             if (old) {
                 ClearScenery.write(buffer, upLever)
                 ConstructScenery.write(buffer, downLever)
@@ -101,64 +91,26 @@ class FamilyCrestListener : InteractionListener {
             return@on true
         }
 
-        on(DOORS, IntType.SCENERY, "open") { player, node ->
-            val northA = player.getAttribute("family-crest:witchaven-lever:$NORTH_LEVER_A", false)
-            val northB = player.getAttribute("family-crest:witchaven-lever:$NORTH_LEVER_B", false)
-            val south = player.getAttribute("family-crest:witchaven-lever:$SOUTH_LEVER", false)
-            val questComplete = player.questRepository.getQuest(Quests.FAMILY_CREST).getStage(player) >= 100
+        on(doorsIDs, IntType.SCENERY, "open") { player, node ->
+            val northA = player.getAttribute("family-crest:witchaven-lever:$northLeverA", false)
+            val northB = player.getAttribute("family-crest:witchaven-lever:$northLeverB", false)
+            val south = player.getAttribute("family-crest:witchaven-lever:$southLever", false)
+            val questComplete = getQuestStage(player, Quests.FAMILY_CREST) >= 100
 
-            val canPass =
-                when (node.id) {
-                    NORTH_DOOR -> !northA && (south || northB)
-                    HELLHOUND_DOOR -> questComplete || (northA && northB && !south)
-                    SOUTHWEST_DOOR -> (northA && !south) || (northA && northB && !south)
-                    SOUTHEAST_DOOR -> (northA && south) || (northA && northB && south)
-                    else -> false
-                }
+            val canPass = when (node.id) {
+                northDoorId -> !northA && (south || northB)
+                hellhoundDoorId -> questComplete || (northA && northB && !south)
+                southwestDoorId -> (northA && !south) || (northA && northB && !south)
+                southEastDoorId -> (northA && south) || (northA && northB && south)
+                else -> false
+            }
             if (canPass) {
                 sendMessage(player, "The door swings open. You go through the door.")
-                doDoor(player, node as Scenery)
+                DoorActionHandler.handleAutowalkDoor(player, node as Scenery)
             } else {
                 sendMessage(player, "The door is locked.")
             }
             return@on true
         }
-    }
-
-    fun doDoor(
-        player: Player,
-        scenery: Scenery,
-    ) {
-        val d =
-            if (scenery.rotation == 0 || scenery.rotation == 3) {
-                -1
-            } else {
-                0
-            }
-        var direction = Direction.NORTH
-        if (scenery.rotation % 2 == 0) {
-            direction =
-                if (player.location.x <= scenery.location.x + d) {
-                    Direction.EAST
-                } else {
-                    Direction.WEST
-                }
-        } else {
-            direction =
-                if (player.location.y <= scenery.location.y + d) {
-                    Direction.NORTH
-                } else {
-                    Direction.SOUTH
-                }
-        }
-        ForceMovement.run(
-            player,
-            player.location,
-            player.location.transform(direction.stepX, direction.stepY, 0),
-            ForceMovement.WALK_ANIMATION,
-            ForceMovement.WALK_ANIMATION,
-            direction,
-            8,
-        )
     }
 }

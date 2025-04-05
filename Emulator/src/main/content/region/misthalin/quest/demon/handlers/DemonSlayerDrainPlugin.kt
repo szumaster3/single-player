@@ -10,9 +10,11 @@ import core.game.node.item.Item
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.plugin.Plugin
+import org.rs.consts.Animations
+import org.rs.consts.Items
 import org.rs.consts.Quests
 
-class DemonSlayerDrainPlugin : UseWithHandler(1929) {
+class DemonSlayerDrainPlugin : UseWithHandler(Items.BUCKET_OF_WATER_1929) {
     override fun newInstance(arg: Any?): Plugin<Any> {
         addHandler(17424, OBJECT_TYPE, this)
         return this
@@ -59,8 +61,8 @@ class DemonSlayerDrainPlugin : UseWithHandler(1929) {
     ): Location = Location(3225, 3495)
 
     companion object {
-        private val ANIMATION = Animation(827)
-        private val BUCKET_OF_WATER = Item(1929)
-        private val BUCKET = Item(1925)
+        private val ANIMATION = Animation(Animations.MULTI_BEND_OVER_827)
+        private val BUCKET_OF_WATER = Item(Items.BUCKET_OF_WATER_1929)
+        private val BUCKET = Item(Items.BUCKET_1925)
     }
 }

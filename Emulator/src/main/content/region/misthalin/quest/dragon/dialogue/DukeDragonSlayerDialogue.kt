@@ -105,7 +105,7 @@ class DukeDragonSlayerDialogue(
         }
     }
 
-    fun hasShield(player: Player): Boolean =
+    private fun hasShield(player: Player): Boolean =
         player.inventory.containsItem(DragonSlayer.SHIELD) ||
             player.bank.containsItem(DragonSlayer.SHIELD) ||
             player.equipment.containsItem(

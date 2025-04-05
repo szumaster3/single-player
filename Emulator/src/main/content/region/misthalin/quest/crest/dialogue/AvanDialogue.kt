@@ -2,6 +2,7 @@ package content.region.misthalin.quest.crest.dialogue
 
 import content.region.misthalin.quest.crest.handlers.SwapGauntletsHelper
 import core.api.getAttribute
+import core.api.quest.setQuestStage
 import core.game.dialogue.Dialogue
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
@@ -15,7 +16,7 @@ import org.rs.consts.Quests
 class AvanDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    val CREST_PIECE_AVAN: Item = Item(779)
+    val crestAvan: Item = Item(Items.CREST_PART_779)
 
     override fun open(vararg args: Any?): Boolean {
         npc = (args[0] as NPC).getShownNPC(player)
@@ -143,8 +144,8 @@ class AvanDialogue(
 
             15 ->
                 player("Well, I'll see what I can do.").also {
+                    setQuestStage(player, Quests.FAMILY_CREST, 14)
                     stage = 1000
-                    player.questRepository.getQuest(Quests.FAMILY_CREST).setStage(player, 14)
                 }
 
             100 -> player("I'm still after that 'perfect gold'.").also { stage++ }
@@ -183,9 +184,9 @@ class AvanDialogue(
 
             300 ->
                 sendDialogue("You hand Avan the perfect gold ring and necklace.").also {
-                    player.questRepository.getQuest(Quests.FAMILY_CREST).setStage(player, 16)
+                    setQuestStage(player, Quests.FAMILY_CREST, 16)
                     player.inventory.remove(Item(774), Item(773))
-                    player.inventory.add(CREST_PIECE_AVAN)
+                    player.inventory.add(crestAvan)
                     stage++
                 }
 
@@ -224,10 +225,10 @@ class AvanDialogue(
             401 ->
                 npc("I hope you succeed for my father's sake.").also {
                     if (player.inventory.containItems(
-                            CREST_PIECE_AVAN.id,
+                            crestAvan.id,
                             782,
                         ) ||
-                        player.bank.containItems(CREST_PIECE_AVAN.id, 782)
+                        player.bank.containItems(crestAvan.id, 782)
                     ) {
                         stage = 1000
                     } else {
@@ -252,7 +253,7 @@ class AvanDialogue(
                     "it is a priceless family heirloom.",
                 ).also {
                     stage = 1000
-                    player.inventory.add(CREST_PIECE_AVAN)
+                    player.inventory.add(crestAvan)
                 }
 
             6000 ->

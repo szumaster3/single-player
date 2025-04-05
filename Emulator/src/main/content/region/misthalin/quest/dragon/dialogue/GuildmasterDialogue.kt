@@ -613,7 +613,7 @@ class GuildmasterDialogue(
         return true
     }
 
-    fun handleDescription(buttonId: Int) {
+    private fun handleDescription(buttonId: Int) {
         when (buttonId) {
             1 -> {
                 if (quest!!.getStage(player) == 10) {

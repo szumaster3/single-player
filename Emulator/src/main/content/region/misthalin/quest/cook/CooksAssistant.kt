@@ -1,19 +1,21 @@
 package content.region.misthalin.quest.cook
 
 import core.api.*
+import core.api.quest.getQuestStage
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest
 import core.game.node.entity.skill.Skills
 import core.plugin.Initializable
 import org.rs.consts.Components
+import org.rs.consts.Items
 import org.rs.consts.Quests
 import org.rs.consts.Vars
 
 @Initializable
 class CooksAssistant : Quest(Quests.COOKS_ASSISTANT, 15, 14, 1, Vars.VARP_QUEST_COOKS_ASSISTANT_PROGRESS_29, 0, 1, 2) {
-    val MILK = 1927
-    val FLOUR = 1933
-    val EGG = 1944
+    private val bucketOfMilk = Items.BUCKET_OF_MILK_1927
+    private val potOfFlour = Items.POT_OF_FLOUR_1933
+    private val eggId = Items.EGG_1944
 
     override fun drawJournal(
         player: Player,
@@ -21,7 +23,7 @@ class CooksAssistant : Quest(Quests.COOKS_ASSISTANT, 15, 14, 1, Vars.VARP_QUEST_
     ) {
         super.drawJournal(player, stage)
         var line = 12
-        var stage = player?.questRepository?.getStage(Quests.COOKS_ASSISTANT)!!
+        var stage = getQuestStage(player, Quests.COOKS_ASSISTANT)
         if (stage < 10) {
             line(player, "I can start this quest by speaking to the !!Cook?? in the", line++)
             line(player, "!!Kitchen?? on the ground floor of !!Lumbridge Castle.??", line)
@@ -36,7 +38,7 @@ class CooksAssistant : Quest(Quests.COOKS_ASSISTANT, 15, 14, 1, Vars.VARP_QUEST_
                 player.getAttribute("cooks_assistant:all_submitted", false)
             ) {
                 line(player, "---I have given the cook a bucket of milk./--", line++)
-            } else if (inInventory(player, MILK, 1)) {
+            } else if (inInventory(player, bucketOfMilk, 1)) {
                 line(player, "I have found a !!bucket of milk?? to give to the cook.", line++)
             } else {
                 line(player, "I need to find a !!bucket of milk.?? There's a cattle field east", line++)
@@ -50,7 +52,7 @@ class CooksAssistant : Quest(Quests.COOKS_ASSISTANT, 15, 14, 1, Vars.VARP_QUEST_
                 player.getAttribute("cooks_assistant:all_submitted", false)
             ) {
                 line(player, "---I have given the cook a pot of flour./--", line++)
-            } else if (inInventory(player, FLOUR, 1)) {
+            } else if (inInventory(player, potOfFlour, 1)) {
                 line(player, "I have found a !!pot of flour?? to give to the cook.", line++)
             } else {
                 line(player, "I need to find a !!pot of flour.?? There's a mill found north-", line++)
@@ -63,7 +65,7 @@ class CooksAssistant : Quest(Quests.COOKS_ASSISTANT, 15, 14, 1, Vars.VARP_QUEST_
                 player.getAttribute("cooks_assistant:all_submitted", false)
             ) {
                 line(player, "---I have given the cook an egg./--", line++)
-            } else if (inInventory(player, EGG, 1)) {
+            } else if (inInventory(player, eggId, 1)) {
                 line(player, "I have found an !!egg?? to give to the cook.", line++)
             } else {
                 line(player, "I need to find an !!egg.?? The cook normally gets his eggs from", line++)

@@ -18,11 +18,11 @@ class SheepShearer : Quest(Quests.SHEEP_SHEARER, 28, 27, 1, Vars.VARP_QUEST_SHEE
         val ATTR_NUM_BALLS_OF_WOOL_DELIVERED = "/save:sheep-shearer:num-balls-of-wool-delivered"
         val ATTR_IS_PENGUIN_SHEEP_SHEARED = "/save:sheep-shearer:is-penguin-sheep-sheared"
 
-        fun getBallsOfWoolDelivered(player: Player): Int = getAttribute(player, ATTR_NUM_BALLS_OF_WOOL_DELIVERED, 0)
+        private fun getBallsOfWoolDelivered(player: Player): Int = getAttribute(player, ATTR_NUM_BALLS_OF_WOOL_DELIVERED, 0)
 
         fun getBallsOfWoolRequired(player: Player): Int = 20 - getBallsOfWoolDelivered(player)
 
-        fun getBallsOfWoolToRemove(player: Player): Int =
+        private fun getBallsOfWoolToRemove(player: Player): Int =
             min(getBallsOfWoolRequired(player), amountInInventory(player, Items.BALL_OF_WOOL_1759))
 
         fun getBallsOfWoolToCollect(player: Player): Int = getBallsOfWoolRequired(player) - getBallsOfWoolToRemove(player)

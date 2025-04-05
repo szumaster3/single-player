@@ -2,6 +2,7 @@ package content.region.misthalin.quest.crest.dialogue
 
 import content.region.misthalin.quest.crest.handlers.SwapGauntletsHelper
 import core.api.getAttribute
+import core.api.quest.setQuestStage
 import core.game.dialogue.Dialogue
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
@@ -144,8 +145,9 @@ class CalebDialogue(
             207 ->
                 when (buttonId) {
                     1 ->
-                        npc("You will? It would help me a lot!").also { stage = 1000 }.also {
-                            player.questRepository.getQuest(Quests.FAMILY_CREST).setStage(player, 11)
+                        npc("You will? It would help me a lot!").also {
+                            setQuestStage(player, Quests.FAMILY_CREST, 11)
+                            stage = 1000
                         }
 
                     2 ->
@@ -165,9 +167,9 @@ class CalebDialogue(
 
             301 ->
                 sendDialogue("You exchange the fish for Caleb's piece of the crest.").also {
+                    setQuestStage(player, Quests.FAMILY_CREST, 12)
                     player.inventory.remove(Item(315), Item(329), Item(361), Item(365), Item(373))
                     player.inventory.add(CREST_PIECE)
-                    player.questRepository.getQuest(Quests.FAMILY_CREST).setStage(player, 12)
                     stage++
                 }
 
