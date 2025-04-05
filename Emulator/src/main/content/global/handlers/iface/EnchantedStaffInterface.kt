@@ -24,10 +24,10 @@ class EnchantedStaffInterface : InterfaceListener {
         }
 
         on(Components.STAFF_ENCHANT_332) { player, _, _, buttonID, _, _ ->
-            val price = 40000
+            val defaultPrice = 40000
             val discountPrice = 27000
             val headbandInEquipment = DiaryManager(player).hasHeadband()
-            val completeDiary = if (!headbandInEquipment) price else discountPrice
+            var price = if (!headbandInEquipment) defaultPrice else discountPrice
 
             if (EnchantedStaff.childToBasic.containsKey(buttonID)) {
                 val basicStaff = Item(EnchantedStaff.childToBasic[buttonID]!!)
@@ -50,24 +50,24 @@ class EnchantedStaffInterface : InterfaceListener {
                     return@on true
                 }
 
-                if (!inInventory(player, Items.COINS_995, completeDiary)) {
+                if (!inInventory(player, Items.COINS_995, price)) {
                     closeInterface(player)
                     sendNPCDialogue(
                         player,
                         NPCs.THORMAC_389,
-                        "I need $completeDiary coins for materials. Come back when you have the money!",
+                        "I need $price coins for materials. Come back when you have the money!",
                     )
                     return@on true
                 }
 
-                if (player.inventory.remove(basicStaff, Item(Items.COINS_995, completeDiary))) {
+                if (player.inventory.remove(basicStaff, Item(Items.COINS_995, price))) {
                     closeInterface(player)
                     sendNPCDialogue(
                         player,
                         NPCs.THORMAC_389,
                         "Just a moment... hang on... hocus pocus abra- cadabra... there you go! Enjoy your enchanted staff!",
                     )
-                    replaceSlot(player, basicStaff.slot, enchantedStaff)
+                    addItem(player, enchantedStaff.id, 1)
                 }
             }
             return@on true

@@ -1,14 +1,13 @@
 package content.region.kandarin.dialogue
 
 import core.api.addItemOrDrop
-import core.api.removeItem
+import core.api.sendItemDialogue
 import core.api.sendMessage
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.diary.Diary
-import core.game.node.entity.player.link.diary.DiaryManager
 import core.game.node.entity.player.link.diary.DiaryType
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
@@ -38,7 +37,7 @@ class StankersDiaryDialogue(
                     1 -> player("Are these your trucks?").also { stage = 10 }
                     2 -> player("Hello Mr. Stankers.").also { stage = 20 }
                     3 ->
-                        if (Diary.canReplaceReward(player, DiaryType.SEERS_VILLAGE, 1)) {
+                        if (Diary.canReplaceReward(player, DiaryType.SEERS_VILLAGE, diaryLevel)) {
                             player("I seem to have lost my seers' headband...").also { stage = 80 }
                         } else if (Diary.hasClaimedLevelRewards(player, DiaryType.SEERS_VILLAGE, diaryLevel)) {
                             player("Can you remind me what my headband does?").also { stage = 90 }
@@ -147,24 +146,9 @@ class StankersDiaryDialogue(
                     stage++
                 }
             201 -> {
-                if (!removeItem(player, DiaryManager(player).headband)) {
-                    npc(
-                        FaceAnim.OLD_DEFAULT,
-                        "I need your headband to anoint it! Come back when",
-                        "you have it.",
-                    ).also {
-                        stage =
-                            END_DIALOGUE
-                    }
-                } else {
-                    Diary.flagRewarded(player, DiaryType.SEERS_VILLAGE, diaryLevel)
-                    sendDialogue(
-                        "Stankers produces a chalice containing a vile-looking concoction that",
-                        "he pours all over your headband.",
-                    ).also {
-                        stage++
-                    }
-                }
+                if (!Diary.flagRewarded(player, DiaryType.SEERS_VILLAGE, diaryLevel)) return true
+                sendItemDialogue(player, Diary.getRewards(DiaryType.SEERS_VILLAGE, diaryLevel)[0],  "Stankers produces a chalice containing a vile-looking concoction that he pours all over your headband.")
+                stage++
             }
             202 -> player("Erm, thank you... I guess.").also { stage++ }
             203 ->
