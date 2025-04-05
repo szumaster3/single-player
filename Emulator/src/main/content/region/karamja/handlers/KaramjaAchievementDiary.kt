@@ -1,14 +1,14 @@
 package content.region.karamja.handlers
 
 import core.api.inBorders
+import core.game.diary.DiaryAreaTask
+import core.game.diary.DiaryEventHookBase
+import core.game.diary.DiaryLevel
 import core.game.event.InteractionEvent
 import core.game.event.NPCKillEvent
 import core.game.event.PickUpEvent
 import core.game.event.ResourceProducedEvent
 import core.game.node.entity.player.Player
-import core.game.diary.DiaryAreaTask
-import core.game.diary.DiaryEventHookBase
-import core.game.diary.DiaryLevel
 import core.game.node.entity.player.link.diary.DiaryType
 import core.game.world.map.zone.ZoneBorders
 import org.rs.consts.Items

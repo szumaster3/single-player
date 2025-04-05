@@ -1,6 +1,5 @@
 package content.region.misthalin.quest.surok.dialogue;
 
-import org.rs.consts.Quests;
 import content.region.misthalin.dialogue.RatBurgissDiaryDialogue;
 import content.region.misthalin.quest.surok.WhatLiesBelow;
 import core.game.dialogue.Dialogue;
@@ -10,6 +9,7 @@ import core.game.node.entity.player.link.diary.Diary;
 import core.game.node.entity.player.link.diary.DiaryType;
 import core.game.node.entity.player.link.quest.Quest;
 import core.plugin.Initializable;
+import org.rs.consts.Quests;
 
 /**
  * The type Rat burgiss dialogue.

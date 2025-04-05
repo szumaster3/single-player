@@ -1,8 +1,11 @@
 package content.region.kandarin.quest.tree.dialogue
 
-import core.api.*
+import core.api.getAttribute
 import core.api.quest.getQuestStage
 import core.api.quest.setQuestStage
+import core.api.sendDialogue
+import core.api.sendDialogueOptions
+import core.api.setTitle
 import core.game.dialogue.DialogueFile
 import core.tools.END_DIALOGUE
 import org.rs.consts.Quests

@@ -1,7 +1,6 @@
 package content.region.misthalin.quest.dragon.handlers;
 
 import content.region.misthalin.quest.dragon.DragonSlayer;
-import org.rs.consts.Quests;
 import core.cache.def.impl.NPCDefinition;
 import core.cache.def.impl.SceneryDefinition;
 import core.game.global.action.ClimbActionHandler;
@@ -19,6 +18,7 @@ import core.game.node.scenery.SceneryBuilder;
 import core.game.world.map.Location;
 import core.game.world.update.flag.context.Animation;
 import core.plugin.Plugin;
+import org.rs.consts.Quests;
 
 import static core.api.ContentAPIKt.setVarp;
 

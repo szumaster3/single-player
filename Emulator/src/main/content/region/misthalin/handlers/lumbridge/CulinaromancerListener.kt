@@ -1,7 +1,10 @@
 package content.region.misthalin.handlers.lumbridge
 
-import core.api.*
+import core.api.LoginListener
+import core.api.getAttribute
 import core.api.quest.getQuestPoints
+import core.api.setAttribute
+import core.api.setVarbit
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.game.shops.Shop

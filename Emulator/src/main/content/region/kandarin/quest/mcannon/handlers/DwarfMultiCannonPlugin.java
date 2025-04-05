@@ -1,6 +1,5 @@
 package content.region.kandarin.quest.mcannon.handlers;
 
-import org.rs.consts.Quests;
 import core.cache.def.impl.ItemDefinition;
 import core.cache.def.impl.SceneryDefinition;
 import core.game.interaction.NodeUsageEvent;
@@ -10,9 +9,10 @@ import core.game.node.Node;
 import core.game.node.entity.player.Player;
 import core.game.node.entity.player.info.Rights;
 import core.game.node.item.Item;
+import core.plugin.ClassScanner;
 import core.plugin.Initializable;
 import core.plugin.Plugin;
-import core.plugin.ClassScanner;
+import org.rs.consts.Quests;
 
 /**
  * The type Dwarf multi cannon plugin.

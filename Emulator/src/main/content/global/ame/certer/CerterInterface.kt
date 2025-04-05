@@ -62,7 +62,7 @@ class CerterInterface : InterfaceListener {
         }
     }
 
-    fun generateOptions(player: Player) {
+    private fun generateOptions(player: Player) {
         val correct = items.keys.random()
         val indexes = arrayListOf(1, 2, 3)
         val correctIndex = indexes.random()
@@ -84,7 +84,7 @@ class CerterInterface : InterfaceListener {
         player.packetDispatch.sendModelOnInterface(iFaceModelId, CERTER_INTERFACE, ITEM_CHILD, iFaceZoom)
     }
 
-    fun optionFromIndex(index: Int): Int =
+    private fun optionFromIndex(index: Int): Int =
         when (index) {
             1 -> OPTION_A_CHILD
             2 -> OPTION_B_CHILD

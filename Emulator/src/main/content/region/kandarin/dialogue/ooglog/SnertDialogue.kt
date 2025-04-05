@@ -1,6 +1,5 @@
 package content.region.kandarin.dialogue.ooglog
 
-import core.api.hasRequirement
 import core.api.quest.hasRequirement
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim

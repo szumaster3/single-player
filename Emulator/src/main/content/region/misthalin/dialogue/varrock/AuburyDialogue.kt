@@ -1,11 +1,12 @@
 package content.region.misthalin.dialogue.varrock
 
 import content.global.travel.EssenceTeleport.teleport
-import core.api.*
 import core.api.interaction.openNpcShop
 import core.api.quest.getQuestStage
 import core.api.quest.isQuestComplete
 import core.api.quest.setQuestStage
+import core.api.removeItem
+import core.api.sendItemDialogue
 import core.game.dialogue.Dialogue
 import core.game.global.Skillcape.isMaster
 import core.game.global.Skillcape.purchase

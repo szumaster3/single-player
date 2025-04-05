@@ -155,6 +155,7 @@ internal object GameAttributes {
     const val QUEST_HFTD_STRANGE_WALL_DISCOVER = "/save:hftd:strange-wall"
     const val QUEST_HFTD_UNLOCK_DOOR = "/save:hftd:item-placed"
 
+    // God books
     const val GOD_BOOKS = "/save:god_books:access"
 
     const val QUEST_HFTD_USE_AIR_RUNE = "/save:hftd:air"
@@ -226,7 +227,6 @@ internal object GameAttributes {
     const val QUEST_SEA_SLUG_TALK_WITH_KENT = "/save:seaslug:kent-dialogue"
 
     // Achievements alternative teleportation options.
-
     const val ATTRIBUTE_VARROCK_ALT_TELE = "/save:diaries:varrock:alttele"
     const val ATTRIBUTE_CAMELOT_ALT_TELE = "/save:diaries:camelot:alttele"
 }

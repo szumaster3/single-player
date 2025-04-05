@@ -1,10 +1,6 @@
 package content.minigame.bountyhunter.handlers
 
-import core.api.ContainerListener
-import core.api.removeAttribute
-import core.api.sendString
-import core.api.setAttribute
-import core.api.setVarp
+import core.api.*
 import core.game.activity.ActivityManager
 import core.game.activity.ActivityPlugin
 import core.game.component.Component

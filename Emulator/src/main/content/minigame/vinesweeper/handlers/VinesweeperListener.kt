@@ -13,7 +13,6 @@ import content.minigame.vinesweeper.handlers.VinesweeperListener.Companion.popul
 import content.minigame.vinesweeper.handlers.VinesweeperListener.Companion.scheduleNPCs
 import content.minigame.vinesweeper.handlers.VinesweeperListener.Companion.sendPoints
 import core.api.*
-import core.api.MapArea
 import core.game.component.Component
 import core.game.dialogue.FaceAnim
 import core.game.interaction.IntType

@@ -1,7 +1,10 @@
 package content.region.fremennik.quest.viking
 
-import core.api.*
+import core.api.getAttribute
+import core.api.getStatLevel
 import core.api.quest.getQuestStage
+import core.api.rewardXP
+import core.api.sendItemZoomOnInterface
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest
 import core.game.node.entity.skill.Skills

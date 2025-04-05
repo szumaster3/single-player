@@ -1,8 +1,10 @@
 package content.region.misthalin.quest.itexam.dialogue
 
-import core.api.*
+import core.api.addItemOrDrop
+import core.api.inInventory
 import core.api.quest.getQuestStage
 import core.api.quest.setQuestStage
+import core.api.removeItem
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

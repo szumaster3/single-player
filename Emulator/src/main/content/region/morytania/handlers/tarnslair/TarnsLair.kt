@@ -2,7 +2,6 @@ package content.region.morytania.handlers.tarnslair
 
 import content.region.morytania.handlers.tarnslair.traps.FloorTrap
 import core.api.*
-import core.api.MapArea
 import core.game.interaction.QueueStrength
 import core.game.node.entity.Entity
 import core.game.node.entity.player.Player

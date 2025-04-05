@@ -1,9 +1,12 @@
 package content.region.kandarin.dialogue.observatory
 
 import content.region.kandarin.quest.itgronigen.dialogue.ProfessorDialogueFile
-import core.api.*
+import core.api.openDialogue
 import core.api.quest.getQuestStage
 import core.api.quest.isQuestComplete
+import core.api.sendDialogue
+import core.api.sendDialogueOptions
+import core.api.setTitle
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

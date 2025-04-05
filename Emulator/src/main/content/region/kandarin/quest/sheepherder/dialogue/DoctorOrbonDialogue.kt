@@ -1,7 +1,10 @@
 package content.region.kandarin.quest.sheepherder.dialogue
 
-import core.api.*
+import core.api.Container
 import core.api.quest.getQuestStage
+import core.api.removeItem
+import core.api.sendDialogue
+import core.api.sendDialogueLines
 import core.game.dialogue.Dialogue
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player

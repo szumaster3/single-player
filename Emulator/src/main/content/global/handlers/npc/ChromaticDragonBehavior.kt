@@ -8,7 +8,6 @@ import core.game.node.item.Item
 import core.tools.RandomFunction
 import org.rs.consts.Items
 import org.rs.consts.NPCs
-import kotlin.collections.ArrayList
 
 class ChromaticDragonBehavior : NPCBehavior(*greenDragons, *blueDragons, *redDragons, *blackDragons) {
     override fun onDropTableRolled(

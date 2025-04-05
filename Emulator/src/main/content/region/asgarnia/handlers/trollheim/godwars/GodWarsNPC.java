@@ -1,6 +1,5 @@
 package content.region.asgarnia.handlers.trollheim.godwars;
 
-import org.rs.consts.NPCs;
 import core.api.ContentAPIKt;
 import core.game.node.entity.Entity;
 import core.game.node.entity.combat.BattleState;
@@ -16,6 +15,7 @@ import core.game.world.map.Location;
 import core.game.world.map.RegionManager;
 import core.plugin.Initializable;
 import core.tools.RandomFunction;
+import org.rs.consts.NPCs;
 
 import java.util.ArrayList;
 import java.util.List;

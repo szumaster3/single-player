@@ -1,7 +1,6 @@
 package content.region.kandarin.dialogue.seers
 
 import content.region.kandarin.quest.scorpcatcher.dialogue.SeersDialogueFile
-import core.api.freeSlots
 import core.api.openDialogue
 import core.api.sendItemDialogue
 import core.game.dialogue.Dialogue

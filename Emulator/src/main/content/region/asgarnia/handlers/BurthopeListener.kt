@@ -1,9 +1,12 @@
 package content.region.asgarnia.handlers
 
-import core.api.*
+import core.api.getStatLevel
 import core.api.interaction.openBankAccount
 import core.api.interaction.openGrandExchangeCollectionBox
 import core.api.interaction.openNpcShop
+import core.api.sendDialogue
+import core.api.sendNPCDialogue
+import core.api.teleport
 import core.game.dialogue.FaceAnim
 import core.game.global.action.ClimbActionHandler
 import core.game.interaction.IntType

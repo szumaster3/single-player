@@ -13,7 +13,9 @@ import core.game.node.item.Item
 import core.game.world.GameWorld
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
-import org.rs.consts.*
+import org.rs.consts.Components
+import org.rs.consts.Items
+import org.rs.consts.NPCs
 
 /* TODO:
  * [ ] CHECK IF tiara is also accepted or if I made it up to myself at the time.:

@@ -1,6 +1,5 @@
 package content.region.misthalin.handlers;
 
-import org.rs.consts.Animations;
 import core.cache.def.impl.NPCDefinition;
 import core.game.interaction.OptionHandler;
 import core.game.node.Node;
@@ -9,6 +8,7 @@ import core.game.node.entity.player.Player;
 import core.game.world.update.flag.context.Animation;
 import core.plugin.Initializable;
 import core.plugin.Plugin;
+import org.rs.consts.Animations;
 
 /**
  * The type Shoo away stray dog plugin.

@@ -1,16 +1,16 @@
 package content.region.kandarin.handlers.guthanoth;
 
-import org.rs.consts.NPCs;
 import content.region.kandarin.dialogue.guthanoth.BogrogDialogue;
 import core.cache.def.impl.NPCDefinition;
 import core.game.interaction.OptionHandler;
 import core.game.node.Node;
 import core.game.node.entity.player.Player;
 import core.game.node.entity.skill.Skills;
+import core.plugin.ClassScanner;
 import core.plugin.Initializable;
 import core.plugin.Plugin;
-import core.plugin.ClassScanner;
 import kotlin.Unit;
+import org.rs.consts.NPCs;
 
 import static core.api.ContentAPIKt.sendItemSelect;
 

@@ -1,6 +1,5 @@
 package content.region.misthalin.quest.demon.cutscene;
 
-import org.rs.consts.Quests;
 import content.region.misthalin.quest.demon.handlers.DemonSlayerUtils;
 import core.game.activity.ActivityManager;
 import core.game.activity.ActivityPlugin;
@@ -30,6 +29,7 @@ import core.net.packet.context.CameraContext.CameraType;
 import core.net.packet.context.MinimapStateContext;
 import core.net.packet.out.CameraViewPacket;
 import core.net.packet.out.MinimapState;
+import org.rs.consts.Quests;
 
 import static core.api.ContentAPIKt.*;
 

@@ -1,7 +1,10 @@
 package content.region.fremennik.quest.viking.dialogue
 
-import core.api.*
+import core.api.addItemOrDrop
+import core.api.getAttribute
+import core.api.inInventory
 import core.api.quest.isQuestComplete
+import core.api.removeItem
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

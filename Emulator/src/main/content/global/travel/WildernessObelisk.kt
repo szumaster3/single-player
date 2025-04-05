@@ -141,15 +141,10 @@ class WildernessObelisk : OptionHandler() {
         val location: Location,
     ) {
         LEVEL_13(Location(3156, 3620, 0)),
-
         LEVEL_19(Location(3219, 3656, 0)),
-
         LEVEL_27(Location(3035, 3732, 0)),
-
         LEVEL_35(Location(3106, 3794, 0)),
-
         LEVEL_44(Location(2980, 3866, 0)),
-
         LEVEL_50(Location(3307, 3916, 0)),
         ;
 

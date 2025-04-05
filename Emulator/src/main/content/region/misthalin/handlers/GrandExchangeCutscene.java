@@ -1,8 +1,5 @@
 package content.region.misthalin.handlers;
 
-import core.game.ge.GuidePrices;
-import org.rs.consts.Components;
-import org.rs.consts.NPCs;
 import core.game.activity.ActivityManager;
 import core.game.activity.ActivityPlugin;
 import core.game.activity.CutscenePlugin;
@@ -10,6 +7,7 @@ import core.game.component.Component;
 import core.game.component.ComponentDefinition;
 import core.game.component.ComponentPlugin;
 import core.game.dialogue.Dialogue;
+import core.game.ge.GuidePrices;
 import core.game.ge.GuidePrices.GuideType;
 import core.game.node.entity.player.Player;
 import core.game.system.task.Pulse;
@@ -21,6 +19,8 @@ import core.net.packet.context.CameraContext.CameraType;
 import core.net.packet.out.CameraViewPacket;
 import core.plugin.Initializable;
 import core.plugin.Plugin;
+import org.rs.consts.Components;
+import org.rs.consts.NPCs;
 
 import static core.api.ContentAPIKt.setAttribute;
 

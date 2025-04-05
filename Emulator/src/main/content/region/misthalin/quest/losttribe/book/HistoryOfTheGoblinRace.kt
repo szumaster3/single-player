@@ -1,7 +1,9 @@
 package content.region.misthalin.quest.losttribe.book
 
-import core.api.*
 import core.api.quest.setQuestStage
+import core.api.removeAttribute
+import core.api.sendPlayerDialogue
+import core.api.setAttribute
 import core.api.ui.sendInterfaceConfig
 import core.game.component.Component
 import core.game.component.ComponentDefinition

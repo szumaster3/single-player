@@ -1,8 +1,10 @@
 package content.region.kandarin.quest.ikov.handlers
 
-import core.api.*
+import core.api.inEquipment
+import core.api.openDialogue
 import core.api.quest.finishQuest
 import core.api.quest.getQuestStage
+import core.api.sendNPCDialogue
 import core.game.dialogue.DialogueFile
 import core.game.node.entity.Entity
 import core.game.node.entity.combat.CombatStyle

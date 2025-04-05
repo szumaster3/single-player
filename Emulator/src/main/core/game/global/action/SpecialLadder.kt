@@ -4,7 +4,6 @@ import core.api.finishDiaryTask
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.diary.DiaryType
 import core.game.world.map.Location
-import java.util.HashMap
 
 enum class SpecialLadder(
     private val ladderLoc: Location,

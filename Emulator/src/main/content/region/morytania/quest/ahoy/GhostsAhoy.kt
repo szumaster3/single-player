@@ -1,8 +1,11 @@
 package content.region.morytania.quest.ahoy
 
 import content.region.morytania.quest.ahoy.handlers.GhostsAhoyUtils
-import core.api.*
 import core.api.quest.isQuestComplete
+import core.api.removeAttributes
+import core.api.rewardXP
+import core.api.sendItemZoomOnInterface
+import core.api.setVarbit
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest
 import core.game.node.entity.skill.Skills

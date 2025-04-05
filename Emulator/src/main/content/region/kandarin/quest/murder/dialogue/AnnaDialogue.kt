@@ -1,10 +1,12 @@
 package content.region.kandarin.quest.murder.dialogue
 
 import content.region.kandarin.quest.murder.handlers.MurderMysteryUtils
-import core.api.*
+import core.api.inInventory
 import core.api.quest.getQuestStage
 import core.api.quest.isQuestComplete
 import core.api.quest.setQuestStage
+import core.api.sendItemDialogue
+import core.api.sendMessage
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

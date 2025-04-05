@@ -1,13 +1,13 @@
 package content.region.misthalin.quest.dragon.handlers;
 
 import content.region.misthalin.quest.dragon.DragonSlayer;
-import org.rs.consts.Quests;
 import core.game.interaction.NodeUsageEvent;
 import core.game.interaction.UseWithHandler;
 import core.game.node.Node;
 import core.game.node.entity.player.Player;
 import core.game.world.map.Location;
 import core.plugin.Plugin;
+import org.rs.consts.Quests;
 
 /**
  * The type Magic door plugin.

@@ -1,7 +1,5 @@
 package content.region.misthalin.quest.fluffs;
 
-import org.rs.consts.Quests;
-import org.rs.consts.Vars;
 import core.game.node.entity.player.Player;
 import core.game.node.entity.player.link.quest.Quest;
 import core.game.node.entity.skill.Skills;
@@ -9,6 +7,8 @@ import core.game.node.item.GroundItemManager;
 import core.game.node.item.Item;
 import core.plugin.Initializable;
 import core.tools.RandomFunction;
+import org.rs.consts.Quests;
+import org.rs.consts.Vars;
 
 import static core.api.ContentAPIKt.addItemOrBank;
 

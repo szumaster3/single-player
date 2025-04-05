@@ -1,9 +1,11 @@
 package content.region.misthalin.quest.cook.dialogue
 
-import core.api.*
+import core.api.getAttribute
+import core.api.inInventory
 import core.api.quest.finishQuest
 import core.api.quest.getQuestStage
 import core.api.quest.setQuestStage
+import core.api.setAttribute
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

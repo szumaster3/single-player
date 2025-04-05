@@ -1,6 +1,5 @@
 package content.region.kandarin.handlers;
 
-import org.rs.consts.Quests;
 import content.global.skill.agility.AgilityHandler;
 import content.region.kandarin.dialogue.stronghold.GnomeGateGuardDialogue;
 import core.cache.def.impl.SceneryDefinition;
@@ -20,6 +19,7 @@ import core.game.world.map.zone.ZoneBorders;
 import core.game.world.update.flag.context.Animation;
 import core.plugin.Initializable;
 import core.plugin.Plugin;
+import org.rs.consts.Quests;
 
 import static core.api.ContentAPIKt.*;
 import static core.api.quest.QuestAPIKt.getQuestStage;

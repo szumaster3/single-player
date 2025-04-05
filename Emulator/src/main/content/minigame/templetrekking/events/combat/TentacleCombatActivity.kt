@@ -4,11 +4,7 @@ import content.minigame.templetrekking.TempleTrekking
 import content.minigame.templetrekking.monsters.HeadNPC.Companion.spawnTentacleHeadNPC
 import content.minigame.templetrekking.monsters.TentacleNPC
 import content.minigame.templetrekking.monsters.TentacleNPC.Companion.spawnTentacleNPC
-import core.api.MapArea
-import core.api.keepRunning
-import core.api.queueScript
-import core.api.stopExecuting
-import core.api.teleport
+import core.api.*
 import core.api.utils.PlayerCamera
 import core.game.activity.ActivityManager
 import core.game.activity.ActivityPlugin

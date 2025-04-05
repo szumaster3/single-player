@@ -1,8 +1,5 @@
 package content.region.misthalin.quest.surok.handlers;
 
-import core.game.world.update.flag.context.Graphics;
-import org.rs.consts.Music;
-import org.rs.consts.Quests;
 import core.game.activity.ActivityPlugin;
 import core.game.activity.CutscenePlugin;
 import core.game.dialogue.FaceAnim;
@@ -20,10 +17,13 @@ import core.game.world.map.Location;
 import core.game.world.map.RegionManager;
 import core.game.world.map.build.DynamicRegion;
 import core.game.world.update.flag.context.Animation;
+import core.game.world.update.flag.context.Graphics;
 import core.net.packet.PacketRepository;
 import core.net.packet.context.CameraContext;
 import core.net.packet.context.CameraContext.CameraType;
 import core.net.packet.out.CameraViewPacket;
+import org.rs.consts.Music;
+import org.rs.consts.Quests;
 
 import static core.api.ContentAPIKt.removeAttribute;
 import static core.api.ContentAPIKt.setAttribute;

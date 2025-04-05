@@ -1,8 +1,5 @@
 package content.region.misthalin.quest.dragon.cutscene;
 
-import core.game.world.update.flag.context.Graphics;
-import org.rs.consts.Animations;
-import org.rs.consts.Quests;
 import content.global.travel.charter.Charter;
 import core.game.activity.ActivityManager;
 import core.game.activity.ActivityPlugin;
@@ -18,12 +15,15 @@ import core.game.world.GameWorld;
 import core.game.world.map.Location;
 import core.game.world.map.build.DynamicRegion;
 import core.game.world.update.flag.context.Animation;
+import core.game.world.update.flag.context.Graphics;
 import core.net.packet.PacketRepository;
 import core.net.packet.context.CameraContext;
 import core.net.packet.context.CameraContext.CameraType;
 import core.net.packet.context.MinimapStateContext;
 import core.net.packet.out.CameraViewPacket;
 import core.net.packet.out.MinimapState;
+import org.rs.consts.Animations;
+import org.rs.consts.Quests;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,8 +1,10 @@
 package content.region.kandarin.quest.grail.dialogue
 
-import core.api.*
+import core.api.addItemOrDrop
 import core.api.quest.getQuestStage
 import core.api.quest.isQuestComplete
+import core.api.sendDialogue
+import core.api.sendItemDialogue
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.game.dialogue.IfTopic

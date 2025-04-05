@@ -25,7 +25,6 @@ import core.net.packet.out.CameraViewPacket
 import core.tools.RandomFunction
 import org.rs.consts.Components
 import org.rs.consts.NPCs
-import java.util.*
 
 class TelekineticTheatre
     @JvmOverloads

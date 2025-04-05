@@ -20,7 +20,6 @@ import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
 import core.plugin.Initializable
-import core.tools.DARK_GREEN
 import core.tools.DARK_ORANGE
 import org.rs.consts.Animations
 import org.rs.consts.Items

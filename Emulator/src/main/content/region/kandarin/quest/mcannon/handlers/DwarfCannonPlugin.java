@@ -1,7 +1,5 @@
 package content.region.kandarin.quest.mcannon.handlers;
 
-import org.rs.consts.Components;
-import org.rs.consts.Quests;
 import content.region.kandarin.quest.mcannon.DwarfCannon;
 import core.cache.def.impl.SceneryDefinition;
 import core.game.component.Component;
@@ -20,13 +18,15 @@ import core.game.node.entity.player.Player;
 import core.game.node.entity.player.link.quest.Quest;
 import core.game.node.item.Item;
 import core.game.node.scenery.Scenery;
-import core.tools.Log;
 import core.game.system.task.Pulse;
 import core.game.world.GameWorld;
 import core.game.world.map.Location;
 import core.game.world.update.flag.context.Animation;
 import core.plugin.Plugin;
+import core.tools.Log;
 import core.tools.RandomFunction;
+import org.rs.consts.Components;
+import org.rs.consts.Quests;
 
 import static core.api.ContentAPIKt.*;
 

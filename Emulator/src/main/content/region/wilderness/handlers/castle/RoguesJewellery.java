@@ -1,6 +1,7 @@
 package content.region.wilderness.handlers.castle;
 
 import org.rs.consts.Items;
+
 import java.util.HashMap;
 import java.util.Map;
 

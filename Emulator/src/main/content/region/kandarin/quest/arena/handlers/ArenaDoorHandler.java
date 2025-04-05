@@ -1,6 +1,5 @@
 package content.region.kandarin.quest.arena.handlers;
 
-import org.rs.consts.Quests;
 import core.cache.def.impl.SceneryDefinition;
 import core.game.dialogue.FaceAnim;
 import core.game.global.action.DoorActionHandler;
@@ -11,6 +10,7 @@ import core.game.node.scenery.Scenery;
 import core.game.world.map.Location;
 import core.plugin.Initializable;
 import core.plugin.Plugin;
+import org.rs.consts.Quests;
 
 /**
  * The type Arena door handler.

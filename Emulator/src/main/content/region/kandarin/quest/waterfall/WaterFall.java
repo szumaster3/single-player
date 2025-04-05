@@ -1,7 +1,5 @@
 package content.region.kandarin.quest.waterfall;
 
-import org.rs.consts.Quests;
-import org.rs.consts.Vars;
 import content.region.kandarin.quest.waterfall.dialogue.GolrieDialogue;
 import content.region.kandarin.quest.waterfall.dialogue.HadleyDialogue;
 import content.region.kandarin.quest.waterfall.dialogue.HudonDialogue;
@@ -11,8 +9,10 @@ import core.game.node.entity.player.Player;
 import core.game.node.entity.player.link.quest.Quest;
 import core.game.node.entity.skill.Skills;
 import core.game.node.item.Item;
-import core.plugin.Initializable;
 import core.plugin.ClassScanner;
+import core.plugin.Initializable;
+import org.rs.consts.Quests;
+import org.rs.consts.Vars;
 
 /**
  * The type Water fall.

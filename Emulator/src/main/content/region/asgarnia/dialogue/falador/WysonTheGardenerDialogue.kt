@@ -3,9 +3,9 @@ package content.region.asgarnia.dialogue.falador
 import content.data.tables.BirdNestDropTable
 import core.api.*
 import core.game.dialogue.Dialogue
+import core.game.diary.DiaryLevel
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
-import core.game.diary.DiaryLevel
 import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.item.GroundItemManager
 import core.game.node.item.Item

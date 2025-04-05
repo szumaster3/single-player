@@ -1,8 +1,11 @@
 package content.region.kandarin.quest.ikov.dialogue
 
-import core.api.*
+import core.api.inInventory
+import core.api.openDialogue
 import core.api.quest.finishQuest
 import core.api.quest.getQuestStage
+import core.api.removeItem
+import core.api.sendMessage
 import core.game.dialogue.Dialogue
 import core.game.dialogue.DialogueBuilder
 import core.game.dialogue.DialogueBuilderFile

@@ -1,7 +1,8 @@
 package content.region.kandarin.quest.phoenix.handlers
 
 import content.region.kandarin.quest.phoenix.handlers.PhoenixLairListener.Companion.woundedPhoenix
-import core.api.*
+import core.api.sendGraphics
+import core.api.setVarbit
 import core.game.activity.Cutscene
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.TeleportManager

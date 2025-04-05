@@ -1,9 +1,9 @@
 package content.region.fremennik.dialogue.lighthouse
 
 import content.data.GodBook
-import core.api.*
 import core.api.addItemOrDrop
 import core.api.hasAnItem
+import core.api.removeItem
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

@@ -1,6 +1,5 @@
 package content.region.kandarin.dialogue.ooglog
 
-import core.api.hasRequirement
 import core.api.quest.hasRequirement
 import core.api.sendNPCDialogue
 import core.game.dialogue.Dialogue

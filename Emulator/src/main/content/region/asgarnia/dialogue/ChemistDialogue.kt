@@ -1,9 +1,12 @@
 package content.region.asgarnia.dialogue
 
 import content.region.kandarin.quest.biohazard.dialogue.ChemistDialogue
-import core.api.*
+import core.api.addItemOrDrop
+import core.api.openDialogue
 import core.api.quest.isQuestComplete
 import core.api.quest.isQuestInProgress
+import core.api.sendDialogueOptions
+import core.api.setTitle
 import core.game.dialogue.Dialogue
 import core.game.node.entity.player.Player
 import core.game.node.item.Item

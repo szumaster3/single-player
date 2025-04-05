@@ -1,7 +1,10 @@
 package content.region.misthalin.quest.losttribe.dialogue
 
-import core.api.*
+import core.api.addItemOrDrop
+import core.api.inInventory
 import core.api.quest.setQuestStage
+import core.api.sendItemDialogue
+import core.api.setVarbit
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

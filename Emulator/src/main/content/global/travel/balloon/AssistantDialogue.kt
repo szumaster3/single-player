@@ -18,7 +18,7 @@ class AssistantDialogue(
 ) : Dialogue(player) {
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
-        val faceExpression = if (npc.id != 5056) FaceAnim.HALF_GUILTY else FaceAnim.OLD_NORMAL
+        val faceExpression = if (npc.id != NPCs.ASSISTANT_LE_SMITH_5056) FaceAnim.HALF_GUILTY else FaceAnim.OLD_NORMAL
         npcl(
             faceExpression,
             "Do you want to use the balloon? Just so you know, some locations require special logs and high Firemaking skills.",
@@ -30,10 +30,10 @@ class AssistantDialogue(
         interfaceId: Int,
         buttonId: Int,
     ): Boolean {
-        val faceExpression = if (npc.id != 5056) FaceAnim.HALF_GUILTY else FaceAnim.OLD_NORMAL
+        val faceExpression = if (npc.id != NPCs.ASSISTANT_LE_SMITH_5056) FaceAnim.HALF_GUILTY else FaceAnim.OLD_NORMAL
         when (stage) {
             0 ->
-                if (npc.id != 5050) {
+                if (npc.id != NPCs.AUGUSTE_5050) {
                     options("Yes.", "No.", "Who are you?").also { stage++ }
                 } else {
                     options("Yes.", "No.").also { stage++ }

@@ -1,6 +1,5 @@
 package content.region.kandarin.dialogue.piscatoris
 
-import core.api.hasRequirement
 import core.api.quest.hasRequirement
 import core.api.sendDialogueOptions
 import core.game.dialogue.Dialogue

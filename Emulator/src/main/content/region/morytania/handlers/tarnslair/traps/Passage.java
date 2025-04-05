@@ -1,7 +1,7 @@
 package content.region.morytania.handlers.tarnslair.traps;
 
-import org.rs.consts.Scenery;
 import core.game.world.map.Location;
+import org.rs.consts.Scenery;
 
 import java.util.HashMap;
 

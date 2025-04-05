@@ -4,11 +4,10 @@ import content.data.RespawnPoint
 import content.data.setRespawnLocation
 import content.global.activity.jobs.JobManager
 import content.region.kandarin.handlers.barbtraining.BarbarianTraining
-import content.region.kandarin.miniquest.knightwave.KnightWaveAttributes
 import core.api.*
-import core.api.quest.finishQuest
 import core.api.ui.closeDialogue
-import core.cache.def.impl.*
+import core.cache.def.impl.NPCDefinition
+import core.cache.def.impl.VarbitDefinition
 import core.game.node.entity.combat.ImpactHandler.HitsplatType
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.SpellBookManager
@@ -24,7 +23,6 @@ import core.tools.RED
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.rs.consts.Items
-import org.rs.consts.Quests
 
 @Initializable
 class DevelopmentCommandSet : CommandSet(Privilege.ADMIN) {

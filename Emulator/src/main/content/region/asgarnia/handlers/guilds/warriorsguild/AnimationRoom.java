@@ -1,9 +1,5 @@
 package content.region.asgarnia.handlers.guilds.warriorsguild;
 
-import org.rs.consts.Animations;
-import org.rs.consts.Items;
-import org.rs.consts.NPCs;
-import org.rs.consts.Sounds;
 import core.game.interaction.NodeUsageEvent;
 import core.game.interaction.UseWithHandler;
 import core.game.node.entity.Entity;
@@ -22,6 +18,10 @@ import core.game.world.update.flag.context.Animation;
 import core.plugin.Initializable;
 import core.plugin.Plugin;
 import kotlin.Unit;
+import org.rs.consts.Animations;
+import org.rs.consts.Items;
+import org.rs.consts.NPCs;
+import org.rs.consts.Sounds;
 
 import static core.api.ContentAPIKt.playAudio;
 import static core.api.ContentAPIKt.setAttribute;

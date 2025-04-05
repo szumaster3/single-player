@@ -1,7 +1,10 @@
 package content.region.kandarin.quest.elena.dialogue
 
-import core.api.*
+import core.api.addItem
+import core.api.freeSlots
+import core.api.inInventory
 import core.api.quest.getQuestStage
+import core.api.sendItemDialogue
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

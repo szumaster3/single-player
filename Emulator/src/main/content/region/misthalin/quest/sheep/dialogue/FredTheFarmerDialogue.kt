@@ -1,10 +1,12 @@
 package content.region.misthalin.quest.sheep.dialogue
 
 import content.region.misthalin.quest.sheep.SheepShearer
-import core.api.*
+import core.api.getAttribute
+import core.api.inInventory
 import core.api.quest.finishQuest
 import core.api.quest.setQuestStage
 import core.api.quest.startQuest
+import core.api.sendDialogue
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.tools.END_DIALOGUE

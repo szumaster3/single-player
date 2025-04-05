@@ -2,9 +2,12 @@ package content.region.fremennik.dialogue.rellekka
 
 import content.region.fremennik.handlers.TravelDestination
 import content.region.fremennik.handlers.WaterbirthTravel.sail
-import core.api.*
+import core.api.findLocalNPC
+import core.api.getAttribute
 import core.api.quest.isQuestComplete
 import core.api.quest.requireQuest
+import core.api.sendChat
+import core.api.sendNPCDialogue
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

@@ -1,7 +1,10 @@
 package content.region.misthalin.dialogue.varrock
 
-import core.api.*
+import core.api.addItemOrDrop
+import core.api.inInventory
 import core.api.quest.isQuestComplete
+import core.api.sendDialogue
+import core.api.sendItemDialogue
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

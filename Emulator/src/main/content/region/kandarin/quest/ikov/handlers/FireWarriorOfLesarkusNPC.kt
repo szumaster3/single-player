@@ -1,9 +1,12 @@
 package content.region.kandarin.quest.ikov.handlers
 
 import content.data.GameAttributes
-import core.api.*
+import core.api.poofClear
 import core.api.quest.getQuestStage
 import core.api.quest.setQuestStage
+import core.api.removeAttribute
+import core.api.runTask
+import core.api.sendNPCDialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.Entity
 import core.game.node.entity.combat.BattleState

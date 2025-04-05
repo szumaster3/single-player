@@ -1,10 +1,13 @@
 package content.region.misthalin.quest.rag.dialogue
 
 import content.region.misthalin.quest.rag.RagAndBoneMan
-import core.api.*
+import core.api.getAttribute
+import core.api.inInventory
 import core.api.quest.finishQuest
 import core.api.quest.getQuestStage
 import core.api.quest.setQuestStage
+import core.api.removeItem
+import core.api.setAttribute
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.game.dialogue.Topic

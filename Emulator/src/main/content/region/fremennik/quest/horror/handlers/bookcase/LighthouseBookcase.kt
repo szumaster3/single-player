@@ -1,8 +1,11 @@
 package content.region.fremennik.quest.horror.handlers.bookcase
 
 import content.data.QuestItem
-import core.api.*
+import core.api.addItem
+import core.api.freeSlots
+import core.api.openDialogue
 import core.api.quest.isQuestComplete
+import core.api.sendDialogue
 import core.game.dialogue.DialogueFile
 import core.tools.END_DIALOGUE
 import org.rs.consts.Items

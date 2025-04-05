@@ -1,7 +1,10 @@
 package content.region.misthalin.dialogue.lumbridge
 
-import core.api.*
+import core.api.getAttribute
 import core.api.interaction.openNpcShop
+import core.api.sendDialogueOptions
+import core.api.setAttribute
+import core.api.setTitle
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

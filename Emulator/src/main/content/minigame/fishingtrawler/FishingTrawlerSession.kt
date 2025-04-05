@@ -1,7 +1,6 @@
 package content.minigame.fishingtrawler
 
 import core.api.*
-import core.api.MapArea
 import core.game.component.Component
 import core.game.node.entity.Entity
 import core.game.node.entity.npc.NPC

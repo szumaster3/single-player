@@ -1,7 +1,5 @@
 package content.region.misthalin.quest.priest.handlers;
 
-import org.rs.consts.NPCs;
-import org.rs.consts.Quests;
 import core.cache.def.impl.NPCDefinition;
 import core.cache.def.impl.SceneryDefinition;
 import core.game.component.Component;
@@ -16,8 +14,11 @@ import core.game.node.scenery.Scenery;
 import core.game.world.map.Location;
 import core.plugin.Initializable;
 import core.plugin.Plugin;
+import org.rs.consts.NPCs;
+import org.rs.consts.Quests;
 
-import static core.api.ContentAPIKt.*;
+import static core.api.ContentAPIKt.sendMessage;
+import static core.api.ContentAPIKt.sendMessageWithDelay;
 import static core.api.quest.QuestAPIKt.getQuestStage;
 
 /**

@@ -4,14 +4,12 @@ import content.data.GameAttributes
 import content.global.skill.magic.SpellListener
 import content.global.skill.magic.TeleportMethod
 import content.global.skill.magic.spells.ModernSpells
-import content.region.misthalin.handlers.VarrockAchievementDiary
 import core.ServerConstants
 import core.api.*
 import core.api.quest.hasRequirement
 import core.game.event.TeleportEvent
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.TeleportManager
-import core.game.node.entity.player.link.diary.DiaryManager
 import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.item.Item
 import core.game.system.task.Pulse

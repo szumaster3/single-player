@@ -1,7 +1,6 @@
 package content.region.kandarin.quest.zogre.handlers
 
 import core.api.*
-import core.api.EquipmentSlot
 import core.api.item.produceGroundItem
 import core.game.node.entity.Entity
 import core.game.node.entity.combat.BattleState

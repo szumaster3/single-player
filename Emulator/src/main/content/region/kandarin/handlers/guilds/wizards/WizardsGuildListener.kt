@@ -1,8 +1,11 @@
 package content.region.kandarin.handlers.guilds.wizards
 
 import content.global.travel.EssenceTeleport.teleport
-import core.api.*
+import core.api.getDynLevel
 import core.api.quest.isQuestComplete
+import core.api.sendMessage
+import core.api.sendNPCDialogue
+import core.api.sendPlayerDialogue
 import core.game.global.action.ClimbActionHandler
 import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType

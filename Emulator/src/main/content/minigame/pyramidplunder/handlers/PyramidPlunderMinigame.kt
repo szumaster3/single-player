@@ -1,7 +1,6 @@
 package content.minigame.pyramidplunder.handlers
 
 import core.api.*
-import core.api.MapArea
 import core.api.event.applyPoison
 import core.game.dialogue.DialogueFile
 import core.game.interaction.IntType

@@ -1,8 +1,11 @@
 package content.region.kandarin.quest.merlin
 
 import content.data.GameAttributes
-import core.api.*
+import core.api.inInventory
 import core.api.quest.updateQuestTab
+import core.api.sendItemZoomOnInterface
+import core.api.sendString
+import core.api.setVarbit
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest
 import core.plugin.Initializable

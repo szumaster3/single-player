@@ -1,7 +1,6 @@
 package content.region.misthalin.handlers.lumbridge;
 
 import core.cache.def.impl.SceneryDefinition;
-import core.game.dialogue.FaceAnim;
 import core.game.interaction.NodeUsageEvent;
 import core.game.interaction.OptionHandler;
 import core.game.interaction.UseWithHandler;
@@ -16,10 +15,9 @@ import core.plugin.Initializable;
 import core.plugin.Plugin;
 import org.rs.consts.Items;
 import org.rs.consts.NPCs;
-import org.rs.consts.Quests;
 import org.rs.consts.Sounds;
 
-import static core.api.ContentAPIKt.*;
+import static core.api.ContentAPIKt.playAudio;
 
 /**
  * Represents the plugin used to milk a cow.

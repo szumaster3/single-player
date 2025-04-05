@@ -1,8 +1,11 @@
 package content.region.kandarin.dialogue.piscatoris
 
 import content.global.travel.RowingBoat
-import core.api.*
+import core.api.inEquipment
 import core.api.quest.hasRequirement
+import core.api.removeItem
+import core.api.sendDialogueOptions
+import core.api.setTitle
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

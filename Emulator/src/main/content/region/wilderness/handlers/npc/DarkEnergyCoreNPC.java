@@ -1,6 +1,5 @@
 package content.region.wilderness.handlers.npc;
 
-import org.rs.consts.NPCs;
 import core.game.node.entity.Entity;
 import core.game.node.entity.combat.ImpactHandler.HitsplatType;
 import core.game.node.entity.impl.Projectile;
@@ -14,6 +13,7 @@ import core.game.world.map.path.Path;
 import core.game.world.map.path.Pathfinder;
 import core.plugin.Initializable;
 import core.tools.RandomFunction;
+import org.rs.consts.NPCs;
 
 import static core.api.event.EventAPIKt.isPoisoned;
 import static core.api.event.EventAPIKt.isStunned;

@@ -4,23 +4,25 @@ import content.global.handlers.iface.FairyRing
 import content.global.handlers.item.withnpc.ChaliceOnKingArthurListener
 import content.region.kandarin.quest.grail.dialogue.GalahadDialogue
 import content.region.kandarin.quest.scorpcatcher.dialogue.ThormacDialogueFile
-import core.api.getVarbit
 import core.api.hasLevelDyn
 import core.api.inBorders
 import core.api.inEquipment
 import core.api.quest.isQuestComplete
+import core.game.diary.DiaryEventHookBase
+import core.game.diary.DiaryLevel
 import core.game.event.*
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.SpellBookManager
-import core.game.diary.DiaryEventHookBase
-import core.game.diary.DiaryLevel
 import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.entity.player.link.prayer.PrayerType
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.game.world.map.Location
 import core.game.world.map.zone.ZoneBorders
-import org.rs.consts.*
+import org.rs.consts.Items
+import org.rs.consts.NPCs
+import org.rs.consts.Quests
+import org.rs.consts.Scenery
 
 class SeersVillageAchievementDiary : DiaryEventHookBase(DiaryType.SEERS_VILLAGE) {
     companion object {

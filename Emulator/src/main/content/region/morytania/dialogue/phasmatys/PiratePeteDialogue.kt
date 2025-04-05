@@ -1,7 +1,6 @@
 package content.region.morytania.dialogue.phasmatys
 
 import content.region.morytania.quest.deal.dialogue.PiratePeteDialogueFile
-import core.api.hasRequirement
 import core.api.openDialogue
 import core.api.quest.hasRequirement
 import core.api.sendDialogue

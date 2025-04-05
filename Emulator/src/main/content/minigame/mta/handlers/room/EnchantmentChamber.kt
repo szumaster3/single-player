@@ -19,7 +19,10 @@ import core.game.world.map.Location
 import core.game.world.map.RegionManager.getNpc
 import core.game.world.map.zone.ZoneBorders
 import core.tools.RandomFunction
-import org.rs.consts.*
+import org.rs.consts.Animations
+import org.rs.consts.Components
+import org.rs.consts.Items
+import org.rs.consts.Music
 
 class EnchantmentChamber :
     MTAZone(

@@ -1,7 +1,10 @@
 package content.region.kandarin.quest.merlin.dialogue
 
 import content.region.kandarin.quest.merlin.cutscene.CrateCutscene
-import core.api.*
+import core.api.sendDialogue
+import core.api.sendDialogueLines
+import core.api.sendDialogueOptions
+import core.api.setTitle
 import core.game.dialogue.DialogueFile
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation

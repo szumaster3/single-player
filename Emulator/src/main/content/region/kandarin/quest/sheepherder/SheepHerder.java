@@ -1,13 +1,13 @@
 package content.region.kandarin.quest.sheepherder;
 
-import org.rs.consts.Items;
-import org.rs.consts.Vars;
 import content.region.kandarin.quest.sheepherder.handler.HerderSheepNPC;
 import core.game.node.entity.player.Player;
 import core.game.node.entity.player.link.quest.Quest;
 import core.game.node.item.Item;
 import core.game.world.map.Location;
 import core.plugin.Initializable;
+import org.rs.consts.Items;
+import org.rs.consts.Vars;
 
 import java.util.HashMap;
 

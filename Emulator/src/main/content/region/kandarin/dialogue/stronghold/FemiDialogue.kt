@@ -1,9 +1,11 @@
 package content.region.kandarin.dialogue.stronghold
 
 import content.region.kandarin.quest.grandtree.handlers.TheGrandTreeUtils
-import core.api.*
+import core.api.inBorders
 import core.api.quest.getQuestStage
 import core.api.quest.isQuestInProgress
+import core.api.sendDialogue
+import core.api.setAttribute
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

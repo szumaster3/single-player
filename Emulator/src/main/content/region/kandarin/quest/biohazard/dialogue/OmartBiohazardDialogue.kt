@@ -1,7 +1,10 @@
 package content.region.kandarin.quest.biohazard.dialogue
 
-import core.api.*
+import core.api.location
 import core.api.quest.getQuestStage
+import core.api.runTask
+import core.api.sendMessage
+import core.api.teleport
 import core.game.dialogue.DialogueFile
 import core.game.node.entity.npc.NPC
 import core.tools.END_DIALOGUE

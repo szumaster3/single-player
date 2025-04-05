@@ -1,9 +1,12 @@
 package content.region.misthalin.quest.vampire.dialogue
 
-import core.api.*
+import core.api.inBank
+import core.api.inInventory
 import core.api.quest.getQuestStage
 import core.api.quest.isQuestComplete
 import core.api.quest.setQuestStage
+import core.api.sendDialogue
+import core.api.sendItemDialogue
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

@@ -1,8 +1,11 @@
 package content.region.kandarin.quest.elementalquest2
 
 import content.region.kandarin.quest.elementalquest2.handlers.EW2Utils
-import core.api.*
+import core.api.hasLevelStat
 import core.api.quest.isQuestComplete
+import core.api.removeAttributes
+import core.api.rewardXP
+import core.api.setVarbit
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest
 import core.game.node.entity.skill.Skills

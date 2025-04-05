@@ -12,6 +12,7 @@ import core.game.world.update.flag.context.Animation
 import core.tools.END_DIALOGUE
 import core.tools.RandomFunction
 import org.rs.consts.Animations
+import org.rs.consts.Graphics
 import org.rs.consts.Items
 import org.rs.consts.Sounds
 
@@ -295,7 +296,7 @@ class PetRockItemListener : InteractionListener {
                                             "You wait a few seconds and pick your rock back up and pet it.",
                                             6,
                                         )
-                                        visualize(player, 6664, 1156)
+                                        visualize(player, Animations.PET_ROCK_FETCH_6664, Graphics.PET_ROCK_1156)
                                         end()
                                     }
                                 }
@@ -307,11 +308,11 @@ class PetRockItemListener : InteractionListener {
                                 lockInteractions(player, duration = animDuration)
                                 face(player, Location.getRandomLocation(getLocation(player), 2, true))
                                 playAudio(player, Sounds.THROW_STICK_1942)
-                                visualize(player, Animations.HUMAN_THROW_STICK_6665, 1157)
+                                visualize(player, Animations.HUMAN_THROW_STICK_6665, Graphics.PET_ROCK_THROW_STICK_1157)
                                 spawnProjectile(
                                     getLocation(player),
                                     Location.getRandomLocation(getLocation(player), 5, true),
-                                    1158,
+                                    Graphics.THROWING_THE_STICK_PROJECTILE_1158,
                                     40,
                                     0,
                                     150,

@@ -4,7 +4,6 @@ import core.api.*
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.player.Player
-import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.item.Item
 import org.rs.consts.Items
 import org.rs.consts.Scenery

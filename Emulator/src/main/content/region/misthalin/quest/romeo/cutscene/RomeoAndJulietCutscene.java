@@ -1,6 +1,5 @@
 package content.region.misthalin.quest.romeo.cutscene;
 
-import org.rs.consts.Quests;
 import core.game.activity.ActivityPlugin;
 import core.game.activity.CutscenePlugin;
 import core.game.node.entity.npc.NPC;
@@ -13,6 +12,7 @@ import core.net.packet.context.CameraContext;
 import core.net.packet.context.CameraContext.CameraType;
 import core.net.packet.out.CameraViewPacket;
 import core.plugin.Initializable;
+import org.rs.consts.Quests;
 
 /**
  * The type Romeo and juliet cutscene.

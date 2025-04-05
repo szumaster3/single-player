@@ -1,9 +1,11 @@
 package content.region.misthalin.quest.priest.dialogue
 
-import core.api.*
+import core.api.openInterface
 import core.api.quest.getQuestStage
 import core.api.quest.isQuestComplete
 import core.api.quest.updateQuestTab
+import core.api.sendDialogueOptions
+import core.api.setTitle
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

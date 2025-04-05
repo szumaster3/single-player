@@ -1,8 +1,6 @@
 package content.region.morytania.quest.ahoy.handlers
 
 import core.api.*
-import core.api.Event
-import core.api.MapArea
 import core.game.component.Component
 import core.game.event.EventHook
 import core.game.event.TickEvent

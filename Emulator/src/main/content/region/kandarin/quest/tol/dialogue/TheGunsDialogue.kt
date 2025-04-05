@@ -1,8 +1,11 @@
 package content.region.kandarin.quest.tol.dialogue
 
 import content.region.kandarin.quest.tol.handlers.TowerOfLifeUtils
-import core.api.*
+import core.api.addItemOrDrop
+import core.api.getAttribute
+import core.api.inInventory
 import core.api.quest.getQuestStage
+import core.api.sendMessage
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.player.Player

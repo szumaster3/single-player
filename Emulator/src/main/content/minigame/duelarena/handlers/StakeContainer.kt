@@ -2,7 +2,10 @@ package content.minigame.duelarena.handlers
 
 import core.api.ContainerListener
 import core.game.component.Component
-import core.game.container.*
+import core.game.container.Container
+import core.game.container.ContainerEvent
+import core.game.container.ContainerType
+import core.game.container.SortType
 import core.game.container.access.InterfaceContainer
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.info.login.PlayerParser

@@ -3,7 +3,6 @@ package content.region.misthalin.handlers.museum
 import content.region.misthalin.dialogue.digsite.GateGuardDialogue
 import content.region.misthalin.handlers.museum.dialogue.*
 import core.api.*
-import core.api.MapArea
 import core.api.quest.isQuestComplete
 import core.game.global.action.ClimbActionHandler
 import core.game.global.action.DoorActionHandler

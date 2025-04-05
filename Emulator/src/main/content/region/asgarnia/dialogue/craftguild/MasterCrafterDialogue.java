@@ -1,7 +1,5 @@
 package content.region.asgarnia.dialogue.craftguild;
 
-import org.rs.consts.Items;
-import org.rs.consts.NPCs;
 import core.api.Container;
 import core.game.dialogue.Dialogue;
 import core.game.dialogue.FaceAnim;
@@ -10,6 +8,8 @@ import core.game.node.entity.player.Player;
 import core.game.node.entity.skill.Skills;
 import core.game.node.item.Item;
 import core.plugin.Initializable;
+import org.rs.consts.Items;
+import org.rs.consts.NPCs;
 
 import static core.api.ContentAPIKt.*;
 import static core.tools.DialogueHelperKt.END_DIALOGUE;

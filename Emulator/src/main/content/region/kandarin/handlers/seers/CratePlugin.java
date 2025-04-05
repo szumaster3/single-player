@@ -1,6 +1,5 @@
 package content.region.kandarin.handlers.seers;
 
-import org.rs.consts.Scenery;
 import core.cache.def.impl.SceneryDefinition;
 import core.game.interaction.OptionHandler;
 import core.game.node.Node;
@@ -8,6 +7,7 @@ import core.game.node.entity.player.Player;
 import core.game.shops.Shops;
 import core.plugin.Initializable;
 import core.plugin.Plugin;
+import org.rs.consts.Scenery;
 
 /**
  * The type Crate plugin.

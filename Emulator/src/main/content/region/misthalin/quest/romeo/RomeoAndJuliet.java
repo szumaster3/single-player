@@ -1,10 +1,10 @@
 package content.region.misthalin.quest.romeo;
 
-import org.rs.consts.Quests;
-import org.rs.consts.Vars;
 import core.game.node.entity.player.Player;
 import core.game.node.entity.player.link.quest.Quest;
 import core.plugin.Initializable;
+import org.rs.consts.Quests;
+import org.rs.consts.Vars;
 
 /**
  * The type Romeo and juliet.

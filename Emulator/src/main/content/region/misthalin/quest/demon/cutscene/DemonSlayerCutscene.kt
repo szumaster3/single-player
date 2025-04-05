@@ -1,10 +1,6 @@
 package content.region.misthalin.quest.demon.cutscene
 
-import core.api.MapArea
-import core.api.getAttribute
-import core.api.inEquipment
-import core.api.inInventory
-import core.api.setAttribute
+import core.api.*
 import core.game.activity.ActivityManager
 import core.game.node.entity.Entity
 import core.game.node.entity.player.Player

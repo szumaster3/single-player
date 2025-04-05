@@ -8,7 +8,7 @@ import core.plugin.Initializable;
 import org.rs.consts.Items;
 import org.rs.consts.NPCs;
 
-import static core.api.ContentAPIKt.*;
+import static core.api.ContentAPIKt.sendMessage;
 import static core.api.interaction.NPCInteractionAPIKt.openNpcShop;
 import static core.tools.DialogueHelperKt.END_DIALOGUE;
 

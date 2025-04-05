@@ -1,7 +1,6 @@
 package content.region.kandarin.quest.zogre.handlers
 
 import core.api.*
-import core.api.MapArea
 import core.api.ui.closeDialogue
 import core.api.utils.PlayerCamera
 import core.game.node.entity.Entity

@@ -7,7 +7,9 @@ import core.game.node.entity.player.Player
 import core.game.system.task.Pulse
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
-import org.rs.consts.*
+import org.rs.consts.Animations
+import org.rs.consts.Quests
+import org.rs.consts.Sounds
 
 class BlessingPulse(
     val drezel: NPC,

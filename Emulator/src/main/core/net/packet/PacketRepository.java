@@ -1,16 +1,13 @@
 package core.net.packet;
 
-import core.net.packet.out.GrandExchangePacket;
+import core.game.bots.AIPlayer;
 import core.net.packet.out.*;
 import core.tools.Log;
-import core.tools.SystemLogger;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
-
-import core.game.bots.AIPlayer;
 
 import static core.api.ContentAPIKt.log;
 

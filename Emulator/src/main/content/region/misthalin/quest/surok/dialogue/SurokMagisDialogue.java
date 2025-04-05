@@ -1,7 +1,5 @@
 package content.region.misthalin.quest.surok.dialogue;
 
-import org.rs.consts.NPCs;
-import org.rs.consts.Quests;
 import content.region.misthalin.quest.surok.WhatLiesBelow;
 import content.region.misthalin.quest.surok.handlers.WhatLiesBelowCutscene;
 import core.game.activity.ActivityManager;
@@ -11,6 +9,8 @@ import core.game.node.entity.player.Player;
 import core.game.node.entity.player.link.quest.Quest;
 import core.game.world.update.flag.context.Animation;
 import core.plugin.Initializable;
+import org.rs.consts.NPCs;
+import org.rs.consts.Quests;
 
 /**
  * The type Surok magis dialogue.

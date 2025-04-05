@@ -2,11 +2,7 @@ package content.region.wilderness.handlers
 
 import content.global.skill.summoning.familiar.Familiar
 import content.region.wilderness.handlers.npc.CorporealBeastNPC
-import core.api.MapArea
-import core.api.TickListener
-import core.api.getAttribute
-import core.api.sendMessage
-import core.api.setAttribute
+import core.api.*
 import core.game.node.entity.Entity
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player

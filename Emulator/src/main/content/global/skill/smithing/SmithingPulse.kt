@@ -2,7 +2,6 @@ package content.global.skill.smithing
 
 import core.api.*
 import core.api.quest.isQuestComplete
-import core.cache.def.impl.ItemDefinition
 import core.game.event.ResourceProducedEvent
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.diary.DiaryType

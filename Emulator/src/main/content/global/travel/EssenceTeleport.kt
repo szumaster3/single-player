@@ -31,8 +31,8 @@ object EssenceTeleport {
         )
 
     private const val CURSE_PROJECTILE = org.rs.consts.Graphics.CURSE_PROJECTILE_109
-    private val ANIMATION = Animation(437)
-    private val OLD_ANIMATION = Animation(198)
+    private val ANIMATION = Animation(Animations.ATTACK_437)
+    private val OLD_ANIMATION = Animation(Animations.BALLER_CLAP_198)
     private val GLOWING_HANDS_GFX = Graphics(org.rs.consts.Graphics.CURSE_CAST_108)
     private val TELEPORT_GFX = Graphics(org.rs.consts.Graphics.CURSE_IMPACT_110, 150)
 
@@ -48,7 +48,7 @@ object EssenceTeleport {
         ) {
             return sendMessage(player, "You need to complete Rune Mysteries to enter the Rune Essence mine.")
         }
-        if (npc.id != 171) npc.animate(ANIMATION) else npc.animate(OLD_ANIMATION)
+        if (npc.id != NPCs.BRIMSTAIL_171) npc.animate(ANIMATION) else npc.animate(OLD_ANIMATION)
         npc.faceTemporary(player, 1)
         npc.graphics(GLOWING_HANDS_GFX)
         lock(player, 4)

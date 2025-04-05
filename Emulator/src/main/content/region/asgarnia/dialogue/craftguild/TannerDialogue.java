@@ -1,12 +1,12 @@
 package content.region.asgarnia.dialogue.craftguild;
 
 import content.global.skill.crafting.Tanning;
-import org.rs.consts.NPCs;
 import core.game.dialogue.Dialogue;
 import core.game.dialogue.FaceAnim;
 import core.game.node.entity.npc.NPC;
 import core.game.node.entity.player.Player;
 import core.plugin.Initializable;
+import org.rs.consts.NPCs;
 
 import static core.api.ContentAPIKt.inInventory;
 import static core.tools.DialogueHelperKt.END_DIALOGUE;

@@ -1,6 +1,9 @@
 package content.region.misthalin.dialogue.wizardstower
 
-import core.api.*
+import core.api.rewardXP
+import core.api.sendMessage
+import core.api.sendNPCDialogue
+import core.api.sendPlayerDialogue
 import core.api.skill.sendSkillDialogue
 import core.game.dialogue.Dialogue
 import core.game.event.ResourceProducedEvent

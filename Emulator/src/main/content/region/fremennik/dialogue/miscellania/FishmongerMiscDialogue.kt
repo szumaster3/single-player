@@ -1,6 +1,5 @@
 package content.region.fremennik.dialogue.miscellania
 
-import core.api.hasRequirement
 import core.api.interaction.openNpcShop
 import core.api.quest.hasRequirement
 import core.game.dialogue.Dialogue

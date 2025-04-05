@@ -1,6 +1,6 @@
 package content.minigame.bountyhunter.dialogue
 
-import core.api.*
+import core.api.hasIronmanRestriction
 import core.api.interaction.hasAwaitingGrandExchangeCollections
 import core.api.interaction.openBankAccount
 import core.api.interaction.openBankPinSettings

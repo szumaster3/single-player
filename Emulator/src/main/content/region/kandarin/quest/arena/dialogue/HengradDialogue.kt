@@ -1,7 +1,10 @@
 package content.region.kandarin.quest.arena.dialogue
 
 import content.region.kandarin.quest.arena.cutscene.ScorpionFightCutscene
-import core.api.*
+import core.api.face
+import core.api.findNPC
+import core.api.lock
+import core.api.lockInteractions
 import core.api.quest.getQuestStage
 import core.api.quest.setQuestStage
 import core.game.dialogue.DialogueFile

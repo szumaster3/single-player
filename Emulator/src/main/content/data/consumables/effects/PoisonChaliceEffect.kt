@@ -1,7 +1,6 @@
 package content.data.consumables.effects
 
 import core.api.impact
-import core.api.sendMessage
 import core.api.sendMessageWithDelay
 import core.game.consumable.ConsumableEffect
 import core.game.node.entity.combat.ImpactHandler

@@ -2,7 +2,9 @@ package content.minigame.mta.handlers.room
 
 import content.minigame.mta.handlers.MTAType
 import content.minigame.mta.handlers.MTAZone
-import core.api.*
+import core.api.removeAttribute
+import core.api.sendDialogue
+import core.api.sendString
 import core.game.interaction.Option
 import core.game.node.Node
 import core.game.node.entity.Entity

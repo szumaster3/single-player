@@ -20,8 +20,8 @@ import core.game.world.map.build.DynamicRegion;
 import core.game.world.map.zone.RegionZone;
 import core.game.world.map.zone.ZoneBuilder;
 import core.game.world.map.zone.ZoneRestriction;
-import core.plugin.Initializable;
 import core.plugin.ClassScanner;
+import core.plugin.Initializable;
 import core.tools.RandomFunction;
 import core.tools.StringUtils;
 
@@ -29,8 +29,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
 
-import static core.api.event.EventAPIKt.isPoisoned;
 import static core.api.event.EventAPIKt.curePoison;
+import static core.api.event.EventAPIKt.isPoisoned;
 
 /**
  * The type Pest control activity plugin.

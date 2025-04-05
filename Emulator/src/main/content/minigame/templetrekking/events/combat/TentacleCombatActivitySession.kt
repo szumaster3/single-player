@@ -1,11 +1,7 @@
 package content.minigame.templetrekking.events.combat
 
 import content.minigame.templetrekking.TempleTrekking
-import core.api.MapArea
-import core.api.getAttribute
-import core.api.getRegionBorders
-import core.api.registerLogoutListener
-import core.api.setAttribute
+import core.api.*
 import core.game.node.entity.player.Player
 import core.game.world.map.Location
 import core.game.world.map.build.DynamicRegion

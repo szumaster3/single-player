@@ -1,8 +1,5 @@
 package content.region.misthalin.quest.vampire.handlers;
 
-import org.rs.consts.Items;
-import org.rs.consts.NPCs;
-import org.rs.consts.Quests;
 import core.game.node.entity.Entity;
 import core.game.node.entity.combat.BattleState;
 import core.game.node.entity.combat.CombatStyle;
@@ -14,6 +11,9 @@ import core.game.world.map.Location;
 import core.game.world.update.flag.context.Animation;
 import core.plugin.Initializable;
 import core.tools.RandomFunction;
+import org.rs.consts.Items;
+import org.rs.consts.NPCs;
+import org.rs.consts.Quests;
 
 import static core.api.ContentAPIKt.inInventory;
 import static core.api.ContentAPIKt.sendMessage;

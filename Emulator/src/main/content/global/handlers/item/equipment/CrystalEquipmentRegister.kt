@@ -1,9 +1,9 @@
 package content.global.handlers.item.equipment
 
-import core.api.StartupListener
-import org.rs.consts.Items
 import core.Util.convertToIntegerArray
+import core.api.StartupListener
 import core.plugin.Initializable
+import org.rs.consts.Items
 
 /**
  * The Crystal equipment.

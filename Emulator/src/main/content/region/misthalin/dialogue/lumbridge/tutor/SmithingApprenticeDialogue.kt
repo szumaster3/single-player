@@ -1,6 +1,8 @@
 package content.region.misthalin.dialogue.lumbridge.tutor
 
-import core.api.*
+import core.api.anyInInventory
+import core.api.getStatLevel
+import core.api.sendItemDialogue
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

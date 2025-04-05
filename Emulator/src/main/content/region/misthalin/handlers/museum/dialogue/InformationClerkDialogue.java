@@ -1,11 +1,11 @@
 package content.region.misthalin.handlers.museum.dialogue;
 
-import core.game.world.GameWorld;
-import org.rs.consts.Items;
-import org.rs.consts.NPCs;
 import core.game.dialogue.Dialogue;
 import core.game.node.entity.player.Player;
+import core.game.world.GameWorld;
 import core.plugin.Initializable;
+import org.rs.consts.Items;
+import org.rs.consts.NPCs;
 
 import static core.api.ContentAPIKt.addItemOrDrop;
 import static core.api.ContentAPIKt.sendDialogueOptions;

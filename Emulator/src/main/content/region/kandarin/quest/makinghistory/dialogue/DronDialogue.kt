@@ -1,8 +1,11 @@
 package content.region.kandarin.quest.makinghistory.dialogue
 
 import content.region.kandarin.quest.makinghistory.handlers.MakingHistoryUtils
-import core.api.*
+import core.api.getVarbit
 import core.api.quest.getQuestStage
+import core.api.sendDialogue
+import core.api.setAttribute
+import core.api.setVarbit
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.player.Player

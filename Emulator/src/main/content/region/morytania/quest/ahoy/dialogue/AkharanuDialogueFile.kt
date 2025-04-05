@@ -1,9 +1,12 @@
 package content.region.morytania.quest.ahoy.dialogue
 
 import content.region.morytania.quest.ahoy.handlers.GhostsAhoyUtils
-import core.api.*
+import core.api.addItemOrDrop
+import core.api.inInventory
 import core.api.quest.getQuestStage
 import core.api.quest.setQuestStage
+import core.api.sendItemDialogue
+import core.api.setAttribute
 import core.game.dialogue.DialogueFile
 import core.game.node.entity.npc.NPC
 import core.tools.END_DIALOGUE

@@ -48,7 +48,7 @@ class PharaohSceptreListener : InteractionListener {
             player: Player,
         ) {
             player.lock()
-            player.visualize(Animation(714), Graphics(715))
+            player.visualize(Animation(714), Graphics(org.rs.consts.Graphics.PHARAOH_SCEPTRE_TP_715))
             player.impactHandler.disabledTicks = 4
             Pulser.submit(
                 object : Pulse(4, player) {

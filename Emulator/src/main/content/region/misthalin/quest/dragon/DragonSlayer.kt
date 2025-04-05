@@ -11,7 +11,6 @@ import content.region.misthalin.quest.dragon.handlers.DragonSlayerPlugin
 import content.region.misthalin.quest.dragon.handlers.MagicDoorPlugin
 import content.region.misthalin.quest.dragon.handlers.npc.*
 import core.api.*
-import core.api.Event
 import core.api.quest.getQuestStage
 import core.game.component.Component
 import core.game.event.EventHook

@@ -2,8 +2,6 @@ package content.region.misthalin.quest.anma.handlers
 
 import content.data.GameAttributes
 import core.api.*
-import core.api.EquipmentSlot
-import core.api.Event
 import core.api.quest.isQuestComplete
 import core.game.container.impl.EquipmentContainer
 import core.game.event.EventHook

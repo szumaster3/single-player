@@ -2,9 +2,7 @@ package content.region.kandarin.dialogue.witchaven
 
 import content.region.kandarin.quest.seaslug.dialogue.CarolineDialogueFile
 import core.api.openDialogue
-import core.api.quest.getQuestStage
 import core.api.quest.isQuestComplete
-import core.api.quest.isQuestInProgress
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
