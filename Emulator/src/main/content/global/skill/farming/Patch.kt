@@ -35,7 +35,7 @@ class Patch(
             when (compost) {
                 CompostType.NONE -> 0
                 CompostType.COMPOST -> 1
-                CompostType.SUPERCOMPOST -> 2
+                CompostType.SUPER_COMPOST -> 2
             }
         harvestAmt =
             when (plantable) {
@@ -333,7 +333,7 @@ class Patch(
                 when (compost) {
                     CompostType.NONE -> 0
                     CompostType.COMPOST -> 8
-                    CompostType.SUPERCOMPOST -> 13
+                    CompostType.SUPER_COMPOST -> 13
                 }
             }
 

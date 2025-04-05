@@ -48,11 +48,7 @@ class SackBasketListener : InteractionListener {
         item: Item,
     ) {
         if (item.id == Items.EMPTY_SACK_5418) {
-            val hasProduce =
-                player.inventory.contains(Items.POTATO_1942, 1) ||
-                    player.inventory.contains(Items.ONION_1957, 1) ||
-                    player.inventory.contains(Items.CABBAGE_1965, 1)
-
+            val hasProduce = anyInInventory(player, Items.POTATO_1942, Items.ONION_1957, Items.CABBAGE_1965)
             if (!hasProduce) {
                 sendMessage(player, "You don't have any potatoes, onions or cabbages.")
                 return
@@ -67,7 +63,7 @@ class SackBasketListener : InteractionListener {
         val max = container.containers.size - 1
 
         if (isLast) {
-            player.sendMessage("This is already full.")
+            sendMessage(player, "This is already full.")
             return
         }
 

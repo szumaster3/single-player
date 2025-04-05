@@ -25,18 +25,18 @@ class WorkbenchSpace :
     InteractionListener {
     private val flatpackItemIDs = Decoration.values().map { it.interfaceItem }.toIntArray()
     private val buildHotspot = BuildHotspot.values().map { it.objectId }.toIntArray()
-    private val workBenchIDs = intArrayOf(13704, 13705, 13706, 13707, 13708)
+    private val workBenchIDs = intArrayOf(org.rs.consts.Scenery.WORKBENCH_13704, org.rs.consts.Scenery.WORKBENCH_13705, org.rs.consts.Scenery.WORKBENCH_13706, org.rs.consts.Scenery.WORKBENCH_13707, org.rs.consts.Scenery.WORKBENCH_13708)
 
     override fun defineListeners() {
         on(workBenchIDs, IntType.SCENERY, "work-at") { player, obj ->
             player.interfaceManager.close()
             openInterface(player, Components.POH_WORKBENCH_397)
             when (obj.id) {
-                13704 -> setAttribute(player, GameAttributes.CON_FLATPACK_TIER, 20)
-                13705 -> setAttribute(player, GameAttributes.CON_FLATPACK_TIER, 40)
-                13706 -> setAttribute(player, GameAttributes.CON_FLATPACK_TIER, 60)
-                13707 -> setAttribute(player, GameAttributes.CON_FLATPACK_TIER, 80)
-                13708 -> setAttribute(player, GameAttributes.CON_FLATPACK_TIER, 99)
+                org.rs.consts.Scenery.WORKBENCH_13704 -> setAttribute(player, GameAttributes.CON_FLATPACK_TIER, 20)
+                org.rs.consts.Scenery.WORKBENCH_13705 -> setAttribute(player, GameAttributes.CON_FLATPACK_TIER, 40)
+                org.rs.consts.Scenery.WORKBENCH_13706 -> setAttribute(player, GameAttributes.CON_FLATPACK_TIER, 60)
+                org.rs.consts.Scenery.WORKBENCH_13707 -> setAttribute(player, GameAttributes.CON_FLATPACK_TIER, 80)
+                org.rs.consts.Scenery.WORKBENCH_13708 -> setAttribute(player, GameAttributes.CON_FLATPACK_TIER, 99)
             }
 
             return@on true

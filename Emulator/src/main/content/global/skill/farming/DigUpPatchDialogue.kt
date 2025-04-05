@@ -5,6 +5,7 @@ import core.game.dialogue.Dialogue
 import core.game.interaction.QueueStrength
 import core.game.node.entity.player.Player
 import core.plugin.Initializable
+import org.rs.consts.Animations
 import org.rs.consts.Sounds
 
 @Initializable
@@ -47,7 +48,7 @@ class DigUpPatchDialogue(
                 when (buttonId) {
                     1 -> {
                         end()
-                        val anim = getAnimation(830)
+                        val anim = getAnimation(Animations.DIG_SPADE_830)
                         sendMessage(player, "You start digging the farming patch...")
                         queueScript(player, 0, QueueStrength.WEAK) { stage: Int ->
                             when (stage) {

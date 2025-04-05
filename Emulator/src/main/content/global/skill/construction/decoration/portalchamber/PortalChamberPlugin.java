@@ -16,6 +16,7 @@ import core.game.world.update.flag.context.Animation;
 import core.plugin.ClassScanner;
 import core.plugin.Initializable;
 import core.plugin.Plugin;
+import org.rs.consts.Animations;
 
 import static core.api.ContentAPIKt.sendDialogueOptions;
 import static core.api.ContentAPIKt.setTitle;
@@ -108,7 +109,7 @@ public class PortalChamberPlugin extends OptionHandler {
                         break;
                     }
                 }
-                player.animate(Animation.create(3705));
+                player.animate(Animation.create(Animations.MAKING_TELE_TAB_3705));
                 h.setDecorationIndex(h.getHotspot().getDecorationIndex(Decoration.forName(prefix + "_" + identifier + "_" + "PORTAL")));
                 player.getHouseManager().reload(player, player.getHouseManager().isBuildingMode());
             }
@@ -117,11 +118,11 @@ public class PortalChamberPlugin extends OptionHandler {
 
     @Override
     public Plugin<java.lang.Object> newInstance(java.lang.Object arg) throws Throwable {
-        SceneryDefinition.forId(13639).getHandlers().put("option:direct-portal", this);
-        SceneryDefinition.forId(13639).getHandlers().put("option:scry", this);
-        SceneryDefinition.forId(13640).getHandlers().put("option:direct-portal", this);
-        SceneryDefinition.forId(13641).getHandlers().put("option:direct-portal", this);
-        for (int i = 13615; i <= 13635; i++) {
+        SceneryDefinition.forId(org.rs.consts.Scenery.SCRYING_POOL_13639).getHandlers().put("option:direct-portal", this);
+        SceneryDefinition.forId(org.rs.consts.Scenery.SCRYING_POOL_13639).getHandlers().put("option:scry", this);
+        SceneryDefinition.forId(org.rs.consts.Scenery.TPATION_FOCUS_13640).getHandlers().put("option:direct-portal", this);
+        SceneryDefinition.forId(org.rs.consts.Scenery.GREATER_TP_FOCUS_13641).getHandlers().put("option:direct-portal", this);
+        for (int i = org.rs.consts.Scenery.VARROCK_PORTAL_13615; i <= org.rs.consts.Scenery.KHARYRLL_PORTAL_13635; i++) {
             SceneryDefinition.forId(i).getHandlers().put("option:enter", this);
         }
         ClassScanner.definePlugin(new DirectPortalDialogue());
@@ -177,11 +178,7 @@ public class PortalChamberPlugin extends OptionHandler {
 
         @Override
         public boolean open(java.lang.Object... args) {
-            sendDialogue(
-                "To direct a portal you need enough runes for " + DARK_RED + "100</col> castings of that",
-                "teleport spell.",
-                "(Combination runes and staffs cannot be used.)"
-            );
+            sendDialogue("To direct a portal you need enough runes for " + DARK_RED + "100</col> castings of that", "teleport spell.", "(Combination runes and staffs cannot be used.)");
             stage = 0;
             return true;
         }

@@ -8,6 +8,7 @@ import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import org.rs.consts.Components
 import org.rs.consts.Items
+import org.rs.consts.Vars
 
 class ToolLeprechaunInterface : InterfaceListener {
     private val FARMING_TOOLS = Components.FARMING_TOOLS_125
@@ -46,32 +47,29 @@ class ToolLeprechaunInterface : InterfaceListener {
                 }
 
                 38 -> doWithdrawal(player, Items.GARDENING_TROWEL_5325, ::setHasGardeningTrowel, ::hasGardeningTrowel)
-                39 ->
-                    doStackedWithdrawal(
-                        player,
-                        Items.BUCKET_1925,
-                        getAmount(opcode),
-                        ::updateBuckets,
-                        ::getNumBuckets,
-                    )
+                39 -> doStackedWithdrawal(
+                    player,
+                    Items.BUCKET_1925,
+                    getAmount(opcode),
+                    ::updateBuckets,
+                    ::getNumBuckets,
+                )
 
-                40 ->
-                    doStackedWithdrawal(
-                        player,
-                        Items.COMPOST_6032,
-                        getAmount(opcode),
-                        ::updateCompost,
-                        ::getNumCompost,
-                    )
+                40 -> doStackedWithdrawal(
+                    player,
+                    Items.COMPOST_6032,
+                    getAmount(opcode),
+                    ::updateCompost,
+                    ::getNumCompost,
+                )
 
-                41 ->
-                    doStackedWithdrawal(
-                        player,
-                        Items.SUPERCOMPOST_6034,
-                        getAmount(opcode),
-                        ::updateSuperCompost,
-                        ::getNumSuperCompost,
-                    )
+                41 -> doStackedWithdrawal(
+                    player,
+                    Items.SUPERCOMPOST_6034,
+                    getAmount(opcode),
+                    ::updateSuperCompost,
+                    ::getNumSuperCompost,
+                )
             }
             return@on true
         }
@@ -82,8 +80,7 @@ class ToolLeprechaunInterface : InterfaceListener {
                 19 -> doDeposit(player, Items.SEED_DIBBER_5343, ::setHasDibber, ::hasDibber)
                 20 -> doDeposit(player, Items.SPADE_952, ::setHasSpade, ::hasSpade)
                 21 -> {
-                    if (!inInventory(player, Items.SECATEURS_5329) &&
-                        !inInventory(
+                    if (!inInventory(player, Items.SECATEURS_5329) && !inInventory(
                             player,
                             Items.MAGIC_SECATEURS_7409,
                         )
@@ -119,14 +116,13 @@ class ToolLeprechaunInterface : InterfaceListener {
                 23 -> doDeposit(player, Items.GARDENING_TROWEL_5325, ::setHasGardeningTrowel, ::hasGardeningTrowel)
                 24 -> doStackedDeposit(player, Items.BUCKET_1925, getAmount(opcode), ::updateBuckets, ::getNumBuckets)
                 25 -> doStackedDeposit(player, Items.COMPOST_6032, getAmount(opcode), ::updateCompost, ::getNumCompost)
-                26 ->
-                    doStackedDeposit(
-                        player,
-                        Items.SUPERCOMPOST_6034,
-                        getAmount(opcode),
-                        ::updateSuperCompost,
-                        ::getNumSuperCompost,
-                    )
+                26 -> doStackedDeposit(
+                    player,
+                    Items.SUPERCOMPOST_6034,
+                    getAmount(opcode),
+                    ::updateSuperCompost,
+                    ::getNumSuperCompost,
+                )
             }
             return@on true
         }
@@ -168,14 +164,13 @@ class ToolLeprechaunInterface : InterfaceListener {
             depositMethod.invoke(player, true)
             removeItem(player, item)
         } else {
-            val itemName =
-                when (item) {
-                    Items.RAKE_5341 -> "rake"
-                    Items.SEED_DIBBER_5343 -> "dibber"
-                    Items.SPADE_952 -> "spade"
-                    Items.GARDENING_TROWEL_5325 -> "trowel"
-                    else -> getItemName(item).lowercase()
-                }
+            val itemName = when (item) {
+                Items.RAKE_5341 -> "rake"
+                Items.SEED_DIBBER_5343 -> "dibber"
+                Items.SPADE_952 -> "spade"
+                Items.GARDENING_TROWEL_5325 -> "trowel"
+                else -> getItemName(item).lowercase()
+            }
             sendMessage(player, "You cannot store more than one $itemName in here.")
         }
     }
@@ -285,59 +280,59 @@ class ToolLeprechaunInterface : InterfaceListener {
         updateQuantityMethod.invoke(player, -finalAmount)
     }
 
-    fun getAmount(opcode: Int): Int =
-        when (opcode) {
-            155 -> 1
-            196 -> 5
-            124 -> -1
-            199 -> -2
-            else -> 0
-        }
+    fun getAmount(opcode: Int): Int = when (opcode) {
+        155 -> 1
+        196 -> 5
+        124 -> -1
+        199 -> -2
+        else -> 0
+    }
 
-    private fun hasRake(player: Player?): Boolean = getVarbit(player!!, 1435) == 1
+    private fun hasRake(player: Player?): Boolean = getVarbit(player!!, Vars.VARBIT_FARMING_TOOL_RAKE_LOW_1435) == 1
 
     private fun setHasRake(
         player: Player?,
         hasRake: Boolean,
     ) {
-        setVarbit(player!!, 1435, if (hasRake) 1 else 0, true)
+        setVarbit(player!!, Vars.VARBIT_FARMING_TOOL_RAKE_LOW_1435, if (hasRake) 1 else 0, true)
     }
 
-    private fun hasDibber(player: Player?): Boolean = getVarbit(player!!, 1436) == 1
+    private fun hasDibber(player: Player?): Boolean =
+        getVarbit(player!!, Vars.VARBIT_FARMING_TOOL_SEED_DIBBER_LOW_1436) == 1
 
     private fun setHasDibber(
         player: Player?,
         hasDibber: Boolean,
     ) {
-        setVarbit(player!!, 1436, if (hasDibber) 1 else 0, true)
+        setVarbit(player!!, Vars.VARBIT_FARMING_TOOL_SEED_DIBBER_LOW_1436, if (hasDibber) 1 else 0, true)
     }
 
-    private fun hasSpade(player: Player?): Boolean = getVarbit(player!!, 1437) == 1
+    private fun hasSpade(player: Player?): Boolean = getVarbit(player!!, Vars.VARBIT_FARMING_TOOL_SPADE_LOW_1437) == 1
 
     private fun setHasSpade(
         player: Player?,
         hasSpade: Boolean,
     ) {
-        setVarbit(player!!, 1437, if (hasSpade) 1 else 0, true)
+        setVarbit(player!!, Vars.VARBIT_FARMING_TOOL_SPADE_LOW_1437, if (hasSpade) 1 else 0, true)
     }
 
-    private fun hasSecateurs(player: Player?): Boolean = getVarbit(player!!, 1438) == 1
+    private fun hasSecateurs(player: Player?): Boolean =
+        getVarbit(player!!, Vars.VARBIT_FARMING_TOOL_SECATEURS_LOW_1438) == 1
 
     private fun setHasSecateurs(
         player: Player?,
         hasSecateurs: Boolean,
     ) {
-        setVarbit(player!!, 1438, if (hasSecateurs) 1 else 0, true)
+        setVarbit(player!!, Vars.VARBIT_FARMING_TOOL_SECATEURS_LOW_1438, if (hasSecateurs) 1 else 0, true)
     }
 
     private fun hasWateringCan(player: Player?): Boolean = getVarbit(player!!, 1439) > 0
 
     private fun getWateringCan(player: Player?): Int {
-        var can =
-            getVarbit(
-                player!!,
-                1439,
-            )
+        var can = getVarbit(
+            player!!,
+            1439,
+        )
         if (can == 1) can = 0
         return Items.WATERING_CAN_5331 + can
     }
@@ -346,19 +341,18 @@ class ToolLeprechaunInterface : InterfaceListener {
         player: Player?,
         item: Item,
     ) {
-        val can =
-            when (item.id) {
-                Items.WATERING_CAN_5331 -> 1
-                Items.WATERING_CAN1_5333 -> 2
-                Items.WATERING_CAN2_5334 -> 3
-                Items.WATERING_CAN3_5335 -> 4
-                Items.WATERING_CAN4_5336 -> 5
-                Items.WATERING_CAN5_5337 -> 6
-                Items.WATERING_CAN6_5338 -> 7
-                Items.WATERING_CAN7_5339 -> 8
-                Items.WATERING_CAN8_5340 -> 9
-                else -> 0
-            }
+        val can = when (item.id) {
+            Items.WATERING_CAN_5331 -> 1
+            Items.WATERING_CAN1_5333 -> 2
+            Items.WATERING_CAN2_5334 -> 3
+            Items.WATERING_CAN3_5335 -> 4
+            Items.WATERING_CAN4_5336 -> 5
+            Items.WATERING_CAN5_5337 -> 6
+            Items.WATERING_CAN6_5338 -> 7
+            Items.WATERING_CAN7_5339 -> 8
+            Items.WATERING_CAN8_5340 -> 9
+            else -> 0
+        }
         setVarbit(player!!, 1439, can, true)
     }
 
@@ -366,22 +360,23 @@ class ToolLeprechaunInterface : InterfaceListener {
         setVarbit(player!!, 1439, 0, true)
     }
 
-    private fun hasGardeningTrowel(player: Player?): Boolean = getVarbit(player!!, 1440) == 1
+    private fun hasGardeningTrowel(player: Player?): Boolean =
+        getVarbit(player!!, Vars.VARBIT_FARMING_TOOL_TROWEL_LOW_1440) == 1
 
     private fun setHasGardeningTrowel(
         player: Player?,
         hasTrowel: Boolean,
     ) {
-        setVarbit(player!!, 1440, if (hasTrowel) 1 else 0, true)
+        setVarbit(player!!, Vars.VARBIT_FARMING_TOOL_TROWEL_LOW_1440, if (hasTrowel) 1 else 0, true)
     }
 
-    private fun getNumBuckets(player: Player?): Int = getVarbit(player!!, 1441)
+    private fun getNumBuckets(player: Player?): Int = getVarbit(player!!, Vars.VARBIT_FARMING_TOOL_BUCKET_LOW_1441)
 
     private fun updateBuckets(
         player: Player?,
         amount: Int,
     ) {
-        setVarbit(player!!, 1441, getNumBuckets(player) + amount, true)
+        setVarbit(player!!, Vars.VARBIT_FARMING_TOOL_BUCKET_LOW_1441, getNumBuckets(player) + amount, true)
     }
 
     private fun getNumCompost(player: Player?): Int = getVarbit(player!!, 1442)
@@ -402,13 +397,14 @@ class ToolLeprechaunInterface : InterfaceListener {
         setVarbit(player!!, 1443, getNumSuperCompost(player) + amount, true)
     }
 
-    private fun hasMagicSecateurs(player: Player?): Boolean = getVarbit(player!!, 1848) == 1
+    private fun hasMagicSecateurs(player: Player?): Boolean =
+        getVarbit(player!!, Vars.VARBIT_FARMING_TOOL_SECATEURS_TYPE_1848) == 1
 
     private fun setHasMagicSecateurs(
         player: Player?,
         hasMagic: Boolean,
     ) {
-        setVarbit(player!!, 1848, if (hasMagic) 1 else 0, true)
+        setVarbit(player!!, Vars.VARBIT_FARMING_TOOL_SECATEURS_TYPE_1848, if (hasMagic) 1 else 0, true)
     }
 
     private fun getHighestCan(player: Player?): Item? {

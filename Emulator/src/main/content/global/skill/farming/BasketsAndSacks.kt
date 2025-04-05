@@ -55,17 +55,17 @@ enum class BasketsAndSacks(
         private val map = HashMap<Int, BasketsAndSacks>()
 
         init {
-            values().map { it.produceID to it }.toMap(BasketsAndSacks.Companion.map)
+            values().associateByTo(BasketsAndSacks.map) { it.produceID }
             for (b in values()) {
                 for (i in 0 until b.capacity) {
-                    BasketsAndSacks.Companion.map[b.baseContainer + (i * 2)] = b
+                    BasketsAndSacks.map[b.baseContainer + (i * 2)] = b
                     b.containers.add(b.baseContainer + (i * 2))
                 }
             }
         }
 
         @JvmStatic
-        fun forId(itemId: Int): BasketsAndSacks? = BasketsAndSacks.Companion.map[itemId]
+        fun forId(itemId: Int): BasketsAndSacks? = BasketsAndSacks.map[itemId]
     }
 
     fun checkIsLast(containerID: Int): Boolean = containerID == containers.last()

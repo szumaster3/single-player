@@ -10,6 +10,7 @@ import core.game.node.item.Item
 import core.tools.END_DIALOGUE
 import core.tools.START_DIALOGUE
 import org.rs.consts.Items
+import org.rs.consts.NPCs
 
 class FarmerPayOptionDialogue(
     val patch: Patch,
@@ -21,8 +22,10 @@ class FarmerPayOptionDialogue(
         componentID: Int,
         buttonID: Int,
     ) {
-        val faceAnim =
-            if (npc!!.id in intArrayOf(1037, 2343)) FaceAnim.OLD_NORMAL else FaceAnim.HALF_GUILTY
+        val faceAnim = if (npc!!.id in intArrayOf(
+                NPCs.PRISSY_SCILLA_1037, NPCs.BOLONGO_2343
+            )
+        ) FaceAnim.OLD_NORMAL else FaceAnim.HALF_GUILTY
         when (stage) {
             START_DIALOGUE -> {
                 if (patch.patch.type == PatchType.TREE_PATCH && patch.plantable != null && patch.isGrown()) {
@@ -63,37 +66,32 @@ class FarmerPayOptionDialogue(
                     ).also { stage = END_DIALOGUE }
                 } else {
                     item = patch.plantable?.protectionItem
-                    val protectionText =
-                        when (item?.id) {
-                            Items.COMPOST_6032 -> if (item?.amount == 1) "bucket of compost" else "buckets of compost"
-                            Items.POTATOES10_5438 -> if (item?.amount == 1) "sack of potatoes" else "sacks of potatoes"
-                            Items.ONIONS10_5458 -> if (item?.amount == 1) "sack of onions" else "sacks of onions"
-                            Items.CABBAGES10_5478 -> if (item?.amount == 1) "sack of cabbages" else "sacks of cabbages"
-                            Items.JUTE_FIBRE_5931 -> "jute fibres"
-                            Items.APPLES5_5386 -> if (item?.amount == 1) "basket of apples" else "baskets of apples"
-                            Items.MARIGOLDS_6010 -> "harvest of marigold"
-                            Items.TOMATOES5_5968 ->
-                                if (item?.amount ==
-                                    1
-                                ) {
-                                    "basket of tomatoes"
-                                } else {
-                                    "baskets of tomatoes"
-                                }
-                            Items.ORANGES5_5396 -> if (item?.amount == 1) "basket of oranges" else "baskets of oranges"
-                            Items.COCONUT_5974 -> "coconuts"
-                            Items.CACTUS_SPINE_6016 -> "cactus spines"
-                            Items.STRAWBERRIES5_5406 ->
-                                if (item?.amount ==
-                                    1
-                                ) {
-                                    "basket of strawberries"
-                                } else {
-                                    "baskets of strawberries"
-                                }
-                            Items.BANANAS5_5416 -> if (item?.amount == 1) "basket of bananas" else "baskets of bananas"
-                            else -> item?.name?.lowercase()
+                    val protectionText = when (item?.id) {
+                        Items.COMPOST_6032 -> if (item?.amount == 1) "bucket of compost" else "buckets of compost"
+                        Items.POTATOES10_5438 -> if (item?.amount == 1) "sack of potatoes" else "sacks of potatoes"
+                        Items.ONIONS10_5458 -> if (item?.amount == 1) "sack of onions" else "sacks of onions"
+                        Items.CABBAGES10_5478 -> if (item?.amount == 1) "sack of cabbages" else "sacks of cabbages"
+                        Items.JUTE_FIBRE_5931 -> "jute fibres"
+                        Items.APPLES5_5386 -> if (item?.amount == 1) "basket of apples" else "baskets of apples"
+                        Items.MARIGOLDS_6010 -> "harvest of marigold"
+                        Items.TOMATOES5_5968 -> if (item?.amount == 1) {
+                            "basket of tomatoes"
+                        } else {
+                            "baskets of tomatoes"
                         }
+
+                        Items.ORANGES5_5396 -> if (item?.amount == 1) "basket of oranges" else "baskets of oranges"
+                        Items.COCONUT_5974 -> "coconuts"
+                        Items.CACTUS_SPINE_6016 -> "cactus spines"
+                        Items.STRAWBERRIES5_5406 -> if (item?.amount == 1) {
+                            "basket of strawberries"
+                        } else {
+                            "baskets of strawberries"
+                        }
+
+                        Items.BANANAS5_5416 -> if (item?.amount == 1) "basket of bananas" else "baskets of bananas"
+                        else -> item?.name?.lowercase()
+                    }
                     if (item == null) {
                         if (patch.plantable!!.harvestItem == Items.POISON_IVY_BERRIES_6018) {
                             npc(faceAnim, "There is no need for me to look after that poison ivy.")
@@ -101,15 +99,11 @@ class FarmerPayOptionDialogue(
                         } else {
                             npc(faceAnim, "Sorry, I won't protect that.").also { stage = END_DIALOGUE }
                         }
-                    } else if (quickPay &&
-                        !(
-                            inInventory(player!!, item!!.id, item!!.amount) ||
-                                inInventory(
-                                    player!!,
-                                    note(item!!).id,
-                                    note(item!!).amount,
-                                )
-                        )
+                    } else if (quickPay && !(inInventory(player!!, item!!.id, item!!.amount) || inInventory(
+                            player!!,
+                            note(item!!).id,
+                            note(item!!).amount,
+                        ))
                     ) {
                         val amount = if (item?.amount == 1) "one" else item?.amount
                         npc(faceAnim, "I want $amount $protectionText for that.")
@@ -130,14 +124,11 @@ class FarmerPayOptionDialogue(
             }
 
             1 -> {
-                if (!(
-                        inInventory(player!!, item!!.id, item!!.amount) ||
-                            inInventory(
-                                player!!,
-                                note(item!!).id,
-                                note(item!!).amount,
-                            )
-                    )
+                if (!(inInventory(player!!, item!!.id, item!!.amount) || inInventory(
+                        player!!,
+                        note(item!!).id,
+                        note(item!!).amount,
+                    ))
                 ) {
                     player("I'm afraid I don't have any of those at the moment.").also { stage = 10 }
                 } else {
@@ -179,11 +170,10 @@ class FarmerPayOptionDialogue(
             }
 
             400 -> player("Really?").also { stage++ }
-            401 ->
-                npc(
-                    "Yes, poison ivy is pretty hardy stuff, and most animals",
-                    "will avoid eating it.",
-                ).also { stage++ }
+            401 -> npc(
+                "Yes, poison ivy is pretty hardy stuff, and most animals",
+                "will avoid eating it.",
+            ).also { stage++ }
 
             402 -> npc("Hence, there is no reason to worry about it.").also { stage++ }
             403 -> player("Great.").also { stage = END_DIALOGUE }

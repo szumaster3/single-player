@@ -12,6 +12,7 @@ import core.game.system.task.Pulse
 import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
 import core.plugin.Plugin
+import org.rs.consts.Animations
 import org.rs.consts.Sounds
 import java.util.concurrent.TimeUnit
 
@@ -47,7 +48,7 @@ class FruitAndBerryPicker : OptionHandler() {
         val plantable = patch.plantable
         plantable ?: return false
 
-        val animation = Animation(2281)
+        val animation = Animation(Animations.PICK_FROM_FRUIT_TREE_2281)
 
         if (patch.getFruitOrBerryCount() <= 0) {
             sendMessage(player, "This shouldn't be happening. Please report this.")

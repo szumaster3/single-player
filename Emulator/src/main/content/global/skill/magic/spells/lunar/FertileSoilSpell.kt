@@ -51,7 +51,7 @@ class FertileSoilSpell : SpellListener("lunar") {
                 animate(player, Animations.LUNAR_FERTILE_SOIL_4413)
                 sendGraphics(724, node.location)
                 playGlobalAudio(node.location, Sounds.LUNAR_FERTILIZE_2891)
-                patch.compost = CompostType.SUPERCOMPOST
+                patch.compost = CompostType.SUPER_COMPOST
                 sendMessage(player, "You fertilize the soil.")
                 addXP(player, 87.0)
             }

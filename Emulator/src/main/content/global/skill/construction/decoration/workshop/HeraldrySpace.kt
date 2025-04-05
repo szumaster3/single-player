@@ -27,15 +27,15 @@ class HeraldrySpace : InteractionListener {
             "make-helmet",
             "use",
         ) { player, node ->
-            if (node.id == 13716 && getDynLevel(player, Skills.CRAFTING) < 38) {
+            if (node.id == Scenery.HELMET_PLUMING_STAND_13716 && getDynLevel(player, Skills.CRAFTING) < 38) {
                 sendMessage(player, "You need a crafting level of 38 in order to do this.")
                 return@on true
             }
-            if (node.id == 13717 && getDynLevel(player, Skills.CRAFTING) < 43) {
+            if (node.id == Scenery.PAINTING_STAND_13717 && getDynLevel(player, Skills.CRAFTING) < 43) {
                 sendMessage(player, "You need a crafting level of 43 in order to do this.")
                 return@on true
             }
-            if (node.id == 13718 && getDynLevel(player, Skills.CRAFTING) < 48) {
+            if (node.id == Scenery.BANNER_MAKING_STAND_13718 && getDynLevel(player, Skills.CRAFTING) < 48) {
                 sendMessage(player, "You need a crafting level of 48 in order to do this.")
                 return@on true
             }
@@ -60,8 +60,8 @@ class HeraldrySpace : InteractionListener {
                                 setTitle(
                                     player,
                                     when (sceneryID) {
-                                        13716 -> 2
-                                        13717 -> 4
+                                        Scenery.HELMET_PLUMING_STAND_13716 -> 2
+                                        Scenery.PAINTING_STAND_13717 -> 4
                                         else -> 5
                                     },
                                 )
@@ -70,9 +70,9 @@ class HeraldrySpace : InteractionListener {
                                     "What do you want to make?",
                                     *when (sceneryID) {
                                         // Pluming stand.
-                                        13716 -> arrayOf("Steel helmet", "Runite helmet")
+                                        Scenery.HELMET_PLUMING_STAND_13716 -> arrayOf("Steel helmet", "Runite helmet")
                                         // Shield easel.
-                                        13717 ->
+                                        Scenery.PAINTING_STAND_13717 ->
                                             arrayOf(
                                                 "Steel helmet",
                                                 "Runite helmet",

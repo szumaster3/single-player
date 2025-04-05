@@ -54,27 +54,24 @@ class CropGrowth : PersistTimer(500, "farming:crops", isSoft = true) {
         for ((_, patch) in patchMap) {
             val type = patch.patch.type
             val shouldPlayCatchup =
-                !patch.isGrown() ||
-                    (type == PatchType.BUSH_PATCH && patch.getFruitOrBerryCount() < 4) ||
-                    (type == PatchType.FRUIT_TREE_PATCH && patch.getFruitOrBerryCount() < 6)
+                !patch.isGrown() || (type == PatchType.BUSH_PATCH && patch.getFruitOrBerryCount() < 4) || (type == PatchType.FRUIT_TREE_PATCH && patch.getFruitOrBerryCount() < 6)
             if (shouldPlayCatchup && !patch.isDead) {
-                var stagesToSimulate =
-                    if (!patch.isGrown()) {
-                        if (patch.isWeedy() || patch.isEmptyAndWeeded()) {
-                            patch.currentGrowthStage % 4
-                        } else {
-                            patch.plantable!!.stages - patch.currentGrowthStage
-                        }
+                var stagesToSimulate = if (!patch.isGrown()) {
+                    if (patch.isWeedy() || patch.isEmptyAndWeeded()) {
+                        patch.currentGrowthStage % 4
                     } else {
-                        0
+                        patch.plantable!!.stages - patch.currentGrowthStage
                     }
+                } else {
+                    0
+                }
 
                 if (patch.plantable != null) {
                     if (type == PatchType.BUSH_PATCH) {
-                        stagesToSimulate += Math.min(4, 4 - patch.getFruitOrBerryCount())
+                        stagesToSimulate += 4.coerceAtMost(4 - patch.getFruitOrBerryCount())
                     }
                     if (type == PatchType.FRUIT_TREE_PATCH) {
-                        stagesToSimulate += Math.min(6, 6 - patch.getFruitOrBerryCount())
+                        stagesToSimulate += 6.coerceAtMost(6 - patch.getFruitOrBerryCount())
                     }
                 }
 
@@ -104,19 +101,19 @@ class CropGrowth : PersistTimer(500, "farming:crops", isSoft = true) {
         val patches = JSONArray()
         for ((key, patch) in patchMap) {
             val p = JSONObject()
-            p.put("patch-ordinal", key.ordinal)
-            p.put("patch-plantable-ordinal", patch.plantable?.ordinal ?: -1)
-            p.put("patch-watered", patch.isWatered)
-            p.put("patch-diseased", patch.isDiseased)
-            p.put("patch-dead", patch.isDead)
-            p.put("patch-stage", patch.currentGrowthStage)
-            p.put("patch-state", patch.getCurrentState())
-            p.put("patch-nextGrowth", patch.nextGrowth)
-            p.put("patch-harvestAmt", patch.harvestAmt)
-            p.put("patch-checkHealth", patch.isCheckHealth)
-            p.put("patch-compost", patch.compost.ordinal)
-            p.put("patch-paidprot", patch.protectionPaid)
-            p.put("patch-croplives", patch.cropLives)
+            p["patch-ordinal"] = key.ordinal
+            p["patch-plantable-ordinal"] = patch.plantable?.ordinal ?: -1
+            p["patch-watered"] = patch.isWatered
+            p["patch-diseased"] = patch.isDiseased
+            p["patch-dead"] = patch.isDead
+            p["patch-stage"] = patch.currentGrowthStage
+            p["patch-state"] = patch.getCurrentState()
+            p["patch-nextGrowth"] = patch.nextGrowth
+            p["patch-harvestAmt"] = patch.harvestAmt
+            p["patch-checkHealth"] = patch.isCheckHealth
+            p["patch-compost"] = patch.compost.ordinal
+            p["patch-paidprot"] = patch.protectionPaid
+            p["patch-croplives"] = patch.cropLives
             patches.add(p)
         }
         root["patches"] = patches
@@ -144,19 +141,18 @@ class CropGrowth : PersistTimer(500, "farming:crops", isSoft = true) {
             val cropLives = if (p["patch-croplives"] != null) p["patch-croplives"].toString().toInt() else 3
             val fPatch = FarmingPatch.values()[patchOrdinal]
             val plantable = if (patchPlantableOrdinal != -1) Plantable.values()[patchPlantableOrdinal] else null
-            val patch =
-                Patch(
-                    (entity as? Player)!!,
-                    fPatch,
-                    plantable,
-                    patchStage,
-                    patchDiseased,
-                    patchDead,
-                    patchWatered,
-                    nextGrowth,
-                    harvestAmt,
-                    checkHealth,
-                )
+            val patch = Patch(
+                (entity as? Player)!!,
+                fPatch,
+                plantable,
+                patchStage,
+                patchDiseased,
+                patchDead,
+                patchWatered,
+                nextGrowth,
+                harvestAmt,
+                checkHealth,
+            )
 
             patch.cropLives = cropLives
             patch.compost = CompostType.values()[compostOrdinal]

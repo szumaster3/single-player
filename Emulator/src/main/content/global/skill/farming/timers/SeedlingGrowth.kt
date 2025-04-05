@@ -58,12 +58,12 @@ class SeedlingGrowth : PersistTimer(1, "farming:seedling", isSoft = true) {
         val seedArray = JSONArray()
         for (s in seedlings) {
             val seed = JSONObject()
-            seed.put("id", s.id)
-            seed.put("ttl", s.TTL)
-            seed.put("sapling", s.sapling)
+            seed["id"] = s.id
+            seed["ttl"] = s.TTL
+            seed["sapling"] = s.sapling
             seedArray.add(seed)
         }
-        root.put("seedlings", seedArray)
+        root["seedlings"] = seedArray
     }
 
     override fun parse(

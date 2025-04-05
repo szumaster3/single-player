@@ -44,11 +44,11 @@ class Compost : PersistTimer(500, "farming:compost", isSoft = true) {
         val bins = JSONArray()
         for ((key, bin) in binMap) {
             val b = JSONObject()
-            b.put("bin-ordinal", key.ordinal)
+            b["bin-ordinal"] = key.ordinal
             bin.save(b)
             bins.add(b)
         }
-        root.put("bins", bins)
+        root["bins"] = bins
     }
 
     override fun parse(

@@ -33,25 +33,23 @@ class CompostBinOptionHandler : OptionHandler() {
         val bin = cBin.getBinForPlayer(player)
 
         when (option) {
-            "close" ->
-                if (!bin.isFull()) {
-                    sendMessage(
-                        player,
-                        "This shouldn't be happening. Report this.",
-                    )
-                } else {
-                    bin.close()
-                }
+            "close" -> if (!bin.isFull()) {
+                sendMessage(
+                    player,
+                    "This shouldn't be happening. Report this.",
+                )
+            } else {
+                bin.close()
+            }
 
-            "open" ->
-                if (!bin.isFinished) {
-                    sendMessage(
-                        player,
-                        "I should probably wait until it is done to open it.",
-                    )
-                } else {
-                    bin.open()
-                }
+            "open" -> if (!bin.isFinished) {
+                sendMessage(
+                    player,
+                    "I should probably wait until it is done to open it.",
+                )
+            } else {
+                bin.open()
+            }
 
             "take-tomato" -> {
                 if (!bin.isTomatoes || !bin.isFinished) {

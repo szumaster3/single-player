@@ -1,6 +1,7 @@
 package content.global.skill.construction.servants
 
 import core.game.node.item.Item
+import org.rs.consts.Items
 import org.rs.consts.NPCs
 
 enum class ServantType(
@@ -31,7 +32,7 @@ enum class ServantType(
         capacity = 10,
         level = 25,
         timer = 50,
-        food = arrayOf(Item(2003)),
+        Item(Items.STEW_2003),
     ),
     COOK(
         npcId = NPCs.COOK_4239,
@@ -39,7 +40,7 @@ enum class ServantType(
         capacity = 16,
         level = 30,
         timer = 17,
-        food = arrayOf(Item(2301), Item(712)),
+        Item(Items.PINEAPPLE_PIZZA_2301), Item(Items.AMULET_OF_GLORY4_1712),
     ),
     BUTLER(
         npcId = NPCs.BUTLER_4241,
@@ -47,7 +48,7 @@ enum class ServantType(
         capacity = 20,
         level = 40,
         timer = 12,
-        food = arrayOf(Item(1897), Item(712)),
+        Item(Items.CHOCOLATE_CAKE_1897), Item(Items.CUP_OF_TEA_712),
     ),
     DEMON_BUTLER(
         npcId = NPCs.DEMON_BUTLER_4243,
@@ -55,9 +56,8 @@ enum class ServantType(
         capacity = 26,
         level = 50,
         timer = 7,
-        food = arrayOf(Item(2011)),
-    ),
-    ;
+        Item(Items.CURRY_2011),
+    ), ;
 
     companion object {
         @JvmStatic

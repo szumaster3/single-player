@@ -50,8 +50,8 @@ class InspectionHandler : OptionHandler() {
                     "This is a specially prepared herb patch. You think it's probably best not to use it in case you get into trouble.",
                 )
 
-            Scenery(41017, node.location) -> sendMessage(player, "The seed has only just been planted.")
-            Scenery(41018, node.location) -> sendMessage(player, "The herb is fully grown and ready to harvest.")
+            Scenery(org.rs.consts.Scenery.HERBS_41017, node.location) -> sendMessage(player, "The seed has only just been planted.")
+            Scenery(org.rs.consts.Scenery.HERBS_41018, node.location) -> sendMessage(player, "The herb is fully grown and ready to harvest.")
         }
     }
 

@@ -47,7 +47,7 @@ class PortalChamberDialogue(
         return true
     }
 
-    fun directPortal(portal: String) {
+    private fun directPortal(portal: String) {
         PortalChamberPlugin.direct(
             player,
             portal.uppercase(),

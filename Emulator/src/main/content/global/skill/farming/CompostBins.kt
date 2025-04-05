@@ -17,7 +17,7 @@ enum class CompostBins(
 
     companion object {
         @JvmField
-        val bins = values().map { it.varbit to it }.toMap()
+        val bins = values().associateBy { it.varbit }
 
         @JvmStatic
         fun forObject(obj: Scenery): CompostBins? = forObjectID(obj.id)

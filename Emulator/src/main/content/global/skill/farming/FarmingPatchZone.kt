@@ -10,17 +10,14 @@ import core.game.node.entity.skill.Skills
 import core.game.world.map.zone.ZoneBorders
 import org.rs.consts.NPCs
 
-class FarmingPatchZone :
-    MapArea,
-    TickListener {
+class FarmingPatchZone : MapArea, TickListener {
     private val playersInZone = hashMapOf<Player, Int>()
 
-    override fun defineAreaBorders(): Array<ZoneBorders> =
-        arrayOf(
-            getRegionBorders(12083),
-            getRegionBorders(10548),
-            ZoneBorders(3594, 3521, 3608, 3532),
-        )
+    override fun defineAreaBorders(): Array<ZoneBorders> = arrayOf(
+        getRegionBorders(12083),
+        getRegionBorders(10548),
+        ZoneBorders(3594, 3521, 3608, 3532),
+    )
 
     override fun areaEnter(entity: Entity) {
         if (entity is Player && playersInZone[entity] == null && getStatLevel(entity, Skills.FARMING) <= 15) {

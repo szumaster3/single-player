@@ -12,6 +12,7 @@ import core.game.system.task.Pulse
 import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
 import core.plugin.Plugin
+import org.rs.consts.Animations
 import org.rs.consts.Items
 import org.rs.consts.Sounds
 
@@ -77,30 +78,26 @@ class CropHarvester : OptionHandler() {
                         when (requiredItem) {
                             Items.SPADE_952 -> {
                                 when (fPatch.type) {
-                                    PatchType.HERB_PATCH -> Animation(2282)
-                                    PatchType.FLOWER_PATCH -> Animation(2292)
-                                    else -> Animation(830)
+                                    PatchType.HERB_PATCH -> Animation(Animations.PICK_SOMETHING_UP_FROM_GROUND_2282)
+                                    PatchType.FLOWER_PATCH -> Animation(Animations.BEND_AND_PICK_2292)
+                                    else -> Animation(Animations.DIG_SPADE_830)
                                 }
                             }
 
                             Items.SECATEURS_5329 ->
                                 if (fPatch.type == PatchType.TREE_PATCH) {
-                                    Animation(2277)
+                                    Animation(Animations.SECUTARS_2277)
                                 } else {
-                                    Animation(
-                                        7227,
-                                    )
+                                    Animation(Animations.SECUTARS_7227)
                                 }
 
                             Items.MAGIC_SECATEURS_7409 ->
                                 if (fPatch.type ==
                                     PatchType.TREE_PATCH
                                 ) {
-                                    Animation(3340)
+                                    Animation(Animations.PRUNING_WITH_MAGIC_SECATEURS_3340)
                                 } else {
-                                    Animation(
-                                        7228,
-                                    )
+                                    Animation(Animations.MAGIC_SECATEURS_7228)
                                 }
 
                             else -> Animation(0)

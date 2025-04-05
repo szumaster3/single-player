@@ -7,22 +7,20 @@ import org.json.simple.JSONObject;
 import java.nio.ByteBuffer;
 
 /**
- * The type Servant.
+ * Represents a servant NPC that performs various actions related to construction tasks.
+ * The servant has a type, an associated item, a number of uses, and a greeting status.
  */
 public final class Servant extends NPC {
 
     private final ServantType type;
-
     private Item item;
-
     private int uses;
-
     private boolean greet;
 
     /**
-     * Instantiates a new Servant.
+     * Instantiates a new Servant with the given type.
      *
-     * @param type the type
+     * @param type the type of the servant (determines its NPC ID and behavior)
      */
     public Servant(ServantType type) {
         super(type.getNpcId());
@@ -30,9 +28,10 @@ public final class Servant extends NPC {
     }
 
     /**
-     * Save.
+     * Saves the servant's state to a byte buffer.
+     * This method writes the servant's type, uses, item, and greet status to the buffer.
      *
-     * @param buffer the buffer
+     * @param buffer the byte buffer where the servant's state will be saved
      */
     public void save(ByteBuffer buffer) {
         buffer.put((byte) type.ordinal());
@@ -47,10 +46,11 @@ public final class Servant extends NPC {
     }
 
     /**
-     * Parse servant.
+     * Parses a servant from a JSON object.
+     * This method reads the servant's data from a JSON object and creates a `Servant` instance.
      *
-     * @param data the data
-     * @return the servant
+     * @param data the JSON object containing the servant's data
+     * @return a new `Servant` instance populated with the parsed data
      */
     public static Servant parse(JSONObject data) {
         int type = Integer.parseInt(data.get("type").toString());
@@ -66,10 +66,11 @@ public final class Servant extends NPC {
     }
 
     /**
-     * Parse servant.
+     * Parses a servant from a byte buffer.
+     * This method reads the servant's state from the buffer and creates a `Servant` instance.
      *
-     * @param buffer the buffer
-     * @return the servant
+     * @param buffer the byte buffer containing the servant's data
+     * @return a new `Servant` instance populated with the data from the buffer, or `null` if the type is -1
      */
     public static Servant parse(ByteBuffer buffer) {
         int type = buffer.get();
@@ -87,63 +88,63 @@ public final class Servant extends NPC {
     }
 
     /**
-     * Gets item.
+     * Gets the item associated with the servant.
      *
-     * @return the item
+     * @return the item the servant holds
      */
     public Item getItem() {
         return item;
     }
 
     /**
-     * Sets item.
+     * Sets the item for the servant.
      *
-     * @param item the item
+     * @param item the item to be set for the servant
      */
     public void setItem(Item item) {
         this.item = item;
     }
 
     /**
-     * Gets uses.
+     * Gets the number of uses remaining for the servant.
      *
-     * @return the uses
+     * @return the number of uses the servant has left
      */
     public int getUses() {
         return uses;
     }
 
     /**
-     * Sets uses.
+     * Sets the number of uses for the servant.
      *
-     * @param uses the uses
+     * @param uses the number of uses to be set for the servant
      */
     public void setUses(int uses) {
         this.uses = uses;
     }
 
     /**
-     * Is greet boolean.
+     * Checks if the servant has greeted the player.
      *
-     * @return the boolean
+     * @return `true` if the servant has greeted the player, otherwise `false`
      */
     public boolean isGreet() {
         return greet;
     }
 
     /**
-     * Sets greet.
+     * Sets the greeting status of the servant.
      *
-     * @param greet the greet
+     * @param greet the greeting status to be set for the servant
      */
     public void setGreet(boolean greet) {
         this.greet = greet;
     }
 
     /**
-     * Gets type.
+     * Gets the type of the servant.
      *
-     * @return the type
+     * @return the `ServantType` associated with the servant
      */
     public ServantType getType() {
         return type;

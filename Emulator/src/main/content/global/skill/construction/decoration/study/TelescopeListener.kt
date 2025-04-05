@@ -24,8 +24,8 @@ class TelescopeListener : InteractionListener {
             val timeLeft = delay - star.ticks
             val window =
                 when (obj.id) {
-                    13657 -> 9
-                    13658 -> 2
+                    Scenery.TELESCOPE_13657 -> 9
+                    Scenery.TELESCOPE_13658 -> 2
                     else -> 24
                 }
             val time = RandomFunction.random(-window, window + 1) + TimeUnit.MILLISECONDS.toMinutes(timeLeft * 600L)

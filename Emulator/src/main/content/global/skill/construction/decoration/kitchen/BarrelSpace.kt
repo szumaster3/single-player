@@ -19,29 +19,34 @@ class BarrelSpace : InteractionListener {
             if (removeItem(player, Item(BEER_GLASS))) {
                 animate(player, Animation.create(Animations.FILLING_BEER_MUG_FROM_TAP_3661 + (used.id - 13569)))
                 sendMessage(
-                    player,
-                    "You fill up your glass with ${node.name.lowercase().replace("barrel", "").trim()}.",
+                    player, "You fill up your glass with ${node.name.lowercase().replace("barrel", "").trim()}."
                 )
                 addItem(player, getReward(node.id), 1)
             }
-            true
+            return@onUseWith true
         }
     }
 
     private fun getReward(barrelId: Int): Int = REWARDS[barrelId - 13568] ?: DEFAULT_REWARD
 
     companion object {
-        private val BARRELS = intArrayOf(13568, 13569, 13570, 13571, 13572, 13573)
-        private val REWARDS =
-            mapOf(
-                13568 to 1917,
-                13569 to 5763,
-                13570 to 1905,
-                13571 to 1909,
-                13572 to 1911,
-                13573 to 5755,
-            )
-        private const val DEFAULT_REWARD = 1917
+        private val BARRELS = intArrayOf(
+            org.rs.consts.Scenery.BEER_BARREL_13568,
+            org.rs.consts.Scenery.CIDER_BARREL_13569,
+            org.rs.consts.Scenery.ASGARNIAN_ALE_13570,
+            org.rs.consts.Scenery.GREENMAN_S_ALE_13571,
+            org.rs.consts.Scenery.DRAGON_BITTER_13572,
+            org.rs.consts.Scenery.CHEF_S_DELIGHT_13573
+        )
+        private val REWARDS = mapOf(
+            org.rs.consts.Scenery.BEER_BARREL_13568 to Items.BEER_1917,
+            org.rs.consts.Scenery.CIDER_BARREL_13569 to Items.CIDER_5763,
+            org.rs.consts.Scenery.ASGARNIAN_ALE_13570 to Items.ASGARNIAN_ALE_1905,
+            org.rs.consts.Scenery.GREENMAN_S_ALE_13571 to Items.GREENMANS_ALE_1909,
+            org.rs.consts.Scenery.DRAGON_BITTER_13572 to Items.DRAGON_BITTER_1911,
+            org.rs.consts.Scenery.CHEF_S_DELIGHT_13573 to Items.CHEFS_DELIGHT_5755
+        )
+        private const val DEFAULT_REWARD = Items.BEER_1917
         private const val BEER_GLASS = Items.BEER_GLASS_1919
     }
 }

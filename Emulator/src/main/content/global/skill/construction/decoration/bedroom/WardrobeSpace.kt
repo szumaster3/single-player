@@ -4,6 +4,7 @@ import core.api.*
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.system.task.Pulse
+import org.rs.consts.Animations
 import org.rs.consts.Components
 import org.rs.consts.Scenery
 
@@ -29,7 +30,7 @@ class WardrobeSpace : InteractionListener {
 
                     override fun pulse(): Boolean {
                         when (counter++) {
-                            0 -> animate(player, 535)
+                            0 -> animate(player, Animations.OPEN_POH_WARDROBE_535)
                             2 -> {
                                 if (node.id == Scenery.SHOE_BOX_13155) {
                                     openInterface(player, Components.YRSA_SHOE_STORE_200)

@@ -6,6 +6,7 @@ import core.game.interaction.InteractionListener
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.game.system.task.Pulse
+import org.rs.consts.Animations
 import org.rs.consts.Items
 import org.rs.consts.Scenery
 
@@ -86,7 +87,7 @@ class TeaMaking : InteractionListener {
 
             if (unitItem != null) {
                 replaceSlot(player, itemUsed.slot, Item(unitItem, 1))
-                replaceSlot(player, usedWith.slot, Item(if (with.id == 7728) with.id + 2 else with.id + 1))
+                replaceSlot(player, usedWith.slot, Item(if (with.id == Items.EMPTY_CUP_7728) with.id + 2 else with.id + 1))
                 sendMessage(player, "You pour some tea.")
                 rewardXP(player, Skills.COOKING, 52.0)
             } else {
@@ -127,7 +128,7 @@ class TeaMaking : InteractionListener {
 
             val scenery = with.asScenery()
             lock(player, 6)
-            animate(player, 3622)
+            animate(player, Animations.GRAB_AND_HOLDING_ONTO_SOMETHING_BIG_3622)
             submitIndividualPulse(
                 player,
                 object : Pulse(1) {
@@ -136,7 +137,7 @@ class TeaMaking : InteractionListener {
                     override fun pulse(): Boolean {
                         when (counter++) {
                             0 -> {
-                                animate(player, 3625)
+                                animate(player, Animations.KETTLE_3625)
                                 replaceScenery(scenery, with.id + 1, 4)
                                 animateScenery(scenery, 3720)
                             }
@@ -144,7 +145,7 @@ class TeaMaking : InteractionListener {
                             5 -> {
                                 sendMessage(player, "You fill the kettle from the sink.")
                                 replaceSlot(player, used.asItem().slot, Item(Items.FULL_KETTLE_7690))
-                                animate(player, 3623)
+                                animate(player, Animations.LET_GO_OF_SOMETHING_BIG_3623)
                                 return true
                             }
                         }

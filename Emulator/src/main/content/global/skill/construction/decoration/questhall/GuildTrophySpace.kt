@@ -15,13 +15,12 @@ import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
 class GuildTrophySpace : InteractionListener {
-    val TELEPORTS =
-        arrayOf(
-            Location.create(3087, 3495, 0),
-            Location.create(2919, 3175, 0),
-            Location.create(3081, 3250, 0),
-            Location.create(3304, 3124, 0),
-        )
+    val TELEPORTS = arrayOf(
+        Location.create(3087, 3495, 0),
+        Location.create(2919, 3175, 0),
+        Location.create(3081, 3250, 0),
+        Location.create(3304, 3124, 0),
+    )
 
     override fun defineListeners() {
         on(org.rs.consts.Scenery.AMULET_OF_GLORY_13523, IntType.SCENERY, "rub", "remove") { player, node ->
@@ -48,6 +47,7 @@ class GuildTrophySpace : InteractionListener {
                         }
                     }
                 }
+
                 "remove" -> {
                     if (!player.houseManager.isBuildingMode) {
                         sendMessage(player, "You have to be in building mode to do this.")
@@ -55,6 +55,7 @@ class GuildTrophySpace : InteractionListener {
                     }
                     openDialogue(player, "con:removedec", node.asScenery())
                 }
+
                 else -> return@on false
             }
             return@on true

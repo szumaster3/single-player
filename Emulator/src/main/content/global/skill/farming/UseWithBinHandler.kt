@@ -5,14 +5,15 @@ import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.system.task.Pulse
 import core.game.world.update.flag.context.Animation
+import org.rs.consts.Animations
 import org.rs.consts.Items
 
 class UseWithBinHandler : InteractionListener {
     @JvmField
     val allowedNodes = ArrayList<Int>(100)
-    val fillAnim = Animation(832)
-    val compostPotionAnimation = Animation(2259)
-    val scoopAnimation = Animation(8905)
+    val fillAnim = Animation(Animations.HUMAN_MULTI_USE_832)
+    val compostPotionAnimation = Animation(Animations.POUR_VIAL_2259)
+    val scoopAnimation = Animation(Animations.BUCKET_8905)
 
     val bins = 7836..7840
 
@@ -63,29 +64,28 @@ class UseWithBinHandler : InteractionListener {
                     }
                 }
 
-                else ->
-                    if (bin.isFull()) {
-                        sendMessage(player, "This compost bin is already full.")
-                        return@onUseWith true
-                    } else if (!bin.isFinished) {
-                        submitIndividualPulse(
-                            player,
-                            object : Pulse(fillAnim.duration) {
-                                override fun pulse(): Boolean {
-                                    animate(player, fillAnim)
-                                    if (removeItem(player, usedNode.asItem())) {
-                                        bin.addItem(usedNode.asItem())
-                                    }
-                                    return bin.isFull() || player.inventory.getAmount(usedNode.asItem()) == 0
+                else -> if (bin.isFull()) {
+                    sendMessage(player, "This compost bin is already full.")
+                    return@onUseWith true
+                } else if (!bin.isFinished) {
+                    submitIndividualPulse(
+                        player,
+                        object : Pulse(fillAnim.duration) {
+                            override fun pulse(): Boolean {
+                                animate(player, fillAnim)
+                                if (removeItem(player, usedNode.asItem())) {
+                                    bin.addItem(usedNode.asItem())
                                 }
-                            },
-                        )
-                    } else {
-                        sendDialogue(
-                            player,
-                            "The compost bin must be empty of compost before you can put new items in it.",
-                        )
-                    }
+                                return bin.isFull() || player.inventory.getAmount(usedNode.asItem()) == 0
+                            }
+                        },
+                    )
+                } else {
+                    sendDialogue(
+                        player,
+                        "The compost bin must be empty of compost before you can put new items in it.",
+                    )
+                }
             }
             return@onUseWith true
         }
