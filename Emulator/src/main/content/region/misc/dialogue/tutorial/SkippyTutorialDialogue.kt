@@ -132,6 +132,7 @@ class SkippyTutorialDialogue : DialogueFile() {
                                         player!!.teleporter.send(Location.create(3233, 3230, 0))
                                         openDialogue(player!!, WelcomeMessage())
                                         setAttribute(player!!, "close_c_", true)
+                                        player!!.interfaceManager.restoreTabs()
                                         return true
                                     }
                                 }
