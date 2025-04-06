@@ -4,6 +4,7 @@ import content.global.skill.farming.CompostBins
 import content.global.skill.summoning.familiar.Familiar
 import content.global.skill.summoning.familiar.FamiliarSpecial
 import content.global.skill.summoning.familiar.Forager
+import core.api.sendMessage
 import core.game.interaction.NodeUsageEvent
 import core.game.interaction.UseWithHandler
 import core.game.node.entity.combat.ImpactHandler.HitsplatType
@@ -17,6 +18,8 @@ import core.plugin.ClassScanner.definePlugin
 import core.plugin.Initializable
 import core.plugin.Plugin
 import core.tools.RandomFunction
+import org.rs.consts.Items
+import org.rs.consts.NPCs
 
 /**
  * The type Compost mound npc.
@@ -32,8 +35,8 @@ class CompostMoundNPC
 /**
  * Instantiates a new Compost mound npc.
  */
-@JvmOverloads constructor(owner: Player? = null, id: Int = 6871) :
-    Forager(owner, id, 2400, 12091, 12, WeaponInterface.STYLE_AGGRESSIVE, *ITEMS) {
+@JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.COMPOST_MOUND_6871) :
+    Forager(owner, id, 2400, Items.COMPOST_MOUND_POUCH_12091, 12, WeaponInterface.STYLE_AGGRESSIVE, *ITEMS) {
     override fun construct(owner: Player, id: Int): Familiar {
         return CompostMoundNPC(owner, id)
     }
@@ -49,7 +52,7 @@ class CompostMoundNPC
     override fun specialMove(special: FamiliarSpecial): Boolean {
         val `object` = special.node as Scenery
         if (`object`.name != "Compost Bin") {
-            owner.packetDispatch.sendMessage("This scroll can only be used on an empty compost bin.")
+            sendMessage(owner,"This scroll can only be used on an empty compost bin.")
             return false
         }
         val cbin = CompostBins.forObject(special.node.asScenery()) ?: return false
@@ -59,7 +62,7 @@ class CompostMoundNPC
         }
         val superCompost = RandomFunction.random(10) == 1
         faceLocation(`object`.location)
-        val toAdd = Item(if (superCompost) PINEAPPLE_2114 else POTATO_1942)
+        val toAdd = Item(if (superCompost) Items.PINEAPPLE_2114 else Items.POTATO_1942)
         toAdd.amount = 15
         bin.addItem(toAdd)
         bin.close()
@@ -69,7 +72,7 @@ class CompostMoundNPC
     }
 
     override fun getIds(): IntArray {
-        return intArrayOf(6871, 6872)
+        return intArrayOf(NPCs.COMPOST_MOUND_6871, NPCs.COMPOST_MOUND_6872)
     }
 
     /**
