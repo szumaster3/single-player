@@ -2285,5 +2285,14 @@
     "id": "266",
     "title": "Nathifa's Bake Stall",
     "stock": "{2309,10,12}-{1891,10,50}-{1901,10,30}-{1823,30,30}"
+  },
+  {
+    "npcs": "706",
+    "high_alch": "0",
+    "currency": "995",
+    "general_store": "false",
+    "id": "267",
+    "title": "Mizgog's Amulets of Accuracy",
+    "stock": "{1478,30,1000}"
   }
 ]
