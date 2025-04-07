@@ -3,6 +3,7 @@ package content.region.asgarnia.handlers
 import core.api.*
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
+import core.game.node.entity.player.link.TeleportManager
 import core.game.world.map.Location
 import core.game.world.repository.Repository.findNPC
 import org.rs.consts.Items
@@ -50,7 +51,7 @@ class EntranaListener : InteractionListener {
 
         on(MAGIC_DOOR, IntType.SCENERY, "open") { player, _ ->
             sendMessage(player, "You feel the world around you dissolve...")
-            teleport(player, Location(3093, 3224, 0))
+            teleport(player, Location(3093, 3224, 0), TeleportManager.TeleportType.ENTRANA_MAGIC_DOOR)
             return@on true
         }
     }
