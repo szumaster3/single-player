@@ -5,16 +5,20 @@ import content.data.RandomEvent
 import core.api.*
 import core.api.utils.WeightBasedTable
 import core.api.utils.WeightedItem
+import core.game.dialogue.FaceAnim
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.player.Player
+import core.game.world.map.Location
 import org.rs.consts.Animations
 import org.rs.consts.Items
+import org.rs.consts.NPCs
 import org.rs.consts.Scenery
 
 class MazeListener : InteractionListener {
     private val rewardIDs = intArrayOf(Items.COINS_995, Items.FEATHER_314, Items.IRON_ARROW_884, Items.CHAOS_RUNE_562, Items.STEEL_ARROW_886, Items.DEATH_RUNE_560, Items.COAL_454, Items.NATURE_RUNE_561, Items.MITHRIL_ORE_448)
     private val itemsDivisor = arrayOf(1.0, 2.0, 3.0, 9.0, 12.0, 18.0, 45.0, 162.0, 180.0)
+    private val oneWayPassageIDs = intArrayOf(Scenery.WALL_3629, Scenery.WALL_3630, Scenery.WALL_3631, Scenery.WALL_3632)
 
     private fun calculateLoot(player: Player) {
         val randomNumber = (0..8).random()
@@ -41,6 +45,35 @@ class MazeListener : InteractionListener {
     )
 
     override fun defineListeners() {
+
+        /*
+         * Handles opening of the wall gates, each path is led by two gates.
+         */
+
+        on(Scenery.WALL_3628, IntType.SCENERY, "open") { _, _ ->
+            return@on true
+        }
+
+        /*
+         * Handles one-way passages in the maze.
+         */
+
+        on(oneWayPassageIDs, IntType.SCENERY, "open") { player, node ->
+            sendNPCDialogueLines(
+                player,
+                NPCs.MYSTERIOUS_OLD_MAN_410,
+                FaceAnim.NEUTRAL,
+                false,
+                "That's not the right way.",
+                "Try a different route."
+            )
+            return@on true
+        }
+
+        /*
+         * Handles the interaction with the chest in the maze.
+         */
+
         on(Scenery.CHEST_3635, IntType.SCENERY, "open") { player, _ ->
             val ticksLeft = getAttribute(player, GameAttributes.MAZE_ATTRIBUTE_TICKS_LEFT, 0)
             val chestsOpened = getAttribute(player, GameAttributes.MAZE_ATTRIBUTE_CHESTS_OPEN, 0)
@@ -48,11 +81,12 @@ class MazeListener : InteractionListener {
             if (ticksLeft > 0 && chestsOpened < 10) {
                 animate(player, Animations.OPEN_CHEST_536)
                 val reward = mazeDropTable.roll().first()
+                val rewardName = getItemName(reward.id).lowercase()
                 val message = when (reward.id) {
                     Items.ATTACK_POTION2_123 -> "You've found an attack potion!"
                     Items.STRENGTH_POTION2_117 -> "You've found a strength potion!"
                     Items.DEFENCE_POTION2_135 -> "You've found a defence potion!"
-                    else -> "You've found some ${getItemName(reward.id).lowercase()}!"
+                    else -> "You've found some $rewardName!"
                 }
                 addItemOrBank(player, reward.id)
                 sendItemDialogue(player, reward.id, message)
@@ -63,11 +97,22 @@ class MazeListener : InteractionListener {
             return@on true
         }
 
+        /*
+         * Handles the interaction with the end point of maze.
+         */
+
         on(Scenery.STRANGE_SHRINE_3634, IntType.SCENERY, "touch") { player, _ ->
-            runTask(player, 2) {
+            lock(player, 6)
+            faceLocation(player, Location.create(2912, 4576, 0))
+            animate(player, Animations.CHEER_862)
+            runTask(player, 6) {
                 calculateLoot(player)
                 clearLogoutListener(player, RandomEvent.logout())
-                removeAttributes(player, GameAttributes.MAZE_ATTRIBUTE_TICKS_LEFT, GameAttributes.MAZE_ATTRIBUTE_CHESTS_OPEN)
+                removeAttributes(
+                    player,
+                    GameAttributes.MAZE_ATTRIBUTE_TICKS_LEFT,
+                    GameAttributes.MAZE_ATTRIBUTE_CHESTS_OPEN
+                )
                 player.properties.teleportLocation = getAttribute(player, RandomEvent.save(), null)
                 closeOverlay(player)
             }
