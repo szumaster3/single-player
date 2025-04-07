@@ -14,7 +14,7 @@ class GoblinVillageListener : InteractionListener {
     override fun defineListeners() {
 
         /*
-         * Handles interaction with goblin at Tree gnome village labirynth.
+         * Handles interaction with goblin at Tree gnome village labyrinth.
          */
 
         on(NPCs.GOBLIN_444, IntType.NPC, "Talk-To") { player, _ ->
@@ -28,8 +28,8 @@ class GoblinVillageListener : InteractionListener {
 
         on(Scenery.SIGNPOST_31301, IntType.SCENERY, "read") { player, _ ->
             var population = 3
-            val npcs = getLocalNpcs(player, 50)
-            for (n in npcs) {
+            val localNPC = getLocalNpcs(player, 50)
+            for (n in localNPC) {
                 if (n.name == "Goblin" && !DeathTask.isDead(n)) {
                     population++
                 }

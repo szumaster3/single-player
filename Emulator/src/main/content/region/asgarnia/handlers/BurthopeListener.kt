@@ -67,22 +67,20 @@ class BurthopeListener : InteractionListener {
          */
 
         on(MARTIN, IntType.NPC, "trade") { player, _ ->
-            if (getStatLevel(player, Skills.THIEVING) < 50 || getStatLevel(player, Skills.AGILITY) < 50) {
+            val thievingLevel = getStatLevel(player, Skills.THIEVING)
+            val agilityLevel = getStatLevel(player, Skills.AGILITY)
+
+            if (thievingLevel < 50 || agilityLevel < 50) {
+                val skillMessage = when {
+                    thievingLevel < 50 && agilityLevel < 50 -> "Thieving and Agility"
+                    thievingLevel < 50 -> "Thieving"
+                    else -> "Agility"
+                }
+
                 sendNPCDialogue(
                     player,
                     NPCs.MARTIN_THWAIT_2270,
-                    "Sorry, mate. Train up your ${if (getStatLevel(
-                            player,
-                            Skills.THIEVING,
-                        ) < 50 &&
-                        getStatLevel(player, Skills.AGILITY) < 50
-                    ) {
-                        "Thieving and Agility"
-                    } else if (getStatLevel(player, Skills.THIEVING) < 50) {
-                        "Thieving"
-                    } else {
-                        "Agility"
-                    }} skill to at least 50 and I might be able to help you out.",
+                    "Sorry, mate. Train up your $skillMessage skill to at least 50 and I might be able to help you out.",
                     FaceAnim.HALF_GUILTY,
                 )
             } else {

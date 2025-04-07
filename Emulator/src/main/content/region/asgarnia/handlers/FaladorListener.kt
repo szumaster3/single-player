@@ -15,6 +15,10 @@ class FaladorListener : InteractionListener {
             return@on true
         }
 
+        /*
+         * Handles interaction with noticeboard at Falador bank.
+         */
+
         on(Scenery.NOTICEBOARD_11755, IntType.SCENERY, "read") { player, _ ->
             val notice =
                 arrayOf(
@@ -51,6 +55,10 @@ class FaladorListener : InteractionListener {
             return@on true
         }
 
+        /*
+         * Handles quest interaction for cupboard.
+         */
+
         on(CUPBOARD_OPEN, IntType.SCENERY, "search", "shut") { player, node ->
             when (getUsedOption(player)) {
                 "shut" -> {
@@ -72,6 +80,10 @@ class FaladorListener : InteractionListener {
             }
             return@on true
         }
+
+        /*
+         * Handles white castle ladders.
+         */
 
         on(CASTLE_STAIRS, IntType.SCENERY, "climb-up", "climb-down") { player, node ->
             when (node.id) {
