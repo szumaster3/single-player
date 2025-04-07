@@ -1,5 +1,6 @@
 package content.region.misthalin.dialogue
 
+import content.region.fremennik.quest.viking.FremennikTrials
 import core.api.interaction.openNpcShop
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
@@ -16,10 +17,7 @@ class FishmongerEtceteriaDialogue(
         npc = args[0] as NPC
         npcl(
             FaceAnim.FRIENDLY,
-            "Welcome, ${player.getAttribute(
-                "fremennikname",
-                "fremmyname",
-            )}. My fish is fresher than any in Miscellania.",
+            "Welcome, ${FremennikTrials.getFremennikName(player)}. My fish is fresher than any in Miscellania.",
         )
         return true
     }

@@ -26,9 +26,9 @@ class BardurExchangeListener : InteractionListener {
                     "I do not trust you outerlander, I will not accept your gifts, no matter what your intention...",
                 )
             } else {
+                npc.impactHandler.disabledTicks = 8
                 openDialogue(player, BardurExchangeDialogue())
             }
-
             return@onUseWith true
         }
     }

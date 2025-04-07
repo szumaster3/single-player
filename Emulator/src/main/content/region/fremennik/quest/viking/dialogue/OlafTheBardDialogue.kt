@@ -1,5 +1,7 @@
 package content.region.fremennik.quest.viking.dialogue
 
+import content.data.GameAttributes
+import content.region.fremennik.quest.viking.FremennikTrials
 import core.api.*
 import core.api.quest.isQuestComplete
 import core.game.dialogue.Dialogue
@@ -15,57 +17,56 @@ class OlafTheBardDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
     override fun open(vararg args: Any?): Boolean {
-        if (inInventory(player, Items.STURDY_BOOTS_3700, 1)) {
-            playerl(FaceAnim.HAPPY, "Hello Olaf. Do you have a beautiful love song written for me?")
-            stage = 65
-        } else if (inInventory(player, Items.FREMENNIK_BALLAD_3699, 1)) {
-            playerl(FaceAnim.ASKING, "So you think this song is pretty good then?")
-            stage = 70
-            return true
-        } else if (getAttribute(player, "sigmundreturning", false)) {
-            playerl(FaceAnim.ASKING, "I've got a trade item; is it for you?")
-            stage = 75
-            return true
-        } else if (getAttribute(player, "sigmund-steps", 0) == 3) {
-            playerl(
-                FaceAnim.ASKING,
-                "I don't suppose you have any idea where I could find some custom sturdy boots, do you?",
-            )
-            stage = 60
-            return true
-        } else if (getAttribute(player, "sigmund-steps", 0) == 2) {
-            playerl(FaceAnim.ASKING, "I don't suppose you have any idea where I could find a love ballad, do you?")
-            stage = 50
-            return true
-        } else if (getAttribute(player, "lyreConcertPlayed", false)) {
-            playerl(FaceAnim.HAPPY, "So can I rely on your vote with the council of elders in my favour?")
-            stage = 40
-            return true
-        } else if (getAttribute(player, "fremtrials:olaf-accepted", false)) {
-            npc("I can't wait to see your performance.")
-            stage = 1000
-            return true
-        } else if (isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS)) {
-            npcl(
-                FaceAnim.HAPPY,
-                "Hello again to you, ${
-                    getAttribute(
-                        player,
-                        "fremennikname",
-                        "fremmyname",
-                    )
-                }. Us bards should stick together, what can I do for you?",
-            )
-            stage = 98
-            return true
-        } else if (player.questRepository.hasStarted(Quests.THE_FREMENNIK_TRIALS)) {
-            npc("Hello? Yes? You want something outerlander?")
-            stage = 0
-            return true
-        } else {
-            playerl(FaceAnim.HAPPY, "Hello there. So you're a bard?")
-            stage = 150
-            return true
+        when {
+            inInventory(player, Items.STURDY_BOOTS_3700, 1) -> {
+                playerl(FaceAnim.HAPPY, "Hello Olaf. Do you have a beautiful love song written for me?")
+                stage = 65
+            }
+
+            inInventory(player, Items.FREMENNIK_BALLAD_3699, 1) -> {
+                playerl(FaceAnim.ASKING, "So you think this song is pretty good then?")
+                stage = 70
+            }
+
+            getAttribute(player, GameAttributes.QUEST_VIKING_SIGMUND_RETURN, false) -> {
+                playerl(FaceAnim.ASKING, "I've got a trade item; is it for you?")
+                stage = 75
+            }
+
+            getAttribute(player, GameAttributes.QUEST_VIKING_SIGMUND_PROGRESS, 0) == 3 -> {
+                playerl(FaceAnim.ASKING, "I don't suppose you have any idea where I could find some custom sturdy boots, do you?")
+                stage = 60
+            }
+
+            getAttribute(player, GameAttributes.QUEST_VIKING_SIGMUND_PROGRESS, 0) == 2 -> {
+                playerl(FaceAnim.ASKING, "I don't suppose you have any idea where I could find a love ballad, do you?")
+                stage = 50
+            }
+
+            getAttribute(player, GameAttributes.QUEST_VIKING_OLAF_CONCERT, false) -> {
+                playerl(FaceAnim.HAPPY, "So can I rely on your vote with the council of elders in my favour?")
+                stage = 40
+            }
+
+            getAttribute(player, GameAttributes.QUEST_VIKING_OLAF_START, false) -> {
+                npc("I can't wait to see your performance.")
+                stage = 1000
+            }
+
+            isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS) -> {
+                npcl(FaceAnim.HAPPY, "Hello again to you, ${FremennikTrials.getFremennikName(player)}. Us bards should stick together, what can I do for you?")
+                stage = 98
+            }
+
+            player.questRepository.hasStarted(Quests.THE_FREMENNIK_TRIALS) -> {
+                npc("Hello? Yes? You want something outerlander?")
+                stage = 0
+            }
+
+            else -> {
+                playerl(FaceAnim.HAPPY, "Hello there. So you're a bard?")
+                stage = 150
+            }
         }
         return true
     }
@@ -124,7 +125,7 @@ class OlafTheBardDialogue(
                     "music lovers here!",
                 ).also {
                     stage++
-                    setAttribute(player, "/save:fremtrials:olaf-accepted", true)
+                    setAttribute(player, GameAttributes.QUEST_VIKING_OLAF_START, true)
                 }
 
             10 -> player("So how would I go about writing this epic?").also { stage++ }
@@ -224,8 +225,12 @@ class OlafTheBardDialogue(
                     FaceAnim.HAPPY,
                     "Absolutely! We must collaborate together on a duet sometime, don't you think?",
                 ).also {
-                    setAttribute(player, "/save:fremtrials:olaf-vote", true)
-                    setAttribute(player, "/save:fremtrials:votes", getAttribute(player, "fremtrials:votes", 0) + 1)
+                    setAttribute(player, GameAttributes.QUEST_VIKING_OLAF_VOTE, true)
+                    setAttribute(
+                        player,
+                        GameAttributes.QUEST_VIKING_VOTES,
+                        getAttribute(player, GameAttributes.QUEST_VIKING_VOTES, 0) + 1
+                    )
                     stage = 1000
                 }
 
@@ -261,7 +266,7 @@ class OlafTheBardDialogue(
                     FaceAnim.NEUTRAL,
                     "If you can find me a pair of sturdy boots to replace these old worn out ones of mine, I will be happy to spend the time on composing you a romantic ballad.",
                 ).also {
-                    player.incrementAttribute("sigmund-steps", 1)
+                    player.incrementAttribute(GameAttributes.QUEST_VIKING_SIGMUND_PROGRESS, 1)
                     stage = 1000
                 }
 
@@ -312,6 +317,7 @@ class OlafTheBardDialogue(
                             FaceAnim.ASKING,
                             "I was wondering... Can I learn to play my lyre again?",
                         ).also { stage++ }
+
                     2 -> playerl(FaceAnim.THINKING, "I forget now...").also { stage = 1000 }
                 }
 

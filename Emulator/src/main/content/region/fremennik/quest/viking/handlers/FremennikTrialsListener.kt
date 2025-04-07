@@ -1,5 +1,6 @@
 package content.region.fremennik.quest.viking.handlers
 
+import content.data.GameAttributes
 import content.global.skill.gathering.woodcutting.WoodcuttingPulse
 import content.global.travel.LyreTeleport
 import content.region.fremennik.quest.viking.dialogue.CouncilWorkerDialogue
@@ -65,10 +66,10 @@ class FremennikTrialsListener : InteractionListener {
         }
 
         onUseWith(IntType.ITEM, LOW_ALC_KEG, KEG) { player, _, _ ->
-            if (!getAttribute(player, "fremtrials:keg-mixed", false)) {
-                if (getAttribute(player, "fremtrials:cherrybomb", false)) {
+            if (!getAttribute(player, GameAttributes.QUEST_VIKING_MANI_KEG, false)) {
+                if (getAttribute(player, GameAttributes.QUEST_VIKING_MANI_BOMB, false)) {
                     removeItem(player, LOW_ALC_KEG)
-                    setAttribute(player, "/save:fremtrials:keg-mixed", true)
+                    setAttribute(player, GameAttributes.QUEST_VIKING_MANI_KEG, true)
                     sendMessage(player, "The cherry bomb in the pipe goes off.")
                     RegionManager.getLocalEntitys(player).stream().forEach { e -> e.sendChat("What was THAT??") }
                     sendMessage(player, "You mix the kegs together.")
@@ -109,25 +110,25 @@ class FremennikTrialsListener : InteractionListener {
             when (stewIngredient.id) {
                 Items.ONION_1957 -> {
                     sendDialogue(player, "You added an onion to the stew")
-                    setAttribute(player, "/save:lalliStewOnionAdded", true)
+                    setAttribute(player, GameAttributes.QUEST_VIKING_STEW_INGREDIENTS_ONION, true)
                     removeItem(player, stewIngredient)
                 }
 
                 Items.POTATO_1942 -> {
                     sendDialogue(player, "You added a potato to the stew")
-                    setAttribute(player, "/save:lalliStewPotatoAdded", true)
+                    setAttribute(player, GameAttributes.QUEST_VIKING_STEW_INGREDIENTS_POTATO, true)
                     removeItem(player, stewIngredient)
                 }
 
                 Items.CABBAGE_1965 -> {
                     sendDialogue(player, "You added a cabbage to the stew")
-                    setAttribute(player, "/save:lalliStewCabbageAdded", true)
+                    setAttribute(player, GameAttributes.QUEST_VIKING_STEW_INGREDIENTS_CABBAGE, true)
                     removeItem(player, stewIngredient)
                 }
 
                 Items.PET_ROCK_3695 -> {
                     sendDialogue(player, "You added your dear pet rock to the stew")
-                    setAttribute(player, "/save:lalliStewRockAdded", true)
+                    setAttribute(player, GameAttributes.QUEST_VIKING_STEW_INGREDIENTS_ROCK, true)
                     removeItem(player, stewIngredient)
                 }
             }
@@ -182,7 +183,7 @@ class FremennikTrialsListener : InteractionListener {
             }
 
             when {
-                getAttribute(player, "LyreEnchanted", false) -> {
+                getAttribute(player, GameAttributes.QUEST_VIKING_LYRE, false) -> {
                     sendNPCDialogue(
                         player,
                         NPCs.LONGHALL_BOUNCER_1278,
@@ -191,7 +192,7 @@ class FremennikTrialsListener : InteractionListener {
                     DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
                 }
 
-                getAttribute(player, "lyreConcertPlayed", false) -> {
+                getAttribute(player, GameAttributes.QUEST_VIKING_OLAF_CONCERT, false) -> {
                     DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
                 }
 
@@ -203,7 +204,7 @@ class FremennikTrialsListener : InteractionListener {
         }
 
         on(LYRE_IDs, IntType.ITEM, "play") { player, lyre ->
-            if (getAttribute(player, "onStage", false) && !getAttribute(player, "lyreConcertPlayed", false)) {
+            if (getAttribute(player, "onStage", false) && !getAttribute(player, GameAttributes.QUEST_VIKING_OLAF_CONCERT, false)) {
                 Pulser.submit(
                     LyreConcertPulse(
                         player,
@@ -233,7 +234,7 @@ class FremennikTrialsListener : InteractionListener {
         on(PIPE, IntType.SCENERY, "put-inside") { player, _ ->
             if (inInventory(player, LIT_BOMB)) {
                 sendMessage(player, "You stuff the lit object into the pipe.")
-                setAttribute(player, "/save:fremtrials:cherrybomb", true)
+                setAttribute(player, GameAttributes.QUEST_VIKING_MANI_BOMB, true)
                 removeItem(
                     player,
                     LIT_BOMB,
@@ -254,7 +255,7 @@ class FremennikTrialsListener : InteractionListener {
                     2505 -> DestRoom(2650, 10001, 2656, 10007).getCenter()
                     2503 -> DestRoom(2662, 10012, 2668, 10018).getCenter()
                     2504 -> {
-                        setAttribute(player, "/save:fremtrials:maze-complete", true)
+                        setAttribute(player, GameAttributes.QUEST_VIKING_SWENSEN_MAZE, true)
                         DestRoom(2662, 10034, 2668, 10039).getCenter()
                     }
 
@@ -264,8 +265,8 @@ class FremennikTrialsListener : InteractionListener {
         }
 
         on(SWENSEN_LADDER, IntType.SCENERY, "climb") { player, _ ->
-            if (!getAttribute(player, "fremtrials:swensen-accepted", false)) {
-                sendNPCDialogue(player, 1283, "Where do you think you're going?", FaceAnim.ANGRY)
+            if (!getAttribute(player, GameAttributes.QUEST_VIKING_SWENSEN_START, false)) {
+                sendNPCDialogue(player, NPCs.SWENSEN_THE_NAVIGATOR_1283, "Where do you think you're going?", FaceAnim.ANGRY)
             }
             return@on true
         }
@@ -274,13 +275,13 @@ class FremennikTrialsListener : InteractionListener {
             if (isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS) ||
                 getAttribute(
                     player,
-                    "fremtrials:thorvald-vote",
+                    GameAttributes.QUEST_VIKING_THORVALD_VOTE,
                     false,
                 )
             ) {
                 sendMessage(player, "You have no reason to go back down there.")
                 return@on true
-            } else if (!getAttribute(player, "fremtrials:warrior-accepted", false)) {
+            } else if (!getAttribute(player, GameAttributes.QUEST_VIKING_THORVALD_START, false)) {
                 player.dialogueInterpreter?.sendDialogues(
                     NPCs.THORVALD_THE_WARRIOR_1289,
                     FaceAnim.ANGRY,
@@ -469,7 +470,7 @@ class FremennikTrialsListener : InteractionListener {
                 6 -> player.unlock()
                 10 ->
                     npc.clear().also {
-                        setAttribute(player, "/save:LyreEnchanted", true)
+                        setAttribute(player, GameAttributes.QUEST_VIKING_LYRE, true)
                         return true
                     }
             }
@@ -538,41 +539,41 @@ class FremennikTrialsListener : InteractionListener {
             when (counter++) {
                 0 -> {
                     player.lock()
-                    animate(player, 1318, true)
+                    animate(player, Animations.HOLD_LYRE_1318, true)
                 }
 
                 2 -> {
-                    animate(player, 1320, true)
+                    animate(player, Animations.PLAY_LYRE_1320, true)
                     player.musicPlayer.play(MusicEntry.forId(165))
                 }
 
                 4 -> {
-                    animate(player, 1320, true)
+                    animate(player, Animations.PLAY_LYRE_1320, true)
                     player.musicPlayer.play(MusicEntry.forId(164))
                     sendChat(player, LYRICS[0])
                 }
 
                 6 -> {
-                    animate(player, 1320, true)
+                    animate(player, Animations.PLAY_LYRE_1320, true)
                     player.musicPlayer.play(MusicEntry.forId(164))
                     sendChat(player, LYRICS[1])
                 }
 
                 8 -> {
-                    animate(player, 1320, true)
+                    animate(player, Animations.PLAY_LYRE_1320, true)
                     player.musicPlayer.play(MusicEntry.forId(164))
                     sendChat(player, LYRICS[2])
                 }
 
                 10 -> {
-                    animate(player, 1320, true)
+                    animate(player, Animations.PLAY_LYRE_1320, true)
                     player.musicPlayer.play(MusicEntry.forId(164))
                     sendChat(player, LYRICS[3])
                 }
 
                 14 -> {
-                    setAttribute(player, "/save:lyreConcertPlayed", true)
-                    removeAttribute(player, "LyreEnchanted")
+                    setAttribute(player, GameAttributes.QUEST_VIKING_OLAF_CONCERT, true)
+                    removeAttribute(player, GameAttributes.QUEST_VIKING_LYRE)
                     if (removeItem(player, Lyre)) {
                         addItem(player, Items.ENCHANTED_LYRE_3690)
                     }
@@ -590,7 +591,7 @@ class FremennikTrialsListener : InteractionListener {
 
         override fun pulse(): Boolean {
             when (counter++) {
-                0 -> player.animator?.animate(Animation(1248)).also { player.lock() }
+                0 -> player.animator?.animate(Animation(Animations.HUMAN_FLETCHING_LOGS_1248)).also { player.lock() }
                 3 -> {
                     if (removeItem(player, Items.BRANCH_3692)) {
                         addItem(player, Items.UNSTRUNG_LYRE_3688)

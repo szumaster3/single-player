@@ -1,5 +1,7 @@
 package content.region.fremennik.quest.viking.dialogue
 
+import content.data.GameAttributes
+import content.region.fremennik.quest.viking.FremennikTrials
 import core.api.addItemOrDrop
 import core.api.getAttribute
 import core.api.inInventory
@@ -20,41 +22,53 @@ class FremennikFishermanDialogue : DialogueFile() {
     ) {
         npc = NPC(NPCs.FISHERMAN_1302)
         when (stage) {
-            0 -> {
-                if (inInventory(player!!, Items.SEA_FISHING_MAP_3704, 1)) {
+            0 -> when {
+                inInventory(player!!, Items.SEA_FISHING_MAP_3704, 1) -> {
                     playerl(FaceAnim.HAPPY, "Here. I got you your map.")
                     stage = 15
-                } else if (inInventory(player!!, Items.UNUSUAL_FISH_3703, 1)) {
+                }
+
+                inInventory(player!!, Items.UNUSUAL_FISH_3703, 1) -> {
                     playerl(FaceAnim.ASKING, "I don't see what's so special about this so called exotic fish.")
                     stage = 16
-                } else if (getAttribute(player!!, "sigmundreturning", false)) {
+                }
+
+                getAttribute(player!!, GameAttributes.QUEST_VIKING_SIGMUND_RETURN, false) -> {
                     playerl(FaceAnim.ASKING, "Is this trade item for you?")
                     stage = 17
                 }
-                if (getAttribute(player!!, "sigmund-steps", 0) == 8) {
+
+                getAttribute(player!!, GameAttributes.QUEST_VIKING_SIGMUND_PROGRESS, 0) == 8 -> {
                     playerl(
                         FaceAnim.ASKING,
-                        "I don't suppose you have any idea where I could find a map of deep sea fishing spots do you?",
+                        "I don't suppose you have any idea where I could find a map of deep sea fishing spots do you?"
                     )
                     stage = 10
-                } else if (getAttribute(player!!, "sigmund-steps", 0) == 7) {
+                }
+
+                getAttribute(player!!, GameAttributes.QUEST_VIKING_SIGMUND_PROGRESS, 0) == 7 -> {
                     playerl(
                         FaceAnim.ASKING,
-                        "I don't suppose you have any idea where I could find an exotic and extremely odd fish, do you?",
+                        "I don't suppose you have any idea where I could find an exotic and extremely odd fish, do you?"
                     )
                     stage = 1
-                } else if (!isQuestComplete(player!!, Quests.THE_FREMENNIK_TRIALS)) {
-                    player(FaceAnim.FRIENDLY, "Hello there.").also { stage = 200 }
-                } else if (isQuestComplete(player!!, Quests.THE_FREMENNIK_TRIALS)) {
-                    player(FaceAnim.FRIENDLY, "Hello there.").also { stage = 100 }
+                }
+
+                isQuestComplete(player!!, Quests.THE_FREMENNIK_TRIALS) -> {
+                    player(FaceAnim.FRIENDLY, "Hello there.")
+                    stage = 100
+                }
+
+                else -> {
+                    player(FaceAnim.FRIENDLY, "Hello there.")
+                    stage = 200
                 }
             }
 
-            1 ->
-                npcl(
-                    FaceAnim.AMAZED,
-                    "Ah, so even outerlanders have heard of my amazing catch the other day!",
-                ).also { stage++ }
+            1 -> npcl(
+                FaceAnim.AMAZED,
+                "Ah, so even outerlanders have heard of my amazing catch the other day!"
+            ).also { stage++ }
 
             2 -> playerl(FaceAnim.THINKING, "You have it? Can I trade you something for it?").also { stage++ }
             3 ->
@@ -80,7 +94,7 @@ class FremennikFishermanDialogue : DialogueFile() {
 
             7 ->
                 playerl(FaceAnim.THINKING, "I'll see what I can do.").also {
-                    player!!.incrementAttribute("sigmund-steps", 1)
+                    player!!.incrementAttribute(GameAttributes.QUEST_VIKING_SIGMUND_PROGRESS, 1)
                     stage = 1000
                 }
 
@@ -106,11 +120,7 @@ class FremennikFishermanDialogue : DialogueFile() {
                 npc(
                     FaceAnim.FRIENDLY,
                     "Welcome back, " + (if (player!!.isMale) "brother " else "sister ") + "${
-                        getAttribute(
-                            player!!,
-                            "fremennikname",
-                            "fremmyname",
-                        )
+                        FremennikTrials.getFremennikName(player!!)
                     }.",
                     "It has been too long since last we spoke!",
                     "The fish are really biting today!",

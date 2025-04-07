@@ -1,5 +1,7 @@
 package content.region.fremennik.quest.viking.dialogue
 
+import content.data.GameAttributes
+import content.region.fremennik.quest.viking.FremennikTrials
 import core.api.*
 import core.api.quest.isQuestComplete
 import core.game.dialogue.Dialogue
@@ -16,57 +18,60 @@ class SigliTheHuntsmanDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
     override fun open(vararg args: Any?): Boolean {
-        if (inInventory(player, Items.CUSTOM_BOW_STRING_3702, 1)) {
-            npcl(FaceAnim.HAPPY, "Greetings outerlander.")
-            stage = 165
-            return true
-        } else if (inInventory(player, Items.TRACKING_MAP_3701, 1)) {
-            playerl(FaceAnim.ASKING, "So you really don't mind giving this away to me?")
-            stage = 170
-            return true
-        } else if (getAttribute(player, "sigmundreturning", false)) {
-            playerl(FaceAnim.ASKING, "I have an item to trade.")
-            stage = 175
-            return true
+        when {
+            inInventory(player, Items.CUSTOM_BOW_STRING_3702, 1) -> {
+                npcl(FaceAnim.HAPPY, "Greetings outerlander.")
+                stage = 165
+            }
+
+            inInventory(player, Items.TRACKING_MAP_3701, 1) -> {
+                playerl(FaceAnim.ASKING, "So you really don't mind giving this away to me?")
+                stage = 170
+            }
+
+            getAttribute(player, GameAttributes.QUEST_VIKING_SIGMUND_RETURN, false) -> {
+                playerl(FaceAnim.ASKING, "I have an item to trade.")
+                stage = 175
+            }
+
+            getAttribute(player, GameAttributes.QUEST_VIKING_SIGMUND_PROGRESS, 0) == 6 -> {
+                npcl(FaceAnim.HAPPY, "Greetings outerlander.")
+                stage = 160
+            }
+
+            getAttribute(player, GameAttributes.QUEST_VIKING_SIGMUND_PROGRESS, 0) == 5 -> {
+                npcl(FaceAnim.HAPPY, "Greetings outerlander.")
+                stage = 150
+            }
+
+            getAttribute(player, GameAttributes.QUEST_VIKING_SIGLI_VOTE, false) -> {
+                npc("You have my vote!")
+                stage = 1000
+            }
+
+            getAttribute(player, GameAttributes.QUEST_VIKING_SIGLI_DRAUGEN_KILL, false) -> {
+                npc("I saw the entire hunt. Let me take that talisman from", "you, I would be honored to speak out for you to our", "council of elders after such a hunt, outerlander.")
+                stage = 100
+            }
+
+            isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS) -> {
+                playerl(FaceAnim.HAPPY, "Hello again Sigli.")
+                stage = 180
+            }
+
+            player.questRepository.hasStarted(Quests.THE_FREMENNIK_TRIALS) -> {
+                npc("What do you want outerlander?")
+                stage = 0
+            }
+
+            else -> {
+                npcl(FaceAnim.HAPPY, "I do not speak to outerlanders. If you have anything of import to say, go and speak to the Chieftain.")
+                stage = 1000
+            }
         }
-        if (getAttribute(player, "sigmund-steps", 0) == 6) {
-            npcl(FaceAnim.HAPPY, "Greetings outerlander.")
-            stage = 160
-            return true
-        } else if (getAttribute(player, "sigmund-steps", 0) == 5) {
-            npcl(FaceAnim.HAPPY, "Greetings outerlander.")
-            stage = 150
-            return true
-        } else if (getAttribute(player, "fremtrials:sigli-vote", false)) {
-            npc("You have my vote!")
-            stage = 1000
-            return true
-        }
-        if (getAttribute(player, "fremtrials:draugen-killed", false)) {
-            npc(
-                "I saw the entire hunt. Let me take that talisman from",
-                "you, I would be honored to speak out for you to our",
-                "council of elders after such a hunt, outerlander.",
-            )
-            stage = 100
-            return true
-        } else if (isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS)) {
-            playerl(FaceAnim.HAPPY, "Hello again Sigli.")
-            stage = 180
-            return true
-        } else if (player.questRepository.hasStarted(Quests.THE_FREMENNIK_TRIALS)) {
-            npc("What do you want outerlander?")
-            stage = 0
-            return true
-        } else {
-            npcl(
-                FaceAnim.HAPPY,
-                "I do not speak to outerlanders. If you have anything of import to say, go and speak to the Chieftain.",
-            )
-            stage = 1000
-            return true
-        }
+        return true
     }
+
 
     override fun handle(
         interfaceId: Int,
@@ -204,14 +209,13 @@ class SigliTheHuntsmanDialogue(
             23 ->
                 npc("Take care of the talisman, and see me when you have", "completed this task.").also {
                     stage = 1000
-                    setAttribute(player, "/save:fremtrials:sigli-accepted", true)
                 }
 
             100 ->
                 player("Thanks!").also {
-                    removeAttribute(player, "fremtrials:draugen-killed")
-                    setAttribute(player, "/save:fremtrials:sigli-vote", true)
-                    setAttribute(player, "/save:fremtrials:votes", getAttribute(player, "fremtrials:votes", 0) + 1)
+                    removeAttribute(player, GameAttributes.QUEST_VIKING_SIGLI_DRAUGEN_KILL)
+                    setAttribute(player, GameAttributes.QUEST_VIKING_SIGLI_VOTE, true)
+                    setAttribute(player, GameAttributes.QUEST_VIKING_VOTES, getAttribute(player, GameAttributes.QUEST_VIKING_VOTES, 0) + 1)
                     removeItem(player, Items.HUNTERS_TALISMAN_3697)
                     stage = 1000
                 }
@@ -254,7 +258,7 @@ class SigliTheHuntsmanDialogue(
                     FaceAnim.HAPPY,
                     "I have no idea. But then again, I'm happy with my old bowstring and being the only person who knows where my hunting ground is.",
                 ).also {
-                    player.incrementAttribute("sigmund-steps", 1)
+                    player.incrementAttribute(GameAttributes.QUEST_VIKING_SIGMUND_PROGRESS, 1)
                     stage = 1000
                 }
 
@@ -302,7 +306,7 @@ class SigliTheHuntsmanDialogue(
             180 ->
                 npcl(
                     FaceAnim.HAPPY,
-                    "Hello again to you ${getAttribute(player, "fremennikname", "fremmyname")}. How goes the hunt?",
+                    "Hello again to you ${FremennikTrials.getFremennikName(player)}. How goes the hunt?",
                 ).also { stage++ }
 
             181 ->

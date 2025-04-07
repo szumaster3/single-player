@@ -1,5 +1,6 @@
 package content.region.fremennik.quest.viking.handlers
 
+import content.data.GameAttributes
 import core.api.addItemOrDrop
 import core.game.node.entity.Entity
 import core.game.node.entity.combat.BattleState
@@ -59,12 +60,12 @@ class KoscheiNPC(
                 type!!.transform(this, session!!.player)
             } else {
                 session?.player?.sendMessage("Congratulations! You have completed the warriors trial!")
-                session?.player?.setAttribute("/save:fremtrials:thorvald-vote", true)
+                session?.player?.setAttribute(GameAttributes.QUEST_VIKING_THORVALD_VOTE, true)
                 session?.player?.setAttribute(
-                    "/save:fremtrials:votes",
-                    session.player.getAttribute("fremtrials:votes", 0) + 1,
+                    GameAttributes.QUEST_VIKING_VOTES,
+                    session.player.getAttribute(GameAttributes.QUEST_VIKING_VOTES, 0) + 1,
                 )
-                session?.player?.removeAttribute("fremtrials:warrior-accepted")
+                session?.player?.removeAttribute(GameAttributes.QUEST_VIKING_THORVALD_START)
                 addItemOrDrop(session?.player!!, Items.FREMENNIK_BLADE_3757, 1)
                 session.close()
             }
@@ -228,12 +229,12 @@ class KoscheiNPC(
                         .also { player?.animate(Animation(1332)).also { player?.sendMessage("Oh dear you are...") } }
 
                 1 ->
-                    player?.setAttribute("/save:fremtrials:thorvald-vote", true).also {
+                    player?.setAttribute(GameAttributes.QUEST_VIKING_THORVALD_VOTE, true).also {
                         player?.setAttribute(
-                            "/save:fremtrials:votesplayer",
-                            player.getAttribute("fremtrials:votesplayer", 0) + 1,
+                            GameAttributes.QUEST_VIKING_VOTES,
+                            player.getAttribute(GameAttributes.QUEST_VIKING_VOTES, 0) + 1,
                         )
-                        player?.removeAttribute("fremtrials:warrior-accepted")
+                        player?.removeAttribute(GameAttributes.QUEST_VIKING_THORVALD_START)
                     }
 
                 3 -> player?.teleport(Location.create(2666, 3694, 1)).also { koschei.session?.close() }

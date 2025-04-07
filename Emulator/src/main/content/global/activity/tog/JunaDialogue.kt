@@ -1,6 +1,7 @@
 package content.global.activity.tog
 
 import content.data.GameAttributes
+import content.region.fremennik.quest.viking.FremennikTrials
 import content.region.kandarin.miniquest.barcrawl.BarcrawlManager
 import content.region.misthalin.quest.tog.TearsOfGuthix
 import core.api.*
@@ -186,11 +187,7 @@ class JunaDialogue(
                     questDialogue.add(
                         0,
                         "...And that was how I became an honourary member of the Fremennik, and was given my Fremennik name, ${
-                            getAttribute(
-                                player,
-                                "fremennikname",
-                                "fremmyname",
-                            )
+                            FremennikTrials.getFremennikName(player)
                         }.",
                     )
                     questDialogue.add(1, "...")

@@ -1,5 +1,6 @@
 package content.region.fremennik.quest.viking.handlers
 
+import content.data.GameAttributes
 import core.api.getAttribute
 import core.api.sendDialogue
 import core.api.sendMessage
@@ -20,10 +21,10 @@ class HunterTalismanListener : InteractionListener {
 
     override fun defineListeners() {
         on(TALISMAN, IntType.ITEM, "locate") { player, _ ->
-            var locationString = getAttribute(player, "fremtrials:draugen-loc", "none")
+            var locationString = getAttribute(player, GameAttributes.QUEST_VIKING_SIGLI_DRAUGEN_LOCATION, "none")
             if (locationString == "none") {
                 val newLoc = possibleLocations.random()
-                setAttribute(player, "/save:fremtrials:draugen-loc", "${newLoc.x},${newLoc.y}")
+                setAttribute(player, GameAttributes.QUEST_VIKING_SIGLI_DRAUGEN_LOCATION, "${newLoc.x},${newLoc.y}")
                 locationString = "${newLoc.x},${newLoc.y}"
             }
             val locationComponents = locationString.split(",")
@@ -49,9 +50,9 @@ class HunterTalismanListener : InteractionListener {
         override fun pulse(): Boolean {
             when (count++) {
                 3 -> {
-                    if (getAttribute(player, "fremtrials:draugen-spawned", false)) return true
+                    if (getAttribute(player, GameAttributes.QUEST_VIKING_SIGLI_DRAUGEN_SPAWN, false)) return true
                     DraugenNPC(player).init()
-                    setAttribute(player, "fremtrials:draugen-spawned", true)
+                    setAttribute(player, GameAttributes.QUEST_VIKING_SIGLI_DRAUGEN_SPAWN, true)
                     return true
                 }
             }

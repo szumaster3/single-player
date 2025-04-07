@@ -1,5 +1,7 @@
 package content.region.fremennik.quest.viking.dialogue
 
+import content.data.GameAttributes
+import content.region.fremennik.quest.viking.FremennikTrials
 import core.api.*
 import core.api.quest.getQuestStage
 import core.api.quest.isQuestComplete
@@ -15,6 +17,7 @@ import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
+import org.rs.consts.Animations
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
@@ -23,61 +26,62 @@ import org.rs.consts.Quests
 class ManniDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    private var curNPC: NPC? = NPC(0, Location(0, 0, 0))
-
     override fun open(vararg args: Any?): Boolean {
-        curNPC = args[0] as? NPC
-        if (getQuestStage(player, Quests.THE_FREMENNIK_TRIALS) > 0) {
-            if (inInventory(player, Items.LEGENDARY_COCKTAIL_3707, 1)) {
-                playerl(FaceAnim.HAPPY, "Hey. I got your cocktail for you.")
-                stage = 170
-                return true
-            } else if (inInventory(player, Items.CHAMPIONS_TOKEN_3706, 1)) {
-                playerl(
-                    FaceAnim.ASKING,
-                    "So it doesn't bother you at all that you just gave up your place here for one drink?",
-                )
-                stage = 180
-                return true
-            } else if (getAttribute(player, "sigmundreturning", false)) {
-                playerl(FaceAnim.ASKING, "Is this trade item for you?")
-                stage = 165
-                return true
-            } else if (getAttribute(player, "sigmund-steps", 0) == 12) {
-                playerl(
-                    FaceAnim.ASKING,
-                    "I don't suppose you have any idea where I could find the longhall barkeeps' legendary cocktail, do you?",
-                )
-                stage = 162
-                return true
-            } else if (getAttribute(player, "sigmund-steps", 0) == 11) {
-                playerl(
-                    FaceAnim.ASKING,
-                    "I don't suppose you have any idea where I could find a token to allow a seat at the champions table, do you?",
-                )
-                stage = 150
-                return true
-            } else if (getAttribute(player, "fremtrials:manni-accepted", false)) {
-                if (inInventory(player, Items.LOW_ALCOHOL_KEG_3712) || inInventory(player, Items.KEG_OF_BEER_3711)) {
-                    npc("Ah, I see you have your keg of beer. Are ye ready to", "drink against each other?")
-                    stage = 101
-                    return true
-                } else {
-                    npc("Come back when you're ready to begin", "the contest.")
-                    stage = 1000
-                    return true
+        val questStage = getQuestStage(player, Quests.THE_FREMENNIK_TRIALS)
+
+        if (questStage > 0) {
+            when {
+                inInventory(player, Items.LEGENDARY_COCKTAIL_3707, 1) -> {
+                    playerl(FaceAnim.HAPPY, "Hey. I got your cocktail for you.")
+                    stage = 170
                 }
-            } else if (getAttribute(player, "fremtrials:manni-vote", false)) {
-                npc("e have my vote!")
-                stage = 1000
-                return true
-            } else if (isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS)) {
-                playerl(FaceAnim.HAPPY, "Howdy!")
-                stage = 190
-                return true
+
+                inInventory(player, Items.CHAMPIONS_TOKEN_3706, 1) -> {
+                    playerl(FaceAnim.ASKING, "So it doesn't bother you at all that you just gave up your place here for one drink?")
+                    stage = 180
+                }
+
+                getAttribute(player, GameAttributes.QUEST_VIKING_SIGMUND_RETURN, false) -> {
+                    playerl(FaceAnim.ASKING, "Is this trade item for you?")
+                    stage = 165
+                }
+
+                getAttribute(player, GameAttributes.QUEST_VIKING_SIGMUND_PROGRESS, 0) == 12 -> {
+                    playerl(FaceAnim.ASKING, "I don't suppose you have any idea where I could find the longhall barkeeps' legendary cocktail, do you?")
+                    stage = 162
+                }
+
+                getAttribute(player, GameAttributes.QUEST_VIKING_SIGMUND_PROGRESS, 0) == 11 -> {
+                    playerl(FaceAnim.ASKING, "I don't suppose you have any idea where I could find a token to allow a seat at the champions table, do you?")
+                    stage = 150
+                }
+
+                getAttribute(player, GameAttributes.QUEST_VIKING_MANI_START, false) -> {
+                    val kegAvailable = inInventory(player, Items.LOW_ALCOHOL_KEG_3712) || inInventory(player, Items.KEG_OF_BEER_3711)
+                    if (kegAvailable) {
+                        npc("Ah, I see you have your keg of beer. Are ye ready to", "drink against each other?")
+                        stage = 101
+                    } else {
+                        npc("Come back when you're ready to begin", "the contest.")
+                        stage = 1000
+                    }
+                }
+
+                getAttribute(player, GameAttributes.QUEST_VIKING_MANI_VOTE, false) -> {
+                    npc("You have my vote!")
+                    stage = 1000
+                }
+
+                isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS) -> {
+                    playerl(FaceAnim.HAPPY, "Howdy!")
+                    stage = 190
+                }
+
+                else -> {
+                    player("Hello there!")
+                    stage = 0
+                }
             }
-            player("Hello there!")
-            stage = 0
             return true
         } else {
             playerl(FaceAnim.HAPPY, "Hello there!")
@@ -144,7 +148,7 @@ class ManniDialogue(
                     "yields.",
                 )
                 stage = END_DIALOGUE
-                setAttribute(player, "/save:fremtrials:manni-accepted", true)
+                setAttribute(player, GameAttributes.QUEST_VIKING_MANI_START, true)
             }
 
             12 -> npc("That's a shame.").also { stage = END_DIALOGUE }
@@ -158,7 +162,7 @@ class ManniDialogue(
 
             103 -> npc("As you wish outerlander; I will drink first, then you will", "drink.").also { stage++ }
             104 -> {
-                Pulser.submit(DrinkingPulse(player, curNPC, getAttribute(player, "fremtrials:keg-mixed", false)))
+                Pulser.submit(DrinkingPulse(player, findLocalNPC(player, npc.id), getAttribute(player, GameAttributes.QUEST_VIKING_MANI_KEG, false)))
                 end()
             }
 
@@ -225,7 +229,7 @@ class ManniDialogue(
             160 -> playerl(FaceAnim.THINKING, "That's all?").also { stage++ }
             161 -> {
                 npcl(FaceAnim.NEUTRAL, "That is all.")
-                player.incrementAttribute("sigmund-steps", 1)
+                player.incrementAttribute(GameAttributes.QUEST_VIKING_SIGMUND_PROGRESS, 1)
                 stage = END_DIALOGUE
             }
 
@@ -279,7 +283,7 @@ class ManniDialogue(
             190 -> {
                 npcl(
                     FaceAnim.HAPPY,
-                    "Hey! It's ${getAttribute(player, "fremennikname", "fremmyname")}! Let me buy you a drink!",
+                    "Hey! It's ${FremennikTrials.getFremennikName(player)}! Let me buy you a drink!",
                 )
                 addItem(player, Items.BEER_1917)
                 stage++
@@ -326,9 +330,9 @@ class ManniDialogue(
                         npc?.face(player)
                     }
 
-                    3 -> npc?.animator?.animate(Animation(1330, Animator.Priority.HIGH))
+                    3 -> npc?.animator?.animate(Animation(Animations.DRINK_KEG_1330, Animator.Priority.HIGH))
                     5 -> {
-                        player?.animator?.animate(Animation(1330, Animator.Priority.HIGH))
+                        player?.animator?.animate(Animation(Animations.DRINK_KEG_1330, Animator.Priority.HIGH))
                         player?.inventory?.remove(
                             Item(Items.KEG_OF_BEER_3711),
                         )
@@ -373,9 +377,9 @@ class ManniDialogue(
                         npc?.face(player)
                     }
 
-                    3 -> npc?.animator?.animate(Animation(1330, Animator.Priority.HIGH))
+                    3 -> npc?.animator?.animate(Animation(Animations.DRINK_KEG_1330, Animator.Priority.HIGH))
                     5 -> {
-                        player?.animator?.animate(Animation(1330, Animator.Priority.HIGH))
+                        player?.animator?.animate(Animation(Animations.DRINK_KEG_1330, Animator.Priority.HIGH))
                         player?.inventory?.remove(
                             Item(Items.KEG_OF_BEER_3711),
                         )
@@ -415,21 +419,21 @@ class ManniDialogue(
                         npc?.face(npc)
                         npc?.isNeverWalks =
                             false
-                        removeAttribute(player!!, "fremtrials:cherrybomb")
+                        removeAttribute(player!!, GameAttributes.QUEST_VIKING_MANI_BOMB)
                         removeAttribute(
                             player,
-                            "fremtrials:manni-accepted",
+                            GameAttributes.QUEST_VIKING_MANI_START,
                         )
-                        removeAttribute(player, "fremtrials:keg-mixed")
+                        removeAttribute(player, GameAttributes.QUEST_VIKING_MANI_KEG)
                         setAttribute(
                             player,
-                            "/save:fremtrials:manni-vote",
+                            GameAttributes.QUEST_VIKING_MANI_VOTE,
                             true,
                         )
                         setAttribute(
                             player,
-                            "/save:fremtrials:votes",
-                            getAttribute(player, "fremtrials:votes", 0) + 1,
+                            GameAttributes.QUEST_VIKING_VOTES,
+                            getAttribute(player, GameAttributes.QUEST_VIKING_VOTES, 0) + 1,
                         )
                         return true
                     }

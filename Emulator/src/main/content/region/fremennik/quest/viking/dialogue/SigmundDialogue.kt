@@ -1,5 +1,7 @@
 package content.region.fremennik.quest.viking.dialogue
 
+import content.data.GameAttributes
+import content.region.fremennik.quest.viking.FremennikTrials
 import core.api.*
 import core.api.interaction.openNpcShop
 import core.api.quest.isQuestComplete
@@ -24,44 +26,48 @@ class SigmundDialogue(
         } else {
             "sister"
         }
-    val fName = player?.getAttribute("fremennikname", "fremmyname")
+    private val fremennikName = FremennikTrials.getFremennikName(player!!)
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
-        if (isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS)) {
-            playerl(FaceAnim.HAPPY, "Hello there!")
-            stage = 50
-            return true
-        } else if (!player.questRepository.hasStarted(Quests.THE_FREMENNIK_TRIALS)) {
-            playerl(FaceAnim.HAPPY, "Hello there!")
-            stage = 60
-            return true
+
+        when {
+            isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS) -> {
+                playerl(FaceAnim.HAPPY, "Hello there!")
+                stage = 50
+            }
+
+            !player.questRepository.hasStarted(Quests.THE_FREMENNIK_TRIALS) -> {
+                playerl(FaceAnim.HAPPY, "Hello there!")
+                stage = 60
+            }
+
+            inInventory(player, Items.EXOTIC_FLOWER_3698, 1) -> {
+                playerl(FaceAnim.HAPPY, "Here's that flower you wanted.")
+                stage = 30
+            }
+
+            getAttribute(player, GameAttributes.QUEST_VIKING_SIGMUND_RETURN, false) && !anyInInventory(player, *questItems) -> {
+                npcl(FaceAnim.ASKING, "So... how goes it outerlander? Did you manage to obtain my flower for me yet? Or do you lack the necessary merchanting skills?")
+                stage = 35
+            }
+
+            getAttribute(player, GameAttributes.QUEST_VIKING_SIGMUND_START, false) -> {
+                playerl(FaceAnim.HAPPY, "Hello there!")
+                stage = 25
+            }
+
+            !getAttribute(player, GameAttributes.QUEST_VIKING_SIGMUND_VOTE, false) -> {
+                playerl(FaceAnim.HAPPY, "Hello there!")
+                stage = 1
+            }
+
+            getAttribute(player, GameAttributes.QUEST_VIKING_SIGMUND_VOTE, false) -> {
+                playerl(FaceAnim.HAPPY, "Hello there!")
+                stage = 40
+            }
         }
-        if (inInventory(player, Items.EXOTIC_FLOWER_3698, 1)) {
-            playerl(FaceAnim.HAPPY, "Here's that flower you wanted.")
-            stage = 30
-            return true
-        } else if (getAttribute(player, "sigmundreturning", false) && !anyInInventory(player, *questItems)) {
-            npcl(
-                FaceAnim.ASKING,
-                "So... how goes it outerlander? Did you manage to obtain my flower for me yet? Or do you lack the necessary merchanting skills?",
-            )
-            stage = 35
-            return true
-        }
-        if (getAttribute(player, "sigmund-started", false)) {
-            playerl(FaceAnim.HAPPY, "Hello there!")
-            stage = 25
-            return true
-        } else if (!getAttribute(player, "fremtrials:sigmund-vote", false)) {
-            playerl(FaceAnim.HAPPY, "Hello there!")
-            stage = 1
-            return true
-        } else if (getAttribute(player, "fremtrials:sigmund-vote", false)) {
-            playerl(FaceAnim.HAPPY, "Hello there!")
-            stage = 40
-            return true
-        }
+
         return true
     }
 
@@ -120,8 +126,8 @@ class SigmundDialogue(
                             FaceAnim.ASKING,
                             "Okay. I don't think this will be too difficult. Any suggestions on where to start looking for this flower?",
                         ).also {
-                            setAttribute(player, "/save:sigmund-started", true)
-                            setAttribute(player, "/save:sigmund-steps", 1)
+                            setAttribute(player, GameAttributes.QUEST_VIKING_SIGMUND_START, true)
+                            setAttribute(player, GameAttributes.QUEST_VIKING_SIGMUND_PROGRESS, 1)
                             stage++
                         }
 
@@ -175,9 +181,9 @@ class SigmundDialogue(
                     "Incredible! Your merchanting skills might even match my own! I have no choice but to recommend you to the council of elders!",
                 ).also {
                     removeItem(player, Items.EXOTIC_FLOWER_3698)
-                    removeAttributes(player, "sigmund-steps", "sigmund-started", "sigmundreturning")
-                    setAttribute(player, "/save:fremtrials:votes", getAttribute(player, "fremtrials:votes", 0) + 1)
-                    setAttribute(player, "/save:fremtrials:sigmund-vote", true)
+                    removeAttributes(player, GameAttributes.QUEST_VIKING_SIGMUND_PROGRESS, GameAttributes.QUEST_VIKING_SIGMUND_START, GameAttributes.QUEST_VIKING_SIGMUND_RETURN)
+                    setAttribute(player, GameAttributes.QUEST_VIKING_VOTES, getAttribute(player, GameAttributes.QUEST_VIKING_VOTES, 0) + 1)
+                    setAttribute(player, GameAttributes.QUEST_VIKING_SIGMUND_VOTE, true)
                     stage = 1000
                 }
 
@@ -219,7 +225,7 @@ class SigmundDialogue(
             50 ->
                 npcl(
                     FaceAnim.HAPPY,
-                    "Greetings again $gender $fName! What can I do for you this day?",
+                    "Greetings again $gender $fremennikName! What can I do for you this day?",
                 ).also { stage++ }
 
             51 -> options("Can I see your wares?", "Nothing thanks").also { stage++ }
@@ -229,7 +235,7 @@ class SigmundDialogue(
                     2 -> playerl(FaceAnim.HAPPY, "Nothing thanks").also { stage = 55 }
                 }
 
-            53 -> npcl(FaceAnim.HAPPY, "Certainly, $fName.").also { stage = 54 }
+            53 -> npcl(FaceAnim.HAPPY, "Certainly, $fremennikName.").also { stage = 54 }
             54 -> {
                 end()
                 openNpcShop(player, NPCs.SIGMUND_THE_MERCHANT_1282)
@@ -238,7 +244,7 @@ class SigmundDialogue(
             55 ->
                 npcl(
                     FaceAnim.HAPPY,
-                    "Well, feel free to stop by anytime you wish $fName. You are always welcome here!",
+                    "Well, feel free to stop by anytime you wish $fremennikName. You are always welcome here!",
                 ).also { stage = 1000 }
 
             60 ->

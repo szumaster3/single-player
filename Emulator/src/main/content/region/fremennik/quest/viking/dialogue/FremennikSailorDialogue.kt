@@ -1,5 +1,6 @@
 package content.region.fremennik.quest.viking.dialogue
 
+import content.data.GameAttributes
 import core.api.addItemOrDrop
 import core.api.getAttribute
 import core.api.inInventory
@@ -18,39 +19,49 @@ class FremennikSailorDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
     override fun open(vararg args: Any?): Boolean {
-        if (!player.questRepository.hasStarted(Quests.THE_FREMENNIK_TRIALS)) {
-            npcl(
-                FaceAnim.ANNOYED,
-                "Don't talk to me outerlander. I need to fix this longboat. Go talk to the chieftain.",
-            ).also { stage = END_DIALOGUE }
-        } else if (inInventory(player, Items.FREMENNIK_BALLAD_3699, 1)) {
-            playerl(
-                FaceAnim.HAPPY,
-                "You'll be glad to know I have had a love song written just for you by Olaf. So can I have that flower of yours now?",
-            )
-            stage = 15
-        } else if (inInventory(player, Items.EXOTIC_FLOWER_3698, 1)) {
-            playerl(FaceAnim.ASKING, "So tell me... who is this woman that you are trying to impress anyway?")
-            stage = 20
-            return true
-        } else if (getAttribute(player, "sigmundreturning", false)) {
-            playerl(FaceAnim.ASKING, "I've got an item to trade.")
-            stage = 25
-            return true
-        } else if (getAttribute(player, "sigmund-steps", 0) == 2) {
-            playerl(FaceAnim.ASKING, "I don't suppose you have any idea where I could find a love ballad, do you?")
-            stage = 10
-            return true
-        } else if (getAttribute(player, "sigmund-started", false)) {
-            playerl(
-                FaceAnim.ASKING,
-                "I don't suppose you have any idea where I could find a unique flower from across the sea, do you?",
-            )
-            stage = 1
-            return true
-        } else {
-            end()
-            player.dialogueInterpreter.open(1304)
+        when {
+            !player.questRepository.hasStarted(Quests.THE_FREMENNIK_TRIALS) -> {
+                npcl(
+                    FaceAnim.ANNOYED,
+                    "Don't talk to me outerlander. I need to fix this longboat. Go talk to the chieftain.",
+                ).also { stage = END_DIALOGUE }
+            }
+
+            inInventory(player, Items.FREMENNIK_BALLAD_3699, 1) -> {
+                playerl(
+                    FaceAnim.HAPPY,
+                    "You'll be glad to know I have had a love song written just for you by Olaf. So can I have that flower of yours now?",
+                )
+                stage = 15
+            }
+
+            inInventory(player, Items.EXOTIC_FLOWER_3698, 1) -> {
+                playerl(FaceAnim.ASKING, "So tell me... who is this woman that you are trying to impress anyway?")
+                stage = 20
+            }
+
+            getAttribute(player, GameAttributes.QUEST_VIKING_SIGMUND_RETURN, false) -> {
+                playerl(FaceAnim.ASKING, "I've got an item to trade.")
+                stage = 25
+            }
+
+            getAttribute(player, GameAttributes.QUEST_VIKING_SIGMUND_PROGRESS, 0) == 2 -> {
+                playerl(FaceAnim.ASKING, "I don't suppose you have any idea where I could find a love ballad, do you?")
+                stage = 10
+            }
+
+            getAttribute(player, GameAttributes.QUEST_VIKING_SIGMUND_START, false) -> {
+                playerl(
+                    FaceAnim.ASKING,
+                    "I don't suppose you have any idea where I could find a unique flower from across the sea, do you?",
+                )
+                stage = 1
+            }
+
+            else -> {
+                end()
+                player.dialogueInterpreter.open(NPCs.SAILOR_1304)
+            }
         }
         return true
     }
@@ -99,7 +110,7 @@ class FremennikSailorDialogue(
 
             8 ->
                 npcl(FaceAnim.HAPPY, "That sounds like a fair deal to me, outerlander.").also {
-                    player.incrementAttribute("sigmund-steps", 1)
+                    player.incrementAttribute(GameAttributes.QUEST_VIKING_SIGMUND_PROGRESS, 1)
                     stage = END_DIALOGUE
                 }
 

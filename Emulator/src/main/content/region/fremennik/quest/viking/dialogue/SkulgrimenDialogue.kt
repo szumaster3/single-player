@@ -1,5 +1,7 @@
 package content.region.fremennik.quest.viking.dialogue
 
+import content.data.GameAttributes
+import content.region.fremennik.quest.viking.FremennikTrials
 import core.api.*
 import core.api.interaction.openNpcShop
 import core.api.quest.isQuestComplete
@@ -20,44 +22,43 @@ class SkulgrimenDialogue(
 ) : Dialogue(player) {
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
-        if (inInventory(player, Items.UNUSUAL_FISH_3703, 1)) {
-            playerl(FaceAnim.HAPPY, "Hi there. I got your fish, so can I have that bowstring for Sigli now?")
-            stage = 20
-            return true
-        } else if (inInventory(player, Items.CUSTOM_BOW_STRING_3702, 1)) {
-            playerl(FaceAnim.ASKING, "So about this bowstring... was it hard to make or something?")
-            stage = 25
-            return true
-        } else if (getAttribute(player, "sigmundreturning", false)) {
-            playerl(FaceAnim.ASKING, "Is this trade item for you?")
-            stage = 26
-            return true
+        when {
+            inInventory(player, Items.UNUSUAL_FISH_3703, 1) -> {
+                playerl(FaceAnim.HAPPY, "Hi there. I got your fish, so can I have that bowstring for Sigli now?")
+                stage = 20
+            }
+
+            inInventory(player, Items.CUSTOM_BOW_STRING_3702, 1) -> {
+                playerl(FaceAnim.ASKING, "So about this bowstring... was it hard to make or something?")
+                stage = 25
+            }
+
+            getAttribute(player, GameAttributes.QUEST_VIKING_SIGMUND_RETURN, false) -> {
+                playerl(FaceAnim.ASKING, "Is this trade item for you?")
+                stage = 26
+            }
+
+            getAttribute(player, GameAttributes.QUEST_VIKING_SIGMUND_PROGRESS, 0) == 7 -> {
+                playerl(FaceAnim.ASKING, "I don't suppose you have any idea where I could find an exotic and extremely odd fish, do you?")
+                stage = 15
+            }
+
+            getAttribute(player, GameAttributes.QUEST_VIKING_SIGMUND_PROGRESS, 0) == 6 -> {
+                playerl(FaceAnim.ASKING, "I don't suppose you have any idea where I could find a finely balanced custom bowstring, do you?")
+                stage = 1
+            }
+
+            isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS) -> {
+                npcl(FaceAnim.HAPPY, "Hello again, ${FremennikTrials.getFremennikName(player)}. Come to see what's for sale?")
+                stage = 101
+            }
+
+            else -> {
+                playerl(FaceAnim.HAPPY, "Hello!")
+                stage = 100
+            }
         }
-        if (getAttribute(player, "sigmund-steps", 0) == 7) {
-            playerl(
-                FaceAnim.ASKING,
-                "I don't suppose you have any idea where I could find an exotic and extremely odd fish, do you?",
-            )
-            stage = 15
-            return true
-        } else if (getAttribute(player, "sigmund-steps", 0) == 6) {
-            playerl(
-                FaceAnim.ASKING,
-                "I don't suppose you have any idea where I could find a finely balanced custom bowstring, do you?",
-            )
-            stage = 1
-            return true
-        } else if (isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS)) {
-            npcl(
-                FaceAnim.HAPPY,
-                "Hello again, ${getAttribute(player, "fremennikname", "fremmyname")}. Come to see what's for sale?",
-            )
-            stage = 101
-            return true
-        } else {
-            playerl(FaceAnim.HAPPY, "Hello!")
-            stage = 100
-        }
+
         return true
     }
 
@@ -118,7 +119,7 @@ class SkulgrimenDialogue(
 
             11 ->
                 playerl(FaceAnim.HAPPY, "Sounds good to me.").also {
-                    player.incrementAttribute("sigmund-steps", 1)
+                    player.incrementAttribute(GameAttributes.QUEST_VIKING_SIGMUND_PROGRESS, 1)
                     stage = END_DIALOGUE
                 }
 
@@ -193,7 +194,7 @@ class SkulgrimenDialogue(
             103 ->
                 npcl(
                     FaceAnim.FRIENDLY,
-                    "No problem, ${getAttribute(player, "fremennikname", "fremmyname")}. What armour you want?",
+                    "No problem, ${FremennikTrials.getFremennikName(player)}. What armour you want?",
                 ).also { stage++ }
 
             104 -> options("A fine helm", "Sturdy bodyarmour", "Powerful leg armour", "Nothing").also { stage++ }

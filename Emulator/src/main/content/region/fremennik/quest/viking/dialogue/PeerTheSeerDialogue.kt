@@ -1,5 +1,7 @@
 package content.region.fremennik.quest.viking.dialogue
 
+import content.data.GameAttributes
+import content.region.fremennik.quest.viking.FremennikTrials
 import core.api.*
 import core.api.quest.getQuestStage
 import core.api.quest.isQuestComplete
@@ -81,18 +83,18 @@ class PeerTheSeerDialogue(
             playerl(FaceAnim.ASKING, "So, about this forecast...")
             stage = 20
             return true
-        } else if (getAttribute(player, "sigmundreturning", false)) {
+        } else if (getAttribute(player, GameAttributes.QUEST_VIKING_SIGMUND_RETURN, false)) {
             playerl(FaceAnim.ASKING, "I've got an item to trade but I don't know if it's for you.")
             stage = 26
             return true
-        } else if (getAttribute(player, "sigmund-steps", 0) == 10) {
+        } else if (getAttribute(player, GameAttributes.QUEST_VIKING_SIGMUND_PROGRESS, 0) == 10) {
             playerl(
                 FaceAnim.ASKING,
                 "I don't suppose you have any idea where I could find a brave and powerful warrior to act as a bodyguard?",
             )
             stage = 8
             return true
-        } else if (getAttribute(player, "sigmund-steps", 0) == 9) {
+        } else if (getAttribute(player, GameAttributes.QUEST_VIKING_SIGMUND_PROGRESS, 0) == 9) {
             playerl(
                 FaceAnim.ASKING,
                 "I don't suppose you have any idea where I could find a weather forecast from the Fremennik Seer do you?",
@@ -101,7 +103,7 @@ class PeerTheSeerDialogue(
             return true
         } else if (getAttribute(
                 player,
-                "PeerStarted",
+                GameAttributes.QUEST_VIKING_PEER_START,
                 false,
             ) &&
             !player.inventory.isEmpty ||
@@ -110,11 +112,11 @@ class PeerTheSeerDialogue(
             npcl(FaceAnim.SAD, "Uuuh... What was that dark presence I felt?")
             stage = 100
             return true
-        } else if (getAttribute(player, "PeerStarted", false) && player.inventory.isEmpty && player.equipment.isEmpty) {
+        } else if (getAttribute(player, GameAttributes.QUEST_VIKING_PEER_START, false) && player.inventory.isEmpty && player.equipment.isEmpty) {
             npcl(FaceAnim.SAD, "Uuuh... What was that dark presence I felt?")
             stage = 110
             return true
-        } else if (getAttribute(player, "fremtrials:peer-vote", false)) {
+        } else if (getAttribute(player, GameAttributes.QUEST_VIKING_PEER_VOTE, false)) {
             npcl(FaceAnim.SAD, "Uuuh... What was that dark presence I felt?")
             stage = 120
             return true
@@ -156,7 +158,7 @@ class PeerTheSeerDialogue(
             6 -> playerl(FaceAnim.ASKING, "That's all?").also { stage++ }
             7 ->
                 npcl(FaceAnim.HAPPY, "That is all.").also {
-                    player.incrementAttribute("sigmund-steps", 1)
+                    player.incrementAttribute(GameAttributes.QUEST_VIKING_SIGMUND_PROGRESS, 1)
                     stage = 1000
                 }
 
@@ -288,8 +290,8 @@ class PeerTheSeerDialogue(
                             FaceAnim.HAPPY,
                             "Yes, I accept your challenge, I have one small question, however...",
                         )
-                        setAttribute(player, "/save:PeerStarted", true)
-                        setAttribute(player, "/save:PeerRiddle", Random.nextInt(0, 3))
+                        setAttribute(player, GameAttributes.QUEST_VIKING_PEER_START, true)
+                        setAttribute(player, GameAttributes.QUEST_VIKING_PEER_RIDDLE, Random.nextInt(0, 3))
                         stage = 70
                     }
 
@@ -439,11 +441,7 @@ class PeerTheSeerDialogue(
                 npcl(
                     FaceAnim.HAPPY,
                     "Greetings to you, brother ${
-                        getAttribute(
-                            player,
-                            "fremennikname",
-                            "fremmyname",
-                        )
+                        FremennikTrials.getFremennikName(player)
                     }! What brings you to see me again?",
                 ).also { stage++ }
 
@@ -496,11 +494,7 @@ class PeerTheSeerDialogue(
                 npcl(
                     FaceAnim.HAPPY,
                     "Of course, ${
-                        getAttribute(
-                            player,
-                            "fremennikname",
-                            "fremmyname",
-                        )
+                        FremennikTrials.getFremennikName(player)
                     }. I am always happy to aid those who have earned the right to wear Fremennik sea boots.",
                 ).also {
                     player.bank.openDepositBox()

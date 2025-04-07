@@ -1,5 +1,6 @@
 package content.region.fremennik.quest.viking.handlers
 
+import content.data.GameAttributes
 import core.api.*
 import core.game.dialogue.DialogueFile
 import core.game.global.action.ClimbActionHandler
@@ -94,18 +95,18 @@ class SeersHouseListener : InteractionListener {
 
     override fun defineListeners() {
         on(WESTDOOR, IntType.SCENERY, "open") { player, node ->
-            if (!getAttribute(player, "PeerStarted", false)) {
+            if (!getAttribute(player, GameAttributes.QUEST_VIKING_PEER_START, false)) {
                 sendDialogue(player, "You should probably talk to the owner of this home.")
             }
-            if (getAttribute(player, "fremtrials:peer-vote", false)) {
+            if (getAttribute(player, GameAttributes.QUEST_VIKING_PEER_VOTE, false)) {
                 sendDialogue(player, "I don't need to go through that again.")
                 return@on true
-            } else if (getAttribute(player, "PeerRiddle", 5) < 5) {
+            } else if (getAttribute(player, GameAttributes.QUEST_VIKING_PEER_RIDDLE, 5) < 5) {
                 player.dialogueInterpreter.open(
                     DoorRiddleDialogue(player),
                     Scenery(WESTDOOR, node.location),
                 )
-            } else if (getAttribute(player, "riddlesolved", false)) {
+            } else if (getAttribute(player, GameAttributes.QUEST_VIKING_PEER_RIDDLE_SOLVED, false)) {
                 val insideHouse = (player.location == Location.create(2631, 3666, 0))
                 if (insideHouse) {
                     DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
@@ -1103,11 +1104,10 @@ class SeersHouseListener : InteractionListener {
 
         on(EASTDOOR, IntType.SCENERY, "Open") { player, node ->
             if (inInventory(player, SEERSKEY, 1)) {
-                setAttribute(player, "/save:housepuzzlesolved", true)
                 player.inventory.clear()
                 DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
-                setAttribute(player, "/save:fremtrials:peer-vote", true)
-                setAttribute(player, "/save:fremtrials:votes", getAttribute(player, "fremtrials:votes", 0) + 1)
+                setAttribute(player, GameAttributes.QUEST_VIKING_PEER_VOTE, true)
+                setAttribute(player, GameAttributes.QUEST_VIKING_VOTES, getAttribute(player, GameAttributes.QUEST_VIKING_VOTES, 0) + 1)
                 sendNPCDialogue(
                     player,
                     1288,
@@ -1226,7 +1226,7 @@ class DoorRiddleDialogue(
     val p = player
 
     val riddle =
-        when (getAttribute(player, "PeerRiddle", 0)) {
+        when (getAttribute(player, GameAttributes.QUEST_VIKING_PEER_RIDDLE, 0)) {
             0 -> RIDDLEONE
             1 -> RIDDLETWO
             2 -> RIDDLETHREE

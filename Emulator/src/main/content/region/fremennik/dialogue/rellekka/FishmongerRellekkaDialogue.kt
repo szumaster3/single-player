@@ -1,6 +1,6 @@
 package content.region.fremennik.dialogue.rellekka
 
-import core.api.getAttribute
+import content.region.fremennik.quest.viking.FremennikTrials
 import core.api.interaction.openNpcShop
 import core.api.quest.isQuestComplete
 import core.game.dialogue.Dialogue
@@ -23,7 +23,7 @@ class FishmongerRellekkaDialogue(
         } else {
             npcl(
                 FaceAnim.FRIENDLY,
-                "Hello there, ${getAttribute(player, "fremennikname", "fremmyname")}. Looking for fresh fish?",
+                "Hello there, ${FremennikTrials.getFremennikName(player)}. Looking for fresh fish?",
             )
         }
         return true

@@ -1,5 +1,6 @@
 package content.region.fremennik.quest.viking
 
+import content.data.GameAttributes
 import core.api.getAttribute
 import core.api.getStatLevel
 import core.api.quest.getQuestStage
@@ -15,7 +16,9 @@ import org.rs.consts.Quests
 import org.rs.consts.Vars
 
 @Initializable
-class FremennikTrials : Quest(Quests.THE_FREMENNIK_TRIALS, 64, 63, 3, Vars.VARP_QUEST_FREMENNIK_TRIALS_PROGRESS_347, 0, 1, 10) {
+class FremennikTrials :
+    Quest(Quests.THE_FREMENNIK_TRIALS, 64, 63, 3, Vars.VARP_QUEST_FREMENNIK_TRIALS_PROGRESS_347, 0, 1, 10) {
+
     class SkillRequirement(
         val skill: Int?,
         val level: Int?,
@@ -47,19 +50,22 @@ class FremennikTrials : Quest(Quests.THE_FREMENNIK_TRIALS, 64, 63, 3, Vars.VARP_
             line(player, "In order to join the Fremenniks, I need to", line++)
             line(player, "!!earn the approval?? of !!7 members?? of the elder council.", line++)
             line(player, "I've written down the members who I can try to help:", line++)
-            line(player, "Manni the Reveller", line++, getAttribute(player, "fremtrials:manni-vote", false))
-            line(player, "Swensen the Navigator", line++, getAttribute(player, "fremtrials:swensen-vote", false))
-            line(player, "Sigli the Huntsman", line++, getAttribute(player, "fremtrials:sigli-vote", false))
-            line(player, "Olaf the Bard", line++, getAttribute(player, "fremtrials:olaf-vote", false))
-            line(player, "Thorvald the Warrior", line++, getAttribute(player, "fremtrials:thorvald-vote", false))
-            line(player, "Sigmund the Merchant", line++, getAttribute(player, "fremtrials:sigmund-vote", false))
-            line(player, "Peer the Seer", line++, getAttribute(player, "fremtrials:peer-vote", false))
-            val voteCount = getAttribute(player, "fremtrials:votes", 0)
+
+            line(player, "Manni the Reveller", line++, getAttribute(player, GameAttributes.QUEST_VIKING_MANI_VOTE, false))
+            line(player, "Swensen the Navigator", line++, getAttribute(player, GameAttributes.QUEST_VIKING_SWENSEN_VOTE, false))
+            line(player, "Sigli the Huntsman", line++, getAttribute(player, GameAttributes.QUEST_VIKING_SIGLI_VOTE, false))
+            line(player, "Olaf the Bard", line++, getAttribute(player, GameAttributes.QUEST_VIKING_OLAF_VOTE, false))
+            line(player, "Thorvald the Warrior", line++, getAttribute(player, GameAttributes.QUEST_VIKING_THORVALD_VOTE, false))
+            line(player, "Sigmund the Merchant", line++, getAttribute(player, GameAttributes.QUEST_VIKING_SIGMUND_VOTE, false))
+            line(player, "Peer the Seer", line++, getAttribute(player, GameAttributes.QUEST_VIKING_PEER_VOTE, false))
+
+            val voteCount = getAttribute(player, GameAttributes.QUEST_VIKING_VOTES, 0)
             var voteText = "$voteCount votes"
             if (voteCount == 1) {
                 voteText = "1 vote"
             }
             line(player, "So far I have gotten $voteText.", line++)
+
         } else if (stage == 100) {
             line(player, "I made my way to the far north of !!Kandarin?? and found", line++)
             line(player, "the Barbarian hometown of !!Rellekka??. The tribe that live", line++)
@@ -73,13 +79,12 @@ class FremennikTrials : Quest(Quests.THE_FREMENNIK_TRIALS, 64, 63, 3, Vars.VARP_
             line(player, "<col=FF0000>QUEST COMPLETE!</col>", line++)
             line++
             line(player, "They also gave me a new name:", line++)
-            line(player, getAttribute(player, "fremennikname", "name"), line)
+            line(player, getFremennikName(player), line)
         }
     }
 
     override fun finish(player: Player) {
         super.finish(player)
-        player ?: return
         var ln = 10
         sendItemZoomOnInterface(player, Components.QUEST_COMPLETE_SCROLL_277, 5, Items.FREMENNIK_HELM_3748, 235)
         drawReward(player, "3 Quest points, 2.8k XP in:", ln++)
@@ -105,4 +110,11 @@ class FremennikTrials : Quest(Quests.THE_FREMENNIK_TRIALS, 64, 63, 3, Vars.VARP_
         requirements.add(SkillRequirement(Skills.WOODCUTTING, 40))
         return this
     }
+
+    companion object {
+        fun getFremennikName(player: Player): String {
+            return player.getAttribute("fremennikname", "fremmyname")
+        }
+    }
+
 }

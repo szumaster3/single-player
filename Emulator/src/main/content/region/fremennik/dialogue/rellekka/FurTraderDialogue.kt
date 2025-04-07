@@ -1,6 +1,6 @@
 package content.region.fremennik.dialogue.rellekka
 
-import core.api.getAttribute
+import content.region.fremennik.quest.viking.FremennikTrials
 import core.api.interaction.openNpcShop
 import core.api.quest.isQuestComplete
 import core.game.dialogue.Dialogue
@@ -23,11 +23,7 @@ class FurTraderDialogue(
         } else {
             npcl(
                 FaceAnim.FRIENDLY,
-                "Welcome back, ${getAttribute(
-                    player,
-                    "fremennikname",
-                    "fremmyname",
-                )}. Have you seen the furs I have today?",
+                "Welcome back, ${FremennikTrials.getFremennikName(player)}. Have you seen the furs I have today?",
             )
         }
         return true

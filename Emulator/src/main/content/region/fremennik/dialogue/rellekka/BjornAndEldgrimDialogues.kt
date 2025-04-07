@@ -1,6 +1,6 @@
 package content.region.fremennik.dialogue.rellekka
 
-import core.api.getAttribute
+import content.region.fremennik.quest.viking.FremennikTrials
 import core.api.quest.isQuestComplete
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
@@ -45,7 +45,7 @@ class BjornAndEldgrimDialogues(
                 }
             10 -> player(FaceAnim.ASKING, "${player.name}?").also { stage++ }
             11 -> npcl(FaceAnim.DRUNK, "Nah nah nah, not them, the other one, whatshyerfashe!").also { stage++ }
-            12 -> player(FaceAnim.ASKING, "${getAttribute(player, "fremennikname", "fremmyname")}?").also { stage++ }
+            12 -> player(FaceAnim.ASKING, "${FremennikTrials.getFremennikName(player)}?").also { stage++ }
             13 -> npc(FaceAnim.DRUNK, "Thatsh what I said diddle I?").also { stage++ }
             14 -> player(FaceAnim.ASKING, "Um.... okay. I'll leave you to your drinking.").also { stage++ }
             15 -> npc(FaceAnim.DRUNK, "Thanksh pal! You're alright!").also { stage = END_DIALOGUE }

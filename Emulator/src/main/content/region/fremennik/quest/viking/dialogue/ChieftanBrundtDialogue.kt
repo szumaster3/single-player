@@ -1,8 +1,9 @@
 package content.region.fremennik.quest.viking.dialogue
 
+import content.data.GameAttributes
+import content.region.fremennik.quest.viking.FremennikTrials
 import core.api.*
 import core.api.quest.finishQuest
-import core.api.quest.getQuestStage
 import core.api.quest.isQuestComplete
 import core.api.quest.startQuest
 import core.game.dialogue.Dialogue
@@ -20,80 +21,59 @@ import kotlin.random.Random
 class ChieftanBrundtDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    val gender =
-        if (player?.isMale == true) {
-            "brother"
-        } else {
-            "sister"
-        }
-    val fName = player?.getAttribute("fremennikname", "fremmyname")
-
+    private val fremennikName = FremennikTrials.getFremennikName(player!!)
     override fun open(vararg args: Any?): Boolean {
-        if (inInventory(player, Items.TRACKING_MAP_3701, 1)) {
-            playerl(FaceAnim.HAPPY, "I got Sigli's hunting map for you.")
-            stage = 515
-            return true
-        } else if (inInventory(player, Items.FISCAL_STATEMENT_3708, 1)) {
-            playerl(FaceAnim.ASKING, "So cutting sales tax isn't going to ruin your economy here or anything?")
-            stage = 520
-            return true
-        } else if (getAttribute(player, "sigmundreturning", false)) {
-            playerl(FaceAnim.ASKING, "I've got this trade item. Is it for you?")
-            stage = 525
-            return true
-        }
-        if (getAttribute(player, "sigmund-steps", 0) == 5) {
-            playerl(
-                FaceAnim.ASKING,
-                "I don't suppose you have any idea where I could find a map to unspoiled hunting grounds, do you?",
-            )
-            stage = 510
-            return true
-        } else if (getAttribute(player, "sigmund-steps", 0) == 4) {
-            playerl(
-                FaceAnim.ASKING,
-                "I don't suppose you have any idea where I could find a guarantee of a reduction on sales taxes, do you?",
-            )
-            stage = 500
-            return true
-        } else if (getAttribute(player, "fremtrials:votes", 0) >= 7) {
-            npcl(
-                FaceAnim.HAPPY,
-                "Greetings again outerlander! How goes your attempts to gain votes with the council of elders?",
-            )
-            stage = 545
-            return true
-        } else if (getAttribute(player, "fremtrials:votes", 0) in 3..6) {
-            npcl(
-                FaceAnim.HAPPY,
-                "Greetings again outerlander! How goes your attempts to gain votes with the council of elders?",
-            )
-            stage = 540
-            return true
-        } else if (getAttribute(player, "fremtrials:votes", 0) == 1) {
-            npcl(
-                FaceAnim.HAPPY,
-                "Greetings again outerlander! How goes your attempts to gain votes with the council of elders?",
-            )
-            stage = 535
-            return true
-        } else if (getAttribute(player, "fremtrials:votes", -1) == 0) {
-            npcl(
-                FaceAnim.HAPPY,
-                "Greetings again outerlander! How goes your attempts to gain votes with the council of elders?",
-            )
-            stage = 530
-            return true
-        } else if (isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS)) {
-            npcl(
-                FaceAnim.HAPPY,
-                "Hello again, $gender $fName. I hope your travels have brought you wealth and joy! What compels you to visit me on this day?",
-            )
-            stage = 600
-            return true
-        } else if (getQuestStage(player, Quests.THE_FREMENNIK_TRIALS) == 0) {
-            npc("Greetings outlander!")
-            stage = 0
+        when {
+            inInventory(player, Items.TRACKING_MAP_3701, 1) -> {
+                playerl(FaceAnim.HAPPY, "I got Sigli's hunting map for you.")
+                stage = 515
+            }
+
+            inInventory(player, Items.FISCAL_STATEMENT_3708, 1) -> {
+                playerl(FaceAnim.ASKING, "So cutting sales tax isn't going to ruin your economy here or anything?")
+                stage = 520
+            }
+
+            getAttribute(player, GameAttributes.QUEST_VIKING_SIGMUND_RETURN, false) -> {
+                playerl(FaceAnim.ASKING, "I've got this trade item. Is it for you?")
+                stage = 525
+            }
+
+            getAttribute(player, GameAttributes.QUEST_VIKING_SIGMUND_PROGRESS, 0) == 5 -> {
+                playerl(FaceAnim.ASKING, "I don't suppose you have any idea where I could find a map to unspoiled hunting grounds, do you?")
+                stage = 510
+            }
+
+            getAttribute(player, GameAttributes.QUEST_VIKING_SIGMUND_PROGRESS, 0) == 4 -> {
+                playerl(FaceAnim.ASKING, "I don't suppose you have any idea where I could find a guarantee of a reduction on sales taxes, do you?")
+                stage = 500
+            }
+
+            getAttribute(player, GameAttributes.QUEST_VIKING_VOTES, 0) >= 7 -> {
+                npcl(FaceAnim.HAPPY, "Greetings again outerlander! How goes your attempts to gain votes with the council of elders?")
+                stage = 545
+            }
+
+            getAttribute(player, GameAttributes.QUEST_VIKING_VOTES, 0) in 3..6 -> {
+                npcl(FaceAnim.HAPPY, "Greetings again outerlander! How goes your attempts to gain votes with the council of elders?")
+                stage = 540
+            }
+
+            getAttribute(player, GameAttributes.QUEST_VIKING_VOTES, 0) == 1 -> {
+                npcl(FaceAnim.HAPPY, "Greetings again outerlander! How goes your attempts to gain votes with the council of elders?")
+                stage = 535
+            }
+
+            getAttribute(player, GameAttributes.QUEST_VIKING_VOTES, -1) == 0 -> {
+                npcl(FaceAnim.HAPPY, "Greetings again outerlander! How goes your attempts to gain votes with the council of elders?")
+                stage = 530
+            }
+
+            isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS) -> {
+                npcl(FaceAnim.HAPPY, "Hello again, ${if (player?.isMale == true) "brother" else "sister"} $fremennikName. I hope your travels have brought you wealth and joy! What compels you to visit me on this day?")
+                stage = 600
+            }
+            else -> npc("Greetings outlander!")
         }
         return true
     }
@@ -107,6 +87,7 @@ class ChieftanBrundtDialogue(
                 options("What is this place?", "Why will no-one talk to me?", "Do you have any quests?", "Nice hat!")
                 stage++
             }
+
             1 ->
                 when (buttonId) {
                     1 -> playerl(FaceAnim.HAPPY, "What is this place?").also { stage++ }
@@ -114,6 +95,7 @@ class ChieftanBrundtDialogue(
                     3 -> player("Do you have any quests?").also { stage = 300 }
                     4 -> playerl(FaceAnim.HAPPY, "Nice hat!").also { stage = 15 }
                 }
+
             2 ->
                 npcl(
                     FaceAnim.HAPPY,
@@ -121,6 +103,7 @@ class ChieftanBrundtDialogue(
                 ).also {
                     stage++
                 }
+
             3 ->
                 playerl(
                     FaceAnim.HAPPY,
@@ -129,6 +112,7 @@ class ChieftanBrundtDialogue(
                     stage =
                         0
                 }
+
             5 ->
                 npcl(
                     FaceAnim.HAPPY,
@@ -136,6 +120,7 @@ class ChieftanBrundtDialogue(
                 ).also {
                     stage++
                 }
+
             6 -> npcl(FaceAnim.HAPPY, "This is why speaking to outerlanders is forbidden.").also { stage++ }
             7 ->
                 npcl(
@@ -144,6 +129,7 @@ class ChieftanBrundtDialogue(
                 ).also {
                     stage++
                 }
+
             8 -> playerl(FaceAnim.ASKING, "Then how come you're talking to me?").also { stage++ }
             9 ->
                 npcl(
@@ -152,11 +138,13 @@ class ChieftanBrundtDialogue(
                 ).also {
                     stage++
                 }
+
             10 ->
                 playerl(
                     FaceAnim.ASKING,
                     "Is there a way for you to authorise your tribe to talk to me then?",
                 ).also { stage++ }
+
             11 ->
                 npcl(FaceAnim.HAPPY, "Well, there is one way... but I doubt it is of any interest to you.").also {
                     stage =
@@ -301,6 +289,7 @@ class ChieftanBrundtDialogue(
                 )
                 stage++
             }
+
             321 -> {
                 npc(
                     "If you can gain the support of seven of the twelve, then",
@@ -309,6 +298,7 @@ class ChieftanBrundtDialogue(
                 stage = END_DIALOGUE
                 startQuest(player, Quests.THE_FREMENNIK_TRIALS)
             }
+
             322 -> npc("Well, that's what I expect from an outerlander.").also { stage = END_DIALOGUE }
             340 -> TODO("Not implemented yet")
             500 ->
@@ -318,11 +308,13 @@ class ChieftanBrundtDialogue(
                 ).also {
                     stage++
                 }
+
             501 ->
                 playerl(
                     FaceAnim.HAPPY,
                     "Actually, it's not for me. I need to get it as part of my trials",
                 ).also { stage++ }
+
             502 ->
                 npcl(
                     FaceAnim.THINKING,
@@ -330,6 +322,7 @@ class ChieftanBrundtDialogue(
                 ).also {
                     stage++
                 }
+
             503 ->
                 npcl(
                     FaceAnim.NEUTRAL,
@@ -337,6 +330,7 @@ class ChieftanBrundtDialogue(
                 ).also {
                     stage++
                 }
+
             504 ->
                 npcl(
                     FaceAnim.THINKING,
@@ -344,6 +338,7 @@ class ChieftanBrundtDialogue(
                 ).also {
                     stage++
                 }
+
             505 ->
                 npcl(
                     FaceAnim.ASKING,
@@ -351,6 +346,7 @@ class ChieftanBrundtDialogue(
                 ).also {
                     stage++
                 }
+
             506 ->
                 npcl(
                     FaceAnim.ASKING,
@@ -358,20 +354,23 @@ class ChieftanBrundtDialogue(
                 ).also {
                     stage++
                 }
+
             507 ->
                 npcl(
                     FaceAnim.HAPPY,
                     "I think this is a more than fair arrangement to make, dont you?",
                 ).also { stage++ }
+
             508 -> playerl(FaceAnim.HAPPY, "Yeah, that sounds very fair.").also { stage++ }
             509 ->
                 npcl(
                     FaceAnim.HAPPY,
                     "Speak to Sigli then, and you may have my promise to reduce our sales taxes. And best of luck with the rest of your trials.",
                 ).also {
-                    player.incrementAttribute("sigmund-steps", 1)
+                    player.incrementAttribute(GameAttributes.QUEST_VIKING_SIGMUND_PROGRESS, 1)
                     stage = END_DIALOGUE
                 }
+
             510 ->
                 npcl(
                     FaceAnim.ANNOYED,
@@ -379,6 +378,7 @@ class ChieftanBrundtDialogue(
                 ).also {
                     stage++
                 }
+
             511 ->
                 npcl(
                     FaceAnim.ANNOYED,
@@ -387,6 +387,7 @@ class ChieftanBrundtDialogue(
                     stage =
                         END_DIALOGUE
                 }
+
             515 ->
                 npcl(
                     FaceAnim.HAPPY,
@@ -396,6 +397,7 @@ class ChieftanBrundtDialogue(
                     addItemOrDrop(player, Items.FISCAL_STATEMENT_3708, 1)
                     stage = END_DIALOGUE
                 }
+
             520 ->
                 npcl(
                     FaceAnim.HAPPY,
@@ -404,6 +406,7 @@ class ChieftanBrundtDialogue(
                     stage =
                         END_DIALOGUE
                 }
+
             525 -> npcl(FaceAnim.ANNOYED, "Not unless it's a map of the hunting grounds.").also { stage = END_DIALOGUE }
             530 -> playerl(FaceAnim.HAPPY, "I don't have any votes yet.").also { stage++ }
             531 ->
@@ -414,6 +417,7 @@ class ChieftanBrundtDialogue(
                     stage =
                         550
                 }
+
             535 -> playerl(FaceAnim.HAPPY, "I only have one vote so far.").also { stage++ }
             536 ->
                 npcl(
@@ -422,6 +426,7 @@ class ChieftanBrundtDialogue(
                 ).also {
                     stage++
                 }
+
             537 ->
                 npcl(
                     FaceAnim.HAPPY,
@@ -430,13 +435,15 @@ class ChieftanBrundtDialogue(
                     stage =
                         550
                 }
+
             540 ->
                 playerl(
                     FaceAnim.HAPPY,
-                    "I only have ${getAttribute(player, "fremtrials:votes", 0)} votes so far.",
+                    "I only have ${getAttribute(player, GameAttributes.QUEST_VIKING_VOTES, 0)} votes so far.",
                 ).also {
                     stage++
                 }
+
             541 ->
                 npcl(
                     FaceAnim.HAPPY,
@@ -445,6 +452,7 @@ class ChieftanBrundtDialogue(
                     stage =
                         537
                 }
+
             545 ->
                 playerl(
                     FaceAnim.HAPPY,
@@ -452,6 +460,7 @@ class ChieftanBrundtDialogue(
                 ).also {
                     stage++
                 }
+
             546 ->
                 npcl(
                     FaceAnim.HAPPY,
@@ -459,6 +468,7 @@ class ChieftanBrundtDialogue(
                 ).also {
                     stage++
                 }
+
             547 ->
                 npcl(
                     FaceAnim.HAPPY,
@@ -467,15 +477,17 @@ class ChieftanBrundtDialogue(
                     setAttribute(
                         player,
                         "/save:fremennikname",
-                        GenerateFremennikName(),
+                        generateFremennikName(),
                     )
                     stage = 560
                 }
+
             548 ->
                 sendDialogue("You require 10 free spaces in your backpack to claim your reward.").also {
                     stage =
                         END_DIALOGUE
                 }
+
             550 ->
                 npcl(
                     FaceAnim.HAPPY,
@@ -484,17 +496,19 @@ class ChieftanBrundtDialogue(
                     stage =
                         END_DIALOGUE
                 }
+
             560 ->
                 npcl(
                     FaceAnim.HAPPY,
                     "From this day onward, you are outerlander no more! In honour of your acceptance into the Fremennik, you gain a new name: ${
-                        getAttribute(player, "fremennikname", "fremmyname")
+                        FremennikTrials.getFremennikName(player)
                     }.",
                 ).also {
                     cleanupAttributes(player)
                     finishQuest(player, Quests.THE_FREMENNIK_TRIALS)
                     stage = END_DIALOGUE
                 }
+
             600 ->
                 options(
                     "I just came to say hello.",
@@ -505,6 +519,7 @@ class ChieftanBrundtDialogue(
                 ).also {
                     stage++
                 }
+
             601 ->
                 when (buttonId) {
                     1 -> playerl(FaceAnim.HAPPY, "I just came by to say hello.").also { stage++ }
@@ -513,37 +528,42 @@ class ChieftanBrundtDialogue(
                     4 -> playerl(FaceAnim.ASKING, "Can I hear the history of your people?").also { stage = 615 }
                     5 -> playerl(FaceAnim.HAPPY, "Can I have a seal of passage?").also { stage = 1200 }
                 }
+
             602 ->
                 npcl(
                     FaceAnim.HAPPY,
-                    "Well met, $gender $fName. it is always good to see your face in glorious Rellekka once more!",
+                    "Well met, ${if (player?.isMale == true) "brother" else "sister"} $fremennikName. it is always good to see your face in glorious Rellekka once more!",
                 ).also {
                     stage =
                         END_DIALOGUE
                 }
+
             605 ->
                 npcl(
                     FaceAnim.HAPPY,
-                    "Not at the moment, $fName. Rest assured, should your services to the Fremennik be required, I will call upon you",
+                    "Not at the moment, $fremennikName. Rest assured, should your services to the Fremennik be required, I will call upon you",
                 ).also {
                     stage =
                         END_DIALOGUE
                 }
+
             610 ->
                 npcl(
                     FaceAnim.HAPPY,
-                    "Aye that it is, $gender $fName. Should you desire one of your own, you should go to Skulgrimen's shop and see what they have available!",
+                    "Aye that it is, ${if (player?.isMale == true) "brother" else "sister"} $fremennikName. Should you desire one of your own, you should go to Skulgrimen's shop and see what they have available!",
                 ).also {
                     stage =
                         END_DIALOGUE
                 }
+
             615 ->
                 npcl(
                     FaceAnim.HAPPY,
-                    "Why, of course, $fName! Do not say 'your people' like that, for you are now a Fremennik yourself! What did you want to hear of?",
+                    "Why, of course, $fremennikName! Do not say 'your people' like that, for you are now a Fremennik yourself! What did you want to hear of?",
                 ).also {
                     stage++
                 }
+
             616 ->
                 options(
                     "Tell me of the finding of Koschei",
@@ -553,6 +573,7 @@ class ChieftanBrundtDialogue(
                 ).also {
                     stage++
                 }
+
             617 ->
                 when (buttonId) {
                     1 ->
@@ -562,6 +583,7 @@ class ChieftanBrundtDialogue(
                         ).also {
                             stage++
                         }
+
                     2 ->
                         playerl(
                             FaceAnim.HAPPY,
@@ -570,6 +592,7 @@ class ChieftanBrundtDialogue(
                             stage =
                                 635
                         }
+
                     3 ->
                         playerl(
                             FaceAnim.HAPPY,
@@ -578,8 +601,10 @@ class ChieftanBrundtDialogue(
                             stage =
                                 645
                         }
+
                     4 -> playerl(FaceAnim.HAPPY, "Actually, history isn't really my thing.").also { stage = 665 }
                 }
+
             618 ->
                 npcl(
                     FaceAnim.HAPPY,
@@ -587,6 +612,7 @@ class ChieftanBrundtDialogue(
                 ).also {
                     stage++
                 }
+
             619 ->
                 npcl(
                     FaceAnim.HAPPY,
@@ -594,6 +620,7 @@ class ChieftanBrundtDialogue(
                 ).also {
                     stage++
                 }
+
             620 -> npcl(FaceAnim.HAPPY, "and he has not yet found its hiding place.").also { stage++ }
             621 -> playerl(FaceAnim.ASKING, "So how exactly did you find him?").also { stage++ }
             622 ->
@@ -603,6 +630,7 @@ class ChieftanBrundtDialogue(
                 ).also {
                     stage++
                 }
+
             623 ->
                 npcl(
                     FaceAnim.HAPPY,
@@ -610,6 +638,7 @@ class ChieftanBrundtDialogue(
                 ).also {
                     stage++
                 }
+
             624 ->
                 npcl(
                     FaceAnim.HAPPY,
@@ -617,6 +646,7 @@ class ChieftanBrundtDialogue(
                 ).also {
                     stage++
                 }
+
             625 ->
                 npcl(
                     FaceAnim.HAPPY,
@@ -624,6 +654,7 @@ class ChieftanBrundtDialogue(
                 ).also {
                     stage++
                 }
+
             626 ->
                 npcl(
                     FaceAnim.HAPPY,
@@ -631,6 +662,7 @@ class ChieftanBrundtDialogue(
                 ).also {
                     stage++
                 }
+
             627 ->
                 npcl(
                     FaceAnim.HAPPY,
@@ -638,6 +670,7 @@ class ChieftanBrundtDialogue(
                 ).also {
                     stage++
                 }
+
             628 ->
                 npcl(
                     FaceAnim.HAPPY,
@@ -645,6 +678,7 @@ class ChieftanBrundtDialogue(
                 ).also {
                     stage++
                 }
+
             629 ->
                 npcl(
                     FaceAnim.HAPPY,
@@ -652,6 +686,7 @@ class ChieftanBrundtDialogue(
                 ).also {
                     stage++
                 }
+
             630 ->
                 npcl(
                     FaceAnim.HAPPY,
@@ -659,6 +694,7 @@ class ChieftanBrundtDialogue(
                 ).also {
                     stage++
                 }
+
             631 ->
                 npcl(
                     FaceAnim.HAPPY,
@@ -666,7 +702,8 @@ class ChieftanBrundtDialogue(
                 ).also {
                     stage++
                 }
-            632 -> npcl(FaceAnim.HAPPY, "So, $fName, was there anything more you wished to hear?").also { stage = 616 }
+
+            632 -> npcl(FaceAnim.HAPPY, "So, $fremennikName, was there anything more you wished to hear?").also { stage = 616 }
             635 ->
                 npcl(
                     FaceAnim.HAPPY,
@@ -674,13 +711,15 @@ class ChieftanBrundtDialogue(
                 ).also {
                     stage++
                 }
+
             636 ->
                 npcl(
                     FaceAnim.HAPPY,
-                    "So my knowledge is not great, but I will happily share what little I do know with you, $fName. North of this town the atmosphere becomes bitterly cold.",
+                    "So my knowledge is not great, but I will happily share what little I do know with you, $fremennikName. North of this town the atmosphere becomes bitterly cold.",
                 ).also {
                     stage++
                 }
+
             637 ->
                 npcl(
                     FaceAnim.HAPPY,
@@ -688,6 +727,7 @@ class ChieftanBrundtDialogue(
                 ).also {
                     stage++
                 }
+
             638 ->
                 npcl(
                     FaceAnim.HAPPY,
@@ -695,6 +735,7 @@ class ChieftanBrundtDialogue(
                 ).also {
                     stage++
                 }
+
             639 ->
                 npcl(
                     FaceAnim.HAPPY,
@@ -702,6 +743,7 @@ class ChieftanBrundtDialogue(
                 ).also {
                     stage++
                 }
+
             640 ->
                 npcl(
                     FaceAnim.HAPPY,
@@ -709,6 +751,7 @@ class ChieftanBrundtDialogue(
                 ).also {
                     stage++
                 }
+
             641 ->
                 npcl(
                     FaceAnim.HAPPY,
@@ -716,6 +759,7 @@ class ChieftanBrundtDialogue(
                 ).also {
                     stage++
                 }
+
             642 ->
                 npcl(
                     FaceAnim.HAPPY,
@@ -723,6 +767,7 @@ class ChieftanBrundtDialogue(
                 ).also {
                     stage++
                 }
+
             643 -> npcl(FaceAnim.HAPPY, "Was there anything else you wished to hear tell of?").also { stage = 616 }
             645 ->
                 npcl(
@@ -731,6 +776,7 @@ class ChieftanBrundtDialogue(
                 ).also {
                     stage++
                 }
+
             646 ->
                 npcl(
                     FaceAnim.HAPPY,
@@ -738,6 +784,7 @@ class ChieftanBrundtDialogue(
                 ).also {
                     stage++
                 }
+
             647 ->
                 npcl(
                     FaceAnim.HAPPY,
@@ -745,6 +792,7 @@ class ChieftanBrundtDialogue(
                 ).also {
                     stage++
                 }
+
             648 ->
                 npcl(
                     FaceAnim.HAPPY,
@@ -752,6 +800,7 @@ class ChieftanBrundtDialogue(
                 ).also {
                     stage++
                 }
+
             649 ->
                 npcl(
                     FaceAnim.HAPPY,
@@ -759,6 +808,7 @@ class ChieftanBrundtDialogue(
                 ).also {
                     stage++
                 }
+
             650 ->
                 npcl(
                     FaceAnim.HAPPY,
@@ -766,6 +816,7 @@ class ChieftanBrundtDialogue(
                 ).also {
                     stage++
                 }
+
             651 ->
                 npcl(
                     FaceAnim.HAPPY,
@@ -773,6 +824,7 @@ class ChieftanBrundtDialogue(
                 ).also {
                     stage++
                 }
+
             652 ->
                 npcl(
                     FaceAnim.HAPPY,
@@ -780,6 +832,7 @@ class ChieftanBrundtDialogue(
                 ).also {
                     stage++
                 }
+
             653 ->
                 npcl(
                     FaceAnim.HAPPY,
@@ -787,6 +840,7 @@ class ChieftanBrundtDialogue(
                 ).also {
                     stage++
                 }
+
             654 ->
                 npcl(
                     FaceAnim.HAPPY,
@@ -794,6 +848,7 @@ class ChieftanBrundtDialogue(
                 ).also {
                     stage++
                 }
+
             655 ->
                 npcl(
                     FaceAnim.HAPPY,
@@ -801,6 +856,7 @@ class ChieftanBrundtDialogue(
                 ).also {
                     stage++
                 }
+
             656 ->
                 npcl(
                     FaceAnim.HAPPY,
@@ -808,6 +864,7 @@ class ChieftanBrundtDialogue(
                 ).also {
                     stage++
                 }
+
             657 ->
                 npcl(
                     FaceAnim.HAPPY,
@@ -815,6 +872,7 @@ class ChieftanBrundtDialogue(
                 ).also {
                     stage++
                 }
+
             658 ->
                 npcl(
                     FaceAnim.HAPPY,
@@ -822,6 +880,7 @@ class ChieftanBrundtDialogue(
                 ).also {
                     stage++
                 }
+
             659 ->
                 npcl(
                     FaceAnim.HAPPY,
@@ -829,6 +888,7 @@ class ChieftanBrundtDialogue(
                 ).also {
                     stage++
                 }
+
             660 ->
                 npcl(
                     FaceAnim.HAPPY,
@@ -836,6 +896,7 @@ class ChieftanBrundtDialogue(
                 ).also {
                     stage++
                 }
+
             661 ->
                 npcl(
                     FaceAnim.HAPPY,
@@ -843,6 +904,7 @@ class ChieftanBrundtDialogue(
                 ).also {
                     stage++
                 }
+
             662 -> npcl(FaceAnim.HAPPY, "Was there something else you wished to hear?").also { stage = 616 }
             665 ->
                 npcl(
@@ -852,11 +914,13 @@ class ChieftanBrundtDialogue(
                     stage =
                         END_DIALOGUE
                 }
+
             1200 ->
                 npcl(
                     FaceAnim.HALF_THINKING,
                     "Well, I ought not to give you such things lightly...",
                 ).also { stage++ }
+
             1201 ->
                 npcl(
                     FaceAnim.HALF_THINKING,
@@ -864,18 +928,20 @@ class ChieftanBrundtDialogue(
                 ).also {
                     stage++
                 }
+
             1202 ->
                 npcl(
                     FaceAnim.HAPPY,
-                    "Very well, $fName! Let me look you over and see if you're strong enough for this boon.",
+                    "Very well, $fremennikName! Let me look you over and see if you're strong enough for this boon.",
                 ).also {
                     stage++
                 }
+
             1203 -> {
                 if (player!!.hasItem(Item(Items.SEAL_OF_PASSAGE_9083))) {
                     npcl(
                         FaceAnim.HALF_GUILTY,
-                        "I'm sorry, $fName. You just don't have the experience needed for this gift. Please come back when you've learned more.",
+                        "I'm sorry, $fremennikName. You just don't have the experience needed for this gift. Please come back when you've learned more.",
                     ).also {
                         stage =
                             END_DIALOGUE
@@ -902,7 +968,7 @@ class ChieftanBrundtDialogue(
     override fun getIds(): IntArray = intArrayOf(NPCs.BRUNDT_THE_CHIEFTAIN_1294)
 }
 
-fun GenerateFremennikName(): String {
+fun generateFremennikName(): String {
     val namePrefixes =
         arrayOf(
             "Bal",
@@ -949,21 +1015,19 @@ fun GenerateFremennikName(): String {
 }
 
 fun cleanupAttributes(player: Player) {
-    removeAttribute(player, "PeerStarted")
-    removeAttribute(player, "housepuzzlesolved")
-    removeAttribute(player, "fremtrials:peer-vote")
-    removeAttribute(player, "fremtrials:votes")
-    removeAttribute(player, "fremtrials:sigmund-vote")
-    removeAttribute(player, "fremtrials:manni-vote")
-    removeAttribute(player, "fremtrials:swensen-vote")
-    removeAttribute(player, "fremtrials:olaf-accepted")
-    removeAttribute(player, "fremtrials:lalli-talkedto")
-    removeAttribute(player, "fremtrials:askeladden-talkedto")
-    removeAttribute(player, "hasWool")
-    removeAttribute(player, "lyreConcertPlayed")
-    removeAttribute(player, "fremtrials:olaf-vote")
-    removeAttribute(player, "fremtrials:sigli-accepted")
-    removeAttribute(player, "fremtrials:thorvald-vote")
-    removeAttribute(player, "fremtrials:sigli-vote")
-    removeAttribute(player, "riddlesolved")
+    removeAttribute(player, GameAttributes.QUEST_VIKING_PEER_START)
+    removeAttribute(player, GameAttributes.QUEST_VIKING_PEER_VOTE)
+    removeAttribute(player, GameAttributes.QUEST_VIKING_VOTES)
+    removeAttribute(player, GameAttributes.QUEST_VIKING_SIGMUND_VOTE)
+    removeAttribute(player, GameAttributes.QUEST_VIKING_MANI_VOTE)
+    removeAttribute(player, GameAttributes.QUEST_VIKING_SWENSEN_VOTE)
+    removeAttribute(player, GameAttributes.QUEST_VIKING_OLAF_START)
+    removeAttribute(player, GameAttributes.QUEST_VIKING_STEW_START)
+    removeAttribute(player, GameAttributes.QUEST_VIKING_ASKELADDEN_TALK)
+    removeAttribute(player, GameAttributes.QUEST_VIKING_HAS_WOOL)
+    removeAttribute(player, GameAttributes.QUEST_VIKING_OLAF_CONCERT)
+    removeAttribute(player, GameAttributes.QUEST_VIKING_OLAF_VOTE)
+    removeAttribute(player, GameAttributes.QUEST_VIKING_THORVALD_VOTE)
+    removeAttribute(player, GameAttributes.QUEST_VIKING_SIGLI_VOTE)
+    removeAttribute(player, GameAttributes.QUEST_VIKING_PEER_RIDDLE_SOLVED)
 }

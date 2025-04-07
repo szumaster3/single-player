@@ -1,15 +1,17 @@
 package content.region.fremennik.quest.viking.handlers
 
+import content.data.GameAttributes
 import core.api.*
 import core.game.node.entity.Entity
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import org.rs.consts.Items
+import org.rs.consts.NPCs
 
 class DraugenNPC(
     val player: Player,
-) : NPC(1279, player.location?.transform(1, 0, 0)) {
+) : NPC(NPCs.THE_DRAUGEN_1279, player.location?.transform(1, 0, 0)) {
     override fun init() {
         super.init()
         isRespawn = false
@@ -21,19 +23,17 @@ class DraugenNPC(
             properties.combatPulse.attack(player)
         }
         if (!player.isActive) {
-            removeAttribute(player, "fremtrials:draugen-spawned")
+            removeAttribute(player, GameAttributes.QUEST_VIKING_SIGLI_DRAUGEN_SPAWN)
             this.clear()
         }
     }
 
     override fun finalizeDeath(killer: Entity?) {
         super.finalizeDeath(killer)
-        setAttribute(player, "/save:fremtrials:draugen-killed", true)
-        removeAttribute(player, "fremtrials:draugen-loc")
+        setAttribute(player, GameAttributes.QUEST_VIKING_SIGLI_DRAUGEN_KILL, true)
+        removeAttribute(player, GameAttributes.QUEST_VIKING_SIGLI_DRAUGEN_LOCATION)
         if (removeItem(player, Item(Items.HUNTERS_TALISMAN_3696), Container.INVENTORY)) {
             addItem(player, Items.HUNTERS_TALISMAN_3697, 1, Container.INVENTORY)
-        } else {
-            sendMessage(player, "Omenare imperavi emulari omg.")
         }
     }
 }

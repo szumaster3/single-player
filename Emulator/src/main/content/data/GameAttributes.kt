@@ -231,6 +231,52 @@ internal object GameAttributes {
     const val ATTRIBUTE_CAMELOT_ALT_TELE = "/save:diaries:camelot:alttele"
 
     // Priest in Peril quest.
-
     const val QUEST_PRIEST_IN_PERIL = "/save:priest_in_peril"
+
+    // Fremennik Trials quest.
+    const val QUEST_VIKING_VOTES = "/save:fremtrials:votes"
+
+    const val QUEST_VIKING_SIGMUND_START = "/save:sigmund-started"
+    const val QUEST_VIKING_SIGMUND_PROGRESS = "/save:sigmund-steps"
+    const val QUEST_VIKING_SIGMUND_RETURN = "/save:sigmundreturning"
+    const val QUEST_VIKING_SIGMUND_VOTE = "/save:fremtrials:sigmund-vote"
+
+    const val QUEST_VIKING_PEER_START = "/save:PeerStarted"
+    const val QUEST_VIKING_PEER_RIDDLE = "/save:PeerRiddle"
+    const val QUEST_VIKING_PEER_RIDDLE_SOLVED = "/save:riddlesolved"
+    const val QUEST_VIKING_PEER_VOTE = "/save:fremtrials:peer-vote"
+
+    const val QUEST_VIKING_MANI_START = "/save:fremtrials:manni-accepted"
+    const val QUEST_VIKING_MANI_KEG = "/save:fremtrials:keg-mixed"
+    const val QUEST_VIKING_MANI_BOMB = "/save:fremtrials:cherrybomb"
+    const val QUEST_VIKING_MANI_VOTE = "/save:fremtrials:manni-vote"
+
+    const val QUEST_VIKING_SWENSEN_START = "/save:fremtrials:swensen-accepted"
+    const val QUEST_VIKING_SWENSEN_MAZE = "/save:fremtrials:maze-complete"
+    const val QUEST_VIKING_SWENSEN_VOTE = "/save:fremtrials:swensen-vote"
+
+    const val QUEST_VIKING_SIGLI_DRAUGEN_SPAWN = "/save:fremtrials:draugen-spawned"
+    const val QUEST_VIKING_SIGLI_DRAUGEN_LOCATION = "/save:fremtrials:draugen-loc"
+    const val QUEST_VIKING_SIGLI_DRAUGEN_KILL = "/save:fremtrials:draugen-killed"
+    const val QUEST_VIKING_SIGLI_VOTE = "/save:fremtrials:sigli-vote"
+
+    const val QUEST_VIKING_OLAF_START = "/save:fremtrials:olaf-accepted"
+    const val QUEST_VIKING_OLAF_CONCERT = "/save:lyreConcertPlayed"
+    const val QUEST_VIKING_LYRE = "/save:LyreEnchanted"
+    const val QUEST_VIKING_OLAF_VOTE = "/save:fremtrials:olaf-vote"
+
+    const val QUEST_VIKING_STEW_START = "/save:fremtrials:lalli-talkedto"
+    const val QUEST_VIKING_STEW_INGREDIENTS_ONION = "/save:lalliStewOnionAdded"
+    const val QUEST_VIKING_STEW_INGREDIENTS_POTATO = "/save:lalliStewPotatoAdded"
+    const val QUEST_VIKING_STEW_INGREDIENTS_CABBAGE = "/save:lalliStewCabbageAdded"
+    const val QUEST_VIKING_STEW_INGREDIENTS_ROCK = "/save:lalliStewRockAdded"
+    const val QUEST_VIKING_EAT_STEW = "/save:lalliEatStew"
+
+    const val QUEST_VIKING_HAS_WOOL = "/save:hasWool"
+    const val QUEST_VIKING_ASKELADDEN_TALK = "/save:fremtrials:askeladden-talkedto"
+
+    const val QUEST_VIKING_THORVALD_START = "/save:fremtrials:warrior-accepted"
+    const val QUEST_VIKING_THORVALD_VOTE = "/save:fremtrials:thorvald-vote"
+
+
 }

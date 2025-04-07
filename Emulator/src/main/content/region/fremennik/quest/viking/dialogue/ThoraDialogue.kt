@@ -1,5 +1,7 @@
 package content.region.fremennik.quest.viking.dialogue
 
+import content.data.GameAttributes
+import content.region.fremennik.quest.viking.FremennikTrials
 import core.api.*
 import core.api.interaction.openNpcShop
 import core.api.quest.isQuestComplete
@@ -17,42 +19,43 @@ import org.rs.consts.Quests
 class ThoraDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    val fName = player?.getAttribute("fremennikname", "fremmyname")
-    var curNPC: NPC? = NPC(0, Location(0, 0, 0))
-
     override fun open(vararg args: Any?): Boolean {
-        curNPC = args[0] as? NPC
         npc = args[0] as NPC
-        if (inInventory(player, Items.LEGENDARY_COCKTAIL_3707, 1)) {
-            playerl(FaceAnim.ASKING, "Thanks for making me this cocktail. Why don't you make them anymore normally?")
-            stage = 35
-        } else if (inInventory(player, Items.PROMISSORY_NOTE_3709, 1)) {
-            playerl(FaceAnim.HAPPY, "Hi! Can I please have one of your legendary cocktails now?")
-            stage = 25
-        } else if (getAttribute(player, "sigmundreturning", false)) {
-            playerl(FaceAnim.ASKING, "I'm trying to remember who I was meant to give this trade item to.")
-            stage = 30
-        } else if (getAttribute(player, "sigmund-steps", 0) == 13) {
-            playerl(
-                FaceAnim.ASKING,
-                "I don't suppose you have any idea where I could find a written promise from Askeladden to stay out of the Longhall?",
-            )
-            stage = 20
-        } else if (getAttribute(player, "sigmund-steps", 0) == 12) {
-            playerl(
-                FaceAnim.ASKING,
-                "I don't suppose you have any idea where I could find the longhall barkeeps' legendary cocktail, do you?",
-            )
-            stage = 1
-        } else if (isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS)) {
-            npcl(
-                FaceAnim.HAPPY,
-                "Hello again, $fName. I suppose you want a drink? Or are you going to try another scam with that terrible Askeladden again?",
-            )
-            stage = 50
-        } else {
-            playerl(FaceAnim.HAPPY, "Hello there.")
-            stage = 60
+        when {
+            inInventory(player, Items.LEGENDARY_COCKTAIL_3707, 1) -> {
+                playerl(FaceAnim.ASKING, "Thanks for making me this cocktail. Why don't you make them anymore normally?")
+                stage = 35
+            }
+
+            inInventory(player, Items.PROMISSORY_NOTE_3709, 1) -> {
+                playerl(FaceAnim.HAPPY, "Hi! Can I please have one of your legendary cocktails now?")
+                stage = 25
+            }
+
+            getAttribute(player, GameAttributes.QUEST_VIKING_SIGMUND_RETURN, false) -> {
+                playerl(FaceAnim.ASKING, "I'm trying to remember who I was meant to give this trade item to.")
+                stage = 30
+            }
+
+            getAttribute(player, GameAttributes.QUEST_VIKING_SIGMUND_PROGRESS, 0) == 13 -> {
+                playerl(FaceAnim.ASKING, "I don't suppose you have any idea where I could find a written promise from Askeladden to stay out of the Longhall?")
+                stage = 20
+            }
+
+            getAttribute(player, GameAttributes.QUEST_VIKING_SIGMUND_PROGRESS, 0) == 12 -> {
+                playerl(FaceAnim.ASKING, "I don't suppose you have any idea where I could find the longhall barkeeps' legendary cocktail, do you?")
+                stage = 1
+            }
+
+            isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS) -> {
+                npcl(FaceAnim.HAPPY, "Hello again, ${FremennikTrials.getFremennikName(player!!)}. I suppose you want a drink? Or are you going to try another scam with that terrible Askeladden again?")
+                stage = 50
+            }
+
+            else -> {
+                playerl(FaceAnim.HAPPY, "Hello there.")
+                stage = 60
+            }
         }
         return true
     }
@@ -140,7 +143,7 @@ class ThoraDialogue(
                     FaceAnim.HAPPY,
                     "Knowing that little horror, he'll probably be willing to in exchange for some cash. You should go ask him yourself though.",
                 ).also {
-                    player.incrementAttribute("sigmund-steps", 1)
+                    player.incrementAttribute(GameAttributes.QUEST_VIKING_SIGMUND_PROGRESS, 1)
                     stage = 1000
                 }
 
@@ -157,7 +160,7 @@ class ThoraDialogue(
                 ).also {
                     removeItem(player, Items.PROMISSORY_NOTE_3709)
                     addItemOrDrop(player, Items.LEGENDARY_COCKTAIL_3707, 1)
-                    setAttribute(player, "/save:sigmundreturning", true)
+                    setAttribute(player, GameAttributes.QUEST_VIKING_SIGMUND_RETURN, true)
                     stage++
                 }
 

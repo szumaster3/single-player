@@ -1,5 +1,6 @@
 package content.region.fremennik.quest.viking.dialogue
 
+import content.data.GameAttributes
 import content.region.fremennik.dialogue.YrsaDiaryDialogue
 import core.api.*
 import core.api.interaction.openNpcShop
@@ -23,47 +24,43 @@ class YrsaDialogue(
 ) : Dialogue(player) {
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
-        if (inInventory(player, Items.FISCAL_STATEMENT_3708, 1)) {
-            playerl(
-                FaceAnim.HAPPY,
-                "Hello. Can I have those boots now? Here is a written statement from Brundt outlining future tax burdens upon Fremennik merchants and shopkeepers for the year.",
-            )
-            stage = 15
-            return true
-        } else if (inInventory(player, Items.STURDY_BOOTS_3700, 1)) {
-            playerl(FaceAnim.ASKING, "Hey, these shoes look pretty comfy. Think you could make me a pair like them?")
-            stage = 20
-            return true
-        } else if (getAttribute(player, "sigmundreturning", false)) {
-            playerl(FaceAnim.ASKING, "I have this trade item but I can't remember who it's for.")
-            stage = 25
-            return true
+        when {
+            inInventory(player, Items.FISCAL_STATEMENT_3708, 1) -> {
+                playerl(FaceAnim.HAPPY, "Hello. Can I have those boots now? Here is a written statement from Brundt outlining future tax burdens upon Fremennik merchants and shopkeepers for the year.")
+                stage = 15
+            }
+
+            inInventory(player, Items.STURDY_BOOTS_3700, 1) -> {
+                playerl(FaceAnim.ASKING, "Hey, these shoes look pretty comfy. Think you could make me a pair like them?")
+                stage = 20
+            }
+
+            getAttribute(player, GameAttributes.QUEST_VIKING_SIGMUND_RETURN, false) -> {
+                playerl(FaceAnim.ASKING, "I have this trade item but I can't remember who it's for.")
+                stage = 25
+            }
+
+            getAttribute(player, GameAttributes.QUEST_VIKING_SIGMUND_PROGRESS, 0) == 4 -> {
+                playerl(FaceAnim.ASKING, "I don't suppose you have any idea where I could find a guarantee of a reduction on sales taxes, do you?")
+                stage = 10
+            }
+
+            getAttribute(player, GameAttributes.QUEST_VIKING_SIGMUND_PROGRESS, 0) == 3 -> {
+                playerl(FaceAnim.ASKING, "I don't suppose you have any idea where I could find some custom sturdy boots, do you?")
+                stage = 1
+            }
+
+            isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS) -> {
+                npcl(FaceAnim.HAPPY, "Welcome to my clothes shop. I can change your shoes, or I've got a fine selection of clothes for sale.")
+                stage = 30
+            }
+
+            else -> {
+                playerl(FaceAnim.HAPPY, "Hello!")
+                stage = 35
+            }
         }
-        if (getAttribute(player, "sigmund-steps", 0) == 4) {
-            playerl(
-                FaceAnim.ASKING,
-                "I don't suppose you have any idea where I could find a guarantee of a reduction on sales taxes, do you?",
-            )
-            stage = 10
-            return true
-        } else if (getAttribute(player, "sigmund-steps", 0) == 3) {
-            playerl(
-                FaceAnim.ASKING,
-                "I don't suppose you have any idea where I could find some custom sturdy boots, do you?",
-            )
-            stage = 1
-            return true
-        } else if (isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS)) {
-            npcl(
-                FaceAnim.HAPPY,
-                "Welcome to my clothes shop. I can change your shoes, or I've got a fine selection of clothes for sale.",
-            )
-            stage = 30
-            return true
-        } else {
-            playerl(FaceAnim.HAPPY, "Hello!")
-            stage = 35
-        }
+
         return true
     }
 
@@ -100,7 +97,7 @@ class YrsaDialogue(
 
             6 ->
                 playerl(FaceAnim.NEUTRAL, "Okay, I will see what I can do").also {
-                    player.incrementAttribute("sigmund-steps", 1)
+                    player.incrementAttribute(GameAttributes.QUEST_VIKING_SIGMUND_PROGRESS, 1)
                     stage = END_DIALOGUE
                 }
 

@@ -1,6 +1,6 @@
 package content.region.fremennik.dialogue.rellekka
 
-import core.api.getAttribute
+import content.region.fremennik.quest.viking.FremennikTrials
 import core.api.quest.isQuestComplete
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
@@ -25,7 +25,7 @@ class ReesoDialogue(
         } else {
             npcl(
                 FaceAnim.STRUGGLE,
-                "Sorry, ${getAttribute(player, "fremennikname", "fremmyname")}, I must get on with my work.",
+                "Sorry, ${FremennikTrials.getFremennikName(player)}, I must get on with my work.",
             ).also {
                 stage =
                     END_DIALOGUE

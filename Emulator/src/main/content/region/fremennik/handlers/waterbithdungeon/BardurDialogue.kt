@@ -1,5 +1,6 @@
 package content.region.fremennik.handlers.waterbithdungeon
 
+import content.region.fremennik.quest.viking.FremennikTrials
 import core.api.*
 import core.api.quest.isQuestComplete
 import core.game.dialogue.Dialogue
@@ -20,13 +21,7 @@ class BardurDialogue(
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (!isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS)) {
-            npcl(
-                FaceAnim.FRIENDLY,
-                "Ah! Outerlander! Do not interrupt me in my business! I must cull these fiends!",
-            ).also {
-                stage =
-                    0
-            }
+            npcl(FaceAnim.FRIENDLY, "Ah! Outerlander! Do not interrupt me in my business! I must cull these fiends!")
             return true
         }
 
@@ -58,6 +53,7 @@ class BardurDialogue(
                 ).also {
                     stage++
                 }
+
             2 ->
                 npcl(
                     FaceAnim.FRIENDLY,
@@ -65,18 +61,16 @@ class BardurDialogue(
                 ).also {
                     stage++
                 }
+
             3 -> playerl(FaceAnim.FRIENDLY, "Erm... okay then. I'll leave you to it.").also { stage = END_DIALOGUE }
             5 ->
                 npcl(
                     FaceAnim.FRIENDLY,
-                    "Listen, ${getAttribute(
-                        player,
-                        "fremennikname",
-                        "name",
-                    )}. I'm sorry about the way I acted while you were exiled.",
+                    "Listen, ${FremennikTrials.getFremennikName(player)}. I'm sorry about the way I acted while you were exiled.",
                 ).also {
                     stage++
                 }
+
             6 -> sendDialogue(player!!, "Bardur gets hostile around outerlanders.").also { stage++ }
             7 ->
                 playerl(
@@ -85,6 +79,7 @@ class BardurDialogue(
                 ).also {
                     stage++
                 }
+
             8 ->
                 npcl(
                     FaceAnim.FRIENDLY,
@@ -92,6 +87,7 @@ class BardurDialogue(
                 ).also {
                     stage++
                 }
+
             9 ->
                 npcl(
                     FaceAnim.FRIENDLY,
@@ -99,18 +95,16 @@ class BardurDialogue(
                 ).also {
                     stage++
                 }
+
             10 -> playerl(FaceAnim.FRIENDLY, "Can you tell me anything about the caves down here?").also { stage++ }
             11 ->
                 npcl(
                     FaceAnim.FRIENDLY,
-                    "Aye, that I can $${getAttribute(
-                        player,
-                        "fremennikname",
-                        "name",
-                    )}! Yonder lies the lair of the daggermouth kings, the three beasts of legend!",
+                    "Aye, that I can ${FremennikTrials.getFremennikName(player)}! Yonder lies the lair of the daggermouth kings, the three beasts of legend!",
                 ).also {
                     stage++
                 }
+
             12 ->
                 npcl(
                     FaceAnim.FRIENDLY,
@@ -118,14 +112,16 @@ class BardurDialogue(
                 ).also {
                     stage++
                 }
+
             13 -> playerl(FaceAnim.FRIENDLY, "Okay, thanks Bardur. Do you have any food with you?").also { stage++ }
             14 ->
                 npcl(
                     FaceAnim.FRIENDLY,
-                    "Ah, you did not come prepared $${getAttribute(player, "fremennikname", "name")}?",
+                    "Ah, you did not come prepared ${FremennikTrials.getFremennikName(player)}?",
                 ).also {
                     stage++
                 }
+
             15 ->
                 npcl(
                     FaceAnim.FRIENDLY,
@@ -133,6 +129,7 @@ class BardurDialogue(
                 ).also {
                     stage++
                 }
+
             16 ->
                 npcl(
                     FaceAnim.FRIENDLY,
@@ -140,6 +137,7 @@ class BardurDialogue(
                 ).also {
                     stage++
                 }
+
             17 ->
                 if (!anyInInventory(player, *BardurExchangeListener.exchangeItemIDs)) {
                     playerl(
@@ -171,64 +169,33 @@ class BardurExchangeDialogue : DialogueFile() {
     ) {
         npc = NPC(NPCs.BARDUR_2879)
         when (stage) {
-            0 ->
-                npcl(
-                    FaceAnim.FRIENDLY,
-                    "Ah, just what I was looking for! You wish to trade me that for a cooked shark?",
-                ).also { stage++ }
-
+            0 -> npcl(FaceAnim.FRIENDLY, "Ah, just what I was looking for! You wish to trade me that for a cooked shark?").also { stage++ }
             1 -> sendDialogueOptions(player!!, "Trade with Bardur?", "YES", "NO").also { stage++ }
             2 ->
                 when (buttonID) {
-                    1 ->
-                        if ((
-                                inInventory(player!!, Items.FREMENNIK_HELM_3748) &&
-                                    removeItem(
-                                        player!!,
-                                        Items.FREMENNIK_HELM_3748,
-                                    )
-                            ) ||
-                            (
-                                inInventory(player!!, Items.FREMENNIK_BLADE_3757) &&
-                                    removeItem(
-                                        player!!,
-                                        Items.FREMENNIK_BLADE_3757,
-                                    )
-                            ) ||
-                            (
-                                inInventory(player!!, Items.FREMENNIK_SHIELD_3758) &&
-                                    removeItem(
-                                        player!!,
-                                        Items.FREMENNIK_SHIELD_3758,
-                                    )
-                            )
-                        ) {
-                            end()
-                            addItemOrDrop(player!!, Items.SHARK_385)
-                            npcl(
-                                FaceAnim.FRIENDLY,
-                                "Ah, this will serve me well as a backup! My thanks to you ${
-                                    getAttribute(
-                                        player!!,
-                                        "fremennikname",
-                                        "name",
-                                    )
-                                }, I trust we will one day sing songs together of glorious battles in the Rellekka longhall!",
-                            )
-                        }
+                    1 -> if ((inInventory(player!!, Items.FREMENNIK_HELM_3748) && removeItem(
+                            player!!,
+                            Items.FREMENNIK_HELM_3748,
+                        )) || (inInventory(player!!, Items.FREMENNIK_BLADE_3757) && removeItem(
+                            player!!,
+                            Items.FREMENNIK_BLADE_3757,
+                        )) || (inInventory(player!!, Items.FREMENNIK_SHIELD_3758) && removeItem(
+                            player!!,
+                            Items.FREMENNIK_SHIELD_3758,
+                        ))
+                    ) {
+                        end()
+                        addItemOrDrop(player!!, Items.SHARK_385)
+                        npcl(FaceAnim.FRIENDLY, "Ah, this will serve me well as a backup! My thanks to you ${
+                                FremennikTrials.getFremennikName(player!!)
+                            }, I trust we will one day sing songs together of glorious battles in the Rellekka longhall!",)
+                    }
 
                     2 -> {
                         end()
-                        npcl(
-                            FaceAnim.FRIENDLY,
-                            "As you wish, ${
-                                getAttribute(
-                                    player!!,
-                                    "fremennikname",
-                                    "name",
-                                )
-                            }. My weapons have lasted me this long, I will keep my trust in them yet.",
-                        )
+                        npcl(FaceAnim.FRIENDLY, "As you wish, ${
+                                FremennikTrials.getFremennikName(player!!)
+                            }. My weapons have lasted me this long, I will keep my trust in them yet.",)
                     }
                 }
         }

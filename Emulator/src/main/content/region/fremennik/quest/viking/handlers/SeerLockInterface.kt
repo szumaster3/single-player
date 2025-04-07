@@ -1,5 +1,6 @@
 package content.region.fremennik.quest.viking.handlers
 
+import content.data.GameAttributes
 import core.api.getAttribute
 import core.api.removeAttribute
 import core.api.sendMessage
@@ -71,11 +72,11 @@ class SeerLockInterface : InterfaceListener {
         val lettersSelected = (1..4).map { letters[getAttribute(player, "riddle-letter-$it", 0)] }
         val riddleAnswers = listOf("LIFE", "MIND", "TIME", "WIND")
 
-        val currentRiddle = getAttribute(player, "PeerRiddle", 0)
+        val currentRiddle = getAttribute(player, GameAttributes.QUEST_VIKING_PEER_RIDDLE, 0)
         if (lettersSelected.joinToString("") == riddleAnswers[currentRiddle]) {
             sendMessage(player, "You have solved the riddle!")
-            removeAttribute(player, "PeerRiddle")
-            setAttribute(player, "/save:riddlesolved", true)
+            removeAttribute(player, GameAttributes.QUEST_VIKING_PEER_RIDDLE)
+            setAttribute(player, GameAttributes.QUEST_VIKING_PEER_RIDDLE_SOLVED, true)
         } else {
             sendMessage(player, "You have failed to solve the riddle.")
         }

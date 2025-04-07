@@ -1,6 +1,9 @@
 package content.region.fremennik.quest.viking.dialogue
 
+import content.data.GameAttributes
+import content.region.fremennik.quest.viking.FremennikTrials
 import core.api.*
+import core.api.quest.getQuestStage
 import core.api.quest.isQuestComplete
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
@@ -16,38 +19,40 @@ class AskeladdenDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
     override fun open(vararg args: Any?): Boolean {
-        player?.let {
-            if (inInventory(player, Items.PROMISSORY_NOTE_3709, 1)) {
+        when {
+            inInventory(player, Items.PROMISSORY_NOTE_3709, 1) -> {
                 playerl(FaceAnim.ASKING, "I thought you really liked the long hall?")
                 stage = 27
-                return true
-            } else if (getAttribute(player, "sigmund-steps", 0) == 13) {
-                playerl(
-                    FaceAnim.ASKING,
-                    "I don't suppose you have any idea where I could find a written promise from Askeladden to stay out of the Longhall?",
-                )
+            }
+
+            getAttribute(player, GameAttributes.QUEST_VIKING_SIGMUND_PROGRESS, 0) == 13 -> {
+                playerl(FaceAnim.ASKING, "I don't suppose you have any idea where I could find a written promise from Askeladden to stay out of the Longhall?")
                 stage = 15
-                return true
-            } else if (getAttribute(player, "sigmundreturning", false)) {
+            }
+
+            getAttribute(player, GameAttributes.QUEST_VIKING_SIGMUND_RETURN, false) -> {
                 playerl(FaceAnim.ASKING, "I've lost one of the items I was supposed to be trading.")
                 stage = 35
-                return true
-            } else if (isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS)) {
+            }
+
+            isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS) -> {
                 playerl(FaceAnim.HAPPY, "Hello again Askeladden.")
                 stage = 40
-                return true
-            } else if (it.questRepository.getStage(Quests.THE_FREMENNIK_TRIALS) > 0) {
+            }
+
+            getQuestStage(player, Quests.THE_FREMENNIK_TRIALS) > 0 -> {
                 player("Hello there.")
                 stage = 0
-                return true
-            } else if (it.getAttribute("fremtrials:lalli-talkedto", false)!!) {
+            }
+
+            getAttribute(player, GameAttributes.QUEST_VIKING_STEW_START, false) -> {
                 player("Hello there. I understand you managed to get some", "golden wool from Lalli?")
                 stage = 0
-                return true
-            } else {
+            }
+
+            else -> {
                 playerl(FaceAnim.HAPPY, "Hello there.")
                 stage = 55
-                return true
             }
         }
         return true
@@ -124,7 +129,7 @@ class AskeladdenDialogue(
                     "TWICE in a row! You can try anyways though!",
                 ).also {
                     addItemOrDrop(player, Items.PET_ROCK_3695, 1)
-                    setAttribute(player, "/save:fremtrials:askeladden-talkedto", true)
+                    setAttribute(player, GameAttributes.QUEST_VIKING_ASKELADDEN_TALK, true)
                     stage = 1000
                 }
 
@@ -169,7 +174,7 @@ class AskeladdenDialogue(
                 ).also {
                     removeItem(player, Item(Items.COINS_995, 5000))
                     addItemOrDrop(player, Items.PROMISSORY_NOTE_3709, 1)
-                    player.incrementAttribute("sigmund-steps", 1)
+                    player.incrementAttribute(GameAttributes.QUEST_VIKING_SIGMUND_PROGRESS, 1)
                     stage = 1000
                 }
 
@@ -222,7 +227,7 @@ class AskeladdenDialogue(
             41 ->
                 playerl(
                     FaceAnim.HAPPY,
-                    "My Fremennik name is ${getAttribute(player, "fremennikname", "fremmyname")}.",
+                    "My Fremennik name is ${FremennikTrials.getFremennikName(player)}.",
                 ).also { stage++ }
 
             42 ->

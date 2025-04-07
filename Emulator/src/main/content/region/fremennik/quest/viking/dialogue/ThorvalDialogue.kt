@@ -1,5 +1,6 @@
 package content.region.fremennik.quest.viking.dialogue
 
+import content.data.GameAttributes
 import core.api.*
 import core.api.quest.isQuestComplete
 import core.game.dialogue.Dialogue
@@ -16,67 +17,61 @@ class ThorvalDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
     override fun open(vararg args: Any?): Boolean {
-        if (inInventory(player, Items.CHAMPIONS_TOKEN_3706, 1)) {
-            playerl(FaceAnim.HAPPY, "I would like your contract to offer your services as a bodyguard.")
-            stage = 215
-            return true
-        } else if (inInventory(player, Items.WARRIORS_CONTRACT_3710, 1)) {
-            playerl(FaceAnim.ASKING, "You didn't take much persuading to 'lower' yourself to a bodyguard.")
-            stage = 220
-            return true
-        } else if (getAttribute(player, "sigmundreturning", false)) {
-            playerl(FaceAnim.ASKING, "Is this item for you?")
-            stage = 214
-            return true
-        } else if (getAttribute(player, "sigmund-steps", 0) == 11) {
-            playerl(
-                FaceAnim.ASKING,
-                "I don't suppose you have any idea where I could find the token to allow your seat at the champions table?",
-            )
-            stage = 211
-            return true
-        } else if (getAttribute(player, "sigmund-steps", 0) == 10) {
-            playerl(
-                FaceAnim.ASKING,
-                "I don't suppose you have any idea where I could find a brave and powerful warrior to act as a bodyguard?",
-            )
-            stage = 200
-            return true
-        } else if (args.size > 1) {
-            npcl(
-                FaceAnim.FRIENDLY,
-                "Hahaha! Well fought outerlander! Now come down from there, you have passed my trial with flying colours!",
-            )
-            stage = 150
-            return true
-        } else if (isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS)) {
-            playerl(FaceAnim.FRIENDLY, "Howdy Thorvald!")
-            stage = 0
-            return true
-        } else if (getAttribute(player, "fremtrials:thorvald-vote", false)) {
-            playerl(FaceAnim.FRIENDLY, "So can I count on your vote at the council of elders now Thorvald?")
-            stage = 160
-            return true
-        } else if (isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS)) {
-            playerl(FaceAnim.HAPPY, "Howdy Thorvald!")
-            stage = 250
-            return true
-        } else if (!player.questRepository.hasStarted(Quests.THE_FREMENNIK_TRIALS)) {
-            npcl(
-                FaceAnim.ANNOYED,
-                "Leave me be, outerlander. I have nothing to say to the likes of you.",
-            ).also { stage = END_DIALOGUE }
-            return true
-        } else if (!getAttribute(player, "fremtrials:thorvald-vote", false)) {
-            if (getAttribute(player, "fremtrials:warrior-accepted", false)) {
-                options("What do I have to do again?", "Who is my opponent?", "Can't I do something else?")
-                stage = 100
-                return true
-            } else {
-                playerl(FaceAnim.FRIENDLY, "Hello!")
-                stage = 60
-                return true
+        when {
+            inInventory(player, Items.CHAMPIONS_TOKEN_3706, 1) -> {
+                playerl(FaceAnim.HAPPY, "I would like your contract to offer your services as a bodyguard.")
+                stage = 215
             }
+
+            inInventory(player, Items.WARRIORS_CONTRACT_3710, 1) -> {
+                playerl(FaceAnim.ASKING, "You didn't take much persuading to 'lower' yourself to a bodyguard.")
+                stage = 220
+            }
+
+            getAttribute(player, GameAttributes.QUEST_VIKING_SIGMUND_RETURN, false) -> {
+                playerl(FaceAnim.ASKING, "Is this item for you?")
+                stage = 214
+            }
+
+            getAttribute(player, GameAttributes.QUEST_VIKING_SIGMUND_PROGRESS, 0) == 11 -> {
+                playerl(FaceAnim.ASKING, "I don't suppose you have any idea where I could find the token to allow your seat at the champions table?")
+                stage = 211
+            }
+
+            getAttribute(player, GameAttributes.QUEST_VIKING_SIGMUND_PROGRESS, 0) == 10 -> {
+                playerl(FaceAnim.ASKING, "I don't suppose you have any idea where I could find a brave and powerful warrior to act as a bodyguard?")
+                stage = 200
+            }
+
+            args.size > 1 -> {
+                npcl(FaceAnim.FRIENDLY, "Hahaha! Well fought outerlander! Now come down from there, you have passed my trial with flying colours!")
+                stage = 150
+            }
+
+            isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS) -> {
+                playerl(FaceAnim.FRIENDLY, "Howdy Thorvald!")
+                stage = 0
+            }
+
+            getAttribute(player, GameAttributes.QUEST_VIKING_THORVALD_VOTE, false) -> {
+                playerl(FaceAnim.FRIENDLY, "So can I count on your vote at the council of elders now Thorvald?")
+                stage = 160
+            }
+
+            !player.questRepository.hasStarted(Quests.THE_FREMENNIK_TRIALS) -> {
+                npcl(FaceAnim.ANNOYED, "Leave me be, outerlander. I have nothing to say to the likes of you.").also { stage = END_DIALOGUE }
+            }
+
+            !getAttribute(player, GameAttributes.QUEST_VIKING_THORVALD_VOTE, false) -> {
+                if (getAttribute(player, GameAttributes.QUEST_VIKING_THORVALD_START, false)) {
+                    options("What do I have to do again?", "Who is my opponent?", "Can't I do something else?")
+                    stage = 100
+                } else {
+                    playerl(FaceAnim.FRIENDLY, "Hello!")
+                    stage = 60
+                }
+            }
+            else -> return true
         }
         return true
     }
@@ -168,7 +163,7 @@ class ThorvalDialogue(
                             FaceAnim.EVIL_LAUGH,
                             "Am I prepared? I'll show you what combat's all about, you big sissy barbarian type guy!",
                         ).also {
-                            setAttribute(player, "/save:fremtrials:warrior-accepted", true)
+                            setAttribute(player, GameAttributes.QUEST_VIKING_THORVALD_START, true)
                             stage = 80
                         }
 
@@ -444,7 +439,7 @@ class ThorvalDialogue(
 
             210 ->
                 playerl(FaceAnim.HAPPY, "Okay, I'll see what I can do.").also {
-                    player.incrementAttribute("sigmund-steps", 1)
+                    player.incrementAttribute(GameAttributes.QUEST_VIKING_SIGMUND_PROGRESS, 1)
                     stage = END_DIALOGUE
                 }
 
@@ -499,12 +494,6 @@ class ThorvalDialogue(
                 npcl(
                     FaceAnim.HAPPY,
                     "With this Champion's token, I can stand alongside my warrior brethren in the Long Hall, and revel in the glories of past victories together!",
-                ).also { stage = END_DIALOGUE }
-
-            250 ->
-                npcl(
-                    FaceAnim.HAPPY,
-                    "And greetings to you too. It is good to see new blood entering the Fremennik; we gain our strength by bringing new warriors into the tribe.",
                 ).also { stage = END_DIALOGUE }
         }
         return true

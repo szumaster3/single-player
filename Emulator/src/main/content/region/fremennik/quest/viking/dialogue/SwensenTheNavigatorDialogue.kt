@@ -1,5 +1,7 @@
 package content.region.fremennik.quest.viking.dialogue
 
+import content.data.GameAttributes
+import content.region.fremennik.quest.viking.FremennikTrials
 import core.api.*
 import core.api.quest.isQuestComplete
 import core.game.dialogue.Dialogue
@@ -14,62 +16,62 @@ import org.rs.consts.Quests
 class SwensenTheNavigatorDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    val gender =
-        if (player?.isMale == true) {
-            "brother"
-        } else {
-            "sister"
-        }
-    val fName = player?.getAttribute("fremennikname", "fremmyname")
-
     override fun open(vararg args: Any?): Boolean {
-        if (inInventory(player, Items.WEATHER_FORECAST_3705, 1)) {
-            playerl(FaceAnim.HAPPY, "I would like your map of fishing spots.")
-            stage = 120
-            return true
-        } else if (inInventory(player, Items.SEA_FISHING_MAP_3704, 1)) {
-            playerl(
-                FaceAnim.ASKING,
-                "If this map of fishing spots is so valuable, why did you give it away to me so easily?",
-            )
-            stage = 125
-            return true
-        } else if (getAttribute(player, "sigmundreturning", false)) {
-            playerl(FaceAnim.ASKING, "I have a trade item here.")
-            stage = 130
-            return true
+        when {
+            inInventory(player, Items.WEATHER_FORECAST_3705, 1) -> {
+                playerl(FaceAnim.HAPPY, "I would like your map of fishing spots.")
+                stage = 120
+            }
+
+            inInventory(player, Items.SEA_FISHING_MAP_3704, 1) -> {
+                playerl(FaceAnim.ASKING, "If this map of fishing spots is so valuable, why did you give it away to me so easily?")
+                stage = 125
+            }
+
+            getAttribute(player, GameAttributes.QUEST_VIKING_SIGMUND_RETURN, false) -> {
+                playerl(FaceAnim.ASKING, "I have a trade item here.")
+                stage = 130
+            }
+
+            getAttribute(player, GameAttributes.QUEST_VIKING_SIGMUND_PROGRESS, 0) == 9 -> {
+                npcl(FaceAnim.HAPPY, "Greetings outerlander.")
+                stage = 115
+            }
+
+            getAttribute(player, GameAttributes.QUEST_VIKING_SIGMUND_PROGRESS, 0) == 8 -> {
+                npcl(FaceAnim.HAPPY, "Greetings outerlander.")
+                stage = 105
+            }
+
+            getAttribute(player, GameAttributes.QUEST_VIKING_SWENSEN_MAZE, false) -> {
+                npc("Outerlander! You have finished my maze!", "I am genuinely impressed!")
+                stage = 100
+            }
+
+            getAttribute(player, GameAttributes.QUEST_VIKING_SWENSEN_VOTE, false) -> {
+                npc("You have my vote!")
+                stage = 1000
+            }
+
+            isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS) -> {
+                playerl(FaceAnim.HAPPY, "Hello!")
+                stage = 140
+            }
+
+            player.questRepository.hasStarted(Quests.THE_FREMENNIK_TRIALS) -> {
+                player("Hello!")
+                stage = 0
+            }
+
+            else -> {
+                playerl(FaceAnim.HAPPY, "Hello!")
+                stage = 145
+            }
         }
-        if (getAttribute(player, "sigmund-steps", 0) == 9) {
-            npcl(FaceAnim.HAPPY, "Greetings outerlander.")
-            stage = 115
-            return true
-        } else if (getAttribute(player, "sigmund-steps", 0) == 8) {
-            npcl(FaceAnim.HAPPY, "Greetings outerlander.")
-            stage = 105
-            return true
-        }
-        if (getAttribute(player, "fremtrials:maze-complete", false)) {
-            npc("Outerlander! You have finished my maze!", "I am genuinely impressed!")
-            stage = 100
-            return true
-        } else if (getAttribute(player, "fremtrials:swensen-vote", false)) {
-            npc("You have my vote!")
-            stage = 1000
-            return true
-        } else if (isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS)) {
-            playerl(FaceAnim.HAPPY, "Hello!")
-            stage = 140
-            return true
-        } else if (player.questRepository.hasStarted(Quests.THE_FREMENNIK_TRIALS)) {
-            player("Hello!")
-            stage = 0
-            return true
-        } else {
-            playerl(FaceAnim.HAPPY, "Hello!")
-            stage = 145
-            return true
-        }
+
+        return true
     }
+
 
     override fun handle(
         interfaceId: Int,
@@ -181,7 +183,7 @@ class SwensenTheNavigatorDialogue(
                 stage = 1000
                 setAttribute(
                     player,
-                    "/save:fremtrials:swensen-accepted",
+                    GameAttributes.QUEST_VIKING_SWENSEN_START,
                     true,
                 )
             }
@@ -201,9 +203,9 @@ class SwensenTheNavigatorDialogue(
 
             102 -> {
                 player("Thanks!")
-                removeAttributes(player, "fremtrials:maze-complete", "fremtrials:swensen-accepted")
-                setAttribute(player, "/save:fremtrials:swensen-vote", true)
-                setAttribute(player, "/save:fremtrials:votes", getAttribute(player, "fremtrials:votes", 0) + 1)
+                removeAttributes(player, GameAttributes.QUEST_VIKING_SWENSEN_MAZE, GameAttributes.QUEST_VIKING_SWENSEN_START)
+                setAttribute(player, GameAttributes.QUEST_VIKING_SWENSEN_VOTE, true)
+                setAttribute(player, GameAttributes.QUEST_VIKING_VOTES, getAttribute(player, GameAttributes.QUEST_VIKING_VOTES, 0) + 1)
                 stage = 1000
             }
 
@@ -245,7 +247,7 @@ class SwensenTheNavigatorDialogue(
                     FaceAnim.ANNOYED,
                     "I just told you: from the Seer. You will need to persuade him to take the time to make a forecast somehow.",
                 ).also {
-                    player.incrementAttribute("sigmund-steps", 1)
+                    player.incrementAttribute(GameAttributes.QUEST_VIKING_SIGMUND_PROGRESS, 1)
                     stage = 1000
                 }
 
@@ -293,7 +295,7 @@ class SwensenTheNavigatorDialogue(
                 ).also { stage = 1000 }
 
             130 -> npcl(FaceAnim.ANNOYED, "It isn't for me, I'm afraid.").also { stage = 1000 }
-            140 -> npcl(FaceAnim.HAPPY, "Greetings to you $gender $fName. How fare you today?").also { stage++ }
+            140 -> npcl(FaceAnim.HAPPY, "Greetings to you ${if (player.isMale) "brother" else "sister"} ${FremennikTrials.getFremennikName(player!!)}. How fare you today?").also { stage++ }
             141 -> playerl(FaceAnim.HAPPY, "I am fine thanks Swensen. How are you doing?").also { stage++ }
             142 -> npcl(FaceAnim.HAPPY, "I am fine too!").also { stage = 1000 }
             145 ->

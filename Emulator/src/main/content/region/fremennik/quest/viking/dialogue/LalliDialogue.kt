@@ -1,6 +1,9 @@
 package content.region.fremennik.quest.viking.dialogue
 
+import content.data.GameAttributes
 import core.api.*
+import core.api.quest.getQuestStage
+import core.api.quest.isQuestComplete
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.player.Player
@@ -16,72 +19,55 @@ class LalliDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
     override fun open(vararg args: Any?): Boolean {
-        player?.let {
-            println(it.getAttribute("lalliEatStew", false))
-            if (it.questRepository.isComplete(Quests.THE_FREMENNIK_TRIALS)) {
+        when {
+            isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS) -> {
                 playerl(FaceAnim.NEUTRAL, "Hello there.")
                 stage = 100
-                return true
             }
-            if (it.getAttribute("lalliStewCabbageAdded", false)!! &&
-                it.getAttribute(
-                    "lalliStewOnionAdded",
-                    false,
-                )!! &&
-                it.getAttribute("lalliStewPotatoAdded", false)!! &&
-                it.getAttribute(
-                    "lalliStewRockAdded",
-                    false,
-                )!!
-            ) {
+
+            getAttribute(player, GameAttributes.QUEST_VIKING_STEW_INGREDIENTS_CABBAGE, false) &&
+                    getAttribute(player, GameAttributes.QUEST_VIKING_STEW_INGREDIENTS_ONION, false) &&
+                    getAttribute(player, GameAttributes.QUEST_VIKING_STEW_INGREDIENTS_POTATO, false) &&
+                    getAttribute(player, GameAttributes.QUEST_VIKING_STEW_INGREDIENTS_ROCK, false) -> {
                 npcl(FaceAnim.OLD_NORMAL, "It am ready now?")
                 stage = 60
-                return true
             }
-            if (it.getAttribute("lalliStewCabbageAdded", false)!! ||
-                it.getAttribute(
-                    "lalliStewOnionAdded",
-                    false,
-                )!! ||
-                it.getAttribute("lalliStewPotatoAdded", false)!! ||
-                it.getAttribute(
-                    "lalliStewRockAdded",
-                    false,
-                )!!
-            ) {
+
+            getAttribute(player, GameAttributes.QUEST_VIKING_STEW_INGREDIENTS_CABBAGE, false) ||
+                    getAttribute(player, GameAttributes.QUEST_VIKING_STEW_INGREDIENTS_ONION, false) ||
+                    getAttribute(player, GameAttributes.QUEST_VIKING_STEW_INGREDIENTS_POTATO, false) ||
+                    getAttribute(player, GameAttributes.QUEST_VIKING_STEW_INGREDIENTS_ROCK, false) -> {
                 npcl(FaceAnim.OLD_NORMAL, "It am ready now?")
                 stage = 58
-                return true
             }
-            if (it.getAttribute("lalliEatStew", false)!!) {
+
+            getAttribute(player, GameAttributes.QUEST_VIKING_EAT_STEW, false) -> {
                 playerl(FaceAnim.NEUTRAL, "Hello there.")
                 stage = 65
-                return true
             }
-            if (it.getAttribute("hasWool", false)!!) {
+
+            getAttribute(player, GameAttributes.QUEST_VIKING_HAS_WOOL, false) -> {
                 playerl(FaceAnim.NEUTRAL, "Hello there.")
                 stage = 75
-                return true
             }
-            if (it.getAttribute("fremtrials:askeladden-talkedto", false)!!) {
+
+            getAttribute(player, GameAttributes.QUEST_VIKING_ASKELADDEN_TALK, false) -> {
                 player("Hello there.")
                 stage = 50
-                return true
             }
-            if (player.questRepository.isComplete(Quests.THE_FREMENNIK_TRIALS)) {
-                playerl(FaceAnim.HAPPY, "Hello there.")
-                stage = 100
-                return true
+
+            getQuestStage(player, Quests.THE_FREMENNIK_TRIALS) > 0 -> {
+                player("Hello there.")
             }
-            if (it.questRepository.getStage(Quests.THE_FREMENNIK_TRIALS) > 0) {
-                player("Hello there.").also {
-                    stage = 0
-                    return true
-                }
+
+            else -> {
+                player("Hello there.")
+                stage = 200
             }
         }
         return true
     }
+
 
     override fun handle(
         interfaceId: Int,
@@ -163,7 +149,7 @@ class LalliDialogue(
 
             11 ->
                 player("I see... okay, well, bye!").also {
-                    setAttribute(player, "/save:fremtrials:lalli-talkedto", true)
+                    setAttribute(player, GameAttributes.QUEST_VIKING_STEW_START, true)
                     stage = END_DIALOGUE
                 }
 
@@ -210,7 +196,7 @@ class LalliDialogue(
                         "You have a cunning plan to trick this troll. You need your pet rock,",
                         "a cabbage, a potato and an onion.",
                     ).also {
-                        removeAttribute(player, "fremtrials:fremtrials:lalli-talkedto")
+                        removeAttribute(player, GameAttributes.QUEST_VIKING_STEW_START)
                         stage = END_DIALOGUE
                     }
 
@@ -225,13 +211,13 @@ class LalliDialogue(
             62 -> playerl(FaceAnim.NEUTRAL, "Indeed it is. But I'm willing to trade it.").also { stage++ }
             63 ->
                 npcl(FaceAnim.OLD_SNEAKY, "Let me think about that, me like to think.").also {
-                    setAttribute(player, "/save:lalliEatStew", true)
+                    setAttribute(player, GameAttributes.QUEST_VIKING_EAT_STEW, true)
                     removeAttributes(
                         player,
-                        "lalliStewOnionAdded",
-                        "lalliStewPotatoAdded",
-                        "lalliStewCabbageAdded",
-                        "lalliStewRockAdded",
+                        GameAttributes.QUEST_VIKING_STEW_INGREDIENTS_ONION,
+                        GameAttributes.QUEST_VIKING_STEW_INGREDIENTS_POTATO,
+                        GameAttributes.QUEST_VIKING_STEW_INGREDIENTS_CABBAGE,
+                        GameAttributes.QUEST_VIKING_STEW_INGREDIENTS_ROCK,
                     )
                     stage = END_DIALOGUE
                 }
@@ -275,8 +261,8 @@ class LalliDialogue(
             71 ->
                 playerl(FaceAnim.HAPPY, "Glad you're happy Lalli!").also {
                     addItemOrDrop(player, Items.GOLDEN_FLEECE_3693, 1)
-                    setAttribute(player, "/save:hasWool", true)
-                    removeAttribute(player, "lalliEatStew")
+                    setAttribute(player, GameAttributes.QUEST_VIKING_HAS_WOOL, true)
+                    removeAttribute(player, GameAttributes.QUEST_VIKING_EAT_STEW)
                     stage = END_DIALOGUE
                 }
 
@@ -344,6 +330,14 @@ class LalliDialogue(
                     FaceAnim.OLD_NORMAL,
                     "Well stupid bad trade human don't get no wool then! Or any golden apples!",
                 ).also { stage = END_DIALOGUE }
+
+            200 -> npc(
+                FaceAnim.OLD_SNEAKY,
+                "Bah! Puny humans always try steal Lalli's golden",
+                "apples! You go away now!",
+            ).also { stage++ }
+
+            201 -> player("Uh.... okay...").also { stage = END_DIALOGUE }
         }
         return true
     }
