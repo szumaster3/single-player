@@ -75,7 +75,7 @@ object CharterUtils {
         }
     }
 
-    fun getCost(
+    private fun getCost(
         player: Player,
         destination: Destination,
     ): Int {
@@ -87,7 +87,7 @@ object CharterUtils {
         }
     }
 
-    fun getHiddenComponents(
+    private fun getHiddenComponents(
         player: Player?,
         base: Destination,
     ): IntArray {

@@ -58,13 +58,13 @@ class FalconryActivityPlugin : ActivityPlugin(FALCONRY_ZONE, false, false, false
 
     class FalconryPlugin : OptionHandler() {
         override fun newInstance(arg: Any?): Plugin<Any> {
-            NPCDefinition.forId(5093).handlers["option:quick-falconry"] = this
-            NPCDefinition.forId(5094).handlers["option:retrieve"] = this
+            NPCDefinition.forId(NPCs.MATTHIAS_5093).handlers["option:quick-falconry"] = this
+            NPCDefinition.forId(NPCs.GYR_FALCON_5094).handlers["option:retrieve"] = this
             for (falconCatch in FalconCatch.values()) {
                 NPCDefinition.forId(falconCatch.npc).handlers["option:catch"] = this
             }
-            ItemDefinition.forId(10023).handlers["equipment"] = this
-            ItemDefinition.forId(10024).handlers["equipment"] = this
+            ItemDefinition.forId(Items.FALCONERS_GLOVE_10023).handlers["equipment"] = this
+            ItemDefinition.forId(Items.FALCONERS_GLOVE_10024).handlers["equipment"] = this
             return this
         }
 

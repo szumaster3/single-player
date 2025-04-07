@@ -117,21 +117,6 @@ class ShootingStarMiningPulse(
         return false
     }
 
-    fun rollBlueprint(player: Player) {
-        val chance =
-            when (star.level) {
-                ShootingStarType.LEVEL_9 -> 250
-                ShootingStarType.LEVEL_8 -> 500
-                ShootingStarType.LEVEL_7 -> 750
-                ShootingStarType.LEVEL_6 -> 1000
-                ShootingStarType.LEVEL_5 -> 2000
-                ShootingStarType.LEVEL_4 -> 3000
-                ShootingStarType.LEVEL_3 -> 4000
-                ShootingStarType.LEVEL_2 -> 5000
-                ShootingStarType.LEVEL_1 -> 10000
-            }
-    }
-
     override fun message(type: Int) {
         when (type) {
             0 -> sendMessage(player, "You swing your pickaxe at the rock.")

@@ -17,9 +17,9 @@ class ScorpionCatcher : Quest(Quests.SCORPION_CATCHER, 108, 107, 1, Vars.VARP_QU
         const val ATTRIBUTE_SECRET = "/save:scorpion_catcher:secret-room"
         const val ATTRIBUTE_NPC = "/save:scorpion_catcher:dialogues"
         const val ATTRIBUTE_CAGE = "/save:scorpion_catcher:cage-dialogue"
-        const val ATTRIBUTE_TAVERLEY = "scorpion_catcher:caught_taverly"
-        const val ATTRIBUTE_BARBARIAN = "scorpion_catcher:caught_barb"
-        const val ATTRIBUTE_MONK = "scorpion_catcher:caught_monk"
+        const val ATTRIBUTE_TAVERLEY = "/save:scorpion_catcher:caught_taverley"
+        const val ATTRIBUTE_BARBARIAN = "/save:scorpion_catcher:caught_barb"
+        const val ATTRIBUTE_MONK = "/save:scorpion_catcher:caught_monk"
     }
 
     override fun drawJournal(
@@ -141,7 +141,7 @@ class ScorpionCatcher : Quest(Quests.SCORPION_CATCHER, 108, 107, 1, Vars.VARP_QU
             line(player, "I've spoken to !!Thormac?? and he thanked me", line++, stage == 100)
             line(player, "for finding his pet !!Kharid Scorpions??.", line++, stage == 100)
             line++
-            line(player, "<col=FF0000>QUEST COMPLETE</col>", line++, false)
+            line(player, "<col=FF0000>QUEST COMPLETE!</col>", line++, false)
         }
     }
 

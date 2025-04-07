@@ -11,6 +11,7 @@ import core.game.node.entity.player.Player
 import core.game.node.scenery.Scenery
 import core.game.node.scenery.SceneryBuilder
 import core.game.world.map.Location
+import org.rs.consts.NPCs
 
 class ShootingStar(
     var level: ShootingStarType = ShootingStarType.values().random(),
@@ -61,7 +62,7 @@ class ShootingStar(
             "Lava Maze mining site" to Location.create(3062, 3885, 0),
             "Mage Arena bank" to Location.create(3093, 3962, 0),
         )
-    val starSprite = NPC(8091)
+    val starSprite = NPC(NPCs.STAR_SPRITE_8091)
     var location = "Canifis Bank"
     var maxDust = level.totalStardust
     var dustLeft = level.totalStardust

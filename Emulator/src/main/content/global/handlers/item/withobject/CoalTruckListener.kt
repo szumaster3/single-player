@@ -39,7 +39,7 @@ class CoalTruckListener : InteractionListener {
             }
 
             if (removeItem(player, Item(Items.COAL_453, coalInInventory))) {
-                setAttribute(player, "/save:$ATTRIBUTE_COAL_TRUCK_INVENTORY", coalInTruck + coalInInventory)
+                setAttribute(player, ATTRIBUTE_COAL_TRUCK_INVENTORY, coalInTruck + coalInInventory)
             }
             return@onUseWith true
         }
@@ -56,7 +56,7 @@ class CoalTruckListener : InteractionListener {
             }
             if (addItem(player, Items.COAL_453, toRemove)) {
                 coalInTruck -= toRemove
-                setAttribute(player, "/save:$ATTRIBUTE_COAL_TRUCK_INVENTORY", coalInTruck)
+                setAttribute(player, ATTRIBUTE_COAL_TRUCK_INVENTORY, coalInTruck)
             }
             return@on true
         }
@@ -73,6 +73,6 @@ class CoalTruckListener : InteractionListener {
     }
 
     companion object {
-        private const val ATTRIBUTE_COAL_TRUCK_INVENTORY = "coal-truck-inventory"
+        private const val ATTRIBUTE_COAL_TRUCK_INVENTORY = "/save:coal-truck-inventory"
     }
 }

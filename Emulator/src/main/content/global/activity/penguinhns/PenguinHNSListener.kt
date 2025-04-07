@@ -65,7 +65,7 @@ class PenguinHNSListener : InteractionListener {
 
                 2 -> {
                     sendMessage(player, "You manage to spy on the penguin.").also {
-                        setAttribute(player, "/save:${GameAttributes.ACTIVITY_PENGUINS_HNS_SCORE}", totalPoints + 1)
+                        setAttribute(player, GameAttributes.ACTIVITY_PENGUINS_HNS_SCORE, totalPoints + 1)
                         PenguinManager.registerTag(player, npc.location)
                     }
                 }

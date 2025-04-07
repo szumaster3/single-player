@@ -210,7 +210,7 @@ class ThormacDialogueFile : DialogueFile() {
                     3 -> {
                         end()
                         player!!.questRepository.setStageNonmonotonic(player!!.questRepository.forIndex(108), 10)
-                        removeAttribute(player!!, "scorpion_catcher:caught_taverly")
+                        removeAttribute(player!!, "scorpion_catcher:caught_taverley")
                         removeAttribute(player!!, "scorpion_catcher:caught_barb")
                         removeAttribute(player!!, "scorpion_catcher:caught_monk")
                         addItemOrDrop(player!!, Items.SCORPION_CAGE_456)
