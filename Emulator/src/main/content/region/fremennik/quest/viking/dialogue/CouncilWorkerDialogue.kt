@@ -24,7 +24,7 @@ class CouncilWorkerDialogue(
         if (isBeerInteraction) {
             when (stage) {
                 START_DIALOGUE -> {
-                    npc(COUNCIL_WORKER, "Oh, thank you much ${if (player!!.isMale) "sir" else "miss"}")
+                    npc(COUNCIL_WORKER, "Oh, thank you much ${if (player!!.isMale) "sir" else "miss"}.")
                     stage++
                 }
 
