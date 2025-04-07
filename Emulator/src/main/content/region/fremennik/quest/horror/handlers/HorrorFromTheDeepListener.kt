@@ -12,7 +12,7 @@ import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.interaction.QueueStrength
-import core.game.node.entity.impl.ForceMovement
+import core.game.node.entity.player.link.TeleportManager
 import core.game.node.item.Item
 import core.game.system.task.Pulse
 import core.game.world.map.Direction
@@ -279,6 +279,49 @@ class HorrorFromTheDeepListener : InteractionListener {
                 }
             }
             return@onUseWith true
+        }
+
+        /*
+         * Handles crossing the bridge from east.
+         * val agilityLevel = getStatLevel(player, Skills.AGILITY)
+         * val failChance = 1.0 - (agilityLevel + 1) / 100.0
+         * val damage = (1..5).random()
+         */
+
+        on(Scenery.BROKEN_BRIDGE_4615, IntType.SCENERY, "cross") { player, _ ->
+            val bridgeUnlock = getAttribute(player, GameAttributes.QUEST_HFTD_UNLOCK_BRIDGE, 0)
+            val cycle = animationCycles(Animations.AGILITY_START_3276)
+            val destination = Location(2598, 3608, 0)
+
+            when (bridgeUnlock) {
+                1 -> {
+                    player.animate(Animation(Animations.JUMP_BRIDGE_769), 1)
+                    forceWalk(player, destination.transform(1, 0, 0), "like travolta")
+                    teleport(player, destination, TeleportManager.TeleportType.INSTANT, 2)
+                    runTask(player, 3) { forceWalk(player, destination.transform(1, 0, 0), "") }
+                }
+                2 -> {
+                    forceMove(player, player.location, destination, 0, cycle, Direction.EAST, Animations.AGILITY_START_3276)
+                    runTask(player, 6) { forceWalk(player, destination.transform(1, 0, 0), "like jeffrey") }
+                }
+                else -> return@on false
+            }
+
+            return@on true
+        }
+
+        /*
+         * Handles crossing the bridge from west.
+         */
+
+        on(Scenery.BROKEN_BRIDGE_4616, IntType.SCENERY, "cross") { player, node ->
+            if (getAttribute(player, GameAttributes.QUEST_HFTD_UNLOCK_BRIDGE, 0) != 2) {
+                sendMessage(player, "I might be able to make it to the other side.")
+                return@on true
+            }
+            forceMove(player, node.location, Location(2596, 3608, 0), 0, 120, Direction.WEST, Animations.AGILITY_START_ALT_3277)
+            runTask(player, 6) { forceWalk(player, Location.create(2595, 3608, 0), "jeffrey only") }
+            return@on true
         }
     }
 }
