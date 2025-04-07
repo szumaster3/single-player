@@ -21,7 +21,6 @@ import kotlin.random.Random
 class ChieftanBrundtDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    private val fremennikName = FremennikTrials.getFremennikName(player!!)
     override fun open(vararg args: Any?): Boolean {
         when {
             inInventory(player, Items.TRACKING_MAP_3701, 1) -> {
@@ -70,7 +69,7 @@ class ChieftanBrundtDialogue(
             }
 
             isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS) -> {
-                npcl(FaceAnim.HAPPY, "Hello again, ${if (player?.isMale == true) "brother" else "sister"} $fremennikName. I hope your travels have brought you wealth and joy! What compels you to visit me on this day?")
+                npcl(FaceAnim.HAPPY, "Hello again, ${if (player?.isMale == true) "brother" else "sister"} ${FremennikTrials.getFremennikName(player!!)}. I hope your travels have brought you wealth and joy! What compels you to visit me on this day?")
                 stage = 600
             }
             else -> npc("Greetings outlander!")
@@ -532,7 +531,7 @@ class ChieftanBrundtDialogue(
             602 ->
                 npcl(
                     FaceAnim.HAPPY,
-                    "Well met, ${if (player?.isMale == true) "brother" else "sister"} $fremennikName. it is always good to see your face in glorious Rellekka once more!",
+                    "Well met, ${if (player?.isMale == true) "brother" else "sister"} ${FremennikTrials.getFremennikName(player!!)}. it is always good to see your face in glorious Rellekka once more!",
                 ).also {
                     stage =
                         END_DIALOGUE
@@ -541,7 +540,7 @@ class ChieftanBrundtDialogue(
             605 ->
                 npcl(
                     FaceAnim.HAPPY,
-                    "Not at the moment, $fremennikName. Rest assured, should your services to the Fremennik be required, I will call upon you",
+                    "Not at the moment, ${FremennikTrials.getFremennikName(player!!)}. Rest assured, should your services to the Fremennik be required, I will call upon you",
                 ).also {
                     stage =
                         END_DIALOGUE
@@ -550,7 +549,7 @@ class ChieftanBrundtDialogue(
             610 ->
                 npcl(
                     FaceAnim.HAPPY,
-                    "Aye that it is, ${if (player?.isMale == true) "brother" else "sister"} $fremennikName. Should you desire one of your own, you should go to Skulgrimen's shop and see what they have available!",
+                    "Aye that it is, ${if (player?.isMale == true) "brother" else "sister"} ${FremennikTrials.getFremennikName(player!!)}. Should you desire one of your own, you should go to Skulgrimen's shop and see what they have available!",
                 ).also {
                     stage =
                         END_DIALOGUE
@@ -559,7 +558,7 @@ class ChieftanBrundtDialogue(
             615 ->
                 npcl(
                     FaceAnim.HAPPY,
-                    "Why, of course, $fremennikName! Do not say 'your people' like that, for you are now a Fremennik yourself! What did you want to hear of?",
+                    "Why, of course, ${FremennikTrials.getFremennikName(player!!)}! Do not say 'your people' like that, for you are now a Fremennik yourself! What did you want to hear of?",
                 ).also {
                     stage++
                 }
@@ -703,7 +702,7 @@ class ChieftanBrundtDialogue(
                     stage++
                 }
 
-            632 -> npcl(FaceAnim.HAPPY, "So, $fremennikName, was there anything more you wished to hear?").also { stage = 616 }
+            632 -> npcl(FaceAnim.HAPPY, "So, ${FremennikTrials.getFremennikName(player!!)}, was there anything more you wished to hear?").also { stage = 616 }
             635 ->
                 npcl(
                     FaceAnim.HAPPY,
@@ -715,7 +714,7 @@ class ChieftanBrundtDialogue(
             636 ->
                 npcl(
                     FaceAnim.HAPPY,
-                    "So my knowledge is not great, but I will happily share what little I do know with you, $fremennikName. North of this town the atmosphere becomes bitterly cold.",
+                    "So my knowledge is not great, but I will happily share what little I do know with you, ${FremennikTrials.getFremennikName(player!!)}. North of this town the atmosphere becomes bitterly cold.",
                 ).also {
                     stage++
                 }
@@ -932,7 +931,7 @@ class ChieftanBrundtDialogue(
             1202 ->
                 npcl(
                     FaceAnim.HAPPY,
-                    "Very well, $fremennikName! Let me look you over and see if you're strong enough for this boon.",
+                    "Very well, ${FremennikTrials.getFremennikName(player!!)}! Let me look you over and see if you're strong enough for this boon.",
                 ).also {
                     stage++
                 }
@@ -941,7 +940,7 @@ class ChieftanBrundtDialogue(
                 if (player!!.hasItem(Item(Items.SEAL_OF_PASSAGE_9083))) {
                     npcl(
                         FaceAnim.HALF_GUILTY,
-                        "I'm sorry, $fremennikName. You just don't have the experience needed for this gift. Please come back when you've learned more.",
+                        "I'm sorry, ${FremennikTrials.getFremennikName(player!!)}. You just don't have the experience needed for this gift. Please come back when you've learned more.",
                     ).also {
                         stage =
                             END_DIALOGUE

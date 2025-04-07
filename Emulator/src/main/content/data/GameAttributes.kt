@@ -262,7 +262,10 @@ internal object GameAttributes {
 
     const val QUEST_VIKING_OLAF_START = "/save:fremtrials:olaf-accepted"
     const val QUEST_VIKING_OLAF_CONCERT = "/save:lyreConcertPlayed"
+
     const val QUEST_VIKING_LYRE = "/save:LyreEnchanted"
+    const val QUEST_VIKING_PLAYER_ON_STAGE = "/save:onStage"
+
     const val QUEST_VIKING_OLAF_VOTE = "/save:fremtrials:olaf-vote"
 
     const val QUEST_VIKING_STEW_START = "/save:fremtrials:lalli-talkedto"

@@ -204,7 +204,7 @@ class FremennikTrialsListener : InteractionListener {
         }
 
         on(LYRE_IDs, IntType.ITEM, "play") { player, lyre ->
-            if (getAttribute(player, "onStage", false) && !getAttribute(player, GameAttributes.QUEST_VIKING_OLAF_CONCERT, false)) {
+            if (getAttribute(player, GameAttributes.QUEST_VIKING_PLAYER_ON_STAGE, false) && !getAttribute(player, GameAttributes.QUEST_VIKING_OLAF_CONCERT, false)) {
                 Pulser.submit(
                     LyreConcertPulse(
                         player,

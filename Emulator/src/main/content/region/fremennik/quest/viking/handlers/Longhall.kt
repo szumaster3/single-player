@@ -1,5 +1,6 @@
 package content.region.fremennik.quest.viking.handlers
 
+import content.data.GameAttributes
 import core.game.node.entity.Entity
 import core.game.world.map.zone.MapZone
 import core.game.world.map.zone.ZoneBorders
@@ -22,7 +23,7 @@ class Longhall :
 
     override fun enter(e: Entity?): Boolean {
         if (e != null && e.isPlayer) {
-            e.setAttribute("onStage", true)
+            e.setAttribute(GameAttributes.QUEST_VIKING_PLAYER_ON_STAGE, true)
         }
         return super.enter(e)
     }
@@ -32,7 +33,7 @@ class Longhall :
         logout: Boolean,
     ): Boolean {
         if (e != null && e.isPlayer) {
-            e.removeAttribute("onStage")
+            e.removeAttribute(GameAttributes.QUEST_VIKING_PLAYER_ON_STAGE)
         }
         return super.leave(e, logout)
     }

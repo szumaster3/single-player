@@ -18,19 +18,23 @@ import org.rs.consts.Quests
 class SigmundDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
-    private val questItems = intArrayOf(3709, 3707, 3706, 3710, 3705, 3704, 3703, 3702, 3701, 3708, 3700, 3699, 3698)
-
-    val gender =
-        if (player?.isMale == true) {
-            "brother"
-        } else {
-            "sister"
-        }
-    private val fremennikName = FremennikTrials.getFremennikName(player!!)
+    private val questItems = intArrayOf(
+        Items.FREMENNIK_BALLAD_3699,
+        Items.EXOTIC_FLOWER_3698,
+        Items.CUSTOM_BOW_STRING_3702,
+        Items.TRACKING_MAP_3701,
+        Items.UNUSUAL_FISH_3703,
+        Items.SEA_FISHING_MAP_3704,
+        Items.WEATHER_FORECAST_3705,
+        Items.CHAMPIONS_TOKEN_3706,
+        Items.LEGENDARY_COCKTAIL_3707,
+        Items.FISCAL_STATEMENT_3708,
+        Items.PROMISSORY_NOTE_3709,
+        Items.WARRIORS_CONTRACT_3710,
+    )
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
-
         when {
             isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS) -> {
                 playerl(FaceAnim.HAPPY, "Hello there!")
@@ -225,7 +229,7 @@ class SigmundDialogue(
             50 ->
                 npcl(
                     FaceAnim.HAPPY,
-                    "Greetings again $gender $fremennikName! What can I do for you this day?",
+                    "Greetings again ${if (player?.isMale == true) "brother" else "sister"} ${FremennikTrials.getFremennikName(player!!)}! What can I do for you this day?",
                 ).also { stage++ }
 
             51 -> options("Can I see your wares?", "Nothing thanks").also { stage++ }
@@ -235,7 +239,7 @@ class SigmundDialogue(
                     2 -> playerl(FaceAnim.HAPPY, "Nothing thanks").also { stage = 55 }
                 }
 
-            53 -> npcl(FaceAnim.HAPPY, "Certainly, $fremennikName.").also { stage = 54 }
+            53 -> npcl(FaceAnim.HAPPY, "Certainly, ${FremennikTrials.getFremennikName(player!!)}.").also { stage = 54 }
             54 -> {
                 end()
                 openNpcShop(player, NPCs.SIGMUND_THE_MERCHANT_1282)
@@ -244,7 +248,7 @@ class SigmundDialogue(
             55 ->
                 npcl(
                     FaceAnim.HAPPY,
-                    "Well, feel free to stop by anytime you wish $fremennikName. You are always welcome here!",
+                    "Well, feel free to stop by anytime you wish ${FremennikTrials.getFremennikName(player!!)}. You are always welcome here!",
                 ).also { stage = 1000 }
 
             60 ->
