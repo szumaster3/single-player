@@ -11,30 +11,46 @@ import org.rs.consts.Scenery
 
 class EntranaListener : InteractionListener {
     override fun defineListeners() {
+
+        /*
+         * Handles searching the bookcase in the house near Fritz on Entrana.
+         */
+
         on(ENTRANA_BOOKCASE, IntType.SCENERY, "Search") { player, _ ->
-            if (freeSlots(player) == 0) {
-                sendMessage(player, "You don't have enough inventory space.")
+            sendMessage(player, "You search the bookcase...")
+
+            if (inInventory(player, GLASSBLOWING_BOOK)) {
+                sendMessage(player, "You don't find anything that you'd ever want to read.")
                 return@on true
             }
 
-            sendMessage(player, "You search the bookcase...")
-            if (!inInventory(player, GLASSBLOWING_BOOK)) {
-                sendMessageWithDelay(player, "You search the bookcase and find a book named 'Glassblowing Book'.", 1)
-                addItem(player, GLASSBLOWING_BOOK)
+            sendMessage(player, "and find a Glassblowing Book.")
+
+            if (freeSlots(player) == 0) {
+                sendMessage(player, "...but you don't have enough room to take it.")
             } else {
-                sendMessageWithDelay(player, "You don't find anything interesting.", 1)
+                addItem(player, GLASSBLOWING_BOOK)
             }
+
             return@on true
         }
+
+        /*
+         * Handles entering the Entrana dungeon (Lost City quest).
+         */
 
         on(Scenery.LADDER_2408, IntType.SCENERY, "climb-down") { player, _ ->
             openDialogue(player, CAVE_MONK, findNPC(CAVE_MONK)!!.asNpc())
             return@on true
         }
 
+        /*
+         * Handles exit from the Entrana dungeon.
+         */
+
         on(MAGIC_DOOR, IntType.SCENERY, "open") { player, _ ->
             sendMessage(player, "You feel the world around you dissolve...")
-            teleport(player, Location(3208, 3764, 0))
+            teleport(player, Location(3093, 3224, 0))
             return@on true
         }
     }
