@@ -6,6 +6,7 @@ import core.api.*
 import core.api.utils.WeightBasedTable
 import core.api.utils.WeightedItem
 import core.game.dialogue.FaceAnim
+import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.player.Player
@@ -50,8 +51,19 @@ class MazeListener : InteractionListener {
          * Handles opening of the wall gates, each path is led by two gates.
          */
 
-        on(Scenery.WALL_3628, IntType.SCENERY, "open") { _, _ ->
+        on(Scenery.WALL_3628, IntType.SCENERY, "open") { player, node ->
+            val end = DoorActionHandler.getEndLocation(player, node.asScenery())
+            DoorActionHandler.open(node.asScenery(), node.asScenery(), Scenery.WALL_3628, 3626, true, 3, false)
+            forceWalk(player, end, "")
             return@on true
+        }
+
+        /*
+         * Handles door lock.
+         */
+
+        on(Scenery.WALL_3626, IntType.SCENERY, "open") { _, _ ->
+            return@on false
         }
 
         /*
