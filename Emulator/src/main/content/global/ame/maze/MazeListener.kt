@@ -5,21 +5,20 @@ import content.data.RandomEvent
 import core.api.*
 import core.api.utils.WeightBasedTable
 import core.api.utils.WeightedItem
-import core.game.dialogue.FaceAnim
 import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
+import core.game.interaction.QueueStrength
 import core.game.node.entity.player.Player
 import core.game.world.map.Location
 import org.rs.consts.Animations
 import org.rs.consts.Items
-import org.rs.consts.NPCs
 import org.rs.consts.Scenery
 
 class MazeListener : InteractionListener {
     private val rewardIDs = intArrayOf(Items.COINS_995, Items.FEATHER_314, Items.IRON_ARROW_884, Items.CHAOS_RUNE_562, Items.STEEL_ARROW_886, Items.DEATH_RUNE_560, Items.COAL_454, Items.NATURE_RUNE_561, Items.MITHRIL_ORE_448)
     private val itemsDivisor = arrayOf(1.0, 2.0, 3.0, 9.0, 12.0, 18.0, 45.0, 162.0, 180.0)
-    private val oneWayPassageIDs = intArrayOf(Scenery.WALL_3629, Scenery.WALL_3630, Scenery.WALL_3631, Scenery.WALL_3632)
+    private val wallIDs = intArrayOf(Scenery.WALL_3628, Scenery.WALL_3629, Scenery.WALL_3630, Scenery.WALL_3631, Scenery.WALL_3632)
 
     private fun calculateLoot(player: Player) {
         val randomNumber = (0..8).random()
@@ -48,13 +47,23 @@ class MazeListener : InteractionListener {
     override fun defineListeners() {
 
         /*
-         * Handles opening of the wall gates, each path is led by two gates.
+         * Handles passages in the maze.
          */
 
-        on(Scenery.WALL_3628, IntType.SCENERY, "open") { player, node ->
+        on(wallIDs, IntType.SCENERY, "open") { player, node ->
             val end = DoorActionHandler.getEndLocation(player, node.asScenery())
+
+            // if(node.id != Scenery.WALL_3628) { // TODO: One-way passages.
+            //     sendNPCDialogueLines(player, NPCs.MYSTERIOUS_OLD_MAN_410, FaceAnim.NEUTRAL, false, "That's not the right way.", "Try a different route.")
+            //     return@on true
+            // }
+
             DoorActionHandler.open(node.asScenery(), node.asScenery(), Scenery.WALL_3628, 3626, true, 3, false)
-            forceWalk(player, end, "")
+
+            if (node.location == Location(2910, 4576)) // Doors leading to the strange shrine.
+                forceMove(player, player.location, end, 0, 30)
+            else
+                forceWalk(player, end, "")
             return@on true
         }
 
@@ -62,31 +71,16 @@ class MazeListener : InteractionListener {
          * Handles door lock.
          */
 
-        on(Scenery.WALL_3626, IntType.SCENERY, "open") { _, _ ->
+        on(Scenery.WALL_3626, IntType.SCENERY, "open") { player, _ ->
+            sendMessage(player, "That bit doesn't open.")
             return@on false
-        }
-
-        /*
-         * Handles one-way passages in the maze.
-         */
-
-        on(oneWayPassageIDs, IntType.SCENERY, "open") { player, node ->
-            sendNPCDialogueLines(
-                player,
-                NPCs.MYSTERIOUS_OLD_MAN_410,
-                FaceAnim.NEUTRAL,
-                false,
-                "That's not the right way.",
-                "Try a different route."
-            )
-            return@on true
         }
 
         /*
          * Handles the interaction with the chest in the maze.
          */
 
-        on(Scenery.CHEST_3635, IntType.SCENERY, "open") { player, _ ->
+        on(Scenery.CHEST_3635, IntType.SCENERY, "open") { player, node ->
             val ticksLeft = getAttribute(player, GameAttributes.MAZE_ATTRIBUTE_TICKS_LEFT, 0)
             val chestsOpened = getAttribute(player, GameAttributes.MAZE_ATTRIBUTE_CHESTS_OPEN, 0)
 
@@ -100,10 +94,18 @@ class MazeListener : InteractionListener {
                     Items.DEFENCE_POTION2_135 -> "You've found a defence potion!"
                     else -> "You've found some $rewardName!"
                 }
-                addItemOrBank(player, reward.id)
+                replaceScenery(node.asScenery(), node.id + 1, -1)
                 sendItemDialogue(player, reward.id, message)
+                addItemOrBank(player, reward.id, reward.amount)
                 player.incrementAttribute(GameAttributes.MAZE_ATTRIBUTE_CHESTS_OPEN, 1)
             } else {
+                sendMessage(player, "You find nothing of interest.")
+            }
+            return@on true
+        }
+
+        on(Scenery.CHEST_3636, IntType.SCENERY, "search") { player, _ ->
+            if(player.viewport.region.id == 11591) {
                 sendMessage(player, "You find nothing of interest.")
             }
             return@on true
@@ -117,7 +119,7 @@ class MazeListener : InteractionListener {
             lock(player, 6)
             faceLocation(player, Location.create(2912, 4576, 0))
             animate(player, Animations.CHEER_862)
-            runTask(player, 6) {
+            queueScript(player, 6, QueueStrength.SOFT) {
                 calculateLoot(player)
                 clearLogoutListener(player, RandomEvent.logout())
                 removeAttributes(
@@ -127,6 +129,7 @@ class MazeListener : InteractionListener {
                 )
                 player.properties.teleportLocation = getAttribute(player, RandomEvent.save(), null)
                 closeOverlay(player)
+                return@queueScript stopExecuting(player)
             }
             return@on true
         }

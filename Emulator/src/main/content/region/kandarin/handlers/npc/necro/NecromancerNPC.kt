@@ -10,9 +10,7 @@ import core.tools.RandomFunction
 import core.tools.SystemLogger
 import org.rs.consts.NPCs
 
-val necroId = intArrayOf(NPCs.INVRIGAR_THE_NECROMANCER_173, NPCs.NECROMANCER_194)
-
-class NecromancerNPC : NPCBehavior(*necroId) {
+class NecromancerNPC : NPCBehavior(*intArrayOf(NPCs.INVRIGAR_THE_NECROMANCER_173, NPCs.NECROMANCER_194)) {
     override fun afterDamageReceived(
         self: NPC,
         attacker: Entity,

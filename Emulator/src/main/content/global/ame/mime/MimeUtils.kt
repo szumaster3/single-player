@@ -21,7 +21,7 @@ object MimeUtils {
     val PLAYER_LOCATION = Location(2007, 4761, 0)
     val SCENERY_LOCATION = Location(2010, 4761, 0)
 
-    const val LIGH_ON = 3644
+    const val LIGHT_ON = 3644
     const val LIGHT_OFF = 3645
 
     fun cleanup(player: Player) {
@@ -92,7 +92,7 @@ object MimeUtils {
                         1 ->
                             replaceScenery(
                                 Scenery(
-                                    LIGH_ON,
+                                    LIGHT_ON,
                                     PLAYER_LOCATION,
                                 ),
                                 LIGHT_OFF,
@@ -118,7 +118,7 @@ object MimeUtils {
                         14 ->
                             replaceScenery(
                                 Scenery(
-                                    LIGH_ON,
+                                    LIGHT_ON,
                                     SCENERY_LOCATION,
                                 ),
                                 LIGHT_OFF,
@@ -131,7 +131,7 @@ object MimeUtils {
                                     LIGHT_OFF,
                                     PLAYER_LOCATION,
                                 ),
-                                LIGH_ON,
+                                LIGHT_ON,
                                 -1,
                             )
                             openInterface(player, Components.MACRO_MIME_EMOTES_188)
@@ -167,7 +167,7 @@ object MimeUtils {
                                     openInterface(player, Components.CHATDEFAULT_137)
                                     replaceScenery(
                                         Scenery(
-                                            LIGH_ON,
+                                            LIGHT_ON,
                                             PLAYER_LOCATION,
                                         ),
                                         LIGHT_OFF,
@@ -178,7 +178,7 @@ object MimeUtils {
                                             LIGHT_OFF,
                                             SCENERY_LOCATION,
                                         ),
-                                        LIGH_ON,
+                                        LIGHT_ON,
                                         -1,
                                     )
                                     sendUnclosablePlainDialogue(
