@@ -126,7 +126,7 @@ class PhoenixLairListener : InteractionListener {
                         1 -> {
                             openInterface(player, Components.FADE_TO_BLACK_120)
                             player.animate(Animation.create(Animations.HUMAN_CRAWL_INTO_CAVE_11042), 1)
-
+                            lock(player, 3)
                             queueScript(player, 3, QueueStrength.SOFT) {
                                 teleport(player, Location(3566, 5224, 0))
                                 resetAnimator(player)
@@ -137,7 +137,7 @@ class PhoenixLairListener : InteractionListener {
                         2 -> {
                             openInterface(player, Components.FADE_TO_BLACK_120)
                             player.animate(Animation.create(Animations.HUMAN_CRAWL_INTO_CAVE_11042), 1)
-
+                            lock(player, 3)
                             queueScript(player, 3, QueueStrength.SOFT) {
                                 teleport(player, locations.random())
                                 resetAnimator(player)
@@ -151,7 +151,10 @@ class PhoenixLairListener : InteractionListener {
             }
 
             if (randomRoll == 0) {
-                teleport(player, phoenixChamber)
+                val phoenixEggling = core.game.node.entity.npc.NPC.create(NPCs.LARGE_EGG_8552, Location.create(3567,5230,0))
+                phoenixEggling.init().also {
+                    PhoenixEgglingCutscene(player).start()
+                }
                 return@on true
             }
 
@@ -164,7 +167,7 @@ class PhoenixLairListener : InteractionListener {
 
             openInterface(player, Components.FADE_TO_BLACK_120)
             player.animate(Animation.create(Animations.HUMAN_CRAWL_INTO_CAVE_11042), 1)
-
+            lock(player, 3)
             queueScript(player, 3, QueueStrength.SOFT) {
                 teleport(player, newLocation)
                 if (newLocation == Location.create(3535, 5186, 0)) {
@@ -191,6 +194,7 @@ class PhoenixLairListener : InteractionListener {
             IntType.SCENERY,
             "escape",
         ) { player, _ ->
+            lock(player, 3)
             openInterface(player, Components.FADE_TO_BLACK_120)
             animate(player, Animations.HUMAN_CRAWL_INTO_CAVE_11042)
             runTask(player, 3) {
@@ -218,7 +222,7 @@ class PhoenixLairListener : InteractionListener {
                 val twigs = getSceneryName(node.id).lowercase().replace("tree", "twigs")
                 sendMessage(player, "You harvest some $twigs.")
             } else {
-                sendMessage(player, "You already have ${getItemName(item).lowercase()}.")
+                sendMessage(player, "You already have ${node.name.lowercase()}.")
             }
             return@on true
         }
@@ -249,9 +253,10 @@ class PhoenixLairListener : InteractionListener {
         onUseWith(IntType.SCENERY, Items.TINDERBOX_590, Scenery.PYRE_41908) { player, _, _ ->
             if (getStatLevel(player, Skills.FIREMAKING) < 55) {
                 sendDialogue(player, "You need at least 55 firemaking to light the funeral pyre.")
-                return@onUseWith false
+                return@onUseWith true
             }
             if (getVarbit(player, Vars.VARBIT_QUEST_IN_PYRE_NEED_PROGRESS_5761) >= 5) {
+                lock(player, 3)
                 animate(player, Animations.TINDERBOX_733)
                 FuneralPyreCutscene(player).start()
             }
@@ -273,26 +278,19 @@ class PhoenixLairListener : InteractionListener {
 
         onUseWith(IntType.ITEM, Items.KNIFE_946, *allTwigs) { player, _, with ->
             if (allTwigs.isNotEmpty() && allTwigs.all { hasAnItem(player, it).container == player.inventory }) {
-                lock(player, 1)
+                lock(player, 3)
                 animate(player, Animations.FLETCH_LOGS_4433)
                 queueScript(player, 2, QueueStrength.SOFT) {
                     allTwigs.forEach { removeItem(player, Item(it, 1), Container.INVENTORY) }
                     setVarbit(player, Vars.VARBIT_QUEST_IN_PYRE_NEED_PROGRESS_5761, 5, true)
-                    weavingRibbons.forEach {
-                        addItem(player, it, 1, Container.INVENTORY)
-                    }
-                    sendItemDialogue(
-                        player,
-                        with.id,
-                        "You fetch the ${getItemName(with.asItem().id).lowercase()} into wooden ribbons.",
-                    )
-                    return@queueScript stopExecuting(player)
+                    weavingRibbons.forEach { addItem(player, it, 1, Container.INVENTORY) }
+                    sendItemDialogue(player, with.id, "You fetch the ${with.name.lowercase()} into wooden ribbons.")
+                    stopExecuting(player)
                 }
-            } else {
-                sendMessage(player, "You don't have the required twigs to fletch.")
-                return@onUseWith false
+                return@onUseWith true
             }
-            return@onUseWith true
+            sendMessage(player, "You don't have the required twigs to fletch.")
+            return@onUseWith false
         }
     }
 }

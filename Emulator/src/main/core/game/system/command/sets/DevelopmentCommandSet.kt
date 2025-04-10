@@ -4,6 +4,7 @@ import content.data.RespawnPoint
 import content.data.setRespawnLocation
 import content.global.activity.jobs.JobManager
 import content.region.kandarin.handlers.barbtraining.BarbarianTraining
+import content.region.kandarin.quest.phoenix.handlers.PhoenixEgglingCutscene
 import core.api.*
 import core.api.ui.closeDialogue
 import core.cache.def.impl.NPCDefinition
@@ -158,6 +159,19 @@ class DevelopmentCommandSet : CommandSet(Privilege.ADMIN) {
             playerJobManager.jobOriginalAmount = -1
 
             sendMessage(player, "Job cleared successfully.")
+        }
+
+        /*
+         *
+         */
+
+        define(
+            name = "eggling",
+            privilege = Privilege.ADMIN,
+            usage = "::eggling",
+            description = "In Pyre Need D&D custcene",
+        ) { player, _ ->
+            PhoenixEgglingCutscene(player).start()
         }
 
         /*

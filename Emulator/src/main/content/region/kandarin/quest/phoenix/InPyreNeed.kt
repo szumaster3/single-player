@@ -4,7 +4,6 @@ import content.data.GameAttributes
 import content.region.kandarin.quest.phoenix.handlers.allTwigs
 import core.api.*
 import core.api.item.allInInventory
-import core.api.quest.isQuestComplete
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest
 import core.game.node.entity.skill.Skills
@@ -37,19 +36,19 @@ class InPyreNeed : Quest(Quests.IN_PYRE_NEED, 162, 161, 1, Vars.VARBIT_QUEST_IN_
                 player,
                 "Level 53 Fletching",
                 line++,
-                getStatLevel(player, Skills.FLETCHING) >= 53 || inPyreNeedProgress > 1,
+                getStatLevel(player, Skills.FLETCHING) >= 53,
             )
             line(
                 player,
                 "Level 52 Crafting",
                 line++,
-                getStatLevel(player, Skills.CRAFTING) >= 52 || inPyreNeedProgress > 1,
+                getStatLevel(player, Skills.CRAFTING) >= 52,
             )
             line(
                 player,
                 "Level 55 Firemaking",
                 line++,
-                getStatLevel(player, Skills.FIREMAKING) >= 55 || inPyreNeedProgress > 1,
+                getStatLevel(player, Skills.FIREMAKING) >= 55,
             )
             line++
         }
@@ -75,13 +74,13 @@ class InPyreNeed : Quest(Quests.IN_PYRE_NEED, 162, 161, 1, Vars.VARBIT_QUEST_IN_
                 player,
                 "I could enter the cave and try to figure it out for myself, but",
                 line++,
-                getAttribute(player, GameAttributes.TALK_WITH_PRIEST, 0) >= 3 || stage > 99 || inPyreNeedProgress > 5,
+                getAttribute(player, GameAttributes.TALK_WITH_PRIEST, 0) >= 3 || stage == 100 || inPyreNeedProgress > 5,
             )
             line(
                 player,
                 "I should ask the Priest of Guthix for more information.",
                 line++,
-                getAttribute(player, GameAttributes.TALK_WITH_PRIEST, 0) >= 3 || stage > 99 || inPyreNeedProgress > 5,
+                getAttribute(player, GameAttributes.TALK_WITH_PRIEST, 0) >= 3 || stage == 100 || inPyreNeedProgress > 5,
             )
             line++
         }
@@ -91,65 +90,65 @@ class InPyreNeed : Quest(Quests.IN_PYRE_NEED, 162, 161, 1, Vars.VARBIT_QUEST_IN_
                 player,
                 "I have gathered the !!cinnamon twigs??.",
                 line++,
-                inInventory(player, Items.CINNAMON_TWIGS_14606) || stage > 99 || inPyreNeedProgress > 5,
+                inInventory(player, Items.CINNAMON_TWIGS_14606) || stage == 100 || inPyreNeedProgress > 5,
             )
             line(
                 player,
                 "I have fletched the !!cinnamon twigs?? into !!weaving ribbon??.",
                 line++,
-                inInventory(player, Items.CINNAMON_WEAVING_RIBBON_14611) || stage > 99 || inPyreNeedProgress > 5,
+                inInventory(player, Items.CINNAMON_WEAVING_RIBBON_14611) || stage == 100 || inPyreNeedProgress > 5,
             )
             line++
             line(
                 player,
                 "I have gathered the !!sassafras twigs??.",
                 line++,
-                inInventory(player, Items.SASSAFRAS_TWIGS_14607) || stage > 99 || inPyreNeedProgress > 5,
+                inInventory(player, Items.SASSAFRAS_TWIGS_14607) || stage == 100 || inPyreNeedProgress > 5,
             )
             line(
                 player,
                 "I have fletched the !!sassafras twigs?? into !!weaving ribbon??.",
                 line++,
-                inInventory(player, Items.SASSAFRAS_WEAVING_RIBBON_14612) || stage > 99 || inPyreNeedProgress > 5,
+                inInventory(player, Items.SASSAFRAS_WEAVING_RIBBON_14612) || stage == 100 || inPyreNeedProgress > 5,
             )
             line++
             line(
                 player,
                 "I have gathered the !!ailanthus twigs??.",
                 line++,
-                inInventory(player, Items.AILANTHUS_TWIGS_14608) || stage > 99 || inPyreNeedProgress > 5,
+                inInventory(player, Items.AILANTHUS_TWIGS_14608) || stage == 100 || inPyreNeedProgress > 5,
             )
             line(
                 player,
                 "I have fletched the !!ailanthus twigs into !!weaving ribbon??.",
                 line++,
-                inInventory(player, Items.AILANTHUS_WEAVING_RIBBON_14613) || stage > 99 || inPyreNeedProgress > 5,
+                inInventory(player, Items.AILANTHUS_WEAVING_RIBBON_14613) || stage == 100 || inPyreNeedProgress > 5,
             )
             line++
             line(
                 player,
                 "I have gathered the !!cedar twigs??.",
                 line++,
-                inInventory(player, Items.CEDAR_TWIGS_14609) || stage > 99 || inPyreNeedProgress > 5,
+                inInventory(player, Items.CEDAR_TWIGS_14609) || stage == 100 || inPyreNeedProgress > 5,
             )
             line(
                 player,
                 "I have fletched the !!cedar twigs into !!weaving ribbon??.",
                 line++,
-                inInventory(player, Items.CEDAR_WEAVING_RIBBON_14614) || stage > 99 || inPyreNeedProgress > 5,
+                inInventory(player, Items.CEDAR_WEAVING_RIBBON_14614) || stage == 100 || inPyreNeedProgress > 5,
             )
             line++
             line(
                 player,
                 "I have gathered the !!mastic twigs??.",
                 line++,
-                inInventory(player, Items.MASTIC_TWIGS_14610) || stage > 99 || inPyreNeedProgress > 5,
+                inInventory(player, Items.MASTIC_TWIGS_14610) || stage == 100 || inPyreNeedProgress > 5,
             )
             line(
                 player,
                 "I have fletched the !!mastic twigs?? into !!weaving ribbon??.",
                 line++,
-                inInventory(player, Items.MASTIC_WEAVING_RIBBON_14615) || stage > 99 || inPyreNeedProgress > 5,
+                inInventory(player, Items.MASTIC_WEAVING_RIBBON_14615) || stage == 100 || inPyreNeedProgress > 5,
             )
             line++
         }
@@ -159,19 +158,19 @@ class InPyreNeed : Quest(Quests.IN_PYRE_NEED, 162, 161, 1, Vars.VARBIT_QUEST_IN_
                 player,
                 "I have gathered all the twigs, and made my way to the phoenix's roost.",
                 line++,
-                allInInventory(player, *allTwigs) || stage > 99 || inPyreNeedProgress > 6,
+                allInInventory(player, *allTwigs) || stage == 100 || inPyreNeedProgress > 6,
             )
             line(
                 player,
                 "The phoenix is here. It is gravely wounded. I should look around for",
                 line++,
-                allInInventory(player, *allTwigs) || stage > 99 || inPyreNeedProgress > 6,
+                allInInventory(player, *allTwigs) || stage == 100 || inPyreNeedProgress > 6,
             )
             line(
                 player,
                 "clues as to what to do next.",
                 line++,
-                allInInventory(player, *allTwigs) || stage > 99 || inPyreNeedProgress > 6,
+                allInInventory(player, *allTwigs) || stage == 100 || inPyreNeedProgress > 6,
             )
             line++
         }
@@ -181,25 +180,25 @@ class InPyreNeed : Quest(Quests.IN_PYRE_NEED, 162, 161, 1, Vars.VARBIT_QUEST_IN_
                 player,
                 "I should hurry and fletch all the twigs into weaving ribbon,",
                 line++,
-                inPyreNeedProgress >= 7,
+                inPyreNeedProgress >= 7 || stage == 100,
             )
-            line(player, "construct the funeral pyre and light it.", line++, inPyreNeedProgress >= 7)
+            line(player, "construct the funeral pyre and light it.", line++, inPyreNeedProgress >= 7 || stage == 100)
             line++
         }
 
         if (inPyreNeedProgress >= 7) {
-            line(player, "I have constructed and lit the funeral pyre. The phoenix", line++, inPyreNeedProgress >= 10)
-            line(player, "managed to limp over and throw itself into the fire.", line++, inPyreNeedProgress >= 10)
+            line(player, "I have constructed and lit the funeral pyre. The phoenix", line++, stage == 100)
+            line(player, "managed to limp over and throw itself into the fire.", line++, stage == 100)
             line++
-            line(player, "It burned to ashes, and in a flash of flame was reborn.", line++, inPyreNeedProgress >= 10)
+            line(player, "It burned to ashes, and in a flash of flame was reborn.", line++, stage == 100)
             line++
             line(
                 player,
                 "I should speak to the phoenix and ensure all is okay before",
                 line++,
-                inPyreNeedProgress >= 10,
+                stage == 100,
             )
-            line(player, "returning to the Priest of Guthix.", line++, inPyreNeedProgress >= 10)
+            line(player, "returning to the Priest of Guthix.", line++, stage == 100)
             line++
         }
 
@@ -208,22 +207,22 @@ class InPyreNeed : Quest(Quests.IN_PYRE_NEED, 162, 161, 1, Vars.VARBIT_QUEST_IN_
                 player,
                 "The reborn phoenix spoke to me, thanking me for helping it its",
                 line++,
-                inPyreNeedProgress >= 10,
+                stage == 100,
             )
-            line(player, "time of need.", line++, inPyreNeedProgress >= 10)
+            line(player, "time of need.", line++, stage == 100)
             line(
                 player,
                 "As a reward, the phoenix gave me 5 phoenix quills, and also gave me",
                 line++,
-                inPyreNeedProgress >= 10,
+                stage == 100,
             )
             line(
                 player,
                 "permission to challenge it to combat in its lair, once per day",
                 line++,
-                inPyreNeedProgress >= 10,
+                stage == 100,
             )
-            line(player, "once my combat skills are proven.", line++, inPyreNeedProgress >= 10)
+            line(player, "once my combat skills are proven.", line++, stage == 100)
             line++
         }
 
@@ -232,32 +231,32 @@ class InPyreNeed : Quest(Quests.IN_PYRE_NEED, 162, 161, 1, Vars.VARBIT_QUEST_IN_
                 player,
                 "I should meet the Priest of Guthix at the entrance to the phoenix's lair",
                 line++,
-                isQuestComplete(player, Quests.IN_PYRE_NEED) || inPyreNeedProgress >= 10,
+                stage == 100,
             )
             line(
                 player,
                 "to claim my reward from him, too.",
                 line++,
-                isQuestComplete(player, Quests.IN_PYRE_NEED) || inPyreNeedProgress >= 10,
+                stage == 100,
             )
             line++
             line(
                 player,
                 "I have spoken to the Priest of Guthix, who",
                 line++,
-                isQuestComplete(player, Quests.IN_PYRE_NEED) || inPyreNeedProgress >= 10,
+                stage == 100,
             )
             line(
                 player,
                 "thanked and rewarded me for my help.",
                 line++,
-                isQuestComplete(player, Quests.IN_PYRE_NEED) || inPyreNeedProgress >= 10,
+                stage == 100,
             )
         }
 
         if (stage == 100) {
             line++
-            line(player, "<col=FF0000>QUEST COMPLETE!", line, false)
+            line(player, "<col=FF0000>QUEST COMPLETE!</col>", line, false)
         }
     }
 
