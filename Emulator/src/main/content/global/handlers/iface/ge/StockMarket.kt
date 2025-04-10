@@ -224,6 +224,13 @@ class StockMarket : InterfaceListener {
         }
     }
 
+    /**
+     * Updates the offer's value (price) in the Grand Exchange.
+     *
+     * @param player The player making the offer.
+     * @param offer The current Grand Exchange offer being made.
+     * @param newAmt The new price for the offer.
+     */
     fun updateOfferValue(
         player: Player,
         offer: GrandExchangeOffer,
@@ -233,6 +240,13 @@ class StockMarket : InterfaceListener {
         setVarp(player, 1111, newAmt)
     }
 
+    /**
+     * Updates the amount of an offer in the Grand Exchange.
+     *
+     * @param player The player making the offer.
+     * @param offer The current Grand Exchange offer being made.
+     * @param newAmt The new amount of items being offered.
+     */
     fun updateOfferAmount(
         player: Player,
         offer: GrandExchangeOffer,
@@ -242,6 +256,12 @@ class StockMarket : InterfaceListener {
         setVarp(player, 1110, newAmt)
     }
 
+    /**
+     * Aborts a currently active offer.
+     *
+     * @param player The player requesting the offer cancellation.
+     * @param offer The Grand Exchange offer to be aborted.
+     */
     fun abortOffer(
         player: Player,
         offer: GrandExchangeOffer?,
@@ -280,6 +300,14 @@ class StockMarket : InterfaceListener {
         OfferPlacementError,
     }
 
+    /**
+     * Confirms the details of a Grand Exchange offer and processes the transaction.
+     *
+     * @param player The player confirming the offer.
+     * @param offer The offer being confirmed.
+     * @param index The index of the offer in the Grand Exchange.
+     * @return The result of the offer confirmation.
+     */
     fun confirmOffer(
         player: Player,
         offer: GrandExchangeOffer,
@@ -352,6 +380,11 @@ class StockMarket : InterfaceListener {
     }
 
     companion object {
+        /**
+         * Opens the Grand Exchange interface for the player.
+         *
+         * @param player The player opening the interface.
+         */
         @JvmStatic
         fun openFor(player: Player) {
             if (player.ironmanManager.checkRestriction()) {
@@ -365,6 +398,14 @@ class StockMarket : InterfaceListener {
             openInterface(player, Components.STOCKMARKET_105)
         }
 
+        /**
+         * Updates the varbits for a Grand Exchange offer.
+         *
+         * @param player The player making the offer.
+         * @param offer The Grand Exchange offer being updated.
+         * @param index The index of the offer.
+         * @param sale Whether the offer is a sale or not (optional).
+         */
         @JvmStatic
         fun updateVarbits(
             player: Player,
@@ -396,6 +437,14 @@ class StockMarket : InterfaceListener {
             }
         }
 
+        /**
+         * Withdraws items from a Grand Exchange offer based on the given operation.
+         *
+         * @param player The player requesting the withdrawal.
+         * @param offer The Grand Exchange offer being processed.
+         * @param index The index of the withdrawal.
+         * @param op The operation type (e.g., withdraw notes or items).
+         */
         @JvmStatic
         fun withdraw(
             player: Player,
@@ -454,7 +503,9 @@ class StockMarket : InterfaceListener {
         }
 
         /**
-         * Returns to the main interface.
+         * Returns the player to the main Grand Exchange interface.
+         *
+         * @param player The player returning to the main interface.
          */
         fun toMainInterface(player: Player) {
             PacketRepository.send(Config::class.java, ConfigContext(player, 1112, -1))
