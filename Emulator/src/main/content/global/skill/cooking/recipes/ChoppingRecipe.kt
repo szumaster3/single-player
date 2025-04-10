@@ -25,11 +25,11 @@ class ChoppingRecipe : InteractionListener {
          * Ticks: 4 (2.4 seconds)
          */
 
-        onUseWith(IntType.ITEM, Items.KNIFE_946, Items.CALQUAT_FRUIT_5980, Items.CHOCOLATE_BAR_1973) { player, _, items ->
+        onUseWith(IntType.ITEM, KNIFE, *cuttingIngredients) { player, _, items ->
             val (base, product, animation) = when (items.id) {
-                Items.CALQUAT_FRUIT_5980 -> Triple(Items.CALQUAT_FRUIT_5980, Items.CALQUAT_KEG_5769, Animations.CARVE_CALQUAT_KEG_2290)
-                Items.CHOCOLATE_BAR_1973 -> Triple(Items.CHOCOLATE_BAR_1973, Items.CHOCOLATE_DUST_1975, Animations.CUTTING_CHOCOLATE_BAR_1989)
-                else -> return@onUseWith false
+                CALQUAT_FRUIT -> Triple(CALQUAT_FRUIT, CALQUAT_KEG, CALQUAT_CARVED_ANIMATION)
+                CHOCOLATE_BAR -> Triple(CALQUAT_FRUIT, CHOCOLATE_DUST, CHOCOLATE_CUT_ANIMATION)
+                else -> return@onUseWith true
             }
 
             player.pulseManager.run(object : Pulse(1) {
@@ -64,10 +64,10 @@ class ChoppingRecipe : InteractionListener {
          * Ticks: 2 (1.2 seconds)
          */
 
-        onUseWith(IntType.ITEM, Items.BOWL_1923, Items.TUNA_361, Items.ONION_1957, Items.GARLIC_1550, Items.TOMATO_1982, Items.UGTHANKI_MEAT_1861, Items.MUSHROOM_6004, Items.COOKED_MEAT_2142) { player, used, ingredients ->
+        onUseWith(IntType.ITEM, EMPTY_BOWL, *choppingIngredients) { player, used, ingredients ->
             if (!inInventory(player, Items.KNIFE_946)) {
                 sendMessage(player, "You need a knife to slice up the ${ingredients.name.lowercase()}.")
-                return@onUseWith false
+                return@onUseWith true
             }
 
             val (product, message) = when (ingredients.id) {
@@ -78,7 +78,7 @@ class ChoppingRecipe : InteractionListener {
                 Items.UGTHANKI_MEAT_1861 -> Items.CHOPPED_UGTHANKI_1873 to "You chop the meat into the bowl."
                 Items.MUSHROOM_6004 -> Items.SLICED_MUSHROOMS_7080 to "You slice the mushrooms."
                 Items.COOKED_MEAT_2142 -> Items.MINCED_MEAT_7070 to "You chop the meat into the bowl."
-                else -> return@onUseWith false
+                else -> return@onUseWith true
             }
 
             player.pulseManager.run(object : Pulse(1) {
@@ -105,7 +105,7 @@ class ChoppingRecipe : InteractionListener {
          * Product: Uncooked Egg.
          */
 
-        onUseWith(IntType.ITEM, Items.BOWL_1923, Items.EGG_1944) { player, used, with ->
+        onUseWith(IntType.ITEM, KNIFE, EGG) { player, used, with ->
             if (removeItem(player, Item(used.id, 1), Container.INVENTORY) && removeItem(player, Item(with.id, 1), Container.INVENTORY)) {
                 addItem(player, Items.UNCOOKED_EGG_7076)
                 sendMessage(player, "You prepare an uncooked egg.")
@@ -117,7 +117,7 @@ class ChoppingRecipe : InteractionListener {
          * Handles creating spicy sauce from a chopped garlic and gnome spice.
          */
 
-        onUseWith(IntType.ITEM, Items.CHOPPED_GARLIC_7074, Items.GNOME_SPICE_2169) { player, used, with ->
+        onUseWith(IntType.ITEM, CHOPPED_GARLIC, GNOME_SPICE) { player, used, with ->
             if (!hasLevelDyn(player, Skills.COOKING, 9)) {
                 sendMessage(player, "You need a Cooking level of 9 to make that.")
                 return@onUseWith true
@@ -127,7 +127,7 @@ class ChoppingRecipe : InteractionListener {
                 if (removeItem(player, Item(used.id, 1), Container.INVENTORY) &&
                     removeItem(player, Item(with.id, 1), Container.INVENTORY)
                 ) {
-                    addItem(player, Items.SPICY_SAUCE_7072, 1, Container.INVENTORY)
+                    addItem(player, SPICY_SAUCE, 1, Container.INVENTORY)
                     rewardXP(player, Skills.COOKING, 25.0)
                     sendMessage(player, "You mix the ingredients to make spicy sauce.")
                     return true
@@ -143,7 +143,7 @@ class ChoppingRecipe : InteractionListener {
             }
 
             sendSkillDialogue(player) {
-                withItems(Items.SPICY_SAUCE_7072)
+                withItems(SPICY_SAUCE)
                 create { _, amount ->
                     runTask(player, 2, amount) {
                         if (amount > 0) makeDish()
@@ -156,5 +156,24 @@ class ChoppingRecipe : InteractionListener {
 
             return@onUseWith true
         }
+    }
+
+    companion object {
+        private const val CALQUAT_FRUIT = Items.CALQUAT_FRUIT_5980
+        private const val CALQUAT_KEG = Items.CALQUAT_KEG_5769
+        private const val CALQUAT_CARVED_ANIMATION = Animations.CARVE_CALQUAT_KEG_2290
+
+        private const val CHOCOLATE_BAR = Items.CHOCOLATE_BAR_1973
+        private const val CHOCOLATE_DUST = Items.CHOCOLATE_DUST_1975
+        private const val CHOCOLATE_CUT_ANIMATION = Animations.CUTTING_CHOCOLATE_BAR_1989
+
+        private const val CHOPPED_GARLIC = Items.CHOPPED_GARLIC_7074
+        private const val GNOME_SPICE = Items.GNOME_SPICE_2169
+        private const val SPICY_SAUCE = Items.SPICY_SAUCE_7072
+        private const val EMPTY_BOWL = Items.BOWL_1923
+        private const val EGG = Items.EGG_1944
+        private const val KNIFE = Items.KNIFE_946
+        private val choppingIngredients = intArrayOf(Items.TUNA_361, Items.ONION_1957, Items.GARLIC_1550, Items.TOMATO_1982, Items.UGTHANKI_MEAT_1861, Items.MUSHROOM_6004, Items.COOKED_MEAT_2142)
+        private val cuttingIngredients = intArrayOf(Items.CALQUAT_FRUIT_5980, Items.CHOCOLATE_BAR_1973)
     }
 }

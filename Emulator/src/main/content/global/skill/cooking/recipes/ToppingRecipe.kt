@@ -24,30 +24,30 @@ class ToppingRecipe : InteractionListener {
          * Ticks: 2 (1.2 seconds)
          */
 
-        onUseWith(IntType.ITEM, Items.SPICY_SAUCE_7072, Items.MINCED_MEAT_7070, Items.COOKED_MEAT_2142) { player, used, ingredient ->
+        onUseWith(IntType.ITEM, SPICY_SAUCE, *spicyIngredients) { player, used, ingredient ->
             if (!hasLevelDyn(player, Skills.COOKING, 9)) {
                 sendMessage(player, "You need a Cooking level of 9 to make that.")
                 return@onUseWith true
             }
 
-            if (ingredient.id == Items.MINCED_MEAT_7070 && freeSlots(player) < 1) {
+            if (ingredient.id == MINCED_MEAT && freeSlots(player) < 1) {
                 sendMessage(player, "Not enough space in your inventory.")
-                return@onUseWith false
+                return@onUseWith true
             }
 
             fun makeDish(): Boolean {
                 if (removeItem(player, Item(used.id, 1), Container.INVENTORY) &&
                     removeItem(player, Item(ingredient.id, 1), Container.INVENTORY)
                 ) {
-                    if (ingredient.id == Items.MINCED_MEAT_7070) {
-                        addItem(player, Items.BOWL_1923, 1)
+                    if (ingredient.id == MINCED_MEAT) {
+                        addItem(player, EMPTY_BOWL, 1)
                     }
                     rewardXP(player, Skills.COOKING, 25.0)
                     sendMessage(
                         player,
-                        if (ingredient.id == Items.MINCED_MEAT_7070) "You mix the ingredients to make the topping." else "You put the cut up meat into the bowl."
+                        if (ingredient.id == MINCED_MEAT) "You mix the ingredients to make the topping." else "You put the cut up meat into the bowl."
                     )
-                    addItem(player, Items.CHILLI_CON_CARNE_7062, 1, Container.INVENTORY)
+                    addItem(player, CHILLI_CON_CARNE, 1, Container.INVENTORY)
                     return true
                 }
                 return false
@@ -61,7 +61,7 @@ class ToppingRecipe : InteractionListener {
             }
 
             sendSkillDialogue(player) {
-                withItems(Items.CHILLI_CON_CARNE_7062)
+                withItems(CHILLI_CON_CARNE)
                 create { _, amount ->
                     runTask(player, 2, amount) {
                         if (amount > 0) makeDish()
@@ -85,7 +85,7 @@ class ToppingRecipe : InteractionListener {
          * Ticks: 2 (1.2 seconds)
          */
 
-        onUseWith(IntType.ITEM, Items.COOKED_SWEETCORN_5988, Items.CHOPPED_TUNA_7086) { player, used, with ->
+        onUseWith(IntType.ITEM, COOKED_SWEETCORN, CHOPPED_TUNA) { player, used, with ->
             if (!hasLevelDyn(player, Skills.COOKING, 67)) {
                 sendMessage(player, "You need a Cooking level of 67 to make that.")
                 return@onUseWith true
@@ -96,7 +96,7 @@ class ToppingRecipe : InteractionListener {
                     removeItem(player, Item(with.id, 1), Container.INVENTORY)
                 ) {
                     rewardXP(player, Skills.COOKING, 204.0)
-                    addItem(player, Items.TUNA_AND_CORN_7068, 1, Container.INVENTORY)
+                    addItem(player, TUNA_AND_CORN, 1, Container.INVENTORY)
                     sendMessage(player, "You mix the ingredients to make the topping.")
                     return true
                 }
@@ -111,7 +111,7 @@ class ToppingRecipe : InteractionListener {
             }
 
             sendSkillDialogue(player) {
-                withItems(Items.TUNA_AND_CORN_7068)
+                withItems(TUNA_AND_CORN)
                 create { _, amount ->
                     runTask(player, 2, amount) {
                         if (amount > 0) makeDish()
@@ -134,7 +134,7 @@ class ToppingRecipe : InteractionListener {
          * Ticks: 2 (1.2 seconds)
          */
 
-        onUseWith(IntType.ITEM, Items.SCRAMBLED_EGG_7078, Items.TOMATO_1982) { player, used, with ->
+        onUseWith(IntType.ITEM, SCRAMBLED_EGG, TOMATO) { player, used, with ->
             if (!hasLevelDyn(player, Skills.COOKING, 23)) {
                 sendMessage(player, "You need a Cooking level of 23 to make that.")
                 return@onUseWith true
@@ -144,7 +144,7 @@ class ToppingRecipe : InteractionListener {
                 if (removeItem(player, Item(used.id, 1), Container.INVENTORY) &&
                     removeItem(player, Item(with.id, 1), Container.INVENTORY)
                 ) {
-                    addItem(player, Items.EGG_AND_TOMATO_7064, 1, Container.INVENTORY)
+                    addItem(player, EGG_AND_TOMATO, 1, Container.INVENTORY)
                     rewardXP(player, Skills.COOKING, 50.0)
                     sendMessage(player, "You mix the scrambled egg with the tomato.")
                     return true
@@ -160,7 +160,7 @@ class ToppingRecipe : InteractionListener {
             }
 
             sendSkillDialogue(player) {
-                withItems(Items.EGG_AND_TOMATO_7064)
+                withItems(EGG_AND_TOMATO)
                 create { _, amount ->
                     runTask(player, 2, amount) {
                         if (amount > 0) makeDish()
@@ -183,7 +183,7 @@ class ToppingRecipe : InteractionListener {
          * Ticks: 1 (0.6 seconds)
          */
 
-        onUseWith(IntType.ITEM, Items.RAW_OOMLIE_2337, Items.PALM_LEAF_2339) { player, used, with ->
+        onUseWith(IntType.ITEM, RAW_OOMLIE, PALM_LEAF) { player, used, with ->
             if (!hasLevelDyn(player, Skills.COOKING, 50)) {
                 sendMessage(player, "You need a Cooking level of 50 to make that.")
                 return@onUseWith true
@@ -193,7 +193,7 @@ class ToppingRecipe : InteractionListener {
                 if (removeItem(player, Item(used.id, 1), Container.INVENTORY) &&
                     removeItem(player, Item(with.id, 1), Container.INVENTORY)
                 ) {
-                    addItem(player, Items.WRAPPED_OOMLIE_2341, 1, Container.INVENTORY)
+                    addItem(player, WRAPPED_OOMLIE, 1, Container.INVENTORY)
                     rewardXP(player, Skills.COOKING, 10.0)
                     sendMessage(player, "You wrap the raw oomlie in the palm leaf.")
                     return true
@@ -209,7 +209,7 @@ class ToppingRecipe : InteractionListener {
             }
 
             sendSkillDialogue(player) {
-                withItems(Items.WRAPPED_OOMLIE_2341)
+                withItems(WRAPPED_OOMLIE)
                 create { _, amount ->
                     runTask(player, 2, amount) {
                         if (amount > 0) makeDish()
@@ -227,7 +227,7 @@ class ToppingRecipe : InteractionListener {
          * Handles creating Mushroom & onion.
          */
 
-        onUseWith(IntType.ITEM, Items.FRIED_MUSHROOMS_7082, Items.FRIED_ONIONS_7084) { player, used, with ->
+        onUseWith(IntType.ITEM, FRIED_MUSHROOMS, FRIED_ONIONS) { player, used, with ->
             if (!hasLevelDyn(player, Skills.COOKING, 57)) {
                 sendMessage(player, "You need a Cooking level of 57 to make that.")
                 return@onUseWith true
@@ -237,8 +237,8 @@ class ToppingRecipe : InteractionListener {
                 if (removeItem(player, Item(used.id, 1), Container.INVENTORY) &&
                     removeItem(player, Item(with.id, 1), Container.INVENTORY)
                 ) {
-                    addItem(player, Items.BOWL_1923, 1, Container.INVENTORY)
-                    addItem(player, Items.MUSHROOM_AND_ONION_7066, 1, Container.INVENTORY)
+                    addItem(player, EMPTY_BOWL, 1, Container.INVENTORY)
+                    addItem(player, MUSHROOM_AND_ONION, 1, Container.INVENTORY)
                     rewardXP(player, Skills.COOKING, 120.0)
                     sendMessage(player, "You mix the fried onions and mushrooms.")
                     return true
@@ -254,7 +254,7 @@ class ToppingRecipe : InteractionListener {
             }
 
             sendSkillDialogue(player) {
-                withItems(Items.MUSHROOM_AND_ONION_7066)
+                withItems(MUSHROOM_AND_ONION)
                 create { _, amount ->
                     runTask(player, 2, amount) {
                         if (amount > 0) makeDish()
@@ -268,5 +268,30 @@ class ToppingRecipe : InteractionListener {
             return@onUseWith true
         }
 
+    }
+
+    companion object {
+        private const val EMPTY_BOWL = Items.BOWL_1923
+        private const val FRIED_MUSHROOMS = Items.FRIED_MUSHROOMS_7082
+        private const val FRIED_ONIONS = Items.FRIED_ONIONS_7084
+        private const val MUSHROOM_AND_ONION = Items.MUSHROOM_AND_ONION_7066
+        private const val WRAPPED_OOMLIE = Items.WRAPPED_OOMLIE_2341
+        private const val RAW_OOMLIE = Items.RAW_OOMLIE_2337
+        private const val PALM_LEAF = Items.PALM_LEAF_2339
+
+        private const val EGG_AND_TOMATO = Items.EGG_AND_TOMATO_7064
+        private const val SCRAMBLED_EGG = Items.SCRAMBLED_EGG_7078
+        private const val TOMATO = Items.TOMATO_1982
+
+        private const val COOKED_SWEETCORN = Items.COOKED_SWEETCORN_5988
+        private const val CHOPPED_TUNA = Items.CHOPPED_TUNA_7086
+        private const val TUNA_AND_CORN = Items.TUNA_AND_CORN_7068
+
+        private const val SPICY_SAUCE = Items.SPICY_SAUCE_7072
+        private const val MINCED_MEAT = Items.MINCED_MEAT_7070
+        private const val COOKED_MEAT = Items.COOKED_MEAT_2142
+        private const val CHILLI_CON_CARNE = Items.CHILLI_CON_CARNE_7062
+
+        private val spicyIngredients = intArrayOf(MINCED_MEAT, COOKED_MEAT)
     }
 }

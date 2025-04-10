@@ -11,21 +11,6 @@ import kotlin.math.min
 
 class PieRecipe : InteractionListener {
 
-    private val firstPartPie = intArrayOf(
-        Items.PART_MUD_PIE_7164,
-        Items.PART_GARDEN_PIE_7172,
-        Items.PART_FISH_PIE_7182,
-        Items.PART_ADMIRAL_PIE_7192,
-        Items.PART_WILD_PIE_7202,
-        Items.PART_SUMMER_PIE_7212
-    )
-    private val secondPartPie = intArrayOf(
-        Items.PART_MUD_PIE_7166,
-        Items.PART_GARDEN_PIE_7174,
-        Items.PART_WILD_PIE_7204,
-        Items.PART_SUMMER_PIE_7214
-    )
-
     override fun defineListeners() {
 
         /*
@@ -58,7 +43,7 @@ class PieRecipe : InteractionListener {
          * Ticks: 2 (1.2 seconds)
          */
 
-        onUseWith(IntType.ITEM, Items.PIE_SHELL_2315, Items.REDBERRIES_1951, Items.COOKED_MEAT_2142, Items.COOKED_CHICKEN_2140, Items.COMPOST_6032, Items.COOKING_APPLE_1955, Items.TOMATO_1982, Items.TROUT_333, Items.SALMON_329, Items.RAW_BEAR_MEAT_2136, Items.STRAWBERRY_5504) { player, used, with ->
+        onUseWith(IntType.ITEM, Items.PIE_SHELL_2315, *firstPieIngredients) { player, used, with ->
             val requirements = when (with.id) {
                 Items.REDBERRIES_1951 -> 10
                 Items.COOKED_MEAT_2142, Items.COOKED_CHICKEN_2140 -> 20
@@ -87,7 +72,7 @@ class PieRecipe : InteractionListener {
                 Items.SALMON_329 -> Items.PART_ADMIRAL_PIE_7192
                 Items.RAW_BEAR_MEAT_2136 -> Items.PART_WILD_PIE_7202
                 Items.STRAWBERRY_5504 -> Items.PART_SUMMER_PIE_7212
-                else -> return@onUseWith false
+                else -> return@onUseWith true
             }
 
             val ingredient = with.name.lowercase()
@@ -138,7 +123,7 @@ class PieRecipe : InteractionListener {
          * Ticks: 2 (1.2 seconds)
          */
 
-        onUseWith(IntType.ITEM, firstPartPie, Items.BUCKET_OF_WATER_1929, Items.ONION_1957, Items.COD_339, Items.TUNA_361, Items.RAW_CHOMPY_2876, Items.WATERMELON_5982) { player, used, with ->
+        onUseWith(IntType.ITEM, firstPartPies, *secondPieIngredients) { player, used, with ->
             val requirements = when (used.id) {
                 Items.PART_MUD_PIE_7164 -> 29
                 Items.PART_GARDEN_PIE_7172 -> 34
@@ -216,7 +201,7 @@ class PieRecipe : InteractionListener {
          * Ticks: 2 (1.2 seconds)
          */
 
-        onUseWith(IntType.ITEM, secondPartPie, Items.CLAY_434, Items.CABBAGE_1965 or Items.CABBAGE_1967, Items.RAW_RABBIT_3226, Items.COOKING_APPLE_1955) { player, used, with ->
+        onUseWith(IntType.ITEM, secondPartPie, *rawPieIngredients) { player, used, with ->
             val requirements = when (used.id) {
                 Items.PART_MUD_PIE_7166 -> 29
                 Items.PART_GARDEN_PIE_7174 -> 34
@@ -354,4 +339,11 @@ class PieRecipe : InteractionListener {
         }
     }
 
+    companion object {
+        private val firstPieIngredients = intArrayOf(Items.REDBERRIES_1951, Items.COOKED_MEAT_2142, Items.COOKED_CHICKEN_2140, Items.COMPOST_6032, Items.COOKING_APPLE_1955, Items.TOMATO_1982, Items.TROUT_333, Items.SALMON_329, Items.RAW_BEAR_MEAT_2136, Items.STRAWBERRY_5504)
+        private val firstPartPies = intArrayOf(Items.PART_MUD_PIE_7164, Items.PART_GARDEN_PIE_7172, Items.PART_FISH_PIE_7182, Items.PART_ADMIRAL_PIE_7192, Items.PART_WILD_PIE_7202, Items.PART_SUMMER_PIE_7212)
+        private val secondPieIngredients = intArrayOf(Items.BUCKET_OF_WATER_1929, Items.ONION_1957, Items.COD_339, Items.TUNA_361, Items.RAW_CHOMPY_2876, Items.WATERMELON_5982)
+        private val secondPartPie = intArrayOf(Items.PART_MUD_PIE_7166, Items.PART_GARDEN_PIE_7174, Items.PART_WILD_PIE_7204, Items.PART_SUMMER_PIE_7214)
+        private val rawPieIngredients = intArrayOf(Items.CLAY_434, Items.CABBAGE_1965 or Items.CABBAGE_1967, Items.RAW_RABBIT_3226, Items.COOKING_APPLE_1955)
+    }
 }

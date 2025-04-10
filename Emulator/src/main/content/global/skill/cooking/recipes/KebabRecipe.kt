@@ -17,9 +17,9 @@ class KebabRecipe : InteractionListener {
          * Handles creating a super kebab.
          */
 
-        onUseWith(IntType.ITEM, Items.RED_HOT_SAUCE_4610, Items.KEBAB_1971, Items.UGTHANKI_KEBAB_1883, Items.UGTHANKI_KEBAB_1885) { player, used, with ->
+        onUseWith(IntType.ITEM, RED_HOT_SAUCE, *kebabIDs) { player, used, with ->
             if (removeItem(player, Item(used.id, 1), Container.INVENTORY) && removeItem(player, Item(with.id, 1), Container.INVENTORY)) {
-                addItemOrDrop(player, Items.SUPER_KEBAB_4608)
+                addItemOrDrop(player, SUPER_KEBAB)
             }
             return@onUseWith true
         }
@@ -29,7 +29,7 @@ class KebabRecipe : InteractionListener {
          * Ticks: 2 (1.2 seconds)
          */
 
-        onUseWith(IntType.ITEM, Items.PITTA_BREAD_1865, Items.KEBAB_MIX_1881) { player, used, with ->
+        onUseWith(IntType.ITEM, PITTA_BREAD, KEBAB_MIX) { player, used, with ->
             if (!hasLevelDyn(player, Skills.COOKING, 40)) {
                 sendMessage(player, "You need a Cooking level of 40 to make that.")
                 return@onUseWith true
@@ -39,8 +39,8 @@ class KebabRecipe : InteractionListener {
                 if (removeItem(player, Item(used.id, 1), Container.INVENTORY) &&
                     removeItem(player, Item(with.id, 1), Container.INVENTORY)
                 ) {
-                    addItem(player, Items.BOWL_1923, 1, Container.INVENTORY)
-                    addItem(player, Items.UGTHANKI_KEBAB_1885, 1, Container.INVENTORY)
+                    addItem(player, BOWL, 1, Container.INVENTORY)
+                    addItem(player, UGTHANKI_KEBAB, 1, Container.INVENTORY)
                     rewardXP(player, Skills.COOKING, 40.0)
                     sendMessage(player, "You mix the ingredients to make ugthanki kebab.")
                     return true
@@ -56,7 +56,7 @@ class KebabRecipe : InteractionListener {
             }
 
             sendSkillDialogue(player) {
-                withItems(Items.UGTHANKI_KEBAB_1885)
+                withItems(UGTHANKI_KEBAB)
                 create { _, amount ->
                     runTask(player, 2, amount) {
                         if (amount > 0) makeKebab()
@@ -74,17 +74,17 @@ class KebabRecipe : InteractionListener {
          * Handles creating Onion & tomato.
          */
 
-        onUseWith(IntType.ITEM, Items.CHOPPED_ONION_1871, Items.TOMATO_1982) { player, used, with ->
-            if (!inInventory(player, Items.KNIFE_946)) {
+        onUseWith(IntType.ITEM, CHOPPED_ONION, TOMATO) { player, used, with ->
+            if (!inInventory(player, KNIFE)) {
                 sendMessage(player, "You need a knife to slice up the tomato.")
-                return@onUseWith false
+                return@onUseWith true
             }
 
             fun makeDish(): Boolean {
                 if (removeItem(player, Item(used.id, 1), Container.INVENTORY) &&
                     removeItem(player, Item(with.id, 1), Container.INVENTORY)
                 ) {
-                    addItem(player, Items.ONION_AND_TOMATO_1875, 1, Container.INVENTORY)
+                    addItem(player, ONION_AND_TOMATO, 1, Container.INVENTORY)
                     rewardXP(player, Skills.COOKING, 1.0)
                     sendMessage(player, "You added the tomato into the chopped onion.")
                     return true
@@ -100,7 +100,7 @@ class KebabRecipe : InteractionListener {
             }
 
             sendSkillDialogue(player) {
-                withItems(Items.ONION_AND_TOMATO_1875)
+                withItems(ONION_AND_TOMATO)
                 create { _, amount ->
                     runTask(player, 2, amount) {
                         if (amount > 0) makeDish()
@@ -119,17 +119,17 @@ class KebabRecipe : InteractionListener {
          * Ticks: 2 (1.2 seconds)
          */
 
-        onUseWith(IntType.ITEM, Items.ONION_AND_TOMATO_1875, Items.UGTHANKI_MEAT_1861) { player, used, with ->
-            if (!inInventory(player, Items.KNIFE_946)) {
+        onUseWith(IntType.ITEM, ONION_AND_TOMATO, UGTHANKI_MEAT) { player, used, with ->
+            if (!inInventory(player, KNIFE)) {
                 sendMessage(player, "You need a knife to slice up the meat.")
-                return@onUseWith false
+                return@onUseWith true
             }
 
             fun mixMeat(): Boolean {
                 if (removeItem(player, Item(used.id, 1), Container.INVENTORY) &&
                     removeItem(player, Item(with.id, 1), Container.INVENTORY)
                 ) {
-                    addItem(player, Items.KEBAB_MIX_1881, 1, Container.INVENTORY)
+                    addItem(player, KEBAB_MIX, 1, Container.INVENTORY)
                     rewardXP(player, Skills.COOKING, 1.0)
                     sendMessage(player, "You mix the meat with onion and tomato.")
                     return true
@@ -145,7 +145,7 @@ class KebabRecipe : InteractionListener {
             }
 
             sendSkillDialogue(player) {
-                withItems(Items.KEBAB_MIX_1881)
+                withItems(KEBAB_MIX)
                 create { _, amount ->
                     runTask(player, 2, amount) {
                         if (amount > 0) mixMeat()
@@ -165,17 +165,23 @@ class KebabRecipe : InteractionListener {
          * Ticks: 2 (1.2 seconds)
          */
 
-        onUseWith(IntType.ITEM, Items.UGTHANKI_MEAT_1861, Items.ONION_1957, Items.TOMATO_1982) { player, used, with ->
-            val product = if(with.id == Items.ONION_1957) Items.UGTHANKI_AND_ONION_1877 else Items.UGTHANKI_AND_TOMATO_1879
+        onUseWith(IntType.ITEM, UGTHANKI_MEAT, *ugthankiIngredients) { player, used, with ->
+            val product = if(with.id == ONION) UGTHANKI_AND_ONION else UGTHANKI_AND_TOMATO
 
-            if (!inInventory(player, Items.KNIFE_946)) {
+            if (!inInventory(player, KNIFE)) {
                 sendMessage(player, "You need a knife to slice up the ${with.name.lowercase()}.")
-                return@onUseWith false
+                return@onUseWith true
+            }
+
+            if (!inInventory(player, Items.BOWL_1923)) {
+                sendMessage(player, "You need a bowl to slice up the ${with.name.lowercase()}.")
+                return@onUseWith true
             }
 
             fun makeDish(): Boolean {
                 if (removeItem(player, Item(used.id, 1), Container.INVENTORY) &&
-                    removeItem(player, Item(with.id, 1), Container.INVENTORY)
+                    removeItem(player, Item(with.id, 1), Container.INVENTORY) &&
+                    removeItem(player, Item(Items.BOWL_1923, 1), Container.INVENTORY)
                 ) {
                     addItem(player, product, 1, Container.INVENTORY)
                     rewardXP(player, Skills.COOKING, 1.0)
@@ -206,5 +212,24 @@ class KebabRecipe : InteractionListener {
 
             return@onUseWith true
         }
+    }
+
+    companion object {
+        private const val UGTHANKI_MEAT = Items.UGTHANKI_MEAT_1861
+        private const val CHOPPED_ONION = Items.CHOPPED_ONION_1871
+        private const val TOMATO = Items.TOMATO_1982
+        private const val KNIFE = Items.KNIFE_946
+        private const val ONION = Items.ONION_1957
+        private const val ONION_AND_TOMATO = Items.ONION_AND_TOMATO_1875
+        private const val PITTA_BREAD = Items.PITTA_BREAD_1865
+        private const val KEBAB_MIX = Items.KEBAB_MIX_1881
+        private const val UGTHANKI_KEBAB = Items.UGTHANKI_KEBAB_1885
+        private const val UGTHANKI_AND_ONION = Items.UGTHANKI_AND_ONION_1877
+        private const val UGTHANKI_AND_TOMATO = Items.UGTHANKI_AND_TOMATO_1879
+        private const val BOWL = Items.BOWL_1923
+        private const val RED_HOT_SAUCE = Items.RED_HOT_SAUCE_4610
+        private const val SUPER_KEBAB = Items.SUPER_KEBAB_4608
+        private val kebabIDs = intArrayOf(Items.KEBAB_1971, Items.UGTHANKI_KEBAB_1883, Items.UGTHANKI_KEBAB_1885)
+        private val ugthankiIngredients = intArrayOf(Items.ONION_1957, Items.TOMATO_1982)
     }
 }

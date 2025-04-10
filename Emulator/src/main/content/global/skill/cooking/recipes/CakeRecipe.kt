@@ -25,31 +25,31 @@ class CakeRecipe : InteractionListener {
          * Ticks: 2 (1.2 seconds)
          */
 
-        onUseWith(IntType.ITEM, Items.CAKE_TIN_1887, Items.POT_OF_FLOUR_1933, Items.BUCKET_OF_MILK_1927, Items.EGG_1944) { player, used, with ->
+        onUseWith(IntType.ITEM, CAKE_TIN, *cakeIngredients) { player, used, with ->
             if (!hasLevelDyn(player, Skills.COOKING, 40)) {
                 sendMessage(player, "You need a Cooking level of 40 to make that.")
                 return@onUseWith true
             }
 
-            if (anyInInventory(player, Items.POT_OF_FLOUR_1933, Items.BUCKET_OF_MILK_1927, Items.EGG_1944) && !allInInventory(player, Items.POT_OF_FLOUR_1933, Items.BUCKET_OF_MILK_1927, Items.EGG_1944)) {
+            if (anyInInventory(player, *cakeIngredients) && !allInInventory(player, *cakeIngredients)) {
                 sendMessage(player, "You don't have the required items to make a cake.")
-                return@onUseWith false
+                return@onUseWith true
             }
 
             sendSkillDialogue(player) {
-                withItems(Items.UNCOOKED_CAKE_1889)
+                withItems(UNCOOKED_CAKE)
                 create { _, amount ->
                     runTask(player, 2, amount) {
                         if (amount > 0) return@runTask
-                        if (player.inventory.remove(Item(Items.POT_OF_FLOUR_1933, 1)) &&
-                            player.inventory.remove(Item(Items.BUCKET_OF_MILK_1927, 1)) &&
-                            player.inventory.remove(Item(Items.EGG_1944, 1)) &&
-                            player.inventory.remove(Item(Items.CAKE_TIN_1887, 1))
+                        if (player.inventory.remove(Item(POT_OF_FLOUR, 1)) &&
+                            player.inventory.remove(Item(BUCKET_OF_MILK, 1)) &&
+                            player.inventory.remove(Item(EGG, 1)) &&
+                            player.inventory.remove(Item(CAKE_TIN, 1))
                         ) {
 
-                            addItem(player, Items.UNCOOKED_CAKE_1889, 1, Container.INVENTORY)
-                            addItem(player, Items.BUCKET_1925, 1, Container.INVENTORY)
-                            addItem(player, Items.EMPTY_POT_1931, 1, Container.INVENTORY)
+                            addItem(player, UNCOOKED_CAKE, 1, Container.INVENTORY)
+                            addItem(player, EMPTY_BUCKET, 1, Container.INVENTORY)
+                            addItem(player, EMPTY_POT, 1, Container.INVENTORY)
 
                             sendMessage(player, "You mix the milk, flour, and egg together to make a raw cake mix.")
                         }
@@ -72,18 +72,33 @@ class CakeRecipe : InteractionListener {
          *  - XP Gained: 30.0 Cooking XP
          */
 
-        onUseWith(IntType.ITEM, Items.CAKE_1891, Items.CHOCOLATE_BAR_1973, Items.CHOCOLATE_DUST_1975) { player, used, with ->
+        onUseWith(IntType.ITEM, CAKE, *chocolateIngredients) { player, used, with ->
             if (!hasLevelDyn(player, Skills.COOKING, 50)) {
                 sendMessage(player, "You need a Cooking level of 50 to make that.")
                 return@onUseWith true
             }
 
             if(removeItem(player, Item(used.id, 1)) && removeItem(player, Item(with.id, 1))) {
-                addItem(player, Items.CHOCOLATE_CAKE_1897, 1, Container.INVENTORY)
+                addItem(player, CHOCOLATE_CAKE, 1, Container.INVENTORY)
                 rewardXP(player, Skills.COOKING, 30.0)
                 sendMessage(player, "You add chocolate to the cake.")
             }
             return@onUseWith true
         }
+    }
+
+    companion object {
+        private const val POT_OF_FLOUR = Items.POT_OF_FLOUR_1933
+        private const val EGG = Items.EGG_1944
+        private const val BUCKET_OF_MILK = Items.BUCKET_OF_MILK_1927
+        private const val EMPTY_BUCKET = Items.BUCKET_1925
+        private const val EMPTY_POT = Items.EMPTY_POT_1931
+        private const val UNCOOKED_CAKE = Items.UNCOOKED_CAKE_1889
+        private const val CAKE_TIN = Items.CAKE_TIN_1887
+        private const val CAKE = Items.CAKE_1891
+        private const val CHOCOLATE_CAKE = Items.CHOCOLATE_CAKE_1897
+        private val chocolateIngredients = intArrayOf(Items.CHOCOLATE_BAR_1973, Items.CHOCOLATE_DUST_1975)
+        private val cakeIngredients = intArrayOf(Items.POT_OF_FLOUR_1933, Items.BUCKET_OF_MILK_1927, Items.EGG_1944)
+
     }
 }

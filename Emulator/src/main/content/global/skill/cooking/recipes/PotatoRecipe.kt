@@ -17,7 +17,7 @@ class PotatoRecipe : InteractionListener {
          * Handles attempting to add cheese to a baked potato without butter.
          */
 
-        onUseWith(IntType.ITEM, Items.POTATO_1943, Items.CHEESE_1985) { player, _, _ ->
+        onUseWith(IntType.ITEM, POTATO, CHEESE) { player, _, _ ->
             sendMessage(player, "You must add butter to the baked potato before adding toppings.")
             return@onUseWith true
         }
@@ -31,7 +31,7 @@ class PotatoRecipe : InteractionListener {
          * Ticks: 2 (1.2 seconds)
          */
 
-        onUseWith(IntType.ITEM, Items.BAKED_POTATO_6701, Items.PAT_OF_BUTTER_6697) { player, used, with ->
+        onUseWith(IntType.ITEM, BAKED_POTATO, PAT_OF_BUTTER) { player, used, with ->
             if (!hasLevelDyn(player, Skills.COOKING, 39)) {
                 sendMessage(player, "You need a Cooking level of 39 to make that.")
                 return@onUseWith true
@@ -39,7 +39,7 @@ class PotatoRecipe : InteractionListener {
 
             if (amountInInventory(player, used.id) == 1 || amountInInventory(player, with.id) == 1) {
                 if (removeItem(player, Item(used.id, 1), Container.INVENTORY) && removeItem(player, Item(with.id, 1), Container.INVENTORY)) {
-                    addItem(player, Items.POTATO_WITH_BUTTER_6703, 1, Container.INVENTORY)
+                    addItem(player, POTATO_WITH_BUTTER, 1, Container.INVENTORY)
                     rewardXP(player, Skills.COOKING, 40.5)
                     sendMessage(player, "You add the butter to the potato.")
                 }
@@ -47,12 +47,12 @@ class PotatoRecipe : InteractionListener {
             }
 
             sendSkillDialogue(player) {
-                withItems(Items.POTATO_WITH_BUTTER_6703)
+                withItems(POTATO_WITH_BUTTER)
                 create { _, amount ->
                     runTask(player, 2, amount) {
                         if (amount < 1) return@runTask
                         if (removeItem(player, Item(used.id, 1), Container.INVENTORY) && removeItem(player, Item(with.id, 1), Container.INVENTORY)) {
-                            addItem(player, Items.POTATO_WITH_BUTTER_6703, 1, Container.INVENTORY)
+                            addItem(player, POTATO_WITH_BUTTER, 1, Container.INVENTORY)
                             rewardXP(player, Skills.CRAFTING, 40.5)
                             sendMessage(player, "You add the butter to the potato.")
                         }
@@ -81,17 +81,17 @@ class PotatoRecipe : InteractionListener {
          */
 
         val potatoRecipes = mapOf(
-            Items.CHILLI_CON_CARNE_7062 to Pair(Items.CHILLI_POTATO_7054, 41),
-            Items.EGG_AND_TOMATO_7064 to Pair(Items.EGG_POTATO_7056, 51),
-            Items.MUSHROOM_AND_ONION_7066 to Pair(Items.MUSHROOM_POTATO_7058, 64),
-            Items.CHEESE_1985 to Pair(Items.POTATO_WITH_CHEESE_6705, 47),
-            Items.TUNA_AND_CORN_7068 to Pair(Items.TUNA_POTATO_7060, 68)
+            CHILLI_CON_CARNE to Pair(CHILLI_POTATO, 41),
+            EGG_AND_TOMATO to Pair(EGG_POTATO, 51),
+            MUSHROOM_AND_ONION to Pair(MUSHROOM_POTATO, 64),
+            CHEESE to Pair(POTATO_WITH_CHEESE, 47),
+            TUNA_AND_CORN to Pair(TUNA_POTATO, 68)
         )
 
         potatoRecipes.forEach { (ingredient, product) ->
             val (product, requirements) = product
 
-            onUseWith(IntType.ITEM, Items.POTATO_WITH_BUTTER_6703, ingredient) { player, used, with ->
+            onUseWith(IntType.ITEM, POTATO_WITH_BUTTER, ingredient) { player, used, with ->
                 if (!hasLevelDyn(player, Skills.COOKING, requirements)) {
                     sendMessage(player, "You need a Cooking level of $requirements to make that.")
                     return@onUseWith true
@@ -101,8 +101,8 @@ class PotatoRecipe : InteractionListener {
                     if (removeItem(player, Item(used.id, 1), Container.INVENTORY) &&
                         removeItem(player, Item(with.id, 1), Container.INVENTORY)
                     ) {
-                        if (ingredient != Items.CHEESE_1985) {
-                            addItem(player, Items.BOWL_1923, 1, Container.INVENTORY)
+                        if (ingredient != CHEESE) {
+                            addItem(player, EMPTY_BOWL, 1, Container.INVENTORY)
                         }
                         addItem(player, product, 1, Container.INVENTORY)
                         rewardXP(player, Skills.COOKING, 10.0)
@@ -135,5 +135,24 @@ class PotatoRecipe : InteractionListener {
                 return@onUseWith true
             }
         }
+    }
+
+    companion object {
+        private const val EMPTY_BOWL = Items.BOWL_1923
+        private const val POTATO = Items.POTATO_1942
+        private const val BAKED_POTATO = Items.BAKED_POTATO_6701
+        private const val PAT_OF_BUTTER = Items.PAT_OF_BUTTER_6697
+        private const val CHEESE = Items.CHEESE_1985
+        private const val POTATO_WITH_BUTTER = Items.POTATO_WITH_BUTTER_6703
+        private const val CHILLI_POTATO = Items.CHILLI_POTATO_7054
+        private const val CHILLI_CON_CARNE = Items.CHILLI_CON_CARNE_7062
+        private const val EGG_POTATO = Items.EGG_POTATO_7056
+        private const val EGG_AND_TOMATO = Items.EGG_AND_TOMATO_7064
+        private const val MUSHROOM_POTATO = Items.MUSHROOM_POTATO_7058
+        private const val MUSHROOM_AND_ONION = Items.MUSHROOM_AND_ONION_7066
+        private const val POTATO_WITH_CHEESE = Items.POTATO_WITH_CHEESE_6705
+        private const val TUNA_AND_CORN = Items.TUNA_AND_CORN_7068
+        private const val TUNA_POTATO = Items.TUNA_POTATO_7060
+
     }
 }

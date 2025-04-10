@@ -58,7 +58,7 @@ class PizzaRecipe : InteractionListener {
          * Ticks: 3 (1.8 seconds)
          */
 
-        onUseWith(IntType.ITEM, Items.PLAIN_PIZZA_2289, Items.COOKED_CHICKEN_2140, Items.COOKED_MEAT_2142, Items.PINEAPPLE_CHUNKS_2116, Items.PINEAPPLE_RING_2118, Items.ANCHOVIES_319) { player, used, base ->
+        onUseWith(IntType.ITEM, Items.PLAIN_PIZZA_2289, *pizzaIngredients) { player, used, base ->
             val pizzaMap = mapOf(
                 Items.COOKED_MEAT_2142 to Triple(Items.MEAT_PIZZA_2293, 45, 26.0),
                 Items.COOKED_CHICKEN_2140 to Triple(Items.MEAT_PIZZA_2293, 45, 26.0),
@@ -91,5 +91,9 @@ class PizzaRecipe : InteractionListener {
             })
             return@onUseWith true
         }
+    }
+
+    companion object {
+        private val pizzaIngredients = intArrayOf(Items.COOKED_CHICKEN_2140, Items.COOKED_MEAT_2142, Items.PINEAPPLE_CHUNKS_2116, Items.PINEAPPLE_RING_2118, Items.ANCHOVIES_319)
     }
 }
