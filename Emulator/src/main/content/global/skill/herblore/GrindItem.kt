@@ -3,6 +3,13 @@ package content.global.skill.herblore
 import core.game.node.item.Item
 import org.rs.consts.Items
 
+/**
+ * Represents an item that can be ground down to create a different item.
+ *
+ * @property items The list of items that can be ground to produce the product.
+ * @property product The item produced after grinding the items.
+ * @property message The message displayed to the player when the grinding action occurs.
+ */
 enum class GrindItem(
     val items: List<Item>,
     val product: Item,
@@ -121,6 +128,12 @@ enum class GrindItem(
                 }
             }
 
+        /**
+         * Finds the corresponding [GrindItem] for a given item.
+         *
+         * @param item The item to check for grinding compatibility.
+         * @return The corresponding [GrindItem] if found, or null if no match is found.
+         */
         @JvmStatic
         fun forItem(item: Item): GrindItem? = grindItemMap[item.id]
     }

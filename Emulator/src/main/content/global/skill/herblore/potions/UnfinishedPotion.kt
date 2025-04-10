@@ -6,6 +6,14 @@ import core.game.node.item.Item
 import org.rs.consts.Items
 import java.util.*
 
+/**
+ * Represents an unfinished potions.
+ *
+ * @property base The base item needed to create the unfinished potion, such as a vial of water or coconut milk.
+ * @property ingredient The ingredient used in the potion recipe.
+ * @property level The required Herblore level to make this unfinished potion.
+ * @property potion The resulting unfinished potion item.
+ */
 enum class UnfinishedPotion(
     val base: Item,
     val ingredient: Item,
@@ -28,28 +36,20 @@ enum class UnfinishedPotion(
     LANTADYME(HerblorePulse.VIAL_OF_WATER, Herbs.LANTADYME.product, 69, Item(Items.LANTADYME_POTIONUNF_2483)),
     DWARF_WEED(HerblorePulse.VIAL_OF_WATER, Herbs.DWARF_WEED.product, 72, Item(Items.DWARF_WEED_POTIONUNF_109)),
     TORSTOL(HerblorePulse.VIAL_OF_WATER, Herbs.TORSTOL.product, 75, Item(Items.TORSTOL_POTIONUNF_111)),
-    STRONG_WEAPON_POISON(
-        HerblorePulse.COCONUT_MILK,
-        Item(Items.CACTUS_SPINE_6016),
-        73,
-        Item(Items.WEAPON_POISON_PLUSUNF_5936),
-    ),
-    SUPER_STRONG_WEAPON_POISON(
-        HerblorePulse.COCONUT_MILK,
-        Item(Items.CAVE_NIGHTSHADE_2398),
-        82,
-        Item(Items.WEAPON_POISON_PLUS_PLUSUNF_5939),
-    ),
+    STRONG_WEAPON_POISON(HerblorePulse.COCONUT_MILK, Item(Items.CACTUS_SPINE_6016), 73, Item(Items.WEAPON_POISON_PLUSUNF_5936)),
+    SUPER_STRONG_WEAPON_POISON(HerblorePulse.COCONUT_MILK, Item(Items.CAVE_NIGHTSHADE_2398), 82, Item(Items.WEAPON_POISON_PLUS_PLUSUNF_5939)),
     STRONG_ANTIPOISON(HerblorePulse.COCONUT_MILK, Herbs.TOADFLAX.product, 68, Item(Items.ANTIPOISON_PLUSUNF_5942)),
-    SUPER_STRONG_ANTIPOISON(
-        HerblorePulse.COCONUT_MILK,
-        Herbs.IRIT.product,
-        79,
-        Item(Items.ANTIPOISON_PLUS_PLUSUNF_5951),
-    ),
+    SUPER_STRONG_ANTIPOISON(HerblorePulse.COCONUT_MILK, Herbs.IRIT.product, 79, Item(Items.ANTIPOISON_PLUS_PLUSUNF_5951)),
     ;
 
     companion object {
+        /**
+         * Finds the corresponding unfinished potion based on the provided item and base item.
+         *
+         * @param item The item to match with the ingredient or potion base.
+         * @param base The base item that is part of the potion creation.
+         * @return The corresponding [UnfinishedPotion] if found, or null if no match is found.
+         */
         fun forItem(
             item: Item,
             base: Item,
@@ -58,7 +58,7 @@ enum class UnfinishedPotion(
                 .stream(values())
                 .filter { potion: UnfinishedPotion? ->
                     (potion!!.ingredient.id == item.id || potion.ingredient.id == base.id) &&
-                        (item.id == potion.base.id || base.id == potion.base.id)
+                            (item.id == potion.base.id || base.id == potion.base.id)
                 }.findFirst()
                 .orElse(null)
     }

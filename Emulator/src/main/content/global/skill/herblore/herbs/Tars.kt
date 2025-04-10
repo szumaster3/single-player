@@ -2,6 +2,17 @@ package content.global.skill.herblore.herbs
 
 import org.rs.consts.Items
 
+/**
+ * Enum representing different types of Tars used in Herblore.
+ *
+ * Each type of Tar has a corresponding ingredient, required level, experience gained when used,
+ * and the resulting product when used in the Herblore skill.
+ *
+ * @property ingredient The id of the ingredient used to create the Tar.
+ * @property level The Herblore level required to use the Tar.
+ * @property experience The amount of experience gained for creating the Tar.
+ * @property product The ID of the product produced when the Tar is created.
+ */
 enum class Tars(
     val ingredient: Int,
     val level: Int,
@@ -16,6 +27,12 @@ enum class Tars(
     ;
 
     companion object {
+        /**
+         * Finds the [Tars] enum value for the given ingredient ids.
+         *
+         * @param id The id of the ingredient.
+         * @return The corresponding [Tars] enum value or null if no match is found.
+         */
         fun forId(id: Int): Tars? {
             for (tar in values()) {
                 if (tar.ingredient == id) {

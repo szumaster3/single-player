@@ -30,22 +30,10 @@ class GuthixRestPlugin : UseWithHandler(Items.CLEAN_GUAM_249, Items.CLEAN_MARREN
         HERB_TEA_MIX_5(listOf(Items.CLEAN_HARRALANDER_255, Items.CLEAN_GUAM_249), Items.HERB_TEA_MIX_4472),
         HERB_TEA_MIX_6(listOf(Items.CLEAN_GUAM_249, Items.CLEAN_GUAM_249), Items.HERB_TEA_MIX_4474),
         HERB_TEA_MIX_7(listOf(Items.CLEAN_GUAM_249, Items.CLEAN_MARRENTILL_251), Items.HERB_TEA_MIX_4476),
-        HERB_TEA_MIX_8(
-            listOf(Items.CLEAN_HARRALANDER_255, Items.CLEAN_MARRENTILL_251, Items.CLEAN_GUAM_249),
-            Items.HERB_TEA_MIX_4478,
-        ),
-        HERB_TEA_MIX_9(
-            listOf(Items.CLEAN_GUAM_249, Items.CLEAN_GUAM_249, Items.CLEAN_MARRENTILL_251),
-            Items.HERB_TEA_MIX_4480,
-        ),
-        HERB_TEA_MIX_10(
-            listOf(Items.CLEAN_GUAM_249, Items.CLEAN_GUAM_249, Items.CLEAN_HARRALANDER_255),
-            Items.HERB_TEA_MIX_4482,
-        ),
-        COMPLETE_MIX(
-            listOf(Items.CLEAN_GUAM_249, Items.CLEAN_GUAM_249, Items.CLEAN_MARRENTILL_251, Items.CLEAN_HARRALANDER_255),
-            Items.GUTHIX_REST3_4419,
-        ),
+        HERB_TEA_MIX_8(listOf(Items.CLEAN_HARRALANDER_255, Items.CLEAN_MARRENTILL_251, Items.CLEAN_GUAM_249), Items.HERB_TEA_MIX_4478),
+        HERB_TEA_MIX_9(listOf(Items.CLEAN_GUAM_249, Items.CLEAN_GUAM_249, Items.CLEAN_MARRENTILL_251), Items.HERB_TEA_MIX_4480),
+        HERB_TEA_MIX_10(listOf(Items.CLEAN_GUAM_249, Items.CLEAN_GUAM_249, Items.CLEAN_HARRALANDER_255), Items.HERB_TEA_MIX_4482),
+        COMPLETE_MIX(listOf(Items.CLEAN_GUAM_249, Items.CLEAN_GUAM_249, Items.CLEAN_MARRENTILL_251, Items.CLEAN_HARRALANDER_255), Items.GUTHIX_REST3_4419),
     }
 
     override fun handle(event: NodeUsageEvent?): Boolean {

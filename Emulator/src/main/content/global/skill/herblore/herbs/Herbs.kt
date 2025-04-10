@@ -3,6 +3,14 @@ package content.global.skill.herblore.herbs
 import core.game.node.item.Item
 import org.rs.consts.Items
 
+/**
+ * Enum representing different types of herbs used in Herblore.
+ *
+ * @property herb The [Item] representing the grimy version of the herb.
+ * @property experience The amount of experience gained when the herb is cleaned.
+ * @property level The Herblore level required to clean the herb.
+ * @property product The [Item] representing the cleaned version of the herb.
+ */
 enum class Herbs(
     @JvmField val herb: Item,
     val experience: Double,
@@ -32,11 +40,20 @@ enum class Herbs(
     ;
 
     companion object {
+        /**
+         * A map of herb IDs to their respective [Herbs] enum values.
+         */
         private val herbMap =
             HashMap<Int, Herbs>().apply {
                 values().forEach { herbData -> put(herbData.herb.id, herbData) }
             }
 
+        /**
+         * Finds the [Herbs] enum value for the given [Item].
+         *
+         * @param item The [Item] representing the herb.
+         * @return The corresponding [Herbs] enum value or null if no match is found.
+         */
         fun forItem(item: Item): Herbs? = herbMap[item.id]
     }
 }
