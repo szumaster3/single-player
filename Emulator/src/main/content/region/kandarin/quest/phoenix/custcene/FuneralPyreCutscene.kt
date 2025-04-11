@@ -1,4 +1,4 @@
-package content.region.kandarin.quest.phoenix.handlers
+package content.region.kandarin.quest.phoenix.custcene
 
 import content.region.kandarin.quest.phoenix.handlers.PhoenixLairListener.Companion.woundedPhoenix
 import core.api.sendGraphics

@@ -7,7 +7,7 @@ import core.game.node.entity.npc.NPCBehavior
 import core.game.world.map.Location
 import core.tools.RandomFunction
 
-class RebornWarriorAggresiveBehavior : NPCBehavior(*rebornWarriors) {
+class RebornWarriorBehavior : NPCBehavior(*rebornWarriors) {
     override fun tick(self: NPC): Boolean {
         super.tick(self)
         if (RandomFunction.random(300) < 3) {

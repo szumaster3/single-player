@@ -1,4 +1,4 @@
-package content.region.kandarin.quest.phoenix.handlers
+package content.region.kandarin.quest.phoenix.dialogue
 
 import content.data.GameAttributes
 import core.api.*

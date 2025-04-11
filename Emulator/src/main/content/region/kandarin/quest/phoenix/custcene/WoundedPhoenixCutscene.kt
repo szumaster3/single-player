@@ -1,5 +1,6 @@
-package content.region.kandarin.quest.phoenix.handlers
+package content.region.kandarin.quest.phoenix.custcene
 
+import content.region.kandarin.quest.phoenix.handlers.PhoenixLairListener
 import core.api.setVarbit
 import core.game.activity.Cutscene
 import core.game.node.entity.player.Player

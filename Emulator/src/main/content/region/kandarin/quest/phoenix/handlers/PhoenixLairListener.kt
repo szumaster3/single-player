@@ -1,6 +1,10 @@
 package content.region.kandarin.quest.phoenix.handlers
 
 import content.data.GameAttributes
+import content.region.kandarin.quest.phoenix.custcene.FuneralPyreCutscene
+import content.region.kandarin.quest.phoenix.custcene.GetLostCutscene
+import content.region.kandarin.quest.phoenix.custcene.WoundedPhoenixCutscene
+import content.region.kandarin.quest.phoenix.dialogue.PhoenixEgglingDialogue
 import core.api.*
 import core.api.interaction.getSceneryName
 import core.api.item.allInInventory

@@ -2,7 +2,7 @@ package core.game.system.command.sets
 
 import content.region.kandarin.quest.arena.cutscene.JeremyRescueCutscene
 import content.region.kandarin.quest.phoenix.handlers.PhoenixLairListener.Companion.weavingRibbons
-import content.region.kandarin.quest.phoenix.handlers.WoundedPhoenixCutscene
+import content.region.kandarin.quest.phoenix.custcene.WoundedPhoenixCutscene
 import content.region.kandarin.quest.phoenix.handlers.allTwigs
 import core.api.Container
 import core.api.addItem

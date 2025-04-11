@@ -1,4 +1,4 @@
-package content.region.kandarin.quest.phoenix.handlers
+package content.region.kandarin.quest.phoenix.custcene
 
 import core.game.activity.Cutscene
 import core.game.dialogue.FaceAnim

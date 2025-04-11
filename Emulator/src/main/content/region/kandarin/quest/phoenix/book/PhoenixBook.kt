@@ -1,4 +1,4 @@
-package content.region.kandarin.quest.phoenix.handlers
+package content.region.kandarin.quest.phoenix.book
 
 import content.global.handlers.iface.BookInterface
 import content.global.handlers.iface.BookLine
