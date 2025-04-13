@@ -105,6 +105,12 @@ class RestlessGhostListener : InteractionListener {
                 },
         )
 
+        if (closedCoffin) {
+            playAudio(player, Sounds.COFFIN_CLOSE_53)
+        } else {
+            playAudio(player, Sounds.COFFIN_OPEN_54)
+        }
+
         replaceScenery(
             toReplace = coffin,
             with = if (closedCoffin) Scenery.COFFIN_15061 else Scenery.COFFIN_2145,

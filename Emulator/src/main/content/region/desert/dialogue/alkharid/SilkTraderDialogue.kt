@@ -60,11 +60,11 @@ class SilkTraderDialogue(
                 if (freeSlots(player) == 0) {
                     player(FaceAnim.HALF_GUILTY, "I don't have enough room, sorry.")
                 } else if (amountInInventory(player, Items.COINS_995) < 2) {
-                    sendDialogue(player, "You need 2 gold coins to buy silk.")
+                    sendMessage(player, "You need 2 gold coins to buy silk.")
                 } else {
                     removeItem(player, Item(Items.COINS_995, 2))
                     addItem(player, Items.SILK_950, 1)
-                    sendDialogue(player, "You buy some silk for 2 gold coins.")
+                    sendMessage(player, "You buy some silk for 2 gold coins.")
                 }
             }
 
@@ -73,11 +73,11 @@ class SilkTraderDialogue(
                 if (freeSlots(player) == 0) {
                     player(FaceAnim.HALF_GUILTY, "I don't have enough room, sorry.")
                 } else if (amountInInventory(player, Items.COINS_995) < 3) {
-                    sendDialogue(player, "You need 3 gold coins to buy silk.")
+                    sendMessage(player, "You need 3 gold coins to buy silk.")
                 } else {
                     removeItem(player, Item(Items.COINS_995, 3))
                     addItem(player, Items.SILK_950, 1)
-                    sendDialogue(player, "You buy some silk for 3 gold coins.")
+                    sendMessage(player, "You buy some silk for 3 gold coins.")
                 }
             }
         }

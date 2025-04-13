@@ -178,6 +178,7 @@ class PlayerSafetyListener :
 
         on(org.rs.consts.Scenery.AN_OLD_LEVER_29730, IntType.SCENERY, "pull") { player, _ ->
             animate(player, Animations.PULL_LEVER_798)
+            playAudio(player, Sounds.PULL_LEVER_ENABLED_1547)
             sendMessage(player, "You hear the cogs and gears moving and a distant unlocking sound.")
             setVarp(player, 1203, (1 shl 29) or (1 shl 26), true)
             return@on true
@@ -185,6 +186,7 @@ class PlayerSafetyListener :
 
         on(org.rs.consts.Scenery.AN_OLD_LEVER_29731, IntType.SCENERY, "pull") { player, _ ->
             animate(player, Animations.PULL_LEVER_798)
+            playAudio(player, Sounds.PULL_LEVER_ENABLED_1547)
             sendMessage(player, "You hear cogs and gears moving and the sound of heavy locks falling into place.")
             setVarp(player, 1203, 1 shl 29, true)
             return@on true
