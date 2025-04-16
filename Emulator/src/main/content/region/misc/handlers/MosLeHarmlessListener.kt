@@ -16,15 +16,28 @@ import org.rs.consts.Quests
 class MosLeHarmlessListener : InteractionListener {
 
     override fun defineListeners() {
+
+        /*
+         * Handles honest jimmy interactions.
+         */
+
         on(NPCs.HONEST_JIMMY_4362, IntType.NPC, "Join-Team") { player, _ ->
             sendMessage(player, "There must be at least 3 people on each team for the game to start.")
             return@on true
         }
 
+        /*
+         * Handles patchy sewing interaction.
+         */
+
         on(NPCs.PATCHY_4359, IntType.NPC, "sew") { player, _ ->
             openInterface(player, Components.SEW_INTERFACE_419)
             return@on true
         }
+
+        /*
+         * Handles split beret and mask.
+         */
 
         onUseWith(IntType.NPC, BERET_AND_MASK, NPCs.PATCHY_4359) { player, used, _ ->
             if (freeSlots(player) == 0 || freeSlots(player) < 2) {
@@ -58,6 +71,10 @@ class MosLeHarmlessListener : InteractionListener {
             return@onUseWith true
         }
 
+        /*
+         * Handles interaction with shop owners.
+         */
+
         on(SHOP_OWNERS, IntType.NPC, "trade") { player, node ->
             if (!MosleUtils.canUnderstandPirateLanguage(player)) {
                 player.dialogueInterpreter.open(node.asNpc().id, node)
@@ -69,6 +86,10 @@ class MosLeHarmlessListener : InteractionListener {
     }
 
     override fun defineDestinationOverrides() {
+        /*
+         * Handles destination to shop NPCs.
+         */
+
         setDest(IntType.NPC, intArrayOf(NPCs.MIKE_3166), "talk-to", "trade") { _, _ ->
             return@setDest Location.create(3693, 2975, 0)
         }
