@@ -31,6 +31,7 @@ class SurvivalExpertDialogue(
                     "we're going to start with the most basic survival skill of",
                     "all: making a fire.",
                 )
+
             11 ->
                 sendTutorialNPCDialogue(
                     player,
@@ -39,6 +40,7 @@ class SurvivalExpertDialogue(
                     "bellies. We'll need something to cook. There are shrimp",
                     "in the pond there, so let's catch and cook some.",
                 )
+
             5, 14, 15 -> {
                 if (!inInventory(player, Items.BRONZE_AXE_1351)) {
                     sendItemDialogue(player, Items.BRONZE_AXE_1351, "The Survival Expert gives you a spare bronze axe.")
@@ -50,11 +52,13 @@ class SurvivalExpertDialogue(
                 }
                 return false
             }
+
             8 ->
                 npcl(FaceAnim.FRIENDLY, "Light the logs in your backpack to make a fire.").also {
                     TutorialStage.rollback(player)
                     stage = END_DIALOGUE
                 }
+
             12 ->
                 if (!inInventory(player, Items.SMALL_FISHING_NET_303)) {
                     Component.setUnclosable(
@@ -77,7 +81,19 @@ class SurvivalExpertDialogue(
                             END_DIALOGUE
                     }
                 }
-            16 -> end().also { openDialogue(player, SurvivalExpert()) }
+
+            16 -> {
+                setTitle(player!!, 5)
+                sendDialogueOptions(
+                    player!!,
+                    title = "What would you like to hear more about?",
+                    "Crafting the logs.",
+                    "Light a fire.",
+                    "Netting a Fishing spot.",
+                    "Cooking shrimp.",
+                    "Nothing, thanks.",
+                )
+            }
         }
         return true
     }
@@ -130,37 +146,9 @@ class SurvivalExpertDialogue(
                         TutorialStage.load(player, 12)
                     }
                 }
-        }
-        return true
-    }
 
-    override fun newInstance(player: Player?): Dialogue = SurvivalExpertDialogue(player)
-
-    override fun getIds(): IntArray = intArrayOf(NPCs.SURVIVAL_EXPERT_943)
-}
-
-class SurvivalExpert : DialogueFile() {
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
-        npc = NPC(NPCs.SURVIVAL_EXPERT_943)
-        when (stage) {
-            0 -> {
-                setTitle(player!!, 5)
-                sendDialogueOptions(
-                    player!!,
-                    title = "What would you like to hear more about?",
-                    "Crafting the logs.",
-                    "Light a fire.",
-                    "Netting a Fishing spot.",
-                    "Cooking shrimp.",
-                    "Nothing, thanks.",
-                )
-                stage++
-            }
-            1 ->
-                when (buttonID) {
+            16 -> when (stage) {
+                0 -> when (buttonId) {
                     1 ->
                         npcl(
                             FaceAnim.HAPPY,
@@ -169,6 +157,7 @@ class SurvivalExpert : DialogueFile() {
                             stage =
                                 2
                         }
+
                     2 -> npcl(FaceAnim.FRIENDLY, "Light the logs in your backpack to make a fire.").also { stage = 0 }
                     3 ->
                         npcl(
@@ -178,6 +167,7 @@ class SurvivalExpert : DialogueFile() {
                             stage =
                                 0
                         }
+
                     4 ->
                         npcl(
                             FaceAnim.HAPPY,
@@ -186,6 +176,7 @@ class SurvivalExpert : DialogueFile() {
                             stage =
                                 3
                         }
+
                     5 ->
                         npcl(
                             FaceAnim.HAPPY,
@@ -195,9 +186,16 @@ class SurvivalExpert : DialogueFile() {
                                 END_DIALOGUE
                         }
                 }
-            2 -> npcl(FaceAnim.FRIENDLY, "For now, right-click the logs and left-click Light.").also { stage = 0 }
-            3 -> npcl(FaceAnim.FRIENDLY, "Then use the shrimp on the fire.").also { stage = 0 }
-            END_DIALOGUE -> TutorialStage.rollback(player!!)
+
+                2 -> npcl(FaceAnim.FRIENDLY, "For now, right-click the logs and left-click Light.").also { stage = 0 }
+                3 -> npcl(FaceAnim.FRIENDLY, "Then use the shrimp on the fire.").also { stage = 0 }
+                END_DIALOGUE -> TutorialStage.rollback(player!!)
+            }
         }
+        return true
     }
+
+    override fun newInstance(player: Player?): Dialogue = SurvivalExpertDialogue(player)
+
+    override fun getIds(): IntArray = intArrayOf(NPCs.SURVIVAL_EXPERT_943)
 }

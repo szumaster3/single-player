@@ -19,7 +19,7 @@ class FinanceAdvisorDialogue(
         npc = args[0] as NPC
         when (getAttribute(player, TutorialStage.TUTORIAL_STAGE, 0)) {
             58 -> playerl(FaceAnim.FRIENDLY, "Hello, who are you?")
-            59 -> npcl(FaceAnim.FRIENDLY, "Move along, now.").also { return false }
+            59 -> npcl(FaceAnim.FRIENDLY, "You're nearly finished. The Prayer instructor would like to have a chat with you in the nearby church.").also { return false }
         }
         return true
     }

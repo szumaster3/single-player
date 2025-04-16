@@ -8,7 +8,9 @@ import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.plugin.Initializable
+import core.tools.END_DIALOGUE
 import org.rs.consts.Components
+import org.rs.consts.Items
 import org.rs.consts.NPCs
 
 @Initializable
@@ -36,6 +38,7 @@ class QuestGuideDialogue(
                     "it At the moment all the quests are shown in red, which",
                     "means you have not started them yet.",
                 )
+            in 29..72 -> sendTutorialNPCDialogue(player, npc.id, FaceAnim.HALF_ASKING, "Would you like to hear about quests again?")
 
             else -> return false
         }
@@ -103,7 +106,23 @@ class QuestGuideDialogue(
                         TutorialStage.load(player, 29)
                     }
                 }
+
+            in 29..72 -> when(stage) {
+                0 -> options("Yes!", "Nope, I'm ready to move on!").also { stage++ }
+                1 -> when(buttonId) {
+                    1 -> player("Yes!").also { stage++ }
+                    2 -> player("Nope, I'm ready to move on!").also { stage = 8 }
+                }
+                2 -> npcl(FaceAnim.FRIENDLY, "Within your quest list, you'll unsurprisingly find a list of quests. Clicking one of these quests will display some more information on it.").also { stage++ }
+                3 -> npcl(FaceAnim.FRIENDLY, "If you haven't started the quest, it will tell you where to begin and what requirements you need. If the quest is in progress, it will remind you what to do next.").also { stage++ }
+                4 -> npcl(FaceAnim.FRIENDLY, " It's very easy to find quest start points. Just look out for the quest icon on your minimap. You should see one marking this house.").also { stage++ }
+                5 -> sendItemDialogue(player, Items.NULL_5092, "The minimap in the top right corner of the screen has various icons to show different points of interest. Look for the icon to the left to find quest start points.").also { stage++ }
+                6 -> npcl(FaceAnim.FRIENDLY, "The quests themselves can vary greatly from collecting beads to hunting down dragons. Completing quests will reward you with all sorts of things, such as new areas and better weapons!").also { stage++ }
+                7 -> npcl(FaceAnim.FRIENDLY, "There's not a lot more I can tell you about questing. You have to experience the thrill of it yourself to fully understand.").also { stage = END_DIALOGUE }
+                8 -> npcl(FaceAnim.FRIENDLY, "Okay then.").also { stage = END_DIALOGUE }
+            }
         }
+
         return true
     }
 

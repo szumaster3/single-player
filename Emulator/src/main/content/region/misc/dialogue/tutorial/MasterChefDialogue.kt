@@ -37,7 +37,16 @@ class MasterChefDialogue(
                 )
 
             19, 20 -> sendNPCDialogue(player, npc.id, "Hello again.", FaceAnim.FRIENDLY)
-            in 21..100 -> end().also { openDialogue(player, MasterChef()) }
+            in 21..100 -> {
+                setTitle(player!!, 3)
+                sendDialogueOptions(
+                    player!!,
+                    title = "What would you like to hear more about?",
+                    "Making dough.",
+                    "Range cooking.",
+                    "Nothing, thanks.",
+                )
+            }
         }
         return true
     }
@@ -152,36 +161,9 @@ class MasterChefDialogue(
                         return false
                     }
                 }
-        }
-        return true
-    }
 
-    override fun newInstance(player: Player?): Dialogue = MasterChefDialogue(player)
-
-    override fun getIds(): IntArray = intArrayOf(NPCs.MASTER_CHEF_942)
-}
-
-class MasterChef : DialogueFile() {
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
-        npc = NPC(NPCs.MASTER_CHEF_942)
-        when (stage) {
-            0 -> {
-                setTitle(player!!, 3)
-                sendDialogueOptions(
-                    player!!,
-                    title = "What would you like to hear more about?",
-                    "Making dough.",
-                    "Range cooking.",
-                    "Nothing, thanks.",
-                )
-                stage++
-            }
-
-            1 ->
-                when (buttonID) {
+            in 20..100 -> when (stage) {
+                0 -> when (buttonId) {
                     1 ->
                         sendNPCDialogue(
                             player!!,
@@ -191,6 +173,7 @@ class MasterChef : DialogueFile() {
                             stage =
                                 END_DIALOGUE
                         }
+
                     2 ->
                         sendNPCDialogue(
                             player!!,
@@ -200,8 +183,16 @@ class MasterChef : DialogueFile() {
                             stage =
                                 END_DIALOGUE
                         }
+
                     3 -> end()
                 }
+            }
+
         }
+        return true
     }
+
+    override fun newInstance(player: Player?): Dialogue = MasterChefDialogue(player)
+
+    override fun getIds(): IntArray = intArrayOf(NPCs.MASTER_CHEF_942)
 }

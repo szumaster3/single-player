@@ -193,7 +193,7 @@ class MagicInstructorDialogue(
                         sendItemDialogue(
                             player,
                             Items.NULL_5079,
-                            "the castle's courtyard and the others you will find, scattered around lumbridge.",
+                            "the castle's courtyard and the others you will find, scattered around Lumbridge.",
                         ).also {
                             stage++
                         }
@@ -202,8 +202,7 @@ class MagicInstructorDialogue(
                         sendNPCDialogue(
                             player,
                             npc.id,
-                            "If all else fails, visit the " + GameWorld.settings!!.name +
-                                " website for a whole chestload of information on quests skills and minigames as well as a very good starter's guide.",
+                            "If all else fails, visit the " + GameWorld.settings!!.name + " website for a whole chestload of information on quests skills and minigames as well as a very good starter's guide.",
                         ).also { stage++ }
 
                     8 -> {
