@@ -71,7 +71,7 @@ class MasterChefDialogue(
                     1 ->
                         sendTutorialNPCDialogue(
                             player,
-                            npc.id,
+                            npc.id, FaceAnim.LAUGH,
                             "Hahahahahaha! You call THAT cooking? Some shrimp",
                             "on an open log fire? Oh, no, no no. I am going to",
                             "teach you the fine art of cooking bread.",
