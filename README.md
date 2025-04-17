@@ -4,7 +4,7 @@ Fork of [2009scape](https://gitlab.com/2009scape/2009scape).
 
 For information on content, please visit the [blog](https://szumaster3.github.io/530-content/).
 
-[![License][license-shield]][license-url] [![Release][libs]][libs-url] [![Release][play-release]][play-url]<br>
+[![Release][play-release]][play-url] <br>
 
 ___
 
@@ -113,6 +113,6 @@ ___
 
 [libs-url]: https://gitlab.com/rs2-emu/530-variables
 
-[play-release]: https://img.shields.io/badge/singleplayer-release-blue
+[play-release]: https://img.shields.io/badge/website-releases-blue
 
-[play-url]: https://mega.nz/folder/3ngT2JpZ#NNn2Pb9UCIFaYk2nVHWtAQ
+[play-url]: https://szumaster3.github.io/530-content/
