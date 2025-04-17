@@ -3,7 +3,6 @@ package content.region.asgarnia.handlers.guilds
 import core.api.*
 import core.game.dialogue.FaceAnim
 import core.game.global.action.ClimbActionHandler.climb
-import core.game.global.action.ClimbActionHandler.climbLadder
 import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
@@ -15,29 +14,52 @@ import org.rs.consts.NPCs
 import org.rs.consts.Scenery
 
 class MiningGuildListener : InteractionListener {
+
+    private val REQUIRED_MINING_LEVEL = 60
+    private val animation = Animation(Animations.USE_LADDER_828)
+
+    private val ladderMap = mapOf(
+        Location.create(3019, 3340, 0) to Location.create(3019, 9741, 0),
+        Location.create(3019, 9740, 0) to Location.create(3019, 3341, 0),
+        Location.create(3020, 3339, 0) to Location.create(3021, 9739, 0),
+        Location.create(3021, 9739, 0) to Location.create(3021, 3339, 0),
+        Location.create(3019, 3338, 0) to Location.create(3019, 9737, 0),
+        Location.create(3019, 9738, 0) to Location.create(3019, 3337, 0),
+        Location.create(3018, 3339, 0) to Location.create(3017, 9739, 0),
+        Location.create(3018, 9739, 0) to Location.create(3017, 3339, 0),
+        Location.create(3019, 3339, 0) to Location.create(3021, 9739, 0),
+    )
+
     override fun defineListeners() {
-        on(Scenery.LADDER_2113, IntType.SCENERY, "climb-down") { player, node ->
-            val option = getUsedOption(player)
-            if (withinDistance(player, Location.create(3019, 3339, 0), 4)) {
-                if (getDynLevel(player, Skills.MINING) < 60) {
-                    openDialogue(
-                        player,
-                        dialogue = NPCs.DWARF_382,
-                        core.game.node.entity.npc.NPC
-                            .create(NPCs.DWARF_382, Location.create(0, 0, 0)),
-                        1,
-                    )
-                    return@on true
-                }
-                climb(player, Animation(Animations.USE_LADDER_828), Location.create(3021, 9739, 0))
+
+        /*
+         * Handles ladder interaction to mining guild.
+         */
+
+        on(Scenery.LADDER_2113, IntType.SCENERY, "climb-up", "climb-down") { player, node ->
+            val location = node.location
+            val destination = ladderMap[location] ?: return@on false
+
+            if (getDynLevel(player, Skills.MINING) < REQUIRED_MINING_LEVEL) {
+                sendNPCDialogue(
+                    player,
+                    NPCs.DWARF_382,
+                    "Sorry, but you need level 60 Mining to go in there.",
+                    FaceAnim.OLD_NORMAL,
+                )
                 return@on true
             }
-            climbLadder(player, node.asScenery(), option)
+
+            climb(player, animation, destination)
             return@on true
         }
 
+        /*
+         * Handles door interaction to mining guild.
+         */
+
         on(Scenery.DOOR_2112, IntType.SCENERY, "open") { player, node ->
-            if (getDynLevel(player, Skills.MINING) < 60) {
+            if (getDynLevel(player, Skills.MINING) < REQUIRED_MINING_LEVEL) {
                 sendNPCDialogue(
                     player,
                     NPCs.DWARF_382,
@@ -47,16 +69,6 @@ class MiningGuildListener : InteractionListener {
                 return@on true
             }
             DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
-            return@on true
-        }
-
-        on(Scenery.LADDER_30941, IntType.SCENERY, "climb-up") { player, node ->
-            val option = getUsedOption(player)
-            if (withinDistance(player, Location(3019, 9739, 0))) {
-                climb(player, Animation(Animations.USE_LADDER_828), Location(3017, 3339, 0))
-            } else {
-                climbLadder(player, node.asScenery(), option)
-            }
             return@on true
         }
     }
