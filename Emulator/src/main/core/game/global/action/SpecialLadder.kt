@@ -133,6 +133,22 @@ enum class SpecialLadder(
         ladderLoc = Location.create(3097, 9867, 0),
         destLoc = Location.create(3096, 3468, 0),
     ),
+    FALADOR_MINING_NORTH_UP(
+        ladderLoc = Location.create(3019, 9740, 0),
+        destLoc = Location.create(3019, 3341, 0),
+    ),
+    FALADOR_MINING_EAST_UP(
+        ladderLoc = Location.create(3020, 9739, 0),
+        destLoc = Location.create(3021, 3339, 0),
+    ),
+    FALADOR_MINING_SOUTH_UP(
+        ladderLoc = Location.create(3019, 9738, 0),
+        destLoc = Location.create(3019, 3337, 0),
+    ),
+    FALADOR_MINING_WEST_UP(
+        ladderLoc = Location.create(3018, 9739, 0),
+        destLoc = Location.create(3017, 3339, 0),
+    ),
     FISHING_GUILD_HOUSE_UP(
         ladderLoc = Location.create(2615, 3394, 0),
         destLoc = Location.create(2615, 3395, 1),
@@ -580,10 +596,26 @@ enum class SpecialLadder(
     ;
 
     companion object {
-        @JvmStatic private val destinationMap = HashMap<Location, Location>()
 
-        @JvmStatic private val ladderMap = HashMap<Location, SpecialLadder>()
+        /**
+         * A map linking ladder locations to their destination locations.
+         *
+         * Used for handling generic ladder traversal without requiring additional metadata.
+         */
+        @JvmStatic
+        private val destinationMap = HashMap<Location, Location>()
 
+        /**
+         * A map linking ladder locations to their corresponding [SpecialLadder] instance.
+         *
+         * Useful for accessing custom ladder metadata or handling.
+         */
+        @JvmStatic
+        private val ladderMap = HashMap<Location, SpecialLadder>()
+
+        /**
+         * Initializes the maps by registering all [SpecialLadder] values.
+         */
         init {
             for (entry in values()) {
                 destinationMap.putIfAbsent(entry.ladderLoc, entry.destLoc)
@@ -591,18 +623,34 @@ enum class SpecialLadder(
             }
         }
 
+        /**
+         * Registers a new ladder location and its destination in the [destinationMap].
+         *
+         * @param from The ladder's origin location.
+         * @param to The destination location when the ladder is used.
+         */
         @JvmStatic
-        fun add(
-            from: Location,
-            to: Location,
-        ) {
+        fun add(from: Location, to: Location) {
             destinationMap[from] = to
         }
 
+        /**
+         * Retrieves the destination location associated with a given ladder location.
+         *
+         * @param loc The ladder location.
+         * @return The destination [Location], or `null` if none exists.
+         */
         @JvmStatic
         fun getDestination(loc: Location): Location? = destinationMap[loc]
 
+        /**
+         * Retrieves the [SpecialLadder] instance associated with the given location.
+         *
+         * @param loc The ladder location.
+         * @return The corresponding [SpecialLadder], or `null` if not found.
+         */
         @JvmStatic
         fun getSpecialLadder(loc: Location): SpecialLadder? = ladderMap[loc]
     }
+
 }

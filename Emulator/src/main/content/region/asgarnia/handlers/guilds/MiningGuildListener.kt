@@ -20,14 +20,10 @@ class MiningGuildListener : InteractionListener {
 
     private val ladderMap = mapOf(
         Location.create(3019, 3340, 0) to Location.create(3019, 9741, 0),
-        Location.create(3019, 9740, 0) to Location.create(3019, 3341, 0),
-        Location.create(3020, 3339, 0) to Location.create(3021, 9739, 0),
-        Location.create(3021, 9739, 0) to Location.create(3021, 3339, 0),
         Location.create(3019, 3338, 0) to Location.create(3019, 9737, 0),
-        Location.create(3019, 9738, 0) to Location.create(3019, 3337, 0),
         Location.create(3018, 3339, 0) to Location.create(3017, 9739, 0),
-        Location.create(3018, 9739, 0) to Location.create(3017, 3339, 0),
-        Location.create(3019, 3339, 0) to Location.create(3021, 9739, 0),
+        Location.create(3020, 3339, 0) to Location.create(3021, 9739, 0),
+        Location.create(3019, 3340, 0) to Location.create(3019, 9741, 0),
     )
 
     override fun defineListeners() {
@@ -36,7 +32,7 @@ class MiningGuildListener : InteractionListener {
          * Handles ladder interaction to mining guild.
          */
 
-        on(Scenery.LADDER_2113, IntType.SCENERY, "climb-up", "climb-down") { player, node ->
+        on(Scenery.LADDER_2113, IntType.SCENERY,"climb-down") { player, node ->
             val location = node.location
             val destination = ladderMap[location] ?: return@on false
 
