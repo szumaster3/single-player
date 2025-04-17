@@ -80,7 +80,7 @@ class MollyDialogue(
                 }
 
             3 -> {
-                val startDialogue = !getAttribute(player!!, GameAttributes.RE_TWIN_DIAL, false)
+                val startDialogue = getAttribute(player!!, GameAttributes.RE_TWIN_DIAL, false)
 
                 when (stage) {
                     0 ->
@@ -90,7 +90,7 @@ class MollyDialogue(
                                 "I'm sorry for abducting you like that, but I really need",
                                 "your help ${player!!.username}.",
                             )
-                            setAttribute(player!!, GameAttributes.RE_TWIN_OBJ_DIAL, true)
+                            setAttribute(player!!, GameAttributes.RE_TWIN_DIAL, true)
                             stage = 4
                         } else {
                             npc(FaceAnim.ASKING, "Wait! Do you know what you're doing here?")

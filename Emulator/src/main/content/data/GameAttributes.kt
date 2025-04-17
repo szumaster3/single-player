@@ -69,7 +69,6 @@ internal object GameAttributes {
     // Evil twin random event.
     const val RE_TWIN_START = "/save:random:5:start"
     const val RE_TWIN_DIAL = "/save:random:evil_twin_dialogue"
-    const val RE_TWIN_OBJ_DIAL = "/save:random:evil_twin:objs_dialogue"
     const val RE_TWIN_OBJ_LOC_X = "/save:random:evil_twin_loc:x"
     const val RE_TWIN_OBJ_LOC_Y = "/save:random:evil_twin_loc:y"
 
