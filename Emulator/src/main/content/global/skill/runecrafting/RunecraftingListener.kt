@@ -114,7 +114,7 @@ class RunecraftingListener : InteractionListener {
     ) {
         closeDialogue(player)
         removeItem(player, if (buttonId == 3) Items.RUNECRAFTING_STAFF_13629 else Items.TIARA_5525)
-        replaceSlot(player, itemId.slot, if (buttonId == 3) Item(product.staves.item) else Item(product.tiara))
+        replaceSlot(player, itemId.index, if (buttonId == 3) Item(product.staves.item, 1) else Item(product.tiara, 1))
         rewardXP(player, Skills.RUNECRAFTING, product.staves.experience)
         sendMessage(player, "You bind the power of the talisman into your ${if (buttonId == 3) "staff" else "tiara"}.")
     }

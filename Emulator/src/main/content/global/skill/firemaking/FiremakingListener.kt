@@ -99,7 +99,7 @@ class FiremakingListener : InteractionListener {
             if (!removeItem(player, Item(with.id, 1), Container.INVENTORY)) {
                 sendMessage(player, "You don't have required items in your inventory.")
             } else {
-                replaceSlot(player, used.asItem().slot, Item(firelighter.product, 1))
+                addItem(player, firelighter.product, 1)
                 sendMessage(
                     player,
                     "You coat the log with the " +
@@ -131,7 +131,7 @@ class FiremakingListener : InteractionListener {
             intArrayOf(Items.CANDLE_36, Items.BLACK_CANDLE_38),
             BALLOON_STRUCTURE,
         ) { player, used, with ->
-            if (removeItem(player, used.asItem()) && removeItem(player, with.asItem())) {
+            if (removeItem(player, Item(used.id, 1)) && removeItem(player, Item(with.id, 1))) {
                 sendMessage(player, "You create the origami balloonIDs.")
                 rewardXP(player, Skills.CRAFTING, 35.0)
                 animate(player, CRAFTING_ANIMATION)

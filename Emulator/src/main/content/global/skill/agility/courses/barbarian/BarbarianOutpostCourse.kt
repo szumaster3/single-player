@@ -149,6 +149,7 @@ class BarbarianOutpostCourse
         val failed = AgilityHandler.hasFailed(player, 1, 0.5)
         val end = if (failed) Location.create(2545, 3546, 0) else Location.create(2541, 3546, 0)
         sendMessage(player, "You walk carefully across the slippery log...")
+        playAudio(player, Sounds.LOG_BALANCE_2470)
         AgilityHandler.walk(
             player,
             if (failed) -1 else 1,
@@ -300,7 +301,7 @@ class BarbarianOutpostCourse
         n: Node,
     ): Location? {
         if (n is Scenery) {
-            when (n.getId()) {
+            when (n.id) {
                 2282 -> return Location.create(2551, 3554, 0)
             }
         }

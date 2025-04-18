@@ -11,6 +11,7 @@ import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import org.rs.consts.Animations
 import org.rs.consts.Scenery
+import org.rs.consts.Sounds
 
 class DwarvenMineCreviceShortcut : InteractionListener {
     override fun defineListeners() {
@@ -30,6 +31,7 @@ class DwarvenMineCreviceShortcut : InteractionListener {
             lock(player, 8)
             face(player, node)
             animate(player, Animations.DUCK_UNDER_2240)
+            playAudio(player, Sounds.SQUEEZE_THROUGH_ROCKS_1310)
             forceMove(player, player.location, destination, 0, 240, null, Animations.HUMAN_TURNS_INVISIBLE_2590)
             runTask(player, 7) {
                 animate(player, Animations.DUCK_UNDER_2240)

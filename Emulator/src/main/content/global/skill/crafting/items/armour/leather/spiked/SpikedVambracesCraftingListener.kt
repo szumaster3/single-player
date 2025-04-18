@@ -67,8 +67,8 @@ class SpikedVambracesCraftingListener : InteractionListener {
         product: Int,
         leather: String,
     ) {
-        if (removeItem(player, Items.KEBBIT_CLAWS_10113, Container.INVENTORY)) {
-            replaceSlot(player, base.slot, Item(product))
+        if (removeItem(player, Item(base.id, 1), Container.INVENTORY)) {
+            addItem(player, product, 1)
             rewardXP(player, Skills.CRAFTING, 6.0)
             sendMessage(player, "You carefully attach the sharp claws to the $leather vambraces.")
         }

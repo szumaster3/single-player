@@ -12,19 +12,19 @@ import org.rs.consts.Items
 class CoconutListener : InteractionListener {
     override fun defineListeners() {
         onUseWith(IntType.ITEM, Items.COCONUT_5974, Items.HAMMER_2347) { player, used, _ ->
-            val itemSlot = used.asItem().slot
-            if (removeItem(player, used.asItem())) {
-                replaceSlot(player, itemSlot, Item(used.id + 2))
+            val itemSlot = used.asItem().index
+            if (removeItem(player, Item(used.id, 1))) {
+                replaceSlot(player, itemSlot, Item(Items.COCONUT_SHELL_5978, 1))
                 sendMessage(player, "You crush the coconut with a hammer.")
             }
             return@onUseWith true
         }
 
         onUseWith(IntType.ITEM, Items.COCONUT_5976, Items.VIAL_229) { player, used, with ->
-            val itemSlot = with.asItem().slot
-            if (removeItem(player, used.asItem())) {
+            val itemSlot = with.asItem().index
+            if (removeItem(player, Item(used.id, 1))) {
                 replaceSlot(player, itemSlot, Item(Items.COCONUT_MILK_5935))
-                addItem(player, used.id + 2)
+                addItem(player, Items.COCONUT_SHELL_5978, 1)
                 sendMessage(player, "You overturn the coconut into a vial.")
             }
             return@onUseWith true

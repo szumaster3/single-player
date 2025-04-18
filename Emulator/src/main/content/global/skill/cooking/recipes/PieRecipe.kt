@@ -18,9 +18,8 @@ class PieRecipe : InteractionListener {
          */
 
         onUseWith(IntType.ITEM, Items.PASTRY_DOUGH_1953, Items.PIE_DISH_2313) { player, used, with ->
-            val pieDish = with.asItem().slot
             if (removeItem(player, Item(used.id, 1))) {
-                replaceSlot(player, pieDish, Item(Items.PIE_SHELL_2315, 1))
+                addItem(player, Items.PIE_SHELL_2315, 1)
                 sendMessage(player, "You put the pastry dough into the pie dish to make a pie shell.")
             }
             return@onUseWith true

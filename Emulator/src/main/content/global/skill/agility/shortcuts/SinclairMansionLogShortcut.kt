@@ -34,7 +34,7 @@ class SinclairMansionLogShortcut : InteractionListener {
                 fromSouth = true
                 failLand = Location.create(2726, 3596, 0)
             }
-
+            playAudio(player, Sounds.LOG_BALANCE_2470)
             if (AgilityHandler.hasFailed(player, 48, 0.1)) {
                 val failLocation = if (fromSouth) Location.create(2723, 3594, 0) else Location.create(2721, 3594, 0)
                 AgilityHandler.forceWalk(player, -1, start, failLocation, failAnimation, 10, 0.0, null, 0)
@@ -70,8 +70,7 @@ class SinclairMansionLogShortcut : InteractionListener {
                 )
             } else {
                 val end = if (fromSouth) start.transform(0, 4, 0) else start.transform(0, -4, 0)
-                AgilityHandler.forceWalk(player, -1, start, end, logBalanceAnimation, 10, 0.0, null, 0).endAnimation =
-                    Animation.RESET
+                AgilityHandler.forceWalk(player, -1, start, end, logBalanceAnimation, 10, 0.0, null, 0).endAnimation = Animation.RESET
                 runTask(player, 4) {
                     if (node.id in sinclarLog &&
                         !player.achievementDiaryManager

@@ -2,6 +2,7 @@ package content.global.skill.agility.shortcuts
 
 import content.global.skill.agility.AgilityHandler
 import content.global.skill.agility.AgilityShortcut
+import core.api.playAudio
 import core.game.node.Node
 import core.game.node.entity.player.Player
 import core.game.node.scenery.Scenery
@@ -9,6 +10,7 @@ import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
 import core.plugin.Plugin
+import org.rs.consts.Sounds
 
 @Initializable
 class LogBalanceShortcut : AgilityShortcut {
@@ -97,6 +99,7 @@ class LogBalanceShortcut : AgilityShortcut {
                 distanceToStart > distanceToEnd -> start
                 else -> end
             }
+        playAudio(player, Sounds.LOG_BALANCE_2470)
         AgilityHandler.walk(player, -1, player.location, destination, Animation.create(155), experience, null)
     }
 

@@ -23,7 +23,7 @@ class FeatherHeaddressListener : InteractionListener {
 
             if (removeItem(player, Item(item.base, 20))) {
                 rewardXP(player, Skills.CRAFTING, 50.0)
-                replaceSlot(player, with.asItem().slot, Item(item.product, 1))
+                addItem(player, item.product, 1)
                 sendMessage(player, "You add the feathers to the coif to make a feathered headdress.")
             }
             return@onUseWith true

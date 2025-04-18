@@ -40,7 +40,7 @@ class EnchantedHeadgearListener : InteractionListener {
                 "You remove the scrolls. You will need to use a Summoning scroll on it to charge the",
                 "headgear up once more.",
             )
-            replaceSlot(player, item.slot, enchantId.enchantedItem)
+            replaceSlot(player, item.index, enchantId.enchantedItem)
             return@on true
         }
     }

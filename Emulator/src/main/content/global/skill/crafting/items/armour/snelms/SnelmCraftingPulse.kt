@@ -23,8 +23,10 @@ class SnelmCraftingPulse(
 
     override fun reward(): Boolean {
         sendMessage(player, "You craft the shell into a helmet.")
-        replaceSlot(player, node!!.slot, Item(itemId.product))
-        rewardXP(player, Skills.CRAFTING, 32.5)
+        if(removeItem(player, Item(node!!.id, 1), Container.INVENTORY)){
+            addItem(player, itemId.product, 1, Container.INVENTORY)
+            rewardXP(player, Skills.CRAFTING, 32.5)
+        }
         return true
     }
 }

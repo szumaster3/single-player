@@ -2,6 +2,7 @@ package content.global.skill.agility.courses
 
 import content.data.GameAttributes
 import core.api.getAttribute
+import core.api.playAudio
 import core.api.sendMessage
 import core.api.setAttribute
 import core.cache.def.impl.SceneryDefinition
@@ -14,6 +15,7 @@ import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
 import core.tools.DARK_GREEN
+import org.rs.consts.Sounds
 
 @Initializable
 class GnomeStrongholdCourse
@@ -32,6 +34,7 @@ constructor(
             2295 -> {
                 TRAINERS[0]!!.sendChat("Okay get over that log, quick quick!")
                 sendMessage(player, "You walk carefully across the slippery log...")
+                playAudio(player, Sounds.LOG_BALANCE_2470)
                 content.global.skill.agility.AgilityHandler.walk(
                     player,
                     0,
@@ -47,6 +50,7 @@ constructor(
 
             2285 -> {
                 TRAINERS[1]!!.sendChat("Move it, move it, move it!")
+                playAudio(player, Sounds.CLIMB_WALL_2453)
                 sendMessage(player, "You climb the netting...")
                 content.global.skill.agility.AgilityHandler.climb(
                     player,
@@ -62,6 +66,7 @@ constructor(
 
             35970 -> {
                 TRAINERS[2]!!.sendChat("That's it - straight up.")
+                playAudio(player, Sounds.TREE_CLIMBING_1705)
                 sendMessage(player, "You climb the tree..")
                 content.global.skill.agility.AgilityHandler.climb(
                     player,
@@ -77,6 +82,7 @@ constructor(
 
             2312 -> {
                 TRAINERS[3]!!.sendChat("Come on scaredy cat, get across that rope!")
+                playAudio(player, Sounds.ROPECLIMB_2482)
                 sendMessage(player, "You carefully cross the tightrope.")
                 content.global.skill.agility.AgilityHandler.walk(
                     player,
@@ -97,6 +103,7 @@ constructor(
             }
 
             2314, 2315 -> {
+                playAudio(player, Sounds.TREE_CLIMBING_1705)
                 sendMessage(player, "You climb down the tree..")
                 content.global.skill.agility.AgilityHandler.climb(
                     player,
@@ -113,6 +120,7 @@ constructor(
             2286 -> {
                 TRAINERS[4]!!.sendChat("My Granny can move faster than you.")
                 player.faceLocation(player.location.transform(0, 2, 0))
+                playAudio(player, Sounds.CLIMB_WALL_2453)
                 sendMessage(player, "You climb the netting...")
                 content.global.skill.agility.AgilityHandler.climb(
                     player,
@@ -138,7 +146,6 @@ constructor(
                     return true
                 }
                 USED_PIPES[index] = GameWorld.ticks + 10
-
                 player.lock()
                 content.global.skill.agility.AgilityHandler.forceWalk(
                     player,

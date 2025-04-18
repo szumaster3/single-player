@@ -91,15 +91,17 @@ class JewelleryCraftingListener : InteractionListener {
         }
 
         onUseWith(IntType.ITEM, Items.SALVE_SHARD_4082, Items.BALL_OF_WOOL_1759) { player, used, with ->
-            if (removeItem(player, with.asItem())) {
-                replaceSlot(player, used.asItem().slot, Item(Items.SALVE_AMULET_4081))
+            if (removeItem(player, Item(used.id, 1), Container.INVENTORY)) {
+                addItem(player, Items.SALVE_AMULET_4081, 1)
                 sendMessage(player, "You carefully string the shard of crystal.")
             }
             return@onUseWith true
         }
 
         onUseWith(IntType.ITEM, Items.SALVE_AMULET_4081, Items.TARNS_DIARY_10587) { player, used, with ->
-            replaceSlot(player, used.asItem().slot, Item(Items.SALVE_AMULETE_10588))
+            if (removeItem(player, Item(used.id, 1), Container.INVENTORY)) {
+                addItem(player, Items.SALVE_AMULETE_10588, 1)
+            }
             return@onUseWith true
         }
     }

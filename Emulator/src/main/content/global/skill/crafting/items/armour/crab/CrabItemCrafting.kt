@@ -4,6 +4,7 @@ import core.api.*
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.skill.Skills
+import core.game.node.item.Item
 import org.rs.consts.Items
 
 class CrabItemCrafting : InteractionListener {
@@ -17,8 +18,8 @@ class CrabItemCrafting : InteractionListener {
                 sendDialogue(player, "You need a crafting level of at least 15 in order to do this.")
                 return@onUseWith false
             }
-            if (removeItem(player, with.asItem())) {
-                addItem(player, Items.CRAB_CLAW_7537)
+            if (removeItem(player, Item(with.id, 1), Container.INVENTORY)) {
+                addItem(player, Items.CRAB_CLAW_7537, 1, Container.INVENTORY)
                 rewardXP(player, Skills.CRAFTING, 32.5)
             }
             return@onUseWith true
@@ -33,8 +34,8 @@ class CrabItemCrafting : InteractionListener {
                 sendDialogue(player, "You need a crafting level of at least 15 in order to do this.")
                 return@onUseWith false
             }
-            if (removeItem(player, with.asItem())) {
-                addItem(player, Items.CRAB_HELMET_7539)
+            if (removeItem(player, Item(with.id, 1), Container.INVENTORY)) {
+                addItem(player, Items.CRAB_HELMET_7539, 1, Container.INVENTORY)
                 rewardXP(player, Skills.CRAFTING, 32.5)
             }
             return@onUseWith true

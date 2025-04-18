@@ -36,7 +36,7 @@ class ArdougneLogShortcut : InteractionListener {
 
             lock(player, 10)
             face(player, node)
-
+            playAudio(player, Sounds.LOG_BALANCE_2470)
             player.logoutListeners["balance-log"] = { p: Player -> p.location = start }
 
             if (AgilityHandler.hasFailed(player, 33, 0.1)) {
