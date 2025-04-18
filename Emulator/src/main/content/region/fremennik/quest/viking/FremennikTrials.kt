@@ -41,9 +41,9 @@ class FremennikTrials :
             line(player, "Level 40 Crafting", line++, getStatLevel(player, Skills.CRAFTING) >= 40)
             line(player, "Level 25 Fletching", line++, getStatLevel(player, Skills.FLETCHING) >= 25)
             line(player, "I must also be able to defeat a !!level 69 enemy?? and must", line++)
-            line(player, "not be afraid of !!combat without any weapons or armour.", line++)
+            line(player, "not be afraid of !!combat without any weapons or armour??.", line++)
             line += 1
-            line(player, "I can start this quest by speaking to !!Chieftan Brundt?? on", line++)
+            line(player, "I can start this quest by speaking to !!Chieftan Brundt?? in", line++)
             line(player, "the !!Fremennik Longhall??, which is in the town of !!Rellekka?? to", line++)
             line(player, "the north of !!Sinclair Mansion??.", line)
         } else if (started && stage != 100) {
@@ -69,7 +69,7 @@ class FremennikTrials :
         } else if (stage == 100) {
             line(player, "I made my way to the far north of !!Kandarin?? and found", line++)
             line(player, "the Barbarian hometown of !!Rellekka??. The tribe that live", line++)
-            line(player, "there call themselves the !!Fremennik??, and offerred me the", line++)
+            line(player, "there call themselves the !!Fremennik??, and offered me the", line++)
             line(player, "chance to join them if I could pass their trials.", line++)
             line += 1
             line(player, "I managed to persuade !!seven?? of the !!twelve?? council of", line++)
