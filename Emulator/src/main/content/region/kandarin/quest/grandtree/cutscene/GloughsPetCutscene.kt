@@ -1,4 +1,4 @@
-package content.region.kandarin.quest.grandtree.handlers
+package content.region.kandarin.quest.grandtree.cutscene
 
 import content.region.kandarin.quest.grandtree.handlers.BlackDemonNPC.Companion.spawnBlackDemon
 import core.api.face
@@ -12,7 +12,13 @@ import core.game.world.map.Direction
 import core.game.world.map.Location
 import org.rs.consts.NPCs
 
-class BlackDemonCutscene(
+/**
+ * Represents the Glough's Pet cutscene in The Grand Tree quest.
+ *
+ * Relations:
+ * [The Grand Tree][content.region.kandarin.quest.grandtree.TheGrandTree]
+ */
+class GloughsPetCutscene(
     player: Player,
 ) : Cutscene(player) {
     override fun setup() {

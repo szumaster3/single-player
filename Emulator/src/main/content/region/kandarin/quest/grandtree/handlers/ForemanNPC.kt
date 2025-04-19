@@ -1,6 +1,6 @@
 package content.region.kandarin.quest.grandtree.handlers
 
-import content.region.kandarin.quest.grandtree.dialogue.ForemanGTDialogue
+import content.region.kandarin.quest.grandtree.dialogue.ForemanDialogue
 import core.api.item.produceGroundItem
 import core.api.openDialogue
 import core.api.quest.getQuestStage
@@ -18,6 +18,12 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Foreman NPC.
+ *
+ * Relations:
+ * [The Grand Tree][content.region.kandarin.quest.grandtree.TheGrandTree]
+ */
 @Initializable
 class ForemanNPC(
     id: Int = 0,
@@ -35,7 +41,7 @@ class ForemanNPC(
     override fun defineListeners() {
         on(this.ids, IntType.NPC, "talk-to") { player, npc ->
             if (!isQuestComplete(player, Quests.THE_GRAND_TREE)) {
-                openDialogue(player, ForemanGTDialogue(), npc)
+                openDialogue(player, ForemanDialogue(), npc)
             } else {
                 sendDialogue(player, "The foreman is too busy to talk.")
             }

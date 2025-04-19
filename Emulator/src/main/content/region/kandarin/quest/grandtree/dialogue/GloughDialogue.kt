@@ -15,7 +15,13 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
-class GloughGTDialogue : DialogueFile() {
+/**
+ * Represents the Glough dialogue.
+ *
+ * Relations:
+ * [The Grand Tree][content.region.kandarin.quest.grandtree.TheGrandTree]
+ */
+class GloughDialogue : DialogueFile() {
     override fun handle(
         componentID: Int,
         buttonID: Int,

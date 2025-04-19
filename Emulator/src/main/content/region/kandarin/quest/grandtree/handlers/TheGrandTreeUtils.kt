@@ -11,6 +11,9 @@ import core.tools.GREEN
 import core.tools.RED
 import org.rs.consts.Items
 
+/**
+ * Holds [The Grand Tree][content.region.kandarin.quest.grandtree.TheGrandTree] utils.
+ */
 object TheGrandTreeUtils {
     const val TWIG_0 = "/save:grandtree:twig:0"
     const val TWIG_1 = "/save:grandtree:twig:1"

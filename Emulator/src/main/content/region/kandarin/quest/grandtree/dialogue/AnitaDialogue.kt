@@ -14,6 +14,12 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Anita dialogue.
+ *
+ * Relations:
+ * [The Grand Tree][content.region.kandarin.quest.grandtree.TheGrandTree]
+ */
 @Initializable
 class AnitaDialogue(
     player: Player? = null,

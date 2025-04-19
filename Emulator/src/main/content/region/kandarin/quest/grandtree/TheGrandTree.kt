@@ -15,6 +15,11 @@ import org.rs.consts.Items
 import org.rs.consts.Quests
 import org.rs.consts.Vars
 
+/**
+ * Represents the Grand Tree quest.
+ *
+ * Author: [downthecrop](https://gitlab.com/downthecrop)
+ */
 @Initializable
 class TheGrandTree : Quest(Quests.THE_GRAND_TREE, 71, 70, 5, Vars.VARP_QUEST_THE_GRAND_TREE_PROGRESS_150, 0, 1, 160) {
     override fun drawJournal(

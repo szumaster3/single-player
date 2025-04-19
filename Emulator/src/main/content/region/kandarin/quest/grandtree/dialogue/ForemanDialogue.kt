@@ -14,7 +14,13 @@ import org.rs.consts.Components
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
-class ForemanGTDialogue : DialogueFile() {
+/**
+ * Represents the Foreman dialogue.
+ *
+ * Relations:
+ * [The Grand Tree][content.region.kandarin.quest.grandtree.TheGrandTree]
+ */
+class ForemanDialogue : DialogueFile() {
     private fun attackPlayer() {
         val foreman = RegionManager.getNpc(player!!.location, NPCs.FOREMAN_674, 6)
         foreman!!.attack(player!!)

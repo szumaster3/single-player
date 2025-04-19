@@ -24,6 +24,12 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the King Narnode dialogue.
+ *
+ * Relations:
+ * [The Grand Tree][content.region.kandarin.quest.grandtree.TheGrandTree]
+ */
 class KingNarnodeDialogue : DialogueFile() {
 
     val trapdoorLocation = Location(2464, 3497, 0)

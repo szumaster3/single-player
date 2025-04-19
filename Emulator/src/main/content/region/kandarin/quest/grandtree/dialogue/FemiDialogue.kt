@@ -15,7 +15,13 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
-class FemiGTDialogue : DialogueFile() {
+/**
+ * Represents the Femi dialogue.
+ *
+ * Relations:
+ * [The Grand Tree][content.region.kandarin.quest.grandtree.TheGrandTree]
+ */
+class FemiDialogue : DialogueFile() {
     override fun handle(
         componentID: Int,
         buttonID: Int,

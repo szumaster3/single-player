@@ -13,6 +13,12 @@ import core.plugin.Initializable
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Black Demon NPC.
+ *
+ * Relations:
+ * [The Grand Tree][content.region.kandarin.quest.grandtree.TheGrandTree]
+ */
 @Initializable
 class BlackDemonNPC(
     id: Int = 0,

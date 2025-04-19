@@ -20,8 +20,14 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Charlie dialogue.
+ *
+ * Relations:
+ * [The Grand Tree][content.region.kandarin.quest.grandtree.TheGrandTree]
+ */
 @Initializable
-class CharlieGTDialogue(
+class CharlieDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
     override fun handle(

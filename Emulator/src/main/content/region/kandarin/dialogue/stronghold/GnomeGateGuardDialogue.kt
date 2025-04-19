@@ -1,6 +1,6 @@
 package content.region.kandarin.dialogue.stronghold
 
-import content.region.kandarin.quest.grandtree.dialogue.FemiGTDialogue
+import content.region.kandarin.quest.grandtree.dialogue.FemiDialogue
 import core.api.face
 import core.api.findLocalNPC
 import core.api.openDialogue
@@ -25,7 +25,7 @@ class GnomeGateGuardDialogue : DialogueFile() {
                 end()
                 findLocalNPC(player!!, NPCs.FEMI_676)?.let {
                     face(player!!, it, 2)
-                    openDialogue(player!!, FemiGTDialogue())
+                    openDialogue(player!!, FemiDialogue())
                 }
             }
         }

@@ -14,6 +14,12 @@ import org.rs.consts.Components
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Captain Errdo dialogue.
+ *
+ * Relations:
+ * [The Grand Tree][content.region.kandarin.quest.grandtree.TheGrandTree]
+ */
 @Initializable
 class CaptainErrdoDialogue(
     player: Player? = null,

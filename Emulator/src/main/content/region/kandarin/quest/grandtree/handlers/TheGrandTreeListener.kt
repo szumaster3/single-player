@@ -1,8 +1,9 @@
 package content.region.kandarin.quest.grandtree.handlers
 
 import content.global.handlers.iface.ScrollInterface
+import content.region.kandarin.quest.grandtree.cutscene.GloughsPetCutscene
 import content.region.kandarin.quest.grandtree.dialogue.KingNarnodeUnderGroundDialogue
-import content.region.kandarin.quest.grandtree.dialogue.ShipyardWorkerGTDialogue
+import content.region.kandarin.quest.grandtree.dialogue.ShipyardWorkerDialogueFile
 import content.region.karamja.quest.mm.dialogue.KingNarnodeMMDialogue
 import core.api.*
 import core.api.quest.getQuestStage
@@ -84,7 +85,7 @@ class TheGrandTreeListener : InteractionListener {
                     getAttribute(player, TheGrandTreeUtils.TWIG_3, false)
                 ) {
                     animate(player, 827)
-                    BlackDemonCutscene(player).start()
+                    GloughsPetCutscene(player).start()
                 }
             } else {
                 sendDialogue(player, "The trapdoor won't open.")
@@ -213,7 +214,7 @@ class TheGrandTreeListener : InteractionListener {
                         face(it, player, 1)
                         face(player, it, 1)
                     }
-                    openDialogue(player, ShipyardWorkerGTDialogue(), NPC(NPCs.SHIPYARD_WORKER_675))
+                    openDialogue(player, ShipyardWorkerDialogueFile(), NPC(NPCs.SHIPYARD_WORKER_675))
                 } else {
                     DoorActionHandler.autowalkFence(
                         player,
