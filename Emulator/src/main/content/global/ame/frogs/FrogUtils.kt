@@ -49,8 +49,7 @@ object FrogUtils {
         node: Node,
     ) {
         val npc = node as NPC
-        lock(player, 100)
-        lockInteractions(player, 100)
+        lock(player, 12)
         submitIndividualPulse(
             player,
             object : Pulse() {
