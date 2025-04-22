@@ -125,7 +125,8 @@ class BonzoDialogue(
              */
 
             24 -> {
-                var fishingSpots = findLocalNPC(player, NPCs.FISHING_SPOT_309)!!
+                val willowTreeSpot = findLocalNPC(player, NPCs.FISHING_SPOT_309)!!
+                val besidePipeSpot = findNPC(Location.create(2637, 3444, 0), NPCs.FISHING_SPOT_309)
                 setAttribute(player, GameAttributes.QUEST_FISHINGCOMPO_CONTEST, true)
                 Pulser.submit(object : Pulse(1, player) {
                     var counter: Int = 0
@@ -133,7 +134,7 @@ class BonzoDialogue(
                         when (counter++) {
                             0 -> {
                                 // Transform the willow tree spot for competition.
-                                fishingSpots.asNpc().transform(NPCs.FISHING_SPOT_234)
+                                willowTreeSpot.asNpc().transform(NPCs.FISHING_SPOT_234)
                             }
 
                             7 -> {
@@ -152,8 +153,10 @@ class BonzoDialogue(
                             10 -> {
                                 if (getAttribute(player, GameAttributes.QUEST_FISHINGCOMPO_STASH_GARLIC, false)) {
                                     npc("Hmm. You'd better go and take the area by the pipes", "then.")
+                                    // Reset willow tree spot.
+                                    willowTreeSpot.reTransform()
                                     // Transform spot beside pipe to carp spot.
-                                    fishingSpots.transform(NPCs.FISHING_SPOT_233)
+                                    besidePipeSpot!!.transform(NPCs.FISHING_SPOT_233)
                                 } else {
                                     counter++
                                 }
@@ -162,9 +165,6 @@ class BonzoDialogue(
                             13 -> {
                                 if (getAttribute(player, GameAttributes.QUEST_FISHINGCOMPO_STASH_GARLIC, false)) {
                                     sendDialogue(player, "Your fishing competition spot is now beside the pipes.")
-                                }
-                                registerLogoutListener(player, "fishing-contest-end") {
-                                    fishingSpots.reTransform()
                                 }
                             }
 
