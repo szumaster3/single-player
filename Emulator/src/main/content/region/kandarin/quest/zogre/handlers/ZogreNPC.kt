@@ -10,15 +10,16 @@ import core.tools.RandomFunction
 import core.tools.minutesToTicks
 import org.rs.consts.NPCs
 
-class ZogreNPC : NPCBehavior(*ZOGRES_NPC + SKOGRE_NPC) {
+class ZogreNPC : NPCBehavior(*IDS) {
     override fun onCreation(self: NPC) {
         self.isWalks = true
         self.isNeverWalks = false
         self.isAggressive = true
+        self.task.undead = true
     }
 
     companion object {
-        private val ZOGRES_NPC =
+        private val IDS =
             intArrayOf(
                 NPCs.ZOGRE_2044,
                 NPCs.ZOGRE_2045,
@@ -26,14 +27,16 @@ class ZogreNPC : NPCBehavior(*ZOGRES_NPC + SKOGRE_NPC) {
                 NPCs.ZOGRE_2047,
                 NPCs.ZOGRE_2048,
                 NPCs.ZOGRE_2049,
-                NPCs.SKOGRE_2050,
                 NPCs.ZOGRE_2051,
                 NPCs.ZOGRE_2052,
                 NPCs.ZOGRE_2053,
                 NPCs.ZOGRE_2054,
                 NPCs.ZOGRE_2055,
+
+                NPCs.SKOGRE_2050,
+                NPCs.SKOGRE_2056,
+                NPCs.SKOGRE_2057,
             )
-        private val SKOGRE_NPC = intArrayOf(NPCs.SKOGRE_2056, NPCs.SKOGRE_2057)
     }
 
     override fun beforeAttackFinalized(

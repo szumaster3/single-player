@@ -57,7 +57,7 @@ class CrumbleUndeadSpell :
         target: Node,
     ): Boolean {
         val npc = if (target is NPC) target else null
-        if (npc == null || npc.task == null || !npc.task.undead || npc.id != NPCs.SLASH_BASH_2060) {
+        if (npc == null || npc.task == null || !npc.task.undead) {
             (entity as Player).packetDispatch.sendMessage("This spell only affects the undead.")
             return false
         }

@@ -4,13 +4,10 @@ import core.api.*
 import core.api.item.produceGroundItem
 import core.game.node.entity.Entity
 import core.game.node.entity.combat.BattleState
-import core.game.node.entity.combat.CombatStyle
 import core.game.node.entity.npc.AbstractNPC
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.npc.NPCBehavior
 import core.game.node.entity.player.Player
-import core.game.node.item.Item
-import core.game.system.config.ItemConfigParser
 import core.game.system.task.Pulse
 import core.game.world.GameWorld
 import core.game.world.map.Location
@@ -49,19 +46,9 @@ class SlashBashNPC(
     }
 
     companion object {
-        val brutalArrows =
-            intArrayOf(
-                Items.BRONZE_BRUTAL_4773,
-                Items.IRON_BRUTAL_4778,
-                Items.STEEL_BRUTAL_4783,
-                Items.BLACK_BRUTAL_4788,
-                Items.MITHRIL_BRUTAL_4793,
-                Items.ADAMANT_BRUTAL_4798,
-                Items.RUNE_BRUTAL_4803,
-            )
-        val questItem = Items.OGRE_ARTEFACT_4818
+        const val OGRE_ARTIFACT = Items.OGRE_ARTEFACT_4818
 
-        fun spawnZogreBoss(player: Player) {
+        fun spawnSlashBash(player: Player) {
             val boss = SlashBashNPC(NPCs.SLASH_BASH_2060)
             val spawnGraphics =
                 Graphics(org.rs.consts.Graphics.RANDOM_EVENT_PUFF_OF_SMOKE_86)
@@ -73,11 +60,13 @@ class SlashBashNPC(
             if (boss.asNpc() != null && boss.isActive) {
                 boss.properties.teleportLocation = boss.properties.spawnLocation
             }
-
             boss.isActive = true
             GameWorld.Pulser.submit(
                 object : Pulse(2, boss) {
                     override fun pulse(): Boolean {
+                        registerLogoutListener(player, "slash-bash") { _ ->
+                            boss.clear()
+                        }
                         setAttribute(player, ZUtils.SLASH_BASH_ACTIVE, true)
                         sendMessage(player, "Something stirs behind you!")
                         visualize(boss, -1, spawnGraphics)
@@ -95,27 +84,17 @@ class SlashBashNPC(
         super.checkImpact(state)
         val player = state.attacker
         if (player is Player) {
-            val checkWeapon: Item = getItemFromEquipment(player, EquipmentSlot.WEAPON)!!
-            val checkAmmunition = getItemFromEquipment(player, EquipmentSlot.AMMO)!!
-            val crumbleUndead = 22
-            if (checkWeapon.definition.getConfiguration(
-                    ItemConfigParser.TWO_HANDED,
-                    false,
-                ) == true &&
-                state.style == CombatStyle.RANGE
-            ) {
-                if (state.estimatedHit > -1) {
-                    state.estimatedHit = 0
-                    return
+            if (state.spell != null && state.spell.spellId == 22 || inEquipment(player, Items.COMP_OGRE_BOW_4827)) {
+                state.estimatedHit = (state.estimatedHit * 0.5).toInt()
+                if (state.secondaryHit > 0) {
+                    state.secondaryHit = (state.secondaryHit * 0.5).toInt()
                 }
-                if (checkWeapon.id == Items.COMP_OGRE_BOW_4827 && checkAmmunition.id in brutalArrows) {
-                    state.neutralizeHits()
-                    state.estimatedHit = state.maximumHit
+                return
+            } else {
+                state.estimatedHit = (state.estimatedHit * 0.25).toInt()
+                if (state.secondaryHit > 0) {
+                    state.secondaryHit = (state.secondaryHit * 0.25).toInt()
                 }
-            }
-            if (player.properties.spell.spellId == crumbleUndead) {
-                state.neutralizeHits()
-                state.estimatedHit = state.maximumHit
             }
         }
     }
@@ -123,7 +102,7 @@ class SlashBashNPC(
     override fun finalizeDeath(killer: Entity?) {
         if (killer is Player) {
             val player = killer.asPlayer()
-            produceGroundItem(player, questItem, 1, this.location)
+            produceGroundItem(player, OGRE_ARTIFACT, 1, this.location)
             produceGroundItem(player, Items.OURG_BONES_4834, RandomFunction.random(1, 3), this.location)
             produceGroundItem(player, Items.ZOGRE_BONES_4812, RandomFunction.random(1, 2), this.location)
             setVarbit(player!!, Vars.VARBIT_QUEST_ZORGE_FLESH_EATERS_PROGRESS_487, 12, true)
@@ -136,6 +115,11 @@ class SlashBashNPC(
 }
 
 class SlashBashBehavior : NPCBehavior(NPCs.SLASH_BASH_2060) {
+
+    override fun onCreation(self: NPC) {
+        self.task.undead = true
+    }
+
     override fun beforeAttackFinalized(
         self: NPC,
         victim: Entity,

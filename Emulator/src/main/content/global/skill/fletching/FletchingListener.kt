@@ -48,18 +48,25 @@ class FletchingListener : InteractionListener {
          */
 
         onUseWith(IntType.ITEM, Fletching.arrowShaftId, *Fletching.featherIds) { player, shaft, feather ->
-            sendSkillDialogue(player) {
-                withItems(Fletching.fletchedShaftId)
-                create { _, amount ->
-                    submitIndividualPulse(
-                        entity = player,
-                        pulse = HeadlessArrowPulse(player, Item(shaft.id), Item(feather.id), amount),
-                    )
+            val handler =
+                object : SkillDialogueHandler(
+                    player,
+                    SkillDialogue.MAKE_SET_ONE_OPTION,
+                    Item(Fletching.fletchedShaftId),
+                ) {
+                    override fun create(
+                        amount: Int,
+                        index: Int,
+                    ) {
+                        submitIndividualPulse(
+                            entity = player,
+                            pulse = HeadlessArrowPulse(player, Item(shaft.id), Item(feather.id), amount),
+                        )
+                    }
+                    override fun getAll(index: Int): Int =
+                        amountInInventory(player, shaft.id)
                 }
-                calculateMaxAmount {
-                    amountInInventory(player, shaft.id)
-                }
-            }
+            handler.open()
             return@onUseWith true
         }
 
@@ -69,19 +76,25 @@ class FletchingListener : InteractionListener {
 
         onUseWith(IntType.ITEM, Fletching.fletchedShaftId, *Fletching.unfinishedArrows) { player, shaft, unfinished ->
             val arrowHead = ArrowHead.getByUnfinishedId(unfinished.id) ?: return@onUseWith false
-            sendSkillDialogue(player) {
-                withItems(arrowHead.finished)
-                create { _, amount ->
-                    submitIndividualPulse(
-                        entity = player,
-                        pulse = ArrowHeadPulse(player, Item(shaft.id), arrowHead, amount),
-                    )
+            val handler =
+                object : SkillDialogueHandler(
+                    player,
+                    SkillDialogue.MAKE_SET_ONE_OPTION,
+                    Item(arrowHead.finished),
+                ) {
+                    override fun create(
+                        amount: Int,
+                        index: Int,
+                    ) {
+                        submitIndividualPulse(
+                            entity = player,
+                            pulse = ArrowHeadPulse(player, Item(shaft.id), arrowHead, amount),
+                        )
+                    }
+                    override fun getAll(index: Int): Int =
+                        amountInInventory(player, shaft.id)
                 }
-                calculateMaxAmount {
-                    amountInInventory(player, shaft.id)
-                }
-            }
-
+            handler.open()
             return@onUseWith true
         }
 
@@ -90,32 +103,37 @@ class FletchingListener : InteractionListener {
          */
 
         onUseWith(IntType.ITEM, Items.WOLFBONE_ARROWTIPS_2861, Items.FLIGHTED_OGRE_ARROW_2865) { player, used, with ->
-            fun getMaxAmount(_unused: Int = 0): Int {
-                val tips = amountInInventory(player, Items.WOLFBONE_ARROWTIPS_2861)
-                val shafts = amountInInventory(player, Items.FLIGHTED_OGRE_ARROW_2865)
+            val tips = amountInInventory(player, Items.WOLFBONE_ARROWTIPS_2861)
+            val shafts = amountInInventory(player, Items.FLIGHTED_OGRE_ARROW_2865)
+
+            fun getMaxAmount(): Int {
                 return min(tips, shafts)
             }
 
             fun process() {
-                val amountThisIter = min(6, getMaxAmount())
-                if (removeItem(player, Item(used.id, amountThisIter)) &&
+                val amount = min(6, getMaxAmount())
+                if (removeItem(player, Item(used.id, amount)) &&
                     removeItem(
                         player,
-                        Item(with.id, amountThisIter),
+                        Item(with.id, amount),
                     )
                 ) {
-                    addItem(player, Items.OGRE_ARROW_2866, amountThisIter)
+                    addItem(player, Items.OGRE_ARROW_2866, amount)
                     rewardXP(player, Skills.FLETCHING, 6.0)
-                    sendMessage(player, "You make $amountThisIter ogre arrows.")
+                    sendMessage(player, "You make $amount ogre arrows.")
                 }
             }
 
             sendSkillDialogue(player) {
+                withItems(Item(Items.OGRE_ARROW_2866, 5))
+
                 create { _, amount ->
                     runTask(player, delay = 2, repeatTimes = min(amount, getMaxAmount() / 6 + 1), task = ::process)
                 }
-                calculateMaxAmount(::getMaxAmount)
-                withItems(Item(Items.OGRE_ARROW_2866, 5))
+
+                calculateMaxAmount { _ ->
+                    min(amountInInventory(player, tips), amountInInventory(player, shafts))
+                }
             }
             return@onUseWith true
         }
@@ -188,15 +206,25 @@ class FletchingListener : InteractionListener {
 
         onUseWith(IntType.ITEM, Items.CHISEL_1755, *Fletching.gemIds) { player, used, with ->
             val gem = GemBolt.product[with.id] ?: return@onUseWith true
-            sendSkillDialogue(player) {
-                withItems(gem.gem)
-                create { _, amount ->
-                    submitIndividualPulse(
-                        entity = player,
-                        pulse = GemBoltCutPulse(player, Item(used.id), gem, amount),
-                    )
+            val handler =
+                object : SkillDialogueHandler(
+                    player,
+                    SkillDialogue.MAKE_SET_ONE_OPTION,
+                    Item(gem.product),
+                ) {
+                    override fun create(
+                        amount: Int,
+                        index: Int,
+                    ) {
+                        submitIndividualPulse(
+                            entity = player,
+                            pulse = GemBoltCutPulse(player, Item(used.id), gem, amount),
+                        )
+                    }
+                    override fun getAll(index: Int): Int =
+                        amountInInventory(player, used.id)
                 }
-            }
+            handler.open()
             return@onUseWith true
         }
 
@@ -229,18 +257,26 @@ class FletchingListener : InteractionListener {
          */
 
         onUseWith(IntType.ITEM, Items.CHISEL_1755, *Fletching.kebbitSpikeIds) { player, _, base ->
-            sendSkillDialogue(player) {
-                withItems(base.id)
-                create { _, amount ->
-                    submitIndividualPulse(
-                        entity = player,
-                        pulse = KebbitBoltPulse(player, Item(base.id), KebbitBolt.forId(base.asItem())!!, amount),
-                    )
+            val handler =
+                object : SkillDialogueHandler(
+                    player,
+                    SkillDialogue.MAKE_SET_ONE_OPTION,
+                    Item(base.id),
+                ) {
+                    override fun create(
+                        amount: Int,
+                        index: Int,
+                    ) {
+                        submitIndividualPulse(
+                            entity = player,
+                            pulse = KebbitBoltPulse(player, Item(base.id), KebbitBolt.forId(base.asItem())!!, amount),
+                        )
+                    }
+
+                    override fun getAll(index: Int): Int =
+                        amountInInventory(player, base.id)
                 }
-                calculateMaxAmount {
-                    amountInInventory(player, base.id)
-                }
-            }
+            handler.open()
             return@onUseWith true
         }
 
@@ -262,7 +298,7 @@ class FletchingListener : InteractionListener {
                 return@onUseWith true
             }
 
-            fun getMaxAmount(_unused: Int = 0): Int {
+            fun getMaxAmount(): Int {
                 val tips = amountInInventory(player, used.id)
                 val bolts = amountInInventory(player, with.id)
                 return min(tips, bolts)
@@ -277,13 +313,21 @@ class FletchingListener : InteractionListener {
                 }
             }
 
-            sendSkillDialogue(player) {
-                create { _, amount ->
-                    runTask(player, delay = 2, repeatTimes = min(amount, getMaxAmount() / 6 + 1), task = ::process)
+            val handler =
+                object : SkillDialogueHandler(
+                    player,
+                    SkillDialogue.MAKE_SET_ONE_OPTION,
+                    Item(Items.BARBED_BOLTS_881),
+                ) {
+                    override fun create(
+                        amount: Int,
+                        index: Int,
+                    ) {
+                        runTask(player, delay = 2, repeatTimes = min(amount, getMaxAmount() / 6 + 1), task = ::process)
+                    }
+                    override fun getAll(index: Int): Int = getMaxAmount()
                 }
-                calculateMaxAmount(::getMaxAmount)
-                withItems(Item(Items.BARBED_BOLTS_881, 10))
-            }
+            handler.open()
             return@onUseWith true
         }
 
@@ -301,7 +345,7 @@ class FletchingListener : InteractionListener {
                 return@onUseWith true
             }
 
-            fun getMaxAmount(_unused: Int = 0): Int {
+            fun getMaxAmount(): Int {
                 val tips = amountInInventory(player, Items.OGRE_ARROW_SHAFT_2864)
                 val feathers = Fletching.featherIds.sumOf { amountInInventory(player, it) }
                 return min(tips, feathers)
@@ -315,14 +359,21 @@ class FletchingListener : InteractionListener {
                     sendMessage(player, "You attach $amount feathers to the ogre arrow shafts.")
                 }
             }
-
-            sendSkillDialogue(player) {
-                create { _, amount ->
-                    runTask(player, delay = 2, repeatTimes = min(amount, getMaxAmount() / 6 + 1), task = ::process)
+            val handler =
+                object : SkillDialogueHandler(
+                    player,
+                    SkillDialogue.MAKE_SET_ONE_OPTION,
+                    Item(Fletching.fligtedOgreArrowId),
+                ) {
+                    override fun create(
+                        amount: Int,
+                        index: Int,
+                    ) {
+                        runTask(player, delay = 2, amount, task = ::process)
+                    }
+                    override fun getAll(index: Int): Int = getMaxAmount()
                 }
-                calculateMaxAmount(::getMaxAmount)
-                withItems(Item(Fletching.fligtedOgreArrowId, 4))
-            }
+            handler.open()
             return@onUseWith true
         }
 
@@ -332,18 +383,26 @@ class FletchingListener : InteractionListener {
 
         onUseWith(IntType.ITEM, Fletching.fligtedOgreArrowId, *Fletching.nailIds) { player, used, with ->
             val brutalArrow = BrutalArrow.product[with.id] ?: return@onUseWith false
-            sendSkillDialogue(player) {
-                withItems(brutalArrow.product)
-                create { _, amount ->
-                    submitIndividualPulse(
-                        entity = player,
-                        pulse = BrutalArrowPulse(player, Item(used.id), brutalArrow, amount),
-                    )
+            val handler =
+                object : SkillDialogueHandler(
+                    player,
+                    SkillDialogue.MAKE_SET_ONE_OPTION,
+                    Item(brutalArrow.product),
+                ) {
+                    override fun create(
+                        amount: Int,
+                        index: Int,
+                    ) {
+                        submitIndividualPulse(
+                            entity = player,
+                            pulse = BrutalArrowPulse(player, Item(used.id), brutalArrow, amount),
+                        )
+                    }
+
+                    override fun getAll(index: Int): Int =
+                        amountInInventory(player, with.id)
                 }
-                calculateMaxAmount {
-                    amountInInventory(player, with.id)
-                }
-            }
+            handler.open()
             return@onUseWith true
         }
     }

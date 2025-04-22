@@ -2,7 +2,7 @@ package content.region.kandarin.quest.zogre.handlers
 
 import content.global.skill.thieving.PickpocketListener
 import content.region.kandarin.quest.zogre.handlers.BrentleVahnNPC.Companion.spawnHumanZombie
-import content.region.kandarin.quest.zogre.handlers.SlashBashNPC.Companion.spawnZogreBoss
+import content.region.kandarin.quest.zogre.handlers.SlashBashNPC.Companion.spawnSlashBash
 import core.api.*
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
@@ -521,7 +521,7 @@ class GutanothListener : InteractionListener {
                 getAttribute(player, ZUtils.SLASH_BASH_ACTIVE, false) -> return@on false
                 else ->
                     if (getVarbit(player, Vars.VARBIT_QUEST_ZORGE_FLESH_EATERS_PROGRESS_487) >= 8) {
-                        spawnZogreBoss(
+                        spawnSlashBash(
                             player,
                         )
                     }

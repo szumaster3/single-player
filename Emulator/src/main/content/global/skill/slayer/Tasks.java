@@ -264,7 +264,7 @@ public enum Tasks {
     /**
      * The Ogres.
      */
-    OGRES(40, new int[]{115, 374, 2044, 2045, 2046, 2047, 2048, 2049, 2050, 2051, 2052, 2053, 2054, 2055, 2056, 2057, 2801, 3419, 7078, 7079, 7080, 7081, 7082}, new String[]{"Ogres are brutal creatures, favouring large blunt maces and clubs", "they often attack without warning."}, 1, false, false),
+    OGRES(40, new int[]{115, 374, 2044, 2045, 2046, 2047, 2048, 2049, 2050, 2051, 2052, 2053, 2054, 2055, 2056, 2057, NPCs.SLASH_BASH_2060, 2801, 3419, 7078, 7079, 7080, 7081, 7082}, new String[]{"Ogres are brutal creatures, favouring large blunt maces and clubs", "they often attack without warning."}, 1, false, false),
     /**
      * The Otherwordly being.
      */
