@@ -291,4 +291,9 @@ internal object GameAttributes {
     // Phoenix Lair
     const val PHOENIX_LAIR_EGGLING_CUTE = "/save:phoenix-familiar:0"
     const val PHOENIX_LAIR_EGGLING_MEAN = "/save:phoenix-familiar:1"
+
+    // Fishing contest quest
+    const val QUEST_FISHINGCOMPO_WON = "/save:fishing_contest:won"
+    const val QUEST_FISHINGCOMPO_STASH_GARLIC = "/save:fishing_contest:garlic-stuffed"
+    const val QUEST_FISHINGCOMPO_CONTEST = "fishing_contest:contest-start"
 }

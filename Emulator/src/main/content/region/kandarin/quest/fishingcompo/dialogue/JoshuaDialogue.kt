@@ -6,6 +6,12 @@ import core.game.node.entity.player.Player
 import core.plugin.Initializable
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Joshua dialogue.
+ *
+ * Relations:
+ * - [Fishing Contest][content.region.kandarin.quest.fishingcompo.FishingContest]
+ */
 @Initializable
 class JoshuaDialogue(
     player: Player? = null,
@@ -30,23 +36,22 @@ class JoshuaDialogue(
                 stage++
             }
 
-            1 ->
-                when (buttonId) {
-                    1 -> {
-                        player("Um... nothing really...")
-                        stage = 10
-                    }
-
-                    2 -> {
-                        player("Can I fish here instead of you?")
-                        stage = 20
-                    }
-
-                    3 -> {
-                        player("Do you have any tips for me?")
-                        stage = 30
-                    }
+            1 -> when (buttonId) {
+                1 -> {
+                    player("Um... nothing really...")
+                    stage = 10
                 }
+
+                2 -> {
+                    player("Can I fish here instead of you?")
+                    stage = 20
+                }
+
+                3 -> {
+                    player("Do you have any tips for me?")
+                    stage = 30
+                }
+            }
 
             9 -> end()
             10 -> {

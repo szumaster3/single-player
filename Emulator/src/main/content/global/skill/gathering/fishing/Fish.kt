@@ -16,210 +16,223 @@ enum class Fish(
         level = 1,
         experience = 1.0,
         lowChance = 0.121,
-        highChance = 0.16,
+        highChance = 0.16
     ),
     CRAYFISH(
         id = Items.RAW_CRAYFISH_13435,
         level = 1,
         experience = 10.0,
         lowChance = 0.15,
-        highChance = 0.5,
+        highChance = 0.5
     ),
     SHRIMP(
         id = Items.RAW_SHRIMPS_317,
         level = 1,
         experience = 10.0,
         lowChance = 0.191,
-        highChance = 0.5,
+        highChance = 0.5
     ),
     SARDINE(
         id = Items.RAW_SARDINE_327,
         level = 5,
         experience = 20.0,
         lowChance = 0.148,
-        highChance = 0.374,
+        highChance = 0.374
     ),
     KARAMBWANJI(
         id = Items.RAW_KARAMBWANJI_3150,
         level = 5,
         experience = 5.0,
         lowChance = 0.4,
-        highChance = 0.98,
+        highChance = 0.98
     ),
     HERRING(
         id = Items.RAW_HERRING_345,
         level = 10,
         experience = 30.0,
         lowChance = 0.129,
-        highChance = 0.504,
+        highChance = 0.504
     ),
-    ANCHOVIE(
+    ANCHOVY(
         id = Items.RAW_ANCHOVIES_321,
         level = 15,
         experience = 40.0,
         lowChance = 0.098,
-        highChance = 0.5,
+        highChance = 0.5
     ),
     MACKEREL(
         id = Items.RAW_MACKEREL_353,
         level = 16,
         experience = 20.0,
         lowChance = 0.055,
-        highChance = 0.258,
+        highChance = 0.258
     ),
     TROUT(
         id = Items.RAW_TROUT_335,
         level = 20,
         experience = 50.0,
         lowChance = 0.246,
-        highChance = 0.468,
+        highChance = 0.468
     ),
     COD(
         id = Items.RAW_COD_341,
         level = 23,
         experience = 45.0,
         lowChance = 0.063,
-        highChance = 0.219,
+        highChance = 0.219
     ),
     PIKE(
         id = Items.RAW_PIKE_349,
         level = 25,
         experience = 60.0,
         lowChance = 0.14,
-        highChance = 0.379,
+        highChance = 0.379
     ),
     SLIMY_EEL(
         id = Items.SLIMY_EEL_3379,
         level = 28,
         experience = 65.0,
         lowChance = 0.117,
-        highChance = 0.216,
+        highChance = 0.216
     ),
     SALMON(
         id = Items.RAW_SALMON_331,
         level = 30,
         experience = 70.0,
         lowChance = 0.156,
-        highChance = 0.378,
+        highChance = 0.378
     ),
     FROG_SPAWN(
         id = Items.FROG_SPAWN_5004,
         level = 33,
         experience = 75.0,
         lowChance = 0.164,
-        highChance = 0.379,
+        highChance = 0.379
     ),
     TUNA(
         id = Items.RAW_TUNA_359,
         level = 35,
         experience = 80.0,
         lowChance = 0.109,
-        highChance = 0.205,
+        highChance = 0.205
     ),
     RAINBOW_FISH(
         id = Items.RAW_RAINBOW_FISH_10138,
         level = 38,
         experience = 80.0,
         lowChance = 0.113,
-        highChance = 0.254,
+        highChance = 0.254
     ),
     CAVE_EEL(
         id = Items.RAW_CAVE_EEL_5001,
         level = 38,
         experience = 80.0,
         lowChance = 0.145,
-        highChance = 0.316,
+        highChance = 0.316
     ),
     LOBSTER(
         id = Items.RAW_LOBSTER_377,
         level = 40,
         experience = 90.0,
         lowChance = 0.16,
-        highChance = 0.375,
+        highChance = 0.375
     ),
     BASS(
         id = Items.RAW_BASS_363,
         level = 46,
         experience = 100.0,
         lowChance = 0.078,
-        highChance = 0.16,
+        highChance = 0.16
     ),
     SWORDFISH(
         id = Items.RAW_SWORDFISH_371,
         level = 50,
         experience = 100.0,
         lowChance = 0.105,
-        highChance = 0.191,
+        highChance = 0.191
     ),
     LAVA_EEL(
         id = Items.RAW_LAVA_EEL_2148,
         level = 53,
         experience = 30.0,
         lowChance = 0.227,
-        highChance = 0.379,
+        highChance = 0.379
     ),
     MONKFISH(
         id = Items.RAW_MONKFISH_7944,
         level = 62,
         experience = 120.0,
         lowChance = 0.293,
-        highChance = 0.356,
+        highChance = 0.356
     ),
     KARAMBWAN(
         id = Items.RAW_KARAMBWAN_3142,
         level = 65,
         experience = 105.0,
         lowChance = 0.414,
-        highChance = 0.629,
+        highChance = 0.629
     ),
     SHARK(
         id = Items.RAW_SHARK_383,
         level = 76,
         experience = 110.0,
         lowChance = 0.121,
-        highChance = 0.16,
+        highChance = 0.16
     ),
     SEA_TURTLE(
         id = Items.RAW_SEA_TURTLE_395,
         level = 79,
         experience = 38.0,
         lowChance = 0.0,
-        highChance = 0.0,
+        highChance = 0.0
     ),
     MANTA_RAY(
         id = Items.RAW_MANTA_RAY_389,
         level = 81,
         experience = 46.0,
         lowChance = 0.0,
-        highChance = 0.0,
+        highChance = 0.0
     ),
     SEAWEED(
         id = Items.SEAWEED_401,
         level = 16,
         experience = 1.0,
         lowChance = 0.63,
-        highChance = 0.219,
+        highChance = 0.219
     ),
     CASKET(
         id = Items.CASKET_405,
         level = 16,
         experience = 10.0,
         lowChance = 0.63,
-        highChance = 0.219,
+        highChance = 0.219
     ),
     OYSTER(
         id = Items.OYSTER_407,
         level = 16,
         experience = 10.0,
         lowChance = 0.63,
-        highChance = 0.219,
+        highChance = 0.219
     ),
+    GIANT_CARP(
+        id = Items.RAW_GIANT_CARP_338,
+        level = 10,
+        experience = 0.0,
+        lowChance = 0.63,
+        highChance = 0.219
+    )
     ;
 
     companion object {
+        /**
+         * Maps item IDs to their corresponding [Fish] instances.
+         */
         @JvmStatic
         val fishMap: HashMap<Int, Fish> = HashMap()
 
+        /**
+         * Maps regular [Fish] to their corresponding "big" fish item ID.
+         */
         @JvmStatic
         val bigFishMap: HashMap<Fish, Int> = HashMap()
 
@@ -232,14 +245,38 @@ enum class Fish(
             bigFishMap[SHARK] = Items.BIG_SHARK_7993
         }
 
+        /**
+         * Returns the item ID of the "big" version of the given [fish], or `null` if none exists.
+         *
+         * @param fish The [Fish] to look up.
+         * @return The item ID of the big fish, or `null` if not found.
+         */
         @JvmStatic
         fun getBigFish(fish: Fish): Int? = bigFishMap[fish]
 
+        /**
+         * Returns the [Fish] instance corresponding to the given [item], or `null` if none exists.
+         *
+         * @param item The item to look up.
+         * @return The corresponding [Fish] or `null` if not found.
+         */
         @JvmStatic
         fun forItem(item: Item): Fish? = fishMap[item.id]
     }
 
-    fun getSuccessChance(level: Int): Double = (level.toDouble() - 1.0) * ((highChance - lowChance) / (99.0 - 1.0)) + lowChance
+    /**
+     * Calculates the success chance of catching this fish based on the given [level].
+     *
+     * @param level The fishing level of the player.
+     * @return The calculated success chance as a [Double].
+     */
+    fun getSuccessChance(level: Int): Double =
+        (level.toDouble() - 1.0) * ((highChance - lowChance) / (99.0 - 1.0)) + lowChance
 
+    /**
+     * Converts the fish's ID to an [Item] instance.
+     *
+     * @return The [Item] representation of this fish.
+     */
     fun getItem(): Item = this.id.asItem()
 }

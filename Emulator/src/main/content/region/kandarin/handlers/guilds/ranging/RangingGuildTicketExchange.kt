@@ -29,12 +29,7 @@ enum class RangingGuildTicketExchange(
     RUNE_ARROW(Item(Items.RUNE_ARROW_892, 50), 2000, 2, "The 50 Rune Arrows cost 2,000 Archery Tickets."),
     COIF(Item(Items.COIF_1169, 1), 100, 3, "The Coif costs 100 Archery Tickets."),
     GREEN_D_HIDE(Item(Items.GREEN_DHIDE_BODY_1135, 1), 2400, 4, "The Dragonhide body costs 2,400 Archery Tickets."),
-    ADAMANT_JAVELIN(
-        Item(Items.ADAMANT_JAVELIN_829, 20),
-        2000,
-        5,
-        "The 20 Adamant Javelins cost 2,000 Archery Tickets.",
-    ),
+    ADAMANT_JAVELIN(Item(Items.ADAMANT_JAVELIN_829, 20), 2000, 5, "The 20 Adamant Javelins cost 2,000 Archery Tickets."),
     ;
 
     companion object {

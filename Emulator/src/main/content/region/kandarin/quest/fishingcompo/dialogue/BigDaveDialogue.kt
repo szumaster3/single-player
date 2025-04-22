@@ -6,6 +6,12 @@ import core.game.node.entity.player.Player
 import core.plugin.Initializable
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Big Dave dialogue.
+ *
+ * Relations:
+ * - [Fishing Contest][content.region.kandarin.quest.fishingcompo.FishingContest]
+ */
 @Initializable
 class BigDaveDialogue(
     player: Player? = null,

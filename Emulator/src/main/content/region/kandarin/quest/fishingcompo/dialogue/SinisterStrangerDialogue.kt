@@ -6,6 +6,20 @@ import core.game.node.entity.player.Player
 import core.plugin.Initializable
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Sinister Stranger dialogue.
+ *
+ * ```
+ * NPC Wrapper ID: 226
+ * Varbit ID: 2054
+ * set values:
+ *   0 = NPC_ID: 3677
+ *   1 = NPC_ID: 3678
+ * ```
+ *
+ * Relations:
+ * - [Fishing Contest][content.region.kandarin.quest.fishingcompo.FishingContest]
+ */
 @Initializable
 class SinisterStrangerDialogue(
     player: Player? = null,
@@ -21,168 +35,61 @@ class SinisterStrangerDialogue(
         buttonId: Int,
     ): Boolean {
         when (stage) {
-            0 -> {
-                options("...?", "Who are you?", "So... you like fishing?")
-                stage++
+            // Meeting the Competition.
+            0 -> options("...?", "Who are you?", "So... you like fishing?").also { stage++ }
+            1 -> when (buttonId) {
+                1 -> player("...?").also { stage = 10 }
+                2 -> player("Who are you?").also { stage = 20 }
+                3 -> player("So... you like fishing?").also { stage = 30 }
             }
 
-            1 ->
-                when (buttonId) {
-                    1 -> {
-                        player("...?")
-                        stage = 10
-                    }
-
-                    2 -> {
-                        player("Who are you?")
-                        stage = 20
-                    }
-
-                    3 -> {
-                        player("So... you like fishing?")
-                        stage = 30
-                    }
-                }
-
-            2 -> {
-                options(
-                    "You're a vampire aren't you?",
-                    "Is it nice there?",
-                    "So you like fishing?",
-                )
-                stage++
+            2 -> options("You're a vampire aren't you?", "Is it nice there?", "So you like fishing?").also { stage++ }
+            3 -> when (buttonId) {
+                1 -> player("You're a vampire aren't you?").also { stage = 21 }
+                2 -> player("Is it nice there?").also { stage = 50 }
+                3 -> player("So you like fishing?").also { stage = 30 }
             }
 
-            3 ->
-                when (buttonId) {
-                    1 -> {
-                        player("You're a vampire aren't you?")
-                        stage = 21
-                    }
+            4 -> options(
+                "You're a vampire aren't you?", "So you like fishing?", "Well, good luck with the fishing."
+            ).also { stage++ }
 
-                    2 -> {
-                        player("Is it nice there?")
-                        stage = 50
-                    }
-
-                    3 -> {
-                        player("So you like fishing?")
-                        stage = 30
-                    }
-                }
-
-            4 -> {
-                options(
-                    "You're a vampire aren't you?",
-                    "So you like fishing?",
-                    "Well, good luck with the fishing.",
-                )
-                stage++
+            5 -> when (buttonId) {
+                1 -> player("You're a vampire aren't you?").also { stage = 21 }
+                2 -> player("So you like fishing?").also { stage = 30 }
+                3 -> player("Well, good luck with the fishing.").also { stage = 60 }
             }
 
-            5 ->
-                when (buttonId) {
-                    1 -> {
-                        player("You're a vampire aren't you?")
-                        stage = 21
-                    }
+            6 -> options(
+                "You're a vampire aren't you?",
+                "If you get thirsty you should drink something.",
+                "Well, good luck with the fishing."
+            ).also { stage++ }
 
-                    2 -> {
-                        player("So you like fishing?")
-                        stage = 30
-                    }
-
-                    3 -> {
-                        player("Well, good luck with the fishing.")
-                        stage = 70
-                    }
-                }
-
-            6 -> {
-                interpreter.sendOptions(
-                    "Choose an option:",
-                    "You're a vampire aren't you?",
-                    "If you get thirsty you should drink something.",
-                    "Well, good luck with the fishing.",
-                )
-                stage++
+            7 -> when (buttonId) {
+                1 -> player("You're a vampire aren't you?").also { stage = 21 }
+                2 -> player("If you get thirsty you should drink something.").also { stage = 40 }
+                3 -> player("Well, good luck with the fishing.").also { stage = 60 }
             }
-
-            7 ->
-                when (buttonId) {
-                    1 -> {
-                        player("You're a vampire aren't you?")
-                        stage = 21
-                    }
-
-                    2 -> {
-                        player("If you get thirsty you should drink something.")
-                        stage = 40
-                    }
-
-                    3 -> {
-                        player("Well, good luck with the fishing.")
-                        stage = 70
-                    }
-                }
 
             9 -> end()
-            10 -> {
-                npc("...")
-                stage++
-            }
 
-            11 -> {
-                player("......?")
-                stage++
-            }
+            10 -> npc("...").also { stage++ }
+            11 -> player("......?").also { stage++ }
+            12 -> npc("......").also { stage = 9 }
 
-            12 -> {
-                npc("......")
-                stage = 9
-            }
+            20 -> npc("My name is Vlad.", "I come from far avay,", "vere the sun iz not so bright.").also { stage = 2 }
+            21 -> npc("Just because I can't stand ze smell ov garlic", "and I don't like bright sunlight doesn't", "necessarily mean I'm ein vampire!").also { stage = 9 }
+            30 -> npc("My doctor told me to take up ein velaxing hobby.", "Vhen I am stressed I tend to get ein little...").also { stage++ }
+            31 -> npc("...thirsty.").also { stage = 6 }
+            40 -> npc("I tsink I may do zat soon...").also { stage = 9 }
+            50 -> npc("It is vonderful!", "Zev omen are beautiful und ze nights are long!").also { stage = 4 }
+            60 -> npc("Luck haz notsing to do vith it.", "It is all in ze technique.").also { stage = 9 }
 
-            20 -> {
-                npc("My name is Vlad.", "I come from far avay,", "vere the sun iz not so bright.")
-                stage = 2
-            }
-
-            21 -> {
-                npc(
-                    "Just because I can't stand ze smell ov garlic",
-                    "and I don't like bright sunlight doesn't",
-                    "necessarily mean I'm ein vampire!",
-                )
-                stage = 9
-            }
-
-            30 -> {
-                npc("My doctor told me to take up ein velaxing hobby.", "Vhen I am stressed I tend to get ein little")
-                stage++
-            }
-
-            31 -> {
-                npc("... thirsty.")
-                stage = 6
-            }
-
-            40 -> {
-                npc("I tsink I may do zat soon...")
-                stage = 9
-            }
-
-            50 -> {
-                npc("It is vonderful!", "Zev omen are beautiful und ze nights are long!")
-                stage = 4
-            }
-
-            70 -> {
-                npc("Luck haz notsing to do vith it.", "It is all in ze technique.")
-                stage = 9
-            }
         }
         return true
     }
 
-    override fun getIds(): IntArray = intArrayOf(NPCs.SINISTER_STRANGER_3677)
+    override fun getIds(): IntArray = intArrayOf(226)
+    // NPCs.SINISTER_STRANGER_3677, NPCs.SINISTER_STRANGER_3678
 }

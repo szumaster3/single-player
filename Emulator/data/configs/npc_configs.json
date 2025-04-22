@@ -3557,7 +3557,7 @@
     "id": "226"
   },
   {
-    "examine": "He checks the entrants to the Fishing Contest",
+    "examine": "He checks the entrants to the Fishing Contest.",
     "name": "Morris",
     "id": "227"
   },
@@ -27318,6 +27318,11 @@
     "respawn_delay": "60"
   },
   {
+    "examine": "Works in the Rising Sun.",
+    "name": "Tina",
+    "id": "3318"
+  },
+  {
     "weakness": "2",
     "examine": "An animated shrub.",
     "magic_animation": "0",
@@ -29227,9 +29232,83 @@
     "attack_level": "40"
   },
   {
+    "examine": "He looks a LOT like a vampyre...",
+    "name": "Sinister Stranger",
+    "id": "3677"
+  },
+  {
+    "examine": "He looks a LOT like a vampyre...",
+    "name": "Sinister Stranger",
+    "id": "3678"
+  },
+  {
+    "examine": "He looks short and grumpy.",
+    "name": "Vestri",
+    "id": "3679"
+  },
+  {
     "examine": "A young boy handing out flyers.",
     "name": "Ali the Leaflet Dropper",
     "id": "3680"
+  },
+  {
+    "name": "Nigel",
+    "id": "3681"
+  },
+  {
+    "name": "Egg",
+    "id": "3682"
+  },
+  {
+    "name": "Egg",
+    "id": "3683"
+  },
+  {
+    "name": "Egg",
+    "id": "3684"
+  },
+  {
+    "name": "Egg",
+    "id": "3685"
+  },
+  {
+    "examine": "Chocolatey kebbit goodness.",
+    "name": "Chocolate kebbit",
+    "id": "3686"
+  },
+  {
+    "examine": "Chocolatey kebbit goodness.",
+    "name": "Chocolate kebbit",
+    "id": "3687"
+  },
+  {
+    "examine": "The Easter Bunny's lazy son.",
+    "name": "Easter Bunny",
+    "id": "3688"
+  },
+  {
+    "name": "Egg",
+    "id": "3689"
+  },
+  {
+    "name": "Egg",
+    "id": "3690"
+  },
+  {
+    "name": "Egg",
+    "id": "3691"
+  },
+  {
+    "name": "Egg",
+    "id": "3692"
+  },
+  {
+    "name": "Egg",
+    "id": "3693"
+  },
+  {
+    "name": "Egg",
+    "id": "3694"
   },
   {
     "examine": "One of the inhabitants of the camp.",

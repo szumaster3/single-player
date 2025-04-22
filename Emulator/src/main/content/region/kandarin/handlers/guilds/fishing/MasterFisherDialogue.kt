@@ -17,12 +17,12 @@ class MasterFisherDialogue(
 ) : Dialogue(player) {
     override fun open(vararg args: Any?): Boolean {
         if (!Skillcape.isMaster(player, Skills.FISHING)) {
-            npc("Hello, I'm afraid only the top fishers are allowed to use", "our premier fishing facilities.")
+            npc("Hello, I'm afraid only the top fishers are allowed to use our", "premier fishing facilities.")
         } else {
             npc(
-                "Hello, only the top fishers are allowed to use",
-                "our premier fishing facilities and you seem",
-                "to meet the criteria. Enjoy!",
+                "Hello, only the top fishers are allowed to use our",
+                "premier fishing facilities and you seem to meet the",
+                "criteria. Enjoy!",
             )
         }
         stage = 0
@@ -38,7 +38,7 @@ class MasterFisherDialogue(
                 if (Skillcape.isMaster(player, Skills.FISHING)) {
                     player("Can I buy a Skillcape of Fishing?").also { stage = 3 }
                 } else {
-                    player("Can you tell me about that skillcape you're wearing?").also { stage++ }
+                    player("Can you tell me about that Skillcape you're wearing?").also { stage++ }
                 }
             }
             1 ->
@@ -54,7 +54,7 @@ class MasterFisherDialogue(
                 npc(
                     "fisherman in the guild it is my duty to control who has",
                     "access to the guild and to say who can buy similar",
-                    "skillcapes.",
+                    "Skillcapes.",
                 ).also {
                     stage =
                         END_DIALOGUE

@@ -1,5 +1,6 @@
 package core.game.system.command.sets
 
+import content.data.GameAttributes
 import content.data.RespawnPoint
 import content.data.setRespawnLocation
 import content.global.activity.jobs.JobManager
@@ -43,6 +44,22 @@ class DevelopmentCommandSet : CommandSet(Privilege.ADMIN) {
                 setVarbit(player, varbit, 1)
             }
             player.debug("Toggled display cases on.")
+            return@define
+        }
+
+        /*
+         * Command for setting tutorial stages.
+         */
+
+        define(
+            name = "tutorialstage",
+            privilege = Privilege.ADMIN,
+            usage = "::tutorialstage",
+            description = "Set tutorial stage.",
+        ) { player, args ->
+            val stage = args[1].toIntOrNull() ?: reject(player, "Please use a valid int.")
+            setAttribute(player, GameAttributes.TUTORIAL_STAGE, stage)
+            player.debug("Stage set to [${getAttribute(player, GameAttributes.TUTORIAL_STAGE, 0)}]")
             return@define
         }
 

@@ -138,6 +138,11 @@ enum class CookItem(
     LOBSTER(Items.LOBSTER_379, Items.RAW_LOBSTER_377, Items.BURNT_LOBSTER_381, 40, 120.0, 38, 332, 38, 332),
 
     /**
+     * Giant carp (Fishing contest quest - Once the quest has been completed, this fish can no longer be obtained.).
+     */
+    GIANT_CARP(Items.GIANT_CARP_337, Items.RAW_GIANT_CARP_338, Items.BURNT_FISH_343, 10, 0.0, 68, 392, 68, 392),
+
+    /**
      * Bass.
      */
     BASS(Items.BASS_365, Items.RAW_BASS_363, Items.BURNT_FISH_367, 43, 130.0, 33, 312, 33, 312),
@@ -443,6 +448,7 @@ enum class CookItem(
             lumbridgeRangeValues[Items.FAT_SNAIL_3367] = intArrayOf(83, 422)
             lumbridgeRangeValues[Items.UNCOOKED_STEW_2001] = intArrayOf(78, 412)
             lumbridgeRangeValues[Items.RAW_SALMON_331] = intArrayOf(78, 402)
+            lumbridgeRangeValues[Items.RAW_GIANT_CARP_338] = intArrayOf(78, 402)
         }
 
         /**

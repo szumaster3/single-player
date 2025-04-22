@@ -20,6 +20,7 @@ import core.game.system.command.sets.STATS_BASE
 import core.game.system.command.sets.STATS_FISH
 import core.game.world.GameWorld
 import core.game.world.map.path.Pathfinder
+import core.game.world.map.zone.ZoneBorders
 import core.tools.RandomFunction
 import org.rs.consts.Items
 import org.rs.consts.NPCs
@@ -120,7 +121,7 @@ class FishingListener : InteractionListener {
             } else {
                 var msg =
                     when (fish) {
-                        in arrayOf(Fish.ANCHOVIE, Fish.SHRIMP, Fish.SEAWEED) -> "You catch some "
+                        in arrayOf(Fish.ANCHOVY, Fish.SHRIMP, Fish.SEAWEED) -> "You catch some "
                         in arrayOf(Fish.OYSTER) -> "You catch an "
                         else -> "You catch a "
                     }

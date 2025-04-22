@@ -6,6 +6,7 @@ import core.api.quest.isQuestComplete
 import core.api.sendMessage
 import core.api.sendNPCDialogue
 import core.api.sendPlayerDialogue
+import core.game.dialogue.FaceAnim
 import core.game.global.action.ClimbActionHandler
 import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType
@@ -19,6 +20,16 @@ import org.rs.consts.Scenery
 
 class WizardsGuildListener : InteractionListener {
     override fun defineListeners() {
+        on(NPCs.WIZARD_FRUMSCONE_460, IntType.NPC, "talk-to") { player, node ->
+            sendNPCDialogue(
+                player,
+                node.id,
+                "Do you like my magic Zombies? Feel free to kill them, there's plenty more where these came from!",
+                FaceAnim.HALF_GUILTY
+            )
+            return@on true
+        }
+
         on(MAGIC_DOOR, IntType.SCENERY, "open") { player, node ->
             if (getDynLevel(player, Skills.MAGIC) < 66) {
                 sendPlayerDialogue(player, "You need a Magic level of at least 66 to enter.")

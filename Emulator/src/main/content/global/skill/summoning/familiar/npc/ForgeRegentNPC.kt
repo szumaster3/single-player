@@ -2,6 +2,7 @@ package content.global.skill.summoning.familiar.npc
 
 import content.global.skill.firemaking.FiremakingPulse
 import content.global.skill.firemaking.Log
+import content.global.skill.firemaking.logs
 import content.global.skill.summoning.familiar.Familiar
 import content.global.skill.summoning.familiar.FamiliarSpecial
 import core.api.finishDiaryTask
@@ -42,9 +43,6 @@ class ForgeRegentNPC @JvmOverloads constructor(owner: Player? = null, id: Int = 
      * @param owner the owner
      * @param id    the id
      */
-    /**
-     * Instantiates a new Forge regent npc.
-     */
     init {
         boosts.add(SkillBonus(Skills.FIREMAKING, 4.0))
     }
@@ -54,7 +52,7 @@ class ForgeRegentNPC @JvmOverloads constructor(owner: Player? = null, id: Int = 
     }
 
     public override fun configureFamiliar() {
-        definePlugin(ForgeRegentFiremaking())
+        definePlugin(ForgeRegentAbility())
     }
 
     override fun specialMove(special: FamiliarSpecial): Boolean {
@@ -85,7 +83,7 @@ class ForgeRegentNPC @JvmOverloads constructor(owner: Player? = null, id: Int = 
             }
         }
         graphics(Graphics.create(1394))
-        target.graphics(Graphics.create(1393))
+        target.graphics(Graphics.create(org.rs.consts.Graphics.RAINING_FIRE_ON_YOU_1393))
         if (target.equipment.remove(remove)) {
             target.inventory.add(remove)
         }
@@ -97,31 +95,9 @@ class ForgeRegentNPC @JvmOverloads constructor(owner: Player? = null, id: Int = 
     }
 
     /**
-     * The type Forge regent firemake.
+     * Represents the Forge Regent ability.
      */
-    inner class ForgeRegentFiremaking
-    /**
-     * Instantiates a new Forge regent firemake.
-     */
-        : UseWithHandler(
-        Items.LOGS_1511,
-        Items.ACHEY_TREE_LOGS_2862,
-        Items.OAK_LOGS_1521,
-        Items.WILLOW_LOGS_1519,
-        Items.TEAK_LOGS_6333,
-        Items.ARCTIC_PINE_LOGS_10810,
-        Items.MAPLE_LOGS_1517,
-        Items.MAHOGANY_LOGS_6332,
-        Items.EUCALYPTUS_LOGS_12581,
-        Items.YEW_LOGS_1515,
-        Items.MAGIC_LOGS_1513,
-        Items.CURSED_MAGIC_LOGS_13567,
-        Items.PURPLE_LOGS_10329,
-        Items.WHITE_LOGS_10328,
-        Items.BLUE_LOGS_7406,
-        Items.GREEN_LOGS_7405,
-        Items.RED_LOGS_7404
-    ) {
+    inner class ForgeRegentAbility : UseWithHandler(*logs) {
         @Throws(Throwable::class)
         override fun newInstance(arg: Any?): Plugin<Any> {
             for (id in ids) {

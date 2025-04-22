@@ -63,9 +63,9 @@ class PrayerAltarListener : InteractionListener {
             Scenery.ALTAR_OF_NATURE_3521 ->
                 sendMessage(
                     player,
-                    "You recharge your prayer points at the altar of nature.",
+                    "You recharge your Prayer points at the altar of nature.",
                 )
-            else -> sendMessage(player, "You recharge your prayer points.")
+            else -> sendMessage(player, "You recharge your Prayer points.")
         }
         player.dispatch(PrayerPointsRechargeEvent(node))
         return true

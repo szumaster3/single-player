@@ -32,7 +32,7 @@ object TrawlerLoot {
             Fish.SWORDFISH,
             Fish.LOBSTER,
             Fish.TUNA,
-            Fish.ANCHOVIE,
+            Fish.ANCHOVY,
             Fish.SARDINE,
             Fish.SHRIMP,
         )

@@ -1,7 +1,7 @@
 package content.region.fremennik.dialogue.rellekka
 
-import content.region.fremennik.handlers.TravelDestination
-import content.region.fremennik.handlers.WaterbirthTravel.sail
+import content.region.fremennik.handlers.waterbith.TravelDestination
+import content.region.fremennik.handlers.waterbith.WaterbirthTravel.sail
 import core.api.getVarp
 import core.api.quest.isQuestComplete
 import core.api.sendDialogueOptions

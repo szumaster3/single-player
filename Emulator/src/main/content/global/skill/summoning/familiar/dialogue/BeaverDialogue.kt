@@ -1,6 +1,6 @@
 package content.global.skill.summoning.familiar.dialogue
 
-import content.global.skill.firemaking.Log
+import content.global.skill.firemaking.logs
 import core.api.anyInInventory
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
@@ -135,14 +135,4 @@ class BeaverDialogue : Dialogue {
     }
 
     override fun getIds(): IntArray = intArrayOf(NPCs.BEAVER_6808)
-
-    companion object {
-        private val logs = IntArray(Log.values().size)
-
-        init {
-            for (i in Log.values().indices) {
-                logs[i] = Log.values()[i].logId
-            }
-        }
-    }
 }

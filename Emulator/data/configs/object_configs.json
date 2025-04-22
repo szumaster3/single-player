@@ -15178,5 +15178,13 @@
   {
     "examine": "I can store my items here.",
     "ids": "27663"
+  },
+  {
+    "examine": "A trophy and some scales... hmmm.",
+    "ids": "14040"
+  },
+  {
+    "examine": "A table with fish on.",
+    "ids": "14041"
   }
 ]

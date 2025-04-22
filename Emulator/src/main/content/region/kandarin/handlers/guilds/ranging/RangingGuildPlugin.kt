@@ -14,6 +14,7 @@ import core.game.node.scenery.Scenery
 import core.game.world.map.Location
 import core.plugin.Initializable
 import core.plugin.Plugin
+import org.rs.consts.Components
 
 /**
  * Ranging guild plugin.
@@ -63,7 +64,7 @@ class RangingGuildPlugin : OptionHandler() {
                 when (id) {
                     2511 -> {
                         setAttribute(player, "ladder", node)
-                        player.interfaceManager.open(Component(564))
+                        player.interfaceManager.open(Component(Components.CWS_WARNING_23_564))
                     }
                 }
 

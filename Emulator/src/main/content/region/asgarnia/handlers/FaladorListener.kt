@@ -4,6 +4,7 @@ import core.api.*
 import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
+import core.game.node.item.Item
 import core.game.world.map.Location
 import core.tools.DARK_RED
 import org.rs.consts.*
@@ -53,6 +54,16 @@ class FaladorListener : InteractionListener {
             playAudio(player, Sounds.CUPBOARD_OPEN_58)
             replaceScenery(node.asScenery(), CUPBOARD_OPEN, -1)
             return@on true
+        }
+
+        /*
+         * Handles use the coins on Tina NPC.
+         */
+
+        onUseWith(IntType.NPC, Items.COINS_995, NPCs.TINA_3218) { player, used, with ->
+            removeItem(player, Item(used.id, 1), Container.INVENTORY)
+            sendNPCDialogue(player, with.id, "Thanks!")
+            return@onUseWith true
         }
 
         /*
@@ -112,11 +123,22 @@ class FaladorListener : InteractionListener {
     override fun defineDestinationOverrides() {
 
         /*
-         * Handles destination to shop NPC.
+         * Rising Sun Inn.
+         *
+         * Borders refer to the Emily bar counter area.
+         *
+         * When the player is outside of this area, the only possible side
+         * for interaction remains the northern side point.
          */
 
-        setDest(IntType.NPC, intArrayOf(NPCs.EMILY_736), "talk-to") { _, _ ->
-            return@setDest Location.create(2956, 3372, 0)
+        val northPoint = Location.create(2955, 3375, 0)
+
+        setDest(IntType.NPC, NPCs.EMILY_736) { player, _ ->
+            if(inBorders(player, 2953, 3368, 2956, 3374)) {
+                player.location
+            } else {
+                northPoint
+            }
         }
     }
 

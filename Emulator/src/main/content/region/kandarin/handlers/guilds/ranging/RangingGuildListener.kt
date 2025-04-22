@@ -1,9 +1,6 @@
 package content.region.kandarin.handlers.guilds.ranging
 
-import core.api.inInventory
-import core.api.sendMessage
-import core.api.sendNPCDialogueLines
-import core.api.submitIndividualPulse
+import core.api.*
 import core.game.container.impl.EquipmentContainer
 import core.game.dialogue.FaceAnim
 import core.game.interaction.IntType
@@ -14,7 +11,41 @@ import org.rs.consts.Scenery
 
 class RangingGuildListener : InteractionListener {
     override fun defineListeners() {
-        on(TARGET, IntType.SCENERY, "fire-at") { player, node ->
+
+        on(NPCs.RANGING_GUILD_DOORMAN_679, IntType.NPC, "talk-to") { player, node ->
+            sendPlayerDialogue(player, "Hello there.")
+            addDialogueAction(player) { player, button ->
+                if (button > 0) {
+                    sendNPCDialogueLines(
+                        player,
+                        node.id,
+                        FaceAnim.HALF_GUILTY,
+                        false,
+                        "Greetings. If you are an experienced archer, you may",
+                        "want to visit the guild here...",
+                    )
+                }
+            }
+            return@on true
+        }
+
+        on(NPCs.GUARD_678, IntType.NPC, "talk-to") { player, node ->
+            sendPlayerDialogue(player, "Hello there.")
+            addDialogueAction(player) { player, button ->
+                if (button > 0) {
+                    sendNPCDialogueLines(
+                        player,
+                        node.id,
+                        FaceAnim.HALF_GUILTY,
+                        false,
+                        "Greetings, traveller. Enjoy the time at the Ranging", "Guild.",
+                    )
+                }
+            }
+            return@on true
+        }
+
+        on(Scenery.TARGET_2513, IntType.SCENERY, "fire-at") { player, node ->
             if (player.archeryTargets <= 0) {
                 sendNPCDialogueLines(
                     player,
@@ -27,28 +58,17 @@ class RangingGuildListener : InteractionListener {
                 return@on true
             }
             if (!inInventory(player, Items.BRONZE_ARROW_882) ||
-                player.equipment[EquipmentContainer.SLOT_WEAPON] == null ||
-                (
-                    !player.equipment[EquipmentContainer.SLOT_WEAPON].definition.name.lowercase().contains(
-                        "shortbow",
-                        true,
-                    ) &&
-                        !player.equipment[EquipmentContainer.SLOT_WEAPON].definition.name.lowercase().contains(
-                            "longbow",
-                            true,
-                        )
-                )
+                player.equipment[EquipmentContainer.SLOT_WEAPON] == null || (
+                        !player.equipment[EquipmentContainer.SLOT_WEAPON].definition.name.lowercase()
+                            .contains("shortbow", true) &&
+                                !player.equipment[EquipmentContainer.SLOT_WEAPON].definition.name.lowercase()
+                                    .contains("longbow", true))
             ) {
                 sendMessage(player, "You must have bronze arrows and a bow equipped.")
                 return@on true
             }
-
             submitIndividualPulse(player, ArcheryCompetitionPulse(player, (node.asScenery())))
             return@on true
         }
-    }
-
-    companion object {
-        val TARGET = Scenery.TARGET_2513
     }
 }

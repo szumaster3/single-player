@@ -31,7 +31,7 @@ class TreeGnomeVillageListeners : InteractionListener {
             return@setDest Location.create(2524, 3256, 0)
         }
 
-        setDest(IntType.SCENERY, intArrayOf(5250)) { _, _ ->
+        setDest(IntType.SCENERY, Scenery.LADDER_5250) { _, _ ->
             return@setDest Location.create(2533, 3156, 0)
         }
     }
@@ -42,7 +42,7 @@ class TreeGnomeVillageListeners : InteractionListener {
             IntType.SCENERY,
             "climb-down",
             "climb-up",
-        ) { player, node ->
+        ) { player, _ ->
             when (getUsedOption(player)) {
                 "climb-down" -> ClimbActionHandler.climb(player, Animation(827), Location(2533, 9556, 0))
                 else -> ClimbActionHandler.climb(player, Animation(828), Location(2533, 3156, 0))

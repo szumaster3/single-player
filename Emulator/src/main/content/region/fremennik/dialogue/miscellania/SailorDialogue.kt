@@ -1,7 +1,7 @@
 package content.region.fremennik.dialogue.miscellania
 
-import content.region.fremennik.handlers.TravelDestination
-import content.region.fremennik.handlers.WaterbirthTravel.sail
+import content.region.fremennik.handlers.waterbith.TravelDestination
+import content.region.fremennik.handlers.waterbith.WaterbirthTravel.sail
 import core.api.inBorders
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim

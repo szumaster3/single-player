@@ -8,6 +8,9 @@ import core.tools.RandomFunction
 import org.rs.consts.Animations
 import org.rs.consts.Items
 
+/**
+ * Represents fishing options.
+ */
 enum class FishingOption(
     val tool: Int,
     val level: Int,
@@ -31,7 +34,7 @@ enum class FishingOption(
         bait = null,
         option = "net",
         Fish.SHRIMP,
-        Fish.ANCHOVIE,
+        Fish.ANCHOVY,
     ),
     BAIT(
         tool = Items.FISHING_ROD_307,
@@ -63,7 +66,7 @@ enum class FishingOption(
     LOBSTER_CAGE(
         tool = Items.LOBSTER_POT_301,
         level = 40,
-        animation = Animation(619),
+        animation = Animation(Animations.LOBSTER_FISHING),
         bait = null,
         option = "cage",
         Fish.LOBSTER,
@@ -163,22 +166,56 @@ enum class FishingOption(
         option = "bait",
         Fish.LAVA_EEL,
     ),
+    FISHING_CONTEST_0(
+        tool = Items.FISHING_ROD_307,
+        level = 10,
+        animation = Animation(Animations.ROD_FISHING_622),
+        bait = intArrayOf(Items.RED_VINE_WORM_25),
+        option = "bait",
+        Fish.GIANT_CARP
+    ),
+    FISHING_CONTEST_1(
+        tool = Items.FISHING_ROD_307,
+        level = 10,
+        animation = Animation(Animations.ROD_FISHING_622),
+        bait = intArrayOf(Items.RED_VINE_WORM_25),
+        option = "bait",
+        Fish.SARDINE
+    ),
     ;
 
     companion object {
+        /**
+         * Maps the option name string to the corresponding [FishingOption] enum instance.
+         */
         @JvmStatic
         private val nameMap: HashMap<String, FishingOption> = HashMap()
 
+        /**
+         * Initializes the [nameMap] with option names pointing to their respective enum values.
+         */
         init {
             for (value in values()) {
                 nameMap[value.option] = value
             }
         }
 
+        /**
+         * Retrieves a [FishingOption] by its option name.
+         *
+         * @param opName The name of the fishing option.
+         * @return The corresponding [FishingOption], or `null` if not found.
+         */
         @JvmStatic
         fun forName(opName: String): FishingOption? = nameMap[opName]
     }
 
+    /**
+     * Attempts to roll a fish that the player can catch using this fishing method.
+     *
+     * @param player The player attempting to catch a fish.
+     * @return A [Fish] if caught successfully, or `null` if no fish was caught.
+     */
     fun rollFish(player: Player): Fish? {
         if (this == BIG_NET) {
             when (RandomFunction.randomize(100)) {
@@ -204,6 +241,11 @@ enum class FishingOption(
         return null
     }
 
+    /**
+     * Retrieves the name of the bait item used for this fishing option.
+     *
+     * @return The name of the bait item, or "none" if no bait is required.
+     */
     fun getBaitName(): String {
         if (bait != null && bait.isNotEmpty()) {
             return getItemName(bait[0])
@@ -211,6 +253,12 @@ enum class FishingOption(
         return "none"
     }
 
+    /**
+     * Checks if the player has the required bait for this fishing option.
+     *
+     * @param player The player whose inventory is checked.
+     * @return `true` if bait is not required or the player has any required bait, otherwise `false`.
+     */
     fun hasBait(player: Player): Boolean =
         if (bait == null) {
             true
@@ -222,6 +270,12 @@ enum class FishingOption(
             anyBait
         }
 
+    /**
+     * Removes one unit of bait from the player's inventory, if available.
+     *
+     * @param player The player to remove bait from.
+     * @return `true` if bait was removed successfully or no bait is required, otherwise `false`.
+     */
     fun removeBait(player: Player): Boolean {
         return if (bait == null) {
             true
@@ -235,5 +289,10 @@ enum class FishingOption(
         }
     }
 
+    /**
+     * Returns the message shown when the player starts fishing with this option.
+     *
+     * @return A string message describing the fishing attempt.
+     */
     fun getStartMessage(): String = if (option == "net") "You cast out your net..." else "You attempt to catch a fish."
 }

@@ -13,6 +13,14 @@ import core.tools.START_DIALOGUE
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Dialogue handler for the bartenders in the Rising Sun Inn located in Falador.
+ *
+ * NPCs involved:
+ * - NPCs.EMILY_736,
+ * - NPCs.KAYLEE_3217,
+ * - NPCs.TINA_3218
+ */
 @Initializable
 class RisingSunInnBartenderDialogue(
     player: Player? = null,
@@ -87,12 +95,17 @@ class RisingSunInnBartenderDialogue(
         intArrayOf(
             NPCs.EMILY_736,
             NPCs.KAYLEE_3217,
+            NPCs.TINA_3218
         )
 
+    /**
+     * Checks whether the player has at least 3 coins.
+     *
+     * @return true if the player has enough coins, false otherwise.
+     */
     private fun ensureHasMoney(): Boolean {
         if (!inInventory(player, Items.COINS_995, 3)) {
-            npcl(FaceAnim.ANGRY, "No freeloaders!").also {
-                sendMessage(player, "You don't have enough money to buy that.")
+            npcl(FaceAnim.ANGRY, "I said 3 coins! You haven't got 3 coins!").also {
                 stage = END_DIALOGUE
             }
             return false
@@ -101,6 +114,11 @@ class RisingSunInnBartenderDialogue(
         return true
     }
 
+    /**
+     * Processes the purchase of a beer.
+     *
+     * @param brewId The item id.
+     */
     private fun purchaseBrew(brewId: Int) {
         if (removeItem(player, Item(Items.COINS_995, 3))) {
             addItemOrDrop(player, brewId)
@@ -119,8 +137,16 @@ class RisingSunInnBartenderDialogue(
         }
     }
 
+    /**
+     * Checks if the player has any type of beer glass in their inventory.
+     *
+     * @return true if they have either regular or noted beer glasses.
+     */
     private fun hasAnyBeerGlasses() = inInventory(player, Items.BEER_GLASS_1919) || inInventory(player, Items.BEER_GLASS_1920)
 
+    /**
+     * Attempts to sell all beer glasses from inventory.
+     */
     private fun trySellAllBeerGlasses() {
         val regularGlassAmount = amountInInventory(player, Items.BEER_GLASS_1919)
         val notedGlassAmount = amountInInventory(player, Items.BEER_GLASS_1920)

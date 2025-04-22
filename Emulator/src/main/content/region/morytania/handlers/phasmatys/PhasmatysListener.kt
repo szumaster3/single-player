@@ -30,7 +30,7 @@ class PhasmatysListener : InteractionListener {
     }
 
     override fun defineDestinationOverrides() {
-        setDest(IntType.NPC, intArrayOf(GHOST_GUARD)) { player, _ ->
+        setDest(IntType.NPC, GHOST_GUARD) { player, _ ->
             if (inBorders(player, 3660, 3508, 3662, 3509)) {
                 return@setDest Location(3661, 3509, 0)
             }

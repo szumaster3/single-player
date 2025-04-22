@@ -2,6 +2,9 @@ package content.global.skill.gathering.fishing
 
 import org.rs.consts.NPCs
 
+/**
+ * Represents fishing spots.
+ */
 enum class FishingSpot(
     val ids: IntArray,
     vararg val options: FishingOption,
@@ -118,12 +121,30 @@ enum class FishingSpot(
         intArrayOf(NPCs.FISHING_SPOT_800),
         FishingOption.OILY_FISHING_ROD,
     ),
+    BAIT_FISHING_CONTEST_0(
+        intArrayOf(NPCs.FISHING_SPOT_233),
+        FishingOption.FISHING_CONTEST_0
+    ),
+    BAIT_FISHING_CONTEST_1(
+        intArrayOf(NPCs.FISHING_SPOT_234),
+        FishingOption.FISHING_CONTEST_1
+    ),
     ;
 
     companion object {
+        /**
+         * A map that associates NPC IDs with their corresponding [FishingSpot] definitions.
+         */
         private val spotMap: HashMap<Int, FishingSpot> = HashMap()
+
+        /**
+         * A list of all NPC IDs that are used by fishing spots.
+         */
         private val array: ArrayList<Int> = ArrayList()
 
+        /**
+         * Initializes the fishing spot map and array by mapping each spot's IDs to its enum instance.
+         */
         init {
             val spots = values()
             for (spot in spots) {
@@ -134,11 +155,28 @@ enum class FishingSpot(
             }
         }
 
+        /**
+         * Retrieves a [FishingSpot] by its associated NPC ID.
+         *
+         * @param npcID The NPC ID to look up.
+         * @return The corresponding [FishingSpot], or `null` if not found.
+         */
         fun forId(npcID: Int): FishingSpot? = spotMap[npcID]
 
+        /**
+         * Returns an array of all NPC IDs that are associated with fishing spots.
+         *
+         * @return An [IntArray] containing all fishing spot NPC IDs.
+         */
         fun getAllIds(): IntArray = array.toIntArray()
     }
 
+    /**
+     * Finds a [FishingOption] for this spot by its name (case-insensitive).
+     *
+     * @param option The name of the fishing option to search for.
+     * @return The matching [FishingOption], or `null` if not found.
+     */
     fun getOptionByName(option: String): FishingOption? {
         for (o in options) {
             if (o.option == option.lowercase()) {
@@ -147,4 +185,5 @@ enum class FishingSpot(
         }
         return null
     }
+
 }

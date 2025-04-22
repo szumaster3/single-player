@@ -14,6 +14,40 @@ import org.rs.consts.Items
 import org.rs.consts.Quests
 import kotlin.math.min
 
+val logs = intArrayOf(
+    Items.LOGS_1511,
+    Items.OAK_LOGS_1521,
+    Items.WILLOW_LOGS_1519,
+    Items.MAPLE_LOGS_1517,
+    Items.YEW_LOGS_1515,
+    Items.MAGIC_LOGS_1513,
+    Items.ACHEY_TREE_LOGS_2862,
+    Items.PYRE_LOGS_3438,
+    Items.OAK_PYRE_LOGS_3440,
+    Items.WILLOW_PYRE_LOGS_3442,
+    Items.MAPLE_PYRE_LOGS_3444,
+    Items.YEW_PYRE_LOGS_3446,
+    Items.MAGIC_PYRE_LOGS_3448,
+    Items.TEAK_PYRE_LOGS_6211,
+    Items.MAHOGANY_PYRE_LOG_6213,
+    Items.MAHOGANY_LOGS_6332,
+    Items.TEAK_LOGS_6333,
+    Items.RED_LOGS_7404,
+    Items.GREEN_LOGS_7405,
+    Items.BLUE_LOGS_7406,
+    Items.PURPLE_LOGS_10329,
+    Items.WHITE_LOGS_10328,
+    Items.SCRAPEY_TREE_LOGS_8934,
+    Items.DREAM_LOG_9067,
+    Items.ARCTIC_PYRE_LOGS_10808,
+    Items.ARCTIC_PINE_LOGS_10810,
+    Items.SPLIT_LOG_10812,
+    Items.WINDSWEPT_LOGS_11035,
+    Items.EUCALYPTUS_LOGS_12581,
+    Items.EUCALYPTUS_PYRE_LOGS_12583,
+    Items.JOGRE_BONES_3125
+)
+
 class FiremakingListener : InteractionListener {
     companion object {
         private val dyesIDs = Origami.values().map { it.base }.toIntArray()
@@ -22,40 +56,6 @@ class FiremakingListener : InteractionListener {
         private const val BALLOON_STRUCTURE = Items.BALLOON_STRUCTURE_9933
         private const val CRAFTING_ANIMATION = Animations.HUMAN_CRAFT_ORIGAMI_BALLOON_5140
         private const val RELEASE_A_BALLOON_ANIMATION = Animations.HUMAN_RELEASE_BALLOON_5142
-        val logs =
-            intArrayOf(
-                Items.LOGS_1511,
-                Items.OAK_LOGS_1521,
-                Items.WILLOW_LOGS_1519,
-                Items.MAPLE_LOGS_1517,
-                Items.YEW_LOGS_1515,
-                Items.MAGIC_LOGS_1513,
-                Items.ACHEY_TREE_LOGS_2862,
-                Items.PYRE_LOGS_3438,
-                Items.OAK_PYRE_LOGS_3440,
-                Items.WILLOW_PYRE_LOGS_3442,
-                Items.MAPLE_PYRE_LOGS_3444,
-                Items.YEW_PYRE_LOGS_3446,
-                Items.MAGIC_PYRE_LOGS_3448,
-                Items.TEAK_PYRE_LOGS_6211,
-                Items.MAHOGANY_PYRE_LOG_6213,
-                Items.MAHOGANY_LOGS_6332,
-                Items.TEAK_LOGS_6333,
-                Items.RED_LOGS_7404,
-                Items.GREEN_LOGS_7405,
-                Items.BLUE_LOGS_7406,
-                Items.PURPLE_LOGS_10329,
-                Items.WHITE_LOGS_10328,
-                Items.SCRAPEY_TREE_LOGS_8934,
-                Items.DREAM_LOG_9067,
-                Items.ARCTIC_PYRE_LOGS_10808,
-                Items.ARCTIC_PINE_LOGS_10810,
-                Items.SPLIT_LOG_10812,
-                Items.WINDSWEPT_LOGS_11035,
-                Items.EUCALYPTUS_LOGS_12581,
-                Items.EUCALYPTUS_PYRE_LOGS_12583,
-                Items.JOGRE_BONES_3125,
-            )
         val firelighter =
             intArrayOf(
                 Items.RED_FIRELIGHTER_7329,
@@ -119,7 +119,7 @@ class FiremakingListener : InteractionListener {
                 return@onUseWith false
             }
             if (removeItem(player, used.asItem()) && removeItem(player, wool.asItem())) {
-                sendMessage(player, "You create the origami balloonIDs structure.")
+                sendMessage(player, "You create the origami balloon structure.")
                 animate(player, CRAFTING_ANIMATION)
                 addItemOrDrop(player, BALLOON_STRUCTURE)
             }
@@ -132,7 +132,7 @@ class FiremakingListener : InteractionListener {
             BALLOON_STRUCTURE,
         ) { player, used, with ->
             if (removeItem(player, Item(used.id, 1)) && removeItem(player, Item(with.id, 1))) {
-                sendMessage(player, "You create the origami balloonIDs.")
+                sendMessage(player, "You create the origami balloon.")
                 rewardXP(player, Skills.CRAFTING, 35.0)
                 animate(player, CRAFTING_ANIMATION)
                 addItemOrDrop(player, ORIGAMI_BALLOON)

@@ -79,6 +79,12 @@ public abstract class Quest implements Plugin<Object> {
         return null;
     }
 
+    /**
+     * Returns a new instance of the quest.
+     *
+     * @param `object` ignored parameter, required by the Quest interface.
+     * @return this instance of the quest.
+     */
     @Override
     public abstract Quest newInstance(Object object);
 

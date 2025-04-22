@@ -1,11 +1,18 @@
 package content.global.handlers.iface
 
+import core.api.ui.restoreTabs
 import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.link.request.assist.AssistSession
 import org.rs.consts.Components
 
 class RequestAssistInterface : InterfaceListener {
     override fun defineInterfaceListeners() {
+
+        onClose(Components.REQ_ASSIST_301) { player, _ ->
+            restoreTabs(player)
+            return@onClose true
+        }
+
         on(Components.REQ_ASSIST_301) { player, _, _, buttonID, _, _ ->
             val session = AssistSession.getExtension(player) ?: return@on true
             if (player !== session.player) {

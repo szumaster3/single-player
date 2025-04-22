@@ -1,13 +1,21 @@
 package content.region.kandarin.quest.fishingcompo.dialogue
 
 import content.region.kandarin.quest.fishingcompo.FishingContest
+import core.api.sendItemDialogue
 import core.game.dialogue.Dialogue
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.plugin.Initializable
+import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Grandpa Jack dialogue.
+ *
+ * Relations:
+ * - [Fishing Contest][content.region.kandarin.quest.fishingcompo.FishingContest]
+ */
 @Initializable
 class GrandpaJackDialogue(
     player: Player? = null,
@@ -39,33 +47,32 @@ class GrandpaJackDialogue(
                 stage++
             }
 
-            1 ->
-                when (buttonId) {
-                    1 -> {
-                        player("Tell me a story then.")
-                        stage = 10
-                    }
-
-                    2 -> {
-                        player("Are you entering the fishing competition?")
-                        stage = 20
-                    }
-
-                    3 -> {
-                        player("Sorry, I don't have time now.")
-                        stage = 35
-                    }
-
-                    4 -> {
-                        player("Can I buy one of your fishing rods?")
-                        stage = 40
-                    }
-
-                    5 -> {
-                        player("I've forgotten how to fish, can you remind me?")
-                        stage = 50
-                    }
+            1 -> when (buttonId) {
+                1 -> {
+                    player("Tell me a story then.")
+                    stage = 10
                 }
+
+                2 -> {
+                    player("Are you entering the fishing competition?")
+                    stage = 20
+                }
+
+                3 -> {
+                    player("Sorry, I don't have time now.")
+                    stage = 35
+                }
+
+                4 -> {
+                    player("Can I buy one of your fishing rods?")
+                    stage = 40
+                }
+
+                5 -> {
+                    player("I've forgotten how to fish, can you remind me?")
+                    stage = 50
+                }
+            }
 
             4 -> {
                 options(
@@ -75,18 +82,17 @@ class GrandpaJackDialogue(
                 stage++
             }
 
-            5 ->
-                when (buttonId) {
-                    1 -> {
-                        player("I don't suppose you could give me any hints?")
-                        stage = 22
-                    }
-
-                    2 -> {
-                        player("That's less competition for me then.")
-                        stage = 30
-                    }
+            5 -> when (buttonId) {
+                1 -> {
+                    player("I don't suppose you could give me any hints?")
+                    stage = 22
                 }
+
+                2 -> {
+                    player("That's less competition for me then.")
+                    stage = 30
+                }
+            }
 
             6 -> {
                 options(
@@ -96,23 +102,21 @@ class GrandpaJackDialogue(
                 stage++
             }
 
-            7 ->
-                when (buttonId) {
-                    1 -> {
-                        player("Very fair, I'll buy that rod!")
-                        stage =
-                            if (player.inventory.containsItem(Item(995, 5))) {
-                                42
-                            } else {
-                                60
-                            }
-                    }
-
-                    2 -> {
-                        player("That's too rich for me, I'll go to Catherby.")
-                        stage = 44
+            7 -> when (buttonId) {
+                1 -> {
+                    player("Very fair, I'll buy that rod!")
+                    stage = if (player.inventory.containsItem(Item(995, 5))) {
+                        42
+                    } else {
+                        60
                     }
                 }
+
+                2 -> {
+                    player("That's too rich for me, I'll go to Catherby.")
+                    stage = 44
+                }
+            }
 
             9 -> end()
             10 -> {
@@ -241,7 +245,12 @@ class GrandpaJackDialogue(
             42 -> {
                 npc("Excellent choice!")
                 player.inventory.remove(Item(995, 5))
-                player.inventory.add(FishingContest.FISHING_ROD, player)
+                stage++
+            }
+
+            43 -> {
+                sendItemDialogue(player, Items.FISHING_ROD_307, "You hand over the money and receive a fishing rod.")
+                player.inventory.add(Item(Items.FISHING_ROD_307, 1), player)
                 stage = 9
             }
 

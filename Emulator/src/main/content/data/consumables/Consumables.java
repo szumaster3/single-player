@@ -34,7 +34,6 @@ public enum Consumables {
      * The Cooked turkey.
      */
     COOKED_TURKEY(new Food(new int[]{Items.COOKED_TURKEY_14540}, new HealingEffect(2))),
-
     /**
      * The Cooked turkey drumstick.
      */
@@ -220,6 +219,10 @@ public enum Consumables {
      * The Giant frog legs.
      */
     GIANT_FROG_LEGS(new Food(new int[]{Items.GIANT_FROG_LEGS_4517}, new HealingEffect(6))),
+    /**
+     * The Giant carp.
+     */
+    GIANT_CARP(new Food(new int[]{Items.GIANT_CARP_337}, new HealingEffect(6))),
     /**
      * The Bread.
      */

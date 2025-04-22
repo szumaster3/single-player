@@ -65,8 +65,8 @@ class TutorialListener : InteractionListener {
             DoorActionHandler.autowalkFence(
                 player,
                 node as core.game.node.scenery.Scenery,
-                node.asScenery().id,
-                node.asScenery().id,
+                Scenery.GATE_3016,
+                Scenery.GATE_3015
             )
             return@on true
         }

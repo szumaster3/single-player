@@ -1,7 +1,7 @@
 package content.region.fremennik.dialogue.jatizso
 
-import content.region.fremennik.handlers.TravelDestination
-import content.region.fremennik.handlers.WaterbirthTravel
+import content.region.fremennik.handlers.waterbith.TravelDestination
+import content.region.fremennik.handlers.waterbith.WaterbirthTravel
 import core.api.quest.requireQuest
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim

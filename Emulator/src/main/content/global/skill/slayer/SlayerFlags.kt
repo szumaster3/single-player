@@ -145,7 +145,7 @@ class SlayerFlags {
     fun getPoints(): Int = (rewardFlags shr 15) and 0xFFFF
 
     /**
-     * Increases the player’s slayer points by the specified [amount].
+     * Increases the player's slayer points by the specified [amount].
      */
     fun incrementPoints(amount: Int) {
         setPoints(getPoints() + amount)

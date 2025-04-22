@@ -249,7 +249,7 @@ enum class BarcrawlType {
     },
 
     RISING_SUNN_INN(
-        intArrayOf(NPCs.KAYLEE_3217, NPCs.EMILY_736),
+        intArrayOf(NPCs.TINA_3218, NPCs.KAYLEE_3217, NPCs.EMILY_736),
         70,
         "Hand of Death Cocktail",
         arrayOf("Heehee, this'll be fun!"),
