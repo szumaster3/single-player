@@ -80304,7 +80304,7 @@
     "id": "9432"
   },
   {
-    "destroy_message": "You can reclaim this item from the place you found it.",
+    "destroy_message": "WARNING: If the pouch contains any bolts they will be dropped on the floor. You can get another pouch from Hirko in Keldagrim.",
     "shop_price": "1500",
     "examine": "A pouch for storing crossbow bolts.",
     "durability": null,
