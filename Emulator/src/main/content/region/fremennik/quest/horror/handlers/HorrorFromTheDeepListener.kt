@@ -4,6 +4,7 @@ import content.data.GameAttributes
 import content.data.QuestItem
 import content.region.fremennik.quest.horror.JossikLighthouseDialogue
 import core.api.*
+import core.api.interaction.openDoor
 import core.api.quest.getQuestStage
 import core.api.quest.isQuestComplete
 import core.api.quest.setQuestStage
@@ -212,10 +213,8 @@ class HorrorFromTheDeepListener : InteractionListener {
 
         on(strangeDoors, IntType.SCENERY, "open") { player, node ->
             val questStage = getQuestStage(player, Quests.HORROR_FROM_THE_DEEP)
-            val destination = DoorActionHandler.getEndLocation(player, node.asScenery(), true)
             if (questStage >= 50) {
-                DoorActionHandler.open(node.asScenery(), node.asScenery(), node.id + 1, node.id + 1, true, 3, false)
-                forceWalk(player, destination, "")
+                openDoor(player, node.asScenery())
                 playAudio(player, Sounds.STRANGEDOOR_OPEN_1626)
                 playAudio(player, Sounds.STRANGEDOOR_CLOSE_1625, 2)
                 if (!isQuestComplete(player, Quests.HORROR_FROM_THE_DEEP)) {

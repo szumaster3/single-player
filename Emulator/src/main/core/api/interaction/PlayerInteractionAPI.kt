@@ -4,9 +4,12 @@ import content.global.handlers.iface.ge.StockMarket
 import core.api.*
 import core.api.interaction.SecondaryBankAccountActivationResult.*
 import core.game.ge.ExchangeHistory
+import core.game.global.action.DoorActionHandler
+import core.game.node.Node
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.IronmanMode
 import core.game.node.item.Item
+import core.game.node.scenery.Scenery
 import org.rs.consts.Items
 
 /**
@@ -224,6 +227,27 @@ fun openGrandExchange(player: Player) {
     restrictForIronman(player, IronmanMode.ULTIMATE) {
         StockMarket.openFor(player)
     }
+}
+
+/**
+ * Opens a door and instantly moves the player through it.
+ *
+ * @param player The player interacting with the door.
+ * @param node The scenery object representing the door to be opened.
+ */
+fun openDoor(player: Player, node: Scenery) {
+    val destination = DoorActionHandler.getEndLocation(player, node, true)
+
+    DoorActionHandler.open(
+        node,
+        node,
+        node.id + 1,
+        node.id + 1,
+        true,
+        3,
+        false
+    )
+    forceWalk(player, destination, "")
 }
 
 private class PlayerInteractionAPI
