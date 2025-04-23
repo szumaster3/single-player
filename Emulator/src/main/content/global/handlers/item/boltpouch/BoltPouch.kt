@@ -1,6 +1,7 @@
 package content.global.handlers.item.boltpouch
 
 import core.api.*
+import core.cache.def.impl.ItemDefinition
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import org.rs.consts.Components
@@ -55,7 +56,7 @@ object BoltPouch {
      */
     fun hasBolts(player: Player, slot: Int): Boolean {
         val amounts = getBoltAmounts(player)
-        return amounts.getOrNull(slot) ?: 0 > 0
+        return (amounts.getOrNull(slot) ?: 0) > 0
     }
 
     /**
@@ -123,11 +124,9 @@ object BoltPouch {
 
         val AMMO_SLOT = EquipmentSlot.AMMO.ordinal
         val currentlyEquipped = player.equipment[AMMO_SLOT]
-        if (currentlyEquipped != null) {
-            if (!player.inventory.add(currentlyEquipped)) {
-                sendMessage(player, "You don't have enough space in your inventory to do that.")
-                return false
-            }
+        if (currentlyEquipped != null && !player.inventory.add(currentlyEquipped)) {
+            sendMessage(player, "You don't have enough space in your inventory to do that.")
+            return false
         }
 
         player.equipment.add(Item(id, amt))
@@ -210,26 +209,26 @@ object BoltPouch {
      * @param player The player whose bolt pouch is being updated.
      */
     fun updateBoltPouchDisplay(player: Player) {
-        // Handles showing amount of bolts on each slot.
         val amountSlots = intArrayOf(20, 21, 22, 23, 24)
-        for (i in amountSlots.indices) {
-            val amount = getAmount(player, i)
-            sendString(player, amount.toString(), Components.XBOWS_POUCH_433, amountSlots[i])
-        }
-
-        // Handles showing name of bolts on each slot.
         val boltNameSlots = intArrayOf(25, 26, 27, 28, 29)
-        for (i in boltNameSlots.indices) {
-            val boltId = getBolt(player, i)
-            val boltName = if (boltId != -1) getItemName(boltId) else "Nothing"
-            sendString(player, boltName, Components.XBOWS_POUCH_433, boltNameSlots[i])
-        }
-
-        // Handles showing item sprite of bolts on each slot.
         val spriteSlots = intArrayOf(2, 6, 10, 14, 18)
-        for (i in spriteSlots.indices) {
+
+        for (i in 0 until 4) {
             val boltId = getBolt(player, i)
-            sendItemOnInterface(player, Components.XBOWS_POUCH_433, spriteSlots[i], item = boltId)
+            val amount = getAmount(player, i)
+
+            sendString(player, if (amount > 0) amount.toString() else "", Components.XBOWS_POUCH_433, amountSlots[i])
+            sendString(player, if (boltId != -1) getItemName(boltId) else "Nothing", Components.XBOWS_POUCH_433, boltNameSlots[i])
+
+            val def = if (boltId != -1) ItemDefinition.forId(boltId) else null
+            val model = def?.interfaceModelId ?: -1
+
+            if (model > 0) {
+                sendModelOnInterface(player, Components.XBOWS_POUCH_433, spriteSlots[i], model, 170)
+            } else {
+                // Prevent sends dwarfs.
+                sendModelOnInterface(player, Components.XBOWS_POUCH_433, spriteSlots[i], -1)
+            }
         }
     }
 
