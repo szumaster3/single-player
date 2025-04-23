@@ -8,36 +8,43 @@ import org.rs.consts.Components
 class BoltPouchInterface : InterfaceListener {
 
     override fun defineInterfaceListeners() {
-        on(Components.XBOWS_POUCH_433) { player, _, _, _, slot, bolts ->
 
-            val boltItemSlots = intArrayOf(2, 6, 10, 14)
-            val wieldBoltSlots = intArrayOf(3, 7, 11, 15)
-            val removeBoltSlots = intArrayOf(4, 8, 12, 16)
-            val unwieldBoltItemSlot = 18
-            val unwieldBoltSlot = 19
+        /*
+         * Handles the visual layer of the pouch itself.
+         */
 
-            // Update bolts shown in pouch.
-            for (i in boltItemSlots.indices) {
-                val boltId = BoltPouch.getBolt(player, i)
-                sendItemOnInterface(player, Components.XBOWS_POUCH_433, boltItemSlots[i], item = boltId)
-            }
-
-            // Update amounts.
-            val boltAmountSlots = intArrayOf(24, 25, 26, 27)
-            for (i in boltAmountSlots.indices) {
+        onOpen(Components.XBOWS_POUCH_433) { player, _ ->
+            // Handles showing amount of bolts on each slot.
+            val amountSlots = intArrayOf(20, 21, 22, 23, 24)
+            for (i in amountSlots.indices) {
                 val amount = BoltPouch.getAmount(player, i)
-                sendString(player, "$amount", Components.XBOWS_POUCH_433, boltAmountSlots[i])
+                sendString(player, amount.toString(), Components.XBOWS_POUCH_433, amountSlots[i])
             }
-
-            // Update names.
-            val boltNameSlots = intArrayOf(21, 22, 23, 28)
+            // Handles showing name of bolts on each slot.
+            val boltNameSlots = intArrayOf(25, 26, 27, 28, 29)
             for (i in boltNameSlots.indices) {
                 val boltId = BoltPouch.getBolt(player, i)
-                val boltName = if (boltId != -1) getItemName(boltId).capitalize() else "Nothing"
+                val boltName = if (boltId != -1) getItemName(boltId) else "Nothing"
                 sendString(player, boltName, Components.XBOWS_POUCH_433, boltNameSlots[i])
             }
+            // Handles showing item sprite of bolts on each slot.
+            val spriteSlots = intArrayOf(2, 6, 10, 14, 18)
+            for (i in spriteSlots.indices) {
+                val boltId = BoltPouch.getBolt(player, i)
+                sendItemOnInterface(player, Components.XBOWS_POUCH_433, spriteSlots[i], item = boltId)
+            }
+            return@onOpen true
+        }
 
-            // Handle slots.
+        /*
+         * Handles interaction with pouch.
+         */
+
+        on(Components.XBOWS_POUCH_433) { player, _, _, _, slot, _ ->
+            val wieldBoltSlots = intArrayOf(3, 7, 11, 15)
+            val removeBoltSlots = intArrayOf(4, 8, 12, 16)
+            val unwieldBoltSlot = 19
+
             when (slot) {
                 in wieldBoltSlots -> {
                     val pouchSlot = wieldBoltSlots.indexOf(slot)
