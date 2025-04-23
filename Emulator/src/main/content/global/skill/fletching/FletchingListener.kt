@@ -63,6 +63,7 @@ class FletchingListener : InteractionListener {
                             pulse = HeadlessArrowPulse(player, Item(shaft.id), Item(feather.id), amount),
                         )
                     }
+
                     override fun getAll(index: Int): Int =
                         amountInInventory(player, shaft.id)
                 }
@@ -91,6 +92,7 @@ class FletchingListener : InteractionListener {
                             pulse = ArrowHeadPulse(player, Item(shaft.id), arrowHead, amount),
                         )
                     }
+
                     override fun getAll(index: Int): Int =
                         amountInInventory(player, shaft.id)
                 }
@@ -105,6 +107,11 @@ class FletchingListener : InteractionListener {
         onUseWith(IntType.ITEM, Items.WOLFBONE_ARROWTIPS_2861, Items.FLIGHTED_OGRE_ARROW_2865) { player, used, with ->
             val tips = amountInInventory(player, Items.WOLFBONE_ARROWTIPS_2861)
             val shafts = amountInInventory(player, Items.FLIGHTED_OGRE_ARROW_2865)
+
+            if (freeSlots(player) == 0) {
+                sendDialogue(player, "You do not have enough inventory space.")
+                return@onUseWith true
+            }
 
             fun getMaxAmount(): Int {
                 return min(tips, shafts)
@@ -204,13 +211,13 @@ class FletchingListener : InteractionListener {
          * Handles chiseling gems into bolt tips.
          */
 
-        onUseWith(IntType.ITEM, Items.CHISEL_1755, *Fletching.gemIds) { player, used, with ->
-            val gem = GemBolt.product[with.id] ?: return@onUseWith true
+        onUseWith(IntType.ITEM, Items.CHISEL_1755, *Fletching.gemIds) { player, _, with ->
+            val gem = GemBolt.gemToBolt[with.id] ?: return@onUseWith true
             val handler =
                 object : SkillDialogueHandler(
                     player,
-                    SkillDialogue.MAKE_SET_ONE_OPTION,
-                    Item(gem.product),
+                    SkillDialogue.ONE_OPTION,
+                    Item(gem.tip),
                 ) {
                     override fun create(
                         amount: Int,
@@ -218,11 +225,12 @@ class FletchingListener : InteractionListener {
                     ) {
                         submitIndividualPulse(
                             entity = player,
-                            pulse = GemBoltCutPulse(player, Item(used.id), gem, amount),
+                            pulse = GemBoltCutPulse(player, Item(with.id), gem, amount),
                         )
                     }
+
                     override fun getAll(index: Int): Int =
-                        amountInInventory(player, used.id)
+                        amountInInventory(player, with.id)
                 }
             handler.open()
             return@onUseWith true
@@ -246,7 +254,8 @@ class FletchingListener : InteractionListener {
                         )
                     }
 
-                    override fun getAll(index: Int): Int = min(amountInInventory(player, used.id), amountInInventory(player, with.id))
+                    override fun getAll(index: Int): Int =
+                        min(amountInInventory(player, used.id), amountInInventory(player, with.id))
                 }
             handler.open()
             return@onUseWith true
@@ -325,6 +334,7 @@ class FletchingListener : InteractionListener {
                     ) {
                         runTask(player, delay = 2, repeatTimes = min(amount, getMaxAmount() / 6 + 1), task = ::process)
                     }
+
                     override fun getAll(index: Int): Int = getMaxAmount()
                 }
             handler.open()
@@ -359,6 +369,7 @@ class FletchingListener : InteractionListener {
                     sendMessage(player, "You attach $amount feathers to the ogre arrow shafts.")
                 }
             }
+
             val handler =
                 object : SkillDialogueHandler(
                     player,
@@ -371,6 +382,7 @@ class FletchingListener : InteractionListener {
                     ) {
                         runTask(player, delay = 2, amount, task = ::process)
                     }
+
                     override fun getAll(index: Int): Int = getMaxAmount()
                 }
             handler.open()

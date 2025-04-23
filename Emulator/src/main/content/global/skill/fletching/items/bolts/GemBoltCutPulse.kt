@@ -1,50 +1,37 @@
 package content.global.skill.fletching.items.bolts
 
+import content.global.skill.crafting.casting.Gem
+import core.api.*
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.SkillPulse
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
-import core.game.world.update.flag.context.Animation
-import org.rs.consts.Animations
 import org.rs.consts.Items
 
-class GemBoltCutPulse
-/**
- * Constructs a new `GemCutPulse.java` `Object`.
- * @param player the player.
- * @param node the node.
- * @param amount the amount.
- */
-(
-    player: Player?,
-    node: Item?,
-    /**
-     * Represents the gem we're cutting.
-     */
-    private val gem: GemBolt,
-    /**
-     * Represents the amount to make.
-     */
-    private var amount: Int,
-) : SkillPulse<Item?>(player, node) {
+class GemBoltCutPulse(player: Player?, node: Item?, private val gem: GemBolt, private var amount: Int, ) : SkillPulse<Item?>(player, node) {
+
     /**
      * Represents the ticks passed.
      */
     private var ticks = 0
 
     override fun checkRequirements(): Boolean {
-        if (player.skills.getLevel(Skills.FLETCHING) < gem.level) {
-            player.dialogueInterpreter.sendDialogue(
-                "You need a fletching level of " + gem.level + " or above to do that.",
-            )
+        if (getStatLevel(player, Skills.FLETCHING) < gem.level) {
+            sendDialogue(player, "You need a fletching level of " + gem.level + " or above to do that.")
             return false
         }
+
+        if(!hasSpaceFor(player, Item(gem.tip))){
+            sendDialogue(player, "You do not have enough inventory space.")
+            return false
+        }
+
         return player.inventory.containsItem(Item(gem.gem))
     }
 
     override fun animate() {
         if (ticks % 6 == 0) {
-            player.animate(ANIMATION)
+            player.animate(Gem.forItem(Item(gem.gem))?.animation)
         }
     }
 
@@ -52,19 +39,18 @@ class GemBoltCutPulse
         if (++ticks % 5 != 0) {
             return false
         }
-        val reward = if (gem.gem == Items.OYSTER_PEARLS_413) Item(gem.tip, 24) else Item(gem.tip, 12)
+        val reward =
+            when (gem.gem) {
+                Items.OYSTER_PEARLS_413, Items.ONYX_6573 -> Item(gem.tip, 24)
+                Items.OYSTER_PEARL_411 -> Item(gem.tip, 6)
+                else -> Item(gem.tip, 12)
+            }
+
         if (player.inventory.remove(Item(gem.gem))) {
             player.inventory.add(reward)
             player.skills.addExperience(Skills.FLETCHING, gem.experience, true)
         }
         amount--
         return amount <= 0
-    }
-
-    companion object {
-        /**
-         * Represents the cutting animation.
-         */
-        private val ANIMATION = Animation(Animations.CUT_THING_6702)
     }
 }

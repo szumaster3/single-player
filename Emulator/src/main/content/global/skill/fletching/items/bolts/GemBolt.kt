@@ -113,14 +113,9 @@ enum class GemBolt(
     companion object {
         val values = enumValues<GemBolt>()
         val product = values.associateBy { it.base }
+        val gemToBolt = values.associateBy { it.gem }
 
         @JvmStatic
         fun forId(id: Int): GemBolt? = values().find { it.base == id || it.tip == id }
-
-        @JvmStatic
-        fun getGemId(gemBolt: GemBolt): Int = gemBolt.gem
-
-        @JvmStatic
-        fun getTipId(gemBolt: GemBolt): Int = gemBolt.tip
     }
 }
