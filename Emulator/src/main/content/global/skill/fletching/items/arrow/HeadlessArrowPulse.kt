@@ -100,7 +100,7 @@ class HeadlessArrowPulse(
 
     companion object {
         private val FEATHER =
-            arrayOf<Item>(
+            arrayOf(
                 Item(Items.FEATHER_314),
                 Item(Items.STRIPY_FEATHER_10087),
                 Item(Items.RED_FEATHER_10088),

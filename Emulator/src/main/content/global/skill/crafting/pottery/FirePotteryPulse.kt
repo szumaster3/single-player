@@ -54,11 +54,7 @@ class FirePotteryPulse(
 
             if (pottery == Pottery.BOWL &&
                 withinDistance(player, Location(3085, 3408, 0)) &&
-                getAttribute(
-                    player,
-                    "diary:varrock:spun-bowl",
-                    false,
-                )
+                getAttribute(player, "diary:varrock:spun-bowl", false)
             ) {
                 finishDiaryTask(player, DiaryType.VARROCK, 0, 9)
             }
