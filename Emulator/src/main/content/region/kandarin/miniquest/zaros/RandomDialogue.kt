@@ -4,7 +4,6 @@ import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
 import core.tools.END_DIALOGUE
-import core.tools.START_DIALOGUE
 import kotlin.random.Random
 
 /**
@@ -29,7 +28,7 @@ class RandomDialogue : DialogueFile() {
         when (stage) {
             0 -> npc(FaceAnim.NEUTRAL, "Wooo?", "Woooo woo woooooo wooooo woooowooo wooo woooooo woo!").also { stage++ }
             1 -> playerl(FaceAnim.FRIENDLY, "Yeah, I heard about that, ha-ha-ha!").also { stage++ }
-            2 -> npcl(FaceAnim.NEUTRAL, "Woo! WOO WOOOOO WOOWOOWOO WOO WOOOOO!").also { stage++ }
+            2 -> npc(FaceAnim.NEUTRAL, "Woo!", "WOO WOOOOO WOOWOOWOO WOO WOOOOO!").also { stage++ }
             3 -> playerl(FaceAnim.FRIENDLY, "With a MACKEREL? Ouch!").also { stage++ }
             4 -> npc(FaceAnim.NEUTRAL, "Wooowoowoooooo....", "Woowoowoo? Woooo, wooowoo wooowooowooo!").also { stage++ }
             5 -> playerl(FaceAnim.FRIENDLY, "Well, it was fun. Let's do it again sometime.").also { stage = END_DIALOGUE }
@@ -52,7 +51,7 @@ class RandomDialogue : DialogueFile() {
             31 -> playerl(FaceAnim.FRIENDLY, "We get signal!").also { stage++ }
             32 -> npc(FaceAnim.NEUTRAL, "Woo!", "WOO WOOOOO WOOWOOWOO WOO WOOOOO!").also { stage++ }
             33 -> playerl(FaceAnim.FRIENDLY, "Somebody set up us the bomb!").also { stage++ }
-            34 -> npcl(FaceAnim.NEUTRAL, "Wooowoowoooooo.... Woowoowoo? Woooo, wooowoo wooowooowooo!").also { stage++ }
+            34 -> npc(FaceAnim.NEUTRAL, "Wooowoowoooooo....", "Woowoowoo? Woooo, wooowoo wooowooowooo!").also { stage++ }
             35 -> playerl(FaceAnim.FRIENDLY, "You have no chance to survive make your time.").also { stage++ }
             36 -> npcl(FaceAnim.NEUTRAL, "Woo?").also { stage++ }
             37 -> playerl(FaceAnim.FRIENDLY, "All your base are belong to us.").also { stage = END_DIALOGUE }
