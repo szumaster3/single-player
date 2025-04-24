@@ -1,9 +1,9 @@
 package content.global.handlers.item.boltpouch
 
 import core.api.*
-import core.cache.def.impl.ItemDefinition
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
+import core.tools.colorize
 import org.rs.consts.Components
 
 /**
@@ -189,25 +189,32 @@ object BoltPouch {
      * @param player The player whose bolt pouch is being updated.
      */
     fun updateBoltPouchDisplay(player: Player) {
-        val amountSlots = intArrayOf(20, 21, 22, 23, 24)
-        val boltNameSlots = intArrayOf(25, 26, 27, 28, 29)
-        val spriteSlots = intArrayOf(2, 6, 10, 14, 18)
+        val boltAmount = intArrayOf(20, 21, 22, 23, 24)
+        val boltName = intArrayOf(25, 26, 27, 28)
+        val itemSprite = intArrayOf(2, 6, 10, 14)
 
+        // Current ammo slot:
+        val current = player.equipment.getNew(13).copy()
+        if(current != null) {
+            sendItemOnInterface(player, Components.XBOWS_POUCH_433, 18, current.id, current.amount)
+        } else {
+            sendModelOnInterface(player, Components.XBOWS_POUCH_433, 18, -1)
+        }
+
+        sendString(player, if (current.id == -1) "Nothing" else current.name, Components.XBOWS_POUCH_433, 29)
+        sendString(player, if (current.amount > 0) colorize("%G${current.amount}") else "0", Components.XBOWS_POUCH_433, 24)
+
+        // Pouch slots:
         for (i in 0 until 4) {
             val boltId = getBolt(player, i)
             val amount = getAmount(player, i)
-
-            sendString(player, if (amount > 0) amount.toString() else "", Components.XBOWS_POUCH_433, amountSlots[i])
-            sendString(player, if (boltId != -1) getItemName(boltId) else "Nothing", Components.XBOWS_POUCH_433, boltNameSlots[i])
-
-            val def = if (boltId != -1) ItemDefinition.forId(boltId) else null
-            val model = def?.interfaceModelId ?: -1
-
-            if (model > 0) {
-                sendModelOnInterface(player, Components.XBOWS_POUCH_433, spriteSlots[i], model, 170)
+            sendString(player, if (amount > 0) colorize("%G$amount") else "0", Components.XBOWS_POUCH_433, boltAmount[i])
+            sendString(player, if (boltId != -1) getItemName(boltId) else "Nothing", Components.XBOWS_POUCH_433, boltName[i])
+            val def = if (boltId != -1) boltId else null
+            if (def != null) {
+                sendItemOnInterface(player, Components.XBOWS_POUCH_433, itemSprite[i], boltId, amount)
             } else {
-                // Prevent sends dwarfs.
-                sendModelOnInterface(player, Components.XBOWS_POUCH_433, spriteSlots[i], -1)
+                sendModelOnInterface(player, Components.XBOWS_POUCH_433, itemSprite[i], -1)
             }
         }
     }
@@ -220,6 +227,6 @@ object BoltPouch {
      */
     private fun isAllowedBolt(id: Int): Boolean {
         val name = Item(id).name.lowercase()
-        return name.contains("bolt")
+        return name.contains("bolt", true)
     }
 }
