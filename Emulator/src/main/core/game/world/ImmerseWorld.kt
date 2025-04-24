@@ -166,21 +166,21 @@ class ImmerseWorld : StartupListener {
             GeneralBotCreator(
                 DraynorWillows(),
                 skillingBotAssembler.produce(
-                    SkillingBotAssembler.Wealth.values().random(),
+                    SkillingBotAssembler.Wealth.POOR,
                     Location.create(3094, 3245, 0),
                 ),
             )
             GeneralBotCreator(
                 DraynorWillows(),
                 skillingBotAssembler.produce(
-                    SkillingBotAssembler.Wealth.values().random(),
+                    SkillingBotAssembler.Wealth.TUTORIAL,
                     Location.create(3094, 3245, 0),
                 ),
             )
             GeneralBotCreator(
                 DraynorWillows(),
                 skillingBotAssembler.produce(
-                    SkillingBotAssembler.Wealth.values().random(),
+                    SkillingBotAssembler.Wealth.TUTORIAL,
                     Location.create(3094, 3245, 0),
                 ),
             )
