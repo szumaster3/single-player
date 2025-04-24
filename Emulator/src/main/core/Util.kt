@@ -77,6 +77,17 @@ object Util {
     @JvmOverloads
     fun randomDouble(random: Random = Util.random): Double = random.nextDouble()
 
+    fun formatItemName(name: String, definite: Boolean = false): String {
+        val lower = name.lowercase()
+        return if (definite) {
+            "the $lower"
+        } else {
+            val firstChar = lower.firstOrNull()
+            val article = if (firstChar != null && firstChar in listOf('a', 'e', 'i', 'o', 'u')) "an" else "a"
+            "$article $lower"
+        }
+    }
+
     fun capitalize(name: String?): String? {
         if (name != null && name.length != 0) {
             val chars = name.toCharArray()

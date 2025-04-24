@@ -40,10 +40,11 @@ class SilverCraftingInterface : InterfaceListener {
                 return@on true
             }
 
-            if (product == Silver.SILVTHRILL_ROD || product == Silver.SILVTHRIL_CHAIN) {
-                sendMessage(player, "You can't do that yet.")
-                return@on true
-            }
+            // TODO: Confirm real date
+            // if(product == Silver.SICKLE && inBorders(player, getRegionBorders(11316))) {
+            //     sendMessage(player, "You can't make that on Entrana; the monks will object.")
+            //     return@on true
+            // }
 
             if (!hasLevelDyn(player, Skills.CRAFTING, product.level)) {
                 sendMessage(player, "You need a crafting level of ${product.level} to make this.")

@@ -1,5 +1,6 @@
 package content.global.skill.crafting.pottery
 
+import core.Util.formatItemName
 import core.api.*
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.diary.DiaryType
@@ -47,9 +48,9 @@ class FirePotteryPulse(
             rewardXP(player, Skills.CRAFTING, pottery.fireExp)
             player.inventory.add(item)
 
-            sendMessage(player, "You put the " + getItemName(pottery.unfinished.id).lowercase() + " in the oven.")
-            sendMessage(player, "The " + getItemName(pottery.product.id).lowercase() + " hardens in the oven.")
-            sendMessage(player, "You remove a " + getItemName(pottery.product.id).lowercase() + " from the oven.")
+            sendMessage(player, "You put ${formatItemName(getItemName(pottery.unfinished.id), definite = false)} in the oven.")
+            sendMessage(player, "The ${getItemName(pottery.product.id).lowercase()} hardens in the oven.")
+            sendMessage(player, "You remove ${formatItemName(getItemName(pottery.product.id), definite = false)} from the oven.")
 
             if (pottery == Pottery.BOWL &&
                 withinDistance(player, Location(3085, 3408, 0)) &&
