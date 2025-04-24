@@ -1,6 +1,8 @@
 package content.region.kandarin.miniquest.zaros.dialogue
 
 import content.region.kandarin.miniquest.zaros.CurseOfZaros
+import content.region.kandarin.miniquest.zaros.RandomDialogue
+import content.region.kandarin.miniquest.zaros.WrongLocationDialogue
 import core.api.*
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
@@ -11,6 +13,12 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Valdez the Explorer dialogue.
+ *
+ * Relations:
+ * - [Curse of Zaros miniquest][content.region.kandarin.miniquest.zaros]
+ */
 @Initializable
 class ValdezDialogue(
     player: Player? = null,
@@ -18,7 +26,14 @@ class ValdezDialogue(
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (!inEquipment(player, Items.GHOSTSPEAK_AMULET_552)) {
-            player("All your base are belong to us.")
+            end()
+            openDialogue(player, RandomDialogue(), npc)
+            return true
+        }
+
+        if (CurseOfZaros.isNpcInWrongLocation(npc.id, npc.location)) {
+            end()
+            openDialogue(player, WrongLocationDialogue(), npc)
             return true
         }
 

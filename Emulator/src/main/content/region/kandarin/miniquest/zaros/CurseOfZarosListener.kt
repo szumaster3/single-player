@@ -41,6 +41,10 @@ class CurseOfZarosListener : InteractionListener {
                 ),
         )
 
+
+    /**
+     * Initializes the miniquest.
+     */
     init {
         val randomIndex =
             npcLocations.values

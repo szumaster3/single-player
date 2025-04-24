@@ -1,6 +1,8 @@
 package content.region.kandarin.miniquest.zaros.dialogue
 
 import content.region.kandarin.miniquest.zaros.CurseOfZaros
+import content.region.kandarin.miniquest.zaros.RandomDialogue
+import content.region.kandarin.miniquest.zaros.WrongLocationDialogue
 import core.api.*
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
@@ -11,6 +13,12 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Kharrim the Messenger dialogue.
+ *
+ * Relations:
+ * - [Curse of Zaros miniquest][content.region.kandarin.miniquest.zaros]
+ */
 @Initializable
 class KharrimDialogue(
     player: Player? = null,
@@ -18,7 +26,14 @@ class KharrimDialogue(
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (!inEquipment(player, Items.GHOSTSPEAK_AMULET_552)) {
-            player("All your base are belong to us.")
+            end()
+            openDialogue(player, RandomDialogue(), npc)
+            return true
+        }
+
+        if (CurseOfZaros.isNpcInWrongLocation(npc.id, npc.location)) {
+            end()
+            openDialogue(player, WrongLocationDialogue(), npc)
             return true
         }
 
@@ -264,10 +279,10 @@ class KharrimDialogue(
                 end()
                 if (freeSlots(player) == 0) {
                     sendDialogue(player, "You don't have space for the reward.")
-                    return true
+                } else {
+                    npc(FaceAnim.SAD, "How strange...", "They seemed to return to me when you lost them...")
+                    addItem(player!!, Items.GHOSTLY_BOOTS_6106, 1)
                 }
-                npc(FaceAnim.SAD, "How strange...", "They seemed to return to me when you lost them...")
-                addItem(player!!, Items.GHOSTLY_BOOTS_6106, 1)
             }
         }
         return true

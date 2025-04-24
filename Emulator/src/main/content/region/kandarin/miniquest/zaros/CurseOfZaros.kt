@@ -6,7 +6,14 @@ import core.game.node.entity.player.Player
 import core.game.world.map.Location
 import org.rs.consts.NPCs
 
+/**
+ * The Curse of Zaros (miniquest).
+ */
 object CurseOfZaros {
+
+    /**
+     * Represents the mysterious ghosts.
+     */
     private val MYSTERIOUS_NPC =
         intArrayOf(
             NPCs.MYSTERIOUS_GHOST_2397,
@@ -17,6 +24,9 @@ object CurseOfZaros {
             NPCs.MYSTERIOUS_GHOST_2402,
         )
 
+    /**
+     * A map storing the sequence of dialogues for all ghosts.
+     */
     private val dialogueSequence =
         mapOf(
             NPCs.MYSTERIOUS_GHOST_2397 to
@@ -66,6 +76,13 @@ object CurseOfZaros {
                 ),
         )
 
+    /**
+     * Tag completed dialogue with npc.
+     *
+     * @param player The player.
+     * @param npcId the mysterious ghost npc id.
+     * @return `true` if completed; `false` otherwise.
+     */
     fun tagDialogue(
         player: Player,
         npcId: Int,
@@ -82,13 +99,33 @@ object CurseOfZaros {
         return false
     }
 
+    /**
+     * Checks if the player has tagged the specified NPC's dialogue.
+     *
+     * @param player The player to check.
+     * @param npcId The NPC ID to check for dialogue tag.
+     * @return `true` if the player has tagged the dialogue for the specified NPC; `false` otherwise.
+     */
     fun hasTag(
         player: Player,
         npcId: Int,
     ): Boolean = getAttribute(player, "/save:dialogueTag:$npcId", false)
 
+    /**
+     * Checks if the player has completed the miniquest related to Zaros.
+     *
+     * @param player The player to check.
+     * @return `true` if the player has completed the miniquest; `false` otherwise.
+     */
     fun hasComplete(player: Player): Boolean = getAttribute(player, "/save:zaros:complete", false)
 
+    /**
+     * Checks if the player has a specific item in their inventory, equipment, or familiar's container.
+     *
+     * @param player The player to check.
+     * @param item The item ID to check for.
+     * @return `true` if the player has the item; `false` otherwise.
+     */
     fun hasItems(
         player: Player,
         item: Int,
@@ -100,8 +137,29 @@ object CurseOfZaros {
             inBank(player, item)
     }
 
+    /**
+     * Checks if the NPC's location is invalid based on the predefined dialogue sequence.
+     *
+     * @param npcId The NPC ID to check.
+     * @param npcLocation The current location of the NPC.
+     * @return `true` if the NPC is in an incorrect location, `false` otherwise.
+     */
+    fun isNpcInWrongLocation(npcId: Int, npcLocation: Location): Boolean {
+        val allowedLocations = dialogueSequence[npcId] ?: return true
+        return npcLocation !in allowedLocations.keys
+    }
+
+    /**
+     * Fetches the dialogue sequence for an NPC at a specific location.
+     *
+     * @param npcId The NPC ID to check.
+     * @param location The location of the NPC.
+     * @return A single-element array with the dialogue, or null if no dialogue is found.
+     */
     fun getLocationDialogue(
         npcId: Int,
         location: Location,
-    ): Array<String>? = dialogueSequence[npcId]?.get(location)?.let { arrayOf(it) }
+    ): Array<String>? {
+        return dialogueSequence[npcId]?.get(location)?.let { arrayOf(it) }
+    }
 }
