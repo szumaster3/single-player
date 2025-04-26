@@ -1,5 +1,6 @@
 package content.region.kandarin.quest.chompybird
 
+import content.global.skill.fletching.Fletching
 import core.api.*
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
@@ -18,16 +19,8 @@ import kotlin.random.Random
 class BigChompyBirdHunting :
     Quest(Quests.BIG_CHOMPY_BIRD_HUNTING, 35, 34, 2, Vars.VARP_QUEST_CHOMPY_PROGRESS_293, 0, 1, 65),
     InteractionListener {
+
     companion object {
-        val FEATHERS =
-            intArrayOf(
-                Items.FEATHER_314,
-                Items.STRIPY_FEATHER_10087,
-                Items.RED_FEATHER_10088,
-                Items.BLUE_FEATHER_10089,
-                Items.YELLOW_FEATHER_10090,
-                Items.ORANGE_FEATHER_10091,
-            )
         val CAVE_ENTRANCE = Location.create(2646, 9378, 0)
         val CAVE_EXIT = Location.create(2630, 2997, 0)
         val TOAD_LOCATION = Location.create(2636, 2966, 0)
@@ -38,31 +31,25 @@ class BigChompyBirdHunting :
         val ATTR_FYCIE_ASKED = "/save:chompybird:fycie-asked"
     }
 
-    override fun drawJournal(
-        player: Player,
-        stage: Int,
-    ) {
+    override fun drawJournal(player: Player, stage: Int, ) {
         super.drawJournal(player, stage)
-
         var ln = 11
-
         if (stage == 0) {
-            line(player, "To start this quest I will need:", ln++, false)
+            line(player, "I can start this quest by speaking to the ogre !!Rantz?? who", ln++, false)
+            line(player, "lives !!East?? of the !!Ogre City??, !!North?? of the !!Swamp Pool??.", ln++, false)
+            line(player, "To complete this quest I need:", ln++, false)
             line(player, "Level 5 !!Fletching??", ln++, getStatLevel(player, Skills.FLETCHING) >= 5)
             line(player, "Level 30 !!Cooking??", ln++, getStatLevel(player, Skills.COOKING) >= 30)
-            line(player, "Level 30 !!Ranged??", ln++, getStatLevel(player, Skills.RANGE) >= 30)
-            line(
-                player,
-                "Ability to defend against !!level 64 wolves?? and !!level 70 ogres<n>??for short periods of time.",
-                ln,
-                false,
-            )
+            line(player, "Level 30 !!Ranging??", ln++, getStatLevel(player, Skills.RANGE) >= 30)
+            if(getStatLevel(player, Skills.FLETCHING) >= 5 && getStatLevel(player, Skills.COOKING) >= 30 && getStatLevel(player, Skills.RANGE) >= 30) {
+                line(player, "I have all the !!stats?? needed to complete this quest.", ln++, false)
+            }
         } else {
             if (stage == 10) {
                 line(player, "Rantz needs me to make 'stabbers'. To do this I need:", ln++, false)
                 line(player, "- !!Achey Logs??", ln++, inInventory(player, Items.ACHEY_TREE_LOGS_2862))
                 line(player, "- !!Wolf Bones??", ln++, inInventory(player, Items.WOLF_BONES_2859))
-                line(player, "- !!Feathers??", ln++, anyInInventory(player, *FEATHERS))
+                line(player, "- !!Feathers??", ln++, anyInInventory(player, *Fletching.featherIds))
                 line(player, "I then must turn the !!achey logs?? into !!ogre shafts??,", ln++, false)
                 line(player, "attach !!feathers?? to these !!shafts??, and then tip them", ln++, false)
                 line(player, "with !!wolf bones?? chiseled into !!tips??.", ln++, false)
@@ -107,36 +94,8 @@ class BigChompyBirdHunting :
                 line(player, "me to cook the bird for him! And to make it even worse, he and", ln++, false)
                 line(player, "his children want special ingredients! Those are listed below:", ln++, false)
                 line(player, "- Rantz wants: !!${getItemName(getAttribute(player, ATTR_ING_RANTZ, -1))}??", ln++, false)
-                line(
-                    player,
-                    "- ${
-                        if (getAttribute(player, ATTR_BUGS_ASKED, false)) {
-                            "Bugs wants: !!${
-                                getItemName(getAttribute(player, ATTR_ING_BUGS, -1))
-                            }??"
-                        } else {
-                            "I still need to ask !!Bugs??."
-                        }
-                    }",
-                    ln++,
-                    false,
-                )
-                line(
-                    player,
-                    "- ${
-                        if (getAttribute(player, ATTR_FYCIE_ASKED, false)) {
-                            "Fycie wants: !!${
-                                getItemName(
-                                    getAttribute(player, ATTR_ING_FYCIE, -1),
-                                )
-                            }??"
-                        } else {
-                            "I still need to ask !!Fycie??."
-                        }
-                    }",
-                    ln,
-                    false,
-                )
+                line(player, "- ${if (getAttribute(player, ATTR_BUGS_ASKED, false)) { "Bugs wants: !!${getItemName(getAttribute(player, ATTR_ING_BUGS, -1))}??" } else { "I still need to ask !!Bugs??." }}", ln++, false,)
+                line(player, "- ${if (getAttribute(player, ATTR_FYCIE_ASKED, false)) { "Fycie wants: !!${getItemName(getAttribute(player, ATTR_ING_FYCIE, -1),)}??" } else { "I still need to ask !!Fycie??." }}", ln, false,)
             } else if (stage > 70) {
                 line(player, "I seasoned and cooked the chompy bird for Rantz and his kids.", ln++, true)
                 ln++
@@ -147,8 +106,6 @@ class BigChompyBirdHunting :
 
     override fun finish(player: Player) {
         super.finish(player)
-        player ?: return
-
         var ln = 10
         player.packetDispatch.sendItemZoomOnInterface(Items.OGRE_BOW_2883, 230, 277, 5)
         drawReward(player, "2 Quest Points, 262 Fletching", ln++)
@@ -209,24 +166,9 @@ class BigChompyBirdHunting :
         }
 
         onUseWith(IntType.SCENERY, Items.RAW_CHOMPY_2876, Scenery.OGRE_SPIT_ROAST_3375) { player, used, _ ->
-            val rantzIngredient =
-                getAttribute(
-                    player,
-                    ATTR_ING_RANTZ,
-                    -1,
-                )
-            val bugsIngredient =
-                getAttribute(
-                    player,
-                    ATTR_ING_BUGS,
-                    -1,
-                )
-            val fycieIngredient =
-                getAttribute(
-                    player,
-                    ATTR_ING_FYCIE,
-                    -1,
-                )
+            val rantzIngredient = getAttribute(player, ATTR_ING_RANTZ, -1)
+            val bugsIngredient = getAttribute(player, ATTR_ING_BUGS, -1)
+            val fycieIngredient = getAttribute(player, ATTR_ING_FYCIE, -1)
 
             if (rantzIngredient == -1) {
                 sendDialogue(player, "I don't have a reason to do this yet.")
@@ -245,23 +187,8 @@ class BigChompyBirdHunting :
                 sendMessage(player, "You add the other ingredients and cook the food.")
                 runTask(player, 4) {
                     setVarbit(player, Vars.VARBIT_QUEST_CHOMPY_SPITROAST_1770, 0)
-                    sendItemDialogue(
-                        player,
-                        Items.SEASONED_CHOMPY_2882,
-                        "You use the ${getItemName(
-                            rantzIngredient,
-                        ).lowercase()}, ${getItemName(bugsIngredient).lowercase()} and the ${
-                            getItemName(fycieIngredient)
-                        } with the chompy bird to make a seasoned chompy.",
-                    )
-                    if (removeItem(player, used.asItem()) &&
-                        removeItem(player, rantzIngredient) &&
-                        removeItem(
-                            player,
-                            bugsIngredient,
-                        ) &&
-                        removeItem(player, fycieIngredient)
-                    ) {
+                    sendItemDialogue(player, Items.SEASONED_CHOMPY_2882, "You use the ${getItemName(rantzIngredient).lowercase()}, ${getItemName(bugsIngredient).lowercase()} and the ${getItemName(fycieIngredient)} with the chompy bird to make a seasoned chompy.",)
+                    if (removeItem(player, used.asItem()) && removeItem(player, rantzIngredient) && removeItem(player, bugsIngredient) && removeItem(player, fycieIngredient)) {
                         addItem(player, Items.SEASONED_CHOMPY_2882)
                     }
                     sendMessage(player, "Eventually the chompy is cooked")
@@ -278,11 +205,7 @@ class BigChompyBirdHunting :
         onUseWith(IntType.SCENERY, Items.OGRE_BELLOWS_2871, Scenery.SWAMP_BUBBLES_684) { player, used, _ ->
             if (removeItem(player, used.asItem())) {
                 lock(player, 2)
-                visualize(
-                    player,
-                    Animations.HUMAN_USING_BELLOWS_1026,
-                    Graphics(org.rs.consts.Graphics.USING_BELLOWS, 80),
-                )
+                visualize(player, Animations.HUMAN_USING_BELLOWS_1026, Graphics(org.rs.consts.Graphics.USING_BELLOWS, 80))
                 addItem(player, Items.OGRE_BELLOWS_3_2872)
                 sendMessage(player, "You fill the bellows with swamp gas.")
             }
@@ -299,11 +222,7 @@ class BigChompyBirdHunting :
 
             sendChat(player, "Come here toady!")
             sendMessage(player, "You manage to catch the toad and inflate it with swamp gas.")
-            visualize(
-                player,
-                Animations.HUMAN_USING_BELLOWS_1026,
-                Graphics(org.rs.consts.Graphics.USING_BELLOWS, 80),
-            )
+            visualize(player, Animations.HUMAN_USING_BELLOWS_1026, Graphics(org.rs.consts.Graphics.USING_BELLOWS, 80))
             animate(with.asNpc(), Animations.TOAD_INFLATION_1019)
             runTask(player, 2) {
                 if (removeItem(player, used.asItem())) {
