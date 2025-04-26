@@ -11,31 +11,32 @@ import org.rs.consts.Items
 import org.rs.consts.Sounds
 
 class SuperglassMakeSpell : SpellListener("lunar") {
+    companion object {
+        private val GLASS_WEEDS = hashSetOf(Items.SODA_ASH_1781, Items.SEAWEED_401, Items.SWAMP_WEED_10978)
+        private val SAND_SOURCES = intArrayOf(Items.BUCKET_OF_SAND_1783, Items.SANDBAG_9943)
+    }
+
     override fun defineListeners() {
         onCast(LunarSpells.SUPERGLASS_MAKE, NONE) { player, _ ->
-            requires(
-                player,
-                77,
-                arrayOf(Item(Items.ASTRAL_RUNE_9075, 2), Item(Items.FIRE_RUNE_554, 6), Item(Items.AIR_RUNE_556, 10)),
-            )
-            val GLASS_WEEDS = hashSetOf(Items.SODA_ASH_1781, Items.SEAWEED_401, Items.SWAMP_WEED_10978)
+            requires(player, 77, arrayOf(Item(Items.ASTRAL_RUNE_9075, 2), Item(Items.FIRE_RUNE_554, 6), Item(Items.AIR_RUNE_556, 10)))
+
             val inv = player.inventory.toArray()
-            var playerWeed: Int =
-                amountInInventory(player, Items.SODA_ASH_1781) +
-                    amountInInventory(
-                        player,
-                        Items.SEAWEED_401,
-                    ) + amountInInventory(player, Items.SWAMP_WEED_10978)
-            var playerSand: Int = amountInInventory(player, Items.BUCKET_OF_SAND_1783)
+            var playerWeed = amountInInventory(player, Items.SODA_ASH_1781) +
+                    amountInInventory(player, Items.SEAWEED_401) +
+                    amountInInventory(player, Items.SWAMP_WEED_10978)
+            var playerSand = 0
+            for (sandId in SAND_SOURCES) {
+                playerSand += amountInInventory(player, sandId)
+            }
+
             var index = 0
 
             fun addMolten(): Boolean {
-                if (RandomFunction.randomDouble(1.0) < 0.3) {
-                    if (addItem(player, Items.MOLTEN_GLASS_1775, 2)) return true
+                return if (RandomFunction.randomDouble(1.0) < 0.3) {
+                    addItem(player, Items.MOLTEN_GLASS_1775, 2)
                 } else {
-                    if (addItem(player, Items.MOLTEN_GLASS_1775)) return true
+                    addItem(player, Items.MOLTEN_GLASS_1775)
                 }
-                return false
             }
 
             val size = minOf(playerSand, playerWeed)
@@ -45,10 +46,15 @@ class SuperglassMakeSpell : SpellListener("lunar") {
                     if (item == null) continue
                     if (index == size) break
                     if (GLASS_WEEDS.contains(item.id)) {
-                        if (removeItem(player, item) && removeItem(player, Items.BUCKET_OF_SAND_1783) && addMolten()) {
-                            index++
-                        } else {
-                            break
+                        for (sandId in SAND_SOURCES) {
+                            if (amountInInventory(player, sandId) > 0) {
+                                if (removeItem(player, item) && removeItem(player, sandId) && addMolten()) {
+                                    index++
+                                    break
+                                } else {
+                                    break
+                                }
+                            }
                         }
                     }
                 }
