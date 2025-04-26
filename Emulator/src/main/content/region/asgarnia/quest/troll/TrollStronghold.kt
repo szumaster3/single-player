@@ -35,13 +35,8 @@ class TrollStronghold : Quest(Quests.TROLL_STRONGHOLD, 128, 127, 1, Vars.VARP_QU
             line++
             line(player, "To complete this quest I need:", line++)
             line(player, "Level 15 Agility.", line++, hasLevelStat(player, Skills.AGILITY, 15))
-            line(
-                player,
-                "I also need to be able to defeat a !!level 113 Troll??.",
-                line++,
-                player.properties.combatLevel >= 100,
-            )
-            line(player, "Level 30 Thieving might be useful.", line++, hasLevelStat(player, Skills.THIEVING, 30))
+            line(player, "I also need to be able to defeat a !!level 113 Troll??.", line++)
+            line(player, "!!Level 30 Thieving might be useful.??", line++)
             if (isQuestComplete(player, Quests.DEATH_PLATEAU) &&
                 hasLevelStat(player, Skills.AGILITY, 15) &&
                 hasLevelStat(player, Skills.THIEVING, 30)
@@ -49,12 +44,7 @@ class TrollStronghold : Quest(Quests.TROLL_STRONGHOLD, 128, 127, 1, Vars.VARP_QU
                 line(player, "I have all the requirements to start this quest.", line)
             }
         } else {
-            line(
-                player,
-                "I promised !!Denulth?? that I would rescue !!Godric?? from the !!Troll??",
-                line++,
-                stage == 100,
-            )
+            line(player, "I promised !!Denulth?? that I would rescue !!Godric?? from the !!Troll??", line++, stage == 100)
             line(player, "!!Stronghold??", line++, stage == 100)
             line++
             if (stage >= 5 || hasBoots) {

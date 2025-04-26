@@ -20,23 +20,23 @@ class ImpCatcher : Quest(Quests.IMP_CATCHER, 21, 20, 1, Vars.VARP_QUEST_IMP_CATC
         super.drawJournal(player, stage)
         var line = 11
         if (stage == 0) {
-            line(player, "I can start this quest by speaking to !!Wizard Mizgog?? who is", line++, true)
-            line(player, "in the !!Wizard's Tower??.", line++, true)
-            line(player, "There are no requirements for this quest.", line++, true)
+            line(player, "I can start this quest by speaking to !!Wizard Mizgog?? who is", line++)
+            line(player, "in the !!Wizard's Tower??.", line++)
+            line(player, "There are no requirements for this quest.", line++)
         }
 
-        if (stage >= 1) {
+        if (stage == 1) {
             line(player, "I have spoken to Wizard Mizgog.", line++, true)
             line++
 
-            line(player, "I need to collect some items by killing !!Imps??.", line++, allInInventory(player, *beads) || stage == 100)
+            line(player, "I need to collect some items by killing !!Imps??.", line++, allInInventory(player, *beads))
             if (beads.all { inInventory(player, it) }) {
                 line(player, "I have collected all the missing beads and need to return", line++)
                 line(player, "them to !!Wizard Mizgog??.", line++)
             } else {
                 beads.forEach { itemId ->
                     val item = getItemName(itemId)
-                    line(player, "!!1 $item??", line++, inInventory(player, itemId) || stage == 100)
+                    line(player, "!!1 $item??", line++, inInventory(player, itemId))
                 }
             }
         }

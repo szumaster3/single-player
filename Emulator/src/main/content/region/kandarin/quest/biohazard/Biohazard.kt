@@ -56,14 +56,14 @@ class Biohazard : Quest(Quests.BIOHAZARD, 36, 35, 3, Vars.VARP_QUEST_BIOHAZARD_P
             line++
         }
 
-        if (stage > 1) {
+        if (stage >= 1) {
             line(player, "The Mourners blocked the tunnel I used to enter West", line++, true)
             line(player, "Ardougne before. However, I spoke to Jerico, an old friend", line++, true)
             line(player, "of Elena's father, about finding another way into the city.", line++, true)
             line++
         }
 
-        if (stage < 2) {
+        if (stage >= 2) {
             line(player, "!!Jerico?? told me that !!Omart??, a friend of his, should be able", line++, true)
             line(player, "to help me get into !!West Ardougne??. He is waiting for me at", line++, true)
             line(player, "the southern end of the wall.", line++, true)
@@ -88,7 +88,7 @@ class Biohazard : Quest(Quests.BIOHAZARD, 36, 35, 3, Vars.VARP_QUEST_BIOHAZARD_P
             line++
         }
 
-        if (stage > 3) {
+        if (stage >= 3) {
             line(player, "Omart and Kilron, friends of Jerico, helped me cross the", line++, true)
             line(player, "wall into West Ardougne.", line++, true)
             line++
@@ -123,7 +123,7 @@ class Biohazard : Quest(Quests.BIOHAZARD, 36, 35, 3, Vars.VARP_QUEST_BIOHAZARD_P
             line++
         }
 
-        if (stage > 10) {
+        if (stage >= 10) {
             line(player, "I managed to get into the Mourner Headquarters in West", line++, true)
             line(player, "Ardougne. I found Elena's Distillator and returned it", line++, true)
             line(player, "to her.", line++, true)
@@ -141,7 +141,7 @@ class Biohazard : Quest(Quests.BIOHAZARD, 36, 35, 3, Vars.VARP_QUEST_BIOHAZARD_P
             line++
         }
 
-        if (stage > 10) {
+        if (stage > 11) {
             line(player, "Elena ran some tests on a Plague Sample using her", line++, true)
             line(player, "Distillator. However, she wasn't able to discover anything.", line++, true)
             line++
@@ -158,7 +158,7 @@ class Biohazard : Quest(Quests.BIOHAZARD, 36, 35, 3, Vars.VARP_QUEST_BIOHAZARD_P
             line++
         }
 
-        if (stage >= 15) {
+        if (stage > 15) {
             line(player, "!!Elena?? asked me to take some items to !!Guidor?? in !!Varrock??. I", line++, true)
             line(player, "was warned that carrying some of these items into !!Varrock??", line++, true)
             line(player, "might be problematic so I gave them to the !!Chemist's??", line++, true)
