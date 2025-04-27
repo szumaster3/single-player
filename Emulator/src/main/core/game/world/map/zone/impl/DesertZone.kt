@@ -127,7 +127,7 @@ class DesertZone :
                 override fun pulse(): Boolean {
                     for (player in PLAYERS) {
                         if (!getAttribute(player, TUTORIAL_COMPLETE, false) ||
-                            player.interfaceManager.isOpened ||
+                            player.interfaceManager.isOpened() ||
                             player.interfaceManager.hasChatbox() ||
                             player.locks.isMovementLocked
                         ) {

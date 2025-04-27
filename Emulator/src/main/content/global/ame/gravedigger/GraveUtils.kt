@@ -75,7 +75,7 @@ object GraveUtils {
     val gravePlates = intArrayOf(13398, 13400, 13401, 13402, 13403)
 
     fun getRandomCoffinContent(player: Player) {
-        if (player.interfaceManager.opened.id == COFFIN_INTERFACE) {
+        if (player.interfaceManager.opened?.id == COFFIN_INTERFACE) {
             coffinContent.random().forEachIndexed { index, item ->
                 player.packetDispatch.sendModelOnInterface(item, COFFIN_INTERFACE, COMPONENTS[index], 25)
             }
@@ -83,7 +83,7 @@ object GraveUtils {
     }
 
     fun getRandomGraveContent(player: Player) {
-        if (player.interfaceManager.opened.id == GRAVESTONE_INTERFACE) {
+        if (player.interfaceManager.opened?.id == GRAVESTONE_INTERFACE) {
             val plate = gravePlates.random()
             gravePlates.forEach { _ ->
                 player.packetDispatch.sendModelOnInterface(plate, GRAVESTONE_INTERFACE, 2, 240)

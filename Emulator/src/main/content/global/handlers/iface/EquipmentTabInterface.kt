@@ -122,8 +122,8 @@ class EquipmentTabInterface : ComponentPlugin() {
             else ->
                 when (button) {
                     52 -> {
-                        if (p.interfaceManager.isOpened &&
-                            p.interfaceManager.opened.id == Components.ITEMS_LOSE_ON_DEATH_102
+                        if (p.interfaceManager.isOpened() &&
+                            p.interfaceManager.opened?.id == Components.ITEMS_LOSE_ON_DEATH_102
                         ) {
                             return true
                         }
@@ -200,8 +200,8 @@ class EquipmentTabInterface : ComponentPlugin() {
                         }
 
                     55 -> {
-                        if (p.interfaceManager.isOpened &&
-                            p.interfaceManager.opened.id == Components.EQUIP_SCREEN2_667
+                        if (p.interfaceManager.isOpened() &&
+                            p.interfaceManager.opened?.id == Components.EQUIP_SCREEN2_667
                         ) {
                             return true
                         }
@@ -226,7 +226,7 @@ class EquipmentTabInterface : ComponentPlugin() {
                             }
                         p.interfaceManager
                             .openComponent(Components.EQUIP_SCREEN2_667)
-                            .setUncloseEvent { player: Player, c: Component? ->
+                            ?.setUncloseEvent { player: Player, c: Component? ->
                                 player.removeAttribute("equip_stats_open")
                                 player.interfaceManager.closeSingleTab()
                                 player.inventory.listeners.remove(listener)

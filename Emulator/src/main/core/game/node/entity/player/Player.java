@@ -728,6 +728,7 @@ public class Player extends Entity {
         getPrayer().reset();
         removeAttribute("original-loc");
         interfaceManager.openDefaultTabs();
+        interfaceManager.openInfoBars();
         setComponentVisibility(this, Components.TOPLEVEL_548, 69, false);
         setComponentVisibility(this, Components.TOPLEVEL_FULLSCREEN_746, 12, false);
         super.finalizeDeath(killer);
@@ -842,7 +843,7 @@ public class Player extends Entity {
      * Init reconnect.
      */
     public void initReconnect() {
-        getInterfaceManager().setChatbox(null);
+        getInterfaceManager().chatbox = null;
         getPulseManager().clear();
         getZoneMonitor().getZones().clear();
         getViewport().setCurrentPlane(RegionManager.forId(66666).getPlanes()[3]);
@@ -1241,7 +1242,7 @@ public class Player extends Entity {
     public boolean hasModalOpen() {
         int[] excludedIds = new int[]{372, 421, InterfaceManager.DEFAULT_CHATBOX}; // Excludes plain message, plain message with scrollbar, and normal chatbox
         Component openedIface = interfaceManager.getOpened();
-        Component openChatbox = interfaceManager.getChatbox();
+        Component openChatbox = interfaceManager.chatbox;
 
         boolean hasModal = false;
 

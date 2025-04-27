@@ -19,6 +19,18 @@ class MainGameInterface : InterfaceListener {
     val REPORT_ABUSE = Components.SNAPSHOT_MAIN_553
 
     override fun defineInterfaceListeners() {
+
+        onOpen(TOPLEVEL) {player, _ ->
+            player.interfaceManager.openDefaultTabs()
+            return@onOpen true
+        }
+
+        onOpen(TOPLEVEL_FS) {player, _ ->
+            player.interfaceManager.openInfoBars()
+            return@onOpen true
+        }
+
+
         on(FILTER_BUTTONS) { player, _, _, buttonID, _, _ ->
             if (buttonID == 27) {
                 openReport(player)
@@ -86,7 +98,7 @@ class MainGameInterface : InterfaceListener {
     }
 
     fun openReport(player: Player) {
-        player.interfaceManager.open(Component(REPORT_ABUSE)).closeEvent =
+        player.interfaceManager.open(Component(REPORT_ABUSE))?.closeEvent =
             CloseEvent { player1: Player, c: Component? ->
                 player1.packetDispatch.sendRunScript(80, "")
                 player1.packetDispatch.sendRunScript(137, "")

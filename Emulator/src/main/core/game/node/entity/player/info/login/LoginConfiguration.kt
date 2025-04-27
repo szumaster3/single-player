@@ -143,7 +143,7 @@ object LoginConfiguration {
         player.interfaceManager.openWindowsPane(Component(if (player.interfaceManager.isResizable) 746 else 548))
         player.interfaceManager.openChatbox(Components.CHATDEFAULT_137)
         player.interfaceManager.openDefaultTabs()
-
+        player.interfaceManager.openInfoBars()
         welcome(player)
         config(player)
 
@@ -205,6 +205,7 @@ object LoginConfiguration {
         player.questRepository.syncronizeTab(player)
         player.interfaceManager.close()
         player.emoteManager.refresh()
+        player.interfaceManager.openInfoBars()
 
         if (!player.isArtificial) {
             log(LoginConfiguration::class.java, Log.INFO, "Finished configuring player ${player.username}")

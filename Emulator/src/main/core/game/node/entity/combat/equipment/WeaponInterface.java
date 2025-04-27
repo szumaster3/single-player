@@ -238,7 +238,7 @@ public final class WeaponInterface extends Component {
      * Updates the interface.
      */
     public void updateInterface() {
-        player.getInterfaceManager().getTabs()[0] = this;
+        player.getInterfaceManager().tabs[0] = this;
         Item weapon = player.getEquipment().get(EquipmentContainer.SLOT_WEAPON);
         WeaponInterfaces inter = getWeaponInterface(weapon);
         String name;

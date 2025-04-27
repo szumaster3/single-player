@@ -83,7 +83,7 @@ class ScriptProcessor(
         }
         var canProcess = !entity.delayed()
         if (entity is Player && entity !is AIPlayer) {
-            canProcess = canProcess && !entity.interfaceManager.isOpened && !entity.interfaceManager.hasChatbox()
+            canProcess = canProcess && !entity.interfaceManager.isOpened() && !entity.interfaceManager.hasChatbox()
         }
 
         if (entity !is Player) return

@@ -49,7 +49,7 @@ public final class MainInterface extends ComponentPlugin {
                 return true;
             case Components.TOPLEVEL_548:
                 if (button >= 38 && button <= 44 || button >= 20 && button <= 26) {
-                    player.getInterfaceManager().setCurrentTabIndex(getTabIndex(button));
+                    player.getInterfaceManager().currentTabIndex = getTabIndex(button);
                 }
 
                 switch (button) {

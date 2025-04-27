@@ -188,8 +188,8 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
             description = "Lists the online players.",
         ) { player, _ ->
             val rights = player.rights.ordinal
-            if (player.interfaceManager.isOpened &&
-                player.interfaceManager.opened.id != Components.QUESTJOURNAL_SCROLL_275 ||
+            if (player.interfaceManager.isOpened() &&
+                player.interfaceManager.opened?.id != Components.QUESTJOURNAL_SCROLL_275 ||
                 player.locks.isMovementLocked ||
                 player.locks.isTeleportLocked
             ) {
@@ -350,7 +350,7 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
             usage = "",
             description = "Opens a reply prompt to your last DM. Same as pressing tab.",
         ) { player, _ ->
-            if (player.interfaceManager.isOpened) {
+            if (player.interfaceManager.isOpened()) {
                 reject(player, "<col=e74c3c>Please finish what you're doing first.")
             }
             if (player.attributes.containsKey("replyTo")) {

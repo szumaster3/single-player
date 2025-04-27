@@ -54,7 +54,7 @@ class BankHelpDialogue : DialogueFile() {
                             end()
                             it.bank.close()
                             openInterface(it, Components.BANK_V2_HELP_767).also {
-                                if (player!!.interfaceManager.isOpened) {
+                                if (player!!.interfaceManager.isOpened()) {
                                     sendString(
                                         player!!,
                                         "Bank of ${ServerConstants.SERVER_NAME} - Help",

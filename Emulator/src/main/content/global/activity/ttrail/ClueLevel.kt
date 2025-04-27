@@ -9,6 +9,7 @@ import core.game.node.item.Item
 import core.game.system.config.ClueRewardParser
 import core.game.world.GameWorld
 import core.tools.RandomFunction
+import org.rs.consts.Components
 import org.rs.consts.Items
 
 enum class ClueLevel(
@@ -49,7 +50,7 @@ enum class ClueLevel(
             if (trailCompleted || isDevMode) {
                 val rewards = rollLoot(player, clueLevel)
 
-                player.interfaceManager.open(Component(364))
+                player.interfaceManager.open(Component(Components.TRAIL_REWARD_364))
 
                 if (player.inventory.remove(casket)) {
                     var rewardValue = 0L

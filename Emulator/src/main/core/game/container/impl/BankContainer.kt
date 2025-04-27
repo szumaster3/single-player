@@ -377,14 +377,14 @@ class BankContainer(
          *
          * @return If items have to be noted `true`.
          */
-        get() = getVarbit(player, Vars.VARBIT_IFACE_BANK_NOTE_MODE_7001) == 1
+        get() = getVarbit(player, Vars.VARBIT_BANK_WITHDRAW_MODE_3958) == 1
         /**
          * Set if items have to be noted.
          *
          * @param noteItems If items have to be noted `true`.
          */
         set(noteItems) {
-            setVarbit(player, Vars.VARBIT_IFACE_BANK_NOTE_MODE_7001, if (noteItems) 1 else 0, false)
+            setVarbit(player, Vars.VARBIT_BANK_WITHDRAW_MODE_3958, if (noteItems) 1 else 0, false)
         }
 
     /**
@@ -411,14 +411,14 @@ class BankContainer(
          *
          * @return `True` if inserting items mode is enabled.
          */
-        get() = getVarbit(player, Vars.VARBIT_IFACE_BANK_INSERT_MODE_7000) == 1
+        get() = getVarbit(player, Vars.VARP_IFACE_BANK_INSERT_MODE_304) == 1
         /**
          * Sets the insert items value.
          *
          * @param insertItems The insert items value.
          */
         set(insertItems) {
-            setVarbit(player, Vars.VARBIT_IFACE_BANK_INSERT_MODE_7000, if (insertItems) 1 else 0, false)
+            setVarbit(player, Vars.VARP_IFACE_BANK_INSERT_MODE_304, if (insertItems) 1 else 0, false)
         }
 
     /**

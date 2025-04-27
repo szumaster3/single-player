@@ -124,7 +124,7 @@ public final class GodwarsZone extends MapZone implements Plugin<java.lang.Objec
     public void locationUpdate(Entity e, Location last) {
         if (e instanceof Player) {
             Player player = (Player) e;
-            Component c = player.getInterfaceManager().getOverlay();
+            Component c = player.getInterfaceManager().overlay;
             boolean inZamorakFortress = ZAMORAK_FORTRESS.insideBorder(player.getLocation().getX(), player.getLocation().getY());
             if ((c == null || c.id != 598) && inZamorakFortress) {
                 openOverlay(player, 598);

@@ -70,7 +70,7 @@ class RequestManager(
             player.packetDispatch.sendMessage("Unable to find " + target.username + ".")
             return false
         }
-        if (!target.isActive || target.interfaceManager.isOpened) {
+        if (!target.isActive || target.interfaceManager.isOpened()) {
             player.packetDispatch.sendMessage("Other player is busy at the moment.")
             return false
         }

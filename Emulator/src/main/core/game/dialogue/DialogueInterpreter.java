@@ -190,7 +190,7 @@ public final class DialogueInterpreter {
         if (dialogue != null) {
             actions.clear();
 
-            if (player.getInterfaceManager().getChatbox() != null && player.getInterfaceManager().getChatbox().getCloseEvent() != null) {
+            if (player.getInterfaceManager().chatbox != null && player.getInterfaceManager().chatbox.getCloseEvent() != null) {
                 return true;
             }
             if (dialogue != null) {
@@ -232,8 +232,8 @@ public final class DialogueInterpreter {
             player.getPacketDispatch().sendString(messages[i], interfaceId, i + 1);
         }
         player.getInterfaceManager().openChatbox(interfaceId);
-        player.getPacketDispatch().sendInterfaceConfig(player.getInterfaceManager().getChatbox().id, 1, false);
-        return player.getInterfaceManager().getChatbox();
+        player.getPacketDispatch().sendInterfaceConfig(player.getInterfaceManager().chatbox.id, 1, false);
+        return player.getInterfaceManager().chatbox;
     }
 
     /**
@@ -251,7 +251,7 @@ public final class DialogueInterpreter {
                 return true;
             }
         });
-        return player.getInterfaceManager().getChatbox();
+        return player.getInterfaceManager().chatbox;
     }
 
     /**
@@ -272,7 +272,7 @@ public final class DialogueInterpreter {
         }
 
         player.getInterfaceManager().openChatbox(214);
-        return player.getInterfaceManager().getChatbox();
+        return player.getInterfaceManager().chatbox;
     }
 
     /**
@@ -284,8 +284,8 @@ public final class DialogueInterpreter {
      */
     public Component sendPlainMessage(final boolean hideContinue, String... messages) {
         sendDialogue(messages);
-        player.getPacketDispatch().sendInterfaceConfig(player.getInterfaceManager().getChatbox().id, (messages.length + 1), hideContinue);
-        return player.getInterfaceManager().getChatbox();
+        player.getPacketDispatch().sendInterfaceConfig(player.getInterfaceManager().chatbox.id, (messages.length + 1), hideContinue);
+        return player.getInterfaceManager().chatbox;
     }
 
     /**
@@ -315,7 +315,7 @@ public final class DialogueInterpreter {
         player.getPacketDispatch().sendItemOnInterface(id, 1, 94, 9);
 
         player.getInterfaceManager().openChatbox(94);
-        return player.getInterfaceManager().getChatbox();
+        return player.getInterfaceManager().chatbox;
     }
 
     /**
@@ -331,7 +331,7 @@ public final class DialogueInterpreter {
             player.getPacketDispatch().sendString(messages[i], 372, i + 1);
         }
         player.getInterfaceManager().openChatbox(372);
-        return player.getInterfaceManager().getChatbox();
+        return player.getInterfaceManager().chatbox;
     }
 
     /**
@@ -350,7 +350,7 @@ public final class DialogueInterpreter {
             player.getPacketDispatch().sendString(messages[i], 421, i + 2);
         }
         player.getInterfaceManager().openChatbox(421);
-        return player.getInterfaceManager().getChatbox();
+        return player.getInterfaceManager().chatbox;
     }
 
     /**
@@ -384,7 +384,7 @@ public final class DialogueInterpreter {
                         itemDef.getModelRotationY()
                 );
 
-        return player.getInterfaceManager().getChatbox();
+        return player.getInterfaceManager().chatbox;
     }
 
     /**
@@ -411,7 +411,7 @@ public final class DialogueInterpreter {
         player.getPacketDispatch().sendString(message, 131, 1);
         player.getPacketDispatch().sendItemOnInterface(first, 1, 131, 0);
         player.getPacketDispatch().sendItemOnInterface(second, 1, 131, 2);
-        return player.getInterfaceManager().getChatbox();
+        return player.getInterfaceManager().chatbox;
     }
 
     /**
@@ -428,7 +428,7 @@ public final class DialogueInterpreter {
         player.getPacketDispatch().sendString(message, 131, 1);
         player.getPacketDispatch().sendItemZoomOnInterface(first, zoom, 131, 0);
         player.getPacketDispatch().sendItemZoomOnInterface(second, zoom, 131, 2);
-        return player.getInterfaceManager().getChatbox();
+        return player.getInterfaceManager().chatbox;
     }
 
     /**
@@ -444,7 +444,7 @@ public final class DialogueInterpreter {
         player.getPacketDispatch().sendString(message, 131, 1);
         player.getPacketDispatch().sendItemOnInterface(first.getId(), first.getAmount(), 131, 0);
         player.getPacketDispatch().sendItemOnInterface(second.getId(), second.getAmount(), 131, 2);
-        return player.getInterfaceManager().getChatbox();
+        return player.getInterfaceManager().chatbox;
     }
 
     /**
@@ -604,8 +604,8 @@ public final class DialogueInterpreter {
             player.getPacketDispatch().sendString(doSubstitutions(player, messages[i]), interfaceId, (i + 4));
         }
         player.getInterfaceManager().openChatbox(interfaceId);
-        player.getPacketDispatch().sendInterfaceConfig(player.getInterfaceManager().getChatbox().id, 3, false);
-        return player.getInterfaceManager().getChatbox();
+        player.getPacketDispatch().sendInterfaceConfig(player.getInterfaceManager().chatbox.id, 3, false);
+        return player.getInterfaceManager().chatbox;
     }
 
     /**
@@ -648,7 +648,7 @@ public final class DialogueInterpreter {
                 }
 
                 player.getInterfaceManager().openChatbox(finalInterfaceId);
-                player.getPacketDispatch().sendInterfaceConfig(player.getInterfaceManager().getChatbox().id, 3, false);
+                player.getPacketDispatch().sendInterfaceConfig(player.getInterfaceManager().chatbox.id, 3, false);
 
                 return true;
             }
@@ -676,7 +676,7 @@ public final class DialogueInterpreter {
             player.getPacketDispatch().sendString(options[i].toString(), interfaceId, i + 2);
         }
         player.getInterfaceManager().openChatbox(interfaceId);
-        return player.getInterfaceManager().getChatbox();
+        return player.getInterfaceManager().chatbox;
     }
 
     /**

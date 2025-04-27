@@ -21,7 +21,7 @@ class ChallengeOptionPlugin : OptionHandler() {
         option: String,
     ): Boolean {
         val other = node as Player
-        if (other.interfaceManager.isOpened || other.getExtension<Any?>(DuelSession::class.java) != null) {
+        if (other.interfaceManager.isOpened() || other.getExtension<Any?>(DuelSession::class.java) != null) {
             player.packetDispatch.sendMessage("Other player is busy at the moment.")
             return true
         }

@@ -554,15 +554,15 @@ object PacketProcessor {
         }
 
         if (canWalk &&
-            player.interfaceManager.isOpened &&
-            !player.interfaceManager.opened.definition!!
+            player.interfaceManager?.isOpened() == true &&
+            !player.interfaceManager?.opened?.definition!!
                 .isWalkable
         ) {
             canWalk = canWalk && player.interfaceManager.close()
         }
         if (canWalk &&
             player.interfaceManager.hasChatbox() &&
-            !player.interfaceManager.chatbox.definition!!
+            !player.interfaceManager.chatbox?.definition!!
                 .isWalkable
         ) {
             player.interfaceManager.closeChatbox()
