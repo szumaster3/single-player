@@ -45,16 +45,12 @@ class PotteryCraftingPulse(
             if (pottery == Pottery.BOWL && withinDistance(player, Location(3086, 3410, 0))) {
                 setAttribute(player, "/save:diary:varrock:spun-bowl", true)
             }
+
             val item = pottery.unfinished
             player.inventory.add(item)
             rewardXP(player, Skills.CRAFTING, pottery.exp)
-            sendMessage(
-                player,
-                "You make the clay into " + (if (StringUtils.isPlusN(pottery.unfinished.name)) "an" else "a") + " " +
-                    pottery.unfinished.name.lowercase() +
-                    ".",
-            )
 
+            sendMessage(player, "You make the clay into " + (if (StringUtils.isPlusN(item.name)) "an" else "a") + " " + item.name.lowercase() + ".")
             if (pottery == Pottery.POT && withinDistance(player, Location(3086, 3410, 0))) {
                 finishDiaryTask(player, DiaryType.LUMBRIDGE, 0, 7)
             }
