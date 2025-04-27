@@ -6,7 +6,6 @@ import content.region.kandarin.quest.phoenix.custcene.WoundedPhoenixCutscene
 import content.region.kandarin.quest.phoenix.handlers.allTwigs
 import content.region.kandarin.quest.seaslug.cutscene.HolgartCutscene
 import content.region.kandarin.quest.seaslug.cutscene.KennithCutscene
-import content.region.kandarin.quest.seaslug.cutscene.SafeAndSoundCutscene
 import core.api.Container
 import core.api.addItem
 import core.api.quest.finishQuest
