@@ -12,7 +12,12 @@ import static core.api.ContentAPIKt.*;
 import static core.tools.DialogueHelperKt.END_DIALOGUE;
 
 /**
- * The type Gus dialogue.
+ * Represents the Gus dialogue.
+ *
+ * <p>Relations:
+ * <ul>
+ *   <li>{@link content.region.kandarin.quest.swept.SweptAway Swept Away quest}</li>
+ * </ul>
  */
 @Initializable
 public class GusDialogue extends Dialogue {

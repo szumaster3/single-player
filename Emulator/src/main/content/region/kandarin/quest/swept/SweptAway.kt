@@ -11,6 +11,9 @@ import org.rs.consts.Items
 import org.rs.consts.Quests
 import org.rs.consts.Vars
 
+/**
+ * Represents the Swept Away quest.
+ */
 @Initializable
 class SweptAway : Quest(Quests.SWEPT_AWAY, 160, 159, 2, Vars.VARBIT_QUEST_SWEPT_AWAY_PROGRESS_5448, 0, 1, 50) {
     override fun drawJournal(

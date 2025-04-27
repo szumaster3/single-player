@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 import org.rs.consts.*
 
 /**
- * Utility functions for handling interactions related to the [SweptAway] quest.
+ * Represents utils for [Swept Away quest][content.region.kandarin.quest.swept.SweptAway].
  */
 internal object SweptUtils {
     const val PEN_TABLE_INTERFACE = 799
@@ -444,40 +444,6 @@ internal object SweptUtils {
                             addItemOrDrop(player, Items.TOAD_LABEL_14066, 1)
                             addItemOrDrop(player, Items.NEWTS_AND_TOADS_LABEL_14067, 1)
                         }
-
-                        6 -> {
-                            unlock(player)
-                            openInterface(player, Components.FADE_FROM_BLACK_170)
-                            return true
-                        }
-                    }
-                    return false
-                }
-            },
-        )
-    }
-
-    /**
-     * Teleports the player to a new location with a fade effect.
-     *
-     * @param player The player.
-     */
-    @JvmStatic
-    fun teleport(player: Player) {
-        lock(player, 6)
-        GameWorld.Pulser.submit(
-            object : Pulse() {
-                var counter = 0
-
-                override fun pulse(): Boolean {
-                    when (counter++) {
-                        0 -> openInterface(player, Components.FADE_TO_BLACK_120)
-                        1 ->
-                            teleport(
-                                player,
-                                Location.create(3086, 3259, 0),
-                                TeleportManager.TeleportType.NORMAL,
-                            )
 
                         6 -> {
                             unlock(player)

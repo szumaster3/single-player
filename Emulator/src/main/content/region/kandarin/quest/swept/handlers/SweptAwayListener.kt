@@ -310,6 +310,7 @@ class SweptAwayListener :
         /*
          * Handles labelling the crate with Newts and Toads when used with a label.
          */
+
         onUseWith(IntType.SCENERY, Items.NEWTS_AND_TOADS_LABEL_14067, SweptUtils.NT_CRATE) { player, used, _ ->
             SweptUtils.handleCrateLabelling(player, used.id, SweptUtils.VARBIT_NEWT_AND_TOAD_CRATE_LABEL, 3)
             return@onUseWith true

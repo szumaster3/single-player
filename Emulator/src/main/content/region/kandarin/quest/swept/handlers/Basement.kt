@@ -8,6 +8,9 @@ import core.game.world.map.zone.ZoneBorders
 import core.game.world.map.zone.ZoneRestriction
 import org.rs.consts.Items
 
+/**
+ * Represents the Basement (Betty & Hetty) area for Swept Away quest.
+ */
 class Basement : MapArea {
     override fun defineAreaBorders(): Array<ZoneBorders> = arrayOf(bettyBasement, hettyBasement)
 

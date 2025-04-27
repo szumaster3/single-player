@@ -15,7 +15,12 @@ import static core.api.ContentAPIKt.getAttribute;
 import static core.tools.DialogueHelperKt.END_DIALOGUE;
 
 /**
- * The type Lottie dialogue.
+ * Represents the Lottie dialogue.
+ *
+ * <p>Relations:
+ * <ul>
+ *   <li>{@link content.region.kandarin.quest.swept.SweptAway Swept Away quest}</li>
+ * </ul>
  */
 @Initializable
 public class LottieDialogue extends Dialogue {

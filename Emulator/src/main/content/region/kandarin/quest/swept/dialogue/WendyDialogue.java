@@ -11,7 +11,12 @@ import org.rs.consts.Quests;
 import static core.tools.DialogueHelperKt.END_DIALOGUE;
 
 /**
- * The type Wendy dialogue.
+ * Represents the Wendy dialogue.
+ *
+ * <p>Relations:
+ * <ul>
+ *   <li>{@link content.region.kandarin.quest.swept.SweptAway Swept Away quest}</li>
+ * </ul>
  */
 @Initializable
 public class WendyDialogue extends Dialogue {

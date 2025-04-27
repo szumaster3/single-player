@@ -16,7 +16,12 @@ import static core.api.quest.QuestAPIKt.*;
 import static core.tools.DialogueHelperKt.END_DIALOGUE;
 
 /**
- * The type Maggie dialogue.
+ * Represents the Maggie dialogue.
+ *
+ * <p>Relations:
+ * <ul>
+ *   <li>{@link content.region.kandarin.quest.swept.SweptAway Swept Away quest}</li>
+ * </ul>
  */
 @Initializable
 public class MaggieDialogue extends Dialogue {
