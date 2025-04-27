@@ -728,7 +728,6 @@ public class Player extends Entity {
         getPrayer().reset();
         removeAttribute("original-loc");
         interfaceManager.openDefaultTabs();
-        interfaceManager.openInfoBars();
         setComponentVisibility(this, Components.TOPLEVEL_548, 69, false);
         setComponentVisibility(this, Components.TOPLEVEL_FULLSCREEN_746, 12, false);
         super.finalizeDeath(killer);
