@@ -1,8 +1,6 @@
-### Emulation
+### [Emulation](https://szumaster3.github.io/530-content/)
 
-Fork of [2009scape](https://gitlab.com/2009scape/2009scape).
-
-[![Release][play-release]][play-url] <br>
+This repository is a fork of the original [2009scape project](https://gitlab.com/2009scape/2009scape), licensed under the **GNU Affero General Public License v3.0 (AGPL-3.0)**.
 
 ___
 
@@ -96,21 +94,11 @@ ___
 
 - This project is licensed under the **AGPL 3.0**. This means you are free to modify, distribute, and use this code,
   provided you comply with the terms of the AGPL 3.0 license.
+
+- As this is a fork of the [2009scape](https://gitlab.com/2009scape/2009scape) project, all modifications to this code, including derivative works, must also be licensed under the **AGPL 3.0**.
+
 - You can find more information about the license [here](https://www.gnu.org/licenses/agpl-3.0.html).
+
+- **Source Code**: You must make the source code available to anyone who interacts with this software, especially in online services.
+
 - The license applies to the entire repository unless otherwise stated.
-
-[license-shield]: https://img.shields.io/badge/license-AGPL--3.0-informational
-
-[license-url]: https://www.gnu.org/licenses/agpl-3.0.en.html
-
-[fork-shield]: https://img.shields.io/badge/repository-fork-blue
-
-[fork-url]: https://gitlab.com/2009scape/2009scape
-
-[libs]: https://img.shields.io/badge/constants-library-blue
-
-[libs-url]: https://gitlab.com/rs2-emu/530-variables
-
-[play-release]: https://img.shields.io/badge/website-releases-blue
-
-[play-url]: https://szumaster3.github.io/530-content/
