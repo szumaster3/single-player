@@ -1,6 +1,6 @@
 ### [Emulation](https://szumaster3.github.io/530-content/)
 
-This repository is a fork of the original [2009scape project](https://gitlab.com/2009scape/2009scape), licensed under the **GNU Affero General Public License v3.0 (AGPL-3.0)**.
+This repository is a fork of the original [2009scape project](https://gitlab.com/2009scape/2009scape).
 
 ___
 
