@@ -1,7 +1,7 @@
 package core.game.node.entity.player.link.request
 
 import core.game.node.entity.player.Player
-import core.game.node.entity.player.link.request.assist.AssistSession
+import core.game.node.entity.player.link.request.assist.AssistSessionPulse
 import core.game.node.entity.player.link.request.trade.TradeModule
 
 /**
@@ -45,6 +45,6 @@ open class RequestType(
         /**
          * Assist request type, allowing players to request assistance.
          */
-        val ASSIST = RequestType("Sending assistance request...", ":assistreq:", AssistSession())
+        val ASSIST = RequestType("Sending assistance request...", ":assistreq:", AssistSessionPulse())
     }
 }

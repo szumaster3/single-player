@@ -9,7 +9,7 @@ import core.game.node.entity.Entity;
 import core.game.node.entity.npc.NPC;
 import core.game.node.entity.player.Player;
 import core.game.node.entity.player.info.PlayerMonitor;
-import core.game.node.entity.player.link.request.assist.AssistSession;
+import core.game.node.entity.player.link.request.assist.AssistSessionPulse;
 import core.game.node.item.Item;
 import core.game.world.GameWorld;
 import core.game.world.repository.Repository;
@@ -233,7 +233,7 @@ public final class Skills {
             lastUpdateXp = this.experience.clone();
         double mod = getExperienceMod(slot, experience, playerMod, true);
         final Player player = entity instanceof Player ? ((Player) entity) : null;
-        final AssistSession assist = entity.getExtension(AssistSession.class);
+        final AssistSessionPulse assist = entity.getExtension(AssistSessionPulse.class);
         if (assist != null && assist.translateExperience(player, slot, experience, mod)) {
             return;
         }
@@ -649,7 +649,7 @@ public final class Skills {
         if (!discardAssist) {
             if (entity instanceof Player) {
                 final Player p = (Player) entity;
-                final AssistSession assist = p.getExtension(AssistSession.class);
+                final AssistSessionPulse assist = p.getExtension(AssistSessionPulse.class);
                 if (assist != null && assist.getPlayer() != p) {
                     Player assister = assist.getPlayer();
                     int index = assist.getSkillIndex(slot);
