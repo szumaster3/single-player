@@ -9,7 +9,7 @@ import org.rs.consts.NPCs
 class PyramidPlunderMummyNPC(
     location: Location?,
     player: Player?,
-) : PyramidPlunderNPC(IDS.get(0), location, player!!) {
+) : PyramidPlunderNPC(IDS[0], location, player!!) {
     override fun init() {
         super.init()
         isRespawn = false

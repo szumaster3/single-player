@@ -78442,7 +78442,7 @@
   {
     "requirements": "{0,30}-{6,30}",
     "turn90cw_anim": "1207",
-    "examine": "This sceptre has two charges left.",
+    "examine": "This sceptre has two remaining charges.",
     "walk_anim": "1205",
     "durability": null,
     "destroy": "true",
@@ -78474,7 +78474,7 @@
   {
     "requirements": "{0,30}-{6,30}",
     "turn90cw_anim": "1207",
-    "examine": "This sceptre has one charge left.",
+    "examine": "This sceptre has one remaining charge.",
     "walk_anim": "1205",
     "durability": null,
     "destroy": "true",

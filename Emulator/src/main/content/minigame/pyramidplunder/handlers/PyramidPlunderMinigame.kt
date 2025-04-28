@@ -71,9 +71,9 @@ class PyramidPlunderMinigame :
 
             val pastSpears =
                 (spearDir == Direction.NORTH && player.location.y > node.location.y) ||
-                    (spearDir == Direction.SOUTH && player.location.y < node.location.y) ||
-                    (spearDir == Direction.EAST && player.location.x > node.location.x) ||
-                    (spearDir == Direction.WEST && player.location.x < node.location.x)
+                        (spearDir == Direction.SOUTH && player.location.y < node.location.y) ||
+                        (spearDir == Direction.EAST && player.location.x > node.location.x) ||
+                        (spearDir == Direction.WEST && player.location.x < node.location.x)
 
             if (pastSpears) {
                 sendDialogue(player, "I have no reason to do that.")
@@ -308,6 +308,7 @@ class PyramidPlunderMinigame :
         }
 
         on(Scenery.TOMB_DOOR_16458, IntType.SCENERY, "leave tomb") { player, _ ->
+            val outsidePyramidLocation = Location.create(3288, 2801, 0)
             openDialogue(
                 player,
                 object : DialogueFile() {
@@ -316,17 +317,19 @@ class PyramidPlunderMinigame :
                         buttonID: Int,
                     ) {
                         when (stage) {
-                            0 -> options("Yes, I'm sure I want to leave.", "No, never mind.").also { stage++ }
-                            1 ->
-                                when (buttonID) {
+                            0 -> sendDialogue(player, "Do you really want to leave the Tomb?").also { stage++ }
+                            1 -> {
+                                setTitle(player, 2)
+                                sendDialogueOptions(player, "Leave the Tomb?", "Yes, I'm out of here.", "Ah, I think I'll stay a little longer.").also { stage++ }
+                            }
+                            2 -> when (buttonID) {
                                     1 -> {
                                         end()
-                                        teleport(player, Location.create(3288, 2802, 0))
+                                        teleport(player, outsidePyramidLocation)
                                         PlunderUtils.unregisterPlayer(player)
                                         PlunderUtils.resetOverlay(player)
                                         PlunderUtils.resetObjectVarbits(player)
                                     }
-
                                     2 -> end()
                                 }
                         }
