@@ -191,10 +191,10 @@ public final class PestControlActivityPlugin extends ActivityPlugin {
     @Override
     public void register() {
         if (type == BoatType.NOVICE) {
-            PestControlActivityPlugin[] activities = new PestControlActivityPlugin[]{this, new PestControlActivityPlugin(BoatType.INTERMEDIATE), new PestControlActivityPlugin(BoatType.VETERAN)};
+            PestControlActivityPlugin[] activities = new PestControlActivityPlugin[] { this, new PestControlActivityPlugin(BoatType.INTERMEDIATE), new PestControlActivityPlugin(BoatType.VETERAN) };
             ActivityManager.register(activities[1]);
             ActivityManager.register(activities[2]);
-
+            // Load abstract NPC plugins
             ClassScanner.definePlugin(new PCPortalNPC());
             ClassScanner.definePlugin(new PCSquireNPC());
             ClassScanner.definePlugin(new PCTorcherNPC());
