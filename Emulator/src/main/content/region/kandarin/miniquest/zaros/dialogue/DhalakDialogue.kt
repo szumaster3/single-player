@@ -1,5 +1,6 @@
 package content.region.kandarin.miniquest.zaros.dialogue
 
+import content.data.GameAttributes
 import content.region.kandarin.miniquest.zaros.CurseOfZaros
 import content.region.kandarin.miniquest.zaros.RandomDialogue
 import content.region.kandarin.miniquest.zaros.WrongLocationDialogue
@@ -18,33 +19,31 @@ import org.rs.consts.NPCs
  * Represents the Dhalak the Magician dialogue.
  *
  * Relations:
- * - [Curse of Zaros miniquest][content.region.kandarin.miniquest.zaros]
+ * - [Curse of Zaros miniquest][content.region.kandarin.miniquest.zaros.CurseOfZaros]
  */
 @Initializable
 class DhalakDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
     override fun open(vararg args: Any?): Boolean {
-        npc = args[0] as NPC
+        val correctNPC = NPC(2384 + getAttribute(player, GameAttributes.ZAROS_PATH_SEQUENCE, 0))
+
         if (!inEquipment(player, Items.GHOSTSPEAK_AMULET_552)) {
             end()
             openDialogue(player, RandomDialogue(), npc)
             return true
         }
 
-        if (CurseOfZaros.isNpcInWrongLocation(npc.id, npc.location)) {
+        if(npc != correctNPC) {
             end()
             openDialogue(player, WrongLocationDialogue(), npc)
             return true
         }
 
-        if (CurseOfZaros.hasTag(player, npc.id) || CurseOfZaros.hasComplete(player)) {
+        if (CurseOfZaros.hasComplete(player)) {
             val item = Items.GHOSTLY_HOOD_6109
             if (!CurseOfZaros.hasItems(player, item)) {
-                player(FaceAnim.SAD, "Could I have that hat again? I seem to have", "misplaced it somewhere...").also {
-                    stage =
-                        39
-                }
+                player(FaceAnim.SAD, "Could I have that hat again? I seem to have", "misplaced it somewhere...").also { stage = 39 }
             } else {
                 sendDialogue(player, "You have already talked to this NPC.").also { stage = END_DIALOGUE }
             }
@@ -266,17 +265,13 @@ class DhalakDialogue(
                     "but take my hood as reward; It has served me well these",
                     "centuries past, and may bring you luck.",
                 ).also {
-                    CurseOfZaros.tagDialogue(player, npc.id)
                     addItemOrDrop(player, Items.GHOSTLY_HOOD_6109, 1)
                     stage++
                 }
-            36 -> player("Where would you suggest I look for Viggora?").also { stage++ }
-            37 ->
-                npcl(
-                    FaceAnim.HALF_GUILTY,
-                    CurseOfZaros.getLocationDialogue(npc.id, npc.location)?.joinToString("\n") ?: "",
-                ).also { stage++ }
-            38 -> player("Okay, well I'll try and find him for you then.").also { stage = END_DIALOGUE }
+            36 -> player("Where would you suggest I look for Viggora?").also {
+                stage = (1000 + getAttribute(player, GameAttributes.ZAROS_PATH_SEQUENCE, 0))
+            }
+            37 -> player("Okay, well I'll try and find him for you then.").also { stage = END_DIALOGUE }
             39 -> {
                 end()
                 if (freeSlots(player) == 0) {
@@ -286,11 +281,28 @@ class DhalakDialogue(
                     addItem(player!!, Items.GHOSTLY_HOOD_6109, 1)
                 }
             }
+
+            1001 -> npc(
+                FaceAnim.HALF_GUILTY,
+                "Ah, the evil swordsman Viggora...",
+                "Paddewwa was where he fought many battles, perhaps",
+                "he has returned to one of his old haunts?",
+            ).also { stage = 37 }
+
+            1002 ->        npc(FaceAnim.HALF_GUILTY,
+            "Ah, the evil swordsman Viggora...",
+            "A rogue like him would probably flock to his own kind.",
+                ).also { stage = 37 }
+
+            1003 ->     npc(FaceAnim.HALF_GUILTY,
+                    "Ah, the evil swordsman Viggora...",
+                    "Perhaps he has returned to his castle in the dark lands?",
+                ).also { stage = 37 }
         }
         return true
     }
 
     override fun newInstance(player: Player?): Dialogue = DhalakDialogue(player)
 
-    override fun getIds(): IntArray = intArrayOf(NPCs.MYSTERIOUS_GHOST_2398)
+    override fun getIds(): IntArray = intArrayOf(2385, 2386, 2387)
 }

@@ -1,5 +1,6 @@
 package content.region.kandarin.miniquest.zaros.dialogue
 
+import content.data.GameAttributes
 import content.region.kandarin.miniquest.zaros.CurseOfZaros
 import content.region.kandarin.miniquest.zaros.RandomDialogue
 import content.region.kandarin.miniquest.zaros.WrongLocationDialogue
@@ -8,6 +9,7 @@ import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
+import core.game.world.repository.Repository
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import org.rs.consts.Items
@@ -17,27 +19,29 @@ import org.rs.consts.NPCs
  * Represents the Viggora the Warrior dialogue.
  *
  * Relations:
- * - [Curse of Zaros miniquest][content.region.kandarin.miniquest.zaros]
+ * - [Curse of Zaros miniquest][content.region.kandarin.miniquest.zaros.CurseOfZaros]
  */
 @Initializable
 class ViggoraDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
+
     override fun open(vararg args: Any?): Boolean {
-        npc = args[0] as NPC
+        val correctNPC = NPC(2393 + getAttribute(player, GameAttributes.ZAROS_PATH_SEQUENCE, 0))
+
         if (!inEquipment(player, Items.GHOSTSPEAK_AMULET_552)) {
             end()
             openDialogue(player, RandomDialogue(), npc)
             return true
         }
 
-        if (CurseOfZaros.isNpcInWrongLocation(npc.id, npc.location)) {
+        if(npc != correctNPC) {
             end()
             openDialogue(player, WrongLocationDialogue(), npc)
             return true
         }
 
-        if (CurseOfZaros.hasTag(player, npc.id) || CurseOfZaros.hasComplete(player)) {
+        if (CurseOfZaros.hasComplete(player)) {
             val item = Items.GHOSTLY_CLOAK_6111
             if (!CurseOfZaros.hasItems(player, item)) {
                 player(FaceAnim.SAD, "Can I have that cloak back?").also { stage = 106 }
@@ -180,7 +184,7 @@ class ViggoraDialogue(
                 ).also {
                     stage++
                 }
-            28 -> npc(" me to his attention.").also { stage++ }
+            28 -> npc("me to his attention.").also { stage++ }
             29 ->
                 npc(
                     "So pleased was he with my bloodthirst that he promoted",
@@ -573,7 +577,7 @@ class ViggoraDialogue(
                 }
             98 ->
                 npc("thousand foes, and may bring you luck in battle.").also {
-                    CurseOfZaros.tagDialogue(player, npc.id)
+                    setAttribute(player, GameAttributes.ZAROS_COMPLETE, true)
                     addItemOrDrop(player, Items.GHOSTLY_CLOAK_6111, 1)
                     stage++
                 }
@@ -614,5 +618,5 @@ class ViggoraDialogue(
 
     override fun newInstance(player: Player?): Dialogue = ViggoraDialogue(player)
 
-    override fun getIds(): IntArray = intArrayOf(NPCs.MYSTERIOUS_GHOST_2402)
+    override fun getIds(): IntArray = intArrayOf(2394, 2395, 2396)
 }

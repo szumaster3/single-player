@@ -296,4 +296,8 @@ internal object GameAttributes {
     const val QUEST_FISHINGCOMPO_WON = "/save:fishing_contest:won"
     const val QUEST_FISHINGCOMPO_STASH_GARLIC = "/save:fishing_contest:garlic-stuffed"
     const val QUEST_FISHINGCOMPO_CONTEST = "fishing_contest:contest-start"
+
+    // Curse of zaros mini-quest
+    const val ZAROS_PATH_SEQUENCE = "/save:zaros:sequence"
+    const val ZAROS_COMPLETE = "/save:zaros:complete"
 }

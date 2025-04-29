@@ -35,7 +35,6 @@ object GeneralShadow {
             Items.GHOSTLY_HOOD_6109,
             Items.GHOSTLY_ROBE_6107,
             Items.GHOSTLY_ROBE_6108,
-            Items.RING_OF_VISIBILITY_4657,
             Items.GHOSTSPEAK_AMULET_552
         )
     }

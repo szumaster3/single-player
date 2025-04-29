@@ -12,6 +12,20 @@ import org.rs.consts.Items
 import org.rs.consts.Quests
 import org.rs.consts.Vars
 
+/**
+ * Represents the *Desert Treasure* quest.
+ *
+ * ### Related Content
+ *
+ * **Shadow Varbit** - Controls the state switch for indivisible NPCs in [General Shadow][content.region.fremennik.handlers.general_shadows.GeneralShadow] and [Curse of Zaros][content.region.kandarin.miniquest.zaros.CurseOfZaros]
+ *
+ * ```kotlin
+ * const val varbitSmokeDungeonLadder = 393
+ * ```
+ *
+ * ---
+ * Author: [ovenbread](https://gitlab.com/ovenbreado)
+ */
 @Initializable
 class DesertTreasure : Quest(Quests.DESERT_TREASURE, 45, 44, 3, 440, 0, 1, 15) {
     companion object {
@@ -48,6 +62,7 @@ class DesertTreasure : Quest(Quests.DESERT_TREASURE, 45, 44, 3, 440, 0, 1, 15) {
         const val shadowStage = "/save:quest:dt-shadowstage"
         const val attributeDamisWarning = "quest:dt-damiswarning"
         const val attributeDamisInstance = "quest:dt-damisinstance"
+
         const val varbitSmokeDungeonLadder = 393
 
         const val bloodDiamond = "/save:quest:dt-blooddiamondinserted"

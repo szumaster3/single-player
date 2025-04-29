@@ -1,5 +1,6 @@
 package content.region.kandarin.miniquest.zaros.dialogue
 
+import content.data.GameAttributes
 import content.region.kandarin.miniquest.zaros.CurseOfZaros
 import content.region.kandarin.miniquest.zaros.RandomDialogue
 import content.region.kandarin.miniquest.zaros.WrongLocationDialogue
@@ -17,27 +18,28 @@ import org.rs.consts.NPCs
  * Represents the Rennard the Thief dialogue.
  *
  * Relations:
- * - [Curse of Zaros miniquest][content.region.kandarin.miniquest.zaros]
+ * - [Curse of Zaros miniquest][content.region.kandarin.miniquest.zaros.CurseOfZaros]
  */
 @Initializable
 class RennardDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
     override fun open(vararg args: Any?): Boolean {
-        npc = args[0] as NPC
+        val correctNPC = NPC(2381 + getAttribute(player, GameAttributes.ZAROS_PATH_SEQUENCE, 0))
+
         if (!inEquipment(player, Items.GHOSTSPEAK_AMULET_552)) {
             end()
             openDialogue(player, RandomDialogue(), npc)
             return true
         }
 
-        if (CurseOfZaros.isNpcInWrongLocation(npc.id, npc.location)) {
+        if(npc != correctNPC) {
             end()
             openDialogue(player, WrongLocationDialogue(), npc)
             return true
         }
 
-        if (CurseOfZaros.hasTag(player, npc.id) || CurseOfZaros.hasComplete(player)) {
+        if (CurseOfZaros.hasComplete(player)) {
             val item = Items.GHOSTLY_GLOVES_6110
             if (!CurseOfZaros.hasItems(player, item)) {
                 player(FaceAnim.SAD, "I lost those gloves you gave me...", "Can I have some more please?").also {
@@ -227,18 +229,14 @@ class RennardDialogue(
                 }
             33 ->
                 npc("I have nothing I may offer you save my piece of", "clothing, please take it as payment...").also {
-                    CurseOfZaros.tagDialogue(player, npc.id)
                     addItemOrDrop(player, Items.GHOSTLY_GLOVES_6110, 1)
                     stage++
                 }
-            34 -> player("Where can I find Rennard then?").also { stage++ }
-            35 ->
-                npcl(
-                    FaceAnim.HALF_GUILTY,
-                    CurseOfZaros.getLocationDialogue(npc.id, npc.location)?.joinToString("\n") ?: "",
-                ).also { stage++ }
-            36 -> npc("the reach of the authorities that pursued them...").also { stage++ }
-            37 -> player("Okay, well I'll try and find him for you then.").also { stage = END_DIALOGUE }
+            34 -> player("Where can I find Rennard then?").also {
+                stage = (1000 + getAttribute(player, GameAttributes.ZAROS_PATH_SEQUENCE, 0))
+            }
+
+            35 -> player("Okay, well I'll try and find him for you then.").also { stage = END_DIALOGUE }
             38 -> {
                 if (freeSlots(player) == 0) {
                     sendDialogue(player, "You don't have space for the reward.")
@@ -253,11 +251,48 @@ class RennardDialogue(
                 end()
                 npc(FaceAnim.CALM, "Here, take them, some evil power returned them to", "me.")
             }
+
+            1001 -> npc(
+                FaceAnim.HALF_GUILTY,
+                "Kharrim the messenger...",
+                "The last I'd heard of that weasel he was claiming he'd",
+                "found some underground deposit of runite ore guarded",
+                "by demons and dragons."
+            ).also { stage = 10001 }
+            10001 -> npc(
+                FaceAnim.HALF_GUILTY,
+                "I suspect he was pulling some scam or other, but if you",
+                "know of such a place, that might be a good place to",
+                "start checking."
+            ).also { stage = 35 }
+
+            1002 -> npc(
+                FaceAnim.HALF_GUILTY,
+                "Kharrim the messenger...",
+                "Well, he was always a devoted follower of old General",
+                "Zamorak, and if I remember rightly Zamorak set up a",
+                "small base in an old temple near Dareeyak..."
+            ).also { stage = 10002 }
+
+            10002 -> npc(
+                FaceAnim.HALF_GUILTY,
+                "You might want to check around there."
+            ).also { stage = 35 }
+
+            1003 -> npc(FaceAnim.HALF_GUILTY,
+                    "Kharrim the messenger...",
+                    "Last I'd heard of him, he'd headed off to Carrallagar",
+                    "to seek his fortune. Ya might want to check around",
+                    "there somewhere."
+            ).also { stage = 35 }
+
+
+
         }
         return true
     }
 
     override fun newInstance(player: Player?): Dialogue = RennardDialogue(player)
 
-    override fun getIds(): IntArray = intArrayOf(NPCs.MYSTERIOUS_GHOST_2397)
+    override fun getIds(): IntArray = intArrayOf(2382, 2383, 2384)
 }

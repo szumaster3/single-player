@@ -1,5 +1,6 @@
 package content.region.kandarin.miniquest.zaros.dialogue
 
+import content.data.GameAttributes
 import content.region.kandarin.miniquest.zaros.CurseOfZaros
 import content.region.kandarin.miniquest.zaros.RandomDialogue
 import content.region.kandarin.miniquest.zaros.WrongLocationDialogue
@@ -11,33 +12,33 @@ import core.game.node.entity.player.Player
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import org.rs.consts.Items
-import org.rs.consts.NPCs
 
 /**
  * Represents the Lennissa the Spy dialogue.
  *
  * Relations:
- * - [Curse of Zaros miniquest][content.region.kandarin.miniquest.zaros]
+ * - [Curse of Zaros miniquest][content.region.kandarin.miniquest.zaros.CurseOfZaros]
  */
 @Initializable
 class LennissaDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
     override fun open(vararg args: Any?): Boolean {
-        npc = args[0] as NPC
+        val correctNPC = NPC(2390 + getAttribute(player, GameAttributes.ZAROS_PATH_SEQUENCE, 0))
+
         if (!inEquipment(player, Items.GHOSTSPEAK_AMULET_552)) {
             end()
             openDialogue(player, RandomDialogue(), npc)
             return true
         }
 
-        if (CurseOfZaros.isNpcInWrongLocation(npc.id, npc.location)) {
+        if(npc != correctNPC) {
             end()
             openDialogue(player, WrongLocationDialogue(), npc)
             return true
         }
 
-        if (CurseOfZaros.hasTag(player, npc.id) || CurseOfZaros.hasComplete(player)) {
+        if (CurseOfZaros.hasComplete(player)) {
             val item = Items.GHOSTLY_ROBE_6108
             if (!CurseOfZaros.hasItems(player, item)) {
                 player(
@@ -319,18 +320,15 @@ class LennissaDialogue(
                     stage++
                 }
             53 ->
-                npc("Please find him and discover why I am cursed like this!").also {
-                    CurseOfZaros.tagDialogue(player, npc.id)
+                npcl(FaceAnim.HALF_GUILTY, "Please find him and discover why I am cursed like this!").also {
                     addItemOrDrop(player, Items.GHOSTLY_ROBE_6108, 1)
                     stage++
                 }
-            54 -> player("Where would I be able to find this Dhalak then?").also { stage++ }
-            55 ->
-                npcl(
-                    FaceAnim.HALF_GUILTY,
-                    CurseOfZaros.getLocationDialogue(npc.id, npc.location)?.joinToString("\n") ?: "",
-                ).also { stage++ }
-            56 -> player("Okay, well I'll try and find him for you.").also { stage = END_DIALOGUE }
+            54 -> player("Where would I be able to find this Dhalak then?").also {
+                stage = (1000 + getAttribute(player, GameAttributes.ZAROS_PATH_SEQUENCE, 0))
+            }
+
+            55 -> player("Okay, well I'll try and find him for you.").also { stage = END_DIALOGUE }
             57 -> {
                 end()
                 if (freeSlots(player) == 0) {
@@ -344,11 +342,31 @@ class LennissaDialogue(
                 )
                 addItem(player!!, Items.GHOSTLY_ROBE_6108, 1)
             }
+
+            1001 -> npc(FaceAnim.HALF_GUILTY,
+                "Dhalak?",
+            "I know not where, but he would try and make the most",
+            "of his situation if he has been cursed, and find a place",
+            "to lift his spirits!",
+            ).also { stage = 55 }
+            1002 ->         npc(FaceAnim.HALF_GUILTY,
+            "Dhalak?",
+            "Well, he was always a knowledgeable mage, so if this",
+            "curse has befallen him as well, I would suspect he would",
+            "be researching how to free himself of it.",
+                ).also { stage = 10002 }
+            10002 -> npc(FaceAnim.HALF_GUILTY, "I would look for a library to find him if I were you.").also { stage = 55 }
+                1003 ->         npc(FaceAnim.HALF_GUILTY,
+                "Dhalak?",
+        "He was always a loyal follower of Saradomin... I think",
+                "he would have found an altar to Saradomin so that he",
+                "may pray for this curse to be lifted.",
+                ).also { stage = 55 }
         }
         return true
     }
 
     override fun newInstance(player: Player?): Dialogue = LennissaDialogue(player)
 
-    override fun getIds(): IntArray = intArrayOf(NPCs.MYSTERIOUS_GHOST_2401)
+    override fun getIds(): IntArray = intArrayOf(2391, 2392, 2393)
 }

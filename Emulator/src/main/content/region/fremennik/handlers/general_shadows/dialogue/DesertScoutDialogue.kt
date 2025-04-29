@@ -138,5 +138,5 @@ class DesertScoutDialogue(
         return true
     }
 
-    override fun getIds(): IntArray = intArrayOf(NPCs.SCOUT_5570)
+    override fun getIds(): IntArray = intArrayOf(5577)
 }
