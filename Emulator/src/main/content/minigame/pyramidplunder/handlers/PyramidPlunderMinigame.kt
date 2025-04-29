@@ -376,7 +376,7 @@ class PyramidPlunderMinigame :
         }
 
         on(Scenery.TOMB_DOOR_16459, IntType.SCENERY, "leave tomb") { player, _ ->
-            teleport(player, getAttribute(player, "pyramid-entrance", Location.create(3288, 2802, 0)))
+            teleport(player, getAttribute(player, "pyramid-entrance", Location.create(3288, 2801, 0)))
             return@on true
         }
 
