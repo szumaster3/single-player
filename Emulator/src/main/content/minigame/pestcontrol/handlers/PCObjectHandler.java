@@ -3,6 +3,7 @@ package content.minigame.pestcontrol.handlers;
 import core.cache.def.impl.SceneryDefinition;
 import core.game.activity.ActivityManager;
 import core.game.bots.PvMBotsBuilder;
+import core.game.global.action.DoorActionHandler;
 import core.game.interaction.OptionHandler;
 import core.game.node.Node;
 import core.game.node.entity.player.Player;
@@ -13,7 +14,6 @@ import core.game.node.scenery.SceneryBuilder;
 import core.game.world.GameWorld;
 import core.game.world.map.Direction;
 import core.game.world.map.Location;
-import core.game.world.map.RegionManager;
 import core.game.world.update.flag.context.Animation;
 import core.plugin.Plugin;
 
@@ -222,7 +222,7 @@ public final class PCObjectHandler extends OptionHandler {
      */
     private static void handleGates(Player player, PestControlSession session, Scenery object) {
         boolean open = (object.getId() % 2) != 0;
-        Scenery second = getSecondDoor(object);
+        Scenery second = DoorActionHandler.getSecondDoor(object, player);
         if (second == null) {
             return;
         }
@@ -273,29 +273,6 @@ public final class PCObjectHandler extends OptionHandler {
         return 0;
     }
 
-    /**
-     * Gets the second door.
-     *
-     * @param object The first door object.
-     * @return The second door object.
-     */
-    public static Scenery getSecondDoor(Scenery object) {
-        Location l = object.getLocation();
-        Scenery o = null;
-        if ((o = RegionManager.getObject(l.transform(-1, 0, 0))) != null && o.getName().equals(object.getName())) {
-            return o;
-        }
-        if ((o = RegionManager.getObject(l.transform(1, 0, 0))) != null && o.getName().equals(object.getName())) {
-            return o;
-        }
-        if ((o = RegionManager.getObject(l.transform(0, -1, 0))) != null && o.getName().equals(object.getName())) {
-            return o;
-        }
-        if ((o = RegionManager.getObject(l.transform(0, 1, 0))) != null && o.getName().equals(object.getName())) {
-            return o;
-        }
-        return null;
-    }
 
     /**
      * Gets the object type for the given object id.

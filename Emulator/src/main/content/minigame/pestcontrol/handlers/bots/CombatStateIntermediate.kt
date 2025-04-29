@@ -20,7 +20,7 @@ import java.util.*
  * @param bot The [PestControlIntermediateBot].
  */
 class CombatStateIntermediate(
-    private val bot: PestControlIntermediateBot,
+    val bot: PestControlIntermediateBot,
 ) {
     private val random = Random()
     private val randomType = random.nextInt(100)
@@ -118,7 +118,6 @@ class CombatStateIntermediate(
         bot.eat(379)
 
         if (!bot.inCombat()) {
-            bot.AttackNpcsInRadius(50)
         }
     }
 
@@ -145,8 +144,8 @@ class CombatStateIntermediate(
      * @param loc The location that the bot will walk to.
      */
     private fun walkToIterator(loc: Location) {
-        val diffX = loc.x - bot.location.x
-        val diffY = loc.y - bot.location.y
+        var diffX = loc.x - bot.location.x
+        var diffY = loc.y - bot.location.y
 
         GameWorld.Pulser.submit(
             object : MovementPulse(bot, bot.location.transform(diffX, diffY, 0), Pathfinder.SMART) {
