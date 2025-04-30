@@ -4,47 +4,53 @@ import content.global.handlers.iface.BookInterface
 import content.global.handlers.iface.BookLine
 import content.global.handlers.iface.Page
 import content.global.handlers.iface.PageSet
+import core.api.sendString
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.player.Player
+import core.tools.DARK_BLUE
+import core.tools.DARK_RED
 import org.rs.consts.Items
 
 class BarbarianAssaultGuide : InteractionListener {
+
     /*
-     * Obtainable during the Barbarian Assault minigame.
+     * Obtained during the Barbarian Assault minigame
+     * after "The Final Battle" tutorial with Captain Cain.
+     * Authentic state.
      */
 
     companion object {
-        private const val TITLE = "Queen help book"
-        private val CONTENTS =
-            arrayOf(
-                PageSet(
-                    Page(
-                        BookLine("<col=08088A>1) Collector:</col>", 55),
-                        BookLine("Pick up yellow", 56),
-                        BookLine("egg. Pass to healer. Take", 57),
-                        BookLine("omega egg from Defender.", 58),
-                        BookLine("Load into turret.", 59),
-                        BookLine("<col=08088A>2) Healer:</col>", 61),
-                        BookLine("Take yellow egg from", 62),
-                        BookLine("Collector. Poison egg", 63),
-                        BookLine("in pool. Pass to", 64),
-                        BookLine("attacker.", 65),
-                    ),
-                    Page(
-                        BookLine("<col=08088A>3) Attacker:</col>", 66),
-                        BookLine("Take poisoned, yellow", 67),
-                        BookLine("egg from healer.", 68),
-                        BookLine("Add spikes from mushroom.", 69),
-                        BookLine("Pass to defender.", 70),
-                        BookLine("<col=08088A>4) Defender:</col>", 72),
-                        BookLine("Take poisoned, spiked,", 73),
-                        BookLine("yellow egg from Attacker.", 74),
-                        BookLine("Dunk in lava. Pass", 75),
-                        BookLine("to Collector.", 76),
-                    ),
+        private const val TITLE = "Queen Help"
+        private val CONTENTS = arrayOf(
+            PageSet(
+                Page(
+                    BookLine("${DARK_RED}1)$DARK_BLUE Collector:</col> Pick up",    55),
+                    BookLine("yellow egg. Pass to",                                 56),
+                    BookLine("healer.",                                             57),
+                    BookLine("Take omega egg from",                                 58),
+                    BookLine("Defender. Load into",                                 59),
+                    BookLine("turret.",                                             60),
+                    BookLine("",                                                    61),
+                    BookLine("${DARK_RED}2)$DARK_BLUE Healer:</col> Take yellow",   62),
+                    BookLine("egg from Collector.",                                 63),
+                    BookLine("Poison egg in pool. Pass",                            64),
+                    BookLine("to attacker.",                                        65),
                 ),
-            )
+                Page(
+                    BookLine("${DARK_RED}3)$DARK_BLUE Attacker:</col> Take",        66),
+                    BookLine("poisoned, yellow egg from",                           67),
+                    BookLine("healer. Add spikes from",                             68),
+                    BookLine("mushroom. Pass to",                                   69),
+                    BookLine("defender.",                                           70),
+                    BookLine("",                                                    71),
+                    BookLine("${DARK_RED}4)$DARK_BLUE Defender:</col> Take",        72),
+                    BookLine("poisoned, spiked, yellow",                            73),
+                    BookLine("egg from Attacker. Dunk",                             74),
+                    BookLine("in lava. Pass to Collector.",                         75),
+                ),
+            ),
+        )
     }
 
     @Suppress("UNUSED_PARAMETER")
@@ -54,6 +60,9 @@ class BarbarianAssaultGuide : InteractionListener {
         buttonID: Int,
     ): Boolean {
         BookInterface.pageSetup(player, BookInterface.FANCY_BOOK_3_49, TITLE, CONTENTS)
+        // Hides page numbers.
+        sendString(player, "", BookInterface.FANCY_BOOK_3_49, BookInterface.FANCY_BOOK_3_49_LINE_IDS[1])
+        sendString(player, "", BookInterface.FANCY_BOOK_3_49, BookInterface.FANCY_BOOK_3_49_LINE_IDS[2])
         return true
     }
 

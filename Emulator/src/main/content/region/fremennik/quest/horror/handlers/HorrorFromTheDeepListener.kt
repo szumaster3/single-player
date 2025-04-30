@@ -1,7 +1,6 @@
 package content.region.fremennik.quest.horror.handlers
 
 import content.data.GameAttributes
-import content.data.QuestItem
 import content.region.fremennik.quest.horror.JossikLighthouseDialogue
 import core.api.*
 import core.api.interaction.openDoor
@@ -33,10 +32,7 @@ class HorrorFromTheDeepListener : InteractionListener {
          */
 
         on(Scenery.BOOKCASE_4617, IntType.SCENERY, "search") { player, _ ->
-            if (isQuestComplete(player, Quests.HORROR_FROM_THE_DEEP)) {
-                openDialogue(player, QuestItem(Items.MANUAL_3847))
-                return@on true
-            } else {
+
                 sendDialogue(player, "There are three books here that look important... What would you like to do?")
                 addDialogueAction(player) { _, button ->
                     if (button > 0) sendDialogueOptions(player, "Select an option", "Take the Lighthouse Manual", "Take the ancient Diary", "Take Jossik's Journal", "Take all three books")
@@ -55,7 +51,7 @@ class HorrorFromTheDeepListener : InteractionListener {
                         }
                     }
                 }
-            }
+
             return@on true
         }
 
