@@ -644,6 +644,14 @@ public enum Consumables {
      */
     ORANGE_SLICES(new Food(new int[]{Items.ORANGE_SLICES_2112}, new HealingEffect(2))),
     /**
+     * The Lime chunks.
+     */
+    LIME_CHUNKS(new Food(new int[]{Items.LIME_CHUNKS_2122}, new HealingEffect(2))),
+    /**
+     * The Lime slices.
+     */
+    LIME_SLICES(new Food(new int[]{Items.LIME_SLICES_2124}, new HealingEffect(2))),
+    /**
      * The Papaya fruit.
      */
     PAPAYA_FRUIT(new Food(new int[]{Items.PAPAYA_FRUIT_5972}, new HealingEffect(2))),

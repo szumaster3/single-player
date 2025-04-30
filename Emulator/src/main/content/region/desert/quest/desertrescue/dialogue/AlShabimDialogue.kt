@@ -2,6 +2,7 @@ package content.region.desert.quest.desertrescue.dialogue
 
 import content.region.desert.quest.desertrescue.TouristTrap
 import core.game.dialogue.Dialogue
+import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest
@@ -17,7 +18,7 @@ class AlShabimDialogue(
         npc = args[0] as NPC
         quest = player.getQuestRepository().getQuest(Quests.THE_TOURIST_TRAP)
         when (quest!!.getStage(player)) {
-            else -> npc("Hello Effendi!")
+            else -> npcl(FaceAnim.FRIENDLY, "Hello Effendi! I am Al Shabim, greetings on behalf of the Bedabin nomads.")
         }
         return true
     }
