@@ -1,12 +1,8 @@
 package content.global.skill.cooking.recipes
 
-import core.api.Container
-import core.api.addItem
-import core.api.removeItem
-import core.api.sendMessage
+import core.api.*
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import core.game.node.item.Item
 import org.rs.consts.Items
 
 class NettleTeaRecipe : InteractionListener {
@@ -18,7 +14,7 @@ class NettleTeaRecipe : InteractionListener {
          */
 
         onUseWith(IntType.ITEM, NETTLES, BOWL_OF_WATER) { player, used, with ->
-            if (removeItem(player, Item(used.id, 1), Container.INVENTORY) && removeItem(player, Item(with.id, 1), Container.INVENTORY)) {
+            if (removeItem(player, used.asItem(), Container.INVENTORY) && removeItem(player, with.asItem(), Container.INVENTORY)) {
                 addItem(player, NETTLE_WATER, 1)
                 sendMessage(player, "You place the nettles into the bowl of water.")
             }
@@ -30,8 +26,8 @@ class NettleTeaRecipe : InteractionListener {
          */
 
         onUseWith(IntType.ITEM, BUCKET_OF_MILK, BOWL_OF_NETTLE_TEA) { player, used, with ->
-            if (removeItem(player, Item(used.id, 1), Container.INVENTORY) && removeItem(player, Item(with.id, 1), Container.INVENTORY)) {
-                addItem(player, EMPTY_BUCKET, 1)
+            if (removeItem(player, used.asItem(), Container.INVENTORY) && removeItem(player, with.asItem(), Container.INVENTORY)) {
+                addItemOrDrop(player, EMPTY_BUCKET, 1)
                 addItem(player, BOWL_OF_NETTLE_TEA_MILKY, 1)
             }
             return@onUseWith true
@@ -42,8 +38,8 @@ class NettleTeaRecipe : InteractionListener {
          */
 
         onUseWith(IntType.ITEM, BUCKET_OF_MILK, PORCELAIN_CUP_OF_NETTLE_TEA) { player, used, with ->
-            if (removeItem(player, Item(used.id, 1), Container.INVENTORY) && removeItem(player, Item(with.id, 1), Container.INVENTORY)) {
-                addItem(player, EMPTY_BUCKET, 1)
+            if (removeItem(player, used.asItem(), Container.INVENTORY) && removeItem(player, with.asItem(), Container.INVENTORY)) {
+                addItemOrDrop(player, EMPTY_BUCKET, 1)
                 addItem(player, PORCELAIN_CUP_OF_NETTLE_TEA_MILKY, 1)
             }
             return@onUseWith true
@@ -54,8 +50,8 @@ class NettleTeaRecipe : InteractionListener {
          */
 
         onUseWith(IntType.ITEM, BOWL_OF_NETTLE_TEA, EMPTY_CUP) { player, used, with ->
-            if (removeItem(player, Item(used.id, 1), Container.INVENTORY) && removeItem(player, Item(with.id, 1), Container.INVENTORY)) {
-                addItem(player, EMPTY_BOWL, 1)
+            if (removeItem(player, used.asItem(), Container.INVENTORY) && removeItem(player, with.asItem(), Container.INVENTORY)) {
+                addItemOrDrop(player, EMPTY_BOWL, 1)
                 addItem(player, CUP_OF_NETTLE_TEA, 1)
             }
             return@onUseWith true
@@ -66,8 +62,8 @@ class NettleTeaRecipe : InteractionListener {
          */
 
         onUseWith(IntType.ITEM, BOWL_OF_NETTLE_TEA_MILKY, EMPTY_CUP) { player, used, with ->
-            if (removeItem(player, Item(used.id, 1), Container.INVENTORY) && removeItem(player, Item(with.id, 1), Container.INVENTORY)) {
-                addItem(player, EMPTY_BOWL, 1)
+            if (removeItem(player, used.asItem(), Container.INVENTORY) && removeItem(player, with.asItem(), Container.INVENTORY)) {
+                addItemOrDrop(player, EMPTY_BOWL, 1)
                 addItem(player, CUP_OF_NETTLE_TEA_MILKY, 1)
             }
             return@onUseWith true
@@ -78,8 +74,8 @@ class NettleTeaRecipe : InteractionListener {
          */
 
         onUseWith(IntType.ITEM, BOWL_OF_NETTLE_TEA, EMPTY_PORCELAIN_CUP) { player, used, with ->
-            if (removeItem(player, Item(used.id, 1), Container.INVENTORY) && removeItem(player, Item(with.id, 1), Container.INVENTORY)) {
-                addItem(player, EMPTY_BOWL, 1)
+            if (removeItem(player, used.asItem(), Container.INVENTORY) && removeItem(player, with.asItem(), Container.INVENTORY)) {
+                addItemOrDrop(player, EMPTY_BOWL, 1)
                 addItem(player, PORCELAIN_CUP_OF_NETTLE_TEA, 1)
             }
             return@onUseWith true
@@ -90,13 +86,14 @@ class NettleTeaRecipe : InteractionListener {
          */
 
         onUseWith(IntType.ITEM, BOWL_OF_NETTLE_TEA_MILKY, EMPTY_PORCELAIN_CUP) { player, used, with ->
-            if (removeItem(player, Item(used.id, 1), Container.INVENTORY) && removeItem(player, Item(with.id, 1), Container.INVENTORY)) {
-                addItem(player, EMPTY_BOWL, 1)
+            if (removeItem(player, used.asItem(), Container.INVENTORY) && removeItem(player, with.asItem(), Container.INVENTORY)) {
+                addItemOrDrop(player, EMPTY_BOWL, 1)
                 addItem(player, PORCELAIN_CUP_OF_NETTLE_TEA_MILKY, 1)
             }
             return@onUseWith true
         }
     }
+
     companion object {
         private const val EMPTY_BUCKET = Items.BUCKET_1925
         private const val BUCKET_OF_MILK = Items.BUCKET_OF_MILK_1927

@@ -7,7 +7,6 @@ import core.game.interaction.InteractionListener
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import org.rs.consts.Items
-import kotlin.math.min
 
 class PieRecipe : InteractionListener {
 
@@ -42,66 +41,56 @@ class PieRecipe : InteractionListener {
          * Ticks: 2 (1.2 seconds)
          */
 
-        onUseWith(IntType.ITEM, Items.PIE_SHELL_2315, *firstPieIngredients) { player, used, with ->
-            val requirements = when (with.id) {
-                Items.REDBERRIES_1951 -> 10
-                Items.COOKED_MEAT_2142, Items.COOKED_CHICKEN_2140 -> 20
-                Items.COMPOST_6032 -> 29
-                Items.COOKING_APPLE_1955 -> 30
-                Items.TOMATO_1982 -> 34
-                Items.TROUT_333 -> 47
-                Items.SALMON_329 -> 70
-                Items.RAW_BEAR_MEAT_2136 -> 85
-                Items.STRAWBERRY_5504 -> 95
-                else -> return@onUseWith true
-            }
+        val pieRecipes = mapOf(
+            Items.REDBERRIES_1951 to Pair(10, Items.UNCOOKED_BERRY_PIE_2321),
+            Items.COOKED_MEAT_2142 to Pair(20, Items.UNCOOKED_MEAT_PIE_2319),
+            Items.COOKED_CHICKEN_2140 to Pair(20, Items.UNCOOKED_MEAT_PIE_2319),
+            Items.COMPOST_6032 to Pair(29, Items.PART_MUD_PIE_7164),
+            Items.COOKING_APPLE_1955 to Pair(30, Items.UNCOOKED_APPLE_PIE_2317),
+            Items.TOMATO_1982 to Pair(34, Items.PART_GARDEN_PIE_7172),
+            Items.TROUT_333 to Pair(47, Items.PART_FISH_PIE_7182),
+            Items.SALMON_329 to Pair(70, Items.PART_ADMIRAL_PIE_7192),
+            Items.RAW_BEAR_MEAT_2136 to Pair(85, Items.PART_WILD_PIE_7202),
+            Items.STRAWBERRY_5504 to Pair(95, Items.PART_SUMMER_PIE_7212)
+        )
 
-            if (!hasLevelDyn(player, Skills.COOKING, requirements)) {
-                sendMessage(player, "You need a Cooking level of $requirements to make that.")
+        onUseWith(IntType.ITEM, firstPieIngredients, Items.PIE_SHELL_2315) { player, used, with ->
+            val (requiredLevel, productID) = pieRecipes[used.id] ?: return@onUseWith false
+
+            if (!hasLevelDyn(player, Skills.COOKING, requiredLevel)) {
+                sendDialogue(player, "You need an Cooking level of at least $requiredLevel to make that.")
                 return@onUseWith true
             }
 
-            val products = when (with.id) {
-                Items.REDBERRIES_1951 -> Items.UNCOOKED_BERRY_PIE_2321
-                Items.COOKED_MEAT_2142, Items.COOKED_CHICKEN_2140 -> Items.UNCOOKED_MEAT_PIE_2319
-                Items.COMPOST_6032 -> Items.PART_MUD_PIE_7164
-                Items.COOKING_APPLE_1955 -> Items.UNCOOKED_APPLE_PIE_2317
-                Items.TOMATO_1982 -> Items.PART_GARDEN_PIE_7172
-                Items.TROUT_333 -> Items.PART_FISH_PIE_7182
-                Items.SALMON_329 -> Items.PART_ADMIRAL_PIE_7192
-                Items.RAW_BEAR_MEAT_2136 -> Items.PART_WILD_PIE_7202
-                Items.STRAWBERRY_5504 -> Items.PART_SUMMER_PIE_7212
-                else -> return@onUseWith true
-            }
+            val ingredientName = used.name.lowercase()
+            val amountUsed = amountInInventory(player, used.id)
+            val amountWith = amountInInventory(player, with.id)
+            val maxAmount = minOf(amountUsed, amountWith)
 
-            val ingredient = with.name.lowercase()
-
-            if (amountInInventory(player, used.id) == 1 || amountInInventory(player, with.id) == 1) {
-                if (removeItem(player, Item(used.id, 1), Container.INVENTORY) &&
-                    removeItem(player, Item(with.id, 1), Container.INVENTORY)
-                ) {
-                    addItem(player, products, 1, Container.INVENTORY)
-                    sendMessage(player, "You fill the pie with $ingredient.")
+            fun process(): Boolean {
+                val success = removeItem(player, used.asItem(), Container.INVENTORY) && removeItem(player, with.asItem(), Container.INVENTORY)
+                if (success) {
+                    if(used.id == Items.COMPOST_6032) {
+                        addItemOrDrop(player, Items.BUCKET_1925)
+                    }
+                    addItem(player, productID, 1, Container.INVENTORY)
+                    sendMessage(player, "You fill the pie with $ingredientName.")
+                    return true
                 }
-                return@onUseWith true
+                return false
             }
 
-            sendSkillDialogue(player) {
-                withItems(products)
-                create { _, amount ->
-                    runTask(player, 2, amount) {
-                        if (amount < 1) return@runTask
-                        if (removeItem(player, Item(used.id, 1), Container.INVENTORY) &&
-                            removeItem(player, Item(with.id, 1), Container.INVENTORY)
-                        ) {
-                            addItem(player, products, 1, Container.INVENTORY)
-                            sendMessage(player, "You fill the pie with $ingredient.")
+            if (maxAmount <= 1) {
+                process()
+            } else {
+                sendSkillDialogue(player) {
+                    withItems(productID)
+                    create { _, amount ->
+                        runTask(player, 2, amount) {
+                            process()
                         }
                     }
-                }
-
-                calculateMaxAmount {
-                    min(amountInInventory(player, used.id), amountInInventory(player, with.id))
+                    calculateMaxAmount { maxAmount }
                 }
             }
 
@@ -122,66 +111,49 @@ class PieRecipe : InteractionListener {
          * Ticks: 2 (1.2 seconds)
          */
 
-        onUseWith(IntType.ITEM, firstPartPies, *secondPieIngredients) { player, used, with ->
-            val requirements = when (used.id) {
-                Items.PART_MUD_PIE_7164 -> 29
-                Items.PART_GARDEN_PIE_7172 -> 34
-                Items.PART_FISH_PIE_7182 -> 47
-                Items.PART_ADMIRAL_PIE_7192 -> 70
-                Items.PART_WILD_PIE_7202 -> 85
-                Items.PART_SUMMER_PIE_7212 -> 95
-                else -> return@onUseWith true
-            }
+        val secondPieRecipes = mapOf(
+            Pair(Items.PART_MUD_PIE_7164, Items.BUCKET_OF_WATER_1929) to Triple(29, Items.PART_MUD_PIE_7166, true),
+            Pair(Items.PART_GARDEN_PIE_7172, Items.ONION_1957) to Triple(34, Items.PART_GARDEN_PIE_7174, false),
+            Pair(Items.PART_FISH_PIE_7182, Items.COD_339) to Triple(47, Items.PART_FISH_PIE_7184, false),
+            Pair(Items.PART_ADMIRAL_PIE_7192, Items.TUNA_361) to Triple(70, Items.PART_ADMIRAL_PIE_7194, false),
+            Pair(Items.PART_WILD_PIE_7202, Items.RAW_CHOMPY_2876) to Triple(85, Items.PART_WILD_PIE_7204, false),
+            Pair(Items.PART_SUMMER_PIE_7212, Items.WATERMELON_5982) to Triple(95, Items.PART_SUMMER_PIE_7214, false)
+        )
 
-            if (!hasLevelDyn(player, Skills.COOKING, requirements)) {
-                sendMessage(player, "You need a Cooking level of $requirements to make that.")
+        onUseWith(IntType.ITEM, secondPieIngredients, *firstPartPies) { player, used, with ->
+            val recipe = secondPieRecipes[with.id to used.id] ?: return@onUseWith true
+            val (requiredLevel, productID, returnsBucket) = recipe
+
+            if (!hasLevelDyn(player, Skills.COOKING, requiredLevel)) {
+                sendDialogue(player, "You need an Cooking level of at least $requiredLevel to make that.")
                 return@onUseWith true
             }
 
-            val product = when {
-                used.id == Items.PART_MUD_PIE_7164     && with.id == Items.BUCKET_OF_WATER_1929 -> Items.PART_MUD_PIE_7166
-                used.id == Items.PART_GARDEN_PIE_7172  && with.id == Items.ONION_1957           -> Items.PART_GARDEN_PIE_7174
-                used.id == Items.PART_FISH_PIE_7182    && with.id == Items.COD_339              -> Items.PART_FISH_PIE_7184
-                used.id == Items.PART_ADMIRAL_PIE_7192 && with.id == Items.TUNA_361             -> Items.PART_ADMIRAL_PIE_7194
-                used.id == Items.PART_WILD_PIE_7202    && with.id == Items.RAW_CHOMPY_2876      -> Items.PART_WILD_PIE_7204
-                used.id == Items.PART_SUMMER_PIE_7212  && with.id == Items.WATERMELON_5982      -> Items.PART_SUMMER_PIE_7214
-                else -> return@onUseWith true
-            }
+            val ingredientName = used.name.lowercase()
+            val maxAmount = minOf(amountInInventory(player, used.id), amountInInventory(player, with.id))
 
-            val ingredient = with.name.lowercase()
-
-            if (amountInInventory(player, used.id) == 1 || amountInInventory(player, with.id) == 1) {
-                if (removeItem(player, Item(used.id, 1), Container.INVENTORY) &&
-                    removeItem(player, Item(with.id, 1), Container.INVENTORY)
-                ) {
-                    if (with.id == Items.BUCKET_OF_WATER_1929) {
-                        addItem(player, Items.BUCKET_1925)
-                    }
-                    addItem(player, product, 1, Container.INVENTORY)
-                    sendMessage(player, "You fill the pie with the $ingredient.")
+            fun process(): Boolean {
+                val success = removeItem(player, used.asItem(), Container.INVENTORY) && removeItem(player, with.asItem(), Container.INVENTORY)
+                if (success) {
+                    if (returnsBucket) addItemOrDrop(player, Items.BUCKET_1925, 1)
+                    addItem(player, productID, 1, Container.INVENTORY)
+                    sendMessage(player, "You fill the pie with the $ingredientName.")
+                    return true
                 }
-                return@onUseWith true
+                return false
             }
 
-            sendSkillDialogue(player) {
-                withItems(product)
-                create { _, amount ->
-                    runTask(player, 2, amount) {
-                        if (amount < 1) return@runTask
-                        if (removeItem(player, Item(used.id, 1), Container.INVENTORY) &&
-                            removeItem(player, Item(with.id, 1), Container.INVENTORY)
-                        ) {
-                            if (with.id == Items.BUCKET_OF_WATER_1929) {
-                                addItem(player, Items.BUCKET_1925)
-                            }
-                            addItem(player, product, 1, Container.INVENTORY)
-                            sendMessage(player, "You fill the pie with the $ingredient.")
+            if (maxAmount <= 1) {
+                process()
+            } else {
+                sendSkillDialogue(player) {
+                    withItems(productID)
+                    create { _, amount ->
+                        runTask(player, 2, amount) {
+                            process()
                         }
                     }
-                }
-
-                calculateMaxAmount {
-                    min(amountInInventory(player, used.id), amountInInventory(player, with.id))
+                    calculateMaxAmount { maxAmount }
                 }
             }
 
@@ -200,56 +172,47 @@ class PieRecipe : InteractionListener {
          * Ticks: 2 (1.2 seconds)
          */
 
-        onUseWith(IntType.ITEM, secondPartPie, *rawPieIngredients) { player, used, with ->
-            val requirements = when (used.id) {
-                Items.PART_MUD_PIE_7166 -> 29
-                Items.PART_GARDEN_PIE_7174 -> 34
-                Items.PART_WILD_PIE_7204 -> 85
-                Items.PART_SUMMER_PIE_7214 -> 95
-                else -> return@onUseWith true
-            }
+        val rawPieRecipes = mapOf(
+            Pair(Items.PART_MUD_PIE_7166, Items.CLAY_434) to Pair(29, Items.RAW_MUD_PIE_7168),
+            Pair(Items.PART_GARDEN_PIE_7174, Items.CABBAGE_1965) to Pair(34, Items.RAW_GARDEN_PIE_7176),
+            Pair(Items.PART_GARDEN_PIE_7174, Items.CABBAGE_1967) to Pair(34, Items.RAW_GARDEN_PIE_7176),
+            Pair(Items.PART_WILD_PIE_7204, Items.RAW_RABBIT_3226) to Pair(85, Items.RAW_WILD_PIE_7206),
+            Pair(Items.PART_SUMMER_PIE_7214, Items.COOKING_APPLE_1955) to Pair(95, Items.RAW_SUMMER_PIE_7216)
+        )
 
-            if (!hasLevelDyn(player, Skills.COOKING, requirements)) {
-                sendMessage(player, "You need a Cooking level of $requirements to make that.")
+        onUseWith(IntType.ITEM, rawPieIngredients, *secondPartPie) { player, used, with ->
+            val recipe = rawPieRecipes[with.id to used.id] ?: return@onUseWith true
+            val (requiredLevel, productID) = recipe
+
+            if (!hasLevelDyn(player, Skills.COOKING, requiredLevel)) {
+                sendDialogue(player, "You need an Cooking level of at least $requiredLevel to make that.")
                 return@onUseWith true
             }
 
-            val product = when {
-                used.id == Items.PART_MUD_PIE_7166      && with.id == Items.CLAY_434 -> Items.RAW_MUD_PIE_7168
-                used.id == Items.PART_GARDEN_PIE_7174   && with.id == Items.CABBAGE_1965 || with.id == Items.CABBAGE_1967 -> Items.RAW_GARDEN_PIE_7176
-                used.id == Items.PART_WILD_PIE_7204     && with.id == Items.RAW_RABBIT_3226 -> Items.RAW_WILD_PIE_7206
-                used.id == Items.PART_SUMMER_PIE_7214   && with.id == Items.COOKING_APPLE_1955 -> Items.RAW_SUMMER_PIE_7216
-                else -> return@onUseWith true
-            }
+            val productName = getItemName(productID).lowercase()
+            val maxAmount = minOf(amountInInventory(player, used.id), amountInInventory(player, with.id))
 
-            val productName = product.asItem().name.lowercase()
-
-            if (amountInInventory(player, used.id) == 1 || amountInInventory(player, with.id) == 1) {
-                if (removeItem(player, Item(used.id, 1), Container.INVENTORY) &&
-                    removeItem(player, Item(with.id, 1), Container.INVENTORY)
-                ) {
-                    addItem(player, product, 1, Container.INVENTORY)
+            fun prepareRawPie(): Boolean {
+                val success = removeItem(player, used.asItem(), Container.INVENTORY) && removeItem(player, with.asItem(), Container.INVENTORY)
+                if (success) {
+                    addItem(player, productID, 1, Container.INVENTORY)
                     sendMessage(player, "You prepare an $productName.")
+                    return true
                 }
-                return@onUseWith true
+                return false
             }
 
-            sendSkillDialogue(player) {
-                withItems(product)
-                create { _, amount ->
-                    runTask(player, 2, amount) {
-                        if (amount < 1) return@runTask
-                        if (removeItem(player, Item(used.id, 1), Container.INVENTORY) &&
-                            removeItem(player, Item(with.id, 1), Container.INVENTORY)
-                        ) {
-                            addItem(player, product, 1, Container.INVENTORY)
-                            sendMessage(player, "You prepare an $productName.")
+            if (maxAmount <= 1) {
+                prepareRawPie()
+            } else {
+                sendSkillDialogue(player) {
+                    withItems(productID)
+                    create { _, amount ->
+                        runTask(player, 2, amount) {
+                            prepareRawPie()
                         }
                     }
-                }
-
-                calculateMaxAmount {
-                    min(amountInInventory(player, used.id), amountInInventory(player, with.id))
+                    calculateMaxAmount { maxAmount }
                 }
             }
 
@@ -262,12 +225,15 @@ class PieRecipe : InteractionListener {
 
         onUseWith(IntType.ITEM, Items.PART_ADMIRAL_PIE_7194, Items.POTATO_1942) { player, used, with ->
             if (!hasLevelDyn(player, Skills.COOKING, 70)) {
-                sendMessage(player, "You need a Cooking level of 70 to make that.")
+                sendDialogue(player, "You need an Cooking level of at least 70 to make that.")
                 return@onUseWith true
             }
 
             if (amountInInventory(player, used.id) == 1 || amountInInventory(player, with.id) == 1) {
-                if (removeItem(player, Item(used.id, 1), Container.INVENTORY) && removeItem(player, Item(with.id, 1), Container.INVENTORY)) {
+                val success = removeItem(player, used.asItem(), Container.INVENTORY) && removeItem(
+                    player, with.asItem(), Container.INVENTORY
+                )
+                if (success) {
                     addItem(player, Items.RAW_ADMIRAL_PIE_7196, 1, Container.INVENTORY)
                     sendMessage(player, "You prepare a admiral pie.")
                 }
@@ -279,7 +245,10 @@ class PieRecipe : InteractionListener {
                 create { _, amount ->
                     runTask(player, 2, amount) {
                         if (amount < 1) return@runTask
-                        if (removeItem(player, Item(used.id, 1), Container.INVENTORY) && removeItem(player, Item(with.id, 1), Container.INVENTORY)) {
+                        val success = removeItem(player, used.asItem(), Container.INVENTORY) && removeItem(
+                            player, with.asItem(), Container.INVENTORY
+                        )
+                        if (success) {
                             addItem(player, Items.RAW_ADMIRAL_PIE_7196, 1, Container.INVENTORY)
                             sendMessage(player, "You prepare a admiral pie.")
                         }
@@ -287,7 +256,7 @@ class PieRecipe : InteractionListener {
                 }
 
                 calculateMaxAmount { _ ->
-                    min(amountInInventory(player, with.id), amountInInventory(player, used.id))
+                    minOf(amountInInventory(player, with.id), amountInInventory(player, used.id))
                 }
             }
 
@@ -300,12 +269,15 @@ class PieRecipe : InteractionListener {
 
         onUseWith(IntType.ITEM, Items.PART_FISH_PIE_7184, Items.POTATO_1942) { player, used, with ->
             if (!hasLevelDyn(player, Skills.COOKING, 47)) {
-                sendMessage(player, "You need a Cooking level of 47 to make that.")
+                sendDialogue(player, "You need an Cooking level of at least 47 to make that.")
                 return@onUseWith true
             }
 
             if (amountInInventory(player, used.id) == 1 || amountInInventory(player, with.id) == 1) {
-                if (removeItem(player, Item(used.id, 1), Container.INVENTORY) && removeItem(player, Item(with.id, 1), Container.INVENTORY)) {
+                val success = removeItem(player, used.asItem(), Container.INVENTORY) && removeItem(
+                    player, with.asItem(), Container.INVENTORY
+                )
+                if (success) {
                     addItem(player, Items.RAW_FISH_PIE_7186, 1, Container.INVENTORY)
                     sendMessage(player, "You prepare a fish pie.")
                 }
@@ -317,12 +289,10 @@ class PieRecipe : InteractionListener {
                 create { _, amount ->
                     runTask(player, 2, amount) {
                         if (amount < 1) return@runTask
-                        if (removeItem(player, Item(used.id, 1), Container.INVENTORY) && removeItem(
-                                player,
-                                Item(with.id, 1),
-                                Container.INVENTORY
-                            )
-                        ) {
+                        val success = removeItem(player, used.asItem(), Container.INVENTORY) && removeItem(
+                            player, with.asItem(), Container.INVENTORY
+                        )
+                        if (success) {
                             addItem(player, Items.RAW_FISH_PIE_7186, 1, Container.INVENTORY)
                             sendMessage(player, "You prepare a fish pie.")
                         }
@@ -330,7 +300,7 @@ class PieRecipe : InteractionListener {
                 }
 
                 calculateMaxAmount { _ ->
-                    min(amountInInventory(player, with.id), amountInInventory(player, used.id))
+                    minOf(amountInInventory(player, with.id), amountInInventory(player, used.id))
                 }
             }
 
@@ -339,10 +309,39 @@ class PieRecipe : InteractionListener {
     }
 
     companion object {
-        private val firstPieIngredients = intArrayOf(Items.REDBERRIES_1951, Items.COOKED_MEAT_2142, Items.COOKED_CHICKEN_2140, Items.COMPOST_6032, Items.COOKING_APPLE_1955, Items.TOMATO_1982, Items.TROUT_333, Items.SALMON_329, Items.RAW_BEAR_MEAT_2136, Items.STRAWBERRY_5504)
-        private val firstPartPies = intArrayOf(Items.PART_MUD_PIE_7164, Items.PART_GARDEN_PIE_7172, Items.PART_FISH_PIE_7182, Items.PART_ADMIRAL_PIE_7192, Items.PART_WILD_PIE_7202, Items.PART_SUMMER_PIE_7212)
-        private val secondPieIngredients = intArrayOf(Items.BUCKET_OF_WATER_1929, Items.ONION_1957, Items.COD_339, Items.TUNA_361, Items.RAW_CHOMPY_2876, Items.WATERMELON_5982)
-        private val secondPartPie = intArrayOf(Items.PART_MUD_PIE_7166, Items.PART_GARDEN_PIE_7174, Items.PART_WILD_PIE_7204, Items.PART_SUMMER_PIE_7214)
-        private val rawPieIngredients = intArrayOf(Items.CLAY_434, Items.CABBAGE_1965 or Items.CABBAGE_1967, Items.RAW_RABBIT_3226, Items.COOKING_APPLE_1955)
+        private val firstPieIngredients = intArrayOf(
+            Items.REDBERRIES_1951,
+            Items.COOKED_MEAT_2142,
+            Items.COOKED_CHICKEN_2140,
+            Items.COMPOST_6032,
+            Items.COOKING_APPLE_1955,
+            Items.TOMATO_1982,
+            Items.TROUT_333,
+            Items.SALMON_329,
+            Items.RAW_BEAR_MEAT_2136,
+            Items.STRAWBERRY_5504
+        )
+        private val firstPartPies = intArrayOf(
+            Items.PART_MUD_PIE_7164,
+            Items.PART_GARDEN_PIE_7172,
+            Items.PART_FISH_PIE_7182,
+            Items.PART_ADMIRAL_PIE_7192,
+            Items.PART_WILD_PIE_7202,
+            Items.PART_SUMMER_PIE_7212
+        )
+        private val secondPieIngredients = intArrayOf(
+            Items.BUCKET_OF_WATER_1929,
+            Items.ONION_1957,
+            Items.COD_339,
+            Items.TUNA_361,
+            Items.RAW_CHOMPY_2876,
+            Items.WATERMELON_5982
+        )
+        private val secondPartPie = intArrayOf(
+            Items.PART_MUD_PIE_7166, Items.PART_GARDEN_PIE_7174, Items.PART_WILD_PIE_7204, Items.PART_SUMMER_PIE_7214
+        )
+        private val rawPieIngredients = intArrayOf(
+            Items.CLAY_434, Items.CABBAGE_1965 or Items.CABBAGE_1967, Items.RAW_RABBIT_3226, Items.COOKING_APPLE_1955
+        )
     }
 }

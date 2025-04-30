@@ -7,7 +7,6 @@ import core.game.interaction.InteractionListener
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import org.rs.consts.Items
-import kotlin.math.min
 
 class StewRecipe : InteractionListener {
 
@@ -17,46 +16,47 @@ class StewRecipe : InteractionListener {
          * Handles creating incomplete stews.
          */
 
-        onUseWith(IntType.ITEM, BOWL_OF_WATER, *stewIngredients) { player, used, ingredient ->
+        onUseWith(IntType.ITEM, stewIngredients, BOWL_OF_WATER) { player, used, with ->
             if (!hasLevelDyn(player, Skills.COOKING, 25)) {
-                sendMessage(player, "You need a Cooking level of 25 to make that.")
+                sendDialogue(player, "You need an Cooking level of at least 25 to make that.")
                 return@onUseWith true
             }
 
-            val stew = when (ingredient.id) {
+            val stew = when (used.id) {
                 POTATO -> POTATO_STEW
                 COOKED_MEAT -> MEAT_STEW
                 else -> return@onUseWith true
             }
 
-            fun makeIncompleteStew(): Boolean {
-                if (removeItem(player, Item(used.id, 1), Container.INVENTORY) &&
-                    removeItem(player, Item(ingredient.id, 1), Container.INVENTORY)
-                ) {
+            fun process(): Boolean {
+                val success = removeItem(player, used.asItem(), Container.INVENTORY) && removeItem(
+                    player, with.asItem(), Container.INVENTORY
+                )
+                if (success) {
                     addItem(player, stew, 1, Container.INVENTORY)
-                    val base = ingredient.name.lowercase()
-                    sendMessage(player, "You cut up the $base and put it into the bowl.")
+                    val ingredientName = used.name.lowercase()
+                    sendMessage(player, "You cut up the $ingredientName and put it into the bowl.")
                     return true
                 }
                 return false
             }
 
             val amountUsed = amountInInventory(player, used.id)
-            val amountWith = amountInInventory(player, ingredient.id)
+            val amountWith = amountInInventory(player, with.id)
 
             if (amountUsed == 1 || amountWith == 1) {
-                return@onUseWith makeIncompleteStew()
+                return@onUseWith process()
             }
 
             sendSkillDialogue(player) {
                 withItems(stew)
                 create { _, amount ->
                     runTask(player, 2, amount) {
-                        if (amount > 0) makeIncompleteStew()
+                        process()
                     }
                 }
                 calculateMaxAmount {
-                    min(amountWith, amountUsed)
+                    minOf(amountWith, amountUsed)
                 }
             }
 
@@ -67,40 +67,42 @@ class StewRecipe : InteractionListener {
          * Handles creating an uncooked stew.
          */
 
-        onUseWith(IntType.ITEM, incompleteStew, *stewIngredients) { player, used, ingredient ->
+        onUseWith(IntType.ITEM, stewIngredients, *incompleteStew) { player, used, with ->
             if (!hasLevelDyn(player, Skills.COOKING, 25)) {
-                sendMessage(player, "You need a Cooking level of 25 to make that.")
+                sendDialogue(player, "You need an Cooking level of at least 25 to make that.")
                 return@onUseWith true
             }
 
-            fun makeUncookedStew(): Boolean {
-                if (removeItem(player, Item(used.id, 1), Container.INVENTORY) &&
-                    removeItem(player, Item(ingredient.id, 1), Container.INVENTORY)
-                ) {
+            fun process(): Boolean {
+                val success = removeItem(player, used.asItem(), Container.INVENTORY) && removeItem(
+                    player, with.asItem(), Container.INVENTORY
+                )
+                if (success) {
                     addItem(player, UNCOOKED_STEW, 1, Container.INVENTORY)
-                    val base = ingredient.name.lowercase().replace("cooked", "").trim()
-                    sendMessage(player, "You cut up the $base and put it into the stew.")
+                    val ingredientName = used.name.lowercase().replace("cooked", "").trim()
+                    sendMessage(player, "You cut up the $ingredientName and put it into the stew.")
                     return true
                 }
                 return false
             }
 
             val amountUsed = amountInInventory(player, used.id)
-            val amountWith = amountInInventory(player, ingredient.id)
+            val amountWith = amountInInventory(player, with.id)
 
             if (amountUsed == 1 || amountWith == 1) {
-                return@onUseWith makeUncookedStew()
+                process()
+                return@onUseWith true
             }
 
             sendSkillDialogue(player) {
                 withItems(UNCOOKED_STEW)
                 create { _, amount ->
                     runTask(player, 2, amount) {
-                        if (amount > 0) makeUncookedStew()
+                        process()
                     }
                 }
                 calculateMaxAmount {
-                    min(amountWith, amountUsed)
+                    minOf(amountWith, amountUsed)
                 }
             }
 
@@ -111,14 +113,15 @@ class StewRecipe : InteractionListener {
          * Handles creating an uncooked curry using spice on stew.
          */
 
-        onUseWith(IntType.ITEM, SPICE, UNCOOKED_STEW) { player, used, with ->
+        onUseWith(IntType.ITEM, UNCOOKED_STEW, SPICE) { player, used, with ->
             if (!hasLevelDyn(player, Skills.COOKING, 60)) {
-                sendMessage(player, "You need a Cooking level of 60 to make that.")
+                sendDialogue(player, "You need an Cooking level of at least 60 to make that.")
                 return@onUseWith true
             }
 
             if (amountInInventory(player, used.id) == 1 || amountInInventory(player, with.id) == 1) {
-                if (removeItem(player, Item(used.id, 1), Container.INVENTORY) && removeItem(player, Item(with.id, 1), Container.INVENTORY)) {
+                val success = removeItem(player, used.asItem(), Container.INVENTORY) && removeItem(player, with.asItem(), Container.INVENTORY)
+                if (success) {
                     addItem(player, UNCOOKED_CURRY, 1, Container.INVENTORY)
                     sendMessage(player, "You mix the spice with the stew.")
                 }
@@ -130,12 +133,10 @@ class StewRecipe : InteractionListener {
                 create { _, amount ->
                     runTask(player, 2, amount) {
                         if (amount < 1) return@runTask
-                        if (removeItem(player, Item(used.id, 1), Container.INVENTORY) && removeItem(
-                                player,
-                                Item(with.id, 1),
-                                Container.INVENTORY
-                            )
-                        ) {
+                        val success = removeItem(player, used.asItem(), Container.INVENTORY) && removeItem(
+                            player, with.asItem(), Container.INVENTORY
+                        )
+                        if (success) {
                             addItem(player, UNCOOKED_CURRY, 1, Container.INVENTORY)
                             sendMessage(player, "You mix the spice with the stew.")
                         }
@@ -143,7 +144,7 @@ class StewRecipe : InteractionListener {
                 }
 
                 calculateMaxAmount { _ ->
-                    min(amountInInventory(player, with.id), amountInInventory(player, used.id))
+                    minOf(amountInInventory(player, with.id), amountInInventory(player, used.id))
                 }
             }
 
@@ -154,21 +155,21 @@ class StewRecipe : InteractionListener {
          * Handles creating an uncooked curry using curry leaves.
          */
 
-        onUseWith(IntType.ITEM, UNCOOKED_STEW, CURRY_LEAF) { player, used, with ->
+        onUseWith(IntType.ITEM, CURRY_LEAF, UNCOOKED_STEW) { player, used, with ->
             if (!hasLevelDyn(player, Skills.COOKING, 60)) {
-                sendMessage(player, "You need a Cooking level of 60 to make that.")
+                sendDialogue(player, "You need an Cooking level of at least 60 to make that.")
                 return@onUseWith true
             }
 
-            val requiredCurryLeaves = 3
+            val requiredAmount = 3
+            val amount = amountInInventory(player, used.id)
 
-            if (amountInInventory(player, with.id) < requiredCurryLeaves) {
-                sendMessage(player, "You need $requiredCurryLeaves curry leaves to mix with the stew.")
+            if (amount < requiredAmount) {
+                sendMessage(player, "You need ${requiredAmount - amount} curry leaves to mix with the stew.")
                 return@onUseWith true
             }
 
-            if (removeItem(player, Item(used.id, 1), Container.INVENTORY) &&
-                removeItem(player, Item(with.id, requiredCurryLeaves), Container.INVENTORY)) {
+            if (removeItem(player, Item(used.id, requiredAmount), Container.INVENTORY) && removeItem(player, Item(with.id, 1), Container.INVENTORY)) {
                 addItem(player, UNCOOKED_CURRY, 1, Container.INVENTORY)
                 sendMessage(player, "You mix the curry leaves with the stew.")
             }

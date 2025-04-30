@@ -9,7 +9,6 @@ import core.game.node.item.Item
 import core.game.system.task.Pulse
 import org.rs.consts.Animations
 import org.rs.consts.Items
-import kotlin.math.min
 
 class ChoppingRecipe : InteractionListener {
 
@@ -69,13 +68,13 @@ class ChoppingRecipe : InteractionListener {
          * Ticks: 2 (1.2 seconds)
          */
 
-        onUseWith(IntType.ITEM, EMPTY_BOWL, *CHOPPING_INGREDIENTS) { player, used, ingredients ->
+        onUseWith(IntType.ITEM, CHOPPING_INGREDIENTS, EMPTY_BOWL) { player, used, with ->
             if (!inInventory(player, Items.KNIFE_946)) {
-                sendMessage(player, "You need a knife to slice up the ${ingredients.name.lowercase()}.")
+                sendMessage(player, "You need a knife to slice up the ${used.name.lowercase()}.")
                 return@onUseWith true
             }
 
-            val (product, message) = when (ingredients.id) {
+            val (productID, message) = when (used.id) {
                 Items.TUNA_361 -> Items.CHOPPED_TUNA_7086 to "You chop the tuna into the bowl."
                 Items.ONION_1957 -> Items.CHOPPED_ONION_1871 to "You chop the onion into small pieces."
                 Items.GARLIC_1550 -> Items.CHOPPED_GARLIC_7074 to "You chop the garlic into the bowl."
@@ -89,12 +88,12 @@ class ChoppingRecipe : InteractionListener {
             player.pulseManager.run(object : Pulse(1) {
                 override fun pulse(): Boolean {
                     super.setDelay(2)
-                    val amount = amountInInventory(player, ingredients.id)
+                    val amount = amountInInventory(player, used.id)
                     if (amount > 0) {
-                        if (removeItem(player, Item(ingredients.id, 1), Container.INVENTORY) && removeItem(player, Item(used.id, 1), Container.INVENTORY)) {
+                        val success = removeItem(player, used.asItem(), Container.INVENTORY) && removeItem(player, with.asItem(), Container.INVENTORY)
+                        if (success) {
                             animate(player, Animations.CUT_THING_WITH_KNIFE_IN_HAND_5756)
-                            addItem(player, product, 1, Container.INVENTORY)
-                            rewardXP(player, Skills.COOKING, 1.0)
+                            addItem(player, productID, 1, Container.INVENTORY)
                             sendMessage(player, message)
                         }
                     }
@@ -105,13 +104,11 @@ class ChoppingRecipe : InteractionListener {
         }
 
         /*
-         * Handles creating spicy sauce from a chopped garlic and gnome spice.
-         *
-         * Product: Uncooked Egg.
+         * Handles creating uncooked egg.
          */
 
-        onUseWith(IntType.ITEM, KNIFE, EGG) { player, used, with ->
-            if (removeItem(player, Item(used.id, 1), Container.INVENTORY) && removeItem(player, Item(with.id, 1), Container.INVENTORY)) {
+        onUseWith(IntType.ITEM, EGG, EMPTY_BOWL) { player, used, with ->
+            if (removeItem(player, used.asItem(), Container.INVENTORY) && removeItem(player, with.asItem(), Container.INVENTORY)) {
                 addItem(player, Items.UNCOOKED_EGG_7076)
                 sendMessage(player, "You prepare an uncooked egg.")
             }
@@ -122,16 +119,15 @@ class ChoppingRecipe : InteractionListener {
          * Handles creating spicy sauce from a chopped garlic and gnome spice.
          */
 
-        onUseWith(IntType.ITEM, CHOPPED_GARLIC, GNOME_SPICE) { player, used, with ->
+        onUseWith(IntType.ITEM, GNOME_SPICE, CHOPPED_GARLIC) { player, used, with ->
             if (!hasLevelDyn(player, Skills.COOKING, 9)) {
-                sendMessage(player, "You need a Cooking level of 9 to make that.")
+                sendDialogue(player, "You need an Cooking level of at least 9 to make that.")
                 return@onUseWith true
             }
 
-            fun makeDish(): Boolean {
-                if (removeItem(player, Item(used.id, 1), Container.INVENTORY) &&
-                    removeItem(player, Item(with.id, 1), Container.INVENTORY)
-                ) {
+            fun process(): Boolean {
+                val success = removeItem(player, used.asItem(), Container.INVENTORY) && removeItem(player, with.asItem(), Container.INVENTORY)
+                if (success) {
                     addItem(player, SPICY_SAUCE, 1, Container.INVENTORY)
                     rewardXP(player, Skills.COOKING, 25.0)
                     sendMessage(player, "You mix the ingredients to make spicy sauce.")
@@ -144,18 +140,18 @@ class ChoppingRecipe : InteractionListener {
             val amountWith = amountInInventory(player, with.id)
 
             if (amountUsed == 1 || amountWith == 1) {
-                return@onUseWith makeDish()
+                return@onUseWith process()
             }
 
             sendSkillDialogue(player) {
                 withItems(SPICY_SAUCE)
                 create { _, amount ->
                     runTask(player, 2, amount) {
-                        if (amount > 0) makeDish()
+                        process()
                     }
                 }
                 calculateMaxAmount {
-                    min(amountWith, amountUsed)
+                    minOf(amountWith, amountUsed)
                 }
             }
 

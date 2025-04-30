@@ -19722,7 +19722,7 @@
   },
   {
     "ge_buy_limit": "1000",
-    "examine": "A mixture of chopped tomatoes, onions and ugthanki meat in a bowl",
+    "examine": "A mixture of chopped tomatoes, onions and ugthanki meat in a bowl.",
     "grand_exchange_price": "412",
     "durability": null,
     "name": "Kebab mix",
@@ -19740,6 +19740,7 @@
     "id": "1882"
   },
   {
+    "examine": "A fresh kebab made from ugthanki meat.",
     "ge_buy_limit": "1000",
     "grand_exchange_price": "2027",
     "durability": null,
@@ -19759,6 +19760,7 @@
     "id": "1884"
   },
   {
+    "examine": "A strange smelling kebab made from ugthanki meat.",
     "ge_buy_limit": "1000",
     "grand_exchange_price": "1499",
     "durability": null,

@@ -25,9 +25,9 @@ class CakeRecipe : InteractionListener {
          * Ticks: 2 (1.2 seconds)
          */
 
-        onUseWith(IntType.ITEM, CAKE_TIN, *cakeIngredients) { player, used, with ->
+        onUseWith(IntType.ITEM, cakeIngredients, CAKE_TIN) { player, used, with ->
             if (!hasLevelDyn(player, Skills.COOKING, 40)) {
-                sendMessage(player, "You need a Cooking level of 40 to make that.")
+                sendDialogue(player, "You need an Cooking level of at least 40 to make that.")
                 return@onUseWith true
             }
 
@@ -48,14 +48,14 @@ class CakeRecipe : InteractionListener {
                         ) {
 
                             addItem(player, UNCOOKED_CAKE, 1, Container.INVENTORY)
-                            addItem(player, EMPTY_BUCKET, 1, Container.INVENTORY)
-                            addItem(player, EMPTY_POT, 1, Container.INVENTORY)
+                            addItemOrDrop(player, EMPTY_BUCKET, 1)
+                            addItemOrDrop(player, EMPTY_POT, 1)
 
                             sendMessage(player, "You mix the milk, flour, and egg together to make a raw cake mix.")
                         }
                     }
                     calculateMaxAmount { _ ->
-                        min(amountInInventory(player, with.id), amountInInventory(player, used.id))
+                        minOf(amountInInventory(player, with.id), amountInInventory(player, used.id))
                     }
                 }
             }
@@ -72,13 +72,13 @@ class CakeRecipe : InteractionListener {
          *  - XP Gained: 30.0 Cooking XP
          */
 
-        onUseWith(IntType.ITEM, CAKE, *chocolateIngredients) { player, used, with ->
+        onUseWith(IntType.ITEM, chocolateIngredients, CAKE) { player, used, with ->
             if (!hasLevelDyn(player, Skills.COOKING, 50)) {
-                sendMessage(player, "You need a Cooking level of 50 to make that.")
+                sendDialogue(player, "You need an Cooking level of at least 50 to make that.")
                 return@onUseWith true
             }
-
-            if(removeItem(player, Item(used.id, 1)) && removeItem(player, Item(with.id, 1))) {
+            val success = removeItem(player, used.asItem(), Container.INVENTORY) && removeItem(player, with.asItem(), Container.INVENTORY)
+            if (success) {
                 addItem(player, CHOCOLATE_CAKE, 1, Container.INVENTORY)
                 rewardXP(player, Skills.COOKING, 30.0)
                 sendMessage(player, "You add chocolate to the cake.")

@@ -5,11 +5,9 @@ import core.api.skill.sendSkillDialogue
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.skill.Skills
-import core.game.node.item.Item
 import org.rs.consts.Animations
 import org.rs.consts.Items
 import org.rs.consts.Sounds
-import kotlin.math.min
 
 class SkeweredRecipe : InteractionListener {
 
@@ -27,49 +25,52 @@ class SkeweredRecipe : InteractionListener {
          * Ticks: 2 (1.2 seconds)
          */
 
-        onUseWith(IntType.ITEM, IRON_SPIT, *rawIngredients) { player, used, base ->
-            val itemDetails = mapOf(
-                Items.RAW_BIRD_MEAT_9978 to Pair(11, Items.SKEWERED_BIRD_MEAT_9984),
-                Items.RAW_RABBIT_3226 to Pair(16, Items.SKEWERED_RABBIT_7224),
-                Items.RAW_BEAST_MEAT_9986 to Pair(21, Items.SKEWERED_BEAST_9992),
-                Items.RAW_CHOMPY_2876 to Pair(30, Items.SKEWERED_CHOMPY_7230)
-            )
-            val (requirements, product) = itemDetails[base.id] ?: return@onUseWith false
+        val spitRecipes = mapOf(
+            Items.RAW_BIRD_MEAT_9978 to Pair(11, Items.SKEWERED_BIRD_MEAT_9984),
+            Items.RAW_RABBIT_3226 to Pair(16, Items.SKEWERED_RABBIT_7224),
+            Items.RAW_BEAST_MEAT_9986 to Pair(21, Items.SKEWERED_BEAST_9992),
+            Items.RAW_CHOMPY_2876 to Pair(30, Items.SKEWERED_CHOMPY_7230)
+        )
 
-            if (!hasLevelDyn(player, Skills.COOKING, requirements)) {
-                sendMessage(player, "You need a Cooking level of $requirements to make that.")
+        onUseWith(IntType.ITEM, rawIngredients, IRON_SPIT) { player, used, with ->
+            val (requiredLevel, productID) = spitRecipes[used.id] ?: return@onUseWith false
+
+            if (!hasLevelDyn(player, Skills.COOKING, requiredLevel)) {
+                sendDialogue(player, "You need an Cooking level of at least $requiredLevel to make that.")
                 return@onUseWith true
             }
 
-            if (amountInInventory(player, used.id) == 1 || amountInInventory(player, base.id) == 1) {
-                if (removeItem(player, Item(used.id, 1), Container.INVENTORY) && removeItem(player, Item(base.id, 1), Container.INVENTORY)) {
-                    addItem(player, product, 1, Container.INVENTORY)
-                    val ingredient = base.name.lowercase()
-                    sendMessage(player, "You pierce the $ingredient with the iron spit.")
+            val ingredientName = used.name.lowercase()
+            val amountUsed = amountInInventory(player, used.id)
+            val amountWith = amountInInventory(player, with.id)
+            val maxAmount = minOf(amountUsed, amountWith)
+
+            fun process(): Boolean {
+                val success = removeItem(player, used.asItem(), Container.INVENTORY) && removeItem(
+                    player, with.asItem(), Container.INVENTORY
+                )
+                if (success) {
+                    addItem(player, productID, 1, Container.INVENTORY)
+                    sendMessage(player, "You pierce the $ingredientName with the iron spit.")
+                    return true
                 }
-                return@onUseWith true
+                return false
             }
 
-            sendSkillDialogue(player) {
-                withItems(product)
-                create { _, amount ->
-                    runTask(player, 2, amount) {
-                        if (amount < 1) return@runTask
-                        if (removeItem(player, Item(used.id, 1), Container.INVENTORY) && removeItem(
-                                player,
-                                Item(base.id, 1),
-                                Container.INVENTORY
-                            )
-                        ) {
-                            addItem(player, product, 1, Container.INVENTORY)
+            if (maxAmount <= 1) {
+                process()
+            } else {
+                sendSkillDialogue(player) {
+                    withItems(productID)
+                    create { _, amount ->
+                        runTask(player, 2, amount) {
+                            process()
                         }
                     }
-                }
-
-                calculateMaxAmount { _ ->
-                    min(amountInInventory(player, used.id), amountInInventory(player, base.id))
+                    calculateMaxAmount { maxAmount }
                 }
             }
+
             return@onUseWith true
         }
 
@@ -81,8 +82,9 @@ class SkeweredRecipe : InteractionListener {
          *
          */
 
-        onUseWith(IntType.ITEM, SKEWER_STICK, SPIDER_CARCASS) { player, used, with ->
-            if (removeItem(player, Item(used.id, 1), Container.INVENTORY) && removeItem(player, Item(with.id, 1), Container.INVENTORY)) {
+        onUseWith(IntType.ITEM, SPIDER_CARCASS, SKEWER_STICK) { player, used, with ->
+            val success = removeItem(player, used.asItem(), Container.INVENTORY) && removeItem(player, with.asItem(), Container.INVENTORY)
+            if (success) {
                 animate(player, PIERCE_ANIMATION)
                 playAudio(player, Sounds.TBCU_SPIDER_STICK_1280)
                 addItem(player, SPIDER_ON_STICK, 1, Container.INVENTORY)
@@ -99,8 +101,9 @@ class SkeweredRecipe : InteractionListener {
          *
          */
 
-        onUseWith(IntType.ITEM, ARROW_SHAFT, SPIDER_CARCASS) { player, used, with ->
-            if (removeItem(player, Item(used.id, 1), Container.INVENTORY) && removeItem(player, Item(with.id, 1), Container.INVENTORY)) {
+        onUseWith(IntType.ITEM, SPIDER_CARCASS, ARROW_SHAFT) { player, used, with ->
+            val success = removeItem(player, used.asItem(), Container.INVENTORY) && removeItem(player, with.asItem(), Container.INVENTORY)
+            if (success) {
                 animate(player, PIERCE_ANIMATION)
                 playAudio(player, Sounds.TBCU_SPIDER_1279)
                 addItem(player, SPIDER_ON_SHAFT, 1, Container.INVENTORY)
