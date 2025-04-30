@@ -51,10 +51,11 @@ class BookcaseSpace :
     }
 
     companion object {
+        // Represents the bookcase interface.
         const val BOOKCASE_INTERFACE = 467
-
+        // Represents the scenery ids.
         val BOOKCASE = intArrayOf(Scenery.BOOKCASE_13597, Scenery.BOOKCASE_13598, Scenery.BOOKCASE_13599)
-
+        // Array of restricted books that cannot be interacted with or accessed.
         val RESTRICTED_BOOKS =
             intArrayOf(
                 Items.HOLY_BOOK_3840,
@@ -68,7 +69,7 @@ class BookcaseSpace :
                 Items.BOOK_OF_FOLKLORE_5508,
                 Items.PVP_WORLDS_MANUAL_14056,
             )
-
+        // A list of books with their corresponding IDs and titles.
         val bookDetails =
             listOf(
                 Items.ARENA_BOOK_6891 to "Magic Training Arena Lore Book",
@@ -104,7 +105,13 @@ class BookcaseSpace :
             )
     }
 
-    fun getBook(id: Int): Int =
+    /**
+     * Retrieves the first element of a book's details based on the provided id.
+     *
+     * @param id The book item id.
+     * @return The first element if the `id` is valid; otherwise, returns `0`.
+     */
+    private fun getBook(id: Int): Int =
         if (id in 56..114 step 2) {
             bookDetails[(id - 56) / 2].first
         } else {

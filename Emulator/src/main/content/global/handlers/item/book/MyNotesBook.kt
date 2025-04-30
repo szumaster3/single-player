@@ -12,6 +12,9 @@ import org.rs.consts.Items
 class MyNotesBook : InteractionListener {
     /*
      * Book given during Barbarian Training by Otto Godblessed.
+     * It records entries from ancient pages which are sometimes
+     * obtained when rummaging barbarian skeletons or as monster
+     * drops in the Ancient Cavern.
      */
 
     companion object {
@@ -20,7 +23,6 @@ class MyNotesBook : InteractionListener {
             arrayOf(
                 PageSet(
                     Page(
-                        BookLine("<col=08088A>Ancient page 1.", 55),
                         BookLine("I have researched these", 56),
                         BookLine("accursed creatures of", 57),
                         BookLine("mithril more, the results", 58),
@@ -32,7 +34,6 @@ class MyNotesBook : InteractionListener {
                         BookLine("so powerful?", 64),
                     ),
                     Page(
-                        BookLine("<col=08088A>Ancient page 2.", 66),
                         BookLine("...metallic for missiles", 67),
                         BookLine("and magical energies...", 68),
                         BookLine("green for close combat", 69),
@@ -46,7 +47,6 @@ class MyNotesBook : InteractionListener {
                 ),
                 PageSet(
                     Page(
-                        BookLine("<col=08088A>Ancient page 3.", 55),
                         BookLine("I must caution against", 56),
                         BookLine("offering the wrong gifts", 57),
                         BookLine("to the spirits inhabiting", 58),
@@ -55,7 +55,6 @@ class MyNotesBook : InteractionListener {
                         BookLine("if the offerer was in any", 61),
                         BookLine("way responsible for the", 62),
                         BookLine("offering's death.", 63),
-                        BookLine("<col=08088A>Ancient page 4.", 65),
                     ),
                     Page(
                         BookLine("Item 1 - mithril present", 66),
@@ -71,7 +70,6 @@ class MyNotesBook : InteractionListener {
                 ),
                 PageSet(
                     Page(
-                        BookLine("<col=08088A>Ancient page 5.", 55),
                         BookLine("The combination of each", 56),
                         BookLine("of these prime ingredients", 57),
                         BookLine("will result in a fine pie,", 58),
@@ -84,7 +82,6 @@ class MyNotesBook : InteractionListener {
                         BookLine("look untidy.", 65),
                     ),
                     Page(
-                        BookLine("<col=08088A>Ancient page 6.", 66),
                         BookLine("...no one I know of has", 67),
                         BookLine("access to an onyx amulet,", 68),
                         BookLine("the cost is just too", 69),
@@ -100,7 +97,6 @@ class MyNotesBook : InteractionListener {
                     Page(
                         BookLine("they can increase the", 55),
                         BookLine("yield of precious gems.", 56),
-                        BookLine("<col=08088A>Ancient page 7.", 58),
                         BookLine("...because her coach", 59),
                         BookLine("was a pumpkin. We laughed", 60),
                         BookLine("so much I thought my sides", 61),
@@ -111,7 +107,6 @@ class MyNotesBook : InteractionListener {
                     ),
                     Page(
                         BookLine("a fit jest...", 66),
-                        BookLine("<col=08088A>Ancient page 8.", 68),
                         BookLine("In search of the", 69),
                         BookLine("incarnation of Scabaras,", 70),
                         BookLine("I probe the darkest", 71),
@@ -128,7 +123,6 @@ class MyNotesBook : InteractionListener {
                         BookLine("were forever isolated?", 56),
                         BookLine("His bitterness can", 57),
                         BookLine("only grow...", 58),
-                        BookLine("<col=08088A>Ancient page 9.", 60),
                         BookLine("I am not sure anyone will", 61),
                         BookLine("ever read this, as I say my", 62),
                         BookLine("final farewells. If any", 63),
@@ -140,7 +134,6 @@ class MyNotesBook : InteractionListener {
                         BookLine("see this being a place", 67),
                         BookLine("visited by those as", 68),
                         BookLine("doomed as I am.", 69),
-                        BookLine("<col=08088A>Ancient page 10.", 71),
                         BookLine("If I ever get my hands", 72),
                         BookLine("on Otto he'll be in his", 73),
                         BookLine("grave. Sending me to", 74),
@@ -156,7 +149,6 @@ class MyNotesBook : InteractionListener {
                         BookLine("spirits is as one.", 58),
                         BookLine("While he sits out there", 59),
                         BookLine("living in luxury...", 60),
-                        BookLine("<col=08088A>Ancient page 11.", 62),
                         BookLine("...is the stone here?...", 63),
                         BookLine("was the stone here?...", 64),
                         BookLine("will the stone be here?...", 65),
@@ -166,7 +158,6 @@ class MyNotesBook : InteractionListener {
                         BookLine("firm enough that I knew", 67),
                         BookLine("what my questions meant.", 68),
                         BookLine("Then I might seek an answer.", 69),
-                        BookLine("<col=08088A>Ancient page 12.", 71),
                         BookLine("A momentary flash but", 72),
                         BookLine("I saw it! Hornless but", 73),
                         BookLine("the same deep crimson", 74),
@@ -180,7 +171,6 @@ class MyNotesBook : InteractionListener {
                         BookLine("in the upper galleries.", 56),
                         BookLine("I must have it,", 57),
                         BookLine("I will have it!", 58),
-                        BookLine("<col=08088A>Ancient page 13.", 60),
                         BookLine("It read 'Laufata ki", 61),
                         BookLine("Glough ki Ta Quir Priw", 62),
                         BookLine("Undo eso, Tolly, gnomo", 63),
@@ -191,7 +181,6 @@ class MyNotesBook : InteractionListener {
                         BookLine("- If only I had studied", 66),
                         BookLine("my languages more", 67),
                         BookLine("diligently.", 68),
-                        BookLine("<col=08088A>Ancient page 14.", 70),
                         BookLine("When Pukkamay first made", 71),
                         BookLine("toad crunchies, everyone", 72),
                         BookLine("thought he was mad.", 73),
@@ -202,7 +191,6 @@ class MyNotesBook : InteractionListener {
                 ),
                 PageSet(
                     Page(
-                        BookLine("<col=08088A>Ancient page 15.", 55),
                         BookLine("...I learned my lesson", 56),
                         BookLine("when I tried to take", 57),
                         BookLine("that Zamorakian wine.", 58),
@@ -210,7 +198,6 @@ class MyNotesBook : InteractionListener {
                         BookLine("overreacted. I always", 60),
                         BookLine("thought they were supposed", 61),
                         BookLine("to be teetotal anyway.", 62),
-                        BookLine("<col=08088A>Ancient page 16.", 64),
                     ),
                     Page(
                         BookLine("The Baxtorian Falls are", 66),
@@ -221,7 +208,6 @@ class MyNotesBook : InteractionListener {
                         BookLine("flow into it. What could", 71),
                         BookLine("be the source of this", 72),
                         BookLine("quantity of water?", 73),
-                        BookLine("<col=08088A>Ancient page 17.", 75),
                         BookLine("My investigations show", 76),
                     ),
                 ),
@@ -235,7 +221,6 @@ class MyNotesBook : InteractionListener {
                         BookLine("climate. The source of", 60),
                         BookLine("this heat will now be", 61),
                         BookLine("the focus of my studies.", 62),
-                        BookLine("<col=08088A>Ancient page 18.", 64),
                         BookLine("Our best guess is that", 65),
                     ),
                     Page(
@@ -247,7 +232,6 @@ class MyNotesBook : InteractionListener {
                         BookLine("to our free travel. Research", 71),
                         BookLine("was never this dangerous", 72),
                         BookLine("for my teachers.", 73),
-                        BookLine("<col=08088A>Ancient page 19.", 75),
                         BookLine("Barakur has proved his worth,", 76),
                     ),
                 ),
@@ -261,7 +245,6 @@ class MyNotesBook : InteractionListener {
                         BookLine("excavations must have been", 60),
                         BookLine("thousands of years ago,", 61),
                         BookLine("to judge by the...", 62),
-                        BookLine("<col=08088A>Ancient page 20.", 64),
                         BookLine("Our theory of artificial", 65),
                     ),
                     Page(
@@ -274,7 +257,6 @@ class MyNotesBook : InteractionListener {
                         BookLine("activity behind it, though it", 72),
                         BookLine("may simply be a great", 73),
                         BookLine("rush of water.", 74),
-                        BookLine("<col=08088A>Ancient page 21.", 76),
                     ),
                 ),
                 PageSet(
@@ -291,7 +273,6 @@ class MyNotesBook : InteractionListener {
                         BookLine("now long dead.", 64),
                     ),
                     Page(
-                        BookLine("<col=08088A>Ancient page 22.", 66),
                         BookLine("Buy from Bob's Brilliant Axes", 67),
                         BookLine("- if you see our prices", 68),
                         BookLine("bettered, let us know and", 69),
@@ -300,7 +281,6 @@ class MyNotesBook : InteractionListener {
                         BookLine("and at Bob's discretion.", 72),
                         BookLine("Does not affect your legal", 73),
                         BookLine("rights under Lumbridge laws.", 74),
-                        BookLine("<col=08088A>Ancient page 23.", 76),
                     ),
                 ),
                 PageSet(
@@ -311,7 +291,6 @@ class MyNotesBook : InteractionListener {
                         BookLine("thereafter. But the well", 58),
                         BookLine("senses the light of these", 59),
                         BookLine("spheres, and will not...", 60),
-                        BookLine("<col=08088A>Ancient page 24.", 62),
                         BookLine("...barred the magi loyal", 63),
                         BookLine("to the great Lord Zamorak", 64),
                         BookLine("from entering the tower,", 65),
@@ -323,7 +302,6 @@ class MyNotesBook : InteractionListener {
                         BookLine("soul gathered his followers", 69),
                         BookLine("and forced his way into", 70),
                         BookLine("the library...", 71),
-                        BookLine("<col=08088A>Ancient page 25.", 73),
                         BookLine("...and I have lost my way", 74),
                         BookLine("in this accursed dungeon.", 75),
                         BookLine("The air is foul and bugs", 76),
@@ -337,7 +315,6 @@ class MyNotesBook : InteractionListener {
                         BookLine("the floor. Grasping the", 58),
                         BookLine("bell I rang it with all", 59),
                         BookLine("my might...it attacked me.", 60),
-                        BookLine("<col=08088A>Ancient page 26.", 62),
                         BookLine("...perhaps the dragonkin", 63),
                         BookLine("were involved? A wild", 64),
                         BookLine("theory, I know, but", 65),
