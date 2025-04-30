@@ -156,14 +156,7 @@ class SkulgrimenDialogue(
                 ).also { stage = END_DIALOGUE }
 
             101 -> {
-                if (anyInInventory(
-                        player,
-                        Items.DAGANNOTH_HIDE_6155,
-                        Items.ROCK_SHELL_CHUNK_6157,
-                        Items.ROCK_SHELL_SHARD_6159,
-                        Items.ROCK_SHELL_SPLINTER_6161,
-                    )
-                ) {
+                if (anyInInventory(player, Items.DAGANNOTH_HIDE_6155, Items.ROCK_SHELL_CHUNK_6157, Items.ROCK_SHELL_SHARD_6159, Items.ROCK_SHELL_SPLINTER_6161)) {
                     setTitle(player, 2)
                     sendDialogueOptions(
                         player,
@@ -253,7 +246,7 @@ class SkulgrimenDialogue(
                         } else {
                             removeItem(player, Item(Items.COINS_995, 10000))
                             removeItem(player, Item(Items.DAGANNOTH_HIDE_6155, 3))
-                            removeItem(player, Item(Items.ROCK_SHELL_SHARD_6160, 1))
+                            removeItem(player, Item(Items.ROCK_SHELL_SHARD_6159, 1))
                             addItemOrDrop(player, Items.ROCK_SHELL_PLATE_6129)
                             npc("There you go. Sturdy armour. You need another piece?")
                             stage = 109
@@ -281,7 +274,7 @@ class SkulgrimenDialogue(
                         } else {
                             removeItem(player, Item(Items.COINS_995, 7500))
                             removeItem(player, Item(Items.DAGANNOTH_HIDE_6155, 2))
-                            removeItem(player, Item(Items.ROCK_SHELL_SPLINTER_6162, 1))
+                            removeItem(player, Item(Items.ROCK_SHELL_SPLINTER_6161, 1))
                             addItemOrDrop(player, Items.ROCK_SHELL_PLATE_6129)
                             npc("There you go. Sturdy armour. You need another piece?")
                             stage = 111
