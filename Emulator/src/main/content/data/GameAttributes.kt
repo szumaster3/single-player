@@ -8,6 +8,9 @@ internal object GameAttributes {
     const val SAVE = "/save:"
     const val JOIN_DATE = "joinDate"
 
+    // Timers.
+    const val TELEBLOCK_TIMER = "teleblock"
+
     // Tutorial island.
     const val TUTORIAL_COMPLETE = "tutorial:complete"
     const val TUTORIAL_STAGE = "tutorial:stage"
@@ -114,7 +117,7 @@ internal object GameAttributes {
     const val DRILL_TASK = "/save:random:drill_task"
     const val DRILL_COUNTER = "/save:random:drill_score"
 
-    // Swept away continuation (mini-quest)
+    // Swept away continuation (mini-quest).
     const val MINI_PURPLE_CAT = "/save:mini-quest:purple-cat"
     const val MINI_PURPLE_CAT_COMPLETE = "/save:mini-quest:purple-cat:complete"
     const val MINI_PURPLE_CAT_PROGRESS = "/save:mini-quest:purple-cat:score"
@@ -142,7 +145,7 @@ internal object GameAttributes {
     const val QUEST_TOG_LAST_XP_AMOUNT = "/save:quest:tog:xp_amount"
     const val QUEST_TOG_LAST_QP = "/save:quest:tog:last_qp"
 
-    // Temple of ikov quest.
+    // Temple of Ikov quest.
     const val QUEST_IKOV_SELECTED_END = "/save:quest:ikov:end"
     const val QUEST_IKOV_DISABLED_TRAP = "/save:quest:ikov:disabled_trap"
     const val QUEST_IKOV_WINELDA_INTER = "/save:quest:ikov:winelda_interactions"
@@ -158,7 +161,7 @@ internal object GameAttributes {
     const val QUEST_HFTD_STRANGE_WALL_DISCOVER = "/save:hftd:strange-wall"
     const val QUEST_HFTD_UNLOCK_DOOR = "/save:hftd:item-placed"
 
-    // God books
+    // God books.
     const val GOD_BOOKS = "/save:god_books:access"
 
     const val QUEST_HFTD_USE_AIR_RUNE = "/save:hftd:air"
@@ -195,14 +198,14 @@ internal object GameAttributes {
     // Player safety training centre access.
     const val PLAYER_SAFETY_TRAINING_CENTRE_ACCESS = "/save:training-centre-access-unlocked"
 
-    // Agile top
+    // Agile top.
     const val BARBARIAN_OUTPOST_GUNNJORN_TALK = "/save:gunnjorn:first-talk"
     const val BARBARIAN_OUTPOST_COURSE_LAPS = "/save:barbarian_outpost:obstacle_count"
     const val BARBARIAN_OUTPOST_PERFECT_LAPS = "/save:barbarian_outpost:perfect_laps_counter"
     const val BARBARIAN_OUTPOST_LAST_OBSTACLE = "barbarian-outpost-obstacle"
     const val BARBARIAN_OUTPOST_COURSE_REWARD = "/save:barbarian_course_reward:unlocked"
 
-    // Agile legs
+    // Agile legs.
     const val GNOME_STRONGHOLD_GNOME_TALK = "/save:gnome:first-talk"
     const val GNOME_STRONGHOLD_COURSE_LAPS = "/save:gnome_stronghold:obstacle_count"
     const val GNOME_STRONGHOLD_PERFECT_LAPS = "/save:gnome_stronghold:perfect_laps_counter"
@@ -284,25 +287,24 @@ internal object GameAttributes {
     const val QUEST_VIKING_THORVALD_START = "/save:fremtrials:warrior-accepted"
     const val QUEST_VIKING_THORVALD_VOTE = "/save:fremtrials:thorvald-vote"
 
-    // Varrock achievement (Who Ate All the Pie?)
+    // Varrock achievement (Who Ate All the Pie?).
     const val DIARY_VARROCK_ROMILY_WEAKLAX_PIE_AMOUNT = "/save:romily-weaklax:pie-amt"
     const val DIARY_VARROCK_ROMILY_WEAKLAX_PIE_ASSIGN = "/save:romily-weaklax:pie-assigned"
 
-    // Phoenix Lair
+    // Phoenix Lair.
     const val PHOENIX_LAIR_EGGLING_CUTE = "/save:phoenix-familiar:0"
     const val PHOENIX_LAIR_EGGLING_MEAN = "/save:phoenix-familiar:1"
 
-    // Fishing contest quest
+    // Fishing contest quest.
     const val QUEST_FISHINGCOMPO_WON = "/save:fishing_contest:won"
     const val QUEST_FISHINGCOMPO_STASH_GARLIC = "/save:fishing_contest:garlic-stuffed"
     const val QUEST_FISHINGCOMPO_CONTEST = "fishing_contest:contest-start"
 
-    // Curse of zaros mini-quest
+    // Curse of zaros mini-quest.
     const val ZAROS_PATH_SEQUENCE = "/save:zaros:sequence"
     const val ZAROS_COMPLETE = "/save:zaros:complete"
     const val ZAROS_NPC_TALK = "/save:zaros:npc-talked"
 
-    // Ancient pages (lore)
-
+    // Ancient pages (lore).
     const val LORE_ANCIENT_PAGES_TRANSCRIPT = "/save:ancient_page"
 }

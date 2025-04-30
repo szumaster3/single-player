@@ -43746,15 +43746,34 @@
     "aggressive": "true"
   },
   {
-    "examine": "This grizzled soldier is here to distribute Rated Clan Wars badges.",
+    "examine": "A financial expert.",
+    "name": "Banker",
+    "id": "5912"
+  },
+  {
+    "examine": "She'll store my items for me.",
+    "name": "Banker",
+    "id": "5913"
+  },
+  {
+    "examine": "An old woman busily knitting.",
     "name": "Iffie",
     "id": "5914"
   },
   {
+    "examine": "Armed with a pair of needles.",
+    "name": "Elsie",
+    "id": "5915"
+  },
+  {
+    "examine": "A dwarf.",
+    "name": "Rupert the Beard",
+    "id": "6001"
+  },
+  {
     "examine": "Does what too many people aren't interested in doing.",
     "name": "Cleaner",
-    "id": "5916",
-    "aggressive": "true"
+    "id": "5916"
   },
   {
     "examine": "A mangy mutt.",

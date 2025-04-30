@@ -1,5 +1,6 @@
 package content.global.handlers.item
 
+import content.data.GameAttributes
 import core.api.*
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
@@ -17,7 +18,7 @@ class HouseTeleportTabletListener : InteractionListener {
                 sendMessage(player, "You must have a house to teleport to before attempting that.")
                 return@on false
             }
-            if (hasTimerActive(player, "teleblock")) {
+            if (hasTimerActive(player, GameAttributes.TELEBLOCK_TIMER)) {
                 sendMessage(player, "A magical force has stopped you from teleporting.")
                 return@on true
             }

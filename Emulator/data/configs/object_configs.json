@@ -14441,7 +14441,7 @@
   },
   {
     "examine": "A bookcase with various books.",
-    "ids": "33056,33056"
+    "ids": "15544,33056,33056"
   },
   {
     "examine": "Closed for business.",
@@ -15194,9 +15194,109 @@
   {
     "examine": "A barbarian's anvil.",
     "ids": "25349"
-  }
+  },
   {
     "examine": "He should have run a virus checker more often.",
     "ids": "16103"
+  },
+  {
+    "examine": "Life in the midst of death.",
+    "ids": "16047"
+  },
+  {
+    "examine": "I don't think she read the security tips on the website.",
+    "ids": "16074"
+  },
+  {
+    "examine": "These bones have been picked clean... something around here is hungry!",
+    "ids": "16075"
+  },
+  {
+    "examine": "He looks hungry!",
+    "ids": "16076"
+  },
+  {
+    "examine": "A huge sack of grain in the middle of famine.",
+    "ids": "16077"
+  },
+  {
+    "examine": "They seem to have mould growing from them... ick!",
+    "ids": "16104"
+  },
+  {
+    "examine": "A shiny box of medicine treasure away from the stinking ooze.",
+    "ids": "16118"
+  },
+  {
+    "examine": "An oasis of peace in the nightmare of war.",
+    "ids": "16135"
+  },
+  {
+    "examine": "A victim of war...looks like he's been dead a while now...",
+    "ids": "16143"
+  },
+  {
+    "examine": "I don't think he'd mind us checking for his wallet now...",
+    "ids": "16144"
+  },
+  {
+    "examine": "I'm sure he died of natural causes. Like a massive dragon or something...",
+    "ids": "16145"
+  },
+  {
+    "examine": "Elaborate portal crafted from bones of the long dead.",
+    "ids": "16043,16044"
+  },
+  {
+    "examine": "A chain of bones leading up.",
+    "ids": "16048"
+  },
+  {
+    "examine": "The entrance to the Stronghold of Security.",
+    "ids": "16154"
+  },
+  {
+    "examine": "It seems to be looking at you!",
+    "ids": "16123,16124"
+  },
+  {
+    "examine": "Contains traces of summoning energy.",
+    "ids": "29956"
+  },
+  {
+    "examine": "Even this door looks half starved - and appears to be eyeing you up as lunch.",
+    "ids": "16065,16066"
+  },
+  {
+    "examine": "Are you sure you want to touch that? It seems to be alive and looking at you.",
+    "ids": "16089,16090"
+  },
+  {
+    "examine": "You'll be lucky to keep a grip on this! Climb to go back to the start of this level.",
+    "ids": "16112"
+  },
+  {
+    "examine": "Bones of the dead lashed together.",
+    "ids": "16049"
+  },
+  {
+    "examine": "Goo oozes from this vine.",
+    "ids": "16115"
+  },
+  {
+    "examine": "I'd be careful going in there.",
+    "ids": "28891,28892,28893"
+  },
+  {
+    "examine": "A passage leading into the next chamber of the cave.",
+    "ids": "37929,38811"
+  },
+  {
+    "examine": "A massive cave entrance that looks rather unstable.",
+    "ids": "37749"
+  },
+  {
+    "examine": "A massive, crumbled cave entrance.",
+    "ids": "37750"
   }
 ]

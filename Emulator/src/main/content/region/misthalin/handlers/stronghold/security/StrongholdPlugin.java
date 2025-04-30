@@ -62,7 +62,7 @@ public final class StrongholdPlugin extends MapZone implements Plugin<Object> {
             @Override
             public boolean handle(Player player, Node node, String option) {
                 flagDoor(player, false);
-                ClimbActionHandler.climb(player, new Animation(Animations.USE_LADDER_828), Location.create(1859, 5243, 0));
+                ClimbActionHandler.climb(player, null, Location.create(1859, 5243, 0));
                 sendDialogueLines(player, "You squeeze through the hole and find a ladder a few feet down", "leading into the Stronghold of Security.");
                 return true;
             }
@@ -92,7 +92,7 @@ public final class StrongholdPlugin extends MapZone implements Plugin<Object> {
                     ladder(player, new Location(2042, 5245, 0));
                     player.getPacketDispatch().sendMessage("You climb the ladder which seems to twist and wind in all directions.");
                     return true;
-                case 16080:// lader
+                case 16080:// ladder
                     ladder(player, Location.create(1859, 5243, 0));
                     return true;
                 case 16048:// bone chain.
@@ -114,21 +114,21 @@ public final class StrongholdPlugin extends MapZone implements Plugin<Object> {
                     if (!Warnings.STRONGHOLD_OF_SECURITY_LADDERS.isDisabled()) {
                         openComponent(player, Location.create(2042, 5245, 0));
                     } else {
-                        ClimbActionHandler.climb(player, new Animation(Animations.MULTI_BEND_OVER_827), Location.create(2042, 5245, 0));
+                        ClimbActionHandler.climb(player, new Animation(Animations.USE_LADDER_828), Location.create(2042, 5245, 0));
                     }
                     return true;
                 case 16081: // Ladder from Level 2 to Level 3 (Poison spiders)
                     if (!Warnings.STRONGHOLD_OF_SECURITY_LADDERS.isDisabled()) {
                         openComponent(player, Location.create(2123, 5252, 0));
                     } else {
-                        ClimbActionHandler.climb(player, new Animation(Animations.MULTI_BEND_OVER_827), Location.create(2123, 5252, 0));
+                        ClimbActionHandler.climb(player, new Animation(Animations.USE_LADDER_828), Location.create(2123, 5252, 0));
                     }
                     return true;
                 case 16115: // Ladder from Level 3 to Level 4 (Shades)
                     if (!Warnings.STRONGHOLD_OF_SECURITY_LADDERS.isDisabled()) {
                         openComponent(player, Location.create(2358, 5215, 0));
                     } else {
-                        ClimbActionHandler.climb(player, new Animation(Animations.MULTI_BEND_OVER_827), Location.create(2358, 5215, 0));
+                        ClimbActionHandler.climb(player, new Animation(Animations.USE_LADDER_828), Location.create(2358, 5215, 0));
                     }
                     return true;
                 case 16150:

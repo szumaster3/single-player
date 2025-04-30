@@ -1,5 +1,6 @@
 package content.global.handlers.item
 
+import content.data.GameAttributes
 import core.api.*
 import core.api.quest.hasRequirement
 import core.game.interaction.IntType
@@ -20,7 +21,7 @@ class TeleportCrystalListener : InteractionListener {
                 sendMessage(player, "The crystal is unresponsive.")
                 return@on false
             }
-            if (hasTimerActive(player, "teleblock")) {
+            if (hasTimerActive(player, GameAttributes.TELEBLOCK_TIMER)) {
                 sendMessage(player, "A magical force has stopped you from teleporting.")
                 return@on true
             }

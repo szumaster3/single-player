@@ -1,5 +1,6 @@
 package content.minigame.castlewars.handlers.areas
 
+import content.data.GameAttributes
 import content.minigame.castlewars.handlers.CastleWars
 import core.api.TickListener
 import core.api.registerTimer
@@ -86,7 +87,7 @@ class CastleWarsGameArea :
     override fun areaEnter(entity: Entity) {
         val player = entity as? Player ?: return
         super.areaEnter(player)
-        registerTimer(player, spawnTimer("teleblock", (CastleWars.gameTimeMinutes) * 60 * 2))
+        registerTimer(player, spawnTimer(GameAttributes.TELEBLOCK_TIMER, (CastleWars.gameTimeMinutes) * 60 * 2))
 
         if (saradominPlayers.contains(player)) {
             player.interfaceManager.openOverlay(Component(Components.CASTLEWARS_STATUS_OVERLAY_SARADOMIN_58))

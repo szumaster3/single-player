@@ -1,5 +1,6 @@
 package content.region.wilderness.handlers.revenants
 
+import content.data.GameAttributes
 import core.api.*
 import core.api.event.applyPoison
 import core.api.event.isPoisoned
@@ -62,10 +63,10 @@ class RevenantCombatHandler(
                 if (victim.asPlayer().prayer[PrayerType.PROTECT_FROM_MAGIC]) {
                     ticks /= 2
                 }
-                if (hasTimerActive(victim, "teleblock")) {
+                if (hasTimerActive(victim, GameAttributes.TELEBLOCK_TIMER)) {
                     playGlobalAudio(victim.getLocation(), 4064, 0, 1, 10)
                 } else {
-                    registerTimer(victim, spawnTimer("teleblock", ticks))
+                    registerTimer(victim, spawnTimer(GameAttributes.TELEBLOCK_TIMER, ticks))
                 }
             }
         }

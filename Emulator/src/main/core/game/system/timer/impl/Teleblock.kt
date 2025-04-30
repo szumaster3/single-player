@@ -1,5 +1,6 @@
 package core.game.system.timer.impl
 
+import content.data.GameAttributes
 import core.api.sendMessage
 import core.game.node.entity.Entity
 import core.game.node.entity.player.Player
@@ -10,7 +11,7 @@ import core.game.system.timer.TimerFlag
 class Teleblock :
     PersistTimer(
         runInterval = 1,
-        identifier = "teleblock",
+        identifier = GameAttributes.TELEBLOCK_TIMER,
         flags = arrayOf(TimerFlag.ClearOnDeath),
     ) {
     override fun run(entity: Entity): Boolean = false

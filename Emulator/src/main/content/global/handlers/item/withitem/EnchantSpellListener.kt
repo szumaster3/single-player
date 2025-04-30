@@ -1,5 +1,6 @@
 package content.global.handlers.item.withitem
 
+import content.data.GameAttributes
 import core.api.*
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
@@ -66,7 +67,7 @@ class EnchantSpellListener : InteractionListener {
          */
 
         on(IntType.ITEM, "break") { player, node ->
-            if (hasTimerActive(player, "teleblock")) {
+            if (hasTimerActive(player, GameAttributes.TELEBLOCK_TIMER)) {
                 sendMessage(player, "A magical force has stopped you from teleporting.")
                 return@on true
             }

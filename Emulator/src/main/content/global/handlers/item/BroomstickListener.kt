@@ -26,7 +26,7 @@ class BroomstickListener : InteractionListener {
                 return@on true
             }
 
-            if (hasTimerActive(player, "teleblock")) {
+            if (hasTimerActive(player, GameAttributes.TELEBLOCK_TIMER)) {
                 sendMessage(player, "A magical force has stopped you from teleporting.")
                 return@on true
             }

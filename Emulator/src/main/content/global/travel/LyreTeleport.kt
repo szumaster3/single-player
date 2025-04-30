@@ -1,5 +1,6 @@
 package content.global.travel
 
+import content.data.GameAttributes
 import core.ServerStore.Companion.getArchive
 import core.api.*
 import core.game.node.entity.impl.Animator
@@ -25,7 +26,7 @@ class LyreTeleport(
         fun getStoreFile(): JSONObject = getArchive("daily-lyre-teleport")
 
         fun teleport(player: Player) {
-            if (hasTimerActive(player, "teleblock")) {
+            if (hasTimerActive(player, GameAttributes.TELEBLOCK_TIMER)) {
                 sendMessage(player, "A magical force has stopped you from teleporting.")
             } else {
                 GameWorld.Pulser.submit(LyreTeleport(player))

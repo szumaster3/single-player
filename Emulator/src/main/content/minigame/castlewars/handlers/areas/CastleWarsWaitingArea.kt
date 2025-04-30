@@ -1,5 +1,6 @@
 package content.minigame.castlewars.handlers.areas
 
+import content.data.GameAttributes
 import content.data.God
 import content.minigame.castlewars.handlers.CastleWars
 import content.minigame.castlewars.handlers.CastleWarsOverlay
@@ -32,7 +33,7 @@ class CastleWarsWaitingArea :
         super.areaEnter(player)
         registerTimer(
             player,
-            spawnTimer("teleblock", (CastleWars.gameCooldownMinutes + CastleWars.gameTimeMinutes) * 60 * 2),
+            spawnTimer(GameAttributes.TELEBLOCK_TIMER, (CastleWars.gameCooldownMinutes + CastleWars.gameTimeMinutes) * 60 * 2),
         )
 
         if (zamorakWaitingRoom.insideBorder(player.location)) {

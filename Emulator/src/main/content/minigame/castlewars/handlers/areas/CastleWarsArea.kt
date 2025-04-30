@@ -1,5 +1,6 @@
 package content.minigame.castlewars.handlers.areas
 
+import content.data.GameAttributes
 import content.global.skill.summoning.familiar.BurdenBeast
 import content.minigame.castlewars.handlers.CastleWars
 import core.api.LogoutListener
@@ -51,7 +52,7 @@ abstract class CastleWarsArea :
     private fun exitCastleWars(player: Player) {
         player.interfaceManager.closeOverlay()
 
-        removeTimer(player, "teleblock")
+        removeTimer(player, GameAttributes.TELEBLOCK_TIMER)
 
         val cwarsItems =
             intArrayOf(

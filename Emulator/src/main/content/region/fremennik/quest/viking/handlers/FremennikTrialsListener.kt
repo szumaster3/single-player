@@ -270,7 +270,7 @@ class FremennikTrialsListener : InteractionListener {
                 sendMessage(player, "You lack the knowledge to play this.")
             } else if (LYRE_IDs.isLast(lyre.id)) {
                 sendMessage(player, "Your lyre is out of charges!")
-            } else if (hasTimerActive(player, "teleblock")) {
+            } else if (hasTimerActive(player, GameAttributes.TELEBLOCK_TIMER)) {
                 sendMessage(player, "A magical force has stopped you from teleporting.")
             } else {
                 if (removeItem(player, lyre.asItem())) {

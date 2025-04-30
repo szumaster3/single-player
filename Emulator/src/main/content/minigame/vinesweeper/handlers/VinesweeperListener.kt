@@ -1,5 +1,6 @@
 package content.minigame.vinesweeper.handlers
 
+import content.data.GameAttributes
 import content.minigame.vinesweeper.dialogue.BlinkinDialogueFile
 import content.minigame.vinesweeper.dialogue.MrsWinkinDialogueFile
 import content.minigame.vinesweeper.handlers.FlagsHandler.Companion.FARMER_FLAG_LINES
@@ -597,7 +598,7 @@ class VinesweeperListener :
                 npc: NPC,
                 player: Player,
             ) {
-                if (hasTimerActive(player, "teleblock")) {
+                if (hasTimerActive(player, GameAttributes.TELEBLOCK_TIMER)) {
                     sendNPCDialogue(player, npc.id, "I can't do that, you're teleblocked!", FaceAnim.OLD_ANGRY1)
                     return
                 }

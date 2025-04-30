@@ -1,5 +1,6 @@
 package content.global.handlers.item
 
+import content.data.GameAttributes
 import core.api.*
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
@@ -15,7 +16,7 @@ class SkullSceptreListener : InteractionListener {
     override fun defineListeners() {
         on(Items.SKULL_SCEPTRE_9013, IntType.ITEM, "invoke", "divine", "operate") { player, node ->
             if (getUsedOption(player) == "invoke" || getUsedOption(player) == "operate") {
-                if (hasTimerActive(player, "teleblock")) {
+                if (hasTimerActive(player, GameAttributes.TELEBLOCK_TIMER)) {
                     sendMessage(player, "A magical force has stopped you from teleporting.")
                     return@on true
                 }
