@@ -25,7 +25,7 @@ class PiscatorisListener : InteractionListener {
         }
 
         on(HERMANS_DESK, IntType.SCENERY, "search") { player, _ ->
-            val hasBook = hasAnItem(player, Items.TZHAAR_TOURIST_GUIDE_13244).container != null
+            val hasBook = hasAnItem(player, Items.HERMANS_BOOK_7951).container != null
 
             sendMessage(player, "You search the herman's desk...")
 
