@@ -1,9 +1,15 @@
 package content.global.handlers.item
 
 import content.data.GameAttributes
+import content.global.handlers.iface.BookInterface
+import content.global.handlers.iface.BookLine
+import content.global.handlers.iface.Page
+import content.global.handlers.iface.PageSet
 import core.api.*
+import core.game.dialogue.splitLines
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
+import core.game.node.entity.player.Player
 import org.rs.consts.Components
 import org.rs.consts.Items
 
@@ -15,23 +21,25 @@ class AncientPageListener : InteractionListener {
     companion object {
         private val ancientPageTranscripts = listOf(
             // Ancient page number 1.
-            listOf(// TODO: Handle split correction caused by absent source data.
+            listOf( // TODO: Handle split correction caused by absent source data.
                 "",
                 "",
-                "                                                     I have researched",
-                "these accursed creatures of mithril more, the results are disturbing.",
-                "Analysis leads me to believe that they were created by a higher power,",
-                "what sort of creature could be so powerful?"
+                "                                                       I have researched",
+                "these accursed creatures of mithril more, the results",
+                "are disturbing. Analysis leads me to believe that they",
+                "were created by a higher power, what sort of creature",
+                "could be so powerful?"
             ),
 
             // Ancient page number 2.
-            listOf(// TODO: Handle split correction caused by absent source data.
+            listOf( // TODO: Handle split correction caused by absent source data.
                 "",
                 "",
-                "                                                     ...metallic for missiles",
-                "and magical energies...green for close combat and magic...",
-                "both have their breath weapon for which they are infamous...",
-                "next I will try reason and logic, may Guthix watch over me.",
+                "                                                       ...metallic for missiles",
+                "and magical energies...green for close combat and",
+                " magic... both have their breath weapon for which they",
+                "are infamous... next I will try reason and logic, may",
+                "Guthix watch over me.",
             ),
 
             // Ancient page number 3.
@@ -57,21 +65,21 @@ class AncientPageListener : InteractionListener {
             ),
 
             // Ancient page number 5.
-            listOf(// TODO: Handle split correction caused by absent source data.
+            listOf( // TODO: Handle split correction caused by absent source data.
                 "",
                 "",
-                "                                                     The combination",
+                "                                                           The combination",
                 "of each of these prime ingredients will result in a fine",
-                "pie, heightening the reactions of the lucky fellow who eats it.",
-                "Sadly, most demand in my establishment is from scruffy fellows",
-                "who make the place look untidy.",
+                "pie, heightening the reactions of the lucky fellow who",
+                "eats it. Sadly, most demand in my establishment is from",
+                "scruffy fellows who make the place look untidy.",
             ),
 
             // Ancient page number 6.
             listOf(
                 "",
                 "",
-                "                                                     ...no one I know of",
+                "                                                       ...no one I know of",
                 "has access to an onyx amulet, the cost is just too",
                 "immense. Enchanted, charged dragonstone amulets",
                 "appear to be able to increase the perceptions of the",
@@ -83,7 +91,7 @@ class AncientPageListener : InteractionListener {
             listOf(
                 "",
                 "",
-                "                                                     ...because her coach",
+                "                                                       ...because her coach",
                 "was a pumpkin. We laughed so much I thought my sides",
                 "would split. I think that too much dwarven ale may have",
                 "clouded by views, since it no longer seems a fit jest...",
@@ -93,7 +101,7 @@ class AncientPageListener : InteractionListener {
             listOf(
                 "",
                 "",
-                "                                                     In search of the",
+                "                                                           In search of the",
                 "incarnation of Scabaras, I probe the darkest recesses",
                 "of the hidden world. If he lies in wait, I must be the one to",
                 "reunite him with his fellow deities. What would befall us if",
@@ -104,7 +112,7 @@ class AncientPageListener : InteractionListener {
             listOf(
                 "",
                 "",
-                "                                                     I am not sure anyone",
+                "                                                       I am not sure anyone",
                 "will ever read this, as I say my final farewells. If any find",
                 "this, pass on my regards to Annalise, if she still lives. I",
                 "cannot see this being a place visited by those as",
@@ -112,21 +120,22 @@ class AncientPageListener : InteractionListener {
             ),
 
             // Ancient page number 10.
-            listOf(// TODO: Handle split correction caused by absent source data.
+            listOf( // TODO: Handle split correction caused by absent source data.
                 "",
                 "",
-                "                                                     If I ever get",
-                "my hands on Otto he'll be in his grave. Sending me to this place",
-                "to fester and die. 'See wonders' he says 'Impress the spirits'",
-                "he says. The only way I'll be impressing the spirits is as one.",
-                "While he sits out there living in luxury...",
+                "                                                           If I ever get",
+                "my hands on Otto he'll be in his grave. Sending me to",
+                "this place to fester and die. 'See wonders' he says",
+                "'Impress the spirits' he says. The only way I'll be",
+                "impressing the spirits is as one. While he sits out",
+                "there living in luxury..."
             ),
 
             // Ancient page number 11.
             listOf(
                 "",
                 "",
-                "                                                     ...is the stone",
+                "                                                       ...is the stone",
                 "here?...was the stone here?...will the stone be",
                 "here?...would that my sanity were firm enough that I",
                 "knew what my questions meant. Then I might seek an",
@@ -134,10 +143,10 @@ class AncientPageListener : InteractionListener {
             ),
 
             // Ancient page number 12.
-            listOf(// TODO: Handle split correction caused by absent source data.
+            listOf( // TODO: Handle split correction caused by absent source data.
                 "",
                 "",
-                "                                                     A momentary flash",
+                "                                                       A momentary flash",
                 "but I saw it! Hornless but the same deep crimson of",
                 "its set-mates. A glorious thing to see, guarded by the",
                 "creatures in the upper galleries. I must have it,",
@@ -148,7 +157,7 @@ class AncientPageListener : InteractionListener {
             listOf(
                 "",
                 "",
-                "                                                     It read 'Laufata ki",
+                "                                                       It read 'Laufata ki",
                 "Glough ki Ta Quir Priw Undo eso, Tolly, gnomo kar is",
                 "Glough hamo sarko pro Arposandra Qua!' - If only I had",
                 "studied my languages more diligently.",
@@ -158,7 +167,7 @@ class AncientPageListener : InteractionListener {
             listOf(
                 "",
                 "",
-                "                                                     When Pukkamay first",
+                "                                                       When Pukkamay first",
                 "made toad crunchies, everyone thought he was mad.",
                 "'Chewy toads, in crunchies? It'll never work' they said -",
                 "how wrong they were...",
@@ -168,20 +177,20 @@ class AncientPageListener : InteractionListener {
             listOf(
                 "",
                 "",
-                "                                                     ...I learned my lesson",
+                "                                                       ...I learned my lesson",
                 "when I tried to take that Zamorakian wine. I really think",
                 "the monks overreacted. I always thought they were",
                 "supposed to be teetotal anyway.",
             ),
 
             // Ancient page number 16.
-            listOf(// TODO: Handle split correction caused by absent source data.
+            listOf( // TODO: Handle split correction caused by absent source data.
                 "",
                 "",
-                "                                                     The Baxtorian Falls",
+                "                                                       The Baxtorian Falls",
                 "are well worth investigating, in my opinion, since water",
-                "leaves the lake above this area yet none appears to flow",
-                "into it. What could be the source of this quantity of",
+                "leaves the lake above this area yet none appears to",
+                "flow into it. What could be the source of this quantity of",
                 "water?",
             ),
 
@@ -189,7 +198,7 @@ class AncientPageListener : InteractionListener {
             listOf(
                 "",
                 "",
-                "                                                     My investigations",
+                "                                                       My investigations",
                 "show that water temperature in the Baxtorian Falls area",
                 "are substantially higher than might be expected given",
                 "the local climate. The source of this heat will now be the",
@@ -234,7 +243,7 @@ class AncientPageListener : InteractionListener {
             listOf(
                 "",
                 "",
-                "                                                     The door resists all of",
+                "                                                       The door resists all of",
                 "our efforts to penetrate it, even the Fishing explosives",
                 "which Derril suggested were tried with no success. There",
                 "must be some way through which is linked to magic,",
@@ -243,53 +252,53 @@ class AncientPageListener : InteractionListener {
             ),
 
             // Ancient page number 22.
-            listOf(// TODO: Handle split correction caused by absent source data.
+            listOf( // TODO: Handle split correction caused by absent source data.
                 "",
                 "",
-                "                                                     Buy from Bob's",
+                "                                                           Buy from Bob's",
                 "Brilliant Axes - if you see our prices bettered, let us",
                 "know and we will beat them. Offer subject to availability",
-                "and at Bob's discretion. Does not affect your legal rights",
-                "under Lumbridge laws.",
+                "and at Bob's discretion. Does not affect your legal",
+                "rights under Lumbridge laws.",
             ),
 
             // Ancient page number 23.
-            listOf(// TODO: Handle split correction caused by absent source data.
+            listOf( // TODO: Handle split correction caused by absent source data.
                 "",
                 "",
-                "                                                     ...created spheres",
-                "of power to support those who should come to that, dread",
-                "place thereafter. But the well senses the light of these",
-                "spheres, and will not...",
+                "                                                       ...created spheres",
+                "of power to support those who should come to that,",
+                "dread place thereafter. But the well senses the light",
+                "of these spheres, and will not...",
             ),
 
             // Ancient page number 24.
-            listOf(// TODO: Handle split correction caused by absent source data.
+            listOf( // TODO: Handle split correction caused by absent source data.
                 "",
                 "",
-                "                                                     ...barred the magi",
+                "                                                       ...barred the magi",
                 "loyal to the great Lord Zamorak from entering the tower,",
-                "keeping the new-found power of the runes to themselves. But",
-                "one brave soul gathered his followers and forced his way",
-                "into the library...",
+                "keeping the new-found power of the runes to",
+                "themselves. But one brave soul gathered his followers",
+                "and forced his way into the library...",
             ),
 
             // Ancient page number 25.
-            listOf(// TODO: Handle split correction caused by absent source data.
+            listOf( // TODO: Handle split correction caused by absent source data.
                 "",
                 "",
-                "                                                     ...and I have lost",
-                "my way in this accursed dungeon. The air is foul and bugs",
-                "are everywhere...a noise from down the tunnel. There was a",
-                "bell on the floor. Grasping the bell I rang it with all my",
-                "might...it attacked me.",
+                "                                                           ...and I have lost",
+                "my way in this accursed dungeon. The air is foul",
+                "and bugs are everywhere...a noise from down the",
+                "tunnel. There was a bell on the floor. Grasping",
+                "the bell I rang it with all my might...it attacked me.",
             ),
 
             // Ancient page number 26.
             listOf(
                 "",
                 "",
-                "                                                     ...perhaps the",
+                "                                                           ...perhaps the",
                 "dragonkin were involved? A wild theory, I know, but look",
                 "at the evidence..."
             )

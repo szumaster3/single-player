@@ -29,6 +29,23 @@ import org.rs.consts.Items
 class DevelopmentCommandSet : CommandSet(Privilege.ADMIN) {
     override fun defineCommands() {
         /*
+         * Command to spawn all Ancient Pages into the inventory.
+         */
+
+        define(
+            name = "ancientpages",
+            privilege = Privilege.ADMIN,
+            usage = "::ancientpages",
+            description = "Spawn all ancient pages into the inventory.",
+        ) { player, _ ->
+            for (pages in (Items.ANCIENT_PAGE_11341..Items.ANCIENT_PAGE_11366).toIntArray())
+            addItem(player, pages)
+            addItem(player, Items.MY_NOTES_11339)
+            player.debug("Ancient pages added to the inventory.")
+            return@define
+        }
+
+        /*
          * Command to toggle all display cases in Varrock Museum.
          */
 
