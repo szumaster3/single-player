@@ -177,7 +177,7 @@ class SkulgrimenDialogue(
                         removeItem(player, Item(Items.DAGANNOTH_HIDE_6155, 2))
                         removeItem(player, Item(Items.ROCK_SHELL_SPLINTER_6161, 1))
                         addItemOrDrop(player, Items.ROCK_SHELL_LEGS_6130)
-                        npc("There you go. Sturdy armour. You need another piece?")
+                        npc("There you go. Sturdy legs. You need another piece?")
                         stage = 111
                     }
                 }
