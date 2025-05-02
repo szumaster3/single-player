@@ -8,22 +8,23 @@ import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Arianwyn dialogue.
+ */
 @Initializable
-class ArianwynDialogue(
-    player: Player? = null,
-) : Dialogue(player) {
-    override fun open(vararg args: Any?): Boolean {
+class ArianwynDialogue(player: Player? = null) : Dialogue(player) {
+
+    override fun open(vararg args: Any): Boolean {
         npc = args[0] as NPC
         sendDialogue(player, "He doesn't seem interested in talking to you.").also { stage = END_DIALOGUE }
         return true
     }
 
-    override fun handle(
-        interfaceId: Int,
-        buttonId: Int,
-    ): Boolean = true
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+        return true
+    }
 
-    override fun newInstance(player: Player?): Dialogue = ArianwynDialogue(player)
-
-    override fun getIds(): IntArray = intArrayOf(NPCs.ARIANWYN_1202)
+    override fun getIds(): IntArray {
+        return intArrayOf(NPCs.ARIANWYN_1202)
+    }
 }
