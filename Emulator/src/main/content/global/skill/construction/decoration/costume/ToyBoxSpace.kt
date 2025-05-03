@@ -20,7 +20,7 @@ class ToyBoxSpace : InteractionListener {
         on(TOY_BOX_OPEN, IntType.SCENERY, "search", "close") { player, node ->
             val option = getUsedOption(player)
             if(option == "close") {
-                animate(player, Animations.CLOSE_CHEST_539)
+                animate(player, Animations.HUMAN_CLOSE_CHEST_538)
                 replaceScenery(node.asScenery(), node.id - 1, -1)
             } else {
                 DiangoReclaimInterface.open(player)
