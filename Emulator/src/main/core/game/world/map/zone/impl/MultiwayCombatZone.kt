@@ -44,10 +44,6 @@ class MultiwayCombatZone
              * https://youtu.be/BG1TqWzeZWQ?si=OdhfU47HrJiaquBf&t=171
              */
             TROLLHEIM_GWD_BORDERS.addException(ZoneBorders(2913, 3744, 2922, 3751))
-
-            Location.create(2913, 3744, 0)
-            Location.create(2922, 3751, 0)
-
             register(ZoneBorders(1728, 5120, 1791, 5247))
             register(ZoneBorders(3136, 3523, 3328, 3710))
             registerRegion(13105, ZoneBorders(3282, 3159, 3303, 3177))
