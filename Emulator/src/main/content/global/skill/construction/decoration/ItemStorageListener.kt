@@ -26,20 +26,25 @@ class ItemStorageListener : InterfaceListener, InteractionListener {
 
         on(INTERFACE) { player, _, _, buttonID, _, _ ->
             val setIndex = (buttonID - 56) / 2
-            if (getAttribute(player, "con:bookcase", false)) {
-                if (setIndex in BOOKCASE_CONTENT.indices) {
-                    val itemId = BOOKCASE_CONTENT[setIndex]
-                    addItem(player, itemId)
-                } else {
-                    player.debug("Invalid book index.")
+
+            when {
+                getAttribute(player, "con:bookcase", false) -> {
+                    if (setIndex in BOOKCASE_CONTENT.indices) {
+                        addItem(player, BOOKCASE_CONTENT[setIndex])
+                    } else {
+                        player.debug("Invalid button / book index.")
+                    }
                 }
-            } else if (getAttribute(player, "con:fancy-dress-box", false)) {
-                if (setIndex in DRESS_BOX_CONTENT.indices) {
-                    toggleFancyDressSet(player, setIndex)
-                } else {
-                    player.debug("Invalid costume set.")
+
+                getAttribute(player, "con:fancy-dress-box", false) -> {
+                    if (setIndex in DRESS_BOX_CONTENT.indices) {
+                        toggleFancyDressSet(player, setIndex)
+                    } else {
+                        player.debug("Invalid button / costume set.")
+                    }
                 }
             }
+
             return@on true
         }
 
@@ -70,22 +75,19 @@ class ItemStorageListener : InterfaceListener, InteractionListener {
          */
 
         on(DRESS_BOX_OPEN, IntType.SCENERY, "search", "close") { player, node ->
-            val option = getUsedOption(player)
-            if (option == "close") {
-                animate(player, Animations.CLOSE_CHEST_539)
-                replaceScenery(node.asScenery(), node.id - 1, -1)
-            } else {
-                setAttribute(player, "con:fancy-dress-box", true)
-                openInterface(player, INTERFACE).also {
-                    sendString(player, "Fancy dress box", INTERFACE, 225)
-                    sendString(player, "Mime costume", INTERFACE, 55)
-                    sendString(player, "Royal frog costume", INTERFACE, 57)
-                    sendString(player, "Frog mask", INTERFACE, 59)
-                    sendString(player, "Zombie outfit", INTERFACE, 61)
-                    sendString(player, "Camo outfit", INTERFACE, 63)
-                    sendString(player, "Lederhosen outfit", INTERFACE, 65)
-                    sendString(player, "Shade robes", INTERFACE, 67)
-                    PacketRepository.send(ContainerPacket::class.java, ContainerContext(player, INTERFACE, 164, 30, DRESS_BOX_CONTENT.map { Item(it) }.toTypedArray(), false))
+            when (getUsedOption(player)) {
+                "close" -> {
+                    animate(player, Animations.HUMAN_CLOSE_CHEST_538)
+                    replaceScenery(node.asScenery(), node.id - 1, -1)
+                }
+                else -> {
+                    setAttribute(player, "con:fancy-dress-box", true)
+                    openInterface(player, INTERFACE).also {
+                        PacketRepository.send(ContainerPacket::class.java, ContainerContext(player, INTERFACE, 164, 30, DRESS_BOX_CONTENT, false))
+                        listOf(225 to "Fancy dress box", 55 to "Mime costume", 57 to "Royal frog costume", 59 to "Frog mask", 61 to "Zombie outfit", 63 to "Camo outfit", 65 to "Lederhosen outfit", 67 to "Shade robes").forEach { (id, text) ->
+                            sendString(player, text, INTERFACE, id)
+                        }
+                    }
                 }
             }
             return@on true
@@ -114,10 +116,8 @@ class ItemStorageListener : InterfaceListener, InteractionListener {
          * Handles use the restricted book on bookcase.
          */
 
-        onUseWith(IntType.SCENERY, BOOKCASE_RESTRICTED_CONTENT, *BOOKCASE) { player, used, _ ->
-            if (used.id in BOOKCASE_RESTRICTED_CONTENT) {
-                sendMessage(player, "There doesn't seem to be space for that on the bookcase.")
-            }
+        onUseWith(IntType.SCENERY, BOOKCASE_RESTRICTED_CONTENT, *BOOKCASE) { player, _, _ ->
+            sendMessage(player, "There doesn't seem to be space for that on the bookcase.")
             return@onUseWith true
         }
     }
@@ -127,50 +127,36 @@ class ItemStorageListener : InterfaceListener, InteractionListener {
         // Fancy dress box.
         private val DRESS_BOX_CLOSE = intArrayOf(Scenery.FANCY_DRESS_BOX_18772, Scenery.FANCY_DRESS_BOX_18774, Scenery.FANCY_DRESS_BOX_18776)
         private val DRESS_BOX_OPEN = intArrayOf(Scenery.FANCY_DRESS_BOX_18773, Scenery.FANCY_DRESS_BOX_18775, Scenery.FANCY_DRESS_BOX_18777)
-        private val DRESS_BOX_CONTENT = intArrayOf(Items.MIME_MASK_10629, Items.PRINCESS_BLOUSE_10630, Items.FROG_MASK_10721, Items.ZOMBIE_SHIRT_10631, Items.CAMO_TOP_10632, Items.LEDERHOSEN_TOP_10633, Items.SHADE_ROBE_10634)
+        private val DRESS_BOX_CONTENT = arrayOf(Item(Items.MIME_MASK_10629), Item(Items.PRINCESS_BLOUSE_10630), Item(Items.FROG_MASK_10721), Item(Items.ZOMBIE_SHIRT_10631), Item(Items.CAMO_TOP_10632), Item(Items.LEDERHOSEN_TOP_10633), Item(Items.SHADE_ROBE_10634))
         // Bookcase.
         private val BOOKCASE = intArrayOf(Scenery.BOOKCASE_13597, Scenery.BOOKCASE_13598, Scenery.BOOKCASE_13599)
         private val BOOKCASE_CONTENT = intArrayOf(Items.ARENA_BOOK_6891, Items.MY_NOTES_11339, Items.CRUMBLING_TOME_4707, Items.PIE_RECIPE_BOOK_7162, Items.GIANNES_COOK_BOOK_2167, Items.GAME_BOOK_7681, Items.STRONGHOLD_NOTES_9004, Items.COCKTAIL_GUIDE_2023, Items.TARNS_DIARY_10587, Items.CONSTRUCTION_GUIDE_8463, Items.GLASSBLOWING_BOOK_11656, Items.BREWIN_GUIDE_8989, Items.SECURITY_BOOK_9003, Items.QUEEN_HELP_BOOK_10562, Items.ABYSSAL_BOOK_5520, Items.EXPLORERS_NOTES_11677, Items.GOBLIN_BOOK_10999, Items.DWARVEN_LORE_4568, Items.BOOK_O_PIRACY_7144, Items.CLOCKWORK_BOOK_10594, Items.SCABARITE_NOTES_11975, Items.TRANSLATION_4655, Items.BOOK_ON_CHEMICALS_711, Items.INSTRUCTION_MANUAL_5, Items.BIRD_BOOK_10173, Items.FEATHERED_JOURNAL_10179, Items.BATTERED_BOOK_2886, Items.BEATEN_BOOK_9717, Items.A_HANDWRITTEN_BOOK_9627, Items.VARMENS_NOTES_4616)
         private val BOOKCASE_RESTRICTED_CONTENT = intArrayOf(Items.HOLY_BOOK_3840, Items.DAMAGED_BOOK_3839, Items.BOOK_OF_BALANCE_3844, Items.DAMAGED_BOOK_3843, Items.UNHOLY_BOOK_3842, Items.DAMAGED_BOOK_3841, Items.STRANGE_BOOK_5507, Items.BOOK_ON_CHICKENS_7464, Items.BOOK_OF_FOLKLORE_5508, Items.PVP_WORLDS_MANUAL_14056)
 
-        /**
-         * Toggles a fancy sets.
-         */
         private fun toggleFancyDressSet(player: Player, setIndex: Int) {
-            if (setIndex !in DRESS_BOX_CONTENT.indices) {
+            val item = DRESS_BOX_CONTENT.getOrNull(setIndex)
+            if (item == null) {
                 player.debug("Invalid outfit selection.")
                 return
             }
 
-            val set = when (DRESS_BOX_CONTENT[setIndex]) {
-                // Set 1: Mime
+            val set = when (item.id) {
                 Items.MIME_MASK_10629 -> intArrayOf(Items.MIME_MASK_3057, Items.MIME_TOP_3058, Items.MIME_LEGS_3059, Items.MIME_BOOTS_3061, Items.MIME_GLOVES_3060)
-                // Set 2: Royal costume (male/female).
-                Items.PRINCESS_BLOUSE_10630 -> if (player.isMale)  intArrayOf(Items.PRINCE_TUNIC_6184, Items.PRINCE_LEGGINGS_6185) else intArrayOf(Items.PRINCESS_BLOUSE_6186, Items.PRINCESS_SKIRT_6187)
-                // Set 3: Frog mask.
+                Items.PRINCESS_BLOUSE_10630 -> if (player.isMale) intArrayOf(Items.PRINCE_TUNIC_6184, Items.PRINCE_LEGGINGS_6185) else intArrayOf(Items.PRINCESS_BLOUSE_6186, Items.PRINCESS_SKIRT_6187)
                 Items.FROG_MASK_10721 -> intArrayOf(Items.FROG_MASK_6188)
-                // Set 4. Zombie outfit.
                 Items.ZOMBIE_SHIRT_10631 -> intArrayOf(Items.ZOMBIE_MASK_7594, Items.ZOMBIE_SHIRT_7592, Items.ZOMBIE_TROUSERS_7593, Items.ZOMBIE_GLOVES_7595, Items.ZOMBIE_BOOTS_7596)
-                // Set 5. Camo costume.
                 Items.CAMO_TOP_10632 -> intArrayOf(Items.CAMO_HELMET_6656, Items.CAMO_TOP_6654, Items.CAMO_BOTTOMS_6655)
-                // Set 6. Lederhosen set.
                 Items.LEDERHOSEN_TOP_10633 -> intArrayOf(Items.LEDERHOSEN_HAT_6182, Items.LEDERHOSEN_TOP_6180, Items.LEDERHOSEN_SHORTS_6181)
-                // Set 7. Shade robes.
                 Items.SHADE_ROBE_10634 -> intArrayOf(Items.SHADE_ROBE_546, Items.SHADE_ROBE_548)
                 else -> return
             }
 
-            val isHidden = 166 + (setIndex * 2)
+            val key = "set:$setIndex"
 
-            if (!allInInventory(player, *set)) {
-                sendMessage(player, "You don't have the necessary items to take the outfit.")
-                return
-            }
-
-            if (getAttribute(player, "set:$setIndex", false)) {
+            if (getAttribute(player, key, false)) {
                 if (freeSlots(player) >= set.size) {
                     set.forEach { addItem(player, it, 1) }
-                    removeAttribute(player, "set:$setIndex")
+                    removeAttribute(player, key)
                     sendMessage(player, "You take the outfit from the wardrobe.")
                 } else {
                     sendMessage(player, "You don't have enough inventory space.")
@@ -178,11 +164,10 @@ class ItemStorageListener : InterfaceListener, InteractionListener {
             } else {
                 if (allInInventory(player, *set)) {
                     set.forEach { removeItem(player, Item(it, 1)) }
-                    setAttribute(player, "/save:set:$setIndex", true)
-                    // sendInterfaceConfig(player, INTERFACE, isHidden, true)
+                    setAttribute(player, "/save:$key", true)
                     sendMessage(player, "You put your outfit into the wardrobe.")
                 } else {
-                    sendMessage(player, "You need to have the full set to store it.")
+                    sendMessage(player, "That isn't currently stored in the toy box.")
                 }
             }
         }
