@@ -3,6 +3,7 @@ package content.region.kandarin.quest.seaslug
 import core.api.*
 import core.api.quest.getQuestStage
 import core.api.quest.isQuestComplete
+import core.game.interaction.QueueStrength
 import core.game.node.entity.Entity
 import core.game.node.entity.player.Player
 import core.game.world.map.Location
@@ -43,11 +44,16 @@ class FishingPlatform : MapArea {
     }
 
     private fun fishermanAttack(player: Player) {
+        openInterface(player, Components.FADE_TO_BLACK_115)
         playAudio(player, Sounds.SLUG_FISHERMAN_ATTACK_3022)
         sendMessage(player, "The fishermen approach you...")
         sendMessage(player, "and smack you on the head with a fishing rod!")
-        sendChat(player, "Ouch!")
-        openInterface(player, Components.FADE_FROM_BLACK_170)
-        teleport(player, Location.create(2784, 3287, 0))
+        queueScript(player, 3, QueueStrength.NORMAL) { stage: Int ->
+            sendChat(player, "Ouch!")
+            openInterface(player, Components.FADE_FROM_BLACK_170)
+            teleport(player, Location.create(2784, 3287, 0))
+            return@queueScript delayScript(player, 3)
+        }
     }
+
 }

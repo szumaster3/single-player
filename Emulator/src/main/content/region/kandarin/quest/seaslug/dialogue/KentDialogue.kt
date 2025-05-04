@@ -61,6 +61,7 @@ class KentDialogue(
             9 -> {
                 end()
                 lock(player, 4)
+                lockMovement(npc, 10)
                 submitWorldPulse(
                     object : Pulse() {
                         var ticks = 0

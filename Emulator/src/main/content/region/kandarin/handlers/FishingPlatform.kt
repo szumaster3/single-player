@@ -20,6 +20,7 @@ object FishingPlatform {
             setComponentVisibility(player, Components.SEASLUG_BOAT_TRAVEL_461, it.component, true)
         }
         player.lock()
+        openInterface(player, Components.FADE_TO_BLACK_115)
         submitWorldPulse(
             object : Pulse() {
                 var counter = 0

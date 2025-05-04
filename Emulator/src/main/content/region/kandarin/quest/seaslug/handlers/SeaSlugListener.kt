@@ -5,6 +5,7 @@ import content.region.kandarin.quest.seaslug.dialogue.KennithDialogueFile
 import core.api.*
 import core.api.quest.getQuestStage
 import core.api.quest.setQuestStage
+import core.game.global.action.ClimbActionHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.combat.ImpactHandler.HitsplatType
@@ -12,6 +13,7 @@ import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.game.world.map.Location
+import core.tools.Log
 import org.rs.consts.*
 
 class SeaSlugListener : InteractionListener {
@@ -43,8 +45,8 @@ class SeaSlugListener : InteractionListener {
          */
 
         onUseWith(IntType.ITEM, DAMP_STICK, BROKEN_GLASS) { player, used, _ ->
-            lock(player, 6)
             if (removeItem(player, used.asItem())) {
+                lock(player, 6)
                 visualize(player, 4809, 791)
                 playAudio(player, Sounds.SLUG_DRY_STICKS_3023)
                 addItemOrDrop(player, DRY_STICK)
@@ -57,17 +59,16 @@ class SeaSlugListener : InteractionListener {
          */
 
         on(DRY_STICK, IntType.ITEM, "rub-together") { player, _ ->
+            if (inInventory(player, Items.LIT_TORCH_594)) {
+                sendMessage(player, "You need to extinguish the torch first.")
+                return@on true
+            }
             if (!inInventory(player, UNLIT_TORCH)) {
-                sendMessage(player, "You don't have required items.")
+                sendMessage(player, "You don't have the required items.")
                 return@on true
             }
 
-            if (!inInventory(player, UNLIT_TORCH) && inInventory(player, Items.LIT_TORCH_594)) {
-                sendMessage(player, "you need to extinguish the torch first.")
-                return@on true
-            }
-
-            if(getStatLevel(player, Skills.FIREMAKING) < 30) {
+            if (getStatLevel(player, Skills.FIREMAKING) < 30) {
                 sendMessage(player, "You rub together the dry sticks but nothing happens.")
                 sendMessage(player, "You need a Firemaking level of 30 or above.")
                 return@on true
@@ -81,6 +82,7 @@ class SeaSlugListener : InteractionListener {
                 playAudio(player, Sounds.SLUG_TORCH_LIT_3028)
                 setQuestStage(player, Quests.SEA_SLUG, 20)
             }
+
             return@on true
         }
 
@@ -152,24 +154,20 @@ class SeaSlugListener : InteractionListener {
          * Handles the roadblock interaction.
          */
 
-        on(LADDER, IntType.SCENERY, "climb-up") { player, _ ->
+        on(LADDER, IntType.SCENERY, "climb-up") { player, node ->
             sendMessage(player, "You attempt to climb up the ladder.")
 
             // Before speak with Kent.
             if (getQuestStage(player, Quests.SEA_SLUG) in 5..10) {
-                animate(player, Animations.USE_LADDER_828)
-                runTask(player, 2) { teleport(player, location(2784, 3287, 1)) }
+                ClimbActionHandler.climbLadder(player, node.asScenery(), "climb-up")
                 return@on true
             }
 
             // After speak with Kent with/without torch.
             if (inInventory(player, Items.LIT_TORCH_594) && getQuestStage(player, Quests.SEA_SLUG) >= 20) {
-                lock(player, 3)
-                animate(player, Animations.USE_LADDER_828)
-                runTask(player, 2) {
-                    teleport(player, Location.create(2784, 3287, 1))
-                    sendMessageWithDelay(player, "The fishermen seem afraid of your torch.", 1)
-                }
+                ClimbActionHandler.climbLadder(player, node.asScenery(), "climb-up")
+                sendMessageWithDelay(player, "The fishermen seem afraid of your torch.", 1)
+
             } else {
                 getSmack(player)
             }
@@ -182,13 +180,15 @@ class SeaSlugListener : InteractionListener {
          */
 
         on(SEA_SLUG, IntType.NPC, "take") { player, _ ->
-            animate(player, 1114)
-            playAudio(player, Sounds.SEASLUG_HIT_3019)
-            sendMessage(player, "You pick up the sea slug.")
-            sendMessage(player, "It sinks its teeth deep into your hand.")
-            sendMessage(player, "You drop the sea slug.")
-            impact(player, 3, HitsplatType.NORMAL)
-            sendChat(player, "Ouch!")
+            runTask(player, 1) {
+                animate(player, 1114)
+                playAudio(player, Sounds.SEASLUG_HIT_3019)
+                sendMessage(player, "You pick up the sea slug.")
+                sendMessage(player, "It sinks its teeth deep into your hand.")
+                sendMessage(player, "You drop the sea slug.")
+                impact(player, 3, HitsplatType.NORMAL)
+                sendChat(player, "Ouch!")
+            }
             return@on true
         }
 
@@ -197,17 +197,19 @@ class SeaSlugListener : InteractionListener {
          */
 
         onUseWith(IntType.ITEM, POT_OF_FLOUR, SWAMP_TAR) { player, used, with ->
-            if (!hasSpaceFor(player, Item(with.id))){
+            if (!hasSpaceFor(player, Item(RAW_SWAMP_PASTE, 1))) {
                 sendDialogue(player, "You do not have enough inventory space.")
                 return@onUseWith true
             }
 
-            sendMessage(player, "You mix the flour with the swamp tar.")
             if (removeItem(player, Item(with.id, 1), Container.INVENTORY)) {
                 playAudio(player, Sounds.SLUG_SMEAR_PASTE_3026)
+                sendMessage(player, "You mix the flour with the swamp tar.")
                 sendMessage(player, "It mixes into a paste.")
                 replaceSlot(player, used.index, Item(EMPTY_POT, 1))
                 addItem(player, RAW_SWAMP_PASTE, 1)
+            } else {
+                log(this.javaClass, Log.ERR, "Failed to remove item [id=${with.id}] from player [id=${player.id}, name=${player.name}] inventory.")
             }
             return@onUseWith true
         }

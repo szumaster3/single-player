@@ -58,7 +58,19 @@ class ExaminerDialogueFile : DialogueBuilderFile() {
 
         b
             .onQuestStages(Quests.THE_DIG_SITE, 6, 7, 8, 9, 10, 11, 12)
-            .npcl(FaceAnim.FRIENDLY, "Well, what are you doing here? Get digging!")
+            .branch { player -> if(inInventory(player, Items.TROWEL_676)) { 0 } else { 1 } }
+            .let{ branch ->
+                branch.onValue(0)
+                    .npcl(FaceAnim.ANNOYED, "Well, what are you doing here? Get digging!")
+                    .end()
+                branch.onValue(1)
+                    .playerl(FaceAnim.HALF_GUILTY, "I have lost my trowel.")
+                    .npcl(FaceAnim.THINKING, "Deary me. That was a good one as well. It's a good job I have another. Here you go...")
+                    .endWith { _, player ->
+                        addItemOrDrop(player, Items.TROWEL_676)
+                    }
+            }
+
 
         b
             .onQuestStages(Quests.THE_DIG_SITE, 5)

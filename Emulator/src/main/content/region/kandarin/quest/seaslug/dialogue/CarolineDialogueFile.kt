@@ -1,14 +1,11 @@
 package content.region.kandarin.quest.seaslug.dialogue
 
-import core.api.getStatLevel
 import core.api.quest.finishQuest
 import core.api.quest.getQuestStage
 import core.api.quest.setQuestStage
-import core.api.sendMessage
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
-import core.game.node.entity.skill.Skills
 import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
@@ -43,7 +40,7 @@ class CarolineDialogueFile : DialogueFile() {
                         1 -> player(FaceAnim.ASKING, "I suppose so, how do I get there?").also { stage++ }
                         2 -> player(FaceAnim.NEUTRAL, "I'm sorry, I'm too busy.").also { stage = END_DIALOGUE }
                     }
-                    10 -> npc(FaceAnim.HALF_GUILTY, "That's very good of you ${player!!.username}. My friend Holgart", "wil take you there.").also { stage++ }
+                    10 -> npc(FaceAnim.HALF_GUILTY, "That's very good of you ${player!!.username}. My friend Holgart", "will take you there.").also { stage++ }
                     11 -> player("Ok, I'll go and see if they're ok.").also { stage++ }
                     12 -> npc(FaceAnim.HALF_GUILTY, "I'll reward you for your time. It'll give me peace of", "mind to know Kennith and my husband, Kent, are safe.").also { stage++ }
                     13 -> {

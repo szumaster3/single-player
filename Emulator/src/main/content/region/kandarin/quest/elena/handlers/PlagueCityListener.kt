@@ -143,29 +143,81 @@ class PlagueCityListener : InteractionListener {
         }
 
         on(Scenery.DOOR_35991, IntType.SCENERY, "open") { player, node ->
-            if (getQuestStage(player, Quests.PLAGUE_CITY) < 11) {
+            val questStage = getQuestStage(player, Quests.PLAGUE_CITY)
+            if (questStage < 11) {
                 sendDialogueLines(player, "The door won't open.", "You notice a black cross on the door.")
                 return@on true
-            } else {
-                when {
-                    getQuestStage(player, Quests.PLAGUE_CITY) == 11 -> openDialogue(player, HeadMournerDialogue())
-                    getQuestStage(player, Quests.PLAGUE_CITY) == 16 ->
-                        openDialogue(
-                            player,
-                            MournerEastDoorDialogueExtension(),
-                        )
+            }
 
-                    getQuestStage(player, Quests.PLAGUE_CITY) > 16 ->
-                        DoorActionHandler.handleAutowalkDoor(
-                            player,
-                            node.asScenery(),
-                        )
+            if (questStage == 11) {
+                openDialogue(player, HeadMournerDialogue())
+                return@on true
+            }
 
-                    else -> openDialogue(player, MournerWestDialogue())
+            if (questStage == 16) {
+                sendPlayerDialogue(player, "I have a warrant from Bravek to enter here.")
+                addDialogueAction(player) { player, button ->
+                    if (button > 0) {
+                        sendNPCDialogue(
+                            player, NPCs.MOURNER_3216, "This is highly irregular. Please wait...", FaceAnim.ANNOYED
+                        )
+                        addDialogueAction(player) { player, button ->
+                            if (button > 0) {
+                                lock(player, 6)
+                                lockInteractions(player, 6)
+
+                                queueScript(player, 1, QueueStrength.SOFT) { stage: Int ->
+                                    when (stage) {
+                                        0 -> {
+                                            findLocalNPC(player, NPCs.MOURNER_717)?.apply {
+                                                sendChat("Hey... I got someone here with a warrant from Bravek, what should we do?")
+                                                faceLocation(location(2536, 3273, 0))
+                                            }
+                                            return@queueScript delayScript(player, 1)
+                                        }
+
+                                        1 -> {
+                                            findLocalNPC(player, NPCs.MOURNER_3216)?.apply {
+                                                sendChat("Well, you can't let them in...", 1)
+                                                faceLocation(location(2537, 3273, 0))
+                                            }
+                                            return@queueScript delayScript(player, 1)
+                                        }
+
+                                        2 -> {
+                                            getObject(location(2540, 3273, 0))?.asScenery()?.let {
+                                                DoorActionHandler.handleAutowalkDoor(player, it)
+                                            }
+                                            return@queueScript delayScript(player, 3)
+                                        }
+
+                                        3 -> {
+                                            setQuestStage(player, Quests.PLAGUE_CITY, 17)
+                                            sendDialogueLines(
+                                                player,
+                                                "You wait until the mourner's back is turned and sneak into the building."
+                                            )
+                                            return@queueScript stopExecuting(player)
+                                        }
+
+                                        else -> return@queueScript stopExecuting(player)
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
+
+            if (questStage in 17..100) {
+                DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
+            } else {
+                openDialogue(player, MournerWestDialogue())
+            }
+
             return@on true
         }
+
 
         on(Scenery.WARDROBE_2524, IntType.SCENERY, "open") { player, node ->
             animate(player, Animations.OPEN_WARDROBE_545)
@@ -196,29 +248,20 @@ class PlagueCityListener : InteractionListener {
         }
 
         onUseWith(IntType.SCENERY, Items.BUCKET_OF_WATER_1929, Scenery.MUD_PATCH_11418) { player, _, _ ->
-            if (getAttribute(player, BUCKET_USES_ATTRIBUTE, 0) in 0..2 &&
-                removeItem(
-                    player,
-                    Items.BUCKET_OF_WATER_1929,
-                )
-            ) {
+            val bucketUses = getAttribute(player, BUCKET_USES_ATTRIBUTE, 0)
+
+            if (bucketUses in 0..2 && removeItem(player, Items.BUCKET_OF_WATER_1929)) {
                 animate(player, Animations.POUR_BUCKET_OVER_GROUND_2283)
                 playAudio(player, Sounds.WATER_BEING_POURED_2982)
-                sendDialogueLines(player, "You pour water onto the soil.", "The soil softens slightly.")
-                player.incrementAttribute(BUCKET_USES_ATTRIBUTE, 1)
-                addItem(player, Items.BUCKET_1925)
-                return@onUseWith true
-            } else if (getAttribute(player, BUCKET_USES_ATTRIBUTE, 0) == 3 &&
-                removeItem(
-                    player,
-                    Items.BUCKET_OF_WATER_1929,
-                )
-            ) {
-                animate(player, Animations.POUR_BUCKET_OVER_GROUND_2283)
-                playAudio(player, Sounds.WATER_BEING_POURED_2982)
-                sendDialogueLines(player, "You pour water onto the soil.", "The soil is now soft enough to dig into.")
-                setVarbit(player, MUD_PATCH_VARBIT, 1, true)
-                addItem(player, Items.BUCKET_1925)
+                if (bucketUses < 3) {
+                    sendDialogueLines(player, "You pour water onto the soil.", "The soil softens slightly.")
+                    player.incrementAttribute(BUCKET_USES_ATTRIBUTE, 1)
+                    addItem(player, Items.BUCKET_1925)
+                } else if (bucketUses == 3) {
+                    sendDialogueLines(player, "You pour water onto the soil.", "The soil is now soft enough to dig into.")
+                    setVarbit(player, MUD_PATCH_VARBIT, 1, true)
+                    addItem(player, Items.BUCKET_1925)
+                }
             } else {
                 sendMessage(player, "Nothing interesting happens.")
             }
@@ -337,26 +380,16 @@ class PlagueCityListener : InteractionListener {
                         ) {
                             npc = NPC(NPCs.TED_REHNISON_721)
                             when (stage) {
-                                0 ->
-                                    if (inInventory(player, Items.BOOK_1509)) {
-                                        playerl(
-                                            FaceAnim.NEUTRAL,
-                                            "I'm a friend of Jethick's, I have come to return a book he borrowed.",
-                                        ).also { stage++ }
-                                    } else {
-                                        npcl(FaceAnim.FRIENDLY, "Go away. We don't want any.").also {
-                                            stage = END_DIALOGUE
-                                        }
-                                    }
+                                0 -> if (inInventory(player, Items.BOOK_1509)) {
+                                    playerl(FaceAnim.NEUTRAL, "I'm a friend of Jethick's, I have come to return a book he borrowed.").also { stage++ }
+                                } else {
+                                    npcl(FaceAnim.FRIENDLY, "Go away. We don't want any.").also { stage = END_DIALOGUE }
+                                }
 
                                 1 -> npcl(FaceAnim.FRIENDLY, "Oh... why didn't you say, come in then.").also { stage++ }
+
                                 2 -> {
-                                    sendDoubleItemDialogue(
-                                        player,
-                                        -1,
-                                        Items.BOOK_1509,
-                                        "You hand the book to Ted as you enter.",
-                                    )
+                                    sendItemDialogue(player, Items.BOOK_1509, "You hand the book to Ted as you enter.")
                                     DoorActionHandler.handleAutowalkDoor(player, getScenery(2531, 3328, 0)!!)
                                     removeItem(player, Items.BOOK_1509)
                                     stage++
@@ -420,42 +453,20 @@ class PlagueCityListener : InteractionListener {
                 openDialogue(
                     player,
                     object : DialogueFile() {
-                        override fun handle(
-                            componentID: Int,
-                            buttonID: Int,
-                        ) {
+                        override fun handle(componentID: Int, buttonID: Int, ) {
                             npc = NPC(NPCs.ELENA_3215)
                             when (stage) {
                                 0 -> npcl(FaceAnim.CRYING, "Hey get me out of here please!").also { stage++ }
                                 1 -> playerl(FaceAnim.FRIENDLY, "I would do but I don't have a key.").also { stage++ }
-                                2 ->
-                                    npcl(
-                                        FaceAnim.SAD,
-                                        "I think there may be one around somewhere. I'm sure I heard them stashing it somewhere.",
-                                    ).also { stage++ }
-
+                                2 -> npcl(FaceAnim.SAD, "I think there may be one around somewhere. I'm sure I heard them stashing it somewhere.").also { stage++ }
                                 3 -> options("Have you caught the plague?", "Okay, I'll look for it.").also { stage++ }
-                                4 ->
-                                    when (buttonID) {
-                                        1 -> playerl(FaceAnim.FRIENDLY, "Have you caught the plague?").also { stage++ }
-                                        2 ->
-                                            playerl(FaceAnim.FRIENDLY, "Okay, I'll look for it.").also {
-                                                stage = END_DIALOGUE
-                                            }
-                                    }
-
+                                4 -> when (buttonID) {
+                                    1 -> playerl(FaceAnim.FRIENDLY, "Have you caught the plague?").also { stage++ }
+                                    2 -> playerl(FaceAnim.FRIENDLY, "Okay, I'll look for it.").also { stage = END_DIALOGUE }
+                                }
                                 5 -> npcl(FaceAnim.HALF_WORRIED, "No, I have none of the symptoms.").also { stage++ }
-                                6 ->
-                                    playerl(
-                                        FaceAnim.THINKING,
-                                        "Strange, I was told this house was plague infected.",
-                                    ).also { stage++ }
-
-                                7 ->
-                                    playerl(
-                                        FaceAnim.THINKING,
-                                        "I suppose that was a cover up by the kidnappers.",
-                                    ).also { stage = 3 }
+                                6 -> playerl(FaceAnim.THINKING, "Strange, I was told this house was plague infected.").also { stage++ }
+                                7 -> playerl(FaceAnim.THINKING, "I suppose that was a cover up by the kidnappers.").also { stage = 3 }
                             }
                         }
                     },
@@ -466,82 +477,37 @@ class PlagueCityListener : InteractionListener {
     }
 
     private fun scruffyNote(player: Player) {
-        val scruffynotes =
-            arrayOf(
-                "Got a bncket of nnilk",
-                "Tlen grind sorne lhoculate",
-                "vnith a pestal and rnortar",
-                "ald the grourd dlocolate to tho milt",
-                "finales add 5cme snape gras5",
-            )
+        val scruffynotes = arrayOf(
+            "Got a bncket of nnilk",
+            "Tlen grind sorne lhoculate",
+            "vnith a pestal and rnortar",
+            "ald the grourd dlocolate to tho milt",
+            "finales add 5cme snape gras5",
+        )
         sendString(player, scruffynotes.joinToString("<br>"), Components.BLANK_SCROLL_222, 5)
     }
 
     override fun defineDestinationOverrides() {
-        setDest(IntType.SCENERY, intArrayOf(Scenery.GRILL_11423), "open") { _, _ ->
+        setDest(IntType.SCENERY, Scenery.GRILL_11423) { _, _ ->
             return@setDest Location.create(
                 2514,
                 9739,
                 0,
             )
         }
-        setDest(IntType.SCENERY, intArrayOf(Scenery.PIPE_2542), "climb-up") { _, _ ->
+        setDest(IntType.SCENERY, Scenery.PIPE_2542) { _, _ ->
             return@setDest Location.create(
                 2514,
                 9739,
                 0,
             )
         }
-        setDest(IntType.SCENERY, intArrayOf(Scenery.MANHOLE_2544), "climb-down") { _, _ ->
+        setDest(IntType.SCENERY, Scenery.MANHOLE_2544) { _, _ ->
             return@setDest Location.create(
                 2529,
                 3304,
                 0,
             )
-        }
-    }
-}
-
-class MournerEastDoorDialogueExtension : DialogueFile() {
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
-        npc = NPC(NPCs.MOURNER_3216)
-        when (stage) {
-            0 -> playerl(FaceAnim.FRIENDLY, "I have a warrant from Bravek to enter here.").also { stage++ }
-            1 -> npcl(FaceAnim.ANNOYED, "This is highly irregular. Please wait...").also { stage++ }
-            2 -> {
-                end()
-                stage = END_DIALOGUE
-                lock(player!!, 6)
-                lockInteractions(player!!, 6)
-                runTask(player!!, 2) {
-                    findLocalNPC(
-                        player!!,
-                        NPCs.MOURNER_717,
-                    )!!.sendChat("Hay... I got someone here with a warrant from Bravek, what should we do?")
-                    findLocalNPC(player!!, NPCs.MOURNER_717)!!.faceLocation(location(2536, 3273, 0))
-                    runTask(player!!, 1) {
-                        findLocalNPC(player!!, NPCs.MOURNER_3216)!!.sendChat("Well you can't let them in...", 1)
-                        findLocalNPC(player!!, NPCs.MOURNER_3216)!!.faceLocation(location(2537, 3273, 0))
-                        runTask(player!!, 1) {
-                            DoorActionHandler.handleAutowalkDoor(
-                                player!!,
-                                getObject(location(2540, 3273, 0))!!.asScenery(),
-                            )
-                            runTask(player!!, 1) {
-                                setQuestStage(player!!, Quests.PLAGUE_CITY, 17)
-                                sendDialogueLines(
-                                    player!!,
-                                    "You wait until the mourner's back is turned and sneak into the",
-                                    "building.",
-                                )
-                            }
-                        }
-                    }
-                }
-            }
         }
     }
 }

@@ -12,6 +12,12 @@ import org.rs.consts.Animations
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents repair boat cutscene.
+ *
+ * Relations:
+ * - [Sea Slug quest][content.region.kandarin.quest.seaslug.SeaSlug]
+ */
 class HolgartCutscene(
     player: Player,
 ) : Cutscene(player) {

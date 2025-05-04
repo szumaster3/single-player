@@ -24,7 +24,7 @@ class CropCircleController :
     }
 
     override fun defineListeners() {
-        on(center, IntType.SCENERY, "enter") { player, _ ->
+        on(center, IntType.SCENERY, "enter") { player, node ->
             if (hasImpBox(player)) {
                 sendDialogue(
                     player,
@@ -32,16 +32,24 @@ class CropCircleController :
                 )
                 return@on true
             }
-            playAudio(player, fairyTeleport)
-            teleport(player, puroLocation, TeleportType.PURO_PURO)
-            setAttribute(player, exitLocation, Location.create(player.location))
+            lock(player, 1)
+            runTask(player, 0) {
+                forceWalk(player, node.centerLocation, "")
+                playAudio(player, fairyTeleport)
+                teleport(player, puroLocation, TeleportType.PURO_PURO, 1)
+                setAttribute(player, exitLocation, Location.create(node.centerLocation))
+            }
             return@on true
         }
 
-        on(puroExit, IntType.SCENERY, "leave", "quick-leave") { player, _ ->
+        on(puroExit, IntType.SCENERY, "leave", "quick-leave") { player, node ->
             var exit = getAttribute(player, exitLocation, Location.create(3158, 3300, 0))
-            playAudio(player, fairyTeleport)
-            teleport(player, exit, TeleportType.PURO_PURO)
+            lock(player, 1)
+            runTask(player, 0) {
+                forceWalk(player, node.centerLocation, "")
+                playAudio(player, fairyTeleport)
+                teleport(player, exit, TeleportType.PURO_PURO, 1)
+            }
             return@on true
         }
     }
