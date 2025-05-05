@@ -20,7 +20,7 @@ class StrongholdListener : InteractionListener {
          * Handles stronghold rewards.
          */
 
-        on(STRONGHOLD_TREASURE, IntType.SCENERY, "open") { player, node ->
+        on(STRONGHOLD_TREASURE, IntType.SCENERY, "open", "search") { player, node ->
 
             val rewardIndex = when (node.id) {
                 Scenery.GIFT_OF_PEACE_16135 -> 0

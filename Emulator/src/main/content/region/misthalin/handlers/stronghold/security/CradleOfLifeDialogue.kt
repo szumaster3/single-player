@@ -95,7 +95,7 @@ class CradleOfLifeDialogue(
             5 ->
                 when (buttonId) {
                     1 -> {
-                        playerl(FaceAnim.HALF_GUILTY, "I'll take the colourful ones!")
+                        playerl(FaceAnim.HAPPY, "I'll take the colourful ones!")
                         player.inventory.add(ITEMS[0])
                         player.emoteManager.unlock(Emotes.STOMP)
                         stage = 6
@@ -103,7 +103,7 @@ class CradleOfLifeDialogue(
                     }
 
                     2 -> {
-                        playerl(FaceAnim.HALF_GUILTY, "I'll take the fighting ones!")
+                        playerl(FaceAnim.HAPPY, "I'll take the fighting ones!")
                         player.inventory.add(ITEMS[1])
                         player.emoteManager.unlock(Emotes.STOMP)
                         player.getSavedData().globalData.getStrongHoldRewards()[3] = true
@@ -165,11 +165,11 @@ class CradleOfLifeDialogue(
     }
 
     fun swap(container: Container): Boolean {
-        if (container.contains(9005, 1)) {
-            container.replace(Item(9006), container.getSlot(ITEMS[0]))
+        if (container.contains(Items.FANCY_BOOTS_9005, 1)) {
+            container.replace(Item(Items.FIGHTING_BOOTS_9006), container.getSlot(ITEMS[0]))
             return true
         }
-        if (container.contains(9006, 1)) {
+        if (container.contains(Items.FIGHTING_BOOTS_9006, 1)) {
             container.replace(ITEMS[0], container.getSlot(ITEMS[1]))
             return true
         }
@@ -179,6 +179,6 @@ class CradleOfLifeDialogue(
     override fun getIds(): IntArray = intArrayOf(96873)
 
     companion object {
-        private val ITEMS = arrayOf(Item(9005, 1), Item(9006, 1))
+        private val ITEMS = arrayOf(Item(Items.FANCY_BOOTS_9005, 1), Item(Items.FIGHTING_BOOTS_9006, 1))
     }
 }
