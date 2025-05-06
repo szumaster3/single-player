@@ -12,7 +12,7 @@ import org.rs.consts.Graphics
 import org.rs.consts.Quests
 import org.rs.consts.Scenery
 
-class RCGuildPortal : InteractionListener {
+class RCGuildPortalListener : InteractionListener {
     override fun defineListeners() {
         /*
          * Handles the interaction with the RC Portal scenery.
