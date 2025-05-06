@@ -25,12 +25,7 @@ class BeerOnDrunkenAliListener : InteractionListener {
                     var random = RandomFunction.random(0, 7)
                     when (random) {
                         0 -> sendChat(with.asNpc(), "I've got a lovely bunch of coconuts, doobidy doo.")
-                        1 ->
-                            sendNPCDialogue(
-                                player,
-                                NPCs.DRUNKEN_ALI_1863,
-                                "Thank you my friend - now if you don't mind I'm having a conversation with my imaginary friend Bob here.",
-                            )
+                        1 -> sendNPCDialogue(player, NPCs.DRUNKEN_ALI_1863, "Thank you my friend - now if you don't mind I'm having a conversation with my imaginary friend Bob here.")
 
                         2 -> {
                             sendChat(with.asNpc(), "Did you hear the one about the man who walked into a bar?").also {
@@ -50,10 +45,7 @@ class BeerOnDrunkenAliListener : InteractionListener {
                         5 -> sendChat(with.asNpc(), "Cheers for the beers!")
                         6 -> sendChat(with.asNpc(), "What you looking at.")
                         7 -> {
-                            sendChat(
-                                with.asNpc(),
-                                "Did you hear the one where the camel walks into the bar and orders a pint?.",
-                            ).also {
+                            sendChat(with.asNpc(), "Did you hear the one where the camel walks into the bar and orders a pint?.").also {
                                 runTask(player, 2) { sendChat(with.asNpc(), "The barman asks 'Why the long face!'") }
                             }
                         }

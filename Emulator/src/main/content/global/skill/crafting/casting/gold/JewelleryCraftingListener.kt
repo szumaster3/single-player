@@ -40,55 +40,68 @@ class JewelleryCraftingListener : InteractionListener {
         )
 
     override fun defineListeners() {
+
+        /*
+         * Handles crafting interface.
+         */
+
         onUseWith(IntType.SCENERY, barId, *furnaceId) { player, used, _ ->
-            if (used == Item(Items.PERFECT_GOLD_BAR_2365)) {
+            if (used.id == Items.PERFECT_GOLD_BAR_2365) {
                 if (isQuestComplete(player, Quests.FAMILY_CREST)) {
                     sendMessage(player, "You can no longer smelt this.")
                     return@onUseWith false
                 }
-                if (inInventory(player, Items.RUBY_1603) && inInventory(player, Items.RING_MOULD_1592)) {
-                    sendItemOnInterface(player, Components.CRAFTING_GOLD_446, 25, Items.PERFECT_RING_773, 1)
-                }
-                if (inInventory(player, Items.RUBY_1603) && inInventory(player, Items.NECKLACE_MOULD_1597)) {
-                    sendItemOnInterface(player, Components.CRAFTING_GOLD_446, 47, Items.PERFECT_NECKLACE_774, 1)
-                }
-            } else {
+
                 Jewellery.open(player)
+
+                val hasRuby = inInventory(player, Items.RUBY_1603)
+
+                if (hasRuby) {
+                    if (inInventory(player, Items.RING_MOULD_1592)) {
+                        sendItemOnInterface(player, Components.CRAFTING_GOLD_446, 25, Items.PERFECT_RING_773, 1)
+                    }
+
+                    if (inInventory(player, Items.NECKLACE_MOULD_1597)) {
+                        sendItemOnInterface(player, Components.CRAFTING_GOLD_446, 47, Items.PERFECT_NECKLACE_774, 1)
+                    }
+                }
+                return@onUseWith true
             }
+
+            Jewellery.open(player)
             return@onUseWith true
         }
 
+        /*
+         * Handles crafting onyx amulet.
+         */
+
         onUseWith(IntType.ITEM, amuletId, Items.BALL_OF_WOOL_1759) { player, used, with ->
-            val data =
-                Jewellery.JewelleryItem.forProduct(
-                    if (used.id ==
-                        Items.ONYX_AMULET_6579
-                    ) {
-                        Items.ONYX_AMULET_6579
-                    } else {
-                        used.asItem().id
-                    },
-                )
-                    ?: return@onUseWith false
+            val amuletItem = used.asItem()
+            val productId = if (amuletItem.id == Items.ONYX_AMULET_6579) Items.ONYX_AMULET_6579 else amuletItem.id
+            val data = Jewellery.JewelleryItem.forProduct(productId) ?: return@onUseWith false
             if (getStatLevel(player, Skills.CRAFTING) < data.level) {
-                sendMessage(player, "You need a crafting level of at least " + data.level + " to do that.")
+                sendMessage(player, "You need a crafting level of at least ${data.level} to do that.")
                 return@onUseWith false
             }
-            if (removeItem(player, used.asItem()) && removeItem(player, with.asItem())) {
-                addItem(
-                    player,
-                    if (data ==
-                        Jewellery.JewelleryItem.ONYX_AMULET
-                    ) {
-                        Items.ONYX_AMULET_6581
-                    } else {
-                        data.sendItem + 19
-                    },
-                )
+
+            if (removeItem(player, amuletItem) && removeItem(player, with.asItem())) {
+                val resultId = if (data == Jewellery.JewelleryItem.ONYX_AMULET) {
+                    Items.ONYX_AMULET_6581
+                } else {
+                    data.sendItem + 19
+                }
+
+                addItem(player, resultId)
                 sendMessage(player, "You put some string on your amulet.")
             }
+
             return@onUseWith true
         }
+
+        /*
+         * Handles crafting salve amulet.
+         */
 
         onUseWith(IntType.ITEM, Items.SALVE_SHARD_4082, Items.BALL_OF_WOOL_1759) { player, used, with ->
             if (removeItem(player, Item(used.id, 1), Container.INVENTORY)) {
@@ -97,6 +110,10 @@ class JewelleryCraftingListener : InteractionListener {
             }
             return@onUseWith true
         }
+
+        /*
+         * Handles enchanting salve amulet.
+         */
 
         onUseWith(IntType.ITEM, Items.SALVE_AMULET_4081, Items.TARNS_DIARY_10587) { player, used, with ->
             if (removeItem(player, Item(used.id, 1), Container.INVENTORY)) {
