@@ -14,7 +14,7 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Scenery
 
-class WerewolfCourseListeners : InteractionListener {
+class WerewolfCourseListener : InteractionListener {
     override fun defineDestinationOverrides() {
         setDest(IntType.SCENERY, ZIP_LINE, "teeth-grip") { _, _ ->
             return@setDest Location(3528, 9910, 0)
