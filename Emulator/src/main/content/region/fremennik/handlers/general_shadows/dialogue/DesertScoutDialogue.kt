@@ -2,6 +2,8 @@ package content.region.fremennik.handlers.general_shadows.dialogue
 
 import content.region.fremennik.handlers.general_shadows.GeneralShadow
 import core.api.getAttribute
+import core.api.hasRequirement
+import core.api.quest.hasRequirement
 import core.api.quest.isQuestComplete
 import core.api.sendDialogue
 import core.game.dialogue.Dialogue
@@ -99,7 +101,7 @@ class DesertScoutDialogue(
                         "I have heard whisperings in the bandit camp that the",
                         "prisoner of Jaldraocht is now free.",
                     ).also { stage++ }
-                } else if (isQuestComplete(player, Quests.ENAKHRAS_LAMENT) &&
+                } else if (hasRequirement(player, Quests.ENAKHRAS_LAMENT) &&
                     !isQuestComplete(player, Quests.DESERT_TREASURE)
                 ) {
                     npc(

@@ -1,6 +1,8 @@
 package content.region.misthalin.dialogue.varrock
 
+import core.api.hasRequirement
 import core.api.inEquipment
+import core.api.quest.hasRequirement
 import core.api.quest.isQuestComplete
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
@@ -18,7 +20,7 @@ class CatsDialogue(
 ) : Dialogue(player) {
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
-        if (isQuestComplete(player, Quests.ICTHLARINS_LITTLE_HELPER) &&
+        if (hasRequirement(player, Quests.ICTHLARINS_LITTLE_HELPER) &&
             inEquipment(
                 player,
                 Items.CATSPEAK_AMULET_4677,

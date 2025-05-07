@@ -1,5 +1,7 @@
 package content.region.misc.dialogue.zanaris
 
+import core.api.hasRequirement
+import core.api.quest.hasRequirement
 import core.api.quest.isQuestComplete
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
@@ -16,7 +18,7 @@ class FairyQueenDialogue(
 ) : Dialogue(player) {
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
-        if (!isQuestComplete(player, Quests.FAIRYTALE_II_CURE_A_QUEEN)) {
+        if (!hasRequirement(player, Quests.FAIRYTALE_II_CURE_A_QUEEN)) {
             options("How do crops and such survive down here?", "What's so good about this place?")
         } else {
             playerl(FaceAnim.ASKING, "Have you managed to work out a plan yet?").also { stage = 3 }

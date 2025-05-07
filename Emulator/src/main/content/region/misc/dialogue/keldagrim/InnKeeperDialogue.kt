@@ -23,20 +23,11 @@ class InnKeeperDialogue(
         buttonId: Int,
     ): Boolean {
         when (stage) {
-            0 ->
-                npc(
-                    FaceAnim.CHILD_NEUTRAL,
-                    "Welcome to the King's Axe inn!",
-                    "What can I help you with?",
-                ).also { stage++ }
+            0 -> npc(FaceAnim.CHILD_NEUTRAL, "Welcome to the King's Axe inn!", "What can I help you with?").also { stage++ }
             1 -> player(FaceAnim.ASKING, "Can I have some beer please?").also { stage++ }
             2 -> npc(FaceAnim.CHILD_NORMAL, "Go to the bar downstairs.", "I only deal with residents.").also { stage++ }
             3 -> player(FaceAnim.THINKING, "Residents? People live here?").also { stage++ }
-            4 ->
-                npc(
-                    FaceAnim.CHILD_LOUDLY_LAUGHING,
-                    "No, just guests that stay the night.",
-                ).also { stage = END_DIALOGUE }
+            4 -> npc(FaceAnim.CHILD_LOUDLY_LAUGHING, "No, just guests that stay the night.").also { stage = END_DIALOGUE }
         }
         return true
     }

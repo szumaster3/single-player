@@ -5,10 +5,8 @@ import content.region.fremennik.quest.viking.FremennikTrials
 import content.region.kandarin.miniquest.barcrawl.BarcrawlManager
 import content.region.misthalin.quest.tog.TearsOfGuthix
 import core.api.*
-import core.api.quest.finishQuest
-import core.api.quest.getQuestStage
-import core.api.quest.isQuestComplete
-import core.api.quest.setQuestStage
+import core.api.hasRequirement
+import core.api.quest.*
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.dialogue.splitLines
@@ -341,7 +339,7 @@ class JunaDialogue(
                     questDialogue.add(0, "...And that was how I retrieved the Chalice of Eternity from the waterfall.")
                     questDialogue.add(1, "...")
                 }
-                if (isQuestComplete(player, Quests.WHAT_LIES_BELOW)) {
+                if (hasRequirement(player, Quests.WHAT_LIES_BELOW)) {
                     questDialogue.add(
                         0,
                         "...but after I defeated King Roald, Rat was able to remove Surok's mind control spell from him.",

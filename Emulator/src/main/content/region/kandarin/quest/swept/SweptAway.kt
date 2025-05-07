@@ -15,7 +15,7 @@ import org.rs.consts.Vars
  * Represents the Swept Away quest.
  */
 @Initializable
-class SweptAway : Quest(Quests.SWEPT_AWAY, 160, 159, 2, Vars.VARBIT_QUEST_SWEPT_AWAY_PROGRESS_5448, 0, 1, 50) {
+class SweptAway : Quest(Quests.SWEPT_AWAY, 160, 159, 1, Vars.VARBIT_QUEST_SWEPT_AWAY_PROGRESS_5448, 0, 1, 50) {
     override fun drawJournal(
         player: Player,
         stage: Int,
@@ -62,11 +62,11 @@ class SweptAway : Quest(Quests.SWEPT_AWAY, 160, 159, 2, Vars.VARBIT_QUEST_SWEPT_
             line(player, "<col=FF0000>QUEST COMPLETE!</col>", line++, false)
             line++
             line(player, "I can get further rewards if I take my broom to:", line++, false)
-            line(player, "The !!Sorceress's apprentice?? in !!Al Kharid??", line++, false)
-            line(player, "!!Ali the Hag?? in !!Pollnivneach??", line++, false)
-            line(player, "The !!Old Crone?? near the !!Slayer Tower?? (with level 53 Magic)", line++, false)
-            line(player, "!!Baba Yaga?? of !!Lunar Isle?? (with level 73 Magic)", line++, false)
-            line(player, "!!Kardia?? in the !!Underground Pass?? (with level 93 Magic)", line++, false)
+            line(player, "The !!Sorceress's apprentice?? in !!Al Kharid??", line++, getAttribute(player, GameAttributes.BROOM_ENCHANTMENT_TP, false))
+            line(player, "!!Ali the Hag?? in !!Pollnivneach??", line++, getAttribute(player, GameAttributes.QUEST_SWEPT_AWAY_ALI_THE_HAG_ENCH_RECEIVED, false))
+            line(player, "The !!Old Crone?? near the !!Slayer Tower?? (with level 53 Magic)", line++, getAttribute(player, GameAttributes.QUEST_SWEPT_AWAY_OLD_CRONE_ENCH_RECEIVED, false))
+            line(player, "!!Baba Yaga?? of !!Lunar Isle?? (with level 73 Magic)", line++, getAttribute(player, GameAttributes.QUEST_SWEPT_AWAY_BETTY_ENCH_RECEIVED, false))
+            line(player, "!!Kardia?? in the !!Underground Pass?? (with level 93 Magic)", line++, false) // TODO
             line++
             line(player, "I should talk to these !!witches?? for more information.", line, false)
         }

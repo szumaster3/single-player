@@ -108,23 +108,17 @@ class OldCroneDialogue(
 
             2 -> when (buttonId) {
                 1 -> npc(FaceAnim.HALF_GUILTY, "I lived here when this was all just fields, you know.").also { stage = END_DIALOGUE }
-
                 2 -> player("Could you enchant this broom for me?").also { stage++ }
             }
 
-            3 -> npc(
-                "Oh, this must be Maggie's broom. I suppose I could",
-                "enchant it, just this once, for old timers' sake. Just one",
-                "moment...",
-            ).also {
-                stage++
-            }
+            3 -> npc("Oh, this must be Maggie's broom. I suppose I could", "enchant it, just this once, for old timers' sake. Just one", "moment...").also { stage++ }
 
             4 -> {
                 end()
                 lock(player, 1)
                 visualize(player, -1, SweptUtils.BROOM_ENCHANTMENT_GFX)
                 removeAttribute(player, GameAttributes.QUEST_SWEPT_AWAY_LABELS_COMPLETE)
+                setAttribute(player, GameAttributes.QUEST_SWEPT_AWAY_OLD_CRONE_ENCH_RECEIVED, true)
                 sendDoubleItemDialogue(player, -1, Items.BROOMSTICK_14057, "You receive 7,139 Magic experience.")
                 rewardXP(player, Skills.MAGIC, 7139.0)
             }

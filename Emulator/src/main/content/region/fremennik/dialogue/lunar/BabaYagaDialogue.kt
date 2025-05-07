@@ -94,6 +94,7 @@ class BabaYagaDialogue(
                 lock(player, 1)
                 visualize(player, -1, SweptUtils.BROOM_ENCHANTMENT_GFX)
                 removeAttribute(player, GameAttributes.QUEST_SWEPT_AWAY_BETTY_ENCH)
+                setAttribute(player, GameAttributes.QUEST_SWEPT_AWAY_BETTY_ENCH_RECEIVED, true)
                 sendDoubleItemDialogue(player, -1, Items.BROOMSTICK_14057, "You receive 10,338 Magic experience.")
                 rewardXP(player, Skills.MAGIC, 10338.0)
             }

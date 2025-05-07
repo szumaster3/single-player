@@ -1,10 +1,8 @@
 package content.region.misthalin.dialogue.varrock
 
-import core.api.addItemOrDrop
-import core.api.inInventory
+import core.api.*
+import core.api.quest.hasRequirement
 import core.api.quest.isQuestComplete
-import core.api.sendDialogue
-import core.api.sendItemDialogue
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
@@ -496,7 +494,7 @@ class HooknosedJackDialogue(
             91 -> playerl(FaceAnim.FRIENDLY, "Thanks for your help.").also { stage++ }
             92 -> npcl(FaceAnim.FRIENDLY, "Do you have any other questions about the pits?").also { stage = 60 }
             93 ->
-                if (!isQuestComplete(player, Quests.RATCATCHERS)) {
+                if (!hasRequirement(player, Quests.RATCATCHERS)) {
                     npcl(FaceAnim.FRIENDLY, "Step away from that manhole, you've no business down there.").also {
                         stage =
                             END_DIALOGUE

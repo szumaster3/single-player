@@ -27,36 +27,31 @@ class CartConductorDialogue(
         buttonId: Int,
     ): Boolean {
         when (stage) {
-            0 ->
-                npc(FaceAnim.OLD_NORMAL, "Sorry, but I can only take people", "who have been there before.").also {
-                    stage =
-                        1000
-                }
+            0 -> npc(FaceAnim.OLD_NORMAL, "Sorry, but I can only take people", "who have been there before.").also {
+                stage = 1000
+            }
 
             100 -> npc(FaceAnim.OLD_NORMAL, "Alright, that'll cost ye 150gp.").also { stage++ }
             101 -> options("Okay, sure.", "No, thanks.").also { stage++ }
-            102 ->
-                when (buttonId) {
-                    1 -> end().also { purchaseTrip(player, 150) }
-                    2 -> end()
-                }
+            102 -> when (buttonId) {
+                1 -> end().also { purchaseTrip(player, 150) }
+                2 -> end()
+            }
 
             200 -> npc(FaceAnim.OLD_NORMAL, "Alright, that'll cost ye 100gp.").also { stage++ }
             201 -> options("Okay, sure.", "No, thanks.").also { stage++ }
-            202 ->
-                when (buttonId) {
-                    1 -> end().also { purchaseTrip(player, 100) }
-                    2 -> end()
-                }
+            202 -> when (buttonId) {
+                1 -> end().also { purchaseTrip(player, 100) }
+                2 -> end()
+            }
 
             300 -> npc(FaceAnim.OLD_NORMAL, "Alright, where would ye like to go?").also { stage++ }
             301 -> options("Grand Exchange", "White Wolf Mountain", "Ice Mountain").also { stage++ }
-            302 ->
-                when (buttonId) {
-                    1 -> MinecartTravel.leaveKeldagrimTo(player, Location.create(3140, 3507, 0)).also { end() }
-                    2 -> MinecartTravel.leaveKeldagrimTo(player, Location.create(2875, 9871, 0)).also { end() }
-                    3 -> MinecartTravel.leaveKeldagrimTo(player, Location.create(2997, 9837, 0)).also { end() }
-                }
+            302 -> when (buttonId) {
+                1 -> MinecartTravel.leaveKeldagrimTo(player, Location.create(3140, 3507, 0)).also { end() }
+                2 -> MinecartTravel.leaveKeldagrimTo(player, Location.create(2875, 9871, 0)).also { end() }
+                3 -> MinecartTravel.leaveKeldagrimTo(player, Location.create(2997, 9837, 0)).also { end() }
+            }
 
             1000 -> end()
         }

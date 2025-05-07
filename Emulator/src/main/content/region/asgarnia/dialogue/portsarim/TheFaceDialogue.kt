@@ -1,5 +1,7 @@
 package content.region.asgarnia.dialogue.portsarim
 
+import core.api.hasRequirement
+import core.api.quest.hasRequirement
 import core.api.quest.isQuestComplete
 import core.api.sendDialogue
 import core.game.dialogue.Dialogue
@@ -32,7 +34,7 @@ class TheFaceDialogue(
     ): Boolean {
         when (stage) {
             0 ->
-                if (!isQuestComplete(player, Quests.RATCATCHERS)) {
+                if (!hasRequirement(player, Quests.RATCATCHERS)) {
                     sendDialogue(player!!, "She looks through you as if you don't exist.").also { stage = END_DIALOGUE }
                 } else {
                     npcl(FaceAnim.FRIENDLY, "Oh it's you again.").also { stage++ }

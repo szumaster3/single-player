@@ -81,7 +81,6 @@ class HirkoDialogue(
                     stage = 101
                     return true
                 }
-
                 if(!removeItem(player, Item(Items.COINS_995, 1500))) {
                     player("Oh, I don't have that much on me.")
                     stage++

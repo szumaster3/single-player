@@ -1,5 +1,7 @@
 package content.region.misthalin.dialogue.edgeville
 
+import core.api.hasRequirement
+import core.api.quest.hasRequirement
 import core.api.quest.isQuestComplete
 import core.api.sendMessage
 import core.game.dialogue.Dialogue
@@ -17,7 +19,7 @@ class DorisDialogue(
 ) : Dialogue(player) {
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
-        if (!isQuestComplete(player, Quests.RECIPE_FOR_DISASTER)) {
+        if (!hasRequirement(player, Quests.RECIPE_FOR_DISASTER)) {
             npc("What are you doing in my house?")
         } else {
             npc("Hello again dearie. How are you doing?").also { stage = 5 }

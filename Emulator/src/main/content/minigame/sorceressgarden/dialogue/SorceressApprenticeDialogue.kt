@@ -207,9 +207,7 @@ class SorceressApprenticeDialogue(
                     2 -> player("Could you enchant this broom for me?").also { stage++ }
                 }
             101 ->
-                if (!isQuestComplete(player, Quests.PRINCE_ALI_RESCUE) &&
-                    !getAttribute(player, GameAttributes.TALK_ABOUT_SQ_IRKJUICE, false)
-                ) {
+                if (!isQuestComplete(player, Quests.PRINCE_ALI_RESCUE) && !getAttribute(player, GameAttributes.TALK_ABOUT_SQ_IRKJUICE, false)) {
                     npc("Not right now; I have too much housework to do at the", "moment.").also { stage++ }
                 } else {
                     npc(

@@ -1,5 +1,7 @@
 package content.region.karamja.dialogue.shilovillage
 
+import core.api.hasRequirement
+import core.api.quest.hasRequirement
 import core.api.quest.isQuestComplete
 import core.api.sendMessage
 import core.api.sendMessageWithDelay
@@ -18,7 +20,7 @@ class MosolReiDialogue(
 ) : Dialogue(player) {
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
-        if (isQuestComplete(player, Quests.SHILO_VILLAGE)) {
+        if (hasRequirement(player, Quests.SHILO_VILLAGE)) {
             player("Greetings")
         } else {
             npc(

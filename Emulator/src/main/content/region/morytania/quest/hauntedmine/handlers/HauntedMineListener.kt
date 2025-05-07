@@ -10,6 +10,7 @@ import org.rs.consts.*
 class HauntedMineListener : InteractionListener {
     override fun defineListeners() {
         on(NPCs.ZEALOT_1528, IntType.NPC, "pickpocket") { player, _ ->
+            /*
             if (isQuestInProgress(player, Quests.HAUNTED_MINE, 1, 2)) {
                 lock(player, 1)
                 animate(player, Animations.HUMAN_PICKPOCKETING_881)
@@ -34,6 +35,7 @@ class HauntedMineListener : InteractionListener {
                     addItem(player, Items.ZEALOTS_KEY_4078)
                 }
             }
+            */
             return@on true
         }
 
