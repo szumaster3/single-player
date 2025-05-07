@@ -17,7 +17,7 @@ import org.rs.consts.Items;
 import org.rs.consts.NPCs;
 import org.rs.consts.Sounds;
 
-import static core.api.ContentAPIKt.playAudio;
+import static core.api.ContentAPIKt.*;
 
 /**
  * Represents the plugin used to milk a cow.
@@ -65,7 +65,11 @@ public final class CowMilkingPlugin extends OptionHandler {
      */
     public boolean milk(final Player player, final Scenery object) {
         if (!player.getInventory().contains(Items.BUCKET_1925, 1) && !player.getInventory().contains(Items.BUCKET_OF_MILK_1927, 1)) {
-            player.getDialogueInterpreter().open(NPCs.GILLIE_GROATS_3807, true, true);
+            if(inBorders(player, 3250, 3271, 3256, 3277)) {
+                player.getDialogueInterpreter().open(NPCs.GILLIE_GROATS_3807, true, true);
+            } else {
+                sendDialogue(player, "You'll need an empty bucket for the milk itself.");
+            }
             return true;
         }
 

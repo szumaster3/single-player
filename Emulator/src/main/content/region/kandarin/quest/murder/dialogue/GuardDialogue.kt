@@ -81,6 +81,7 @@ class GuardDialogue(
                     9 -> {
                         end()
                         setQuestStage(player!!, Quests.MURDER_MYSTERY, 1)
+                        setVarbit(player, 3889, 1, true)
                     }
                 }
 

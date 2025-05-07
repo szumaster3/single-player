@@ -100040,7 +100040,7 @@
     "id": "11679"
   },
   {
-    "destroy_message": "You can reclaim this item from the place you found it.",
+    "destroy_message": "You'll need to visit the Sinclair Mansion to get another one.",
     "examine": "A change of address form.",
     "durability": null,
     "name": "Address form",
@@ -100050,7 +100050,7 @@
     "id": "11680"
   },
   {
-    "destroy_message": "You can reclaim this item from the place you found it.",
+    "destroy_message": "You'll need to visit the Sinclair Mansion to get another one.",
     "examine": "It has something written on it.",
     "durability": null,
     "name": "Scrap paper",

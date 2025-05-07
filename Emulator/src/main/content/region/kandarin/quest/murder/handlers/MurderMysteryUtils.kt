@@ -70,13 +70,13 @@ object MurderMysteryUtils {
 
     fun initialSuspects(player: Player) {
         if (player.inventory.containItems(Items.CRIMINALS_THREAD_1808)) {
-            setAttribute(player, ATTRIBUTE_ELIZABETH, false)
+            setAttribute(player, ATTRIBUTE_ELIZABETH, true)
         } else if (player.inventory.containItems(Items.CRIMINALS_THREAD_1809)) {
-            setAttribute(player, ATTRIBUTE_ANNA, false)
+            setAttribute(player, ATTRIBUTE_ANNA, true)
         } else if (player.inventory.containItems(Items.CRIMINALS_THREAD_1810)) {
-            setAttribute(player, ATTRIBUTE_DAVID, false)
+            setAttribute(player, ATTRIBUTE_DAVID, true)
         }
-        setQuestStage(player, Quests.MURDER_MYSTERY, 1)
+        setQuestStage(player, Quests.MURDER_MYSTERY, 2)
     }
 
     fun getGuiltyPerson(player: Player): String? =
