@@ -78,7 +78,6 @@ class SweptAway : Quest(Quests.SWEPT_AWAY, 160, 159, 1, Vars.VARBIT_QUEST_SWEPT_
         player.packetDispatch.sendItemZoomOnInterface(Items.BROOMSTICK_14057, 230, 277, 5)
         drawReward(player, "1 Quest Point", ln++)
         drawReward(player, "A broom", ln++)
-        drawReward(player, "1 Quest Point", ln++)
         drawReward(player, "Access to 10 portions of", ln++)
         drawReward(player, "experience-giving goulash", ln)
         addItemOrDrop(player, Items.GOULASH_14058, 1)
