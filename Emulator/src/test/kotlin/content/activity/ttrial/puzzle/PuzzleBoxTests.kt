@@ -1,3 +1,7 @@
+package content.activity.ttrial.puzzle
+
+import MockPlayer
+import TestUtils
 import content.global.activity.ttrail.puzzle.PuzzleBoxListener
 import core.api.getAttribute
 import core.api.setAttribute
