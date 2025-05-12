@@ -1,9 +1,6 @@
 package content.global.activity.ttrail.puzzle
 
-import core.api.IfaceSettingsBuilder
-import core.api.getAttribute
-import core.api.sendMessage
-import core.api.setAttribute
+import core.api.*
 import core.game.component.Component
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
@@ -29,38 +26,12 @@ class PuzzleBoxListener : InteractionListener, InterfaceListener {
     private val puzzleSessionState = mutableMapOf<Player, MutableMap<String, List<Int>>>()
 
     override fun defineListeners() {
-
-        /*
-         * Handles tree clue puzzle.
-         */
-
-        on(Items.PUZZLE_BOX_3571, IntType.ITEM, "Open") { player, _ ->
-            handlePuzzleOpen(player, "tree", (3643..3666).toList() + -1)
-            return@on true
+        PuzzleBox.values().forEach { box ->
+            on(box.item.id, IntType.ITEM, "Open") { player, _ ->
+                handlePuzzleOpen(player, box.key, box.solutionTiles + -1)
+                return@on true
+            }
         }
-
-        /*
-         * Handles troll clue puzzle.
-         */
-
-        on(Items.PUZZLE_BOX_2795, IntType.ITEM, "Open") { player, _ ->
-            handlePuzzleOpen(player, "troll", (2749..2772).toList() + -1)
-            return@on true
-        }
-
-
-        /*
-         * Handles castle clue puzzle.
-         */
-
-        on(Items.PUZZLE_BOX_3565, IntType.ITEM, "Open") { player, _ ->
-            handlePuzzleOpen(player, "castle", (3619..3642).toList() + -1)
-            return@on true
-        }
-
-        /*
-         * Handles monkey madness puzzle.
-         */
 
         on(Items.SPARE_CONTROLS_4002, IntType.ITEM, "View") { player, _ ->
             val puzzlePieces: Array<Item?>? = ((3904..3950 step 2).toList().map { Item(it) } + Item(-1)).toTypedArray()
@@ -72,10 +43,6 @@ class PuzzleBoxListener : InteractionListener, InterfaceListener {
             )
             return@on true
         }
-
-        /*
-         * Handles monkey madness puzzle hint.
-         */
 
         on(Scenery.REINITIALISATION_PANEL_4871, IntType.SCENERY, "Operate") { player, _ ->
             if (!getAttribute(player, "mm:puzzle:done", false)) {
@@ -100,18 +67,12 @@ class PuzzleBoxListener : InteractionListener, InterfaceListener {
 
     override fun defineInterfaceListeners() {
         on(Components.TRAIL_PUZZLE_363) { player, _, _, buttonID, slot, _ ->
-            val key = listOf("mm", "tree", "troll", "castle").find {
+            val key = (PuzzleBox.values().map { it.key } + "mm").find {
                 loadPuzzleState(player, it) != null
             } ?: return@on true
 
             val puzzle = loadPuzzleState(player, key)?.toMutableList() ?: return@on true
-            val solution = when (key) {
-                "mm" -> (3904..3950 step 2).toList()
-                "tree" -> (3643..3666).toList()
-                "troll" -> (2749..2772).toList()
-                "castle" -> (3619..3642).toList()
-                else -> emptyList()
-            } + -1
+            val solution = PuzzleBox.fromKey(key)?.fullSolution ?: if (key == "mm") (3904..3950 step 2).toList() + -1 else return@on true
 
             if (buttonID == 6 && slot in 0..24) {
                 val offsets = listOf(-1, 1, -5, 5)
@@ -129,9 +90,14 @@ class PuzzleBoxListener : InteractionListener, InterfaceListener {
                     if (puzzle == solution) {
                         setAttribute(player, "$key:puzzle:done", true)
                         savePuzzleStateInAttributes(player, key, puzzle)
+                        player.debug("[$key] Puzzle completed.")
+
+                        PuzzleBox.fromKey(key)?.let { box ->
+                            val item = box.item
+                            adjustCharge(item, 100)
+                        }
                     }
                 }
-
             } else if (buttonID == 0) {
                 val solutionItems = solution.map { Item(it) }.toTypedArray()
 
@@ -151,20 +117,23 @@ class PuzzleBoxListener : InteractionListener, InterfaceListener {
      * Opens and initializes the puzzle if not already completed or in progress.
      */
     private fun handlePuzzleOpen(player: Player, key: String, items: List<Int>) {
-        if (!getAttribute(player, "$key:puzzle:done", false)) {
-            val settings = IfaceSettingsBuilder().enableAllOptions().build()
-            player.packetDispatch.sendIfaceSettings(settings, 6, Components.TRAIL_PUZZLE_363, 0, 25)
-            player.interfaceManager.open(Component(Components.TRAIL_PUZZLE_363))
+        val box = PuzzleBox.fromKey(key) ?: return
+        val charge = getCharge(box.item) ?: 1000
 
-            if (loadPuzzleState(player, key) == null) {
+        val puzzleData = if (charge >= 1100) {
+            box.fullSolution
+        } else {
+            loadPuzzleState(player, key) ?: run {
                 val shuffled = generateSolvablePuzzle(items)
                 savePuzzleStateInSession(player, key, shuffled)
+                shuffled
             }
-
-            sendPuzzle(player, key)
-        } else {
-            sendPuzzle(player, key)
         }
+
+        val settings = IfaceSettingsBuilder().enableAllOptions().build()
+        player.packetDispatch.sendIfaceSettings(settings, 6, Components.TRAIL_PUZZLE_363, 0, 25)
+        player.interfaceManager.open(Component(Components.TRAIL_PUZZLE_363))
+        sendPuzzle(player, key, puzzleData)
     }
 
     /**
@@ -239,5 +208,18 @@ class PuzzleBoxListener : InteractionListener, InterfaceListener {
                 return shuffled
             }
         }
+    }
+
+    /**
+     * Checks if the player has completed the puzzle.
+     *
+     * @param player The player to check.
+     * @param key The key identifying the puzzle type.
+     * @return `true` if the puzzle is completed and player has a puzzle box item, `false` otherwise.
+     */
+    fun hasCompletePuzzleBox(player: Player, key: String): Boolean {
+        val box = PuzzleBox.fromKey(key) ?: return false
+        return getAttribute(player, "$key:puzzle:done", false) &&
+                player.inventory.contains(box.item.id, 1)
     }
 }
