@@ -26,12 +26,21 @@ class PuzzleBoxListener : InteractionListener, InterfaceListener {
     private val puzzleSessionState = mutableMapOf<Player, MutableMap<String, List<Int>>>()
 
     override fun defineListeners() {
+
+        /*
+         * Handles interaction with puzzle boxes.
+         */
+
         PuzzleBox.values().forEach { box ->
             on(box.item.id, IntType.ITEM, "Open") { player, _ ->
                 handlePuzzleOpen(player, box.key, box.solutionTiles + -1)
                 return@on true
             }
         }
+
+        /*
+         * Handles quest puzzle (Monkey madness).
+         */
 
         on(Items.SPARE_CONTROLS_4002, IntType.ITEM, "View") { player, _ ->
             val puzzlePieces: Array<Item?>? = ((3904..3950 step 2).toList().map { Item(it) } + Item(-1)).toTypedArray()
@@ -43,6 +52,10 @@ class PuzzleBoxListener : InteractionListener, InterfaceListener {
             )
             return@on true
         }
+
+        /*
+         * Handles interaction with panel (shows solution) puzzle (Monkey madness).
+         */
 
         on(Scenery.REINITIALISATION_PANEL_4871, IntType.SCENERY, "Operate") { player, _ ->
             if (!getAttribute(player, "mm:puzzle:done", false)) {
@@ -72,13 +85,12 @@ class PuzzleBoxListener : InteractionListener, InterfaceListener {
             } ?: return@on true
 
             val puzzle = loadPuzzleState(player, key)?.toMutableList() ?: return@on true
-            val solution = PuzzleBox.fromKey(key)?.fullSolution ?: if (key == "mm") (3904..3950 step 2).toList() + -1 else return@on true
+            val solution = PuzzleBox.fromKey(key)?.fullSolution
+                ?: if (key == "mm") (3904..3950 step 2).toList() + -1 else return@on true
 
             if (buttonID == 6 && slot in 0..24) {
                 val offsets = listOf(-1, 1, -5, 5)
-                val targetSlot = offsets
-                    .map { findTargetSlot(puzzle, slot, it) }
-                    .firstOrNull { it != -1 }
+                val targetSlot = offsets.map { findTargetSlot(puzzle, slot, it) }.firstOrNull { it != -1 }
 
                 if (targetSlot != null) {
                     puzzle[targetSlot] = puzzle[slot]
@@ -208,18 +220,5 @@ class PuzzleBoxListener : InteractionListener, InterfaceListener {
                 return shuffled
             }
         }
-    }
-
-    /**
-     * Checks if the player has completed the puzzle.
-     *
-     * @param player The player to check.
-     * @param key The key identifying the puzzle type.
-     * @return `true` if the puzzle is completed and player has a puzzle box item, `false` otherwise.
-     */
-    fun hasCompletePuzzleBox(player: Player, key: String): Boolean {
-        val box = PuzzleBox.fromKey(key) ?: return false
-        return getAttribute(player, "$key:puzzle:done", false) &&
-                player.inventory.contains(box.item.id, 1)
     }
 }

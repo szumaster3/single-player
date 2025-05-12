@@ -1,5 +1,7 @@
 package content.global.activity.ttrail.puzzle
 
+import core.api.getAttribute
+import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import org.rs.consts.Items
 
@@ -35,6 +37,26 @@ enum class PuzzleBox(
          * @return The corresponding [PuzzleBox], or `null` if not found.
          */
         fun fromItemId(itemId: Int): PuzzleBox? = values().find { it.item.id == itemId }
+
+        /**
+         * Gets random puzzle item.
+         */
+        fun getRandomPuzzleBox(): Int? {
+            val randomPuzzleBox = PuzzleBox.values().random()
+            return PuzzleBox.fromItemId(randomPuzzleBox.item.id)?.item?.id
+        }
+
+        /**
+         * Checks if the player has completed the puzzle.
+         *
+         * @param player The player to check.
+         * @param key The key identifying the puzzle type.
+         * @return `true` if the puzzle is completed and player has a puzzle box item, `false` otherwise.
+         */
+        fun hasCompletePuzzleBox(player: Player, key: String): Boolean {
+            val box = PuzzleBox.fromKey(key) ?: return false
+            return getAttribute(player, "$key:puzzle:done", false) && player.inventory.contains(box.item.id, 1)
+        }
     }
 
     /**
