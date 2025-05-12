@@ -21,6 +21,8 @@ class AnagramListener : InteractionListener {
 
                 if (hasClue || puzzleComplete) {
                     AnagramClueScroll(clue).handleInteraction(player, node as NPC)
+                } else {
+                    player.dialogueInterpreter.open(node.id, node)
                 }
 
                 return@on true
