@@ -1,5 +1,6 @@
 package content.global.activity.ttrail.anagram
 
+import content.global.activity.ttrail.ClueLevel
 import content.global.activity.ttrail.ClueScrollPlugin
 import content.global.activity.ttrail.TreasureTrailManager
 import content.global.activity.ttrail.puzzle.PuzzleBox
@@ -14,28 +15,24 @@ import core.game.node.entity.Entity
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
-import core.plugin.Plugin
+import org.rs.consts.Components
 import org.rs.consts.Items
 
-class AnagramCluePlugin(
-    private val clue: AnagramClue
-) : ClueScrollPlugin(clue.name, clue.clueId, clue.level, 345) {
-
-    override fun newInstance(arg: Any?): Plugin<Any> {
-        val clue = arg as? AnagramClue ?: error("Expected AnagramClue")
-        return AnagramCluePlugin(clue)
-    }
-
-    override fun configure() {
-
-    }
+abstract class AnagramClueScroll(
+    name: String?,
+    clueId: Int,
+    val anagram: String?,
+    val npcId: Int,
+    level: ClueLevel?,
+    val challenge: Int? = null
+) : ClueScrollPlugin(name, clueId, level, Components.TRAIL_MAP09_345) {
 
     override fun read(player: Player) {
         repeat(8) { setInterfaceText(player, "", interfaceId, it + 1) }
 
         val text = buildString {
-            append("<br><br>This anagram reveals<br>who to speak to next:<br><br><br>")
-            append(clue.anagram.replace("<br>", "<br><br>"))
+            append("<br><br>This anagram reveals<br>who to speak to next:<br><br>")
+            append(anagram)
         }
         setInterfaceText(player, text, interfaceId, 1)
     }
@@ -43,9 +40,9 @@ class AnagramCluePlugin(
     override fun interact(e: Entity, target: Node, option: Option): Boolean {
         val player = e as? Player ?: return false
         val npc = target as? NPC ?: return false
-        if (npc.id != clue.npcId || !player.inventory.contains(clue.clueId, 1)) return false
+        if (npc.id != npcId || !player.inventory.contains(clueId, 1)) return false
 
-        val puzzle = clue.challenge?.let { PuzzleBox.fromKey(it.toString()) }
+        val puzzle = challenge?.let { PuzzleBox.fromKey(it.toString()) }
         if (puzzle != null) {
             val hasPuzzle = player.inventory.contains(puzzle.item.id, 1)
             val puzzleComplete = PuzzleBox.hasCompletePuzzleBox(player, puzzle.key)
@@ -57,7 +54,7 @@ class AnagramCluePlugin(
                         "Oh, I've been expecting you.",
                         "The solving of this puzzle could be the key to your treasure."
                     ).random()
-                    sendNPCDialogue(player, clue.npcId, msg, FaceAnim.HALF_GUILTY)
+                    sendNPCDialogue(player, npcId, msg, FaceAnim.HALF_GUILTY)
                     player.inventory.add(puzzle.item)
                     addDialogueAction(player) { p, btn ->
                         if (btn > 0) sendItemDialogue(p, puzzle.item, "${npc.name} has given you a puzzle box!")
@@ -67,9 +64,9 @@ class AnagramCluePlugin(
             }
 
             if (player.inventory.remove(Item(puzzle.item.id, 1))) {
-                sendNPCDialogue(player, clue.npcId, "Well done, traveller.", FaceAnim.HALF_GUILTY)
+                sendNPCDialogue(player, npcId, "Well done, traveller.", FaceAnim.HALF_GUILTY)
                 val manager = TreasureTrailManager.getInstance(player)
-                val clueScroll = getClueScrolls()[clue.clueId]
+                val clueScroll = getClueScrolls()[clueId]
                 clueScroll?.let {
                     it.reward(player)
                     val newClue = getClue(it.level)
@@ -84,7 +81,6 @@ class AnagramCluePlugin(
             }
             return true
         }
-
         return false
     }
 }
