@@ -28,6 +28,7 @@ enum class PuzzleBox(
          * @param key The puzzle type (e.g., "castle").
          * @return The corresponding [PuzzleBox], or `null` if not found.
          */
+        @JvmStatic
         fun fromKey(key: String): PuzzleBox? = values().find { it.key == key }
 
         /**
@@ -36,11 +37,13 @@ enum class PuzzleBox(
          * @param itemId the puzzle box item id.
          * @return The corresponding [PuzzleBox], or `null` if not found.
          */
+        @JvmStatic
         fun fromItemId(itemId: Int): PuzzleBox? = values().find { it.item.id == itemId }
 
         /**
          * Gets random puzzle item.
          */
+        @JvmStatic
         fun getRandomPuzzleBox(): Int? {
             val randomPuzzleBox = PuzzleBox.values().random()
             return PuzzleBox.fromItemId(randomPuzzleBox.item.id)?.item?.id
@@ -53,6 +56,7 @@ enum class PuzzleBox(
          * @param key The key identifying the puzzle type.
          * @return `true` if the puzzle is completed and player has a puzzle box item, `false` otherwise.
          */
+        @JvmStatic
         fun hasCompletePuzzleBox(player: Player, key: String): Boolean {
             val box = PuzzleBox.fromKey(key) ?: return false
             return getAttribute(player, "$key:puzzle:done", false) && player.inventory.contains(box.item.id, 1)

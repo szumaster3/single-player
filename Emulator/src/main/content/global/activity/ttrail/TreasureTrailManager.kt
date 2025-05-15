@@ -472,6 +472,7 @@ class TreasureTrailManager :
                 13080,
             )
 
+        @JvmStatic
         fun getInstance(player: Player): TreasureTrailManager = player.getAttribute("tt-manager", TreasureTrailManager())
     }
 }
