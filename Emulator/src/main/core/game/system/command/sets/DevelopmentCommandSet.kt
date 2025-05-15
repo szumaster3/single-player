@@ -4,7 +4,6 @@ import content.data.GameAttributes
 import content.data.RespawnPoint
 import content.data.setRespawnLocation
 import content.global.activity.jobs.JobManager
-import content.global.ame.grave.GravediggerListener
 import content.region.kandarin.handlers.barbtraining.BarbarianTraining
 import core.api.*
 import core.api.ui.closeDialogue
@@ -16,7 +15,6 @@ import core.game.node.entity.player.link.SpellBookManager
 import core.game.node.entity.player.link.diary.DiaryType
 import core.game.system.command.Privilege
 import core.game.world.map.Location
-import core.game.world.repository.Repository
 import core.net.packet.PacketWriteQueue
 import core.net.packet.context.PlayerContext
 import core.net.packet.out.ResetInterface
@@ -30,31 +28,6 @@ import org.rs.consts.Items
 @Initializable
 class DevelopmentCommandSet : CommandSet(Privilege.ADMIN) {
     override fun defineCommands() {
-
-        /*
-         * Command to complete a puzzle box for a player.
-         */
-
-        define("completepuzzle", privilege = Privilege.ADMIN, "Complete a puzzle box for a player. (puzzleKey: tree, troll, castle") { player, strings ->
-            if (strings.size != 3) {
-                sendMessage(player, "Invalid arguments. Use: ::completepuzzle username puzzleKey")
-                return@define
-            }
-
-            val targetName = strings[1]
-            val puzzleKey = strings[2]
-
-            val targetPlayer = Repository.getPlayerByName(targetName)
-            if (targetPlayer == null) {
-                sendMessage(player, "Wrong username.")
-                return@define
-            }
-
-            setAttribute(targetPlayer, "$puzzleKey:puzzle:done", true)
-
-            player.debug("Puzzle [$puzzleKey] marked as complete.")
-        }
-
         /*
          * Command to spawn all Ancient Pages into the inventory.
          */
