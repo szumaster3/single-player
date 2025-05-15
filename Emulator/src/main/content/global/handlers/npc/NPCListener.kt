@@ -1,5 +1,6 @@
 package content.global.handlers.npc
 
+import content.global.activity.ttrail.anagram.AnagramClueScroll
 import content.global.ame.RandomEvents
 import content.minigame.gnomecook.dialogue.GnomeCookingDialogue
 import content.minigame.gnomecook.handlers.GC_BASE_ATTRIBUTE
@@ -124,6 +125,12 @@ class NPCListener : InteractionListener {
 
         on(IntType.NPC, "talk-to", "talk", "talk to") { player, node ->
             val npc = node.asNpc()
+
+            val clue = AnagramClueScroll.getClueForNpc(player, npc)
+            if (clue != null) {
+                clue.getPuzzle(player, npc)
+                return@on true
+            }
 
             if (RandomEvents.randomIDs.contains(node.id)) {
                 if (AntiMacro.getEventNpc(player) == null ||
