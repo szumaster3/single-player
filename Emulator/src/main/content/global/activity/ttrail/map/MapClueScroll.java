@@ -1,5 +1,7 @@
-package content.global.activity.ttrail;
+package content.global.activity.ttrail.map;
 
+import content.global.activity.ttrail.ClueLevel;
+import content.global.activity.ttrail.ClueScrollPlugin;
 import core.game.global.action.DigAction;
 import core.game.global.action.DigSpadeHandler;
 import core.game.interaction.Option;

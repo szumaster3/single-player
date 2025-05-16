@@ -2,6 +2,10 @@ package content.global.activity.ttrail;
 
 import content.global.activity.ttrail.anagram.AnagramClue;
 import content.global.activity.ttrail.challenge.ChallengeClue;
+import content.global.activity.ttrail.coords.CoordinateCluePlugin;
+import content.global.activity.ttrail.coords.CoordinateClueScroll;
+import content.global.activity.ttrail.emotes.EmoteCluePlugin;
+import content.global.activity.ttrail.map.MapCluePlugin;
 import content.global.skill.agility.AgilityHandler;
 import core.cache.def.impl.ItemDefinition;
 import core.cache.def.impl.SceneryDefinition;

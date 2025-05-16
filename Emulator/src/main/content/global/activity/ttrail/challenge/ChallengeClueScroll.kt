@@ -2,13 +2,19 @@ package content.global.activity.ttrail.challenge
 
 import content.global.activity.ttrail.ClueLevel
 import content.global.activity.ttrail.ClueScrollPlugin
+import core.api.addItem
 import core.api.interaction.getNPCName
+import core.api.removeItem
+import core.api.sendInputDialogue
+import core.api.sendItemDialogue
 import core.api.ui.setInterfaceText
 import core.game.interaction.Option
 import core.game.node.Node
 import core.game.node.entity.Entity
 import core.game.node.entity.player.Player
+import core.game.node.item.Item
 import core.game.world.map.zone.ZoneBorders
+import org.rs.consts.Items
 
 /**
  * Representing a challenge clue scroll.
@@ -45,6 +51,43 @@ abstract class ChallengeClueScroll(
         target: Node,
         option: Option,
     ): Boolean {
-        return super.interact(e, target, option)
+        val player = e as? Player ?: return false
+        val npc = target as? core.game.node.entity.npc.NPC ?: return false
+
+        if (npc.id != this.npc) return false
+
+        sendInputDialogue(player, true, "Your answer:") { value: Any ->
+            val answer = (value as? Int) ?: return@sendInputDialogue
+
+            if (answer == this.answer) {
+                removeItem(player, clueId)
+                val manager = content.global.activity.ttrail.TreasureTrailManager.getInstance(player)
+
+                sendItemDialogue(player, Items.CASKET_405, "You receive another clue scroll.")
+
+                if (manager.isCompleted) {
+                    sendItemDialogue(player, org.rs.consts.Items.CASKET_405, "You've found a casket!")
+                    manager.clearTrail()
+                    addItem(player, Items.CASKET_405)
+                } else {
+                    val next = this.getClueId()
+                    if (next != null) {
+                        player.inventory.add(Item(next))
+                    }
+                }
+            }
+        }
+
+        return true
+    }
+
+    companion object {
+        fun getClueForNpc(player: Player, npc: core.game.node.entity.npc.NPC): ChallengeClueScroll? {
+            return player.inventory.toArray()
+                .filterNotNull()
+                .mapNotNull { ClueScrollPlugin.getClueScrolls()[it.id] }
+                .filterIsInstance<ChallengeClueScroll>()
+                .firstOrNull { it.npc == npc.id }
+        }
     }
 }

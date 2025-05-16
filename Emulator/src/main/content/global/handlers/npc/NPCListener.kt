@@ -1,6 +1,7 @@
 package content.global.handlers.npc
 
 import content.global.activity.ttrail.anagram.AnagramClueScroll
+import content.global.activity.ttrail.challenge.ChallengeClueScroll
 import content.global.ame.RandomEvents
 import content.minigame.gnomecook.dialogue.GnomeCookingDialogue
 import content.minigame.gnomecook.handlers.GC_BASE_ATTRIBUTE
@@ -14,6 +15,7 @@ import core.api.interaction.openDepositBox
 import core.game.dialogue.FaceAnim
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
+import core.game.interaction.Option
 import core.game.node.entity.combat.equipment.WeaponInterface
 import core.game.node.entity.npc.IdleAbstractNPC
 import core.game.node.entity.npc.NPC
@@ -69,7 +71,7 @@ class NPCListener : InteractionListener {
          * Handles banking interaction with Peer the seer NPC.
          */
 
-        on(peerTheSeerNPC, IntType.NPC, "deposit") { player, _ ->
+        on(PEER_THE_SEER, IntType.NPC, "deposit") { player, _ ->
             if (!anyInEquipment(
                     player,
                     Items.FREMENNIK_SEA_BOOTS_1_14571,
@@ -126,6 +128,19 @@ class NPCListener : InteractionListener {
         on(IntType.NPC, "talk-to", "talk", "talk to") { player, node ->
             val npc = node.asNpc()
 
+            /*
+             * Handles challenge clues.
+             */
+            val challengeClue = ChallengeClueScroll.getClueForNpc(player, npc)
+            if (challengeClue != null) {
+                if (challengeClue.interact(player, npc, Option("talk-to", 0))) {
+                    return@on true
+                }
+            }
+
+            /*
+             * Handles anagram clues.
+             */
             val clue = AnagramClueScroll.getClueForNpc(player, npc)
             if (clue != null) {
                 clue.getPuzzle(player, npc)
@@ -193,7 +208,7 @@ class NPCListener : InteractionListener {
     }
 
     companion object {
-        val peerTheSeerNPC = NPCs.PEER_THE_SEER_1288
+        const val PEER_THE_SEER = NPCs.PEER_THE_SEER_1288
         val barCrawlNPCs =
             intArrayOf(
                 NPCs.BARTENDER_733,

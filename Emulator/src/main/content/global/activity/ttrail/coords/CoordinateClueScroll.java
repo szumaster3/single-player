@@ -1,5 +1,7 @@
-package content.global.activity.ttrail;
+package content.global.activity.ttrail.coords;
 
+import content.global.activity.ttrail.ClueLevel;
+import content.global.activity.ttrail.map.MapClueScroll;
 import core.game.node.entity.npc.NPC;
 import core.game.node.entity.player.Player;
 import core.game.node.item.Item;

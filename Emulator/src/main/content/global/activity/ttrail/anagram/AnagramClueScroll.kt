@@ -47,11 +47,12 @@ abstract class AnagramClueScroll(
      */
     fun getPuzzle(player: Player, npc: NPC) {
         val puzzle = PuzzleBox.fromItemId(challenge ?: return) ?: return
-
         val isComplete = PuzzleBox.hasCompletePuzzleBox(player, puzzle.key)
 
         if (!player.inventory.contains(puzzle.item.id, 1)) {
             if (player.inventory.remove(Item(clueId, 1))) {
+                player.setAttribute("anagram_clue_active", clueId)
+
                 val msg = listOf(
                     "Oh, I have a puzzle for you to solve.",
                     "Oh, I've been expecting you.",
@@ -73,9 +74,13 @@ abstract class AnagramClueScroll(
         if (isComplete) {
             if (player.inventory.remove(puzzle.item)) {
                 removeAttribute(player, "${puzzle.key}:puzzle:done")
+                removeAttribute(player, "anagram_clue_active")
 
                 sendNPCDialogue(player, npcId, "Well done, traveller.", FaceAnim.HALF_GUILTY)
-                handleClueCompletion(player)
+
+                addDialogueAction(player) { _, _ ->
+                    handleClueCompletion(player)
+                }
             }
             return
         }
@@ -119,10 +124,20 @@ abstract class AnagramClueScroll(
          * @return The matching [AnagramClueScroll] if found; otherwise, `null`.
          */
         fun getClueForNpc(player: Player, npc: NPC): AnagramClueScroll? {
-            return player.inventory.toArray()
+            // Inventory
+            val fromInventory = player.inventory.toArray()
                 .filterNotNull()
                 .mapNotNull { getClueScrolls()[it.id] as? AnagramClueScroll }
                 .firstOrNull { it.npcId == npc.id }
+
+            if (fromInventory != null) return fromInventory
+
+            // Attributes
+            val clueId = player.getAttribute("anagram_clue_active", -1)
+            val fromAttribute = getClueScrolls()[clueId]
+            return if (fromAttribute is AnagramClueScroll && fromAttribute.npcId == npc.id) {
+                fromAttribute
+            } else null
         }
     }
 }

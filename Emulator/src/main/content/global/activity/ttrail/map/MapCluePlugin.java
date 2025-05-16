@@ -1,5 +1,6 @@
-package content.global.activity.ttrail;
+package content.global.activity.ttrail.map;
 
+import content.global.activity.ttrail.ClueLevel;
 import core.game.world.map.Location;
 import core.game.world.map.zone.ZoneBorders;
 import core.plugin.Plugin;

@@ -1,5 +1,7 @@
-package content.global.activity.ttrail;
+package content.global.activity.ttrail.emotes;
 
+import content.global.activity.ttrail.ClueLevel;
+import content.global.activity.ttrail.ClueScrollPlugin;
 import core.game.node.entity.npc.NPC;
 import core.game.node.entity.player.Player;
 import core.game.node.entity.player.link.emote.Emotes;

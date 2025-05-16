@@ -1,5 +1,6 @@
 package content.global.activity.ttrail
 
+import content.global.activity.ttrail.emotes.EmoteClueScroll
 import core.api.removeAttribute
 import core.api.sendItemDialogue
 import core.game.dialogue.Dialogue
