@@ -89,21 +89,23 @@ abstract class AnagramClueScroll(
         if (!player.inventory.remove(puzzle.item)) return
 
         removeAttributes(player, "${puzzle.key}:puzzle:done", "${puzzle.key}:puzzle:data", "anagram_clue_active")
-        sendNPCDialogue(player, npcId, "Well done, traveller.", FaceAnim.HALF_GUILTY)
+        sendNPCDialogue(player, npc.id, "Well done, traveller.", FaceAnim.HALF_GUILTY)
 
-        addDialogueAction(player) { _, _ ->
-            val manager = TreasureTrailManager.getInstance(player)
-            val clueScroll = getClueScrolls()[clueId]
-            clueScroll?.reward(player)
+        addDialogueAction(player) { player, btn ->
+            if (btn > 0) {
+                val manager = TreasureTrailManager.getInstance(player)
+                val clueScroll = getClueScrolls()[clueId]
+                clueScroll?.reward(player)
 
-            if (manager.isCompleted) {
-                sendItemDialogue(player, Items.CASKET_405, "You've found a casket!")
-                manager.clearTrail()
-            } else {
-                val newClue = getClue(clueScroll?.level)
-                if (newClue != null) {
-                    sendItemDialogue(player, newClue, "You receive another clue scroll.")
-                    player.inventory.add(newClue)
+                if (manager.isCompleted) {
+                    sendItemDialogue(player, Items.CASKET_405, "You've found a casket!")
+                    manager.clearTrail()
+                } else {
+                    val newClue = getClue(clueScroll?.level)
+                    if (newClue != null) {
+                        sendItemDialogue(player, newClue, "You receive another clue scroll.")
+                        player.inventory.add(newClue)
+                    }
                 }
             }
         }
