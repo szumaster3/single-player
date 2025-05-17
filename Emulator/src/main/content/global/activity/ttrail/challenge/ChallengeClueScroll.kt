@@ -2,20 +2,19 @@ package content.global.activity.ttrail.challenge
 
 import content.global.activity.ttrail.ClueLevel
 import content.global.activity.ttrail.ClueScrollPlugin
-import core.api.addItem
+import core.api.addDialogueAction
 import core.api.interaction.getNPCName
-import core.api.removeItem
 import core.api.sendInputDialogue
-import core.api.sendItemDialogue
+import core.api.sendNPCDialogue
 import core.api.ui.setInterfaceText
+import core.game.dialogue.FaceAnim
 import core.game.interaction.Option
 import core.game.node.Node
 import core.game.node.entity.Entity
 import core.game.node.entity.player.Player
-import core.game.node.item.Item
 import core.game.world.map.zone.ZoneBorders
 import org.rs.consts.Components
-import org.rs.consts.Items
+import org.rs.consts.NPCs
 
 /**
  * Representing a challenge clue scroll.
@@ -66,14 +65,22 @@ abstract class ChallengeClueScroll(
 
         if (npc.id != this.npc) return false
 
-        sendInputDialogue(player, true, "Your answer:") { value: Any ->
-            val answer = (value as? Int) ?: return@sendInputDialogue
-
-            if (answer == this.answer) {
-                reward(player)
+        sendNPCDialogue(
+            player,
+            npc.id,
+            "$question",
+            if (npc.id == NPCs.GNOME_COACH_2802 || npc.id == NPCs.GNOME_BALL_REFEREE_635) FaceAnim.OLD_DEFAULT else FaceAnim.HALF_ASKING
+        )
+        addDialogueAction(player) { player, button ->
+            if (button > 0) {
+                sendInputDialogue(player, true, "Your answer:") { value: Any ->
+                    val answer = (value as? Int) ?: return@sendInputDialogue
+                    if (answer == this.answer) {
+                        reward(player)
+                    }
+                }
             }
         }
-
         return true
     }
 
@@ -84,7 +91,7 @@ abstract class ChallengeClueScroll(
         fun getClueForNpc(player: Player, npc: core.game.node.entity.npc.NPC): ChallengeClueScroll? {
             return player.inventory.toArray()
                 .filterNotNull()
-                .mapNotNull { ClueScrollPlugin.getClueScrolls()[it.id] }
+                .mapNotNull { getClueScrolls()[it.id] }
                 .filterIsInstance<ChallengeClueScroll>()
                 .firstOrNull { it.npc == npc.id }
         }
