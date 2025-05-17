@@ -112,6 +112,10 @@ class VarrockListener : InteractionListener {
             return@on true
         }
 
+        /*
+         * Clue scroll (Varrock church)
+         */
+
         on(Scenery.CLOSED_CHEST_24203, IntType.SCENERY, "open") { player, node ->
             if (inBorders(player, getRegionBorders(12596))) {
                 replaceScenery(node.asScenery(), Scenery.OPEN_CHEST_24204, -1, node.location)

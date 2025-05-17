@@ -36885,6 +36885,7 @@
     "durability": null,
     "name": "Iron sickle",
     "weight": "1.6",
+    "attack_anims": "390,390,381,390",
     "archery_ticket_price": "0",
     "id": "3899",
     "weapon_interface": "6",
