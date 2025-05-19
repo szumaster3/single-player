@@ -2,16 +2,21 @@ package content.global.activity.ttrail.cryptic;
 
 import content.global.activity.ttrail.ClueLevel;
 import content.global.activity.ttrail.ClueScrollPlugin;
+import content.global.activity.ttrail.TreasureTrailManager;
+import core.api.Container;
 import core.game.global.action.DigAction;
 import core.game.global.action.DigSpadeHandler;
 import core.game.interaction.Option;
 import core.game.node.Node;
 import core.game.node.entity.Entity;
 import core.game.node.entity.player.Player;
+import core.game.node.item.Item;
 import core.game.world.map.Location;
 import core.game.world.map.zone.ZoneBorders;
 import org.rs.consts.Components;
 import org.rs.consts.Items;
+
+import static core.api.ContentAPIKt.*;
 
 /**
  * A base class for cryptic clue scrolls requiring object interaction or digging at a specific location.
@@ -67,13 +72,31 @@ public abstract class CrypticClueScroll extends ClueScrollPlugin {
     @Override
     public boolean interact(Entity e, Node target, Option option) {
         if (e instanceof Player) {
-            Player p = e.asPlayer();
+            Player player = (Player) e;
             if (target.getId() == object && option.getName().equals("Search")) {
-                if (!p.getInventory().contains(clueId, 1) || !target.getLocation().equals(location)) {
-                    p.sendMessage("Nothing interesting happens.");
+                if (!player.getInventory().contains(clueId, 1) || !target.getLocation().equals(location)) {
+                    player.sendMessage("Nothing interesting happens.");
                     return false;
                 }
-                reward(p);
+
+                TreasureTrailManager manager = TreasureTrailManager.getInstance(player);
+                ClueScrollPlugin clueScroll = getClueScrolls().get(clueId);
+
+                if (clueScroll != null && removeItem(player, clueScroll.getClueId(), Container.INVENTORY)) {
+
+                    clueScroll.reward(player);
+
+                    if (manager.isCompleted()) {
+                        sendItemDialogue(player, Items.CASKET_405, "You've found a casket!");
+                        manager.clearTrail();
+                    } else {
+                        Item newClue = getClue(clueScroll.getLevel());
+                        if (newClue != null) {
+                            sendItemDialogue(player, newClue, "You found another clue scroll.");
+                            player.getInventory().add(new Item(newClue.getId(), 1));
+                        }
+                    }
+                }
                 return true;
             }
         }
