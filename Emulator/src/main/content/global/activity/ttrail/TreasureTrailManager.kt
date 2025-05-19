@@ -7,6 +7,9 @@ import core.tools.RandomFunction
 import org.json.simple.JSONArray
 import org.json.simple.JSONObject
 
+/**
+ * Manages the treasure trail state and progression.
+ */
 class TreasureTrailManager :
     LoginListener,
     PersistPlayer {
@@ -17,19 +20,40 @@ class TreasureTrailManager :
     private var trailLength = 0
     val completedClues: IntArray = IntArray(3)
 
+    /**
+     * Constructs a [TreasureTrailManager] for the player.
+     *
+     * @param player the player to associate with this manager.
+     */
     constructor(player: Player?) {
         this.player = player
     }
 
+    /**
+     * Constructs a TreasureTrailManager without an associated player.
+     */
     constructor() {
         this.player = null
     }
 
+    /**
+     * Called when the player logs in.
+     *
+     * Creates and assigns a new TreasureTrailManager instance to the player's attributes.
+     *
+     * @param player the player who logged in.
+     */
     override fun login(player: Player) {
         val instance = TreasureTrailManager(player)
         player.setAttribute("tt-manager", instance)
     }
 
+    /**
+     * Parses and loads treasure trail data from the player's saved JSON data.
+     *
+     * @param player the player whose data is being parsed.
+     * @param data the JSON object containing saved player data.
+     */
     override fun parsePlayer(
         player: Player,
         data: JSONObject,
@@ -48,6 +72,12 @@ class TreasureTrailManager :
         }
     }
 
+    /**
+     * Saves the current treasure trail state into the player data.
+     *
+     * @param player the player whose data is being saved.
+     * @param save the JSON object to write the data into.
+     */
     override fun savePlayer(
         player: Player,
         save: JSONObject,
@@ -69,6 +99,11 @@ class TreasureTrailManager :
         save["treasureTrails"] = treasureTrailManager
     }
 
+    /**
+     * Parses treasure trail data from a generic JSON object.
+     *
+     * @param data the JSON object containing treasure trail data.
+     */
     fun parse(data: JSONObject) {
         val cc = data["completedClues"] as JSONArray
         for (i in cc.indices) {
@@ -83,12 +118,22 @@ class TreasureTrailManager :
         }
     }
 
+    /**
+     * Starts a new treasure trail based on the provided clue scroll.
+     *
+     * @param clue the clue scroll plugin representing the new trail.
+     */
     fun startTrail(clue: ClueScrollPlugin) {
         setClue(clue)
         trailLength = RandomFunction.random(clue.level.minSteps, clue.level.maxSteps)
         trailStage = 0
     }
 
+    /**
+     * Clears the current treasure trail state.
+     *
+     * Resets clue id, difficulty level, trail length, and stage.
+     */
     fun clearTrail() {
         clueId = 0
         level = null
@@ -96,11 +141,21 @@ class TreasureTrailManager :
         trailStage = 0
     }
 
+    /**
+     * Sets the current clue scroll for this trail manager.
+     *
+     * @param clue the clue scroll plugin to set.
+     */
     fun setClue(clue: ClueScrollPlugin) {
         clueId = clue.clueId
         level = clue.level
     }
 
+    /**
+     * Checks if the player currently has any clue scroll or related trail item.
+     *
+     * @return true if the player has a clue or trail item; false otherwise.
+     */
     fun hasClue(): Boolean {
         if (player == null) {
             return true
@@ -119,23 +174,53 @@ class TreasureTrailManager :
         return false
     }
 
+    /**
+     * Increments the current trail stage by one.
+     */
     fun incrementStage() {
         trailStage += 1
     }
 
+    /**
+     * Checks if the treasure trail is completed.
+     *
+     * Returns true if the trail has started and the current stage is at least the trail length.
+     */
     val isCompleted: Boolean
         get() = trailStage != 0 && trailLength != 0 && trailStage >= trailLength
 
+    /**
+     * Checks if there is an active treasure trail.
+     *
+     * Returns true if clue id, level, trail length, and stage are all set and non-zero.
+     */
     fun hasTrail(): Boolean = clueId != 0 && (level != null) and (trailLength != 0) && trailStage != 0
 
+    /**
+     * Increments the count of completed clues for the specified difficulty level.
+     *
+     * @param level the difficulty level for which to increment completed clues.
+     */
     fun incrementClues(level: ClueLevel) {
         completedClues[level.ordinal]++
     }
 
+    /**
+     * Gets the number of completed clues for the specified difficulty level.
+     *
+     * @param level the difficulty level to query.
+     * @return the count of completed clues for that level.
+     */
     fun getCompletedClues(level: ClueLevel): Int = completedClues[level.ordinal]
 
+    /**
+     * @return the total length (number of stages) of the current treasure trail.
+     */
     fun getTrailLength(): Int = trailLength
 
+    /**
+     * @return the current stage number of the treasure trail.
+     */
     fun getTrailStage(): Int = trailStage
 
     companion object {

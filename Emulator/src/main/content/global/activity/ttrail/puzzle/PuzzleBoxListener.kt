@@ -175,21 +175,12 @@ class PuzzleBoxListener : InteractionListener, InterfaceListener {
     }
 
     /**
-     * Loads the current puzzle state from attributes.
-     */
-    fun loadPuzzleStateFromAttributes(player: Player, key: String): List<Int>? {
-        val encoded = getAttribute(player, "/save:$key:puzzle:data", "")
-        if (encoded.isEmpty()) return null
-        return encoded.split(",").mapNotNull { it.toIntOrNull() }
-    }
-
-    /**
      * Saves the completed puzzle state in persistent player attributes.
      */
     private fun savePuzzleStateInAttributes(player: Player, key: String, puzzle: List<Int>) {
         val encoded = puzzle.joinToString(",")
-        setAttribute(player, "/save:$key:puzzle", encoded.hashCode())
-        setAttribute(player, "/save:$key:puzzle:data", encoded)
+        setAttribute(player, "$key:puzzle", encoded.hashCode())
+        setAttribute(player, "$key:puzzle:data", encoded)
     }
 
     /**
