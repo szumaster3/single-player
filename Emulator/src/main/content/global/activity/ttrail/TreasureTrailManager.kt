@@ -214,16 +214,6 @@ class TreasureTrailManager :
      */
     fun getCompletedClues(level: ClueLevel): Int = completedClues[level.ordinal]
 
-    /**
-     * @return the total length (number of stages) of the current treasure trail.
-     */
-    fun getTrailLength(): Int = trailLength
-
-    /**
-     * @return the current stage number of the treasure trail.
-     */
-    fun getTrailStage(): Int = trailStage
-
     companion object {
         /**
          * Represents the clue scroll ids.
