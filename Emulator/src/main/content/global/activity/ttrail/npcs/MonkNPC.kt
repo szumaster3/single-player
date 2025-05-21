@@ -35,7 +35,7 @@ class MonkNPC(
         (killer as? Player)?.takeIf {
             inBorders(it, 2590, 3203, 2622, 3221) &&
                     hasAnItem(it, Items.KEY_2834).container == null &&
-                    it.inventory.containsItem(Item(Items.CLUE_SCROLL_10236, 1))
+                    it.inventory.containsItem(Item(Items.CLUE_SCROLL_10222, 1))
         }?.let {
             produceGroundItem(it, Items.KEY_2834, 1, location)
         }
