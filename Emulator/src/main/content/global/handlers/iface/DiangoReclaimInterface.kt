@@ -14,6 +14,9 @@ import core.plugin.Initializable
 import core.plugin.Plugin
 import org.rs.consts.Components
 
+/**
+ * Represents interface plugin for the Diango Reclaimable.
+ */
 @Initializable
 class DiangoReclaimInterface : ComponentPlugin() {
     override fun newInstance(arg: Any?): Plugin<Any> {
@@ -44,6 +47,7 @@ class DiangoReclaimInterface : ComponentPlugin() {
                 player.inventory.add(reclaimItem)
                 refresh(player)
             }
+
             9 -> sendMessage(player, reclaimItem.definition.examine)
         }
         return false
@@ -53,12 +57,22 @@ class DiangoReclaimInterface : ComponentPlugin() {
         private const val COMPONENT_ID = Components.DIANGO_RECLAIMABLE_468
         private val ITEMS: MutableList<Item> = mutableListOf()
 
+        /**
+         * Returns a list of eligible items that can be reclaimed.
+         *
+         * @return List of eligible reclaimable items.
+         */
         private fun getEligibleItemsList(): List<Item> {
-            return ToyBoxItem.values()
-                .filter { it != ToyBoxItem.More && it != ToyBoxItem.Back }
+            return ToyBoxItem.values().filter { it != ToyBoxItem.More && it != ToyBoxItem.Back }
                 .map { Item(it.takeId.first()) }
         }
 
+        /**
+         * Opens the reclaim interface for the specified player.
+         * Sets up the reclaimable items and displays the interface.
+         *
+         * @param player The player opening the interface.
+         */
         @JvmStatic
         fun open(player: Player) {
             val curOpen = player.interfaceManager.opened
@@ -79,17 +93,24 @@ class DiangoReclaimInterface : ComponentPlugin() {
             openInterface(player, COMPONENT_ID)
         }
 
+        /**
+         * Refreshes the reclaim interface.
+         *
+         * @param player The player.
+         */
         fun refresh(player: Player) {
             player.interfaceManager.close()
             open(player)
         }
 
-        fun getEligibleItems(player: Player): Array<Item?>? =
-            ITEMS.filter { item ->
-                !player.equipment.containsItem(item) &&
-                        !player.inventory.containsItem(item) &&
-                        !player.bank.containsItem(item)
-            }
-                .toTypedArray()
+        /**
+         * Returns an array of items that the player is eligible to reclaim.
+         *
+         * @param player The player whose eligibility is checked.
+         * @return Array of reclaimable items.
+         */
+        fun getEligibleItems(player: Player): Array<Item?>? = ITEMS.filter { item ->
+            !player.equipment.containsItem(item) && !player.inventory.containsItem(item) && !player.bank.containsItem(item)
+        }.toTypedArray()
     }
 }

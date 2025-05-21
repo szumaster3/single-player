@@ -9,71 +9,55 @@ import org.rs.consts.Components
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the enchanting of battle staffs into mystic staffs.
+ */
 class EnchantedStaffInterface : InterfaceListener {
     override fun defineInterfaceListeners() {
         onOpen(Components.STAFF_ENCHANT_332) { player, _ ->
             for (staff in EnchantedStaff.values()) {
-                sendItemZoomOnInterface(
-                    player,
-                    Components.STAFF_ENCHANT_332,
-                    staff.child,
-                    staff.basic,
-                )
+                sendItemZoomOnInterface(player, Components.STAFF_ENCHANT_332, staff.child, staff.basic)
             }
             return@onOpen true
         }
 
         on(Components.STAFF_ENCHANT_332) { player, _, _, buttonID, _, _ ->
-            val defaultPrice = 40000
-            val discountPrice = 27000
-            val headbandInEquipment = DiaryManager(player).hasHeadband()
-            var price = if (!headbandInEquipment) defaultPrice else discountPrice
+            val price = if (DiaryManager(player).hasHeadband()) 27000 else 40000
 
-            if (EnchantedStaff.childToBasic.containsKey(buttonID)) {
-                val basicStaff = Item(EnchantedStaff.childToBasic[buttonID]!!)
-                val enchantedStaff = Item(EnchantedStaff.basicToEnchanted[basicStaff.id]!!)
-                if (!inInventory(player, basicStaff.id)) {
-                    sendMessage(
-                        player,
-                        "You don't have a" + (
-                            if (StringUtils.isPlusN(
-                                    basicStaff.name,
-                                )
-                            ) {
-                                "n "
-                            } else {
-                                " "
-                            }
-                        ) + basicStaff.name +
-                            " to enchant.",
-                    )
-                    return@on true
-                }
+            val basicStaffId = EnchantedStaff.childToBasic[buttonID] ?: return@on true
+            val basicStaff = Item(basicStaffId)
+            val enchantedStaffId = EnchantedStaff.basicToEnchanted[basicStaffId] ?: return@on true
+            val enchantedStaff = Item(enchantedStaffId)
 
-                if (!inInventory(player, Items.COINS_995, price)) {
-                    closeInterface(player)
-                    sendNPCDialogue(
-                        player,
-                        NPCs.THORMAC_389,
-                        "I need $price coins for materials. Come back when you have the money!",
-                    )
-                    return@on true
-                }
+            if (!inInventory(player, basicStaff.id)) {
+                val article = if (StringUtils.isPlusN(basicStaff.name)) "n" else ""
+                sendMessage(player, "You don't have a $article ${basicStaff.name} to enchant.")
+                return@on true
+            }
 
-                if (player.inventory.remove(basicStaff, Item(Items.COINS_995, price))) {
-                    closeInterface(player)
-                    sendNPCDialogue(
-                        player,
-                        NPCs.THORMAC_389,
-                        "Just a moment... hang on... hocus pocus abra- cadabra... there you go! Enjoy your enchanted staff!",
-                    )
-                    addItem(player, enchantedStaff.id, 1)
-                }
+            if (!inInventory(player, Items.COINS_995, price)) {
+                closeInterface(player)
+                sendNPCDialogue(player, NPCs.THORMAC_389, "I need $price coins for materials. Come back when you have the money!")
+                return@on true
+            }
+
+            if (player.inventory.remove(basicStaff, Item(Items.COINS_995, price))) {
+                closeInterface(player)
+                sendNPCDialogue(player, NPCs.THORMAC_389, "Just a moment... hang on... hocus pocus abra- cadabra... there you go! Enjoy your enchanted staff!")
+                addItem(player, enchantedStaff.id, 1)
             }
             return@on true
         }
+
     }
 
+    /**
+     * Represents the various enchanted staffs.
+     *
+     * @property enchanted The item id of the enchanted staff.
+     * @property basic The item id of the basic staff.
+     * @property child The button id in the interface for the staff.
+     */
     enum class EnchantedStaff(
         val enchanted: Int,
         val basic: Int,
@@ -89,7 +73,14 @@ class EnchantedStaffInterface : InterfaceListener {
         ;
 
         companion object {
+            /**
+             * Mapping base staff item ids to enchanted staff item ids.
+             */
             val basicToEnchanted = HashMap<Int, Int>()
+
+            /**
+             * Mapping interface button ids to basic staff item ids.
+             */
             val childToBasic = HashMap<Int, Int>()
 
             init {

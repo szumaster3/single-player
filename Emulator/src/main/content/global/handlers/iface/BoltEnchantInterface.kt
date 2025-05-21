@@ -12,6 +12,9 @@ import org.rs.consts.Components
 import org.rs.consts.Items
 import org.rs.consts.Sounds
 
+/**
+ * Represents the bolt enchant interface.
+ */
 class BoltEnchantInterface : InterfaceListener {
     override fun defineInterfaceListeners() {
         on(Components.XBOWS_ENCHANT_BOLT_432) { player, _, _, buttonID, _, itemID ->
@@ -68,6 +71,16 @@ class BoltEnchantInterface : InterfaceListener {
         }
     }
 
+    /**
+     * Enum representing different types of bolts that can be enchanted.
+     *
+     * @property button The button id in the interface.
+     * @property bolt The base bolt item id.
+     * @property level Required Magic level to enchant.
+     * @property runes Required runes and their quantities.
+     * @property exp Experience gained from enchanting.
+     * @property enchanted The enchanted bolt item id.
+     */
     enum class Bolts(
         val button: Int,
         val bolt: Int,
@@ -159,6 +172,9 @@ class BoltEnchantInterface : InterfaceListener {
         ;
 
         companion object {
+            /**
+             * Mapping from button to corresponding bolt enchantment.
+             */
             val boltMap = HashMap<Int, Bolts>()
 
             init {

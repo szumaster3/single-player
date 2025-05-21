@@ -12,6 +12,9 @@ import core.net.amsc.WorldCommunicator
 import core.tools.StringUtils
 import org.rs.consts.Components
 
+/**
+ * Represents the clan setup interface interactions for players.
+ */
 class ClanSetupInterface : InterfaceListener {
     override fun defineInterfaceListeners() {
         on(Components.CLANJOIN_589) { player, _, _, buttonID, _, _ ->
@@ -101,6 +104,12 @@ class ClanSetupInterface : InterfaceListener {
         }
     }
 
+    /**
+     * Converts an opcode integer to a corresponding [ClanRank].
+     *
+     * @param opcode The opcode representing a clan rank.
+     * @return The corresponding [ClanRank].
+     */
     fun getRank(opcode: Int): ClanRank =
         when (opcode) {
             155 -> ClanRank.ANYONE
@@ -115,7 +124,12 @@ class ClanSetupInterface : InterfaceListener {
             else -> ClanRank.NO_ONE
         }
 
-    fun updateSettings(player: Player) {
+    /**
+     * Updates the clan settings UI strings for the specified player.
+     *
+     * @param player The player whose clan settings should be updated.
+     */
+    private fun updateSettings(player: Player) {
         val clan = ClanRepository.get(player.name, true)
         player.packetDispatch.sendString(clan.name, Components.CLANSETUP_590, 22)
         // player.getPacketDispatch().sendConfig(1083, (isCoinshare() ? 1 : 0) << 18 | (isLootshare() ? 0 : 1));
@@ -130,7 +144,7 @@ class ClanSetupInterface : InterfaceListener {
      *
      * @param player The player.
      */
-    fun openSettings(player: Player) {
+    private fun openSettings(player: Player) {
         player.interfaceManager.open(Component(Components.CLANSETUP_590))
         updateSettings(player)
     }

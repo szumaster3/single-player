@@ -13,6 +13,9 @@ import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.Player
 import org.rs.consts.Components
 
+/**
+ * Handles the Exchange Item Sets interface logic.
+ */
 class ExchangeItemSets : InterfaceListener {
     override fun defineInterfaceListeners() {
         onClose(Components.EXCHANGE_ITEMSETS_645) { player, _ ->
@@ -26,6 +29,11 @@ class ExchangeItemSets : InterfaceListener {
     }
 
     companion object {
+        /**
+         * Opens the interface for the player.
+         *
+         * @param player The player.
+         */
         @JvmStatic
         fun openFor(player: Player) {
             openInterface(player, Components.EXCHANGE_ITEMSETS_645)
@@ -36,6 +44,11 @@ class ExchangeItemSets : InterfaceListener {
         }
     }
 
+    /**
+     * Listens to the inv container events to update the interface accordingly.
+     *
+     * @property player The player.
+     */
     private class InventoryListener(
         val player: Player,
     ) : ContainerListener {
@@ -43,6 +56,9 @@ class ExchangeItemSets : InterfaceListener {
             createContainers(player)
         }
 
+        /**
+         * Called when the inventory container updates.
+         */
         override fun update(
             c: Container?,
             event: ContainerEvent?,
@@ -50,10 +66,18 @@ class ExchangeItemSets : InterfaceListener {
             createContainers(player)
         }
 
+        /**
+         * Called to refresh the inventory container.
+         */
         override fun refresh(c: Container?) {
             createContainers(player)
         }
 
+        /**
+         * Generates and sets interface containers for the exchange based on player inventory and container set.
+         *
+         * @param player The player.
+         */
         private fun createContainers(player: Player) {
             setAttribute(
                 player,
