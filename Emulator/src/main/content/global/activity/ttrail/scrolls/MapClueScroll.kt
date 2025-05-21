@@ -19,19 +19,6 @@ import org.rs.consts.Items
 abstract class MapClueScroll(name: String?, clueId: Int, level: ClueLevel?, interfaceId: Int, val location: Location?, val `object`: Int, vararg borders: ZoneBorders?
 ) : ClueScroll(name!!, clueId, level!!, interfaceId, borders.filterNotNull().toTypedArray()) {
 
-    /**
-     * Instantiates a new Map clue scroll.
-     *
-     * @param name        the name
-     * @param clueId      the clue id
-     * @param level       the level
-     * @param interfaceId the interface id
-     * @param location    the location
-     */
-    constructor(name: String?, clueId: Int, level: ClueLevel?, interfaceId: Int, location: Location) : this(
-        name, clueId, level, interfaceId, location, 0
-    )
-
     override fun interact(e: Entity, target: Node, option: Option): Boolean {
         if (e is Player) {
             val p = e.asPlayer()
