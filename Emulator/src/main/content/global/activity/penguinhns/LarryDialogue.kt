@@ -43,7 +43,7 @@ class LarryDialogue(
             10 -> npc("Yes, give me just one moment...").also { stage++ }
             11 -> {
                 val hint = Penguin.values()[PenguinManager.penguins.random()].hint
-                npcl(FaceAnim.FRIENDLY, "One is $hint.")
+                npcl(FaceAnim.FRIENDLY, "I've heard there's a penguin $hint.")
                 stage = END_DIALOGUE
             }
 
