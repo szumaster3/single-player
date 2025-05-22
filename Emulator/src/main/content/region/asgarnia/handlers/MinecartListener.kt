@@ -12,7 +12,7 @@ import org.rs.consts.Scenery
 
 class MinecartListener : InteractionListener {
 
-    private val MINECART = intArrayOf(Scenery.TRAIN_CART_7029, Scenery.TRAIN_CART_7030)
+    private val MINECART = intArrayOf(Scenery.TRAIN_CART_7028, Scenery.TRAIN_CART_7029, Scenery.TRAIN_CART_7030)
 
     override fun defineListeners() {
         on(MINECART, IntType.SCENERY, "ride") { player, node ->
@@ -21,7 +21,7 @@ class MinecartListener : InteractionListener {
                 return@on true
             }
 
-            val isCartFromKeldagrim = node.id == Scenery.TRAIN_CART_7030
+            val isCartFromKeldagrim = node.id == Scenery.TRAIN_CART_7028
             val hasFishingContest = isQuestComplete(player, Quests.FISHING_CONTEST)
 
             if (isCartFromKeldagrim) {

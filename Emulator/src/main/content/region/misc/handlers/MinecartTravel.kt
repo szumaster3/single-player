@@ -20,11 +20,11 @@ object MinecartTravel {
 
     init {
         // Adds minecarts at the Keldagrim station.
-        addScenery(Scenery.TRAIN_CART_7030, Location.create(2916, 10175, 0), 10, 0)
-        addScenery(Scenery.TRAIN_CART_7030, Location.create(2918, 10175, 0), 10, 0)
-        addScenery(Scenery.TRAIN_CART_7030, Location.create(2920, 10175, 0), 10, 0)
-        addScenery(Scenery.TRAIN_CART_7030, Location.create(2922, 10175, 0), 10, 0)
-        addScenery(Scenery.TRAIN_CART_7030, Location.create(2924, 10175, 0), 10, 0)
+        addScenery(Scenery.TRAIN_CART_7028, Location.create(2916, 10175, 0), 0, 10)
+        addScenery(Scenery.TRAIN_CART_7028, Location.create(2918, 10175, 0), 0, 10)
+        addScenery(Scenery.TRAIN_CART_7028, Location.create(2920, 10175, 0), 0, 10)
+        addScenery(Scenery.TRAIN_CART_7028, Location.create(2922, 10175, 0), 0, 10)
+        addScenery(Scenery.TRAIN_CART_7028, Location.create(2924, 10175, 0), 0, 10)
     }
 
     /**
