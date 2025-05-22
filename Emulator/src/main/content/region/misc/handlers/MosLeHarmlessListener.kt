@@ -40,7 +40,7 @@ class MosLeHarmlessListener : InteractionListener {
          */
 
         onUseWith(IntType.NPC, BERET_AND_MASK, NPCs.PATCHY_4359) { player, used, _ ->
-            if (freeSlots(player) == 0 || freeSlots(player) < 2) {
+            if (freeSlots(player) < 2) {
                 sendNPCDialogueLines(
                     player,
                     NPCs.PATCHY_4359,
@@ -51,23 +51,19 @@ class MosLeHarmlessListener : InteractionListener {
                 )
                 return@onUseWith false
             }
-            if (used.id != BERET_AND_MASK) {
-                sendNPCDialogue(player, NPCs.PATCHY_4359, "Sorry, I can't do anythin' with that.", FaceAnim.STRUGGLE)
+
+            if (!removeItem(player, Items.BERET_AND_MASK_11282)) {
+                sendNPCDialogue(
+                    player,
+                    NPCs.PATCHY_4359,
+                    "Sorry, I can't do anythin' with that.",
+                    FaceAnim.SAD
+                )
                 return@onUseWith false
             }
 
-            if (!removeItem(player, Items.BERET_AND_MASK_11282)) {
-                sendNPCDialogueLines(
-                    player,
-                    NPCs.PATCHY_4359,
-                    FaceAnim.SAD,
-                    false,
-                    "Sorry, I can't do anythin' with that.",
-                )
-            } else {
-                addItemOrDrop(player, Items.BLACK_BERET_2635)
-                addItemOrDrop(player, Items.MIME_MASK_3057)
-            }
+            addItemOrDrop(player, Items.BLACK_BERET_2635)
+            addItemOrDrop(player, Items.MIME_MASK_3057)
             return@onUseWith true
         }
 

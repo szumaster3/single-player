@@ -1,5 +1,6 @@
 package content.region.misc.dialogue.keldagrim
 
+import content.data.GameAttributes
 import core.api.quest.isQuestComplete
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
@@ -30,7 +31,7 @@ class CartConductorDialogue(
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
-        visitedKeldagrim = player.getAttribute("keldagrim-visited", false)
+        visitedKeldagrim = player.getAttribute(GameAttributes.MINECART_TRAVEL_UNLOCK, false)
 
         if (!visitedKeldagrim) {
             npcl(FaceAnim.OLD_NORMAL, "Sorry, but I can only take people who have been there before.")

@@ -1,5 +1,6 @@
 package content.region.misthalin.handlers.varrock
 
+import content.data.GameAttributes
 import content.region.kandarin.quest.biohazard.dialogue.GuidorsWifeDialogue
 import content.region.misc.handlers.MinecartTravel
 import content.region.misthalin.dialogue.varrock.KnockatDoorDialogue
@@ -443,7 +444,7 @@ class VarrockListener : InteractionListener {
          */
 
         on(HIDDEN_TRAPDOOR, IntType.SCENERY, "open") { player, _ ->
-            val visited = getAttribute(player, "keldagrim-visited", false)
+            val visited = getAttribute(player, GameAttributes.MINECART_TRAVEL_UNLOCK, false)
 
             if (!visited) {
                 sendDialogue(player, "You must visit Keldagrim to use this shortcut.")

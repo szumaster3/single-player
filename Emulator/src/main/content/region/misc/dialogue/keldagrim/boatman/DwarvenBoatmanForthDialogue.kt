@@ -1,5 +1,6 @@
 package content.region.misc.dialogue.keldagrim.boatman
 
+import content.data.GameAttributes
 import core.api.*
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
@@ -21,7 +22,7 @@ class DwarvenBoatmanForthDialogue(
         interfaceId: Int,
         buttonId: Int,
     ): Boolean {
-        if (!getAttribute(player, "/save:keldagrim-visited", false)) {
+        if (!getAttribute(player, GameAttributes.MINECART_TRAVEL_UNLOCK, false)) {
             when (stage) {
                 START_DIALOGUE -> npcl(FaceAnim.OLD_HAPPY, "Ho there, human!").also { stage++ }
                 1 -> playerl(FaceAnim.FRIENDLY, "${player.name}.").also { stage++ }
@@ -133,7 +134,7 @@ class TravelForthPulse(
             6 ->
                 unlock(player).also {
                     closeInterface(player)
-                    setAttribute(player, "/save:keldagrim-visited", true)
+                    setAttribute(player, GameAttributes.MINECART_TRAVEL_UNLOCK, true)
                     return true
                 }
         }

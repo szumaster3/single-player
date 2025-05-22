@@ -12,6 +12,19 @@ import org.rs.consts.NPCs
 import org.rs.consts.Scenery
 
 class KeldagrimListener : InteractionListener {
+
+    init {
+        /*
+         * Adds minecarts at the Keldagrim station.
+         */
+        addScenery(Scenery.TRAIN_CART_7028, Location.create(2914, 10173, 0), 0, 10)
+        addScenery(Scenery.TRAIN_CART_7028, Location.create(2916, 10175, 0), 0, 10)
+        addScenery(Scenery.TRAIN_CART_7028, Location.create(2918, 10175, 0), 0, 10)
+        addScenery(Scenery.TRAIN_CART_7028, Location.create(2920, 10175, 0), 0, 10)
+        addScenery(Scenery.TRAIN_CART_7028, Location.create(2922, 10175, 0), 0, 10)
+        addScenery(Scenery.TRAIN_CART_7028, Location.create(2924, 10175, 0), 0, 10)
+    }
+
     override fun defineListeners() {
         /*
          * Handles entering through doorway.
@@ -68,14 +81,18 @@ class KeldagrimListener : InteractionListener {
          */
 
         on(Scenery.BOOKCASE_6091, IntType.SCENERY, "search") { player, _ ->
-            if (inInventory(player, Items.EXPLORERS_NOTES_11677)) {
-                sendMessage(player, "You search the books...")
-                sendMessageWithDelay(player, "You find nothing of interest to you.", 1)
-            } else if (freeSlots(player) < 1) {
-                sendMessage(player, "You need at least one free inventory space to take from the shelves.")
-            } else {
-                sendMessage(player, "You search the bookcase and find a book named 'Explorer's Notes'.")
-                addItemOrDrop(player, Items.EXPLORERS_NOTES_11677)
+            when {
+                inInventory(player, Items.EXPLORERS_NOTES_11677) -> {
+                    sendMessage(player, "You search the books...")
+                    sendMessageWithDelay(player, "You find nothing of interest to you.", 1)
+                }
+                freeSlots(player) < 1 -> {
+                    sendMessage(player, "You need at least one free inventory space to take from the shelves.")
+                }
+                else -> {
+                    sendMessage(player, "You search the bookcase and find a book named 'Explorer's Notes'.")
+                    addItemOrDrop(player, Items.EXPLORERS_NOTES_11677)
+                }
             }
             return@on true
         }

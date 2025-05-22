@@ -18,15 +18,6 @@ import org.rs.consts.Scenery
  */
 object MinecartTravel {
 
-    init {
-        // Adds minecarts at the Keldagrim station.
-        addScenery(Scenery.TRAIN_CART_7028, Location.create(2916, 10175, 0), 0, 10)
-        addScenery(Scenery.TRAIN_CART_7028, Location.create(2918, 10175, 0), 0, 10)
-        addScenery(Scenery.TRAIN_CART_7028, Location.create(2920, 10175, 0), 0, 10)
-        addScenery(Scenery.TRAIN_CART_7028, Location.create(2922, 10175, 0), 0, 10)
-        addScenery(Scenery.TRAIN_CART_7028, Location.create(2924, 10175, 0), 0, 10)
-    }
-
     /**
      * Init travel **to Keldagrim** for the given player.
      *
@@ -59,6 +50,11 @@ object MinecartTravel {
         submitWorldPulse(TravelFromKeldagrimPulse(player, dest))
     }
 
+    /**
+     * Handles travel **from** Keldagrim via the minecart.
+     *
+     * @property player The player who is traveling.
+     */
     class TravelFromKeldagrimPulse(
         val player: Player,
         val dest: Location,
@@ -112,6 +108,11 @@ object MinecartTravel {
         }
     }
 
+    /**
+     * Handles travel **to** Keldagrim via the minecart.
+     *
+     * @property player The player who is traveling.
+     */
     class TravelToKeldagrimPulse(
         val player: Player,
     ) : Pulse() {
@@ -126,21 +127,25 @@ object MinecartTravel {
                         setMinimapState(player, 2)
                     }
 
-                3 ->
+                6 ->
                     player.properties.teleportLocation =
-                        Location.create(2942, 10175, 0).also { player.appearance.rideCart(true) }
-
-                5 -> {
-                    player.walkingQueue.reset()
-                    player.walkingQueue.addPath(2915, 10175)
-                }
+                        Location.create(2943, 10170, 0).also { player.appearance.rideCart(true) }
 
                 7 -> {
+                    player.walkingQueue.reset()
+                    player.walkingQueue.addPath(2939, 10173)
+                }
+                8 -> {
+                    player.walkingQueue.reset()
+                    player.walkingQueue.addPath(2914, 10173)
+                }
+
+                10 -> {
                     closeInterface(player)
                     openInterface(player, Components.FADE_FROM_BLACK_170)
                 }
 
-                19 -> {
+                23 -> {
                     closeInterface(player)
                     setMinimapState(player, 0)
                     unlock(player)
