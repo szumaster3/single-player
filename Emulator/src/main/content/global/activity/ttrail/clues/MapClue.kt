@@ -12,31 +12,6 @@ import org.rs.consts.Scenery
 /**
  * Represents the emote clues.
  */
-
-// Maps with Crates
-//  [ ] - Clock Tower – South of Ardougne's Castle.
-//  [ ] - Dark Knight's Fortress – Level 14 Wilderness. Search a crate in the southwest corner of the main room.
-//  [ ] - Observatory – Southwest of Ardougne. Search the crate in the westernmost building near the 3 goblins.
-//  [ ] - Varrock Lumberyard – Northeast of Varrock. Search the indicated crate.
-// Maps with X (No Crates) With Buildings
-//  [ ] - Chaos Altar – North of the Observatory. Dig next to the standards behind the altar.
-//  [ ] - Brother Galahad's House – West of Seers' Village, across the river from the coal trucks.
-//  [ ] - Miscellania – East of the castle.
-//  [ ] - Necromancer's Tower – North of Tower of Life, south of Ardougne, near the Necromancer's tower. Fairy ring code DJP is nearby.
-//  [ ] - Ranging Guild – East of the Ranging Guild.
-// Without Buildings
-//  [ ] - North Falador Rocks – East of Falador's walls, near some stones.
-//  [ ] - Varrock West Mine – South-west of Varrock, near the mining spot.
-//  [ ] - North Falador Statue – Just north of Falador, near a statue at a crossroads.
-//  [ ] - Road to Rellekka – Between Seers' Village and Rellekka, near two oak trees.
-//  [ ] - Crafting Guild Peninsula – West of the Crafting Guild.
-//  [ ] - Picnic Tables – South of Legends' Guild, east of Ardougne.
-//  [ ] - Volcanoes – Level 50 Wilderness, southeast of the Agility Dungeon and west of the Mage Arena. Dig between the three volcanoes.
-//  [ ] - Rellekka Bridge – On the road between Rellekka and the Lighthouse.
-// Maps with Fish
-//  [ ] - Draynor – South of Draynor Village bank, by the fishing spot.
-//  [ ] - Mort'ton – North of the Haunted Mine, along the path to Mort'ton (03.15N 31.03E).
-//
 class MapClue : MapClueScroll {
 
     /**
@@ -71,6 +46,8 @@ class MapClue : MapClueScroll {
         register(MapClue("champion's-guild", Items.CLUE_SCROLL_2788, ClueLevel.EASY, Components.TRAIL_MAP10_346, Location.create(3166, 3360, 0)))
         register(MapClue("varrock-mine", Items.CLUE_SCROLL_2792, ClueLevel.EASY, Components.TRAIL_MAP11_347, Location.create(3289, 3373, 0)))
         register(MapClue("draynor", Items.CLUE_SCROLL_2801, ClueLevel.MEDIUM, Components.TRAIL_MAP12_348, Location.create(3092, 3227, 0)))
+        register(MapClue("ranging_guild", Items.CLUE_SCROLL_3526, ClueLevel.MEDIUM, Components.TRAIL_MAP13_349, Location.create(2702, 3429, 0)))
+        register(MapClue("varrock-lumberyard", Items.CLUE_SCROLL_3528, ClueLevel.HARD, Components.TRAIL_MAP14_350, Location.create(3309, 3503, 0), Scenery.CRATE_2620, ZoneBorders(3308, 3502, 3310, 3504)))
         register(MapClue("falador-stone", Items.CLUE_SCROLL_2786, ClueLevel.EASY, Components.TRAIL_MAP15_351, Location.create(3043, 3399, 0)))
         register(MapClue("crafting-guild-dig", Items.CLUE_SCROLL_2778, ClueLevel.MEDIUM, Components.TRAIL_MAP16_352, Location.create(2906, 3294, 0)))
         register(MapClue("yanille", Items.CLUE_SCROLL_2783, ClueLevel.HARD, Components.TRAIL_MAP17_353, Location.create(2616, 3077, 0)))
