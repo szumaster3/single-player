@@ -11,6 +11,7 @@ import core.game.world.map.zone.ZoneBorders
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
 import org.rs.consts.Animations
+import org.rs.consts.NPCs
 
 /**
  * Represents an emote-based clue scroll.
@@ -75,14 +76,14 @@ abstract class EmoteClueScroll(
     private fun spawnUri(player: Player) {
         var doubleAgent = level == ClueLevel.HARD && player.getAttribute("killed-agent", 0) != clueId
 
-        var id = 5141
+        var id = NPCs.URI_5141
         if (doubleAgent) {
             val wilderness = player.skullManager.isWilderness
             if (wilderness) {
-                id = 5141
+                id = NPCs.URI_5141
                 doubleAgent = false
             } else {
-                id = 5145
+                id = NPCs.DOUBLE_AGENT_5145
             }
         }
         val uri = NPC.create(id, player.location.transform(1, 0, 0))

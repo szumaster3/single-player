@@ -129,7 +129,7 @@ abstract class CrypticClueScroll(
      */
     fun dig(player: Player) {
         reward(player)
-        player.dialogueInterpreter.sendItemMessage(Items.CASKET_405, "You've found a casket!")
+        sendItemDialogue(player, Items.CASKET_405, "You've found a casket!")
     }
 
     /**

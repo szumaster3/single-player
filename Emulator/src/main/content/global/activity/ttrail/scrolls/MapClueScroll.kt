@@ -2,7 +2,9 @@ package content.global.activity.ttrail.scrolls
 
 import content.global.activity.ttrail.ClueLevel
 import content.global.activity.ttrail.ClueScroll
+import core.api.inInventory
 import core.api.sendItemDialogue
+import core.api.sendMessage
 import core.game.global.action.DigAction
 import core.game.global.action.DigSpadeHandler.register
 import core.game.interaction.Option
@@ -22,13 +24,13 @@ abstract class MapClueScroll(
 
     override fun interact(e: Entity, target: Node, option: Option): Boolean {
         if (e is Player) {
-            val p = e.asPlayer()
+            val player = e.asPlayer()
             if (target.id == `object` && option.name == "Search") {
-                if (!p.inventory.contains(clueId, 1) || target.location != location) {
-                    p.sendMessage("Nothing interesting happens.")
+                if (!inInventory(player, clueId, 1) || target.location != location) {
+                    sendMessage(player, "Nothing interesting happens.")
                     return false
                 }
-                reward(p)
+                reward(player)
                 return true
             }
         }
@@ -58,7 +60,7 @@ abstract class MapClueScroll(
     inner class MapDigAction : DigAction {
         override fun run(player: Player?) {
             if (!hasRequiredItems(player)) {
-                player!!.sendMessage("Nothing interesting happens.")
+                sendMessage(player!!, "Nothing interesting happens.")
                 return
             }
             dig(player)
