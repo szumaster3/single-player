@@ -32,28 +32,30 @@ class DraynorVillageListener : InteractionListener {
             return@on true
         }
 
+        /**
+         * Handles searching the bookshelves in Draynor Manor.
+         * Each shelf can contain a specific unique book. The player must have at least one free slot.
+         */
         on(DraynorUtils.bookshelf, IntType.SCENERY, "search") { player, node ->
+            sendMessage(player, "You search the bookcase...")
+
             if (freeSlots(player) == 0) {
                 sendDialogue(player, "You need at least one free inventory space to take from the shelves.")
                 return@on true
             }
-            when (node.id) {
-                7065 -> if (!inInventory(player, Items.STRANGE_BOOK_5507)) {
-                    sendMessage(player, "You search the bookcase and find a book named 'Strange Book'.")
-                    addItem(player, Items.STRANGE_BOOK_5507)
-                }
 
-                7066 -> if (!inInventory(player, Items.BOOK_OF_FOLKLORE_5508)) {
-                    sendMessage(player, "You search the bookcase and find a book named 'Book of folklore'.")
-                    addItem(player, Items.BOOK_OF_FOLKLORE_5508)
-                }
+            val (itemId, bookName) = when (node.id) {
+                7065 -> Items.STRANGE_BOOK_5507 to "Strange Book"
+                7066 -> Items.BOOK_OF_FOLKLORE_5508 to "Book of folklore"
+                7068 -> Items.BOOK_ON_CHICKENS_7464 to "Book on chickens"
+                else -> null to null
+            }
 
-                7068 -> if (!inInventory(player, Items.BOOK_ON_CHICKENS_7464)) {
-                    sendMessage(player, "You search the bookcase and find a book named 'Book on chickens'.")
-                    addItem(player, Items.BOOK_ON_CHICKENS_7464)
-                }
-
-                else -> sendMessage(player, "You search the bookcase and find nothing of interest.")
+            if (itemId != null && !inInventory(player, itemId)) {
+                addItem(player, itemId)
+                sendMessage(player, "...and find a book named '$bookName'.")
+            } else {
+                sendMessage(player, "...and find nothing of interest.")
             }
             return@on true
         }

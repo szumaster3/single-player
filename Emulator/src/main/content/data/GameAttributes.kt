@@ -334,4 +334,6 @@ internal object GameAttributes {
     // Keldagrim travel.
     const val MINECART_TRAVEL_UNLOCK = "/save:keldagrim-visited"
 
+    // Beehive cleaning.
+    const val BEEHIVE_INTERACTION = "cleared-beehives"
 }

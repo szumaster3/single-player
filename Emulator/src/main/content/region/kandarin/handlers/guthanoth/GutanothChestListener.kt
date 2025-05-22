@@ -18,6 +18,9 @@ import java.util.concurrent.TimeUnit
 
 private const val CHEST = org.rs.consts.Scenery.CHEST_2827
 
+/**
+ * Handles interactions with the Gutanoth chest.
+ */
 class GutanothChestListener : InteractionListener {
     override fun defineListeners() {
         on(CHEST, IntType.SCENERY, "open") { player, node ->
@@ -27,11 +30,14 @@ class GutanothChestListener : InteractionListener {
         }
     }
 
-    class ChestPulse(
-        val player: Player,
-        val isLoot: Boolean,
-        val chest: Scenery,
-    ) : Pulse() {
+    /**
+     * Handles the chest opening.
+     *
+     * @property player the player.
+     * @property isLooted whether the chest currently contains loot (based on cooldown)
+     * @property chest the scenery object representing the chest
+     */
+    class ChestPulse(val player: Player, val isLooted: Boolean, val chest: Scenery, ) : Pulse() {
         var ticks = 0
 
         override fun pulse(): Boolean {
@@ -54,8 +60,13 @@ class GutanothChestListener : InteractionListener {
             return false
         }
 
+        /**
+         * Gives loot to the player or spawns an NPC as a reward.
+         *
+         * @param player the player to receive the reward
+         */
         private fun lootChest(player: Player) {
-            if (isLoot) {
+            if (isLooted) {
                 setAttribute(
                     player,
                     "/save:gutanoth-chest-delay",
@@ -87,24 +98,26 @@ class GutanothChestListener : InteractionListener {
             }
         }
 
-        enum class Rewards(
-            val id: Int,
-            val type: Type,
-            val message: String,
-        ) {
+        /**
+         * Represents the rewards from the Gutanoth chest.
+         *
+         * @property id the item id.
+         * @property type the type of reward.
+         * @property message the message.
+         */
+        enum class Rewards(val id: Int, val type: Type, val message: String, ) {
             BONES(id = Items.BONES_2530, type = Type.ITEM, message = "Oh! Some bones. Delightful."),
             EMERALD(id = Items.EMERALD_1605, type = Type.ITEM, message = "Ooh! A lovely emerald!"),
-            ROTTEN_APPLE(
-                id = Items.ROTTEN_APPLE_1984,
-                type = Type.ITEM,
-                message = "Oh, joy, spoiled fruit! My favorite!",
-            ),
+            ROTTEN_APPLE(id = Items.ROTTEN_APPLE_1984, type = Type.ITEM, message = "Oh, joy, spoiled fruit! My favorite!"),
             CHAOS_DWARF(id = NPCs.CHAOS_DWARF_119, type = Type.NPC, message = "You've gotta be kidding me, a dwarf?!"),
             RAT(id = NPCs.RAT_47, type = Type.NPC, message = "Eek!"),
             SCORPION(id = NPCs.SCORPION_1477, type = Type.NPC, message = "Zoinks!"),
             SPIDER(id = NPCs.SPIDER_1004, type = Type.NPC, message = "Awh, a cute lil spidey!"),
         }
 
+        /**
+         * Types of rewards possible from the chest.
+         */
         enum class Type {
             ITEM,
             NPC,

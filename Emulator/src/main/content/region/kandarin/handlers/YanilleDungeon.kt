@@ -19,21 +19,13 @@ import core.game.world.map.zone.ZoneBorders
 import core.game.world.map.zone.ZoneBuilder
 import core.game.world.update.flag.context.Animation
 import core.tools.RandomFunction
+import org.rs.consts.Animations
 import org.rs.consts.Items
 import org.rs.consts.Scenery
 
-class YanilleDungeon :
-    MapZone("Yanille agility", true),
-    InteractionListener {
-    private val sinisterChestContent =
-        arrayOf(
-            Item(Items.GRIMY_HARRALANDER_205, 2),
-            Item(Items.GRIMY_RANARR_207, 3),
-            Item(Items.GRIMY_IRIT_209),
-            Item(Items.GRIMY_AVANTOE_211),
-            Item(Items.GRIMY_KWUARM_213),
-            Item(Items.GRIMY_TORSTOL_219),
-        )
+class YanilleDungeon : MapZone("Yanille agility", true), InteractionListener {
+
+    private val sinisterChestContent = arrayOf(Item(Items.GRIMY_HARRALANDER_205, 2), Item(Items.GRIMY_RANARR_207, 3), Item(Items.GRIMY_IRIT_209), Item(Items.GRIMY_AVANTOE_211), Item(Items.GRIMY_KWUARM_213), Item(Items.GRIMY_TORSTOL_219))
 
     override fun configure() {
         register(ZoneBorders(2544, 9481, 2631, 9587))
@@ -57,108 +49,107 @@ class YanilleDungeon :
             return@on true
         }
 
-        on(
-            intArrayOf(Scenery.PILE_OF_RUBBLE_2318, Scenery.PILE_OF_RUBBLE_2317),
-            IntType.SCENERY,
-            "climb-up",
-            "climb-down",
-        ) { player, target ->
+        /*
+         * Handles climbing up or down a pile of rubble in the agility course.
+         */
+
+        on(intArrayOf(Scenery.PILE_OF_RUBBLE_2318, Scenery.PILE_OF_RUBBLE_2317), IntType.SCENERY, "climb-up", "climb-down") { player, target ->
+
             if (getStatLevel(player, Skills.AGILITY) < 67) {
                 sendMessage(player, "You need an agility level of at least 67 in order to do this.")
                 return@on true
             }
+
             lock(player, 3)
-            queueScript(player, 1, QueueStrength.SOFT) {
-                val loc = if (target.id == 2317) Location(2614, 9504, 0) else Location(2617, 9571, 0)
-                ClimbActionHandler.climb(
-                    player,
-                    if (target.id == 2317) {
-                        ClimbActionHandler.CLIMB_UP
-                    } else {
-                        ClimbActionHandler.CLIMB_DOWN
-                    },
-                    loc,
-                )
-                sendMessage(
-                    player,
-                    "You climb " +
-                        if (target.id == 2317) {
-                            "up"
-                        } else {
-                            "down"
-                        } + " the pile of rubble...",
-                )
+
+            queueScript(player, delay = 1, strength = QueueStrength.SOFT) {
+                val isClimbingUp = target.id == Scenery.PILE_OF_RUBBLE_2317
+                val destination = if (isClimbingUp) Location(2614, 9504, 0) else Location(2617, 9571, 0)
+                ClimbActionHandler.climb(player, if (isClimbingUp) ClimbActionHandler.CLIMB_UP else ClimbActionHandler.CLIMB_DOWN, destination)
+                sendMessage(player, "You climb ${if (isClimbingUp) "up" else "down"} the pile of rubble...")
                 rewardXP(player, Skills.AGILITY, 5.5)
                 return@queueScript stopExecuting(player)
             }
+
             return@on true
         }
 
-        on(
-            intArrayOf(Scenery.BALANCING_LEDGE_35969, Scenery.BALANCING_LEDGE_2303),
-            IntType.SCENERY,
-            "walk-across",
-        ) { player, node ->
+        /*
+         * Handles walking across the balancing ledges in the agility course.
+         */
+
+        on(intArrayOf(Scenery.BALANCING_LEDGE_35969, Scenery.BALANCING_LEDGE_2303), IntType.SCENERY, "walk-across") { player, node ->
             val target = node as core.game.node.scenery.Scenery
+
             if (getStatLevel(player, Skills.AGILITY) < 40) {
                 sendMessage(player, "You need an agility level of at least 40 in order to do this.")
                 return@on true
             }
+
             val dir = Direction.getLogicalDirection(player.location, target.location)
-            val diff =
-                if (player.location.y == 9512) {
-                    0
-                } else {
-                    1
-                }
+            val diff = if (player.location.y == 9512) 0 else 1
+
             var end = target.location
-            var xp = 0.0
-            if (AgilityHandler.hasFailed(player, 40, 0.01)) {
+            val failChance = AgilityHandler.hasFailed(player, 40, 0.01)
+
+            if (failChance) {
                 lock(player, 3)
-                GameWorld.Pulser.submit(
-                    object : Pulse(2, player) {
-                        override fun pulse(): Boolean {
-                            AgilityHandler.fail(
-                                player,
-                                1,
-                                Location(2572, 9570, 0),
-                                Animation.create(761 - diff),
-                                RandomFunction.random(1, 3),
-                                "You lost your balance!",
-                            )
-                            runTask(player, 2) {
-                                animate(player, 5056, true)
-                            }
-                            return true
+                GameWorld.Pulser.submit(object : Pulse(2, player) {
+                    override fun pulse(): Boolean {
+                        AgilityHandler.fail(player, 1, Location(2572, 9570, 0), Animation.create(761 - diff), RandomFunction.random(1, 3), "You lost your balance!")
+                        runTask(player, 2) {
+                            animate(player, Animations.ON_BACK_GET_UP_BRUSH_SELF_5056, true)
                         }
-                    },
-                )
+                        return true
+                    }
+                })
             } else {
-                xp = 22.5
                 end = target.location.transform(dir.stepX * 7, dir.stepY * 7, 0)
+                AgilityHandler.walk(
+                    player,
+                    -1,
+                    player.location,
+                    end,
+                    Animation.create(157 - diff),
+                    22.5,
+                    null
+                )
             }
-            AgilityHandler.walk(player, -1, player.location, end, Animation.create(157 - diff), xp, null)
+
             return@on true
         }
 
+        /*
+         * Handles the interaction with the sinister chest.
+         */
+
         on(Scenery.CLOSED_CHEST_377, IntType.SCENERY, "open") { player, target ->
-            if (!inInventory(player, Items.SINISTER_KEY_993, 1)) {
+            if (!inInventory(player, Items.SINISTER_KEY_993)) {
                 sendMessage(player, "The chest is locked.")
-            } else {
-                if (freeSlots(player) == 0) {
-                    sendMessage(player, "You don't have enough inventory space.")
-                    return@on true
-                }
-                lock(player, 1)
-                if (removeItem(player, Items.SINISTER_KEY_993)) {
-                    sendMessage(player, "You unlock the chest with your key... A foul gas seeps from the chest")
-                    applyPoison(player, player, 2)
-                    for (item in sinisterChestContent) {
-                        addItemOrDrop(player, item.id, item.amount)
-                    }
-                    SceneryBuilder.replace(target.asScenery(), target.asScenery().transform(target.id + 1), 5)
-                }
+                return@on true
             }
+
+            if (freeSlots(player) == 0) {
+                sendMessage(player, "You don't have enough inventory space.")
+                return@on true
+            }
+
+            lock(player, 1)
+
+            if (removeItem(player, Items.SINISTER_KEY_993)) {
+                sendMessage(player, "You unlock the chest with your key... A foul gas seeps from the chest.")
+                applyPoison(player, player, 2)
+
+                for (item in sinisterChestContent) {
+                    addItemOrDrop(player, item.id, item.amount)
+                }
+
+                SceneryBuilder.replace(
+                    target.asScenery(),
+                    target.asScenery().transform(target.id + 1), 5
+                )
+            }
+
             return@on true
         }
 

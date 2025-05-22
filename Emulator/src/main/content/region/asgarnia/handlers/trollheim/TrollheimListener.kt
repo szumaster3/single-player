@@ -9,11 +9,7 @@ import org.rs.consts.Scenery
 
 class TrollheimListener : InteractionListener {
     override fun defineListeners() {
-        on(
-            intArrayOf(Scenery.CAVE_ENTRANCE_3759, Scenery.CAVE_ENTRANCE_3735),
-            IntType.SCENERY,
-            "enter",
-        ) { player, node ->
+        on(intArrayOf(Scenery.CAVE_ENTRANCE_3759, Scenery.CAVE_ENTRANCE_3735), IntType.SCENERY, "enter") { player, node ->
             if (node.id == Scenery.CAVE_ENTRANCE_3759) {
                 teleport(player, Location.create(2893, 10074, 0))
             } else {
@@ -23,11 +19,12 @@ class TrollheimListener : InteractionListener {
         }
 
         on(Scenery.CAVE_EXIT_32738, IntType.SCENERY, "exit") { player, _ ->
-            if (!getRegionBorders(11677).insideBorder(player)) {
-                teleport(player, Location.create(2858, 3577, 0))
+            val location = if (!getRegionBorders(11677).insideBorder(player)) {
+                Location.create(2858, 3577, 0)
             } else {
-                teleport(player, Location.create(2893, 3671, 0))
+                Location.create(2893, 3671, 0)
             }
+            teleport(player, location)
             return@on true
         }
     }
@@ -37,4 +34,5 @@ class TrollheimListener : InteractionListener {
             return@setDest Location.create(2893, 3671, 0)
         }
     }
+
 }

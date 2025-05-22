@@ -19,15 +19,23 @@ import org.rs.consts.Sounds
 
 class TindelMerchantListener : InteractionListener {
     override fun defineListeners() {
+
+        /*
+         * Handles ring the bell at Port Khazard.
+         */
+
         on(ANTIQUE_SHOP_STALL, IntType.SCENERY, "ring-bell") { player, _ ->
             playGlobalAudio(player.location, BELL_SOUND)
             sendDialogue(player, "You ring for attention.")
-            queueScript(player, 1, QueueStrength.SOFT) {
+            runTask(player, 1) {
                 openDialogue(player, TindelMerchantDialogue())
-                return@queueScript stopExecuting(player)
             }
             return@on true
         }
+
+        /*
+         * Handles interaction options with Tindel Merchant NPCs.
+         */
 
         on(TINDEL, IntType.NPC, "talk-to", "Give-Sword") { player, _ ->
             when (getUsedOption(player)) {
@@ -53,70 +61,67 @@ class TindelMerchantListener : InteractionListener {
         private const val RUSTY_SCIMITAR = Items.RUSTY_SCIMITAR_6721
         private const val FAKE_COINS = Items.COINS_8896
 
+        /**
+         * Exchanges a rusty items for a random repaired weapon.
+         *
+         * @param player The player.
+         * @return item.
+         */
         fun exchangeRustyWeapon(player: Player): Boolean {
-            if (!anyInInventory(player, RUSTY_SWORD, RUSTY_SCIMITAR)) {
-                sendNPCDialogue(
-                    player,
-                    TINDEL,
-                    "Sorry my friend, but you don't seem to have any swords that need to be identified.",
-                    FaceAnim.HALF_GUILTY,
-                )
-                return false
+            val rustyItemId = when {
+                inInventory(player, RUSTY_SWORD) -> RUSTY_SWORD
+                inInventory(player, RUSTY_SCIMITAR) -> RUSTY_SCIMITAR
+                else -> {
+                    sendNPCDialogue(player, TINDEL, "Sorry my friend, but you don't seem to have any swords that need to be identified.", FaceAnim.HALF_GUILTY)
+                    return false
+                }
             }
+
             if (!inInventory(player, Items.COINS_995, 100)) {
                 sendNPCDialogue(player, TINDEL, "Sorry, you don't have enough coins.", FaceAnim.HALF_GUILTY)
                 return false
             }
-            var rustySword: Item? = null
-            var repairedItem: Item? = null
-            val sendItem = if (inInventory(player, RUSTY_SWORD)) RUSTY_SWORD else RUSTY_SCIMITAR
+
             sendDoubleItemDialogue(
                 player,
-                sendItem,
+                rustyItemId,
                 FAKE_COINS,
-                "You hand Tindel 100 coins plus the ${getItemName(sendItem).lowercase()}.",
+                "You hand Tindel 100 coins plus the ${getItemName(rustyItemId).lowercase()}."
             )
-            addDialogueAction(player) { player, button ->
+
+            addDialogueAction(player) { _, button ->
                 if (button >= 1) {
-                    val chance =
-                        RandomFunction.getSkillSuccessChance(50.0, 100.0, getStatLevel(player, Skills.SMITHING))
-                    if (RandomFunction.random(0.0, 100.0) < chance) {
-                        if (inInventory(player, RUSTY_SWORD, 1)) {
-                            rustySword = Item(RUSTY_SWORD, 1)
-                            repairedItem = BrokenItem.getRepair(BrokenItem.EquipmentType.SWORDS)
-                        }
-                    } else if (inInventory(player, RUSTY_SCIMITAR, 1)) {
-                        rustySword = Item(RUSTY_SCIMITAR, 1)
-                        repairedItem = BrokenItem.getRepair(BrokenItem.EquipmentType.SCIMITARS)
-                    } else {
-                        sendNPCDialogue(
-                            player,
-                            TINDEL,
-                            "Sorry my friend, but you don't seem to have any swords that need to be identified.",
-                            FaceAnim.HALF_GUILTY,
-                        )
+                    val smithingLevel = getStatLevel(player, Skills.SMITHING)
+                    val chance = RandomFunction.getSkillSuccessChance(50.0, 100.0, smithingLevel)
+                    val success = RandomFunction.random(0.0, 100.0) < chance
+
+                    val equipmentType = when (rustyItemId) {
+                        RUSTY_SWORD -> BrokenItem.EquipmentType.SWORDS
+                        RUSTY_SCIMITAR -> BrokenItem.EquipmentType.SCIMITARS
+                        else -> null
                     }
+
+                    if (equipmentType == null) {
+                        sendNPCDialogue(player, TINDEL, "Sorry my friend, but you don't seem to have any swords that need to be identified.", FaceAnim.HALF_GUILTY)
+                        return@addDialogueAction
+                    }
+
+                    val rustyItem = Item(rustyItemId, 1)
+                    val repairedItem = BrokenItem.getRepair(equipmentType)
+                    val itemName = getItemName(repairedItem!!.id).lowercase()
+
                     removeItem(player, Item(Items.COINS_995, 100))
-                    removeItem(player, rustySword)
-                    if (RandomFunction.random(0.0, 100.0) < chance) {
-                        repairedItem?.let {
-                            sendItemDialogue(
-                                player,
-                                it.id,
-                                "Tindel gives you a ${getItemName(it.id).lowercase()}.",
-                            )
-                        }
-                        addItem(player, repairedItem!!.id)
+                    removeItem(player, rustyItem)
+
+                    if (success) {
+                        sendItemDialogue(player, repairedItem.id, "Tindel gives you a $itemName.")
+                        addItem(player, repairedItem.id, 1)
                     } else {
-                        sendNPCDialogue(
-                            player,
-                            TINDEL,
-                            "Sorry my friend, but the item wasn't worth anything. I've disposed of it for you.",
-                            FaceAnim.HALF_GUILTY,
-                        )
+                        sendNPCDialogue(player, TINDEL, "Sorry my friend, but the item wasn't worth anything. I've disposed of it for you.", FaceAnim.HALF_GUILTY)
                     }
                 }
             }
+
             return true
         }
     }

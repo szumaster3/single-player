@@ -18,8 +18,7 @@ class LunarIsleListener : InteractionListener {
         private const val HOUSE = NPCs.HOUSE_4512
         private const val LADDER_UP = Scenery.LADDER_16640
         private const val LADDER_DOWN = Scenery.LADDER_36306
-        private val CYRISUS =
-            intArrayOf(NPCs.CYRISUS_5893, NPCs.CYRISUS_5894, NPCs.CYRISUS_5895, NPCs.CYRISUS_5896, NPCs.CYRISUS_5897)
+        private val CYRISUS = intArrayOf(NPCs.CYRISUS_5893, NPCs.CYRISUS_5894, NPCs.CYRISUS_5895, NPCs.CYRISUS_5896, NPCs.CYRISUS_5897)
     }
 
     override fun defineListeners() {

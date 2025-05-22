@@ -5,15 +5,11 @@ import content.region.kandarin.dialogue.ardougne.CaptainBarnabyDialogue
 import content.region.kandarin.quest.grail.dialogue.GalahadDialogue
 import core.api.*
 import core.api.quest.hasRequirement
-import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.item.Item
-import core.tools.END_DIALOGUE
-import core.tools.START_DIALOGUE
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
@@ -31,7 +27,7 @@ class ArdougneListener : InteractionListener {
         }
 
         on(NPCs.CAPTAIN_BARNABY_4974, IntType.NPC, "pay-fare") { player, _ ->
-            var amount = if (isDiaryComplete(player, DiaryType.KARAMJA, 0)) 15 else 30
+            val amount = if (isDiaryComplete(player, DiaryType.KARAMJA, 0)) 15 else 30
             if (!removeItem(player, Item(Items.COINS_995, amount))) {
                 sendMessage(player, "You can not afford that.")
             } else {

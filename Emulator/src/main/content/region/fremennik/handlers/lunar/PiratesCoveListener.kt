@@ -12,6 +12,11 @@ import org.rs.consts.Scenery
 
 class PiratesCoveListener : InteractionListener {
     override fun defineListeners() {
+
+        /*
+         * Handles taking apples form barrel.
+         */
+
         on(FULL_BARREL, IntType.SCENERY, "take-from") { player, node ->
             val incrementAmount = RandomFunction.random(83, 1000)
 
@@ -20,24 +25,25 @@ class PiratesCoveListener : InteractionListener {
                 return@on true
             }
 
-            if (node.asScenery().charge >= 0) {
-                node.asScenery().charge -= incrementAmount
+            val scenery = node.asScenery()
+            if (scenery.charge >= 0) {
+                scenery.charge -= incrementAmount
+
                 when (node.id) {
                     Scenery.BARREL_16884 -> addItem(player, Items.ROTTEN_APPLE_1984)
                     Scenery.BARREL_16885 -> addItem(player, Items.COOKING_APPLE_1955)
                     Scenery.TAR_BARREL_16860 -> addItem(player, Items.SWAMP_TAR_1939)
                 }
 
-                if (node.asScenery().charge <= 0) {
+                if (scenery.charge <= 0) {
                     sendMessage(player, "The barrel became empty!")
                     when (node.id) {
-                        Scenery.TAR_BARREL_16860 -> replaceScenery(node.asScenery(), Scenery.TAR_BARREL_16688, 38)
-                        Scenery.BARREL_16884, Scenery.BARREL_16885 -> replaceScenery(node.asScenery(), EMPTY_BARREL, 38)
+                        Scenery.TAR_BARREL_16860 -> replaceScenery(scenery, Scenery.TAR_BARREL_16688, 38)
+                        Scenery.BARREL_16884, Scenery.BARREL_16885 -> replaceScenery(scenery, EMPTY_BARREL, 38)
                     }
-                    node.asScenery().charge = 1000
+                    scenery.charge = 1000
                 }
             }
-
             return@on true
         }
     }

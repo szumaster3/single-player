@@ -11,13 +11,24 @@ import org.rs.consts.NPCs
 
 class BogrogListener : InteractionListener {
     override fun defineListeners() {
+
+        /*
+         * Handles the "swap" interaction on the Bogrog NPC.
+         */
+
         on(NPCs.BOGROG_4472, IntType.NPC, "swap") { player, _ ->
             openSwap(player)
             return@on true
         }
+
     }
 
     companion object {
+        /**
+         * Opens the pouch swapping interface.
+         *
+         * @param player The player.
+         */
         fun openSwap(player: Player) {
             if (getStatLevel(player, Skills.SUMMONING) < 21) {
                 sendMessage(player, "You need a Summoning level of at least 21 in order to do that.")
