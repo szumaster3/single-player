@@ -5,6 +5,8 @@ import core.api.*
 import core.game.component.Component
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
+import core.game.dialogue.IfTopic
+import core.game.dialogue.Topic
 import core.game.node.entity.player.Player
 import core.tools.END_DIALOGUE
 import core.tools.Log
@@ -34,16 +36,15 @@ class LarryDialogue(
                 1 -> end()
                 2 -> {
                     if (!getAttribute(player, GameAttributes.ACTIVITY_PENGUINS_HNS, false)) {
-                        npc(FaceAnim.THINKING,"What do you want?")
+                        npc(FaceAnim.THINKING, "What do you want?")
                         stage = 1
-                    } else if(getAttribute(player, GameAttributes.ACTIVITY_PENGUINS_HNS, false) && !lostNotebook) {
+                    } else if (getAttribute(player, GameAttributes.ACTIVITY_PENGUINS_HNS, false) && !lostNotebook) {
                         npcl(FaceAnim.HALF_ASKING, "Wait! Where if your spy notebook? Did it fall into enemy hands?")
                         stage = 17
                     } else {
-                        options("I've found more penguins.", "I'm having trouble finding the penguins; can I have a hint?", "I want to claim my reward.", "What do I need to do again?", "Never mind.")
-                        stage = 18
+                        npcl(FaceAnim.CRYING, "Do you have news? Have you found more?")
+                        stage = 35
                     }
-
                 }
             }
             1 -> player("Uh, I just wanted to as-").also { stage++ }
@@ -77,15 +78,18 @@ class LarryDialogue(
             17 -> {
                 sendItemDialogue(player, Items.SPY_NOTEBOOK_13732, "You receive a penguin spy notebook.")
                 addItemOrDrop(player, Items.SPY_NOTEBOOK_13732, 1)
-                stage++
+                stage = 0
             }
-            18 -> when(buttonId) {
-                1 -> playerl(FaceAnim.FRIENDLY, "I've found more penguins.").also { stage = 100 }
-                2 -> playerl(FaceAnim.HALF_ASKING, "I'm having trouble finding the penguins; can I have a hint?").also { stage = 31 }
-                3 -> player(FaceAnim.HALF_ASKING,"I want to claim my reward.").also { stage = 28 }
-                4 -> player(FaceAnim.HALF_ASKING,"What do I need to do again?").also { stage = 13 }
-                5 -> player(FaceAnim.HALF_ASKING,"Never mind.").also { stage = 32 }
-
+            18 -> {
+                setTitle(player, 5)
+                showTopics(
+                    Topic("I've found more penguins.", 35),
+                    Topic("I'm having trouble finding the penguins, can I have a hint?", 31),
+                    Topic("I want to claim my reward.", 26),
+                    IfTopic("I need a new notebook.", 34, !lostNotebook),
+                    IfTopic("What do I need to do again?", 13, lostNotebook),
+                    Topic("Never mind.", 32),
+                )
             }
             19 -> playerl(FaceAnim.FRIENDLY, "That's not all! I discovered there are secret agent penguins that have started to appear across Gielinor as well!").also { stage++ }
             20 -> npcl(FaceAnim.FRIENDLY, "Prawn crackers! Surely not? I heard the whispers but I never believed they would have reached this stage already.").also { stage++ }
@@ -94,41 +98,38 @@ class LarryDialogue(
             23 -> playerl(FaceAnim.FRIENDLY, "Because of the ice, right?").also { stage++ }
             24 -> npcl(FaceAnim.FRIENDLY, "This isn't a laughing matter, Player! Pay attention or who knows what may happen to you!").also { stage++ }
             25 -> playerl(FaceAnim.FRIENDLY, "Sorry. Full focus from now on.").also { stage++ }
-            26 -> npcl(FaceAnim.FRIENDLY, "Great! You have $points points to spend. Perhaps you should think about claiming your reward.").also { stage++ }
-            27 -> options("YES", "NO").also { stage++ }
-            28 -> when(buttonId) {
-                1 -> {
-                    if (points > 0) {
-                        npc("Sure thing, what would you like to be", "rewarded with?").also { stage++ }
-                    } else {
-                        npc("Uh, you don't have any points", "to turn in.").also { stage = END_DIALOGUE }
-                    }
+            26 -> {
+                if(points == 0) {
+                    npc(FaceAnim.SAD, "Uh, you don't have any points", "to turn in.").also { stage = END_DIALOGUE }
+                } else {
+                    npc(FaceAnim.FRIENDLY, "Well, you need rewarding for your hard work. You","have $points Penguin Points.").also { stage = 36 }
                 }
-                2 -> end()
             }
-            29 -> options("Coins", "Experience").also { stage++ }
-            30 -> when (buttonId) {
-                1 -> {
-                    end()
-                    addItem(player, Items.COINS_995, 6500 * player.getAttribute(GameAttributes.ACTIVITY_PENGUINS_HNS_SCORE, 0))
-                    removeAttribute(player, GameAttributes.ACTIVITY_PENGUINS_HNS_SCORE)
-                    player("Thanks!")
-                }
-
-                2 -> {
-                    setAttribute(player, "caller", this)
-                    player.interfaceManager.open(Component(134).setUncloseEvent { _: Player?, _: Component? ->
-                            player.interfaceManager.openDefaultTabs()
-                            removeAttribute(player, "lamp")
-                            player.unlock()
-                            true
-                        },).also { end() }
-                }
+            27 -> options("Show me the money!", "Experience, all the way!").also { stage++ }
+            28 -> when(buttonId) {
+                1 -> player(FaceAnim.HAPPY, "I want the coins reward.").also { stage = 30 }
+                2 -> player(FaceAnim.HAPPY, "I want the experience reward.").also { stage++ }
+            }
+            29 -> {
+                setAttribute(player, "caller", this)
+                player.interfaceManager.open(Component(134).setUncloseEvent { _: Player?, _: Component? ->
+                    player.interfaceManager.openDefaultTabs()
+                    removeAttribute(player, "lamp")
+                    npc(FaceAnim.HAPPY, "Well done finding those penguins. Keep up the hard", "work, they'll keep moving around.")
+                    player.unlock()
+                    true
+                },).also { end() }
+            }
+            30 -> {
+                end()
+                addItem(player, Items.COINS_995, 6500 * player.getAttribute(GameAttributes.ACTIVITY_PENGUINS_HNS_SCORE, 0))
+                removeAttribute(player, GameAttributes.ACTIVITY_PENGUINS_HNS_SCORE)
+                npc(FaceAnim.HAPPY, "Well done finding those penguins. Keep up the hard", "work, they'll keep moving around.")
             }
             31 -> {
                 val hint = Penguin.values()[PenguinManager.penguins.random()].hint
                 npcl(FaceAnim.FRIENDLY, "I've heard there's a penguin $hint.")
-                stage = END_DIALOGUE
+                stage = 18
             }
             32 -> npc("FINE. Be that way.").also { stage = END_DIALOGUE }
 
@@ -139,14 +140,17 @@ class LarryDialogue(
                 sendItemDialogue(player, Items.SPY_NOTEBOOK_13732, "Larry hands you a penguin spy notebook.")
                 addItemOrDrop(player, Items.SPY_NOTEBOOK_13732, 1)
             }
-            100 -> {
-                if(points in 1..9) {
-                    npcl(FaceAnim.ASKING, "More? They're spreading so quickly.").also { stage = 19 }
+            35 -> {
+                if(points > 10) {
+                    npcl(FaceAnim.ASKING, "More? They're spreading so quickly.")
+                    stage = 18
                 } else {
                     player("I've found $points penguin this week.")
-                    stage = 26
+                    stage = 18
                 }
             }
+            36 -> npc(FaceAnim.HAPPY, "I can either reward you with coins or experience.", "Which would you prefer?").also { stage = 27 }
+
         }
         return true
     }

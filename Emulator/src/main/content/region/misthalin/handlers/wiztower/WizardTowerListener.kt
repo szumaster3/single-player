@@ -57,12 +57,15 @@ class WizardTowerListener : InteractionListener {
 
         on(WIZARDS_TOWER_DEMON_TAUNT, IntType.SCENERY, "taunt-through") { player, _ ->
             val demon = findLocalNPC(player, NPCs.LESSER_DEMON_82) ?: return@on true
-            forceWalk(demon, player.location, "smart")
-            face(player, demon, 3)
-            sendMessage(player, "You taunt the demon, making it growl.")
-            sendChat(demon, "Graaaagh!")
-            face(demon, player, 3)
-            animate(player, Animations.RASPBERRY_2110)
+            lock(player, 3)
+            runTask(player, 1) {
+                forceWalk(demon, player.location, "smart")
+                face(player, demon, 3)
+                sendMessage(player, "You taunt the demon, making it growl.")
+                sendChat(demon, "Graaaagh!")
+                face(demon, player, 3)
+                animate(player, Animations.RASPBERRY_2110)
+            }
             return@on true
         }
 
@@ -100,17 +103,12 @@ class WizardTowerListener : InteractionListener {
         }
 
         on(CABINET_BASEMENT_OPEN, IntType.SCENERY, "close") { player, node ->
-            if (getUsedOption(player) == "close") {
-                replaceScenery(node.asScenery(), CABINET_BASEMENT_CLOSED, -1)
-                return@on true
-            } else {
-                if (getUsedOption(player) == "search") {
-                    sendMessage(player, "You search the cabinet but find nothing.")
-                } else {
-                    sendMessage(player, "Nothing interesting happens.")
-                }
-                return@on true
+            when (getUsedOption(player)) {
+                "close" -> replaceScenery(node.asScenery(), CABINET_BASEMENT_CLOSED, -1)
+                "search" -> sendMessage(player, "You search the cabinet but find nothing.")
+                else -> sendMessage(player, "Nothing interesting happens.")
             }
+            return@on true
         }
 
         on(LAND_OF_SNOW_PORTAL, IntType.SCENERY, "exit") { player, node ->
