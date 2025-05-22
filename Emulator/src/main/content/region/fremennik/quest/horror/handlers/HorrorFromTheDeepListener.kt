@@ -141,37 +141,40 @@ class HorrorFromTheDeepListener : InteractionListener {
          */
 
         onUseWith(IntType.SCENERY, Items.SWAMP_TAR_1939, Scenery.LIGHTING_MECHANISM_4588) { player, used, with ->
-            if(getVarbit(player, Vars.VARBIT_HORROR_FROM_THE_DEEP_SWAMP_TAR_LIGHTING_MECHANISM_46) == 1) {
+            val swampTarVarbit = Vars.VARBIT_HORROR_FROM_THE_DEEP_SWAMP_TAR_LIGHTING_MECHANISM_46
+            if (getVarbit(player, swampTarVarbit) == 1) {
                 sendMessage(player, "The torch is already flammable.")
-                return@onUseWith true
-            }
-            if(removeItem(player, used.id)) {
+            } else if (removeItem(player, used.id)) {
                 sendMessage(player, "You use the swamp tar to make the torch flammable again.")
-                setVarbit(player, Vars.VARBIT_HORROR_FROM_THE_DEEP_SWAMP_TAR_LIGHTING_MECHANISM_46, 1, true)
+                setVarbit(player, swampTarVarbit, 1, true)
             }
             return@onUseWith true
         }
 
         onUseWith(IntType.SCENERY, Items.TINDERBOX_590, Scenery.LIGHTING_MECHANISM_4588) { player, used, with ->
-            if(getVarbit(player, Vars.VARBIT_HORROR_FROM_THE_DEEP_SWAMP_TAR_LIGHTING_MECHANISM_46) == 0) return@onUseWith false
-            if(getVarbit(player, Vars.VARBIT_HORROR_FROM_THE_DEEP_LIT_LIGHTING_MECHANISM_48) == 1) {
+            val swampTarVarbit = Vars.VARBIT_HORROR_FROM_THE_DEEP_SWAMP_TAR_LIGHTING_MECHANISM_46
+            val litVarbit = Vars.VARBIT_HORROR_FROM_THE_DEEP_LIT_LIGHTING_MECHANISM_48
+
+            if (getVarbit(player, swampTarVarbit) == 0) return@onUseWith false
+            if (getVarbit(player, litVarbit) == 1) {
                 sendMessage(player, "You've already lit the torch.")
                 return@onUseWith false
             }
             sendMessage(player, "You light the torch with your tinderbox.")
-            setVarbit(player, Vars.VARBIT_HORROR_FROM_THE_DEEP_LIT_LIGHTING_MECHANISM_48, 1, true)
+            setVarbit(player, litVarbit, 1, true)
             return@onUseWith true
         }
 
         onUseWith(IntType.SCENERY, Items.MOLTEN_GLASS_1775, Scenery.LIGHTING_MECHANISM_4588) { player, used, with ->
-            if(getVarbit(player, Vars.VARBIT_HORROR_FROM_THE_DEEP_LIGHTING_MECHANISM_LENS_REPAIRED_47) == 1) {
-                sendMessage(player, "You have already repaired the the lighthouse torch.")
+            val repairedVarbit = Vars.VARBIT_HORROR_FROM_THE_DEEP_LIGHTING_MECHANISM_LENS_REPAIRED_47
+            if (getVarbit(player, repairedVarbit) == 1) {
+                sendMessage(player, "You have already repaired the lighthouse torch.")
                 return@onUseWith false
             }
-            if(removeItem(player, used.id)) {
+            if (removeItem(player, used.id)) {
                 replaceScenery(with.asScenery(), Scenery.LIGHTING_MECHANISM_4587, 80)
                 setQuestStage(player, Quests.HORROR_FROM_THE_DEEP, 40)
-                setVarbit(player, Vars.VARBIT_HORROR_FROM_THE_DEEP_LIGHTING_MECHANISM_LENS_REPAIRED_47, 1, true)
+                setVarbit(player, repairedVarbit, 1, true)
                 sendMessage(player, "You use the molten glass to repair the lens.")
                 sendMessage(player, "You have managed to repair the lighthouse torch!")
             }

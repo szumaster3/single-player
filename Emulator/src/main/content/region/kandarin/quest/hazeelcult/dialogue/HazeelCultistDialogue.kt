@@ -42,17 +42,11 @@ class HazeelCultistDialogue(
                     }
                 }
 
-                1 -> npcl(
-                    FaceAnim.FRIENDLY,
-                    "The adventurer returns! Glory to you for your efforts in bringing about the return of Lord Hazeel!",
-                ).also {
+                1 -> npcl(FaceAnim.FRIENDLY, "The adventurer returns! Glory to you for your efforts in bringing about the return of Lord Hazeel!").also {
                     stage = END_DIALOGUE
                 }
 
-                2 -> npcl(
-                    FaceAnim.ANNOYED,
-                    "It's the meddler! The one who blew Jones' cover! I don't know why you came to this place but it is here that you will die.",
-                ).also {
+                2 -> npcl(FaceAnim.ANNOYED, "It's the meddler! The one who blew Jones' cover! I don't know why you came to this place but it is here that you will die.").also {
                     stage++
                 }
 

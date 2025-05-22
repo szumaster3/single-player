@@ -27,11 +27,7 @@ class ShiloVillageListener : InteractionListener {
 
         on(BLACKSMITH_DOOR, IntType.SCENERY, "open") { player, node ->
             if (!getAttribute(player, "shilo-village:blacksmith-doors", false)) {
-                sendNPCDialogue(
-                    player,
-                    NPCs.YOHNUS_513,
-                    "Sorry but the blacksmiths is closed. But I can let you use the furnace at the cost of 20 gold pieces.",
-                )
+                sendNPCDialogue(player, NPCs.YOHNUS_513, "Sorry but the blacksmiths is closed. But I can let you use the furnace at the cost of 20 gold pieces.")
             } else {
                 DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
             }
@@ -110,80 +106,59 @@ class ShiloVillageListener : InteractionListener {
 
         onUseWith(IntType.NPC, ANTIQUE_ITEMS, YANNI) { player, used, _ ->
             val item = AntiqueItem.getAntiqueItem(used.id) ?: return@onUseWith true
-            if (amountInInventory(player, used.id) == 1) {
-                if (!inInventory(player, used.id)) {
-                    sendNPCDialogue(player, NPCs.YANNI_SALIKA_515, "Sorry Bwana, you have nothing I am interested in.")
-                } else {
-                    openDialogue(
-                        player,
-                        object : DialogueFile() {
-                            override fun handle(
-                                componentID: Int,
-                                buttonID: Int,
-                            ) {
-                                npc = NPC(NPCs.YANNI_SALIKA_515)
-                                when (stage) {
-                                    0 -> sendNPCDialogue(player, NPCs.YANNI_SALIKA_515, item.dialogue).also { stage++ }
-                                    1 -> sendNPCDialogue(player, NPCs.YANNI_SALIKA_515, item.message).also { stage++ }
-                                    2 -> {
-                                        setTitle(player, 2)
-                                        sendDialogueOptions(
-                                            player,
-                                            "Sell the " + getItemName(used.id) + "?",
-                                            "Yes.",
-                                            "No.",
-                                        ).also { stage++ }
-                                    }
 
-                                    3 ->
-                                        when (buttonID) {
-                                            1 -> {
-                                                end()
-                                                if (removeItem(player, used.id)) {
-                                                    sendNPCDialogue(
-                                                        player,
-                                                        NPCs.YANNI_SALIKA_515,
-                                                        "Here's " + item.price + " for it.",
-                                                    ).also { stage++ }
-                                                    sendMessage(
-                                                        player,
-                                                        "You sell the " + getItemName(used.id) + " for " + item.price +
-                                                            " gold.",
-                                                    )
-                                                    addItem(player, Items.COINS_995, item.price)
-                                                }
-                                            }
-
-                                            2 -> end()
+            if (!inInventory(player, used.id)) {
+                sendNPCDialogue(player, NPCs.YANNI_SALIKA_515, "Sorry Bwana, you have nothing I am interested in.")
+            } else {
+                val itemName = getItemName(used.id)
+                openDialogue(
+                    player,
+                    object : DialogueFile() {
+                        override fun handle(componentID: Int, buttonID: Int) {
+                            npc = NPC(NPCs.YANNI_SALIKA_515)
+                            when (stage) {
+                                0 -> sendNPCDialogue(player, NPCs.YANNI_SALIKA_515, item.dialogue).also { stage++ }
+                                1 -> sendNPCDialogue(player, NPCs.YANNI_SALIKA_515, item.message).also { stage++ }
+                                2 -> {
+                                    setTitle(player, 2)
+                                    sendDialogueOptions(player, "Sell the $itemName?", "Yes.", "No.").also { stage++ }
+                                }
+                                3 -> when (buttonID) {
+                                    1 -> {
+                                        if (removeItem(player, used.id)) {
+                                            sendNPCDialogue(player, NPCs.YANNI_SALIKA_515, "Here's ${item.price} for it.").also { stage++ }
+                                            sendMessage(player, "You sell the $itemName for ${item.price} gold.")
+                                            addItem(player, Items.COINS_995, item.price)
                                         }
+                                        end()
+                                    }
+                                    2 -> end()
                                 }
                             }
-                        },
-                    )
-                }
-                if (used.id == Items.BLACK_PRISM_4808) {
-                    openDialogue(player, BlackPrismDialogue())
-                }
+                        }
+                    }
+                )
             }
+
+            if (used.id == Items.BLACK_PRISM_4808) {
+                openDialogue(player, BlackPrismDialogue())
+            }
+
             return@onUseWith true
         }
 
         on(WOODEN_GATE, IntType.SCENERY, "open") { player, node ->
+            DoorActionHandler.autowalkFence(player, node.asScenery(), 2262, 2261)
             if (player.location.x == 2867) {
-                DoorActionHandler.autowalkFence(player, node.asScenery(), 2262, 2261)
                 sendMessage(player, "You make your way out of Shilo Village.")
-            } else {
-                DoorActionHandler.autowalkFence(player, node.asScenery(), 2262, 2261)
             }
             return@on true
         }
 
         on(METAL_GATE, IntType.SCENERY, "open") { player, node ->
+            DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
             if (player.location.x == 2874) {
-                DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
-                sendMessage(player, "You open the gates and make you way back out of the village.")
-            } else {
-                DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
+                sendMessage(player, "You open the gates and make your way back out of the village.")
             }
             return@on true
         }

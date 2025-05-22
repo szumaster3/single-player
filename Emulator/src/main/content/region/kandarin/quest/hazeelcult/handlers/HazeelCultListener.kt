@@ -32,124 +32,88 @@ class HazeelCultListener : InteractionListener {
         }
 
         on(CLIVET_RAFT, IntType.SCENERY, "board") { player, _ ->
-            if (getAttribute(player, RAFT_UNLOCK, 0) == 1) {
-                setAttribute(player, RAFT_UNLOCK, 0)
-                teleport(player, location(2606, 9692, 0))
-                sendDialogue(
-                    player,
-                    "The raft washes up the sewer, past the islands until it reaches the end of the sewer passage.",
-                )
-            } else if (inBorders(player, 2604, 9688, 2611, 9694)) {
-                setAttribute(player, RAFT_UNLOCK, 1)
-                teleport(player, location(2567, 9680, 0))
-                sendDialogue(player, "The raft flows back to the cave entrance.")
-            } else {
-                sendNPCDialogue(
-                    player,
-                    CLIVET_NPC,
-                    "Hey! I don't remember saying you could use that raft!",
-                    FaceAnim.ANNOYED,
-                )
+            when {
+                getAttribute(player, RAFT_UNLOCK, 0) == 1 -> {
+                    setAttribute(player, RAFT_UNLOCK, 0)
+                    teleport(player, location(2606, 9692, 0))
+                    sendDialogue(player, "The raft washes up the sewer, past the islands until it reaches the end of the sewer passage.")
+                }
+                inBorders(player, 2604, 9688, 2611, 9694) -> {
+                    setAttribute(player, RAFT_UNLOCK, 1)
+                    teleport(player, location(2567, 9680, 0))
+                    sendDialogue(player, "The raft flows back to the cave entrance.")
+                }
+                else -> {
+                    sendNPCDialogue(player, CLIVET_NPC, "Hey! I don't remember saying you could use that raft!", FaceAnim.ANNOYED)
+                }
             }
             return@on true
         }
 
         on(SEWERS, IntType.SCENERY, "turn-left") { player, node ->
-            if (!player.location.withinDistance(node.asScenery().location, 2)) return@on true
-            if (getQuestStage(player, Quests.HAZEEL_CULT) >= 1) {
+            val nodeLocation = node.asScenery().location
+            if (withinDistance(player, nodeLocation, 2) && getQuestStage(player, Quests.HAZEEL_CULT) >= 1) {
                 lock(player, 4)
                 animate(player, TURN_VALVE_ANIMATION)
-                player.dialogueInterpreter.sendDialogue(
-                    "Turn the large metal valve to the left. Beneath your feet you",
-                    "can heat the sudden sound of rushing water from the sewer.",
-                )
+                sendDialogueLines(player, "Turn the large metal valve to the left. Beneath your feet you", "can hear the sudden sound of rushing water from the sewer.")
             }
             return@on true
         }
 
         on(SEWER_1, IntType.SCENERY, "turn-left") { player, node ->
+            val nodeLocation = node.asScenery().location
             if (getQuestStage(player, Quests.HAZEEL_CULT) >= 1 && getAttribute(player, SEWER_LEFT, 0) == 0) {
                 setAttribute(player, SEWER_LEFT, 1)
             }
             if (getQuestStage(player, Quests.HAZEEL_CULT) == 10 && getAttribute(player, SEWER_RIGHT_2, 0) == 1) {
                 setAttribute(player, SEWER_RIGHT_3, 1)
             }
-            if (!player.location.withinDistance(node.asScenery().location, 2)) return@on true
+            if (!withinDistance(player, nodeLocation, 2)) return@on true
+
             lock(player, 4)
             animate(player, TURN_VALVE_ANIMATION)
-            player.dialogueInterpreter.sendDialogue(
-                "Turn the large metal valve to the left. Beneath your feet you",
-                "can heat the sudden sound of rushing water from the sewer.",
-            )
+            sendDialogueLines(player, "Turn the large metal valve to the left. Beneath your feet you", "can hear the sudden sound of rushing water from the sewer.")
             return@on true
         }
 
         on(SEWER_1, IntType.SCENERY, "turn-right") { player, _ ->
             lock(player, 4)
             animate(player, TURN_VALVE_ANIMATION)
-            player.dialogueInterpreter.sendDialogue(
-                "Turn the large metal valve to the right. Beneath your feet you",
-                "can heat the sudden sound of rushing water from the sewer.",
-            )
+            sendDialogueLines(player, "Turn the large metal valve to the right. Beneath your feet you", "can heat the sudden sound of rushing water from the sewer.")
             return@on true
         }
 
         on(SEWERS, IntType.SCENERY, "turn-right") { player, node ->
             if (!player.location.withinDistance(node.asScenery().location, 2)) return@on true
-            if (getQuestStage(player, Quests.HAZEEL_CULT) >= 1) {
-                for (i in SEWERS) {
-                    when (i) {
-                        SEWER_2 ->
-                            if (getAttribute(player, SEWER_LEFT, 0) == 1) {
-                                setAttribute(player, SEWER_RIGHT_1, 1)
-                            }
 
-                        SEWER_3 ->
-                            if (getAttribute(player, SEWER_RIGHT_1, 0) == 1) {
-                                setAttribute(player, SEWER_RIGHT_2, 1)
-                            }
+            val questStage = getQuestStage(player, Quests.HAZEEL_CULT)
+            val currentSewer = node.id
 
-                        SEWER_4 ->
-                            if (getAttribute(player, SEWER_RIGHT_2, 0) == 1) {
-                                setAttribute(player, SEWER_RIGHT_3, 1)
-                            }
-
-                        SEWER_5 ->
-                            if (getAttribute(player, SEWER_RIGHT_3, 0) == 1) {
-                                setAttribute(player, RAFT_UNLOCK, 1)
-                                removeAttributes(player, SEWER_RIGHT_1, SEWER_RIGHT_2, SEWER_RIGHT_3, SEWER_LEFT)
-                            }
+            if (questStage >= 1 && questStage != 10) {
+                when (currentSewer) {
+                    SEWER_2 -> if (getAttribute(player, SEWER_LEFT, 0) == 1) setAttribute(player, SEWER_RIGHT_1, 1)
+                    SEWER_3 -> if (getAttribute(player, SEWER_RIGHT_1, 0) == 1) setAttribute(player, SEWER_RIGHT_2, 1)
+                    SEWER_4 -> if (getAttribute(player, SEWER_RIGHT_2, 0) == 1) setAttribute(player, SEWER_RIGHT_3, 1)
+                    SEWER_5 -> if (getAttribute(player, SEWER_RIGHT_3, 0) == 1) {
+                        setAttribute(player, RAFT_UNLOCK, 1)
+                        removeAttributes(player, SEWER_RIGHT_1, SEWER_RIGHT_2, SEWER_RIGHT_3, SEWER_LEFT)
                     }
                 }
-            } else if (getQuestStage(player, Quests.HAZEEL_CULT) == 10) {
-                if (!player.location.withinDistance(node.asScenery().location, 2)) return@on true
-                for (i in SEWERS) {
-                    when (i) {
-                        SEWER_4 -> setAttribute(player, SEWER_RIGHT_1, 1)
-                        SEWER_5 ->
-                            if (getAttribute(player, SEWER_RIGHT_1, 0) == 1) {
-                                setAttribute(player, SEWER_RIGHT_2, 1)
-                            }
-
-                        SEWER_2 ->
-                            if (getAttribute(player, SEWER_RIGHT_3, 0) == 1) {
-                                setAttribute(player, SEWER_LEFT, 1)
-                            }
-
-                        SEWER_3 ->
-                            if (getAttribute(player, SEWER_LEFT, 0) == 1) {
-                                setAttribute(player, RAFT_UNLOCK, 1)
-                                removeAttributes(player, SEWER_RIGHT_1, SEWER_RIGHT_2, SEWER_RIGHT_3, SEWER_LEFT)
-                            }
+            } else if (questStage == 10) {
+                when (currentSewer) {
+                    SEWER_4 -> setAttribute(player, SEWER_RIGHT_1, 1)
+                    SEWER_5 -> if (getAttribute(player, SEWER_RIGHT_1, 0) == 1) setAttribute(player, SEWER_RIGHT_2, 1)
+                    SEWER_2 -> if (getAttribute(player, SEWER_RIGHT_3, 0) == 1) setAttribute(player, SEWER_LEFT, 1)
+                    SEWER_3 -> if (getAttribute(player, SEWER_LEFT, 0) == 1) {
+                        setAttribute(player, RAFT_UNLOCK, 1)
+                        removeAttributes(player, SEWER_RIGHT_1, SEWER_RIGHT_2, SEWER_RIGHT_3, SEWER_LEFT)
                     }
                 }
             }
+
             lock(player, 4)
             animate(player, TURN_VALVE_ANIMATION)
-            player.dialogueInterpreter.sendDialogue(
-                "Turn the large metal valve to the right. Beneth your feet you",
-                "can heat the sudden sound of rushing water from the sewer.",
-            )
+            sendDialogueLines(player, "Turn the large metal valve to the right. Beneath your feet you", "can hear the sudden sound of rushing water from the sewer.")
             return@on true
         }
 
@@ -160,17 +124,10 @@ class HazeelCultListener : InteractionListener {
 
         onUseWith(IntType.SCENERY, POISON, COOKING_RANGE) { player, _, _ ->
             if (getAttribute(player, MAHJARRAT, true) && removeItem(player, POISON)) {
-                player.dialogueInterpreter.sendDialogue(
-                    "You pour the poison into the hot pot.",
-                    "The poison dissolves into the soup.",
-                )
+                sendDialogueLines(player, "You pour the poison into the hot pot.", "The poison dissolves into the soup.")
                 setQuestStage(player, Quests.HAZEEL_CULT, 3)
             } else {
-                sendNPCDialogue(
-                    player,
-                    NPCs.CLAUS_THE_CHEF_886,
-                    "Oi - I don't want people messing around with my range!",
-                )
+                sendNPCDialogue(player, NPCs.CLAUS_THE_CHEF_886, "Oi - I don't want people messing around with my range!")
             }
             return@onUseWith true
         }
@@ -207,23 +164,15 @@ class HazeelCultListener : InteractionListener {
         }
 
         onUseWith(IntType.SCENERY, CHEST_KEY, Scenery.CHEST_2856) { player, _, _ ->
-            animate(player, 536)
-            addScenery(Scenery.CHEST_2857, Location(2565, 3272, 2), 2, 10)
-            removeScenery(
-                core.game.node.scenery
-                    .Scenery(Scenery.CHEST_2856, Location(2565, 3272, 2)),
-            )
+            animate(player, Animations.OPEN_CHEST_536)
+            addScenery(Scenery.CHEST_2857,CHEST_LOCATION, 2, 10)
+            removeScenery(core.game.node.scenery.Scenery(Scenery.CHEST_2856, Location(2565, 3272, 2)))
             return@onUseWith true
         }
 
         on(Scenery.CHEST_2857, IntType.SCENERY, "Close") { _, _ ->
-            addScenery(Scenery.CHEST_2856, Location(2565, 3272, 2), 2, 10)
-            removeScenery(
-                core.game.node.scenery.Scenery(
-                    Scenery.CHEST_2857,
-                    Location(2565, 3272, 2),
-                ),
-            )
+            addScenery(Scenery.CHEST_2856, CHEST_LOCATION, 2, 10)
+            removeScenery(core.game.node.scenery.Scenery(Scenery.CHEST_2857, CHEST_LOCATION))
             return@on true
         }
 
@@ -327,5 +276,7 @@ class HazeelCultListener : InteractionListener {
         val ALOMONE = AlomoneNPC(NPCs.ALOMONE_891, Location.create(2607, 9671, 0))
 
         const val SECRET_PASSAGE = Scenery.WALL_26940
+
+        val CHEST_LOCATION = Location(2565, 3272, 2)
     }
 }
