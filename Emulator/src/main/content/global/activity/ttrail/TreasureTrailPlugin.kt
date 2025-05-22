@@ -9,6 +9,7 @@ import content.global.activity.ttrail.clues.EmoteClue
 import content.global.activity.ttrail.clues.MapClue
 import content.global.activity.ttrail.npcs.SaradominWizardNPC
 import content.global.activity.ttrail.npcs.ZamorakWizardNPC
+import core.api.sendMessage
 import core.cache.def.impl.ItemDefinition
 import core.game.interaction.OptionHandler
 import core.game.node.Node
@@ -75,7 +76,7 @@ class TreasureTrailPlugin : OptionHandler() {
             "read" -> {
                 val clue = ClueScroll.getClueScrolls()[node.id]
                 if (clue == null) {
-                    player.sendMessage("Unused clue scroll item! Removed.")
+                    player.debug("Unused clue scroll item! Removed.")
                     player.inventory.remove(node as Item)
                     return false
                 }
@@ -124,7 +125,7 @@ class TreasureTrailPlugin : OptionHandler() {
          */
         override fun canPickUp(player: Player, item: GroundItem, type: Int): Boolean {
             return if (hasClue(player)) {
-                player.sendMessage("A magical force prevents you from picking the clue scroll up.")
+                sendMessage(player, "You can only have one clue scroll at a time.")
                 false
             } else true
         }

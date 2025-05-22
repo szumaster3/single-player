@@ -8,7 +8,9 @@ import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.emote.Emotes
 import core.game.node.entity.player.link.emote.Emotes.Companion.forId
 import core.game.world.map.zone.ZoneBorders
+import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
+import org.rs.consts.Animations
 
 /**
  * Represents an emote-based clue scroll.
@@ -62,7 +64,7 @@ abstract class EmoteClueScroll(
             sendString(player, "", interfaceId, i)
         }
         super.read(player)
-        sendString(player, clue!!.replace("<br>", "<br><br>"), interfaceId, 1)
+        sendString(player, "<br><br>" + clue!!.replace("<br>", "<br><br>"), interfaceId, 1)
     }
 
     /**
@@ -92,6 +94,8 @@ abstract class EmoteClueScroll(
         uri.init()
         uri.graphics(Graphics.create(86))
         uri.faceTemporary(player, 1)
+        uri.animator.animate(
+            Animation.create(Animations.WAVE_863))
         if (doubleAgent) {
             uri.sendChat("I expect you to die!")
             uri.properties.combatPulse.attack(player)
