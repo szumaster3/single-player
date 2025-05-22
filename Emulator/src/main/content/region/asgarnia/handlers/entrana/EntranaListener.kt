@@ -25,11 +25,10 @@ class EntranaListener : InteractionListener {
                 return@on true
             }
 
-            sendMessage(player, "and find a Glassblowing Book.")
-
             if (freeSlots(player) == 0) {
-                sendMessage(player, "...but you don't have enough room to take it.")
+                sendMessage(player, "You find a Glassblowing Book, but you don't have enough room to take it.")
             } else {
+                sendMessage(player, "You find a Glassblowing Book.")
                 addItem(player, GLASSBLOWING_BOOK)
             }
 

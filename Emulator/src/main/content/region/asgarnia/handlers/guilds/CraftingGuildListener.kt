@@ -26,13 +26,18 @@ class CraftingGuildListener : InteractionListener {
                 return@on false
             }
 
+            val doorScenery = door.asScenery()
+
             if (player.location.y < 3289) {
-                DoorActionHandler.handleAutowalkDoor(player, door.asScenery())
+                DoorActionHandler.handleAutowalkDoor(player, doorScenery)
                 return@on true
             }
 
-            if (inEquipment(player, BROWN_APRON) || anyInEquipment(player, Items.CRAFTING_CAPE_9780, Items.CRAFTING_CAPET_9781)) {
-                DoorActionHandler.handleAutowalkDoor(player, door.asScenery())
+            val hasApron = inEquipment(player, BROWN_APRON)
+            val hasCape = anyInEquipment(player, Items.CRAFTING_CAPE_9780, Items.CRAFTING_CAPET_9781)
+
+            if (hasApron || hasCape) {
+                DoorActionHandler.handleAutowalkDoor(player, doorScenery)
                 sendNPCDialogue(player, NPCs.MASTER_CRAFTER_805, "Welcome to the Guild of Master Craftsmen.", FaceAnim.HAPPY)
             } else {
                 sendNPCDialogue(player, NPCs.MASTER_CRAFTER_805, "Where's your brown apron? You can't come in here unless you're wearing one.", FaceAnim.HALF_ASKING)
@@ -42,6 +47,7 @@ class CraftingGuildListener : InteractionListener {
                     }
                 }
             }
+
             return@on true
         }
     }

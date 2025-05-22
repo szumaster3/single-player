@@ -48,6 +48,7 @@ class WaterbirthIslandListener :
 
         on(intArrayOf(Scenery.CAVE_ENTRANCE_8930), IntType.SCENERY, "enter") { player, _ ->
             teleport(player, Location(2545, 10143, 0), TeleportManager.TeleportType.INSTANT)
+            return@on true
         }
     }
 }

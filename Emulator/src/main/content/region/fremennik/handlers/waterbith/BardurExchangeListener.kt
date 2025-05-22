@@ -12,6 +12,11 @@ import org.rs.consts.Quests
 
 class BardurExchangeListener : InteractionListener {
     override fun defineListeners() {
+
+        /*
+         * Handles interaction with Bardur NPCs.
+         */
+
         onUseWith(IntType.NPC, exchangeItemIDs, NPCs.BARDUR_2879) { player, node, _ ->
             val npc = node.asNpc()
             if (npc.inCombat()) {
@@ -20,17 +25,14 @@ class BardurExchangeListener : InteractionListener {
             }
 
             if (!isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS)) {
-                sendNPCDialogue(
-                    player,
-                    NPCs.BARDUR_2879,
-                    "I do not trust you outerlander, I will not accept your gifts, no matter what your intention...",
-                )
+                sendNPCDialogue(player, NPCs.BARDUR_2879, "I do not trust you outerlander, I will not accept your gifts, no matter what your intention...")
             } else {
                 npc.impactHandler.disabledTicks = 8
                 openDialogue(player, BardurExchangeDialogue())
             }
             return@onUseWith true
         }
+
     }
 
     companion object {

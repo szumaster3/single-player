@@ -33,26 +33,23 @@ class ShantayPassListener : InteractionListener {
     }
 
     override fun defineListeners() {
+
+        /*
+         * Handles buying shantay pass.
+         */
+
         on(SHANTAY, IntType.NPC, "buy-pass") { player, _ ->
-            if (freeSlots(player) == 0) {
-                sendNPCDialogue(
-                    player,
-                    SHANTAY,
-                    "Sorry friend, you'll need more inventory space to buy a pass.",
-                    FaceAnim.NEUTRAL,
-                )
-                return@on true
-            }
-            if (!removeItem(player, Item(COINS, 5))) {
-                sendNPCDialogue(
-                    player,
-                    SHANTAY,
-                    "Sorry friend, the Shantay Pass is 5 gold coins. You don't seem to have enough money!",
-                    FaceAnim.NEUTRAL,
-                )
-            } else {
-                sendItemDialogue(player, SHANTAY_PASS_TICKET, "You purchase a Shantay Pass.")
-                addItemOrDrop(player, SHANTAY_PASS_TICKET)
+            when {
+                freeSlots(player) == 0 -> {
+                    sendNPCDialogue(player, SHANTAY, "Sorry friend, you'll need more inventory space to buy a pass.", FaceAnim.NEUTRAL)
+                }
+                !removeItem(player, Item(COINS, 5)) -> {
+                    sendNPCDialogue(player, SHANTAY, "Sorry friend, the Shantay Pass is 5 gold coins. You don't seem to have enough money!", FaceAnim.NEUTRAL)
+                }
+                else -> {
+                    sendItemDialogue(player, SHANTAY_PASS_TICKET, "You purchase a Shantay Pass.")
+                    addItemOrDrop(player, SHANTAY_PASS_TICKET)
+                }
             }
             return@on true
         }
@@ -69,72 +66,51 @@ class ShantayPassListener : InteractionListener {
             return@on true
         }
 
+        /*
+         * Handles interaction with shantay pass.
+         */
+
         on(SHANTAY_SCENERY_IDS, IntType.SCENERY, "go-through") { player, _ ->
+            val goingSouth = player.location.y > 3116
+            val destination = player.location.transform(0, if (goingSouth) -2 else 2, 0)
+
             if (player.location.y < 3117) {
                 sendMessage(player, "You go through the gate.")
-                AgilityHandler.walk(
-                    player,
-                    0,
-                    player.location,
-                    player.location.transform(0, if (player.location.y > 3116) -2 else 2, 0),
-                    null,
-                    0.0,
-                    null,
-                )
+                AgilityHandler.walk(player, 0, player.location, destination, null, 0.0, null)
             } else {
                 if (!WarningManager.isDisabled(player, Warnings.SHANTAY_PASS)) {
                     openInterface(player, Components.CWS_WARNING_10_565)
+                } else if (!removeItem(player, SHANTAY_PASS_TICKET)) {
+                    sendNPCDialogue(player, SHANTAY_NPC, "You need a Shantay pass to get through this gate. See Shantay, he will sell you one for a very reasonable price.", FaceAnim.NEUTRAL)
                 } else {
-                    if (!removeItem(player, SHANTAY_PASS_TICKET)) {
-                        sendNPCDialogue(
-                            player,
-                            SHANTAY_NPC,
-                            "You need a Shantay pass to get through this gate. See Shantay, he will sell you one for a very reasonable price.",
-                            FaceAnim.NEUTRAL,
-                        )
-                    } else {
-                        sendMessage(player, "You go through the gate.")
-                        AgilityHandler.walk(
-                            player,
-                            0,
-                            player.location,
-                            player.location.transform(0, if (player.location.y > 3116) -2 else 2, 0),
-                            null,
-                            0.0,
-                            null,
-                        )
-                    }
+                    sendMessage(player, "You go through the gate.")
+                    AgilityHandler.walk(player, 0, player.location, destination, null, 0.0, null)
                 }
             }
             return@on true
         }
 
+        /*
+         * Handles quick pass interaction at shantay pass.
+         */
+
         on(SHANTAY_SCENERY_IDS, IntType.SCENERY, "quick-pass") { player, _ ->
-            if (player.location.y > 3116) {
+            val goingSouth = player.location.y > 3116
+            val destination = player.location.transform(0, if (goingSouth) -2 else 2, 0)
+
+            if (goingSouth) {
                 if (!inInventory(player, SHANTAY_PASS_TICKET, 1)) {
-                    sendNPCDialogue(
-                        player,
-                        SHANTAY_NPC,
-                        "You need a Shantay pass to get through this gate. See Shantay, he will sell you one for a very reasonable price.",
-                        FaceAnim.NEUTRAL,
-                    )
+                    sendNPCDialogue(player, SHANTAY_NPC, "You need a Shantay pass to get through this gate. See Shantay, he will sell you one for a very reasonable price.", FaceAnim.NEUTRAL)
                     return@on true
                 }
+
                 if (!removeItem(player, SHANTAY_PASS_TICKET, Container.INVENTORY)) {
                     sendMessage(player, "An error occurred while trying to remove your Shantay pass. Please try again.")
                     return@on false
                 }
                 sendMessage(player, "You hand your Shantay pass to the guard and pass through the gate.")
             }
-            AgilityHandler.walk(
-                player,
-                0,
-                player.location,
-                player.location.transform(0, if (player.location.y > 3116) -2 else 2, 0),
-                null,
-                0.0,
-                null,
-            )
+            AgilityHandler.walk(player, 0, player.location, destination, null, 0.0, null)
             return@on true
         }
 
@@ -142,11 +118,13 @@ class ShantayPassListener : InteractionListener {
             if (player.getAttribute("shantay-jail", false) && player.location.x > 3299) {
                 player.removeAttribute("shantay-jail")
             }
-            return@on if (!player.getAttribute("shantay-jail", false)) {
+
+            if (!player.getAttribute("shantay-jail", false)) {
                 DoorActionHandler.handleDoor(player, node.asScenery())
                 return@on true
             } else {
                 player.dialogueInterpreter.open(SHANTAY, null, true)
+                return@on true
             }
         }
 

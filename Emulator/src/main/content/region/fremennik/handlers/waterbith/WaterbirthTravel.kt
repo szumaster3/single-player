@@ -6,7 +6,17 @@ import core.game.system.task.Pulse
 import core.game.world.map.Location
 import org.rs.consts.Components
 
+/**
+ * Handles travel by ship between Fremennik and Waterbirth Island.
+ */
 object WaterbirthTravel {
+
+    /**
+     * Initiates the ship travel.
+     *
+     * @param player The player who will travel.
+     * @param destination The travel destination.
+     */
     @JvmStatic
     fun sail(
         player: Player,
@@ -36,8 +46,20 @@ object WaterbirthTravel {
         )
     }
 
+    /**
+     * Checks if the destination is valid.
+     *
+     * @param destination The travel destination.
+     * @return `True` if valid, `false` otherwise.
+     */
     private fun isDestinationValid(destination: TravelDestination): Boolean = TravelDestination.values().contains(destination)
 
+    /**
+     * Completes the travel.
+     *
+     * @param player The player.
+     * @param destination The travel destination.
+     */
     private fun completeJourney(
         player: Player,
         destination: TravelDestination,
@@ -48,9 +70,19 @@ object WaterbirthTravel {
         unlock(player)
     }
 
+    /**
+     * Gets the animation duration for a given ship animation.
+     */
     private fun TravelDestination.animationDuration(): Int = animationDuration(getAnimation(this.shipAnim))
 }
 
+/**
+ * Represnets travel destinations by ship from Waterbirth Island area.
+ *
+ * @property destName The display name.
+ * @property destinationLoc The destination.
+ * @property shipAnim The ship animation.
+ */
 enum class TravelDestination(
     val destName: String,
     val destinationLoc: Location,

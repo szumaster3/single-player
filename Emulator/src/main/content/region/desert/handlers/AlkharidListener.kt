@@ -25,18 +25,18 @@ class AlkharidListener : InteractionListener {
         }
 
         on(TOLL_GATES, IntType.SCENERY, "open", "pay-toll(10gp)") { player, node ->
-            if (getUsedOption(player) == "pay-toll(10gp)") {
+            val usedOption = getUsedOption(player)
+            val door = node.asScenery()
+
+            if (usedOption == "pay-toll(10gp)") {
                 if (getQuestStage(player, Quests.PRINCE_ALI_RESCUE) > 50) {
                     sendMessage(player, "The guards let you through for free.")
-                    DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
+                    DoorActionHandler.handleAutowalkDoor(player, door)
+                } else if (removeItem(player, Item(Items.COINS_995, 10))) {
+                    sendMessage(player, "You quickly pay the 10 gold toll and go through the gates.")
+                    DoorActionHandler.handleAutowalkDoor(player, door)
                 } else {
-                    if (!removeItem(player, Item(Items.COINS_995, 10))) {
-                        sendMessage(player, "You need 10 gold to pass through the gates.")
-                    } else {
-                        sendMessage(player, "You quickly pay the 10 gold toll and go through the gates.")
-                        DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
-                        return@on true
-                    }
+                    sendMessage(player, "You need 10 gold to pass through the gates.")
                 }
             } else {
                 openDialogue(player, BorderGuardDialogue())
@@ -66,12 +66,10 @@ class AlkharidListener : InteractionListener {
         on(LEAFLET_DROPPER, IntType.NPC, "Take-flyer") { player, _ ->
             if (player.inventory.containItems(Items.AL_KHARID_FLYER_7922)) {
                 openDialogue(player, AliTheLeafletDropperDialogue(2))
+            } else if (addItem(player, Items.AL_KHARID_FLYER_7922)) {
+                openDialogue(player, AliTheLeafletDropperDialogue(1))
             } else {
-                if (addItem(player, Items.AL_KHARID_FLYER_7922)) {
-                    openDialogue(player, AliTheLeafletDropperDialogue(1))
-                } else {
-                    return@on false
-                }
+                return@on false
             }
             return@on true
         }

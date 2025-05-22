@@ -28,6 +28,10 @@ class PollnivneahListener : InteractionListener {
             return@on true
         }
 
+        /*
+         * Handles taking the beer from the bar table.
+         */
+
         on(BAR_TABLE, IntType.SCENERY, "take-beer") { player, node ->
             if (freeSlots(player) < 1) {
                 sendDialogue(player, "You don't have enough inventory space.")

@@ -77,16 +77,18 @@ class HeroesGuildListener : InteractionListener {
         node: Node,
     ) {
         val usedItem = n as? Item ?: return
-        val usedWith = node as? Scenery ?: node as? NPC ?: return
+        val usedWith = when (node) {
+            is Scenery -> node
+            is NPC -> node
+            else -> return
+        }
 
         val jewellery = idMap[usedItem.id] ?: return
-
         if (!hasRequirement(player, Quests.HEROES_QUEST)) return
 
         if (usedWith is NPC) {
-            if (!jewellery.canBeRechargedByFamiliar()) return
-
             val familiar = usedWith as? Familiar ?: return
+            if (!jewellery.canBeRechargedByFamiliar()) return
             if (!player.familiarManager.isOwner(familiar)) return
 
             familiar.animate(Animation.create(7882))
@@ -98,29 +100,29 @@ class HeroesGuildListener : InteractionListener {
         val rechargedItem = Item(jewellery.ids[0])
         replaceSlot(player, usedItem.slot, rechargedItem)
 
-        val name = jewellery.getJewelleryName(rechargedItem)
-        val item =
-            when {
-                "amulet" in name.lowercase() -> "amulet"
-                "bracelet" in name.lowercase() -> "bracelet"
-                "ring" in name.lowercase() -> "ring"
-                "necklace" in name.lowercase() -> "necklace"
-                else -> name
-            }
+        val jewelleryName = jewellery.getJewelleryName(rechargedItem).lowercase()
+        val item = when {
+            "amulet" in jewelleryName -> "amulet"
+            "bracelet" in jewelleryName -> "bracelet"
+            "ring" in jewelleryName -> "ring"
+            "necklace" in jewelleryName -> "necklace"
+            else -> jewellery.getJewelleryName(rechargedItem)
+        }
 
-        if (usedWith is Scenery) {
-            if (usedItem.name.contains("glory", true)) {
-                player.dialogueInterpreter.sendItemMessage(
-                    Items.AMULET_OF_GLORY_1704,
-                    "You feel a power emanating from the fountain as it",
-                    "recharges your amulet. You can now rub the amulet to",
-                    "teleport and wear it to get more gems whilst mining.",
-                )
-            } else {
-                sendMessage(player, "You dip the $item in the fountain...")
+        when (usedWith) {
+            is Scenery -> {
+                if (usedItem.name.contains("glory", ignoreCase = true)) {
+                    player.dialogueInterpreter.sendItemMessage(
+                        Items.AMULET_OF_GLORY_1704,
+                        "You feel a power emanating from the fountain as it",
+                        "recharges your amulet. You can now rub the amulet to",
+                        "teleport and wear it to get more gems whilst mining.",
+                    )
+                } else {
+                    sendMessage(player, "You dip the $item in the fountain...")
+                }
             }
-        } else {
-            sendMessage(player, "Your titan recharges the glory.")
+            is NPC -> sendMessage(player, "Your titan recharges the glory.")
         }
     }
 
