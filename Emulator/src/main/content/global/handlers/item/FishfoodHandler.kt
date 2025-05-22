@@ -15,6 +15,9 @@ import core.plugin.Plugin
 import org.rs.consts.Animations
 import org.rs.consts.Items
 
+/**
+ * Handles the logic for combining fish food.
+ */
 @Initializable
 class FishfoodHandler : UseWithHandler(*FishFood.usables) {
     companion object {
@@ -23,12 +26,15 @@ class FishfoodHandler : UseWithHandler(*FishFood.usables) {
         private const val POISONED_FISH_FOOD = Items.POISONED_FISH_FOOD_274
     }
 
-    enum class FishFood(
-        private val used: Int,
-        val with: Int,
-        private val product: Int,
-        private val msg: String,
-    ) {
+    /**
+     * Represents fish food item combinations.
+     *
+     * @property used the item used on another item
+     * @property with the item that `used` is combined with
+     * @property product the resulting item id
+     * @property msg the message shown to the player
+     */
+    enum class FishFood(private val used: Int, val with: Int, private val product: Int, private val msg: String, ) {
         POISONED(
             POISON,
             FISH_FOOD,
@@ -67,12 +73,19 @@ class FishfoodHandler : UseWithHandler(*FishFood.usables) {
         ), ;
 
         companion object {
+            /**
+             * List of all item ids that can be used with another item.
+             */
             val usables = values().map { it.used }.toIntArray()
 
-            fun product(
-                used: Int,
-                with: Int,
-            ): Item? {
+            /**
+             * Returns the product item for a given combination.
+             *
+             * @param used the item used
+             * @param with the item it's used on
+             * @return the resulting [Item] or `null` if no match
+             */
+            fun product(used: Int, with: Int, ): Item? {
                 for (value in values()) {
                     if (value.used == used && value.with == with) {
                         return Item(value.product)
@@ -81,10 +94,14 @@ class FishfoodHandler : UseWithHandler(*FishFood.usables) {
                 return null
             }
 
-            fun message(
-                used: Int,
-                with: Int,
-            ): String? {
+            /**
+             * Returns the message to display for a given combination.
+             *
+             * @param used the item used
+             * @param with the item it's used on
+             * @return the message or `null` if no match
+             */
+            fun message(used: Int, with: Int, ): String? {
                 for (value in values()) {
                     if (value.used == used && value.with == with) {
                         return value.msg
@@ -95,6 +112,9 @@ class FishfoodHandler : UseWithHandler(*FishFood.usables) {
         }
     }
 
+    /**
+     * Registers the item handlers for each valid `with` item.
+     */
     override fun newInstance(arg: Any?): Plugin<Any> {
         for (value in FishFood.values()) {
             addHandler(value.with, ITEM_TYPE, this)
@@ -102,6 +122,9 @@ class FishfoodHandler : UseWithHandler(*FishFood.usables) {
         return this
     }
 
+    /**
+     * Handles the item-on-item combination when triggered by the player.
+     */
     override fun handle(event: NodeUsageEvent): Boolean {
         val player: Player = event.player
         val used: Int = event.usedItem.id

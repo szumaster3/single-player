@@ -17,24 +17,28 @@ class SilverSickleListener : InteractionListener {
 
     override fun defineListeners() {
         on(sickleIDs, IntType.ITEM, "operate", "cast bloom") { player, node ->
-            if (getQuestStage(player, Quests.NATURE_SPIRIT) >= 75) {
-                if (!inZone(player, "Mort Myre Swamp")) {
-                    sendMessage(player, "You can cast the spell in the swamp.")
-                    return@on true
-                }
-
-                if (inEquipment(player, Items.ENCHANTED_SICKLE_EMERALDB_13156)) {
-                    return@on true
-                }
-                if (node.name.contains("emerald", true)) {
-                    animate(player, Animations.LEGACY_OF_SEERGAZE_EMERALD_SICKLE_BLOOM_9021)
-                } else {
-                    animate(player, Animations.SILVER_SICKLE_1100)
-                }
-                castBloom(player)
-            } else {
+            val questStage = getQuestStage(player, Quests.NATURE_SPIRIT)
+            if (questStage < 75) {
                 sendDialogue(player, "You need to start the Nature Spirit to use this.")
+                return@on true
             }
+
+            if (!inZone(player, "Mort Myre Swamp")) {
+                sendMessage(player, "You can only cast the spell in the Mort Myre Swamp.")
+                return@on true
+            }
+
+            if (inEquipment(player, Items.ENCHANTED_SICKLE_EMERALDB_13156)) {
+                return@on true
+            }
+
+            if (node.name.contains("emerald", ignoreCase = true)) {
+                animate(player, Animations.LEGACY_OF_SEERGAZE_EMERALD_SICKLE_BLOOM_9021)
+            } else {
+                animate(player, Animations.SILVER_SICKLE_1100)
+            }
+
+            castBloom(player)
             return@on true
         }
 

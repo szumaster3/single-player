@@ -13,6 +13,9 @@ import core.plugin.Initializable
 import core.plugin.Plugin
 import org.rs.consts.Items
 
+/**
+ * Handles interactions related to damaged God books.
+ */
 @Initializable
 class GodBookOptionHandler : OptionHandler() {
     override fun newInstance(arg: Any?): Plugin<Any> {
@@ -23,6 +26,13 @@ class GodBookOptionHandler : OptionHandler() {
         return this
     }
 
+    /**
+     * Handles player interaction with God books.
+     *
+     * Supported options:
+     * - check: Displays which pages (1–4) are inserted.
+     * - preach: Opens dialogue corresponding to the book's lore.
+     */
     override fun handle(
         player: Player,
         node: Node,
@@ -53,7 +63,14 @@ class GodBookOptionHandler : OptionHandler() {
         return true
     }
 
+    /**
+     * Plugin that prevents the player from picking up duplicate incomplete God books.
+     */
     inner class GodBookItem : ItemPlugin() {
+
+        /**
+         * Registers this plugin for all damaged God book items.
+         */
         override fun newInstance(arg: Any?): Plugin<Any> {
             for (book in GodBook.values()) {
                 register(book.damagedBook.id)
@@ -61,6 +78,9 @@ class GodBookOptionHandler : OptionHandler() {
             return this
         }
 
+        /**
+         * Prevents pickup of a damaged God book if the player already has one.
+         */
         override fun canPickUp(player: Player, item: GroundItem, type: Int): Boolean {
             if (player.hasItem(item.asItem())) {
                 player.sendMessage("You do not need more than one incomplete book.")
@@ -70,8 +90,14 @@ class GodBookOptionHandler : OptionHandler() {
         }
     }
 
+    /**
+     * Handles combining God book pages with damaged books via "use with" interaction.
+     */
     inner class PageHandler :
         UseWithHandler(Items.DAMAGED_BOOK_3839, Items.DAMAGED_BOOK_3841, Items.DAMAGED_BOOK_3843) {
+        /**
+         * Registers this handler for all God book page items.
+         */
         override fun newInstance(arg: Any?): Plugin<Any?> {
             for (book in GodBook.values()) {
                 for (i in book.pages) {
@@ -81,6 +107,9 @@ class GodBookOptionHandler : OptionHandler() {
             return this
         }
 
+        /**
+         * Inserts a page into the damaged book if it matches.
+         */
         override fun handle(event: NodeUsageEvent): Boolean {
             val book = GodBook.forItem(event.usedItem, true)
             val player = event.player
@@ -92,6 +121,9 @@ class GodBookOptionHandler : OptionHandler() {
         }
     }
 
+    /**
+     * Converts a page number (1–4) to a string for dialogue.
+     */
     private fun getNumberName(i: Int): String = when (i) {
         1 -> "first"
         2 -> "second"

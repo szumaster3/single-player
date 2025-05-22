@@ -12,6 +12,9 @@ import core.plugin.Plugin
 import org.rs.consts.Items
 import org.rs.consts.Sounds
 
+/**
+ * A plugin that handles the "Dig" option on the spade item.
+ */
 @Initializable
 class SpadeOptionPlugin : OptionHandler() {
     override fun newInstance(arg: Any?): Plugin<Any>? {

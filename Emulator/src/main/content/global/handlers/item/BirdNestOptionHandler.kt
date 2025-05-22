@@ -7,7 +7,16 @@ import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.plugin.Plugin
 
+/**
+ * Handles the "search" option for bird nest items.
+ */
 class BirdNestOptionHandler : OptionHandler() {
+    /**
+     * Registers this handler as the option handler for the "search" option on all bird nest items.
+     *
+     * @param arg Optional argument, ignored in this implementation.
+     * @return Always returns null as this plugin does not need to be retained.
+     */
     override fun newInstance(arg: Any?): Plugin<Any?>? {
         BirdNestDropTable.values().forEach { nest ->
             nest.nest.definition.handlers["option:search"] = this
@@ -15,6 +24,9 @@ class BirdNestOptionHandler : OptionHandler() {
         return null
     }
 
+    /**
+     * Handles the "search" option on a bird nest item.
+     */
     override fun handle(
         player: Player,
         node: Node,
@@ -25,5 +37,10 @@ class BirdNestOptionHandler : OptionHandler() {
         return true
     }
 
+    /**
+     * Indicates that this option handler does not require the player to walk to the item before handling.
+     *
+     * @return false indicating no walking is required.
+     */
     override fun isWalk(): Boolean = false
 }

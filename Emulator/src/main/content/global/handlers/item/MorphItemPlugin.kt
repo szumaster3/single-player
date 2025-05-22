@@ -21,11 +21,24 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Sounds
 
+/**
+ * Represents a plugin that handles the transformation effects for morph items.
+ */
 @Initializable
 class MorphItemPlugin : Plugin<Any> {
+    /**
+     * List of NPC ids the player can morph into when using the easter ring.
+     */
     private val easterEggIds = (NPCs.EGG_3689..NPCs.EGG_3694).toIntArray()
+
+    /**
+     * The interface component used for the unmorph option.
+     */
     private val component = Component(Components.UNMORPH_375)
 
+    /**
+     * Registers this plugin.
+     */
     override fun newInstance(arg: Any?): Plugin<Any> {
         with(ItemDefinition.forId(Items.EASTER_RING_7927).handlers) {
             this["equipment"] = this@MorphItemPlugin
@@ -40,6 +53,13 @@ class MorphItemPlugin : Plugin<Any> {
         return this
     }
 
+    /**
+     * Handles the "equip" event.
+     *
+     * @param identifier The event type (e.g., "equip").
+     * @param args Arguments including [Player] and [Item].
+     * @return `false` to cancel the original "equip" behavior, `true` otherwise.
+     */
     override fun fireEvent(identifier: String, vararg args: Any, ): Any {
         val player = args[0] as Player
         val item = args[1] as Item
@@ -53,6 +73,12 @@ class MorphItemPlugin : Plugin<Any> {
         }
     }
 
+    /**
+     * Transforms the player into a morph NPC.
+     *
+     * @param player The player to transform.
+     * @param item The item being used for the transformation.
+     */
     private fun morph(player: Player, item: Item, ) {
         val morphId =
             if (item.id == Items.RING_OF_STONE_6583) {
@@ -70,6 +96,11 @@ class MorphItemPlugin : Plugin<Any> {
         player.walkingQueue.reset()
     }
 
+    /**
+     * Locks the player.
+     *
+     * @param player The player to lock.
+     */
     private fun lockPlayerActions(player: Player) {
         val currentTicks = GameWorld.ticks
         player.locks.lockMovement(currentTicks + 900000000)
@@ -77,12 +108,24 @@ class MorphItemPlugin : Plugin<Any> {
         player.locks.lockTeleport(currentTicks + 900000000)
     }
 
+    /**
+     * Inner plugin that handles the component interface.
+     */
     inner class MorphInterfacePlugin : ComponentPlugin() {
+
+        /**
+         * Registers this component plugin to handle the unmorph interface.
+         */
         override fun newInstance(arg: Any?): Plugin<Any> {
             ComponentDefinition.forId(Components.UNMORPH_375).plugin = this
             return this
         }
 
+        /**
+         * Handles the unmorph button click.
+         *
+         * @return Always returns `true` after closing the interface.
+         */
         override fun handle(player: Player, component: Component, opcode: Int, button: Int, slot: Int, itemId: Int, ): Boolean {
             player.interfaceManager.closeSingleTab()
             return true

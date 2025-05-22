@@ -25,8 +25,17 @@ import org.rs.consts.Items
 import org.rs.consts.Scenery
 import org.rs.consts.Sounds
 
+/**
+ * Handles interactions with fishbowl.
+ */
 @Initializable
 class FishbowlOptionHandler : OptionHandler() {
+    /**
+     * Registers handlers for fishbowl related item options and initializes supporting plugins.
+     *
+     * @param arg Optional initialization argument.
+     * @return This plugin instance.
+     */
     override fun newInstance(arg: Any?): Plugin<Any> {
         ItemDefinition.forId(FISHBOWL_WATER).handlers["option:empty"] = this
         ItemDefinition.forId(FISHBOWL_SEAWEED).handlers["option:empty"] = this
@@ -43,6 +52,9 @@ class FishbowlOptionHandler : OptionHandler() {
         return this
     }
 
+    /**
+     * Handles fishbowl-related option interactions performed by the player.
+     */
     override fun handle(
         player: Player,
         node: Node,
@@ -82,7 +94,17 @@ class FishbowlOptionHandler : OptionHandler() {
         return true
     }
 
+    /**
+     * Handles feeding pet fish using fish food on fishbowl items.
+     */
     private inner class FeedPetFishHandler : UseWithHandler(Items.FISH_FOOD_272) {
+
+        /**
+         * Registers this handler for feeding fish on different fishbowl items.
+         *
+         * @param arg Optional argument.
+         * @return This handler instance.
+         */
         override fun newInstance(arg: Any?): Plugin<Any?> {
             addHandler(FISHBOWL_BLUE, ITEM_TYPE, this)
             addHandler(FISHBOWL_GREEN, ITEM_TYPE, this)
@@ -90,9 +112,20 @@ class FishbowlOptionHandler : OptionHandler() {
             return this
         }
 
+        /**
+         * Opens the feeding dialogue when fish food is used on a fishbowl.
+         *
+         * @param event The node usage event.
+         * @return True to indicate the action was handled.
+         */
         override fun handle(event: NodeUsageEvent): Boolean = event.player.dialogueInterpreter.open("fishbowl-options", "feed")
     }
 
+    /**
+     * Dialogue for fishbowl.
+     *
+     * @param player The player.
+     */
     inner class FishbowlDialogue(
         player: Player? = null,
     ) : Dialogue(player) {
@@ -187,19 +220,37 @@ class FishbowlOptionHandler : OptionHandler() {
         override fun getIds(): IntArray = intArrayOf(DialogueInterpreter.getDialogueKey("fishbowl-options"))
     }
 
+    /**
+     * Handles the fish-catching aquarium scenery option and fishing logic.
+     */
     class AquariumPlugin : OptionHandler() {
+        /**
+         * Registers the aquarium "fish-in" option handler and the tiny net use handler.
+         *
+         * @param arg Optional argument.
+         * @return This plugin instance.
+         */
         override fun newInstance(arg: Any?): Plugin<Any?> {
             SceneryDefinition.forId(Scenery.AQUARIUM_10091).handlers["option:fish-in"] = this
             ClassScanner.definePlugin(TinyNetHandler())
             return this
         }
 
+        /**
+         * Handles the "fish-in" option on the aquarium scenery by attempting to catch fish.
+         */
         override fun handle(
             player: Player,
             node: Node,
             option: String,
         ): Boolean = getFish(player)
 
+        /**
+         * Attempts to catch fish using a tiny net and fishbowl seaweed.
+         *
+         * @param player The player catching fish.
+         * @return True after processing the catch attempt.
+         */
         fun getFish(player: Player): Boolean {
             if (!anyInInventory(player, TINY_NET)) {
                 sendMessage(player, "You see some tiny fish swimming around... but how to catch them?")
@@ -236,12 +287,26 @@ class FishbowlOptionHandler : OptionHandler() {
             }
         }
 
+        /**
+         * Handles using the tiny net on aquarium scenery to catch fish.
+         */
         private inner class TinyNetHandler : UseWithHandler(TINY_NET) {
+            /**
+             * Registers this handler for using the tiny net on the aquarium scenery object.
+             *
+             * @param arg Optional argument.
+             * @return This handler instance.
+             */
             override fun newInstance(arg: Any?): Plugin<Any?> {
                 addHandler(Scenery.AQUARIUM_10091, OBJECT_TYPE, this)
                 return this
             }
-
+            /**
+             * Processes the use of the tiny net on the aquarium scenery by attempting to catch fish.
+             *
+             * @param event The node usage event.
+             * @return True to indicate the event was handled.
+             */
             override fun handle(event: NodeUsageEvent): Boolean = getFish(event.player)
         }
     }

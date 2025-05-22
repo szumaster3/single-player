@@ -13,6 +13,9 @@ import org.rs.consts.Animations
 import org.rs.consts.Items
 import java.util.concurrent.TimeUnit
 
+/**
+ * handles interactions with Falador shields.
+ */
 class FaladorShieldListener : InteractionListener {
     override fun defineListeners() {
 
@@ -71,6 +74,12 @@ class FaladorShieldListener : InteractionListener {
         }
     }
 
+    /**
+     * Returns the Falador shield level based on the item id.
+     *
+     * @param itemId The item id of the shield.
+     * @return The shield level (0, 1, or 2), or -1 if unrecognized.
+     */
     private fun getLevel(itemId: Int): Int =
         when (itemId) {
             Items.FALADOR_SHIELD_1_14577 -> 0
@@ -106,16 +115,25 @@ class FaladorShieldListener : InteractionListener {
         }
 
     companion object {
+        /**
+         * Animation id used for the shield operate emote.
+         */
         const val ANIM_EMOTE: Int = Animations.HUMAN_FALADOR_SHIELD_RESTORE_11012
+
+        /**
+         * Graphics ids for shield emotes per shield level.
+         */
         val GFX_EMOTE: IntArray =
-            intArrayOf(
-                org.rs.consts.Graphics.FALADOR_SHIELD_1_EMOTE_1966,
-                org.rs.consts.Graphics.FALADOR_SHIELD_3_EMOTE_1965,
-                org.rs.consts.Graphics.FALADOR_SHIELD_3_EMOTE_1965,
-            )
-        val GFX_PRAYER_RESTORE: IntArray =
-            intArrayOf(1962, 1963, org.rs.consts.Graphics.FALADOR_SHIELD_PRAY_RESTORE_1964)
-        val FALADOR_SHIELD: IntArray =
-            intArrayOf(Items.FALADOR_SHIELD_1_14577, Items.FALADOR_SHIELD_2_14578, Items.FALADOR_SHIELD_3_14579)
+            intArrayOf(org.rs.consts.Graphics.FALADOR_SHIELD_1_EMOTE_1966, org.rs.consts.Graphics.FALADOR_SHIELD_3_EMOTE_1965, org.rs.consts.Graphics.FALADOR_SHIELD_3_EMOTE_1965)
+
+        /**
+         * Graphics ids used for prayer restore effect per shield level.
+         */
+        val GFX_PRAYER_RESTORE: IntArray = intArrayOf(1962, 1963, org.rs.consts.Graphics.FALADOR_SHIELD_PRAY_RESTORE_1964)
+
+        /**
+         * Item ids corresponding to Falador shields supported.
+         */
+        val FALADOR_SHIELD: IntArray = intArrayOf(Items.FALADOR_SHIELD_1_14577, Items.FALADOR_SHIELD_2_14578, Items.FALADOR_SHIELD_3_14579)
     }
 }
