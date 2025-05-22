@@ -104,32 +104,33 @@ class FaladorListener : InteractionListener {
          */
 
         on(CASTLE_STAIRS, IntType.SCENERY, "climb-up", "climb-down") { player, node ->
-            when (node.id) {
-                11729 ->
-                    if (getUsedOption(player) == "climb-up") {
-                        if (node.location == Location(3011, 3338, 0)) {
-                            teleport(player, Location(3011, 3337, 1))
-                        } else {
-                            when (player.location.z) {
-                                0 -> teleport(player, Location(2956, 3338, 1))
-                                1 -> teleport(player, Location(2959, 3339, 2))
-                                2 -> teleport(player, Location(2959, 3338, 3))
-                            }
-                        }
-                    }
+            val option = getUsedOption(player)
+            val loc = node.location
 
-                11731 ->
-                    if (getUsedOption(player) == "climb-down") {
-                        if (node.location == Location(3011, 3338, 1)) {
-                            teleport(player, Location(3011, 3337, 0))
-                        } else {
-                            when (player.location.z) {
-                                3 -> teleport(player, Location(2959, 3338, 2))
-                                2 -> teleport(player, Location(2959, 3339, 1))
-                                1 -> teleport(player, Location(2956, 3338, 0))
-                            }
+            when (node.id) {
+                11729 -> if (option == "climb-up") {
+                    if (loc == Location(3011, 3338, 0)) {
+                        teleport(player, Location(3011, 3337, 1))
+                    } else {
+                        when (player.location.z) {
+                            0 -> teleport(player, Location(2956, 3338, 1))
+                            1 -> teleport(player, Location(2959, 3339, 2))
+                            2 -> teleport(player, Location(2959, 3338, 3))
                         }
                     }
+                }
+
+                11731 -> if (option == "climb-down") {
+                    if (loc == Location(3011, 3338, 1)) {
+                        teleport(player, Location(3011, 3337, 0))
+                    } else {
+                        when (player.location.z) {
+                            3 -> teleport(player, Location(2959, 3338, 2))
+                            2 -> teleport(player, Location(2959, 3339, 1))
+                            1 -> teleport(player, Location(2956, 3338, 0))
+                        }
+                    }
+                }
             }
             return@on true
         }

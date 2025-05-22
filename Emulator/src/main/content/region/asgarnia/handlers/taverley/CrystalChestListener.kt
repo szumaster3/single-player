@@ -12,10 +12,19 @@ import org.rs.consts.Scenery
 
 class CrystalChestListener : InteractionListener {
     override fun defineListeners() {
+
+        /*
+         * Handles opening crystal chest without key.
+         */
+
         on(Scenery.CLOSED_CHEST_172, IntType.SCENERY, "open") { player, _ ->
             sendMessage(player, "This chest is securely locked shut.")
             return@on true
         }
+
+        /*
+         * Handles opening crystal chest.
+         */
 
         onUseWith(IntType.SCENERY, Items.CRYSTAL_KEY_989, Scenery.CLOSED_CHEST_172) { player, used, with ->
             val usedKey = used.asItem().slot
@@ -45,6 +54,12 @@ class CrystalChestListener : InteractionListener {
         }
     }
 
+    /**
+     * Represents a possible reward tier with an associated drop chance and items.
+     *
+     * @property chance The probability (percentage) of this reward being selected.
+     * @property items The list of items included in this reward tier.
+     */
     enum class Reward(
         val chance: Double,
         vararg items: Item,
@@ -79,6 +94,12 @@ class CrystalChestListener : InteractionListener {
         val items: Array<Item> = items as Array<Item>
 
         companion object {
+            /**
+             * Randomly selects a reward for the given player based on chance values.
+             *
+             * @param player The player for whom the reward is selected.
+             * @return A [Reward] instance representing the selected reward, or null if none was selected.
+             */
             fun getReward(player: Player): Reward? {
                 var totalChance = 0.0
                 for (r in values()) {

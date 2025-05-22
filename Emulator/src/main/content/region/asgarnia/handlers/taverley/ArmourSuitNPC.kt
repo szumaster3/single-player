@@ -1,6 +1,7 @@
 package content.region.asgarnia.handlers.taverley
 
 import core.api.addScenery
+import core.api.sendMessage
 import core.game.node.entity.npc.AbstractNPC
 import core.game.node.entity.player.Player
 import core.game.node.scenery.Scenery
@@ -43,11 +44,35 @@ class ArmourSuitNPC(
     }
 
     companion object {
+        /**
+         * Currently active armour suit NPCs spawned in the world.
+         */
         val activeSuits = mutableListOf<ArmourSuitNPC>()
+
+        /**
+         * Maximum number of armour suits that can be spawned simultaneously.
+         */
         private const val MAX_SPAWNED = 2
-        private val spawnLocations = arrayOf(Location.create(2887, 9829, 0), Location.create(2887, 9832, 0))
+
+        /**
+         * Predefined spawn locations for the armour suits.
+         */
+        private val spawnLocations = arrayOf(
+            Location.create(2887, 9829, 0),
+            Location.create(2887, 9832, 0)
+        )
+
+        /**
+         * Locations where armour suits have already been spawned.
+         */
         private val spawnedLocations = mutableSetOf<Location>()
 
+        /**
+         * Spawns an armour suit NPC near the player if the maximum number of suits
+         * has not yet been reached. The suit will attack the player upon spawning.
+         *
+         * @param player The player near whom the armour suit should spawn.
+         */
         @JvmStatic
         fun spawnArmourSuit(player: Player) {
             if (activeSuits.size >= MAX_SPAWNED) return
@@ -61,7 +86,7 @@ class ArmourSuitNPC(
                 }
 
                 getObject(availableLocation)?.let(SceneryBuilder::remove)
-                player.packetDispatch.sendMessage("Suddenly, the suit of armour comes to life!")
+                sendMessage(player, "Suddenly, the suit of armour comes to life!")
             }
         }
     }
