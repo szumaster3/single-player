@@ -11,8 +11,28 @@ import core.game.world.map.Location
 import org.rs.consts.Components
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
+import org.rs.consts.Scenery
 
+/**
+ * Handles minecart-based travel
+ */
 object MinecartTravel {
+
+    init {
+        // Adds minecarts at the Keldagrim station.
+        addScenery(Scenery.TRAIN_CART_7030, Location.create(2916, 10175, 0), 10, 0)
+        addScenery(Scenery.TRAIN_CART_7030, Location.create(2918, 10175, 0), 10, 0)
+        addScenery(Scenery.TRAIN_CART_7030, Location.create(2920, 10175, 0), 10, 0)
+        addScenery(Scenery.TRAIN_CART_7030, Location.create(2922, 10175, 0), 10, 0)
+        addScenery(Scenery.TRAIN_CART_7030, Location.create(2924, 10175, 0), 10, 0)
+    }
+
+    /**
+     * Init travel **to Keldagrim** for the given player.
+     *
+     * @param player The player who is travelling.
+     * Requires that the player has completed *The Giant Dwarf* quest.
+     */
     @JvmStatic
     fun goToKeldagrim(player: Player) {
         if (!hasRequirement(player, Quests.THE_GIANT_DWARF)) {
@@ -21,6 +41,13 @@ object MinecartTravel {
         submitWorldPulse(TravelToKeldagrimPulse(player))
     }
 
+    /**
+     * Init travel **leaving Keldagrim** to a destination.
+     *
+     * @param player The player who is travelling.
+     * @param dest The destination location to which the player will be transported.
+     * Requires that the player has completed *The Giant Dwarf* quest.
+     */
     @JvmStatic
     fun leaveKeldagrimTo(
         player: Player,

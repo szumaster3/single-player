@@ -15318,5 +15318,9 @@
   {
     "examine": "This scroll has information about the dummy game.",
     "ids": "15656"
+  },
+  {
+    "examine": "It seems to be covered up.",
+    "ids": "28094"
   }
 ]
