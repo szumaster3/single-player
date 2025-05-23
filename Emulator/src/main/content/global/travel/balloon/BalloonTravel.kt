@@ -99,9 +99,6 @@ class BalloonTravel : InterfaceListener, InteractionListener {
                         openOverlay(player, Components.FADE_FROM_BLACK_170)
                         removeAttribute(player, GameAttributes.BALLOON_ORIGIN)
                         sendDialogue(player, "You arrive safely in ${destination.areaName}.")
-                        if (destination == Balloons.VARROCK) {
-                            finishDiaryTask(player, DiaryType.VARROCK, 2, 17)
-                        }
                         return@queueScript stopExecuting(player)
                     }
 
@@ -150,6 +147,9 @@ class BalloonTravel : InterfaceListener, InteractionListener {
 
             if (removeItem(player, Item(destination.logId, 1))) {
                 handleFlight(player, destination)
+                if (destination == Balloons.VARROCK) {
+                    finishDiaryTask(player, DiaryType.VARROCK, 2, 17)
+                }
             } else {
                 val requiredItem = getItemName(destination.logId).lowercase().removeSuffix("s").trim()
                 sendDialogue(player, "You need at least one $requiredItem.")
