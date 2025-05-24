@@ -694,7 +694,7 @@ public enum Consumables {
     /**
      * The Watermelon slice.
      */
-    WATERMELON_SLICE(new Food(new int[]{Items.WATERMELON_SLICE_5984}, new PercentageHealthEffect(5))),
+    WATERMELON_SLICE(new Food(new int[]{Items.WATERMELON_SLICE_5984}, new PercentageHealthEffect(5), "You eat the slice of watermelon.")),
     /**
      * The Lemon.
      */
@@ -706,7 +706,7 @@ public enum Consumables {
     /**
      * The Lemon slices.
      */
-    LEMON_SLICES(new Food(new int[]{Items.LEMON_SLICES_2106}, new HealingEffect(2))),
+    LEMON_SLICES(new Food(new int[]{Items.LEMON_SLICES_2106}, new HealingEffect(2), "You eat the slice of lemon.")),
     /**
      * The Toad legs.
      */
