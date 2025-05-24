@@ -138,26 +138,6 @@ class DragonForgeListener : InteractionListener {
 
             return@onUseWith true
         }
-        onUseWith(IntType.NPC, STRANGE_KEYS, *MITHRIL_DRAGON_NPC) { player, _, with ->
-            val npc = with.asNpc()
-            if (!hasRequirement(player, Quests.WHILE_GUTHIX_SLEEPS, false)) {
-                sendMessage(player, "You cannot currently use any items on that dragon.")
-                return@onUseWith true
-            }
-            if (!anyInInventory(player, *STRANGE_KEYS) && !anyInEquipment(player, *REQUIRED_SHIELD)) {
-                return@onUseWith true
-            }
-
-            if(removeAll(player, STRANGE_KEYS, Container.INVENTORY)) {
-                visualize(npc, DRAGON_BREATH_ANIMATION, DRAGON_BREATH_GFX)
-                sendItemDialogue(player, DRAGONKIN_KEY, "The intense heat of the mithril dragon's breath fuses the key halves together.")
-                addItem(player, DRAGONKIN_KEY.id, 1)
-                runTask(player, 1) {
-                    npc.attack(player)
-                }
-            }
-            return@onUseWith true
-        }
     }
 
     companion object {
