@@ -134,7 +134,7 @@ class BalloonTravel : InterfaceListener, InteractionListener {
             }
 
             if(player.settings.weight > 40.0) {
-                sendDialogue(player, "You are carrying too much to fly in the balloon.")
+                sendDialogue(player, "You're carrying too much weight to fly. Try reducing your weight below 40 kg.")
                 return@on true
             }
 
