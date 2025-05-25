@@ -31,20 +31,19 @@ class HazeelCultListener : InteractionListener {
             return@on true
         }
 
-        on(CLIVET_RAFT, IntType.SCENERY, "board") { player, _ ->
-            when {
-                getAttribute(player, RAFT_UNLOCK, 0) == 1 -> {
-                    setAttribute(player, RAFT_UNLOCK, 0)
+        on(CLIVET_RAFT, IntType.SCENERY, "board") { player, node ->
+            val raftUnlock = player.getAttribute(RAFT_UNLOCK, false)
+
+            if (!raftUnlock) {
+                sendNPCDialogue(player, CLIVET_NPC, "Hey! I don't remember saying you could use that raft!", FaceAnim.ANNOYED)
+            } else {
+                val x = node.location.x
+                if (x == 2567) {
                     teleport(player, location(2606, 9692, 0))
                     sendDialogue(player, "The raft washes up the sewer, past the islands until it reaches the end of the sewer passage.")
-                }
-                inBorders(player, 2604, 9688, 2611, 9694) -> {
-                    setAttribute(player, RAFT_UNLOCK, 1)
+                } else {
                     teleport(player, location(2567, 9680, 0))
                     sendDialogue(player, "The raft flows back to the cave entrance.")
-                }
-                else -> {
-                    sendNPCDialogue(player, CLIVET_NPC, "Hey! I don't remember saying you could use that raft!", FaceAnim.ANNOYED)
                 }
             }
             return@on true
@@ -176,20 +175,22 @@ class HazeelCultListener : InteractionListener {
             return@on true
         }
 
+        /*
+         * Handles search the quest chest.
+         */
+
         on(Scenery.CHEST_2857, IntType.SCENERY, "Search") { player, _ ->
             val hasScroll = hasAnItem(player, HAZEEL_SCROLL).container != null
-            if (!hasScroll && freeSlots(player) > 1) {
-                addItem(player, HAZEEL_SCROLL, 1)
-                sendItemDialogue(player, HAZEEL_SCROLL, "You unlock the chest and find a scroll inside.")
-            } else if (!hasScroll && freeSlots(player) < 1) {
-                player.dialogueInterpreter.sendItemMessage(
-                    HAZEEL_SCROLL,
-                    "You unlock the chest and find a scroll inside",
-                    "but you don't have enough room to take it.",
-                )
-            } else if (hasScroll && freeSlots(player) > 1) {
+            if (hasScroll) {
                 sendDialogue(player, "You already have the scroll from this chest.")
+                return@on true
             }
+            if(freeSlots(player) == 0) {
+                player.dialogueInterpreter.sendItemMessage(HAZEEL_SCROLL, "You unlock the chest and find a scroll inside,", "but you don't have enough room to take it.")
+                return@on true
+            }
+            addItem(player, HAZEEL_SCROLL, 1)
+            sendItemDialogue(player, HAZEEL_SCROLL, "You unlock the chest and find a scroll inside.")
             return@on true
         }
 
