@@ -29,7 +29,7 @@ class TribalTotemListener : InteractionListener {
         on(Scenery.CRATE_2708, IntType.SCENERY, "Investigate") { player, _ ->
             if (getQuestStage(player, Quests.TRIBAL_TOTEM) in 1..19) {
                 if (!inInventory(player, Items.ADDRESS_LABEL_1858)) {
-                    sendDialogue(player, "There is a label on this crate. It says;${BLUE} Lord Handelmort, Handelmort Mansion Ardogune.</col>")
+                    sendDialogue(player, "There is a label on this crate. It says;${BLUE} Lord Handelmort, Handelmort Mansion Ardogune.</col> You carefully peel it off and take it.")
                     addItem(player, Items.ADDRESS_LABEL_1858, 1)
                 } else {
                     sendDialogue(player, "There was a label on this crate, but it's gone now since you took it!")
