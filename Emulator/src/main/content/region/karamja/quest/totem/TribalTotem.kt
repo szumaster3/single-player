@@ -1,12 +1,10 @@
 package content.region.karamja.quest.totem
 
-import core.api.removeAttribute
+import core.api.addItemOrDrop
 import core.api.rewardXP
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest
 import core.game.node.entity.skill.Skills
-import core.game.node.item.GroundItemManager
-import core.game.node.item.Item
 import core.plugin.Initializable
 import org.rs.consts.Items
 import org.rs.consts.Quests
@@ -73,19 +71,11 @@ class TribalTotem : Quest(Quests.TRIBAL_TOTEM, 126, 125, 1, Vars.VARP_QUEST_TRIB
         drawReward(player, "1,775 Thieving XP", ln++)
         drawReward(player, "5 Swordfish", ln)
         rewardXP(player, Skills.THIEVING, 1775.0)
-        if (!player.inventory.add(Item(Items.SWORDFISH_373, 5))) {
-            GroundItemManager.create(Item(Items.SWORDFISH_373, 5), player)
-        }
-        cleanTTAttributes(player)
+        addItemOrDrop(player, Items.SWORDFISH_373, 5)
     }
 
     override fun newInstance(`object`: Any?): Quest {
         requirements.add(SkillRequirement(Skills.THIEVING, 21))
         return this
-    }
-
-    private fun cleanTTAttributes(player: Player) {
-        removeAttribute(player, "TT:StairsChecked")
-        removeAttribute(player, "TT:DoorUnlocked")
     }
 }

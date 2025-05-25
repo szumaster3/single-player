@@ -3,6 +3,7 @@ package content.region.karamja.quest.totem.dialogue
 import core.api.quest.finishQuest
 import core.api.quest.isQuestComplete
 import core.api.removeItem
+import core.api.sendItemDialogue
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.player.Player
@@ -115,12 +116,10 @@ class KangaiMauDialogue(
                 stage++
             }
 
-            37 -> sendDialogue("You hand over the totem").also {
-                if (!isQuestComplete(player, Quests.TRIBAL_TOTEM) && removeItem(player, Items.TOTEM_1857)) {
+            37 -> {
+                if(removeItem(player, Items.TOTEM_1857)) {
+                    sendItemDialogue(player, Items.TOTEM_1857, "You hand over the totem.")
                     finishQuest(player, Quests.TRIBAL_TOTEM)
-                    stage = END_DIALOGUE
-                } else {
-                    stage = END_DIALOGUE
                 }
             }
 

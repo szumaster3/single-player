@@ -339,4 +339,9 @@ internal object GameAttributes {
 
     // Balloon base destination.
     const val BALLOON_ORIGIN = "balloon-origin-location"
+
+    // Tribal totem quest.
+
+    const val QUEST_TRIBAL_TOTEM_STAIRS = "/save:TT:StairsChecked"
+    const val QUEST_TRIBAL_TOTEM_DOORS = "/save:TT:DoorUnlocked"
 }

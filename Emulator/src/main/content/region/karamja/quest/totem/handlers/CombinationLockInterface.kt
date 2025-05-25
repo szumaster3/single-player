@@ -1,5 +1,6 @@
 package content.region.karamja.quest.totem.handlers
 
+import content.data.GameAttributes
 import core.api.*
 import core.game.interaction.InterfaceListener
 import core.game.world.map.Location
@@ -69,16 +70,14 @@ class CombinationLockInterface : InterfaceListener {
                 val enteredCode = (1..4).joinToString("") {
                     LETTERS[player.getAttribute("tt-letter-$it", 0)]
                 }
-
+                closeInterface(player)
                 if (enteredCode == "KURT") {
-                    setAttribute(player, "/save:TT:DoorUnlocked", true)
+                    setAttribute(player, GameAttributes.QUEST_TRIBAL_TOTEM_DOORS, true)
                     sendMessage(player, "You hear a satisfying click, signifying that the door has been unlocked.")
-                    closeInterface(player)
                 } else {
                     sendMessage(player, "You hear a satisfying click, and then a worrying thunk.")
                     sendMessage(player, "The floor opens up beneath you sending you plummeting down to the sewers.")
                     teleport(player, Location.create(2641, 9721, 0))
-                    closeInterface(player)
                 }
             }
 
