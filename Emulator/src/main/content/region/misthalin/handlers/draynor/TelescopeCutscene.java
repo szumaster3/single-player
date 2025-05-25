@@ -16,6 +16,8 @@ import core.net.packet.context.CameraContext.CameraType;
 import core.net.packet.out.CameraViewPacket;
 import core.plugin.Initializable;
 import kotlin.Unit;
+import org.rs.consts.Animations;
+import org.rs.consts.Components;
 
 import static core.api.ContentAPIKt.*;
 
@@ -25,8 +27,8 @@ import static core.api.ContentAPIKt.*;
 @Initializable
 public final class TelescopeCutscene extends CutscenePlugin {
 
-    private static final Component INTERFACE = new Component(386);
-    private static final Animation TELESCOPE_ANIM = new Animation(2171);
+    private static final Component INTERFACE = new Component(Components.WOM_TELESCOPE_386);
+    private static final Animation TELESCOPE_ANIM = new Animation(Animations.LOOK_TELESCOPE_WOM);
 
     /**
      * Instantiates a new Telescope cutscene.
@@ -52,7 +54,7 @@ public final class TelescopeCutscene extends CutscenePlugin {
 
     @Override
     public boolean start(final Player player, boolean login, Object... args) {
-        player.animate(TELESCOPE_ANIM);
+        player.animate(TELESCOPE_ANIM, 1);
         player.getDialogueInterpreter().sendPlainMessage(true, "You look through the telescope...");
         return super.start(player, login, args);
     }

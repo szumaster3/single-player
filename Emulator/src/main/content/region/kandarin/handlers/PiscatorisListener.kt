@@ -34,17 +34,19 @@ class PiscatorisListener : InteractionListener {
          */
 
         on(HERMANS_DESK, IntType.SCENERY, "search") { player, _ ->
-            sendMessage(player, "You search the herman's desk...")
-
+            sendMessage(player, "You search Herman's desk...")
             val hasBook = hasAnItem(player, Items.HERMANS_BOOK_7951).container != null
-
-            if (hasBook) {
-                sendMessage(player, "You search the herman's desk but find nothing.")
-            } else if (freeSlots(player) == 0) {
-                sendMessage(player, "...but you don't have enough room to take it.")
-            } else {
-                sendMessage(player, "You find the 'Herman's book'.")
-                addItemOrDrop(player, Items.HERMANS_BOOK_7951)
+            when {
+                hasBook -> {
+                    sendMessage(player, "...but find nothing.")
+                }
+                freeSlots(player) == 0 -> {
+                    sendMessage(player, "You find 'Herman's book' but you don't have enough room to take it.")
+                }
+                else -> {
+                    sendMessage(player, "You find Herman's book.")
+                    addItemOrDrop(player, Items.HERMANS_BOOK_7951)
+                }
             }
             return@on true
         }

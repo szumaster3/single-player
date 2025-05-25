@@ -23,7 +23,7 @@ class DraynorVillageListener : InteractionListener {
         }
 
         on(DraynorUtils.trapdoor, IntType.SCENERY, "open") { _, node ->
-            replaceScenery(node.asScenery(), 6435, 500)
+            replaceScenery(node.asScenery(), 6435, -1)
             return@on true
         }
 

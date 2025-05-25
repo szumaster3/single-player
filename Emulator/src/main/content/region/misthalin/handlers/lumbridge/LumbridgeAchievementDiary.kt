@@ -8,10 +8,10 @@ import content.region.misthalin.dialogue.draynor.WiseOldManDialogue
 import content.region.misthalin.dialogue.lumbridge.DoomsayerDialogue
 import content.region.misthalin.dialogue.lumbridge.DukeHoracioDialogue
 import content.region.misthalin.dialogue.lumbridge.LumbridgeGuideDialogue
+import content.region.misthalin.handlers.draynor.TelescopeCutscene.EndDialogue
 import content.region.misthalin.quest.dragon.dialogue.DukeDragonSlayerDialogue
 import content.region.misthalin.quest.priest.dialogue.FatherUhrneyDialogue
 import core.api.*
-import core.api.item.allInInventory
 import core.api.quest.getQuestStage
 import core.game.diary.DiaryAreaTask
 import core.game.diary.DiaryEventHookBase
@@ -392,15 +392,6 @@ class LumbridgeAchievementDiary : DiaryEventHookBase(DiaryType.LUMBRIDGE) {
                     )
                 }
 
-            12338 ->
-                if (event.target.id == Scenery.TELESCOPE_7092 && event.option == "observe") {
-                    finishTask(
-                        player,
-                        DiaryLevel.EASY,
-                        EasyTasks.DRAYNOR_WISEOLDMAN_PEEK_TELESCOPE,
-                    )
-                }
-
             12849 ->
                 if (event.target.id == Scenery.DOOR_2406 &&
                     event.option == "open" &&
@@ -491,6 +482,14 @@ class LumbridgeAchievementDiary : DiaryEventHookBase(DiaryType.LUMBRIDGE) {
                 player,
                 DiaryLevel.BEGINNER,
                 BeginnerTasks.CASTLE_SPEAK_TO_DUKE_HORACIO,
+            )
+        }
+
+        if (event.dialogue is EndDialogue) {
+            finishTask(
+                player,
+                DiaryLevel.EASY,
+                EasyTasks.DRAYNOR_WISEOLDMAN_PEEK_TELESCOPE,
             )
         }
     }
