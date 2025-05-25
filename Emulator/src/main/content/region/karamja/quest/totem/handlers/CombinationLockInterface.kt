@@ -75,9 +75,7 @@ class CombinationLockInterface : InterfaceListener {
                     setAttribute(player, GameAttributes.QUEST_TRIBAL_TOTEM_DOORS, true)
                     sendMessage(player, "The combination seems correct!")
                 } else {
-                    sendMessage(player, "You hear a satisfying click, and then a worrying thunk.")
-                    sendMessage(player, "The floor opens up beneath you sending you plummeting down to the sewers.")
-                    teleport(player, Location.create(2641, 9721, 0))
+                    sendMessage(player, "This combination is incorrect.")
                 }
             }
 

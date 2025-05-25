@@ -107,8 +107,9 @@ class TribalTotemListener : InteractionListener {
                 sendMessage(player, "You climb up the stairs.")
                 ClimbActionHandler.climb(player, null, Location.create(2629, 3324, 1))
             } else {
-                sendMessage(player, "You set off a trap and the stairs give way under you, dropping you into the sewers.")
+                sendMessage(player, "As you climb the stairs you hear a click...")
                 teleport(player, Location.create(2641, 9721, 0))
+                sendMessage(player, "You have fallen through a trap!")
             }
             return@on true
         }
@@ -156,7 +157,7 @@ class TribalTotemListener : InteractionListener {
         on(Scenery.CHEST_2710, IntType.SCENERY, "Search") { player, _ ->
             val hasTotem = hasAnItem(player, Items.TOTEM_1857).container != null
             if (hasTotem) {
-                sendDialogue(player, "Inside the chest you don't find anything.")
+                sendMessage(player, "The chest is empty.")
             } else {
                 setQuestStage(player, Quests.TRIBAL_TOTEM, 35)
                 sendDialogue(player, "Inside the chest you find the tribal totem.")

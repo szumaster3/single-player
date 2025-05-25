@@ -37,16 +37,12 @@ class KangaiMauDialogue(player: Player? = null, ) : Dialogue(player) {
         buttonId: Int,
     ): Boolean {
         when (stage) {
-            0 -> options("And what are you doing here in Brimhaven?", "I'm in search of adventure!", "Who are the Rantuki tribe?").also {
-                stage++
-            }
-
+            0 -> options("And what are you doing here in Brimhaven?", "I'm in search of adventure!", "Who are the Rantuki tribe?").also { stage++ }
             1 -> when (buttonId) {
                 1 -> playerl(FaceAnim.ASKING, "And what are you doing here in Brimhaven?").also { stage = 5 }
                 2 -> playerl(FaceAnim.HAPPY, "I'm in search of adventure!").also { stage = 15 }
                 3 -> playerl(FaceAnim.ASKING, "Who are the Rantuki Tribe?").also { stage = 10 }
             }
-
             5 -> npcl(FaceAnim.HAPPY, "I'm looking for someone brave to go on important mission. Someone skilled in thievery and sneaking about.").also { stage++ }
             6 -> npcl(FaceAnim.HAPPY, "I am told I can find such people in Brimhaven.").also { stage++ }
             7 -> playerl(FaceAnim.HAPPY, "Yep. I have heard there are many of that type here.").also { stage++ }
@@ -65,7 +61,6 @@ class KangaiMauDialogue(player: Player? = null, ) : Dialogue(player) {
                 player.questRepository.getQuest(Quests.TRIBAL_TOTEM).setStage(player, 10)
                 stage++
             }
-
             23 -> npcl(FaceAnim.HAPPY, "Best of luck with that adventurer").also { stage = END_DIALOGUE }
             24 -> if(inInventory(player, Items.TOTEM_1857, 1)) {
                 playerl(FaceAnim.HAPPY, "Yes I have.").also { stage = 26 }
