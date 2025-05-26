@@ -38,13 +38,13 @@ public class BasiliskNPC extends AbstractNPC {
 
     @Override
     public CombatSwingHandler getSwingHandler(boolean swing) {
-        return MirrorShieldHandler.SINGLETON;
+        return MirrorShieldHandler.INSTANCE;
     }
 
     @Override
     public void checkImpact(BattleState state) {
         super.checkImpact(state);
-        MirrorShieldHandler.SINGLETON.checkImpact(state);
+        MirrorShieldHandler.INSTANCE.checkImpact(state);
     }
 
     @Override
