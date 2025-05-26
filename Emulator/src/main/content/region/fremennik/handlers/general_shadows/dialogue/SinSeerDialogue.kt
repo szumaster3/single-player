@@ -11,35 +11,37 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Sin Seer dialogue.
+ *
+ * Relations:
+ * - [GeneralShadow]
+ */
 @Initializable
-class SinSeerDialogue(
-    player: Player? = null,
-) : Dialogue(player) {
+class SinSeerDialogue(player: Player? = null, ) : Dialogue(player) {
+
     override fun open(vararg args: Any?): Boolean {
         val hasNote = hasAnItem(player, Items.SIN_SEERS_NOTE_10856).container != null
-        if (!hasNote && getAttribute(player, GeneralShadow.GS_RECEIVED_NOTE, false)) {
-            npcl(FaceAnim.HALF_ASKING, "Whatcha lookin' at chicken legs? Don't you have a General you should speak to?")
-            stage = 26
-            return true
+
+        return when {
+            !hasNote && getAttribute(player, GeneralShadow.GS_RECEIVED_NOTE, false) -> {
+                npcl(FaceAnim.HALF_ASKING, "Whatcha lookin' at chicken legs? Don't you have a General you should speak to?")
+                stage = 26
+                true
+            }
+            GeneralShadow.getShadowProgress(player) >= 0 -> {
+                player("I'm looking for the Sin Seer.")
+                true
+            }
+            else -> {
+                npcl(FaceAnim.SCARED, "My inner eye is clouded from the wave of darkness; give me a moment. What do you want? Augh! Your sins! They BLIND me!")
+                stage = END_DIALOGUE
+                true
+            }
         }
-        if (GeneralShadow.getShadowProgress(player) >= 0) {
-            player("I'm looking for the Sin Seer.")
-            return true
-        }
-        npcl(
-            FaceAnim.SCARED,
-            "My inner eye is clouded from the wave of darkness; give me a moment. What do you want? Augh! Your sins! They BLIND me!",
-        ).also {
-            stage =
-                END_DIALOGUE
-        }
-        return true
     }
 
-    override fun handle(
-        interfaceId: Int,
-        buttonId: Int,
-    ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
         val hasNote = hasAnItem(player, Items.SIN_SEERS_NOTE_10856).container != null
         when (stage) {
             0 ->

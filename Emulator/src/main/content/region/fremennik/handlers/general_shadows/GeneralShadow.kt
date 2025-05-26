@@ -66,7 +66,7 @@ object GeneralShadow {
      * @param player The player whose quest completion status is being checked.
      * @return `true` if the mini-quest is complete, `false` otherwise.
      */
-    fun isQuestComplete(player: Player): Boolean {
+    fun isComplete(player: Player): Boolean {
         return getShadowProgress(player) == 5
     }
 }

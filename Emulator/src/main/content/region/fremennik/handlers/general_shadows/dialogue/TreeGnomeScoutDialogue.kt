@@ -9,34 +9,41 @@ import core.game.dialogue.FaceAnim
 import core.game.node.entity.player.Player
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
-import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Tree Gnome Scout dialogue.
+ *
+ * Relations:
+ * - [GeneralShadow]
+ */
 @Initializable
-class TreeGnomeScoutDialogue(
-    player: Player? = null,
-) : Dialogue(player) {
+class TreeGnomeScoutDialogue(player: Player? = null, ) : Dialogue(player) {
     override fun open(vararg args: Any?): Boolean {
-        if (!GeneralShadow.hasGhostlySet(player)) {
-            npc("Whoooo wooo Whooooooooo").also { stage = END_DIALOGUE }
-            return true
+        stage = END_DIALOGUE
+
+        return when {
+            !GeneralShadow.hasGhostlySet(player) -> {
+                npc("Whoooo wooo Whooooooooo")
+                true
+            }
+            GeneralShadow.isComplete(player) -> {
+                player("Hello again.")
+                stage = 100
+                true
+            }
+            GeneralShadow.getShadowProgress(player) >= 3 -> {
+                player("Hello there! General Khazard sent me.")
+                true
+            }
+            else -> {
+                sendDialogue(player, "The Scout is too busy to talk.")
+                true
+            }
         }
-        if (GeneralShadow.isQuestComplete(player)) {
-            player("Hello again.").also { stage = 100 }
-            return true
-        }
-        if (GeneralShadow.getShadowProgress(player) >= 3) {
-            player("Hello there! General Khazard sent me.")
-            return true
-        }
-        sendDialogue(player, "The Scout is too busy to talk.").also { stage = END_DIALOGUE }
-        return true
     }
 
-    override fun handle(
-        interfaceId: Int,
-        buttonId: Int,
-    ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
         when (stage) {
             0 -> npc("What news, skinbag?").also { stage++ }
             1 -> player("Hey, no need to be rude.").also { stage++ }
