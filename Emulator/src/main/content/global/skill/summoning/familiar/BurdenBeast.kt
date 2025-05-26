@@ -37,7 +37,7 @@ abstract class BurdenBeast : Familiar {
      * @param attackStyle The familiar's attack style.
      */
     constructor(
-        owner: Player, id: Int, ticks: Int, pouchId: Int, specialCost: Int, containerSize: Int, attackStyle: Int
+        owner: Player?, id: Int, ticks: Int, pouchId: Int, specialCost: Int, containerSize: Int, attackStyle: Int
     ) : super(owner, id, ticks, pouchId, specialCost, attackStyle) {
         this.container = Container(containerSize).register(BurdenContainerListener(owner))
     }
