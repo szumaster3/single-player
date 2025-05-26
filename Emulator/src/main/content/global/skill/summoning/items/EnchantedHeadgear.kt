@@ -1,5 +1,6 @@
 package content.global.skill.summoning.items
 
+import core.game.container.Container
 import core.game.node.item.Item
 import org.rs.consts.Items
 
@@ -37,10 +38,16 @@ enum class EnchantedHeadgear(
     companion object {
         private val byDefault = values().associateBy { it.defaultItem.id }
         private val byEnchanted = values().associateBy { it.enchantedItem.id }
-        private val byCharged = values().associateBy { it.chargedItem.id }
+        val byCharged = values().associateBy { it.chargedItem.id }
 
         fun forItem(item: Item): EnchantedHeadgear? =
             byDefault[item.id] ?: byEnchanted[item.id] ?: byCharged[item.id]
 
+        fun getChargedItem(item: Item): Item? {
+            val headgear = forItem(item) ?: return null
+            return headgear.chargedItem
+        }
+
+        fun forEnchanted(item: Item): EnchantedHeadgear? = byEnchanted[item.id]
     }
 }

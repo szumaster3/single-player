@@ -10,6 +10,18 @@ import org.rs.consts.Items
  */
 object EnchantedHeadgearScrolls {
     private const val MAX_AMOUNT = 0xFFFF
+    private val playerHeadgearScrolls = mutableMapOf<Pair<Player, Int>, MutableMap<Int, Int>>()
+
+    fun getCurrentScrollCount(player: Player, chargedItemId: Int, scrollId: Int): Int {
+        return playerHeadgearScrolls[Pair(player, chargedItemId)]?.get(scrollId) ?: 0
+    }
+
+    fun addScroll(player: Player, chargedItemId: Int, scrollId: Int, amount: Int): Boolean {
+        val map = playerHeadgearScrolls.getOrPut(Pair(player, chargedItemId)) { mutableMapOf() }
+        val current = map[scrollId] ?: 0
+        map[scrollId] = current + amount
+        return true
+    }
 
     val allowedScrollIDs = intArrayOf(
         Items.HOWL_SCROLL_12425, Items.DREADFOWL_STRIKE_SCROLL_12445, Items.SLIME_SPRAY_SCROLL_12459,
@@ -41,19 +53,55 @@ object EnchantedHeadgearScrolls {
         return if (isAllowedScroll(scrollId)) scrollId to amount else null to 0
     }
 
-    fun addScroll(player: Player, item: Item, scrollId: Int, amount: Int): Boolean {
-        val gear = EnchantedHeadgear.forItem(item) ?: return false
+    fun addScrollToChargedItem(
+        chargedItemId: Int,
+        scrollId: Int,
+        amount: Int,
+        player: Player
+    ) {
+        if (scrollId !in allowedScrollIDs) {
+            sendMessage(player, "You cannot add this scroll to the headgear.")
+            return
+        }
 
-        if (!isAllowedScroll(scrollId)) return false
+        val headgear = EnchantedHeadgear.byCharged[chargedItemId]
+        if (headgear == null) {
+            sendMessage(player, "This item cannot hold scrolls.")
+            return
+        }
 
-        val (storedScrollId, storedAmount) = decodeCharge(item.charge)
-        if (storedScrollId != null && storedScrollId != scrollId) return false
+        val currentCount = getCurrentScrollCount(player, chargedItemId, scrollId)
+        val freeSpace = headgear.scrollCapacity - currentCount
 
-        val newAmount = (storedAmount + amount).coerceAtMost(gear.scrollCapacity)
-        item.charge = encodeCharge(scrollId, newAmount)
+        if (freeSpace <= 0) {
+            sendMessage(player, "Your headgear scroll storage is full.")
+            return
+        }
 
-        player.inventory.remove(Item(scrollId, amount))
-        return true
+        var toAdd = amount
+        if (toAdd > freeSpace) {
+            toAdd = freeSpace
+        }
+
+        val scrollItem = Item(scrollId, toAdd)
+
+        if (!player.inventory.containsItem(scrollItem)) {
+            sendMessage(player, "You do not have enough scrolls to add.")
+            return
+        }
+
+        if (!player.inventory.remove(scrollItem)) {
+            sendMessage(player, "Failed to remove scrolls from your inventory.")
+            return
+        }
+
+        if (!addScroll(player, chargedItemId, scrollId, toAdd)) {
+            player.inventory.add(scrollItem)
+            sendMessage(player, "Failed to add scrolls to your headgear.")
+            return
+        }
+
+        sendMessage(player, "Added $toAdd scroll(s) to your headgear.")
     }
 
     fun checkScrolls(player: Player, item: Item) {

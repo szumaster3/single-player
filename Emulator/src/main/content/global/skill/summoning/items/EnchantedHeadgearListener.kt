@@ -10,6 +10,7 @@ import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.game.world.update.flag.context.Graphics
+import core.tools.Log
 import org.rs.consts.Animations
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
@@ -81,44 +82,35 @@ class EnchantedHeadgearListener : InteractionListener {
          */
 
         onUseWith(IntType.ITEM, enchantedIDs, *allowedScrollIDs) { player, used, with ->
-            val item = used.asItem() ?: return@onUseWith true
+            val enchantedItem = used.asItem() ?: return@onUseWith true
             val scrollItem = with.asItem() ?: return@onUseWith true
 
-            val headgear = EnchantedHeadgear.forItem(item) ?: return@onUseWith true
-
-            val (storedScroll, storedAmount) = EnchantedHeadgearScrolls.decodeCharge(item.charge)
-            if (storedScroll != null && storedScroll != scrollItem.id) {
-                sendMessage(player, "This headgear already contains a different type of scroll.")
-                return@onUseWith true
-            }
-
-            val capacityLeft = headgear.scrollCapacity - storedAmount
-            if (capacityLeft <= 0) {
-                sendMessage(player, "Your headgear cannot hold any more scrolls.")
-                return@onUseWith true
-            }
+            val headgear = EnchantedHeadgear.forEnchanted(enchantedItem) ?: return@onUseWith true
 
             if (getStatLevel(player, Skills.SUMMONING) < headgear.requiredLevel) {
-                sendMessage(player, "You need a Summoning level of ${headgear.requiredLevel} to enchant this headgear.")
+                sendMessage(player, "You need Summoning level ${headgear.requiredLevel} to enchant this headgear.")
                 return@onUseWith true
             }
 
-            val amountToAdd = capacityLeft.coerceAtMost(scrollItem.amount)
-            val summoningScroll = SummoningScroll.forItemId(scrollItem.id) ?: return@onUseWith true
-
-            val workingItem = if (item.id != headgear.chargedItem.id) {
-                replaceSlot(player, item.index, headgear.chargedItem)
-                val newItem = player.inventory.get(item.index) ?: return@onUseWith true
-                setCharge(newItem, item.charge)
-                newItem
-            } else {
-                item
+            val chargedItem = EnchantedHeadgear.getChargedItem(enchantedItem) ?: run {
+                sendMessage(player, "Failed to charge the headgear.")
+                return@onUseWith true
             }
 
-            val success = EnchantedHeadgearScrolls.addScroll(player, workingItem, summoningScroll.itemId, amountToAdd)
-            if (!success) return@onUseWith true
+            EnchantedHeadgearScrolls.addScrollToChargedItem(
+                chargedItemId = chargedItem.id,
+                scrollId = scrollItem.id,
+                amount = scrollItem.amount,
+                player = player
+            )
 
-            sendMessage(player, "You add $amountToAdd scroll${if (amountToAdd > 1) "s" else ""} to the enchanted headgear.")
+            val slot = enchantedItem.index
+            if (slot >= 0) {
+                replaceSlot(player, slot, chargedItem)
+            } else {
+                sendMessage(player, "Failed to update your inventory.")
+            }
+
             return@onUseWith true
         }
     }
@@ -139,7 +131,11 @@ class EnchantedHeadgearListener : InteractionListener {
          */
         private val chargedIDs = EnchantedHeadgear.values().map { it.chargedItem.id }.toIntArray()
 
+        /**
+         * IDs of scrolls allowed to store in headgear.
+         */
         val allowedScrollIDs = EnchantedHeadgearScrolls.allowedScrollIDs
+
         /**
          * Enchants the provided item if possible.
          *
@@ -154,7 +150,7 @@ class EnchantedHeadgearListener : InteractionListener {
             if (getStatLevel(player, Skills.SUMMONING) < item.requiredLevel) return false
             if (option == 1) lock(player, 1)
             animate(findLocalNPC(player, NPCs.PIKKUPSTIX_6970)!!, Animations.CAST_SPELL_711)
-            sendGraphics(Graphics(1574, 100), player.location)
+            sendGraphics(Graphics(434, 100), player.location)
 
             return when {
                 slot.id == item.defaultItem.id -> {
