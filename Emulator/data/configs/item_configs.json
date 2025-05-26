@@ -105376,7 +105376,7 @@
     "grand_exchange_price": "50",
     "durability": null,
     "name": "Antlers (charged)",
-    "tradeable": "true",
+    "tradeable": "false",
     "weight": "1",
     "archery_ticket_price": "0",
     "id": "12206",
@@ -105419,7 +105419,7 @@
     "equipment_slot": "0",
     "grand_exchange_price": "211",
     "name": "Lizard skull (charged)",
-    "tradeable": "true",
+    "tradeable": "false",
     "archery_ticket_price": "0",
     "id": "12209",
     "bonuses": "0,0,0,0,1,2,3,4,2,3,12,0,0,0,0"
@@ -105452,7 +105452,7 @@
     "grand_exchange_price": "107",
     "durability": null,
     "name": "Feather headdress (charged)",
-    "tradeable": "true",
+    "tradeable": "false",
     "weight": "2",
     "archery_ticket_price": "0",
     "id": "12212",
@@ -105487,7 +105487,7 @@
     "grand_exchange_price": "107",
     "durability": null,
     "name": "Feather headdress (charged)",
-    "tradeable": "true",
+    "tradeable": "false",
     "weight": "2",
     "archery_ticket_price": "0",
     "id": "12215",
@@ -105522,7 +105522,7 @@
     "grand_exchange_price": "107",
     "durability": null,
     "name": "Feather headdress (charged)",
-    "tradeable": "true",
+    "tradeable": "false",
     "weight": "2",
     "archery_ticket_price": "0",
     "id": "12218",
@@ -105557,7 +105557,7 @@
     "grand_exchange_price": "107",
     "durability": null,
     "name": "Feather headdress (charged)",
-    "tradeable": "true",
+    "tradeable": "false",
     "weight": "2",
     "archery_ticket_price": "0",
     "id": "12221",
@@ -105592,7 +105592,7 @@
     "grand_exchange_price": "107",
     "durability": null,
     "name": "Feather headdress (charged)",
-    "tradeable": "true",
+    "tradeable": "false",
     "weight": "2",
     "archery_ticket_price": "0",
     "id": "12224",
@@ -108153,7 +108153,7 @@
     "equipment_slot": "0",
     "grand_exchange_price": "1913",
     "name": "Adamant full helm (charged)",
-    "tradeable": "true",
+    "tradeable": "false",
     "archery_ticket_price": "0",
     "id": "12659",
     "bonuses": "0,0,0,-6,-2,19,21,16,-1,19,6,0,0,0,0"
@@ -108211,7 +108211,7 @@
     "lendable": "true",
     "grand_exchange_price": "5623",
     "name": "Splitbark helm (charged)",
-    "tradeable": "true",
+    "tradeable": "false",
     "archery_ticket_price": "0",
     "id": "12663",
     "bonuses": "0,0,0,3,-2,10,9,11,3,0,7,0,0,0,0"
@@ -108243,7 +108243,7 @@
     "lendable": "true",
     "grand_exchange_price": "21200",
     "name": "Rune full helm (charged)",
-    "tradeable": "true",
+    "tradeable": "false",
     "archery_ticket_price": "0",
     "id": "12665",
     "bonuses": "0,0,0,-6,-2,30,32,27,-1,30,7,0,0,0,0"
@@ -108275,7 +108275,7 @@
     "lendable": "true",
     "grand_exchange_price": "61200",
     "name": "Dragon med helm (charged)",
-    "tradeable": "true",
+    "tradeable": "false",
     "archery_ticket_price": "0",
     "id": "12667",
     "bonuses": "0,0,0,-3,-1,33,35,32,-1,34,10,0,0,0,0"
@@ -108341,7 +108341,7 @@
     "lendable": "true",
     "grand_exchange_price": "3932989",
     "name": "Armadyl helmet (charged)",
-    "tradeable": "true",
+    "tradeable": "false",
     "archery_ticket_price": "0",
     "id": "12671",
     "bonuses": "-5,-5,-5,-5,10,6,8,10,10,8,12,0,1,0,0"
@@ -108373,7 +108373,7 @@
     "lendable": "true",
     "grand_exchange_price": "41000",
     "name": "Archer helm (charged)",
-    "tradeable": "true",
+    "tradeable": "false",
     "archery_ticket_price": "0",
     "id": "12673",
     "bonuses": "-5,-5,-5,-5,6,6,8,10,6,6,0,0,0,0,0"
@@ -108405,7 +108405,7 @@
     "lendable": "true",
     "grand_exchange_price": "48800",
     "name": "Berserker helm (charged)",
-    "tradeable": "true",
+    "tradeable": "false",
     "archery_ticket_price": "0",
     "id": "12675",
     "bonuses": "0,0,0,-5,-5,31,29,33,0,30,7,3,0,0,0"
@@ -108437,7 +108437,7 @@
     "lendable": "true",
     "grand_exchange_price": "48200",
     "name": "Warrior helm (charged)",
-    "tradeable": "true",
+    "tradeable": "false",
     "archery_ticket_price": "0",
     "id": "12677",
     "bonuses": "0,5,0,-5,-5,31,33,29,0,30,7,0,0,0,0"
@@ -108469,7 +108469,7 @@
     "lendable": "true",
     "grand_exchange_price": "46400",
     "name": "Farseer helm (charged)",
-    "tradeable": "true",
+    "tradeable": "false",
     "archery_ticket_price": "0",
     "id": "12679",
     "bonuses": "-5,-5,-5,6,-5,8,10,12,6,0,7,0,0,0,0"
@@ -108501,73 +108501,136 @@
     "equipment_slot": "0",
     "grand_exchange_price": "44831",
     "name": "Helm of neitiznot (charged)",
-    "tradeable": "true",
+    "tradeable": "false",
     "archery_ticket_price": "0",
     "id": "12681",
     "bonuses": "0,0,0,0,0,31,29,34,3,30,8,3,3,0,0"
   },
   {
-    "examine": "(Baby) It's a tiny, cheeky monkey. (Adult) Hide the bananas!",
+    "examine": "It's a tiny, cheeky monkey.",
     "durability": null,
     "name": "Baby monkey",
     "archery_ticket_price": "0",
     "id": "12682"
   },
   {
-    "examine": "(Baby) It's a tiny, cheeky monkey. (Adult) Hide the bananas!",
+    "examine": "Hide the bananas!",
+    "durability": null,
+    "name": "Monkey",
+    "archery_ticket_price": "0",
+    "id": "12683"
+  },
+  {
+    "examine": "It's a tiny, cheeky monkey.",
     "durability": null,
     "name": "Baby monkey",
     "archery_ticket_price": "0",
     "id": "12684"
   },
   {
-    "examine": "(Baby) It's a tiny, cheeky monkey. (Adult) Hide the bananas!",
+    "examine": "Hide the bananas!",
+    "durability": null,
+    "name": "Monkey",
+    "archery_ticket_price": "0",
+    "id": "12685"
+  },
+  {
+    "examine": "It's a tiny, cheeky monkey.",
     "durability": null,
     "name": "Baby monkey",
     "archery_ticket_price": "0",
     "id": "12686"
   },
   {
-    "examine": "(Baby) It's a tiny, cheeky monkey. (Adult) Hide the bananas!",
+    "examine": "Hide the bananas!",
+    "durability": null,
+    "name": "Monkey",
+    "archery_ticket_price": "0",
+    "id": "12687"
+  },
+  {
+    "examine": "It's a tiny, cheeky monkey.",
     "durability": null,
     "name": "Baby monkey",
     "archery_ticket_price": "0",
     "id": "12688"
   },
   {
-    "examine": "(Baby) It's a tiny, cheeky monkey. (Adult) Hide the bananas!",
+    "examine": "Hide the bananas!",
+    "durability": null,
+    "name": "Monkey",
+    "archery_ticket_price": "0",
+    "id": "12689"
+  },
+  {
+    "examine": "It's a tiny, cheeky monkey.",
     "durability": null,
     "name": "Baby monkey",
     "archery_ticket_price": "0",
     "id": "12690"
   },
   {
-    "examine": "(Baby) It's a tiny, cheeky monkey. (Adult) Hide the bananas!",
+    "examine": "Hide the bananas!",
+    "durability": null,
+    "name": "Monkey",
+    "archery_ticket_price": "0",
+    "id": "12691"
+  },
+  {
+    "examine": "It's a tiny, cheeky monkey.",
     "durability": null,
     "name": "Baby monkey",
     "archery_ticket_price": "0",
     "id": "12692"
   },
   {
-    "examine": "(Baby) It's a tiny, cheeky monkey. (Adult) Hide the bananas!",
+    "examine": "Hide the bananas!",
+    "durability": null,
+    "name": "Monkey",
+    "archery_ticket_price": "0",
+    "id": "12693"
+  },
+  {
+    "examine": "It's a tiny, cheeky monkey.",
     "durability": null,
     "name": "Baby monkey",
     "archery_ticket_price": "0",
     "id": "12694"
   },
   {
-    "examine": "(Baby) It's a tiny, cheeky monkey. (Adult) Hide the bananas!",
+    "examine": "Hide the bananas!",
+    "durability": null,
+    "name": "Baby monkey",
+    "archery_ticket_price": "0",
+    "id": "12695"
+  },
+  {
+    "examine": "It's a tiny, cheeky monkey.",
     "durability": null,
     "name": "Baby monkey",
     "archery_ticket_price": "0",
     "id": "12696"
   },
   {
-    "examine": "(Baby) It's a tiny, cheeky monkey. (Adult) Hide the bananas!",
+    "examine": "Hide the bananas!",
+    "durability": null,
+    "name": "Monkey",
+    "archery_ticket_price": "0",
+    "id": "12697"
+  },
+  {
+    "examine": "It's a tiny, cheeky monkey.",
     "durability": null,
     "name": "Baby monkey",
     "archery_ticket_price": "0",
     "id": "12698"
+  },
+    {
+    "examine": "Hide the bananas!",
+    "durability": null,
+    "name": "Monkey",
+    "archery_ticket_price": "0",
+    "id": "12699"
   },
   {
     "requirements": "{4,23}",
@@ -132065,6 +132128,7 @@
     "destroy_message": "Drop",
     "name": "Slayer helmet (e)",
     "archery_ticket_price": "0",
+    "tradeable": "false",
     "id": "14636",
     "bonuses": "0,0,0,0,0,30,32,27,0,30,7,0,0,0,0"
   },
@@ -132081,6 +132145,7 @@
     "destroy_message": "Drop",
     "name": "Slayer helmet (charged)",
     "archery_ticket_price": "0",
+    "tradeable": "false",
     "id": "14637",
     "bonuses": "0,0,0,0,0,30,32,27,0,30,7,0,0,0,0"
   },
@@ -132093,6 +132158,7 @@
     "archery_ticket_price": "0",
     "attack_speed": "4",
     "id": "14640",
+    "tradeable": "false",
     "absorb": "0,0,0",
     "bonuses": "0,0,0,0,0,0,0,0,3,0,0,0,0,0,0",
     "equipment_slot": "0"
@@ -132106,6 +132172,7 @@
     "archery_ticket_price": "0",
     "attack_speed": "4",
     "id": "14641",
+    "tradeable": "false",
     "absorb": "0,0,0",
     "bonuses": "0,0,0,0,0,0,0,0,3,0,0,0,0,0,0",
     "equipment_slot": "0"
