@@ -1,7 +1,7 @@
 package content.global.activity.ttrail
 
-import content.global.activity.ttrail.clues.AnagramClue
-import content.global.activity.ttrail.clues.ChallengeClue
+import content.global.activity.ttrail.clues.Anagram
+import content.global.activity.ttrail.clues.ChallengeScroll
 import content.global.activity.ttrail.clues.CoordinateClue
 import content.global.activity.ttrail.scrolls.CoordinateClueScroll
 import content.global.activity.ttrail.clues.CrypticClue
@@ -49,9 +49,9 @@ class TreasureTrailPlugin : OptionHandler() {
 
         ClassScanner.definePlugin(MapClue())
         ClassScanner.definePlugin(ClueItemPlugin())
-        ClassScanner.definePlugin(ChallengeClue())
+        ClassScanner.definePlugin(ChallengeScroll())
         ClassScanner.definePlugin(CrypticClue())
-        ClassScanner.definePlugin(AnagramClue())
+        ClassScanner.definePlugin(Anagram())
         ClassScanner.definePlugin(EmoteClue())
         ClassScanner.definePlugin(CoordinateClue())
         ClassScanner.definePlugin(SaradominWizardNPC())
