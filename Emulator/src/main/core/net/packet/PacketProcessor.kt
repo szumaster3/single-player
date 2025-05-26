@@ -325,7 +325,7 @@ object PacketProcessor {
             is Packet.ItemExamine -> {
                 val tutorialStage = pkt.player.getAttribute(TutorialStage.TUTORIAL_STAGE, 0)
                 val def = ItemDefinition.forId(pkt.id) ?: return
-                pkt.player.debug("[ITEM] ID: ${pkt.id} Value: ${def.value} Model: ${def.interfaceModelId}")
+                pkt.player.debug("[ITEM] ID: ${pkt.id} Value: ${def.value} Model: ${def.interfaceModelId} Charges: ${getCharge(Item(def.id))}")
                 when {
                     tutorialStage < 73 -> sendTutorialMessage(pkt.player, def.examine)
                     else -> pkt.player.sendMessage(def.examine)
