@@ -108625,7 +108625,7 @@
     "archery_ticket_price": "0",
     "id": "12698"
   },
-    {
+  {
     "examine": "Hide the bananas!",
     "durability": null,
     "name": "Monkey",
@@ -132127,8 +132127,8 @@
     "equipment_slot": "0",
     "destroy_message": "Drop",
     "name": "Slayer helmet (e)",
-    "archery_ticket_price": "0",
     "tradeable": "false",
+    "archery_ticket_price": "0",
     "id": "14636",
     "bonuses": "0,0,0,0,0,30,32,27,0,30,7,0,0,0,0"
   },
@@ -132144,8 +132144,8 @@
     "equipment_slot": "0",
     "destroy_message": "Drop",
     "name": "Slayer helmet (charged)",
-    "archery_ticket_price": "0",
     "tradeable": "false",
+    "archery_ticket_price": "0",
     "id": "14637",
     "bonuses": "0,0,0,0,0,30,32,27,0,30,7,0,0,0,0"
   },
@@ -132154,11 +132154,11 @@
     "examine": "A headband with an eye embroidered on it.",
     "durability": null,
     "name": "Seer's headband 2",
+    "tradeable": "false",
     "destroy": "true",
     "archery_ticket_price": "0",
     "attack_speed": "4",
     "id": "14640",
-    "tradeable": "false",
     "absorb": "0,0,0",
     "bonuses": "0,0,0,0,0,0,0,0,3,0,0,0,0,0,0",
     "equipment_slot": "0"
@@ -132168,11 +132168,11 @@
     "examine": "A headband with an eye embroidered on it.",
     "durability": null,
     "name": "Seer's headband 3",
+    "tradeable": "false",
     "destroy": "true",
     "archery_ticket_price": "0",
     "attack_speed": "4",
     "id": "14641",
-    "tradeable": "false",
     "absorb": "0,0,0",
     "bonuses": "0,0,0,0,0,0,0,0,3,0,0,0,0,0,0",
     "equipment_slot": "0"
