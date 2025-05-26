@@ -68,7 +68,7 @@ abstract class Forager : BurdenBeast {
      * @param item the item to produce
      * @return `true` if added successfully, `false` otherwise
      */
-    fun produceItem(item: Item): Boolean {
+    open fun produceItem(item: Item): Boolean {
         if (!container.hasSpaceFor(item)) {
             owner.packetDispatch.sendMessage("Your familiar is too full to collect items.")
             return false

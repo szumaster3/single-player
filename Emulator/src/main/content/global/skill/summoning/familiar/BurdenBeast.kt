@@ -45,7 +45,7 @@ abstract class BurdenBeast : Familiar {
     /**
      * Secondary constructor that defaults to a defensive attack style.
      */
-    constructor(owner: Player, id: Int, ticks: Int, pouchId: Int, specialCost: Int, containerSize: Int) : this(
+    constructor(owner: Player?, id: Int, ticks: Int, pouchId: Int, specialCost: Int, containerSize: Int) : this(
         owner, id, ticks, pouchId, specialCost, containerSize, WeaponInterface.STYLE_DEFENSIVE
     )
 
@@ -82,7 +82,7 @@ abstract class BurdenBeast : Familiar {
      * @param item The item to check.
      * @return `True` if the item is allowed, `false` otherwise.
      */
-    fun isAllowed(owner: Player, item: Item): Boolean {
+    open fun isAllowed(owner: Player, item: Item): Boolean {
         if (item.value > 50_000) {
             sendMessage(owner, "This item is too valuable to trust to this familiar.")
             return false

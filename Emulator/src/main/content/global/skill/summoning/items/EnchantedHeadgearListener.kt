@@ -41,7 +41,7 @@ class EnchantedHeadgearListener : InteractionListener {
             return@on true
         }
 
-        on(chargedIDs, IntType.ITEM, "Commune") { player, node ->
+        on(chargedIDs, IntType.ITEM, "Commune", "Operate") { player, node ->
             val item = node.asItem() ?: return@on true
             val scrolls = getScrolls(player, item)
             if (scrolls.isEmpty()) {

@@ -98,7 +98,7 @@ class DreadfowlNPC @JvmOverloads constructor(owner: Player? = null, id: Int = 68
             override fun swing(entity: Entity?, victim: Entity?, state: BattleState?): Int {
                 val npc = entity as DreadfowlNPC?
                 if (npc!!.specialMove) {
-                    npc.specialMove(FamiliarSpecial(victim))
+                    victim?.let { FamiliarSpecial(it) }?.let { npc.specialMove(it) }
                     npc.specialMove = false
                     return -1
                 }
