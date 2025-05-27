@@ -92,7 +92,7 @@ object EnchantedHeadgearScrolls {
         val message = scrolls.entries.joinToString(separator = "\n") { (scrollId, amount) ->
             val scrollName = getItemName(scrollId)
             val plural = if (amount == 1) "charge" else "charges"
-            "The item contains $amount $plural of the $scrollName scroll."
+            "The item contains $amount $plural of the $scrollName."
         }
         sendMessage(player, message)
     }
