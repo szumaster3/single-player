@@ -52,13 +52,7 @@ enum class RunePouch(
             return
         }
         if (getStatLevel(player, Skills.RUNECRAFTING) < level) {
-            sendMessage(
-                player,
-                "You need level " + level + " Runecrafting to fill a " +
-                    name.lowercase(
-                        Locale.getDefault(),
-                    ) + " pouch.",
-            )
+            sendMessage(player, "You need level $level Runecrafting to fill a " + name.lowercase(Locale.getDefault()) + " pouch.",)
             return
         }
         val essence = getEssence(player)

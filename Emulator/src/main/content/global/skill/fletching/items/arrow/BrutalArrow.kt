@@ -4,60 +4,15 @@ import org.rs.consts.Items
 
 /**
  * Represents the types of brutal arrows.
- *
- * @property base       The id of the base item (nails).
- * @property product    The product id.
- * @property level      The level required to fletch.
- * @property experience The experience gained from creating the brutal arrow.
  */
-enum class BrutalArrow(
-    val base: Int,
-    val product: Int,
-    val level: Int,
-    val experience: Double,
-) {
-    BRONZE_BRUTAL(
-        base = Items.BRONZE_NAILS_4819,
-        product = Items.BRONZE_BRUTAL_4773,
-        level = 7,
-        experience = 1.4,
-    ),
-    IRON_BRUTAL(
-        base = Items.IRON_NAILS_4820,
-        product = Items.IRON_BRUTAL_4778,
-        level = 18,
-        experience = 2.6,
-    ),
-    STEEL_BRUTAL(
-        base = Items.STEEL_NAILS_1539,
-        product = Items.STEEL_BRUTAL_4783,
-        level = 33,
-        experience = 5.1,
-    ),
-    BLACK_BRUTAL(
-        base = Items.BLACK_NAILS_4821,
-        product = Items.BLACK_BRUTAL_4788,
-        level = 38,
-        experience = 6.4,
-    ),
-    MITHRIL_BRUTAL(
-        base = Items.MITHRIL_NAILS_4822,
-        product = Items.MITHRIL_BRUTAL_4793,
-        level = 49,
-        experience = 7.5,
-    ),
-    ADAMANT_BRUTAL(
-        base = Items.ADAMANTITE_NAILS_4823,
-        product = Items.ADAMANT_BRUTAL_4798,
-        level = 62,
-        experience = 10.1,
-    ),
-    RUNE_BRUTAL(
-        base = Items.RUNE_NAILS_4824,
-        product = Items.RUNE_BRUTAL_4803,
-        level = 77,
-        experience = 12.5,
-    ),
+enum class BrutalArrow(val base: Int, val product: Int, val level: Int, val experience: Double, ) {
+    BRONZE_BRUTAL(Items.BRONZE_NAILS_4819, Items.BRONZE_BRUTAL_4773, 7, 1.4),
+    IRON_BRUTAL(Items.IRON_NAILS_4820, Items.IRON_BRUTAL_4778, 18, 2.6),
+    STEEL_BRUTAL(Items.STEEL_NAILS_1539, Items.STEEL_BRUTAL_4783, 33, 5.1),
+    BLACK_BRUTAL(Items.BLACK_NAILS_4821, Items.BLACK_BRUTAL_4788, 38, 6.4),
+    MITHRIL_BRUTAL(Items.MITHRIL_NAILS_4822, Items.MITHRIL_BRUTAL_4793, 49, 7.5),
+    ADAMANT_BRUTAL(Items.ADAMANTITE_NAILS_4823, Items.ADAMANT_BRUTAL_4798, 62, 10.1),
+    RUNE_BRUTAL(Items.RUNE_NAILS_4824, Items.RUNE_BRUTAL_4803, 77, 12.5),
     ;
 
     companion object {

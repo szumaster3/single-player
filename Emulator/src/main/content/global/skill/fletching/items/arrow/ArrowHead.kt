@@ -2,12 +2,7 @@ package content.global.skill.fletching.items.arrow
 
 import org.rs.consts.Items
 
-enum class ArrowHead(
-    val unfinished: Int,
-    val finished: Int,
-    val level: Int,
-    val experience: Double,
-) {
+enum class ArrowHead(val unfinished: Int, val finished: Int, val level: Int, val experience: Double) {
     BRONZE_ARROW(Items.BRONZE_ARROWTIPS_39, Items.BRONZE_ARROW_882, 1, 1.3),
     IRON_ARROW(Items.IRON_ARROWTIPS_40, Items.IRON_ARROW_884, 15, 2.5),
     STEEL_ARROW(Items.STEEL_ARROWTIPS_41, Items.STEEL_ARROW_886, 30, 5.0),

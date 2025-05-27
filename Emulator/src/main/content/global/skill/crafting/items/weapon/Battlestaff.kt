@@ -54,22 +54,19 @@ enum class Battlestaff(
     ;
 
     companion object {
-        /**
-         * Returns the [Battlestaff] enum entry corresponding to the given orb item id.
-         *
-         * @param itemId The id of the orb required for crafting the battle staff.
-         * @return The corresponding [Battlestaff] enum entry, or `null` if no match is found.
-         */
-        @JvmStatic
-        fun forId(itemId: Int): Battlestaff? = values().find { it.required == itemId }
+        private val requiredMap: Map<Int, Battlestaff> = values().associateBy { it.required }
+        private val productMap: Map<Int, Battlestaff> = values().associateBy { it.productId }
 
         /**
-         * Returns the [Battlestaff] enum entry corresponding to the given battle staff product id.
-         *
-         * @param productId The id of the battle staff product.
-         * @return The corresponding [Battlestaff] enum entry, or `null` if no match is found.
+         * Finds [Battlestaff] by orb item id or `null` if none.
          */
         @JvmStatic
-        fun forProductId(productId: Int): Battlestaff? = values().find { it.productId == productId }
+        fun forId(itemId: Int): Battlestaff? = requiredMap[itemId]
+
+        /**
+         * Finds [Battlestaff] by product id or `null` if none.
+         */
+        @JvmStatic
+        fun forProductId(productId: Int): Battlestaff? = productMap[productId]
     }
 }

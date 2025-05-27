@@ -3,21 +3,9 @@ package content.global.skill.herblore.potions
 import core.game.node.item.Item
 
 /**
- * Represents a generic potion that can be transformed from either an unfinished or finished potion.
- *
- * @property base The base potion (unfinished or finished).
- * @property ingredient The ingredient used in the potion.
- * @property level The required level to create the potion.
- * @property experience The experience gained from making the potion.
- * @property product The resulting potion item.
+ * Represents a generic potion.
  */
-class GenericPotion(
-    val base: Item?,
-    val ingredient: Item?,
-    val level: Int,
-    val experience: Double,
-    val product: Item?,
-) {
+class GenericPotion(val base: Item?, val ingredient: Item?, val level: Int, val experience: Double, val product: Item?) {
     companion object {
         /**
          * Transforms an unfinished potion into a generic potion.

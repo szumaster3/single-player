@@ -2,11 +2,7 @@ package content.global.skill.prayer
 
 import org.rs.consts.Items
 
-enum class Bones(
-    val itemId: Int,
-    val experience: Double,
-    val bonemealId: Int? = null,
-) {
+enum class Bones(val itemId: Int, val experience: Double, val bonemealId: Int? = null, ) {
     BONES(Items.BONES_2530, 4.5, Items.BONEMEAL_4255),
     BONES_2(Items.BONES_526, 4.5, Items.BONEMEAL_4256),
     WOLF_BONES(Items.WOLF_BONES_2859, 4.5, Items.BONEMEAL_4257),
@@ -35,18 +31,37 @@ enum class Bones(
     ;
 
     companion object {
+        /**
+         * Maps bone item ids to [Bones].
+         */
         private val bones: MutableMap<Int, Bones> = mutableMapOf()
+
+        /**
+         * Maps bonemeal item ids to [Bones].
+         */
         private val bonemealIndex: MutableMap<Int, Bones> = mutableMapOf()
 
+        /**
+         * Gets [Bones] by bonemeal item id.
+         */
         @JvmStatic
         fun forBoneMeal(itemId: Int): Bones? = bonemealIndex[itemId]
 
+        /**
+         * Returns all bone item ids.
+         */
         val array: IntArray
             get() = bones.keys.toIntArray()
 
+        /**
+         * Gets [Bones] by bone item id.
+         */
         @JvmStatic
         fun forId(itemId: Int): Bones? = bones[itemId]
 
+        /**
+         * Populates the maps on init.
+         */
         init {
             for (bone in values()) {
                 bones[bone.itemId] = bone

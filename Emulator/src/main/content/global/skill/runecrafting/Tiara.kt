@@ -4,15 +4,9 @@ import core.game.node.item.Item
 import org.rs.consts.Items
 
 /**
- * Represents the various elemental tiaras used in Runecrafting.
- *
- * @property item The [Item] instance representing the tiara.
- * @property experience The amount of bonus experience awarded when using the tiara during Runecrafting.
+ * Represents the various elemental tiaras.
  */
-enum class Tiara(
-    val item: Item,
-    val experience: Double,
-) {
+enum class Tiara(val item: Item, val experience: Double, ) {
     AIR(Item(Items.AIR_TIARA_5527), 25.0),
     MIND(Item(Items.MIND_TIARA_5529), 27.5),
     WATER(Item(Items.WATER_TIARA_5531), 30.0),
@@ -36,32 +30,11 @@ enum class Tiara(
         get() = Talisman.values().find { it.name == name }
 
     companion object {
-        private val itemToTiara = HashMap<Int, Tiara>()
-
-        init {
-            for (tiara in values()) {
-                itemToTiara[tiara.item.id] = tiara
-            }
-        }
+        private val itemToTiara = values().associateBy { it.item.id }
 
         /**
-         * Retrieves the [Tiara] enum constant for the given [Item].
-         *
-         * @param item The item to check.
-         * @return The matching [Tiara], or `null` if no match is found.
+         * Same as [from], for naming flexibility.
          */
-        @JvmStatic
-        fun from(item: Item): Tiara? = itemToTiara[item.id]
-
-        /**
-         * Alternative method to retrieve the [Tiara] enum constant for the given [Item].
-         *
-         * This does the same as [from] and is kept for naming flexibility.
-         *
-         * @param item The item to check.
-         * @return The matching [Tiara], or `null` if no match is found.
-         */
-        @JvmStatic
         fun forItem(item: Item): Tiara? = itemToTiara[item.id]
     }
 }

@@ -13,32 +13,8 @@ import org.rs.consts.Scenery
 
 class JewelleryCraftingListener : InteractionListener {
     private val barId = intArrayOf(Items.GOLD_BAR_2357, Items.PERFECT_GOLD_BAR_2365)
-    private val furnaceId =
-        intArrayOf(
-            Scenery.FURNACE_4304,
-            Scenery.FURNACE_6189,
-            Scenery.FURNACE_11010,
-            Scenery.FURNACE_11666,
-            Scenery.FURNACE_12100,
-            Scenery.FURNACE_12809,
-            Scenery.FURNACE_18497,
-            Scenery.FURNACE_26814,
-            Scenery.FURNACE_30021,
-            Scenery.FURNACE_30510,
-            Scenery.FURNACE_36956,
-            Scenery.FURNACE_37651,
-        )
-    private val amuletId =
-        intArrayOf(
-            Items.GOLD_AMULET_1673,
-            Items.SAPPHIRE_AMULET_1675,
-            Items.EMERALD_AMULET_1677,
-            Items.RUBY_AMULET_1679,
-            Items.DIAMOND_AMULET_1681,
-            Items.DRAGONSTONE_AMMY_1683,
-            Items.ONYX_AMULET_6579,
-        )
-
+    private val furnaceId = intArrayOf(Scenery.FURNACE_4304, Scenery.FURNACE_6189, Scenery.FURNACE_11010, Scenery.FURNACE_11666, Scenery.FURNACE_12100, Scenery.FURNACE_12809, Scenery.FURNACE_18497, Scenery.FURNACE_26814, Scenery.FURNACE_30021, Scenery.FURNACE_30510, Scenery.FURNACE_36956, Scenery.FURNACE_37651)
+    private val amuletId = intArrayOf(Items.GOLD_AMULET_1673, Items.SAPPHIRE_AMULET_1675, Items.EMERALD_AMULET_1677, Items.RUBY_AMULET_1679, Items.DIAMOND_AMULET_1681, Items.DRAGONSTONE_AMMY_1683, Items.ONYX_AMULET_6579)
     override fun defineListeners() {
 
         /*

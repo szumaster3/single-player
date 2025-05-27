@@ -5,41 +5,21 @@ import org.rs.consts.Items
 /**
  * Represents the different types of studded leather armour that can be crafted.
  */
-enum class StuddedArmour(
-    val leather: Int,
-    val product: Int,
-    val level: Int,
-    val experience: Double,
-) {
-    /**
-     * Crafting Studded Chaps using Leather Chaps.
-     */
-    CHAPS(
-        leather = Items.LEATHER_CHAPS_1095,
-        product = Items.STUDDED_CHAPS_1097,
-        level = 44,
-        experience = 42.0,
-    ),
-
-    /**
-     * Crafting Studded Body using Leather Body.
-     */
-    BODY(
-        leather = Items.LEATHER_BODY_1129,
-        product = Items.STUDDED_BODY_1133,
-        level = 41,
-        experience = 40.0,
-    ),
+enum class StuddedArmour(val leather: Int, val product: Int, val level: Int, val experience: Double, ) {
+    CHAPS(Items.LEATHER_CHAPS_1095, Items.STUDDED_CHAPS_1097, 44, 42.0),
+    BODY(Items.LEATHER_BODY_1129, Items.STUDDED_BODY_1133, 41, 40.0),
     ;
 
     companion object {
         /**
-         * Returns the [StuddedArmour] enum entry corresponding to the given leather item id.
-         *
-         * @param itemId The id of the leather item.
-         * @return The corresponding [StuddedArmour] enum entry, or null if no match is found.
+         * Map leather item ids to [StuddedArmour] entries for fast lookup.
+         */
+        private val map = values().associateBy { it.leather }
+
+        /**
+         * Returns [StuddedArmour] by leather item id, or null if none.
          */
         @JvmStatic
-        fun forId(itemId: Int): StuddedArmour? = StuddedArmour.values().find { it.leather == itemId }
+        fun forId(itemId: Int): StuddedArmour? = map[itemId]
     }
 }

@@ -90,65 +90,47 @@ enum class Tanning(
     ;
 
     companion object {
-        /**
-         * Returns the [Tanning] enum entry corresponding to the given button id.
-         *
-         * @param id The button id that corresponds to a tanning option.
-         * @return The corresponding [Tanning] enum entry, or null if no match is found.
-         */
-        @JvmStatic
-        fun forId(id: Int): Tanning? = values().find { it.button == id }
+        private val buttonMap: Map<Int, Tanning> = values().associateBy { it.button }
+        private val itemMap: Map<Int, Tanning> = values().associateBy { it.item }
 
         /**
-         * Returns the [Tanning] enum entry corresponding to the given item id.
-         *
-         * @param id The id of the item required for tanning.
-         * @return The corresponding [Tanning] enum entry, or null if no match is found.
+         * Gets [Tanning] by button id or `null` if none.
          */
         @JvmStatic
-        fun forItemId(id: Int): Tanning? = values().find { it.item == id }
+        fun forId(id: Int): Tanning? = buttonMap[id]
 
         /**
-         * Opens the tanning interface for the player.
-         *
-         * @param player The player opening the tanning interface.
-         * @param npc The id of the NPC to interact with for tanning.
+         * Gets [Tanning] by item id or `null` if none.
          */
         @JvmStatic
-        fun open(
-            player: Player,
-            npc: Int,
-        ) {
+        fun forItemId(id: Int): Tanning? = itemMap[id]
+
+        /**
+         * Opens tanning interface for the player.
+         */
+        @JvmStatic
+        fun open(player: Player, npc: Int) {
             player.interfaceManager.open(Component(Components.TANNER_324))
         }
 
         /**
-         * Tans a specific amount of an item for the player.
-         *
-         * @param player The player performing the tanning action.
-         * @param amount The number of items to tan.
-         * @param def The [Tanning] enum entry that defines the tanning action.
+         * Tans a given amount of items for the player, checking inventory and coins.
          */
         @JvmStatic
-        fun tan(
-            player: Player,
-            amount: Int,
-            def: Tanning,
-        ) {
+        fun tan(player: Player, amount: Int, def: Tanning) {
             val availableAmount = minOf(amount, player.inventory.getAmount(Item(def.item)))
             if (availableAmount == 0) {
                 sendMessage(player, "You don't have any ${getItemName(def.item).lowercase()} to tan.")
                 return
             }
 
-            val coinsRequired =
-                when (def) {
-                    SOFT_LEATHER -> 1
-                    HARD_LEATHER -> 3
-                    SNAKESKIN -> 20
-                    SNAKESKIN2 -> 15
-                    else -> 20
-                }
+            val coinsRequired = when (def) {
+                SOFT_LEATHER -> 1
+                HARD_LEATHER -> 3
+                SNAKESKIN -> 20
+                SNAKESKIN2 -> 15
+                else -> 20
+            }
 
             if (!inInventory(player, Items.COINS_995, coinsRequired * availableAmount)) {
                 sendMessage(player, "You don't have enough coins to tan that many.")
@@ -156,27 +138,10 @@ enum class Tanning(
             }
 
             if (removeItem(player, Item(Items.COINS_995, coinsRequired * availableAmount)) &&
-                removeItem(
-                    player,
-                    Item(def.item, availableAmount),
-                )
-            ) {
+                removeItem(player, Item(def.item, availableAmount))) {
                 addItem(player, def.product, availableAmount)
-                sendMessage(
-                    player,
-                    "The tanner tans ${
-                        if (availableAmount > 1) {
-                            "$availableAmount ${getItemName(def.item).lowercase()}s for you"
-                        } else {
-                            "${
-                                getItemName(def.item).lowercase()
-                            } for you"
-                        }
-                    }" + ".",
-                )
-                if (def == SOFT_LEATHER) {
-                    finishDiaryTask(player, DiaryType.LUMBRIDGE, 1, 2)
-                }
+                sendMessage(player, "The tanner tans ${if (availableAmount > 1) "$availableAmount ${getItemName(def.item).lowercase()}s" else getItemName(def.item).lowercase()} for you.")
+                if (def == SOFT_LEATHER) finishDiaryTask(player, DiaryType.LUMBRIDGE, 1, 2)
             } else {
                 sendMessage(player, "You don't have enough coins to tan that many.")
             }

@@ -139,29 +139,23 @@ enum class Spinning(
     ;
 
     companion object {
-        /**
-         * Returns the [Spinning] enum entry corresponding to the given button ID.
-         *
-         * @param id The button ID associated with a spinning activity.
-         * @return The corresponding [Spinning] enum entry, or null if no match is found.
-         */
-        @JvmStatic
-        fun forId(id: Int): Spinning? = values().find { it.button == id }
+        private val buttonMap: Map<Int, Spinning> = values().associateBy { it.button }
+        private val allNeed: List<Item> = values().map { Item(it.need, 1) }
+        private val allProduct: List<Item> = values().map { Item(it.product, 1) }
 
         /**
-         * Returns a list of all required items for each spinning activity.
-         *
-         * @return A mutable list of [Item]s representing the required items for each spinning activity.
+         * Finds [Spinning] by button id or null if none.
          */
-        @JvmStatic
-        fun getAllNeed(): MutableList<Item> = values().map { Item(it.need, 1) }.toMutableList()
+        fun forId(id: Int): Spinning? = buttonMap[id]
 
         /**
-         * Returns a list of all produced items from each spinning activity.
-         *
-         * @return A mutable list of [Item]s representing the products of each spinning activity.
+         * Gets all required items for spinning.
          */
-        @JvmStatic
-        fun getAllProduct(): MutableList<Item> = values().map { Item(it.product, 1) }.toMutableList()
+        fun getAllNeed(): List<Item> = allNeed
+
+        /**
+         * Gets all product items from spinning.
+         */
+        fun getAllProduct(): List<Item> = allProduct
     }
 }

@@ -18,11 +18,7 @@ import org.rs.consts.Animations
 import org.rs.consts.Items
 
 /**
- * A pulse that handles the fishing skill activity for a [Player] interacting with a fishing [NPC] spot.
- *
- * @param player The player performing the fishing.
- * @param npc The NPC representing the fishing spot.
- * @param option The fishing option (e.g., bait, lure, harpoon) being used.
+ * A pulse that handles the fishing skill.
  */
 class FishingPulse(
     player: Player?,

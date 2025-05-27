@@ -24,6 +24,12 @@ enum class Bar(
     val ores: Array<Item> = ores as Array<Item>
 
     companion object {
+        /**
+         * Returns the [Bar] corresponding to the given product item id.
+         *
+         * @param id the item id of the bar product
+         * @return the matching [Bar], or null if none found
+         */
         @JvmStatic
         fun forId(id: Int): Bar? {
             for (bar in values()) {
@@ -34,6 +40,12 @@ enum class Bar(
             return null
         }
 
+        /**
+         * Returns the [Bar] that uses the given ore item id.
+         *
+         * @param id the item id of the ore
+         * @return the matching [Bar], or null if none found
+         */
         fun forOre(id: Int): Bar? {
             for (bar in values()) {
                 for (i in bar.ores) {
@@ -45,9 +57,19 @@ enum class Bar(
             return null
         }
 
+        /**
+         * Returns a list of all bar product items.
+         *
+         * @return a mutable list of all bar products
+         */
         @JvmStatic
         fun getAllBars(): MutableList<Item> = values().map { it.product }.toMutableList()
 
+        /**
+         * Returns a list of all ore items required for any bar.
+         *
+         * @return a mutable list of all ores used in bars
+         */
         @JvmStatic
         fun getAllOres(): MutableList<Item> {
             val ores = mutableListOf<Item>()

@@ -170,71 +170,54 @@ enum class Bars(
     ;
 
     companion object {
+        /**
+         * Maps product item ids to their [Bars].
+         */
         private val bars: MutableMap<Short, Bars> = HashMap()
 
-        fun forId(item: Int): Bars? {
-            for (bar in values()) {
-                if (bar.product == item) {
-                    return bar
-                }
-            }
-            return null
-        }
+        /**
+         * @return the [Bars] for the given product item id, or `null` if not found.
+         */
+        fun forId(item: Int): Bars? = values().find { it.product == item }
 
+        /**
+         * Initializes the [bars] map with product ids.
+         */
         init {
             for (bar in values()) {
                 bars[bar.product.toShort()] = bar
             }
         }
 
+        /**
+         * @return all [Bars] of the specified [BarType].
+         */
         fun getBars(type: BarType): Array<Bars?> {
-            val bars: MutableList<Bars> = ArrayList()
-            for (bar in values()) {
-                if (bar.barType == type) {
-                    bars.add(bar)
-                }
-            }
-            val barsSize = arrayOfNulls<Bars>(bars.size)
-            for (i in bars.indices) {
-                barsSize[i] = bars[i]
-            }
-            return barsSize
+            val list = values().filter { it.barType == type }
+            return list.toTypedArray()
         }
 
-        fun getItemId(
-            buttonId: Int,
-            type: BarType,
-        ): Int {
+        /**
+         * @return the product item ID for a button and bar type, or -1 if none.
+         */
+        fun getItemId(buttonId: Int, type: BarType): Int {
             for (bar in values()) {
-                if (bar.barType != type) {
-                    continue
-                }
-                for (i in bar.smithingType.button) {
-                    if (buttonId == i) {
-                        return bar.product
-                    }
-                }
+                if (bar.barType != type) continue
+                if (buttonId in bar.smithingType.button) return bar.product
             }
             return -1
         }
 
-        fun getIndex(
-            player: Player?,
-            buttonId: Int,
-            type: BarType,
-        ): Int {
+        /**
+         * @return the index of the button in the bar set, or -1 if none.
+         */
+        fun getIndex(player: Player?, buttonId: Int, type: BarType): Int {
             var index = 0
             for (bar in values()) {
-                var bar = bar
-                if (bar.barType != type) {
-                    continue
-                }
-                bar = forId(bar.product)!!
-                for (i in bar.smithingType.button.indices) {
-                    if (buttonId != bar.smithingType.button[i]) {
-                        index++
-                        return index
-                    }
+                if (bar.barType != type) continue
+                for (btn in bar.smithingType.button) {
+                    if (buttonId == btn) return index
+                    index++
                 }
             }
             return -1

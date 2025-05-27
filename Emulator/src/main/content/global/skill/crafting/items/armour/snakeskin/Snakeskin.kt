@@ -5,50 +5,23 @@ import org.rs.consts.Items
 /**
  * Represents the snakeskin armour items.
  */
-enum class Snakeskin(
-    val product: Int,
-    val level: Int,
-    val experience: Double,
-    val amount: Int,
-) {
-    /**
-     * Crafting Snakeskin Boots.
-     */
-    SNAKESKIN_BOOTS(product = Items.SNAKESKIN_BOOTS_6328, level = 45, experience = 30.0, amount = 6),
-
-    /**
-     * Crafting Snakeskin Vambraces.
-     */
-    SNAKESKIN_VAMBRACES(product = Items.SNAKESKIN_VBRACE_6330, level = 47, experience = 35.0, amount = 8),
-
-    /**
-     * Crafting Snakeskin Bandana.
-     */
-    SNAKESKIN_BANDANA(product = Items.SNAKESKIN_BANDANA_6326, level = 48, experience = 45.0, amount = 5),
-
-    /**
-     * Crafting Snakeskin Chaps.
-     */
-    SNAKESKIN_CHAPS(product = Items.SNAKESKIN_CHAPS_6324, level = 51, experience = 50.0, amount = 12),
-
-    /**
-     * Crafting Snakeskin Body.
-     */
-    SNAKESKIN_BODY(product = Items.SNAKESKIN_BODY_6322, level = 53, experience = 55.0, amount = 15),
+enum class Snakeskin(val product: Int, val level: Int, val experience: Double, val amount: Int, ) {
+    SNAKESKIN_BOOTS(Items.SNAKESKIN_BOOTS_6328, 45, 30.0, 6),
+    SNAKESKIN_VAMBRACES(Items.SNAKESKIN_VBRACE_6330, 47, 35.0, 8),
+    SNAKESKIN_BANDANA(Items.SNAKESKIN_BANDANA_6326, 48, 45.0, 5),
+    SNAKESKIN_CHAPS(Items.SNAKESKIN_CHAPS_6324, 51, 50.0, 12),
+    SNAKESKIN_BODY(Items.SNAKESKIN_BODY_6322, 53, 55.0, 15),
     ;
 
     companion object {
         /**
-         * A map of product IDs to corresponding [Snakeskin] enum entries.
+         * Map of product ids to [Snakeskin] entries.
          */
         @JvmStatic
         private val productMap = values().associateBy { it.product }
 
         /**
-         * Returns the [Snakeskin] enum entry corresponding to the given product item ID.
-         *
-         * @param itemId The ID of the snakeskin item.
-         * @return The corresponding [Snakeskin] enum entry, or null if no match is found.
+         * Gets [Snakeskin] by product id or null if none.
          */
         @JvmStatic
         fun forId(itemId: Int): Snakeskin? = productMap[itemId]

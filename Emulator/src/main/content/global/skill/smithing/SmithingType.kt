@@ -46,12 +46,12 @@ enum class SmithingType(
     ;
 
     companion object {
-        fun forButton(
-            player: Player,
-            bar: Bars?,
-            button: Int,
-            item: Int,
-        ): Int {
+        /**
+         * Gets the smithing quantity based on the clicked button.
+         *
+         * @return the amount to smith, or `-1` if invalid
+         */
+        fun forButton(player: Player, bar: Bars?, button: Int, item: Int, ): Int {
             var count = 0
             if (bar == null) {
                 return -1

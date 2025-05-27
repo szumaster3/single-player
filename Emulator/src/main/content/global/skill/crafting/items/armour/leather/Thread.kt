@@ -7,9 +7,16 @@ import core.game.node.item.Item
 import org.rs.consts.Items
 
 object Thread {
+
+    /**
+     * Checks if the player has a thread charged at or above 1004.
+     */
     @JvmStatic
     fun isLastThread(player: Player): Boolean = getThread(player)?.charge?.let { it >= 1004 } ?: false
 
+    /**
+     * Increases the thread’s charge by 1 if present.
+     */
     @JvmStatic
     fun decayThread(player: Player) {
         getThread(player)?.let { thread ->
@@ -17,6 +24,9 @@ object Thread {
         }
     }
 
+    /**
+     * Removes one thread item from player inventory and sets charge to 1000.
+     */
     @JvmStatic
     fun removeThread(player: Player) {
         if (removeItem(player, Item(Items.THREAD_1734, 1))) {
@@ -25,6 +35,9 @@ object Thread {
         }
     }
 
+    /**
+     * Gets the thread item from player inventory, or null if not found.
+     */
     @JvmStatic
     fun getThread(player: Player): Item? = player.inventory[player.inventory.getSlot(Item(Items.THREAD_1734, 1))]
 }

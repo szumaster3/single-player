@@ -2,11 +2,7 @@ package content.global.skill.smithing
 
 import org.rs.consts.Items
 
-enum class BarType(
-    val barType: Int,
-    @JvmField val experience: Double,
-    val barName: String,
-) {
+enum class BarType(val barType: Int, @JvmField val experience: Double, val barName: String, ) {
     BRONZE(Items.BRONZE_BAR_2349, 12.5, "Bronze Smithing"),
     BLURITE(Items.BLURITE_BAR_9467, 16.0, "Blurite Smithing"),
     IRON(Items.IRON_BAR_2351, 25.0, "Iron Smithing"),
@@ -17,6 +13,12 @@ enum class BarType(
     ;
 
     companion object {
+        /**
+         * Returns the [BarType] to the given item id.
+         *
+         * @param itemId the id of the bar item
+         * @return the matching [BarType], or `null` if no match is found
+         */
         fun getBarTypeForId(itemId: Int): BarType? {
             when (itemId) {
                 Items.BRONZE_BAR_2349 -> return BRONZE

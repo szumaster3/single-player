@@ -4,110 +4,19 @@ import org.rs.consts.Items
 
 /**
  * Represents the gem bolt data.
- *
- * @property base       The base item id used to create.
- * @property gem        The gem id used for fletch.
- * @property tip        The tip id used for the gem bolt.
- * @property product    The product created from the base, gem, and tip.
- * @property level      The required level to create the gem bolt.
- * @property experience The experience gained from creating the bolt.
  */
-enum class GemBolt(
-    val base: Int,
-    val gem: Int,
-    val tip: Int,
-    val product: Int,
-    val level: Int,
-    val experience: Double,
-) {
-    OPAL(
-        base = Items.BRONZE_BOLTS_877,
-        gem = Items.OPAL_1609,
-        tip = Items.OPAL_BOLT_TIPS_45,
-        product = Items.OPAL_BOLTS_879,
-        level = 11,
-        experience = 1.6,
-    ),
-    PEARL(
-        base = Items.IRON_BOLTS_9140,
-        gem = Items.OYSTER_PEARL_411,
-        tip = Items.PEARL_BOLT_TIPS_46,
-        product = Items.PEARL_BOLTS_880,
-        level = 41,
-        experience = 3.2,
-    ),
-    PEARLS(
-        base = Items.IRON_BOLTS_9140,
-        gem = Items.OYSTER_PEARLS_413,
-        tip = Items.PEARL_BOLT_TIPS_46,
-        product = Items.PEARL_BOLTS_880,
-        level = 41,
-        experience = 3.2,
-    ),
-    JADE(
-        base = Items.BLURITE_BOLTS_9139,
-        gem = Items.JADE_1611,
-        tip = Items.JADE_BOLT_TIPS_9187,
-        product = Items.JADE_BOLTS_9335,
-        level = 26,
-        experience = 2.4,
-    ),
-    RED_TOPAZ(
-        base = Items.STEEL_BOLTS_9141,
-        gem = Items.RED_TOPAZ_1613,
-        tip = Items.TOPAZ_BOLT_TIPS_9188,
-        product = Items.TOPAZ_BOLTS_9336,
-        level = 48,
-        experience = 3.9,
-    ),
-    SAPPHIRE(
-        base = Items.MITHRIL_BOLTS_9142,
-        gem = Items.SAPPHIRE_1607,
-        tip = Items.SAPPHIRE_BOLT_TIPS_9189,
-        product = Items.SAPPHIRE_BOLTS_9337,
-        level = 56,
-        experience = 4.7,
-    ),
-    EMERALD(
-        base = Items.MITHRIL_BOLTS_9142,
-        gem = Items.EMERALD_1605,
-        tip = Items.EMERALD_BOLT_TIPS_9190,
-        product = Items.EMERALD_BOLTS_9338,
-        level = 58,
-        experience = 5.5,
-    ),
-    RUBY(
-        base = Items.ADAMANT_BOLTS_9143,
-        gem = Items.RUBY_1603,
-        tip = Items.RUBY_BOLT_TIPS_9191,
-        product = Items.RUBY_BOLTS_9339,
-        level = 63,
-        experience = 6.3,
-    ),
-    DIAMOND(
-        base = Items.ADAMANT_BOLTS_9143,
-        gem = Items.DIAMOND_1601,
-        tip = Items.DIAMOND_BOLT_TIPS_9192,
-        product = Items.DIAMOND_BOLTS_9340,
-        level = 65,
-        experience = 7.0,
-    ),
-    DRAGONSTONE(
-        base = Items.RUNE_BOLTS_9144,
-        gem = Items.DRAGONSTONE_1615,
-        tip = Items.DRAGON_BOLT_TIPS_9193,
-        product = Items.DRAGON_BOLTS_9341,
-        level = 71,
-        experience = 8.2,
-    ),
-    ONYX(
-        base = Items.RUNE_BOLTS_9144,
-        gem = Items.ONYX_6573,
-        tip = Items.ONYX_BOLT_TIPS_9194,
-        product = Items.ONYX_BOLTS_9342,
-        level = 73,
-        experience = 9.4,
-    ),
+enum class GemBolt(val base: Int, val gem: Int, val tip: Int, val product: Int, val level: Int, val experience: Double) {
+    OPAL(Items.BRONZE_BOLTS_877, Items.OPAL_1609, Items.OPAL_BOLT_TIPS_45, Items.OPAL_BOLTS_879, 11, 1.6),
+    PEARL(Items.IRON_BOLTS_9140, Items.OYSTER_PEARL_411, Items.PEARL_BOLT_TIPS_46, Items.PEARL_BOLTS_880, 41, 3.2),
+    PEARLS(Items.IRON_BOLTS_9140, Items.OYSTER_PEARLS_413, Items.PEARL_BOLT_TIPS_46, Items.PEARL_BOLTS_880, 41, 3.2),
+    JADE(Items.BLURITE_BOLTS_9139, Items.JADE_1611, Items.JADE_BOLT_TIPS_9187, Items.JADE_BOLTS_9335, 26, 2.4),
+    RED_TOPAZ(Items.STEEL_BOLTS_9141, Items.RED_TOPAZ_1613, Items.TOPAZ_BOLT_TIPS_9188, Items.TOPAZ_BOLTS_9336, 48, 3.9),
+    SAPPHIRE(Items.MITHRIL_BOLTS_9142, Items.SAPPHIRE_1607, Items.SAPPHIRE_BOLT_TIPS_9189, Items.SAPPHIRE_BOLTS_9337, 56, 4.7),
+    EMERALD(Items.MITHRIL_BOLTS_9142, Items.EMERALD_1605, Items.EMERALD_BOLT_TIPS_9190, Items.EMERALD_BOLTS_9338, 58, 5.5),
+    RUBY(Items.ADAMANT_BOLTS_9143, Items.RUBY_1603, Items.RUBY_BOLT_TIPS_9191, Items.RUBY_BOLTS_9339, 63, 6.3),
+    DIAMOND(Items.ADAMANT_BOLTS_9143, Items.DIAMOND_1601, Items.DIAMOND_BOLT_TIPS_9192, Items.DIAMOND_BOLTS_9340, 65, 7.0),
+    DRAGONSTONE(Items.RUNE_BOLTS_9144, Items.DRAGONSTONE_1615, Items.DRAGON_BOLT_TIPS_9193, Items.DRAGON_BOLTS_9341, 71, 8.2),
+    ONYX(Items.RUNE_BOLTS_9144, Items.ONYX_6573, Items.ONYX_BOLT_TIPS_9194, Items.ONYX_BOLTS_9342, 73, 9.4),
     ;
 
     companion object {

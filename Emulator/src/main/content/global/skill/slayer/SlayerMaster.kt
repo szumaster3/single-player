@@ -7,21 +7,6 @@ import java.util.*
 
 /**
  * Represents a Slayer Master who assigns Slayer tasks.
- *
- * Each Slayer Master has specific:
- * - NPC ID
- * - Required combat level
- * - Additional requirements (e.g., Slayer level or quest completion)
- * - Range of task amounts they can assign
- * - Task points awarded based on streaks
- * - A unique list of tasks they can assign
- *
- * @property npc The npc id of the Slayer Master.
- * @property requiredCombat The minimum combat level required to receive tasks.
- * @property requirements Additional requirement level (e.g., Slayer level or quest req).
- * @property assignmentCount The possible min and max range of tasks assigned.
- * @property taskPoints Points awarded per task streak milestone.
- * @property tasks List of possible Slayer tasks assigned by the master.
  */
 enum class SlayerMaster(
     var npc: Int,

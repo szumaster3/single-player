@@ -44,11 +44,7 @@ class FishingListener : InteractionListener {
         )
     }
 
-    private fun handleFishing(
-        player: Player,
-        node: Node,
-        state: Int,
-    ): Boolean {
+    private fun handleFishing(player: Player, node: Node, state: Int, ): Boolean {
         val npc = node as? NPC ?: return clearScripts(player)
         val spot = FishingSpot.forId(npc.id) ?: return clearScripts(player)
         val op = spot.getOptionByName(getUsedOption(player)) ?: return clearScripts(player)

@@ -36,10 +36,7 @@ object Jewellery {
     )
 
     /**
-     * Opens the gold jewellery crafting interface and configures visible options
-     * based on the player's inventory contents and skill level.
-     *
-     * @param player The player opening the crafting interface.
+     * Opens the gold jewellery crafting interface.
      */
     @JvmStatic
     fun open(player: Player) {
@@ -87,10 +84,6 @@ object Jewellery {
 
     /**
      * Init crafting pulse for a selected jewellery item.
-     *
-     * @param player The player crafting the item.
-     * @param data The jewellery item to craft.
-     * @param amount The amount of items to craft.
      */
     @JvmStatic
     fun make(player: Player, data: JewelleryItem, amount: Int) {
@@ -138,9 +131,6 @@ object Jewellery {
 
     /**
      * Determines the correct mould id based on the item name.
-     *
-     * @param name The item name.
-     * @return The corresponding mould id.
      */
     private fun mouldFor(name: String): Int {
         var name = name

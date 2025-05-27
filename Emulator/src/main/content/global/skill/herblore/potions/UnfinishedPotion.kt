@@ -8,18 +8,8 @@ import java.util.*
 
 /**
  * Represents an unfinished potions.
- *
- * @property base The base item needed to create the unfinished potion, such as a vial of water or coconut milk.
- * @property ingredient The ingredient used in the potion recipe.
- * @property level The required Herblore level to make this unfinished potion.
- * @property potion The resulting unfinished potion item.
  */
-enum class UnfinishedPotion(
-    val base: Item,
-    val ingredient: Item,
-    val level: Int,
-    val potion: Item,
-) {
+enum class UnfinishedPotion(val base: Item, val ingredient: Item, val level: Int, val potion: Item, ) {
     GUAM(HerblorePulse.VIAL_OF_WATER, Herbs.GUAM.product, 3, Item(Items.GUAM_POTIONUNF_91)),
     ROGUE_PURSE(HerblorePulse.VIAL_OF_WATER, Herbs.ROGUES_PUSE.product, 3, Item(Items.ROGUES_PURSE_POTIONUNF_4840)),
     MARRENTILL(HerblorePulse.VIAL_OF_WATER, Herbs.MARRENTILL.product, 5, Item(Items.MARRENTILL_POTIONUNF_93)),
@@ -44,11 +34,7 @@ enum class UnfinishedPotion(
 
     companion object {
         /**
-         * Finds the corresponding unfinished potion based on the provided item and base item.
-         *
-         * @param item The item to match with the ingredient or potion base.
-         * @param base The base item that is part of the potion creation.
-         * @return The corresponding [UnfinishedPotion] if found, or null if no match is found.
+         * Finds the unfinished potion matching the given item and base, or `null` if none.
          */
         fun forItem(
             item: Item,

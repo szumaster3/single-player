@@ -3,14 +3,7 @@ package content.global.skill.firemaking
 import org.rs.consts.Items
 import org.rs.consts.Scenery
 
-enum class Log(
-    val logId: Int,
-    val defaultLevel: Int,
-    val barbarianLevel: Int,
-    val life: Int,
-    val fireId: Int,
-    val xp: Double,
-) {
+enum class Log(val logId: Int, val defaultLevel: Int, val barbarianLevel: Int, val life: Int, val fireId: Int, val xp: Double) {
     NORMAL(Items.LOGS_1511, 1, 21, 180, Scenery.FIRE_2732, 40.0),
     PURPLE(Items.PURPLE_LOGS_10329, 1, 21, 200, Scenery.FIRE_20001, 50.0),
     WHITE(Items.WHITE_LOGS_10328, 1, 21, 200, Scenery.FIRE_20000, 50.0),
@@ -32,14 +25,23 @@ enum class Log(
     ;
 
     companion object {
+        /**
+         * Log id to [Log].
+         */
         var logMap: HashMap<Int, Log> = HashMap()
 
+        /**
+         * Builds [logMap].
+         */
         init {
             for (log in values()) {
                 logMap[log.logId] = log
             }
         }
 
+        /**
+         * Gets [Log] by ids.
+         */
         @JvmStatic
         fun forId(id: Int): Log? = logMap[id]
     }

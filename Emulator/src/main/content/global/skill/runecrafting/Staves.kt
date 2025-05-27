@@ -4,9 +4,6 @@ import org.rs.consts.Items
 
 /**
  * Represents the different Runecrafting staves.
- *
- * @property item The item ID of the staff.
- * @property experience The experience bonus gained when using the staff.
  */
 enum class Staves(val item: Int, val experience: Double) {
     AIR_RC_STAFF(Items.AIR_TALISMAN_STAFF_13630, 25.0),

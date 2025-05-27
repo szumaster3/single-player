@@ -9,17 +9,9 @@ import core.game.world.map.zone.ZoneBorders
 import core.game.world.update.flag.context.Animation
 
 /**
- * The type String pulse.
+ * Represents the string pulse.
  */
-class StringPulse
-/**
- * Instantiates a new String pulse.
- *
- * @param player the player
- * @param node   the node
- * @param bow    the bow
- * @param amount the amount
- */(player: Player?, node: Item?, private val bow: Strings, private var amount: Int) : SkillPulse<Item?>(player, node) {
+class StringPulse(player: Player?, node: Item?, private val bow: Strings, private var amount: Int) : SkillPulse<Item?>(player, node) {
     override fun checkRequirements(): Boolean {
         if (delay == 1) {
             delay = 2
