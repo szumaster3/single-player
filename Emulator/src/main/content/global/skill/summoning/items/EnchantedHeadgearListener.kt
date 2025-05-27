@@ -42,7 +42,7 @@ class EnchantedHeadgearListener : InteractionListener {
         }
 
         /*
-         * Handles uncharge enchanted headgear (remove scrolls)
+         * Handles uncharge the headgear.
          */
 
         on(chargedIDs, IntType.ITEM, "Uncharge") { player, node ->
@@ -60,7 +60,7 @@ class EnchantedHeadgearListener : InteractionListener {
         }
 
         /*
-         * Handles check stored scrolls in enchanted headgear
+         * Handles check stored scrolls in charged headgear.
          */
 
         on(chargedIDs, IntType.ITEM, "Commune", "Operate") { player, node ->
@@ -69,7 +69,7 @@ class EnchantedHeadgearListener : InteractionListener {
         }
 
         /*
-         * Handles store scrolls into enchanted headgear
+         * Handles store scrolls into headgear.
          */
 
         onUseWith(IntType.ITEM, enchantedIDs, *allowedScrollIDs) { player, used, with ->
@@ -113,7 +113,7 @@ class EnchantedHeadgearListener : InteractionListener {
         private val normalItemIDs = EnchantedHeadgear.values().map { it.defaultItem.id }.toIntArray()
 
         /**
-         * IDs of already enchanted headgear items.
+         * All enchanted and charged item ids.
          */
         private val enchantedIDs = EnchantedHeadgear.values().map { it.enchantedItem.id }.toIntArray()
 

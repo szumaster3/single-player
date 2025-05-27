@@ -88,14 +88,13 @@ object EnchantedHeadgearScrolls {
             return
         }
 
-        val builder = StringBuilder("Your headgear contains: ")
-        for ((scrollId, amount) in scrolls) {
+
+        val message = scrolls.entries.joinToString(separator = "\n") { (scrollId, amount) ->
             val scrollName = getItemName(scrollId)
-            builder.append("${amount}x $scrollName.")
-
+            val plural = if (amount == 1) "charge" else "charges"
+            "The item contains $amount $plural of the $scrollName scroll."
         }
-
-        sendDialogue(player, builder.toString())
+        sendMessage(player, message)
     }
 
     /**
@@ -138,7 +137,7 @@ object EnchantedHeadgearScrolls {
         val freeSpace = headgear.scrollCapacity - currentCount
 
         if (freeSpace <= 0) {
-            sendMessage(player, "Your headgear is full.")
+            sendMessage(player, "You already have charged headgear.")
             return
         }
 
@@ -164,7 +163,7 @@ object EnchantedHeadgearScrolls {
             sendMessage(player, "Failed to add scrolls to your headgear.")
             return
         }
-        sendMessage(player, "You add $toAdd scroll${if (toAdd > 1) "s" else ""} to the enchanted headgear.")
+        sendMessage(player, "You charge the headgear with a scroll.")
     }
 
     /**
