@@ -37,7 +37,6 @@ class CockatriceFamiliarNPC : Plugin<Any?> {
         return null
     }
 
-
     fun petrifyingGaze(familiar: Familiar, special: FamiliarSpecial, skill: Int): Boolean {
         val target = special.target
         if (!familiar.canCombatSpecial(target)) {

@@ -1,6 +1,7 @@
 package content.global.skill.summoning.familiar.npc
 
 import content.global.skill.summoning.familiar.Familiar
+import core.api.sendMessage
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
@@ -29,10 +30,10 @@ class SpiritGraahkDialogue : Dialogue {
         }
         val fam = npc as Familiar
         if (fam.owner !== player) {
-            player.packetDispatch.sendMessage("This is not your familiar.")
+            sendMessage(player, "This is not your familiar.")
             return true
         } else {
-            interpreter.sendOptions("Select an Option", "Chat", "Teleport")
+            options("Chat", "Teleport")
         }
         return true
     }
@@ -64,12 +65,13 @@ class SpiritGraahkDialogue : Dialogue {
                 }
             }
 
-            2 -> if (!WildernessZone.checkTeleport(player, 20)) {
-                player.sendMessage("You cannot teleport with the Graahk above level 20 wilderness.")
+            2 -> {
                 end()
-            } else {
-                player.teleporter.send(Location(2786, 3002), TeleportType.NORMAL)
-                end()
+                if (!WildernessZone.checkTeleport(player, 20)) {
+                    sendMessage(player, "You cannot teleport with the Graahk above level 20 wilderness.")
+                } else {
+                    player.teleporter.send(Location(2786, 3002), TeleportType.NORMAL)
+                }
             }
 
             10 -> {
@@ -83,10 +85,7 @@ class SpiritGraahkDialogue : Dialogue {
             }
 
             12 -> {
-                npcl(
-                    FaceAnim.OLD_DEFAULT,
-                    "That's really kind of you to say. I was going to spike you but I won't now..."
-                )
+                npcl(FaceAnim.OLD_DEFAULT, "That's really kind of you to say. I was going to spike you but I won't now...")
                 stage++
             }
 

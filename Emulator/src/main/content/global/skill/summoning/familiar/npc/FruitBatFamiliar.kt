@@ -23,9 +23,10 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 
 @Initializable
-class FruitBatFamiliar(owner: Player? = null, id: Int = FRUIT_BAT, ) : Forager(owner, id, 4500, Items.FRUIT_BAT_POUCH_12033, 6, *FRUIT_FORAGE), InteractionListener {
+class FruitBatFamiliar(owner: Player? = null, id: Int = FRUIT_BAT) :
+    Forager(owner, id, 4500, Items.FRUIT_BAT_POUCH_12033, 6, *FRUIT_FORAGE), InteractionListener {
 
-    override fun construct(owner: Player, id: Int, ): Familiar = FruitBatFamiliar(owner, id)
+    override fun construct(owner: Player, id: Int): Familiar = FruitBatFamiliar(owner, id)
 
     override fun isHidden(player: Player?): Boolean = super.isHidden(player)
 
@@ -43,70 +44,40 @@ class FruitBatFamiliar(owner: Player? = null, id: Int = FRUIT_BAT, ) : Forager(o
         owner.setAttribute("fruit-bat", GameWorld.ticks + 5)
         lock(4)
 
-        Pulser.submit(
-            object : Pulse(4, this) {
-                override fun pulse(): Boolean {
-                    if (anyFruit) {
-                        val coords =
-                            mutableListOf(
-                                Pair(-1, -1),
-                                Pair(-1, 0),
-                                Pair(-1, 1),
-                                Pair(0, -1),
-                                Pair(0, 1),
-                                Pair(1, -1),
-                                Pair(1, 0),
-                                Pair(1, 1),
-                            ).shuffled().toMutableList()
+        Pulser.submit(object : Pulse(4, this) {
+            override fun pulse(): Boolean {
+                if (!anyFruit) return true
 
-                        if (coords.isNotEmpty()) {
-                            val firstCoord = coords.removeAt(0)
-                            GroundItemManager.create(
-                                Item(Items.PAPAYA_FRUIT_5972),
-                                owner.location.transform(firstCoord.first, firstCoord.second, 0),
-                                owner,
-                            )
-                            sendGraphics(
-                                FRUIT_SPLASH_GFX,
-                                owner.location.transform(firstCoord.first, firstCoord.second, 0),
-                            )
-                        }
+                val coords = listOf(
+                    -1 to -1, -1 to 0, -1 to 1, 0 to -1, 0 to 1, 1 to -1, 1 to 0, 1 to 1
+                ).shuffled().iterator()
 
-                        if (coords.isNotEmpty()) {
-                            val secondCoord = coords.removeAt(0)
-                            GroundItemManager.create(
-                                Item(Items.PAPAYA_FRUIT_5972),
-                                owner.location.transform(secondCoord.first, secondCoord.second, 0),
-                                owner,
-                            )
-                            sendGraphics(
-                                FRUIT_SPLASH_GFX,
-                                owner.location.transform(secondCoord.first, secondCoord.second, 0),
-                            )
-                        }
+                fun spawnFruit(item: Item, dx: Int, dy: Int) {
+                    val loc = owner.location.transform(dx, dy, 0)
+                    GroundItemManager.create(item, loc, owner)
+                    sendGraphics(FRUIT_SPLASH_GFX, loc)
+                }
 
-                        repeat(otherFruitAmount) {
-                            if (coords.isNotEmpty()) {
-                                val coord = coords.removeAt(0)
-                                val item = RandomFunction.rollWeightedChanceTable(*FRUIT_FALL)
-                                if (item.id != 0) {
-                                    GroundItemManager.create(
-                                        item,
-                                        owner.location.transform(coord.first, coord.second, 0),
-                                        owner,
-                                    )
-                                    sendGraphics(
-                                        FRUIT_SPLASH_GFX,
-                                        owner.location.transform(coord.first, coord.second, 0),
-                                    )
-                                }
-                            }
+                repeat(2) {
+                    if (coords.hasNext()) {
+                        val (dx, dy) = coords.next()
+                        spawnFruit(Item(Items.PAPAYA_FRUIT_5972), dx, dy)
+                    }
+                }
+
+                repeat(otherFruitAmount) {
+                    if (coords.hasNext()) {
+                        val (dx, dy) = coords.next()
+                        val item = RandomFunction.rollWeightedChanceTable(*FRUIT_FALL)
+                        if (item.id != 0) {
+                            spawnFruit(item, dx, dy)
                         }
                     }
-                    return true
                 }
-            },
-        )
+
+                return true
+            }
+        })
 
         return true
     }
@@ -114,7 +85,6 @@ class FruitBatFamiliar(owner: Player? = null, id: Int = FRUIT_BAT, ) : Forager(o
     override fun defineListeners() {
         on(FRUIT_BAT, IntType.NPC, "Interact") { player, node ->
             val familiar = node as? BurdenBeast ?: return@on false
-
             sendDialogueOptions(player, "Select an Option", "Chat", "Fly", "Withdraw")
             addDialogueAction(player) { _, button ->
                 when (button) {
@@ -172,48 +142,16 @@ class FruitBatFamiliar(owner: Player? = null, id: Int = FRUIT_BAT, ) : Forager(o
         private val FLY_DOWN_ANIMATION: Animation = Animation(8321)
         private val FRUIT_FALL_GFX: Graphics = Graphics(1332, 200)
         private val FRUIT_SPLASH_GFX: Graphics = Graphics(1331)
-        private val FRUIT_BAT = NPCs.FRUIT_BAT_6817
-
-        private val FRUIT_FORAGE =
-            arrayOf(
-                Item(Items.PAPAYA_FRUIT_5972),
-                Item(Items.ORANGE_2108),
-                Item(Items.PINEAPPLE_2114),
-                Item(Items.LEMON_2102),
-                Item(Items.LIME_2120),
-                Item(Items.STRAWBERRY_5504),
-                Item(Items.WATERMELON_5982),
-                Item(Items.COCONUT_5974),
-            )
-
-        private val FRUIT_FALL =
-            arrayOf(
-                WeightedChanceItem(Items.ORANGE_2108, 1, 4),
-                WeightedChanceItem(Items.PINEAPPLE_2114, 1, 3),
-                WeightedChanceItem(Items.LEMON_2102, 1, 2),
-                WeightedChanceItem(Items.LIME_2120, 1, 2),
-                WeightedChanceItem(Items.BANANA_1963, 1, 2),
-                WeightedChanceItem(0, 1, 4),
-            )
-        private val FRUIT_FLY =
-            arrayOf(
-                WeightedChanceItem(Items.ORANGE_2108, 1, 4),
-                WeightedChanceItem(Items.PINEAPPLE_2114, 1, 3),
-                WeightedChanceItem(Items.LEMON_2102, 1, 2),
-                WeightedChanceItem(Items.LIME_2120, 1, 2),
-                WeightedChanceItem(Items.BANANA_1963, 1, 2),
-            )
-
+        private const val FRUIT_BAT = NPCs.FRUIT_BAT_6817
+        private val FRUIT_FORAGE = arrayOf(Item(Items.PAPAYA_FRUIT_5972), Item(Items.ORANGE_2108), Item(Items.PINEAPPLE_2114), Item(Items.LEMON_2102), Item(Items.LIME_2120), Item(Items.STRAWBERRY_5504), Item(Items.WATERMELON_5982), Item(Items.COCONUT_5974))
+        private val FRUIT_FALL = arrayOf(WeightedChanceItem(Items.ORANGE_2108, 1, 4), WeightedChanceItem(Items.PINEAPPLE_2114, 1, 3), WeightedChanceItem(Items.LEMON_2102, 1, 2), WeightedChanceItem(Items.LIME_2120, 1, 2), WeightedChanceItem(Items.BANANA_1963, 1, 2), WeightedChanceItem(0, 1, 4))
+        private val FRUIT_FLY = arrayOf(WeightedChanceItem(Items.ORANGE_2108, 1, 4), WeightedChanceItem(Items.PINEAPPLE_2114, 1, 3), WeightedChanceItem(Items.LEMON_2102, 1, 2), WeightedChanceItem(Items.LIME_2120, 1, 2), WeightedChanceItem(Items.BANANA_1963, 1, 2))
         private val anyFruit = RandomFunction.random(10) <= 8
         private val goodFruit = RandomFunction.random(100) <= 2
-        private val otherFruitAmount =
-            if (!goodFruit && RandomFunction.random(10) == 1) {
-                RandomFunction.random(0, 1)
-            } else {
-                RandomFunction.random(
-                    0,
-                    if (goodFruit) 7 else 3,
-                )
-            }
+        private val otherFruitAmount = if (!goodFruit && RandomFunction.random(10) == 1) {
+            RandomFunction.random(0, 1)
+        } else {
+            RandomFunction.random(0, if (goodFruit) 7 else 3)
+        }
     }
 }

@@ -103,7 +103,6 @@ class DesertWyrmNPC @JvmOverloads constructor(owner: Player? = null, id: Int = N
                 return true
             }
 
-
             fun getClosestRock(player: Player): Scenery? {
                 val rocks: MutableList<Scenery> = ArrayList(20)
                 for (k in 0..6) {

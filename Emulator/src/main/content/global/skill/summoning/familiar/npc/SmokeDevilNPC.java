@@ -14,6 +14,8 @@ import core.game.world.update.flag.context.Graphics;
 import core.plugin.Initializable;
 import core.plugin.Plugin;
 import core.tools.RandomFunction;
+import org.rs.consts.Items;
+import org.rs.consts.NPCs;
 
 import java.util.List;
 
@@ -21,11 +23,11 @@ import java.util.List;
 public class SmokeDevilNPC extends content.global.skill.summoning.familiar.Familiar {
 
     public SmokeDevilNPC() {
-        this(null, 6865);
+        this(null, NPCs.SMOKE_DEVIL_6865);
     }
 
     public SmokeDevilNPC(Player owner, int id) {
-        super(owner, id, 4800, 12085, 6);
+        super(owner, id, 4800, Items.SMOKE_DEVIL_POUCH_12085, 6);
     }
 
     @Override
@@ -72,7 +74,7 @@ public class SmokeDevilNPC extends content.global.skill.summoning.familiar.Famil
 
     @Override
     public int[] getIds() {
-        return new int[]{6865, 6866};
+        return new int[]{NPCs.SMOKE_DEVIL_6865, NPCs.SMOKE_DEVIL_6866};
     }
 
 }

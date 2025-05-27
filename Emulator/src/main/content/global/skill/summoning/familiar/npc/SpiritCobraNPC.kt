@@ -32,43 +32,30 @@ class SpiritCobraNPC @JvmOverloads constructor(owner: Player? = null, id: Int = 
         return intArrayOf(NPCs.SPIRIT_COBRA_6802, NPCs.SPIRIT_COBRA_6803)
     }
 
-
-    enum class Egg(
-
-        val egg: Item,
-
-        val product: Item
-    ) {
-
+    /**
+     * Represents a type of eggs.
+     *
+     * @property egg The input egg.
+     * @property product The resulting item.
+     */
+    enum class Egg(val egg: Item, val product: Item) {
         COCKATRICE(Item(Items.EGG_1944), Item(Items.COCKATRICE_EGG_12109)),
-
-
         SARATRICE(Item(Items.BIRDS_EGG_5077), Item(Items.SARATRICE_EGG_12113)),
-
-
         ZAMATRICE(Item(Items.BIRDS_EGG_5076), Item(Items.ZAMATRICE_EGG_12115)),
-
-
         GUTHATRICE(Item(Items.BIRDS_EGG_5078), Item(Items.GUTHATRICE_EGG_12111)),
-
-
         CORACATRICE(Item(Items.RAVEN_EGG_11964), Item(Items.CORAXATRICE_EGG_12119)),
-
-
         PENGATRICE(Item(Items.PENGUIN_EGG_12483), Item(Items.PENGATRICE_EGG_12117)),
-
-
         VULATRICE(Item(Items.VULTURE_EGG_11965), Item(Items.VULATRICE_EGG_12121));
 
         companion object {
-
+            /**
+             * Finds the corresponding [Egg] enum for the given [item], if any.
+             *
+             * @param item The egg item to look up.
+             * @return The matching [Egg] instance, or `null` if the item does not match any known egg.
+             */
             fun forEgg(item: Item): Egg? {
-                for (egg in values()) {
-                    if (egg.egg.id == item.id) {
-                        return egg
-                    }
-                }
-                return null
+                return values().firstOrNull { it.egg.id == item.id }
             }
         }
     }
