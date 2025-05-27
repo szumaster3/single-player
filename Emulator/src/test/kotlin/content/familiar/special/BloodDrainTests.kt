@@ -1,4 +1,4 @@
-/*package content.familiar.special
+package content.familiar.special
 
 import TestUtils
 import content.global.skill.summoning.familiar.FamiliarSpecial
@@ -116,4 +116,3 @@ class BloodDrainTests {
         }
     }
 }
-*/

@@ -2,8 +2,8 @@ package content.global.skill.summoning.familiar.npc
 
 import content.global.skill.summoning.familiar.Familiar
 import content.global.skill.summoning.familiar.FamiliarSpecial
-import core.api.event.cureDisease
 import core.api.event.curePoison
+import core.api.removeTimer
 import core.game.node.entity.combat.ImpactHandler.HitsplatType
 import core.game.node.entity.combat.equipment.WeaponInterface
 import core.game.node.entity.player.Player
@@ -23,18 +23,21 @@ class BloatedLeechNPC @JvmOverloads constructor(owner: Player? = null, id: Int =
 
     override fun specialMove(special: FamiliarSpecial): Boolean {
         curePoison(owner)
-        cureDisease(owner)
+        removeTimer(owner, "disease")
+
         for (i in Skills.SKILL_NAME.indices) {
             if (i == Skills.PRAYER) continue
 
-            val current = owner.getSkills().getLevel(i)
-            val base = owner.getSkills().getStaticLevel(i)
+            val current = owner.skills.getLevel(i)
+            val base = owner.skills.getStaticLevel(i)
             if (current < base) {
                 val restored = ceil(base * 0.2).toInt()
-                owner.getSkills().setLevel(i, minOf(current + restored, base))
+                owner.skills.setLevel(i, minOf(current + restored, base))
             }
         }
-        owner.impactHandler.manualHit(owner, RandomFunction.random(1, 5), HitsplatType.NORMAL)
+
+        val damage = RandomFunction.random(1, 5)
+        owner.impactHandler.manualHit(owner, damage, HitsplatType.NORMAL)
         return true
     }
 
