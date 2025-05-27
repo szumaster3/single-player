@@ -13,21 +13,8 @@ import org.rs.consts.Animations
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
-/**
- * The type Spirit terrorbird npc.
- */
 @Initializable
-class SpiritTerrorbirdNPC
-/**
- * Instantiates a new Spirit terrorbird npc.
- *
- * @param owner the owner
- * @param id    the id
- */
-/**
- * Instantiates a new Spirit terrorbird npc.
- */
-@JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.SPIRIT_TERRORBIRD_6794) :
+class SpiritTerrorbirdNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.SPIRIT_TERRORBIRD_6794) :
     BurdenBeast(owner, id, 3600, Items.SPIRIT_TERRORBIRD_POUCH_12007, 8, 12, WeaponInterface.STYLE_CONTROLLED) {
     override fun construct(owner: Player, id: Int): Familiar {
         return SpiritTerrorbirdNPC(owner, id)

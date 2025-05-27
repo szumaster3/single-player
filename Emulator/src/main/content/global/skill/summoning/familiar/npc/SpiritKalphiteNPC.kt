@@ -15,21 +15,8 @@ import core.plugin.Initializable
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
-/**
- * The type Spirit kalphite npc.
- */
 @Initializable
-class SpiritKalphiteNPC
-/**
- * Instantiates a new Spirit kalphite npc.
- *
- * @param owner the owner
- * @param id    the id
- */
-/**
- * Instantiates a new Spirit kalphite npc.
- */
-@JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.SPIRIT_KALPHITE_6994) :
+class SpiritKalphiteNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.SPIRIT_KALPHITE_6994) :
     BurdenBeast(owner, id, 2200, Items.SPIRIT_KALPHITE_POUCH_12063, 6, 6, WeaponInterface.STYLE_DEFENSIVE) {
     override fun construct(owner: Player, id: Int): Familiar {
         return SpiritKalphiteNPC(owner, id)

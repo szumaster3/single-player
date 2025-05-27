@@ -14,21 +14,8 @@ import core.tools.RandomFunction
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
-/**
- * The type Stranger plant npc.
- */
 @Initializable
-class StrangerPlantNPC
-/**
- * Instantiates a new Stranger plant npc.
- *
- * @param owner the owner
- * @param id    the id
- */
-/**
- * Instantiates a new Stranger plant npc.
- */
-@JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.STRANGER_PLANT_6827) :
+class StrangerPlantNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.STRANGER_PLANT_6827) :
     Forager(owner, id, 4900, Items.STRANGER_PLANT_POUCH_12045, 6, Item(Items.STRANGE_FRUIT_464)) {
     override fun construct(owner: Player, id: Int): Familiar {
         return StrangerPlantNPC(owner, id)

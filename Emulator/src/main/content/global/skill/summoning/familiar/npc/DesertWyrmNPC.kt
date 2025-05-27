@@ -30,21 +30,10 @@ import core.plugin.Plugin
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
-/**
- * The type Desert wyrm npc.
- */
 @Initializable
 class DesertWyrmNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.DESERT_WYRM_6831) :
     Forager(owner, id, 1900, Items.DESERT_WYRM_POUCH_12049, 6, WeaponInterface.STYLE_AGGRESSIVE) {
-    /**
-     * Instantiates a new Desert wyrm npc.
-     *
-     * @param owner the owner
-     * @param id    the id
-     */
-    /**
-     * Instantiates a new Desert wyrm npc.
-     */
+
     init {
         boosts.add(SkillBonus(Skills.MINING, 1.0))
     }
@@ -114,14 +103,7 @@ class DesertWyrmNPC @JvmOverloads constructor(owner: Player? = null, id: Int = N
                 return true
             }
 
-            /**
-             * Gets the closest combat rock.
-             * @return the object.
-             */
-            /**
-             * Gets the closest combat rock.
-             * @return the object.
-             */
+
             fun getClosestRock(player: Player): Scenery? {
                 val rocks: MutableList<Scenery> = ArrayList(20)
                 for (k in 0..6) {

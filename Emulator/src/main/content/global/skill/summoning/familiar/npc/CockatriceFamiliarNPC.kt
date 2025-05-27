@@ -18,11 +18,9 @@ import core.plugin.Plugin
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
-/**
- * The type Cockatrice familiar npc.
- */
 @Initializable
 class CockatriceFamiliarNPC : Plugin<Any?> {
+
     @Throws(Throwable::class)
     override fun newInstance(arg: Any?): Plugin<Any?> {
         definePlugin(SpiritCockatrice())
@@ -39,14 +37,7 @@ class CockatriceFamiliarNPC : Plugin<Any?> {
         return null
     }
 
-    /**
-     * Petrifying gaze boolean.
-     *
-     * @param familiar the familiar
-     * @param special  the special
-     * @param skill    the skill
-     * @return the boolean
-     */
+
     fun petrifyingGaze(familiar: Familiar, special: FamiliarSpecial, skill: Int): Boolean {
         val target = special.target
         if (!familiar.canCombatSpecial(target)) {
@@ -69,19 +60,8 @@ class CockatriceFamiliarNPC : Plugin<Any?> {
         return true
     }
 
-    /**
-     * The type Spirit cockatrice.
-     */
+
     inner class SpiritCockatrice
-    /**
-     * Instantiates a new Spirit cockatrice.
-     *
-     * @param owner the owner
-     * @param id    the id
-     */
-    /**
-     * Instantiates a new Spirit cockatrice.
-     */
     @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.SPIRIT_COCKATRICE_6875) :
         Forager(owner, id, 3600, Items.SP_COCKATRICE_POUCH_12095, 3, WeaponInterface.STYLE_CAST, COCKATRICE_EGG) {
         override fun construct(owner: Player, id: Int): Familiar {
@@ -97,19 +77,8 @@ class CockatriceFamiliarNPC : Plugin<Any?> {
         }
     }
 
-    /**
-     * The type Spirit guthatrice.
-     */
+
     inner class SpiritGuthatrice
-    /**
-     * Instantiates a new Spirit guthatrice.
-     *
-     * @param owner the owner
-     * @param id    the id
-     */
-    /**
-     * Instantiates a new Spirit guthatrice.
-     */
     @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.SPIRIT_GUTHATRICE_6877) :
         Forager(owner, id, 3600, Items.SP_GUTHATRICE_POUCH_12097, 3, WeaponInterface.STYLE_CAST, COCKATRICE_EGG) {
         override fun construct(owner: Player, id: Int): Familiar {
@@ -125,19 +94,8 @@ class CockatriceFamiliarNPC : Plugin<Any?> {
         }
     }
 
-    /**
-     * The type Spirit zamatrice.
-     */
+
     inner class SpiritZamatrice
-    /**
-     * Instantiates a new Spirit zamatrice.
-     *
-     * @param owner the owner
-     * @param id    the id
-     */
-    /**
-     * Instantiates a new Spirit zamatrice.
-     */
     @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.SPIRIT_ZAMATRICE_6881) :
         Forager(owner, id, 3600, Items.SP_ZAMATRICE_POUCH_12101, 3, WeaponInterface.STYLE_CAST, COCKATRICE_EGG) {
         override fun construct(owner: Player, id: Int): Familiar {
@@ -153,19 +111,8 @@ class CockatriceFamiliarNPC : Plugin<Any?> {
         }
     }
 
-    /**
-     * The type Spirit pengatrice.
-     */
+
     inner class SpiritPengatrice
-    /**
-     * Instantiates a new Spirit pengatrice.
-     *
-     * @param owner the owner
-     * @param id    the id
-     */
-    /**
-     * Instantiates a new Spirit pengatrice.
-     */
     @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.SPIRIT_PENGATRICE_6883) :
         Forager(owner, id, 3600, Items.SP_PENGATRICE_POUCH_12103, 3, WeaponInterface.STYLE_CAST, COCKATRICE_EGG) {
         override fun construct(owner: Player, id: Int): Familiar {
@@ -181,19 +128,8 @@ class CockatriceFamiliarNPC : Plugin<Any?> {
         }
     }
 
-    /**
-     * The type Spirit coraxatrice.
-     */
+
     inner class SpiritCoraxatrice
-    /**
-     * Instantiates a new Spirit coraxatrice.
-     *
-     * @param owner the owner
-     * @param id    the id
-     */
-    /**
-     * Instantiates a new Spirit coraxatrice.
-     */
     @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.SPIRIT_CORAXATRICE_6885) :
         Forager(owner, id, 3600, Items.SP_CORAXATRICE_POUCH_12105, 3, WeaponInterface.STYLE_CAST, COCKATRICE_EGG) {
         override fun construct(owner: Player, id: Int): Familiar {
@@ -209,19 +145,8 @@ class CockatriceFamiliarNPC : Plugin<Any?> {
         }
     }
 
-    /**
-     * The type Spirit vulatrice.
-     */
+
     inner class SpiritVulatrice
-    /**
-     * Instantiates a new Spirit vulatrice.
-     *
-     * @param owner the owner
-     * @param id    the id
-     */
-    /**
-     * Instantiates a new Spirit vulatrice.
-     */
     @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.SPIRIT_VULATRICE_6887) :
         Forager(owner, id, 3600, Items.SP_VULATRICE_POUCH_12107, 3, WeaponInterface.STYLE_CAST, COCKATRICE_EGG) {
         override fun construct(owner: Player, id: Int): Familiar {
@@ -237,19 +162,8 @@ class CockatriceFamiliarNPC : Plugin<Any?> {
         }
     }
 
-    /**
-     * The type Spirit saratrice.
-     */
+
     inner class SpiritSaratrice
-    /**
-     * Instantiates a new Spirit saratrice.
-     *
-     * @param owner the owner
-     * @param id    the id
-     */
-    /**
-     * Instantiates a new Spirit saratrice.
-     */
     @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.SPIRIT_SARATRICE_6879) :
         Forager(owner, id, 3600, Items.SP_SARATRICE_POUCH_12099, 3, WeaponInterface.STYLE_CAST, COCKATRICE_EGG) {
         override fun construct(owner: Player, id: Int): Familiar {

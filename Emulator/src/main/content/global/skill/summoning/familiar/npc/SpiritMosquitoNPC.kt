@@ -11,21 +11,8 @@ import core.plugin.Initializable
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
-/**
- * The type Spirit mosquito npc.
- */
 @Initializable
-class SpiritMosquitoNPC
-/**
- * Instantiates a new Spirit mosquito npc.
- *
- * @param owner the owner
- * @param id    the id
- */
-/**
- * Instantiates a new Spirit mosquito npc.
- */
-@JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.SPIRIT_MOSQUITO_7331) :
+class SpiritMosquitoNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.SPIRIT_MOSQUITO_7331) :
     Familiar(owner, id, 1200, Items.SPIRIT_MOSQUITO_POUCH_12778, 3, WeaponInterface.STYLE_ACCURATE) {
     override fun construct(owner: Player, id: Int): Familiar {
         return SpiritMosquitoNPC(owner, id)

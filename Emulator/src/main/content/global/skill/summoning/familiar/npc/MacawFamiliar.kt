@@ -18,20 +18,11 @@ import core.plugin.Plugin
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
-/**
- * Represents the Macaw familiar.
- */
 @Initializable
-class MacawFamiliar(
-    owner: Player? = null,
-    id: Int = NPCs.MACAW_6851,
-) : Forager(owner, id, 3100, Items.MACAW_POUCH_12071, 12, *HERBS_IDS) {
+class MacawFamiliar(owner: Player? = null, id: Int = NPCs.MACAW_6851, ) : Forager(owner, id, 3100, Items.MACAW_POUCH_12071, 12, *HERBS_IDS) {
     private var specialDelay = 0
 
-    override fun construct(
-        owner: Player,
-        id: Int,
-    ): Familiar = MacawFamiliar(owner, id)
+    override fun construct(owner: Player, id: Int, ): Familiar = MacawFamiliar(owner, id)
 
     override fun newInstance(`object`: Any?): Plugin<Any> = super.newInstance(`object`)
 

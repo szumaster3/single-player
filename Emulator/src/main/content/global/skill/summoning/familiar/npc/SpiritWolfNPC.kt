@@ -22,23 +22,11 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Sounds
 
-/**
- * The type Spirit wolf npc.
- */
 @Initializable
 class SpiritWolfNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.SPIRIT_WOLF_6829) :
     Familiar(owner, id, 600, Items.SPIRIT_WOLF_POUCH_12047, 3, WeaponInterface.STYLE_ACCURATE) {
     private var cutscene: CutscenePlugin? = null
 
-    /**
-     * Instantiates a new Spirit wolf npc.
-     *
-     * @param owner the owner
-     * @param id    the id
-     */
-    /**
-     * Instantiates a new Spirit wolf npc.
-     */
     init {
         if (owner != null) {
             cutscene = owner.getAttribute<Any>("in-cutscene", null) as? CutscenePlugin
@@ -77,7 +65,7 @@ class SpiritWolfNPC @JvmOverloads constructor(owner: Player? = null, id: Int = N
             return false
         }
         val npc = special.node as NPC
-        if (npc.walkRadius > 20) { // Usually indicates special NPC.
+        if (npc.walkRadius > 20) {
             sendMessage(owner, "This monster won't get intimidated by your familiar.")
             return false
         }

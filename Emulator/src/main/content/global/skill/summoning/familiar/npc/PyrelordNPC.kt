@@ -31,9 +31,6 @@ import core.plugin.Plugin
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
-/**
- * The Pyrelord familiar NPCs.
- */
 @Initializable
 class PyrelordNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.PYRELORD_7377) :
     Familiar(owner, id, 3200, Items.PYRELORD_POUCH_12816, 6, WeaponInterface.STYLE_AGGRESSIVE) {
@@ -50,9 +47,7 @@ class PyrelordNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPC
         definePlugin(PyrelordAbility())
     }
 
-    /**
-     * Represents the Immense Heat special move.
-     */
+
     override fun specialMove(special: FamiliarSpecial): Boolean {
         val item = special.node as Item
         if (item.id != Items.GOLD_BAR_2357) {
@@ -69,9 +64,7 @@ class PyrelordNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPC
         return intArrayOf(NPCs.PYRELORD_7377, NPCs.PYRELORD_7378)
     }
 
-    /**
-     * Represents the Pyrelord special ability.
-     */
+
     inner class PyrelordAbility : UseWithHandler(*logs) {
         @Throws(Throwable::class)
         override fun newInstance(arg: Any?): Plugin<Any> {

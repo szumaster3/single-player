@@ -5,23 +5,12 @@ import content.global.skill.summoning.familiar.FamiliarSpecial
 import core.game.node.entity.combat.equipment.WeaponInterface
 import core.game.node.entity.player.Player
 import core.plugin.Initializable
+import org.rs.consts.Items
+import org.rs.consts.NPCs
 
-/**
- * The type Spirit dagannoth npc.
- */
 @Initializable
-class SpiritDagannothNPC
-/**
- * Instantiates a new Spirit dagannoth npc.
- *
- * @param owner the owner
- * @param id    the id
- */
-/**
- * Instantiates a new Spirit dagannoth npc.
- */
-@JvmOverloads constructor(owner: Player? = null, id: Int = 6804) :
-    Familiar(owner, id, 5700, 12017, 6, WeaponInterface.STYLE_CONTROLLED) {
+class SpiritDagannothNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.SPIRIT_DAGANNOTH_6804) :
+    Familiar(owner, id, 5700, Items.SPIRIT_DAGANNOTH_POUCH_12017, 6, WeaponInterface.STYLE_CONTROLLED) {
     override fun construct(owner: Player, id: Int): Familiar {
         return SpiritDagannothNPC(owner, id)
     }
@@ -31,6 +20,6 @@ class SpiritDagannothNPC
     }
 
     override fun getIds(): IntArray {
-        return intArrayOf(6804, 6805)
+        return intArrayOf(NPCs.SPIRIT_DAGANNOTH_6804, NPCs.SPIRIT_DAGANNOTH_6805)
     }
 }

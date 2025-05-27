@@ -20,32 +20,33 @@ import core.game.world.update.flag.context.Graphics;
 import core.plugin.Initializable;
 import core.plugin.Plugin;
 import core.tools.RandomFunction;
+import org.rs.consts.Items;
+import org.rs.consts.NPCs;
 
-/**
- * The type Bunyip npc.
- */
 @Initializable
 public class BunyipNPC extends content.global.skill.summoning.familiar.Familiar {
 
-    private static final int[] FISH = new int[]{317, 327, 3150, 345, 321, 353, 335, 341, 349, 3379, 331, 5004, 359, 10138, 5001, 377, 363, 371, 2148, 7944, 3142, 383, 395, 389, 401, 405, 407};
+    private static final int[] FISH = new int[]{
+            Items.RAW_SHRIMPS_317, Items.RAW_SARDINE_327, Items.RAW_KARAMBWANJI_3150,
+            Items.RAW_HERRING_345, Items.RAW_ANCHOVIES_321, Items.RAW_MACKEREL_353,
+            Items.RAW_TROUT_335, Items.RAW_COD_341, Items.RAW_PIKE_349, Items.SLIMY_EEL_3379,
+            Items.RAW_SALMON_331, Items.FROG_SPAWN_5004, Items.RAW_TUNA_359,
+            Items.RAW_RAINBOW_FISH_10138, Items.RAW_CAVE_EEL_5001, Items.RAW_LOBSTER_377,
+            Items.RAW_BASS_363, Items.RAW_SWORDFISH_371, Items.RAW_LAVA_EEL_2148,
+            Items.RAW_MONKFISH_7944, Items.RAW_KARAMBWAN_3142, Items.RAW_SHARK_383,
+            Items.RAW_SEA_TURTLE_395, Items.RAW_MANTA_RAY_389, Items.SEAWEED_401,
+            Items.CASKET_405, Items.OYSTER_407
+    };
 
     private int lastHeal;
 
-    /**
-     * Instantiates a new Bunyip npc.
-     */
     public BunyipNPC() {
-        this(null, 6813);
+        this(null, NPCs.BUNYIP_6813);
     }
 
-    /**
-     * Instantiates a new Bunyip npc.
-     *
-     * @param owner the owner
-     * @param id    the id
-     */
+
     public BunyipNPC(Player owner, int id) {
-        super(owner, id, 4400, 12029, 3, WeaponInterface.STYLE_ACCURATE);
+        super(owner, id, 4400, Items.BUNYIP_POUCH_12029, 3, WeaponInterface.STYLE_ACCURATE);
         setLastHeal();
     }
 
@@ -69,9 +70,7 @@ public class BunyipNPC extends content.global.skill.summoning.familiar.Familiar 
         return true;
     }
 
-    /**
-     * Sets last heal.
-     */
+
     public void setLastHeal() {
         this.lastHeal = GameWorld.getTicks() + (int) (15 / 0.6);
     }
@@ -117,10 +116,10 @@ public class BunyipNPC extends content.global.skill.summoning.familiar.Familiar 
 
     @Override
     protected void configureFamiliar() {
-        UseWithHandler.addHandler(6813, UseWithHandler.NPC_TYPE, new UseWithHandler(FISH) {
+        UseWithHandler.addHandler(NPCs.BUNYIP_6813, UseWithHandler.NPC_TYPE, new UseWithHandler(FISH) {
             @Override
             public Plugin<Object> newInstance(Object arg) throws Throwable {
-                addHandler(6814, UseWithHandler.NPC_TYPE, this);
+                addHandler(NPCs.BUNYIP_6814, UseWithHandler.NPC_TYPE, this);
                 return this;
             }
 
@@ -147,6 +146,6 @@ public class BunyipNPC extends content.global.skill.summoning.familiar.Familiar 
 
     @Override
     public int[] getIds() {
-        return new int[]{6813, 6814};
+        return new int[]{NPCs.BUNYIP_6813, NPCs.BUNYIP_6814};
     }
 }

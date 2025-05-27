@@ -12,21 +12,8 @@ import core.plugin.Initializable
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
-/**
- * The type Honey badger npc.
- */
 @Initializable
-class HoneyBadgerNPC
-/**
- * Instantiates a new Honey badger npc.
- *
- * @param owner the owner
- * @param id    the id
- */
-/**
- * Instantiates a new Honey badger npc.
- */
-@JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.HONEY_BADGER_6845) :
+class HoneyBadgerNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.HONEY_BADGER_6845) :
     Familiar(owner, id, 2500, Items.HONEY_BADGER_POUCH_12065, 4, WeaponInterface.STYLE_AGGRESSIVE) {
     override fun construct(owner: Player, id: Int): Familiar {
         return HoneyBadgerNPC(owner, id)

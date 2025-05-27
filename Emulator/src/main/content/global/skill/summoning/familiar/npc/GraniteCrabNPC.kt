@@ -15,21 +15,10 @@ import core.tools.RandomFunction
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
-/**
- * The type Granite crab npc.
- */
 @Initializable
 class GraniteCrabNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.GRANITE_CRAB_6796) :
     Forager(owner, id, 1800, Items.GRANITE_CRAB_POUCH_12009, 12, WeaponInterface.STYLE_DEFENSIVE) {
-    /**
-     * Instantiates a new Granite crab npc.
-     *
-     * @param owner the owner
-     * @param id    the id
-     */
-    /**
-     * Instantiates a new Granite crab npc.
-     */
+
     init {
         boosts.add(SkillBonus(Skills.FISHING, 1.0))
     }

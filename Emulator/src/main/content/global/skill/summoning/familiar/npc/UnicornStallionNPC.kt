@@ -27,14 +27,9 @@ import org.rs.consts.NPCs
 import org.rs.consts.Sounds
 
 @Initializable
-class UnicornStallionNPC(
-    owner: Player? = null,
-    id: Int = NPCs.UNICORN_STALLION_6822,
-) : Familiar(owner, id, 5400, Items.UNICORN_STALLION_POUCH_12039, 20, WeaponInterface.STYLE_CONTROLLED) {
-    override fun construct(
-        owner: Player,
-        id: Int,
-    ): Familiar = UnicornStallionNPC(owner, id)
+class UnicornStallionNPC(owner: Player? = null, id: Int = NPCs.UNICORN_STALLION_6822) :
+    Familiar(owner, id, 5400, Items.UNICORN_STALLION_POUCH_12039, 20, WeaponInterface.STYLE_CONTROLLED) {
+    override fun construct(owner: Player, id: Int): Familiar = UnicornStallionNPC(owner, id)
 
     override fun specialMove(special: FamiliarSpecial): Boolean {
         val player = special.node as Player

@@ -5,24 +5,10 @@ import content.global.skill.summoning.familiar.FamiliarSpecial;
 import core.game.node.entity.player.Player;
 import core.game.node.entity.skill.Skills;
 
-/**
- * The type Elemental titan npc.
- */
 public abstract class ElementalTitanNPC extends Familiar {
-
     private static final int scrollHealAmount = 8;
     private static final double scrollDefenceBoostPercent = 0.125;
 
-    /**
-     * Instantiates a new Elemental titan npc.
-     *
-     * @param owner       the owner
-     * @param id          the id
-     * @param ticks       the ticks
-     * @param pouchId     the pouch id
-     * @param specialCost the special cost
-     * @param attackStyle the attack style
-     */
     public ElementalTitanNPC(Player owner, int id, int ticks, int pouchId, int specialCost, int attackStyle) {
         super(owner, id, ticks, pouchId, specialCost, attackStyle);
     }

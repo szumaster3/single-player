@@ -10,23 +10,13 @@ import core.game.node.entity.skill.Skills
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
 import core.plugin.Initializable
+import org.rs.consts.Items
 import org.rs.consts.NPCs
 
-/**
- * The type Arctic bear npc.
- */
 @Initializable
 class ArcticBearNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.ARCTIC_BEAR_6839) :
-    Familiar(owner, id, 2800, 12057, 6, WeaponInterface.STYLE_CONTROLLED) {
-    /**
-     * Instantiates a new Arctic bear npc.
-     *
-     * @param owner the owner
-     * @param id    the id
-     */
-    /**
-     * Instantiates a new Arctic bear npc.
-     */
+    Familiar(owner, id, 2800, Items.ARCTIC_BEAR_POUCH_12057, 6, WeaponInterface.STYLE_CONTROLLED) {
+
     init {
         boosts.add(SkillBonus(Skills.HUNTER, 7.0))
     }

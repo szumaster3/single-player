@@ -21,21 +21,8 @@ import core.tools.RandomFunction
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
-/**
- * The type Compost mound npc.
- */
 @Initializable
-class CompostMoundNPC
-/**
- * Instantiates a new Compost mound npc.
- *
- * @param owner the owner
- * @param id    the id
- */
-/**
- * Instantiates a new Compost mound npc.
- */
-@JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.COMPOST_MOUND_6871) :
+class CompostMoundNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.COMPOST_MOUND_6871) :
     Forager(owner, id, 2400, Items.COMPOST_MOUND_POUCH_12091, 12, WeaponInterface.STYLE_AGGRESSIVE, *ITEMS) {
     override fun construct(owner: Player, id: Int): Familiar {
         return CompostMoundNPC(owner, id)
@@ -52,7 +39,7 @@ class CompostMoundNPC
     override fun specialMove(special: FamiliarSpecial): Boolean {
         val `object` = special.node as Scenery
         if (`object`.name != "Compost Bin") {
-            sendMessage(owner,"This scroll can only be used on an empty compost bin.")
+            sendMessage(owner, "This scroll can only be used on an empty compost bin.")
             return false
         }
         val cbin = CompostBins.forObject(special.node.asScenery()) ?: return false
@@ -75,18 +62,12 @@ class CompostMoundNPC
         return intArrayOf(NPCs.COMPOST_MOUND_6871, NPCs.COMPOST_MOUND_6872)
     }
 
-    /**
-     * The type Compost bucket plugin.
-     */
-    inner class CompostBucketPlugin
-    /**
-     * Instantiates a new Compost bucket plugin.
-     */
-        : UseWithHandler(1925) {
+    inner class CompostBucketPlugin : UseWithHandler(Items.BUCKET_1925) {
+
         @Throws(Throwable::class)
         override fun newInstance(arg: Any?): Plugin<Any> {
-            addHandler(6871, NPC_TYPE, this)
-            addHandler(6872, NPC_TYPE, this)
+            addHandler(NPCs.COMPOST_MOUND_6871, NPC_TYPE, this)
+            addHandler(NPCs.COMPOST_MOUND_6872, NPC_TYPE, this)
             return this
         }
 
@@ -106,47 +87,47 @@ class CompostMoundNPC
 
     companion object {
         private val ITEMS = arrayOf(
-            Item(6032),
-            Item(6034),
-            Item(5318),
-            Item(5319),
-            Item(5324),
-            Item(5322),
-            Item(5320),
-            Item(5323),
-            Item(5321),
-            Item(5305),
-            Item(5307),
-            Item(5308),
-            Item(5306),
-            Item(5309),
-            Item(5310),
-            Item(5311),
-            Item(5101),
-            Item(5102),
-            Item(5103),
-            Item(5104),
-            Item(5105),
-            Item(5106),
-            Item(5096),
-            Item(5097),
-            Item(5098),
-            Item(5099),
-            Item(5100),
-            Item(5291),
-            Item(5292),
-            Item(5293),
-            Item(5294),
-            Item(5295),
-            Item(12176),
-            Item(5296),
-            Item(5298),
-            Item(5299),
-            Item(5300),
-            Item(5301),
-            Item(5302),
-            Item(5303),
-            Item(5304)
+            Item(Items.COMPOST_6032),
+            Item(Items.SUPERCOMPOST_6034),
+            Item(Items.POTATO_SEED_5318),
+            Item(Items.ONION_SEED_5319),
+            Item(Items.CABBAGE_SEED_5324),
+            Item(Items.TOMATO_SEED_5322),
+            Item(Items.SWEETCORN_SEED_5320),
+            Item(Items.STRAWBERRY_SEED_5323),
+            Item(Items.WATERMELON_SEED_5321),
+            Item(Items.BARLEY_SEED_5305),
+            Item(Items.HAMMERSTONE_SEED_5307),
+            Item(Items.ASGARNIAN_SEED_5308),
+            Item(Items.JUTE_SEED_5306),
+            Item(Items.YANILLIAN_SEED_5309),
+            Item(Items.KRANDORIAN_SEED_5310),
+            Item(Items.WILDBLOOD_SEED_5311),
+            Item(Items.REDBERRY_SEED_5101),
+            Item(Items.CADAVABERRY_SEED_5102),
+            Item(Items.DWELLBERRY_SEED_5103),
+            Item(Items.JANGERBERRY_SEED_5104),
+            Item(Items.WHITEBERRY_SEED_5105),
+            Item(Items.POISON_IVY_SEED_5106),
+            Item(Items.MARIGOLD_SEED_5096),
+            Item(Items.ROSEMARY_SEED_5097),
+            Item(Items.NASTURTIUM_SEED_5098),
+            Item(Items.WOAD_SEED_5099),
+            Item(Items.LIMPWURT_SEED_5100),
+            Item(Items.GUAM_SEED_5291),
+            Item(Items.MARRENTILL_SEED_5292),
+            Item(Items.TARROMIN_SEED_5293),
+            Item(Items.HARRALANDER_SEED_5294),
+            Item(Items.RANARR_SEED_5295),
+            Item(Items.SPIRIT_WEED_SEED_12176),
+            Item(Items.TOADFLAX_SEED_5296),
+            Item(Items.AVANTOE_SEED_5298),
+            Item(Items.KWUARM_SEED_5299),
+            Item(Items.SNAPDRAGON_SEED_5300),
+            Item(Items.CADANTINE_SEED_5301),
+            Item(Items.LANTADYME_SEED_5302),
+            Item(Items.DWARF_WEED_SEED_5303),
+            Item(Items.TORSTOL_SEED_5304)
         )
     }
 }

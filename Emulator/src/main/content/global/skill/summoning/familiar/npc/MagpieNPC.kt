@@ -13,21 +13,10 @@ import core.plugin.Initializable
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
-/**
- * The type Magpie npc.
- */
 @Initializable
 class MagpieNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.MAGPIE_6824) :
     Forager(owner, id, 3400, Items.MAGPIE_POUCH_12041, 3, *ITEMS) {
-    /**
-     * Instantiates a new Magpie npc.
-     *
-     * @param owner the owner
-     * @param id    the id
-     */
-    /**
-     * Instantiates a new Magpie npc.
-     */
+
     init {
         boosts.add(SkillBonus(Skills.THIEVING, 3.0))
     }

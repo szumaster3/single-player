@@ -20,21 +20,8 @@ import core.plugin.Initializable
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
-/**
- * The type Pack yak npc.
- */
 @Initializable
-class PackYakNPC
-/**
- * Instantiates a new Pack yak npc.
- *
- * @param owner the owner
- * @param id    the id
- */
-/**
- * Instantiates a new Pack yak npc.
- */
-@JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.PACK_YAK_6873) :
+class PackYakNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.PACK_YAK_6873) :
     BurdenBeast(owner, id, 5800, Items.PACK_YAK_POUCH_12093, 12, 30, WeaponInterface.STYLE_AGGRESSIVE) {
     override fun construct(owner: Player, id: Int): Familiar {
         return PackYakNPC(owner, id)
@@ -70,9 +57,17 @@ class PackYakNPC
             if (!success) {
                 val recovered = removeItem(player, item, Container.BANK)
                 if (recovered) {
-                    log(player, LogType.DUPE_ALERT, "Successfully recovered from potential dupe attempt involving the winter storage scroll")
+                    log(
+                        player,
+                        LogType.DUPE_ALERT,
+                        "Successfully recovered from potential dupe attempt involving the winter storage scroll"
+                    )
                 } else {
-                    log(player, LogType.DUPE_ALERT, "Failed to recover from potentially successful dupe attempt involving the winter storage scroll")
+                    log(
+                        player,
+                        LogType.DUPE_ALERT,
+                        "Failed to recover from potentially successful dupe attempt involving the winter storage scroll"
+                    )
                 }
             }
         }

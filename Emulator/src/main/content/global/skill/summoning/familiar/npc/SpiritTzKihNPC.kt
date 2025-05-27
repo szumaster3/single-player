@@ -12,21 +12,8 @@ import core.plugin.Initializable
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
-/**
- * The type Spirit tz kih npc.
- */
 @Initializable
-class SpiritTzKihNPC
-/**
- * Instantiates a new Spirit tz kih npc.
- *
- * @param owner the owner
- * @param id    the id
- */
-/**
- * Instantiates a new Spirit tz kih npc.
- */
-@JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.SPIRIT_TZ_KIH_7361) :
+class SpiritTzKihNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.SPIRIT_TZ_KIH_7361) :
     Familiar(owner, id, 1800, Items.SPIRIT_TZ_KIH_POUCH_12808, 6, WeaponInterface.STYLE_CAST) {
     override fun construct(owner: Player, id: Int): Familiar {
         return SpiritTzKihNPC(owner, id)

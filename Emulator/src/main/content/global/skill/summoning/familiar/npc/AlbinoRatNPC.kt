@@ -12,22 +12,10 @@ import core.plugin.Initializable
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
-/**
- * The type Albino rat npc.
- */
 @Initializable
-class AlbinoRatNPC
-/**
- * Instantiates a new Albino rat npc.
- *
- * @param owner the owner
- * @param id    the id
- */
-/**
- * Instantiates a new Albino rat npc.
- */
-@JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.ALBINO_RAT_6847) :
+class AlbinoRatNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.ALBINO_RAT_6847) :
     Forager(owner, id, 2200, Items.ALBINO_RAT_POUCH_12067, 6, WeaponInterface.STYLE_ACCURATE, CHEESE) {
+
     override fun construct(owner: Player, id: Int): Familiar {
         return AlbinoRatNPC(owner, id)
     }

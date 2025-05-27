@@ -24,9 +24,6 @@ import core.plugin.Plugin
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
-/**
- * The Void familiars.
- */
 @Initializable
 class VoidFamiliarNPC : Plugin<Any?> {
     @Throws(Throwable::class)
@@ -42,13 +39,6 @@ class VoidFamiliarNPC : Plugin<Any?> {
         return null
     }
 
-    /**
-     * Call to arms boolean.
-     *
-     * @param familiar the familiar
-     * @param special  the special
-     * @return the boolean
-     */
     fun callToArms(familiar: Familiar, special: FamiliarSpecial?): Boolean {
         val owner = familiar.owner
         owner.lock()
@@ -71,20 +61,11 @@ class VoidFamiliarNPC : Plugin<Any?> {
         return true
     }
 
-    /**
-     * The type Void ravager npc.
-     */
+
     inner class VoidRavagerNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.VOID_RAVAGER_7370) :
         Forager(owner, id, 2700, Items.VOID_RAVAGER_POUCH_12818, 3, WeaponInterface.STYLE_AGGRESSIVE, *ITEMS) {
-        /**
-         * Instantiates a new Void ravager npc.
-         *
-         * @param owner the owner
-         * @param id    the id
-         */
-        /**
-         * Instantiates a new Void ravager npc.
-         */
+
+
         init {
             boosts.add(SkillBonus(Skills.MINING, 1.0))
         }
@@ -102,19 +83,8 @@ class VoidFamiliarNPC : Plugin<Any?> {
         }
     }
 
-    /**
-     * The type Void shifter npc.
-     */
+
     inner class VoidShifterNPC
-    /**
-     * Instantiates a new Void shifter npc.
-     *
-     * @param owner the owner
-     * @param id    the id
-     */
-    /**
-     * Instantiates a new Void shifter npc.
-     */
     @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.VOID_SHIFTER_7367) :
         Familiar(owner, id, 9400, Items.VOID_SHIFTER_POUCH_12814, 3, WeaponInterface.STYLE_ACCURATE) {
         override fun construct(owner: Player, id: Int): Familiar {
@@ -138,19 +108,8 @@ class VoidFamiliarNPC : Plugin<Any?> {
         }
     }
 
-    /**
-     * The type Void spinner npc.
-     */
+
     inner class VoidSpinnerNPC
-    /**
-     * Instantiates a new Void spinner npc.
-     *
-     * @param owner the owner
-     * @param id    the id
-     */
-    /**
-     * Instantiates a new Void spinner npc.
-     */
     @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.VOID_SPINNER_7333) :
         Familiar(owner, id, 2700, Items.VOID_SPINNER_POUCH_12780, 3, WeaponInterface.STYLE_DEFENSIVE) {
         private var healDelay = 0
@@ -176,19 +135,8 @@ class VoidFamiliarNPC : Plugin<Any?> {
         }
     }
 
-    /**
-     * The type Void torcher npc.
-     */
+
     inner class VoidTorcherNPC
-    /**
-     * Instantiates a new Void torcher npc.
-     *
-     * @param owner the owner
-     * @param id    the id
-     */
-    /**
-     * Instantiates a new Void torcher npc.
-     */
     @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.VOID_TORCHER_7351) :
         Familiar(owner, id, 9400, Items.VOID_TORCHER_POUCH_12798, 3, WeaponInterface.STYLE_CAST) {
         override fun construct(owner: Player, id: Int): Familiar {

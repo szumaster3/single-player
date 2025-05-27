@@ -14,31 +14,21 @@ import core.game.world.update.flag.context.Animation;
 import core.game.world.update.flag.context.Graphics;
 import core.plugin.Initializable;
 import core.tools.RandomFunction;
+import org.rs.consts.Items;
+import org.rs.consts.NPCs;
 
-/**
- * The type Steel titan npc.
- */
 @Initializable
 public final class SteelTitanNPC extends content.global.skill.summoning.familiar.Familiar {
-
     private static final SwitchAttack[] ATTACKS = {new SwitchAttack(CombatStyle.RANGE.getSwingHandler(), Animation.create(8190), null, null, Projectile.create(null, null, 1445, 60, 36, 41, 46)), new SwitchAttack(CombatStyle.MAGIC.getSwingHandler(), Animation.create(8190), null, null, Projectile.create(null, null, 1445, 60, 36, 41, 46)), new SwitchAttack(CombatStyle.MELEE.getSwingHandler(), Animation.create(8183))};
     private boolean specialMove;
 
-    /**
-     * Instantiates a new Steel titan npc.
-     */
     public SteelTitanNPC() {
-        this(null, 7343);
+        this(null, NPCs.STEEL_TITAN_7343);
     }
 
-    /**
-     * Instantiates a new Steel titan npc.
-     *
-     * @param owner the owner
-     * @param id    the id
-     */
+
     public SteelTitanNPC(Player owner, int id) {
-        super(owner, id, 6400, 12790, 12, WeaponInterface.STYLE_RANGE_ACCURATE);
+        super(owner, id, 6400, Items.STEEL_TITAN_POUCH_12790, 12, WeaponInterface.STYLE_RANGE_ACCURATE);
         super.setCombatHandler(new MultiSwingHandler(true, ATTACKS) {
             @Override
             public int swing(Entity entity, Entity victim, BattleState s) {
@@ -72,7 +62,7 @@ public final class SteelTitanNPC extends content.global.skill.summoning.familiar
 
     @Override
     public int[] getIds() {
-        return new int[]{7343, 7344};
+        return new int[]{NPCs.STEEL_TITAN_7343, NPCs.STEEL_TITAN_7344};
     }
 
     @Override

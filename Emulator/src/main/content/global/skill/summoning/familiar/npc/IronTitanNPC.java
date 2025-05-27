@@ -13,31 +13,22 @@ import core.game.world.update.flag.context.Animation;
 import core.game.world.update.flag.context.Graphics;
 import core.plugin.Initializable;
 import core.tools.RandomFunction;
+import org.rs.consts.Items;
+import org.rs.consts.NPCs;
 
-/**
- * The type Iron titan npc.
- */
 @Initializable
 public class IronTitanNPC extends content.global.skill.summoning.familiar.Familiar {
 
     private static final SwitchAttack[] ATTACKS = {new SwitchAttack(CombatStyle.MELEE.getSwingHandler(), Animation.create(8183))};
     private boolean specialMove;
 
-    /**
-     * Instantiates a new Iron titan npc.
-     */
     public IronTitanNPC() {
         this(null, 7375);
     }
 
-    /**
-     * Instantiates a new Iron titan npc.
-     *
-     * @param owner the owner
-     * @param id    the id
-     */
+
     public IronTitanNPC(Player owner, int id) {
-        super(owner, id, 6000, 12822, 12, WeaponInterface.STYLE_DEFENSIVE);
+        super(owner, id, 6000, Items.IRON_TITAN_POUCH_12822, 12, WeaponInterface.STYLE_DEFENSIVE);
         super.setCombatHandler(new MultiSwingHandler(true, ATTACKS) {
             @Override
             public int swing(Entity entity, Entity victim, BattleState s) {
@@ -83,7 +74,7 @@ public class IronTitanNPC extends content.global.skill.summoning.familiar.Famili
 
     @Override
     public int[] getIds() {
-        return new int[]{7375, 7376};
+        return new int[]{NPCs.IRON_TITAN_7375, NPCs.IRON_TITAN_7376};
     }
 
 }

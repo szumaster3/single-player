@@ -12,21 +12,8 @@ import core.plugin.Initializable
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
-/**
- * The type Bull ant npc.
- */
 @Initializable
-class BullAntNPC
-/**
- * Instantiates a new Bull ant npc.
- *
- * @param owner the owner
- * @param id    the id
- */
-/**
- * Instantiates a new Bull ant npc.
- */
-@JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.BULL_ANT_6867) :
+class BullAntNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.BULL_ANT_6867) :
     BurdenBeast(owner, id, 3000, Items.BULL_ANT_POUCH_12087, 12, 9, WeaponInterface.STYLE_CONTROLLED) {
     override fun construct(owner: Player, id: Int): Familiar {
         return BullAntNPC(owner, id)

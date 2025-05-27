@@ -14,21 +14,8 @@ import core.plugin.Initializable
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
-/**
- * The type Abyssal lurker npc.
- */
 @Initializable
-class AbyssalLurkerNPC
-/**
- * Instantiates a new Abyssal lurker npc.
- *
- * @param owner the owner
- * @param id    the id
- */
-/**
- * Instantiates a new Abyssal lurker npc.
- */
-@JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.ABYSSAL_LURKER_6820) :
+class AbyssalLurkerNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.ABYSSAL_LURKER_6820) :
     BurdenBeast(owner, id, 4100, Items.ABYSSAL_LURKER_POUCH_12037, 3, 7, WeaponInterface.STYLE_CAST) {
     override fun construct(owner: Player, id: Int): Familiar {
         return AbyssalLurkerNPC(owner, id)

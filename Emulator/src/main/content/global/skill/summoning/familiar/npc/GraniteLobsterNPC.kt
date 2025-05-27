@@ -16,21 +16,10 @@ import core.tools.RandomFunction
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
-/**
- * The type Granite lobster npc.
- */
 @Initializable
 class GraniteLobsterNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.GRANITE_LOBSTER_6849) :
     Forager(owner, id, 4700, Items.GRANITE_LOBSTER_POUCH_12069, 6) {
-    /**
-     * Instantiates a new Granite lobster npc.
-     *
-     * @param owner the owner
-     * @param id    the id
-     */
-    /**
-     * Instantiates a new Granite lobster npc.
-     */
+
     init {
         boosts.add(SkillBonus(Skills.FISHING, 4.0))
     }

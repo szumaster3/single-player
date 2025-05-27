@@ -23,15 +23,9 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 
 @Initializable
-class FruitBatFamiliar(
-    owner: Player? = null,
-    id: Int = FRUIT_BAT,
-) : Forager(owner, id, 4500, Items.FRUIT_BAT_POUCH_12033, 6, *FRUIT_FORAGE),
-    InteractionListener {
-    override fun construct(
-        owner: Player,
-        id: Int,
-    ): Familiar = FruitBatFamiliar(owner, id)
+class FruitBatFamiliar(owner: Player? = null, id: Int = FRUIT_BAT, ) : Forager(owner, id, 4500, Items.FRUIT_BAT_POUCH_12033, 6, *FRUIT_FORAGE), InteractionListener {
+
+    override fun construct(owner: Player, id: Int, ): Familiar = FruitBatFamiliar(owner, id)
 
     override fun isHidden(player: Player?): Boolean = super.isHidden(player)
 

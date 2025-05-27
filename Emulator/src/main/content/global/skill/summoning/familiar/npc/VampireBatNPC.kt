@@ -13,21 +13,8 @@ import core.tools.RandomFunction
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
-/**
- * The type Vampire bat npc.
- */
 @Initializable
-class VampireBatNPC
-/**
- * Instantiates a new Vampire bat npc.
- *
- * @param owner the owner
- * @param id    the id
- */
-/**
- * Instantiates a new Vampire bat npc.
- */
-@JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.VAMPIRE_BAT_6835) :
+class VampireBatNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.VAMPIRE_BAT_6835) :
     Familiar(owner, id, 3300, Items.VAMPIRE_BAT_POUCH_12053, 4, WeaponInterface.STYLE_CONTROLLED) {
     override fun construct(owner: Player, id: Int): Familiar {
         return VampireBatNPC(owner, id)

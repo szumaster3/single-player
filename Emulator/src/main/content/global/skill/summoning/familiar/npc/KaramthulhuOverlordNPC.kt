@@ -8,21 +8,8 @@ import core.plugin.Initializable
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
-/**
- * The type Karamthulhu overlord npc.
- */
 @Initializable
-class KaramthulhuOverlordNPC
-/**
- * Instantiates a new Karamthulhu overlord npc.
- *
- * @param owner the owner
- * @param id    the id
- */
-/**
- * Instantiates a new Karamthulhu overlord npc.
- */
-@JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.KARAMTHULHU_OVERLORD_6809) :
+class KaramthulhuOverlordNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.KARAMTHULHU_OVERLORD_6809) :
     Familiar(owner, id, 4400, Items.KARAM_OVERLORD_POUCH_12023, 3, WeaponInterface.STYLE_RANGE_ACCURATE) {
     override fun construct(owner: Player, id: Int): Familiar {
         return KaramthulhuOverlordNPC(owner, id)

@@ -13,21 +13,8 @@ import org.rs.consts.Animations
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
-/**
- * The type War tortoise npc.
- */
 @Initializable
-class WarTortoiseNPC
-/**
- * Instantiates a new War tortoise npc.
- *
- * @param owner the owner
- * @param id    the id
- */
-/**
- * Instantiates a new War tortoise npc.
- */
-@JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.WAR_TORTOISE_6815) :
+class WarTortoiseNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.WAR_TORTOISE_6815) :
     BurdenBeast(owner, id, 4300, Items.WAR_TORTOISE_POUCH_12031, 20, 18, WeaponInterface.STYLE_DEFENSIVE) {
     override fun construct(owner: Player, id: Int): Familiar {
         return WarTortoiseNPC(owner, id)
@@ -40,7 +27,10 @@ class WarTortoiseNPC
     }
 
     override fun visualizeSpecialMove() {
-        owner.visualize(Animation.create(Animations.CAST_FAMILIAR_SCROLL_7660), Graphics.create(org.rs.consts.Graphics.YELLOW_FAMILIAR_GRAPHIC_1310))
+        owner.visualize(
+            Animation.create(Animations.CAST_FAMILIAR_SCROLL_7660),
+            Graphics.create(org.rs.consts.Graphics.YELLOW_FAMILIAR_GRAPHIC_1310)
+        )
     }
 
     override fun getIds(): IntArray {

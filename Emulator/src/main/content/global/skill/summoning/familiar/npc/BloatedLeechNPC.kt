@@ -14,21 +14,8 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import kotlin.math.ceil
 
-/**
- * The type Bloated leech npc.
- */
 @Initializable
-class BloatedLeechNPC
-/**
- * Instantiates a new Bloated leech npc.
- *
- * @param owner the owner
- * @param id    the id
- */
-/**
- * Instantiates a new Bloated leech npc.
- */
-@JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.BLOATED_LEECH_6843) :
+class BloatedLeechNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.BLOATED_LEECH_6843) :
     Familiar(owner, id, 3400, Items.BLOATED_LEECH_POUCH_12061, 6, WeaponInterface.STYLE_ACCURATE) {
     override fun construct(owner: Player, id: Int): Familiar {
         return BloatedLeechNPC(owner, id)

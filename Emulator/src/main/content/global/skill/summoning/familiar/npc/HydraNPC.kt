@@ -10,21 +10,8 @@ import core.plugin.Initializable
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
-/**
- * The type Hydra npc.
- */
 @Initializable
-class HydraNPC
-/**
- * Instantiates a new Hydra npc.
- *
- * @param owner the owner
- * @param id    the id
- */
-/**
- * Instantiates a new Hydra npc.
- */
-@JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.HYDRA_6811) :
+class HydraNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.HYDRA_6811) :
     Familiar(owner, id, 4900, Items.HYDRA_POUCH_12025, 6, WeaponInterface.STYLE_RANGE_ACCURATE) {
     override fun construct(owner: Player, id: Int): Familiar {
         return HydraNPC(owner, id)

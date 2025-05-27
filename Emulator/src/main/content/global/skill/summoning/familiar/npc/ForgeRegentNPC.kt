@@ -31,18 +31,10 @@ import core.tools.RandomFunction
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
-/**
- * The type Forge regent npc.
- */
 @Initializable
 class ForgeRegentNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.FORGE_REGENT_7335) :
     Familiar(owner, id, 4500, Items.FORGE_REGENT_POUCH_12782, 6, WeaponInterface.STYLE_RANGE_ACCURATE) {
-    /**
-     * Instantiates a new Forge regent npc.
-     *
-     * @param owner the owner
-     * @param id    the id
-     */
+
     init {
         boosts.add(SkillBonus(Skills.FIREMAKING, 4.0))
     }
@@ -94,9 +86,7 @@ class ForgeRegentNPC @JvmOverloads constructor(owner: Player? = null, id: Int = 
         return intArrayOf(NPCs.FORGE_REGENT_7335, NPCs.FORGE_REGENT_7336)
     }
 
-    /**
-     * Represents the Forge Regent ability.
-     */
+
     inner class ForgeRegentAbility : UseWithHandler(*logs) {
         @Throws(Throwable::class)
         override fun newInstance(arg: Any?): Plugin<Any> {

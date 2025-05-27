@@ -7,23 +7,13 @@ import core.game.node.entity.player.Player
 import core.game.node.entity.skill.SkillBonus
 import core.game.node.entity.skill.Skills
 import core.plugin.Initializable
+import org.rs.consts.Items
 import org.rs.consts.NPCs
 
-/**
- * The type Spirit graahk npc.
- */
 @Initializable
 class SpiritGraahkNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.SPIRIT_GRAAHK_7363) :
-    Familiar(owner, id, 4900, 12810, 3, WeaponInterface.STYLE_AGGRESSIVE) {
-    /**
-     * Instantiates a new Spirit graahk npc.
-     *
-     * @param owner the owner
-     * @param id    the id
-     */
-    /**
-     * Instantiates a new Spirit graahk npc.
-     */
+    Familiar(owner, id, 4900, Items.SPIRIT_GRAAHK_POUCH_12810, 3, WeaponInterface.STYLE_AGGRESSIVE) {
+
     init {
         boosts.add(SkillBonus(Skills.HUNTER, 5.0))
     }

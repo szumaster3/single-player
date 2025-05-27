@@ -12,24 +12,13 @@ import core.game.node.item.Item
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
 import core.plugin.Initializable
+import org.rs.consts.Items
+import org.rs.consts.NPCs
 import kotlin.math.floor
 
-/**
- * The type Evil turnip npc.
- */
 @Initializable
-class EvilTurnipNPC
-/**
- * Instantiates a new Evil turnip npc.
- *
- * @param owner the owner
- * @param id    the id
- */
-/**
- * Instantiates a new Evil turnip npc.
- */
-@JvmOverloads constructor(owner: Player? = null, id: Int = 6833) :
-    Forager(owner, id, 3000, 12051, 6, WeaponInterface.STYLE_RANGE_ACCURATE, EVIL_TURNIP) {
+class EvilTurnipNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.EVIL_TURNIP_6833) :
+    Forager(owner, id, 3000, Items.EVIL_TURNIP_POUCH_12051, 6, WeaponInterface.STYLE_RANGE_ACCURATE, EVIL_TURNIP) {
     override fun construct(owner: Player, id: Int): Familiar {
         return EvilTurnipNPC(owner, id)
     }
@@ -55,10 +44,10 @@ class EvilTurnipNPC
     }
 
     override fun getIds(): IntArray {
-        return intArrayOf(6833, 6834)
+        return intArrayOf(NPCs.EVIL_TURNIP_6833, NPCs.EVIL_TURNIP_6834)
     }
 
     companion object {
-        private val EVIL_TURNIP = Item(12136)
+        private val EVIL_TURNIP = Item(Items.TWO_THIRDS_EVIL_TURNIP_12136)
     }
 }

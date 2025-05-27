@@ -12,21 +12,10 @@ import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 
-/**
- * The type Spirit graahk dialogue.
- */
 @Initializable
 class SpiritGraahkDialogue : Dialogue {
-    /**
-     * Instantiates a new Spirit graahk dialogue.
-     */
     constructor()
 
-    /**
-     * Instantiates a new Spirit graahk dialogue.
-     *
-     * @param player the player
-     */
     constructor(player: Player?) : super(player)
 
     override fun newInstance(player: Player): Dialogue {

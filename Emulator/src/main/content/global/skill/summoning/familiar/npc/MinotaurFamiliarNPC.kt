@@ -20,9 +20,6 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import kotlin.math.floor
 
-/**
- * The type Minotaur familiar npc.
- */
 @Initializable
 class MinotaurFamiliarNPC : Plugin<Any?> {
     @Throws(Throwable::class)
@@ -40,14 +37,7 @@ class MinotaurFamiliarNPC : Plugin<Any?> {
         return null
     }
 
-    /**
-     * Bull rush boolean.
-     *
-     * @param familiar the familiar
-     * @param special  the special
-     * @param maxHit   the max hit
-     * @return the boolean
-     */
+
     fun bullRush(familiar: Familiar, special: FamiliarSpecial, maxHit: Int): Boolean {
         val target = special.node as Entity
         if (!familiar.canCombatSpecial(target)) {
@@ -68,19 +58,8 @@ class MinotaurFamiliarNPC : Plugin<Any?> {
         return true
     }
 
-    /**
-     * The type Bronze minotaur npc.
-     */
+
     inner class BronzeMinotaurNPC
-    /**
-     * Instantiates a new Bronze minotaur npc.
-     *
-     * @param owner the owner
-     * @param id    the id
-     */
-    /**
-     * Instantiates a new Bronze minotaur npc.
-     */
     @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.BRONZE_MINOTAUR_6853) :
         Familiar(owner, id, 3000, Items.BRONZE_MINOTAUR_POUCH_12073, 6, WeaponInterface.STYLE_DEFENSIVE) {
         override fun construct(owner: Player, id: Int): Familiar {
@@ -100,19 +79,8 @@ class MinotaurFamiliarNPC : Plugin<Any?> {
         }
     }
 
-    /**
-     * The type Iron minotaur npc.
-     */
+
     inner class IronMinotaurNPC
-    /**
-     * Instantiates a new Iron minotaur npc.
-     *
-     * @param owner the owner
-     * @param id    the id
-     */
-    /**
-     * Instantiates a new Iron minotaur npc.
-     */
     @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.IRON_MINOTAUR_6855) :
         Familiar(owner, id, 3700, Items.IRON_MINOTAUR_POUCH_12075, 6, WeaponInterface.STYLE_DEFENSIVE) {
         override fun construct(owner: Player, id: Int): Familiar {
@@ -132,19 +100,8 @@ class MinotaurFamiliarNPC : Plugin<Any?> {
         }
     }
 
-    /**
-     * The type Steel minotaur npc.
-     */
+
     inner class SteelMinotaurNPC
-    /**
-     * Instantiates a new Steel minotaur npc.
-     *
-     * @param owner the owner
-     * @param id    the id
-     */
-    /**
-     * Instantiates a new Steel minotaur npc.
-     */
     @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.STEEL_MINOTAUR_6857) :
         Familiar(owner, id, 4600, Items.STEEL_MINOTAUR_POUCH_12077, 6, WeaponInterface.STYLE_DEFENSIVE) {
         override fun construct(owner: Player, id: Int): Familiar {
@@ -168,19 +125,8 @@ class MinotaurFamiliarNPC : Plugin<Any?> {
         }
     }
 
-    /**
-     * The type Mithril minotaur npc.
-     */
+
     inner class MithrilMinotaurNPC
-    /**
-     * Instantiates a new Mithril minotaur npc.
-     *
-     * @param owner the owner
-     * @param id    the id
-     */
-    /**
-     * Instantiates a new Mithril minotaur npc.
-     */
     @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.MITHRIL_MINOTAUR_6859) :
         Familiar(owner, id, 5500, Items.MITHRIL_MINOTAUR_POUCH_12079, 6, WeaponInterface.STYLE_DEFENSIVE) {
         override fun construct(owner: Player, id: Int): Familiar {
@@ -200,19 +146,8 @@ class MinotaurFamiliarNPC : Plugin<Any?> {
         }
     }
 
-    /**
-     * The type Adamant minotaur npc.
-     */
+
     inner class AdamantMinotaurNPC
-    /**
-     * Instantiates a new Adamant minotaur npc.
-     *
-     * @param owner the owner
-     * @param id    the id
-     */
-    /**
-     * Instantiates a new Adamant minotaur npc.
-     */
     @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.ADAMANT_MINOTAUR_6861) :
         Familiar(owner, id, 6600, Items.ADAMANT_MINOTAUR_POUCH_12081, 6, WeaponInterface.STYLE_DEFENSIVE) {
         override fun construct(owner: Player, id: Int): Familiar {
@@ -236,19 +171,8 @@ class MinotaurFamiliarNPC : Plugin<Any?> {
         }
     }
 
-    /**
-     * The type Rune minotaur npc.
-     */
+
     inner class RuneMinotaurNPC
-    /**
-     * Instantiates a new Rune minotaur npc.
-     *
-     * @param owner the owner
-     * @param id    the id
-     */
-    /**
-     * Instantiates a new Rune minotaur npc.
-     */
     @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.RUNE_MINOTAUR_6863) :
         Familiar(owner, id, 15100, Items.RUNE_MINOTAUR_POUCH_12083, 6, WeaponInterface.STYLE_DEFENSIVE) {
         override fun construct(owner: Player, id: Int): Familiar {

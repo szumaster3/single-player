@@ -17,25 +17,15 @@ import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
 import core.plugin.Initializable
 import core.tools.RandomFunction
+import org.rs.consts.Items
+import org.rs.consts.NPCs
 import kotlin.math.floor
 
-/**
- * The type Dreadfowl npc.
- */
 @Initializable
-class DreadfowlNPC @JvmOverloads constructor(owner: Player? = null, id: Int = 6825) :
-    Familiar(owner, id, 400, 12043, 3, WeaponInterface.STYLE_CAST) {
+class DreadfowlNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.DREADFOWL_6825) :
+    Familiar(owner, id, 400, Items.DREADFOWL_POUCH_12043, 3, WeaponInterface.STYLE_CAST) {
     private var specialMove = false
 
-    /**
-     * Instantiates a new Dreadfowl npc.
-     *
-     * @param owner the owner
-     * @param id    the id
-     */
-    /**
-     * Instantiates a new Dreadfowl npc.
-     */
     init {
         super.setCombatHandler(COMBAT_HANDLER)
         boosts.add(SkillBonus(Skills.FARMING, 1.0))
@@ -83,7 +73,7 @@ class DreadfowlNPC @JvmOverloads constructor(owner: Player? = null, id: Int = 68
     }
 
     override fun getIds(): IntArray {
-        return intArrayOf(6825, 6826)
+        return intArrayOf(NPCs.DREADFOWL_6825, NPCs.DREADFOWL_6826)
     }
 
     companion object {

@@ -16,21 +16,8 @@ import core.tools.RandomFunction
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
-/**
- * The type Spirit spider npc.
- */
 @Initializable
-class SpiritSpiderNPC
-/**
- * Instantiates a new Spirit spider npc.
- *
- * @param owner the owner
- * @param id    the id
- */
-/**
- * Instantiates a new Spirit spider npc.
- */
-@JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.SPIRIT_SPIDER_6841) :
+class SpiritSpiderNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.SPIRIT_SPIDER_6841) :
     Familiar(owner, id, 1500, Items.SPIRIT_SPIDER_POUCH_12059, 6, WeaponInterface.STYLE_CONTROLLED) {
     private var eggDelay = GameWorld.ticks + 500
 

@@ -15,21 +15,8 @@ import core.plugin.Initializable
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
-/**
- * The type Spirit scorpion npc.
- */
 @Initializable
-class SpiritScorpionNPC
-/**
- * Instantiates a new Spirit scorpion npc.
- *
- * @param owner the owner
- * @param id    the id
- */
-/**
- * Instantiates a new Spirit scorpion npc.
- */
-@JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.SPIRIT_SCORPION_6837) :
+class SpiritScorpionNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.SPIRIT_SCORPION_6837) :
     Familiar(owner, id, 1700, Items.SPIRIT_SCORPION_POUCH_12055, 6, WeaponInterface.STYLE_CONTROLLED) {
     override fun construct(owner: Player, id: Int): Familiar {
         return SpiritScorpionNPC(owner, id)

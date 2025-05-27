@@ -14,22 +14,10 @@ import core.tools.RandomFunction
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
-/**
- * The type Abyssal parasite npc.
- */
 @Initializable
-class AbyssalParasiteNPC
-/**
- * Instantiates a new Abyssal parasite npc.
- *
- * @param owner the owner
- * @param id    the id
- */
-/**
- * Instantiates a new Abyssal parasite npc.
- */
-@JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.ABYSSAL_PARASITE_6818) :
+class AbyssalParasiteNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.ABYSSAL_PARASITE_6818) :
     BurdenBeast(owner, id, 3000, Items.ABYSSAL_PARASITE_POUCH_12035, 1, 7) {
+
     @Suppress("unused")
     private val specialMove = false
 

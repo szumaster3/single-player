@@ -9,23 +9,12 @@ import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
 import core.plugin.Initializable
 import core.tools.RandomFunction
+import org.rs.consts.Items
+import org.rs.consts.NPCs
 
-/**
- * The type Geyser titan npc.
- */
 @Initializable
-class GeyserTitanNPC
-/**
- * Instantiates a new Geyser titan npc.
- *
- * @param owner the owner
- * @param id    the id
- */
-/**
- * Instantiates a new Geyser titan npc.
- */
-@JvmOverloads constructor(owner: Player? = null, id: Int = 7339) :
-    Familiar(owner, id, 6900, 12786, 6, WeaponInterface.STYLE_RANGE_ACCURATE) {
+class GeyserTitanNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.GEYSER_TITAN_7339) :
+    Familiar(owner, id, 6900, Items.GEYSER_TITAN_POUCH_12786, 6, WeaponInterface.STYLE_RANGE_ACCURATE) {
     override fun construct(owner: Player, id: Int): Familiar {
         return GeyserTitanNPC(owner, id)
     }
@@ -54,6 +43,6 @@ class GeyserTitanNPC
     }
 
     override fun getIds(): IntArray {
-        return intArrayOf(7339, 7340)
+        return intArrayOf(NPCs.GEYSER_TITAN_7339, NPCs.GEYSER_TITAN_7340)
     }
 }

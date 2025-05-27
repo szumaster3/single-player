@@ -13,21 +13,10 @@ import org.rs.consts.Animations
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
-/**
- * The Wolpertinger familiar.
- */
 @Initializable
 class WolpertingerNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.WOLPERTINGER_6869) :
     Familiar(owner, id, 6200, Items.WOLPERTINGER_POUCH_12089, 1, WeaponInterface.STYLE_CAST) {
-    /**
-     * Instantiates a new Wolpertinger npc.
-     *
-     * @param owner the owner
-     * @param id    the id
-     */
-    /**
-     * Instantiates a new Wolpertinger npc.
-     */
+
     init {
         boosts.add(SkillBonus(Skills.HUNTER, 5.0))
     }
@@ -43,7 +32,10 @@ class WolpertingerNPC @JvmOverloads constructor(owner: Player? = null, id: Int =
     }
 
     override fun visualizeSpecialMove() {
-        owner.visualize(Animation.create(Animations.CAST_FAMILIAR_SCROLL_7660), Graphics.create(org.rs.consts.Graphics.WHITE_FAMILIAR_GRAPHIC_1306))
+        owner.visualize(
+            Animation.create(Animations.CAST_FAMILIAR_SCROLL_7660),
+            Graphics.create(org.rs.consts.Graphics.WHITE_FAMILIAR_GRAPHIC_1306)
+        )
     }
 
     override fun getIds(): IntArray {

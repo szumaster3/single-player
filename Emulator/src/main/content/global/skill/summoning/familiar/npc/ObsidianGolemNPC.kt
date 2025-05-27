@@ -11,21 +11,10 @@ import core.plugin.Initializable
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
-/**
- * The type Obsidian golem npc.
- */
 @Initializable
 class ObsidianGolemNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.OBSIDIAN_GOLEM_7345) :
     Familiar(owner, id, 5500, Items.OBSIDIAN_GOLEM_POUCH_12792, 12, WeaponInterface.STYLE_AGGRESSIVE) {
-    /**
-     * Instantiates a new Obsidian golem npc.
-     *
-     * @param owner the owner
-     * @param id    the id
-     */
-    /**
-     * Instantiates a new Obsidian golem npc.
-     */
+
     init {
         boosts.add(SkillBonus(Skills.MINING, 7.0))
     }

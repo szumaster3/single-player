@@ -19,21 +19,10 @@ import core.tools.RandomFunction
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
-/**
- * The type Ibis npc.
- */
 @Initializable
 class IbisNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.IBIS_6991) :
     Forager(owner, id, 3800, Items.IBIS_POUCH_12531, 12, Item(Items.TUNA_361), Item(Items.SWORDFISH_373)) {
-    /**
-     * Instantiates a new Ibis npc.
-     *
-     * @param owner the owner
-     * @param id    the id
-     */
-    /**
-     * Instantiates a new Ibis npc.
-     */
+
     init {
         boosts.add(SkillBonus(Skills.FISHING, 3.0))
     }

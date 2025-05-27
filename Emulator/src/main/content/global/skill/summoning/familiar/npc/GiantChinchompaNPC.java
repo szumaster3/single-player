@@ -18,25 +18,12 @@ import org.rs.consts.NPCs;
 
 import java.util.List;
 
-/**
- * The type Giant chinchompa npc.
- */
 @Initializable
 public class GiantChinchompaNPC extends content.global.skill.summoning.familiar.Familiar {
-
-    /**
-     * Instantiates a new Giant chinchompa npc.
-     */
     public GiantChinchompaNPC() {
         this(null, NPCs.GIANT_CHINCHOMPA_7353);
     }
 
-    /**
-     * Instantiates a new Giant chinchompa npc.
-     *
-     * @param owner the owner
-     * @param id    the id
-     */
     public GiantChinchompaNPC(Player owner, int id) {
         super(owner, id, 3100, Items.GIANT_CHINCHOMPA_POUCH_12800, 3, WeaponInterface.STYLE_RANGE_ACCURATE);
     }

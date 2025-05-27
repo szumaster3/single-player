@@ -8,9 +8,6 @@ import core.plugin.Initializable
 import core.plugin.Plugin
 import org.rs.consts.NPCs
 
-/**
- * The type Spirit graahk option plugin.
- */
 @Initializable
 class SpiritGraahkOptionPlugin : OptionHandler() {
     @Throws(Throwable::class)

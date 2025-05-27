@@ -12,21 +12,8 @@ import core.plugin.Initializable
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
-/**
- * The type Spirit jelly npc.
- */
 @Initializable
-class SpiritJellyNPC
-/**
- * Instantiates a new Spirit jelly npc.
- *
- * @param owner the owner
- * @param id    the id
- */
-/**
- * Instantiates a new Spirit jelly npc.
- */
-@JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.SPIRIT_JELLY_6992) :
+class SpiritJellyNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.SPIRIT_JELLY_6992) :
     Familiar(owner, id, 4300, Items.SPIRIT_JELLY_POUCH_12027, 6, WeaponInterface.STYLE_AGGRESSIVE) {
     override fun construct(owner: Player, id: Int): Familiar {
         return SpiritJellyNPC(owner, id)

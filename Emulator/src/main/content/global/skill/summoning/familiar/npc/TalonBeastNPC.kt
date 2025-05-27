@@ -8,21 +8,8 @@ import core.plugin.Initializable
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
-/**
- * The type Talon beast npc.
- */
 @Initializable
-class TalonBeastNPC
-/**
- * Instantiates a new Talon beast npc.
- *
- * @param owner the owner
- * @param id    the id
- */
-/**
- * Instantiates a new Talon beast npc.
- */
-@JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.TALON_BEAST_7347) :
+class TalonBeastNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.TALON_BEAST_7347) :
     Familiar(owner, id, 4900, Items.TALON_BEAST_POUCH_12794, 6, WeaponInterface.STYLE_AGGRESSIVE) {
     override fun construct(owner: Player, id: Int): Familiar {
         return TalonBeastNPC(owner, id)

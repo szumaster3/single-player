@@ -12,21 +12,10 @@ import core.plugin.Initializable
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
-/**
- * The type Spirit larupia npc.
- */
 @Initializable
 class SpiritLarupiaNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.SPIRIT_LARUPIA_7337) :
     Familiar(owner, id, 4900, Items.SPIRIT_LARUPIA_POUCH_12784, 6, WeaponInterface.STYLE_CONTROLLED) {
-    /**
-     * Instantiates a new Spirit larupia npc.
-     *
-     * @param owner the owner
-     * @param id    the id
-     */
-    /**
-     * Instantiates a new Spirit larupia npc.
-     */
+
     init {
         boosts.add(SkillBonus(Skills.HUNTER, 5.0))
     }

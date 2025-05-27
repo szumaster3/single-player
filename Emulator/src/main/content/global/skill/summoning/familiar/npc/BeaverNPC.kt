@@ -20,23 +20,11 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import kotlin.math.floor
 
-/**
- * The Beaver familiar NPC.
- */
 @Initializable
 class BeaverNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.BEAVER_6808) :
     Forager(owner, id, 2700, Items.BEAVER_POUCH_12021, 6, *ITEMS) {
     private var multiChop = false
 
-    /**
-     * Instantiates a new Beaver npc.
-     *
-     * @param owner the owner
-     * @param id    the id
-     */
-    /**
-     * Instantiates a new Beaver npc.
-     */
     init {
         boosts.add(SkillBonus(Skills.WOODCUTTING, 2.0))
     }

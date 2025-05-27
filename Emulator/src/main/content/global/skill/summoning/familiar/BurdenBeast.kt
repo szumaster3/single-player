@@ -93,11 +93,13 @@ abstract class BurdenBeast : Familiar {
         }
         val pouch = SummoningPouch.get(pouchId)
         val isEssence = item.id == Items.RUNE_ESSENCE_1436 || item.id == Items.PURE_ESSENCE_7936
-        if ((!pouch.abyssal && isEssence) || !item.definition.getConfiguration(ItemConfigParser.BANKABLE, true)) {
-            sendMessage(owner, "You can't store ${item.name.lowercase()} in this familiar.")
-            return false
+        if (pouch != null) {
+            if ((!pouch.abyssal && isEssence) || !item.definition.getConfiguration(ItemConfigParser.BANKABLE, true)) {
+                sendMessage(owner, "You can't store ${item.name.lowercase()} in this familiar.")
+                return false
+            }
         }
-        if (pouch.abyssal) {
+        if (pouch?.abyssal == true) {
             if (!item.name.lowercase().contains("essence")) {
                 sendMessage(owner, "You can only give unnoted essence to this familiar.")
                 return false

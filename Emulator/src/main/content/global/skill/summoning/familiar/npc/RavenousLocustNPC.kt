@@ -10,22 +10,10 @@ import core.plugin.Initializable
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
-/**
- * The type Ravenous locust npc.
- */
 @Initializable
-class RavenousLocustNPC
-/**
- * Instantiates a new Ravenous locust npc.
- *
- * @param owner the owner
- * @param id    the id
- */
-/**
- * Instantiates a new Ravenous locust npc.
- */
-@JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.RAVENOUS_LOCUST_7372) :
+class RavenousLocustNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.RAVENOUS_LOCUST_7372) :
     Familiar(owner, id, 2400, Items.RAVENOUS_LOCUST_POUCH_12820, 12, WeaponInterface.STYLE_ACCURATE) {
+
     override fun construct(owner: Player, id: Int): Familiar {
         return RavenousLocustNPC(owner, id)
     }
