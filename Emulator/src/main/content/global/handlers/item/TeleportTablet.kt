@@ -1,5 +1,6 @@
 package content.global.handlers.item
 
+import content.data.GameAttributes
 import core.api.*
 import core.api.quest.isQuestComplete
 import core.cache.def.impl.ItemDefinition
@@ -157,7 +158,10 @@ class TeleportTabletOption : InteractionListener {
                 val tabloc = tabEnum.location
 
                 if (inInventory(player, tab)) {
-                    if (tab == Items.ARDOUGNE_TP_8011 && !isQuestComplete(player, Quests.PLAGUE_CITY)) return@on true
+                    if (tab == Items.ARDOUGNE_TP_8011 && !getAttribute(player, GameAttributes.ARDOUGNE_TELEPORT, false)){
+                        sendDialogue(player, "You haven't learnt how to use this yet.")
+                        return@on true
+                    }
                     if (tab == Items.ASTRAL_ALTAR_TP_13611 &&
                         !hasRequirement(player, QuestReq(QuestRequirements.LUNAR_DIPLOMACY))
                     ) {

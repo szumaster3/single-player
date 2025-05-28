@@ -341,7 +341,9 @@ internal object GameAttributes {
     const val BALLOON_ORIGIN = "balloon-origin-location"
 
     // Tribal totem quest.
-
     const val QUEST_TRIBAL_TOTEM_STAIRS = "/save:TT:StairsChecked"
     const val QUEST_TRIBAL_TOTEM_DOORS = "/save:TT:DoorUnlocked"
+
+    // Plague City quest.
+    const val ARDOUGNE_TELEPORT = "/save:ardougne_teleport"
 }

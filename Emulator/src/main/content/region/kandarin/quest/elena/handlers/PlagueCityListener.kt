@@ -1,5 +1,6 @@
 package content.region.kandarin.quest.elena.handlers
 
+import content.data.GameAttributes
 import content.region.kandarin.dialogue.plaguecity.WomanDialogue
 import content.region.kandarin.quest.elena.dialogue.HeadMournerDialogue
 import content.region.kandarin.quest.elena.dialogue.ManRehnisonDialogue
@@ -15,6 +16,7 @@ import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.interaction.QueueStrength
+import core.game.node.entity.combat.ImpactHandler
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.system.task.Pulse
@@ -126,12 +128,22 @@ class PlagueCityListener : InteractionListener {
         }
 
         on(Items.A_MAGIC_SCROLL_1505, IntType.ITEM, "read") { player, _ ->
-            sendItemDialogue(player, Items.A_MAGIC_SCROLL_1505, "You memorise what is written on the scroll.")
             removeItem(player, Items.A_MAGIC_SCROLL_1505)
-            sendDialogue(
-                player,
-                "You can now cast the Ardougne Teleport spell provided you have the required runes and magic level.",
-            )
+            sendMessage(player, "The scroll crumbles to dust.")
+
+            if(getAttribute(player, GameAttributes.ARDOUGNE_TELEPORT, false)) {
+                visualize(player, -1, core.game.world.update.flag.context.Graphics(Graphics.FIRE_WAVE_IMPACT_157, 50))
+                player.impactHandler.manualHit(player, 0, ImpactHandler.HitsplatType.MISS)
+            } else {
+                sendItemDialogue(player, Items.A_MAGIC_SCROLL_1505, "You memorise what is written on the scroll.")
+                addDialogueAction(player) { _, _ ->
+                    setAttribute(player, GameAttributes.ARDOUGNE_TELEPORT, true)
+                    sendDialogueLines(
+                        player,
+                        "You can now cast the Ardougne Teleport spell provided you have the", "required runes and magic level.",
+                    )
+                }
+            }
             return@on true
         }
 
