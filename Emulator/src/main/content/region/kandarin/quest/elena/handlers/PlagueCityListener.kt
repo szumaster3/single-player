@@ -36,10 +36,19 @@ class PlagueCityListener : InteractionListener {
     }
 
     override fun defineListeners() {
+
+        /*
+         * Handles talking to Billy Rehinson.
+         */
+
         on(NPCs.BILLY_REHNISON_723, IntType.NPC, "talk-to") { player, _ ->
             sendMessage(player, "Billy isn't interested in talking.")
             return@on true
         }
+
+        /*
+         * Handles talking to Man NPCs near Plague City borders.
+         */
 
         on(MANS, IntType.NPC, "talk-to") { player, _ ->
             if (inBorders(player, 2496, 3280, 2557, 3336)) {
@@ -48,6 +57,10 @@ class PlagueCityListener : InteractionListener {
             return@on true
         }
 
+        /*
+         * Handles talking to Woman NPCs near Plague City borders.
+         */
+
         on(WOMANS, IntType.NPC, "talk-to") { player, _ ->
             if (inBorders(player, 2496, 3280, 2557, 3336)) {
                 openDialogue(player, WomanDialogue())
@@ -55,11 +68,11 @@ class PlagueCityListener : InteractionListener {
             return@on true
         }
 
-        on(
-            intArrayOf(Scenery.ARDOUGNE_WALL_DOOR_9738, Scenery.ARDOUGNE_WALL_DOOR_9330),
-            IntType.SCENERY,
-            "open",
-        ) { player, _ ->
+        /*
+         * Handles trying to open the Ardougne wooden wall doors.
+         */
+
+        on(intArrayOf(Scenery.ARDOUGNE_WALL_DOOR_9738, Scenery.ARDOUGNE_WALL_DOOR_9330), IntType.SCENERY, "open",) { player, _ ->
             if (inBorders(player, 2556, 3298, 2557, 3301)) {
                 sendMessage(player, "You pull on the large wooden doors...")
                 sendMessageWithDelay(player, "...But they will not open.", 1)
@@ -70,6 +83,10 @@ class PlagueCityListener : InteractionListener {
             }
             return@on true
         }
+
+        /*
+         * Handles opening the manhole at the north square.
+         */
 
         on(Scenery.MANHOLE_2543, IntType.SCENERY, "open") { player, node ->
             if (isQuestInProgress(player, Quests.BIOHAZARD, 1, 99)) {
@@ -83,6 +100,10 @@ class PlagueCityListener : InteractionListener {
             return@on true
         }
 
+        /*
+         * Handles closing the manhole cover.
+         */
+
         on(Scenery.MANHOLE_COVER_2545, IntType.SCENERY, "close") { player, node ->
             removeScenery(node.asScenery())
             playAudio(player, Sounds.MANHOLE_CLOSE_74)
@@ -92,6 +113,10 @@ class PlagueCityListener : InteractionListener {
             sendMessage(player, "You close the manhole cover.")
             return@on true
         }
+
+        /*
+         * Handles climbing down into the manhole.
+         */
 
         on(Scenery.MANHOLE_2544, IntType.SCENERY, "climb-down") { player, _ ->
             if (isQuestInProgress(player, Quests.BIOHAZARD, 1, 100)) {
@@ -107,6 +132,10 @@ class PlagueCityListener : InteractionListener {
             return@on true
         }
 
+        /*
+         * Handles opening Bravik's door.
+         */
+
         on(Scenery.DOOR_2528, IntType.SCENERY, "open") { player, node ->
             if (getQuestStage(player, Quests.PLAGUE_CITY) >= 13) {
                 DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
@@ -117,6 +146,10 @@ class PlagueCityListener : InteractionListener {
             return@on true
         }
 
+        /*
+         * Handles climbing up the mud pile in the sewer.
+         */
+
         on(Scenery.MUD_PILE_2533, IntType.SCENERY, "climb") { player, _ ->
             animate(player, Animations.USE_LADDER_828)
             queueScript(player, 2, QueueStrength.SOFT) {
@@ -126,6 +159,10 @@ class PlagueCityListener : InteractionListener {
             }
             return@on true
         }
+
+        /*
+         * Handles reading the magic scroll for Ardougne teleport unlock.
+         */
 
         on(Items.A_MAGIC_SCROLL_1505, IntType.ITEM, "read") { player, _ ->
             removeItem(player, Items.A_MAGIC_SCROLL_1505)
@@ -147,11 +184,19 @@ class PlagueCityListener : InteractionListener {
             return@on true
         }
 
+        /*
+         * Handles reading the scruffy note.
+         */
+
         on(Items.A_SCRUFFY_NOTE_1508, IntType.ITEM, "read") { player, _ ->
             sendMessage(player, "You guess it really says something slightly different.")
             openInterface(player, Components.BLANK_SCROLL_222).also { scruffyNote(player) }
             return@on true
         }
+
+        /*
+         * Handles opening the mourner headquarters' locked door during quest.
+         */
 
         on(Scenery.DOOR_35991, IntType.SCENERY, "open") { player, node ->
             val questStage = getQuestStage(player, Quests.PLAGUE_CITY)
@@ -227,6 +272,9 @@ class PlagueCityListener : InteractionListener {
             return@on true
         }
 
+        /*
+         * Handles opening the wardrobe.
+         */
 
         on(Scenery.WARDROBE_2524, IntType.SCENERY, "open") { player, node ->
             animate(player, Animations.OPEN_WARDROBE_545)
@@ -234,11 +282,19 @@ class PlagueCityListener : InteractionListener {
             return@on true
         }
 
+        /*
+         * Handles closing the wardrobe.
+         */
+
         on(Scenery.WARDROBE_2525, IntType.SCENERY, "close") { player, node ->
             animate(player, Animations.CLOSE_WARDROBE_544)
             replaceScenery(node.asScenery(), node.id - 1, -1)
             return@on true
         }
+
+        /*
+         * Handles searching the wardrobe for a gas mask.
+         */
 
         on(Scenery.WARDROBE_2525, IntType.SCENERY, "search") { player, _ ->
             if (freeSlots(player) == 0 && !inEquipmentOrInventory(player, Items.GAS_MASK_1506)) {
@@ -257,6 +313,10 @@ class PlagueCityListener : InteractionListener {
             }
             return@on true
         }
+
+        /*
+         * Handles using a bucket of water on the mud patch.
+         */
 
         onUseWith(IntType.SCENERY, Items.BUCKET_OF_WATER_1929, Scenery.MUD_PATCH_11418) { player, _, _ ->
             val bucketUses = getAttribute(player, BUCKET_USES_ATTRIBUTE, 0)
@@ -278,6 +338,10 @@ class PlagueCityListener : InteractionListener {
             }
             return@onUseWith true
         }
+
+        /*
+         * Handles climbing down the dug hole.
+         */
 
         on(Scenery.DUG_HOLE_11417, IntType.SCENERY, "climb-down") { player, _ ->
             if (getQuestStage(player, Quests.BIOHAZARD) > 1) {
@@ -301,6 +365,10 @@ class PlagueCityListener : InteractionListener {
             return@on true
         }
 
+        /*
+         * Handles attempting to open the sewer grill.
+         */
+
         on(Scenery.GRILL_11423, IntType.SCENERY, "open") { player, _ ->
             if (getQuestStage(player, Quests.PLAGUE_CITY) == 4) {
                 sendDialogue(player, "The grill is too secure. You can't pull it off alone.")
@@ -312,6 +380,10 @@ class PlagueCityListener : InteractionListener {
             }
             return@on true
         }
+
+        /*
+         * Handles climbing up through the sewer pipe.
+         */
 
         on(Scenery.PIPE_2542, IntType.SCENERY, "climb-up") { player, _ ->
             if (getQuestStage(player, Quests.PLAGUE_CITY) >= 7 && inEquipment(player, Items.GAS_MASK_1506)) {
@@ -333,10 +405,18 @@ class PlagueCityListener : InteractionListener {
             return@on true
         }
 
+        /*
+         * Handles using rope on the sewer pipe directly.
+         */
+
         onUseWith(IntType.SCENERY, Items.ROPE_954, Scenery.PIPE_2542) { player, _, _ ->
             sendPlayerDialogue(player, "Maybe I should try opening it first.")
             return@onUseWith true
         }
+
+        /*
+         * Handles tying rope to the sewer grill.
+         */
 
         onUseWith(IntType.SCENERY, Items.ROPE_954, Scenery.GRILL_11423) { player, _, _ ->
             lock(player, 5)
@@ -377,6 +457,10 @@ class PlagueCityListener : InteractionListener {
             }
             return@onUseWith true
         }
+
+        /*
+         * Handles trying to open Ted Rehnison’s door.
+         */
 
         on(Scenery.DOOR_2537, IntType.SCENERY, "open") { player, node ->
             if (getQuestStage(player, Quests.PLAGUE_CITY) >= 9) {
@@ -419,6 +503,10 @@ class PlagueCityListener : InteractionListener {
             return@on true
         }
 
+        /*
+         * Handles searching the barrel.
+         */
+
         on(Scenery.BARREL_2530, IntType.SCENERY, "search") { player, _ ->
             animate(player, Animations.SEARCHING_CRATES_6840)
             if (inInventory(player, Items.KEY_423) || freeSlots(player) == 0) {
@@ -430,12 +518,11 @@ class PlagueCityListener : InteractionListener {
             return@on true
         }
 
-        on(
-            intArrayOf(Scenery.SPOOKY_STAIRS_2522, Scenery.SPOOKY_STAIRS_2523),
-            IntType.SCENERY,
-            "walk-down",
-            "walk-up",
-        ) { player, node ->
+        /*
+         * Handles walking up or down the spooky stairs.
+         */
+
+        on(intArrayOf(Scenery.SPOOKY_STAIRS_2522, Scenery.SPOOKY_STAIRS_2523), IntType.SCENERY, "walk-down", "walk-up",) { player, node ->
             if (node.id == Scenery.SPOOKY_STAIRS_2522) {
                 sendMessage(player, "You walk down the stairs...")
                 teleport(player, Location(2537, 9671))
@@ -446,6 +533,10 @@ class PlagueCityListener : InteractionListener {
             return@on true
         }
 
+        /*
+         * Handles using the key on Elena’s basement door.
+         */
+
         onUseWith(IntType.SCENERY, Items.KEY_423, Scenery.DOOR_2526) { player, _, _ ->
             if (getQuestStage(player, Quests.PLAGUE_CITY) >= 16) {
                 DoorActionHandler.handleAutowalkDoor(player, getScenery(Location(2539, 9672, 0))!!.asScenery())
@@ -455,6 +546,10 @@ class PlagueCityListener : InteractionListener {
             }
             return@onUseWith true
         }
+
+        /*
+         * Handles trying to open the locked door to Elena’s cell.
+         */
 
         on(Scenery.DOOR_2526, IntType.SCENERY, "open") { player, node ->
             if (isQuestComplete(player, Quests.PLAGUE_CITY) || player.location.x > 2539) {
