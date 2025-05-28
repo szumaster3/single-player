@@ -86,21 +86,9 @@ fun applyPoison(
  * @param source The entity responsible for applying the disease (e.g., attacker or source of disease).
  * @param hits The number of remaining hits for the disease effect.
  */
-fun applyDisease(
-    entity: Entity,
-    source: Entity,
-    hits: Int,
-) {
-    if (hasTimerActive<Disease>(entity)) {
-        return
-    }
-    val existingTimer = getTimer<Disease>(entity)
-
-    if (existingTimer != null) {
-        existingTimer.hitsLeft = hits
-    } else {
-        registerTimer(entity, spawnTimer<Disease>(source, hits))
-    }
+fun applyDisease(entity: Entity, source: Entity, hits: Int) {
+    if (hasTimerActive<Disease>(entity)) return
+    registerTimer(entity, spawnTimer<Disease>(source, hits))
 }
 
 /**
