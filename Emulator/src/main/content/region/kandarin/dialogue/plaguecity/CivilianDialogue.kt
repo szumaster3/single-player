@@ -1,10 +1,7 @@
 package content.region.kandarin.dialogue.plaguecity
 
-import content.region.kandarin.quest.elena.handlers.PlagueCityUtils
-import core.api.addItem
-import core.api.inInventory
-import core.api.sendDialogue
-import core.api.sendItemDialogue
+import content.global.handlers.item.withnpc.grownCatItemIds
+import core.api.*
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
@@ -20,7 +17,7 @@ class CivilianDialogue(
 ) : Dialogue(player) {
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
-        if (PlagueCityUtils.hasFullMournerGear(player)) {
+        if (allInEquipment(player, *hasMournerSet)) {
             player("Hello.")
             stage = 20
             return true
@@ -48,11 +45,11 @@ class CivilianDialogue(
                 ).also { stage++ }
             5 -> {
                 when {
-                    PlagueCityUtils.hasAnKitten(player) -> {
+                    anyInInventory(player, *hasKitten) -> {
                         playerl(FaceAnim.HAPPY, "I have a kitten that I could sell.")
                         stage++
                     }
-                    PlagueCityUtils.hasAnCat(player) -> {
+                    anyInInventory(player, *hasCat) -> {
                         playerl(FaceAnim.HAPPY, "I have a cat that I could sell.")
                         stage = 9
                     }
@@ -88,10 +85,10 @@ class CivilianDialogue(
                 ).also { stage++ }
             14 -> {
                 end()
-                val item = PlagueCityUtils.grownCatItemIds
+                val item = grownCatItemIds.indices
                 for (i in item) {
-                    if (player.inventory.remove(i)) {
-                        player.familiarManager.removeDetails(i.idHash)
+                    if (removeItem(player, grownCatItemIds[i])) {
+                        player.familiarManager.removeDetails(i)
                         sendItemDialogue(player, Items.DEATH_RUNE_560, "The peasant shows you a sack of death runes.")
                         addItem(player, Items.DEATH_RUNE_560, 100)
                     }
@@ -134,4 +131,55 @@ class CivilianDialogue(
     }
 
     override fun getIds(): IntArray = intArrayOf(NPCs.CIVILIAN_785, NPCs.CIVILIAN_786, NPCs.CIVILIAN_787)
+
+    companion object {
+        private val hasMournerSet = intArrayOf(Items.GAS_MASK_1506,
+                Items.MOURNER_TOP_6065,
+                Items.MOURNER_TROUSERS_6067,
+                Items.MOURNER_BOOTS_6069,
+                Items.MOURNER_CLOAK_6070,
+                Items.MOURNER_GLOVES_6068
+        )
+
+       private val hasKitten = intArrayOf(
+           NPCs.CLOCKWORK_CAT_3598,
+           NPCs.KITTEN_8217,
+           NPCs.HELL_KITTEN_3505,
+           NPCs.KITTEN_766,
+           NPCs.KITTEN_765,
+           NPCs.KITTEN_764,
+           NPCs.KITTEN_763,
+           NPCs.KITTEN_762,
+           NPCs.KITTEN_761,
+       )
+
+        private val hasCat = intArrayOf(Items.PET_CAT_1561,
+            Items.PET_CAT_1562,
+            Items.PET_CAT_1563,
+            Items.PET_CAT_1564,
+            Items.PET_CAT_1565,
+            Items.PET_CAT_1566,
+            Items.OVERGROWN_CAT_1567,
+            Items.OVERGROWN_CAT_1568,
+            Items.OVERGROWN_CAT_1569,
+            Items.OVERGROWN_CAT_1570,
+            Items.OVERGROWN_CAT_1571,
+            Items.OVERGROWN_CAT_1572,
+            Items.LAZY_CAT_6551,
+            Items.LAZY_CAT_6552,
+            Items.LAZY_CAT_6553,
+            Items.LAZY_CAT_6554,
+            Items.WILY_CAT_6555,
+            Items.WILY_CAT_6556,
+            Items.WILY_CAT_6557,
+            Items.WILY_CAT_6558,
+            Items.WILY_CAT_6559,
+            Items.WILY_CAT_6560,
+            Items.HELL_CAT_7582,
+            Items.OVERGROWN_HELLCAT_7581,
+            Items.LAZY_HELL_CAT_7584,
+            Items.WILY_HELLCAT_7585)
+    }
 }
+
+
