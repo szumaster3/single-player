@@ -20,6 +20,7 @@ import org.rs.consts.Sounds
 
 class AltarSpace : InteractionListener {
     override fun defineListeners() {
+
         /*
          * Handles use bones on altar.
          */
@@ -61,7 +62,7 @@ class AltarSpace : InteractionListener {
                 return@onUseWith false
             }
 
-            animate(player, Animations.HUMAN_COOKING_RANGE_896)
+            animate(player, Animations.HUMAN_PRAY_645)
             playAudio(player, Sounds.POH_OFFER_BONES_958)
 
             val first = used.asItem()
@@ -74,6 +75,7 @@ class AltarSpace : InteractionListener {
                 removeItem(player, Item(Items.SPIRIT_SHIELD_13734))
                 removeItem(player, Item(Items.HOLY_ELIXIR_13754))
                 addItem(player, Items.BLESSED_SPIRIT_SHIELD_13736)
+                sendMessage(player, "You bless the spirit shield using the holy elixir and the power of Saradomin.")
             } else {
                 sendMessage(player, "You need both a Spirit Shield and Holy Elixir.")
             }
@@ -82,13 +84,7 @@ class AltarSpace : InteractionListener {
         }
     }
 
-    private fun worship(
-        player: Player,
-        altar: Scenery,
-        left: Scenery?,
-        right: Scenery?,
-        bones: Bones,
-    ) {
+    private fun worship(player: Player, altar: Scenery, left: Scenery?, right: Scenery?, bones: Bones, ) {
         if (player.ironmanManager.isIronman && !player.houseManager.isInHouse(player)) {
             sendMessage(player, "You cannot do this on someone else's altar.")
             return
@@ -121,37 +117,19 @@ class AltarSpace : InteractionListener {
     }
 
     private fun isLit(obj: Scenery?): Boolean =
-        obj != null &&
-            obj.id != org.rs.consts.Scenery.LAMP_SPACE_15271 &&
-            SceneryDefinition.forId(obj.id).options != null &&
-            !SceneryDefinition
-                .forId(
-                    obj.id,
-                ).hasAction("light")
+        obj != null && obj.id != org.rs.consts.Scenery.LAMP_SPACE_15271 && !SceneryDefinition.forId(obj.id).hasAction("light")
 
-    private fun getBase(altar: Scenery?): Double {
-        var base = 150.0
-        if (altar == null) {
-            return base
-        }
-        base =
-            when (altar.id) {
-                org.rs.consts.Scenery.ALTAR_13182 -> 110.0
-                org.rs.consts.Scenery.ALTAR_13185 -> 125.0
-                org.rs.consts.Scenery.ALTAR_13188 -> 150.0
-                org.rs.consts.Scenery.ALTAR_13191 -> 175.0
-                org.rs.consts.Scenery.ALTAR_13194 -> 200.0
-                org.rs.consts.Scenery.ALTAR_13197 -> 250.0
-                else -> base
-            }
-        return base
+    private fun getBase(altar: Scenery?): Double = when (altar?.id) {
+        org.rs.consts.Scenery.ALTAR_13182 -> 110.0
+        org.rs.consts.Scenery.ALTAR_13185 -> 125.0
+        org.rs.consts.Scenery.ALTAR_13188 -> 150.0
+        org.rs.consts.Scenery.ALTAR_13191 -> 175.0
+        org.rs.consts.Scenery.ALTAR_13194 -> 200.0
+        org.rs.consts.Scenery.ALTAR_13197 -> 250.0
+        else -> 150.0
     }
 
-    private fun getMod(
-        altar: Scenery,
-        isLeft: Boolean,
-        isRight: Boolean,
-    ): Double {
+    private fun getMod(altar: Scenery, isLeft: Boolean, isRight: Boolean, ): Double {
         var total = getBase(altar)
         if (isLeft) {
             total += 50.0
@@ -162,10 +140,7 @@ class AltarSpace : InteractionListener {
         return total / 100
     }
 
-    private fun getMessage(
-        isLeft: Boolean,
-        isRight: Boolean,
-    ): String =
+    private fun getMessage(isLeft: Boolean, isRight: Boolean, ): String =
         when {
             isLeft && isRight -> "The gods are very pleased with your offering."
             isLeft || isRight -> "The gods are pleased with your offering."
