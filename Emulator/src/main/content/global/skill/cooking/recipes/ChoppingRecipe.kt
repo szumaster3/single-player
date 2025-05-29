@@ -4,9 +4,8 @@ import core.api.*
 import core.api.skill.sendSkillDialogue
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
+import core.game.interaction.QueueStrength
 import core.game.node.entity.skill.Skills
-import core.game.node.item.Item
-import core.game.system.task.Pulse
 import org.rs.consts.Animations
 import org.rs.consts.Items
 
@@ -16,13 +15,6 @@ class ChoppingRecipe : InteractionListener {
 
         /*
          * Handles cutting ingredients with a knife.
-         *
-         * Products:
-         *  - Calquat Keg
-         *  - Chocolate Dust
-         *  - Sliced banana
-         *
-         * Ticks: 4 (2.4 seconds)
          */
 
         onUseWith(IntType.ITEM, CUTTING_INGREDIENTS, KNIFE) { player, used, _ ->
@@ -37,35 +29,24 @@ class ChoppingRecipe : InteractionListener {
                 else -> CHOCOLATE_CUT_ANIMATION
             }
 
-            player.pulseManager.run(object : Pulse(1) {
-                override fun pulse(): Boolean {
-                    delay = 3
-
-                    if (amountInInventory(player, used.id) <= 0) return true
-                    if (!removeItem(player, Item(used.id), Container.INVENTORY)) return false
-
-                    animate(player, animation)
-                    addItem(player, productID, 1, Container.INVENTORY)
-
-                    return amountInInventory(player, used.id) <= 0
+            queueScript(player, 1, QueueStrength.NORMAL) {
+                if (amountInInventory(player, used.id) <= 0) {
+                    return@queueScript stopExecuting(player)
                 }
-            })
+                if (!removeItem(player, used.asItem())) {
+                    return@queueScript stopExecuting(player)
+                }
+
+                animate(player, animation)
+                addItem(player, productID, 1, Container.INVENTORY)
+                return@queueScript delayScript(player, 3)
+            }
+
             return@onUseWith true
         }
 
         /*
          * Handles chopping ingredients into a bowl using a knife.
-         *
-         * Products:
-         *  - Chopped Tuna
-         *  - Chopped Onion
-         *  - Chopped Garlic
-         *  - Chopped Tomato
-         *  - Chopped Ugthanki
-         *  - Sliced Mushrooms
-         *  - Minced Meat
-         *
-         * Ticks: 2 (1.2 seconds)
          */
 
         onUseWith(IntType.ITEM, CHOPPING_INGREDIENTS, EMPTY_BOWL) { player, used, with ->
@@ -176,27 +157,34 @@ class ChoppingRecipe : InteractionListener {
     }
 
     companion object {
-        // Cutting ingredients array
-        private val CUTTING_INGREDIENTS = intArrayOf(Items.CALQUAT_FRUIT_5980, Items.CHOCOLATE_BAR_1973, Items.BANANA_1963)
-        // Cutting item ids
-        private const val CALQUAT_FRUIT = Items.CALQUAT_FRUIT_5980
-        private const val CALQUAT_KEG = Items.CALQUAT_KEG_5769
-        private const val BANANA = Items.BANANA_1963
-        private const val SLICED_BANANA = Items.SLICED_BANANA_3162
-        private const val CHOCOLATE_BAR = Items.CHOCOLATE_BAR_1973
-        private const val CHOCOLATE_DUST = Items.CHOCOLATE_DUST_1975
-        // Chopping ingredients array
-        private val CHOPPING_INGREDIENTS = intArrayOf(Items.TUNA_361, Items.ONION_1957, Items.GARLIC_1550, Items.TOMATO_1982, Items.UGTHANKI_MEAT_1861, Items.MUSHROOM_6004, Items.COOKED_MEAT_2142)
-        // Chopping item ids
-        private const val CHOPPED_GARLIC = Items.CHOPPED_GARLIC_7074
-        private const val GNOME_SPICE = Items.GNOME_SPICE_2169
-        private const val SPICY_SAUCE = Items.SPICY_SAUCE_7072
-        private const val EMPTY_BOWL = Items.BOWL_1923
-        private const val EGG = Items.EGG_1944
-        private const val KNIFE = Items.KNIFE_946
-        // Animations
-        private const val CHOCOLATE_CUT_ANIMATION = Animations.CUTTING_CHOCOLATE_BAR_1989
-        private const val CALQUAT_CARVED_ANIMATION = Animations.CARVE_CALQUAT_KEG_2290
-        private const val BANANA_SLICE_ANIMATION = Animations.HUMAN_FRUIT_CUTTING_1192
+        private val CUTTING_INGREDIENTS = intArrayOf(
+            Items.CALQUAT_FRUIT_5980,
+            Items.CHOCOLATE_BAR_1973,
+            Items.BANANA_1963
+        )
+        private val CHOPPING_INGREDIENTS = intArrayOf(
+            Items.TUNA_361,
+            Items.ONION_1957,
+            Items.GARLIC_1550,
+            Items.TOMATO_1982,
+            Items.UGTHANKI_MEAT_1861,
+            Items.MUSHROOM_6004,
+            Items.COOKED_MEAT_2142
+        )
+        private const val CALQUAT_FRUIT             = Items.CALQUAT_FRUIT_5980
+        private const val CALQUAT_KEG               = Items.CALQUAT_KEG_5769
+        private const val BANANA                    = Items.BANANA_1963
+        private const val SLICED_BANANA             = Items.SLICED_BANANA_3162
+        private const val CHOCOLATE_BAR             = Items.CHOCOLATE_BAR_1973
+        private const val CHOCOLATE_DUST            = Items.CHOCOLATE_DUST_1975
+        private const val CHOPPED_GARLIC            = Items.CHOPPED_GARLIC_7074
+        private const val GNOME_SPICE               = Items.GNOME_SPICE_2169
+        private const val SPICY_SAUCE               = Items.SPICY_SAUCE_7072
+        private const val EMPTY_BOWL                = Items.BOWL_1923
+        private const val EGG                       = Items.EGG_1944
+        private const val KNIFE                     = Items.KNIFE_946
+        private const val CHOCOLATE_CUT_ANIMATION   = Animations.CUTTING_CHOCOLATE_BAR_1989
+        private const val CALQUAT_CARVED_ANIMATION  = Animations.CARVE_CALQUAT_KEG_2290
+        private const val BANANA_SLICE_ANIMATION    = Animations.HUMAN_FRUIT_CUTTING_1192
     }
 }
