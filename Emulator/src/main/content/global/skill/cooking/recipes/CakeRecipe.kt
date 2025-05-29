@@ -39,7 +39,6 @@ class CakeRecipe : InteractionListener {
                 withItems(UNCOOKED_CAKE)
                 create { _, amount ->
                     runTask(player, 2, amount) {
-                        if (amount > 0) return@runTask
                         if (player.inventory.remove(Item(POT_OF_FLOUR, 1)) &&
                             player.inventory.remove(Item(BUCKET_OF_MILK, 1)) &&
                             player.inventory.remove(Item(EGG, 1)) &&

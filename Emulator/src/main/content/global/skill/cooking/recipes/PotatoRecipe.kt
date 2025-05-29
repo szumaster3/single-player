@@ -35,13 +35,23 @@ class PotatoRecipe : InteractionListener {
                 return@onUseWith true
             }
 
-            if (amountInInventory(player, used.id) == 1 || amountInInventory(player, with.id) == 1) {
-                val success = removeItem(player, used.asItem(), Container.INVENTORY) && removeItem(player, with.asItem(), Container.INVENTORY)
-                if (success) {
-                    addItem(player, POTATO_WITH_BUTTER, 1, Container.INVENTORY)
-                    rewardXP(player, Skills.COOKING, 40.5)
-                    sendMessage(player, "You add the butter to the potato.")
+            val usedAmount = amountInInventory(player, used.id)
+            val withAmount = amountInInventory(player, with.id)
+            val maxAmount = minOf(usedAmount, withAmount)
+
+            fun process(): Boolean {
+                if (!removeItem(player, used.asItem(), Container.INVENTORY) || !removeItem(player, with.asItem(), Container.INVENTORY)) {
+                    sendMessage(player, "You don't have the required ingredients to make that.")
+                    return false
                 }
+                addItem(player, POTATO_WITH_BUTTER, 1, Container.INVENTORY)
+                rewardXP(player, Skills.COOKING, 40.5)
+                sendMessage(player, "You add the butter to the potato.")
+                return true
+            }
+
+            if (maxAmount == 1) {
+                process()
                 return@onUseWith true
             }
 
@@ -49,19 +59,10 @@ class PotatoRecipe : InteractionListener {
                 withItems(POTATO_WITH_BUTTER)
                 create { _, amount ->
                     runTask(player, 2, amount) {
-                        if (amount < 1) return@runTask
-                        val success = removeItem(player, used.asItem(), Container.INVENTORY) && removeItem(player, with.asItem(), Container.INVENTORY)
-                        if (success) {
-                            addItem(player, POTATO_WITH_BUTTER, 1, Container.INVENTORY)
-                            rewardXP(player, Skills.CRAFTING, 40.5)
-                            sendMessage(player, "You add the butter to the potato.")
-                        }
+                        if (amount > 0) process()
                     }
                 }
-
-                calculateMaxAmount { _ ->
-                    minOf(amountInInventory(player, with.id), amountInInventory(player, used.id))
-                }
+                calculateMaxAmount { maxAmount }
             }
 
             return@onUseWith true
@@ -90,69 +91,67 @@ class PotatoRecipe : InteractionListener {
 
         potatoRecipes.forEach { (ingredientID, recipeData) ->
             val (productID, requiredLevel) = recipeData
-
             onUseWith(IntType.ITEM, ingredientID, POTATO_WITH_BUTTER) { player, used, with ->
-
                 if (!hasLevelDyn(player, Skills.COOKING, requiredLevel)) {
                     sendDialogue(player, "You need an Cooking level of at least $requiredLevel to make that.")
                     return@onUseWith true
                 }
 
-                fun process(): Boolean {
-                    val success = removeItem(player, used.asItem(), Container.INVENTORY) && removeItem(player, with.asItem(), Container.INVENTORY)
-                    if (success) {
-                        if (ingredientID != CHEESE) {
-                            addItemOrDrop(player, EMPTY_BOWL, 1)
-                        }
-                        addItem(player, productID, 1, Container.INVENTORY)
-                        rewardXP(player, Skills.COOKING, 10.0)
-
-                        val ingredientName = getItemName(used.id).lowercase()
-                        sendMessage(player, "You add the $ingredientName to the potato.")
-                        return true
-                    }
-                    return false
-                }
-
                 val amountUsed = amountInInventory(player, used.id)
                 val amountWith = amountInInventory(player, with.id)
                 val maxAmount = minOf(amountUsed, amountWith)
+                val dropEmptyBowl = ingredientID != CHEESE
 
-                if (maxAmount <= 1) {
-                    process()
-                } else {
-                    sendSkillDialogue(player) {
-                        withItems(productID)
-                        create { _, amount ->
-                            runTask(player, 2, amount) {
-                                process()
-                            }
-                        }
-                        calculateMaxAmount { maxAmount }
+                fun process(): Boolean {
+                    if (!removeItem(player, used.asItem(), Container.INVENTORY) || !removeItem(player, with.asItem(), Container.INVENTORY)) {
+                        sendMessage(player, "You don't have the required ingredients to make that.")
+                        return false
                     }
+                    if (dropEmptyBowl) {
+                        addItemOrDrop(player, EMPTY_BOWL, 1)
+                    }
+                    addItem(player, productID, 1, Container.INVENTORY)
+                    rewardXP(player, Skills.COOKING, 10.0)
+                    sendMessage(player, "You add the ${used.name.lowercase()} to the potato.")
+                    return true
                 }
 
-                return@onUseWith  true
+                if (maxAmount == 1) {
+                    process()
+                    return@onUseWith true
+                }
+
+                sendSkillDialogue(player) {
+                    withItems(productID)
+                    create { _, amount ->
+                        runTask(player, 2, amount) {
+                            process()
+                        }
+                    }
+                    calculateMaxAmount { maxAmount }
+                }
+
+                return@onUseWith true
             }
         }
     }
 
     companion object {
-        private const val EMPTY_BOWL = Items.BOWL_1923
-        private const val POTATO = Items.POTATO_1942
-        private const val BAKED_POTATO = Items.BAKED_POTATO_6701
-        private const val PAT_OF_BUTTER = Items.PAT_OF_BUTTER_6697
-        private const val CHEESE = Items.CHEESE_1985
+        private const val EMPTY_BOWL         = Items.BOWL_1923
+        private const val POTATO             = Items.POTATO_1942
+        private const val BAKED_POTATO       = Items.BAKED_POTATO_6701
+        private const val PAT_OF_BUTTER      = Items.PAT_OF_BUTTER_6697
+        private const val CHEESE             = Items.CHEESE_1985
         private const val POTATO_WITH_BUTTER = Items.POTATO_WITH_BUTTER_6703
-        private const val CHILLI_POTATO = Items.CHILLI_POTATO_7054
-        private const val CHILLI_CON_CARNE = Items.CHILLI_CON_CARNE_7062
-        private const val EGG_POTATO = Items.EGG_POTATO_7056
-        private const val EGG_AND_TOMATO = Items.EGG_AND_TOMATO_7064
-        private const val MUSHROOM_POTATO = Items.MUSHROOM_POTATO_7058
+        private const val CHILLI_POTATO      = Items.CHILLI_POTATO_7054
+        private const val CHILLI_CON_CARNE   = Items.CHILLI_CON_CARNE_7062
+        private const val EGG_POTATO         = Items.EGG_POTATO_7056
+        private const val EGG_AND_TOMATO     = Items.EGG_AND_TOMATO_7064
+        private const val MUSHROOM_POTATO    = Items.MUSHROOM_POTATO_7058
         private const val MUSHROOM_AND_ONION = Items.MUSHROOM_AND_ONION_7066
         private const val POTATO_WITH_CHEESE = Items.POTATO_WITH_CHEESE_6705
-        private const val TUNA_AND_CORN = Items.TUNA_AND_CORN_7068
-        private const val TUNA_POTATO = Items.TUNA_POTATO_7060
+        private const val TUNA_AND_CORN      = Items.TUNA_AND_CORN_7068
+        private const val TUNA_POTATO        = Items.TUNA_POTATO_7060
 
     }
 }

@@ -24,7 +24,7 @@ class StewRecipe : InteractionListener {
          * Ticks: 2 (1.2 seconds)
          */
 
-        onUseWith(IntType.ITEM, stewIngredients, BOWL_OF_WATER) { player, used, with ->
+        onUseWith(IntType.ITEM, STEW_INGREDIENTS, BOWL_OF_WATER) { player, used, with ->
             if (!hasLevelDyn(player, Skills.COOKING, 25)) {
                 sendDialogue(player, "You need an Cooking level of at least 25 to make that.")
                 return@onUseWith true
@@ -35,36 +35,35 @@ class StewRecipe : InteractionListener {
                 COOKED_MEAT -> MEAT_STEW
                 else -> return@onUseWith true
             }
+            val ingredientName = used.name.lowercase()
 
             fun process(): Boolean {
-                val success = removeItem(player, used.asItem(), Container.INVENTORY) && removeItem(
-                    player, with.asItem(), Container.INVENTORY
-                )
-                if (success) {
-                    addItem(player, stew, 1, Container.INVENTORY)
-                    val ingredientName = used.name.lowercase()
-                    sendMessage(player, "You cut up the $ingredientName and put it into the bowl.")
-                    return true
+                if (!removeItem(player, used.asItem()) || !removeItem(player, with.asItem())) {
+                    sendMessage(player, "You don't have the required ingredients.")
+                    return false
                 }
-                return false
+                addItem(player, stew, 1, Container.INVENTORY)
+                sendMessage(player, "You cut up the $ingredientName and put it into the bowl.")
+                return true
             }
 
             val amountUsed = amountInInventory(player, used.id)
             val amountWith = amountInInventory(player, with.id)
 
             if (amountUsed == 1 || amountWith == 1) {
-                return@onUseWith process()
+                process()
+                return@onUseWith true
             }
 
             sendSkillDialogue(player) {
                 withItems(stew)
                 create { _, amount ->
                     runTask(player, 2, amount) {
-                        process()
+                        if (amount > 0) process()
                     }
                 }
                 calculateMaxAmount {
-                    minOf(amountWith, amountUsed)
+                    minOf(amountUsed, amountWith)
                 }
             }
 
@@ -82,7 +81,7 @@ class StewRecipe : InteractionListener {
          * Ticks: 2 (1.2 seconds)
          */
 
-        onUseWith(IntType.ITEM, stewIngredients, *incompleteStew) { player, used, with ->
+        onUseWith(IntType.ITEM, STEW_INGREDIENTS, *INCOMPLETE_STEW) { player, used, with ->
             if (!hasLevelDyn(player, Skills.COOKING, 25)) {
                 sendDialogue(player, "You need an Cooking level of at least 25 to make that.")
                 return@onUseWith true
@@ -181,7 +180,6 @@ class StewRecipe : InteractionListener {
          *
          * Required Cooking Level: 60
          * Required Amount of Curry Leaves: 3
-         *
          */
 
         onUseWith(IntType.ITEM, CURRY_LEAF, UNCOOKED_STEW) { player, used, with ->
@@ -209,16 +207,16 @@ class StewRecipe : InteractionListener {
     }
 
     companion object {
-        private const val BOWL_OF_WATER = Items.BOWL_OF_WATER_1921
-        private const val UNCOOKED_STEW = Items.UNCOOKED_STEW_2001
+        private const val BOWL_OF_WATER  = Items.BOWL_OF_WATER_1921
+        private const val UNCOOKED_STEW  = Items.UNCOOKED_STEW_2001
         private const val UNCOOKED_CURRY = Items.UNCOOKED_CURRY_2009
-        private const val SPICE = Items.SPICE_2007
-        private const val CURRY_LEAF = Items.CURRY_LEAF_5970
-        private const val POTATO = Items.POTATO_1942
-        private const val POTATO_STEW = Items.INCOMPLETE_STEW_1997
-        private const val MEAT_STEW = Items.INCOMPLETE_STEW_1999
-        private const val COOKED_MEAT = Items.COOKED_MEAT_2142
-        private val stewIngredients = intArrayOf(Items.COOKED_MEAT_2142, Items.POTATO_1942)
-        private val incompleteStew = intArrayOf(Items.INCOMPLETE_STEW_1997, Items.INCOMPLETE_STEW_1999)
+        private const val SPICE          = Items.SPICE_2007
+        private const val CURRY_LEAF     = Items.CURRY_LEAF_5970
+        private const val POTATO         = Items.POTATO_1942
+        private const val POTATO_STEW    = Items.INCOMPLETE_STEW_1997
+        private const val MEAT_STEW      = Items.INCOMPLETE_STEW_1999
+        private const val COOKED_MEAT    = Items.COOKED_MEAT_2142
+        private val STEW_INGREDIENTS     = intArrayOf(Items.COOKED_MEAT_2142, Items.POTATO_1942)
+        private val INCOMPLETE_STEW      = intArrayOf(Items.INCOMPLETE_STEW_1997, Items.INCOMPLETE_STEW_1999)
     }
 }

@@ -8,7 +8,7 @@ import core.game.node.entity.skill.Skills
 import org.rs.consts.Items
 import kotlin.math.min
 
-class ToppingRecipes : InteractionListener {
+class ToppingRecipe : InteractionListener {
 
     override fun defineListeners() {
         registerRecipe(SPICY_SAUCE, MINCED_MEAT, 9, 25.0, CHILLI_CON_CARNE, "You mix the ingredients to make the topping.")

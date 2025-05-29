@@ -85,21 +85,35 @@ class ChoppingRecipe : InteractionListener {
                 else -> return@onUseWith true
             }
 
-            player.pulseManager.run(object : Pulse(1) {
-                override fun pulse(): Boolean {
-                    super.setDelay(2)
-                    val amount = amountInInventory(player, used.id)
-                    if (amount > 0) {
-                        val success = removeItem(player, used.asItem(), Container.INVENTORY) && removeItem(player, with.asItem(), Container.INVENTORY)
-                        if (success) {
-                            animate(player, Animations.CUT_THING_WITH_KNIFE_IN_HAND_5756)
-                            addItem(player, productID, 1, Container.INVENTORY)
-                            sendMessage(player, message)
-                        }
-                    }
-                    return amount <= 0
+            fun process(): Boolean {
+                if (!removeItem(player, used.asItem()) || !removeItem(player, with.asItem())) {
+                    sendMessage(player, "You don't have the required ingredients.")
+                    return false
                 }
-            })
+                animate(player, Animations.CUT_THING_WITH_KNIFE_IN_HAND_5756)
+                addItem(player, productID, 1, Container.INVENTORY)
+                sendMessage(player, message)
+                return true
+            }
+
+            val baseAmount = amountInInventory(player, used.id)
+            val withAmount = amountInInventory(player, with.id)
+
+            if (baseAmount == 1 || withAmount == 1) {
+                process()
+                return@onUseWith true
+            }
+
+            sendSkillDialogue(player) {
+                withItems(productID)
+                create { _, amount ->
+                    runTask(player, 2, amount) {
+                        if (amount > 0) process()
+                    }
+                }
+                calculateMaxAmount { minOf(baseAmount, withAmount) }
+            }
+
             return@onUseWith true
         }
 
@@ -108,10 +122,12 @@ class ChoppingRecipe : InteractionListener {
          */
 
         onUseWith(IntType.ITEM, EGG, EMPTY_BOWL) { player, used, with ->
-            if (removeItem(player, used.asItem(), Container.INVENTORY) && removeItem(player, with.asItem(), Container.INVENTORY)) {
-                addItem(player, Items.UNCOOKED_EGG_7076)
-                sendMessage(player, "You prepare an uncooked egg.")
+            if (!removeItem(player, used.asItem()) || !removeItem(player, with.asItem())) {
+                sendMessage(player, "You don't have the required ingredients.")
+                return@onUseWith true
             }
+            sendMessage(player, "You prepare an uncooked egg.")
+            addItem(player, Items.UNCOOKED_EGG_7076)
             return@onUseWith true
         }
 
@@ -124,34 +140,34 @@ class ChoppingRecipe : InteractionListener {
                 sendDialogue(player, "You need an Cooking level of at least 9 to make that.")
                 return@onUseWith true
             }
-
             fun process(): Boolean {
-                val success = removeItem(player, used.asItem(), Container.INVENTORY) && removeItem(player, with.asItem(), Container.INVENTORY)
-                if (success) {
-                    addItem(player, SPICY_SAUCE, 1, Container.INVENTORY)
-                    rewardXP(player, Skills.COOKING, 25.0)
-                    sendMessage(player, "You mix the ingredients to make spicy sauce.")
-                    return true
+                if (!removeItem(player, used.asItem()) || !removeItem(player, with.asItem())) {
+                    sendMessage(player, "You don't have the required ingredients.")
+                    return false
                 }
-                return false
+                rewardXP(player, Skills.COOKING, 25.0)
+                addItem(player, SPICY_SAUCE, 1, Container.INVENTORY)
+                sendMessage(player, "You mix the ingredients to make spicy sauce.")
+                return true
             }
 
             val amountUsed = amountInInventory(player, used.id)
             val amountWith = amountInInventory(player, with.id)
 
             if (amountUsed == 1 || amountWith == 1) {
-                return@onUseWith process()
+                process()
+                return@onUseWith true
             }
 
             sendSkillDialogue(player) {
                 withItems(SPICY_SAUCE)
                 create { _, amount ->
                     runTask(player, 2, amount) {
-                        process()
+                        if (amount > 0) process()
                     }
                 }
                 calculateMaxAmount {
-                    minOf(amountWith, amountUsed)
+                    minOf(amountUsed, amountWith)
                 }
             }
 
