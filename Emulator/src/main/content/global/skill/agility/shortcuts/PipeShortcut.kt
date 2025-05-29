@@ -5,8 +5,6 @@ import core.api.*
 import core.game.interaction.QueueStrength
 import core.game.node.entity.player.Player
 import core.game.node.scenery.Scenery
-import core.game.system.task.Pulse
-import core.game.world.GameWorld
 import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
 import core.plugin.Plugin
@@ -14,15 +12,13 @@ import core.tools.ticksToCycles
 import org.rs.consts.Animations
 import org.rs.consts.Sounds
 
+/**
+ * Represents the pipe shortcuts.
+ */
 @Initializable
 class PipeShortcut : AgilityShortcut {
     constructor() : super(intArrayOf(), 0, 0.0, "")
-    constructor(ids: IntArray?, level: Int, experience: Double, vararg options: String?) : super(
-        ids,
-        level,
-        experience,
-        *options,
-    )
+    constructor(ids: IntArray?, level: Int, experience: Double, vararg options: String?) : super(ids, level, experience, *options,)
 
     override fun newInstance(arg: Any?): Plugin<Any> {
         configure(PipeShortcut(intArrayOf(YANILLE_DUNGEON), 49, 0.0, "squeeze-through"))
@@ -34,12 +30,7 @@ class PipeShortcut : AgilityShortcut {
         return this
     }
 
-    override fun run(
-        player: Player,
-        obj: Scenery,
-        option: String,
-        failed: Boolean,
-    ) {
+    override fun run(player: Player, obj: Scenery, option: String, failed: Boolean, ) {
         val lockTime: Int
         val interactionTime: Int
         val soundDelay: Int
