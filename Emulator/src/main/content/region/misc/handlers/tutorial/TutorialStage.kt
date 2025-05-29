@@ -1271,9 +1271,6 @@ object TutorialStage {
                 player.bank.clear()
                 player.equipment.clear()
 
-                player.interfaceManager.restoreTabs()
-                player.interfaceManager.setViewedTab(3)
-
                 player.inventory.add(*STARTER_PACK)
                 player.bank.add(STARTER_BANK)
 
@@ -1298,8 +1295,16 @@ object TutorialStage {
                 }
                 player.teleporter.send(Location.create(3233, 3230, 0))
                 queueScript(player, 5, QueueStrength.SOFT) {
-                    openDialogue(player, WelcomeMessage())
+                    player.dialogueInterpreter.sendDialogues(
+                        "Welcome to Lumbridge! To get more help, simply click on the",
+                        "Lumbridge Guide or one of the Tutors - these can be found by",
+                        "looking for the question mark icon on your minimap. If you find you",
+                        "are lost at any time, look for a signpost or use the Lumbridge Home",
+                        "Teleport spell.",
+                    )
                     setAttribute(player, "close_c_", true)
+                    player.interfaceManager.restoreTabs()
+                    player.interfaceManager.setViewedTab(3)
                     return@queueScript stopExecuting(player)
                 }
             }
@@ -1317,16 +1322,13 @@ object TutorialStage {
         } else {
             setAttribute(player, "/save:${GameAttributes.TUTORIAL_STAGE}", 73)
             setAttribute(player, "/save:tutorial:complete", true)
-            setVarbit(player, 3756, 0)
+            setVarbit(player, FLASHING_ICON, 0)
             setVarp(player, 281, 1000, true)
             closeOverlay(player)
 
             player.inventory.clear()
             player.bank.clear()
             player.equipment.clear()
-
-            player.interfaceManager.restoreTabs()
-            player.interfaceManager.setViewedTab(3)
 
             player.inventory.add(*STARTER_PACK)
             player.bank.add(STARTER_BANK)
@@ -1353,8 +1355,16 @@ object TutorialStage {
 
             player.teleporter.send(Location.create(3233, 3230, 0))
             queueScript(player, 5, QueueStrength.SOFT) {
-                openDialogue(player, WelcomeMessage())
+                player.dialogueInterpreter.sendDialogues(
+                    "Welcome to Lumbridge! To get more help, simply click on the",
+                    "Lumbridge Guide or one of the Tutors - these can be found by",
+                    "looking for the question mark icon on your minimap. If you find you",
+                    "are lost at any time, look for a signpost or use the Lumbridge Home",
+                    "Teleport spell.",
+                )
                 setAttribute(player, "close_c_", true)
+                player.interfaceManager.restoreTabs()
+                player.interfaceManager.setViewedTab(3)
                 return@queueScript stopExecuting(player)
             }
         }
