@@ -8,6 +8,7 @@ import core.api.ui.closeDialogue
 import core.api.ui.sendInterfaceConfig
 import core.api.ui.setMinimapState
 import core.game.component.Component
+import core.game.interaction.QueueStrength
 import core.game.node.Node
 import core.game.node.entity.combat.equipment.WeaponInterface
 import core.game.node.entity.player.Player
@@ -15,57 +16,33 @@ import core.game.node.entity.player.link.HintIconManager
 import core.game.node.entity.player.link.music.MusicEntry
 import core.game.node.item.Item
 import core.game.system.task.Pulse
+import core.game.world.GameWorld
 import core.game.world.GameWorld.Pulser
 import core.game.world.GameWorld.settings
 import core.game.world.map.Location
 import core.game.world.repository.Repository
 import core.tools.BLUE
 import core.worker.ManagementEvents
-import org.rs.consts.Components
-import org.rs.consts.Items
-import org.rs.consts.Music
-import org.rs.consts.NPCs
+import org.rs.consts.*
 import proto.management.JoinClanRequest
 
 object TutorialStage {
     const val TUTORIAL_STAGE = GameAttributes.TUTORIAL_STAGE
     const val TUTORIAL_HINT = "tutorial:hinticon"
+    const val FLASHING_ICON = Vars.VARBIT_FLASHING_TAB_ICON_3756
 
-    private val STARTER_PACK =
-        arrayOf(
-            Item(Items.BRONZE_AXE_1351, 1),
-            Item(Items.TINDERBOX_590, 1),
-            Item(Items.SMALL_FISHING_NET_303, 1),
-            Item(Items.SHRIMPS_315, 1),
-            Item(Items.BUCKET_1925, 1),
-            Item(Items.EMPTY_POT_1931, 1),
-            Item(Items.BREAD_2309, 1),
-            Item(Items.BRONZE_PICKAXE_1265, 1),
-            Item(Items.BRONZE_DAGGER_1205, 1),
-            Item(Items.BRONZE_SWORD_1277, 1),
-            Item(Items.WOODEN_SHIELD_1171, 1),
-            Item(Items.SHORTBOW_841, 1),
-            Item(Items.BRONZE_ARROW_882, 25),
-            Item(Items.AIR_RUNE_556, 25),
-            Item(Items.MIND_RUNE_558, 15),
-            Item(Items.WATER_RUNE_555, 6),
-            Item(Items.EARTH_RUNE_557, 4),
-            Item(Items.BODY_RUNE_559, 2),
-        )
+    private val STARTER_PACK = arrayOf(Item(Items.BRONZE_AXE_1351, 1), Item(Items.TINDERBOX_590, 1), Item(Items.SMALL_FISHING_NET_303, 1), Item(Items.SHRIMPS_315, 1), Item(Items.BUCKET_1925, 1), Item(Items.EMPTY_POT_1931, 1), Item(Items.BREAD_2309, 1), Item(Items.BRONZE_PICKAXE_1265, 1), Item(Items.BRONZE_DAGGER_1205, 1), Item(Items.BRONZE_SWORD_1277, 1), Item(Items.WOODEN_SHIELD_1171, 1), Item(Items.SHORTBOW_841, 1), Item(Items.BRONZE_ARROW_882, 25), Item(Items.AIR_RUNE_556, 25), Item(Items.MIND_RUNE_558, 15), Item(Items.WATER_RUNE_555, 6), Item(Items.EARTH_RUNE_557, 4), Item(Items.BODY_RUNE_559, 2))
     private val STARTER_BANK = Item(Items.COINS_995, 25)
 
     @JvmStatic
     fun rollback(player: Player) {
         val currentStage = getAttribute(player, TUTORIAL_STAGE, 0)
-        closeDialogue(player)
-        load(player, currentStage)
+        closeDialogue(player).also {
+            load(player, currentStage)
+        }
     }
 
-    fun load(
-        player: Player,
-        stage: Int,
-        login: Boolean = false,
-    ) {
+    fun load(player: Player, stage: Int, login: Boolean = false, ) {
         if (login) {
             player.hook(Event.ButtonClicked, TutorialButtonReceiver)
             player.hook(Event.Interacted, TutorialInteractionReceiver)
@@ -78,12 +55,14 @@ object TutorialStage {
             sendInterfaceConfig(player, Components.TUTORIAL_PROGRESS_371, 4, true)
             player.musicPlayer.play(MusicEntry.forId(Music.NEWBIE_MELODY_62))
         }
+
         /*
         if(!getAttribute(player, STARTER_BANK, false)) {
             player.bank.add(Item(Items.COINS_995, 25))
             setAttribute(player, "/save:${STARTER_BANK}", true)
         }
          */
+
         updateProgressBar(player)
         when (stage) {
             0 -> {
@@ -124,7 +103,7 @@ object TutorialStage {
             1 -> {
                 player.interfaceManager.removeTabs(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13)
                 player.interfaceManager.openTab(Component(Components.OPTIONS_261))
-                setVarbit(player, 3756, 12)
+                setVarbit(player, FLASHING_ICON, 12)
                 removeHintIcon(player)
                 Component.setUnclosable(
                     player,
@@ -140,7 +119,7 @@ object TutorialStage {
 
             2 -> {
                 hideTabs(player, login)
-                setVarbit(player, 3756, 0)
+                setVarbit(player, FLASHING_ICON, 0)
                 registerHintIcon(player, Repository.findNPC(NPCs.RUNESCAPE_GUIDE_945)!!)
                 Component.setUnclosable(
                     player,
@@ -188,7 +167,7 @@ object TutorialStage {
             5 -> {
                 hideTabs(player, login)
                 player.interfaceManager.openTab(Component(Components.INVENTORY_149))
-                setVarbit(player, 3756, 4)
+                setVarbit(player, FLASHING_ICON, 4)
                 removeHintIcon(player)
                 Component.setUnclosable(
                     player,
@@ -204,7 +183,7 @@ object TutorialStage {
 
             6 -> {
                 hideTabs(player, login)
-                setVarbit(player, 3756, 4)
+                setVarbit(player, FLASHING_ICON, 4)
                 Component.setUnclosable(
                     player,
                     player.dialogueInterpreter.sendPlaneMessageWithBlueTitle(
@@ -263,7 +242,7 @@ object TutorialStage {
             10 -> {
                 hideTabs(player, login)
                 player.interfaceManager.openTab(Component(Components.STATS_320))
-                setVarbit(player, 3756, 2)
+                setVarbit(player, FLASHING_ICON, 2)
                 Component.setUnclosable(
                     player,
                     player.dialogueInterpreter.sendPlaneMessageWithBlueTitle(
@@ -278,7 +257,7 @@ object TutorialStage {
 
             11 -> {
                 hideTabs(player, login)
-                setVarbit(player, 3756, 2)
+                setVarbit(player, FLASHING_ICON, 2)
                 registerHintIcon(player, Repository.findNPC(NPCs.SURVIVAL_EXPERT_943)!!)
                 Component.setUnclosable(
                     player,
@@ -368,11 +347,7 @@ object TutorialStage {
 
             16 -> {
                 hideTabs(player, login)
-                registerHintIcon(
-                    player,
-                    Location.create(3090, 3091),
-                    75,
-                )
+                registerHintIcon(player, Location.create(3090, 3091), 75)
                 Component.setUnclosable(
                     player,
                     player.dialogueInterpreter.sendPlaneMessageWithBlueTitle(
@@ -434,7 +409,6 @@ object TutorialStage {
 
             20 -> {
                 hideTabs(player, login)
-                removeHintIcon(player)
                 registerHintIcon(player, Location.create(3075, 3081, 0), 75)
                 Component.setUnclosable(
                     player,
@@ -452,7 +426,7 @@ object TutorialStage {
                 hideTabs(player, login)
                 removeHintIcon(player)
                 player.interfaceManager.openTab(Component(Components.MUSIC_V3_187))
-                setVarbit(player, 3756, 14)
+                setVarbit(player, FLASHING_ICON, 14)
                 Component.setUnclosable(
                     player,
                     player.dialogueInterpreter.sendPlaneMessageWithBlueTitle(
@@ -467,7 +441,7 @@ object TutorialStage {
 
             22 -> {
                 hideTabs(player, login)
-                setVarbit(player, 3756, 0)
+                setVarbit(player, FLASHING_ICON, 0)
                 Component.setUnclosable(
                     player,
                     player.dialogueInterpreter.sendPlaneMessageWithBlueTitle(
@@ -484,7 +458,7 @@ object TutorialStage {
                 hideTabs(player, login)
                 removeHintIcon(player)
                 player.interfaceManager.openTab(Component(Components.EMOTES_464))
-                setVarbit(player, 3756, 13)
+                setVarbit(player, FLASHING_ICON, 13)
                 stopWalk(player)
                 Component.setUnclosable(
                     player,
@@ -514,7 +488,7 @@ object TutorialStage {
 
             25 -> {
                 hideTabs(player, login)
-                setVarbit(player, 3756, 12)
+                setVarbit(player, FLASHING_ICON, 12)
                 Component.setUnclosable(
                     player,
                     player.dialogueInterpreter.sendPlaneMessageWithBlueTitle(
@@ -529,7 +503,7 @@ object TutorialStage {
 
             26 -> {
                 hideTabs(player, login)
-                setVarbit(player, 3756, 0)
+                setVarbit(player, FLASHING_ICON, 0)
                 registerHintIcon(player, Location.create(3086, 3125, 0), 125)
                 Component.setUnclosable(
                     player,
@@ -562,7 +536,7 @@ object TutorialStage {
 
             28 -> {
                 hideTabs(player, login)
-                setVarbit(player, 3756, 0)
+                setVarbit(player, FLASHING_ICON, 0)
                 registerHintIcon(player, Repository.findNPC(NPCs.QUEST_GUIDE_949)!!)
                 Component.setUnclosable(
                     player,
@@ -579,7 +553,7 @@ object TutorialStage {
             29 -> {
                 hideTabs(player, login)
                 removeHintIcon(player)
-                setVarbit(player, 3756, 0)
+                setVarbit(player, FLASHING_ICON, 0)
                 registerHintIcon(player, Location.create(3088, 3119))
                 Component.setUnclosable(
                     player,
@@ -596,7 +570,7 @@ object TutorialStage {
             30 -> {
                 hideTabs(player, login)
                 removeHintIcon(player)
-                setVarbit(player, 3756, 0)
+                setVarbit(player, FLASHING_ICON, 0)
                 registerHintIcon(player, Repository.findNPC(NPCs.MINING_INSTRUCTOR_948)!!)
                 Component.setUnclosable(
                     player,
@@ -629,7 +603,6 @@ object TutorialStage {
             32 -> {
                 hideTabs(player, login)
                 removeHintIcon(player)
-                if (!finishedMoving(player)) return
                 Component.setUnclosable(
                     player,
                     player.dialogueInterpreter.sendPlaneMessageWithBlueTitle(
@@ -670,7 +643,6 @@ object TutorialStage {
             34 -> {
                 hideTabs(player, login)
                 removeHintIcon(player)
-                if (!finishedMoving(player)) return
                 registerHintIcon(player, Repository.findNPC(NPCs.MINING_INSTRUCTOR_948)!!)
                 Component.setUnclosable(
                     player,
@@ -840,9 +812,8 @@ object TutorialStage {
                     )
                 }.also {
                     hideTabs(player, login)
-                    removeHintIcon(player)
                     player.interfaceManager.openTab(Component(Components.WORNITEMS_387))
-                    setVarbit(player, 3756, 5)
+                    setVarbit(player, FLASHING_ICON, 5)
                     Component.setUnclosable(
                         player,
                         player.dialogueInterpreter.sendPlaneMessageWithBlueTitle(
@@ -858,8 +829,7 @@ object TutorialStage {
 
             46 -> {
                 hideTabs(player, login)
-                setVarbit(player, 3756, 0)
-                removeHintIcon(player)
+                setVarbit(player, FLASHING_ICON, 0)
                 Component.setUnclosable(
                     player,
                     player.dialogueInterpreter.sendPlaneMessageWithBlueTitle(
@@ -874,7 +844,6 @@ object TutorialStage {
 
             47 -> {
                 hideTabs(player, login)
-                removeHintIcon(player)
                 registerHintIcon(player, Repository.findNPC(NPCs.COMBAT_INSTRUCTOR_944)!!)
                 Component.setUnclosable(
                     player,
@@ -905,7 +874,7 @@ object TutorialStage {
 
             49 -> {
                 hideTabs(player, login)
-                setVarbit(player, 3756, 1)
+                setVarbit(player, FLASHING_ICON, 1)
                 var wepInter = player.getExtension<WeaponInterface>(WeaponInterface::class.java)
                 if (wepInter == null) {
                     wepInter = WeaponInterface(player)
@@ -926,8 +895,7 @@ object TutorialStage {
 
             50 -> {
                 hideTabs(player, login)
-                setVarbit(player, 3756, 0)
-                removeHintIcon(player)
+                setVarbit(player, FLASHING_ICON, 0)
                 registerHintIcon(player, Location.create(3111, 9518, 0), 125)
                 Component.setUnclosable(
                     player,
@@ -1054,7 +1022,6 @@ object TutorialStage {
 
             58 -> {
                 hideTabs(player, login)
-                removeHintIcon(player)
                 registerHintIcon(player, Location.create(3127, 3124, 0), 100)
                 Component.setUnclosable(
                     player,
@@ -1104,7 +1071,7 @@ object TutorialStage {
                 hideTabs(player, login)
                 removeHintIcon(player)
                 player.interfaceManager.openTab(Component(Components.PRAYER_271))
-                setVarbit(player, 3756, 6)
+                setVarbit(player, FLASHING_ICON, 6)
                 Component.setUnclosable(
                     player,
                     player.dialogueInterpreter.sendPlaneMessageWithBlueTitle(
@@ -1119,7 +1086,7 @@ object TutorialStage {
 
             62 -> {
                 hideTabs(player, login)
-                setVarbit(player, 3756, 0)
+                setVarbit(player, FLASHING_ICON, 0)
                 registerHintIcon(player, Repository.findNPC(NPCs.BROTHER_BRACE_954)!!)
                 Component.setUnclosable(
                     player,
@@ -1136,7 +1103,7 @@ object TutorialStage {
                 hideTabs(player, login)
                 removeHintIcon(player)
                 player.interfaceManager.openTab(Component(Components.FRIENDS2_550))
-                setVarbit(player, 3756, 9)
+                setVarbit(player, FLASHING_ICON, 9)
                 Component.setUnclosable(
                     player,
                     player.dialogueInterpreter.sendPlainMessage(
@@ -1151,7 +1118,7 @@ object TutorialStage {
 
             64 -> {
                 hideTabs(player, login)
-                setVarbit(player, 3756, 10)
+                setVarbit(player, FLASHING_ICON, 10)
                 player.interfaceManager.openTab(Component(Components.IGNORE2_551))
                 player.interfaceManager.openTab(Component(Components.CLANJOIN_589))
                 Component.setUnclosable(
@@ -1168,7 +1135,7 @@ object TutorialStage {
 
             65 -> {
                 hideTabs(player, login)
-                setVarbit(player, 3756, 0)
+                setVarbit(player, FLASHING_ICON, 0)
                 registerHintIcon(player, Repository.findNPC(NPCs.BROTHER_BRACE_954)!!)
                 Component.setUnclosable(
                     player,
@@ -1218,7 +1185,7 @@ object TutorialStage {
                 hideTabs(player, login)
                 removeHintIcon(player)
                 player.interfaceManager.openTab(Component(player.spellBookManager.spellBook))
-                setVarbit(player, 3756, 7)
+                setVarbit(player, FLASHING_ICON, 7)
                 Component.setUnclosable(
                     player,
                     player.dialogueInterpreter.sendPlaneMessageWithBlueTitle(
@@ -1233,7 +1200,7 @@ object TutorialStage {
 
             69 -> {
                 hideTabs(player, login)
-                setVarbit(player, 3756, 0)
+                setVarbit(player, FLASHING_ICON, 0)
                 registerHintIcon(player, Repository.findNPC(NPCs.MAGIC_INSTRUCTOR_946)!!)
                 Component.setUnclosable(
                     player,
@@ -1294,71 +1261,62 @@ object TutorialStage {
             }
 
             73 -> {
-                lock(player, 18)
-                Component.setUnclosable(
-                    player,
-                    player.dialogueInterpreter.sendPlaneMessageWithBlueTitle(
-                        "You have almost completed the tutorial!",
-                        "",
-                        "Just click on the first spell, Home Teleport, in your Magic",
-                        "Spellbook. This spell doesn't require any runes, but can only",
-                        "be cast once every 30 minutes.",
-                    ),
-                )
-                submitWorldPulse(
-                    object : Pulse() {
-                        var counter = 0
-
-                        override fun pulse(): Boolean {
-                            when (counter++) {
-                                0 -> {
-                                    setVarbit(player, 3756, 0)
-                                    setVarp(player, 281, 1000, true)
-                                    setAttribute(player, "/save:tutorial:complete", true)
-                                    player.unhook(TutorialCompletionReceiver)
-                                    player.unhook(TutorialKillReceiver)
-                                    player.unhook(TutorialFireReceiver)
-                                    player.unhook(TutorialResourceReceiver)
-                                    player.unhook(TutorialUseWithReceiver)
-                                    player.unhook(TutorialInteractionReceiver)
-                                    player.unhook(TutorialButtonReceiver)
-
-                                    if (settings!!.enable_default_clan) {
-                                        player.communication.currentClan = ServerConstants.SERVER_NAME
-                                        val clanJoin = JoinClanRequest.newBuilder()
-                                        clanJoin.clanName = ServerConstants.SERVER_NAME
-                                        clanJoin.username = player.name
-                                        ManagementEvents.publish(clanJoin.build())
-                                    }
-                                }
-
-                                18 -> {
-                                    closeOverlay(player)
-                                    player.inventory.clear()
-                                    player.bank.clear()
-                                    player.equipment.clear()
-                                    player.inventory.add(*STARTER_PACK)
-                                    player.bank.add(STARTER_BANK)
-                                    player.interfaceManager.restoreTabs()
-                                    player.interfaceManager.setViewedTab(3)
-                                    openDialogue(player, WelcomeMessage())
-                                    setAttribute(player, "close_c_", true)
-                                    return true
-                                }
-                            }
-                            return false
-                        }
-                    },
-                )
+                completeTutorial(player)
             }
         }
     }
 
+    fun completeTutorial(player: Player) {
+        // Mark tutorial as complete.
+        setAttribute(player, "/save:tutorial:complete", true)
+        setVarbit(player, 3756, 0)
+        setVarp(player, 281, 1000, true)
+        closeOverlay(player)
+
+        // Clear storages.
+        player.inventory.clear()
+        player.bank.clear()
+        player.equipment.clear()
+
+        // Restore default interfaces.
+        player.interfaceManager.restoreTabs()
+        player.interfaceManager.setViewedTab(3)
+
+        // Add starter items to inventory and bank.
+        player.inventory.add(*STARTER_PACK)
+        player.bank.add(STARTER_BANK)
+
+        // Unhook all tutorial-related event receivers.
+        player.unhook(TutorialCompletionReceiver)
+        player.unhook(TutorialKillReceiver)
+        player.unhook(TutorialFireReceiver)
+        player.unhook(TutorialResourceReceiver)
+        player.unhook(TutorialUseWithReceiver)
+        player.unhook(TutorialInteractionReceiver)
+        player.unhook(TutorialButtonReceiver)
+
+        // Auto-join default clan (if enabled).
+        if (GameWorld.settings!!.enable_default_clan) {
+            player.communication.currentClan = ServerConstants.SERVER_NAME.toLowerCase()
+
+            val clanJoin = JoinClanRequest.newBuilder()
+                .setClanName(ServerConstants.SERVER_NAME.toLowerCase())
+                .setUsername(player.name)
+                .build()
+
+            ManagementEvents.publish(clanJoin)
+        }
+
+        // Show welcome dialogue and stop script execution.
+        queueScript(player, 18, QueueStrength.SOFT) {
+            openDialogue(player, WelcomeMessage())
+            setAttribute(player, "close_c_", true)
+            return@queueScript stopExecuting(player)
+        }
+    }
+
     @JvmStatic
-    fun hideTabs(
-        player: Player,
-        login: Boolean,
-    ) {
+    fun hideTabs(player: Player, login: Boolean, ) {
         val stage = getAttribute(player, TUTORIAL_STAGE, 0)
         if (login) {
             player.interfaceManager.removeTabs(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13)
@@ -1423,18 +1381,11 @@ object TutorialStage {
         HintIconManager.removeHintIcon(player, slot)
     }
 
-    private fun registerHintIcon(
-        player: Player,
-        node: Node,
-    ) {
+    private fun registerHintIcon(player: Player, node: Node, ) {
         setAttribute(player, TUTORIAL_HINT, HintIconManager.registerHintIcon(player, node))
     }
 
-    private fun registerHintIcon(
-        player: Player,
-        location: Location,
-        height: Int,
-    ) {
+    private fun registerHintIcon(player: Player, location: Location, height: Int, ) {
         setAttribute(
             player,
             TUTORIAL_HINT,

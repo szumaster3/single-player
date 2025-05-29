@@ -1,6 +1,5 @@
 package content.global.activity.mogre
 
-import content.region.misc.dialogue.tutorial.SkippyTutorialDialogue
 import core.api.*
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
@@ -11,11 +10,7 @@ class SkippyListener : InteractionListener {
     private val skippyNPCs = intArrayOf(2795, 2796, 2797, 2798, 2799)
 
     override fun defineListeners() {
-        on(skippyNPCs, IntType.NPC, "sober-up", "talk-to") { player, node ->
-            if (inBorders(player, SkippyUtils.TUTORIAL_ISLAND)) {
-                openDialogue(player, SkippyTutorialDialogue())
-                return@on true
-            }
+        on(skippyNPCs, IntType.NPC, "sober-up") { player, node ->
             player.dialogueInterpreter.open(node.id)
             return@on true
         }
@@ -29,12 +24,9 @@ class SkippyListener : InteractionListener {
             return@onUseWith true
         }
 
-        onUseWith(IntType.NPC, Items.BUCKET_OF_WATER_1929, *skippyNPCs) { player, used, _ ->
-            if (getVarbit(player, SkippyUtils.SKIPPY_VARBIT) > 1 && used.id == 1929) {
-                sendPlayerDialogue(
-                    player,
-                    "I think he's sober enough. And I don't want to use another bucket of water.",
-                )
+        onUseWith(IntType.NPC, Items.BUCKET_OF_WATER_1929, *skippyNPCs) { player, _, _ ->
+            if (getVarbit(player, SkippyUtils.SKIPPY_VARBIT) > 1) {
+                sendPlayerDialogue(player, "I think he's sober enough. And I don't want to use another bucket of water.")
             } else {
                 sendMessage(player, "I can't do that.")
             }
