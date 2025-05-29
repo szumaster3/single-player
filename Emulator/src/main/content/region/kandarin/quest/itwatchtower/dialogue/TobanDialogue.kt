@@ -21,22 +21,24 @@ class TobanDialogue(
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         val questStage = getQuestStage(player, Quests.WATCHTOWER)
-        if (questStage == 4) {
-            npc(FaceAnim.OLD_NEUTRAL, "What do you want, small t'ing?")
-            return true
-        }
-        if (questStage == 5) {
-            npc(FaceAnim.OLD_NEUTRAL, "Hahaha! Small t'ing returns. Did you bring the dragon", "bone?").also {
-                stage =
-                    10
+
+        when (questStage) {
+            4 -> {
+                npc(FaceAnim.OLD_NEUTRAL, "What do you want, small t'ing?")
             }
-            return true
+            5 -> {
+                npc(FaceAnim.OLD_NEUTRAL, "Hahaha! Small t'ing returns. Did you bring the dragon", "bone?")
+                stage = 10
+            }
+            else -> {
+                if (!isQuestComplete(player, Quests.WATCHTOWER)) {
+                    sendMessage(player, "The ogre has nothing to say at the moment.")
+                } else {
+                    sendMessage(player, "The ogre is not interested in you anymore.")
+                }
+            }
         }
-        if (!isQuestComplete(player, Quests.WATCHTOWER)) {
-            sendMessage(player, "The ogre has nothing to say at the moment.")
-        } else {
-            sendMessage(player, "The ogre is not interested in you anymore.")
-        }
+
         return true
     }
 

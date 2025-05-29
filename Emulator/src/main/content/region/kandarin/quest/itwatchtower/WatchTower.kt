@@ -1,7 +1,6 @@
 package content.region.kandarin.quest.itwatchtower
 
 import core.api.*
-import core.api.quest.getQuestStage
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest
 import core.game.node.entity.skill.Skills
@@ -31,22 +30,21 @@ class WatchTower : Quest(Quests.WATCHTOWER, 131, 130, 4, Vars.VARP_QUEST_WATCHTO
             line(player, "!!Level 15 Thieving??", line++, getStatLevel(player, Skills.THIEVING) >= 15)
             line(player, "!!Level 25 Agility??", line++, getStatLevel(player, Skills.AGILITY) >= 25)
             line(player, "The north west guard wants a sign of !!friendship??.", line++)
-            line++
+            limitScrolling(player, line, true)
         }
 
-        if (stage >= 1) {
+        if (stage == 1) {
             line(player, "I accepted the challenge of finding the lost crystals.", line++)
             line++
         }
 
-        if (inInventory(player, Items.FINGERNAILS_2384)) {
-            line(player, "I found some fingernails as evidence.", line++, getQuestStage(player, Quests.WATCHTOWER) >= 2)
-            line(
-                player,
-                "I should take them to the Watchtower wizard.",
-                line++,
-                getQuestStage(player, Quests.WATCHTOWER) >= 2,
-            )
+        if (stage == 2) {
+            if(inInventory(player, Items.FINGERNAILS_2384)) {
+                line(player, "I found some !!fingernails?? as evidence.", line++)
+                line(player, "I should take them to the !!Watchtower wizard??.", line++)
+                line++
+            }
+            line(player, "I need to search the skavid caves.", line++)
             line++
         }
 
@@ -72,6 +70,7 @@ class WatchTower : Quest(Quests.WATCHTOWER, 131, 130, 4, Vars.VARP_QUEST_WATCHTO
         if (stage == 100) {
             line++
             line(player, "<col=FF0000>QUEST COMPLETE!", line, false)
+            limitScrolling(player, line, false)
         }
     }
 

@@ -1,5 +1,6 @@
 package content.region.kandarin.quest.itwatchtower.dialogue
 
+import core.api.asItem
 import core.api.item.allInInventory
 import core.api.quest.getQuestStage
 import core.api.quest.setQuestStage
@@ -29,14 +30,23 @@ class WizardTowerDialogue(
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
-        if (npc.id == NPCs.WIZARD_5195) {
-            player("What's going on here?").also { stage = 100 }
-        } else {
-            npc("Who are you? Are you one of the new guards?")
+        val stage = getQuestStage(player, Quests.WATCHTOWER)
+
+        when (npc.id) {
+            NPCs.WIZARD_5195 -> {
+                player("What's going on here?")
+                this.stage = 100
+            }
+            else -> {
+                if (stage >= 1) {
+                    npc("Hello again. Did you find anything of interest?")
+                    this.stage = 30
+                } else {
+                    npc("Who are you? Are you one of the new guards?")
+                }
+            }
         }
-        if (getQuestStage(player, Quests.WATCHTOWER) >= 1) {
-            npc("Hello again. Did you find anything of interest?").also { stage = 30 }
-        }
+
         return true
     }
 
@@ -133,29 +143,20 @@ class WizardTowerDialogue(
 
             30 ->
                 if (!allInInventory(player, *evidenceItems)) {
-                    player("Have a look at these...").also { stage++ }
+                    for (i in evidenceItems){
+                        player("I found this ${i.asItem().name}...").also { stage = -31 }
+                    }
                 } else {
-                    npc("Interesting, very interesting.").also { stage += 2 }
+                    player("Have a look at these...").also { stage = -32 }
                 }
 
-            31 ->
-                npcl(
-                    FaceAnim.NEUTRAL,
-                    "No, sorry, this is not evidence. You need to keep searching, I'm afraid.",
-                ).also {
-                    stage =
-                        END_DIALOGUE
-                }
+            -31 -> npc("Let me see...").also { stage = 31 }
+            31 -> npc(FaceAnim.NEUTRAL, "No, sorry, this is not evidence. You need to keep", "searching, I'm afraid.").also { stage = END_DIALOGUE }
+           -32 -> npc("Interesting, very interesting.").also { stage = 32 }
             32 -> npc("Long nails...grey in colour...well chewed...").also { stage++ }
             33 -> npc("Of course! They belong to a skavid!").also { stage++ }
             34 -> player("A skavid?").also { stage++ }
-            35 ->
-                npc(
-                    "A servant race to the ogres: grey, depressed-looking",
-                    "creatures, always losing nails, teeth and hair!",
-                ).also {
-                    stage++
-                }
+            35 -> npc("A servant race to the ogres: grey, depressed-looking", "creatures, always losing nails, teeth and hair!").also { stage++ }
             36 -> npc("They inhabit the caves in the Feldip Hills.").also { stage++ }
             37 ->
                 npc(

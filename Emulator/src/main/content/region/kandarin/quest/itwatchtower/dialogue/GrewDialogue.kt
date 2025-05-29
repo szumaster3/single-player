@@ -1,7 +1,6 @@
 package content.region.kandarin.quest.itwatchtower.dialogue
 
-import core.api.quest.getQuestStage
-import core.api.quest.isQuestComplete
+import core.api.quest.isQuestInProgress
 import core.api.sendMessage
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
@@ -17,10 +16,8 @@ class GrewDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
     override fun open(vararg args: Any?): Boolean {
-        if (getQuestStage(player, Quests.WATCHTOWER) >= 3) {
+        if (isQuestInProgress(player, Quests.WATCHTOWER, 3, 99)) {
             npc(FaceAnim.OLD_NEUTRAL, "What do you want, little morsel? You would look good", "on my plate!")
-        } else if (!isQuestComplete(player, Quests.WATCHTOWER)) {
-            sendMessage(player, "The ogre has nothing to say at the moment.")
         } else {
             sendMessage(player, "The ogre is not interested in you anymore.")
         }

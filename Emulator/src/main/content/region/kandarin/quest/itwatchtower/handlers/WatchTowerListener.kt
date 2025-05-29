@@ -65,6 +65,10 @@ class WatchTowerListener : InteractionListener {
             return@on true
         }
 
+        /*
+         * Handles exit from north skavid caves.
+         */
+
         on(Scenery.CAVE_EXIT_2818, IntType.SCENERY, "leave") { player, _ ->
             teleport(player, Location.create(2524, 3070, 0), TeleportManager.TeleportType.INSTANT)
             return@on true
@@ -89,9 +93,19 @@ class WatchTowerListener : InteractionListener {
             return@onUseWith true
         }
 
+        /*
+         * Handles opening skavid map.
+         */
+
+        on(Items.SKAVID_MAP_2376, IntType.ITEM, "read") { player, _ ->
+            openInterface(player, 479)
+            return@on true
+        }
+
         onUseWith(IntType.NPC, Items.CAVE_NIGHTSHADE_2398, NPCs.ENCLAVE_GUARD_870) { _, _, _ ->
             return@onUseWith true
         }
+
     }
 
     private fun searchBush(player: Player, item: Pair<Int, String>?, ): Boolean {
