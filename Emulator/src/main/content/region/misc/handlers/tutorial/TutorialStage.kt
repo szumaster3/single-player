@@ -1277,6 +1277,7 @@ object TutorialStage {
             }
         } else {
             // Mark tutorial as complete.
+            setAttribute(player, "/save:${GameAttributes.TUTORIAL_STAGE}", 73)
             setAttribute(player, "/save:tutorial:complete", true)
             setVarbit(player, 3756, 0)
             setVarp(player, 281, 1000, true)
