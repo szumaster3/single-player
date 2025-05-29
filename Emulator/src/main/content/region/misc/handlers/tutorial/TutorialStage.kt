@@ -13,11 +13,9 @@ import core.game.node.entity.combat.equipment.WeaponInterface
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.info.Rights
 import core.game.node.entity.player.link.HintIconManager
-import core.game.node.entity.player.link.TeleportManager
 import core.game.node.entity.player.link.music.MusicEntry
 import core.game.node.item.Item
 import core.game.system.task.Pulse
-import core.game.world.GameWorld
 import core.game.world.GameWorld.Pulser
 import core.game.world.GameWorld.settings
 import core.game.world.map.Location
@@ -43,7 +41,7 @@ object TutorialStage {
         }
     }
 
-    fun load(player: Player, stage: Int, login: Boolean = false, ) {
+    fun load(player: Player, stage: Int, login: Boolean = false) {
         if (login) {
             player.hook(Event.ButtonClicked, TutorialButtonReceiver)
             player.hook(Event.Interacted, TutorialInteractionReceiver)
@@ -1271,6 +1269,10 @@ object TutorialStage {
                 player.bank.clear()
                 player.equipment.clear()
 
+                player.interfaceManager.restoreTabs()
+                player.interfaceManager.setViewedTab(3)
+                player.interfaceManager.openDefaultTabs()
+
                 player.inventory.add(*STARTER_PACK)
                 player.bank.add(STARTER_BANK)
 
@@ -1293,7 +1295,9 @@ object TutorialStage {
                     ManagementEvents.publish(clanJoin)
 
                 }
+
                 player.teleporter.send(Location.create(3233, 3230, 0))
+
                 queueScript(player, 5, QueueStrength.SOFT) {
                     player.dialogueInterpreter.sendDialogues(
                         "Welcome to Lumbridge! To get more help, simply click on the",
@@ -1303,10 +1307,9 @@ object TutorialStage {
                         "Teleport spell.",
                     )
                     setAttribute(player, "close_c_", true)
-                    player.interfaceManager.restoreTabs()
-                    player.interfaceManager.setViewedTab(3)
                     return@queueScript stopExecuting(player)
                 }
+
             }
         }
     }
@@ -1329,6 +1332,10 @@ object TutorialStage {
             player.inventory.clear()
             player.bank.clear()
             player.equipment.clear()
+
+            player.interfaceManager.restoreTabs()
+            player.interfaceManager.setViewedTab(3)
+            player.interfaceManager.openDefaultTabs()
 
             player.inventory.add(*STARTER_PACK)
             player.bank.add(STARTER_BANK)
@@ -1354,6 +1361,7 @@ object TutorialStage {
             }
 
             player.teleporter.send(Location.create(3233, 3230, 0))
+
             queueScript(player, 5, QueueStrength.SOFT) {
                 player.dialogueInterpreter.sendDialogues(
                     "Welcome to Lumbridge! To get more help, simply click on the",
@@ -1363,15 +1371,13 @@ object TutorialStage {
                     "Teleport spell.",
                 )
                 setAttribute(player, "close_c_", true)
-                player.interfaceManager.restoreTabs()
-                player.interfaceManager.setViewedTab(3)
                 return@queueScript stopExecuting(player)
             }
         }
     }
 
     @JvmStatic
-    fun hideTabs(player: Player, login: Boolean, ) {
+    fun hideTabs(player: Player, login: Boolean) {
         val stage = getAttribute(player, TUTORIAL_STAGE, 0)
         if (login) {
             player.interfaceManager.removeTabs(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13)
@@ -1436,11 +1442,11 @@ object TutorialStage {
         HintIconManager.removeHintIcon(player, slot)
     }
 
-    private fun registerHintIcon(player: Player, node: Node, ) {
+    private fun registerHintIcon(player: Player, node: Node) {
         setAttribute(player, TUTORIAL_HINT, HintIconManager.registerHintIcon(player, node))
     }
 
-    private fun registerHintIcon(player: Player, location: Location, height: Int, ) {
+    private fun registerHintIcon(player: Player, location: Location, height: Int) {
         setAttribute(
             player,
             TUTORIAL_HINT,
