@@ -12,7 +12,7 @@ import org.rs.consts.Scenery
 
 class MyrequeShortcut : InteractionListener {
     override fun defineListeners() {
-        on(Scenery.TRAPDOOR_5055, IntType.SCENERY, "open") { player, node ->
+        on(Scenery.TRAPDOOR_5055, IntType.SCENERY, "open") { player, _ ->
             teleport(player, Location(3477, 9845))
             sendMessage(player, "You open the trap door and find yourself in the inn basement.")
             return@on true

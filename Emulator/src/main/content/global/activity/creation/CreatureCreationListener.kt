@@ -21,8 +21,11 @@ class CreatureCreationListener : InteractionListener {
          */
 
         on(Scenery.TRAPDOOR_21921, IntType.SCENERY, "open") { player, _ ->
-            if (hasRequirement(player, Quests.TOWER_OF_LIFE)) {
+            if (hasRequirement(player, Quests.TOWER_OF_LIFE, false)) {
                 setVarbit(player, 3372, 1)
+                sendMessage(player, "You open the trapdoor.")
+            } else {
+                sendDialogue(player, "The trapdoor won't open.")
             }
             return@on true
         }
@@ -33,6 +36,7 @@ class CreatureCreationListener : InteractionListener {
 
         on(Scenery.TRAPDOOR_21922, IntType.SCENERY, "close") { player, _ ->
             setVarbit(player, 3372, 0)
+            sendMessage(player, "You close the trapdoor.")
             return@on true
         }
 
@@ -64,7 +68,9 @@ class CreatureCreationListener : InteractionListener {
         on(Scenery.SYMBOL_OF_LIFE_21893, IntType.SCENERY, "inspect") { player, node ->
             CreatureCreation.forLocation(node.location)?.let {
                 sendDialogue(player, "You see some text scrolled above the altar on a symbol...")
-                sendDoubleItemDialogue(player, it.firstMaterial, it.secondMaterial, "${it.material}...")
+                addDialogueAction(player) { _, _ ->
+                    sendDoubleItemDialogue(player, it.firstMaterial, it.secondMaterial, "${it.material}...")
+                }
             }
             return@on true
         }
@@ -74,31 +80,27 @@ class CreatureCreationListener : InteractionListener {
          */
 
         CreatureCreation.values().forEach { symbol ->
-            onUseWith(
-                IntType.SCENERY,
-                symbol.materials.toIntArray(),
-                Scenery.SYMBOL_OF_LIFE_21893,
-            ) { player, used, with ->
+            onUseWith(IntType.SCENERY, symbol.materials.toIntArray(), Scenery.SYMBOL_OF_LIFE_21893) { player, used, with ->
                 val item = used.asItem()
-                if (with.location == symbol.location) {
-                    if (symbol.materials.contains(item.id)) {
-                        val attributeKey = "${symbol.name}:${item.id}"
-                        if (!getAttribute(player, attributeKey, false)) {
-                            player.lock(1)
-                            removeItem(player, item.id)
-                            animate(player, Animations.HUMAN_BURYING_BONES_827)
-                            sendDialogueLines(player, "You place the ${getItemName(item.id).lowercase()} on the altar.")
-                            setAttribute(player, attributeKey, true)
-                        } else {
-                            sendMessage(
-                                player,
-                                "You already placed the ${getItemName(item.id).lowercase()} on the altar!",
-                            )
-                        }
-                    }
-                } else {
+                val attributeKey = "${symbol.name}:${item.id}"
+
+                if (with.location != symbol.location) {
                     sendMessage(player, "You can't reach.")
+                    return@onUseWith true
                 }
+
+                if (!symbol.materials.contains(item.id)) return@onUseWith true
+
+                if (getAttribute(player, attributeKey, false)) {
+                    sendMessage(player, "You already placed the ${getItemName(item.id).lowercase()} on the altar!")
+                } else {
+                    player.lock(1)
+                    removeItem(player, item.id)
+                    animate(player, Animations.HUMAN_BURYING_BONES_827)
+                    sendDialogueLines(player, "You place the ${getItemName(item.id).lowercase()} on the altar.")
+                    setAttribute(player, attributeKey, true)
+                }
+
                 return@onUseWith true
             }
         }
@@ -113,7 +115,7 @@ class CreatureCreationListener : InteractionListener {
             if (symbol != null && required == true) {
                 activateAltar(player, symbol, node)
             } else {
-                sendNPCDialogue(player, NPCs.HOMUNCULUS_5581, "You no haveee the two materials need.")
+                sendNPCDialogue(player, NPCs.HOMUNCULUS_5581, "You no haveee the two materials need.", FaceAnim.OLD_NORMAL)
             }
             return@on true
         }
@@ -144,21 +146,19 @@ class CreatureCreationListener : InteractionListener {
     /**
      * Spawns a creature at the designated location after altar activation.
      */
-    private fun spawnCreature(
-        player: Player,
-        symbol: CreatureCreation,
-    ) {
+    private fun spawnCreature(player: Player, symbol: CreatureCreation, ) {
         val spawnLocation =
             if (symbol.location == Location(3018, 4410, 0)) {
                 Location.getRandomLocation(Location(3022, 4403, 0), 2, true)
             } else {
                 Location.create(symbol.location.x - 1, symbol.location.y - 3, 0)
             }
-        val creature =
-            core.game.node.entity.npc.NPC
-                .create(symbol.npcId, spawnLocation)
-        creature.init()
-        creature.attack(player)
-        creature.isRespawn = false
+        val creature = core.game.node.entity.npc.NPC.create(symbol.npcId, spawnLocation)
+        playAudio(player, 3417)
+        runTask(player, 2) {
+            creature.init()
+            creature.attack(player)
+            creature.isRespawn = false
+        }
     }
 }

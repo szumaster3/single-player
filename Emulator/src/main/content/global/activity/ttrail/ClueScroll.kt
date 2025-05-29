@@ -1,6 +1,8 @@
 package content.global.activity.ttrail
 
 import core.api.log
+import core.api.playAudio
+import core.api.playJingle
 import core.api.toIntArray
 import core.game.component.Component
 import core.game.node.entity.player.Player

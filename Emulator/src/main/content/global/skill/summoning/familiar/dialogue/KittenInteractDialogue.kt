@@ -1,9 +1,6 @@
 package content.global.skill.summoning.familiar.dialogue
 
-import core.api.animate
-import core.api.sendDialogueOptions
-import core.api.sendMessage
-import core.api.setTitle
+import core.api.*
 import core.game.dialogue.Dialogue
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
@@ -34,6 +31,7 @@ class KittenInteractDialogue(
                     1 -> {
                         player.familiarManager.familiar.face(player)
                         animate(player, PLAYER_STROKE_ANIMATION)
+                        playAudio(player, 340)
                         player.familiarManager.familiar.animate(KITTEN_STROKE_ANIMATION)
                         player.familiarManager.familiar.sendChat("Purr...purr...")
                         interpreter.sendDialogues(player, null, "That cat sure loves to be stroked.")
@@ -61,6 +59,7 @@ class KittenInteractDialogue(
                         if (!cant) {
                             sendMessage(player, "Your cat cannot get to its prey.")
                         } else {
+                            playAudio(player, 339)
                             player.familiarManager.familiar.sendChat("Meeeoooooowwww!")
                             val path = Pathfinder.find(player.familiarManager.familiar, rat)
                             path.walk(player.familiarManager.familiar)

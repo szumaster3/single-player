@@ -56,38 +56,39 @@ class GhostBouncerNPC(
     override fun finalizeDeath(killer: Entity?) {
         if (killer is Player) {
             val player = killer.asPlayer()
-            lock(player, 100)
-            lockInteractions(player, 100)
-            sendMessage(player, "You grab the severed leg and throw it to distract the hound.")
-            animate(player, Animation(Animations.SEVERED_LEG_ATTACK_5812))
-            sendChat(player, "Away, darn spot!")
-            spawnProjectile(
-                source = Projectile.getLocation(killer),
-                dest = Location.getRandomLocation(Projectile.getLocation(player), 5, true),
-                projectile = 1024,
-                startHeight = 40,
-                endHeight = 30,
-                delay = 0,
-                speed = 250,
-                angle = 0,
-            )
-            if (removeItem(player, Items.SEVERED_LEG_10857)) {
-                lock(player, 8)
-                runTask(player, 8) {
-                    sendItemDialogue(
-                        killer.asPlayer(),
-                        Items.SHADOW_SWORD_10858,
-                        "You receive a shadow sword and 2000 Slayer xp.",
-                    )
-                    rewardXP(player, Skills.SLAYER, 2000.0)
-                    addItemOrDrop(player, Items.SHADOW_SWORD_10858)
-                    /*
-                     * Finish the general shadows mini-quest.
-                     */
-                    GeneralShadow.setShadowProgress(player, 5)
-                    unlock(player)
-                }
+            if (!removeItem(player, Items.SEVERED_LEG_10857)) {
+                return
             }
+            lock(player, 10)
+            submitIndividualPulse(
+                player,
+                object : Pulse(1) {
+                    var counter = 0
+
+                    override fun pulse(): Boolean {
+                        when (counter++) {
+                            0 -> {
+                                sendMessage(player, "You grab the severed leg and throw it to distract the hound.")
+                                playAudio(player, 3415)
+                                spawnProjectile(Projectile.getLocation(killer), Location.getRandomLocation(Projectile.getLocation(player), 5, true), 1024, 40, 30, 1, 250, 0)
+                            }
+                            1 -> sendChat(player, "Away, darn spot!")
+                            2 -> animate(player, Animation(Animations.SEVERED_LEG_ATTACK_5812))
+                            8 -> {
+                                rewardXP(player, Skills.SLAYER, 2000.0)
+                                sendItemDialogue(
+                                    player,
+                                    Items.SHADOW_SWORD_10858,
+                                    "You receive a shadow sword and 2000 Slayer xp."
+                                )
+                                addItemOrDrop(player, Items.SHADOW_SWORD_10858)
+                                GeneralShadow.setShadowProgress(player, 5)
+                                return true
+                            }
+                        }
+                        return false
+                    }
+                })
         }
         clear()
         super.finalizeDeath(killer)

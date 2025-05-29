@@ -2,6 +2,7 @@ package content.region.morytania.quest.druidspirit
 
 import content.region.morytania.handlers.npc.GhastNPC
 import core.api.*
+import core.api.item.produceGroundItem
 import core.api.quest.getQuestStage
 import core.api.quest.hasRequirement
 import core.api.quest.isQuestComplete
@@ -14,11 +15,9 @@ import core.game.node.item.GroundItemManager
 import core.game.node.item.Item
 import core.game.shops.Shops
 import core.game.world.map.Location
+import core.game.world.update.flag.context.Animation
 import core.tools.Log
-import org.rs.consts.Items
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
-import org.rs.consts.Scenery
+import org.rs.consts.*
 
 class NatureSpiritListeners : InteractionListener {
 
@@ -168,6 +167,7 @@ class NatureSpiritListeners : InteractionListener {
                 return@on false
             }
             if (NSUtils.castBloom(player)) {
+                sendMessage(player, "You cast this spell in the swamp.")
                 removeItem(player, node.asItem(), Container.INVENTORY)
                 addItem(player, Items.A_USED_SPELL_2969)
             }
@@ -181,30 +181,32 @@ class NatureSpiritListeners : InteractionListener {
                 return@on true
             }
 
-            val ingredients = listOf(
-                Triple(PEAR, 3, 9),
-                Triple(STEM, 3, 6),
-                Triple(FUNGUS, 3, 3)
-            )
+            val pear   = amountInInventory(player, PEAR)
+            val stem   = amountInInventory(player, STEM)
+            val fungus = amountInInventory(player, FUNGUS)
 
-            for ((itemId, requiredAmount, pouchAmount) in ingredients) {
-                if (amountInInventory(player, itemId) >= requiredAmount) {
-                    if (node.id != Items.DRUID_POUCH_2958) {
-                        removeItem(player, node, Container.INVENTORY)
-                    }
-                    removeItem(player, Item(itemId, requiredAmount), Container.INVENTORY)
-                    addItem(player, Items.DRUID_POUCH_2958, pouchAmount)
+            val (itemId, pouchAmount) = when {
+                pear   >= 3 -> PEAR   to 9
+                stem   >= 3 -> STEM   to 6
+                fungus >= 3 -> FUNGUS to 3
+                else -> {
+                    sendMessage(player, "You need 3 fungus before you can do that.")
                     return@on true
                 }
             }
 
-            sendDialogue(player, "You need 3 fungus before you can do that.")
+            if (node.id != Items.DRUID_POUCH_2958) {
+                removeItem(player, node, Container.INVENTORY)
+            }
+            removeItem(player, Item(itemId, 3), Container.INVENTORY)
+            addItem(player, Items.DRUID_POUCH_2958, pouchAmount)
+            sendMessage(player, "You add 3 natures harvests to your druid pouch.")
             return@on true
         }
 
         onUseWith(IntType.SCENERY, Items.SILVER_SICKLE_2961, NATURE_ALTAR) { player, _, _ ->
-            sendItemDialogue(player, Items.SILVER_SICKLEB_2963, "You dump the sickle into the waters.")
             if (removeItem(player, Items.SILVER_SICKLE_2961, Container.INVENTORY)) {
+                sendItemDialogue(player, Items.SILVER_SICKLEB_2963, "You dump the sickle into the waters.")
                 addItem(player, Items.SILVER_SICKLEB_2963, 1)
             }
             return@onUseWith true
@@ -215,58 +217,60 @@ class NatureSpiritListeners : InteractionListener {
         }
 
         on(NATURE_STONE, IntType.SCENERY, "search") { player, _ ->
-            sendDialogueLines(
-                player,
-                "You search the stone and find that it has some sort of nature symbol",
-                "scratched into it.",
-            )
+            sendDialogueLines(player, "You search the stone and find that it has some sort of nature symbol", "scratched into it.")
             return@on true
         }
 
         on(FAITH_STONE, IntType.SCENERY, "search") { player, _ ->
-            sendDialogueLines(
-                player,
-                "You search the stone and find that it has some sort of faith symbol",
-                "scratched into it.",
-            )
+            sendDialogueLines(player, "You search the stone and find that it has some sort of faith symbol", "scratched into it.")
             return@on true
         }
 
         on(FREELY_GIVEN_STONE, IntType.SCENERY, "search") { player, _ ->
-            sendDialogueLines(
-                player,
-                "You search the stone and find it has some sort of spirit symbol",
-                "scratched into it.",
-            )
+            sendDialogueLines(player, "You search the stone and find it has some sort of spirit symbol", "scratched into it.")
             return@on true
         }
 
         onUseWith(IntType.SCENERY, items, *stones) { player, used, with ->
-            when (used.id) {
-                USED_SPELLCARD -> {
-                    if (with.id == FREELY_GIVEN_STONE) {
-                        if (removeItem(player, used, Container.INVENTORY)) {
-                            sendNPCDialogue(player, NPCs.FILLIMAN_TARLOCK_1050, "Aha, yes, that seems right well done!")
-                            sendMessage(player, "The stone seems to absorb the used spell scroll.")
-                            NSUtils.flagCardPlaced(player)
-                        }
-                    } else {
-                        sendMessage(player, "You try to put the item on the stone, but it just moves off.")
+
+            fun absorbItem(message: String, onSuccess: () -> Unit) {
+                if (!removeItem(player, used, Container.INVENTORY)) {
+                    sendMessage(player, "You try to put the item on the stone, but it just moves off.")
+                    return
+                }
+                val anim = Animations.HUMAN_BURYING_BONES_827
+                animate(player, anim)
+                runTask(player, animationDuration(Animation(anim))) {
+                    produceGroundItem(player, used.id, 1, with.location)
+                    sendNPCDialogue(player, NPCs.FILLIMAN_TARLOCK_1050, "Aha, yes, that seems right well done!")
+                    sendMessage(player, message)
+                    onSuccess()
+                }
+            }
+
+            if (getQuestStage(player, Quests.NATURE_SPIRIT) == 0) {
+                sendMessage(player, "You try to put the item on the stone, but it just moves off.")
+                return@onUseWith true
+            }
+
+            when {
+                used.id == USED_SPELLCARD && with.id == FREELY_GIVEN_STONE -> {
+                    absorbItem("The stone seems to absorb the used spell scroll.") {
+                        NSUtils.flagCardPlaced(player)
                     }
                 }
 
-                FUNGUS -> {
-                    if (with.id == NATURE_STONE) {
-                        if (removeItem(player, used, Container.INVENTORY)) {
-                            sendNPCDialogue(player, NPCs.FILLIMAN_TARLOCK_1050, "Aha, yes, that seems right well done!")
-                            sendMessage(player, "The stone seems to absorb the used fungus.")
-                            NSUtils.flagFungusPlaced(player)
-                        }
-                    } else {
-                        sendMessage(player, "You try to put the item on the stone, but it just moves off.")
+                used.id == FUNGUS && with.id == NATURE_STONE -> {
+                    absorbItem("The stone seems to absorb the fungus.") {
+                        NSUtils.flagFungusPlaced(player)
                     }
                 }
+
+                else -> {
+                    sendMessage(player, "You try to put the item on the stone, but it just moves off.")
+                }
             }
+
             return@onUseWith true
         }
 

@@ -23,7 +23,7 @@ class SilverSickleListener : InteractionListener {
                 return@on true
             }
 
-            if (!inZone(player, "Mort Myre Swamp")) {
+            if (!inBorders(player, getRegionBorders(13620)) || inBorders(player, getRegionBorders(13621))) {
                 sendMessage(player, "You can only cast the spell in the Mort Myre Swamp.")
                 return@on true
             }
@@ -42,7 +42,7 @@ class SilverSickleListener : InteractionListener {
             return@on true
         }
 
-        onEquip(Items.ENCHANTED_SICKLE_EMERALDB_13156) { player, node ->
+        onEquip(Items.ENCHANTED_SICKLE_EMERALDB_13156) { _, _ ->
             return@onEquip false
         }
 

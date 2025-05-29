@@ -18,8 +18,7 @@ import core.plugin.Initializable;
 import core.plugin.Plugin;
 import org.rs.consts.Animations;
 
-import static core.api.ContentAPIKt.sendDialogueOptions;
-import static core.api.ContentAPIKt.setTitle;
+import static core.api.ContentAPIKt.*;
 import static core.tools.GlobalsKt.DARK_RED;
 
 /**
@@ -145,6 +144,7 @@ public class PortalChamberPlugin extends OptionHandler {
                 for (Locations l : Locations.values()) {
                     if (objectName.toLowerCase().contains(l.name().toLowerCase())) {
                         player.teleport(l.location);
+                        playAudio(player, 984);
                         break;
                     }
                 }

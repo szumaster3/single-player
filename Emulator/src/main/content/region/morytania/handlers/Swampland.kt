@@ -1,6 +1,9 @@
 package content.region.morytania.handlers
 
 import core.api.getRegionBorders
+import core.api.removeAttribute
+import core.game.node.entity.Entity
+import core.game.node.entity.player.Player
 import core.game.world.map.zone.MapZone
 import core.game.world.map.zone.ZoneRestriction
 
@@ -13,6 +16,14 @@ class Swampland : MapZone("Mort Myre Swamp", true) {
     }
 
     fun getRestrictions(): Array<ZoneRestriction> = arrayOf(ZoneRestriction.CANNON)
+
+
+    override fun leave(e: Entity?, logout: Boolean): Boolean {
+        if (e is Player) {
+            removeAttribute(e, "lastRepelTick")
+        }
+        return super.leave(e, logout)
+    }
 
     companion object {
         val instance = Swampland()

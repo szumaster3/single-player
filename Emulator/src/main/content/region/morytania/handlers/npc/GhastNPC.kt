@@ -42,37 +42,43 @@ class GhastNPC : AbstractNPC {
 
     override fun handleTickActions() {
         super.handleTickActions()
-        if (id == ids[0] && RandomFunction.roll(35)) {
-            val players = RegionManager.getLocalPlayers(this, supportRange).filter { !it.inCombat() }
-            if (players.isNotEmpty()) {
-                val player = players.random()
-                submitIndividualPulse(
-                    this,
-                    object : MovementPulse(this, player) {
-                        override fun pulse(): Boolean {
-                            playAudio(player, Sounds.GHAST_APPEAR_432)
-                            animate(Animation(1093))
-                            attemptLifeSiphon(player)
-                            return true
-                        }
-                    },
-                )
-            }
+
+        val playersInRange = RegionManager.getLocalPlayers(this, supportRange).filter { !it.inCombat() }
+
+        if (id == ids[0] && RandomFunction.roll(35) && playersInRange.isNotEmpty()) {
+            val player = playersInRange.random()
+            submitIndividualPulse(
+                this,
+                object : MovementPulse(this, player) {
+                    override fun pulse(): Boolean {
+                        playAudio(player, Sounds.GHAST_APPEAR_432)
+                        animate(Animation(1093))
+                        attemptLifeSiphon(player)
+                        return true
+                    }
+                }
+            )
         } else {
             val ticksTransformed = getWorldTicks() - getAttribute(this, "woke", 0)
             if (!inCombat() && ticksTransformed > 10) {
                 reTransform()
             }
         }
-        val playersInRange = RegionManager.getLocalPlayers(this, supportRange).filter { !it.inCombat() }
+
+        val currentTick = getWorldTicks()
         for (player in playersInRange) {
-            if (inInventory(player, Items.SILVER_SICKLEB_2963) || inEquipment(player, Items.SILVER_SICKLEB_2963)) {
-                player.face(findLocalNPC(player, this.id)?.asNpc())
-                animate(player, Animations.DEFEND_MACE_SHIELD_404)
-                sendChat(findLocalNPC(player, this.id)!!, "OOooooohhh")
-                sendMessage(player, "The power of the blessed silver sickle prevents the swamp from decaying you.")
-                break
-            }
+            val hasSickle = inInventory(player, Items.SILVER_SICKLEB_2963) || inEquipment(player, Items.SILVER_SICKLEB_2963)
+            if (!hasSickle) continue
+
+            val lastRepel = getAttribute(player, "lastRepelTick", 0)
+            if (currentTick - lastRepel < 100) continue
+
+            setAttribute(player, "lastRepelTick", currentTick)
+
+            player.face(this)
+            animate(player, Animations.DEFEND_MACE_SHIELD_404)
+            sendChat(this.asNpc(), "OOooooohhh")
+            sendMessage(player, "The power of the blessed silver sickle prevents the swamp from decaying you.")
         }
     }
 
@@ -80,8 +86,6 @@ class GhastNPC : AbstractNPC {
 
     fun attemptLifeSiphon(player: Player) {
         if (NSUtils.activatePouch(player, this)) return
-
-        val rottenFoodItem = Items.ROTTEN_FOOD_2959
         val inventoryItems = player.inventory.toArray().filterNotNull()
 
         GlobalScope.launch {
@@ -92,8 +96,9 @@ class GhastNPC : AbstractNPC {
                 }
 
             if (foodInInventory != null) {
+                playAudio(player, Sounds.FOOD_ROT_1494)
                 removeItem(player, foodInInventory, Container.INVENTORY)
-                addItem(player, rottenFoodItem)
+                addItem(player, Items.ROTTEN_FOOD_2959)
                 sendMessage(player, "You feel something attacking your backpack, and smell a terrible stench.")
                 return@launch
             }
@@ -111,7 +116,7 @@ class GhastNPC : AbstractNPC {
                     }
 
                 if (foodFound != null) {
-                    addItem(player, rottenFoodItem)
+                    addItem(player, Items.ROTTEN_FOOD_2959, 1)
                     adjustCharge(foodInSatchel, -(foodFound + BASE_CHARGE_AMOUNT))
                     sendMessage(player, "You feel something attacking your satchel, and smell a terrible stench.")
                     return@launch

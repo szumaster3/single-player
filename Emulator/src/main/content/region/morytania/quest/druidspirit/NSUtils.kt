@@ -30,16 +30,8 @@ object NSUtils {
 
     fun incrementGhastKC(player: Player) {
         setAttribute(player, "/save:ns:ghasts_killed", getGhastKC(player) + 1)
-        val msg =
-            when (getGhastKC(player)) {
-                1 -> "That's one down, two more to go."
-                2 -> "Two down, only one more to go."
-                3 -> "That's it! I've killed all 3 Ghasts!"
-                else -> ""
-            }
-
-        if (!msg.isEmpty()) {
-            sendMessage(player, msg)
+        if (getGhastKC(player) == 3) {
+            sendMessage(player, "That's all three Ghasts!")
         }
     }
 
@@ -61,19 +53,22 @@ object NSUtils {
 
                     override fun pulse(): Boolean {
                         when (ticks++) {
-                            2 ->
+                            2 -> {
+                                playAudio(player, 1495)
                                 visualize(
                                     attacker,
                                     -1,
                                     Graphics(org.rs.consts.Graphics.FIRST_CONTACT_GOES_WITH_ABOVE_269, 125),
                                 )
-
-                            3 ->
+                            }
+                            3 -> {
                                 attacker.transform(attacker.id + 1).also {
+                                    playAudio(player, 1490)
                                     attacker.attack(player)
                                     attacker.setAttribute("woke", getWorldTicks())
                                     return true
                                 }
+                            }
                         }
                         return false
                     }
@@ -105,21 +100,26 @@ object NSUtils {
                 if (obj.name.equals("Rotting log", ignoreCase = true) && player.skills.prayerPoints >= 1) {
                     if (player.location.withinDistance(obj.location, 2)) {
                         SceneryBuilder.replace(obj, obj.transform(3509))
+                        playAudio(player, Sounds.BLOOM_MUSHROOM_1491)
                         success = true
                     }
                 }
                 if (obj.name.equals("Rotting branch", ignoreCase = true) && player.skills.prayerPoints >= 1) {
                     if (player.location.withinDistance(obj.location, 2)) {
                         SceneryBuilder.replace(obj, obj.transform(3511))
+                        playAudio(player, Sounds.BLOOM_BRANCH_1489)
                         success = true
                     }
                 }
                 if (obj.name.equals("A small bush", ignoreCase = true) && player.skills.prayerPoints >= 1) {
                     if (player.location.withinDistance(obj.location, 2)) {
                         SceneryBuilder.replace(obj, obj.transform(3513))
+                        playAudio(player, Sounds.BLOOM_PEARS_1492)
                         success = true
                     }
                 }
+            } else {
+                sendMessage(player, "There is no suitable material to be affected in this area.")
             }
         }
         return success

@@ -297,6 +297,7 @@ public class AnimalMagnetismPlugin extends OptionHandler {
                     if (player.getInventory().remove(AnimalMagnetism.RESEARCH_NOTES)) {
                         player.setAttribute("note-disabled", true);
                         player.getInventory().add(AnimalMagnetism.TRANSLATED_NOTES);
+                        playAudio(player, 3283);
                         sendMessage(player, "It suddenly all makes sense.");
                     }
                 }

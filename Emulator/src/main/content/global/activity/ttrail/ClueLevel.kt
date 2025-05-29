@@ -82,7 +82,7 @@ enum class ClueLevel(
                         addItemOrDrop(player, reward.id, reward.amount)
                         rewardValue += reward.value
                     }
-
+                    playAudio(player, 50)
                     playerTrails.incrementClues(clueLevel)
                     playerTrails.clearTrail()
                     playJingle(player, 193)

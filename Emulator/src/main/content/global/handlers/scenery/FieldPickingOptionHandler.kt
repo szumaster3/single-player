@@ -66,13 +66,13 @@ class FieldPickingOptionHandler : OptionHandler() {
                 true,
             ) &&
             (
-                player.equipment[EquipmentContainer.SLOT_HANDS] == null ||
-                    player.equipment[EquipmentContainer.SLOT_HANDS] != null &&
-                    !player.equipment[EquipmentContainer.SLOT_HANDS].name.contains(
-                        "glove",
-                        true,
+                    player.equipment[EquipmentContainer.SLOT_HANDS] == null ||
+                            player.equipment[EquipmentContainer.SLOT_HANDS] != null &&
+                            !player.equipment[EquipmentContainer.SLOT_HANDS].name.contains(
+                                "glove",
+                                true,
+                            )
                     )
-            )
         ) {
             player.packetDispatch.sendMessage("You have been stung by the nettles!")
             player.impactHandler.manualHit(player, 2, HitsplatType.POISON)
@@ -99,9 +99,7 @@ class FieldPickingOptionHandler : OptionHandler() {
                         SceneryBuilder.replace(scenery, full)
                     }
                     val isBloomPlant =
-                        plant == PickingPlant.FUNGI_ON_LOG ||
-                            plant == PickingPlant.BUDDING_BRANCH ||
-                            plant == PickingPlant.GOLDEN_PEAR_BUSH
+                        plant == PickingPlant.FUNGI_ON_LOG || plant == PickingPlant.BUDDING_BRANCH || plant == PickingPlant.GOLDEN_PEAR_BUSH || plant == PickingPlant.GOLDEN_PEAR_BUSH
                     if (isBloomPlant) {
                         full = scenery.transform(scenery.id - 1)
                         SceneryBuilder.replace(scenery, full)
@@ -193,7 +191,7 @@ class FieldPickingOptionHandler : OptionHandler() {
         ONION_0(objectId = Scenery.ONION_3366, reward = Items.ONION_1957, respawn = 30),
         ONION_1(objectId = Scenery.ONION_5538, reward = Items.ONION_1957, respawn = 30),
         FUNGI_ON_LOG(objectId = Scenery.FUNGI_ON_LOG_3509, reward = Items.MORT_MYRE_FUNGUS_2970, respawn = -1),
-        BUDDING_BRANCH(objectId = Scenery.BUDDING_BRANCH_3511, reward = Items.TEAM_29_CAPE_4372, respawn = -1),
+        BUDDING_BRANCH(objectId = Scenery.BUDDING_BRANCH_3511, reward = Items.MORT_MYRE_STEM_2972, respawn = -1),
         GOLDEN_PEAR_BUSH(objectId = Scenery.A_GOLDEN_PEAR_BUSH_3513, reward = Items.MORT_MYRE_PEAR_2974, respawn = -1),
         GLOWING_FUNGUS_0(objectId = Scenery.GLOWING_FUNGUS_4932, reward = Items.GLOWING_FUNGUS_4075, respawn = 30),
         GLOWING_FUNGUS_1(objectId = Scenery.GLOWING_FUNGUS_4933, reward = Items.GLOWING_FUNGUS_4075, respawn = 30),
