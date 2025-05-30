@@ -69,7 +69,14 @@ class JangerberryIsleShortcut : InteractionListener {
          */
 
         on(Scenery.ROPESWING_2325, IntType.SCENERY, "swing-on") { player, node ->
-            ropeSwing(player, node)
+            if (!player.location.withinDistance(node.location, 2)) {
+                sendMessage(player, "You cannot do that from here.")
+                return@on true
+            }
+
+            walkThen(player, Location(2501, 3087, 0)) {
+                ropeSwing(player, node)
+            }
             return@on true
         }
 
@@ -80,7 +87,7 @@ class JangerberryIsleShortcut : InteractionListener {
          * Pulse helper that walks to a location before interaction start.
          */
         private fun walkThen(player: Player, target: Location, afterWalk: () -> Unit) {
-            submitIndividualPulse(player, object : Pulse(1, player) {
+            submitIndividualPulse(player, object : Pulse(0, player) {
                 private var state = 0
                 private var moving = true
 
@@ -94,7 +101,7 @@ class JangerberryIsleShortcut : InteractionListener {
                     }
 
                     return when (++state) {
-                        1 -> {
+                        2 -> {
                             afterWalk()
                             true
                         }
@@ -122,7 +129,7 @@ class JangerberryIsleShortcut : InteractionListener {
                 playAudio(player, Sounds.SWING_ACROSS_2494)
                 animateScenery(player, node.asScenery(), 497, true)
             }
-            AgilityHandler.forceWalk(player, -1, player.location, destination, Animation.create(Animations.ROPE_SWING_751), 20, 22.0, "You skillfully swing across.")
+            AgilityHandler.forceWalk(player, -1, player.location, destination, Animation.create(Animations.ROPE_SWING_751), 20, 22.0, "You skillfully swing across.", 1)
         }
 
     }
