@@ -10,7 +10,8 @@ import core.net.event.MSHSWriteEvent;
 import java.nio.ByteBuffer;
 
 /**
- * The type Mshs event producer.
+ * Handles Management server events.
+ * @author Emperor
  */
 public final class MSHSEventProducer implements EventProducer {
 

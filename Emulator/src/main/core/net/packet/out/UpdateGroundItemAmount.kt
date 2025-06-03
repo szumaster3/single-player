@@ -6,7 +6,8 @@ import core.net.packet.OutgoingPacket
 import core.net.packet.context.BuildItemContext
 
 /**
- * The type Update ground item amount.
+ * Updates the ground item amount.
+ * @author Emperor
  */
 class UpdateGroundItemAmount : OutgoingPacket<BuildItemContext> {
     override fun send(context: BuildItemContext) {
@@ -19,12 +20,9 @@ class UpdateGroundItemAmount : OutgoingPacket<BuildItemContext> {
 
     companion object {
         /**
-         * Write io buffer.
-         *
-         * @param buffer    the buffer
-         * @param item      the item
-         * @param oldAmount the old amount
-         * @return the io buffer
+         * Writes the packet.
+         * @param buffer The buffer.
+         * @param item The item.
          */
         @JvmStatic
         fun write(buffer: IoBuffer, item: Item, oldAmount: Int): IoBuffer {

@@ -6,7 +6,8 @@ import core.net.packet.PacketHeader
 import core.net.packet.context.StringContext
 
 /**
- * The type String packet.
+ * The outgoing set component string packet.
+ * @author Emperor
  */
 class StringPacket : OutgoingPacket<StringContext> {
     override fun send(context: StringContext) {

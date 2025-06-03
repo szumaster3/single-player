@@ -5,19 +5,27 @@ import core.game.world.map.RegionChunk;
 import core.net.packet.Context;
 
 /**
- * The type Clear chunk context.
+ * The packet context for the clear region chunk outgoing packet.
+ *
+ * @author Emperor
  */
 public final class ClearChunkContext implements Context {
 
+    /**
+     * The player.
+     */
     private final Player player;
 
+    /**
+     * The region chunk to clear.
+     */
     private final RegionChunk chunk;
 
     /**
-     * Instantiates a new Clear chunk context.
+     * Constructs a new {@code ClearChunkContext} {@code Object}.
      *
-     * @param player the player
-     * @param chunk  the chunk
+     * @param player The player.
+     * @param chunk  The chunk to clear.
      */
     public ClearChunkContext(Player player, RegionChunk chunk) {
         this.player = player;
@@ -30,9 +38,9 @@ public final class ClearChunkContext implements Context {
     }
 
     /**
-     * Gets chunk.
+     * Gets the chunk.
      *
-     * @return the chunk
+     * @return The chunk.
      */
     public RegionChunk getChunk() {
         return chunk;

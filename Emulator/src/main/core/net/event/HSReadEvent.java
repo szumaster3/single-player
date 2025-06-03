@@ -1,5 +1,6 @@
 package core.net.event;
 
+import core.ServerConstants;
 import core.net.IoReadEvent;
 import core.net.IoSession;
 import core.net.lobby.WorldList;
@@ -14,20 +15,20 @@ import java.util.Map;
 import static core.api.ContentAPIKt.log;
 
 /**
- * The type Hs read event.
+ * Handles handshake read events.
+ *
+ * @author Emperor
  */
 public final class HSReadEvent extends IoReadEvent {
 
-    /**
-     * The Count.
-     */
+    // debug
     static Map<String, Integer> count = new HashMap<>();
 
     /**
-     * Instantiates a new Hs read event.
+     * Constructs a new {@code HSReadEvent}.
      *
-     * @param session the session
-     * @param buffer  the buffer
+     * @param session The session.
+     * @param buffer  The buffer.
      */
     public HSReadEvent(IoSession session, ByteBuffer buffer) {
         super(session, buffer);
@@ -52,7 +53,7 @@ public final class HSReadEvent extends IoReadEvent {
                 //int sub_revision = buffer.getInt();
                 buffer.flip();
 
-                if (revision != 530) {// || sub_revision != Constants.CLIENT_BUILD) {
+                if (revision != ServerConstants.REVISION) {//|| sub_revision != Constants.CLIENT_BUILD) {
                     session.disconnect();
                     break;
                 }

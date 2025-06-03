@@ -4,6 +4,10 @@ import core.game.node.entity.player.Player
 import core.game.node.entity.player.info.PlayerDetails
 import core.game.node.entity.player.info.login.PlayerParser
 
+/**
+ * Represents a class that is used to load a player, or details of it.
+ * @author Vexia
+ */
 object PlayerLoader {
     @JvmStatic
     fun getPlayerFile(name: String?): Player {

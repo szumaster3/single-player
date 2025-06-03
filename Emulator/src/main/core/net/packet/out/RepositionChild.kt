@@ -5,7 +5,8 @@ import core.net.packet.OutgoingPacket
 import core.net.packet.context.ChildPositionContext
 
 /**
- * The type Reposition child.
+ * Handles the "reposition interface child" outgoing packet.
+ * @author Emperor
  */
 class RepositionChild : OutgoingPacket<ChildPositionContext> {
     override fun send(context: ChildPositionContext) {

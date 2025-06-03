@@ -10,7 +10,8 @@ import core.net.event.RegistryWriteEvent;
 import java.nio.ByteBuffer;
 
 /**
- * The type Registry event producer.
+ * Handles world server registry.
+ * @author Emperor
  */
 public final class RegistryEventProducer implements EventProducer {
 

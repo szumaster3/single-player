@@ -4,22 +4,33 @@ import core.game.node.entity.player.Player;
 import core.net.packet.Context;
 
 /**
- * The type Interaction option context.
+ * The context implementation used for the InteractionOption outgoing packet.
+ *
+ * @author Emperor
  */
 public final class InteractionOptionContext implements Context {
 
+    /**
+     * The player reference.
+     */
     private final Player player;
 
+    /**
+     * The index.
+     */
     private final int index;
+    /**
+     * The name.
+     */
     private final String name;
     private boolean remove = false;
 
     /**
-     * Instantiates a new Interaction option context.
+     * Constructs a new {@code InteractionOptionContext} {@code Object}.
      *
-     * @param player the player
-     * @param index  the index
-     * @param name   the name
+     * @param player The player.
+     * @param index  The index.
+     * @param name   The option name.
      */
     public InteractionOptionContext(Player player, int index, String name) {
         this.player = player;
@@ -28,14 +39,6 @@ public final class InteractionOptionContext implements Context {
         this.remove = false;
     }
 
-    /**
-     * Instantiates a new Interaction option context.
-     *
-     * @param player the player
-     * @param index  the index
-     * @param name   the name
-     * @param remove the remove
-     */
     public InteractionOptionContext(Player player, int index, String name, boolean remove) {
         this.player = player;
         this.index = index;
@@ -48,28 +51,23 @@ public final class InteractionOptionContext implements Context {
         return player;
     }
 
-    /**
-     * Is remove boolean.
-     *
-     * @return the boolean
-     */
     public boolean isRemove() {
         return remove;
     }
 
     /**
-     * Gets index.
+     * Gets the index.
      *
-     * @return the index
+     * @return The index.
      */
     public int getIndex() {
         return index;
     }
 
     /**
-     * Gets name.
+     * Gets the name.
      *
-     * @return the name
+     * @return The name.
      */
     public String getName() {
         return name;

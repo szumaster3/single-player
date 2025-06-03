@@ -4,19 +4,27 @@ import core.game.node.entity.player.Player;
 import core.net.packet.Context;
 
 /**
- * The type Game message context.
+ * The game message packet context.
+ *
+ * @author Emperor
  */
 public final class GameMessageContext implements Context {
 
-    private Player player;
-
-    private String message;
+    /**
+     * The player reference.
+     */
+    private final Player player;
 
     /**
-     * Instantiates a new Game message context.
+     * The game message.
+     */
+    private final String message;
+
+    /**
+     * Construct a new {@code GameMessageContext} {@code Object}.
      *
-     * @param player  the player
-     * @param message the message
+     * @param player  The player.
+     * @param message The game message.
      */
     public GameMessageContext(Player player, String message) {
         this.player = player;
@@ -29,9 +37,9 @@ public final class GameMessageContext implements Context {
     }
 
     /**
-     * Gets message.
+     * Get the game message.
      *
-     * @return the message
+     * @return The game message.
      */
     public String getMessage() {
         return message;

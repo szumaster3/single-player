@@ -5,22 +5,33 @@ import core.game.system.communication.ClanRepository;
 import core.net.packet.Context;
 
 /**
- * The type Clan context.
+ * The packet context for clan-related outgoing packets.
+ *
+ * @author Emperor
  */
 public final class ClanContext implements Context {
 
+    /**
+     * The player
+     */
     private final Player player;
 
+    /**
+     * The clan instance.
+     */
     private final ClanRepository clan;
 
+    /**
+     * If the player is leaving the clan.
+     */
     private final boolean leave;
 
     /**
-     * Instantiates a new Clan context.
+     * Constructs a new {@code ClanContext} {@code Object}.
      *
-     * @param player the player
-     * @param clan   the clan
-     * @param leave  the leave
+     * @param player the player.
+     * @param clan   the clan.
+     * @param leave  If the player is leaving the clan.
      */
     public ClanContext(Player player, ClanRepository clan, boolean leave) {
         this.player = player;
@@ -29,18 +40,18 @@ public final class ClanContext implements Context {
     }
 
     /**
-     * Gets clan.
+     * Gets the clan.
      *
-     * @return the clan
+     * @return The clan.
      */
     public ClanRepository getClan() {
         return clan;
     }
 
     /**
-     * Is leave boolean.
+     * Gets the leave.
      *
-     * @return the boolean
+     * @return The leave.
      */
     public boolean isLeave() {
         return leave;

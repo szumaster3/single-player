@@ -10,7 +10,8 @@ import core.net.event.MSWriteEvent;
 import java.nio.ByteBuffer;
 
 /**
- * The type Ms event producer.
+ * Handles Management server events.
+ * @author Emperor
  */
 public final class MSEventProducer implements EventProducer {
 

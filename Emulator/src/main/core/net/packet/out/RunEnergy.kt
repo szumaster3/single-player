@@ -5,7 +5,8 @@ import core.net.packet.OutgoingPacket
 import core.net.packet.context.PlayerContext
 
 /**
- * The type Run energy.
+ * The run energy outgoing packet.
+ * @author Emperor
  */
 class RunEnergy : OutgoingPacket<PlayerContext> {
     override fun send(context: PlayerContext) {

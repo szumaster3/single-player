@@ -1,9 +1,9 @@
 package core.net.packet;
 
 /**
- * The interface Outgoing packet.
- *
- * @param <Context> the type parameter
+ * Represents an outgoing packet.
+ * @author Emperor
+ * @param <Context>> The context type.
  */
 public interface OutgoingPacket<Context> {
 

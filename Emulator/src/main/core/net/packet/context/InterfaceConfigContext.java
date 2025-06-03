@@ -4,25 +4,39 @@ import core.game.node.entity.player.Player;
 import core.net.packet.Context;
 
 /**
- * The type Interface config context.
+ * The interface config packet context.
+ *
+ * @author Emperor
  */
 public class InterfaceConfigContext implements Context {
 
-    private Player player;
-
-    private int interfaceId;
-
-    private int childId;
-
-    private boolean hide;
+    /**
+     * The player reference.
+     */
+    private final Player player;
 
     /**
-     * Instantiates a new Interface config context.
+     * The interface id.
+     */
+    private final int interfaceId;
+
+    /**
+     * The child id.
+     */
+    private final int childId;
+
+    /**
+     * If the interface child should be hidden.
+     */
+    private final boolean hide;
+
+    /**
+     * Construct a new {@code InterfaceConfigContext} {@code Object}.
      *
-     * @param player      the player
-     * @param interfaceId the interface id
-     * @param childId     the child id
-     * @param hide        the hide
+     * @param player      The player reference.
+     * @param interfaceId The interface id.
+     * @param childId     The child id.
+     * @param hide        If the component should be hidden.
      */
     public InterfaceConfigContext(Player player, int interfaceId, int childId, boolean hide) {
         this.player = player;
@@ -32,27 +46,27 @@ public class InterfaceConfigContext implements Context {
     }
 
     /**
-     * Gets interface id.
+     * Get the interface id.
      *
-     * @return the interface id
+     * @return The interface id.
      */
     public int getInterfaceId() {
         return interfaceId;
     }
 
     /**
-     * Gets child id.
+     * Get the child id.
      *
-     * @return the child id
+     * @return The child id.
      */
     public int getChildId() {
         return childId;
     }
 
     /**
-     * Is hidden boolean.
+     * If is set.
      *
-     * @return the boolean
+     * @return If is set {@code true}.
      */
     public boolean isHidden() {
         return hide;

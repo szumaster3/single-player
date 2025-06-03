@@ -4,21 +4,20 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 /**
- * The interface Plugin manifest.
+ * Represents a plugin manifest.
+ * @author Emperor
  */
 @Retention(RetentionPolicy.RUNTIME)
 public @interface PluginManifest {
 
     /**
-     * Type plugin type.
-     *
-     * @return the plugin type
+     * Gets the plugin type.
+     * @return The plugin type.
      */
     PluginType type() default PluginType.ACTION;
 
     /**
-     * Name string.
-     *
+     * Get name.
      * @return the string
      */
     String name() default "";

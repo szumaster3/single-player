@@ -9,7 +9,6 @@ import core.game.world.GameWorld.Pulser
 import core.game.world.GameWorld.authenticator
 import core.net.IoSession
 import core.net.packet.`in`.Login
-import core.net.packet.`in`.Login.decryptRSABuffer
 import core.tools.Log
 import java.nio.ByteBuffer
 import java.util.*
@@ -17,16 +16,17 @@ import java.util.regex.Pattern
 
 /**
  * Handles new account registration processes.
+ * @author Vexia
  */
 object AccountRegister {
     private val PATTERN: Pattern = Pattern.compile("[a-z0-9_]{1,12}")
 
     /**
-     * Reads and handles registration packets based on their opcode.
+     * Reads the incoming opcode of an account register.
      *
-     * @param session The client's IO session.
-     * @param opcode The operation code representing the type of registration action.
-     * @param buffer The buffer containing the incoming data.
+     * @param session the session.
+     * @param opcode the opcode.
+     * @param buffer the buffer.
      */
     @JvmStatic
     fun read(session: IoSession, opcode: Int, buffer: ByteBuffer) {
@@ -121,10 +121,9 @@ object AccountRegister {
     }
 
     /**
-     * Sends a registration response back to the client.
+     * Sends a registry response code.
      *
-     * @param session The client's IO session.
-     * @param response The registration response to send.
+     * @param response the response.
      */
     private fun response(session: IoSession, response: RegistryResponse) {
         val buf = ByteBuffer.allocate(100)
@@ -133,10 +132,9 @@ object AccountRegister {
     }
 
     /**
-     * Checks if the provided username is invalid based on a regex pattern.
+     * Checks if a username is valid.
      *
-     * @param username The username to validate.
-     * @return True if the username is invalid, false otherwise.
+     * @return true if so.
      */
     private fun invalidUsername(username: String): Boolean {
         val matcher = PATTERN.matcher(username)

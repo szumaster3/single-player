@@ -7,7 +7,8 @@ import core.net.packet.context.ContactContext
 import core.tools.StringUtils.stringToLong
 
 /**
- * The type Contact packets.
+ * Handles the contact packet sending.
+ * @author Emperor
  */
 class ContactPackets : OutgoingPacket<ContactContext> {
     override fun send(context: ContactContext) {

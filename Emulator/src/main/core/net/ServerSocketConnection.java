@@ -5,7 +5,9 @@ import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 
 /**
- * The type Server socket connection.
+ * Represents a server socket and its selector.
+ *
+ * @author Emperor
  */
 public final class ServerSocketConnection {
 

@@ -3,27 +3,24 @@ package core.plugin;
 import core.game.node.entity.player.Player;
 
 /**
- * The interface Plugin.
- *
- * @param <T> the type parameter
+ * Represents a plugin.
+ * @author Emperor
+ * @param <T> The argument type.
  */
 public interface Plugin<T> {
 
     /**
-     * New instance plugin.
-     *
-     * @param arg the arg
-     * @return the plugin
-     * @throws Throwable the throwable
+     * Creates a new instance.
+     * @param arg The argument.
+     * @return The plugin instance created.
      */
     public Plugin<T> newInstance(T arg) throws Throwable;
 
     /**
-     * Fire event object.
-     *
-     * @param identifier the identifier
-     * @param args       the args
-     * @return the object
+     * Fires a plugin event.
+     * @param identifier The identifier.
+     * @param args The arguments.
+     * @return Specified by the plugin implementation.
      */
     Object fireEvent(String identifier, Object... args);
 

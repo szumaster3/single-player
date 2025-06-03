@@ -5,7 +5,8 @@ import core.net.packet.OutgoingPacket
 import core.net.packet.context.PlayerContext
 
 /**
- * The type Weight update.
+ * Handles the outgoing weight update packet.
+ * @author Emperor
  */
 class WeightUpdate : OutgoingPacket<PlayerContext> {
     override fun send(context: PlayerContext) {

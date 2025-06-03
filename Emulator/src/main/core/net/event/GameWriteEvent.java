@@ -7,15 +7,17 @@ import core.net.packet.IoBuffer;
 import java.nio.ByteBuffer;
 
 /**
- * The type Game write event.
+ * Handles game packet writing events.
+ *
+ * @author Emperor
  */
 public final class GameWriteEvent extends IoWriteEvent {
 
     /**
-     * Instantiates a new Game write event.
+     * Constructs a new {@code GameWriteEvent}.
      *
-     * @param session the session
-     * @param context the context
+     * @param session The session.
+     * @param context The context.
      */
     public GameWriteEvent(IoSession session, Object context) {
         super(session, context);

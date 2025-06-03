@@ -4,19 +4,27 @@ import core.game.node.entity.player.Player;
 import core.net.packet.Context;
 
 /**
- * The type Scene graph context.
+ * The update scene graph packet context.
+ *
+ * @author Emperor
  */
 public class SceneGraphContext implements Context {
 
+    /**
+     * The player.
+     */
     private final Player player;
 
+    /**
+     * If we are logging in.
+     */
     private final boolean login;
 
     /**
-     * Instantiates a new Scene graph context.
+     * Constructs a new {@code SceneGraphContext} {@code Object}.
      *
-     * @param player the player
-     * @param login  the login
+     * @param player The player.
+     * @param login  If we are logging in.
      */
     public SceneGraphContext(Player player, boolean login) {
         this.player = player;
@@ -29,9 +37,9 @@ public class SceneGraphContext implements Context {
     }
 
     /**
-     * Is login boolean.
+     * Gets the login.
      *
-     * @return the boolean
+     * @return The login.
      */
     public boolean isLogin() {
         return login;

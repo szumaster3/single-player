@@ -5,56 +5,34 @@ import core.net.packet.Context;
 
 /**
  * The packet context of the grand exchange update packet.
+ *
  * @author Emperor
  */
 public class GrandExchangeContext implements Context {
 
-    /**
-     * The Idx.
-     */
     public final byte idx;
-    /**
-     * The State.
-     */
     public final byte state;
-    /**
-     * The Item id.
-     */
     public final short itemID;
-    /**
-     * The Is sell.
-     */
     public final boolean isSell;
-    /**
-     * The Value.
-     */
     public final int value;
-    /**
-     * The Amt.
-     */
     public final int amt;
-    /**
-     * The Completed amt.
-     */
     public final int completedAmt;
-    /**
-     * The Total coins exchanged.
-     */
     public final int totalCoinsExchanged;
+    /**
+     * The player.
+     */
     private final Player player;
 
     /**
-     * Instantiates a new Grand exchange context.
+     * Constructs a new {@code GrandExchangeContext} {@code Object}.
      *
-     * @param player              the player
-     * @param idx                 the idx
-     * @param state               the state
-     * @param itemID              the item id
-     * @param isSell              the is sell
-     * @param value               the value
-     * @param amt                 the amt
-     * @param completedAmt        the completed amt
-     * @param totalCoinsExchanged the total coins exchanged
+     * @param player              The player.
+     * @param state
+     * @param itemID
+     * @param value
+     * @param amt
+     * @param completedAmt
+     * @param totalCoinsExchanged
      */
     public GrandExchangeContext(Player player, byte idx, byte state, short itemID, boolean isSell, int value, int amt, int completedAmt, int totalCoinsExchanged) {
         this.player = player;

@@ -4,50 +4,76 @@ import core.game.node.entity.player.Player;
 import core.net.packet.Context;
 
 /**
- * The type Display model context.
+ * Represents the player on interface context.
+ *
+ * @author Emperor
  */
 public class DisplayModelContext implements Context {
 
+    /**
+     * The player reference.
+     */
     private final Player player;
+    /**
+     * The model type.
+     */
     private final ModelType type;
+    /**
+     * The node id.
+     */
     private final int nodeId;
+    /**
+     * The interface id.
+     */
     private final int interfaceId;
+    /**
+     * The child id.
+     */
     private final int childId;
+    /**
+     * The amount (for item display).
+     */
     private int amount;
+    /**
+     * The zoom.
+     */
     private int zoom;
 
     /**
-     * Instantiates a new Display model context.
+     * Construct a new {@code DisplayModelContext} {@code Object} used for
+     * displaying the player.
      *
-     * @param player      the player
-     * @param interfaceId the interface id
-     * @param childId     the child id
+     * @param player      The player reference.
+     * @param interfaceId The interface id.
+     * @param childId     The child id.
      */
     public DisplayModelContext(Player player, int interfaceId, int childId) {
         this(player, ModelType.PLAYER, -1, 0, interfaceId, childId);
     }
 
     /**
-     * Instantiates a new Display model context.
+     * Construct a new {@code DisplayModelContext} {@code Object} used for
+     * displaying an NPC.
      *
-     * @param player      the player
-     * @param nodeId      the node id
-     * @param interfaceId the interface id
-     * @param childId     the child id
+     * @param player      The player reference.
+     * @param nodeId      The node id to display.
+     * @param interfaceId The interface id.
+     * @param childId     The child id.
      */
     public DisplayModelContext(Player player, int nodeId, int interfaceId, int childId) {
         this(player, ModelType.NPC, nodeId, 0, interfaceId, childId);
     }
 
     /**
-     * Instantiates a new Display model context.
+     * Construct a new {@code DisplayModelContext} {@code Object} used by the
+     * other constructors or for displaying an item.
      *
-     * @param player      the player
-     * @param type        the type
-     * @param nodeId      the node id
-     * @param amount      the amount
-     * @param interfaceId the interface id
-     * @param childId     the child id
+     * @param player      The player reference.
+     * @param type        The model type.
+     * @param nodeId      The node id to display.
+     * @param amount      The amount.
+     * @param interfaceId The interface id.
+     * @param childId     The child id.
      */
     public DisplayModelContext(Player player, ModelType type, int nodeId, int amount, int interfaceId, int childId) {
         this.player = player;
@@ -59,15 +85,14 @@ public class DisplayModelContext implements Context {
     }
 
     /**
-     * Instantiates a new Display model context.
+     * Construct a new {@code DisplayModelContext} {@code Object} used by the
+     * other constructors or for displaying an item.
      *
-     * @param player      the player
-     * @param type        the type
-     * @param nodeId      the node id
-     * @param zoom        the zoom
-     * @param interfaceId the interface id
-     * @param childId     the child id
-     * @param object      the object
+     * @param player      The player reference.
+     * @param type        The model type.
+     * @param nodeId      The node id to display.
+     * @param interfaceId The interface id.
+     * @param childId     The child id.
      */
     public DisplayModelContext(Player player, ModelType type, int nodeId, int zoom, int interfaceId, int childId, Object... object) {
         this.player = player;
@@ -84,88 +109,71 @@ public class DisplayModelContext implements Context {
     }
 
     /**
-     * Gets type.
+     * Gets the type.
      *
-     * @return the type
+     * @return The type.
      */
     public ModelType getType() {
         return type;
     }
 
     /**
-     * Gets node id.
+     * Gets the nodeId.
      *
-     * @return the node id
+     * @return The nodeId.
      */
     public int getNodeId() {
         return nodeId;
     }
 
     /**
-     * Gets amount.
+     * Gets the amount.
      *
-     * @return the amount
+     * @return The amount.
      */
     public int getAmount() {
         return amount;
     }
 
     /**
-     * Gets interface id.
+     * Get the interface id.
      *
-     * @return the interface id
+     * @return The interface id.
      */
     public int getInterfaceId() {
         return interfaceId;
     }
 
     /**
-     * Gets child id.
+     * Get the child id.
      *
-     * @return the child id
+     * @return The child id.
      */
     public int getChildId() {
         return childId;
     }
 
     /**
-     * Gets zoom.
-     *
-     * @return the zoom
+     * @return the zoom.
      */
     public int getZoom() {
         return zoom;
     }
 
     /**
-     * Sets zoom.
-     *
-     * @param zoom the zoom
+     * @param zoom the zoom to set.
      */
     public void setZoom(int zoom) {
         this.zoom = zoom;
     }
 
     /**
-     * The enum Model type.
+     * Represents the model types.
+     *
+     * @author Emperor
      */
-    public static enum ModelType {
-        /**
-         * Player model type.
-         */
-        PLAYER,
-        /**
-         * Npc model type.
-         */
-        NPC,
-        /**
-         * Item model type.
-         */
-        ITEM,
-        /**
-         * Model model type.
-         */
-        MODEL;
+    public enum ModelType {
+        PLAYER, NPC, ITEM, MODEL
     }
 
 }

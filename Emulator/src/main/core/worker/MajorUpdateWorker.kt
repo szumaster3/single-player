@@ -20,6 +20,10 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.system.exitProcess
 
+/**
+ * Handles the running of pulses and writing of masks, etc
+ * @author Ceikry
+ */
 class MajorUpdateWorker {
     var running: Boolean = false
     var started = false

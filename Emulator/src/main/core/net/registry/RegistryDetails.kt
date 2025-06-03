@@ -4,16 +4,9 @@ import java.sql.Date
 
 /**
  * Holds registration details.
+ * @author Vexia
  */
-class RegistryDetails
-/**
- * Instantiates a new Registry details.
- *
- * @param username the username
- * @param password the password
- * @param birth    the birth
- * @param country  the country
- */(
+class RegistryDetails(
     /**
      * Gets username.
      *
@@ -33,9 +26,9 @@ class RegistryDetails
      */
     val birth: Date,
     /**
-     * Gets country.
+     * Gets the country.
      *
-     * @return the country
+     * @return the country.
      */
     val country: Int
 )

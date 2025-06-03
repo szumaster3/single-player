@@ -4,36 +4,49 @@ import core.game.node.entity.player.Player;
 import core.net.packet.Context;
 
 /**
- * The type Config context.
+ * The config packet context.
+ *
+ * @author Emperor
  */
 public class ConfigContext implements Context {
 
+    /**
+     * The player reference.
+     */
     private Player player;
 
-    private int id;
-
-    private int value;
-
-    private boolean cs2;
+    /**
+     * The config id.
+     */
+    private final int id;
 
     /**
-     * Instantiates a new Config context.
+     * The config value.
+     */
+    private final int value;
+
+    /**
+     * If the config is a cs2-config.
+     */
+    private final boolean cs2;
+
+    /**
+     * Construct a new {@code ConfigContext} {@code Object}.
      *
-     * @param player the player
-     * @param id     the id
-     * @param value  the value
+     * @param player The player reference.
+     * @param id     The config id.
+     * @param value  The config value.
      */
     public ConfigContext(Player player, int id, int value) {
         this(player, id, value, false);
     }
 
     /**
-     * Instantiates a new Config context.
+     * Construct a new {@code ConfigContext} {@code Object}.
      *
-     * @param player the player
-     * @param id     the id
-     * @param value  the value
-     * @param cs2    the cs 2
+     * @param player The player reference.
+     * @param id     The config id.
+     * @param value  The config value.
      */
     public ConfigContext(Player player, int id, int value, boolean cs2) {
         this.player = player;
@@ -48,10 +61,10 @@ public class ConfigContext implements Context {
     }
 
     /**
-     * Sets player.
+     * Sets the player.
      *
-     * @param player the player
-     * @return the player
+     * @param player The player.
+     * @return This context instance.
      */
     public Context setPlayer(Player player) {
         this.player = player;
@@ -59,27 +72,27 @@ public class ConfigContext implements Context {
     }
 
     /**
-     * Gets id.
+     * Get the config id.
      *
-     * @return the id
+     * @return The config id.
      */
     public int getId() {
         return id;
     }
 
     /**
-     * Gets value.
+     * Get the config value.
      *
-     * @return the value
+     * @return The config value.
      */
     public int getValue() {
         return value;
     }
 
     /**
-     * Is cs 2 boolean.
+     * Gets the cs2.
      *
-     * @return the boolean
+     * @return The cs2.
      */
     public boolean isCs2() {
         return cs2;

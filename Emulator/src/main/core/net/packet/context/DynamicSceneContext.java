@@ -3,15 +3,17 @@ package core.net.packet.context;
 import core.game.node.entity.player.Player;
 
 /**
- * The type Dynamic scene context.
+ * Represents the packet context for the build dynamic scene graph packet.
+ *
+ * @author Emperor
  */
 public final class DynamicSceneContext extends SceneGraphContext {
 
     /**
-     * Instantiates a new Dynamic scene context.
+     * Constructs a new {@code DynamicSceneContext} {@code Object}.
      *
-     * @param player the player
-     * @param login  the login
+     * @param player The player.
+     * @param login  If the player is logging in.
      */
     public DynamicSceneContext(Player player, boolean login) {
         super(player, login);

@@ -9,6 +9,10 @@ import core.game.world.GameWorld
 import java.text.SimpleDateFormat
 import java.util.*
 
+/**
+ * Handles server log printing.
+ * @author Ceikry
+ */
 object SystemLogger {
     val t = Terminal()
     val errT = t.forStdErr()

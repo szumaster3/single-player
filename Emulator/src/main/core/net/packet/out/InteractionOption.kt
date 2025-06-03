@@ -6,7 +6,8 @@ import core.net.packet.PacketHeader
 import core.net.packet.context.InteractionOptionContext
 
 /**
- * The type Interaction option.
+ * Handles the interaction option changed outgoing packet.
+ * @author Emperor
  */
 class InteractionOption : OutgoingPacket<InteractionOptionContext> {
     override fun send(context: InteractionOptionContext) {

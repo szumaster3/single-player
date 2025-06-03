@@ -5,7 +5,8 @@ import core.net.packet.OutgoingPacket
 import core.net.packet.context.PlayerContext
 
 /**
- * The type Logout.
+ * The outgoing logout packet.
+ * @author Emperor
  */
 class Logout : OutgoingPacket<PlayerContext> {
     override fun send(context: PlayerContext) {

@@ -5,7 +5,8 @@ import core.net.packet.OutgoingPacket
 import core.net.packet.context.ConfigContext
 
 /**
- * The type Config.
+ * The config outgoing packet.
+ * @author Emperor
  */
 class Config : OutgoingPacket<ConfigContext> {
     override fun send(context: ConfigContext) {

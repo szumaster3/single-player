@@ -10,7 +10,8 @@ import core.net.event.GameWriteEvent;
 import java.nio.ByteBuffer;
 
 /**
- * The type Game event producer.
+ * Produces game packet I/O events.
+ * @author Emperor
  */
 public final class GameEventProducer implements EventProducer {
 

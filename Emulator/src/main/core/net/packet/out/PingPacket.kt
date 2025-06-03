@@ -4,7 +4,8 @@ import core.net.packet.OutgoingPacket
 import core.net.packet.context.PlayerContext
 
 /**
- * The type Ping packet.
+ * Handles the ping packet sending.
+ * @author Emperor
  */
 class PingPacket : OutgoingPacket<PlayerContext> {
     override fun send(context: PlayerContext) {

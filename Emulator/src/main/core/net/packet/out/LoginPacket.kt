@@ -6,7 +6,8 @@ import core.net.packet.context.PlayerContext
 import java.nio.ByteBuffer
 
 /**
- * The type Login packet.
+ * Handles the login outgoing packet.
+ * @author Emperor
  */
 class LoginPacket : OutgoingPacket<PlayerContext> {
     override fun send(context: PlayerContext) {

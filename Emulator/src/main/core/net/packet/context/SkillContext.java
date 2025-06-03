@@ -4,19 +4,27 @@ import core.game.node.entity.player.Player;
 import core.net.packet.Context;
 
 /**
- * The type Skill context.
+ * The skill context.
+ *
+ * @author Emperor
  */
 public final class SkillContext implements Context {
 
+    /**
+     * The player.
+     */
     private final Player player;
 
+    /**
+     * The skill id.
+     */
     private final int skillId;
 
     /**
-     * Instantiates a new Skill context.
+     * Constructs a new {@code SkillContext} {@code Object}.
      *
-     * @param player  the player
-     * @param skillId the skill id
+     * @param player  The player.
+     * @param skillId The skill id.
      */
     public SkillContext(Player player, int skillId) {
         this.player = player;
@@ -29,9 +37,9 @@ public final class SkillContext implements Context {
     }
 
     /**
-     * Gets skill id.
+     * Gets the skillId.
      *
-     * @return the skill id
+     * @return The skillId.
      */
     public int getSkillId() {
         return skillId;

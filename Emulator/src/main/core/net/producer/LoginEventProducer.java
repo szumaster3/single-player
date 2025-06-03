@@ -10,7 +10,8 @@ import core.net.event.LoginWriteEvent;
 import java.nio.ByteBuffer;
 
 /**
- * The type Login event producer.
+ * Produces login I/O events.
+ * @author Emperor
  */
 public final class LoginEventProducer implements EventProducer {
 

@@ -3,7 +3,9 @@ package core.net;
 import java.nio.channels.CancelledKeyException;
 
 /**
- * The type Io write event.
+ * Handles a writing event.
+ *
+ * @author Emperor
  */
 public abstract class IoWriteEvent implements Runnable {
 

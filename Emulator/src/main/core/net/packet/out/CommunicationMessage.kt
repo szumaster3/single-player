@@ -11,7 +11,8 @@ import core.tools.StringUtils.stringToLong
 import java.util.*
 
 /**
- * The type Communication message.
+ * Handles communication message packet sending.
+ * @author Emperor
  */
 class CommunicationMessage : OutgoingPacket<MessageContext> {
     override fun send(context: MessageContext) {

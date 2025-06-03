@@ -5,7 +5,8 @@ import core.net.packet.OutgoingPacket
 import core.net.packet.context.WindowsPaneContext
 
 /**
- * The type Windows pane.
+ * Handles the windows pane outgoing packet.
+ * @author Emperor
  */
 class WindowsPane : OutgoingPacket<WindowsPaneContext> {
     override fun send(context: WindowsPaneContext) {

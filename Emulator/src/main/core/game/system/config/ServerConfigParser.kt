@@ -14,20 +14,45 @@ import java.io.File
 import java.net.URL
 import kotlin.system.exitProcess
 
+/**
+ * Singleton object responsible for parsing the server configuration.
+ */
 object ServerConfigParser {
+    /**
+     * The configuration file as a [File] object after parsing the path.
+     */
     var confFile: File? = null
+
+    /**
+     * The parsed TOML data from the configuration file.
+     */
     var tomlData: Toml? = null
 
+    /**
+     * Parses the configuration from a file system path.
+     *
+     * @param path the file path of the configuration file to parse.
+     */
     fun parse(path: String) {
         confFile = File(parsePath(path))
         parseFromFile(confFile)
     }
 
+    /**
+     * Parses the configuration from a URL pointing to a TOML file.
+     *
+     * @param path the URL of the configuration file to parse.
+     */
     fun parse(path: URL?) {
         confFile = File(path!!.toURI())
         parseFromFile(confFile)
     }
 
+    /**
+     * Parses the configuration from the given [confFile].
+     *
+     * @param confFile the configuration file to parse.
+     */
     private fun parseFromFile(confFile: File?) {
         if (!confFile!!.canonicalFile.exists()) {
             log(this::class.java, Log.ERR, "${confFile.canonicalFile} does not exist.")
@@ -58,6 +83,10 @@ object ServerConfigParser {
         }
     }
 
+    /**
+     * Parses game settings from the loaded TOML data initializing
+     * [GameWorld.settings] with the configured parameters.
+     */
     private fun parseGameSettings() {
         tomlData ?: return
         val data = tomlData!!
@@ -95,6 +124,10 @@ object ServerConfigParser {
             )
     }
 
+    /**
+     * Parses server-wide configuration settings from the loaded TOML data
+     * and initializes the relevant constants in [ServerConstants].
+     */
     private fun parseServerSettings() {
         tomlData ?: return
         val data = tomlData!!
@@ -174,6 +207,13 @@ object ServerConfigParser {
         ServerConstants.LOG_LEVEL = parseEnumEntry<LogLevel>(logLevel) ?: LogLevel.VERBOSE
     }
 
+    /**
+     * Get a file path string from the TOML data,
+     * normalized to absolute path if it starts with "./".
+     *
+     * @param path the key for the file path property
+     * @return the normalized absolute path as a string
+     */
     private fun Toml.getPath(key: String): String {
         try {
             return parsePath(getString(key, "@data/").replace("@data", ServerConstants.DATA_PATH!!))
@@ -183,11 +223,26 @@ object ServerConfigParser {
         }
     }
 
+    /**
+     * Parses a location from the format "x,y,z"
+     * @author Ceikry
+     * @param locString The string to parse
+     * @return Location
+     */
+    @JvmStatic
     fun parseLocation(locString: String): Location {
         val locTokens = locString.split(",").map { it.toInt() }
         return Location(locTokens[0], locTokens[1], locTokens[2])
     }
 
+    /**
+     * Parses a location string of the form "x,y,z" into a [Location] object.
+     * @author Ceikry
+     * @param pathString The string to parse
+     * @return a String with the proper file separators for the current OS.
+     */
+
+    @JvmStatic
     fun parsePath(pathString: String): String {
         var pathTokens: List<String>? = null
         if (pathString.contains("/")) {
@@ -196,7 +251,11 @@ object ServerConfigParser {
             pathTokens = pathString.split("\\")
         }
 
-        pathTokens ?: return pathString
+        pathTokens ?: return pathString /*
+                                         * return the initial pathString
+                                         * if path does not contain file
+                                         * separators.
+                                         */
         var pathProduct = ""
         for (token in pathTokens) {
             if (token != "") {

@@ -4,29 +4,33 @@ import core.game.node.entity.player.Player;
 import core.net.packet.Context;
 
 /**
- * The type Varbit context.
+ * Represents the varbit packet context.
+ *
+ * @author Ceikry
  */
 public class VarbitContext implements Context {
 
     /**
-     * The Varbit id.
+     * The varbit id.
      */
-    public int varbitId;
-    /**
-     * The Value.
-     */
-    public int value;
-    /**
-     * The Player.
-     */
-    Player player;
+    private final int varbitId;
 
     /**
-     * Instantiates a new Varbit context.
+     * The value to set the varbit to.
+     */
+    private final int value;
+
+    /**
+     * The player reference.
+     */
+    private final Player player;
+
+    /**
+     * Constructs a new {@code VarbitContext}.
      *
-     * @param player   the player
-     * @param varbitId the varbit id
-     * @param value    the value
+     * @param player   The player involved in the context.
+     * @param varbitId The varbit id.
+     * @param value    The value to assign to the varbit.
      */
     public VarbitContext(Player player, int varbitId, int value) {
         this.player = player;
@@ -37,5 +41,23 @@ public class VarbitContext implements Context {
     @Override
     public Player getPlayer() {
         return player;
+    }
+
+    /**
+     * Gets the varbit id.
+     *
+     * @return The varbit id.
+     */
+    public int getVarbitId() {
+        return varbitId;
+    }
+
+    /**
+     * Gets the value to set the varbit to.
+     *
+     * @return The varbit value.
+     */
+    public int getValue() {
+        return value;
     }
 }

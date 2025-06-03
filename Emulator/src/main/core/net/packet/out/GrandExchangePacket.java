@@ -6,7 +6,8 @@ import core.net.packet.PacketHeader;
 import core.net.packet.context.GrandExchangeContext;
 
 /**
- * The type Grand exchange packet.
+ * The outgoing packet used for updating a player's grand exchange data.
+ * @author Emperor,Vexia, Angle
  */
 public class GrandExchangePacket implements OutgoingPacket<GrandExchangeContext> {
 

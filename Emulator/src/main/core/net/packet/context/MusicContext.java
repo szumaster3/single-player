@@ -4,32 +4,44 @@ import core.game.node.entity.player.Player;
 import core.net.packet.Context;
 
 /**
- * The type Music context.
+ * Packet context for music.
+ *
+ * @author Emperor
+ * @author SonicForce41
  */
 public class MusicContext implements Context {
 
-    private Player player;
+    /**
+     * The Player
+     */
+    private final Player player;
 
-    private int musicId;
+    /**
+     * The music Id
+     */
+    private final int musicId;
 
+    /**
+     * The secondary music type.
+     */
     private boolean secondary;
 
     /**
-     * Instantiates a new Music context.
+     * Constructs a new {@code MusicContext} {@code Object}.
      *
-     * @param player  the player
-     * @param musicId the music id
+     * @param player  The player.
+     * @param musicId The music id.
      */
     public MusicContext(Player player, int musicId) {
         this(player, musicId, false);
     }
 
     /**
-     * Instantiates a new Music context.
+     * Constructs a new {@code MusicContext} {@code Object}.
      *
-     * @param player    the player
-     * @param musicId   the music id
-     * @param temporary the temporary
+     * @param player    The player.
+     * @param musicId   The music id.
+     * @param temporary The temporary music type.
      */
     public MusicContext(Player player, int musicId, boolean temporary) {
         this.player = player;
@@ -38,9 +50,9 @@ public class MusicContext implements Context {
     }
 
     /**
-     * Gets music id.
+     * Gets the Music Id
      *
-     * @return the music id
+     * @return the musicId
      */
     public final int getMusicId() {
         return musicId;
@@ -52,18 +64,18 @@ public class MusicContext implements Context {
     }
 
     /**
-     * Is secondary boolean.
+     * Gets the secondary.
      *
-     * @return the boolean
+     * @return The secondary.
      */
     public boolean isSecondary() {
         return secondary;
     }
 
     /**
-     * Sets secondary.
+     * Sets the secondary.
      *
-     * @param secondary the secondary
+     * @param secondary The secondary to set.
      */
     public void setSecondary(boolean secondary) {
         this.secondary = secondary;

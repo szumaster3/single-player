@@ -5,7 +5,8 @@ import core.net.packet.OutgoingPacket
 import core.net.packet.context.PlayerContext
 
 /**
- * The type Clear minimap flag.
+ * Handles the removal of the minimap flag.
+ * @author Emperor
  */
 class ClearMinimapFlag : OutgoingPacket<PlayerContext> {
     override fun send(context: PlayerContext) {

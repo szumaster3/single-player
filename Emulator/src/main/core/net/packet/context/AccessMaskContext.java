@@ -4,31 +4,51 @@ import core.game.node.entity.player.Player;
 import core.net.packet.Context;
 
 /**
- * The type Access mask context.
+ * The access mask context.
+ *
+ * @author Emperor
  */
 public class AccessMaskContext implements Context {
 
+    /**
+     * The player reference.
+     */
     private Player player;
 
-    private int id;
-
-    private int childId;
-
-    private int interfaceId;
-
-    private int offset;
-
-    private int length;
+    /**
+     * The access mask id.
+     */
+    private final int id;
 
     /**
-     * Instantiates a new Access mask context.
+     * The child id.
+     */
+    private final int childId;
+
+    /**
+     * The interface id.
+     */
+    private final int interfaceId;
+
+    /**
+     * The offset.
+     */
+    private final int offset;
+
+    /**
+     * The length.
+     */
+    private final int length;
+
+    /**
+     * Construct a new {@code AccessMaskContext} {@code Object}.
      *
-     * @param player      the player
-     * @param id          the id
-     * @param childId     the child id
-     * @param interfaceId the interface id
-     * @param offset      the offset
-     * @param length      the length
+     * @param player
+     * @param id
+     * @param childId
+     * @param interfaceId
+     * @param offset
+     * @param length
      */
     public AccessMaskContext(Player player, int id, int childId, int interfaceId, int offset, int length) {
         this.player = player;
@@ -45,21 +65,22 @@ public class AccessMaskContext implements Context {
     }
 
     /**
-     * Transform access mask context.
+     * Transforms this access mask context into a new instance with the player
+     * instance and id value changed.
      *
-     * @param player the player
-     * @param id     the id
-     * @return the access mask context
+     * @param player The player to set.
+     * @param id     The id to set.
+     * @return The access mask context.
      */
     public AccessMaskContext transform(Player player, int id) {
         return new AccessMaskContext(player, id, childId, interfaceId, offset, length);
     }
 
     /**
-     * Sets player.
+     * Sets the player.
      *
-     * @param player the player
-     * @return the player
+     * @param player The player.
+     * @return This context instance.
      */
     public Context setPlayer(Player player) {
         this.player = player;
@@ -67,45 +88,45 @@ public class AccessMaskContext implements Context {
     }
 
     /**
-     * Gets id.
+     * Get the access mask id.
      *
-     * @return the id
+     * @return The access mask.
      */
     public int getId() {
         return id;
     }
 
     /**
-     * Gets child id.
+     * Get the child id.
      *
-     * @return the child id
+     * @return The child id.
      */
     public int getChildId() {
         return childId;
     }
 
     /**
-     * Gets interface id.
+     * Get the interface id.
      *
-     * @return the interface id
+     * @return The interface id.
      */
     public int getInterfaceId() {
         return interfaceId;
     }
 
     /**
-     * Gets offset.
+     * Get the offset.
      *
-     * @return the offset
+     * @return The offset.
      */
     public int getOffset() {
         return offset;
     }
 
     /**
-     * Gets length.
+     * Get the length.
      *
-     * @return the length
+     * @return The length.
      */
     public int getLength() {
         return length;

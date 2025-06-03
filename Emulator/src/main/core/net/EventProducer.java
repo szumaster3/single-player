@@ -3,25 +3,27 @@ package core.net;
 import java.nio.ByteBuffer;
 
 /**
- * The interface Event producer.
+ * Used for producing I/O events.
+ *
+ * @author Emperor
  */
 public interface EventProducer {
 
     /**
-     * Produce reader io read event.
+     * Produces a new read event.
      *
-     * @param session the session
-     * @param buffer  the buffer
-     * @return the io read event
+     * @param session The session.
+     * @param buffer  The buffer to read.
+     * @return The read event handler.
      */
     IoReadEvent produceReader(IoSession session, ByteBuffer buffer);
 
     /**
-     * Produce writer io write event.
+     * Produces a new writing event.
      *
-     * @param session the session
-     * @param context the context
-     * @return the io write event
+     * @param session The session.
+     * @param context The context.
+     * @return The write event handler.
      */
     IoWriteEvent produceWriter(IoSession session, Object context);
 

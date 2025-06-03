@@ -5,19 +5,28 @@ import core.game.node.scenery.Scenery;
 import core.net.packet.Context;
 
 /**
- * The type Build scenery context.
+ * Represents the build object packet context, <br> which is used for
+ * construct/clear object outgoing packet.
+ *
+ * @author Emperor
  */
 public final class BuildSceneryContext implements Context {
 
+    /**
+     * The player.
+     */
     private final Player player;
 
+    /**
+     * The list of scenerys to send.
+     */
     private final Scenery scenery;
 
     /**
-     * Instantiates a new Build scenery context.
+     * Constructs a new {@code BuildObjectContext} {@code Object}.
      *
-     * @param player  the player
-     * @param scenery the scenery
+     * @param player  The player
+     * @param scenery the scenery to send.
      */
     public BuildSceneryContext(Player player, Scenery scenery) {
         this.player = player;
@@ -30,9 +39,9 @@ public final class BuildSceneryContext implements Context {
     }
 
     /**
-     * Gets scenery.
+     * Gets the gameObject.
      *
-     * @return the scenery
+     * @return The gameObject.
      */
     public Scenery getScenery() {
         return scenery;

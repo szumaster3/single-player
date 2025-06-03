@@ -7,7 +7,8 @@ import core.net.packet.PacketHeader
 import core.net.packet.context.SceneGraphContext
 
 /**
- * The type Update scene graph.
+ * The update scene graph outgoing packet.
+ * @author Emperor
  */
 class UpdateSceneGraph : OutgoingPacket<SceneGraphContext> {
     override fun send(context: SceneGraphContext) {

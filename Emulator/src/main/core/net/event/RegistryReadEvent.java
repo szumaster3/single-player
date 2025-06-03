@@ -13,17 +13,22 @@ import java.nio.ByteBuffer;
 import static core.api.ContentAPIKt.log;
 
 /**
- * The type Registry read event.
+ * Handles world registry read events.
+ *
+ * @author Emperor
  */
 public final class RegistryReadEvent extends IoReadEvent {
 
+    /**
+     * The event producer.
+     */
     private static final MSEventProducer PRODUCER = new MSEventProducer();
 
     /**
-     * Instantiates a new Registry read event.
+     * Constructs a new {@code RegistryReadEvent} {@code Object}.
      *
-     * @param session the session
-     * @param buffer  the buffer
+     * @param session The session.
+     * @param buffer  The buffer to read.
      */
     public RegistryReadEvent(IoSession session, ByteBuffer buffer) {
         super(session, buffer);

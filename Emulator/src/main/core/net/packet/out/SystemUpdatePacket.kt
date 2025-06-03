@@ -5,7 +5,8 @@ import core.net.packet.OutgoingPacket
 import core.net.packet.context.SystemUpdateContext
 
 /**
- * The type System update packet.
+ * Handles the system update packet.
+ * @author 'Vexia
  */
 class SystemUpdatePacket : OutgoingPacket<SystemUpdateContext> {
     override fun send(context: SystemUpdateContext) {

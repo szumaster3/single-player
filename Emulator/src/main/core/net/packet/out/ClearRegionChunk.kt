@@ -5,7 +5,8 @@ import core.net.packet.OutgoingPacket
 import core.net.packet.context.ClearChunkContext
 
 /**
- * The type Clear region chunk.
+ * Handles the clear region chunk outgoing packet.
+ * @author Emperor
  */
 class ClearRegionChunk : OutgoingPacket<ClearChunkContext> {
     override fun send(context: ClearChunkContext) {

@@ -6,17 +6,22 @@ import core.net.IoSession;
 import java.nio.ByteBuffer;
 
 /**
- * The type Ms read event.
+ * Handles reading Management server packets.
+ *
+ * @author Emperor
  */
 public final class MSReadEvent extends IoReadEvent {
 
+    /**
+     * The packet sizes.
+     */
     private static final int[] PACKET_SIZE = {-1, -1, -1, -2, -1, -1, -2, -1, -2, -1, 4, -1, -1, -1, -1, -1, -1, -1, -1, -1};
 
     /**
-     * Instantiates a new Ms read event.
+     * Constructs a new {@code MSReadEvent} {@code Object}
      *
-     * @param session the session
-     * @param buffer  the buffer
+     * @param session The I/O session.
+     * @param buffer  The buffer to read from.
      */
     public MSReadEvent(IoSession session, ByteBuffer buffer) {
         super(session, buffer);
@@ -58,6 +63,15 @@ public final class MSReadEvent extends IoReadEvent {
         }
     }
 
+    /**
+     * Gets the packet size for the given opcode.
+     *
+     * @param buffer The buffer.
+     * @param opcode The opcode.
+     * @param header The packet header.
+     * @param last   The last opcode.
+     * @return The packet size.
+     */
     private int getPacketSize(ByteBuffer buffer, int opcode, int header, int last) {
         if (header == -1) {
             if (buffer.remaining() < 1) {

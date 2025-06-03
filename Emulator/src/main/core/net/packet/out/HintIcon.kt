@@ -5,7 +5,8 @@ import core.net.packet.OutgoingPacket
 import core.net.packet.context.HintIconContext
 
 /**
- * The type Hint icon.
+ * Handles the Hint icon outgoing packet.
+ * @author Emperor
  */
 class HintIcon : OutgoingPacket<HintIconContext> {
     override fun send(context: HintIconContext) {

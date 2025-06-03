@@ -1,7 +1,8 @@
 package core.plugin;
 
 /**
- * The enum Plugin type.
+ * Represents the plugin types.
+ * @author Emperor
  */
 public enum PluginType {
 

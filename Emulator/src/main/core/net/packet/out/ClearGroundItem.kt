@@ -6,7 +6,8 @@ import core.net.packet.OutgoingPacket
 import core.net.packet.context.BuildItemContext
 
 /**
- * The type Clear ground item.
+ * Represents the outgoing packet of clearing ground items.
+ * @author Emperor
  */
 class ClearGroundItem : OutgoingPacket<BuildItemContext> {
     override fun send(context: BuildItemContext) {

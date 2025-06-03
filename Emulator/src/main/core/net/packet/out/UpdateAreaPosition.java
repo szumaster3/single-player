@@ -8,16 +8,18 @@ import core.net.packet.PacketHeader;
 import core.net.packet.context.AreaPositionContext;
 
 /**
- * The type Update area position.
+ * Handles the update area position packet.
+ *
+ * @author Emperor
  */
 public final class UpdateAreaPosition implements OutgoingPacket<AreaPositionContext> {
 
     /**
-     * Gets chunk update buffer.
+     * Gets the region chunk update buffer.
      *
-     * @param player the player
-     * @param base   the base
-     * @return the chunk update buffer
+     * @param player The player.
+     * @param base   The base location of the chunk.
+     * @return The buffer.
      */
     public static IoBuffer getChunkUpdateBuffer(Player player, Location base) {
         int x = base.getSceneX(player.getPlayerFlags().getLastSceneGraph());
@@ -26,11 +28,11 @@ public final class UpdateAreaPosition implements OutgoingPacket<AreaPositionCont
     }
 
     /**
-     * Gets buffer.
+     * Gets the region chunk update buffer.
      *
-     * @param player the player
-     * @param base   the base
-     * @return the buffer
+     * @param player The player.
+     * @param base   The base location of the chunk.
+     * @return The buffer.
      */
     public static IoBuffer getBuffer(Player player, Location base) {
         int x = base.getSceneX(player.getPlayerFlags().getLastSceneGraph());

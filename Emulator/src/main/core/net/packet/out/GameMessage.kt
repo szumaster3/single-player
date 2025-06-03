@@ -6,7 +6,8 @@ import core.net.packet.PacketHeader
 import core.net.packet.context.GameMessageContext
 
 /**
- * The type Game message.
+ * The game message outgoing packet.
+ * @author Emperor
  */
 class GameMessage : OutgoingPacket<GameMessageContext> {
     override fun send(context: GameMessageContext) {

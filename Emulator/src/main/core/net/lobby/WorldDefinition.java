@@ -4,36 +4,62 @@ import core.game.world.GameWorld;
 import core.game.world.repository.Repository;
 
 /**
- * The type World definition.
+ * Represents a world's definition.
+ *
+ * @author Dementhium development team.
  */
 public class WorldDefinition {
 
+    /**
+     * The activity for this world.
+     */
     private final String activity;
 
+    /**
+     * The country flag.
+     */
     private final int country;
 
+    /**
+     * If the world is members.
+     */
     private final int flag;
 
+    /**
+     * The ip-address for this world.
+     */
     private final String ip;
 
+    /**
+     * The location.
+     */
     private final int location;
 
+    /**
+     * The region.
+     */
     private final String region;
 
+    /**
+     * The world's id.
+     */
     private final int worldId;
 
+    /**
+     * The amount of players in this world.
+     */
     private int players;
 
     /**
-     * Instantiates a new World definition.
+     * Constructs a new {@code WorldDefinition} {@code Object}.
      *
-     * @param worldId  the world id
-     * @param location the location
-     * @param flag     the flag
-     * @param activity the activity
-     * @param ip       the ip
-     * @param region   the region
-     * @param country  the country
+     * @param worldId  The world's id.
+     * @param location The location.
+     * @param flag     If the world is members.
+     * @param activity The activity for this world.
+     * @param ip       The IP-address.
+     * @param region   The region.
+     * @param country  The country flag.
      */
     public WorldDefinition(int worldId, int location, int flag, String activity, String ip, String region, int country) {
         this.worldId = worldId;
@@ -46,72 +72,58 @@ public class WorldDefinition {
     }
 
     /**
-     * Gets activity.
-     *
-     * @return the activity
+     * @return the activity.
      */
     public String getActivity() {
         return activity;
     }
 
     /**
-     * Gets country.
-     *
-     * @return the country
+     * @return the country.
      */
     public int getCountry() {
         return country;
     }
 
     /**
-     * Gets flag.
-     *
-     * @return the flag
+     * @return the flag.
      */
     public int getFlag() {
         return flag;
     }
 
     /**
-     * Gets ip.
-     *
-     * @return the ip
+     * @return the ip.
      */
     public String getIp() {
         return ip;
     }
 
     /**
-     * Gets location.
-     *
-     * @return the location
+     * @return the location.
      */
     public int getLocation() {
         return location;
     }
 
     /**
-     * Gets region.
-     *
-     * @return the region
+     * @return the region.
      */
     public String getRegion() {
         return region;
     }
 
     /**
-     * Gets world id.
-     *
-     * @return the world id
+     * @return the worldId.
      */
     public int getWorldId() {
         return worldId;
     }
 
     /**
-     * Gets player count.
+     * Gets the player count.
      *
-     * @return the player count
+     * @return The player count.
      */
     public int getPlayerCount() {
         if (worldId == GameWorld.getSettings().getWorldId()) {
@@ -121,18 +133,18 @@ public class WorldDefinition {
     }
 
     /**
-     * Gets players.
+     * Gets the players.
      *
-     * @return the players
+     * @return the players.
      */
     public int getPlayers() {
         return players;
     }
 
     /**
-     * Sets players.
+     * Sets the players.
      *
-     * @param players the players
+     * @param players the players to set.
      */
     public void setPlayers(int players) {
         this.players = players;

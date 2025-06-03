@@ -5,7 +5,9 @@ import core.net.packet.OutgoingPacket
 import core.net.packet.context.LocationContext
 
 /**
- * The type Instanced location update.
+ * Outgoing packet used for updating a player's location solely on his own
+ * client.
+ * @author Emperor
  */
 class InstancedLocationUpdate : OutgoingPacket<LocationContext> {
     override fun send(context: LocationContext) {

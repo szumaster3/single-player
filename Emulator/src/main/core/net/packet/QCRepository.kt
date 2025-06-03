@@ -19,9 +19,16 @@ import proto.management.ClanMessage
 import java.nio.ByteBuffer
 import java.util.*
 
+/**
+ * Handles the sending of quick chat messages and string-replacement for specific messages.
+ * @author Ceikry
+ */
 object QCRepository {
     private val quickChatIndex = Cache.getIndex(CacheIndex.QUICK_CHAT_MESSAGES)
 
+    /**
+     * The entry method that connects to the other more specific methods
+     */
     @JvmStatic
     fun sendQC(
         player: Player?,
@@ -66,6 +73,9 @@ object QCRepository {
         }
     }
 
+    /**
+     * For standard quick chat messages with no string replacements
+     */
     @JvmStatic
     fun getStandardQC(
         player: Player?,
@@ -104,6 +114,9 @@ object QCRepository {
         return qcString
     }
 
+    /**
+     * For Single-replacement quick chat messages with one replacement selection
+     */
     @JvmStatic
     fun getSingleQC(
         index: Int,
@@ -301,10 +314,10 @@ object QCRepository {
         return qcString
     }
 
-    fun getFromMap(
-        map: Int,
-        index: Int,
-    ): String = DataMap.get(map).getString(index)!!
+    /**
+     * For Double-replacement quick chat messages with 2 selection replacements.
+     */
+    fun getFromMap(map: Int, index: Int, ): String = DataMap.get(map).getString(index)!!
 
     @JvmStatic
     fun getDoubleQC(

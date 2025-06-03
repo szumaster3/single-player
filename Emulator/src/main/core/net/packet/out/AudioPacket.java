@@ -6,8 +6,9 @@ import core.net.packet.IoBuffer;
 import core.net.packet.OutgoingPacket;
 import core.net.packet.context.DefaultContext;
 
-/**
- * The type Audio packet.
+ /**
+ * Sends an audio packet.
+ * @author Vexia
  */
 public class AudioPacket implements OutgoingPacket<DefaultContext> {
 

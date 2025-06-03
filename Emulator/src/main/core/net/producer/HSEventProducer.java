@@ -10,7 +10,8 @@ import core.net.event.HSWriteEvent;
 import java.nio.ByteBuffer;
 
 /**
- * The type Hs event producer.
+ * Produces I/O events for the handshake protocol.
+ * @author Emperor
  */
 public final class HSEventProducer implements EventProducer {
 

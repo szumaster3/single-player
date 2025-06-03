@@ -6,56 +6,74 @@ import core.cache.misc.buffer.ByteBufferUtils;
 import java.nio.ByteBuffer;
 
 /**
- * The type Io buffer.
+ * Represents the buffer used for reading/writing packets.
+ *
+ * @author Emperor
  */
 public class IoBuffer {
 
+    /**
+     * The bit masks.
+     */
     private static final int[] BIT_MASK = new int[32];
 
-    static {
-        for (int i = 0; i < 32; i++) {
-            BIT_MASK[i] = (1 << i) - 1;
-        }
-    }
-
-    private final PacketHeader header;
+    /**
+     * The packet size.
+     */
     private int packetSize;
+
+    /**
+     * The opcode.
+     */
     private int opcode;
+
+    /**
+     * The packet header.
+     */
+    private final PacketHeader header;
+
+    /**
+     * The byte buffer.
+     */
     private ByteBuffer buf;
+
+    /**
+     * The bit position.
+     */
     private int bitPosition = 0;
 
     /**
-     * Instantiates a new Io buffer.
+     * Constructs a new {@code IoBuffer} {@code Object}.
      */
     public IoBuffer() {
         this(-1, PacketHeader.NORMAL, ByteBuffer.allocate(2048));
     }
 
     /**
-     * Instantiates a new Io buffer.
+     * Constructs a new {@code IoBuffer} {@code Object}.
      *
-     * @param opcode the opcode
+     * @param opcode The opcode.
      */
     public IoBuffer(int opcode) {
         this(opcode, PacketHeader.NORMAL, ByteBuffer.allocate(2048));
     }
 
     /**
-     * Instantiates a new Io buffer.
+     * Constructs a new {@code IoBuffer} {@code Object}.
      *
-     * @param opcode the opcode
-     * @param header the header
+     * @param opcode The opcode.
+     * @param header The packet header.
      */
     public IoBuffer(int opcode, PacketHeader header) {
         this(opcode, header, ByteBuffer.allocate((1 << 16) + 1));
     }
 
     /**
-     * Instantiates a new Io buffer.
+     * Constructs a new {@code IoBuffer} {@code Object}.
      *
-     * @param opcode the opcode
-     * @param header the header
-     * @param buf    the buf
+     * @param opcode The opcode.
+     * @param header The packet header.
+     * @param buf    The byte buffer.
      */
     public IoBuffer(int opcode, PacketHeader header, ByteBuffer buf) {
         this.opcode = opcode;
@@ -63,10 +81,14 @@ public class IoBuffer {
         this.buf = buf;
     }
 
+    static {
+        for (int i = 0; i < 32; i++) {
+            BIT_MASK[i] = (1 << i) - 1;
+        }
+    }
+
     /**
-     * Clear io buffer.
-     *
-     * @return the io buffer
+     * @return
      */
     public IoBuffer clear() {
         buf.clear();
@@ -75,103 +97,53 @@ public class IoBuffer {
     }
 
     /**
-     * P 1 io buffer.
-     *
-     * @param value the value
-     * @return the io buffer
+     * What follows are put/get methods using authentic naming.
+     * The older methods are kept for the sake of backwards compatibility within the codebase.
      */
     public IoBuffer p1(int value) {
         buf.put((byte) value);
         return this;
     }
 
-    /**
-     * P 1 add io buffer.
-     *
-     * @param value the value
-     * @return the io buffer
-     */
     public IoBuffer p1add(int value) {
         buf.put((byte) (value + 128));
         return this;
     }
 
-    /**
-     * P 1 sub io buffer.
-     *
-     * @param value the value
-     * @return the io buffer
-     */
     public IoBuffer p1sub(int value) {
         buf.put((byte) (128 - value));
         return this;
     }
 
-    /**
-     * P 1 neg io buffer.
-     *
-     * @param value the value
-     * @return the io buffer
-     */
     public IoBuffer p1neg(int value) {
         buf.put((byte) -value);
         return this;
     }
 
-    /**
-     * P 2 io buffer.
-     *
-     * @param value the value
-     * @return the io buffer
-     */
     public IoBuffer p2(int value) {
         buf.put((byte) (value >> 8));
         buf.put((byte) value);
         return this;
     }
 
-    /**
-     * P 2 add io buffer.
-     *
-     * @param value the value
-     * @return the io buffer
-     */
     public IoBuffer p2add(int value) {
         buf.put((byte) (value >> 8));
         buf.put((byte) (value + 128));
         return this;
     }
 
-    /**
-     * Ip 2 io buffer.
-     *
-     * @param value the value
-     * @return the io buffer
-     */
     public IoBuffer ip2(int value) {
         buf.put((byte) value);
         buf.put((byte) (value >> 8));
         return this;
     }
 
-    /**
-     * Ip 2 add io buffer.
-     *
-     * @param value the value
-     * @return the io buffer
-     */
     public IoBuffer ip2add(int value) {
         buf.put((byte) (value + 128));
         buf.put((byte) (value >> 8));
         return this;
     }
 
-    /**
-     * P 3 io buffer.
-     *
-     * @param value the value
-     * @return the io buffer
-     */
     public IoBuffer p3(int value) {
         buf.put((byte) (value >> 16));
         buf.put((byte) (value >> 8));
@@ -179,12 +151,6 @@ public class IoBuffer {
         return this;
     }
 
-    /**
-     * Ip 3 io buffer.
-     *
-     * @param value the value
-     * @return the io buffer
-     */
     public IoBuffer ip3(int value) {
         buf.put((byte) value);
         buf.put((byte) (value >> 8));
@@ -192,12 +158,6 @@ public class IoBuffer {
         return this;
     }
 
-    /**
-     * P 4 io buffer.
-     *
-     * @param value the value
-     * @return the io buffer
-     */
     public IoBuffer p4(int value) {
         buf.put((byte) (value >> 24));
         buf.put((byte) (value >> 16));
@@ -206,12 +166,6 @@ public class IoBuffer {
         return this;
     }
 
-    /**
-     * Ip 4 io buffer.
-     *
-     * @param value the value
-     * @return the io buffer
-     */
     public IoBuffer ip4(int value) {
         buf.put((byte) value);
         buf.put((byte) (value >> 8));
@@ -220,12 +174,6 @@ public class IoBuffer {
         return this;
     }
 
-    /**
-     * Mp 4 io buffer.
-     *
-     * @param value the value
-     * @return the io buffer
-     */
     public IoBuffer mp4(int value) {
         buf.put((byte) (value >> 16));
         buf.put((byte) (value >> 24));
@@ -234,12 +182,6 @@ public class IoBuffer {
         return this;
     }
 
-    /**
-     * Imp 4 io buffer.
-     *
-     * @param value the value
-     * @return the io buffer
-     */
     public IoBuffer imp4(int value) {
         buf.put((byte) (value >> 8));
         buf.put((byte) value);
@@ -248,12 +190,6 @@ public class IoBuffer {
         return this;
     }
 
-    /**
-     * P 8 io buffer.
-     *
-     * @param value the value
-     * @return the io buffer
-     */
     public IoBuffer p8(long value) {
         buf.put((byte) (value >> 56));
         buf.put((byte) (value >> 48));
@@ -266,12 +202,6 @@ public class IoBuffer {
         return this;
     }
 
-    /**
-     * P var int io buffer.
-     *
-     * @param value the value
-     * @return the io buffer
-     */
     public IoBuffer pVarInt(int value) {
         if ((value & 0xffffff80) != 0) {
             if ((value & 0xffffc000) != 0) {
@@ -288,212 +218,97 @@ public class IoBuffer {
         return this.p1(value & 0x7F);
     }
 
-    /**
-     * P var long io buffer.
-     *
-     * @param size  the size
-     * @param value the value
-     * @return the io buffer
-     */
     public IoBuffer pVarLong(int size, long value) {
         int bytes = size - 1;
-        if (bytes < 0 || bytes > 7)
-            throw new IllegalArgumentException();
+        if (bytes < 0 || bytes > 7) throw new IllegalArgumentException();
         for (int shift = bytes * 8; shift >= 0; shift -= 8)
             this.p1((byte) (value >> shift));
         return this;
     }
 
-    /**
-     * Psmarts io buffer.
-     *
-     * @param value the value
-     * @return the io buffer
-     */
     public IoBuffer psmarts(int value) {
-        if (value >= 0 && value < 128)
-            this.p1(value);
-        else if (value >= 0 && value < 0x8000)
-            this.p2(value + 0x8000);
-        else
-            throw new IllegalArgumentException("smart out of range: $value");
+        if (value >= 0 && value < 128) this.p1(value);
+        else if (value >= 0 && value < 0x8000) this.p2(value + 0x8000);
+        else throw new IllegalArgumentException("smart out of range: $value");
         return this;
     }
 
-    /**
-     * Psize io buffer.
-     *
-     * @param length the length
-     * @return the io buffer
-     */
     public IoBuffer psize(int length) {
         buf.put(buf.position() - length - 1, (byte) length);
         return this;
     }
 
-    /**
-     * Psizeadd io buffer.
-     *
-     * @param length the length
-     * @return the io buffer
-     */
     public IoBuffer psizeadd(int length) {
         buf.put(buf.position() - length - 1, (byte) (length + 128));
         return this;
     }
 
-    /**
-     * G 1 int.
-     *
-     * @return the int
-     */
     public int g1() {
         return buf.get() & 0xFF;
     }
 
-    /**
-     * G 1 b int.
-     *
-     * @return the int
-     */
     public int g1b() {
         return buf.get();
     }
 
-    /**
-     * G 1 add int.
-     *
-     * @return the int
-     */
     public int g1add() {
         return (buf.get() - 128) & 0xFF;
     }
 
-    /**
-     * G 1 neg int.
-     *
-     * @return the int
-     */
     public int g1neg() {
         return -(buf.get() & 0xFF);
     }
 
-    /**
-     * G 1 sub int.
-     *
-     * @return the int
-     */
     public int g1sub() {
         return (128 - buf.get()) & 0xFF;
     }
 
-    /**
-     * G 2 int.
-     *
-     * @return the int
-     */
     public int g2() {
         return ((buf.get() & 0xFF) << 8) + (buf.get() & 0xFF);
     }
 
-    /**
-     * G 2 add int.
-     *
-     * @return the int
-     */
     public int g2add() {
         return ((buf.get() & 0xff) << 8) + ((buf.get() - 128) & 0xFF);
     }
 
-    /**
-     * G 2 b int.
-     *
-     * @return the int
-     */
     public int g2b() {
         int value = ((buf.get() & 0xFF) << 8) + (buf.get() & 0xFF);
-        if (value > 32767)
-            value -= 0x10000;
+        if (value > 32767) value -= 0x10000;
         return value;
     }
 
-    /**
-     * Ig 2 int.
-     *
-     * @return the int
-     */
     public int ig2() {
         return (buf.get() & 0xFF) + ((buf.get() & 0xFF) << 8);
     }
 
-    /**
-     * Ig 2 add int.
-     *
-     * @return the int
-     */
     public int ig2add() {
         return ((buf.get() - 128) & 0xFF) + ((buf.get() & 0xFF) << 8);
     }
 
-    /**
-     * G 3 int.
-     *
-     * @return the int
-     */
     public int g3() {
         return ((buf.get() & 0xFF) << 16) + ((buf.get() & 0xFF) << 8) + (buf.get() & 0xFF);
     }
 
-    /**
-     * Ig 3 int.
-     *
-     * @return the int
-     */
     public int ig3() {
         return (buf.get() & 0xFF) + ((buf.get() & 0xFF) << 8) + ((buf.get() & 0xFF) << 16);
     }
 
-    /**
-     * G 4 int.
-     *
-     * @return the int
-     */
     public int g4() {
         return ((buf.get() & 0xFF) << 24) + ((buf.get() & 0xFF) << 16) + ((buf.get() & 0xFF) << 8) + (buf.get() & 0xFF);
     }
 
-    /**
-     * Ig 4 int.
-     *
-     * @return the int
-     */
     public int ig4() {
         return (buf.get() & 0xFF) + ((buf.get() & 0xFF) << 8) + ((buf.get() & 0xFF) << 16) + ((buf.get() & 0xFF) << 24);
     }
 
-    /**
-     * M 4 int.
-     *
-     * @return the int
-     */
     public int m4() {
         return ((buf.get() & 0xFF) << 16) + ((buf.get() & 0xFF) << 24) + (buf.get() & 0xFF) + ((buf.get() & 0xFF) << 8);
     }
 
-    /**
-     * Im 4 int.
-     *
-     * @return the int
-     */
     public int im4() {
         return ((buf.get() & 0xFF) << 8) + (buf.get() & 0xFF) + ((buf.get() & 0xFF) << 24) + ((buf.get() & 0xFF) << 16);
     }
 
-    /**
-     * G 8 long.
-     *
-     * @return the long
-     */
     public long g8() {
         long low = (long) this.g4() & 0xFFFFFFFFL;
         long high = (long) this.g4() & 0xFFFFFFFFL;
@@ -501,10 +316,8 @@ public class IoBuffer {
     }
 
     /**
-     * Put io buffer.
-     *
-     * @param val the val
-     * @return the io buffer
+     * @param val
+     * @return
      */
     public IoBuffer put(int val) {
         buf.put((byte) val);
@@ -512,12 +325,10 @@ public class IoBuffer {
     }
 
     /**
-     * Put bytes io buffer.
-     *
-     * @param datas  the datas
-     * @param offset the offset
-     * @param len    the len
-     * @return the io buffer
+     * @param datas
+     * @param offset
+     * @param len
+     * @return
      */
     public IoBuffer putBytes(byte[] datas, int offset, int len) {
         for (int i = offset; i < len; i++) {
@@ -526,13 +337,6 @@ public class IoBuffer {
         return this;
     }
 
-    /**
-     * Gets bytes.
-     *
-     * @param data the data
-     * @param off  the off
-     * @param len  the len
-     */
     public final void getBytes(byte data[], int off, int len) {
         for (int k = off; k < len + off; k++) {
             data[k] = data[off++];
@@ -540,10 +344,8 @@ public class IoBuffer {
     }
 
     /**
-     * Put a io buffer.
-     *
-     * @param val the val
-     * @return the io buffer
+     * @param val
+     * @return
      */
     public IoBuffer putA(int val) {
         buf.put((byte) (val + 128));
@@ -551,10 +353,8 @@ public class IoBuffer {
     }
 
     /**
-     * Put c io buffer.
-     *
-     * @param val the val
-     * @return the io buffer
+     * @param val
+     * @return
      */
     public IoBuffer putC(int val) {
         buf.put((byte) -val);
@@ -562,10 +362,8 @@ public class IoBuffer {
     }
 
     /**
-     * Put s io buffer.
-     *
-     * @param val the val
-     * @return the io buffer
+     * @param val
+     * @return
      */
     public IoBuffer putS(int val) {
         buf.put((byte) (128 - val));
@@ -573,10 +371,8 @@ public class IoBuffer {
     }
 
     /**
-     * Put tri io buffer.
-     *
-     * @param val the val
-     * @return the io buffer
+     * @param val
+     * @return
      */
     public IoBuffer putTri(int val) {
         buf.put((byte) (val >> 16));
@@ -586,10 +382,8 @@ public class IoBuffer {
     }
 
     /**
-     * Put short io buffer.
-     *
-     * @param val the val
-     * @return the io buffer
+     * @param val
+     * @return
      */
     public IoBuffer putShort(int val) {
         buf.putShort((short) val);
@@ -597,10 +391,8 @@ public class IoBuffer {
     }
 
     /**
-     * Put le short io buffer.
-     *
-     * @param val the val
-     * @return the io buffer
+     * @param val
+     * @return
      */
     public IoBuffer putLEShort(int val) {
         buf.put((byte) val);
@@ -609,10 +401,8 @@ public class IoBuffer {
     }
 
     /**
-     * Put short a io buffer.
-     *
-     * @param val the val
-     * @return the io buffer
+     * @param val
+     * @return
      */
     public IoBuffer putShortA(int val) {
         buf.put((byte) (val >> 8));
@@ -621,10 +411,8 @@ public class IoBuffer {
     }
 
     /**
-     * Put le short a io buffer.
-     *
-     * @param val the val
-     * @return the io buffer
+     * @param val
+     * @return
      */
     public IoBuffer putLEShortA(int val) {
         buf.put((byte) (val + 128));
@@ -633,10 +421,8 @@ public class IoBuffer {
     }
 
     /**
-     * Put int io buffer.
-     *
-     * @param val the val
-     * @return the io buffer
+     * @param val
+     * @return
      */
     public IoBuffer putInt(int val) {
         buf.putInt(val);
@@ -644,10 +430,8 @@ public class IoBuffer {
     }
 
     /**
-     * Put le int io buffer.
-     *
-     * @param val the val
-     * @return the io buffer
+     * @param val
+     * @return
      */
     public IoBuffer putLEInt(int val) {
         buf.put((byte) val);
@@ -658,10 +442,8 @@ public class IoBuffer {
     }
 
     /**
-     * Put int a io buffer.
-     *
-     * @param val the val
-     * @return the io buffer
+     * @param val
+     * @return
      */
     public IoBuffer putIntA(int val) {
         buf.put((byte) (val >> 8));
@@ -672,10 +454,8 @@ public class IoBuffer {
     }
 
     /**
-     * Put int b io buffer.
-     *
-     * @param val the val
-     * @return the io buffer
+     * @param val
+     * @return
      */
     public IoBuffer putIntB(int val) {
         buf.put((byte) (val >> 16));
@@ -686,10 +466,8 @@ public class IoBuffer {
     }
 
     /**
-     * Put long io buffer.
-     *
-     * @param val the val
-     * @return the io buffer
+     * @param val
+     * @return
      */
     public IoBuffer putLong(long val) {
         buf.putLong(val);
@@ -697,10 +475,8 @@ public class IoBuffer {
     }
 
     /**
-     * Put smart io buffer.
-     *
-     * @param val the val
-     * @return the io buffer
+     * @param val
+     * @return
      */
     public IoBuffer putSmart(int val) {
         if (val > Byte.MAX_VALUE) {
@@ -712,10 +488,8 @@ public class IoBuffer {
     }
 
     /**
-     * Put int smart io buffer.
-     *
-     * @param val the val
-     * @return the io buffer
+     * @param val
+     * @return
      */
     public IoBuffer putIntSmart(int val) {
         if (val > Short.MAX_VALUE) {
@@ -727,10 +501,8 @@ public class IoBuffer {
     }
 
     /**
-     * Put string io buffer.
-     *
-     * @param val the val
-     * @return the io buffer
+     * @param val
+     * @return
      */
     public IoBuffer putString(String val) {
         buf.put(val.getBytes());
@@ -739,10 +511,8 @@ public class IoBuffer {
     }
 
     /**
-     * Put jag string io buffer.
-     *
-     * @param val the val
-     * @return the io buffer
+     * @param val
+     * @return
      */
     public IoBuffer putJagString(String val) {
         buf.put((byte) 0);
@@ -752,10 +522,8 @@ public class IoBuffer {
     }
 
     /**
-     * Put jag string 2 io buffer.
-     *
-     * @param val the val
-     * @return the io buffer
+     * @param val
+     * @return
      */
     public IoBuffer putJagString2(String val) {
         byte[] packed = new byte[256];
@@ -765,10 +533,8 @@ public class IoBuffer {
     }
 
     /**
-     * Put io buffer.
-     *
-     * @param val the val
-     * @return the io buffer
+     * @param val
+     * @return
      */
     public IoBuffer put(byte[] val) {
         buf.put(val);
@@ -776,11 +542,11 @@ public class IoBuffer {
     }
 
     /**
-     * Put reverse a.
+     * Puts a byte array as byte A in reverse.
      *
-     * @param data   the data
-     * @param start  the start
-     * @param offset the offset
+     * @param data   The data to put.
+     * @param start  The start index.
+     * @param offset The offset.
      */
     public void putReverseA(byte[] data, int start, int offset) {
         for (int i = offset + start; i >= start; i--) {
@@ -789,11 +555,11 @@ public class IoBuffer {
     }
 
     /**
-     * Put reverse.
+     * Puts a byte array as byte A in reverse.
      *
-     * @param data   the data
-     * @param start  the start
-     * @param offset the offset
+     * @param data   The data to put.
+     * @param start  The start index.
+     * @param offset The offset.
      */
     public void putReverse(byte[] data, int start, int offset) {
         for (int i = offset + start; i >= start; i--) {
@@ -802,11 +568,9 @@ public class IoBuffer {
     }
 
     /**
-     * Put bits io buffer.
-     *
-     * @param numBits the num bits
-     * @param value   the value
-     * @return the io buffer
+     * @param numBits
+     * @param value
+     * @return
      */
     public IoBuffer putBits(int numBits, int value) {
         int bytePos = getBitPosition() >> 3;
@@ -830,10 +594,8 @@ public class IoBuffer {
     }
 
     /**
-     * Put io buffer.
-     *
-     * @param buffer the buffer
-     * @return the io buffer
+     * @param buffer
+     * @return
      */
     public IoBuffer put(IoBuffer buffer) {
         buffer.toByteBuffer().flip();
@@ -842,10 +604,8 @@ public class IoBuffer {
     }
 
     /**
-     * Put a io buffer.
-     *
-     * @param buffer the buffer
-     * @return the io buffer
+     * @param buffer
+     * @return
      */
     public IoBuffer putA(IoBuffer buffer) {
         buffer.toByteBuffer().flip();
@@ -856,10 +616,8 @@ public class IoBuffer {
     }
 
     /**
-     * Put io buffer.
-     *
-     * @param buffer the buffer
-     * @return the io buffer
+     * @param buffer
+     * @return
      */
     public IoBuffer put(ByteBuffer buffer) {
         buf.put(buffer);
@@ -867,9 +625,7 @@ public class IoBuffer {
     }
 
     /**
-     * Sets bit access.
-     *
-     * @return the bit access
+     * @return
      */
     public IoBuffer setBitAccess() {
         bitPosition = buf.position() * 8;
@@ -877,9 +633,7 @@ public class IoBuffer {
     }
 
     /**
-     * Sets byte access.
-     *
-     * @return the byte access
+     * @return
      */
     public IoBuffer setByteAccess() {
         buf.position((getBitPosition() + 7) / 8);
@@ -887,148 +641,115 @@ public class IoBuffer {
     }
 
     /**
-     * Get int.
-     *
-     * @return the int
+     * @return
      */
     public int get() {
         return buf.get();
     }
 
     /**
-     * Gets a.
-     *
-     * @return the a
+     * @return
      */
     public int getA() {
         return (buf.get() & 0xFF) - 128;
     }
 
     /**
-     * Gets c.
-     *
-     * @return the c
+     * @return
      */
     public int getC() {
         return -buf.get();
     }
 
     /**
-     * Gets s.
-     *
-     * @return the s
+     * @return
      */
     public int getS() {
         return 128 - (buf.get() & 0xFF);
     }
 
     /**
-     * Gets tri.
-     *
-     * @return the tri
+     * @return
      */
     public int getTri() {
         return ((buf.get() << 16) & 0xFF) | ((buf.get() << 8) & 0xFF) | (buf.get() & 0xFF);
     }
 
     /**
-     * Gets short.
-     *
-     * @return the short
+     * @return
      */
     public int getShort() {
         return buf.getShort();
     }
 
     /**
-     * Gets le short.
-     *
-     * @return the le short
+     * @return
      */
     public int getLEShort() {
         return (buf.get() & 0xFF) | ((buf.get() & 0xFF) << 8);
     }
 
     /**
-     * Gets short a.
-     *
-     * @return the short a
+     * @return
      */
     public int getShortA() {
         return ((buf.get() & 0xFF) << 8) | (buf.get() - 128 & 0xFF);
     }
 
     /**
-     * Gets le short a.
-     *
-     * @return the le short a
+     * @return
      */
     public int getLEShortA() {
         return (buf.get() - 128 & 0xFF) | ((buf.get() & 0xFF) << 8);
     }
 
     /**
-     * Gets int.
-     *
-     * @return the int
+     * @return
      */
     public int getInt() {
         return buf.getInt();
     }
 
     /**
-     * Gets le int.
-     *
-     * @return the le int
+     * @return
      */
     public int getLEInt() {
         return (buf.get() & 0xFF) + ((buf.get() & 0xFF) << 8) + ((buf.get() & 0xFF) << 16) + ((buf.get() & 0xFF) << 24);
     }
 
     /**
-     * Gets int a.
-     *
-     * @return the int a
+     * @return
      */
     public int getIntA() {
         return ((buf.get() & 0xFF) << 8) + (buf.get() & 0xFF) + ((buf.get() & 0xFF) << 24) + ((buf.get() & 0xFF) << 16);
     }
 
     /**
-     * Gets int b.
-     *
-     * @return the int b
+     * @return
      */
     public int getIntB() {
         return ((buf.get() & 0xFF) << 16) + ((buf.get() & 0xFF) << 24) + (buf.get() & 0xFF) + ((buf.get() & 0xFF) << 8);
     }
 
     /**
-     * Gets long l.
-     *
-     * @return the long l
+     * @return
      */
     public long getLongL() {
         long first = getIntB();
         long second = getIntB();
-        if (second < 0)
-            second = second & 0xffffffffL;
+        if (second < 0) second = second & 0xffffffffL;
         return (first << -41780448) + second;
     }
 
     /**
-     * Gets long.
-     *
-     * @return the long
+     * @return
      */
     public long getLong() {
         return buf.getLong();
     }
 
     /**
-     * Gets smart.
-     *
-     * @return the smart
+     * @return
      */
     public int getSmart() {
         int peek = buf.get(buf.position());
@@ -1039,9 +760,7 @@ public class IoBuffer {
     }
 
     /**
-     * Gets int smart.
-     *
-     * @return the int smart
+     * @return
      */
     public int getIntSmart() {
         int peek = buf.getShort(buf.position());
@@ -1052,18 +771,14 @@ public class IoBuffer {
     }
 
     /**
-     * Gets string.
-     *
-     * @return the string
+     * @return
      */
     public String getString() {
         return ByteBufferUtils.getString(buf);
     }
 
     /**
-     * Gets jag string.
-     *
-     * @return the jag string
+     * @return
      */
     public String getJagString() {
         byte b = buf.get();
@@ -1072,12 +787,10 @@ public class IoBuffer {
     }
 
     /**
-     * Gets reverse a.
-     *
-     * @param is     the is
-     * @param offset the offset
-     * @param length the length
-     * @return the reverse a
+     * @param is
+     * @param offset
+     * @param length
+     * @return
      */
     public IoBuffer getReverseA(byte[] is, int offset, int length) {
         for (int i = (offset + length - 1); i >= offset; i--) {
@@ -1086,82 +799,63 @@ public class IoBuffer {
         return this;
     }
 
-    /**
-     * Cypher opcode.
-     *
-     * @param cipher the cipher
-     */
     public void cypherOpcode(ISAACCipher cipher) {
         this.opcode += (byte) cipher.getNextValue();
     }
 
     /**
-     * To byte buffer byte buffer.
-     *
-     * @return the byte buffer
+     * @return
      */
     public ByteBuffer toByteBuffer() {
         return buf;
     }
 
     /**
-     * Opcode int.
-     *
-     * @return the int
+     * @return
      */
     public int opcode() {
         return opcode;
     }
 
     /**
-     * Readable bytes int.
-     *
-     * @return the int
+     * @return
      */
     public int readableBytes() {
         return buf.capacity() - buf.remaining();
     }
 
     /**
-     * Gets header.
-     *
-     * @return the header
+     * @return
      */
     public PacketHeader getHeader() {
         return header;
     }
 
     /**
-     * Array byte [ ].
-     *
-     * @return the byte [ ]
+     * @return
      */
     public byte[] array() {
         return buf.array();
     }
 
     /**
-     * Gets packet size.
-     *
-     * @return the packet size
+     * @return the packetSize.
      */
     public int getPacketSize() {
         return packetSize;
     }
 
     /**
-     * Sets packet size.
-     *
-     * @param packetSize the packet size
+     * @param packetSize the packetSize to set.
      */
     public void setPacketSize(int packetSize) {
         this.packetSize = packetSize;
     }
 
     /**
-     * Gets bit position.
+     * Gets the bitPosition.
      *
-     * @return the bit position
+     * @return The bitPosition.
      */
     public int getBitPosition() {
         return bitPosition;

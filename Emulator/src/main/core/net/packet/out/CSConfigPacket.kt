@@ -5,7 +5,9 @@ import core.net.packet.OutgoingPacket
 import core.net.packet.context.CSConfigContext
 
 /**
- * The type Cs config packet.
+ * The outgoing packet for client script configs.
+ *
+ * @author Snickerize
  */
 class CSConfigPacket : OutgoingPacket<CSConfigContext> {
     override fun send(context: CSConfigContext) {

@@ -7,7 +7,8 @@ import core.net.packet.context.CameraContext
 import core.net.packet.context.CameraContext.CameraType
 
 /**
- * The type Camera view packet.
+ * Handles the outgoing camera view packets.
+ * @author Emperor
  */
 class CameraViewPacket : OutgoingPacket<CameraContext> {
     override fun send(context: CameraContext) {

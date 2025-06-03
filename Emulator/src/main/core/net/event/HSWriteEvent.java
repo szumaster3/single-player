@@ -8,19 +8,27 @@ import core.net.producer.LoginEventProducer;
 import java.nio.ByteBuffer;
 
 /**
- * The type Hs write event.
+ * Handles Handshake write events.
+ *
+ * @author Emperor
  */
 public final class HSWriteEvent extends IoWriteEvent {
 
+    /**
+     * The JS-5 event producer.
+     */
     private static final JS5EventProducer JS5_PRODUCER = new JS5EventProducer();
 
+    /**
+     * The login event producer.
+     */
     private static final LoginEventProducer LOGIN_PRODUCER = new LoginEventProducer();
 
     /**
-     * Instantiates a new Hs write event.
+     * Constructs a new {@code HSWriteEvent} {@code Object}.
      *
-     * @param session the session
-     * @param context the context
+     * @param session The session.
+     * @param context The context.
      */
     public HSWriteEvent(IoSession session, Object context) {
         super(session, context);

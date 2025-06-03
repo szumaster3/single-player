@@ -5,7 +5,8 @@ import core.net.packet.OutgoingPacket
 import core.net.packet.context.InterfaceContext
 
 /**
- * The type Close interface.
+ * Represents the outgoing packet used for closing an interface.
+ * @author Emperor
  */
 class CloseInterface : OutgoingPacket<InterfaceContext> {
     override fun send(context: InterfaceContext) {

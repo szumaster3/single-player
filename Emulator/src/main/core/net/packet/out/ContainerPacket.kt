@@ -7,7 +7,8 @@ import core.net.packet.PacketHeader
 import core.net.packet.context.ContainerContext
 
 /**
- * The type Container packet.
+ * Represents the outgoing container packet.
+ * @author Emperor
  */
 class ContainerPacket : OutgoingPacket<ContainerContext> {
     override fun send(context: ContainerContext) {

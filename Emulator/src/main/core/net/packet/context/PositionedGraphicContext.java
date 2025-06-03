@@ -6,43 +6,40 @@ import core.game.world.update.flag.context.Graphics;
 import core.net.packet.Context;
 
 /**
- * The type Positioned graphic context.
+ * The packet context for the positioned graphic packet.
+ *
+ * @author Emperor
  */
 public final class PositionedGraphicContext implements Context {
 
+    /**
+     * The player.
+     */
     private final Player player;
 
-    private final Graphics graphics;
+    /**
+     * The graphics.
+     */
+    private final Graphics graphic;
 
+    /**
+     * The location.
+     */
     private final Location location;
 
-    /**
-     * The Scene x.
-     */
-    public int sceneX, /**
-     * The Scene y.
-     */
-    sceneY;
-    /**
-     * The Offset x.
-     */
-    public int offsetX, /**
-     * The Offset y.
-     */
-    offsetY;
+    public int sceneX, sceneY;
+    public int offsetX, offsetY;
 
     /**
-     * Instantiates a new Positioned graphic context.
+     * Constructs a new {@code PositionedGraphicContext} {@code Object}.
      *
-     * @param player   the player
-     * @param graphics the graphics
-     * @param location the location
-     * @param offsetX  the offset x
-     * @param offsetY  the offset y
+     * @param player   The player.
+     * @param graphic  The graphic to display on the given location.
+     * @param location The location to display the graphic on.
      */
-    public PositionedGraphicContext(Player player, Graphics graphics, Location location, int offsetX, int offsetY) {
+    public PositionedGraphicContext(Player player, Graphics graphic, Location location, int offsetX, int offsetY) {
         this.player = player;
-        this.graphics = graphics;
+        this.graphic = graphic;
         this.location = location;
         this.sceneX = location.getSceneX(player.getPlayerFlags().getLastSceneGraph());
         this.sceneY = location.getSceneY(player.getPlayerFlags().getLastSceneGraph());
@@ -56,17 +53,13 @@ public final class PositionedGraphicContext implements Context {
     }
 
     /**
-     * Gets graphic.
-     *
      * @return the graphic
      */
     public Graphics getGraphic() {
-        return graphics;
+        return graphic;
     }
 
     /**
-     * Gets location.
-     *
      * @return the location
      */
     public Location getLocation() {

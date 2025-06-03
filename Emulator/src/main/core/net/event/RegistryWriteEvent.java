@@ -9,17 +9,22 @@ import core.net.IoWriteEvent;
 import java.nio.ByteBuffer;
 
 /**
- * The type Registry write event.
+ * Handles game world registry writing events.
+ *
+ * @author Emperor
  */
 public final class RegistryWriteEvent extends IoWriteEvent {
 
+    /**
+     * The string check.
+     */
     private static final String CHECK = "12x4578f5g45hrdjiofed59898";
 
     /**
-     * Instantiates a new Registry write event.
+     * Constructs a new {@code RegistryWriteEvent} {@code Object}.
      *
-     * @param session the session
-     * @param context the context
+     * @param session The I/O session.
+     * @param context The writing context.
      */
     public RegistryWriteEvent(IoSession session, Object context) {
         super(session, context);

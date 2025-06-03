@@ -3,16 +3,18 @@ package core.net.packet;
 import core.game.node.entity.player.Player;
 
 /**
- * The interface Incoming packet.
+ * Represents an incoming packet.
+ *
+ * @author Emperor
  */
 public interface IncomingPacket {
 
     /**
-     * Decode.
+     * Decodes the incoming packet.
      *
-     * @param player the player
-     * @param opcode the opcode
-     * @param buffer the buffer
+     * @param player The player.
+     * @param opcode The opcode.
+     * @param buffer The buffer.
      */
     public void decode(Player player, int opcode, IoBuffer buffer);
 

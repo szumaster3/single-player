@@ -4,19 +4,25 @@ import core.game.node.entity.player.Player;
 import core.net.packet.Context;
 
 /**
- * The type Default context.
+ * Represents a default context of a packet.
+ *
+ * @author 'Vexia
  */
 public class DefaultContext implements Context {
-
+    /**
+     * Represents the {@link Player} instance.
+     */
     private Player player;
-
+    /**
+     * Represents the array of objects casted.
+     */
     private Object[] objects;
 
     /**
-     * Instantiates a new Default context.
+     * Constructs a new {@code DefaultContext.java} {@code Object}.
      *
-     * @param player  the player
-     * @param objects the objects
+     * @param player  the player.
+     * @param objects the objects.
      */
     public DefaultContext(Player player, Object... objects) {
         this.player = player;
@@ -29,27 +35,21 @@ public class DefaultContext implements Context {
     }
 
     /**
-     * Sets player.
-     *
-     * @param player the player
+     * @param player the player to set.
      */
     public void setPlayer(Player player) {
         this.player = player;
     }
 
     /**
-     * Get objects object [ ].
-     *
-     * @return the object [ ]
+     * @return the objects.
      */
     public Object[] getObjects() {
         return objects;
     }
 
     /**
-     * Sets objects.
-     *
-     * @param objects the objects
+     * @param objects the objects to set.
      */
     public void setObjects(Object[] objects) {
         this.objects = objects;

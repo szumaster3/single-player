@@ -10,7 +10,8 @@ import core.net.event.js5.JS5WriteEvent;
 import java.nio.ByteBuffer;
 
 /**
- * The type Js 5 event producer.
+ * Produces JS-5 I/O events.
+ * @author Tyler, Emperor
  */
 public class JS5EventProducer implements EventProducer {
 

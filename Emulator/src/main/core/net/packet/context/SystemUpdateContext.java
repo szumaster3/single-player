@@ -4,19 +4,27 @@ import core.game.node.entity.player.Player;
 import core.net.packet.Context;
 
 /**
- * The type System update context.
+ * Represents a system update.
+ *
+ * @author 'Vexia
  */
 public class SystemUpdateContext implements Context {
 
-    private Player player;
+    /**
+     * The <b>Player</b> instance.
+     */
+    private final Player player;
 
+    /**
+     * The time.
+     */
     private int time;
 
     /**
-     * Instantiates a new System update context.
+     * Constructs a new {@code SystemUpdateContext.java} {@code Object}.
      *
-     * @param player the player
-     * @param time   the time
+     * @param player the <b>Player</b>.
+     * @param time   the time.
      */
     public SystemUpdateContext(Player player, int time) {
         this.player = player;
@@ -29,8 +37,6 @@ public class SystemUpdateContext implements Context {
     }
 
     /**
-     * Gets time.
-     *
      * @return the time
      */
     public int getTime() {
@@ -38,9 +44,7 @@ public class SystemUpdateContext implements Context {
     }
 
     /**
-     * Sets time.
-     *
-     * @param time the time
+     * @param time the time to set
      */
     public void setTime(int time) {
         this.time = time;

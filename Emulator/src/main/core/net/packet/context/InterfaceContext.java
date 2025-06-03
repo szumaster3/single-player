@@ -4,24 +4,41 @@ import core.game.node.entity.player.Player;
 import core.net.packet.Context;
 
 /**
- * The type Interface context.
+ * The interface packet context.
+ *
+ * @author Emperor
  */
 public final class InterfaceContext implements Context {
 
+    /**
+     * The window id.
+     */
     private final int windowId;
+    /**
+     * The interface id.
+     */
     private final int interfaceId;
+    /**
+     * If the interface can be walked over.
+     */
     private final boolean walkable;
+    /**
+     * The player.
+     */
     private Player player;
+    /**
+     * The component id.
+     */
     private int componentId;
 
     /**
-     * Instantiates a new Interface context.
+     * Constructs a new {@code InterfaceContext} {@code Object}.
      *
-     * @param player      the player
-     * @param windowId    the window id
-     * @param componentId the component id
-     * @param interfaceId the interface id
-     * @param walkable    the walkable
+     * @param player      The player.
+     * @param windowId    The window id.
+     * @param componentId The window component id.
+     * @param interfaceId The interface id.
+     * @param walkable    If we can walk over the interface.
      */
     public InterfaceContext(Player player, int windowId, int componentId, int interfaceId, boolean walkable) {
         this.player = player;
@@ -32,11 +49,11 @@ public final class InterfaceContext implements Context {
     }
 
     /**
-     * Transform interface context.
+     * Transforms this context for the new player & id.
      *
-     * @param player the player
-     * @param id     the id
-     * @return the interface context
+     * @param player The player.
+     * @param id     The new interface id.
+     * @return The interface context created.
      */
     public InterfaceContext transform(Player player, int id) {
         return new InterfaceContext(player, windowId, componentId, id, walkable);
@@ -48,10 +65,10 @@ public final class InterfaceContext implements Context {
     }
 
     /**
-     * Sets player.
+     * Sets the player.
      *
-     * @param player the player
-     * @return the player
+     * @param player The player.
+     * @return This context instance.
      */
     public Context setPlayer(Player player) {
         this.player = player;
@@ -59,45 +76,45 @@ public final class InterfaceContext implements Context {
     }
 
     /**
-     * Gets window id.
+     * Gets the windowId.
      *
-     * @return the window id
+     * @return The windowId.
      */
     public int getWindowId() {
         return windowId;
     }
 
     /**
-     * Gets component id.
+     * Gets the componentId.
      *
-     * @return the component id
+     * @return The componentId.
      */
     public int getComponentId() {
         return componentId;
     }
 
     /**
-     * Sets component id.
+     * Sets the component id.
      *
-     * @param componentId the component id
+     * @param componentId The component id.
      */
     public void setComponentId(int componentId) {
         this.componentId = componentId;
     }
 
     /**
-     * Gets interface id.
+     * Gets the interfaceId.
      *
-     * @return the interface id
+     * @return The interfaceId.
      */
     public int getInterfaceId() {
         return interfaceId;
     }
 
     /**
-     * Is walkable boolean.
+     * Gets the walkable.
      *
-     * @return the boolean
+     * @return The walkable.
      */
     public boolean isWalkable() {
         return walkable;

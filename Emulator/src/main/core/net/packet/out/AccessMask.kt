@@ -5,7 +5,8 @@ import core.net.packet.OutgoingPacket
 import core.net.packet.context.AccessMaskContext
 
 /**
- * The type Access mask.
+ * The access mask outgoing packet.
+ * @author Emperor
  */
 class AccessMask : OutgoingPacket<AccessMaskContext> {
     override fun send(context: AccessMaskContext) {

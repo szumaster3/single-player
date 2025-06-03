@@ -4,19 +4,27 @@ import core.game.node.entity.player.Player;
 import core.net.packet.Context;
 
 /**
- * The type Walk option context.
+ * Represents the set walk-to option context.
+ *
+ * @author Emperor
  */
 public final class WalkOptionContext implements Context {
 
+    /**
+     * The player.
+     */
     private final Player player;
 
+    /**
+     * The option.
+     */
     private final String option;
 
     /**
-     * Instantiates a new Walk option context.
+     * Constructs a new {@code WalkOptionContext} {@code Object}.
      *
-     * @param player the player
-     * @param option the option
+     * @param player The player.
+     * @param option The option name.
      */
     public WalkOptionContext(Player player, String option) {
         this.player = player;
@@ -29,9 +37,9 @@ public final class WalkOptionContext implements Context {
     }
 
     /**
-     * Gets option.
+     * Gets the option.
      *
-     * @return the option
+     * @return The option.
      */
     public String getOption() {
         return option;

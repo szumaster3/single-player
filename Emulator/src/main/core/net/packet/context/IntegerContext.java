@@ -4,19 +4,27 @@ import core.game.node.entity.player.Player;
 import core.net.packet.Context;
 
 /**
- * The type Integer context.
+ * The <b>Integer</b> context.
+ *
+ * @author 'Vexia
  */
 public class IntegerContext implements Context {
 
-    private Player player;
+    /**
+     * The player instance.
+     */
+    private final Player player;
 
+    /**
+     * The integer value.
+     */
     private int integer;
 
     /**
-     * Instantiates a new Integer context.
+     * Constructs a new {@code IntegerContext.java} {@code Object}.
      *
-     * @param player  the player
-     * @param integer the integer
+     * @param player  the player.
+     * @param integer the integer.
      */
     public IntegerContext(Player player, int integer) {
         this.player = player;
@@ -29,18 +37,14 @@ public class IntegerContext implements Context {
     }
 
     /**
-     * Gets integer.
-     *
-     * @return the integer
+     * @return the integer.
      */
     public int getInteger() {
         return integer;
     }
 
     /**
-     * Sets integer.
-     *
-     * @param integer the integer
+     * @param integer the integer to set.
      */
     public void setInteger(int integer) {
         this.integer = integer;

@@ -19,24 +19,12 @@ class LoginInfo(
     var crcSums: IntArray,
 ) {
     companion object {
-        fun createDefault(): LoginInfo =
-            LoginInfo(
-                false,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                "",
-                "",
-                ISAACPair(ISAACCipher(intArrayOf()), ISAACCipher(intArrayOf())),
-                0,
-                IntArray(Login.CACHE_INDEX_COUNT),
-            )
+        fun createDefault(): LoginInfo {
+            return LoginInfo(false, 0, 0, 0, 0, 0, 0, 0, "", "", ISAACPair(ISAACCipher(intArrayOf()), ISAACCipher(intArrayOf())), 0, IntArray(Login.CACHE_INDEX_COUNT))
+        }
     }
 
-    override fun toString(): String =
-        "ads:$showAds,wm:$windowMode,sw:$screenWidth,sh:$screenHeight,dm:$displayMode,adid:$adAffiliateId,settings:$settingsHash,pkt:$currentPacketCount,un:$username,pw:$password"
+    override fun toString(): String {
+        return "ads:$showAds,wm:$windowMode,sw:$screenWidth,sh:$screenHeight,dm:$displayMode,adid:$adAffiliateId,settings:$settingsHash,pkt:$currentPacketCount,un:$username,pw:$password"
+    }
 }

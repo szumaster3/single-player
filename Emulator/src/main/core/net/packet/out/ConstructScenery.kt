@@ -6,7 +6,8 @@ import core.net.packet.OutgoingPacket
 import core.net.packet.context.BuildSceneryContext
 
 /**
- * The type Construct scenery.
+ * The construct scenery packet.
+ * @author Emperor
  */
 class ConstructScenery : OutgoingPacket<BuildSceneryContext> {
     override fun send(context: BuildSceneryContext) {

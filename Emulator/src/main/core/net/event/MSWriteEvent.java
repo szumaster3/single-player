@@ -7,15 +7,17 @@ import core.net.packet.IoBuffer;
 import java.nio.ByteBuffer;
 
 /**
- * The type Ms write event.
+ * Handles management server write events.
+ *
+ * @author Emperor
  */
 public final class MSWriteEvent extends IoWriteEvent {
 
     /**
-     * Instantiates a new Ms write event.
+     * Constructs a new {@code MSWriteEvent} {@code Object}
      *
-     * @param session the session
-     * @param context the context
+     * @param session The I/O session.
+     * @param context The packet context.
      */
     public MSWriteEvent(IoSession session, Object context) {
         super(session, context);

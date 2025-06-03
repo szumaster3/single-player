@@ -4,7 +4,8 @@ import core.net.packet.OutgoingPacket
 import core.net.packet.context.WalkOptionContext
 
 /**
- * The type Set walk option.
+ * Handles the sending of the "Set walk-to option" packet.
+ * @author Emperor
  */
 class SetWalkOption : OutgoingPacket<WalkOptionContext> {
     override fun send(context: WalkOptionContext) {

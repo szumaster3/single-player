@@ -4,25 +4,39 @@ import core.game.node.entity.player.Player;
 import core.net.packet.Context;
 
 /**
- * The type String context.
+ * The StringPacket packet context.
+ *
+ * @author Emperor
  */
 public class StringContext implements Context {
 
-    private Player player;
-
-    private String string;
-
-    private int interfaceId;
-
-    private int lineId;
+    /**
+     * The player reference.
+     */
+    private final Player player;
 
     /**
-     * Instantiates a new String context.
+     * The StringPacket string.
+     */
+    private final String string;
+
+    /**
+     * The interface id.
+     */
+    private final int interfaceId;
+
+    /**
+     * The line id.
+     */
+    private final int lineId;
+
+    /**
+     * Constructs a new {@code StringContext} {@code Object}.
      *
-     * @param player      the player
-     * @param string      the string
-     * @param interfaceId the interface id
-     * @param lineId      the line id
+     * @param player      The player.
+     * @param string      The string to send.
+     * @param interfaceId The interface id.
+     * @param lineId      The child id.
      */
     public StringContext(Player player, String string, int interfaceId, int lineId) {
         this.player = player;
@@ -37,27 +51,27 @@ public class StringContext implements Context {
     }
 
     /**
-     * Gets string.
+     * Get the StringPacket string.
      *
-     * @return the string
+     * @return The string.
      */
     public String getString() {
         return string;
     }
 
     /**
-     * Gets interface id.
+     * Get the interface id.
      *
-     * @return the interface id
+     * @return The interface id.
      */
     public int getInterfaceId() {
         return interfaceId;
     }
 
     /**
-     * Gets line id.
+     * Gets the line id.
      *
-     * @return the line id
+     * @return The line id.
      */
     public int getLineId() {
         return lineId;

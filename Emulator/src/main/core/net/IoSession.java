@@ -21,35 +21,93 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Represents a network session between a client and the server.
- * This session handles reading, writing, and managing client connections.
+ *
+ * @author Emperor
  */
 public class IoSession {
 
+    /**
+     * The handshake event producer.
+     */
     private static final EventProducer HANDSHAKE_PRODUCER = new HSEventProducer();
 
+    /**
+     * The selection key.
+     */
     private final SelectionKey key;
+
+    /**
+     * The executor service.
+     */
     private final ExecutorService service;
-    private final String address;
+
     /**
-     * The Isaac input opcode.
+     * The event producer.
      */
-    public int isaacInputOpcode = 0;
-    /**
-     * The Associated username.
-     */
-    public String associatedUsername;
     private EventProducer producer = HANDSHAKE_PRODUCER;
+
+    /**
+     * The currently queued writing data.
+     */
     private List<ByteBuffer> writingQueue = new ArrayList<>(20);
+
+    /**
+     * The currently queued reading data.
+     */
     private ByteBuffer readingQueue;
+
+    /**
+     * The writing lock.
+     */
     private Lock writingLock = new ReentrantLock();
+
+    /**
+     * The ISAAC cipher pair.
+     */
     private ISAACPair isaacPair;
+
+    /**
+     * The name hash.
+     */
     private int nameHash;
+
+    /**
+     * The server key.
+     */
     private long serverKey;
+
+    /**
+     * The JS-5 encryption value.
+     */
     private int js5Encryption;
+
+    /**
+     * The object.
+     */
     private Object object;
+
+    /**
+     * If the session is active.
+     */
     private boolean active = true;
+
+    /**
+     * The last ping time stamp.
+     */
     private long lastPing;
+
+    /**
+     * The address.
+     */
+    private final String address;
+
+    /**
+     * The client info.
+     */
     private ClientInfo clientInfo;
+
+    public String associatedUsername;
+
 
     /**
      * Constructs a new IoSession for the given SelectionKey and ExecutorService.

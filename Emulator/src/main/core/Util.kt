@@ -50,6 +50,12 @@ object Util {
         return wrapperArray
     }
 
+    /**
+     * Parses a location from the format "x,y,z"
+     * @author Ceikry
+     * @param locString The string to parse
+     * @return Location
+     */
     @JvmStatic
     fun parseLocation(locString: String): Location {
         val locTokens =

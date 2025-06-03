@@ -5,32 +5,44 @@ import core.game.node.item.Item;
 import core.net.packet.Context;
 
 /**
- * The type Build item context.
+ * Represents the build item packet context, <br> which is used for
+ * construct/clear item outgoing packet.
+ *
+ * @author Emperor
  */
 public final class BuildItemContext implements Context {
 
+    /**
+     * The player.
+     */
     private final Player player;
 
+    /**
+     * The item to send.
+     */
     private final Item item;
 
+    /**
+     * The old item amount.
+     */
     private final int oldAmount;
 
     /**
-     * Instantiates a new Build item context.
+     * Constructs a new {@code BuildObjectContext} {@code Object}.
      *
-     * @param player the player
-     * @param item   the item
+     * @param player The player
+     * @param item   The item to send.
      */
     public BuildItemContext(Player player, Item item) {
         this(player, item, 0);
     }
 
     /**
-     * Instantiates a new Build item context.
+     * Constructs a new {@code BuildObjectContext} {@code Object}.
      *
-     * @param player    the player
-     * @param item      the item
-     * @param oldAmount the old amount
+     * @param player    The player
+     * @param item      The item to send.
+     * @param oldAmount The old item amount.
      */
     public BuildItemContext(Player player, Item item, int oldAmount) {
         this.player = player;
@@ -44,18 +56,18 @@ public final class BuildItemContext implements Context {
     }
 
     /**
-     * Gets item.
+     * Gets the item.
      *
-     * @return the item
+     * @return The item.
      */
     public Item getItem() {
         return item;
     }
 
     /**
-     * Gets old amount.
+     * Gets the oldAmount.
      *
-     * @return the old amount
+     * @return The oldAmount.
      */
     public int getOldAmount() {
         return oldAmount;

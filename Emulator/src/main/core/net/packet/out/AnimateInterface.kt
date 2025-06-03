@@ -4,9 +4,11 @@ import core.net.packet.IoBuffer
 import core.net.packet.OutgoingPacket
 import core.net.packet.context.AnimateInterfaceContext
 
+
 /**
- * The type Animate interface.
- */
+ * The animate interface outgoing packet.
+ * @author Emperor
+*/
 class AnimateInterface : OutgoingPacket<AnimateInterfaceContext> {
     override fun send(context: AnimateInterfaceContext) {
         val buffer = IoBuffer(36)

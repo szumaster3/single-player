@@ -6,7 +6,8 @@ import core.net.packet.OutgoingPacket
 import core.net.packet.context.AnimateObjectContext
 
 /**
- * The type Animate object packet.
+ * Represents the packet used to animate an object.
+ * @author Vexia (10/11/2013)
  */
 class AnimateObjectPacket : OutgoingPacket<AnimateObjectContext> {
     override fun send(context: AnimateObjectContext) {

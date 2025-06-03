@@ -5,7 +5,8 @@ import core.net.packet.OutgoingPacket
 import core.net.packet.context.MinimapStateContext
 
 /**
- * The type Minimap state.
+ * Handles the sending of the minimap state outgoing packet.
+ * @author Emperor
  */
 class MinimapState : OutgoingPacket<MinimapStateContext> {
     override fun send(context: MinimapStateContext) {

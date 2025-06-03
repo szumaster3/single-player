@@ -5,7 +5,8 @@ import core.net.packet.OutgoingPacket
 import core.net.packet.context.PlayerContext
 
 /**
- * The type Update random file.
+ * Updates the random.dat file for the player.
+ * @author Emperor
  */
 class UpdateRandomFile : OutgoingPacket<PlayerContext> {
     override fun send(context: PlayerContext) {

@@ -23,6 +23,7 @@ import kotlin.system.exitProcess
 
 /**
  * The main server object responsible for initializing and managing the game server.
+ * @author Emperor, Ceikry
  */
 object Server {
     /**

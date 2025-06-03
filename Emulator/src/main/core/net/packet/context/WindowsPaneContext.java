@@ -4,22 +4,33 @@ import core.game.node.entity.player.Player;
 import core.net.packet.Context;
 
 /**
- * The type Windows pane context.
+ * Represents the windows pane packet context.
+ *
+ * @author Emperor
  */
 public final class WindowsPaneContext implements Context {
 
+    /**
+     * The player.
+     */
     private final Player player;
 
+    /**
+     * The window id.
+     */
     private final int windowId;
 
+    /**
+     * The type.
+     */
     private final int type;
 
     /**
-     * Instantiates a new Windows pane context.
+     * Constructs a new {@code WindowsPaneContext} object.
      *
-     * @param player   the player
-     * @param windowId the window id
-     * @param type     the type
+     * @param player   The player.
+     * @param windowId The window id.
+     * @param type     The type.
      */
     public WindowsPaneContext(Player player, int windowId, int type) {
         this.player = player;
@@ -33,18 +44,18 @@ public final class WindowsPaneContext implements Context {
     }
 
     /**
-     * Gets window id.
+     * Gets the windowId.
      *
-     * @return the window id
+     * @return The windowId.
      */
     public int getWindowId() {
         return windowId;
     }
 
     /**
-     * Gets type.
+     * Gets the type.
      *
-     * @return the type
+     * @return The type.
      */
     public int getType() {
         return type;

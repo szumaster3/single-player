@@ -10,7 +10,8 @@ import core.net.packet.PacketHeader
 import core.net.packet.context.DynamicSceneContext
 
 /**
- * The type Build dynamic scene.
+ * Represents the build dynamic scene.
+ * @author Emperor
  */
 class BuildDynamicScene : OutgoingPacket<DynamicSceneContext> {
     override fun send(context: DynamicSceneContext) {

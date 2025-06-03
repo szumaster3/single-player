@@ -5,7 +5,8 @@ import core.net.packet.OutgoingPacket
 import core.net.packet.context.InterfaceConfigContext
 
 /**
- * The type Interface config.
+ * The outgoing interface configuration packet.
+ * @author Emperor
  */
 class InterfaceConfig : OutgoingPacket<InterfaceConfigContext> {
     override fun send(context: InterfaceConfigContext) {

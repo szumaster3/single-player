@@ -6,7 +6,9 @@ import core.net.packet.context.DisplayModelContext
 import core.net.packet.context.DisplayModelContext.ModelType
 
 /**
- * The type Display model.
+ * Represents the outgoing packet for the displaying of a node model on an
+ * interface.
+ * @author Emperor
  */
 class DisplayModel : OutgoingPacket<DisplayModelContext> {
     override fun send(context: DisplayModelContext) {

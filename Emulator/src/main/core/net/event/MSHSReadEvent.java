@@ -8,17 +8,22 @@ import core.net.producer.RegistryEventProducer;
 import java.nio.ByteBuffer;
 
 /**
- * The type Mshs read event.
+ * Handles the management server handshake read events.
+ *
+ * @author Emperor
  */
 public final class MSHSReadEvent extends IoReadEvent {
 
+    /**
+     * The event producer.
+     */
     private static final EventProducer REGISTRY_PRODUCER = new RegistryEventProducer();
 
     /**
-     * Instantiates a new Mshs read event.
+     * Constructs a new {@code MSHSReadEvent} {@Code Object}
      *
-     * @param session the session
-     * @param buffer  the buffer
+     * @param session The session.
+     * @param buffer  The buffer to read.
      */
     public MSHSReadEvent(IoSession session, ByteBuffer buffer) {
         super(session, buffer);

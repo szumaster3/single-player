@@ -8,15 +8,17 @@ import core.net.IoWriteEvent;
 import java.nio.ByteBuffer;
 
 /**
- * The type Mshs write event.
+ * Handles the management server handshake write event.
+ *
+ * @author Emperor
  */
 public final class MSHSWriteEvent extends IoWriteEvent {
 
     /**
-     * Instantiates a new Mshs write event.
+     * Constructs a new {@code MSHSWriteEvent} {@code Object}
      *
-     * @param session the session
-     * @param context the context
+     * @param session The session.
+     * @param context The context.
      */
     public MSHSWriteEvent(IoSession session, Object context) {
         super(session, context);

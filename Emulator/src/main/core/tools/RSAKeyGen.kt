@@ -8,6 +8,11 @@ import java.security.KeyPairGenerator
 import java.security.spec.RSAPrivateKeySpec
 import java.security.spec.RSAPublicKeySpec
 
+/**
+ * Utility functions for RSA key pair creation, generates
+ * a simple 1024-bit RSA key pair.
+ * @author Nikki
+ */
 object RSAKeyGen {
     @JvmStatic
     fun main(args: Array<String>) {

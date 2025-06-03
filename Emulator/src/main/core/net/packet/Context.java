@@ -3,14 +3,16 @@ package core.net.packet;
 import core.game.node.entity.player.Player;
 
 /**
- * The interface Context.
+ * Represents packet context.
+ *
+ * @author Emperor
  */
 public interface Context {
 
     /**
-     * Gets player.
+     * Gets the node.
      *
-     * @return the player
+     * @return The node.
      */
     public Player getPlayer();
 

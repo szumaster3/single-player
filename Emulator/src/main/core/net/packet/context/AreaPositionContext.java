@@ -5,25 +5,39 @@ import core.game.world.map.Location;
 import core.net.packet.Context;
 
 /**
- * The type Area position context.
+ * Handles the area position update packet context.
+ *
+ * @author Emperor
  */
 public final class AreaPositionContext implements Context {
 
+    /**
+     * The player.
+     */
     private final Player player;
 
+    /**
+     * The location.
+     */
     private final Location location;
 
+    /**
+     * The offset x-coordinate.
+     */
     private final int offsetX;
 
+    /**
+     * The offset y-coordinate.
+     */
     private final int offsetY;
 
     /**
-     * Instantiates a new Area position context.
+     * Constructs a new {@code AreaPositionContext} {@code Object}.
      *
-     * @param player   the player
-     * @param location the location
-     * @param offsetX  the offset x
-     * @param offsetY  the offset y
+     * @param player   The player.
+     * @param location The location.
+     * @param offsetX  The offset x-coordinate.
+     * @param offsetY  The offset y-coordinate.
      */
     public AreaPositionContext(Player player, Location location, int offsetX, int offsetY) {
         this.player = player;
@@ -38,27 +52,27 @@ public final class AreaPositionContext implements Context {
     }
 
     /**
-     * Gets location.
+     * Gets the location.
      *
-     * @return the location
+     * @return The location.
      */
     public Location getLocation() {
         return location;
     }
 
     /**
-     * Gets offset x.
+     * Gets the offsetX.
      *
-     * @return the offset x
+     * @return The offsetX.
      */
     public int getOffsetX() {
         return offsetX;
     }
 
     /**
-     * Gets offset y.
+     * Gets the offsetY.
      *
-     * @return the offset y
+     * @return The offsetY.
      */
     public int getOffsetY() {
         return offsetY;

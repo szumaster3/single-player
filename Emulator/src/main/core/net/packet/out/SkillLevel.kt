@@ -7,7 +7,8 @@ import core.net.packet.context.SkillContext
 import kotlin.math.ceil
 
 /**
- * The type Skill level.
+ * Handles the update skill outgoing packet.
+ * @author Emperor
  */
 class SkillLevel : OutgoingPacket<SkillContext> {
     override fun send(context: SkillContext) {

@@ -5,22 +5,33 @@ import core.game.world.map.Location;
 import core.net.packet.Context;
 
 /**
- * The type Location context.
+ * Packet context used for location based packets.
+ *
+ * @author Emperor
  */
 public final class LocationContext implements Context {
 
+    /**
+     * The player.
+     */
     private final Player player;
 
+    /**
+     * The location.
+     */
     private final Location location;
 
+    /**
+     * If the location update is flagged as a teleport.
+     */
     private final boolean teleport;
 
     /**
-     * Instantiates a new Location context.
+     * Constructs a new {@code LocationContext} {@code Object}.
      *
-     * @param player   the player
-     * @param location the location
-     * @param teleport the teleport
+     * @param player   The player.
+     * @param location The location.
+     * @param teleport If the location update is flagged as a teleport.
      */
     public LocationContext(Player player, Location location, boolean teleport) {
         this.player = player;
@@ -34,18 +45,18 @@ public final class LocationContext implements Context {
     }
 
     /**
-     * Gets location.
+     * Gets the location.
      *
-     * @return the location
+     * @return The location.
      */
     public Location getLocation() {
         return location;
     }
 
     /**
-     * Is teleport boolean.
+     * Gets the teleport.
      *
-     * @return the boolean
+     * @return The teleport.
      */
     public boolean isTeleport() {
         return teleport;

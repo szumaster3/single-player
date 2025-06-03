@@ -6,31 +6,66 @@ import core.game.node.item.Item;
 import core.net.packet.Context;
 
 /**
- * The type Container context.
+ * Represents the context for the container packet.
+ *
+ * @author Emperor
  */
 public final class ContainerContext implements Context {
 
-    private final int interfaceId;
-    private final int childId;
-    private final int containerId;
-    private final int length;
-    private final boolean split;
-    private final int[] slots;
     /**
-     * The Ids.
+     * The interface id.
      */
+    private final int interfaceId;
+
+    /**
+     * The child id.
+     */
+    private final int childId;
+
+    /**
+     * The container type.
+     */
+    private final int containerId;
+
+    /**
+     * The length of the array to send.
+     */
+    private final int length;
+
+    /**
+     * If the container should be split up.
+     */
+    private final boolean split;
+
+    /**
+     * The slots we're changing.
+     */
+    private final int[] slots;
+
     public int[] ids;
-    private Player player;
+
+    /**
+     * The player.
+     */
+    private final Player player;
+
+    /**
+     * The items.
+     */
     private Item[] items;
+
+    /**
+     * If the container should be cleared.
+     */
     private boolean clear;
 
     /**
-     * Instantiates a new Container context.
+     * Constructs a new {@code ContainerContext} {@code Object}.
      *
-     * @param player      the player
-     * @param interfaceId the interface id
-     * @param childId     the child id
-     * @param clear       the clear
+     * @param player      The player.
+     * @param interfaceId The interface id.
+     * @param childId     The child id.
+     * @param clear       If the container should be cleared.
      */
     public ContainerContext(Player player, int interfaceId, int childId, boolean clear) {
         this(player, interfaceId, childId, 0, null, 1, false);
@@ -38,43 +73,43 @@ public final class ContainerContext implements Context {
     }
 
     /**
-     * Instantiates a new Container context.
+     * Constructs a new {@code ContainerContext} {@code Object}.
      *
-     * @param player      the player
-     * @param interfaceId the interface id
-     * @param childId     the child id
-     * @param containerId the container id
-     * @param container   the container
-     * @param split       the split
+     * @param player      The player.
+     * @param interfaceId The interface id.
+     * @param childId     The child id.
+     * @param containerId The container type.
+     * @param container   The container.
+     * @param split       If the container should be split.
      */
     public ContainerContext(Player player, int interfaceId, int childId, int containerId, Container container, boolean split) {
         this(player, interfaceId, childId, containerId, container.toArray(), container.toArray().length, split);
     }
 
     /**
-     * Instantiates a new Container context.
+     * Constructs a new {@code ContainerContext} {@code Object}.
      *
-     * @param player      the player
-     * @param interfaceId the interface id
-     * @param childId     the child id
-     * @param containerId the container id
-     * @param items       the items
-     * @param split       the split
+     * @param player      The player.
+     * @param interfaceId The interface id.
+     * @param childId     The child id.
+     * @param containerId The container type.
+     * @param items       The items.
+     * @param split       If the container should be split.
      */
     public ContainerContext(Player player, int interfaceId, int childId, int containerId, Item[] items, boolean split) {
         this(player, interfaceId, childId, containerId, items, items.length, split);
     }
 
     /**
-     * Instantiates a new Container context.
+     * Constructs a new {@code ContainerContext} {@code Object}.
      *
-     * @param player      the player
-     * @param interfaceId the interface id
-     * @param childId     the child id
-     * @param containerId the container id
-     * @param items       the items
-     * @param length      the length
-     * @param split       the split
+     * @param player      The player.
+     * @param interfaceId The interface id.
+     * @param childId     The child id.
+     * @param containerId The container containerId.
+     * @param items       The items.
+     * @param length      The length.
+     * @param split       If the container should be split.
      */
     public ContainerContext(Player player, int interfaceId, int childId, int containerId, Item[] items, int length, boolean split) {
         this.player = player;
@@ -87,15 +122,6 @@ public final class ContainerContext implements Context {
         this.slots = null;
     }
 
-    /**
-     * Instantiates a new Container context.
-     *
-     * @param player      the player
-     * @param interfaceId the interface id
-     * @param childId     the child id
-     * @param containerId the container id
-     * @param items       the items
-     */
     public ContainerContext(Player player, int interfaceId, int childId, int containerId, int[] items) {
         this.player = player;
         this.interfaceId = interfaceId;
@@ -108,15 +134,15 @@ public final class ContainerContext implements Context {
     }
 
     /**
-     * Instantiates a new Container context.
+     * Constructs a new {@code ContainerContext} {@code Object}.
      *
-     * @param player      the player
-     * @param interfaceId the interface id
-     * @param childId     the child id
-     * @param containerId the container id
-     * @param items       the items
-     * @param split       the split
-     * @param slots       the slots
+     * @param player      The player.
+     * @param interfaceId The interface id.
+     * @param childId     The child id.
+     * @param containerId The container containerId.
+     * @param items       The items.
+     * @param split       If the container should be split.
+     * @param slots       The slots to update.
      */
     public ContainerContext(Player player, int interfaceId, int childId, int containerId, Item[] items, boolean split, int... slots) {
         this.player = player;
@@ -135,81 +161,81 @@ public final class ContainerContext implements Context {
     }
 
     /**
-     * Gets interface id.
+     * Gets the interfaceId.
      *
-     * @return the interface id
+     * @return The interfaceId.
      */
     public int getInterfaceId() {
         return interfaceId;
     }
 
     /**
-     * Gets container id.
+     * Gets the type.
      *
-     * @return the container id
+     * @return The type.
      */
     public int getContainerId() {
         return containerId;
     }
 
     /**
-     * Get items item [ ].
+     * Gets the items.
      *
-     * @return the item [ ]
+     * @return The items.
      */
     public Item[] getItems() {
         return items;
     }
 
     /**
-     * Gets length.
+     * Gets the length.
      *
-     * @return the length
+     * @return The length.
      */
     public int getLength() {
         return length;
     }
 
     /**
-     * Is split boolean.
+     * Gets the split.
      *
-     * @return the boolean
+     * @return The split.
      */
     public boolean isSplit() {
         return split;
     }
 
     /**
-     * Get slots int [ ].
+     * Gets the slots.
      *
-     * @return the int [ ]
+     * @return The slots.
      */
     public int[] getSlots() {
         return slots;
     }
 
     /**
-     * Gets child id.
+     * Gets the childId.
      *
-     * @return the child id
+     * @return The childId.
      */
     public int getChildId() {
         return childId;
     }
 
     /**
-     * Is clear boolean.
+     * Gets the clear.
      *
-     * @return the boolean
+     * @return The clear.
      */
     public boolean isClear() {
         return clear;
     }
 
     /**
-     * Sets clear.
+     * Sets the clear.
      *
-     * @param clear the clear
+     * @param clear The clear to set.
      */
     public void setClear(boolean clear) {
         this.clear = clear;

@@ -4,19 +4,27 @@ import core.game.node.entity.player.Player;
 import core.net.packet.Context;
 
 /**
- * The type Minimap state context.
+ * Represents the context used for the Minimap State packet.
+ *
+ * @author Emperor
  */
 public class MinimapStateContext implements Context {
 
+    /**
+     * The player.
+     */
     private final Player player;
 
+    /**
+     * The minimap state to set.
+     */
     private final int state;
 
     /**
-     * Instantiates a new Minimap state context.
+     * Constructs a new {@code MinimapStateContext} {@code Object}.
      *
-     * @param player the player
-     * @param state  the state
+     * @param player The player.
+     * @param state  The minimap state to set.
      */
     public MinimapStateContext(Player player, int state) {
         this.player = player;
@@ -29,9 +37,9 @@ public class MinimapStateContext implements Context {
     }
 
     /**
-     * Gets state.
+     * Gets the state.
      *
-     * @return the state
+     * @return The state.
      */
     public int getState() {
         return state;

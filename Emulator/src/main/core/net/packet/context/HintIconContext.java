@@ -7,28 +7,55 @@ import core.game.world.map.Location;
 import core.net.packet.Context;
 
 /**
- * The type Hint icon context.
+ * Represents the hint icon packet context.
+ *
+ * @author Emperor
  */
 public final class HintIconContext implements Context {
 
+    /**
+     * The player.
+     */
     private final Player player;
 
+    /**
+     * The hint icon slot.
+     */
     private final int slot;
+    /**
+     * The entity index.
+     */
     private final int index;
+    /**
+     * The model id.
+     */
     private final int modelId;
+    /**
+     * The location.
+     */
     private final Location location;
+    /**
+     * The target type.
+     */
     private int targetType;
+    /**
+     * The arrow id.
+     */
     private int arrowId;
+    /**
+     * The height.
+     */
     private int height;
 
     /**
-     * Instantiates a new Hint icon context.
+     * Constructs a new {@code HintIconContext} {@code Object}. <br> This hint
+     * icon is entity based.
      *
-     * @param player  the player
-     * @param slot    the slot
-     * @param arrowId the arrow id
-     * @param target  the target
-     * @param modelId the model id
+     * @param player  The player.
+     * @param slot    The hint icon slot.
+     * @param arrowId The arrow id.
+     * @param target  The target.
+     * @param modelId The model id.
      */
     public HintIconContext(Player player, int slot, int arrowId, Node target, int modelId) {
         this(player, slot, arrowId, -1, target, modelId);
@@ -39,29 +66,31 @@ public final class HintIconContext implements Context {
     }
 
     /**
-     * Instantiates a new Hint icon context.
+     * Constructs a new {@code HintIconContext} {@code Object}. <br> This hint
+     * icon is entity based.
      *
-     * @param player     the player
-     * @param slot       the slot
-     * @param arrowId    the arrow id
-     * @param targetType the target type
-     * @param target     the target
-     * @param modelId    the model id
+     * @param player     The player.
+     * @param slot       The hint icon slot.
+     * @param arrowId    The arrow id.
+     * @param targetType The target type.
+     * @param target     The index of the entity.
+     * @param modelId    The model id.
      */
     public HintIconContext(Player player, int slot, int arrowId, int targetType, Node target, int modelId) {
         this(player, slot, arrowId, targetType, target, modelId, 0);
     }
 
     /**
-     * Instantiates a new Hint icon context.
+     * Constructs a new {@code HintIconContext} {@code Object}. <br> This hint
+     * icon is entity based.
      *
-     * @param player     the player
-     * @param slot       the slot
-     * @param arrowId    the arrow id
-     * @param targetType the target type
-     * @param target     the target
-     * @param modelId    the model id
-     * @param height     the height
+     * @param player     The player.
+     * @param slot       The hint icon slot.
+     * @param arrowId    The arrow id.
+     * @param targetType The target type.
+     * @param target     The index of the entity.
+     * @param modelId    The model id.
+     * @param height     The height.
      */
     public HintIconContext(Player player, int slot, int arrowId, int targetType, Node target, int modelId, int height) {
         this.player = player;
@@ -71,7 +100,7 @@ public final class HintIconContext implements Context {
         this.modelId = modelId;
         this.height = height;
         if (target instanceof Entity) {
-            this.index = ((Entity) target).getIndex();
+            this.index = target.getIndex();
             this.location = null;
         } else {
             this.location = target.getLocation();
@@ -85,90 +114,90 @@ public final class HintIconContext implements Context {
     }
 
     /**
-     * Gets slot.
+     * Gets the slot.
      *
-     * @return the slot
+     * @return The slot.
      */
     public int getSlot() {
         return slot;
     }
 
     /**
-     * Gets target type.
+     * Gets the targetType.
      *
-     * @return the target type
+     * @return The targetType.
      */
     public int getTargetType() {
         return targetType;
     }
 
     /**
-     * Sets target type.
+     * Sets the targetType.
      *
-     * @param targetType the target type
+     * @param targetType The targetType to set.
      */
     public void setTargetType(int targetType) {
         this.targetType = targetType;
     }
 
     /**
-     * Gets arrow id.
+     * Gets the arrowId.
      *
-     * @return the arrow id
+     * @return The arrowId.
      */
     public int getArrowId() {
         return arrowId;
     }
 
     /**
-     * Sets arrow id.
+     * Sets the arrowId.
      *
-     * @param arrowId the arrow id
+     * @param arrowId The arrowId to set.
      */
     public void setArrowId(int arrowId) {
         this.arrowId = arrowId;
     }
 
     /**
-     * Gets index.
+     * Gets the index.
      *
-     * @return the index
+     * @return The index.
      */
     public int getIndex() {
         return index;
     }
 
     /**
-     * Gets model id.
+     * Gets the modelId.
      *
-     * @return the model id
+     * @return The modelId.
      */
     public int getModelId() {
         return modelId;
     }
 
     /**
-     * Gets location.
+     * Gets the location.
      *
-     * @return the location
+     * @return The location.
      */
     public Location getLocation() {
         return location;
     }
 
     /**
-     * Gets height.
+     * Gets the height.
      *
-     * @return the height
+     * @return The height.
      */
     public int getHeight() {
         return height;
     }
 
     /**
-     * Sets height.
+     * Sets the height.
      *
-     * @param height the height
+     * @param height The height to set.
      */
     public void setHeight(int height) {
         this.height = height;

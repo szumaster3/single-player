@@ -5,19 +5,29 @@ import core.game.world.update.flag.context.Animation;
 import core.net.packet.Context;
 
 /**
- * The type Animate object context.
+ * Represents the context of animating an object.
+ *
+ * @author Emperor
+ * @author 'Vexia
+ * @date 10/11/2013
  */
 public class AnimateObjectContext implements Context {
 
+    /**
+     * Represents the player of the context.
+     */
     private final Player player;
 
+    /**
+     * Represents the animation to use.
+     */
     private final Animation animation;
 
     /**
-     * Instantiates a new Animate object context.
+     * Constructs a new {@code AnimateObjectContext} {@code Object}.
      *
-     * @param player    the player
-     * @param animation the animation
+     * @param player    the player.
+     * @param animation the animation.
      */
     public AnimateObjectContext(Player player, Animation animation) {
         this.player = player;
@@ -30,9 +40,9 @@ public class AnimateObjectContext implements Context {
     }
 
     /**
-     * Gets animation.
+     * Gets the animation.
      *
-     * @return the animation
+     * @return The animation.
      */
     public Animation getAnimation() {
         return animation;

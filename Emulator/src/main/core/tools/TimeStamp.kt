@@ -1,5 +1,9 @@
 package core.tools
 
+/**
+ * Used for debugging duration of executing code.
+ * @author Emperor
+ */
 class TimeStamp {
     private var start: Long = System.currentTimeMillis()
     private var interval: Long = start
@@ -9,10 +13,25 @@ class TimeStamp {
         interval = start
     }
 
+    /**
+     * Set current interval.
+     * @return The duration of this interval.
+     */
     fun interval(): Long = interval(true, "")
 
+    /**
+     * Set current interval.
+     * @param debug If we should print out the duration.
+     * @return The duration of this interval.
+     */
     fun interval(debug: Boolean): Long = interval(debug, "")
 
+    /**
+     * Set current interval.
+     * @param debug If we should print out the duration.
+     * @param info Extra information.
+     * @return The duration of this interval.
+     */
     fun interval(
         debug: Boolean,
         info: String,
@@ -26,6 +45,10 @@ class TimeStamp {
         return difference
     }
 
+    /**
+     * Gets the amount of milliseconds passed since the creation of this object.
+     * @return The duration.
+     */
     fun duration(
         debug: Boolean,
         info: String,

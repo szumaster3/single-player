@@ -13,16 +13,30 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * The type Nio reactor.
+ * Handles (NIO-based) networking events using the reactor pattern.
+ *
+ * @author Emperor
  */
 public final class NioReactor implements Runnable {
 
+    /**
+     * The executor service.
+     */
     private final ExecutorService service;
 
+    /**
+     * The socket channel.
+     */
     private ServerSocketConnection channel;
 
+    /**
+     * The I/O event handling instance.
+     */
     private IoEventHandler eventHandler;
 
+    /**
+     * If the reactor is running.
+     */
     private boolean running;
 
     private NioReactor(IoEventHandler eventHandler) {

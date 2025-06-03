@@ -6,26 +6,40 @@ import core.net.packet.Context;
 import java.awt.*;
 
 /**
- * The type Child position context.
+ * A context implementation used for the interface child repositioning packet.
+ *
+ * @author Emperor
  */
 public final class ChildPositionContext implements Context {
 
+    /**
+     * The player.
+     */
     private final Player player;
 
+    /**
+     * The interface id.
+     */
     private final int interfaceId;
 
+    /**
+     * The child id.
+     */
     private final int childId;
 
+    /**
+     * The new position of the child.
+     */
     private final Point position;
 
     /**
-     * Instantiates a new Child position context.
+     * Constructs a new {@code ChildPositionContext} {@code Object}.
      *
-     * @param player      the player
-     * @param interfaceId the interface id
-     * @param childId     the child id
-     * @param positionX   the position x
-     * @param positionY   the position y
+     * @param player      The player.
+     * @param interfaceId The interface id.
+     * @param childId     The id of the child to reposition.
+     * @param positionX   The new x-position.
+     * @param positionY   The new y-position.
      */
     public ChildPositionContext(Player player, int interfaceId, int childId, int positionX, int positionY) {
         this.player = player;
@@ -40,27 +54,27 @@ public final class ChildPositionContext implements Context {
     }
 
     /**
-     * Gets interface id.
+     * Gets the interfaceId.
      *
-     * @return the interface id
+     * @return The interfaceId.
      */
     public int getInterfaceId() {
         return interfaceId;
     }
 
     /**
-     * Gets child id.
+     * Gets the childId.
      *
-     * @return the child id
+     * @return The childId.
      */
     public int getChildId() {
         return childId;
     }
 
     /**
-     * Gets position.
+     * Gets the position.
      *
-     * @return the position
+     * @return The position.
      */
     public Point getPosition() {
         return position;

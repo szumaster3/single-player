@@ -9,6 +9,10 @@ import core.tools.secondsToTicks
 import java.math.BigInteger
 import java.util.*
 
+/**
+ * A class holding various constants and configuration variables for the server.
+ * @author Ceikry
+ */
 class ServerConstants {
     companion object {
         var NOAUTH_DEFAULT_ADMIN: Boolean = true

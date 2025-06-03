@@ -6,43 +6,44 @@ import java.nio.channels.*;
 import java.util.concurrent.ExecutorService;
 
 /**
- * Handles I/O events for network communication using Java NIO.
- * <p>
- * This class manages the life cycle of non-blocking I/O connections, including accepting
- * new connections, reading and writing data, and handling disconnections.
+ * I/O event handling.
+ *
+ * @author Emperor
  */
 public class IoEventHandler {
 
     /**
-     * The executor service used to handle asynchronous I/O operations.
+     * The executor service.
      */
     protected final ExecutorService service;
 
     /**
-     * Constructs a new {@code IoEventHandler} with the specified executor service.
+     * Constructs a new {@code IoEventHandler}.
      *
-     * @param service the executor service to use for handling I/O tasks.
+     * @param service The executor service used for handling events.
      */
     public IoEventHandler(ExecutorService service) {
         this.service = service;
     }
 
     /**
-     * Handles a connection event. This method is intended to be overridden by subclasses.
+     * Called when making a new connection.
      *
-     * @param key the selection key representing the connection event.
-     * @throws IOException if an I/O error occurs.
+     * @param key The selection key.
+     * @throws IOException When an I/O exception occurs.
      */
     public void connect(SelectionKey key) throws IOException {
-        // Optional implementation by subclasses
+        /*
+         * empty.
+         */
     }
 
     /**
-     * Accepts a new incoming connection and registers it for reading.
+     * Used for accepting a new connection.
      *
-     * @param key      the selection key associated with the server socket channel.
-     * @param selector the selector to register the new connection with.
-     * @throws IOException if an I/O error occurs during acceptance or registration.
+     * @param key      The selection key.
+     * @param selector The selector.
+     * @throws IOException When an I/O exception occurs.
      */
     public void accept(SelectionKey key, Selector selector) throws IOException {
         SocketChannel sc = ((ServerSocketChannel) key.channel()).accept();
@@ -52,11 +53,10 @@ public class IoEventHandler {
     }
 
     /**
-     * Reads data from a channel and delegates processing to a reader event.
-     * If the session is not yet established, it initializes a new {@link IoSession}.
+     * Reads the incoming packet data.
      *
-     * @param key the selection key associated with the readable channel.
-     * @throws IOException if an I/O error occurs during reading.
+     * @param key The selection key.
+     * @throws IOException When an I/O exception occurs.
      */
     public void read(SelectionKey key) throws IOException {
         ReadableByteChannel channel = (ReadableByteChannel) key.channel();
@@ -78,21 +78,17 @@ public class IoEventHandler {
                 return;
             }
         }
-
         buffer.flip();
-
         if (session == null) {
             key.attach(session = new IoSession(key, service));
         }
-
         service.execute(session.getProducer().produceReader(session, buffer));
     }
 
     /**
-     * Handles a write event for the associated session.
-     * Removes the write interest from the selection key to prevent busy waiting.
+     * Writes the outgoing packet data.
      *
-     * @param key the selection key representing the writable channel.
+     * @param key The selection key.
      */
     public void write(SelectionKey key) {
         IoSession session = (IoSession) key.attachment();
@@ -101,24 +97,18 @@ public class IoEventHandler {
     }
 
     /**
-     * Handles disconnection of a client session, optionally logging the cause of the disconnect.
+     * Disconnects a connection.
      *
-     * @param key the selection key representing the disconnected channel.
-     * @param t   the cause of the disconnect, may be {@code null}.
+     * @param key The selection key.
+     * @param t   The occurred exception (if any).
      */
     public void disconnect(SelectionKey key, Throwable t) {
         try {
             IoSession session = (IoSession) key.attachment();
             String cause = "" + t;
-            if (t != null && !(t instanceof ClosedChannelException
-                    || cause.contains("De externe host")
-                    || cause.contains("De software op uw")
-                    || cause.contains("An established connection was aborted")
-                    || cause.contains("An existing connection")
-                    || cause.contains("AsynchronousClose"))) {
+            if (t != null && !(t instanceof ClosedChannelException || cause.contains("De externe host") || cause.contains("De software op uw") || cause.contains("An established connection was aborted") || cause.contains("An existing connection") || cause.contains("AsynchronousClose"))) {
                 t.printStackTrace();
             }
-
             if (session != null) {
                 session.disconnect();
             }

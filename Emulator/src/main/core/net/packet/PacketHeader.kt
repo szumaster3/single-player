@@ -1,7 +1,8 @@
 package core.net.packet
 
 /**
- * The enum Packet header.
+ * Represents the types of packet headers.
+ * @author Emperor
  */
 enum class PacketHeader {
     /**

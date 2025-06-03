@@ -6,7 +6,8 @@ import core.net.packet.OutgoingPacket
 import core.net.packet.context.BuildItemContext
 
 /**
- * The type Construct ground item.
+ * Represents the outgoing packet of constructing a ground item.
+ * @author Emperor
  */
 class ConstructGroundItem : OutgoingPacket<BuildItemContext> {
     override fun send(context: BuildItemContext) {

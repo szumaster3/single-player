@@ -4,24 +4,35 @@ import core.game.node.entity.player.Player;
 import core.net.packet.Context;
 
 /**
- * The type Cs config context.
+ * The context for ClientScript configurations.
+ *
+ * @author Torchic
  */
 public class CSConfigContext implements Context {
-
     private final Object[] parameters;
     private final String types;
+    /**
+     * The player reference.
+     */
     private Player player;
-    private int value;
-    private int id;
+    /**
+     * The value
+     */
+    private final int value;
+    /**
+     * The id.
+     */
+    private final int id;
+
 
     /**
-     * Instantiates a new Cs config context.
+     * Constructs a new {@Code CSConfigContext} {@Code Object}
      *
-     * @param player     the player
-     * @param id         the id
-     * @param value      the value
-     * @param types      the types
-     * @param parameters the parameters
+     * @param player     The player.
+     * @param id         The id.
+     * @param value      The config value.
+     * @param parameters
+     * @param types
      */
     public CSConfigContext(Player player, int id, int value, String types, Object[] parameters) {
         this.player = player;
@@ -37,10 +48,10 @@ public class CSConfigContext implements Context {
     }
 
     /**
-     * Sets player.
+     * Sets the player.
      *
-     * @param player the player
-     * @return the player
+     * @param player The player.
+     * @return This context instance.
      */
     public Context setPlayer(Player player) {
         this.player = player;
@@ -48,37 +59,27 @@ public class CSConfigContext implements Context {
     }
 
     /**
-     * Gets value.
+     * Get the config value.
      *
-     * @return the value
+     * @return The config value.
      */
     public int getValue() {
         return value;
     }
 
     /**
-     * Gets id.
+     * Get the config id.
      *
-     * @return the id
+     * @return The config id.
      */
     public int getId() {
         return id;
     }
 
-    /**
-     * Gets types.
-     *
-     * @return the types
-     */
     public String getTypes() {
         return types;
     }
 
-    /**
-     * Get parameters object [ ].
-     *
-     * @return the object [ ]
-     */
     public Object[] getParameters() {
         return parameters;
     }

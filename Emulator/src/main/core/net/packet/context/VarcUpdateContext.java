@@ -4,29 +4,33 @@ import core.game.node.entity.player.Player;
 import core.net.packet.Context;
 
 /**
- * The type Varc update context.
+ * Represents the Varc update packet context.
+ *
+ * @author Ceikry
  */
 public class VarcUpdateContext implements Context {
 
     /**
-     * The Varc id.
+     * The varc id.
      */
-    public int varcId;
-    /**
-     * The Value.
-     */
-    public int value;
-    /**
-     * The Player.
-     */
-    Player player;
+    private final int varcId;
 
     /**
-     * Instantiates a new Varc update context.
+     * The value to update the varc with.
+     */
+    private final int value;
+
+    /**
+     * The player reference.
+     */
+    private final Player player;
+
+    /**
+     * Constructs a new {@code VarcUpdateContext}.
      *
-     * @param player the player
-     * @param varcId the varc id
-     * @param value  the value
+     * @param player The player involved in the update.
+     * @param varcId The varc id.
+     * @param value  The new value for the varc.
      */
     public VarcUpdateContext(Player player, int varcId, int value) {
         this.player = player;
@@ -38,5 +42,22 @@ public class VarcUpdateContext implements Context {
     public Player getPlayer() {
         return player;
     }
-}
 
+    /**
+     * Gets the varc id.
+     *
+     * @return The varc id.
+     */
+    public int getVarcId() {
+        return varcId;
+    }
+
+    /**
+     * Gets the value to update the varc with.
+     *
+     * @return The varc value.
+     */
+    public int getValue() {
+        return value;
+    }
+}

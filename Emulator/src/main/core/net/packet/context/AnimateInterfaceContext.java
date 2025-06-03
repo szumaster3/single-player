@@ -4,25 +4,39 @@ import core.game.node.entity.player.Player;
 import core.net.packet.Context;
 
 /**
- * The type Animate interface context.
+ * The animate interface context.
+ *
+ * @author Emperor
  */
 public class AnimateInterfaceContext implements Context {
 
-    private Player player;
-
-    private int animationId;
-
-    private int interfaceId;
-
-    private int childId;
+    /**
+     * The player reference.
+     */
+    private final Player player;
 
     /**
-     * Instantiates a new Animate interface context.
+     * The animation id.
+     */
+    private final int animationId;
+
+    /**
+     * The interface id.
+     */
+    private final int interfaceId;
+
+    /**
+     * The child id.
+     */
+    private final int childId;
+
+    /**
+     * Construct a new {@code AnimateInterfaceContext} {@code Object}.
      *
-     * @param player      the player
-     * @param animationId the animation id
-     * @param interfaceId the interface id
-     * @param childId     the child id
+     * @param player      The player reference.
+     * @param animationId The animation id.
+     * @param interfaceId The interface id.
+     * @param childId     The child id.
      */
     public AnimateInterfaceContext(Player player, int animationId, int interfaceId, int childId) {
         this.player = player;
@@ -32,27 +46,27 @@ public class AnimateInterfaceContext implements Context {
     }
 
     /**
-     * Gets animation id.
+     * Get the animation id.
      *
-     * @return the animation id
+     * @return The animation id.
      */
     public int getAnimationId() {
         return animationId;
     }
 
     /**
-     * Gets interface id.
+     * Get the interface id.
      *
-     * @return the interface id
+     * @return The interface id.
      */
     public int getInterfaceId() {
         return interfaceId;
     }
 
     /**
-     * Gets child id.
+     * Get the child id.
      *
-     * @return the child id
+     * @return The child id.
      */
     public int getChildId() {
         return childId;

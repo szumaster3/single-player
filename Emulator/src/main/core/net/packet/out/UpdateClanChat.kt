@@ -7,7 +7,8 @@ import core.net.packet.context.ClanContext
 import core.tools.StringUtils.stringToLong
 
 /**
- * The type Update clan chat.
+ * Handles the update clan chat outgoing packet.
+ * @author Emperor
  */
 class UpdateClanChat : OutgoingPacket<ClanContext> {
     override fun send(context: ClanContext) {

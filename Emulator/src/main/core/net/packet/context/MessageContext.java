@@ -5,42 +5,59 @@ import core.game.node.entity.player.info.Rights;
 import core.net.packet.Context;
 
 /**
- * The type Message context.
+ * Packet context for communication message packets.
+ *
+ * @author Emperor
  */
 public final class MessageContext implements Context {
 
     /**
-     * The constant SEND_MESSAGE.
+     * Represents the packet id to use when sending a message.
      */
     public static final int SEND_MESSAGE = 71;
 
     /**
-     * The constant RECEIVE_MESSAGE.
+     * Represents the packet id to use when receiving a message.
      */
-    public static final int RECEIVE_MESSAGE = 0;
+    public static final int RECIEVE_MESSAGE = 0;
 
     /**
-     * The constant CLAN_MESSAGE.
+     * Represents the packet id use to send a clan message.
      */
     public static final int CLAN_MESSAGE = 54;
 
+    /**
+     * The player.
+     */
     private final Player player;
 
+    /**
+     * The other player.
+     */
     private final String other;
 
+    /**
+     * The chat icon.
+     */
     private final int chatIcon;
 
+    /**
+     * The opcode.
+     */
     private final int opcode;
 
+    /**
+     * The message.
+     */
     private final String message;
 
     /**
-     * Instantiates a new Message context.
+     * Constructs a new MessageContext Object.
      *
-     * @param player  the player
-     * @param other   the other
-     * @param opcode  the opcode
-     * @param message the message
+     * @param player  The player.
+     * @param other   The communicated player.
+     * @param opcode  The opcode.
+     * @param message The message.
      */
     public MessageContext(Player player, Player other, int opcode, String message) {
         this.player = player;
@@ -51,13 +68,12 @@ public final class MessageContext implements Context {
     }
 
     /**
-     * Instantiates a new Message context.
+     * Constructs a new MessageContext Object.
      *
-     * @param player   the player
-     * @param other    the other
-     * @param chatIcon the chat icon
-     * @param opcode   the opcode
-     * @param message  the message
+     * @param player  The player.
+     * @param other   The communicated player.
+     * @param opcode  The opcode.
+     * @param message The message.
      */
     public MessageContext(Player player, String other, int chatIcon, int opcode, String message) {
         this.player = player;
@@ -73,36 +89,36 @@ public final class MessageContext implements Context {
     }
 
     /**
-     * Gets other.
+     * Gets the other.
      *
-     * @return the other
+     * @return The other.
      */
     public String getOther() {
         return other;
     }
 
     /**
-     * Gets opcode.
+     * Gets the opcode.
      *
-     * @return the opcode
+     * @return The opcode.
      */
     public int getOpcode() {
         return opcode;
     }
 
     /**
-     * Gets message.
+     * Gets the message.
      *
-     * @return the message
+     * @return The message.
      */
     public String getMessage() {
         return message;
     }
 
     /**
-     * Gets chat icon.
+     * Gets the chatIcon.
      *
-     * @return the chat icon
+     * @return the chatIcon
      */
     public int getChatIcon() {
         return chatIcon;
