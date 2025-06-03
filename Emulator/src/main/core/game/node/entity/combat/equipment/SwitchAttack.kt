@@ -37,7 +37,7 @@ open class SwitchAttack @JvmOverloads constructor(
     /**
      * The end graphic.
      */
-    val endGraphics: Graphics?
+    val endGraphic: Graphics?
 
     /**
      * The projectile.
@@ -75,7 +75,7 @@ open class SwitchAttack @JvmOverloads constructor(
         this.handler = handler
         this.animation = animation
         this.startGraphic = startGraphic
-        this.endGraphics = endGraphic
+        this.endGraphic = endGraphic
         this.projectile = projectile
     }
 

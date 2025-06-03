@@ -110,7 +110,7 @@ public class DragonfireSwingHandler extends CombatSwingHandler {
 
     @Override
     public void visualize(Entity entity, Entity victim, BattleState state) {
-        entity.visualize(attack.getAnimation(), attack.getStartGraphics());
+        entity.visualize(attack.getAnimation(), attack.getStartGraphic());
         if (attack.getProjectile() != null) {
             attack.getProjectile().copy(entity, victim, 5).send();
         }
@@ -144,7 +144,7 @@ public class DragonfireSwingHandler extends CombatSwingHandler {
             registerTimer(victim, spawnTimer("frozen", 16, true));
             victim.graphics(Graphics.create(502));
         }
-        Graphics graphics = attack != null ? attack.getEndGraphics() : null;
+        Graphics graphics = attack != null ? attack.getEndGraphic() : null;
         victim.visualize(victim.getProperties().getDefenceAnimation(), graphics);
     }
 

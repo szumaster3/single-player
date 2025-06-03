@@ -167,7 +167,7 @@ open class MultiSwingHandler(
             current.handler!!.visualizeImpact(entity, victim, state)
             return
         }
-        victim!!.visualize(victim.properties.defenceAnimation, current.endGraphics)
+        victim!!.visualize(victim.properties.defenceAnimation, current.endGraphic)
     }
 
     override fun calculateAccuracy(entity: Entity?): Int = current.handler!!.calculateAccuracy(entity)
