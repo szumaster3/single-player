@@ -28,11 +28,8 @@ import core.tools.Log
 import org.rs.consts.Components
 
 /**
- * An abstract class representing a cutscene that a player experiences in the game.
- * It controls the setup and progression of a cutscene, handling various events and actions like teleportation,
- * NPC movements, camera movements, and dialogues.
- *
- * @property player The player who is experiencing the cutscene.
+ * A utility class for making cutscenes.
+ * @author Ceikry
  */
 abstract class Cutscene(
     val player: Player,

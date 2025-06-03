@@ -7,27 +7,40 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 /**
- * The type Path.
+ * Represents a path.
+ *
+ * @author Emperor
  */
 public class Path {
 
-    private boolean successful;
+    /**
+     * If the path was found.
+     */
+    private boolean succesful;
 
+    /**
+     * If we have to move near the destination (as we can't reach it).
+     */
     private boolean moveNear;
 
+    /**
+     * The points to walk.
+     */
     private Deque<Point> points = new ArrayDeque<Point>();
 
     /**
-     * Instantiates a new Path.
+     * Constructs a new {@code Path} {@code Object}.
      */
     public Path() {
-        // Empty
+        /*
+         * empty.
+         */
     }
 
     /**
-     * Walk.
+     * Walks this path.
      *
-     * @param entity the entity
+     * @param entity The entity.
      */
     public void walk(Entity entity) {
         if (entity.getLocks().isMovementLocked()) {
@@ -40,54 +53,54 @@ public class Path {
     }
 
     /**
-     * Is successful boolean.
+     * Gets the succesful.
      *
-     * @return the boolean
+     * @return The succesful.
      */
     public boolean isSuccessful() {
-        return successful;
+        return succesful;
     }
 
     /**
-     * Sets successful.
+     * Sets the succesful.
      *
-     * @param successful the successful
+     * @param succesful The succesful to set.
      */
-    public void setSuccessful(boolean successful) {
-        this.successful = successful;
+    public void setSuccesful(boolean succesful) {
+        this.succesful = succesful;
     }
 
     /**
-     * Gets points.
+     * Gets the points.
      *
-     * @return the points
+     * @return The points.
      */
     public Deque<Point> getPoints() {
         return points;
     }
 
     /**
-     * Sets points.
+     * Sets the points.
      *
-     * @param points the points
+     * @param points The points to set.
      */
     public void setPoints(Deque<Point> points) {
         this.points = points;
     }
 
     /**
-     * Is move near boolean.
+     * Gets the moveNear.
      *
-     * @return the boolean
+     * @return The moveNear.
      */
     public boolean isMoveNear() {
         return moveNear;
     }
 
     /**
-     * Sets move near.
+     * Sets the moveNear.
      *
-     * @param moveNear the move near
+     * @param moveNear The moveNear to set.
      */
     public void setMoveNear(boolean moveNear) {
         this.moveNear = moveNear;

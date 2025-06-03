@@ -24,150 +24,99 @@ import core.game.world.map.path.Pathfinder.*
 import core.game.world.update.flag.context.Animation
 import core.tools.Log
 import core.tools.RandomFunction
-import org.rs.consts.Items
-import org.rs.consts.NPCs
 import org.rs.consts.Sounds
 
 /**
- * Abstract handler for managing combat swings in the game.
+ * Handles a combat swing.
  *
- * @property type The combat style to be used in combat.
- * @property flags Additional flags to customize the behavior of the combat swing handler.
+ * @author Emperor, Ceikry, Player Name
  */
-abstract class CombatSwingHandler(
-    var type: CombatStyle?,
-) {
+abstract class CombatSwingHandler(var type: CombatStyle?) {
+    var flags: ArrayList<SwingHandlerFlag> = ArrayList(SwingHandlerFlag.values().size)
 
-    /**
-     * Flags associated with the combat swing handler.
-     */
-    var flags: Array<out SwingHandlerFlag> = emptyArray()
-
-    /**
-     * Creates a combat swing handler with the specified combat style and flags.
-     *
-     * @param type The combat style to use.
-     * @param flags Additional flags to customize the behavior.
-     */
     constructor(type: CombatStyle?, vararg flags: SwingHandlerFlag) : this(type) {
-        this.flags = flags
+        this.flags = arrayListOf(*flags)
     }
 
+    /**
+     * The mapping of the special attack handlers.
+     */
     private var specialHandlers: MutableMap<Int, CombatSwingHandler?>? = null
 
     /**
-     * Executes a swing of the combat style.
-     *
-     * @param entity The entity performing the swing.
-     * @param victim The target of the swing.
-     * @param state The current battle state.
-     * @return The result of the swing.
+     * Starts the combat swing.
+     * @param entity The attacking entity.
+     * @param victim The victim.
+     * @param state The battle state instance.
+     * @return The amount of ticks before impact of the attack.
      */
-    abstract fun swing(
-        entity: Entity?,
-        victim: Entity?,
-        state: BattleState?,
-    ): Int
+    abstract fun swing(entity: Entity?, victim: Entity?, state: BattleState?): Int
 
     /**
-     * Applies the impact of a combat swing.
-     *
-     * @param entity The entity performing the swing.
-     * @param victim The target of the swing.
-     * @param state The current battle state.
+     * Handles the impact of the combat swing (victim getting hit).
+     * @param entity The attacking entity.
+     * @param victim The victim.
+     * @param state The battle state instance.
      */
-    abstract fun impact(
-        entity: Entity?,
-        victim: Entity?,
-        state: BattleState?,
-    )
+    abstract fun impact(entity: Entity?, victim: Entity?, state: BattleState?)
 
     /**
-     * Visualizes the impact of a combat swing.
-     *
-     * @param entity The entity performing the swing.
-     * @param victim The target of the swing.
-     * @param state The current battle state.
+     * Visualizes the impact itself (end animation, end GFX, ...)
+     * @param entity The attacking entity.
+     * @param victim The victim.
+     * @param state The battle state instance.
      */
-    abstract fun visualizeImpact(
-        entity: Entity?,
-        victim: Entity?,
-        state: BattleState?,
-    )
+    abstract fun visualizeImpact(entity: Entity?, victim: Entity?, state: BattleState?)
 
     /**
-     * Calculates the accuracy of the entity's attack.
-     *
-     * @param entity The entity performing the attack.
-     * @return The calculated accuracy.
+     * Calculates the maximum accuracy of the entity.
+     * @param entity The entity.
+     * @return The maximum accuracy value.
      */
     abstract fun calculateAccuracy(entity: Entity?): Int
 
     /**
-     * Calculates the damage dealt by the swing.
-     *
-     * @param entity The entity performing the swing.
-     * @param victim The target of the swing.
-     * @param modifier A modifier to adjust the hit damage.
-     * @return The calculated damage.
+     * Calculates the maximum strength of the entity.
+     * @param entity The entity.
+     * @param victim The victim.
+     * @param modifier The modifier.
+     * @return The maximum strength value.
      */
-    abstract fun calculateHit(
-        entity: Entity?,
-        victim: Entity?,
-        modifier: Double,
-    ): Int
+    abstract fun calculateHit(entity: Entity?, victim: Entity?, modifier: Double): Int
 
     /**
-     * Calculates the defense value of the victim.
-     *
-     * @param victim The target of the swing.
-     * @param attacker The entity performing the attack.
-     * @return The calculated defense value.
+     * Calculates the maximum defence of the entity.
+     * @param victim The entity.
+     * @param attacker The entity to defend against.
+     * @return The maximum defence value.
      */
-    abstract fun calculateDefence(
-        victim: Entity?,
-        attacker: Entity?,
-    ): Int
+    abstract fun calculateDefence(victim: Entity?, attacker: Entity?): Int
 
     /**
-     * Gets the multiplier for the armor set.
-     *
-     * @param e The entity performing the attack.
-     * @param skillId The skill id to be used.
-     * @return The multiplier based on the armor set.
+     * Gets the void set multiplier.
+     * @param e The entity.
+     * @param skillId The skill id.
+     * @return The multiplier.
      */
-    abstract fun getSetMultiplier(
-        e: Entity?,
-        skillId: Int,
-    ): Double
+    abstract fun getSetMultiplier(e: Entity?, skillId: Int): Double
 
     /**
-     * Visualizes the combat action, such as animating the entity's attack.
-     *
-     * @param entity The entity performing the attack.
-     * @param victim The target of the attack.
-     * @param state The current battle state.
+     * Visualizes the combat swing (start animation, GFX, projectile, ...)
+     * @param entity The attacking entity.
+     * @param victim The victim.
+     * @param state The battle state instance.
      */
-    open fun visualize(
-        entity: Entity,
-        victim: Entity?,
-        state: BattleState?,
-    ) {
+    open fun visualize(entity: Entity, victim: Entity?, state: BattleState?) {
         entity.animate(getAttackAnimation(entity, type))
     }
 
     /**
-     * Handles the impact after a swing, including [DegradableEquipment] and damage calculation.
-     *
-     * @param entity The entity performing the swing.
-     * @param victim The target of the swing.
-     * @param state The current battle state.
+     * Method called when the impact method got called.
+     * @param entity The attacking entity.
+     * @param victim The victim.
+     * @param state The battle state.
      */
-    fun onImpact(
-        entity: Entity?,
-        victim: Entity?,
-        state: BattleState?,
-    ) {
+    fun onImpact(entity: Entity?, victim: Entity?, state: BattleState?) {
         if (entity is Player && victim != null) {
             DegradableEquipment.degrade(entity as Player?, victim, true)
         }
@@ -188,55 +137,46 @@ abstract class CombatSwingHandler(
     }
 
     /**
-     * Retrieves the armor set for the entity, if any.
-     *
-     * @param e The entity to get the armor set for.
-     * @return The armor set, or null if none is available.
+     * Gets the currently worn armour set, if any.
+     * @param e The entity.
+     * @return The armour set worn.
      */
-    open fun getArmourSet(e: Entity?): ArmourSet? = null
+    open fun getArmourSet(e: Entity?): ArmourSet? {
+        return null
+    }
 
     /**
-     * Determines if the combat swing is accurate based on various factors.
-     *
-     * @param entity The entity performing the swing.
-     * @param victim The target of the swing.
-     * @return True if the swing is accurate, false otherwise.
+     * Checks if the hit will be accurate.
+     * @param entity The entity.
+     * @param victim The victim.
+     * @return `True` if the hit is accurate.
      */
-    fun isAccurateImpact(
-        entity: Entity?,
-        victim: Entity?,
-    ): Boolean = isAccurateImpact(entity, victim, type, 1.0, 1.0)
+    fun isAccurateImpact(entity: Entity?, victim: Entity?): Boolean {
+        return isAccurateImpact(entity, victim, type, 1.0, 1.0)
+    }
 
     /**
-     * Determines if the combat swing is accurate based on various factors, including combat style.
-     *
-     * @param entity The entity performing the swing.
-     * @param victim The target of the swing.
-     * @param style The combat style being used.
-     * @return True if the swing is accurate, false otherwise.
+     * Checks if the hit will be accurate.
+     * @param entity The entity.
+     * @param victim The victim.
+     * @param style The combat style used.
+     * @return `True` if the hit is accurate.
      */
-    fun isAccurateImpact(
-        entity: Entity?,
-        victim: Entity?,
-        style: CombatStyle?,
-    ): Boolean = isAccurateImpact(entity, victim, style, 1.0, 1.0)
+    fun isAccurateImpact(entity: Entity?, victim: Entity?, style: CombatStyle?): Boolean {
+        return isAccurateImpact(entity, victim, style, 1.0, 1.0)
+    }
 
     /**
-     * Determines if the combat swing is accurate based on various factors, including combat style and modifiers.
-     *
-     * @param entity The entity performing the swing.
-     * @param victim The target of the swing.
-     * @param style The combat style being used.
-     * @param accuracyMod A modifier for the accuracy.
-     * @param defenceMod A modifier for the defense.
-     * @return True if the swing is accurate, false otherwise.
+     * Checks if the hit will be accurate.
+     * @param entity The entity.
+     * @param victim The victim.
+     * @param style The combat style (null to ignore prayers).
+     * @param accuracyMod The accuracy modifier.
+     * @param defenceMod The defence modifier.
+     * @return `True` if the hit is accurate.
      */
     fun isAccurateImpact(
-        entity: Entity?,
-        victim: Entity?,
-        style: CombatStyle?,
-        accuracyMod: Double,
-        defenceMod: Double,
+        entity: Entity?, victim: Entity?, style: CombatStyle?, accuracyMod: Double, defenceMod: Double
     ): Boolean {
         var mod = 1.0
         if (victim == null || style == null) {
@@ -256,28 +196,22 @@ abstract class CombatSwingHandler(
     }
 
     /**
-     * Determines if the entity can swing at the victim based on certain conditions.
-     *
-     * @param entity The entity performing the swing.
-     * @param victim The target of the swing.
-     * @return The interaction type, which can indicate if the attack is allowed.
+     * Checks if the entity can execute a combat swing at the victim.
+     * @param entity The entity.
+     * @param victim The victim.
+     * @return `True` if so.
      */
-    open fun canSwing(
-        entity: Entity,
-        victim: Entity,
-    ): InteractionType? = isAttackable(entity, victim)
+    open fun canSwing(entity: Entity, victim: Entity): InteractionType? {
+        return isAttackable(entity, victim)
+    }
 
     /**
-     * Determines if the victim is attackable by the entity based on various factors.
-     *
-     * @param entity The entity performing the swing.
-     * @param victim The target of the swing.
-     * @return The interaction type, which can indicate if the victim is attackable.
+     * Checks if the victim can be attacked by the entity.
+     * @param entity The attacking entity.
+     * @param victim The entity being attacked.
+     * @return `True` if so.
      */
-    open fun isAttackable(
-        entity: Entity,
-        victim: Entity,
-    ): InteractionType? {
+    open fun isAttackable(entity: Entity, victim: Entity): InteractionType? {
         if (victim.getAttribute("return-to-spawn", false)) {
             return InteractionType.NO_INTERACT
         }
@@ -292,20 +226,20 @@ abstract class CombatSwingHandler(
             val weapEx = entity.getExtension<Any>(WeaponInterface::class.java) as WeaponInterface?
             if (comp != null) {
                 entity.interfaceManager.close(comp)
-                entity.interfaceManager.openTab(weapEx!!)
+                if (weapEx != null) {
+                    entity.interfaceManager.openTab(weapEx)
+                }
                 entity.properties.combatPulse.stop()
                 entity.attack(victim)
                 entity.removeAttribute("autocast_component")
             }
             weapEx?.updateInterface()
-            entity.debug("[COMBAT SWING HANDLER] - Adjusting attack style")
+            entity.debug("Adjusting attack style")
         }
         if (entity.location == victim.location) {
             return if (entity is Player && victim is Player && entity.clientIndex < victim.clientIndex && victim.properties.combatPulse.getVictim() === entity) {
                 InteractionType.STILL_INTERACT
-            } else {
-                InteractionType.NO_INTERACT
-            }
+            } else InteractionType.NO_INTERACT
         }
         val el = entity.location
         val vl = victim.location
@@ -316,48 +250,31 @@ abstract class CombatSwingHandler(
         return InteractionType.STILL_INTERACT
     }
 
-    /**
-     * Determines if the entity can step towards the victim.
-     *
-     * @param entity The entity attempting to step towards the victim.
-     * @param victim The entity that the stepping entity is attempting to approach.
-     * @return The interaction type, either [InteractionType.NO_INTERACT] or [InteractionType.STILL_INTERACT].
-     */
-    private fun canStepTowards(
-        entity: Entity,
-        victim: Entity,
-    ): InteractionType {
+    private fun canStepTowards(entity: Entity, victim: Entity): InteractionType {
         val closestVictimTile = victim.getClosestOccupiedTile(entity.location)
         val closestEntityTile = entity.getClosestOccupiedTile(closestVictimTile)
         val dir = closestEntityTile.deriveDirection(closestVictimTile)
-            ?: return InteractionType.STILL_INTERACT // if we cannot derive a direction, it's because both tiles are the same, so hand off control to the main logic which already handles this case
+            ?: return InteractionType.STILL_INTERACT //if we cannot derive a direction, it's because both tiles are the same, so hand off control to the main logic which already handles this case
         var next = closestEntityTile
 
-        while (next.getDistance(closestVictimTile) > 3) { // skip the initial gap in distance if it exists, because standard pathfinding would already stop us before this point if something was between us and the NPC or vice versa
+        while (next.getDistance(closestVictimTile) > 3) { //skip the initial gap in distance if it exists, because standard pathfinding would already stop us before this point if something was between us and the NPC or vice versa
             next = next.transform(dir)
         }
 
         var result: InteractionType = InteractionType.STILL_INTERACT
         val maxIterations = next.getDistance(closestVictimTile).toInt()
-        for (i in 0 until maxIterations) { // step towards the target tile, checking if anything would obstruct us on the way, and immediately breaking + returning if it does.
+        for (i in 0 until maxIterations) { //step towards the target tile, checking if anything would obstruct us on the way, and immediately breaking + returning if it does.
             next = next.transform(dir)
             result = checkStepInterval(dir, next)
             if (result == InteractionType.NO_INTERACT) break
         }
 
+
         return result
     }
 
-    /**
-     * Checks the step interval for the given direction and location.
-     *
-     * @param dir The direction the entity is moving towards.
-     * @param next The next location the entity intends to step to.
-     * @return The interaction type, either [InteractionType.NO_INTERACT] or [InteractionType.STILL_INTERACT].
-     */
     private fun checkStepInterval(
-        dir: Direction,
-        next: Location,
+        dir: Direction, next: Location
     ): InteractionType {
         val components = next.getStepComponents(dir)
 
@@ -371,71 +288,64 @@ abstract class CombatSwingHandler(
                 if (getClippingFlag(components[0]) and PREVENT_EAST != 0 || getClippingFlag(components[1]) and PREVENT_NORTH != 0 || getClippingFlag(
                         next
                     ) and PREVENT_NORTHEAST != 0
-                ) {
-                    return InteractionType.NO_INTERACT
-                }
+                ) return InteractionType.NO_INTERACT
             }
 
             Direction.NORTH_WEST -> {
                 if (getClippingFlag(components[0]) and PREVENT_WEST != 0 || getClippingFlag(components[1]) and PREVENT_NORTH != 0 || getClippingFlag(
                         next
                     ) and PREVENT_NORTHWEST != 0
-                ) {
-                    return InteractionType.NO_INTERACT
-                }
+                ) return InteractionType.NO_INTERACT
             }
 
             Direction.SOUTH_EAST -> {
                 if (getClippingFlag(components[0]) and PREVENT_EAST != 0 || getClippingFlag(components[1]) and PREVENT_SOUTH != 0 || getClippingFlag(
                         next
                     ) and PREVENT_SOUTHEAST != 0
-                ) {
-                    return InteractionType.NO_INTERACT
-                }
+                ) return InteractionType.NO_INTERACT
             }
 
             Direction.SOUTH_WEST -> {
                 if (getClippingFlag(components[0]) and PREVENT_WEST != 0 || getClippingFlag(components[1]) and PREVENT_SOUTH != 0 || getClippingFlag(
                         next
                     ) and PREVENT_SOUTHWEST != 0
-                ) {
-                    return InteractionType.NO_INTERACT
-                }
+                ) return InteractionType.NO_INTERACT
             }
+
         }
 
         return InteractionType.STILL_INTERACT
     }
 
     /**
-     * Returns a formatted message based on the type of protection the entity has against dragonfire.
-     *
-     * @param protection An integer representing the entity's protection against dragonfire.
-     * @param fireName The fire name.
-     * @return A string containing the message about the protection.
+     * Gets the dragonfire message.
+     * @param protection The protection value.
+     * @param fireName The fire breath name.
+     * @return The message to send.
      */
     fun getDragonfireMessage(protection: Int, fireName: String): String {
-        return when {
-            protection and 0x4 != 0 && protection and 0x2 != 0 -> "Your potion and shield fully protects you from the dragon's $fireName."
-            protection and 0x4 != 0 -> "Your shield absorbs most of the dragon's $fireName."
-            protection and 0x2 != 0 -> "Your antifire potion helps you defend against the dragon's $fireName."
-            protection and 0x8 != 0 -> "Your magic prayer absorbs some of the dragon's $fireName."
-            else -> "You are horribly burnt by the dragon's $fireName."
+        if (protection and 0x4 != 0) {
+            if (protection and 0x2 != 0) {
+                return "Your potion and shield fully protects you from the dragon's $fireName."
+            }
+            return "Your shield absorbs most of the dragon's $fireName."
         }
+        if (protection and 0x2 != 0) {
+            return "Your antifire potion helps you defend the against the dragon's $fireName."
+        }
+        if (protection and 0x8 != 0) {
+            return "Your magic prayer absorbs some of the dragon's $fireName."
+        }
+        return "You are horribly burnt by the dragon's $fireName."
     }
 
     /**
-     * Visualizes the audio played during combat.
-     *
-     * @param entity The entity that is performing the attack.
-     * @param victim The entity that is being attacked.
-     * @param state The current state of the battle.
+     * Visualizes the audio.
+     * @param entity the entity.
+     * @param victim the victim.
+     * @param state the state.
      */
-    fun visualizeAudio(
-        entity: Entity,
-        victim: Entity,
-        state: BattleState,
-    ) {
+    fun visualizeAudio(entity: Entity, victim: Entity, state: BattleState) {
         if (entity is Player) {
             val styleIndex = entity.settings.attackStyleIndex
             if (state.weapon != null && state.weapon.item != null) {
@@ -451,9 +361,8 @@ abstract class CombatSwingHandler(
                     }
                     playGlobalAudio(entity.location, audio.id)
                 }
-            } else if (type == CombatStyle.MELEE) {/*
-                 * Plays a punching sound when no weapon is equipped.
-                 */
+            } else if (type == CombatStyle.MELEE) {
+                //plays a punching sound when no weapon is equipped
                 playGlobalAudio(entity.location, Sounds.HUMAN_ATTACK_2564)
             }
         } else if (entity is NPC) {
@@ -464,18 +373,13 @@ abstract class CombatSwingHandler(
     }
 
     /**
-     * Returns the combat distance between the attacker and the victim.
-     *
-     * @param e The attacking entity.
-     * @param v The victim entity.
-     * @param rawDistance The raw distance between the two entities.
-     * @return The adjusted combat distance.
+     * Gets the combat distance.
+     * @param e The entity.
+     * @param v The victim.
+     * @param rawDistance The distance.
+     * @return The actual distance used for combat.
      */
-    open fun getCombatDistance(
-        e: Entity,
-        v: Entity,
-        rawDistance: Int,
-    ): Int {
+    open fun getCombatDistance(e: Entity, v: Entity, rawDistance: Int): Int {
         var distance = rawDistance
         if (e is NPC) {
             if (e.definition.combatDistance > 0) {
@@ -486,16 +390,13 @@ abstract class CombatSwingHandler(
     }
 
     /**
-     * Formats the hit points based on the victim's current health.
-     *
-     * @param victim The entity being attacked.
-     * @param rawHit The raw damage to be dealt.
-     * @return The final formatted hit value.
+     * Formats the hit for the victim. (called as
+     * victim.getSwingHandler(false).formatHit(victim, hit))
+     * @param victim The entity receiving the hit.
+     * @param rawHit The hit to format.
+     * @return The formatted hit.
      */
-    fun formatHit(
-        victim: Entity,
-        rawHit: Int,
-    ): Int {
+    fun formatHit(victim: Entity, rawHit: Int): Int {
         var hit = rawHit
         if (hit < 1) {
             return hit
@@ -507,17 +408,12 @@ abstract class CombatSwingHandler(
     }
 
     /**
-     * Adjusts the battle state based on the entities involved in the combat.
-     *
+     * Adjusts the battle state object for this combat swing.
      * @param entity The attacking entity.
-     * @param victim The victim entity.
-     * @param state The current state of the battle.
+     * @param victim The victim.
+     * @param state The battle state.
      */
-    open fun adjustBattleState(
-        entity: Entity,
-        victim: Entity,
-        state: BattleState,
-    ) {
+    open fun adjustBattleState(entity: Entity, victim: Entity, state: BattleState) {
         EXPERIENCE_MOD = 4.0
         var totalHit = 0
         if (entity is Player) {
@@ -525,8 +421,8 @@ abstract class CombatSwingHandler(
         }
         entity.sendImpact(state)
         victim.checkImpact(state)
-
-        if (victim.id == NPCs.MAGIC_DUMMY_4474 && type == CombatStyle.MAGIC || victim.id == NPCs.MELEE_DUMMY_7891 && type == CombatStyle.MELEE) {
+        //Prevents lumbridge dummies from dying (true to how rs3 / 2009scape in 2009 does it)
+        if (victim.id == 4474 && type == CombatStyle.MAGIC || victim.id == 7891 && type == CombatStyle.MELEE) {
             EXPERIENCE_MOD = 0.1
             victim.fullRestore()
             if (state.estimatedHit >= 15) {
@@ -536,10 +432,10 @@ abstract class CombatSwingHandler(
                 state.secondaryHit = 14
             }
         }
-        if (victim.id == NPCs.COUNT_DRAYNOR_757) {
+        if (victim.id == 757) {
             EXPERIENCE_MOD = 0.01
         }
-
+        // Recursively adjustBattleState targets so that multi-target attacks have protection prayers applied.
         if (state.targets != null && state.targets.isNotEmpty()) {
             if (!(state.targets.size == 1 && state.targets[0] == state)) {
                 for (s in state.targets) {
@@ -574,17 +470,12 @@ abstract class CombatSwingHandler(
     }
 
     /**
-     * Adds experience based on the damage dealt in combat.
-     *
-     * @param entity The entity performing the attack.
-     * @param victim The entity receiving the attack.
-     * @param state The current state of the battle.
+     * Adds the experience for the current combat swing.
+     * @param entity The attacking entity.
+     * @param victim The victim.
+     * @param state The battle state.
      */
-    open fun addExperience(
-        entity: Entity?,
-        victim: Entity?,
-        state: BattleState?,
-    ) {
+    open fun addExperience(entity: Entity?, victim: Entity?, state: BattleState?) {
         if (entity == null || (victim is Player && entity is Player && entity.asPlayer().ironmanManager.isIronman)) {
             return
         }
@@ -593,13 +484,11 @@ abstract class CombatSwingHandler(
 
         when (entity) {
             is Familiar -> {
-                player = entity.owner
-                attStyle = entity.attackStyle
+                player = entity.owner; attStyle = entity.attackStyle
             }
 
             is Player -> {
-                player = entity
-                attStyle = entity.properties.attackStyle.style
+                player = entity; attStyle = entity.properties.attackStyle.style
             }
 
             else -> return
@@ -650,26 +539,20 @@ abstract class CombatSwingHandler(
     }
 
     /**
-     * Returns the formatted hit after applying any relevant modifiers.
-     *
-     * @param attacker The entity performing the attack.
-     * @param victim The entity being attacked.
-     * @param state The current state of the battle.
-     * @param rawHit The raw hit value.
-     * @return The final formatted hit value.
+     * Gets the formated hit.
+     * @param attacker The attacking entity.
+     * @param victim The victim.
+     * @param state The battle state.
+     * @param rawHit The hit to format.
+     * @return The formated hit.
      */
-    protected open fun getFormattedHit(
-        attacker: Entity,
-        victim: Entity,
-        state: BattleState,
-        rawHit: Int,
-    ): Int {
+    protected open fun getFormattedHit(attacker: Entity, victim: Entity, state: BattleState, rawHit: Int): Int {
         var hit = rawHit
         hit = attacker.getFormattedHit(state, hit).toInt()
         if (victim is Player) {
             val player = victim.asPlayer()
             val shield = player.equipment[EquipmentContainer.SLOT_SHIELD]
-            if (shield != null && shield.id == Items.ELYSIAN_SPIRIT_SHIELD_13742) {
+            if (shield != null && shield.id == 13742) {
                 if (RandomFunction.random(100) < 71) {
                     hit -= (hit.toDouble() * 0.25).toInt()
                     if (hit < 1) {
@@ -677,7 +560,7 @@ abstract class CombatSwingHandler(
                     }
                 }
             }
-            if (shield != null && shield.id == Items.DIVINE_SPIRIT_SHIELD_13740) {
+            if (shield != null && shield.id == 13740) {
                 val reduce = hit.toDouble() * 0.30
                 var drain = hit * 0.15
                 if (player.skills.prayerPoints > drain && drain > 0) {
@@ -692,6 +575,12 @@ abstract class CombatSwingHandler(
                 }
             }
         }
+        if (attacker is Player) {
+            val player = attacker.asPlayer()
+            if (player.equipment[3] != null && player.equipment[3].id == 14726 && state.style == CombatStyle.MAGIC) {
+                hit += (hit.toDouble() * 0.15).toInt()
+            }
+        }
         if (attacker is Familiar && victim is Player) {
             if (victim.prayer[PrayerType.PROTECT_FROM_SUMMONING]) {
                 hit = 0
@@ -701,16 +590,12 @@ abstract class CombatSwingHandler(
     }
 
     /**
-     * Returns the attack animation associated with the specified combat style.
-     *
-     * @param e The entity performing the attack.
-     * @param style The combat style being used by the entity.
-     * @return The animation associated with the attack.
+     * Gets the default animation of the entity.
+     * @param e The entity.
+     * @param style The combat style.
+     * @return The attack animation.
      */
-    fun getAttackAnimation(
-        e: Entity,
-        style: CombatStyle?,
-    ): Animation {
+    fun getAttackAnimation(e: Entity, style: CombatStyle?): Animation {
         var anim: Animation? = null
         if (type != null && e is NPC) {
             anim = e.properties.getCombatAnimation(style!!.ordinal % 3)
@@ -719,16 +604,12 @@ abstract class CombatSwingHandler(
     }
 
     /**
-     * Registers a special attack handler for a specific item id.
-     *
-     * @param itemId The item id for which the handler is being registered.
-     * @param handler The combat swing handler to be registered for the item.
-     * @return `true` if the handler was successfully registered, `false` if a handler already exists for the item.
+     * Registers a special attack handler.
+     * @param itemId The item id.
+     * @param handler The combat swing handler.
+     * @return `True` if succesful.
      */
-    fun register(
-        itemId: Int,
-        handler: CombatSwingHandler,
-    ): Boolean {
+    fun register(itemId: Int, handler: CombatSwingHandler): Boolean {
         if (specialHandlers == null) {
             specialHandlers = HashMap()
         }
@@ -736,7 +617,7 @@ abstract class CombatSwingHandler(
             log(
                 this::class.java,
                 Log.ERR,
-                "Already contained special attack handler for item " + itemId + " - [old=" + specialHandlers!![itemId]!!::class.java.simpleName + ", new=" + handler.javaClass.simpleName + "].",
+                "Already contained special attack handler for item " + itemId + " - [old=" + specialHandlers!![itemId]!!::class.java.simpleName + ", new=" + handler.javaClass.simpleName + "]."
             )
             return false
         }
@@ -744,10 +625,10 @@ abstract class CombatSwingHandler(
     }
 
     /**
-     * Retrieves the special combat swing handler associated with a specific item id.
-     *
-     * @param itemId The id of the item for which the special handler is being requested.
-     * @return The combat swing handler associated with the item id, or `null` if none exists.
+     * Gets the special attack handler for the given item id.
+     * @param itemId The item id.
+     * @return The special attack handler, or `null` if this item has no
+     * special attack handler.
      */
     fun getSpecial(itemId: Int): CombatSwingHandler? {
         if (specialHandlers == null) {
@@ -757,26 +638,23 @@ abstract class CombatSwingHandler(
     }
 
     companion object {
+        /**
+         * The amount of experience to get per hit.
+         */
         @JvmField
         var EXPERIENCE_MOD = 4.0
 
         /**
-         * Determines if the projectile from the given entity is clipped when targeting a victim.
-         *
-         * This method checks if there is any clipping (obstacles or other entities) between the entity and victim
-         * that would block the projectile. Optionally, it can check for close clipping as well.
-         *
-         * @param entity The entity that is firing the projectile.
-         * @param victim The entity that is being targeted by the projectile.
-         * @param checkClose If `true`, it also checks for close clipping.
-         * @return `true` if the projectile is clipped, `false` otherwise.
+         * Checks if a projectile can be fired from the node location to the victim
+         * location.
+         * @param entity The node.
+         * @param victim The victim.
+         * @param checkClose If we are checking for a melee attack rather than a
+         * projectile.
+         * @return `True` if so.
          */
         @JvmStatic
-        fun isProjectileClipped(
-            entity: Node,
-            victim: Node?,
-            checkClose: Boolean,
-        ): Boolean {
+        fun isProjectileClipped(entity: Node, victim: Node?, checkClose: Boolean): Boolean {
             for (x1 in 0 until entity.size()) {
                 for (y1 in 0 until entity.size()) {
                     val src = entity.location.transform(x1, y1, 0)
@@ -795,29 +673,9 @@ abstract class CombatSwingHandler(
             return false
         }
     }
+
 }
 
-/**
- * Represents different flags for swing handlers that can modify combat behavior.
- */
 enum class SwingHandlerFlag {
-    /**
-     * Flag indicating that stat boosts should be ignored for damage calculation.
-     */
-    IGNORE_STAT_BOOSTS_DAMAGE,
-
-    /**
-     * Flag indicating that stat boosts should be ignored for accuracy calculation.
-     */
-    IGNORE_STAT_BOOSTS_ACCURACY,
-
-    /**
-     * Flag indicating that prayer boosts should be ignored for damage calculation.
-     */
-    IGNORE_PRAYER_BOOSTS_DAMAGE,
-
-    /**
-     * Flag indicating that prayer boosts should be ignored for accuracy calculation.
-     */
-    IGNORE_PRAYER_BOOSTS_ACCURACY,
+    IGNORE_STAT_BOOSTS_DAMAGE, IGNORE_STAT_BOOSTS_ACCURACY, IGNORE_PRAYER_BOOSTS_DAMAGE, IGNORE_PRAYER_BOOSTS_ACCURACY, IGNORE_STAT_REDUCTION
 }

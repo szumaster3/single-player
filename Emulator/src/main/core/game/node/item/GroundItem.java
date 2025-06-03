@@ -5,65 +5,71 @@ import core.game.world.GameWorld;
 import core.game.world.map.Location;
 
 /**
- * The type Ground item.
+ * Represents a ground item.
+ *
+ * @author Emperor
  */
 public class GroundItem extends Item {
 
+    /**
+     * The player who dropped this item.
+     */
     private Player dropper;
 
     private int dropperUid;
 
+    /**
+     * The amount of ticks.
+     */
     private int ticks;
 
+    /**
+     * The amount of ticks when to remove this item.
+     */
     private int decayTime;
 
+    /**
+     * If the item should remain private.
+     */
     private boolean remainPrivate;
 
+    /**
+     * If the ground item has been removed.
+     */
     private boolean removed;
 
-    /**
-     * The Force visible.
-     */
     public boolean forceVisible;
 
     /**
-     * Instantiates a new Ground item.
+     * Constructs a new {@code GroundItem} {@code Object}.
      *
-     * @param item the item
+     * @param item The item
      */
     public GroundItem(Item item) {
         this(item, null, null);
     }
 
     /**
-     * Instantiates a new Ground item.
+     * Constructs a new {@code GroundItem} {@code Object}.
      *
-     * @param item     the item
-     * @param location the location
+     * @param item     The item.
+     * @param location The location.
      */
     public GroundItem(Item item, Location location) {
         this(item, location, 200, null);
     }
 
     /**
-     * Instantiates a new Ground item.
+     * Constructs a new {@code GroundItem} {@code Object}.
      *
-     * @param item     the item
-     * @param location the location
-     * @param player   the player
+     * @param item     The item.
+     * @param location The location.
+     * @param player   The player who dropped this item.
      */
     public GroundItem(Item item, Location location, Player player) {
         this(item, location, 200, player);
     }
 
-    /**
-     * Instantiates a new Ground item.
-     *
-     * @param item      the item
-     * @param location  the location
-     * @param playerUid the player uid
-     * @param ticks     the ticks
-     */
     public GroundItem(Item item, Location location, int playerUid, int ticks) {
         this(item, location);
         this.dropperUid = playerUid;
@@ -71,12 +77,11 @@ public class GroundItem extends Item {
     }
 
     /**
-     * Instantiates a new Ground item.
+     * Constructs a new {@code GroundItem} {@code Object}.
      *
-     * @param item     the item
-     * @param location the location
-     * @param decay    the decay
-     * @param player   the player
+     * @param item     The item.
+     * @param location The location.
+     * @param player   The player who dropped this item.
      */
     public GroundItem(Item item, Location location, int decay, Player player) {
         super(item.getId(), item.getAmount(), item.getCharge());
@@ -90,16 +95,16 @@ public class GroundItem extends Item {
     }
 
     /**
-     * Respawn.
+     * Used to respawn the ground item.
      */
     public void respawn() {
-        // Placeholder for respawn logic
+
     }
 
     /**
-     * Is private boolean.
+     * Checks if the ground item is private.
      *
-     * @return the boolean
+     * @return {@code True} if so.
      */
     public boolean isPrivate() {
         return !forceVisible && (remainPrivate || (decayTime - GameWorld.getTicks() > 100));
@@ -107,15 +112,14 @@ public class GroundItem extends Item {
 
     @Override
     public boolean isActive() {
-        // Returns {@code true} if the item is active, i.e., it hasn't decayed or been removed.
-        return !removed && GameWorld.getTicks() < decayTime;
+        return removed || GameWorld.getTicks() < decayTime;
     }
 
     /**
-     * Dropped by boolean.
+     * Checks if this item was dropped by the player.
      *
-     * @param p the p
-     * @return the boolean
+     * @param p The player.
+     * @return {@code True} if so.
      */
     public boolean droppedBy(Player p) {
         if (p.getDetails().getUid() == dropperUid) {
@@ -126,99 +130,97 @@ public class GroundItem extends Item {
     }
 
     /**
-     * Gets dropper.
+     * Gets the dropper.
      *
-     * @return the dropper
+     * @return The dropper.
      */
     public Player getDropper() {
         return dropper;
     }
 
     /**
-     * Sets dropper.
+     * Sets the dropper.
      *
-     * @param player the player
+     * @param player The player who dropped this item.
      */
     public void setDropper(Player player) {
         this.dropper = player;
     }
 
     /**
-     * Gets ticks.
+     * Gets the ticks.
      *
-     * @return the ticks
+     * @return The ticks.
      */
     public int getTicks() {
         return ticks;
     }
 
     /**
-     * Gets decay time.
+     * Gets the decayTime.
      *
-     * @return the decay time
+     * @return The decayTime.
      */
     public int getDecayTime() {
         return decayTime;
     }
 
     /**
-     * Sets decay time.
+     * Sets the decayTime.
      *
-     * @param decayTime the decay time
+     * @param decayTime The decayTime to set.
      */
     public void setDecayTime(int decayTime) {
         this.decayTime = GameWorld.getTicks() + decayTime;
     }
 
     /**
-     * Is auto spawn boolean.
+     * Gets the autoSpawn.
      *
-     * @return the boolean
+     * @return The autoSpawn.
      */
     public boolean isAutoSpawn() {
         return false;
     }
 
     /**
-     * Is remain private boolean.
+     * Gets the remainPrivate.
      *
-     * @return the boolean
+     * @return The remainPrivate.
      */
     public boolean isRemainPrivate() {
         return remainPrivate;
     }
 
     /**
-     * Sets remain private.
+     * Sets the remainPrivate.
      *
-     * @param remainPrivate the remain private
+     * @param remainPrivate The remainPrivate to set.
      */
     public void setRemainPrivate(boolean remainPrivate) {
         this.remainPrivate = remainPrivate;
     }
 
     /**
-     * Is removed boolean.
+     * Gets the removed.
      *
-     * @return the boolean
+     * @return The removed.
      */
     public boolean isRemoved() {
         return removed;
     }
 
     /**
-     * Sets removed.
+     * Sets the removed.
      *
-     * @param removed the removed
+     * @param removed The removed to set.
      */
     public void setRemoved(boolean removed) {
         this.removed = removed;
     }
 
     /**
-     * Gets dropper uid.
-     *
-     * @return the dropper uid
+     * Gets the dropper uid.
      */
     public int getDropperUid() {
         return dropperUid;
@@ -226,10 +228,6 @@ public class GroundItem extends Item {
 
     @Override
     public String toString() {
-        return "GroundItem [dropper=" + (dropper != null ? dropper.getUsername() : dropper) +
-            ", ticks=" + ticks +
-            ", decayTime=" + decayTime +
-            ", remainPrivate=" + remainPrivate +
-            ", removed=" + removed + "]";
+        return "GroundItem [dropper=" + (dropper != null ? dropper.getUsername() : dropper) + ", ticks=" + ticks + ", decayTime=" + decayTime + ", remainPrivate=" + remainPrivate + ", removed=" + removed + "]";
     }
 }

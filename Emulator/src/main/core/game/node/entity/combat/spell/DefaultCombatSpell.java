@@ -10,18 +10,26 @@ import core.game.node.entity.skill.Skills;
 import core.plugin.Plugin;
 
 /**
- * The type Default combat spell.
+ * Handles the default combat spell for NPCs.
+ *
+ * @author Emperor
  */
 public final class DefaultCombatSpell extends CombatSpell {
 
+    /**
+     * The projectile id.
+     */
     private final int projectileId;
 
+    /**
+     * The start height of the projectile.
+     */
     private final int startHeight;
 
     /**
-     * Instantiates a new Default combat spell.
+     * Constructs a new {@code DefaultCombatSpell} {@code Object}.
      *
-     * @param npc the npc
+     * @param npc The NPC.
      */
     public DefaultCombatSpell(NPC npc) {
         super(SpellType.BOLT, SpellBookManager.SpellBook.MODERN, 0, 0.0, -1, -1, npc.getProperties().getMagicAnimation(), npc.getDefinition().combatGraphics[0], null, npc.getDefinition().combatGraphics[2]);

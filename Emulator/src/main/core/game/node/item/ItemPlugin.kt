@@ -8,6 +8,7 @@ import core.plugin.Plugin
 
 /**
  * Represents a base plugin for handling item-related interactions.
+ * @author Vexia
  *
  * @see Plugin
  */

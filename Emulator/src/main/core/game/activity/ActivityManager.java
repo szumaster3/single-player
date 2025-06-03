@@ -10,20 +10,30 @@ import java.util.Map;
 import static core.api.ContentAPIKt.log;
 
 /**
- * The type Activity manager.
+ * Manages the activities.
+ *
+ * @author Emperor
  */
 public final class ActivityManager {
 
+    /**
+     * The mapping of instanced activities.
+     */
     private static final Map<String, ActivityPlugin> ACTIVITIES = new HashMap<>();
 
+    /**
+     * Constructs a new {@code ActivityManager} {@code Object}.
+     */
     private ActivityManager() {
-
+        /*
+         * empty.
+         */
     }
 
     /**
-     * Register.
+     * Registers an activity plugin.
      *
-     * @param plugin the plugin
+     * @param plugin The plugin to register.
      */
     public static void register(ActivityPlugin plugin) {
         plugin.register();
@@ -34,13 +44,12 @@ public final class ActivityManager {
     }
 
     /**
-     * Start boolean.
+     * Starts an instanced activity.
      *
-     * @param player the player
-     * @param name   the name
-     * @param login  the login
-     * @param args   the args
-     * @return the boolean
+     * @param player The player.
+     * @param name   The name.
+     * @param login  If we are logging in.
+     * @param args   The arguments.
      */
     public static boolean start(Player player, String name, boolean login, Object... args) {
         ActivityPlugin plugin = ACTIVITIES.get(name);
@@ -65,10 +74,10 @@ public final class ActivityManager {
     }
 
     /**
-     * Gets activity.
+     * Gets the activity by the name.
      *
-     * @param name the name
-     * @return the activity
+     * @param name the name.
+     * @return the activity.
      */
     public static ActivityPlugin getActivity(String name) {
         return ACTIVITIES.get(name);

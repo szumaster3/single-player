@@ -16,9 +16,26 @@ import org.rs.consts.NPCs
 import org.rs.consts.Sounds
 import kotlin.math.ceil
 
+/**
+ * Represents a bolt effect.
+ *
+ * @author Vexia, Aero
+ */
 enum class BoltEffect(
+
+    /**
+     * The item id of the bolt.
+     */
     val itemId: Int,
+
+    /**
+     * The graphics to send.
+     */
     private val graphics: Graphics,
+
+    /**
+     * The sound to send.
+     */
     private val sound: Audio,
 ) {
     OPAL(Items.OPAL_BOLTS_E_9236, Graphics.create(749), Audio(Sounds.LUCKY_LIGHTNING_2918)) {
@@ -65,14 +82,9 @@ enum class BoltEffect(
 
         override fun canFire(state: BattleState): Boolean {
             if (state.victim is Player) {
-                if (state.victim
-                        .asPlayer()
-                        .equipment
-                        .contains(1383, 1) ||
-                    state.victim
-                        .asPlayer()
-                        .equipment
-                        .contains(1395, 1)
+                if (state.victim.asPlayer().equipment.contains(1383, 1) || state.victim.asPlayer().equipment.contains(
+                        1395, 1
+                    )
                 ) {
                     return false
                 }
@@ -164,15 +176,9 @@ enum class BoltEffect(
                 }
             }
             if (state.victim is Player) {
-                if (state.victim
-                        .asPlayer()
-                        .equipment
-                        .contains(1540, 1) ||
-                    state.victim
-                        .asPlayer()
-                        .equipment
-                        .contains(11283, 1) ||
-                    state.victim.hasFireResistance()
+                if (state.victim.asPlayer().equipment.contains(1540, 1) || state.victim.asPlayer().equipment.contains(
+                        11283, 1
+                    ) || state.victim.hasFireResistance()
                 ) {
                     return false
                 }
@@ -204,6 +210,10 @@ enum class BoltEffect(
         }
     }, ;
 
+    /**
+     * Handles the impact.
+     * @param state the battle state.
+     */
     open fun impact(state: BattleState) {
         val victim = state.victim
         val attacker = state.attacker
@@ -216,10 +226,21 @@ enum class BoltEffect(
         victim.graphics(graphics)
     }
 
+    /**
+     * Checks if the effect can fire.
+     * @param state the state.
+     * @return {@code True} if so.
+     */
     open fun canFire(state: BattleState): Boolean = RandomFunction.random(13) == 5
 
     companion object {
-        @JvmStatic fun forId(id: Int): BoltEffect? {
+        /**
+         * Gets an effect by the id.
+         * @param id the id.
+         * @return the effect.
+         */
+        @JvmStatic
+        fun forId(id: Int): BoltEffect? {
             for (effect in values()) {
                 if (effect.itemId == id) {
                     return effect

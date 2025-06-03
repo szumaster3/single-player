@@ -7,9 +7,12 @@ import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
 
-enum class SpellType(
-    val accuracyMod: Double,
-) {
+/**
+ * Represents the spell types.
+ * @author Emperor
+ */
+
+enum class SpellType(val accuracyMod: Double, ) {
     STRIKE(1.0) {
         override fun getImpactAmount(
             e: Entity,
@@ -145,8 +148,7 @@ enum class SpellType(
 
     TELEBLOCK(1.3),
 
-    NULL(0.0),
-    ;
+    NULL(0.0), ;
 
     open fun getImpactAmount(
         e: Entity,

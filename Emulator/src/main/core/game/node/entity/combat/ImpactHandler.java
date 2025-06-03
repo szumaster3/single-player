@@ -1,7 +1,6 @@
 package core.game.node.entity.combat;
 
 import content.data.EnchantedJewellery;
-import content.data.GameAttributes;
 import content.global.skill.summoning.familiar.Familiar;
 import content.global.skill.summoning.pet.Pet;
 import core.game.bots.AIPlayer;
@@ -23,36 +22,53 @@ import java.util.Map;
 import java.util.Queue;
 
 /**
- * The type Impact handler.
+ * Class used for handling combat impacts.
+ *
+ * @author Emperor
  */
 public final class ImpactHandler {
 
+    /**
+     * The entity.
+     */
     private final Entity entity;
 
+    /**
+     * The amount of ticks impacts have been disabled for.
+     */
     private int disabledTicks;
 
+    /**
+     * The NPC impact log.
+     */
     private final Map<Entity, Integer> npcImpactLog = new HashMap<>();
 
+    /**
+     * The player impact log. This is by player uid to cope with players relogging.
+     */
     private final Map<Integer, Integer> playerImpactLog = new HashMap<>();
 
+    /**
+     * Gets the current hitsplats to show.
+     */
     private final Queue<Impact> impactQueue = new LinkedList<Impact>();
 
     /**
-     * Instantiates a new Impact handler.
+     * Constructs a new {@code ImpactHandler} {@code Object}.
      *
-     * @param entity the entity
+     * @param entity The entity.
      */
     public ImpactHandler(Entity entity) {
         this.entity = entity;
     }
 
     /**
-     * Manual hit impact.
+     * Manually hits the entity.
      *
-     * @param source the source
-     * @param hit    the hit
-     * @param type   the type
-     * @return the impact
+     * @param source The entity dealing the hit.
+     * @param hit    The amount to hit.
+     * @param type   The hitsplat type.
+     * @return The impact object.
      */
     public Impact manualHit(Entity source, int hit, HitsplatType type) {
         if (hit > entity.getSkills().getLifepoints()) {
@@ -62,30 +78,13 @@ public final class ImpactHandler {
     }
 
     /**
-     * Visual hit impact.
+     * Manually hits the entity.
      *
-     * @param source the source
-     * @param hit    the hit
-     * @param type   the type
-     * @return the impact
-     */
-    public Impact visualHit(Entity source, int hit, HitsplatType type) {
-        if (type == null || type == HitsplatType.NORMAL) {
-            type = hit == 0 ? HitsplatType.MISS : HitsplatType.NORMAL;
-        }
-        Impact impact = new Impact(source, hit, null, type);
-        impactQueue.add(impact);
-        return impact;
-    }
-
-    /**
-     * Manual hit impact.
-     *
-     * @param source the source
-     * @param hit    the hit
-     * @param type   the type
-     * @param ticks  the ticks
-     * @return the impact
+     * @param source The entity dealing the hit.
+     * @param hit    The amount to hit.
+     * @param type   The hitsplat type.
+     * @param ticks  The delay before handling the hit.
+     * @return The impact object (or null if a pulse got submitted).
      */
     public Impact manualHit(final Entity source, int hit, final HitsplatType type, int ticks) {
         if (ticks > 0) {
@@ -103,54 +102,53 @@ public final class ImpactHandler {
     }
 
     /**
-     * Handle impact impact.
+     * Handles an impact.
      *
-     * @param source the source
-     * @param hit    the hit
-     * @param style  the style
-     * @return the impact
+     * @param source The impact-dealing entity.
+     * @param hit    The hit amount.
+     * @param style  The combat style used to deal the impact.
+     * @return The impact object created.
      */
     public Impact handleImpact(Entity source, int hit, CombatStyle style) {
         return handleImpact(source, hit, style, null, null, false);
     }
 
     /**
-     * Handle impact impact.
+     * Handles an impact.
      *
-     * @param source the source
-     * @param hit    the hit
-     * @param style  the style
-     * @param state  the state
-     * @return the impact
+     * @param source The impact-dealing entity.
+     * @param hit    The hit amount.
+     * @param style  The combat style used to deal the impact.
+     * @param state  The battle state.
+     * @return The impact object created.
      */
     public Impact handleImpact(Entity source, int hit, CombatStyle style, BattleState state) {
         return handleImpact(source, hit, style, state, null, false);
     }
 
     /**
-     * Handle impact impact.
+     * Handles an impact.
      *
-     * @param source the source
-     * @param hit    the hit
-     * @param style  the style
-     * @param state  the state
-     * @param type   the type
-     * @return the impact
+     * @param source The impact-dealing entity.
+     * @param hit    The hit amount.
+     * @param style  The combat style used to deal the impact.
+     * @param state  The battle state.
+     * @param type   The hitsplat type.
+     * @return The impact object created.
      */
     public Impact handleImpact(Entity source, int hit, CombatStyle style, BattleState state, HitsplatType type) {
         return handleImpact(source, hit, style, state, type, false);
     }
 
     /**
-     * Handle impact impact.
+     * Handles an impact.
      *
-     * @param source    the source
-     * @param hit       the hit
-     * @param style     the style
-     * @param state     the state
-     * @param type      the type
-     * @param secondary the secondary
-     * @return the impact
+     * @param source The impact-dealing entity.
+     * @param hit    The hit amount.
+     * @param style  The combat style used to deal the impact.
+     * @param state  The battle state.
+     * @param type   The hitsplat type.
+     * @return The impact object created.
      */
     public Impact handleImpact(Entity source, int hit, final CombatStyle style, final BattleState state, HitsplatType type, boolean secondary) {
         if (DeathTask.isDead(this.entity)) {
@@ -165,7 +163,7 @@ public final class ImpactHandler {
         if (disabledTicks > GameWorld.getTicks()) {
             return null;
         }
-        if (entity instanceof Player && !(entity instanceof AIPlayer) && !(entity.getAttribute(GameAttributes.TUTORIAL_COMPLETE, false))) {
+        if (entity instanceof Player && !(entity instanceof AIPlayer) && !(entity.getAttribute("tutorial:complete", false))) {
             Impact impact = new Impact(source, 0, style, HitsplatType.MISS);
             impactQueue.add(impact);
             return impact;
@@ -232,10 +230,10 @@ public final class ImpactHandler {
     }
 
     /**
-     * Handle recoil effect.
+     * Handles the recoil effect.
      *
-     * @param attacker the attacker
-     * @param hit      the hit
+     * @param attacker The attacker.
+     * @param hit      The hit to handle.
      */
     public void handleRecoilEffect(Entity attacker, int hit) {
         int damage = (int) Math.ceil(hit * 0.1);
@@ -257,16 +255,17 @@ public final class ImpactHandler {
     }
 
     /**
-     * Gets most damage entity.
+     * Gets the player who's dealt the most damage.
      *
-     * @param killer the killer
-     * @return the most damage entity
+     * @param killer The killer.
+     * @return The player.
      */
     public Entity getMostDamageEntity(Entity killer) {
         Entity entity = this.entity;
         if (entity instanceof Player) {
             return killer;
         }
+        if (killer instanceof AIPlayer) return killer;
 
         int damage = -1;
         if (playerImpactLog.isEmpty()) {
@@ -295,79 +294,91 @@ public final class ImpactHandler {
     }
 
     /**
-     * Gets npc impact log.
+     * Gets the npc impact log.
      *
-     * @return the npc impact log
+     * @return The npc impact log.
      */
     public Map<Entity, Integer> getNpcImpactLog() {
         return npcImpactLog;
     }
 
     /**
-     * Gets player impact log.
+     * Gets the player impact log.
      *
-     * @return the player impact log
+     * @return The player impact log.
      */
     public Map<Integer, Integer> getPlayerImpactLog() {
         return playerImpactLog;
     }
 
     /**
-     * Is hit update boolean.
+     * Checks if the entity needs a hit update.
      *
-     * @return the boolean
+     * @return {@code True} if so.
      */
     public boolean isHitUpdate() {
         return impactQueue.peek() != null;
     }
 
     /**
-     * Gets impact queue.
+     * Gets the hitsplats.
      *
-     * @return the impact queue
+     * @return The hitsplats.
      */
     public Queue<Impact> getImpactQueue() {
         return impactQueue;
     }
 
     /**
-     * Gets disabled ticks.
+     * Gets the disabledTicks.
      *
-     * @return the disabled ticks
+     * @return The disabledTicks.
      */
     public int getDisabledTicks() {
         return disabledTicks;
     }
 
     /**
-     * Sets disabled ticks.
-     *
-     * @param ticks the ticks
+     * Sets the disabledTicks.
      */
     public void setDisabledTicks(int ticks) {
         this.disabledTicks = GameWorld.getTicks() + ticks;
     }
 
     /**
-     * The type Impact.
+     * Represents an impact.
+     *
+     * @author Emperor
      */
     public static class Impact {
 
+        /**
+         * The impact-dealing entity.
+         */
         private final Entity source;
 
+        /**
+         * The hit amount.
+         */
         private final int amount;
 
+        /**
+         * The combat style used to deal the hit.
+         */
         private final CombatStyle style;
 
+        /**
+         * The hitsplat type.
+         */
         private final HitsplatType type;
 
         /**
-         * Instantiates a new Impact.
+         * Constructs a new {@code ImpactHandler} {@code Object}.
          *
-         * @param source the source
-         * @param amount the amount
-         * @param style  the style
-         * @param type   the type
+         * @param source The impact-dealing entity.
+         * @param amount The hit amount.
+         * @param style  The combat style used to deal the hit.
+         * @param type   The hitsplat type.
          */
         public Impact(Entity source, int amount, CombatStyle style, HitsplatType type) {
             this.source = source;
@@ -377,36 +388,36 @@ public final class ImpactHandler {
         }
 
         /**
-         * Gets source.
+         * Gets the source.
          *
-         * @return the source
+         * @return The source.
          */
         public Entity getSource() {
             return source;
         }
 
         /**
-         * Gets amount.
+         * Gets the amount.
          *
-         * @return the amount
+         * @return The amount.
          */
         public int getAmount() {
             return amount;
         }
 
         /**
-         * Gets style.
+         * Gets the style.
          *
-         * @return the style
+         * @return The style.
          */
         public CombatStyle getStyle() {
             return style;
         }
 
         /**
-         * Gets type.
+         * Gets the type.
          *
-         * @return the type
+         * @return The type.
          */
         public HitsplatType getType() {
             return type;
@@ -414,38 +425,11 @@ public final class ImpactHandler {
     }
 
     /**
-     * The enum Hitsplat type.
+     * Represents the hitsplat types.
+     *
+     * @author Emperor
      */
     public static enum HitsplatType {
-
-        /**
-         * Miss hitsplat type.
-         */
-        MISS,
-
-        /**
-         * Normal hitsplat type.
-         */
-        NORMAL,
-
-        /**
-         * Poison hitsplat type.
-         */
-        POISON,
-
-        /**
-         * Disease hitsplat type.
-         */
-        DISEASE,
-
-        /**
-         * Normal 1 hitsplat type.
-         */
-        NORMAL_1,
-
-        /**
-         * Venom hitsplat type.
-         */
-        VENOM;
+        MISS, NORMAL, POISON, DISEASE, NORMAL_1, VENOM;
     }
 }

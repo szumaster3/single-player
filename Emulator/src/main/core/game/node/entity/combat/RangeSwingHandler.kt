@@ -23,9 +23,12 @@ import core.tools.RandomFunction
 import kotlin.math.ceil
 import kotlin.math.floor
 
-open class RangeSwingHandler(
-    vararg flags: SwingHandlerFlag,
-) : CombatSwingHandler(CombatStyle.RANGE, *flags) {
+/**
+ * Handles the range combat swings.
+ * @author Emperor
+ * @author Ceikry, conversion to Kotlin + cleanup
+ */
+open class RangeSwingHandler(vararg flags: SwingHandlerFlag) : CombatSwingHandler(CombatStyle.RANGE, *flags) {
     override fun canSwing(
         entity: Entity,
         victim: Entity,
@@ -34,10 +37,7 @@ open class RangeSwingHandler(
             return InteractionType.NO_INTERACT
         }
         var distance = 7
-        if (entity is Player &&
-            (entity.getExtension<Any>(WeaponInterface::class.java) as WeaponInterface).weaponInterface?.interfaceId ==
-            91
-        ) {
+        if (entity is Player && (entity.getExtension<Any>(WeaponInterface::class.java) as WeaponInterface).weaponInterface?.interfaceId == 91) {
             distance -= 2
         }
         if (entity.properties.attackStyle.style == WeaponInterface.STYLE_LONG_RANGE) {
@@ -51,18 +51,16 @@ open class RangeSwingHandler(
                 distance = 10
             }
         }
-        var goodRange =
-            victim.centerLocation.withinDistance(
-                entity.centerLocation,
-                getCombatDistance(entity, victim, distance),
-            )
+        var goodRange = victim.centerLocation.withinDistance(
+            entity.centerLocation,
+            getCombatDistance(entity, victim, distance),
+        )
         var type = InteractionType.STILL_INTERACT
         if (victim.walkingQueue.isMoving && !goodRange) {
-            goodRange =
-                victim.centerLocation.withinDistance(
-                    entity.centerLocation,
-                    getCombatDistance(entity, victim, ++distance),
-                )
+            goodRange = victim.centerLocation.withinDistance(
+                entity.centerLocation,
+                getCombatDistance(entity, victim, ++distance),
+            )
             type = InteractionType.MOVE_INTERACT
         }
         if (goodRange && super.canSwing(entity, victim) != InteractionType.NO_INTERACT) {
@@ -86,14 +84,11 @@ open class RangeSwingHandler(
         }
         var hit = 0
         if (isAccurateImpact(entity, victim, CombatStyle.RANGE)) {
-            val max =
-                calculateHit(entity, victim, 1.0).also {
-                    if (entity?.name?.lowercase() ==
-                        "test10"
-                    ) {
-                        log(this::class.java, Log.FINE, "Damage: $it")
-                    }
+            val max = calculateHit(entity, victim, 1.0).also {
+                if (entity?.name?.lowercase() == "test10") {
+                    log(this::class.java, Log.FINE, "Damage: $it")
                 }
+            }
             state.maximumHit = max
             hit = RandomFunction.random(max + 1)
         }
@@ -108,11 +103,8 @@ open class RangeSwingHandler(
             return -1
         }
         if (state.estimatedHit > victim.skills.lifepoints) state.estimatedHit = victim.skills.lifepoints
-        if (state.estimatedHit + state.secondaryHit >
-            victim.skills.lifepoints
-        ) {
-            state.secondaryHit -=
-                ((state.estimatedHit + state.secondaryHit) - victim.skills.lifepoints)
+        if (state.estimatedHit + state.secondaryHit > victim.skills.lifepoints) {
+            state.secondaryHit -= ((state.estimatedHit + state.secondaryHit) - victim.skills.lifepoints)
         }
         useAmmo(entity, state, victim.location)
         return 1 + ceil(entity.location.getDistance(victim.location) * 0.3).toInt()
@@ -166,14 +158,11 @@ open class RangeSwingHandler(
         var start: Graphics? = null
         if (state!!.ammunition != null) {
             start = state.ammunition.startGraphics
-            state.ammunition.projectile!!
-                .copy(entity, victim, 5.0)
-                .send()
+            state.ammunition.projectile!!.copy(entity, victim, 5.0).send()
             if (state.weapon.type == WeaponType.DOUBLE_SHOT && state.ammunition.darkBowGraphics != null) {
                 start = state.ammunition.darkBowGraphics
                 val speed = (55 + entity.location.getDistance(victim!!.location) * 10).toInt()
-                Projectile
-                    .create(entity, victim, state.ammunition.projectile!!.projectileId, 40, 36, 41, speed, 25)
+                Projectile.create(entity, victim, state.ammunition.projectile!!.projectileId, 40, 36, 41, speed, 25)
                     .send()
             }
         } else if (entity is NPC) {
@@ -201,10 +190,7 @@ open class RangeSwingHandler(
         victim: Entity?,
         state: BattleState?,
     ) {
-        if (state!!.ammunition != null &&
-            state.ammunition.effect != null &&
-            state.ammunition!!.effect!!.canFire(state)
-        ) {
+        if (state!!.ammunition != null && state.ammunition.effect != null && state.ammunition!!.effect!!.canFire(state)) {
             state.ammunition!!.effect!!.impact(state)
         }
         val hit = state.estimatedHit
@@ -301,12 +287,11 @@ open class RangeSwingHandler(
         return 1.0
     }
 
-    override fun getArmourSet(e: Entity?): ArmourSet? =
-        if (ArmourSet.KARIL.isUsing(e)) {
-            ArmourSet.KARIL
-        } else {
-            super.getArmourSet(e)
-        }
+    override fun getArmourSet(e: Entity?): ArmourSet? = if (ArmourSet.KARIL.isUsing(e)) {
+        ArmourSet.KARIL
+    } else {
+        super.getArmourSet(e)
+    }
 
     companion object {
         fun hasAmmo(
@@ -387,12 +372,7 @@ open class RangeSwingHandler(
             if (e is Player) {
                 val cape = e.equipment[EquipmentContainer.SLOT_CAPE]
                 val weapon = e.equipment[EquipmentContainer.SLOT_WEAPON]
-                if (cape != null &&
-                    (cape.id == 10498 || cape.id == 10499) &&
-                    weapon != null &&
-                    weapon.id != 10034 &&
-                    weapon.id != 10033
-                ) {
+                if (cape != null && (cape.id == 10498 || cape.id == 10499) && weapon != null && weapon.id != 10034 && weapon.id != 10033) {
                     val rate = 80
                     if (RandomFunction.random(100) < rate) {
                         val torso = e.equipment[EquipmentContainer.SLOT_CHEST]

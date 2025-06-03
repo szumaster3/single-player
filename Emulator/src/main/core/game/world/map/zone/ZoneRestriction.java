@@ -1,49 +1,51 @@
 package core.game.world.map.zone;
 
 /**
- * The enum Zone restriction.
+ * The zone restrictions.
+ *
+ * @author Emperor
  */
 public enum ZoneRestriction {
 
     /**
-     * Followers zone restriction.
+     * No followers allowed in this zone.
      */
     FOLLOWERS,
 
     /**
-     * Random events zone restriction.
+     * No random events allowed.
      */
     RANDOM_EVENTS,
 
     /**
-     * Fires zone restriction.
+     * No fires allowed.
      */
     FIRES,
 
     /**
-     * Members zone restriction.
+     * Members only.
      */
     MEMBERS,
 
     /**
-     * Cannon zone restriction.
+     * No cannons allowed.
      */
     CANNON,
-
     /**
-     * Graves zone restriction.
+     * Do not spawn a grave if a player dies here.
      */
     GRAVES,
 
     /**
-     * Teleport zone restriction.
+     * No teleporting allowed.
      */
-    TELEPORT;
+    TELEPORT,
+    ;
 
     /**
-     * Gets flag.
+     * Gets the restriction flag.
      *
-     * @return the flag
+     * @return The flag.
      */
     public int getFlag() {
         return 1 << ordinal();

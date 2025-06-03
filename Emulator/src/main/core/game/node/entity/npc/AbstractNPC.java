@@ -10,31 +10,33 @@ import java.util.Map;
 import static core.api.ContentAPIKt.log;
 
 /**
- * The type Abstract npc.
+ * Used as superclass for "special NPC" plugins.
+ *
+ * @author Emperor
  */
 public abstract class AbstractNPC extends NPC implements Plugin<Object> {
 
     /**
-     * The constant mapping.
+     * The abstract NPC mapping.
      */
     protected static Map<Integer, AbstractNPC> mapping = new HashMap<>();
 
     /**
-     * Instantiates a new Abstract npc.
+     * Constructs a new {@code AbstractNPC} {@Code Object}.
      *
-     * @param id       the id
-     * @param location the location
+     * @param id       The id.
+     * @param location The location.
      */
     public AbstractNPC(int id, Location location) {
         this(id, location, true);
     }
 
     /**
-     * Instantiates a new Abstract npc.
+     * Constructs a new {@code AbstractNPC} {@Code Object}.
      *
-     * @param id       the id
-     * @param location the location
-     * @param autowalk the autowalk
+     * @param id       The id.
+     * @param location The location.
+     * @param autowalk If the NPC should move around.
      */
     public AbstractNPC(int id, Location location, boolean autowalk) {
         super(id, location);
@@ -62,27 +64,27 @@ public abstract class AbstractNPC extends NPC implements Plugin<Object> {
     }
 
     /**
-     * Construct abstract npc.
+     * Constructs a new instance of this abstract NPC.
      *
-     * @param id       the id
-     * @param location the location
-     * @param objects  the objects
-     * @return the abstract npc
+     * @param id       The npc id.
+     * @param location The location.
+     * @param objects  TODO
+     * @return The abstract npc instance.
      */
     public abstract AbstractNPC construct(int id, Location location, Object... objects);
 
     /**
-     * Get ids int [ ].
+     * Gets the NPC ids using this abstract NPC handler.
      *
-     * @return the int [ ]
+     * @return The NPC ids.
      */
     public abstract int[] getIds();
 
     /**
-     * For id abstract npc.
+     * Gets the abstract NPC object for this NPC id.
      *
-     * @param npcId the npc id
-     * @return the abstract npc
+     * @param npcId The NPC id.
+     * @return The abstract NPC "loader" object for the given NPC id.
      */
     public static AbstractNPC forId(int npcId) {
         return mapping.get(npcId);

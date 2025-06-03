@@ -8,6 +8,10 @@ import core.game.world.map.zone.MapZone
 import core.game.world.map.zone.ZoneBorders
 import org.rs.consts.Components
 
+/**
+ * Handles the snow zone.
+ * @author szu
+ */
 class SnowZone :
     MapZone("snow", true),
     MapArea {

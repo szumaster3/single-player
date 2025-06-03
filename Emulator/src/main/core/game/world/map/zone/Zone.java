@@ -3,24 +3,27 @@ package core.game.world.map.zone;
 import core.game.node.entity.Entity;
 
 /**
- * The interface Zone.
+ * Represents a zone.
+ *
+ * @author Emperor
  */
 public interface Zone {
 
     /**
-     * Enter boolean.
+     * Checks if the entity can enter this map zone.
      *
-     * @param e the e
-     * @return the boolean
+     * @param e The entity.
+     * @return {@code True} if so.
      */
     boolean enter(Entity e);
 
     /**
-     * Leave boolean.
+     * Called when the entity leaves this map zone.
      *
-     * @param e      the e
-     * @param logout the logout
-     * @return the boolean
+     * @param e      The entity.
+     * @param logout If the entity is logging out.
+     * @return {@code True} if the entity can leave.
      */
     boolean leave(Entity e, boolean logout);
+
 }

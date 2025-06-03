@@ -3,6 +3,10 @@ package core.game.node.entity.combat.spell
 import core.game.node.item.Item
 import org.rs.consts.Items
 
+/**
+ * Represents the constants of runes.
+ * @author Vexia
+ */
 enum class Runes(
     val id: Int,
 ) {
@@ -26,11 +30,25 @@ enum class Runes(
     ZURIELS_STAFF(Items.ZURIELS_STAFF_13867),
     ;
 
+    /**
+     * Method used to transform this item.
+     * @return the item.
+     */
     fun transform(): Item = Item(id)
 
+    /**
+     * Gets the item of this rune.
+     * @param amount The amount.
+     * @return The item instance.
+     */
     fun getItem(amount: Int): Item = Item(id, amount)
 
     companion object {
+        /**
+         * Gets the rune by the id.
+         * @param id the id.
+         * @return the id.
+         */
         fun forId(id: Int): Runes? {
             for (rune in values()) {
                 if (rune.id == id) {
@@ -40,11 +58,14 @@ enum class Runes(
             return null
         }
 
-        fun isInfinite(
-            rune: Runes?,
-            weapon: Item?,
-            vararg type: SpellType,
-        ): Boolean {
+        /**
+         * Checks if the player has an infinite amt of runes.
+         *
+         * @param rune the rune.
+         * @param weapon the weapon.
+         * @return `true` if so.
+         */
+        fun isInfinite(rune: Runes?, weapon: Item?, vararg type: SpellType): Boolean {
             if (weapon == null || rune == null) {
                 return false
             }
@@ -65,11 +86,7 @@ enum class Runes(
                     }
                 }
                 if (weapon.id == 13867 && rune == ZURIELS_STAFF && type.size == 1) {
-                    if (type[0] === SpellType.BARRAGE ||
-                        type[0] === SpellType.BLITZ ||
-                        type[0] === SpellType.RUSH ||
-                        type[0] === SpellType.BURST
-                    ) {
+                    if (type[0] === SpellType.BARRAGE || type[0] === SpellType.BLITZ || type[0] === SpellType.RUSH || type[0] === SpellType.BURST) {
                         return true
                     }
                 }

@@ -16,23 +16,24 @@ import java.util.Random;
  * @author Emperor
  */
 public final class ZoneBorders {
+
     /**
-     * The south-west x-coordinate.
+     * The south west x-coordinate.
      */
     private final int southWestX;
 
     /**
-     * The south-west y-coordinate.
+     * The south west y-coordinate.
      */
     private final int southWestY;
 
     /**
-     * The north-east x-coordinate.
+     * The north east x-coordinate.
      */
     private final int northEastX;
 
     /**
-     * The north-east y-coordinate.
+     * The north east y-coordinate.
      */
     private final int northEastY;
 
@@ -47,17 +48,18 @@ public final class ZoneBorders {
     private List<ZoneBorders> exceptions;
 
     /**
-     * If a zero plane check is needed.
+     * If we need to do a zero plane check.
      */
     private boolean zeroPlaneCheck;
 
     /**
      * Constructs a new {@code ZoneBorders} {@code Object}.
      *
-     * @param x1 The south-west x-coordinate.
-     * @param y1 The south-west y-coordinate.
-     * @param x2 The north-east x-coordinate.
-     * @param y2 The north-east y-coordinate.           Invariant enforced at runtime.
+     * @param x1 The south west x-coordinate.
+     * @param y1 The south west y-coordinate.
+     * @param x2 The north east x-coordinate.
+     * @param y2 The north east y-coordinate.
+     *           Invariant enforced at runtime.
      */
     public ZoneBorders(int x1, int y1, int x2, int y2) {
         this.southWestX = Math.min(x1, x2);
@@ -69,10 +71,11 @@ public final class ZoneBorders {
     /**
      * Constructs a new {@code ZoneBorders} {@code Object}.
      *
-     * @param x1    The south-west x-coordinate.
-     * @param y1    The south-west y-coordinate.
-     * @param x2    The north-east x-coordinate.
-     * @param y2    The north-east y-coordinate.              Invariant enforced at runtime.
+     * @param x1    The south west x-coordinate.
+     * @param y1    The south west y-coordinate.
+     * @param x2    The north east x-coordinate.
+     * @param y2    The north east y-coordinate.
+     *              Invariant enforced at runtime.
      * @param plane the plane.
      */
     public ZoneBorders(int x1, int y1, int x2, int y2, int plane) {
@@ -86,10 +89,11 @@ public final class ZoneBorders {
     /**
      * Constructs a new {@code ZoneBorders} {@code Object}.
      *
-     * @param x1             The south-west x-coordinate.
-     * @param y1             The south-west y-coordinate.
-     * @param x2             The north-east x-coordinate.
-     * @param y2             The north-east y-coordinate.                       Invariant enforced at runtime.
+     * @param x1             The south west x-coordinate.
+     * @param y1             The south west y-coordinate.
+     * @param x2             The north east x-coordinate.
+     * @param y2             The north east y-coordinate.
+     *                       Invariant enforced at runtime.
      * @param plane          the plane.
      * @param zeroPlaneCheck the plane check.
      */
@@ -98,12 +102,6 @@ public final class ZoneBorders {
         this.zeroPlaneCheck = zeroPlaneCheck;
     }
 
-    /**
-     * Instantiates a new Zone borders.
-     *
-     * @param l1 the l 1
-     * @param l2 the l 2
-     */
     public ZoneBorders(Location l1, Location l2) {
         this(l1.getX(), l1.getY(), l2.getX(), l2.getY(), l1.getZ());
     }
@@ -140,7 +138,6 @@ public final class ZoneBorders {
     public boolean insideBorder(Node node) {
         return insideBorder(node.getLocation());
     }
-
 
     /**
      * Checks if the player is in the zone
@@ -244,37 +241,21 @@ public final class ZoneBorders {
         return exceptions;
     }
 
-    /**
-     * Gets weighted random loc.
-     *
-     * @param intensity the intensity
-     * @return the weighted random loc
-     */
     public Location getWeightedRandomLoc(int intensity) {
         int x = northEastX - southWestX == 0 ? southWestX : RandomFunction.normalRandDist(northEastX - southWestX, intensity) + southWestX;
         int y = northEastY - southWestY == 0 ? southWestY : RandomFunction.normalRandDist(northEastY - southWestY, intensity) + southWestY;
         return new Location(x, y);
     }
 
-    /**
-     * Gets random loc.
-     *
-     * @return the random loc
-     */
     public Location getRandomLoc() {
         int x = northEastX - southWestX == 0 ? southWestX : new Random().nextInt(northEastX - southWestX + 1) + southWestX;
         int y = northEastY - southWestY == 0 ? southWestY : new Random().nextInt(northEastY - southWestY + 1) + southWestY;
         return new Location(x, y, plane);
     }
 
-    /**
-     * Gets random walkable loc.
-     *
-     * @return the random walkable loc
-     */
     public Location getRandomWalkableLoc() {
         Location loc = getRandomLoc();
-        int tries = 0; // prevent bad code from DOSing server.
+        int tries = 0; // prevent bad code from DOSing server
         while (!RegionManager.isTeleportPermitted(loc) && tries < 20) {
             loc = getRandomLoc();
             tries += 1;
@@ -300,7 +281,7 @@ public final class ZoneBorders {
     }
 
     /**
-     * Gets the plane.
+     * Gets the bplane.
      *
      * @return the plane
      */
@@ -309,7 +290,7 @@ public final class ZoneBorders {
     }
 
     /**
-     * Sets the plane.
+     * Sets the baplane.
      *
      * @param plane the plane to set.
      */
@@ -317,12 +298,6 @@ public final class ZoneBorders {
         this.plane = plane;
     }
 
-    /**
-     * Inside region boolean.
-     *
-     * @param n the n
-     * @return the boolean
-     */
     public boolean insideRegion(Node n) {
         return insideBorder(n.getLocation().getRegionX(), n.getLocation().getRegionY());
     }

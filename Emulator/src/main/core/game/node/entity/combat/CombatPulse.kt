@@ -1,10 +1,7 @@
 package core.game.node.entity.combat
 
 import content.global.ame.RandomEventNPC
-import core.api.getAttribute
-import core.api.hasTimerActive
-import core.api.playGlobalAudio
-import core.api.playHurtAudio
+import core.api.*
 import core.game.container.impl.EquipmentContainer
 import core.game.interaction.MovementPulse
 import core.game.node.Node
@@ -17,33 +14,66 @@ import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.game.system.task.Pulse
-import core.game.system.timer.impl.AntiMacro
-import core.game.system.timer.impl.Miasmic
+import core.game.system.timer.impl.*
 import core.game.world.GameWorld
 import core.game.world.update.flag.context.Animation
 import core.tools.RandomFunction
 
-class CombatPulse(
-    val entity: Entity?,
-) : Pulse(1, entity, null) {
+/**
+ * The combat-handling pulse implementation.
+ *
+ * @author Emperor
+ */
+class CombatPulse(val entity: Entity?) : Pulse(1, entity, null) {
+
+    /**
+     * The victim.
+     */
     private var victim: Entity? = null
 
+    /**
+     * The current combat style used.
+     */
     var style = CombatStyle.MELEE
 
+    /**
+     * The temporary combat swing handler.
+     */
     var temporaryHandler: CombatSwingHandler? = null
 
+    /**
+     * The current combat swing handler.
+     */
     var handler = style.swingHandler
 
+    /**
+     * The last victim.
+     */
     var lastVictim: Entity? = null
 
+    /**
+     * The tick value of when we can start another hit-cycle.
+     */
     private var nextAttack = -1
 
+    /**
+     * The combat time out counter.
+     */
     private var combatTimeOut = 0
 
+    /**
+     * The movement handling pulse.
+     */
     private val movement: MovementPulse
 
+    /**
+     * The last attack sent.
+     */
     var lastSentAttack = 0
 
+    /**
+     * The last attack recieved.
+     */
     var lastReceivedAttack = 0
 
     init {
@@ -60,9 +90,7 @@ class CombatPulse(
         if (!interactable()) {
             return if (entity.walkingQueue.isMoving) {
                 false
-            } else {
-                combatTimeOut++ > entity.properties.combatTimeOut
-            }
+            } else combatTimeOut++ > entity.properties.combatTimeOut
         }
         combatTimeOut = 0
         entity.face(victim)
@@ -73,12 +101,8 @@ class CombatPulse(
             if (handler == null) {
                 handler = entity.getSwingHandler(true)
             }
-            if (!v.isAttackable(entity, handler!!.type, true) &&
-                entity !=
-                getAttribute<RandomEventNPC?>(
-                    v,
-                    AntiMacro.EVENT_NPC,
-                    null,
+            if (!v.isAttackable(entity, handler!!.type, true) && entity != getAttribute<RandomEventNPC?>(
+                    v, AntiMacro.EVENT_NPC, null
                 )
             ) {
                 return true
@@ -93,9 +117,7 @@ class CombatPulse(
             val salamander = handler!! is SalamanderSwingHandler
             if (entity is Player && magic) {
                 speed = 5
-            } else if (entity.properties.attackStyle.style == WeaponInterface.STYLE_RAPID ||
-                (salamander && entity.properties.attackStyle.style == WeaponInterface.STYLE_RANGE_ACCURATE)
-            ) {
+            } else if (entity.properties.attackStyle.style == WeaponInterface.STYLE_RAPID || (salamander && entity.properties.attackStyle.style == WeaponInterface.STYLE_RANGE_ACCURATE)) {
                 speed--
             }
             if (!magic && hasTimerActive<Miasmic>(entity)) {
@@ -108,6 +130,10 @@ class CombatPulse(
         return victim != null && victim!!.skills.lifepoints < 1 || entity.skills.lifepoints < 1
     }
 
+    /**
+     * Sets the "in combat" flag for the victim and handles closing.
+     * @param victim The victim.
+     */
     fun setCombatFlags(victim: Entity?) {
         if (victim == null || entity == null) {
             return
@@ -135,6 +161,10 @@ class CombatPulse(
         victim.setAttribute("combat-attacker", entity)
     }
 
+    /**
+     * Checks if the mover can interact with the victim.
+     * @return `True` if so.
+     */
     private fun interactable(): Boolean {
         if (victim == null) {
             return false
@@ -162,6 +192,9 @@ class CombatPulse(
         return type == InteractionType.MOVE_INTERACT
     }
 
+    /**
+     * Sets the combat style.
+     */
     fun updateStyle() {
         if (entity == null) {
             return
@@ -176,15 +209,18 @@ class CombatPulse(
                 style = CombatStyle.MAGIC
                 return
             }
-            style =
-                when (p.properties.attackStyle.bonusType) {
-                    WeaponInterface.BONUS_MAGIC -> CombatStyle.MAGIC
-                    WeaponInterface.BONUS_RANGE -> CombatStyle.RANGE
-                    else -> CombatStyle.MELEE
-                }
+            style = when (p.properties.attackStyle.bonusType) {
+                WeaponInterface.BONUS_MAGIC -> CombatStyle.MAGIC
+                WeaponInterface.BONUS_RANGE -> CombatStyle.RANGE
+                else -> CombatStyle.MELEE
+            }
         }
     }
 
+    /**
+     * Attacks the node.
+     * @param victim The victim node.
+     */
     fun attack(victim: Node?) {
         if (victim == null) {
             return
@@ -195,11 +231,12 @@ class CombatPulse(
         if (victim === this.victim && isAttacking) {
             return
         }
+        //makes sure lumbridge dummies can't attack back (lol)
         if (victim is Player && (entity.id == 4474 || entity.id == 7891)) {
             return
         }
         if (entity is Player) {
-            if ((victim.id == 4474 || victim.id == 7891) && entity.asPlayer().properties.combatLevel >= 8) {
+            if ((victim.id == 4474 || victim.id == 7891) && entity.asPlayer().properties.combatLevel >= 30) {
                 entity.asPlayer().sendMessage("You are too experienced to gain anything from these.")
                 return
             }
@@ -216,9 +253,7 @@ class CombatPulse(
                 }
                 if (mask != null && mask.id >= 8901 && mask.id < 8920 && RandomFunction.random(50) == 0) {
                     player.packetDispatch.sendMessage(
-                        "Your black mask startles your enemy, you have " +
-                            (if (mask.id == 8919) "no" else ((8920 - mask.id) / 2).toString()) +
-                            " charges left.",
+                        "Your black mask startles your enemy, you have " + (if (mask.id == 8919) "no" else ((8920 - mask.id) / 2).toString()) + " charges left."
                     )
                     player.equipment.replace(Item(mask.id + 2), EquipmentContainer.SLOT_HAT)
                     var drain = 3 + victim.skills.getLevel(Skills.DEFENCE) / 14
@@ -226,24 +261,23 @@ class CombatPulse(
                         drain = 10
                     }
                     victim.skills.updateLevel(
-                        Skills.DEFENCE,
-                        -drain,
-                        victim.skills.getStaticLevel(Skills.DEFENCE) - drain,
+                        Skills.DEFENCE, -drain, victim.skills.getStaticLevel(Skills.DEFENCE) - drain
                     )
                 }
             }
-            if (!victim.locks.isMovementLocked()) {
-                victim.walkingQueue.reset()
-            }
+            if (!victim.locks.isMovementLocked()) victim.walkingQueue.reset()
         }
         setVictim(victim)
         entity.onAttack(victim as Entity?)
+        victim.scripts.removeWeakScripts()
 
-        if (!isAttacking) {
-            entity.pulseManager.run(this)
-        }
+        if (!isAttacking) entity.pulseManager.run(this)
     }
 
+    /**
+     * Sets the victim.
+     * @param victim The victim.
+     */
     fun setVictim(victim: Node?) {
         super.addNodeCheck(1, victim)
         movement.setLast(null)
@@ -252,25 +286,41 @@ class CombatPulse(
         combatTimeOut = 0
     }
 
+    /**
+     * Sets the next attack.
+     * @param ticks The amount of ticks.
+     */
     fun setNextAttack(ticks: Int) {
         nextAttack = GameWorld.ticks + ticks
     }
 
+    /**
+     * Delays the next attack.
+     * @param ticks The amount of ticks to delay the next attack with.
+     */
     fun delayNextAttack(ticks: Int) {
         nextAttack += ticks
     }
 
-    fun getNextAttack(): Int = nextAttack
+    /**
+     * Gets the next attack tick.
+     * @return The next attack tick.
+     */
+    fun getNextAttack(): Int {
+        return nextAttack
+    }
 
+    /**
+     * Checks if we can fight with the victim.
+     * @return `True` if so.
+     */
     fun canInteract(): InteractionType? {
         if (victim == null) {
             return InteractionType.NO_INTERACT
         }
         return if (temporaryHandler != null) {
             temporaryHandler!!.canSwing(entity!!, victim!!)
-        } else {
-            entity!!.getSwingHandler(false).canSwing(entity, victim!!)
-        }
+        } else entity!!.getSwingHandler(false).canSwing(entity, victim!!)
     }
 
     override fun start() {
@@ -303,23 +353,42 @@ class CombatPulse(
         return true
     }
 
+    /**
+     * Checks if this entity is attacking.
+     * @return `True` if so.
+     */
     val isAttacking: Boolean
         get() = victim != null && victim!!.isActive && isRunning
 
+    /**
+     * If the entity has an attacker.
+     * @return `True` if so.
+     */
     val isInCombat: Boolean
         get() {
             val entity = entity!!.getAttribute<Entity>("combat-attacker")
             return entity != null && entity.properties.combatPulse.isAttacking
         }
 
-    fun getVictim(): Entity? = victim
+    /**
+     * Gets the current victim.
+     * @return The victim.
+     */
+    fun getVictim(): Entity? {
+        return victim
+    }
 
     companion object {
-        fun swing(
-            entity: Entity?,
-            victim: Entity?,
-            handler: CombatSwingHandler?,
-        ): Boolean {
+
+        /**
+         * Executes a combat swing.
+         *
+         * @param entity The entity.
+         * @param victim The victim.
+         * @param handler The combat swing handler.
+         * @return `True` if successfully started the swing.
+         */
+        fun swing(entity: Entity?, victim: Entity?, handler: CombatSwingHandler?): Boolean {
             val state = BattleState(entity, victim)
             val set = handler!!.getArmourSet(entity)
             entity!!.properties.armourSet = set
@@ -340,46 +409,42 @@ class CombatPulse(
             if (set != null && set.effect(entity, victim, state)) {
                 set.visualize(entity, victim)
             }
-            GameWorld.Pulser.submit(
-                object : Pulse(delay - 1, entity, victim) {
-                    var impact = false
-
-                    override fun pulse(): Boolean {
-                        if (DeathTask.isDead(victim) || DeathTask.isDead(entity)) {
-                            return true
-                        }
-                        if (entity is NPC) {
-                            entity.asNpc().behavior.beforeAttackFinalized(entity, victim, state)
-                        }
-                        if (impact || getDelay() == 0) {
-                            if (state.estimatedHit != 0 && victim is NPC) {
-                                val n = victim.asNpc()
-                                val audio = n.getAudio(1)
-                                if (audio != null) {
-                                    playGlobalAudio(victim.location, audio.id)
-                                }
-                            } else if (state.estimatedHit != 0 && victim is Player) {
-                                playHurtAudio(victim.asPlayer())
-                            }
-                            handler.impact(entity, victim, state)
-                            handler.onImpact(entity, victim, state)
-                            return true
-                        }
-                        setDelay(1)
-                        impact = true
-                        handler.visualizeImpact(entity, victim, state)
-                        return false
+            GameWorld.Pulser.submit(object : Pulse(delay - 1, entity, victim) {
+                var impact = false
+                override fun pulse(): Boolean {
+                    if (DeathTask.isDead(victim) || DeathTask.isDead(entity)) {
+                        return true
                     }
-                },
-            )
+                    if (entity is NPC) entity.asNpc().behavior.beforeAttackFinalized(entity, victim, state)
+                    if (impact || getDelay() == 0) {
+                        if (state.estimatedHit != 0 && victim is NPC) {
+                            val n = victim.asNpc()
+                            val audio = n.getAudio(1)
+                            if (audio != null) {
+                                playGlobalAudio(victim.location, audio.id)
+                            }
+                        } else if (state.estimatedHit != 0 && victim is Player) {
+                            playHurtAudio(victim.asPlayer())
+                        }
+                        handler.impact(entity, victim, state)
+                        handler.onImpact(entity, victim, state)
+                        return true
+                    }
+                    setDelay(1)
+                    impact = true
+                    handler.visualizeImpact(entity, victim, state)
+                    return false
+                }
+            })
             return true
         }
     }
 
     init {
-        movement =
-            object : MovementPulse(entity, null) {
-                override fun pulse(): Boolean = false
+        movement = object : MovementPulse(entity, null) {
+            override fun pulse(): Boolean {
+                return false
             }
+        }
     }
 }

@@ -5,6 +5,11 @@ import core.game.node.entity.combat.equipment.SwitchAttack
 import core.game.node.entity.npc.NPC
 import core.tools.RandomFunction
 
+/**
+ * Handles combat swings with switching combat styles.
+ * @author Emperor
+ * @author Ceikry, Kotlin conversion
+ */
 open class MultiSwingHandler(
     meleeDistance: Boolean,
     vararg attacks: SwitchAttack,

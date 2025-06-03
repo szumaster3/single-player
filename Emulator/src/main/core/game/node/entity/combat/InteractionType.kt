@@ -2,10 +2,10 @@ package core.game.node.entity.combat
 
 /**
  * The interaction types for combat.
+ *
  * @author Emperor
  */
 enum class InteractionType {
-
     /**
      * The entity can hit while standing still.
      */
@@ -19,6 +19,5 @@ enum class InteractionType {
     /**
      * The entity can't hit its target.
      */
-    NO_INTERACT;
-
+    NO_INTERACT
 }

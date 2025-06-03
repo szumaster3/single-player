@@ -7,8 +7,8 @@ import core.game.interaction.ScriptProcessor;
 import core.game.node.Node;
 import core.game.node.entity.combat.*;
 import core.game.node.entity.combat.equipment.ArmourSet;
-import core.game.node.entity.impl.*;
 import core.game.node.entity.impl.Properties;
+import core.game.node.entity.impl.*;
 import core.game.node.entity.lock.ActionLocks;
 import core.game.node.entity.npc.NPC;
 import core.game.node.entity.player.Player;
@@ -35,36 +35,72 @@ import org.jetbrains.annotations.NotNull;
 import java.util.*;
 
 /**
- * The type Entity.
+ * An entity is a movable node, such as players and NPCs.
+ *
+ * @author Emperor
  */
 public abstract class Entity extends Node {
 
+    /**
+     * The entity's properties.
+     */
     private final Properties properties = new Properties(this);
 
+    /**
+     * The entity's update masks.
+     */
     private final UpdateMasks updateMasks = new UpdateMasks(this);
 
+    /**
+     * The walking queue.
+     */
     private final WalkingQueue walkingQueue = new WalkingQueue(this);
 
     /**
-     * The Skills.
+     * The entity's skills.
      */
     public Skills skills = new Skills(this);
 
+    /**
+     * The entity's extension classes.
+     */
     private final Map<Class<?>, Object> extensions = new HashMap<Class<?>, Object>();
 
+    /**
+     * The entity's attributes.
+     */
     private final GameAttributes attributes = new GameAttributes();
 
+    /**
+     * The entity's viewport.
+     */
     private final Viewport viewport = new Viewport();
 
+    /**
+     * The pulse manager.
+     */
     private final PulseManager pulseManager = new PulseManager();
 
+    /**
+     * The impact handler.
+     */
     private final ImpactHandler impactHandler = new ImpactHandler(this);
 
+    /**
+     * The animator.
+     */
     private final Animator animator = new Animator(this);
 
+    /**
+     * The teleporter.
+     */
     private final TeleportManager teleporter = new TeleportManager(this);
 
+    /**
+     * The zone monitor.
+     */
     private final ZoneMonitor zoneMonitor = new ZoneMonitor(this);
+
 
     private final ActionLocks locks = new ActionLocks();
 
@@ -171,8 +207,7 @@ public abstract class Entity extends Node {
         } else {
             hookList = new ArrayList<EventHook>();
         }
-        if (!hookList.contains(hook))
-            hookList.add(hook);
+        if (!hookList.contains(hook)) hookList.add(hook);
         hooks.put(event, hookList);
     }
 
@@ -326,8 +361,7 @@ public abstract class Entity extends Node {
      * @param state  the state
      */
     public void onImpact(final Entity entity, BattleState state) {
-        if (DeathTask.isDead(this))
-            state.neutralizeHits();
+        if (DeathTask.isDead(this)) state.neutralizeHits();
         if (this instanceof NPC) {
             ((NPC) this).behavior.afterDamageReceived((NPC) this, entity, state);
         }

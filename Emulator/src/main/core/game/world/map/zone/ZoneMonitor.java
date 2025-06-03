@@ -17,34 +17,17 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * The type Zone monitor.
+ * Handles the zones for an entity.
+ *
+ * @author Emperor
  */
+
 public final class ZoneMonitor {
 
     /**
      * Represents the jewellery that allows teleporting out from the Wilderness at level 30 or below.
      */
-    static final Set<Integer> WILDERNESS_LEVEL_30_TELEPORT_ITEMS = Set.of(
-            Items.AMULET_OF_GLORY_1704,
-            Items.AMULET_OF_GLORY1_1706,
-            Items.AMULET_OF_GLORY2_1708,
-            Items.AMULET_OF_GLORY3_1710,
-            Items.AMULET_OF_GLORYT_10362,
-            Items.AMULET_OF_GLORYT1_10360,
-            Items.AMULET_OF_GLORYT2_10358,
-            Items.AMULET_OF_GLORYT3_10356,
-            Items.SKILLS_NECKLACE_11113,
-            Items.SKILLS_NECKLACE1_11111,
-            Items.SKILLS_NECKLACE2_11109,
-            Items.SKILLS_NECKLACE3_11107,
-            Items.COMBAT_BRACELET_11126,
-            Items.COMBAT_BRACELET1_11124,
-            Items.COMBAT_BRACELET2_11122,
-            Items.COMBAT_BRACELET3_11120,
-            Items.PHARAOHS_SCEPTRE_9044,
-            Items.PHARAOHS_SCEPTRE_9046,
-            Items.PHARAOHS_SCEPTRE_9048
-    );
+    static final Set<Integer> WILDERNESS_LEVEL_30_TELEPORT_ITEMS = Set.of(Items.AMULET_OF_GLORY_1704, Items.AMULET_OF_GLORY1_1706, Items.AMULET_OF_GLORY2_1708, Items.AMULET_OF_GLORY3_1710, Items.AMULET_OF_GLORYT_10362, Items.AMULET_OF_GLORYT1_10360, Items.AMULET_OF_GLORYT2_10358, Items.AMULET_OF_GLORYT3_10356, Items.SKILLS_NECKLACE_11113, Items.SKILLS_NECKLACE1_11111, Items.SKILLS_NECKLACE2_11109, Items.SKILLS_NECKLACE3_11107, Items.COMBAT_BRACELET_11126, Items.COMBAT_BRACELET1_11124, Items.COMBAT_BRACELET2_11122, Items.COMBAT_BRACELET3_11120, Items.PHARAOHS_SCEPTRE_9044, Items.PHARAOHS_SCEPTRE_9046, Items.PHARAOHS_SCEPTRE_9048);
 
     private final Entity entity;
 
@@ -76,9 +59,9 @@ public final class ZoneMonitor {
     }
 
     /**
-     * Can logout boolean.
+     * Checks if the player can logout.
      *
-     * @return the boolean
+     * @return {@code True} if so.
      */
     public boolean canLogout() {
         for (RegionZone z : zones) {
@@ -100,10 +83,10 @@ public final class ZoneMonitor {
     }
 
     /**
-     * Is restricted boolean.
+     * Checks if the restriction was flagged.
      *
-     * @param flag the flag
-     * @return the boolean
+     * @param flag The restriction flag.
+     * @return {@code True} if so.
      */
     public boolean isRestricted(int flag) {
         for (RegionZone z : zones) {
@@ -115,10 +98,10 @@ public final class ZoneMonitor {
     }
 
     /**
-     * Handle death boolean.
+     * Handles a death.
      *
-     * @param killer the killer
-     * @return the boolean
+     * @param killer The killer.
+     * @return {@code True} if the death got handled.
      */
     public boolean handleDeath(Entity killer) {
         for (RegionZone z : zones) {
@@ -130,12 +113,11 @@ public final class ZoneMonitor {
     }
 
     /**
-     * Continue attack boolean.
+     * Checks if the entity is able to continue attacking the target.
      *
-     * @param target  the target
-     * @param style   the style
-     * @param message the message
-     * @return the boolean
+     * @param target The target.
+     * @param style  The combat style used.
+     * @return {@code True} if so.
      */
     public boolean continueAttack(Node target, CombatStyle style, boolean message) {
         if (target instanceof Entity) {
@@ -195,14 +177,14 @@ public final class ZoneMonitor {
     }
 
     /**
-     * Click button boolean.
+     * Checks if the player handled the reward button using a map zone.
      *
-     * @param interfaceId the interface id
-     * @param buttonId    the button id
-     * @param slot        the slot
-     * @param itemId      the item id
-     * @param opcode      the opcode
-     * @return the boolean
+     * @param interfaceId The interface id.
+     * @param buttonId    The button id.
+     * @param slot        The slot.
+     * @param itemId      The item id.
+     * @param opcode      The packet opcode.
+     * @return {@code True} if the button got handled.
      */
     public boolean clickButton(int interfaceId, int buttonId, int slot, int itemId, int opcode) {
         for (RegionZone z : zones) {
@@ -214,10 +196,11 @@ public final class ZoneMonitor {
     }
 
     /**
-     * Is ignore multi boundaries boolean.
+     * Checks if multiway combat zone rules should be ignored.
      *
-     * @param victim the victim
-     * @return the boolean
+     * @param victim The victim.
+     * @return {@code True} if this entity can attack regardless of multiway
+     * combat zone.
      */
     public boolean isIgnoreMultiBoundaries(Entity victim) {
         for (RegionZone z : zones) {
@@ -254,8 +237,7 @@ public final class ZoneMonitor {
         if (type != 1 || !WILDERNESS_LEVEL_30_TELEPORT_ITEMS.contains(node.asItem().getId())) {
             return false;
         }
-        if (entity.timers.getTimer("teleblock") != null)
-            return false;
+        if (entity.timers.getTimer("teleblock") != null) return false;
 
         if (entity.getZoneMonitor().isRestricted(ZoneRestriction.TELEPORT)) {
             return false;

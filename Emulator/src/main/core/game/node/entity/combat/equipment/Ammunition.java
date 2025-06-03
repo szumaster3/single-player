@@ -14,32 +14,55 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * The type Ammunition.
+ * Represents range ammunition types.
+ *
+ * @author Emperor
  */
 public final class Ammunition {
 
+    /**
+     * The ammunition mapping.
+     */
     private static final Map<Integer, Ammunition> AMMUNITION = new HashMap<Integer, Ammunition>();
 
+    /**
+     * The ammunition item id.
+     */
     private final int itemId;
 
+    /**
+     * The start graphics.
+     */
     private final Graphics startGraphics;
 
+    /**
+     * The start graphics when using Dark bow.
+     */
     private final Graphics darkBowGraphics;
 
+    /**
+     * The projectile.
+     */
     private final Projectile projectile;
 
+    /**
+     * The poison damage.
+     */
     private final int poisonDamage;
 
+    /**
+     * The bolt effect.
+     */
     private BoltEffect effect;
 
     /**
-     * Instantiates a new Ammunition.
+     * Constructs a new {@code Ammunition} object.
      *
-     * @param itemId          the item id
-     * @param startGraphics   the start graphics
-     * @param darkBowGraphics the dark bow graphics
-     * @param projectile      the projectile
-     * @param poisonDamage    the poison damage
+     * @param itemId          The item id.
+     * @param startGraphics   The start graphics.
+     * @param darkBowGraphics The dark bow start graphics.
+     * @param projectile      The projectile.
+     * @param poisonDamage    The poison damage the ammunition can do.
      */
     public Ammunition(int itemId, Graphics startGraphics, Graphics darkBowGraphics, Projectile projectile, int poisonDamage) {
         this.itemId = itemId;
@@ -50,11 +73,11 @@ public final class Ammunition {
     }
 
     /**
-     * Initialize boolean.
+     * Loads all the {@code Ammunition} info to the mapping.
      *
-     * @return the boolean
+     * @return {@code True}.
      */
-    public static final boolean initialize() {
+    public static boolean initialize() {
         Document doc;
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -104,64 +127,51 @@ public final class Ammunition {
         return true;
     }
 
-    /**
-     * The entry point of application.
-     *
-     * @param args the input arguments
-     */
     public static void main(String... args) {
         initialize();
     }
 
     /**
-     * Gets ammunition.
+     * Gets the ammunition mapping.
      *
-     * @return the ammunition
+     * @return The mapping.
      */
     public static Map<Integer, Ammunition> getAmmunition() {
         return AMMUNITION;
     }
 
     /**
-     * Get ammunition.
+     * Gets an ammunition object from the mapping.
      *
-     * @param id the id
-     * @return the ammunition
+     * @param id The ammo id.
+     * @return The ammunition object.
      */
-    public static final Ammunition get(int id) {
+    public static Ammunition get(int id) {
         return AMMUNITION.get(id);
     }
 
     /**
-     * Gets item id.
-     *
-     * @return the item id
+     * @return the itemId
      */
     public int getItemId() {
         return itemId;
     }
 
     /**
-     * Gets start graphics.
-     *
-     * @return the start graphics
+     * @return the startGraphics
      */
     public Graphics getStartGraphics() {
         return startGraphics;
     }
 
     /**
-     * Gets dark bow graphics.
-     *
-     * @return the dark bow graphics
+     * @return the darkBowGraphics
      */
     public Graphics getDarkBowGraphics() {
         return darkBowGraphics;
     }
 
     /**
-     * Gets projectile.
-     *
      * @return the projectile
      */
     public Projectile getProjectile() {
@@ -169,16 +179,14 @@ public final class Ammunition {
     }
 
     /**
-     * Gets poison damage.
-     *
-     * @return the poison damage
+     * @return the poisonDamage
      */
     public int getPoisonDamage() {
         return poisonDamage;
     }
 
     /**
-     * Gets effect.
+     * Gets the effect.
      *
      * @return the effect
      */
@@ -187,9 +195,9 @@ public final class Ammunition {
     }
 
     /**
-     * Sets effect.
+     * Sets the effect.
      *
-     * @param effect the effect
+     * @param effect the effect to set.
      */
     public void setEffect(BoltEffect effect) {
         this.effect = effect;

@@ -9,25 +9,32 @@ import core.game.node.entity.skill.Skills;
 import core.game.world.map.Location;
 
 /**
- * The type Idle abstract npc.
+ * Handles NPCs that are idle on default but can be disturbed (rock crabs, kraken, ...)
+ *
+ * @author Emperor
  */
 public abstract class IdleAbstractNPC extends AbstractNPC {
 
+    /**
+     * The active NPC id.
+     */
     private int activeId;
 
+    /**
+     * If the NPC is currently idle.
+     */
     private boolean idle = true;
 
     /**
-     * The Timeout.
+     * The timeout ticks.
      */
-    protected int timeout = 30;
+    protected int timeout = 30; //18 second time out to go idle again
 
     /**
-     * Instantiates a new Idle abstract npc.
+     * Constructs a new {@code IdleAbstractNPC} {@code Object}.
      *
-     * @param idleId   the idle id
-     * @param activeId the active id
-     * @param location the location
+     * @param idleId   The NPC id.
+     * @param location The location.
      */
     public IdleAbstractNPC(int idleId, int activeId, Location location) {
         super(idleId, location);
@@ -70,10 +77,10 @@ public abstract class IdleAbstractNPC extends AbstractNPC {
     }
 
     /**
-     * In disturbing range boolean.
+     * Checks if the entity is in range for disturbing this NPC.
      *
-     * @param disturber the disturber
-     * @return the boolean
+     * @param disturber The entity.
+     * @return {@code True} if so.
      */
     public boolean inDisturbingRange(Entity disturber) {
         if (idle && disturber.getSwingHandler(false).canSwing(disturber, this) != InteractionType.NO_INTERACT) {
@@ -83,19 +90,19 @@ public abstract class IdleAbstractNPC extends AbstractNPC {
     }
 
     /**
-     * Can disturb boolean.
+     * Checks if the entity can currently disturb this NPC (and returns {@code true}), or returns {@code false}.
      *
-     * @param disturber the disturber
-     * @return the boolean
+     * @param disturber The disturber.
+     * @return {@code True} if the entity could disturb this NPC.
      */
     public boolean canDisturb(Entity disturber) {
         return idle;
     }
 
     /**
-     * Disturb.
+     * Disturbs the NPC so it becomes active.
      *
-     * @param disturber the disturber
+     * @param disturber The entity disturbing this NPC.
      */
     public void disturb(Entity disturber) {
         if (disturber != null) {
@@ -109,7 +116,7 @@ public abstract class IdleAbstractNPC extends AbstractNPC {
     }
 
     /**
-     * Go idle.
+     * Makes the NPC go idle again.
      */
     public void goIdle() {
         if (idle) {
@@ -120,18 +127,18 @@ public abstract class IdleAbstractNPC extends AbstractNPC {
     }
 
     /**
-     * Is idle boolean.
+     * Gets the idle value.
      *
-     * @return the boolean
+     * @return The idle.
      */
     public boolean isIdle() {
         return idle;
     }
 
     /**
-     * Sets idle.
+     * Sets the idle value.
      *
-     * @param idle the idle
+     * @param idle The idle to set.
      */
     public void setIdle(boolean idle) {
         this.idle = idle;

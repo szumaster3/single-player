@@ -9,119 +9,98 @@ import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
 
 /**
- * Represents a switch attack, which allows modifying attack properties such as animations, graphics, and projectiles.
- *
- * @property handler The combat swing handler used for the attack.
- * @property animation The attack animation.
- * @property startGraphics The initial graphics effect when executing the attack.
- * @property endGraphics The final graphics effect after the attack.
- * @property projectile The projectile used in the attack, if applicable.
+ * Represents a possible attack the entity can switch to.
+ * @author Emperor
  */
-open class SwitchAttack
-@JvmOverloads
-constructor(
+class SwitchAttack @JvmOverloads constructor(
     handler: CombatSwingHandler?,
     animation: Animation?,
-    startGraphics: Graphics? = null,
-    endGraphics: Graphics? = null,
-    projectile: Projectile? = null,
+    startGraphic: Graphics? = null,
+    endGraphic: Graphics? = null,
+    projectile: Projectile? = null
 ) {
     /**
-     * The combat swing handler associated with this attack.
+     * The combat swing handler.
      */
     var handler: CombatSwingHandler? = null
 
     /**
-     * The initial graphics effect when executing the attack.
+     * The start graphic.
      */
-    val startGraphics: Graphics?
+    val startGraphic: Graphics?
 
     /**
-     * The attack animation.
+     * The animation.
      */
     val animation: Animation?
 
     /**
-     * The final graphics effect after the attack.
+     * The end graphic.
      */
-    val endGraphics: Graphics?
+    val endGraphic: Graphics?
 
     /**
-     * The projectile used in the attack, if applicable.
+     * The projectile.
      */
     val projectile: Projectile?
 
     /**
-     * Determines whether to use the handler for processing attack mechanics.
+     * If the handler should be used for visualizing/handling combat.
      */
-    @JvmField
     var isUseHandler: Boolean = false
+        private set
 
     /**
-     * The maximum possible damage for this attack.
+     * The maximum hit of this attack.
      */
-    @JvmField
     var maximumHit: Int = -1
+        private set
 
     /**
-     * Secondary constructor for attacks that involve a projectile but no start or end graphics.
-     *
-     * @param handler The combat swing handler for the attack.
-     * @param animation The attack animation.
-     * @param projectile The projectile used in the attack.
+     * Constructs a new `SwitchAttack` `Object`
+     * @param handler the handler.
+     * @param projectile the projectile.
      */
     constructor(handler: CombatSwingHandler?, animation: Animation?, projectile: Projectile?) : this(
-        handler = handler,
-        animation = animation,
-        startGraphics = null,
-        endGraphics = null,
-        projectile = projectile,
+        handler, animation, null, null, projectile
     )
 
     /**
-     * Secondary constructor using a [CombatStyle].
-     *
-     * @param style The combat style associated with this attack.
+     * Constructs a new `SwitchAttack` `Object`
+     * @param style the style.
      */
-    constructor(style: CombatStyle) : this(
-        handler = style.swingHandler,
-        animation = null,
-        startGraphics = null,
-        endGraphics = null,
-    )
+    constructor(style: CombatStyle) : this(style.swingHandler, null, null, null)
 
     init {
         this.handler = handler
         this.animation = animation
-        this.startGraphics = startGraphics
-        this.endGraphics = endGraphics
+        this.startGraphic = startGraphic
+        this.endGraphic = endGraphic
         this.projectile = projectile
     }
 
     /**
-     * Determines whether this attack style can be selected based on the entity, victim, and battle state.
-     *
-     * @param entity The attacking entity.
-     * @param victim The entity being attacked.
-     * @param state The battle state containing relevant combat details.
-     * @return `true` if the attack can be selected, otherwise `false`.
+     * Checks if this attack can be selected.
+     * @param entity the entity.
+     * @param victim the victim.
+     * @param state the state.
+     * @return `True` if selected.
      */
-    open fun canSelect(
-        entity: Entity?,
-        victim: Entity?,
-        state: BattleState?,
-    ): Boolean = true
+    fun canSelect(entity: Entity?, victim: Entity?, state: BattleState?): Boolean {
+        return true
+    }
+
+    val style: CombatStyle?
+        /**
+         * Gets the style.
+         * @return The style.
+         */
+        get() = handler!!.type
 
     /**
-     * Retrieves the combat style associated with this attack.
-     */
-    val style: CombatStyle? get() = handler!!.type
-
-    /**
-     * Sets whether the attack should use the handler for combat calculations.
-     *
-     * @param useHandler `true` to use the handler, `false` otherwise.
-     * @return The modified [SwitchAttack] instance.
+     * Sets the useHandler.
+     * @param useHandler The useHandler to set.
+     * @return This instance, for chaining.
      */
     fun setUseHandler(useHandler: Boolean): SwitchAttack {
         this.isUseHandler = useHandler
@@ -129,10 +108,8 @@ constructor(
     }
 
     /**
-     * Sets the maximum possible hit for this attack.
-     *
-     * @param maximumHit The maximum hit value.
-     * @return The modified [SwitchAttack] instance.
+     * Sets the maximumHit value.
+     * @param maximumHit The maximumHit to set.
      */
     fun setMaximumHit(maximumHit: Int): SwitchAttack {
         this.maximumHit = maximumHit

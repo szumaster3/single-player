@@ -17,31 +17,47 @@ import java.util.Iterator;
 import java.util.Objects;
 
 /**
- * The type Map zone.
+ * Represents a map zone.
+ *
+ * @author Emperor
  */
 public abstract class MapZone implements Zone {
 
+    /**
+     * The map zone uid.
+     */
     private int uid;
 
+    /**
+     * The zone name.
+     */
     private String name;
 
+    /**
+     * If the map zone can be overlapped by another zone.
+     */
     private boolean overlappable;
 
     /**
-     * The Fire random events.
+     * If random events should be fired in this zone.
      */
     protected boolean fireRandomEvents;
 
+    /**
+     * If restriction flag.
+     */
     private int restriction;
 
+    /**
+     * The zone type (used for items kept on death).
+     */
     private int zoneType;
 
     /**
-     * Instantiates a new Map zone.
+     * Constructs a new {@code MapZone} {@code Object}.
      *
-     * @param name         the name
-     * @param overlappable the overlappable
-     * @param restrictions the restrictions
+     * @param name         The name.
+     * @param overlappable If the zone can be overlapped.
      */
     public MapZone(String name, boolean overlappable, ZoneRestriction... restrictions) {
         this.name = name;
@@ -70,96 +86,88 @@ public abstract class MapZone implements Zone {
     }
 
     /**
-     * Can logout boolean.
+     * Checks if the player can logout.
      *
-     * @param p the p
-     * @return the boolean
+     * @param p The player.
+     * @return {@code True} if so.
      */
     public boolean canLogout(Player p) {
         return true;
     }
 
     /**
-     * Death boolean.
+     * Called when an entity dies.
      *
-     * @param e      the e
-     * @param killer the killer
-     * @return the boolean
+     * @param e      The entity dying.
+     * @param killer The killer.
+     * @return {@code True} if the death got handled by this zone handler.
      */
     public boolean death(Entity e, Entity killer) {
         return false;
     }
 
     /**
-     * Interact boolean.
+     * Handles an interaction.
      *
-     * @param e      the e
-     * @param target the target
-     * @param option the option
-     * @return the boolean
+     * @param e      The entity.
+     * @param target The target to interact with.
+     * @param option The option.
+     * @return {@code True} if the option got handled.
      */
     public boolean interact(Entity e, Node target, Option option) {
         return false;
     }
 
-    /**
-     * Handle use with boolean.
-     *
-     * @param player the player
-     * @param used   the used
-     * @param with   the with
-     * @return the boolean
-     */
     public boolean handleUseWith(Player player, Item used, Node with) {
         return false;
     }
 
     /**
-     * Action button boolean.
+     * Handles an reward button.
      *
-     * @param player      the player
-     * @param interfaceId the interface id
-     * @param buttonId    the button id
-     * @param slot        the slot
-     * @param itemId      the item id
-     * @param opcode      the opcode
-     * @return the boolean
+     * @param player      The player.
+     * @param interfaceId The interface id.
+     * @param buttonId    The button id.
+     * @param slot        The slot.
+     * @param itemId      The item id.
+     * @param opcode      The packet opcode.
+     * @return {@code True} if the button got handled.
      */
     public boolean actionButton(Player player, int interfaceId, int buttonId, int slot, int itemId, int opcode) {
         return false;
     }
 
     /**
-     * Continue attack boolean.
+     * Checks if the entity is able to continue attacking the target.
      *
-     * @param e       the e
-     * @param target  the target
-     * @param style   the style
-     * @param message the message
-     * @return the boolean
+     * @param e       the attacking entity.
+     * @param target  The target.
+     * @param style   The combat style used.
+     * @param message If a message should be send.
+     * @return {@code True} if so.
      */
     public boolean continueAttack(Entity e, Node target, CombatStyle style, boolean message) {
         return true;
     }
 
     /**
-     * Ignore multi boundaries boolean.
+     * If multi-zone boundaries should be ignored.
      *
-     * @param attacker the attacker
-     * @param victim   the victim
-     * @return the boolean
+     * @param attacker The attacker.
+     * @param victim   The victim.
+     * @return {@code True} if the entity can attack regardless of multicombat.
      */
     public boolean ignoreMultiBoundaries(Entity attacker, Entity victim) {
         return false;
     }
 
     /**
-     * Check multi boolean.
+     * Checks if the entity can attack the target.
      *
-     * @param e       the e
-     * @param t       the t
-     * @param message the message
-     * @return the boolean
+     * @param e       The attacking entity.
+     * @param t       The target.
+     * @param message If a message should be sent.
+     * @return {@code True} if the entity can continue attacking.
      */
     public static boolean checkMulti(Entity e, Entity t, boolean message) {
         long time = System.currentTimeMillis();
@@ -187,76 +195,75 @@ public abstract class MapZone implements Zone {
     }
 
     /**
-     * Teleport boolean.
+     * Checks if the entity can teleport.
      *
-     * @param e    the e
-     * @param type the type
-     * @param node the node
-     * @return the boolean
+     * @param e    The entity.
+     * @param type The teleport type (0=spell, 1=item, 2=object, 3=npc -1=
+     *             force)
+     * @return {@code True} if so.
      */
     public boolean teleport(Entity e, int type, Node node) {
         return true;
     }
 
     /**
-     * Start death boolean.
+     * Checks if the death should start.
      *
-     * @param e      the e
-     * @param killer the killer
-     * @return the boolean
+     * @param e      the entity.
+     * @param killer the killer.
+     * @return {@code True} if so.
      */
     public boolean startDeath(Entity e, Entity killer) {
         return true;
     }
 
     /**
-     * Can request boolean.
+     * Checks if a request can be made in this zone.
      *
-     * @param type   the type
-     * @param player the player
-     * @param target the target
-     * @return the boolean
+     * @param type   the type.
+     * @param target the target.
+     * @return {@code True} if so.
      */
     public boolean canRequest(RequestType type, Player player, Player target) {
         return true;
     }
 
     /**
-     * Move boolean.
+     * Checks if the entity can move.
      *
-     * @param e    the e
-     * @param from the from
-     * @param to   the to
-     * @return the boolean
+     * @param e    The entity.
+     * @param from The current location.
+     * @param to   The destination location.
+     * @return {@code True} if so.
      */
     public boolean move(Entity e, Location from, Location to) {
         return true;
     }
 
     /**
-     * Parse command boolean.
+     * Parses a command in this map zone.
      *
-     * @param player    the player
-     * @param name      the name
-     * @param arguments the arguments
-     * @return the boolean
+     * @param player    the player.
+     * @param name      the name.
+     * @param arguments the arguments.
+     * @return {@code True} if so.
      */
     public boolean parseCommand(Player player, String name, String[] arguments) {
         return false;
     }
 
     /**
-     * Location update.
+     * Called when an entity changed location.
      *
-     * @param e    the e
-     * @param last the last
+     * @param e    The entity.
+     * @param last The previous location the entity was standing on.
      */
     public void locationUpdate(Entity e, Location last) {
 
     }
 
     /**
-     * Configure.
+     * Configures this map zone.
      */
     public void configure() {
     }
@@ -264,10 +271,10 @@ public abstract class MapZone implements Zone {
     ;
 
     /**
-     * Clean items.
+     * Cleans items from a players inventory, equipment and bank.
      *
-     * @param player the player
-     * @param items  the items
+     * @param player the player.
+     * @param items  the items.
      */
     public void cleanItems(Player player, Item[] items) {
         if (player == null) {
@@ -290,10 +297,10 @@ public abstract class MapZone implements Zone {
     }
 
     /**
-     * Message.
+     * Sends a message to the entity (if it is a player).
      *
-     * @param e       the e
-     * @param message the message
+     * @param e       The entity.
+     * @param message The message.
      */
     protected static void message(Entity e, String message) {
         if (!(e instanceof Player)) {
@@ -303,9 +310,9 @@ public abstract class MapZone implements Zone {
     }
 
     /**
-     * Register.
+     * Registers this mapzone in the appropriate regions.
      *
-     * @param borders the borders
+     * @param borders The borders of this zone.
      */
     public void register(ZoneBorders borders) {
         for (Integer id : borders.getRegionIds()) {
@@ -316,11 +323,6 @@ public abstract class MapZone implements Zone {
         }
     }
 
-    /**
-     * Unregister.
-     *
-     * @param borders the borders
-     */
     public void unregister(ZoneBorders borders) {
         for (Integer id : borders.getRegionIds()) {
             Region r = RegionManager.forId(id);
@@ -331,19 +333,19 @@ public abstract class MapZone implements Zone {
     }
 
     /**
-     * Register region.
+     * Registers this zone in the region for the given id.
      *
-     * @param regionId the region id
+     * @param regionId The region id.
      */
     public void registerRegion(int regionId) {
         register(ZoneBorders.forRegion(regionId));
     }
 
     /**
-     * Register region.
+     * Registers a region with zone borders and the region id.
      *
-     * @param regionId the region id
-     * @param borders  the borders
+     * @param regionId the region id.
+     * @param borders  the borders.
      */
     public void registerRegion(int regionId, ZoneBorders borders) {
         Region r = RegionManager.forId(regionId);
@@ -353,9 +355,9 @@ public abstract class MapZone implements Zone {
     }
 
     /**
-     * Unregister region.
+     * Unregisters the borders in a region.
      *
-     * @param regionId the region id
+     * @param regionId The region id.
      */
     public void unregisterRegion(int regionId) {
         Region r = RegionManager.forId(regionId);
@@ -369,138 +371,140 @@ public abstract class MapZone implements Zone {
     }
 
     /**
-     * Disable random events.
+     * Disables the firing of random events in this zone.
      */
     public void disableRandomEvents() {
         this.fireRandomEvents = false;
     }
 
     /**
-     * Gets name.
+     * Gets the name.
      *
-     * @return the name
+     * @return The name.
      */
     public String getName() {
         return name;
     }
 
     /**
-     * Sets name.
+     * Sets the name.
      *
-     * @param name the name
+     * @param name The name to set.
      */
     public void setName(String name) {
         this.name = name;
     }
 
     /**
-     * Is overlappable boolean.
+     * Gets the overlappable.
      *
-     * @return the boolean
+     * @return The overlappable.
      */
     public boolean isOverlappable() {
         return overlappable;
     }
 
     /**
-     * Sets overlappable.
+     * Sets the overlappable.
      *
-     * @param overlappable the overlappable
+     * @param overlappable The overlappable to set.
      */
     public void setOverlappable(boolean overlappable) {
         this.overlappable = overlappable;
     }
 
     /**
-     * Gets uid.
+     * Gets the uid.
      *
-     * @return the uid
+     * @return The uid.
      */
     public int getUid() {
         return getName().hashCode();
     }
 
     /**
-     * Sets uid.
+     * Sets the uid.
      *
-     * @param uid the uid
+     * @param uid The uid to set.
      */
     public void setUid(int uid) {
         this.uid = uid;
     }
 
     /**
-     * Is fire randoms boolean.
+     * Gets the fireRandoms.
      *
-     * @return the boolean
+     * @return The fireRandoms.
      */
     public boolean isFireRandoms() {
         return fireRandomEvents;
     }
 
     /**
-     * Is dynamic zone boolean.
+     * If the zone is dynamicly added and removed. Non-location based zones will
+     * typicly return true.
      *
-     * @return the boolean
+     * @return {@code false} on default.
      */
     public boolean isDynamicZone() {
         return false;
     }
 
     /**
-     * Add restriction.
+     * Adds a restriction flag.
      *
-     * @param restriction the restriction
+     * @param restriction The restriction flag.
      */
     public void addRestriction(ZoneRestriction restriction) {
         addRestriction(restriction.getFlag());
     }
 
     /**
-     * Add restriction.
+     * Adds a restriction flag.
      *
-     * @param flag the flag
+     * @param flag The restriction flag.
      */
     public void addRestriction(int flag) {
         restriction |= flag;
     }
 
     /**
-     * Is restricted boolean.
+     * Checks if the restriction was flagged.
      *
-     * @param flag the flag
-     * @return the boolean
+     * @param flag The restriction flag.
+     * @return {@code True} if so.
      */
     public boolean isRestricted(int flag) {
         return (restriction & flag) != 0;
     }
 
     /**
-     * Gets restriction.
+     * Gets the restriction.
      *
-     * @return the restriction
+     * @return The restriction.
      */
     public int getRestriction() {
         return restriction;
     }
 
     /**
-     * Gets zone type.
+     * Gets the type.
      *
-     * @return the zone type
+     * @return The type.
      */
     public int getZoneType() {
         return zoneType;
     }
 
     /**
-     * Sets zone type.
+     * Sets the type.
      *
-     * @param type the type
+     * @param type The type to set.
      */
     public void setZoneType(int type) {
         this.zoneType = type;
     }
+
 
     @Override
     public boolean equals(Object o) {

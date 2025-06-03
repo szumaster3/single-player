@@ -10,23 +10,57 @@ import core.game.world.GameWorld;
 import core.tools.RandomFunction;
 
 /**
- * The type Aggressive handler.
+ * Used to handle entity aggressiveness.
+ *
+ * @author Emperor
  */
 public final class AggressiveHandler {
+
+    /**
+     * The entity.
+     */
     private final Entity entity;
+
+    /**
+     * The radius.
+     */
     private int radius = 4;
+
+    /**
+     * The amount of ticks to pause aggressiveness with.
+     */
     private int pauseTicks = 0;
+
+    /**
+     * If target switching is enabled.
+     */
     private boolean targetSwitching;
+
+    /**
+     * The aggressiveness behavior.
+     */
     private final AggressiveBehavior behavior;
+
+    /**
+     * The aggressive chance ratio (1/10).
+     */
     private int chanceRatio = 2;
+
+    /**
+     * The tolerance data.
+     */
     private final int[] playerTolerance = new int[ServerConstants.MAX_PLAYERS];
+
+    /**
+     * If tolerance is allowed.
+     */
     private boolean allowTolerance = true;
 
     /**
-     * Instantiates a new Aggressive handler.
+     * Constructs a new {@code AggressiveHandler} {@code Object}.
      *
-     * @param entity   the entity
-     * @param behavior the behavior
+     * @param entity   The entity.
+     * @param behavior The aggressive behavior.
      */
     public AggressiveHandler(Entity entity, AggressiveBehavior behavior) {
         this.entity = entity;
@@ -34,9 +68,9 @@ public final class AggressiveHandler {
     }
 
     /**
-     * Select target boolean.
+     * Selects a target.
      *
-     * @return the boolean
+     * @return {@code True} if the entity has selected a target.
      */
     public boolean selectTarget() {
         if (pauseTicks > GameWorld.getTicks() || entity.getLocks().isInteractionLocked()) {
@@ -71,99 +105,99 @@ public final class AggressiveHandler {
     }
 
     /**
-     * Remove tolerance.
+     * Removes the tolerance of a player.
      *
-     * @param index the index
+     * @param index The player index.
      */
     public synchronized void removeTolerance(int index) {
         playerTolerance[index] = 0;
     }
 
     /**
-     * Gets radius.
+     * Gets the radius.
      *
-     * @return the radius
+     * @return The radius.
      */
     public int getRadius() {
         return radius;
     }
 
     /**
-     * Sets radius.
+     * Sets the radius.
      *
-     * @param radius the radius
+     * @param radius The radius to set.
      */
     public void setRadius(int radius) {
         this.radius = radius;
     }
 
     /**
-     * Gets pause ticks.
+     * Gets the pauseTicks.
      *
-     * @return the pause ticks
+     * @return The pauseTicks.
      */
     public int getPauseTicks() {
         return pauseTicks;
     }
 
     /**
-     * Sets pause ticks.
+     * Sets the pauseTicks.
      *
-     * @param pauseTicks the pause ticks
+     * @param pauseTicks The amount of ticks to pause for.
      */
     public void setPauseTicks(int pauseTicks) {
         this.pauseTicks = GameWorld.getTicks() + pauseTicks;
     }
 
     /**
-     * Get player tolerance int [ ].
+     * Gets the playerTolerance.
      *
-     * @return the int [ ]
+     * @return The playerTolerance.
      */
     public int[] getPlayerTolerance() {
         return playerTolerance;
     }
 
     /**
-     * Is target switching boolean.
+     * Gets the targetSwitching.
      *
-     * @return the boolean
+     * @return The targetSwitching.
      */
     public boolean isTargetSwitching() {
         return targetSwitching;
     }
 
     /**
-     * Sets target switching.
+     * Sets the targetSwitching.
      *
-     * @param targetSwitching the target switching
+     * @param targetSwitching The targetSwitching to set.
      */
     public void setTargetSwitching(boolean targetSwitching) {
         this.targetSwitching = targetSwitching;
     }
 
     /**
-     * Gets chance ratio.
+     * Gets the chanceRatio.
      *
-     * @return the chance ratio
+     * @return The chanceRatio.
      */
     public int getChanceRatio() {
         return chanceRatio;
     }
 
     /**
-     * Sets chance ratio.
+     * Sets the chanceRatio (a ratio of 0-10).
      *
-     * @param chanceRatio the chance ratio
+     * @param chanceRatio The chanceRatio to set.
      */
     public void setChanceRatio(int chanceRatio) {
         this.chanceRatio = chanceRatio;
     }
 
     /**
-     * Is allow tolerance boolean.
+     * Gets the allowTolerance.
      *
-     * @return the boolean
+     * @return The allowTolerance.
      */
     public boolean isAllowTolerance() {
         boolean configSetting = true;
@@ -174,9 +208,9 @@ public final class AggressiveHandler {
     }
 
     /**
-     * Sets allow tolerance.
+     * Sets the allowTolerance.
      *
-     * @param allowTolerance the allow tolerance
+     * @param allowTolerance The allowTolerance to set.
      */
     public void setAllowTolerance(boolean allowTolerance) {
         this.allowTolerance = allowTolerance;

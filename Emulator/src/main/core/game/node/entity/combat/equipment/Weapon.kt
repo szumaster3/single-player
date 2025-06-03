@@ -9,6 +9,8 @@ import core.game.node.item.Item
  * @property ammunitionSlot The slot in which ammunition is stored (-1 if not applicable).
  * @property ammunition The ammunition item used with the weapon, if applicable.
  * @property type The type of weapon.
+ *
+ * @author Emperor
  */
 class Weapon
 @JvmOverloads

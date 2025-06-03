@@ -15,74 +15,62 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Represents a node in the game world.
+ * Represents a node which is anything that is interactable in 2009Scape.
+ *
+ * @author Emperor
  */
 public abstract class Node {
-    /**
-     * A map storing all registered nodes by their index.
-     */
-    private static final Map<Integer, Node> nodeMap = new HashMap<>();
 
     /**
-     * Registers a node into the global node repository.
-     *
-     * @param node The node to register.
+     * The name of the node;
      */
-    public static void registerNode(Node node) {
-        nodeMap.put(node.getIndex(), node);
-    }
-
-    /**
-     * The Name.
-     */
-// The name of the node
     protected String name;
+
     /**
-     * The Location.
+     * The location.
      */
-// The location of the node in the game world
     protected Location location;
+
     /**
-     * The Index.
+     * The index of the node.
      */
-// The index identifier for the node
     protected int index;
+
     /**
-     * The Direction.
+     * The node's direction.
      */
-// The direction the node is facing
     protected Direction direction;
+
     /**
-     * The Size.
+     * The node's size.
      */
-// The size of the node (default is 1)
     protected int size = 1;
+
     /**
-     * The Active.
+     * If the node is active.
      */
-// Whether the node is active
     protected boolean active = true;
+
     /**
-     * The Interact plugin.
+     * The interaction instance.
      */
-// Interaction behavior of the node
     protected InteractPlugin interactPlugin;
+
     /**
-     * The Destination flag.
+     * The destination flag.
      */
-// The movement destination flag
     protected DestinationFlag destinationFlag;
+
     /**
-     * The Renderable.
+     * If the node is renderable.
      */
-// Whether the node is renderable
     protected boolean renderable = true;
 
     /**
-     * Constructs a new Node.
+     * Constructs a new {@code Node} {@code Object}.
      *
-     * @param name     The name of the node.
-     * @param location The location of the node.
+     * @param name     The name.
+     * @param location The location.
      */
     public Node(String name, Location location) {
         this.name = name;
@@ -90,73 +78,66 @@ public abstract class Node {
     }
 
     /**
-     * Casts the node to an NPC.
+     * Casts the npc to a player.
      *
-     * @return The NPC instance.
+     * @return the npc.
      */
     public NPC asNpc() {
         return (NPC) this;
     }
 
     /**
-     * Casts the node to a Player.
+     * Casts the player.
      *
-     * @return The Player instance.
+     * @return the player.
      */
     public Player asPlayer() {
         return (Player) this;
     }
 
     /**
-     * Casts the node to a Scenery object.
+     * Casts the scenery.
      *
-     * @return The Scenery instance.
+     * @return the object.
      */
     public Scenery asScenery() {
         return (Scenery) this;
     }
 
     /**
-     * Casts the node to an Item.
+     * Casts the item.
      *
-     * @return The Item instance.
+     * @return the item.
      */
     public Item asItem() {
         return (Item) this;
     }
 
     /**
-     * Retrieves the ID of the node.
+     * Gets the node id.
      *
-     * @return The ID of the node, or -1 if it does not have one.
+     * @return the id.
      */
     public int getId() {
-        if (this instanceof NPC) {
-            return ((NPC) this).getId();
-        } else if (this instanceof Scenery) {
-            return ((Scenery) this).getId();
-        } else if (this instanceof Item) {
-            return ((Item) this).getId();
-        }
-        return -1;
+        return this instanceof NPC ? ((NPC) this).getId() : this instanceof Scenery ? ((Scenery) this).getId() : this instanceof Item ? ((Item) this).getId() : -1;
     }
 
     /**
-     * Retrieves the hash ID of an item node.
+     * Gets the node id hash (only relevant if the node is an item).
      *
-     * @return The item ID hash, or -1 if not applicable.
+     * @return the id hash.
      */
     public int getIdHash() {
         return this instanceof Item ? ((Item) this).getIdHash() : -1;
     }
 
     /**
-     * Retrieves the center location of the node.
+     * Gets the center location.
      *
-     * @return The center location of the node.
+     * @return The center location.
      */
     public Location getCenterLocation() {
-        int offset = size >> 1; // Half the size
+        int offset = size >> 1;
         return location.transform(offset, offset, 0);
     }
 
@@ -187,119 +168,118 @@ public abstract class Node {
     }
 
     /**
-     * Gets name.
+     * Gets the name of this node.
      *
-     * @return the name
+     * @return The name.
      */
     public String getName() {
         return name;
     }
 
     /**
-     * Gets username.
+     * Get a formated username.
      *
-     * @return the username
+     * @return The username.
      */
     public String getUsername() {
         return StringUtils.formatDisplayName(name);
     }
 
     /**
-     * Gets index.
+     * Gets the index.
      *
-     * @return the index
+     * @return The index.
      */
     public int getIndex() {
         return index;
     }
 
     /**
-     * Sets index.
+     * Sets the index.
      *
-     * @param index the index
+     * @param index The index to set.
      */
     public void setIndex(int index) {
         this.index = index;
     }
 
     /**
-     * Gets location.
+     * Gets the location.
      *
-     * @return the location
+     * @return The location.
      */
     public Location getLocation() {
         return location;
     }
 
     /**
-     * Sets location.
+     * Sets the location.
      *
-     * @param location the location
+     * @param location The location to set.
      */
     public void setLocation(Location location) {
         this.location = location;
     }
 
     /**
-     * Gets direction.
+     * Gets the direction.
      *
-     * @return the direction
+     * @return The direction.
      */
     public Direction getDirection() {
         return direction;
     }
 
     /**
-     * Sets direction.
+     * Sets the direction.
      *
-     * @param direction the direction
+     * @param direction The direction to set.
      */
     public void setDirection(Direction direction) {
-        if (direction != null) {
-            this.direction = direction;
-        }
+        if (direction == null) return;
+        this.direction = direction;
     }
 
     /**
-     * Size int.
+     * Gets the size.
      *
-     * @return the int
+     * @return The size.
      */
     public int size() {
         return size;
     }
 
     /**
-     * Sets size.
+     * Sets the size.
      *
-     * @param size the size
+     * @param size The size to set.
      */
     public void setSize(int size) {
         this.size = size;
     }
 
     /**
-     * Is active boolean.
+     * Gets the active.
      *
-     * @return the boolean
+     * @return The active.
      */
     public boolean isActive() {
         return active;
     }
 
     /**
-     * Sets active.
+     * Sets the active.
      *
-     * @param active the active
+     * @param active The active to set.
      */
     public void setActive(boolean active) {
         this.active = active;
     }
 
     /**
-     * Gets interaction.
+     * Gets the interaction.
      *
-     * @return the interaction
+     * @return The interaction.
      */
     public InteractPlugin getInteraction() {
         if (interactPlugin != null && !interactPlugin.isInitialized()) {
@@ -309,49 +289,50 @@ public abstract class Node {
     }
 
     /**
-     * Sets interaction.
+     * Sets the interaction.
      *
-     * @param interactPlugin the interact plugin
+     * @param interactPlugin The interaction to set.
      */
     public void setInteraction(InteractPlugin interactPlugin) {
         this.interactPlugin = interactPlugin;
     }
 
     /**
-     * Gets destination flag.
+     * Gets the destinationFlag.
      *
-     * @return the destination flag
+     * @return The destinationFlag.
      */
     public DestinationFlag getDestinationFlag() {
         return destinationFlag;
     }
 
     /**
-     * Sets destination flag.
+     * Sets the destinationFlag.
      *
-     * @param destinationFlag the destination flag
+     * @param destinationFlag The destinationFlag to set.
      */
     public void setDestinationFlag(DestinationFlag destinationFlag) {
         this.destinationFlag = destinationFlag;
     }
 
     /**
-     * Is renderable boolean.
+     * Gets the renderable.
      *
-     * @return the boolean
+     * @return The renderable.
      */
     public boolean isRenderable() {
         return renderable;
     }
 
     /**
-     * Sets renderable.
+     * Sets the renderable.
      *
-     * @param renderable the renderable
+     * @param renderable The renderable to set.
      */
     public void setRenderable(boolean renderable) {
         this.renderable = renderable;
     }
+
 
     /**
      * A repository for managing Node instances.
@@ -372,7 +353,7 @@ public abstract class Node {
         }
 
         /**
-         * Retrieves a node by its ID.
+         * Retrieves a node by its id.
          *
          * @param id The ID of the node.
          * @return The corresponding Node, or null if not found.

@@ -4,16 +4,9 @@ import core.game.node.entity.npc.drop.DropFrequency
 import core.tools.RandomFunction
 
 /**
- * Represents an item that has a chance to drop, with customizable properties for drop amount,
- * chance rate, drop frequency, and more.
+ * Represents an item with a chance-rate.
  *
- * @property chanceRate The chance rate (probability) for this item to drop, expressed as a decimal between 0 and 1.
- * @property minimumAmount The minimum amount of this item to drop.
- * @property maximumAmount The maximum amount of this item to drop.
- * @property tableSlot The table slot number where this item is positioned (used in certain loot tables).
- * @property dropFrequency The frequency at which this item can drop (e.g., COMMON, UNCOMMON, etc.).
- * @property setRate A rate that can be used to modify or scale the item's drop rate.
- * @constructor Initializes the `ChanceItem` with the given properties.
+ * @author Emperor
  */
 class ChanceItem
 @JvmOverloads constructor(

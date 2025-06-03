@@ -14,6 +14,10 @@ import core.game.world.map.RegionManager.getLocalPlayers
 import core.game.world.map.zone.MapZone
 import core.game.world.map.zone.ZoneBorders
 
+/**
+ * Represents the moderator zone.
+ * @author Vexia
+ */
 class ModeratorZone : MapZone("Moderator Zone", true) {
     override fun enter(entity: Entity): Boolean {
         if (entity !is Player) {
@@ -56,11 +60,25 @@ class ModeratorZone : MapZone("Moderator Zone", true) {
     }
 
     companion object {
-        @JvmStatic var open: Boolean = true
+        /**
+         * Represents if the moderator zone is open.
+         */
+        @JvmStatic
+        var open: Boolean = true
 
-        @JvmStatic val center: Location = Location.create(2846, 5213, 0)
+        /**
+         * Represents the center of the zone.
+         */
+        @JvmStatic
+        val center: Location = Location.create(2846, 5213, 0)
 
-        @JvmStatic fun toggle(
+        /**
+         * Method used to toggle the moderator zone.
+         * @param player the player.
+         * @param on the toggle switch.
+         */
+        @JvmStatic
+        fun toggle(
             player: Player,
             on: Boolean,
         ) {
@@ -75,14 +93,29 @@ class ModeratorZone : MapZone("Moderator Zone", true) {
             }
         }
 
-        @JvmStatic val toggleMessage: String =
+        /**
+         * Method used to get the togglemessage.
+         * @return the message.
+         */
+        @JvmStatic
+        val toggleMessage: String =
             "The moderator room is currently " + (if (open) "available" else "not available") + " to player moderators."
 
-        @JvmStatic fun home(player: Player) {
+        /**
+         * Method used to send a player home.
+         * @param player the player.
+         */
+        @JvmStatic
+        fun home(player: Player) {
             player.teleporter.send(ServerConstants.HOME_LOCATION, TeleportType.NORMAL)
         }
 
-        @JvmStatic fun teleport(player: Player) {
+        /**
+         * Method used to teleport a player into the zone.
+         * @param player the player.
+         */
+        @JvmStatic
+        fun teleport(player: Player) {
             player.teleporter.send(center, TeleportType.NORMAL)
         }
     }

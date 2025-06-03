@@ -98,6 +98,8 @@ import static core.tools.GlobalsKt.colorize;
 
 /**
  * Represents a player in the game.
+ *
+ * @author Emperor, Vexia
  */
 public class Player extends Entity {
 
@@ -363,8 +365,7 @@ public class Player extends Entity {
      */
     @Override
     public void init() {
-        if (!artificial)
-            log(this.getClass(), Log.INFO, getUsername() + " initialising...");
+        if (!artificial) log(this.getClass(), Log.INFO, getUsername() + " initialising...");
         if (!artificial) {
             // getProperties().setSpawnLocation(ServerConstants.HOME_LOCATION);
             getDetails().getSession().setObject(this);
@@ -392,8 +393,7 @@ public class Player extends Entity {
      * Final cleanup when the player logs out or is removed.
      */
     public void finishClear() {
-        if (!isArtificial())
-            GameWorld.getLogoutListeners().forEach((it) -> it.logout(this));
+        if (!isArtificial()) GameWorld.getLogoutListeners().forEach((it) -> it.logout(this));
         setPlaying(false);
         getWalkingQueue().reset();
         if (!logoutListeners.isEmpty()) {
@@ -407,7 +407,7 @@ public class Player extends Entity {
         super.clear();
         getZoneMonitor().clear();
         HouseManager.leave(this);
-        UpdateSequence.getrenderablePlayers().remove(this);
+        UpdateSequence.getRenderablePlayers().remove(this);
         sendLogoutEvents();
         checkForWealthUpdate(true);
     }
@@ -555,8 +555,7 @@ public class Player extends Entity {
             setAttribute("/save:last-wealth", totalWealth);
             setAttribute("/save:last-wealth-check", nowTime);
 
-            if (diff != 0)
-                PlayerMonitor.logWealthChange(this, totalWealth, diff);
+            if (diff != 0) PlayerMonitor.logWealthChange(this, totalWealth, diff);
         }
     }
 
@@ -638,8 +637,7 @@ public class Player extends Entity {
 
     @Override
     public void finalizeDeath(Entity killer) {
-        if (!isPlaying())
-            return;
+        if (!isPlaying()) return;
 
         GlobalStatistics.incrementDeathCount();
         settings.setSpecialEnergy(100);
@@ -656,7 +654,7 @@ public class Player extends Entity {
         }
         if (killer instanceof Player && killer.getName() != getName()
 
-            && getWorldTicks() - killer.getAttribute("/save:last-murder-news", 0) >= 500) {
+                && getWorldTicks() - killer.getAttribute("/save:last-murder-news", 0) >= 500) {
             Item wep = getItemFromEquipment((Player) killer, EquipmentSlot.WEAPON);
             sendNews(killer.getUsername() + " has murdered " + getUsername() + " with " + (wep == null ? "their fists." : (StringUtils.isPlusN(wep.getName()) ? "an " : "a ") + wep.getName()));
             killer.setAttribute("/save:last-murder-news", getWorldTicks());
@@ -694,10 +692,8 @@ public class Player extends Entity {
                     if (item == null) continue;
                     if (killer instanceof Player)
                         itemsLost.append(getItemName(item.getId())).append("(").append(item.getAmount()).append("), ");
-                    if (GraveController.shouldCrumble(item.getId()))
-                        continue;
-                    if (GraveController.shouldRelease(item.getId()))
-                        continue;
+                    if (GraveController.shouldCrumble(item.getId())) continue;
+                    if (GraveController.shouldRelease(item.getId())) continue;
                     if (!item.getDefinition().isTradeable()) {
                         if (killer instanceof Player) {
                             int value = item.getDefinition().getAlchemyValue(true);
@@ -786,12 +782,9 @@ public class Player extends Entity {
         if (entity instanceof Player) {
             Player p = (Player) entity;
             if (p.getSkullManager().isWilderness() && skullManager.isWilderness()) {
-                if (!GameWorld.getSettings().getWild_pvp_enabled())
-                    return false;
-                if (p.getSkullManager().hasWildernessProtection())
-                    return false;
-                if (skullManager.hasWildernessProtection())
-                    return false;
+                if (!GameWorld.getSettings().getWild_pvp_enabled()) return false;
+                if (p.getSkullManager().hasWildernessProtection()) return false;
+                if (skullManager.hasWildernessProtection()) return false;
                 return true;
             } else return false;
         }
@@ -874,8 +867,7 @@ public class Player extends Entity {
             return false;
         }
         boolean legs = inEquipment(this, Items.VOID_KNIGHT_ROBE_8840, 1);
-        boolean top = inEquipment(this, Items.VOID_KNIGHT_TOP_8839, 1)
-            || inEquipment(this, Items.VOID_KNIGHT_TOP_10611, 1);
+        boolean top = inEquipment(this, Items.VOID_KNIGHT_TOP_8839, 1) || inEquipment(this, Items.VOID_KNIGHT_TOP_10611, 1);
         boolean gloves = inEquipment(this, Items.VOID_KNIGHT_GLOVES_8842, 1);
         return inEquipment(this, helm, 1) && legs && top && gloves;
     }
@@ -936,8 +928,7 @@ public class Player extends Entity {
      * @return the boolean
      */
     public boolean spawnZone() {
-        return (getLocation().getX() > 3090 && getLocation().getY() < 3500
-            && getLocation().getX() < 3099 && getLocation().getY() > 3487);
+        return (getLocation().getX() > 3090 && getLocation().getY() < 3500 && getLocation().getX() < 3099 && getLocation().getY() > 3487);
     }
 
     /**

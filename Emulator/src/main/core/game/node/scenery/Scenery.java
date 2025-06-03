@@ -1,7 +1,7 @@
 package core.game.node.scenery;
 
-import core.cache.def.impl.SceneryDefinition;
 import core.cache.def.impl.VarbitDefinition;
+import core.cache.def.impl.SceneryDefinition;
 import core.game.interaction.DestinationFlag;
 import core.game.interaction.InteractPlugin;
 import core.game.node.Node;
@@ -17,109 +17,125 @@ import java.util.List;
 
 import static core.api.ContentAPIKt.setVarbit;
 import static core.api.ContentAPIKt.setVarp;
-
 /**
- * The type Scenery.
+ * Represents a scenery.
+ * @author Emperor
  */
 public class Scenery extends Node {
 
+    /**
+     * The object id.
+     */
     private final int id;
 
+    /**
+     * Object's type.
+     */
     private final int type;
 
+    /**
+     * The rotation.
+     */
     private int rotation;
 
+    /**
+     * The object's definition.
+     */
     private final SceneryDefinition definition;
 
+    /**
+     * The restore pulse.
+     */
     private Pulse restorePulse;
 
+    /**
+     * The destruction pulse.
+     */
     private Pulse destructionPulse;
 
+    /**
+     * The charge of this object.
+     */
     private int charge = 1000;
 
+    /**
+     * The entity's attributes.
+     */
     private final GameAttributes attributes = new GameAttributes();
 
+    /**
+     * The child objects.
+     */
     private final Scenery[] childs;
 
+    /**
+     * The scenery wrapper (used for object configurations).
+     */
     private Scenery wrapper;
 
     /**
-     * Instantiates a new Scenery.
-     *
-     * @param id the id
-     * @param x  the x
-     * @param y  the y
-     * @param z  the z
+     * Constructs a new scenery.
+     * @param id The object id.
+     * @param x The object x-coordinate.
+     * @param y The object y-coordinate.
+     * @param z The object z-coordinate.
      */
     public Scenery(int id, int x, int y, int z) {
         this(id, Location.create(x, y, z), 10, 0);
     }
 
     /**
-     * Instantiates a new Scenery.
-     *
-     * @param id       the id
-     * @param location the location
+     * Constructs a new scenery.
+     * @param id The object id.
+     * @param location The object's location.
      */
     public Scenery(int id, Location location) {
         this(id, location, 10, 0);
     }
 
     /**
-     * Instantiates a new Scenery.
-     *
-     * @param id       the id
-     * @param location the location
-     * @param rotation the rotation
+     * Constructs a new scenery.
+     * @param id The object id.
+     * @param location The object's location.
+     * @param rotation The object's rotation.
      */
     public Scenery(int id, Location location, int rotation) {
         this(id, location, 10, rotation);
     }
 
-    /**
-     * Instantiates a new Scenery.
-     *
-     * @param id        the id
-     * @param location  the location
-     * @param rotation  the rotation
-     * @param direction the direction
-     */
     public Scenery(int id, Location location, int rotation, Direction direction) {
         this(id, location, 10, rotation);
     }
 
     /**
-     * Instantiates a new Scenery.
-     *
-     * @param id       the id
-     * @param x        the x
-     * @param y        the y
-     * @param z        the z
-     * @param type     the type
-     * @param rotation the rotation
+     * Constructs a new {@code GameObject} {@code Object}.
+     * @param id The object id.
+     * @param x The x-coordinate.
+     * @param y The y-coordinate.
+     * @param z The z-coordinate.
+     * @param type The object type.
+     * @param rotation The rotation.
      */
     public Scenery(int id, int x, int y, int z, int type, int rotation) {
         this(id, Location.create(x, y, z), type, rotation);
     }
 
     /**
-     * Instantiates a new Scenery.
-     *
-     * @param id       the id
-     * @param type     the type
-     * @param rotation the rotation
+     * Constructs a new {@code GameObject} {@code Object}.
+     * @param id The object id.
+     * @param type The object type.
+     * @param rotation The rotation.
      */
     public Scenery(int id, int type, int rotation) {
         this(id, Location.create(0, 0, 0), type, rotation);
     }
 
     /**
-     * Instantiates a new Scenery.
-     *
-     * @param id       the id
-     * @param location the location
-     * @param type     the type
-     * @param rotation the rotation
+     * Constructs a new {@code GameObject} {@code Object}.
+     * @param id The object id.
+     * @param location The location.
+     * @param type The object type.
+     * @param rotation The rotation.
      */
     public Scenery(int id, Location location, int type, int rotation) {
         super(SceneryDefinition.forId(id).getName(), location);
@@ -149,25 +165,18 @@ public class Scenery extends Node {
         }
     }
 
-    /**
-     * Instantiates a new Scenery.
-     *
-     * @param other the other
-     */
     public Scenery(Scenery other) {
         this(other.getId(), other.getLocation(), other.getType(), other.getRotation());
     }
 
     /**
-     * Remove.
+     * Called when an object is removed.
      */
-    public void remove() {
-    }
+    public void remove() {};
 
     /**
-     * Gets size x.
-     *
-     * @return the size x
+     * Gets the current x-size.
+     * @return The current size.
      */
     public int getSizeX() {
         if (direction.toInteger() % 2 != 0) {
@@ -177,9 +186,8 @@ public class Scenery extends Node {
     }
 
     /**
-     * Gets size y.
-     *
-     * @return the size y
+     * Gets the current y-size.
+     * @return The current size.
      */
     public int getSizeY() {
         if (direction.toInteger() % 2 != 0) {
@@ -197,10 +205,9 @@ public class Scenery extends Node {
     }
 
     /**
-     * Gets child.
-     *
-     * @param player the player
-     * @return the child
+     * Gets the child object shown for the current player.
+     * @param player The player.
+     * @return The child object.
      */
     public Scenery getChild(Player player) {
         if (childs != null) {
@@ -215,10 +222,9 @@ public class Scenery extends Node {
     }
 
     /**
-     * Sets child index.
-     *
-     * @param player the player
-     * @param index  the index
+     * Sets the child object index.
+     * @param player The player.
+     * @param index The child object.
      */
     public void setChildIndex(Player player, int index) {
         SceneryDefinition def = getDefinition();
@@ -236,75 +242,70 @@ public class Scenery extends Node {
     }
 
     /**
-     * Transform scenery.
-     *
-     * @param id the id
-     * @return the scenery
+     * Gets a transformed object of this object.
+     * @param id The new object id.
+     * @return The constructed scenery.
      */
     public Scenery transform(int id) {
         return new Scenery(id, location, type, rotation);
     }
 
     /**
-     * Transform scenery.
-     *
-     * @param id       the id
-     * @param rotation the rotation
-     * @return the scenery
+     * Gets a transformed object of this object.
+     * @param id The new object id.
+     * @param rotation The new rotation.
+     * @return The constructed scenery.
      */
     public Scenery transform(int id, int rotation) {
         return new Scenery(id, location, type, rotation);
     }
 
     /**
-     * Transform scenery.
-     *
-     * @param id       the id
-     * @param rotation the rotation
-     * @param location the location
-     * @return the scenery
+     * Gets a transformed object of this object.
+     * @param id The new object id.
+     * @param rotation The new rotation.
+     * @param location The new location.
+     * @return The constructed scenery.
      */
     public Scenery transform(int id, int rotation, Location location) {
         return new Scenery(id, location, type, rotation);
     }
 
     /**
-     * Transform scenery.
-     *
-     * @param id       the id
-     * @param rotation the rotation
-     * @param type     the type
-     * @return the scenery
+     * Gets a transformed object of this object.
+     * @param id The new object id.
+     * @param rotation The new rotation.
+     * @param type The object type.
+     * @return The constructed scenery.
      */
     public Scenery transform(int id, int rotation, int type) {
         return new Scenery(id, location, type, rotation);
     }
 
     /**
-     * Is permanent boolean.
-     *
-     * @return the boolean
+     * If the object is permanent.
+     * @return {@code True} if so.
      */
     public boolean isPermanent() {
         return true;
     }
 
     /**
-     * As constructed constructed.
-     *
-     * @return the constructed
+     * Gets this scenery as Constructed object.
+     * @return The {@link Constructed} object.
      */
     public Constructed asConstructed() {
         return new Constructed(id, location, type, rotation);
     }
 
+    /**
+     * @return the id
+     */
     public int getId() {
         return id;
     }
 
     /**
-     * Gets type.
-     *
      * @return the type
      */
     public int getType() {
@@ -312,32 +313,27 @@ public class Scenery extends Node {
     }
 
     /**
-     * Gets rotation.
-     *
      * @return the rotation
      */
     public int getRotation() {
         return rotation;
     }
 
-    /**
-     * Sets rotation.
-     *
-     * @param rot the rot
-     */
     public void setRotation(int rot) {
         rotation = rot;
     }
 
+    /**
+     * @return the location
+     */
     @Override
     public Location getLocation() {
         return location;
     }
 
     /**
-     * Gets definition.
-     *
-     * @return the definition
+     * Gets the definition.
+     * @return The definition.
      */
     public SceneryDefinition getDefinition() {
         return definition;
@@ -349,7 +345,7 @@ public class Scenery extends Node {
     }
 
     @Override
-    public boolean equals(java.lang.Object obj) {
+    public boolean equals(Object obj) {
         if (obj == null || !(obj instanceof Scenery)) {
             return false;
         }
@@ -363,81 +359,71 @@ public class Scenery extends Node {
     }
 
     /**
-     * Gets restore pulse.
-     *
-     * @return the restore pulse
+     * Gets the restorePulse.
+     * @return The restorePulse.
      */
     public Pulse getRestorePulse() {
         return restorePulse;
     }
 
     /**
-     * Sets restore pulse.
-     *
-     * @param restorePulse the restore pulse
+     * Sets the restorePulse.
+     * @param restorePulse The restorePulse to set.
      */
     public void setRestorePulse(Pulse restorePulse) {
         this.restorePulse = restorePulse;
     }
 
     /**
-     * Gets charge.
-     *
-     * @return the charge
+     * Gets the charge.
+     * @return The charge.
      */
     public int getCharge() {
         return charge;
     }
 
     /**
-     * Sets charge.
-     *
-     * @param charge the charge
+     * Sets the charge.
+     * @param charge The charge to set.
      */
     public void setCharge(int charge) {
         this.charge = charge;
     }
 
     /**
-     * Gets destruction pulse.
-     *
-     * @return the destruction pulse
+     * Gets the destructionPulse.
+     * @return The destructionPulse.
      */
     public Pulse getDestructionPulse() {
         return destructionPulse;
     }
 
     /**
-     * Sets destruction pulse.
-     *
-     * @param destructionPulse the destruction pulse
+     * Sets the destructionPulse.
+     * @param destructionPulse The destructionPulse to set.
      */
     public void setDestructionPulse(Pulse destructionPulse) {
         this.destructionPulse = destructionPulse;
     }
 
     /**
-     * Gets attributes.
-     *
-     * @return the attributes
+     * @return the attributes.
      */
     public GameAttributes getAttributes() {
         return attributes;
     }
 
     /**
-     * Get childs scenery [ ].
-     *
-     * @return the scenery [ ]
+     * Gets the childs.
+     * @return The childs.
      */
     public Scenery[] getChilds() {
         return childs;
     }
 
     /**
-     * Gets wrapper.
-     *
-     * @return the wrapper
+     * Gets the wrapper.
+     * @return The wrapper.
      */
     public Scenery getWrapper() {
         if (wrapper == null) {
@@ -447,19 +433,13 @@ public class Scenery extends Node {
     }
 
     /**
-     * Sets wrapper.
-     *
-     * @param wrapper the wrapper
+     * Sets the wrapper.
+     * @param wrapper The wrapper to set.
      */
     public void setWrapper(Scenery wrapper) {
         this.wrapper = wrapper;
     }
 
-    /**
-     * Gets occupied tiles.
-     *
-     * @return the occupied tiles
-     */
     @SuppressWarnings("SuspiciousNameCombination")
     @NotNull
     public List<Location> getOccupiedTiles() {

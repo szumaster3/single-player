@@ -13,45 +13,57 @@ import core.plugin.PluginManifest;
 import core.plugin.PluginType;
 
 /**
- * The type Activity plugin.
+ * A plugin implementation used for activity plugins.
+ *
+ * @author Emperor
  */
 @PluginManifest(type = PluginType.ACTIVITY)
 public abstract class ActivityPlugin extends MapZone implements Plugin<Player> {
 
+    /**
+     * If the activity is instanced.
+     */
     private boolean instanced;
 
+    /**
+     * If the activity is multicombat.
+     */
     private boolean multicombat;
 
+    /**
+     * If the activity is safe.
+     */
     private boolean safe;
 
     /**
-     * The Region.
+     * The region of the activity.
      */
     protected DynamicRegion region;
 
     /**
-     * The Base.
+     * The base location.
      */
     protected Location base;
 
     /**
-     * The Safe respawn.
+     * A location which the player is teleported to in the case of death, if this activity is safe.
+     * Defaults to the home location of the server.
      */
     protected Location safeRespawn = ServerConstants.HOME_LOCATION;
 
     /**
-     * The Player.
+     * The player.
      */
     protected Player player;
 
     /**
-     * Instantiates a new Activity plugin.
+     * Constructs a new {@code ActivityPlugin} {@code Object}.
      *
-     * @param name         the name
-     * @param instanced    the instanced
-     * @param multicombat  the multicombat
-     * @param safe         the safe
-     * @param restrictions the restrictions
+     * @param name        The name.
+     * @param instanced   If the activity is instanced.
+     * @param multicombat If the activity is multicombat.
+     * @param safe        If the activity is safe (the player does not lose his/her
+     *                    items).
      */
     public ActivityPlugin(String name, boolean instanced, boolean multicombat, boolean safe, ZoneRestriction... restrictions) {
         super(name, true, ZoneRestriction.RANDOM_EVENTS);
@@ -69,13 +81,13 @@ public abstract class ActivityPlugin extends MapZone implements Plugin<Player> {
     @Override
     public void register(ZoneBorders borders) {
         if (multicombat) {
-            MultiwayCombatZone.Companion.getInstance().register(borders);
+            MultiwayCombatZone.getInstance().register(borders);
         }
         super.register(borders);
     }
 
     /**
-     * Sets region base.
+     * Sets the region base location.
      */
     protected void setRegionBase() {
         if (region != null) {
@@ -87,9 +99,9 @@ public abstract class ActivityPlugin extends MapZone implements Plugin<Player> {
     }
 
     /**
-     * Sets region base.
+     * Sets the region base for multiple regions.
      *
-     * @param regions the regions
+     * @param regions The regions.
      */
     protected void setRegionBase(DynamicRegion[] regions) {
         region = regions[0];
@@ -100,7 +112,7 @@ public abstract class ActivityPlugin extends MapZone implements Plugin<Player> {
             }
         }
         ZoneBorders borders = new ZoneBorders(region.getX() << 6, region.getY() << 6, l.getX() + Region.SIZE, l.getY() + Region.SIZE);
-        RegionZone multiZone = multicombat ? new RegionZone(MultiwayCombatZone.Companion.getInstance(), borders) : null;
+        RegionZone multiZone = multicombat ? new RegionZone(MultiwayCombatZone.getInstance(), borders) : null;
         RegionZone zone = new RegionZone(this, borders);
         for (DynamicRegion r : regions) {
             if (multicombat) {
@@ -113,12 +125,12 @@ public abstract class ActivityPlugin extends MapZone implements Plugin<Player> {
     }
 
     /**
-     * Start boolean.
+     * Starts the activity for the player.
      *
-     * @param player the player
-     * @param login  the login
-     * @param args   the args
-     * @return the boolean
+     * @param player The player.
+     * @param login  If the player is logging in.
+     * @param args   The arguments.
+     * @return {@code True} if successfully started the activity.
      */
     public boolean start(Player player, boolean login, Object... args) {
         this.player = player;
@@ -153,7 +165,7 @@ public abstract class ActivityPlugin extends MapZone implements Plugin<Player> {
     }
 
     /**
-     * Register.
+     * Method used to do anything on registration.
      */
     public void register() {
     }
@@ -167,88 +179,86 @@ public abstract class ActivityPlugin extends MapZone implements Plugin<Player> {
     public abstract ActivityPlugin newInstance(Player p) throws Throwable;
 
     /**
-     * Gets spawn location.
-     *
-     * @return the spawn location
+     * Gets the spawn location for this activity.
      */
     public abstract Location getSpawnLocation();
 
     /**
-     * Is instanced boolean.
+     * Gets the instanced.
      *
-     * @return the boolean
+     * @return The instanced.
      */
     public boolean isInstanced() {
         return instanced;
     }
 
     /**
-     * Sets instanced.
+     * Sets the instanced.
      *
-     * @param instanced the instanced
+     * @param instanced The instanced to set.
      */
     public void setInstanced(boolean instanced) {
         this.instanced = instanced;
     }
 
     /**
-     * Is multicombat boolean.
+     * Gets the multicombat.
      *
-     * @return the boolean
+     * @return The multicombat.
      */
     public boolean isMulticombat() {
         return multicombat;
     }
 
     /**
-     * Sets multicombat.
+     * Sets the multicombat.
      *
-     * @param multicombat the multicombat
+     * @param multicombat The multicombat to set.
      */
     public void setMulticombat(boolean multicombat) {
         this.multicombat = multicombat;
     }
 
     /**
-     * Is safe boolean.
+     * Gets the safe.
      *
-     * @return the boolean
+     * @return The safe.
      */
     public boolean isSafe() {
         return safe;
     }
 
     /**
-     * Sets safe.
+     * Sets the safe.
      *
-     * @param safe the safe
+     * @param safe The safe to set.
      */
     public void setSafe(boolean safe) {
         this.safe = safe;
     }
 
     /**
-     * Gets player.
+     * Gets the player.
      *
-     * @return the player
+     * @return The player.
      */
     public Player getPlayer() {
         return player;
     }
 
     /**
-     * Gets base.
+     * Gets the base.
      *
-     * @return the base
+     * @return The base.
      */
     public Location getBase() {
         return base;
     }
 
     /**
-     * Sets base.
+     * Sets the base.
      *
-     * @param base the base
+     * @param base The base to set.
      */
     public void setBase(Location base) {
         this.base = base;

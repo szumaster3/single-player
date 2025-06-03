@@ -27,7 +27,9 @@ import org.rs.consts.Items
 import java.util.*
 
 /**
- * Represents a Dark Zone in the game where players experience the effect of darkness.
+ * Handles a dark area.
+ *
+ * @author Emperor
  */
 class DarkZone : MapZone("Dark zone", true), EventHook<UseWithEvent> {
 
@@ -67,14 +69,6 @@ class DarkZone : MapZone("Dark zone", true), EventHook<UseWithEvent> {
         return true
     }
 
-    /**
-     * Handles interaction with items in the Dark Zone, such as dropping, extinguishing, or destroying items.
-     *
-     * @param entity The entity interacting with the item.
-     * @param target The target node (item) being interacted with.
-     * @param option The interaction option selected.
-     * @return Boolean indicating whether the interaction was successfully handled.
-     */
     override fun interact(
         entity: Entity,
         target: Node,
@@ -105,13 +99,6 @@ class DarkZone : MapZone("Dark zone", true), EventHook<UseWithEvent> {
         return false
     }
 
-    /**
-     * Handles the player entering the Dark Zone, including checking for a light source
-     * and opening the appropriate overlay.
-     *
-     * @param entity The entity entering the zone.
-     * @return Boolean indicating whether the player successfully entered the zone.
-     */
     override fun enter(entity: Entity): Boolean {
         if (entity is Player) {
             val player = entity.asPlayer()
@@ -129,13 +116,6 @@ class DarkZone : MapZone("Dark zone", true), EventHook<UseWithEvent> {
         return true
     }
 
-    /**
-     * Handles the player leaving the Dark Zone, including closing any active overlays.
-     *
-     * @param e The entity leaving the zone.
-     * @param logout Whether the player is logging out.
-     * @return Boolean indicating whether the player successfully left the zone.
-     */
     override fun leave(
         entity: Entity,
         logout: Boolean,
@@ -148,9 +128,9 @@ class DarkZone : MapZone("Dark zone", true), EventHook<UseWithEvent> {
     }
 
     /**
-     * Updates the darkness overlay for the given player based on their light source.
+     * Updates the overlay.
      *
-     * @param player The player whose overlay will be updated.
+     * @param player The player.
      */
     fun updateOverlay(player: Player) {
         val source = getActiveLightSource(player)
@@ -258,11 +238,11 @@ class DarkZone : MapZone("Dark zone", true), EventHook<UseWithEvent> {
             }
         }
 
+
         /**
-         * Checks if the player is in a dark area and updates the overlay accordingly.
+         * Checks if the player is in a dark area and will update accordingly.
          *
-         * @param player The player being checked for dark area zones.
-         * @return Boolean indicating whether the player is in a dark area.
+         * @param p The player.
          */
         fun checkDarkArea(player: Player): Boolean {
             for (r in player.zoneMonitor.zones) {

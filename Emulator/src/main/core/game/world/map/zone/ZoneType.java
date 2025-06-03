@@ -1,50 +1,61 @@
 package core.game.world.map.zone;
 
 /**
- * The enum Zone type.
+ * Represents the default zone types.
+ *
+ * @author Emperor
  */
 public enum ZoneType {
 
     /**
-     * Default zone type.
+     * Default zone.
      */
     DEFAULT(0),
 
     /**
-     * Safe zone type.
+     * Safe area.
      */
     SAFE(1),
 
     /**
-     * P o h zone type.
+     * Player-owner house type.
      */
     P_O_H(2),
 
     /**
-     * Castle wars zone type.
+     * Castle wars zone.
      */
     CASTLE_WARS(3),
 
     /**
-     * Trouble brewing zone type.
+     * Trouble brewing zone.
      */
     TROUBLE_BREWING(4),
 
     /**
-     * Barbarian assault zone type.
+     * Barbarian assault zone.
      */
-    BARBARIAN_ASSAULT(5);
+    BARBARIAN_ASSAULT(5),
+    ;
 
+    /**
+     * The zone id.
+     */
     private final int id;
 
+    /**
+     * Constructs a new {@code ZoneType} {@code Object}.
+     *
+     * @param id The zone id.
+     */
     ZoneType(int id) {
         this.id = id;
     }
 
     /**
-     * Gets id.
+     * Gets the id.
      *
-     * @return the id
+     * @return The id.
      */
     public int getId() {
         return id;

@@ -42,7 +42,9 @@ import static core.game.system.command.sets.StatsAttributeSetKt.STATS_BASE;
 import static core.game.system.command.sets.StatsAttributeSetKt.STATS_ENEMIES_KILLED;
 
 /**
- * The type Npc.
+ * Represents a non-player character.
+ *
+ * @author Emperor
  */
 public class NPC extends Entity {
     private int id;
@@ -300,8 +302,7 @@ public class NPC extends Entity {
 
         //Fix for issue #11 for shops keeping dialogue open.
         Dialogue dialogue = player.getDialogueInterpreter().getDialogue();
-        if (dialogue != null)
-            dialogue.end();
+        if (dialogue != null) dialogue.end();
         return true;
     }
 
@@ -364,8 +365,7 @@ public class NPC extends Entity {
                 ((Player) entity).getPacketDispatch().sendMessage("You need a higher slayer level to know how to wound this monster.");
             }
         }
-        if (!behavior.canBeAttackedBy(this, entity, style, message))
-            return false;
+        if (!behavior.canBeAttackedBy(this, entity, style, message)) return false;
         return super.isAttackable(entity, style, message);
     }
 
@@ -381,8 +381,7 @@ public class NPC extends Entity {
             return;
         }
         if (respawnTick > GameWorld.getTicks()) {
-            if (respawnTick - GameWorld.getTicks() == 2)
-                teleport(getProperties().getSpawnLocation());
+            if (respawnTick - GameWorld.getTicks() == 2) teleport(getProperties().getSpawnLocation());
             return;
         }
         if (isRespawning && respawnTick <= GameWorld.getTicks()) {
@@ -405,23 +404,15 @@ public class NPC extends Entity {
      * Handle tick actions.
      */
     public void handleTickActions() {
-        if (!behavior.tick(this))
-            return;
+        if (!behavior.tick(this)) return;
         if (!getLocks().isInteractionLocked()) {
             if (!getLocks().isMovementLocked()) {
-                if (
-                    !pathBoundMovement
-                        && walkRadius > 0
-                        && walkRadius <= 20
-                        && !getLocation().withinDistance(getProperties().getSpawnLocation(), (int) (walkRadius * 1.5))
-                        && !getAttribute("no-spawn-return", false)
-                ) {
+                if (!pathBoundMovement && walkRadius > 0 && walkRadius <= 20 && !getLocation().withinDistance(getProperties().getSpawnLocation(), (int) (walkRadius * 1.5)) && !getAttribute("no-spawn-return", false)) {
                     MovementPulse current = getAttribute("return-to-spawn-pulse");
                     if (current != null && current.isRunning()) return;
 
                     if (!isNeverWalks()) {
-                        if (walkRadius == 0)
-                            walkRadius = 3;
+                        if (walkRadius == 0) walkRadius = 3;
                     }
                     if (aggressiveHandler != null) {
                         aggressiveHandler.setPauseTicks(walkRadius + 1);
@@ -535,8 +526,7 @@ public class NPC extends Entity {
             PlayerStatsCounter.incrementKills(p, originalId);
         }
         handleDrops(p, killer);
-        if (!isRespawn())
-            clear();
+        if (!isRespawn()) clear();
         isRespawning = true;
         behavior.onDeathFinished(this, killer);
         killer.dispatch(new NPCKillEvent(this));

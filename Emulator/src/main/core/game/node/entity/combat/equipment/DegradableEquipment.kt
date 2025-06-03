@@ -5,6 +5,10 @@ import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.plugin.Plugin
 
+/**
+ * Handles equipment degrading.
+ * @author Emperor
+ */
 abstract class DegradableEquipment(
     val slot: Int,
     vararg val itemIds: Int,
@@ -33,10 +37,11 @@ abstract class DegradableEquipment(
     ): Any? = null
 
     companion object {
-        @JvmStatic private val EQUIPMENT: Array<ArrayList<DegradableEquipment>?> =
-            arrayOfNulls(14)
+        @JvmStatic
+        private val EQUIPMENT: Array<ArrayList<DegradableEquipment>?> = arrayOfNulls(14)
 
-        @JvmStatic fun degrade(
+        @JvmStatic
+        fun degrade(
             player: Player?,
             entity: Entity?,
             attack: Boolean,
@@ -44,7 +49,8 @@ abstract class DegradableEquipment(
             // TODO
         }
 
-        @JvmStatic fun checkDegrade(
+        @JvmStatic
+        fun checkDegrade(
             player: Player?,
             entity: Entity?,
             slot: Int,
@@ -52,7 +58,13 @@ abstract class DegradableEquipment(
             // TODO
         }
 
-        @JvmStatic fun getDropReplacement(itemId: Int): Int {
+        /**
+         * Gets the item to drop.
+         * @param itemId The item id.
+         * @return The dropped item.
+         */
+        @JvmStatic
+        fun getDropReplacement(itemId: Int): Int {
             for (i in EQUIPMENT.indices) {
                 if (EQUIPMENT[i] == null) continue
                 for (e in EQUIPMENT[i]!!) {
