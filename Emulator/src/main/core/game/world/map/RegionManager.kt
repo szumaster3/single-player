@@ -68,6 +68,7 @@ object RegionManager {
         }
     }
 
+
     /**
      * Gets the clipping flag on the given location.
      * @param l The location.
@@ -76,6 +77,53 @@ object RegionManager {
     @JvmStatic
     fun getClippingFlag(l: Location): Int {
         return getClippingFlag(l.z, l.x, l.y)
+    }
+
+    /**
+     * Sets the clipping flag at the specified coordinates and level.
+     *
+     * @param z The plane (height level) of the tile.
+     * @param x The absolute X-coordinate of the tile.
+     * @param y The absolute Y-coordinate of the tile.
+     * @param flag The clipping flag value to set.
+     * @param projectile Whether the flag is for projectile clipping (true) or movement clipping (false).
+     */
+    @JvmStatic
+    fun setClippingFlags(z: Int, x: Int, y: Int, flag: Int, projectile: Boolean = false) {
+        val regionX = x shr 6
+        val regionY = y shr 6
+        val localX = x and 63
+        val localY = y and 63
+        val regionId = (regionX shl 8) or regionY
+        val index = (z * 64 * 64) + (localX * 64) + localY
+
+        val flags = getFlags(regionId, projectile)
+        flags[index] = flag
+    }
+
+
+    /**
+     * Adds a npc clipping flag.
+     *
+     * This prevents NPCs from walking through the given location.
+     *
+     * @param z The plane (height level) of the tile.
+     * @param x The absolute X-coordinate of the tile.
+     * @param y The absolute Y-coordinate of the tile.
+     */
+    @JvmStatic
+    fun addNPCClipping(z: Int, x: Int, y: Int) {
+        val regionX = x shr 6
+        val regionY = y shr 6
+        val localX = x and 63
+        val localY = y and 63
+        val regionId = (regionX shl 8) or regionY
+        val index = (z * 64 * 64) + (localX * 64) + localY
+
+        val flags = getFlags(regionId, projectile = false)
+        val npcBlockFlag = 0x200000
+
+        flags[index] = flags[index] or npcBlockFlag
     }
 
     /**

@@ -78,6 +78,23 @@ public final class ImpactHandler {
     }
 
     /**
+     * Visual hit impact.
+     *
+     * @param source the source
+     * @param hit    the hit
+     * @param type   the type
+     * @return the impact
+     */
+    public Impact visualHit(Entity source, int hit, HitsplatType type) {
+        if (type == null || type == HitsplatType.NORMAL) {
+            type = hit == 0 ? HitsplatType.MISS : HitsplatType.NORMAL;
+        }
+        Impact impact = new Impact(source, hit, null, type);
+        impactQueue.add(impact);
+        return impact;
+    }
+
+    /**
      * Manually hits the entity.
      *
      * @param source The entity dealing the hit.

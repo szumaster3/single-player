@@ -292,7 +292,7 @@ internal constructor() : Pathfinder() {
             absY = location.y + queueY[readPosition]
             path.points.add(Point(absX, absY))
         }
-        path.setSuccesful(true)
+        path.setSuccessful(true)
         if (end != dest)
             path.isMoveNear = true
         return path

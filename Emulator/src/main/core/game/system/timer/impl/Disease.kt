@@ -51,6 +51,8 @@ class Disease :
 
         var damage = RandomFunction.random(1, 5)
 
+        // The disease hit is purely visual,
+        // it doesn't deal any damage to the player.
         entity.impactHandler.visualHit(entity, damage, HitsplatType.DISEASE)
 
         var skillId = RandomFunction.random(24)

@@ -16,20 +16,8 @@ class WaterfiendNPC : NPCBehavior(*Tasks.WATERFIENDS.npcs) {
     private val combatHandler =
         MultiSwingHandler(
             true,
-            SwitchAttack(
-                CombatStyle.MAGIC.swingHandler,
-                Animation(1581, Priority.HIGH),
-                null,
-                null,
-                Projectile.create(null as Entity?, null, 500, 15, 30, 50, 50, 14, 255),
-            ),
-            SwitchAttack(
-                CombatStyle.RANGE.swingHandler,
-                Animation(1581, Priority.HIGH),
-                null,
-                null,
-                Projectile.create(null as Entity?, null, 16, 15, 30, 50, 50, 14, 255),
-            ),
+            SwitchAttack(CombatStyle.MAGIC.swingHandler, Animation(1581, Priority.HIGH), null, null, Projectile.create(null as Entity?, null, 500, 15, 30, 50, 50, 14, 255)),
+            SwitchAttack(CombatStyle.RANGE.swingHandler, Animation(1581, Priority.HIGH), null, null, Projectile.create(null as Entity?, null, 16, 15, 30, 50, 50, 14, 255)),
         )
 
     override fun getSwingHandlerOverride(

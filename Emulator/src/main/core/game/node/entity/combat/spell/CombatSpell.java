@@ -52,7 +52,7 @@ public abstract class CombatSpell extends MagicSpell {
     /**
      * The end graphic.
      */
-    protected final Graphics endGraphic;
+    protected final Graphics endGraphics;
 
     /**
      * The impact Audio.
@@ -78,15 +78,15 @@ public abstract class CombatSpell extends MagicSpell {
      * @param animation      the cast animation.
      * @param startGraphic   The start graphic.
      * @param projectile     The projectile.
-     * @param endGraphic     The end graphic.
+     * @param endGraphics     The end graphic.
      * @param runes          The runes required to cast this spell.
      */
-    public CombatSpell(SpellType type, SpellBookManager.SpellBook book, int level, double baseExperience, int castAudio, int impactAudio, Animation animation, Graphics startGraphic, Projectile projectile, Graphics endGraphic, Item... runes) {
+    public CombatSpell(SpellType type, SpellBookManager.SpellBook book, int level, double baseExperience, int castAudio, int impactAudio, Animation animation, Graphics startGraphic, Projectile projectile, Graphics endGraphics, Item... runes) {
         super(book, level, baseExperience, animation, startGraphic, new Audio(castAudio, 1, 0), runes);
         this.type = type;
         this.impactAudio = impactAudio;
         this.projectile = projectile;
-        this.endGraphic = endGraphic;
+        this.endGraphics = endGraphics;
     }
 
     /**
@@ -146,7 +146,7 @@ public abstract class CombatSpell extends MagicSpell {
             target.graphics(SPLASH_GRAPHIC);
             return;
         }
-        target.graphics(endGraphic);
+        target.graphics(endGraphics);
         playGlobalAudio(target.getLocation(), impactAudio, 20);
     }
 

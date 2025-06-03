@@ -132,7 +132,7 @@ class GodSpell : CombatSpell {
                 }
             }
             if (state.estimatedHit == -1) {
-                target.graphics(SPLASH_GRAPHICS)
+                target.graphics(SPLASH_GRAPHIC)
                 if (projectile === SARA_PROJECTILE) {
                     playGlobalAudio(target.location, Sounds.SARADOMIN_STRIKE_FAIL_1656, 20)
                 }

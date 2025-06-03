@@ -94,7 +94,7 @@ open class MultiSwingHandler(
             current.handler!!.visualize(entity, victim, state)
             return
         }
-        entity.visualize(current.animation, current.startGraphics)
+        entity.visualize(current.animation, current.startGraphic)
         if (current.projectile != null) {
             current.projectile!!
                 .transform(

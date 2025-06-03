@@ -16,7 +16,7 @@ public class Path {
     /**
      * If the path was found.
      */
-    private boolean succesful;
+    private boolean successful;
 
     /**
      * If we have to move near the destination (as we can't reach it).
@@ -53,21 +53,21 @@ public class Path {
     }
 
     /**
-     * Gets the succesful.
+     * Gets the successful.
      *
-     * @return The succesful.
+     * @return The successful.
      */
     public boolean isSuccessful() {
-        return succesful;
+        return successful;
     }
 
     /**
-     * Sets the succesful.
+     * Sets the successful.
      *
-     * @param succesful The succesful to set.
+     * @param successful The successful to set.
      */
-    public void setSuccesful(boolean succesful) {
-        this.succesful = succesful;
+    public void setSuccessful(boolean successful) {
+        this.successful = successful;
     }
 
     /**

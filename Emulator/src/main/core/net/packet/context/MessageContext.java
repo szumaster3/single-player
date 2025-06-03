@@ -19,7 +19,7 @@ public final class MessageContext implements Context {
     /**
      * Represents the packet id to use when receiving a message.
      */
-    public static final int RECIEVE_MESSAGE = 0;
+    public static final int RECEIVE_MESSAGE = 0;
 
     /**
      * Represents the packet id use to send a clan message.

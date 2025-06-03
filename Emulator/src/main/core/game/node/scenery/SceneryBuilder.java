@@ -150,6 +150,53 @@ public final class SceneryBuilder {
     }
 
     /**
+     * Replace with temp before new boolean.
+     *
+     * @param remove       the remove
+     * @param temporary    the temporary
+     * @param construct    the construct
+     * @param restoreTicks the restore ticks
+     * @param clip         the clip
+     * @return the boolean
+     */
+    public static boolean replaceWithTempBeforeNew(Scenery remove, Scenery temporary, Scenery construct, int restoreTicks, final boolean clip) {
+        if (!clip) {
+            return replaceClientSide(remove, temporary, restoreTicks);
+        }
+        remove = remove.getWrapper();
+        Scenery current = LandscapeParser.removeScenery(remove);
+        if (current == null) {
+            return false;
+        }
+        if (current.getRestorePulse() != null) {
+            current.getRestorePulse().stop();
+            current.setRestorePulse(null);
+        }
+        if (current instanceof Constructed) {
+            Scenery previous = ((Constructed) current).getReplaced();
+            if (previous != null && previous.equals(temporary)) {
+                throw new IllegalStateException("Can't temporarily replace an already temporary object!");
+            }
+        }
+        final Constructed constructed = temporary.asConstructed();
+        constructed.setReplaced(current);
+        LandscapeParser.addScenery(constructed);
+        update(current, constructed);
+        if (restoreTicks < 0) {
+            return true;
+        }
+        constructed.setRestorePulse(new Pulse(restoreTicks) {
+            @Override
+            public boolean pulse() {
+                replace(constructed, construct);
+                return true;
+            }
+        });
+        GameWorld.getPulser().submit(constructed.getRestorePulse());
+        return true;
+    }
+
+    /**
      * Adds a scenery.
      *
      * @param object The object to add.

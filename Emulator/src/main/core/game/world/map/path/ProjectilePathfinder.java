@@ -42,14 +42,14 @@ public final class ProjectilePathfinder extends Pathfinder {
         x = start.getX();
         y = start.getY();
         List<Point> points = new ArrayList<>(20);
-        path.setSuccesful(true);
+        path.setSuccessful(true);
         while (x != end.getX() || y != end.getY()) {
             Direction[] directions = getDirection(x, y, end);
             found = true;
             checkSingleTraversal(points, directions);
             if (!found) {
                 path.setMoveNear(x != start.getX() || y != start.getY());
-                path.setSuccesful(false);
+                path.setSuccessful(false);
                 break;
             }
         }

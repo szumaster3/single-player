@@ -1,6 +1,7 @@
 package core.game.world.map.build;
 
 import core.game.world.map.RegionManager;
+import core.game.world.map.RegionPlane;
 import kotlin.Pair;
 
 import static java.lang.Math.max;
@@ -43,9 +44,19 @@ public final class RegionFlags {
     private boolean[][] landscape;
 
     /**
-     * If the flags are set for projectile clipping
+     * If the flags are set for projectile clipping.
      */
     private final boolean projectile;
+
+    /**
+     * Representng clipping flags for tiles in the region plane.
+     */
+    private int[][] clippingFlags;
+
+    /**
+     * Representing projectile clipping flags.
+     */
+    private int[][] projectileFlags;
 
     /**
      * Constructs a new {@code RegionFlags} {@code Object}.
@@ -208,6 +219,18 @@ public final class RegionFlags {
     public void invalidateFlag(int x, int y) {
         Pair<Integer, Integer> indices = getFlagIndex(x, y);
         RegionManager.getFlags(indices.getFirst(), projectile)[indices.getSecond()] = -1;
+    }
+    /**
+     * Adds a clipping flag at the specified position within the given region plane.
+     *
+     * @param plane         the region plane where the clipping is set
+     * @param x             the X coordinate of the tile to set the clipping on
+     * @param y             the Y coordinate of the tile to set the clipping on
+     * @param clippingFlag  the bitwise flag representing the type of blockage (e.g., NPC)
+     */
+    public void addNpcClipping(RegionPlane plane, int x, int y, int clippingFlag) {
+        int[][] clippingFlags = plane.getFlags().clippingFlags;
+        clippingFlags[x][y] |= clippingFlag;
     }
 
     /**
@@ -549,5 +572,23 @@ public final class RegionFlags {
      */
     public void setLandscape(boolean[][] landscape) {
         this.landscape = landscape;
+    }
+
+    /**
+     * Sets the clipping.
+     *
+     * @param clipping The clipping to set.
+     */
+    public void setClippingFlags(int[][] clipping) {
+        this.clippingFlags = clipping;
+    }
+
+    /**
+     * Sets the projectile.
+     *
+     * @param projectile The projectile to set.
+     */
+    public void setProjectileFlags(int[][] projectile) {
+        this.projectileFlags = projectile;
     }
 }
