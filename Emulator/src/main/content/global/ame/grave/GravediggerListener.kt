@@ -13,6 +13,10 @@ import core.game.world.map.zone.ZoneBorders
 import core.game.world.update.flag.context.Animation
 import org.rs.consts.*
 
+/**
+ * Handles interactions for Gravedigger random event.
+ * @author szu
+ */
 class GravediggerListener : InteractionListener {
 
     enum class CoffinSet(val displayName: String, val coffinId: Int, val gravestoneId: Int, val graveId: Int, val emptyGraveId: Int, val item: Int, val content: List<Int>) {

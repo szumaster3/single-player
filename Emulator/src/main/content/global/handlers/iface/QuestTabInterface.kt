@@ -15,6 +15,10 @@ import org.rs.consts.Quests
 import kotlin.math.max
 import kotlin.math.min
 
+/**
+ * Handles the quest tab reward buttons.
+ * @author Emperor, Vexia
+ */
 class QuestTabInterface : InterfaceListener {
     override fun defineInterfaceListeners() {
         on(Components.QUESTJOURNAL_V2_274) { player, _, _, buttonID, _, _ ->

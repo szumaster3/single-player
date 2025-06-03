@@ -6,6 +6,10 @@ import core.game.node.entity.player.Player
 import core.game.system.timer.PersistTimer
 import org.json.simple.JSONObject
 
+/**
+ * Star bonus timer.
+ * @author Ceikry.
+ */
 class StarBonus : PersistTimer(1, "shootingstar:bonus") {
     var ticksLeft = 1500
 

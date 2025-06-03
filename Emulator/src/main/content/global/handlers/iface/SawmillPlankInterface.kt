@@ -13,6 +13,9 @@ import core.plugin.Plugin
 import org.rs.consts.Components
 import org.rs.consts.Items
 
+/**
+ * Represents the sawmill plank interface.
+ */
 @Initializable
 class SawmillPlankInterface : ComponentPlugin() {
     override fun newInstance(arg: Any?): Plugin<Any> {

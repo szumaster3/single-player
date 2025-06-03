@@ -8,6 +8,10 @@ import org.rs.consts.NPCs
 import kotlin.math.max
 import kotlin.math.min
 
+/**
+ * Handles the zombie npc.
+ * @author Vexia
+ */
 class ZombieNPC(
     override var loot: WeightBasedTable? = null,
 ) : RandomEventNPC(NPCs.ZOMBIE_419) {

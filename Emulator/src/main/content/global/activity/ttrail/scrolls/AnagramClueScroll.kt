@@ -19,13 +19,7 @@ import org.rs.consts.NPCs
 
 /**
  * Represents an anagram clue scroll.
- *
- * @param anagram    the anagram text hinting the next NPC.
- * @param npcId      the NPC related to the clue.
- * @param challenge  the optional challenge id linked to this clue.
- * @param name       the name of the clue scroll.
- * @param clueId     the unique identifier of the clue.
- * @param level      the difficulty level of the clue.
+ * @author szu
  */
 abstract class AnagramClueScroll(
     name: String?,

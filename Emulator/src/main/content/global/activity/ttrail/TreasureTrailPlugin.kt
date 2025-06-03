@@ -24,17 +24,13 @@ import core.plugin.Initializable
 import core.plugin.Plugin
 
 /**
- * Handles registration and interaction with clue scrolls and caskets for Treasure Trails.
+ * Plugin handling interactions with clue scrolls and caskets in Treasure Trails.
  */
 @Initializable
 class TreasureTrailPlugin : OptionHandler() {
 
     /**
-     * Initializes the plugin by registering item handlers for clue scrolls and caskets,
-     * and defining plugins for clue scroll types and related NPCs.
-     *
-     * @param arg Optional argument, unused.
-     * @return This plugin instance.
+     * Registers handlers for clue scrolls, caskets, and related NPCs.
      */
     override fun newInstance(arg: Any?): Plugin<Any> {
         IDS.forEach { id ->
@@ -61,14 +57,7 @@ class TreasureTrailPlugin : OptionHandler() {
     }
 
     /**
-     * Handles player interaction with clue scroll items and caskets.
-     *
-     * Supports "read" to read clue scrolls and "open" to open clue caskets.
-     *
-     * @param player The player interacting.
-     * @param node The node (item) being interacted with.
-     * @param option The interaction option chosen.
-     * @return True if the interaction was handled, false otherwise.
+     * Handles read clue scrolls and open caskets.
      */
     override fun handle(player: Player, node: Node, option: String): Boolean {
         player.lock(1)
@@ -91,22 +80,17 @@ class TreasureTrailPlugin : OptionHandler() {
     }
 
     /**
-     * Indicates that this handler does not allow walking while using the option.
-     *
-     * @return False always.
+     * Prevents walking while using the option.
      */
     override fun isWalk(): Boolean = false
 
     /**
-     * Plugin for managing item behavior for clue scrolls when dropped or picked up.
+     * Managing item behavior for clue scrolls when dropped or picked up.
      */
     inner class ClueItemPlugin : ItemPlugin() {
 
         /**
-         * Registers the clue scroll item IDs for this plugin.
-         *
-         * @param arg (Optional) argument, unused.
-         * @return This plugin instance.
+         * Registers clue scroll ids.
          */
         override fun newInstance(arg: Any?): Plugin<Any> {
             register(*IDS)
@@ -114,14 +98,7 @@ class TreasureTrailPlugin : OptionHandler() {
         }
 
         /**
-         * Determines if the player can pick up the specified clue scroll item.
-         *
-         * Prevents picking up if the player already has a clue scroll.
-         *
-         * @param player The player trying to pick up the item.
-         * @param item The ground item being picked up.
-         * @param type The type of pickup.
-         * @return True if allowed to pick up, false otherwise.
+         * Prevents pickup if player already has a clue scroll.
          */
         override fun canPickUp(player: Player, item: GroundItem, type: Int): Boolean {
             return if (hasClue(player)) {
@@ -131,34 +108,19 @@ class TreasureTrailPlugin : OptionHandler() {
         }
 
         /**
-         * Determines if the player can drop the clue scroll item.
-         *
-         * Prevents dropping if the player currently has a clue scroll.
-         *
-         * @param item The item to drop.
-         * @param player The player dropping the item.
-         * @param npc The NPC involved, if any.
-         * @param location The location of the drop.
-         * @return True if dropping is allowed, false otherwise.
+         * Prevents dropping if player has a clue scroll.
          */
         override fun createDrop(item: Item, player: Player, npc: NPC?, location: Location): Boolean {
             return !hasClue(player)
         }
 
         /**
-         * Returns the item without modification.
-         *
-         * @param item The item.
-         * @param npc The NPC involved, if any.
-         * @return The same item.
+         * Returns the item unchanged.
          */
         override fun getItem(item: Item, npc: NPC?): Item = item
 
         /**
-         * Checks if the player currently holds a clue scroll.
-         *
-         * @param player The player to check.
-         * @return True if player has a clue scroll, false otherwise.
+         * Checks if player currently holds a clue scroll.
          */
         private fun hasClue(player: Player): Boolean {
             return TreasureTrailManager.getInstance(player).hasClue()

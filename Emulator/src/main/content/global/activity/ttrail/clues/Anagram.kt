@@ -9,6 +9,7 @@ import org.rs.consts.NPCs
 
 /**
  * Represents the anagram clues.
+ * @author szu
  */
 open class Anagram : AnagramClueScroll {
 

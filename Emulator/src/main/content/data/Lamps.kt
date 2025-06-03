@@ -4,7 +4,7 @@ import core.game.node.item.Item
 import org.rs.consts.Items
 
 /**
- * Represents the different types of lamps.
+ * Represents an experience lamp.
  */
 enum class Lamps(
     val item: Int,

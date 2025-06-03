@@ -17,6 +17,10 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Sounds
 
+/**
+ * Handles interaction for Evil bob random event.
+ * @author szu, Zerken
+ */
 class EvilBobListener :
     InteractionListener,
     MapArea {

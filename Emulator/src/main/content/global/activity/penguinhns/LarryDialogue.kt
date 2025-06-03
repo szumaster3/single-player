@@ -15,6 +15,7 @@ import org.rs.consts.NPCs
 
 /**
  * Represents the Larry dialogue.
+ * @author szu
  */
 class LarryDialogue(
     player: Player? = null,

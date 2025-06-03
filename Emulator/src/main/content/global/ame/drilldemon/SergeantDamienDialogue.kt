@@ -11,6 +11,10 @@ import core.tools.DARK_RED
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Sergeant Damien random event dialogue.
+ * @author Ceikry
+ */
 class SergeantDamienDialogue(
     var isCorrect: Boolean = false,
     var eventStart: Boolean = false,

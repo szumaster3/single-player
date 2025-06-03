@@ -13,6 +13,10 @@ import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Postie Pete dialogue.
+ * @author szu
+ */
 @Initializable
 class PostiePeteDialogue(
     player: Player? = null,

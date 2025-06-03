@@ -18,6 +18,9 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Vars
 
+/**
+ * Represents the Imp champion NPC for Champions challenge.
+ */
 @Initializable
 class ImpChampionNPC(
     id: Int = 0,

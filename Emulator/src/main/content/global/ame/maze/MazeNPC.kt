@@ -12,6 +12,10 @@ import core.game.system.timer.impl.AntiMacro
 import org.rs.consts.Components
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Mysterious Old Man NPC for Maze random event.
+ * @author ovenbreado
+ */
 class MazeNPC(override var loot: WeightBasedTable? = null) : RandomEventNPC(NPCs.MYSTERIOUS_OLD_MAN_410) {
 
     override fun init() {

@@ -18,6 +18,10 @@ import org.rs.consts.Sounds
 import kotlin.random.Random
 import kotlin.reflect.full.createInstance
 
+/**
+ * Handles random event NPC.
+ * @author Ceikry
+ */
 abstract class RandomEventNPC(
     id: Int,
 ) : NPC(id) {

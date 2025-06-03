@@ -13,6 +13,10 @@ import core.game.system.timer.impl.AntiMacro
 import core.game.world.map.zone.ZoneBorders
 import org.rs.consts.Components
 
+/**
+ * Handles Lost and Found random event NPC.
+ * @author Emperor, szu
+ */
 class LostAndFoundNPC(
     override var loot: WeightBasedTable? = null,
 ) : RandomEventNPC(-1) {

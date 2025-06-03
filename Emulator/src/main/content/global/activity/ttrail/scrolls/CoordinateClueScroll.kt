@@ -13,6 +13,7 @@ import org.rs.consts.NPCs
 
 /**
  * Represents a coordinate clue scroll.
+ * @author Vexia
  */
 abstract class CoordinateClueScroll(
     name: String?, clueId: Int, level: ClueLevel?, location: Location?,

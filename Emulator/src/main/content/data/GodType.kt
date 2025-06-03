@@ -15,13 +15,7 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 
 /**
- * Represents the different types of gods and their associated items and actions.
- *
- * @property cape The item representing the cape of the god.
- * @property staff The item representing the staff of the god.
- * @property statueId The ID of the god's statue.
- * @property npcId The ID of the associated NPC for the god.
- * @property dropMessage The message displayed when the god's cape drops.
+ * Represents god books.
  */
 enum class GodType(
     val cape: Item,
@@ -30,9 +24,6 @@ enum class GodType(
     val npcId: Int,
     val dropMessage: String,
 ) {
-    /**
-     * Saradomin god type with associated cape, staff, statue, and NPC.
-     */
     SARADOMIN(
         cape = Item(Items.SARADOMIN_CAPE_2412),
         staff = Item(Items.SARADOMIN_STAFF_2415),
@@ -40,10 +31,6 @@ enum class GodType(
         npcId = NPCs.BATTLE_MAGE_913,
         dropMessage = "The cape disappears in a flash of light as it touches the ground.",
     ),
-
-    /**
-     * Guthix god type with associated cape, staff, statue, and NPC.
-     */
     GUTHIX(
         cape = Item(Items.GUTHIX_CAPE_2413),
         staff = Item(Items.GUTHIX_STAFF_2416),
@@ -51,10 +38,6 @@ enum class GodType(
         npcId = NPCs.BATTLE_MAGE_914,
         dropMessage = "The cape disintegrates as it touches the earth.",
     ),
-
-    /**
-     * Zamorak god type with associated cape, staff, statue, and NPC.
-     */
     ZAMORAK(
         cape = Item(Items.ZAMORAK_CAPE_2414),
         staff = Item(Items.ZAMORAK_STAFF_2417),
@@ -65,10 +48,6 @@ enum class GodType(
 
     /**
      * Allows the player to pray to the associated god statue.
-     * If the player does not already possess any of the god's items, it triggers a prayer action.
-     *
-     * @param player The player interacting with the statue.
-     * @param statue The statue being prayed to.
      */
     fun pray(
         player: Player,
@@ -120,20 +99,13 @@ enum class GodType(
 
     companion object {
         /**
-         * Retrieves the corresponding god type for a given statue ID.
-         *
-         * @param scenery The ID of the statue.
-         * @return The corresponding GodType, or null if not found.
+         * Get god type for a given statue id.
          */
         @JvmStatic
         fun forScenery(scenery: Int): GodType? = values().find { it.statueId == scenery }
 
         /**
-         * Retrieves the corresponding god type for a player based on the cape they possess.
-         *
-         * @param player The player whose inventory or equipment is checked for the cape.
-         * @param invyOnly If true, only checks the player's inventory.
-         * @return The corresponding GodType, or null if no cape is found.
+         * Gets the god type for a player based on the cape they possess.
          */
         @JvmStatic
         fun getCape(
@@ -149,50 +121,33 @@ enum class GodType(
             }
 
         /**
-         * Retrieves the corresponding god type for a player based on the cape they possess, checking both inventory and equipment.
-         *
-         * @param player The player whose inventory and equipment are checked for the cape.
-         * @return The corresponding GodType, or null if no cape is found.
+         * Retrieves the god type for a player based on the cape.
          */
         fun getCape(player: Player): GodType? = getCape(player, false)
 
         /**
-         * Retrieves the corresponding god type for a given cape item.
-         *
-         * @param cape The cape item.
-         * @return The corresponding GodType, or null if not found.
+         * Gets the god type for a given cape item.
          */
         fun forCape(cape: Item): GodType? = values().find { it.cape.id == cape.id }
 
         /**
-         * Retrieves the corresponding god type for a given NPC ID.
-         *
-         * @param id The NPC ID.
-         * @return The corresponding GodType, or null if not found.
+         * Gets the god type for a given NPC id.
          */
         fun forId(id: Int): GodType? = values().find { it.npcId == id }
 
         /**
          * Checks if the player possesses any of the god's cape items.
-         *
-         * @param player The player to check.
-         * @return True if the player has any of the god's capes, otherwise false.
          */
         fun hasAny(player: Player): Boolean = values().any { player.hasItem(it.cape) }
     }
 
     /**
      * Checks if the player has the associated god's cape equipped.
-     *
-     * @param player The player to check.
-     * @return True if the player has the cape equipped, otherwise false.
      */
     fun isFriendly(player: Player): Boolean = player.equipment.containsItem(cape)
 
     /**
-     * Retrieves the display name of the god.
-     *
-     * @return The formatted display name of the god.
+     * Gets the display name of the god.
      */
     fun getName(): String = StringUtils.formatDisplayName(name.lowercase())
 }

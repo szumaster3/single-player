@@ -5,6 +5,10 @@ import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.game.system.timer.impl.AntiMacro
 
+/**
+ * Represents the Capn hand dialogue file for Lost Pirate random event.
+ * @author Vexia
+ */
 class CapnHandDialogue(
     val rand: Int,
 ) : DialogueFile() {

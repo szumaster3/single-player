@@ -8,6 +8,10 @@ import core.game.world.map.Location
 import org.rs.consts.Animations
 import org.rs.consts.Items
 
+/**
+ * Utils for quiz master.
+ * @author Vexia, szu
+ */
 object QuizMaster {
     const val COINS = Items.COINS_995
     const val MYSTERY_BOX = Items.RANDOM_EVENT_GIFT_14645

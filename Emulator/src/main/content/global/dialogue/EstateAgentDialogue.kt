@@ -18,6 +18,10 @@ import core.tools.START_DIALOGUE
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Estate Agent dialogue.
+ * @author Woah
+ */
 @Initializable
 class EstateAgentDialogue(
     player: Player? = null,

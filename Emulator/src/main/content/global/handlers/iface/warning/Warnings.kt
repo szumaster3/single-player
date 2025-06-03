@@ -2,6 +2,9 @@ package content.global.handlers.iface.warning
 
 import org.rs.consts.Components
 
+/**
+ * Enum represents the Warnings.
+ */
 enum class Warnings(
     val varbit: Int,
     val component: Int,

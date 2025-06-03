@@ -5,6 +5,10 @@ import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.link.music.MusicEntry
 import org.rs.consts.Components
 
+/**
+ * Handles the interface tab buttons.
+ * @author Emperor
+ */
 class MusicTabInterface : InterfaceListener {
     override fun defineInterfaceListeners() {
         on(Components.MUSIC_V3_187) { player, _, opcode, buttonID, slot, _ ->

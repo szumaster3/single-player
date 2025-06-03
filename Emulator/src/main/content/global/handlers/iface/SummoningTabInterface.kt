@@ -4,6 +4,10 @@ import core.api.sendMessage
 import core.game.interaction.InterfaceListener
 import org.rs.consts.Components
 
+/**
+ * Handles summoning tab interface
+ * @author Vexia, Avi Weinstock
+ */
 class SummoningTabInterface : InterfaceListener {
     override fun defineInterfaceListeners() {
         on(Components.LORE_STATS_SIDE_662) { player, _, opcode, buttonID, _, _ ->
@@ -18,15 +22,8 @@ class SummoningTabInterface : InterfaceListener {
 
                 67 -> {
                     if (player.familiarManager.hasFamiliar()) {
-                        if (player.familiarManager.familiar.isInvisible ||
-                            !player.familiarManager.familiar.location.withinDistance(
-                                player.location,
-                            )
-                        ) {
-                            sendMessage(
-                                player,
-                                "Your familiar is too far away to use that Scroll, or it cannot see you.",
-                            )
+                        if (player.familiarManager.familiar.isInvisible || !player.familiarManager.familiar.location.withinDistance(player.location)) {
+                            sendMessage(player, "Your familiar is too far away to use that Scroll, or it cannot see you.")
                             return@on true
                         }
                         if (!player.familiarManager.familiar.isBurdenBeast) {

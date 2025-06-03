@@ -19,6 +19,7 @@ import org.rs.consts.NPCs
 
 /**
  * Represents the Uri Molotov NPC.
+ * @author Vexia, szu
  */
 class UriNPC : AbstractNPC {
     /**

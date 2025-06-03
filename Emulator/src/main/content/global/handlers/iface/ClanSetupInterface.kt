@@ -14,6 +14,7 @@ import org.rs.consts.Components
 
 /**
  * Represents the clan setup interface interactions for players.
+ * @author Vexia
  */
 class ClanSetupInterface : InterfaceListener {
     override fun defineInterfaceListeners() {

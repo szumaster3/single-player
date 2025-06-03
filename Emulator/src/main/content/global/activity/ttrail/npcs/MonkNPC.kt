@@ -14,6 +14,7 @@ import org.rs.consts.NPCs
 
 /**
  * Represents the Monk (Monastery) NPC.
+ * @author szu
  */
 @Initializable
 class MonkNPC(

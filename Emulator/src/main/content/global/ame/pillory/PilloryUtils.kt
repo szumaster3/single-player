@@ -14,6 +14,9 @@ import org.rs.consts.Components
 import org.rs.consts.NPCs
 import org.rs.consts.Sounds
 
+/**
+ * Utils for Pillory random event.
+ */
 object PilloryUtils {
     val INTERFACE = Components.MACRO_PILLORY_GUARD_188
     val LOCATIONS =

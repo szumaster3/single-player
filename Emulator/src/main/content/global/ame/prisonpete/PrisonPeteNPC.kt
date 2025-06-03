@@ -7,7 +7,10 @@ import core.api.sendMessage
 import core.api.utils.WeightBasedTable
 import core.game.node.entity.npc.NPC
 import org.rs.consts.NPCs
-
+/**
+ * Represents the Prison Pete random event NPC.
+ * @author szu
+ */
 class PrisonPeteNPC(
     override var loot: WeightBasedTable? = null,
 ) : RandomEventNPC(NPCs.EVIL_BOB_2478) {

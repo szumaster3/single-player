@@ -12,11 +12,8 @@ import org.rs.consts.Components
 import org.rs.consts.Items
 
 /**
- * Represents the difficulty levels of clue scrolls.
- *
- * @property casketId the item id of the clue casket for this level.
- * @property minSteps minimum number of steps for a trail of this level.
- * @property maxSteps maximum number of steps for a trail of this level.
+ * A clue scroll level.
+ * @author Vexia
  */
 enum class ClueLevel(
     val casketId: Int,
@@ -31,10 +28,10 @@ enum class ClueLevel(
 
     companion object {
         /**
-         * Determines the clue level corresponding to a given casket item.
+         * Get difficulty level for the casket.
          *
-         * @param casket the casket item to identify.
-         * @return the matching ClueLevel, or UNKNOWN if no match.
+         * @param casket the casket.
+         * @return the casket matching [ClueLevel].
          */
         private fun getLevelForCasket(casket: Item): ClueLevel =
             when (casket.id) {
@@ -45,15 +42,9 @@ enum class ClueLevel(
             }
 
         /**
-         * Opens a clue casket for the player, handling reward distribution or
-         * clue progression depending on trail completion.
-         *
-         * If the trail is completed or dev mode is enabled, rewards are rolled,
-         * granted to the player, and the trail is cleared.
-         * Otherwise, a new clue is provided, replacing the casket.
-         *
-         * @param player the player opening the casket.
-         * @param casket the casket item being opened.
+         * Opens a casket for the player.
+         * @param player the player.
+         * @param casket the casket.
          */
         fun open(
             player: Player,
@@ -109,13 +100,8 @@ enum class ClueLevel(
         }
 
         /**
-         * Rolls random loot rewards for the player based on clue level.
-         *
-         * The number of items and rarity depends on the clue difficulty.
-         *
-         * @param player the player receiving the loot.
-         * @param level the clue difficulty level.
-         * @return a list of items rewarded.
+         * Gets the rewards
+         * @return the rewards
          */
         private fun rollLoot(
             player: Player,
@@ -145,10 +131,9 @@ enum class ClueLevel(
         }
 
         /**
-         * Returns a chat color code string based on the clue level.
-         *
-         * @param level the clue difficulty level.
-         * @return the color code string for chat messages.
+         * Gets the Chat color to send on completed clues.
+         * @param level The clue level.
+         * @return the chat color.
          */
         private fun getChatColor(level: ClueLevel): String =
             when (level) {
@@ -157,17 +142,16 @@ enum class ClueLevel(
                 else -> "<col=00e673>"
             }
     }
+
     /**
-     * Creates an item representing the clue casket of this level.
-     *
-     * @return an Item instance of the casket.
+     * Gets the casket.
+     * @return the casket
      */
     fun getCasket(): Item = Item(casketId)
 
     /**
-     * Returns the name of the clue level.
-     *
-     * @return the name of this ClueLevel enum constant.
+     * Gets the name of the clue level.
+     * @return the name.
      */
     fun getName(): String = Companion.toString()
 }

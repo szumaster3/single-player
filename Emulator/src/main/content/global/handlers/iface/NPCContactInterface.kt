@@ -17,6 +17,10 @@ import org.rs.consts.Components
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the NPC contact interface.
+ * @author szu
+ */
 class NPCContactInterface : InterfaceListener {
     private val contactNPCs = arrayOf(NPCs.HONEST_JIMMY_4362, NPCs.BERT_3108, NPCs.ADVISOR_GHRIM_1375, NPCs.TURAEL_8273, NPCs.LANTHUS_1526, NPCs.SUMONA_7780, NPCs.MAZCHNA_8274, NPCs.DURADEL_8275, NPCs.VANNAKA_1597, NPCs.MURPHY_464, NPCs.CHAELDAR_1598, NPCs.CYRISUS_432, NPCs.LARRY_5424)
 

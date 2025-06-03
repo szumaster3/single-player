@@ -13,6 +13,7 @@ import org.rs.consts.NPCs
 
 /**
  * Represents the Penda NPC.
+ * @author szu
  */
 @Initializable
 class PendaNPC(

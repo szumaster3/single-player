@@ -6,6 +6,10 @@ import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.info.login.LoginConfiguration
 import org.rs.consts.Components
 
+/**
+ * Represents the plugin used for the login interface.
+ * @author Vexia
+ */
 class LoginInterface : InterfaceListener {
     override fun defineInterfaceListeners() {
         on(Components.WELCOME_SCREEN_378) { player, _, _, buttonID, _, _ ->

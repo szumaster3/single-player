@@ -7,10 +7,7 @@ import org.rs.consts.Items
 
 /**
  * Represents a sliding puzzle boxes.
- *
- * @property key A puzzle type.
- * @property item The puzzle box item id.
- * @property solutionTiles The puzzle pieces.
+ * @author szu
  */
 enum class PuzzleBox(
     val key: String,

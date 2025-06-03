@@ -12,6 +12,10 @@ import org.rs.consts.Music
 import org.rs.consts.NPCs
 import org.rs.consts.Sounds
 
+/**
+ * Represents the Evil Bob random event NPC.
+ * @author szu, Zerken
+ */
 class EvilBobNPC(
     override var loot: WeightBasedTable? = null,
 ) : RandomEventNPC(NPCs.EVIL_BOB_2478) {

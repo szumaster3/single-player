@@ -8,6 +8,7 @@ import org.rs.consts.Items
 
 /**
  * Represents the coordinate clues.
+ * @author Vexia
  */
 class CoordinateClue
 /**

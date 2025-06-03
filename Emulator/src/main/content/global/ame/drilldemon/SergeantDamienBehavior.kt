@@ -6,6 +6,10 @@ import core.game.node.entity.npc.NPCBehavior
 import core.game.world.map.Location
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Sergeant Damien NPC behavior inside random event.
+ * @author Zerken (September 3, 2023)
+ */
 class SergeantDamienBehavior : NPCBehavior(NPCs.SERGEANT_DAMIEN_2790) {
     override fun onCreation(self: NPC) {
         if (inBorders(self, DrillDemonUtils.DD_AREA)) {

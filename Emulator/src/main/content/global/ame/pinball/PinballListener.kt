@@ -14,6 +14,10 @@ import core.tools.BLUE
 import org.rs.consts.Animations
 import org.rs.consts.Components
 
+/**
+ * Handles pinball re interactions.
+ * @author szu
+ */
 class PinballListener : InteractionListener, MapArea {
     init {
         PinballUtils.PINBALL_EVENT_MYSTERIOUS_OLD_MAN.init()

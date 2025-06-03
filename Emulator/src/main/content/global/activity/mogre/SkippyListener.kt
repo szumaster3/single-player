@@ -6,6 +6,10 @@ import core.game.interaction.InteractionListener
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Handles interaction for lore activity that teaches players how to fight mogre npc.
+ * @author szu
+ */
 class SkippyListener : InteractionListener {
     private val skippyNPCs = intArrayOf(2795, 2796, 2797, 2798, 2799)
 

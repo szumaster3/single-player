@@ -11,6 +11,9 @@ import core.game.system.task.Pulse
 import core.game.world.update.flag.context.Animation
 import org.rs.consts.*
 
+/**
+ * Utils for Frog random event.
+ */
 object FrogUtils {
     const val ATTRIBUTE_FROG_TASK_FAIL = "frog:fail"
 

@@ -9,6 +9,10 @@ import core.game.node.item.Item
 import core.game.system.timer.impl.AntiMacro
 import org.rs.consts.Items
 
+/**
+ * Represents the Certer interface.
+ * @author Ceikry (March 18, 2021)
+ */
 class CerterInterface : InterfaceListener {
     val CERTER_INTERFACE = 184
     val OPTION_A_CHILD = 1

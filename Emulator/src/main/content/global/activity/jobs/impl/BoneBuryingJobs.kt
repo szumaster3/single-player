@@ -5,6 +5,9 @@ import content.global.activity.jobs.JobType
 import core.game.world.map.zone.ZoneBorders
 import org.rs.consts.Items
 
+/**
+ * Enum represents the bone-burying jobs.
+ */
 enum class BoneBuryingJobs(
     val buryArea: BuryArea,
     val boneIds: List<Int>,

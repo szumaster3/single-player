@@ -14,6 +14,9 @@ import org.rs.consts.Components
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Petshop owner dialogue.
+ */
 @Initializable
 class PetshopOwnerDialogue(
     player: Player? = null,

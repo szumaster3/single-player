@@ -11,6 +11,7 @@ import org.rs.consts.Items
 
 /**
  * Represents sextant interface for solving coordinate clues on Treasure Trails.
+ * @author Vexia
  */
 class SextantListener : InterfaceListener, InteractionListener {
 

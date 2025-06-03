@@ -5,6 +5,7 @@ import org.rs.consts.Items
 
 /**
  * Represents a repairable item, its repaired product, and the repair cost.
+ * @author szu
  */
 enum class RepairItem(
     @JvmField val item: Item,

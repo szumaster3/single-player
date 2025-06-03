@@ -8,6 +8,10 @@ import org.rs.consts.NPCs
 import kotlin.math.max
 import kotlin.math.min
 
+/**
+ * Handles the shade npc.
+ * @author Vexia
+ */
 class ShadeNPC(
     override var loot: WeightBasedTable? = null,
 ) : RandomEventNPC(NPCs.SHADE_425) {

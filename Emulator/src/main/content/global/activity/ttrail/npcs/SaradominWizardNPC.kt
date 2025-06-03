@@ -17,6 +17,7 @@ import org.rs.consts.NPCs
 
 /**
  * Represents the Saradomin wizard NPC.
+ * @author Vexia
  */
 class SaradominWizardNPC : AbstractNPC {
 

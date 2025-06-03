@@ -8,6 +8,11 @@ import core.game.node.entity.skill.Skills
 import core.tools.RandomFunction
 import org.rs.consts.Items
 
+/**
+ * Handles interaction for Lost and Found random event.
+ * TODO; Complete
+ * @author Vexia
+ */
 class LostAndFoundListener : InteractionListener {
     private val sceneryIDs = (8998..9006).toIntArray()
 

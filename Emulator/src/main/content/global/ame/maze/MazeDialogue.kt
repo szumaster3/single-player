@@ -11,6 +11,7 @@ import org.rs.consts.NPCs
 /**
  * Represents the mysterious old man dialogue (Maze random event).
  * TODO find full dialogue.
+ * @author szu
  */
 class MazeDialogue : DialogueFile() {
     override fun handle(componentID: Int, buttonID: Int) {

@@ -10,6 +10,10 @@ import core.game.node.item.Item
 import org.rs.consts.Items
 import org.rs.consts.Sounds
 
+/**
+ * Handles interaction for pickaxe head random event.
+ * @author Ceikry
+ */
 class CombinePickListener : InteractionListener {
     private val pickaxeHandle = Items.PICKAXE_HANDLE_466
     private val brokenPickaxe =

@@ -10,6 +10,10 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Sounds
 
+/**
+ * Handles the random event genie npc.
+ * @author Vexia
+ */
 class GenieNPC(
     override var loot: WeightBasedTable? = null,
 ) : RandomEventNPC(NPCs.GENIE_409) {

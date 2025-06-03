@@ -1,6 +1,5 @@
 package content.global.ame.quizmaster
 
-import content.data.RandomEvent
 import content.global.ame.RandomEventNPC
 import core.api.findLocalNPC
 import core.api.utils.WeightBasedTable
@@ -10,6 +9,10 @@ import core.game.system.timer.impl.AntiMacro
 import core.game.world.update.flag.context.Animation
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Quizmaster random event NPC.
+ * @author ovenbreado
+ */
 class QuizMasterNPC(
     override var loot: WeightBasedTable? = null,
 ) : RandomEventNPC(NPCs.QUIZ_MASTER_2477) {

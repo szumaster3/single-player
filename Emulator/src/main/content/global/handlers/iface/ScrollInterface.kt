@@ -5,6 +5,10 @@ import core.api.openInterface
 import core.game.node.entity.player.Player
 import org.rs.consts.Components
 
+/**
+ * Represents the scroll interface.
+ * @author ovenbreado
+ */
 class ScrollInterface {
     companion object {
         private val MESSAGESCROLL_220_LINE_IDS = arrayOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)

@@ -8,6 +8,7 @@ import org.rs.consts.NPCs
 
 /**
  * Represents the challenge scroll clues.
+ * @author szu
  */
 open class ChallengeScroll : ChallengeClueScroll {
 

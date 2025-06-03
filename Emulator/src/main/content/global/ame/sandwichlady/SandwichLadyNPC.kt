@@ -8,6 +8,10 @@ import core.tools.RandomFunction
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Sandwich lady NPC.
+ * @author Ceikry
+ */
 class SandwichLadyNPC(
     override var loot: WeightBasedTable? = null,
 ) : RandomEventNPC(NPCs.SANDWICH_LADY_3117) {

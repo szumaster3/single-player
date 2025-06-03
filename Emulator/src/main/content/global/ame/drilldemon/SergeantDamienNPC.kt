@@ -10,6 +10,10 @@ import core.tools.RED
 import org.rs.consts.Music
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Sergeant Damien NPC random event npc.
+ * @author Ceikry
+ */
 class SergeantDamienNPC(
     override var loot: WeightBasedTable? = null,
 ) : RandomEventNPC(NPCs.SERGEANT_DAMIEN_2790) {

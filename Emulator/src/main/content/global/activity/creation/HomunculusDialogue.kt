@@ -6,6 +6,10 @@ import core.game.node.entity.npc.NPC
 import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Homunculus dialogue.
+ * @author szu
+ */
 class HomunculusDialogue : DialogueFile() {
     override fun handle(
         componentID: Int,

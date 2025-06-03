@@ -15,7 +15,7 @@ import static core.tools.TickUtilsKt.minutesToTicks;
 import static core.tools.TickUtilsKt.secondsToTicks;
 
 /**
- * The enum Consumables.
+ * Enum represents a repository of active consumables in the framework.
  */
 public enum Consumables {
     /**

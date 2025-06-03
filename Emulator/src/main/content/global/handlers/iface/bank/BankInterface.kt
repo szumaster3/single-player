@@ -15,7 +15,6 @@ import org.rs.consts.Items
 
 /**
  * Handles player interaction with the bank interface.
- *
  * @author vddCore
  */
 class BankInterface : InterfaceListener {

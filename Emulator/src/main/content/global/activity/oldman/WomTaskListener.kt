@@ -11,6 +11,11 @@ import org.rs.consts.Components
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Handles interaction for wise old man delivery activity.
+ * TODO: Work has been stopped due to a lack of sources.
+ * @author szu
+ */
 class WomTaskListener : InteractionListener {
     override fun defineListeners() {
         onUseWith(IntType.NPC, 0, WISE_OLD_MAN) { player, used, _ ->

@@ -32,6 +32,10 @@ import core.api.utils.WeightedItem
 import core.game.node.entity.skill.Skills
 import org.rs.consts.Items
 
+/**
+ * Handles random events.
+ * @author Ceikry
+ */
 enum class RandomEvents(
     val npc: RandomEventNPC,
     val loot: WeightBasedTable? = null,

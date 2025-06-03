@@ -10,6 +10,10 @@ import core.game.node.entity.npc.NPC
 import core.tools.BLUE
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Pinball random event dialogues.
+ * @author szu
+ */
 class PinballDialogue : DialogueFile() {
     override fun handle(
         componentID: Int,

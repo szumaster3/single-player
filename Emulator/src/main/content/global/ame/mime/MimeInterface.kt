@@ -6,6 +6,10 @@ import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.link.emote.Emotes
 import org.rs.consts.Components
 
+/**
+ * Represents the Mime interface.
+ * @author szu
+ */
 class MimeInterface : InterfaceListener {
     override fun defineInterfaceListeners() {
         on(Components.MACRO_MIME_EMOTES_188) { player, _, _, buttonID, _, _ ->

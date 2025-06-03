@@ -6,6 +6,10 @@ import core.api.getScenery
 import core.game.world.map.Location
 import org.rs.consts.Scenery
 
+/**
+ * Handles interaction for tog activity
+ * @author ovenbreado
+ */
 class TearsOfGuthixListener : TickListener {
     companion object {
         var ticks = 0

@@ -17,6 +17,7 @@ import org.rs.consts.Items
 
 /**
  * Represents an map clue scroll.
+ * @author Vexia
  */
 abstract class MapClueScroll(
     name: String?, clueId: Int, level: ClueLevel?, interfaceId: Int, val location: Location?, val `object`: Int, vararg borders: ZoneBorders?

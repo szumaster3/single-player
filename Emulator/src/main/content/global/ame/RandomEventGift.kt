@@ -9,6 +9,10 @@ import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import org.rs.consts.Items
 
+/**
+ * Handles interaction with random event box.
+ * @author szu
+ */
 class RandomEventGift : InteractionListener {
     override fun defineListeners() {
 

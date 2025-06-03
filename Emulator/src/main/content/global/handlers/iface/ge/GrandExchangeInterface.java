@@ -25,7 +25,6 @@ import static core.api.ContentAPIKt.playAudio;
 
 /**
  * Handles the Grand Exchange interface options.
- *
  * @author Emperor
  */
 @Initializable

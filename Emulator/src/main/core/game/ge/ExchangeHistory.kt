@@ -12,9 +12,9 @@ import java.text.NumberFormat
 import java.util.*
 
 /**
- * Manages the history of Grand Exchange offers for a player, including tracking their active and completed offers.
- * This class handles loading, saving, and displaying offer history and provides methods to interact with a player's
- * Grand Exchange history and offer records.
+ * Handles the grand exchange interfaces for the player.
+ *
+ * @author Emperor, Angle
  */
 class ExchangeHistory(
     private val player: Player? = null,
@@ -27,9 +27,7 @@ class ExchangeHistory(
     val offerRecords = arrayOfNulls<OfferRecord>(6)
 
     /**
-     * Called when the player logs in. Initializes the player's Grand Exchange history.
-     *
-     * @param player The player who is logging in.
+     * Called when the player logs in.
      */
     override fun login(player: Player) {
         val instance = ExchangeHistory(player)
@@ -37,10 +35,7 @@ class ExchangeHistory(
     }
 
     /**
-     * Parses the player's Grand Exchange history from a JSON object and populates the `history` array.
-     *
-     * @param player The player whose data is being loaded.
-     * @param data The JSON object containing the player's saved Grand Exchange data.
+     * Parses the player Grand Exchange history from a JSON obj.
      */
     override fun parsePlayer(
         player: Player,
@@ -107,9 +102,6 @@ class ExchangeHistory(
 
     /**
      * Saves the player's Grand Exchange history to a JSON object.
-     *
-     * @param player The player whose data is being saved.
-     * @param save The JSON object to save the player's data to.
      */
     override fun savePlayer(
         player: Player,
@@ -131,7 +123,6 @@ class ExchangeHistory(
 
     /**
      * Opens the collection box interface for the player.
-     * If the player's bank pin is not unlocked, it will prompt them to unlock it first.
      */
     fun openCollectionBox() {
         if (!player!!.bankPinManager.isUnlocked) {

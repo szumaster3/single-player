@@ -14,6 +14,10 @@ import org.rs.consts.Components
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Utils for Drill demon random event.
+ * @author Ceikry (March 18, 2021)
+ */
 object DrillDemonUtils {
     val DD_SIGN_VARP = 531
     val DD_SIGN_RUN = 0

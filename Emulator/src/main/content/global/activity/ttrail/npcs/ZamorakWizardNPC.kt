@@ -14,6 +14,7 @@ import org.rs.consts.NPCs
 
 /**
  * Represents the Zamorak wizard NPC.
+ * @author Vexia
  */
 class ZamorakWizardNPC : AbstractNPC {
 

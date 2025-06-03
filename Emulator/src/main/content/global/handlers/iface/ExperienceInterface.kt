@@ -14,6 +14,10 @@ import org.rs.consts.Components
 import org.rs.consts.Quests
 import org.rs.consts.Sounds
 
+/**
+ * Represents the experience interface.
+ * @author Ceikry
+ */
 @Initializable
 class ExperienceInterface : ComponentPlugin() {
     @Throws(Throwable::class)

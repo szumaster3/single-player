@@ -19,9 +19,12 @@ import org.rs.consts.Sounds
 import java.lang.Integer.max
 import java.util.concurrent.LinkedBlockingDeque
 
-class GrandExchange :
-    StartupListener,
-    Commands {
+/**
+ * Handles the exchanging of offers, offer update thread, etc.
+ * @author Ceikry
+ */
+class GrandExchange : StartupListener, Commands {
+
     var isRunning = false
 
     fun boot() {

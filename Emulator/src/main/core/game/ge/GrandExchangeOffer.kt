@@ -15,8 +15,8 @@ import java.sql.ResultSet
 import kotlin.math.min
 
 /**
- * Represents a Grand Exchange offer made by a player or a bot.
- * Offers can either be a sale or purchase of items, with various states and attributes.
+ * The outgoing packet used for updating a player's grand exchange data.
+ * @author Emperor, Vexia, Angle
  */
 class GrandExchangeOffer {
     /**

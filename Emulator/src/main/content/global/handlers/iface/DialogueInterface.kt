@@ -4,6 +4,9 @@ import core.api.ui.repositionChild
 import core.game.interaction.InterfaceListener
 import org.rs.consts.Components
 
+/**
+ * Handles repositioning of text on the dialogue interface.
+ */
 class DialogueInterface : InterfaceListener {
     override fun defineInterfaceListeners() {
         onOpen(Components.DOUBLEOBJBOX_131) { player, _ ->

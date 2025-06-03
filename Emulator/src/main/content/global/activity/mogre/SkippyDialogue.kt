@@ -11,6 +11,10 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.Items
 import org.rs.consts.Sounds
 
+/**
+ * Represents the Skippy dialogue.
+ * @author szu
+ */
 @Initializable
 class SkippyDialogue(player: Player? = null) : Dialogue(player) {
     override fun open(vararg args: Any?): Boolean {

@@ -15,6 +15,7 @@ import org.rs.consts.NPCs
 
 /**
  * Represents an emote-based clue scroll.
+ * @author Vexia
  */
 abstract class EmoteClueScroll(
     name: String?,

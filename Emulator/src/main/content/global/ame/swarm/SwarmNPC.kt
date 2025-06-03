@@ -9,6 +9,10 @@ import core.tools.minutesToTicks
 import org.rs.consts.NPCs
 import org.rs.consts.Sounds
 
+/**
+ * Handles the swarm npc.
+ * @author Zerken
+ */
 class SwarmNPC(
     override var loot: WeightBasedTable? = null,
 ) : RandomEventNPC(NPCs.SWARM_411) {

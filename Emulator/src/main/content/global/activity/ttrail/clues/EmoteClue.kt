@@ -11,6 +11,7 @@ import org.rs.consts.Items
 
 /**
  * Represents the emote clues.
+ * @author Vexia
  */
 class EmoteClue : EmoteClueScroll {
     /**

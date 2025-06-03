@@ -9,6 +9,10 @@ import core.game.interaction.InterfaceListener
 import core.tools.DARK_RED
 import org.rs.consts.Scenery
 
+/**
+ * Represents the Pillory random event interface.
+ * @author szu
+ */
 class PilloryInterface :
     InterfaceListener,
     InteractionListener {

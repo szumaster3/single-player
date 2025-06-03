@@ -1,8 +1,6 @@
 package content.global.activity.ttrail
 
 import core.api.log
-import core.api.playAudio
-import core.api.playJingle
 import core.api.toIntArray
 import core.game.component.Component
 import core.game.node.entity.player.Player
@@ -14,17 +12,10 @@ import core.plugin.Plugin
 import core.tools.Log
 import core.tools.RandomFunction
 import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 /**
- * Represents a base class for all clue scroll in the [TreasureTrailPlugin] activity.
- *
- * @param name          The name of the clue zone.
- * @param clueId        The item id of clue scroll.
- * @param level         The difficulty level of the clue.
- * @param interfaceId   The interface id shown when reading the clue.
- * @param borders       (Optional) map zone borders for region-based clues.
+ * Represents a clue scroll plugin.
+ * @author Vexia
  */
 abstract class ClueScroll(
     name: String?,
@@ -40,11 +31,9 @@ abstract class ClueScroll(
     override fun fireEvent(identifier: String?, vararg args: Any?): Any? = null
 
     /**
-     * Rewards the player by progressing the clue trail and replacing the clue
-     * with a casket or removing it if no casket is given.
-     *
-     * @param player The player to reward.
-     * @param casket If true, replace the clue with a casket. Otherwise, remove the clue.
+     * Rewards the player with a casket.
+     * @param player the player.
+     * @param casket if we give a ckaset.
      */
     fun reward(player: Player, casket: Boolean) {
         val clue = player.inventory.getItem(Item(clueId)) ?: return
@@ -57,20 +46,17 @@ abstract class ClueScroll(
     }
 
     /**
-     * Rewards the player with a casket after clue completion.
-     *
-     * @param player The player to reward.
+     * Rewards the player.
+     * @param player the player.
      */
     fun reward(player: Player) {
         reward(player, true)
     }
 
     /**
-     * Advances the player to the next stage of the clue trail,
-     * or clears the trail if the final stage is completed.
-     *
-     * @param player The player progressing through the trail.
-     * @param clue The clue item being progressed.
+     * Increments the next stage of the clue.
+     * @param player the player.
+     * @param clue the clue.
      */
     private fun nextStage(player: Player, clue: Item) {
         val manager = TreasureTrailManager.getInstance(player)
@@ -86,9 +72,8 @@ abstract class ClueScroll(
     }
 
     /**
-     * Opens the clue interface for the player, if no other interface is already open.
-     *
-     * @param player The player reading the clue.
+     * Reads a clue scroll.
+     * @param player the player.
      */
     open fun read(player: Player) {
         if (player.interfaceManager.isOpened()) {
@@ -99,15 +84,18 @@ abstract class ClueScroll(
     }
 
     /**
-     * Registers a clue plugin and its map zone.
-     *
-     * @param clue The clue plugin to register.
+     * Registers a clue scroll into the repository.
+     * @param clue the plugin.
      */
     fun register(clue: ClueScroll) {
         if (clue.clueId == 2681) return
 
         if (CLUE_SCROLLS.containsKey(clue.clueId)) {
-            log(this::class.java, Log.ERR, "Error! Plugin already registered with clue id - ${clue.clueId}, trying to register ${clue::class.java.canonicalName} the real plugin using the id is ${CLUE_SCROLLS[clue.clueId]!!::class.java.canonicalName}!")
+            log(
+                this::class.java,
+                Log.ERR,
+                "Error! Plugin already registered with clue id - ${clue.clueId}, trying to register ${clue::class.java.canonicalName} the real plugin using the id is ${CLUE_SCROLLS[clue.clueId]!!::class.java.canonicalName}!"
+            )
             return
         }
 
@@ -124,11 +112,10 @@ abstract class ClueScroll(
     }
 
     /**
-     * Checks whether the player is wearing at least one item from each of the provided equipment sets.
-     *
-     * @param player The player to check.
-     * @param equipment An array of equipment sets, where each set is an array of item IDs.
-     * @return True if the player satisfies the requirement for all sets.
+     * Checks if the player has equipment.
+     * @param player the player.
+     * @param equipment the equipment.
+     * @return true if so.
      */
     fun hasEquipment(player: Player, equipment: Array<IntArray>?): Boolean {
         if (equipment.isNullOrEmpty()) return true
@@ -143,18 +130,24 @@ abstract class ClueScroll(
 
     companion object {
         /**
-         * All wilderness cape ids. Used in certain clue equipment checks.
+         * The wilderness cape ids.
          */
         val WILDERNESS_CAPES = (4315..4414).toIntArray()
 
+        /**
+         * The mapping of clue scrolls.
+         */
         private val CLUE_SCROLLS: MutableMap<Int, ClueScroll> = HashMap()
+
+        /**
+         * A map of pre organized clue scrolls.
+         */
         private val ORGANIZED: MutableMap<ClueLevel, MutableList<ClueScroll>> = EnumMap(ClueLevel::class.java)
 
         /**
-         * Gets a random clue scroll item of the given difficulty level.
-         *
-         * @param clueLevel The level of clue to fetch.
-         * @return A new clue scroll item, or null if none are registered.
+         * Gets a clue item.
+         * @param clueLevel the level.
+         * @return the item.
          */
         @JvmStatic
         fun getClue(clueLevel: ClueLevel): Item? {
@@ -168,9 +161,8 @@ abstract class ClueScroll(
         }
 
         /**
-         * Gets all registered clue scrolls mapped by their item ID.
-         *
-         * @return A map of clue ID to plugin instance.
+         * Gets all registered clue scrolls ids.
+         * @return A map of clue ids.
          */
         @JvmStatic
         fun getClueScrolls(): Map<Int, ClueScroll> = CLUE_SCROLLS

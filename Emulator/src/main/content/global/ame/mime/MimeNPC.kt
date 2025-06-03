@@ -13,6 +13,10 @@ import core.tools.RandomFunction
 import org.rs.consts.Music
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Mime NPC.
+ * @author szu
+ */
 class MimeNPC(
     override var loot: WeightBasedTable? = null,
 ) : RandomEventNPC(NPCs.MYSTERIOUS_OLD_MAN_410) {

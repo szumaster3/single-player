@@ -10,6 +10,10 @@ import core.game.world.GameWorld
 import core.tools.END_DIALOGUE
 import core.tools.RandomFunction
 
+/**
+ * Represents the Molly dialogue.
+ * @author szu
+ */
 class MollyDialogue(
     var type: Int,
 ) : DialogueFile() {

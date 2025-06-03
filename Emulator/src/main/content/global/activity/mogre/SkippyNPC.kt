@@ -12,6 +12,10 @@ import org.rs.consts.Graphics
 import org.rs.consts.NPCs
 import org.rs.consts.Sounds
 
+/**
+ * Represents Skippy NPC for Mogre lore activity.
+ * @author szu
+ */
 class SkippyNPC : NPCBehavior(NPCs.SKIPPY_2795) {
     private val forceChat =
         arrayOf(

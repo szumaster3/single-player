@@ -9,6 +9,10 @@ import core.game.activity.Cutscene
 import core.game.node.entity.player.Player
 import org.rs.consts.Components
 
+/**
+ * Represents the Servant cutscenes.
+ * @author szu, Zerken
+ */
 class ServantCutsceneN(
     player: Player,
 ) : Cutscene(player) {

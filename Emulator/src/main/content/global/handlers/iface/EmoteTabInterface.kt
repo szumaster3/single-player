@@ -7,6 +7,10 @@ import core.game.node.entity.player.link.emote.Emotes
 import org.rs.consts.Components
 import org.rs.consts.Items
 
+/**
+ * Handles the emote tab interface.
+ * @author Vexia
+ */
 class EmoteTabInterface : InterfaceListener {
     override fun defineInterfaceListeners() {
         on(Components.EMOTES_464) { player, _, _, buttonID, _, _ ->

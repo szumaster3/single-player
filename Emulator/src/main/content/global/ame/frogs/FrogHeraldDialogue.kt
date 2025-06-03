@@ -13,6 +13,10 @@ import core.tools.END_DIALOGUE
 import core.tools.START_DIALOGUE
 import org.rs.consts.NPCs
 
+/**
+ * Represents the dialogue file used for the Frog Herald NPC.
+ * @author szu
+ */
 class FrogHeraldDialogue(
     val isStarted: Boolean = false,
 ) : DialogueFile() {

@@ -10,6 +10,10 @@ import core.game.system.timer.impl.AntiMacro
 import core.tools.END_DIALOGUE
 import org.rs.consts.Animations
 
+/**
+ * Represents the Certer dialogue.
+ * @author Ceikry (March 18, 2021)
+ */
 class CerterDialogue(
     val initial: Boolean,
 ) : DialogueFile() {

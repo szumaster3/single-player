@@ -5,6 +5,9 @@ import content.global.activity.jobs.JobType
 import core.game.node.entity.skill.Skills
 import org.rs.consts.Items
 
+/**
+ * Enum represents the production only jobs.
+ */
 enum class ProductionJobs(
     override val lower: Int,
     override val upper: Int,

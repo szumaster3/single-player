@@ -4,6 +4,9 @@ import core.api.ui.repositionChild
 import core.game.interaction.InterfaceListener
 import org.rs.consts.Components
 
+/**
+ * Handles the server-side repositioning of the interface for selecting options.
+ */
 class SelectOptionInterface : InterfaceListener {
     override fun defineInterfaceListeners() {
         onOpen(Components.SELECT_AN_OPTION_140) { player, _ ->

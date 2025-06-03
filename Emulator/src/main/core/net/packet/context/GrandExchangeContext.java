@@ -4,7 +4,8 @@ import core.game.node.entity.player.Player;
 import core.net.packet.Context;
 
 /**
- * The type Grand exchange context.
+ * The packet context of the grand exchange update packet.
+ * @author Emperor
  */
 public class GrandExchangeContext implements Context {
 

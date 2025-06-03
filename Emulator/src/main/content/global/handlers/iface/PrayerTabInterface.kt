@@ -11,6 +11,10 @@ import core.game.node.entity.player.link.prayer.PrayerType
 import core.tools.DARK_BLUE
 import org.rs.consts.Components
 
+/**
+ * Represents the prayer interface.
+ * @author Vexia
+ */
 class PrayerTabInterface : InterfaceListener {
     override fun defineInterfaceListeners() {
         on(Components.PRAYER_271) { player, _, _, buttonID, _, _ ->

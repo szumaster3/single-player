@@ -17,6 +17,10 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Juna dialogue for Tears of Guthix activity.
+ * @author szu
+ */
 @Initializable
 class JunaDialogue(
     player: Player? = null,

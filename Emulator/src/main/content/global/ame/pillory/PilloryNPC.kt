@@ -11,6 +11,10 @@ import core.game.system.task.Pulse
 import core.game.system.timer.impl.AntiMacro
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Pillory random event NPC.
+ * @author szu
+ */
 class PilloryNPC(
     override var loot: WeightBasedTable? = null,
 ) : RandomEventNPC(NPCs.PILLORY_GUARD_2791) {

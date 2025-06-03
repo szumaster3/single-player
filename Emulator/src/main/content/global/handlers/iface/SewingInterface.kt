@@ -7,6 +7,10 @@ import core.game.node.item.Item
 import org.rs.consts.Components
 import org.rs.consts.Items
 
+/**
+ * Represents the Sewing interface.
+ * @author szu
+ */
 class SewingInterface : InterfaceListener {
     override fun defineInterfaceListeners() {
         on(Components.SEW_INTERFACE_419) { player, _, opcode, button, _, _ ->

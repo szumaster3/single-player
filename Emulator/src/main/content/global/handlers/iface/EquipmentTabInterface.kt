@@ -25,6 +25,10 @@ import core.plugin.Plugin
 import core.tools.Log
 import org.rs.consts.Components
 
+/**
+ * Represents the equipment interface.
+ * @author Emperor
+ */
 @Initializable
 class EquipmentTabInterface : ComponentPlugin() {
     @Throws(Throwable::class)

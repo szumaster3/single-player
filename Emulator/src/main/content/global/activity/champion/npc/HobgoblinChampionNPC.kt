@@ -17,6 +17,9 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Vars
 
+/**
+ * Represents the Hobgoblin champion NPC for Champions challenge.
+ */
 @Initializable
 class HobgoblinChampionNPC(
     id: Int = 0,

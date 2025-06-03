@@ -28,7 +28,7 @@ import org.rs.consts.Scenery
  * ::setvarbit 454 // (varp 449 7-11) 0-10 where its just time bar length
  * ::setvarbit 455 // (varp 449 12-20) X where x is number of points he gets
  * ```
- * @author https://gitlab.com/ovenbreado
+ * @author ovenbreado
  */
 class TearsOfGuthixActivity :
     InteractionListener,

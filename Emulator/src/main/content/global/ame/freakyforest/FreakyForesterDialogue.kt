@@ -8,6 +8,10 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Freaky forester random event dialogue.
+ * @author szu
+ */
 class FreakyForesterDialogue : DialogueFile() {
     override fun handle(
         componentID: Int,

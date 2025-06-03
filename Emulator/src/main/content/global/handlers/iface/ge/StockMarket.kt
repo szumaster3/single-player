@@ -21,8 +21,7 @@ import kotlin.math.min
 
 /**
  * Handles the grand exchange interface (Stock Market)
- *
- * Author: [Ceikry](https://gitlab.com/Ceikry)
+ * @author Ceikry
  */
 class StockMarket : InterfaceListener {
     override fun defineInterfaceListeners() {

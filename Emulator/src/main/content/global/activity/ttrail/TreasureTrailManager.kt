@@ -9,7 +9,8 @@ import org.json.simple.JSONObject
 import org.rs.consts.Items
 
 /**
- * Manages the treasure trail state and progression.
+ * Handles the treasure trail of a player.
+ * @author Vexia
  */
 class TreasureTrailManager :
     LoginListener,

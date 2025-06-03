@@ -20,6 +20,8 @@ import kotlin.math.abs
  *
  * Relations
  * - Monkey Madness quest
+ *
+ * @author gabriel_aguido, szu
  */
 class PuzzleBoxListener : InteractionListener, InterfaceListener {
 

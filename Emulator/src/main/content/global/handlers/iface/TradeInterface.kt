@@ -11,6 +11,10 @@ import core.plugin.Initializable
 import core.plugin.Plugin
 import org.rs.consts.Components
 
+/**
+ * Represents the interface plugin used to handle all trade related functions.
+ * @author Vexia
+ */
 @Initializable
 class TradeInterface : ComponentPlugin() {
     override fun newInstance(arg: Any?): Plugin<Any> {

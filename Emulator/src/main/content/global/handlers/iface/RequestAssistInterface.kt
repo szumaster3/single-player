@@ -6,7 +6,6 @@ import org.rs.consts.Components
 
 /**
  * Represents the Request assist interface.
- *
  * @see AssistSessionPulse
  */
 class RequestAssistInterface : InterfaceListener {

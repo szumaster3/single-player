@@ -13,6 +13,10 @@ import org.rs.consts.Components
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Quizmaster dialogue.
+ * @author ovenbreado
+ */
 class QuizMasterDialogue : DialogueFile() {
     companion object {
         const val QUIZMASTER_INTERFACE = Components.MACRO_QUIZSHOW_191

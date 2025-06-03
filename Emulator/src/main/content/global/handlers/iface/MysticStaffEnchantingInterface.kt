@@ -11,8 +11,9 @@ import org.rs.consts.NPCs
 
 /**
  * Represents the enchanting of battle staffs into mystic staffs.
+ * @author afaroutdude
  */
-class EnchantedStaffInterface : InterfaceListener {
+class MysticStaffEnchantingInterface : InterfaceListener {
     override fun defineInterfaceListeners() {
         onOpen(Components.STAFF_ENCHANT_332) { player, _ ->
             for (staff in EnchantedStaff.values()) {

@@ -20,6 +20,10 @@ private const val TEXT_CHILD = 88
 
 private val skincolorButtons = (93..100)
 
+/**
+ * Represents the Makeover interface.
+ * @author Ceikry
+ */
 @Initializable
 class MakeOverInterface : ComponentPlugin() {
     override fun open(

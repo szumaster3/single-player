@@ -411,6 +411,10 @@ private val ITEMS =
         null,
     )
 
+/**
+ * Fur Clothing interface.
+ * @author Ceikry
+ */
 @Initializable
 class FurClothingInterface : ComponentPlugin() {
     override fun open(

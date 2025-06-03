@@ -9,12 +9,14 @@ import org.rs.consts.Graphics
 
 class TeleotherInterface : InterfaceListener {
     override fun defineInterfaceListeners() {
-        on(Components.TP_OTHER_326, 5) { player, _, _, _, _, _ ->
-            lock(player, 2)
-            if (teleport(player, getAttribute(player, "t-o_location", player.location), TeleportType.TELE_OTHER)) {
-                visualize(player, Animations.OLD_SHRINK_AND_RISE_UP_TP_1816, Graphics.TELEOTHER_ACCEPT_342)
+        on(Components.TP_OTHER_326) { player, _, _, buttonID, _, _ ->
+            if(buttonID == 5) {
+                lock(player, 2)
+                if (teleport(player, getAttribute(player, "t-o_location", player.location), TeleportType.TELE_OTHER)) {
+                    visualize(player, Animations.OLD_SHRINK_AND_RISE_UP_TP_1816, Graphics.TELEOTHER_ACCEPT_342)
+                }
             }
-            closeInterface(player)
+            player.interfaceManager.close()
             return@on true
         }
     }

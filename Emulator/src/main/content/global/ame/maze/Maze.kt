@@ -16,9 +16,8 @@ import core.game.world.map.zone.ZoneBorders
 import core.game.world.map.zone.ZoneRestriction
 
 /**
- * Maze.
- *
- * Author: [Ovenbread](https://gitlab.com/ovenbreado)
+ * Hook implementation for handling the Maze random event.
+ * @author Ovenbread
  */
 class Maze : EventHook<TickEvent>, MapArea {
     override fun defineAreaBorders(): Array<ZoneBorders> = arrayOf(getRegionBorders(11591))

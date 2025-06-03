@@ -6,6 +6,9 @@ import core.game.node.entity.player.Player
 import core.game.world.map.Location
 import core.game.world.map.zone.ZoneBorders
 
+/**
+ * Represents the Graveyard area.
+ */
 class Graveyard : MapArea {
 
     override fun defineAreaBorders(): Array<ZoneBorders> {

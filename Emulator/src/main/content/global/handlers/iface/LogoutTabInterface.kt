@@ -5,6 +5,10 @@ import core.game.interaction.InterfaceListener
 import core.game.world.repository.Repository
 import org.rs.consts.Components
 
+/**
+ * Represents the interface.
+ * @author Vexia
+ */
 class LogoutTabInterface : InterfaceListener {
     override fun defineInterfaceListeners() {
         on(Components.LOGOUT_182) { player, _, _, buttonID, _, _ ->

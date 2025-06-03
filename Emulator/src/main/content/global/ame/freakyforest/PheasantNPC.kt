@@ -11,6 +11,10 @@ import core.game.node.item.Item
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents Pheasant NPC for Freaky Forester random event.
+ * @author Zerken, szu
+ */
 class PheasantNPC : NPCBehavior(NPCs.PHEASANT_2459, NPCs.PHEASANT_2460, NPCs.PHEASANT_2461, NPCs.PHEASANT_2462) {
     override fun onDropTableRolled(
         self: NPC,

@@ -4,6 +4,9 @@ import core.game.world.map.zone.ZoneBorders
 import org.rs.consts.Animations
 import org.rs.consts.Vars
 
+/**
+ * Mogre activity utils.
+ */
 object SkippyUtils {
     const val SKIPPY_VARBIT = Vars.VARBIT_MINI_QUEST_MOGRE_AND_SKIPPY_1344
     const val ANIMATION_THROW = Animations.THROW_385

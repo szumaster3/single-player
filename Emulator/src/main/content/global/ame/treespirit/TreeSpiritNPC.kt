@@ -8,6 +8,10 @@ import core.game.node.entity.npc.NPC
 import org.rs.consts.NPCs
 import kotlin.math.max
 
+/**
+ * Handles the Tree Spirit event whilst cutting trees.
+ * @author Splinter
+ */
 class TreeSpiritNPC(
     override var loot: WeightBasedTable? = null,
 ) : RandomEventNPC(NPCs.TREE_SPIRIT_438) {

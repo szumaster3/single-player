@@ -205,6 +205,10 @@ private val femaleLegIDs = intArrayOf(
 
 private val COINS = Item(Items.COINS_995, 1000)
 
+/**
+ * Represents the Thessalia interface.
+ * @author Ceikry
+ */
 @Initializable
 class ThessaliaInterface : ComponentPlugin() {
     enum class colorType {

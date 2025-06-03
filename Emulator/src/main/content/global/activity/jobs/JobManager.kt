@@ -19,6 +19,11 @@ import org.json.simple.JSONObject
 import org.rs.consts.Items
 import java.lang.Integer.min
 
+/**
+ * Manages the player job data & progression.
+ *
+ * @source https://runescape.wiki/w/Jobs?oldid=831782
+ */
 class JobManager(
     val player: Player? = null,
 ) : LoginListener,

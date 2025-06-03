@@ -13,6 +13,9 @@ import core.game.world.map.Location
 import org.rs.consts.Music
 import org.rs.consts.NPCs
 
+/**
+ * Handles the pattern recognition random event NPC.
+ */
 class PatternRecognitionNPC(
     var type: String = "",
     override var loot: WeightBasedTable? = null,

@@ -10,6 +10,10 @@ import core.game.world.GameWorld
 import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Servant dialogue.
+ * @author szu
+ */
 class ServantDialogue : DialogueFile() {
     override fun handle(
         componentID: Int,

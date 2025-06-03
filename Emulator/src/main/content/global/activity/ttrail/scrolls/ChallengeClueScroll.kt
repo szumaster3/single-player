@@ -19,14 +19,7 @@ import org.rs.consts.NPCs
 
 /**
  * Represents a challenge clue scroll.
- *
- * @param question  the question associated with the clue.
- * @param npc       the NPC related to the clue.
- * @param answer    the answer to the clue.
- * @param name      the name of the clue scroll.
- * @param clueId    the unique identifier of the clue.
- * @param level     the difficulty level of the clue.
- * @param borders   the zone borders where the clue is located.
+ * @author szu
  */
 abstract class ChallengeClueScroll(
     name: String?,

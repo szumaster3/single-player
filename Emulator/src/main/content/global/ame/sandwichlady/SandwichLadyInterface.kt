@@ -8,6 +8,10 @@ import core.game.system.timer.impl.AntiMacro
 import org.rs.consts.Components
 import org.rs.consts.Items
 
+/**
+ * Represents the Sandwich lady interface.
+ * @author Ceikry
+ */
 class SandwichLadyInterface : InterfaceListener {
     val SANDWICH_INTERFACE = Components.MACRO_SANDWICH_TRAY_297
     val baguette = Items.BAGUETTE_6961

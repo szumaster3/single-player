@@ -6,6 +6,7 @@ import org.rs.consts.NPCs
 
 /**
  * Represents the creature creation combinations used in the Creature Creation activity.
+ * @author szu
  */
 enum class CreatureCreation(
     val material: String,

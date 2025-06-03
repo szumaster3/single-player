@@ -8,6 +8,10 @@ import core.api.sendMessages
 import core.game.interaction.InterfaceListener
 import org.rs.consts.Components
 
+/**
+ * Represents the Warnning interface.
+ * @author szu
+ */
 class DoomsayerInterface : InterfaceListener {
     override fun defineInterfaceListeners() {
         /*

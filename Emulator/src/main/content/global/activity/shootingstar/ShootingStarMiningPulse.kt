@@ -8,6 +8,9 @@ import core.game.node.entity.skill.Skills
 import core.game.node.scenery.Scenery
 import core.game.world.GameWorld
 
+/**
+ * The pulse used to handle mining shooting stars.
+ */
 class ShootingStarMiningPulse(
     player: Player?,
     node: Scenery?,

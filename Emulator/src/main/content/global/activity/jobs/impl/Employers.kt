@@ -2,6 +2,9 @@ package content.global.activity.jobs.impl
 
 import org.rs.consts.NPCs
 
+/**
+ * Enum represents the npc that can assign the player a job.
+ */
 enum class Employers(
     val npcId: Int,
 ) {

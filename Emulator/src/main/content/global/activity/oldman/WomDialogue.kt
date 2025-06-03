@@ -9,6 +9,10 @@ import core.tools.END_DIALOGUE
 import core.tools.RandomFunction
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Wise old man delivery dialogue file (Extension).
+ * @author szu
+ */
 class WomDialogue : DialogueFile() {
     override fun handle(
         componentID: Int,

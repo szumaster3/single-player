@@ -9,6 +9,10 @@ import core.game.interaction.QueueStrength
 import core.game.world.map.Location
 import org.rs.consts.Components
 
+/**
+ * Represents the Evil Bob random event dialogue.
+ * @author szu, Zerken
+ */
 class EvilBobInterface : InterfaceListener {
     override fun defineInterfaceListeners() {
         on(Components.MACRO_EVIL_BOB_186) { player, _, _, buttonID, _, _ ->

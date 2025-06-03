@@ -17,6 +17,9 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Vars
 
+/**
+ * Represents the Giant champion NPC for Champions challenge.
+ */
 @Initializable
 class GiantChampionNPC(
     id: Int = 0,

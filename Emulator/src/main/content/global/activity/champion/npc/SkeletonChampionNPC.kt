@@ -18,6 +18,9 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Vars
 
+/**
+ * Represents the Skeleton champion NPC for Champions challenge.
+ */
 @Initializable
 class SkeletonChampionNPC(
     id: Int = 0,

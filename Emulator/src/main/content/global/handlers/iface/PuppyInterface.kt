@@ -8,7 +8,11 @@ import org.rs.consts.Components
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
-class PetStoreInterface : InterfaceListener {
+/**
+ * Represents the puppy interface plugin.
+ * @author Ceikry
+ */
+class PuppyInterface : InterfaceListener {
     override fun defineInterfaceListeners() {
         on(Components.PICK_A_PUPPY_668) { player, _, _, buttonID, _, _ ->
             val index =

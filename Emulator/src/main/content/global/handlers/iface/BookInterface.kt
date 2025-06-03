@@ -56,6 +56,8 @@ import org.rs.consts.Sounds
  * Example book: [Ultimate Guide to Glassblowing][content.global.handlers.item.book.guide.GlassblowingGuide]
  *
  * @see [core.game.system.command.sets.ModelViewerCommandSet]
+ *
+ * @author ovenbreado
  */
 class BookInterface : InterfaceListener {
     companion object {

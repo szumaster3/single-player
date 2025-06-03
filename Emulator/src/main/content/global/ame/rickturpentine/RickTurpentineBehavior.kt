@@ -7,6 +7,10 @@ import core.game.node.entity.npc.NPCBehavior
 import core.tools.RandomFunction
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Rick Turpentine behavior.
+ * @author Zerken
+ */
 class RickTurpentineBehavior : NPCBehavior(NPCs.RICK_TURPENTINE_2476) {
     override fun beforeAttackFinalized(
         self: NPC,

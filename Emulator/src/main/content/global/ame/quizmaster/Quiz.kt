@@ -1,6 +1,5 @@
 package content.global.ame.quizmaster
 
-import content.data.RandomEvent
 import core.api.MapArea
 import core.api.removeAttribute
 import core.api.removeTabs
@@ -8,6 +7,10 @@ import core.game.node.entity.Entity
 import core.game.node.entity.player.Player
 import core.game.world.map.zone.ZoneBorders
 
+/**
+ * Represents Quiz random event area.
+ * @author ovenbreado
+ */
 class Quiz : MapArea {
     override fun defineAreaBorders(): Array<ZoneBorders> = arrayOf(ZoneBorders(1954, 4763, 1950, 4770))
 

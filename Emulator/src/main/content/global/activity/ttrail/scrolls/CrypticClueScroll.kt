@@ -19,6 +19,7 @@ import org.rs.consts.Scenery
 
 /**
  * Represents a cryptic clue scroll.
+ * @author szu
  */
 abstract class CrypticClueScroll(
     name: String?,

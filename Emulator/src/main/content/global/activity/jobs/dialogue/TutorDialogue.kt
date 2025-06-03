@@ -14,6 +14,9 @@ import core.game.node.item.Item
 import core.tools.END_DIALOGUE
 import org.rs.consts.Items
 
+/**
+ * The dialogue file to handle a player asking about work with npc.
+ */
 class TutorDialogue : DialogueFile() {
     override fun handle(
         componentID: Int,

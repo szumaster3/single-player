@@ -12,6 +12,10 @@ import core.tools.minutesToTicks
 import core.tools.secondsToTicks
 import org.rs.consts.NPCs
 
+/**
+ * Handles strange plant NPC.
+ * @author Zerken
+ */
 class StrangePlantNPC(
     override var loot: WeightBasedTable? = null,
 ) : RandomEventNPC(NPCs.STRANGE_PLANT_407) {

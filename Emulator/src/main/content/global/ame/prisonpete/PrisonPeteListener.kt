@@ -9,6 +9,10 @@ import core.game.world.map.zone.ZoneRestriction
 import core.game.world.update.flag.context.Graphics
 import org.rs.consts.*
 
+/**
+ * Handles the interactions for Prison pete random event.
+ * @author szu
+ */
 class PrisonPeteListener : InteractionListener, MapArea {
 
     init {

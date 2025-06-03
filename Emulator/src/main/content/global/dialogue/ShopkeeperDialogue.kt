@@ -9,6 +9,10 @@ import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Shopkeeper dialogue.
+ * @author Vexia
+ */
 @Initializable
 class ShopkeeperDialogue(
     player: Player? = null,

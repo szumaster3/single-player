@@ -12,7 +12,8 @@ import org.rs.consts.Components
 import org.rs.consts.Sounds
 
 /**
- * Evil twin interface.
+ * Handles interfaces for Evil Twin random event.
+ * @author Emperor
  */
 class EvilTwinInterface : InterfaceListener {
 

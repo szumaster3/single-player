@@ -10,6 +10,9 @@ import core.game.node.entity.npc.NPC
 import org.rs.consts.Components
 import org.rs.consts.NPCs
 
+/**
+ * Represents the pattern recognition interface for surprise exam random event.
+ */
 class PatternRecognitionInterface : InterfaceListener {
     val COMPONENT = Components.PATTERN_NEXT_103
 

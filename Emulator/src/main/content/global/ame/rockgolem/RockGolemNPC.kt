@@ -7,6 +7,10 @@ import core.game.node.entity.npc.NPC
 import org.rs.consts.NPCs
 import kotlin.math.max
 
+/**
+ * Handles the river troll npc.
+ * @author Vexia
+ */
 class RockGolemNPC(
     override var loot: WeightBasedTable? = null,
 ) : RandomEventNPC(NPCs.ROCK_GOLEM_413) {

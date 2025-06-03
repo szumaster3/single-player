@@ -11,6 +11,7 @@ import org.rs.consts.Scenery
 
 /**
  * Represents the cryptic clues.
+ * @author szu
  */
 class CrypticClue : CrypticClueScroll {
 
@@ -21,34 +22,16 @@ class CrypticClue : CrypticClueScroll {
 
     /**
      * Constructs a cryptic clue with basic parameters.
-     *
-     * @param name     the internal name of the clue scroll
-     * @param clueId   the item id of the clue scroll
-     * @param level    the difficulty level of the clue
-     * @param clue the text/riddle of the clue
-     * @param location the in-game location to solve the clue
      */
     constructor(name: String?, clueId: Int, level: ClueLevel?, clue: String?, location: Location?) : super(name, clueId, level, clue, location)
 
     /**
      * Constructs a cryptic clue with additional object and zone data.
-     *
-     * @param name     the internal name of the clue scroll
-     * @param clueId   the item id of the clue scroll
-     * @param level    the difficulty level of the clue
-     * @param clue the text/riddle of the clue
-     * @param location the in-game location to solve the clue
-     * @param object   the object id to interact with (if applicable)
-     * @param borders  the zone borders that define the clue's area
      */
     constructor(name: String, clueId: Int, level: ClueLevel, clue: String, location: Location, `object`: Int, vararg borders: ZoneBorders) : super(name, clueId, level, clue, location, `object`, *borders)
 
     /**
-     * Registers all known cryptic clue scrolls to the game when the plugin is loaded.
-     *
-     * @param arg unused initialization argument
-     * @return the current plugin instance
-     * @throws Throwable if an error occurs during registration
+     * Registers all known cryptic clue scrolls
      */
     @Throws(Throwable::class)
     override fun newInstance(arg: Any?): Plugin<Any> {

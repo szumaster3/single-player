@@ -11,6 +11,9 @@ import core.game.world.map.Location
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Handles the pattern recognition interactions.
+ */
 class PatternRecognitionListener : InteractionListener {
 
     override fun defineListeners() {

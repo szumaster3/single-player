@@ -12,6 +12,9 @@ import core.game.world.map.Location
 import core.tools.RandomFunction
 import org.rs.consts.Items
 
+/**
+ * Utils for Lost And Found random event.
+ */
 object LostAndFoundUtils {
     val eventLocation = Location(2338, 4747, 0)
     const val essenceMineKey = "laf:essence-mine"

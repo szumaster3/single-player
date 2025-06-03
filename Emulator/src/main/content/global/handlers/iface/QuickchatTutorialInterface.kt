@@ -6,6 +6,10 @@ import core.game.interaction.InterfaceListener
 import org.rs.consts.Components
 import org.rs.consts.Vars
 
+/**
+ * Handles quick chat tutorial.
+ * @author szu
+ */
 class QuickchatTutorialInterface : InterfaceListener {
     override fun defineInterfaceListeners() {
         onOpen(Components.QUICKCHAT_TUTORIAL_157) { player, _ ->

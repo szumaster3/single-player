@@ -6,6 +6,9 @@ import core.game.dialogue.FaceAnim
 import core.game.system.timer.impl.AntiMacro
 import core.tools.END_DIALOGUE
 
+/**
+ * Represents the Genie dialogue.
+ */
 class GenieDialogue : DialogueFile() {
     override fun handle(
         componentID: Int,

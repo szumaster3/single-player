@@ -5,6 +5,10 @@ import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Zombie head dialogue.
+ * @author Vexia
+ */
 class ZombieHeadDialogue : DialogueFile() {
     override fun handle(
         componentID: Int,

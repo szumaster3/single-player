@@ -16,6 +16,10 @@ import core.net.packet.out.CameraViewPacket
 import org.rs.consts.Components
 import org.rs.consts.NPCs
 
+/**
+ * Handles the evil twin random event.
+ * @author Emperor, szu
+ */
 class EvilTwinListener :
     InteractionListener,
     MapArea {

@@ -15,6 +15,9 @@ import org.rs.consts.Components
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Utils for Mime random event.
+ */
 object MimeUtils {
     val MIME_EVENT_LOCATION = Location(2008, 4764, 0)
     val MIME_LOCATION = Location(2008, 4762, 0)

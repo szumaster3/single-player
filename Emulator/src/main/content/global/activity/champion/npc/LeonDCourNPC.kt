@@ -14,6 +14,9 @@ import org.rs.consts.Components
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Leon D'Cour final champion for Champions challenge.
+ */
 @Initializable
 class LeonDCourNPC(
     id: Int = 0,

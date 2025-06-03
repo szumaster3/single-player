@@ -12,6 +12,10 @@ import core.tools.START_DIALOGUE
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the dialogue plugin used for the Larxus NPC.
+ * @author Vexia, szu
+ */
 @Initializable
 class LarxusDialogue(
     player: Player? = null,

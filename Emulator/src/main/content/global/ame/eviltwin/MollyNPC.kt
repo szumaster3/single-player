@@ -7,6 +7,10 @@ import core.game.system.timer.impl.AntiMacro
 
 private val MOLLY: Int = 3892 + (0 and 0xFF) + (((0 shr 16) and 0xFF) * EvilTwinColors.values().size)
 
+/**
+ * Represents the Molly NPC for Evil twin random event.
+ * @author szu
+ */
 class MollyNPC(
     override var loot: WeightBasedTable? = null,
 ) : RandomEventNPC(MOLLY) {

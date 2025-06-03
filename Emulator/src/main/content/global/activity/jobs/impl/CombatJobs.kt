@@ -4,6 +4,9 @@ import content.global.activity.jobs.Job
 import content.global.activity.jobs.JobType
 import org.rs.consts.NPCs
 
+/**
+ * Enum represents the combat only jobs.
+ */
 enum class CombatJobs(
     val monsterIds: List<Int>,
     override val employer: Employers,

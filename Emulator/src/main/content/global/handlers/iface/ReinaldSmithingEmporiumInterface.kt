@@ -27,9 +27,10 @@ private val WRISTGUARD_MODELS =
     )
 
 /**
- * Represents the Smithing Emporium.
+ * Handled Reinald bracelet shop.
+ * @author Ceikry
  */
-class SmithingEmporiumInterface : InterfaceListener {
+class ReinaldSmithingEmporiumInterface : InterfaceListener {
     override fun defineInterfaceListeners() {
         onOpen(Components.REINALD_SMITHING_EMPORIUM_593) { player, component ->
             setAttribute(player, "wrists-look", player.appearance.wrists.look)

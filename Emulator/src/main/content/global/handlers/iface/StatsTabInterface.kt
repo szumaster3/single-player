@@ -8,6 +8,10 @@ import core.game.node.entity.skill.LevelUp
 import core.game.node.entity.skill.Skills
 import org.rs.consts.Components
 
+/**
+ * Represents the plugin used to handle the skilling tab.
+ * @author Vexia, Splinter
+ */
 class StatsTabInterface : InterfaceListener {
     override fun defineInterfaceListeners() {
         on(Components.STATS_320) { player, _, _, buttonID, _, _ ->
@@ -49,32 +53,7 @@ class StatsTabInterface : InterfaceListener {
     companion object {
         val skillMap = HashMap<Int, SkillConfig>()
         val ADVANCE_CONFIGS =
-            intArrayOf(
-                9,
-                40,
-                17,
-                49,
-                25,
-                57,
-                33,
-                641,
-                659,
-                664,
-                121,
-                649,
-                89,
-                114,
-                107,
-                72,
-                64,
-                80,
-                673,
-                680,
-                99,
-                698,
-                689,
-                705,
-            )
+            intArrayOf(9, 40, 17, 49, 25, 57, 33, 641, 659, 664, 121, 649, 89, 114, 107, 72, 64, 80, 673, 680, 99, 698, 689, 705)
 
         init {
             for (skill in SkillConfig.values()) {

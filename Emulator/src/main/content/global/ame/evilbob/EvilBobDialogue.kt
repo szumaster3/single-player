@@ -11,6 +11,10 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Evil Bob random event dialogue.
+ * @author szu, Zerken
+ */
 class EvilBobDialogue(
     val rewardDialogue: Boolean = false,
     val rewardXpSkill: Int = Skills.FISHING,

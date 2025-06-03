@@ -11,6 +11,10 @@ import core.game.system.timer.impl.AntiMacro
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Handles interaction with strange plant NPC.
+ * @author Zerken
+ */
 class StrangePlantListener : InteractionListener {
     override fun defineListeners() {
         on(NPCs.STRANGE_PLANT_407, IntType.NPC, "pick") { player, node ->

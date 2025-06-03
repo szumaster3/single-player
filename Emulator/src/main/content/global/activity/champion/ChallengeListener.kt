@@ -25,9 +25,11 @@ import core.game.world.map.zone.ZoneBorders
 import core.game.world.map.zone.ZoneRestriction
 import org.rs.consts.*
 
-class ChallengeListener :
-    InteractionListener,
-    MapArea {
+/**
+ * Represents the Champion challenge.
+ * @author szu
+ */
+class ChallengeListener : InteractionListener, MapArea {
     val earthWarriorScroll = Items.CHAMPION_SCROLL_6798
     val ghoulScroll = Items.CHAMPION_SCROLL_6799
     val giantScroll = Items.CHAMPION_SCROLL_6800

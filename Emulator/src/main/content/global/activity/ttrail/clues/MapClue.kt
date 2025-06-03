@@ -11,6 +11,7 @@ import org.rs.consts.Scenery
 
 /**
  * Represents the emote clues.
+ * @author Vexia
  */
 class MapClue : MapClueScroll {
 

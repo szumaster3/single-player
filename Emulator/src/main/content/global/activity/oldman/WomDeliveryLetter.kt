@@ -7,6 +7,9 @@ import core.game.node.entity.player.Player
 import org.rs.consts.Components
 import org.rs.consts.NPCs
 
+/**
+ * Utils for Wise old man delivery.
+ */
 object WomDeliveryLetter {
     val THE_ORACLE_LETTER_CONTENT =
         arrayOf(

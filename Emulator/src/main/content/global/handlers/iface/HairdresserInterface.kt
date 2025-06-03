@@ -56,42 +56,7 @@ private const val F_FRENCH_TWIST = 279
 private const val F_PRINCESS = 280
 
 val FEMALE_HAIR_STYLES =
-    intArrayOf(
-        F_BALD,
-        F_BUN,
-        F_DREAD,
-        F_LONG,
-        F_SHORT,
-        F_PIGTAILS,
-        F_CREW,
-        F_CLOSE_CROP,
-        F_WILD_SPIKE,
-        F_SPIKE,
-        F_SIDE_PONY,
-        F_CURLS,
-        F_WIND_BRAIDS,
-        F_PONYTAIL,
-        F_RING_BRAIDS,
-        F_FOUR_PONIES,
-        F_FLIP,
-        F_LAYERED_FLIP,
-        F_STRAIGHT,
-        F_LONG_BRAIDS,
-        F_CURTAINS,
-        F_EARMUFFS,
-        F_FRINGE,
-        F_PINNED_UP,
-        F_LAYERED,
-        F_TOP_KNOT,
-        F_PINNED_BUN,
-        F_PONYTAIL_SPIKED,
-        F_PIXIE,
-        F_ODANGO,
-        F_BUN_WITH_FRINGE,
-        F_PIGTAILS_WITH_FRINGE,
-        F_FRENCH_TWIST,
-        F_PRINCESS,
-    )
+    intArrayOf(F_BALD, F_BUN, F_DREAD, F_LONG, F_SHORT, F_PIGTAILS, F_CREW, F_CLOSE_CROP, F_WILD_SPIKE, F_SPIKE, F_SIDE_PONY, F_CURLS, F_WIND_BRAIDS, F_PONYTAIL, F_RING_BRAIDS, F_FOUR_PONIES, F_FLIP, F_LAYERED_FLIP, F_STRAIGHT, F_LONG_BRAIDS, F_CURTAINS, F_EARMUFFS, F_FRINGE, F_PINNED_UP, F_LAYERED, F_TOP_KNOT, F_PINNED_BUN, F_PONYTAIL_SPIKED, F_PIXIE, F_ODANGO, F_BUN_WITH_FRINGE, F_PIGTAILS_WITH_FRINGE, F_FRENCH_TWIST, F_PRINCESS)
 
 private const val M_BALD = 0
 private const val M_DREAD = 1
@@ -119,32 +84,7 @@ private const val M_WARRIOR_CURTAINS = 247
 private const val M_COMB_OVER = 253
 
 val MALE_HAIR_STYLES =
-    intArrayOf(
-        M_BALD,
-        M_DREAD,
-        M_LONG,
-        M_MEDIUM,
-        M_MONK,
-        M_SHORT,
-        M_CLOSE_CROP,
-        M_WILD_SPIKE,
-        M_SPIKE,
-        M_MOHAWK,
-        M_WIND_BRAID,
-        M_QUIFF,
-        M_SAMURAI,
-        M_PRINCE,
-        M_CURTAINS,
-        M_LONG_CURTAINS,
-        M_SIDE_PART_SPIKE,
-        M_TOP_KNOT,
-        M_PONYTAIL_SPIKEY,
-        M_LONG_SWEPT_FRINGE,
-        M_EVANSTYLE,
-        M_DRAGON,
-        M_WARRIOR_CURTAINS,
-        M_COMB_OVER,
-    )
+    intArrayOf(M_BALD, M_DREAD, M_LONG, M_MEDIUM, M_MONK, M_SHORT, M_CLOSE_CROP, M_WILD_SPIKE, M_SPIKE, M_MOHAWK, M_WIND_BRAID, M_QUIFF, M_SAMURAI, M_PRINCE, M_CURTAINS, M_LONG_CURTAINS, M_SIDE_PART_SPIKE, M_TOP_KNOT, M_PONYTAIL_SPIKEY, M_LONG_SWEPT_FRINGE, M_EVANSTYLE, M_DRAGON, M_WARRIOR_CURTAINS, M_COMB_OVER)
 
 private const val MF_GOATEE = 10
 private const val MF_LONG_BEARD = 11
@@ -167,33 +107,17 @@ private const val MF_IMPERIAL = 307
 private const val MF_SENSEI = 308
 
 val MALE_FACIAL_STYLES =
-    intArrayOf(
-        MF_GOATEE,
-        MF_LONG_BEARD,
-        MF_MEDIUM_BEARD,
-        MF_MOUSTACHE,
-        MF_CLEAN_SHAVEN,
-        MF_SHORT_BEARD,
-        MF_SHORT_FULL,
-        MF_SPLIT_BEARD,
-        MF_HANDLEBAR,
-        MF_MUTTON,
-        MF_FULL_MUTTON,
-        MF_FULL_MOUSTACHE,
-        MF_WAXED,
-        MF_DALI,
-        MF_VIZIER,
-        MF_HALF_GOATEE,
-        MF_SIDEBURNS,
-        MF_IMPERIAL,
-        MF_SENSEI,
-    )
+    intArrayOf(MF_GOATEE, MF_LONG_BEARD, MF_MEDIUM_BEARD, MF_MOUSTACHE, MF_CLEAN_SHAVEN, MF_SHORT_BEARD, MF_SHORT_FULL, MF_SPLIT_BEARD, MF_HANDLEBAR, MF_MUTTON, MF_FULL_MUTTON, MF_FULL_MOUSTACHE, MF_WAXED, MF_DALI, MF_VIZIER, MF_HALF_GOATEE, MF_SIDEBURNS, MF_IMPERIAL, MF_SENSEI)
 
 private val maleStyleButtonRange = (65..90)
 private val femaleStyleButtonRange = (148..181)
 
 private val COINS = Item(995, 2000)
 
+/**
+ * Handles the reworked hairdresser interface with full functionality.
+ * @author Ceikry
+ */
 @Initializable
 class HairdresserInterface : ComponentPlugin() {
     override fun open(

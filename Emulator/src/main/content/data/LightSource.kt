@@ -6,7 +6,7 @@ import org.rs.consts.Components
 import org.rs.consts.Items
 
 /**
- * Represents different light sources in the game.
+ * Represents the light sources.
  */
 enum class LightSource(
     val level: Int,

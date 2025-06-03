@@ -6,6 +6,10 @@ import core.game.dialogue.FaceAnim
 import core.game.system.timer.impl.AntiMacro
 import org.rs.consts.Items
 
+/**
+ * Represents the Drunken Dwarf dialogue.
+ * @author Zerken (October 13, 2023)
+ */
 class DrunkenDwarfDialogue : DialogueFile() {
     override fun handle(
         componentID: Int,

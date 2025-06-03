@@ -10,6 +10,10 @@ import org.rs.consts.Animations
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Prison Pete random event dialogue.
+ * @author szu
+ */
 class PrisonPeteDialogue(
     val dialOpt: Int,
 ) : DialogueFile() {

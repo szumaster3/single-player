@@ -11,6 +11,10 @@ import core.tools.START_DIALOGUE
 import org.rs.consts.Components
 import org.rs.consts.Items
 
+/**
+ * Represents the dialogue shown when the user presses the "?" button on the Bank Interface.
+ * @author vddCore
+ */
 class BankHelpDialogue : DialogueFile() {
     override fun handle(
         componentID: Int,

@@ -9,6 +9,9 @@ import core.tools.RandomFunction
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Utils for Freaky Forester random event.
+ */
 object FreakyForesterUtils {
     const val FREAK_NPC = NPCs.FREAKY_FORESTER_2458
     val freakArea = ZoneBorders(2587, 4758, 2616, 4788)

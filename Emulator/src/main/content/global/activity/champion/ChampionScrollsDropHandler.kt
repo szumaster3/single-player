@@ -12,6 +12,10 @@ import core.tools.colorize
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Handles the drop for champion challenge.
+ * @authors Phil, Skelsoft, Ceikry
+ */
 class ChampionScrollsDropHandler : ChampionScrollsEventHookBase() {
     companion object {
         private val IMPS =

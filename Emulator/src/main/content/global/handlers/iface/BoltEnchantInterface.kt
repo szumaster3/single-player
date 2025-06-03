@@ -14,6 +14,7 @@ import org.rs.consts.Sounds
 
 /**
  * Represents the bolt enchant interface.
+ * @author Emperor, SonicForce41
  */
 class BoltEnchantInterface : InterfaceListener {
     override fun defineInterfaceListeners() {

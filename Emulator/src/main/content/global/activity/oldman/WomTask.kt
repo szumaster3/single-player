@@ -3,6 +3,9 @@ package content.global.activity.oldman
 import core.api.getAttribute
 import core.game.node.entity.player.Player
 
+/**
+ * Utils for Wise old man tasks.
+ */
 object WomTask {
     val TASK = "womt-task"
 

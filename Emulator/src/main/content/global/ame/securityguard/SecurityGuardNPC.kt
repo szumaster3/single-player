@@ -8,6 +8,9 @@ import core.game.node.entity.npc.NPC
 import core.game.system.timer.impl.AntiMacro
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Security guard NPC.
+ */
 class SecurityGuardNPC(
     override var loot: WeightBasedTable? = null,
 ) : RandomEventNPC(NPCs.SECURITY_GUARD_4375) {

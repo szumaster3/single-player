@@ -10,6 +10,10 @@ import core.game.node.entity.player.Player
 import core.plugin.Initializable
 import org.rs.consts.NPCs
 
+/**
+ * Represents the dialogue plugin used for the Prince/Princess NPC.
+ * @author szu
+ */
 @Initializable
 class FrogPrincessDialogue(
     player: Player? = null,

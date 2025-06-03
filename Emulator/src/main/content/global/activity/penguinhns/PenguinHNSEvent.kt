@@ -9,6 +9,7 @@ import org.json.simple.JSONObject
 
 /**
  * Handles startup initialization for the Penguin Hunter activity.
+ * @author Ceikry
  */
 class PenguinHNSEvent : StartupListener {
     /**

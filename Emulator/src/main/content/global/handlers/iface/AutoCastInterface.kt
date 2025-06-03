@@ -7,6 +7,10 @@ import core.game.node.entity.combat.equipment.WeaponInterface
 import core.game.node.entity.player.Player
 import org.rs.consts.Components
 
+/**
+ * Represents the auto casting interfaces
+ * @author Emperor
+ */
 class AutoCastInterface : InterfaceListener {
     override fun defineInterfaceListeners() {
         on(Components.STAFF_SPELLS_319) { player, _, _, buttonID, _, _ ->

@@ -20,6 +20,9 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Vars
 
+/**
+ * Represents the Ghoul champion NPC for Champions challenge.
+ */
 @Initializable
 class GhoulChampionNPC(
     id: Int = 0,

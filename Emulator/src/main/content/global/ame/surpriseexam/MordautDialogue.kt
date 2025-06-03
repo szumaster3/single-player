@@ -12,6 +12,9 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 import org.rs.consts.Scenery
 
+/**
+ * Represents the Mordaut dialogue.
+ */
 class MordautDialogue(
     val examComplete: Boolean,
     val questionCorrect: Boolean = false,

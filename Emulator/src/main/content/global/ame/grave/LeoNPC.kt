@@ -13,6 +13,10 @@ import core.game.world.map.Location
 import core.tools.RandomFunction
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Leo NPC for graveyard random event.
+ * @author szu
+ */
 class LeoNPC(override var loot: WeightBasedTable? = null) : RandomEventNPC(NPCs.LEO_3508) {
 
     override fun init() {

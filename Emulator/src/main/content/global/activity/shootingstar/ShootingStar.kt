@@ -13,9 +13,11 @@ import core.game.node.scenery.SceneryBuilder
 import core.game.world.map.Location
 import org.rs.consts.NPCs
 
-class ShootingStar(
-    var level: ShootingStarType = ShootingStarType.values().random(),
-) {
+/**
+ * Represents a shooting star object.
+ * @author Ceikry
+ */
+class ShootingStar(var level: ShootingStarType = ShootingStarType.values().random(), ) {
     val crashLocations =
         mapOf(
             "East of Dark Wizards' Tower" to Location.create(2925, 3339, 0),
@@ -184,6 +186,9 @@ class ShootingStar(
         get() = (level.ordinal + 1) * 10
 }
 
+/**
+ * Enum represents the star types (tiered).
+ */
 enum class ShootingStarType(
     val objectId: Int,
     val exp: Int,

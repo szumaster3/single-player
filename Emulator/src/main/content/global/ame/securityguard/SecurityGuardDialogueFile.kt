@@ -6,6 +6,10 @@ import core.game.dialogue.FaceAnim
 import core.game.system.timer.impl.AntiMacro
 import org.rs.consts.Items
 
+/**
+ * Represents the Security guard random event dialogue.
+ * @author szu
+ */
 class SecurityGuardDialogueFile : DialogueFile() {
     override fun handle(
         componentID: Int,

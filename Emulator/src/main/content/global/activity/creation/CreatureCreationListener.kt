@@ -13,6 +13,7 @@ import org.rs.consts.*
 
 /**
  * Listener for handling interactions related to creature creation.
+ * @author szu
  */
 class CreatureCreationListener : InteractionListener {
     override fun defineListeners() {

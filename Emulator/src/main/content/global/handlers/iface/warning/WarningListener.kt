@@ -26,6 +26,9 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.rs.consts.*
 
+/**
+ * Handles interactions related to warning screens.
+ */
 class WarningListener :
     InteractionListener,
     InterfaceListener {

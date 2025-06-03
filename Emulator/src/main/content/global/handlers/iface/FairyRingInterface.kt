@@ -15,6 +15,10 @@ import core.tools.RandomFunction
 import org.rs.consts.Components
 import org.rs.consts.Quests
 
+/**
+ * Handles the fairy ring interface.
+ * @author Ceikry
+ */
 class FairyRingInterface : InterfaceListener {
     companion object {
         const val RINGS_IFACE = Components.FAIRY_RINGS_734

@@ -5,6 +5,10 @@ import core.api.utils.WeightedItem
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Enum represents Wise old man delivery activity reward table.
+ * @author szu
+ */
 enum class WomTaskReward(
     val npc: IntArray,
     val table: WeightBasedTable,

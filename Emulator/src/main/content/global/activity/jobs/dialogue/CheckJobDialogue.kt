@@ -19,6 +19,11 @@ import core.tools.START_DIALOGUE
 import core.tools.StringUtils
 import org.rs.consts.Items
 
+/**
+ * The dialogue file to handle a player asking about work with the employer that assigned them
+ * their current job.
+ * @author Swizey
+ */
 class CheckJobDialogue : DialogueFile() {
     companion object {
         const val TURN_IN_ITEMS_1 = 1

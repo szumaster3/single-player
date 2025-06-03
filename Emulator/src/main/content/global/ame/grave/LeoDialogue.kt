@@ -13,6 +13,10 @@ import org.rs.consts.Components
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Leo dialogue file for Gravedigger random event.
+ * @author szu
+ */
 class LeoDialogue : DialogueFile() {
 
     override fun handle(

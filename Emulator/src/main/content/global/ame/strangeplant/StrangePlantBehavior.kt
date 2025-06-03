@@ -11,6 +11,10 @@ import core.game.system.timer.impl.AntiMacro
 import core.tools.RandomFunction
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Strange plant NPC behavior.
+ * @author Zerken
+ */
 class StrangePlantBehavior : NPCBehavior(NPCs.STRANGE_PLANT_408) {
     override fun canBeAttackedBy(
         self: NPC,

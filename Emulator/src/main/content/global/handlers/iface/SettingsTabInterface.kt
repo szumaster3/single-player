@@ -8,6 +8,9 @@ import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.link.IronmanMode
 import org.rs.consts.Components
 
+/**
+ * Represents the setting tab interface listener.
+ */
 class SettingsTabInterface : InterfaceListener {
     override fun defineInterfaceListeners() {
         on(Components.OPTIONS_261) { player, _, _, buttonID, _, _ ->

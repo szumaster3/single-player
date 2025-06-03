@@ -11,6 +11,10 @@ import core.tools.RandomFunction
 import org.rs.consts.NPCs
 import org.rs.consts.Sounds
 
+/**
+ * Represents the Certer NPC.
+ * @author Ceikry (March 18, 2021)
+ */
 class CerterNPC(
     override var loot: WeightBasedTable? = null,
 ) : RandomEventNPC(NPCs.GILES_2538) {

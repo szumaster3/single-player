@@ -11,6 +11,10 @@ import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.Player
 import org.rs.consts.Components
 
+/**
+ * Handles the world map interface.
+ * @author Emperor, szu
+ */
 class WorldMapInterface : InterfaceListener {
     companion object {
         private const val RESIZABLE_WINDOW = Components.TOPLEVEL_FULLSCREEN_746

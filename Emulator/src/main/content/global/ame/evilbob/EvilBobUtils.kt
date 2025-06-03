@@ -14,6 +14,9 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Scenery
 
+/**
+ * Utils for Evil Bob rando event.
+ */
 object EvilBobUtils {
     const val evilBob = NPCs.EVIL_BOB_2479
     const val servant = NPCs.SERVANT_2481

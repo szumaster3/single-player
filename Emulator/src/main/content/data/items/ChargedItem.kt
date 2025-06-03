@@ -6,6 +6,7 @@ import org.rs.consts.Items
 
 /**
  * Represents various charged items and their respective item IDs for different charge levels.
+ * @author RiL
  */
 enum class ChargedItem(
     val ids: IntArray,

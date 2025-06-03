@@ -8,6 +8,10 @@ import core.game.node.entity.combat.spell.MagicSpell
 import core.game.node.entity.player.link.SpellBookManager.SpellBook
 import core.game.world.GameWorld
 
+/**
+ * Represents the magic book interface handling of non-combat spells.
+ * @author Vexia
+ */
 class MagicTabInterface : InterfaceListener {
     override fun defineInterfaceListeners() {
         SpellBook.values().forEach {

@@ -13,6 +13,9 @@ import core.game.system.task.Pulse
 import org.rs.consts.Components
 import org.rs.consts.Items
 
+/**
+ * Utils for Surprise exam.
+ */
 object SurpriseExamUtils {
     val SE_LOGOUT_KEY = "surprise_exam"
     private val INTER_PATTERN_CHILDS = intArrayOf(6, 7, 8)

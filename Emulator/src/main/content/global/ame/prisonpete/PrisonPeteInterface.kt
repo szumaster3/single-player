@@ -5,6 +5,9 @@ import core.api.sendModelOnInterface
 import core.game.interaction.InterfaceListener
 import org.rs.consts.Components
 
+/**
+ * Represents the Prison Pete random event interface.
+ */
 class PrisonPeteInterface : InterfaceListener {
     private val modelIDs = intArrayOf(10734, 10735, 10736, 10737).random()
     private val animationIDs = intArrayOf(3048, 3049, 3050, 3051, 3052).random()

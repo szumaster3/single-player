@@ -16,6 +16,7 @@ import org.rs.consts.Components
 
 /**
  * Represents interface plugin for the Diango Reclaimable.
+ * @author Ceikry
  */
 @Initializable
 class DiangoReclaimInterface : ComponentPlugin() {

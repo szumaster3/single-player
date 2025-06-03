@@ -6,6 +6,10 @@ import core.game.node.entity.npc.NPC
 import core.tools.RandomFunction
 import org.rs.consts.NPCs
 
+/**
+ * Represents Frog herald random event NPC.
+ * @author szu
+ */
 class FrogHeraldNPC(
     override var loot: WeightBasedTable? = null,
 ) : RandomEventNPC(NPCs.FROG_2471) {

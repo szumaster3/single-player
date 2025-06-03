@@ -12,6 +12,10 @@ import org.rs.consts.Animations
 import org.rs.consts.Graphics
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Tramp random event NPC.
+ * @author szu
+ */
 @Initializable
 class TrampNPC(
     id: Int = 0,

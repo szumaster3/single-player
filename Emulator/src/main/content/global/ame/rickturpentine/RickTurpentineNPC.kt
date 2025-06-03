@@ -11,6 +11,10 @@ import core.game.node.entity.npc.NPC
 import core.game.system.timer.impl.AntiMacro
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Rick Turpentine NPC.
+ * @author Zerken
+ */
 class RickTurpentineNPC(
     override var loot: WeightBasedTable? = null,
 ) : RandomEventNPC(NPCs.RICK_TURPENTINE_2476) {

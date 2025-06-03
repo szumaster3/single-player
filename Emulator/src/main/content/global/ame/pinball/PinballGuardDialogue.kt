@@ -6,6 +6,10 @@ import core.game.dialogue.FaceAnim
 import core.tools.BLUE
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Flippa and Tilt dialogue for Pinball random event.
+ * @author szu
+ */
 class PinballGuardDialogue : DialogueFile() {
     override fun handle(
         componentID: Int,

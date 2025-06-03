@@ -9,6 +9,10 @@ import core.game.node.entity.npc.NPC
 import core.game.system.timer.impl.AntiMacro
 import org.rs.consts.NPCs
 
+/**
+ * Handles the capn hand npc.
+ * @author Vexia
+ */
 class CapnHandNPC(
     override var loot: WeightBasedTable? = null,
 ) : RandomEventNPC(NPCs.CAPN_HAND_2539) {

@@ -9,10 +9,12 @@ import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 
+/**
+ * Represents the dialogue plugin used for the Frog NPC.
+ * @author szu
+ */
 @Initializable
-class FrogDialogue(
-    player: Player? = null,
-) : Dialogue(player) {
+class FrogDialogue(player: Player? = null, ) : Dialogue(player) {
     override fun handle(
         interfaceId: Int,
         buttonId: Int,

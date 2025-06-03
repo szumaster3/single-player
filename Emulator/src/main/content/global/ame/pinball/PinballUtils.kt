@@ -17,6 +17,9 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Sounds
 
+/**
+ * Utils for Pinball random event.
+ */
 object PinballUtils {
     val VARBIT_PINBALL_SCORE = 2121
     val PINBALL_EVENT_LOCATION = Location.create(1972, 5046, 0)

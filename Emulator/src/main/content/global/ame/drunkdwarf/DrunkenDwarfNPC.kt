@@ -13,6 +13,10 @@ import org.rs.consts.Animations
 import org.rs.consts.NPCs
 import org.rs.consts.Sounds
 
+/**
+ * Represents the Drunken Dwarf NPC.
+ * @author Zerken (October 13, 2023)
+ */
 class DrunkenDwarfNPC(
     override var loot: WeightBasedTable? = null,
 ) : RandomEventNPC(NPCs.DRUNKEN_DWARF_956) {

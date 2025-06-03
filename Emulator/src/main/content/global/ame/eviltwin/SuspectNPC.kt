@@ -6,6 +6,10 @@ import core.game.node.entity.npc.AbstractNPC
 import core.game.world.map.Location
 import core.plugin.Initializable
 
+/**
+ * Represents the Suspect NPC for Evil twin random event.
+ * @author szu
+ */
 @Initializable
 class SuspectNPC(
     id: Int = 0,

@@ -13,6 +13,10 @@ data class Treasure(
     val completionMessage: String? = null,
 )
 
+/**
+ * Represents the Enchanted key activity.
+ * @author szu
+ */
 class EnchKeyListener :
     InteractionListener,
     Commands {

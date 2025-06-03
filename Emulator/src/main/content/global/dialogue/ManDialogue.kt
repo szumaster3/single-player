@@ -15,6 +15,10 @@ import core.tools.RandomFunction
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Handles the man dialogues.
+ * @author Vexia
+ */
 @Initializable
 class ManDialogue(
     player: Player? = null,

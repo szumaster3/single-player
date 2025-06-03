@@ -15,7 +15,8 @@ import core.plugin.Plugin;
 import org.rs.consts.Components;
 
 /**
- * The type Combat tab interface.
+ * Represents the combat tab interface.
+ * @author Emperor, Vexia
  */
 @Initializable
 public class CombatTabInterface extends ComponentPlugin {

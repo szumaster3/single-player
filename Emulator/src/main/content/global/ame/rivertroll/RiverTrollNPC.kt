@@ -7,6 +7,10 @@ import core.game.node.entity.npc.NPC
 import org.rs.consts.NPCs
 import java.lang.Integer.max
 
+/**
+ * Handles the river troll npc.
+ * @author Vexia
+ */
 class RiverTrollNPC(
     override var loot: WeightBasedTable? = null,
 ) : RandomEventNPC(NPCs.RIVER_TROLL_391) {

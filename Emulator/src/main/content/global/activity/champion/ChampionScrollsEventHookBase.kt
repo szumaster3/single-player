@@ -7,6 +7,10 @@ import core.game.event.NPCKillEvent
 import core.game.node.entity.Entity
 import core.game.node.entity.player.Player
 
+/**
+ * Manages the champion scrolls drop.
+ * @authors Phil, Skelsoft.
+ */
 abstract class ChampionScrollsEventHookBase : LoginListener {
     protected companion object {
         private fun <T> forEligibleEntityDo(

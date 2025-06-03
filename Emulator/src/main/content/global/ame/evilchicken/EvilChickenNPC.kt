@@ -12,8 +12,12 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import java.lang.Integer.max
 
-val ids = 2463..2468
+val ids = NPCs.EVIL_CHICKEN_2463..NPCs.EVIL_CHICKEN_2468
 
+/**
+ * Represents The Evil Chicken NPC.
+ * @author Emperor.
+ */
 class EvilChickenNPC(
     override var loot: WeightBasedTable? = null,
 ) : RandomEventNPC(NPCs.EVIL_CHICKEN_2463) {

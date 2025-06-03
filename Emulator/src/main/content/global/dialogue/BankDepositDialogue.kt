@@ -6,6 +6,12 @@ import core.api.sendMessage
 import core.game.dialogue.DialogueFile
 import core.tools.START_DIALOGUE
 
+/**
+ * Represents the dialogue shown when the user presses
+ * "Deposit Beast of Burden" button on the Bank Interface.
+ *
+ * @author vddCore
+ */
 class BankDepositDialogue : DialogueFile() {
     override fun handle(
         componentID: Int,

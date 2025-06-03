@@ -17,6 +17,10 @@ import org.rs.consts.NPCs
 import org.rs.consts.Scenery
 import org.rs.consts.Sounds
 
+/**
+ * Handles interaction for Drill demon random event.
+ * @author Ceikry (March 18, 2021)
+ */
 class DrillDemonListener :
     InteractionListener,
     MapArea {

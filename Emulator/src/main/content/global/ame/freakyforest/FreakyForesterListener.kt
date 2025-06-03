@@ -12,6 +12,10 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Scenery
 
+/**
+ * Handles interaction for Freaky forester random event.
+ * @author szu
+ */
 class FreakyForesterListener :
     InteractionListener,
     MapArea {
