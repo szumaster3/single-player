@@ -12,6 +12,7 @@ import core.game.dialogue.IfTopic
 import core.game.dialogue.Topic
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
+import core.game.world.map.Location
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import org.rs.consts.Items
@@ -133,6 +134,11 @@ class WatchtowerWizardDialogue(player: Player? = null) : Dialogue(player) {
         if(questStage == 90) {
             npc("Hello again. Did the potion work?")
             stage = 948
+            return true
+        }
+        if(questStage == 95 && !getAttribute(player, GameAttributes.WATCHTOWER_SYSTEM_ACTIVATED, false)) {
+            npc("The system is not activated yet. Throw the switch to start it.")
+            stage = END_DIALOGUE
             return true
         }
 
@@ -385,7 +391,12 @@ class WatchtowerWizardDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             943 -> player(FaceAnim.ASKING, "How high is high enough?").also { stage++ }
-            944 -> npc(FaceAnim.NEUTRAL, "Well, if you can cast Bones to Bananas, or any spells", "beyond that, you should be alright.").also { stage = END_DIALOGUE }
+            944 -> npc(FaceAnim.NEUTRAL, "Well, if you can cast Bones to Bananas, or any spells", "beyond that, you should be alright.").also {
+                if(!getAttribute(player, GameAttributes.WATCHTOWER_SHAMAN_SPAWN, false)) {
+                    spawnShamanNPC(player)
+                }
+                stage = END_DIALOGUE
+            }
 
             945 -> playerl(FaceAnim.HALF_GUILTY, "I am still working to rid us of the shamans...").also { stage++ }
             946 -> npc(FaceAnim.FRIENDLY,"May you have success in your task.").also { stage = END_DIALOGUE }
@@ -457,14 +468,6 @@ class WatchtowerWizardDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             1300 -> npcl(FaceAnim.NEUTRAL, "You will need to speak to the Watchtower Wizard. Seriously, he's the one in charge here.").also { stage = END_DIALOGUE }
-            1400 -> npc("Marvellous!, It works! The town will now be safe.").also { stage++ }
-            1401 -> npc("Your help was invaluable. Take this payment as a token", "of my gratitude.").also { stage++ }
-            1402 -> npc("Also, let me improve your Magic level for you.").also { stage++ }
-            1403 -> npc(" Here is a special item for you - it's a new spell. Read", "the scroll and you will be able to teleport yourself here.").also { stage++ }
-            1404 -> {
-                end()
-                finishQuest(player, Quests.WATCHTOWER)
-            }
         }
         return true
     }
@@ -479,5 +482,17 @@ class WatchtowerWizardDialogue(player: Player? = null) : Dialogue(player) {
             Items.OLD_ROBE_2385,
             Items.UNUSUAL_ARMOUR_2386,
         )
+        @JvmStatic
+        private fun spawnShamanNPC(player : Player) {
+            val shamanNPC = arrayOf(5183,5180,5175,5186,5192,5189)
+            NPC.create(shamanNPC[0], Location.create(2592,9436,0)).init()
+            NPC.create(shamanNPC[1], Location.create(2582,9437,0)).init()
+            NPC.create(shamanNPC[2], Location.create(2577,9451,0)).init()
+            NPC.create(shamanNPC[3], Location.create(2599,9461,0)).init()
+            NPC.create(shamanNPC[4], Location.create(2607,9451,0)).init()
+            NPC.create(shamanNPC[5], Location.create(2606,9438,0)).init()
+            setAttribute(player, GameAttributes.WATCHTOWER_SHAMAN_SPAWN, true)
+            setAttribute(player, GameAttributes.WATCHTOWER_OGRE_DESTROY_COUNT, 0)
+        }
     }
 }

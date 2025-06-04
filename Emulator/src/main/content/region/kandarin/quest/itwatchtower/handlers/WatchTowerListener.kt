@@ -2,6 +2,7 @@ package content.region.kandarin.quest.itwatchtower.handlers
 
 import content.data.GameAttributes
 import content.data.LightSource
+import content.data.items.SkillingTool
 import content.global.handlers.iface.warning.WarningManager
 import content.global.handlers.iface.warning.Warnings
 import content.region.kandarin.quest.itwatchtower.cutscene.EnclaveCutscene
@@ -10,8 +11,10 @@ import content.region.kandarin.quest.itwatchtower.dialogue.CityGuardDialogue
 import content.region.kandarin.quest.itwatchtower.dialogue.OgreGuardNorthWestGateDialogue
 import content.region.kandarin.quest.itwatchtower.dialogue.OgreGuardSouthEastGateDialogue
 import core.api.*
+import core.api.quest.finishQuest
 import core.api.quest.getQuestStage
 import core.api.quest.isQuestComplete
+import core.api.quest.setQuestStage
 import core.api.ui.closeDialogue
 import core.game.dialogue.FaceAnim
 import core.game.dialogue.SequenceDialogue.dialogueLine
@@ -22,12 +25,15 @@ import core.game.dialogue.SequenceDialogue.sendSequenceDialogue
 import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
+import core.game.interaction.QueueStrength
 import core.game.node.entity.combat.ImpactHandler
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.TeleportManager
+import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.game.world.map.Location
+import core.game.world.update.flag.context.Animation
 import org.rs.consts.*
 
 class WatchTowerListener : InteractionListener {
@@ -39,6 +45,9 @@ class WatchTowerListener : InteractionListener {
         val SKAVID_CAVE_EXIT = (Scenery.CAVE_EXIT_2817..Scenery.CAVE_EXIT_2822).toIntArray()
         val ENTRANCE_LOCATION = arrayOf(Location(2563, 3024, 0), Location(2524, 3070, 0), Location(2541, 3054, 0), Location(2554, 3054, 0), Location(2552, 3035, 0), Location(2529, 3012, 0))
         val OGRE_POTIONS = intArrayOf(Items.POTION_2394,Items.VIAL_2389, Items.VIAL_2390)
+        val OGRE_SHAMAN = intArrayOf(5183,5180,5175,5186,5192,5189)
+        val CRYSTALS = intArrayOf(Items.CRYSTAL_2383,Items.CRYSTAL_2382,Items.CRYSTAL_2381,Items.CRYSTAL_2380)
+        val PILLARS = intArrayOf(Scenery.PILLAR_21546,Scenery.PILLAR_20022,Scenery.PILLAR_20026,Scenery.PILLAR_20030)
     }
 
     override fun defineListeners() {
@@ -536,7 +545,6 @@ class WatchTowerListener : InteractionListener {
             return@onUseWith true
         }
 
-
         /*
          * Handles creating potion.
          */
@@ -549,6 +557,124 @@ class WatchTowerListener : InteractionListener {
             return@onUseWith true
         }
 
+        /*
+         * Handles using the magic ogre potions on shamans.
+         */
+
+        onUseWith(IntType.NPC, Items.MAGIC_OGRE_POTION_2395, *OGRE_SHAMAN) { player, _, npc ->
+            stopWalk(player)
+            val anim = Animation(Animations.POURING_MAGIC_OGRE_POTION_WATCH_TOWER_5361)
+
+            animate(player, anim)
+
+            // animate(findLocalNPC(player, npc.id)!!, ???)
+
+            sendMessage(player, "There is a bright flash!")
+            sendMessage(player, "The ogre dissolves into spirit form.")
+
+            val count = player.getAttribute(GameAttributes.WATCHTOWER_OGRE_DESTROY_COUNT) ?: 0
+            val killCount = count + 1
+
+            player.setAttribute(GameAttributes.WATCHTOWER_OGRE_DESTROY_COUNT, killCount)
+
+            queueScript(player, anim.duration, QueueStrength.WEAK) {
+                npc.asNpc().clear()
+                if (killCount >= 6) {
+                    setQuestStage(player, Quests.WATCHTOWER, 90)
+                    removeAttribute(player, GameAttributes.WATCHTOWER_OGRE_DESTROY_COUNT)
+                    sendItemDialogue(player, Items.CRYSTAL_2382, "A crystal drops from the hand of the dissappearing ogre. You snatch it up quickly.")
+                    addItemOrDrop(player, Items.CRYSTAL_2382, 1)
+                } else {
+                    sendPlayerDialogue(player, "That's $killCount destroyed...")
+                }
+                return@queueScript stopExecuting(player)
+            }
+
+            return@onUseWith true
+        }
+
+        /*
+         * Handles prospecting the rock of dalgoth.
+         */
+
+        on(Scenery.ROCK_OF_DALGROTH_2816, IntType.SCENERY, "prospect") { player, _ ->
+            sendMessage(player, "You examine the rock for ogres...")
+            sendMessageWithDelay(player, "The rock contains crystal!", 1)
+            return@on true
+        }
+
+        /*
+         * Handles mine the rock of dalgoth.
+         */
+
+        on(Scenery.ROCK_OF_DALGROTH_2816, IntType.SCENERY, "mine") { player, _ ->
+            if (SkillingTool.getPickaxe(player) == null) {
+                sendMessage(player, "You do not have a pickaxe to use.")
+                return@on true
+            }
+
+            if(getStatLevel(player, Skills.MINING) < 40) {
+                sendMessage(player, "You need a mining level of 40 to mine this rock.")
+                return@on true
+            }
+
+            sendItemDialogue(player, Items.CRYSTAL_2383, "A crack appears in the rock and you prise a crystal out.")
+            addItem(player, Items.CRYSTAL_2383, 1)
+            return@on true
+        }
+
+        /*
+         * Handles use crystal on pillar.
+         */
+
+        onUseWith(IntType.SCENERY, CRYSTALS, *PILLARS) { player, used, with ->
+            val success = when {
+                used.id == Items.CRYSTAL_2383 && with.id == Scenery.PILLAR_21546 -> {
+                    removeItem(player, used.asItem()).also {
+                        if (it) setVarbit(player, 3130, 1, true) }
+                }
+                used.id == Items.CRYSTAL_2382 && with.id == Scenery.PILLAR_20022 -> {
+                    removeItem(player, used.asItem()).also {
+                        if (it) setVarbit(player, Vars.VARBIT_QUEST_WATCHTOWER_NW_PILLAR_3127, 1, true) }
+                }
+                used.id == Items.CRYSTAL_2381 && with.id == Scenery.PILLAR_20030 -> {
+                    removeItem(player, used.asItem()).also {
+                        if (it) setVarbit(player, Vars.VARBIT_QUEST_WATCHTOWER_SE_PILLAR_3129, 1, true) }
+                }
+                used.id == Items.CRYSTAL_2380 && with.id == Scenery.PILLAR_20026 -> {
+                    removeItem(player, used.asItem()).also {
+                        if (it) setVarbit(player, Vars.VARBIT_QUEST_WATCHTOWER_SW_PILLAR_3128, 1, true) }
+                }
+                else -> false
+            }
+
+            if (!success) {
+                sendMessage(player, "That is not the right crystal for this pillar; try another.")
+            }
+
+            return@onUseWith true
+        }
+
+
+        on(Scenery.LEVER_2794, IntType.SCENERY, "pull") { player, _ ->
+            val npc = NPC(NPCs.WATCHTOWER_WIZARD_872)
+            for (i in (3027..3030)){
+                if (getVarbit(player, i) == 1){
+                    teleport(player,Location.create(2928, 4715, 2))
+                    sendMessage(player, "The magic force field activates.")
+                    sendSequenceDialogue(player,
+                        npcLine(npc, FaceAnim.HAPPY, "Marvellous!, It works! The town will now be safe."),
+                        npcLine(npc, FaceAnim.HAPPY, "Your help was invaluable. Take this payment as a token", "of my gratitude."),
+                        npcLine(npc, FaceAnim.HAPPY, "Also, let me improve your Magic level for you."),
+                        npcLine(npc, FaceAnim.HAPPY, "Here is a special item for you - it's a new spell. Read", "the scroll and you will be able to teleport yourself here."),
+                        onComplete = {
+                            finishQuest(player, Quests.WATCHTOWER)
+                        }
+                    )
+                }
+            }
+            return@on true
+        }
     }
 
     private fun searchBush(player: Player, item: Pair<Int, String>?): Boolean {

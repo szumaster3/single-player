@@ -369,4 +369,7 @@ internal object GameAttributes {
 
     // Watchtower quest.
     const val WATCHTOWER_TELEPORT = "/save:watchtower_teleport"
+    const val WATCHTOWER_SHAMAN_SPAWN = "/save:watchtower:shamans_spawned"
+    const val WATCHTOWER_OGRE_DESTROY_COUNT = "/save:watchtower:ogres_destroyed"
+    const val WATCHTOWER_SYSTEM_ACTIVATED = "/save:watchtower:done"
 }

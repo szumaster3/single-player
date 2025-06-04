@@ -223,8 +223,9 @@ class WarningListener :
                             }
 
                             Components.CWS_WARNING_13_572 -> {
-                                if(isQuestComplete(player, Quests.WATCHTOWER)) {
+                                if(isQuestComplete(player, Quests.WATCHTOWER) || getQuestStage(player, Quests.WATCHTOWER) >= 60) {
                                     teleport(player, Location.create(2588, 9410, 0))
+                                    sendMessage(player, "You run past the guard while he's busy.")
                                 } else {
                                     EnclaveCutscene(player).start(true)
                                 }
