@@ -12,13 +12,17 @@ import core.api.quest.isQuestInProgress
 import core.api.quest.setQuestStage
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
+import core.game.dialogue.SequenceDialogue.itemLine
+import core.game.dialogue.SequenceDialogue.npcLine
+import core.game.dialogue.SequenceDialogue.options
+import core.game.dialogue.SequenceDialogue.playerLine
+import core.game.dialogue.SequenceDialogue.sendSequenceDialogue
 import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.interaction.QueueStrength
 import core.game.node.entity.combat.ImpactHandler
 import core.game.node.entity.npc.NPC
-import core.game.node.entity.player.Player
 import core.game.system.task.Pulse
 import core.game.world.map.Direction
 import core.game.world.map.Location
@@ -322,21 +326,24 @@ class PlagueCityListener : InteractionListener {
 
         onUseWith(IntType.SCENERY, Items.BUCKET_OF_WATER_1929, Scenery.MUD_PATCH_11418) { player, _, _ ->
             val bucketUses = getAttribute(player, BUCKET_USES_ATTRIBUTE, 0)
+            if (bucketUses > 3 || !removeItem(player, Items.BUCKET_OF_WATER_1929) || getVarbit(player, MUD_PATCH_VARBIT) == 1) {
+                sendMessage(player, "Nothing interesting happens.")
+                return@onUseWith true
+            }
 
-            if (bucketUses in 0..2 && removeItem(player, Items.BUCKET_OF_WATER_1929)) {
-                animate(player, Animations.POUR_BUCKET_OVER_GROUND_2283)
-                playAudio(player, Sounds.WATER_BEING_POURED_2982)
-                if (bucketUses < 3) {
+            animate(player, Animations.POUR_BUCKET_OVER_GROUND_2283)
+            playAudio(player, Sounds.WATER_BEING_POURED_2982)
+            addItem(player, Items.BUCKET_1925)
+
+            when (bucketUses) {
+                in 0..2 -> {
                     sendDialogueLines(player, "You pour water onto the soil.", "The soil softens slightly.")
                     player.incrementAttribute(BUCKET_USES_ATTRIBUTE, 1)
-                    addItem(player, Items.BUCKET_1925)
-                } else if (bucketUses == 3) {
+                }
+                3 -> {
                     sendDialogueLines(player, "You pour water onto the soil.", "The soil is now soft enough to dig into.")
                     setVarbit(player, MUD_PATCH_VARBIT, 1, true)
-                    addItem(player, Items.BUCKET_1925)
                 }
-            } else {
-                sendMessage(player, "Nothing interesting happens.")
             }
             return@onUseWith true
         }
@@ -450,6 +457,7 @@ class PlagueCityListener : InteractionListener {
                                         Items.ROPE_954,
                                         "You tie the end of the rope to the sewer pipe's grill.",
                                     )
+                                    return true
                                 }
                             }
                             return false
@@ -467,41 +475,26 @@ class PlagueCityListener : InteractionListener {
         on(Scenery.DOOR_2537, IntType.SCENERY, "open") { player, node ->
             if (getQuestStage(player, Quests.PLAGUE_CITY) >= 9) {
                 DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
-            } else {
-                openDialogue(
-                    player,
-                    object : DialogueFile() {
-                        override fun handle(
-                            componentID: Int,
-                            buttonID: Int,
-                        ) {
-                            npc = NPC(NPCs.TED_REHNISON_721)
-                            when (stage) {
-                                0 -> if (inInventory(player, Items.BOOK_1509)) {
-                                    playerl(FaceAnim.NEUTRAL, "I'm a friend of Jethick's, I have come to return a book he borrowed.").also { stage++ }
-                                } else {
-                                    npcl(FaceAnim.FRIENDLY, "Go away. We don't want any.").also { stage = END_DIALOGUE }
-                                }
-
-                                1 -> npcl(FaceAnim.FRIENDLY, "Oh... why didn't you say, come in then.").also { stage++ }
-
-                                2 -> {
-                                    sendItemDialogue(player, Items.BOOK_1509, "You hand the book to Ted as you enter.")
-                                    DoorActionHandler.handleAutowalkDoor(player, getScenery(2531, 3328, 0)!!)
-                                    removeItem(player, Items.BOOK_1509)
-                                    stage++
-                                }
-
-                                3 -> {
-                                    end()
-                                    npcl(FaceAnim.NEUTRAL, "Thanks, I've been missing that.")
-                                    setQuestStage(player, Quests.PLAGUE_CITY, 9)
-                                }
-                            }
-                        }
-                    },
-                )
+                return@on true
             }
+
+            val npc = NPC(NPCs.TED_REHNISON_721)
+            if (!inInventory(player, Items.BOOK_1509)) {
+                sendNPCDialogue(player, npc.id, "Go away. We don't want any.", FaceAnim.FRIENDLY)
+                return@on true
+            }
+
+            sendSequenceDialogue(player,
+                playerLine(FaceAnim.FRIENDLY, "I'm a friend of Jethick's, I have come to return a book he borrowed."),
+                npcLine(npc, FaceAnim.HALF_THINKING, "Oh... why didn't you say, come in then."),
+                itemLine(Items.BOOK_1509, "You hand the book to Ted as you enter."),
+                onComplete = {
+                    removeItem(player, Items.BOOK_1509)
+                    DoorActionHandler.handleAutowalkDoor(player, getScenery(2531, 3328, 0)!!)
+                    setQuestStage(player, Quests.PLAGUE_CITY, 9)
+                    sendNPCDialogue(player, npc.id, "Thanks, I've been missing that.", FaceAnim.NEUTRAL)
+                }
+            )
             return@on true
         }
 
@@ -510,11 +503,11 @@ class PlagueCityListener : InteractionListener {
          */
 
         on(Scenery.BARREL_2530, IntType.SCENERY, "search") { player, _ ->
-            animate(player, Animations.SEARCHING_CRATES_6840)
             if (inInventory(player, Items.KEY_423) || freeSlots(player) == 0) {
                 sendMessage(player, "You don't find anything interesting.")
                 return@on true
             }
+            animate(player, Animations.SEARCHING_CRATES_6840)
             sendItemDialogue(player, Items.KEY_423, "You find a small key in the barrel.")
             addItem(player, Items.KEY_423)
             return@on true
@@ -556,30 +549,30 @@ class PlagueCityListener : InteractionListener {
         on(Scenery.DOOR_2526, IntType.SCENERY, "open") { player, node ->
             if (isQuestComplete(player, Quests.PLAGUE_CITY) || player.location.x > 2539) {
                 DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
-            } else {
-                sendMessage(player, "The door is locked.")
-                openDialogue(
-                    player,
-                    object : DialogueFile() {
-                        override fun handle(componentID: Int, buttonID: Int, ) {
-                            npc = NPC(NPCs.ELENA_3215)
-                            when (stage) {
-                                0 -> npcl(FaceAnim.CRYING, "Hey get me out of here please!").also { stage++ }
-                                1 -> playerl(FaceAnim.FRIENDLY, "I would do but I don't have a key.").also { stage++ }
-                                2 -> npcl(FaceAnim.SAD, "I think there may be one around somewhere. I'm sure I heard them stashing it somewhere.").also { stage++ }
-                                3 -> options("Have you caught the plague?", "Okay, I'll look for it.").also { stage++ }
-                                4 -> when (buttonID) {
-                                    1 -> playerl(FaceAnim.FRIENDLY, "Have you caught the plague?").also { stage++ }
-                                    2 -> playerl(FaceAnim.FRIENDLY, "Okay, I'll look for it.").also { stage = END_DIALOGUE }
-                                }
-                                5 -> npcl(FaceAnim.HALF_WORRIED, "No, I have none of the symptoms.").also { stage++ }
-                                6 -> playerl(FaceAnim.THINKING, "Strange, I was told this house was plague infected.").also { stage++ }
-                                7 -> playerl(FaceAnim.THINKING, "I suppose that was a cover up by the kidnappers.").also { stage = 3 }
-                            }
-                        }
-                    },
-                )
+                return@on true
             }
+            val npc = NPC(NPCs.ELENA_3215)
+            sendMessage(player, "The door is locked.")
+            sendSequenceDialogue(player,
+                npcLine(npc, FaceAnim.CRYING, "Hey get me out of here please!"),
+                playerLine(FaceAnim.FRIENDLY, "I would do but I don't have a key."),
+                npcLine(npc, FaceAnim.SAD, "I think there may be one around somewhere. I'm sure I heard them stashing it somewhere."),
+                options("What do you say?", "Have you caught the plague?", "Okay, I'll look for it.") { op ->
+                    when (op) {
+                        1 -> {
+                            sendSequenceDialogue(player,
+                                playerLine(FaceAnim.FRIENDLY, "Have you caught the plague?"),
+                                npcLine(npc, FaceAnim.HALF_WORRIED, "No, I have none of the symptoms."),
+                                playerLine(FaceAnim.THINKING, "Strange, I was told this house was plague infected."),
+                                playerLine(FaceAnim.THINKING, "I suppose that was a cover up by the kidnappers.")
+                            )
+                        }
+                        2 -> {
+                            sendSequenceDialogue(player, playerLine(FaceAnim.FRIENDLY, "Okay, I'll look for it."))
+                        }
+                    }
+                }
+            )
             return@on true
         }
     }

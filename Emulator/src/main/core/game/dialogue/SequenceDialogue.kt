@@ -33,6 +33,14 @@ object SequenceDialogue {
         data class TextLine(val messages: List<String>) : DialogueLine()
 
         /**
+         * An item dialogue line.
+         *
+         * @param itemId Item ID to show.
+         * @param messages Dialogue text lines.
+         */
+        data class ItemLine(val itemId: Int, val messages: List<String>) : DialogueLine()
+
+        /**
          * An options line.
          *
          * @param title   Options title.
@@ -77,6 +85,16 @@ object SequenceDialogue {
                         return
                     }
                     player.dialogueInterpreter.sendDialogue(*entry.messages.toTypedArray())
+                    player.dialogueInterpreter.addAction { _, _ -> sendAt(i + 1) }
+                }
+
+
+                is DialogueLine.ItemLine -> {
+                    if (entry.messages.isEmpty()) {
+                        sendAt(i + 1)
+                        return
+                    }
+                    player.dialogueInterpreter.sendItemMessage(entry.itemId, *entry.messages.toTypedArray())
                     player.dialogueInterpreter.addAction { _, _ -> sendAt(i + 1) }
                 }
 
@@ -141,6 +159,18 @@ object SequenceDialogue {
      */
     fun npcLine(npc: Entity, expression: FaceAnim?, message: String): DialogueLine.SpeechLine =
         DialogueLine.SpeechLine(npc, expression, splitLines(message).toList())
+
+    /**
+     * Builds an item dialogue line.
+     */
+    fun itemLine(itemId: Int, vararg messages: String): DialogueLine.ItemLine =
+        DialogueLine.ItemLine(itemId, messages.toList())
+
+    /**
+     * Builds an item dialogue line with multiple message strings.
+     */
+    fun itemLine(itemId: Int, message: String): DialogueLine.ItemLine =
+        DialogueLine.ItemLine(itemId, splitLines(message).toList())
 
     /**
      * Build an options line with vararg.
