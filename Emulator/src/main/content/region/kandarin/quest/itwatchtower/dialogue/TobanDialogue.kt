@@ -95,13 +95,12 @@ class TobanDialogue(player: Player? = null) : Dialogue(player) {
                     stage = END_DIALOGUE
                     return true
                 }
-
-                npcl(FaceAnim.OLD_NEUTRAL, "Hahaha! Small t'ing has done it. Toban is glad - take this...")
+                player(FaceAnim.FRIENDLY,"When I say I will get something, I get it!")
                 stage = 11
             }
 
             11 -> {
-                player("When I say I will get something, I get it!")
+                npcl(FaceAnim.OLD_NEUTRAL, "Hahaha! Small t'ing has done it. Toban is glad - take this...")
                 stage = 12
             }
 

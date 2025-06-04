@@ -9,6 +9,7 @@ import core.game.dialogue.FaceAnim
 import core.game.dialogue.Topic
 import core.game.node.entity.npc.NPC
 import core.game.node.item.Item
+import core.game.world.map.RegionManager
 import core.tools.END_DIALOGUE
 import org.rs.consts.Items
 import org.rs.consts.NPCs
@@ -33,7 +34,7 @@ class CityGuardDialogue : DialogueFile() {
 
                 if(getAttribute(player!!, GameAttributes.WATCHTOWER_RIDDLE, false) && inInventory(player!!, Items.DEATH_RUNE_560)) {
                     removeItem(player!!, Item(Items.DEATH_RUNE_560, 1))
-                    player("I worked it out!")
+                    player(FaceAnim.HAPPY, "I worked it out!")
                     stage = 11
                 } else {
                     npc(FaceAnim.OLD_ANGRY1, "Grrrr, what business you got here?")
@@ -48,7 +49,7 @@ class CityGuardDialogue : DialogueFile() {
             )
             4 -> {
                 end()
-                npc?.attack(player)
+                RegionManager.getLocalNpcs(player!!).firstOrNull { it.id == NPCs.CITY_GUARD_862 }?.attack(player)
             }
             5 -> npc(FaceAnim.OLD_NORMAL, "Is that so... You humour me small t'ing, answer this", "riddle and I will help you...").also { stage++ }
             6 -> npc(FaceAnim.OLD_DEFAULT, "I want you to bring me an item: I will give you all the", "letters of this item, you work out what it is...").also { stage++ }

@@ -3,7 +3,6 @@ package content.region.kandarin.quest.itwatchtower.dialogue
 import content.data.GameAttributes
 import core.api.*
 import core.api.item.allInInventory
-import core.api.quest.finishQuest
 import core.api.quest.getQuestStage
 import core.api.quest.setQuestStage
 import core.game.dialogue.Dialogue
@@ -56,39 +55,36 @@ class WatchtowerWizardDialogue(player: Player? = null) : Dialogue(player) {
             return true
         }
 
-
         if(questStage == 100 && npc.id == NPCs.WIZARD_5195) {
             npc("All's well that ends well.")
             stage = END_DIALOGUE
             return true
         }
 
-        val items = listOf(
-            Items.RELIC_PART_1_2373 to GameAttributes.WATCHTOWER_RELIC_1,
-            Items.RELIC_PART_2_2374 to GameAttributes.WATCHTOWER_RELIC_2,
-            Items.RELIC_PART_3_2375 to GameAttributes.WATCHTOWER_RELIC_3
-        )
+        val itemIds = listOf(Items.RELIC_PART_1_2373, Items.RELIC_PART_2_2374, Items.RELIC_PART_3_2375)
+        val attributes = listOf(GameAttributes.WATCHTOWER_RELIC_1, GameAttributes.WATCHTOWER_RELIC_2, GameAttributes.WATCHTOWER_RELIC_3)
 
-        val hasAll = items.all { inInventory(player, it.first) }
-        val turnedInAll = items.all { getAttribute(player, it.second, false) }
-        val turnedInAny = items.any { getAttribute(player, it.second, false) }
+        val hasAll = itemIds.all { inInventory(player, it) }
+        val turnedInAny = attributes.any { getAttribute(player, it, false) }
+        val turnedInAll = attributes.all { getAttribute(player, it, false) }
 
         if (hasAll && !turnedInAny) {
             player("An ogre gave me these...")
-            items.forEach { (item, attr) ->
-                removeItem(player, item)
-                setAttribute(player, attr, true)
+            for (i in itemIds.indices) {
+                removeItem(player, itemIds[i])
+                setAttribute(player, attributes[i], true)
             }
             stage = 600
             return true
         }
 
-        val handedIn = items.any { (item, attr) ->
-            if (!getAttribute(player, attr, false) && inInventory(player, item)) {
-                removeItem(player, item)
-                setAttribute(player, attr, true)
-                true
-            } else false
+        var handedIn = false
+        for (i in itemIds.indices) {
+            if (!getAttribute(player, attributes[i], false) && inInventory(player, itemIds[i])) {
+                removeItem(player, itemIds[i])
+                setAttribute(player, attributes[i], true)
+                handedIn = true
+            }
         }
 
         if (handedIn || turnedInAll) {
@@ -97,8 +93,8 @@ class WatchtowerWizardDialogue(player: Player? = null) : Dialogue(player) {
             return true
         }
 
-        val alreadyGive = items.any { (item, attr) ->
-            getAttribute(player, attr, false) && inInventory(player, item)
+        val alreadyGive = itemIds.indices.any { i ->
+            getAttribute(player, attributes[i], false) && inInventory(player, itemIds[i])
         }
 
         if (alreadyGive) {

@@ -8301,11 +8301,24 @@
   },
   {
     "examine": "Big, dumb and ugly.",
+    "melee_animation": "359",
+    "range_animation": "359",
+    "combat_audio": "448,451,450",
+    "attack_speed": "6",
+    "magic_level": "1",
+    "respawn_delay": "60",
+    "defence_animation": "360",
+    "magic_animation": "359",
+    "death_animation": "361",
     "name": "Gorad",
+    "defence_level": "54",
     "lifepoints": "81",
-    "strength_level": "1",
+    "strength_level": "54",
     "id": "856",
-    "respawn_delay": "60"
+    "aggressive": "true",
+    "bonuses": "22,22,22,0,0,0,0,0,0,0,0,20,0,0,0",
+    "range_level": "1",
+    "attack_level": "54"
   },
   {
     "weakness": "7",

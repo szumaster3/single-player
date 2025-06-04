@@ -219,6 +219,7 @@ class WatchTowerListener : InteractionListener {
         on(Scenery.CAVE_ENTRANCE_2811, IntType.SCENERY, "enter") { player, _ ->
             sendMessage(player, "You enter the cave.")
             teleport(player, Location(2576, 3029, 0))
+            sendPlayerDialogue(player, "Wow! That tunnel went a long way.", FaceAnim.EXTREMELY_SHOCKED)
             return@on true
         }
 

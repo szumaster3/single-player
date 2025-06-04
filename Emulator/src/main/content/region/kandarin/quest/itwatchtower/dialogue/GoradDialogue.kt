@@ -5,6 +5,7 @@ import core.api.sendMessage
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.combat.ImpactHandler
+import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
@@ -21,6 +22,7 @@ import org.rs.consts.Quests
 class GoradDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
+        npc = args[0] as NPC
         val questStage = getQuestStage(player, Quests.WATCHTOWER)
 
         if (questStage == 100) {
@@ -57,6 +59,7 @@ class GoradDialogue(player: Player? = null) : Dialogue(player) {
             }
             8 -> {
                 end()
+                sendMessage(player, "You are under attack!")
                 npc.attack(player)
             }
         }

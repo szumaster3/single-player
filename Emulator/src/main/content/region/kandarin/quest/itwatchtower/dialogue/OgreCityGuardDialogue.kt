@@ -27,7 +27,7 @@ import org.rs.consts.*
 @Initializable
 class OgreCityGuardDialogue(player: Player? = null) : Dialogue(player) {
 
-    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         val stage = getQuestStage(player, Quests.WATCHTOWER)
 
         if (stage in 10..100) {
@@ -60,7 +60,10 @@ class BattlementDialogue : DialogueFile() {
     override fun handle(componentID: Int, buttonID: Int) {
         npc = NPC(NPCs.OGRE_GUARD_860)
         when(stage) {
-            0 -> npc(FaceAnim.OLD_DEFAULT,"Oi! Where do you think you are going? You are for", "the cooking pot!").also { stage++ }
+            0 -> {
+                face(player!!, npc!!)
+                npc(FaceAnim.OLD_DEFAULT,"Oi! Where do you think you are going? You are for", "the cooking pot!").also { stage++ }
+            }
             1 -> if(!getAttribute(player!!, GameAttributes.WATCHTOWER_ROCK_CAKE, false)) {
                 showTopics(
                     Topic("But I am a friend to ogres...", 2),
@@ -101,10 +104,10 @@ class BattlementDialogue : DialogueFile() {
                 impact(player!!, 3, ImpactHandler.HitsplatType.NORMAL)
             }
             13 -> {
-                if(!inInventory(player!!, Items.ROCK_CAKE_2379)) {
+                if(!removeItem(player!!, Items.ROCK_CAKE_2379)) {
                     player(FaceAnim.HALF_GUILTY, "I didn't bring anything.").also { stage++ }
                 } else {
-                    player(FaceAnim.HALF_ASKING, "How about this?").also { stage = 11 }
+                    player(FaceAnim.HALF_ASKING, "How about this?").also { stage = 10 }
                 }
             }
             14 -> npc(FaceAnim.OLD_DEFAULT, "Didn't bring anything? In that case shove off!").also { stage = 9 }

@@ -28,7 +28,7 @@ class GoradNPC(id: Int = 0, location: Location? = null) : AbstractNPC(id, locati
     override fun finalizeDeath(killer: Entity?) {
         if (killer is Player) {
             val player = killer
-            if (getQuestStage(player, Quests.WATCHTOWER) >= 4) {
+            if (getQuestStage(player, Quests.WATCHTOWER) >= 2) {
                 sendItemDialogue(player, Items.OGRE_TOOTH_2377, "He's dropped a tooth; I'll keep that!")
                 if (freeSlots(player) == 0) {
                     produceGroundItem(player, Items.OGRE_TOOTH_2377, 1, this.location)

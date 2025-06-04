@@ -110,9 +110,12 @@ class OgDialogue(player: Player? = null) : Dialogue(player) {
                 if (inInventory(player, Items.TOBANS_KEY_2378)) {
                     npc(FaceAnim.OLD_DEFAULT, "Oh yeah? What's dat den?")
                     stage = 15
+                    return true
                 } else {
+                    end()
                     npc(FaceAnim.OLD_DEFAULT, "Stoopid! Take another and don't lose it!")
                     addItem(player, Items.TOBANS_KEY_2378, 1)
+                    stage = END_DIALOGUE
                 }
             }
             15 -> {

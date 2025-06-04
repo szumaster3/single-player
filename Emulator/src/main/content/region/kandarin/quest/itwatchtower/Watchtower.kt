@@ -34,17 +34,16 @@ class Watchtower : Quest(Quests.WATCHTOWER, 131, 130, 4, Vars.VARP_QUEST_WATCHTO
 
         if (stage == 1) {
             line(player, "I accepted the challenge of finding the lost crystals.", line++)
-            line++
-        }
-
-        if (stage == 2) {
-            line(player, "I accepted the challenge of finding the lost crystals.", line++, true)
-            line++
             if(inInventory(player, Items.FINGERNAILS_2384)) {
                 line(player, "I found some !!fingernails?? as evidence.", line++)
                 line(player, "I should take them to the !!Watchtower wizard??.", line++)
                 line++
             }
+            line++
+        }
+
+        if (stage == 2) {
+            line(player, "I accepted the challenge of finding the lost crystals.", line++, true)
             line++
         }
 

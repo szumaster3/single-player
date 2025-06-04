@@ -4,7 +4,9 @@ import core.api.quest.isQuestComplete
 import core.game.dialogue.FaceAnim
 import core.api.sendMessage
 import core.game.dialogue.Dialogue
+import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
+import core.game.world.map.RegionManager
 import core.plugin.Initializable
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
@@ -19,6 +21,7 @@ import org.rs.consts.Quests
 class EnclaveGuardDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
+        npc = args[0] as NPC
         if(isQuestComplete(player, Quests.WATCHTOWER)) {
             sendMessage(player, "The guard is occupied at the moment.")
         } else {
@@ -38,7 +41,7 @@ class EnclaveGuardDialogue(player: Player? = null) : Dialogue(player) {
             3 -> npc(FaceAnim.OLD_ANGRY1, "Oh you do, do you? How about 'no'?").also { stage++ }
             4 -> {
                 end()
-                npc?.attack(player)
+                RegionManager.getLocalNpcs(player!!).firstOrNull { it.id == NPCs.ENCLAVE_GUARD_870 }?.attack(player)
             }
             5 -> npc(FaceAnim.OLD_ANGRY1, "You dare mock me, creature!").also { stage = 4 }
         }

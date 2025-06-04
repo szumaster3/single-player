@@ -5,6 +5,7 @@ import core.api.*
 import core.api.quest.getQuestStage
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
+import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.world.map.RegionManager
 import core.plugin.Initializable
@@ -23,6 +24,7 @@ import org.rs.consts.Quests
 class GrewDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
+        npc = args[0] as NPC
         val questStage = getQuestStage(player, Quests.WATCHTOWER)
 
         if (questStage == 100) {
@@ -88,10 +90,11 @@ class GrewDialogue(player: Player? = null) : Dialogue(player) {
             5 -> npc(FaceAnim.OLD_NEUTRAL, "What can a morsel like you do for me?").also { stage++ }
             6 -> player("I am a mighty adventurer, slayer of monsters and user", "of magic powers.").also { stage++ }
             7 -> npc(FaceAnim.OLD_NEUTRAL, "Well well, perhaps the morsel can help after all...").also { stage++ }
-            8 -> npc(FaceAnim.OLD_NEUTRAL, "If you think you're tough", "find Gorad my enemy in the south east settlement", "And knock one of his teeth out!", "Heheheheh!"). also {
+            8 -> npc(FaceAnim.OLD_NEUTRAL, "If you think you're tough", "find Gorad my enemy in the south east settlement", "And knock one of his teeth out!"). also {
                 setAttribute(player, GameAttributes.WATCHTOWER_GORAD_TOOTH, true)
-                stage = END_DIALOGUE
+                stage++
             }
+            9 -> npc(FaceAnim.OLD_LAUGH1, "Heheheheh!").also { stage = END_DIALOGUE }
             10 -> {
                 if (!removeItem(player, Items.OGRE_TOOTH_2377)) {
                     player("Err, I don't have it.")
