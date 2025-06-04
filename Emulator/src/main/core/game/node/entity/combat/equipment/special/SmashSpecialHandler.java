@@ -18,7 +18,9 @@ import org.rs.consts.Sounds;
 import static core.api.ContentAPIKt.playGlobalAudio;
 
 /**
- * The type Smash special handler.
+ * Handles Statius' Warhammer special attack - Smash.
+ *
+ * @author Splinter
  */
 @Initializable
 public final class SmashSpecialHandler extends MeleeSwingHandler implements Plugin<Object> {

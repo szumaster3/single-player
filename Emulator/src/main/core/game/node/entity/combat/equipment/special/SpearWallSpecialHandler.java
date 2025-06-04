@@ -22,7 +22,9 @@ import java.util.List;
 import static core.api.ContentAPIKt.playGlobalAudio;
 
 /**
- * The type Spear wall special handler.
+ * Handles Vesta's Spear special attack - Spear Wall.
+ *
+ * @author Splinter
  */
 @Initializable
 public final class SpearWallSpecialHandler extends MeleeSwingHandler implements Plugin<Object> {

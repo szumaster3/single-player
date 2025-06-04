@@ -17,7 +17,9 @@ import org.rs.consts.Sounds;
 import static core.api.ContentAPIKt.playGlobalAudio;
 
 /**
- * The type Puncture special handler.
+ * Handles the puncture special attack combat swing.
+ *
+ * @author Emperor
  */
 @Initializable
 public final class PunctureSpecialHandler extends MeleeSwingHandler implements Plugin<Object> {

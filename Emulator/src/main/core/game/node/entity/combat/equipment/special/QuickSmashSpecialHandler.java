@@ -19,7 +19,9 @@ import org.rs.consts.Sounds;
 import static core.api.ContentAPIKt.playGlobalAudio;
 
 /**
- * The type Quick smash special handler.
+ * Handles the granite maul special attack.
+ *
+ * @author Emperor
  */
 @Initializable
 public final class QuickSmashSpecialHandler extends MeleeSwingHandler implements Plugin<Object> {

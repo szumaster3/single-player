@@ -17,7 +17,9 @@ import org.rs.consts.Sounds;
 import static core.api.ContentAPIKt.playAudio;
 
 /**
- * The type Rampage special handler.
+ * Handles the Rampage special attack.
+ *
+ * @author Emperor
  */
 @Initializable
 public final class RampageSpecialHandler extends MeleeSwingHandler implements Plugin<Object> {

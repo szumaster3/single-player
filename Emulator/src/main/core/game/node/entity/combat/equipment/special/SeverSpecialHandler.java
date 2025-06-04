@@ -18,7 +18,9 @@ import org.rs.consts.Sounds;
 import static core.api.ContentAPIKt.playGlobalAudio;
 
 /**
- * The type Sever special handler.
+ * Handles the Sever special attack.
+ *
+ * @author Emperor
  */
 @Initializable
 public final class SeverSpecialHandler extends MeleeSwingHandler implements Plugin<Object> {
@@ -41,8 +43,7 @@ public final class SeverSpecialHandler extends MeleeSwingHandler implements Plug
 
     @Override
     public int swing(Entity entity, Entity victim, BattleState state) {
-        if (!((Player) entity).getSettings().drainSpecial(SPECIAL_ENERGY))
-            return -1;
+        if (!((Player) entity).getSettings().drainSpecial(SPECIAL_ENERGY)) return -1;
         state.setStyle(CombatStyle.MELEE);
         int hit = 0;
         if (isAccurateImpact(entity, victim, CombatStyle.MELEE, 1.25, 1.0)) {

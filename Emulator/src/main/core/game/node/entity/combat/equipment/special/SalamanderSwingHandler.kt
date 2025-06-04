@@ -20,13 +20,14 @@ import org.rs.consts.Items
 import kotlin.math.ceil
 import kotlin.math.floor
 
-class SalamanderSwingHandler(
-    private var style: CombatStyle,
-) : CombatSwingHandler(style) {
-    override fun canSwing(
-        entity: Entity,
-        victim: Entity,
-    ): InteractionType? {
+/**
+ * Handles a combat swing using a salamander.
+ *
+ * @author Vexia, itsmedoggo
+ */
+class SalamanderSwingHandler(private var style: CombatStyle) : CombatSwingHandler(style) {
+
+    override fun canSwing(entity: Entity, victim: Entity): InteractionType? {
         checkStyle(entity)
         if (!isProjectileClipped(entity, victim, false)) {
             return InteractionType.NO_INTERACT

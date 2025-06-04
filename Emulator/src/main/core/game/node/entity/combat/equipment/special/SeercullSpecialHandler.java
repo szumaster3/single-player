@@ -18,7 +18,9 @@ import org.rs.consts.Sounds;
 import static core.api.ContentAPIKt.playGlobalAudio;
 
 /**
- * The type Seercull special handler.
+ * Represents the Seercull's special attack which lowers the opponent's magic level.
+ *
+ * @author Splinter
  */
 @Initializable
 public final class SeercullSpecialHandler extends RangeSwingHandler implements Plugin<Object> {

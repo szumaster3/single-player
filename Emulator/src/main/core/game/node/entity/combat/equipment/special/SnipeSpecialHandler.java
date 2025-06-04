@@ -19,7 +19,9 @@ import org.rs.consts.Sounds;
 import static core.api.ContentAPIKt.playGlobalAudio;
 
 /**
- * The type Snipe special handler.
+ * Represents the Dorgeshuun crossbow's special attack - snipe.
+ *
+ * @author Splinter
  */
 @Initializable
 public final class SnipeSpecialHandler extends RangeSwingHandler implements Plugin<Object> {

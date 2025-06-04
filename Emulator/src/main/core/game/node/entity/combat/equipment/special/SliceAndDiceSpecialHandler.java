@@ -17,7 +17,9 @@ import org.rs.consts.Sounds;
 import static core.api.ContentAPIKt.playGlobalAudio;
 
 /**
- * The type Slice and dice special handler.
+ * Handles the Dragon claws special attack "Slice and Dice".
+ *
+ * @author Emperor
  */
 @Initializable
 public final class SliceAndDiceSpecialHandler extends MeleeSwingHandler implements Plugin<Object> {

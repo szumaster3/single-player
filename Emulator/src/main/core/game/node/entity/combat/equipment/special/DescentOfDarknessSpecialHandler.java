@@ -20,23 +20,46 @@ import org.rs.consts.Sounds;
 import static core.api.ContentAPIKt.playGlobalAudio;
 
 /**
- * The type Descent of darkness special handler.
+ * Represents the descent of darkness sepcial handler.
+ *
+ * @author Emperor
  */
 @Initializable
 public final class DescentOfDarknessSpecialHandler extends RangeSwingHandler implements Plugin<Object> {
 
+    /**
+     * The special energy required.
+     */
     private static final int SPECIAL_ENERGY = 55;
 
+    /**
+     * The descent of dragons projectile.
+     */
     private static final Projectile DRAGON_PROJECTILE = Projectile.create((Entity) null, null, 1099, 40, 36, 41, 46, 5, 11);
 
+    /**
+     * The descent of dragons secondary projectile.
+     */
     private static final Projectile DRAGON_PROJECTILE_1 = Projectile.create((Entity) null, null, 1099, 40, 36, 41, 55, 25, 11);
 
+    /**
+     * The descent of darkness projectile.
+     */
     private static final Projectile DARKNESS_PROJECTILE = Projectile.create((Entity) null, null, 1101, 40, 36, 41, 46, 5, 11);
 
+    /**
+     * The descent of darkness secondary projectile.
+     */
     private static final Projectile DARKNESS_PROJECTILE_1 = Projectile.create((Entity) null, null, 1101, 40, 36, 41, 55, 25, 11);
 
+    /**
+     * The descent of dragons impact graphic.
+     */
     private static final Graphics DRAGON_IMPACT = new Graphics(1100, 96);
 
+    /**
+     * The descent of darkness impact graphic.
+     */
     private static final Graphics DARKNESS_IMPACT = new Graphics(1103, 96);
 
     @Override
@@ -46,7 +69,7 @@ public final class DescentOfDarknessSpecialHandler extends RangeSwingHandler imp
 
     @Override
     public Plugin<Object> newInstance(Object arg) throws Throwable {
-        if (CombatStyle.RANGE.getSwingHandler().register(11235, this) && CombatStyle.RANGE.getSwingHandler().register(13405, this) && CombatStyle.RANGE.getSwingHandler().register(14803, this) && CombatStyle.RANGE.getSwingHandler().register(14804, this) && CombatStyle.RANGE.getSwingHandler().register(14805, this) && CombatStyle.RANGE.getSwingHandler().register(14806, this))
+        if (CombatStyle.RANGE.getSwingHandler().register(11235, this) && CombatStyle.RANGE.getSwingHandler().register(13405, this))
             ;
         return this;
     }

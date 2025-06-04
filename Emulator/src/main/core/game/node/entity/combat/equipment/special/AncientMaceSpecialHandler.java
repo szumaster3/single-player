@@ -16,7 +16,9 @@ import org.rs.consts.Sounds;
 import static core.api.ContentAPIKt.playGlobalAudio;
 
 /**
- * The type Ancient mace special handler.
+ * Handles the ancient mace special attack "Favour of the War God".
+ *
+ * @author Emperor
  */
 @Initializable
 public final class AncientMaceSpecialHandler extends MeleeSwingHandler implements Plugin<Object> {

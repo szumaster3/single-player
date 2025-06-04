@@ -16,7 +16,9 @@ import org.rs.consts.Sounds;
 import static core.api.ContentAPIKt.playGlobalAudio;
 
 /**
- * The type Feint special handler.
+ * Handles Vesta's Longsword special attack, feint.
+ *
+ * @author Splinter
  */
 @Initializable
 public final class FeintSpecialHandler extends MeleeSwingHandler implements Plugin<Object> {

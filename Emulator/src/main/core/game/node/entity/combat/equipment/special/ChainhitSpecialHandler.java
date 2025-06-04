@@ -25,24 +25,38 @@ import java.util.List;
 import static core.api.ContentAPIKt.playGlobalAudio;
 
 /**
- * The type Chainhit special handler.
+ * Handles the Rune throwing axe special attack "Chain-hit".
+ *
+ * @author Emperor
  */
 @Initializable
 public final class ChainhitSpecialHandler extends RangeSwingHandler implements Plugin<Object> {
 
     /**
-     * Instantiates a new Chainhit special handler.
+     * Constructs a new {@code ChainhitSpecialHandler} {@code Object}.
      */
     public ChainhitSpecialHandler() {
         super(SwingHandlerFlag.IGNORE_PRAYER_BOOSTS_DAMAGE);
     }
 
+    /**
+     * The special energy required.
+     */
     private static final int SPECIAL_ENERGY = 10;
 
+    /**
+     * The attack animation.
+     */
     private static final Animation ANIMATION = new Animation(1068, Priority.HIGH);
 
-    private static final Graphics GRAPHICS = new Graphics(257, 96);
+    /**
+     * The graphic.
+     */
+    private static final Graphics GRAPHIC = new Graphics(257, 96);
 
+    /**
+     * The door support locations.
+     */
     private static final Location[] DOOR_SUPPORTS = new Location[]{Location.create(2545, 10145, 0), Location.create(2545, 10141, 0), Location.create(2543, 10143, 0)};
 
     @Override
@@ -99,7 +113,7 @@ public final class ChainhitSpecialHandler extends RangeSwingHandler implements P
     @Override
     public void visualize(Entity entity, Entity victim, BattleState state) {
         playGlobalAudio(entity.getLocation(), Sounds.CHAINSHOT_2528);
-        entity.visualize(ANIMATION, GRAPHICS);
+        entity.visualize(ANIMATION, GRAPHIC);
         int speed = (int) (32 + (entity.getLocation().getDistance(victim.getLocation()) * 5));
         Projectile.create(entity, victim, 258, 40, 36, 32, speed, 5, 11).send();
     }
@@ -116,12 +130,12 @@ public final class ChainhitSpecialHandler extends RangeSwingHandler implements P
     }
 
     /**
-     * Handle hit.
+     * Handles a hit.
      *
-     * @param entity the entity
-     * @param victim the victim
-     * @param player the player
-     * @param state  the state
+     * @param entity The entity.
+     * @param victim The victim.
+     * @param player The player.
+     * @param state  The battle state.
      */
     public void handleHit(final Entity entity, final Entity victim, final Player player, final BattleState state) {
         GameWorld.getPulser().submit(new Pulse(1, player, victim) {
@@ -164,6 +178,12 @@ public final class ChainhitSpecialHandler extends RangeSwingHandler implements P
         player.removeAttribute("chain-hit_v");
     }
 
+    /**
+     * Gets the victims list.
+     *
+     * @param e The attacking entity.
+     * @return The victims list.
+     */
     private List<? extends Entity> getVictimsList(Entity e, Entity victim) {
         List<? extends Entity> list = e.getAttribute("chain-hit_v");
         if (list == null) {

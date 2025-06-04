@@ -19,7 +19,9 @@ import org.rs.consts.Sounds;
 import static core.api.ContentAPIKt.playGlobalAudio;
 
 /**
- * The type Impale special handler.
+ * Handles the Rune claws special attack "Impale".
+ *
+ * @author Emperor
  */
 @Initializable
 public final class ImpaleSpecialHandler extends MeleeSwingHandler implements Plugin<Object> {

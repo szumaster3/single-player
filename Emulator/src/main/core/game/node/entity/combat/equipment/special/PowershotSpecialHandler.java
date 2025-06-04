@@ -16,7 +16,9 @@ import org.rs.consts.Sounds;
 import static core.api.ContentAPIKt.playGlobalAudio;
 
 /**
- * The type Powershot special handler.
+ * Handles the Magic longbow special attack "Powershot".
+ *
+ * @author Emperor
  */
 @Initializable
 public final class PowershotSpecialHandler extends RangeSwingHandler implements Plugin<Object> {

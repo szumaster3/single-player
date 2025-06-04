@@ -17,7 +17,9 @@ import org.rs.consts.Sounds;
 import static core.api.ContentAPIKt.playGlobalAudio;
 
 /**
- * The type Healing blade special handler.
+ * Handles the healing blade special attack.
+ *
+ * @author Emperor
  */
 @Initializable
 public final class HealingBladeSpecialHandler extends MeleeSwingHandler implements Plugin<Object> {

@@ -18,7 +18,9 @@ import org.rs.consts.Sounds;
 import static core.api.ContentAPIKt.playGlobalAudio;
 
 /**
- * The type Warstrike special handler.
+ * Handles the Warstrike special attack.
+ *
+ * @author Emperor
  */
 @Initializable
 public final class WarstrikeSpecialHandler extends MeleeSwingHandler implements Plugin<Object> {
@@ -68,8 +70,7 @@ public final class WarstrikeSpecialHandler extends MeleeSwingHandler implements 
                     left = -victim.getSkills().updateLevel(Skills.ATTACK, -left, 0);
                     if (left > 0) {
                         left = -victim.getSkills().updateLevel(Skills.MAGIC, -left, 0);
-                        if (left > 0)
-                            victim.getSkills().updateLevel(Skills.RANGE, -left, 0);
+                        if (left > 0) victim.getSkills().updateLevel(Skills.RANGE, -left, 0);
                     }
                 }
             }

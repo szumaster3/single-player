@@ -17,7 +17,9 @@ import org.rs.consts.Sounds;
 import static core.api.ContentAPIKt.playGlobalAudio;
 
 /**
- * The type Judgement special handler.
+ * Handles the Judgement special attack.
+ *
+ * @author Emperor
  */
 @Initializable
 public final class JudgementSpecialHandler extends MeleeSwingHandler implements Plugin<Object> {

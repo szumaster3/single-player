@@ -16,7 +16,9 @@ import org.rs.consts.Sounds;
 import static core.api.ContentAPIKt.playGlobalAudio;
 
 /**
- * The type Saradomins lightning handler.
+ * Handles the Saradomin sword special attack.
+ *
+ * @author Emperor
  */
 @Initializable
 public final class SaradominsLightningHandler extends MeleeSwingHandler implements Plugin<Object> {

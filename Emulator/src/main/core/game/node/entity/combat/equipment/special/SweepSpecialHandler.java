@@ -26,7 +26,9 @@ import java.util.List;
 import static core.api.ContentAPIKt.playGlobalAudio;
 
 /**
- * The type Sweep special handler.
+ * Handles the Dragon halberd special attack.
+ *
+ * @author Emperor
  */
 @Initializable
 public final class SweepSpecialHandler extends MeleeSwingHandler implements Plugin<Object> {

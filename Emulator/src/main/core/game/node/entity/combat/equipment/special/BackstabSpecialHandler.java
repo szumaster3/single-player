@@ -17,7 +17,9 @@ import org.rs.consts.Sounds;
 import static core.api.ContentAPIKt.playGlobalAudio;
 
 /**
- * The type Backstab special handler.
+ * Handles the Bone dagger special attack "Backstab".
+ *
+ * @author Emperor
  */
 @Initializable
 public final class BackstabSpecialHandler extends MeleeSwingHandler implements Plugin<Object> {

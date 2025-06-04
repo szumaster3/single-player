@@ -20,6 +20,8 @@ import static core.api.ContentAPIKt.*;
 
 /**
  * The type Excalibur special handler.
+ *
+ * @author Emperor
  */
 @Initializable
 public final class ExcaliburSpecialHandler extends MeleeSwingHandler implements Plugin<Object> {

@@ -20,7 +20,9 @@ import org.rs.consts.Sounds;
 import static core.api.ContentAPIKt.playGlobalAudio;
 
 /**
- * The type Snapshot special handler.
+ * Handles the magic shortbow special attack "Snapshot".
+ *
+ * @author Emperor
  */
 @Initializable
 public final class SnapshotSpecialHandler extends RangeSwingHandler implements Plugin<Object> {

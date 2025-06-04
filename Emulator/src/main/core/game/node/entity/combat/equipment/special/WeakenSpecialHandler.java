@@ -17,7 +17,9 @@ import org.rs.consts.Sounds;
 import static core.api.ContentAPIKt.playGlobalAudio;
 
 /**
- * The type Weaken special handler.
+ * Handles Darklight's special attack, Weaken.
+ *
+ * @author Crash, based on Emperor's code for other special attacks
  */
 @Initializable
 public final class WeakenSpecialHandler extends MeleeSwingHandler implements Plugin<Object> {

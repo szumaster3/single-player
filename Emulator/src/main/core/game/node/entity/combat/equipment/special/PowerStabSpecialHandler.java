@@ -22,7 +22,9 @@ import java.util.List;
 import static core.api.ContentAPIKt.playGlobalAudio;
 
 /**
- * The type Power stab special handler.
+ * Handles the Powerstab special attack.
+ *
+ * @author Emperor
  */
 @Initializable
 public final class PowerStabSpecialHandler extends MeleeSwingHandler implements Plugin<Object> {
@@ -66,8 +68,7 @@ public final class PowerStabSpecialHandler extends MeleeSwingHandler implements 
         if (!multi) {
             return super.swing(entity, victim, state);
         }
-        @SuppressWarnings("rawtypes")
-        List list = victim instanceof NPC ? RegionManager.getSurroundingNPCs(entity, 9, entity) : RegionManager.getSurroundingPlayers(entity, 9, entity);
+        @SuppressWarnings("rawtypes") List list = victim instanceof NPC ? RegionManager.getSurroundingNPCs(entity, 9, entity) : RegionManager.getSurroundingPlayers(entity, 9, entity);
         BattleState[] targets = new BattleState[list.size()];
         int count = 0;
         for (Object o : list) {

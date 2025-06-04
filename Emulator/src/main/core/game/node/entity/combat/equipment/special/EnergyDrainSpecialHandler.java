@@ -11,23 +11,32 @@ import core.game.world.update.flag.context.Graphics;
 import core.plugin.Initializable;
 import core.plugin.Plugin;
 import core.tools.RandomFunction;
-import org.rs.consts.Animations;
-import org.rs.consts.Items;
 import org.rs.consts.Sounds;
 
 import static core.api.ContentAPIKt.playGlobalAudio;
 
 /**
- * The type Energy drain special handler.
+ * Handles the Abyssal whips Energy drain special attack.
+ *
+ * @author Emperor
  */
 @Initializable
 public final class EnergyDrainSpecialHandler extends MeleeSwingHandler implements Plugin<Object> {
 
+    /**
+     * The special energy required.
+     */
     private static final int SPECIAL_ENERGY = 50;
 
-    private static final Animation ANIMATION = new Animation(Animations.THROW_WEAPON_1658, Priority.HIGH);
+    /**
+     * The attack animation.
+     */
+    private static final Animation ANIMATION = new Animation(1658, Priority.HIGH);
 
-    private static final Graphics GRAPHICS = new Graphics(org.rs.consts.Graphics.ABYSSAL_WHIP_SPECIAL_341, 96);
+    /**
+     * The graphic.
+     */
+    private static final Graphics GRAPHIC = new Graphics(341, 96);
 
     @Override
     public Object fireEvent(String identifier, Object... args) {
@@ -36,7 +45,7 @@ public final class EnergyDrainSpecialHandler extends MeleeSwingHandler implement
 
     @Override
     public Plugin<Object> newInstance(Object arg) throws Throwable {
-        CombatStyle.MELEE.getSwingHandler().register(Items.ABYSSAL_WHIP_4151, this);
+        CombatStyle.MELEE.getSwingHandler().register(4151, this);
         return this;
     }
 
@@ -62,6 +71,6 @@ public final class EnergyDrainSpecialHandler extends MeleeSwingHandler implement
     public void visualize(Entity entity, Entity victim, BattleState state) {
         playGlobalAudio(entity.getLocation(), Sounds.ENERGYDRAIN_2713);
         entity.animate(ANIMATION);
-        victim.graphics(GRAPHICS);
+        victim.graphics(GRAPHIC);
     }
 }

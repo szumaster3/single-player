@@ -22,7 +22,9 @@ import static core.api.ContentAPIKt.playGlobalAudio;
 import static core.api.ContentAPIKt.stun;
 
 /**
- * The type Shove special handler.
+ * Handles the dragon spear special attack.
+ *
+ * @author Emperor
  */
 @Initializable
 public final class ShoveSpecialHandler extends MeleeSwingHandler implements Plugin<Object> {

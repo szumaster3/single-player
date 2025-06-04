@@ -19,13 +19,21 @@ import core.tools.RandomFunction;
 import java.util.List;
 
 /**
- * The type Chinchompa swing handler.
+ * Handles a combat swing using red chinchompas.
+ *
+ * @author Emperor
  */
 public final class ChinchompaSwingHandler extends RangeSwingHandler {
 
+    /**
+     * The instance.
+     */
     private static final ChinchompaSwingHandler INSTANCE = new ChinchompaSwingHandler();
 
-    private static final Graphics END_GRAPHICS = new Graphics(157, 96);
+    /**
+     * The impact graphic.
+     */
+    private static final Graphics END_GRAPHIC = new Graphics(157, 96);
 
     @Override
     public int swing(Entity entity, Entity victim, BattleState state) {
@@ -50,8 +58,7 @@ public final class ChinchompaSwingHandler extends RangeSwingHandler {
             entity.getProperties().getCombatPulse().stop();
             return -1;
         }
-        @SuppressWarnings("rawtypes")
-        List list = victim instanceof NPC ? RegionManager.getSurroundingNPCs(victim, 14, entity) : RegionManager.getSurroundingPlayers(victim, 14, entity);
+        @SuppressWarnings("rawtypes") List list = victim instanceof NPC ? RegionManager.getSurroundingNPCs(victim, 14, entity) : RegionManager.getSurroundingPlayers(victim, 14, entity);
         BattleState[] targets = new BattleState[list.size()];
         int count = 0;
         for (Object o : list) {
@@ -126,7 +133,7 @@ public final class ChinchompaSwingHandler extends RangeSwingHandler {
 
     @Override
     public void visualizeImpact(Entity entity, Entity victim, BattleState state) {
-        victim.graphics(END_GRAPHICS);
+        victim.graphics(END_GRAPHIC);
         for (BattleState s : state.getTargets()) {
             if (s != null) {
                 s.getVictim().animate(s.getVictim().getProperties().getDefenceAnimation());
@@ -135,9 +142,9 @@ public final class ChinchompaSwingHandler extends RangeSwingHandler {
     }
 
     /**
-     * Gets instance.
+     * Gets the ChinchompaSwingHandler instance.
      *
-     * @return the instance
+     * @return The instance.
      */
     public static ChinchompaSwingHandler getInstance() {
         return INSTANCE;

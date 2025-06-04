@@ -17,7 +17,9 @@ import org.rs.consts.Sounds;
 import static core.api.ContentAPIKt.*;
 
 /**
- * The type Ice cleave special handler.
+ * Handles the Ice cleave special attack.
+ *
+ * @author Emperor
  */
 @Initializable
 public final class IceCleaveSpecialHandler extends MeleeSwingHandler implements Plugin<Object> {

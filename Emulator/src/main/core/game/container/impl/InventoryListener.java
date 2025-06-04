@@ -13,6 +13,7 @@ import org.rs.consts.Components;
 
 /**
  * Handles the inventory container listening.
+ *
  * @author Emperor
  */
 public final class InventoryListener implements ContainerListener {
@@ -68,10 +69,7 @@ public final class InventoryListener implements ContainerListener {
      */
     @Override
     public void refresh(Container container) {
-        PacketRepository.send(
-                ContainerPacket.class,
-                new ContainerContext(player, Components.INVENTORY_149, 0, 93, container, false)
-        );
+        PacketRepository.send(ContainerPacket.class, new ContainerContext(player, Components.INVENTORY_149, 0, 93, container, false));
         updatePlayerState(container);
     }
 
@@ -84,10 +82,7 @@ public final class InventoryListener implements ContainerListener {
      */
     @Override
     public void update(Container container, ContainerEvent event) {
-        PacketRepository.send(
-                ContainerPacket.class,
-                new ContainerContext(player, Components.INVENTORY_149, 0, 93, event.getItems(), false, event.getSlots())
-        );
+        PacketRepository.send(ContainerPacket.class, new ContainerContext(player, Components.INVENTORY_149, 0, 93, event.getItems(), false, event.getSlots()));
         updatePlayerState(container);
     }
 }
