@@ -1,5 +1,7 @@
 This project is a **fork of [2009scape](https://gitlab.com/2009scape/2009scape)**.
 
+Download full package at https://szumaster3.github.io/530-content/
+
 #### Requirements
 
 - **Java 11**: You can download it from [Oracle](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html)
