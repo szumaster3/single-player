@@ -25,16 +25,16 @@ public class PlayerDetails {
     private final CommunicationInfo communicationInfo = new CommunicationInfo();
 
     /**
-     * Gets player time.
+     * Returns the time elapsed since the player joined as a formatted string.
      *
      * @param player the player
-     * @return the player time
+     * @return the formatted elapsed time or null if join date is not set yet
      */
     public String getPlayerTime(Player player) {
         Timestamp joinTimestamp = (Timestamp) player.getGameAttributes().getAttributes().get(GameAttributes.JOIN_DATE);
 
         if (joinTimestamp == null) {
-            setJoinDate(player);
+            setJoinDateIfAbsent(player);
             return null;
         }
 
@@ -53,17 +53,19 @@ public class PlayerDetails {
     }
 
     /**
-     * Sets join date.
+     * Sets the join date timestamp for the player only if it is not already set.
      *
      * @param player the player
      */
-    public void setJoinDate(Player player) {
-        long joinTime = System.currentTimeMillis();
-        Timestamp timestamp = new Timestamp(joinTime);
+    public void setJoinDateIfAbsent(Player player) {
+        Timestamp existing = (Timestamp) player.getGameAttributes().getAttributes().get(GameAttributes.JOIN_DATE);
+        if (existing == null) {
+            long joinTime = System.currentTimeMillis();
+            Timestamp timestamp = new Timestamp(joinTime);
 
-        player.getGameAttributes().getAttributes().put(GameAttributes.JOIN_DATE, timestamp);
-
-        player.getDetails().accountInfo.setJoinDate(timestamp);
+            player.getGameAttributes().getAttributes().put(GameAttributes.JOIN_DATE, timestamp);
+            player.getDetails().accountInfo.setJoinDate(timestamp);
+        }
     }
 
     /**

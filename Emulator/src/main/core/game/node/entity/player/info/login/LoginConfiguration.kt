@@ -121,7 +121,7 @@ object LoginConfiguration {
         RegionManager.move(player)
         player.musicPlayer.init()
         player.updateAppearance()
-        player.details.setJoinDate(player)
+        player.details.setJoinDateIfAbsent(player)
         player.playerFlags.lastSceneGraph = player.location
         player.packetDispatch.sendInterfaceConfig(226, 1, true)
 
