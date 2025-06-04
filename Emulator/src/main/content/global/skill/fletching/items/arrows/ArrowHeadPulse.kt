@@ -1,4 +1,4 @@
-package content.global.skill.fletching.items.arrow
+package content.global.skill.fletching.items.arrows
 
 import content.global.skill.slayer.SlayerManager.Companion.getInstance
 import core.api.getItemName

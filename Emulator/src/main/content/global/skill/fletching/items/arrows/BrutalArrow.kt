@@ -1,4 +1,4 @@
-package content.global.skill.fletching.items.arrow
+package content.global.skill.fletching.items.arrows
 
 import org.rs.consts.Items
 

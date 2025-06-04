@@ -1,4 +1,4 @@
-package content.global.skill.fletching.items.arrow
+package content.global.skill.fletching.items.arrows
 
 import core.api.*
 import core.game.node.entity.player.Player

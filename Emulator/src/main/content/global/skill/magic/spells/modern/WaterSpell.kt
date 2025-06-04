@@ -119,60 +119,56 @@ class WaterSpell : CombatSpell {
 
     companion object {
         private val STRIKE_START = Graphics(org.rs.consts.Graphics.WATER_STRIKE_CAST_93, 96)
-        private val STRIKE_PROJECTILE: Projectile =
-            Projectile.create(
-                null as Entity?,
-                null,
-                org.rs.consts.Graphics.WATER_STRIKE_PROJECTILE_94,
-                40,
-                36,
-                52,
-                75,
-                15,
-                11,
-            )
+        private val STRIKE_PROJECTILE: Projectile = Projectile.create(
+            null as Entity?,
+            null,
+            org.rs.consts.Graphics.WATER_STRIKE_PROJECTILE_94,
+            40,
+            36,
+            52,
+            75,
+            15,
+            11,
+        )
         private val STRIKE_END = Graphics(org.rs.consts.Graphics.WATER_STRIKE_IMPACT_95, 96)
         private val BOLT_START = Graphics(org.rs.consts.Graphics.WATER_BOLT_CAST_120, 96)
-        private val BOLT_PROJECTILE: Projectile =
-            Projectile.create(
-                null as Entity?,
-                null,
-                org.rs.consts.Graphics.WATER_BOLT_PROJECTILE_121,
-                40,
-                36,
-                52,
-                75,
-                15,
-                11,
-            )
+        private val BOLT_PROJECTILE: Projectile = Projectile.create(
+            null as Entity?,
+            null,
+            org.rs.consts.Graphics.WATER_BOLT_PROJECTILE_121,
+            40,
+            36,
+            52,
+            75,
+            15,
+            11,
+        )
         private val BOLT_END = Graphics(org.rs.consts.Graphics.WATER_BOLT_IMPACT_122, 96)
         private val BLAST_START = Graphics(org.rs.consts.Graphics.WATER_BLAST_CAST_135, 96)
-        private val BLAST_PROJECTILE: Projectile =
-            Projectile.create(
-                null as Entity?,
-                null,
-                org.rs.consts.Graphics.WATER_BLAST_PROJECTILE_136,
-                40,
-                36,
-                52,
-                75,
-                15,
-                11,
-            )
+        private val BLAST_PROJECTILE: Projectile = Projectile.create(
+            null as Entity?,
+            null,
+            org.rs.consts.Graphics.WATER_BLAST_PROJECTILE_136,
+            40,
+            36,
+            52,
+            75,
+            15,
+            11,
+        )
         private val BLAST_END = Graphics(org.rs.consts.Graphics.WATER_BLAST_IMPACT_137, 96)
         private val WAVE_START = Graphics(org.rs.consts.Graphics.WATER_WAVE_CAST_161, 96)
-        private val WAVE_PROJECTILE: Projectile =
-            Projectile.create(
-                null as Entity?,
-                null,
-                org.rs.consts.Graphics.WATER_WAVE_PROJECTILE_162,
-                40,
-                36,
-                52,
-                75,
-                15,
-                11,
-            )
+        private val WAVE_PROJECTILE: Projectile = Projectile.create(
+            null as Entity?,
+            null,
+            org.rs.consts.Graphics.WATER_WAVE_PROJECTILE_162,
+            40,
+            36,
+            52,
+            75,
+            15,
+            11,
+        )
         private val WAVE_END = Graphics(org.rs.consts.Graphics.WATER_WAVE_IMPACT_163, 96)
         private val ANIMATION = Animation(Animations.CAST_SPELL_711, Priority.HIGH)
     }

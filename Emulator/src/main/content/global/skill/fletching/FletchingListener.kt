@@ -1,6 +1,6 @@
 package content.global.skill.fletching
 
-import content.global.skill.fletching.items.arrow.*
+import content.global.skill.fletching.items.arrows.*
 import content.global.skill.fletching.items.bolts.*
 import content.global.skill.fletching.items.bow.StringPulse
 import content.global.skill.fletching.items.bow.Strings

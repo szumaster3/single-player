@@ -1,7 +1,7 @@
 package content.global.skill.fletching
 
-import content.global.skill.fletching.items.arrow.ArrowHead
-import content.global.skill.fletching.items.arrow.BrutalArrow
+import content.global.skill.fletching.items.arrows.ArrowHead
+import content.global.skill.fletching.items.arrows.BrutalArrow
 import content.global.skill.fletching.items.bolts.Bolt
 import content.global.skill.fletching.items.bolts.GemBolt
 import content.global.skill.fletching.items.bow.Strings
