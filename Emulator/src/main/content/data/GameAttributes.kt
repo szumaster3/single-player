@@ -372,4 +372,10 @@ internal object GameAttributes {
     const val WATCHTOWER_SHAMAN_SPAWN = "/save:watchtower:shamans_spawned"
     const val WATCHTOWER_OGRE_DESTROY_COUNT = "/save:watchtower:ogres_destroyed"
     const val WATCHTOWER_SYSTEM_ACTIVATED = "/save:watchtower:done"
+
+    // Knight's wave activity
+    const val KW_SPAWN = "/save:knights-training:spawn"
+    const val KW_TIER = "/save:knights-training:wave"
+    const val KW_BEGIN = "/save:knights-training:complete-tutorial"
+    const val KW_COMPLETE = "/save:knights-training:complete"
 }

@@ -2,7 +2,6 @@ package core.game.node.entity.player.info.login
 
 import content.data.GameAttributes
 import content.data.GlobalStore
-import content.region.kandarin.miniquest.knightwave.KnightWaveAttributes
 import core.ServerConstants
 import core.api.*
 import core.api.quest.hasRequirement
@@ -341,7 +340,7 @@ object LoginConfiguration {
     }
 
     private fun setupPrayer(player: Player) {
-        if (getAttribute(player, KnightWaveAttributes.KW_COMPLETE, false)) {
+        if (getAttribute(player, GameAttributes.KW_COMPLETE, false)) {
             setVarbit(player, 3909, 8)
         } else {
             setVarbit(player, 3909, 0)

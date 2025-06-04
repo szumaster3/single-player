@@ -1,8 +1,8 @@
 package content.region.kandarin.dialogue.camelot
 
+import content.data.GameAttributes
 import content.data.RespawnPoint
 import content.data.setRespawnLocation
-import content.region.kandarin.miniquest.knightwave.KnightWaveAttributes
 import content.region.kandarin.quest.merlin.dialogue.MerlinDialogueFile
 import core.ServerConstants
 import core.api.*
@@ -44,7 +44,7 @@ class MerlinDialogue(
             when (stage) {
                 // Knight Waves training ground: Upon completion of Knight Waves.
                 0 -> if(player.location.z == 2) {
-                    if (!getAttribute(player!!, KnightWaveAttributes.KW_COMPLETE, false)) {
+                    if (!getAttribute(player!!, GameAttributes.KW_COMPLETE, false)) {
                         npc(FaceAnim.HAPPY, "Well done, young adventurer. You truly are a worthy", "knight.").also { stage = 100 }
                     } else {
                         end()
@@ -68,7 +68,7 @@ class MerlinDialogue(
                         stage = END_DIALOGUE
                     }
                     // Knight Waves training ground: after completion of Knight Waves.
-                    else if(getAttribute(player!!, KnightWaveAttributes.KW_COMPLETE, false) && player.location.z != 2) {
+                    else if(getAttribute(player!!, GameAttributes.KW_COMPLETE, false) && player.location.z != 2) {
                         npc(FaceAnim.FRIENDLY,"Well done, young adventurer. You truly are a worthy knight.").also { stage = 200 }
                     }
                     // Holy Grail: Speaking to Merlin.
@@ -143,7 +143,7 @@ class MerlinDialogue(
                         rewardXP(player!!, Skills.ATTACK, 20.000)
                         rewardXP(player!!, Skills.STRENGTH, 20.000)
                         rewardXP(player!!, Skills.DEFENCE, 20.000)
-                        setAttribute(player!!, KnightWaveAttributes.KW_COMPLETE, true)
+                        setAttribute(player!!, GameAttributes.KW_COMPLETE, true)
                     }
                 }
                 // Changing the Respawn point.

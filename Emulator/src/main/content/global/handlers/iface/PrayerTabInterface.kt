@@ -1,7 +1,6 @@
 package content.global.handlers.iface
 
 import content.data.GameAttributes
-import content.region.kandarin.miniquest.knightwave.KnightWaveAttributes
 import core.api.getAttribute
 import core.api.sendDialogue
 import core.api.sendMessage
@@ -46,7 +45,7 @@ class PrayerTabInterface : InterfaceListener {
         player: Player,
         type: PrayerType,
     ): Boolean {
-        val hasRequirements = getAttribute(player, KnightWaveAttributes.KW_COMPLETE, false)
+        val hasRequirements = getAttribute(player, GameAttributes.KW_COMPLETE, false)
         val hasPrayerPoints = player.skills.prayerPoints >= 1
 
         if (!hasPrayerPoints) return false

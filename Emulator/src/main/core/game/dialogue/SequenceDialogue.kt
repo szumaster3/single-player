@@ -9,6 +9,7 @@ import core.game.node.entity.player.Player
  * Supports:
  * - [DialogueLine.SpeechLine]: Player or NPC dialogue (optional) facial expression.
  * - [DialogueLine.TextLine]: Simple dialogue message shown.
+ * - [DialogueLine.ItemLine]: Item dialogue message shown.
  * - [DialogueLine.OptionsLine]: Option selection with a callback.
  * - (Optional) invokes [onComplete] when the sequence finishes.
  */

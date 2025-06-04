@@ -1,5 +1,6 @@
 package content.region.kandarin.miniquest.knightwave
 
+import content.data.GameAttributes
 import core.api.getAttribute
 import core.api.quest.hasRequirement
 import core.api.setAttribute
@@ -18,12 +19,12 @@ class SquireDialogue(
     override fun open(vararg args: Any?): Boolean {
         if (!hasRequirement(player, Quests.KINGS_RANSOM)) return true
         when {
-            getAttribute(player, KnightWaveAttributes.KW_BEGIN, false) ->
+            getAttribute(player, GameAttributes.KW_BEGIN, false) ->
                 npc("Good day, my lord. Is there anything I can do", "for you?").also {
                     stage =
                         14
                 }
-            getAttribute(player, KnightWaveAttributes.KW_COMPLETE, false) ->
+            getAttribute(player, GameAttributes.KW_COMPLETE, false) ->
                 npc(
                     "Congratulations on succeeding in the Knight Waves,",
                     "${if (!player.isMale) "my lady" else "my lord"}.",
@@ -116,7 +117,7 @@ class SquireDialogue(
                 ).also { stage++ }
             13 ->
                 npc("Would you like me to repeat any of that for you?").also {
-                    setAttribute(player, KnightWaveAttributes.KW_BEGIN, true)
+                    setAttribute(player, GameAttributes.KW_BEGIN, true)
                     stage++
                 }
             14 ->
