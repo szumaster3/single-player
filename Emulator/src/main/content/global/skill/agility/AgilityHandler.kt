@@ -1,9 +1,11 @@
 package content.global.skill.agility
 
 import core.api.*
+import core.game.interaction.MovementPulse
 import core.game.interaction.QueueStrength
 import core.game.node.entity.combat.ImpactHandler.HitsplatType
 import core.game.node.entity.impl.ForceMovement
+import core.game.node.entity.impl.PulseType
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.TeleportManager
 import core.game.node.entity.skill.Skills
@@ -188,10 +190,12 @@ object AgilityHandler {
     @JvmStatic
     fun walk(player: Player, courseIndex: Int, start: Location, end: Location, animation: Animation?, experience: Double, message: String?, infiniteRun: Boolean = false) {
         if (player.location != start) {
-            queueScript(player, 1, QueueStrength.SOFT) {
-                walk(player, courseIndex, start, end, animation, experience, message, infiniteRun)
-                return@queueScript stopExecuting(player)
-            }
+            player.pulseManager.run(object : MovementPulse(player, start) {
+                override fun pulse(): Boolean {
+                    walk(player, courseIndex, start, end, animation, experience, message, infiniteRun)
+                    return true
+                }
+            }, PulseType.STANDARD)
             return
         }
 
