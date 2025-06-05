@@ -33,7 +33,7 @@ class UnfinishedPotionListener : InteractionListener {
             }
 
             if (amount == 1) {
-                handler.create(1, 0)
+                handler.create(0, 1)
             } else {
                 handler.open()
             }

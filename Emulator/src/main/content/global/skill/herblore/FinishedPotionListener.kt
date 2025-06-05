@@ -15,6 +15,10 @@ class FinishedPotionListener : InteractionListener {
         val unfinishedItems = UnfinishedPotion.values().map { it.potion }.distinct().toIntArray()
         val ingredients = FinishedPotion.values().map { it.ingredient }.distinct().toIntArray()
 
+        /*
+         * Handles creating potions.
+         */
+
         onUseWith(IntType.ITEM, ingredients, *unfinishedItems) { player, used, with ->
             val unfId: Int
             val ingId: Int
@@ -43,7 +47,7 @@ class FinishedPotionListener : InteractionListener {
             }
 
             if (amount == 1) {
-                handler.create(1, 0)
+                handler.create(0, 1)
             } else {
                 handler.open()
             }

@@ -1,8 +1,6 @@
 package content.global.skill.herblore
 
-import core.api.addItem
 import core.api.amountInInventory
-import core.api.removeItem
 import core.api.ui.repositionChild
 import core.game.dialogue.SkillDialogueHandler
 import core.game.interaction.IntType
@@ -32,17 +30,6 @@ class HarralanderTarListener : InteractionListener {
                 }
             handler.open()
             repositionChild(player, Components.SKILL_MULTI1_309, 2, 210, 15)
-            return@onUseWith true
-        }
-
-        onUseWith(IntType.ITEM, Items.GROUND_GUAM_6681, Items.EMPTY_BOX_7960) { player, used, with ->
-            if (removeItem(player, used.asItem()) && removeItem(player, with.asItem())) {
-                if (!removeItem(player, Items.GROUND_SEAWEED_6683)) {
-                    addItem(player, Items.FISH_FOOD_272)
-                } else {
-                    addItem(player, Items.GUAM_IN_A_BOX_6677)
-                }
-            }
             return@onUseWith true
         }
     }
