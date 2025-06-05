@@ -56,12 +56,9 @@ class HansDialogue(
                         ).also { stage++ }
                 }
             2 -> {
-                val timePlayed = PlayerDetails.getDetails(player.username).timePlayed
+                val timePlayed = PlayerDetails.getDetails(player.username).getFormattedTimePlayed()
                 val playTime = PlayerDetails.getDetails(player.username).getPlayerTime(player)
-                npcl(
-                    FaceAnim.THINKING,
-                    "You've spent $timePlayed in the world since you arrived $playTime ago.",
-                ).also { stage++ }
+                npcl(FaceAnim.THINKING, "You've spent $timePlayed in the world since you arrived $playTime ago.").also { stage++ }
             }
             3 -> player(FaceAnim.ASKING, "You must be old then?").also { stage++ }
             4 ->

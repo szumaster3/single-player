@@ -26,7 +26,7 @@ class HarralanderTarPulse(
             return false
         }
         if (!inInventory(player, PESTLE_AND_MORTAR)) {
-            sendMessage(player, "You need Pestle and Mortar in order to crush the herb.")
+            sendMessage(player, "You need pestle and mortar in order to crush the herb.")
             return false
         }
         if (!inInventory(player, Items.SWAMP_TAR_1939, 15)) {
@@ -45,27 +45,27 @@ class HarralanderTarPulse(
             delay = 4
             return false
         }
-        if (inInventory(player, Items.SWAMP_TAR_1939, 15) &&
-            inInventory(player, tar.ingredient) &&
-            removeItem(
-                player,
-                Item(Items.SWAMP_TAR_1939, 15),
-            ) &&
-            removeItem(player, tar.ingredient)
+
+        val hasRequiredItems = inInventory(player, Items.SWAMP_TAR_1939, 15) &&
+                inInventory(player, tar.ingredient)
+
+        if (!hasRequiredItems ||
+            !removeItem(player, Item(Items.SWAMP_TAR_1939, 15)) ||
+            !removeItem(player, tar.ingredient)
         ) {
-            addItem(player, tar.product, 15)
-            rewardXP(player, Skills.HERBLORE, tar.experience)
-            sendMessage(
-                player,
-                "You add the " +
-                    getItemName(tar.ingredient)
-                        .lowercase()
-                        .replace("clean", "")
-                        .trim { it <= ' ' } + " to the swamp tar.",
-            )
-        } else {
             return true
         }
+
+        addItem(player, tar.product, 15)
+        rewardXP(player, Skills.HERBLORE, tar.experience)
+
+        val ingredientName = getItemName(tar.ingredient)
+            .lowercase()
+            .replace("clean", "")
+            .trim()
+
+        sendMessage(player, "You add the $ingredientName to the swamp tar.")
+
         amount--
         return amount == 0
     }

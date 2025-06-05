@@ -46,7 +46,6 @@ class FinishedPotionListener : InteractionListener {
                 handler.create(1, 0)
             } else {
                 handler.open()
-                repositionChild(player, Components.SKILL_MULTI1_309, 2, 210, 15)
             }
 
             return@onUseWith true

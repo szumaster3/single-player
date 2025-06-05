@@ -69,6 +69,23 @@ public class PlayerDetails {
     }
 
     /**
+     * Get the formatted time played.
+     *
+     * @return the formatted time.
+     */
+    public String getFormattedTimePlayed() {
+        long timePlayedMillis = getTimePlayed();
+        long days = TimeUnit.MILLISECONDS.toDays(timePlayedMillis);
+        long hours = TimeUnit.MILLISECONDS.toHours(timePlayedMillis);
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(timePlayedMillis) % 60;
+        String d = Util.getTimeUnitString(days, "day", "days");
+        String h = Util.getTimeUnitString(hours, "hour", "hours");
+        String m = Util.getTimeUnitString(minutes, "minute", "minutes");
+
+        return String.format("%s, %s, %s", d, h, m);
+    }
+
+    /**
      * Gets credits.
      *
      * @return the credits
