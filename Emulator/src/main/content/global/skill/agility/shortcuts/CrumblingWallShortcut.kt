@@ -1,5 +1,6 @@
 package content.global.skill.agility.shortcuts
 
+import content.global.skill.agility.AgilityHandler
 import content.global.skill.agility.AgilityShortcut
 import core.game.node.entity.impl.ForceMovement
 import core.game.node.entity.player.Player
@@ -16,13 +17,18 @@ import org.rs.consts.Animations
 class CrumblingWallShortcut : AgilityShortcut(intArrayOf(11844), 5, 0.0, "climb-over") {
 
     override fun run(player: Player, scenery: Scenery, option: String, failed: Boolean) {
+        val animation = Animation.create(Animations.CLIMB_OBJECT_839)
 
-        ForceMovement.run(
+        AgilityHandler.forceWalk(
             player,
+            -1,
             if (player.location.x >= 2936) LOCATIONS[0] else LOCATIONS[1],
             if (player.location.x >= 2936) LOCATIONS[1] else LOCATIONS[0],
-            Animation.create(Animations.CLIMB_OBJECT_839),
-            10
+            animation,
+            10,
+            0.0,
+            null,
+            1
         )
     }
 

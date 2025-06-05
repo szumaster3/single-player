@@ -33,7 +33,7 @@ class WatchtowerShortcut : AgilityShortcut(intArrayOf(20056), 18, 31.0, "climb-u
         queueScript(player, 2) {
             teleport(player, end)
             rewardXP(player, Skills.AGILITY, 31.0)
-            stopExecuting(player)
+            return@queueScript stopExecuting(player)
         }
     }
 }

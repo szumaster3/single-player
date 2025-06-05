@@ -23,9 +23,20 @@ class LumberyardFenceShortcut : AgilityShortcut(intArrayOf(31149), 0, 0.0, "sque
     override fun run(player: Player, scenery: Scenery, option: String, failed: Boolean) {
         val anim = Animations.LUMBER_YARD_ENTER_9221
         val destination = Location(if (player.location.x > 3295) 3296 else 3295, 3498, 0)
-        lock(player, animationCycles(anim) + 2)
+
         face(player, scenery)
         playAudio(player, Sounds.SQUEEZE_THROUGH_ROCKS_1310)
-        AgilityHandler.forceWalk(player, -1, player.location, destination, Animation(anim), animationCycles(anim), 0.0, null, 0).endAnimation = Animation.RESET
+
+        AgilityHandler.forceWalk(
+            player,
+            -1,
+            player.location,
+            destination,
+            Animation(anim),
+            animationCycles(anim),
+            0.0,
+            null,
+            0
+        ).endAnimation = Animation.RESET
     }
 }

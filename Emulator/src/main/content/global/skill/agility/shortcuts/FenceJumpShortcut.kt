@@ -1,5 +1,6 @@
 package content.global.skill.agility.shortcuts
 
+import content.global.skill.agility.AgilityHandler
 import content.global.skill.agility.AgilityShortcut
 import core.api.submitIndividualPulse
 import core.game.node.entity.impl.ForceMovement
@@ -28,12 +29,16 @@ class FenceJumpShortcut : AgilityShortcut(intArrayOf(9300), 13, 0.0, "jump-over"
                 }
             },
         )
-        ForceMovement.run(
+
+        AgilityHandler.forceWalk(
             player,
+            -1,
             if (player.location.y >= 3335) locations[1] else locations[0],
             if (player.location.y >= 3335) locations[2] else locations[3],
             runningAnim,
             18,
+            0.0,
+            null
         )
     }
 

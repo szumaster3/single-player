@@ -1,5 +1,6 @@
 package content.global.skill.agility.shortcuts
 
+import content.global.skill.agility.AgilityHandler
 import content.global.skill.agility.AgilityShortcut
 import core.api.quest.hasRequirement
 import core.game.node.Node
@@ -47,7 +48,16 @@ class TunnelShortcut : AgilityShortcut {
         val direction = Direction.getLogicalDirection(start, objectLocation)
         offset = if (objectLocation.x == 2575) 1 else 0
 
-        ForceMovement.run(player, start, objectLocation, Animation.create(Animations.CRAWL_UNDER_WALL_A_2589), 8)
+        AgilityHandler.forceWalk(
+            player,
+            -1,
+            start,
+            objectLocation,
+            Animation.create(Animations.CRAWL_UNDER_WALL_A_2589),
+            8,
+            0.0,
+            null
+        )
 
         GameWorld.Pulser.submit(
             object : Pulse(1, player) {
@@ -67,21 +77,22 @@ class TunnelShortcut : AgilityShortcut {
                     }
 
                     3 -> {
-                        ForceMovement.run(
+                        AgilityHandler.forceWalk(
                             player,
+                            -1,
                             player.location,
                             start.transform(direction, 4 + offset),
                             Animation.create(Animations.CRAWL_UNDER_WALL_C_2591),
                             19,
+                            0.0,
+                            null
                         )
                         false
                     }
 
                     4 -> {
                         player.animate(ForceMovement.WALK_ANIMATION)
-                        if ((obj.id == 9309 || obj.id == 9310) && !player.achievementDiaryManager.getDiary(DiaryType.FALADOR)!!
-                                .isComplete(1, 1)
-                        ) {
+                        if ((obj.id == 9309 || obj.id == 9310) && !player.achievementDiaryManager.getDiary(DiaryType.FALADOR)!!.isComplete(1, 1)) {
                             player.achievementDiaryManager.getDiary(DiaryType.FALADOR)!!.updateTask(player, 1, 1, true)
                         }
                         true

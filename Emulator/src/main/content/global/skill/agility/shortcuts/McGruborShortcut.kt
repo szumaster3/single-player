@@ -1,5 +1,6 @@
 package content.global.skill.agility.shortcuts
 
+import content.global.skill.agility.AgilityHandler
 import content.global.skill.agility.AgilityShortcut
 import core.game.node.entity.impl.ForceMovement
 import core.game.node.entity.player.Player
@@ -19,12 +20,16 @@ class McGruborShortcut : AgilityShortcut(intArrayOf(51), 1, 0.0, "squeeze-throug
         val direction = if (player.location.x < 2662) Direction.EAST else Direction.WEST
         val destination = player.location.transform(direction, 1)
 
-        ForceMovement.run(
+        AgilityHandler.forceWalk(
             player,
+            -1,
             player.location,
             destination,
             Animation(Animations.SIDE_STEP_TO_CRAWL_THROUGH_MCGRUBOR_S_WOODS_FENCE_3844),
-            5
+            5,
+            0.0,
+            null,
+            1
         )
     }
 }

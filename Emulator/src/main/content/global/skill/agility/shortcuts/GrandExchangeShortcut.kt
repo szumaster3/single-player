@@ -1,5 +1,6 @@
 package content.global.skill.agility.shortcuts
 
+import content.global.skill.agility.AgilityHandler
 import content.global.skill.agility.AgilityShortcut
 import core.api.finishDiaryTask
 import core.api.teleport
@@ -27,16 +28,16 @@ class GrandExchangeShortcut : AgilityShortcut(intArrayOf(9311, 9312), 21, 0.0, "
         val path = SHORTCUTS[scenery.id] ?: return
         player.locks.lockComponent(4)
 
-        ForceMovement.run(
+        AgilityHandler.forceWalk(
             player,
+            -1,
             path[0],
             scenery.location,
-            ForceMovement.WALK_ANIMATION,
             CLIMB_DOWN,
-            ForceMovement.direction(path[0], scenery.location),
-            ForceMovement.WALKING_SPEED,
-            ForceMovement.WALKING_SPEED,
-            false
+            15,
+            0.0,
+            null,
+            0
         )
 
         Pulser.submit(object : Pulse(1, player) {
@@ -54,7 +55,17 @@ class GrandExchangeShortcut : AgilityShortcut(intArrayOf(9311, 9312), 21, 0.0, "
                         false
                     }
                     3 -> {
-                        ForceMovement.run(player, path[1], path[2], CLIMB_UP)
+                        AgilityHandler.forceWalk(
+                            player,
+                            -1,
+                            path[1],
+                            path[2],
+                            CLIMB_UP,
+                            15,
+                            0.0,
+                            null,
+                            0
+                        )
                         finishDiaryTask(player, DiaryType.VARROCK, 1, 8)
                         unlock(player)
                         true

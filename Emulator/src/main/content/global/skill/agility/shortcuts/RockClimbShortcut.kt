@@ -41,7 +41,7 @@ class RockClimbShortcut :
                 scalingAnim,
                 scalingAnim,
                 Direction.WEST,
-                13,
+                13
             ).endAnimation = Animation.RESET
 
             9336 -> ForceMovement.run(
@@ -51,7 +51,7 @@ class RockClimbShortcut :
                 scalingAnim,
                 scalingAnim,
                 Direction.WEST,
-                13,
+                13
             ).endAnimation = Animation.RESET
 
             in arrayOf(26327, 26328, 26324, 26323) -> handleGodWarsShortcut(player, scenery, scalingAnim)

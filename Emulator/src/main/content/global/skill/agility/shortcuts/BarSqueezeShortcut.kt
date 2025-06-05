@@ -11,6 +11,7 @@ import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
 import core.plugin.Plugin
+import org.rs.consts.Animations
 import org.rs.consts.Quests
 
 /**
@@ -39,7 +40,7 @@ class BarSqueezeShortcut : AgilityShortcut(intArrayOf(9334, 9337, 2186), 66, 1.0
             -1,
             start,
             start.transform(direction, 1),
-            Animation(2240),
+            Animation(Animations.DUCK_UNDER_2240),
             10,
             0.0,
             null,

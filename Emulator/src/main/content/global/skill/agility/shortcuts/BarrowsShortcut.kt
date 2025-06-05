@@ -1,5 +1,6 @@
 package content.global.skill.agility.shortcuts
 
+import content.global.skill.agility.AgilityHandler
 import content.global.skill.agility.AgilityShortcut
 import core.api.quest.hasRequirement
 import core.api.sendDialogue
@@ -27,12 +28,16 @@ class BarrowsShortcut : AgilityShortcut(intArrayOf(18411), 1, 0.0, "climb-over")
         val direction = if (player.location.y < 3264) Direction.NORTH else Direction.SOUTH
         val destination = player.location.transform(direction, 1)
 
-        ForceMovement.run(
+        AgilityHandler.forceWalk(
             player,
+            -1,
             player.location,
             destination,
             Animation(Animations.WALK_OVER_STILE_10980),
-            10
+            10,
+            0.0,
+            null,
+            1
         )
     }
 }

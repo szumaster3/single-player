@@ -1,5 +1,6 @@
 package content.global.skill.agility.shortcuts
 
+import content.global.skill.agility.AgilityHandler
 import content.global.skill.agility.AgilityShortcut
 import core.api.hasLevelDyn
 import core.api.sendMessage
@@ -28,12 +29,16 @@ class DraynorManorShortcut : AgilityShortcut(intArrayOf(37703), 28, 0.0, "squeez
         val destination = player.location.transform(direction, 1)
         val animation = Animation.create(Animations.SIDE_STEP_TO_CRAWL_THROUGH_MCGRUBOR_S_WOODS_FENCE_3844)
 
-        ForceMovement.run(
+        AgilityHandler.forceWalk(
             player,
+            -1,
             player.location,
             destination,
             animation,
-            5
+            5,
+            0.0,
+            null,
+            1
         )
     }
 }
