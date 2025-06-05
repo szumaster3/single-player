@@ -7,7 +7,6 @@ import core.api.teleport
 import core.api.unlock
 import core.api.visualize
 import core.game.node.Node
-import core.game.node.entity.impl.ForceMovement
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.scenery.Scenery

@@ -25,7 +25,11 @@ import core.plugin.Initializable
 import org.rs.consts.Sounds
 
 @Initializable
-class AgilityPyramidCourse @JvmOverloads constructor(player: Player? = null) : AgilityCourse(player!!, 5, 0.0) {
+class AgilityPyramidCourse : AgilityCourse {
+
+    constructor() : super(null, 5, 0.0)
+
+    constructor(player: Player?) : super(player, 5, 0.0)
 
     override fun configure() {
         SceneryDefinition.forId(org.rs.consts.Scenery.CLIMBING_ROCKS_16535).handlers["option:climb"] = this

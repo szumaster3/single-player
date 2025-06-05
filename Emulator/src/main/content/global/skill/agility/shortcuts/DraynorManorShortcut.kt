@@ -4,7 +4,6 @@ import content.global.skill.agility.AgilityHandler
 import content.global.skill.agility.AgilityShortcut
 import core.api.hasLevelDyn
 import core.api.sendMessage
-import core.game.node.entity.impl.ForceMovement
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
 import core.game.node.scenery.Scenery
@@ -37,7 +36,7 @@ class DraynorManorShortcut : AgilityShortcut(intArrayOf(37703), 28, 0.0, "squeez
             animation,
             5,
             0.0,
-            null,
+            "You squeeze through the loose railing.",
             1
         )
     }

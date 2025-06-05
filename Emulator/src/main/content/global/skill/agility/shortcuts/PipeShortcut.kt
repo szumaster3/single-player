@@ -79,7 +79,7 @@ class PipeShortcut : AgilityShortcut {
         }
 
         lock(player, lockTime)
-        queueScript(player, 0, QueueStrength.SOFT) {
+        queueScript(player, 1, QueueStrength.SOFT) {
             forceMove(
                 player,
                 player.location,

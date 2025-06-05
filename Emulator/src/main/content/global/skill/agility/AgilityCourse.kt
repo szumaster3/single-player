@@ -1,5 +1,6 @@
 package content.global.skill.agility
 
+import core.api.rewardXP
 import core.game.interaction.OptionHandler
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
@@ -10,11 +11,7 @@ import core.plugin.Plugin
  *
  * @author Emperor
  */
-abstract class AgilityCourse(
-    private val player: Player,
-    size: Int,
-    private val completionExperience: Double
-) : OptionHandler() {
+abstract class AgilityCourse(private val player: Player?, size: Int, private val completionExperience: Double) : OptionHandler() {
 
     private val obstaclesPassed = BooleanArray(size)
 
@@ -69,7 +66,9 @@ abstract class AgilityCourse(
      */
     fun finish() {
         if (isCompleted()) {
-            player.skills.addExperience(Skills.AGILITY, completionExperience, true)
+            if (player != null) {
+                rewardXP(player, Skills.AGILITY, completionExperience)
+            }
         }
         reset()
     }
@@ -112,11 +111,6 @@ abstract class AgilityCourse(
             return maxOf(hit, 2)
         }
     }
-
-    /**
-     * Returns the player associated with this course.
-     */
-    fun getPlayer(): Player = player
 
     /**
      * Returns the array indicating which obstacles have been passed.

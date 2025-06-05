@@ -31,6 +31,7 @@ class TreeGnomeVillageFenceShortcut : AgilityShortcut(intArrayOf(2186), 0, 0.0, 
             5,
             0.0,
             "You squeeze through the loose railing.",
+            1
         )
     }
 }

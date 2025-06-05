@@ -18,7 +18,12 @@ import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
 
 @Initializable
-class WildernessCourse @JvmOverloads constructor(player: Player? = null) : AgilityCourse(player!!, 5, 499.0) {
+class WildernessCourse : AgilityCourse {
+
+    constructor() : super(null, 5, 499.0)
+
+    constructor(player: Player?) : super(player, 5, 499.0)
+
 
     override fun handle(player: Player, node: Node, option: String): Boolean {
         getCourse(player)

@@ -27,24 +27,26 @@ import org.rs.consts.NPCs
 import org.rs.consts.Sounds
 
 @Initializable
-class BarbarianOutpostCourse @JvmOverloads constructor(player: Player? = null) : AgilityCourse(player!!, 6, 46.2) {
+class BarbarianOutpostCourse : AgilityCourse {
+
+    constructor() : super(null, 6, 46.2)
+
+    constructor(player: Player?) : super(player, 6, 46.2)
 
     override fun createInstance(player: Player): AgilityCourse = BarbarianOutpostCourse(player)
 
-    override fun handle(
-        player: Player,
-        node: Node,
-        option: String,
-    ): Boolean {
+    override fun handle(player: Player, node: Node, option: String): Boolean {
         val id = node.id
         getCourse(player)
         when (id) {
-            2115, 2116 -> if (!BarcrawlManager.getInstance(player).isFinished || BarcrawlManager.getInstance(player)
-                    .isStarted()
-            ) {
-                player.dialogueInterpreter.open(NPCs.BARBARIAN_GUARD_384)
-            } else {
-                DoorActionHandler.handleAutowalkDoor(player, node as Scenery)
+            2115, 2116 -> {
+                if (!BarcrawlManager.getInstance(player).isFinished || BarcrawlManager.getInstance(player)
+                        .isStarted()
+                ) {
+                    player.dialogueInterpreter.open(NPCs.BARBARIAN_GUARD_384)
+                } else {
+                    DoorActionHandler.handleAutowalkDoor(player, node as Scenery)
+                }
             }
 
             2282 -> handleRopeSwing(player, node as Scenery)

@@ -183,7 +183,7 @@ public final class ErnestTheChickenPlugin extends OptionHandler {
                         secondOpened.setLocation(second.getLocation().transform((int) p.getX(), (int) p.getY(), 0));
                         SceneryBuilder.replace(second, secondOpened, 2);
                     }
-                    AgilityHandler.walk(player, 0, player.getLocation(), destination, null, 0, null);
+                    AgilityHandler.walk(player, 0, player.getLocation(), destination, null, 0, null, false);
                     return true;
                 }
             });

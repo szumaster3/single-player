@@ -4,7 +4,6 @@ import content.global.skill.agility.AgilityHandler
 import content.global.skill.agility.AgilityShortcut
 import core.api.quest.hasRequirement
 import core.api.sendDialogue
-import core.game.node.entity.impl.ForceMovement
 import core.game.node.entity.player.Player
 import core.game.node.scenery.Scenery
 import core.game.world.map.Direction
@@ -17,7 +16,7 @@ import org.rs.consts.Quests
  * Represents the barrows shortcut.
  */
 @Initializable
-class BarrowsShortcut : AgilityShortcut(intArrayOf(18411), 1, 0.0, "climb-over") {
+class BarrowsFenceShortcut : AgilityShortcut(intArrayOf(18411), 1, 0.0, "climb-over") {
 
     override fun run(player: Player, scenery: Scenery, option: String, failed: Boolean) {
         if (!hasRequirement(player, Quests.IN_AID_OF_THE_MYREQUE)) {

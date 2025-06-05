@@ -332,7 +332,7 @@ public final class RugMerchantDialogue extends Dialogue {
                             player.faceLocation(current.getLocation());
                             break;
                         case 2:
-                            AgilityHandler.walk(player, -1, player.getLocation(), current.getLocation(), null, 0.0, null);
+                            AgilityHandler.walk(player, -1, player.getLocation(), current.getLocation(), null, 0.0, null, true);
                             break;
                         case 3:
                             player.faceLocation(getLocation());

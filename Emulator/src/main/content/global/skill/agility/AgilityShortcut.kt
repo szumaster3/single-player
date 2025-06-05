@@ -1,5 +1,6 @@
 package content.global.skill.agility
 
+import core.api.getStatLevel
 import core.api.inEquipment
 import core.api.sendMessage
 import core.cache.def.impl.SceneryDefinition
@@ -34,9 +35,8 @@ abstract class AgilityShortcut(
     vararg val options: String?
 ) : OptionHandler() {
 
-    constructor(ids: IntArray?, level: Int, experience: Double, vararg options: String?) : this(
-        ids, level, experience, false, 0.0, *options
-    )
+    constructor(ids: IntArray?, level: Int, experience: Double, vararg options: String?) :
+            this(ids, level, experience, false, 0.0, *options)
 
     @Throws(Throwable::class)
     override fun newInstance(arg: Any?): Plugin<Any> {
@@ -69,7 +69,7 @@ abstract class AgilityShortcut(
      * @return True if requirements are met, false otherwise.
      */
     open fun checkRequirements(player: Player): Boolean {
-        if (player.skills.getLevel(Skills.AGILITY) < level) {
+        if (getStatLevel(player, Skills.AGILITY) < level) {
             sendMessage(player, "You need an agility level of at least $level to negotiate this obstacle.")
             return false
         }

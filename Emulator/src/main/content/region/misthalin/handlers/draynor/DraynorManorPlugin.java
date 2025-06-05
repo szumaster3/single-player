@@ -105,7 +105,7 @@ public final class DraynorManorPlugin extends OptionHandler {
                 player.getDialogueInterpreter().open(3954922);
                 break;
             case 37703:
-                AgilityHandler.walk(player, 0, player.getLocation(), node.getLocation().transform(player.getLocation().getX() <= 3085 ? 1 : 0, 0, 0), new Animation(1426), 0, null);
+                AgilityHandler.walk(player, 0, player.getLocation(), node.getLocation().transform(player.getLocation().getX() <= 3085 ? 1 : 0, 0, 0), new Animation(1426), 0, null, false);
                 break;
         }
         return true;
@@ -160,7 +160,7 @@ public final class DraynorManorPlugin extends OptionHandler {
                             SceneryBuilder.add(new Scenery(157, new Location(3097, 3360, 0)));
                             break;
                         case 6:
-                            AgilityHandler.walk(player, -1, player.getLocation(), destination, null, 0.0, null);
+                            AgilityHandler.walk(player, -1, player.getLocation(), destination, null, 0.0, null, false);
                             break;
                         case 8:
                             SceneryBuilder.remove(RegionManager.getObject(new Location(3097, 3360, 0)));
@@ -188,7 +188,7 @@ public final class DraynorManorPlugin extends OptionHandler {
                         SceneryBuilder.add(new Scenery(157, new Location(3097, 3360, 0)));
                         break;
                     case 1:
-                        AgilityHandler.walk(player, -1, player.getLocation(), destination, null, 0.0, null);
+                        AgilityHandler.walk(player, -1, player.getLocation(), destination, null, 0.0, null, false);
                         break;
                     case 3:
                         SceneryBuilder.remove(RegionManager.getObject(new Location(3097, 3360, 0)));

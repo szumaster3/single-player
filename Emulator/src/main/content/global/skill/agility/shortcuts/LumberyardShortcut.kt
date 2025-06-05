@@ -2,37 +2,39 @@ package content.global.skill.agility.shortcuts
 
 import content.global.skill.agility.AgilityHandler
 import content.global.skill.agility.AgilityShortcut
-import core.game.node.entity.impl.ForceMovement
+import core.api.face
+import core.api.playAudio
 import core.game.node.entity.player.Player
 import core.game.node.scenery.Scenery
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
 import org.rs.consts.Animations
+import org.rs.consts.Sounds
 
 /**
- * Represents the crumbling Wall shortcut.
+ * Represents the lumberyard squeeze under shortcut.
  */
 @Initializable
-class CrumblingWallShortcut : AgilityShortcut(intArrayOf(11844), 5, 0.0, "climb-over") {
+class LumberyardShortcut : AgilityShortcut(intArrayOf(31149), 0, 0.0, "squeeze-under") {
 
     override fun run(player: Player, scenery: Scenery, option: String, failed: Boolean) {
-        val animation = Animation.create(Animations.CLIMB_OBJECT_839)
+        val anim = Animations.LUMBER_YARD_ENTER_9221
+        val destination = Location(if (player.location.x > 3295) 3296 else 3295, 3498, 0)
+
+        face(player, scenery)
+        playAudio(player, Sounds.SQUEEZE_THROUGH_ROCKS_1310)
 
         AgilityHandler.forceWalk(
             player,
             -1,
-            if (player.location.x >= 2936) LOCATIONS[0] else LOCATIONS[1],
-            if (player.location.x >= 2936) LOCATIONS[1] else LOCATIONS[0],
-            animation,
-            10,
+            player.location,
+            destination,
+            Animation(anim),
+            5,
             0.0,
             null,
             1
-        )
-    }
-
-    companion object {
-        private val LOCATIONS = arrayOf(Location(2936, 3355, 0), Location(2934, 3355, 0))
+        ).endAnimation = Animation.RESET
     }
 }

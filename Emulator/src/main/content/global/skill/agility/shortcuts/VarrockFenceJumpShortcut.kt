@@ -3,7 +3,6 @@ package content.global.skill.agility.shortcuts
 import content.global.skill.agility.AgilityHandler
 import content.global.skill.agility.AgilityShortcut
 import core.api.submitIndividualPulse
-import core.game.node.entity.impl.ForceMovement
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.scenery.Scenery
@@ -17,7 +16,7 @@ import org.rs.consts.Animations
  * Represents the fence jump shortcut.
  */
 @Initializable
-class FenceJumpShortcut : AgilityShortcut(intArrayOf(9300), 13, 0.0, "jump-over") {
+class VarrockFenceJumpShortcut : AgilityShortcut(intArrayOf(9300), 13, 0.0, "jump-over") {
 
     override fun run(player: Player, scenery: Scenery, option: String, failed: Boolean) {
         player.faceLocation(scenery.location)

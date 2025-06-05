@@ -23,7 +23,7 @@ import org.rs.consts.Sounds
  * Represents the Tree swing shortcut to Grew island.
  */
 @Initializable
-class RopeSwingShortcut : OptionHandler() {
+class TreeSwingShortcut : OptionHandler() {
 
     override fun newInstance(arg: Any?): Plugin<Any> {
 

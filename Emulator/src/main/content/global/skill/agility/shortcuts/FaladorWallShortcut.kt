@@ -4,32 +4,34 @@ import content.global.skill.agility.AgilityHandler
 import content.global.skill.agility.AgilityShortcut
 import core.game.node.entity.player.Player
 import core.game.node.scenery.Scenery
-import core.game.world.map.Direction
+import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
 import org.rs.consts.Animations
 
 /**
- * Represents the jump over low fence shortcut.
+ * Represents the crumbling Wall shortcut.
  */
 @Initializable
-class LowFenceShortcut : AgilityShortcut(intArrayOf(12776), 25, 0.0, "jump-over") {
+class FaladorWallShortcut : AgilityShortcut(intArrayOf(11844), 5, 0.0, "climb-over") {
 
     override fun run(player: Player, scenery: Scenery, option: String, failed: Boolean) {
-        val direction = if (player.location.x == 3473) Direction.EAST else Direction.WEST
-        val destination = player.location.transform(direction, 1)
+        val animation = Animation.create(Animations.CLIMB_OBJECT_839)
 
         AgilityHandler.forceWalk(
             player,
             -1,
-            player.location,
-            destination,
-            Animation(Animations.JUMP_OVER_OBSTACLE_6132),
+            if (player.location.x >= 2936) LOCATIONS[0] else LOCATIONS[1],
+            if (player.location.x >= 2936) LOCATIONS[1] else LOCATIONS[0],
+            animation,
             10,
             0.0,
             null,
             1
         )
+    }
 
+    companion object {
+        private val LOCATIONS = arrayOf(Location(2936, 3355, 0), Location(2934, 3355, 0))
     }
 }

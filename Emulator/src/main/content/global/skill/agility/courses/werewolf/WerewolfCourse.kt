@@ -23,12 +23,13 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 
 @Initializable
-class WerewolfCourse constructor(player: Player? = null) : AgilityCourse(player!!, 5, 0.0) {
-    override fun handle(
-        p: Player,
-        node: Node,
-        option: String,
-    ): Boolean {
+class WerewolfCourse : AgilityCourse {
+
+    constructor() : super(null, 5, 0.0)
+
+    constructor(player: Player?) : super(player, 5, 0.0)
+
+    override fun handle(p: Player, node: Node, option: String): Boolean {
         getCourse(p)
         val n = node as Scenery
         when (n.id) {

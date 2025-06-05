@@ -88,7 +88,7 @@ public final class GnomeStrongholdPlugin extends OptionHandler {
         }
         scenery.setCharge(88);
         SceneryBuilder.replace(scenery, scenery.transform(scenery.getId() == 1967 ? 1969 : 1970), 4);
-        AgilityHandler.walk(player, -1, player.getLocation(), player.getLocation().transform(0, player.getLocation().getY() <= 3491 ? 2 : -2, 0), new Animation(1426), 0, null);
+        AgilityHandler.walk(player, -1, player.getLocation(), player.getLocation().transform(0, player.getLocation().getY() <= 3491 ? 2 : -2, 0), new Animation(1426), 0, null, false);
         GameWorld.getPulser().submit(new Pulse(4) {
             @Override
             public boolean pulse() {

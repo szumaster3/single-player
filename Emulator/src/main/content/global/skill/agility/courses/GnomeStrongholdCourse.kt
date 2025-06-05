@@ -19,10 +19,47 @@ import core.tools.DARK_GREEN
 import org.rs.consts.Sounds
 
 @Initializable
-class GnomeStrongholdCourse @JvmOverloads constructor(player: Player? = null) : AgilityCourse(player!!, 7, 39.0) {
+class GnomeStrongholdCourse : AgilityCourse {
 
-    override fun handle(player: Player, node: Node, option: String): Boolean {
-        getCourse(player)
+    constructor() : super(null, 7, 39.0)
+
+    constructor(player: Player?) : super(player, 7, 39.0)
+
+    companion object {
+        private val USED_PIPES = IntArray(2)
+        private val TRAINERS = arrayOfNulls<NPC>(5)
+    }
+
+    override fun configure() {
+        TRAINERS[0] = NPC.create(162, Location.create(2473, 3438, 0))
+        TRAINERS[1] = NPC.create(162, Location.create(2478, 3426, 0))
+        TRAINERS[2] = NPC.create(162, Location.create(2474, 3422, 1))
+        TRAINERS[3] = NPC.create(162, Location.create(2472, 3419, 2))
+        TRAINERS[4] = NPC.create(162, Location.create(2489, 3425, 0))
+
+        for (npc in TRAINERS) {
+            npc!!.init()
+            npc.walkRadius = 3
+        }
+
+        SceneryDefinition.forId(2295).handlers["option:walk-across"] = this
+        SceneryDefinition.forId(2285).handlers["option:climb-over"] = this
+        SceneryDefinition.forId(35970).handlers["option:climb"] = this
+        SceneryDefinition.forId(2312).handlers["option:walk-on"] = this
+        SceneryDefinition.forId(4059).handlers["option:walk-on"] = this
+        SceneryDefinition.forId(2314).handlers["option:climb-down"] = this
+        SceneryDefinition.forId(2315).handlers["option:climb-down"] = this
+        SceneryDefinition.forId(2286).handlers["option:climb-over"] = this
+        SceneryDefinition.forId(4058).handlers["option:squeeze-through"] = this
+        SceneryDefinition.forId(154).handlers["option:squeeze-through"] = this
+    }
+
+    override fun createInstance(player: Player): AgilityCourse {
+        return GnomeStrongholdCourse(player)
+    }
+
+    override fun handle(player: Player?, node: Node?, option: String?): Boolean {
+        getCourse(player!!)
         val scenery = node as Scenery
         when (scenery.id) {
             2295 -> {
@@ -181,6 +218,7 @@ class GnomeStrongholdCourse @JvmOverloads constructor(player: Player? = null) : 
         return false
     }
 
+
     override fun getDestination(
         node: Node,
         n: Node,
@@ -243,35 +281,4 @@ class GnomeStrongholdCourse @JvmOverloads constructor(player: Player? = null) : 
         setAttribute(player, GameAttributes.GNOME_STRONGHOLD_LAST_OBSTACLE, obstacleId)
     }
 
-    override fun configure() {
-        TRAINERS[0] = NPC.create(162, Location.create(2473, 3438, 0))
-        TRAINERS[1] = NPC.create(162, Location.create(2478, 3426, 0))
-        TRAINERS[2] = NPC.create(162, Location.create(2474, 3422, 1))
-        TRAINERS[3] = NPC.create(162, Location.create(2472, 3419, 2))
-        TRAINERS[4] = NPC.create(162, Location.create(2489, 3425, 0))
-
-        for (npc in TRAINERS) {
-            npc!!.init()
-            npc.walkRadius = 3
-        }
-
-        SceneryDefinition.forId(2295).handlers["option:walk-across"] = this
-        SceneryDefinition.forId(2285).handlers["option:climb-over"] = this
-        SceneryDefinition.forId(35970).handlers["option:climb"] = this
-        SceneryDefinition.forId(2312).handlers["option:walk-on"] = this
-        SceneryDefinition.forId(4059).handlers["option:walk-on"] = this
-        SceneryDefinition.forId(2314).handlers["option:climb-down"] = this
-        SceneryDefinition.forId(2315).handlers["option:climb-down"] = this
-        SceneryDefinition.forId(2286).handlers["option:climb-over"] = this
-        SceneryDefinition.forId(4058).handlers["option:squeeze-through"] = this
-        SceneryDefinition.forId(154).handlers["option:squeeze-through"] = this
-    }
-
-    override fun createInstance(player: Player): content.global.skill.agility.AgilityCourse =
-        GnomeStrongholdCourse(player)
-
-    companion object {
-        private val USED_PIPES = IntArray(2)
-        private val TRAINERS = arrayOfNulls<NPC>(5)
-    }
 }

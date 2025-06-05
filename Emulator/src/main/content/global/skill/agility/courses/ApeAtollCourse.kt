@@ -17,10 +17,15 @@ import core.plugin.Initializable
 import org.rs.consts.Items
 
 @Initializable
-class ApeAtollCourse @JvmOverloads constructor(player: Player? = null) : AgilityCourse(player!!, 6, 450.0) {
+class ApeAtollCourse : AgilityCourse {
+
+    constructor() : super(null, 6, 450.0)
+
+    constructor(player: Player?) : super(player, 6, 450.0)
+
     override fun createInstance(player: Player): AgilityCourse = ApeAtollCourse(player)
 
-    override fun handle(player: Player, node: Node?, option: String?, ): Boolean {
+    override fun handle(player: Player, node: Node?, option: String?): Boolean {
         getCourse(player)
         val n = node as Scenery
         when (n.id) {
@@ -66,7 +71,7 @@ class ApeAtollCourse @JvmOverloads constructor(player: Player? = null) : Agility
         SceneryDefinition.forId(12618).handlers["option:climb-down"] = this
     }
 
-    private fun jumpSteppingStone(player: Player, scenery: Scenery, ) {
+    private fun jumpSteppingStone(player: Player, scenery: Scenery) {
         if (!hasLevelDyn(player, Skills.AGILITY, 48)) {
             sendMessage(player, "You need an agility level of at least 48 to do this.")
         } else if (!inEquipment(player, Items.MONKEY_GREEGREE_4024)) {
@@ -124,7 +129,7 @@ class ApeAtollCourse @JvmOverloads constructor(player: Player? = null) : Agility
         }
     }
 
-    private fun climbUpTropicalTree(player: Player, scenery: Scenery, ) {
+    private fun climbUpTropicalTree(player: Player, scenery: Scenery) {
         if (!hasLevelDyn(player, Skills.AGILITY, 48)) {
             sendMessage(player, "You need an agility level of at least 48 to do this.")
         } else if (!inEquipment(player, Items.MONKEY_GREEGREE_4024)) {
@@ -153,7 +158,7 @@ class ApeAtollCourse @JvmOverloads constructor(player: Player? = null) : Agility
         }
     }
 
-    private fun climbUpSkullSlope(player: Player, scenery: Scenery, ) {
+    private fun climbUpSkullSlope(player: Player, scenery: Scenery) {
         if (!hasLevelDyn(player, Skills.AGILITY, 48)) {
             sendMessage(player, "You need an agility level of at least 48 to do this.")
         } else if (!inEquipment(player, Items.MONKEY_GREEGREE_4024)) {
@@ -194,7 +199,7 @@ class ApeAtollCourse @JvmOverloads constructor(player: Player? = null) : Agility
         }
     }
 
-    private fun crossMonkeyBars(player: Player, scenery: Scenery, ) {
+    private fun crossMonkeyBars(player: Player, scenery: Scenery) {
         if (!hasLevelDyn(player, Skills.AGILITY, 48)) {
             sendMessage(player, "You need an agility level of at least 48 to do this.")
         } else if (!inEquipment(player, Items.MONKEY_GREEGREE_4024)) {
@@ -228,7 +233,7 @@ class ApeAtollCourse @JvmOverloads constructor(player: Player? = null) : Agility
         }
     }
 
-    private fun swingRope(player: Player, scenery: Scenery, ) {
+    private fun swingRope(player: Player, scenery: Scenery) {
         if (!hasLevelStat(player, Skills.AGILITY, 48)) {
             sendMessage(player, "You need an agility level of at least 48 to do this.")
         } else if (!inEquipment(player, Items.MONKEY_GREEGREE_4024)) {
@@ -263,7 +268,7 @@ class ApeAtollCourse @JvmOverloads constructor(player: Player? = null) : Agility
         }
     }
 
-    private fun climbDownTropicalTree(player: Player, scenery: Scenery, ) {
+    private fun climbDownTropicalTree(player: Player, scenery: Scenery) {
         if (!hasLevelDyn(player, Skills.AGILITY, 48)) {
             sendMessage(player, "You need an agility level of at least 48 to do this.")
         } else if (!inEquipment(player, Items.MONKEY_GREEGREE_4024)) {

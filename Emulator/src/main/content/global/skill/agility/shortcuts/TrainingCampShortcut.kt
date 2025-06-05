@@ -13,7 +13,7 @@ import org.rs.consts.Scenery.LOOSE_RAILING_19171
  * Represents the combat training area shortcut.
  */
 @Initializable
-class CombatTrainingCampShortcut : AgilityShortcut(intArrayOf(LOOSE_RAILING_19171), 1, 1.0, "squeeze-through") {
+class TrainingCampShortcut : AgilityShortcut(intArrayOf(LOOSE_RAILING_19171), 1, 1.0, "squeeze-through") {
 
     override fun run(player: Player, scenery: Scenery, option: String, failed: Boolean) {
         val start = if (player.location.x <= 2522) scenery.location else scenery.location.transform(1, 0, 0)

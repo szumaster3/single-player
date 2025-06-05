@@ -11,7 +11,7 @@ import core.plugin.Initializable
  * Represents the barrows tunnel shortcut.
  */
 @Initializable
-class BarrowTunnelShortcut : AgilityShortcut(intArrayOf(30261, 30262, 30265), 1, 0.0, "open") {
+class BarrowsTunnelShortcut : AgilityShortcut(intArrayOf(30261, 30262, 30265), 1, 0.0, "open") {
 
     override fun run(player: Player, scenery: Scenery, option: String, failed: Boolean) {
         val destination = when (scenery.id) {

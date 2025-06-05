@@ -173,8 +173,8 @@ object AgilityHandler {
      */
     @JvmStatic
     fun climb(player: Player, courseIndex: Int, animation: Animation, destination: Location, experience: Double, message: String?, delay: Int = 2) {
-        player.lock(delay + 1)
-        player.animate(animation)
+        lock(player, delay + 1)
+        animate(player, animation)
         queueScript(player, delay, QueueStrength.SOFT) {
             message?.let { sendMessage(player, it) }
             if (experience > 0.0) rewardXP(player, Skills.AGILITY, experience)
