@@ -781,6 +781,10 @@ object PacketProcessor {
         var scenery = RegionManager.getObject(player.location.z, pkt.x, pkt.y, pkt.id)
         var objId = pkt.id
 
+        if (player.locks.isInteractionLocked() || player.zoneMonitor.interact(scenery, Option.NULL)) {
+            return sendClearMinimap(player)
+        }
+
         // what follows is a series of hardcoded crimes against humanity
         if (pkt.id == 6898) {
             scenery = Scenery(6898, Location(3219, 9618))
@@ -794,10 +798,6 @@ object PacketProcessor {
         if (objId in 2421..2426 && objId % 2 == 0) {
             scenery = Scenery(objId - 1, Location(pkt.x, pkt.y, player.location.z))
             objId -= 1
-        }
-
-        if (player.locks.isInteractionLocked() || player.zoneMonitor.interact(scenery, Option.NULL)) {
-            return
         }
 
         if (scenery == null || scenery.id != objId || !scenery.isActive) {
