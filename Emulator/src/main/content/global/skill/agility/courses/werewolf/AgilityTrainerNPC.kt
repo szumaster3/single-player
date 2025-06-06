@@ -7,13 +7,13 @@ import core.tools.RandomFunction
 import org.rs.consts.NPCs
 
 class AgilityTrainerNPC : NPCBehavior(NPCs.AGILITY_TRAINER_1663, NPCs.AGILITY_TRAINER_1664) {
+
     override fun tick(self: NPC): Boolean {
-        if (RandomFunction.roll(25)) {
-            when (self.id) {
-                1663 -> sendChat(self, forceChat.random())
-                else -> sendChat(self, lastDialogue.random())
-            }
-        }
+        if (!RandomFunction.roll(25)) return true
+
+        val messages = if (self.id == 1663) forceChat else lastDialogue
+        sendChat(self, messages.random())
+
         return true
     }
 

@@ -2,6 +2,9 @@ package content.global.skill.agility.courses.werewolf
 
 import core.api.*
 import core.game.dialogue.FaceAnim
+import core.game.dialogue.SequenceDialogue.npcLine
+import core.game.dialogue.SequenceDialogue.playerLine
+import core.game.dialogue.SequenceDialogue.sendSequenceDialogue
 import core.game.global.action.ClimbActionHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
@@ -15,12 +18,6 @@ import org.rs.consts.NPCs
 import org.rs.consts.Scenery
 
 class WerewolfCourseListener : InteractionListener {
-    override fun defineDestinationOverrides() {
-        setDest(IntType.SCENERY, ZIP_LINE, "teeth-grip") { _, _ ->
-            return@setDest Location(3528, 9910, 0)
-        }
-    }
-
     override fun defineListeners() {
         on(TRAPDOOR, IntType.SCENERY, "open") { player, node ->
             sendMessage(player, "The trapdoor opens...")
@@ -53,19 +50,31 @@ class WerewolfCourseListener : InteractionListener {
             return@on true
         }
 
-        on(AGILITY_TRAINER, IntType.NPC, "Give-Stick") { player, _ ->
-            if (getAttribute(player, "werewolf-agility-course", false)) return@on true
+        on(AGILITY_TRAINER, IntType.NPC, "Give-Stick") { player, node ->
+            val isOnCourse = getAttribute(player, "werewolf-agility-course", false)
+            if (!isOnCourse) return@on true
 
-            val amount = amountInInventory(player, Items.STICK_4179)
-            if (amount > 0) {
-                removeAll(player, Item(Items.STICK_4179, amount), Container.INVENTORY)
+            val stickAmount = amountInInventory(player, Items.STICK_4179)
+            if (stickAmount > 0) {
+                removeAll(player, Item(Items.STICK_4179, stickAmount), Container.INVENTORY)
                 rewardXP(player, Skills.AGILITY, 190.0)
                 sendMessage(player, "You give the stick to the werewolf.")
             } else {
-                openDialogue(player, AgilityTrainerStickDialogue())
+                val npc = node.asNpc()
+                sendSequenceDialogue(player,
+                    npcLine(npc, FaceAnim.CHILD_NORMAL, "Have you brought the stick yet?"),
+                    playerLine(FaceAnim.EXTREMELY_SHOCKED, "What stick?"),
+                    npcLine(npc, FaceAnim.CHILD_NORMAL, "Come on, get round that course - I need something to chew!")
+                )
             }
             removeAttribute(player, "werewolf-agility-course")
             return@on true
+        }
+    }
+
+    override fun defineDestinationOverrides() {
+        setDest(IntType.SCENERY, ZIP_LINE, "teeth-grip") { _, _ ->
+            return@setDest Location(3528, 9910, 0)
         }
     }
 
@@ -75,4 +84,5 @@ class WerewolfCourseListener : InteractionListener {
         private const val AGILITY_TRAINER = NPCs.AGILITY_TRAINER_1664
         private val ZIP_LINE = intArrayOf(Scenery.ZIP_LINE_5139, Scenery.ZIP_LINE_5140, Scenery.ZIP_LINE_5141)
     }
+
 }

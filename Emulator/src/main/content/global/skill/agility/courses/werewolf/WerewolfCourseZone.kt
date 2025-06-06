@@ -7,6 +7,7 @@ import core.game.world.map.zone.ZoneBorders
 import org.rs.consts.Items
 
 class WerewolfCourseZone : MapArea {
+
     override fun defineAreaBorders(): Array<ZoneBorders> = arrayOf(ZoneBorders(3510, 9851, 3592, 9920))
 
     override fun areaEnter(entity: Entity) {
@@ -15,10 +16,7 @@ class WerewolfCourseZone : MapArea {
         }
     }
 
-    override fun areaLeave(
-        entity: Entity,
-        logout: Boolean,
-    ) {
+    override fun areaLeave(entity: Entity, logout: Boolean, ) {
         if (entity is Player) {
             val p = entity.asPlayer()
             removeAttribute(p, "werewolf-agility-course")

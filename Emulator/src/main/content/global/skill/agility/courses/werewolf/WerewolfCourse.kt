@@ -8,7 +8,11 @@ import core.api.movement.finishedMoving
 import core.api.utils.Vector
 import core.cache.def.impl.SceneryDefinition
 import core.game.dialogue.FaceAnim
+import core.game.dialogue.SequenceDialogue.npcLine
+import core.game.dialogue.SequenceDialogue.playerLine
+import core.game.dialogue.SequenceDialogue.sendSequenceDialogue
 import core.game.node.Node
+import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
 import core.game.node.scenery.Scenery
@@ -18,6 +22,7 @@ import core.game.world.map.Direction
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
+import core.tools.RandomFunction
 import org.rs.consts.Animations
 import org.rs.consts.Items
 import org.rs.consts.NPCs
@@ -161,8 +166,11 @@ class WerewolfCourse : AgilityCourse {
     ) {
         val loc = p.location
         val helmet = getItemFromEquipment(p, EquipmentSlot.HEAD)
+
         if (helmet != null) {
-            openDialogue(p, AgilityTrainerDialogue())
+            val messages = listOf("That headgear won't help you here, human! Take it off!", "You need to take your headgear off before you try the Deathslide, otherwise you won't be able to get a good enough grip with your teeth.")
+            val message = messages[RandomFunction.random(0, 1)]
+            sendNPCDialogue(p, NPCs.AGILITY_TRAINER_1664, message)
             return
         }
 
