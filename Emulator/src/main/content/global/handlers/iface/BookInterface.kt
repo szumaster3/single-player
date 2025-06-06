@@ -3,7 +3,6 @@ package content.global.handlers.iface
 import core.api.*
 import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.Player
-import core.game.world.update.flag.context.Animation
 import org.rs.consts.Animations
 import org.rs.consts.Sounds
 
@@ -260,7 +259,10 @@ class BookInterface : InterfaceListener {
                 getAttribute(player, CALLBACK_ATTRIBUTE, null)
             val currentPage = getAttribute(player, CURRENT_PAGE_ATTRIBUTE, 0)
             playAudio(player, Sounds.TURN_BOOK_PAGE_2417)
-            animate(player, Animations.TURN_PAGE_BOOK_3141)
+
+            if (increment > 0) animate(player, Animations.TURN_PAGE_BOOK_3141)
+            else if (increment < 0) animate(player, 3142)
+
             setAttribute(player, CURRENT_PAGE_ATTRIBUTE, currentPage + increment)
             callback?.invoke(player, currentPage + increment, buttonId)
         }
