@@ -796,6 +796,10 @@ object PacketProcessor {
             objId -= 1
         }
 
+        if (player.locks.isInteractionLocked() || player.zoneMonitor.interact(scenery, Option.NULL)) {
+            return
+        }
+
         if (scenery == null || scenery.id != objId || !scenery.isActive) {
             player.debug("[SCENERY INTERACT] NULL OR MISMATCH OR INACTIVE")
             InteractPlugin.handleInvalidInteraction(player, scenery, Option.NULL)
