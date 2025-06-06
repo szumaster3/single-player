@@ -14,7 +14,8 @@ import org.rs.consts.Animations
 @Initializable
 class OoglogRockPassageShortcut : AgilityShortcut(intArrayOf(29099), 29, 0.0, "squeeze-through") {
 
-    override fun run(player: Player, scenery: Scenery, option: String, failed: Boolean) {
+    override fun run(player: Player, scenery: Scenery, option: String, failed: Boolean)
+    {
         val destination = player.location.transform(0, if (player.location.y == 2871) -2 else 2, 0)
         val animation = Animation(Animations.DUCK_UNDER_2240)
 

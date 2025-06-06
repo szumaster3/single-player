@@ -3,6 +3,8 @@ package content.global.handlers.iface
 import core.api.*
 import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.Player
+import core.game.world.update.flag.context.Animation
+import org.rs.consts.Animations
 import org.rs.consts.Sounds
 
 /**
@@ -68,8 +70,14 @@ class BookInterface : InterfaceListener {
         const val FANCY_BOOK_2_27 = 27
         const val FANCY_BOOK_3_49 = 49
 
-        val FANCY_BOOK_26_LINE_IDS = arrayOf(101, 65, 66, 97, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96)
-        val FANCY_BOOK_2_27_LINE_IDS = arrayOf(163, 5, 6, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67)
+        val FANCY_BOOK_26_LINE_IDS = arrayOf(
+            101, 65, 66, 97, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81,
+            82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96
+        )
+        val FANCY_BOOK_2_27_LINE_IDS = arrayOf(
+            163, 5, 6, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52,
+            53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67
+        )
 
         val FANCY_BOOK_26_IMAGE_ENABLE_DRAW_IDS = arrayOf(
             // Left.  [Index 0-14]
@@ -108,11 +116,7 @@ class BookInterface : InterfaceListener {
         val FANCY_BOOK_2_27_IMAGE_DRAW_IDS = arrayOf(10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 68, 70, 72, 74, 76, 78, 80, 82, 84, 86, 88, 90, 92, 94, 96, 98)
 
         /**
-         * Opens a book interface with a given callback for handling pagination or button clicks.
-         *
-         * @param player The player opening the book.
-         * @param bookComponent The book component id.
-         * @param displayCallback Callback invoked to populate or update the book's content.
+         * Opens a book interface with pagination callback.
          */
         fun openBook(
             player: Player,
@@ -133,21 +137,9 @@ class BookInterface : InterfaceListener {
         }
 
         /**
-         * Sets up the content of a fancy book interface for the current page.
-         *
-         * @param player The player viewing the book.
-         * @param bookComponent The id of the book interface.
-         * @param title The title to be displayed on the book.
-         * @param contents Array of [PageSet] objects representing the pages in the book.
-         * @param hasPagination Whether to show pagination buttons.
+         * Renders a book's current page with title and content.
          */
-        fun pageSetup(
-            player: Player,
-            bookComponent: Int,
-            title: String,
-            contents: Array<PageSet>,
-            hasPagination: Boolean = true,
-        ) {
+        fun pageSetup(player: Player, bookComponent: Int, title: String, contents: Array<PageSet>, hasPagination: Boolean = true, ) {
             val currentPage = getAttribute(player, CURRENT_PAGE_ATTRIBUTE, 0)
 
             when (bookComponent) {
@@ -157,16 +149,10 @@ class BookInterface : InterfaceListener {
             }
         }
 
-        private fun setupFancyBook(
-            player: Player,
-            bookComponent: Int,
-            lineIds: Array<Int>,
-            buttonIds: Array<Int>,
-            title: String,
-            currentPage: Int,
-            contents: Array<PageSet>,
-            hasPagination: Boolean,
-        ) {
+        /**
+         * Populates book content based on current page and layout.
+         */
+        private fun setupFancyBook(player: Player, bookComponent: Int, lineIds: Array<Int>, buttonIds: Array<Int>, title: String, currentPage: Int, contents: Array<PageSet>, hasPagination: Boolean, ) {
             clearBookLines(player, bookComponent, lineIds)
             clearButtons(player, bookComponent, buttonIds)
             setTitle(player, bookComponent, lineIds, title)
@@ -187,73 +173,31 @@ class BookInterface : InterfaceListener {
         }
 
         /**
-         * Clears all the text lines on a book interface.
-         *
-         * @param player The player viewing the book.
-         * @param componentId The component id of the book interface (26,27,49).
-         * @param bookLineIds Array of child IDs representing lines to clear.
+         * Clears all text lines in the book interface.
          */
-        fun clearBookLines(
-            player: Player,
-            componentId: Int,
-            bookLineIds: Array<Int>,
-        ) {
+        fun clearBookLines(player: Player, componentId: Int, bookLineIds: Array<Int>, ) {
             openInterface(player, componentId)
             bookLineIds.forEach { player.packetDispatch.sendString("", componentId, it) }
         }
 
         /**
-         * Clears (hides) all interactive buttons on the book interface.
-         *
-         * @param player The player viewing the book.
-         * @param componentId The interface component id (26,27,49).
-         * @param bookButtonIds The IDs of buttons to hide.
+         * Hides all book interface buttons.
          */
-        fun clearButtons(
-            player: Player,
-            componentId: Int,
-            bookButtonIds: Array<Int>,
-        ) {
+        fun clearButtons(player: Player, componentId: Int, bookButtonIds: Array<Int>, ) {
             bookButtonIds.forEach { player.packetDispatch.sendInterfaceConfig(componentId, it, true) }
         }
 
         /**
-         * Sets the book's title on the first line.
-         *
-         * @param player The player viewing the book.
-         * @param componentId The interface id  (26,27,49).
-         * @param bookLineIds Array of text line IDs, where the first is used for the title.
-         * @param title The title string to display.
+         * Sets the book title on the first line.
          */
-        fun setTitle(
-            player: Player,
-            componentId: Int,
-            bookLineIds: Array<Int>,
-            title: String,
-        ) {
+        fun setTitle(player: Player, componentId: Int, bookLineIds: Array<Int>, title: String, ) {
             player.packetDispatch.sendString(title, componentId, bookLineIds[0])
         }
 
         /**
-         * Sets up the page numbers and enables/disables pagination buttons.
-         *
-         * @param player The player viewing the book.
-         * @param componentId The id of the book interface.
-         * @param bookLineIds Text line ids.
-         * @param bookButtonIds Button IDs for pagination.
-         * @param currentPage The current page number.
-         * @param totalPages The total number of available pages.
-         * @param hasRightPage Whether the current page has a right-hand page (single-page scenario).
+         * Configures pagination buttons and page numbers.
          */
-        fun setPagination(
-            player: Player,
-            componentId: Int,
-            bookLineIds: Array<Int>,
-            bookButtonIds: Array<Int>,
-            currentPage: Int,
-            totalPages: Int,
-            hasRightPage: Boolean,
-        ) {
+        fun setPagination(player: Player, componentId: Int, bookLineIds: Array<Int>, bookButtonIds: Array<Int>, currentPage: Int, totalPages: Int, hasRightPage: Boolean, ) {
             player.packetDispatch.sendInterfaceConfig(componentId, bookButtonIds[0], currentPage <= 0)
             player.packetDispatch.sendInterfaceConfig(componentId, bookButtonIds[1], currentPage >= totalPages - 1)
             player.packetDispatch.sendString("" + (currentPage * 2 + 1), componentId, bookLineIds[1])
@@ -272,23 +216,9 @@ class BookInterface : InterfaceListener {
         }
 
         /**
-         * Displays the page content based on the current page.
-         *
-         * @param player The player viewing the book.
-         * @param componentId The book interface component id.
-         * @param bookLineIds The line ids to update with text.
-         * @param bookButtonIds The button ids to enable/show.
-         * @param currentPage The page number being rendered.
-         * @param contents The entire book content, divided by `PageSet`.
+         * Fills book lines/buttons with page content.
          */
-        fun setPageContent(
-            player: Player,
-            componentId: Int,
-            bookLineIds: Array<Int>,
-            bookButtonIds: Array<Int>,
-            currentPage: Int,
-            contents: Array<PageSet>,
-        ) {
+        fun setPageContent(player: Player, componentId: Int, bookLineIds: Array<Int>, bookButtonIds: Array<Int>, currentPage: Int, contents: Array<PageSet>, ) {
             for (page in contents[currentPage].pages) {
                 for (line in page.lines) {
                     if (bookLineIds.contains(line.child)) {
@@ -303,29 +233,9 @@ class BookInterface : InterfaceListener {
         }
 
         /**
-         * Displays a model on a specific book page.
-         *
-         * @param player The player viewing the book.
-         * @param pageSet The page set index the model belongs to.
-         * @param modelId The model id to render.
-         * @param componentId The book interface component id.
-         * @param enableLineId The index of the array line to toggle visibility.
-         * @param drawLineId The index of the array line to draw the model on.
-         * @param zoom Zoom factor of the model.
-         * @param pitch Pitch rotation of the model.
-         * @param yaw Yaw rotation of the model.
+         * Displays a model on a book page if visible.
          */
-        fun setModelOnPage(
-            player: Player,
-            pageSet: Int,
-            modelId: Int,
-            componentId: Int,
-            enableLineId: Int,
-            drawLineId: Int,
-            zoom: Int,
-            pitch: Int,
-            yaw: Int,
-        ) {
+        fun setModelOnPage(player: Player, pageSet: Int, modelId: Int, componentId: Int, enableLineId: Int, drawLineId: Int, zoom: Int, pitch: Int, yaw: Int, ) {
             if (pageSet == getAttribute(player, CURRENT_PAGE_ATTRIBUTE, 0)) {
                 player.packetDispatch.sendInterfaceConfig(componentId, enableLineId, false)
                 player.packetDispatch.sendModelOnInterface(modelId, componentId, drawLineId, 0)
@@ -335,27 +245,20 @@ class BookInterface : InterfaceListener {
             }
         }
 
-        fun isLastPage(
-            pageNum: Int,
-            totalPages: Int,
-        ): Boolean = pageNum == totalPages - 1
+        /**
+         * Checks if given page is the last one.
+         */
+        fun isLastPage(pageNum: Int, totalPages: Int, ): Boolean = pageNum == totalPages - 1
 
         /**
-         * Changes the page by increment and invokes the callback to refresh content.
-         *
-         * @param player The player viewing the book.
-         * @param increment `+1` for next page, `-1` for previous page.
-         * @param buttonId The button id that triggered the change.
+         * Changes page and triggers content refresh callback.
          */
-        private fun changePageAndCallback(
-            player: Player,
-            increment: Int,
-            buttonId: Int,
-        ) {
+        private fun changePageAndCallback(player: Player, increment: Int, buttonId: Int, ) {
             val callback: ((player: Player, pageNum: Int, buttonId: Int) -> Boolean)? =
                 getAttribute(player, CALLBACK_ATTRIBUTE, null)
             val currentPage = getAttribute(player, CURRENT_PAGE_ATTRIBUTE, 0)
             playAudio(player, Sounds.TURN_BOOK_PAGE_2417)
+
             setAttribute(player, CURRENT_PAGE_ATTRIBUTE, currentPage + increment)
             callback?.invoke(player, currentPage + increment, buttonId)
         }
