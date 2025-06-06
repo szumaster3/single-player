@@ -127,6 +127,8 @@ class BookInterface : InterfaceListener {
             setAttribute(player, CURRENT_PAGE_ATTRIBUTE, 0)
             setAttribute(player, CALLBACK_ATTRIBUTE, displayCallback)
 
+            animate(player, Animations.READ_BOOK_3140)
+
             when (bookComponent) {
                 FANCY_BOOK_26 -> openInterface(player, FANCY_BOOK_26)
                 FANCY_BOOK_2_27 -> openInterface(player, FANCY_BOOK_2_27)
@@ -258,7 +260,7 @@ class BookInterface : InterfaceListener {
                 getAttribute(player, CALLBACK_ATTRIBUTE, null)
             val currentPage = getAttribute(player, CURRENT_PAGE_ATTRIBUTE, 0)
             playAudio(player, Sounds.TURN_BOOK_PAGE_2417)
-
+            animate(player, Animations.TURN_PAGE_BOOK_3141)
             setAttribute(player, CURRENT_PAGE_ATTRIBUTE, currentPage + increment)
             callback?.invoke(player, currentPage + increment, buttonId)
         }
