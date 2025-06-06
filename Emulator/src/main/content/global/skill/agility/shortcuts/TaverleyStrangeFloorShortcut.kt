@@ -28,8 +28,7 @@ class TaverleyStrangeFloorShortcut : AgilityShortcut(intArrayOf(9294), 80, 12.5,
 
         submitIndividualPulse(player, object : Pulse(1, player) {
             var counter = 0
-            var fail = AgilityHandler.hasFailed(player, 80, 0.1)
-
+            var fail = AgilityHandler.hasFailed(player, 1, 0.1)
             override fun pulse(): Boolean {
                 when (counter++) {
                     0 -> animate(player, Animations.RUNNING_OSRS_STYLE_1995)
