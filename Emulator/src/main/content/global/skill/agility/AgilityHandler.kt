@@ -212,8 +212,6 @@ object AgilityHandler {
 
         animation?.let { player.appearance.setAnimations(it) }
 
-        player.settings.runEnergy = 100.0
-
         GameWorld.Pulser.submit(object : Pulse(ticks, player) {
             override fun pulse(): Boolean {
                 animation?.let {
