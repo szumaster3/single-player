@@ -12,10 +12,7 @@ import core.tools.RandomFunction
 import org.rs.consts.NPCs
 
 @Initializable
-class DarkWizardNPC(
-    id: Int = 0,
-    location: Location? = null,
-) : AbstractNPC(id, location) {
+class DarkWizardNPC(id: Int = 0, location: Location? = null, ) : AbstractNPC(id, location) {
     private val usedSpells = mutableSetOf<Int>()
 
     override fun construct(

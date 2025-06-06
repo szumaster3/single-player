@@ -977,6 +977,22 @@ public class NPC extends Entity {
     }
 
     /**
+     * Checks for player within a radius around this NPC.
+     *
+     * @param radius the distance (in tiles) to check around the NPC.
+     * @return {@code true} if a player is within the radius; {@code false} otherwise.
+     */
+    public boolean isPlayerNearby(int radius) {
+        Location loc = this.getLocation();
+        if (loc == null) {
+            return false;
+        }
+        return RegionManager.getLocalPlayers(loc, radius)
+                .stream()
+                .anyMatch(p -> p.isActive() && !p.isArtificial());
+    }
+
+    /**
      * Gets task.
      *
      * @return the task

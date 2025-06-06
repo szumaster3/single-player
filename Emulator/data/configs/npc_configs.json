@@ -20241,6 +20241,7 @@
     "slayer_exp": "0",
     "magic_animation": "0",
     "death_animation": "2183",
+    "lifepoints": "10",
     "name": "Abyssal leech",
     "defence_level": "52",
     "id": "2263",

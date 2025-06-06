@@ -7,19 +7,26 @@ import core.tools.RandomFunction
 import org.rs.consts.NPCs
 
 class DurgokNPC : NPCBehavior(NPCs.DURGOK_5794) {
-    private val forceChat =
-        arrayOf(
-            "Burgers!",
-            "Hot frogburgers!",
-            "Frogburgers!",
-            "Frog in a bun!",
-            "Tasty frogburgers!",
-        )
+
+    private val forceChat = arrayOf(
+        "Burgers!",
+        "Hot frogburgers!",
+        "Frogburgers!",
+        "Frog in a bun!",
+        "Tasty frogburgers!"
+    )
+
+    private var nextChat = 0L
 
     override fun tick(self: NPC): Boolean {
-        if (RandomFunction.random(35) == 5) {
+        val now = System.currentTimeMillis()
+        if (now < nextChat || !self.isPlayerNearby(15)) return true
+
+        if (RandomFunction.roll(8)) {
             sendChat(self, forceChat.random())
+            nextChat = now + 10000L
         }
-        return super.tick(self)
+
+        return true
     }
 }

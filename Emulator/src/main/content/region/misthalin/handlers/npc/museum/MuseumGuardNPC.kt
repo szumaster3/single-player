@@ -6,33 +6,33 @@ import core.game.node.entity.npc.NPCBehavior
 import core.tools.RandomFunction
 import org.rs.consts.NPCs
 
-class MuseumGuardNPC : NPCBehavior(*guardsNPCs) {
-    companion object {
-        private val guardsNPCs =
-            intArrayOf(
-                NPCs.MUSEUM_GUARD_5941,
-                NPCs.MUSEUM_GUARD_5942,
-                NPCs.MUSEUM_GUARD_5943,
-            )
-    }
+class MuseumGuardNPC : NPCBehavior(NPCs.MUSEUM_GUARD_5941, NPCs.MUSEUM_GUARD_5942, NPCs.MUSEUM_GUARD_5943) {
 
-    private val forceChat =
-        arrayOf(
-            "Another boring day.",
-            "Nothing new there.",
-            "Keep 'em coming!",
-            "Don't daudle there!",
-        )
+    private val forceChat = arrayOf(
+        "Another boring day.",
+        "Nothing new there.",
+        "Keep 'em coming!",
+        "Don't daudle there!"
+    )
 
     override fun onCreation(self: NPC) {
         self.isNeverWalks = false
         self.isWalks = false
     }
 
+    private var nextChat = 0L
+
     override fun tick(self: NPC): Boolean {
-        if (RandomFunction.random(35) == 5) {
-            sendChat(self, forceChat.random())
+        val now = System.currentTimeMillis()
+        if (now < nextChat || !self.isPlayerNearby(15)) {
+            return true
         }
+
+        if (RandomFunction.roll(8)) {
+            sendChat(self, forceChat.random())
+            nextChat = now + 5000L
+        }
+
         return true
     }
 }

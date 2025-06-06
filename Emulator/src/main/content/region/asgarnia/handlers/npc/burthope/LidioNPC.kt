@@ -14,10 +14,19 @@ class LidioNPC  : NPCBehavior(NPCs.LIDIO_4293) {
             "Stew to fill the belly, on sale here!"
         )
 
+    private var nextChat = 0L
+
     override fun tick(self: NPC): Boolean {
-        if (RandomFunction.random(100) == 5) {
-            sendChat(self, forceChat.random())
+        val now = System.currentTimeMillis()
+        if (now < nextChat || !self.isPlayerNearby(15)) {
+            return true
         }
-        return super.tick(self)
+
+        if (RandomFunction.roll(8)) {
+            sendChat(self, forceChat.random())
+            nextChat = now + 15000L
+        }
+
+        return true
     }
 }

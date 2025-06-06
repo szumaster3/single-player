@@ -25,17 +25,21 @@ class CartConductorNPC : NPCBehavior(NPCs.CART_CONDUCTOR_2182, NPCs.CART_CONDUCT
         "Selling tickets!"
     )
 
-    override fun tick(self: NPC): Boolean {
-        if (RandomFunction.random(99) == 0) {
-            val speakerId = if (RandomFunction.random(1) == 0) NPCs.CART_CONDUCTOR_2182 else NPCs.CART_CONDUCTOR_2183
+    private var tickDelay = 100
 
-            if (self.id == speakerId) {
-                when (self.id) {
-                    NPCs.CART_CONDUCTOR_2182 -> sendChat(self, forceChat.random())
-                    NPCs.CART_CONDUCTOR_2183 -> sendChat(self, secondChat.random())
-                }
+    override fun tick(self: NPC): Boolean {
+        if (!isPlayerNearby(self)) return true
+
+        if (--tickDelay > 0) return true
+        tickDelay = 100
+
+        if (RandomFunction.random(2) == 0) {
+            when (self.id) {
+                NPCs.CART_CONDUCTOR_2182 -> sendChat(self, forceChat.random())
+                NPCs.CART_CONDUCTOR_2183 -> sendChat(self, secondChat.random())
             }
         }
+
         return true
     }
 }

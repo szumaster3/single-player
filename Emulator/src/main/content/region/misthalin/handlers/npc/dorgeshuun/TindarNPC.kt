@@ -7,19 +7,25 @@ import core.tools.RandomFunction
 import org.rs.consts.NPCs
 
 class TindarNPC : NPCBehavior(NPCs.TINDAR_5795) {
-    private val forceChat =
-        arrayOf(
-            "Crispy!",
-            "Creeeespy frogs' legs!",
-            "Get your crispy frogs' legs!",
-            "Frogs' legs!",
-            "Crispy frogs' legs!",
-        )
+    private val forceChat = arrayOf(
+        "Crispy!",
+        "Creeeespy frogs' legs!",
+        "Get your crispy frogs' legs!",
+        "Frogs' legs!",
+        "Crispy frogs' legs!",
+    )
+
+    private var nextChat = 0L
 
     override fun tick(self: NPC): Boolean {
-        if (RandomFunction.random(35) == 5) {
+        val now = System.currentTimeMillis()
+        if (now < nextChat || !self.isPlayerNearby(15)) return true
+
+        if (RandomFunction.roll(8)) {
             sendChat(self, forceChat.random())
+            nextChat = now + 10000L
         }
-        return super.tick(self)
+
+        return true
     }
 }

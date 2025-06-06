@@ -14,10 +14,7 @@ import org.rs.consts.NPCs
  * The Summoned zombie NPC, which is summoned by a Necromancer NPC.
  */
 @Initializable
-class SummonedZombieNPC @JvmOverloads constructor(
-    id: Int = NPCs.SUMMONED_ZOMBIE_77,
-    location: Location? = null
-) : AbstractNPC(id, location, true) {
+class SummonedZombieNPC @JvmOverloads constructor(id: Int = NPCs.SUMMONED_ZOMBIE_77, location: Location? = null) : AbstractNPC(id, location, true) {
 
     /**
      * The owner NPC that summoned this zombie.

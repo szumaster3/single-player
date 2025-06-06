@@ -6,19 +6,29 @@ import core.game.node.entity.npc.NPCBehavior
 import core.tools.RandomFunction
 import org.rs.consts.NPCs
 
-class ChurchNPC : NPCBehavior(*sleepyNPC) {
-    companion object {
-        private val sleepyNPC = intArrayOf(NPCs.MARTINA_SCORSBY_3326, NPCs.JEREMY_CLERKSIN_3327)
-    }
+class ChurchNPC : NPCBehavior(*ID) {
 
     override fun onCreation(self: NPC) {
         self.isWalks = false
     }
 
+    private var nextSnore = 0L
+
     override fun tick(self: NPC): Boolean {
-        if (RandomFunction.random(35) == 5) {
-            visualize(self, -1, 1056)
+        val now = System.currentTimeMillis()
+        if (now < nextSnore || !self.isPlayerNearby(15)) {
+            return true
         }
+
+        if (RandomFunction.roll(8)) {
+            visualize(self, -1, 1056)
+            nextSnore = now + 9999L
+        }
+
         return true
+    }
+
+    companion object {
+        private val ID = intArrayOf(NPCs.MARTINA_SCORSBY_3326, NPCs.JEREMY_CLERKSIN_3327)
     }
 }

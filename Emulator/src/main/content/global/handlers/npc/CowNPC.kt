@@ -6,11 +6,19 @@ import core.game.node.entity.npc.NPCBehavior
 import core.tools.RandomFunction
 import org.rs.consts.NPCs
 
-class CowNPC : NPCBehavior(NPCs.COW_81, NPCs.COW_397, NPCs.COW_955, NPCs.COW_CALF_1766, NPCs.COW_1767, NPCs.COW_3309) {
+class CowNPC : NPCBehavior(NPCs.COW_81, NPCs.COW_397, NPCs.COW_955, NPCs.COW_1767, NPCs.COW_3309) {
+
+    private var nextChat = 0L
+
     override fun tick(self: NPC): Boolean {
-        if (RandomFunction.roll(20) && self.id != NPCs.COW_CALF_1766) {
+        val now = System.currentTimeMillis()
+        if (now < nextChat) return true
+
+        if (RandomFunction.roll(20)) {
             sendChat(self, "Moo")
+            nextChat = now + 5000L
         }
+
         return true
     }
 }

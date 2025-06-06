@@ -17,17 +17,10 @@ import org.rs.consts.Graphics
 import org.rs.consts.NPCs
 
 @Initializable
-class MetalDragonNPC(
-    id: Int = 0,
-    location: Location? = null,
-) : AbstractNPC(id, location) {
+class MetalDragonNPC(id: Int = 0, location: Location? = null, ) : AbstractNPC(id, location) {
+
     private val combatAction: CombatSwingHandler =
-        MultiSwingHandler(
-            true,
-            SwitchAttack(CombatStyle.MELEE.swingHandler, Animation(80, Priority.HIGH)),
-            SwitchAttack(CombatStyle.MELEE.swingHandler, Animation(91, Priority.HIGH)),
-            DRAGONFIRE,
-        )
+        MultiSwingHandler(true, SwitchAttack(CombatStyle.MELEE.swingHandler, Animation(80, Priority.HIGH)), SwitchAttack(CombatStyle.MELEE.swingHandler, Animation(91, Priority.HIGH)), DRAGONFIRE)
 
     override fun getSwingHandler(swing: Boolean): CombatSwingHandler = combatAction
 
@@ -40,22 +33,16 @@ class MetalDragonNPC(
     ): AbstractNPC = MetalDragonNPC(id, location)
 
     override fun getIds(): IntArray =
-        intArrayOf(
-            NPCs.BRONZE_DRAGON_1590,
-            NPCs.IRON_DRAGON_1591,
-            NPCs.STEEL_DRAGON_1592,
-            NPCs.STEEL_DRAGON_3590,
-        )
+        intArrayOf(NPCs.BRONZE_DRAGON_1590, NPCs.IRON_DRAGON_1591, NPCs.STEEL_DRAGON_1592, NPCs.STEEL_DRAGON_3590)
 
     companion object {
-        private val DRAGONFIRE: SwitchAttack =
-            DragonfireSwingHandler.get(
-                false,
-                52,
-                Animation(Animations.DRAGON_BREATH_81, Priority.HIGH),
-                null,
-                null,
-                Projectile.create(null as Entity?, null, Graphics.GIANT_ORANGE_BLAST_54, 40, 36, 41, 46, 20, 255),
-            )
+        private val DRAGONFIRE: SwitchAttack = DragonfireSwingHandler.get(
+            false,
+            52,
+            Animation(Animations.DRAGON_BREATH_81, Priority.HIGH),
+            null,
+            null,
+            Projectile.create(null as Entity?, null, Graphics.GIANT_ORANGE_BLAST_54, 40, 36, 41, 46, 20, 255)
+        )
     }
 }

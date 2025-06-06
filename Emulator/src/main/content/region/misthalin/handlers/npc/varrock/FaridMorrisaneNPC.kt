@@ -21,10 +21,19 @@ class FaridMorrisaneNPC : NPCBehavior(NPCs.FARID_MORRISANE_ORES_6523) {
         self.isNeverWalks = true
     }
 
+    private var nextChat = 0L
+
     override fun tick(self: NPC): Boolean {
-        if (RandomFunction.random(35) == 5) {
-            sendChat(self, forceChat.random())
+        val now = System.currentTimeMillis()
+        if (now < nextChat || !self.isPlayerNearby(12)) {
+            return true
         }
+
+        if (RandomFunction.roll(8)) {
+            sendChat(self, forceChat.random())
+            nextChat = now + 5000L
+        }
+
         return true
     }
 }

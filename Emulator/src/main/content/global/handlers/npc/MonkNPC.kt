@@ -14,10 +14,8 @@ import org.rs.consts.Animations
 import org.rs.consts.NPCs
 
 @Initializable
-class MonkNPC(
-    id: Int = 0,
-    location: Location? = null,
-) : AbstractNPC(id, location) {
+class MonkNPC(id: Int = 0, location: Location? = null, ) : AbstractNPC(id, location) {
+
     override fun construct(
         id: Int,
         location: Location,

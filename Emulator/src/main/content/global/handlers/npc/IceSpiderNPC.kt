@@ -7,22 +7,13 @@ import core.plugin.Initializable
 import org.rs.consts.NPCs
 
 @Initializable
-class IceSpiderNPC(
-    id: Int = 0,
-    location: Location? = null,
-) : AbstractNPC(id, location) {
-    override fun construct(
-        id: Int,
-        location: Location,
-        vararg objects: Any,
-    ): AbstractNPC = IceSpiderNPC(id, location)
+class IceSpiderNPC(id: Int = 0, location: Location? = null, ) : AbstractNPC(id, location) {
+
+    override fun construct(id: Int, location: Location, vararg objects: Any, ): AbstractNPC = IceSpiderNPC(id, location)
 
     override fun finalizeDeath(killer: Entity) {
         super.finalizeDeath(killer)
     }
 
-    override fun getIds(): IntArray =
-        intArrayOf(
-            NPCs.ICE_SPIDER_64,
-        )
+    override fun getIds(): IntArray = intArrayOf(NPCs.ICE_SPIDER_64)
 }

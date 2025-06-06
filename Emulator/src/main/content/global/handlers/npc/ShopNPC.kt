@@ -5,22 +5,20 @@ import core.game.world.map.Location
 import core.plugin.Initializable
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Shop NPCs.
+ */
 @Initializable
-class ShopNPC(
-    id: Int = 0,
-    location: Location? = null,
-) : AbstractNPC(id, location) {
-    override fun construct(
-        id: Int,
-        location: Location,
-        vararg objects: Any,
-    ): AbstractNPC = ShopNPC(id, location)
+class ShopNPC(id: Int = 0, location: Location? = null, ) : AbstractNPC(id, location) {
+
+    override fun construct(id: Int, location: Location, vararg objects: Any, ): AbstractNPC = ShopNPC(id, location)
 
     override fun getIds(): IntArray = ID
 
     override fun init() {
         super.init()
         isWalks = true
+        isNeverWalks = false
     }
 
     override fun getWalkRadius(): Int = 3

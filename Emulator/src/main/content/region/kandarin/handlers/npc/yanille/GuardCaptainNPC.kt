@@ -7,9 +7,15 @@ import core.tools.RandomFunction
 import org.rs.consts.NPCs
 
 class GuardCaptainNPC : NPCBehavior(NPCs.GUARD_CAPTAIN_3109) {
+    private var nextHiccup = 0L
+
     override fun tick(self: NPC): Boolean {
-        if (RandomFunction.random(1, 15) == 5) {
+        val now = System.currentTimeMillis()
+        if (now < nextHiccup || !self.isPlayerNearby(10)) return true
+
+        if (RandomFunction.roll(15)) {
             sendChat(self, "*HIC*")
+            nextHiccup = now + 10000L
         }
         return true
     }

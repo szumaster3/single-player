@@ -41,6 +41,8 @@ class SkippyNPC : NPCBehavior(NPCs.SKIPPY_2795) {
     }
 
     override fun tick(self: NPC): Boolean {
+        if (!isPlayerNearby(self)) return true
+
         if (sendTutorialChat(self)) {
             return true
         }
@@ -60,19 +62,18 @@ class SkippyNPC : NPCBehavior(NPCs.SKIPPY_2795) {
     private fun randomRoll(self: NPC): Boolean = RandomFunction.random(100) < 5 && inBorders(self, SkippyUtils.PORT_SARIM)
 
     private fun handleThrow(self: NPC) {
-        if (!finishedMoving(self)) return
-        lockMovement(self, 1)
-        queueScript(self, 0, QueueStrength.SOFT) {
+        self.walkingQueue.reset()
+        queueScript(self, 1, QueueStrength.SOFT) {
             sendChat(self, "Take this")
             animate(self, SkippyUtils.ANIMATION_THROW)
             faceLocation(self, self.location.transform(Direction.SOUTH))
-            playGlobalAudio(self.location, Sounds.SKIPPY_THROWGLASS_1398, 1)
+            playGlobalAudio(self.location, Sounds.SKIPPY_THROWGLASS_1398)
             spawnProjectile(
                 self.location,
                 self.location.transform(Direction.SOUTH, 4),
                 Graphics.THROWING_VIAL_49,
                 30,
-                20,
+                0,
                 10,
                 100,
                 0,

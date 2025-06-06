@@ -12,10 +12,8 @@ import core.plugin.Initializable
 import org.rs.consts.NPCs
 
 @Initializable
-class IceGiantNPC(
-    id: Int = 0,
-    location: Location? = null,
-) : AbstractNPC(id, location) {
+class IceGiantNPC(id: Int = 0, location: Location? = null, ) : AbstractNPC(id, location) {
+
     override fun construct(
         id: Int,
         location: Location,
@@ -35,11 +33,5 @@ class IceGiantNPC(
     }
 
     override fun getIds(): IntArray =
-        intArrayOf(
-            NPCs.ICE_GIANT_111,
-            NPCs.ICE_GIANT_3072,
-            NPCs.ICE_GIANT_4685,
-            NPCs.ICE_GIANT_4686,
-            NPCs.ICE_GIANT_4687,
-        )
+        intArrayOf(NPCs.ICE_GIANT_111, NPCs.ICE_GIANT_3072, NPCs.ICE_GIANT_4685, NPCs.ICE_GIANT_4686, NPCs.ICE_GIANT_4687)
 }

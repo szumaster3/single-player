@@ -7,19 +7,25 @@ import core.tools.RandomFunction
 import org.rs.consts.NPCs
 
 class GundikNPC : NPCBehavior(NPCs.GUNDIK_5796) {
-    private val forceChat =
-        arrayOf(
-            "Spicy kebabs!",
-            "Bat kebabs!",
-            "Spicy bat kebabs!",
-            "Bat shish kebabs!",
-            "Kebabs!",
-        )
+    private val forceChat = arrayOf(
+        "Spicy kebabs!",
+        "Bat kebabs!",
+        "Spicy bat kebabs!",
+        "Bat shish kebabs!",
+        "Kebabs!",
+    )
+
+    private var nextChat = 0L
 
     override fun tick(self: NPC): Boolean {
-        if (RandomFunction.random(35) == 1) {
+        val now = System.currentTimeMillis()
+        if (now < nextChat || !self.isPlayerNearby(15)) return true
+
+        if (RandomFunction.roll(8)) {
             sendChat(self, forceChat.random())
+            nextChat = now + 10000L
         }
-        return super.tick(self)
+
+        return true
     }
 }

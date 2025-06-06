@@ -13,15 +13,9 @@ import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
 @Initializable
-class RatNPC(
-    id: Int = 0,
-    location: Location? = null,
-) : AbstractNPC(id, location) {
-    override fun construct(
-        id: Int,
-        location: Location,
-        vararg objects: Any,
-    ): AbstractNPC = RatNPC(id, location)
+class RatNPC(id: Int = 0, location: Location? = null, ) : AbstractNPC(id, location) {
+
+    override fun construct(id: Int, location: Location, vararg objects: Any, ): AbstractNPC = RatNPC(id, location)
 
     override fun finalizeDeath(killer: Entity) {
         super.finalizeDeath(killer)

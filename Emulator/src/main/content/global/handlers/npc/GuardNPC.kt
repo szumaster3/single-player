@@ -6,15 +6,9 @@ import core.plugin.Initializable
 import org.rs.consts.NPCs
 
 @Initializable
-class GuardNPC(
-    id: Int = 0,
-    location: Location? = null,
-) : AbstractNPC(id, location) {
-    override fun construct(
-        id: Int,
-        location: Location,
-        vararg objects: Any,
-    ): AbstractNPC = GuardNPC(id, location)
+class GuardNPC(id: Int = 0, location: Location? = null, ) : AbstractNPC(id, location) {
+
+    override fun construct(id: Int, location: Location, vararg objects: Any, ): AbstractNPC = GuardNPC(id, location)
 
     override fun getIds(): IntArray = ID
 
@@ -97,7 +91,7 @@ class GuardNPC(
                 NPCs.TOWER_GUARD_877,
                 NPCs.TYRAS_GUARD_1200,
                 NPCs.TYRAS_GUARD_1203,
-                NPCs.TYRAS_GUARD_1204,
+                NPCs.TYRAS_GUARD_1204
             )
     }
 }

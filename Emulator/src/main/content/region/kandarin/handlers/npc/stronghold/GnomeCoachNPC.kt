@@ -19,6 +19,8 @@ class GnomeCoachNPC : NPCBehavior(NPCs.GNOME_COACH_2802) {
             "Take him out you wuss",
         )
 
+    private var nextAction = 0L
+
     override fun onCreation(self: NPC) {
         if (inBorders(self, 2386, 3496, 2410, 3499)) {
             val movementPath =
@@ -35,9 +37,16 @@ class GnomeCoachNPC : NPCBehavior(NPCs.GNOME_COACH_2802) {
     }
 
     override fun tick(self: NPC): Boolean {
-        if (RandomFunction.random(1, 15) == 5) {
-            sendChat(self, forceChat.random())
+        val now = System.currentTimeMillis()
+        if (now < nextAction || !self.isPlayerNearby(15)) {
+            return true
         }
+
+        if (RandomFunction.random(15) == 5) {
+            sendChat(self, forceChat.random())
+            nextAction = now + 5000L
+        }
+
         return true
     }
 }

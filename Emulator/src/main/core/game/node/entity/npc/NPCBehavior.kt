@@ -171,6 +171,22 @@ open class NPCBehavior(vararg val ids: Int = intArrayOf()) : ContentInterface {
     }
 
     /**
+     * Checks for player within a distance around the NPC.
+     *
+     * @param npc The NPC instance to check around.
+     * @param radius The radius (in tiles) to search for players. (Default: 15).
+     * @return `true` if a player is within the radius, otherwise, `false`.
+     */
+    open fun isPlayerNearby(npc: NPC, radius: Int = 15): Boolean {
+        if (npc.location == null) {
+            return false
+        }
+        val localPlayers = RegionManager.getLocalPlayers(npc.location, radius)
+        return localPlayers.isNotEmpty() && localPlayers.any { it.isActive && !it.isArtificial }
+    }
+
+
+    /**
      * Modifies the combat experience gained from killing an entity
      *
      * @param self the NPC instance this behavior belongs to

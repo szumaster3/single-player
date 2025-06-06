@@ -9,13 +9,18 @@ import core.game.node.entity.npc.NPCBehavior
 import core.tools.RandomFunction
 import org.rs.consts.NPCs
 
-class YakNPC :
-    NPCBehavior(NPCs.YAK_5529),
-    InteractionListener {
+class YakNPC : NPCBehavior(NPCs.YAK_5529), InteractionListener {
+
+    private var nextChat = 0L
+
     override fun tick(self: NPC): Boolean {
-        if (RandomFunction.roll(20)) {
+        val now = System.currentTimeMillis()
+
+        if (now >= nextChat && RandomFunction.random(20) == 0) {
             sendChat(self, "Moo")
+            nextChat = now + 15000L
         }
+
         return super.tick(self)
     }
 
