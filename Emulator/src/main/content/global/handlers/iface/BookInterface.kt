@@ -126,7 +126,7 @@ class BookInterface : InterfaceListener {
             setAttribute(player, CURRENT_PAGE_ATTRIBUTE, 0)
             setAttribute(player, CALLBACK_ATTRIBUTE, displayCallback)
 
-            animate(player, Animations.READ_BOOK_3140)
+            animate(player, Animations.READ_BOOK_1350)
 
             when (bookComponent) {
                 FANCY_BOOK_26 -> openInterface(player, FANCY_BOOK_26)
@@ -260,8 +260,8 @@ class BookInterface : InterfaceListener {
             val currentPage = getAttribute(player, CURRENT_PAGE_ATTRIBUTE, 0)
             playAudio(player, Sounds.TURN_BOOK_PAGE_2417)
 
-            if (increment > 0) animate(player, Animations.TURN_PAGE_BOOK_3141)
-            else if (increment < 0) animate(player, 3142)
+            if (increment > 0) animate(player, 3140) // 3142 (different book cover)
+            else if (increment < 0) animate(player, 3141) // 3143 (different book cover)
 
             setAttribute(player, CURRENT_PAGE_ATTRIBUTE, currentPage + increment)
             callback?.invoke(player, currentPage + increment, buttonId)
