@@ -71,8 +71,8 @@ class ScorpionCatcher :
              */
 
             if (getAttribute(player, ATTRIBUTE_SECRET, false)) {
-                line(player, "I've spoken to a !!Seer?? and been given the location of", line++, getAttribute(player, ATTRIBUTE_TAVERLEY, false))
-                line(player, "one of the !!Kharid Scorpions??. ", line++, getAttribute(player, ATTRIBUTE_TAVERLEY, false))
+                line(player, "I've spoken to a !!Seer?? and been given the location of", line++, true)
+                line(player, "one of the !!Kharid Scorpions??.", line++, true)
                 line++
                 line(player, "The first !!Kharid Scorpion?? is in a secret room near some", line++, getAttribute(player, ATTRIBUTE_TAVERLEY, false))
                 line(player, "!!nasty spiders?? with two !!coffins?? nearby.", line++, getAttribute(player, ATTRIBUTE_TAVERLEY, false))

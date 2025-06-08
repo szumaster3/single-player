@@ -41,7 +41,7 @@ class EnclaveGuardDialogue(player: Player? = null) : Dialogue(player) {
             3 -> npc(FaceAnim.OLD_ANGRY1, "Oh you do, do you? How about 'no'?").also { stage++ }
             4 -> {
                 end()
-                RegionManager.getLocalNpcs(player!!).firstOrNull { it.id == NPCs.ENCLAVE_GUARD_870 }?.attack(player)
+                npc!!.attack(player)
             }
             5 -> npc(FaceAnim.OLD_ANGRY1, "You dare mock me, creature!").also { stage = 4 }
         }

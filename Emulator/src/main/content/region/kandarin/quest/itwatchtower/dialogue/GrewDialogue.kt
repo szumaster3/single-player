@@ -115,9 +115,9 @@ class GrewDialogue(player: Player? = null) : Dialogue(player) {
             }
             15 -> npc(FaceAnim.OLD_NEUTRAL, "Morsel, you dare to return without the tooth!", "Either you are a fool, or want to be eaten!").also { stage = END_DIALOGUE }
             20 -> npc(FaceAnim.OLD_NEUTRAL, "That can be arranged - guards!!").also {
-                RegionManager.getLocalNpcs(player).firstOrNull { it.id == NPCs.OGRE_115 }?.attack(player)
+                end()
+                npc!!.attack(player)
                 sendMessage(player, "You are under attack!")
-                stage = END_DIALOGUE
             }
             30 -> npc(FaceAnim.OLD_NEUTRAL, "I have nothing left for you but the cooking pot!").also { stage = END_DIALOGUE }
             40 -> {

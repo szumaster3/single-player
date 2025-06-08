@@ -49,7 +49,7 @@ class CityGuardDialogue : DialogueFile() {
             )
             4 -> {
                 end()
-                RegionManager.getLocalNpcs(player!!).firstOrNull { it.id == NPCs.CITY_GUARD_862 }?.attack(player)
+                npc!!.attack(player)
             }
             5 -> npc(FaceAnim.OLD_NORMAL, "Is that so... You humour me small t'ing, answer this", "riddle and I will help you...").also { stage++ }
             6 -> npc(FaceAnim.OLD_DEFAULT, "I want you to bring me an item: I will give you all the", "letters of this item, you work out what it is...").also { stage++ }

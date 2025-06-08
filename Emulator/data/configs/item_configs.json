@@ -16921,14 +16921,14 @@
   },
   {
     "shop_price": "1",
-    "examine": "I wonder what this unlocks. (Heroes' Quest)",
+    "examine": "I wonder what this unlocks?",
     "durability": null,
     "name": "Dusty key",
     "archery_ticket_price": "0",
     "id": "1590"
   },
   {
-    "examine": "Key to a cell. (Heroes' Quest)",
+    "examine": "Key to a cell.",
     "durability": null,
     "name": "Jail key",
     "archery_ticket_price": "0",

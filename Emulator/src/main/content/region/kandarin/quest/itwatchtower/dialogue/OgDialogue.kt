@@ -77,7 +77,7 @@ class OgDialogue(player: Player? = null) : Dialogue(player) {
             7 -> npc(FaceAnim.OLD_DEFAULT, "Kill me, eh? You shall be crushed. Guards!").also { stage++ }
             8 -> {
                 end()
-                RegionManager.getLocalNpcs(player).firstOrNull { it.id == NPCs.OGRE_115 }?.attack(player)
+                npc!!.attack(player)
                 sendMessage(player, "You are under attack!")
             }
             9 -> options("I have your gold.", "I haven't got it yet.", "I have lost the key!").also { stage++ }

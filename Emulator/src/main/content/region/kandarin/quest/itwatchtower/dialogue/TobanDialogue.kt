@@ -67,7 +67,7 @@ class TobanDialogue(player: Player? = null) : Dialogue(player) {
             }
             2 -> npcl(FaceAnim.OLD_NEUTRAL, "Hahaha! It t'inks it's a match for Toban, does it?").also {
                 end()
-                RegionManager.getLocalNpcs(player).firstOrNull { it.id == NPCs.OGRE_115 }?.attack(player)
+                npc!!.attack(player)
                 sendMessage(player, "You are under attack!")
             }
             3 -> npc(FaceAnim.OLD_NEUTRAL, "Hahaha! You'll never get in there.").also { stage++ }
