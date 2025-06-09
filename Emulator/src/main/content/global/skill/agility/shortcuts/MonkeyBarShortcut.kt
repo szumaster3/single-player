@@ -16,7 +16,7 @@ import core.plugin.Plugin
 import core.tools.RandomFunction
 
 /**
- * Represents the monkey bar shortcut.
+ * Handles the monkey bar shortcut.
  * @author Vexia
  */
 @Initializable
@@ -29,12 +29,7 @@ class MonkeyBarShortcut : AgilityShortcut {
         return super.newInstance(arg)
     }
 
-    override fun run(
-        player: Player,
-        scenery: Scenery,
-        option: String,
-        failed: Boolean,
-    ) {
+    override fun run(player: Player, scenery: Scenery, option: String, failed: Boolean, ) {
         player.lock(5)
         var direct = Direction.get((scenery.direction.toInteger() + 2) % 4)
         if (scenery.id == 29375) {
@@ -64,6 +59,7 @@ class MonkeyBarShortcut : AgilityShortcut {
         player.logoutListeners["monkey-bar"] = { p: Player ->
             p.location = start
         }
+
         Pulser.submit(
             object : Pulse(2, player) {
                 var count: Int = 0
@@ -119,10 +115,7 @@ class MonkeyBarShortcut : AgilityShortcut {
         )
     }
 
-    override fun getDestination(
-        n: Node,
-        node: Node,
-    ): Location? {
+    override fun getDestination(n: Node, node: Node, ): Location? {
         if (node.location == Location(2598, 9489, 0)) {
             return Location(2597, 9488, 0)
         } else if (node.location == Location(2598, 9494, 0)) {

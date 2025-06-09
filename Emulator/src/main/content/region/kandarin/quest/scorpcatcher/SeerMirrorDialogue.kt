@@ -1,9 +1,11 @@
-package content.region.kandarin.quest.scorpcatcher.dialogue
+package content.region.kandarin.quest.scorpcatcher
 
-import content.region.kandarin.quest.scorpcatcher.ScorpionCatcher
-import content.region.kandarin.quest.scorpcatcher.handlers.ScorpionCatcherListener.Companion.getScorpionLocation
-import core.api.*
+import content.data.GameAttributes
+import core.api.getAttribute
+import core.api.lock
 import core.api.quest.setQuestStage
+import core.api.removeAttribute
+import core.api.setAttribute
 import core.game.component.Component
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
@@ -14,12 +16,9 @@ import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
 /**
- * Represents the Seer's dialogue extension.
- *
- * Relations:
- * - [Scorpion Catcher quest][content.region.kandarin.quest.scorpcatcher.ScorpionCatcher]
+ * Represents the Seer's dialogue extension for [ScorpionCatcher] quest.
  */
-class SeersDialogueFile : DialogueFile() {
+class SeerMirrorDialogue : DialogueFile() {
     override fun handle(
         componentID: Int,
         buttonID: Int,
@@ -32,7 +31,7 @@ class SeersDialogueFile : DialogueFile() {
                     npcl(FaceAnim.FRIENDLY, "I can see a scorpion that you seek. It would appear to be near some nasty spiders. I can see two coffins there as well.").also { stage = 10 }
                 }
                 // Second and third scorpion - More help from a seer.
-                else if(getAttribute(player!!, ScorpionCatcher.ATTRIBUTE_TAVERLEY, false) && !getAttribute(player!!, ScorpionCatcher.ATTRIBUTE_NPC, false)) {
+                else if(getAttribute(player!!, GameAttributes.LABEL_SCORPION_TAVERLEY, false) && !getAttribute(player!!, ScorpionCatcher.ATTRIBUTE_NPC, false)) {
                     playerl(FaceAnim.NEUTRAL, "Hi, I've retrieved the scorpion from near the spiders.").also { stage = 16 }
                 }
                 // Subsequent dialogue.
@@ -56,9 +55,8 @@ class SeersDialogueFile : DialogueFile() {
             4 -> npcl(FaceAnim.FRIENDLY, "Well you have come to the right place. I am a master of animal detection.").also { stage++ }
             5 -> npcl(FaceAnim.NEUTRAL, "Let me look into my looking glass.").also { stage++ }
             6 -> {
-                lock(player!!, 6)
-                lockInteractions(npc!!, 6)
-                getScorpionLocation(player!!)
+                lock(player!!, 10)
+                ScorpionCatcher.getScorpionLocation(player!!)
                 player!!.interfaceManager.close(Component(Components.NPCCHAT1_241))
             }
 

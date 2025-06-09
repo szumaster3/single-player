@@ -12,7 +12,7 @@ import core.game.world.map.Location
 import org.rs.consts.Animations
 
 /**
- * Represents the stile	shortcuts.
+ * Handles the various stile shortcuts.
  * @author Ceikry
  */
 class StileShortcut : InteractionListener {

@@ -11,14 +11,14 @@ import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.scenery.Scenery
 import core.game.system.task.Pulse
-import core.game.world.GameWorld.Pulser
+import core.game.world.GameWorld
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
 import org.rs.consts.Animations
 
 /**
- * Represents the grand exchange underwall tunnel shortcut.
+ * Handles the GE underwall tunnel shortcut.
  */
 @Initializable
 class GrandExchangeShortcut : AgilityShortcut(intArrayOf(9311, 9312), 21, 0.0, "climb-into") {
@@ -35,11 +35,10 @@ class GrandExchangeShortcut : AgilityShortcut(intArrayOf(9311, 9312), 21, 0.0, "
             CLIMB_DOWN,
             15,
             0.0,
-            null,
-            0
+            null
         )
 
-        Pulser.submit(object : Pulse(1, player) {
+        GameWorld.Pulser.submit(object : Pulse(1, player) {
             var count = 0
             var reachedStart = false
 
@@ -53,6 +52,7 @@ class GrandExchangeShortcut : AgilityShortcut(intArrayOf(9311, 9312), 21, 0.0, "
                         visualize(player, CRAWL_THROUGH, -1)
                         false
                     }
+
                     3 -> {
                         AgilityHandler.forceWalk(
                             player,
@@ -69,6 +69,7 @@ class GrandExchangeShortcut : AgilityShortcut(intArrayOf(9311, 9312), 21, 0.0, "
                         unlock(player)
                         true
                     }
+
                     else -> false
                 }
             }

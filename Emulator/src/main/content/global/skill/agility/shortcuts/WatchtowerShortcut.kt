@@ -11,7 +11,7 @@ import core.plugin.Initializable
 import org.rs.consts.Animations
 
 /**
- * Represents the Trellis shortcut.
+ * Represents the trellis shortcut behind watchtower.
  */
 @Initializable
 class WatchtowerShortcut : AgilityShortcut(intArrayOf(20056), 18, 31.0, "climb-up") {

@@ -16,7 +16,7 @@ import org.rs.consts.Animations
 import org.rs.consts.Scenery
 
 /**
- * Represents the Stepping stone shortcuts.
+ * Handles the stepping stone shortcuts.
  */
 @Initializable
 class SteppingStoneShortcut : OptionHandler() {

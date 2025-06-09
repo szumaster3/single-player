@@ -20,7 +20,9 @@ class VarrockFenceJumpShortcut : AgilityShortcut(intArrayOf(9300), 13, 0.0, "jum
 
     override fun run(player: Player, scenery: Scenery, option: String, failed: Boolean) {
         player.faceLocation(scenery.location)
-        submitIndividualPulse(player, object : Pulse(1, player) {
+        submitIndividualPulse(
+            player,
+            object : Pulse(1, player) {
                 override fun pulse(): Boolean {
                     player.animate(jumpAnim)
                     player.achievementDiaryManager.finishTask(player, DiaryType.VARROCK, 0, 5)
@@ -44,6 +46,7 @@ class VarrockFenceJumpShortcut : AgilityShortcut(intArrayOf(9300), 13, 0.0, "jum
     companion object {
         private val runningAnim = Animation(Animations.RUNNING_OSRS_STYLE_1995)
         private val jumpAnim = Animation(Animations.JUMP_WEREWOLF_1603)
-        private val locations = arrayOf(Location(3240, 3331, 0), Location(3240, 3338, 0), Location(3240, 3334, 0), Location(3240, 3335, 0))
+        private val locations =
+            arrayOf(Location(3240, 3331, 0), Location(3240, 3338, 0), Location(3240, 3334, 0), Location(3240, 3335, 0))
     }
 }

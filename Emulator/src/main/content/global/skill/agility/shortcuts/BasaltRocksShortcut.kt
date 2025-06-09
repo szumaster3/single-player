@@ -15,19 +15,24 @@ import core.plugin.Initializable
 import core.plugin.Plugin
 
 /**
- * Represents the basalt Rock shortcut.
+ * Handles the basalt rocks shortcut north of outpost.
  */
 @Initializable
 class BasaltRocksShortcut : AgilityShortcut {
     constructor() : super(intArrayOf(), 0, 0.0, "")
 
-    constructor(ids: IntArray?, level: Int, experience: Double, vararg options: String?) : super(ids, level, experience, *options)
+    constructor(ids: IntArray?, level: Int, experience: Double, vararg options: String?) : super(
+        ids,
+        level,
+        experience,
+        *options
+    )
 
     data class RockPath(val id: Int, val option: String, val from: Location, val to: Location)
 
     companion object {
         private val paths = listOf(
-            RockPath(4550, "jump-to",     Location.create(2522, 3595, 0), Location.create(2522, 3597, 0)),
+            RockPath(4550, "jump-to", Location.create(2522, 3595, 0), Location.create(2522, 3597, 0)),
             RockPath(4551, "jump-across", Location.create(2522, 3597, 0), Location.create(2522, 3595, 0)),
             RockPath(4552, "jump-across", Location.create(2522, 3600, 0), Location.create(2522, 3602, 0)),
             RockPath(4553, "jump-across", Location.create(2522, 3602, 0), Location.create(2522, 3600, 0)),
@@ -36,7 +41,7 @@ class BasaltRocksShortcut : AgilityShortcut {
             RockPath(4556, "jump-across", Location.create(2514, 3613, 0), Location.create(2514, 3615, 0)),
             RockPath(4557, "jump-across", Location.create(2514, 3615, 0), Location.create(2514, 3613, 0)),
             RockPath(4558, "jump-across", Location.create(2514, 3617, 0), Location.create(2514, 3619, 0)),
-            RockPath(4559, "jump-to",     Location.create(2514, 3619, 0), Location.create(2514, 3617, 0))
+            RockPath(4559, "jump-to", Location.create(2514, 3619, 0), Location.create(2514, 3617, 0))
         )
 
         private val pathMap = paths.associateBy { it.id }

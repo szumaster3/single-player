@@ -10,7 +10,7 @@ import core.game.node.entity.player.link.TeleportManager
 import core.game.node.entity.skill.Skills
 import core.game.node.scenery.Scenery
 import core.game.system.task.Pulse
-import core.game.world.GameWorld.Pulser
+import core.game.world.GameWorld
 import core.game.world.map.Location
 import core.game.world.map.build.DynamicRegion
 import core.game.world.update.flag.context.Animation
@@ -20,7 +20,7 @@ import org.rs.consts.Components
 import org.rs.consts.Quests
 
 /**
- * Represents the Boulder shortcut between God Wars Dungeon and Trollheim.
+ * Handles the GWD shortcut.
  */
 @Initializable
 class GodWarsBoulderShortcut : AgilityShortcut(intArrayOf(26338), 0, 0.0, "move") {
@@ -55,14 +55,11 @@ class GodWarsBoulderShortcut : AgilityShortcut(intArrayOf(26338), 0, 0.0, "move"
         }
 
         val boulderInstance = boulder!!.getChild(player)
-
-        lock(player, 14)
-
         val moveOffsetY = if (isMovingNorth) 4 else -4
 
-        Pulser.submit(object : Pulse(1, player) {
+        lock(player, 14)
+        GameWorld.Pulser.submit(object : Pulse(1, player) {
             var counter = 0
-
             override fun pulse(): Boolean {
                 when (counter++) {
                     0 -> {
@@ -76,13 +73,14 @@ class GodWarsBoulderShortcut : AgilityShortcut(intArrayOf(26338), 0, 0.0, "move"
                             Animation(if (isMovingNorth) Animations.LIFT_REALLY_HEAVY_ROCK_6978 else Animations.LIFT_REALLY_HEAVY_ROCK_6979),
                             3,
                             0.0,
-                            null,
-                            0
+                            null
                         )
                     }
+
                     12 -> {
                         animateScenery(boulderInstance, Animations.MOVE_BOULDER_6981)
                     }
+
                     14 -> {
                         val finalY = 3715 + if (isMovingNorth) 4 else 0
                         teleport(player, Location.create(2898, finalY, 0), TeleportManager.TeleportType.INSTANT)

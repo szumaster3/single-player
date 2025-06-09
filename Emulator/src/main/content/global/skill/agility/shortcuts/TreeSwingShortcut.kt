@@ -10,6 +10,8 @@ import core.game.node.Node
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
 import core.game.node.scenery.SceneryBuilder
+import core.game.system.task.Pulse
+import core.game.world.GameWorld
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
@@ -20,7 +22,7 @@ import org.rs.consts.Scenery
 import org.rs.consts.Sounds
 
 /**
- * Represents the Tree swing shortcut to Grew island.
+ * Handles tree swing shortcut to Grew island.
  */
 @Initializable
 class TreeSwingShortcut : OptionHandler() {
@@ -86,18 +88,23 @@ class TreeSwingShortcut : OptionHandler() {
         playGlobalAudio(player.location, Sounds.SWING_ACROSS_2494, 1)
         animateScenery(player, node.asScenery(), 497, true)
 
-        AgilityHandler.forceWalk(
-            player,
-            0,
-            player.location,
-            end,
-            Animation.create(Animations.SWING_ACROSS_OBSTACLE_3130),
-            50,
-            experience,
-            "You skillfully swing across.",
-            1
-        )
-        return true
+        player.lock(3)
+        GameWorld.Pulser.submit(object : Pulse(1, player) {
+            override fun pulse(): Boolean {
+                AgilityHandler.forceWalk(
+                    player,
+                    0,
+                    player.location,
+                    end,
+                    Animation.create(Animations.SWING_ACROSS_OBSTACLE_3130),
+                    50,
+                    experience,
+                    "You skillfully swing across.",
+                )
+                return true
+            }
+        })
+        return false
     }
 
     override fun getDestination(node: Node, n: Node): Location =

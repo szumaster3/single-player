@@ -373,9 +373,16 @@ internal object GameAttributes {
     const val WATCHTOWER_OGRE_DESTROY_COUNT = "/save:watchtower:ogres_destroyed"
     const val WATCHTOWER_SYSTEM_ACTIVATED = "/save:watchtower:done"
 
-    // Knight's wave activity
+    // Knight's wave activity.
     const val KW_SPAWN = "/save:knights-training:spawn"
     const val KW_TIER = "/save:knights-training:wave"
     const val KW_BEGIN = "/save:knights-training:complete-tutorial"
     const val KW_COMPLETE = "/save:knights-training:complete"
+
+    // Scorpion Catcher quest.
+    const val LABEL_SCORPION_TAVERLEY = "/save:scorpcatcher:taverley"
+    const val LABEL_SCORPION_OUTPOST = "/save:quest:scorpcatcher:outpost"
+    const val LABEL_SCORPION_MONASTERY = "/save:scorpcatcher:monastery"
+    const val LABEL_THORMAC_INTERACTION = "/save:scorpcatcher:thormac_talk_label"
+
 }

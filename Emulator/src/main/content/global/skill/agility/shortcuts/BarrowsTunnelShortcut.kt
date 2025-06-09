@@ -8,7 +8,7 @@ import core.game.world.map.Location
 import core.plugin.Initializable
 
 /**
- * Represents the barrows tunnel shortcut.
+ * Handles the barrows tunnel shortcut.
  */
 @Initializable
 class BarrowsTunnelShortcut : AgilityShortcut(intArrayOf(30261, 30262, 30265), 1, 0.0, "open") {

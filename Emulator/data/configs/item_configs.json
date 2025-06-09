@@ -4269,7 +4269,7 @@
     "id": "456"
   },
   {
-    "destroy_message": "You will need to speak to Thormac to get another cage.",
+    "destroy_message": "You will need to speak to Thormac to get another cage and will have to recapture the scorpion.",
     "examine": "There is 1 scorpion inside.",
     "durability": null,
     "name": "Scorpion cage",
@@ -4280,7 +4280,7 @@
     "id": "457"
   },
   {
-    "destroy_message": "You will need to speak to Thormac to get another cage.",
+    "destroy_message": "You will need to speak to Thormac to get another cage and will have to recapture the scorpions.",
     "examine": "There are 2 scorpions inside.",
     "durability": null,
     "name": "Scorpion cage",
@@ -4291,29 +4291,18 @@
     "id": "458"
   },
   {
-    "destroy_message": "You will need to speak to Thormac to get another cage.",
-    "examine": "There is 1 scorpion inside.",
+    "destroy_message": "You will need to speak to Thormac to get another cage and will have to recapture the scorpions.",
+    "examine": "There are 2 scorpions inside.",
     "durability": null,
     "name": "Scorpion cage",
     "tradeable": "false",
     "destroy": "true",
     "archery_ticket_price": "0",
-    "weight": "0.175",
+    "weight": "0.2",
     "id": "459"
   },
   {
-    "destroy_message": "You will need to speak to Thormac to get another cage.",
-    "examine": "There are 2 scorpions inside.",
-    "durability": null,
-    "name": "Scorpion cage",
-    "tradeable": "false",
-    "destroy": "true",
-    "archery_ticket_price": "0",
-    "weight": "0.2",
-    "id": "460"
-  },
-  {
-    "destroy_message": "You will need to speak to Thormac to get another cage.",
+    "destroy_message": "You will need to speak to Thormac to get another cage and will have to recapture the scorpion.",
     "examine": "There is 1 scorpion inside.",
     "durability": null,
     "name": "Scorpion cage",
@@ -4321,10 +4310,10 @@
     "destroy": "true",
     "archery_ticket_price": "0",
     "weight": "0.175",
-    "id": "461"
+    "id": "460"
   },
   {
-    "destroy_message": "You will need to speak to Thormac to get another cage.",
+    "destroy_message": "You will need to speak to Thormac to get another cage and will have to recapture the scorpions.",
     "examine": "There are 2 scorpions inside.",
     "durability": null,
     "name": "Scorpion cage",
@@ -4332,10 +4321,21 @@
     "destroy": "true",
     "archery_ticket_price": "0",
     "weight": "0.2",
+    "id": "461"
+  },
+  {
+    "destroy_message": "You will need to speak to Thormac to get another cage and will have to recapture the scorpion.",
+    "examine": "There is 1 scorpion inside.",
+    "durability": null,
+    "name": "Scorpion cage",
+    "tradeable": "false",
+    "destroy": "true",
+    "archery_ticket_price": "0",
+    "weight": "0.175",
     "id": "462"
   },
   {
-    "destroy_message": "You will need to speak to Thormac to get another cage.",
+    "destroy_message": "You will need to speak to Thormac to get another cage and will have to recapture all the scorpions.",
     "examine": "There are 3 scorpions inside.",
     "durability": null,
     "name": "Scorpion cage",

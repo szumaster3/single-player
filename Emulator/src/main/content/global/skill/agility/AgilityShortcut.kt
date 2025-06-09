@@ -45,19 +45,17 @@ abstract class AgilityShortcut(
     }
 
     override fun handle(player: Player, node: Node, option: String): Boolean {
-        if (!checkRequirements(player)) {
-            return true
-        }
+        if (!checkRequirements(player)) return true
         run(player, node.asScenery(), option, checkFail(player, node.asScenery(), option))
         return true
     }
 
     /**
-     * Runs the shortcut logic.
+     * Executes the shortcut logic.
      *
      * @param player The player using the shortcut.
      * @param scenery The obstacle scenery.
-     * @param option The chosen interaction option.
+     * @param option The interaction option.
      * @param failed Whether the attempt failed.
      */
     abstract fun run(player: Player, scenery: Scenery, option: String, failed: Boolean)
@@ -69,12 +67,12 @@ abstract class AgilityShortcut(
      * @return True if requirements are met, false otherwise.
      */
     open fun checkRequirements(player: Player): Boolean {
-        if (getStatLevel(player, Skills.AGILITY) < level) {
-            sendMessage(player, "You need an agility level of at least $level to negotiate this obstacle.")
-            return false
-        }
         if (inEquipment(player, Items.SLED_4084, 1)) {
             sendMessage(player, "You can't do that on a sled.")
+            return false
+        }
+        if (getStatLevel(player, Skills.AGILITY) < level) {
+            sendMessage(player, "You need an agility level of at least $level to negotiate this obstacle.")
             return false
         }
         return true

@@ -19,7 +19,7 @@ import org.rs.consts.Animations
 import org.rs.consts.Quests
 
 /**
- * Represents the Underwall tunnel shortcuts.
+ * Handles the underwall tunnel shortcuts.
  */
 @Initializable
 class TunnelShortcut : AgilityShortcut {
@@ -27,7 +27,12 @@ class TunnelShortcut : AgilityShortcut {
 
     constructor() : super(intArrayOf(), 0, 0.0)
 
-    constructor(ids: IntArray, level: Int, experience: Double, offset: Int, vararg options: String) : super(ids, level, experience, *options,) {
+    constructor(ids: IntArray, level: Int, experience: Double, offset: Int, vararg options: String) : super(
+        ids,
+        level,
+        experience,
+        *options,
+    ) {
         this.offset = offset
     }
 
@@ -59,10 +64,10 @@ class TunnelShortcut : AgilityShortcut {
             null
         )
 
+        player.lock(6)
         GameWorld.Pulser.submit(
             object : Pulse(1, player) {
-                private var count = 0
-
+                var count = 0
                 override fun pulse(): Boolean = when (++count) {
                     1 -> {
                         player.lock(6)
@@ -92,7 +97,9 @@ class TunnelShortcut : AgilityShortcut {
 
                     4 -> {
                         player.animate(ForceMovement.WALK_ANIMATION)
-                        if ((obj.id == 9309 || obj.id == 9310) && !player.achievementDiaryManager.getDiary(DiaryType.FALADOR)!!.isComplete(1, 1)) {
+                        if ((obj.id == 9309 || obj.id == 9310) && !player.achievementDiaryManager.getDiary(DiaryType.FALADOR)!!
+                                .isComplete(1, 1)
+                        ) {
                             player.achievementDiaryManager.getDiary(DiaryType.FALADOR)!!.updateTask(player, 1, 1, true)
                         }
                         true

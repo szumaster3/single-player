@@ -6,6 +6,8 @@ import core.api.quest.hasRequirement
 import core.api.sendDialogue
 import core.game.node.entity.player.Player
 import core.game.node.scenery.Scenery
+import core.game.system.task.Pulse
+import core.game.world.GameWorld
 import core.game.world.map.Direction
 import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
@@ -13,7 +15,7 @@ import org.rs.consts.Animations
 import org.rs.consts.Quests
 
 /**
- * Represents the barrows shortcut.
+ * Handles the barrows shortcut.
  */
 @Initializable
 class BarrowsFenceShortcut : AgilityShortcut(intArrayOf(18411), 1, 0.0, "climb-over") {
@@ -23,20 +25,23 @@ class BarrowsFenceShortcut : AgilityShortcut(intArrayOf(18411), 1, 0.0, "climb-o
             sendDialogue(player, "Um... those vampyres don't look very nice. I'm not going through here.")
             return
         }
+        val destination = player.location.transform(if (player.location.y < 3264) Direction.NORTH else Direction.SOUTH, 1)
 
-        val direction = if (player.location.y < 3264) Direction.NORTH else Direction.SOUTH
-        val destination = player.location.transform(direction, 1)
-
-        AgilityHandler.forceWalk(
-            player,
-            -1,
-            player.location,
-            destination,
-            Animation(Animations.WALK_OVER_STILE_10980),
-            10,
-            0.0,
-            null,
-            1
-        )
+        player.lock(3)
+        GameWorld.Pulser.submit(object : Pulse(1, player) {
+            override fun pulse(): Boolean {
+                AgilityHandler.forceWalk(
+                    player,
+                    -1,
+                    player.location,
+                    destination,
+                    Animation(Animations.WALK_OVER_STILE_10980),
+                    10,
+                    0.0,
+                    null
+                )
+                return true
+            }
+        })
     }
 }

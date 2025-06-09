@@ -1,7 +1,6 @@
-package content.region.kandarin.quest.scorpcatcher.dialogue
+package content.region.kandarin.quest.scorpcatcher
 
-import content.region.kandarin.quest.scorpcatcher.ScorpionCatcher
-import content.region.kandarin.quest.scorpcatcher.handlers.ScorpionCatcherListener.Companion.getCage
+import content.data.GameAttributes
 import core.api.*
 import core.api.quest.finishQuest
 import core.api.quest.getQuestStage
@@ -19,12 +18,9 @@ import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
 /**
- * Represents the Thormac dialogue extension.
- *
- * Relations:
- * - [Scorpion Catcher quest][content.region.kandarin.quest.scorpcatcher.ScorpionCatcher]
+ * Represents the Thormac dialogue extension for [ScorpionCatcher] quest.
  */
-class ThormacDialogueFile : DialogueFile() {
+class ThormacRequestDialogue : DialogueFile() {
     override fun handle(
         componentID: Int,
         buttonID: Int,
@@ -75,7 +71,7 @@ class ThormacDialogueFile : DialogueFile() {
                     17 -> runTask(player!!, 0) {
                         lock(player!!, 6)
                         lockInteractions(npc!!, 6)
-                        getCage(player!!)
+                        ScorpionCatcher.getCage(player!!)
                         player!!.interfaceManager.close(Component(Components.NPCCHAT1_241))
                     }
                     18 -> options(
@@ -119,14 +115,12 @@ class ThormacDialogueFile : DialogueFile() {
                     3 -> {
                         end()
                         player!!.questRepository.setStageNonmonotonic(player!!.questRepository.forIndex(108), 10)
-                        removeAttribute(player!!, ScorpionCatcher.ATTRIBUTE_TAVERLEY)
-                        removeAttribute(player!!, ScorpionCatcher.ATTRIBUTE_BARBARIAN)
-                        removeAttribute(player!!, ScorpionCatcher.ATTRIBUTE_MONK)
+                        removeAttributes(player!!, GameAttributes.LABEL_SCORPION_TAVERLEY, GameAttributes.LABEL_SCORPION_OUTPOST,GameAttributes.LABEL_SCORPION_MONASTERY)
                         addItemOrDrop(player!!, Items.SCORPION_CAGE_456)
                         stage = END_DIALOGUE
                     }
                     4 -> npc(FaceAnim.NEUTRAL, "Well remember to go speak to the Seers,", "North of here, if you need any help.").also {
-                        setAttribute(player!!, ScorpionCatcher.ATTRIBUTE_THORMAC_TALK, true)
+                        setAttribute(player!!, GameAttributes.LABEL_THORMAC_INTERACTION, true)
                         stage = END_DIALOGUE
                     }
                     5 -> npcl(FaceAnim.NEUTRAL, "Aha, my little scorpions home at last!").also { stage++ }

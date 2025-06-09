@@ -9,6 +9,9 @@ import core.game.interaction.InteractionListener
 import core.game.world.map.Location
 import org.rs.consts.Scenery
 
+/**
+ * Handles the broken fence shortcut.
+ */
 class MyrequeShortcut : InteractionListener {
 
     override fun defineListeners() {

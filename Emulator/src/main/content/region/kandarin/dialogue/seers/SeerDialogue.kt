@@ -1,6 +1,6 @@
 package content.region.kandarin.dialogue.seers
 
-import content.region.kandarin.quest.scorpcatcher.dialogue.SeersDialogueFile
+import content.region.kandarin.quest.scorpcatcher.SeerMirrorDialogue
 import core.api.openDialogue
 import core.api.quest.isQuestInProgress
 import core.api.sendItemDialogue
@@ -62,7 +62,7 @@ class SeerDialogue(
             1 -> {
                 if (isQuestInProgress(player, Quests.SCORPION_CATCHER, 10, 99)) {
                     end()
-                    openDialogue(player, SeersDialogueFile())
+                    openDialogue(player, SeerMirrorDialogue())
                 } else {
                     options("Many greetings.", "I seek knowledge and power!").also { stage++ }
                 }

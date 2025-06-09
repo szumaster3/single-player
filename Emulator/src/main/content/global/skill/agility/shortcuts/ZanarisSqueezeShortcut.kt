@@ -17,7 +17,7 @@ import org.rs.consts.Scenery
 import org.rs.consts.Sounds
 
 /**
- * Represents the Jutting wall shortcut.
+ * Handles the jutting wall shortcut.
  */
 @Initializable
 class ZanarisSqueezeShortcut : AgilityShortcut(intArrayOf(Scenery.JUTTING_WALL_12127), 0, 0.0, "squeeze-past") {
@@ -33,19 +33,25 @@ class ZanarisSqueezeShortcut : AgilityShortcut(intArrayOf(Scenery.JUTTING_WALL_1
 
         playAudio(player, Sounds.SQUEEZE_THROUGH_ROCKS_1310, 1, 2)
 
-        if (AgilityHandler.hasFailed(player, 10, 0.00300)) {
-            handleFailure(player, direction, sc.rotation, end)
-        } else {
-            AgilityHandler.walk(
-                player,
-                -1,
-                player.location,
-                end,
-                Animation.create(157 - calculateRotation(sc.rotation, direction)),
-                0.0,
-                null,
-            )
-        }
+        player.lock(3)
+        GameWorld.Pulser.submit(object : Pulse(1, player) {
+            override fun pulse(): Boolean {
+                if (AgilityHandler.hasFailed(player, 10, 0.00300)) {
+                    handleFailure(player, direction, sc.rotation, end)
+                } else {
+                    AgilityHandler.walk(
+                        player,
+                        -1,
+                        player.location,
+                        end,
+                        Animation.create(157 - calculateRotation(sc.rotation, direction)),
+                        0.0,
+                        null,
+                    )
+                }
+                return true
+            }
+        })
     }
 
     private fun checkRequirements(player: Player, location: Location): Boolean {
@@ -61,13 +67,12 @@ class ZanarisSqueezeShortcut : AgilityShortcut(intArrayOf(Scenery.JUTTING_WALL_1
         } else true
     }
 
-    private fun calculateRotation(sceneryRotation: Int, direction: Direction): Int =
-        when {
-            sceneryRotation == 3 && direction == Direction.SOUTH -> 1
-            sceneryRotation == 3 && direction == Direction.NORTH -> 0
-            direction == Direction.NORTH || (direction == Direction.SOUTH && sceneryRotation != 0) -> 1
-            else -> 0
-        }
+    private fun calculateRotation(sceneryRotation: Int, direction: Direction): Int = when {
+        sceneryRotation == 3 && direction == Direction.SOUTH -> 1
+        sceneryRotation == 3 && direction == Direction.NORTH -> 0
+        direction == Direction.NORTH || (direction == Direction.SOUTH && sceneryRotation != 0) -> 1
+        else -> 0
+    }
 
     private fun handleFailure(player: Player, direction: Direction, sceneryRotation: Int, end: Location) {
         val forceChat = arrayOf("Arrgghhhh!", "Owww...", "Ahhh...")

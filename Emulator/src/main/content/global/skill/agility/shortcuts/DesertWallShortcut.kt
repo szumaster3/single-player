@@ -36,7 +36,14 @@ class DesertWallShortcut : OptionHandler() {
         val scenery = node as Scenery
 
         if (scenery.id == SCENERY_ID) {
-            ForceMovement.run(player, START_LOCATION, scenery.location, CLIMB_DOWN, Animation(Animations.HUMAN_TURNS_INVISIBLE_2590), node.direction)
+            ForceMovement.run(
+                player,
+                START_LOCATION,
+                scenery.location,
+                CLIMB_DOWN,
+                Animation(Animations.HUMAN_TURNS_INVISIBLE_2590),
+                node.direction
+            )
             submitIndividualPulse(
                 player,
                 object : Pulse(1, player) {

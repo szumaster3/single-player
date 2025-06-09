@@ -11,8 +11,6 @@ import org.rs.consts.Quests
 import org.rs.consts.Scenery
 
 class TaverleyDungeonListener : InteractionListener {
-    private val GATES = intArrayOf(Scenery.DOOR_31844, Scenery.DOOR_31841)
-
     override fun defineListeners() {
         /*
          * Handles opening the gate.
@@ -20,7 +18,9 @@ class TaverleyDungeonListener : InteractionListener {
 
         on(Scenery.GATE_2623, IntType.SCENERY, "open") { player, node ->
             if (inInventory(player, Items.DUSTY_KEY_1590)) {
+                sendMessage(player, "You unlock the door.")
                 DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
+                sendMessage(player, "The door locks shut behind you.")
             } else {
                 sendMessage(player, "This gate seems to be locked.")
             }
@@ -32,21 +32,27 @@ class TaverleyDungeonListener : InteractionListener {
          */
 
         onUseWith(IntType.SCENERY, Items.DUSTY_KEY_1590, Scenery.GATE_2623) { player, _, with ->
+            sendMessage(player, "You unlock the door.")
             DoorActionHandler.handleAutowalkDoor(player, with.asScenery())
+            sendMessage(player, "The door locks shut behind you.")
             return@onUseWith true
         }
 
         /*
          * Handles the gates to Cauldron of thunder.
-         * Sources: https://runescape.wiki/w/Suit_of_armour_(Taverley_Dungeon)?oldid=1622127
          */
 
-        on(GATES, IntType.SCENERY, "open") { player, node ->
+        on(TAVERLEY_GATES, IntType.SCENERY, "open") { player, node ->
             if (!isQuestComplete(player, Quests.DRUIDIC_RITUAL) && ArmourSuitNPC.activeSuits.size < 2) {
                 ArmourSuitNPC.spawnArmourSuit(player)
             }
+
             DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
             return@on true
         }
+    }
+
+    companion object {
+        private val TAVERLEY_GATES = intArrayOf(Scenery.DOOR_31844, Scenery.DOOR_31841)
     }
 }

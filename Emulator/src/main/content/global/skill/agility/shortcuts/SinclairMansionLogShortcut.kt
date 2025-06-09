@@ -20,7 +20,8 @@ import kotlin.random.Random
  * Represents the Log balance shortcut near Sinclair Mansion.
  */
 @Initializable
-class SinclairMansionLogShortcut : AgilityShortcut(intArrayOf(Scenery.LOG_BALANCE_9322, Scenery.LOG_BALANCE_9324), 48, 0.0, "walk-across") {
+class SinclairMansionLogShortcut :
+    AgilityShortcut(intArrayOf(Scenery.LOG_BALANCE_9322, Scenery.LOG_BALANCE_9324), 48, 0.0, "walk-across") {
 
     override fun run(
         player: Player,
@@ -41,7 +42,8 @@ class SinclairMansionLogShortcut : AgilityShortcut(intArrayOf(Scenery.LOG_BALANC
         if (failed) {
             handleFailure(player, start, failLocation, failLand)
         } else {
-            AgilityHandler.forceWalk(player, -1, start, end, logBalanceAnimation, 10, 0.0, null, 1).endAnimation = Animation.RESET
+            AgilityHandler.forceWalk(player, -1, start, end, logBalanceAnimation, 10, 0.0, null, 1).endAnimation =
+                Animation.RESET
             if (!player.achievementDiaryManager.getDiary(DiaryType.SEERS_VILLAGE)!!.isComplete(1, 0)) {
                 player.achievementDiaryManager.getDiary(DiaryType.SEERS_VILLAGE)!!.updateTask(player, 1, 0, true)
             }
@@ -62,6 +64,7 @@ class SinclairMansionLogShortcut : AgilityShortcut(intArrayOf(Scenery.LOG_BALANC
                         teleport(player, failLocation)
                         animate(player, swimmingLoopAnimation)
                     }
+
                     1 -> {
                         AgilityHandler.fail(player, 1, failLand, swimmingAnimation, Random.nextInt(1, 7), null)
                         return true

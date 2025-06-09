@@ -15,17 +15,12 @@ import org.rs.consts.NPCs
  * Represents the Suit of Armour NPC used in Taverley Dungeon.
  */
 @Initializable
-class ArmourSuitNPC(
-    id: Int = NPCs.SUIT_OF_ARMOUR_453,
-    location: Location? = null,
-) : AbstractNPC(id, location) {
+class ArmourSuitNPC(id: Int = NPCs.SUIT_OF_ARMOUR_453, location: Location? = null, ) : AbstractNPC(id, location) {
+
     private var clearTime = 0
 
-    override fun construct(
-        id: Int,
-        location: Location,
-        vararg objects: Any,
-    ): AbstractNPC = ArmourSuitNPC(id, location)
+    override fun construct(id: Int, location: Location, vararg objects: Any): AbstractNPC =
+        ArmourSuitNPC(id, location)
 
     override fun handleTickActions() {
         super.handleTickActions()
@@ -39,53 +34,37 @@ class ArmourSuitNPC(
     override fun clear() {
         super.clear()
         activeSuits.remove(this)
-        spawnedLocations.remove(this.location)
-        addScenery(Scenery(org.rs.consts.Scenery.SUIT_OF_ARMOUR_32292, properties.spawnLocation, 1))
+        spawnedLocations.remove(location)
+        addScenery(Scenery(32292, properties.spawnLocation, 1))
     }
 
     companion object {
-        /**
-         * Currently active armour suit NPCs spawned in the world.
-         */
         val activeSuits = mutableListOf<ArmourSuitNPC>()
-
-        /**
-         * Maximum number of armour suits that can be spawned simultaneously.
-         */
         private const val MAX_SPAWNED = 2
 
-        /**
-         * Predefined spawn locations for the armour suits.
-         */
         private val spawnLocations = arrayOf(
             Location.create(2887, 9829, 0),
             Location.create(2887, 9832, 0)
         )
 
-        /**
-         * Locations where armour suits have already been spawned.
-         */
         private val spawnedLocations = mutableSetOf<Location>()
 
         /**
-         * Spawns an armour suit NPC near the player if the maximum number of suits
-         * has not yet been reached. The suit will attack the player upon spawning.
-         *
-         * @param player The player near whom the armour suit should spawn.
+         * Spawns a suit near the player and attacks them.
          */
         @JvmStatic
         fun spawnArmourSuit(player: Player) {
             if (activeSuits.size >= MAX_SPAWNED) return
 
-            spawnLocations.firstOrNull { it !in spawnedLocations }?.let { availableLocation ->
-                ArmourSuitNPC(NPCs.SUIT_OF_ARMOUR_453, availableLocation).apply {
+            spawnLocations.firstOrNull { it !in spawnedLocations }?.let { location ->
+                ArmourSuitNPC(NPCs.SUIT_OF_ARMOUR_453, location).apply {
                     init()
                     properties.combatPulse.attack(player)
                     activeSuits.add(this)
-                    spawnedLocations.add(availableLocation)
+                    spawnedLocations.add(location)
                 }
 
-                getObject(availableLocation)?.let(SceneryBuilder::remove)
+                getObject(location)?.let(SceneryBuilder::remove)
                 sendMessage(player, "Suddenly, the suit of armour comes to life!")
             }
         }

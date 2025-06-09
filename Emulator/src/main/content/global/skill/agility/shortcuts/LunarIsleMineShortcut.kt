@@ -14,6 +14,9 @@ import org.rs.consts.Animations
 import org.rs.consts.Components
 import org.rs.consts.Scenery
 
+/**
+ * Handles the quest shortcut at Lunar isle.
+ */
 class LunarIsleMineShortcut : InteractionListener {
 
     override fun defineListeners() {

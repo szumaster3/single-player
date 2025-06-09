@@ -2,10 +2,13 @@ package content.global.skill.agility.shortcuts
 
 import content.global.skill.agility.AgilityHandler
 import content.global.skill.agility.AgilityShortcut
-import core.api.*
+import core.api.animate
+import core.api.animateScenery
+import core.api.playAudio
 import core.game.node.entity.player.Player
 import core.game.node.scenery.Scenery
 import core.game.system.task.Pulse
+import core.game.world.GameWorld
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
@@ -14,7 +17,7 @@ import org.rs.consts.Sounds
 import kotlin.random.Random
 
 /**
- * Represents the Strange floor shortcut between the entrance and the Poison spider area.
+ * Handles the strange floor shortcut at tav dungeon.
  */
 @Initializable
 class TaverleyStrangeFloorShortcut : AgilityShortcut(intArrayOf(9294), 80, 12.5, "jump-over") {
@@ -24,9 +27,9 @@ class TaverleyStrangeFloorShortcut : AgilityShortcut(intArrayOf(9294), 80, 12.5,
         val start = Location.create(if (fromLeft) 2877 else 2881, 9813, 0)
         val end = Location.create(if (fromLeft) 2881 else 2877, 9813, 0)
 
-        AgilityHandler.forceWalk(player, -1, start, end, Animation(Animations.RUNNING_OSRS_STYLE_1995), 13, 0.0, null, 0)
+        AgilityHandler.forceWalk(player, -1, start, end, Animation(Animations.RUNNING_OSRS_STYLE_1995), 13, 0.0, null)
 
-        submitIndividualPulse(player, object : Pulse(1, player) {
+        GameWorld.Pulser.submit(object : Pulse(1, player) {
             var counter = 0
             var fail = AgilityHandler.hasFailed(player, 1, 0.1)
             override fun pulse(): Boolean {

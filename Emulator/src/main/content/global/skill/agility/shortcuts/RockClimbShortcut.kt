@@ -66,11 +66,7 @@ class RockClimbShortcut :
         else -> 0
     }
 
-    private fun handleClimbShortcut(
-        player: Player,
-        scenery: Scenery,
-        scalingAnim: Animation,
-    ) {
+    private fun handleClimbShortcut(player: Player, scenery: Scenery, scalingAnim: Animation) {
         val hitpoints = getStatLevel(player, Skills.HITPOINTS)
         val damage = hitpoints / 10.0
         val direction = if (player.location.x == 2795) Direction.WEST else Direction.EAST
@@ -92,7 +88,7 @@ class RockClimbShortcut :
                                 scalingAnim,
                                 scalingAnim,
                                 Direction.WEST,
-                                13,
+                                13
                             ).endAnimation = Animation.RESET
                         } else {
                             ForceMovement.run(
@@ -102,7 +98,7 @@ class RockClimbShortcut :
                                 scalingAnim,
                                 scalingAnim,
                                 Direction.WEST,
-                                13,
+                                13
                             ).endAnimation = Animation.RESET
                         }
                         return true
@@ -114,10 +110,7 @@ class RockClimbShortcut :
         }
     }
 
-    private fun handleEaglesPeakShortcut(
-        player: Player,
-        scalingAnim: Animation,
-    ) {
+    private fun handleEaglesPeakShortcut(player: Player, scalingAnim: Animation) {
         if (getStatLevel(player, Skills.AGILITY) >= 25) {
             val targetLocation =
                 if (player.location.x <= 2322) Location.create(2324, 3497, 0) else Location.create(2322, 3502, 0)
@@ -128,18 +121,14 @@ class RockClimbShortcut :
                 scalingAnim,
                 scalingAnim,
                 Direction.SOUTH,
-                13,
+                13
             ).endAnimation = Animation.RESET
         } else {
             sendMessage(player, "You need an agility level of at least 25 to do this.")
         }
     }
 
-    private fun handleGodWarsShortcut(
-        player: Player,
-        scenery: Scenery,
-        scalingAnim: Animation,
-    ) {
+    private fun handleGodWarsShortcut(player: Player, scenery: Scenery, scalingAnim: Animation) {
         val dir = Vector.betweenLocs(player.location, scenery.location).toDirection()
         if (getStatLevel(player, Skills.AGILITY) >= 60) {
             val targetLocation = when (scenery.id) {
@@ -156,12 +145,7 @@ class RockClimbShortcut :
         }
     }
 
-    private fun handleArandarShortcut(
-        player: Player,
-        scenery: Scenery,
-        scalingAnim: Animation,
-        req: Int,
-    ) {
+    private fun handleArandarShortcut(player: Player, scenery: Scenery, scalingAnim: Animation, req: Int) {
         val dir = Vector.betweenLocs(player.location, scenery.location).toDirection()
         if (getStatLevel(player, Skills.AGILITY) >= req) {
             val targetLocation = when (scenery.id) {
