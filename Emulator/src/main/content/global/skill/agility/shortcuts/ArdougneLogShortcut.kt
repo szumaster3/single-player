@@ -5,6 +5,7 @@ import content.global.skill.agility.AgilityShortcut
 import core.api.*
 import core.game.node.entity.player.Player
 import core.game.system.task.Pulse
+import core.game.world.GameWorld
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
@@ -31,7 +32,9 @@ class ArdougneLogShortcut : AgilityShortcut(intArrayOf(Scenery.LOG_BALANCE_35997
         val fromWest = scenery.id == Scenery.LOG_BALANCE_35997
 
         val failAnim = if (fromWest) Animation(Animations.FALL_LOG_2582) else Animation(Animations.FALL_LOG_2581)
-        val failLand = if (fromWest) Location(2603, 3330, 0) else Location(2598, 3333, 0)
+        val failLand = if (fromWest) Location(2602, 3330, 0) else Location(2599, 3333, 0)
+        val failEnd = if (fromWest) Location.create(2603, 3330, 0) else Location.create(2598, 3333, 0)
+
 
         playAudio(player, Sounds.LOG_BALANCE_2470)
         player.logoutListeners["balance-log"] = { it.location = start }
@@ -45,21 +48,25 @@ class ArdougneLogShortcut : AgilityShortcut(intArrayOf(Scenery.LOG_BALANCE_35997
 
                 override fun pulse(): Boolean = when (counter++) {
                     0 -> {
-                        visualize(player, -1, splashGraphics)
+                        visualize(player, Animations.DROWN_765, splashGraphics)
                         playAudio(player, Sounds.WATERSPLASH_2496)
                         teleport(player, failLocation)
                         animate(player, swimmingLoopAnimation)
                         false
                     }
-                    1 -> {
+                    2 -> {
                         AgilityHandler.fail(
                             player,
-                            if (fromWest) 8 else 1,
+                            if (fromWest) 4 else 2,
                             failLand,
                             swimmingAnimation,
                             Random.nextInt(1, 7),
                             null
                         )
+                        false
+                    }
+                    3 -> {
+                        forceWalk(player, failEnd, "")
                         player.logoutListeners.remove("balance-log")
                         true
                     }
@@ -68,8 +75,15 @@ class ArdougneLogShortcut : AgilityShortcut(intArrayOf(Scenery.LOG_BALANCE_35997
             })
         } else {
             val end = start.transform(if (fromWest) 4 else -4, 0, 0)
-            AgilityHandler.forceWalk(player, -1, start, end, logBalanceAnimation, 10, 0.0, null, 0).endAnimation = Animation.RESET
-            player.logoutListeners.remove("balance-log")
+            player.lock(3)
+            GameWorld.Pulser.submit(object : Pulse(1, player) {
+                override fun pulse(): Boolean {
+                    AgilityHandler.forceWalk(player, -1, start, end, logBalanceAnimation, 10, 0.0, null).endAnimation =
+                        Animation.RESET
+                    player.logoutListeners.remove("balance-log")
+                    return true
+                }
+            })
         }
     }
 }

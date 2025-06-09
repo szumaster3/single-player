@@ -3,9 +3,10 @@ package content.global.activity.mogre
 import content.region.misc.handlers.tutorial.TutorialStage
 import core.api.*
 import core.game.dialogue.Dialogue
+import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
-import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
+import core.game.system.task.Pulse
 import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
@@ -18,68 +19,89 @@ import org.rs.consts.Sounds
  */
 @Initializable
 class SkippyDialogue(player: Player? = null) : Dialogue(player) {
-    override fun open(vararg args: Any?): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+        openDialogue(player, SkippyDialogueFile(), npc)
+        return false
+    }
+    override fun newInstance(player: Player?): Dialogue = SkippyDialogue(player)
+    override fun getIds(): IntArray = intArrayOf(2795, 2796, 2797, 2798, 2799)
+}
 
-        /*
-         * Handles tutorial island dialogue.
-         */
+class SkippyDialogueFile : DialogueFile() {
 
-        if (inBorders(player, SkippyUtils.TUTORIAL_ISLAND)) {
-            npcl(FaceAnim.HALF_ASKING, "Do you wanna skip the Tutorial?")
-            stage = 88
-            return true
-        }
-
-        /*
-         * Handles activity dialogue.
-         */
-
-        when (getVarbit(player, SkippyUtils.SKIPPY_VARBIT)) {
-            0 -> {
-                stage = END_DIALOGUE
-                val message = if (!inInventory(player, Items.BUCKET_OF_WATER_1929)) {
-                    "You know, I could shock him out of it if I could find some cold water..."
-                } else {
-                    stage = 0
-                    "Well, I could dump this bucket of water over him. That would sober him up a little."
-                }
-                playerl(FaceAnim.HALF_GUILTY, message)
-            }
-            1 -> {
-                player("Hey, Skippy.")
-                stage = 12
-            }
-            2 -> {
-                player("Hey, Skippy.")
-                stage = 30
-            }
-            else -> {
-                player("Hey, Skippy.")
-                stage = 77
-            }
-        }
-        return true
+    companion object {
+        const val NETTLE_TEA_BOWL = Items.NETTLE_TEA_4239
+        const val NETTLE_TEA_CUP = Items.CUP_OF_TEA_4242
+        const val NETTLE_TEA_PORCELAIN_CUP = Items.CUP_OF_TEA_4245
+        const val EMPTY_BOWL = Items.BOWL_1923
+        const val EMPTY_CUP = Items.EMPTY_CUP_1980
+        const val EMPTY_PORCELAIN_CUP = Items.PORCELAIN_CUP_4244
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
+    override fun handle(componentID: Int, buttonID: Int) {
         when (stage) {
-            0 -> options("Throw the water!", "I think I'll leave it for now").also { stage++ }
-            1 -> when (buttonId) {
+            0 -> {
+                /*
+                 * Handles tutorial island dialogue.
+                 */
+
+                if (inBorders(player!!, SkippyUtils.TUTORIAL_ISLAND)) {
+                    npcl(FaceAnim.HALF_ASKING, "Do you wanna skip the Tutorial?")
+                    stage = 88
+                    return
+                }
+
+                /*
+                 * Handles activity dialogue.
+                 */
+
+                when (getVarbit(player!!, SkippyUtils.SKIPPY_VARBIT)) {
+                    0 -> {
+                        stage = END_DIALOGUE
+                        val message = if (!inInventory(player!!, Items.BUCKET_OF_WATER_1929)) {
+                            "You know, I could shock him out of it if I could find some cold water..."
+                        } else {
+                            stage = -1
+                            "Well, I could dump this bucket of water over him. That would sober him up a little."
+                        }
+                        playerl(FaceAnim.HALF_GUILTY, message)
+                    }
+                    1 -> {
+                        player("Hey, Skippy.")
+                        stage = 12
+                    }
+                    2 -> {
+                        player("Hey, Skippy.")
+                        stage = 30
+                    }
+                    else -> {
+                        player("Hey, Skippy.")
+                        stage = 77
+                    }
+                }
+            }
+            -1 -> options("Throw the water!", "I think I'll leave it for now.").also { stage = 1 }
+            1 -> when (buttonID) {
                 1 -> player("Hey, Skippy!").also { stage++ }
                 2 -> end()
             }
             2 -> npc("What?").also { stage++ }
             3 -> {
                 val duration = animationDuration(Animation(SkippyUtils.ANIMATION_THROW_BUCKET))
-                if(removeItem(player!!, Items.BUCKET_OF_WATER_1929)) {
-                    lock(player!!, duration)
-                    animate(player!!, SkippyUtils.ANIMATION_THROW_BUCKET)
-                    playAudio(player!!, Sounds.SKIPPY_BUCKET_1399, 2)
-                    addItem(player!!, Items.BUCKET_1925)
-                    runTask(player, duration) {
-                        npc("Ahhhhhhhhhhgh! That's cold! Are you trying to kill me?")
-                    }
-                }
+                if(!removeItem(player!!, Items.BUCKET_OF_WATER_1929)) return
+                submitIndividualPulse(
+                    player!!,
+                    object : Pulse(duration) {
+                        override fun pulse(): Boolean {
+                            animate(player!!, SkippyUtils.ANIMATION_THROW_BUCKET)
+                            playAudio(player!!, Sounds.SKIPPY_BUCKET_1399)
+                            addItem(player!!, Items.BUCKET_1925)
+                            npc("Ahhhhhhhhhhgh! That's cold! Are you trying to kill me?")
+                            stage = 5
+                            return true
+                        }
+                    },
+                )
             }
             5 -> playerl(FaceAnim.HALF_ASKING, "Nope. Just sober you up. Memory coming back yet?").also { stage++ }
             6 -> npcl(FaceAnim.NEUTRAL, "No. But I could do with a bowl of tea to warm myself up a bit. Go grab me one and we'll talk.").also { stage++ }
@@ -92,19 +114,19 @@ class SkippyDialogue(player: Player? = null) : Dialogue(player) {
             13 -> player("Hey! I only did that once! Try not to be such a big", "baby!").also { stage++ }
             14 -> npc("So what are you here for then?").also { stage++ }
             15 -> {
-                if (!anyInInventory(player, NETTLE_TEA_BOWL, NETTLE_TEA_CUP, NETTLE_TEA_PORCELAIN_CUP)) {
+                if (!anyInInventory(player!!, NETTLE_TEA_BOWL, NETTLE_TEA_CUP, NETTLE_TEA_PORCELAIN_CUP)) {
                     playerl(FaceAnim.NEUTRAL, "No real reason. I just thought I would check up on you is all.").also {
                         stage = 29
                     }
                 } else {
                     var gaveTea = false
 
-                    if (inInventory(player, NETTLE_TEA_BOWL)) {
-                        gaveTea = removeItem(player, NETTLE_TEA_BOWL) && addItem(player, EMPTY_BOWL)
-                    } else if (inInventory(player, NETTLE_TEA_CUP)) {
-                        gaveTea = removeItem(player, NETTLE_TEA_CUP) && addItem(player, EMPTY_CUP)
-                    } else if (inInventory(player, NETTLE_TEA_PORCELAIN_CUP)) {
-                        gaveTea = removeItem(player, NETTLE_TEA_PORCELAIN_CUP) && addItem(player, EMPTY_PORCELAIN_CUP)
+                    if (inInventory(player!!, NETTLE_TEA_BOWL)) {
+                        gaveTea = removeItem(player!!, NETTLE_TEA_BOWL) && addItem(player!!, EMPTY_BOWL)
+                    } else if (inInventory(player!!, NETTLE_TEA_CUP)) {
+                        gaveTea = removeItem(player!!, NETTLE_TEA_CUP) && addItem(player!!, EMPTY_CUP)
+                    } else if (inInventory(player!!, NETTLE_TEA_PORCELAIN_CUP)) {
+                        gaveTea = removeItem(player!!, NETTLE_TEA_PORCELAIN_CUP) && addItem(player!!, EMPTY_PORCELAIN_CUP)
                     }
 
                     if (gaveTea) {
@@ -146,7 +168,7 @@ class SkippyDialogue(player: Player? = null) : Dialogue(player) {
             }
             34 -> npc("What?").also { stage++ }
             35 -> options("How do I make that hangover cure again?", "Why do they call you 'Skippy'?").also { stage++ }
-            36 -> when (buttonId) {
+            36 -> when (buttonID) {
                 1 -> player("How do I make that hangover cure again?").also { stage++ }
                 2 -> player("Why do they call you 'Skippy'?").also { stage = 15 }
             }
@@ -211,7 +233,7 @@ class SkippyDialogue(player: Player? = null) : Dialogue(player) {
                 sendDialogueOptions(player!!, "What would you like to say?", "Yes, please.", "Who are you?", "Can I decide later?", "I'll stay here for the Tutorial.")
                 stage++
             }
-            89 -> when (buttonId) {
+            89 -> when (buttonID) {
                 1 -> npc(FaceAnim.HAPPY, "Prepare yourself!").also { stage = 97 }
                 2 -> player(FaceAnim.HALF_ASKING, "Who are you?").also { stage++ }
                 3 -> player(FaceAnim.HALF_ASKING, "Can I decide later?").also { stage = 93 }
@@ -224,7 +246,7 @@ class SkippyDialogue(player: Player? = null) : Dialogue(player) {
             94 -> npcl(FaceAnim.NOD_YES, "Good choice.").also { stage = END_DIALOGUE }
             95 -> sendDialogueOptions(player!!, "What would you like to say?", "Yes, please.", "Can I decide later?", "I'll stay here for the Tutorial.").also { stage++ }
             96 ->
-                when (buttonId) {
+                when (buttonID) {
                     1 -> npc(FaceAnim.HAPPY, "Prepare yourself!").also { stage = 97 }
                     2 -> player(FaceAnim.HALF_ASKING, "Can I decide later?").also { stage = 93 }
                     3 -> player("I'll stay here for the Tutorial.").also { stage = 94 }
@@ -232,22 +254,9 @@ class SkippyDialogue(player: Player? = null) : Dialogue(player) {
 
             97 -> {
                 end()
-                TutorialStage.completeTutorial(player)
+                TutorialStage.completeTutorial(player!!)
             }
         }
-        return true
     }
 
-    override fun getIds(): IntArray = intArrayOf(2795, 2796, 2797, 2798, 2799)
-
-    companion object {
-        // Tea items.
-        const val NETTLE_TEA_BOWL = Items.NETTLE_TEA_4239
-        const val NETTLE_TEA_CUP = Items.CUP_OF_TEA_4242
-        const val NETTLE_TEA_PORCELAIN_CUP = Items.CUP_OF_TEA_4245
-        // Empty items.
-        const val EMPTY_BOWL = Items.BOWL_1923
-        const val EMPTY_CUP = Items.EMPTY_CUP_1980
-        const val EMPTY_PORCELAIN_CUP = Items.PORCELAIN_CUP_4244
-    }
 }
