@@ -19,7 +19,6 @@ import org.rs.consts.Sounds
 @Initializable
 class SkippyDialogue(player: Player? = null) : Dialogue(player) {
     override fun open(vararg args: Any?): Boolean {
-        npc = args[0] as NPC
 
         /*
          * Handles tutorial island dialogue.
