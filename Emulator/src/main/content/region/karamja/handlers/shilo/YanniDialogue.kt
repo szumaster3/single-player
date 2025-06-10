@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
  */
 class YanniDialogue(val antique: Int) : DialogueFile() {
 
-    private val item = AntiqueItem.getAntiqueItem(antique)
+    private val item = YanniAntiqueItem.getAntiqueItem(antique)
 
     override fun handle(componentID: Int, buttonID: Int) {
         npc = NPC(NPCs.YANNI_SALIKA_515)

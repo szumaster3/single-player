@@ -440,39 +440,6 @@ class VarrockListener : InteractionListener {
         }
 
         /*
-         * Handles opening the hidden trapdoor at GE.
-         */
-
-        on(HIDDEN_TRAPDOOR, IntType.SCENERY, "open") { player, _ ->
-            val visited = getAttribute(player, GameAttributes.MINECART_TRAVEL_UNLOCK, false)
-
-            if (!visited) {
-                sendDialogue(player, "You must visit Keldagrim to use this shortcut.")
-            } else {
-                sendDialogueLines(
-                    player,
-                    "This trapdoor leads to a small dwarven mine cart station. The mine",
-                    "cart will take you to Keldagrim."
-                )
-
-                addDialogueAction(player) { _, _ ->
-                    sendDialogueOptions(player, "Select an option", "Travel to Keldagrim.", "Stay here.")
-                    addDialogueAction(player) { _, option ->
-                        when (option) {
-                            2 -> {
-                                closeDialogue(player)
-                                MinecartTravel.goToKeldagrim(player)
-                            }
-                            else -> closeDialogue(player)
-                        }
-                    }
-                }
-            }
-
-            return@on true
-        }
-
-        /*
          * Handles talking to Sawmill Operator.
          */
 
@@ -593,7 +560,6 @@ class VarrockListener : InteractionListener {
                 Scenery.REDBERRY_BUSH_23629,
                 Scenery.REDBERRY_BUSH_23630,
             )
-        private const val HIDDEN_TRAPDOOR = Scenery.HIDDEN_TRAPDOOR_28094
         private const val SAWMILL_OPERATOR = NPCs.SAWMILL_OPERATOR_4250
         private const val CHAMPIONS_GUILD_REGION = 12596
     }

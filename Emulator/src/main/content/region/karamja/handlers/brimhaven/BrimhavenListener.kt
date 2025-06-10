@@ -1,7 +1,7 @@
 package content.region.karamja.handlers.brimhaven
 
-import content.region.karamja.dialogue.brimhaven.CapnIzzyDialogue
-import content.region.karamja.dialogue.brimhaven.PirateJackieDialogue
+import content.region.karamja.handlers.shilo.dialogue.brimhaven.CapnIzzyDialogue
+import content.region.karamja.handlers.shilo.dialogue.brimhaven.PirateJackieDialogue
 import core.api.*
 import core.game.dialogue.FaceAnim
 import core.game.global.action.ClimbActionHandler

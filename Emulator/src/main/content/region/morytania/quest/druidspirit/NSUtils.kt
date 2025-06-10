@@ -1,6 +1,6 @@
 package content.region.morytania.quest.druidspirit
 
-import content.region.morytania.handlers.npc.GhastNPC
+import content.region.morytania.handlers.mortmyre.GhastNPC
 import core.api.*
 import core.game.node.entity.player.Player
 import core.game.node.scenery.SceneryBuilder

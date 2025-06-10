@@ -1,6 +1,6 @@
 package content.region.karamja.handlers.shilo
 
-import content.region.karamja.dialogue.shilovillage.BlackPrismDialogue
+import content.region.karamja.handlers.shilo.dialogue.shilovillage.BlackPrismDialogue
 import core.api.*
 import core.api.interaction.getNPCName
 import core.api.quest.hasRequirement
@@ -16,7 +16,7 @@ import core.game.node.item.Item
 import core.game.world.map.Location
 import org.rs.consts.*
 
-val ANTIQUE_ITEMS = AntiqueItem.values().map { it.antique }.toIntArray()
+val ANTIQUE_ITEMS = YanniAntiqueItem.values().map { it.antique }.toIntArray()
 
 class ShiloVillageListener : InteractionListener {
     override fun defineListeners() {

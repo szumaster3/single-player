@@ -1,7 +1,7 @@
 package content.region.fremennik.quest.viking.dialogue
 
 import content.data.GameAttributes
-import content.region.fremennik.dialogue.YrsaDiaryDialogue
+import content.region.fremennik.dialogue.rellekka.YrsaDiaryDialogue
 import core.api.*
 import core.api.interaction.openNpcShop
 import core.api.quest.isQuestComplete

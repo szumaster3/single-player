@@ -1,6 +1,6 @@
 package content.region.karamja.handlers.tzhaar
 
-import content.region.karamja.dialogue.tzhaar.TzhaarMejJalDialogue
+import content.region.karamja.handlers.shilo.dialogue.tzhaar.TzhaarMejJalDialogue
 import core.cache.def.impl.NPCDefinition
 import core.game.dialogue.DialogueInterpreter
 import core.game.interaction.OptionHandler

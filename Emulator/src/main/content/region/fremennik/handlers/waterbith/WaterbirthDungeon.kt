@@ -2,8 +2,6 @@ package content.region.fremennik.handlers.waterbith
 
 import content.global.handlers.iface.warning.WarningManager
 import content.global.handlers.iface.warning.Warnings
-import content.region.fremennik.handlers.npc.waterbirth.DagannothKingNPC
-import content.region.fremennik.handlers.npc.waterbirth.SpinolypNPC
 import core.api.quest.isQuestComplete
 import core.api.sendMessage
 import core.api.teleport

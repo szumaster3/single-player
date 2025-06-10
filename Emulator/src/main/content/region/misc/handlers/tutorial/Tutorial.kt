@@ -48,7 +48,6 @@ class Tutorial :
         location: Location,
         lastLocation: Location,
     ) {
-        super.entityStep(entity, location, lastLocation)
         if (entity is Player) {
             val player = entity.asPlayer()
             val stage = getAttribute(player, TutorialStage.TUTORIAL_STAGE, -1)

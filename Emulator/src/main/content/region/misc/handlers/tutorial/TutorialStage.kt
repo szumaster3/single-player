@@ -2,7 +2,6 @@ package content.region.misc.handlers.tutorial
 
 import content.data.GameAttributes
 import core.api.*
-import core.api.ui.closeDialogue
 import core.api.ui.sendInterfaceConfig
 import core.api.ui.setMinimapState
 import core.game.component.Component
@@ -30,10 +29,7 @@ object TutorialStage {
 
     @JvmStatic
     fun rollback(player: Player) {
-        val currentStage = getAttribute(player, TUTORIAL_STAGE, 0)
-        closeDialogue(player).also {
-            load(player, currentStage)
-        }
+        load(player, getAttribute(player, TUTORIAL_STAGE, 0))
     }
 
     fun load(player: Player, stage: Int, login: Boolean = false) {

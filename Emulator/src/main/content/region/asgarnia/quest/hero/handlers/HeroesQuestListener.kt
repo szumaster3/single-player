@@ -1,9 +1,9 @@
 package content.region.asgarnia.quest.hero.handlers
 
 import content.region.asgarnia.quest.hero.HeroesQuest
-import content.region.karamja.dialogue.brimhaven.CharlieTheCookDialogueFile
-import content.region.karamja.dialogue.brimhaven.GarvDialogueFile
-import content.region.karamja.dialogue.brimhaven.GruborDialogueFile
+import content.region.karamja.handlers.shilo.dialogue.brimhaven.CharlieTheCookDialogueFile
+import content.region.karamja.handlers.shilo.dialogue.brimhaven.GarvDialogueFile
+import content.region.karamja.handlers.shilo.dialogue.brimhaven.GruborDialogueFile
 import core.api.*
 import core.api.item.removeGroundItem
 import core.api.quest.getQuestStage
