@@ -8,7 +8,6 @@ import core.api.getAttribute
 import core.api.setAttribute
 import core.game.event.*
 import core.game.node.entity.Entity
-import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.SpellBookManager
 import org.rs.consts.Components
@@ -361,7 +360,7 @@ object TutorialCastReceiver : EventHook<SpellCastEvent> {
         val player = entity.asPlayer()
         when (getAttribute(player, TutorialStage.TUTORIAL_STAGE, 0)) {
             70 ->
-                if (event.spellId == 1 && event.spellBook == SpellBookManager.SpellBook.MODERN && event.target == NPC(NPCs.CHICKEN_41)) {
+                if (event.spellId == 1 && event.spellBook == SpellBookManager.SpellBook.MODERN && event.target?.id == NPCs.CHICKEN_41) {
                     setAttribute(player, TutorialStage.TUTORIAL_STAGE, 71)
                     TutorialStage.load(player, 71)
                 }
