@@ -12,6 +12,7 @@ import core.cache.def.impl.VarbitDefinition
 import core.game.node.entity.combat.ImpactHandler.HitsplatType
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.SpellBookManager
+import core.game.node.entity.player.link.TeleportManager
 import core.game.node.entity.player.link.diary.DiaryType
 import core.game.system.command.Privilege
 import core.game.system.task.Pulse
@@ -30,6 +31,15 @@ import org.rs.consts.Items
 @Initializable
 class DevelopmentCommandSet : CommandSet(Privilege.ADMIN) {
     override fun defineCommands() {
+        /*
+         * Command to complete tutorial.
+         */
+
+        define(name = "exit", Privilege.ADMIN) { p, _ ->
+            TeleportManager.completeTutorial(p)
+            p.teleporter.send(Location.create(3233, 3230, 0))
+        }
+
         /*
          * Command to lock (block) random events for the player.
          */
