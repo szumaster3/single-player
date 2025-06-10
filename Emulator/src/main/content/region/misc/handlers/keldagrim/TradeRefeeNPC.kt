@@ -1,4 +1,4 @@
-package content.region.misc.handlers.npc
+package content.region.misc.handlers.keldagrim
 
 import core.api.sendChat
 import core.game.node.entity.npc.NPC

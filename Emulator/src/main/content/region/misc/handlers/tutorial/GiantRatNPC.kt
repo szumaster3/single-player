@@ -1,4 +1,4 @@
-package content.region.misc.handlers.npc
+package content.region.misc.handlers.tutorial
 
 import content.data.GameAttributes
 import core.api.getAttribute

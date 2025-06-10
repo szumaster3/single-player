@@ -1,4 +1,4 @@
-package content.region.misc.handlers
+package content.region.misc.handlers.mosle
 
 import content.minigame.troublebrewing.MosleUtils
 import core.api.*
@@ -6,12 +6,10 @@ import core.api.interaction.openNpcShop
 import core.game.dialogue.FaceAnim
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import core.game.node.entity.player.Player
 import core.game.world.map.Location
 import org.rs.consts.Components
 import org.rs.consts.Items
 import org.rs.consts.NPCs
-import org.rs.consts.Quests
 
 class MosLeHarmlessListener : InteractionListener {
 

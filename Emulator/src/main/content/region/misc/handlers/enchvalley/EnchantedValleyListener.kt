@@ -1,4 +1,4 @@
-package content.region.misc.handlers
+package content.region.misc.handlers.enchvalley
 
 import content.data.items.SkillingTool
 import core.api.*

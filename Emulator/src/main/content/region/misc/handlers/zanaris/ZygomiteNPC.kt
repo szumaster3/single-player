@@ -1,4 +1,4 @@
-package content.region.misc.handlers.npc
+package content.region.misc.handlers.zanaris
 
 import core.api.*
 import core.api.interaction.transformNpc

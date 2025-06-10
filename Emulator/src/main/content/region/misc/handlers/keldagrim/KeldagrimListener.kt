@@ -1,4 +1,4 @@
-package content.region.misc.handlers
+package content.region.misc.handlers.keldagrim
 
 import content.region.misc.dialogue.keldagrim.BlastFusionHammerDialogue
 import core.api.*
