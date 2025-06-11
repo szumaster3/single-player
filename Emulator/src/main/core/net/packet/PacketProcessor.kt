@@ -5,7 +5,7 @@ import content.global.skill.magic.SpellListener
 import content.global.skill.magic.SpellListeners
 import content.global.skill.magic.SpellUtils
 import content.global.skill.summoning.familiar.FamiliarSpecial
-import content.region.misc.handlers.tutorial.TutorialStage
+import content.region.misc.tutorial.TutorialStage
 import core.ServerConstants
 import core.api.*
 import core.api.utils.Vector

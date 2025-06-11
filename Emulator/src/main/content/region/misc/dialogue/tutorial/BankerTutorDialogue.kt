@@ -1,6 +1,6 @@
 package content.region.misc.dialogue.tutorial
 
-import content.region.misc.handlers.tutorial.TutorialStage
+import content.region.misc.tutorial.TutorialStage
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

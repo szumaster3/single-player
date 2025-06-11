@@ -1,7 +1,7 @@
 package content.region.kandarin.miniquest.knightwave
 
 import content.data.GameAttributes
-import content.region.kandarin.dialogue.camelot.MerlinDialogue
+import content.region.kandarin.camelot.dialogue.MerlinDialogue
 import core.api.*
 import core.game.node.entity.npc.AbstractNPC
 import core.game.node.entity.player.Player

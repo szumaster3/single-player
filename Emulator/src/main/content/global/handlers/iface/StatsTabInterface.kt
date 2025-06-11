@@ -1,7 +1,7 @@
 package content.global.handlers.iface
 
 import content.data.GameAttributes
-import content.region.misc.handlers.tutorial.TutorialStage
+import content.region.misc.tutorial.TutorialStage
 import core.api.*
 import core.game.interaction.InterfaceListener
 import core.game.node.entity.skill.LevelUp

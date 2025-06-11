@@ -1,6 +1,7 @@
 package core.game.node.entity.player.link;
 
-import content.region.misc.handlers.tutorial.TutorialStage;
+import content.region.misc.tutorial.TutorialStage;
+import content.region.misc.tutorial.*;
 import core.ServerConstants;
 import core.game.node.entity.Entity;
 import core.game.node.entity.impl.Animator.Priority;
@@ -898,13 +899,13 @@ public class TeleportManager {
         setAttribute(player, "/save:tutorial:complete", true);
         setAttribute(player, "/save:tutorial:stage", 73);
 
-        player.unhook(content.region.misc.handlers.tutorial.TutorialCastReceiver.INSTANCE);
-        player.unhook(content.region.misc.handlers.tutorial.TutorialKillReceiver.INSTANCE);
-        player.unhook(content.region.misc.handlers.tutorial.TutorialFireReceiver.INSTANCE);
-        player.unhook(content.region.misc.handlers.tutorial.TutorialResourceReceiver.INSTANCE);
-        player.unhook(content.region.misc.handlers.tutorial.TutorialUseWithReceiver.INSTANCE);
-        player.unhook(content.region.misc.handlers.tutorial.TutorialInteractionReceiver.INSTANCE);
-        player.unhook(content.region.misc.handlers.tutorial.TutorialButtonReceiver.INSTANCE);
+        player.unhook(TutorialCastReceiver.INSTANCE);
+        player.unhook(TutorialKillReceiver.INSTANCE);
+        player.unhook(TutorialFireReceiver.INSTANCE);
+        player.unhook(TutorialResourceReceiver.INSTANCE);
+        player.unhook(TutorialUseWithReceiver.INSTANCE);
+        player.unhook(TutorialInteractionReceiver.INSTANCE);
+        player.unhook(TutorialButtonReceiver.INSTANCE);
 
         if (GameWorld.getSettings() != null && GameWorld.getSettings().getEnable_default_clan()) {
             player.getCommunication().setCurrentClan(ServerConstants.SERVER_NAME);

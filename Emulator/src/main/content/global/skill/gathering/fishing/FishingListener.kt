@@ -2,7 +2,7 @@ package content.global.skill.gathering.fishing
 
 import content.data.GameAttributes
 import content.global.handlers.item.equipment.gloves.FOGGlovesListener
-import content.region.misc.handlers.tutorial.TutorialStage
+import content.region.misc.tutorial.TutorialStage
 import core.api.*
 import core.api.movement.finishedMoving
 import core.api.skill.clockReady

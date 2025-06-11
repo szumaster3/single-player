@@ -1,6 +1,6 @@
 package core.game.system.command.oldsys
 
-import content.region.misc.handlers.tutorial.CharacterDesign
+import content.region.misc.tutorial.CharacterDesign
 import core.api.sendMessage
 import core.api.setVarp
 import core.api.submitWorldPulse

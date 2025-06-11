@@ -1,6 +1,6 @@
 package content.region.misc.dialogue.tutorial
 
-import content.region.misc.handlers.tutorial.TutorialStage
+import content.region.misc.tutorial.TutorialStage
 import core.api.getAttribute
 import core.api.setAttribute
 import core.game.dialogue.Dialogue

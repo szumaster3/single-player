@@ -1,8 +1,8 @@
 package content.region.karamja.quest.mm.handlers
 
-import content.region.karamja.handlers.shilo.dialogue.apeatoll.dungeon.ZooknockAfterBattleDialogueFile
-import content.region.karamja.handlers.shilo.dialogue.apeatoll.dungeon.ZooknockDialogue
-import content.region.karamja.handlers.shilo.dialogue.apeatoll.dungeon.ZooknockDialogueFile
+import content.region.karamja.dialogue.apeatoll.dungeon.ZooknockAfterBattleDialogueFile
+import content.region.karamja.dialogue.apeatoll.dungeon.ZooknockDialogue
+import content.region.karamja.dialogue.apeatoll.dungeon.ZooknockDialogueFile
 import content.region.karamja.quest.mm.dialogue.*
 import core.api.*
 import core.api.quest.getQuestStage
