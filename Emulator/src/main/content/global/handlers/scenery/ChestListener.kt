@@ -55,5 +55,19 @@ class ChestListener : InteractionListener {
             replaceScenery(node as core.game.node.scenery.Scenery, Scenery.CHEST_2632, -1)
             return@on true
         }
+
+        /*
+         * Handles Witchaven dungeon chests (Treasure Trails).
+         */
+
+        on(Scenery.CHEST_18304, IntType.SCENERY, "open") { _, node ->
+            replaceScenery(node as core.game.node.scenery.Scenery, Scenery.CHEST_18321, -1, node.location)
+            return@on true
+        }
+
+        on(Scenery.CHEST_18321, IntType.SCENERY, "shut") { _, node ->
+            replaceScenery(node as core.game.node.scenery.Scenery, Scenery.CHEST_18304, -1, node.location)
+            return@on true
+        }
     }
 }
