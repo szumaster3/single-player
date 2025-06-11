@@ -15,56 +15,36 @@ import org.rs.consts.Items
 import org.rs.consts.Quests
 import org.rs.consts.Scenery
 
+/**
+ * Handles interactions with the Fairy Ring travel system.
+ */
 class FairyRingListener : InteractionListener {
-    private val RINGS =
-        intArrayOf(
-            Scenery.FAIRY_RING_12095,
-            Scenery.FAIRY_RING_14058,
-            Scenery.FAIRY_RING_14061,
-            Scenery.FAIRY_RING_14064,
-            Scenery.FAIRY_RING_14067,
-            Scenery.FAIRY_RING_14070,
-            Scenery.FAIRY_RING_14073,
-            Scenery.FAIRY_RING_14076,
-            Scenery.FAIRY_RING_14079,
-            Scenery.FAIRY_RING_14082,
-            Scenery.FAIRY_RING_14085,
-            Scenery.FAIRY_RING_14088,
-            Scenery.FAIRY_RING_14091,
-            Scenery.FAIRY_RING_14094,
-            Scenery.FAIRY_RING_14097,
-            Scenery.FAIRY_RING_14100,
-            Scenery.FAIRY_RING_14103,
-            Scenery.FAIRY_RING_14106,
-            Scenery.FAIRY_RING_14109,
-            Scenery.FAIRY_RING_14112,
-            Scenery.FAIRY_RING_14115,
-            Scenery.FAIRY_RING_14118,
-            Scenery.FAIRY_RING_14121,
-            Scenery.FAIRY_RING_14124,
-            Scenery.FAIRY_RING_14127,
-            Scenery.FAIRY_RING_14130,
-            Scenery.FAIRY_RING_14133,
-            Scenery.FAIRY_RING_14136,
-            Scenery.FAIRY_RING_14139,
-            Scenery.FAIRY_RING_14142,
-            Scenery.FAIRY_RING_14145,
-            Scenery.FAIRY_RING_14148,
-            Scenery.FAIRY_RING_14151,
-            Scenery.FAIRY_RING_14154,
-            Scenery.FAIRY_RING_14157,
-            Scenery.FAIRY_RING_14160,
-            Scenery.FAIRY_RING_16181,
-            Scenery.FAIRY_RING_16184,
-            Scenery.FAIRY_RING_23047,
-            Scenery.FAIRY_RING_27325,
-            Scenery.FAIRY_RING_37727,
-        )
+    /**
+     * Represents all fairy ring scenery objects.
+     */
+    private val RINGS = intArrayOf(Scenery.FAIRY_RING_12095, Scenery.FAIRY_RING_14058, Scenery.FAIRY_RING_14061, Scenery.FAIRY_RING_14064, Scenery.FAIRY_RING_14067, Scenery.FAIRY_RING_14070, Scenery.FAIRY_RING_14073, Scenery.FAIRY_RING_14076, Scenery.FAIRY_RING_14079, Scenery.FAIRY_RING_14082, Scenery.FAIRY_RING_14085, Scenery.FAIRY_RING_14088, Scenery.FAIRY_RING_14091, Scenery.FAIRY_RING_14094, Scenery.FAIRY_RING_14097, Scenery.FAIRY_RING_14100, Scenery.FAIRY_RING_14103, Scenery.FAIRY_RING_14106, Scenery.FAIRY_RING_14109, Scenery.FAIRY_RING_14112, Scenery.FAIRY_RING_14115, Scenery.FAIRY_RING_14118, Scenery.FAIRY_RING_14121, Scenery.FAIRY_RING_14124, Scenery.FAIRY_RING_14127, Scenery.FAIRY_RING_14130, Scenery.FAIRY_RING_14133, Scenery.FAIRY_RING_14136, Scenery.FAIRY_RING_14139, Scenery.FAIRY_RING_14142, Scenery.FAIRY_RING_14145, Scenery.FAIRY_RING_14148, Scenery.FAIRY_RING_14151, Scenery.FAIRY_RING_14154, Scenery.FAIRY_RING_14157, Scenery.FAIRY_RING_14160, Scenery.FAIRY_RING_16181, Scenery.FAIRY_RING_16184, Scenery.FAIRY_RING_23047, Scenery.FAIRY_RING_27325, Scenery.FAIRY_RING_37727)
+
+    /**
+     * Represents the main ring that opens the travel interface.
+     */
     private val MAIN_RING = Scenery.FAIRY_RING_12128
+
+    /**
+     * Represents the entry ring that teleports players into Zanaris.
+     */
     private val ENTRY_RING = Scenery.FAIRY_RING_12094
+
+    /**
+     * Represents the marketplace ring.
+     */
     private val MARKETPLACE_RING = Scenery.FAIRY_RING_12003
 
     override fun defineListeners() {
+
+        /*
+         * Handles ring options.
+         */
+
         on(RINGS, IntType.SCENERY, "use") { player, _ ->
             if (!fairyMagic(player)) return@on true
             teleport(player, Location.create(2412, 4434, 0), TeleportType.FAIRY_RING)
@@ -88,13 +68,15 @@ class FairyRingListener : InteractionListener {
         }
     }
 
+    /**
+     * Checks requirements to use rings.
+     *
+     * @param player The player to check.
+     * @return `True` if the player can use the ring, `false` otherwise.
+     */
     private fun fairyMagic(player: Player): Boolean {
         if (!hasRequirement(player, Quests.FAIRYTALE_I_GROWING_PAINS) ||
-            !anyInEquipment(
-                player,
-                Items.DRAMEN_STAFF_772,
-                Items.LUNAR_STAFF_9084,
-            )
+            !anyInEquipment(player, Items.DRAMEN_STAFF_772, Items.LUNAR_STAFF_9084)
         ) {
             sendMessage(player, "The fairy ring only works for those who weld fairy magic.")
             return false
@@ -102,6 +84,11 @@ class FairyRingListener : InteractionListener {
         return true
     }
 
+    /**
+     * Opens the fairy ring interface.
+     *
+     * @param player The player.
+     */
     private fun openFairyRing(player: Player) {
         openInterface(player, FairyRingInterface.RINGS_IFACE)
     }

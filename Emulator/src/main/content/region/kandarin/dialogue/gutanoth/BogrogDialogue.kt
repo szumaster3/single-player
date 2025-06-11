@@ -8,9 +8,8 @@ import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import org.rs.consts.NPCs
 
-class BogrogDialogue(
-    player: Player? = null,
-) : Dialogue(player) {
+class BogrogDialogue(player: Player? = null, ) : Dialogue(player) {
+
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(FaceAnim.CHILD_NORMAL, "Hey, yooman, what you wanting?")
@@ -22,35 +21,34 @@ class BogrogDialogue(
         buttonId: Int,
     ): Boolean {
         when (stage) {
-            0 ->
-                options(
-                    "Can I buy some summoning supplies?",
-                    "Are you interested in buying pouch pouches or scrolls?",
-                ).also {
-                    stage++
-                }
-            1 ->
-                when (buttonId) {
-                    1 -> player("Can I buy some summoning supplies?").also { stage++ }
-                    2 -> player("Are you interested in buying pouch pouches or scrolls?").also { stage = 4 }
-                }
-            2 ->
-                npc(
-                    FaceAnim.CHILD_NORMAL,
-                    "Hur, hur, hur! Yooman's gotta buy lotsa stuff if yooman",
-                    "wants ta train good!",
-                ).also {
-                    stage++
-                }
+            0 -> options(
+                "Can I buy some summoning supplies?", "Are you interested in buying pouch pouches or scrolls?"
+            ).also {
+                stage++
+            }
+
+            1 -> when (buttonId) {
+                1 -> player("Can I buy some summoning supplies?").also { stage++ }
+                2 -> player("Are you interested in buying pouch pouches or scrolls?").also { stage = 4 }
+            }
+
+            2 -> npc(
+                FaceAnim.CHILD_NORMAL,
+                "Hur, hur, hur! Yooman's gotta buy lotsa stuff if yooman",
+                "wants ta train good!",
+            ).also {
+                stage++
+            }
+
             3 -> end().also { openNpcShop(player, npc.id) }
-            4 ->
-                npc(
-                    FaceAnim.CHILD_NORMAL,
-                    "Des other ogre's stealin' Bogrog's stock. Gimmie pouches",
-                    "and scrolls and yooman gets da shardies.",
-                ).also {
-                    stage++
-                }
+            4 -> npc(
+                FaceAnim.CHILD_NORMAL,
+                "Des other ogre's stealin' Bogrog's stock. Gimmie pouches",
+                "and scrolls and yooman gets da shardies.",
+            ).also {
+                stage++
+            }
+
             5 -> player("Ok.").also { stage++ }
             6 -> end().also { BogrogPlugin.openSwap(player) }
         }

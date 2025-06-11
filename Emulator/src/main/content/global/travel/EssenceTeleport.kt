@@ -15,20 +15,22 @@ import core.game.world.GameWorld
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
-import core.tools.RandomFunction
 import org.rs.consts.*
 
+/**
+ * Handles the Rune Essence teleportation mechanics via NPC wizards.
+ */
 object EssenceTeleport {
-    val LOCATIONS =
-        arrayOf(
-            Location.create(2911, 4832, 0),
-            Location.create(2913, 4837, 0),
-            Location.create(2930, 4850, 0),
-            Location.create(2894, 4811, 0),
-            Location.create(2896, 4845, 0),
-            Location.create(2922, 4820, 0),
-            Location.create(2931, 4813, 0),
-        )
+
+    private val LOCATIONS = listOf(
+        Location.create(2911, 4832, 0),
+        Location.create(2913, 4837, 0),
+        Location.create(2930, 4850, 0),
+        Location.create(2894, 4811, 0),
+        Location.create(2896, 4845, 0),
+        Location.create(2922, 4820, 0),
+        Location.create(2931, 4813, 0),
+    )
 
     private const val CURSE_PROJECTILE = org.rs.consts.Graphics.CURSE_PROJECTILE_109
     private val ANIMATION = Animation(Animations.ATTACK_437)
@@ -36,137 +38,147 @@ object EssenceTeleport {
     private val GLOWING_HANDS_GFX = Graphics(org.rs.consts.Graphics.CURSE_CAST_108)
     private val TELEPORT_GFX = Graphics(org.rs.consts.Graphics.CURSE_IMPACT_110, 150)
 
-    @JvmStatic
-    fun teleport(
-        npc: NPC,
-        player: Player,
-    ) {
-        if (!isQuestComplete(
-                player,
-                Quests.RUNE_MYSTERIES,
-            )
-        ) {
-            return sendMessage(player, "You need to complete Rune Mysteries to enter the Rune Essence mine.")
+    /**
+     * Teleports the player to the Rune Essence mine via NPC.
+     *
+     * @param npc The npc who teleport.
+     * @param player The player being teleported.
+     */
+    fun teleport(npc: NPC, player: Player) {
+        if (!isQuestComplete(player, Quests.RUNE_MYSTERIES)) {
+            player.sendMessage("You need to complete Rune Mysteries to enter the Rune Essence mine.")
+            return
         }
-        if (npc.id != NPCs.BRIMSTAIL_171) npc.animate(ANIMATION) else npc.animate(OLD_ANIMATION)
+
+        npc.animate(if (npc.id == NPCs.BRIMSTAIL_171) OLD_ANIMATION else ANIMATION)
         npc.faceTemporary(player, 1)
         npc.graphics(GLOWING_HANDS_GFX)
-        lock(player, 4)
+        player.lock(4)
         playAudio(player, Sounds.CURSE_ALL_125, 0, 1)
         Projectile.create(npc, player, CURSE_PROJECTILE).send()
         npc.sendChat("Senventior Disthine Molenko!")
-        GameWorld.Pulser.submit(
-            object : Pulse(1) {
-                var counter = 0
 
-                override fun pulse(): Boolean {
-                    when (counter++) {
-                        0 -> player.graphics(TELEPORT_GFX)
-                        1 -> {
-                            if (getStage(player) == 2 && inInventory(player, Items.SCRYING_ORB_5519, 1)) {
-                                val item = player.inventory[player.inventory.getSlot(Item(Items.SCRYING_ORB_5519))]
-                                if (item != null) {
-                                    if (item.charge == 1000) {
-                                        player.savedData.globalData.resetAbyss()
-                                    }
-                                    val wizard = Wizard.forNPC(npc.id)
-                                    if (!player.savedData.globalData.hasAbyssCharge(wizard.ordinal)) {
-                                        player.savedData.globalData.setAbyssCharge(wizard.ordinal)
-                                        item.charge += 1
-                                        if (item.charge == 1003) {
-                                            sendMessage(
-                                                player,
-                                                "Your scrying orb has absorbed enough teleport information.",
-                                            )
-                                            removeItem(player, Items.SCRYING_ORB_5519)
-                                            addItemOrDrop(player, Items.SCRYING_ORB_5518)
-                                        }
-                                    }
-                                }
-                            }
-                            player.savedData.globalData.setEssenceTeleporter(npc.id)
-                            player.graphics(TELEPORT_GFX)
-                            val loc = LOCATIONS[RandomFunction.random(0, LOCATIONS.size)]
-                            teleport(player, loc)
-                            player.dispatch(
-                                TeleportEvent(TeleportManager.TeleportType.TELE_OTHER, TeleportMethod.NPC, npc, loc),
-                            )
-                        }
+        GameWorld.Pulser.submit(object : Pulse(1) {
+            var counter = 0
 
-                        2 -> {
-                            unlock(player)
-                            return true
-                        }
+            override fun pulse(): Boolean {
+                when (counter++) {
+                    0 -> player.graphics(TELEPORT_GFX)
+                    1 -> {
+                        handleScryingOrb(player, npc)
+                        player.savedData.globalData.setEssenceTeleporter(npc.id)
+                        player.graphics(TELEPORT_GFX)
+                        val loc = LOCATIONS.random()
+                        player.teleport(loc)
+                        player.dispatch(TeleportEvent(TeleportManager.TeleportType.TELE_OTHER, TeleportMethod.NPC, npc, loc))
                     }
-                    return false
+                    2 -> {
+                        player.unlock()
+                        return true
+                    }
                 }
-            },
-        )
+                return false
+            }
+        })
     }
 
-    @JvmStatic
-    fun home(
-        player: Player,
-        node: Node,
-    ) {
+    /**
+     * Teleports from essence mine.
+     *
+     * @param player The player to teleport.
+     * @param node The node representing the origin of the teleport effect.
+     */
+    fun home(player: Player, node: Node) {
         val wizard = Wizard.forNPC(player.savedData.globalData.getEssenceTeleporter())
         Projectile.create(node.location, player.location, CURSE_PROJECTILE, 15, 10, 0, 10, 0, 2).send()
-        GameWorld.Pulser.submit(
-            object : Pulse(1) {
-                var counter = 0
 
-                override fun pulse(): Boolean {
-                    when (counter++) {
-                        0 -> {
-                            lock(player, 2)
-                            player.graphics(TELEPORT_GFX)
-                        }
+        GameWorld.Pulser.submit(object : Pulse(1) {
+            var counter = 0
 
-                        1 -> {
-                            teleport(player, wizard.location)
-                            player.graphics(TELEPORT_GFX)
-                            unlock(player)
-                            return true
-                        }
+            override fun pulse(): Boolean {
+                when (counter++) {
+                    0 -> {
+                        player.lock(2)
+                        player.graphics(TELEPORT_GFX)
                     }
-                    return false
+                    1 -> {
+                        player.teleport(wizard.location)
+                        player.graphics(TELEPORT_GFX)
+                        player.unlock()
+                        return true
+                    }
                 }
-            },
-        )
+                return false
+            }
+        })
     }
 
+    /**
+     * Handles the scrying orb mechanics during tp.
+     *
+     * Relations:
+     * - [RuneMysteries quest][content.region.misthalin.quest.runemysteries.RuneMysteries]
+     *
+     * @param player The player possessing the scrying orb.
+     * @param npc The NPC involved in the teleport.
+     *
+     */
+    private fun handleScryingOrb(player: Player, npc: NPC) {
+        if (getStage(player) != 2) return
+        val slot = player.inventory.getSlot(Item(Items.SCRYING_ORB_5519))
+        val item = player.inventory.get(slot) ?: return
+
+        val wizard = Wizard.forNPC(npc.id)
+        if (item.charge == 1000) player.savedData.globalData.resetAbyss()
+
+        if (!player.savedData.globalData.hasAbyssCharge(wizard.ordinal)) {
+            player.savedData.globalData.setAbyssCharge(wizard.ordinal)
+            item.charge += 1
+
+            if (item.charge == 1003) {
+                player.sendMessage("Your scrying orb has absorbed enough teleport information.")
+                player.inventory.replace(Item(Items.SCRYING_ORB_5518), slot)
+            }
+        }
+    }
+
+    /**
+     * Gets the current Rune Mysteries quest data.
+     *
+     * @param player The player.
+     * @return The stage number.
+     */
     fun getStage(player: Player): Int = getVarp(player, 492)
 
+    /**
+     * Returns a random essence mine location.
+     */
     val location: Location
-        get() {
-            val count = RandomFunction.random(LOCATIONS.size)
-            return LOCATIONS[count]
-        }
+        get() = LOCATIONS.random()
 
-    enum class Wizard(
-        val npc: Int,
-        val mask: Int,
-        val location: Location,
-    ) {
+    /**
+     * Represents a wizards available teleporting the player to the essence mine.
+     *
+     * @property npc The NPC id of the wizard.
+     * @property mask The bitmask used for quest data tracking.
+     * @property location The wizard's world location.
+     */
+    enum class Wizard(val npc: Int, val mask: Int, val location: Location) {
         BRIMSTAIL(NPCs.BRIMSTAIL_171, 0x1, Location.create(2409, 9815, 0)),
         AUBURY(NPCs.AUBURY_553, 0x2, Location(3253, 3401, 0)),
         SEDRIDOR(NPCs.SEDRIDOR_300, 0x4, Location(3107, 9573, 0)),
         DISTENTOR(NPCs.WIZARD_DISTENTOR_462, 0x8, Location(2591, 3085, 0)),
-        CROMPERTY(NPCs.WIZARD_CROMPERTY_2328, 0x12, Location.create(2682, 3323, 0)),
-        ;
+        CROMPERTY(NPCs.WIZARD_CROMPERTY_2328, 0x12, Location.create(2682, 3323, 0));
 
         companion object {
-            fun forNPC(npc: Int): Wizard {
-                for (wizard in values()) {
-                    if (npc == 844) {
-                        return CROMPERTY
-                    }
-                    if (wizard.npc == npc) {
-                        return wizard
-                    }
-                }
-                return AUBURY
-            }
+            /**
+             * Gets the [Wizard] enum constant for the given npc id.
+             *
+             * @param npc The npc id.
+             * @return The corresponding [Wizard], or [AUBURY] if not found.
+             */
+            fun forNPC(npc: Int): Wizard =
+                values().find { it.npc == npc || (npc == 844 && it == CROMPERTY) } ?: AUBURY
         }
     }
 }
