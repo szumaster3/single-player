@@ -27,7 +27,6 @@ object BogrogPouchUtils {
 
     private const val SPIRIT_SHARD = Items.SPIRIT_SHARDS_12183
 
-    @JvmStatic
     fun handle(player: Player, optionIndex: Int, slot: Int): Boolean {
         val item = player.inventory.get(slot) ?: return false
         return when (optionIndex) {
@@ -43,10 +42,9 @@ object BogrogPouchUtils {
 
             OP_SWAP_ALL -> swap(player, item.amount, item.id)
             EXAMINE -> {
-                val examine = item.definition?.let {
+                item.definition?.let {
                     player.packetDispatch.sendMessage(it.examine)
                 }
-                sendMessage(player, "$examine")
                 false
             }
 
@@ -57,12 +55,11 @@ object BogrogPouchUtils {
     /**
      * Swaps the given amount of summoning pouches for spirit shards.
      */
-    @JvmStatic
     private fun swap(player: Player, amount: Int, itemID: Int): Boolean {
         var amt = amount
         val value = getValue(itemID)
         if (value == 0.0) {
-            sendMessage(player, "This item cannot be exchanged here.")
+            sendMessage(player, "This item cannot be swapped here.")
             return false
         }
         val inInventory = player.inventory.getAmount(itemID)
@@ -73,14 +70,17 @@ object BogrogPouchUtils {
             sendMessage(player, "You don't have any pouches to swap.")
             return false
         }
+
+        if(amt > 30_000) {
+            sendMessage(player, "You can't swap more than 30,000 at a time.")
+            return false
+        }
+
         player.inventory.remove(Item(itemID, amt))
         val shardsReceived = floor(value * amt).toInt()
 
         player.inventory.add(Item(SPIRIT_SHARD, shardsReceived))
-        sendMessage(
-            player,
-            "You swapped $amt pouch${if (amt != 1) "es" else ""} and received $shardsReceived shard${if (shardsReceived != 1) "s" else ""}."
-        )
+        sendMessage(player, "You swapped $amt pouch${if (amt != 1) "es" else ""} and received $shardsReceived shard${if (shardsReceived != 1) "s" else ""}.")
         return true
     }
 
@@ -90,6 +90,7 @@ object BogrogPouchUtils {
     private fun sendValue(itemID: Int, player: Player, ): Boolean {
         val value = getValue(itemID)
         if (value == 0.0) {
+            sendMessage(player, "This item cannot be swapped here.")
             return false
         }
 

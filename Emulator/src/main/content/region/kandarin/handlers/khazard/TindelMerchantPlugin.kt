@@ -21,7 +21,7 @@ import org.rs.consts.Sounds
 /**
  * Handles the exchange of rusty weapons.
  */
-class TindelMerchant : InteractionListener {
+class TindelMerchantPlugin : InteractionListener {
 
     companion object {
         private const val TINDEL = NPCs.TINDEL_MARCHANT_1799
@@ -122,8 +122,7 @@ class TindelMerchant : InteractionListener {
     }
 }
 
-
-class TindelMerchantDialogue : DialogueFile() {
+private class TindelMerchantDialogue : DialogueFile() {
     override fun handle(componentID: Int, buttonID: Int) {
         npc = NPC(NPCs.TINDEL_MARCHANT_1799)
         when (stage) {
@@ -145,7 +144,7 @@ class TindelMerchantDialogue : DialogueFile() {
             9 -> npcl(FaceAnim.FRIENDLY, "However, if it's just a piece of junk, I'll simply give you the bad news and get rid of the item for you.").also { stage = 1 }
             10 -> {
                 end()
-                TindelMerchant.exchangeRustyWeapon(player!!)
+                TindelMerchantPlugin.exchangeRustyWeapon(player!!)
             }
         }
     }
