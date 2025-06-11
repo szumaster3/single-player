@@ -141,22 +141,6 @@
 
 #### Wilderness
 
-| Region Name           | Package (path)                  | Link                                                                          |
-|-----------------------|---------------------------------|-------------------------------------------------------------------------------|
-| Bandit Camp           | `wilderness.bandit_camp`        | [wilderness.bandit_camp](content.region.wilderness.bandit_camp)               |
-| Bone Yard *(removed)* | `wilderness.bone_yard`          | [wilderness.bone_yard](content.region.wilderness.bone_yard)                   |
-| Clan Wars             | `wilderness.clan_wars`          | [wilderness.clan_wars](content.region.wilderness.clan_wars)                   |
-| Bounty Hunter         | `wilderness.bounty_hunter`      | [wilderness.bounty_hunter](content.region.wilderness.bounty_hunter)           |
-| Edgeville Dungeon     | `wilderness.edgeville_dungeon`  | [wilderness.edgeville_dungeon](content.region.wilderness.edgeville_dungeon)   |
-| Green Dragons Area    | `wilderness.green_dragons_area` | [wilderness.green_dragons_area](content.region.wilderness.green_dragons_area) |
-| Lava Maze             | `wilderness.lava_maze`          | [wilderness.lava_maze](content.region.wilderness.lava_maze)                   |
-| Revenants Caves       | `wilderness.revenants_caves`    | [wilderness.revenants_caves](content.region.wilderness.revenants_caves)       |
-| Wildy Volcano         | `wilderness.wildy_volcano`      | [wilderness.wildy_volcano](content.region.wilderness.wildy_volcano)           |
-
----
-
-#### Wilderness
-
 | Region Name               | Package (path)                      | Link                                                                                  |
 |---------------------------|-------------------------------------|---------------------------------------------------------------------------------------|
 | Bandit Camp               | `wilderness.bandit_camp`            | [wilderness.bandit_camp](content.region.wilderness.bandit_camp)                       |
