@@ -33,23 +33,22 @@ class LeonDialogue(
         buttonId: Int,
     ): Boolean {
         when (stage) {
-            1 ->
-                when (buttonId) {
-                    1 -> {
-                        player(FaceAnim.ASKING, "What is this place?")
-                        stage = 10
-                    }
-
-                    2 -> {
-                        player(FaceAnim.FRIENDLY, "Can I have a go with your crossbow?")
-                        stage = 20
-                    }
-
-                    3 -> {
-                        player(FaceAnim.ASKING, "What are you holding there?")
-                        stage = 30
-                    }
+            1 -> when (buttonId) {
+                1 -> {
+                    player(FaceAnim.ASKING, "What is this place?")
+                    stage = 10
                 }
+
+                2 -> {
+                    player(FaceAnim.FRIENDLY, "Can I have a go with your crossbow?")
+                    stage = 20
+                }
+
+                3 -> {
+                    player(FaceAnim.ASKING, "What are you holding there?")
+                    stage = 30
+                }
+            }
 
             10 -> {
                 npc(
@@ -94,50 +93,48 @@ class LeonDialogue(
                 stage = 25
             }
 
-            25 ->
-                when (buttonId) {
-                    1 -> {
-                        player(FaceAnim.HALF_GUILTY, "Ok, here you go.")
-                        stage = 40
-                    }
-
-                    2 -> {
-                        player(FaceAnim.HALF_GUILTY, "I'll give it a miss, thanks.")
-                        stage = 41
-                    }
-
-                    3 -> {
-                        player(FaceAnim.HALF_GUILTY, "Does it use normal crossbow bolts?")
-                        stage = 42
-                    }
+            25 -> when (buttonId) {
+                1 -> {
+                    player(FaceAnim.HALF_GUILTY, "Ok, here you go.")
+                    stage = 40
                 }
+
+                2 -> {
+                    player(FaceAnim.HALF_GUILTY, "I'll give it a miss, thanks.")
+                    stage = 41
+                }
+
+                3 -> {
+                    player(FaceAnim.HALF_GUILTY, "Does it use normal crossbow bolts?")
+                    stage = 42
+                }
+            }
 
             30 -> {
                 npc(FaceAnim.HAPPY, "This? This is a prototype for a new type of crossbow", "I've been designing.")
                 stage = END_DIALOGUE
             }
 
-            40 ->
-                if (!removeItem<Item>(player, Item(Items.COINS_995, 1300), Container.INVENTORY)) {
-                    player(FaceAnim.HALF_GUILTY, "Oh, actually I don't have enough money with me.")
-                    stage = END_DIALOGUE
-                } else if (player.inventory.freeSlots() == 0) {
-                    npc(
-                        FaceAnim.HALF_GUILTY,
-                        "Well, you look a little overburdened there at the moment.",
-                        "Maybe you should free up some space to carry it in first.",
-                    )
-                    stage = END_DIALOGUE
-                } else {
-                    npc(
-                        FaceAnim.HALF_GUILTY,
-                        "Here, you might as well take this one.",
-                        "Aleck over there doesn't seem interested and it'll save you",
-                        "a wait.",
-                    )
-                    addItem(player, Items.HUNTERS_CROSSBOW_10156, 1, Container.INVENTORY)
-                    stage = END_DIALOGUE
-                }
+            40 -> if (!removeItem<Item>(player, Item(Items.COINS_995, 1300), Container.INVENTORY)) {
+                player(FaceAnim.HALF_GUILTY, "Oh, actually I don't have enough money with me.")
+                stage = END_DIALOGUE
+            } else if (player.inventory.freeSlots() == 0) {
+                npc(
+                    FaceAnim.HALF_GUILTY,
+                    "Well, you look a little overburdened there at the moment.",
+                    "Maybe you should free up some space to carry it in first.",
+                )
+                stage = END_DIALOGUE
+            } else {
+                npc(
+                    FaceAnim.HALF_GUILTY,
+                    "Here, you might as well take this one.",
+                    "Aleck over there doesn't seem interested and it'll save you",
+                    "a wait.",
+                )
+                addItem(player, Items.HUNTERS_CROSSBOW_10156, 1, Container.INVENTORY)
+                stage = END_DIALOGUE
+            }
 
             41 -> {
                 npc(
@@ -191,23 +188,22 @@ class LeonDialogue(
                 stage = 47
             }
 
-            47 ->
-                when (buttonId) {
-                    1 -> {
-                        player(FaceAnim.HALF_GUILTY, "Let's see what you can make then.")
-                        stage = 48
-                    }
-
-                    2 -> {
-                        player(FaceAnim.HALF_GUILTY, "I'll give it a miss, thanks.")
-                        stage = 49
-                    }
-
-                    3 -> {
-                        player(FaceAnim.HALF_GUILTY, "Can't I just make my own?")
-                        stage = 52
-                    }
+            47 -> when (buttonId) {
+                1 -> {
+                    player(FaceAnim.HALF_GUILTY, "Let's see what you can make then.")
+                    stage = 48
                 }
+
+                2 -> {
+                    player(FaceAnim.HALF_GUILTY, "I'll give it a miss, thanks.")
+                    stage = 49
+                }
+
+                3 -> {
+                    player(FaceAnim.HALF_GUILTY, "Can't I just make my own?")
+                    stage = 52
+                }
+            }
 
             48 -> {
                 end()

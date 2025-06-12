@@ -13,13 +13,12 @@ import core.game.world.update.flag.context.Animation
 import org.rs.consts.NPCs
 import org.rs.consts.Scenery
 
-class BrimhavenDungeonPlugin: InteractionListener {
+class BrimhavenDungeonPlugin : InteractionListener {
     override fun defineListeners() {
         on(ENTRANCE, IntType.SCENERY, "enter") { player, _ ->
-            if (!getAttribute(player, "saniboch:paid", false) ||
-                !player.achievementDiaryManager.getDiary(DiaryType.KARAMJA)!!.isComplete
-            ) {
+            if (!getAttribute(player, "saniboch:paid", false) || !player.achievementDiaryManager.getDiary(DiaryType.KARAMJA)!!.isComplete) {
                 sendNPCDialogue(player, NPCs.SANIBOCH_1595, "You can't go in there without paying!", FaceAnim.NEUTRAL)
+                return@on true
             }
 
             ClimbActionHandler.climb(player, ClimbActionHandler.CLIMB_UP, location(2713, 9564, 0))
@@ -47,7 +46,7 @@ class BrimhavenDungeonPlugin: InteractionListener {
             return@on true
         }
 
-        on(SANIBOCH_NPC, IntType.NPC, "pay") { player, node ->
+        on(SANIBOCH, IntType.NPC, "pay") { player, node ->
             player.dialogueInterpreter.open(NPCs.SANIBOCH_1595, node.asNpc(), 10)
             return@on true
         }
@@ -59,16 +58,20 @@ class BrimhavenDungeonPlugin: InteractionListener {
             }
 
             if (node.id == Scenery.LOG_BALANCE_5088) {
-                AgilityHandler.walk(player, -1, player.location, Location.create(2687, 9506, 0), Animation.create(155), 0.0, null)
+                AgilityHandler.walk(
+                    player, -1, player.location, Location.create(2687, 9506, 0), Animation.create(155), 0.0, null
+                )
             } else {
-                AgilityHandler.walk(player, -1, player.location, Location.create(2682, 9506, 0), Animation.create(155), 0.0, null)
+                AgilityHandler.walk(
+                    player, -1, player.location, Location.create(2682, 9506, 0), Animation.create(155), 0.0, null
+                )
             }
             return@on true
         }
     }
 
     companion object {
-        private const val SANIBOCH_NPC = NPCs.SANIBOCH_1595
+        private const val SANIBOCH = NPCs.SANIBOCH_1595
         private const val ENTRANCE = Scenery.DUNGEON_ENTRANCE_5083
         private const val EXIT = Scenery.EXIT_5084
         private val VINE = intArrayOf(Scenery.VINES_5103, Scenery.VINES_5104, Scenery.VINES_5105, Scenery.VINES_5106, Scenery.VINES_5107)

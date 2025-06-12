@@ -1,105 +1,72 @@
 package content.region.karamja.brimhaven.plugin
 
-import core.api.inInventory
-import core.api.sendMessage
+import core.api.*
 import core.game.interaction.InterfaceListener
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.tools.StringUtils
 import org.rs.consts.Components
+import org.rs.consts.Items
 
+/**
+ * Handles agility tickets exchange.
+ */
 class AgilityTicketInterface : InterfaceListener {
+
+    private data class RewardData(val tickets: Int, val experience: Double = 0.0, val reward: Item? = null) {
+        val displayName: String?
+            get() = reward?.let {
+                StringUtils.formatDisplayName(it.name.replace("Clean", "").trim())
+            }
+    }
+
+    private val rewardsMap = mapOf(
+        21 to RewardData(tickets = 1, experience = 240.0),
+        22 to RewardData(tickets = 10, experience = 2480.0),
+        23 to RewardData(tickets = 25, experience = 6500.0),
+        24 to RewardData(tickets = 100, experience = 28000.0),
+        25 to RewardData(tickets = 1000, experience = 320000.0),
+        8 to RewardData(tickets = 3, reward = Item(CLEAN_TOADFLAX)),
+        9 to RewardData(tickets = 10, reward = Item(SNAPDRAGON)),
+        10 to RewardData(tickets = 800, reward = Item(PIRATE_HOOK))
+    )
+
     override fun defineInterfaceListeners() {
         on(Components.AGILITYARENA_TRADE_6) { player, _, _, buttonID, _, _ ->
-            var reward: Item? = null
-            var experience = 0.0
-            var tickets = 0
+            val data = rewardsMap[buttonID] ?: return@on true
 
-            when (buttonID) {
-                21 -> {
-                    experience = 240.0
-                    tickets = 1
-                }
-
-                22 -> {
-                    experience = 2480.0
-                    tickets = 10
-                }
-
-                23 -> {
-                    experience = 6500.0
-                    tickets = 25
-                }
-
-                24 -> {
-                    experience = 28000.0
-                    tickets = 100
-                }
-
-                25 -> {
-                    experience = 320000.0
-                    tickets = 1000
-                }
-
-                8 -> {
-                    reward = TOADFLAX
-                    tickets = 3
-                }
-
-                9 -> {
-                    reward = SNAPDRAGON
-                    tickets = 10
-                }
-
-                10 -> {
-                    reward = PIRATE_HOOK
-                    tickets = 800
-                }
-            }
-            if (experience > 0.0 && !inInventory(player, ARENA_TICKET, tickets)) {
-                sendMessage(player, "This Agility experience costs $tickets tickets.")
-            }
-            if (reward != null && !inInventory(player, ARENA_TICKET, tickets)) {
-                sendMessage(
-                    player,
-                    "${StringUtils.formatDisplayName(reward.name.replace("Clean", "").trim())} costs $tickets tickets.",
-                )
-            }
-            if (!inInventory(player, ARENA_TICKET, tickets)) return@on true
-
-            if (experience > 0.0) {
-                if (!inInventory(player, ARENA_TICKET, tickets)) return@on true
-
-                if (player.inventory.remove(Item(ARENA_TICKET, tickets))) {
-                    if (player.achievementDiaryManager.karamjaGlove >= 1) {
-                        experience *= 1.1
-                    }
-                    player.skills.addExperience(Skills.AGILITY, experience)
-                    sendMessage(player, "You have been granted some Agility experience!")
-                }
+            if (!inInventory(player, ARENA_TICKET, data.tickets)) {
+                val costName = data.displayName ?: "Agility experience"
+                sendMessage(player, "$costName costs ${data.tickets} tickets.")
+                return@on true
             }
 
-            if (reward != null) {
-                if (player.inventory.remove(Item(ARENA_TICKET, tickets))) {
-                    player.inventory.add(reward)
-                    sendMessage(
-                        player,
-                        "You have been granted a ${
-                            StringUtils.formatDisplayName(
-                                reward.name.replace("Clean", "").trim(),
-                            )
-                        }.",
-                    )
-                }
+            val removed = removeItem(player, Item(ARENA_TICKET, data.tickets))
+            if (!removed) {
+                sendMessage(player, "Failed to remove tickets from your inventory.")
+                return@on true
             }
-            return@on true
+
+            if (data.experience > 0.0) {
+                var exp = data.experience
+                if (player.achievementDiaryManager.karamjaGlove >= 1) {
+                    exp *= 1.1
+                }
+                rewardXP(player, Skills.AGILITY, exp)
+                sendMessage(player, "You have been granted some Agility experience!")
+            } else if (data.reward != null) {
+                addItem(player, data.reward.id)
+                sendMessage(player, "You have been granted a ${data.displayName}.")
+            }
+
+            true
         }
     }
 
     companion object {
-        private val PIRATE_HOOK = Item(2997)
-        private val TOADFLAX = Item(2998)
-        private val SNAPDRAGON = Item(3000)
-        private const val ARENA_TICKET = 2996
+        private const val ARENA_TICKET = Items.AGILITY_ARENA_TICKET_2996
+        private const val PIRATE_HOOK = Items.PIRATES_HOOK_2997
+        private const val CLEAN_TOADFLAX = Items.CLEAN_TOADFLAX_2998
+        private const val SNAPDRAGON = Items.CLEAN_SNAPDRAGON_3000
     }
 }

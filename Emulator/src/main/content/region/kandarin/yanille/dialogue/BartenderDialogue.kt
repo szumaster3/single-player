@@ -31,23 +31,21 @@ class BartenderDialogue(
         when (stage) {
             0 -> player("What's on the menu?").also { stage++ }
             1 -> npc("Dragon Bitter and Greenman's Ale, oh and some cheap beer.").also { stage++ }
-            2 ->
-                options(
-                    "I'll give it a miss I think.",
-                    "I'll try the Dragon Bitter.",
-                    "Can I have some Greenman's Ale?",
-                    "One cheap beer please!",
-                ).also {
-                    stage++
-                }
+            2 -> options(
+                "I'll give it a miss I think.",
+                "I'll try the Dragon Bitter.",
+                "Can I have some Greenman's Ale?",
+                "One cheap beer please!",
+            ).also {
+                stage++
+            }
 
-            3 ->
-                when (buttonId) {
-                    1 -> player("I'll give it a miss I think.").also { stage++ }
-                    2 -> player("I'll try the Dragon Bitter.").also { stage = 5 }
-                    3 -> player("Can I have some Greenman's Ale?").also { stage = 7 }
-                    4 -> player("One cheap beer please!").also { stage = 9 }
-                }
+            3 -> when (buttonId) {
+                1 -> player("I'll give it a miss I think.").also { stage++ }
+                2 -> player("I'll try the Dragon Bitter.").also { stage = 5 }
+                3 -> player("Can I have some Greenman's Ale?").also { stage = 7 }
+                4 -> player("One cheap beer please!").also { stage = 9 }
+            }
 
             4 -> npc("Come back when you're a little thirstier.").also { stage = END_DIALOGUE }
             5 -> npc("Ok, that'll be two coins.").also { stage++ }

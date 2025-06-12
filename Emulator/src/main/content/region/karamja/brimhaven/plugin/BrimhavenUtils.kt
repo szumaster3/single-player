@@ -14,8 +14,11 @@ import core.game.world.GameWorld
 import core.game.world.map.Direction
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
+import core.tools.RandomFunction
+import kotlin.math.ceil
 
 object BrimhavenUtils {
+    @JvmStatic
     fun getVineDestination(
         player: Player,
         node: Scenery,
@@ -34,6 +37,7 @@ object BrimhavenUtils {
         }
     }
 
+    @JvmStatic
     fun handleStairs(
         node: Scenery,
         player: Player,
@@ -46,6 +50,7 @@ object BrimhavenUtils {
         }
     }
 
+    @JvmStatic
     fun handleSteppingStones(
         player: Player,
         node: Scenery,
@@ -55,18 +60,16 @@ object BrimhavenUtils {
             return
         }
         player.lock(12)
-        val dir =
-            AgilityHandler
-                .forceWalk(
-                    player,
-                    -1,
-                    player.location,
-                    node.location,
-                    Animation.create(769),
-                    10,
-                    0.0,
-                    null,
-                ).direction
+        val dir = AgilityHandler.forceWalk(
+            player,
+            -1,
+            player.location,
+            node.location,
+            Animation.create(769),
+            10,
+            0.0,
+            null,
+        ).direction
         val loc = player.location
 
         registerLogoutListener(player, "steppingstone") { p ->
@@ -83,10 +86,9 @@ object BrimhavenUtils {
                     when (stage++) {
                         1 -> direction = Direction.get(direction.toInteger() + 1 and 3)
                         3 -> direction = Direction.get(direction.toInteger() - 1 and 3)
-                        5 ->
-                            if (direction == Direction.NORTH) {
-                                return true
-                            }
+                        5 -> if (direction == Direction.NORTH) {
+                            return true
+                        }
                     }
                     if (stage == 6) {
                         player.achievementDiaryManager.finishTask(player, DiaryType.KARAMJA, 1, 15)
@@ -112,6 +114,7 @@ object BrimhavenUtils {
         )
     }
 
+    @JvmStatic
     fun handleVines(
         player: Player,
         node: Scenery,
