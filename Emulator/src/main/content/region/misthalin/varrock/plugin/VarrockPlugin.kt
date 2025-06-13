@@ -1,7 +1,6 @@
 package content.region.misthalin.varrock.plugin
 
 import content.region.kandarin.ardougne.east.quest.biohazard.dialogue.GuidorsWifeDialogue
-import content.region.kandarin.quest.biohazard.dialogue.GuidorsWifeDialogue
 import content.region.misthalin.varrock.dialogue.KnockatDoorDialogue
 import content.region.misthalin.varrock.dialogue.SawmillOperatorDialogue
 import core.GlobalStatistics

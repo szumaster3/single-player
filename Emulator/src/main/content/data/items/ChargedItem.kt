@@ -49,8 +49,6 @@ enum class ChargedItem(val ids: IntArray, ) {
 
     /**
      * Returns the maximum charge level for this charged item.
-     *
-     * @return The maximum charge level.
      */
     fun maxCharge(): Int = maxCharges[ordinal]
 
@@ -68,9 +66,6 @@ enum class ChargedItem(val ids: IntArray, ) {
 
         /**
          * Returns the maximum charge level for the specified charged item.
-         *
-         * @param chargedItem The charged item.
-         * @return The maximum charge level.
          */
         @JvmStatic
         private fun getMaxCharge(chargedItem: ChargedItem): Int =
@@ -82,27 +77,18 @@ enum class ChargedItem(val ids: IntArray, ) {
 
         /**
          * Checks if an item ID is a valid-charged item.
-         *
-         * @param id The item id.
-         * @return True if the item id to a charged item, false otherwise.
          */
         @JvmStatic
         fun contains(id: Int): Boolean = idMap.containsKey(id)
 
         /**
          * Returns the charged item for given id.
-         *
-         * @param id The item id.
-         * @return The charged item for the specified id, or `null` if no match is found.
          */
         @JvmStatic
         fun forId(id: Int): ChargedItem? = idMap[id]
 
         /**
          * Returns the charge level for the specified item id.
-         *
-         * @param id The item ID.
-         * @return The charge level, or `null` if the item is not a charged item.
          */
         @JvmStatic
         fun getCharge(id: Int): Int? {

@@ -1,6 +1,6 @@
 package content.region.island.quest.lostcity.dialogue
 
-import content.region.misc.quest.lostcity.handlers.LostCityListeners
+import content.region.island.quest.lostcity.plugin.LostCityPlugin
 import core.api.quest.getQuestStage
 import core.api.quest.setQuestStage
 import core.game.dialogue.Dialogue
@@ -31,7 +31,7 @@ class ShamusDialogue(
                 when (stage++) {
                     0 -> playerl(FaceAnim.THINKING, "I'm not sure.")
                     1 -> npcl(FaceAnim.OLD_ANGRY1, "Well you'll have to be catchin' me again when yer are, elephant!")
-                    2 -> end().also { LostCityListeners.disappearShamus() }
+                    2 -> end().also { LostCityPlugin.disappearShamus() }
                 }
 
             10 ->
@@ -80,7 +80,7 @@ class ShamusDialogue(
 
                     12 ->
                         end().also {
-                            LostCityListeners.disappearShamus()
+                            LostCityPlugin.disappearShamus()
                             sendDialogue("The leprechaun magically disappears.")
                             setQuestStage(player, Quests.LOST_CITY, 20)
                         }
@@ -97,7 +97,7 @@ class ShamusDialogue(
                         )
                     }
 
-                    2 -> end().also { LostCityListeners.disappearShamus() }
+                    2 -> end().also { LostCityPlugin.disappearShamus() }
                 }
         }
         return true

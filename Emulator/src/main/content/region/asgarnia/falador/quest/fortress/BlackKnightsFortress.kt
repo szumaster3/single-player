@@ -1,8 +1,8 @@
 package content.region.asgarnia.falador.quest.fortress
 
 import content.data.GameAttributes
-import content.region.asgarnia.quest.fortress.dialogue.SirAmikVarzeDialogue
-import content.region.asgarnia.quest.fortress.handlers.BlackKnightsFortressPlugin
+import content.region.asgarnia.falador.quest.fortress.dialogue.SirAmikVarzeDialogue
+import content.region.asgarnia.falador.quest.fortress.handlers.BlackKnightsFortressPlugin
 import core.api.getAttribute
 import core.api.removeAttribute
 import core.api.sendItemZoomOnInterface

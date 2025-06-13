@@ -1,6 +1,5 @@
 package content.region.misthalin.draynor_village.quest.swept.dialogue;
 
-import content.region.misthalin.draynor_village.quests.swept.SweptAway;
 import core.game.dialogue.Dialogue;
 import core.game.dialogue.FaceAnim;
 import core.game.node.entity.npc.NPC;
@@ -18,11 +17,6 @@ import static core.tools.DialogueHelperKt.END_DIALOGUE;
 
 /**
  * Represents the Maggie dialogue.
- *
- * <p>Relations:
- * <ul>
- *   <li>{@link SweptAway Swept Away quest}</li>
- * </ul>
  */
 @Initializable
 public class MaggieDialogue extends Dialogue {

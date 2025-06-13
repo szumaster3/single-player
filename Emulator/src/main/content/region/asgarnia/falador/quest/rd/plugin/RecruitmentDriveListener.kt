@@ -1,9 +1,9 @@
 package content.region.asgarnia.falador.quest.rd.plugin
 
-import content.region.asgarnia.dialogue.falador.KnightNotesDialogue
-import content.region.asgarnia.quest.rd.RecruitmentDrive
-import content.region.asgarnia.quest.rd.cutscene.FailCutscene
-import content.region.asgarnia.quest.rd.cutscene.FinishCutscene
+import content.region.asgarnia.falador.dialogue.KnightNotesDialogue
+import content.region.asgarnia.falador.quest.rd.RecruitmentDrive
+import content.region.asgarnia.falador.quest.rd.cutscene.FailCutscene
+import content.region.asgarnia.falador.quest.rd.cutscene.FinishCutscene
 import core.api.*
 import core.api.ui.closeDialogue
 import core.game.dialogue.FaceAnim

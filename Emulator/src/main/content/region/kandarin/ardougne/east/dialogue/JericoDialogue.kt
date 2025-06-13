@@ -21,8 +21,7 @@ class JericoDialogue(
             end()
             openDialogue(
                 player,
-                content.region.kandarin.quest.biohazard.dialogue
-                    .JericoDialogue(),
+                JericoDialogue(),
             )
         } else {
             npcl(FaceAnim.SUSPICIOUS, "Hello.")

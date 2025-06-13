@@ -1,6 +1,7 @@
 package content.region.fremennik.rellekka.quest.viking.dialogue
 
 import content.data.GameAttributes
+import content.region.fremennik.rellekka.quest.viking.FremennikTrials
 import core.api.addItemOrDrop
 import core.api.getAttribute
 import core.api.inInventory

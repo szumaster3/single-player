@@ -1,6 +1,6 @@
 package content.region.asgarnia.burthope.quest.death.plugin
 
-import content.region.asgarnia.quest.death.dialogue.DoorPlateauDialogueFile
+import content.region.asgarnia.burthope.quest.death.dialogue.DoorPlateauDialogueFile
 import core.api.item.produceGroundItem
 import core.api.location
 import core.api.openDialogue
@@ -56,14 +56,14 @@ class DeathPlateauListener : InteractionListener {
         }
 
         on(Items.IOU_3103, ITEM, "read") { player, _ ->
-            openDialogue(player, content.region.asgarnia.burthope.quest.death.plugin.CombinationScrollDialogue())
+            openDialogue(player, CombinationScrollDialogue())
             return@on true
         }
 
         onUseWith(
             IntType.SCENERY,
-            content.region.asgarnia.burthope.quest.death.plugin.DeathPlateauListener.Companion.stoneBalls,
-            *content.region.asgarnia.burthope.quest.death.plugin.DeathPlateauListener.Companion.stoneMechanisms,
+            stoneBalls,
+            *stoneMechanisms,
         ) { player, used, with ->
             val stoneBall = used.asItem()
             val stoneMechanism = with.asScenery()

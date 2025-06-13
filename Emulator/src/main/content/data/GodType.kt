@@ -17,42 +17,15 @@ import org.rs.consts.NPCs
 /**
  * Represents god books.
  */
-enum class GodType(
-    val cape: Item,
-    val staff: Item,
-    val statueId: Int,
-    val npcId: Int,
-    val dropMessage: String,
-) {
-    SARADOMIN(
-        cape = Item(Items.SARADOMIN_CAPE_2412),
-        staff = Item(Items.SARADOMIN_STAFF_2415),
-        statueId = org.rs.consts.Scenery.STATUE_OF_SARADOMIN_2873,
-        npcId = NPCs.BATTLE_MAGE_913,
-        dropMessage = "The cape disappears in a flash of light as it touches the ground.",
-    ),
-    GUTHIX(
-        cape = Item(Items.GUTHIX_CAPE_2413),
-        staff = Item(Items.GUTHIX_STAFF_2416),
-        statueId = org.rs.consts.Scenery.STATUE_OF_GUTHIX_2875,
-        npcId = NPCs.BATTLE_MAGE_914,
-        dropMessage = "The cape disintegrates as it touches the earth.",
-    ),
-    ZAMORAK(
-        cape = Item(Items.ZAMORAK_CAPE_2414),
-        staff = Item(Items.ZAMORAK_STAFF_2417),
-        statueId = org.rs.consts.Scenery.STATUE_OF_ZAMORAK_2874,
-        npcId = NPCs.BATTLE_MAGE_912,
-        dropMessage = "The cape ignites and burns up as it touches the ground.",
-    ), ;
+enum class GodType(val cape: Item, val staff: Item, val statueId: Int, val npcId: Int, val dropMessage: String, ) {
+    SARADOMIN(Item(Items.SARADOMIN_CAPE_2412), Item(Items.SARADOMIN_STAFF_2415), org.rs.consts.Scenery.STATUE_OF_SARADOMIN_2873, NPCs.BATTLE_MAGE_913, "The cape disappears in a flash of light as it touches the ground."),
+    GUTHIX(Item(Items.GUTHIX_CAPE_2413), Item(Items.GUTHIX_STAFF_2416), org.rs.consts.Scenery.STATUE_OF_GUTHIX_2875, NPCs.BATTLE_MAGE_914, "The cape disintegrates as it touches the earth."),
+    ZAMORAK(Item(Items.ZAMORAK_CAPE_2414), Item(Items.ZAMORAK_STAFF_2417), org.rs.consts.Scenery.STATUE_OF_ZAMORAK_2874, NPCs.BATTLE_MAGE_912, "The cape ignites and burns up as it touches the ground."), ;
 
     /**
      * Allows the player to pray to the associated god statue.
      */
-    fun pray(
-        player: Player,
-        statue: Scenery,
-    ) {
+    fun pray(player: Player, statue: Scenery, ) {
         if (hasAny(player)) {
             lock(player, 3)
             animate(player, Animations.HUMAN_PRAY_645)
@@ -101,19 +74,14 @@ enum class GodType(
         /**
          * Get god type for a given statue id.
          */
-        @JvmStatic
         fun forScenery(scenery: Int): GodType? = values().find { it.statueId == scenery }
 
         /**
          * Gets the god type for a player based on the cape they possess.
          */
-        @JvmStatic
-        fun getCape(
-            player: Player,
-            invyOnly: Boolean,
-        ): GodType? =
+        fun getCape(player: Player, inv: Boolean): GodType? =
             values().find { cape ->
-                if (invyOnly) {
+                if (inv) {
                     player.inventory.containsItems(cape.cape)
                 } else {
                     player.equipment.containsItem(cape.cape) || player.inventory.containsItems(cape.cape)

@@ -1,7 +1,7 @@
 package content.region.asgarnia.falador.quest.rd.plugin
 
-import content.region.asgarnia.quest.rd.RecruitmentDrive
-import content.region.asgarnia.quest.rd.plugin.RDUtils.ATTRIBUTE_NPC_SPAWN
+import content.region.asgarnia.falador.quest.rd.RecruitmentDrive
+import content.region.asgarnia.falador.quest.rd.cutscene.FailCutscene
 import core.api.*
 import core.game.dialogue.DialogueBuilder
 import core.game.dialogue.DialogueBuilderFile
@@ -113,7 +113,7 @@ class SirLeyeNPC : NPCBehavior(NPCs.SIR_LEYE_2285) {
                         sendChat(boss, "No man may defeat me!")
                         registerHintIcon(player, boss)
                         boss.attack(player)
-                        setAttribute(player, ATTRIBUTE_NPC_SPAWN, true)
+                        setAttribute(player, RDUtils.ATTRIBUTE_NPC_SPAWN, true)
                         return true
                     }
                 },

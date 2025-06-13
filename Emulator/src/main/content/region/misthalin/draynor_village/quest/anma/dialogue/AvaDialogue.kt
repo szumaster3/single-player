@@ -105,7 +105,7 @@ class AvaDialogue(
                     )
                     stage = 20
                 }
-                if (player.hasItem(_root_ide_package_.content.region.misthalin.draynor_village.quest.anma.AnimalMagnetism.PATTERN)) {
+                if (player.hasItem(AnimalMagnetism.PATTERN)) {
                     player("So what do I do with this pattern again?")
                 } else {
                     player("My pattern seems to have vanished from my pack...not", "my fault, of course.")
@@ -630,7 +630,7 @@ class AvaDialogue(
 
                     4 -> {
                         quest!!.setStage(player, 33)
-                        player.inventory.add(_root_ide_package_.content.region.misthalin.draynor_village.quest.anma.AnimalMagnetism.RESEARCH_NOTES)
+                        player.inventory.add(AnimalMagnetism.RESEARCH_NOTES)
                         end()
                     }
                 }
@@ -657,12 +657,12 @@ class AvaDialogue(
 
                     2 -> end()
                     4 -> {
-                        if (!player.inventory.hasSpaceFor(_root_ide_package_.content.region.misthalin.draynor_village.quest.anma.AnimalMagnetism.RESEARCH_NOTES)) {
+                        if (!player.inventory.hasSpaceFor(AnimalMagnetism.RESEARCH_NOTES)) {
                             player("Sorry, I don't have enough inventory space.")
                             stage++
                             return true
                         }
-                        player.inventory.add(_root_ide_package_.content.region.misthalin.draynor_village.quest.anma.AnimalMagnetism.RESEARCH_NOTES)
+                        player.inventory.add(AnimalMagnetism.RESEARCH_NOTES)
                         npc(
                             "Don't tell me, your cat ate them? You won't get out of",
                             "the job that easily; here are some copies I made.",
@@ -726,8 +726,8 @@ class AvaDialogue(
                     }
 
                     17 ->
-                        if (player.inventory.remove(_root_ide_package_.content.region.misthalin.draynor_village.quest.anma.AnimalMagnetism.TRANSLATED_NOTES)) {
-                            player.inventory.add(_root_ide_package_.content.region.misthalin.draynor_village.quest.anma.AnimalMagnetism.PATTERN)
+                        if (player.inventory.remove(AnimalMagnetism.TRANSLATED_NOTES)) {
+                            player.inventory.add(AnimalMagnetism.PATTERN)
                             quest!!.setStage(player, 34)
                             end()
                         }
@@ -755,18 +755,18 @@ class AvaDialogue(
                     }
 
                     11 -> {
-                        if (!player.inventory.hasSpaceFor(_root_ide_package_.content.region.misthalin.draynor_village.quest.anma.AnimalMagnetism.PATTERN)) {
+                        if (!player.inventory.hasSpaceFor(AnimalMagnetism.PATTERN)) {
                             player("Sorry, I don't have enough room in my backpack.")
                             stage++
                         }
-                        player.inventory.add(_root_ide_package_.content.region.misthalin.draynor_village.quest.anma.AnimalMagnetism.PATTERN)
+                        player.inventory.add(AnimalMagnetism.PATTERN)
                         npc("Here's a replacement; perhaps if I charged for them,", "you'd be more careful.")
                         stage++
                     }
 
                     12 -> end()
                     20 ->
-                        if (player.inventory.remove(_root_ide_package_.content.region.misthalin.draynor_village.quest.anma.AnimalMagnetism.CONTAINER)) {
+                        if (player.inventory.remove(AnimalMagnetism.CONTAINER)) {
                             quest!!.finish(player)
                             end()
                         }
@@ -986,7 +986,7 @@ class AvaDialogue(
     }
 
     private fun buy(upgrade: Boolean) {
-        val item = if (upgrade) _root_ide_package_.content.region.misthalin.draynor_village.quest.anma.AnimalMagnetism.AVAS_ACCUMULATOR else _root_ide_package_.content.region.misthalin.draynor_village.quest.anma.AnimalMagnetism.AVAS_ATTRACTOR
+        val item = if (upgrade) AnimalMagnetism.AVAS_ACCUMULATOR else AnimalMagnetism.AVAS_ATTRACTOR
         if (!player.inventory.hasSpaceFor(item)) {
             end()
             player("Sorry, I don't have enough inventory space.")
@@ -1013,7 +1013,7 @@ class AvaDialogue(
             player.inventory.remove(Item(886, 75))
         }
         end()
-        removeAll(player, item, if (upgrade) _root_ide_package_.content.region.misthalin.draynor_village.quest.anma.AnimalMagnetism.AVAS_ATTRACTOR else _root_ide_package_.content.region.misthalin.draynor_village.quest.anma.AnimalMagnetism.AVAS_ACCUMULATOR)
+        removeAll(player, item, if (upgrade) AnimalMagnetism.AVAS_ATTRACTOR else AnimalMagnetism.AVAS_ACCUMULATOR)
         player.inventory.remove(coins)
         npc(
             FaceAnim.HAPPY,

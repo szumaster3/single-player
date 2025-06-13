@@ -8,9 +8,9 @@ import org.rs.consts.NPCs
 @Initializable
 class BrotherBordissNPC(id: Int = 0, location: Location? = null, ) : AbstractNPC(id, location) {
     override fun construct(id: Int, location: Location, vararg objects: Any): AbstractNPC =
-        content.region.island.quests.icemt.BrotherBordissNPC(id, location)
+        BrotherBordissNPC(id, location)
 
-    override fun getIds(): IntArray = content.region.island.quests.icemt.BrotherBordissNPC.Companion.ID
+    override fun getIds(): IntArray = BrotherBordissNPC.Companion.ID
 
     companion object {
         private val ID = intArrayOf(NPCs.BROTHER_BORDISS_7724)

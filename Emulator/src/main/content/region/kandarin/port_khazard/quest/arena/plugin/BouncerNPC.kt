@@ -1,6 +1,6 @@
 package content.region.kandarin.port_khazard.quest.arena.plugin
 
-import content.region.kandarin.quest.arena.dialogue.GeneralKhazardDialogue
+import content.region.kandarin.port_khazard.quest.arena.dialogue.GeneralKhazardDialogue
 import core.api.getAttribute
 import core.api.location
 import core.api.openDialogue

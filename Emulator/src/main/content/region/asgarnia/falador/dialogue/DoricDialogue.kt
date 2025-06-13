@@ -1,7 +1,7 @@
 package content.region.asgarnia.falador.dialogue
 
-import content.region.asgarnia.quest.dorics.cutscene.DoricCutscene
-import content.region.asgarnia.quest.dorics.dialogue.DoricDialogue
+import content.region.asgarnia.falador.quest.dorics.cutscene.DoricCutscene
+import content.region.asgarnia.falador.quest.dorics.dialogue.DoricDialogue
 import core.api.*
 import core.api.quest.getQuestStage
 import core.game.dialogue.Dialogue
@@ -63,14 +63,14 @@ class DoricDialogue(
             10 ->
                 openDialogue(
                     player,
-                    DoricDialogue(10),
+                    content.region.asgarnia.falador.quest.dorics.dialogue.DoricDialogue(10),
                     npc,
                 )
 
             20 ->
                 openDialogue(
                     player,
-                    DoricDialogue(20),
+                    content.region.asgarnia.falador.quest.dorics.dialogue.DoricDialogue(20),
                     npc,
                 )
 

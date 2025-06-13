@@ -116,7 +116,7 @@ class WitchDialogue(
 
                     4 ->
                         if (player.inventory.remove(IRON_BARS)) {
-                            player.inventory.add(_root_ide_package_.content.region.misthalin.draynor_village.quest.anma.AnimalMagnetism.SELECTED_IRON)
+                            player.inventory.add(AnimalMagnetism.SELECTED_IRON)
                             setQuestStage(player, Quests.ANIMAL_MAGNETISM, 27)
                             end()
                         }
@@ -139,7 +139,7 @@ class WitchDialogue(
                             player("Okay, I'll go get some.")
                         }
                         if (player.inventory.remove(IRON_BARS)) {
-                            player.inventory.add(_root_ide_package_.content.region.misthalin.draynor_village.quest.anma.AnimalMagnetism.SELECTED_IRON)
+                            player.inventory.add(AnimalMagnetism.SELECTED_IRON)
                         }
                     }
                 }

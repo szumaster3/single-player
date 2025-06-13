@@ -1,6 +1,6 @@
 package content.region.asgarnia.falador.dialogue
 
-import content.region.asgarnia.quest.rd.plugin.SirSpishyusDialogueFile
+import content.region.asgarnia.falador.quest.rd.plugin.SirSpishyusDialogueFile
 import core.api.openDialogue
 import core.game.dialogue.Dialogue
 import core.game.node.entity.player.Player

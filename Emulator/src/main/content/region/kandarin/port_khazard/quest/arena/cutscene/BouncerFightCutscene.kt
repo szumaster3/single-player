@@ -1,6 +1,6 @@
 package content.region.kandarin.port_khazard.quest.arena.cutscene
 
-import content.region.kandarin.quest.arena.handlers.npc.BouncerNPC
+import content.region.kandarin.port_khazard.quest.arena.plugin.BouncerNPC
 import core.game.activity.Cutscene
 import core.game.global.action.DoorActionHandler
 import core.game.node.entity.player.Player

@@ -1,7 +1,6 @@
 package content.region.morytania.port_phasmatys.quest.ahoy.dialogue
 
 import content.region.morytania.port_phasmatys.quest.ahoy.plugin.GhostsAhoyUtils
-import content.region.morytania.quest.ahoy.plugin.GhostsAhoyUtils
 import core.api.*
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim

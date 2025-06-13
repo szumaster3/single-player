@@ -1,6 +1,5 @@
 package content.region.kandarin.ardougne.west.dialogue
 
-import content.region.kandarin.quest.biohazard.dialogue.KilronDialogue
 import core.api.openDialogue
 import core.api.quest.isQuestComplete
 import core.api.quest.isQuestInProgress

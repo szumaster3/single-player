@@ -1,9 +1,9 @@
 package content.region.misthalin.draynor_village.quest.anma;
 
-import content.region.misthalin.draynor_village.quests.anma.dialogue.AliceDialogue;
-import content.region.misthalin.draynor_village.quests.anma.dialogue.AliceHusbandDialogue;
-import content.region.misthalin.draynor_village.quests.anma.dialogue.AvaDialogue;
-import content.region.misthalin.draynor_village.quests.anma.dialogue.WitchDialogue;
+import content.region.misthalin.draynor_village.quest.anma.dialogue.AliceDialogue;
+import content.region.misthalin.draynor_village.quest.anma.dialogue.AliceHusbandDialogue;
+import content.region.misthalin.draynor_village.quest.anma.dialogue.AvaDialogue;
+import content.region.misthalin.draynor_village.quest.anma.dialogue.WitchDialogue;
 import content.region.misthalin.draynor_village.quest.anma.plugin.AnimalMagnetismPlugin;
 import core.game.node.entity.player.Player;
 import core.game.node.entity.player.link.quest.Quest;

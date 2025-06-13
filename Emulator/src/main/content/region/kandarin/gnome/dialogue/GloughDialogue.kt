@@ -2,6 +2,7 @@ package content.region.kandarin.gnome.dialogue
 
 import content.minigame.gnomecook.handlers.*
 import core.api.*
+import core.api.quest.getQuestStage
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
@@ -9,6 +10,7 @@ import core.game.node.entity.player.Player
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
+import org.rs.consts.Quests
 
 @Initializable
 class GloughDialogue(

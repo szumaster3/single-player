@@ -1,7 +1,6 @@
 package content.region.misthalin.draynor_village.quest.swept.dialogue;
 
 import content.data.GameAttributes;
-import content.region.misthalin.draynor_village.quests.swept.SweptAway;
 import core.game.dialogue.Dialogue;
 import core.game.dialogue.FaceAnim;
 import core.game.dialogue.Topic;
@@ -17,11 +16,6 @@ import static core.tools.DialogueHelperKt.END_DIALOGUE;
 
 /**
  * Represents the Lottie dialogue.
- *
- * <p>Relations:
- * <ul>
- *   <li>{@link SweptAway Swept Away quest}</li>
- * </ul>
  */
 @Initializable
 public class LottieDialogue extends Dialogue {

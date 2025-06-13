@@ -6,9 +6,7 @@ import core.game.node.entity.player.Player
 import core.game.world.map.Location
 
 /**
- * Enum representing different respawn points in the game world.
- *
- * @property location The [Location] of the respawn point.
+ * Enum representing different respawn points.
  */
 enum class RespawnPoint(
     val location: Location,
@@ -36,11 +34,9 @@ fun Player.setRespawnLocation(respawnPoint: RespawnPoint) {
 }
 
 /**
- * Example function demonstrating how to use the [setRespawnLocation] extension method.
+ * Example.
  *
  * Possible to test in-game via command: `::respawn <point>`
- *
- * @param player The player whose respawn location is being set.
  */
 fun testRespawnPoint(player: Player) {
     player.setRespawnLocation(RespawnPoint.FALADOR)

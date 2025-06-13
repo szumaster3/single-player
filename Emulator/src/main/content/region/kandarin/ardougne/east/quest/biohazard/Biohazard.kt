@@ -1,6 +1,6 @@
 package content.region.kandarin.ardougne.east.quest.biohazard
 
-import content.region.kandarin.quest.biohazard.handlers.BiohazardUtils
+import content.region.kandarin.ardougne.east.quest.biohazard.plugin.BiohazardUtils
 import core.api.quest.isQuestComplete
 import core.api.removeAttributes
 import core.api.rewardXP

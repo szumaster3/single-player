@@ -1,6 +1,7 @@
 package content.region.fremennik.rellekka.quest.viking.dialogue
 
 import content.data.GameAttributes
+import content.region.fremennik.rellekka.quest.viking.FremennikTrials
 import core.api.*
 import core.api.quest.getQuestStage
 import core.api.quest.isQuestComplete

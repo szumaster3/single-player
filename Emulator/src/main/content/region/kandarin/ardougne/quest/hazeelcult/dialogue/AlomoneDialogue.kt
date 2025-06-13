@@ -1,6 +1,5 @@
 package content.region.kandarin.ardougne.quest.hazeelcult.dialogue
 
-import content.region.kandarin.quest.hazeelcult.handlers.HazeelCultListener
 import core.api.getAttribute
 import core.api.quest.getQuestStage
 import core.api.quest.setQuestStage
@@ -21,8 +20,8 @@ class AlomoneDialogue(
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         val questStage = getQuestStage(player, Quests.HAZEEL_CULT)
-        val hasMahjarrat = getAttribute(player, HazeelCultListener.MAHJARRAT, true)
-        val hasCarnillean = getAttribute(player, HazeelCultListener.CARNILLEAN, true)
+        val hasMahjarrat = getAttribute(player, "hazeelcult:mahjarrat", true)
+        val hasCarnillean = getAttribute(player, "hazeelcult:carnillean", true)
 
         when {
             questStage >= 2 -> npcl(FaceAnim.FRIENDLY, "How did YOU get in here?")

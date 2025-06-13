@@ -1,6 +1,6 @@
 package content.region.kandarin.seersvillage.quest.murder
 
-import content.region.kandarin.quest.murder.handlers.MurderMysteryUtils
+import content.region.kandarin.seersvillage.quest.murder.plugin.MurderMysteryUtils
 import core.api.*
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest

@@ -2,7 +2,6 @@ package content.region.misthalin.draynor_village.quest.anma.dialogue
 
 import content.region.misthalin.draynor_village.quest.anma.AnimalMagnetism
 import content.region.misthalin.draynor_village.quest.anma.cutscene.AnimalMagnetismCutscene
-import content.region.misthalin.draynor_village.quests.anma.cutscene.AnimalMagnetismCutscene
 import core.game.dialogue.Dialogue
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
@@ -330,7 +329,7 @@ class AliceHusbandDialogue(
                     }
 
                     7 -> {
-                        if (player.inventory.remove(_root_ide_package_.content.region.misthalin.draynor_village.quest.anma.AnimalMagnetism.CRONE_AMULET)) {
+                        if (player.inventory.remove(AnimalMagnetism.CRONE_AMULET)) {
                             quest.setStage(player, 19)
                             end()
                         }

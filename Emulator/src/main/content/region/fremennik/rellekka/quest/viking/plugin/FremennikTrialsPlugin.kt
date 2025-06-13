@@ -3,8 +3,8 @@ package content.region.fremennik.rellekka.quest.viking.plugin
 import content.data.GameAttributes
 import content.global.skill.gathering.woodcutting.WoodcuttingPulse
 import content.region.fremennik.rellekka.plugin.LyreTeleport
-import content.region.fremennik.quest.viking.dialogue.CouncilWorkerDialogue
-import content.region.fremennik.quest.viking.dialogue.FremennikFishermanDialogue
+import content.region.fremennik.rellekka.quest.viking.dialogue.CouncilWorkerDialogue
+import content.region.fremennik.rellekka.quest.viking.dialogue.FremennikFishermanDialogue
 import core.api.*
 import core.api.interaction.openNpcShop
 import core.api.quest.getQuestPoints
@@ -41,8 +41,8 @@ class FremennikTrialsPlugin : InteractionListener {
          * Handles interaction with Fisherman.
          */
 
-        on(FISHERMAN, IntType.NPC, "talk-to") { player, _ ->
-            openDialogue(player, FremennikFishermanDialogue())
+        on(FISHERMAN, IntType.NPC, "talk-to") { player, node ->
+            openDialogue(player, FremennikFishermanDialogue(), node)
             return@on true
         }
 

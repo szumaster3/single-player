@@ -1,6 +1,6 @@
 package content.region.kandarin.port_khazard.quest.arena.cutscene
 
-import content.region.kandarin.quest.arena.dialogue.HengradDialogue
+import content.region.kandarin.port_khazard.quest.arena.dialogue.HengradDialogue
 import core.api.face
 import core.api.location
 import core.api.openDialogue

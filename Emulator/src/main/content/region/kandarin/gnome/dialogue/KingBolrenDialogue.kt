@@ -1,7 +1,9 @@
 package content.region.kandarin.gnome.dialogue
 
 import content.minigame.gnomecook.handlers.*
+import content.region.kandarin.gnome.quest.tree.dialogue.KingBolrenDialogueFile
 import core.api.*
+import core.api.quest.isQuestComplete
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
@@ -10,6 +12,7 @@ import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import org.rs.consts.Items
 import org.rs.consts.NPCs
+import org.rs.consts.Quests
 
 @Initializable
 class KingBolrenDialogue(

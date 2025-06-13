@@ -1,6 +1,5 @@
 package content.region.kandarin.ardougne.east.dialogue
 
-import content.region.kandarin.quest.biohazard.dialogue.ElenaDialogue
 import core.api.openDialogue
 import core.api.quest.isQuestComplete
 import core.api.quest.isQuestInProgress

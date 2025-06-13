@@ -1,6 +1,5 @@
 package content.region.kandarin.ardougne.quest.hazeelcult
 
-import content.region.kandarin.quest.hazeelcult.handlers.HazeelCultListener
 import core.api.addItemOrDrop
 import core.api.getAttribute
 import core.api.rewardXP
@@ -21,8 +20,8 @@ class HazeelCult : Quest(Quests.HAZEEL_CULT, 74, 73, 1, Vars.VARP_QUEST_HAZEEL_C
         super.drawJournal(player, stage)
         var line = 11
 
-        val attributeMahjarrat = getAttribute(player, HazeelCultListener.MAHJARRAT, false)
-        val attributeCarnillean = getAttribute(player, HazeelCultListener.CARNILLEAN, false)
+        val attributeMahjarrat = getAttribute(player, "hazeelcult:mahjarrat", false)
+        val attributeCarnillean = getAttribute(player, "hazeelcult:carnillean", false)
 
         if (stage >= 0) {
             line(player, "I can start the quest by talking to !!Sir Ceril Carnillean?? at", line++, stage >= 1)

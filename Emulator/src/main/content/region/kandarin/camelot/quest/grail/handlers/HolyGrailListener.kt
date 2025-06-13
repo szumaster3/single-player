@@ -2,7 +2,6 @@ package content.region.kandarin.camelot.quest.grail.handlers
 
 import content.region.kandarin.camelot.quest.grail.HolyGrail
 import content.region.kandarin.camelot.quest.grail.dialogue.*
-import content.region.kandarin.quest.grail.dialogue.*
 import core.api.*
 import core.api.quest.getQuestStage
 import core.game.global.action.ClimbActionHandler

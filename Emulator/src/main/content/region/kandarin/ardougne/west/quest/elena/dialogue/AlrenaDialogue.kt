@@ -1,6 +1,6 @@
 package content.region.kandarin.ardougne.west.quest.elena.dialogue
 
-import content.region.kandarin.quest.elena.handlers.PlagueCityListener
+import content.region.kandarin.ardougne.west.quest.elena.plugin.PlagueCityPlugin
 import core.api.*
 import core.api.quest.getQuestStage
 import core.api.quest.setQuestStage
@@ -89,7 +89,7 @@ class AlrenaDialogue(
                         end()
                         addItem(player!!, Items.GAS_MASK_1506)
                         setQuestStage(player!!, Quests.PLAGUE_CITY, 2)
-                        setAttribute(player!!, PlagueCityListener.BUCKET_USES_ATTRIBUTE, 0)
+                        setAttribute(player!!, PlagueCityPlugin.BUCKET_USES_ATTRIBUTE, 0)
                         sendNPCDialogue(
                             player!!,
                             NPCs.ALRENA_710,
@@ -114,7 +114,7 @@ class AlrenaDialogue(
             3 ->
                 when (stage) {
                     START_DIALOGUE -> {
-                        if (getAttribute(player, PlagueCityListener.BUCKET_USES_ATTRIBUTE, 0) == 1) {
+                        if (getAttribute(player, PlagueCityPlugin.BUCKET_USES_ATTRIBUTE, 0) == 1) {
                             npcl(FaceAnim.FRIENDLY, "Hello darling, how's that tunnel coming along?").also { stage = 5 }
                         } else {
                             npcl(FaceAnim.FRIENDLY, "How's the tunnel going?").also { stage = 2 }

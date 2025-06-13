@@ -1,7 +1,9 @@
 package content.region.kandarin.gnome.dialogue
 
+import content.data.GameAttributes
 import content.minigame.gnomecook.handlers.*
 import core.api.*
+import core.api.quest.setQuestStage
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
@@ -10,6 +12,8 @@ import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import org.rs.consts.Items
 import org.rs.consts.NPCs
+import org.rs.consts.Quests
+import org.rs.consts.Vars
 
 @Initializable
 class GunnjornDialogue(
@@ -272,7 +276,7 @@ class GunnjornDialogue(
         return true
     }
 
-    override fun newInstance(player: Player?): Dialogue = content.region.kandarin.gnome.GunnjornDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = GunnjornDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.GUNNJORN_607)
 }

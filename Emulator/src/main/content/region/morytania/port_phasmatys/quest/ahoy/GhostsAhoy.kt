@@ -1,7 +1,6 @@
 package content.region.morytania.port_phasmatys.quest.ahoy
 
 import content.region.morytania.port_phasmatys.quest.ahoy.plugin.GhostsAhoyUtils
-import content.region.morytania.quest.ahoy.plugin.GhostsAhoyUtils
 import core.api.quest.isQuestComplete
 import core.api.removeAttributes
 import core.api.rewardXP

@@ -9,168 +9,45 @@ enum class MeatState {
     EDIBLE_COOKED,
 }
 
-enum class Meat(
-    val id: Int,
-    val state: MeatState,
-) {
-    ENCHANTED_BEEF(
-        id = Items.ENCHANTED_BEEF_522,
-        state = MeatState.INEDIBLE_SPECIAL,
-    ),
-    ENCHANTED_RAT_MEAT(
-        id = Items.ENCHANTED_RAT_MEAT_523,
-        state = MeatState.INEDIBLE_SPECIAL,
-    ),
-    ENCHANTED_BEAR_MEAT(
-        id = Items.ENCHANTED_BEAR_MEAT_524,
-        state = MeatState.INEDIBLE_SPECIAL,
-    ),
-    ENCHANTED_CHICKEN(
-        id = Items.ENCHANTED_CHICKEN_525,
-        state = MeatState.INEDIBLE_SPECIAL,
-    ),
-    RAW_UGTHANKI_MEAT(
-        Items.RAW_UGTHANKI_MEAT_1859,
-        state = MeatState.INEDIBLE_RAW,
-    ),
-    UGTHANKI_MEAT(
-        id = Items.UGTHANKI_MEAT_1861,
-        state = MeatState.EDIBLE_COOKED,
-    ),
-    RAW_BEEF(
-        id = Items.RAW_BEEF_2132,
-        state = MeatState.INEDIBLE_RAW,
-    ),
-    RAW_RAT_MEAT(
-        id = Items.RAW_RAT_MEAT_2134,
-        state = MeatState.INEDIBLE_RAW,
-    ),
-    RAW_BEAR_MEAT(
-        id = Items.RAW_BEAR_MEAT_2136,
-        state = MeatState.INEDIBLE_RAW,
-    ),
-    RAW_CHICKEN(
-        id = Items.RAW_CHICKEN_2138,
-        state = MeatState.INEDIBLE_RAW,
-    ),
-    COOKED_CHICKEN(
-        id = Items.COOKED_CHICKEN_2140,
-        state = MeatState.EDIBLE_COOKED,
-    ),
-    BURNT_CHICKEN(
-        id = Items.BURNT_CHICKEN_2144,
-        state = MeatState.INEDIBLE_BURNT,
-    ),
-    COOKED_MEAT(
-        id = Items.COOKED_MEAT_2142,
-        state = MeatState.EDIBLE_COOKED,
-    ),
-    BURNT_MEAT(
-        id = Items.BURNT_MEAT_2146,
-        state = MeatState.INEDIBLE_BURNT,
-    ),
-    THIN_SNAIL_MEAT(
-        id = Items.THIN_SNAIL_MEAT_3369,
-        state = MeatState.EDIBLE_COOKED,
-    ),
-    LEAN_SNAIL_MEAT(
-        id = Items.LEAN_SNAIL_MEAT_3371,
-        state = MeatState.EDIBLE_COOKED,
-    ),
-    FAT_SNAIL_MEAT(
-        id = Items.FAT_SNAIL_MEAT_3373,
-        state = MeatState.EDIBLE_COOKED,
-    ),
-    RAW_BEEF_UNDEAD(
-        id = Items.RAW_BEEF_4287,
-        state = MeatState.INEDIBLE_RAW,
-    ),
-    RAW_CHICKEN_UNDEAD(
-        id = Items.RAW_CHICKEN_4289,
-        state = MeatState.INEDIBLE_RAW,
-    ),
-    COOKED_CHICKEN_UNDEAD(
-        id = Items.COOKED_CHICKEN_4291,
-        state = MeatState.EDIBLE_COOKED,
-    ),
-    COOKED_MEAT_UNDEAD(
-        id = Items.COOKED_MEAT_4293,
-        state = MeatState.EDIBLE_COOKED,
-    ),
-    RAW_CRAB_MEAT(
-        id = Items.CRAB_MEAT_7518,
-        state = MeatState.INEDIBLE_RAW,
-    ),
-    BURNT_CRAB_MEAT(
-        id = Items.BURNT_CRAB_MEAT_7520,
-        state = MeatState.INEDIBLE_BURNT,
-    ),
-    COOKED_CRAB_MEAT_5(
-        id = Items.COOKED_CRAB_MEAT_7521,
-        state = MeatState.EDIBLE_COOKED,
-    ),
-    COOKED_CRAB_MEAT_4(
-        id = Items.COOKED_CRAB_MEAT_7523,
-        state = MeatState.EDIBLE_COOKED,
-    ),
-    COOKED_CRAB_MEAT_3(
-        id = Items.COOKED_CRAB_MEAT_7524,
-        state = MeatState.EDIBLE_COOKED,
-    ),
-    COOKED_CRAB_MEAT_2(
-        id = Items.COOKED_CRAB_MEAT_7525,
-        state = MeatState.EDIBLE_COOKED,
-    ),
-    COOKED_CRAB_MEAT_1(
-        id = Items.COOKED_CRAB_MEAT_7526,
-        state = MeatState.EDIBLE_COOKED,
-    ),
-    GROUND_CRAB_MEAT(
-        id = Items.GROUND_CRAB_MEAT_7527,
-        state = MeatState.INEDIBLE_RAW,
-    ),
-    LOCUST_MEAT(
-        id = Items.LOCUST_MEAT_9052,
-        state = MeatState.EDIBLE_COOKED,
-    ),
-    RAW_BIRD_MEAT(
-        id = Items.RAW_BIRD_MEAT_9978,
-        state = MeatState.INEDIBLE_RAW,
-    ),
-    ROAST_BIRD_MEAT(
-        id = Items.ROAST_BIRD_MEAT_9980,
-        state = MeatState.EDIBLE_COOKED,
-    ),
-    BURNT_BIRD_MEAT(
-        id = Items.BURNT_BIRD_MEAT_9982,
-        state = MeatState.INEDIBLE_BURNT,
-    ),
-    SKEWERED_BIRD_MEAT(
-        id = Items.SKEWERED_BIRD_MEAT_9984,
-        state = MeatState.INEDIBLE_RAW,
-    ),
-    RAW_BEAST_MEAT(
-        id = Items.RAW_BEAST_MEAT_9986,
-        state = MeatState.INEDIBLE_RAW,
-    ),
-    ROAST_BEAST_MEAT(
-        id = Items.ROAST_BEAST_MEAT_9988,
-        state = MeatState.EDIBLE_COOKED,
-    ),
-    BURNT_BEAST_MEAT(
-        id = Items.BURNT_BEAST_MEAT_9990,
-        state = MeatState.INEDIBLE_BURNT,
-    ),
-    RAW_YAK_MEAT(
-        id = Items.RAW_YAK_MEAT_10816,
-        state = MeatState.INEDIBLE_RAW,
-    ),
-    RAW_PAWYA_MEAT(
-        id = Items.RAW_PAWYA_MEAT_12535,
-        state = MeatState.INEDIBLE_RAW,
-    ),
-    ENCHANTED_PAWYA_MEAT(
-        id = Items.ENCHANTED_PAWYA_MEAT_12546,
-        state = MeatState.INEDIBLE_SPECIAL,
-    ),
+enum class Meat(val id: Int, val state: MeatState, ) {
+    ENCHANTED_BEEF(Items.ENCHANTED_BEEF_522, MeatState.INEDIBLE_SPECIAL),
+    ENCHANTED_RAT_MEAT(Items.ENCHANTED_RAT_MEAT_523, MeatState.INEDIBLE_SPECIAL),
+    ENCHANTED_BEAR_MEAT(Items.ENCHANTED_BEAR_MEAT_524, MeatState.INEDIBLE_SPECIAL),
+    ENCHANTED_CHICKEN(Items.ENCHANTED_CHICKEN_525, MeatState.INEDIBLE_SPECIAL),
+    RAW_UGTHANKI_MEAT(Items.RAW_UGTHANKI_MEAT_1859, state = MeatState.INEDIBLE_RAW),
+    UGTHANKI_MEAT(Items.UGTHANKI_MEAT_1861, MeatState.EDIBLE_COOKED),
+    RAW_BEEF(Items.RAW_BEEF_2132, MeatState.INEDIBLE_RAW),
+    RAW_RAT_MEAT(Items.RAW_RAT_MEAT_2134, MeatState.INEDIBLE_RAW),
+    RAW_BEAR_MEAT(Items.RAW_BEAR_MEAT_2136, MeatState.INEDIBLE_RAW),
+    RAW_CHICKEN(Items.RAW_CHICKEN_2138, MeatState.INEDIBLE_RAW),
+    COOKED_CHICKEN(Items.COOKED_CHICKEN_2140, MeatState.EDIBLE_COOKED),
+    BURNT_CHICKEN(Items.BURNT_CHICKEN_2144, MeatState.INEDIBLE_BURNT),
+    COOKED_MEAT(Items.COOKED_MEAT_2142, MeatState.EDIBLE_COOKED),
+    BURNT_MEAT(Items.BURNT_MEAT_2146, MeatState.INEDIBLE_BURNT),
+    THIN_SNAIL_MEAT(Items.THIN_SNAIL_MEAT_3369, MeatState.EDIBLE_COOKED),
+    LEAN_SNAIL_MEAT(Items.LEAN_SNAIL_MEAT_3371, MeatState.EDIBLE_COOKED),
+    FAT_SNAIL_MEAT(Items.FAT_SNAIL_MEAT_3373, MeatState.EDIBLE_COOKED),
+    RAW_BEEF_UNDEAD(Items.RAW_BEEF_4287, MeatState.INEDIBLE_RAW),
+    RAW_CHICKEN_UNDEAD(Items.RAW_CHICKEN_4289, MeatState.INEDIBLE_RAW),
+    COOKED_CHICKEN_UNDEAD(Items.COOKED_CHICKEN_4291, MeatState.EDIBLE_COOKED),
+    COOKED_MEAT_UNDEAD(Items.COOKED_MEAT_4293, MeatState.EDIBLE_COOKED),
+    RAW_CRAB_MEAT(Items.CRAB_MEAT_7518, MeatState.INEDIBLE_RAW),
+    BURNT_CRAB_MEAT(Items.BURNT_CRAB_MEAT_7520, MeatState.INEDIBLE_BURNT),
+    COOKED_CRAB_MEAT_5(Items.COOKED_CRAB_MEAT_7521, MeatState.EDIBLE_COOKED),
+    COOKED_CRAB_MEAT_4(Items.COOKED_CRAB_MEAT_7523, MeatState.EDIBLE_COOKED),
+    COOKED_CRAB_MEAT_3(Items.COOKED_CRAB_MEAT_7524, MeatState.EDIBLE_COOKED),
+    COOKED_CRAB_MEAT_2(Items.COOKED_CRAB_MEAT_7525, MeatState.EDIBLE_COOKED),
+    COOKED_CRAB_MEAT_1(Items.COOKED_CRAB_MEAT_7526, MeatState.EDIBLE_COOKED),
+    GROUND_CRAB_MEAT(Items.GROUND_CRAB_MEAT_7527, MeatState.INEDIBLE_RAW),
+    LOCUST_MEAT(Items.LOCUST_MEAT_9052, MeatState.EDIBLE_COOKED),
+    RAW_BIRD_MEAT(Items.RAW_BIRD_MEAT_9978, MeatState.INEDIBLE_RAW),
+    ROAST_BIRD_MEAT(Items.ROAST_BIRD_MEAT_9980, MeatState.EDIBLE_COOKED),
+    BURNT_BIRD_MEAT(Items.BURNT_BIRD_MEAT_9982, MeatState.INEDIBLE_BURNT),
+    SKEWERED_BIRD_MEAT(Items.SKEWERED_BIRD_MEAT_9984, MeatState.INEDIBLE_RAW),
+    RAW_BEAST_MEAT(Items.RAW_BEAST_MEAT_9986, MeatState.INEDIBLE_RAW),
+    ROAST_BEAST_MEAT(Items.ROAST_BEAST_MEAT_9988, MeatState.EDIBLE_COOKED),
+    BURNT_BEAST_MEAT(Items.BURNT_BEAST_MEAT_9990, MeatState.INEDIBLE_BURNT),
+    RAW_YAK_MEAT(Items.RAW_YAK_MEAT_10816, MeatState.INEDIBLE_RAW),
+    RAW_PAWYA_MEAT(Items.RAW_PAWYA_MEAT_12535, MeatState.INEDIBLE_RAW),
+    ENCHANTED_PAWYA_MEAT(Items.ENCHANTED_PAWYA_MEAT_12546, MeatState.INEDIBLE_SPECIAL),
 }

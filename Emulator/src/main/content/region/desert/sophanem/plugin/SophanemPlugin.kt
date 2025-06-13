@@ -1,6 +1,5 @@
 package content.region.desert.sophanem.plugin
 
-import content.region.desert.sophanem.dialogue.EmbalmerDialogueFile
 import core.api.*
 import core.api.quest.hasRequirement
 import core.game.dialogue.FaceAnim

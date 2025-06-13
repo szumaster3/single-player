@@ -1,6 +1,5 @@
 package content.region.kandarin.ardougne.quest.hazeelcult.dialogue
 
-import content.region.kandarin.quest.hazeelcult.handlers.HazeelCultListener
 import core.api.getAttribute
 import core.api.quest.getQuestStage
 import core.api.sendMessage
@@ -29,8 +28,8 @@ class ButlerJonesDialogue(
 
             (questStage == 3) -> when (stage) {
                 0 -> {
-                    if (getAttribute(player, HazeelCultListener.MAHJARRAT, true) && !getAttribute(
-                            player, HazeelCultListener.CARNILLEAN, true
+                    if (getAttribute(player, "hazeelcult:mahjarrat", true) && !getAttribute(
+                            player, "hazeelcult:carnillean", true
                         )
                     ) {
                         playerl(FaceAnim.FRIENDLY, "Hello there.").also { stage++ }
@@ -46,7 +45,7 @@ class ButlerJonesDialogue(
 
             (questStage == 100) -> when (stage) {
                 0 -> {
-                    if (getAttribute(player, HazeelCultListener.MAHJARRAT, true) && !getAttribute(player, HazeelCultListener.CARNILLEAN, true)) {
+                    if (getAttribute(player, "hazeelcult:mahjarrat", true) && !getAttribute(player, "hazeelcult:carnillean", true)) {
                         playerl(FaceAnim.FRIENDLY, "Hello stranger.").also { stage = 1 }
                     } else {
                         playerl(FaceAnim.FRIENDLY, "Hello there.").also { stage = 6 }

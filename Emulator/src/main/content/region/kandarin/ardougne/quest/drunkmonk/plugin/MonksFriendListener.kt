@@ -1,8 +1,8 @@
 package content.region.kandarin.ardougne.quest.drunkmonk.plugin
 
-import content.region.kandarin.quest.drunkmonk.dialogue.BrotherCedricDialogueFile
-import content.region.kandarin.quest.drunkmonk.dialogue.BrotherOmadDialogueFile
-import content.region.kandarin.quest.drunkmonk.dialogue.MonasteryMonkDialogueFile
+import content.region.kandarin.ardougne.quest.drunkmonk.dialogue.BrotherCedricDialogueFile
+import content.region.kandarin.ardougne.quest.drunkmonk.dialogue.BrotherOmadDialogueFile
+import content.region.kandarin.ardougne.quest.drunkmonk.dialogue.MonasteryMonkDialogueFile
 import core.api.openDialogue
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener

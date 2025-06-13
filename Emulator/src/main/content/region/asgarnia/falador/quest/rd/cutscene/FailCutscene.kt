@@ -1,6 +1,6 @@
 package content.region.asgarnia.falador.quest.rd.cutscene
 
-import content.region.asgarnia.quest.rd.plugin.SirKuamPuzzleListener
+import content.region.asgarnia.falador.quest.rd.plugin.SirKuamPuzzleListener
 import core.api.*
 import core.api.ui.setMinimapState
 import core.game.activity.Cutscene

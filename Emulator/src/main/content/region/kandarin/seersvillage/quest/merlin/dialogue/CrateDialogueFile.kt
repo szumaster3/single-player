@@ -1,6 +1,6 @@
 package content.region.kandarin.seersvillage.quest.merlin.dialogue
 
-import content.region.kandarin.quest.merlin.cutscene.CrateCutscene
+import content.region.kandarin.seersvillage.quest.merlin.cutscene.CrateCutscene
 import core.api.sendDialogue
 import core.api.sendDialogueLines
 import core.api.sendDialogueOptions

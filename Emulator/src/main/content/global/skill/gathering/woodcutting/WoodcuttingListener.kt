@@ -5,7 +5,7 @@ import content.data.items.SkillingTool
 import content.data.tables.BirdNestDropTable
 import content.global.skill.farming.FarmingPatch
 import content.global.skill.firemaking.Log
-import content.region.fremennik.dialogue.miscellania.KjallakOnChopDialogue
+import content.region.island.miscellania.dialogue.KjallakOnChopDialogue
 import core.api.*
 import core.api.movement.finishedMoving
 import core.api.skill.clockReady

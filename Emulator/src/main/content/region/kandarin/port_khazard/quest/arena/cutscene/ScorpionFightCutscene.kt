@@ -1,6 +1,6 @@
 package content.region.kandarin.port_khazard.quest.arena.cutscene
 
-import content.region.kandarin.quest.arena.handlers.npc.ScorpionNPC.Companion.spawnScorpion
+import content.region.kandarin.port_khazard.quest.arena.plugin.ScorpionNPC
 import core.api.animate
 import core.api.location
 import core.api.sendChat
@@ -143,7 +143,7 @@ class ScorpionFightCutscene(
             21 -> {
                 end {
                     player.unlock()
-                    spawnScorpion(player)
+                    ScorpionNPC.Companion.spawnScorpion(player)
                 }
             }
         }

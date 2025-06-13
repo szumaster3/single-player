@@ -1,6 +1,6 @@
 package content.region.island.jatizso.dialogue
 
-import content.region.fremennik.quest.viking.FremennikTrials
+import content.region.fremennik.rellekka.quest.viking.FremennikTrials
 import core.api.anyInEquipment
 import core.api.inBorders
 import core.api.quest.isQuestComplete

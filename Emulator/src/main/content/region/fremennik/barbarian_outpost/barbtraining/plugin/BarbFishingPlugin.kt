@@ -1,5 +1,8 @@
 package content.region.fremennik.barbarian_outpost.barbtraining.plugin
 
+import content.region.fremennik.barbarian_outpost.barbtraining.plugin.BarbFishSpotManager.Companion.getNewLoc
+import content.region.fremennik.barbarian_outpost.barbtraining.plugin.BarbFishSpotManager.Companion.getNewTTL
+import content.region.fremennik.barbarian_outpost.barbtraining.plugin.BarbFishSpotManager.Companion.usedLocations
 import core.api.*
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener

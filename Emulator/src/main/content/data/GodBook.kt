@@ -9,52 +9,10 @@ import org.rs.consts.Quests
 /**
  * Represents the different types of God Books.
  */
-enum class GodBook(
-    val bookName: String,
-    val book: Item,
-    val damagedBook: Item,
-    val blessItem: Array<Item>,
-    val pages: Array<Item>,
-) {
-    HOLY_BOOK(
-        "Holy Book of Saradomin",
-        Item(Items.HOLY_BOOK_3840),
-        Item(Items.DAMAGED_BOOK_3839),
-        arrayOf(Item(Items.HOLY_SYMBOL_1718)),
-        arrayOf(
-            Item(Items.SARADOMIN_PAGE_1_3827),
-            Item(Items.SARADOMIN_PAGE_2_3828),
-            Item(Items.SARADOMIN_PAGE_3_3829),
-            Item(Items.SARADOMIN_PAGE_4_3830),
-        ),
-    ),
-    BOOK_OF_BALANCE(
-        "Guthix's Book of Balance",
-        Item(Items.BOOK_OF_BALANCE_3844),
-        Item(Items.DAMAGED_BOOK_3843),
-        arrayOf(
-            Item(Items.HOLY_SYMBOL_1718),
-            Item(Items.UNHOLY_SYMBOL_1724),
-        ),
-        arrayOf(
-            Item(Items.GUTHIX_PAGE_1_3835),
-            Item(Items.GUTHIX_PAGE_2_3836),
-            Item(Items.GUTHIX_PAGE_3_3837),
-            Item(Items.GUTHIX_PAGE_4_3838),
-        ),
-    ),
-    UNHOLY_BOOK(
-        "Unholy Book of Zamorak",
-        Item(Items.UNHOLY_BOOK_3842),
-        Item(Items.DAMAGED_BOOK_3841),
-        arrayOf(Item(Items.UNHOLY_SYMBOL_1724)),
-        arrayOf(
-            Item(Items.ZAMORAK_PAGE_1_3831),
-            Item(Items.ZAMORAK_PAGE_2_3832),
-            Item(Items.ZAMORAK_PAGE_3_3833),
-            Item(Items.ZAMORAK_PAGE_4_3834),
-        ),
-    ),
+enum class GodBook(val bookName: String, val book: Item, val damagedBook: Item, val blessItem: Array<Item>, val pages: Array<Item>, ) {
+    HOLY_BOOK("Holy Book of Saradomin", Item(Items.HOLY_BOOK_3840), Item(Items.DAMAGED_BOOK_3839), arrayOf(Item(Items.HOLY_SYMBOL_1718)), arrayOf(Item(Items.SARADOMIN_PAGE_1_3827), Item(Items.SARADOMIN_PAGE_2_3828), Item(Items.SARADOMIN_PAGE_3_3829), Item(Items.SARADOMIN_PAGE_4_3830)),),
+    BOOK_OF_BALANCE("Guthix's Book of Balance", Item(Items.BOOK_OF_BALANCE_3844), Item(Items.DAMAGED_BOOK_3843), arrayOf(Item(Items.HOLY_SYMBOL_1718), Item(Items.UNHOLY_SYMBOL_1724)), arrayOf(Item(Items.GUTHIX_PAGE_1_3835), Item(Items.GUTHIX_PAGE_2_3836), Item(Items.GUTHIX_PAGE_3_3837), Item(Items.GUTHIX_PAGE_4_3838)),),
+    UNHOLY_BOOK("Unholy Book of Zamorak", Item(Items.UNHOLY_BOOK_3842), Item(Items.DAMAGED_BOOK_3841), arrayOf(Item(Items.UNHOLY_SYMBOL_1724)), arrayOf(Item(Items.ZAMORAK_PAGE_1_3831), Item(Items.ZAMORAK_PAGE_2_3832), Item(Items.ZAMORAK_PAGE_3_3833), Item(Items.ZAMORAK_PAGE_4_3834)),),
     ;
 
     /**

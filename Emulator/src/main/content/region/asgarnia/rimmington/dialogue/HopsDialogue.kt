@@ -1,7 +1,6 @@
 package content.region.asgarnia.rimmington.dialogue
 
-import content.region.kandarin.quest.biohazard.dialogue.HopsDialogue
-import content.region.kandarin.quest.biohazard.handlers.BiohazardUtils
+import content.region.kandarin.ardougne.east.quest.biohazard.plugin.BiohazardUtils
 import core.api.getAttribute
 import core.api.openDialogue
 import core.api.quest.getQuestStage

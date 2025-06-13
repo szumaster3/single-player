@@ -1,6 +1,6 @@
 package content.region.asgarnia.burthope.dialogue
 
-import content.region.asgarnia.quest.death.dialogue.DenulthDialogueFile
+import content.region.asgarnia.burthope.quest.death.dialogue.DenulthDialogueFile
 import core.api.openDialogue
 import core.api.quest.isQuestComplete
 import core.api.quest.isQuestInProgress

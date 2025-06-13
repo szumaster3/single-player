@@ -1,8 +1,8 @@
 package content.region.kandarin.port_khazard.quest.arena.dialogue
 
-import content.region.kandarin.quest.arena.cutscene.BouncerFightCutscene
-import content.region.kandarin.quest.arena.cutscene.PrisonCutscene
-import content.region.kandarin.quest.arena.handlers.FightArenaListener.Companion.General
+import content.region.kandarin.port_khazard.quest.arena.cutscene.BouncerFightCutscene
+import content.region.kandarin.port_khazard.quest.arena.cutscene.PrisonCutscene
+import content.region.kandarin.port_khazard.quest.arena.plugin.FightArenaPlugin.Companion.General
 import core.api.*
 import core.api.quest.getQuestStage
 import core.api.quest.setQuestStage

@@ -1,6 +1,6 @@
 package content.region.island.waterbirth_island.plugin
 
-import content.region.fremennik.quest.viking.FremennikTrials
+import content.region.fremennik.rellekka.quest.viking.FremennikTrials
 import core.api.*
 import core.api.quest.isQuestComplete
 import core.game.dialogue.DialogueFile

@@ -1,5 +1,6 @@
 package content.region.kandarin.gnome.dialogue
 
+import content.data.GameAttributes
 import content.minigame.gnomecook.handlers.*
 import core.api.*
 import core.game.dialogue.Dialogue
@@ -8,6 +9,7 @@ import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
+import core.tools.RandomFunction
 import org.rs.consts.NPCs
 
 @Initializable

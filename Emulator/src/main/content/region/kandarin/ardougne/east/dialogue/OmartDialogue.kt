@@ -1,6 +1,6 @@
 package content.region.kandarin.ardougne.east.dialogue
 
-import content.region.kandarin.quest.biohazard.dialogue.OmartBiohazardDialogue
+import content.region.kandarin.ardougne.east.quest.biohazard.dialogue.OmartBiohazardDialogue
 import core.api.openDialogue
 import core.api.quest.isQuestInProgress
 import core.game.dialogue.Dialogue

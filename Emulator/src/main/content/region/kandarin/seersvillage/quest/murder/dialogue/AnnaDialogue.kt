@@ -1,6 +1,6 @@
 package content.region.kandarin.seersvillage.quest.murder.dialogue
 
-import content.region.kandarin.quest.murder.handlers.MurderMysteryUtils
+import content.region.kandarin.seersvillage.quest.murder.plugin.MurderMysteryUtils
 import core.api.inInventory
 import core.api.quest.getQuestStage
 import core.api.quest.isQuestComplete

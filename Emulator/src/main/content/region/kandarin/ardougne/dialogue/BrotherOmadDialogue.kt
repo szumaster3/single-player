@@ -1,6 +1,6 @@
 package content.region.kandarin.ardougne.dialogue
 
-import content.region.kandarin.quest.drunkmonk.dialogue.BrotherOmadDialogueFile
+import content.region.kandarin.ardougne.quest.drunkmonk.dialogue.BrotherOmadDialogueFile
 import core.api.openDialogue
 import core.api.quest.getQuestStage
 import core.api.sendDialogue

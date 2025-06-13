@@ -1,4 +1,4 @@
-package content.region.kandarin.ardougne.quest.hazeelcult.handlers
+package content.region.kandarin.ardougne.quest.hazeelcult.plugin
 
 import core.api.*
 import core.api.quest.getQuestStage
@@ -11,7 +11,7 @@ import core.game.node.entity.player.Player
 import core.game.world.map.Location
 import org.rs.consts.*
 
-class HazeelCultListener : InteractionListener {
+class HazeelCultPlugin : InteractionListener {
     init {
         ALOMONE.init()
         ALOMONE.isWalks = true
@@ -61,11 +61,11 @@ class HazeelCultListener : InteractionListener {
 
         on(SEWER_1, IntType.SCENERY, "turn-left") { player, node ->
             val nodeLocation = node.asScenery().location
-            if (getQuestStage(player, Quests.HAZEEL_CULT) >= 1 && getAttribute(player, SEWER_LEFT, 0) == 0) {
-                setAttribute(player, SEWER_LEFT, 1)
+            if (getQuestStage(player, Quests.HAZEEL_CULT) >= 1 && getAttribute(player, "hazeelcult:sewer-left", 0) == 0) {
+                setAttribute(player, "/save:hazeelcult:sewer-left", 1)
             }
-            if (getQuestStage(player, Quests.HAZEEL_CULT) == 10 && getAttribute(player, SEWER_RIGHT_2, 0) == 1) {
-                setAttribute(player, SEWER_RIGHT_3, 1)
+            if (getQuestStage(player, Quests.HAZEEL_CULT) == 10 && getAttribute(player, "hazeelcult:sewer-right:2", 0) == 1) {
+                setAttribute(player, "/save:hazeelcult:sewer-right:3", 1)
             }
             if (!withinDistance(player, nodeLocation, 2)) return@on true
 
@@ -90,22 +90,22 @@ class HazeelCultListener : InteractionListener {
 
             if (questStage >= 1 && questStage != 10) {
                 when (currentSewer) {
-                    SEWER_2 -> if (getAttribute(player, SEWER_LEFT, 0) == 1) setAttribute(player, SEWER_RIGHT_1, 1)
-                    SEWER_3 -> if (getAttribute(player, SEWER_RIGHT_1, 0) == 1) setAttribute(player, SEWER_RIGHT_2, 1)
-                    SEWER_4 -> if (getAttribute(player, SEWER_RIGHT_2, 0) == 1) setAttribute(player, SEWER_RIGHT_3, 1)
-                    SEWER_5 -> if (getAttribute(player, SEWER_RIGHT_3, 0) == 1) {
+                    SEWER_2 -> if (getAttribute(player, "hazeelcult:sewer-left", 0) == 1) setAttribute(player, "hazeelcult:sewer-right:1", 1)
+                    SEWER_3 -> if (getAttribute(player, "hazeelcult:sewer-right:1", 0) == 1) setAttribute(player, "hazeelcult:sewer-right:2", 1)
+                    SEWER_4 -> if (getAttribute(player, "hazeelcult:sewer-right:2", 0) == 1) setAttribute(player, "hazeelcult:sewer-right:3", 1)
+                    SEWER_5 -> if (getAttribute(player, "hazeelcult:sewer-right:3", 0) == 1) {
                         setAttribute(player, RAFT_UNLOCK, 1)
-                        removeAttributes(player, SEWER_RIGHT_1, SEWER_RIGHT_2, SEWER_RIGHT_3, SEWER_LEFT)
+                        removeAttributes(player, "hazeelcult:sewer-right:1", "hazeelcult:sewer-right:2", SEWER_RIGHT_3, "hazeelcult:sewer-left")
                     }
                 }
             } else if (questStage == 10) {
                 when (currentSewer) {
-                    SEWER_4 -> setAttribute(player, SEWER_RIGHT_1, 1)
-                    SEWER_5 -> if (getAttribute(player, SEWER_RIGHT_1, 0) == 1) setAttribute(player, SEWER_RIGHT_2, 1)
-                    SEWER_2 -> if (getAttribute(player, SEWER_RIGHT_3, 0) == 1) setAttribute(player, SEWER_LEFT, 1)
-                    SEWER_3 -> if (getAttribute(player, SEWER_LEFT, 0) == 1) {
+                    SEWER_4 -> setAttribute(player, "hazeelcult:sewer-right:1", 1)
+                    SEWER_5 -> if (getAttribute(player, "hazeelcult:sewer-right:1", 0) == 1) setAttribute(player, "hazeelcult:sewer-right:2", 1)
+                    SEWER_2 -> if (getAttribute(player, "hazeelcult:sewer-right:3", 0) == 1) setAttribute(player, "hazeelcult:sewer-left", 1)
+                    SEWER_3 -> if (getAttribute(player, "hazeelcult:sewer-left", 0) == 1) {
                         setAttribute(player, RAFT_UNLOCK, 1)
-                        removeAttributes(player, SEWER_RIGHT_1, SEWER_RIGHT_2, SEWER_RIGHT_3, SEWER_LEFT)
+                        removeAttributes(player, "hazeelcult:sewer-right:1", "hazeelcult:sewer-right:2", SEWER_RIGHT_3, "hazeelcult:sewer-left")
                     }
                 }
             }
@@ -122,7 +122,7 @@ class HazeelCultListener : InteractionListener {
         }
 
         onUseWith(IntType.SCENERY, POISON, COOKING_RANGE) { player, _, _ ->
-            if (getAttribute(player, MAHJARRAT, true) && removeItem(player, POISON)) {
+            if (getAttribute(player, "hazeelcult:mahjarrat", true) && removeItem(player, POISON)) {
                 sendDialogueLines(player, "You pour the poison into the hot pot.", "The poison dissolves into the soup.")
                 setQuestStage(player, Quests.HAZEEL_CULT, 3)
             } else {
@@ -133,8 +133,8 @@ class HazeelCultListener : InteractionListener {
 
         on(CRATE, IntType.SCENERY, "search") { player, _ ->
             if (getQuestStage(player, Quests.HAZEEL_CULT) >= 1 &&
-                getAttribute(player, MAHJARRAT, true) &&
-                !getAttribute(player, CARNILLEAN, true) &&
+                getAttribute(player, "hazeelcult:mahjarrat", true) &&
+                !getAttribute(player, "hazeelcult:carnillean", true) &&
                 freeSlots(player) > 1
             ) {
                 sendMessage(player, "You search the crate and find an old key hidden at the bottom.")
@@ -239,11 +239,6 @@ class HazeelCultListener : InteractionListener {
     }
 
     companion object {
-        const val CARNILLEAN = "/save:hazeelcult:carnillean"
-        const val MAHJARRAT = "/save:hazeelcult:mahjarrat"
-        const val SEWER_LEFT = "/save:hazeelcult:sewer-left"
-        const val SEWER_RIGHT_1 = "/save:hazeelcult:sewer-right:1"
-        const val SEWER_RIGHT_2 = "/save:hazeelcult:sewer-right:2"
         const val SEWER_RIGHT_3 = "/save:hazeelcult:sewer-right:3"
         const val RAFT_UNLOCK = "/save:hazeelcult:raft-unlock"
 

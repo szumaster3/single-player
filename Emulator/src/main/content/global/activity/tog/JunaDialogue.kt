@@ -1,6 +1,7 @@
 package content.global.activity.tog
 
 import content.data.GameAttributes
+import content.region.fremennik.rellekka.quest.viking.FremennikTrials
 import content.region.kandarin.miniquest.barcrawl.BarcrawlManager
 import content.region.misthalin.lumbridge.quest.tog.TearsOfGuthix
 import core.api.*

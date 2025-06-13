@@ -1,9 +1,9 @@
 package content.region.asgarnia.falador.quest.rd.cutscene
 
-import content.region.asgarnia.quest.rd.RecruitmentDrive
-import content.region.asgarnia.quest.rd.plugin.RDUtils
-import content.region.asgarnia.quest.rd.plugin.RecruitmentDriveListener
-import content.region.asgarnia.quest.rd.plugin.RecruitmentDriveListener.Companion.initRoomStage
+import content.region.asgarnia.falador.quest.rd.RecruitmentDrive
+import content.region.asgarnia.falador.quest.rd.plugin.RDUtils
+import content.region.asgarnia.falador.quest.rd.plugin.RecruitmentDriveListener
+import content.region.asgarnia.falador.quest.rd.plugin.RecruitmentDriveListener.Companion.initRoomStage
 import core.api.*
 import core.api.quest.finishQuest
 import core.api.quest.getQuestStage

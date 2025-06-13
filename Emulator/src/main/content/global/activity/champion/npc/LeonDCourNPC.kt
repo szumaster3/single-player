@@ -72,11 +72,11 @@ class LeonDCourNPC(
             runTask(killer, 1) {
                 playJingle(killer.asPlayer(), 85)
                 openInterface(killer, Components.CHAMPIONS_SCROLL_63)
-                sendString(killer, "Well done, you defeated the Human Champion!", Components.CHAMPIONS_SCROLL_63, 2)
-                sendItemZoomOnInterface(killer, Components.CHAMPIONS_SCROLL_63, 3, Items.CHAMPION_SCROLL_6808, 260)
-                sendString(killer, "492 Slayer Xp", Components.CHAMPIONS_SCROLL_63, 6)
-                sendString(killer, "492 Hitpoint Xp", Components.CHAMPIONS_SCROLL_63, 7)
             }
+            sendString(killer, "Well done, you defeated the Human Champion!", Components.CHAMPIONS_SCROLL_63, 2)
+            sendItemZoomOnInterface(killer, Components.CHAMPIONS_SCROLL_63, 3, Items.CHAMPION_SCROLL_6808, 260)
+            sendString(killer, "492 Slayer Xp", Components.CHAMPIONS_SCROLL_63, 6)
+            sendString(killer, "492 Hitpoint Xp", Components.CHAMPIONS_SCROLL_63, 7)
             rewardXP(killer, Skills.HITPOINTS, 492.0)
             rewardXP(killer, Skills.SLAYER, 492.0)
             removeAttribute("championsarena:start")

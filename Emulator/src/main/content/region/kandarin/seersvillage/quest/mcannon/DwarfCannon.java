@@ -1,8 +1,8 @@
 package content.region.kandarin.seersvillage.quest.mcannon;
 
-import content.region.kandarin.quest.mcannon.dialogue.CaptainLawgofDialogue;
-import content.region.kandarin.quest.mcannon.dialogue.LollkDialogue;
-import content.region.kandarin.quest.mcannon.dialogue.NulodionDialogue;
+import content.region.kandarin.seersvillage.quest.mcannon.dialogue.CaptainLawgofDialogue;
+import content.region.kandarin.seersvillage.quest.mcannon.dialogue.LollkDialogue;
+import content.region.kandarin.seersvillage.quest.mcannon.dialogue.NulodionDialogue;
 import content.region.kandarin.seersvillage.quest.mcannon.plugin.CaptainLawgofNPC;
 import content.region.kandarin.seersvillage.quest.mcannon.plugin.DwarfCannonPlugin;
 import core.game.node.entity.player.Player;

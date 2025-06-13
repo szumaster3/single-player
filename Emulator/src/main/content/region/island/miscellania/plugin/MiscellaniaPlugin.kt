@@ -1,7 +1,7 @@
 package content.region.island.miscellania.plugin
 
-import content.region.fremennik.miscellania.dialogue.FarmerFromundDialogue
-import content.region.fremennik.miscellania.dialogue.FishermanFrodiDialogue
+import content.region.island.miscellania.dialogue.FarmerFromundDialogue
+import content.region.island.miscellania.dialogue.FishermanFrodiDialogue
 import core.api.openDialogue
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener

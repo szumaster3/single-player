@@ -1,7 +1,5 @@
 package content.region.kandarin.ardougne.quest.hazeelcult.dialogue
 
-import content.region.kandarin.quest.hazeelcult.handlers.HazeelCultListener.Companion.CARNILLEAN
-import content.region.kandarin.quest.hazeelcult.handlers.HazeelCultListener.Companion.MAHJARRAT
 import core.api.*
 import core.api.quest.finishQuest
 import core.api.quest.getQuestStage
@@ -24,7 +22,7 @@ class CerilCarnilleanDialogue(
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         val questStage = getQuestStage(player, Quests.HAZEEL_CULT)
-        val hasCarnillean = getAttribute(player!!, CARNILLEAN, true)
+        val hasCarnillean = getAttribute(player!!, "hazeelcult:carnillean", true)
         val insideBorders = inBorders(player, 2571, 3267, 2575, 3273)
 
         when {
@@ -86,7 +84,7 @@ class CerilCarnilleanDialogue(
 
             3 -> when (stage) {
                 0 -> {
-                    if (getAttribute(player, MAHJARRAT, true) && !getAttribute(player, CARNILLEAN, true)) {
+                    if (getAttribute(player, "hazeelcult:mahjarrat", true) && !getAttribute(player, "hazeelcult:carnillean", true)) {
                         playerl(FaceAnim.FRIENDLY, "Hello again.").also { stage++ }
                     } else {
                         sendMessage(player, "They aren't interested in talking to you.").also { stage = END_DIALOGUE }
@@ -140,7 +138,7 @@ class CerilCarnilleanDialogue(
 
             100 -> when (stage) {
                 0 -> {
-                    if (getAttribute(player, MAHJARRAT, true) && !getAttribute(player, CARNILLEAN, true)) {
+                    if (getAttribute(player, "hazeelcult:mahjarrat", true) && !getAttribute(player, "hazeelcult:carnillean", true)) {
                         npcl(FaceAnim.FRIENDLY, "Oh... I may be wrong... but ever since I asked for your help, things around here have gone from bad to worse...").also { stage = 2 }
                     } else {
                         npcl(FaceAnim.FRIENDLY, "Well hello again adventurer! It's good to see you again! If it wasn't for your quick thinking the treacherous Jones would have poisoned my family and me by now! We are in your debt.").also { stage = 1 }

@@ -1,7 +1,7 @@
 package content.region.island.pirates_cove.dialogue
 
-import content.region.fremennik.lunar_isle.plugin.Destination
-import content.region.fremennik.lunar_isle.plugin.LunarIsleUtils.sail
+import content.region.island.lunar_isle.plugin.Destination
+import content.region.island.lunar_isle.plugin.LunarIsleUtils.sail
 import core.game.dialogue.Dialogue
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player

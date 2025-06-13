@@ -2,7 +2,7 @@ package content.region.asgarnia.falador.dialogue
 
 import content.data.RespawnPoint
 import content.data.setRespawnLocation
-import content.region.asgarnia.quest.rd.cutscene.SirTiffyCashienDialogueFile
+import content.region.asgarnia.falador.quest.rd.cutscene.SirTiffyCashienDialogueFile
 import core.ServerConstants
 import core.api.interaction.openNpcShop
 import core.api.openDialogue

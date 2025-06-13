@@ -3,7 +3,7 @@ package content.region.kandarin.camelot.dialogue
 import content.data.GameAttributes
 import content.data.RespawnPoint
 import content.data.setRespawnLocation
-import content.region.kandarin.quest.merlin.dialogue.MerlinDialogueFile
+import content.region.kandarin.seersvillage.quest.merlin.dialogue.MerlinDialogueFile
 import core.ServerConstants
 import core.api.*
 import core.api.quest.getQuestStage

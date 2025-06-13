@@ -1,8 +1,5 @@
 package content.region.kandarin.ardougne.quest.hazeelcult.dialogue
 
-import content.region.kandarin.quest.hazeelcult.handlers.HazeelCultListener.Companion.CARNILLEAN
-import content.region.kandarin.quest.hazeelcult.handlers.HazeelCultListener.Companion.MAHJARRAT
-import content.region.kandarin.quest.hazeelcult.handlers.HazeelCultListener.Companion.SEWER_LEFT
 import core.api.*
 import core.api.quest.getQuestStage
 import core.api.quest.setQuestStage
@@ -65,8 +62,8 @@ class ClivetDialogue(
                 22 -> npcl(FaceAnim.ANNOYED, "Then you are a fool. Go back to your small minded moundane little life, you will never know the glories you could have tasted as one of us!").also { stage++ }
                 23 -> {
                     end()
-                    setAttribute(player, CARNILLEAN, true)
-                    setAttribute(player, SEWER_LEFT, 0)
+                    setAttribute(player, "save:hazeelcult:carnillean", true)
+                    setAttribute(player, "hazeelcult:sewer-left", 0)
                     setQuestStage(player, Quests.HAZEEL_CULT, 2)
                     runTask(player, 1) {
                         teleport(npc, location(2568, 9683, 1))
@@ -84,7 +81,7 @@ class ClivetDialogue(
                 25 -> npcl(FaceAnim.ANNOYED, "Here, take this poison and pour it into Ceril Carnillean's food. Once the deed is done, return here and speak to me once more.").also { stage++ }
 
                 26 -> {
-                    setAttribute(player, MAHJARRAT, true)
+                    setAttribute(player, "/save:hazeelcult:mahjarrat", true)
                     setQuestStage(player, Quests.HAZEEL_CULT, 2)
                     if (freeSlots(player) < 1) {
                         end()
@@ -103,7 +100,7 @@ class ClivetDialogue(
 
             (questStage == 2) -> when (stage) {
                 0 -> {
-                    if (getAttribute(player!!, MAHJARRAT, true) && !inInventory(player, Items.POISON_273) && !getAttribute(player, CARNILLEAN, true)) {
+                    if (getAttribute(player!!, "hazeelcult:mahjarrat", true) && !inInventory(player, Items.POISON_273) && !getAttribute(player, "hazeelcult:carnillean", true)) {
                         playerl(FaceAnim.FRIENDLY, "I need some more poison.").also { stage++ }
                     } else {
                         npcl(FaceAnim.FRIENDLY, "You have a mission for us, adventurer. Go to the Carnilliean household and poison Ceril Carnillean's meal to prove your loyalty.").also { stage = END_DIALOGUE }
@@ -128,7 +125,7 @@ class ClivetDialogue(
 
             (questStage == 3) -> when (stage) {
                 0 -> {
-                    if (getAttribute(player, MAHJARRAT, true) && !getAttribute(player, CARNILLEAN, true)) {
+                    if (getAttribute(player, "hazeelcult:mahjarrat", true) && !getAttribute(player, "hazeelcult:carnillean", true)) {
                         playerl(FaceAnim.FRIENDLY, "I poisoned the food as requested, but it didn't quite go to plan.").also { stage++ }
                     } else {
                         sendMessage(player, "They aren't interested in talking to you.").also { stage = END_DIALOGUE }
@@ -160,7 +157,7 @@ class ClivetDialogue(
 
             (questStage == 100) -> when (stage) {
                 0 -> {
-                    if (getAttribute(player, MAHJARRAT, true) && !getAttribute(player, CARNILLEAN, true)) {
+                    if (getAttribute(player, "hazeelcult:mahjarrat", true) && !getAttribute(player, "hazeelcult:carnillean", true)) {
                         playerl(FaceAnim.FRIENDLY, "Hello.").also { stage++ }
                     } else {
                         playerl(FaceAnim.FRIENDLY, "Hello.").also { stage = 2 }

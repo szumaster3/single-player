@@ -1,6 +1,6 @@
 package content.region.kandarin.port_khazard.quest.arena.dialogue
 
-import content.region.kandarin.quest.arena.cutscene.ScorpionFightCutscene
+import content.region.kandarin.port_khazard.quest.arena.cutscene.ScorpionFightCutscene
 import core.api.face
 import core.api.findNPC
 import core.api.lock

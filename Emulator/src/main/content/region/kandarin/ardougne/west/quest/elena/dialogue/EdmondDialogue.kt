@@ -1,7 +1,7 @@
 package content.region.kandarin.ardougne.west.quest.elena.dialogue
 
-import content.region.kandarin.quest.elena.cutscene.UndergroundCutscene
-import content.region.kandarin.quest.elena.handlers.PlagueCityListener
+import content.region.kandarin.ardougne.west.quest.elena.cutscene.UndergroundCutscene
+import content.region.kandarin.ardougne.west.quest.elena.plugin.PlagueCityPlugin
 import core.api.*
 import core.api.quest.finishQuest
 import core.api.quest.getQuestStage
@@ -38,7 +38,7 @@ class EdmondDialogue(
         componentID: Int,
         buttonID: Int,
     ): Boolean {
-        val bucketUses = getAttribute(player, PlagueCityListener.BUCKET_USES_ATTRIBUTE, value)
+        val bucketUses = getAttribute(player, PlagueCityPlugin.BUCKET_USES_ATTRIBUTE, value)
         var hasAnScroll = hasAnItem(player, Items.A_MAGIC_SCROLL_1505).container != null
         when (getQuestStage(player!!, Quests.PLAGUE_CITY)) {
             0 ->
@@ -191,7 +191,7 @@ class EdmondDialogue(
             3 ->
                 when (stage) {
                     1 ->
-                        if (getVarbit(player, PlagueCityListener.MUD_PATCH_VARBIT) == 1) {
+                        if (getVarbit(player, PlagueCityPlugin.MUD_PATCH_VARBIT) == 1) {
                             playerl(FaceAnim.NEUTRAL, "I've soaked the soil with water.").also { stage = 3 }
                         } else {
                             npcl(FaceAnim.FRIENDLY, "How's it going?").also { stage = 2 }

@@ -1,6 +1,6 @@
 package content.region.kandarin.ardougne.east.quest.biohazard.dialogue
 
-import content.region.kandarin.quest.biohazard.handlers.BiohazardUtils
+import content.region.kandarin.ardougne.east.quest.biohazard.plugin.BiohazardUtils
 import core.api.*
 import core.api.quest.getQuestStage
 import core.api.quest.setQuestStage
