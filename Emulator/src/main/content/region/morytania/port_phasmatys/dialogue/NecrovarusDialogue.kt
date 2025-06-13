@@ -1,6 +1,6 @@
 package content.region.morytania.port_phasmatys.dialogue
 
-import content.region.morytania.quest.ahoy.dialogue.NecrovarusDialogueFile
+import content.region.morytania.port_phasmatys.quest.ahoy.dialogue.NecrovarusDialogueFile
 import core.api.inEquipment
 import core.api.openDialogue
 import core.api.quest.hasRequirement

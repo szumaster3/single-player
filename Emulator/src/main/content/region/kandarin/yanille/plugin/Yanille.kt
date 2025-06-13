@@ -1,7 +1,6 @@
 package content.region.kandarin.yanille.plugin
 
-import content.region.feldiphills.quest.zogre.plugin.ZUtils
-import content.region.feldiphills.quest.zogre.plugin.ZogreFleshEatersPlugin
+import content.region.feldiphills.quest.zogre.plugin.ZogreUtils
 import core.api.MapArea
 import core.api.getAttribute
 import core.api.setVarbit
@@ -12,7 +11,7 @@ import org.rs.consts.Vars
 
 class Yanille : MapArea {
     override fun areaEnter(entity: Entity) {
-        if (entity is Player && getAttribute(entity, ZogreFleshEatersPlugin.SITHIK_TURN_INTO_OGRE, false)) {
+        if (entity is Player && getAttribute(entity, ZogreUtils.SITHIK_TURN_INTO_OGRE, false)) {
             setVarbit(entity, Vars.VARBIT_QUEST_SITHIK_OGRE_TRANSFORMATION_495, 1, true)
         }
     }

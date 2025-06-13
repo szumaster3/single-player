@@ -1,7 +1,6 @@
 package content.region.misthalin.draynor_village.quest.swept.plugin
 
 import content.data.GameAttributes
-import content.region.misthalin.draynor_village.quests.swept.handlers.SweptAwayListener.GusSupportDialogue
 import core.api.*
 import core.api.interaction.getNPCName
 import core.api.quest.getQuestStage
@@ -393,7 +392,7 @@ internal object SweptUtils {
 
             }
         } else {
-            openDialogue(player, GusSupportDialogue())
+            openDialogue(player, SweptAwayPlugin.GusSupportDialogue())
         }
     }
 

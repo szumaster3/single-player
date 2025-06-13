@@ -32,7 +32,7 @@ class ZavisticRarveNPC(
         if (player != null) {
             if (player.location.getDistance(getLocation()) > 4 || !player.isActive || clearTime++ > 300) {
                 poofClear(this)
-                removeAttribute(player, ZUtils.NPC_ACTIVE)
+                removeAttribute(player, ZogreUtils.NPC_ACTIVE)
             }
         }
     }
@@ -54,7 +54,7 @@ class ZavisticRarveNPC(
                 object : Pulse(0, wizard) {
                     override fun pulse(): Boolean {
                         wizard.init()
-                        setAttribute(player, ZUtils.NPC_ACTIVE, true)
+                        setAttribute(player, ZogreUtils.NPC_ACTIVE, true)
                         openDialogue(player, ZavisticRarveDialogueFiles())
                         return true
                     }

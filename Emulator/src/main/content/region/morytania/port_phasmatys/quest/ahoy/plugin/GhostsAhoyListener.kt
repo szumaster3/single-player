@@ -1,7 +1,7 @@
 package content.region.morytania.port_phasmatys.quest.ahoy.plugin
 
-import content.region.morytania.quest.ahoy.dialogue.RobinDialogueFile
-import content.region.morytania.quest.ahoy.plugin.GhostsAhoyUtils.jumpRockPath
+import content.region.morytania.port_phasmatys.quest.ahoy.dialogue.RobinDialogueFile
+import content.region.morytania.port_phasmatys.quest.ahoy.plugin.GhostsAhoyUtils.jumpRockPath
 import content.region.morytania.port_phasmatys.quest.ahoy.plugin.GiantLobsterNPC.Companion.spawnGiantLobster
 import core.api.*
 import core.api.quest.setQuestStage

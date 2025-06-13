@@ -1,6 +1,6 @@
 package content.region.feldiphills.jiggig
 
-import content.region.feldiphills.quest.zogre.plugin.ZUtils
+import content.region.feldiphills.quest.zogre.plugin.ZogreUtils
 import core.api.*
 import core.api.ui.closeDialogue
 import core.api.utils.PlayerCamera
@@ -24,7 +24,7 @@ class JiggigCave : MapArea {
 
             if (inBorders(player, CHARRED_AREA)) {
                 stopWalk(entity)
-                if (getAttribute(entity.asPlayer(), ZUtils.CHARRED_AREA, false)) {
+                if (getAttribute(entity.asPlayer(), ZogreUtils.CHARRED_AREA, false)) {
                     return
                 }
 
@@ -59,7 +59,7 @@ class JiggigCave : MapArea {
 
                                 3 -> {
                                     PlayerCamera(entity).reset()
-                                    setAttribute(entity, "/save${ZUtils.CHARRED_AREA}", true)
+                                    setAttribute(entity, "/save${ZogreUtils.CHARRED_AREA}", true)
                                     unlock(entity)
                                     return true
                                 }

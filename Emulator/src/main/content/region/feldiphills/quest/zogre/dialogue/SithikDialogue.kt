@@ -1,6 +1,6 @@
 package content.region.feldiphills.quest.zogre.dialogue
 
-import content.region.feldiphills.quest.zogre.plugin.ZUtils
+import content.region.feldiphills.quest.zogre.plugin.ZogreUtils
 import core.api.*
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
@@ -117,14 +117,14 @@ class SithikQuestDialogueFile : DialogueFile() {
             ).also { stage++ }
 
             2 -> npc(FaceAnim.HALF_THINKING, "Oh, Zavistic...why...why would he send you to me?").also { stage++ }
-            3 -> if (getAttribute(player!!, ZUtils.ASK_SITHIK_ABOUT_OGRES, false)) {
+            3 -> if (getAttribute(player!!, ZogreUtils.ASK_SITHIK_ABOUT_OGRES, false)) {
                 options(
                     "Do you know anything about the undead ogres at Jiggig?",
                     "What do you do?",
                     "Do you mind if I look around?",
                     "Ok, thanks.",
                 ).also { stage++ }
-            } else if (getAttribute(player!!, ZUtils.ASK_SITHIK_AGAIN, false)) {
+            } else if (getAttribute(player!!, ZogreUtils.ASK_SITHIK_AGAIN, false)) {
                 options(
                     "What do you do?",
                     "Why do you spend most of your time in bed?",
@@ -132,7 +132,7 @@ class SithikQuestDialogueFile : DialogueFile() {
                 ).also { stage++ }
             }
 
-            4 -> if (!getAttribute(player!!, ZUtils.ASK_SITHIK_AGAIN, false)) {
+            4 -> if (!getAttribute(player!!, ZogreUtils.ASK_SITHIK_AGAIN, false)) {
                 when (buttonID) {
                     1 -> player(
                         FaceAnim.HALF_GUILTY,
@@ -141,7 +141,7 @@ class SithikQuestDialogueFile : DialogueFile() {
                     ).also { stage++ }
 
                     2 -> playerl(FaceAnim.HALF_GUILTY, "What do you do?").also { stage = 14 }
-                    3 -> if (getAttribute(player!!, ZUtils.ASK_SITHIK_ABOUT_OGRES, false)) {
+                    3 -> if (getAttribute(player!!, ZogreUtils.ASK_SITHIK_ABOUT_OGRES, false)) {
                         playerl(FaceAnim.HALF_GUILTY, "Do you mind if I look around?").also { stage = 19 }
                     } else {
                         playerl(FaceAnim.HALF_GUILTY, "Why do you spend most of your time in bed?").also {
@@ -154,7 +154,7 @@ class SithikQuestDialogueFile : DialogueFile() {
             } else {
                 when (buttonID) {
                     1 -> playerl(FaceAnim.HALF_GUILTY, "What do you do?").also { stage = 14 }
-                    2 -> if (getAttribute(player!!, ZUtils.ASK_SITHIK_ABOUT_OGRES, false)) {
+                    2 -> if (getAttribute(player!!, ZogreUtils.ASK_SITHIK_ABOUT_OGRES, false)) {
                         playerl(FaceAnim.HALF_GUILTY, "Do you mind if I look around?").also { stage = 19 }
                     } else {
                         playerl(FaceAnim.HALF_GUILTY, "Why do you spend most of your time in bed?").also {
@@ -213,7 +213,7 @@ class SithikQuestDialogueFile : DialogueFile() {
             ).also { stage++ }
 
             13 -> player("I'm sure!").also {
-                setAttribute(player!!, "/save:${ZUtils.ASK_SITHIK_ABOUT_OGRES}", true)
+                setAttribute(player!!, "/save:${ZogreUtils.ASK_SITHIK_ABOUT_OGRES}", true)
                 stage = 3
             }
 
@@ -278,7 +278,7 @@ class SithikQuestDialogueFile : DialogueFile() {
             ).also { stage++ }
 
             22 -> playerl("I'm sure!").also {
-                setAttribute(player!!, "/save:${ZUtils.ASK_SITHIK_AGAIN}", true)
+                setAttribute(player!!, "/save:${ZogreUtils.ASK_SITHIK_AGAIN}", true)
                 stage = 3
             }
 
@@ -509,8 +509,8 @@ class SithikIntsPortraitDialogueFile : DialogueFile() {
         buttonID: Int,
     ) {
         val papyrus = Item(Items.PAPYRUS_970)
-        val correctPortrait = ZUtils.REALIST_PORTRAIT
-        val incorrectPortrait = ZUtils.UNREALIST_PORTRAIT
+        val correctPortrait = ZogreUtils.REALIST_PORTRAIT
+        val incorrectPortrait = ZogreUtils.UNREALIST_PORTRAIT
         npc = NPC(NPCs.SITHIK_INTS_2061)
         when (stage) {
             0 -> npcl("Oh lovely! You're making my portrait! Let me see it afterwards!").also { stage++ }
@@ -527,7 +527,7 @@ class SithikIntsPortraitDialogueFile : DialogueFile() {
                                         addItem(player!!, correctPortrait)
                                         sendItemDialogue(
                                             player!!,
-                                            ZUtils.REALIST_PORTRAIT,
+                                            ZogreUtils.REALIST_PORTRAIT,
                                             "You get a portrait of Sithik.",
                                         )
                                     }
@@ -536,7 +536,7 @@ class SithikIntsPortraitDialogueFile : DialogueFile() {
                                         addItem(player!!, incorrectPortrait)
                                         sendItemDialogue(
                                             player!!,
-                                            ZUtils.UNREALIST_PORTRAIT,
+                                            ZogreUtils.UNREALIST_PORTRAIT,
                                             "You get a portrait of Sithik.",
                                         )
                                     }
@@ -561,14 +561,14 @@ class SithikIntsUsedPortraitDialogueFile : DialogueFile() {
         npc = NPC(NPCs.SITHIK_INTS_2061)
         when (stage) {
             0 -> playerl(FaceAnim.HAPPY, "Here you go, what do you think?").also { stage++ }
-            1 -> if (inInventory(player!!, ZUtils.REALIST_PORTRAIT)) {
+            1 -> if (inInventory(player!!, ZogreUtils.REALIST_PORTRAIT)) {
                 sendItemDialogue(
                     player!!,
-                    ZUtils.REALIST_PORTRAIT,
+                    ZogreUtils.REALIST_PORTRAIT,
                     "You get a portrait of Sithik.",
                 ).also { stage++ }
             } else {
-                sendItemDialogue(player!!, ZUtils.UNREALIST_PORTRAIT, "You show the sketch...").also { stage = 3 }
+                sendItemDialogue(player!!, ZogreUtils.UNREALIST_PORTRAIT, "You show the sketch...").also { stage = 3 }
             }
 
             2 -> npcl(
@@ -601,7 +601,7 @@ class SithikIntsSignedPortraitDialogueFile : DialogueFile() {
                 stage++
             }
 
-            1 -> sendItemDialogue(player!!, ZUtils.SIGNED_PORTRAIT, "You show the portrait to Sithik.").also { stage++ }
+            1 -> sendItemDialogue(player!!, ZogreUtils.SIGNED_PORTRAIT, "You show the portrait to Sithik.").also { stage++ }
             2 -> npcl(
                 "Hmmm, well, I've got quite a common looking face, I'm often mistaken for other wizards, you know, when I'm wearing my wizard's hat, robes and staff. There's a lot of us around here you know.",
             ).also {
@@ -709,7 +709,7 @@ class SithikIntsAfterTransformDialogueFile : DialogueFile() {
                 "involvement with the undead Ogres at Jiggig. The",
                 "potion will wear off once you've told the truth!",
             ).also {
-                setAttribute(player!!, "/save:${ZUtils.TALK_WITH_SITHIK_OGRE_DONE}", true)
+                setAttribute(player!!, "/save:${ZogreUtils.TALK_WITH_SITHIK_OGRE_DONE}", true)
                 stage++
             }
 

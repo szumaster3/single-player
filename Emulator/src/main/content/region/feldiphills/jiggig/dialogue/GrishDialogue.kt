@@ -1,7 +1,7 @@
 package content.region.feldiphills.jiggig.dialogue
 
 import content.region.feldiphills.quest.zogre.dialogue.GrishFinishDialogue
-import content.region.feldiphills.quest.zogre.plugin.ZUtils
+import content.region.feldiphills.quest.zogre.plugin.ZogreUtils
 import core.api.*
 import core.api.quest.isQuestComplete
 import core.game.dialogue.Dialogue
@@ -21,7 +21,7 @@ class GrishDialogue(
 ) : Dialogue(player) {
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
-        if (getAttribute(player, ZUtils.TALK_WITH_SITHIK_OGRE_DONE, false) || inInventory(
+        if (getAttribute(player, ZogreUtils.TALK_WITH_SITHIK_OGRE_DONE, false) || inInventory(
                 player, Items.OGRE_ARTEFACT_4818
             )
         ) {

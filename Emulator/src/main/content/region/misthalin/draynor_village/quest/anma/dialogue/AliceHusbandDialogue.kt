@@ -1,6 +1,7 @@
 package content.region.misthalin.draynor_village.quest.anma.dialogue
 
 import content.region.misthalin.draynor_village.quest.anma.AnimalMagnetism
+import content.region.misthalin.draynor_village.quest.anma.cutscene.AnimalMagnetismCutscene
 import content.region.misthalin.draynor_village.quests.anma.cutscene.AnimalMagnetismCutscene
 import core.game.dialogue.Dialogue
 import core.game.node.entity.npc.NPC
@@ -289,7 +290,7 @@ class AliceHusbandDialogue(
                     }
 
                     1 -> {
-                        if (player.inventory.containsItem(_root_ide_package_.content.region.misthalin.draynor_village.quest.anma.AnimalMagnetism.CRONE_AMULET)) {
+                        if (player.inventory.containsItem(AnimalMagnetism.CRONE_AMULET)) {
                             player(
                                 "Well... oh, never mind. I'm desperate enough for those",
                                 "chickens to let that pass.",

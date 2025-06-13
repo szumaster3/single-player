@@ -84,11 +84,11 @@ class AvaDialogue(
 
             32 -> player("I'd like to look at those research notes now, unless you", "have translated them without me?")
             33 -> {
-                if (player.inventory.containsItem(_root_ide_package_.content.region.misthalin.draynor_village.quest.anma.AnimalMagnetism.TRANSLATED_NOTES)) {
+                if (player.inventory.containsItem(AnimalMagnetism.TRANSLATED_NOTES)) {
                     player("I've translated the notes. See? I'm not just a thuggish", "moron like you seem to think.")
                     stage = 10
                 }
-                if (player.hasItem(_root_ide_package_.content.region.misthalin.draynor_village.quest.anma.AnimalMagnetism.RESEARCH_NOTES)) {
+                if (player.hasItem(AnimalMagnetism.RESEARCH_NOTES)) {
                     player("I have the notes but haven't translated them yet. Any", "hints?")
                 } else {
                     player("I seem to have lost the research notes.")
@@ -97,7 +97,7 @@ class AvaDialogue(
             }
 
             34 -> {
-                if (player.inventory.containsItem(_root_ide_package_.content.region.misthalin.draynor_village.quest.anma.AnimalMagnetism.CONTAINER)) {
+                if (player.inventory.containsItem(AnimalMagnetism.CONTAINER)) {
                     npc(
                         "Wow, great, now the arrow manufacturer is ready for",
                         "use...there you are! Talk to me if you need more",

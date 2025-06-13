@@ -1,5 +1,7 @@
 package content.region.morytania.port_phasmatys.dialogue
 
+import content.region.morytania.port_phasmatys.quest.ahoy.dialogue.GhostVillagerDialogueFile
+import content.region.morytania.port_phasmatys.quest.ahoy.plugin.GhostsAhoyUtils
 import content.region.morytania.quest.ahoy.dialogue.GhostVillagerDialogueFile
 import content.region.morytania.quest.ahoy.plugin.GhostsAhoyUtils
 import core.api.getAttribute

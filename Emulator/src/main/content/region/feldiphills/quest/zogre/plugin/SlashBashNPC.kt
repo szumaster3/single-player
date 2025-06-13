@@ -39,7 +39,7 @@ class SlashBashNPC(
         super.handleTickActions()
         if (player != null) {
             if (player.location.getDistance(getLocation()) > 10 || !player.isActive || despawnTime++ > 1030) {
-                removeAttribute(player, ZUtils.SLASH_BASH_ACTIVE)
+                removeAttribute(player, ZogreUtils.SLASH_BASH_ACTIVE)
                 poofClear(this)
             }
         }
@@ -68,7 +68,7 @@ class SlashBashNPC(
                         registerLogoutListener(player, "slash-bash") { _ ->
                             boss.clear()
                         }
-                        setAttribute(player, ZUtils.SLASH_BASH_ACTIVE, true)
+                        setAttribute(player, ZogreUtils.SLASH_BASH_ACTIVE, true)
                         sendMessage(player, "Something stirs behind you!")
                         visualize(boss, -1, spawnGraphics)
                         boss.init()
@@ -107,7 +107,7 @@ class SlashBashNPC(
             produceGroundItem(player, Items.OURG_BONES_4834, RandomFunction.random(1, 3), this.location)
             produceGroundItem(player, Items.ZOGRE_BONES_4812, RandomFunction.random(1, 2), this.location)
             setVarbit(player!!, Vars.VARBIT_QUEST_ZORGE_FLESH_EATERS_PROGRESS_487, 12, true)
-            removeAttribute(player, ZUtils.SLASH_BASH_ACTIVE)
+            removeAttribute(player, ZogreUtils.SLASH_BASH_ACTIVE)
         }
         clearHintIcon(killer!!.asPlayer())
         clear()

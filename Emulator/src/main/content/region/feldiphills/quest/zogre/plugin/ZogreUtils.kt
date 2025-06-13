@@ -2,7 +2,7 @@ package content.region.feldiphills.quest.zogre.plugin
 
 import org.rs.consts.Items
 
-object ZUtils {
+object ZogreUtils {
     const val UNREALIST_PORTRAIT = Items.SITHIK_PORTRAIT_4814
     const val REALIST_PORTRAIT = Items.SITHIK_PORTRAIT_4815
     const val SIGNED_PORTRAIT = Items.SIGNED_PORTRAIT_4816

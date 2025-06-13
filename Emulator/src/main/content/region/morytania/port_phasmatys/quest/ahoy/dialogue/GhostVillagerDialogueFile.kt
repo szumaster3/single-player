@@ -1,6 +1,6 @@
 package content.region.morytania.port_phasmatys.quest.ahoy.dialogue
 
-import content.region.morytania.quest.ahoy.plugin.GhostsAhoyUtils.collectSignature
+import content.region.morytania.port_phasmatys.quest.ahoy.plugin.GhostsAhoyUtils.collectSignature
 import core.api.inEquipment
 import core.api.openDialogue
 import core.game.dialogue.DialogueFile

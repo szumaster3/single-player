@@ -33,7 +33,7 @@ class BrentleVahnNPC(
             if (player.location.getDistance(getLocation()) > 10 || !player.isActive || despawnTime++ > 300) {
                 poofClear(this)
                 sendMessage(player, "This mindless zombie loses interest in fighting you and wanders off.")
-                removeAttribute(player, ZUtils.ZOMBIE_NPC_ACTIVE)
+                removeAttribute(player, ZogreUtils.ZOMBIE_NPC_ACTIVE)
             }
         }
     }
@@ -48,7 +48,7 @@ class BrentleVahnNPC(
                 produceGroundItem(killer, Items.BONES_526, 1, this.location)
             }
             clearHintIcon(killer.asPlayer())
-            removeAttribute(killer.asPlayer(), ZUtils.ZOMBIE_NPC_ACTIVE)
+            removeAttribute(killer.asPlayer(), ZogreUtils.ZOMBIE_NPC_ACTIVE)
             clear()
             super.finalizeDeath(killer)
         }
@@ -71,7 +71,7 @@ class BrentleVahnNPC(
                 object : Pulse(0, zombie) {
                     override fun pulse(): Boolean {
                         zombie.init()
-                        setAttribute(player, ZUtils.ZOMBIE_NPC_ACTIVE, true)
+                        setAttribute(player, ZogreUtils.ZOMBIE_NPC_ACTIVE, true)
                         registerHintIcon(player, zombie)
                         zombie.attack(player)
                         return true

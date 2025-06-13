@@ -1,6 +1,6 @@
 package content.region.feldiphills.quest.zogre.dialogue
 
-import content.region.feldiphills.quest.zogre.plugin.ZUtils
+import content.region.feldiphills.quest.zogre.plugin.ZogreUtils
 import core.api.*
 import core.api.quest.finishQuest
 import core.game.dialogue.DialogueFile
@@ -98,7 +98,7 @@ class GrishFinishDialogue : DialogueFile() {
     ) {
         npc = NPC(NPCs.GRISH_2038)
         when (stage) {
-            0 -> if (getAttribute(player!!, ZUtils.RECEIVED_KEY_FROM_GRISH, false)) {
+            0 -> if (getAttribute(player!!, ZogreUtils.RECEIVED_KEY_FROM_GRISH, false)) {
                 npcl(FaceAnim.OLD_DEFAULT, "Yous creature got da old fings yet?").also { stage++ }
             } else {
                 npcl(
@@ -107,7 +107,7 @@ class GrishFinishDialogue : DialogueFile() {
                 ).also { stage++ }
             }
 
-            1 -> if (getAttribute(player!!, ZUtils.RECEIVED_KEY_FROM_GRISH, false)) {
+            1 -> if (getAttribute(player!!, ZogreUtils.RECEIVED_KEY_FROM_GRISH, false)) {
                 sendDialogueOptions(
                     player!!,
                     "Grish asks if you have the items yet.",
@@ -133,7 +133,7 @@ class GrishFinishDialogue : DialogueFile() {
                 ).also { stage++ }
             }
 
-            2 -> if (getAttribute(player!!, ZUtils.RECEIVED_KEY_FROM_GRISH, false)) {
+            2 -> if (getAttribute(player!!, ZogreUtils.RECEIVED_KEY_FROM_GRISH, false)) {
                 when (buttonID) {
                     1 -> player("Nope, not yet.").also { stage++ }
                     2 -> player("There must be an easier way to kill these zogres!").also { stage = 12 }
@@ -162,7 +162,7 @@ class GrishFinishDialogue : DialogueFile() {
                 }
             }
 
-            3 -> if (getAttribute(player!!, ZUtils.RECEIVED_KEY_FROM_GRISH, false)) {
+            3 -> if (getAttribute(player!!, ZogreUtils.RECEIVED_KEY_FROM_GRISH, false)) {
                 npc(
                     FaceAnim.OLD_DEFAULT,
                     "Yous gets 'em quick tho, cos we'ze wonna do da new Jiggig place...",
@@ -208,7 +208,7 @@ class GrishFinishDialogue : DialogueFile() {
                 "Grish gives you a crudely crafted key.",
             ).also {
                 sendMessage(player!!, "Grish gives you a crudely crafted key.")
-                setAttribute(player!!, "/save:${ZUtils.RECEIVED_KEY_FROM_GRISH}", true)
+                setAttribute(player!!, "/save:${ZogreUtils.RECEIVED_KEY_FROM_GRISH}", true)
                 setVarbit(player!!, Vars.VARBIT_QUEST_ZORGE_FLESH_EATERS_PROGRESS_487, 8)
                 addItem(player!!, Items.OGRE_GATE_KEY_4839)
                 stage++

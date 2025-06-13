@@ -3,7 +3,7 @@ package content.region.feldiphills.gutanoth.plugin
 import content.global.skill.thieving.PickpocketListener
 import content.region.feldiphills.quest.zogre.plugin.BrentleVahnNPC.Companion.spawnHumanZombie
 import content.region.feldiphills.quest.zogre.plugin.SlashBashNPC.Companion.spawnSlashBash
-import content.region.feldiphills.quest.zogre.plugin.ZUtils
+import content.region.feldiphills.quest.zogre.plugin.ZogreUtils
 import core.api.*
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
@@ -90,10 +90,10 @@ class GutanothPlugin : InteractionListener {
 
             animate(player, Animation(Animations.HUMAN_BURYING_BONES_827))
             sendMessage(player, "You search the broken down lecturn.")
-            if (inInventory(player, TORN_PAGE) || getAttribute(player, ZUtils.TORN_PAGE_ACQUIRED, false)) {
+            if (inInventory(player, TORN_PAGE) || getAttribute(player, ZogreUtils.TORN_PAGE_ACQUIRED, false)) {
                 sendMessage(player, "You find nothing here this time.")
             } else {
-                setAttribute(player, ZUtils.TORN_PAGE_ACQUIRED, true)
+                setAttribute(player, ZogreUtils.TORN_PAGE_ACQUIRED, true)
                 sendDoubleItemDialogue(
                     player,
                     -1,
@@ -106,7 +106,7 @@ class GutanothPlugin : InteractionListener {
         }
 
         on(SKELETON, IntType.SCENERY, "search") { player, _ ->
-            if (getAttribute(player, ZUtils.ZOMBIE_NPC_ACTIVE, false)) {
+            if (getAttribute(player, ZogreUtils.ZOMBIE_NPC_ACTIVE, false)) {
                 sendMessage(player, "You find nothing on the corpse.")
             } else if (player.inCombat()) {
                 sendMessage(player, "You're in mortal danger, you don't have time to search!")
@@ -325,7 +325,7 @@ class GutanothPlugin : InteractionListener {
 
                             2 -> {
                                 end()
-                                setAttribute(player, "/save:${ZUtils.ZOMBIE_NPC_ACTIVE}", true)
+                                setAttribute(player, "/save:${ZogreUtils.ZOMBIE_NPC_ACTIVE}", true)
                             }
                         }
                     }
@@ -377,7 +377,7 @@ class GutanothPlugin : InteractionListener {
                             5 -> {
                                 end()
                                 sendDialogue(player, "You eventually manage to lift the lid.")
-                                setAttribute(player, "/save:${ZUtils.BLACK_PRISM_ACQUIRED}", 0)
+                                setAttribute(player, "/save:${ZogreUtils.BLACK_PRISM_ACQUIRED}", 0)
                                 setVarbit(player, Vars.VARBIT_QUEST_ZOGRE_COFFIN_TRANSFORM_488, 3, true)
                             }
                         }
@@ -388,11 +388,11 @@ class GutanothPlugin : InteractionListener {
         }
 
         on(QUEST_COFFIN_2, IntType.SCENERY, "search") { player, _ ->
-            if (inInventory(player, BLACK_PRISM) || getAttribute(player, ZUtils.BLACK_PRISM_ACQUIRED, 0) > 3) {
+            if (inInventory(player, BLACK_PRISM) || getAttribute(player, ZogreUtils.BLACK_PRISM_ACQUIRED, 0) > 3) {
                 sendMessage(player, "You find nothing inside this time.")
             } else {
                 sendItemDialogue(player, BLACK_PRISM, "You find a creepy looking black prism inside.")
-                player.incrementAttribute(ZUtils.BLACK_PRISM_ACQUIRED)
+                player.incrementAttribute(ZogreUtils.BLACK_PRISM_ACQUIRED)
                 setVarbit(player, Vars.VARBIT_QUEST_ZORGE_FLESH_EATERS_PROGRESS_487, 3, true)
                 addItemOrDrop(player, BLACK_PRISM)
             }
@@ -431,7 +431,7 @@ class GutanothPlugin : InteractionListener {
                                 addItem(player, DRAGON_TANKARD, 1)
                                 addItem(player, Items.KNIFE_946, 1)
                                 addItem(player, Items.ROTTEN_FOOD_2959, 1)
-                                setAttribute(player, ZUtils.DRAGON_TANKARD_ACQUIRED, true)
+                                setAttribute(player, ZogreUtils.DRAGON_TANKARD_ACQUIRED, true)
                             }
 
                             2 -> {
@@ -501,7 +501,7 @@ class GutanothPlugin : InteractionListener {
             if (!inInventory(player, Items.OGRE_GATE_KEY_4839) ||
                 !getAttribute(
                     player,
-                    ZUtils.RECEIVED_KEY_FROM_GRISH,
+                    ZogreUtils.RECEIVED_KEY_FROM_GRISH,
                     false,
                 )
             ) {
@@ -519,7 +519,7 @@ class GutanothPlugin : InteractionListener {
         on(STAND, IntType.SCENERY, "search") { player, _ ->
             sendDialogue(player, "You search the plinth...")
             when {
-                getAttribute(player, ZUtils.SLASH_BASH_ACTIVE, false) -> return@on false
+                getAttribute(player, ZogreUtils.SLASH_BASH_ACTIVE, false) -> return@on false
                 else ->
                     if (getVarbit(player, Vars.VARBIT_QUEST_ZORGE_FLESH_EATERS_PROGRESS_487) >= 8) {
                         spawnSlashBash(

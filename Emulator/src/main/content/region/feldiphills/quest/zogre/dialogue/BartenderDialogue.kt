@@ -1,6 +1,6 @@
 package content.region.feldiphills.quest.zogre.dialogue
 
-import content.region.feldiphills.quest.zogre.plugin.ZUtils
+import content.region.feldiphills.quest.zogre.plugin.ZogreUtils
 import core.api.*
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
@@ -25,7 +25,7 @@ class BartenderDialogue : DialogueFile() {
                 stage++
             }
 
-            1 -> if (getAttribute(player!!, ZUtils.TALK_ABOUT_TANKARD_AGAIN, false)) {
+            1 -> if (getAttribute(player!!, ZogreUtils.TALK_ABOUT_TANKARD_AGAIN, false)) {
                 player("Hello again. Can you tell me what you know about", "this tankard again please?").also {
                     stage = 10
                 }
@@ -167,7 +167,7 @@ class BartenderWrongPortraitDialogueFile : DialogueFile() {
         when (stage) {
             0 -> sendItemDialogue(
                 player!!,
-                ZUtils.UNREALIST_PORTRAIT,
+                ZogreUtils.UNREALIST_PORTRAIT,
                 "You show the sketch to the Inn keeper.",
             ).also { stage++ }
 
@@ -196,7 +196,7 @@ class BartenderCorrectPortraitDialogueFile : DialogueFile() {
         when (stage) {
             0 -> sendItemDialogue(
                 player!!,
-                ZUtils.REALIST_PORTRAIT,
+                ZogreUtils.REALIST_PORTRAIT,
                 "You show the portrait to the Inn keeper.",
             ).also { stage++ }
 
@@ -222,20 +222,20 @@ class BartenderCorrectPortraitDialogueFile : DialogueFile() {
             }
 
             4 -> npcl("I can and I will!").also {
-                removeItem(player!!, ZUtils.REALIST_PORTRAIT)
-                addItem(player!!, ZUtils.SIGNED_PORTRAIT)
+                removeItem(player!!, ZogreUtils.REALIST_PORTRAIT)
+                addItem(player!!, ZogreUtils.SIGNED_PORTRAIT)
                 stage++
             }
 
             5 -> sendItemDialogue(
                 player!!,
-                ZUtils.SIGNED_PORTRAIT,
+                ZogreUtils.SIGNED_PORTRAIT,
                 "The Dragon Inn bartender signs the portrait.",
             ).also { stage++ }
 
             6 -> player("Many thanks for your help, it's really very good of", "you.").also { stage++ }
             7 -> npc("Not at all, just doing my part.").also {
-                setAttribute(player!!, ZUtils.TALK_ABOUT_SIGN_PORTRAIT, true)
+                setAttribute(player!!, ZogreUtils.TALK_ABOUT_SIGN_PORTRAIT, true)
                 stage = END_DIALOGUE
             }
         }

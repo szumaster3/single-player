@@ -1,6 +1,6 @@
 package content.region.morytania.port_phasmatys.dialogue
 
-import content.region.morytania.quest.ahoy.dialogue.RobinDialogueFile
+import content.region.morytania.port_phasmatys.quest.ahoy.dialogue.RobinDialogueFile
 import core.api.inInventory
 import core.api.openDialogue
 import core.api.quest.getQuestStage

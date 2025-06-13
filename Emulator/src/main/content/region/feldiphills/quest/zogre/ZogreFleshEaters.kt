@@ -1,6 +1,6 @@
 package content.region.feldiphills.quest.zogre
 
-import content.region.feldiphills.quest.zogre.plugin.ZUtils
+import content.region.feldiphills.quest.zogre.plugin.ZogreUtils
 import core.api.*
 import core.api.quest.isQuestComplete
 import core.game.node.entity.player.Player
@@ -208,7 +208,7 @@ class ZogreFleshEaters :
             line++
         }
 
-        if (getAttribute(player, ZUtils.TALK_WITH_SITHIK_OGRE_DONE, false) || getVarbit(
+        if (getAttribute(player, ZogreUtils.TALK_WITH_SITHIK_OGRE_DONE, false) || getVarbit(
                 player,
                 Vars.VARBIT_QUEST_ZORGE_FLESH_EATERS_PROGRESS_487,
             ) >= 12
@@ -258,11 +258,11 @@ class ZogreFleshEaters :
         setVarbit(player, Vars.VARBIT_QUEST_ZORGE_FLESH_EATERS_PROGRESS_487, 13, true)
         removeAttributes(
             player,
-            ZUtils.TORN_PAGE_ON_NECRO_BOOK,
-            ZUtils.TALK_WITH_SITHIK_OGRE_DONE,
-            ZUtils.TALK_WITH_ZAVISTIC_DONE,
-            ZUtils.RECEIVED_KEY_FROM_GRISH,
-            ZUtils.ASK_SITHIK_AGAIN,
+            ZogreUtils.TORN_PAGE_ON_NECRO_BOOK,
+            ZogreUtils.TALK_WITH_SITHIK_OGRE_DONE,
+            ZogreUtils.TALK_WITH_ZAVISTIC_DONE,
+            ZogreUtils.RECEIVED_KEY_FROM_GRISH,
+            ZogreUtils.ASK_SITHIK_AGAIN,
         )
     }
 

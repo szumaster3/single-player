@@ -1,6 +1,6 @@
 package content.region.karamja.shilo_village.dialogue
 
-import content.region.karamja.shilo.dialogue.KalebParamayaDiaryDialogue
+import content.region.karamja.diary.KalebParamayaDiaryDialogue
 import core.api.addItemOrDrop
 import core.api.openDialogue
 import core.api.removeItem

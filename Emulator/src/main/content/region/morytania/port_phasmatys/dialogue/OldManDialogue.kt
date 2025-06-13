@@ -1,6 +1,6 @@
 package content.region.morytania.port_phasmatys.dialogue
 
-import content.region.morytania.quest.ahoy.dialogue.OldManGADialogue
+import content.region.morytania.port_phasmatys.quest.ahoy.dialogue.OldManGADialogue
 import core.api.openDialogue
 import core.api.quest.getQuestStage
 import core.api.quest.isQuestComplete

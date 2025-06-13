@@ -1,6 +1,6 @@
 package content.region.morytania.port_phasmatys.quest.ahoy.dialogue
 
-import content.region.morytania.quest.ahoy.plugin.GhostsAhoyUtils
+import content.region.morytania.port_phasmatys.quest.ahoy.plugin.GhostsAhoyUtils
 import core.api.*
 import core.api.item.produceGroundItem
 import core.api.quest.getQuestStage

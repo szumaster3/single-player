@@ -28,7 +28,7 @@ class WitchDialogue(
                 }
 
             27 ->
-                if (player.hasItem(_root_ide_package_.content.region.misthalin.draynor_village.quest.anma.AnimalMagnetism.SELECTED_IRON)) {
+                if (player.hasItem(AnimalMagnetism.SELECTED_IRON)) {
                     npc(
                         "You were sent to try my patience, weren't you? Go",
                         "away and make that magnet, then hand it to Ava.",
