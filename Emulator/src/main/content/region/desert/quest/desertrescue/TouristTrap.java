@@ -1,6 +1,10 @@
 package content.region.desert.quest.desertrescue;
 
 import content.region.desert.quest.desertrescue.dialogue.*;
+import content.region.desert.quest.desertrescue.plugin.MineSlaveNPC;
+import content.region.desert.quest.desertrescue.plugin.MiningCampZone;
+import content.region.desert.quest.desertrescue.plugin.RowdySlaveNPC;
+import content.region.desert.quest.desertrescue.plugin.TouristTrapPlugin;
 import core.game.component.Component;
 import core.game.container.impl.EquipmentContainer;
 import core.game.node.entity.player.Player;

@@ -1,7 +1,7 @@
 package content.region.asgarnia.goblin_village.quest.gobdip
 
 import content.region.asgarnia.goblin_village.quest.gobdip.dialogue.GrubfootDialogue
-import content.region.asgarnia.goblin_village.quest.gobdip.handlers.GoblinDiplomacyCutscene
+import content.region.asgarnia.goblin_village.quest.gobdip.plugin.GoblinDiplomacyCutscene
 import core.api.addItemOrDrop
 import core.api.inInventory
 import core.api.quest.updateQuestTab

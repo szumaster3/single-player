@@ -1,6 +1,6 @@
 package content.global.skill.construction.servants
 
-import content.global.skill.construction.item.Planks
+import content.global.skill.construction.item.Plank
 import core.api.*
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
@@ -593,7 +593,7 @@ class HouseServantDialogue(
             )
             return
         }
-        for (plank in Planks.values()) {
+        for (plank in Plank.values()) {
             if (plank.log == item.id) {
                 if (amt > type.capacity) {
                     amt = type.capacity

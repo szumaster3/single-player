@@ -1,7 +1,7 @@
 package content.region.desert.quest.deserttreasure.dialogue
 
 import content.region.desert.quest.deserttreasure.DesertTreasure
-import content.region.desert.quest.deserttreasure.handlers.DTUtils
+import content.region.desert.quest.deserttreasure.plugin.DTUtils
 import core.api.*
 import core.api.interaction.openNpcShop
 import core.api.quest.getQuestStage

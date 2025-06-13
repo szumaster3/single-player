@@ -1,6 +1,6 @@
 package content.region.asgarnia.port_sarim.quest.hunt;
 
-import content.region.asgarnia.port_sarim.quest.hunt.handlers.PiratesTreasurePlugin;
+import content.region.asgarnia.port_sarim.quest.hunt.plugin.PiratesTreasurePlugin;
 import core.game.component.Component;
 import core.game.node.entity.player.Player;
 import core.game.node.entity.player.link.quest.Quest;
