@@ -1,4 +1,4 @@
-package content.global.activity.champion
+package content.global.activity.champion.dialogue
 
 import content.data.GameAttributes
 import core.api.*

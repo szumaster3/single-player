@@ -1,6 +1,7 @@
-package content.global.activity.champion
+package content.global.activity.champion.plugin
 
 import content.data.GameAttributes
+import content.global.activity.champion.dialogue.LarxusDialogueFile
 import core.api.*
 import core.game.dialogue.FaceAnim
 import core.game.global.action.DoorActionHandler
@@ -20,7 +21,7 @@ import org.rs.consts.*
 /**
  * Champion's Challenge plugin.
  */
-class ChallengeListener : InteractionListener, MapArea {
+class ChampionChallengePlugin : InteractionListener, MapArea {
 
     private val regionID = 12696
 

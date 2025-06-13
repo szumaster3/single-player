@@ -1,4 +1,4 @@
-package content.global.activity.champion
+package content.global.activity.champion.plugin
 
 import core.api.sendMessage
 import core.game.event.NPCKillEvent

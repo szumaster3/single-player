@@ -1,4 +1,4 @@
-package content.global.activity.champion
+package content.global.activity.champion.plugin
 
 import content.data.GameAttributes
 import core.api.*
@@ -150,7 +150,7 @@ class ChampionNPC(
                     rewardXP(killer, Skills.HITPOINTS, XP_REWARD)
                     rewardXP(killer, Skills.SLAYER, XP_REWARD)
                 }
-                ChallengeListener.isFinalBattle(killer)
+                ChampionChallengePlugin.isFinalBattle(killer)
             }
             clearHintIcon(killer)
             removeAttributes(
@@ -229,7 +229,9 @@ class ChampionNPC(
             champion.isActive = true
             GameWorld.Pulser.submit(object : Pulse(0, champion) {
                 override fun pulse(): Boolean {
-                    if (npcId == NPCs.EARTH_WARRIOR_CHAMPION_3057 && (player.inventory.containsAtLeastOneItem(PRAYER_ITEMS) || player.equipment.containsAtLeastOneItem(PRAYER_ITEMS))) {
+                    if (npcId == NPCs.EARTH_WARRIOR_CHAMPION_3057 && (player.inventory.containsAtLeastOneItem(
+                            PRAYER_ITEMS
+                        ) || player.equipment.containsAtLeastOneItem(PRAYER_ITEMS))) {
                         sendNPCDialogue(player, NPCs.LARXUS_3050, "For this fight you're not allowed to use prayers!")
                         teleport(player, Location.create(3182, 9758, 0))
                     } else {
