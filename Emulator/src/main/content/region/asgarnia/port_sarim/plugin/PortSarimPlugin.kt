@@ -3,6 +3,7 @@ package content.region.asgarnia.port_sarim.plugin
 import core.api.*
 import core.api.quest.getQuestStage
 import core.api.ui.closeDialogue
+import core.game.dialogue.SequenceDialogue.dialogue
 import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
@@ -13,6 +14,18 @@ import core.tools.RandomFunction
 import org.rs.consts.*
 
 class PortSarimPlugin : InteractionListener {
+
+    companion object {
+        private const val CAVE_ENTRANCE = Scenery.ICY_CAVERN_33174
+        private const val CAVE_EXIT = Scenery.CAVE_33173
+        private const val SLEEPING_GUARD = NPCs.GUARD_2704
+        private const val WORMBRAIN = NPCs.WORMBRAIN_745
+        private const val WYDIN_BANANA_CRATE = Scenery.CRATE_2071
+        private const val WYDIN_STORE_DOOR = Scenery.DOOR_2069
+        private val DOORS = intArrayOf(Scenery.CELL_DOOR_9563, Scenery.DOOR_9565)
+        private val MONKS_OF_ENTRANA = intArrayOf(NPCs.MONK_OF_ENTRANA_2728, NPCs.MONK_OF_ENTRANA_657, NPCs.MONK_OF_ENTRANA_2729, 2730, NPCs.MONK_OF_ENTRANA_2731, NPCs.MONK_OF_ENTRANA_658)
+        private val SEAMAN = intArrayOf(NPCs.CAPTAIN_TOBIAS_376, NPCs.SEAMAN_LORRIS_377, NPCs.SEAMAN_THRESNOR_378)
+    }
 
     override fun defineListeners() {
 
@@ -166,20 +179,17 @@ class PortSarimPlugin : InteractionListener {
          */
 
         on(CAVE_EXIT, IntType.SCENERY, "exit") { player, _ ->
-            player.dialogueInterpreter.open(238284)
+            dialogue(player) {
+                message("STOP! The creatures in this cave are VERY Dangerous. Are you", "sure you want to enter?")
+                options(null, "Yes, I'm not afraid of death!", "No thanks, I don't want to die!") { buttonId ->
+                    if (buttonId == 1) {
+                        val LOCATION = Location.create(3056, 9555, 0)
+                        player.properties.teleportLocation = LOCATION
+                        sendMessage(player, "You venture into the icy cavern.")
+                    }
+                }
+            }
             return@on true
         }
-    }
-
-    companion object {
-        private const val CAVE_ENTRANCE = Scenery.ICY_CAVERN_33174
-        private const val CAVE_EXIT = Scenery.CAVE_33173
-        private const val SLEEPING_GUARD = NPCs.GUARD_2704
-        private const val WORMBRAIN = NPCs.WORMBRAIN_745
-        private const val WYDIN_BANANA_CRATE = Scenery.CRATE_2071
-        private const val WYDIN_STORE_DOOR = Scenery.DOOR_2069
-        private val DOORS = intArrayOf(Scenery.CELL_DOOR_9563, Scenery.DOOR_9565)
-        private val MONKS_OF_ENTRANA = intArrayOf(NPCs.MONK_OF_ENTRANA_2728, NPCs.MONK_OF_ENTRANA_657, NPCs.MONK_OF_ENTRANA_2729, 2730, NPCs.MONK_OF_ENTRANA_2731, NPCs.MONK_OF_ENTRANA_658)
-        private val SEAMAN = intArrayOf(NPCs.CAPTAIN_TOBIAS_376, NPCs.SEAMAN_LORRIS_377, NPCs.SEAMAN_THRESNOR_378)
     }
 }
