@@ -317,6 +317,19 @@ object SequenceDialogue {
             lines += npcLine(npc, FaceAnim.HALF_GUILTY, *text)
         }
 
+        fun npc(npc: Any, expression: FaceAnim?, vararg text: String) {
+            val npcEntity = when (npc) {
+                is NPC -> npc
+                is Int -> NPC(npc)
+                else -> throw IllegalArgumentException("Invalid NPC: ${npc::class.simpleName}.")
+            }
+            lines += npcLine(npcEntity, expression, *text)
+        }
+
+        fun npc(npc: Any, vararg text: String) {
+            npc(npc, FaceAnim.HALF_GUILTY, *text)
+        }
+
         fun item(itemId: Int, vararg text: String) {
             lines += itemLine(itemId, *text)
         }

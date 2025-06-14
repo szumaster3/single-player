@@ -4,14 +4,12 @@ import core.api.*
 import core.game.component.Component
 import core.game.component.ComponentDefinition
 import core.game.component.ComponentPlugin
-import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
-import core.game.node.entity.npc.NPC
+import core.game.dialogue.SequenceDialogue.dialogue
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.plugin.Initializable
 import core.plugin.Plugin
-import core.tools.END_DIALOGUE
 import org.rs.consts.Components
 import org.rs.consts.Items
 import org.rs.consts.NPCs
@@ -111,30 +109,33 @@ class ShoeStoreInterface : ComponentPlugin() {
      */
     fun pay(player: Player) {
         val newColor = getAttribute(player, previousColor, player.appearance.skin.color)
+
         if (newColor == player.appearance.feet.color) {
             closeInterface(player)
+            return
         }
 
         if (!player.houseManager.isInHouse(player)) {
-            if (!removeItem(player, Item(Items.COINS_995, 500))) {
-                sendDialogue(player, "You can not afford that.")
-            } else {
-                setAttribute(player, paymentCheck, true)
-                closeInterface(player)
-                openDialogue(player, YrsaCloseEventDialogue())
+            val paymentSuccessful = removeItem(player, Item(Items.COINS_995, 500))
+            if (!paymentSuccessful) {
+                sendDialogue(player, "You cannot afford that.")
+                return
             }
-        } else {
-            setAttribute(player, paymentCheck, true)
-            closeInterface(player)
         }
+
+        setAttribute(player, paymentCheck, true)
+
+        dialogue(player) {
+            npc(NPCs.YRSA_1301, FaceAnim.FRIENDLY, "I think they suit you.")
+            player(FaceAnim.HAPPY, "Thanks!")
+        }
+
+        closeInterface(player)
         setVarp(player, 261, 0)
     }
 
     /**
-     * Updates the player's shoe color based on the selected button.
-     *
-     * @param player The player to update.
-     * @param button The button ID clicked.
+     * Updates appearance.
      */
     private fun updateFeet(
         player: Player,
@@ -150,9 +151,7 @@ class ShoeStoreInterface : ComponentPlugin() {
     }
 
     /**
-     * Synchronizes the player's appearance with the client.
-     *
-     * @param player The player whose appearance to sync.
+     * Synchronizes the player appearance with the client.
      */
     private fun syncAppearance(player: Player) {
         player.appearance.sync()
@@ -166,19 +165,4 @@ class ShoeStoreInterface : ComponentPlugin() {
         return this
     }
 
-    /**
-     * Dialogue shown to player after confirming shoe purchase.
-     */
-    class YrsaCloseEventDialogue : DialogueFile() {
-        override fun handle(
-            componentID: Int,
-            buttonID: Int,
-        ) {
-            npc = NPC(NPCs.YRSA_1301)
-            when (stage) {
-                0 -> npcl(FaceAnim.FRIENDLY, "I think they suit you.").also { stage++ }
-                1 -> playerl(FaceAnim.HAPPY, "Thanks!").also { stage = END_DIALOGUE }
-            }
-        }
-    }
 }
