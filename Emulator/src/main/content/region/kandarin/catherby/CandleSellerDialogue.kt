@@ -48,23 +48,22 @@ class CandleSellerDialogue(
                 }
             }
 
-            1 ->
-                when (buttonId) {
-                    1 -> {
-                        player(FaceAnim.HAPPY, "Yes please.")
-                        stage = 800
-                    }
-
-                    2 -> {
-                        player(FaceAnim.EXTREMELY_SHOCKED, "One thousand gold?!")
-                        stage = 20
-                    }
-
-                    3 -> {
-                        player(FaceAnim.EXTREMELY_SHOCKED, "No thanks, I'd rather curse the darkness.")
-                        stage = 30
-                    }
+            1 -> when (buttonId) {
+                1 -> {
+                    player(FaceAnim.HAPPY, "Yes please.")
+                    stage = 800
                 }
+
+                2 -> {
+                    player(FaceAnim.EXTREMELY_SHOCKED, "One thousand gold?!")
+                    stage = 20
+                }
+
+                3 -> {
+                    player(FaceAnim.EXTREMELY_SHOCKED, "No thanks, I'd rather curse the darkness.")
+                    stage = 30
+                }
+            }
 
             20 -> {
                 npc(
@@ -101,26 +100,25 @@ class CandleSellerDialogue(
             }
 
             30 -> end()
-            240 ->
-                when (buttonId) {
-                    1 -> {
-                        player(
-                            FaceAnim.HALF_GUILTY,
-                            "All right, you win, I'll buy a candle.",
-                        )
-                        stage = 350
-                    }
-
-                    2 -> {
-                        player(FaceAnim.ANNOYED, "No way.")
-                        stage = 30
-                    }
-
-                    3 -> {
-                        player(FaceAnim.HALF_ASKING, "How do you make lanterns?")
-                        stage = 230
-                    }
+            240 -> when (buttonId) {
+                1 -> {
+                    player(
+                        FaceAnim.HALF_GUILTY,
+                        "All right, you win, I'll buy a candle.",
+                    )
+                    stage = 350
                 }
+
+                2 -> {
+                    player(FaceAnim.ANNOYED, "No way.")
+                    stage = 30
+                }
+
+                3 -> {
+                    player(FaceAnim.HALF_ASKING, "How do you make lanterns?")
+                    stage = 230
+                }
+            }
 
             230 -> {
                 npc(FaceAnim.FRIENDLY, "Out of glass. The more advanced lanterns have a", "metal component as well.")
@@ -221,32 +219,31 @@ class CandleSellerDialogue(
             }
 
             402 -> end()
-            290 ->
-                when (buttonId) {
-                    1 -> {
-                        if (freeSlots(player) == 0) {
-                            end()
-                            sendMessage(player, "You don't have enough inventory space to buy a candle.")
-                        }
-                        if (!inInventory(player, 995, 1000)) {
-                            player(
-                                FaceAnim.HALF_GUILTY,
-                                "Sorry, I don't seem to have enough coins.",
-                            )
-                            stage = 30
-                        }
-                        if (player.inventory.remove(COINS)) {
-                            player.inventory.add(CANDLE)
-                            npc(FaceAnim.FRIENDLY, "Here you go then.")
-                            stage = 400
-                        }
+            290 -> when (buttonId) {
+                1 -> {
+                    if (freeSlots(player) == 0) {
+                        end()
+                        sendMessage(player, "You don't have enough inventory space to buy a candle.")
                     }
-
-                    2 -> {
-                        player(FaceAnim.EXTREMELY_SHOCKED, "No thanks, I'd rather curse the darkness.")
-                        stage = 291
+                    if (!inInventory(player, 995, 1000)) {
+                        player(
+                            FaceAnim.HALF_GUILTY,
+                            "Sorry, I don't seem to have enough coins.",
+                        )
+                        stage = 30
+                    }
+                    if (player.inventory.remove(COINS)) {
+                        player.inventory.add(CANDLE)
+                        npc(FaceAnim.FRIENDLY, "Here you go then.")
+                        stage = 400
                     }
                 }
+
+                2 -> {
+                    player(FaceAnim.EXTREMELY_SHOCKED, "No thanks, I'd rather curse the darkness.")
+                    stage = 291
+                }
+            }
 
             291 -> end()
         }

@@ -12,20 +12,11 @@ import org.rs.consts.Quests
 
 /**
  * Represents Sir Lucan dialogue.
- *
- * **Related quests:**
- * - [Merlin's Crystal][content.region.kandarin.camelot.quest.merlin.MerlinCrystal]
- * - [Holy Grail][content.region.kandarin.camelot.quest.grail.HolyGrail]
- * - [TODO Kings Ransom][content.region.kandarin.quest.kr.KingsRansom]
  */
 @Initializable
-class SirLucanDialogue(
-    player: Player? = null,
-) : Dialogue(player) {
-    override fun handle(
-        interfaceId: Int,
-        buttonId: Int,
-    ): Boolean {
+class SirLucanDialogue(player: Player? = null) : Dialogue(player) {
+
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         if (!isQuestComplete(player, Quests.MERLINS_CRYSTAL)) {
             when (stage) {
                 0 -> {
@@ -34,8 +25,7 @@ class SirLucanDialogue(
                             stage = 1
                         } else if (getQuestStage(player!!, Quests.MERLINS_CRYSTAL) == 10) {
                             stage = 10
-                        } else if (getQuestStage(player!!, Quests.MERLINS_CRYSTAL) == 20 ||
-                            getQuestStage(
+                        } else if (getQuestStage(player!!, Quests.MERLINS_CRYSTAL) == 20 || getQuestStage(
                                 player!!,
                                 Quests.MERLINS_CRYSTAL,
                             ) == 30
@@ -48,11 +38,10 @@ class SirLucanDialogue(
                 }
 
                 1 -> playerl(FaceAnim.NEUTRAL, "I'm looking for a quest...").also { stage++ }
-                2 ->
-                    npcl(
-                        FaceAnim.NEUTRAL,
-                        "Talk to the King then adventurer. He is always looking for men of bravery to aid him in his actions.",
-                    ).also { stage = END_DIALOGUE }
+                2 -> npcl(
+                    FaceAnim.NEUTRAL,
+                    "Talk to the King then adventurer. He is always looking for men of bravery to aid him in his actions.",
+                ).also { stage = END_DIALOGUE }
 
                 10 -> {
                     playerl(FaceAnim.NEUTRAL, "Any suggestions on freeing Merlin?")
@@ -86,17 +75,14 @@ class SirLucanDialogue(
                 }
 
                 20 -> playerl(FaceAnim.NEUTRAL, "I need to get into Mordred's Fortress.").also { stage++ }
-                21 ->
-                    npcl(
-                        FaceAnim.NEUTRAL,
-                        "So... you think Mordred's behind this? I'm afraid I don't have any suggestions...",
-                    ).also { stage++ }
+                21 -> npcl(
+                    FaceAnim.NEUTRAL,
+                    "So... you think Mordred's behind this? I'm afraid I don't have any suggestions...",
+                ).also { stage++ }
 
-                22 ->
-                    playerl(FaceAnim.NEUTRAL, "Thanks. I'll try and find someone who does.").also {
-                        stage =
-                            END_DIALOGUE
-                    }
+                22 -> playerl(FaceAnim.NEUTRAL, "Thanks. I'll try and find someone who does.").also {
+                    stage = END_DIALOGUE
+                }
 
                 40 -> {
                     playerl(FaceAnim.NEUTRAL, "I need to find Excalibur.").also { stage++ }
@@ -109,24 +95,24 @@ class SirLucanDialogue(
             }
         } else {
             when (stage) {
-                0 ->
-                    npcl(FaceAnim.FRIENDLY, "Hello there adventurer.").also {
-                        if (getQuestStage(player!!, Quests.HOLY_GRAIL) == 0 ||
-                            isQuestComplete(player!!, Quests.HOLY_GRAIL)
-                        ) {
-                            stage = 1
-                        } else if (getQuestStage(player!!, Quests.HOLY_GRAIL) >= 10) {
-                            stage = 10
-                        }
+                0 -> npcl(FaceAnim.FRIENDLY, "Hello there adventurer.").also {
+                    if (getQuestStage(player!!, Quests.HOLY_GRAIL) == 0 || isQuestComplete(
+                            player!!, Quests.HOLY_GRAIL
+                        )
+                    ) {
+                        stage = 1
+                    } else if (getQuestStage(player!!, Quests.HOLY_GRAIL) >= 10) {
+                        stage = 10
                     }
+                }
+
                 1 -> npcl(FaceAnim.FRIENDLY, "Congratulations on freeing Merlin!").also { stage = END_DIALOGUE }
                 10 -> playerl(FaceAnim.FRIENDLY, "I seek the Grail of legend!").also { stage++ }
                 11 -> npcl(FaceAnim.FRIENDLY, "I'm afraid I don't have any suggestions...").also { stage++ }
-                12 ->
-                    playerl(
-                        FaceAnim.FRIENDLY,
-                        "Thanks. I'll try and find someone who does.",
-                    ).also { stage = END_DIALOGUE }
+                12 -> playerl(
+                    FaceAnim.FRIENDLY,
+                    "Thanks. I'll try and find someone who does.",
+                ).also { stage = END_DIALOGUE }
             }
         }
         return true

@@ -17,10 +17,9 @@ class HarryDialogue(
 
     private fun needsSeaWeed(): Boolean = player.inventory.containsAtLeastOneItem(FISHBOWL_WATER)
 
-    private fun needsFood(): Boolean =
-        player.inventory.containsAtLeastOneItem(
-            intArrayOf(FISHBOWL_SEAWEED, FISHBOWL_BLUE, FISHBOWL_GREEN, FISHBOWL_SPINE),
-        )
+    private fun needsFood(): Boolean = player.inventory.containsAtLeastOneItem(
+        intArrayOf(FISHBOWL_SEAWEED, FISHBOWL_BLUE, FISHBOWL_GREEN, FISHBOWL_SPINE),
+    )
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
@@ -30,14 +29,13 @@ class HarryDialogue(
             "We'll also give you a good price for any fish that you",
             "catch.",
         )
-        stage =
-            if (needsFish() || needsSeaWeed()) {
-                10
-            } else if (needsFood()) {
-                20
-            } else {
-                0
-            }
+        stage = if (needsFish() || needsSeaWeed()) {
+            10
+        } else if (needsFood()) {
+            20
+        } else {
+            0
+        }
         return true
     }
 
@@ -52,18 +50,17 @@ class HarryDialogue(
                 stage = 1
             }
 
-            1 ->
-                when (buttonId) {
-                    1 -> {
-                        player("Let's see what you've got, then.")
-                        stage++
-                    }
-
-                    2 -> {
-                        player("Sorry, I'm not interested.")
-                        stage = 999
-                    }
+            1 -> when (buttonId) {
+                1 -> {
+                    player("Let's see what you've got, then.")
+                    stage++
                 }
+
+                2 -> {
+                    player("Sorry, I'm not interested.")
+                    stage = 999
+                }
+            }
 
             2 -> {
                 end()
@@ -80,60 +77,57 @@ class HarryDialogue(
                 stage++
             }
 
-            11 ->
-                when (buttonId) {
-                    1 -> {
-                        player("Let's see what you've got, then.")
-                        stage = 2
-                    }
-
-                    2 -> {
-                        player("Can I get a fish for this bowl?")
-                        stage = 30
-                    }
-
-                    3 -> {
-                        player("Do you have any fishfood?")
-                        stage = 40
-                    }
-
-                    4 -> {
-                        player("Sorry, I'm not interested.")
-                        stage = 999
-                    }
+            11 -> when (buttonId) {
+                1 -> {
+                    player("Let's see what you've got, then.")
+                    stage = 2
                 }
+
+                2 -> {
+                    player("Can I get a fish for this bowl?")
+                    stage = 30
+                }
+
+                3 -> {
+                    player("Do you have any fishfood?")
+                    stage = 40
+                }
+
+                4 -> {
+                    player("Sorry, I'm not interested.")
+                    stage = 999
+                }
+            }
 
             20 -> {
                 options("Let's see what you've got, then.", "Do you have any fishfood?", "Sorry, I'm not interested.")
                 stage++
             }
 
-            21 ->
-                when (buttonId) {
-                    1 -> {
-                        player("Let's see what you've got, then.")
-                        stage = 2
-                    }
-
-                    2 -> {
-                        player("Do you have any fishfood?")
-                        stage = 40
-                    }
-
-                    3 -> {
-                        player("Sorry, I'm not interested.")
-                        stage = 999
-                    }
+            21 -> when (buttonId) {
+                1 -> {
+                    player("Let's see what you've got, then.")
+                    stage = 2
                 }
 
-            30 ->
-                if (!needsFish()) {
-                    npc("Sorry, you need to put some seaweed into the bowl", "first.")
-                    stage++
-                } else {
-                    npc("Yes you can!")
-                    stage = 33
+                2 -> {
+                    player("Do you have any fishfood?")
+                    stage = 40
                 }
+
+                3 -> {
+                    player("Sorry, I'm not interested.")
+                    stage = 999
+                }
+            }
+
+            30 -> if (!needsFish()) {
+                npc("Sorry, you need to put some seaweed into the bowl", "first.")
+                stage++
+            } else {
+                npc("Yes you can!")
+                stage = 33
+            }
 
             31 -> {
                 player("Seaweed?")
@@ -164,37 +158,34 @@ class HarryDialogue(
                 stage++
             }
 
-            36 ->
-                when (buttonId) {
-                    1 -> {
-                        player("I'll take it!")
-                        stage++
-                    }
-
-                    2 -> {
-                        player("No thanks, later maybe")
-                        stage = 999
-                    }
+            36 -> when (buttonId) {
+                1 -> {
+                    player("I'll take it!")
+                    stage++
                 }
 
-            37 ->
-                stage =
-                    if (player.inventory.getAmount(995) >= 10) {
-                        if (!player.inventory.hasSpaceFor(Item(TINY_NET))) {
-                            npc("Here you... oh.")
-                            38
-                        } else {
-                            npc("Here you go!")
-                            if (player.inventory.remove(Item(995, 10))) {
-                                player.inventory.add(Item(TINY_NET))
-                                player.packetDispatch.sendMessage("Harry sells you a tiny net!")
-                            }
-                            999
-                        }
-                    } else {
-                        npc("Well, I'll be happy to give you the net once you", "have the cash, but not before!")
-                        999
+                2 -> {
+                    player("No thanks, later maybe")
+                    stage = 999
+                }
+            }
+
+            37 -> stage = if (player.inventory.getAmount(995) >= 10) {
+                if (!player.inventory.hasSpaceFor(Item(TINY_NET))) {
+                    npc("Here you... oh.")
+                    38
+                } else {
+                    npc("Here you go!")
+                    if (player.inventory.remove(Item(995, 10))) {
+                        player.inventory.add(Item(TINY_NET))
+                        player.packetDispatch.sendMessage("Harry sells you a tiny net!")
                     }
+                    999
+                }
+            } else {
+                npc("Well, I'll be happy to give you the net once you", "have the cash, but not before!")
+                999
+            }
 
             38 -> {
                 npc("Well, you don't seem to have any free space for", "this right now. Come back later when you do.")

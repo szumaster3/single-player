@@ -14,23 +14,13 @@ import org.rs.consts.Quests
 
 /**
  * Represents Sir Gawain dialogue.
- *
- * **Related quests:**
- * - [Merlin's Crystal][content.region.kandarin.camelot.quest.merlin.MerlinCrystal]
- * - [Holy Grail][content.region.kandarin.camelot.quest.grail.HolyGrail]
- * - [TODO Kings Ransom][content.region.kandarin.quest.kr.KingsRansom]
  */
 @Initializable
-class SirGawainDialogue(
-    player: Player? = null,
-) : Dialogue(player) {
+class SirGawainDialogue(player: Player? = null, ) : Dialogue(player) {
     val STAGE_LE_FAYE_END = 20
     val STAGE_PROGRESS = 15
 
-    override fun handle(
-        interfaceId: Int,
-        buttonId: Int,
-    ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
         if (!isQuestComplete(player, Quests.MERLINS_CRYSTAL)) {
             when (stage) {
                 0 -> {
@@ -139,42 +129,43 @@ class SirGawainDialogue(
             }
         } else {
             when (stage) {
-                0 ->
-                    npcl(FaceAnim.NEUTRAL, "Good day to you sir!").also {
-                        if (getQuestStage(player!!, Quests.HOLY_GRAIL) == 0 ||
-                            isQuestComplete(player!!, Quests.HOLY_GRAIL)
-                        ) {
-                            stage = 1
-                        } else if (getQuestStage(player!!, Quests.HOLY_GRAIL) >= 10) {
-                            stage = 10
-                        }
+                0 -> npcl(FaceAnim.NEUTRAL, "Good day to you sir!").also {
+                    if (getQuestStage(player!!, Quests.HOLY_GRAIL) == 0 || isQuestComplete(
+                            player!!,
+                            Quests.HOLY_GRAIL
+                        )
+                    ) {
+                        stage = 1
+                    } else if (getQuestStage(player!!, Quests.HOLY_GRAIL) >= 10) {
+                        stage = 10
                     }
-                1 ->
-                    showTopics(
-                        Topic(FaceAnim.NEUTRAL, "Good day.", END_DIALOGUE),
-                        Topic(FaceAnim.NEUTRAL, "Know you of any quests sir knight?", 5),
-                    )
-                5 ->
-                    npcl(FaceAnim.NEUTRAL, "I think you've done the main quest we were on right now...").also {
-                        stage =
-                            END_DIALOGUE
-                    }
+                }
+
+                1 -> showTopics(
+                    Topic(FaceAnim.NEUTRAL, "Good day.", END_DIALOGUE),
+                    Topic(FaceAnim.NEUTRAL, "Know you of any quests sir knight?", 5),
+                )
+
+                5 -> npcl(FaceAnim.NEUTRAL, "I think you've done the main quest we were on right now...").also {
+                    stage = END_DIALOGUE
+                }
+
                 10 -> playerl(FaceAnim.NEUTRAL, "I seek the Grail in the name of Camelot!").also { stage++ }
-                11 ->
-                    npcl(
-                        FaceAnim.NEUTRAL,
-                        "The Grail? That is truly a noble quest indeed. None but Galahad have come close.",
-                    ).also {
-                        stage++
-                    }
+                11 -> npcl(
+                    FaceAnim.NEUTRAL,
+                    "The Grail? That is truly a noble quest indeed. None but Galahad have come close.",
+                ).also {
+                    stage++
+                }
+
                 12 -> playerl(FaceAnim.NEUTRAL, "Galahad? Who is he?").also { stage++ }
-                13 ->
-                    npcl(
-                        FaceAnim.NEUTRAL,
-                        "He used to be one of the Knights of the Round Table, but he mysteriously disappeared many years ago.",
-                    ).also {
-                        stage++
-                    }
+                13 -> npcl(
+                    FaceAnim.NEUTRAL,
+                    "He used to be one of the Knights of the Round Table, but he mysteriously disappeared many years ago.",
+                ).also {
+                    stage++
+                }
+
                 14 -> playerl(FaceAnim.NEUTRAL, "Why would he quit being a Knight?").also { stage++ }
                 15 -> npcl(FaceAnim.NEUTRAL, "That is a good question.").also { stage++ }
                 16 -> npcl(FaceAnim.NEUTRAL, "I'm afraid I don't have the answer.").also { stage = END_DIALOGUE }

@@ -46,17 +46,15 @@ class AnitaDialogue(
                         4 -> playerl(FaceAnim.FRIENDLY, "Indeed!").also { stage++ }
                         5 -> npcl(FaceAnim.OLD_DEFAULT, "Could you do me a favour?").also { stage++ }
                         6 -> playerl(FaceAnim.THINKING, "I suppose so.").also { stage++ }
-                        7 ->
-                            npcl(
-                                FaceAnim.OLD_DEFAULT,
-                                "Please give this key to Glough, he left it here last night.",
-                            ).also { stage++ }
+                        7 -> npcl(
+                            FaceAnim.OLD_DEFAULT,
+                            "Please give this key to Glough, he left it here last night.",
+                        ).also { stage++ }
 
-                        8 ->
-                            sendItemDialogue(player!!, Items.GLOUGHS_KEY_788, "Anita gives you a key.").also {
-                                addItemOrDrop(player!!, Items.GLOUGHS_KEY_788)
-                                stage++
-                            }
+                        8 -> sendItemDialogue(player!!, Items.GLOUGHS_KEY_788, "Anita gives you a key.").also {
+                            addItemOrDrop(player!!, Items.GLOUGHS_KEY_788)
+                            stage++
+                        }
 
                         9 -> npcl(FaceAnim.OLD_DEFAULT, "Thanks a lot.").also { stage++ }
                         10 -> playerl(FaceAnim.HAPPY, "No...thank you!").also { stage = END_DIALOGUE }

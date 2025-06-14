@@ -44133,7 +44133,6 @@
       "Extra! Extra! Read all about it!",
       "Varrock Herald, now only 50 gold!"
     ],
-    "movement_radius": "2",
     "id": "5925"
   },
   {
@@ -48487,7 +48486,6 @@
     "examine": "The man with the armour.",
     "melee_animation": "422",
     "range_animation": "422",
-    "movement_radius": "3",
     "attack_speed": "4",
     "magic_level": "22",
     "defence_animation": "404",

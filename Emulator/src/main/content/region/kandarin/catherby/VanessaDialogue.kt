@@ -24,19 +24,17 @@ class VanessaDialogue(
         buttonId: Int,
     ): Boolean {
         when (stage) {
-            0 ->
-                options(
-                    "What are you selling?",
-                    "Can you give me any Farming advice?",
-                    "I'm okay, thank you.",
-                ).also { stage++ }
+            0 -> options(
+                "What are you selling?",
+                "Can you give me any Farming advice?",
+                "I'm okay, thank you.",
+            ).also { stage++ }
 
-            1 ->
-                when (buttonId) {
-                    1 -> end().also { openNpcShop(player, npc.id) }
-                    2 -> player(FaceAnim.HALF_ASKING, "Can you give me any Farming advice?").also { stage++ }
-                    3 -> player(FaceAnim.FRIENDLY, "I'm okay, thank you.").also { stage = END_DIALOGUE }
-                }
+            1 -> when (buttonId) {
+                1 -> end().also { openNpcShop(player, npc.id) }
+                2 -> player(FaceAnim.HALF_ASKING, "Can you give me any Farming advice?").also { stage++ }
+                3 -> player(FaceAnim.FRIENDLY, "I'm okay, thank you.").also { stage = END_DIALOGUE }
+            }
 
             2 -> npc(FaceAnim.HALF_GUILTY, "Yes - ask a gardener.").also { stage = END_DIALOGUE }
         }

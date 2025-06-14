@@ -25,51 +25,47 @@ class HicktonDialogue(
         buttonId: Int,
     ): Boolean {
         when (stage) {
-            0 ->
-                stage =
-                    if (isMaster(player, Skills.FLETCHING)) {
-                        options(
-                            "Can I buy a Skillcape of Fletching?",
-                            "Yes, please.",
-                            "No, I prefer to bash things close up.",
-                        )
-                        100
-                    } else {
-                        options("Yes, please.", "No, I prefer to bash things close up.")
-                        1
-                    }
+            0 -> stage = if (isMaster(player, Skills.FLETCHING)) {
+                options(
+                    "Can I buy a Skillcape of Fletching?",
+                    "Yes, please.",
+                    "No, I prefer to bash things close up.",
+                )
+                100
+            } else {
+                options("Yes, please.", "No, I prefer to bash things close up.")
+                1
+            }
 
-            1 ->
-                when (buttonId) {
-                    1 -> {
-                        end()
-                        npc.openShop(player)
-                    }
-
-                    2 -> {
-                        player(FaceAnim.EVIL_LAUGH, "No, I prefer to bash things close up.")
-                        stage = 20
-                    }
+            1 -> when (buttonId) {
+                1 -> {
+                    end()
+                    npc.openShop(player)
                 }
+
+                2 -> {
+                    player(FaceAnim.EVIL_LAUGH, "No, I prefer to bash things close up.")
+                    stage = 20
+                }
+            }
 
             20 -> end()
-            100 ->
-                when (buttonId) {
-                    1 -> {
-                        player("Can I buy a Skillcape of Fletching?")
-                        stage = -99
-                    }
-
-                    2 -> {
-                        end()
-                        npc.openShop(player)
-                    }
-
-                    3 -> {
-                        player(FaceAnim.EVIL_LAUGH, "No, I prefer to bash things close up.")
-                        stage = 20
-                    }
+            100 -> when (buttonId) {
+                1 -> {
+                    player("Can I buy a Skillcape of Fletching?")
+                    stage = -99
                 }
+
+                2 -> {
+                    end()
+                    npc.openShop(player)
+                }
+
+                3 -> {
+                    player(FaceAnim.EVIL_LAUGH, "No, I prefer to bash things close up.")
+                    stage = 20
+                }
+            }
 
             -99 -> {
                 npc("You will have to pay a fee of 99,000 gp.")
@@ -81,15 +77,14 @@ class HicktonDialogue(
                 stage = 102
             }
 
-            102 ->
-                when (buttonId) {
-                    1 -> {
-                        player("Yes, here you go.")
-                        stage = 103
-                    }
-
-                    2 -> end()
+            102 -> when (buttonId) {
+                1 -> {
+                    player("Yes, here you go.")
+                    stage = 103
                 }
+
+                2 -> end()
+            }
 
             103 -> {
                 if (purchase(player, Skills.FLETCHING)) {
