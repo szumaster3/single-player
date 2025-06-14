@@ -32,7 +32,7 @@ class MuseumWorkerNPC : NPCBehavior(*archelogistsNPCs) {
     }
 
     override fun tick(self: NPC): Boolean {
-        if (RandomFunction.roll(20)) {
+        if (RandomFunction.roll(8)) {
             sendChat(self, forceChat.random())
         }
         return true

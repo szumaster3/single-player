@@ -28,8 +28,7 @@ import org.rs.consts.Quests
 class ForemanNPC(
     id: Int = 0,
     location: Location? = null,
-) : AbstractNPC(id, location),
-    InteractionListener {
+) : AbstractNPC(id, location) {
     override fun construct(
         id: Int,
         location: Location?,
@@ -37,17 +36,6 @@ class ForemanNPC(
     ): AbstractNPC = ForemanNPC(id, location)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.FOREMAN_674)
-
-    override fun defineListeners() {
-        on(this.ids, IntType.NPC, "talk-to") { player, npc ->
-            if (!isQuestComplete(player, Quests.THE_GRAND_TREE)) {
-                openDialogue(player, ForemanDialogue(), npc)
-            } else {
-                sendDialogue(player, "The foreman is too busy to talk.")
-            }
-            return@on true
-        }
-    }
 
     override fun finalizeDeath(killer: Entity?) {
         if (getQuestStage(killer as Player, Quests.THE_GRAND_TREE) == 55) {

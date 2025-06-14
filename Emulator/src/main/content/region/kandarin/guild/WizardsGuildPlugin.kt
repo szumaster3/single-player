@@ -184,18 +184,3 @@ private class WizardDistentorDialogue : DialogueFile() {
         }
     }
 }
-
-@Initializable
-private class ZavisticRarveDialogue(player: Player? = null) : Dialogue(player) {
-
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
-        if (isQuestComplete(player, Quests.ZOGRE_FLESH_EATERS)) {
-            openDialogue(player, ZavisticRarveDefaultDialogue())
-        } else {
-            openDialogue(player, ZavisticRarveDialogueFiles())
-        }
-        return true
-    }
-
-    override fun getIds(): IntArray = intArrayOf(NPCs.ZAVISTIC_RARVE_2059)
-}

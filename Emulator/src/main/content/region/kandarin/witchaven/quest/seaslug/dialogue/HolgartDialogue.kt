@@ -17,7 +17,7 @@ import org.rs.consts.Quests
  * Represents the Holgart dialogue.
  *
  * Relations:
- * - [Sea Slug quest][content.region.kandarin.quest.seaslug.SeaSlug]
+ * - [Sea Slug quest][content.region.kandarin.witchaven.quest.seaslug.SeaSlug]
  */
 @Initializable
 class HolgartDialogue(

@@ -2,6 +2,7 @@ package content.region.kandarin.gnome.quest.grandtree.plugin
 
 import content.global.plugin.iface.ScrollInterface
 import content.region.kandarin.gnome.quest.grandtree.cutscene.GloughsPetCutscene
+import content.region.kandarin.gnome.quest.grandtree.dialogue.ForemanDialogue
 import content.region.kandarin.gnome.quest.grandtree.dialogue.KingNarnodeUnderGroundDialogue
 import content.region.kandarin.gnome.quest.grandtree.dialogue.ShipyardWorkerDialogueFile
 import content.region.karamja.quest.mm.dialogue.KingNarnodeMMDialogue
@@ -23,7 +24,7 @@ import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import org.rs.consts.*
 
-class TheGrandTreePlugin: InteractionListener {
+class TheGrandTreePlugin : InteractionListener {
     fun unlockTUZODoor(player: Player) {
         if (getAttribute(player, TheGrandTreeUtils.TWIG_0, false) &&
             getAttribute(player, TheGrandTreeUtils.TWIG_1, false) &&
@@ -41,6 +42,16 @@ class TheGrandTreePlugin: InteractionListener {
     }
 
     override fun defineListeners() {
+
+        on(NPCs.FOREMAN_674, IntType.NPC, "talk-to") { player, npc ->
+            if (!isQuestComplete(player, Quests.THE_GRAND_TREE)) {
+                openDialogue(player, ForemanDialogue(), npc)
+            } else {
+                sendDialogue(player, "The foreman is too busy to talk.")
+            }
+            return@on true
+        }
+
         on(NPCs.KING_NARNODE_SHAREEN_670, IntType.NPC, "talk-to") { player, npc ->
             val aboveground = 9782
             when {
@@ -234,12 +245,12 @@ class TheGrandTreePlugin: InteractionListener {
             if (hasRequirement(player, Quests.THE_GRAND_TREE)) {
                 val outsideMine =
                     player.location == Location.create(2467, 9903, 0) ||
-                        player.location ==
-                        Location.create(
-                            2468,
-                            9903,
-                            0,
-                        )
+                            player.location ==
+                            Location.create(
+                                2468,
+                                9903,
+                                0,
+                            )
                 if (outsideMine) {
                     forceMove(player, player.location, player.location.transform(0, 2, 0), 25, 60, null, 819)
                 } else {
@@ -253,29 +264,13 @@ class TheGrandTreePlugin: InteractionListener {
         }
     }
 
-    private fun scrollHandler(
-        player: Player,
-        item: Item,
-    ) {
+    private fun scrollHandler(player: Player, item: Item, ) {
         val id = item.id
 
         openInterface(player, Components.BLANK_SCROLL_222).also {
             when (id) {
-                TheGrandTreeUtils.HAZELMERE_SCROLL ->
-                    sendString(
-                        player,
-                        TheGrandTreeUtils.HAZELMERE_SCROLL_CONTENT.joinToString("<br>"),
-                        Components.BLANK_SCROLL_222,
-                        5,
-                    )
-
-                TheGrandTreeUtils.LUMBER_ORDER_SCROLL ->
-                    sendString(
-                        player,
-                        TheGrandTreeUtils.LUMBER_ORDER_SCROLL_CONTENT.joinToString("<br>"),
-                        Components.BLANK_SCROLL_222,
-                        1,
-                    )
+                TheGrandTreeUtils.HAZELMERE_SCROLL -> sendString(player, TheGrandTreeUtils.HAZELMERE_SCROLL_CONTENT.joinToString("<br>"), Components.BLANK_SCROLL_222, 5)
+                TheGrandTreeUtils.LUMBER_ORDER_SCROLL -> sendString(player, TheGrandTreeUtils.LUMBER_ORDER_SCROLL_CONTENT.joinToString("<br>"), Components.BLANK_SCROLL_222, 1)
             }
         }
     }

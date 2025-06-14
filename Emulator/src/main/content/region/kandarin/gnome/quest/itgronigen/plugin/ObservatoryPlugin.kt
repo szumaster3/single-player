@@ -28,40 +28,17 @@ class ObservatoryPlugin : InteractionListener {
         private const val MOLTEN_GLASS = Items.MOLTEN_GLASS_1775
         private const val LENS_MOULD = Items.LENS_MOULD_602
         private const val OBSERVATORY_LENS = Items.OBSERVATORY_LENS_603
-        private const val DUNGEON_STAIRS_DOWN = Scenery.STAIRS_25432
         private const val DUNGEON_STAIRS_UP = Scenery.STAIRS_25429
         private const val SLEEPING_GUARD = NPCs.SLEEPING_GUARD_6122
         private val KITCHEN_GATES = intArrayOf(Scenery.KITCHEN_GATE_2199, Scenery.KITCHEN_GATE_2200)
-        private val KEY_CHEST =
-            intArrayOf(Scenery.CHEST_25391, Scenery.CHEST_25389, Scenery.CHEST_25385, Scenery.CHEST_25387)
-        private val KEY_CHEST_OPEN =
-            intArrayOf(Scenery.CHEST_25392, Scenery.CHEST_25390, Scenery.CHEST_25386, Scenery.CHEST_25388)
-        private val CHEST_LOCATIONS =
-            arrayOf(
-                Location(2312, 9400, 0),
-                Location(2310, 9374, 0),
-                Location(2335, 9374, 0),
-                Location(2351, 9361, 0),
-                Location(2364, 9355, 0),
-                Location(2326, 9360, 0),
-            )
-        private const val POISON_SPIDER = NPCs.POISON_SPIDER_1009
+        private val KEY_CHEST = intArrayOf(Scenery.CHEST_25391, Scenery.CHEST_25389, Scenery.CHEST_25385, Scenery.CHEST_25387)
+        private val KEY_CHEST_OPEN = intArrayOf(Scenery.CHEST_25392, Scenery.CHEST_25390, Scenery.CHEST_25386, Scenery.CHEST_25388)
         private const val GOBLIN_STOVE = Scenery.GOBLIN_STOVE_25440
         private const val EMPTY_GOBLIN_STOVE = Scenery.GOBLIN_STOVE_25441
         private const val ORRERY = Scenery.ORRERY_25401
         private val OBSERVATORY_GATES = intArrayOf(Scenery.DOOR_25526, Scenery.DOOR_25527)
-        private const val SIGNPOST = Scenery.SIGNPOST_25397
         private const val OBSERVATORY_STAIRS = Scenery.STAIRS_25434
-        const val EXPERIENCE_BLOCKER = Vars.VARBIT_OBSERVATORY_QUEST_REWARD_EXPERIENCE_BLOCKER_3827
-        private val STAR_CHART =
-            intArrayOf(
-                Scenery.STAR_CHART_25578,
-                Scenery.STAR_CHART_25579,
-                Scenery.STAR_CHART_25580,
-                Scenery.STAR_CHART_25581,
-                Scenery.STAR_CHART_25582,
-                Scenery.STAR_CHART_25583,
-            )
+        private val STAR_CHART = intArrayOf(Scenery.STAR_CHART_25578, Scenery.STAR_CHART_25579, Scenery.STAR_CHART_25580, Scenery.STAR_CHART_25581, Scenery.STAR_CHART_25582, Scenery.STAR_CHART_25583)
     }
 
     override fun defineListeners() {

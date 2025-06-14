@@ -101,11 +101,12 @@ class ZogreFleshEatersPlugin : InteractionListener {
         on(Scenery.BELL_6847, IntType.SCENERY, "ring") { player, _ ->
             if (getAttribute(player, ZogreUtils.NPC_ACTIVE, false)) {
                 sendMessage(player, "You can't do that right now.")
-            } else if (getVarbit(player, Vars.VARBIT_QUEST_ZORGE_FLESH_EATERS_PROGRESS_487) in 4..12) {
+                return@on true
+            }
+
+            if (getVarbit(player, Vars.VARBIT_QUEST_ZORGE_FLESH_EATERS_PROGRESS_487) in 4..12) {
                 playGlobalAudio(player.location, Sounds.ZOGRE_BELL_1959)
                 spawnWizard(player)
-            } else {
-                sendMessage(player, "Nothing interesting happens.")
             }
             return@on true
         }

@@ -601,7 +601,10 @@ class SithikIntsSignedPortraitDialogueFile : DialogueFile() {
                 stage++
             }
 
-            1 -> sendItemDialogue(player!!, ZogreUtils.SIGNED_PORTRAIT, "You show the portrait to Sithik.").also { stage++ }
+            1 -> sendItemDialogue(
+                player!!, ZogreUtils.SIGNED_PORTRAIT, "You show the portrait to Sithik."
+            ).also { stage++ }
+
             2 -> npcl(
                 "Hmmm, well, I've got quite a common looking face, I'm often mistaken for other wizards, you know, when I'm wearing my wizard's hat, robes and staff. There's a lot of us around here you know.",
             ).also {

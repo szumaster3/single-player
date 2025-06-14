@@ -453,7 +453,12 @@ public class NPC extends Entity {
                 return;
             }
         }
-        if (forceTalk != null && forceTalk.length > 0 && getAttribute("lastForceTalk", 0) < GameWorld.getTicks()) {
+
+        if (forceTalk == null || forceTalk.length == 0) {
+            return;
+        }
+
+        if (getAttribute("lastForceTalk", 0) < GameWorld.getTicks()) {
             int index = RandomFunction.random(forceTalk.length);
             sendChat(forceTalk[index]);
             setAttribute("lastForceTalk", GameWorld.getTicks() + RandomFunction.random(15, 30));
@@ -975,22 +980,6 @@ public class NPC extends Entity {
      */
     public void setSlayerExperience(double slayerExperience) {
         this.slayerExperience = slayerExperience;
-    }
-
-    /**
-     * Checks for player within a radius around this NPC.
-     *
-     * @param radius the distance (in tiles) to check around the NPC.
-     * @return {@code true} if a player is within the radius; {@code false} otherwise.
-     */
-    public boolean isPlayerNearby(int radius) {
-        Location loc = this.getLocation();
-        if (loc == null) {
-            return false;
-        }
-        return RegionManager.getLocalPlayers(loc, radius)
-                .stream()
-                .anyMatch(p -> p.isActive() && !p.isArtificial());
     }
 
     /**

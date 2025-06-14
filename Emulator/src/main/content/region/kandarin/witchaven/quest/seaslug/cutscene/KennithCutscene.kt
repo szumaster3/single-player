@@ -18,7 +18,7 @@ import org.rs.consts.Scenery
  * Represents saving Kennith cutscene.
  *
  * Relations:
- * - [Sea Slug quest][content.region.kandarin.quest.seaslug.SeaSlug]
+ * - [Sea Slug quest][content.region.kandarin.witchaven.quest.seaslug.SeaSlug]
  */
 class KennithCutscene(
     player: Player,

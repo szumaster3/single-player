@@ -2,15 +2,35 @@ package content.region.kandarin.feldip.quest.zogre.dialogue
 
 import content.region.kandarin.feldip.quest.zogre.plugin.ZogreUtils
 import core.api.*
+import core.api.quest.isQuestComplete
+import core.game.dialogue.Dialogue
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
+import core.game.node.entity.player.Player
 import core.game.node.item.Item
+import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import core.tools.START_DIALOGUE
 import org.rs.consts.Items
 import org.rs.consts.NPCs
+import org.rs.consts.Quests
 import org.rs.consts.Vars
+
+@Initializable
+class ZavisticRarveDialogue(player: Player? = null) : Dialogue(player) {
+
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+        if (isQuestComplete(player, Quests.ZOGRE_FLESH_EATERS)) {
+            openDialogue(player, ZavisticRarveDefaultDialogue())
+        } else {
+            openDialogue(player, ZavisticRarveDialogueFiles())
+        }
+        return true
+    }
+
+    override fun getIds(): IntArray = intArrayOf(NPCs.ZAVISTIC_RARVE_2059)
+}
 
 class ZavisticRarveDialogueFiles : DialogueFile() {
     override fun handle(componentID: Int, buttonID: Int) {

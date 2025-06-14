@@ -4,6 +4,7 @@ import content.region.kandarin.gnome.quest.makinghistory.book.HistoryoftheOutpos
 import content.region.kandarin.gnome.quest.makinghistory.book.TheMysteriousAdventurer
 import core.api.*
 import core.game.dialogue.DialogueFile
+import core.game.dialogue.SequenceDialogue.dialogue
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.player.Player
@@ -79,69 +80,50 @@ class MakingHistoryPlugin : InteractionListener {
                 return@on true
             }
 
-            if (inBorders(player, getRegionBorders(10574))) {
-                sendMessage(player, "It's very cold")
-                playAudio(player, Sounds.HISTORY_KEY_COLD_1198)
-            } else if (inBorders(player, getRegionBorders(10546))) {
-                sendMessage(player, "It's cold")
-                playAudio(player, Sounds.HISTORY_KEY_COLD_1198)
-            } else if (inBorders(player, getRegionBorders(10290))) {
-                sendMessage(player, "It's warm")
-                playAudio(player, Sounds.HISTORY_KEY_WARM_1202)
-            } else if (inBorders(player, getRegionBorders(10289))) {
-                sendMessage(player, "It's hot")
-                playAudio(player, Sounds.HISTORY_KEY_HOT_1200)
-            } else if (inBorders(player, getRegionBorders(9776))) {
-                sendMessage(player, "It's very hot")
-                playAudio(player, Sounds.HISTORY_KEY_HOT_1200)
-            } else if (inBorders(player, getRegionBorders(9777))) {
-                sendMessage(player, "Ouch! It's burning hot and warmer than last time")
-                playAudio(player, Sounds.HISTORY_KEY_BURNING_1197)
-            } else {
-                sendMessage(player, "It's freezing")
-                playAudio(player, Sounds.HISTORY_KEY_FREEZING_1199)
+            when {
+                inBorders(player, getRegionBorders(10574)) -> {
+                    sendMessage(player, "It's very cold")
+                    playAudio(player, Sounds.HISTORY_KEY_COLD_1198)
+                }
+                inBorders(player, getRegionBorders(10546)) -> {
+                    sendMessage(player, "It's cold")
+                    playAudio(player, Sounds.HISTORY_KEY_COLD_1198)
+                }
+                inBorders(player, getRegionBorders(10290)) -> {
+                    sendMessage(player, "It's warm")
+                    playAudio(player, Sounds.HISTORY_KEY_WARM_1202)
+                }
+                inBorders(player, getRegionBorders(10289)) -> {
+                    sendMessage(player, "It's hot")
+                    playAudio(player, Sounds.HISTORY_KEY_HOT_1200)
+                }
+                inBorders(player, getRegionBorders(9776)) -> {
+                    sendMessage(player, "It's very hot")
+                    playAudio(player, Sounds.HISTORY_KEY_HOT_1200)
+                }
+                inBorders(player, getRegionBorders(9777)) -> {
+                    sendMessage(player, "Ouch! It's burning hot and warmer than last time")
+                    playAudio(player, Sounds.HISTORY_KEY_BURNING_1197)
+                }
+                else -> {
+                    sendMessage(player, "It's freezing")
+                    playAudio(player, Sounds.HISTORY_KEY_FREEZING_1199)
+                }
             }
+
             return@on true
         }
 
         on(Scenery.BOOKCASE_10273, IntType.SCENERY, "study") { player, _ ->
-            openDialogue(
-                player,
-                object : DialogueFile() {
-                    override fun handle(
-                        componentID: Int,
-                        buttonID: Int,
-                    ) {
-                        when (stage) {
-                            0 ->
-                                options(
-                                    "The Times of Lathas",
-                                    "The History of the Outpost",
-                                    "The Mysterious Adventurer",
-                                ).also { stage++ }
-
-                            1 ->
-                                when (buttonID) {
-                                    1 ->
-                                        sendDialogue(
-                                            player,
-                                            "You pick up a new looking book: 'The Times of Lathas'. You skim over the heavy book. It talks about the heritage of the line of kings who carry the name Ardignas. They only came into power 68 years ago, but in which time there have been five kings, the current being King Lathas.",
-                                        ).also { stage = END_DIALOGUE }
-
-                                    2 -> {
-                                        end()
-                                        HistoryoftheOutpost.openBook(player)
-                                    }
-
-                                    3 -> {
-                                        end()
-                                        TheMysteriousAdventurer.openBook(player)
-                                    }
-                                }
-                        }
+            dialogue(player) {
+                options(null, "The Times of Lathas", "The History of the Outpost", "The Mysterious Adventurer",) { buttonID ->
+                    when (buttonID) {
+                        1 -> sendDialogue(player, "You pick up a new looking book: 'The Times of Lathas'. You skim over the heavy book. " + "It talks about the heritage of the line of kings who carry the name Ardignas. " + "They only came into power 68 years ago, but in which time there have been five kings, the current being King Lathas.")
+                        2 -> HistoryoftheOutpost.openBook(player)
+                        3 -> TheMysteriousAdventurer.openBook(player)
                     }
-                },
-            )
+                }
+            }
             return@on true
         }
     }

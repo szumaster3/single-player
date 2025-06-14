@@ -14,7 +14,7 @@ import org.rs.consts.Quests
  * Represents the Kennith dialogue extension.
  *
  * Relations:
- * - [Sea Slug quest][content.region.kandarin.quest.seaslug.SeaSlug]
+ * - [Sea Slug quest][content.region.kandarin.witchaven.quest.seaslug.SeaSlug]
  */
 class KennithDialogueFile : DialogueFile() {
     override fun handle(

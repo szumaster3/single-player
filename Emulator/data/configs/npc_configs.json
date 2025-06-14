@@ -23687,6 +23687,14 @@
   {
     "examine": "They just call him 'Coach'.",
     "name": "Gnome Coach",
+    "force_talk": [
+      "One-Two, One-Two!",
+      "Run faster! Don't be so lazy!",
+      "Pass to your left! Pass now!",
+      "There are others to pass to you know",
+      "Hey human, get moving!",
+      "Take him out you wuss"
+    ],
     "id": "2802"
   },
   {
@@ -44125,6 +44133,7 @@
       "Extra! Extra! Read all about it!",
       "Varrock Herald, now only 50 gold!"
     ],
+    "movement_radius": "2",
     "id": "5925"
   },
   {
@@ -45980,11 +45989,49 @@
   {
     "examine": "An old goblin hag.",
     "name": "Naghead",
+    "force_talk": [
+      "Oh yeah, that was it!",
+      "It's about the new family.",
+      "The very same!",
+      "I were hangin' out me washin'.",
+      "And I looked over at-",
+      "Wait, we're being watched!",
+      "Yes, a person over there.",
+      "No! Don't make eye contact.",
+      "They're listening to us.",
+      "Oh no! It's one of those tall people.",
+      "Makes my skin crawl to see them.",
+      "So tall and neat.",
+      "I hope it doesn't come to speak with us.",
+      "Horrid indeed, my dear.",
+      "Let us carry on our conversation.",
+      "So...",
+      "What was I talking about, now?"
+    ],
     "id": "6123"
   },
   {
     "examine": "A young goblin 'beauty'.",
     "name": "Wagchin",
+    "force_talk": [
+      "Weren't you going to tell me about the rumour?",
+      "Carry on.",
+      "That joined our horde?",
+      "Oh my! Do tell.",
+      "Yes...",
+      "I'm listening.",
+      "Where?",
+      "We are?",
+      "Oh my!",
+      "A goblin folk?",
+      "Bizarre creatures for sure.",
+      "Why?",
+      "For sure, my dear.",
+      "What a horrid thought!",
+      "What should we do?",
+      "Let's!",
+      "Yes?"
+    ],
     "id": "6124"
   },
   {
@@ -46002,6 +46049,18 @@
     "combat_audio": "469,472,471",
     "strength_level": "1",
     "id": "6126",
+    "force_talk": [
+      "Which way should I go?",
+      "These dungeons are such a maze.",
+      "Where's the exit?!?",
+      "This is the fifth time this week. I'm lost!",
+      "I've been wandering around down here for hours.",
+      "How do you get back to the village?",
+      "I hate being so lost!",
+      "How could I be so disoriented?",
+      "Where am I? I'm so lost.",
+      "I know the exit's around here, somewhere."
+    ],
     "clue_level": "0"
   },
   {

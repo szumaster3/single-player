@@ -21,7 +21,7 @@ import org.rs.consts.Sounds
  * Represents the Kent dialogue.
  *
  * Relations:
- * - [Sea Slug quest][content.region.kandarin.quest.seaslug.SeaSlug]
+ * - [Sea Slug quest][content.region.kandarin.witchaven.quest.seaslug.SeaSlug]
  */
 @Initializable
 class KentDialogue(
