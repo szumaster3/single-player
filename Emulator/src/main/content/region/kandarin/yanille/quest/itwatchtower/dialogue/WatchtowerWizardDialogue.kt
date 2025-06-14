@@ -23,7 +23,7 @@ import org.rs.consts.Quests
  * Represents the Wizard dialogue.
  *
  * Relations
- * - [Watchtower Quest][content.region.kandarin.quest.itwatchtower.Watchtower]
+ * - [Watchtower Quest][content.region.kandarin.yanille.quest.itwatchtower.Watchtower]
  */
 @Initializable
 class WatchtowerWizardDialogue(player: Player? = null) : Dialogue(player) {

@@ -19,7 +19,7 @@ import org.rs.consts.Quests
  * Represents the Gorad NPC.
  *
  * Relations
- * - [Watchtower Quest][content.region.kandarin.quest.itwatchtower.Watchtower]
+ * - [Watchtower Quest][content.region.kandarin.yanille.quest.itwatchtower.Watchtower]
  */
 @Initializable
 class GoradNPC(id: Int = 0, location: Location? = null) : AbstractNPC(id, location) {

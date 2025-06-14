@@ -61625,16 +61625,37 @@
   {
     "examine": "A warrior that died and was reborn through the phoenix's power.",
     "name": "Lesser reborn warrior",
+    "force_talk": [
+      "The mistress is fading!",
+      "You must help the mistress!",
+      "Save the mistress!",
+      "The mistress is in pain!",
+      "Please, help the mistress!"
+    ],
     "id": "8569"
   },
   {
     "examine": "A ranger that died and was reborn through the phoenix's power.",
     "name": "Lesser reborn ranger",
+    "force_talk": [
+      "The mistress is fading!",
+      "You must help the mistress!",
+      "Save the mistress!",
+      "The mistress is in pain!",
+      "Please, help the mistress!"
+    ],
     "id": "8571"
   },
   {
     "examine": "A mage that died and was reborn through the phoenix's power.",
     "name": "Lesser reborn mage",
+    "force_talk": [
+      "The mistress is fading!",
+      "You must help the mistress!",
+      "Save the mistress!",
+      "The mistress is in pain!",
+      "Please, help the mistress!"
+    ],
     "id": "8573"
   },
   {

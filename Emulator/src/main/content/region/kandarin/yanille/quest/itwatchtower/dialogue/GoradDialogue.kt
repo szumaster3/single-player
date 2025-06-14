@@ -16,7 +16,7 @@ import org.rs.consts.Quests
  * Represents the Gorad dialogue.
  *
  * Relations
- * - [Watchtower Quest][content.region.kandarin.quest.itwatchtower.Watchtower]
+ * - [Watchtower Quest][content.region.kandarin.yanille.quest.itwatchtower.Watchtower]
  */
 @Initializable
 class GoradDialogue(player: Player? = null) : Dialogue(player) {

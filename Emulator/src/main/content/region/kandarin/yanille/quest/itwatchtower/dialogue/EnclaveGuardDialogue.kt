@@ -15,7 +15,7 @@ import org.rs.consts.Quests
  * Represents the Enclave guard dialogue.
  *
  * Relations
- * - [Watchtower Quest][content.region.kandarin.quest.itwatchtower.Watchtower]
+ * - [Watchtower Quest][content.region.kandarin.yanille.quest.itwatchtower.Watchtower]
  */
 @Initializable
 class EnclaveGuardDialogue(player: Player? = null) : Dialogue(player) {

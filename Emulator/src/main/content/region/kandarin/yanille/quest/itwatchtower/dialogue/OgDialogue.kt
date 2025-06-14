@@ -18,7 +18,7 @@ import org.rs.consts.Quests
  * Represents the Og dialogue.
  *
  * Relations
- * - [Watchtower Quest][content.region.kandarin.quest.itwatchtower.Watchtower]
+ * - [Watchtower Quest][content.region.kandarin.yanille.quest.itwatchtower.Watchtower]
  */
 @Initializable
 class OgDialogue(player: Player? = null) : Dialogue(player) {

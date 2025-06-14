@@ -29,8 +29,7 @@ class KathyCorkatDialogue(
                     FaceAnim.FRIENDLY,
                     "I'll be glad to get away from this place, dearie! Fancy a lift up the river?",
                 ).also {
-                    stage =
-                        20
+                    stage = 20
                 }
             } else {
                 npcl(FaceAnim.WORRIED, "Oh dear, oh dear, oh dear...")
@@ -40,8 +39,7 @@ class KathyCorkatDialogue(
                 npcl(FaceAnim.FRIENDLY, "Are ye wantin' a lift up the river, dearie?").also { stage = 23 }
             } else {
                 npcl(FaceAnim.FRIENDLY, "Hello dearie. Heading up north to the Fishing Colony, are we?").also {
-                    stage =
-                        18
+                    stage = 18
                 }
             }
         }
@@ -57,17 +55,15 @@ class KathyCorkatDialogue(
             1 -> npcl(FaceAnim.WORRIED, "It's terrible!").also { stage++ }
             2 -> playerl(FaceAnim.FRIENDLY, "What's terrible?").also { stage++ }
             3 -> npcl(FaceAnim.HALF_ASKING, "Oh, never mind, dearie. What can I do for you?").also { stage++ }
-            4 ->
-                options(
-                    "Can you take me downstream in your boat?",
-                    "I don't think I want anything, thanks.",
-                ).also { stage++ }
+            4 -> options(
+                "Can you take me downstream in your boat?",
+                "I don't think I want anything, thanks.",
+            ).also { stage++ }
 
-            5 ->
-                when (buttonId) {
-                    1 -> playerl(FaceAnim.FRIENDLY, "Can you take me downstream in your boat?").also { stage = 8 }
-                    2 -> playerl(FaceAnim.NEUTRAL, "I don't think I want anything, thanks.").also { stage = 6 }
-                }
+            5 -> when (buttonId) {
+                1 -> playerl(FaceAnim.FRIENDLY, "Can you take me downstream in your boat?").also { stage = 8 }
+                2 -> playerl(FaceAnim.NEUTRAL, "I don't think I want anything, thanks.").also { stage = 6 }
+            }
 
             6 -> npcl(FaceAnim.FRIENDLY, "Everybody wants something, dearie!").also { stage++ }
             7 -> playerl(FaceAnim.FRIENDLY, "Huh? Oh, forget it!").also { stage = END_DIALOGUE }
@@ -94,36 +90,31 @@ class KathyCorkatDialogue(
                 stage++
             }
 
-            10 ->
-                when (buttonId) {
-                    1 -> playerl(FaceAnim.FRIENDLY, "I'm not afraid - let's go!").also { stage++ }
-                    2 -> playerl(FaceAnim.THINKING, "Dangerous? Nah, forget it!").also { stage = 6 }
-                    3 -> playerl(FaceAnim.FRIENDLY, "A lady this beautiful shouldn't be so afraid!").also { stage = 26 }
-                }
+            10 -> when (buttonId) {
+                1 -> playerl(FaceAnim.FRIENDLY, "I'm not afraid - let's go!").also { stage++ }
+                2 -> playerl(FaceAnim.THINKING, "Dangerous? Nah, forget it!").also { stage = 6 }
+                3 -> playerl(FaceAnim.FRIENDLY, "A lady this beautiful shouldn't be so afraid!").also { stage = 26 }
+            }
 
             11 -> npcl(FaceAnim.FRIENDLY, "It's dangerous up there for me too, dearie.").also { stage++ }
             12 -> playerl(FaceAnim.FRIENDLY, "Would it help if I gave you some money?").also { stage++ }
-            13 ->
-                npcl(
-                    FaceAnim.FRIENDLY,
-                    "Ooh, that's better! I'll take you up north for 50 shiny coins.",
-                ).also { stage++ }
+            13 -> npcl(
+                FaceAnim.FRIENDLY,
+                "Ooh, that's better! I'll take you up north for 50 shiny coins.",
+            ).also { stage++ }
 
             14 -> options("Alright, I'll pay.", "Not a chance!").also { stage++ }
-            15 ->
-                when (buttonId) {
-                    1 ->
-                        if (!removeItem(player, Item(Items.COINS_995, 50))) {
-                            playerl(FaceAnim.NEUTRAL, "Sorry, I don't have enough coins for that.").also {
-                                stage =
-                                    END_DIALOGUE
-                            }
-                        } else {
-                            playerl(FaceAnim.FRIENDLY, "Alright, I'll pay.").also { stage = 17 }
-                        }
-
-                    2 -> playerl(FaceAnim.FRIENDLY, "Not a chance!").also { stage = 16 }
+            15 -> when (buttonId) {
+                1 -> if (!removeItem(player, Item(Items.COINS_995, 50))) {
+                    playerl(FaceAnim.NEUTRAL, "Sorry, I don't have enough coins for that.").also {
+                        stage = END_DIALOGUE
+                    }
+                } else {
+                    playerl(FaceAnim.FRIENDLY, "Alright, I'll pay.").also { stage = 17 }
                 }
+
+                2 -> playerl(FaceAnim.FRIENDLY, "Not a chance!").also { stage = 16 }
+            }
 
             16 -> npcl(FaceAnim.FRIENDLY, "Then you can find your own way north, dearie!").also { stage = END_DIALOGUE }
             17 -> {
@@ -132,18 +123,16 @@ class KathyCorkatDialogue(
             }
 
             18 -> options("Yes please.", "No thanks.").also { stage++ }
-            19 ->
-                when (buttonId) {
-                    1 -> playerl(FaceAnim.FRIENDLY, "Yes please.").also { stage = 17 }
-                    2 -> playerl(FaceAnim.FRIENDLY, "No thanks.").also { stage = END_DIALOGUE }
-                }
+            19 -> when (buttonId) {
+                1 -> playerl(FaceAnim.FRIENDLY, "Yes please.").also { stage = 17 }
+                2 -> playerl(FaceAnim.FRIENDLY, "No thanks.").also { stage = END_DIALOGUE }
+            }
 
             20 -> options("Yes please.", "No thanks.").also { stage++ }
-            21 ->
-                when (buttonId) {
-                    1 -> playerl(FaceAnim.FRIENDLY, "Yes please.").also { stage++ }
-                    2 -> playerl(FaceAnim.FRIENDLY, "No thanks.").also { stage = END_DIALOGUE }
-                }
+            21 -> when (buttonId) {
+                1 -> playerl(FaceAnim.FRIENDLY, "Yes please.").also { stage++ }
+                2 -> playerl(FaceAnim.FRIENDLY, "No thanks.").also { stage = END_DIALOGUE }
+            }
 
             22 -> {
                 end()
@@ -163,35 +152,31 @@ class KathyCorkatDialogue(
                 }
             }
 
-            24 ->
-                when (buttonId) {
-                    1 ->
-                        playerl(
-                            FaceAnim.HALF_ASKING,
-                            "Why don't you row right into the Colony? It'd make it much easier to get in there.",
-                        ).also {
-                            stage++
-                        }
-                    2 -> playerl(FaceAnim.FRIENDLY, "Yes please.").also { stage = 22 }
-                    3 -> playerl(FaceAnim.FRIENDLY, "No thanks.").also { stage = END_DIALOGUE }
+            24 -> when (buttonId) {
+                1 -> playerl(
+                    FaceAnim.HALF_ASKING,
+                    "Why don't you row right into the Colony? It'd make it much easier to get in there.",
+                ).also {
+                    stage++
                 }
 
-            25 ->
-                npcl(
-                    FaceAnim.FRIENDLY,
-                    "Oh, Franklin doesn't like it if I take my boat too close. He says I'll damage the nets and scare the fish. But were you wanting a lift up to the river?",
-                ).also {
-                    stage =
-                        20
-                }
-            26 ->
-                npcl(
-                    FaceAnim.HAPPY,
-                    "Oooh, you shouldn't tease a poor girl so! But I'll take you downstream if you like!",
-                ).also {
-                    stage =
-                        17
-                }
+                2 -> playerl(FaceAnim.FRIENDLY, "Yes please.").also { stage = 22 }
+                3 -> playerl(FaceAnim.FRIENDLY, "No thanks.").also { stage = END_DIALOGUE }
+            }
+
+            25 -> npcl(
+                FaceAnim.FRIENDLY,
+                "Oh, Franklin doesn't like it if I take my boat too close. He says I'll damage the nets and scare the fish. But were you wanting a lift up to the river?",
+            ).also {
+                stage = 20
+            }
+
+            26 -> npcl(
+                FaceAnim.HAPPY,
+                "Oooh, you shouldn't tease a poor girl so! But I'll take you downstream if you like!",
+            ).also {
+                stage = 17
+            }
         }
         return true
     }

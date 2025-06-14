@@ -24,7 +24,7 @@ import org.rs.consts.Quests
  * - [08.04.2009](https://youtu.be/xuFxEioCojs?si=LD0PdsJM48mggLXx&t=122)
  *
  * Relations
- * - [Watchtower Quest][content.region.kandarin.quest.itwatchtower.Watchtower]
+ * - [Watchtower Quest][content.region.kandarin.yanille.quest.itwatchtower.Watchtower]
  */
 @Initializable
 class ScaredSkavidDialogue(player: Player? = null) : Dialogue(player) {

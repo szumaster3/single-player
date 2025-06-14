@@ -21,32 +21,28 @@ class DragonForgePlugin : InteractionListener {
          */
 
         onUseWith(IntType.SCENERY, DRAGON_ANVIL, *RUINED_PIECES) { player, _, _ ->
-            if (
-                !hasRequirement(player, Quests.WHILE_GUTHIX_SLEEPS) ||
-                getStatLevel(player, Skills.SMITHING) < 92 ||
-                !player.inventory.containsItem(FUSION_HAMMER) ||
-                (anyInInventory(player, *RUINED_PIECES) && !allInInventory(player, *RUINED_PIECES))
-            ) {
-                when {
-                    !hasRequirement(player, Quests.WHILE_GUTHIX_SLEEPS) -> return@onUseWith false
-                    getStatLevel(player, Skills.SMITHING) < 92 -> {
-                        sendMessage(player, "You need at least 92 smithing level to do this.")
-                        return@onUseWith false
-                    }
-                    !player.inventory.containsItem(FUSION_HAMMER) -> {
-                        sendDialogue(player, "You need a fusion hammer to work the metal with.")
-                        return@onUseWith false
-                    }
-                    anyInInventory(player, *RUINED_PIECES) && !allInInventory(player, *RUINED_PIECES) -> {
-                        sendDialogue(player, "you do not have the required items.")
-                        return@onUseWith false
-                    }
-                }
+
+            if (!hasRequirement(player, Quests.WHILE_GUTHIX_SLEEPS)) return@onUseWith false
+
+            if (getStatLevel(player, Skills.SMITHING) < 92) {
+                sendMessage(player, "You need at least 92 smithing level to do this.")
+                return@onUseWith false
+            }
+
+            if (!player.inventory.containsItem(FUSION_HAMMER)) {
+                sendMessage(player, "You need a fusion hammer to work the metal with.")
+                return@onUseWith false
+            }
+
+            if (anyInInventory(player, *RUINED_PIECES) && !allInInventory(player, *RUINED_PIECES)) {
+                sendMessage(player, "You do not have the required items.")
+                return@onUseWith false
             }
 
             lock(player, 3)
             lockInteractions(player, 3)
-            queueScript(player, 1, QueueStrength.SOFT) { stage: Int ->
+
+            queueScript(player, 1, QueueStrength.SOFT) { stage ->
                 when (stage) {
                     0 -> {
                         sendMessage(player, "You set to work repairing the ruined armour.")
@@ -66,6 +62,7 @@ class DragonForgePlugin : InteractionListener {
                     else -> return@queueScript stopExecuting(player)
                 }
             }
+
             return@onUseWith true
         }
 
@@ -79,10 +76,7 @@ class DragonForgePlugin : InteractionListener {
             } else {
                 sendMessage(player, "The door opens easily.")
                 setAttribute(player, "dragon_head_room", true)
-                val destination = if (node.id == Scenery.MITHRIL_DOOR_25341)
-                    location(1823, 5273, 0)
-                else
-                    location(1759, 5342, 1)
+                val destination = if (node.id == Scenery.MITHRIL_DOOR_25341) location(1823, 5273, 0) else location(1759, 5342, 1)
                 teleport(player, destination)
             }
             return@on true
@@ -97,10 +91,7 @@ class DragonForgePlugin : InteractionListener {
                 sendDialogue(player, "The door is solid and resists all attempts to open it. There's no way past it at all, so best to ignore it.")
             } else {
                 sendMessage(player, "The door opens easily.")
-                val destination = if (node.id == Scenery.MITHRIL_DOOR_25341)
-                    location(1823, 5273, 0)
-                else
-                    location(1759, 5342, 1)
+                val destination = if (node.id == Scenery.MITHRIL_DOOR_25341) location(1823, 5273, 0) else location(1759, 5342, 1)
                 teleport(player, destination)
             }
             return@onUseWith true
@@ -109,6 +100,7 @@ class DragonForgePlugin : InteractionListener {
         /*
          * Handles creating dragonkin key.
          */
+
         onUseWith(IntType.NPC, STRANGE_KEYS, *MITHRIL_DRAGON_NPC) { player, _, with ->
             val npc = with.asNpc()
 
@@ -130,7 +122,7 @@ class DragonForgePlugin : InteractionListener {
                 visualize(npc, DRAGON_BREATH_ANIMATION, DRAGON_BREATH_GFX)
                 sendItemDialogue(player, DRAGONKIN_KEY, "The intense heat of the mithril dragon's breath fuses the key halves together.")
                 addItem(player, DRAGONKIN_KEY.id, 1)
-                runTask(player, 1) {
+                runTask(player, 3) {
                     npc.attack(player)
                 }
             }
@@ -152,7 +144,5 @@ class DragonForgePlugin : InteractionListener {
         private val DRAGONKIN_KEY = Item(Items.DRAGONKIN_KEY_14471, 1)
         private val DRAGON_BREATH_ANIMATION = Animation(Animations.DRAGON_BREATH_81, Animator.Priority.HIGH)
         private val DRAGON_BREATH_GFX = Graphics(org.rs.consts.Graphics.DRAGON_FIRE_BREATH_DARKER_COLOR_953)
-        private val DRAGON_BREATH_ABSORB_GFX = Graphics(org.rs.consts.Graphics.DFS_HIT_PROJECTILE_1165)
-        private val DRAGON_SHIELD_ABSORB_ANIM = Animation(Animations.DEFEND_10663)
     }
 }

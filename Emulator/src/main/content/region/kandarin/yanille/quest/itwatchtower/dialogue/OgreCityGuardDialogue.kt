@@ -22,7 +22,7 @@ import org.rs.consts.*
  * Represents the Ogre Guards dialogues.
  *
  * Relations
- * - [Watchtower Quest][content.region.kandarin.quest.itwatchtower.Watchtower]
+ * - [Watchtower Quest][content.region.kandarin.yanille.quest.itwatchtower.Watchtower]
  */
 @Initializable
 class OgreCityGuardDialogue(player: Player? = null) : Dialogue(player) {
