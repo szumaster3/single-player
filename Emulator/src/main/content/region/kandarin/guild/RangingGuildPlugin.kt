@@ -78,44 +78,6 @@ class RangingGuildPlugin : InteractionListener, InterfaceListener {
             return@on true
         }
 
-        /*
-         * Handles climbing up the ladder in Ranging Guild.
-         */
-
-        on(2511, IntType.SCENERY, "climb-up") { player, _ ->
-            if (!WarningManager.isDisabled(player, Warnings.RANGING_GUILD)) {
-                WarningManager.openWarning(player, Warnings.RANGING_GUILD)
-            } else {
-                climb(player, Animation(Animations.USE_LADDER_828), Location(2668, 3427, 2))
-                val npc = getLocalNpcs(Location.create(2668, 3427, 2))
-                var dir = ""
-                for (n in npc) {
-                    if (n.id in NPCs.TOWER_ADVISOR_684..NPCs.TOWER_ADVISOR_687) {
-                        dir =
-                            when (n.id) {
-                                NPCs.TOWER_ADVISOR_684 -> "north"
-                                NPCs.TOWER_ADVISOR_685 -> "east"
-                                NPCs.TOWER_ADVISOR_686 -> "south"
-                                NPCs.TOWER_ADVISOR_687 -> "west"
-                                else -> dir
-                            }
-                        sendChat(n, "The $dir tower is occupied, get them!")
-                    }
-                }
-                WarningManager.increment(player, Components.CWS_WARNING_23_564)
-            }
-            return@on true
-        }
-
-        /*
-         * Handles climbing down the ladder in Ranging Guild.
-         */
-
-        on(2512, IntType.SCENERY, "climb-down") { player, _ ->
-            climb(player, null, Location(2668, 3427, 0))
-            return@on true
-        }
-
         on(NPCs.RANGING_GUILD_DOORMAN_679, IntType.NPC, "talk-to") { player, node ->
             sendPlayerDialogue(player, "Hello there.")
             addDialogueAction(player) { _, _ ->

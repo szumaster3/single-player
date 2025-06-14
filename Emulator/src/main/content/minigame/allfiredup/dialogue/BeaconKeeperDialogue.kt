@@ -2,6 +2,7 @@ package content.minigame.allfiredup.dialogue
 
 import content.minigame.allfiredup.plugin.AFUBeacon
 import content.minigame.allfiredup.plugin.AFUSession
+import content.minigame.allfiredup.plugin.BeaconState
 import core.api.getStatLevel
 import core.api.sendDialogueOptions
 import core.api.sendMessage
