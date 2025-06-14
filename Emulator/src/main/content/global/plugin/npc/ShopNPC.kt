@@ -82,6 +82,8 @@ class ShopNPC(id: Int = 0, location: Location? = null, ) : AbstractNPC(id, locat
                 NPCs.YRSA_1301,
                 NPCs.SKULGRIMEN_1303,
                 NPCs.SOLIHIB_1433,
+                NPCs.FISHMONGER_1393,
+                NPCs.GREENGROCER_1394,
                 NPCs.DAGA_1434,
                 NPCs.TUTAB_1435,
                 NPCs.SANIBOCH_1596,

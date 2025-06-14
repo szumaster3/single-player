@@ -5,7 +5,6 @@ import content.data.items.SkillingTool
 import content.data.tables.BirdNestDropTable
 import content.global.skill.farming.FarmingPatch
 import content.global.skill.firemaking.Log
-import content.region.island.miscellania.dialogue.KjallakOnChopDialogue
 import core.api.*
 import core.api.movement.finishedMoving
 import core.api.skill.clockReady
@@ -18,7 +17,6 @@ import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.Node
 import core.game.node.entity.impl.Projectile
-import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.diary.DiaryManager
 import core.game.node.entity.player.link.diary.DiaryType
@@ -232,7 +230,7 @@ class WoodcuttingListener : InteractionListener {
         var regionId = player.location.regionId
         if (regionId == 10300 || regionId == 10044) {
             var npc = if (regionId == 10300) NPCs.CARPENTER_KJALLAK_3916 else NPCs.LUMBERJACK_LEIF_1395
-            openDialogue(player, KjallakOnChopDialogue(), NPC(npc, player.location))
+            sendNPCDialogue(player, npc, "Hey! You're not allowed to chop those!")
             return false
         }
         if (getStatLevel(player, Skills.WOODCUTTING) < resource.level) {

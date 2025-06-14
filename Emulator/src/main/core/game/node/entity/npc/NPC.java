@@ -86,7 +86,7 @@ public class NPC extends Entity {
     private double slayerExperience;
     private Tasks task;
     private boolean neverWalks;
-    private String forceTalk;
+    private String[] forceTalk;
     /**
      * The Behavior.
      */
@@ -454,7 +454,8 @@ public class NPC extends Entity {
             }
         }
         if (forceTalk != null && getAttribute("lastForceTalk", 0) < GameWorld.getTicks()) {
-            sendChat(forceTalk);
+            int index = RandomFunction.random(forceTalk.length);
+            sendChat(forceTalk[index]);
             setAttribute("lastForceTalk", GameWorld.getTicks() + RandomFunction.random(15, 30));
         }
     }

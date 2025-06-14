@@ -31,42 +31,20 @@ class CatableponNPC : AbstractNPC {
         this.isAggressive = true
     }
 
-    /**
-     * NPC setup.
-     */
     override fun configure() {
         super.configure()
         super.getProperties().spell = SpellBook.MODERN.getSpell(7) as CombatSpell?
         super.getProperties().autocastSpell = SpellBook.MODERN.getSpell(7) as CombatSpell?
     }
 
-    /**
-     * Constructs a new instance of the npc.
-     *
-     * @param id the npc id.
-     * @param location the location.
-     * @param objects additional objects related to the npc.
-     * @return a new instance of [CatableponNPC].
-     */
     override fun construct(
         id: Int,
         location: Location,
         vararg objects: Any,
     ): AbstractNPC = CatableponNPC(id, location)
 
-    /**
-     * Get swing handler.
-     *
-     * @param swing boolean indicating if a swing action is occurring.
-     * @return the combat swing handler associated with the NPC.
-     */
     override fun getSwingHandler(swing: Boolean): CombatSwingHandler = combatHandler
 
-    /**
-     * Gets the npc.
-     *
-     * @return the array of npc ids.
-     */
     override fun getIds(): IntArray = intArrayOf(NPCs.CATABLEPON_4397, NPCs.CATABLEPON_4398, NPCs.CATABLEPON_4399)
 
     companion object {

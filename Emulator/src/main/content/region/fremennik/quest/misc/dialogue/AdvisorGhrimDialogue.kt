@@ -1,6 +1,6 @@
 package content.region.fremennik.quest.misc.dialogue
 
-import content.region.island.miscellania.dialogue.AdvisorGhrimDiaryDialogue
+import content.region.island.miscellania.dialogue.AdvisorDialogue
 import core.api.openDialogue
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
@@ -27,7 +27,7 @@ class AdvisorGhrimDialogue(
             1 ->
                 when (buttonId) {
                     1 -> playerl(FaceAnim.ANGRY, "How do I make peace with Etceteria?").also { stage++ }
-                    2 -> openDialogue(player, AdvisorGhrimDiaryDialogue()).also { stage = 100 }
+                    2 -> openDialogue(player, AdvisorDialogue()).also { stage = 100 }
                 }
 
             2 ->

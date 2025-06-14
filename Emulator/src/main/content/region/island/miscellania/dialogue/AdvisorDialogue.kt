@@ -10,7 +10,7 @@ import core.game.world.GameWorld
 import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 
-class AdvisorGhrimDiaryDialogue : DialogueFile() {
+class AdvisorDialogue : DialogueFile() {
     override fun handle(
         componentID: Int,
         buttonID: Int,

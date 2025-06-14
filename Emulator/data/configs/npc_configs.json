@@ -1299,6 +1299,7 @@
   {
     "examine": "Converts grass to beef.",
     "slayer_task": "20",
+    "force_talk": "Moo",
     "melee_animation": "5849",
     "combat_audio": "369,371,370",
     "range_animation": "5849",
@@ -5146,6 +5147,9 @@
     "name": "Cow",
     "lifepoints": "8",
     "strength_level": "1",
+    "force_talk": [
+      "Moo"
+    ],
     "id": "397"
   },
   {
@@ -9119,6 +9123,9 @@
     "magic_animation": "5849",
     "death_animation": "5851",
     "name": "Cow",
+    "force_talk": [
+      "Moo"
+    ],
     "lifepoints": "8",
     "strength_level": "1",
     "id": "955"
@@ -16196,12 +16203,21 @@
   {
     "examine": "This Ghost looks quite Rebellious.",
     "name": "Gravingas",
+    "force_talk": [
+      "Down with Necrovaus!!",
+      "Rise up my fellow ghosts, and we shall be victorious!",
+      "Power to the Ghosts!!",
+      "Rise together, Ghosts without a cause!!",
+      "United we conquer - divided we fall!!",
+      "We shall overcome!!",
+      "Let Necrovarus know we want out!!",
+      "Don't stay silent - victory in numbers!!"
+    ],
     "id": "1685"
   },
   {
     "examine": "A ghost disciple.",
     "name": "Ghost disciple",
-    "combat_audio": "436,439,438",
     "id": "1686"
   },
   {
@@ -16680,6 +16696,9 @@
     "magic_animation": "5849",
     "death_animation": "5851",
     "name": "Cow",
+    "force_talk": [
+      "Moo"
+    ],
     "lifepoints": "8",
     "strength_level": "1",
     "id": "1767"
@@ -19523,6 +19542,18 @@
   {
     "examine": "He is regulating the flow of goods on the trade floor and maintaining order.",
     "name": "Trade Referee",
+    "force_talk": [
+      "Stay inside your triangle!",
+      "Who's next?",
+      "Next bid please!",
+      "Need an offer, now!",
+      "Keep the goods flowing!",
+      "Keep it civil!",
+      "Come on, come on!",
+      "Go again please.",
+      "Keep the goods flowing!",
+      "Hold on there!"
+    ],
     "id": "2127"
   },
   {
@@ -19800,11 +19831,25 @@
   {
     "examine": "He makes sure the carts don't run anyone over.",
     "name": "Cart conductor",
+    "force_talk": [
+      "Grand Exchange carts departing from all tracks!",
+      "Ice Mountain carts departing from all tracks!",
+      "White Wolf Mountain carts departing from all tracks!",
+      "Ice Mountain carts departing from all tracks!",
+      "Grand Exchange carts departing from all tracks!",
+      "Mind the cart!",
+      "Careful!"
+    ],
     "id": "2182"
   },
   {
     "examine": "He makes sure the carts don't run anyone over.",
     "name": "Cart conductor",
+    "force_talk": [
+      "Tickets! Tickets!",
+      "Buy your tickets here!",
+      "Selling tickets!"
+    ],
     "id": "2183"
   },
   {
@@ -20241,9 +20286,9 @@
     "slayer_exp": "0",
     "magic_animation": "0",
     "death_animation": "2183",
-    "lifepoints": "10",
     "name": "Abyssal leech",
     "defence_level": "52",
+    "lifepoints": "10",
     "id": "2263",
     "aggressive": "true",
     "range_level": "52",
@@ -23571,6 +23616,13 @@
   {
     "examine": "Mogre lore activity NPC (morph: varbit 1344)",
     "name": "Skippy",
+    "force_talk": [
+      "I'll get you, I'll get you all!",
+      "The horror...The horror...",
+      "They're coming out of the walls!",
+      "Mudskippers, thousands of them!",
+      "I've got a bottle with your name on it!"
+    ],
     "id": "2795"
   },
   {
@@ -25791,6 +25843,9 @@
   {
     "examine": "This guard looks rather drunk and has beer stains down his armour.",
     "name": "Guard Captain",
+    "force_talk": [
+      "*HIC*"
+    ],
     "id": "3109"
   },
   {
@@ -27572,6 +27627,9 @@
     "magic_animation": "5849",
     "death_animation": "5851",
     "name": "Cow",
+    "force_talk": [
+      "Moo"
+    ],
     "lifepoints": "8",
     "strength_level": "1",
     "id": "3309"
@@ -32359,11 +32417,30 @@
   {
     "examine": "Blademistress, skillful female warrior.",
     "name": "Kamfreena",
+    "force_talk": [
+      "When you aim for perfection, you discover it's a moving target.",
+      "Patience and persistence can bring down the tallest tree.",
+      "Be master of mind rather than mastered by mind.",
+      "A reflection on a pool of water does not reveal its depth.",
+      "Life isn't fair, that doesn't mean you can't win."
+    ],
     "id": "4289"
   },
   {
     "examine": "A warrior mage from the east.",
     "name": "Shanomi",
+    "force_talk": [
+      "Those things which cannot be seen, perceive them.",
+      "Do nothing which is of no use.",
+      "Think not dishonestly.",
+      "The Way in training is.",
+      "Gain and loss between you must distinguish.",
+      "Trifles pay attention even to.",
+      "Way of the warrior this is.",
+      "Acquainted with every art become.",
+      "Ways of all professions know you.",
+      "Judgment and understanding for everything develop you must."
+    ],
     "id": "4290"
   },
   {
@@ -32417,6 +32494,11 @@
   {
     "examine": "Food shopkeeper.",
     "name": "Lidio",
+    "force_talk": [
+      "Potatoes are filling and healthy too!",
+      "Come try my lovely pizza or maybe some fish!",
+      "Stew to fill the belly, on sale here!"
+    ],
     "id": "4293"
   },
   {
@@ -32427,6 +32509,11 @@
   {
     "examine": "Armour shopkeeper.",
     "name": "Anton",
+    "force_talk": [
+      "Armour and axes to suit your needs.",
+      "Imported weapons from the finest smithys around the lands!",
+      "Ow, my toe! That armour is heavy."
+    ],
     "id": "4295"
   },
   {
@@ -43986,6 +44073,13 @@
   {
     "examine": "Newspaper seller.",
     "name": "Benny",
+    "force_talk": [
+      "Read all about it!",
+      "Varrock Herald, on sale here!",
+      "Buy your Varrock Herald now!",
+      "Extra! Extra! Read all about it!",
+      "Varrock Herald, now only 50 gold!"
+    ],
     "id": "5925"
   },
   {
@@ -44124,6 +44218,12 @@
   {
     "examine": "This man guards the entrance to the Museum's cleaning area.",
     "name": "Museum guard",
+    "force_talk": [
+        "Another boring day.",
+        "Nothing new there.",
+        "Keep 'em coming!",
+        "Don't daudle there!"
+    ],
     "id": "5943"
   },
   {
@@ -44310,6 +44410,13 @@
   {
     "examine": "A gnarly old man.",
     "name": "Sylas",
+    "force_talk": [
+      "Selling Magic Beans!",
+      "You there, you look like you could use some beans!",
+      "All beans must go!",
+      "Buy 1 bean get a bean free!",
+      "Selling bags of Magic Beans!"
+    ],
     "id": "5987"
   },
   {
@@ -45855,16 +45962,30 @@
   {
     "examine": "Big appetite for a small creature.",
     "name": "Greasycheeks",
+    "force_talk": [
+      "This is gonna taste sooo good",
+      "Cook, cook, cook!",
+      "I'm so hungry!"
+    ],
     "id": "6127"
   },
   {
     "examine": "Likes drink a little too much.",
     "name": "Smellytoes",
+    "force_talk": [
+      "La la la. Do di dum dii!",
+      "Doh ray meeee laa doh faaa!"
+    ],
     "id": "6128"
   },
   {
     "examine": "Lean and green.",
     "name": "Creakyknees",
+    "force_talk": [
+      "Come on! Please light!",
+      "Was that a spark?",
+      "I'm so hungry!"
+    ],
     "id": "6129"
   },
   {
@@ -45899,6 +46020,10 @@
   {
     "examine": "Get useful information from this guy.",
     "name": "Town crier",
+    "force_talk": [
+      "The Duke of Lumbridge needs a hand.",
+      "The squirrels! The squirrels are coming! Noooo, get them out of my head!"
+    ],
     "id": "6135"
   },
   {
@@ -49947,26 +50072,63 @@
   {
     "examine": "The son of Ali M!",
     "name": "Farid Morrisane (ores)",
+    "force_talk": [
+      "I can make so much money here!",
+      "My father shall be so pleased.",
+      "Woo hoo! What a sale!",
+      "What shall I trade next....",
+      "Hmm. If I divide 20 and take off 50%..."
+    ],
     "id": "6523"
   },
   {
     "examine": "He's probably seen better days.",
     "name": "Bob Barter (herbs)",
+    "force_talk": [
+      "Now, what should I buy?",
+      "I'm in the money!",
+      "I could have sworn that would have worked.",
+      "Hope this item sells well.",
+      "Please, please, please work."
+    ],
     "id": "6524"
   },
   {
     "examine": "You can never miss a pirate in disguise.",
     "name": "Murky Matt (runes)",
+    "force_talk": [
+      "Sure be a busy place, today.",
+      "Yarrr! I'm gonna be rich, I tell ye!",
+      "I'm lovin' this Grand Exchange! Arrr!",
+      "Arrr! Another good sale!",
+      "No! Me prices, they be goin' down!"
+    ],
     "id": "6525"
   },
   {
     "examine": "A tribal man",
     "name": "Relobo Blinyo (logs)",
+    "force_talk": [
+      "Such a joy it is to be in this building.",
+      "Hmmm. These numbers don't quite add up.",
+      "My people shall be so proud!",
+      "Yes! Yet another great deal.",
+      "Just one more offer! One more!"
+    ],
     "id": "6526"
   },
   {
     "examine": "He's travelled a long way.",
     "name": "Hofuthand (armour and weapons)",
+    "force_talk": [
+      "I've hit the jackpot!",
+      "Wow. That's cheap.",
+      "This is trading, the likes of which I've never seen",
+      "Oh, that didn't sell so well.",
+      "Jackpot! I'm in the money now!",
+      "Hmmm. If I spend twenty thousand on that, then...",
+      "Hahaha! Trading the likes of which I have never seen."
+    ],
     "id": "6527"
   },
   {

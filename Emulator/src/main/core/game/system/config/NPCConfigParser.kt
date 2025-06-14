@@ -92,7 +92,11 @@ class NPCConfigParser {
                                     .map { v -> v.toInt() }
                                     .toIntArray()
 
-                        "force_talk" -> configs[it.key.toString()] = it.value.toString()
+                        "force_talk" -> {
+                            @Suppress("UNCHECKED_CAST")
+                            val list = it.value as? List<String> ?: emptyList()
+                            configs[it.key.toString()] = list.toTypedArray()
+                        }
 
                         "spawn_animation",
                         "id",

@@ -13,8 +13,6 @@ class ChurchNPC(
     location: Location? = null
 ) : AbstractNPC(id, location) {
 
-    private var snoreDelay = randomDelay()
-
     override fun construct(id: Int, location: Location, vararg objects: Any): AbstractNPC =
         ChurchNPC(id, location)
 
@@ -24,15 +22,8 @@ class ChurchNPC(
     )
 
     override fun handleTickActions() {
-        if (!isPlayerNearby(15)) return
-
-        if (--snoreDelay <= 0) {
-            if (RandomFunction.roll(8)) {
-                visualize(this,-1, 1056)
-            }
-            snoreDelay = randomDelay()
+        if (RandomFunction.roll(8)) {
+            visualize(this,-1, 1056)
         }
     }
-
-    private fun randomDelay() = RandomFunction.random(100, 200)
 }

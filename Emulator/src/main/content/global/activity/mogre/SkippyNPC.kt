@@ -22,30 +22,14 @@ class SkippyNPC(
     location: Location? = null
 ) : AbstractNPC(id, location) {
 
-    private val forceChat = arrayOf(
-        "I'll get you, I'll get you all!",
-        "The horror...The horror...",
-        "They're coming out of the walls!",
-        "Mudskippers, thousands of them!",
-        "I've got a bottle with your name on it!"
-    )
-
-    private var chatDelay = randomDelay()
-
     override fun construct(id: Int, location: Location, vararg objects: Any): AbstractNPC =
         SkippyNPC(id, location)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.SKIPPY_2795)
 
     override fun handleTickActions() {
-        if (!isPlayerNearby(15)) return
-
-        if (--chatDelay <= 0) {
-            if (RandomFunction.roll(8)) {
-                sendChat(forceChat.random())
-                throwVial()
-            }
-            chatDelay = randomDelay()
+        if (RandomFunction.roll(8)) {
+            throwVial()
         }
     }
 
@@ -69,6 +53,4 @@ class SkippyNPC(
             return@queueScript stopExecuting(this)
         }
     }
-
-    private fun randomDelay() = RandomFunction.random(20, 40)
 }
