@@ -1,4 +1,4 @@
-package content.region.fremennik.lighthouse.quest.horror
+package content.region.fremennik.lighthouse.quest.horror.dialogue
 
 import content.region.fremennik.lighthouse.quest.horror.plugin.DagannothBossCutscene
 import content.region.fremennik.lighthouse.quest.horror.plugin.DagannothCutscene

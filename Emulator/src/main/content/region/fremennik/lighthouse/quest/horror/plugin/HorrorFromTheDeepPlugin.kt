@@ -1,7 +1,7 @@
 package content.region.fremennik.lighthouse.quest.horror.plugin
 
 import content.data.GameAttributes
-import content.region.fremennik.lighthouse.quest.horror.JossikLighthouseDialogue
+import content.region.fremennik.lighthouse.quest.horror.dialogue.JossikLighthouseDialogue
 import content.region.fremennik.lighthouse.quest.horror.dialogue.StrangeWallDialogue
 import core.api.*
 import core.api.interaction.openDoor

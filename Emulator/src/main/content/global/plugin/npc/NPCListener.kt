@@ -29,7 +29,40 @@ import org.rs.consts.NPCs
 import org.rs.consts.Scenery
 
 class NPCListener : InteractionListener {
+    companion object {
+        const val PEER_THE_SEER = NPCs.PEER_THE_SEER_1288
+        val BARCRAWL_NPC = intArrayOf(
+            NPCs.BARTENDER_733,
+            NPCs.BLURBERRY_848,
+            NPCs.BARTENDER_735,
+            NPCs.BARTENDER_739,
+            NPCs.BARTENDER_737,
+            NPCs.BARTENDER_738,
+            NPCs.BARTENDER_731,
+            NPCs.ZAMBO_568,
+            NPCs.KAYLEE_3217,
+            NPCs.EMILY_736,
+            NPCs.BARTENDER_734
+        )
+        val DUMMY_ID = intArrayOf(
+            Scenery.DUMMY_2038,
+            Scenery.DUMMY_15624,
+            Scenery.DUMMY_15625,
+            Scenery.DUMMY_15626,
+            Scenery.DUMMY_15627,
+            Scenery.DUMMY_15628,
+            Scenery.DUMMY_15629,
+            Scenery.DUMMY_15630,
+            Scenery.DUMMY_18238,
+            Scenery.DUMMY_25648,
+            Scenery.DUMMY_PAWYA_CORPSE_28912,
+            Scenery.DUMMY_823,
+            Scenery.DUMMY_23921
+        )
+    }
+
     override fun defineListeners() {
+
         /*
          * Handles hair-cut interaction.
          */
@@ -43,7 +76,7 @@ class NPCListener : InteractionListener {
          * Handles interaction with dummies.
          */
 
-        on(dummySceneryIds, IntType.SCENERY, "attack", "hit") { player, _ ->
+        on(DUMMY_ID, IntType.SCENERY, "attack", "hit") { player, _ ->
             lock(player, 3)
             animate(player, player.properties.attackAnimation)
             if (player.properties.currentCombatLevel < 8) {
@@ -96,7 +129,7 @@ class NPCListener : InteractionListener {
          * Handles BarCrawl activity interaction with NPCs.
          */
 
-        on(barCrawlNPCs, IntType.NPC, "talk-to", "talk") { player, node ->
+        on(BARCRAWL_NPC, IntType.NPC, "talk-to", "talk") { player, node ->
             val type = BarcrawlType.forId(node.id)
             val instance = BarcrawlManager.getInstance(player)
             if (instance.isFinished || !instance.isStarted() || instance.isCompleted(type!!.ordinal)) {
@@ -192,39 +225,5 @@ class NPCListener : InteractionListener {
             }
             return@on player.dialogueInterpreter.open(npc.id, npc)
         }
-    }
-
-    companion object {
-        const val PEER_THE_SEER = NPCs.PEER_THE_SEER_1288
-        val barCrawlNPCs =
-            intArrayOf(
-                NPCs.BARTENDER_733,
-                NPCs.BLURBERRY_848,
-                NPCs.BARTENDER_735,
-                NPCs.BARTENDER_739,
-                NPCs.BARTENDER_737,
-                NPCs.BARTENDER_738,
-                NPCs.BARTENDER_731,
-                NPCs.ZAMBO_568,
-                NPCs.KAYLEE_3217,
-                NPCs.EMILY_736,
-                NPCs.BARTENDER_734,
-            )
-        val dummySceneryIds =
-            intArrayOf(
-                Scenery.DUMMY_2038,
-                Scenery.DUMMY_15624,
-                Scenery.DUMMY_15625,
-                Scenery.DUMMY_15626,
-                Scenery.DUMMY_15627,
-                Scenery.DUMMY_15628,
-                Scenery.DUMMY_15629,
-                Scenery.DUMMY_15630,
-                Scenery.DUMMY_18238,
-                Scenery.DUMMY_25648,
-                Scenery.DUMMY_PAWYA_CORPSE_28912,
-                Scenery.DUMMY_823,
-                Scenery.DUMMY_23921,
-            )
     }
 }

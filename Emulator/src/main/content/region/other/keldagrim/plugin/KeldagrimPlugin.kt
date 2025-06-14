@@ -10,15 +10,12 @@ import core.game.dialogue.SequenceDialogue
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.npc.NPC
-import core.game.node.entity.npc.NPCBehavior
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.TeleportManager
 import core.game.system.task.Pulse
 import core.game.world.map.Direction
 import core.game.world.map.Location
-import core.tools.RandomFunction
 import org.rs.consts.*
-import kotlin.random.Random
 
 class KeldagrimPlugin : InteractionListener {
 

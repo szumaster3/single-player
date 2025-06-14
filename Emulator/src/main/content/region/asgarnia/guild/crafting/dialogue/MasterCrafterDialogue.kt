@@ -1,4 +1,4 @@
-package content.region.asgarnia.guild.crafting
+package content.region.asgarnia.guild.crafting.dialogue
 
 import core.api.Container
 import core.api.addItemOrDrop

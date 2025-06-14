@@ -8,8 +8,10 @@ import core.net.packet.context.MusicContext;
 import core.net.packet.context.StringContext;
 import core.net.packet.out.MusicPacket;
 import core.net.packet.out.StringPacket;
+import org.rs.consts.Music;
 
 import java.util.HashMap;
+import java.util.Set;
 
 import static core.api.ContentAPIKt.setVarp;
 
@@ -57,6 +59,11 @@ public final class MusicPlayer {
      * Indicates whether music looping is enabled.
      */
     private boolean looping;
+
+    /**
+     * Represents the music ids unlocked immediately upon login after 2008.
+     */
+    private static final Set<Integer> LOGIN_MUSIC = Set.of(Music.ADVENTURE_177, Music.BITTERSWEET_BUNNY_502, Music.THE_DANCE_OF_THE_SNOW_QUEEN_593, Music.DIANGOS_LITTLE_HELPERS_532, Music.LAND_OF_SNOW_189, Music.FUNNY_BUNNIES_603, Music.HIGH_SPIRITS_205, Music.GRIMLY_FIENDISH_432, Music.EASTER_JIG_273, Music.SEA_SHANTY_XMAS_210, Music.JUNGLE_BELLS_209, Music.JUNGLE_ISLAND_XMAS_208, Music.SCAPE_MAIN_16, Music.HOMESCAPE_621, Music.SCAPE_HUNTER_207, Music.SCAPE_ORIGINAL_400, Music.SCAPE_SUMMON_457, Music.SCAPE_SANTA_547, Music.SCAPE_SCARED_321, Music.GROUND_SCAPE_466);
 
     /**
      * Constructs a new {@code MusicPlayer} for the specified player.
@@ -194,15 +201,21 @@ public final class MusicPlayer {
         }
         if (!unlocked.containsKey(entry.getIndex())) {
             unlocked.put(entry.getIndex(), entry);
-            player.getPacketDispatch().sendMessage("<col=FF0000>You have unlocked a new music track: " + entry.getName() + ".</col>");
+
+            if (!LOGIN_MUSIC.contains(id)) {
+                player.getPacketDispatch().sendMessage(
+                        "<col=FF0000>You have unlocked a new music track: " + entry.getName() + ".</col>"
+                );
+            }
+
             refreshList();
+
             if (!player.getEmoteManager().isUnlocked(Emotes.AIR_GUITAR) && hasAirGuitar()) {
                 player.getEmoteManager().unlock(Emotes.AIR_GUITAR);
-                if (unlocked.size() >= 200) {
-                    player.getPacketDispatch().sendMessage("You've unlocked 200 music tracks and can use a new emote!");
-                } else {
-                    player.getPacketDispatch().sendMessage("You've unlocked all music tracks and can use a new emote!");
-                }
+                String message = unlocked.size() >= 200
+                        ? "You've unlocked 200 music tracks and can use a new emote!"
+                        : "You've unlocked all music tracks and can use a new emote!";
+                player.getPacketDispatch().sendMessage(message);
             }
         }
         if (play) {

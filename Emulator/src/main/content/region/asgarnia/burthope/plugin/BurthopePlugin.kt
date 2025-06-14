@@ -15,6 +15,15 @@ import org.rs.consts.NPCs
 import org.rs.consts.Scenery
 
 class BurthopePlugin : InteractionListener {
+
+    companion object {
+        private const val BENEDICT = NPCs.EMERALD_BENEDICT_2271
+        private const val MARTIN = NPCs.MARTIN_THWAIT_2270
+        private const val STAIRS_1 = Scenery.STAIRS_4624
+        private const val STAIRS_2 = Scenery.STAIRS_4627
+        private val THIEVING_GUILD_PASSAGE = intArrayOf(Scenery.TRAPDOOR_7257, Scenery.PASSAGEWAY_7258)
+    }
+
     override fun defineListeners() {
         /*
          * Handles entering through the Thieving Guild passage.
@@ -179,11 +188,4 @@ class BurthopePlugin : InteractionListener {
         }
     }
 
-    companion object {
-        private const val BENEDICT = NPCs.EMERALD_BENEDICT_2271
-        private const val MARTIN = NPCs.MARTIN_THWAIT_2270
-        private const val STAIRS_1 = Scenery.STAIRS_4624
-        private const val STAIRS_2 = Scenery.STAIRS_4627
-        private val THIEVING_GUILD_PASSAGE = intArrayOf(Scenery.TRAPDOOR_7257, Scenery.PASSAGEWAY_7258)
-    }
 }

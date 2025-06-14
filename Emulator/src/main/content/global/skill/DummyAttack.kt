@@ -15,7 +15,7 @@ import core.plugin.Plugin
 class DummyAttack : OptionHandler() {
     @Throws(Throwable::class)
     override fun newInstance(arg: Any?): Plugin<Any> {
-        for (i in intArrayOf(*NPCListener.dummySceneryIds)) {
+        for (i in intArrayOf(*NPCListener.DUMMY_ID)) {
             SceneryDefinition.forId(i).handlers["option:attack"] = this
         }
         return this

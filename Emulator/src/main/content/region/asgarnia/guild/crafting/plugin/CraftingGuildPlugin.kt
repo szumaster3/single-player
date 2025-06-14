@@ -1,4 +1,4 @@
-package content.region.asgarnia.guild.crafting
+package content.region.asgarnia.guild.crafting.plugin
 
 import core.api.*
 import core.game.dialogue.FaceAnim

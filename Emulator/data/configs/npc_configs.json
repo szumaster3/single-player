@@ -16091,11 +16091,28 @@
   {
     "examine": "A werewolf agility trainer.",
     "name": "Agility Trainer",
+    "force_talk": [
+      "Remember - a slow wolf is a hungry wolf!!",
+      "Get on with it - you need your whiskers perking!!!!",
+      "Claws first - think later.",
+      "Imagine the smell of blood in your nostrils!!!",
+      "I never really wanted to be an agility trainer...",
+      "It'll be worth it when you hunt!!",
+      "Let's see those powerful backlegs at work!!",
+      "Let the bloodlust take you!!",
+      "You're the slowest wolf I've ever had the misfortune to witness!!",
+      "When you're done there's a human with your name on it!!"
+    ],
     "id": "1663"
   },
   {
     "examine": "Have you brought him the stick yet?",
     "name": "Agility Trainer",
+    "force_talk": [
+      "Remember - no stick, no agility bonus!",
+      "Bring me the stick when you've finished the course!",
+      "Don't forget to give me the stick when you're done!"
+    ],
     "id": "1664"
   },
   {
@@ -43025,6 +43042,13 @@
   {
     "examine": "Sells lamps to light your way in dark caves.",
     "name": "Miltog",
+    "force_talk": [
+      "Lamps!",
+      "Lanterns!",
+      "Tinderboxes!",
+      "Torches!",
+      "Lamp oil!"
+    ],
     "id": "5781"
   },
   {
@@ -43075,16 +43099,37 @@
   {
     "examine": "Sells cave goblin fast food.",
     "name": "Tindar",
+    "force_talk": [
+      "Crispy!",
+      "Creeeespy frogs' legs!",
+      "Get your crispy frogs' legs!",
+      "Frogs' legs!",
+      "Crispy frogs' legs!"
+    ],
     "id": "5795"
   },
   {
     "examine": "Sells cave goblin fast food.",
     "name": "Gundik",
+    "force_talk": [
+      "Spicy kebabs!",
+      "Bat kebabs!",
+      "Spicy bat kebabs!",
+      "Bat shish kebabs!",
+      "Kebabs!"
+    ],
     "id": "5796"
   },
   {
     "examine": "Sells cave goblin fast food.",
     "name": "Zenkog",
+    "force_talk": [
+      "Fingers!",
+      "Wall beast fingers!",
+      "Fresh wall beast fingers!",
+      "Lovely wall beast fingers!",
+      "Tasty wall beast fingers!"
+    ],
     "id": "5797"
   },
   {
@@ -48383,6 +48428,7 @@
     "examine": "The man with the armour.",
     "melee_animation": "422",
     "range_animation": "422",
+    "movement_radius": "3",
     "attack_speed": "4",
     "magic_level": "22",
     "defence_animation": "404",

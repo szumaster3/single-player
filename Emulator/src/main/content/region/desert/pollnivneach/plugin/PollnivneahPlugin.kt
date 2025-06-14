@@ -13,6 +13,16 @@ import org.rs.consts.Scenery
 
 class PollnivneahPlugin : InteractionListener {
 
+    companion object {
+        private const val BAR_TABLE = Scenery.TABLE_6246
+        private const val BARMAN = NPCs.ALI_THE_BARMAN_1864
+        private const val BANDIT = NPCs.BANDIT_6388
+        private const val CAMEL = NPCs.ALI_THE_CAMEL_1873
+        private const val MONEY_POT = Scenery.MONEY_POT_6230
+        private const val COINS = Items.COINS_995
+        private const val SNAKE_CHARMER = NPCs.ALI_THE_SNAKE_CHARMER_1872
+    }
+
     override fun defineListeners() {
         on(CAMEL, IntType.NPC, "talk-to") { player, _ ->
             openDialogue(player, CAMEL)
@@ -57,15 +67,5 @@ class PollnivneahPlugin : InteractionListener {
         setDest(IntType.NPC, intArrayOf(BARMAN), "talk-to") { _, _ ->
             return@setDest Location.create(3361, 2956, 0)
         }
-    }
-
-    companion object {
-        private const val BAR_TABLE = Scenery.TABLE_6246
-        private const val BARMAN = NPCs.ALI_THE_BARMAN_1864
-        private const val BANDIT = NPCs.BANDIT_6388
-        private const val CAMEL = NPCs.ALI_THE_CAMEL_1873
-        private const val MONEY_POT = Scenery.MONEY_POT_6230
-        private const val COINS = Items.COINS_995
-        private const val SNAKE_CHARMER = NPCs.ALI_THE_SNAKE_CHARMER_1872
     }
 }

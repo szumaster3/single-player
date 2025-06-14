@@ -56,12 +56,6 @@ class KharidianDesertPlugin : InteractionListener {
         }
     }
 
-    /**
-     * Finds the first empty waterskin item in the player's inventory.
-     *
-     * @param player the player whose inventory to check
-     * @return the empty waterskin Item if found, otherwise null
-     */
     private fun getWaterSkin(player: Player): Item? {
         for (item in WATER_SKINS) {
             if (player.inventory.containsItem(item)) {

@@ -1,6 +1,7 @@
 package content.region.fremennik.lighthouse.quest.horror
 
 import content.data.GameAttributes
+import content.region.fremennik.lighthouse.quest.horror.dialogue.JossikLighthouseDialogue
 import core.api.*
 import core.game.component.CloseEvent
 import core.game.node.entity.player.Player
