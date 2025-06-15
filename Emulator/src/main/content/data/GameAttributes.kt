@@ -5,9 +5,6 @@ package content.data
  * quests and also other categories.
  */
 internal object GameAttributes {
-    const val SAVE = "/save:"
-    const val JOIN_DATE = "joinDate"
-
     // Timers.
     const val TELEBLOCK_TIMER = "teleblock"
 

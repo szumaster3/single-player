@@ -43,7 +43,6 @@ class PlayerSaver(
         saveSpellbook(saveFile)
         saveSavedData(saveFile)
         saveAutocast(saveFile)
-        savePlayerMonitor(saveFile)
         saveMusicPlayer(saveFile)
         saveFamiliarManager(saveFile)
         saveStateManager(saveFile)
@@ -350,13 +349,6 @@ class PlayerSaver(
             unlockedMusic.add(it.id.toString())
         }
         root["unlockedMusic"] = unlockedMusic
-    }
-
-    fun savePlayerMonitor(root: JSONObject) {
-        val joinDate = JSONObject()
-        val updatedJoinTimestamp = player.gameAttributes.attributes["joinDate"] as? Timestamp
-        joinDate["joinTime"] = updatedJoinTimestamp?.toString()
-        root["joinDate"] = joinDate
     }
 
     fun saveAutocast(root: JSONObject) {

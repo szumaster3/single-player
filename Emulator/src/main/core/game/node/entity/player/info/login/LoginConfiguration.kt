@@ -120,16 +120,12 @@ object LoginConfiguration {
         RegionManager.move(player)
         player.musicPlayer.init()
         player.updateAppearance()
-        player.details.setJoinDate(player)
         player.playerFlags.lastSceneGraph = player.location
         player.packetDispatch.sendInterfaceConfig(226, 1, true)
 
         checkEmotes(player)
-
         setupItems(player)
-
         setupSpellBook(player)
-
         setupPrayer(player)
     }
 

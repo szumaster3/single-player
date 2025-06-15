@@ -70,7 +70,6 @@ class PlayerSaveParser(
         parseAutocastSpell()
         parseFarming()
         parseConfigs()
-        parseMonitor()
         parseMusic()
         parseFamiliars()
         parseBankPin()
@@ -221,13 +220,6 @@ class PlayerSaveParser(
             val entry = MusicEntry.forId(s)
             player.musicPlayer.unlocked[entry.index] = entry
         }
-    }
-
-    fun parseMonitor() {
-        val joinDate = saveFile!!["joinDate"] as? JSONObject ?: return
-        val joinTime = joinDate["joinTime"] as? String ?: return
-        val timestamp = Timestamp.valueOf(joinTime)
-        player.gameAttributes.attributes["joinDate"] = timestamp
     }
 
     fun parseConfigs() {

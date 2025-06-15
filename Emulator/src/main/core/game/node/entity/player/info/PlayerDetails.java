@@ -24,20 +24,6 @@ public class PlayerDetails {
     private final CommunicationInfo communicationInfo = new CommunicationInfo();
 
     /**
-     * Sets join date if not already set.
-     *
-     * @param player the player
-     */
-    public void setJoinDate(Player player) {
-        Timestamp existing = (Timestamp) player.getGameAttributes().getAttributes().get(GameAttributes.JOIN_DATE);
-        if (existing == null) {
-            long joinTime = System.currentTimeMillis();
-            Timestamp timestamp = new Timestamp(joinTime);
-            player.getDetails().accountInfo.setJoinDate(timestamp);
-        }
-    }
-
-    /**
      * Gets credits.
      *
      * @return the credits
