@@ -54,7 +54,7 @@ class EnchantedHeadgearListener : InteractionListener {
 
             sendNPCDialogue(player, NPCs.PIKKUPSTIX_6970, "What would you like disenchanted or enchanted?")
             addDialogueAction(player) { _, _ ->
-                sendItemSelect(player, "Choose an item to enchant:") { slot, _ ->
+                sendItemSelect(player, "Choose an item") { slot, _ ->
                     val item = player.inventory[slot] ?: return@sendItemSelect
                     enchant(player, item, 1)
                 }
@@ -95,7 +95,7 @@ class EnchantedHeadgearListener : InteractionListener {
             val chargedHeadgear = enchManager.enchantedGear[item.id]
 
             if (chargedHeadgear == null || chargedHeadgear.container.toArray().all { it == null }) {
-                sendMessage(player, "This headgear has no stored scrolls.")
+                sendMessage(player, "Your headgear has no scrolls to remove.")
             } else {
                 val scrollsDesc = chargedHeadgear.container.toArray()
                     .filterNotNull()
@@ -105,7 +105,10 @@ class EnchantedHeadgearListener : InteractionListener {
             return@on true
         }
 
-        // Obsługa użycia scrolla na enchanted headgear
+        /*
+         * Handles use the scroll on enchanted gear.
+         */
+
         onUseWith(IntType.ITEM, enchantedIDs, *allowedScrolls) { player, used, with ->
             val enchantedItem = used.asItem() ?: return@onUseWith true
             val scrollItem = with.asItem() ?: return@onUseWith true
@@ -154,7 +157,7 @@ class EnchantedHeadgearListener : InteractionListener {
 
                     val npc = NPC(NPCs.PIKKUPSTIX_6971)
                     dialogue(player) {
-                        npc(npc, FaceAnim.NEUTRAL, "Good choice. Here you go, you can now store spells on it.")
+                        npc(npc, FaceAnim.NEUTRAL, "Good choice. Here you go, you can now store spells on", "it.")
                         player(FaceAnim.CALM_TALK, "Excellent. Thank you!")
                     }
                     return true

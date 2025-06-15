@@ -2,7 +2,7 @@ package content.global.skill.summoning.familiar;
 
 import content.global.skill.summoning.SummoningPouch;
 import content.global.skill.summoning.SummoningScroll;
-import content.global.skill.summoning.items.EnchantedHeadgearScrolls;
+import content.global.skill.summoning.item.EnchantedGearManager;
 import content.global.skill.summoning.pet.Pet;
 import core.cache.def.impl.NPCDefinition;
 import core.game.interaction.MovementPulse;
@@ -340,12 +340,6 @@ public abstract class Familiar extends NPC implements Plugin<Object> {
         setVarbit(owner, 4290, centiminutes > 49 ? 1 : 0);
     }
 
-    /**
-     * Execute special move boolean.
-     *
-     * @param special the special
-     * @return the boolean
-     */
     public boolean executeSpecialMove(FamiliarSpecial special) {
         if (special.getNode() == this) {
             return false;
@@ -359,19 +353,23 @@ public abstract class Familiar extends NPC implements Plugin<Object> {
             owner.debug("Invalid scroll for pouch " + pouchId + " - report!");
             return false;
         }
-        /*
-        if (owner.getSkills().getLevel(Skills.SUMMONING) < scroll.getLevel()) {
-            owner.getPacketDispatch().sendMessage("You need to have a higher Summoning level to use this scroll.");
-            owner.getPacketDispatch().sendMessage("You must have a Summoning level of at least " + scroll.getLevel() + " to use this scroll.");
-            return false;
-        }
-        */
-        int scrollId = scroll.getItemId();
-        Integer chargedItemId = EnchantedHeadgearScrolls.getFromEquipment(owner);
 
-        boolean hasInInventory = owner.getInventory().contains(scroll.getItemId(), 1);
+        /*
+         if (owner.getSkills().getLevel(Skills.SUMMONING) < scroll.getLevel()) {
+             owner.getPacketDispatch().sendMessage("You need to have a higher Summoning level to use this scroll.");
+             owner.getPacketDispatch().sendMessage("You must have a Summoning level of at least " + scroll.getLevel() + " to use this scroll.");
+             return false;
+         }
+        */
+
+        int scrollId = scroll.getItemId();
+
+        EnchantedGearManager enchantedGearManager = new EnchantedGearManager(owner);
+        Integer chargedItemId = enchantedGearManager.getFromEquipment();
+
+        boolean hasInInventory = owner.getInventory().contains(scrollId, 1);
         boolean hasInHeadgear = chargedItemId != null &&
-                EnchantedHeadgearScrolls.getCurrentScrollCount(owner, chargedItemId, scrollId) > 0;
+                enchantedGearManager.getCurrentScrollCount(chargedItemId, scrollId) > 0;
 
         if (!hasInInventory && !hasInHeadgear) {
             owner.getPacketDispatch().sendMessage("You do not have enough scrolls left to do this special move.");
@@ -384,9 +382,9 @@ public abstract class Familiar extends NPC implements Plugin<Object> {
         if (specialMove(special)) {
             setAttribute("special-delay", GameWorld.getTicks() + 3);
             if (hasInInventory) {
-                owner.getInventory().remove(new Item(scroll.getItemId()));
+                owner.getInventory().remove(new Item(scrollId));
             } else if (chargedItemId != null) {
-                EnchantedHeadgearScrolls.removeScroll(owner, chargedItemId, scroll.getItemId());
+                enchantedGearManager.removeScroll(chargedItemId, scrollId);
             }
             playAudio(owner, Sounds.SPELL_4161);
             visualizeSpecialMove();
