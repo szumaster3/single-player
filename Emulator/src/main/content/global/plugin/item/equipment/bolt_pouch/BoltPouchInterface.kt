@@ -1,7 +1,6 @@
-package content.global.plugin.item.boltpouch
+package content.global.plugin.item.equipment.bolt_pouch
 
 import core.api.freeSlots
-import core.api.getItemName
 import core.api.sendMessage
 import core.api.sendString
 import core.game.component.Component

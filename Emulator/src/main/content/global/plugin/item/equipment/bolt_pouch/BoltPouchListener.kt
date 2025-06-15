@@ -1,4 +1,4 @@
-package content.global.plugin.item.boltpouch
+package content.global.plugin.item.equipment.bolt_pouch
 
 import core.api.openInterface
 import core.api.sendMessage
