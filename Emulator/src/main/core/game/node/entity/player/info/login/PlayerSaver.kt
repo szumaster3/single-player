@@ -2,7 +2,6 @@ package core.game.node.entity.player.info.login
 
 import com.google.gson.GsonBuilder
 import content.global.skill.summoning.familiar.BurdenBeast
-import content.global.skill.summoning.items.EnchantedHeadgearScrolls
 import content.global.skill.summoning.pet.Pet
 import core.ServerConstants
 import core.api.PersistPlayer
@@ -22,7 +21,6 @@ import java.io.File
 import java.io.FileWriter
 import java.io.IOException
 import java.lang.Math.ceil
-import java.sql.Timestamp
 import java.util.*
 import javax.script.ScriptEngineManager
 
@@ -105,7 +103,7 @@ class PlayerSaver(
     }
 
     fun saveHeadgear(root: JSONObject) {
-        EnchantedHeadgearScrolls.save(player, root)
+        player.enchgearManager.save(root)
     }
 
     fun saveVersion(root: JSONObject) {

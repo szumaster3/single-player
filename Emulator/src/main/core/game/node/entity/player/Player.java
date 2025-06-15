@@ -4,6 +4,7 @@ import content.global.plugin.item.equipment.EquipmentDegrade;
 import content.global.skill.construction.HouseManager;
 import content.global.skill.runecrafting.PouchManager;
 import content.global.skill.summoning.familiar.FamiliarManager;
+import content.global.skill.summoning.item.EnchantedGearManager;
 import core.GlobalStatistics;
 import core.ServerConstants;
 import core.api.EquipmentSlot;
@@ -137,6 +138,11 @@ public class Player extends Entity {
      * Manages pouches for storing resources.
      */
     public PouchManager pouchManager = new PouchManager(this);
+
+    /**
+     * Manages enchanted gear for storing scrolls.
+     */
+    public EnchantedGearManager enchgearManager = new EnchantedGearManager(this);
 
     /**
      * Manages variable persistence for the player.

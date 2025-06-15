@@ -1,4 +1,4 @@
-package content.global.skill.summoning.items
+package content.global.plugin.item.withitem
 
 import core.api.addItem
 import core.api.removeItem
