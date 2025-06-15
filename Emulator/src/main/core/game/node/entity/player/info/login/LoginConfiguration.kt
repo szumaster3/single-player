@@ -120,7 +120,7 @@ object LoginConfiguration {
         RegionManager.move(player)
         player.musicPlayer.init()
         player.updateAppearance()
-        player.details.setJoinDateIfAbsent(player)
+        player.details.setJoinDate(player)
         player.playerFlags.lastSceneGraph = player.location
         player.packetDispatch.sendInterfaceConfig(226, 1, true)
 
@@ -160,7 +160,6 @@ object LoginConfiguration {
     @JvmStatic
     fun welcome(player: Player) {
         if (player.isArtificial) return
-
         sendMessage(player, "Welcome to ${ServerConstants.SERVER_NAME}.")
 
         GlobalStore.check(player)
@@ -205,7 +204,6 @@ object LoginConfiguration {
         player.interfaceManager.close()
         player.emoteManager.refresh()
         player.interfaceManager.openInfoBars()
-
         if (!player.isArtificial) {
             log(LoginConfiguration::class.java, Log.INFO, "Finished configuring player ${player.username}")
         }

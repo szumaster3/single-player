@@ -1,7 +1,6 @@
 package core.game.node.entity.player.info;
 
 import content.data.GameAttributes;
-import core.Util;
 import core.auth.UserAccountInfo;
 import core.game.node.entity.player.Player;
 import core.game.system.communication.CommunicationInfo;
@@ -25,64 +24,17 @@ public class PlayerDetails {
     private final CommunicationInfo communicationInfo = new CommunicationInfo();
 
     /**
-     * Returns the time elapsed since the player joined as a formatted string.
-     *
-     * @param player the player
-     * @return the formatted elapsed time or null if join date is not set yet
-     */
-    public String getPlayerTime(Player player) {
-        Timestamp joinTimestamp = (Timestamp) player.getGameAttributes().getAttributes().get(GameAttributes.JOIN_DATE);
-
-        if (joinTimestamp == null) {
-            setJoinDateIfAbsent(player);
-            return null;
-        }
-
-        long currentTime = System.currentTimeMillis();
-        long difference = currentTime - joinTimestamp.getTime();
-
-        long days = TimeUnit.MILLISECONDS.toDays(difference);
-        long hours = TimeUnit.MILLISECONDS.toHours(difference) % 24;
-        long minutes = TimeUnit.MILLISECONDS.toMinutes(difference) % 60;
-
-        String d = Util.getTimeUnitString(days, "day", "days");
-        String h = Util.getTimeUnitString(hours, "hour", "hours");
-        String m = Util.getTimeUnitString(minutes, "minute", "minutes");
-
-        return String.format("%s, %s, %s", d, h, m);
-    }
-
-    /**
-     * Sets the join date timestamp for the player only if it is not already set.
+     * Sets join date if not already set.
      *
      * @param player the player
      */
-    public void setJoinDateIfAbsent(Player player) {
+    public void setJoinDate(Player player) {
         Timestamp existing = (Timestamp) player.getGameAttributes().getAttributes().get(GameAttributes.JOIN_DATE);
         if (existing == null) {
             long joinTime = System.currentTimeMillis();
             Timestamp timestamp = new Timestamp(joinTime);
-
-            player.getGameAttributes().getAttributes().put(GameAttributes.JOIN_DATE, timestamp);
             player.getDetails().accountInfo.setJoinDate(timestamp);
         }
-    }
-
-    /**
-     * Get the formatted time played.
-     *
-     * @return the formatted time.
-     */
-    public String getFormattedTimePlayed() {
-        long timePlayedMillis = getTimePlayed();
-        long days = TimeUnit.MILLISECONDS.toDays(timePlayedMillis);
-        long hours = TimeUnit.MILLISECONDS.toHours(timePlayedMillis);
-        long minutes = TimeUnit.MILLISECONDS.toMinutes(timePlayedMillis) % 60;
-        String d = Util.getTimeUnitString(days, "day", "days");
-        String h = Util.getTimeUnitString(hours, "hour", "hours");
-        String m = Util.getTimeUnitString(minutes, "minute", "minutes");
-
-        return String.format("%s, %s, %s", d, h, m);
     }
 
     /**
