@@ -19,15 +19,7 @@ class ApprenticeWorkmanDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
-            0 ->
-                npc(
-                    FaceAnim.SAD,
-                    "Sorry, I haven't got time to chat. We've only just",
-                    "finished a collossal order of furniture for the Varrock",
-                    "area, and already there's more work coming in.",
-                ).also {
-                    stage++
-                }
+            0 -> npc(FaceAnim.SAD, "Sorry, I haven't got time to chat. We've only just", "finished a collossal order of furniture for the Varrock", "area, and already there's more work coming in.").also { stage++ }
             1 -> player(FaceAnim.ASKING, "Varrock?").also { stage++ }
             2 -> npc(FaceAnim.ROLLING_EYES, "Yeah, the Council's had it redecorated.").also { stage++ }
             3 -> npc(NPCs.WORKMAN_3236, "Oi - stop gabbing and get that chair finished!").also { stage++ }

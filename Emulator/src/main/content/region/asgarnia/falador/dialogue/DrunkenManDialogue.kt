@@ -23,12 +23,7 @@ class DrunkenManDialogue(player: Player? = null) : Dialogue(player) {
             1 -> player(FaceAnim.ASKING, "Are you alright?").also { stage++ }
             2 -> npc(FaceAnim.DRUNK, "... see... two of you... why there two of you?").also { stage++ }
             3 -> player(FaceAnim.FRIENDLY, "There's only one of me, friend.").also { stage++ }
-            4 ->
-                npc(
-                    FaceAnim.DRUNK,
-                    "... no, two of you... you can't count...",
-                    "... maybe you drunk too much...",
-                ).also { stage++ }
+            4 -> npc(FaceAnim.DRUNK, "... no, two of you... you can't count...", "... maybe you drunk too much...").also { stage++ }
             5 -> player(FaceAnim.FRIENDLY, "Whatever you say, friend.").also { stage++ }
             6 -> npc(FaceAnim.DRUNK, "... giant hairy cabbages...").also { stage = END_DIALOGUE }
         }

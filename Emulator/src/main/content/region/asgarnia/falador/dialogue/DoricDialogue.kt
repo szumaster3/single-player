@@ -56,20 +56,9 @@ class DoricDialogue(player: Player? = null) : Dialogue(player) {
                     Topic(FaceAnim.ASKING, "What do you make here?", 50),
                 )
 
-            10 ->
-                openDialogue(
-                    player,
-                    content.region.asgarnia.falador.quest.dorics.dialogue.DoricDialogue(10),
-                    npc,
-                )
+            10 -> openDialogue(player, DoricDialogue(10), npc)
 
-            20 ->
-                openDialogue(
-                    player,
-                    content.region.asgarnia.falador.quest.dorics.dialogue.DoricDialogue(20),
-                    npc,
-                )
-
+            20 -> openDialogue(player, DoricDialogue(20), npc)
             30 -> {
                 if (getAttribute(player, "pre-dq:doric-angy-count", 0) == 10) {
                     end()
@@ -80,32 +69,17 @@ class DoricDialogue(player: Player? = null) : Dialogue(player) {
                         "/save:pre-dq:doric-angy-count",
                         getAttribute(player, "pre-dq:doric-angy-count", 0) + 1,
                     )
-                    npcl(
-                        FaceAnim.OLD_ANGRY1,
-                        "How nice to meet someone with such pleasant manners. Do come again when you need to shout at someone smaller than you!",
-                    ).also {
-                        stage =
-                            END_DIALOGUE
-                    }
+                    npcl(FaceAnim.OLD_ANGRY1, "How nice to meet someone with such pleasant manners. Do come again when you need to shout at someone smaller than you!").also { stage = END_DIALOGUE }
                 }
             }
 
             40 -> {
-                npcl(
-                    FaceAnim.OLD_HAPPY,
-                    "Hope you like it. I do enjoy the solitude of my little home. If you get time, please say hi to my friends in the Dwarven Mine.",
-                )
+                npcl(FaceAnim.OLD_HAPPY, "Hope you like it. I do enjoy the solitude of my little home. If you get time, please say hi to my friends in the Dwarven Mine.")
                 setAttribute(player, "/save:pre-dq:said-hi", false)
                 stage = END_DIALOGUE
             }
 
-            50 ->
-                npcl(
-                    FaceAnim.OLD_NORMAL,
-                    "I make pickaxes. I am the best maker of pickaxes in the whole of ${settings!!.name}.",
-                ).also {
-                    stage++
-                }
+            50 -> npcl(FaceAnim.OLD_NORMAL, "I make pickaxes. I am the best maker of pickaxes in the whole of ${settings!!.name}.").also { stage++ }
             51 -> playerl(FaceAnim.HALF_ASKING, "Do you have any to sell?").also { stage++ }
             52 -> npcl(FaceAnim.OLD_NOT_INTERESTED, "Sorry, but I've got a running order with Nurmof.").also { stage++ }
             53 -> playerl(FaceAnim.FRIENDLY, "Ah, fair enough.").also { stage = END_DIALOGUE }

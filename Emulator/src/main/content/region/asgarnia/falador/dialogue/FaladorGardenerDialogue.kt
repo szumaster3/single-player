@@ -19,15 +19,7 @@ class FaladorGardenerDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
-            0 ->
-                npc(
-                    FaceAnim.HALF_GUILTY,
-                    "Oi'm busy. If tha' wants owt, tha' can go find Wyson.",
-                    "He's ta boss 'round here. And,",
-                    "KEEP YE' TRAMPIN' FEET OFF MA'FLOWERS!",
-                ).also {
-                    stage++
-                }
+            0 -> npc(FaceAnim.HALF_GUILTY, "Oi'm busy. If tha' wants owt, tha' can go find Wyson.", "He's ta boss 'round here. And,", "KEEP YE' TRAMPIN' FEET OFF MA'FLOWERS!").also { stage++ }
             1 -> player(FaceAnim.HALF_GUILTY, "Right...").also { stage = END_DIALOGUE }
         }
         return true
