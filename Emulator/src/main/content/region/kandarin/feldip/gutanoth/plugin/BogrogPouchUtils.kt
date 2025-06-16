@@ -39,7 +39,6 @@ object BogrogPouchUtils {
                     swap(player, value as Int, item.id)
                 }
             }
-
             OP_SWAP_ALL -> swap(player, item.amount, item.id)
             EXAMINE -> {
                 item.definition?.let {

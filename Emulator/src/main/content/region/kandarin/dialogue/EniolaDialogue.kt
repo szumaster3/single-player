@@ -20,9 +20,9 @@ import org.rs.consts.NPCs
  * Represents the Eniola dialogue.
  */
 @Initializable
-class EniolaDialogue(player: Player? = null, ) : Dialogue(player) {
+class EniolaDialogue(player: Player? = null) : Dialogue(player) {
 
-    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             START_DIALOGUE -> if (hasIronmanRestriction(player, IronmanMode.ULTIMATE)) {
                 npcl(FaceAnim.NEUTRAL, "My apologies, dear ${if (player.isMale) "sir" else "madam"}, " + "our services are not available for Ultimate ${if (player.isMale) "Ironman" else "Ironwoman"}.").also { stage = END_DIALOGUE }

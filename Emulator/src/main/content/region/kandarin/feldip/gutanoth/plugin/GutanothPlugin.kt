@@ -7,6 +7,7 @@ import content.region.kandarin.feldip.quest.zogre.plugin.ZogreUtils
 import core.api.*
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
+import core.game.dialogue.SequenceDialogue.dialogue
 import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
@@ -40,7 +41,11 @@ class GutanothPlugin : InteractionListener {
     }
 
     override fun defineListeners() {
-        on(content.region.kandarin.feldip.gutanoth.plugin.GutanothPlugin.Companion.STAIRS_TO_CRYPT, IntType.SCENERY, "climb-down") { player, node ->
+        on(
+            STAIRS_TO_CRYPT,
+            IntType.SCENERY,
+            "climb-down"
+        ) { player, node ->
             submitWorldPulse(
                 object : Pulse() {
                     var counter = 0
@@ -73,7 +78,11 @@ class GutanothPlugin : InteractionListener {
             return@on true
         }
 
-        on(content.region.kandarin.feldip.gutanoth.plugin.GutanothPlugin.Companion.STAIRS_TO_JIGGIG, IntType.SCENERY, "climb-up") { player, node ->
+        on(
+            STAIRS_TO_JIGGIG,
+            IntType.SCENERY,
+            "climb-up"
+        ) { player, node ->
             teleport(
                 player,
                 if (node.location == Location(2443, 9417, 0)) Location(2446, 9417, 2) else Location(2485, 3045, 0),
@@ -82,7 +91,11 @@ class GutanothPlugin : InteractionListener {
             return@on true
         }
 
-        on(content.region.kandarin.feldip.gutanoth.plugin.GutanothPlugin.Companion.BROKEN_LECTURN, IntType.SCENERY, "search") { player, _ ->
+        on(
+            BROKEN_LECTURN,
+            IntType.SCENERY,
+            "search"
+        ) { player, _ ->
             if (player.inCombat()) {
                 sendMessage(player, "You're in mortal danger, you don't have time to search!")
                 return@on true
@@ -90,26 +103,33 @@ class GutanothPlugin : InteractionListener {
 
             animate(player, Animation(Animations.HUMAN_BURYING_BONES_827))
             sendMessage(player, "You search the broken down lecturn.")
-            if (inInventory(player,
-                    content.region.kandarin.feldip.gutanoth.plugin.GutanothPlugin.Companion.TORN_PAGE
-                ) || getAttribute(player, ZogreUtils.TORN_PAGE_ACQUIRED, false)) {
+            if (inInventory(
+                    player,
+                    TORN_PAGE
+                ) || getAttribute(player, ZogreUtils.TORN_PAGE_ACQUIRED, false)
+            ) {
                 sendMessage(player, "You find nothing here this time.")
             } else {
                 setAttribute(player, ZogreUtils.TORN_PAGE_ACQUIRED, true)
                 sendDoubleItemDialogue(
                     player,
                     -1,
-                    content.region.kandarin.feldip.gutanoth.plugin.GutanothPlugin.Companion.TORN_PAGE,
+                    TORN_PAGE,
                     "You find a half torn page...it has spidery writing all over it.",
                 )
-                addItemOrDrop(player,
-                    content.region.kandarin.feldip.gutanoth.plugin.GutanothPlugin.Companion.TORN_PAGE
+                addItemOrDrop(
+                    player,
+                    TORN_PAGE
                 )
             }
             return@on true
         }
 
-        on(content.region.kandarin.feldip.gutanoth.plugin.GutanothPlugin.Companion.SKELETON, IntType.SCENERY, "search") { player, _ ->
+        on(
+            SKELETON,
+            IntType.SCENERY,
+            "search"
+        ) { player, _ ->
             if (getAttribute(player, ZogreUtils.ZOMBIE_NPC_ACTIVE, false)) {
                 sendMessage(player, "You find nothing on the corpse.")
             } else if (player.inCombat()) {
@@ -121,15 +141,24 @@ class GutanothPlugin : InteractionListener {
             return@on true
         }
 
-        on(content.region.kandarin.feldip.gutanoth.plugin.GutanothPlugin.Companion.SPAWNED_ZOMBIE, IntType.NPC, "talk-to") { _, node ->
+        on(
+            SPAWNED_ZOMBIE,
+            IntType.NPC,
+            "talk-to"
+        ) { _, node ->
             val npc = node.asNpc()
             sendChat(npc, "Raaarrrggghhh")
             return@on true
         }
 
-        on(content.region.kandarin.feldip.gutanoth.plugin.GutanothPlugin.Companion.COFFIN, IntType.SCENERY, "pick-lock") { player, node ->
+        on(
+            COFFIN,
+            IntType.SCENERY,
+            "pick-lock"
+        ) { player, node ->
             val sceneryId = node.asScenery()
-            val loot = content.region.kandarin.feldip.gutanoth.plugin.OgreCoffin.Companion.forId(sceneryId.id)?.roll()?.firstOrNull() ?: return@on false
+            val loot = content.region.kandarin.feldip.gutanoth.plugin.OgreCoffin.Companion.forId(sceneryId.id)?.roll()
+                ?.firstOrNull() ?: return@on false
 
             if (getVarbit(player, Vars.VARBIT_QUEST_ZORGE_FLESH_EATERS_PROGRESS_487) < 13) {
                 sendNPCDialogue(
@@ -162,7 +191,12 @@ class GutanothPlugin : InteractionListener {
             submitIndividualPulse(
                 player,
                 object : Pulse(2) {
-                    var table = PickpocketListener.pickpocketRoll(player, 84.0, 240.0, content.region.kandarin.feldip.gutanoth.plugin.OgreCoffin.OGRE_COFFIN.table)
+                    var table = PickpocketListener.pickpocketRoll(
+                        player,
+                        84.0,
+                        240.0,
+                        content.region.kandarin.feldip.gutanoth.plugin.OgreCoffin.OGRE_COFFIN.table
+                    )
 
                     override fun pulse(): Boolean {
                         if (table != null) {
@@ -227,9 +261,14 @@ class GutanothPlugin : InteractionListener {
             return@on true
         }
 
-        on(content.region.kandarin.feldip.gutanoth.plugin.GutanothPlugin.Companion.COFFIN, IntType.SCENERY, "open") { player, node ->
+        on(
+            COFFIN,
+            IntType.SCENERY,
+            "open"
+        ) { player, node ->
             val sceneryId = node.asScenery()
-            val loot = content.region.kandarin.feldip.gutanoth.plugin.OgreCoffin.Companion.forId(sceneryId.id)?.roll()?.firstOrNull() ?: return@on false
+            val loot = content.region.kandarin.feldip.gutanoth.plugin.OgreCoffin.Companion.forId(sceneryId.id)?.roll()
+                ?.firstOrNull() ?: return@on false
 
             if (getVarbit(player, Vars.VARBIT_QUEST_ZORGE_FLESH_EATERS_PROGRESS_487) < 13) {
                 sendNPCDialogue(
@@ -303,7 +342,11 @@ class GutanothPlugin : InteractionListener {
             return@on true
         }
 
-        on(content.region.kandarin.feldip.gutanoth.plugin.GutanothPlugin.Companion.QUEST_COFFIN, IntType.SCENERY, "search") { player, _ ->
+        on(
+            QUEST_COFFIN,
+            IntType.SCENERY,
+            "search"
+        ) { player, _ ->
             openDialogue(
                 player,
                 object : DialogueFile() {
@@ -338,8 +381,9 @@ class GutanothPlugin : InteractionListener {
             return@on true
         }
 
-        onUseWith(IntType.SCENERY, Items.KNIFE_946,
-            content.region.kandarin.feldip.gutanoth.plugin.GutanothPlugin.Companion.QUEST_COFFIN
+        onUseWith(
+            IntType.SCENERY, Items.KNIFE_946,
+            QUEST_COFFIN
         ) { player, _, _ ->
             openDialogue(
                 player,
@@ -393,24 +437,19 @@ class GutanothPlugin : InteractionListener {
             return@onUseWith true
         }
 
-        on(content.region.kandarin.feldip.gutanoth.plugin.GutanothPlugin.Companion.QUEST_COFFIN_2, IntType.SCENERY, "search") { player, _ ->
-            if (inInventory(player,
-                    content.region.kandarin.feldip.gutanoth.plugin.GutanothPlugin.Companion.BLACK_PRISM
-                ) || getAttribute(player, ZogreUtils.BLACK_PRISM_ACQUIRED, 0) > 3) {
+        on(QUEST_COFFIN_2, IntType.SCENERY, "search") { player, _ ->
+            if (inInventory(player, BLACK_PRISM) || getAttribute(player, ZogreUtils.BLACK_PRISM_ACQUIRED, 0) > 3) {
                 sendMessage(player, "You find nothing inside this time.")
             } else {
-                sendItemDialogue(player,
-                    content.region.kandarin.feldip.gutanoth.plugin.GutanothPlugin.Companion.BLACK_PRISM, "You find a creepy looking black prism inside.")
+                sendItemDialogue(player, BLACK_PRISM, "You find a creepy looking black prism inside.")
                 player.incrementAttribute(ZogreUtils.BLACK_PRISM_ACQUIRED)
                 setVarbit(player, Vars.VARBIT_QUEST_ZORGE_FLESH_EATERS_PROGRESS_487, 3, true)
-                addItemOrDrop(player,
-                    content.region.kandarin.feldip.gutanoth.plugin.GutanothPlugin.Companion.BLACK_PRISM
-                )
+                addItemOrDrop(player, BLACK_PRISM)
             }
             return@on true
         }
 
-        on(content.region.kandarin.feldip.gutanoth.plugin.GutanothPlugin.Companion.BACKPACK, IntType.ITEM, "open") { player, _ ->
+        on(BACKPACK, IntType.ITEM, "open") { player, _ ->
             if (freeSlots(player) < 3) {
                 sendMessage(player, "You don't have enough room in your inventory for the contents of this bag.")
                 return@on false
@@ -424,23 +463,13 @@ class GutanothPlugin : InteractionListener {
                     ) {
                         when (stage) {
                             0 -> {
-                                sendDoubleItemDialogue(
-                                    player,
-                                    -1,
-                                    content.region.kandarin.feldip.gutanoth.plugin.GutanothPlugin.Companion.BACKPACK,
-                                    "Just before you open the backpack, you notice a small leather patch with the monkier: 'B.Uahn', on it.",
-                                ).also { stage++ }
-                                player.inventory.remove(Item(content.region.kandarin.feldip.gutanoth.plugin.GutanothPlugin.Companion.BACKPACK))
+                                sendDoubleItemDialogue(player, -1, BACKPACK, "Just before you open the backpack, you notice a small leather patch with the monkier: 'B.Uahn', on it.").also { stage++ }
+                                player.inventory.remove(Item(BACKPACK))
                             }
 
                             1 -> {
-                                sendItemDialogue(
-                                    player,
-                                    content.region.kandarin.feldip.gutanoth.plugin.GutanothPlugin.Companion.DRAGON_TANKARD,
-                                    "You find an interesting looking tankard.",
-                                ).also { stage++ }
-                                addItem(player,
-                                    content.region.kandarin.feldip.gutanoth.plugin.GutanothPlugin.Companion.DRAGON_TANKARD, 1)
+                                sendItemDialogue(player, DRAGON_TANKARD, "You find an interesting looking tankard.").also { stage++ }
+                                addItem(player, DRAGON_TANKARD, 1)
                                 addItem(player, Items.KNIFE_946, 1)
                                 addItem(player, Items.ROTTEN_FOOD_2959, 1)
                                 setAttribute(player, ZogreUtils.DRAGON_TANKARD_ACQUIRED, true)
@@ -450,12 +479,7 @@ class GutanothPlugin : InteractionListener {
                                 end()
                                 sendMessage(player, "You find a knife and some rotten food.")
                                 sendMessage(player, "You find an interesting looking tankard.")
-                                sendDoubleItemDialogue(
-                                    player,
-                                    Items.KNIFE_5605,
-                                    Items.ROTTEN_FOOD_2959,
-                                    "You find a knife and some rotten food, the backpack is ripped to shreds.",
-                                )
+                                sendDoubleItemDialogue(player, Items.KNIFE_5605, Items.ROTTEN_FOOD_2959, "You find a knife and some rotten food, the backpack is ripped to shreds.")
                             }
                         }
                     }
@@ -464,59 +488,26 @@ class GutanothPlugin : InteractionListener {
             return@on true
         }
 
-        on(content.region.kandarin.feldip.gutanoth.plugin.GutanothPlugin.Companion.BLACK_PRISM, IntType.ITEM, "look-at") { player, _ ->
-            sendDialogue(
-                player,
-                "It looks like a smokey black gem of some sort...very creepy. Some magical force must have prevented it from being shattered when it hit the coffin.",
-            )
+        on(BLACK_PRISM, IntType.ITEM, "look-at") { player, _ ->
+            sendDialogue(player, "It looks like a smokey black gem of some sort...very creepy. Some magical force must have prevented it from being shattered when it hit the coffin.")
             return@on true
         }
 
-        on(content.region.kandarin.feldip.gutanoth.plugin.GutanothPlugin.Companion.DRAGON_TANKARD, IntType.ITEM, "look-at") { player, _ ->
-            sendDialogue(
-                player,
-                "A stout ceramic tankard with a Dragon Emblem on the side, the words, $BLUE'Ye Olde Dragon Inn' are inscribed in the bottom.'</col>.",
-            )
+        on(DRAGON_TANKARD, IntType.ITEM, "look-at") { player, _ ->
+            sendDialogue(player, "A stout ceramic tankard with a Dragon Emblem on the side, the words, $BLUE'Ye Olde Dragon Inn' are inscribed in the bottom.'</col>.")
             return@on true
         }
 
-        on(content.region.kandarin.feldip.gutanoth.plugin.GutanothPlugin.Companion.TORN_PAGE, IntType.ITEM, "read") { player, _ ->
-            openDialogue(
-                player,
-                object : DialogueFile() {
-                    override fun handle(
-                        componentID: Int,
-                        buttonID: Int,
-                    ) {
-                        when (stage) {
-                            0 ->
-                                sendDialogue(
-                                    player,
-                                    "You don't manage to understand all of it as there is only a half page here. But it seems the spell was used to place a curse on an area and for all time raise the dead.",
-                                ).also { stage++ }
-
-                            1 ->
-                                sendDialogue(
-                                    player,
-                                    "If you look very carefully, you see what looks like a guild emblem.",
-                                ).also { stage++ }
-
-                            2 -> end()
-                        }
-                    }
-                },
-            )
+        on(TORN_PAGE, IntType.ITEM, "read") { player, _ ->
+            dialogue(player) {
+                message("You don't manage to understand all of it as there is only a half page here. But it seems the spell was used to place a curse on an area and for all time raise the dead.")
+                message("If you look very carefully, you see what looks like a guild emblem.")
+            }
             return@on true
         }
 
-        on(content.region.kandarin.feldip.gutanoth.plugin.GutanothPlugin.Companion.OGRE_DOORS, IntType.SCENERY, "open") { player, node ->
-            if (!inInventory(player, Items.OGRE_GATE_KEY_4839) ||
-                !getAttribute(
-                    player,
-                    ZogreUtils.RECEIVED_KEY_FROM_GRISH,
-                    false,
-                )
-            ) {
+        on(OGRE_DOORS, IntType.SCENERY, "open") { player, node ->
+            if (!inInventory(player, Items.OGRE_GATE_KEY_4839) || !getAttribute(player, ZogreUtils.RECEIVED_KEY_FROM_GRISH, false)) {
                 sendMessage(player, "These gates are locked, you don't seem to be able to open them.")
             } else {
                 DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
@@ -528,16 +519,13 @@ class GutanothPlugin : InteractionListener {
             return@on true
         }
 
-        on(content.region.kandarin.feldip.gutanoth.plugin.GutanothPlugin.Companion.STAND, IntType.SCENERY, "search") { player, _ ->
+        on(STAND, IntType.SCENERY, "search") { player, _ ->
             sendDialogue(player, "You search the plinth...")
             when {
                 getAttribute(player, ZogreUtils.SLASH_BASH_ACTIVE, false) -> return@on false
-                else ->
-                    if (getVarbit(player, Vars.VARBIT_QUEST_ZORGE_FLESH_EATERS_PROGRESS_487) >= 8) {
-                        spawnSlashBash(
-                            player,
-                        )
-                    }
+                else -> if (getVarbit(player, Vars.VARBIT_QUEST_ZORGE_FLESH_EATERS_PROGRESS_487) >= 8) {
+                    spawnSlashBash(player)
+                }
             }
             return@on true
         }
