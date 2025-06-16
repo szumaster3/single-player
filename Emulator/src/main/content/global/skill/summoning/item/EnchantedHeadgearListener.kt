@@ -78,11 +78,7 @@ class EnchantedHeadgearListener : InteractionListener {
             val success = enchManager.withdrawScrolls(enchantedGear.chargedItemId, firstScroll.id, firstScroll.amount)
 
             if (success) {
-                sendMessages(
-                    player,
-                    "You remove the scrolls. You will need to use a Summoning scroll on it to charge the",
-                    "headgear up once more.",
-                )
+                sendMessages(player, "You remove the scrolls. You will need to use a Summoning scroll on it to charge the", "headgear up once more.")
             } else {
                 player.debug("Failed to remove the scrolls.")
             }
@@ -186,27 +182,29 @@ class EnchantedHeadgearListener : InteractionListener {
 
             if (getStatLevel(player, Skills.SUMMONING) < headgear.requiredLevel) return false
 
-            if (item.id != headgear.defaultItem.id && item.id != headgear.enchantedItem.id) {
+            if (item.id != headgear.defaultItem.id && item.id != headgear.enchantedItem.id && item.id != headgear.chargedItem.id) {
                 sendMessage(player, "This item cannot be charged.")
                 return true
             }
 
             if (option == 1) {
+                if (item.id == headgear.chargedItem.id && player.enchgearManager.hasScrolls(item.id)) {
+                    sendMessage(player, "Your headgear already contains different scrolls. Remove them first.")
+                    return true
+                }
+
                 lock(player, 1)
                 animate(findLocalNPC(player, NPCs.PIKKUPSTIX_6970) ?: return false, Animations.CAST_SPELL_711)
                 sendGraphics(Graphics(434, 100), player.location)
 
-                if (item.id == headgear.defaultItem.id) {
-                    removeItem(player, headgear.defaultItem.id)
-                    addItem(player, headgear.enchantedItem.id)
+                removeItem(player, item.id)
+                addItem(player, headgear.enchantedItem.id)
 
-                    val npc = NPC(NPCs.PIKKUPSTIX_6971)
-                    dialogue(player) {
-                        npc(npc, FaceAnim.NEUTRAL, "Good choice. Here you go, you can now store spells on", "it.")
-                        player(FaceAnim.CALM_TALK, "Excellent. Thank you!")
-                    }
-                    return true
+                dialogue(player) {
+                    npc(NPCs.PIKKUPSTIX_6971, FaceAnim.NEUTRAL, "Good choice. Here you go, you can now store spells on", "it.")
+                    player(FaceAnim.CALM_TALK, "Excellent. Thank you!")
                 }
+                return true
             }
             return false
         }

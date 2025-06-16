@@ -5,7 +5,6 @@ import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.plugin.Initializable
-import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 
 @Initializable
@@ -25,17 +24,10 @@ class LegendsGuardDialogue(player: Player? = null) : Dialogue(player) {
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> npc(FaceAnim.FRIENDLY, "Legends Guild Member Approaching").also { stage++ }
-            1 -> npc(
-                FaceAnim.FRIENDLY,
-                "Welcome " + gender() + "!",
-                "I hope you enjoy your time in the Legends Guild.",
-            ).also { stage = END_DIALOGUE }
-
-            10 -> npc(FaceAnim.FRIENDLY, "I hope the quest is going well " + gender() + ".").also {
-                stage = END_DIALOGUE
-            }
-
-            20 -> npc(FaceAnim.FRIENDLY, "Legends Guild Member Approaching!").also { stage = END_DIALOGUE }
+            1 -> npc(FaceAnim.FRIENDLY, "Welcome " + gender() + "!", "I hope you enjoy your time in the Legends Guild.").also { stage = 21 }
+            10 -> npc(FaceAnim.FRIENDLY, "I hope the quest is going well " + gender() + ".").also { stage = 21 }
+            20 -> npc(FaceAnim.FRIENDLY, "Legends Guild Member Approaching!").also { stage = 21 }
+            21 -> end()
         }
         return true
     }

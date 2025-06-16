@@ -47,7 +47,7 @@ class EnchantedHeadgearManager(private val player: Player) {
         }
 
         if (!player.inventory.remove(scrollItem)) {
-            sendMessage(player, "Failed to remove scrolls from your inventory.")
+            player.debug("Failed to remove scrolls from your inventory.")
             return
         }
 

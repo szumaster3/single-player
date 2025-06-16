@@ -8,7 +8,7 @@ import core.plugin.Initializable
 import org.rs.consts.NPCs
 
 @Initializable
-class PhantuwtiFanstuwiFarsightDialogue(player: Player? = null) : Dialogue(player) {
+class PhantuwtiFarsightDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
@@ -84,7 +84,7 @@ class PhantuwtiFanstuwiFarsightDialogue(player: Player? = null) : Dialogue(playe
         return true
     }
 
-    override fun newInstance(player: Player?): Dialogue = PhantuwtiFanstuwiFarsightDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = PhantuwtiFarsightDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.PHANTUWTI_FANSTUWI_FARSIGHT_1798)
 }

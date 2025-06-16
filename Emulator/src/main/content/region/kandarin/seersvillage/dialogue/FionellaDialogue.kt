@@ -11,7 +11,7 @@ import org.rs.consts.NPCs
 
 @Initializable
 class FionellaDialogue(player: Player? = null) : Dialogue(player) {
-    
+
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(FaceAnim.FRIENDLY, "Can I help you at all?")
@@ -21,11 +21,10 @@ class FionellaDialogue(player: Player? = null) : Dialogue(player) {
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> options("Yes please. What are you selling?", "No thanks.").also { stage++ }
-            1 ->
-                when (buttonId) {
-                    1 -> player(FaceAnim.FRIENDLY, "Yes please. What are you selling?").also { stage++ }
-                    2 -> player(FaceAnim.FRIENDLY, "No thanks.").also { stage = END_DIALOGUE }
-                }
+            1 -> when (buttonId) {
+                1 -> player(FaceAnim.FRIENDLY, "Yes please. What are you selling?").also { stage++ }
+                2 -> player(FaceAnim.FRIENDLY, "No thanks.").also { stage = END_DIALOGUE }
+            }
 
             2 -> npc(FaceAnim.FRIENDLY, "Take a look.").also { stage++ }
             3 -> {

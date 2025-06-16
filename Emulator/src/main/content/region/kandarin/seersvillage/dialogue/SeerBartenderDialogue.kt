@@ -15,6 +15,7 @@ import org.rs.consts.NPCs
 
 @Initializable
 class SeerBartenderDialogue(player: Player? = null) : Dialogue(player) {
+
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(FaceAnim.HALF_GUILTY, "Good morning, what would you like?")
@@ -123,17 +124,12 @@ class SeerBartenderDialogue(player: Player? = null) : Dialogue(player) {
 
     /**
      * Handles purchase a beer for the player.
-     *
-     * @param item The beer id.
-     * @param price The amount of coins required for the purchase.
      */
-    private fun buy(
-        item: Int,
-        price: Int,
-    ) {
+    private fun buy(item: Int, price: Int) {
         end()
         if (freeSlots(player) == 0) {
             player(FaceAnim.HALF_GUILTY, "I don't seem to have room, sorry.")
+            return
         }
         if (!removeItem(player, Item(Items.COINS_995, price))) {
             player(FaceAnim.HALF_GUILTY, "Sorry, I don't seem to have enough coins.")
