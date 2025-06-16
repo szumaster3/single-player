@@ -20,13 +20,9 @@ private val scrolls = intArrayOf(Items.CHAMPION_SCROLL_6798, Items.CHAMPION_SCRO
  * @author Vexia, szu
  */
 @Initializable
-class LarxusDialogue(
-    player: Player? = null,
-) : Dialogue(player) {
-    override fun handle(
-        interfaceId: Int,
-        buttonId: Int,
-    ): Boolean {
+class LarxusDialogue(player: Player? = null, ) : Dialogue(player) {
+
+    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
         npc = NPC(NPCs.LARXUS_3050)
         val challengeStart: Boolean = false
         if (getAttribute(player, GameAttributes.ACTIVITY_CHAMPION_BOSS_CHALLENGE, false)) {
@@ -75,129 +71,91 @@ class LarxusDialogue(
 
     override fun getIds(): IntArray = intArrayOf(NPCs.LARXUS_3050)
 }
-
 class LarxusDialogueFile(val challengeStart: Boolean = false) : DialogueFile() {
+
+    companion object {
+        private val baseText = listOf(
+            "So you want to accept the challenge huh? Well there",
+            "are some specific rules for these Champion fights. For"
+        )
+
+        private val challengeTexts = mapOf(
+            Items.CHAMPION_SCROLL_6798 to listOf(
+                "this fight you're not allowed to use any Prayer's."
+            ),
+            Items.CHAMPION_SCROLL_6799 to listOf(
+                "ths fight you're only allowed to take Weapons, no other",
+                "items are allowed."
+            ),
+            Items.CHAMPION_SCROLL_6800 to listOf(
+                "this fight you're only allowed to use Melee attacks, no",
+                "Ranged or Magic."
+            ),
+            Items.CHAMPION_SCROLL_6801 to listOf(
+                "this fight you're only allowed to use Magic attacks, no",
+                "Melee or Ranged."
+            ),
+            Items.CHAMPION_SCROLL_6802 to listOf(
+                "this fight you're not allowed to use any Melee attacks."
+            ),
+            Items.CHAMPION_SCROLL_6803 to listOf(
+                "this fight you're not allowed to use any Special Attacks."
+            ),
+            Items.CHAMPION_SCROLL_6804 to listOf(
+                "this fight you're not allowed to use any Ranged attacks."
+            ),
+            Items.CHAMPION_SCROLL_6805 to listOf(
+                "this fight you're allowed to use any Weapons or Armour."
+            ),
+            Items.CHAMPION_SCROLL_6806 to listOf(
+                "this fight you're only allowed to use Ranged attacks, no",
+                "Melee or Magic."
+            ),
+            Items.CHAMPION_SCROLL_6807 to listOf(
+                "this fight you're not allowed to use any Magic attacks."
+            )
+        )
+
+        private val endingLine = "Do you still want to proceed?"
+    }
+
     override fun handle(componentID: Int, buttonID: Int) {
         npc = NPC(NPCs.LARXUS_3050)
-        if (challengeStart) {
-            when (stage) {
-                0 -> {
-                    face(findNPC(NPCs.LARXUS_3050)!!, player!!, 1)
-                    for (i in scrolls.indices) {
-                        when {
-                            inInventory(player!!, Items.CHAMPION_SCROLL_6798) -> npc(
-                                "So you want to accept the challenge huh? Well, there",
-                                "are some specific rules for these champion fights. For",
-                                "this fight you're not allowed to use any Prayer's. Do",
-                                "you still want to proceed?",
-                            ).also {
-                                stage = 1
-                            }
 
-                            inInventory(player!!, Items.CHAMPION_SCROLL_6799) -> npc(
-                                "So you want to accept the challenge huh? Well, there",
-                                "are some specific rules for these champion fights. For",
-                                "ths fight you're only allowed to take Weapons, no other",
-                                "items are allowed. Do you still want to proceed?",
-                            ).also {
-                                stage = 1
-                            }
+        if (!challengeStart) return
 
-                            inInventory(player!!, Items.CHAMPION_SCROLL_6800) -> npc(
-                                "So you want to accept the challenge huh? Well there",
-                                "are some specific rules for these Champion fights. For",
-                                "this fight you're only allowed to use Melee attacks, no",
-                                "Ranged or Magic. Do you still want to proceed?",
-                            ).also {
-                                stage = 1
-                            }
+        when (stage) {
+            0 -> {
+                face(findNPC(NPCs.LARXUS_3050)!!, player!!, 1)
 
-                            inInventory(player!!, Items.CHAMPION_SCROLL_6801) -> npc(
-                                "So you want to accept the challenge huh? Well there",
-                                "are some specific rules for these Champion fights. For",
-                                "this fight you're only allowed to use Magic attacks, no",
-                                "Melee or Ranged. Do you still want to proceed?",
-                            ).also {
-                                stage = 1
-                            }
-
-                            inInventory(player!!, Items.CHAMPION_SCROLL_6802) -> npc(
-                                "So you want to accept the challenge huh? Well there",
-                                "are some specific rules for these Champion fights. For",
-                                "this fight you're not allowed to use any Melee attacks.",
-                                "Do you still want to proceed?",
-                            ).also {
-                                stage = 1
-                            }
-
-                            inInventory(player!!, Items.CHAMPION_SCROLL_6803) -> npc(
-                                "So you want to accept the challenge huh? Well there",
-                                "are some specific rules for these Champion fights. For",
-                                "this fight you're not allowed to use any Special Attacks.",
-                                "Do you still want to proceed?",
-                            ).also {
-                                stage = 1
-                            }
-
-                            inInventory(player!!, Items.CHAMPION_SCROLL_6804) -> npc(
-                                "So you want to accept the challenge huh? Well there",
-                                "are some specific rules for these Champion fights. For",
-                                "this fight you're not allowed to use any Ranged attacks.",
-                                "Do you still want to proceed?",
-                            ).also {
-                                stage = 1
-                            }
-
-                            inInventory(player!!, Items.CHAMPION_SCROLL_6805) -> npc(
-                                "So you want to accept the challenge huh? Well there",
-                                "are some specific rules for these Champion fights. For",
-                                "this fight you're allowed to use any Weapons or Armour.",
-                                "Do you still want to proceed?",
-                            ).also {
-                                stage = 1
-                            }
-
-                            inInventory(player!!, Items.CHAMPION_SCROLL_6806) -> npc(
-                                "So you want to accept the challenge huh? Well there",
-                                "are some specific rules for these Champion fights. For",
-                                "this fight you're only allowed to use Ranged attacks, no",
-                                "Melee or Magic. Do you still want to proceed?",
-                            ).also {
-                                stage = 1
-                            }
-
-                            inInventory(player!!, Items.CHAMPION_SCROLL_6807) -> npc(
-                                "So you want to accept the challenge huh? Well there",
-                                "are some specific rules for these Champion fights. For",
-                                "this fight you're not allowed to use any Magic attacks.",
-                                "Do you still want to proceed?",
-                            ).also {
-                                stage = 1
-                            }
-
-                            else -> {
-                                if (getAttribute(player!!, GameAttributes.ACTIVITY_CHAMPION_BOSS_CHALLENGE, false)) {
-                                    options("Yes, let me at him!", "No, thanks I'll pass.").also { stage++ }
-                                    stage = 2
-                                } else {
-                                    end()
-                                    sendMessage(player!!, "Nothing interesting happens.")
-                                }
-                            }
-                        }
-                    }
+                val scrollEntry = challengeTexts.entries.firstOrNull { (itemId, _) ->
+                    inInventory(player!!, itemId)
                 }
 
-                1 -> options("Yes, let me at him!", "No, thanks I'll pass.").also { stage++ }
-                2 -> when (buttonID) {
-                    1 -> playerl("Yes, let me at him!").also { stage++ }
-                    2 -> playerl("No, thanks I'll pass.").also { stage = END_DIALOGUE }
-                }
-                3 -> npcl("Your challenger is ready, please go down through the trapdoor when you're ready.").also { stage++ }
-                4 -> {
+                if (scrollEntry != null) {
+                    val fullText = baseText + scrollEntry.value + listOf(endingLine)
+                    npc(*fullText.toTypedArray())
+                    stage = 1
+                } else if (getAttribute(player!!, GameAttributes.ACTIVITY_CHAMPION_BOSS_CHALLENGE, false)) {
+                    options("Yes, let me at him!", "No, thanks I'll pass.").also { stage = 2 }
+                } else {
                     end()
-                    setAttribute(player!!, GameAttributes.ACTIVITY_CHAMPION_CHALLENGE, true)
+                    sendMessage(player!!, "Nothing interesting happens.")
                 }
+            }
+
+            1 -> options("Yes, let me at him!", "No, thanks I'll pass.").also { stage = 2 }
+
+            2 -> when (buttonID) {
+                1 -> playerl("Yes, let me at him!").also { stage = 3 }
+                2 -> playerl("No, thanks I'll pass.").also { stage = END_DIALOGUE }
+            }
+
+            3 -> npcl("Your challenger is ready, please go down through the trapdoor when you're ready.").also { stage = 4 }
+
+            4 -> {
+                end()
+                setAttribute(player!!, GameAttributes.ACTIVITY_CHAMPION_CHALLENGE, true)
             }
         }
     }

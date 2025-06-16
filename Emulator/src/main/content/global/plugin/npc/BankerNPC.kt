@@ -19,9 +19,7 @@ import core.plugin.Initializable
 import org.rs.consts.NPCs
 
 @Initializable
-class BankerNPC :
-    AbstractNPC,
-    InteractionListener {
+class BankerNPC : AbstractNPC, InteractionListener {
     companion object {
         private const val LUNAR_ISLE_BANK_REGION = 8253
         val NPC_IDS =
@@ -124,6 +122,7 @@ class BankerNPC :
     }
 
     constructor() : super(0, null)
+
     private constructor(id: Int, location: Location) : super(id, location)
 
     override fun construct(
@@ -152,14 +151,18 @@ class BankerNPC :
         val npc = node as NPC
 
         return when (npc.id) {
-            NPCs.BANKER_2354, NPCs.BANKER_2355 -> npc.location.transform(npc.direction, 2)
-            NPCs.OGRESS_BANKER_7049, NPCs.OGRESS_BANKER_7050 -> npc.location.transform(3, 1, 0)
-            NPCs.BANKER_6532, NPCs.BANKER_6533, NPCs.BANKER_6534, NPCs.BANKER_6535 ->
+            NPCs.BANKER_2354,
+            NPCs.BANKER_2355 -> npc.location.transform(npc.direction, 2)
+            NPCs.OGRESS_BANKER_7049,
+            NPCs.OGRESS_BANKER_7050 -> npc.location.transform(3, 1, 0)
+            NPCs.BANKER_6532,
+            NPCs.BANKER_6533,
+            NPCs.BANKER_6534,
+            NPCs.BANKER_6535 ->
                 npc.location.transform(
                     npc.direction,
                     1,
                 )
-
             NPCs.MAGNUS_GRAM_5488 -> npc.location.transform(Direction.NORTH, 2)
             else -> {
                 if (npc is BankerNPC) {
@@ -178,7 +181,14 @@ class BankerNPC :
     }
 
     override fun defineDestinationOverrides() {
-        setDest(IntType.NPC, NPC_IDS, "bank", "collect", "talk-to", handler = ::provideDestinationOverride)
+        setDest(
+            IntType.NPC,
+            NPC_IDS,
+            "bank",
+            "collect",
+            "talk-to",
+            handler = ::provideDestinationOverride
+        )
     }
 
     override fun init() {

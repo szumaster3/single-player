@@ -40,8 +40,5 @@ abstract class ChampionScrollsEventHookBase : LoginListener {
         player.hook(core.api.Event.NPCKilled, EventHandler(this, ::onNpcKilled))
     }
 
-    protected open fun onNpcKilled(
-        player: Player,
-        event: NPCKillEvent,
-    ) {}
+    protected open fun onNpcKilled(player: Player, event: NPCKillEvent) {}
 }

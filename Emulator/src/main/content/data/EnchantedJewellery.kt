@@ -94,27 +94,27 @@ enum class EnchantedJewellery(val options: Array<String>, val locations: Array<L
     /**
      * Handles the usage of the jewellery after teleportation.
      */
-    private fun handleJewelleryUsage(player: Player, item: Item, nextID: Item, itemIndex: Int, isEquipped: Boolean, location: Location, ) {
-        val jewelleryName =
-            when {
-                getItemName(item.id).contains("ring", true) -> "ring's"
-                getItemName(item.id).contains("combat", true) -> "bracelet's"
-                getItemName(item.id).contains("necklace", true) -> "necklace's"
-                else -> "amulet's"
-            }
-        val jewellery = nextID.name.replace("[^\\d-]|-(?=\\D)".toRegex(), "")
+    private fun handleJewelleryUsage(player: Player, item: Item, nextID: Item, itemIndex: Int, isEquipped: Boolean, location: Location) {
+        val name = getItemName(item.id).lowercase()
+        val jewelleryName = when {
+            "ring" in name -> "ring's"
+            "combat" in name -> "bracelet's"
+            "necklace" in name -> "necklace's"
+            else -> "amulet's"
+        }
+        val jewelleryUsesStr = nextID.name.replace("[^\\d-]|-(?=\\D)".toRegex(), "")
+
         if (isLastItemIndex(itemIndex)) {
             if (crumbled) crumbleJewellery(player, item, isEquipped)
         } else {
             replaceJewellery(player, item, nextID, isEquipped)
         }
-        val message =
-            if (jewellery.isNotEmpty()) {
-                val number = jewellery.toInt()
-                "Your ${getJewelleryType(item)} has ${Util.convert(number)} uses left."
-            } else {
-                "You use your $jewelleryName last charge."
-            }
+
+        val message = if (jewelleryUsesStr.isNotEmpty()) {
+            "Your ${getJewelleryType(item)} has ${Util.convert(jewelleryUsesStr.toInt())} uses left."
+        } else {
+            "You use your $jewelleryName last charge."
+        }
         sendMessage(player, message)
         unlock(player)
         player.dispatch(TeleportEvent(TeleportManager.TeleportType.NORMAL, TeleportMethod.JEWELRY, item, location))

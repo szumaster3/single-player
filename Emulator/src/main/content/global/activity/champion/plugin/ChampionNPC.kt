@@ -231,7 +231,8 @@ class ChampionNPC(
                 override fun pulse(): Boolean {
                     if (npcId == NPCs.EARTH_WARRIOR_CHAMPION_3057 && (player.inventory.containsAtLeastOneItem(
                             PRAYER_ITEMS
-                        ) || player.equipment.containsAtLeastOneItem(PRAYER_ITEMS))) {
+                        ) || player.equipment.containsAtLeastOneItem(PRAYER_ITEMS))
+                    ) {
                         sendNPCDialogue(player, NPCs.LARXUS_3050, "For this fight you're not allowed to use prayers!")
                         teleport(player, Location.create(3182, 9758, 0))
                     } else {

@@ -7,115 +7,120 @@ import core.game.node.item.Item
 import org.json.simple.JSONArray
 import org.json.simple.JSONObject
 
-class EnchantedHeadgearManager(val player: Player) {
+class EnchantedHeadgearManager(private val player: Player) {
 
     val enchantedGear: MutableMap<Int, ChargedHeadgear> = mutableMapOf()
 
-    fun addScrolls(chargedItemId: Int, itemId: Int, amount: Int) {
-        val chargedGear: ChargedHeadgear = enchantedGear.getOrPut(chargedItemId) {
-            val capacity = EnchantedHeadgear.byCharged[chargedItemId]?.scrollCapacity ?: 50
-            ChargedHeadgear(chargedItemId, Container(capacity))
-        }
-
-        val freeSlots = chargedGear.container.freeSlots()
-        if (freeSlots <= 0) {
-            sendMessage(player, "You already have charged headgear.")
+    /**
+     * Adds scrolls to the enchanted headgear if valid.
+     */
+    fun addScrolls(chargedItemId: Int, scrollId: Int, amount: Int) {
+        if (scrollId !in EnchantedHeadgearListener.allowedScrolls) {
+            sendMessage(player, "You cannot add this scroll to the headgear.")
             return
         }
 
-        val toAdd = amount.coerceAtMost(freeSlots)
-        chargedGear.container.add(Item(itemId, toAdd))
+        val headgearData = EnchantedHeadgear.byCharged[chargedItemId]
+        if (headgearData == null) {
+            return
+        }
+
+        val capacity = headgearData.scrollCapacity ?: 50
+        val chargedGear = enchantedGear.getOrPut(chargedItemId) { ChargedHeadgear(chargedItemId, Container(capacity)) }
+        val container = chargedGear.container
+
+        val existingScrollIds = container.toArray().filterNotNull().map { it.id }.distinct()
+        if (existingScrollIds.isNotEmpty() && existingScrollIds.any { it != scrollId }) {
+            sendMessage(player, "Your headgear already contains different scrolls. Remove them first.")
+            return
+        }
+
+        val freeSpace = container.freeSlots()
+        if (freeSpace <= 0) {
+            sendMessage(player, "Your headgear is already fully charged.")
+            return
+        }
+
+        val toAdd = amount.coerceAtMost(freeSpace)
+
+        val scrollItem = Item(scrollId, toAdd)
+        if (!player.inventory.containsItem(scrollItem)) {
+            sendMessage(player, "You do not have enough scrolls to add.")
+            return
+        }
+
+        if (!player.inventory.remove(scrollItem)) {
+            sendMessage(player, "Failed to remove scrolls from your inventory.")
+            return
+        }
+
+        container.add(scrollItem)
+        sendMessage(player, "You charge the headgear with $toAdd scroll${if (toAdd > 1) "s" else ""}.")
     }
 
-    fun withdrawScrolls(chargedItemId: Int, itemId: Int, amount: Int) {
-        val chargedGear = enchantedGear[chargedItemId] ?: return
+    /**
+     * Withdraw a specified amount of scrolls from the enchanted headgear.
+     */
+    fun withdrawScrolls(chargedItemId: Int, scrollId: Int, amount: Int): Boolean {
+        val chargedGear = enchantedGear[chargedItemId] ?: return false
+        val container = chargedGear.container
+        val containedAmount = container.getAmount(scrollId)
+        if (containedAmount < amount) return false
 
-
-        val containedAmount = chargedGear.container.getAmount(itemId)
-        if (containedAmount < amount) return
-
-        chargedGear.container.remove(Item(itemId, amount))
-        chargedGear.container.shift()
-        addItem(player, itemId, amount)
+        container.remove(Item(scrollId, amount))
+        container.shift()
+        addItem(player, scrollId, amount)
+        return true
     }
 
+    /**
+     * Withdraw all scrolls from the enchanted headgear.
+     */
     fun withdrawAllScrolls(chargedItemId: Int) {
         val chargedGear = enchantedGear[chargedItemId] ?: return
-        val scrolls = chargedGear.container.toArray().filterNotNull()
+        val container = chargedGear.container
+        val scrolls = container.toArray().filterNotNull()
 
         scrolls.forEach { item ->
-            chargedGear.container.remove(item)
+            container.remove(item)
             addItem(player, item.id, item.amount)
         }
+        container.shift()
 
-        chargedGear.container.shift()
-        sendMessages(player, "You remove the scrolls. You will need to use a Summoning scroll on it to charge the", "headgear up once more.")
+        sendMessages(
+            player,
+            "You remove the scrolls. You will need to use a Summoning scroll",
+            "on it to charge the headgear up once more."
+        )
     }
 
+    /**
+     * Checks if enchanted headgear contains any scrolls.
+     */
     fun hasScrolls(chargedItemId: Int): Boolean {
-        val chargedGear = enchantedGear[chargedItemId] ?: return false
-        return chargedGear.container.toArray().any { it != null }
+        return enchantedGear[chargedItemId]?.container?.toArray()?.any { it != null } == true
     }
 
-    fun clear() {
-        enchantedGear.clear()
-    }
-
-    fun save(root: JSONObject) {
-        val arr = JSONArray()
-        enchantedGear.forEach { (_, chargedGear) ->
-            val obj = JSONObject().apply {
-                put("chargedItemId", chargedGear.chargedItemId.toString())
-                put("scrolls", JSONArray().apply {
-                    chargedGear.container.toArray().forEach { item ->
-                        if (item == null) return@forEach
-                        add(JSONObject().apply {
-                            put("id", item.id.toString())
-                            put("amount", item.amount.toString())
-                        })
-                    }
-                })
-            }
-            arr.add(obj)
-        }
-        root["enchanted_headgear_scrolls"] = arr
-    }
-
-    fun parse(data: JSONArray) {
-        enchantedGear.clear()
-
-        data.forEach { e ->
-            val obj = e as JSONObject
-            val chargedItemId = obj["chargedItemId"].toString().toInt()
-            val scrollsArr = obj["scrolls"] as JSONArray
-            val capacity = EnchantedHeadgear.byCharged[chargedItemId]?.scrollCapacity ?: 50
-            val container = Container(capacity)
-
-            scrollsArr.forEach { s ->
-                val scrollObj = s as JSONObject
-                val id = scrollObj["id"].toString().toInt()
-                val amount = scrollObj["amount"].toString().toInt()
-                container.add(Item(id, amount))
-            }
-
-            enchantedGear[chargedItemId] = ChargedHeadgear(chargedItemId, container)
-        }
-    }
-
+    /**
+     * Gets the current amount of specific scrolls in the enchanted headgear.
+     */
     fun getCurrentScrollCount(chargedItemId: Int, scrollId: Int): Int {
-        val chargedGear = enchantedGear[chargedItemId] ?: return 0
-        return chargedGear.container.getAmount(scrollId)
+        return enchantedGear[chargedItemId]?.container?.getAmount(scrollId) ?: 0
     }
 
+    /**
+     * Gets total amount of scrolls player has (inventory + equipped enchanted headgear).
+     */
     fun getTotalScrollCount(scrollId: Int): Int {
         val inventoryCount = player.inventory.getAmount(scrollId)
         val equippedHeadgearId = getFromEquipment()
-        val headgearCount = if (equippedHeadgearId != null) {
-            getCurrentScrollCount(equippedHeadgearId, scrollId)
-        } else 0
+        val headgearCount = equippedHeadgearId?.let { getCurrentScrollCount(it, scrollId) } ?: 0
         return inventoryCount + headgearCount
     }
 
+    /**
+     * Gets enchanted headgear item ID from player's equipment (head slot).
+     */
     fun getFromEquipment(): Int? {
         val headSlotItem = player.equipment[EquipmentSlot.HEAD.ordinal]
         return if (headSlotItem != null && EnchantedHeadgear.byCharged.containsKey(headSlotItem.id)) {
@@ -123,6 +128,9 @@ class EnchantedHeadgearManager(val player: Player) {
         } else null
     }
 
+    /**
+     * Removes a single scroll from enchanted headgear.
+     */
     fun removeScroll(chargedItemId: Int, scrollId: Int): Boolean {
         val chargedGear = enchantedGear[chargedItemId] ?: return false
         val container = chargedGear.container
@@ -133,6 +141,9 @@ class EnchantedHeadgearManager(val player: Player) {
         return true
     }
 
+    /**
+     * Sends player a message about current scrolls stored in the enchanted headgear.
+     */
     fun checkHeadgear(chargedItemId: Int) {
         val chargedGear = enchantedGear[chargedItemId]
         if (chargedGear == null || chargedGear.container.toArray().all { it == null }) {
@@ -147,6 +158,59 @@ class EnchantedHeadgearManager(val player: Player) {
                 "The item contains ${item.amount} $plural of the $scrollName."
             }
         sendMessage(player, message)
+    }
+
+    /**
+     * Clears all enchanted headgear data for the player.
+     */
+    fun clear() {
+        enchantedGear.clear()
+    }
+
+    /**
+     * Saves enchanted headgear scroll data into a JSON root object.
+     */
+    fun save(root: JSONObject) {
+        val arr = JSONArray()
+        enchantedGear.forEach { (_, chargedGear) ->
+            val obj = JSONObject().apply {
+                put("chargedItemId", chargedGear.chargedItemId.toString())
+                put("scrolls", JSONArray().apply {
+                    chargedGear.container.toArray().forEach { item ->
+                        if (item != null) {
+                            add(JSONObject().apply {
+                                put("id", item.id.toString())
+                                put("amount", item.amount.toString())
+                            })
+                        }
+                    }
+                })
+            }
+            arr.add(obj)
+        }
+        root["enchanted_headgear_scrolls"] = arr
+    }
+
+    /**
+     * Parses enchanted headgear scroll data from JSON array.
+     */
+    fun parse(data: JSONArray) {
+        enchantedGear.clear()
+        data.forEach { element ->
+            val obj = element as JSONObject
+            val chargedItemId = obj["chargedItemId"].toString().toInt()
+            val scrollsArr = obj["scrolls"] as JSONArray
+            val capacity = EnchantedHeadgear.byCharged[chargedItemId]?.scrollCapacity ?: 50
+            val container = Container(capacity)
+
+            scrollsArr.forEach { s ->
+                val scrollObj = s as JSONObject
+                val id = scrollObj["id"].toString().toInt()
+                val amount = scrollObj["amount"].toString().toInt()
+                container.add(Item(id, amount))
+            }
+            enchantedGear[chargedItemId] = ChargedHeadgear(chargedItemId, container)
+        }
     }
 
     data class ChargedHeadgear(
