@@ -35,7 +35,7 @@ class SirVyvinDialogue(player: Player? = null) : Dialogue(player) {
             2 -> when (buttonId) {
                 1 -> playerl(FaceAnim.HALF_ASKING, "Do you have anything to trade?").also { stage = 10 }
                 2 -> playerl(FaceAnim.HALF_ASKING, "Why are there so many knights in this city?").also { stage = 30 }
-                3 -> playerl(FaceAnim.FRIENDLY, "Can I just talk to you very slowly for a few minutes, while I distract you, so that my friend over there can do something while you're busy being distracted by me?").also { stage = 40 }
+                3 -> playerl(FaceAnim.FRIENDLY, "Can I just talk to you very slowly for a few minutes,").also { stage = 40 }
             }
 
             // Trade.
@@ -70,6 +70,7 @@ class SirVyvinDialogue(player: Player? = null) : Dialogue(player) {
             31 -> npcl(FaceAnim.FRIENDLY,"We are helping King Vallance rule the kingdom as he is getting old and tired.")
 
             // Distraction.
+            39 -> playerl(FaceAnim.HALF_ASKING, "while I distract you, so that my friend over there can do something while you're busy being distracted by me?").also { stage++ }
             40 -> npcl(FaceAnim.ASKING,"... ...what?").also { stage++ }
             41 -> npcl(FaceAnim.HALF_THINKING,"I'm... not sure what you're asking me... you want to join the White Knights?").also { stage++ }
             42 -> playerl(FaceAnim.FRIENDLY, "Nope. I'm just trying to distract you.").also { stage++ }

@@ -331,6 +331,12 @@ class PoisonWeaponPlugin : InteractionListener {
             pp = Items.STEEL_DAGGERP_PLUS_5672,
             ppp = Items.STEEL_DAGGERP_PLUS_PLUS_5690,
         ),
+        WHITE_DAGGER(
+            base = Items.WHITE_DAGGER_6591,
+            p = Items.WHITE_DAGGERP_6593,
+            pp = Items.WHITE_DAGGERP_PLUS_6595,
+            ppp = Items.WHITE_DAGGERP_PLUS_PLUS_6597,
+        ),
         BLACK_DAGGER(
             base = Items.BLACK_DAGGER_1217,
             p = Items.BLACK_DAGGERP_1233,
