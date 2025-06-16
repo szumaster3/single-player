@@ -55,7 +55,7 @@ class EnchantedHeadgearListener : InteractionListener {
             val enchManager = player.enchgearManager
 
             if (!enchManager.hasScrolls(item.id)) {
-                sendDialogue(player, "There are no scrolls stored in this enchanted gear.")
+                sendMessage(player, "Your headgear has no scrolls to remove.")
                 return@on true
             }
 
@@ -66,19 +66,23 @@ class EnchantedHeadgearListener : InteractionListener {
 
             val enchantedGear = enchManager.enchantedGear[item.id]
             if (enchantedGear == null || enchantedGear.container.toArray().all { it == null }) {
-                sendDialogue(player, "There are no scrolls stored in this enchanted gear.")
+                sendMessage(player, "Could not find the charged headgear in your inventory.")
                 return@on true
             }
 
             val firstScroll = enchantedGear.container.toArray().firstOrNull { it != null } ?: run {
-                sendDialogue(player, "There are no scrolls stored in this enchanted gear.")
+                sendMessage(player, "Could not find the charged headgear in your inventory.")
                 return@on true
             }
 
             val success = enchManager.withdrawScrolls(enchantedGear.chargedItemId, firstScroll.id, firstScroll.amount)
 
             if (success) {
-                sendDialogue(player, "You removed ${firstScroll.amount} ${getItemName(firstScroll.id)} scroll(s) from the enchanted gear.")
+                sendMessages(
+                    player,
+                    "You remove the scrolls. You will need to use a Summoning scroll on it to charge the",
+                    "headgear up once more.",
+                )
             } else {
                 player.debug("Failed to remove the scrolls.")
             }
