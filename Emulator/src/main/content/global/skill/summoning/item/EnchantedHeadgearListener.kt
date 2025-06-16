@@ -97,17 +97,7 @@ class EnchantedHeadgearListener : InteractionListener {
         on(chargedIDs, IntType.ITEM, "Commune", "Operate") { player, node ->
             val item = node.asItem() ?: return@on true
             val enchManager = player.enchgearManager
-
-            val chargedHeadgear = enchManager.enchantedGear[item.id]
-
-            if (chargedHeadgear == null || chargedHeadgear.container.toArray().all { it == null }) {
-                sendMessage(player, "Your headgear has no scrolls to remove.")
-            } else {
-                val scrollsDesc = chargedHeadgear.container.toArray()
-                    .filterNotNull()
-                    .joinToString(", ") { "${it.amount} x ${getItemName(it.id)}" }
-                sendDialogue(player, "Stored scrolls: $scrollsDesc")
-            }
+            enchManager.checkHeadgear(item.id)
             return@on true
         }
 
