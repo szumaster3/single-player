@@ -17,19 +17,14 @@ import org.rs.consts.NPCs
  * Represents the Larry dialogue.
  * @author szu
  */
-class LarryDialogue(
-    player: Player? = null,
-) : Dialogue(player) {
+class LarryDialogue(player: Player? = null, ) : Dialogue(player) {
     override fun open(vararg args: Any?): Boolean {
         setTitle(player, 2)
         sendDialogueOptions(player, "I want to speak to Larry about:", "Cold War", "Penguin Hide and Seek")
         return true
     }
 
-    override fun handle(
-        interfaceId: Int,
-        buttonId: Int,
-    ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
         val points = player.getAttribute(GameAttributes.ACTIVITY_PENGUINS_HNS_SCORE, 0)
         val lostNotebook = hasAnItem(player, Items.SPY_NOTEBOOK_13732).container != null
         when (stage) {

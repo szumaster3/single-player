@@ -1,4 +1,4 @@
-package content.global.activity.ttrail.scrolls
+package content.global.activity.ttrail.plugin
 
 import content.global.activity.ttrail.ClueLevel
 import core.api.sendString
@@ -15,7 +15,7 @@ import org.rs.consts.NPCs
  * Represents a coordinate clue scroll.
  * @author Vexia
  */
-abstract class CoordinateClueScroll(
+abstract class CoordinateScroll(
     name: String?, clueId: Int, level: ClueLevel?, location: Location?,
     val clue: String?
 ) : MapClueScroll(name, clueId, level, Components.TRAIL_MAP09_345, location, 0) {

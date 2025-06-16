@@ -2,7 +2,7 @@ package content.global.skill.gathering.mining
 
 import content.data.GameAttributes
 import content.data.items.SkillingTool
-import content.global.activity.shootingstar.StarBonus
+import content.global.activity.shootingstar.ShootingStarBonus
 import core.api.*
 import core.api.movement.finishedMoving
 import core.api.quest.hasRequirement
@@ -375,7 +375,7 @@ class MiningPlugin : InteractionListener {
             }
         }
 
-        if (hasTimerActive<StarBonus>(player)) {
+        if (hasTimerActive<ShootingStarBonus>(player)) {
             if (RandomFunction.getRandom(5) == 3) {
                 sendMessage(player, "...you manage to mine a second ore thanks to the Star Sprite.")
                 amount += 1

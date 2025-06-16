@@ -10,10 +10,7 @@ import org.rs.consts.NPCs
 class PenguinSpawner {
 
     /**
-     * Spawns a specified number of unique penguins randomly.
-     *
-     * @param amount The number of penguins to spawn.
-     * @return A list of the ordinals of the spawned penguins.
+     * Spawns a penguins randomly.
      */
     fun spawnPenguins(amount: Int): ArrayList<Int> {
         val availablePenguins = Penguin.values().toMutableList()
@@ -36,9 +33,7 @@ class PenguinSpawner {
     }
 
     /**
-     * Spawns penguins specified by their ordinals.
-     *
-     * @param ordinals List of penguin ordinals to spawn.
+     * Spawns penguins by their ordinals.
      */
     fun spawnPenguins(ordinals: List<Int>) {
         ordinals.forEach { ordinal ->
@@ -56,16 +51,8 @@ class PenguinSpawner {
 
 /**
  * Represents all possible penguins for the Penguin Hunter activity.
- *
- * @property id The [NPC] id.
- * @property hint Text hint describing location of penguin.
- * @property location The [Location] of the penguin [NPC].
  */
-enum class Penguin(
-    val id: Int,
-    val hint: String,
-    val location: List<Location>,
-) {
+enum class Penguin(val id: Int, val hint: String, val location: List<Location>) {
 
     /*
      * Cactus's.
@@ -249,23 +236,10 @@ enum class Penguin(
     ));
 
     companion object {
-        /**
-         * Maps string representations of locations to their corresponding [Penguin] enum entries.
-         */
-        private val locationMap: Map<String, Penguin> = buildMap {
-            for (penguin in values()) {
-                for (loc in penguin.location) {
-                    put(loc.toString(), penguin)
-                }
-            }
-        }
+        private val locationMap = values()
+            .flatMap { penguin -> penguin.location.map { it to penguin } }
+            .toMap()
 
-        /**
-         * Returns the [Penguin] associated with the given [location], or `null` if none match.
-         *
-         * @param location The location to look up.
-         * @return The [Penguin] associated with the location, or `null` if not found.
-         */
-        fun forLocation(location: Location): Penguin? = locationMap[location.toString()]
+        fun forLocation(location: Location): Penguin? = locationMap[location]
     }
 }

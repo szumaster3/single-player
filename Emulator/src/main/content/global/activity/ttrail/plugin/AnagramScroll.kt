@@ -1,9 +1,8 @@
-package content.global.activity.ttrail.scrolls
+package content.global.activity.ttrail.plugin
 
 import content.global.activity.ttrail.ClueLevel
 import content.global.activity.ttrail.ClueScroll
 import content.global.activity.ttrail.TreasureTrailManager
-import content.global.activity.ttrail.puzzle.PuzzleBox
 import core.api.*
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
@@ -21,7 +20,7 @@ import org.rs.consts.NPCs
  * Represents an anagram clue scroll.
  * @author szu
  */
-abstract class AnagramClueScroll(
+abstract class AnagramScroll(
     name: String?,
     clueId: Int,
     private val anagram: String?,
@@ -66,15 +65,15 @@ abstract class AnagramClueScroll(
          * @param npc The NPC to match with clue.
          * @return The matching AnagramClueScroll if found, null otherwise.
          */
-        fun getClueForNpc(player: Player, npc: NPC): AnagramClueScroll? {
+        fun getClueForNpc(player: Player, npc: NPC): AnagramScroll? {
             val fromInventory = player.inventory.toArray()
                 .filterNotNull()
-                .mapNotNull { getClueScrolls()[it.id] as? AnagramClueScroll }
+                .mapNotNull { getClueScrolls()[it.id] as? AnagramScroll }
                 .firstOrNull { it.npcId == npc.id }
             if (fromInventory != null) return fromInventory
             val clueId = player.getAttribute("anagram_clue_active", -1)
             val fromAttribute = getClueScrolls()[clueId]
-            return if (fromAttribute is AnagramClueScroll && fromAttribute.npcId == npc.id) fromAttribute else null
+            return if (fromAttribute is AnagramScroll && fromAttribute.npcId == npc.id) fromAttribute else null
         }
 
         /**

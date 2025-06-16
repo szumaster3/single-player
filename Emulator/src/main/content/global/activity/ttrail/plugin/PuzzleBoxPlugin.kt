@@ -1,4 +1,4 @@
-package content.global.activity.ttrail.puzzle
+package content.global.activity.ttrail.plugin
 
 import core.api.*
 import core.game.component.Component
@@ -23,7 +23,7 @@ import kotlin.math.abs
  *
  * @author gabriel_aguido, szu
  */
-class PuzzleBoxListener : InteractionListener, InterfaceListener {
+class PuzzleBoxPlugin : InteractionListener, InterfaceListener {
 
     private val puzzleSessionState = mutableMapOf<Player, MutableMap<String, List<Int>>>()
 

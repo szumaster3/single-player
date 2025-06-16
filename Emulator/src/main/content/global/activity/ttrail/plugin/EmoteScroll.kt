@@ -1,4 +1,4 @@
-package content.global.activity.ttrail.scrolls
+package content.global.activity.ttrail.plugin
 
 import content.global.activity.ttrail.ClueLevel
 import content.global.activity.ttrail.ClueScroll
@@ -17,7 +17,7 @@ import org.rs.consts.NPCs
  * Represents an emote-based clue scroll.
  * @author Vexia
  */
-abstract class EmoteClueScroll(
+abstract class EmoteScroll(
     name: String?,
     clueId: Int,
     level: ClueLevel?,

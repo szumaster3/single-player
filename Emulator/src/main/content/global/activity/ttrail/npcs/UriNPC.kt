@@ -1,7 +1,7 @@
 package content.global.activity.ttrail.npcs
 
 import content.global.activity.ttrail.ClueScroll
-import content.global.activity.ttrail.scrolls.EmoteClueScroll
+import content.global.activity.ttrail.plugin.EmoteScroll
 import core.api.removeAttribute
 import core.api.sendItemDialogue
 import core.game.dialogue.Dialogue
@@ -170,7 +170,7 @@ class UriNPC : AbstractNPC {
          * Checks if the player is eligible to speak with Uri, based on emote clue progress and gear.
          */
         private fun canSpeak(): Boolean {
-            val scroll = asUri().clueScroll as EmoteClueScroll?
+            val scroll = asUri().clueScroll as EmoteScroll?
             return asUri().player == player &&
                     player.getAttribute(
                         "commence-emote",

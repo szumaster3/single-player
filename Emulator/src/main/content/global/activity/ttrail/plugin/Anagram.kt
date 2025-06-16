@@ -1,8 +1,6 @@
-package content.global.activity.ttrail.clues
+package content.global.activity.ttrail.plugin
 
 import content.global.activity.ttrail.ClueLevel
-import content.global.activity.ttrail.puzzle.PuzzleBox
-import content.global.activity.ttrail.scrolls.AnagramClueScroll
 import core.plugin.Plugin
 import org.rs.consts.Items
 import org.rs.consts.NPCs
@@ -11,7 +9,7 @@ import org.rs.consts.NPCs
  * Represents the anagram clues.
  * @author szu
  */
-open class Anagram : AnagramClueScroll {
+open class Anagram : AnagramScroll {
 
     /**
      * Default constructor.

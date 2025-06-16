@@ -1,7 +1,6 @@
-package content.global.activity.ttrail.clues
+package content.global.activity.ttrail.plugin
 
 import content.global.activity.ttrail.ClueLevel
-import content.global.activity.ttrail.scrolls.CrypticClueScroll
 import core.game.world.map.Location
 import core.game.world.map.zone.ZoneBorders
 import core.plugin.Plugin
@@ -13,7 +12,7 @@ import org.rs.consts.Scenery
  * Represents the cryptic clues.
  * @author szu
  */
-class CrypticClue : CrypticClueScroll {
+class CrypticClue : CrypticScroll {
 
     /**
      * Constructs a new Cryptic clue plugin.

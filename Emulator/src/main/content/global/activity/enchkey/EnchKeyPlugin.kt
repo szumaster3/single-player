@@ -17,7 +17,7 @@ data class Treasure(
  * Represents the Enchanted key activity.
  * @author szu
  */
-class EnchKeyListener :
+class EnchKeyPlugin :
     InteractionListener,
     Commands {
     private var player: Player? = null

@@ -2,7 +2,7 @@ package content.activity.ttrial.puzzle
 
 import MockPlayer
 import TestUtils
-import content.global.activity.ttrail.puzzle.PuzzleBoxListener
+import content.global.activity.ttrail.plugin.PuzzleBoxPlugin
 import core.api.getAttribute
 import core.api.setAttribute
 import org.junit.jupiter.api.Assertions
@@ -18,7 +18,7 @@ class PuzzleBoxTests {
 
     @Test
     fun generateOnlySolvablePuzzles() {
-        val puzzleListener = PuzzleBoxListener()
+        val puzzleListener = PuzzleBoxPlugin()
         val puzzleItems = (1..24).toList() + -1
 
         repeat(100) {
@@ -31,21 +31,21 @@ class PuzzleBoxTests {
 
     @Test
     fun verifyKnownStateIsSolvable() {
-        val puzzleListener = PuzzleBoxListener()
+        val puzzleListener = PuzzleBoxPlugin()
         val solvablePuzzle = (1..24).toList() + -1
         Assertions.assertTrue(puzzleListener.isSolvable(solvablePuzzle), "Puzzle should be solvable")
     }
 
     @Test
     fun generateUnsolvablePuzzles() {
-        val puzzleListener = PuzzleBoxListener()
+        val puzzleListener = PuzzleBoxPlugin()
         val unsolvablePuzzle = (2..24).toList() + 1 + -1
         Assertions.assertFalse(puzzleListener.isSolvable(unsolvablePuzzle), "Puzzle should not be solvable")
     }
 
     @Test
     fun checkPuzzleStateSaving() {
-        val puzzleListener = PuzzleBoxListener()
+        val puzzleListener = PuzzleBoxPlugin()
         val player = mockPlayer
         val key = "mm"
         val puzzleItems = (3904..3950 step 2).toList() + -1
@@ -59,7 +59,7 @@ class PuzzleBoxTests {
 
     @Test
     fun completePuzzleAndMarkAsDone() {
-        val puzzleListener = PuzzleBoxListener()
+        val puzzleListener = PuzzleBoxPlugin()
         val player = mockPlayer
         val key = "mm"
         val puzzleItems = (3904..3950 step 2).toList() + -1

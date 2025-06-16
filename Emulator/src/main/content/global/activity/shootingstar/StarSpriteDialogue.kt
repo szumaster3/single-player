@@ -146,7 +146,7 @@ class StarSpriteDialogue(player: Player? = null) : Dialogue(player) {
                         "coins.",
                     )
                     getStoreFile()[player.username.lowercase()] = true
-                    val timer = getOrStartTimer<StarBonus>(player)
+                    val timer = getOrStartTimer<ShootingStarBonus>(player)
                     timer.ticksLeft = 1500
                 }
                 stage = 52
@@ -168,7 +168,7 @@ class StarSpriteDialogue(player: Player? = null) : Dialogue(player) {
         bonusBaseAmt: Int,
     ) {
         if (RandomFunction.roll(3)) {
-            var bonus = getOrStartTimer<StarBonus>(player)
+            var bonus = getOrStartTimer<ShootingStarBonus>(player)
             bonus.ticksLeft += 500
             sendMessage(player, colorize("%RYour ring shines dimly as if imbued with energy."))
         } else if (RandomFunction.roll(5)) {

@@ -1,4 +1,4 @@
-package content.global.activity.ttrail.scrolls
+package content.global.activity.ttrail.plugin
 
 import content.global.activity.ttrail.ClueLevel
 import content.global.activity.ttrail.ClueScroll
@@ -110,7 +110,7 @@ abstract class ChallengeClueScroll(
                                 }
                                 val manager = TreasureTrailManager.getInstance(player)
                                 val clueScroll = getClueScrolls()[clue.clueId]
-                                val anagramClue = AnagramClueScroll.getClueForNpc(player, npc)
+                                val anagramClue = AnagramScroll.getClueForNpc(player, npc)
                                 if (clueScroll != null && removeItem(player, clueScroll.clueId) && removeItem(player, anagramClue?.clueId)) {
                                     removeAttributes(player, "anagram_clue_active")
                                     clueScroll.reward(player)

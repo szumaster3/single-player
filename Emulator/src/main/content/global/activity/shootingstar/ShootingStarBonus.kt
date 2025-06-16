@@ -10,7 +10,7 @@ import org.json.simple.JSONObject
  * Star bonus timer.
  * @author Ceikry.
  */
-class StarBonus : PersistTimer(1, "shootingstar:bonus") {
+class ShootingStarBonus : PersistTimer(1, "shootingstar:bonus") {
     var ticksLeft = 1500
 
     override fun save(

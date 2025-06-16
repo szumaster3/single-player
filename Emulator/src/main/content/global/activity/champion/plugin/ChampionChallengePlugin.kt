@@ -129,8 +129,8 @@ class ChampionChallengePlugin : InteractionListener, MapArea {
             return
         }
 
-        val npcId = ChampionNPC.NPC_ID + (scroll - ChampionNPC.SCROLL_ID)
-        ChampionNPC.spawnChampion(player, npcId)
+        val npcId = ChampionChallengeNPC.NPC_ID + (scroll - ChampionChallengeNPC.SCROLL_ID)
+        ChampionChallengeNPC.spawnChampion(player, npcId)
         if (scroll == Items.CHAMPION_SCROLL_6798) {
             setAttribute(player, GameAttributes.PRAYER_LOCK, true)
         }
@@ -150,7 +150,7 @@ class ChampionChallengePlugin : InteractionListener, MapArea {
                 return
             }
             removeAttribute(player, GameAttributes.ACTIVITY_CHAMPION_BOSS_CHALLENGE)
-            ChampionNPC.spawnChampion(player, NPCs.LEON_DCOUR_3067)
+            ChampionChallengeNPC.spawnChampion(player, NPCs.LEON_DCOUR_3067)
         }
     }
 

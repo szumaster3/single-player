@@ -1,7 +1,6 @@
-package content.global.activity.ttrail.clues
+package content.global.activity.ttrail.plugin
 
 import content.global.activity.ttrail.ClueLevel
-import content.global.activity.ttrail.scrolls.ChallengeClueScroll
 import core.plugin.Plugin
 import org.rs.consts.Items
 import org.rs.consts.NPCs

@@ -1,4 +1,4 @@
-package content.global.activity.ttrail.puzzle
+package content.global.activity.ttrail.plugin
 
 import core.api.getAttribute
 import core.game.node.entity.player.Player
@@ -43,7 +43,7 @@ enum class PuzzleBox(
         @JvmStatic
         fun getRandomPuzzleBox(): Int? {
             val randomPuzzleBox = PuzzleBox.values().random()
-            return PuzzleBox.fromItemId(randomPuzzleBox.item.id)?.item?.id
+            return fromItemId(randomPuzzleBox.item.id)?.item?.id
         }
 
         /**
@@ -55,7 +55,7 @@ enum class PuzzleBox(
          */
         @JvmStatic
         fun hasCompletePuzzleBox(player: Player, key: String): Boolean {
-            val box = PuzzleBox.fromKey(key) ?: return false
+            val box = fromKey(key) ?: return false
             return getAttribute(player, "$key:puzzle:done", false) && player.inventory.contains(box.item.id, 1)
         }
     }

@@ -1,9 +1,8 @@
 package content.global.activity.ttrail
 
-import content.global.activity.ttrail.clues.*
 import content.global.activity.ttrail.npcs.SaradominWizardNPC
 import content.global.activity.ttrail.npcs.ZamorakWizardNPC
-import content.global.activity.ttrail.scrolls.CoordinateClueScroll
+import content.global.activity.ttrail.plugin.*
 import core.api.sendMessage
 import core.cache.def.impl.ItemDefinition
 import core.game.interaction.OptionHandler
@@ -36,7 +35,7 @@ class TreasureTrailPlugin : OptionHandler() {
             ItemDefinition.forId(level.casketId).handlers["option:open"] = this
         }
 
-        ItemDefinition.forId(CoordinateClueScroll.SEXTANT.id).handlers["option:look through"] = this
+        ItemDefinition.forId(CoordinateScroll.SEXTANT.id).handlers["option:look through"] = this
 
         ClassScanner.definePlugin(MapClue())
         ClassScanner.definePlugin(ClueItemPlugin())

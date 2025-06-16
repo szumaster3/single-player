@@ -1,8 +1,7 @@
-package content.global.activity.ttrail.clues
+package content.global.activity.ttrail.plugin
 
 import content.global.activity.ttrail.ClueLevel
 import content.global.activity.ttrail.npcs.UriNPC
-import content.global.activity.ttrail.scrolls.EmoteClueScroll
 import core.game.node.entity.player.link.emote.Emotes
 import core.game.world.map.zone.ZoneBorders
 import core.plugin.ClassScanner.definePlugin
@@ -13,7 +12,7 @@ import org.rs.consts.Items
  * Represents the emote clues.
  * @author Vexia
  */
-class EmoteClue : EmoteClueScroll {
+class EmoteClue : EmoteScroll {
     /**
      * Instantiates a new Emote clue plugin.
      */

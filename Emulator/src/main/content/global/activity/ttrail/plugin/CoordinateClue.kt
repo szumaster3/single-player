@@ -1,7 +1,6 @@
-package content.global.activity.ttrail.clues
+package content.global.activity.ttrail.plugin
 
 import content.global.activity.ttrail.ClueLevel
-import content.global.activity.ttrail.scrolls.CoordinateClueScroll
 import core.game.world.map.Location
 import core.plugin.Plugin
 import org.rs.consts.Items
@@ -12,7 +11,7 @@ import org.rs.consts.Items
  */
 class CoordinateClue
 /**
- * Instantiates a new Coordinate clue plugin.
+ * Instantiates a new CoordinateClue clue plugin.
  *
  * @param name     the name
  * @param clueId   the clue id
@@ -26,7 +25,7 @@ class CoordinateClue
     level: ClueLevel? = null,
     location: Location? = null,
     clue: String? = null
-) : CoordinateClueScroll(name, clueId, level, location, clue) {
+) : CoordinateScroll(name, clueId, level, location, clue) {
     @Throws(Throwable::class)
     override fun newInstance(arg: Any?): Plugin<Any> {
         register(CoordinateClue("tree-gnome-coord", Items.CLUE_SCROLL_2807, ClueLevel.MEDIUM, Location(2478, 3158, 0), "00 degrees 05 minutes south<br>01 degrees 13 minutes east"))

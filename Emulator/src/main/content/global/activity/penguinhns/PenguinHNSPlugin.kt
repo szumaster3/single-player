@@ -16,7 +16,7 @@ import org.rs.consts.NPCs
 /**
  * Represents the interaction for the Penguin Hunter activity.
  */
-class PenguinHNSListener : InteractionListener {
+class PenguinHNSPlugin : InteractionListener {
     override fun defineListeners() {
         on(sceneryPenguinIDs, IntType.NPC, "spy-on") { player, node ->
             val npc = node.asNpc()

@@ -20,14 +20,11 @@ import org.rs.consts.NPCs
 import org.rs.consts.Vars
 
 @Initializable
-class ChampionNPC(
-    id: Int = 0,
-    location: Location? = null,
-) : AbstractNPC(id, location) {
+class ChampionChallengeNPC(id: Int = 0, location: Location? = null, ) : AbstractNPC(id, location) {
 
     private var clearTime = 0
 
-    override fun construct(id: Int, location: Location, vararg objects: Any): AbstractNPC = ChampionNPC(id, location)
+    override fun construct(id: Int, location: Location, vararg objects: Any): AbstractNPC = ChampionChallengeNPC(id, location)
 
     override fun getIds(): IntArray = intArrayOf(
         NPCs.EARTH_WARRIOR_CHAMPION_3057,
@@ -216,7 +213,7 @@ class ChampionNPC(
 
         @JvmStatic
         fun spawnChampion(player: Player, npcId: Int) {
-            val champion = ChampionNPC(npcId)
+            val champion = ChampionChallengeNPC(npcId)
             champion.location = location(3170, 9758, 0)
             champion.isWalks = true
             champion.isAggressive = true
