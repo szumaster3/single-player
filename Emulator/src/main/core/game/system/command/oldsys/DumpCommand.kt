@@ -63,7 +63,7 @@ class DumpCommand : CommandPlugin() {
         println(f.absolutePath)
         val writer = f.bufferedWriter()
         writer.writeLn("<head>")
-        writer.writeLn("<link rel=\"stylesheet\" type=\"text/css\" href=\"../References/table_template.css\">")
+        writer.writeLn("<link rel=\"stylesheet\" type=\"text/css\" href=\"../Emulator/table_template.css\">")
         writer.writeLn("</head>")
         writer.writeLn("<table style='width:100%'>")
         writer.writeLn("<tr>")
