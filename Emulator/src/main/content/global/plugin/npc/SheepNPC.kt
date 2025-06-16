@@ -56,16 +56,17 @@ private val sheepIds =
         NPCs.GOLDEN_SHEEP_5173,
     )
 
-class SheepNPC :
-    NPCBehavior(*sheepIds),
-    InteractionListener {
+class SheepNPC : NPCBehavior(*sheepIds), InteractionListener {
+
     override fun tick(self: NPC): Boolean {
         if (self.properties.combatPulse.isAttacking || DeathTask.isDead(self)) {
             return true
         }
+
         if (RandomFunction.random(35) == 5) {
             sendChat(self, "Baa!")
         }
+
         return true
     }
 
