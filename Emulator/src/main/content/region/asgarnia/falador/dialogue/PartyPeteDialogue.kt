@@ -1,4 +1,4 @@
-package content.region.asgarnia.falador.plugin.partyroom
+package content.region.asgarnia.falador.dialogue
 
 import core.api.animate
 import core.api.interaction.openNpcShop
