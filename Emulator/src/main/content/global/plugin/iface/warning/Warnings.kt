@@ -5,11 +5,7 @@ import org.rs.consts.Components
 /**
  * Enum represents the Warnings.
  */
-enum class Warnings(
-    val varbit: Int,
-    val component: Int,
-    val buttonId: Int,
-) {
+enum class Warnings(val varbit: Int, val component: Int, val buttonId: Int, ) {
     DAGANNOTH_KINGS_LADDER(3851, Components.CWS_WARNING_1_574, 50), // Complete
     LUMBRIDGE_SWAMP_CAVE_ROPE(3863, Components.CWS_WARNING_17_570, 51),
     STRONGHOLD_OF_SECURITY_LADDERS(3854, Components.CWS_WARNING_4_579, 52),

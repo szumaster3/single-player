@@ -9,25 +9,18 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 
 class ClaimTokenDialogue(private val npcId: NPC) : DialogueFile() {
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
+    override fun handle(componentID: Int, buttonID: Int, ) {
         npc = npcId
 
         val amount = player!!.getSavedData().activityData.warriorGuildTokens
-        val faceAnimation = if(npc!!.id == NPCs.GAMFRED_4287) FaceAnim.CHILD_NORMAL else FaceAnim.HALF_GUILTY
+        val faceAnimation = if (npc!!.id == NPCs.GAMFRED_4287) FaceAnim.CHILD_NORMAL else FaceAnim.HALF_GUILTY
         when (stage) {
             0 -> player("May I claim my tokens please?").also { stage++ }
             1 -> if (amount < 1) {
-
-                npc(faceAnimation,
-                    "I'm afraid you have not earned any tokens yet. Try",
-                    "some of the activities around the guild to earn some.",
-                )
+                npc(faceAnimation, "I'm afraid you have not earned any tokens yet. Try", "some of the activities around the guild to earn some.")
                 stage = 3
             } else {
-                npc(faceAnimation,"Of course! Here you go, you've earned $amount tokens!")
+                npc(faceAnimation, "Of course! Here you go, you've earned $amount tokens!")
                 stage++
             }
 

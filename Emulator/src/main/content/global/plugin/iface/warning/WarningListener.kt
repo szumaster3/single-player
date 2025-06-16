@@ -29,9 +29,7 @@ import org.rs.consts.*
 /**
  * Handles interactions related to warning screens.
  */
-class WarningListener :
-    InteractionListener,
-    InterfaceListener {
+class WarningListener : InteractionListener, InterfaceListener {
     /*
      * Implemented warnings.
      */

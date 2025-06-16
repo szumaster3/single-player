@@ -180,7 +180,7 @@ class BankContainer(player: Player) : Container(SIZE, ContainerType.ALWAYS_STACK
         var item = player.inventory[slot] ?: return
 
         if (!item.definition.getConfiguration(ItemConfigParser.BANKABLE, true)) {
-            player.sendMessage("A magical force prevents you from banking this item")
+            player.sendMessage("A magical force prevents you from banking this item.")
             return
         }
 

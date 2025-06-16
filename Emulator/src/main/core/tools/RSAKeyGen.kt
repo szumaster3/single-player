@@ -34,11 +34,7 @@ object RSAKeyGen {
         }
     }
 
-    fun writeKey(
-        file: String?,
-        modulus: BigInteger,
-        exponent: BigInteger,
-    ) {
+    private fun writeKey(file: String?, modulus: BigInteger, exponent: BigInteger, ) {
         try {
             val writer = BufferedWriter(FileWriter(file))
             writer.write("private static final BigInteger RSA_MODULUS = new BigInteger(\"$modulus\");")

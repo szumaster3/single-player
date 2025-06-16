@@ -134,21 +134,7 @@ class StockMarket : InterfaceListener {
                     openedOffer = ExchangeHistory.getInstance(player).getOffer(openedIndex)
                     updateVarbits(player, openedOffer, openedIndex, true)
                     player.interfaceManager.openSingleTab(Component(Components.STOCKSIDE_107)).open(player)
-                    player.packetDispatch.sendRunScript(
-                        149,
-                        "IviiiIsssss",
-                        "",
-                        "",
-                        "",
-                        "Examine",
-                        "Offer",
-                        -1,
-                        0,
-                        7,
-                        4,
-                        93,
-                        7012370,
-                    )
+                    player.packetDispatch.sendRunScript(149, "IviiiIsssss", "", "", "", "Examine", "Offer", -1, 0, 7, 4, 93, 7012370)
                     val settings = IfaceSettingsBuilder().enableOptions(0, 1).build()
                     player.packetDispatch.sendIfaceSettings(settings, 18, 107, 0, 27)
                 }

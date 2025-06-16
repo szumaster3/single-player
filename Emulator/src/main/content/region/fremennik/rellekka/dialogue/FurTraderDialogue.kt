@@ -20,10 +20,7 @@ class FurTraderDialogue(player: Player? = null) : Dialogue(player) {
         if (!isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS)) {
             npc(FaceAnim.ANNOYED, "I don't sell to outerlanders.").also { stage = END_DIALOGUE }
         } else {
-            npcl(
-                FaceAnim.FRIENDLY,
-                "Welcome back, ${FremennikTrials.getFremennikName(player)}. Have you seen the furs I have today?",
-            )
+            npcl(FaceAnim.FRIENDLY, "Welcome back, ${FremennikTrials.getFremennikName(player)}. Have you seen the furs I have today?")
         }
         return true
     }

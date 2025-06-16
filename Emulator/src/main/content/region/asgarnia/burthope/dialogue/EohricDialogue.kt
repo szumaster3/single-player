@@ -32,49 +32,20 @@ class EohricDialogue(player: Player? = null) : Dialogue(player) {
         when (stage) {
             0 -> npc(FaceAnim.ASKING, "Hello. Can I help?").also { stage++ }
             1 -> options("What is this place?", "That's quite an outfit.", "Goodbye.").also { stage++ }
-            2 ->
-                when (buttonId) {
-                    1 -> playerl(FaceAnim.ASKING, "What is this place?").also { stage = 4 }
-                    2 -> playerl(FaceAnim.ASKING, "That's quite an outfit.").also { stage++ }
-                    3 -> player(FaceAnim.FRIENDLY, "Goodbye.").also { stage = END_DIALOGUE }
-                }
-            3 ->
-                npcl(
-                    FaceAnim.HAPPY,
-                    "Why, thank you. I designed it myself. I've always found purple such a cheerful colour!",
-                ).also {
-                    stage =
-                        2
-                }
-            4 ->
-                npcl(
-                    FaceAnim.FRIENDLY,
-                    "This is Burthorpe Castle, home to His Royal Highness Prince Anlaf, heir to the throne of Asgarnia.",
-                ).also {
-                    stage =
-                        END_DIALOGUE
-                }
+            2 -> when (buttonId) {
+                1 -> playerl(FaceAnim.ASKING, "What is this place?").also { stage = 4 }
+                2 -> playerl(FaceAnim.ASKING, "That's quite an outfit.").also { stage++ }
+                3 -> player(FaceAnim.FRIENDLY, "Goodbye.").also { stage = END_DIALOGUE }
+            }
+            3 -> npcl(FaceAnim.HAPPY, "Why, thank you. I designed it myself. I've always found purple such a cheerful colour!").also { stage = 1 }
+            4 -> npcl(FaceAnim.FRIENDLY, "This is Burthorpe Castle, home to His Royal Highness Prince Anlaf, heir to the throne of Asgarnia.").also { stage = END_DIALOGUE }
             5 -> npc(FaceAnim.FRIENDLY, "No doubt you're impressed.").also { stage++ }
             6 -> options("Where is the prince?", "Goodbye.").also { stage++ }
-            7 ->
-                when (buttonId) {
-                    1 ->
-                        npcl(
-                            FaceAnim.SUSPICIOUS,
-                            "I cannot disclose the prince's exact whereabouts for fear of compromising his personal safety.",
-                        ).also {
-                            stage++
-                        }
-                    2 -> player(FaceAnim.FRIENDLY, "Goodbye.").also { stage = END_DIALOGUE }
-                }
-            8 ->
-                npcl(
-                    FaceAnim.FRIENDLY,
-                    "But rest assured that he is working tirelessly to maintain the safety and well being of Burthorpe's people.",
-                ).also {
-                    stage =
-                        1
-                }
+            7 -> when (buttonId) {
+                1 -> npcl(FaceAnim.SUSPICIOUS, "I cannot disclose the prince's exact whereabouts for fear of compromising his personal safety.").also { stage++ }
+                2 -> player(FaceAnim.FRIENDLY, "Goodbye.").also { stage = END_DIALOGUE }
+            }
+            8 -> npcl(FaceAnim.FRIENDLY, "But rest assured that he is working tirelessly to maintain the safety and well being of Burthorpe's people.").also { stage = 1 }
         }
         return true
     }

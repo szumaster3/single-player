@@ -9,7 +9,7 @@ import core.game.interaction.InterfaceListener
 import org.rs.consts.Components
 
 /**
- * Represents the Warnning interface.
+ * Represents the warning interface.
  * @author szu
  */
 class DoomsayerInterface : InterfaceListener {
@@ -28,11 +28,7 @@ class DoomsayerInterface : InterfaceListener {
 
             if (warning != null) {
                 if (getVarbit(player, warning.varbit) < 6) {
-                    sendMessages(
-                        player,
-                        "You cannot toggle the warning screen on or off. You need to go to the area it",
-                        "is linked to enough times to have the option to do so.",
-                    )
+                    sendMessages(player, "You cannot toggle the warning screen on or off. You need to go to the area it", "is linked to enough times to have the option to do so.")
                     return@on true
                 }
 

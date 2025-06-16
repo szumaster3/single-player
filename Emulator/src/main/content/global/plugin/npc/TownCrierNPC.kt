@@ -16,12 +16,11 @@ class TownCrierNPC : NPCBehavior(NPCs.TOWN_CRIER_6135, NPCs.TOWN_CRIER_6136, NPC
     )
 
     override fun tick(self: NPC): Boolean {
-        forceChatAnimation.forEach { (chat, animation) ->
-            if (RandomFunction.random(300) == 5) {
-                stopWalk(self)
-                animate(self, animation)
-                sendChat(self, chat)
-            }
+        if (RandomFunction.random(150) == 0) {
+            stopWalk(self)
+            val (chat, animation) = forceChatAnimation.entries.random()
+            animate(self, animation)
+            sendChat(self, chat)
         }
         return super.tick(self)
     }

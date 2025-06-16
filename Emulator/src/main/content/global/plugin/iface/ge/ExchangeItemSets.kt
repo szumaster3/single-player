@@ -11,6 +11,7 @@ import core.game.container.access.InterfaceContainer
 import core.game.ge.ItemSet
 import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.Player
+import core.game.node.item.Item
 import org.rs.consts.Components
 
 /**
@@ -30,9 +31,7 @@ class ExchangeItemSets : InterfaceListener {
 
     companion object {
         /**
-         * Opens the interface for the player.
-         *
-         * @param player The player.
+         * Opens the exchange set interface.
          */
         @JvmStatic
         fun openFor(player: Player) {
@@ -45,13 +44,9 @@ class ExchangeItemSets : InterfaceListener {
     }
 
     /**
-     * Listens to the inv container events to update the interface accordingly.
-     *
-     * @property player The player.
+     * Update the interface.
      */
-    private class InventoryListener(
-        val player: Player,
-    ) : ContainerListener {
+    private class InventoryListener(val player: Player) : ContainerListener {
         init {
             createContainers(player)
         }
@@ -59,10 +54,7 @@ class ExchangeItemSets : InterfaceListener {
         /**
          * Called when the inventory container updates.
          */
-        override fun update(
-            c: Container?,
-            event: ContainerEvent?,
-        ) {
+        override fun update(c: Container?, event: ContainerEvent?, ) {
             createContainers(player)
         }
 
@@ -79,23 +71,10 @@ class ExchangeItemSets : InterfaceListener {
          * @param player The player.
          */
         private fun createContainers(player: Player) {
-            setAttribute(
-                player,
-                "container-key",
-                InterfaceContainer.generateItems(
-                    player,
-                    player.inventory.toArray(),
-                    arrayOf("Exchange", "Components"),
-                    Components.EXCHANGE_SETS_SIDE_644,
-                    0,
-                    7,
-                    4,
-                ),
-            )
-
+            setAttribute(player, "container-key", InterfaceContainer.generateItems(player, player.inventory.toArray(), arrayOf("Exchange", "Components"), Components.EXCHANGE_SETS_SIDE_644, 0, 7, 4),)
             InterfaceContainer.generateItems(
                 player,
-                ItemSet.getItemArray(),
+                ItemSet.getItemArray() as Array<Item>,
                 arrayOf("Exchange", "Components"),
                 Components.EXCHANGE_ITEMSETS_645,
                 16,

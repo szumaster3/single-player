@@ -25,6 +25,7 @@ class UnferthDialogue(player: Player? = null) : Dialogue(player) {
          * 5 -> npcl(FaceAnim.FRIENDLY, "Thanks ${player.name}.").also { stage = END_DIALOGUE }
          * }
          */
+
         when (stage) {
             START_DIALOGUE -> npcl(FaceAnim.GUILTY, "Hello.").also { stage++ }
             1 -> playerl(FaceAnim.FRIENDLY, "What's wrong?").also { stage++ }

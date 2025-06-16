@@ -23,12 +23,7 @@ class ReffDialogue(player: Player? = null) : Dialogue(player) {
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 ->
-                options(
-                    "Tell me about the Shot Put area.",
-                    "May I claim my tokens please?",
-                    "Do you have any tips for me?",
-                    "Bye!",
-                ).also {
+                options("Tell me about the Shot Put area.", "May I claim my tokens please?", "Do you have any tips for me?", "Bye!").also {
                     stage++
                 }
             1 ->

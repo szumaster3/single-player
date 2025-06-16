@@ -10,6 +10,7 @@ class RugMerchantPlugin : InteractionListener {
     private val rugMerchants = intArrayOf(NPCs.RUG_MERCHANT_2291, NPCs.RUG_MERCHANT_2292, NPCs.RUG_MERCHANT_2293, NPCs.RUG_MERCHANT_2294, NPCs.RUG_MERCHANT_2296, NPCs.RUG_MERCHANT_2298, NPCs.RUG_MERCHANT_3020)
 
     override fun defineListeners() {
+
         /*
          * Handles travel option for Rug Merchants NPC.
          */

@@ -18,9 +18,8 @@ import org.rs.consts.NPCs
  * @author szu
  */
 @Initializable
-class PostiePeteDialogue(
-    player: Player? = null,
-) : Dialogue(player) {
+class PostiePeteDialogue(player: Player? = null) : Dialogue(player) {
+
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(FaceAnim.OLD_NORMAL, "Anyone got Post?")

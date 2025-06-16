@@ -14,30 +14,24 @@ import org.rs.consts.NPCs
  * @author szu
  */
 @Initializable
-class FurTradeDialogue(
-    player: Player? = null,
-) : Dialogue(player) {
+class FurTradeDialogue(player: Player? = null) : Dialogue(player) {
+
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(FaceAnim.HALF_GUILTY, "Would you like to trade in fur?")
         return true
     }
 
-    override fun handle(
-        interfaceId: Int,
-        buttonId: Int,
-    ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> options("Yes.", "No.").also { stage++ }
-            1 ->
-                when (buttonId) {
-                    1 -> {
-                        end()
-                        openNpcShop(player, NPCs.FUR_TRADER_573)
-                    }
-
-                    2 -> player(FaceAnim.HALF_GUILTY, "No, thanks.").also { stage = END_DIALOGUE }
+            1 -> when (buttonId) {
+                1 -> {
+                    end()
+                    openNpcShop(player, NPCs.FUR_TRADER_573)
                 }
+                2 -> player(FaceAnim.HALF_GUILTY, "No, thanks.").also { stage = END_DIALOGUE }
+            }
         }
         return true
     }

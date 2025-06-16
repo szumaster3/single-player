@@ -119,22 +119,8 @@ object CharterUtils {
 
     /**
      * Represents a charter ship travel destination.
-     *
-     * @property location The in-game location to teleport the player to.
-     * @property button The button ID corresponding to this destination in the interface.
-     * @property costs An array of travel costs from various bases.
-     * @property base The base location associated with this destination, if any.
-     * @property xChild The component ID for the X coordinate display in the interface.
-     * @property nameChild The component ID for the name display in the interface.
      */
-    enum class Destination(
-        val location: Location,
-        val button: Int,
-        val costs: IntArray,
-        val base: Location?,
-        val xChild: Int,
-        val nameChild: Int
-    ) {
+    enum class Destination(val location: Location, val button: Int, val costs: IntArray, val base: Location?, val xChild: Int, val nameChild: Int) {
         CATHERBY(loc(2792, 3417, 1), 25, intArrayOf(480, 0, 480, 625, 1600, 3250, 1000, 1600, 3200, 3400), loc(2797, 3414), 3, 14),
         PORT_PHASMATYS(loc(3705, 3503, 1), 24, intArrayOf(3650, 3250, 1850, 0, 0, 0, 2050, 1850, 3200, 1100), loc(3702, 3502), 2, 13) {
             override fun checkTravel(player: Player) = requireQuest(player, Quests.PRIEST_IN_PERIL, "to go there.")

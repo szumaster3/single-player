@@ -18,10 +18,8 @@ class PostiePeteNPC : NPCBehavior(NPCs.POSTIE_PETE_3805) {
         )
 
     init {
-
         val randomLocation = POSTIE_PETE_LOCATIONS.random()
-        core.game.node.entity.npc.NPC
-            .create(NPCs.POSTIE_PETE_3805, randomLocation, null).init()
+        core.game.node.entity.npc.NPC.create(NPCs.POSTIE_PETE_3805, randomLocation, null).init()
         SystemLogger.processLogEntry(this::class.java, Log.INFO, "Postie Pete spawn: $randomLocation")
     }
 }

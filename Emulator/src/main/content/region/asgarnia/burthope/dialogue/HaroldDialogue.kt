@@ -31,17 +31,11 @@ class HaroldDialogue(player: Player? = null) : Dialogue(player) {
             1 -> npc(FaceAnim.FRIENDLY, "Hi.").also { stage++ }
             2 -> player(FaceAnim.FRIENDLY, "Can I buy you a drink?").also { stage++ }
             3 -> npc(FaceAnim.HAPPY, "Now you're talking! An Asgarnian Ale, please!").also { stage++ }
-            4 -> {
-                if (!removeItem(player!!, Items.ASGARNIAN_ALE_1905)) {
-                    player(FaceAnim.FRIENDLY, "I'll go and get you one.").also { stage = END_DIALOGUE }
-                } else {
-                    sendMessage(player!!, "You give Harold an Asgarnian Ale.")
-                    sendItemDialogue(
-                        player!!,
-                        Items.ASGARNIAN_ALE_1905,
-                        "You give Harold an Asgarnian Ale.",
-                    ).also { stage++ }
-                }
+            4 -> if (!removeItem(player!!, Items.ASGARNIAN_ALE_1905)) {
+                player(FaceAnim.FRIENDLY, "I'll go and get you one.").also { stage = END_DIALOGUE }
+            } else {
+                sendMessage(player!!, "You give Harold an Asgarnian Ale.")
+                sendItemDialogue(player!!, Items.ASGARNIAN_ALE_1905, "You give Harold an Asgarnian Ale.").also { stage++ }
             }
             5 -> {
                 end()

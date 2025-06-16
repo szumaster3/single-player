@@ -1,177 +1,165 @@
-package core.game.container.access;
+package core.game.container.access
 
-import core.api.IfaceSettingsBuilder;
-import core.game.node.entity.player.Player;
-import core.game.node.item.Item;
-import core.net.packet.PacketRepository;
-import core.net.packet.context.ContainerContext;
-import core.net.packet.out.ContainerPacket;
+import core.api.IfaceSettingsBuilder
+import core.game.node.entity.player.Player
+import core.game.node.item.Item
+import core.net.packet.PacketRepository
+import core.net.packet.context.ContainerContext
+import core.net.packet.out.ContainerPacket
 
 /**
- * Generates a set of items and options on an interface.
+ * Utility for generating item containers and options on game interfaces.
  *
  * @author Stacx (05.02.2013)
  */
-public class InterfaceContainer {
+object InterfaceContainer {
 
     /**
-     * The client script index for set_options.
+     * The client script index used for setting options.
      */
-    private static final int CLIENT_SCRIPT_INDEX = 150;
+    private const val CLIENT_SCRIPT_INDEX = 150
 
     /**
      * This index will increase each time a set is generated.
      */
-    private static int index = 600; // 93
+    private var index = 600 // 93
 
     /**
-     * Generates a container/array of items in an interface positioned on the
-     * child index.
+     * Generates an item container on an interface.
      *
-     * @param player         the player we generate this set for
-     * @param itemArray      the container/array of items we want to display
-     * @param options        the right-click options we want for the items
-     * @param interfaceIndex the interface index
-     * @param childIndex     the child index of the interface where we display the
-     *                       items at.
-     * @return The container key.
+     * @param player            The player to send the interface to.
+     * @param itemArray         The array of items to display.
+     * @param options           The array of string options.
+     * @param interfaceIndex    The interface id.
+     * @param childIndex        The child component id within the interface.
+     * @param x                 The x-offset for item placement.
+     * @param y                 The y-offset for item placement.
+     * @param key               The unique key for the container.
+     * @return                  The key used for this container.
      */
-    private static int generate(Player player, Item[] itemArray, String[] options, int interfaceIndex, int childIndex, int x, int y, int key) {
-        Object[] clientScript = new Object[options.length + 7];
-        player.getPacketDispatch().sendRunScript(CLIENT_SCRIPT_INDEX, generateScriptArguments(options.length), populateScript(clientScript, options, interfaceIndex << 16 | childIndex, x, y, key));
-        int settings = new IfaceSettingsBuilder().enableAllOptions().build();
-        player.getPacketDispatch().sendIfaceSettings(settings, childIndex, interfaceIndex, 0, itemArray.length);
-        PacketRepository.send(ContainerPacket.class, new ContainerContext(player, -1, -2, key, itemArray, itemArray.length, false));
-        return increment();
+    private fun generate(player: Player, itemArray: Array<Item>, options: Array<String>, interfaceIndex: Int, childIndex: Int, x: Int, y: Int, key: Int): Int {
+        val clientScript = arrayOfNulls<Any>(options.size + 7)
+        player.packetDispatch.sendRunScript(
+            CLIENT_SCRIPT_INDEX,
+            generateScriptArguments(options.size),
+            populateScript(clientScript, options, (interfaceIndex shl 16) or childIndex, x, y, key)
+        )
+        val settings = IfaceSettingsBuilder().enableAllOptions().build()
+        player.packetDispatch.sendIfaceSettings(settings, childIndex, interfaceIndex, 0, itemArray.size)
+        PacketRepository.send(
+            ContainerPacket::class.java, ContainerContext(player, -1, -2, key, itemArray, itemArray.size, false)
+        )
+        return increment()
     }
 
-    public static int generateOptions(Player player, String[] options, int interfaceIndex, int childIndex, int x, int y, int key) {
-        player.getPacketDispatch().sendRunScript(CLIENT_SCRIPT_INDEX, generateScriptArguments(options.length), populateScript(new Object[options.length + 7], options, interfaceIndex << 16 | childIndex, x, y, key));
-        int settings = new IfaceSettingsBuilder().enableAllOptions().build();
-        player.getPacketDispatch().sendIfaceSettings(settings, childIndex, interfaceIndex, 0, 28);
-        return increment();
+    /**
+     * Generates options on the interface component.
+     *
+     * @param player            The player to send the interface to.
+     * @param options           The array of string options.
+     * @param interfaceIndex    The interface id.
+     * @param childIndex        The child component id.
+     * @param x                 The x-offset for placement.
+     * @param y                 The y-offset for placement.
+     * @param key               The unique key for this setup.
+     * @return                  The generated key.
+     */
+    fun generateOptions(player: Player, options: Array<String>, interfaceIndex: Int, childIndex: Int, x: Int, y: Int, key: Int): Int {
+        player.packetDispatch.sendRunScript(
+            CLIENT_SCRIPT_INDEX,
+            generateScriptArguments(options.size),
+            populateScript(arrayOfNulls(options.size + 7), options, (interfaceIndex shl 16) or childIndex, x, y, key)
+        )
+        val settings = IfaceSettingsBuilder().enableAllOptions().build()
+        player.packetDispatch.sendIfaceSettings(settings, childIndex, interfaceIndex, 0, 28)
+        return increment()
     }
 
     /**
      * Generates options for the interface item container.
-     *
-     * @param player      The player.
-     * @param interfaceId The interface id.
-     * @param childId     The child index.
-     * @param itemLength  The amount of items.
-     * @param options     The options.
-     * @return The container key.
      */
-    public static int generate(Player player, int interfaceId, int childId, int itemLength, String... options) {
-        return generate(player, interfaceId, childId, itemLength, 7, 3, options);
-    }
-
+    @JvmName("generateOptions")
+    fun generate(player: Player, interfaceId: Int, childId: Int, itemLength: Int, vararg options: String): Int =
+        generate(player, interfaceId, childId, itemLength, 7, 3, *options)
     /**
      * Generates options for the interface item container.
-     *
-     * @param player      The player.
-     * @param interfaceId The interface id.
-     * @param childId     The child index.
-     * @param itemLength  The amount of items.
-     * @param x           The amount of items in a row.
-     * @param y           The amount of item rows.
-     * @param options     The options.
-     * @return The container key.
      */
-    public static int generate(Player player, int interfaceId, int childId, int itemLength, int x, int y, String... options) {
-        int key = increment();
-        Object[] clientScript = new Object[options.length + 7];
-        player.getPacketDispatch().sendRunScript(CLIENT_SCRIPT_INDEX, generateScriptArguments(options.length), populateScript(clientScript, options, interfaceId << 16 | childId, x, y, key));
-        int settings = new IfaceSettingsBuilder().enableAllOptions().build();
-        player.getPacketDispatch().sendIfaceSettings(settings, childId, interfaceId, 0, itemLength);
-        return key;
+    @JvmName("generateOption")
+    fun generate(player: Player, interfaceId: Int, childId: Int, itemLength: Int, x: Int, y: Int, vararg options: String): Int = generate(player, interfaceId, childId, itemLength, x, y, options as Array<String>)
+
+    /**
+     * Generates options for an item container on an interface.
+     */
+    private fun generate(player: Player, interfaceId: Int, childId: Int, itemLength: Int, x: Int, y: Int, options: Array<String>): Int {
+        val key = increment()
+        val clientScript = arrayOfNulls<Any>(options.size + 7)
+        player.packetDispatch.sendRunScript(CLIENT_SCRIPT_INDEX, generateScriptArguments(options.size), populateScript(clientScript, options, (interfaceId shl 16) or childId, x, y, key))
+        val settings = IfaceSettingsBuilder().enableAllOptions().build()
+        player.packetDispatch.sendIfaceSettings(settings, childId, interfaceId, 0, itemLength)
+        return key
     }
 
     /**
      * Increments the current index.
-     *
-     * @return The previous index.
      */
-    private static int increment() {
+    private fun increment(): Int {
         if (index == 6999) {
-            index = 600;
+            index = 600
         }
-        return index++;
+        return index++
     }
 
     /**
-     * Populates an object array used as a script for the client
+     * Populates the script argument array for the client script.
      *
-     * @param script  the array we want to populate
-     * @param options the right-click options for our items
-     * @param hash    interfaceIndex << 16 | childIndex
-     * @return script, the populated script
+     * @param script            The target array to populate.
+     * @param options           The options to include.
+     * @param hash              The unique hash for the interface component.
+     * @param x                 The x-offset.
+     * @param y                 The y-offset.
+     * @param key               The unique key.
+     * @return                  The populated script array.
      */
-    private static Object[] populateScript(Object[] script, String[] options, int hash, int x, int y, int key) {
-        int offset = 0;
-        for (String option : options) {
-            script[offset++] = option;
+    private fun populateScript(script: Array<Any?>, options: Array<String>, hash: Int, x: Int, y: Int, key: Int): Array<Any?> {
+        var offset = 0
+        for (option in options) {
+            script[offset++] = option
         }
-        System.arraycopy(new Object[]{-1, 0, x, y, key, hash}, 0, script, offset, 6);
-        return script;
+        arrayOf(-1, 0, x, y, key, hash).copyInto(script, offset)
+        return script
     }
 
     /**
-     * Generates a script argument type string for the client (note: everything
-     * but a "s" is integer for the run script packet)
+     * Generates the script argument type string for the client script.
      *
-     * @param length the amount of options
-     * @return the generated string.
+     * @param length            The number of options.
+     * @return                  The generated argument type string.
      */
-    private static String generateScriptArguments(int length) {
-        StringBuilder builder = new StringBuilder("IviiiI");
-        while (length > 0) {
-            builder.append("s");
-            length--;
+    private fun generateScriptArguments(length: Int): String {
+        val builder = StringBuilder("IviiiI")
+        repeat(length) {
+            builder.append('s')
         }
-        return builder.toString();
+        return builder.toString()
     }
 
     /**
-     * Default method to generate and send an item array for the client.
-     *
-     * @return The container key.
+     * Generate and send an item array for the client.
      */
-    public static int generateItems(Player player, Item[] itemArray, String[] options, int interfaceIndex, int childIndex) {
-        return generateItems(player, itemArray, options, interfaceIndex, childIndex, 7, 3, increment());
-    }
+    fun generateItems(player: Player, itemArray: Array<Item>, options: Array<String>, interfaceIndex: Int, childIndex: Int): Int = generateItems(player, itemArray, options, interfaceIndex, childIndex, 7, 3, increment())
 
     /**
-     * Default method to generate and send an item array for the client.
-     *
-     * @return The container key.
+     * Generates and sends an item container with options using default layout and specified key.
      */
-    public static int generateItems(Player player, Item[] itemArray, String[] options, int interfaceIndex, int childIndex, int key) {
-        return generateItems(player, itemArray, options, interfaceIndex, childIndex, 7, 3, key);
-    }
+    fun generateItems(player: Player, itemArray: Array<Item>, options: Array<String>, interfaceIndex: Int, childIndex: Int, key: Int): Int = generateItems(player, itemArray, options, interfaceIndex, childIndex, 7, 3, key)
 
     /**
-     * Method to generate the send items for the client with a specified
-     * location for the items.
-     *
-     * @param x the x coordinate
-     * @param y the y coordinate
-     * @return The container key.
+     * Generates and sends an item container with options and specified layout, using a new unique key.
      */
-    public static int generateItems(Player player, Item[] itemArray, String[] options, int interfaceIndex, int childIndex, int x, int y) {
-        return generateItems(player, itemArray, options, interfaceIndex, childIndex, x, y, increment());
-    }
+    fun generateItems(player: Player, itemArray: Array<Item>, options: Array<String>, interfaceIndex: Int, childIndex: Int, x: Int, y: Int): Int = generateItems(player, itemArray, options, interfaceIndex, childIndex, x, y, increment())
 
     /**
-     * Method to generate the send items for the client with a specified
-     * location for the items.
-     *
-     * @param x the x coordinate
-     * @param y the y coordinate
-     * @return The container key.
+     * Generates and sends an item container with options and specified layout and key.
      */
-    public static int generateItems(Player player, Item[] itemArray, String[] options, int interfaceIndex, int childIndex, int x, int y, int key) {
-        return generate(player, itemArray, options, interfaceIndex, childIndex, x, y, key);
-    }
-
+    fun generateItems(player: Player, itemArray: Array<Item>, options: Array<String>, interfaceIndex: Int, childIndex: Int, x: Int, y: Int, key: Int): Int = generate(player, itemArray, options, interfaceIndex, childIndex, x, y, key)
 }

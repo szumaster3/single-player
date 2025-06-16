@@ -292,8 +292,7 @@ public class RandomFunction {
         int rand = random(sumOfWeights);
         Collections.shuffle(table);
         for (WeightedChanceItem item : table) {
-            if (rand <= item.getWeight())
-                return item.getItem();
+            if (rand <= item.getWeight()) return item.getItem();
             rand -= item.getWeight();
         }
         //We should get here if and only if the weighted chance table is empty.

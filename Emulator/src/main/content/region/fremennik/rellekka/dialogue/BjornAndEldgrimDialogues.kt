@@ -26,19 +26,9 @@ class BjornAndEldgrimDialogues(player: Player? = null) : Dialogue(player) {
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
-            0 ->
-                npcl(
-                    FaceAnim.DRUNK,
-                    "Hey! scheck it out! Itsh an outerlandub! Yer shud go shpeak to the chieftain!",
-                ).also {
-                    stage++
-                }
+            0 -> npcl(FaceAnim.DRUNK, "Hey! scheck it out! Itsh an outerlandub! Yer shud go shpeak to the chieftain!").also { stage++ }
             1 -> player(FaceAnim.ASKING, "The who?").also { stage++ }
-            2 ->
-                npcl(FaceAnim.DRUNK, "That guy over there by that stuff! (hic) Yeh, abshoultely! He's da bosh!").also {
-                    stage =
-                        END_DIALOGUE
-                }
+            2 -> npcl(FaceAnim.DRUNK, "That guy over there by that stuff! (hic) Yeh, abshoultely! He's da bosh!").also { stage = END_DIALOGUE }
             10 -> player(FaceAnim.ASKING, "${player.name}?").also { stage++ }
             11 -> npcl(FaceAnim.DRUNK, "Nah nah nah, not them, the other one, whatshyerfashe!").also { stage++ }
             12 -> player(FaceAnim.ASKING, "${FremennikTrials.getFremennikName(player)}?").also { stage++ }

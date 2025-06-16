@@ -11,36 +11,29 @@ import kotlin.math.abs
 import kotlin.math.pow
 import kotlin.math.sqrt
 
+/**
+ * A collection of general utility functions used across the server.
+ */
 object Util {
-    private val tens_names =
-        arrayOf("", " ten", " twenty", " thirty", " forty", " fifty", " sixty", " seventy", " eighty", " ninety")
 
-    val number_names: Array<String> =
-        arrayOf(
-            "",
-            " one",
-            " two",
-            " three",
-            " four",
-            " five",
-            " six",
-            " seven",
-            " eight",
-            " nine",
-            " ten",
-            " eleven",
-            " twelve",
-            " thirteen",
-            " fourteen",
-            " fifteen",
-            " sixteen",
-            " seventeen",
-            " eighteen",
-            " nineteen",
-        )
+    /**
+     * Number names for multiples of ten.
+     */
+    private val tens_names = arrayOf("", " ten", " twenty", " thirty", " forty", " fifty", " sixty", " seventy", " eighty", " ninety")
 
+    /**
+     * Number names for numbers zero to nineteen.
+     */
+    val number_names: Array<String> = arrayOf("", " one", " two", " three", " four", " five", " six", " seven", " eight", " nine", " ten", " eleven", " twelve", " thirteen", " fourteen", " fifteen", " sixteen", " seventeen", " eighteen", " nineteen")
+
+    /**
+     * Shared random instance.
+     */
     val random: Random = Random()
 
+    /**
+     * Converts a primitive [IntArray] to an [Array] of nullable [Int].
+     */
     @JvmStatic
     fun convertToIntegerArray(primitiveArray: IntArray): Array<Int?> {
         val wrapperArray = arrayOfNulls<Int>(primitiveArray.size)
@@ -51,10 +44,9 @@ object Util {
     }
 
     /**
-     * Parses a location from the format "x,y,z"
+     * Parses a [Location] from a string in the format "x,y,z".
+     *
      * @author Ceikry
-     * @param locString The string to parse
-     * @return Location
      */
     @JvmStatic
     fun parseLocation(locString: String): Location {
@@ -66,23 +58,32 @@ object Util {
         return Location(locTokens[0], locTokens[1], locTokens[2])
     }
 
+    /**
+     * Returns a string representation of a time unit based on the [count].
+     * Example: "1 hour" or "2 hours".
+     */
     @JvmStatic
-    fun getTimeUnitString(
-        count: Long,
-        singular: String,
-        plural: String,
-    ): String = if (count == 1L) "$count $singular" else "$count $plural"
+    fun getTimeUnitString(count: Long, singular: String, plural: String, ): String = if (count == 1L) "$count $singular" else "$count $plural"
 
-    fun random(
-        random: Random,
-        i: Int,
-    ): Int = random.nextInt(i + 1)
+    /**
+     * Returns a random integer between 0 and [i], inclusive.
+     */
+    fun random(random: Random, i: Int, ): Int = random.nextInt(i + 1)
 
+    /**
+     * Returns a random integer between 0 and [i], inclusive, using the default random.
+     */
     fun random(i: Int): Int = random(random, i)
 
+    /**
+     * Returns a random [Double] between 0.0 and 1.0.
+     */
     @JvmOverloads
     fun randomDouble(random: Random = Util.random): Double = random.nextDouble()
 
+    /**
+     * Formats an item [name] with an article ("a"/"an") or "the" if [definite] is true.
+     */
     fun formatItemName(name: String, definite: Boolean = false): String {
         val lower = name.lowercase()
         return if (definite) {
@@ -94,6 +95,9 @@ object Util {
         }
     }
 
+    /**
+     * Capitalizes the first character of the given [name].
+     */
     fun capitalize(name: String?): String? {
         if (name != null && name.length != 0) {
             val chars = name.toCharArray()
@@ -104,6 +108,9 @@ object Util {
         }
     }
 
+    /**
+     * Converts an enum-style [name] (e.g., "SOME_ENUM") to a readable string (e.g., "Some enum").
+     */
     fun enumToString(name: String): String? {
         var name = name
         name = name.lowercase(Locale.getDefault())
@@ -111,21 +118,22 @@ object Util {
         return capitalize(name)
     }
 
-    fun clamp(
-        input: Double,
-        min: Double,
-        max: Double,
-    ): Double = kotlin.math.max(kotlin.math.min(input, max), min)
+    /**
+     * Clamps [input] to the range of [min] and [max] for [Double] values.
+     */
+    fun clamp(input: Double, min: Double, max: Double, ): Double = kotlin.math.max(kotlin.math.min(input, max), min)
 
-    fun clamp(
-        input: Int,
-        min: Int,
-        max: Int,
-    ): Int =
+    /**
+     * Clamps [input] to the range of [min] and [max] for [Int] values.
+     */
+    fun clamp(input: Int, min: Int, max: Int, ): Int =
         kotlin.math
             .max(kotlin.math.min(input.toDouble(), max.toDouble()), min.toDouble())
             .toInt()
 
+    /**
+     * Returns the timestamp (ms) of the next midnight based on [currentTime].
+     */
     fun nextMidnight(currentTime: Long): Long {
         val date = Date()
         val cal = Calendar.getInstance()
@@ -141,41 +149,47 @@ object Util {
         return cal.time.time
     }
 
+    /**
+     * Finds the first matching element in [array] that satisfies [predicate].
+     */
     inline fun <T> findMatching(
         array: Array<T>,
         predicate: (T) -> Boolean,
     ): T? = array.firstOrNull(predicate)
 
+    /**
+     * Returns [primary] if not null; otherwise returns [defaultValue].
+     */
     fun <T> getOrDefault(
         primary: T?,
         defaultValue: T,
     ): T = primary ?: defaultValue
 
-    fun random(
-        random: Random,
-        min: Int,
-        max: Int,
-    ): Int {
+    /**
+     * Returns a random integer between [min] and [max], inclusive.
+     */
+    fun random(random: Random, min: Int, max: Int, ): Int {
         val n = abs((max - min).toDouble()).toInt()
         return (kotlin.math.min(min.toDouble(), max.toDouble()) + (if (n == 0) 0 else random(random, n))).toInt()
     }
 
-    fun random(
-        min: Int,
-        max: Int,
-    ): Int = random(random, min, max)
+    /**
+     * Returns a random integer between [min] and [max], inclusive, using the default random.
+     */
+    fun random(min: Int, max: Int, ): Int = random(random, min, max)
 
-    fun getDistance(
-        coordX1: Int,
-        coordY1: Int,
-        coordX2: Int,
-        coordY2: Int,
-    ): Int {
+    /**
+     * Calculates the Euclidean distance between two points.
+     */
+    fun getDistance(coordX1: Int, coordY1: Int, coordX2: Int, coordY2: Int, ): Int {
         val deltaX = coordX2 - coordX1
         val deltaY = coordY2 - coordY1
         return (sqrt(deltaX.toDouble().pow(2.0) + deltaY.toDouble().pow(2.0)).toInt())
     }
 
+    /**
+     * Converts numbers less than 1000 to their English word representation.
+     */
     private fun convertLessThanOneThousand(number: Int): String {
         var number = number
         var soFar: String
@@ -196,6 +210,9 @@ object Util {
         return number_names[number] + " hundred" + soFar
     }
 
+    /**
+     * Converts [number] into its full English word representation.
+     */
     fun convert(number: Int): String {
         if (number == 0) {
             return "zero"
@@ -238,23 +255,35 @@ object Util {
         return result.replace("^\\s+".toRegex(), "").replace("\\b\\s{2,}\\b".toRegex(), " ")
     }
 
+    /**
+     * Decimal format for floating numbers.
+     */
     private val DECIMAL_FORMAT = DecimalFormat(".###")
 
+    /**
+     * Formats an [Int] to include commas.
+     */
     fun format(number: Int): String = NumberFormat.getNumberInstance().format(number.toLong())
 
+    /**
+     * Formats a [Long] to include commas.
+     */
     fun format(number: Long): String = NumberFormat.getNumberInstance().format(number)
 
+    /**
+     * Formats a [Float] to include commas.
+     */
     fun format(number: Float): String = NumberFormat.getNumberInstance().format(number.toDouble())
 
-    fun equals(
-        a: Any?,
-        b: Any,
-    ): Boolean = (a === b) || (a != null && a == b)
+    /**
+     * Compares two objects [a] and [b] for equality, handling nulls safely.
+     */
+    fun equals(a: Any?, b: Any, ): Boolean = (a === b) || (a != null && a == b)
 
-    fun round(
-        value: Double,
-        places: Int,
-    ): Double {
+    /**
+     * Rounds a [Double] to [places] decimal places.
+     */
+    fun round(value: Double, places: Int, ): Double {
         require(places >= 0)
         try {
             var bd = BigDecimal(value)
@@ -265,6 +294,9 @@ object Util {
         }
     }
 
+    /**
+     * Converts a string [message] to a formatted byte array suitable for specific encoding.
+     */
     fun getFormatedMessage(message: String): ByteArray {
         val i_0_ = message.length
         val `is` = ByteArray(i_0_)

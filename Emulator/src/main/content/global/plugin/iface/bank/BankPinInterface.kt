@@ -5,6 +5,7 @@ import org.rs.consts.Components
 
 /**
  * Handles the bank pin interfaces.
+ *
  * @author Vexia
  */
 class BankPinInterface : InterfaceListener {
@@ -12,23 +13,15 @@ class BankPinInterface : InterfaceListener {
         on(Components.BANKPIN_SETTINGS_14) { player, _, _, buttonID, _, _ ->
             val manager = player.bankPinManager
             when (buttonID) {
-                60, 62 ->
-                    if (!manager.hasPin()) {
-                        manager.toggleConfirmInterface(buttonID == 60)
-                    } else {
-                        manager.setChangingState(1)
-                        manager.openPin()
-                    }
+                60, 62 -> if (!manager.hasPin()) {
+                    manager.toggleConfirmInterface(buttonID == 60)
+                } else {
+                    manager.setChangingState(1)
+                    manager.openPin()
+                }
 
                 63 -> manager.toggleConfirmInterface(true)
-                65 ->
-                    manager.cancelPin(
-                        "The PIN has been cancelled",
-                        "and will NOT be set.",
-                        "",
-                        "You still do not have a Bank",
-                        "PIN.",
-                    )
+                65 -> manager.cancelPin("The PIN has been cancelled", "and will NOT be set.", "", "You still do not have a Bank", "PIN.")
 
                 89, 91 -> manager.handleConfirmInterface(buttonID)
                 61, 64 -> manager.switchRecovery()

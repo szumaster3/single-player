@@ -83,7 +83,7 @@ class DiangoReclaimInterface : ComponentPlugin() {
             if (reclaimable!!.isNotEmpty()) {
                 InterfaceContainer.generateItems(
                     player,
-                    reclaimable,
+                    reclaimable as Array<Item>,
                     arrayOf("Take"),
                     COMPONENT_ID,
                     2,

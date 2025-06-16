@@ -409,7 +409,7 @@ class VisualCommand : CommandPlugin() {
                         override fun pulse(): Boolean {
 // 					PacketRepository.send(Interface.class, new InterfaceContext(player, 548, 77, id, false));
                             InterfaceContainer.generateItems(
-                                player,
+                                player!!,
                                 arrayOf(Item(4151), Item(410)),
                                 arrayOf("E"),
                                 367,

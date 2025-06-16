@@ -41,29 +41,17 @@ class ExperienceInterface : ComponentPlugin() {
             } else {
                 removeAttribute(player, "exp_interface:skill")
                 when (confirmedSkill) {
-                    Skills.HERBLORE ->
-                        if (!checkHerblore(player)) {
-                            sendMessage(
-                                player,
-                                "You need to have completed ${Quests.DRUIDIC_RITUAL} for this.",
-                            ).also { return true }
-                        }
+                    Skills.HERBLORE -> if (!checkHerblore(player)) {
+                        sendMessage(player, "You need to have completed ${Quests.DRUIDIC_RITUAL} for this.").also { return true }
+                    }
 
-                    Skills.RUNECRAFTING ->
-                        if (!checkRunecrafting(player)) {
-                            sendMessage(
-                                player,
-                                "You need to have completed Rune Mysteries for this.",
-                            ).also { return true }
-                        }
+                    Skills.RUNECRAFTING -> if (!checkRunecrafting(player)) {
+                        sendMessage(player, "You need to have completed Rune Mysteries for this.").also { return true }
+                    }
 
-                    Skills.SUMMONING ->
-                        if (!checkSummoning(player)) {
-                            sendMessage(
-                                player,
-                                "You need to have completed ${Quests.WOLF_WHISTLE} for this.",
-                            ).also { return true }
-                        }
+                    Skills.SUMMONING -> if (!checkSummoning(player)) {
+                        sendMessage(player, "You need to have completed ${Quests.WOLF_WHISTLE} for this.").also { return true }
+                    }
                 }
                 val caller = player.attributes["caller"]
                 caller ?: return true
@@ -76,37 +64,35 @@ class ExperienceInterface : ComponentPlugin() {
                 closeInterface(player)
             }
         } else {
-            val skill =
-                when (button) {
-                    29 -> Skills.ATTACK
-                    30 -> Skills.STRENGTH
-                    31 -> Skills.DEFENCE
-                    32 -> Skills.RANGE
-                    35 -> Skills.MAGIC
-                    39 -> Skills.CRAFTING
-                    34 -> Skills.HITPOINTS
-                    33 -> Skills.PRAYER
-                    36 -> Skills.AGILITY
-                    37 -> Skills.HERBLORE
-                    38 -> Skills.THIEVING
-                    43 -> Skills.FISHING
-                    47 -> Skills.RUNECRAFTING
-                    48 -> Skills.SLAYER
-                    50 -> Skills.FARMING
-                    41 -> Skills.MINING
-                    42 -> Skills.SMITHING
-                    49 -> Skills.HUNTER
-                    52 -> Skills.SUMMONING
-                    45 -> Skills.COOKING
-                    44 -> Skills.FIREMAKING
-                    46 -> Skills.WOODCUTTING
-                    40 -> Skills.FLETCHING
-                    51 -> Skills.CONSTRUCTION
-                    else ->
-                        Skills.SLAYER.also {
-                            log(this::class.java, Log.WARN, "EXP_INTERFACE: Invalid SKILL CHOICE BUTTON: $button")
-                        }
+            val skill = when (button) {
+                29 -> Skills.ATTACK
+                30 -> Skills.STRENGTH
+                31 -> Skills.DEFENCE
+                32 -> Skills.RANGE
+                35 -> Skills.MAGIC
+                39 -> Skills.CRAFTING
+                34 -> Skills.HITPOINTS
+                33 -> Skills.PRAYER
+                36 -> Skills.AGILITY
+                37 -> Skills.HERBLORE
+                38 -> Skills.THIEVING
+                43 -> Skills.FISHING
+                47 -> Skills.RUNECRAFTING
+                48 -> Skills.SLAYER
+                50 -> Skills.FARMING
+                41 -> Skills.MINING
+                42 -> Skills.SMITHING
+                49 -> Skills.HUNTER
+                52 -> Skills.SUMMONING
+                45 -> Skills.COOKING
+                44 -> Skills.FIREMAKING
+                46 -> Skills.WOODCUTTING
+                40 -> Skills.FLETCHING
+                51 -> Skills.CONSTRUCTION
+                else -> Skills.SLAYER.also {
+                    log(this::class.java, Log.WARN, "EXP_INTERFACE: Invalid SKILL CHOICE BUTTON: $button")
                 }
+            }
             setAttribute(player, "exp_interface:skill", skill)
         }
         return true
