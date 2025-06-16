@@ -92,7 +92,7 @@ class ImmerseWorld : StartupListener {
                 skillingBotAssembler.produce(SkillingBotAssembler.Wealth.AVERAGE, Location.create(2702, 3397, 0)),
             )
             GeneralBotCreator(
-                SeersFlax(),
+                content.global.bots.SeersFlax(),
                 skillingBotAssembler.produce(SkillingBotAssembler.Wealth.POOR, Location.create(2738, 3444, 0)),
             )
             GeneralBotCreator(
@@ -156,11 +156,11 @@ class ImmerseWorld : StartupListener {
                 ),
             )
             GeneralBotCreator(
-                FarmerThiever(),
+                content.global.bots.FarmerThiever(),
                 skillingBotAssembler.produce(SkillingBotAssembler.Wealth.POOR, Location.create(3094, 3243, 0)),
             )
             GeneralBotCreator(
-                FarmerThiever(),
+                content.global.bots.FarmerThiever(),
                 skillingBotAssembler.produce(SkillingBotAssembler.Wealth.POOR, Location.create(3094, 3243, 0)),
             )
             GeneralBotCreator(

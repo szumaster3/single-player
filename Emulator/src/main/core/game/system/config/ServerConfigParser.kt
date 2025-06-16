@@ -7,7 +7,7 @@ import core.api.parseEnumEntry
 import core.game.world.GameSettings
 import core.game.world.GameWorld
 import core.game.world.map.Location
-import core.integration.mysql.Database
+import core.tools.mysql.Database
 import core.tools.Log
 import core.tools.LogLevel
 import java.io.File

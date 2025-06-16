@@ -3,7 +3,7 @@ package core
 import content.minigame.castlewars.plugin.CastleWars
 import core.game.system.SystemShutdownHook
 import core.game.world.map.Location
-import core.integration.mysql.Database
+import core.tools.mysql.Database
 import core.tools.LogLevel
 import core.tools.secondsToTicks
 import java.math.BigInteger
