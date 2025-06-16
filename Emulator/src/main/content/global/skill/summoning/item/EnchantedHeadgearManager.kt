@@ -20,10 +20,7 @@ class EnchantedHeadgearManager(private val player: Player) {
             return
         }
 
-        val headgearData = EnchantedHeadgear.byCharged[chargedItemId]
-        if (headgearData == null) {
-            return
-        }
+        val headgearData = EnchantedHeadgear.byCharged[chargedItemId] ?: return
 
         val capacity = headgearData.scrollCapacity ?: 50
         val chargedGear = enchantedGear.getOrPut(chargedItemId) { ChargedHeadgear(chargedItemId, Container(capacity)) }
