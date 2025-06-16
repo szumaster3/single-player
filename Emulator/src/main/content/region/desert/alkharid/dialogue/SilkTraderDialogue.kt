@@ -23,34 +23,24 @@ class SilkTraderDialogue(player: Player? = null) : Dialogue(player) {
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> options("How much are they?", "No, silk doesn't suit me.").also { stage++ }
-            1 ->
-                when (buttonId) {
-                    1 -> player(FaceAnim.HALF_ASKING, "How much are they?").also { stage++ }
-                    2 -> player(FaceAnim.HALF_GUILTY, "No, silk doesn't suit me.").also { stage = END_DIALOGUE }
-                }
-
+            1 -> when (buttonId) {
+                1 -> player(FaceAnim.HALF_ASKING, "How much are they?").also { stage++ }
+                2 -> player(FaceAnim.HALF_GUILTY, "No, silk doesn't suit me.").also { stage = END_DIALOGUE }
+            }
             2 -> npc(FaceAnim.NEUTRAL, "3gp.").also { stage++ }
             3 -> options("No, that's too much for me.", "Okay, that sounds good.").also { stage++ }
-            4 ->
-                when (buttonId) {
-                    1 -> player(FaceAnim.HALF_GUILTY, "No, that's too much for me.").also { stage++ }
-                    2 -> player(FaceAnim.HALF_GUILTY, "Okay, that sounds good.").also { stage = 10 }
-                }
+            4 -> when (buttonId) {
+                1 -> player(FaceAnim.HALF_GUILTY, "No, that's too much for me.").also { stage++ }
+                2 -> player(FaceAnim.HALF_GUILTY, "Okay, that sounds good.").also { stage = 10 }
+            }
             5 -> npc(FaceAnim.HALF_GUILTY, "2 gold coins and that's as low as I'll go.").also { stage++ }
-            6 ->
-                npc(
-                    FaceAnim.ANNOYED,
-                    "I'm not selling it for any less. You'll only go and sell it",
-                    "in Varrock for a profit.",
-                ).also {
-                    stage++
-                }
+            6 -> npc(FaceAnim.ANNOYED, "I'm not selling it for any less. You'll only go and sell it", "in Varrock for a profit.").also { stage++ }
             7 -> options("2 gold coins sounds good.", "No really, I don't want it.").also { stage++ }
-            8 ->
-                when (buttonId) {
-                    1 -> player(FaceAnim.HAPPY, "2 gold coins sounds good.").also { stage++ }
-                    2 -> end()
-                }
+            8 -> when (buttonId) {
+                1 -> player(FaceAnim.HAPPY, "2 gold coins sounds good.").also { stage++ }
+                2 -> end()
+            }
+
             9 -> {
                 end()
                 if (freeSlots(player) == 0) {

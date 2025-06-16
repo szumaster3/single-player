@@ -24,11 +24,7 @@ class SimonTempletonDialogue(player: Player? = null) : Dialogue(player) {
 
         if (args.size == 4) {
             if (args[3] as Int == 9044 || args[3] as Int == 9046 || args[3] as Int == 9048 || args[3] as Int == 9050) {
-                npc(
-                    "You sellin' me this gold colored",
-                    "stick thing. Looks fake to me.",
-                    "I'll give you 100 gold for it.",
-                )
+                npc("You sellin' me this gold colored", "stick thing. Looks fake to me.", "I'll give you 100 gold for it.")
                 stage = 30
                 return true
             }

@@ -20,31 +20,21 @@ class AlKharidShopKeeperDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
-            0 ->
-                options(
-                    "Yes, please. What are you selling?",
-                    "How should I use your shop?",
-                    "No, thanks.",
-                ).also { stage++ }
-
-            1 ->
-                when (buttonId) {
-                    1 -> {
-                        end()
-                        openNpcShop(player, npc.id)
-                    }
-
-                    2 -> playerl(FaceAnim.ASKING, "How should I use your shop?").also { stage++ }
-                    3 -> playerl(FaceAnim.NEUTRAL, "No, thanks.").also { stage = END_DIALOGUE }
+            0 -> options(
+                "Yes, please. What are you selling?",
+                "How should I use your shop?",
+                "No, thanks.",
+            ).also { stage++ }
+            1 -> when (buttonId) {
+                1 -> {
+                    end()
+                    openNpcShop(player, npc.id)
                 }
-            2 ->
-                npcl(
-                    FaceAnim.FRIENDLY,
-                    "I'm glad you ask! You can buy as many of the items stocked as you wish. You can also sell most items to the shop.",
-                ).also {
-                    stage =
-                        END_DIALOGUE
-                }
+                2 -> playerl(FaceAnim.ASKING, "How should I use your shop?").also { stage++ }
+                3 -> playerl(FaceAnim.NEUTRAL, "No, thanks.").also { stage = 3 }
+            }
+            2 -> npcl(FaceAnim.FRIENDLY, "I'm glad you ask! You can buy as many of the items stocked as you wish. You can also sell most items to the shop.").also { stage = 3 }
+            3 -> end()
         }
         return true
     }

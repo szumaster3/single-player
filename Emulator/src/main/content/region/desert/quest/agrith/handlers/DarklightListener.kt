@@ -12,16 +12,7 @@ import org.rs.consts.Quests
 class DarklightListener : InteractionListener {
     override fun defineListeners() {
         onUseWith(IntType.ITEM, Items.BLACK_MUSHROOM_INK_4622, Items.SILVERLIGHT_2402) { player, used, with ->
-            if (!hasRequirement(player, Quests.SHADOW_OF_THE_STORM) ||
-                (
-                    !inInventory(
-                        player,
-                        Items.BLACK_MUSHROOM_INK_4622,
-                        1,
-                    ) &&
-                        (!inInventory(player, Items.SILVERLIGHT_2402, 1))
-                )
-            ) {
+            if (!hasRequirement(player, Quests.SHADOW_OF_THE_STORM) || (!inInventory(player, Items.BLACK_MUSHROOM_INK_4622, 1) && (!inInventory(player, Items.SILVERLIGHT_2402, 1)))) {
                 return@onUseWith false
             }
             if (removeItem(player, used.id) && removeItem(player, with.id)) {

@@ -28,27 +28,15 @@ class AliTheSnakeCharmerDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
-            0 ->
-                sendDialogue(
-                    "The snake charmer fails to acknowledge you,",
-                    "he seems too deep into the music to notice you.",
-                ).also {
-                    stage =
-                        END_DIALOGUE
-                }
-            5 ->
-                sendDialogue(
-                    "The snake charmer snaps out of his trance",
-                    "and directs his full attention to you.",
-                ).also {
-                    stage++
-                }
+            0 -> sendDialogue("The snake charmer fails to acknowledge you,", "he seems too deep into the music to notice you.").also { stage = END_DIALOGUE }
+            5 -> sendDialogue("The snake charmer snaps out of his trance", "and directs his full attention to you.").also { stage++ }
             6 -> player(FaceAnim.JOLLY, "Wow a snake charmer. Can I have a go? Please?").also { stage++ }
             7 -> {
                 end()
-                if (!anyInInventory(player, Items.SNAKE_CHARM_4605, Items.SNAKE_BASKET_4606) &&
-                    !inBank(player, Items.SNAKE_CHARM_4605) &&
-                    !inBank(player, Items.SNAKE_BASKET_4606)
+                if (!anyInInventory(player, Items.SNAKE_CHARM_4605, Items.SNAKE_BASKET_4606) && !inBank(
+                        player,
+                        Items.SNAKE_CHARM_4605
+                    ) && !inBank(player, Items.SNAKE_BASKET_4606)
                 ) {
                     if (freeSlots(player) >= 2) {
                         addItem(player, Items.SNAKE_CHARM_4605)
@@ -57,12 +45,7 @@ class AliTheSnakeCharmerDialogue(player: Player? = null) : Dialogue(player) {
                         GroundItemManager.create(Item(Items.SNAKE_CHARM_4605), player.location)
                         GroundItemManager.create(Item(Items.SNAKE_BASKET_4606), player.location)
                     }
-                    npc(
-                        FaceAnim.ANNOYED,
-                        "If it means that you'll leave me alone, I would give you",
-                        "my snake charming super starter kit complete",
-                        "with flute and basket.",
-                    )
+                    npc(FaceAnim.ANNOYED, "If it means that you'll leave me alone, I would give you", "my snake charming super starter kit complete", "with flute and basket.")
                 } else {
                     npc(FaceAnim.ANGRY, "I already gave you one!")
                 }

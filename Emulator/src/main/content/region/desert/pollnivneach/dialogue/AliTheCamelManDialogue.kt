@@ -20,73 +20,68 @@ class AliTheCamelManDialogue(player: Player? = null) : Dialogue(player) {
         buttonId: Int,
     ): Boolean {
         when (stage) {
-            0 ->
-                sendDialogueOptions(
-                    player,
-                    "Select one.",
-                    "A discount camel store?",
-                    "Tell me about this town.",
-                    "Lovely day isn't it?",
-                    "Are those camels around the side for sale?",
-                    "I'm looking for Ali from Pollnivneach.",
-                ).also { stage++ }
+            0 -> sendDialogueOptions(
+                player,
+                "Select one.",
+                "A discount camel store?",
+                "Tell me about this town.",
+                "Lovely day isn't it?",
+                "Are those camels around the side for sale?",
+                "I'm looking for Ali from Pollnivneach.",
+            ).also { stage++ }
 
-            1 ->
-                when (buttonId) {
-                    1 -> player(FaceAnim.ASKING, "A discount camel store?").also { stage = 20 }
-                    2 -> player(FaceAnim.THINKING, "Tell me about this town.").also { stage = 30 }
-                    3 -> player(FaceAnim.ASKING, "Lovely day isn't it?").also { stage = 40 }
-                    4 -> player(FaceAnim.ASKING, "Are those camels around the side for sale?").also { stage = 50 }
-                    5 -> player(FaceAnim.ASKING, "I'm looking for Ali from Pollnivneach.").also { stage = 60 }
+            1 -> when (buttonId) {
+                1 -> player(FaceAnim.ASKING, "A discount camel store?").also { stage = 20 }
+                2 -> player(FaceAnim.THINKING, "Tell me about this town.").also { stage = 30 }
+                3 -> player(FaceAnim.ASKING, "Lovely day isn't it?").also { stage = 40 }
+                4 -> player(FaceAnim.ASKING, "Are those camels around the side for sale?").also { stage = 50 }
+                5 -> player(FaceAnim.ASKING, "I'm looking for Ali from Pollnivneach.").also { stage = 60 }
+            }
+
+            20 -> npc(
+                FaceAnim.JOLLY,
+                "Yes- a great idea - selling camels at discounted",
+                "prices so that the common man can experience",
+                "the joys of owning a camel too. They're not just",
+                "a source of kebab meat you know!",
+            ).also { stage++ }
+
+            21 -> sendDialogueOptions(
+                player,
+                "Select one.",
+                "So can I buy a camel then? I'm hungry!",
+                "Yes camels are beautiful creatures.",
+                "Filthy animals all they do is spit and...",
+                "Actually I think I was a camel in a previous existence.",
+                "So is business good then?",
+            ).also { stage++ }
+
+            22 -> when (buttonId) {
+                1 -> {
+                    player(FaceAnim.ASKING, "So can I buy a camel then? I'm hungry!")
+                    stage = 230
                 }
 
-            20 ->
-                npc(
-                    FaceAnim.JOLLY,
-                    "Yes- a great idea - selling camels at discounted",
-                    "prices so that the common man can experience",
-                    "the joys of owning a camel too. They're not just",
-                    "a source of kebab meat you know!",
-                ).also { stage++ }
-
-            21 ->
-                sendDialogueOptions(
-                    player,
-                    "Select one.",
-                    "So can I buy a camel then? I'm hungry!",
-                    "Yes camels are beautiful creatures.",
-                    "Filthy animals all they do is spit and...",
-                    "Actually I think I was a camel in a previous existence.",
-                    "So is business good then?",
-                ).also { stage++ }
-
-            22 ->
-                when (buttonId) {
-                    1 -> {
-                        player(FaceAnim.ASKING, "So can I buy a camel then? I'm hungry!")
-                        stage = 230
-                    }
-
-                    2 -> {
-                        player(FaceAnim.HAPPY, "Yes camels are beautiful creatures.")
-                        stage = 240
-                    }
-
-                    3 -> {
-                        player(FaceAnim.DISGUSTED, "Filthy animals all they do is spit and...")
-                        stage = 250
-                    }
-
-                    4 -> {
-                        player(FaceAnim.THINKING, "Actually I think I was a camel in a previous existence.")
-                        stage = 260
-                    }
-
-                    5 -> {
-                        player(FaceAnim.ASKING, "So is business good then?")
-                        stage = 270
-                    }
+                2 -> {
+                    player(FaceAnim.HAPPY, "Yes camels are beautiful creatures.")
+                    stage = 240
                 }
+
+                3 -> {
+                    player(FaceAnim.DISGUSTED, "Filthy animals all they do is spit and...")
+                    stage = 250
+                }
+
+                4 -> {
+                    player(FaceAnim.THINKING, "Actually I think I was a camel in a previous existence.")
+                    stage = 260
+                }
+
+                5 -> {
+                    player(FaceAnim.ASKING, "So is business good then?")
+                    stage = 270
+                }
+            }
 
             230 -> {
                 npc(
@@ -123,18 +118,17 @@ class AliTheCamelManDialogue(player: Player? = null) : Dialogue(player) {
                 stage = 27
             }
 
-            27 ->
-                when (buttonId) {
-                    1 -> {
-                        player("Well yes actually I'd like to ask about something else.")
-                        stage = 0
-                    }
-
-                    2 -> {
-                        player("No but thanks for your time.")
-                        stage = 100
-                    }
+            27 -> when (buttonId) {
+                1 -> {
+                    player("Well yes actually I'd like to ask about something else.")
+                    stage = 0
                 }
+
+                2 -> {
+                    player("No but thanks for your time.")
+                    stage = 100
+                }
+            }
 
             250 -> {
                 npc(
@@ -196,23 +190,22 @@ class AliTheCamelManDialogue(player: Player? = null) : Dialogue(player) {
                 stage = 311
             }
 
-            311 ->
-                when (buttonId) {
-                    1 -> {
-                        player(FaceAnim.ASKING, "In what way?")
-                        stage = 320
-                    }
-
-                    2 -> {
-                        player(FaceAnim.ASKING, "Well the weak will always be trodden on. Why not stand up to them?")
-                        stage = 330
-                    }
-
-                    3 -> {
-                        player(FaceAnim.FRIENDLY, "Perhaps I can help.")
-                        stage = 340
-                    }
+            311 -> when (buttonId) {
+                1 -> {
+                    player(FaceAnim.ASKING, "In what way?")
+                    stage = 320
                 }
+
+                2 -> {
+                    player(FaceAnim.ASKING, "Well the weak will always be trodden on. Why not stand up to them?")
+                    stage = 330
+                }
+
+                3 -> {
+                    player(FaceAnim.FRIENDLY, "Perhaps I can help.")
+                    stage = 340
+                }
+            }
 
             320 -> {
                 npc(

@@ -75,189 +75,184 @@ class IrenaDialogue(player: Player? = null) : Dialogue(player) {
             }
         }
         when (quest!!.getStage(player)) {
-            98 ->
-                when (stage) {
-                    1 -> {
-                        npc("I can offer you increased knowledge in two of the", "following areas.")
-                        stage++
-                    }
-
-                    2 -> {
-                        options("Fletching.", "Agility.", "Smithing.", "Thieving.")
-                        stage++
-                    }
-
-                    3 -> {
-                        setAttribute(player, "first-skill", buttonId)
-                        npc("Okay, now choose your second skills.")
-                        stage++
-                    }
-
-                    4 -> {
-                        options("Fletching.", "Agility.", "Smithing.", "Thieving.")
-                        stage++
-                    }
-
-                    5 -> {
-                        setAttribute(player, "second-skill", buttonId)
-                        npc("Okay, that's all the skills I can teach you!")
-                        stage++
-                    }
-
-                    6 -> {
-                        val skills =
-                            intArrayOf(
-                                SKILLS[player.getAttribute("first-skill", 0) - 1],
-                                SKILLS[player.getAttribute("second-skill", 0) - 1],
-                            )
-                        for (i in skills) {
-                            player.getSkills().addExperience(i, 4650.0)
-                        }
-                        quest!!.finish(player)
-                        end()
-                    }
+            98 -> when (stage) {
+                1 -> {
+                    npc("I can offer you increased knowledge in two of the", "following areas.")
+                    stage++
                 }
 
-            0 ->
-                when (stage) {
-                    0 ->
-                        if (quest!!.hasRequirements(player)) {
-                            npc(FaceAnim.CRYING, "Boo hoo! Oh dear, my only daughter....")
-                            stage++
-                        } else {
-                            npc(FaceAnim.CRYING, "Boo hoo! Go away!")
-                            stage = 99
-                        }
-
-                    1 -> {
-                        player("What's the matter?")
-                        stage++
-                    }
-
-                    2 -> {
-                        npc(
-                            FaceAnim.SAD,
-                            "Oh dear... my daughter, Ana, has gone missing in the",
-                            "desert. I fear that she is lost, or perhaps... *sob* even",
-                            "worse.",
-                        )
-                        stage++
-                    }
-
-                    3 -> {
-                        player("When did she go into the desert?")
-                        stage++
-                    }
-
-                    4 -> {
-                        npc(
-                            FaceAnim.SAD,
-                            "*Sob* she went in there just a few days ago, *Sob*",
-                            "she said she would be back yesterday.",
-                        )
-                        stage++
-                    }
-
-                    5 -> {
-                        npc(FaceAnim.SAD, "*Sob* And she's not...")
-                        stage++
-                    }
-
-                    6 -> {
-                        player("Is there a reward if I get her back?")
-                        stage++
-                    }
-
-                    7 -> {
-                        npc(FaceAnim.SAD, "Well, yes, you'll have my gratitude young man.")
-                        stage++
-                    }
-
-                    8 -> {
-                        npc(
-                            FaceAnim.HALF_CRYING,
-                            "And I'm sure that Ana will also be very pleased! And I",
-                            "may see if I can get a small reward together... But I",
-                            "cannot promise anything. So does that mean that you'll",
-                            "look for her then?",
-                        )
-                        stage++
-                    }
-
-                    9 -> {
-                        player("Okay Irena, calm down. I'll get your daughter back for", "you.")
-                        stage++
-                    }
-
-                    10 -> {
-                        npc(
-                            FaceAnim.HAPPY,
-                            "That would be great! That's really very nice of you!",
-                            "She was wearing a red silk scarf when she left.",
-                        )
-                        stage++
-                    }
-
-                    11 -> {
-                        npc(
-                            FaceAnim.HALF_ASKING,
-                            "Are you 'really' sure you want to do this? I mean, go",
-                            "on this quest?",
-                        )
-                        stage++
-                    }
-
-                    12 -> {
-                        player("Yes, I'll go on this quest!")
-                        stage++
-                    }
-
-                    13 -> {
-                        npc(
-                            FaceAnim.HAPPY,
-                            "Oh thank you! You've made me a very happy mother, I",
-                            "just hope it's not too late!",
-                        )
-                        stage++
-                    }
-
-                    14 -> {
-                        player("Do you have any other hints on where she may have", "gone?")
-                        stage++
-                    }
-
-                    15 -> {
-                        npc(
-                            FaceAnim.NEUTRAL,
-                            "I did go looking for her myself and I came across some",
-                            "footprints just a little way south. I'm worried that they",
-                            "lead to the desert mining camp.",
-                        )
-                        stage++
-                    }
-
-                    16 -> {
-                        quest!!.start(player)
-                        end()
-                    }
-
-                    99 -> end()
+                2 -> {
+                    options("Fletching.", "Agility.", "Smithing.", "Thieving.")
+                    stage++
                 }
 
-            10 ->
-                when (stage) {
-                    0 -> {
-                        player("No, not yet.")
-                        stage++
-                    }
-
-                    1 -> {
-                        npc(FaceAnim.HALF_CRYING, "Please! Hurry up.")
-                        stage++
-                    }
-
-                    2 -> end()
+                3 -> {
+                    setAttribute(player, "first-skill", buttonId)
+                    npc("Okay, now choose your second skills.")
+                    stage++
                 }
+
+                4 -> {
+                    options("Fletching.", "Agility.", "Smithing.", "Thieving.")
+                    stage++
+                }
+
+                5 -> {
+                    setAttribute(player, "second-skill", buttonId)
+                    npc("Okay, that's all the skills I can teach you!")
+                    stage++
+                }
+
+                6 -> {
+                    val skills = intArrayOf(
+                        SKILLS[player.getAttribute("first-skill", 0) - 1],
+                        SKILLS[player.getAttribute("second-skill", 0) - 1],
+                    )
+                    for (i in skills) {
+                        player.getSkills().addExperience(i, 4650.0)
+                    }
+                    quest!!.finish(player)
+                    end()
+                }
+            }
+
+            0 -> when (stage) {
+                0 -> if (quest!!.hasRequirements(player)) {
+                    npc(FaceAnim.CRYING, "Boo hoo! Oh dear, my only daughter....")
+                    stage++
+                } else {
+                    npc(FaceAnim.CRYING, "Boo hoo! Go away!")
+                    stage = 99
+                }
+
+                1 -> {
+                    player("What's the matter?")
+                    stage++
+                }
+
+                2 -> {
+                    npc(
+                        FaceAnim.SAD,
+                        "Oh dear... my daughter, Ana, has gone missing in the",
+                        "desert. I fear that she is lost, or perhaps... *sob* even",
+                        "worse.",
+                    )
+                    stage++
+                }
+
+                3 -> {
+                    player("When did she go into the desert?")
+                    stage++
+                }
+
+                4 -> {
+                    npc(
+                        FaceAnim.SAD,
+                        "*Sob* she went in there just a few days ago, *Sob*",
+                        "she said she would be back yesterday.",
+                    )
+                    stage++
+                }
+
+                5 -> {
+                    npc(FaceAnim.SAD, "*Sob* And she's not...")
+                    stage++
+                }
+
+                6 -> {
+                    player("Is there a reward if I get her back?")
+                    stage++
+                }
+
+                7 -> {
+                    npc(FaceAnim.SAD, "Well, yes, you'll have my gratitude young man.")
+                    stage++
+                }
+
+                8 -> {
+                    npc(
+                        FaceAnim.HALF_CRYING,
+                        "And I'm sure that Ana will also be very pleased! And I",
+                        "may see if I can get a small reward together... But I",
+                        "cannot promise anything. So does that mean that you'll",
+                        "look for her then?",
+                    )
+                    stage++
+                }
+
+                9 -> {
+                    player("Okay Irena, calm down. I'll get your daughter back for", "you.")
+                    stage++
+                }
+
+                10 -> {
+                    npc(
+                        FaceAnim.HAPPY,
+                        "That would be great! That's really very nice of you!",
+                        "She was wearing a red silk scarf when she left.",
+                    )
+                    stage++
+                }
+
+                11 -> {
+                    npc(
+                        FaceAnim.HALF_ASKING,
+                        "Are you 'really' sure you want to do this? I mean, go",
+                        "on this quest?",
+                    )
+                    stage++
+                }
+
+                12 -> {
+                    player("Yes, I'll go on this quest!")
+                    stage++
+                }
+
+                13 -> {
+                    npc(
+                        FaceAnim.HAPPY,
+                        "Oh thank you! You've made me a very happy mother, I",
+                        "just hope it's not too late!",
+                    )
+                    stage++
+                }
+
+                14 -> {
+                    player("Do you have any other hints on where she may have", "gone?")
+                    stage++
+                }
+
+                15 -> {
+                    npc(
+                        FaceAnim.NEUTRAL,
+                        "I did go looking for her myself and I came across some",
+                        "footprints just a little way south. I'm worried that they",
+                        "lead to the desert mining camp.",
+                    )
+                    stage++
+                }
+
+                16 -> {
+                    quest!!.start(player)
+                    end()
+                }
+
+                99 -> end()
+            }
+
+            10 -> when (stage) {
+                0 -> {
+                    player("No, not yet.")
+                    stage++
+                }
+
+                1 -> {
+                    npc(FaceAnim.HALF_CRYING, "Please! Hurry up.")
+                    stage++
+                }
+
+                2 -> end()
+            }
 
             100, 95, 99 -> {
                 player.packetDispatch.sendMessage("Irena goes back to work.")

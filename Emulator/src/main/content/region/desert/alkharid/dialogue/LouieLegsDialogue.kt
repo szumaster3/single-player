@@ -21,12 +21,10 @@ class LouieLegsDialogue(player: Player? = null) : Dialogue(player) {
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> options("What have you got?", "No, thank you.").also { stage++ }
-            1 ->
-                when (buttonId) {
-                    1 -> player(FaceAnim.THINKING, "What have you got?").also { stage++ }
-                    2 -> player(FaceAnim.FRIENDLY, "No, thank you.").also { stage = END_DIALOGUE }
-                }
-
+            1 -> when (buttonId) {
+                1 -> player(FaceAnim.THINKING, "What have you got?").also { stage++ }
+                2 -> player(FaceAnim.FRIENDLY, "No, thank you.").also { stage = END_DIALOGUE }
+            }
             2 -> npc(FaceAnim.HAPPY, "I provide items to help you keep your legs!").also { stage++ }
             3 -> {
                 end()

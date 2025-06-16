@@ -43,62 +43,42 @@ class ShantayGuardDialogue(player: Player? = null) : Dialogue(player) {
         when (stage) {
             0 -> npc(FaceAnim.HALF_GUILTY, "What can I do for you?").also { stage++ }
             1 -> options("I'd like to go into the desert please.", "Nothing thanks.").also { stage++ }
-            2 ->
-                when (buttonId) {
-                    1 -> player(FaceAnim.HALF_GUILTY, "I'd like to go into the desert please.").also { stage = 10 }
-                    2 -> end()
-                }
-
+            2 -> when (buttonId) {
+                1 -> player(FaceAnim.HALF_GUILTY, "I'd like to go into the desert please.").also { stage = 10 }
+                2 -> end()
+            }
             10 -> npc(FaceAnim.HALF_GUILTY, "Of course!").also { stage++ }
-            11 ->
-                if (!player.inventory.containsItem(PASS)) {
-                    npc(
-                        "You need a Shantay pass to get through this gate. See Shantay, he will sell you one for a very reasonable price.",
-                    ).also {
-                        stage = END_DIALOGUE
-                    }
-                } else {
-                    npc("Can I see your Desert Pass please?").also { stage = 13 }
-                }
-
-            13 ->
-                if (!player.inventory.containsItem(PASS)) {
-                    player("Sorry, I don't have one with me.").also { stage = END_DIALOGUE }
-                } else {
-                    sendItemDialogue(player, PASS, "You hand over a Shantay Pass.").also { stage++ }
-                }
-
+            11 -> if (!player.inventory.containsItem(PASS)) {
+                npc("You need a Shantay pass to get through this gate. See Shantay, he will sell you one for a very reasonable price.").also { stage = END_DIALOGUE }
+            } else {
+                npc("Can I see your Desert Pass please?").also { stage = 13 }
+            }
+            13 -> if (!player.inventory.containsItem(PASS)) {
+                player("Sorry, I don't have one with me.").also { stage = END_DIALOGUE }
+            } else {
+                sendItemDialogue(player, PASS, "You hand over a Shantay Pass.").also { stage++ }
+            }
             14 -> player("Sure, here you go!").also { stage++ }
-            15 ->
-                if (player.inventory.remove(PASS)) {
-                    val dest =
-                        if (player.location.y < 3304) Location.create(3303, 3117, 0) else Location.create(3305, 3117, 0)
-                    Pathfinder.find(player, dest).walk(player)
-                    end()
-                    player.lock()
-                    Pulser.submit(
-                        object : Pulse(1, player) {
-                            override fun pulse(): Boolean {
-                                if (player.location == dest) {
-                                    player.unlock()
-                                    handleShantayPass(player)
-                                    return true
-                                }
-                                return false
+            15 -> if (player.inventory.remove(PASS)) {
+                val dest =
+                    if (player.location.y < 3304) Location.create(3303, 3117, 0) else Location.create(3305, 3117, 0)
+                Pathfinder.find(player, dest).walk(player)
+                end()
+                player.lock()
+                Pulser.submit(
+                    object : Pulse(1, player) {
+                        override fun pulse(): Boolean {
+                            if (player.location == dest) {
+                                player.unlock()
+                                handleShantayPass(player)
+                                return true
                             }
-                        },
-                    )
-                }
-
-            100 ->
-                sendDialogueLines(
-                    player!!,
-                    "The guard seems quite bad tempered, probably from having to wear",
-                    "heavy armour in this intense heat.",
-                ).also {
-                    stage =
-                        END_DIALOGUE
-                }
+                            return false
+                        }
+                    },
+                )
+            }
+            100 -> sendDialogueLines(player!!, "The guard seems quite bad tempered, probably from having to wear", "heavy armour in this intense heat.").also { stage = END_DIALOGUE }
         }
         return true
     }

@@ -16,18 +16,10 @@ class AlTheCamelDialogue(player: Player? = null) : Dialogue(player) {
     
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
-        val rand = RandomFunction.random(0, 1)
+        val rand = RandomFunction.random(0, 2)
         when (rand) {
-            0 ->
-                playerl(
-                    FaceAnim.HALF_GUILTY,
-                    "Mmm... Looks like that camel would make a nice kebab.",
-                ).also { stage = 0 }
-            1 ->
-                playerl(FaceAnim.HALF_GUILTY, "If I go near that camel, it'll probably bite my hand off.").also {
-                    stage =
-                        0
-                }
+            0 -> player(FaceAnim.HALF_GUILTY, "If I go near that camel, it'll probably", "bite my hand off.").also { stage = 0 }
+            1, 2 -> player(FaceAnim.HALF_THINKING, "I wonder if that camel has fleas...").also { stage = 0 }
         }
         return true
     }
@@ -45,5 +37,5 @@ class AlTheCamelDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun newInstance(player: Player?): Dialogue = AlTheCamelDialogue(player)
 
-    override fun getIds(): IntArray = intArrayOf(NPCs.AL_THE_CAMEL_2809)
+    override fun getIds(): IntArray = intArrayOf(NPCs.AL_THE_CAMEL_2809, NPCs.ELLY_THE_CAMEL_2810, NPCs.OLLIE_THE_CAMEL_2811, NPCs.CAM_THE_CAMEL_2812, NPCs.CAM_THE_CAMEL_2813)
 }

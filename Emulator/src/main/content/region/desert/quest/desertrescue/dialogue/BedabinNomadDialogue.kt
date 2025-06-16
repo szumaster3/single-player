@@ -25,12 +25,26 @@ class BedabinNomadDialogue(player: Player? = null) : Dialogue(player) {
                     player("Al Shabim said I could enter, here are the plans!")
                     stage++
                 } else {
-                    npc(FaceAnim.NEUTRAL, "Sorry, but you can't use the tent without permission.", "Orders of Al Shabim.")
+                    npc(
+                        FaceAnim.NEUTRAL,
+                        "Sorry, but you can't use the tent without permission.",
+                        "Orders of Al Shabim."
+                    )
                 }
-                100 -> npc("Sorry, but you can't use the tent without permission. But", "thanks for all your help with the Bedabin people.")
-                else -> npc(FaceAnim.NEUTRAL, "Sorry, but you can't use the tent without permission.", "Orders of Al Shabim.")
+
+                100 -> npc(
+                    "Sorry, but you can't use the tent without permission. But",
+                    "thanks for all your help with the Bedabin people."
+                )
+
+                else -> npc(
+                    FaceAnim.NEUTRAL, "Sorry, but you can't use the tent without permission.", "Orders of Al Shabim."
+                )
             }
-            NPCs.BEDABIN_NOMAD_833, NPCs.BEDABIN_NOMAD_FIGHTER_1239 -> npc(FaceAnim.FRIENDLY, "Hello Effendi! How can I help you?")
+
+            NPCs.BEDABIN_NOMAD_833, NPCs.BEDABIN_NOMAD_FIGHTER_1239 -> npc(
+                FaceAnim.FRIENDLY, "Hello Effendi! How can I help you?"
+            )
         }
         return true
     }
@@ -139,9 +153,14 @@ class BedabinNomadDialogue(player: Player? = null) : Dialogue(player) {
                 }
 
                 10 -> {
-                    npc("This is the camp of Bedabin. Talk to our leader, Al", "Shabim, he'll be happy to chat. We can sell you very", "reasonably priced water...")
+                    npc(
+                        "This is the camp of Bedabin. Talk to our leader, Al",
+                        "Shabim, he'll be happy to chat. We can sell you very",
+                        "reasonably priced water..."
+                    )
                     stage = 40
                 }
+
                 20 -> {
                     npc("It is North East of here effendi, across the trackless", "desert. It will be a thirsty trip.")
                     stage = 40

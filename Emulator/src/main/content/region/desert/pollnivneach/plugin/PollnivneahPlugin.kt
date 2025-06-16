@@ -2,6 +2,7 @@ package content.region.desert.pollnivneach.plugin
 
 import content.region.desert.pollnivneach.dialogue.AliTheBarmanDialogue
 import core.api.*
+import core.game.dialogue.FaceAnim
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.item.Item
@@ -36,6 +37,11 @@ class PollnivneahPlugin : InteractionListener {
 
         on(BARMAN, IntType.NPC, "talk-to") { player, _ ->
             openDialogue(player, AliTheBarmanDialogue())
+            return@on true
+        }
+
+        on(NPCs.BANDIT_6388, IntType.NPC, "talk-to") { player, node ->
+            sendNPCDialogue(player, node.id, "Go away.", FaceAnim.ANNOYED)
             return@on true
         }
 
