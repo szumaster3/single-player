@@ -72,7 +72,13 @@ abstract class ChallengeClueScroll(
          */
         fun handleNPC(player: Player, npc: NPC, clue: ChallengeClueScroll) {
             dialogue(player) {
-                val facialExpression = if (npc.id in intArrayOf(NPCs.UGLUG_NAR_2039, NPCs.GNOME_COACH_2802, NPCs.GNOME_BALL_REFEREE_635)) FaceAnim.OLD_DEFAULT else FaceAnim.HALF_ASKING
+                val facialExpression = if (npc.id in intArrayOf(
+                        NPCs.UGLUG_NAR_2039,
+                        NPCs.GNOME_COACH_2802,
+                        NPCs.GNOME_BALL_REFEREE_635
+                    )
+                ) FaceAnim.OLD_DEFAULT else FaceAnim.HALF_ASKING
+
                 val randomAnswer = arrayOf("Here is your reward!", "Spot on!").random()
 
                 npc(npc.id, facialExpression, "Please enter the answer to the question.")
@@ -96,8 +102,12 @@ abstract class ChallengeClueScroll(
 
                     val manager = TreasureTrailManager.getInstance(player)
                     val clueScroll = getClueScrolls()[clue.clueId]
+                    val anagramClue = AnagramScroll.getClueForNpc(player, npc)
 
-                    if (clueScroll != null && removeAll(player, clueScroll.clueId)) {
+                    if (clueScroll != null) {
+                        removeItem(player, clueScroll.clueId)
+                        anagramClue?.let { removeItem(player, it.clueId) }
+
                         removeAttributes(player, "anagram_clue_active")
                         clueScroll.reward(player)
 
