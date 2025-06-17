@@ -9,58 +9,33 @@ import core.plugin.Plugin
 import org.rs.consts.Items
 
 /**
- * Represents the emote clues.
+ * Represents the emote clues plugin.
  * @author Vexia
  */
 class EmoteClue : EmoteScroll {
-    /**
-     * Instantiates a new Emote clue plugin.
-     */
+
     constructor() : super(null, -1, null, null, null, null, null)
 
-    /**
-     * Instantiates a new Emote clue plugin.
-     *
-     * @param name          the name
-     * @param clueId        the clue id
-     * @param level         the level
-     * @param emote         the emote
-     * @param commenceEmote the commence emote
-     * @param equipment     the equipment
-     * @param clue          the clue
-     * @param borders       the borders
-     */
     constructor(
-        name: String?,
+        name: String,
         clueId: Int,
-        level: ClueLevel?,
-        emote: Emotes?,
+        level: ClueLevel,
+        emote: Emotes,
         commenceEmote: Emotes?,
-        equipment: Array<IntArray>?,
-        clue: String?,
-        vararg borders: ZoneBorders?
-    ) : super(name, clueId, level, emote!!, commenceEmote, equipment!!, clue!!, *borders)
+        equipment: Array<IntArray>,
+        clue: String,
+        vararg borders: ZoneBorders
+    ) : super(name, clueId, level, emote, commenceEmote, equipment, clue, *borders)
 
-    /**
-     * Instantiates a new Emote clue plugin.
-     *
-     * @param name      the name
-     * @param clueId    the clue id
-     * @param level     the level
-     * @param emote     the emote
-     * @param equipment the equipment
-     * @param clue      the clue
-     * @param borders   the borders
-     */
     constructor(
-        name: String?,
+        name: String,
         clueId: Int,
-        level: ClueLevel?,
-        emote: Emotes?,
-        equipment: Array<IntArray>?,
-        clue: String?,
-        vararg borders: ZoneBorders?
-    ) : super(name, clueId, level, emote!!, null, equipment!!, clue!!, *borders)
+        level: ClueLevel,
+        emote: Emotes,
+        equipment: Array<IntArray>,
+        clue: String,
+        vararg borders: ZoneBorders
+    ) : super(name, clueId, level, emote, null, equipment, clue, *borders)
 
     @Throws(Throwable::class)
     override fun newInstance(arg: Any?): Plugin<Any> {

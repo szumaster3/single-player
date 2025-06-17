@@ -45,3 +45,4 @@ class SextantPlugin : InterfaceListener, InteractionListener {
     }
 
 }
+// There's no way I can find my way through without a map of some kind.

@@ -11,9 +11,6 @@ import org.rs.consts.NPCs
  */
 open class ChallengeScroll : ChallengeClueScroll {
 
-    /**
-     * Default constructor.
-     */
     constructor() : super(null, -1, null, null, null, null)
 
     /**
@@ -36,10 +33,7 @@ open class ChallengeScroll : ChallengeClueScroll {
     )
 
     /**
-     * Initializes and registers the challenge clues.
-     *
-     * @param arg optional argument, not used
-     * @return this instance of [ChallengeScroll]
+     * Register the challenge clues.
      */
     @Throws(Throwable::class)
     override fun newInstance(arg: Any?): Plugin<Any> {
