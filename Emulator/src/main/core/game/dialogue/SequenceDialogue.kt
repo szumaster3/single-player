@@ -1,5 +1,6 @@
 package core.game.dialogue
 
+import core.api.sendInputDialogue
 import core.game.dialogue.SequenceDialogue.DialogueLine
 import core.game.node.entity.Entity
 import core.game.node.entity.npc.NPC
@@ -14,6 +15,7 @@ import core.game.node.entity.player.Player
  * - [DialogueLine.ItemLine]: Item dialogue message shown.
  * - [DialogueLine.DoubleItemLine]: Double item dialogue message shown.
  * - [DialogueLine.OptionsLine]: Option selection with a callback.
+ * - [DialogueLine.InputLine]: Input prompt with a callback, numeric or text input.
  * - (Optional) invokes [onComplete] when the sequence finishes.
  */
 object SequenceDialogue {
@@ -57,6 +59,15 @@ object SequenceDialogue {
          * @param messages Dialogue text lines.
          */
         data class DoubleItemLine(val firstId: Int, val secondId: Int, val messages: Array<out String>) : DialogueLine()
+
+        /**
+         * An input line for string or numeric value input.
+         *
+         * @param numeric If true, numeric input is required; otherwise, string.
+         * @param prompt Prompt message displayed to the player.
+         * @param handler Callback receiving the entered value (String or Int).
+         */
+        data class InputLine(val numeric: Boolean, val prompt: String, val handler: (Any, (Boolean) -> Unit) -> Unit) : DialogueLine()
 
         /**
          * An options line for selecting one choice.
@@ -128,6 +139,15 @@ object SequenceDialogue {
                         entry.firstId, entry.secondId, entry.messages.joinToString("\n")
                     )
                     player.dialogueInterpreter.addAction { _, _ -> sendAt(i + 1) }
+                }
+
+                is DialogueLine.InputLine -> {
+                    val type = if (entry.numeric) InputType.NUMERIC else InputType.STRING_SHORT
+                    sendInputDialogue(player, type, entry.prompt) { value ->
+                        entry.handler(value) { continueDialogue ->
+                            if (continueDialogue) sendAt(i + 1) else onComplete?.invoke()
+                        }
+                    }
                 }
 
                 is DialogueLine.OptionsLine -> {
@@ -246,6 +266,12 @@ object SequenceDialogue {
     }
 
     /**
+     * Creates an input dialogue line with a prompt and a handler.
+     */
+    fun inputLine(numeric: Boolean, prompt: String, handler: (Any, (Boolean) -> Unit) -> Unit) =
+        DialogueLine.InputLine(numeric, prompt, handler)
+
+    /**
      * Creates an options dialogue with callback.
      *
      * @param title Displayed title
@@ -344,6 +370,10 @@ object SequenceDialogue {
 
         fun doubleItem(itemId1: Int, itemId2: Int, text: String) {
             lines += doubleItemLine(itemId1, itemId2, text)
+        }
+
+        fun input(numeric: Boolean, prompt: String, handler: (Any, (Boolean) -> Unit) -> Unit) {
+            lines += inputLine(numeric, prompt, handler)
         }
 
         fun options(title: String?, vararg options: String, onSelect: (Int) -> Unit) {
