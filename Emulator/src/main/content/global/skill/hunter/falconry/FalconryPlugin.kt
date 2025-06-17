@@ -1,4 +1,4 @@
-package content.global.skill.hunter.falcon
+package content.global.skill.hunter.falconry
 
 import core.api.*
 import core.cache.def.impl.ItemDefinition
@@ -43,7 +43,7 @@ class FalconryPlugin : ActivityPlugin(FALCONRY_ZONE, false, false, false), MapAr
         }
     }
 
-    override fun newInstance(p: Player): ActivityPlugin = content.global.skill.hunter.falcon.FalconryPlugin()
+    override fun newInstance(p: Player): ActivityPlugin = content.global.skill.hunter.falconry.FalconryPlugin()
 
     override fun start(player: Player, login: Boolean, vararg args: Any): Boolean {
         setAttribute(player, "/save:$FALCONRY_ZONE", true)

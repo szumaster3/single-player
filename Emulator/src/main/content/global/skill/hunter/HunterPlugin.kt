@@ -4,7 +4,7 @@ import content.global.skill.hunter.NetTrapSetting.NetTrap
 import content.global.skill.hunter.Traps.Companion.forNode
 import content.global.skill.hunter.bnet.BNetTypes
 import content.global.skill.hunter.bnet.ImplingNode
-import content.global.skill.hunter.falcon.FalconryPlugin
+import content.global.skill.hunter.falconry.FalconryPlugin
 import core.api.addItem
 import core.api.removeItem
 import core.api.sendMessage

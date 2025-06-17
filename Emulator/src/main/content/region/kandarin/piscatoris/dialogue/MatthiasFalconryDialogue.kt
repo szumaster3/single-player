@@ -1,6 +1,6 @@
 package content.region.kandarin.piscatoris.dialogue
 
-import content.global.skill.hunter.falcon.FalconryPlugin
+import content.global.skill.hunter.falconry.FalconryPlugin
 import core.api.*
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
