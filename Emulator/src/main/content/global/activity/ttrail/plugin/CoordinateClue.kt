@@ -85,7 +85,16 @@ class CoordinateClue
         register(CoordinateClue("pirates-hideout-coord", Items.CLUE_SCROLL_3522, ClueLevel.HARD, Location(3040, 3961, 0), "24 degrees 58 minutes north<br>18 degrees 43 minutes east"))
         register(CoordinateClue("agility-wildy-coord", Items.CLUE_SCROLL_3524, ClueLevel.HARD, Location(2987, 3964, 0), "25 degrees 03 minutes north<br>17 degrees 05 minutes east"))
         register(CoordinateClue("axe-hut-coord", Items.CLUE_SCROLL_3525, ClueLevel.HARD, Location(3190, 3963, 0), "25 degrees 03 minutes north<br>23 degrees 24 minutes east"))
-        register(CoordinateClue("web-chasm-coord", Items.CLUE_SCROLL_3530, ClueLevel.HARD, Location(3249,3739, 0), "18 degrees 3 minutes north<br>25 degrees 16 minutes east"))
+        register(CoordinateClue("web-chasm-coord", Items.CLUE_SCROLL_3530, ClueLevel.HARD, Location(3249,3739, 0), "18 degrees 03 minutes north<br>25 degrees 16 minutes east"))
+        register(CoordinateClue("elf-camp-coord", Items.CLUE_SCROLL_3532, ClueLevel.HARD, Location(2181, 3206,0), "01 degrees 24 minutes north<br>08 degrees 05 minutes west"))
+        register(CoordinateClue("air-obelisk-coord", Items.CLUE_SCROLL_3534, ClueLevel.HARD, Location(3091, 3571,0), "12 degrees 48 minutes north<br>20 degrees 20 minutes east"))
+        register(CoordinateClue("gutanoth-city-ogre-coord", Items.CLUE_SCROLL_3536, ClueLevel.HARD, Location(2542, 3031, 0), "04 degrees 03 minutes south<br>03 degrees 11 minutes east"))
+        register(CoordinateClue("nature-spirit-coord", Items.CLUE_SCROLL_3538, ClueLevel.HARD, Location(3440,3341, 0), "05 degrees 37 minutes north<br>31 degrees 15 minutes east"))
+        register(CoordinateClue("shilo-water-pool-coord", Items.CLUE_SCROLL_3540, ClueLevel.HARD, Location(2838,2914, 0), "07 degrees 43 minutes south<br>12 degrees 26 minutes east"))
+        register(CoordinateClue("east-karamja-coord", Items.CLUE_SCROLL_3542, ClueLevel.HARD, Location(2924, 2963, 0), "06 degrees 11 minutes south<br>15 degrees 07 minutes east"))
+        register(CoordinateClue("shilo-totem-pole-coord", Items.CLUE_SCROLL_3544, ClueLevel.HARD, Location(2950, 2902, 0), "08 degrees 05 minutes south<br>15 degrees 56 minutes east"))
+        register(CoordinateClue("kharazi-jungle-corner-coord", Items.CLUE_SCROLL_3546, ClueLevel.HARD, Location(2775, 2891, 0), "08 degrees 26 minutes south<br>10 degrees 28 minutes east"))
+        register(CoordinateClue("tyras-camp-coord", Items.CLUE_SCROLL_3548, ClueLevel.HARD, Location(2209, 3161, 0), "00 degrees 00 minutes north<br>07 degrees 13 minutes west"))
         return this
     }
 }

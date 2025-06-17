@@ -75,7 +75,8 @@ abstract class ChallengeClueScroll(
                 val facialExpression = if (npc.id in intArrayOf(
                         NPCs.UGLUG_NAR_2039,
                         NPCs.GNOME_COACH_2802,
-                        NPCs.GNOME_BALL_REFEREE_635
+                        NPCs.GNOME_BALL_REFEREE_635,
+                        NPCs.GNOME_TRAINER_162
                     )
                 ) FaceAnim.OLD_DEFAULT else FaceAnim.HALF_ASKING
 

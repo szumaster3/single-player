@@ -76,6 +76,7 @@ class CrypticClue : CrypticScroll {
         register(CrypticClue("lubufu-brimhaven", Items.CLUE_SCROLL_10268, ClueLevel.MEDIUM, "The owner of this crate has<br>a hunch that he put more<br>than fish inside.", Location.create(2770, 3172, 0), Scenery.CRATE_366, ZoneBorders(2769, 3171, 2771, 3173)))
         register(CrypticClue("canifis-archery-shop", Items.CLUE_SCROLL_10270, ClueLevel.EASY, "Search the drawers in<br>Catherby's Archery shop.", Location.create(2825, 3442, 0), Scenery.DRAWERS_33932, ZoneBorders(2824, 3441, 2826, 3443)))
         register(CrypticClue("yanille-crates", Items.CLUE_SCROLL_10272, ClueLevel.EASY, "Search the crates in a house<br>in Yanille that has a piano.", Location.create(2598, 3105, 0), Scenery.CRATE_357, ZoneBorders(2597, 3104, 2599, 3106)))
+        register(CrypticClue("gnome-trainer", Items.CLUE_SCROLL_10274, ClueLevel.HARD, "'Small shoe.'<br>often found with<br>rod on mushroom.", Location.create(2473, 3438, 0), NPCs.GNOME_TRAINER_162, ZoneBorders(2469, 3414, 2490, 3440)))
         return this
     }
 }
