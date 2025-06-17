@@ -37,7 +37,7 @@ class BraindeathIslandPlugin : InteractionListener {
                 dialogue(player) {
                     npc(NPCs.LUKE_50PERCENT_2828, FaceAnim.OLD_DEFAULT, "Hey! What are you doing out there?")
                     player("Nothing.")
-                    npc(NPCs.LUKE_50PERCENT_2828, FaceAnim.OLD_DEFAULT, "Well Cap'n Donnie said no livin' landlubbers were allowed out of the compound.")
+                    npc(NPCs.LUKE_50PERCENT_2828, FaceAnim.OLD_DEFAULT, "Well Cap'n Donnie said no livin' landlubbers were", "allowed out of the compound.")
                     npc(NPCs.LUKE_50PERCENT_2828, FaceAnim.OLD_DEFAULT,  "So get yerself back in here, or yer for it!")
                     end {
                         DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
