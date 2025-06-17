@@ -20,9 +20,6 @@ import org.rs.consts.NPCs
 @Initializable
 class FiftyPercentLukeDialogue(player: Player? = null) : Dialogue(player) {
 
-    private val ladLass = if (player!!.isMale) "lad" else "lass"
-    private val isCharos = player!!.equipment.containsAtLeastOneItem(Items.RING_OF_CHAROSA_6465)
-
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         player(FaceAnim.HALF_ASKING, "Are you all right?")
@@ -30,6 +27,8 @@ class FiftyPercentLukeDialogue(player: Player? = null) : Dialogue(player) {
     }
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+        val ladLass = if (player!!.isMale) "lad" else "lass"
+        val isCharos = player!!.equipment.containsAtLeastOneItem(Items.RING_OF_CHAROSA_6465)
         when(stage) {
             0 -> npc(FaceAnim.OLD_DEFAULT, "Who goes there?").also { stage++ }
             1 -> npcl(FaceAnim.OLD_DEFAULT, "Arr! A landlubber!").also { stage++ }
@@ -46,6 +45,7 @@ class FiftyPercentLukeDialogue(player: Player? = null) : Dialogue(player) {
                 Topic("How flammable are you?", 51),
                 Topic("So what is going on here anyway?", 58)
             )
+            // What happened to you?
             11 -> npcl(FaceAnim.OLD_DEFAULT, "That be a tale so heart-wrenchin' that it has so far wrenched the hearts from over a dozen sturdier men than thee!").also { stage++ }
             12 -> npcl(FaceAnim.OLD_DEFAULT, "A tale of such woe that none but the stoniest hearts can hear it without sheddin' a single, poignant tear...").also { stage++ }
             13 -> npcl(FaceAnim.OLD_DEFAULT, "And I'll never tell ye, not even if ye wore an item, such as a ring, with powers of mind control!").also { stage++ }
@@ -54,7 +54,7 @@ class FiftyPercentLukeDialogue(player: Player? = null) : Dialogue(player) {
             16 -> npcl(FaceAnim.OLD_DEFAULT, "Wait, no!").also { stage++ }
             17 -> npcl(FaceAnim.OLD_DEFAULT, "Get goin' landlubber before I take my splintery foot to yet behind!").also { stage++ }
             18 -> end()
-
+            // What happened to you? (Dialogue with Ring of Charos in equipment).
             19 -> npcl(FaceAnim.OLD_DEFAULT, "Well ye seem like a $ladLass that can handle such a tale...so I'll tell ye...").also { stage++ }
             20 -> npcl(FaceAnim.OLD_DEFAULT, "Well, it all starts with this albatross...").also { stage++ }
             21 -> npcl(FaceAnim.OLD_DEFAULT, "Wait, never mind, I'll skip forward a bit.").also { stage++ }
@@ -87,7 +87,7 @@ class FiftyPercentLukeDialogue(player: Player? = null) : Dialogue(player) {
             48 -> npcl(FaceAnim.OLD_DEFAULT, "So, that be the tale of how I managed to lose precisely 50% of my body.").also { stage++ }
             49 -> playerl(FaceAnim.NEUTRAL, "There there.").also { stage++ }
             50 -> end()
-
+            // How flammable are you?
             51 -> npcl(FaceAnim.HALF_ASKING, "What kind of question is that?").also { stage++ }
             52 -> playerl(FaceAnim.FRIENDLY,"I'll soon have you out of the way! Burn!").also {
                 player.animate(Animation(Animations.HUMAN_LIGHT_FIRE_WITH_TINDERBOX_733))
@@ -104,7 +104,7 @@ class FiftyPercentLukeDialogue(player: Player? = null) : Dialogue(player) {
             55 -> npcl(FaceAnim.OLD_DEFAULT, "Let that be a lesson to ye!").also { stage++ }
             56 -> playerl(FaceAnim.NEUTRAL, "My world is an ocean of paaaain!").also { stage++ }
             57 -> end()
-
+            // So what is going on here anyway?
             58 -> npcl(FaceAnim.OLD_DEFAULT, "Ye expect me to talk?").also { stage++ }
             59 -> playerl(FaceAnim.NEUTRAL, "No Mr. Luke, I expect you to die!").also { stage++ }
             60 -> npcl(FaceAnim.OLD_DEFAULT, "Hah! I'm one step ahead of ye!").also { stage++ }
@@ -121,6 +121,8 @@ class FiftyPercentLukeDialogue(player: Player? = null) : Dialogue(player) {
 
         return true
     }
+
+    override fun newInstance(player: Player?): Dialogue = FiftyPercentLukeDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.LUKE_50PERCENT_2828)
 }

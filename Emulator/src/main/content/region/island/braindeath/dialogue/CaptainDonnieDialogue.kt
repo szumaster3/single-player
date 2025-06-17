@@ -12,8 +12,6 @@ import org.rs.consts.*
 @Initializable
 class CaptainDonnieDialogue(player: Player? = null) : Dialogue(player) {
 
-    private val ladLass = if (player!!.isMale) "lad" else "lass"
-
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(FaceAnim.HALF_ASKING, "Arr! What be ye wantin?")
@@ -21,6 +19,7 @@ class CaptainDonnieDialogue(player: Player? = null) : Dialogue(player) {
     }
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+        val ladLass = if (player!!.isMale) "lad" else "lass"
         when(stage) {
             0 -> player(FaceAnim.STRUGGLE, "I, err, came to...").also { stage++ }
             1 -> showTopics(
@@ -38,7 +37,6 @@ class CaptainDonnieDialogue(player: Player? = null) : Dialogue(player) {
             8 -> playerl(FaceAnim.NEUTRAL, "I have come to tell you to leave.").also { stage++ }
             9 -> npcl(FaceAnim.LAUGH, "Stop $ladLass! I'll shatter me ribs!").also { stage++ }
             10 -> end()
-
             // Ask what you wanted.
             11 -> playerl(FaceAnim.NEUTRAL, "I've come to ask you what you want.").also { stage++ }
             12 -> npcl(FaceAnim.HALF_ASKING, "Whadda we want? 'Rum'! When do we want it? Now!").also { stage++ }
@@ -46,7 +44,6 @@ class CaptainDonnieDialogue(player: Player? = null) : Dialogue(player) {
             14 -> npcl(FaceAnim.FRIENDLY, "Not really $ladLass. If ye were to give us 'rum' we'd kill ye quickly, as opposed to over a few weeks.").also { stage++ }
             15 -> playerl(FaceAnim.NEUTRAL, "Oh...").also { stage++ }
             16 -> end()
-
             // Join your crew.
             17 -> playerl(FaceAnim.NEUTRAL, "Err, I mean...").also { stage++ }
             18 -> playerl(FaceAnim.NEUTRAL, "Arr! Shiver me mainbraces and make them landlubbers walk the scurvy plank, Cap'n! I've come to join yer cut- throat, bilge swillin' crew!").also { stage++ }
@@ -65,6 +62,8 @@ class CaptainDonnieDialogue(player: Player? = null) : Dialogue(player) {
         }
         return true
     }
+
+    override fun newInstance(player: Player?): Dialogue = CaptainDonnieDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.CAPTAIN_DONNIE_2830)
 }

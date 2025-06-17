@@ -145,9 +145,10 @@ class PiratePeteDialogue(player: Player? = null) : Dialogue(player) {
                         7 -> player.unlock()
                         8 -> {
                             openDialogue(player, PiratePeteTravelDialogue())
+                            return true
                         }
                     }
-                    return true
+                    return false
                 }
             },
         )
@@ -175,8 +176,8 @@ private class PiratePeteTravelDialogue : DialogueFile() {
                 stage++
             }
             1 -> {
-                val index = Random.nextInt(randomDialogue.size)
-                npcl(FaceAnim.NEUTRAL, randomDialogue[index])
+                val index = randomDialogue.random()
+                npcl(FaceAnim.NEUTRAL, index)
                 stage++
             }
             2 -> {

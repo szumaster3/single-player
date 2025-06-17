@@ -3,6 +3,7 @@ package content.region.island.braindeath.plugin
 import core.api.faceLocation
 import core.api.findLocalNPC
 import core.api.sendChat
+import core.game.dialogue.FaceAnim
 import core.game.dialogue.SequenceDialogue.dialogue
 import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType
@@ -10,7 +11,6 @@ import core.game.interaction.InteractionListener
 import core.game.world.map.Location
 import org.rs.consts.NPCs
 import org.rs.consts.Scenery
-import kotlin.random.Random
 
 class BraindeathIslandPlugin : InteractionListener {
 
@@ -22,6 +22,20 @@ class BraindeathIslandPlugin : InteractionListener {
 
         on(Scenery.GATE_10172, IntType.SCENERY, "open") { player, node ->
             val lukeNPC = findLocalNPC(player, NPCs.LUKE_50PERCENT_2828)
+            faceLocation(lukeNPC!!, player.location)
+            if(player.location.y > 5098) {
+                dialogue(player) {
+                    npc(NPCs.LUKE_50PERCENT_2828, FaceAnim.OLD_DEFAULT, "Hey! What are you doing out there?")
+                    player("Nothing.")
+                    npc(NPCs.LUKE_50PERCENT_2828, FaceAnim.OLD_DEFAULT, "Well Cap'n Donnie said no livin' landlubbers were allowed out of the compound.")
+                    npc(NPCs.LUKE_50PERCENT_2828, FaceAnim.OLD_DEFAULT,  "So get yerself back in here, or yer for it!")
+                    end {
+                        DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
+                    }
+                }
+                return@on true
+            }
+
             val distractionDialogue = arrayOf(
                 "Hey you! Look over there!",
                 "Who's that making faces behind you?",
@@ -30,11 +44,11 @@ class BraindeathIslandPlugin : InteractionListener {
                 "Who is that behind you?",
                 "That is the most amazing thing I have ever seen!"
             )
-            val index = Random.nextInt(distractionDialogue.size)
-            faceLocation(lukeNPC!!, player.location)
+
+            val index = distractionDialogue.random()
             dialogue(player) {
-                npc(NPCs.LUKE_50PERCENT_2828, "Arr! Tryin' ter get away eh? Well ye'll never sneak", "past me, I'm the best lookout this crew has ever seen!")
-                player(distractionDialogue[index])
+                npc(NPCs.LUKE_50PERCENT_2828, FaceAnim.OLD_DEFAULT, "Arr! Tryin' ter get away eh? Well ye'll never sneak", "past me, I'm the best lookout this crew has ever seen!")
+                player(index)
                 end {
                     faceLocation(lukeNPC, Location(2120, 5095, 0))
                     sendChat(lukeNPC, "Where?", 1)
