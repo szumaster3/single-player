@@ -1,8 +1,7 @@
 package content.region.kandarin.gnome.quest.makinghistory.dialogue
 
-import content.region.kandarin.gnome.quest.makinghistory.cutscene.OutpostHistoryCutscene
 import content.region.kandarin.gnome.quest.makinghistory.MHUtils
-import content.region.kandarin.gnome.quest.makinghistory.MHUtils.checkRequirements
+import content.region.kandarin.gnome.quest.makinghistory.cutscene.OutpostHistoryCutscene
 import core.api.*
 import core.api.quest.*
 import core.game.dialogue.Dialogue
@@ -10,6 +9,7 @@ import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
+import core.game.node.entity.skill.Skills
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import org.rs.consts.Components
@@ -132,7 +132,7 @@ class JorralDialogue(player: Player? = null) : Dialogue(player) {
             55 -> npcl(FaceAnim.FRIENDLY, "He talks of all the nasty things they did to the people of Ardougne, which I don't care to mention! It looks like they were stopped by someone. But it doesn't say who.").also { stage++ }
             56 -> playerl(FaceAnim.FRIENDLY, "Interesting.").also {
                 removeItem(player, Items.JOURNAL_6755)
-                MHUtils.checkProgress(player!!)
+                checkProgress(player!!)
                 stage = if (getVarbit(player, MHUtils.PROGRESS) == 3) 72 else END_DIALOGUE
                 stage = END_DIALOGUE
             }
@@ -142,7 +142,7 @@ class JorralDialogue(player: Player? = null) : Dialogue(player) {
             60 -> sendDoubleItemDialogue(player!!, -1, Items.SCROLL_6758, "Jorral skims over the contents of the scroll.").also { stage++ }
             61 -> npcl(FaceAnim.FRIENDLY, "Very interesting. So there was a great battle at the outpost. Then one of the survivors became king, and the other started the market place. Good work.").also {
                 removeItem(player, Items.SCROLL_6758)
-                MHUtils.checkProgress(player!!)
+                checkProgress(player!!)
                 stage = if (getVarbit(player, MHUtils.PROGRESS) == 3) 72 else END_DIALOGUE
             }
             62 -> player("Hi there.").also { stage++ }
@@ -161,7 +161,7 @@ class JorralDialogue(player: Player? = null) : Dialogue(player) {
             69 -> npcl(FaceAnim.FRIENDLY, "From the two pieces of evidence, we know that the outpost was occupied by followers of Zamorak who caused havoc to the nearby city of Ardougne.").also { stage++ }
             70 -> npcl(FaceAnim.FRIENDLY, "Ardougne called in some Saradomin followers to deal with the problem. The two sides were led by ex-friends who settled their differences and decided to worship Guthix.").also { stage++ }
             71 -> npcl(FaceAnim.FRIENDLY, "But who survived and what happened to them?").also {
-                MHUtils.checkProgress(player!!)
+                checkProgress(player!!)
                 stage = if (getVarbit(player, MHUtils.PROGRESS) == 3) 72 else END_DIALOGUE
             }
             72 -> npcl(FaceAnim.FRIENDLY, "It all makes sense now, I never realised there was quite so much history to this place, it was more than I could have hoped.").also { stage++ }
@@ -216,7 +216,23 @@ class JorralDialogue(player: Player? = null) : Dialogue(player) {
         return true
     }
 
+    private fun checkRequirements(player: Player): Boolean =
+        getStatLevel(player, Skills.CRAFTING) >= 24 &&
+                getStatLevel(player, Skills.MINING) >= 40 &&
+                getStatLevel(player, Skills.SMITHING) >= 40 &&
+                isQuestComplete(player, Quests.PRIEST_IN_PERIL)
+
+    private fun checkProgress(player: Player) {
+        if (getVarbit(player, MHUtils.ERIN_PROGRESS) == 4 &&
+            getVarbit(player, MHUtils.DROALAK_PROGRESS) in 5..6 &&
+            getVarbit(player, MHUtils.DRON_PROGRESS) == 4
+        ) {
+            setVarbit(player, MHUtils.PROGRESS, 3, true)
+        }
+    }
+
     override fun getIds(): IntArray = intArrayOf(NPCs.JORRAL_2932)
+
 }
 
 class JorralDialogueExtension : DialogueFile() {

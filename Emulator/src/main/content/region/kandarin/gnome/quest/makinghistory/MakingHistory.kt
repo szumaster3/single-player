@@ -92,19 +92,4 @@ class MakingHistory : Quest(Quests.MAKING_HISTORY, 86, 85, 3, Vars.VARBIT_QUEST_
     }
 
     override fun newInstance(`object`: Any?): Quest = this
-
-    fun checkRequirements(player: Player): Boolean =
-            getStatLevel(player, Skills.CRAFTING) >= 24 &&
-            getStatLevel(player, Skills.MINING) >= 40 &&
-            getStatLevel(player, Skills.SMITHING) >= 40 &&
-            isQuestComplete(player, Quests.PRIEST_IN_PERIL)
-
-    fun checkProgress(player: Player) {
-        if (getVarbit(player, ERIN_PROGRESS) == 4 &&
-            getVarbit(player, DROALAK_PROGRESS) in 5..6 &&
-            getVarbit(player, DRON_PROGRESS) == 4
-        ) {
-            setVarbit(player, PROGRESS, 3, true)
-        }
-    }
 }
