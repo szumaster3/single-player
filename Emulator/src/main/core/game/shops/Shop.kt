@@ -26,74 +26,34 @@ import kotlin.math.roundToInt
 
 /**
  * Represents a single item in a shop.
- *
- * @property itemId The id of the item.
- * @property amount The amount of the item in stock.
- * @property restockRate The number of ticks between restocks (Default to 100).
  */
-data class ShopItem(
-    var itemId: Int,
-    var amount: Int,
-    val restockRate: Int = 100,
-)
+data class ShopItem(var itemId: Int, var amount: Int, val restockRate: Int = 100, )
 
 /**
  * A listener for shop container updates, used to send interface updates to the player.
- *
- * @property player The player this listener is associated with.
  */
-class ShopListener(
-    val player: Player,
-) : ContainerListener {
+class ShopListener(val player: Player, ) : ContainerListener {
     var enabled = false
 
     /**
      * Called when the container changes.
-     *
-     * @param c The container being updated.
-     * @param event The event describing what changed.
      */
-    override fun update(
-        c: Container?,
-        event: ContainerEvent?,
-    ) {
-        PacketRepository.send(
-            ContainerPacket::class.java,
-            ContainerContext(player, -1, -1, 92, event!!.items, false, *event.slots),
-        )
+    override fun update(c: Container?, event: ContainerEvent?, ) {
+        PacketRepository.send(ContainerPacket::class.java, ContainerContext(player, -1, -1, 92, event!!.items, false, *event.slots))
     }
 
     /**
      * Refreshes the entire container.
-     *
-     * @param c The container to refresh.
      */
     override fun refresh(c: Container?) {
-        PacketRepository.send(
-            ContainerPacket::class.java,
-            ContainerContext(player, -1, -1, 92, c!!.toArray(), c.capacity(), false),
-        )
+        PacketRepository.send(ContainerPacket::class.java, ContainerContext(player, -1, -1, 92, c!!.toArray(), c.capacity(), false))
     }
 }
 
 /**
- * Represents a shop that can be opened by players to buy and sell items.
- *
- * @property title The title of the shop shown in the interface.
- * @property stock The default stock items available in the shop.
- * @property general Whether the shop accepts any item from the player as sellable.
- * @property currency The item ID used as the shop's currency (default: coins).
- * @property highAlch Whether high alchemy pricing is applied.
- * @property forceShared Whether to force the shop to use a shared container across all players.
+ * Represents a player-accessible shop with configurable stock, currency, and settings.
  */
-class Shop(
-    val title: String,
-    val stock: Array<ShopItem>,
-    val general: Boolean = false,
-    val currency: Int = Items.COINS_995,
-    val highAlch: Boolean = false,
-    val forceShared: Boolean = false,
-) {
+class Shop(val title: String, val stock: Array<ShopItem>, val general: Boolean = false, val currency: Int = Items.COINS_995, val highAlch: Boolean = false, val forceShared: Boolean = false) {
 
     /**
      * Map of player UID or global key to stock containers.
@@ -123,8 +83,6 @@ class Shop(
 
     /**
      * Opens the shop interface for the given player.
-     *
-     * @param player The player to open the shop for.
      */
     fun openFor(player: Player) {
         val cont = getContainer(player)
@@ -138,15 +96,9 @@ class Shop(
     }
 
     /**
-     * Displays the shop tab (main or player stock).
-     *
-     * @param player The player viewing the shop.
-     * @param main Whether to show the main stock (true) or the player stock (false).
+     * Shows the main or player stock tab in the shop for the player.
      */
-    fun showTab(
-        player: Player,
-        main: Boolean,
-    ) {
+    fun showTab(player: Player, main: Boolean, ) {
         val cont = if (main) getAttribute<Container?>(player, "shop-cont", null) ?: return else playerStock
 
         if (!main) {
@@ -157,10 +109,7 @@ class Shop(
             cont.listeners.add(listenerInstances[player.details.uid])
         }
 
-        val settings =
-            IfaceSettingsBuilder()
-                .enableOptions(0..9)
-                .build()
+        val settings = IfaceSettingsBuilder().enableOptions(0..9).build()
 
         player.packetDispatch.sendIfaceSettings(
             settings,
@@ -205,21 +154,17 @@ class Shop(
     }
 
     /**
-     * Retrieves the appropriate shop container for a player.
-     *
-     * @param player The player for whom to retrieve the container.
-     * @return The shop container.
+     * Returns the shop container for the given player.
      */
     fun getContainer(player: Player): Container {
-        val container =
-            if (getServerConfig().getBoolean(Shops.personalizedShops, false) && !forceShared) {
-                stockInstances[player.details.uid] ?: generateStockContainer().also {
-                    stockInstances[player.details.uid] = it
-                }
-            } else {
-                stockInstances[ServerConstants.SERVER_NAME.hashCode()]
-                    ?: generateStockContainer().also { stockInstances[ServerConstants.SERVER_NAME.hashCode()] = it }
+        val container = if (getServerConfig().getBoolean(Shops.personalizedShops, false) && !forceShared) {
+            stockInstances[player.details.uid] ?: generateStockContainer().also {
+                stockInstances[player.details.uid] = it
             }
+        } else {
+            stockInstances[ServerConstants.SERVER_NAME.hashCode()]
+                ?: generateStockContainer().also { stockInstances[ServerConstants.SERVER_NAME.hashCode()] = it }
+        }
 
         val listener = listenerInstances[player.details.uid]
 
@@ -275,16 +220,9 @@ class Shop(
     }
 
     /**
-     * Calculates the cost of buying an item from the shop.
-     *
-     * @param player The player attempting to buy the item.
-     * @param slot The slot of the item within the container.
-     * @return An [Item] representing the currency and price required to buy the item. Returns Item(-1, -1) if not found.
+     * Gets the cost in currency for a player to buy an item from the shop.
      */
-    fun getBuyPrice(
-        player: Player,
-        slot: Int,
-    ): Item {
+    fun getBuyPrice(player: Player, slot: Int, ): Item {
         val isMainStock = getAttribute(player, "shop-main", true)
         val cont =
             if (isMainStock) getAttribute<Container?>(player, "shop-cont", null) ?: return Item(-1, -1) else playerStock
@@ -295,39 +233,28 @@ class Shop(
             return Item(-1, -1)
         }
 
-        val price =
-            when (currency) {
-                Items.TOKKUL_6529 -> item.definition.getConfiguration(ItemConfigParser.TOKKUL_PRICE, 1)
-                Items.ARCHERY_TICKET_1464 -> item.definition.getConfiguration(ItemConfigParser.ARCHERY_TICKET_PRICE, 1)
-                Items.CASTLE_WARS_TICKET_4067 ->
-                    item.definition.getConfiguration(
-                        ItemConfigParser.CASTLE_WARS_TICKET_PRICE,
-                        1,
-                    )
+        val price = when (currency) {
+            Items.TOKKUL_6529 -> item.definition.getConfiguration(ItemConfigParser.TOKKUL_PRICE, 1)
+            Items.ARCHERY_TICKET_1464 -> item.definition.getConfiguration(ItemConfigParser.ARCHERY_TICKET_PRICE, 1)
+            Items.CASTLE_WARS_TICKET_4067 -> item.definition.getConfiguration(
+                ItemConfigParser.CASTLE_WARS_TICKET_PRICE,
+                1,
+            )
 
-                else ->
-                    getGPCost(
-                        Item(item.id, 1),
-                        if (isMainStock) stock[item.slot].amount else playerStock[slot].amount,
-                        if (isMainStock) item.amount else playerStock[slot].amount,
-                    )
-            }
+            else -> getGPCost(
+                Item(item.id, 1),
+                if (isMainStock) stock[item.slot].amount else playerStock[slot].amount,
+                if (isMainStock) item.amount else playerStock[slot].amount,
+            )
+        }
 
         return Item(currency, price)
     }
 
     /**
-     * Calculates the price the shop will pay the player for selling an item.
-     *
-     * @param player The player attempting to sell the item.
-     * @param slot The inventory slot of the item.
-     * @return A [Pair] containing the target container (or null) and the price in currency as an [Item].
-     *         Returns (null, Item(-1, -1)) if the item is invalid or unsellable.
+     * Determines the shop payment and target container when a player sells an item.
      */
-    fun getSellPrice(
-        player: Player,
-        slot: Int,
-    ): Pair<Container?, Item> {
+    fun getSellPrice(player: Player, slot: Int, ): Pair<Container?, Item> {
         val shopCont = getAttribute<Container?>(player, "shop-cont", null) ?: return Pair(null, Item(-1, -1))
         val item = player.inventory[slot]
 
@@ -337,54 +264,46 @@ class Shop(
             return Pair(null, Item(-1, -1))
         }
 
-        val shopItemId =
-            if (item.definition.isUnnoted()) {
-                item.id
-            } else {
-                item.noteChange
-            }
+        val shopItemId = if (item.definition.isUnnoted()) {
+            item.id
+        } else {
+            item.noteChange
+        }
         var (isPlayerStock, shopSlot) = getStockSlot(shopItemId)
 
-        val stockAmt =
-            if (isPlayerStock) {
+        val stockAmt = if (isPlayerStock) {
+            0
+        } else {
+            if (shopSlot != -1) {
+                stock[shopSlot].amount
+            } else {
                 0
+            }
+        }
+        val currentAmt = if (isPlayerStock) {
+            playerStock.getAmount(shopItemId)
+        } else {
+            if (shopSlot != -1) {
+                shopCont[shopSlot].amount
             } else {
-                if (shopSlot != -1) {
-                    stock[shopSlot].amount
-                } else {
-                    0
-                }
+                isPlayerStock = true
+                0
             }
-        val currentAmt =
-            if (isPlayerStock) {
-                playerStock.getAmount(shopItemId)
-            } else {
-                if (shopSlot != -1) {
-                    shopCont[shopSlot].amount
-                } else {
-                    isPlayerStock = true
-                    0
-                }
-            }
+        }
 
-        val price =
-            when (currency) {
-                Items.TOKKUL_6529 ->
-                    (
-                            item.definition.getConfiguration(
-                                ItemConfigParser.TOKKUL_PRICE,
-                                1,
-                            ) / 10.0
-                            ).toInt() // selling items authentically return 10x less tokkul (floored/truncated) than the item's shop price
-                Items.ARCHERY_TICKET_1464 -> item.definition.getConfiguration(ItemConfigParser.ARCHERY_TICKET_PRICE, 1)
-                Items.CASTLE_WARS_TICKET_4067 ->
-                    item.definition.getConfiguration(
-                        ItemConfigParser.CASTLE_WARS_TICKET_PRICE,
-                        1,
-                    )
+        val price = when (currency) {
+            Items.TOKKUL_6529 -> (item.definition.getConfiguration(
+                ItemConfigParser.TOKKUL_PRICE,
+                1,
+            ) / 10.0).toInt() // selling items authentically return 10x less tokkul (floored/truncated) than the item's shop price
+            Items.ARCHERY_TICKET_1464 -> item.definition.getConfiguration(ItemConfigParser.ARCHERY_TICKET_PRICE, 1)
+            Items.CASTLE_WARS_TICKET_4067 -> item.definition.getConfiguration(
+                ItemConfigParser.CASTLE_WARS_TICKET_PRICE,
+                1,
+            )
 
-                else -> getGPSell(Item(shopItemId, 1), stockAmt, currentAmt)
-            }
+            else -> getGPSell(Item(shopItemId, 1), stockAmt, currentAmt)
+        }
 
         if (!general && stockAmt == 0 && shopSlot == -1) {
             return Pair(null, Item(-1, -1))
@@ -394,29 +313,19 @@ class Shop(
     }
 
     /**
-     * Computes the adjusted buy price of an item based on current and stock amounts.
-     *
-     * @param item The item being priced.
-     * @param stockAmount The original stock quantity of the item.
-     * @param currentAmt The current amount of the item in the shop.
-     * @return The computed GP cost for the item.
+     * Calculates the adjusted buy price of an item based on stock levels.
      */
-    private fun getGPCost(
-        item: Item,
-        stockAmount: Int,
-        currentAmt: Int,
-    ): Int {
+    private fun getGPCost(item: Item, stockAmount: Int, currentAmt: Int, ): Int {
         var mod: Int
-        mod =
-            if (stockAmount == 0) {
-                100
-            } else if (currentAmt == 0) {
-                130
-            } else if (currentAmt >= stockAmount) {
-                100
-            } else {
-                130 - (130 - 100) * currentAmt / stockAmount
-            }
+        mod = if (stockAmount == 0) {
+            100
+        } else if (currentAmt == 0) {
+            130
+        } else if (currentAmt >= stockAmount) {
+            100
+        } else {
+            130 - (130 - 100) * currentAmt / stockAmount
+        }
         if (mod < 1) mod = 1
         mod = max(100, min(130, mod))
 
@@ -426,18 +335,9 @@ class Shop(
     }
 
     /**
-     * Computes the amount of GP given to the player when selling an item.
-     *
-     * @param item The item being sold.
-     * @param stockAmount The shop's desired stock quantity.
-     * @param currentAmt The current quantity of the item in the shop.
-     * @return The GP value the shop will give for this item (minimum 1).
+     * Calculates the GP received when selling an item to the shop.
      */
-    private fun getGPSell(
-        item: Item,
-        stockAmount: Int,
-        currentAmt: Int,
-    ): Int {
+    private fun getGPSell(item: Item, stockAmount: Int, currentAmt: Int): Int {
         val base = item.definition.getAlchemyValue(highAlch)
         var overstock = currentAmt - stockAmount
         if (overstock < 0) {
@@ -453,26 +353,19 @@ class Shop(
         return price
     }
 
-    fun buy(
-        player: Player,
-        slot: Int,
-        amount: Int,
-    ): TransactionStatus {
+    fun buy(player: Player, slot: Int, amount: Int, ): TransactionStatus {
         if (amount !in 1..Integer.MAX_VALUE) return TransactionStatus.Failure("Invalid amount: $amount")
         val isMainStock = getAttribute(player, "shop-main", false)
         if (!isMainStock && player.ironmanManager.isIronman) {
             sendDialogue(player, "As an ironman, you cannot buy from player stock in shops.")
             return TransactionStatus.Failure("Ironman buying from player stock")
         }
-        val cont =
-            if (isMainStock) {
-                (
-                        getAttribute<Container?>(player, "shop-cont", null)
-                            ?: return TransactionStatus.Failure("Invalid shop-cont attr")
-                        )
-            } else {
-                playerStock
-            }
+        val cont = if (isMainStock) {
+            (getAttribute<Container?>(player, "shop-cont", null)
+                ?: return TransactionStatus.Failure("Invalid shop-cont attr"))
+        } else {
+            playerStock
+        }
         val inStock = cont[slot]
         val item = Item(inStock.id, amount)
         if (inStock.amount < amount) {
@@ -485,16 +378,10 @@ class Shop(
             sendMessage(player, "There is no stock of that item at the moment.")
             return TransactionStatus.Failure("Shop item out of stock.")
         }
-        if (isMainStock &&
-            inStock.amount > stock[slot].amount &&
-            (
-                    !getServerConfig().getBoolean(
-                        Shops.personalizedShops,
-                        false,
-                    ) ||
-                            forceShared
-                    ) &&
-            player.ironmanManager.isIronman
+        if (isMainStock && inStock.amount > stock[slot].amount && (!getServerConfig().getBoolean(
+                Shops.personalizedShops,
+                false,
+            ) || forceShared) && player.ironmanManager.isIronman
         ) {
             sendDialogue(player, "As an ironman, you cannot buy overstocked items from shops.")
             return TransactionStatus.Failure("Ironman overstock purchase")
@@ -510,12 +397,11 @@ class Shop(
             var amt = item.amount
             var inStockAmt = inStock.amount
             while (amt-- > 1) {
-                cost.amount +=
-                    getGPCost(
-                        Item(item.id, 1),
-                        if (isMainStock) stock[slot].amount else playerStock[slot].amount,
-                        --inStockAmt,
-                    )
+                cost.amount += getGPCost(
+                    Item(item.id, 1),
+                    if (isMainStock) stock[slot].amount else playerStock[slot].amount,
+                    --inStockAmt,
+                )
             }
         } else {
             cost.amount = cost.amount * item.amount
@@ -548,18 +434,8 @@ class Shop(
         } else {
             when (currency) {
                 Items.TOKKUL_6529 -> sendMessage(player, "You don't have enough tokkul to purchase that.")
-                Items.ARCHERY_TICKET_1464 ->
-                    sendMessage(
-                        player,
-                        "You only had enough money to buy some of the items you requested.",
-                    )
-
-                Items.CASTLE_WARS_TICKET_4067 ->
-                    sendMessage(
-                        player,
-                        "You don't have enough castle wars tickets to purchase that.",
-                    )
-
+                Items.ARCHERY_TICKET_1464 -> sendMessage(player, "You only had enough money to buy some of the items you requested.")
+                Items.CASTLE_WARS_TICKET_4067 -> sendMessage(player, "You don't have enough castle wars tickets to purchase that.")
                 else -> sendMessage(player, "You don't have enough money.")
             }
             return TransactionStatus.Failure("Not enough money in inventory")
@@ -568,11 +444,7 @@ class Shop(
         return TransactionStatus.Success()
     }
 
-    fun sell(
-        player: Player,
-        slot: Int,
-        amount: Int,
-    ): TransactionStatus {
+    fun sell(player: Player, slot: Int, amount: Int, ): TransactionStatus {
         if (amount !in 1..Integer.MAX_VALUE) return TransactionStatus.Failure("Invalid amount: $amount")
         val playerInventory = player.inventory[slot]
         if (playerInventory.id in intArrayOf(Items.COINS_995, Items.TOKKUL_6529, Items.ARCHERY_TICKET_1464)) {
@@ -594,13 +466,8 @@ class Shop(
 
         val (container, profit) = getSellPrice(player, slot)
         if (profit.amount == -1) {
-            sendMessage(
-                player,
-                "This item can't be sold to this shop.",
-            ).also {
-                return TransactionStatus.Failure(
-                    "Can't sell this item to this shop - ${playerInventory.id}, general: $general, price: $profit",
-                )
+            sendMessage(player, "This item can't be sold to this shop.").also {
+                return TransactionStatus.Failure("Can't sell this item to this shop - ${playerInventory.id}, general: $general, price: $profit")
             }
         }
         if (amount > player.inventory.getAmount(item.id)) {
@@ -619,12 +486,11 @@ class Shop(
             var amt = item.amount
             var inStockAmt = container!![shopSlot]?.amount ?: playerStock.getAmount(id)
             while (amt-- > 1) {
-                profit.amount +=
-                    getGPSell(
-                        Item(item.id, 1),
-                        if (isPlayerStock) 0 else stock[shopSlot].amount,
-                        ++inStockAmt,
-                    )
+                profit.amount += getGPSell(
+                    Item(item.id, 1),
+                    if (isPlayerStock) 0 else stock[shopSlot].amount,
+                    ++inStockAmt,
+                )
             }
         } else {
             profit.amount = profit.amount * item.amount
@@ -659,11 +525,7 @@ class Shop(
     }
 
     /**
-     * Determines the stock slot and source (main stock or player stock) for a given item id.
-     *
-     * @param itemId The id of the item to locate in the stock.
-     * @return A [Pair] where the first value is `true` if found in player stock, `false` if in main stock,
-     *         and the second is the slot index where the item was found (or -1 if not found).
+     * Finds the stock source and slot index for a given item id.
      */
     fun getStockSlot(itemId: Int): Pair<Boolean, Int> {
         var shopSlot: Int = -1
@@ -690,35 +552,29 @@ class Shop(
 
     companion object {
         /**
-         * Shared container used by general stores for storing player-sold items.
-         * This is a globally shared inventory across all general stores.
+         * Shared container for player-sold items in general stores.
          */
         val generalPlayerStock = Container(40, ContainerType.SHOP)
 
         /**
-         * A map of shop IDs to their corresponding [ShopListener] instances.
-         * Used to track active listeners per shop.
+         * Maps shop IDs to their active ShopListener instances.
          */
         val listenerInstances = HashMap<Int, ShopListener>()
     }
 
     /**
-     * Represents the result of a shop transaction.
+     * Represents the outcome of a shop transaction.
      */
     sealed class TransactionStatus {
 
         /**
-         * Indicates that the transaction was completed successfully.
+         * Transaction completed successfully.
          */
         class Success : TransactionStatus()
 
         /**
-         * Indicates that the transaction failed.
-         *
-         * @param reason The reason why the transaction could not be completed.
+         * Transaction failed with a reason.
          */
-        class Failure(
-            val reason: String,
-        ) : TransactionStatus()
+        class Failure(val reason: String) : TransactionStatus()
     }
 }
