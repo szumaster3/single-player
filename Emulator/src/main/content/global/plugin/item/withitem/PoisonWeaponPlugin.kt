@@ -8,32 +8,41 @@ import org.rs.consts.Items
 import kotlin.math.min
 
 class PoisonWeaponPlugin : InteractionListener {
+    private val poisonsId = intArrayOf(
+        Items.WEAPON_POISON_187,
+        Items.WEAPON_POISON_PLUS_5937,
+        Items.WEAPON_POISON_PLUS_PLUS_5940
+    )
 
-    private val poisonsId = intArrayOf(Items.WEAPON_POISON_187, Items.WEAPON_POISON_PLUS_5937, Items.WEAPON_POISON_PLUS_PLUS_5940)
     private val regularWeapons = PoisonSets.itemMap.keys.toIntArray()
-    private val poisonedWeapons = PoisonSets.itemMap.values.toIntArray()
-    private val regularKarambwanWeapons = KarambwanPoisonSets.regularWeaponsMap.values.map { it.base }.toIntArray()
-    private val karambwanPoisonedWeapons = KarambwanPoisonSets.poisonWeaponMap.values.map { it.kp }.toIntArray()
+
+    private val poisonedWeapons = PoisonSets.itemMap.values
+        .flatMap { it.toList() }
+        .toIntArray()
+
+    private val regularKarambwanWeapons = KarambwanPoisonSets.values().map { it.base }.toIntArray()
+
+    private val karambwanPoisonedWeapons = KarambwanPoisonSets.values().map { it.kp }.toIntArray()
 
     override fun defineListeners() {
 
         onUseWith(IntType.ITEM, poisonsId, *regularWeapons) { player, used, with ->
             val index = poisonsId.indexOf(used.id)
-            val product = PoisonSets.itemMap[with.id]?.get(index) ?: return@onUseWith true
             val item = with.asItem()
+            val product = PoisonSets.itemMap[item.id]?.get(index) ?: return@onUseWith true
             val amt = min(5, item.amount)
 
             if (removeItem(player, Item(item.id, amt))) {
                 addItemOrDrop(player, product, amt)
                 replaceSlot(player, used.asItem().index, Item(Items.VIAL_229, 1))
-                sendMessage(player, "You poison the ${with.name.lowercase()}.")
+                sendMessage(player, "You poison the ${item.name.lowercase()}.")
             }
             return@onUseWith true
         }
 
         onUseWith(IntType.ITEM, Items.KARAMBWAN_PASTE_3153, *regularKarambwanWeapons) { player, used, with ->
             val item = with.asItem()
-            val product = KarambwanPoisonSets.regularWeaponsMap[item.id] ?: return@onUseWith true
+            val product = KarambwanPoisonSets.itemMap[item.id] ?: return@onUseWith true
 
             if (removeItem(player, used.asItem())) {
                 replaceSlot(player, item.index, Item(product.kp, 1))
@@ -83,12 +92,13 @@ class PoisonWeaponPlugin : InteractionListener {
         RUNE_HASTA(base = Items.RUNE_HASTA_11377, kp = Items.RUNE_HASTAKP_11416);
 
         companion object {
-            val regularWeaponsMap = values().associateBy { it.base }
-            val poisonWeaponMap = values().associateBy { it.kp }
+            // base ID -> enum
+            val itemMap = values().associateBy { it.base }
 
-            fun getBase(poisonedId: Int): Int? {
-                return poisonWeaponMap[poisonedId]?.base
-            }
+            // poisoned ID -> base ID
+            private val poisonedToBase = values().associate { it.kp to it.base }
+
+            fun getBase(poisoned: Int): Int? = poisonedToBase[poisoned]
         }
     }
 
