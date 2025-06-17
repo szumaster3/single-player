@@ -191,7 +191,7 @@ class StatsCommandSet : CommandSet(Privilege.STANDARD) {
             }
 
             if (queryPlayer == null) {
-                reject(player, "Invalid player or player not online.")
+                reject(player, "The player name is invalid or the player is not online.")
                 return@define
             }
 
