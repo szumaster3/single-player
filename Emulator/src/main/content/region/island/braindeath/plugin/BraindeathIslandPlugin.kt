@@ -3,6 +3,7 @@ package content.region.island.braindeath.plugin
 import core.api.faceLocation
 import core.api.findLocalNPC
 import core.api.sendChat
+import core.api.sendMessage
 import core.game.dialogue.FaceAnim
 import core.game.dialogue.SequenceDialogue.dialogue
 import core.game.global.action.DoorActionHandler
@@ -13,6 +14,15 @@ import org.rs.consts.NPCs
 import org.rs.consts.Scenery
 
 class BraindeathIslandPlugin : InteractionListener {
+
+    val ZOMBIE_SWAB_ID = intArrayOf(
+        NPCs.ZOMBIE_SWAB_2843,
+        NPCs.ZOMBIE_SWAB_2844,
+        NPCs.ZOMBIE_SWAB_2845,
+        NPCs.ZOMBIE_SWAB_2846,
+        NPCs.ZOMBIE_SWAB_2847,
+        NPCs.ZOMBIE_SWAB_2848
+    )
 
     override fun defineListeners() {
 
@@ -55,6 +65,15 @@ class BraindeathIslandPlugin : InteractionListener {
                     DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
                 }
             }
+            return@on true
+        }
+
+        /*
+         * Handles talking to Zombie swab NPC.
+         */
+
+        on(ZOMBIE_SWAB_ID, IntType.NPC, "talk-to") {player, _ ->
+            sendMessage(player, "I don't think he wants to talk to you.")
             return@on true
         }
     }

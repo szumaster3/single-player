@@ -1,0 +1,56 @@
+// Zombie Swab dialogues:
+// #1
+//     player("Hey you!"),
+//     npc("Hahahaha! Yer goin ter die!"),
+//     npc("We interrupt this insult to bring you this soothing picture of a kitten. Normal service will be resumed shortly. Thank you for your patience."),
+//     npc("Showing a kitten playing with a ball of yarn"),
+//     player("...so that all you will be able to hear from then on will be the rustling of the ants walking through them!"),
+//     npc("That be the most intimidatin' thing I've ever heard! I'm not messin' with you!")
+// ),
+// #2
+//     player("Hey you!"),
+//     npc("Hey yerself, landlubber!"),
+//     npc("We interrupt this insult to bring you this soothing picture of a kitten. Normal service will be resumed shortly. Thank you for your patience."),
+//     npc("Showing a kitten playing with a ball of yarn"),
+//     player("...so that you will know exactly what time it is due to the horrible pain in your earlobes!"),
+//     npc("That be the most intimidatin' thing I've ever heard! I'm not messin' with you!")
+// ),
+// #3
+//     player("Hey you!"),
+//     npc("Arr! Prepare to die!"),
+//     npc("We interrupt this insult to bring you this soothing picture of a kitten. Normal service will be resumed shortly. Thank you for your patience."),
+//     npc("Showing a kitten playing with a ball of yarn"),
+//     player("...meaning you'll need a dozen Ogres and a team of highly skilled surgeons to remove them!"),
+//     npc("That be the most intimidatin' thing I've ever heard! I'm not messin' with you!")
+// ),
+// #4
+//     player("Hey you!"),
+//     npc("Yer a deadman, sez I!!"),
+//     npc("We interrupt this insult to bring you this soothing picture of a kitten. Normal service will be resumed shortly. Thank you for your patience."),
+//     npc("Showing a kitten playing with a ball of yarn"),
+//     player("...leading to the eventual, violent explosion of those organs!"),
+//     npc("That be the most intimidatin' thing I've ever heard! I'm not messin' with you!")
+// ),
+// #5
+//     player("Hey you!"),
+//     npc("Yer brave, but stupid!"),
+//     npc("We interrupt this insult to bring you this soothing picture of a kitten. Normal service will be resumed shortly. Thank you for your patience."),
+//     npc("Showing a kitten playing with a ball of yarn"),
+//     npc("He seems to have vanished...you must have scared him off.")
+// ),
+// #6
+//     player("Hey you!"),
+//     npc("Yer brave, but stupid!"),
+//     npc("We interrupt this insult to bring you this soothing picture of a kitten. Normal service will be resumed shortly. Thank you for your patience."),
+//     npc("Showing a kitten playing with a ball of yarn"),
+//     player("...and then I'll use a wrench to remove the handles, so you'll see it every time you cough!"),
+//     npc("That be the most intimidatin' thing I've ever heard! I'm not messin' with you!")
+// ),
+// #7
+//     player("Hey you!"),
+//     npc("Yer a deadman, sez!!"),
+//     npc("We interrupt this insult to bring you this soothing picture of a kitten. Normal service will be resumed shortly. Thank you for your patience."),
+//     npc("Showing a kitten playing with a ball of yarn"),
+//     player("...and I'll grind up what's left, mix it with lemon juice and throw the whole lot into the ocean!"),
+//     npc("That be the most intimidatin' thing I've ever heard! I'm not messin' with you!")
+// )
