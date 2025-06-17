@@ -26,8 +26,8 @@ class EnchantedHeadgearManager(private val player: Player) {
         val chargedGear = enchantedGear.getOrPut(chargedItemId) { ChargedHeadgear(chargedItemId, Container(capacity)) }
         val container = chargedGear.container
 
-        val existingScrollIds = container.toArray().filterNotNull().map { it.id }.distinct()
-        if (existingScrollIds.isNotEmpty() && existingScrollIds.any { it != scrollId }) {
+        val existingScrollIds = container.toArray().filterNotNull().map { it.id }.toSet()
+        if (existingScrollIds.any { it != scrollId }) {
             sendMessage(player, "Your headgear already contains different scrolls. Remove them first.")
             return
         }
@@ -38,14 +38,15 @@ class EnchantedHeadgearManager(private val player: Player) {
             return
         }
 
-        val toAdd = amount.coerceAtMost(freeSpace)
+        val inventoryCount = player.inventory.getAmount(scrollId)
+        val toAdd = amount.coerceAtMost(freeSpace).coerceAtMost(inventoryCount)
 
-        val scrollItem = Item(scrollId, toAdd)
-        if (!player.inventory.containsItem(scrollItem)) {
-            sendMessage(player, "You do not have enough scrolls to add.")
+        if (toAdd <= 0) {
+            sendMessage(player, "You do not have any scrolls to add.")
             return
         }
 
+        val scrollItem = Item(scrollId, toAdd)
         if (!player.inventory.remove(scrollItem)) {
             player.debug("Failed to remove scrolls from your inventory.")
             return
@@ -67,6 +68,22 @@ class EnchantedHeadgearManager(private val player: Player) {
         container.remove(Item(scrollId, amount))
         container.shift()
         addItem(player, scrollId, amount)
+
+        val isEmpty = container.toArray().all { it == null }
+        if (isEmpty) {
+            val headgear = EnchantedHeadgear.byCharged[chargedItemId] ?: return false
+
+            val slot = player.inventory.getSlot(chargedItemId.asItem())
+            if (slot == -1) {
+                player.debug("Charged headgear not found in inventory.")
+                return false
+            }
+
+            val newItem = Item(headgear.enchantedItem.id, 1)
+            player.inventory.replace(newItem, slot)
+            enchantedGear.remove(chargedItemId)
+        }
+
         return true
     }
 
@@ -120,9 +137,7 @@ class EnchantedHeadgearManager(private val player: Player) {
      */
     fun getFromEquipment(): Int? {
         val headSlotItem = player.equipment[EquipmentSlot.HEAD.ordinal]
-        return if (headSlotItem != null && EnchantedHeadgear.byCharged.containsKey(headSlotItem.id)) {
-            headSlotItem.id
-        } else null
+        return headSlotItem?.takeIf { EnchantedHeadgear.byCharged.containsKey(it.id) }?.id
     }
 
     /**
@@ -185,7 +200,7 @@ class EnchantedHeadgearManager(private val player: Player) {
             }
             arr.add(obj)
         }
-        root["enchanted_headgear_scrolls"] = arr
+        root["enchanted_headgear"] = arr
     }
 
     /**

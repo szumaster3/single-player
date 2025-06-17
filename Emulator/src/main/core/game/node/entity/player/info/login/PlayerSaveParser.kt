@@ -97,11 +97,11 @@ class PlayerSaveParser(
     }
 
     fun parseHeadgear() {
-        if (saveFile!!.containsKey("headgear")) player.pouchManager.parse(saveFile!!["headgear"] as JSONArray)
+        if (saveFile!!.containsKey("enchanted_headgear")) player.enchgearManager.parse(saveFile!!["enchanted_headgear"] as JSONArray)
     }
 
     fun parseBoltPouch() {
-        if (saveFile!!.containsKey("boltpouch")) player.pouchManager.parse(saveFile!!["boltpouch"] as JSONArray)
+        if (saveFile!!.containsKey("boltpouch")) player.boltPouchManager.parse(saveFile!!["boltpouch"] as JSONArray)
     }
 
     fun parseAttributes() {

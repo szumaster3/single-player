@@ -53,6 +53,7 @@ class PlayerSaver(
         saveAttributes(saveFile)
         savePouches(saveFile)
         saveHeadgear(saveFile)
+        saveBoltPouch(saveFile)
         saveVersion(saveFile)
         contentHooks.forEach { it.savePlayer(player, saveFile) }
         return saveFile

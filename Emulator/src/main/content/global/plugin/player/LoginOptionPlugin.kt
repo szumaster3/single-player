@@ -50,27 +50,29 @@ class LoginOptionPlugin : Plugin<Player> {
             player.getSavedData().globalData.setLootShareDelay(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(1))
         }
 
-        val musicTracks = listOf(
-            Music.ADVENTURE_177,
-            Music.BITTERSWEET_BUNNY_502,
-            Music.THE_DANCE_OF_THE_SNOW_QUEEN_593,
-            Music.DIANGOS_LITTLE_HELPERS_532,
-            Music.LAND_OF_SNOW_189,
-            Music.FUNNY_BUNNIES_603,
-            Music.HIGH_SPIRITS_205,
-            Music.GRIMLY_FIENDISH_432,
-            Music.EASTER_JIG_273,
-            Music.SEA_SHANTY_XMAS_210,
-            Music.JUNGLE_BELLS_209,
-            Music.JUNGLE_ISLAND_XMAS_208,
+        val musicTracks = intArrayOf(
             Music.SCAPE_MAIN_16,
-            Music.HOMESCAPE_621,
+            Music.NEWBIE_MELODY_62,
+            Music.ADVENTURE_177,
+            Music.LAND_OF_SNOW_189,
+            Music.HIGH_SPIRITS_205,
             Music.SCAPE_HUNTER_207,
-            Music.SCAPE_ORIGINAL_400,
-            Music.SCAPE_SUMMON_457,
-            Music.SCAPE_SANTA_547,
+            Music.JUNGLE_ISLAND_XMAS_208,
+            Music.JUNGLE_BELLS_209,
+            Music.SEA_SHANTY_XMAS_210,
+            Music.EASTER_JIG_273,
             Music.SCAPE_SCARED_321,
+            Music.GRIMLY_FIENDISH_432,
+            Music.SCAPE_SUMMON_457,
             Music.GROUND_SCAPE_466,
+            Music.SCAPE_ORIGINAL_400,
+            Music.THE_ADVENTURER_401,
+            Music.BITTERSWEET_BUNNY_502,
+            Music.DIANGOS_LITTLE_HELPERS_532,
+            Music.SCAPE_SANTA_547,
+            Music.THE_DANCE_OF_THE_SNOW_QUEEN_593,
+            Music.FUNNY_BUNNIES_603,
+            Music.HOMESCAPE_621,
         )
 
         musicTracks.forEach { track ->

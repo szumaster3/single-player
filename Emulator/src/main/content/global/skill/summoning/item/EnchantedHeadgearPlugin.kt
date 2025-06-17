@@ -64,12 +64,18 @@ class EnchantedHeadgearPlugin : InteractionListener {
             }
 
             val enchantedGear = enchManager.enchantedGear[item.id]
-            if (enchantedGear == null || enchantedGear.container.toArray().all { it == null }) {
+            if (enchantedGear == null) {
                 sendMessage(player, "Could not find the charged headgear in your inventory.")
                 return@on true
             }
 
-            val firstScroll = enchantedGear.container.toArray().firstOrNull { it != null } ?: run {
+            val containerItems = enchantedGear.container.toArray()
+            if (containerItems.all { it == null }) {
+                sendMessage(player, "Could not find the charged headgear in your inventory.")
+                return@on true
+            }
+
+            val firstScroll = containerItems.firstOrNull { it != null } ?: run {
                 sendMessage(player, "Could not find the charged headgear in your inventory.")
                 return@on true
             }
@@ -77,7 +83,10 @@ class EnchantedHeadgearPlugin : InteractionListener {
             val success = enchManager.withdrawScrolls(enchantedGear.chargedItemId, firstScroll.id, firstScroll.amount)
 
             if (success) {
-                sendMessages(player, "You remove the scrolls. You will need to use a Summoning scroll on it to charge the", "headgear up once more.")
+                sendMessages(player,
+                    "You remove the scrolls. You will need to use a Summoning scroll on it to charge the",
+                    "headgear up once more."
+                )
             } else {
                 player.debug("Failed to remove the scrolls.")
             }
@@ -121,11 +130,7 @@ class EnchantedHeadgearPlugin : InteractionListener {
             val slot = enchantedItem.index
             if (slot >= 0) {
                 replaceSlot(player, slot, chargedItem)
-                sendMessage(player, "You charge the headgear with a scroll.")
-            } else {
-                sendMessage(player, "Failed to update your inventory with the charged item.")
             }
-
             return@onUseWith true
         }
     }
