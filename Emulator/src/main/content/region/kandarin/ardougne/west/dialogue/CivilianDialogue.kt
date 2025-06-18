@@ -1,6 +1,6 @@
 package content.region.kandarin.ardougne.west.dialogue
 
-import content.global.plugin.item.withnpc.grownCatItemIds
+import content.region.misthalin.draynor.quest.swept_cat.grownCatItemIds
 import core.api.*
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
