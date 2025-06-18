@@ -10,13 +10,9 @@ import core.tools.END_DIALOGUE
 import core.tools.colorize
 import org.rs.consts.Items
 
-class GnomeCookingDialogue(
-    val job: GnomeCookingTask,
-) : DialogueFile() {
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
+class GnomeCookingDialogue(val job: GnomeCookingTask, ) : DialogueFile() {
+
+    override fun handle(componentID: Int, buttonID: Int, ) {
         when (stage) {
             0 -> {
                 val neededItem = player!!.getAttribute<Item>("$GC_BASE_ATTRIBUTE:$GC_NEEDED_ITEM", null)

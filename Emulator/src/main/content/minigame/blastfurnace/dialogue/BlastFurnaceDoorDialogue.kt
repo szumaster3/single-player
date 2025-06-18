@@ -18,14 +18,14 @@ class BlastFurnaceDoorDialogue(val fee: Int) : DialogueFile() {
             1 -> sendDialogue(player!!, "However, you may enter for 10 minutes if you pay the entrance fee.<br>($fee gp)").also { stage++ }
             2 -> options("Yes", "No").also { stage++ }
             3 -> when (buttonID) {
-                1 -> {
-                    if (removeItem(player!!, Item(Items.COINS_995, fee))) {
-                        BlastFurnace.enter(player!!, true)
-                    } else {
-                        sendDialogue(player!!, "You don't have enough gold to cover the entrance fee!")
-                    }
-                    stage = END_DIALOGUE
+                1 -> if (removeItem(player!!, Item(Items.COINS_995, fee))) {
+                    end()
+                    BlastFurnace.enter(player!!, true)
+                } else {
+                    end()
+                    sendDialogue(player!!, "You don't have enough gold to cover the entrance fee!")
                 }
+
                 2 -> sendDialogue(player!!, "Then get out of here!").also { stage = END_DIALOGUE }
             }
         }

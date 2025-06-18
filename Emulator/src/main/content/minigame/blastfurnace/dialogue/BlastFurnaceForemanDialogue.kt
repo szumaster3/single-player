@@ -27,12 +27,11 @@ class BlastFurnaceForemanDialogue(player: Player? = null) : Dialogue(player) {
                 stage++
             }
 
-            1 ->
-                showTopics(
-                    Topic("What?", 2, true),
-                    Topic("Ask about dragon metal.", 52, true),
-                    Topic(FaceAnim.FRIENDLY, "Okay.", END_DIALOGUE),
-                )
+            1 -> showTopics(
+                Topic("What?", 2, true),
+                Topic("Ask about dragon metal.", 52, true),
+                Topic(FaceAnim.FRIENDLY, "Okay.", END_DIALOGUE),
+            )
 
             2 -> {
                 npcl(FaceAnim.OLD_DEFAULT, "You are here to help work the blast furnace, aren't you?")
@@ -189,33 +188,32 @@ class BlastFurnaceForemanDialogue(player: Player? = null) : Dialogue(player) {
                 stage = 61
             }
 
-            61 ->
-                when (buttonId) {
-                    1 -> {
-                        playerl(FaceAnim.HALF_ASKING, "How much is a hammer?")
-                        stage = 62
-                    }
-
-                    2 -> {
-                        playerl(FaceAnim.FRIENDLY, "I want to trade in my hammer and get some money back.")
-                        stage = 65
-                    }
-
-                    3 -> {
-                        playerl(FaceAnim.FRIENDLY, "How come you have such a hammer in the first place?")
-                        stage = 68
-                    }
-
-                    4 -> {
-                        playerl(FaceAnim.FRIENDLY, "What would dragon metal be used for?")
-                        stage = 53
-                    }
-
-                    5 -> {
-                        playerl(FaceAnim.FRIENDLY, "Okay, thanks.")
-                        stage = 100
-                    }
+            61 -> when (buttonId) {
+                1 -> {
+                    playerl(FaceAnim.HALF_ASKING, "How much is a hammer?")
+                    stage = 62
                 }
+
+                2 -> {
+                    playerl(FaceAnim.FRIENDLY, "I want to trade in my hammer and get some money back.")
+                    stage = 65
+                }
+
+                3 -> {
+                    playerl(FaceAnim.FRIENDLY, "How come you have such a hammer in the first place?")
+                    stage = 68
+                }
+
+                4 -> {
+                    playerl(FaceAnim.FRIENDLY, "What would dragon metal be used for?")
+                    stage = 53
+                }
+
+                5 -> {
+                    playerl(FaceAnim.FRIENDLY, "Okay, thanks.")
+                    stage = 100
+                }
+            }
 
             62 -> {
                 npcl(FaceAnim.OLD_DEFAULT, "It costs 1,000,000 coins.")
@@ -227,30 +225,28 @@ class BlastFurnaceForemanDialogue(player: Player? = null) : Dialogue(player) {
                 stage = 64
             }
 
-            64 ->
-                when (buttonId) {
-                    1 ->
-                        if (!removeItem(player, Item(Items.COINS_995, 1000000))) {
-                            npcl(
-                                FaceAnim.OLD_DEFAULT,
-                                "You don't have enough money to buy a blast fusion hammer, come back when you can afford one.",
-                            )
-                            stage = 100
-                        } else {
-                            sendItemDialogue(
-                                player!!,
-                                Items.BLAST_FUSION_HAMMER_14478,
-                                "You hand over 1,000,000 coins for the blast fusion hammer.",
-                            )
-                            addItemOrDrop(player, Items.BLAST_FUSION_HAMMER_14478)
-                            stage = 100
-                        }
-
-                    2 -> {
-                        playerl(FaceAnim.FRIENDLY, "I'll leave it for now, thanks.")
-                        stage = 100
-                    }
+            64 -> when (buttonId) {
+                1 -> if (!removeItem(player, Item(Items.COINS_995, 1000000))) {
+                    npcl(
+                        FaceAnim.OLD_DEFAULT,
+                        "You don't have enough money to buy a blast fusion hammer, come back when you can afford one.",
+                    )
+                    stage = 100
+                } else {
+                    sendItemDialogue(
+                        player!!,
+                        Items.BLAST_FUSION_HAMMER_14478,
+                        "You hand over 1,000,000 coins for the blast fusion hammer.",
+                    )
+                    addItemOrDrop(player, Items.BLAST_FUSION_HAMMER_14478)
+                    stage = 100
                 }
+
+                2 -> {
+                    playerl(FaceAnim.FRIENDLY, "I'll leave it for now, thanks.")
+                    stage = 100
+                }
+            }
 
             65 -> {
                 npcl(
@@ -318,18 +314,17 @@ class BlastFurnaceForemanDialogue(player: Player? = null) : Dialogue(player) {
         val npc: NPC,
     ) : Pulse() {
         companion object {
-            val forceChat =
-                arrayOf(
-                    "Good work soldier!",
-                    "Push it!",
-                    "Work it!",
-                    "The dummy is the enemy. Kill it!",
-                    "Put your back into it soldier!",
-                    "You're not out for a sunday stroll soldier!",
-                    "My daughter can hit harder than that!",
-                    "I want to see you sweat!",
-                    "Keep it up soldier!",
-                )
+            val forceChat = arrayOf(
+                "Good work soldier!",
+                "Push it!",
+                "Work it!",
+                "The dummy is the enemy. Kill it!",
+                "Put your back into it soldier!",
+                "You're not out for a sunday stroll soldier!",
+                "My daughter can hit harder than that!",
+                "I want to see you sweat!",
+                "Keep it up soldier!",
+            )
         }
 
         var ticks = 0

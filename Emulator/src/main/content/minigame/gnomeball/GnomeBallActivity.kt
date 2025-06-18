@@ -7,17 +7,8 @@ import core.game.world.GameWorld
 import core.game.world.map.Location
 import core.game.world.map.zone.ZoneRestriction
 
-class GnomeBallActivity :
-    ActivityPlugin(
-        "gnomeball",
-        false,
-        false,
-        false,
-        ZoneRestriction.CANNON,
-        ZoneRestriction.FIRES,
-        ZoneRestriction.FOLLOWERS,
-        ZoneRestriction.RANDOM_EVENTS,
-    ) {
+class GnomeBallActivity : ActivityPlugin("gnomeball", false, false, false, ZoneRestriction.CANNON, ZoneRestriction.FIRES, ZoneRestriction.FOLLOWERS, ZoneRestriction.RANDOM_EVENTS) {
+
     private val waitTime = if (GameWorld.settings?.isDevMode == true) 10 else 203
     private val waitingPlayers = ArrayList<Player>()
 

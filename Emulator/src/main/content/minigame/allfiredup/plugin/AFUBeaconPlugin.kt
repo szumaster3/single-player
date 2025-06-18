@@ -48,21 +48,13 @@ class AFUBeaconPlugin : InteractionListener {
         }
     }
 
-    fun fillBeacon(
-        player: Player,
-        beacon: AFUBeacon,
-        questComplete: Boolean,
-    ) {
+    private fun fillBeacon(player: Player, beacon: AFUBeacon, questComplete: Boolean, ) {
         when (beacon) {
             AFUBeacon.MONASTERY -> {
                 if (getStatLevel(player, Skills.PRAYER) < 31) {
-                    player.dialogueInterpreter.sendDialogues(
-                        core.game.node.entity.npc
+                    player.dialogueInterpreter.sendDialogues(core.game.node.entity.npc
                             .NPC(beacon.keeper)
-                            .getShownNPC(player),
-                        FaceAnim.ANGRY,
-                        "You must join the monastery to light this beacon!",
-                    )
+                            .getShownNPC(player), FaceAnim.ANGRY, "You must join the monastery to light this beacon!",)
                     return
                 }
             }
@@ -76,14 +68,9 @@ class AFUBeaconPlugin : InteractionListener {
 
             AFUBeacon.GOBLIN_VILLAGE -> {
                 if (!isQuestComplete(player, Quests.THE_LOST_TRIBE)) {
-                    player.dialogueInterpreter.sendDialogues(
-                        core.game.node.entity.npc
+                    player.dialogueInterpreter.sendDialogues(core.game.node.entity.npc
                             .NPC(beacon.keeper)
-                            .getShownNPC(player),
-                        FaceAnim.THINKING,
-                        "We no trust you outsider. You no light our beacon.",
-                        "(Complete Lost Tribe to use this beacon.)",
-                    )
+                            .getShownNPC(player), FaceAnim.THINKING, "We no trust you outsider. You no light our beacon.", "(Complete Lost Tribe to use this beacon.)",)
                     return
                 }
             }
@@ -138,11 +125,7 @@ class AFUBeaconPlugin : InteractionListener {
         }
     }
 
-    fun lightBeacon(
-        player: Player,
-        beacon: AFUBeacon,
-        questComplete: Boolean,
-    ) {
+    private fun lightBeacon(player: Player, beacon: AFUBeacon, questComplete: Boolean, ) {
         var session: AFUSession? = null
         if (questComplete) {
             session = player.getAttribute("afu-session", null)
@@ -163,51 +146,23 @@ class AFUBeaconPlugin : InteractionListener {
                                 if (questComplete) {
                                     session?.startTimer(beacon.ordinal)
                                     if (session?.getLitBeacons() == 6 && !player.hasFireRing()) {
-                                        sendDoubleItemDialogue(
-                                            player,
-                                            -1,
-                                            Items.RING_OF_FIRE_13659,
-                                            DARK_BLUE +
-                                                "Congratulations! You have kept six beacons alight simultaneously!</col><br></br>Why don't you talk to King Roald in Varrock? He has<br></br>a special rewawrd for you.",
-                                        )
+                                        sendDoubleItemDialogue(player, -1, Items.RING_OF_FIRE_13659, DARK_BLUE +
+                                                    "Congratulations! You have kept six beacons alight simultaneously!</col><br></br>Why don't you talk to King Roald in Varrock? He has<br></br>a special rewawrd for you.",)
                                         sendMessage(player, "Congratulations! You've lit six beacons simultaneously!")
-                                        sendMessage(
-                                            player,
-                                            "Why don't you talk to King Roald in Varrock? He has a special reward for you.",
-                                        )
+                                        sendMessage(player, "Why don't you talk to King Roald in Varrock? He has a special reward for you.")
                                         setAttribute(player, "/save:afu-mini:ring", true)
                                     }
                                     if (session?.getLitBeacons() == 10 && !player.hasFlameGloves()) {
-                                        sendDoubleItemDialogue(
-                                            player,
-                                            -1,
-                                            Items.FLAME_GLOVES_13660,
-                                            DARK_BLUE +
-                                                "Congratulations! You have kept ten beacons alight simultaneously!</col><br></br>Why don't you talk to King Roald in Varrock? He has<br></br>a special rewawrd for you.",
-                                        )
+                                        sendDoubleItemDialogue(player, -1, Items.FLAME_GLOVES_13660, DARK_BLUE +
+                                                    "Congratulations! You have kept ten beacons alight simultaneously!</col><br></br>Why don't you talk to King Roald in Varrock? He has<br></br>a special rewawrd for you.",)
                                         sendMessage(player, "Congratulations! You've lit ten beacons simultaneously!")
-                                        sendMessage(
-                                            player,
-                                            "Why don't you talk to King Roald in Varrock? He has a special reward for you.",
-                                        )
+                                        sendMessage(player, "Why don't you talk to King Roald in Varrock? He has a special reward for you.")
                                         setAttribute(player, "/save:afu-mini:gloves", true)
                                     }
                                     if (session?.getLitBeacons() == 14 && !player.hasInfernoAdze()) {
-                                        sendDoubleItemDialogue(
-                                            player,
-                                            -1,
-                                            Items.INFERNO_ADZE_13661,
-                                            DARK_BLUE +
-                                                "Congratulations! You have kept all fourteen beacons alight simultaneously!</col><br></br>Why don't you talk to King Roald in Varrock? He has<br></br>a special rewawrd for you.",
-                                        )
-                                        sendMessage(
-                                            player,
-                                            "Congratulations! You've lit all fourteen beacons simultaneously!",
-                                        )
-                                        sendMessage(
-                                            player,
-                                            "Why don't you talk to King Roald in Varrock? He has a special reward for you.",
-                                        )
+                                        sendDoubleItemDialogue(player, -1, Items.INFERNO_ADZE_13661, DARK_BLUE + "Congratulations! You have kept all fourteen beacons alight simultaneously!</col><br></br>Why don't you talk to King Roald in Varrock? He has<br></br>a special rewawrd for you.",)
+                                        sendMessage(player, "Congratulations! You've lit all fourteen beacons simultaneously!")
+                                        sendMessage(player, "Why don't you talk to King Roald in Varrock? He has a special reward for you.")
                                         setAttribute(player, "/save:afu-mini:adze", true)
                                     }
                                     var experience = beacon.experience
@@ -233,11 +188,7 @@ class AFUBeaconPlugin : InteractionListener {
         }
     }
 
-    fun restoreBeacon(
-        player: Player,
-        beacon: AFUBeacon,
-        questComplete: Boolean,
-    ) {
+    private fun restoreBeacon(player: Player, beacon: AFUBeacon, questComplete: Boolean, ) {
         var session: AFUSession? = null
         if (questComplete) {
             session = player.getAttribute("afu-session", null)
@@ -254,15 +205,13 @@ class AFUBeaconPlugin : InteractionListener {
                     override fun pulse(): Boolean {
                         when (counter++) {
                             0 -> player.animator.animate(FILL_ANIM)
-                            1 ->
-                                beacon.light(player).also {
-                                    if (questComplete) {
-                                        session?.refreshTimer(beacon, logs.id)
-                                    } else {
-                                        setQuestStage(player, Quests.ALL_FIRED_UP, 80)
-                                    }
+                            1 -> beacon.light(player).also {
+                                if (questComplete) {
+                                    session?.refreshTimer(beacon, logs.id)
+                                } else {
+                                    setQuestStage(player, Quests.ALL_FIRED_UP, 80)
                                 }
-
+                            }
                             2 -> player.unlock().also { return true }
                         }
                         return false
@@ -274,10 +223,7 @@ class AFUBeaconPlugin : InteractionListener {
         }
     }
 
-    fun getLogs(
-        player: Player,
-        amount: Int,
-    ): Item {
+    private fun getLogs(player: Player, amount: Int, ): Item {
         var logId = 0
         for (log in VALID_LOGS) {
             if (player.inventory.getAmount(log) >= amount) {
@@ -291,21 +237,15 @@ class AFUBeaconPlugin : InteractionListener {
     fun Player.hasFireRing(): Boolean =
         inventory.containsItem(Item(Items.RING_OF_FIRE_13659)) ||
             bank.containsItem(Item(Items.RING_OF_FIRE_13659)) ||
-            equipment.containsItem(
-                Item(Items.RING_OF_FIRE_13659),
-            )
+            equipment.containsItem(Item(Items.RING_OF_FIRE_13659))
 
     fun Player.hasFlameGloves(): Boolean =
         inventory.containsItem(Item(Items.FLAME_GLOVES_13660)) ||
             bank.containsItem(Item(Items.FLAME_GLOVES_13660)) ||
-            equipment.containsItem(
-                Item(Items.FLAME_GLOVES_13660),
-            )
+            equipment.containsItem(Item(Items.FLAME_GLOVES_13660))
 
     fun Player.hasInfernoAdze(): Boolean =
         inventory.containsItem(Item(Items.INFERNO_ADZE_13661)) ||
             bank.containsItem(Item(Items.INFERNO_ADZE_13661)) ||
-            equipment.containsItem(
-                Item(Items.INFERNO_ADZE_13661),
-            )
+            equipment.containsItem(Item(Items.INFERNO_ADZE_13661))
 }

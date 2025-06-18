@@ -9,10 +9,8 @@ import core.tools.START_DIALOGUE
 import org.rs.consts.Items
 
 class KingRoaldAFUDialogue : DialogueFile() {
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
+
+    override fun handle(componentID: Int, buttonID: Int) {
         when (stage) {
             START_DIALOGUE -> npc("Did what?").also { stage++ }
             1 -> {
@@ -29,29 +27,17 @@ class KingRoaldAFUDialogue : DialogueFile() {
             2 -> {
                 npc("Oh, wonderful! Here is your reward then.")
                 if (getAttribute(player!!, "afu-mini:adze", false)) {
-                    if (addItem(
-                            player!!,
-                            Items.INFERNO_ADZE_13661,
-                        )
-                    ) {
+                    if (addItem(player!!, Items.INFERNO_ADZE_13661)) {
                         removeAttribute(player!!, "afu-mini:adze")
                     }
                 }
                 if (getAttribute(player!!, "afu-mini:gloves", false)) {
-                    if (addItem(
-                            player!!,
-                            Items.FLAME_GLOVES_13660,
-                        )
-                    ) {
+                    if (addItem(player!!, Items.FLAME_GLOVES_13660)) {
                         removeAttribute(player!!, "afu-mini:gloves")
                     }
                 }
                 if (getAttribute(player!!, "afu-mini:ring", false)) {
-                    if (addItem(
-                            player!!,
-                            Items.RING_OF_FIRE_13659,
-                        )
-                    ) {
+                    if (addItem(player!!, Items.RING_OF_FIRE_13659)) {
                         removeAttribute(player!!, "afu-mini:ring")
                     }
                 }

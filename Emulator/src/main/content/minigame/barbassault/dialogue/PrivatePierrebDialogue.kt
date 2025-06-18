@@ -12,19 +12,15 @@ import org.rs.consts.NPCs
 import org.rs.consts.Sounds
 
 @Initializable
-class PrivatePierrebDialogue(
-    player: Player? = null,
-) : Dialogue(player) {
+class PrivatePierrebDialogue(player: Player? = null, ) : Dialogue(player) {
+
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         playerl(FaceAnim.FRIENDLY, "Hello. So you're just a private?")
         return true
     }
 
-    override fun handle(
-        interfaceId: Int,
-        buttonId: Int,
-    ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
         when (stage) {
             0 -> npcl(FaceAnim.FRIENDLY, "Show some respect! It's more than you'll achieve.").also { stage++ }
             1 -> playerl(FaceAnim.FRIENDLY, "I beg to differ. I'm in perfect shape!").also { stage++ }
@@ -36,14 +32,12 @@ class PrivatePierrebDialogue(
                 playAudio(player, Sounds.STAR_JUMP_2492, 0, 5)
                 stage++
             }
-
             7 -> npcl(FaceAnim.FRIENDLY, "Five sit-ups!").also { stage++ }
             8 -> {
                 DrillDemonUtils.animationForTask(DrillDemonUtils.DD_SIGN_PUSHUP)
                 playAudio(player, Sounds.PRESSUPS_2481, 25, 5)
                 stage++
             }
-
             9 -> npcl(FaceAnim.FRIENDLY, "Run on the spot!").also { stage++ }
             10 -> {
                 DrillDemonUtils.animationForTask(DrillDemonUtils.DD_SIGN_RUN)
@@ -51,11 +45,7 @@ class PrivatePierrebDialogue(
                 stage++
             }
 
-            11 ->
-                npcl(
-                    FaceAnim.NEUTRAL,
-                    "Okay. Maybe you have what it takes. Best you speak with the captain.",
-                ).also { stage = END_DIALOGUE }
+            11 -> npcl(FaceAnim.NEUTRAL, "Okay. Maybe you have what it takes. Best you speak with the captain.").also { stage = END_DIALOGUE }
         }
         return true
     }

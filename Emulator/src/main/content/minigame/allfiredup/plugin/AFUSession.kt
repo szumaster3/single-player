@@ -7,9 +7,8 @@ import core.game.system.task.Pulse
 import core.tools.colorize
 import org.rs.consts.Items
 
-class AFUSession(
-    val player: Player? = null,
-) : LogoutListener {
+class AFUSession(val player: Player? = null) : LogoutListener {
+
     private val beaconTimers = Array(14) { i -> BeaconTimer(0, AFUBeacon.values()[i]) }
     private val logInventories = Array(14) { Item(0, 0) }
     private val beaconWatched = Array(14) { false }
@@ -29,36 +28,15 @@ class AFUSession(
                                     beaconWatched[timer.beacon.ordinal] = false
                                     timer.ticks += (getTicks(logInventories[timer.beacon.ordinal].id) * 5)
                                     timer.beacon.light(player)
-                                    sendMessage(
-                                        player,
-                                        colorize(
-                                            "%RThe ${
-                                                timer.beacon.name.lowercase().replace("_", " ")
-                                            } watcher has used your backup logs.",
-                                        ),
-                                    )
+                                    sendMessage(player, colorize("%RThe ${timer.beacon.name.lowercase().replace("_", " ")} watcher has used your backup logs.",),)
                                 } else {
-                                    sendMessage(
-                                        player,
-                                        colorize(
-                                            "%RThe ${
-                                                timer.beacon.name.lowercase().replace("_", " ")
-                                            } beacon is dying!",
-                                        ),
-                                    )
+                                    sendMessage(player, colorize("%RThe ${timer.beacon.name.lowercase().replace("_", " ")} beacon is dying!",),)
                                 }
                             }
                         }
                         if (timer.ticks == 0) {
                             timer.beacon.extinguish(player).also {
-                                sendMessage(
-                                    player,
-                                    colorize(
-                                        "%RThe ${
-                                            timer.beacon.name.lowercase().replace("_", " ")
-                                        } beacon has gone out!",
-                                    ),
-                                )
+                                sendMessage(player, colorize("%RThe ${timer.beacon.name.lowercase().replace("_", " ")} beacon has gone out!",),)
                             }
                         }
                     }
