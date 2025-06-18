@@ -10,8 +10,7 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 
 /**
- * Represents the Estate Agent dialogue.
- * @author szu
+ * Represents the Fur trader dialogue.
  */
 @Initializable
 class FurTradeDialogue(player: Player? = null) : Dialogue(player) {
