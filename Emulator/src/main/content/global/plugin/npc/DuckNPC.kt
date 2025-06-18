@@ -12,7 +12,7 @@ class DuckNPC : NPCBehavior(NPCs.DUCK_46, NPCs.DUCK_2693, NPCs.DUCK_6113) {
 
     override fun tick(self: NPC): Boolean {
         if (RandomFunction.random(100) < chatFrequency) {
-            val randomChat = forceChat[RandomFunction.random(forceChat.size)]
+            val randomChat = forceChat.random()
             sendChat(self, randomChat)
         }
         return true

@@ -20,8 +20,8 @@ class GravingasNPC : NPCBehavior(NPCs.GRAVINGAS_1685) {
         )
 
     override fun tick(self: NPC): Boolean {
-        if (RandomFunction.roll(25)) {
-            sendChat(self, forceChat[RandomFunction.random(forceChat.size)])
+        if (RandomFunction.random(15, 100) == 5) {
+            sendChat(self, forceChat.random())
         }
         return true
     }

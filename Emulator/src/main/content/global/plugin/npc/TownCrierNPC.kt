@@ -29,15 +29,12 @@ class TownCrierNPC : NPCBehavior(
 
     override fun tick(self: NPC): Boolean {
         if (RandomFunction.random(FORCE_CHAT_CHANCE) == 0) {
-            doForceChat(self)
+            stopWalk(self)
+            val (chat, animation) = forceChatList.random()
+            animate(self, animation)
+            sendChat(self, chat)
         }
         return super.tick(self)
     }
 
-    private fun doForceChat(self: NPC) {
-        stopWalk(self)
-        val (chat, animation) = forceChatList.random()
-        animate(self, animation)
-        sendChat(self, chat)
-    }
 }

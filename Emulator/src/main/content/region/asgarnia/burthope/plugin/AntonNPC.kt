@@ -7,29 +7,21 @@ import core.tools.RandomFunction
 import org.rs.consts.NPCs
 
 @Initializable
-class AntonNPC(
-    id: Int = 0,
-    location: Location? = null,
-) : AbstractNPC(id, location) {
-    private val forceChat: Array<String> =
-        arrayOf(
-            "Armour and axes to suit your needs.",
-            "Imported weapons from the finest smithys around the lands!",
-            "Ow, my toe! That armour is heavy.",
-        )
+class AntonNPC(id: Int = 0, location: Location? = null, ) : AbstractNPC(id, location) {
 
-    override fun construct(
-        id: Int,
-        location: Location,
-        vararg objects: Any,
-    ): AbstractNPC = AntonNPC(id, location)
+    private val forceChat: Array<String> = arrayOf(
+        "Armour and axes to suit your needs.",
+        "Imported weapons from the finest smithys around the lands!",
+        "Ow, my toe! That armour is heavy."
+    )
+
+    override fun construct(id: Int, location: Location, vararg objects: Any, ): AbstractNPC = AntonNPC(id, location)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.ANTON_4295)
 
     override fun tick() {
-        if (RandomFunction.random(35) == 5) {
-            sendChat(forceChat[RandomFunction.random(forceChat.size)])
+        if (RandomFunction.random(100) == 5) {
+            sendChat(forceChat.random())
         }
-        super.tick()
     }
 }
