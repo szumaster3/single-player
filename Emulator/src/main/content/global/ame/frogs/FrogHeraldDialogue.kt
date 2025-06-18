@@ -17,13 +17,8 @@ import org.rs.consts.NPCs
  * Represents the dialogue file used for the Frog Herald NPC.
  * @author szu
  */
-class FrogHeraldDialogue(
-    val isStarted: Boolean = false,
-) : DialogueFile() {
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
+class FrogHeraldDialogue(val isStarted: Boolean = false) : DialogueFile() {
+    override fun handle(componentID: Int, buttonID: Int) {
         npc = NPC(NPCs.FROG_2471)
         if (isStarted) {
             when (stage) {
@@ -52,7 +47,9 @@ class FrogHeraldDialogue(
                         registerLogoutListener(player!!, RandomEvent.logout()) { p ->
                             p.location = getAttribute(p, RandomEvent.save(), player!!.location)
                         }
-                        teleport(player!!, Location.create(2463, 4781, 0), TeleportManager.TeleportType.RANDOM_EVENT_OLD)
+                        teleport(
+                            player!!, Location.create(2463, 4781, 0), TeleportManager.TeleportType.RANDOM_EVENT_OLD
+                        )
                         removeTabs(player!!, 0, 1, 2, 3, 4, 5, 6, 7, 14)
                         openDialogue(player!!, FrogHeraldDialogue(true))
                         AntiMacro.terminateEventNpc(player!!)

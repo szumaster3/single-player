@@ -60,30 +60,12 @@ class QuizMasterDialogue : DialogueFile() {
         }
     }
 
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
+    override fun handle(componentID: Int, buttonID: Int, ) {
         npc = NPC(NPCs.QUIZ_MASTER_2477)
         when (stage) {
-            0 ->
-                npc(
-                    FaceAnim.FRIENDLY,
-                    "WELCOME to the GREATEST QUIZ SHOW in the",
-                    "whole of ${ServerConstants.SERVER_NAME}:",
-                    "<col=8A0808>O D D</col>  <col=8A088A>O N E</col>  <col=08088A>O U T</col>",
-                ).also { stage++ }
-
+            0 -> npc(FaceAnim.FRIENDLY, "WELCOME to the GREATEST QUIZ SHOW in the", "whole of ${ServerConstants.SERVER_NAME}:", "<col=8A0808>O D D</col>  <col=8A088A>O N E</col>  <col=08088A>O U T</col>").also { stage++ }
             1 -> player(FaceAnim.THINKING, "I'm sure I didn't ask to take part in a quiz show...").also { stage++ }
-            2 ->
-                npc(
-                    FaceAnim.FRIENDLY,
-                    "Please welcome our newest contestant:",
-                    "<col=FF0000>${player?.username}</col>!",
-                    "Just pick the O D D  O N E  O U T.",
-                    "Four questions right, and then you win!",
-                ).also { stage++ }
-
+            2 -> npc(FaceAnim.FRIENDLY, "Please welcome our newest contestant:", "<col=FF0000>${player?.username}</col>!", "Just pick the O D D  O N E  O U T.", "Four questions right, and then you win!").also { stage++ }
             3 -> {
                 setAttribute(player!!, QUIZMASTER_ATTRIBUTE_RANDOM_ANSWER, randomQuestion(player!!))
                 player!!.interfaceManager.openChatbox(QUIZMASTER_INTERFACE)
@@ -95,36 +77,18 @@ class QuizMasterDialogue : DialogueFile() {
                     /*
                      * Correct Answer.
                      */
-                    setAttribute(
-                        player!!,
-                        QUIZMASTER_ATTRIBUTE_QUESTIONS_CORRECT,
-                        getAttribute(player!!, QUIZMASTER_ATTRIBUTE_QUESTIONS_CORRECT, 0) + 1
-                    )
+                    setAttribute(player!!, QUIZMASTER_ATTRIBUTE_QUESTIONS_CORRECT, getAttribute(player!!, QUIZMASTER_ATTRIBUTE_QUESTIONS_CORRECT, 0) + 1)
                     if (getAttribute(player!!, QUIZMASTER_ATTRIBUTE_QUESTIONS_CORRECT, 0) >= 4) {
-                        npc(
-                            FaceAnim.FRIENDLY,
-                            "<col=08088A>CONGRATULATIONS!</col>",
-                            "You are a <col=8A0808>WINNER</col>!",
-                            "Please choose your <col=08088A>PRIZE</col>!",
-                        ).also { stage = 5 }
+                        npc(FaceAnim.FRIENDLY, "<col=08088A>CONGRATULATIONS!</col>", "You are a <col=8A0808>WINNER</col>!", "Please choose your <col=08088A>PRIZE</col>!").also { stage = 5 }
                     } else {
-                        npc(
-                            FaceAnim.HAPPY,
-                            QuizMaster.CORRECT.random(),
-                            "Okay, next question!",
-                        )
+                        npc(FaceAnim.HAPPY, QuizMaster.CORRECT.random(), "Okay, next question!")
                         stage = 3
                     }
                 } else {
                     /*
                      * Wrong Answer.
                      */
-                    npc(
-                        FaceAnim.NEUTRAL,
-                        QuizMaster.WRONG.random(),
-                        "You're supposed to pick the ODD ONE OUT.",
-                        "Now, let's start again...",
-                    ).also { stage = 3 }
+                    npc(FaceAnim.NEUTRAL, QuizMaster.WRONG.random(), "You're supposed to pick the ODD ONE OUT.", "Now, let's start again...").also { stage = 3 }
                 }
             }
 

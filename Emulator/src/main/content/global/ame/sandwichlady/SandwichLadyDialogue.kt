@@ -16,15 +16,10 @@ import org.rs.consts.Components
  * Represents the Sandwich Lady dialogue.
  * @author Vexia, Ceikry
  */
-class SandwichLadyDialogue(
-    val isChoice: Boolean,
-) : DialogueFile() {
+class SandwichLadyDialogue(val isChoice: Boolean) : DialogueFile() {
     private val sandwichInterface = Components.MACRO_SANDWICH_TRAY_297
 
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
+    override fun handle(componentID: Int, buttonID: Int, ) {
         val assigned = getAttribute(player!!, GameAttributes.S_LADY_ITEM, 0)
         val choice = getAttribute(player!!, GameAttributes.S_LADY_ITEM_VALUE, 0)
         if (!isChoice) {
@@ -37,19 +32,18 @@ class SandwichLadyDialogue(
             }
         } else {
             when (stage) {
-                0 ->
-                    if (choice != assigned) {
-                        npc!!.sendChat("That's not what I said you could have!")
-                        player!!.impactHandler.manualHit(npc, 3, ImpactHandler.HitsplatType.NORMAL)
-                        AntiMacro.terminateEventNpc(player!!)
-                    } else {
-                        npc("Here you are, dear. I hope you enjoy it!")
-                        if (!player!!.inventory.add(Item(assigned))) {
-                            GroundItemManager.create(Item(assigned), player!!)
-                        }
-                        AntiMacro.terminateEventNpc(player!!)
-                        stage = END_DIALOGUE
+                0 -> if (choice != assigned) {
+                    npc!!.sendChat("That's not what I said you could have!")
+                    player!!.impactHandler.manualHit(npc, 3, ImpactHandler.HitsplatType.NORMAL)
+                    AntiMacro.terminateEventNpc(player!!)
+                } else {
+                    npc("Here you are, dear. I hope you enjoy it!")
+                    if (!player!!.inventory.add(Item(assigned))) {
+                        GroundItemManager.create(Item(assigned), player!!)
                     }
+                    AntiMacro.terminateEventNpc(player!!)
+                    stage = END_DIALOGUE
+                }
             }
         }
     }

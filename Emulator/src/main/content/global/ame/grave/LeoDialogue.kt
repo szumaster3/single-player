@@ -19,22 +19,16 @@ import org.rs.consts.NPCs
  */
 class LeoDialogue : DialogueFile() {
 
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
+    override fun handle(componentID: Int, buttonID: Int) {
         npc = NPC(NPCs.LEO_3508)
         when (stage) {
-            0 -> {
-                if (getAttribute(player!!, GameAttributes.GRAVEDIGGER_SCORE, 0) >= 1) {
-                    options("There, finished!", "I want to leave.").also { stage = 9 }
-                } else if(getAttribute(player!!, "random:talk-to", false)) {
-                    player("Remind me what I'm supposed to do.").also { stage = 4 }
-                } else {
-                    npcl("You have to help me dig these graves ${player!!.username}, I don't know who else to turn to!").also { stage++ }
-                }
+            0 -> if (getAttribute(player!!, GameAttributes.GRAVEDIGGER_SCORE, 0) >= 1) {
+                options("There, finished!", "I want to leave.").also { stage = 9 }
+            } else if(getAttribute(player!!, "random:talk-to", false)) {
+                player("Remind me what I'm supposed to do.").also { stage = 4 }
+            } else {
+                npcl("You have to help me dig these graves ${player!!.username}, I don't know who else to turn to!").also { stage++ }
             }
-
             1 -> playerl("What do you mean?").also { stage++ }
             2 -> npcl("I've put the wrong coffins into these graves.").also { stage++ }
             3 -> npcl("I saw you burying bones and it struck me that you seemed to know what you were doing.").also { stage++ }

@@ -25,10 +25,7 @@ class ManDialogue(player: Player? = null) : Dialogue(player) {
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (npc == null) return false
-        if ((args.size > 1 && args[1] is Item) && (args[1] as Item) == Item(Items.CIDER_5763) && player.inventory.remove(
-                Item(Items.CIDER_5763)
-            )
-        ) {
+        if ((args.size > 1 && args[1] is Item) && (args[1] as Item) == Item(Items.CIDER_5763) && player.inventory.remove(Item(Items.CIDER_5763))) {
             if (!player.achievementDiaryManager.getDiary(DiaryType.SEERS_VILLAGE)!!.isComplete(0, 6)) {
                 if (player.getAttribute("diary:seers:pub-cider", 0) >= 4) {
                     setAttribute(player, "/save:diary:seers:pub-cider", 5)

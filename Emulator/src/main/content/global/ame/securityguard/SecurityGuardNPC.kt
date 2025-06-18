@@ -3,9 +3,12 @@ package content.global.ame.securityguard
 import content.global.ame.RandomEventNPC
 import core.api.*
 import core.api.utils.WeightBasedTable
+import core.game.dialogue.FaceAnim
+import core.game.dialogue.SequenceDialogue.dialogue
 import core.game.node.entity.Entity
 import core.game.node.entity.npc.NPC
 import core.game.system.timer.impl.AntiMacro
+import org.rs.consts.Items
 import org.rs.consts.NPCs
 
 /**
@@ -22,7 +25,14 @@ class SecurityGuardNPC(
     }
 
     override fun talkTo(npc: NPC) {
-        openDialogue(player, SecurityGuardDialogueFile(), this.asNpc())
+        dialogue(player) {
+            npc(npc.id, FaceAnim.OLD_DEFAULT, "My records show you have your recovery questions", "set. Here, take this small gift and book and explore the", "Stronghold of Security. There's some great rewards to", "be had there!")
+            end {
+                AntiMacro.rollEventLoot(player).forEach { addItemOrDrop(player, it.id, it.amount) }
+                addItemOrDrop(player, Items.SECURITY_BOOK_9003)
+                AntiMacro.terminateEventNpc(player)
+            }
+        }
     }
 
     override fun finalizeDeath(killer: Entity?) {
