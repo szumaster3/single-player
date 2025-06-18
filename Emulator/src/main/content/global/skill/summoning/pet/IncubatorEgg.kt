@@ -4,12 +4,7 @@ import core.game.node.item.Item
 import org.rs.consts.Items
 
 /**
- * Represents the different types of incubator eggs.
- *
- * @property egg The item representing the egg.
- * @property level The level required to incubate the egg.
- * @property incubationTime The time (in minutes) required for the egg to hatch.
- * @property product The item produced when the egg hatches.
+ * Represents the types of incubator eggs.
  */
 enum class IncubatorEgg(
     val egg: Item,
@@ -129,10 +124,7 @@ enum class IncubatorEgg(
 
     companion object {
         /**
-         * Returns the corresponding [IncubatorEgg] for a given item, or null if the item is not an incubator egg.
-         *
-         * @param item The item to check.
-         * @return The [IncubatorEgg] associated with the item, or null if no match is found.
+         * Returns the [IncubatorEgg] for a given item.
          */
         fun forItem(item: Item): IncubatorEgg? {
             for (e in values()) {

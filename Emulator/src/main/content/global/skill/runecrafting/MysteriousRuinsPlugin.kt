@@ -19,7 +19,22 @@ import org.rs.consts.Items
 class MysteriousRuinsPlugin : InteractionListener {
     private val sceneryIDs = allRuins()
     private val stavesIDs = Staves.values().map { it.item }.toIntArray()
-    private val talismanIDs = arrayOf(Items.AIR_TALISMAN_1438, Items.MIND_TALISMAN_1448, Items.WATER_TALISMAN_1444, Items.EARTH_TALISMAN_1440, Items.FIRE_TALISMAN_1442, Items.ELEMENTAL_TALISMAN_5516, Items.BODY_TALISMAN_1446, Items.COSMIC_TALISMAN_1454, Items.CHAOS_TALISMAN_1452, Items.NATURE_TALISMAN_1462, Items.LAW_TALISMAN_1458, Items.DEATH_TALISMAN_1456, Items.BLOOD_TALISMAN_1450, Items.SOUL_TALISMAN_1460).toIntArray()
+    private val talismanIDs = arrayOf(
+        Items.AIR_TALISMAN_1438,
+        Items.MIND_TALISMAN_1448,
+        Items.WATER_TALISMAN_1444,
+        Items.EARTH_TALISMAN_1440,
+        Items.FIRE_TALISMAN_1442,
+        Items.ELEMENTAL_TALISMAN_5516,
+        Items.BODY_TALISMAN_1446,
+        Items.COSMIC_TALISMAN_1454,
+        Items.CHAOS_TALISMAN_1452,
+        Items.NATURE_TALISMAN_1462,
+        Items.LAW_TALISMAN_1458,
+        Items.DEATH_TALISMAN_1456,
+        Items.BLOOD_TALISMAN_1450,
+        Items.SOUL_TALISMAN_1460
+    ).toIntArray()
 
     override fun defineListeners() {
 
@@ -49,21 +64,13 @@ class MysteriousRuinsPlugin : InteractionListener {
      * Retrieves all the ids for the mysterious ruins.
      */
     private fun allRuins(): IntArray =
-        MysteriousRuins
-            .values()
-            .flatMap { ruins -> ruins.`object`.asList() }
-            .toIntArray()
+        MysteriousRuins.values().flatMap { ruins -> ruins.`object`.asList() }.toIntArray()
 
     /**
      * Handles the interaction when a talisman is used with a scenery object.
      */
-    private fun handleTalisman(
-        player: Player,
-        used: Node,
-        with: Node,
-    ): Boolean {
-        val ruin =
-            MysteriousRuins.forObject(with.asScenery())
+    private fun handleTalisman(player: Player, used: Node, with: Node): Boolean {
+        val ruin = MysteriousRuins.forObject(with.asScenery())
         if (!checkQuestCompletion(player, ruin!!)) {
             return true
         }
@@ -73,14 +80,7 @@ class MysteriousRuinsPlugin : InteractionListener {
             sendMessage(player, "Nothing interesting happens.")
             return false
         }
-        if (talisman == Talisman.ELEMENTAL &&
-            (
-                    ruin.talisman != Talisman.AIR &&
-                            ruin.talisman != Talisman.WATER &&
-                            ruin.talisman != Talisman.FIRE &&
-                            ruin.talisman != Talisman.EARTH
-                    )
-        ) {
+        if (talisman == Talisman.ELEMENTAL && (ruin.talisman != Talisman.AIR && ruin.talisman != Talisman.WATER && ruin.talisman != Talisman.FIRE && ruin.talisman != Talisman.EARTH)) {
             sendMessage(player, "Nothing interesting happens.")
             return false
         }
@@ -92,12 +92,8 @@ class MysteriousRuinsPlugin : InteractionListener {
     /**
      * Handles the interaction when the player uses a staff with a scenery object.
      */
-    private fun handleStaff(
-        player: Player,
-        node: Node,
-    ): Boolean {
-        val ruin =
-            MysteriousRuins.forObject(node.asScenery())
+    private fun handleStaff(player: Player, node: Node): Boolean {
+        val ruin = MysteriousRuins.forObject(node.asScenery())
 
         if (!checkQuestCompletion(player, ruin!!)) {
             return true
@@ -136,12 +132,11 @@ class MysteriousRuinsPlugin : InteractionListener {
     private fun checkQuestCompletion(
         player: Player,
         ruin: MysteriousRuins,
-    ): Boolean =
-        when (ruin) {
-            MysteriousRuins.DEATH -> hasRequirement(player, QuestReq(QuestRequirements.MEP_2), true)
-            MysteriousRuins.BLOOD -> hasRequirement(player, QuestReq(QuestRequirements.SEERGAZE), true)
-            else -> hasRequirement(player, QuestReq(QuestRequirements.RUNE_MYSTERIES), true)
-        }
+    ): Boolean = when (ruin) {
+        MysteriousRuins.DEATH -> hasRequirement(player, QuestReq(QuestRequirements.MEP_2), true)
+        MysteriousRuins.BLOOD -> hasRequirement(player, QuestReq(QuestRequirements.SEERGAZE), true)
+        else -> hasRequirement(player, QuestReq(QuestRequirements.RUNE_MYSTERIES), true)
+    }
 
     /**
      * Teleports the player to the mysterious ruin after using the talisman.

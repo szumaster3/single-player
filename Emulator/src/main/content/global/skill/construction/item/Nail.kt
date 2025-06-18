@@ -4,6 +4,9 @@ import core.game.node.entity.player.Player
 import core.tools.RandomFunction
 import org.rs.consts.Items
 
+/**
+ * Represents different types of nails.
+ */
 enum class Nail(
     val itemId: Int,
     val bendRate: Int,
@@ -39,39 +42,20 @@ enum class Nail(
     ;
 
     /**
-     * Checks if a random function produces a value that corresponds to a bend.
-     * The result is based on a predefined `bendRate`. If the random function returns 0, it indicates a bend.
-     *
-     * @return `true` if a bend occurs, otherwise `false`.
+     * Returns true if a random roll matches the bend rate (indicating a bend).
      */
     fun isBend(): Boolean = RandomFunction.getRandom(bendRate) == 0
 
     companion object {
-        /**
-         * A collection of all possible values of the `Nails` enum.
-         */
         val values = enumValues<Nail>()
-
-        /**
-         * A map associating each `Nails` enum value to its corresponding `itemId`.
-         */
         val product = values.associateBy { it.itemId }
 
         /**
-         * Retrieves the first `Nails` type from the player's inventory that contains the required amount of nails.
-         *
-         * This function checks the player's inventory for each nail type and returns the first one
-         * that satisfies the condition of having at least the required amount.
-         *
-         * @param player The player whose inventory is being checked.
-         * @param requiredAmount The amount of nails required to satisfy the condition.
-         * @return The `Nails` enum value that corresponds to the type of nails found in the inventory, or `null` if none are found.
+         * Finds the first Nail type in the inventory with at least the required amount.
+         * @return Nail type or null if none found.
          */
         @JvmStatic
-        fun get(
-            player: Player,
-            requiredAmount: Int,
-        ): Nail? {
+        fun get(player: Player, requiredAmount: Int): Nail? {
             for (nailType in values()) {
                 if (player.inventory.contains(nailType.itemId, requiredAmount)) {
                     return nailType

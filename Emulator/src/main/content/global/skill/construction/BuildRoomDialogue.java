@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The type Build room dialogue.
+ * Represents the build room dialogue.
  */
 @Initializable
 public final class BuildRoomDialogue extends Dialogue {

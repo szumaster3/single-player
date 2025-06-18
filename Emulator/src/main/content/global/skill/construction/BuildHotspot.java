@@ -274,78 +274,15 @@ public enum BuildHotspot {
     /**
      * Portal 1 build hotspot.
      */
-    PORTAL1(Scenery.PORTAL_SPACE_15406, BuildHotspotType.INDIVIDUAL, BuildingUtils.BUILD_MID_ANIM, Decoration.TEAK_PORTAL, Decoration.MAHOGANY_PORTAL, Decoration.MARBLE_PORTAL,
-        Decoration.TEAK_VARROCK_PORTAL,
-        Decoration.MAHOGANY_VARROCK_PORTAL,
-        Decoration.MARBLE_VARROCK_PORTAL,
-        Decoration.TEAK_LUMBRIDGE_PORTAL,
-        Decoration.MAHOGANY_LUMBRIDGE_PORTAL,
-        Decoration.MARBLE_LUMBRIDGE_PORTAL,
-        Decoration.TEAK_FALADOR_PORTAL,
-        Decoration.MAHOGANY_FALADOR_PORTAL,
-        Decoration.MARBLE_FALADOR_PORTAL,
-        Decoration.TEAK_CAMELOT_PORTAL,
-        Decoration.MAHOGANY_CAMELOT_PORTAL,
-        Decoration.MARBLE_CAMELOT_PORTAL,
-        Decoration.TEAK_ARDOUGNE_PORTAL,
-        Decoration.MAHOGANY_ARDOUGNE_PORTAL,
-        Decoration.MARBLE_ARDOUGNE_PORTAL,
-        Decoration.TEAK_YANILLE_PORTAL,
-        Decoration.MAHOGANY_YANILLE_PORTAL,
-        Decoration.MARBLE_YANILLE_PORTAL,
-        Decoration.TEAK_KHARYRLL_PORTAL,
-        Decoration.MAHOGANY_KHARYRLL_PORTAL,
-        Decoration.MARBLE_KHARYRLL_PORTAL),
+    PORTAL1(Scenery.PORTAL_SPACE_15406, BuildHotspotType.INDIVIDUAL, BuildingUtils.BUILD_MID_ANIM, Decoration.TEAK_PORTAL, Decoration.MAHOGANY_PORTAL, Decoration.MARBLE_PORTAL, Decoration.TEAK_VARROCK_PORTAL, Decoration.MAHOGANY_VARROCK_PORTAL, Decoration.MARBLE_VARROCK_PORTAL, Decoration.TEAK_LUMBRIDGE_PORTAL, Decoration.MAHOGANY_LUMBRIDGE_PORTAL, Decoration.MARBLE_LUMBRIDGE_PORTAL, Decoration.TEAK_FALADOR_PORTAL, Decoration.MAHOGANY_FALADOR_PORTAL, Decoration.MARBLE_FALADOR_PORTAL, Decoration.TEAK_CAMELOT_PORTAL, Decoration.MAHOGANY_CAMELOT_PORTAL, Decoration.MARBLE_CAMELOT_PORTAL, Decoration.TEAK_ARDOUGNE_PORTAL, Decoration.MAHOGANY_ARDOUGNE_PORTAL, Decoration.MARBLE_ARDOUGNE_PORTAL, Decoration.TEAK_YANILLE_PORTAL, Decoration.MAHOGANY_YANILLE_PORTAL, Decoration.MARBLE_YANILLE_PORTAL, Decoration.TEAK_KHARYRLL_PORTAL, Decoration.MAHOGANY_KHARYRLL_PORTAL, Decoration.MARBLE_KHARYRLL_PORTAL),
     /**
      * Portal 2 build hotspot.
      */
-    PORTAL2(Scenery.PORTAL_SPACE_15407, BuildHotspotType.INDIVIDUAL, BuildingUtils.BUILD_MID_ANIM, Decoration.TEAK_PORTAL, Decoration.MAHOGANY_PORTAL, Decoration.MARBLE_PORTAL,
-        Decoration.TEAK_VARROCK_PORTAL,
-        Decoration.MAHOGANY_VARROCK_PORTAL,
-        Decoration.MARBLE_VARROCK_PORTAL,
-        Decoration.TEAK_LUMBRIDGE_PORTAL,
-        Decoration.MAHOGANY_LUMBRIDGE_PORTAL,
-        Decoration.MARBLE_LUMBRIDGE_PORTAL,
-        Decoration.TEAK_FALADOR_PORTAL,
-        Decoration.MAHOGANY_FALADOR_PORTAL,
-        Decoration.MARBLE_FALADOR_PORTAL,
-        Decoration.TEAK_CAMELOT_PORTAL,
-        Decoration.MAHOGANY_CAMELOT_PORTAL,
-        Decoration.MARBLE_CAMELOT_PORTAL,
-        Decoration.TEAK_ARDOUGNE_PORTAL,
-        Decoration.MAHOGANY_ARDOUGNE_PORTAL,
-        Decoration.MARBLE_ARDOUGNE_PORTAL,
-        Decoration.TEAK_YANILLE_PORTAL,
-        Decoration.MAHOGANY_YANILLE_PORTAL,
-        Decoration.MARBLE_YANILLE_PORTAL,
-        Decoration.TEAK_KHARYRLL_PORTAL,
-        Decoration.MAHOGANY_KHARYRLL_PORTAL,
-        Decoration.MARBLE_KHARYRLL_PORTAL),
+    PORTAL2(Scenery.PORTAL_SPACE_15407, BuildHotspotType.INDIVIDUAL, BuildingUtils.BUILD_MID_ANIM, Decoration.TEAK_PORTAL, Decoration.MAHOGANY_PORTAL, Decoration.MARBLE_PORTAL, Decoration.TEAK_VARROCK_PORTAL, Decoration.MAHOGANY_VARROCK_PORTAL, Decoration.MARBLE_VARROCK_PORTAL, Decoration.TEAK_LUMBRIDGE_PORTAL, Decoration.MAHOGANY_LUMBRIDGE_PORTAL, Decoration.MARBLE_LUMBRIDGE_PORTAL, Decoration.TEAK_FALADOR_PORTAL, Decoration.MAHOGANY_FALADOR_PORTAL, Decoration.MARBLE_FALADOR_PORTAL, Decoration.TEAK_CAMELOT_PORTAL, Decoration.MAHOGANY_CAMELOT_PORTAL, Decoration.MARBLE_CAMELOT_PORTAL, Decoration.TEAK_ARDOUGNE_PORTAL, Decoration.MAHOGANY_ARDOUGNE_PORTAL, Decoration.MARBLE_ARDOUGNE_PORTAL, Decoration.TEAK_YANILLE_PORTAL, Decoration.MAHOGANY_YANILLE_PORTAL, Decoration.MARBLE_YANILLE_PORTAL, Decoration.TEAK_KHARYRLL_PORTAL, Decoration.MAHOGANY_KHARYRLL_PORTAL, Decoration.MARBLE_KHARYRLL_PORTAL),
     /**
      * Portal 3 build hotspot.
      */
-    PORTAL3(Scenery.PORTAL_SPACE_15408, BuildHotspotType.INDIVIDUAL, BuildingUtils.BUILD_MID_ANIM, Decoration.TEAK_PORTAL, Decoration.MAHOGANY_PORTAL, Decoration.MARBLE_PORTAL,
-        Decoration.TEAK_VARROCK_PORTAL,
-        Decoration.MAHOGANY_VARROCK_PORTAL,
-        Decoration.MARBLE_VARROCK_PORTAL,
-        Decoration.TEAK_LUMBRIDGE_PORTAL,
-        Decoration.MAHOGANY_LUMBRIDGE_PORTAL,
-        Decoration.MARBLE_LUMBRIDGE_PORTAL,
-        Decoration.TEAK_FALADOR_PORTAL,
-        Decoration.MAHOGANY_FALADOR_PORTAL,
-        Decoration.MARBLE_FALADOR_PORTAL,
-        Decoration.TEAK_CAMELOT_PORTAL,
-        Decoration.MAHOGANY_CAMELOT_PORTAL,
-        Decoration.MARBLE_CAMELOT_PORTAL,
-        Decoration.TEAK_ARDOUGNE_PORTAL,
-        Decoration.MAHOGANY_ARDOUGNE_PORTAL,
-        Decoration.MARBLE_ARDOUGNE_PORTAL,
-        Decoration.TEAK_YANILLE_PORTAL,
-        Decoration.MAHOGANY_YANILLE_PORTAL,
-        Decoration.MARBLE_YANILLE_PORTAL,
-        Decoration.TEAK_KHARYRLL_PORTAL,
-        Decoration.MAHOGANY_KHARYRLL_PORTAL,
-        Decoration.MARBLE_KHARYRLL_PORTAL),
+    PORTAL3(Scenery.PORTAL_SPACE_15408, BuildHotspotType.INDIVIDUAL, BuildingUtils.BUILD_MID_ANIM, Decoration.TEAK_PORTAL, Decoration.MAHOGANY_PORTAL, Decoration.MARBLE_PORTAL, Decoration.TEAK_VARROCK_PORTAL, Decoration.MAHOGANY_VARROCK_PORTAL, Decoration.MARBLE_VARROCK_PORTAL, Decoration.TEAK_LUMBRIDGE_PORTAL, Decoration.MAHOGANY_LUMBRIDGE_PORTAL, Decoration.MARBLE_LUMBRIDGE_PORTAL, Decoration.TEAK_FALADOR_PORTAL, Decoration.MAHOGANY_FALADOR_PORTAL, Decoration.MARBLE_FALADOR_PORTAL, Decoration.TEAK_CAMELOT_PORTAL, Decoration.MAHOGANY_CAMELOT_PORTAL, Decoration.MARBLE_CAMELOT_PORTAL, Decoration.TEAK_ARDOUGNE_PORTAL, Decoration.MAHOGANY_ARDOUGNE_PORTAL, Decoration.MARBLE_ARDOUGNE_PORTAL, Decoration.TEAK_YANILLE_PORTAL, Decoration.MAHOGANY_YANILLE_PORTAL, Decoration.MARBLE_YANILLE_PORTAL, Decoration.TEAK_KHARYRLL_PORTAL, Decoration.MAHOGANY_KHARYRLL_PORTAL, Decoration.MARBLE_KHARYRLL_PORTAL),
 
     /**
      * Guild trophy build hotspot.
@@ -804,9 +741,7 @@ public enum BuildHotspot {
         linkedHotspots.add(new BuildHotspot[]{RUG, RUG2, RUG3});
         linkedHotspots.add(new BuildHotspot[]{BEDROOM_RUG, BEDROOM_RUG2, BEDROOM_RUG3});
         linkedHotspots.add(new BuildHotspot[]{HALL_RUG, HALL_RUG2, HALL_RUG3});
-        linkedHotspots.add(new BuildHotspot[]{CR_CORNER, CR_CORNER2, CR_CORNER3, CR_CORNER4, CR_RING,
-            CR_RING2, CR_RING3, CR_RING4, CR_FLOOR, CR_FLOOR2, CR_FLOOR3, CR_FLOOR4, CR_FLOOR5,
-            CR_FLOOR6, CR_FLOOR7, CR_FLOOR8, CR_INVISIBLE_WALL, CR_INVISIBLE_WALL2, CR_INVISIBLE_WALL3});
+        linkedHotspots.add(new BuildHotspot[]{CR_CORNER, CR_CORNER2, CR_CORNER3, CR_CORNER4, CR_RING, CR_RING2, CR_RING3, CR_RING4, CR_FLOOR, CR_FLOOR2, CR_FLOOR3, CR_FLOOR4, CR_FLOOR5, CR_FLOOR6, CR_FLOOR7, CR_FLOOR8, CR_INVISIBLE_WALL, CR_INVISIBLE_WALL2, CR_INVISIBLE_WALL3});
         linkedHotspots.add(new BuildHotspot[]{Q_HALL_RUG, Q_HALL_RUG2, Q_HALL_RUG3});
         linkedHotspots.add(new BuildHotspot[]{CHAPEL_RUG, CHAPEL_RUG2});
         linkedHotspots.add(new BuildHotspot[]{HEDGE1, HEDGE2, HEDGE3});
@@ -835,11 +770,10 @@ public enum BuildHotspot {
     }
 
     /**
-     * For id build hotspot.
-     *
-     * @param id    the id
-     * @param style the style
-     * @return the build hotspot
+     * Gets the BuildHotspot corresponding to the given object id and housing style.
+     * @param id    the object id to match
+     * @param style the housing style
+     * @return the matching BuildHotspot, or null if none found
      */
     public static BuildHotspot forId(int id, HousingStyle style) {
         for (BuildHotspot spot : values()) {
@@ -851,10 +785,9 @@ public enum BuildHotspot {
     }
 
     /**
-     * Get linked hotspots build hotspot [ ].
-     *
-     * @param b the b
-     * @return the build hotspot [ ]
+     * Gets the array of linked BuildHotspots that includes the specified hotspot.
+     * @param b the BuildHotspot to find linked hotspots for
+     * @return an array of linked BuildHotspots, or null if none found
      */
     public static BuildHotspot[] getLinkedHotspots(BuildHotspot b) {
         for (BuildHotspot[] list : linkedHotspots) {
@@ -868,10 +801,9 @@ public enum BuildHotspot {
     }
 
     /**
-     * Gets decoration index.
-     *
-     * @param deco the deco
-     * @return the decoration index
+     * Gets the index of the given Decoration within this hotspot's decorations array.
+     * @param deco the Decoration to find
+     * @return the index of the decoration, or -1 if not found
      */
     public int getDecorationIndex(Decoration deco) {
         for (int i = 0; i < decorations.length; i++) {
@@ -883,10 +815,9 @@ public enum BuildHotspot {
     }
 
     /**
-     * Gets object id.
-     *
-     * @param style the style
-     * @return the object id
+     * Gets the object id for this hotspot based on the specified housing style.
+     * @param style the housing style
+     * @return the object id for the given style, or the default object id if none available
      */
     public int getObjectId(HousingStyle style) {
         if (objectIds != null) {
@@ -896,8 +827,7 @@ public enum BuildHotspot {
     }
 
     /**
-     * Gets object id.
-     *
+     * Gets the default object id for this hotspot.
      * @return the object id
      */
     public int getObjectId() {
@@ -905,36 +835,32 @@ public enum BuildHotspot {
     }
 
     /**
-     * Gets type.
-     *
-     * @return the type
+     * Gets the type of this BuildHotspot.
+     * @return the BuildHotspotType
      */
     public BuildHotspotType getType() {
         return type;
     }
 
     /**
-     * Get decorations decoration [ ].
-     *
-     * @return the decoration [ ]
+     * Gets the array of Decorations available for this hotspot.
+     * @return an array of Decorations
      */
     public Decoration[] getDecorations() {
         return decorations;
     }
 
     /**
-     * Get object ids int [ ].
-     *
-     * @return the int [ ]
+     * Gets the array of object ids associated with this hotspot for different styles.
+     * @return an array of object ids
      */
     public int[] getObjectIds() {
         return objectIds;
     }
 
     /**
-     * Gets building animation.
-     *
-     * @return the building animation
+     * Gets the animation used when building on this hotspot.
+     * @return the build Animation
      */
     public Animation getBuildingAnimation() {
         return buildingAnimation;

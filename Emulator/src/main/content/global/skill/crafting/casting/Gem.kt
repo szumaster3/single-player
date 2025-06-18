@@ -34,7 +34,7 @@ enum class Gem(val uncut: Item, val gem: Item, val level: Int, val animation: An
         }
 
         /**
-         * Retrieves the [Gem] for a given uncut [Item].
+         * Gets the [Gem] for a given uncut [Item].
          */
         fun forId(item: Item): Gem? {
             for (gem in Gem.values()) {

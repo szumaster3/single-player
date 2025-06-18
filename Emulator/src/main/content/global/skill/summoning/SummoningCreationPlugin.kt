@@ -17,9 +17,7 @@ import org.rs.consts.Components
  */
 @Initializable
 class SummoningCreationPlugin : ComponentPlugin() {
-    /**
-     * Registers this plugin to summoning-related interfaces and the obelisk handler.
-     */
+
     @Throws(Throwable::class)
     override fun newInstance(arg: Any?): Plugin<Any> {
         ComponentDefinition.put(Components.SUMMONING_POUCHES_669, this)
@@ -27,9 +25,6 @@ class SummoningCreationPlugin : ComponentPlugin() {
         return this
     }
 
-    /**
-     * Handles interactions within the summoning creation interfaces.
-     */
     override fun handle(player: Player, component: Component, opcode: Int, button: Int, slot: Int, itemId: Int, ): Boolean {
         when (button) {
             17, 18 -> {
@@ -65,7 +60,7 @@ class SummoningCreationPlugin : ComponentPlugin() {
     }
 
     /**
-     * Resolves the pouch or scroll based on component and slot.
+     * Gets the pouch or scroll based on component and slot.
      */
     private fun getPouch(component: Component, slot: Int, ) = if (component.id == Components.SUMMONING_POUCHES_669) {
         SummoningPouch.forSlot(getAdjustedSlot(slot))
@@ -79,7 +74,7 @@ class SummoningCreationPlugin : ComponentPlugin() {
     private fun getAdjustedSlot(slot: Int) = if (slot > 50) slot - 1 else slot
 
     /**
-     * Determines the quantity based on click opcode.
+     * Check the amount based on click opcode.
      */
     private fun getItemAmount(opcode: Int): Int = when (opcode) {
         155 -> 1

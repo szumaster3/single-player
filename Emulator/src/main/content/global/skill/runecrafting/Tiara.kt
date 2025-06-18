@@ -22,19 +22,13 @@ enum class Tiara(val item: Item, val experience: Double, ) {
     ;
 
     /**
-     * Gets the corresponding [Talisman] for this tiara, if one exists.
-     *
-     * The name of the tiara enum constant is matched against the names of the [Talisman] enum.
+     * Gets the talisman for this tiara
      */
     val talisman: Talisman?
         get() = Talisman.values().find { it.name == name }
 
     companion object {
         private val itemToTiara = values().associateBy { it.item.id }
-
-        /**
-         * Same as [from], for naming flexibility.
-         */
         fun forItem(item: Item): Tiara? = itemToTiara[item.id]
     }
 }

@@ -18,9 +18,8 @@ import org.rs.consts.Scenery
 import org.rs.consts.Sounds
 
 class SpinningPlugin : InteractionListener, InterfaceListener {
-    companion object {
-        val SPINNING_WHEEL = intArrayOf(Scenery.SPINNING_WHEEL_2644, Scenery.SPINNING_WHEEL_4309, Scenery.SPINNING_WHEEL_8748, Scenery.SPINNING_WHEEL_20365, Scenery.SPINNING_WHEEL_21304, Scenery.SPINNING_WHEEL_25824, Scenery.SPINNING_WHEEL_26143, Scenery.SPINNING_WHEEL_34497, Scenery.SPINNING_WHEEL_36970, Scenery.SPINNING_WHEEL_37476)
-    }
+
+    val SPINNING_WHEEL = intArrayOf(Scenery.SPINNING_WHEEL_2644, Scenery.SPINNING_WHEEL_4309, Scenery.SPINNING_WHEEL_8748, Scenery.SPINNING_WHEEL_20365, Scenery.SPINNING_WHEEL_21304, Scenery.SPINNING_WHEEL_25824, Scenery.SPINNING_WHEEL_26143, Scenery.SPINNING_WHEEL_34497, Scenery.SPINNING_WHEEL_36970, Scenery.SPINNING_WHEEL_37476)
 
     override fun defineListeners() {
         on(SPINNING_WHEEL, IntType.SCENERY, "spin") { player, _ ->
@@ -28,8 +27,6 @@ class SpinningPlugin : InteractionListener, InterfaceListener {
             return@on true
         }
     }
-
-
 
     override fun defineInterfaceListeners() {
         on(Components.CRAFTING_SPINNING_459) { player, _, opcode, buttonID, _, _ ->

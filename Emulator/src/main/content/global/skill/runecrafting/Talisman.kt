@@ -7,7 +7,7 @@ import org.rs.consts.Items
 /**
  * Represents the various talismans used in Runecrafting.
  */
-enum class Talisman(val item: Item, private val ruin: MysteriousRuins?, ) {
+enum class Talisman(val item: Item, private val ruin: MysteriousRuins?) {
     AIR(Item(Items.AIR_TALISMAN_1438), MysteriousRuins.AIR),
     MIND(Item(Items.MIND_TALISMAN_1448), MysteriousRuins.MIND),
     WATER(Item(Items.WATER_TALISMAN_1444), MysteriousRuins.WATER),

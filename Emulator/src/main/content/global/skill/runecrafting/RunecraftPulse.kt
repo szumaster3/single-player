@@ -61,10 +61,9 @@ class RunecraftPulse(
             sendMessage(player, "You need a runecrafting level of at least " + rune.level + " to craft this rune.")
             return false
         }
-        if (!altar.isOurania &&
-            rune.isNormal &&
-            !inInventory(player, PURE_ESSENCE) &&
-            !inInventory(player, RUNE_ESSENCE)
+        if (!altar.isOurania && rune.isNormal && !inInventory(player, PURE_ESSENCE) && !inInventory(
+                player, RUNE_ESSENCE
+            )
         ) {
             sendMessage(player, "You need rune essence or pure essence in order to craft this rune.")
             return false
@@ -108,16 +107,14 @@ class RunecraftPulse(
 
     override fun message(type: Int) {
         when (type) {
-            1 ->
-                if (altar == Altar.OURANIA) {
-                    sendMessage(player, "You bind the temple's power into runes.")
-                } else {
-                    sendMessage(
-                        player,
-                        "You bind the temple's power into " +
-                            (if (combination) combo!!.rune.name.lowercase() else rune.rune.name.lowercase() + "s."),
-                    )
-                }
+            1 -> if (altar == Altar.OURANIA) {
+                sendMessage(player, "You bind the temple's power into runes.")
+            } else {
+                sendMessage(
+                    player,
+                    "You bind the temple's power into " + (if (combination) combo!!.rune.name.lowercase() else rune.rune.name.lowercase() + "s."),
+                )
+            }
         }
     }
 
@@ -136,15 +133,15 @@ class RunecraftPulse(
                 player.incrementAttribute("/save:$STATS_BASE:$STATS_RC", amount)
                 sendMessage(
                     player,
-                    "You bind the temple's power into " +
-                        (if (combination) combo!!.rune.name.lowercase() else rune.rune.name.lowercase()) +
-                        "s.",
+                    "You bind the temple's power into " + (if (combination) combo!!.rune.name.lowercase() else rune.rune.name.lowercase()) + "s.",
                 )
 
                 var xp = rune.experience * amount
-                if ((altar == Altar.AIR && inEquipment(player, Items.AIR_RUNECRAFTING_GLOVES_12863, 1)) ||
-                    (altar == Altar.WATER && inEquipment(player, Items.WATER_RUNECRAFTING_GLOVES_12864, 1)) ||
-                    (altar == Altar.EARTH && inEquipment(player, Items.EARTH_RUNECRAFTING_GLOVES_12865, 1))
+                if ((altar == Altar.AIR && inEquipment(
+                        player, Items.AIR_RUNECRAFTING_GLOVES_12863, 1
+                    )) || (altar == Altar.WATER && inEquipment(
+                        player, Items.WATER_RUNECRAFTING_GLOVES_12864, 1
+                    )) || (altar == Altar.EARTH && inEquipment(player, Items.EARTH_RUNECRAFTING_GLOVES_12865, 1))
                 ) {
                     xp += xp * updateCharges(player, amount) / amount
                 }
@@ -186,36 +183,31 @@ class RunecraftPulse(
     }
 
     private fun combine() {
-        val remove =
-            if (node!!.name.contains("talisman")) {
-                node!!
-            } else if (talisman !=
-                null
-            ) {
-                talisman!!.item
-            } else {
-                forName(Rune.forItem(node!!)!!.name)!!.item
-            }
+        val remove = if (node!!.name.contains("talisman")) {
+            node!!
+        } else if (talisman != null) {
+            talisman!!.item
+        } else {
+            forName(Rune.forItem(node!!)!!.name)!!.item
+        }
         val imbued = hasSpellImbue()
         if (if (!imbued) player.inventory.remove(remove) else imbued) {
             var amount = 0
             val essenceAmt = player.inventory.getAmount(PURE_ESSENCE)
-            val rune =
-                if (node!!.name.contains(
-                        "rune",
-                    )
-                ) {
-                    Rune.forItem(node!!)!!.rune
-                } else {
-                    Rune.forName(Talisman.forItem(node!!)!!.name)!!.rune
-                }
+            val rune = if (node!!.name.contains(
+                    "rune",
+                )
+            ) {
+                Rune.forItem(node!!)!!.rune
+            } else {
+                Rune.forName(Talisman.forItem(node!!)!!.name)!!.rune
+            }
             val runeAmt = player.inventory.getAmount(rune)
-            amount =
-                if (essenceAmt > runeAmt) {
-                    runeAmt
-                } else {
-                    essenceAmt
-                }
+            amount = if (essenceAmt > runeAmt) {
+                runeAmt
+            } else {
+                essenceAmt
+            }
             if (player.inventory.remove(Item(PURE_ESSENCE, amount)) && player.inventory.remove(Item(rune.id, amount))) {
                 for (i in 0 until amount) {
                     if (RandomFunction.random(1, 3) == 1 || hasBindingNecklace()) {
@@ -309,8 +301,11 @@ class RunecraftPulse(
                 }
             }
 
-            if ((lumbridgeDiary && ArrayList(listOf(Rune.AIR, Rune.WATER, Rune.FIRE, Rune.EARTH)).contains(rune)) &&
-                RandomFunction.getRandom(10) == 0
+            if ((lumbridgeDiary && ArrayList(
+                    listOf(
+                        Rune.AIR, Rune.WATER, Rune.FIRE, Rune.EARTH
+                    )
+                ).contains(rune)) && RandomFunction.getRandom(10) == 0
             ) {
                 i += 1
             }

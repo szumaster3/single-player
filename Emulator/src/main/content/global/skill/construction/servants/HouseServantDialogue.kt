@@ -4,6 +4,7 @@ import content.global.skill.construction.item.Plank
 import core.api.*
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
+import core.game.dialogue.SequenceDialogue.dialogue
 import core.game.interaction.MovementPulse
 import core.game.node.entity.impl.PulseType
 import core.game.node.entity.npc.NPC
@@ -11,6 +12,7 @@ import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.game.system.task.Pulse
+import core.game.world.GameWorld
 import core.game.world.GameWorld.Pulser
 import core.game.world.map.Location
 import core.game.world.map.path.Pathfinder
@@ -108,7 +110,7 @@ class HouseServantDialogue(
                         expression,
                         false,
                         fontColor + "I have returned with what you asked me to",
-                        fontColor + "retrieve.",
+                        fontColor + "retrieve."
                     ).also { stage = 150 }
                     return true
                 }
@@ -118,7 +120,7 @@ class HouseServantDialogue(
                     expression,
                     false,
                     fontColor + "Yes, " + fontColor + (if (player.appearance.isMale) "sir" else "ma'am") + "?",
-                    fontColor + "You have " + fontColor + (8 - servant.uses) + fontColor + " uses of my services remaining.",
+                    fontColor + "You have " + fontColor + (8 - servant.uses) + fontColor + " uses of my services remaining."
                 ).also { stage = 50 }
             } else if (npc.id != servant.id) {
                 sendNPCDialogueLines(
@@ -127,7 +129,7 @@ class HouseServantDialogue(
                     expression,
                     false,
                     "You already have someone working for you.",
-                    "Fire them first before hiring me.",
+                    "Fire them first before hiring me."
                 ).also { stage = 100 }
             }
         }
@@ -147,19 +149,130 @@ class HouseServantDialogue(
             0 -> options("What can you do?", "Tell me about your previous jobs.", "You're hired!").also { stage++ }
             1 -> when (buttonId) {
                 1 -> when (npc.id) {
-                    NPCs.RICK_4235 -> openDialogue(player, ServantRickDialogue())
-                    NPCs.MAID_4237 -> openDialogue(player, ServantMaidDialogue())
-                    NPCs.COOK_4239 -> openDialogue(player, ServantCookDialogue())
-                    NPCs.BUTLER_4241 -> openDialogue(player, ServantButlerDialogue())
-                    NPCs.DEMON_BUTLER_4243 -> openDialogue(player, ServantDemonButlerDialogue())
+                    NPCs.RICK_4235 -> dialogue(player) {
+                        player("What can you do?")
+                        npc(
+                            FaceAnim.HALF_GUILTY,
+                            "I'm a great cook, me! I used to work with a rat-catcher, I used to cook for him."
+                        )
+                        npc(FaceAnim.HALF_GUILTY, "There's a dozen different ways you can cook a rat!")
+                    }
+
+                    NPCs.MAID_4237 -> dialogue(player) {
+                        player("What can you do?")
+                        npc(
+                            FaceAnim.HALF_GUILTY,
+                            "Well, I can, um, I can cook meals and make tea and everything, and I can even take things to and from the bank for you."
+                        )
+                        npc(FaceAnim.HALF_GUILTY, "I won't make any mistakes this time and everything will be fine!")
+                    }
+
+                    NPCs.COOK_4239 -> dialogue(player) {
+                        player("What can you do?")
+                        npc(FaceAnim.HALF_GUILTY, "I, sir, am the finest cook in all ${GameWorld.settings!!.name}!")
+                        npc(FaceAnim.HALF_GUILTY, "I can also make good time going to the bank or the sawmill.")
+                    }
+
+                    NPCs.BUTLER_4241 -> dialogue(player) {
+                        player("What can you do?")
+                        npc(
+                            FaceAnim.HALF_GUILTY,
+                            DARK_BLUE + "I can fulfill all sir's domestic service needs with efficiency and impeccable manners."
+                        )
+                        npc(
+                            FaceAnim.HALF_GUILTY,
+                            DARK_BLUE + "I hate to boast, but I can say with confidence that no mortal can make trips to the bank or sawmill faster than I!"
+                        )
+                    }
+
+                    NPCs.DEMON_BUTLER_4243 -> dialogue(player) {
+                        player("What can you do?")
+                        npc(
+                            FaceAnim.HALF_GUILTY,
+                            DARK_BLUE + "I can fulfill all sir's domestic service needs with efficiency and impeccable manners."
+                        )
+                        npc(
+                            FaceAnim.HALF_GUILTY,
+                            DARK_BLUE + "I hate to boast, but I can say with confidence that no mortal can make trips to the bank or sawmill faster than I!"
+                        )
+                    }
                 }
 
                 2 -> when (npc.id) {
-                    NPCs.RICK_4235 -> openDialogue(player, ServantRickDialogueExtension())
-                    NPCs.MAID_4237 -> openDialogue(player, ServantMaidDialogueExtension())
-                    NPCs.COOK_4239 -> openDialogue(player, ServantCookDialogueExtension())
-                    NPCs.BUTLER_4241 -> openDialogue(player, ServantButlerDialogueExtension())
-                    NPCs.DEMON_BUTLER_4243 -> interpreter.open(ServantDemonButlerDialogueExtension())
+                    NPCs.RICK_4235 -> dialogue(player) {
+                        player("Tell me about your previous jobs.")
+                        npc(
+                            FaceAnim.HALF_GUILTY,
+                            "Well, city warder Bravek once threw a chair at me and yelled at me to get him a hangover cure. So I made it and I think it worked, 'cause then he threw another chair at me and that one hit!"
+                        )
+                        player(FaceAnim.HALF_GUILTY, "So you've been in West Ardougne?")
+                        npc(FaceAnim.HALF_GUILTY, "Yeah but I ain't got the plague or nuthin'! Honest, guv!")
+                    }
+
+                    NPCs.MAID_4237 -> dialogue(player) {
+                        player("Tell me about your previous jobs.")
+                        npc(
+                            FaceAnim.HALF_GUILTY,
+                            "Oh! Oh! I, well, I, er. It wasn't really my fault, I mean, it was, but not really. I mean, how was I to know that that plate was so valuable?"
+                        )
+                        npc(
+                            FaceAnim.HALF_GUILTY,
+                            "It was just lying around and I don't know art, it just looked like a pretty pattern and I just had to use it because there weren't enough plates."
+                        )
+                        npc(
+                            FaceAnim.HALF_GUILTY,
+                            "And no one had told me that Dennis was off sick and hadn't fed the dogs so I wasn't expecting them to jump up at me when I was carrying the food and it, it went all over the place, gravy and potatoes and bits of fine porcelain and I'm so sorry."
+                        )
+                        npc(FaceAnim.HALF_GUILTY, "It won't happen again, I promise.")
+                    }
+
+                    NPCs.COOK_4239 -> dialogue(player) {
+                        player("Tell me about your previous jobs.")
+                        npc(
+                            FaceAnim.HALF_GUILTY,
+                            "I used to be the cook for the old Duke of Lumbridge. Visiting dignitaries praised me for my fine banquets!"
+                        )
+                        npc(
+                            FaceAnim.HALF_GUILTY,
+                            "But then someone found a rule that said that only one family could hold that post."
+                        )
+                        npc(
+                            FaceAnim.HALF_GUILTY,
+                            "Overnight I was fired and replaced by some fool who can't even bake a cake without help!"
+                        )
+                    }
+
+                    NPCs.BUTLER_4241 -> dialogue(player) {
+                        player("Tell me about your previous jobs.")
+                        npc(
+                            FaceAnim.HALF_GUILTY,
+                            DARK_BLUE + "From a humble beginning as a dish-washer I have worked my way up through the ranks of domestic service in the households of nobles from Varrock and Ardougne."
+                        )
+                        npc(
+                            FaceAnim.HALF_GUILTY,
+                            DARK_BLUE + "As a life-long servant I have naturally suppressed any personality of my own and trained myself never to use the second person when talking to a superior."
+                        )
+                        npc(
+                            FaceAnim.HALF_GUILTY,
+                            DARK_BLUE + "I have usually worked in the large households of the aristocracy, but now that such a large number of private persons are building their own houses I decided to offer them my services."
+                        )
+                    }
+
+                    NPCs.DEMON_BUTLER_4243 -> dialogue(player) {
+                        player("Tell me about your previous jobs.")
+                        npc(
+                            FaceAnim.OLD_NORMAL,
+                            DARK_BLUE + "For millennia I have served and waited on the mighty Demon Lords of the Infernal Dimensions."
+                        )
+                        npc(
+                            FaceAnim.OLD_NORMAL,
+                            DARK_BLUE + "I began as a humble footman in the household of Lord Thammaron, and for several centuries I was the private valet to Delrith."
+                        )
+                        npc(
+                            FaceAnim.OLD_NORMAL,
+                            DARK_BLUE + "I have also worked in the Grim Underworld, escorting the souls of the dead to their final abodes. But the incessant shadows and hellfire wary me, so I have come to serve mortal masters in the realms of light."
+                        )
+                    }
                 }
 
                 3 -> {

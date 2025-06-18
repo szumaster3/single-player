@@ -33,13 +33,13 @@ open class CookingPulse(
     private var experience = 0.0
     private var burned = false
 
-    var properties: CookItem? = null
+    var properties: CookableItems? = null
 
     /**
      * Starts the cooking pulse, checks requirements, and processes the cooking.
      */
     override fun start() {
-        properties = CookItem.forId(initial)
+        properties = CookableItems.forId(initial)
         if (checkRequirements()) {
             super.start()
             cook(player, scenery, properties != null && burned, initial, product)
@@ -128,17 +128,17 @@ open class CookingPulse(
         val hasGauntlets = player.equipment.containsItem(Item(Items.COOKING_GAUNTLETS_775))
         var effectiveCookingLevel = player.getSkills().getLevel(Skills.COOKING)
 
-        val item = CookItem.forId(food)
+        val item = CookableItems.forId(food)
         val low: Int
         val high: Int
 
-        if (hasGauntlets && CookItem.gauntletValues.containsKey(food)) {
-            val successValues = CookItem.gauntletValues[food]
+        if (hasGauntlets && CookableItems.gauntletValues.containsKey(food)) {
+            val successValues = CookableItems.gauntletValues[food]
             low = successValues!![0]
             high = successValues[1]
         } else if (scenery.id == LUMBRIDGE_RANGE) {
             val successValues =
-                CookItem.lumbridgeRangeValues.getOrDefault(food, intArrayOf(item!!.lowRange, item.highRange))
+                CookableItems.lumbridgeRangeValues.getOrDefault(food, intArrayOf(item!!.lowRange, item.highRange))
             low = successValues[0]
             high = successValues[1]
         } else {
@@ -191,13 +191,13 @@ open class CookingPulse(
             } else {
                 player.dispatch(
                     ResourceProducedEvent(
-                        itemId = CookItem.getBurnt(initial).id,
+                        itemId = CookableItems.getBurnt(initial).id,
                         amount = 1,
                         source = sceneryId!!,
                         original = initialItem.id,
                     ),
                 )
-                player.inventory.add(CookItem.getBurnt(initial))
+                player.inventory.add(CookableItems.getBurnt(initial))
             }
             getMessage(initialItem, productItem, burned)?.let { sendMessage(player, it) }
             playAudio(player, Sounds.FRY_2577)
@@ -236,7 +236,7 @@ open class CookingPulse(
             product.id == Items.MUD_PIE_7170 && !burned -> "You successfully bake a mucky mud pie."
             product.id in listOf(Items.BOWL_OF_HOT_WATER_4456, Items.CUP_OF_HOT_WATER_4460) -> if (burned) "You accidentally let the water boil over." else "You boil the water."
 
-            CookItem.intentionalBurn(food.id) -> "You deliberately burn the perfectly good piece of meat."
+            CookableItems.intentionalBurn(food.id) -> "You deliberately burn the perfectly good piece of meat."
 
             else ->
                 if (!burned) {

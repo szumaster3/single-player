@@ -21,13 +21,12 @@ class IncubatorTimer : PersistTimer(500, "incubation") {
         val eggs = root["eggs"] as? JSONArray ?: return
         for (eggData in eggs) {
             val eggInfo = eggData as JSONArray
-            val egg =
-                IncubatingEgg(
-                    eggInfo[0].toString().toInt(),
-                    IncubatorEgg.values()[eggInfo[1].toString().toInt()],
-                    eggInfo[2].toString().toLong(),
-                    eggInfo[3].toString().toBoolean(),
-                )
+            val egg = IncubatingEgg(
+                eggInfo[0].toString().toInt(),
+                IncubatorEgg.values()[eggInfo[1].toString().toInt()],
+                eggInfo[2].toString().toLong(),
+                eggInfo[3].toString().toBoolean(),
+            )
             incubatingEggs[egg.region] = egg
         }
     }
@@ -82,12 +81,11 @@ class IncubatorTimer : PersistTimer(500, "incubation") {
         val YANILLE_REGION = 10288
         val YANILLE_VARBIT = 4221
 
-        fun varbitForRegion(region: Int): Int =
-            when (region) {
-                TAVERLEY_REGION -> TAVERLEY_VARBIT
-                YANILLE_REGION -> YANILLE_VARBIT
-                else -> -1
-            }
+        fun varbitForRegion(region: Int): Int = when (region) {
+            TAVERLEY_REGION -> TAVERLEY_VARBIT
+            YANILLE_REGION -> YANILLE_VARBIT
+            else -> -1
+        }
 
         fun getEggFor(
             player: Player,
@@ -103,12 +101,11 @@ class IncubatorTimer : PersistTimer(500, "incubation") {
             egg: IncubatorEgg,
         ) {
             val timer = getTimer<IncubatorTimer>(player) ?: IncubatorTimer()
-            timer.incubatingEggs[region] =
-                IncubatingEgg(
-                    region,
-                    egg,
-                    System.currentTimeMillis() + (ticksToSeconds(egg.incubationTime * 100) * 1000),
-                )
+            timer.incubatingEggs[region] = IncubatingEgg(
+                region,
+                egg,
+                System.currentTimeMillis() + (ticksToSeconds(egg.incubationTime * 100) * 1000),
+            )
             if (!hasTimerActive<IncubatorTimer>(player)) {
                 registerTimer(player, timer)
             }

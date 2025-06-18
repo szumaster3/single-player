@@ -17,6 +17,10 @@ class GemCuttingPlugin : InteractionListener {
 
     override fun defineListeners() {
 
+        /*
+         * Handles cutting gems.
+         */
+
         onUseWith(IntType.ITEM, Items.CHISEL_1755, *itemIDs) { player, used, with ->
             val gem = Gem.forId(if (used.id == Items.CHISEL_1755) with.asItem() else used.asItem())
             val handler: SkillDialogueHandler =

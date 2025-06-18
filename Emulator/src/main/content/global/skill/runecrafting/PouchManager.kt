@@ -9,16 +9,13 @@ import org.json.simple.JSONArray
 import org.json.simple.JSONObject
 import org.rs.consts.Items
 
-class PouchManager(
-    val player: Player,
-) {
-    val pouches =
-        mapOf(
-            Items.SMALL_POUCH_5509 to Pouches(3, 3, 1),
-            Items.MEDIUM_POUCH_5510 to Pouches(6, 264, 25),
-            Items.LARGE_POUCH_5512 to Pouches(9, 186, 50),
-            Items.GIANT_POUCH_5514 to Pouches(12, 140, 75),
-        )
+class PouchManager(val player: Player) {
+    val pouches = mapOf(
+        Items.SMALL_POUCH_5509 to Pouches(3, 3, 1),
+        Items.MEDIUM_POUCH_5510 to Pouches(6, 264, 25),
+        Items.LARGE_POUCH_5512 to Pouches(9, 186, 50),
+        Items.GIANT_POUCH_5514 to Pouches(12, 140, 75),
+    )
 
     fun addToPouch(
         itemId: Int,
@@ -32,12 +29,11 @@ class PouchManager(
         }
         var amt = amount
         val pouch = pouches[pouchId]
-        val otherEssence =
-            when (essence) {
-                Items.RUNE_ESSENCE_1436 -> Items.PURE_ESSENCE_7936
-                Items.PURE_ESSENCE_7936 -> Items.RUNE_ESSENCE_1436
-                else -> 0
-            }
+        val otherEssence = when (essence) {
+            Items.RUNE_ESSENCE_1436 -> Items.PURE_ESSENCE_7936
+            Items.PURE_ESSENCE_7936 -> Items.RUNE_ESSENCE_1436
+            else -> 0
+        }
         pouch ?: return
         if (amount > pouch.container.freeSlots()) {
             amt = pouch.container.freeSlots()
@@ -55,13 +51,12 @@ class PouchManager(
             pouch.charges -= amt
         }
         if (pouch.charges <= 0) {
-            pouch.currentCap -=
-                when (pouchId) {
-                    Items.MEDIUM_POUCH_5510 -> 1
-                    Items.LARGE_POUCH_5512 -> 2
-                    Items.GIANT_POUCH_5514 -> 3
-                    else -> 0
-                }
+            pouch.currentCap -= when (pouchId) {
+                Items.MEDIUM_POUCH_5510 -> 1
+                Items.LARGE_POUCH_5512 -> 2
+                Items.GIANT_POUCH_5514 -> 3
+                else -> 0
+            }
             if (pouch.currentCap <= 0) {
                 if (removeItem(player, itemId)) {
                     disappeared = true
@@ -80,8 +75,7 @@ class PouchManager(
                     player,
                     "Your pouch has decayed through use.",
                 )
-                pouch.charges =
-                    9 * pouch.currentCap
+                pouch.charges = 9 * pouch.currentCap
                 pouch.remakeContainer()
                 if (amt > pouch.currentCap) {
                     amt = pouch.currentCap

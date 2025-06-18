@@ -30,10 +30,7 @@ enum class Staves(val item: Int, val experience: Double) {
         }
 
         /**
-         * Returns the [Staves] instance for the given item id.
-         *
-         * @param item The item id of the staff.
-         * @return The corresponding [Staves] instance, or `null` if not found.
+         * Returns the Staves for the given item id.
          */
         fun forStaff(item: Int): Staves? {
             return ITEM_TO_STAVES[item]
@@ -42,9 +39,9 @@ enum class Staves(val item: Int, val experience: Double) {
 }
 
 /**
- * Represents a combination of a talisman, corresponding rune crafting staff, and tiara.
+ * Represents a combination of a talismans.
  */
-enum class TalismanStaff(val items: Item, val staves: Staves, val tiara: Int, ) {
+enum class TalismanStaff(val items: Item, val staves: Staves, val tiara: Int) {
     AIR(Item(Items.AIR_TALISMAN_1438), Staves.AIR_RC_STAFF, Items.AIR_TIARA_5527),
     MIND(Item(Items.MIND_TALISMAN_1448), Staves.MIND_RC_STAFF, Items.MIND_TIARA_5529),
     WATER(Item(Items.WATER_TALISMAN_1444), Staves.WATER_RC_STAFF, Items.WATER_TIARA_5531),
@@ -62,7 +59,7 @@ enum class TalismanStaff(val items: Item, val staves: Staves, val tiara: Int, ) 
         private val itemToTalismanStaves = values().associateBy { it.items.id }
 
         /**
-         * Gets [TalismanStaff] for given [Item], or null if none.
+         * Gets TalismanStaff for given Item, or null if none.
          */
         @JvmStatic
         fun from(item: Item): TalismanStaff? = itemToTalismanStaves[item.id]

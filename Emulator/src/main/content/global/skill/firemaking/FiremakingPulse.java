@@ -20,7 +20,7 @@ import static core.api.ContentAPIKt.inInventory;
 import static core.api.ContentAPIKt.replaceSlot;
 
 /**
- * The type Firemaking pulse.
+ * Represents making fire plugin.
  */
 public final class FiremakingPulse extends SkillPulse<Item> {
 

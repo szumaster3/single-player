@@ -9,18 +9,18 @@ import org.rs.consts.Items;
 import org.rs.consts.NPCs;
 
 /**
- * The type House servant plugin.
+ * Plugin handling interactions with house servants.
  */
 @Initializable
 public class HouseServantPlugin extends UseWithHandler {
 
     /**
-     * The Ids.
+     * The item ids of logs that can be used with house servants.
      */
     final static int[] IDS = {Items.LOGS_1511, Items.OAK_LOGS_1521, Items.TEAK_LOGS_6333, Items.MAHOGANY_LOGS_6332};
 
     /**
-     * Instantiates a new House servant plugin.
+     * Creates a new instance.
      */
     public HouseServantPlugin() {
         super(IDS);

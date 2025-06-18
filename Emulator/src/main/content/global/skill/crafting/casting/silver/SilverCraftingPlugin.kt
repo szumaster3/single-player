@@ -13,18 +13,18 @@ import org.rs.consts.*
 
 class SilverCraftingPlugin : InteractionListener, InterfaceListener {
 
+    private val FURNACE_ID = intArrayOf(Scenery.FURNACE_2966, Scenery.FURNACE_3044, Scenery.FURNACE_3294, Scenery.FURNACE_4304, Scenery.FURNACE_6189, Scenery.FURNACE_11009, Scenery.FURNACE_11010, Scenery.FURNACE_11666, Scenery.FURNACE_12100, Scenery.FURNACE_12809, Scenery.FURNACE_18497, Scenery.FURNACE_18525, Scenery.FURNACE_18526, Scenery.FURNACE_21879, Scenery.FURNACE_22721, Scenery.FURNACE_26814, Scenery.FURNACE_28433, Scenery.FURNACE_28434, Scenery.FURNACE_30021, Scenery.FURNACE_30510, Scenery.FURNACE_36956, Scenery.FURNACE_37651)
+    private val UNSTRUNG_ID = intArrayOf(Items.UNSTRUNG_SYMBOL_1714, Items.UNSTRUNG_EMBLEM_1720)
+
     private val OP_MAKE_ONE = 155
     private val OP_MAKE_FIVE = 196
     private val OP_MAKE_ALL = 124
     private val OP_MAKE_X = 199
-    private val ATTRIBUTE_FURNACE_ID = "crafting:silver:furnace_id"
-    private val FURNACE_ID = intArrayOf(Scenery.FURNACE_2966, Scenery.FURNACE_3044, Scenery.FURNACE_3294, Scenery.FURNACE_4304, Scenery.FURNACE_6189, Scenery.FURNACE_11009, Scenery.FURNACE_11010, Scenery.FURNACE_11666, Scenery.FURNACE_12100, Scenery.FURNACE_12809, Scenery.FURNACE_18497, Scenery.FURNACE_18525, Scenery.FURNACE_18526, Scenery.FURNACE_21879, Scenery.FURNACE_22721, Scenery.FURNACE_26814, Scenery.FURNACE_28433, Scenery.FURNACE_28434, Scenery.FURNACE_30021, Scenery.FURNACE_30510, Scenery.FURNACE_36956, Scenery.FURNACE_37651)
-    private val UNSTRUNG_ID = intArrayOf(Items.UNSTRUNG_SYMBOL_1714, Items.UNSTRUNG_EMBLEM_1720)
 
     override fun defineListeners() {
 
         onUseWith(IntType.SCENERY, Items.SILVER_BAR_2355, *FURNACE_ID) { player, _, with ->
-            setAttribute(player, ATTRIBUTE_FURNACE_ID, with)
+            setAttribute(player, "crafting:silver:furnace_id", with)
             openInterface(player, Components.CRAFTING_SILVER_CASTING_438)
             return@onUseWith true
         }
@@ -42,7 +42,17 @@ class SilverCraftingPlugin : InteractionListener, InterfaceListener {
     override fun defineInterfaceListeners() {
 
         onOpen(Components.CRAFTING_SILVER_CASTING_438) { player, _ ->
-            val itemsToSend = listOf(Items.HOLY_SYMBOL_1718 to 17, Items.UNHOLY_SYMBOL_1724 to 24, Items.SILVER_SICKLE_2961 to 31, Items.CONDUCTOR_4201 to 38, Items.TIARA_5525 to 45, Items.SILVTHRILL_ROD_7637 to 53, Items.DEMONIC_SIGIL_6748 to 60, Items.SILVER_BOLTS_UNF_9382 to 67, Items.SILVTHRIL_CHAIN_13154 to 74)
+            val itemsToSend = listOf(
+                Items.HOLY_SYMBOL_1718 to 17,
+                Items.UNHOLY_SYMBOL_1724 to 24,
+                Items.SILVER_SICKLE_2961 to 31,
+                Items.CONDUCTOR_4201 to 38,
+                Items.TIARA_5525 to 45,
+                Items.SILVTHRILL_ROD_7637 to 53,
+                Items.DEMONIC_SIGIL_6748 to 60,
+                Items.SILVER_BOLTS_UNF_9382 to 67,
+                Items.SILVTHRIL_CHAIN_13154 to 74
+            )
             itemsToSend.forEach { (item, index) ->
                 sendItemOnInterface(player, Components.CRAFTING_SILVER_CASTING_438, index, item)
             }
@@ -66,10 +76,9 @@ class SilverCraftingPlugin : InteractionListener, InterfaceListener {
                 OP_MAKE_ONE -> make(player, product, 1)
                 OP_MAKE_FIVE -> make(player, product, 5)
                 OP_MAKE_ALL -> make(player, product, amountInInventory(player, Items.SILVER_BAR_2355))
-                OP_MAKE_X ->
-                    sendInputDialogue(player, InputType.AMOUNT, "Enter the amount:") { value ->
-                        make(player, product, Integer.parseInt(value.toString()))
-                    }
+                OP_MAKE_X -> sendInputDialogue(player, InputType.AMOUNT, "Enter the amount:") { value ->
+                    make(player, product, Integer.parseInt(value.toString()))
+                }
 
                 else -> return@on true
             }
@@ -78,12 +87,16 @@ class SilverCraftingPlugin : InteractionListener, InterfaceListener {
         }
     }
 
-    private fun make(player: Player, product: Silver, amount: Int, ) {
+    private fun make(player: Player, product: Silver, amount: Int) {
         closeInterface(player)
         submitIndividualPulse(
             player,
-            pulse =
-            SilverCraftingPulse(player, product, getAttribute(player, ATTRIBUTE_FURNACE_ID, core.game.node.scenery.Scenery(-1, -1, 0)), amount),
+            pulse = SilverCraftingPulse(
+                player,
+                product,
+                getAttribute(player, "crafting:silver:furnace_id", core.game.node.scenery.Scenery(-1, -1, 0)),
+                amount
+            ),
         )
     }
 
@@ -92,7 +105,7 @@ class SilverCraftingPlugin : InteractionListener, InterfaceListener {
 /**
  * Handles silver crafting pulse.
  */
-private class SilverCraftingPulse(val player: Player, val product: Silver, val furnace: core.game.node.scenery.Scenery, var amount: Int, ) : Pulse() {
+private class SilverCraftingPulse(val player: Player, val product: Silver, val furnace: core.game.node.scenery.Scenery, var amount: Int) : Pulse() {
     override fun pulse(): Boolean {
         if (amount < 1) return true
 
@@ -122,5 +135,26 @@ private class SilverCraftingPulse(val player: Player, val product: Silver, val f
         delay = 5
 
         return false
+    }
+}
+
+private enum class Silver(
+    val buttonId: Int,
+    val required: Int,
+    val product: Int,
+    val amount: Int,
+    val level: Int,
+    val experience: Double,
+    val strung: Int
+) {
+    HOLY(16, Items.HOLY_MOULD_1599, Items.UNSTRUNG_SYMBOL_1714, 1, 16, 50.0, Items.UNBLESSED_SYMBOL_1716), UNHOLY(23, Items.UNHOLY_MOULD_1594, Items.UNSTRUNG_EMBLEM_1720, 1, 17, 50.0, Items.UNHOLY_SYMBOL_1724),
+    SICKLE(30, Items.SICKLE_MOULD_2976, Items.SILVER_SICKLE_2961, 1, 18, 50.0, -1), TIARA(44, Items.TIARA_MOULD_5523, Items.TIARA_5525, 1, 23, 52.5, -1),
+    SILVTHRIL_CHAIN(59, Items.CHAIN_LINK_MOULD_13153, Items.SILVTHRIL_CHAIN_13154, 1, 47, 100.0, -1), LIGHTNING_ROD(73, Items.CONDUCTOR_MOULD_4200, Items.CONDUCTOR_4201, 1, 20, 50.0, -1),
+    SILVTHRILL_ROD(37, Items.ROD_CLAY_MOULD_7649, Items.SILVTHRILL_ROD_7637, 1, 25, 55.0, -1), CROSSBOW_BOLTS(52, Items.BOLT_MOULD_9434, Items.SILVER_BOLTS_UNF_9382, 10, 21, 50.0, -1),
+    DEMONIC_SIGIL(66, Items.DEMONIC_SIGIL_MOULD_6747, Items.DEMONIC_SIGIL_6748, 1, 30, 50.0, -1), ;
+
+    companion object {
+        fun forId(itemId: Int): Silver? = values().find { it.required == itemId }
+        fun forButton(button: Int): Silver? = values().find { it.buttonId == button }
     }
 }

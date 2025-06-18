@@ -11,8 +11,7 @@ import org.rs.consts.Components
 import org.rs.consts.Items
 
 /**
- * Handles jewellery crafting functionality for gold, including interface management
- * and item production.
+ * Handles jewellery crafting functionality.
  */
 object Jewellery {
     const val RING_MOULD: Int = Items.RING_MOULD_1592

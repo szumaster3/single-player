@@ -12,18 +12,10 @@ import core.plugin.Plugin
 
 @Initializable
 class FiremakingHandler : OptionHandler() {
-    override fun handle(
-        player: Player,
-        node: Node,
-        option: String,
-    ): Boolean {
+    override fun handle(player: Player, node: Node, option: String, ): Boolean {
         submitIndividualPulse(
             player,
-            FiremakingPulse(
-                player,
-                (node as Item),
-                (node as GroundItem),
-            ),
+            FiremakingPulse(player, (node as Item), (node as GroundItem))
         )
         return true
     }

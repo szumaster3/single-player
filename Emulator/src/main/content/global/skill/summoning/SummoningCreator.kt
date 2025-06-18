@@ -30,7 +30,7 @@ object SummoningCreator {
             "Infuse<col=FF9040>",
             20,
             4,
-            Components.SUMMONING_POUCHES_669 shl 16 or 15,
+            Components.SUMMONING_POUCHES_669 shl 16 or 15
         )
 
     /**

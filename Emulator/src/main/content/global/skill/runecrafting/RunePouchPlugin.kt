@@ -31,11 +31,10 @@ class RunePouchPlugin : OptionHandler() {
         if (rEssAmt - pEssAmt == 0 && option == "fill") return true
         if (rEssAmt > pEssAmt) preferenceFlag = 0 else preferenceFlag = 1
 
-        val essence =
-            Item(
-                if (preferenceFlag == 0) Items.RUNE_ESSENCE_1436 else Items.PURE_ESSENCE_7936,
-                if (preferenceFlag == 0) rEssAmt else pEssAmt,
-            )
+        val essence = Item(
+            if (preferenceFlag == 0) Items.RUNE_ESSENCE_1436 else Items.PURE_ESSENCE_7936,
+            if (preferenceFlag == 0) rEssAmt else pEssAmt,
+        )
 
         when (option) {
             "fill" -> player.pouchManager.addToPouch(node.id, essence.amount, essence.id)

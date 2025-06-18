@@ -16,7 +16,7 @@ import core.tools.Log;
 import static core.api.ContentAPIKt.log;
 
 /**
- * The type Build option plugin.
+ * Handles the build options.
  */
 @Initializable
 public final class BuildOptionPlugin extends OptionHandler {

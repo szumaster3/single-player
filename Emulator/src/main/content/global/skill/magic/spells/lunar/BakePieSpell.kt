@@ -1,6 +1,6 @@
 package content.global.skill.magic.spells.lunar
 
-import content.global.skill.cooking.CookItem
+import content.global.skill.cooking.CookableItems
 import content.global.skill.magic.SpellListener
 import content.global.skill.magic.spells.LunarSpells
 import core.api.sendMessage
@@ -24,7 +24,7 @@ class BakePieSpell : SpellListener("lunar") {
 
             for (item in player.inventory.toArray()) {
                 if (item == null) continue
-                val pie = CookItem.forId(item.id) ?: continue
+                val pie = CookableItems.forId(item.id) ?: continue
                 if (!pie.name.lowercase().contains("pie")) continue
                 if (player.skills.getLevel(Skills.COOKING) < pie.level) continue
                 playerPies.add(item)
@@ -46,7 +46,7 @@ class BakePieSpell : SpellListener("lunar") {
                             delay = Animation(Animations.LUNAR_BAKE_PIE_4413).definition.getDurationTicks() + 1
                         }
                         val item = playerPies[0]
-                        val pie = CookItem.forId(item.id)
+                        val pie = CookableItems.forId(item.id)
                         visualizeSpell(player, Animations.LUNAR_BAKE_PIE_4413, 746, 75, Sounds.LUNAR_BAKE_PIE_2879)
                         addXP(player, 60.0)
                         player.skills.addExperience(Skills.COOKING, pie!!.experience)

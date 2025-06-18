@@ -23,7 +23,7 @@ enum class Rune(val rune: Item, val level: Int, val experience: Double, private 
     SOUL(Runes.SOUL_RUNE.transform(), 90, 11.0);
 
     /**
-     * Retrieves the multiples of experience for this rune.
+     * Gets the multiples of experience for this rune.
      */
     fun getMultiple(): IntArray? = multiple
 
@@ -51,13 +51,13 @@ enum class Rune(val rune: Item, val level: Int, val experience: Double, private 
         }
 
         /**
-         * Returns the [Rune] matching the given [Item], or null if none.
+         * Returns the Rune matching the given Item, or null if none.
          */
         @JvmStatic
         fun forItem(item: Item): Rune? = itemToRune[item.id]
 
         /**
-         * Returns the [Rune] matching the given name, or null if none.
+         * Returns the Rune matching the given name, or null if none.
          */
         fun forName(name: String): Rune? = values().find { it.name == name }
     }

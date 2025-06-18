@@ -9,15 +9,21 @@ import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.entity.skill.SkillPulse
 import core.game.node.entity.skill.Skills
+import core.game.node.item.Item
 import core.game.node.scenery.Scenery
 import core.game.world.map.Location
 import core.tools.StringUtils
 import org.rs.consts.Animations
 import org.rs.consts.Components
+import org.rs.consts.Items
 
 class WeavingPlugin : InteractionListener {
 
     override fun defineListeners() {
+
+        /*
+         * Handles interaction with weaves.
+         */
 
         on(IntType.SCENERY, "weave") { player, node ->
             object : SkillDialogueHandler(player, SkillDialogue.THREE_OPTION, Weaving.SACK.product, Weaving.BASKET.product, Weaving.CLOTH.product) {
@@ -128,4 +134,13 @@ private class WeavingPulse(player: Player?, node: Scenery?, private val type: We
     companion object {
         private const val ANIMATION = Animations.PULLING_ROPE_2270
     }
+}
+
+/**
+ * Represents weaving items.
+ */
+enum class Weaving(val product: Item, val required: Item, val level: Int, val experience: Double, ) {
+    SACK(Item(Items.EMPTY_SACK_5418), Item(Items.JUTE_FIBRE_5931, 4), 21, 38.0),
+    BASKET(Item(Items.BASKET_5376), Item(Items.WILLOW_BRANCH_5933, 6), 36, 56.0),
+    CLOTH(Item(Items.STRIP_OF_CLOTH_3224), Item(Items.BALL_OF_WOOL_1759, 4), 10, 12.0),
 }
