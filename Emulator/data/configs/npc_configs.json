@@ -19658,6 +19658,7 @@
   {
     "examine": "A gnome traveller, visiting Keldagrim.",
     "name": "Gnome traveller",
+    "force_talk": "",
     "id": "2139"
   },
   {
@@ -19689,6 +19690,11 @@
     "examine": "He's selling his bread on the market here.",
     "name": "Randivor",
     "id": "2156"
+  },
+  {
+    "examine": "A gem stall owner, with goods from the deepest of mines.",
+    "name": "Hervi",
+    "id": "2157"
   },
   {
     "examine": "A crafty dwarf.",
@@ -20293,24 +20299,29 @@
     "id": "2266"
   },
   {
-    "examine": "Sparkles the Tinsel Snake",
+    "examine": "Roguelike and guardish.",
     "name": "Rogue Guard",
     "id": "2267"
   },
   {
-    "examine": "A snowman armed with a holly bow.",
+    "examine": "Roguelike and guardish.",
     "name": "Rogue Guard",
     "id": "2269"
   },
   {
-    "examine": "A snowman armed with an ice sword.",
+    "examine": "A rich banker man... Some say too rich.",
     "name": "Emerald Benedict",
     "id": "2271"
   },
   {
-    "examine": "A snowman armed with a winter staff.",
+    "examine": "I don't think I want to get too close to that!",
     "name": "Spin Blades",
     "id": "2272"
+  },
+  {
+    "examine": "I don't think I want to get too close to that!",
+    "name": "Spin Blades",
+    "id": "2273"
   },
   {
     "examine": "An ugly green creature.",
