@@ -10,7 +10,7 @@ import core.game.node.item.Item
 import org.rs.consts.Components
 import org.rs.consts.Items
 
-class LeatherCraftingPlugin : InteractionListener , InterfaceListener {
+class LeatherCraftingListener : InteractionListener , InterfaceListener {
     val STUDDED_LEATHER = StuddedArmour.values().map { it.leather }.toIntArray()
     val DRAGON_LEATHER = intArrayOf(Items.GREEN_D_LEATHER_1745, Items.BLUE_D_LEATHER_2505, Items.RED_DRAGON_LEATHER_2507, Items.BLACK_D_LEATHER_2509)
 
@@ -41,6 +41,30 @@ class LeatherCraftingPlugin : InteractionListener , InterfaceListener {
                     )
                 }
 
+                calculateMaxAmount {
+                    amountInInventory(player, used.id)
+                }
+            }
+            return@onUseWith true
+        }
+
+        /*
+         * Handles crafting the snakeskin.
+         */
+
+        onUseWith(IntType.ITEM, Items.NEEDLE_1733, Items.SNAKESKIN_6289) { player, used, _ ->
+            sendString(player, "Which snakeskin item would you like to make?", Components.SKILL_MAKE_306, 27)
+            sendSkillDialogue(player) {
+                withItems(Items.SNAKESKIN_BODY_6322, Items.SNAKESKIN_CHAPS_6324, Items.SNAKESKIN_VBRACE_6330, Items.SNAKESKIN_BANDANA_6326, Items.SNAKESKIN_BOOTS_6328)
+                create { id, amount ->
+                    val item = SnakeskinLeather.forId(id)
+                    item?.let {
+                        submitIndividualPulse(
+                            entity = player,
+                            pulse = SnakeskinCraftingPulse(player, null, amount, it),
+                        )
+                    } ?: sendMessage(player, "Invalid snakeskin item selected.")
+                }
                 calculateMaxAmount {
                     amountInInventory(player, used.id)
                 }

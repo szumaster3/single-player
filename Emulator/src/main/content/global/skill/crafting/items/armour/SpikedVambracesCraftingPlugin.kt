@@ -1,4 +1,4 @@
-package content.global.skill.crafting.items.leather
+package content.global.skill.crafting.items.armour
 
 import core.api.*
 import core.game.interaction.IntType
@@ -8,7 +8,7 @@ import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import org.rs.consts.Items
 
-class SpikedVambsPlugin : InteractionListener {
+class SpikedVambracesCraftingPlugin : InteractionListener {
 
     override fun defineListeners() {
 

@@ -17,7 +17,19 @@ import org.rs.consts.Animations
 import org.rs.consts.Components
 import org.rs.consts.Items
 
-class WeavingPlugin : InteractionListener {
+/**
+ * Represents weaving items.
+ */
+enum class Weaving(val product: Item, val required: Item, val level: Int, val experience: Double, ) {
+    SACK(Item(Items.EMPTY_SACK_5418), Item(Items.JUTE_FIBRE_5931, 4), 21, 38.0),
+    BASKET(Item(Items.BASKET_5376), Item(Items.WILLOW_BRANCH_5933, 6), 36, 56.0),
+    CLOTH(Item(Items.STRIP_OF_CLOTH_3224), Item(Items.BALL_OF_WOOL_1759, 4), 10, 12.0),
+}
+
+/**
+ * Handles weaving crafting.
+ */
+class WeavingListener : InteractionListener {
 
     override fun defineListeners() {
 
@@ -43,7 +55,7 @@ class WeavingPlugin : InteractionListener {
 }
 
 /**
- * Handles weaving pulse.
+ * Handles weaving crafting pulse.
  */
 private class WeavingPulse(player: Player?, node: Scenery?, private val type: Weaving, private var amount: Int, ) : SkillPulse<Scenery?>(player, node) {
     private var ticks = 0
@@ -134,13 +146,4 @@ private class WeavingPulse(player: Player?, node: Scenery?, private val type: We
     companion object {
         private const val ANIMATION = Animations.PULLING_ROPE_2270
     }
-}
-
-/**
- * Represents weaving items.
- */
-enum class Weaving(val product: Item, val required: Item, val level: Int, val experience: Double, ) {
-    SACK(Item(Items.EMPTY_SACK_5418), Item(Items.JUTE_FIBRE_5931, 4), 21, 38.0),
-    BASKET(Item(Items.BASKET_5376), Item(Items.WILLOW_BRANCH_5933, 6), 36, 56.0),
-    CLOTH(Item(Items.STRIP_OF_CLOTH_3224), Item(Items.BALL_OF_WOOL_1759, 4), 10, 12.0),
 }

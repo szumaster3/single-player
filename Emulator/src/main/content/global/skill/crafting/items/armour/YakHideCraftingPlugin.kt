@@ -1,4 +1,4 @@
-package content.global.skill.crafting.items.armour.yakhide
+package content.global.skill.crafting.items.armour
 
 import content.global.skill.crafting.items.leather.ThreadUtils
 import core.api.*
@@ -12,7 +12,7 @@ import core.game.node.item.Item
 import org.rs.consts.Animations
 import org.rs.consts.Items
 
-class YakArmourCraftingPlugin : InteractionListener {
+class YakHideCraftingPlugin : InteractionListener {
     override fun defineListeners() {
         onUseWith(IntType.ITEM, Items.CURED_YAK_HIDE_10820, Items.NEEDLE_1733) { player, used, _ ->
             sendSkillDialogue(player) {

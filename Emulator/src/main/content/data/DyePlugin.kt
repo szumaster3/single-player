@@ -1,4 +1,4 @@
-package content.global.skill.crafting.items.armour.capes
+package content.data
 
 import core.api.inInventory
 import core.api.removeItem
@@ -13,7 +13,7 @@ import org.rs.consts.Animations
 import org.rs.consts.Items
 import java.util.*
 
-class DyesUsagePlugin : InteractionListener {
+class DyePlugin : InteractionListener {
 
     companion object {
         private val DYES = Dyes.values().map { it.item.id }.toIntArray()

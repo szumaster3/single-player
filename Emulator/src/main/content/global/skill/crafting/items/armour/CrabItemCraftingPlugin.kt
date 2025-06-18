@@ -1,4 +1,4 @@
-package content.global.skill.crafting.items.armour.crab
+package content.global.skill.crafting.items.armour
 
 import core.api.*
 import core.game.interaction.IntType

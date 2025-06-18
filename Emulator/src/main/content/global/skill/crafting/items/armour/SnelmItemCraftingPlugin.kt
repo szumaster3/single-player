@@ -1,4 +1,4 @@
-package content.global.skill.crafting.items.armour.snelms
+package content.global.skill.crafting.items.armour
 
 import core.api.*
 import core.game.interaction.IntType
@@ -8,7 +8,7 @@ import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import org.rs.consts.Items
 
-class SnelmCraftingPlugin : InteractionListener {
+class SnelmItemCraftingPlugin : InteractionListener {
 
     private val shellIDs = Snelm.values().map(Snelm::shell).toIntArray()
 
