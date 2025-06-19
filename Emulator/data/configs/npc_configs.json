@@ -6922,24 +6922,41 @@
     "attack_level": "15"
   },
   {
+    "examine": "He looks a bit funny.",
+    "name": "Straven",
+    "id": "644"
+  },
+  {
     "examine": "Looks kind of shifty...",
     "melee_animation": "422",
-    "combat_audio": "498,500,499",
-    "range_animation": "0",
+    "combat_audio": "511,513,512",
+    "range_animation": "422",
+    "attack_speed": "4",
+    "magic_level": "1",
     "respawn_delay": "60",
-    "defence_animation": "0",
+    "defence_animation": "404",
     "weakness": "9",
-    "magic_animation": "0",
-    "death_animation": "836",
+    "slayer_exp": "0",
+    "magic_animation": "422",
+    "death_animation": "9055",
     "name": "Jonny the beard",
-    "lifepoints": "2",
+    "defence_level": "5",
+    "lifepoints": "8",
     "strength_level": "1",
-    "id": "645"
+    "id": "645",
+    "clue_level": "0",
+    "range_level": "1",
+    "attack_level": "1"
   },
   {
     "examine": "Curator of the museum.",
     "name": "Curator Haig Halen",
     "id": "646"
+  },
+  {
+    "examine": "Reldo the librarian.",
+    "name": "Reldo",
+    "id": "647"
   },
   {
     "examine": "Varrock's resident monarch.",
@@ -6959,17 +6976,22 @@
   {
     "examine": "He looks holy.",
     "name": "Monk",
-    "combat_audio": "511,513,512",
     "id": "651"
   },
   {
     "examine": "He looks kind of puny...",
     "name": "Wizard",
-    "combat_audio": "511,513,512",
-    "id": "652",
-    "range_level": "1",
-    "prj_height": "3",
-    "attack_level": "1"
+    "id": "652"
+  },
+  {
+    "examine": "Looks otherworldly.",
+    "name": "Fairy Queen",
+    "id": "653"
+  },
+  {
+    "examine": "A funny little man who lives in a tree.",
+    "name": "Shamus",
+    "id": "654"
   },
   {
     "examine": "Guardian of the dramen tree.",
@@ -7010,20 +7032,46 @@
     "id": "659"
   },
   {
+    "examine": "You'd need a tin opener to get him out.",
     "name": "Knight",
-    "lifepoints": "10",
-    "combat_audio": "511,513,512",
-    "strength_level": "1",
     "id": "660"
   },
   {
+    "examine": "Pretty barmaid.",
+    "name": "Megan",
+    "id": "661"
+  },
+  {
+    "examine": "Pretty barmaid.",
+    "name": "Lucy",
+    "id": "662"
+  },
+  {
     "examine": "One of Gielinor's many citizens.",
-    "name": "Man",
-    "lifepoints": "7",
+    "melee_animation": "422",
     "combat_audio": "511,513,512",
-    "strength_level": "1",
+    "range_animation": "422",
+    "attack_speed": "4",
+    "magic_level": "6",
+    "respawn_delay": "18",
+    "defence_animation": "404",
+    "weakness": "9",
+    "slayer_exp": "0",
+    "magic_animation": "422",
+    "death_animation": "9055",
+    "name": "Man",
+    "defence_level": "5",
+    "lifepoints": "7",
+    "strength_level": "2",
     "id": "663",
-    "clue_level": "0"
+    "clue_level": "0",
+    "range_level": "1",
+    "attack_level": "5"
+  },
+  {
+    "examine": "A well-dressed nobleman.",
+    "name": "Dimintheis",
+    "id": "664"
   },
   {
     "examine": "A short and angry dwarf.",

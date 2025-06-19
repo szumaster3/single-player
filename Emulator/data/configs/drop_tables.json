@@ -59592,5 +59592,19 @@
     "ids": "195,196",
     "description": "Bandit Camp guards (Level-22)",
     "main": []
+  },
+  {
+    "default": [
+      {
+        "minAmount": "1",
+        "weight": "1.0",
+        "id": "526",
+        "maxAmount": "1"
+      }
+    ],
+    "charm": [],
+    "ids": "645",
+    "description": "Jonny the beard (Level-2)",
+    "main": []
   }
 ]

@@ -31,12 +31,6 @@ private val VALID_LOGS = arrayOf(
 class BeaconKeeperDialogue(player: Player? = null) : Dialogue(player) {
     var index = 0
 
-    private val faceExpression = when (npc.id) {
-        NPCs.STUBTHUMB_8054, NPCs.CRATE_8059, NPCs.NANUQ_8063 -> FaceAnim.OLD_ANGRY2
-        NPCs.DORONBOL_8057 -> FaceAnim.CHILD_NEUTRAL
-        else -> FaceAnim.ANNOYED
-    }
-
     override fun open(vararg args: Any?): Boolean {
         npc = (args[0] as NPC).getShownNPC(player)
         index = getIndexOf((args[0] as NPC).originalId, listOf(npc.id))
