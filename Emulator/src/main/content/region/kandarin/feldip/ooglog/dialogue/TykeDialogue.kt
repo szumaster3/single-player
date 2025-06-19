@@ -16,13 +16,7 @@ class TykeDialogue(player: Player? = null) : Dialogue(player) {
             START_DIALOGUE -> npcl(FaceAnim.CHILD_NORMAL, "Hi, human.").also { stage++ }
             1 -> playerl(FaceAnim.HALF_ASKING, "Hi, ogre! How are you today, little ogre?").also { stage++ }
             2 -> npcl(FaceAnim.CHILD_NORMAL, "Hey, human. What did you bring me?").also { stage++ }
-            3 -> playerl(
-                FaceAnim.THINKING,
-                "Hmm, let me think carefully about this. Oh, yes. I remember, now! Absolutely nothing.",
-            ).also {
-                stage++
-            }
-
+            3 -> playerl(FaceAnim.THINKING, "Hmm, let me think carefully about this. Oh, yes. I remember, now! Absolutely nothing.").also { stage++ }
             4 -> npcl(FaceAnim.CHILD_NORMAL, "Aw, shucks.").also { stage = END_DIALOGUE }
         }
         return true

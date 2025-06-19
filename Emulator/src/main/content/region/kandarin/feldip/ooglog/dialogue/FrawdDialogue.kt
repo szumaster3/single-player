@@ -16,11 +16,10 @@ class FrawdDialogue(player: Player? = null) : Dialogue(player) {
         when (stage) {
             START_DIALOGUE -> npcl(FaceAnim.CHILD_NORMAL, "What you want, human?").also { stage++ }
             1 -> options("So what do you have for sale, then?", "Never mind.").also { stage++ }
-            2 ->
-                when (buttonId) {
-                    1 -> playerl(FaceAnim.FRIENDLY, "So what do you have for sale, then?").also { stage = 3 }
-                    2 -> playerl(FaceAnim.FRIENDLY, "Never mind.").also { stage = END_DIALOGUE }
-                }
+            2 -> when (buttonId) {
+                1 -> playerl(FaceAnim.FRIENDLY, "So what do you have for sale, then?").also { stage = 3 }
+                2 -> playerl(FaceAnim.FRIENDLY, "Never mind.").also { stage = END_DIALOGUE }
+            }
 
             3 -> {
                 end()
