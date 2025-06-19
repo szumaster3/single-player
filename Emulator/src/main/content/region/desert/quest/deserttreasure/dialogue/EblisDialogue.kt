@@ -1,7 +1,7 @@
 package content.region.desert.quest.deserttreasure.dialogue
 
+import content.region.desert.quest.deserttreasure.DTUtils
 import content.region.desert.quest.deserttreasure.DesertTreasure
-import content.region.desert.quest.deserttreasure.plugin.DTUtils
 import core.api.*
 import core.api.quest.getQuestStage
 import core.api.quest.isQuestComplete
@@ -340,7 +340,7 @@ class EblisDialogue(player: Player? = null) : Dialogue(player) {
     override fun getIds(): IntArray = intArrayOf(NPCs.EBLIS_1923, NPCs.EBLIS_1924, NPCs.EBLIS_1925)
 }
 
-class EblisDialogueFile : DialogueBuilderFile() {
+private class EblisDialogueFile : DialogueBuilderFile() {
     override fun create(b: DialogueBuilder) {
         b.onQuestStages(Quests.DESERT_TREASURE, 0, 1, 2, 3, 4)
             .npcl("Leave us to our fate. We care nothing for the world that betrayed us, or those that come from it.")

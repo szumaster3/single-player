@@ -27,7 +27,7 @@ class RuantunDialogue(player: Player? = null) : Dialogue(player) {
     override fun getIds(): IntArray = intArrayOf(NPCs.RUANTUN_1916)
 }
 
-class RuantunDialogueFile : DialogueBuilderFile() {
+private class RuantunDialogueFile : DialogueBuilderFile() {
     override fun create(b: DialogueBuilder) {
         b.onQuestStages(Quests.DESERT_TREASURE, 0, 1, 2, 3, 4, 5, 6, 7, 8).playerl("Hello.")
             .npcl(FaceAnim.OLD_NORMAL, "You ssshould not be down here...").options().let { optionBuilder ->

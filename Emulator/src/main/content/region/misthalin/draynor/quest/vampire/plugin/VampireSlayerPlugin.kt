@@ -1,6 +1,5 @@
 package content.region.misthalin.draynor.quest.vampire.plugin
 
-import content.region.misthalin.draynor.plugin.DraynorUtils
 import core.api.*
 import core.api.quest.getQuestStage
 import core.api.quest.isQuestComplete
@@ -12,35 +11,37 @@ import org.rs.consts.*
 
 class VampireSlayerPlugin: InteractionListener {
     override fun defineListeners() {
-        on(DraynorUtils.cupBoard, IntType.SCENERY, "open") { player, node ->
+        on(Scenery.CUPBOARD_33502, IntType.SCENERY, "open") { player, node ->
             animate(player, Animations.OPEN_WARDROBE_542)
             playAudio(player, Sounds.CUPBOARD_OPEN_58)
             sendMessage(player, "You open the cupboard.")
-            replaceScenery(node.asScenery(), DraynorUtils.openedCupBoard, -1)
+            replaceScenery(node.asScenery(),  Scenery.CUPBOARD_33503, -1)
             return@on true
         }
 
-        on(DraynorUtils.openedCupBoard, IntType.SCENERY, "close") { player, node ->
-            animate(player, Animations.CLOSE_CUPBOARD_543)
-            playAudio(player, Sounds.CUPBOARD_CLOSE_57)
-            sendMessage(player, "You close the cupboard.")
-            replaceScenery(node.asScenery(), DraynorUtils.cupBoard, -1)
-            return@on true
-        }
-
-        on(DraynorUtils.openedCupBoard, IntType.SCENERY, "search") { player, _ ->
-            if (!inInventory(player, DraynorUtils.garlic)) {
-                sendMessage(player, "The cupboard contains garlic. You take a clove.")
-                addItem(player, DraynorUtils.garlic, 1)
-            } else if (freeSlots(player) == 0) {
-                sendMessage(player, "Not enough inventory space.")
-            } else {
-                sendMessage(player, "You search the cupboard but find nothing.")
+        on(Scenery.CUPBOARD_33503, IntType.SCENERY, "close", "search") { player, node ->
+            when(node.interaction.options.toString()) {
+                "close" -> {
+                    animate(player, Animations.CLOSE_CUPBOARD_543)
+                    playAudio(player, Sounds.CUPBOARD_CLOSE_57)
+                    sendMessage(player, "You close the cupboard.")
+                    replaceScenery(node.asScenery(), Scenery.CUPBOARD_33502, -1)
+                }
+                "search" -> {
+                    when {
+                        !inInventory(player, Items.GARLIC_1550) -> {
+                            sendMessage(player, "The cupboard contains garlic. You take a clove.")
+                            addItem(player, Items.GARLIC_1550, 1)
+                        }
+                        freeSlots(player) == 0 -> sendMessage(player, "Not enough inventory space.")
+                        else -> sendMessage(player, "You search the cupboard but find nothing.")
+                    }
+                }
             }
             return@on true
         }
 
-        on(DraynorUtils.coffin, IntType.SCENERY, "open") { player, node ->
+        on(Scenery.COFFIN_2614, IntType.SCENERY, "open") { player, node ->
             if (isQuestComplete(player, Quests.VAMPIRE_SLAYER)) {
                 sendPlayerDialogue(player, "I should tell Morgan that I've killed the vampire!")
                 return@on true
@@ -52,7 +53,7 @@ class VampireSlayerPlugin: InteractionListener {
             animate(player, Animations.MULTI_TAKE_832)
             playAudio(player, Sounds.COFFIN_OPEN_54)
             if (getQuestStage(player, Quests.VAMPIRE_SLAYER) == 30) {
-                replaceScenery(node.asScenery(), DraynorUtils.openedCoffin, 6)
+                replaceScenery(node.asScenery(), Scenery.COFFIN_11208, 6)
                 runTask(player, 3) {
                     val o = player.getAttribute<NPC>("count", null)
                     if (o == null || !o.isActive) {
@@ -79,18 +80,18 @@ class VampireSlayerPlugin: InteractionListener {
             return@on true
         }
 
-        on(DraynorUtils.stairsUp, IntType.SCENERY, "walk-down") { player, _ ->
-            player.properties.teleportLocation = DraynorUtils.basement
+        on(Scenery.STAIRS_32835, IntType.SCENERY, "walk-down") { player, _ ->
+            player.properties.teleportLocation = Location.create(3077, 9770, 0)
             sendMessage(player, "You walk down the stairs...")
             return@on true
         }
 
-        on(DraynorUtils.stairsBasement, IntType.SCENERY, "walk-up") { player, _ ->
+        on(Scenery.STAIRS_32836, IntType.SCENERY, "walk-up") { player, _ ->
             if (getAttribute(player, "vs-exit", false)) {
                 sendMessage(player, "You can't do that right now.")
                 return@on true
             }
-            player.properties.teleportLocation = DraynorUtils.groundFloor
+            player.properties.teleportLocation = Location.create(3115, 3356, 0)
             return@on true
         }
     }

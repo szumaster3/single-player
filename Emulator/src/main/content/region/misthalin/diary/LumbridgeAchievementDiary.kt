@@ -8,9 +8,9 @@ import content.region.misthalin.draynor.dialogue.WiseOldManDialogue
 import content.region.misthalin.lumbridge.dialogue.DoomsayerDialogue
 import content.region.misthalin.lumbridge.dialogue.DukeHoracioDialogue
 import content.region.misthalin.lumbridge.dialogue.LumbridgeGuideDialogue
-import content.region.misthalin.draynor.plugin.TelescopeCutscene.EndDialogue
+import content.region.misthalin.draynor.cutscene.TelescopeCutscene.EndDialogue
 import content.region.misthalin.varrock.quest.dragon.dialogue.DukeDragonSlayerDialogue
-import content.region.misthalin.lumbridge.quest.restless.dialogue.FatherUhrneyDialogue
+import content.region.misthalin.lumbridge.quest.priest.dialogue.FatherUhrneyDialogue
 import core.api.*
 import core.api.quest.getQuestStage
 import core.game.diary.DiaryAreaTask

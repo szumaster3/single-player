@@ -1,6 +1,6 @@
 package content.region.misthalin.varrock.plugin.museum
 
-import content.region.desert.quest.golem.TheGolemListeners
+import content.region.desert.uzer.quest.golem.TheGolemListeners
 import core.api.*
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener

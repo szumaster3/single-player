@@ -28,7 +28,7 @@ class BartenderDialogue(player: Player? = null) : Dialogue(player) {
     override fun getIds(): IntArray = intArrayOf(NPCs.BARTENDER_1921)
 }
 
-class BartenderDialogueFile : DialogueBuilderFile() {
+private class BartenderDialogueFile : DialogueBuilderFile() {
     override fun create(b: DialogueBuilder) {
         b.onQuestStages(Quests.DESERT_TREASURE, 0, 1, 2, 3, 4)
             .npcl(FaceAnim.ANNOYED, "Get out of here. I have nothing to say to the likes of you.").end()

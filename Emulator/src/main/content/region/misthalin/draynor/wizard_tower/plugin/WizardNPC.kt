@@ -8,21 +8,13 @@ import core.game.world.map.Location
 import core.plugin.Initializable
 import org.rs.consts.NPCs
 
-/*
- * Wizards are humans in blue robes that can be found at
- * the Wizards' Tower, south of Draynor Village, and in the
- * Magic Guild in Yanille.
+/**
+ * Handles WizardNPC at Wizard Tower.
  */
 @Initializable
-class WizardNPC(
-    id: Int = 0,
-    location: Location? = null,
-) : AbstractNPC(id, location) {
-    override fun construct(
-        id: Int,
-        location: Location,
-        vararg objects: Any,
-    ): AbstractNPC = WizardNPC(id, location)
+class WizardNPC(id: Int = 0, location: Location? = null, ) : AbstractNPC(id, location) {
+
+    override fun construct(id: Int, location: Location, vararg objects: Any, ): AbstractNPC = WizardNPC(id, location)
 
     override fun init() {
         super.init()

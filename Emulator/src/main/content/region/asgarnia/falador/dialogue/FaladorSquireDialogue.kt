@@ -1,6 +1,5 @@
 package content.region.asgarnia.falador.dialogue
 
-import content.region.asgarnia.falador.diary.SquireDiaryDialogue
 import core.api.*
 import core.api.quest.finishQuest
 import core.api.quest.getQuestStage

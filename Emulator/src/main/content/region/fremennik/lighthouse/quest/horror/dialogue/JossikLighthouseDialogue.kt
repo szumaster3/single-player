@@ -1,7 +1,7 @@
 package content.region.fremennik.lighthouse.quest.horror.dialogue
 
-import content.region.fremennik.lighthouse.quest.horror.plugin.DagannothBossCutscene
-import content.region.fremennik.lighthouse.quest.horror.plugin.DagannothCutscene
+import content.region.fremennik.lighthouse.quest.horror.cutscene.DagannothBossCutscene
+import content.region.fremennik.lighthouse.quest.horror.cutscene.DagannothCutscene
 import core.api.quest.getQuestStage
 import core.api.sendMessage
 import core.game.dialogue.DialogueFile

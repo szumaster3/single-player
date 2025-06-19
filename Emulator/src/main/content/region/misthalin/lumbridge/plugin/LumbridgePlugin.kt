@@ -23,6 +23,10 @@ import org.rs.consts.NPCs
 import kotlin.math.floor
 
 class LumbridgePlugin : InteractionListener {
+
+    val CMB_TUTOR = intArrayOf(NPCs.MAGIC_TUTOR_4707, NPCs.RANGED_TUTOR_1861)
+    var flagInUse: Boolean = false
+
     override fun defineListeners() {
         /*
          * Handles warning toggles.
@@ -37,7 +41,7 @@ class LumbridgePlugin : InteractionListener {
          * Handles claiming interactions with combat tutors.
          */
 
-        on(LumbridgeUtils.combatTutors, IntType.NPC, "claim") { player, node ->
+        on(CMB_TUTOR, IntType.NPC, "claim") { player, node ->
             val npc = node as NPC
             openDialogue(player, npc.id, npc, true)
             return@on true
@@ -47,7 +51,7 @@ class LumbridgePlugin : InteractionListener {
          * Handles reading the gnome advertisement.
          */
 
-        on(LumbridgeUtils.gnomeAd, IntType.SCENERY, "read") { player, _ ->
+        on(org.rs.consts.Scenery.ADVERTISEMENT_30037, IntType.SCENERY, "read") { player, _ ->
             sendDialogue(player, "Come check our gnome copters up north!")
             return@on true
         }
@@ -56,18 +60,12 @@ class LumbridgePlugin : InteractionListener {
          * Handles reading the cow field signpost.
          */
 
-        on(LumbridgeUtils.cowfieldSignpost, IntType.SCENERY, "read") { player, _ ->
+        on(org.rs.consts.Scenery.SIGNPOST_31297, IntType.SCENERY, "read") { player, _ ->
             val cowDeaths = GlobalStatistics.getDailyCowDeaths()
             if (cowDeaths > 0) {
-                sendDialogue(
-                    player,
-                    "Local cowherders have reported that $cowDeaths cows have been slain in this field today by passing adventurers. Farmers throughout the land fear this may be an epidemic.",
-                )
+                sendDialogue(player, "Local cowherders have reported that $cowDeaths cows have been slain in this field today by passing adventurers. Farmers throughout the land fear this may be an epidemic.")
             } else {
-                sendDialogue(
-                    player,
-                    "The Lumbridge cow population has been thriving today, without a single cow death to worry about!",
-                )
+                sendDialogue(player, "The Lumbridge cow population has been thriving today, without a single cow death to worry about!")
             }
             return@on true
         }
@@ -76,18 +74,12 @@ class LumbridgePlugin : InteractionListener {
          * Handles reading the church signpost.
          */
 
-        on(LumbridgeUtils.churchSignpost, IntType.SCENERY, "read") { player, _ ->
+        on(org.rs.consts.Scenery.SIGNPOST_31299, IntType.SCENERY, "read") { player, _ ->
             val deaths = GlobalStatistics.getDailyDeaths()
             if (deaths > 0) {
-                sendDialogue(
-                    player,
-                    "So far today $deaths unlucky adventurers have died on RuneScape and been sent to their respawn location. Be careful out there.",
-                )
+                sendDialogue(player, "So far today $deaths unlucky adventurers have died on RuneScape and been sent to their respawn location. Be careful out there.")
             } else {
-                sendDialogue(
-                    player,
-                    "So far today not a single adventurer on RuneScape has met their end grisly or otherwise. Either the streets are getting safer or adventurers are getting warier.",
-                )
+                sendDialogue(player, "So far today not a single adventurer on RuneScape has met their end grisly or otherwise. Either the streets are getting safer or adventurers are getting warier.")
             }
             return@on true
         }
@@ -96,7 +88,7 @@ class LumbridgePlugin : InteractionListener {
          * Handles reading the warning signpost.
          */
 
-        on(LumbridgeUtils.warnSignpost, IntType.SCENERY, "read") { player, _ ->
+        on(org.rs.consts.Scenery.WARNING_SIGN_15566, IntType.SCENERY, "read") { player, _ ->
             openInterface(player, Components.MESSAGESCROLL_220).also {
                 sendString(player, "<col=8A0808>~-~-~ WARNING ~-~-~", 220, 5)
                 sendString(player, "<col=8A0808>Noxious gases vent into this cave.", 220, 7)
@@ -111,8 +103,8 @@ class LumbridgePlugin : InteractionListener {
          * Handles interaction with the RFD chest for buying items or food.
          */
 
-        on(LumbridgeUtils.rfdChest, IntType.SCENERY, "buy-items", "buy-food") { player, _ ->
-            CulinaromancerPlugin.openShop(player, food = getUsedOption(player).lowercase() == "buy-food")
+        on(org.rs.consts.Scenery.CHEST_12309, IntType.SCENERY, "buy-items", "buy-food") { player, _ ->
+            CulinoChestPlugin.openShop(player, food = getUsedOption(player).lowercase() == "buy-food")
             return@on true
         }
 
@@ -120,7 +112,7 @@ class LumbridgePlugin : InteractionListener {
          * Handles opening the bank account from the RFD chest.
          */
 
-        on(LumbridgeUtils.rfdChest, IntType.SCENERY, "bank") { player, _ ->
+        on(org.rs.consts.Scenery.CHEST_12309, IntType.SCENERY, "bank") { player, _ ->
             openBankAccount(player)
             return@on true
         }
@@ -129,7 +121,7 @@ class LumbridgePlugin : InteractionListener {
          * Handles playing the organ in the church.
          */
 
-        on(LumbridgeUtils.churchOrgans, IntType.SCENERY, "play") { player, _ ->
+        on(org.rs.consts.Scenery.ORGAN_36978, IntType.SCENERY, "play") { player, _ ->
             lock(player, 10)
             ActivityManager.start(player, "organ cutscene", false)
             return@on true
@@ -139,7 +131,7 @@ class LumbridgePlugin : InteractionListener {
          * Handles ringing the church bell.
          */
 
-        on(LumbridgeUtils.churchBell, IntType.SCENERY, "ring") { player, _ ->
+        on(org.rs.consts.Scenery.BELL_36976, IntType.SCENERY, "ring") { player, _ ->
             sendMessage(player, "The townspeople wouldn't appreciate you ringing their bell.")
             return@on true
         }
@@ -148,10 +140,10 @@ class LumbridgePlugin : InteractionListener {
          * Handles raising the castle flag.
          */
 
-        on(LumbridgeUtils.castleFlag, IntType.SCENERY, "raise") { player, node ->
+        on(org.rs.consts.Scenery.FLAG_37335, IntType.SCENERY, "raise") { player, node ->
             lock(player, 12)
-            if (!LumbridgeUtils.flagInUse) {
-                LumbridgeUtils.flagInUse = true
+            if (!flagInUse) {
+                flagInUse = true
                 submitIndividualPulse(
                     player,
                     object : Pulse(1, player) {
@@ -175,7 +167,7 @@ class LumbridgePlugin : InteractionListener {
 
                         override fun stop() {
                             super.stop()
-                            LumbridgeUtils.flagInUse = false
+                            flagInUse = false
                         }
                     },
                 )
@@ -188,7 +180,7 @@ class LumbridgePlugin : InteractionListener {
          * Handles viewing the tutor map.
          */
 
-        on(LumbridgeUtils.tutorMap, IntType.SCENERY, "view") { player, _ ->
+        on(org.rs.consts.Scenery.LUMBRIDGE_MAP_37655, IntType.SCENERY, "view") { player, _ ->
             openInterface(player, Components.TUTOR_MAP_270)
             return@on true
         }
@@ -197,7 +189,7 @@ class LumbridgePlugin : InteractionListener {
          * Handles shooting at the archery target.
          */
 
-        on(LumbridgeUtils.archeryTarget, IntType.SCENERY, "shoot-at") { player, node ->
+        on(org.rs.consts.Scenery.ARCHERY_TARGET_37095, IntType.SCENERY, "shoot-at") { player, node ->
             if (!anyInEquipment(player, Items.TRAINING_ARROWS_9706, Items.TRAINING_BOW_9705)) {
                 sendMessage(player, "You need a training bow and arrow to practice here.")
                 return@on true
@@ -210,7 +202,7 @@ class LumbridgePlugin : InteractionListener {
          * Handles taking tools from the scenery.
          */
 
-        on(LumbridgeUtils.tools, IntType.SCENERY, "take") { player, node ->
+        on(org.rs.consts.Scenery.TOOLS_10375, IntType.SCENERY, "take") { player, node ->
             if (freeSlots(player) < 2) {
                 sendMessage(player, "You do not have enough inventory space.")
                 return@on true

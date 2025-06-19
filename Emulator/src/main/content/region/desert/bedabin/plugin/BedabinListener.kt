@@ -1,4 +1,4 @@
-package content.region.desert.bedabin.plugin
+package content.region.desert.bedabin.quest
 
 import core.api.findNPC
 import core.api.getScenery

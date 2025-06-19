@@ -1,7 +1,7 @@
 package content.region.morytania.plugin
 
 import content.global.skill.agility.AgilityHandler
-import content.region.morytania.mortmyre.dialogue.AbidorCrankDialogue
+import content.region.morytania.swamp.dialogue.AbidorCrankDialogue
 import core.api.*
 import core.api.quest.hasRequirement
 import core.api.quest.isQuestComplete

@@ -1,7 +1,7 @@
 package content.region.misthalin.silvarea.quest.priest.dialogue
 
 import content.data.GameAttributes
-import content.region.morytania.mortmyre.quest.druidspirit.dialogue.DrezelDialogueFile
+import content.region.morytania.swamp.quest.druidspirit.dialogue.DrezelDialogueFile
 import core.api.*
 import core.api.quest.finishQuest
 import core.game.dialogue.Dialogue

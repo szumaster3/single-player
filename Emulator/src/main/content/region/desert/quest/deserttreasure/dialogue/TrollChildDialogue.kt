@@ -1,7 +1,7 @@
 package content.region.desert.quest.deserttreasure.dialogue
 
+import content.region.desert.quest.deserttreasure.DTUtils
 import content.region.desert.quest.deserttreasure.DesertTreasure
-import content.region.desert.quest.deserttreasure.plugin.DTUtils
 import core.api.inInventory
 import core.api.openDialogue
 import core.game.dialogue.Dialogue
@@ -27,7 +27,7 @@ class TrollChildDialogue(player: Player? = null) : Dialogue(player) {
     override fun getIds(): IntArray = intArrayOf(NPCs.BANDIT_1932)
 }
 
-class TrollChildDialogueFile : DialogueBuilderFile() {
+private class TrollChildDialogueFile : DialogueBuilderFile() {
     companion object {
         fun dialogueBeforeQuestCrying(builder: DialogueBuilder): DialogueBuilder = builder.playerl("Hello there.")
             .line("The troll child is crying to itself.", "It is ignoring you completely.")

@@ -1,5 +1,6 @@
 package content.region.desert.quest.deserttreasure.plugin
 
+import content.region.desert.quest.deserttreasure.DTUtils
 import content.region.desert.quest.deserttreasure.DesertTreasure
 import core.api.*
 import core.api.quest.getQuestStage

@@ -84,64 +84,6 @@ class RellekkaPlugin : InteractionListener, MapArea {
         }
 
         /*
-         * Handles the ferry travel option from Rellekka to Neitiznot.
-         */
-
-        on(NPCs.MARIA_GUNNARS_5508, IntType.NPC, "ferry-neitiznot") { player, _ ->
-            if (!requireQuest(player, Quests.THE_FREMENNIK_TRIALS, "")) return@on true
-            RellekkaShip.sail(player, TravelDestination.RELLEKKA_TO_NEITIZNOT)
-            return@on true
-        }
-
-        /*
-         * Handles the ferry travel option from Neitiznot to Rellekka.
-         */
-
-        on(NPCs.MARIA_GUNNARS_5507, IntType.NPC, "ferry-rellekka") { player, _ ->
-            RellekkaShip.sail(player, TravelDestination.NEITIZNOT_TO_RELLEKKA)
-            return@on true
-        }
-
-        /*
-         * Handles the ferry travel option from Rellekka to Jatizso.
-         */
-
-        on(NPCs.MORD_GUNNARS_5481, IntType.NPC, "ferry-jatizso") { player, _ ->
-            if (!requireQuest(player, Quests.THE_FREMENNIK_TRIALS, "")) return@on true
-            RellekkaShip.sail(player, TravelDestination.RELLEKKA_TO_JATIZSO)
-            return@on true
-        }
-
-        /*
-         * Handles the ferry travel option from Jatizso to Rellekka.
-         */
-
-        on(NPCs.MORD_GUNNARS_5482, IntType.NPC, "ferry-rellekka") { player, _ ->
-            RellekkaShip.sail(player, TravelDestination.JATIZSO_TO_RELLEKKA)
-            return@on true
-        }
-
-        /*
-         * Handles the ship travel option from Rellekka to Miscellania.
-         */
-
-        on(NPCs.SAILOR_1385, IntType.NPC, "travel") { player, _ ->
-            if (!requireQuest(player, Quests.THE_FREMENNIK_TRIALS, "")) return@on true
-            RellekkaShip.sail(player, TravelDestination.RELLEKA_TO_MISCELLANIA)
-            return@on true
-        }
-
-        /*
-         * Handles the ship travel option from Miscellania to Rellekka.
-         */
-
-        on(NPCs.SAILOR_1304, IntType.NPC, "travel") { player, _ ->
-            if (!requireQuest(player, Quests.THE_FREMENNIK_TRIALS, "")) return@on true
-            RellekkaShip.sail(player, TravelDestination.MISCELLANIA_TO_RELLEKKA)
-            return@on true
-        }
-
-        /*
          * Handles the dialogue interaction with the Fish Monger NPC in Rellekka.
          */
 

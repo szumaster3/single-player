@@ -1,7 +1,7 @@
 package content.region.desert.quest.deserttreasure.dialogue
 
 import content.region.desert.quest.deserttreasure.DesertTreasure
-import content.region.desert.quest.deserttreasure.plugin.DTUtils
+import content.region.desert.quest.deserttreasure.DTUtils
 import core.api.*
 import core.api.quest.getQuestStage
 import core.game.dialogue.Dialogue
@@ -38,7 +38,7 @@ class FatherTrollDialogue(player: Player? = null) : Dialogue(player) {
     override fun getIds(): IntArray = intArrayOf(NPCs.ICE_TROLL_1943)
 }
 
-class ChatFatherAndMotherTrollDialogueFile : DialogueFile() {
+private class ChatFatherAndMotherTrollDialogueFile : DialogueFile() {
 
     override fun handle(componentID: Int, buttonID: Int) {
         when (stage) {
@@ -95,7 +95,7 @@ class ChatFatherAndMotherTrollDialogueFile : DialogueFile() {
     }
 }
 
-class ChatFatherAndMotherTrollAfterDialogueFile : DialogueFile() {
+private class ChatFatherAndMotherTrollAfterDialogueFile : DialogueFile() {
 
     override fun handle(componentID: Int, buttonID: Int) {
         when (stage) {

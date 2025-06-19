@@ -32,7 +32,7 @@ class ArchaeologistDialogue(player: Player? = null) : Dialogue(player) {
     override fun getIds(): IntArray = intArrayOf(NPCs.ARCHAEOLOGIST_1918)
 }
 
-class ArchaeologistDialogueFile : DialogueBuilderFile() {
+private class ArchaeologistDialogueFile : DialogueBuilderFile() {
     override fun create(b: DialogueBuilder) {
         b.onQuestStages(Quests.DESERT_TREASURE, 0).player(FaceAnim.FRIENDLY, "Hello there.").branch { player ->
             return@branch if (DesertTreasure.hasRequirements(player)) {

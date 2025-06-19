@@ -1,6 +1,6 @@
 package content.region.misthalin.varrock.quest.phoenixgang.dialogue
 
-import content.region.desert.quest.golem.CuratorHaigHalenGolemDialogue
+import content.region.desert.uzer.quest.golem.CuratorHaigHalenGolemDialogue
 import core.api.*
 import core.api.quest.getQuestPoints
 import core.api.quest.getQuestStage

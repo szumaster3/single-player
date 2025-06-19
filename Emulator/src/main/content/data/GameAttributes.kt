@@ -388,4 +388,7 @@ internal object GameAttributes {
 
     // Smoking kills miniquest.
     const val MINIQUEST_SMKI_GUARDIANS = "/save:quest:smki-guardians"
+
+    // Draynor
+    const val TREE_GUARD = "draynor:tree_guard:feed"
 }

@@ -1,6 +1,6 @@
 package content.region.fremennik.rellekka.quest.viking.dialogue
 
-import content.region.kandarin.seersvillage.quest.murder.dialogue.PoisonSalesmanDialogueFile
+import content.region.kandarin.seers.quest.murder.dialogue.PoisonSalesmanDialogueFile
 import core.api.addItemOrDrop
 import core.api.openDialogue
 import core.api.quest.getQuestStage

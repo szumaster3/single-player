@@ -1,7 +1,7 @@
 package content.region.desert.quest.deserttreasure.dialogue
 
+import content.region.desert.quest.deserttreasure.DTUtils
 import content.region.desert.quest.deserttreasure.DesertTreasure
-import content.region.desert.quest.deserttreasure.plugin.DTUtils
 import core.api.*
 import core.game.dialogue.Dialogue
 import core.game.dialogue.DialogueBuilder
@@ -26,7 +26,7 @@ class MalakDialogue(player: Player? = null) : Dialogue(player) {
     override fun getIds(): IntArray = intArrayOf(NPCs.MALAK_1920)
 }
 
-class MalakDialogueFile : DialogueBuilderFile() {
+private class MalakDialogueFile : DialogueBuilderFile() {
     override fun create(b: DialogueBuilder) {
         // "Don't think that silly little ring of yours will fool me"
         b.onQuestStages(Quests.DESERT_TREASURE, 0, 1, 2, 3, 4, 5, 6, 7, 8)
@@ -56,8 +56,7 @@ class MalakDialogueFile : DialogueBuilderFile() {
                             ).goto(returnJoin)
 
                         optionBuilder.option("I am here to praise Lord Drakan")
-                            .playerl("I am here only to serve the mighty Drakan. Yup, Drakan, he's the man.")
-                            .npcl(
+                            .playerl("I am here only to serve the mighty Drakan. Yup, Drakan, he's the man.").npcl(
                                 "I see. I would perhaps be more inclined to believe you if I could not smell the death blood of his brother Draynor upon you.",
                             ).npcl("What are you real intentions here?").goto(returnJoin)
 
@@ -80,8 +79,7 @@ class MalakDialogueFile : DialogueBuilderFile() {
                             "I am here looking for a special diamond... I have reason to believe it is somewhere in this vicinity, and it is probably in the possession of a warrior of Zamorak.",
                         ).playerl(
                             "I'm fairly sure it will have some kind of magical aura or something too. I don't suppose you've seen it, or know where it might be?",
-                        ).npcl("Interesting... Well perhaps we can come to a little... arrangement, human.")
-                            .npcl(
+                        ).npcl("Interesting... Well perhaps we can come to a little... arrangement, human.").npcl(
                                 "I may have information that may assist you, but you in turn will have to do something for me. What do you say? Do you think we could come to some form of",
                             ).npcl("agreement?").playerl(
                                 "Well, what kind of something? No offence, but you're not exactly the trustworthy type...",
@@ -151,8 +149,8 @@ class MalakDialogueFile : DialogueBuilderFile() {
                             "Good, we understand each other then. We will both benefit from the death of Dessous.",
                         ).goto(returnJoin)
 
-                        optionBuilder.option("Where can I find Dessous?")
-                            .playerl("Where can I find this Dessous?").npcl(
+                        optionBuilder.option("Where can I find Dessous?").playerl("Where can I find this Dessous?")
+                            .npcl(
                                 "He currently resides in a graveyard to the South-East of here. You will not be able to move the gravestone which he lies beneath however, you will need to find some way to",
                             ).npcl("lure him out from his tomb.")
                             .playerl("And how exactly would I go about doing that?").npcl(
@@ -226,8 +224,8 @@ class MalakDialogueFile : DialogueBuilderFile() {
 
                 branch2.onValue(0).npcl("Why are you still here? I notice Dessous still lives.").options()
                     .let { optionBuilder ->
-                        optionBuilder.option("Where can I find Dessous?")
-                            .playerl("Where can I find this Dessous?").npcl(
+                        optionBuilder.option("Where can I find Dessous?").playerl("Where can I find this Dessous?")
+                            .npcl(
                                 "He currently resides in a graveyard to the South-East of here. You will not be able to move the gravestone which he lies beneath however, you will need to find some way to",
                             ).npcl("lure him out from his tomb.")
                             .playerl("And how exactly would I go about doing that?").npcl(

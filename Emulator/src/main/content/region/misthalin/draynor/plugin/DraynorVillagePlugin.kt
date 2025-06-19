@@ -9,34 +9,39 @@ import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import org.rs.consts.Items
 import org.rs.consts.NPCs
+import org.rs.consts.Scenery
 
 class DraynorVillagePlugin : InteractionListener {
+
+    val WOM_BOOKCASE_ID = intArrayOf(Scenery.OLD_BOOKSHELF_7065, Scenery.OLD_BOOKSHELF_7066, Scenery.OLD_BOOKSHELF_7068)
+
     override fun defineListeners() {
-        on(DraynorUtils.aggie, IntType.NPC, "make-dyes") { player, node ->
+
+        on(NPCs.AGGIE_922, IntType.NPC, "make-dyes") { player, node ->
             openDialogue(player, node.asNpc().id, node, true)
             return@on true
         }
 
-        on(DraynorUtils.telescope, IntType.SCENERY, "observe") { player, _ ->
+        on(Scenery.TELESCOPE_7092, IntType.SCENERY, "observe") { player, _ ->
             ActivityManager.start(player, "draynor telescope", false)
             return@on true
         }
 
-        on(DraynorUtils.trapdoor, IntType.SCENERY, "open") { _, node ->
+        on(Scenery.TRAPDOOR_6434, IntType.SCENERY, "open") { _, node ->
             replaceScenery(node.asScenery(), 6435, -1)
             return@on true
         }
 
-        on(DraynorUtils.diango, IntType.NPC, "holiday-items") { player, _ ->
+        on(NPCs.DIANGO_970, IntType.NPC, "holiday-items") { player, _ ->
             DiangoReclaimInterface.open(player)
             return@on true
         }
 
         /*
-         * Handles searching the bookshelves in Draynor Manor.
+         * Handles searching wise old man bookcases.
          */
 
-        on(DraynorUtils.bookshelf, IntType.SCENERY, "search") { player, node ->
+        on(WOM_BOOKCASE_ID, IntType.SCENERY, "search") { player, node ->
             sendMessage(player, "You search the bookcase...")
 
             if (freeSlots(player) == 0) {
@@ -60,16 +65,12 @@ class DraynorVillagePlugin : InteractionListener {
             return@on true
         }
 
-        on(DraynorUtils.tree, IntType.SCENERY, "chop down", "talk to") { player, _ ->
+        on(Scenery.TREE_10041, IntType.SCENERY, "chop down", "talk to") { player, _ ->
+            val treeGuardChat = arrayOf("Hey - gerroff me!", "You'll blow my cover! I'm meant to be hidden!", "Don't draw attention to me!", "Will you stop that?", "Watch what you're doing with that hatchet, you nit!", "Ooooch!", "Ow! That really hurt!", "Oi!")
             when (getUsedOption(player)) {
-                "chop down" -> sendNPCDialogue(
-                    player,
-                    NPCs.GUARD_345,
-                    DraynorUtils.treeGuardChat.random(),
-                    FaceAnim.ANNOYED,
-                )
-
+                "chop down" -> sendNPCDialogue(player, NPCs.GUARD_345, treeGuardChat.random(), FaceAnim.ANNOYED)
                 "talk to" -> openDialogue(player, TreeGuardDialogue())
+                else -> return@on false
             }
             return@on true
         }
