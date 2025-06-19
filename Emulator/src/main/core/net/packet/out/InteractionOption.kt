@@ -7,6 +7,7 @@ import core.net.packet.context.InteractionOptionContext
 
 /**
  * Handles the interaction option changed outgoing packet.
+ *
  * @author Emperor
  */
 class InteractionOption : OutgoingPacket<InteractionOptionContext> {

@@ -1,7 +1,7 @@
 package content.region.fremennik.rellekka.dialogue
 
-import content.region.island.waterbirth.plugin.TravelDestination
-import content.region.island.waterbirth.plugin.WaterbirthUtils.sail
+import content.region.fremennik.rellekka.plugin.TravelDestination
+import content.region.fremennik.rellekka.plugin.RellekkaShip.sail
 import core.api.getVarp
 import core.api.quest.isQuestComplete
 import core.api.sendDialogueOptions
@@ -29,9 +29,7 @@ class JarvaldDialogue(player: Player? = null) : Dialogue(player) {
             npc("Ah, you live yet, outerlander!").also { stage = 37 }
             return true
         }
-        npc(
-            "What do you want from me outerlander?", "It is our policy not to associate with those not of our", "tribe."
-        )
+        npc("What do you want from me outerlander?", "It is our policy not to associate with those not of our", "tribe.")
         return true
     }
 
@@ -117,5 +115,5 @@ class JarvaldDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun newInstance(player: Player?): Dialogue = JarvaldDialogue(player)
 
-    override fun getIds(): IntArray = intArrayOf(2435, NPCs.JARVALD_2436, NPCs.JARVALD_2437, NPCs.JARVALD_2438)
+    override fun getIds(): IntArray = intArrayOf(2435)
 }

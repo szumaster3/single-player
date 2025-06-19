@@ -1,7 +1,7 @@
 package content.region.island.jatizso.dialogue
 
-import content.region.island.waterbirth.plugin.TravelDestination
-import content.region.island.waterbirth.plugin.WaterbirthUtils
+import content.region.fremennik.rellekka.plugin.TravelDestination
+import content.region.fremennik.rellekka.plugin.RellekkaShip
 import core.api.quest.requireQuest
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
@@ -38,7 +38,7 @@ class MordGunnarsDialogue(player: Player? = null) : Dialogue(player) {
                 if (!requireQuest(player, Quests.THE_FREMENNIK_TRIALS, "")) {
                     return true
                 } else {
-                    WaterbirthUtils.sail(
+                    RellekkaShip.sail(
                         player,
                         if (npc.id == NPCs.MORD_GUNNARS_5481) {
                             TravelDestination.RELLEKKA_TO_JATIZSO

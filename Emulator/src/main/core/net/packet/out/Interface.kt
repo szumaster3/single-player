@@ -6,6 +6,7 @@ import core.net.packet.context.InterfaceContext
 
 /**
  * The interface outgoing packet.
+ *
  * @author Emperor
  */
 class Interface : OutgoingPacket<InterfaceContext> {

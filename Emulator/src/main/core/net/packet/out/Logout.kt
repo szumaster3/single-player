@@ -6,6 +6,7 @@ import core.net.packet.context.PlayerContext
 
 /**
  * The outgoing logout packet.
+ *
  * @author Emperor
  */
 class Logout : OutgoingPacket<PlayerContext> {

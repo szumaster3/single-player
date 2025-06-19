@@ -6,6 +6,7 @@ import core.net.packet.context.ConfigContext
 
 /**
  * The config outgoing packet.
+ *
  * @author Emperor
  */
 class Config : OutgoingPacket<ConfigContext> {

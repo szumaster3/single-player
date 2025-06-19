@@ -22,7 +22,7 @@ class TrapPlugin : OptionHandler() {
         return this
     }
 
-    override fun handle(player: Player, node: Node, option: String, ): Boolean {
+    override fun handle(player: Player, node: Node, option: String): Boolean {
         val target = node as? Scenery ?: return false
         val chance = RandomFunction.getSkillSuccessChance(50.0, 100.0, getStatLevel(player, Skills.THIEVING))
         val roll = RandomFunction.random(0.0, 100.0)

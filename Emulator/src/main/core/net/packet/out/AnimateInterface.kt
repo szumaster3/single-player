@@ -7,6 +7,7 @@ import core.net.packet.context.AnimateInterfaceContext
 
 /**
  * The animate interface outgoing packet.
+ *
  * @author Emperor
 */
 class AnimateInterface : OutgoingPacket<AnimateInterfaceContext> {

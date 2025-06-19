@@ -1,7 +1,7 @@
 package content.region.fremennik.rellekka.dialogue
 
-import content.region.island.waterbirth.plugin.TravelDestination
-import content.region.island.waterbirth.plugin.WaterbirthUtils.sail
+import content.region.fremennik.rellekka.plugin.TravelDestination
+import content.region.fremennik.rellekka.plugin.RellekkaShip.sail
 import core.api.findLocalNPC
 import core.api.getAttribute
 import core.api.quest.isQuestComplete

@@ -8,6 +8,7 @@ import kotlin.math.ceil
 
 /**
  * Handles the update skill outgoing packet.
+ *
  * @author Emperor
  */
 class SkillLevel : OutgoingPacket<SkillContext> {

@@ -20,7 +20,7 @@ import static core.api.ContentAPIKt.getStatLevel;
 /**
  * Represents the pest control reward interface.
  *
- * @author 'Vexia
+ * @author Vexia
  */
 public final class PCRewardInterface extends ComponentPlugin {
 
@@ -360,7 +360,7 @@ public final class PCRewardInterface extends ComponentPlugin {
     /**
      * Represents the rewards that are obtainable with this interface.
      *
-     * @author 'Vexia
+     * @author Vexia
      */
     public enum Reward {
         /**

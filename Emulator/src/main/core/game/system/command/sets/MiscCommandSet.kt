@@ -371,10 +371,7 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
             usage = "",
             description = "Closes the currently opened interface/dialogue.",
         ) { player, _ ->
-            player.interfaceManager.close()
-            closeOverlay(player)
-            player.dialogueInterpreter.close()
-            closeTabInterface(player)
+            closeAllInterfaces(player)
         }
 
         define(name = "max", privilege = Privilege.ADMIN, usage = "", description = "Gives you all 99s.") { player, _ ->

@@ -23,36 +23,68 @@ interface MapArea : ContentInterface {
             zoneMaps[this::class.java.simpleName + "MapArea"] = value
         }
 
+    /**
+     * Defines the borders of this map area.
+     *
+     * @return An array of [ZoneBorders] representing the area's boundaries.
+     */
     fun defineAreaBorders(): Array<ZoneBorders>
 
+    /**
+     * Returns restrictions applied within this area.
+     *
+     * @return An array of [ZoneRestriction]; empty by default.
+     */
     fun getRestrictions(): Array<ZoneRestriction> = emptyArray()
 
+    /**
+     * Called when an entity enters the area.
+     *
+     * @param entity The entity that entered.
+     */
     fun areaEnter(entity: Entity) {}
 
-    fun areaLeave(
-        entity: Entity,
-        logout: Boolean,
-    ) {}
+    /**
+     * Called when an entity leaves the area.
+     *
+     * @param entity The entity that left.
+     * @param logout True if the entity left due to logout.
+     */
+    fun areaLeave(entity: Entity, logout: Boolean) {}
 
-    fun entityStep(
-        entity: Entity,
-        location: Location,
-        lastLocation: Location,
-    ) {}
+    /**
+     * Called when an entity steps within the area.
+     *
+     * @param entity The entity that moved.
+     * @param location The new location.
+     * @param lastLocation The previous location.
+     */
+    fun entityStep(entity: Entity, location: Location, lastLocation: Location) {}
 
-    fun interactBehavior(
-        entity: Entity,
-        target: Node,
-        option: Option,
-    ): Boolean = false
+    /**
+     * Called when an entity interacts with a target in the area.
+     *
+     * @param entity The acting entity.
+     * @param target The target node.
+     * @param option The selected interaction option.
+     * @return True if the interaction was handled.
+     */
+    fun entityInteraction(entity: Entity, target: Node, option: Option): Boolean = false
 
-    fun useWithBehavior(
-        player: Player?,
-        used: Item?,
-        with: Node?,
-    ): Boolean = false
+    /**
+     * Called when a player uses an item with another node in the area.
+     *
+     * @param player The player performing the action.
+     * @param used The used item.
+     * @param with The target node.
+     * @return True if the action was handled.
+     */
+    fun entityUseWith(player: Player?, used: Item?, with: Node?): Boolean = false
 
     companion object {
+        /**
+         * A map storing zone data for all map areas.
+         */
         val zoneMaps = mutableMapOf<String, MapZone>()
     }
 }

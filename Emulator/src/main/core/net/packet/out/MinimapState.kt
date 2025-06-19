@@ -6,6 +6,7 @@ import core.net.packet.context.MinimapStateContext
 
 /**
  * Handles the sending of the minimap state outgoing packet.
+ *
  * @author Emperor
  */
 class MinimapState : OutgoingPacket<MinimapStateContext> {

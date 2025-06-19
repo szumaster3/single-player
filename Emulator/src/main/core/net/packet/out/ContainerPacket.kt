@@ -8,6 +8,7 @@ import core.net.packet.context.ContainerContext
 
 /**
  * Represents the outgoing container packet.
+ *
  * @author Emperor
  */
 class ContainerPacket : OutgoingPacket<ContainerContext> {

@@ -7,6 +7,7 @@ import core.net.packet.context.AnimateObjectContext
 
 /**
  * Represents the packet used to animate an object.
+ *
  * @author Vexia (10/11/2013)
  */
 class AnimateObjectPacket : OutgoingPacket<AnimateObjectContext> {

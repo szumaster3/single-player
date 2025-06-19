@@ -11,10 +11,11 @@ import core.game.world.map.Location
 import core.plugin.Initializable
 import core.plugin.Plugin
 import org.rs.consts.Components
+import org.rs.consts.NPCs
 import org.rs.consts.Scenery
 
 @Initializable
-class RellekkaBoatPlugin : OptionHandler() {
+class LarryBoatPlugin : OptionHandler() {
 
     override fun newInstance(arg: Any?): Plugin<Any> {
         SceneryDefinition.forId(RELLEKKA_BOAT).handlers["option:travel"] = this
@@ -33,12 +34,7 @@ class RellekkaBoatPlugin : OptionHandler() {
                     "iceberg" -> sail(player, "Iceberg", Location.create(2659, 3988, 1), 4652)
                     "travel" -> {
                         setTitle(player, 2)
-                        sendDialogueOptions(
-                            player,
-                            "Where would you like to travel?",
-                            "Iceberg",
-                            "Stay here",
-                        )
+                        sendDialogueOptions(player, "Where would you like to travel?", "Iceberg", "Stay here")
                         addDialogueAction(player) { _, button ->
                             when (button) {
                                 1 -> sail(player, "Iceberg", Location.create(2659, 3988, 1), 4652)

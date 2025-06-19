@@ -7,6 +7,7 @@ import core.net.packet.context.StringContext
 
 /**
  * The outgoing set component string packet.
+ *
  * @author Emperor
  */
 class StringPacket : OutgoingPacket<StringContext> {

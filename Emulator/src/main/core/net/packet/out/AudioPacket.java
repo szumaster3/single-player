@@ -8,6 +8,7 @@ import core.net.packet.context.DefaultContext;
 
  /**
  * Sends an audio packet.
+  *
  * @author Vexia
  */
 public class AudioPacket implements OutgoingPacket<DefaultContext> {

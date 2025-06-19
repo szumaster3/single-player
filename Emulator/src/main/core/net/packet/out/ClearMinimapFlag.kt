@@ -6,6 +6,7 @@ import core.net.packet.context.PlayerContext
 
 /**
  * Handles the removal of the minimap flag.
+ *
  * @author Emperor
  */
 class ClearMinimapFlag : OutgoingPacket<PlayerContext> {

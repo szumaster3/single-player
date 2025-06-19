@@ -7,6 +7,7 @@ import core.net.packet.context.BuildItemContext
 
 /**
  * Represents the outgoing packet of constructing a ground item.
+ *
  * @author Emperor
  */
 class ConstructGroundItem : OutgoingPacket<BuildItemContext> {

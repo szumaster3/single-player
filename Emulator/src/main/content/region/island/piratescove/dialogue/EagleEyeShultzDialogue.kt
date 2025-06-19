@@ -13,10 +13,7 @@ class EagleEyeShultzDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
-        playerl(
-            FaceAnim.HALF_ASKING,
-            "What do you do for fun on this ship? You know, when you're not doing pirate stuff.",
-        )
+        playerl(FaceAnim.HALF_ASKING, "What do you do for fun on this ship? You know, when you're not doing pirate stuff.")
         return true
     }
 

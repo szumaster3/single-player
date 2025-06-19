@@ -6,6 +6,7 @@ import core.net.packet.context.InterfaceContext
 
 /**
  * Represents the outgoing packet used for closing an interface.
+ *
  * @author Emperor
  */
 class CloseInterface : OutgoingPacket<InterfaceContext> {

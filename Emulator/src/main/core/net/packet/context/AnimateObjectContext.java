@@ -8,7 +8,7 @@ import core.net.packet.Context;
  * Represents the context of animating an object.
  *
  * @author Emperor
- * @author 'Vexia
+ * @author Vexia
  * @date 10/11/2013
  */
 public class AnimateObjectContext implements Context {

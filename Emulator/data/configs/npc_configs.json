@@ -21278,6 +21278,16 @@
     "defence_animation": "9231"
   },
   {
+    "examine": "A fremennik raider.",
+    "name": "Jarvald",
+    "id": "2437"
+  },
+  {
+    "examine": "A fremennik raider.",
+    "name": "Jarvald",
+    "id": "2438"
+  },
+  {
     "examine": "Looks like a wanna be Fremennik.",
     "name": "Askeladden",
     "id": "2439"

@@ -6,7 +6,7 @@ import core.net.packet.Context;
 /**
  * Represents a system update.
  *
- * @author 'Vexia
+ * @author Vexia
  */
 public class SystemUpdateContext implements Context {
 

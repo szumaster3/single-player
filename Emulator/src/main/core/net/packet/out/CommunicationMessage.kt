@@ -12,6 +12,7 @@ import java.util.*
 
 /**
  * Handles communication message packet sending.
+ *
  * @author Emperor
  */
 class CommunicationMessage : OutgoingPacket<MessageContext> {

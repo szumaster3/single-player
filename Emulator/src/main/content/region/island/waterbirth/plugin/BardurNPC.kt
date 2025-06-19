@@ -7,18 +7,13 @@ import core.plugin.Initializable
 import core.tools.RandomFunction
 import org.rs.consts.NPCs
 
+/**
+ * Handles BardurNPC.
+ */
 @Initializable
-class BardurNPC(
-    id: Int = 0,
-    location: Location? = null,
-) : AbstractNPC(id, location) {
-    override fun construct(
-        id: Int,
-        location: Location,
-        vararg objects: Any,
-    ): AbstractNPC = BardurNPC(id, location)
+class BardurNPC(id: Int = 0, location: Location? = null) : AbstractNPC(id, location) {
 
-    override fun getIds(): IntArray = intArrayOf(NPCs.BARDUR_2879)
+    override fun construct(id: Int, location: Location, vararg objects: Any): AbstractNPC = BardurNPC(id, location)
 
     override fun tick() {
         if (isActive && !inCombat() && RandomFunction.roll(10)) {
@@ -35,4 +30,6 @@ class BardurNPC(
         }
         return super.tick()
     }
+
+    override fun getIds(): IntArray = intArrayOf(NPCs.BARDUR_2879)
 }

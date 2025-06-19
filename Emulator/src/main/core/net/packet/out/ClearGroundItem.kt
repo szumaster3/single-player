@@ -6,7 +6,7 @@ import core.net.packet.OutgoingPacket
 import core.net.packet.context.BuildItemContext
 
 /**
- * Sends information about the removed item to update the client view.
+ * Represents the outgoing packet of clearing ground items.
  *
  * @author Emperor
  */
@@ -15,26 +15,23 @@ class ClearGroundItem : OutgoingPacket<BuildItemContext> {
         val player = context.player
         val item = context.item
         val buffer = write(UpdateAreaPosition.getBuffer(player, item.location.chunkBase), item)
-        buffer.cypherOpcode(player.session.isaacPair.output)
+        buffer.cypherOpcode(context.player.session.isaacPair.output)
         player.session.write(buffer)
     }
 
     companion object {
-        private const val CLEAR_GROUND_ITEM_OPCODE = 240
-
         /**
-         * Writes the clear ground item packet data to the given buffer.
+         * Write io buffer.
          *
-         * @param buffer The buffer to write to.
-         * @param item The item to be cleared.
-         * @return The buffer with the written data.
+         * @param buffer the buffer
+         * @param item   the item
+         * @return the io buffer
          */
         @JvmStatic
         fun write(buffer: IoBuffer, item: Item): IoBuffer {
-            val location = item.location
-            buffer.put(CLEAR_GROUND_ITEM_OPCODE)
-            buffer.putS((location.chunkOffsetX shl 4) or (location.chunkOffsetY and 0x7))
-                .putShort(item.id)
+            val l = item.location
+            buffer.put(240)
+            buffer.putS((l.chunkOffsetX shl 4) or (l.chunkOffsetY and 0x7)).putShort(item.id)
             return buffer
         }
     }

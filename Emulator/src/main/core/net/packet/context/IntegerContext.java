@@ -6,7 +6,7 @@ import core.net.packet.Context;
 /**
  * The <b>Integer</b> context.
  *
- * @author 'Vexia
+ * @author Vexia
  */
 public class IntegerContext implements Context {
 

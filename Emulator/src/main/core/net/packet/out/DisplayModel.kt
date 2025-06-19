@@ -6,8 +6,8 @@ import core.net.packet.context.DisplayModelContext
 import core.net.packet.context.DisplayModelContext.ModelType
 
 /**
- * Represents the outgoing packet for the displaying of a node model on an
- * interface.
+ * Represents the outgoing packet for the displaying of a node model on an interface.
+ *
  * @author Emperor
  */
 class DisplayModel : OutgoingPacket<DisplayModelContext> {

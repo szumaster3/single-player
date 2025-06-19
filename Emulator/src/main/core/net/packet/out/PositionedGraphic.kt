@@ -6,6 +6,7 @@ import core.net.packet.context.PositionedGraphicContext
 
 /**
  * The positioned graphic outgoing packet.
+ *
  * @author Emperor
  */
 class PositionedGraphic : OutgoingPacket<PositionedGraphicContext> {

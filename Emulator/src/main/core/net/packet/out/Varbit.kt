@@ -5,7 +5,7 @@ import core.net.packet.OutgoingPacket
 import core.net.packet.context.VarbitContext
 
 /**
- * The type Varbit.
+ * Sends a varbit update to the client.
  */
 class Varbit : OutgoingPacket<VarbitContext> {
     override fun send(varbitContext: VarbitContext) {

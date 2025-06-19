@@ -17,19 +17,13 @@ import core.plugin.Initializable
 import core.plugin.Plugin
 
 @Initializable
-class SlayerTowerZone :
-    MapZone("slayer tower", true, ZoneRestriction.CANNON),
-    Plugin<Any?> {
+class SlayerTowerZone : MapZone("slayer tower", true, ZoneRestriction.CANNON), Plugin<Any?> {
     override fun newInstance(arg: Any?): Plugin<Any?> {
         ZoneBuilder.configure(this)
         return this
     }
 
-    override fun interact(
-        entity: Entity,
-        target: Node,
-        option: Option,
-    ): Boolean {
+    override fun interact(entity: Entity, target: Node, option: Option): Boolean {
         if (entity is Player) {
             val level = if (entity.location.z == 0) 61 else 71
             if (target.id == 9319 && getStatLevel(entity, Skills.AGILITY) < level) {
@@ -44,10 +38,7 @@ class SlayerTowerZone :
         return super.interact(entity, target, option)
     }
 
-    override fun fireEvent(
-        identifier: String,
-        vararg args: Any,
-    ): Any? = null
+    override fun fireEvent(identifier: String, vararg args: Any): Any? = null
 
     override fun configure() {
         register(ZoneBorders(3401, 3527, 3459, 3585))

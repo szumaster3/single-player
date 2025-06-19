@@ -20,189 +20,33 @@ import org.rs.consts.NPCs
 
 @Initializable
 class SorceressElementalNPC : AbstractNPC {
-    internal enum class ElementalDefinition(
-        private val npcId: Int,
-        private val locations: Array<Location>,
-    ) {
-        AUTUMN_ELEMENTAL_5533(
-            npcId = NPCs.AUTUMN_ELEMENTAL_5533,
-            locations = arrayOf(Location(2908, 5460, 0), Location(2898, 5460, 0)),
-        ),
-        AUTUMN_ELEMENTAL_5534(
-            npcId = NPCs.AUTUMN_ELEMENTAL_5534,
-            locations = arrayOf(Location(2900, 5448, 0), Location(2900, 5455, 0)),
-        ),
-        AUTUMN_ELEMENTAL_5535(
-            npcId = NPCs.AUTUMN_ELEMENTAL_5535,
-            locations = arrayOf(Location(2905, 5449, 0), Location(2899, 5449, 0)),
-        ),
-        AUTUMN_ELEMENTAL_5536(
-            npcId = NPCs.AUTUMN_ELEMENTAL_5536,
-            locations =
-                arrayOf(
-                    Location(2903, 5451, 0),
-                    Location(2903, 5455, 0),
-                    Location(2905, 5455, 0),
-                    Location(2905, 5451, 0),
-                ),
-        ),
-        AUTUMN_ELEMENTAL_5537(
-            npcId = NPCs.AUTUMN_ELEMENTAL_5537,
-            locations = arrayOf(Location(2903, 5457, 0), Location(2917, 5457, 0)),
-        ),
-        AUTUMN_ELEMENTAL_5538(
-            npcId = NPCs.AUTUMN_ELEMENTAL_5538,
-            locations = arrayOf(Location(2908, 5455, 0), Location(2917, 5455, 0)),
-        ),
-        SPRING_ELEMENTAL_5539(
-            npcId = NPCs.SPRING_ELEMENTAL_5539,
-            locations = arrayOf(Location(2922, 5471, 0), Location(2922, 5459, 0)),
-        ),
-        SPRING_ELEMENTAL_5540(
-            npcId = NPCs.SPRING_ELEMENTAL_5540,
-            locations =
-                arrayOf(
-                    Location(2924, 5463, 0),
-                    Location(2928, 5463, 0),
-                    Location(2928, 5461, 0),
-                    Location(2924, 5461, 0),
-                ),
-        ),
-        SPRING_ELEMENTAL_5541(
-            npcId = NPCs.SPRING_ELEMENTAL_5541,
-            locations =
-                arrayOf(
-                    Location(2924, 5461, 0),
-                    Location(2926, 5461, 0),
-                    Location(2926, 5458, 0),
-                    Location(2924, 5458, 0),
-                ),
-        ),
-        SPRING_ELEMENTAL_5542(
-            npcId = NPCs.SPRING_ELEMENTAL_5542,
-            locations =
-                arrayOf(
-                    Location(2928, 5458, 0),
-                    Location(2928, 5460, 0),
-                    Location(2934, 5460, 0),
-                    Location(2934, 5458, 0),
-                ),
-        ),
-        SPRING_ELEMENTAL_5543(
-            npcId = NPCs.SPRING_ELEMENTAL_5543,
-            locations = arrayOf(Location(2931, 5477, 0), Location(2931, 5470, 0)),
-        ),
-        SPRING_ELEMENTAL_5544(
-            npcId = NPCs.SPRING_ELEMENTAL_5544,
-            locations = arrayOf(Location(2935, 5469, 0), Location(2928, 5469, 0)),
-        ),
-        SPRING_ELEMENTAL_5545(
-            npcId = NPCs.SPRING_ELEMENTAL_5545,
-            locations = arrayOf(Location(2925, 5464, 0), Location(2925, 5475, 0)),
-        ),
-        SPRING_ELEMENTAL_5546(
-            npcId = NPCs.SPRING_ELEMENTAL_5546,
-            locations = arrayOf(Location(2931, 5477, 0), Location(2931, 5470, 0)),
-        ),
-        SUMMER_ELEMENTAL_5547(
-            npcId = NPCs.SUMMER_ELEMENTAL_5547,
-            locations = arrayOf(Location(2907, 5488, 0), Location(2907, 5482, 0)),
-        ),
-        SUMMER_ELEMENTAL_5548(
-            npcId = NPCs.SUMMER_ELEMENTAL_5548,
-            locations = arrayOf(Location(2907, 5490, 0), Location(2907, 5495, 0)),
-        ),
-        SUMMER_ELEMENTAL_5549(
-            npcId = NPCs.SUMMER_ELEMENTAL_5549,
-            locations = arrayOf(Location(2910, 5493, 0), Location(2910, 5487, 0)),
-        ),
-        SUMMER_ELEMENTAL_5550(
-            npcId = NPCs.SUMMER_ELEMENTAL_5550,
-            locations =
-                arrayOf(
-                    Location(2918, 5483, 0),
-                    Location(2918, 5485, 0),
-                    Location(2915, 5485, 0),
-                    Location(2915, 5483, 0),
-                    Location(2912, 5483, 0),
-                    Location(2912, 5485, 0),
-                    Location(2915, 5485, 0),
-                    Location(2915, 5483, 0),
-                ),
-        ),
-        SUMMER_ELEMENTAL_5551(
-            npcId = NPCs.SUMMER_ELEMENTAL_5551,
-            locations =
-                arrayOf(
-                    Location(2921, 5486, 0),
-                    Location(2923, 5486, 0),
-                    Location(2923, 5490, 0),
-                    Location(2923, 5486, 0),
-                ),
-        ),
-        SUMMER_ELEMENTAL_5552(
-            npcId = NPCs.SUMMER_ELEMENTAL_5552,
-            locations =
-                arrayOf(
-                    Location(2921, 5491, 0),
-                    Location(2923, 5491, 0),
-                    Location(2923, 5495, 0),
-                    Location(2921, 5495, 0),
-                ),
-        ),
-        WINTER_ELEMENTAL_5553(
-            npcId = NPCs.WINTER_ELEMENTAL_5553,
-            locations =
-                arrayOf(
-                    Location(2899, 5466, 0),
-                    Location(2899, 5468, 0),
-                    Location(2897, 5468, 0),
-                    Location(2897, 5466, 0),
-                    Location(2897, 5468, 0),
-                    Location(2899, 5468, 0),
-                ),
-        ),
-        WINTER_ELEMENTAL_5554(
-            npcId = NPCs.WINTER_ELEMENTAL_5554,
-            locations = arrayOf(Location(2897, 5470, 0), Location(2891, 5470, 0)),
-        ),
-        WINTER_ELEMENTAL_5555(
-            npcId = NPCs.WINTER_ELEMENTAL_5555,
-            locations =
-                arrayOf(
-                    Location(2897, 5471, 0),
-                    Location(2899, 5471, 0),
-                    Location(2899, 5478, 0),
-                    Location(2897, 5478, 0),
-                ),
-        ),
-        WINTER_ELEMENTAL_5556(
-            npcId = NPCs.WINTER_ELEMENTAL_5556,
-            locations =
-                arrayOf(
-                    Location(2896, 5483, 0),
-                    Location(2900, 5483, 0),
-                    Location(2900, 5480, 0),
-                    Location(2897, 5480, 0),
-                    Location(2897, 5481, 0),
-                    Location(2896, 5481, 0),
-                    Location(2896, 5482, 0),
-                ),
-        ),
-        WINTER_ELEMENTAL_5557(
-            npcId = NPCs.WINTER_ELEMENTAL_5557,
-            locations =
-                arrayOf(
-                    Location(2896, 5483, 0),
-                    Location(2896, 5481, 0),
-                    Location(2891, 5481, 0),
-                    Location(2891, 5483, 0),
-                ),
-        ),
-        WINTER_ELEMENTAL_5558(
-            npcId = NPCs.WINTER_ELEMENTAL_5558,
-            locations = arrayOf(Location(2889, 5485, 0), Location(2900, 5485, 0)),
-        ),
+    internal enum class ElementalDefinition(private val npcId: Int, private val locations: Array<Location>, ) {
+        AUTUMN_ELEMENTAL_5533(NPCs.AUTUMN_ELEMENTAL_5533, arrayOf(Location(2908, 5460, 0), Location(2898, 5460, 0))),
+        AUTUMN_ELEMENTAL_5534(NPCs.AUTUMN_ELEMENTAL_5534, arrayOf(Location(2900, 5448, 0), Location(2900, 5455, 0))),
+        AUTUMN_ELEMENTAL_5535(NPCs.AUTUMN_ELEMENTAL_5535, arrayOf(Location(2905, 5449, 0), Location(2899, 5449, 0))),
+        AUTUMN_ELEMENTAL_5536(NPCs.AUTUMN_ELEMENTAL_5536, arrayOf(Location(2903, 5451, 0), Location(2903, 5455, 0), Location(2905, 5455, 0), Location(2905, 5451, 0))),
+        AUTUMN_ELEMENTAL_5537(NPCs.AUTUMN_ELEMENTAL_5537, arrayOf(Location(2903, 5457, 0), Location(2917, 5457, 0))),
+        AUTUMN_ELEMENTAL_5538(NPCs.AUTUMN_ELEMENTAL_5538, arrayOf(Location(2908, 5455, 0), Location(2917, 5455, 0))),
+        SPRING_ELEMENTAL_5539(NPCs.SPRING_ELEMENTAL_5539, arrayOf(Location(2922, 5471, 0), Location(2922, 5459, 0))),
+        SPRING_ELEMENTAL_5540(NPCs.SPRING_ELEMENTAL_5540, arrayOf(Location(2924, 5463, 0), Location(2928, 5463, 0), Location(2928, 5461, 0), Location(2924, 5461, 0))),
+        SPRING_ELEMENTAL_5541(NPCs.SPRING_ELEMENTAL_5541, arrayOf(Location(2924, 5461, 0), Location(2926, 5461, 0), Location(2926, 5458, 0), Location(2924, 5458, 0))),
+        SPRING_ELEMENTAL_5542(NPCs.SPRING_ELEMENTAL_5542, arrayOf(Location(2928, 5458, 0), Location(2928, 5460, 0), Location(2934, 5460, 0), Location(2934, 5458, 0))),
+        SPRING_ELEMENTAL_5543(NPCs.SPRING_ELEMENTAL_5543, arrayOf(Location(2931, 5477, 0), Location(2931, 5470, 0))),
+        SPRING_ELEMENTAL_5544(NPCs.SPRING_ELEMENTAL_5544, arrayOf(Location(2935, 5469, 0), Location(2928, 5469, 0))),
+        SPRING_ELEMENTAL_5545(NPCs.SPRING_ELEMENTAL_5545, arrayOf(Location(2925, 5464, 0), Location(2925, 5475, 0))),
+        SPRING_ELEMENTAL_5546(NPCs.SPRING_ELEMENTAL_5546, arrayOf(Location(2931, 5477, 0), Location(2931, 5470, 0))),
+        SUMMER_ELEMENTAL_5547(NPCs.SUMMER_ELEMENTAL_5547, arrayOf(Location(2907, 5488, 0), Location(2907, 5482, 0))),
+        SUMMER_ELEMENTAL_5548(NPCs.SUMMER_ELEMENTAL_5548, arrayOf(Location(2907, 5490, 0), Location(2907, 5495, 0))),
+        SUMMER_ELEMENTAL_5549(NPCs.SUMMER_ELEMENTAL_5549, arrayOf(Location(2910, 5493, 0), Location(2910, 5487, 0))),
+        SUMMER_ELEMENTAL_5550(NPCs.SUMMER_ELEMENTAL_5550, arrayOf(Location(2918, 5483, 0), Location(2918, 5485, 0), Location(2915, 5485, 0), Location(2915, 5483, 0), Location(2912, 5483, 0), Location(2912, 5485, 0), Location(2915, 5485, 0), Location(2915, 5483, 0)),),
+        SUMMER_ELEMENTAL_5551(NPCs.SUMMER_ELEMENTAL_5551, arrayOf(Location(2921, 5486, 0), Location(2923, 5486, 0), Location(2923, 5490, 0), Location(2923, 5486, 0))),
+        SUMMER_ELEMENTAL_5552(NPCs.SUMMER_ELEMENTAL_5552, arrayOf(Location(2921, 5491, 0), Location(2923, 5491, 0), Location(2923, 5495, 0), Location(2921, 5495, 0))),
+        WINTER_ELEMENTAL_5553(NPCs.WINTER_ELEMENTAL_5553, arrayOf(Location(2899, 5466, 0), Location(2899, 5468, 0), Location(2897, 5468, 0), Location(2897, 5466, 0), Location(2897, 5468, 0), Location(2899, 5468, 0)),),
+        WINTER_ELEMENTAL_5554(NPCs.WINTER_ELEMENTAL_5554, arrayOf(Location(2897, 5470, 0), Location(2891, 5470, 0))),
+        WINTER_ELEMENTAL_5555(NPCs.WINTER_ELEMENTAL_5555, arrayOf(Location(2897, 5471, 0), Location(2899, 5471, 0), Location(2899, 5478, 0), Location(2897, 5478, 0)),),
+        WINTER_ELEMENTAL_5556(NPCs.WINTER_ELEMENTAL_5556, arrayOf(Location(2896, 5483, 0), Location(2900, 5483, 0), Location(2900, 5480, 0), Location(2897, 5480, 0), Location(2897, 5481, 0), Location(2896, 5481, 0), Location(2896, 5482, 0)),),
+        WINTER_ELEMENTAL_5557(NPCs.WINTER_ELEMENTAL_5557, arrayOf(Location(2896, 5483, 0), Location(2896, 5481, 0), Location(2891, 5481, 0), Location(2891, 5483, 0)),),
+        WINTER_ELEMENTAL_5558(NPCs.WINTER_ELEMENTAL_5558, arrayOf(Location(2889, 5485, 0), Location(2900, 5485, 0))),
         ;
 
         fun getId(): Int = npcId

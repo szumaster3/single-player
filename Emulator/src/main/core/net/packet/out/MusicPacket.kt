@@ -5,7 +5,8 @@ import core.net.packet.OutgoingPacket
 import core.net.packet.context.MusicContext
 
 /**
- * Outgoing Music packet
+ * Outgoing music packet.
+ *
  * @author SonicForce41
  */
 class MusicPacket : OutgoingPacket<MusicContext> {

@@ -6,7 +6,7 @@ import core.net.packet.Context;
 /**
  * Represents a default context of a packet.
  *
- * @author 'Vexia
+ * @author Vexia
  */
 public class DefaultContext implements Context {
     /**

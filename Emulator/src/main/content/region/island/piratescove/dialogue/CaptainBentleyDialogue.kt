@@ -1,7 +1,7 @@
 package content.region.island.piratescove.dialogue
 
 import content.region.island.lunarisle.plugin.Destination
-import content.region.island.lunarisle.plugin.LunarIsleUtils.sail
+import content.region.island.lunarisle.plugin.LunarIsleShip.sail
 import core.game.dialogue.Dialogue
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player

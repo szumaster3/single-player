@@ -7,6 +7,7 @@ import java.nio.ByteBuffer
 
 /**
  * Handles the login outgoing packet.
+ *
  * @author Emperor
  */
 class LoginPacket : OutgoingPacket<PlayerContext> {

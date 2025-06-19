@@ -6,6 +6,7 @@ import core.net.packet.context.HintIconContext
 
 /**
  * Handles the Hint icon outgoing packet.
+ *
  * @author Emperor
  */
 class HintIcon : OutgoingPacket<HintIconContext> {

@@ -6,6 +6,7 @@ import core.net.packet.context.ChildPositionContext
 
 /**
  * Handles the "reposition interface child" outgoing packet.
+ *
  * @author Emperor
  */
 class RepositionChild : OutgoingPacket<ChildPositionContext> {

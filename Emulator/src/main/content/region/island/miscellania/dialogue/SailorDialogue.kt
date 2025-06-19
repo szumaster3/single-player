@@ -1,7 +1,7 @@
 package content.region.island.miscellania.dialogue
 
-import content.region.island.waterbirth.plugin.TravelDestination
-import content.region.island.waterbirth.plugin.WaterbirthUtils.sail
+import content.region.fremennik.rellekka.plugin.TravelDestination
+import content.region.fremennik.rellekka.plugin.RellekkaShip.sail
 import core.api.inBorders
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim

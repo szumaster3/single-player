@@ -11,34 +11,22 @@ import core.game.world.map.Location
 import core.tools.RandomFunction
 import org.rs.consts.NPCs
 
-class SpinolypNPC(
-    id: Int = 0,
-    location: Location? = null,
-) : AbstractNPC(id, location) {
+class SpinolypNPC(id: Int = 0, location: Location? = null, ) : AbstractNPC(id, location) {
+
     init {
-        super.setAggressive(true)
-        super.setNeverWalks(true)
+        setAggressive(true)
+        setNeverWalks(true)
     }
 
-    override fun construct(
-        id: Int,
-        location: Location,
-        vararg objects: Any,
-    ): AbstractNPC = SpinolypNPC(id, location)
+    override fun construct(id: Int, location: Location, vararg objects: Any, ): AbstractNPC = SpinolypNPC(id, location)
 
     override fun getSwingHandler(swing: Boolean): CombatSwingHandler = SWING_HANDLER
 
     override fun init() {
         super.init()
-        super.getLocks().lockMovement(Int.MAX_VALUE)
-        setSpell()
+        getLocks().lockMovement(Int.MAX_VALUE)
+        setSpell(this)
         getAggressiveHandler().isAllowTolerance = false
-    }
-
-    fun setSpell() {
-        val spell = SpellBook.MODERN.getSpell(14) as CombatSpell?
-        properties.spell = spell
-        properties.autocastSpell = spell
     }
 
     override fun sendImpact(state: BattleState) {
@@ -52,15 +40,9 @@ class SpinolypNPC(
 
     override fun getIds(): IntArray = intArrayOf(NPCs.SPINOLYP_2894, NPCs.SPINOLYP_2896)
 
-    class SpinolpySwingHandler :
-        MultiSwingHandler(
-            SwitchAttack(CombatStyle.MAGIC.swingHandler, null),
-            SwitchAttack(CombatStyle.RANGE.swingHandler, null),
-        ) {
-        override fun canSwing(
-            entity: Entity,
-            victim: Entity,
-        ): InteractionType? {
+    class SpinolpySwingHandler : MultiSwingHandler(SwitchAttack(CombatStyle.MAGIC.swingHandler, null), SwitchAttack(CombatStyle.RANGE.swingHandler, null)) {
+
+        override fun canSwing(entity: Entity, victim: Entity): InteractionType? {
             var type = super.canSwing(entity, victim)
             if (type == InteractionType.MOVE_INTERACT) {
                 type = InteractionType.NO_INTERACT
@@ -68,67 +50,51 @@ class SpinolypNPC(
             return type
         }
 
-        override fun swing(
-            entity: Entity?,
-            victim: Entity?,
-            state: BattleState?,
-        ): Int {
+        override fun swing(entity: Entity?, victim: Entity?, state: BattleState?): Int {
             val swing = super.swing(entity, victim, state)
             if (type == CombatStyle.MAGIC) {
-                setSpell(entity)
+                entity?.let { setSpell(it) }
             }
             return swing
         }
 
-        override fun getCombatDistance(
-            e: Entity,
-            v: Entity,
-            rawDistance: Int,
-        ): Int = 12
+        override fun getCombatDistance(e: Entity, v: Entity, rawDistance: Int): Int = 12
 
-        override fun calculateDefence(
-            victim: Entity?,
-            attacker: Entity?,
-        ): Int = CombatStyle.RANGE.swingHandler.calculateDefence(victim, attacker)
+        override fun calculateDefence(victim: Entity?, attacker: Entity?): Int =
+            CombatStyle.RANGE.swingHandler.calculateDefence(victim, attacker)
 
-        override fun visualize(
-            entity: Entity,
-            victim: Entity?,
-            state: BattleState?,
-        ) {
+        override fun visualize(entity: Entity, victim: Entity?, state: BattleState?) {
             super.visualize(entity, victim, state)
-            if (state!!.style == CombatStyle.MAGIC) {
-                setSpell(entity)
+            if (state?.style == CombatStyle.MAGIC) {
+                entity?.let { setSpell(it) }
                 val spell = SpellBook.MODERN.getSpell(14) as CombatSpell?
                 state.spell = spell
             }
-            state.style.swingHandler.visualize(entity, victim, state)
+            state?.style?.swingHandler?.visualize(entity, victim, state)
             entity.animator.forceAnimation(entity.properties.attackAnimation)
         }
 
-        override fun impact(
-            entity: Entity?,
-            victim: Entity?,
-            state: BattleState?,
-        ) {
+        override fun impact(entity: Entity?, victim: Entity?, state: BattleState?) {
             super.impact(entity, victim, state)
-            if (super.type == CombatStyle.MAGIC && state!!.estimatedHit > 0) {
-                victim!!.getSkills().decrementPrayerPoints(1.0)
+            if (type == CombatStyle.MAGIC && state?.estimatedHit ?: 0 > 0) {
+                victim?.getSkills()?.decrementPrayerPoints(1.0)
             } else {
                 if (RandomFunction.random(20) == 5) {
-                    applyPoison(victim!!, entity!!, 30)
+                    if (victim != null && entity != null) {
+                        applyPoison(victim, entity, 30)
+                    }
                 }
             }
-        }
-
-        fun setSpell(e: Entity?) {
-            val spell = SpellBook.MODERN.getSpell(14) as CombatSpell?
-            e!!.properties.spell = spell
-            e.properties.autocastSpell = spell
         }
     }
 
     companion object {
         private val SWING_HANDLER: CombatSwingHandler = SpinolpySwingHandler()
+
+        fun setSpell(e: Entity) {
+            val spell = SpellBook.MODERN.getSpell(14) as CombatSpell?
+            e.properties.spell = spell
+            e.properties.autocastSpell = spell
+        }
     }
 }

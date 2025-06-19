@@ -152,7 +152,7 @@ public abstract class CutscenePlugin extends ActivityPlugin {
      * dramatic effect for entering a cutscene. In the future allow for this to
      * be toggled.
      *
-     * @author 'Vexia
+     * @author Vexia
      * @date 30/12/2013
      */
     public class StartPulse extends Pulse {

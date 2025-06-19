@@ -20,6 +20,7 @@ import core.game.system.task.Pulse
 import core.game.world.GameWorld
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
+import core.plugin.ClassScanner
 import core.plugin.Plugin
 import core.tools.RandomFunction
 import org.rs.consts.*
@@ -30,7 +31,6 @@ class SorceressGardenPlugin : InteractionListener {
     private val HERBS_ITEMS = intArrayOf(Items.GRIMY_GUAM_199, Items.GRIMY_MARRENTILL_201, Items.GRIMY_TARROMIN_203, Items.GRIMY_HARRALANDER_205, Items.GRIMY_RANARR_207, Items.GRIMY_IRIT_209, Items.GRIMY_AVANTOE_211, Items.GRIMY_KWUARM_213, Items.GRIMY_CADANTINE_215, Items.GRIMY_DWARF_WEED_217, Items.GRIMY_TORSTOL_219, Items.GRIMY_LANTADYME_2485, Items.GRIMY_TOADFLAX_3049, Items.GRIMY_SNAPDRAGON_3051)
     private val HERB_DEFINITIONS = HashMap<Int, HerbDefinition>()
     private val SEASON_DEFINITIONS = HashMap<Int, SeasonDefinitions>()
-
     private val APPRENTICE = NPCs.APPRENTICE_5532
     private val FOUNTAIN = org.rs.consts.Scenery.FOUNTAIN_21764
     private val SHELVES = org.rs.consts.Scenery.SHELVES_21794
@@ -45,6 +45,10 @@ class SorceressGardenPlugin : InteractionListener {
     }
 
     override fun defineListeners() {
+        SqirkJuicePlugin().newInstance(null)
+        SqirkMakingDialogue().init()
+        ClassScanner.definePlugin(SorceressGardenObject())
+
         on(GATES, IntType.SCENERY, "open") { player, node ->
             val def = SEASON_DEFINITIONS[(node as Scenery).id]?.let { forGateId(it.gateId) }
             if (def != null) {
@@ -52,7 +56,7 @@ class SorceressGardenPlugin : InteractionListener {
                     sendItemDialogue(
                         player,
                         Items.HIGHWAYMAN_MASK_10692,
-                        "You need Thieving level of ${def.level} to pick the lock of this gate.",
+                        "You need Thieving level of ${def.level} to pick the lock of this gate."
                     )
                     return@on true
                 }
@@ -135,10 +139,7 @@ class SorceressGardenPlugin : InteractionListener {
         }
     }
 
-    private fun handleSqirkTreeInteraction(
-        player: Player,
-        def: SeasonDefinitions,
-    ) {
+    private fun handleSqirkTreeInteraction(player: Player, def: SeasonDefinitions) {
         player.lock()
         player.logoutListeners["garden"] = { it.location = def.respawn }
         animate(player, PICK_FRUIT)
@@ -175,11 +176,7 @@ class SorceressGardenPlugin : InteractionListener {
         )
     }
 
-    private fun handleHerbPicking(
-        player: Player,
-        scenery: Scenery,
-        herbDef: HerbDefinition,
-    ) {
+    private fun handleHerbPicking(player: Player, scenery: Scenery, herbDef: HerbDefinition) {
         player.lock()
         player.logoutListeners["garden"] = { it.location = herbDef.respawn }
         player.animate(ANIMATION)
@@ -219,18 +216,23 @@ class SorceressGardenPlugin : InteractionListener {
         )
     }
 
-    enum class HerbDefinition(
-        val id: Int,
-        val exp: Double,
-        val respawn: Location,
-    ) {
-        WINTER(id = 21671, exp = 30.0, respawn = Location(2907, 5470, 0)),
-        SPRING(id = 21668, exp = 40.0, respawn = Location(2916, 5473, 0)),
-        AUTUMN(id = 21670, exp = 50.0, respawn = Location(2913, 5467, 0)),
-        SUMMER(id = 21669, exp = 60.0, respawn = Location(2910, 5476, 0)),
-        ;
+    /**
+     * Represents the herb definitions.
+     *
+     * @author SonicForce41
+     */
+    enum class HerbDefinition(val id: Int, val exp: Double, val respawn: Location) {
+        WINTER(21671, 30.0, Location(2907, 5470, 0)),
+        SPRING(21668, 40.0, Location(2916, 5473, 0)),
+        AUTUMN(21670, 50.0, Location(2913, 5467, 0)),
+        SUMMER(21669, 60.0, Location(2910, 5476, 0));
 
         companion object {
+            /**
+             * Gets the herb definition by the id.
+             * @param id the objectId
+             * @return the definition.
+             */
             fun forId(id: Int): HerbDefinition? {
                 for (def in values()) {
                     if (def.id == id) {
@@ -242,6 +244,11 @@ class SorceressGardenPlugin : InteractionListener {
         }
     }
 
+    /**
+     * Represents the season definitions.
+     *
+     * @author SonicForce41
+     */
     enum class SeasonDefinitions(
         val treeId: Int,
         val level: Int,
@@ -263,14 +270,24 @@ class SorceressGardenPlugin : InteractionListener {
         ;
 
         companion object {
-            @JvmStatic
+            /**
+             * Gets the def by the fruit id.
+             * @param fruitId the fruit id.
+             * @return the definition.
+             */
             fun forFruitId(fruitId: Int): SeasonDefinitions? {
                 for (def in values()) {
+                    if (def == null) continue
                     if (fruitId == def.fruitId) return def
                 }
                 return null
             }
 
+            /**
+             * Gets the def by the gate Id.
+             * @param gateId the gateId
+             * @return the def.
+             */
             @JvmStatic
             fun forGateId(gateId: Int): SeasonDefinitions? {
                 for (def in values()) {
@@ -279,31 +296,41 @@ class SorceressGardenPlugin : InteractionListener {
                 return null
             }
 
-            @JvmStatic
+            /**
+             * Gets the def by the juice id.
+             * @param juiceId the juice id.
+             * @return the def.
+             */
             fun forJuiceId(juiceId: Int): SeasonDefinitions? {
                 for (def in values()) {
+                    if (def == null) continue
                     if (juiceId == def.juiceId) return def
                 }
                 return null
             }
 
-            @JvmStatic
+            /**
+             * Gets the season def by the tree id.
+             * @param treeId the tree id.
+             * @return the def.
+             */
             fun forTreeId(treeId: Int): SeasonDefinitions? {
                 for (def in values()) {
+                    if (def == null) continue
                     if (treeId == def.treeId) return def
                 }
                 return null
             }
+
         }
     }
 
-    class SqirkJuicePlugin :
-        UseWithHandler(
-            Items.SPRING_SQIRK_10844,
-            Items.SUMMER_SQIRK_10845,
-            Items.AUTUMN_SQIRK_10846,
-            Items.WINTER_SQIRK_10847,
-        ) {
+    /**
+     * Use with Plugin for Sq'irk Juice making
+     * @author SonicForce41
+     */
+    class SqirkJuicePlugin : UseWithHandler(Items.SPRING_SQIRK_10844, Items.SUMMER_SQIRK_10845, Items.AUTUMN_SQIRK_10846, Items.WINTER_SQIRK_10847) {
+
         override fun handle(event: NodeUsageEvent): Boolean {
             val item: Item = event.usedItem
             val with: Item = event.baseItem
@@ -347,7 +374,7 @@ class SorceressGardenPlugin : InteractionListener {
     }
 }
 
-class SqirkMakingDialogue(
+private class SqirkMakingDialogue(
     player: Player? = null,
 ) : Dialogue(player) {
     private var dialogueId = 0
@@ -355,23 +382,14 @@ class SqirkMakingDialogue(
 
     override fun getIds(): IntArray = intArrayOf(43382)
 
-    override fun handle(
-        interfaceId: Int,
-        buttonId: Int,
-    ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
         when (dialogueId) {
             0 -> end()
-            1 ->
-                when (stage) {
-                    0 -> {
-                        interpreter.sendDialogue(
-                            "You need " + definition!!.fruitAmt + " sq'irks of this kind to fill a glass of juice.",
-                        )
-                        stage = 1
-                    }
-
-                    1 -> end()
-                }
+            1 -> when (stage) {
+                0 -> sendDialogue(player,"You need " + definition!!.fruitAmt + " sq'irks of this kind to fill a glass of juice.").also { stage = 2 }
+                1 -> end()
+            }
+            2 -> end()
         }
         return true
     }
@@ -379,12 +397,7 @@ class SqirkMakingDialogue(
     override fun open(vararg args: Any?): Boolean {
         dialogueId = args[0] as Int
         when (dialogueId) {
-            0 ->
-                player(
-                    FaceAnim.THINKING,
-                    "I should get an empty beer glass to",
-                    "hold the juice before I squeeze the fruit.",
-                )
+            0 -> player(FaceAnim.THINKING, "I should get an empty beer glass to", "hold the juice before I squeeze the fruit.")
             1 -> {
                 definition = SorceressGardenPlugin.SeasonDefinitions.forFruitId(args[1] as Int)
                 if (definition == null) end()

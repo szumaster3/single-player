@@ -6,6 +6,7 @@ import core.net.packet.context.AccessMaskContext
 
 /**
  * The access mask outgoing packet.
+ *
  * @author Emperor
  */
 class AccessMask : OutgoingPacket<AccessMaskContext> {

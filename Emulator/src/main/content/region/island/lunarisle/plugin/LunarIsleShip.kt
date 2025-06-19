@@ -7,20 +7,14 @@ import core.game.world.map.Location
 import org.rs.consts.Components
 
 /**
- * Handles the lunar isle travel functionality for players.
+ * Utility for travel between moonclan island and pirates' cove.
  */
-object LunarIsleUtils {
+object LunarIsleShip {
     /**
      * Initiates the sailing.
-     *
-     * @param player The player who is initiating the travel.
-     * @param destination The destination to which the player is traveling.
      */
     @JvmStatic
-    fun sail(
-        player: Player,
-        destination: Destination,
-    ) {
+    fun sail(player: Player, destination: Destination, ) {
         lock(player, destination.animation)
         lockInteractions(player, destination.animation)
         openInterface(player, Components.LUNAR_COVE_BOAT_MAP_431)
@@ -43,24 +37,8 @@ object LunarIsleUtils {
 
 /**
  * Represents the travel destinations.
- *
- * @property destName The name of the destination.
- * @property destination The [Location] representing the coordinates of the destination.
- * @property animation The animation id used during the travel animation.
  */
-enum class Destination(
-    val destName: String,
-    val destination: Location,
-    val animation: Int,
-) {
-    PIRATES_COVE_TO_MOONCLAN_ISLAND(
-        destName = "Pirates' Cove",
-        destination = Location.create(2131, 3900, 2),
-        animation = 2344,
-    ),
-    MOONCLAN_ISLAND_TO_PIRATES_COVE(
-        destName = "Moonclan Island",
-        destination = Location.create(2216, 3797, 2),
-        animation = 2345,
-    ),
+enum class Destination(val destName: String, val destination: Location, val animation: Int, ) {
+    PIRATES_COVE_TO_MOONCLAN_ISLAND("Pirates' Cove", Location.create(2131, 3900, 2), 2344),
+    MOONCLAN_ISLAND_TO_PIRATES_COVE("Moonclan Island", Location.create(2216, 3797, 2), 2345),
 }

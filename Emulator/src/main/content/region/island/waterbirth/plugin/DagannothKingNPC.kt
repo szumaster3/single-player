@@ -11,10 +11,11 @@ import core.game.world.map.RegionManager.getLocalPlayers
 import core.tools.RandomFunction
 import org.rs.consts.NPCs
 
-class DagannothKingNPC(
-    id: Int = 0,
-    location: Location? = null,
-) : AbstractNPC(id, location) {
+/**
+ * Handles Dagannoth King NPC.
+ */
+class DagannothKingNPC(id: Int = 0, location: Location? = null) : AbstractNPC(id, location) {
+
     private var type: DagType? = null
 
     override fun init() {

@@ -7,6 +7,7 @@ import core.net.packet.context.GameMessageContext
 
 /**
  * The game message outgoing packet.
+ *
  * @author Emperor
  */
 class GameMessage : OutgoingPacket<GameMessageContext> {

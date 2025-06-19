@@ -8,6 +8,7 @@ import core.tools.StringUtils.stringToLong
 
 /**
  * Handles the update clan chat outgoing packet.
+ *
  * @author Emperor
  */
 class UpdateClanChat : OutgoingPacket<ClanContext> {

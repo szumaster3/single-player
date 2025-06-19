@@ -6,16 +6,16 @@ import core.game.world.map.Location
 import core.plugin.Initializable
 import org.rs.consts.NPCs
 
+/**
+ * Handles Ice trolls NPC.
+ */
 @Initializable
 class IceTrollNPC : AbstractNPC {
+
     constructor() : super(NPCs.ICE_TROLL_MALE_5474, null, true)
     private constructor(id: Int, location: Location) : super(id, location)
 
-    override fun construct(
-        id: Int,
-        location: Location,
-        vararg objects: Any?,
-    ): AbstractNPC = IceTrollNPC(id, location)
+    override fun construct(id: Int, location: Location, vararg objects: Any?, ): AbstractNPC = IceTrollNPC(id, location)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.ICE_TROLL_MALE_5474, NPCs.ICE_TROLL_RUNT_5473, NPCs.ICE_TROLL_FEMALE_5475)
 

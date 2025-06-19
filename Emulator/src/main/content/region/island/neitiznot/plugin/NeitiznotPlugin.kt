@@ -21,7 +21,7 @@ class NeitiznotPlugin : InteractionListener, MapArea {
         ZoneBorders(2313, 3786, 2331, 3802)
     )
 
-    override fun interactBehavior(
+    override fun entityInteraction(
         entity: Entity,
         target: Node,
         option: Option,
@@ -44,7 +44,7 @@ class NeitiznotPlugin : InteractionListener, MapArea {
         return false
     }
 
-    override fun useWithBehavior(
+    override fun entityUseWith(
         player: Player?,
         used: Item?,
         with: Node?,

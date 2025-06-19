@@ -7,6 +7,7 @@ import core.net.packet.context.RunScriptContext
 
 /**
  * The run script outgoing packet.
+ *
  * @author Snickerize
  */
 class RunScriptPacket : OutgoingPacket<RunScriptContext> {

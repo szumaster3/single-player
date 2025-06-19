@@ -6,6 +6,7 @@ import core.net.packet.context.PlayerContext
 
 /**
  * The run energy outgoing packet.
+ *
  * @author Emperor
  */
 class RunEnergy : OutgoingPacket<PlayerContext> {

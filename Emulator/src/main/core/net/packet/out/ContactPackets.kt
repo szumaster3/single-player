@@ -8,6 +8,7 @@ import core.tools.StringUtils.stringToLong
 
 /**
  * Handles the contact packet sending.
+ *
  * @author Emperor
  */
 class ContactPackets : OutgoingPacket<ContactContext> {
