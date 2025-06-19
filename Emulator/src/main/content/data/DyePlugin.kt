@@ -84,10 +84,6 @@ class DyePlugin : InteractionListener {
 
     /**
      * Handles combining two basic dyes into a new dye.
-     *
-     * @param player The player attempting to mix the dyes.
-     * @param primary The first dye being used.
-     * @param secondary The second dye being used.
      */
     private fun handleDyeCombine(player: Player, primary: Dyes, secondary: Dyes) {
         val anim = Animation.create(Animations.DYE_COMBINE_4348)
@@ -142,7 +138,7 @@ class DyePlugin : InteractionListener {
 /**
  * Represents capes.
  */
-enum class Capes(val dye: Dyes, val cape: Item) {
+private enum class Capes(val dye: Dyes, val cape: Item) {
     BLACK(Dyes.BLACK, Item(Items.BLACK_CAPE_1019)),
     RED(Dyes.RED, Item(Items.RED_CAPE_1007)),
     BLUE(Dyes.BLUE, Item(Items.BLUE_CAPE_1021)),
@@ -173,7 +169,7 @@ enum class Capes(val dye: Dyes, val cape: Item) {
     }
 }
 
-enum class Dyes(val item: Item) {
+private enum class Dyes(val item: Item) {
     BLACK(Item(Items.BLACK_MUSHROOM_INK_4622)),
     RED(Item(Items.RED_DYE_1763)),
     YELLOW(Item(Items.YELLOW_DYE_1765)),
