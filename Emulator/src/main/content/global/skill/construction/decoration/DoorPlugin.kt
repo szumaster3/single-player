@@ -46,7 +46,10 @@ class DoorPlugin : OptionHandler() {
         }
 
         val second = DoorActionHandler.getSecondDoor(node, player)
-
+//val scenery = node.asScenery()
+//            DoorActionHandler.getSecondDoor(scenery, player)?.let { second ->
+//                DoorActionHandler.open(scenery, second, scenery.id + 1, second.id + 1, true, 500, false)
+//            }
         if (second != null) {
             DoorActionHandler.open(
                 node.asScenery(),
