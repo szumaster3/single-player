@@ -114,6 +114,7 @@ class ItemStoragePlugin : InterfaceListener {
                 sendInterfaceConfig(player, INTERFACE, item.displayId, true)
             } else sendMessage(player, "That isn't currently stored in the toy box.")
         }
+        handlePage(player)
     }
 
     private fun handleFancyDressBox(player: Player, setIndex: Int) {
@@ -137,6 +138,7 @@ class ItemStoragePlugin : InterfaceListener {
                 sendMessage(player, "You put your outfit into the wardrobe.")
             } else sendMessage(player, "That isn't currently stored in the fancy dress box.")
         }
+        handlePage(player)
     }
 
     private fun handleCapeRack(player: Player, setIndex: Int) {
@@ -155,6 +157,7 @@ class ItemStoragePlugin : InterfaceListener {
                 sendMessage(player, "You put the cape into the rack.")
             } else sendMessage(player, "That isn't currently stored in the cape rack.")
         }
+        handlePage(player)
     }
 
     private data class StorageInterface(

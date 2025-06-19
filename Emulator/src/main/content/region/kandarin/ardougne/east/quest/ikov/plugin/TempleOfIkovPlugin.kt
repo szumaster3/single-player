@@ -68,12 +68,8 @@ class TempleOfIkovPlugin : InteractionListener {
             return@on true
         }
 
-        on(Scenery.TRAPDOOR_100, SCENERY, "open") { player, node ->
-            sendDialogueLines(
-                player,
-                "You try to open the trapdoor but it won't budge! It looks like the",
-                "trapdoor can only be opened from the other side.",
-            )
+        on(Scenery.TRAPDOOR_100, SCENERY, "open") { player, _ ->
+            sendDialogueLines(player, "You try to open the trapdoor but it won't budge! It looks like the", "trapdoor can only be opened from the other side.")
             sendMessage(player, "You try to open the trapdoor but it won't budge!")
             sendMessage(player, "It looks like the trapdoor can only be opened from the other side.")
             return@on true

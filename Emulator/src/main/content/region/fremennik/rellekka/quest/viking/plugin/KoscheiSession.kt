@@ -32,7 +32,7 @@ class KoscheiSession(
     }
 
     /**
-     * Starts the Koschei encounter by initializing the NPC and unlocking the player.
+     * Starts the session.
      */
     fun start() {
         koschei.init()
@@ -40,7 +40,7 @@ class KoscheiSession(
     }
 
     /**
-     * Ends the session, clears the Koschei NPC, and removes the session from the player.
+     * Ends the session.
      */
     fun close() {
         koschei.clear()
@@ -48,20 +48,9 @@ class KoscheiSession(
     }
 
     companion object {
-        /**
-         * Creates a new [KoscheiSession] for the given player.
-         *
-         * @param player The player to create the session for.
-         * @return A new instance of [KoscheiSession].
-         */
+
         fun create(player: Player): KoscheiSession = KoscheiSession(player)
 
-        /**
-         * Retrieves the current [KoscheiSession] associated with the player.
-         *
-         * @param player The player whose session should be fetched.
-         * @return The existing [KoscheiSession] for the player.
-         */
         fun getSession(player: Player): KoscheiSession = player.getExtension(KoscheiSession::class.java)
     }
 }

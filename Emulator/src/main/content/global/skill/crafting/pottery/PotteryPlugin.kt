@@ -102,7 +102,7 @@ class PotteryPlugin : UseWithHandler(Items.SOFT_CLAY_1761) {
                 val player = event.player
                 val scenery = event.usedWith
 
-                if (scenery.id == Scenery.POTTERY_OVEN_4308 && isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS)) {
+                if (scenery.id == Scenery.POTTERY_OVEN_4308 && !isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS)) {
                     sendMessage(player, "Only Fremenniks may use this ${scenery.name.lowercase(Locale.getDefault())}.")
                     return false
                 }
