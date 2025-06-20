@@ -28,25 +28,23 @@ import org.rs.consts.Scenery
  */
 @Initializable
 class FremennikPlugin : OptionHandler() {
+
     override fun newInstance(arg: Any?): Plugin<Any> {
-        // Larry's boat - Iceberg
         SceneryDefinition.forId(Scenery.BOAT_21176).handlers["option:travel"] = this
         SceneryDefinition.forId(Scenery.BOAT_21175).handlers["option:travel"] = this
 
-        // Maria Gunnars - Neitiznot
         NPCDefinition.forId(NPCs.MARIA_GUNNARS_5508).handlers["ferry-neitiznot"] = this
         NPCDefinition.forId(NPCs.MARIA_GUNNARS_5507).handlers["ferry-rellekka"] = this
 
-        // Mord Gunnars - Jatizso
         NPCDefinition.forId(NPCs.MORD_GUNNARS_5481).handlers["ferry-jatizso"] = this
         NPCDefinition.forId(NPCs.MORD_GUNNARS_5482).handlers["ferry-rellekka"] = this
 
-        // Sailors - Miscellania
         NPCDefinition.forId(NPCs.SAILOR_1385).handlers["travel"] = this
         NPCDefinition.forId(NPCs.SAILOR_1304).handlers["travel"] = this
 
-        // Jarvald - Waterbirth
         NPCDefinition.forId(2435).handlers["option:travel"] = this
+        NPCDefinition.forId(NPCs.JARVALD_2436).handlers["option:travel"] = this
+        NPCDefinition.forId(NPCs.JARVALD_2437).handlers["option:travel"] = this
         NPCDefinition.forId(NPCs.JARVALD_2438).handlers["option:travel"] = this
         return this
     }
@@ -59,21 +57,18 @@ class FremennikPlugin : OptionHandler() {
                 if (!requireQuest(player, Quests.THE_FREMENNIK_TRIALS, "")) return true
                 FremennikTransportation.sail(player, Travel.RELLEKKA_TO_NEITIZNOT)
             }
-
-            NPCs.MARIA_GUNNARS_5507 -> FremennikTransportation.sail(player, Travel.NEITIZNOT_TO_RELLEKKA)
             // Mord Gunnars - Rellekka - Jatizso
+            NPCs.MARIA_GUNNARS_5507 -> FremennikTransportation.sail(player, Travel.NEITIZNOT_TO_RELLEKKA)
+            NPCs.MORD_GUNNARS_5482 -> FremennikTransportation.sail(player, Travel.JATIZSO_TO_RELLEKKA)
             NPCs.MORD_GUNNARS_5481 -> {
                 if (!requireQuest(player, Quests.THE_FREMENNIK_TRIALS, "")) return true
                 FremennikTransportation.sail(player, Travel.RELLEKKA_TO_JATIZSO)
             }
-
-            NPCs.MORD_GUNNARS_5482 -> FremennikTransportation.sail(player, Travel.JATIZSO_TO_RELLEKKA)
             // Sailors - Rellekka - Miscellania
             NPCs.SAILOR_1385 -> {
                 if (!requireQuest(player, Quests.THE_FREMENNIK_TRIALS, "")) return true
                 FremennikTransportation.sail(player, Travel.RELLEKKA_TO_MISC)
             }
-
             NPCs.SAILOR_1304 -> {
                 if (!requireQuest(player, Quests.THE_FREMENNIK_TRIALS, "")) return true
                 FremennikTransportation.sail(player, Travel.MISC_TO_RELLEKKA)
@@ -101,7 +96,7 @@ class FremennikPlugin : OptionHandler() {
                 }
             }
             // Jarvald - Waterbirth - Rellekka
-            2435, NPCs.JARVALD_2438 -> {
+            2435, NPCs.JARVALD_2436, NPCs.JARVALD_2437, NPCs.JARVALD_2438 -> {
                 dialogue(player) {
                     options("Leave island?", "YES", "NO") { opt ->
                         if (node.id == 2438 && opt == 1) FremennikTransportation.sail(

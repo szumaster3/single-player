@@ -1,88 +1,23 @@
-package content.region.fremennik.waterbirth
+package content.region.fremennik.waterbirth.dialogue
 
 import content.region.fremennik.rellekka.quest.viking.FremennikTrials
+import content.region.fremennik.waterbirth.plugin.BardurPlugin
 import core.api.*
 import core.api.quest.isQuestComplete
 import core.game.dialogue.Dialogue
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
-import core.game.interaction.IntType
-import core.game.interaction.InteractionListener
-import core.game.node.entity.npc.AbstractNPC
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
-import core.game.world.map.Location
-import core.plugin.ClassScanner
 import core.tools.END_DIALOGUE
-import core.tools.RandomFunction
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
-class BardurPlugin : InteractionListener {
-
-    override fun defineListeners() {
-
-        /*
-         * Handles interaction with Bardur NPCs.
-         */
-
-        onUseWith(IntType.NPC, exchangeItemIDs, NPCs.BARDUR_2879) { player, node, _ ->
-            ClassScanner.definePlugin(BardurDialogue())
-
-            val npc = node.asNpc()
-            if (npc.inCombat()) {
-                sendMessage(player, "He's busy right now.")
-                return@onUseWith false
-            }
-
-            if (!isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS)) {
-                sendNPCDialogue(player, NPCs.BARDUR_2879, "I do not trust you Outlander, I will not accept your gifts, no matter what your intention...")
-            } else {
-                npc.impactHandler.disabledTicks = 60
-                openDialogue(player, BardurExchangeDialogue())
-            }
-            return@onUseWith true
-        }
-
-    }
-
-    companion object {
-        val exchangeItemIDs =
-            intArrayOf(Items.FREMENNIK_HELM_3748, Items.FREMENNIK_BLADE_3757, Items.FREMENNIK_SHIELD_3758)
-    }
-}
-
-/**
- * Handles BardurNPC.
- */
-private class BardurNPC(id: Int = 0, location: Location? = null) : AbstractNPC(id, location) {
-
-    override fun construct(id: Int, location: Location, vararg objects: Any): AbstractNPC = BardurNPC(id, location)
-
-    override fun tick() {
-        if (isActive && !inCombat() && RandomFunction.roll(10)) {
-            val localfledgelings = findLocalNPCs(this, intArrayOf(NPCs.DAGANNOTH_FLEDGELING_2880))
-            localfledgelings.forEach { fledglings ->
-                if (fledglings.location.withinDistance(location, 6)) {
-                    attack(fledglings)
-                    return super.tick()
-                }
-            }
-        }
-        if (!isActive) {
-            properties.combatPulse.stop()
-        }
-        return super.tick()
-    }
-
-    override fun getIds(): IntArray = intArrayOf(NPCs.BARDUR_2879)
-}
-
 /**
  * Represents Bardur dialogue.
  */
-private class BardurDialogue(player: Player? = null) : Dialogue(player) {
+class BardurDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
@@ -141,7 +76,7 @@ private class BardurDialogue(player: Player? = null) : Dialogue(player) {
 /**
  * Represents Bardur exchange dialogue.
  */
-private class BardurExchangeDialogue : DialogueFile() {
+class BardurExchangeDialogue : DialogueFile() {
 
     override fun handle(componentID: Int, buttonID: Int) {
         npc = NPC(NPCs.BARDUR_2879)

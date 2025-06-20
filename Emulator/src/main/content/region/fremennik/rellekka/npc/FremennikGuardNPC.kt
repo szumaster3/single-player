@@ -1,4 +1,4 @@
-package content.region.fremennik.rellekka.plugin
+package content.region.fremennik.rellekka.npc
 
 import core.api.getWorldTicks
 import core.api.sendChat

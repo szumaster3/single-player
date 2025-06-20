@@ -1,4 +1,4 @@
-package content.region.fremennik.waterbirth
+package content.region.fremennik.waterbirth.npc
 
 import core.api.playAudio
 import core.api.sendGraphics

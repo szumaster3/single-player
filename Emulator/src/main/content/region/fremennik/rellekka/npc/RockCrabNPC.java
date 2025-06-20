@@ -1,4 +1,4 @@
-package content.region.fremennik.rellekka.plugin;
+package content.region.fremennik.rellekka.npc;
 
 import core.game.node.entity.Entity;
 import core.game.node.entity.combat.BattleState;
