@@ -218,7 +218,7 @@ class TalkAboutLizards : DialogueFile() {
             9 -> {
                 end()
                 unlock(player!!)
-                PlayerCamera(player).reset()
+                PlayerCamera(player!!).reset()
             }
         }
     }
@@ -290,7 +290,7 @@ class TalkAboutTortoises : DialogueFile() {
             10 -> {
                 end()
                 unlock(player!!)
-                PlayerCamera(player).reset()
+                PlayerCamera(player!!).reset()
             }
         }
     }
@@ -407,7 +407,7 @@ class TalkAboutDragons : DialogueFile() {
             15 -> {
                 end()
                 unlock(player!!)
-                PlayerCamera(player).reset()
+                PlayerCamera(player!!).reset()
             }
         }
     }
@@ -521,7 +521,7 @@ class TalkAboutWyverns : DialogueFile() {
             16 -> {
                 end()
                 unlock(player!!)
-                PlayerCamera(player).reset()
+                PlayerCamera(player!!).reset()
             }
         }
     }

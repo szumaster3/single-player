@@ -5,6 +5,7 @@ import core.net.packet.OutgoingPacket
 
 /**
  * Handles the sending of the "Set walk-to option" packet.
+ *
  * @author Emperor
  */
 class SetWalkOption : OutgoingPacket<OutgoingContext.WalkOption> {

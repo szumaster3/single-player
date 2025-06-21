@@ -11,22 +11,11 @@ import java.io.StringWriter
 import java.nio.BufferUnderflowException
 
 /**
- * Enum representing different packet decoders
- * specific to protocol version 530.
+ * Enum representing different packet decoders specific to protocol version 530.
+ *
  * @author Ceikry
- *
- * Each enum constant holds a unique [opcode] corresponding
- * to a particular incoming client packet type.
- *
- * Provides an abstract [decode] method that parses the
- * incoming data from the [IoBuffer] and returns the
- * appropriate [Packet] instance.
- *
- * @property opcode the unique operation code identifying the packet type.
  */
-enum class Decoders530(
-    val opcode: Int,
-) {
+enum class Decoders530(val opcode: Int, ) {
     ITEM_ACTION_1(156) {
         override fun decode(
             player: Player,

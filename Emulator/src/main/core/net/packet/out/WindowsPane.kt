@@ -6,6 +6,7 @@ import core.net.packet.OutgoingPacket
 
 /**
  * Handles the windows pane outgoing packet.
+ *
  * @author Emperor
  */
 class WindowsPane : OutgoingPacket<OutgoingContext.WindowsPane> {

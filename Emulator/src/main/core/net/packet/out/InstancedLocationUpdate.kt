@@ -5,8 +5,8 @@ import core.net.packet.OutgoingContext
 import core.net.packet.OutgoingPacket
 
 /**
- * Outgoing packet used for updating a player's location solely on his own
- * client.
+ * Outgoing packet used for updating a player's location solely on his own client.
+ *
  * @author Emperor
  */
 class InstancedLocationUpdate : OutgoingPacket<OutgoingContext.LocationContext> {

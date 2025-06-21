@@ -6,6 +6,7 @@ import core.net.packet.OutgoingPacket
 
 /**
  * Updates the random.dat file for the player.
+ *
  * @author Emperor
  */
 class UpdateRandomFile : OutgoingPacket<OutgoingContext.PlayerContext> {

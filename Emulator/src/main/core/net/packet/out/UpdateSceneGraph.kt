@@ -8,6 +8,7 @@ import core.net.packet.PacketHeader
 
 /**
  * The update scene graph outgoing packet.
+ *
  * @author Emperor
  */
 class UpdateSceneGraph : OutgoingPacket<OutgoingContext.SceneGraph> {

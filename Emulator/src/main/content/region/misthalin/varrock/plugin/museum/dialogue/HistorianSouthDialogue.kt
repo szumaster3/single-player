@@ -219,7 +219,7 @@ class TalkAboutTerrorBirds : DialogueFile() {
             13 -> {
                 end()
                 unlock(player!!)
-                PlayerCamera(player).reset()
+                PlayerCamera(player!!).reset()
             }
         }
     }
@@ -350,7 +350,7 @@ class TalkAboutKalphiteQueen : DialogueFile() {
             19 -> {
                 end()
                 unlock(player!!)
-                PlayerCamera(player).reset()
+                PlayerCamera(player!!).reset()
             }
         }
     }

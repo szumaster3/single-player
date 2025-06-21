@@ -7,13 +7,12 @@ import core.net.packet.OutgoingPacket
 
 /**
  * The outgoing packet for clearing scenery.
- * Uses OutgoingContext sealed class.
  *
  * @author Emperor
  */
 class ClearScenery : OutgoingPacket<OutgoingContext.BuildScenery> {
     override fun send(context: OutgoingContext.BuildScenery) {
-        val player = context.getPlayer()
+        val player = context.player
         val scenery = context.scenery
         val buffer = write(UpdateAreaPosition.getBuffer(player, scenery.location.chunkBase), scenery)
         buffer.cypherOpcode(player.session.isaacPair.output)

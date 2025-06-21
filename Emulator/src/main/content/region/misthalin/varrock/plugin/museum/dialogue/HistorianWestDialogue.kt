@@ -215,7 +215,7 @@ class TalkAboutCamels : DialogueFile() {
             10 -> {
                 end()
                 unlock(player!!)
-                PlayerCamera(player).reset()
+                PlayerCamera(player!!).reset()
             }
         }
     }
@@ -321,7 +321,7 @@ class TalkAboutLeeches : DialogueFile() {
             15 -> {
                 end()
                 unlock(player!!)
-                PlayerCamera(player).reset()
+                PlayerCamera(player!!).reset()
             }
         }
     }
@@ -393,7 +393,7 @@ class TalkAboutMoles : DialogueFile() {
             11 -> {
                 end()
                 unlock(player!!)
-                PlayerCamera(player).reset()
+                PlayerCamera(player!!).reset()
             }
         }
     }
@@ -481,7 +481,7 @@ class TalkAboutPenguins : DialogueFile() {
             12 -> {
                 end()
                 unlock(player!!)
-                PlayerCamera(player).reset()
+                PlayerCamera(player!!).reset()
             }
         }
     }

@@ -5,14 +5,9 @@ import core.net.packet.OutgoingContext
 import core.net.packet.OutgoingPacket
 
 /**
- * Represents an outgoing packet responsible
- * for updating a's variable client-side.
+ * Represents an outgoing packet responsible for updating a's variable client-side.
  */
 class VarcUpdate : OutgoingPacket<OutgoingContext.VarcUpdate> {
-
-    /**
-     * Sends a varc update to client.
-     */
     override fun send(varcUpdateContext: OutgoingContext.VarcUpdate) {
         val player = varcUpdateContext.player
         if (varcUpdateContext.value <= 255) {

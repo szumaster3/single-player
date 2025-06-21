@@ -7,7 +7,6 @@ import core.net.packet.OutgoingPacket
 
 /**
  * The outgoing packet for constructing scenery in the player's scene.
- * Sends information about a newly built scenery object.
  *
  * @author Emperor
  */

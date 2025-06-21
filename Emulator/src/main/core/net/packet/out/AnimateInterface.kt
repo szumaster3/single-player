@@ -4,7 +4,6 @@ import core.net.packet.IoBuffer
 import core.net.packet.OutgoingContext
 import core.net.packet.OutgoingPacket
 
-
 /**
  * The animate interface outgoing packet.
  *

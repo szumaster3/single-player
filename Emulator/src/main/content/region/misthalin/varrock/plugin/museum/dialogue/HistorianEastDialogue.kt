@@ -254,7 +254,7 @@ class TalkAboutSnails : DialogueFile() {
             13 -> {
                 end()
                 unlock(player!!)
-                PlayerCamera(player).reset()
+                PlayerCamera(player!!).reset()
             }
         }
     }
@@ -347,7 +347,7 @@ class TalkAboutMonkeys : DialogueFile() {
             13 -> {
                 end()
                 unlock(player!!)
-                PlayerCamera(player).reset()
+                PlayerCamera(player!!).reset()
             }
         }
     }
@@ -441,7 +441,7 @@ class TalkAboutSeaSlugs : DialogueFile() {
             13 -> {
                 end()
                 unlock(player!!)
-                PlayerCamera(player).reset()
+                PlayerCamera(player!!).reset()
             }
         }
     }
@@ -519,7 +519,7 @@ class TalkAboutSnakes : DialogueFile() {
             12 -> {
                 end()
                 unlock(player!!)
-                PlayerCamera(player).reset()
+                PlayerCamera(player!!).reset()
             }
         }
     }

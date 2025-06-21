@@ -5,7 +5,7 @@ import core.net.packet.OutgoingContext
 import core.net.packet.PacketRepository
 import core.net.packet.out.CameraViewPacket
 
-class PlayerCamera(val player: Player, ) {
+class PlayerCamera(val player: Player) {
 
     var ctx: OutgoingContext.Camera? = null
 
