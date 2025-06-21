@@ -2,6 +2,7 @@ package content.global.plugin.iface
 
 import core.api.ContainerListener
 import core.api.log
+import core.api.sendMessage
 import core.api.submitWorldPulse
 import core.cache.def.impl.ItemDefinition
 import core.game.component.Component
@@ -173,7 +174,6 @@ class EquipmentTabInterface : ComponentPlugin() {
                         "You are skulled.",
                     )
                     p.packetDispatch.sendRunScript(118, "siiooooii", *params)
-
                     p.interfaceManager.openComponent(Components.ITEMS_LOSE_ON_DEATH_102)
                 }
 
@@ -195,10 +195,7 @@ class EquipmentTabInterface : ComponentPlugin() {
                         return true
                     }
                     val listener: ContainerListener = object : ContainerListener {
-                        override fun update(
-                            c: Container?,
-                            e: ContainerEvent?,
-                        ) {
+                        override fun update(c: Container?, e: ContainerEvent?, ) {
                             PacketRepository.send(
                                 ContainerPacket::class.java,
                                 ContainerContext(p, -1, -1, 98, e!!.items, false, *e.slots),
@@ -206,10 +203,7 @@ class EquipmentTabInterface : ComponentPlugin() {
                         }
 
                         override fun refresh(c: Container?) {
-                            PacketRepository.send(
-                                ContainerPacket::class.java,
-                                ContainerContext(p, -1, -1, 98, c!!, false),
-                            )
+                            PacketRepository.send(ContainerPacket::class.java, ContainerContext(p, -1, -1, 98, c!!, false),)
                         }
                     }
                     p.interfaceManager.openComponent(Components.EQUIP_SCREEN2_667)
@@ -242,11 +236,7 @@ class EquipmentTabInterface : ComponentPlugin() {
         return true
     }
 
-    fun operate(
-        player: Player,
-        slot: Int,
-        itemId: Int,
-    ) {
+    private fun operate(player: Player, slot: Int, itemId: Int, ) {
         if (slot < 0 || slot > 13) {
             return
         }
@@ -258,6 +248,6 @@ class EquipmentTabInterface : ComponentPlugin() {
         if (handler != null && handler.handle(player, item, "operate")) {
             return
         }
-        player.packetDispatch.sendMessage("You can't operate that.")
+        sendMessage(player, "You can't operate that.")
     }
 }

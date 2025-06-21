@@ -22,16 +22,55 @@ import org.rs.consts.Quests
  * @author szu
  */
 class NPCContactInterface : InterfaceListener {
-    private val contactNPCs = arrayOf(NPCs.HONEST_JIMMY_4362, NPCs.BERT_3108, NPCs.ADVISOR_GHRIM_1375, NPCs.TURAEL_8273, NPCs.LANTHUS_1526, NPCs.SUMONA_7780, NPCs.MAZCHNA_8274, NPCs.DURADEL_8275, NPCs.VANNAKA_1597, NPCs.MURPHY_464, NPCs.CHAELDAR_1598, NPCs.CYRISUS_432, NPCs.LARRY_5424)
+    private val contactNPCs = arrayOf(
+        NPCs.HONEST_JIMMY_4362,
+        NPCs.BERT_3108,
+        NPCs.ADVISOR_GHRIM_1375,
+        NPCs.TURAEL_8273,
+        NPCs.LANTHUS_1526,
+        NPCs.SUMONA_7780,
+        NPCs.MAZCHNA_8274,
+        NPCs.DURADEL_8275,
+        NPCs.VANNAKA_1597,
+        NPCs.MURPHY_464,
+        NPCs.CHAELDAR_1598,
+        NPCs.CYRISUS_432,
+        NPCs.LARRY_5424
+    )
 
-    private val randomDialogue = arrayOf(Blurberry(), EvilBob(), EvilDave(), Camel(), CaptainCain(), Cyrisus(), DrunkenDwarf(), FatherUrhney(), GeneralWartface(), GypsyAris(), Hans(), Homunculus(), KGPAgent(), LumbridgeCow(), LumbridgeGuide(), LumbridgeSheep(), Man(), MyArm(), Osman(), PartyPete(), Romeo(), WiseOldMan())
+    private val randomDialogue = arrayOf(
+        Blurberry(),
+        EvilBob(),
+        EvilDave(),
+        Camel(),
+        CaptainCain(),
+        Cyrisus(),
+        DrunkenDwarf(),
+        FatherUrhney(),
+        GeneralWartface(),
+        GypsyAris(),
+        Hans(),
+        Homunculus(),
+        KGPAgent(),
+        LumbridgeCow(),
+        LumbridgeGuide(),
+        LumbridgeSheep(),
+        Man(),
+        MyArm(),
+        Osman(),
+        PartyPete(),
+        Romeo(),
+        WiseOldMan()
+    )
+
+    val random = randomDialogue.random()
 
     override fun defineInterfaceListeners() {
         on(Components.NPC_CONTACT_429) { player, _, _, buttonID, _, _ ->
             when (buttonID) {
                 35 -> {
                     closeInterface(player)
-                    openDialogue(player, randomDialogue.random())
+                    openDialogue(player, random)
                     return@on true
                 }
             }

@@ -121,7 +121,7 @@ class DragonfireShieldPlugin : InteractionListener {
                     }
                 }
             attack.handler = handler
-            val victim = player.properties.combatPulse.getVictim()
+            val victim = player.properties.combatPulse.victim
             if (player.properties.combatPulse.isAttacking &&
                 handler.canSwing(
                     player,

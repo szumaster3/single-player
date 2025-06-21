@@ -1,4 +1,4 @@
-package content.global.skill.summoning.item
+package content.global.skill.summoning.items
 
 import core.api.*
 import core.game.container.Container

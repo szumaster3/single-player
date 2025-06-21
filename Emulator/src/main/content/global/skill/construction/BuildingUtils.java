@@ -1,6 +1,6 @@
 package content.global.skill.construction;
 
-import content.global.skill.construction.item.Nail;
+import content.global.skill.construction.items.Nail;
 import core.cache.def.impl.ItemDefinition;
 import core.game.component.Component;
 import core.game.node.entity.player.Player;

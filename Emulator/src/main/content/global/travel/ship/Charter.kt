@@ -12,7 +12,7 @@ import org.rs.consts.Components
 /**
  * Represents various charter routes with their data.
  */
-enum class Charter(val location: Location, val config: Int, val delay: Int, val destination: String, ) {
+enum class Charter(val location: Location, val config: Int, val delay: Int, val destination: String) {
     PORT_SARIM_TO_ENTRANA(Location.create(2834, 3331, 1), 1, 15, "Entrana"),
     ENTRANA_TO_PORT_SARIM(Location.create(3048, 3234, 0), 2, 15, "Port Sarim"),
     PORT_SARIM_TO_CRANDOR(Location.create(2849, 3238, 0), 3, 12, "Crandor"),

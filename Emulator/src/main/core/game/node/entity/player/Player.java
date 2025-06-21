@@ -5,7 +5,7 @@ import content.global.skill.construction.HouseManager;
 import content.global.plugin.item.equipment.bolt_pouch.BoltPouchManager;
 import content.global.skill.runecrafting.PouchManager;
 import content.global.skill.summoning.familiar.FamiliarManager;
-import content.global.skill.summoning.item.EnchantedHeadgearManager;
+import content.global.skill.summoning.items.EnchantedHeadgearManager;
 import core.GlobalStatistics;
 import core.ServerConstants;
 import core.api.EquipmentSlot;

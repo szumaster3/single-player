@@ -36,7 +36,6 @@ class TrogsDialogue(player: Player? = null) : Dialogue(player) {
 
         if (isHalloween) {
             val eligibleItems = getEligibleItems(player)
-
             if (hasCostumeItems(player, eligibleItems)) {
                 npc(FaceAnim.CHILD_NEUTRAL, "Rather nice costume, that. Are you trick-or-treating this year, then?")
             } else if (hasAnyCostumeItem(player, eligibleItems)) {

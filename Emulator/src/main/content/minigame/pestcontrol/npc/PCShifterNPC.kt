@@ -38,9 +38,9 @@ class PCShifterNPC : AbstractNPC {
         if (session != null && !inCombat() && !pulse.isAttacking && RandomFunction.RANDOM.nextInt(50) < 2) {
             pulse.attack(session!!.squire)
         }
-        if (pulse.isAttacking && !getLocation().withinDistance(pulse.getVictim()!!.location, 5)) {
+        if (pulse.isAttacking && !getLocation().withinDistance(pulse.victim!!.location, 5)) {
             if (session == null || session!!.isActive) {
-                teleport(session, this, getDestination(pulse.getVictim()))
+                teleport(session, this, getDestination(pulse.victim))
             }
         }
     }

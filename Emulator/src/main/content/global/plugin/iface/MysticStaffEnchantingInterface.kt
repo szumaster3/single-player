@@ -59,11 +59,7 @@ class MysticStaffEnchantingInterface : InterfaceListener {
      * @property basic The item id of the basic staff.
      * @property child The button id in the interface for the staff.
      */
-    enum class EnchantedStaff(
-        val enchanted: Int,
-        val basic: Int,
-        val child: Int,
-    ) {
+    enum class EnchantedStaff(val enchanted: Int, val basic: Int, val child: Int) {
         AIR(enchanted = Items.MYSTIC_AIR_STAFF_1405, basic = Items.AIR_BATTLESTAFF_1397, child = 21),
         WATER(enchanted = Items.MYSTIC_WATER_STAFF_1403, basic = Items.WATER_BATTLESTAFF_1395, child = 22),
         EARTH(enchanted = Items.MYSTIC_EARTH_STAFF_1407, basic = Items.EARTH_BATTLESTAFF_1399, child = 23),

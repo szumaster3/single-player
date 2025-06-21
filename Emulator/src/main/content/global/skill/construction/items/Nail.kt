@@ -1,4 +1,4 @@
-package content.global.skill.construction.item
+package content.global.skill.construction.items
 
 import core.game.node.entity.player.Player
 import core.tools.RandomFunction

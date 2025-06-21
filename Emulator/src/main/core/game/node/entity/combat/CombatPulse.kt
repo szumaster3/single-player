@@ -29,7 +29,7 @@ class CombatPulse(val entity: Entity?) : Pulse(1, entity, null) {
     /**
      * The victim.
      */
-    private var victim: Entity? = null
+    var victim: Entity? = null
 
     /**
      * The current combat style used.
@@ -369,14 +369,6 @@ class CombatPulse(val entity: Entity?) : Pulse(1, entity, null) {
             val entity = entity!!.getAttribute<Entity>("combat-attacker")
             return entity != null && entity.properties.combatPulse.isAttacking
         }
-
-    /**
-     * Gets the current victim.
-     * @return The victim.
-     */
-    fun getVictim(): Entity? {
-        return victim
-    }
 
     companion object {
 

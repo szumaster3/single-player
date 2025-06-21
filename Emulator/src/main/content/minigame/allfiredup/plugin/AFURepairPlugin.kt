@@ -1,6 +1,6 @@
 package content.minigame.allfiredup.plugin
 
-import content.global.skill.construction.item.Nail
+import content.global.skill.construction.items.Nail
 import core.api.*
 import core.api.quest.hasRequirement
 import core.game.interaction.IntType

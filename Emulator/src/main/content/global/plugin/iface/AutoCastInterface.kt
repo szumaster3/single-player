@@ -31,10 +31,7 @@ class AutoCastInterface : InterfaceListener {
         }
     }
 
-    private fun autoCast(
-        player: Player,
-        button: Int,
-    ) {
+    private fun autoCast(player: Player, button: Int) {
         if (!getAttribute(player, "autocast_select", false)) return
         removeAttribute(player, "autocast_select")
         val w = player.getExtension<WeaponInterface>(WeaponInterface::class.java)

@@ -88,10 +88,7 @@ class FairyRingInterface : InterfaceListener {
         drawLog(player)
     }
 
-    fun increment(
-        player: Player,
-        ring: Int,
-    ) {
+    private fun increment(player: Player, ring: Int) {
         val vbit =
             when (ring) {
                 1 -> VB_RING_1
@@ -109,10 +106,7 @@ class FairyRingInterface : InterfaceListener {
         setVarbit(player, vbit, nextIndex)
     }
 
-    fun decrement(
-        player: Player,
-        ring: Int,
-    ) {
+    private fun decrement(player: Player, ring: Int, ) {
         val vbit =
             when (ring) {
                 1 -> VB_RING_1
@@ -187,11 +181,7 @@ class FairyRingInterface : InterfaceListener {
     }
 }
 
-enum class FairyRing(
-    val tile: Location?,
-    val tip: String = "",
-    val childId: Int = -1,
-) {
+enum class FairyRing(val tile: Location?, val tip: String = "", val childId: Int = -1, ) {
     AIQ(Location.create(2996, 3114, 0), "Asgarnia: Mudskipper Point", 15),
     AIR(Location.create(2700, 3247, 0), "Islands: South of Witchaven", 16),
     AJQ(Location.create(2735, 5221, 0), "Dungeons: Dark cave south of Dorgesh-Kaann", 19),

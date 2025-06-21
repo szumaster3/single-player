@@ -308,7 +308,7 @@ class ThessaliaInterface : ComponentPlugin() {
         return true
     }
 
-    fun pay(player: Player) {
+    private fun pay(player: Player) {
         if (!player.houseManager.isInHouse(player)) {
             if (!removeItem(player, COINS)) {
                 sendDialogue(player, "You can not afford that.")

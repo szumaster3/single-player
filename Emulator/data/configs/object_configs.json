@@ -15350,5 +15350,9 @@
   {
     "examine": "It seems to be a bit broken.",
     "ids": "17162"
+  },
+  {
+    "examine": "Wild cadava berries are growing here.",
+    "ids": "23625,23626,23627"
   }
 ]

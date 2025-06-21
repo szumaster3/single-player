@@ -18,7 +18,7 @@ class BankDepositBoxInterface : InterfaceListener {
         private const val OP_AMOUNT_X = 234
         private const val OP_EXAMINE = 9
 
-        fun transferX(player: Player, slot: Int, withdraw: Boolean, after: (() -> Unit)? = null, ) {
+        private fun transferX(player: Player, slot: Int, withdraw: Boolean, after: (() -> Unit)? = null, ) {
             sendInputDialogue(player, InputType.AMOUNT, "Enter the amount:") { value ->
                 val number = Integer.parseInt(value.toString())
 

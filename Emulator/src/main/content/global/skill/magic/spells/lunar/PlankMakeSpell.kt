@@ -1,7 +1,7 @@
 package content.global.skill.magic.spells.lunar
 
-import content.global.skill.construction.item.Plank
-import content.global.skill.construction.item.Plank.Companion.spellPrice
+import content.global.skill.construction.items.Plank
+import content.global.skill.construction.items.Plank.Companion.spellPrice
 import content.global.skill.magic.SpellListener
 import content.global.skill.magic.spells.LunarSpells
 import core.api.*

@@ -50,15 +50,10 @@ class SirMordredNPC(
 
     override fun tick() {
         if (this.skills.lifepoints == 0) {
-            if (this.properties.combatPulse.getVictim() != null) {
-                this.lockMovement =
-                    this.properties.combatPulse
-                        .getVictim()!!
-                        .asPlayer()
+            if (this.properties.combatPulse.victim != null) {
+                this.lockMovement = this.properties.combatPulse.victim!!.asPlayer()
             } else if (this.properties.combatPulse.lastVictim != null) {
-                this.lockMovement =
-                    this.properties.combatPulse.lastVictim!!
-                        .asPlayer()
+                this.lockMovement = this.properties.combatPulse.lastVictim!!.asPlayer()
             }
 
             this.locks.lock()

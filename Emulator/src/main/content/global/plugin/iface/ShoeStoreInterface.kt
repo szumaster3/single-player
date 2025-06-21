@@ -107,7 +107,7 @@ class ShoeStoreInterface : ComponentPlugin() {
      *
      * @param player The player making the payment.
      */
-    fun pay(player: Player) {
+    private fun pay(player: Player) {
         val newColor = getAttribute(player, previousColor, player.appearance.skin.color)
 
         if (newColor == player.appearance.feet.color) {

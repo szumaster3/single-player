@@ -16,7 +16,7 @@ class GuthixRestPlugin : InteractionListener {
 
     private val herbIds = setOf(Items.CLEAN_GUAM_249, Items.CLEAN_MARRENTILL_251, Items.CLEAN_HARRALANDER_255)
 
-    enum class PartialTea(val ingredients: List<Int>, val teaId: Int, ) {
+    enum class PartialTea(val ingredients: List<Int>, val teaId: Int) {
         HERB_TEA_MIX_1(listOf(Items.CLEAN_HARRALANDER_255), Items.HERB_TEA_MIX_4464),
         HERB_TEA_MIX_2(listOf(Items.CLEAN_GUAM_249), Items.HERB_TEA_MIX_4466),
         HERB_TEA_MIX_3(listOf(Items.CLEAN_MARRENTILL_251), Items.HERB_TEA_MIX_4468),

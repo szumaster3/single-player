@@ -57,7 +57,7 @@ class GoblinVillageNPC(
             if (rand != 1) {
                 return
             }
-            val enemy = properties.combatPulse.getVictim() ?: return
+            val enemy = properties.combatPulse.victim ?: return
             if (enemy !is NPC) {
                 return
             }

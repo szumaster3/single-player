@@ -223,7 +223,7 @@ class HairdresserInterface : ComponentPlugin() {
         return this
     }
 
-    fun pay(player: Player) {
+    private fun pay(player: Player) {
         if (!player.houseManager.isInHouse(player)) {
             if (!removeItem(player, COINS)) {
                 sendDialogue(player, "You can not afford that.")
@@ -237,7 +237,7 @@ class HairdresserInterface : ComponentPlugin() {
         }
     }
 
-    fun updateBeard(
+    private fun updateBeard(
         player: Player,
         button: Int,
     ) {
@@ -251,7 +251,7 @@ class HairdresserInterface : ComponentPlugin() {
         syncAppearance(player)
     }
 
-    fun updateHair(
+    private fun updateHair(
         player: Player,
         button: Int,
     ) {
@@ -279,7 +279,7 @@ class HairdresserInterface : ComponentPlugin() {
         syncAppearance(player)
     }
 
-    fun updateColor(
+    private fun updateColor(
         player: Player,
         button: Int,
     ) {
@@ -295,7 +295,7 @@ class HairdresserInterface : ComponentPlugin() {
         syncAppearance(player)
     }
 
-    fun syncAppearance(player: Player) {
+    private fun syncAppearance(player: Player) {
         player.appearance.sync()
     }
 }

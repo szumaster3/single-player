@@ -137,7 +137,7 @@ class NPCListener : InteractionListener {
                 npc.faceLocation(player.location)
             }
 
-            if (player.properties.combatPulse.getVictim() == npc) {
+            if (player.properties.combatPulse.victim == npc) {
                 sendMessage(player, "I don't think they have any interest in talking to me right now!")
                 return@on true
             }

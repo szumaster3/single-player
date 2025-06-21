@@ -1,6 +1,6 @@
 package content.global.plugin.iface
 
-import content.global.skill.construction.item.Plank
+import content.global.skill.construction.items.Plank
 import core.api.*
 import core.game.component.Component
 import core.game.component.ComponentDefinition

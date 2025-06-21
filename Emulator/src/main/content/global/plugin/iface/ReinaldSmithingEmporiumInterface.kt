@@ -86,10 +86,7 @@ class ReinaldSmithingEmporiumInterface : InterfaceListener {
      * @param id Model ID to display.
      * @param player The player to update.
      */
-    private fun sendModel(
-        id: Int,
-        player: Player,
-    ) {
+    private fun sendModel(id: Int, player: Player) {
         val appearanceIndex = calculateAppearanceIndex(id, player)
         sendModelOnInterface(player, Components.REINALD_SMITHING_EMPORIUM_593, BRACELET_INTERFACE_CHILD_ID, id, 1)
         setComponentVisibility(player, Components.REINALD_SMITHING_EMPORIUM_593, BRACELET_INTERFACE_CHILD_ID, id == 0)

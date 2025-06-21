@@ -99,7 +99,7 @@ class DiangoReclaimInterface : ComponentPlugin() {
          *
          * @param player The player.
          */
-        fun refresh(player: Player) {
+        private fun refresh(player: Player) {
             player.interfaceManager.close()
             open(player)
         }

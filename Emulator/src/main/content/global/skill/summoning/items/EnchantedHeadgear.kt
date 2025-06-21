@@ -1,4 +1,4 @@
-package content.global.skill.summoning.item
+package content.global.skill.summoning.items
 
 import core.game.node.item.Item
 import org.rs.consts.Items

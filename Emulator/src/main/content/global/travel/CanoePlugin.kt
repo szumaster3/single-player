@@ -136,58 +136,10 @@ class CanoePlugin :
             val canoeFloating: CanoeStationSceneries,
             val canoeSinking: CanoeStationSceneries,
         ) {
-            LOG(
-                12,
-                30.0,
-                1,
-                32.0,
-                100.0,
-                16.0,
-                50.0,
-                CanoeStationSceneries.TREE_SHAPED_LOG,
-                CanoeStationSceneries.CANOE_PUSHING_LOG,
-                CanoeStationSceneries.CANOE_FLOATING_LOG,
-                CanoeStationSceneries.CANOE_SINKING_LOG,
-            ),
-            DUGOUT(
-                27,
-                60.0,
-                2,
-                16.0,
-                50.0,
-                8.0,
-                25.0,
-                CanoeStationSceneries.TREE_SHAPED_DUGOUT,
-                CanoeStationSceneries.CANOE_PUSHING_DUGOUT,
-                CanoeStationSceneries.CANOE_FLOATING_DUGOUT,
-                CanoeStationSceneries.CANOE_SINKING_DUGOUT,
-            ),
-            STABLE_DUGOUT(
-                42,
-                90.0,
-                3,
-                8.0,
-                25.0,
-                4.0,
-                12.5,
-                CanoeStationSceneries.TREE_SHAPED_STABLE_DUGOUT,
-                CanoeStationSceneries.CANOE_PUSHING_STABLE_DUGOUT,
-                CanoeStationSceneries.CANOE_FLOATING_STABLE_DUGOUT,
-                CanoeStationSceneries.CANOE_SINKING_STABLE_DUGOUT,
-            ),
-            WAKA(
-                57,
-                150.0,
-                4,
-                4.0,
-                12.5,
-                2.0,
-                6.25,
-                CanoeStationSceneries.TREE_SHAPED_WAKA,
-                CanoeStationSceneries.CANOE_PUSHING_WAKA,
-                CanoeStationSceneries.CANOE_FLOATING_WAKA,
-                CanoeStationSceneries.CANOE_SINKING_WAKA,
-            ),
+            LOG(12, 30.0, 1, 32.0, 100.0, 16.0, 50.0, CanoeStationSceneries.TREE_SHAPED_LOG, CanoeStationSceneries.CANOE_PUSHING_LOG, CanoeStationSceneries.CANOE_FLOATING_LOG, CanoeStationSceneries.CANOE_SINKING_LOG),
+            DUGOUT(27, 60.0, 2, 16.0, 50.0, 8.0, 25.0, CanoeStationSceneries.TREE_SHAPED_DUGOUT, CanoeStationSceneries.CANOE_PUSHING_DUGOUT, CanoeStationSceneries.CANOE_FLOATING_DUGOUT, CanoeStationSceneries.CANOE_SINKING_DUGOUT),
+            STABLE_DUGOUT(42, 90.0, 3, 8.0, 25.0, 4.0, 12.5, CanoeStationSceneries.TREE_SHAPED_STABLE_DUGOUT, CanoeStationSceneries.CANOE_PUSHING_STABLE_DUGOUT, CanoeStationSceneries.CANOE_FLOATING_STABLE_DUGOUT, CanoeStationSceneries.CANOE_SINKING_STABLE_DUGOUT),
+            WAKA(57, 150.0, 4, 4.0, 12.5, 2.0, 6.25, CanoeStationSceneries.TREE_SHAPED_WAKA, CanoeStationSceneries.CANOE_PUSHING_WAKA, CanoeStationSceneries.CANOE_FLOATING_WAKA, CanoeStationSceneries.CANOE_SINKING_WAKA),
             ;
 
             companion object {
@@ -206,56 +158,11 @@ class CanoePlugin :
             val destination: Location,
             val locationName: String,
         ) {
-            LUMBRIDGE(
-                region = 12850,
-                varbit = 1839,
-                chopLocation = Location(3243, 3235),
-                floatLocation = Location(3243, 3237),
-                facingLocation = Location(-1, 0),
-                sinkLocation = Location.create(3239, 3242, 0),
-                destination = Location(3240, 3242, 0),
-                locationName = "Lumbridge",
-            ),
-            CHAMPIONS(
-                region = 12852,
-                varbit = 1840,
-                chopLocation = Location(3204, 3343),
-                floatLocation = Location(3202, 3343),
-                facingLocation = Location(0, -1),
-                sinkLocation = Location.create(3199, 3344, 0),
-                destination = Location(3199, 3344, 0),
-                locationName = "the Champion's Guild",
-            ),
-            BARBARIAN(
-                region = 12341,
-                varbit = 1841,
-                chopLocation = Location(3112, 3409),
-                floatLocation = Location(3112, 3411),
-                facingLocation = Location(-1, 0),
-                sinkLocation = Location.create(3109, 3411, 0),
-                destination = Location(3109, 3415),
-                locationName = "Barbarian Village",
-            ),
-            EDGEVILLE(
-                region = 12342,
-                varbit = 1842,
-                chopLocation = Location(3132, 3508),
-                floatLocation = Location(3132, 3510),
-                facingLocation = Location(-1, 0),
-                sinkLocation = Location.create(3132, 3510, 0),
-                destination = Location(3132, 3510),
-                locationName = "Edgeville",
-            ),
-            WILDERNESS(
-                region = 12603,
-                varbit = 0,
-                chopLocation = Location(0, 0),
-                floatLocation = Location(0, 0),
-                facingLocation = Location(0, 0),
-                sinkLocation = Location.create(3142, 3795, 0),
-                destination = Location(3141, 3796, 0),
-                locationName = "the Wilderness Pond",
-            ),
+            LUMBRIDGE(12850, 1839, Location(3243, 3235), Location(3243, 3237), Location(-1, 0), Location.create(3239, 3242, 0), Location(3240, 3242, 0), "Lumbridge"),
+            CHAMPIONS(12852, 1840, Location(3204, 3343), Location(3202, 3343), Location(0, -1), Location.create(3199, 3344, 0), Location(3199, 3344, 0), "the Champion's Guild"),
+            BARBARIAN(12341, 1841, Location(3112, 3409), Location(3112, 3411), Location(-1, 0), Location.create(3109, 3411, 0), Location(3109, 3415), "Barbarian Village"),
+            EDGEVILLE(12342, 1842, Location(3132, 3508), Location(3132, 3510), Location(-1, 0), Location.create(3132, 3510, 0), Location(3132, 3510), "Edgeville"),
+            WILDERNESS(12603, 0, Location(0, 0), Location(0, 0), Location(0, 0), Location.create(3142, 3795, 0), Location(3141, 3796, 0), "the Wilderness Pond"),
             ;
 
             companion object {
@@ -272,14 +179,7 @@ class CanoePlugin :
             return@setDest CanoeStationLocations.getCanoeStationbyLocation(node.location).chopLocation
         }
 
-        setDest(
-            IntType.SCENERY,
-            CanoeStationSceneries.stationIdArray,
-            "shape-canoe",
-            "float canoe",
-            "float log",
-            "float waka",
-        ) { _, node ->
+        setDest(IntType.SCENERY, CanoeStationSceneries.stationIdArray, "shape-canoe", "float canoe", "float log", "float waka") { _, node ->
             return@setDest CanoeStationLocations.getCanoeStationbyLocation(node.location).floatLocation
         }
     }
@@ -329,13 +229,7 @@ class CanoePlugin :
             return@on true
         }
 
-        on(
-            CanoeStationSceneries.stationIdArray,
-            IntType.SCENERY,
-            "float canoe",
-            "float log",
-            "float waka",
-        ) { player, node ->
+        on(CanoeStationSceneries.stationIdArray, IntType.SCENERY, "float canoe", "float log", "float waka") { player, node ->
             val canoeStation = CanoeStationLocations.getCanoeStationbyLocation(node.location)
             val canoe = Canoes.indexMap[getAttribute(player, CANOE_SELECTED_ATTRIBUTE, 0)]!!
             setVarbit(player, canoeStation.varbit, canoe.canoePushing.varbitValue)
@@ -449,10 +343,7 @@ class CanoePlugin :
                 sendMessage(player, "You can't take a follower on a canoe.")
                 return@on true
             }
-            lock(
-                player,
-                Animation(interfaceAnimationId).duration + 1 + Animation(Components.FADE_FROM_BLACK_170).duration,
-            )
+            lock(player, Animation(interfaceAnimationId).duration + 1 + Animation(Components.FADE_FROM_BLACK_170).duration)
             submitIndividualPulse(
                 player,
                 object : Pulse() {
@@ -462,10 +353,7 @@ class CanoePlugin :
                         when (counter++) {
                             0 -> {
                                 openInterface(player, CANOE_TRAVEL_INTERFACE)
-                                openOverlay(
-                                    player,
-                                    Components.BLACK_OVERLAY_333,
-                                )
+                                openOverlay(player, Components.BLACK_OVERLAY_333)
                                 animateInterface(player, CANOE_TRAVEL_INTERFACE, 3, interfaceAnimationId)
                                 setMinimapState(player, 2)
                                 removeTabs(player, 0, 1, 2, 3, 4, 5, 6, 11, 12)
@@ -484,16 +372,7 @@ class CanoePlugin :
                                 unlock(player)
                                 restoreTabs(player)
                                 setMinimapState(player, 0)
-                                val sinkingScenery =
-                                    SceneryBuilder
-                                        .add(
-                                            core.game.node.scenery.Scenery(
-                                                Scenery.A_SINKING_CANOE_12159,
-                                                destination.sinkLocation,
-                                                1,
-                                            ),
-                                            3,
-                                        ).asScenery()
+                                val sinkingScenery = SceneryBuilder.add(core.game.node.scenery.Scenery(Scenery.A_SINKING_CANOE_12159, destination.sinkLocation, 1), 3,).asScenery()
                                 animateScenery(sinkingScenery, CANOE_SINKING_ANIMATION.id)
                                 sendMessage(player, "You arrive at $arrivalMessage.")
                                 sendMessage(player, "Your canoe sinks from the long journey.")

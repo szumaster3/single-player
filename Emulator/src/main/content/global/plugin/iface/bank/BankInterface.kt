@@ -74,7 +74,7 @@ class BankInterface : InterfaceListener {
          * @param after An optional action to perform after the transfer.
          */
         @JvmStatic
-        fun transferX(
+        private fun transferX(
             player: Player,
             slot: Int,
             withdraw: Boolean,
@@ -286,10 +286,7 @@ class BankInterface : InterfaceListener {
      * @param container The container holding the item.
      * @return `true` if the override is needed, otherwise `false`.
      */
-    private fun isCoinOverrideNeeded(
-        id: Int,
-        container: Container,
-    ): Boolean {
+    private fun isCoinOverrideNeeded(id: Int, container: Container): Boolean {
         val amount = container.getAmount(id)
         // Only COINS_995 are obtainable and bankable by player.
         return id == Items.COINS_995 && amount >= THRESHOLD_TO_DISPLAY_EXACT_QUANTITY_ON_EXAMINE

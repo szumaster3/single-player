@@ -52,7 +52,7 @@ class SummonedZombieNPC @JvmOverloads constructor(id: Int = NPCs.SUMMONED_ZOMBIE
         if (fails == 0 && (ticks % 100) != 0) return
 
         if (ticks % 2 == 0) {
-            val victim = owner?.properties?.combatPulse?.getVictim()
+            val victim = owner?.properties?.combatPulse?.victim
             if (++fails >= 3 && victim != null && victim.viewport.currentPlane == viewport.currentPlane) {
                 val path = Pathfinder.find(location, victim.location, 1)
                 if (path.isSuccessful || !path.isMoveNear) {

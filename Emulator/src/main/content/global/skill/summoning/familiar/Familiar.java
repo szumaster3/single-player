@@ -2,7 +2,6 @@ package content.global.skill.summoning.familiar;
 
 import content.global.skill.summoning.SummoningPouch;
 import content.global.skill.summoning.SummoningScroll;
-import content.global.skill.summoning.item.EnchantedHeadgearManager;
 import content.global.skill.summoning.pet.Pet;
 import core.cache.def.impl.NPCDefinition;
 import core.game.interaction.MovementPulse;

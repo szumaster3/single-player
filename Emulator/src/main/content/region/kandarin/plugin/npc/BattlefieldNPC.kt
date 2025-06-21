@@ -45,7 +45,7 @@ class BattlefieldNPC(id: Int = 0, location: Location? = null, ) : AbstractNPC(id
     }
 
     private fun chatDuringCombat() {
-        val enemy = properties.combatPulse.getVictim() as? NPC ?: return
+        val enemy = properties.combatPulse.victim as? NPC ?: return
         if (enemy.location.getDistance(location) <= 4 && enemy.id in getOpposingFaction()) {
             sendChat(getRandomChat())
         }

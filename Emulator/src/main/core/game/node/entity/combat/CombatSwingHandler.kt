@@ -237,7 +237,7 @@ abstract class CombatSwingHandler(var type: CombatStyle?) {
             entity.debug("Adjusting attack style")
         }
         if (entity.location == victim.location) {
-            return if (entity is Player && victim is Player && entity.clientIndex < victim.clientIndex && victim.properties.combatPulse.getVictim() === entity) {
+            return if (entity is Player && victim is Player && entity.clientIndex < victim.clientIndex && victim.properties.combatPulse.victim === entity) {
                 InteractionType.STILL_INTERACT
             } else InteractionType.NO_INTERACT
         }

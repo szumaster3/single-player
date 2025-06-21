@@ -36,72 +36,12 @@ enum class Balloon(
     val button: Int,
     val wrapperId: Int
 ) {
-    ENTRANA(
-        "Entrana",
-        NPCs.AUGUSTE_5049,
-        Location(2809, 3356),
-        Items.LOGS_1511,
-        20,
-        Vars.VARBIT_QUEST_ENLIGHTENED_JOURNEY_ENTRANA_BALLOON_2867,
-        25,
-        17,
-        19133
-    ),
-    TAVERLEY(
-        "Taverley",
-        NPCs.ASSISTANT_STAN_5057,
-        Location(2940, 3420),
-        Items.LOGS_1511,
-        20,
-        Vars.VARBIT_QUEST_ENLIGHTENED_JOURNEY_TAVERLEY_BALLOON_2868,
-        22,
-        18,
-        19135
-    ),
-    CRAFT_GUILD(
-        "Crafting Guild",
-        NPCs.ASSISTANT_BROCK_5054,
-        Location(2924, 3303),
-        Items.OAK_LOGS_1521,
-        30,
-        Vars.VARBIT_QUEST_ENLIGHTENED_JOURNEY_CRAFTING_GUILD_BALLOON_2871,
-        20,
-        16,
-        19141
-    ),
-    VARROCK(
-        "Varrock",
-        NPCs.ASSISTANT_SERF_5053,
-        Location(3298, 3481),
-        Items.WILLOW_LOGS_1519,
-        40,
-        Vars.VARBIT_QUEST_ENLIGHTENED_JOURNEY_VARROCK_BALLOON_2872,
-        21,
-        19,
-        19143
-    ),
-    CASTLE_WARS(
-        "Castle Wars",
-        NPCs.ASSISTANT_MARROW_5055,
-        Location(2462, 3108),
-        Items.YEW_LOGS_1515,
-        50,
-        Vars.VARBIT_QUEST_ENLIGHTENED_JOURNEY_CASTLE_WARS_BALLOON_2869,
-        24,
-        14,
-        19137
-    ),
-    GRAND_TREE(
-        "Grand Tree",
-        NPCs.ASSISTANT_LE_SMITH_5056,
-        Location(2480, 3458),
-        Items.MAGIC_LOGS_1513,
-        60,
-        Vars.VARBIT_QUEST_ENLIGHTENED_JOURNEY_GRAND_TREE_BALLOON_2870,
-        23,
-        15,
-        19139
-    );
+    ENTRANA("Entrana", NPCs.AUGUSTE_5049, Location(2809, 3356), Items.LOGS_1511, 20, Vars.VARBIT_QUEST_ENLIGHTENED_JOURNEY_ENTRANA_BALLOON_2867, 25, 17, 19133),
+    TAVERLEY("Taverley", NPCs.ASSISTANT_STAN_5057, Location(2940, 3420), Items.LOGS_1511, 20, Vars.VARBIT_QUEST_ENLIGHTENED_JOURNEY_TAVERLEY_BALLOON_2868, 22, 18, 19135),
+    CRAFT_GUILD("Crafting Guild", NPCs.ASSISTANT_BROCK_5054, Location(2924, 3303), Items.OAK_LOGS_1521, 30, Vars.VARBIT_QUEST_ENLIGHTENED_JOURNEY_CRAFTING_GUILD_BALLOON_2871, 20, 16, 19141),
+    VARROCK("Varrock", NPCs.ASSISTANT_SERF_5053, Location(3298, 3481), Items.WILLOW_LOGS_1519, 40, Vars.VARBIT_QUEST_ENLIGHTENED_JOURNEY_VARROCK_BALLOON_2872, 21, 19, 19143),
+    CASTLE_WARS("Castle Wars", NPCs.ASSISTANT_MARROW_5055, Location(2462, 3108), Items.YEW_LOGS_1515, 50, Vars.VARBIT_QUEST_ENLIGHTENED_JOURNEY_CASTLE_WARS_BALLOON_2869, 24, 14, 19137),
+    GRAND_TREE("Grand Tree", NPCs.ASSISTANT_LE_SMITH_5056, Location(2480, 3458), Items.MAGIC_LOGS_1513, 60, Vars.VARBIT_QUEST_ENLIGHTENED_JOURNEY_GRAND_TREE_BALLOON_2870, 23, 15, 19139);
 
     companion object {
         /**

@@ -56,10 +56,8 @@ private val ITEMS = arrayOf(null, null, null, null, null, null, null, null, null
  */
 @Initializable
 class FurClothingInterface : ComponentPlugin() {
-    override fun open(
-        player: Player?,
-        component: Component?,
-    ) {
+
+    override fun open(player: Player?, component: Component?) {
         super.open(player, component)
         player ?: return
         val nonNullItems = ITEMS.filterNotNull().toTypedArray()

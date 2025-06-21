@@ -26,10 +26,8 @@ private val skincolorButtons = (93..100)
  */
 @Initializable
 class MakeOverInterface : ComponentPlugin() {
-    override fun open(
-        player: Player?,
-        component: Component?,
-    ) {
+
+    override fun open(player: Player?, component: Component?) {
         component ?: return
         player ?: return
         super.open(player, component)
@@ -70,14 +68,7 @@ class MakeOverInterface : ComponentPlugin() {
         }
     }
 
-    override fun handle(
-        player: Player?,
-        component: Component?,
-        opcode: Int,
-        button: Int,
-        slot: Int,
-        itemId: Int,
-    ): Boolean {
+    override fun handle(player: Player?, component: Component?, opcode: Int, button: Int, slot: Int, itemId: Int): Boolean {
         player ?: return false
         if (skincolorButtons.contains(button)) {
             updateInterfaceConfigs(player, button)
@@ -92,14 +83,11 @@ class MakeOverInterface : ComponentPlugin() {
         return true
     }
 
-    fun updateGender(
-        player: Player,
-        male: Boolean,
-    ) {
+    private fun updateGender(player: Player, male: Boolean) {
         setAttribute(player, "mm-gender", if (male) Gender.MALE.ordinal else Gender.FEMALE.ordinal)
     }
 
-    fun pay(player: Player) {
+    private fun pay(player: Player) {
         val newColor = player.getAttribute("mm-previous", player.appearance.skin.color)
         val newGender = player.getAttribute("mm-gender", player.appearance.gender.ordinal)
 
@@ -123,10 +111,7 @@ class MakeOverInterface : ComponentPlugin() {
         }
     }
 
-    fun updateInterfaceConfigs(
-        player: Player,
-        button: Int,
-    ) {
+    private fun updateInterfaceConfigs(player: Player, button: Int) {
         val old = player.getAttribute("mm-previous", 0)
         setAttribute(player, "mm-previous", button - skincolorButtons.first)
         sendInterfaceConfig(player, Components.MAKEOVER_MAGE_205, old + skincolorButtons.first, false)

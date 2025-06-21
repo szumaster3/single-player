@@ -20,6 +20,7 @@ import kotlin.math.min
  * @author Emperor, Vexia
  */
 class QuestTabInterface : InterfaceListener {
+
     override fun defineInterfaceListeners() {
         on(Components.QUESTJOURNAL_V2_274) { player, _, _, buttonID, _, _ ->
             if (buttonID == 3) {
@@ -48,10 +49,7 @@ class QuestTabInterface : InterfaceListener {
 
     companion object {
         @JvmStatic
-        fun showRequirementsInterface(
-            player: Player,
-            button: Int,
-        ) {
+        private fun showRequirementsInterface(player: Player, button: Int, ) {
             val questName = getNameForButton(button)
             val questReq =
                 QuestRequirements.values().filter { it.questName.equals(questName, true) }.firstOrNull() ?: return
@@ -121,7 +119,7 @@ class QuestTabInterface : InterfaceListener {
             openInterface(player, Components.QUESTJOURNAL_SCROLL_275)
         }
 
-        fun getNameForButton(button: Int): String {
+        private fun getNameForButton(button: Int): String {
             val name =
                 when (button) {
                     10 -> Quests.MYTHS_OF_THE_WHITE_LANDS
