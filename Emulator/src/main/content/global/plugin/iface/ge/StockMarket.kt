@@ -19,7 +19,8 @@ import org.rs.consts.Sounds
 import kotlin.math.min
 
 /**
- * Handles the grand exchange interface (Stock Market)
+ * Handles the grand exchange interface (Stock Market).
+ *
  * @author Ceikry
  */
 class StockMarket : InterfaceListener {
@@ -215,7 +216,7 @@ class StockMarket : InterfaceListener {
      * @param offer The current Grand Exchange offer being made.
      * @param newAmt The new price for the offer.
      */
-    fun updateOfferValue(
+    private fun updateOfferValue(
         player: Player,
         offer: GrandExchangeOffer,
         newAmt: Int,
@@ -231,7 +232,7 @@ class StockMarket : InterfaceListener {
      * @param offer The current Grand Exchange offer being made.
      * @param newAmt The new amount of items being offered.
      */
-    fun updateOfferAmount(
+    private fun updateOfferAmount(
         player: Player,
         offer: GrandExchangeOffer,
         newAmt: Int,
@@ -246,7 +247,7 @@ class StockMarket : InterfaceListener {
      * @param player The player requesting the offer cancellation.
      * @param offer The Grand Exchange offer to be aborted.
      */
-    fun abortOffer(
+    private fun abortOffer(
         player: Player,
         offer: GrandExchangeOffer?,
     ) {
@@ -351,7 +352,7 @@ class StockMarket : InterfaceListener {
         return OfferConfirmResult.Success
     }
 
-    fun getInventoryAmount(
+    private fun getInventoryAmount(
         player: Player,
         itemId: Int,
     ): Int {
@@ -413,10 +414,18 @@ class StockMarket : InterfaceListener {
             setVarp(player, 1114, recommendedPrice)
             setVarp(player, 1115, lowPrice)
             setVarp(player, 1116, highPrice)
-            if (offer != null) {
+            if (offer?.withdraw != null) {
+                val items = offer.withdraw.filterNotNull().toTypedArray()
                 PacketRepository.send(
                     ContainerPacket::class.java,
-                    OutgoingContext.Container(player, -1, -1757, 523 + offer.index, offer.withdraw as core.game.container.Container, false)
+                    OutgoingContext.Container(
+                        player,
+                        interfaceId = -1,
+                        childId = -1757,
+                        containerId = 523 + offer.index,
+                        items = items,
+                        split = false
+                    )
                 )
             }
         }
