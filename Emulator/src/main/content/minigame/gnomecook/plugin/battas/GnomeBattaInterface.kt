@@ -18,6 +18,7 @@ private const val VEG_BATTA = 2227
 
 /**
  * Handles the gnome batta interface.
+ *
  * @author Ceikry
  */
 @Initializable
@@ -85,26 +86,10 @@ class GnomeBattaInterface : ComponentPlugin() {
     internal enum class CookedProduct(
         val product: Int, val levelReq: Int, val experience: Double, val requiredItems: Array<Item>
     ) {
-        HALF_MADE_CT(9478, 29, 40.0, arrayOf(Item(Items.TOMATO_1982), Item(Items.CHEESE_1985))), HALF_MADE_FR(
-            9480, 25, 40.0, arrayOf(
-                Item(Items.EQUA_LEAVES_2128, 4),
-                Item(Items.LIME_CHUNKS_2122),
-                Item(Items.ORANGE_CHUNKS_2110),
-                Item(Items.PINEAPPLE_CHUNKS_2116)
-            )
-        ),
-        HALF_MADE_TO(
-            9482, 26, 40.0, arrayOf(Item(Items.EQUA_LEAVES_2128), Item(Items.CHEESE_1985), Item(Items.TOADS_LEGS_2152))
-        ),
-        HALF_MADE_VE(
-            9483, 28, 40.0, arrayOf(
-                Item(Items.TOMATO_1982, 2),
-                Item(Items.CHEESE_1985),
-                Item(Items.DWELLBERRIES_2126),
-                Item(Items.ONION_1957),
-                Item(Items.CABBAGE_1965)
-            )
-        ),
+        HALF_MADE_CT(9478, 29, 40.0, arrayOf(Item(Items.TOMATO_1982), Item(Items.CHEESE_1985))),
+        HALF_MADE_FR(9480, 25, 40.0, arrayOf(Item(Items.EQUA_LEAVES_2128, 4), Item(Items.LIME_CHUNKS_2122), Item(Items.ORANGE_CHUNKS_2110), Item(Items.PINEAPPLE_CHUNKS_2116))),
+        HALF_MADE_TO(9482, 26, 40.0, arrayOf(Item(Items.EQUA_LEAVES_2128), Item(Items.CHEESE_1985), Item(Items.TOADS_LEGS_2152))),
+        HALF_MADE_VE(9483, 28, 40.0, arrayOf(Item(Items.TOMATO_1982, 2), Item(Items.CHEESE_1985), Item(Items.DWELLBERRIES_2126), Item(Items.ONION_1957), Item(Items.CABBAGE_1965))),
         HALF_MADE_WO(9485, 27, 40.0, arrayOf(Item(Items.KING_WORM_2162), Item(Items.CHEESE_1985)))
     }
 

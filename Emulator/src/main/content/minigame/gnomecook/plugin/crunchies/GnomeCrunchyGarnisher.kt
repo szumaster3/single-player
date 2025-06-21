@@ -13,7 +13,6 @@ import org.rs.consts.Items
  *
  * @author Ceikry
  */
-
 @Initializable
 class GnomeCrunchyGarnisher : UseWithHandler(9578, 9580, 9582, 9584) {
     override fun newInstance(arg: Any?): Plugin<Any> {

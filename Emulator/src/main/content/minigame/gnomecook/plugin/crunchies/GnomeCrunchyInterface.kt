@@ -86,16 +86,10 @@ class GnomeCrunchyInterface : ComponentPlugin() {
     }
 
     internal enum class HalfMadeCrunchy(val product: Int, val reqLevel: Int, val requiredItems: Array<Item>) {
-        CHOCCHIP(9577, 16, arrayOf(Item(Items.CHOCOLATE_BAR_1973, 2))), SPICY(
-            9579,
-            12,
-            arrayOf(Item(Items.EQUA_LEAVES_2128, 2))
-        ),
-        TOAD(9581, 10, arrayOf(Item(Items.TOADS_LEGS_2152, 2))), WORM(
-            9583,
-            14,
-            arrayOf(Item(Items.EQUA_LEAVES_2128), Item(Items.KING_WORM_2162, 2))
-        )
+        CHOCCHIP(9577, 16, arrayOf(Item(Items.CHOCOLATE_BAR_1973, 2))),
+        SPICY(9579, 12, arrayOf(Item(Items.EQUA_LEAVES_2128, 2))),
+        TOAD(9581, 10, arrayOf(Item(Items.TOADS_LEGS_2152, 2))),
+        WORM(9583, 14, arrayOf(Item(Items.EQUA_LEAVES_2128), Item(Items.KING_WORM_2162, 2)))
     }
 
 }

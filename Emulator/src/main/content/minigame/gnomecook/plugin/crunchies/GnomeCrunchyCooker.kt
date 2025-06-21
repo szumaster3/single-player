@@ -21,7 +21,6 @@ private const val UNFINISHED_CRUNCHY_WORM = 9584
  *
  * @author Ceikry
  */
-
 @Initializable
 class GnomeCrunchyCooker : UseWithHandler(9577, 9579, 9581, 9583, 2202) {
     override fun newInstance(arg: Any?): Plugin<Any> {

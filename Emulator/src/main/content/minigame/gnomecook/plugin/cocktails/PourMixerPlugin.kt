@@ -76,21 +76,13 @@ class PourMixerPlugin : OptionHandler() {
     }
 
     internal enum class PouredDrink(val product: Int, val requiredItems: Array<Item>) {
-        FRUIT_BLAST(9514, arrayOf(Item(Items.LEMON_SLICES_2106))), PINE_PUNCH(
-            9512,
-            arrayOf(Item(Items.LIME_CHUNKS_2122), Item(Items.PINEAPPLE_CHUNKS_2116), Item(Items.ORANGE_SLICES_2112))
-        ),
-        WIZ_BLIZZ(9508, arrayOf(Item(Items.PINEAPPLE_CHUNKS_2116), Item(Items.LIME_SLICES_2124))), SHORT_G_G(
-            9510,
-            arrayOf(Item(Items.LIME_SLICES_2124), Item(Items.EQUA_LEAVES_2128))
-        ),
-        DRUNK_DRAG(9575, arrayOf()), CHOC_SAT(9572, arrayOf()), BLUR_SPEC(
-            9520, arrayOf(
-                Item(Items.LEMON_CHUNKS_2104),
-                Item(Items.ORANGE_CHUNKS_2110),
-                Item(Items.EQUA_LEAVES_2128),
-                Item(Items.LIME_SLICES_2124)
-            )
+        FRUIT_BLAST(9514, arrayOf(Item(Items.LEMON_SLICES_2106))),
+        PINE_PUNCH(9512, arrayOf(Item(Items.LIME_CHUNKS_2122), Item(Items.PINEAPPLE_CHUNKS_2116), Item(Items.ORANGE_SLICES_2112))),
+        WIZ_BLIZZ(9508, arrayOf(Item(Items.PINEAPPLE_CHUNKS_2116), Item(Items.LIME_SLICES_2124))),
+        SHORT_G_G(9510, arrayOf(Item(Items.LIME_SLICES_2124), Item(Items.EQUA_LEAVES_2128))),
+        DRUNK_DRAG(9575, arrayOf()),
+        CHOC_SAT(9572, arrayOf()),
+        BLUR_SPEC(9520, arrayOf(Item(Items.LEMON_CHUNKS_2104), Item(Items.ORANGE_CHUNKS_2110), Item(Items.EQUA_LEAVES_2128), Item(Items.LIME_SLICES_2124))
         ),
     }
 

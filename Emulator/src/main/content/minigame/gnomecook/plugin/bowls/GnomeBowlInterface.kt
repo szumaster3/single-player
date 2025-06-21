@@ -59,24 +59,10 @@ class GnomeBowlInterface : ComponentPlugin() {
     }
 
     internal enum class PreparedProduct(val product: Int, val levelReq: Int, val requiredItems: Array<Item>) {
-        HALF_MADE_CHOC_B(
-            9558,
-            42,
-            arrayOf(Item(Items.CHOCOLATE_BAR_1973, 4), Item(Items.EQUA_LEAVES_2128))
-        ),
-        HALF_MADE_TAN_TO(
-            9559, 40, arrayOf(
-                Item(Items.TOADS_LEGS_2152, 4),
-                Item(Items.CHEESE_1985, 2),
-                Item(Items.DWELLBERRIES_2126),
-                Item(Items.EQUA_LEAVES_2128, 2)
-            )
-        ),
-        HALF_MADE_VEG_BA(9561, 35, arrayOf(Item(Items.POTATO_1942, 2), Item(Items.ONION_1957, 2))), HALF_MADE_WOR_HO(
-            9563,
-            30,
-            arrayOf(Item(Items.KING_WORM_2162, 4), Item(Items.ONION_1957, 2))
-        )
+        HALF_MADE_CHOC_B(9558, 42, arrayOf(Item(Items.CHOCOLATE_BAR_1973, 4), Item(Items.EQUA_LEAVES_2128))),
+        HALF_MADE_TAN_TO(9559, 40, arrayOf(Item(Items.TOADS_LEGS_2152, 4), Item(Items.CHEESE_1985, 2), Item(Items.DWELLBERRIES_2126), Item(Items.EQUA_LEAVES_2128, 2))),
+        HALF_MADE_VEG_BA(9561, 35, arrayOf(Item(Items.POTATO_1942, 2), Item(Items.ONION_1957, 2))),
+        HALF_MADE_WOR_HO(9563, 30, arrayOf(Item(Items.KING_WORM_2162, 4), Item(Items.ONION_1957, 2)))
     }
 
     override fun newInstance(arg: Any?): Plugin<Any> {

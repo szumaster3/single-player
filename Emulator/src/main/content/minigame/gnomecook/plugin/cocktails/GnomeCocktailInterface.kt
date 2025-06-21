@@ -99,60 +99,13 @@ class GnomeCocktailInterface : ComponentPlugin() {
         val product: Int,
         val requiredItems: Array<Item>
     ) {
-        FRUIT_BLAST(
-            6,
-            50.0,
-            9568,
-            arrayOf(Item(Items.PINEAPPLE_2114), Item(Items.LEMON_2102), Item(Items.ORANGE_2108))
-        ),
-        PINEAPPLE_PUNCH(
-            8,
-            70.0,
-            9569,
-            arrayOf(Item(Items.PINEAPPLE_2114, 2), Item(Items.LEMON_2102), Item(Items.ORANGE_2108))
-        ),
-        WIZARD_BLIZZARD(
-            18,
-            110.0,
-            9566,
-            arrayOf(
-                Item(Items.VODKA_2015, 2),
-                Item(Items.GIN_2019),
-                Item(Items.LIME_2120),
-                Item(Items.LEMON_2102),
-                Item(Items.ORANGE_2108)
-            )
-        ),
+        FRUIT_BLAST(6, 50.0, 9568, arrayOf(Item(Items.PINEAPPLE_2114), Item(Items.LEMON_2102), Item(Items.ORANGE_2108))),
+        PINEAPPLE_PUNCH(8, 70.0, 9569, arrayOf(Item(Items.PINEAPPLE_2114, 2), Item(Items.LEMON_2102), Item(Items.ORANGE_2108))),
+        WIZARD_BLIZZARD(18, 110.0, 9566, arrayOf(Item(Items.VODKA_2015, 2), Item(Items.GIN_2019), Item(Items.LIME_2120), Item(Items.LEMON_2102), Item(Items.ORANGE_2108))),
         SHORT_GREEN_GUY(20, 120.0, 9567, arrayOf(Item(Items.VODKA_2015), Item(Items.LIME_2120, 3))),
-        DRUNK_DRAGON(
-            32,
-            160.0,
-            9574,
-            arrayOf(Item(Items.VODKA_2015), Item(Items.GIN_2019), Item(Items.DWELLBERRIES_2126))
-        ),
-        CHOC_SATURDAY(
-            33,
-            170.0,
-            9571,
-            arrayOf(
-                Item(Items.WHISKY_2017),
-                Item(Items.CHOCOLATE_BAR_1973),
-                Item(Items.EQUA_LEAVES_2128),
-                Item(Items.BUCKET_OF_MILK_1927)
-            )
-        ),
-        BLURBERRY_SPEC(
-            37,
-            180.0,
-            9570,
-            arrayOf(
-                Item(Items.VODKA_2015),
-                Item(Items.BRANDY_2021),
-                Item(Items.GIN_2019),
-                Item(Items.LEMON_2102, 2),
-                Item(Items.ORANGE_2108)
-            )
-        )
+        DRUNK_DRAGON(32, 160.0, 9574, arrayOf(Item(Items.VODKA_2015), Item(Items.GIN_2019), Item(Items.DWELLBERRIES_2126))),
+        CHOC_SATURDAY(33, 170.0, 9571, arrayOf(Item(Items.WHISKY_2017), Item(Items.CHOCOLATE_BAR_1973), Item(Items.EQUA_LEAVES_2128), Item(Items.BUCKET_OF_MILK_1927))),
+        BLURBERRY_SPEC(37, 180.0, 9570, arrayOf(Item(Items.VODKA_2015), Item(Items.BRANDY_2021), Item(Items.GIN_2019), Item(Items.LEMON_2102, 2), Item(Items.ORANGE_2108)))
     }
 
 }
