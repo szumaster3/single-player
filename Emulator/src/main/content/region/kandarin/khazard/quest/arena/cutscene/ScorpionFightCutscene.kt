@@ -1,6 +1,6 @@
 package content.region.kandarin.khazard.quest.arena.cutscene
 
-import content.region.kandarin.khazard.quest.arena.plugin.ScorpionNPC
+import content.region.kandarin.khazard.quest.arena.npc.ScorpionNPC
 import core.api.animate
 import core.api.location
 import core.api.sendChat

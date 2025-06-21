@@ -11,6 +11,9 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Reeso dialogue.
+ */
 @Initializable
 class ReesoDialogue(player: Player? = null) : Dialogue(player) {
 
@@ -24,10 +27,7 @@ class ReesoDialogue(player: Player? = null) : Dialogue(player) {
         return true
     }
 
-    override fun handle(
-        interfaceId: Int,
-        buttonId: Int,
-    ): Boolean = true
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean = true
 
     override fun newInstance(player: Player?): Dialogue = ReesoDialogue(player)
 

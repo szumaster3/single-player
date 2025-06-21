@@ -1,7 +1,7 @@
 package content.minigame.pestcontrol.plugin
 
 import content.global.travel.ship.Charter
-import content.minigame.pestcontrol.plugin.npc.*
+import content.minigame.pestcontrol.npc.*
 import core.api.*
 import core.cache.def.impl.NPCDefinition
 import core.game.interaction.IntType

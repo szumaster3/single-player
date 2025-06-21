@@ -30,7 +30,9 @@ import org.rs.consts.Items
 
 @Initializable
 class DevelopmentCommandSet : CommandSet(Privilege.ADMIN) {
+
     override fun defineCommands() {
+
         /*
          * Command to complete tutorial.
          */

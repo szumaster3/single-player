@@ -1,6 +1,6 @@
 package content.region.kandarin.seers.dialogue
 
-import content.region.kandarin.seers.plugin.IgnatiusVulcanNPC
+import content.region.kandarin.seers.npc.IgnatiusVulcanNPC
 import core.game.dialogue.Dialogue
 import core.game.global.Skillcape.isMaster
 import core.game.global.Skillcape.purchase

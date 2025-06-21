@@ -9,6 +9,9 @@ import core.plugin.Initializable
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Bjorn and Eldgrim dialogue.
+ */
 @Initializable
 class BjornAndEldgrimDialogue(player: Player? = null) : Dialogue(player) {
 

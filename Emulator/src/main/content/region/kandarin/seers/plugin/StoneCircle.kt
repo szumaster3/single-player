@@ -10,18 +10,14 @@ import core.plugin.Initializable
 import core.plugin.Plugin
 
 @Initializable
-class StoneCircle :
-    MapZone(STONE_CIRCLE, true),
-    Plugin<Any> {
+class StoneCircle : MapZone(STONE_CIRCLE, true), Plugin<Any> {
+
     override fun configure() {
         register(ZoneBorders(2558, 3219, 2559, 3225))
         register(ZoneBorders(2560, 3219, 2564, 3225))
     }
 
-    override fun fireEvent(
-        identifier: String?,
-        vararg args: Any?,
-    ): Any? = null
+    override fun fireEvent(identifier: String?, vararg args: Any?, ): Any? = null
 
     override fun newInstance(arg: Any?): Plugin<Any> {
         ZoneBuilder.configure(this)
@@ -35,10 +31,7 @@ class StoneCircle :
         return super.enter(e)
     }
 
-    override fun leave(
-        e: Entity,
-        logout: Boolean,
-    ): Boolean {
+    override fun leave(e: Entity, logout: Boolean, ): Boolean {
         if (!logout && e is Player) {
             setVarbit(e, STONE_CIRCLE_ENTER_VARBIT, 0)
         }

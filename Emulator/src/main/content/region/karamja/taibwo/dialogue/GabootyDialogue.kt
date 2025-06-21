@@ -9,6 +9,9 @@ import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Gabooty dialogue.
+ */
 @Initializable
 class GabootyDialogue(player: Player? = null, ) : Dialogue(player) {
 

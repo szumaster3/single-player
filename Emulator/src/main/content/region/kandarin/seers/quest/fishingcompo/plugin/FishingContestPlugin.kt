@@ -16,6 +16,12 @@ import org.rs.consts.*
 
 class FishingContestPlugin : InteractionListener {
 
+    companion object {
+        private val VINE_SCENERY = intArrayOf(Scenery.VINE_58, Scenery.VINE_2989, Scenery.VINE_2990, Scenery.VINE_2991, Scenery.VINE_2992, Scenery.VINE_2993, Scenery.VINE_2994, Scenery.VINE_2013)
+        private val TUNNEL_STAIRS = intArrayOf(Scenery.STAIRS_55, Scenery.STAIRS_57)
+        private val GATES = intArrayOf(Scenery.GATE_47, Scenery.GATE_48, Scenery.GATE_52, Scenery.GATE_53)
+    }
+
     override fun defineListeners() {
 
         /*
@@ -161,28 +167,5 @@ class FishingContestPlugin : InteractionListener {
             player.dialogueInterpreter.open(NPCs.BONZO_225, Repository.findNPC(NPCs.BONZO_225))
             return@on true
         }
-    }
-
-    companion object {
-        private val VINE_SCENERY = intArrayOf(
-            Scenery.VINE_58,
-            Scenery.VINE_2989,
-            Scenery.VINE_2990,
-            Scenery.VINE_2991,
-            Scenery.VINE_2992,
-            Scenery.VINE_2993,
-            Scenery.VINE_2994,
-            Scenery.VINE_2013
-        )
-        private val TUNNEL_STAIRS = intArrayOf(
-            Scenery.STAIRS_55,
-            Scenery.STAIRS_57
-        )
-        private val GATES = intArrayOf(
-            Scenery.GATE_47,
-            Scenery.GATE_48,
-            Scenery.GATE_52,
-            Scenery.GATE_53
-        )
     }
 }

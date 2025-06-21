@@ -1,6 +1,6 @@
 package content.region.kandarin.ardougne.quest.tol.dialogue
 
-import content.region.kandarin.ardougne.quest.tol.plugin.TowerOfLifeUtils
+import content.data.GameAttributes
 import core.api.getAttribute
 import core.api.quest.getQuestStage
 import core.game.dialogue.Dialogue
@@ -71,8 +71,7 @@ class NoFingersDialogue(player: Player? = null) : Dialogue(player) {
                         ).also { stage = END_DIALOGUE }
                 }
 
-            3 ->
-                if (getAttribute(player, TowerOfLifeUtils.TOL_TOWER_ACCESS, 0) == 1) {
+            3 -> if (getAttribute(player, GameAttributes.TOL_TOWER_ACCESS, 0) == 1) {
                     when (stage) {
                         START_DIALOGUE -> playerl(FaceAnim.FRIENDLY, "Hi.").also { stage++ }
                         1 ->

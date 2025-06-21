@@ -10,13 +10,16 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Justin Servil dialogue.
+ *
+ * Relations
+ * - [Fight Arena][content.region.kandarin.khazard.quest.arena.FightArena]
+ */
 @Initializable
 class JustinServilDialogue(player: Player? = null) : Dialogue(player) {
     
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ): Boolean {
+    override fun handle(componentID: Int, buttonID: Int): Boolean {
         when (getQuestStage(player!!, Quests.FIGHT_ARENA)) {
             in 0..68 ->
                 when (stage) {

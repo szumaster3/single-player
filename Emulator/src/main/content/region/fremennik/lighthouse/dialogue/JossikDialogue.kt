@@ -14,6 +14,9 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import java.util.*
 
+/**
+ * Represents the Jossik dialogue.
+ */
 @Initializable
 class JossikDialogue : Dialogue {
     private var uncompleted: MutableList<GodBook>? = null

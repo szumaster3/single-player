@@ -15,6 +15,7 @@ import java.util.concurrent.locks.ReentrantLock
 
 /**
  * Manages the regions.
+ *
  * @author Emperor
  */
 object RegionManager {

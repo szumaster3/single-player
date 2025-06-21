@@ -93,11 +93,7 @@ class TrollheimPlugin : OptionHandler() {
         return this
     }
 
-    override fun handle(
-        player: Player,
-        node: Node,
-        option: String,
-    ): Boolean {
+    override fun handle(player: Player, node: Node, option: String): Boolean {
         val id = if (node is core.game.node.scenery.Scenery) node.id else (node as NPC).id
         val loc = node.location
         var xOffset = 0

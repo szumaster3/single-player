@@ -5,7 +5,7 @@ import content.global.plugin.iface.BookInterface
 import content.global.plugin.iface.Page
 import content.global.plugin.iface.PageSet
 import content.global.skill.slayer.SlayerManager
-import content.region.asgarnia.falador.plugin.wkrank.WhiteKnightRankManager
+import content.region.asgarnia.falador.plugin.wkrank.plugin.WhiteKnightRankManager
 import core.api.setAttribute
 import core.api.utils.BossKillCounter
 import core.api.utils.PlayerStatsCounter
@@ -42,6 +42,7 @@ val FAKE_CONTENT = arrayOf(
 
 @Initializable
 class StatsCommandSet : CommandSet(Privilege.STANDARD) {
+
     companion object {
         @Suppress("UNUSED_PARAMETER")
         private fun display(player: Player, pageNum: Int, buttonId: Int, ): Boolean {

@@ -10,9 +10,13 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
-class CroneDialogue(
-    val forced: Boolean,
-) : DialogueFile() {
+/**
+ * Represents the Crone dialogue.
+ *
+ * Relations
+ * - [Holy Grail][content.region.kandarin.camelot.quest.grail.HolyGrail]
+ */
+class CroneDialogue(val forced: Boolean, ) : DialogueFile() {
     var STAGE_SIX_HEADS = 5
     val STAGE_FISHER_KING = 10
     val STAGE_WHISTLE = 20

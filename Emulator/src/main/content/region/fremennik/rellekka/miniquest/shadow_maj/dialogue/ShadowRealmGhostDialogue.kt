@@ -20,6 +20,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class ShadowRealmGhostDialogue(player: Player? = null) : Dialogue(player) {
+
     override fun open(vararg args: Any?): Boolean {
         return when {
             !GeneralShadow.hasGhostlySet(player) -> {

@@ -14,11 +14,7 @@ class MinecartDriverDialogue(player: Player? = null) : Dialogue(player) {
         quest = player.getQuestRepository().getQuest(Quests.THE_TOURIST_TRAP)
         when (quest!!.getStage(player)) {
             90 -> npc("Quickly, get in the back of the cart.")
-            80 -> interpreter.sendDialogue(
-                "The cart driver seems to be fastidiously cleaning his cart.",
-                "It doesn't look as if he wants to be disturbed.",
-            )
-
+            80 -> interpreter.sendDialogue("The cart driver seems to be fastidiously cleaning his cart.", "It doesn't look as if he wants to be disturbed.")
             else -> player("Hello!")
         }
         return true

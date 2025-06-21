@@ -7,6 +7,9 @@ import core.game.node.entity.player.Player
 import core.plugin.Initializable
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Jimmy Dazzler dialogue.
+ */
 @Initializable
 class JimmyDazzlerDialogue(player: Player? = null) : Dialogue(player) {
 

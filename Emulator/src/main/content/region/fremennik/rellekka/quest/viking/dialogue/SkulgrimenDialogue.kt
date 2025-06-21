@@ -16,6 +16,12 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Skulgrimen dialogue.
+ *
+ * Relations
+ * - [FremennikTrials]
+ */
 @Initializable
 class SkulgrimenDialogue(player: Player? = null) : Dialogue(player) {
 

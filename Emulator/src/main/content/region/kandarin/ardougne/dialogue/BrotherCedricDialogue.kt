@@ -11,6 +11,9 @@ import core.plugin.Initializable
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Brother Cedric dialogue.
+ */
 @Initializable
 class BrotherCedricDialogue(player: Player? = null) : Dialogue(player) {
 

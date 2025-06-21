@@ -21,19 +21,12 @@ class ZandarHorfyreDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
-            0 -> npcl(
-                FaceAnim.NEUTRAL,
-                "My name is Zandar Horfyre, and you ${player.name} are trespassing in my tower, not to mention attacking my students! I thank you to leave immediately!",
-            ).also {
-                stage++
-            }
-
+            0 -> npcl(FaceAnim.NEUTRAL, "My name is Zandar Horfyre, and you ${player.name} are trespassing in my tower, not to mention attacking my students! I thank you to leave immediately!").also { stage++ }
             1 -> options("Ok, I was going anyway.", "No, I think I'll stay for a bit.").also { stage++ }
             2 -> when (buttonId) {
                 1 -> player("Ok, I was going anyway.").also { stage++ }
                 2 -> player("No, I think I'll stay for a bit.").also { stage = 4 }
             }
-
             3 -> npcl(FaceAnim.NEUTRAL, "Good! And don't forget to close the door behind you!").also { stage = 7 }
             4 -> npcl(FaceAnim.ANNOYED, "Actually, that wasn't an invitation. I've tried being polite, now we'll do it the hard way!").also {
                 teleport(player, Location.create(3217, 3177, 0), TeleportManager.TeleportType.INSTANT)

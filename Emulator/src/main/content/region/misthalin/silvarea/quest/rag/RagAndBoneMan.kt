@@ -1,6 +1,6 @@
 package content.region.misthalin.silvarea.quest.rag
 
-import content.region.misthalin.silvarea.quest.rag.handlers.BoneBoiler
+import content.region.misthalin.silvarea.quest.rag.plugin.BoneBoiler
 import core.api.getAttribute
 import core.api.inInventory
 import core.api.removeAttributes

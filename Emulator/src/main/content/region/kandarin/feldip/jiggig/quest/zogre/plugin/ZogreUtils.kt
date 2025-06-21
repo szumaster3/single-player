@@ -10,20 +10,7 @@ object ZogreUtils {
     const val NECROMANCY_BOOK = Items.NECROMANCY_BOOK_4837
     const val PORTRAI_BOOK = Items.BOOK_OF_PORTRAITURE_4817
     const val STRANGE_POTION = Items.STRANGE_POTION_4836
-    val QUEST_ITEMS =
-        intArrayOf(
-            Items.BOOK_OF_PORTRAITURE_4817,
-            Items.BOOK_OF_HAM_4829,
-            Items.NECROMANCY_BOOK_4837,
-            Items.TORN_PAGE_4809,
-            Items.BLACK_PRISM_4808,
-            Items.DRAGON_INN_TANKARD_4811,
-            Items.PAPYRUS_970,
-            Items.SITHIK_PORTRAIT_4814,
-            Items.SITHIK_PORTRAIT_4815,
-            Items.SIGNED_PORTRAIT_4816,
-            Items.STRANGE_POTION_4836,
-        )
+    val QUEST_ITEMS = intArrayOf(Items.BOOK_OF_PORTRAITURE_4817, Items.BOOK_OF_HAM_4829, Items.NECROMANCY_BOOK_4837, Items.TORN_PAGE_4809, Items.BLACK_PRISM_4808, Items.DRAGON_INN_TANKARD_4811, Items.PAPYRUS_970, Items.SITHIK_PORTRAIT_4814, Items.SITHIK_PORTRAIT_4815, Items.SIGNED_PORTRAIT_4816, Items.STRANGE_POTION_4836)
 
     val CHARRED_AREA = "zfe:charred-area-visited"
     val TORN_PAGE_ACQUIRED = "zfe:torn-page-acquired"

@@ -6,25 +6,22 @@ import core.game.node.entity.npc.NPC
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Nurse Sarah dialogue.
+ *
+ * Relations
+ * - [Biohazard][content.region.kandarin.ardougne.east.quest.biohazard.Biohazard]
+ */
 class NurseSarahDialogue : DialogueFile() {
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
+    override fun handle(componentID: Int, buttonID: Int) {
         npc = NPC(NPCs.NURSE_SARAH_373)
         when (stage) {
             0 -> player("Hello nurse.").also { stage++ }
-            1 ->
-                if (getQuestStage(player!!, Quests.BIOHAZARD) <= 6) {
-                    npc("I don't know how much longer I can cope here.").also { stage = 4 }
-                } else {
-                    npc(
-                        "Oh hello there. I'm afraid I can't stop and talk, a",
-                        "group of mourners have become ill with food poisoning. I need",
-                        "to go over and see what I can do.",
-                    ).also { stage++ }
-                }
-
+            1 -> if (getQuestStage(player!!, Quests.BIOHAZARD) <= 6) {
+                npc("I don't know how much longer I can cope here.").also { stage = 4 }
+            } else {
+                npc("Oh hello there. I'm afraid I can't stop and talk, a", "group of mourners have become ill with food poisoning. I need", "to go over and see what I can do.").also { stage++ }
+            }
             2 -> npc("Hmmm, strange that!").also { stage++ }
             3 -> end()
             4 -> player("What? Is the plague getting to you?").also { stage++ }

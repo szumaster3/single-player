@@ -1,6 +1,6 @@
 package content.region.fremennik.lighthouse.quest.horror.cutscene
 
-import content.region.fremennik.lighthouse.quest.horror.plugin.DagonnothBabyNPC
+import content.region.fremennik.lighthouse.quest.horror.npc.DagonnothBabyNPC
 import core.api.clearHintIcon
 import core.api.interaction.transformNpc
 import core.api.registerHintIcon

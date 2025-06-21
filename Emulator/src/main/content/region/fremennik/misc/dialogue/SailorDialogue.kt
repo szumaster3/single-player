@@ -1,6 +1,6 @@
 package content.region.fremennik.misc.dialogue
 
-import content.region.fremennik.plugin.FremennikTransportation.sail
+import content.region.fremennik.plugin.FremennikShipHelper.sail
 import content.region.fremennik.plugin.Travel
 import core.api.inBorders
 import core.game.dialogue.Dialogue

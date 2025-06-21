@@ -9,9 +9,13 @@ import core.game.world.map.Location
 import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 
-class MaidenDialogue(
-    var forced: Boolean,
-) : DialogueFile() {
+/**
+ * Represents the Maiden dialogue.
+ *
+ * Relations
+ * - [Holy Grail][content.region.kandarin.camelot.quest.grail.HolyGrail]
+ */
+class MaidenDialogue(var forced: Boolean, ) : DialogueFile() {
     override fun handle(
         componentID: Int,
         buttonID: Int,

@@ -11,6 +11,9 @@ import core.plugin.Initializable
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Brother Omad dialogue.
+ */
 @Initializable
 class BrotherOmadDialogue(player: Player? = null) : Dialogue(player) {
 

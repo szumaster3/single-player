@@ -16,12 +16,6 @@ import org.rs.consts.*
 class PortSarimPlugin : InteractionListener {
 
     companion object {
-        private const val CAVE_ENTRANCE = Scenery.ICY_CAVERN_33174
-        private const val CAVE_EXIT = Scenery.CAVE_33173
-        private const val SLEEPING_GUARD = NPCs.GUARD_2704
-        private const val WORMBRAIN = NPCs.WORMBRAIN_745
-        private const val WYDIN_BANANA_CRATE = Scenery.CRATE_2071
-        private const val WYDIN_STORE_DOOR = Scenery.DOOR_2069
         private val DOORS = intArrayOf(Scenery.CELL_DOOR_9563, Scenery.DOOR_9565)
         private val MONKS_OF_ENTRANA = intArrayOf(NPCs.MONK_OF_ENTRANA_2728, NPCs.MONK_OF_ENTRANA_657, NPCs.MONK_OF_ENTRANA_2729, 2730, NPCs.MONK_OF_ENTRANA_2731, NPCs.MONK_OF_ENTRANA_658)
         private val SEAMAN = intArrayOf(NPCs.CAPTAIN_TOBIAS_376, NPCs.SEAMAN_LORRIS_377, NPCs.SEAMAN_THRESNOR_378)
@@ -54,7 +48,7 @@ class PortSarimPlugin : InteractionListener {
          * Handles opening the Wydin store door.
          */
 
-        on(WYDIN_STORE_DOOR, IntType.SCENERY, "open") { player, node ->
+        on(Scenery.DOOR_2069, IntType.SCENERY, "open") { player, node ->
             val needsApron = !inEquipment(player, Items.WHITE_APRON_1005) && player.location.x == 3012
 
             if (needsApron) {
@@ -70,7 +64,7 @@ class PortSarimPlugin : InteractionListener {
          * Handles searching the Wydin banana crate.
          */
 
-        on(WYDIN_BANANA_CRATE, IntType.SCENERY, "search") { player, _ ->
+        on(Scenery.CRATE_2071, IntType.SCENERY, "search") { player, _ ->
             if (freeSlots(player) == 0) {
                 sendMessage(player, "Not enough inventory space.")
                 return@on true
@@ -131,7 +125,7 @@ class PortSarimPlugin : InteractionListener {
          * Handles talking to the sleeping guard NPC.
          */
 
-        on(SLEEPING_GUARD, IntType.NPC, "talk-to") { player, node ->
+        on(NPCs.GUARD_2704, IntType.NPC, "talk-to") { player, node ->
             val forceChat =
                 arrayOf(
                     "Hmph... heh heh heh...",
@@ -152,7 +146,7 @@ class PortSarimPlugin : InteractionListener {
          * Handles attacking Wormbrain NPC.
          */
 
-        on(WORMBRAIN, IntType.NPC, "attack") { player, node ->
+        on(NPCs.WORMBRAIN_745, IntType.NPC, "attack") { player, node ->
             if (getQuestStage(player, Quests.DRAGON_SLAYER) != 20) {
                 sendDialogue(player, "The goblin is already in prison. You have no reason to attack him.")
             } else {
@@ -165,7 +159,7 @@ class PortSarimPlugin : InteractionListener {
          * Handles entering the icy cavern.
          */
 
-        on(CAVE_ENTRANCE, IntType.SCENERY, "enter") { player, _ ->
+        on(Scenery.ICY_CAVERN_33174, IntType.SCENERY, "enter") { player, _ ->
             queueScript(player, 1, QueueStrength.SOFT) {
                 player.properties.teleportLocation = Location(3056, 9562, 0)
                 sendMessage(player, "You leave the icy cavern.")
@@ -178,7 +172,7 @@ class PortSarimPlugin : InteractionListener {
          * Handles exiting the icy cavern.
          */
 
-        on(CAVE_EXIT, IntType.SCENERY, "exit") { player, _ ->
+        on(Scenery.CAVE_33173, IntType.SCENERY, "exit") { player, _ ->
             dialogue(player) {
                 message("STOP! The creatures in this cave are VERY Dangerous. Are you", "sure you want to enter?")
                 options(null, "Yes, I'm not afraid of death!", "No thanks, I don't want to die!") { buttonId ->

@@ -12,6 +12,9 @@ import org.rs.consts.Quests
 
 /**
  * Represents the Jossik dialogue under lighthouse.
+ *
+ * Relations
+ * - [Horror from the Deep][content.region.fremennik.lighthouse.quest.horror.HorrorFromTheDeep]
  */
 class JossikLighthouseDialogue : DialogueFile() {
     override fun handle(

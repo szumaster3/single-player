@@ -1,16 +1,16 @@
 package content.region.morytania.swamp.quest.druidspirit.plugin
 
-import content.region.morytania.swamp.plugin.GhastNPC
-import content.region.morytania.swamp.quest.druidspirit.dialogue.FillimanCompletionDialogue
+import content.region.morytania.swamp.npc.GhastNPC
 import core.api.*
 import core.api.item.produceGroundItem
 import core.api.quest.getQuestStage
 import core.api.quest.hasRequirement
 import core.api.quest.isQuestComplete
+import core.game.dialogue.FaceAnim
+import core.game.dialogue.SequenceDialogue.dialogue
 import core.game.global.action.PickupHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import core.game.node.entity.npc.NPC
 import core.game.node.item.GroundItem
 import core.game.node.item.GroundItemManager
 import core.game.node.item.Item
@@ -110,8 +110,14 @@ class NatureSpiritPlugin : InteractionListener {
         on(GROTTO_ALTAR, IntType.SCENERY, "search") { player, _ ->
             val stage = getQuestStage(player, Quests.NATURE_SPIRIT)
             if (stage == 55) {
-                openDialogue(player, FillimanCompletionDialogue(), NPC(NPCs.FILLIMAN_TARLOCK_1050))
-                return@on true
+                dialogue(player) {
+                    npc(NPCs.FILLIMAN_TARLOCK_1050,FaceAnim.NEUTRAL, "Well, hello there again. I was just enjoying the grotto. Many thanks for your help, I couldn't have become a Spirit of nature without you.")
+                    npc(NPCs.FILLIMAN_TARLOCK_1050,FaceAnim.NEUTRAL, "I must complete the transformation now. Just stand there and watch the show, apparently it's quite good!")
+                    end {
+                        lock(player, 10)
+                        submitWorldPulse(CompleteSpellPulse(player))
+                    }
+                }
             }
             return@on false
         }

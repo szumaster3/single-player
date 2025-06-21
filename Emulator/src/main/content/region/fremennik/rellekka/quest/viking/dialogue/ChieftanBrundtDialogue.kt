@@ -17,6 +17,12 @@ import org.rs.consts.NPCs
 import org.rs.consts.Quests
 import kotlin.random.Random
 
+/**
+ * Represents the Chieftan Brundt dialogue.
+ *
+ * Relations
+ * - [FremennikTrials]
+ */
 @Initializable
 class ChieftanBrundtDialogue(player: Player? = null) : Dialogue(player) {
 

@@ -14,6 +14,12 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Askeladden dialogue.
+ *
+ * Relations
+ * - [FremennikTrials]
+ */
 @Initializable
 class AskeladdenDialogue(player: Player? = null) : Dialogue(player) {
     

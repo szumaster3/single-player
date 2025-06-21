@@ -14,6 +14,9 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Thurgo dialogue.
+ */
 @Initializable
 class ThurgoDialogue(player: Player? = null) : Dialogue(player) {
 

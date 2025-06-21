@@ -20,7 +20,7 @@ import org.rs.consts.Quests
  * Represents the Chemist dialogue.
  *
  * Relations
- * - [Biohazard quest][content.region.kandarin.quest.biohazard.Biohazard]
+ * - [Biohazard][content.region.kandarin.ardougne.east.quest.biohazard.Biohazard]
  */
 @Initializable
 class ChemistDialogue(player: Player? = null) : Dialogue(player) {
@@ -51,7 +51,7 @@ class ChemistDialogue(player: Player? = null) : Dialogue(player) {
                 1 -> player("Hi, I need fuel for a lamp.").also { stage = 10 }
                 2 -> {
                     end()
-                    openDialogue(player, ChemistDialogue())
+                    openDialogue(player, content.region.kandarin.ardougne.east.quest.biohazard.dialogue.ChemistDialogue())
                 }
                 3 -> player("I have a slightly odd question.").also { stage = 30 }
                 4 -> {

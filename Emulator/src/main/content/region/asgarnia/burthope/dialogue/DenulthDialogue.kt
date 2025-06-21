@@ -1,6 +1,7 @@
 package content.region.asgarnia.burthope.dialogue
 
 import content.region.asgarnia.burthope.quest.death.dialogue.DenulthDialogueFile
+import content.region.asgarnia.burthope.quest.troll.dialogue.DenulthTrollDialogue
 import core.api.openDialogue
 import core.api.quest.isQuestComplete
 import core.api.quest.isQuestInProgress
@@ -54,7 +55,7 @@ class DenulthDialogue(player: Player? = null) : Dialogue(player) {
          */
 
         if (isQuestInProgress(player!!, Quests.TROLL_STRONGHOLD, 1, 99)) {
-            openDialogue(player!!, DenulthDialogue(), npc)
+            openDialogue(player!!, DenulthTrollDialogue(), npc)
             return true
         }
 

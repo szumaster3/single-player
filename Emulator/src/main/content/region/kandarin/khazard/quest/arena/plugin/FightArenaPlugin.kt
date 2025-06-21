@@ -3,6 +3,7 @@ package content.region.kandarin.khazard.quest.arena.plugin
 import content.region.kandarin.khazard.quest.arena.cutscene.JeremyRescueCutscene
 import content.region.kandarin.khazard.quest.arena.cutscene.PrisonCutscene
 import content.region.kandarin.khazard.quest.arena.dialogue.*
+import content.region.kandarin.khazard.quest.arena.npc.GeneralNPC
 import core.api.*
 import core.api.quest.getQuestStage
 import core.api.quest.setQuestStage
@@ -14,6 +15,33 @@ import core.game.world.map.Location
 import org.rs.consts.*
 
 class FightArenaPlugin : InteractionListener {
+    companion object {
+        const val GENERAL = NPCs.GENERAL_KHAZARD_258
+        const val KELVIN = NPCs.KELVIN_260
+        const val JOE = NPCs.JOE_261
+        const val FIGHTSLAVE = NPCs.FIGHTSLAVE_262
+        const val HENGARD = NPCs.HENGRAD_263
+        const val JEREMY_A = NPCs.JEREMY_SERVIL_265
+
+        const val CELL_DOOR_1 = Scenery.PRISON_DOOR_79
+        const val CELL_DOOR_2 = Scenery.PRISON_DOOR_80
+        const val MAIN_DOOR = Scenery.DOOR_81
+
+        const val A_LAZY_GUARD_1 = Scenery.A_LAZY_KHAZARD_GUARD_41494
+        const val A_LAZY_GUARD_2 = Scenery.A_LAZY_KHAZARD_GUARD_41496
+        const val A_LAZY_GUARD_3 = Scenery.A_LAZY_KHAZARD_GUARD_41497
+
+        const val FULL_ARMOR_STAND = Scenery.A_SUIT_OF_ARMOUR_41490
+        val FULL_ARMOR_STAND_1 = getScenery(2619, 3196, 0)
+
+        private const val HELMET = Items.KHAZARD_HELMET_74
+        private const val ARMOR = Items.KHAZARD_ARMOUR_75
+        private const val CELL_KEY = Items.KHAZARD_CELL_KEYS_76
+
+        val Jeremy = NPC(NPCs.JEREMY_SERVIL_265, Location.create(2616, 3167, 0))
+        val General = GeneralNPC(NPCs.GENERAL_KHAZARD_258, Location.create(2605, 3156, 0))
+    }
+
     init {
         Jeremy.init()
         Jeremy.isWalks = true
@@ -189,32 +217,5 @@ class FightArenaPlugin : InteractionListener {
         setDest(IntType.SCENERY, intArrayOf(A_LAZY_GUARD_2), "steal-keys") { _, _ ->
             return@setDest Location.create(2619, 3143, 0)
         }
-    }
-
-    companion object {
-        const val GENERAL = NPCs.GENERAL_KHAZARD_258
-        const val KELVIN = NPCs.KELVIN_260
-        const val JOE = NPCs.JOE_261
-        const val FIGHTSLAVE = NPCs.FIGHTSLAVE_262
-        const val HENGARD = NPCs.HENGRAD_263
-        const val JEREMY_A = NPCs.JEREMY_SERVIL_265
-
-        const val CELL_DOOR_1 = Scenery.PRISON_DOOR_79
-        const val CELL_DOOR_2 = Scenery.PRISON_DOOR_80
-        const val MAIN_DOOR = Scenery.DOOR_81
-
-        const val A_LAZY_GUARD_1 = Scenery.A_LAZY_KHAZARD_GUARD_41494
-        const val A_LAZY_GUARD_2 = Scenery.A_LAZY_KHAZARD_GUARD_41496
-        const val A_LAZY_GUARD_3 = Scenery.A_LAZY_KHAZARD_GUARD_41497
-
-        const val FULL_ARMOR_STAND = Scenery.A_SUIT_OF_ARMOUR_41490
-        val FULL_ARMOR_STAND_1 = getScenery(2619, 3196, 0)
-
-        private const val HELMET = Items.KHAZARD_HELMET_74
-        private const val ARMOR = Items.KHAZARD_ARMOUR_75
-        private const val CELL_KEY = Items.KHAZARD_CELL_KEYS_76
-
-        val Jeremy = NPC(NPCs.JEREMY_SERVIL_265, Location.create(2616, 3167, 0))
-        val General = GeneralNPC(NPCs.GENERAL_KHAZARD_258, Location.create(2605, 3156, 0))
     }
 }

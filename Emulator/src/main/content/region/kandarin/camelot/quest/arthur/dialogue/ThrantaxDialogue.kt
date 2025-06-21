@@ -1,7 +1,7 @@
 package content.region.kandarin.camelot.quest.arthur.dialogue
 
 import content.data.GameAttributes
-import content.region.kandarin.camelot.quest.arthur.plugin.ThrantaxTheMightyNPC
+import content.region.kandarin.camelot.quest.arthur.npc.ThrantaxTheMightyNPC
 import core.api.quest.setQuestStage
 import core.api.sendDialogue
 import core.api.sendDialogueOptions
@@ -18,6 +18,12 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Thrantax dialogue.
+ *
+ * Relations
+ * - [Merlin Crystal][content.region.kandarin.camelot.quest.arthur.MerlinCrystal]
+ */
 class ThrantaxDialogue : DialogueFile() {
     val options = arrayOf("Snarthanto Candon Termtrick", "Snarthtrick Candanto Termon", "Snarthon Candtrick Termanto")
     var correct = options[2]

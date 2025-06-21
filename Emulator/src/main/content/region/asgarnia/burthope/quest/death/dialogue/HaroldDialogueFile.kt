@@ -15,32 +15,31 @@ import org.rs.consts.Animations
 import org.rs.consts.Items
 import org.rs.consts.Quests
 
+/**
+ * Represents the Harold dialogue.
+ *
+ * Relations
+ * - [Death Plateau][content.region.asgarnia.burthope.quest.death.DeathPlateau]
+ */
 class HaroldDialogueFile : DialogueFile() {
+
     companion object {
         const val ATTRIBUTE_JUMPSTAGE = "deathplateau:jumpStage"
         const val ATTRIBUTE_HAROLD_MONEY = "/save:deathplateau:haroldMoney"
 
         fun resetNpc(player: Player) {
             setAttribute(player,
-                content.region.asgarnia.burthope.quest.death.dialogue.HaroldDialogueFile.Companion.ATTRIBUTE_JUMPSTAGE, 0)
+                ATTRIBUTE_JUMPSTAGE, 0)
             setAttribute(player,
-                content.region.asgarnia.burthope.quest.death.dialogue.HaroldDialogueFile.Companion.ATTRIBUTE_HAROLD_MONEY, 200)
+                ATTRIBUTE_HAROLD_MONEY, 200)
         }
     }
 
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
-        if (getAttribute(player!!,
-                content.region.asgarnia.burthope.quest.death.dialogue.HaroldDialogueFile.Companion.ATTRIBUTE_JUMPSTAGE, 0) != 0) {
-            stage = getAttribute(player!!,
-                content.region.asgarnia.burthope.quest.death.dialogue.HaroldDialogueFile.Companion.ATTRIBUTE_JUMPSTAGE, 0)
-            setAttribute(player!!,
-                content.region.asgarnia.burthope.quest.death.dialogue.HaroldDialogueFile.Companion.ATTRIBUTE_JUMPSTAGE, 0)
+    override fun handle(componentID: Int, buttonID: Int) {
+        if (getAttribute(player!!, ATTRIBUTE_JUMPSTAGE, 0) != 0) {
+            stage = getAttribute(player!!, ATTRIBUTE_JUMPSTAGE, 0)
+            setAttribute(player!!, ATTRIBUTE_JUMPSTAGE, 0)
         }
-        println(getAttribute(player!!,
-            content.region.asgarnia.burthope.quest.death.dialogue.HaroldDialogueFile.Companion.ATTRIBUTE_HAROLD_MONEY, -1))
         when (getQuestStage(player!!, Quests.DEATH_PLATEAU)) {
             10 -> {
                 when (stage) {
@@ -48,14 +47,9 @@ class HaroldDialogueFile : DialogueFile() {
                     1 -> npcl(FaceAnim.FRIENDLY, "Hi.").also { stage++ }
                     2 -> playerl(FaceAnim.FRIENDLY, "You're the guard that was on duty last night?").also { stage++ }
                     3 -> npcl(FaceAnim.FRIENDLY, "Yeah.").also { stage++ }
-                    4 ->
-                        playerl(
-                            FaceAnim.HAPPY,
-                            "Denulth said that you lost the combination to the equipment room?",
-                        ).also { stage++ }
+                    4 -> playerl(FaceAnim.HAPPY, "Denulth said that you lost the combination to the equipment room?").also { stage++ }
 
-                    5 ->
-                        npcl(FaceAnim.FRIENDLY, "I don't want to talk about it!").also {
+                    5 -> npcl(FaceAnim.FRIENDLY, "I don't want to talk about it!").also {
                             setQuestStage(player!!, Quests.DEATH_PLATEAU, 11)
                             stage = END_DIALOGUE
                         }

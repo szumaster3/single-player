@@ -1,5 +1,6 @@
 package content.region.asgarnia.taverley.quest.ball.plugin
 
+import content.region.asgarnia.taverley.quest.ball.npc.MouseNPC
 import core.api.*
 import core.game.interaction.NodeUsageEvent
 import core.game.interaction.OptionHandler

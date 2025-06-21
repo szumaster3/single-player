@@ -5,11 +5,8 @@ import core.game.world.repository.Repository
 import core.plugin.Plugin
 
 abstract class CommandPlugin : Plugin<Any?> {
-    abstract fun parse(
-        player: Player?,
-        name: String?,
-        args: Array<String?>?,
-    ): Boolean
+
+    abstract fun parse(player: Player?, name: String?, args: Array<String?>?, ): Boolean
 
     fun validate(player: Player?): Boolean = true
 
@@ -35,11 +32,7 @@ abstract class CommandPlugin : Plugin<Any?> {
 
         fun getArgumentLine(args: Array<String?>): String = getArgumentLine(args, 1, args.size)
 
-        fun getArgumentLine(
-            args: Array<String?>,
-            offset: Int,
-            length: Int,
-        ): String {
+        fun getArgumentLine(args: Array<String?>, offset: Int, length: Int, ): String {
             val sb = StringBuilder()
             for (i in offset until length) {
                 if (i != offset) {
@@ -51,10 +44,7 @@ abstract class CommandPlugin : Plugin<Any?> {
         }
 
         @JvmStatic
-        fun getTarget(
-            name: String?,
-            load: Boolean,
-        ): Player? = Repository.getPlayerByName(name)
+        fun getTarget(name: String?, load: Boolean, ): Player? = Repository.getPlayerByName(name)
 
         @JvmStatic
         fun getTarget(name: String?): Player? = Repository.getPlayerByName(name)

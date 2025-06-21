@@ -21,6 +21,7 @@ import org.rs.consts.Scenery
 class AlkharidPlugin : InteractionListener {
 
     override fun defineListeners() {
+
         /*
          * Handles talking to border guards.
          */

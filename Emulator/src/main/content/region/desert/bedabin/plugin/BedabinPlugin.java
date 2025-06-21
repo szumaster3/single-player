@@ -1,4 +1,4 @@
-package content.region.desert.bedabin.quest;
+package content.region.desert.bedabin.plugin;
 
 import core.cache.def.impl.NPCDefinition;
 import core.cache.def.impl.SceneryDefinition;
@@ -14,7 +14,7 @@ import core.plugin.Initializable;
 import core.plugin.Plugin;
 
 /**
- * The type Bedabin plugin.
+ * The Bedabin plugin.
  */
 @Initializable
 public final class BedabinPlugin extends OptionHandler {

@@ -1,5 +1,7 @@
 package content.minigame.pyramidplunder.plugin
 
+import content.minigame.pyramidplunder.npc.PyramidPlunderMummyNPC
+import content.minigame.pyramidplunder.npc.PyramidPlunderSwarmNPC
 import core.api.*
 import core.api.event.applyPoison
 import core.game.dialogue.DialogueFile

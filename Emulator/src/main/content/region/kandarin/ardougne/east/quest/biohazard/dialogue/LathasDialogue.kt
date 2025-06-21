@@ -8,45 +8,28 @@ import core.game.node.entity.npc.NPC
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Lathas dialogue.
+ *
+ * Relations
+ * - [Biohazard][content.region.kandarin.ardougne.east.quest.biohazard.Biohazard]
+ */
 class LathasDialogue : DialogueFile() {
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
+
+    override fun handle(componentID: Int, buttonID: Int) {
         val questStage = getQuestStage(player!!, Quests.BIOHAZARD)
         npc = NPC(NPCs.KING_LATHAS_364)
         when {
             (questStage >= 16) -> {
                 when (stage) {
-                    0 ->
-                        player(
-                            FaceAnim.SUSPICIOUS,
-                            "I assume that you are the King of East Ardougne?",
-                        ).also { stage++ }
-
-                    1 ->
-                        npc(
-                            FaceAnim.ANNOYED,
-                            "You assume correctly, but where do you get such",
-                            "impertinence.",
-                        ).also { stage++ }
-
+                    0 -> player(FaceAnim.SUSPICIOUS, "I assume that you are the King of East Ardougne?").also { stage++ }
+                    1 -> npc(FaceAnim.ANNOYED, "You assume correctly, but where do you get such", "impertinence.").also { stage++ }
                     2 -> player("I get it from finding out that the plague is a hoax.").also { stage++ }
                     3 -> npc("A hoax? I've never heard such a ridiculous thing...").also { stage++ }
                     4 -> player("I have evidence, from Guidor of Varrock.").also { stage++ }
-                    5 ->
-                        npc(
-                            "Ah... I see. Well then you are right about the plague.",
-                            "But I did it for the good of my people.",
-                        ).also { stage++ }
-
+                    5 -> npc("Ah... I see. Well then you are right about the plague.", "But I did it for the good of my people.").also { stage++ }
                     6 -> player("When is it ever good to lie to people like that?").also { stage++ }
-                    7 ->
-                        npc(
-                            "When it protects them from a far greater danger, a",
-                            "fear too big to fathom.",
-                        ).also { stage++ }
-
+                    7 -> npc("When it protects them from a far greater danger, a", "fear too big to fathom.").also { stage++ }
                     8 -> options("I don't understand...", "Well I've wasted enough of my time here.").also { stage++ }
                     9 ->
                         when (buttonID) {

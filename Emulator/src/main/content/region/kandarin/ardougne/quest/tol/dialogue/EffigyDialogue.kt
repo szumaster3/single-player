@@ -1,6 +1,6 @@
 package content.region.kandarin.ardougne.quest.tol.dialogue
 
-import content.region.kandarin.ardougne.quest.tol.plugin.TowerOfLifeUtils
+import content.data.GameAttributes
 import core.api.getAttribute
 import core.api.quest.getQuestStage
 import core.api.quest.setQuestStage
@@ -115,8 +115,7 @@ class EffigyDialogue(player: Player? = null) : Dialogue(player) {
                     }
                 }
 
-            3 ->
-                if (getAttribute(player, TowerOfLifeUtils.TOL_TOWER_ACCESS, 0) == 1) {
+            3 -> if (getAttribute(player, GameAttributes.TOL_TOWER_ACCESS, 0) == 1) {
                     when (stage) {
                         START_DIALOGUE -> playerl(FaceAnim.FRIENDLY, "Guess what!").also { stage++ }
                         1 -> npcl(FaceAnim.FRIENDLY, "What?").also { stage++ }
@@ -150,7 +149,7 @@ class EffigyDialogue(player: Player? = null) : Dialogue(player) {
                 }
 
             6 ->
-                if (getAttribute(player, TowerOfLifeUtils.TOL_CUTSCENE, false)) {
+                if (getAttribute(player, GameAttributes.TOL_CUTSCENE, false)) {
                     when (stage) {
                         START_DIALOGUE -> playerl(FaceAnim.FRIENDLY, "Effigy!").also { stage++ }
                         1 ->

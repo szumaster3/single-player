@@ -11,9 +11,13 @@ import org.rs.consts.Animations
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
-class UndergroundCutscene(
-    player: Player,
-) : Cutscene(player) {
+/**
+ * Represents the Underground cutscene.
+ *
+ * Relations
+ * - [Plague City][content.region.kandarin.ardougne.west.quest.elena.PlagueCity]
+ */
+class UndergroundCutscene(player: Player) : Cutscene(player) {
     override fun setup() {
         setExit(Location.create(2514, 9740, 0))
         if (player.settings.isRunToggled) {

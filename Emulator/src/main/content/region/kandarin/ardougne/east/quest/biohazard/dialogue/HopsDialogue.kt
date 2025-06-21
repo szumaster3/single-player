@@ -1,6 +1,6 @@
 package content.region.kandarin.ardougne.east.quest.biohazard.dialogue
 
-import content.region.kandarin.ardougne.east.quest.biohazard.plugin.BiohazardUtils
+import content.data.GameAttributes
 import core.api.*
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
@@ -8,11 +8,15 @@ import core.game.node.entity.npc.NPC
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Guidors Wife dialogue.
+ *
+ * Relations
+ * - [Biohazard][content.region.kandarin.ardougne.east.quest.biohazard.Biohazard]
+ */
 class HopsDialogue : DialogueFile() {
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
+
+    override fun handle(componentID: Int, buttonID: Int) {
         npc = NPC(NPCs.HOPS_340)
         when (stage) {
             0 -> player("Hi, I've got something for you to take to Varrock.").also { stage++ }
@@ -64,7 +68,7 @@ class HopsDialogue : DialogueFile() {
 
             7 -> {
                 end()
-                setAttribute(player!!, BiohazardUtils.THIRD_VIAL_CORRECT, true)
+                setAttribute(player!!, GameAttributes.THIRD_VIAL_CORRECT, true)
             }
 
             8 -> {
@@ -90,7 +94,7 @@ class HopsVarrockDialogue : DialogueFile() {
                 end()
                 sendMessage(player!!, "He gives you the vial of ethenea.")
                 addItemOrDrop(player!!, Items.SULPHURIC_BROLINE_417)
-                removeAttribute(player!!, BiohazardUtils.THIRD_VIAL_CORRECT)
+                removeAttribute(player!!, GameAttributes.THIRD_VIAL_CORRECT)
                 player("Thanks, I'll let you get your drink now.")
             }
         }

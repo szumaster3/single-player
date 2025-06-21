@@ -13,16 +13,18 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Bravek dialogue.
+ *
+ * Relations
+ * - [Plague City][content.region.kandarin.ardougne.west.quest.elena.PlagueCity]
+ */
 @Initializable
 class BravekDialogue(player: Player? = null) : Dialogue(player) {
 
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ): Boolean {
+    override fun handle(componentID: Int, buttonID: Int): Boolean {
         when (getQuestStage(player!!, Quests.PLAGUE_CITY)) {
-            13 ->
-                when (stage) {
+            13 -> when (stage) {
                     0 -> npcl(FaceAnim.NEUTRAL, "My head hurts! I'll speak to you another day...").also { stage++ }
                     1 -> options("This is really important though!", "Ok, goodbye.").also { stage++ }
                     2 ->

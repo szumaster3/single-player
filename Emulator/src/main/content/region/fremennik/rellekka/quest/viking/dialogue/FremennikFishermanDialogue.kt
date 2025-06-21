@@ -15,11 +15,14 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Fremennik Fisherman dialogue.
+ *
+ * Relations
+ * - [FremennikTrials]
+ */
 class FremennikFishermanDialogue : DialogueFile() {
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
+    override fun handle(componentID: Int, buttonID: Int) {
         npc = NPC(NPCs.FISHERMAN_1302)
         when (stage) {
             0 -> when {

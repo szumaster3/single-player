@@ -1,5 +1,6 @@
 package content.region.fremennik.rellekka.miniquest.shadow_maj.plugin
 
+import content.region.fremennik.rellekka.miniquest.shadow_maj.cutscene.CavernCutscene
 import core.api.*
 import core.game.dialogue.DialogueFile
 import core.game.interaction.IntType
@@ -9,7 +10,26 @@ import org.rs.consts.Items
 import org.rs.consts.Scenery
 
 class GeneralShadowPlugin : InteractionListener {
+
     override fun defineListeners() {
+        /*
+         * Handles enter to the Goblin temple.
+         */
+
+        on(Scenery.STAIRS_27543, IntType.SCENERY, "climb-down") { player, _ ->
+            teleport(player, Location.create(2784, 4241, 0))
+            return@on true
+        }
+
+        /*
+         * Handles exit from Goblin temple.
+         */
+
+        on(Scenery.DOOR_27332, IntType.SCENERY, "open") { player, _ ->
+            teleport(player, Location.create(2581, 9851, 0))
+            return@on true
+        }
+
         /*
          * Handles enter to the cave with bouncer (General Shadows mini-quest).
          */
@@ -60,24 +80,6 @@ class GeneralShadowPlugin : InteractionListener {
             } else {
                 sendMessage(player, "Nothing interesting happens.")
             }
-            return@on true
-        }
-
-        /*
-         * Handles enter to the Goblin temple.
-         */
-
-        on(Scenery.STAIRS_27543, IntType.SCENERY, "climb-down") { player, _ ->
-            teleport(player, Location.create(2784, 4241, 0))
-            return@on true
-        }
-
-        /*
-         * Handles exit from Goblin temple.
-         */
-
-        on(Scenery.DOOR_27332, IntType.SCENERY, "open") { player, _ ->
-            teleport(player, Location.create(2581, 9851, 0))
             return@on true
         }
     }

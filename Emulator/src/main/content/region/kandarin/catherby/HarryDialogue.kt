@@ -9,6 +9,9 @@ import core.plugin.Initializable
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Harry dialogue.
+ */
 @Initializable
 class HarryDialogue(player: Player? = null) : Dialogue(player) {
 

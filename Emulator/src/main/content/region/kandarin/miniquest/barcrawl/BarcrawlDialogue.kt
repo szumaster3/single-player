@@ -8,6 +8,9 @@ import core.game.system.task.Pulse
 import core.game.world.GameWorld.Pulser
 import core.plugin.Initializable
 
+/**
+ * Represents the Alfred Grimhand's Barcrawl activity dialogue.
+ */
 @Initializable
 class BarcrawlDialogue(player: Player? = null) : Dialogue(player) {
     

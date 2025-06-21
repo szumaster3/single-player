@@ -15,6 +15,9 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Arhein dialogue.
+ */
 @Initializable
 class ArheinDialogue(player: Player? = null) : Dialogue(player) {
 

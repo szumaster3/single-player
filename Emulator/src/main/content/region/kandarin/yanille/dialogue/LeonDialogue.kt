@@ -10,7 +10,6 @@ import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.plugin.Initializable
-import core.tools.END_DIALOGUE
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
@@ -19,11 +18,7 @@ class LeonDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
-        options(
-            "What is this place?",
-            "Can I have a go with your crossbow?",
-            "What are you holding there?",
-        ).also { stage = 1 }
+        options("What is this place?", "Can I have a go with your crossbow?", "What are you holding there?").also { stage = 1 }
         return true
     }
 
@@ -47,30 +42,17 @@ class LeonDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             10 -> {
-                npc(
-                    FaceAnim.HAPPY,
-                    "This is Aleck's Hunter Emporium. Basically, it's just a",
-                    "shop with fancy name; you can buy various weapons",
-                    "and traps here.",
-                )
-                stage = END_DIALOGUE
+                npc(FaceAnim.HAPPY, "This is Aleck's Hunter Emporium. Basically, it's just a", "shop with fancy name; you can buy various weapons", "and traps here.")
+                stage = 54
             }
 
             20 -> {
-                npc(
-                    FaceAnim.HALF_GUILTY,
-                    "I'm afraid with it being a prototype, I've only got a few",
-                    "for my own testing purposes.",
-                )
+                npc(FaceAnim.HALF_GUILTY, "I'm afraid with it being a prototype, I've only got a few", "for my own testing purposes.")
                 stage = 21
             }
 
             21 -> {
-                npc(
-                    FaceAnim.HALF_GUILTY,
-                    "Of course, for the right price, it might be worth my while",
-                    "to make another prototype.",
-                )
+                npc(FaceAnim.HALF_GUILTY, "Of course, for the right price, it might be worth my while", "to make another prototype.")
                 stage = 22
             }
 
@@ -108,28 +90,23 @@ class LeonDialogue(player: Player? = null) : Dialogue(player) {
 
             30 -> {
                 npc(FaceAnim.HAPPY, "This? This is a prototype for a new type of crossbow", "I've been designing.")
-                stage = END_DIALOGUE
+                stage = 54
             }
 
             40 -> if (!removeItem<Item>(player, Item(Items.COINS_995, 1300), Container.INVENTORY)) {
                 player(FaceAnim.HALF_GUILTY, "Oh, actually I don't have enough money with me.")
-                stage = END_DIALOGUE
+                stage = 54
             } else if (player.inventory.freeSlots() == 0) {
                 npc(
                     FaceAnim.HALF_GUILTY,
                     "Well, you look a little overburdened there at the moment.",
                     "Maybe you should free up some space to carry it in first.",
                 )
-                stage = END_DIALOGUE
+                stage = 54
             } else {
-                npc(
-                    FaceAnim.HALF_GUILTY,
-                    "Here, you might as well take this one.",
-                    "Aleck over there doesn't seem interested and it'll save you",
-                    "a wait.",
-                )
+                npc(FaceAnim.HALF_GUILTY, "Here, you might as well take this one.", "Aleck over there doesn't seem interested and it'll save you", "a wait.")
                 addItem(player, Items.HUNTERS_CROSSBOW_10156, 1, Container.INVENTORY)
-                stage = END_DIALOGUE
+                stage = 54
             }
 
             41 -> {
@@ -139,7 +116,7 @@ class LeonDialogue(player: Player? = null) : Dialogue(player) {
                     "probably become highly valuable and sought after once",
                     "I convince someone to market the things.",
                 )
-                stage = END_DIALOGUE
+                stage = 54
             }
 
             42 -> {
@@ -217,7 +194,7 @@ class LeonDialogue(player: Player? = null) : Dialogue(player) {
 
             50 -> {
                 player(FaceAnim.HALF_GUILTY, "Er, yes, of course.")
-                stage = END_DIALOGUE
+                stage = 54
             }
 
             51 -> {
@@ -241,8 +218,9 @@ class LeonDialogue(player: Player? = null) : Dialogue(player) {
 
             53 -> {
                 player(FaceAnim.HALF_GUILTY, "Great; thanks.")
-                stage = END_DIALOGUE
+                stage = 54
             }
+            54 -> end()
         }
         return true
     }

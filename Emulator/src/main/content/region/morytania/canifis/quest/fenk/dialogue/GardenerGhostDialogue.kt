@@ -1,6 +1,6 @@
 package content.region.morytania.canifis.quest.fenk.dialogue
 
-import content.region.morytania.canifis.quest.fenk.plugin.GardenerGhostNPC
+import content.region.morytania.canifis.quest.fenk.npc.GardenerGhostNPC
 import core.api.addItemOrDrop
 import core.api.openDialogue
 import core.api.quest.getQuestStage

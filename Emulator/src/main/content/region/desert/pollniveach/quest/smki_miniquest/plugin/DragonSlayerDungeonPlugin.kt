@@ -1,4 +1,4 @@
-package content.region.desert.quest.smki_miniquest.plugin
+package content.region.desert.pollniveach.quest.smki_miniquest.plugin
 
 import core.api.sendMessages
 import core.game.interaction.IntType

@@ -15,6 +15,12 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Handles the Bugs Chompy dialogue.
+ *
+ * Relations
+ * - [Big Chompy Bird Hunting][content.region.kandarin.feldip.quest.chompybird.BigChompyBirdHunting]
+ */
 @Initializable
 class BugsChompyDialogue(player: Player? = null) : Dialogue(player) {
 
@@ -40,9 +46,7 @@ class BugsChompyDialogue(player: Player? = null) : Dialogue(player) {
     override fun getIds(): IntArray = intArrayOf(NPCs.BUGS_1012)
 }
 
-class BugsChompyDialogueFile(
-    val quest: Quest,
-) : DialogueFile() {
+class BugsChompyDialogueFile(val quest: Quest, ) : DialogueFile() {
     override fun handle(
         componentID: Int,
         buttonID: Int,

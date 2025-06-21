@@ -1,6 +1,7 @@
 package content.region.fremennik.rellekka.quest.viking.dialogue
 
 import content.data.GameAttributes
+import content.region.fremennik.rellekka.quest.viking.FremennikTrials
 import core.api.addItemOrDrop
 import core.api.getAttribute
 import core.api.inInventory
@@ -14,6 +15,12 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Fremennik Sailor dialogue.
+ *
+ * Relations
+ * - [FremennikTrials]
+ */
 @Initializable
 class FremennikSailorDialogue(player: Player? = null) : Dialogue(player) {
 

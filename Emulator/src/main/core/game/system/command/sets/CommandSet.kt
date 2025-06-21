@@ -7,35 +7,25 @@ import core.game.system.command.Privilege
 import core.plugin.Plugin
 import core.tools.colorize
 
-abstract class CommandSet(
-    val defaultPrivilege: Privilege,
-) : Plugin<Any?> {
+abstract class CommandSet(val defaultPrivilege: Privilege) : Plugin<Any?> {
+
     override fun newInstance(arg: Any?): Plugin<Any?> {
         defineCommands()
         return this
     }
 
-    override fun fireEvent(
-        identifier: String?,
-        vararg args: Any?,
-    ): Any = Unit
+    override fun fireEvent(identifier: String?, vararg args: Any?, ): Any = Unit
 
     abstract fun defineCommands()
 
-    fun reject(
-        player: Player,
-        vararg message: String,
-    ) {
+    fun reject(player: Player, vararg message: String, ) {
         for (msg in message) {
             player.sendMessage(colorize("-->%R$msg"))
         }
         throw IllegalStateException()
     }
 
-    fun notify(
-        player: Player,
-        message: String,
-    ) {
+    fun notify(player: Player, message: String, ) {
         player.sendMessage(colorize("-->$message"))
     }
 

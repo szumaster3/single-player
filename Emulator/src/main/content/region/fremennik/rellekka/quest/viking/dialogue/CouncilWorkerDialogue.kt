@@ -12,15 +12,12 @@ import org.rs.consts.Quests
 
 private const val COUNCIL_WORKER = 1287
 
-class CouncilWorkerDialogue(
-    val questStage: Int,
-    var isBeerInteraction: Boolean = false,
-    val beerId: Int? = null,
-) : DialogueFile() {
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
+/**
+ * Represents the Council Worker dialogue file.
+ */
+class CouncilWorkerDialogue(val questStage: Int, var isBeerInteraction: Boolean = false, val beerId: Int? = null) : DialogueFile() {
+
+    override fun handle(componentID: Int, buttonID: Int) {
         if (isBeerInteraction) {
             when (stage) {
                 START_DIALOGUE -> {

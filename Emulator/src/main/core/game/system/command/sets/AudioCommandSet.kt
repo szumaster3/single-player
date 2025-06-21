@@ -13,6 +13,7 @@ import core.plugin.Initializable
 
 @Initializable
 class AudioCommandSet : CommandSet(Privilege.ADMIN) {
+
     override fun defineCommands() {
         define(
             name = "playsong",

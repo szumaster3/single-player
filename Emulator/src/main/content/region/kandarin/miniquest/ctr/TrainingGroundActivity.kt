@@ -1,6 +1,8 @@
 package content.region.kandarin.miniquest.ctr
 
 import content.data.GameAttributes
+import content.region.kandarin.miniquest.ctr.npc.KnightWavesNPC
+import content.region.kandarin.miniquest.ctr.npc.MerlinKnightWavesNPC
 import core.api.*
 import core.game.activity.ActivityManager
 import core.game.activity.ActivityPlugin

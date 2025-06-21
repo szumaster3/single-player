@@ -9,11 +9,7 @@ import org.rs.consts.Items
 /**
  * Enum representing different GrubFoot types.
  */
-enum class GrubFoot(
-    val id: Int,
-    val value: Int,
-    val mail: Item,
-) {
+enum class GrubFoot(val id: Int, val value: Int, val mail: Item, ) {
     NORMAL(4495, 1, Item(Items.GOBLIN_MAIL_288)),
     ORANGE(4497, 4, Item(Items.ORANGE_GOBLIN_MAIL_286)),
     BLUE(4498, 5, Item(Items.BLUE_GOBLIN_MAIL_287)),

@@ -15,6 +15,12 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Jethick dialogue.
+ *
+ * Relations
+ * - [Plague City][content.region.kandarin.ardougne.west.quest.elena.PlagueCity]
+ */
 @Initializable
 class JethickDialogue(player: Player? = null) : Dialogue(player) {
 
@@ -31,10 +37,7 @@ class JethickDialogue(player: Player? = null) : Dialogue(player) {
         return true
     }
 
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ): Boolean {
+    override fun handle(componentID: Int, buttonID: Int): Boolean {
         when (getQuestStage(player!!, Quests.PLAGUE_CITY)) {
             in 0..1 ->
                 when (stage) {

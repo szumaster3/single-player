@@ -6,6 +6,7 @@ import core.plugin.Initializable
 
 @Initializable
 class ConfigCommandSet : CommandSet(Privilege.ADMIN) {
+
     override fun defineCommands() {
         define(name = "sconfigrange", Privilege.ADMIN) { player, args ->
             if (args.size < 3) {

@@ -25,6 +25,7 @@ import kotlin.math.abs
 
 @Initializable
 class ModerationCommandSet : CommandSet(Privilege.MODERATOR) {
+
     override fun defineCommands() {
         val maxJailTime = 1800 // Max jail time (in seconds)
 

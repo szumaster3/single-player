@@ -6,9 +6,13 @@ import core.game.dialogue.DialogueFile
 import core.game.node.item.Item
 import org.rs.consts.Items
 
-class StrangeWallDialogue(
-    private val items: Int,
-) : DialogueFile() {
+/**
+ * Represents the Strange Wall dialogue.
+ *
+ * Relations
+ * - [Horror from the Deep][content.region.fremennik.lighthouse.quest.horror.HorrorFromTheDeep]
+ */
+class StrangeWallDialogue(private val items: Int) : DialogueFile() {
     private val itemAttributes = mapOf(
         Items.BRONZE_ARROW_882 to GameAttributes.QUEST_HFTD_USE_ARROW,
         Items.BRONZE_SWORD_1277 to GameAttributes.QUEST_HFTD_USE_SWORD,

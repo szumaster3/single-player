@@ -10,6 +10,12 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Jeremy Servil dialogue.
+ *
+ * Relations
+ * - [Fight Arena][content.region.kandarin.khazard.quest.arena.FightArena]
+ */
 @Initializable
 class JeremyServilDialogue(player: Player? = null) : Dialogue(player) {
 

@@ -12,11 +12,15 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Denulth dialogue.
+ *
+ * Relations
+ * - [Death Plateau][content.region.asgarnia.burthope.quest.death.DeathPlateau]
+ */
 class DenulthDialogueFile : DialogueFile() {
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
+
+    override fun handle(componentID: Int, buttonID: Int) {
         npc = NPC(NPCs.DENULTH_1060)
         when (getQuestStage(player!!, Quests.DEATH_PLATEAU)) {
             in 0..4 ->

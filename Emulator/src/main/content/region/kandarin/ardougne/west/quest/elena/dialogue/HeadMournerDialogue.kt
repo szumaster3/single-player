@@ -9,11 +9,15 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Head Mourner dialogue.
+ *
+ * Relations
+ * - [Plague City][content.region.kandarin.ardougne.west.quest.elena.PlagueCity]
+ */
 class HeadMournerDialogue : DialogueFile() {
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
+
+    override fun handle(componentID: Int, buttonID: Int) {
         npc = NPC(NPCs.HEAD_MOURNER_716)
         when (getQuestStage(player!!, Quests.PLAGUE_CITY)) {
             in 8..10 ->

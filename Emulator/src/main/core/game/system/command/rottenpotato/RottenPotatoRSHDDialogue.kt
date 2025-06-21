@@ -14,9 +14,7 @@ import core.plugin.Initializable
 import core.tools.colorize
 
 @Initializable
-class RottenPotatoRSHDDialogue(
-    player: Player? = null,
-) : Dialogue(player) {
+class RottenPotatoRSHDDialogue(player: Player? = null) : Dialogue(player) {
     val ID = 38575793
 
     override fun newInstance(player: Player?): Dialogue = RottenPotatoRSHDDialogue(player)

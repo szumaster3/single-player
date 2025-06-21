@@ -1,6 +1,6 @@
 /*package content.region.asgarnia.quest.wanted
 
-import content.region.asgarnia.falador.plugin.wkrank.WhiteKnightRankManager
+import content.region.asgarnia.falador.plugin.wkrank.plugin.WhiteKnightRankManager
 import org.rs.consts.Vars
 import core.api.addItemOrDrop
 import core.api.rewardXP

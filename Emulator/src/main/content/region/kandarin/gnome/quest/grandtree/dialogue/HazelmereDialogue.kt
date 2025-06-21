@@ -20,7 +20,7 @@ import org.rs.consts.Quests
  * Represents the Hazelmere dialogue.
  *
  * Relations:
- * [The Grand Tree][content.region.kandarin.quest.grandtree.TheGrandTree]
+ * [The Grand Tree][content.region.kandarin.gnome.quest.grandtree.TheGrandTree]
  */
 @Initializable
 class HazelmereDialogue(player: Player? = null) : Dialogue(player) {

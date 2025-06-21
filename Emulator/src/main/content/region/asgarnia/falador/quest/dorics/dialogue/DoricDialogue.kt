@@ -15,7 +15,13 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.Items
 import org.rs.consts.Quests
 
-class DoricDialogue(private val questStage: Int, ) : DialogueFile() {
+/**
+ * Represents the Doric dialogue file.
+ *
+ * Relations
+ * - [Dorics Quest][content.region.asgarnia.falador.quest.dorics.DoricsQuest]
+ */
+class DoricDialogue(private val questStage: Int) : DialogueFile() {
     override fun handle(componentID: Int, buttonID: Int, ) {
         when (questStage) {
             10 -> handleQuestStartDialogue(player, false)

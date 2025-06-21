@@ -19,6 +19,7 @@ import org.rs.consts.Quests
  */
 @Initializable
 class TreeGnomeScoutDialogue(player: Player? = null, ) : Dialogue(player) {
+
     override fun open(vararg args: Any?): Boolean {
         stage = END_DIALOGUE
 

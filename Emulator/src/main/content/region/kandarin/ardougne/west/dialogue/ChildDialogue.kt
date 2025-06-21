@@ -8,6 +8,9 @@ import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Child dialogue.
+ */
 @Initializable
 class ChildDialogue(player: Player? = null) : Dialogue(player) {
 

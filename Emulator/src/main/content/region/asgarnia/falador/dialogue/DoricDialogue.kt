@@ -17,6 +17,12 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Doric dialogue.
+ *
+ * Relations
+ * - [Dorics Quest][content.region.asgarnia.falador.quest.dorics.DoricsQuest]
+ */
 @Initializable
 class DoricDialogue(player: Player? = null) : Dialogue(player) {
 

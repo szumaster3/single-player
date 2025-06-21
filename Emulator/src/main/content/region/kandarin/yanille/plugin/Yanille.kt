@@ -9,6 +9,7 @@ import core.game.world.map.zone.ZoneBorders
 import org.rs.consts.Vars
 
 class Yanille : MapArea {
+
     override fun areaEnter(entity: Entity) {
         if (entity is Player && getAttribute(entity, "zfe:sithik-transformation", false)) {
             setVarbit(entity, Vars.VARBIT_QUEST_SITHIK_OGRE_TRANSFORMATION_495, 1, true)

@@ -10,6 +10,9 @@ import core.game.node.entity.skill.Skills
 import core.plugin.Initializable
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Hickton dialogue.
+ */
 @Initializable
 class HicktonDialogue(player: Player? = null) : Dialogue(player) {
 

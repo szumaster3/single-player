@@ -14,7 +14,7 @@ import org.rs.consts.Quests
  * Represents the Grubfoot dialogue.
  *
  * Relations
- * - [Goblin Diplomacy quest][content.region.asgarnia.quest.gobdip.GoblinDiplomacy]
+ * - [Goblin Diplomacy quest][content.region.asgarnia.gobvillage.quest.gobdip.GoblinDiplomacy]
  */
 class GrubfootDialogue(player: Player? = null) : Dialogue(player) {
 

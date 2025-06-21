@@ -14,6 +14,12 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Fortress Guard dialogue.
+ *
+ * Relations
+ * - [Black Knights Fortress][content.region.asgarnia.falador.quest.fortress.BlackKnightsFortress]
+ */
 @Initializable
 class FortressGuardDialogue(player: Player? = null) : Dialogue(player) {
 

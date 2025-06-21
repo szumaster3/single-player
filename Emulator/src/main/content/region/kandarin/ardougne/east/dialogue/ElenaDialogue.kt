@@ -11,13 +11,18 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Elena dialogue.
+ */
 @Initializable
 class ElenaDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (isQuestComplete(player, Quests.PLAGUE_CITY) && isQuestInProgress(player, Quests.BIOHAZARD, 0, 100)) {
-            end().also { openDialogue(player, ElenaDialogue()) }
+            end().also {
+                openDialogue(player, content.region.kandarin.ardougne.east.quest.biohazard.dialogue.ElenaDialogue())
+            }
         } else {
             npc("Hello.").also { stage = END_DIALOGUE }
         }

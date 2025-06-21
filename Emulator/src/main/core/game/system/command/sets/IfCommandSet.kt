@@ -6,6 +6,7 @@ import core.cache.def.impl.IfaceDefinition
 import core.game.system.command.Privilege
 
 class IfCommandSet : Commands {
+
     override fun defineCommands() {
         define(
             name = "iftriggers",

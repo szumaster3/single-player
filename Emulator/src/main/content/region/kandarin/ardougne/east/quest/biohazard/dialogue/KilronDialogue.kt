@@ -9,11 +9,15 @@ import core.game.world.map.Location
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Kilron dialogue.
+ *
+ * Relations
+ * - [Biohazard][content.region.kandarin.ardougne.east.quest.biohazard.Biohazard]
+ */
 class KilronDialogue : DialogueFile() {
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
+
+    override fun handle(componentID: Int, buttonID: Int) {
         val questStage = getQuestStage(player!!, Quests.BIOHAZARD)
         npc = NPC(NPCs.KILRON_349)
         when {

@@ -14,13 +14,15 @@ import org.rs.consts.NPCs
 import org.rs.consts.Quests
 import org.rs.consts.Scenery
 
-class MerlinDialogueFile(
-    val forced: Boolean,
-) : DialogueFile() {
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
+/**
+ * Represents the Merlin dialogue.
+ *
+ * Relations
+ * - [Merlin Crystal][content.region.kandarin.camelot.quest.arthur.MerlinCrystal]
+ */
+class MerlinDialogueFile(val forced: Boolean) : DialogueFile() {
+
+    override fun handle(componentID: Int, buttonID: Int, ) {
         npc = NPC(NPCs.MERLIN_249)
 
         when (stage) {

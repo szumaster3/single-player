@@ -1,6 +1,6 @@
 package content.region.kandarin.ardougne.quest.tol.cutscene
 
-import content.region.kandarin.ardougne.quest.tol.plugin.TowerOfLifeUtils
+import content.data.GameAttributes
 import core.api.setAttribute
 import core.game.activity.Cutscene
 import core.game.dialogue.FaceAnim
@@ -76,7 +76,7 @@ class TowerOfLifeCutscene(
                     "They've run away. I must go confront those alchemists downstairs.",
                 )
 
-            43 -> setAttribute(player, TowerOfLifeUtils.TOL_CUTSCENE, true)
+            43 -> setAttribute(player, GameAttributes.TOL_CUTSCENE, true)
         }
     }
 }

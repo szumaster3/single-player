@@ -1,7 +1,7 @@
 package content.region.misthalin.draynor.quest.haunted
 
-import content.region.misthalin.draynor.quest.haunted.plugin.ErnestChickenNPC
-import content.region.misthalin.draynor.quest.haunted.plugin.ErnestNPC
+import content.region.misthalin.draynor.quest.haunted.npc.ErnestChickenNPC
+import content.region.misthalin.draynor.quest.haunted.npc.ErnestNPC
 import core.api.removeAttributes
 import core.api.sendItemZoomOnInterface
 import core.api.sendMessage

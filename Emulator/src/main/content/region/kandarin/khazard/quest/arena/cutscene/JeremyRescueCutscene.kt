@@ -1,7 +1,7 @@
 package content.region.kandarin.khazard.quest.arena.cutscene
 
 import content.region.kandarin.khazard.quest.arena.plugin.FightArenaPlugin.Companion.Jeremy
-import content.region.kandarin.khazard.quest.arena.plugin.OgreNPC.Companion.spawnOgre
+import content.region.kandarin.khazard.quest.arena.npc.OgreNPC.Companion.spawnOgre
 import core.api.*
 import core.game.activity.Cutscene
 import core.game.dialogue.FaceAnim

@@ -39,6 +39,7 @@ import java.awt.datatransfer.StringSelection
 
 @Initializable
 class MiscCommandSet : CommandSet(Privilege.ADMIN) {
+
     override fun defineCommands() {
         define(
             name = "heal",

@@ -10,7 +10,8 @@ import org.rs.consts.Quests
 import org.rs.consts.Vars
 
 class RumDeal : Quest(Quests.RUM_DEAL, 107, 106, 2, Vars.VARP_QUEST_RUM_DEAL_PROGRESS_600, 0, 1, 19) {
-    override fun drawJournal(player: Player, stage: Int, ) {
+
+    override fun drawJournal(player: Player, stage: Int) {
         super.drawJournal(player, stage)
         var line = 12
         if (stage == 0) {

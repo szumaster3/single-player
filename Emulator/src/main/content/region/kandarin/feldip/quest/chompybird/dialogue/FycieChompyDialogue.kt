@@ -15,6 +15,12 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Flycie dialogue.
+ *
+ * Relations
+ * - [Big Chompy Bird Hunting][content.region.kandarin.feldip.quest.chompybird.BigChompyBirdHunting]
+ */
 @Initializable
 class FycieChompyDialogue(player: Player? = null) : Dialogue(player) {
     

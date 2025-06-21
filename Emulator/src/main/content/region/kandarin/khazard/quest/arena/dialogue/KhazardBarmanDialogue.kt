@@ -15,13 +15,16 @@ import org.rs.consts.Items.COINS_995
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Khazard Barman dialogue.
+ *
+ * Relations
+ * - [Fight Arena][content.region.kandarin.khazard.quest.arena.FightArena]
+ */
 @Initializable
 class KhazardBarmanDialogue(player: Player? = null) : Dialogue(player) {
 
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ): Boolean {
+    override fun handle(componentID: Int, buttonID: Int): Boolean {
         if (getQuestStage(player!!, Quests.FIGHT_ARENA) in 50..100) {
             when (stage) {
                 0 -> playerl(FaceAnim.HAPPY, "Hello.").also { stage++ }

@@ -11,6 +11,12 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Milli Rehnison dialogue.
+ *
+ * Relations
+ * - [Plague City][content.region.kandarin.ardougne.west.quest.elena.PlagueCity]
+ */
 @Initializable
 class MilliRehnisonDialogue(player: Player? = null) : Dialogue(player) {
     
@@ -24,33 +30,26 @@ class MilliRehnisonDialogue(player: Player? = null) : Dialogue(player) {
         return true
     }
 
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ): Boolean {
+    override fun handle(componentID: Int, buttonID: Int): Boolean {
         when (getQuestStage(player!!, Quests.PLAGUE_CITY)) {
-            9 ->
-                when (stage) {
-                    1 ->
-                        npcl(
-                            FaceAnim.CHILD_NORMAL,
-                            "*sniff* Yes I was near the south east corner when I saw Elena walking by. I was about to run to greet her when some men jumped out. They shoved a sack over her head and dragged her into a building.",
-                        ).also { stage++ }
+            9 -> when (stage) {
+                1 -> npcl(
+                    FaceAnim.CHILD_NORMAL,
+                    "*sniff* Yes I was near the south east corner when I saw Elena walking by. I was about to run to greet her when some men jumped out. They shoved a sack over her head and dragged her into a building."
+                ).also { stage++ }
 
-                    2 -> playerl(FaceAnim.FRIENDLY, "Which building?").also { stage++ }
-                    3 ->
-                        npcl(
-                            FaceAnim.CHILD_NORMAL,
-                            "It was the boarded up building with no windows in the south east corner of West Ardougne.",
-                        ).also { stage++ }
+                2 -> playerl(FaceAnim.FRIENDLY, "Which building?").also { stage++ }
+                3 -> npcl(
+                    FaceAnim.CHILD_NORMAL,
+                    "It was the boarded up building with no windows in the south east corner of West Ardougne."
+                ).also { stage++ }
 
-                    4 -> {
-                        end()
-                        setQuestStage(player!!, Quests.PLAGUE_CITY, 11)
-                        stage = END_DIALOGUE
-                    }
+                4 -> {
+                    end()
+                    setQuestStage(player!!, Quests.PLAGUE_CITY, 11)
+                    stage = END_DIALOGUE
                 }
-
+            }
             in 10..98 ->
                 when (stage) {
                     1 -> playerl(FaceAnim.FRIENDLY, "Not yet...").also { stage++ }

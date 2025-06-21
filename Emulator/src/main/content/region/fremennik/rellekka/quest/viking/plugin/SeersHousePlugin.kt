@@ -73,22 +73,8 @@ class SeersHousePlugin : InteractionListener {
     private val FULLJUG = Items.FULL_JUG_3729
     private val FROZENJUG = Items.FROZEN_JUG_3733
 
-    private val JUGS =
-        intArrayOf(
-            Items.EMPTY_JUG_3732,
-            Items.ONE_THIRDRDS_FULL_JUG_3731,
-            Items.TWO_THIRDSRDS_FULL_JUG_3730,
-            Items.FULL_JUG_3729,
-        )
-    private val BUCKETS =
-        intArrayOf(
-            Items.EMPTY_BUCKET_3727,
-            Items.ONE_5THS_FULL_BUCKET_3726,
-            Items.TWO_5THS_FULL_BUCKET_3725,
-            Items.THREE_5THS_FULL_BUCKET_3724,
-            Items.FOUR_5THS_FULL_BUCKET_3723,
-            Items.FULL_BUCKET_3722,
-        )
+    private val JUGS = intArrayOf(Items.EMPTY_JUG_3732, Items.ONE_THIRDRDS_FULL_JUG_3731, Items.TWO_THIRDSRDS_FULL_JUG_3730, Items.FULL_JUG_3729)
+    private val BUCKETS = intArrayOf(Items.EMPTY_BUCKET_3727, Items.ONE_5THS_FULL_BUCKET_3726, Items.TWO_5THS_FULL_BUCKET_3725, Items.THREE_5THS_FULL_BUCKET_3724, Items.FOUR_5THS_FULL_BUCKET_3723, Items.FULL_BUCKET_3722)
     private val DISKS = intArrayOf(Items.OLD_RED_DISK_9947, Items.RED_DISK_3743)
     private val EASTZONE = ZoneBorders(2635, 3662, 2637, 3664, 2)
     private val WESTZONE = ZoneBorders(2630, 3662, 2632, 3664, 2)

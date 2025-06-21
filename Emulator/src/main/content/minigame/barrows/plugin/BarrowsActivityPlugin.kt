@@ -1,5 +1,6 @@
 package content.minigame.barrows.plugin
 
+import content.minigame.barrows.npc.BarrowBrotherNPC
 import content.minigame.barrows.plugin.RewardChest.reward
 import core.api.*
 import core.api.ui.setMinimapState

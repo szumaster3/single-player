@@ -22,7 +22,7 @@ import org.rs.consts.Quests
  * Represents the Shipyard Worker dialogue.
  *
  * Relations:
- * [The Grand Tree][content.region.kandarin.quest.grandtree.TheGrandTree]
+ * [The Grand Tree][content.region.kandarin.gnome.quest.grandtree.TheGrandTree]
  */
 @Initializable
 class ShipyardWorkerDialogue(player: Player? = null) : Dialogue(player) {

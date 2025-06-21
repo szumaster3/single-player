@@ -17,6 +17,12 @@ import org.rs.consts.Items.CUP_OF_TEA_712
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Galahad dialogue.
+ *
+ * Relations
+ * - [Holy Grail][content.region.kandarin.camelot.quest.grail.HolyGrail]
+ */
 class GalahadDialogue : DialogueFile() {
     val STAGE_WHY_LEAVE = 40
     val STAGE_CUP_TEA = 5
@@ -26,10 +32,7 @@ class GalahadDialogue : DialogueFile() {
     var STAGE_GET_GOING = 60
     var STAGE_BETTER_GET_ON = 43
 
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
+    override fun handle(componentID: Int, buttonID: Int) {
         npc = NPC(NPCs.GALAHAD_218)
 
         when (stage) {

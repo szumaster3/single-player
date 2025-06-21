@@ -4,21 +4,9 @@ import core.ServerConstants
 import core.game.node.entity.player.Player
 import core.game.world.GameWorld
 
-/*
- * TODO
- *  [ ] - Replace to book interface.
- */
-class Command(
-    val name: String,
-    val privilege: Privilege,
-    val usage: String = "UNDOCUMENTED",
-    val description: String = "UNDOCUMENTED",
-    val handle: (Player, Array<String>) -> Unit,
-) {
-    fun attemptHandling(
-        player: Player,
-        args: Array<String>?,
-    ) {
+class Command(val name: String, val privilege: Privilege, val usage: String = "UNDOCUMENTED", val description: String = "UNDOCUMENTED", val handle: (Player, Array<String>) -> Unit) {
+
+    fun attemptHandling(player: Player, args: Array<String>?, ) {
         args ?: return
         if (player.rights.ordinal >= privilege.ordinal ||
             GameWorld.settings?.isDevMode == true ||

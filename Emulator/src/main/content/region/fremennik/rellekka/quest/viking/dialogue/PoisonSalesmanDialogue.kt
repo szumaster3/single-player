@@ -1,5 +1,6 @@
 package content.region.fremennik.rellekka.quest.viking.dialogue
 
+import content.region.fremennik.rellekka.quest.viking.FremennikTrials
 import content.region.kandarin.seers.quest.murder.dialogue.PoisonSalesmanDialogueFile
 import core.api.addItemOrDrop
 import core.api.openDialogue
@@ -15,6 +16,13 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Poison Salesman dialogue.
+ *
+ * Relations
+ * - [FremennikTrials]
+ * - [Murder Mystery][content.region.kandarin.seers.quest.murder.MurderMystery]
+ */
 @Initializable
 class PoisonSalesmanDialogue(player: Player? = null) : Dialogue(player) {
 

@@ -9,7 +9,14 @@ import core.game.dialogue.DialogueInterpreter
 import core.game.node.entity.player.Player
 import core.game.world.map.Location
 
+/**
+ * Represents the Jogre Cavern dialogue.
+ *
+ * Relations
+ * - [JunglePotion][content.region.karamja.taibwo.quest.junglepotion.JunglePotion]
+ */
 class JogreCavernDialogue(player: Player? = null) : Dialogue(player) {
+
     override fun open(vararg args: Any?): Boolean {
         if (args.size > 1) {
             sendDialogue(player, "You attempt to climb the rocks back out.")

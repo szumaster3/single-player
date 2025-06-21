@@ -1,6 +1,6 @@
 package content.region.desert.quest.rescue;
 
-import content.region.desert.quest.rescue.plugin.LadyKeliNPC;
+import content.region.desert.quest.rescue.npc.LadyKeliNPC;
 import content.region.desert.quest.rescue.plugin.PrinceAliRescuePlugin;
 import core.game.node.entity.player.Player;
 import core.game.node.entity.player.link.quest.Quest;

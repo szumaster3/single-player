@@ -1,6 +1,7 @@
 package content.region.fremennik.rellekka.quest.viking.dialogue
 
 import content.data.GameAttributes
+import content.region.fremennik.rellekka.quest.viking.FremennikTrials
 import core.api.*
 import core.api.quest.isQuestComplete
 import core.game.dialogue.Dialogue
@@ -12,6 +13,12 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Thorval dialogue.
+ *
+ * Relations
+ * - [FremennikTrials]
+ */
 @Initializable
 class ThorvalDialogue(player: Player? = null) : Dialogue(player) {
 

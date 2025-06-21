@@ -1,7 +1,6 @@
 package content.region.fremennik.dialogue
 
 import content.region.fremennik.rellekka.quest.viking.dialogue.CouncilWorkerDialogue
-import content.region.misthalin.diary.CouncilWorkmanDiaryDialogue
 import core.api.openDialogue
 import core.api.quest.getQuestStage
 import core.game.dialogue.Dialogue
@@ -11,6 +10,9 @@ import core.plugin.Initializable
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Council Workman dialogue.
+ */
 @Initializable
 class CouncilWorkmanDialogue(player: Player? = null) : Dialogue(player) {
 

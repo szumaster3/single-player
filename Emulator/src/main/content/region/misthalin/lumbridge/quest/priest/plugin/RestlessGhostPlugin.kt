@@ -1,5 +1,7 @@
 package content.region.misthalin.lumbridge.quest.priest.plugin
 
+import content.region.misthalin.lumbridge.quest.priest.cutscene.RestlessGhostCutscene
+import content.region.misthalin.lumbridge.quest.priest.npc.RestlessGhostNPC
 import core.api.*
 import core.api.quest.getQuestStage
 import core.api.quest.isQuestComplete

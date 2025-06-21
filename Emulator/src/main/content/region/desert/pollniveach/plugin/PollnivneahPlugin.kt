@@ -14,26 +14,29 @@ import org.rs.consts.Scenery
 
 class PollnivneahPlugin : InteractionListener {
 
-    companion object {
-        private const val BAR_TABLE = Scenery.TABLE_6246
-        private const val BARMAN = NPCs.ALI_THE_BARMAN_1864
-        private const val BANDIT = NPCs.BANDIT_6388
-        private const val CAMEL = NPCs.ALI_THE_CAMEL_1873
-        private const val MONEY_POT = Scenery.MONEY_POT_6230
-        private const val COINS = Items.COINS_995
-        private const val SNAKE_CHARMER = NPCs.ALI_THE_SNAKE_CHARMER_1872
-    }
-
     override fun defineListeners() {
-        on(CAMEL, IntType.NPC, "talk-to") { player, _ ->
-            openDialogue(player, CAMEL)
+
+        /*
+         * Handles talking to camels.
+         */
+
+        on(NPCs.ALI_THE_CAMEL_1873, IntType.NPC, "talk-to") { player, node ->
+            openDialogue(player, NPCs.ALI_THE_CAMEL_1873, node)
             return@on true
         }
 
-        on(BARMAN, IntType.NPC, "talk-to") { player, _ ->
+        /*
+         * Handles talking to barman.
+         */
+
+        on(NPCs.ALI_THE_BARMAN_1864, IntType.NPC, "talk-to") { player, _ ->
             openDialogue(player, AliTheBarmanDialogue())
             return@on true
         }
+
+        /*
+         * Handles talking to bandits.
+         */
 
         on(NPCs.BANDIT_6388, IntType.NPC, "talk-to") { player, node ->
             sendNPCDialogue(player, node.id, "Go away.", FaceAnim.ANNOYED)
@@ -44,7 +47,7 @@ class PollnivneahPlugin : InteractionListener {
          * Handles taking the beer from the bar table.
          */
 
-        on(BAR_TABLE, IntType.SCENERY, "take-beer") { player, node ->
+        on(Scenery.TABLE_6246, IntType.SCENERY, "take-beer") { player, node ->
             if (freeSlots(player) < 1) {
                 sendDialogue(player, "You don't have enough inventory space.")
             } else {
@@ -56,16 +59,20 @@ class PollnivneahPlugin : InteractionListener {
             return@on true
         }
 
-        onUseWith(IntType.SCENERY, MONEY_POT, COINS) { player, _, _ ->
+        /*
+         * Handles using coins on money pot.
+         */
+
+        onUseWith(IntType.SCENERY, Items.COINS_995, Scenery.MONEY_POT_6230) { player, _, _ ->
             if (removeItem(player, Item(Items.COINS_995, 3))) {
-                player.dialogueInterpreter.open(SNAKE_CHARMER, true)
+                player.dialogueInterpreter.open(NPCs.ALI_THE_SNAKE_CHARMER_1872, true)
             }
             return@onUseWith true
         }
     }
 
     override fun defineDestinationOverrides() {
-        setDest(IntType.NPC, intArrayOf(BARMAN), "talk-to") { _, _ ->
+        setDest(IntType.NPC, NPCs.ALI_THE_BARMAN_1864) { _, _ ->
             return@setDest Location.create(3361, 2956, 0)
         }
     }

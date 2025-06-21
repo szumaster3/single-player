@@ -1,6 +1,6 @@
 package content.region.fremennik.rellekka.dialogue
 
-import content.region.fremennik.plugin.FremennikTransportation.sail
+import content.region.fremennik.plugin.FremennikShipHelper.sail
 import content.region.fremennik.plugin.Travel
 import core.api.*
 import core.api.quest.isQuestComplete

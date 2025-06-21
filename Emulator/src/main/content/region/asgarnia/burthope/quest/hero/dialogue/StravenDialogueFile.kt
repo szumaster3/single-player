@@ -10,6 +10,12 @@ import core.game.dialogue.DialogueBuilderFile
 import org.rs.consts.Items
 import org.rs.consts.Quests
 
+/**
+ * Represents the Straven dialogue file.
+ *
+ * Relations
+ * - [Heroes Quest][content.region.asgarnia.burthope.quest.hero.HeroesQuest]
+ */
 class StravenDialogueFile : DialogueBuilderFile() {
     override fun create(b: DialogueBuilder) {
         b

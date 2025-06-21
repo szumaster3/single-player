@@ -24,6 +24,7 @@ import static core.api.ContentAPIKt.*;
  */
 @Initializable
 public class WallPipePlugin extends PluginInteraction {
+
     @Override
     public Plugin<Object> newInstance(Object arg) throws Throwable {
         setIds(new int[]{Items.GARLIC_1550, 41});

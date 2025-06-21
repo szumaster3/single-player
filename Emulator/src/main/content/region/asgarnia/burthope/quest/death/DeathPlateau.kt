@@ -12,16 +12,12 @@ import org.rs.consts.Quests
 
 @Initializable
 class DeathPlateau : Quest(Quests.DEATH_PLATEAU, 44, 43, 1, 314, 0, 1, 80) {
-    override fun drawJournal(
-        player: Player,
-        stage: Int,
-    ) {
+
+    override fun drawJournal(player: Player, stage: Int) {
         super.drawJournal(player, stage)
         var line = 12
         var stage = getStage(player)
-
         var started = player.questRepository?.getStage(Quests.DEATH_PLATEAU)!! > 0
-
         if (!started) {
             line(player, "I can start this quest by speaking to !!Denulth?? who is in his", line++)
             line(player, "tent at the !!Imperial Guard camp?? in !!Burthorpe??.", line++)

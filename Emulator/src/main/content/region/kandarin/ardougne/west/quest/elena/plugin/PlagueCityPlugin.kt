@@ -28,7 +28,14 @@ import core.game.world.map.Location
 import core.game.world.map.RegionManager.getObject
 import org.rs.consts.*
 
+/**
+ * Represents the Plague City plugin.
+ *
+ * Relations
+ * - [Plague City][content.region.kandarin.ardougne.west.quest.elena.PlagueCity]
+ */
 class PlagueCityPlugin : InteractionListener {
+
     companion object {
         const val BUCKET_USES_ATTRIBUTE = "/save:elena:bucket"
         const val TIED_ROPE_VARBIT = Vars.VARP_QUEST_PLAGUE_CITY_TIED_ROPE_1787

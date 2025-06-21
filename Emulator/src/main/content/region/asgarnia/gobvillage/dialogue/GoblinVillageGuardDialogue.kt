@@ -7,6 +7,9 @@ import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Goblin Village guards dialogue.
+ */
 @Initializable
 class GoblinVillageGuardDialogue(player: Player? = null) : Dialogue(player) {
     

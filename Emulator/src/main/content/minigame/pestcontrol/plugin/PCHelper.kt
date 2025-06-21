@@ -1,7 +1,7 @@
 package content.minigame.pestcontrol.plugin
 
-import content.minigame.pestcontrol.plugin.bots.PestControlIntermediateBot
-import content.minigame.pestcontrol.plugin.bots.PestControlNoviceBot
+import content.minigame.pestcontrol.bots.PestControlIntermediateBot
+import content.minigame.pestcontrol.bots.PestControlNoviceBot
 import core.game.node.entity.player.Player
 import core.game.world.map.Location
 import core.game.world.map.zone.ZoneBorders

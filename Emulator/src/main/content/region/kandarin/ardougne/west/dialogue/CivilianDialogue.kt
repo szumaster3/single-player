@@ -11,6 +11,9 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Civilian dialogue.
+ */
 @Initializable
 class CivilianDialogue(player: Player? = null) : Dialogue(player) {
 

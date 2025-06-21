@@ -55,40 +55,40 @@ class FremennikPlugin : OptionHandler() {
             // Maria Gunnars - Rellekka - Neitiznot
             NPCs.MARIA_GUNNARS_5508 -> {
                 if (!requireQuest(player, Quests.THE_FREMENNIK_TRIALS, "")) return true
-                FremennikTransportation.sail(player, Travel.RELLEKKA_TO_NEITIZNOT)
+                FremennikShipHelper.sail(player, Travel.RELLEKKA_TO_NEITIZNOT)
             }
             // Mord Gunnars - Rellekka - Jatizso
-            NPCs.MARIA_GUNNARS_5507 -> FremennikTransportation.sail(player, Travel.NEITIZNOT_TO_RELLEKKA)
-            NPCs.MORD_GUNNARS_5482 -> FremennikTransportation.sail(player, Travel.JATIZSO_TO_RELLEKKA)
+            NPCs.MARIA_GUNNARS_5507 -> FremennikShipHelper.sail(player, Travel.NEITIZNOT_TO_RELLEKKA)
+            NPCs.MORD_GUNNARS_5482 -> FremennikShipHelper.sail(player, Travel.JATIZSO_TO_RELLEKKA)
             NPCs.MORD_GUNNARS_5481 -> {
                 if (!requireQuest(player, Quests.THE_FREMENNIK_TRIALS, "")) return true
-                FremennikTransportation.sail(player, Travel.RELLEKKA_TO_JATIZSO)
+                FremennikShipHelper.sail(player, Travel.RELLEKKA_TO_JATIZSO)
             }
             // Sailors - Rellekka - Miscellania
             NPCs.SAILOR_1385 -> {
                 if (!requireQuest(player, Quests.THE_FREMENNIK_TRIALS, "")) return true
-                FremennikTransportation.sail(player, Travel.RELLEKKA_TO_MISC)
+                FremennikShipHelper.sail(player, Travel.RELLEKKA_TO_MISC)
             }
             NPCs.SAILOR_1304 -> {
                 if (!requireQuest(player, Quests.THE_FREMENNIK_TRIALS, "")) return true
-                FremennikTransportation.sail(player, Travel.MISC_TO_RELLEKKA)
+                FremennikShipHelper.sail(player, Travel.MISC_TO_RELLEKKA)
             }
             // Iceberg - Rellekka
             Scenery.BOAT_21175 -> {
                 if (loc == Location(2654, 3985, 1)) {
-                    FremennikTransportation.sail(player, Travel.ICEBERG_TO_RELLEKKA)
+                    FremennikShipHelper.sail(player, Travel.ICEBERG_TO_RELLEKKA)
                 }
             }
             // Rellekka - Iceberg
             Scenery.BOAT_21176 -> {
                 if (loc == Location(2708, 3732)) {
                     when (option.lowercase()) {
-                        "iceberg" -> FremennikTransportation.sail(player, Travel.RELLEKKA_TO_ICEBERG)
+                        "iceberg" -> FremennikShipHelper.sail(player, Travel.RELLEKKA_TO_ICEBERG)
                         "travel" -> {
                             setTitle(player, 2)
                             sendDialogueOptions(player, "Where would you like to travel?", "Iceberg", "Stay here")
                             addDialogueAction(player) { _, button ->
-                                if (button == 1) FremennikTransportation.sail(player, Travel.RELLEKKA_TO_ICEBERG)
+                                if (button == 1) FremennikShipHelper.sail(player, Travel.RELLEKKA_TO_ICEBERG)
                                 else closeDialogue(player)
                             }
                         }
@@ -99,7 +99,7 @@ class FremennikPlugin : OptionHandler() {
             2435, NPCs.JARVALD_2436, NPCs.JARVALD_2437, NPCs.JARVALD_2438 -> {
                 dialogue(player) {
                     options("Leave island?", "YES", "NO") { opt ->
-                        if (node.id == 2438 && opt == 1) FremennikTransportation.sail(
+                        if (node.id == 2438 && opt == 1) FremennikShipHelper.sail(
                             player,
                             Travel.WATERBIRTH_TO_RELLEKKA
                         ) else
@@ -107,7 +107,7 @@ class FremennikPlugin : OptionHandler() {
                             npc(node.id, FaceAnim.HALF_ASKING, "So do you have the 1000 coins for my service, and are you ready to leave now?")
                             options(null, "YES", "NO") { option ->
                                 if (option == 1) removeItem(player, Item(Items.COINS_995, 1000))
-                                FremennikTransportation.sail(player, Travel.RELLEKKA_TO_WATERBIRTH)
+                                FremennikShipHelper.sail(player, Travel.RELLEKKA_TO_WATERBIRTH)
                             }
                         }
                     }

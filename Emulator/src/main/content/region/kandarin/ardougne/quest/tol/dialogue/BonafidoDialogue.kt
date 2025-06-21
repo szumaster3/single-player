@@ -1,6 +1,6 @@
 package content.region.kandarin.ardougne.quest.tol.dialogue
 
-import content.region.kandarin.ardougne.quest.tol.plugin.TowerOfLifeUtils
+import content.data.GameAttributes
 import core.api.getAttribute
 import core.api.hasAnItem
 import core.api.quest.getQuestStage
@@ -97,7 +97,7 @@ class BonafidoDialogue(player: Player? = null) : Dialogue(player) {
                     13 -> {
                         end()
                         setQuestStage(player, Quests.TOWER_OF_LIFE, 2)
-                        setAttribute(player, TowerOfLifeUtils.BUILDER_COSTUME, 0)
+                        setAttribute(player, GameAttributes.TOL_BUILDER_COSTUME, 0)
                     }
                 }
 
@@ -305,7 +305,7 @@ class BonafidoDialogue(player: Player? = null) : Dialogue(player) {
                         45 -> playerl(FaceAnim.FRIENDLY, "Thanks!").also { stage = END_DIALOGUE }
                     }
                 } else {
-                    if (getAttribute(player, TowerOfLifeUtils.TOL_TOWER_ACCESS, 0) == 1) {
+                    if (getAttribute(player, GameAttributes.TOL_TOWER_ACCESS, 0) == 1) {
                         when (stage) {
                             0 -> playerl(FaceAnim.FRIENDLY, "Hi again Bonafido.").also { stage++ }
                             1 ->
@@ -386,7 +386,7 @@ class BonafidoDialogue(player: Player? = null) : Dialogue(player) {
                 }
 
             6 ->
-                if (getAttribute(player, TowerOfLifeUtils.TOL_CUTSCENE, false)) {
+                if (getAttribute(player, GameAttributes.TOL_CUTSCENE, false)) {
                     when (stage) {
                         START_DIALOGUE ->
                             playerl(

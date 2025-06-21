@@ -1,7 +1,7 @@
 package content.region.asgarnia.gobvillage.quest.gobdip
 
 import content.region.asgarnia.gobvillage.quest.gobdip.dialogue.GrubfootDialogue
-import content.region.asgarnia.gobvillage.quest.gobdip.plugin.GoblinDiplomacyCutscene
+import content.region.asgarnia.gobvillage.quest.gobdip.cutscene.GoblinDiplomacyCutscene
 import core.api.addItemOrDrop
 import core.api.inInventory
 import core.api.quest.updateQuestTab
@@ -19,10 +19,8 @@ import org.rs.consts.Vars
 
 @Initializable
 class GoblinDiplomacy : Quest(Quests.GOBLIN_DIPLOMACY, 20, 19, 5, Vars.VARP_QUEST_GOBLIN_DIPLOMACY_QUEST_PROGRESS_62, 0, 1, 100) {
-    override fun drawJournal(
-        player: Player,
-        stage: Int,
-    ) {
+
+    override fun drawJournal(player: Player, stage: Int) {
         super.drawJournal(player, stage)
         var line = 11
         when (stage) {

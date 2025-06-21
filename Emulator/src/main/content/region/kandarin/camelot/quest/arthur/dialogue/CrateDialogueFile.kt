@@ -11,11 +11,15 @@ import core.game.world.update.flag.context.Animation
 import core.tools.END_DIALOGUE
 import org.rs.consts.Animations
 
+/**
+ * Represents the Crate dialogue.
+ *
+ * Relations
+ * - [Merlin Crystal][content.region.kandarin.camelot.quest.arthur.MerlinCrystal]
+ */
 class CrateDialogueFile : DialogueFile() {
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
+
+    override fun handle(componentID: Int, buttonID: Int) {
         when (stage) {
             0 -> {
                 sendDialogueLines(player!!, "The crate is empty. It's just about big enough to hide inside.")

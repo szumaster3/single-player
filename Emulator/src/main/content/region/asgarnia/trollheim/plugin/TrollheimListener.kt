@@ -8,6 +8,7 @@ import core.game.world.map.Location
 import org.rs.consts.Scenery
 
 class TrollheimListener : InteractionListener {
+
     override fun defineListeners() {
         on(intArrayOf(Scenery.CAVE_ENTRANCE_3759, Scenery.CAVE_ENTRANCE_3735), IntType.SCENERY, "enter") { player, node ->
             if (node.id == Scenery.CAVE_ENTRANCE_3759) {

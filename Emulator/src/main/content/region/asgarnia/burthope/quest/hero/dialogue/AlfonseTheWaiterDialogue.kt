@@ -16,6 +16,12 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Alfonse The Waiter dialogue.
+ *
+ * Relations
+ * - [HeroesQuest]
+ */
 @Initializable
 class AlfonseTheWaiterDialogue(player: Player? = null) : Dialogue(player) {
 
@@ -56,6 +62,12 @@ class AlfonseTheWaiterDialogue(player: Player? = null) : Dialogue(player) {
     override fun getIds(): IntArray = intArrayOf(NPCs.ALFONSE_THE_WAITER_793)
 }
 
+/**
+ * Represents the Alfonse The Waiter dialogue file.
+ *
+ * Relations
+ * - [Heroes Quest][content.region.asgarnia.burthope.quest.hero.HeroesQuest]
+ */
 class AlfonseTheWaiterDialogueFile : DialogueBuilderFile() {
     override fun create(b: DialogueBuilder) {
         b

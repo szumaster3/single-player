@@ -1,7 +1,7 @@
 package content.region.kandarin.camelot.quest.arthur.dialogue
 
 import content.data.GameAttributes
-import content.region.kandarin.camelot.quest.arthur.plugin.BeggarNPC
+import content.region.kandarin.camelot.quest.arthur.npc.BeggarNPC
 import core.api.sendDialogue
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
@@ -16,13 +16,15 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
-class BeggarDialogueFile(
-    val door: Scenery?,
-) : DialogueFile() {
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
+/**
+ * Represents the Beggar dialogue.
+ *
+ * Relations
+ * - [Merlin Crystal][content.region.kandarin.camelot.quest.arthur.MerlinCrystal]
+ */
+class BeggarDialogueFile(val door: Scenery?) : DialogueFile() {
+
+    override fun handle(componentID: Int, buttonID: Int) {
         npc = NPC(NPCs.BEGGAR_252)
 
         when (stage) {

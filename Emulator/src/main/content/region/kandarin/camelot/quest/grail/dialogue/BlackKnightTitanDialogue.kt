@@ -9,13 +9,14 @@ import core.game.world.repository.Repository
 import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 
-class BlackKnightTitanDialogue(
-    val forced: Boolean,
-) : DialogueFile() {
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
+/**
+ * Represents the Black Knight Titan dialogue.
+ *
+ * Relations
+ * - [Holy Grail][content.region.kandarin.camelot.quest.grail.HolyGrail]
+ */
+class BlackKnightTitanDialogue(val forced: Boolean, ) : DialogueFile() {
+    override fun handle(componentID: Int, buttonID: Int, ) {
         npc = NPC(NPCs.BLACK_KNIGHT_TITAN_221)
 
         if (!forced) {

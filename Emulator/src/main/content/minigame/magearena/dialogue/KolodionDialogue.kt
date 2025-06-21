@@ -1,6 +1,6 @@
 package content.minigame.magearena.dialogue
 
-import content.minigame.magearena.plugin.KolodionSession
+import content.minigame.magearena.npc.KolodionSession
 import core.api.animate
 import core.api.getStatLevel
 import core.api.visualize

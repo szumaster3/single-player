@@ -17,7 +17,7 @@ import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
 /**
- * Represents Sir Kay dialogue.
+ * Represents the Sir Kay dialogue.
  */
 @Initializable
 class SirKayDialogue(player: Player? = null) : Dialogue(player) {

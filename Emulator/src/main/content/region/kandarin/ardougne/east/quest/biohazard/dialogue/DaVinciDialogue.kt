@@ -1,17 +1,21 @@
 package content.region.kandarin.ardougne.east.quest.biohazard.dialogue
 
-import content.region.kandarin.ardougne.east.quest.biohazard.plugin.BiohazardUtils
+import content.data.GameAttributes
 import core.api.*
 import core.game.dialogue.DialogueFile
 import core.game.node.entity.npc.NPC
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Da Vinci dialogue.
+ *
+ * Relations
+ * - [Biohazard][content.region.kandarin.ardougne.east.quest.biohazard.Biohazard]
+ */
 class DaVinciDialogue : DialogueFile() {
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
+
+    override fun handle(componentID: Int, buttonID: Int) {
         npc = NPC(NPCs.DA_VINCI_336)
         when (stage) {
             0 -> player("Hello, I hear you're an errand boy for the chemist.").also { stage++ }
@@ -67,7 +71,7 @@ class DaVinciDialogue : DialogueFile() {
             6 -> npc("That's right.").also { stage++ }
             7 -> {
                 end()
-                setAttribute(player!!, BiohazardUtils.SECOND_VIAL_CORRECT, true)
+                setAttribute(player!!, GameAttributes.SECOND_VIAL_CORRECT, true)
             }
 
             8 -> {
@@ -92,7 +96,7 @@ class DaVinciVarrockDialogue : DialogueFile() {
                 sendMessage(player!!, "He gives you the vial of ethenea.")
                 player("Thanks, you've been a big help.")
                 addItemOrDrop(player!!, Items.ETHENEA_415)
-                removeAttribute(player!!, BiohazardUtils.SECOND_VIAL_CORRECT)
+                removeAttribute(player!!, GameAttributes.SECOND_VIAL_CORRECT)
             }
         }
     }

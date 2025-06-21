@@ -1,6 +1,7 @@
 package content.region.asgarnia.rimmington.dialogue
 
-import content.region.kandarin.ardougne.east.quest.biohazard.plugin.BiohazardUtils
+import content.data.GameAttributes
+import content.region.kandarin.ardougne.east.quest.biohazard.dialogue.HopsDialogue
 import core.api.getAttribute
 import core.api.openDialogue
 import core.api.quest.getQuestStage
@@ -22,7 +23,7 @@ class HopsDialogue(player: Player? = null) : Dialogue(player) {
                 end()
                 if (getQuestStage(player, Quests.BIOHAZARD) < 1) {
                     sendDialogue(player, "Hops doesn't feel like talking.")
-                } else if (getAttribute(player, BiohazardUtils.THIRD_VIAL_CORRECT, true)) {
+                } else if (getAttribute(player, GameAttributes.THIRD_VIAL_CORRECT, true)) {
                     openDialogue(player, HopsDialogue())
                 } else {
                     npcl(FaceAnim.NEUTRAL, "I suppose I'd better get going. I'll meet you at the Dancing Donkey Inn.")

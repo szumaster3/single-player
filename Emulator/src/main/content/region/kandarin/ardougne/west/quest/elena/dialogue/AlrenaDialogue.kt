@@ -15,6 +15,12 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Alrena dialogue.
+ *
+ * Relations
+ * - [Plague City][content.region.kandarin.ardougne.west.quest.elena.PlagueCity]
+ */
 @Initializable
 class AlrenaDialogue(player: Player? = null) : Dialogue(player) {
 
@@ -28,10 +34,7 @@ class AlrenaDialogue(player: Player? = null) : Dialogue(player) {
         return true
     }
 
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ): Boolean {
+    override fun handle(componentID: Int, buttonID: Int): Boolean {
         when (getQuestStage(player!!, Quests.PLAGUE_CITY)) {
             0 ->
                 when (stage) {

@@ -9,6 +9,7 @@ import core.plugin.Initializable
 
 @Initializable
 class ModelViewerCommandSet : CommandSet(Privilege.ADMIN) {
+
     companion object {
         const val DEF_BOOK = 10216
         const val TITLE = "Model Viewer"

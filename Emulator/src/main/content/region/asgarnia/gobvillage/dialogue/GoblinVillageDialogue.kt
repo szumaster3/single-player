@@ -11,6 +11,9 @@ import core.tools.RandomFunction
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Goblin Village dialogue.
+ */
 @Initializable
 class GoblinVillageDialogue(player: Player? = null) : Dialogue(player) {
 

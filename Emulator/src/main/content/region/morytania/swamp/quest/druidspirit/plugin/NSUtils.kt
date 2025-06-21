@@ -1,6 +1,6 @@
 package content.region.morytania.swamp.quest.druidspirit.plugin
 
-import content.region.morytania.swamp.plugin.GhastNPC
+import content.region.morytania.swamp.npc.GhastNPC
 import core.api.*
 import core.game.node.entity.player.Player
 import core.game.node.scenery.SceneryBuilder

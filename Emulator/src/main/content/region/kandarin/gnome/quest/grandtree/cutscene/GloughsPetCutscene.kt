@@ -1,6 +1,6 @@
 package content.region.kandarin.gnome.quest.grandtree.cutscene
 
-import content.region.kandarin.gnome.quest.grandtree.plugin.BlackDemonNPC.Companion.spawnBlackDemon
+import content.region.kandarin.gnome.quest.grandtree.npc.BlackDemonNPC.Companion.spawnBlackDemon
 import core.api.face
 import core.api.sendChat
 import core.api.sendMessage

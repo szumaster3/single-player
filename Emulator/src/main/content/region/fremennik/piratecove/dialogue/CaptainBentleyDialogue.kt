@@ -1,6 +1,6 @@
 package content.region.fremennik.piratecove.dialogue
 
-import content.region.fremennik.plugin.FremennikTransportation.sail
+import content.region.fremennik.plugin.FremennikShipHelper.sail
 import content.region.fremennik.plugin.Travel
 import core.game.dialogue.Dialogue
 import core.game.node.entity.npc.NPC

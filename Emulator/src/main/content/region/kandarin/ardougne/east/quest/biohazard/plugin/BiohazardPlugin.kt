@@ -1,16 +1,15 @@
 package content.region.kandarin.ardougne.east.quest.biohazard.plugin
 
+import content.data.GameAttributes
 import content.global.skill.agility.AgilityHandler
-import content.region.kandarin.ardougne.east.quest.biohazard.dialogue.ChancyDialogue
-import content.region.kandarin.ardougne.east.quest.biohazard.dialogue.ChancyVarrockDialogueFile
-import content.region.kandarin.ardougne.east.quest.biohazard.dialogue.GuidorDialogue
-import content.region.kandarin.ardougne.east.quest.biohazard.dialogue.HopsVarrockDialogue
+import content.region.kandarin.ardougne.east.quest.biohazard.dialogue.*
 import core.api.*
 import core.api.quest.getQuestStage
 import core.api.quest.isQuestComplete
 import core.api.quest.setQuestStage
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
+import core.game.dialogue.SequenceDialogue.dialogue
 import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
@@ -24,10 +23,14 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.*
 
 class BiohazardPlugin : InteractionListener {
+
+    val FENCE_CORNER_LOCATION = Location(2563, 3301, 0)
+    val WATCHTOWER_CORNER_LOCATION = Location(2561, 3303, 0)
+
     override fun defineListeners() {
         on(NPCs.CHANCY_338, IntType.NPC, "talk-to") { player, _ ->
             if (getQuestStage(player, Quests.BIOHAZARD) in 1..100) {
-                if (getAttribute(player, BiohazardUtils.FIRST_VIAL_CORRECT, true)) {
+                if (getAttribute(player, GameAttributes.FIRST_VIAL_CORRECT, true)) {
                     openDialogue(player, ChancyDialogue())
                 } else {
                     sendNPCDialogue(
@@ -44,7 +47,7 @@ class BiohazardPlugin : InteractionListener {
 
         on(NPCs.DA_VINCI_336, IntType.NPC, "talk-to") { player, _ ->
             if (getQuestStage(player, Quests.BIOHAZARD) in 1..100) {
-                if (getAttribute(player, BiohazardUtils.SECOND_VIAL_CORRECT, true)) {
+                if (getAttribute(player, GameAttributes.SECOND_VIAL_CORRECT, true)) {
                     openDialogue(player,
                         content.region.kandarin.ardougne.east.quest.biohazard.dialogue.DaVinciDialogue()
                     )
@@ -63,10 +66,9 @@ class BiohazardPlugin : InteractionListener {
 
         on(NPCs.DA_VINCI_337, IntType.NPC, "talk-to") { player, _ ->
             if (getQuestStage(player, Quests.BIOHAZARD) in 1..100) {
-                if (getAttribute(player, BiohazardUtils.SECOND_VIAL_CORRECT, false)) {
-                    openDialogue(player,
-                        content.region.kandarin.ardougne.east.quest.biohazard.dialogue.DaVinciVarrockDialogue()
-                    )
+                if (getAttribute(player, GameAttributes.SECOND_VIAL_CORRECT, false)) {
+                    openDialogue(player, DaVinciVarrockDialogue())
+                    return@on true
                 }
             } else {
                 sendDialogue(player, "Da Vinci does not feel sufficiently moved to talk.")
@@ -75,7 +77,7 @@ class BiohazardPlugin : InteractionListener {
         }
 
         on(NPCs.CHANCY_339, IntType.NPC, "talk-to") { player, _ ->
-            if (getAttribute(player, BiohazardUtils.FIRST_VIAL_CORRECT, false)) {
+            if (getAttribute(player, GameAttributes.FIRST_VIAL_CORRECT, false)) {
                 openDialogue(player, ChancyVarrockDialogueFile())
             } else {
                 sendDialogue(player, "Chancy doesn't feel like talking.")
@@ -84,7 +86,7 @@ class BiohazardPlugin : InteractionListener {
         }
 
         on(NPCs.HOPS_341, IntType.NPC, "talk-to") { player, _ ->
-            if (getAttribute(player, BiohazardUtils.THIRD_VIAL_CORRECT, false)) {
+            if (getAttribute(player, GameAttributes.THIRD_VIAL_CORRECT, false)) {
                 openDialogue(player, HopsVarrockDialogue())
             } else {
                 sendDialogue(player, "Hops doesn't feel like talking.")
@@ -101,27 +103,27 @@ class BiohazardPlugin : InteractionListener {
             if (removeItem(player, Items.BIRD_FEED_422)) {
                 sendMessage(player, "You throw a handful of seeds onto the watchtower.")
                 sendMessageWithDelay(player, "The mourners do not seem to notice.", 1)
-                setAttribute(player, BiohazardUtils.FEED_ON_FENCE, true)
+                setAttribute(player, GameAttributes.FEED_ON_FENCE, true)
             }
             return@on true
         }
 
         onUseWith(IntType.SCENERY, Items.BIRD_FEED_422, Scenery.WATCHTOWER_FENCE_2067) { player, used, _ ->
-            if (getAttribute(player, BiohazardUtils.FEED_ON_FENCE, true)) {
+            if (getAttribute(player, GameAttributes.FEED_ON_FENCE, true)) {
                 return@onUseWith true
             }
             if (removeItem(player, used.asItem())) {
                 sendMessage(player, "You throw a handful of seeds onto the watchtower.")
                 sendMessageWithDelay(player, "The mourners do not seem to notice.", 1)
-                setAttribute(player, BiohazardUtils.FEED_ON_FENCE, true)
+                setAttribute(player, GameAttributes.FEED_ON_FENCE, true)
             }
             return@onUseWith true
         }
 
         on(Items.PIGEON_CAGE_424, IntType.ITEM, "open") { player, _ ->
-            if (getAttribute(player, BiohazardUtils.FEED_ON_FENCE, false)) {
-                if (player.location != BiohazardUtils.FENCE_CORNER_LOCATION) return@on true
-                face(player, BiohazardUtils.WATCHTOWER_CORNER_LOCATION)
+            if (getAttribute(player, GameAttributes.FEED_ON_FENCE, false)) {
+                if (player.location != FENCE_CORNER_LOCATION) return@on true
+                face(player, WATCHTOWER_CORNER_LOCATION)
                 var counter = 0
                 submitIndividualPulse(
                     player,
@@ -131,12 +133,7 @@ class BiohazardPlugin : InteractionListener {
                             when (counter) {
                                 0 -> sendMessage(player, "You open the cage.")
                                 2 -> sendMessage(player, "The pigeons fly towards the watch tower.")
-                                4 ->
-                                    sendMessage(
-                                        player,
-                                        "The mourners are frantically trying to scare the pigeons away.",
-                                    )
-
+                                4 -> sendMessage(player, "The mourners are frantically trying to scare the pigeons away.")
                                 5 -> {
                                     spawnProjectile(
                                         Projectile.getLocation(player),
@@ -247,10 +244,7 @@ class BiohazardPlugin : InteractionListener {
         on(Scenery.DOOR_2036, IntType.SCENERY, "open") { player, node ->
             if (inBorders(player, getRegionBorders(10035)) || inBorders(player, getRegionBorders(10036))) {
                 if (isQuestComplete(player, Quests.BIOHAZARD) ||
-                    getQuestStage(
-                        player,
-                        Quests.BIOHAZARD,
-                    ) >= 7 ||
+                    getQuestStage(player, Quests.BIOHAZARD) >= 7 ||
                     player.location.y in 3321..3327
                 ) {
                     DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
@@ -264,35 +258,11 @@ class BiohazardPlugin : InteractionListener {
                 }
 
                 if (!inEquipment(player, Items.DOCTORS_GOWN_430) || getQuestStage(player, Quests.BIOHAZARD) == 0) {
-                    openDialogue(
-                        player,
-                        object : DialogueFile() {
-                            override fun handle(
-                                componentID: Int,
-                                buttonID: Int,
-                            ) {
-                                when (stage) {
-                                    0 ->
-                                        sendNPCDialogue(
-                                            player,
-                                            NPCs.MOURNER_347,
-                                            "Stay away from there.",
-                                        ).also { stage++ }
-                                    1 -> player("Why?").also { stage++ }
-                                    2 ->
-                                        sendNPCDialogue(
-                                            player,
-                                            NPCs.MOURNER_347,
-                                            "Several mourners are ill with food poisoning, we're waiting for a doctor.",
-                                        ).also {
-                                            stage =
-                                                END_DIALOGUE
-                                        }
-                                }
-                            }
-                        },
-                        node,
-                    )
+                    dialogue(player) {
+                        npc(NPCs.MOURNER_347, "Stay away from there.")
+                        player("Why?")
+                        npc(NPCs.MOURNER_347, "Several mourners are ill with food poisoning, we're waiting for a doctor.")
+                    }
                 } else {
                     sendNPCDialogue(player, NPCs.MOURNER_347, "In you go dot.")
                     setQuestStage(player, Quests.BIOHAZARD, 7)
@@ -363,52 +333,27 @@ class BiohazardPlugin : InteractionListener {
                 openDialogue(
                     player,
                     object : DialogueFile() {
-                        override fun handle(
-                            componentID: Int,
-                            buttonID: Int,
-                        ) {
+                        override fun handle(componentID: Int, buttonID: Int, ) {
                             when (stage) {
                                 0 ->
-                                    sendNPCDialogue(
-                                        player,
-                                        NPCs.GUARD_368,
-                                        "Halt. I need to conduct a search on you. There have been reports of someone bringing a virus into Varrock.",
-                                    ).also { stage++ }
+                                    sendNPCDialogue(player, NPCs.GUARD_368, "Halt. I need to conduct a search on you. There have been reports of someone bringing a virus into Varrock.").also { stage++ }
 
                                 1 -> {
                                     sendMessage(player, "The guard searches you.")
-                                    if (!anyInInventory(
-                                            player,
-                                            Items.SULPHURIC_BROLINE_417,
-                                            Items.ETHENEA_415,
-                                            Items.LIQUID_HONEY_416,
-                                        )
-                                    ) {
+                                    if (!anyInInventory(player, Items.SULPHURIC_BROLINE_417, Items.ETHENEA_415, Items.LIQUID_HONEY_416)) {
                                         sendNPCDialogue(player, NPCs.GUARD_368, "You may now pass.").also { stage++ }
                                     } else {
                                         if (removeItem(player, Items.SULPHURIC_BROLINE_417)) {
                                             sendMessage(player, "He takes the vial of sulphuric broline from you.")
-                                            sendNPCDialogue(
-                                                player,
-                                                NPCs.GUARD_368,
-                                                "You may now pass.",
-                                            ).also { stage++ }
+                                            sendNPCDialogue(player, NPCs.GUARD_368, "You may now pass.").also { stage++ }
                                         }
                                         if (removeItem(player, Items.ETHENEA_415)) {
                                             sendMessage(player, "He takes the vial of ethenea from you.")
-                                            sendNPCDialogue(
-                                                player,
-                                                NPCs.GUARD_368,
-                                                "You may now pass.",
-                                            ).also { stage++ }
+                                            sendNPCDialogue(player, NPCs.GUARD_368, "You may now pass.").also { stage++ }
                                         }
                                         if (removeItem(player, Items.LIQUID_HONEY_416)) {
                                             sendMessage(player, "He takes the vial of liquid honey from you.")
-                                            sendNPCDialogue(
-                                                player,
-                                                NPCs.GUARD_368,
-                                                "You may now pass.",
-                                            ).also { stage++ }
+                                            sendNPCDialogue(player, NPCs.GUARD_368, "You may now pass.").also { stage++ }
                                         }
                                     }
                                 }

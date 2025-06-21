@@ -11,15 +11,13 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Tiadeche dialogue.
+ */
 @Initializable
 class TiadecheDialogue(player: Player? = null) : Dialogue(player) {
 
-    private val randomConversation =
-        arrayOf(
-            "Just leave a depressed fish hunter alone...",
-            "I'll never be able to catch a Karambwan...",
-            "Go away! Can't you see I'm concentrating?",
-        )
+    private val randomConversation = arrayOf("Just leave a depressed fish hunter alone...", "I'll never be able to catch a Karambwan...", "Go away! Can't you see I'm concentrating?")
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
@@ -35,14 +33,10 @@ class TiadecheDialogue(player: Player? = null) : Dialogue(player) {
         when (stage) {
             0 -> npc(FaceAnim.FRIENDLY, "Hello, Bwana! Would you like to buy some Karambwan?").also { stage++ }
             1 -> options("Yes", "No.").also { stage++ }
-            2 ->
-                when (buttonId) {
-                    1 -> end().also { openNpcShop(player, npc.id) }
-                    2 ->
-                        npc(FaceAnim.FRIENDLY, "Very well. Let me know if you change your mind.").also {
-                            stage = END_DIALOGUE
-                        }
-                }
+            2 -> when (buttonId) {
+                1 -> end().also { openNpcShop(player, npc.id) }
+                2 -> npc(FaceAnim.FRIENDLY, "Very well. Let me know if you change your mind.").also { stage = END_DIALOGUE }
+            }
         }
         return true
     }

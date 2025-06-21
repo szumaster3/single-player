@@ -17,6 +17,12 @@ import org.rs.consts.NPCs
 import org.rs.consts.Quests
 import kotlin.random.Random
 
+/**
+ * Represents the Peer The Seer dialogue.
+ *
+ * Relations
+ * - [FremennikTrials]
+ */
 @Initializable
 class PeerTheSeerDialogue(player: Player? = null) : Dialogue(player) {
     

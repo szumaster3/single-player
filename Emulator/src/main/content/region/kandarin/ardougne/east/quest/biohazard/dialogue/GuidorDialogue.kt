@@ -14,11 +14,14 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Guidor dialogue.
+ *
+ * Relations
+ * - [Biohazard][content.region.kandarin.ardougne.east.quest.biohazard.Biohazard]
+ */
 class GuidorDialogue : DialogueFile() {
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
+    override fun handle(componentID: Int, buttonID: Int) {
         npc = NPC(NPCs.GUIDOR_343)
         when (stage) {
             0 ->

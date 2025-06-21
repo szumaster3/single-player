@@ -6,11 +6,12 @@ import core.tools.END_DIALOGUE
 import core.tools.RandomFunction
 import core.tools.START_DIALOGUE
 
+/**
+ * Represents the Woman dialogue.
+ */
 class WomanDialogue : DialogueFile() {
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
+
+    override fun handle(componentID: Int, buttonID: Int) {
         when (RandomFunction.random(1, 4)) {
             1 -> when (stage) {
                 START_DIALOGUE -> playerl(FaceAnim.FRIENDLY, "Hello, how's it going?").also { stage++ }

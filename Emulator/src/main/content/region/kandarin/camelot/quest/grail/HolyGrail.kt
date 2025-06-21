@@ -20,10 +20,7 @@ class HolyGrail : Quest(Quests.HOLY_GRAIL, 76, 75, 1, 5, 0, 1, 10) {
         val DOOR_MAGIC_WHISTLE_LOCATION = Location.create(3106, 3361, 2)
     }
 
-    override fun drawJournal(
-        player: Player,
-        stage: Int,
-    ) {
+    override fun drawJournal(player: Player, stage: Int) {
         super.drawJournal(player, stage)
         var ln = 12
         if (stage == 0) {

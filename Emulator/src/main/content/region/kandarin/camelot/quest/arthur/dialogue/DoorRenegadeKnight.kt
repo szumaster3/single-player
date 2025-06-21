@@ -8,13 +8,16 @@ import core.game.node.entity.npc.NPC
 import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Door Renegade Knight dialogue.
+ *
+ * Relations
+ * - [Merlin Crystal][content.region.kandarin.camelot.quest.arthur.MerlinCrystal]
+ */
 class DoorRenegadeKnight : DialogueFile() {
     var STAGE_NO = 10
 
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
+    override fun handle(componentID: Int, buttonID: Int, ) {
         npc = NPC(NPCs.RENEGADE_KNIGHT_237)
 
         when (stage) {

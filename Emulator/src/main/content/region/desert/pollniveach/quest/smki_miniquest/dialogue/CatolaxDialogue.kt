@@ -1,4 +1,4 @@
-package content.region.desert.quest.smki_miniquest.dialogue
+package content.region.desert.pollniveach.quest.smki_miniquest.dialogue
 
 import content.data.GameAttributes
 import core.api.getAttribute

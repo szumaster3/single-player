@@ -17,17 +17,18 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
-class SirPercivalDialogue(
-    val interactionType: String,
-) : DialogueFile() {
+/**
+ * Represents the Sir Percival dialogue.
+ *
+ * Relations
+ * - [Holy Grail][content.region.kandarin.camelot.quest.grail.HolyGrail]
+ */
+class SirPercivalDialogue(val interactionType: String, ) : DialogueFile() {
     val STAGE_COME_KING = 10
     val STAGE_FATHER_SPEAK = 30
     val STAGE_BEEN_TOLD = 13
 
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
+    override fun handle(componentID: Int, buttonID: Int) {
         npc = NPC(NPCs.SIR_PERCIVAL_211)
 
         when (stage) {

@@ -16,6 +16,7 @@ import org.rs.consts.Quests
 
 @Initializable
 class DruidicRitual : Quest(Quests.DRUIDIC_RITUAL, 48, 47, 4, 80, 0, 3, 4) {
+
     override fun drawJournal(
         player: Player,
         stage: Int,

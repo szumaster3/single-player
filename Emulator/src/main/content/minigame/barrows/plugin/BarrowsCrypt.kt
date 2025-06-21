@@ -1,5 +1,6 @@
 package content.minigame.barrows.plugin
 
+import content.minigame.barrows.npc.BarrowBrotherNPC
 import core.api.sendMessage
 import core.api.setAttribute
 import core.game.global.action.DigAction

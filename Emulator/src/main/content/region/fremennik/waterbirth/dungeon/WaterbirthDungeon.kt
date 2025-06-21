@@ -37,6 +37,7 @@ import org.rs.consts.NPCs
 
 @Initializable
 class WaterbirthDungeon : MapZone("Waterbirth dungeon", true, ZoneRestriction.RANDOM_EVENTS), Plugin<Any?> {
+
     init {
         definePlugin(DagannothKingNPC())
         definePlugin(DoorSupportNPC())
@@ -50,16 +51,9 @@ class WaterbirthDungeon : MapZone("Waterbirth dungeon", true, ZoneRestriction.RA
         return this
     }
 
-    override fun fireEvent(
-        identifier: String,
-        vararg args: Any,
-    ): Any? = null
+    override fun fireEvent(identifier: String, vararg args: Any): Any? = null
 
-    override fun move(
-        e: Entity,
-        from: Location,
-        to: Location,
-    ): Boolean {
+    override fun move(e: Entity, from: Location, to: Location): Boolean {
         for (location in DOOR_SUPPORTS) {
             if (location == to) {
                 val npcs: List<NPC> = getLocalNpcs(location, 0)
@@ -176,11 +170,7 @@ class WaterbirthDungeon : MapZone("Waterbirth dungeon", true, ZoneRestriction.RA
             getRegionPlane(location).getItem(Items.PET_ROCK_3695, location, player) != null
         }
 
-        override fun handle(
-            player: Player,
-            node: Node,
-            option: String,
-        ): Boolean {
+        override fun handle(player: Player, node: Node, option: String): Boolean {
             when (node.id) {
                 8958, 8959, 8960 -> {
                     val behind = player.location.x >= 2492
@@ -221,10 +211,7 @@ class WaterbirthDungeon : MapZone("Waterbirth dungeon", true, ZoneRestriction.RA
             return true
         }
 
-        override fun getDestination(
-            node: Node,
-            n: Node,
-        ): Location? {
+        override fun getDestination(node: Node, n: Node): Location? {
             if (n.name == "Door-support") {
                 val player = node.asPlayer()
                 if (player.properties.combatPulse.style !== CombatStyle.MELEE) {
@@ -242,11 +229,7 @@ class WaterbirthDungeon : MapZone("Waterbirth dungeon", true, ZoneRestriction.RA
 
         constructor(id: Int, location: Location?) : super(id, location)
 
-        override fun construct(
-            id: Int,
-            location: Location,
-            vararg objects: Any,
-        ): AbstractNPC = DoorSupportNPC(id, location)
+        override fun construct(id: Int, location: Location, vararg objects: Any): AbstractNPC = DoorSupportNPC(id, location)
 
         override fun init() {
             lock()
@@ -298,14 +281,11 @@ class WaterbirthDungeon : MapZone("Waterbirth dungeon", true, ZoneRestriction.RA
             lock()
         }
 
-        override fun isAttackable(
-            entity: Entity,
-            style: CombatStyle,
-            message: Boolean,
-        ): Boolean {
+        override fun isAttackable(entity: Entity, style: CombatStyle, message: Boolean): Boolean {
             if (id != originalId) {
                 return false
             }
+
             if (entity.location.getDistance(getLocation()) <= 3) {
                 if (entity is Player) {
                     val player = entity.asPlayer()
@@ -315,15 +295,15 @@ class WaterbirthDungeon : MapZone("Waterbirth dungeon", true, ZoneRestriction.RA
                 }
                 return false
             }
+
             return style !== CombatStyle.MELEE
         }
 
-        override fun getIds(): IntArray =
-            intArrayOf(NPCs.DOOR_SUPPORT_2440, NPCs.DOOR_SUPPORT_2443, NPCs.DOOR_SUPPORT_2446)
+        override fun getIds(): IntArray = intArrayOf(NPCs.DOOR_SUPPORT_2440, NPCs.DOOR_SUPPORT_2443, NPCs.DOOR_SUPPORT_2446)
     }
 
     companion object {
-        private val DOOR_SUPPORTS =
-            arrayOf(Location.create(2545, 10145, 0), Location.create(2543, 10143, 0), Location.create(2545, 10141, 0))
+        private val DOOR_SUPPORTS = arrayOf(Location.create(2545, 10145, 0), Location.create(2543, 10143, 0), Location.create(2545, 10141, 0))
     }
+
 }

@@ -23,20 +23,12 @@ import org.rs.consts.*
 
 class EntranaPlugin : InteractionListener, MapArea {
 
-    companion object {
-        const val ENTRANA_BOOKCASE = Scenery.BOOKCASE_33964
-        const val GLASSBLOWING_BOOK = Items.GLASSBLOWING_BOOK_11656
-        const val CAVE_MONK = NPCs.CAVE_MONK_656
-        const val MAGIC_DOOR = Scenery.MAGIC_DOOR_2407
-    }
-
     override fun defineAreaBorders(): Array<ZoneBorders> = arrayOf(
         getRegionBorders(11060), getRegionBorders(11316)
     )
 
     override fun areaEnter(entity: Entity) {
         if (entity is Player && entity !is AIPlayer && entity.details.rights != Rights.ADMINISTRATOR) {
-            // Checking items made on the island.
             if (!ItemDefinition.canEnterEntrana(entity)) {
                 kickThemOut(entity)
             }
@@ -49,10 +41,10 @@ class EntranaPlugin : InteractionListener, MapArea {
          * Handles searching the bookcase in the house near Fritz on Entrana.
          */
 
-        on(ENTRANA_BOOKCASE, IntType.SCENERY, "Search") { player, _ ->
+        on(Scenery.BOOKCASE_33964, IntType.SCENERY, "Search") { player, _ ->
             sendMessage(player, "You search the bookcase...")
 
-            if (inInventory(player, GLASSBLOWING_BOOK)) {
+            if (inInventory(player, Items.GLASSBLOWING_BOOK_11656)) {
                 sendMessage(player, "You don't find anything that you'd ever want to read.")
                 return@on true
             }
@@ -61,7 +53,7 @@ class EntranaPlugin : InteractionListener, MapArea {
                 sendMessage(player, "You find a 'Glassblowing Book', but you don't have enough room to take it.")
             } else {
                 sendMessage(player, "You find a 'Glassblowing Book'.")
-                addItem(player, GLASSBLOWING_BOOK)
+                addItem(player, Items.GLASSBLOWING_BOOK_11656, 1)
             }
 
             return@on true
@@ -72,7 +64,7 @@ class EntranaPlugin : InteractionListener, MapArea {
          */
 
         on(Scenery.LADDER_2408, IntType.SCENERY, "climb-down") { player, _ ->
-            openDialogue(player, CAVE_MONK, findNPC(CAVE_MONK)!!.asNpc())
+            openDialogue(player, NPCs.CAVE_MONK_656, findNPC(NPCs.CAVE_MONK_656)!!.asNpc())
             return@on true
         }
 
@@ -80,7 +72,7 @@ class EntranaPlugin : InteractionListener, MapArea {
          * Handles exit from the Entrana dungeon.
          */
 
-        on(MAGIC_DOOR, IntType.SCENERY, "open") { player, _ ->
+        on(Scenery.MAGIC_DOOR_2407, IntType.SCENERY, "open") { player, _ ->
             sendMessage(player, "You feel the world around you dissolve...")
             teleport(player, Location(3093, 3224, 0), TeleportManager.TeleportType.ENTRANA_MAGIC_DOOR)
             return@on true

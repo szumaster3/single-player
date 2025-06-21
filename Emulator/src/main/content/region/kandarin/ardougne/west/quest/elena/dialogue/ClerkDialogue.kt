@@ -12,6 +12,12 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Clerk dialogue.
+ *
+ * Relations
+ * - [Plague City][content.region.kandarin.ardougne.west.quest.elena.PlagueCity]
+ */
 @Initializable
 class ClerkDialogue(player: Player? = null) : Dialogue(player) {
 
@@ -24,10 +30,7 @@ class ClerkDialogue(player: Player? = null) : Dialogue(player) {
         return true
     }
 
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ): Boolean {
+    override fun handle(componentID: Int, buttonID: Int): Boolean {
         when (getQuestStage(player!!, Quests.PLAGUE_CITY)) {
             11 ->
                 when (stage) {

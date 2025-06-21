@@ -20,6 +20,7 @@ import kotlin.system.exitProcess
 
 @Initializable
 class SystemCommandSet : CommandSet(Privilege.ADMIN) {
+
     override fun defineCommands() {
         define(name = "update", Privilege.ADMIN) { _, args ->
             if (args.size > 1) {

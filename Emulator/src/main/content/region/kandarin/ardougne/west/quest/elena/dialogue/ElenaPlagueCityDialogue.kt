@@ -11,29 +11,26 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Elena dialogue.
+ *
+ * Relations
+ * - [Plague City][content.region.kandarin.ardougne.west.quest.elena.PlagueCity]
+ */
 @Initializable
 class ElenaPlagueCityDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (getQuestStage(player, Quests.PLAGUE_CITY) >= 16) {
-            playerl(
-                FaceAnim.FRIENDLY,
-                "Hi, you're free to go! Your kidnappers don't seem to be about right now.",
-            ).also { stage = 1 }
+            playerl(FaceAnim.FRIENDLY, "Hi, you're free to go! Your kidnappers don't seem to be about right now.").also { stage = 1 }
         } else {
-            npcl(
-                FaceAnim.FRIENDLY,
-                "Go and see my father, I'll make sure he adequately rewards you. Now I'd better leave while I still can.",
-            ).also { stage = END_DIALOGUE }
+            npcl(FaceAnim.FRIENDLY, "Go and see my father, I'll make sure he adequately rewards you. Now I'd better leave while I still can.").also { stage = END_DIALOGUE }
         }
         return true
     }
 
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ): Boolean {
+    override fun handle(componentID: Int, buttonID: Int): Boolean {
         when (stage) {
             1 ->
                 npcl(

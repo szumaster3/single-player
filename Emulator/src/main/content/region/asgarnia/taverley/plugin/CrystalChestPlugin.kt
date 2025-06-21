@@ -11,6 +11,7 @@ import org.rs.consts.Items
 import org.rs.consts.Scenery
 
 class CrystalChestPlugin : InteractionListener {
+
     override fun defineListeners() {
 
         /*

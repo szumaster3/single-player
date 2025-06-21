@@ -21,17 +21,17 @@ class SeersVillagePlugin : InteractionListener {
     }
 
     override fun defineListeners() {
-        on(COURTHOUSE_STAIRS, IntType.SCENERY, "climb-down") { player, _ ->
+        on(Scenery.STAIRS_26017, IntType.SCENERY, "climb-down") { player, _ ->
             sendMessage(player, "Court is not in session.")
             return@on true
         }
 
-        on(CRATE, IntType.SCENERY, "buy") { player, _ ->
+        on(Scenery.CRATE_6839, IntType.SCENERY, "buy") { player, _ ->
             openId(player, 93)
             return@on true
         }
 
-        on(TICKET_MERCHANT, IntType.NPC, "trade") { player: Player, _: Node ->
+        on(NPCs.TICKET_MERCHANT_694, IntType.NPC, "trade") { player: Player, _: Node ->
             openInterface(player, Components.RANGING_GUILD_TICKET_EXCHANGE_278)
             return@on true
         }

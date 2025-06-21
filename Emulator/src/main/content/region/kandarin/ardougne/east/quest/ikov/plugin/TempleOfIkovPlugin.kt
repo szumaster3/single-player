@@ -1,6 +1,7 @@
 package content.region.kandarin.ardougne.east.quest.ikov.plugin
 
 import content.data.GameAttributes
+import content.region.kandarin.ardougne.east.quest.ikov.npc.FireWarriorOfLesarkusNPC
 import core.api.*
 import core.api.quest.getQuestStage
 import core.api.quest.setQuestStage

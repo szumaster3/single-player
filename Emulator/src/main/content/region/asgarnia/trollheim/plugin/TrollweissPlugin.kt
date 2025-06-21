@@ -9,6 +9,7 @@ import org.rs.consts.Scenery
 class TrollweissPlugin : InteractionListener {
 
     override fun defineListeners() {
+
         on(intArrayOf(Scenery.TUNNEL_5012, Scenery.TUNNEL_5013), IntType.SCENERY, "enter") { player, node ->
             when (node.id) {
                 5012 -> teleport(player, Location.create(2799, 10134, 0))

@@ -15,6 +15,9 @@ import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Luthas dialogue.
+ */
 @Initializable
 class LuthasDialogue(player: Player? = null) : Dialogue(player) {
     
@@ -37,11 +40,9 @@ class LuthasDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
-            0 ->
-                options(
-                    "Could you offer me employment on your plantation?",
-                    "That customs officer is annoying isn't he?",
-                ).also { stage++ }
+            0 -> options(
+                "Could you offer me employment on your plantation?", "That customs officer is annoying isn't he?"
+            ).also { stage++ }
 
             1 ->
                 when (buttonId) {

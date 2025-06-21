@@ -8,6 +8,9 @@ import core.game.node.entity.player.Player
 import core.plugin.Initializable
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Hring Hring dialogue.
+ */
 @Initializable
 class HringHringDialogue(player: Player? = null) : Dialogue(player) {
 

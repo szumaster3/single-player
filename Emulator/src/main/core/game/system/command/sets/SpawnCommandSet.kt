@@ -22,10 +22,7 @@ import java.io.File
 class SpawnCommandSet : CommandSet(Privilege.ADMIN) {
 
     companion object {
-        fun readJsonArrayFromFile(
-            filePath: String,
-            gson: Gson,
-        ): JsonArray {
+        fun readJsonArrayFromFile(filePath: String, gson: Gson, ): JsonArray {
             val file = File(filePath)
             return if (file.exists()) {
                 gson.fromJson(file.readText(), JsonArray::class.java) ?: JsonArray()
@@ -34,11 +31,7 @@ class SpawnCommandSet : CommandSet(Privilege.ADMIN) {
             }
         }
 
-        fun writeJsonArrayToFile(
-            filePath: String,
-            jsonArray: JsonArray,
-            gson: Gson,
-        ) {
+        fun writeJsonArrayToFile(filePath: String, jsonArray: JsonArray, gson: Gson, ) {
             val file = File(filePath)
             file.parentFile.mkdirs()
             file.writeText(gson.toJson(jsonArray))

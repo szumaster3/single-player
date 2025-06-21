@@ -11,9 +11,8 @@ import core.plugin.Initializable
 import core.tools.colorize
 
 @Initializable
-class RottenPotatoExtraDialogue(
-    player: Player? = null,
-) : Dialogue(player) {
+class RottenPotatoExtraDialogue(player: Player? = null) : Dialogue(player) {
+
     val ID = 38575794
     val AMEs = arrayOf("chicken", "Sandwich Lady", "tree spirit", "rick turpentine", "Genie")
     val BossIDs = arrayOf(50, 8350, 8133, 2745)
@@ -26,10 +25,7 @@ class RottenPotatoExtraDialogue(
         return true
     }
 
-    override fun handle(
-        interfaceId: Int,
-        buttonId: Int,
-    ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 ->
                 when (buttonId) {

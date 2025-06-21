@@ -15,11 +15,15 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the General Khazard dialogue.
+ *
+ * Relations
+ * - [Fight Arena][content.region.kandarin.khazard.quest.arena.FightArena]
+ */
 class GeneralKhazardDialogue : DialogueFile() {
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
+
+    override fun handle(componentID: Int, buttonID: Int, ) {
         npc = NPC(NPCs.GENERAL_KHAZARD_258)
         when (getQuestStage(player!!, Quests.FIGHT_ARENA)) {
             in 68..70 ->

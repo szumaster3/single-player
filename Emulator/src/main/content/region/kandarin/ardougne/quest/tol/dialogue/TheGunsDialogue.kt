@@ -1,6 +1,6 @@
 package content.region.kandarin.ardougne.quest.tol.dialogue
 
-import content.region.kandarin.ardougne.quest.tol.plugin.TowerOfLifeUtils
+import content.data.GameAttributes
 import core.api.addItemOrDrop
 import core.api.getAttribute
 import core.api.inInventory
@@ -134,8 +134,7 @@ class TheGunsDialogue(player: Player? = null) : Dialogue(player) {
                     }
                 }
 
-            3 ->
-                if (getAttribute(player, TowerOfLifeUtils.TOL_TOWER_ACCESS, 0) == 1) {
+            3 -> if (getAttribute(player, GameAttributes.TOL_TOWER_ACCESS, 0) == 1) {
                     when (stage) {
                         START_DIALOGUE ->
                             playerl(

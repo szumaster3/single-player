@@ -28,6 +28,7 @@ import kotlin.streams.toList
 
 @Initializable
 class FunCommandSet : CommandSet(Privilege.ADMIN) {
+
     var npcs: List<NPC> = ArrayList()
 
     override fun defineCommands() {

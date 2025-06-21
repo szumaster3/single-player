@@ -23,13 +23,9 @@ import org.rs.consts.Scenery
 import kotlin.math.ceil
 
 class TrollStrongholdPlugin : InteractionListener {
-    override fun defineListeners() {
-        on(
-            intArrayOf(Scenery.ARENA_ENTRANCE_3782, Scenery.ARENA_ENTRANCE_3783),
-            IntType.SCENERY,
-            "open",
-        ) { player, node ->
 
+    override fun defineListeners() {
+        on(intArrayOf(Scenery.ARENA_ENTRANCE_3782, Scenery.ARENA_ENTRANCE_3783), IntType.SCENERY, "open") { player, node ->
             if (getQuestStage(player, Quests.TROLL_STRONGHOLD) == 1) {
                 openDialogue(player, DadDialogueFile(1), findNPC(NPCs.DAD_1125)!!)
             }

@@ -14,16 +14,19 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Morgan Le Faye dialogue.
+ *
+ * Relations
+ * - [Merlin Crystal][content.region.kandarin.camelot.quest.arthur.MerlinCrystal]
+ */
 class MorganLeFayeDialogue : DialogueFile() {
     var STAGE_VANISH = 50
     var STAGE_EXCALIBUR = 15
     var STAGE_MAGIC_WORDS = 32
     var STAGE_KILL = 100
 
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
+    override fun handle(componentID: Int, buttonID: Int) {
         npc = NPC(NPCs.MORGAN_LE_FAYE_248)
 
         when (stage) {

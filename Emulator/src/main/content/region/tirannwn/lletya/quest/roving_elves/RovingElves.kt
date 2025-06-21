@@ -2,9 +2,9 @@ package content.region.tirannwn.lletya.quest.roving_elves
 
 import content.region.tirannwn.lletya.quest.roving_elves.dialogue.ElunedDialogue
 import content.region.tirannwn.lletya.quest.roving_elves.dialogue.IslwynDialogue
-import content.region.tirannwn.lletya.quest.roving_elves.handlers.MossGiantNPC
-import content.region.tirannwn.lletya.quest.roving_elves.handlers.RovingElvesObstacles
-import content.region.tirannwn.lletya.quest.roving_elves.handlers.RovingElvesPlugin
+import content.region.tirannwn.lletya.quest.roving_elves.npc.MossGiantNPC
+import content.region.tirannwn.lletya.quest.roving_elves.plugin.RovingElvesObstacles
+import content.region.tirannwn.lletya.quest.roving_elves.plugin.RovingElvesPlugin
 import core.api.inInventory
 import core.api.quest.updateQuestTab
 import core.api.rewardXP

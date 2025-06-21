@@ -11,16 +11,10 @@ import org.rs.consts.Vars
 
 @Initializable
 class PlagueCity : Quest(Quests.PLAGUE_CITY, 98, 97, 1, Vars.VARP_QUEST_PLAGUE_CITY_PROGRESS_165, 0, 1, 29) {
-    override fun newInstance(`object`: Any?): Quest = this
 
-    override fun drawJournal(
-        player: Player,
-        stage: Int,
-    ) {
+    override fun drawJournal(player: Player, stage: Int) {
         super.drawJournal(player, stage)
         var line = 11
-        player ?: return
-
         if (stage == 0) {
             line++
             line(player, "I can start this quest by speaking to !!Edmond?? who is in !!East??", line++, false)
@@ -102,9 +96,7 @@ class PlagueCity : Quest(Quests.PLAGUE_CITY, 98, 97, 1, Vars.VARP_QUEST_PLAGUE_C
 
     override fun finish(player: Player) {
         super.finish(player)
-        player ?: return
         var ln = 10
-
         sendItemZoomOnInterface(player, 277, 5, Items.GAS_MASK_1506)
         drawReward(player, "1 Quest Point", ln++)
         drawReward(player, "2,425 Mining XP", ln++)
@@ -114,4 +106,6 @@ class PlagueCity : Quest(Quests.PLAGUE_CITY, 98, 97, 1, Vars.VARP_QUEST_PLAGUE_C
         setVarbit(player, 1784, 1, save = true)
         removeAttributes(player, "elena:bucket", "elena:cure")
     }
+
+    override fun newInstance(`object`: Any?): Quest = this
 }

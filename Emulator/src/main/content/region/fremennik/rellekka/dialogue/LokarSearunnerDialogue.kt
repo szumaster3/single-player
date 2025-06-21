@@ -17,6 +17,9 @@ import org.rs.consts.Components
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Lokar Searunner dialogue.
+ */
 @Initializable
 class LokarSearunnerDialogue(player: Player? = null) : Dialogue(player) {
 

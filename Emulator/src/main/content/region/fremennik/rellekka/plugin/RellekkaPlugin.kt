@@ -36,10 +36,6 @@ class RellekkaPlugin : InteractionListener, MapArea {
         private val DOWN2B: Location? = Location.create(2727, 3805, 1)
 
         private val STAIRS = intArrayOf(Scenery.STEPS_19690, Scenery.STEPS_19691)
-        private const val TUNNEL = Scenery.TUNNEL_5008
-        private const val ROCKSLIDE = Scenery.ROCKSLIDE_5847
-        private const val LADDER = Scenery.LADDER_15116
-
         private val OBJECTS = intArrayOf(Scenery.ANVIL_4306, Scenery.POTTER_S_WHEEL_4310, Scenery.SPINNING_WHEEL_4309, Scenery.FURNACE_4304, Scenery.POTTERY_OVEN_4308)
     }
 
@@ -47,7 +43,8 @@ class RellekkaPlugin : InteractionListener, MapArea {
 
 
     override fun defineListeners() {
-        on(LADDER, IntType.SCENERY, "climb-down") { player, _ ->
+
+        on(Scenery.LADDER_15116, IntType.SCENERY, "climb-down") { player, _ ->
             teleport(player, Location.create(2509, 10245, 0), TeleportManager.TeleportType.INSTANT)
             return@on true
         }
@@ -56,12 +53,12 @@ class RellekkaPlugin : InteractionListener, MapArea {
          * Handles interaction with cave entrance to Keldagrim.
          */
 
-        on(TUNNEL, IntType.SCENERY, "enter") { player, _ ->
+        on(Scenery.TUNNEL_5008, IntType.SCENERY, "enter") { player, _ ->
             teleport(player, Location.create(2773, 10162, 0), TeleportManager.TeleportType.INSTANT)
             return@on true
         }
 
-        on(ROCKSLIDE, IntType.SCENERY, "climb-over") { player, _ ->
+        on(Scenery.ROCKSLIDE_5847, IntType.SCENERY, "climb-over") { player, _ ->
             lock(player, 1)
             AgilityHandler.forceWalk(player, -1, player.location, player.location.transform(0, if (player.location.y <= 3657) 3 else -3, 0), Animation.create(839), 20, 1.0, null, 0)
             return@on true

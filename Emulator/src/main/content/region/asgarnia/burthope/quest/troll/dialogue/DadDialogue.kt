@@ -14,6 +14,12 @@ import core.tools.START_DIALOGUE
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Dad dialogue.
+ *
+ * Relations
+ * - [Troll Stronghold][content.region.asgarnia.burthope.quest.troll.TrollStronghold]
+ */
 @Initializable
 class DadDialogue(player: Player? = null) : Dialogue(player) {
 
@@ -55,13 +61,15 @@ class DadDialogue(player: Player? = null) : Dialogue(player) {
     override fun getIds(): IntArray = intArrayOf(NPCs.DAD_1125)
 }
 
-class DadDialogueFile(
-    private val dialogueNum: Int = 0,
-) : DialogueFile() {
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
+/**
+ * Represents the Dad dialogue file.
+ *
+ * Relations
+ * - [Troll Stronghold][content.region.asgarnia.burthope.quest.troll.TrollStronghold]
+ */
+class DadDialogueFile(private val dialogueNum: Int = 0) : DialogueFile() {
+
+    override fun handle(componentID: Int, buttonID: Int) {
         when (dialogueNum) {
             1 ->
                 when (stage) {

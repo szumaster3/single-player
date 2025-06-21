@@ -16,6 +16,12 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Rantz dialogue.
+ *
+ * Relations
+ * - [Big Chompy Bird Hunting][content.region.kandarin.feldip.quest.chompybird.BigChompyBirdHunting]
+ */
 @Initializable
 class RantzChompyDialogue(player: Player? = null) : Dialogue(player) {
 

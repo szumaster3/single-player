@@ -29,16 +29,13 @@ import java.awt.datatransfer.StringSelection
 
 @Initializable
 class VisualCommand : CommandPlugin() {
+
     override fun newInstance(arg: Any?): Plugin<Any?> {
         link(CommandSet.ADMINISTRATOR)
         return this
     }
 
-    override fun parse(
-        player: Player?,
-        name: String?,
-        args: Array<String?>?,
-    ): Boolean {
+    override fun parse(player: Player?, name: String?, args: Array<String?>?): Boolean {
         var location: Location? = null
         var scenery: Scenery? = null
         var o: Player? = null

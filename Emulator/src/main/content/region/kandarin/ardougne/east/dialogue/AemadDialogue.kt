@@ -9,6 +9,9 @@ import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Aemad dialogue.
+ */
 @Initializable
 class AemadDialogue(player: Player? = null) : Dialogue(player) {
 

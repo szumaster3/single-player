@@ -16,17 +16,12 @@ import org.rs.consts.Quests
 import org.rs.consts.Scenery
 
 class WitchHouseListener : InteractionListener {
-    val items =
-        intArrayOf(
-            Items.NEEDLE_1733,
-            Items.LEATHER_GLOVES_1059,
-            Items.LEATHER_BOOTS_1061,
-            Items.CABBAGE_1965,
-            Items.THREAD_1734,
-        )
+
+    val items = intArrayOf(Items.NEEDLE_1733, Items.LEATHER_GLOVES_1059, Items.LEATHER_BOOTS_1061, Items.CABBAGE_1965, Items.THREAD_1734)
     private val basementGates = intArrayOf(Scenery.GATE_2865, Scenery.GATE_2866)
 
     override fun defineListeners() {
+
         /*
          * Handles search the plant for key to witch house.
          */

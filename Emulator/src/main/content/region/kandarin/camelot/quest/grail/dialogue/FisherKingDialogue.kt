@@ -10,6 +10,12 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Fisher king dialogue.
+ *
+ * Relations
+ * - [Holy Grail][content.region.kandarin.camelot.quest.grail.HolyGrail]
+ */
 class FisherKingDialogue : DialogueFile() {
     var STAGE_SEEK_GRAIL = 10
     var STAGE_LOOK_WELL = 20

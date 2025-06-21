@@ -11,16 +11,19 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Jerico dialogue.
+ */
 @Initializable
 class JericoDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
-        if (isQuestInProgress(player, Quests.BIOHAZARD, 1, 100)) {
+        if (isQuestInProgress(player, Quests.BIOHAZARD, 1, 99)) {
             end()
             openDialogue(
                 player,
-                JericoDialogue(),
+                content.region.kandarin.ardougne.east.quest.biohazard.dialogue.JericoDialogue(),
             )
         } else {
             npcl(FaceAnim.SUSPICIOUS, "Hello.")

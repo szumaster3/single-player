@@ -12,6 +12,9 @@ import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Mourner dialogue.
+ */
 @Initializable
 class MournerDialogue(player: Player? = null) : Dialogue(player) {
 

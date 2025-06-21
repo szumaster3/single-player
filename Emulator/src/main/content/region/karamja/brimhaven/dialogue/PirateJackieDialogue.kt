@@ -1,6 +1,5 @@
 package content.region.karamja.brimhaven.dialogue
 
-import content.region.karamja.diary.PirateJackieDiaryDialogue
 import core.api.openDialogue
 import core.api.openInterface
 import core.game.dialogue.DialogueFile

@@ -10,6 +10,12 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Fightslave dialogue.
+ *
+ * Relations
+ * - [Fight Arena][content.region.kandarin.khazard.quest.arena.FightArena]
+ */
 @Initializable
 class FightslaveDialogue(player: Player? = null) : Dialogue(player) {
 

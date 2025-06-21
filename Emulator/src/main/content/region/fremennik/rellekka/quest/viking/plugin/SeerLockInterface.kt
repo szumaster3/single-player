@@ -10,9 +10,7 @@ import core.game.node.entity.player.Player
 import org.rs.consts.Components
 
 /**
- * Handles the lock interface for the Seer's Riddle Door in the Fremennik Trials quest.
- *
- * This interface allows players to select letters using buttons and solve a riddle by entering the correct word.
+ * Handles the lock interface for the Seer's riddle door in the Fremennik Trials quest.
  */
 class SeerLockInterface : InterfaceListener {
 
@@ -22,17 +20,17 @@ class SeerLockInterface : InterfaceListener {
     private val letters = ('A'..'Z').toList()
 
     /**
-     * Button IDs to cycle the letters backward (A -> Z).
+     * Button ids to cycle the letters backward (A -> Z).
      */
     private val letterBacks = listOf(39, 35, 31, 27)
 
     /**
-     * Button IDs to cycle the letters forward (Z -> A).
+     * Button ids to cycle the letters forward (Z -> A).
      */
     private val letterForwards = listOf(40, 36, 32, 28)
 
     /**
-     * Button ID to submit the selected combination.
+     * Button id to submit the selected combination.
      */
     private val enterButton = 1
 
@@ -58,36 +56,17 @@ class SeerLockInterface : InterfaceListener {
         }
     }
 
-    /**
-     * Resets the player's temporary riddle attributes and initializes the UI state.
-     *
-     * @param player The player opening the interface.
-     */
     private fun resetPlayerAttributes(player: Player) {
         (618..621).forEach { player.packetDispatch.sendVarcUpdate(it.toShort(), 0) }
         player.packetDispatch.sendIfaceSettings(0, 2, 298, 0, 1)
         (1..4).forEach { setAttribute(player, "riddle-letter-$it", 0) }
     }
 
-    /**
-     * Clears the temporary letter attributes from the player when the interface is closed.
-     *
-     * @param player The player closing the interface.
-     */
     private fun clearPlayerAttributes(player: Player) {
         (1..4).forEach { removeAttribute(player, "riddle-letter-$it") }
     }
 
-    /**
-     * Handles any button press on the interface by delegating to appropriate logic.
-     *
-     * @param player The player interacting with the interface.
-     * @param buttonID The ID of the button clicked.
-     */
-    private fun handleButtonClick(
-        player: Player,
-        buttonID: Int,
-    ) {
+    private fun handleButtonClick(player: Player, buttonID: Int) {
         when (buttonID) {
             in letterBacks -> updateLetter(player, letterBacks.indexOf(buttonID), -1)
             in letterForwards -> updateLetter(player, letterForwards.indexOf(buttonID), 1)
@@ -95,18 +74,7 @@ class SeerLockInterface : InterfaceListener {
         }
     }
 
-    /**
-     * Updates a single letter in the combination based on button press.
-     *
-     * @param player The player modifying the letter.
-     * @param index The index of the letter being changed (0-based).
-     * @param change The direction of the change: -1 for back, +1 for forward.
-     */
-    private fun updateLetter(
-        player: Player,
-        index: Int,
-        change: Int,
-    ) {
+    private fun updateLetter(player: Player, index: Int, change: Int) {
         val letterKey = "riddle-letter-${index + 1}"
         val currentValue = getAttribute(player, letterKey, 0)
         if (currentValue == 0 && change < 0) {
@@ -116,14 +84,6 @@ class SeerLockInterface : InterfaceListener {
         }
     }
 
-    /**
-     * Validates the player's selected combination against the expected riddle answer.
-     *
-     * If the answer is correct, it marks the riddle as solved.
-     * Otherwise, it sends a failure message.
-     *
-     * @param player The player submitting their answer.
-     */
     private fun checkRiddleSolution(player: Player) {
         val lettersSelected = (1..4).map { letters[getAttribute(player, "riddle-letter-$it", 0)] }
         val riddleAnswers = listOf("LIFE", "MIND", "TIME", "WIND")

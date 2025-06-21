@@ -44,6 +44,7 @@ import org.rs.consts.Quests
 import org.rs.consts.Vars
 
 class TouristTrapPlugin : OptionHandler() {
+
     override fun newInstance(arg: Any?): Plugin<Any> {
         SceneryDefinition.forId(1528).handlers["option:open"] = this
         SceneryDefinition.forId(1529).handlers["option:close"] = this
@@ -128,11 +129,7 @@ class TouristTrapPlugin : OptionHandler() {
         return this
     }
 
-    override fun handle(
-        player: Player,
-        node: Node,
-        option: String,
-    ): Boolean {
+    override fun handle(player: Player, node: Node, option: String): Boolean {
         val quest = player.getQuestRepository().getQuest(Quests.THE_TOURIST_TRAP)
         val id = node.id
         when (option) {

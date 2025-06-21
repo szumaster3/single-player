@@ -6,11 +6,14 @@ import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
 import org.rs.consts.NPCs
 
+/**
+ * Represents the High Priest dialogue.
+ *
+ * Relations
+ * - [Holy Grail][content.region.kandarin.camelot.quest.grail.HolyGrail]
+ */
 class HighPriestDialogue : DialogueFile() {
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
+    override fun handle(componentID: Int, buttonID: Int) {
         npc = NPC(NPCs.HIGH_PRIEST_216)
 
         when (stage) {

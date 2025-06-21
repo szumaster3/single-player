@@ -11,11 +11,15 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Jeremy Servil dialogue file.
+ *
+ * Relations
+ * - [Fight Arena][content.region.kandarin.khazard.quest.arena.FightArena]
+ */
 class JeremyServilDialogueFile : DialogueFile() {
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
+
+    override fun handle(componentID: Int, buttonID: Int) {
         npc = NPC(NPCs.JEREMY_SERVIL_266)
         when (getQuestStage(player!!, Quests.FIGHT_ARENA)) {
             in 1..84 ->

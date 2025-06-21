@@ -1,6 +1,6 @@
 package content.region.fremennik.jatizso.dialogue
 
-import content.region.fremennik.plugin.FremennikTransportation
+import content.region.fremennik.plugin.FremennikShipHelper
 import content.region.fremennik.plugin.Travel
 import core.api.quest.requireQuest
 import core.game.dialogue.Dialogue
@@ -12,6 +12,9 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Mord Gunnars dialogue.
+ */
 @Initializable
 class MordGunnarsDialogue(player: Player? = null) : Dialogue(player) {
 
@@ -38,7 +41,7 @@ class MordGunnarsDialogue(player: Player? = null) : Dialogue(player) {
                 if (!requireQuest(player, Quests.THE_FREMENNIK_TRIALS, "")) {
                     return true
                 } else {
-                    FremennikTransportation.sail(
+                    FremennikShipHelper.sail(
                         player,
                         if (npc.id == NPCs.MORD_GUNNARS_5481) {
                             Travel.RELLEKKA_TO_JATIZSO

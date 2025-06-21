@@ -22,10 +22,8 @@ import org.rs.consts.Quests
  * Represents the Thormac dialogue extension for [ScorpionCatcherPlugin] quest.
  */
 class ThormacRequestDialogue : DialogueFile() {
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
+
+    override fun handle(componentID: Int, buttonID: Int) {
         val questStage = getQuestStage(player!!, Quests.SCORPION_CATCHER)
         val hasAnCage = hasAnItem(player!!, Items.SCORPION_CAGE_456, Items.SCORPION_CAGE_457, Items.SCORPION_CAGE_458, Items.SCORPION_CAGE_459, Items.SCORPION_CAGE_460, Items.SCORPION_CAGE_461, Items.SCORPION_CAGE_462, Items.SCORPION_CAGE_463).container != null
         npc = NPC(NPCs.THORMAC_389)

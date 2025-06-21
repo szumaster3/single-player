@@ -28,7 +28,7 @@ import org.rs.consts.Quests
  * Represents the King Narnode dialogue.
  *
  * Relations:
- * [The Grand Tree][content.region.kandarin.quest.grandtree.TheGrandTree]
+ * [The Grand Tree][content.region.kandarin.gnome.quest.grandtree.TheGrandTree]
  */
 class KingNarnodeDialogue : DialogueFile() {
 

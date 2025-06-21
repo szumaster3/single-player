@@ -1,6 +1,7 @@
 package content.region.fremennik.rellekka.quest.viking.plugin
 
 import content.data.GameAttributes
+import content.region.fremennik.rellekka.quest.viking.npc.DraugenNPC
 import core.api.getAttribute
 import core.api.sendDialogue
 import core.api.sendMessage
@@ -21,6 +22,7 @@ import kotlin.math.atan2
  * Handles the "locate" interaction which guides the player towards the [DraugenNPC][content.region.fremennik.quest.viking.handlers.DraugenNPC].
  */
 class HunterTalismanPlugin : InteractionListener {
+
     val TALISMAN = Items.HUNTERS_TALISMAN_3696
 
     override fun defineListeners() {
@@ -69,7 +71,7 @@ class HunterTalismanPlugin : InteractionListener {
                 3 -> {
                     if (getAttribute(player, GameAttributes.QUEST_VIKING_SIGLI_DRAUGEN_SPAWN, false)) return true
                     sendMessage(player, "The draugen is here! Beware!")
-                    content.region.fremennik.rellekka.quest.viking.plugin.DraugenNPC(player).init()
+                    DraugenNPC(player).init()
                     setAttribute(player, GameAttributes.QUEST_VIKING_SIGLI_DRAUGEN_SPAWN, true)
                     return true
                 }

@@ -6,11 +6,15 @@ import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Guidors Wife dialogue.
+ *
+ * Relations
+ * - [Biohazard][content.region.kandarin.ardougne.east.quest.biohazard.Biohazard]
+ */
 class GuidorsWifeDialogue : DialogueFile() {
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
+
+    override fun handle(componentID: Int, buttonID: Int) {
         npc = NPC(NPCs.GUIDORS_WIFE_342)
         when (stage) {
             0 -> sendDialogue(player!!, "Guidor's wife refuses to let you enter.").also { stage++ }

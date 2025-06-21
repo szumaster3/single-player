@@ -10,6 +10,9 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Knight at god wars entrance dialogue.
+ */
 @Initializable
 class KnightGWDDialogue(player: Player? = null) : Dialogue(player) {
 

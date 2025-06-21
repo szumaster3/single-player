@@ -3,7 +3,7 @@ package content.region.kandarin.seers.quest.mcannon;
 import content.region.kandarin.seers.quest.mcannon.dialogue.CaptainLawgofDialogue;
 import content.region.kandarin.seers.quest.mcannon.dialogue.LollkDialogue;
 import content.region.kandarin.seers.quest.mcannon.dialogue.NulodionDialogue;
-import content.region.kandarin.seers.quest.mcannon.plugin.CaptainLawgofNPC;
+import content.region.kandarin.seers.quest.mcannon.npc.CaptainLawgofNPC;
 import content.region.kandarin.seers.quest.mcannon.plugin.DwarfCannonPlugin;
 import core.game.node.entity.player.Player;
 import core.game.node.entity.player.link.quest.Quest;

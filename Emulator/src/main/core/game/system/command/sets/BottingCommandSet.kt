@@ -12,7 +12,9 @@ import org.rs.consts.Components
 
 @Initializable
 class BottingCommandSet : CommandSet(Privilege.ADMIN) {
+
     override fun defineCommands() {
+
         if (GameWorld.settings?.enabled_botting != true) {
             return
         }

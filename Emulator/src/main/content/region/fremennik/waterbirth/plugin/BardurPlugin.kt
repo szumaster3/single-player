@@ -2,6 +2,7 @@ package content.region.fremennik.waterbirth.plugin
 
 import content.region.fremennik.waterbirth.dialogue.BardurDialogue
 import content.region.fremennik.waterbirth.dialogue.BardurExchangeDialogue
+import content.region.fremennik.waterbirth.npc.BardurNPC
 import core.api.openDialogue
 import core.api.quest.isQuestComplete
 import core.api.sendMessage
@@ -23,6 +24,7 @@ class BardurPlugin : InteractionListener {
 
         onUseWith(IntType.NPC, exchangeItemIDs, NPCs.BARDUR_2879) { player, node, _ ->
             ClassScanner.definePlugin(BardurDialogue())
+            ClassScanner.definePlugin(BardurNPC())
 
             val npc = node.asNpc()
             if (npc.inCombat()) {

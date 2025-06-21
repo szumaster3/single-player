@@ -1,6 +1,6 @@
 package core.game.world.repository
 
-import content.region.wild.plugin.revenants.RevenantNPC
+import content.region.wilderness.npc.revenants.RevenantNPC
 import core.ServerConstants
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player

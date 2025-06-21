@@ -1,6 +1,6 @@
 package content.region.kandarin.ardougne.east.quest.biohazard.dialogue
 
-import content.region.kandarin.ardougne.east.quest.biohazard.plugin.BiohazardUtils
+import content.data.GameAttributes
 import core.api.*
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
@@ -8,11 +8,15 @@ import core.game.node.entity.npc.NPC
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Chancy dialogue.
+ *
+ * Relations
+ * - [Biohazard][content.region.kandarin.ardougne.east.quest.biohazard.Biohazard]
+ */
 class ChancyDialogue : DialogueFile() {
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
+
+    override fun handle(componentID: Int, buttonID: Int) {
         npc = NPC(NPCs.CHANCY_338)
         when (stage) {
             0 -> player("Hello, I've got a vial for you to take to Varrock.").also { stage++ }
@@ -63,7 +67,7 @@ class ChancyDialogue : DialogueFile() {
             6 -> npc("Be Lucky!").also { stage++ }
             7 -> {
                 end()
-                setAttribute(player!!, BiohazardUtils.FIRST_VIAL_CORRECT, true)
+                setAttribute(player!!, GameAttributes.FIRST_VIAL_CORRECT, true)
             }
 
             8 -> {
@@ -93,7 +97,7 @@ class ChancyVarrockDialogueFile : DialogueFile() {
                 player("That was the idea.")
                 sendMessage(player!!, "He gives you the vial of liquid honey.")
                 addItemOrDrop(player!!, Items.LIQUID_HONEY_416)
-                removeAttribute(player!!, BiohazardUtils.FIRST_VIAL_CORRECT)
+                removeAttribute(player!!, GameAttributes.FIRST_VIAL_CORRECT)
             }
         }
     }

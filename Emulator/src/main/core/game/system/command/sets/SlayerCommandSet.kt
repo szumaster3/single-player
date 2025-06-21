@@ -11,6 +11,7 @@ import core.plugin.Initializable
 
 @Initializable
 class SlayerCommandSet : CommandSet(Privilege.ADMIN) {
+
     override fun defineCommands() {
         define(name = "finishtask", Privilege.ADMIN) { player, _ ->
             notify(player, "Kill the npc that spawned to finish your task.")

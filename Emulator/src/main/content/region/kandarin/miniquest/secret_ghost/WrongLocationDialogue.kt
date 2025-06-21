@@ -5,7 +5,7 @@ import core.game.dialogue.FaceAnim
 import core.tools.END_DIALOGUE
 
 /**
- * Represents the wrong location dialogue of a mysterious ghost in Curse of zaros miniquest.
+ * Represents the [WrongLocationDialogue].
  */
 class WrongLocationDialogue : DialogueFile() {
 

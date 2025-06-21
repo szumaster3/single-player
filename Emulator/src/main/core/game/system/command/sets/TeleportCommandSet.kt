@@ -12,6 +12,7 @@ import kotlinx.coroutines.launch
 
 @Initializable
 class TeleportCommandSet : CommandSet(Privilege.ADMIN) {
+
     override fun defineCommands() {
         define(
             name = "to",

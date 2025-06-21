@@ -389,6 +389,23 @@ internal object GameAttributes {
     // Smoking kills miniquest.
     const val MINIQUEST_SMKI_GUARDIANS = "/save:quest:smki-guardians"
 
-    // Draynor
+    // Draynor.
     const val TREE_GUARD = "draynor:tree_guard:feed"
+
+    // Tower of life.
+    const val TOL_BUILDER_COSTUME = "/save:tol:builder_costume"
+    const val TOL_TOWER_ACCESS = "/save:tol:tower-enter"
+    const val TOL_CUTSCENE = "/save:tol:cutscene-start"
+
+    // Biohazard quest.
+    const val FIRST_VIAL_CORRECT = "/save:biohazard-vial:1"
+    const val SECOND_VIAL_CORRECT = "/save:biohazard-vial:2"
+    const val THIRD_VIAL_CORRECT = "/save:biohazard-vial:3"
+
+    const val FIRST_VIAL_WRONG = "/save:biohazard-vial:4"
+    const val SECOND_VIAL_WRONG = "/save:biohazard-vial:5"
+    const val THIRD_VIAL_WRONG = "/save:biohazard-vial:6"
+
+    const val ELENA_REPLACE = "/save:biohazard-items"
+    const val FEED_ON_FENCE = "/save:biohazard:fed-fence"
 }

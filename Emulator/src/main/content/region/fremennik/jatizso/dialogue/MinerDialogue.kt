@@ -7,6 +7,9 @@ import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Miner dialogue.
+ */
 @Initializable
 class MinerDialogue(player: Player? = null) : Dialogue(player) {
 

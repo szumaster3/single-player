@@ -16,19 +16,15 @@ private val ROTTEN_POTATO_OPTIONS = arrayOf("RS HD", "Heal", "Extra", "Commands"
 
 @Initializable
 class RottenPotatoOptionHandler : OptionHandler() {
+
     override fun newInstance(arg: Any?): Plugin<Any> {
         for (option in ROTTEN_POTATO_OPTIONS) {
-            ItemDefinition.forId(Items.ROTTEN_POTATO_5733).handlers["option:${option.lowercase()}"] =
-                this
+            ItemDefinition.forId(Items.ROTTEN_POTATO_5733).handlers["option:${option.lowercase()}"] = this
         }
         return this
     }
 
-    override fun handle(
-        player: Player?,
-        node: Node?,
-        option: String?,
-    ): Boolean {
+    override fun handle(player: Player?, node: Node?, option: String?): Boolean {
         player ?: return false
         node ?: return false
         option ?: return false

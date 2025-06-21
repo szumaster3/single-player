@@ -5,6 +5,7 @@ import content.global.skill.gathering.woodcutting.WoodcuttingPulse
 import content.region.fremennik.plugin.LyreTeleport
 import content.region.fremennik.rellekka.quest.viking.dialogue.CouncilWorkerDialogue
 import content.region.fremennik.rellekka.quest.viking.dialogue.FremennikFishermanDialogue
+import content.region.fremennik.rellekka.quest.viking.npc.KoscheiSession
 import core.api.*
 import core.api.interaction.openNpcShop
 import core.api.quest.getQuestPoints
@@ -35,6 +36,7 @@ import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
 class FremennikTrialsPlugin : InteractionListener {
+
     override fun defineListeners() {
 
         /*

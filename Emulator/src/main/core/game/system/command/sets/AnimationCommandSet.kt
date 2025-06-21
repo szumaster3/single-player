@@ -1,6 +1,5 @@
 package core.game.system.command.sets
 
-import core.game.node.entity.npc.NPC
 import core.game.system.command.CommandPlugin.Companion.toInteger
 import core.game.system.command.Privilege
 import core.game.system.task.Pulse
@@ -10,7 +9,6 @@ import core.plugin.Initializable
 
 @Initializable
 class AnimationCommandSet : CommandSet(Privilege.ADMIN) {
-    private var npcs: List<NPC> = ArrayList()
 
     override fun defineCommands() {
         define(

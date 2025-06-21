@@ -8,11 +8,15 @@ import core.game.dialogue.Topic
 import core.tools.END_DIALOGUE
 import org.rs.consts.Quests
 
+/**
+ * Represents the Eohric dialogue.
+ *
+ * Relations
+ * - [Death Plateau][content.region.asgarnia.burthope.quest.death.DeathPlateau]
+ */
 class EohricDialogueFile : DialogueFile() {
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
+
+    override fun handle(componentID: Int, buttonID: Int) {
         when (getQuestStage(player!!, Quests.DEATH_PLATEAU)) {
             in 5..9 -> {
                 when (stage) {

@@ -25,10 +25,7 @@ import org.rs.consts.Quests
 @Initializable
 class AugusteDialogue(player: Player? = null) : Dialogue(player) {
 
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ): Boolean {
+    override fun handle(componentID: Int, buttonID: Int): Boolean {
         val hasPapyrus = inInventory(player!!, Items.PAPYRUS_970, 3)
         val hasCandle = inInventory(player!!, Items.CANDLE_36, 1)
         val hasWool = inInventory(player!!, Items.BALL_OF_WOOL_1759, 1)

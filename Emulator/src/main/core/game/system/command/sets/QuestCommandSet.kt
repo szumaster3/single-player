@@ -12,6 +12,7 @@ import org.rs.consts.Quests
 
 @Initializable
 class QuestCommandSet : CommandSet(Privilege.ADMIN) {
+
     override fun defineCommands() {
 
         define(

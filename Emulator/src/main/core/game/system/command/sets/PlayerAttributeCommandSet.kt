@@ -9,6 +9,7 @@ import core.plugin.Initializable
 
 @Initializable
 class PlayerAttributeCommandSet : CommandSet(Privilege.ADMIN) {
+
     override fun defineCommands() {
         define(name = "getattribute") { player, args ->
             if (args.size < 2) {

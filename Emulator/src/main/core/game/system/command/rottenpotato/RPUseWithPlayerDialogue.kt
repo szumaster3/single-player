@@ -6,9 +6,7 @@ import core.game.node.entity.player.Player
 import core.plugin.Initializable
 
 @Initializable
-class RPUseWithPlayerDialogue(
-    player: Player? = null,
-) : Dialogue(player) {
+class RPUseWithPlayerDialogue(player: Player? = null) : Dialogue(player) {
     var other: Player? = null
     val ID = 38575796
 
@@ -21,10 +19,7 @@ class RPUseWithPlayerDialogue(
         return true
     }
 
-    override fun handle(
-        interfaceId: Int,
-        buttonId: Int,
-    ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (buttonId) {
             1 -> other!!.impactHandler.manualHit(player, other!!.skills.lifepoints, ImpactHandler.HitsplatType.NORMAL)
             2 -> other!!.bank!!.open(player)

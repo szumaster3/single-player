@@ -11,6 +11,9 @@ import core.game.node.item.Item
 import core.plugin.Initializable
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Candle Seller dialogue.
+ */
 @Initializable
 class CandleSellerDialogue(player: Player? = null) : Dialogue(player) {
 

@@ -8,6 +8,7 @@ import core.plugin.Initializable
 
 @Initializable
 class CameraCommandSet : CommandSet(Privilege.ADMIN) {
+
     override fun defineCommands() {
         define(
             name = "poscam",

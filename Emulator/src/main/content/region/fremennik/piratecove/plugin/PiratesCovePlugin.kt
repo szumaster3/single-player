@@ -13,6 +13,7 @@ import org.rs.consts.Items
 import org.rs.consts.Scenery
 
 class PiratesCovePlugin : InteractionListener {
+
     override fun defineListeners() {
 
         /*
@@ -39,7 +40,7 @@ class PiratesCovePlugin : InteractionListener {
                     sendMessage(player, "The barrel became empty!")
                     when (node.id) {
                         Scenery.TAR_BARREL_16860 -> replaceScenery(scenery, Scenery.TAR_BARREL_16688, 40)
-                        Scenery.BARREL_16884, Scenery.BARREL_16885 -> replaceScenery(scenery, EMPTY_BARREL, 40)
+                        Scenery.BARREL_16884, Scenery.BARREL_16885 -> replaceScenery(scenery, Scenery.BARREL_16886, 40)
                     }
                     scenery.charge = 0
                 }
@@ -50,6 +51,5 @@ class PiratesCovePlugin : InteractionListener {
 
     companion object {
         private val FULL_BARREL = intArrayOf(Scenery.TAR_BARREL_16860, Scenery.BARREL_16884, Scenery.BARREL_16885)
-        private const val EMPTY_BARREL = Scenery.BARREL_16886
     }
 }

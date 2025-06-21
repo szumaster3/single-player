@@ -17,6 +17,12 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Achietties dialogue.
+ *
+ * Relations
+ * - [HeroesQuest]
+ */
 @Initializable
 class AchiettiesDialogue(player: Player? = null) : Dialogue(player) {
 
@@ -36,6 +42,12 @@ class AchiettiesDialogue(player: Player? = null) : Dialogue(player) {
     override fun getIds(): IntArray = intArrayOf(NPCs.ACHIETTIES_796)
 }
 
+/**
+ * Represents the Achietties dialogue file.
+ *
+ * Relations
+ * - [Heroes Quest][content.region.asgarnia.burthope.quest.hero.HeroesQuest]
+ */
 class AchiettiesDialogueFile : DialogueBuilderFile() {
     override fun create(b: DialogueBuilder) {
         b

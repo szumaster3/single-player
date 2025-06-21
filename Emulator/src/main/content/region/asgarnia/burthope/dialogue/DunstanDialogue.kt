@@ -1,5 +1,7 @@
 package content.region.asgarnia.burthope.dialogue
 
+import content.region.asgarnia.burthope.quest.death.dialogue.DunstanDialogueFile
+import content.region.asgarnia.burthope.quest.troll.dialogue.DunstanTrollDialogue
 import core.api.openDialogue
 import core.api.quest.isQuestComplete
 import core.api.quest.isQuestInProgress
@@ -49,7 +51,7 @@ class DunstanDialogue(player: Player? = null) : Dialogue(player) {
          * Troll Stronghold in progress.
          */
         if (isQuestInProgress(player!!, Quests.TROLL_STRONGHOLD, 1, 99)) {
-            openDialogue(player!!, DunstanDialogue(), npc)
+            openDialogue(player!!, DunstanTrollDialogue(), npc)
             return true
         }
 
@@ -81,7 +83,7 @@ class DunstanDialogue(player: Player? = null) : Dialogue(player) {
          * Death Plateau in progress.
          */
         if (isQuestInProgress(player!!, Quests.DEATH_PLATEAU, 21, 24)) {
-            openDialogue(player!!, DunstanDialogue(), npc)
+            openDialogue(player!!, DunstanDialogueFile(), npc)
             return true
         }
 

@@ -17,6 +17,19 @@ import org.rs.consts.Scenery
 import org.rs.consts.Sounds
 
 class BoneGrinderPlugin : InteractionListener {
+
+    companion object {
+        private const val LOADED_BONE_KEY = "/save:bonegrinder-bones"
+        private const val BONE_HOPPER_KEY = "/save:bonegrinder-hopper"
+        private const val BONE_BIN_KEY = "/save:bonegrinder-bin"
+
+        private val WIND_ANIM = Animation(Animations.TURN_WHEEL_1648)
+        private val FILL_ANIM = Animation(Animations.FILL_HOPPER_1649)
+        private val SCOOP_ANIM = Animation(Animations.FILL_POT_1650)
+
+        private val boneIDs = Bones.values().map { it.itemId }.toIntArray()
+    }
+
     override fun defineListeners() {
         on(Scenery.LOADER_11162, IntType.SCENERY, "fill") { player, _ ->
             handleFill(player)
@@ -38,18 +51,6 @@ class BoneGrinderPlugin : InteractionListener {
             handleFill(player)
             return@onUseWith true
         }
-    }
-
-    companion object {
-        private const val LOADED_BONE_KEY = "/save:bonegrinder-bones"
-        private const val BONE_HOPPER_KEY = "/save:bonegrinder-hopper"
-        private const val BONE_BIN_KEY = "/save:bonegrinder-bin"
-
-        private val WIND_ANIM = Animation(Animations.TURN_WHEEL_1648)
-        private val FILL_ANIM = Animation(Animations.FILL_HOPPER_1649)
-        private val SCOOP_ANIM = Animation(Animations.FILL_POT_1650)
-
-        private val boneIDs = Bones.values().map { it.itemId }.toIntArray()
     }
 
     fun handleFill(player: Player): Boolean {

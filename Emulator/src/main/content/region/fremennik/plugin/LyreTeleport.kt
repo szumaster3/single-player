@@ -17,7 +17,7 @@ import org.rs.consts.Items
 /**
  * Handles teleport using lyre.
  */
-class LyreTeleport(val player: Player, ) : Pulse() {
+class LyreTeleport(val player: Player) : Pulse() {
     companion object {
         const val LYRE_TELEPORT_ALT = "/save:lyre-waterbirth-tp"
         val waterBirthIsland = Location(2544, 3759, 0)

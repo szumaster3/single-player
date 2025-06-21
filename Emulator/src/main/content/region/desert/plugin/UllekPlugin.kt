@@ -10,7 +10,9 @@ import core.game.world.update.flag.context.Animation
 import org.rs.consts.Animations
 
 class UllekPlugin : InteractionListener {
+
     override fun defineListeners() {
+
         on(org.rs.consts.Scenery.STAIRS_DOWN_28481, IntType.SCENERY, "enter") { player, _ ->
             player.properties.teleportLocation = Location.create(3448, 9252, 1)
             return@on true

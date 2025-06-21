@@ -9,6 +9,12 @@ import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
 import org.rs.consts.*
 
+/**
+ * Represents the Sabotage dialogue.
+ *
+ * Relations
+ * - [Black Knights Fortress][content.region.asgarnia.falador.quest.fortress.BlackKnightsFortress]
+ */
 @Initializable
 class SabotageDialogue(player: Player? = null) : Dialogue(player) {
 

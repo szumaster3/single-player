@@ -1,6 +1,6 @@
 package content.region.kandarin.ardougne.quest.tol.dialogue
 
-import content.region.kandarin.ardougne.quest.tol.plugin.TowerOfLifeUtils
+import content.data.GameAttributes
 import core.api.getAttribute
 import core.api.quest.getQuestStage
 import core.game.dialogue.Dialogue
@@ -27,8 +27,7 @@ class TransmuteDialogue(player: Player? = null) : Dialogue(player) {
                     3 -> npcl(FaceAnim.FRIENDLY, "Pah, you have no taste.").also { stage = END_DIALOGUE }
                 }
 
-            3 ->
-                if (getAttribute(player, TowerOfLifeUtils.TOL_TOWER_ACCESS, 0) == 1) {
+            3 -> if (getAttribute(player, GameAttributes.TOL_TOWER_ACCESS, 0) == 1) {
                     when (stage) {
                         START_DIALOGUE -> playerl(FaceAnim.FRIENDLY, "I'm a builder!").also { stage++ }
                         1 -> npcl(FaceAnim.FRIENDLY, "I question why you are so pleased about this.").also { stage++ }
@@ -55,7 +54,7 @@ class TransmuteDialogue(player: Player? = null) : Dialogue(player) {
                 }
 
             6 ->
-                if (getAttribute(player, TowerOfLifeUtils.TOL_CUTSCENE, false)) {
+                if (getAttribute(player, GameAttributes.TOL_CUTSCENE, false)) {
                     when (stage) {
                         START_DIALOGUE ->
                             playerl(

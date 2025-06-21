@@ -14,11 +14,11 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+
+
 class PoisonSalesmanDialogueFile : DialogueFile() {
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
+
+    override fun handle(componentID: Int, buttonID: Int, ) {
         val questName = Quests.MURDER_MYSTERY
         val questStage = getQuestStage(player!!, questName)
         npc = NPC(NPCs.POISON_SALESMAN_820)

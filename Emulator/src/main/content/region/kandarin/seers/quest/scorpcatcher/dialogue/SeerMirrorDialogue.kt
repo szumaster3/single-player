@@ -20,10 +20,8 @@ import org.rs.consts.Quests
  * Represents the Seer's dialogue extension for [ScorpionCatcherPlugin] quest.
  */
 class SeerMirrorDialogue : DialogueFile() {
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
+
+    override fun handle(componentID: Int, buttonID: Int) {
         npc = NPC(NPCs.SEER_388)
         when (stage) {
             0 -> {

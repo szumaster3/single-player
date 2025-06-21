@@ -12,15 +12,19 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the A Lazy guard dialogue.
+ *
+ * Relations
+ * - [Fight Arena][content.region.kandarin.khazard.quest.arena.FightArena]
+ */
 class ALazyGuardDialogue : DialogueFile() {
+
     companion object {
         val guardLocation = location(2617, 3144, 0)
     }
 
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
+    override fun handle(componentID: Int, buttonID: Int, ) {
         npc = NPC(NPCs.A_LAZY_KHAZARD_GUARD_8498)
         when (getQuestStage(player!!, Quests.FIGHT_ARENA)) {
             in 40..49 ->

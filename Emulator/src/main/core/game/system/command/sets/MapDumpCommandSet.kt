@@ -11,17 +11,14 @@ import java.util.*
 
 @Initializable
 class MapDumpCommandSet : CommandPlugin() {
+
     @Throws(Throwable::class)
     override fun newInstance(arg: Any?): Plugin<Any?> {
         link(CommandSet.ADMINISTRATOR)
         return this
     }
 
-    override fun parse(
-        player: Player?,
-        name: String?,
-        args: Array<String?>?,
-    ): Boolean {
+    override fun parse(player: Player?, name: String?, args: Array<String?>?, ): Boolean {
         when (name) {
             "mapredo" -> redoMap(3000, 3000, 1).also { return true }
             "findobj" -> findObj(player, args?.toList() as List<String>?).also { return true }

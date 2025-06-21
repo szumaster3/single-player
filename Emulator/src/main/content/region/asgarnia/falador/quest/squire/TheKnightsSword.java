@@ -11,16 +11,13 @@ import org.rs.consts.Quests;
 import org.rs.consts.Vars;
 
 /**
- * The type The knights sword.
+ * The knight's sword quest.
  */
 @Initializable
 public class TheKnightsSword extends Quest {
 
     private static final Item PORTRAIT = new Item(Items.PORTRAIT_666);
 
-    /**
-     * Instantiates a new The knights sword.
-     */
     public TheKnightsSword() {
         super(Quests.THE_KNIGHTS_SWORD, 22, 21, 1, Vars.VARP_QUEST_KNIGHTS_SWORD_PROGRESS_122, 0, 1, 7);
     }

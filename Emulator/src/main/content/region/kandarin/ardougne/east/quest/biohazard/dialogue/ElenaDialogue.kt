@@ -1,6 +1,6 @@
 package content.region.kandarin.ardougne.east.quest.biohazard.dialogue
 
-import content.region.kandarin.ardougne.east.quest.biohazard.plugin.BiohazardUtils
+import content.data.GameAttributes
 import core.api.*
 import core.api.quest.getQuestStage
 import core.api.quest.setQuestStage
@@ -13,11 +13,15 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Elena dialogue.
+ *
+ * Relations
+ * - [Biohazard][content.region.kandarin.ardougne.east.quest.biohazard.Biohazard]
+ */
 class ElenaDialogue : DialogueFile() {
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
+
+    override fun handle(componentID: Int, buttonID: Int) {
         val questStage = getQuestStage(player!!, Quests.BIOHAZARD)
         npc = NPC(NPCs.ELENA_3209)
         when {
@@ -129,7 +133,7 @@ class ElenaDialogue : DialogueFile() {
             (questStage in 10..15) -> {
                 when (stage) {
                     0 ->
-                        if (getAttribute(player!!, BiohazardUtils.ELENA_REPLACE, false)) {
+                        if (getAttribute(player!!, GameAttributes.ELENA_REPLACE, false)) {
                             npcl(FaceAnim.HALF_ASKING, "What are you doing back here?").also { stage = 99 }
                         } else {
                             npc(FaceAnim.CALM_TALK, "So, have you managed to retrieve my distillator?").also { stage++ }
@@ -213,7 +217,7 @@ class ElenaDialogue : DialogueFile() {
                             addItemOrDrop(player!!, Items.SULPHURIC_BROLINE_417)
                             addItemOrDrop(player!!, Items.PLAGUE_SAMPLE_418)
                             sendMessage(player!!, "Elena gives you three vials and a sample in a tin container.")
-                            setAttribute(player!!, BiohazardUtils.ELENA_REPLACE, true)
+                            setAttribute(player!!, GameAttributes.ELENA_REPLACE, true)
                         }
                     }
 

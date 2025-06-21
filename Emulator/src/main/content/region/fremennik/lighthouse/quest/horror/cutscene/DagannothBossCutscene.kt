@@ -1,6 +1,6 @@
 package content.region.fremennik.lighthouse.quest.horror.cutscene
 
-import content.region.fremennik.lighthouse.quest.horror.plugin.DagonnothSessionPulse
+import content.region.fremennik.lighthouse.quest.horror.npc.DagonnothSessionPulse
 import core.api.clearHintIcon
 import core.api.interaction.transformNpc
 import core.api.registerHintIcon

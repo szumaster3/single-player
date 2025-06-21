@@ -19,13 +19,11 @@ import org.rs.consts.Quests
  * Represents the Glough dialogue.
  *
  * Relations:
- * [The Grand Tree][content.region.kandarin.quest.grandtree.TheGrandTree]
+ * [The Grand Tree][content.region.kandarin.gnome.quest.grandtree.TheGrandTree]
  */
 class GloughDialogue : DialogueFile() {
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
+
+    override fun handle(componentID: Int, buttonID: Int, ) {
         npc = NPC(NPCs.GLOUGH_671)
         when (getQuestStage(player!!, Quests.THE_GRAND_TREE)) {
             40 -> {

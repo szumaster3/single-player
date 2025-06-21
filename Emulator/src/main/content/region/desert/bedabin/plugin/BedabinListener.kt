@@ -1,4 +1,4 @@
-package content.region.desert.bedabin.quest
+package content.region.desert.bedabin.plugin
 
 import core.api.findNPC
 import core.api.getScenery
@@ -11,6 +11,7 @@ import org.rs.consts.NPCs
 import org.rs.consts.Scenery
 
 class BedabinListener : InteractionListener {
+
     override fun defineListeners() {
         on(TENT, IntType.SCENERY, "walk-through") { player, _ ->
             if (player.location.y >= 3046) {

@@ -1,6 +1,6 @@
 package content.region.kandarin.ardougne.east.quest.biohazard
 
-import content.region.kandarin.ardougne.east.quest.biohazard.plugin.BiohazardUtils
+import content.data.GameAttributes
 import core.api.quest.isQuestComplete
 import core.api.removeAttributes
 import core.api.rewardXP
@@ -16,25 +16,16 @@ import org.rs.consts.Vars
 
 @Initializable
 class Biohazard : Quest(Quests.BIOHAZARD, 36, 35, 3, Vars.VARP_QUEST_BIOHAZARD_PROGRESS_68, 0, 1, 16) {
-    override fun drawJournal(
-        player: Player,
-        stage: Int,
-    ) {
+
+    override fun drawJournal(player: Player, stage: Int) {
         super.drawJournal(player, stage)
         var line = 11
-        player ?: return
-
         if (stage == 0) {
             line(player, "I can start this quest by speaking to !!Elena?? who is in !!East??", line++)
             line(player, "!!Ardougne??.", line++)
             line++
             line(player, "Requirements:", line++)
-            line(
-                player,
-                "!!I need to complete ${Quests.PLAGUE_CITY} before I can attempt this??",
-                line++,
-                isQuestComplete(player, Quests.PLAGUE_CITY),
-            )
+            line(player, "!!I need to complete ${Quests.PLAGUE_CITY} before I can attempt this??", line++, isQuestComplete(player, Quests.PLAGUE_CITY))
             line(player, "!!Quest??.", line++, isQuestComplete(player, Quests.PLAGUE_CITY))
             line++
         }
@@ -212,13 +203,12 @@ class Biohazard : Quest(Quests.BIOHAZARD, 36, 35, 3, Vars.VARP_QUEST_BIOHAZARD_P
 
     override fun finish(player: Player) {
         super.finish(player)
-        player ?: return
         var line = 10
         sendItemZoomOnInterface(player, Components.QUEST_COMPLETE_SCROLL_277, 5, Items.DISTILLATOR_420, 230)
         drawReward(player, "3 Quest Points", line++)
         drawReward(player, "1250 Thieving XP", line)
         rewardXP(player, Skills.THIEVING, 1250.0)
-        removeAttributes(player, BiohazardUtils.FEED_ON_FENCE, BiohazardUtils.ELENA_REPLACE)
+        removeAttributes(player, GameAttributes.FEED_ON_FENCE, GameAttributes.ELENA_REPLACE)
     }
 
     override fun newInstance(`object`: Any?): Quest = this

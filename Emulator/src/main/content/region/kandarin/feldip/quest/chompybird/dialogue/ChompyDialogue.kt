@@ -10,13 +10,15 @@ import core.game.node.item.Item
 import core.tools.END_DIALOGUE
 import org.rs.consts.Items
 
-class ChompyDialogue(
-    val quest: Quest,
-) : DialogueFile() {
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
+/**
+ * Represents the Chompy dialogue.
+ *
+ * Relations
+ * - [Big Chompy Bird Hunting][content.region.kandarin.feldip.quest.chompybird.BigChompyBirdHunting]
+ */
+class ChompyDialogue(val quest: Quest) : DialogueFile() {
+
+    override fun handle(componentID: Int, buttonID: Int) {
         when (quest.getStage(player)) {
             0 -> handleQuestStartDialogue(player, buttonID)
             in 20 until 30 -> handleToadsiesDialogue(player, buttonID)
@@ -29,10 +31,7 @@ class ChompyDialogue(
         }
     }
 
-    private fun handleQuestStartDialogue(
-        player: Player?,
-        buttonId: Int,
-    ) {
+    private fun handleQuestStartDialogue(player: Player?, buttonId: Int) {
         when (stage) {
             0 -> npcl(
                 FaceAnim.OLD_NORMAL,

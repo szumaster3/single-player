@@ -10,11 +10,14 @@ import core.game.node.entity.npc.NPC
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the East Door Support dialogue.
+ *
+ * Relations
+ * - [Fight Arena][content.region.kandarin.khazard.quest.arena.FightArena]
+ */
 class EastDoorSupportDialogue : DialogueFile() {
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
+    override fun handle(componentID: Int, buttonID: Int, ) {
         npc = NPC(NPCs.KHAZARD_GUARD_257)
         val completeOptionalTask = getAttribute(player!!, "quest:arena-optional-task", false)
         when (stage) {

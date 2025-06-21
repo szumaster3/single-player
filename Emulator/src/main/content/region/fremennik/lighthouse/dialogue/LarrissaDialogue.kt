@@ -16,6 +16,9 @@ import org.rs.consts.NPCs
 import org.rs.consts.Quests
 import org.rs.consts.Vars
 
+/**
+ * Represents the Larrissa dialogue.
+ */
 @Initializable
 class LarrissaDialogue(player: Player? = null) : Dialogue(player) {
 

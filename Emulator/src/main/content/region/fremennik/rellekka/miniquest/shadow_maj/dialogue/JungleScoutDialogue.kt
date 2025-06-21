@@ -18,6 +18,7 @@ import org.rs.consts.Quests
  */
 @Initializable
 class JungleScoutDialogue(player: Player? = null) : Dialogue(player) {
+
     override fun open(vararg args: Any?): Boolean {
         return when {
             !GeneralShadow.hasGhostlySet(player) -> {

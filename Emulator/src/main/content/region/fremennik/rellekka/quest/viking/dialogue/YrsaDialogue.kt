@@ -1,7 +1,8 @@
 package content.region.fremennik.rellekka.quest.viking.dialogue
 
 import content.data.GameAttributes
-import content.region.fremennik.rellekka.dialogue.RellekkaYrsaDiaryDialogue
+import content.region.fremennik.rellekka.dialogue.YrsaDiaryDialogue
+import content.region.fremennik.rellekka.quest.viking.FremennikTrials
 import core.api.*
 import core.api.interaction.openNpcShop
 import core.api.quest.isQuestComplete
@@ -18,6 +19,12 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Yrsa dialogue.
+ *
+ * Relations
+ * - [FremennikTrials]
+ */
 @Initializable
 class YrsaDialogue(player: Player? = null) : Dialogue(player) {
 
@@ -154,7 +161,7 @@ class YrsaDialogue(player: Player? = null) : Dialogue(player) {
                             "and then give me the 500 coins.",
                         ).also { stage = 33 }
 
-                    3 -> openDialogue(player, RellekkaYrsaDiaryDialogue()).also { stage = END_DIALOGUE }
+                    3 -> openDialogue(player, YrsaDiaryDialogue()).also { stage = END_DIALOGUE }
                     4 -> playerl(FaceAnim.HAPPY, "Nothing, thanks.").also { stage++ }
                 }
 

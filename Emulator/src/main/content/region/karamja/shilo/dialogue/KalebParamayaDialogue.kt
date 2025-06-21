@@ -1,6 +1,6 @@
 package content.region.karamja.shilo.dialogue
 
-import content.region.karamja.diary.KalebParamayaDiaryDialogue
+import content.region.karamja.brimhaven.dialogue.KalebParamayaDiaryDialogue
 import core.api.addItemOrDrop
 import core.api.openDialogue
 import core.api.removeItem
@@ -14,6 +14,9 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Kaleb Paramaya dialogue.
+ */
 @Initializable
 class KalebParamayaDialogue(player: Player? = null) : Dialogue(player) {
 

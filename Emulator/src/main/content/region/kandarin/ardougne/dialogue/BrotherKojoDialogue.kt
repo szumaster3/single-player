@@ -12,6 +12,9 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Brother Kojo dialogue.
+ */
 @Initializable
 class BrotherKojoDialogue(player: Player? = null) : Dialogue(player) {
     override fun open(vararg args: Any?): Boolean {

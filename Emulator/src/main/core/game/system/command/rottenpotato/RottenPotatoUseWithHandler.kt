@@ -8,10 +8,7 @@ import core.game.node.scenery.Scenery
 
 object RottenPotatoUseWithHandler {
     @JvmStatic
-    fun handle(
-        node: Node,
-        player: Player,
-    ) {
+    fun handle(node: Node, player: Player) {
         if (node is Scenery) {
             val go = node.asScenery()
         }

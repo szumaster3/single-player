@@ -19,13 +19,7 @@ class KaramjaManDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
-            0 ->
-                npc(
-                    FaceAnim.HALF_GUILTY,
-                    "Not too bad, but I'm a little worried about the increase",
-                    "of goblins these days.",
-                )
-
+            0 -> npc(FaceAnim.HALF_GUILTY, "Not too bad, but I'm a little worried about the increase", "of goblins these days.").also { stage++ }
             1 -> player(FaceAnim.HAPPY, "Don't worry, I'll kill them.").also { stage = END_DIALOGUE }
         }
         return true

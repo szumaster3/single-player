@@ -14,6 +14,12 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Sigmund dialogue.
+ *
+ * Relations
+ * - [FremennikTrials]
+ */
 @Initializable
 class SigmundDialogue(player: Player? = null) : Dialogue(player) {
 

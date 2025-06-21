@@ -1,6 +1,5 @@
 package core.game.world.map;
 
-
 import core.game.node.entity.player.Player;
 import core.game.node.item.GroundItem;
 import core.game.node.scenery.Constructed;

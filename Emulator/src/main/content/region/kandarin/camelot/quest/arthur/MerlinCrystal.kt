@@ -16,10 +16,8 @@ import org.rs.consts.Vars
 
 @Initializable
 class MerlinCrystal : Quest(Quests.MERLINS_CRYSTAL, 87, 86, 6, Vars.VARP_QUEST_MERLIN_CRYSTAL_PROGRESS_14, 0, 1, 7) {
-    override fun drawJournal(
-        player: Player,
-        stage: Int,
-    ) {
+
+    override fun drawJournal(player: Player, stage: Int) {
         super.drawJournal(player, stage)
         var line = 12
 

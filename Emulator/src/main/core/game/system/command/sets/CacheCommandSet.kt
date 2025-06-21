@@ -15,6 +15,7 @@ import kotlin.reflect.jvm.isAccessible
 
 @Initializable
 class CacheCommandSet : CommandSet(Privilege.ADMIN) {
+
     override fun defineCommands() {
         /*
          * Dumps for educational purposes the interface id data.

@@ -11,13 +11,15 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
-class DoorPlateauDialogueFile(
-    val door: Int,
-) : DialogueFile() {
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
+/**
+ * Represents the Door Plateau dialogue.
+ *
+ * Relations
+ * - [Death Plateau][content.region.asgarnia.burthope.quest.death.DeathPlateau]
+ */
+class DoorPlateauDialogueFile(val door: Int) : DialogueFile() {
+
+    override fun handle(componentID: Int, buttonID: Int) {
         if (door == 1) {
             npc = NPC(NPCs.HAROLD_1078)
             when (stage) {
