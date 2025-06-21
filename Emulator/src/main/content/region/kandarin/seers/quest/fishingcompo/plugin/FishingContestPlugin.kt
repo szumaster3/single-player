@@ -56,6 +56,11 @@ class FishingContestPlugin : InteractionListener {
          */
 
         on(GATES, IntType.SCENERY, "open") { player, node ->
+            val gatePair = when (node.id) {
+                Scenery.GATE_47 -> Pair(Scenery.GATE_47, Scenery.GATE_48)
+                Scenery.GATE_48 -> Pair(Scenery.GATE_48, Scenery.GATE_47)
+                else -> null
+            }
             when (node.id) {
                 Scenery.GATE_47, Scenery.GATE_48 -> {
                     // Exit during competition.
@@ -71,12 +76,14 @@ class FishingContestPlugin : InteractionListener {
                                     removeAttribute(player, GameAttributes.QUEST_FISHINGCOMPO_CONTEST)
                                     sendPlayerDialogue(player, "Yes I'll compete again another day.")
                                     runTask(player, 3) {
-                                        DoorActionHandler.autowalkFence(
-                                            player,
-                                            node.asScenery(),
-                                            Scenery.GATE_47,
-                                            Scenery.GATE_48
-                                        )
+                                        if (gatePair != null) {
+                                            DoorActionHandler.autowalkFence(
+                                                player,
+                                                node.asScenery(),
+                                                gatePair.first,
+                                                gatePair.second
+                                            )
+                                        }
                                         sendNPCDialogue(player, NPCs.BONZO_225, "Ok, I'll see you again.")
                                     }
                                 } else {
@@ -107,12 +114,14 @@ class FishingContestPlugin : InteractionListener {
                             )
                         }
 
-                        else -> DoorActionHandler.autowalkFence(
-                            player,
-                            node.asScenery(),
-                            Scenery.GATE_47,
-                            Scenery.GATE_48
-                        )
+                        else -> if (gatePair != null) {
+                            DoorActionHandler.autowalkFence(
+                                player,
+                                node.asScenery(),
+                                gatePair.first,
+                                gatePair.second
+                            )
+                        }
                     }
                 }
 

@@ -330,6 +330,7 @@ class ProfessorConstellationsDialogue : DialogueFile() {
                     12 -> npcl(FaceAnim.HALF_GUILTY, "That's Taurus, the bull.").also { stage = 28 }
                     14 -> npcl(FaceAnim.HALF_GUILTY, "That's Aries, the ram.").also { stage = 29 }
                     15 -> npcl(FaceAnim.HALF_GUILTY, "That's Pisces, the fish.").also { stage = 30 }
+                    else -> npcl(FaceAnim.HALF_GUILTY, "I'm afraid not. Have another look. Remember, you can check the star charts on the walls for reference.").also { stage = END_DIALOGUE }
                 }
             }
 

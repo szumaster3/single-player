@@ -329,6 +329,11 @@ class BiohazardPlugin : InteractionListener {
         }
 
         on(VARROCK_GATES, IntType.SCENERY, "open") { player, node ->
+            val gatePair = when (node.id) {
+                Scenery.GATE_2050 -> Pair(Scenery.GATE_2050, Scenery.GATE_2051)
+                Scenery.GATE_2051 -> Pair(Scenery.GATE_2051, Scenery.GATE_2050)
+                else -> null
+            }
             if (player.location.x < 3264) {
                 openDialogue(
                     player,
@@ -360,19 +365,38 @@ class BiohazardPlugin : InteractionListener {
 
                                 2 -> {
                                     end()
-                                    DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
+                                    if (gatePair != null) {
+                                        DoorActionHandler.autowalkFence(
+                                            player,
+                                            node.asScenery(),
+                                            gatePair.first,
+                                            gatePair.second
+                                        )
+                                    }
                                 }
                             }
                         }
                     },
                 )
             } else {
-                DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
+                if (gatePair != null) {
+                    DoorActionHandler.autowalkFence(
+                        player,
+                        node.asScenery(),
+                        gatePair.first,
+                        gatePair.second
+                    )
+                }
             }
             return@on true
         }
 
         on(COMBAT_AREA, IntType.SCENERY, "open") { player, node ->
+            val gatePair = when (node.id) {
+                Scenery.GATE_2039 -> Pair(Scenery.GATE_2039, Scenery.GATE_2041)
+                Scenery.GATE_2041 -> Pair(Scenery.GATE_2041, Scenery.GATE_2039)
+                else -> null
+            }
             if (isQuestComplete(player, Quests.BIOHAZARD)) {
                 sendNPCDialogueLines(
                     player,
@@ -384,7 +408,14 @@ class BiohazardPlugin : InteractionListener {
                     "needed.",
                 )
                 addDialogueAction(player) { _, _ ->
-                    DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
+                    if (gatePair != null) {
+                        DoorActionHandler.autowalkFence(
+                            player,
+                            node.asScenery(),
+                            gatePair.first,
+                            gatePair.second
+                        )
+                    }
                 }
             } else {
                 sendDialogueLines(

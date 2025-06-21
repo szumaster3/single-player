@@ -95,12 +95,19 @@ class TutorialPlugin : InteractionListener, MapArea {
             }
             setAttribute(player, TutorialStage.TUTORIAL_STAGE, 17)
             TutorialStage.load(player, 17)
-            DoorActionHandler.autowalkFence(
-                player,
-                node as core.game.node.scenery.Scenery,
-                Scenery.GATE_3016,
-                Scenery.GATE_3015
-            )
+            val gatePair = when (node.id) {
+                Scenery.GATE_3015 -> Pair(Scenery.GATE_3015, Scenery.GATE_3016)
+                Scenery.GATE_3016 -> Pair(Scenery.GATE_3016, Scenery.GATE_3015)
+                else -> null
+            }
+            if (gatePair != null) {
+                DoorActionHandler.autowalkFence(
+                    player,
+                    node.asScenery(),
+                    gatePair.first,
+                    gatePair.second
+                )
+            }
             return@on true
         }
 
@@ -122,7 +129,7 @@ class TutorialPlugin : InteractionListener, MapArea {
             }
             setAttribute(player, TutorialStage.TUTORIAL_STAGE, 18)
             TutorialStage.load(player, 18)
-            DoorActionHandler.handleAutowalkDoor(player, node as core.game.node.scenery.Scenery)
+            DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
             return@on true
         }
 
@@ -157,7 +164,7 @@ class TutorialPlugin : InteractionListener, MapArea {
             }
             setAttribute(player, TutorialStage.TUTORIAL_STAGE, 23)
             TutorialStage.load(player, 23)
-            DoorActionHandler.handleAutowalkDoor(player, node as core.game.node.scenery.Scenery)
+            DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
             return@on true
         }
 
@@ -179,7 +186,7 @@ class TutorialPlugin : InteractionListener, MapArea {
             }
             setAttribute(player, TutorialStage.TUTORIAL_STAGE, 27)
             TutorialStage.load(player, 27)
-            DoorActionHandler.handleAutowalkDoor(player, node as core.game.node.scenery.Scenery)
+            DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
             return@on true
         }
 
@@ -238,7 +245,7 @@ class TutorialPlugin : InteractionListener, MapArea {
             }
             setAttribute(player, TutorialStage.TUTORIAL_STAGE, 44)
             TutorialStage.load(player, 44)
-            DoorActionHandler.handleAutowalkDoor(player, node as core.game.node.scenery.Scenery)
+            DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
         }
 
         on(GIANT_RAT_GATE, IntType.SCENERY, "open") { player, node ->
@@ -251,7 +258,7 @@ class TutorialPlugin : InteractionListener, MapArea {
                         "Oi, get away from there!",
                         "Don't enter my rat pen unless I say so!",
                     ).also {
-                        closeDialogue(player)
+                        TutorialStage.rollback(player)
                     }
                 return@on true
             }
@@ -259,7 +266,7 @@ class TutorialPlugin : InteractionListener, MapArea {
                 setAttribute(player, TutorialStage.TUTORIAL_STAGE, 51)
                 TutorialStage.load(player, 51)
             }
-            DoorActionHandler.handleAutowalkDoor(player, node as core.game.node.scenery.Scenery)
+            DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
             return@on true
         }
 
@@ -299,7 +306,7 @@ class TutorialPlugin : InteractionListener, MapArea {
             }
             setAttribute(player, TutorialStage.TUTORIAL_STAGE, 58)
             TutorialStage.load(player, 58)
-            DoorActionHandler.handleAutowalkDoor(player, node as core.game.node.scenery.Scenery)
+            DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
         }
 
         on(FINANCE_GUIDE_DOOR, IntType.SCENERY, "open") { player, node ->
@@ -341,7 +348,7 @@ class TutorialPlugin : InteractionListener, MapArea {
             }
             setAttribute(player, TutorialStage.TUTORIAL_STAGE, 67)
             TutorialStage.load(player, 67)
-            DoorActionHandler.handleAutowalkDoor(player, node as core.game.node.scenery.Scenery)
+            DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
         }
 
         onEquip(intArrayOf(BRONZE_AXE, BRONZE_PICKAXE)) { player, _ ->

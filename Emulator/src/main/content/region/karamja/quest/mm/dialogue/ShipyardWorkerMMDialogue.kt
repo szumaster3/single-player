@@ -1,6 +1,6 @@
 package content.region.karamja.quest.mm.dialogue
 
-import content.region.kandarin.gnome.quest.grandtree.dialogue.ShipyardWorkerDialogue
+import content.region.kandarin.gnome.quest.grandtree.dialogue.ShipyardWorkerDialogueFile
 import core.api.quest.getQuestStage
 import core.api.sendItemDialogue
 import core.game.dialogue.DialogueFile
@@ -18,7 +18,7 @@ class ShipyardWorkerMMDialogue : DialogueFile() {
         buttonID: Int,
     ) {
         when (getQuestStage(player!!, Quests.MONKEY_MADNESS)) {
-            0 -> ShipyardWorkerDialogue()
+            0 -> ShipyardWorkerDialogueFile()
             10 -> when (stage) {
                 0 -> npcl("Hey you! What are you up to?").also { stage++ }
                 1 -> playerl("I'm trying to open the gate!").also { stage++ }

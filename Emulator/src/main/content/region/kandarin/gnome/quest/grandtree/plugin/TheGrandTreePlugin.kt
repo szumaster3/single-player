@@ -3,6 +3,7 @@ package content.region.kandarin.gnome.quest.grandtree.plugin
 import content.global.plugin.iface.ScrollInterface
 import content.region.kandarin.gnome.quest.grandtree.cutscene.GloughsPetCutscene
 import content.region.kandarin.gnome.quest.grandtree.dialogue.ForemanDialogue
+import content.region.kandarin.gnome.quest.grandtree.dialogue.KingNarnodeDialogue
 import content.region.kandarin.gnome.quest.grandtree.dialogue.KingNarnodeUnderGroundDialogue
 import content.region.kandarin.gnome.quest.grandtree.dialogue.ShipyardWorkerDialogueFile
 import content.region.karamja.quest.mm.dialogue.KingNarnodeMMDialogue
@@ -62,7 +63,7 @@ class TheGrandTreePlugin : InteractionListener {
                         npc,
                     )
 
-                player.location.regionId == aboveground -> openDialogue(player, KingNarnodeUnderGroundDialogue(), npc)
+                player.location.regionId == aboveground -> openDialogue(player, KingNarnodeDialogue(), npc)
                 player.location.regionId != aboveground -> openDialogue(player, KingNarnodeUnderGroundDialogue(), npc)
             }
             return@on true
@@ -95,7 +96,7 @@ class TheGrandTreePlugin : InteractionListener {
                     getAttribute(player, TheGrandTreeUtils.TWIG_2, false) &&
                     getAttribute(player, TheGrandTreeUtils.TWIG_3, false)
                 ) {
-                    animate(player, 827)
+                    player.animator.animate(Animation(827))
                     GloughsPetCutscene(player).start()
                 }
             } else {
@@ -107,7 +108,6 @@ class TheGrandTreePlugin : InteractionListener {
         on(2446, IntType.SCENERY, "open") { player, node ->
             if (node.location == Location(2463, 3497, 0) && isQuestComplete(player, Quests.THE_GRAND_TREE)) {
                 player.animator.animate(Animation(828))
-
                 teleport(player, Location(2464, 9897, 0))
             }
             return@on true
@@ -125,7 +125,7 @@ class TheGrandTreePlugin : InteractionListener {
                     Scenery(2437, Location(2482, 3462, 1)),
                     2,
                 )
-                animate(player, 538)
+                player.animator.animate(Animation(Animations.TAKE_FROM_CHEST_538))
                 sendItemDialogue(player, Items.INVASION_PLANS_794, "You found a scroll!")
                 addItemOrDrop(player, Items.INVASION_PLANS_794)
                 if (getQuestStage(player, Quests.THE_GRAND_TREE) < 60) {
@@ -218,26 +218,20 @@ class TheGrandTreePlugin : InteractionListener {
             return@on true
         }
 
-        on(TheGrandTreeUtils.KARAMJA_GATE, IntType.SCENERY, "open") { player, _ ->
-            if (getQuestStage(player, Quests.THE_GRAND_TREE) == 55) {
-                if (player.location.x < 2945) {
-                    findLocalNPC(player, NPCs.SHIPYARD_WORKER_675)?.let {
-                        face(it, player, 1)
-                        face(player, it, 1)
-                    }
-                    openDialogue(player, ShipyardWorkerDialogueFile(), NPC(NPCs.SHIPYARD_WORKER_675))
-                } else {
-                    DoorActionHandler.autowalkFence(
-                        player,
-                        Scenery(2438, Location(2945, 3041, 0)),
-                        2432,
-                        2439,
-                    )
-                }
+        on(TheGrandTreeUtils.KARAMJA_GATE, IntType.SCENERY, "open") { player, node ->
+
+            val gatePair = when (node.id) {
+                2438 -> Pair(2438, 2439)
+                2439 -> Pair(2439, 2438)
+                else -> null
+            } ?: return@on false
+
+            if (player.location.x > 2944 || isQuestComplete(player, Quests.THE_GRAND_TREE)) {
+                DoorActionHandler.autowalkFence(player, node.asScenery(), gatePair.first, gatePair.second)
             } else {
-                findLocalNPC(player, NPCs.SHIPYARD_WORKER_675)?.let { face(player, it) }
-                player.dialogueInterpreter.open(675)
+                openDialogue(player, ShipyardWorkerDialogueFile(), NPC(NPCs.SHIPYARD_WORKER_675))
             }
+
             return@on true
         }
 
@@ -256,8 +250,8 @@ class TheGrandTreePlugin : InteractionListener {
                 } else {
                     forceMove(player, player.location, player.location.transform(0, -2, 0), 25, 60, null, 819)
                 }
-                animate(player, 2572, false)
                 animateScenery(roots.asScenery(), 452)
+                player.animator.animate(Animation(Animations.PUSH_2572))
                 playGlobalAudio(player.location, Sounds.TANGLEVINE_APPEAR_2316)
             }
             return@on true
