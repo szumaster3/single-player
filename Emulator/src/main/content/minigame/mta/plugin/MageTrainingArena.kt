@@ -1,11 +1,7 @@
 package content.minigame.mta.plugin
 
-import content.global.skill.agility.AgilityHandler
 import content.minigame.mta.plugin.room.TelekineticTheatrePlugin
-import core.api.hasLevelStat
-import core.api.openDialogue
-import core.api.openInterface
-import core.api.sendDialogue
+import core.api.*
 import core.cache.def.impl.ItemDefinition
 import core.cache.def.impl.NPCDefinition
 import core.cache.def.impl.SceneryDefinition
@@ -17,16 +13,14 @@ import core.game.node.item.GroundItem
 import core.game.world.map.Direction
 import core.game.world.map.Location
 import core.game.world.map.zone.ZoneBuilder
-import core.game.world.update.flag.context.Animation
 import core.plugin.ClassScanner.definePlugins
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.Components
-import org.rs.consts.NPCs
-import org.rs.consts.Scenery
+import org.rs.consts.*
 
 @Initializable
 class MageTrainingArena : OptionHandler() {
+
     override fun newInstance(arg: Any?): Plugin<Any> {
         SceneryDefinition.forId(Scenery.DOORWAY_10721).handlers["option:enter"] = this
         NPCDefinition.forId(NPCs.REWARDS_GUARDIAN_3103).handlers["option:trade-with"] = this
@@ -43,40 +37,43 @@ class MageTrainingArena : OptionHandler() {
         return this
     }
 
-    override fun handle(
-        player: Player,
-        node: Node,
-        option: String,
-    ): Boolean {
+    override fun handle(player: Player, node: Node, option: String): Boolean {
         when (node.id) {
             Scenery.DOORWAY_10721 -> {
                 if (!hasLevelStat(player, Skills.MAGIC, 7)) {
                     sendDialogue(player, "You need a Magic level of at least 7 to enter the guild.")
+                    return false
                 }
-                AgilityHandler.walk(
-                    player,
-                    -1,
-                    player.location,
-                    player.location.transform(Direction.getDirection(player.location, node.location), 2),
-                    Animation(1426),
-                    0.0,
-                    null,
-                )
+                playAudio(player, Sounds.MAGICAL_BARRIER_1657)
+                val destination = if (player.location.y < 3300) Direction.NORTH else Direction.SOUTH
+                forceMove(player, player.location, player.location.transform(destination, 2), 30, 90, dir = destination, Animations.WALK_THROUGH_BARRIER_10584)
+                return true
             }
 
-            NPCs.REWARDS_GUARDIAN_3103 ->
+            NPCs.REWARDS_GUARDIAN_3103 -> {
                 if (!player.getSavedData().activityData.isStartedMta) {
                     openDialogue(player, NPCs.REWARDS_GUARDIAN_3103, this, true, true)
                 } else {
                     openInterface(player, Components.MAGICTRAINING_SHOP_197)
                 }
+                return true
+            }
 
-            NPCs.MAZE_GUARDIAN_3102 -> openDialogue(player, node.id, node)
+            NPCs.MAZE_GUARDIAN_3102 -> {
+                openDialogue(player, node.id, node)
+                return true
+            }
         }
+
         when (option) {
             "enter" -> {
-                val type: MTAType = MTAType.forId(node.id)!!
+                val type = MTAType.forId(node.id)
+                if (type == null) {
+                    player.debug("Can't find a suitable area to enter.")
+                    return true
+                }
                 type.enter(player)
+                return true
             }
 
             "reset", "observe" -> {
@@ -86,25 +83,21 @@ class MageTrainingArena : OptionHandler() {
                 } else {
                     zone.observe(player)
                 }
+                return true
             }
+
+            else -> return false
         }
-        return true
     }
 
-    override fun isWalk(
-        player: Player,
-        n: Node,
-    ): Boolean {
+    override fun isWalk(player: Player, n: Node): Boolean {
         if (n !is GroundItem) {
             return true
         }
         return n.getId() != TelekineticTheatrePlugin.STATUE
     }
 
-    override fun getDestination(
-        node: Node,
-        n: Node,
-    ): Location? =
+    override fun getDestination(node: Node, n: Node): Location? =
         if (n.id == NPCs.MAZE_GUARDIAN_3102) {
             n.location.transform(Direction.getDirection(node.location, n.location), -1)
         } else {

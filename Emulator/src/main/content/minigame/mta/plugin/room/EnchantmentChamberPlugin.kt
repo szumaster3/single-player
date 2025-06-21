@@ -19,11 +19,11 @@ import core.game.world.map.Location
 import core.game.world.map.RegionManager.getNpc
 import core.game.world.map.zone.ZoneBorders
 import core.tools.RandomFunction
-import org.rs.consts.Animations
-import org.rs.consts.Components
-import org.rs.consts.Items
-import org.rs.consts.Music
+import org.rs.consts.*
 
+/**
+ * Represents the Enchantment Chamber.
+ */
 class EnchantmentChamberPlugin :
     MTAZone(
         "Enchantment Chamber",
@@ -64,11 +64,7 @@ class EnchantmentChamberPlugin :
         return super.enter(entity)
     }
 
-    override fun interact(
-        e: Entity,
-        target: Node,
-        option: Option,
-    ): Boolean {
+    override fun interact(e: Entity, target: Node, option: Option): Boolean {
         if (e is Player) {
             when (target.id) {
                 in 10799..10802 -> Shapes.forId(target.id)?.take(e, target.asScenery())
@@ -102,6 +98,12 @@ class EnchantmentChamberPlugin :
         }
     }
 
+    /**
+     * Creates a respawn pulse for the given ground item.
+     *
+     * @param item The ground item to respawn.
+     * @return A Pulse object managing respawn timing.
+     */
     fun getRespawnPulse(item: GroundItem) =
         object : Pulse(if (settings!!.isDevMode) 45 else RandomFunction.random(700, 800)) {
             override fun pulse(): Boolean {
@@ -110,10 +112,21 @@ class EnchantmentChamberPlugin :
             }
         }
 
+    /**
+     * Removes all ground spawns..
+     *
+     * @param player The player whose ground spawns should be removed.
+     */
     fun removeGroundSpawns(player: Player) {
         getGroundSpawns(player).forEach(GroundItemManager::destroy)
     }
 
+    /**
+     * Gets the list of ground items spawned.
+     *
+     * @param player The player to query.
+     * @return Mutable list of ground items.
+     */
     fun getGroundSpawns(player: Player?): MutableList<GroundItem> {
         if (player == null) throw IllegalArgumentException("Player cannot be null.")
         return DSPAWNS.getOrPut(player.name) { mutableListOf() }
@@ -127,6 +140,7 @@ class EnchantmentChamberPlugin :
         val amount = amountInInventory(player, ORB.id)
         animate(player, Animations.MULTI_TAKE_832)
         removeItem(player, Item(ORB.id, amount))
+        playAudio(player, Sounds.MTA_DEPOSIT_ORB_1664)
 
         val updatedAmount = (player.getAttribute("mta-orb", 0) + amount).also { setAttribute(player, "mta-orb", it) }
 
@@ -142,20 +156,26 @@ class EnchantmentChamberPlugin :
         register(ZoneBorders(3335, 9612, 3389, 9663, 0, true))
     }
 
-    enum class Shapes(
-        val sceneryId: Int,
-        val item: Item,
-    ) {
+    /**
+     * Enum representing the shapes available in this room.
+     *
+     * @property sceneryId The id of the shape.
+     * @property item The item associated with the shape.
+     */
+    enum class Shapes(val sceneryId: Int, val item: Item) {
         CUBE(org.rs.consts.Scenery.CUBE_PILE_10799, Item(Items.CUBE_6899)),
         CYLINDER(org.rs.consts.Scenery.CYLINDER_PILE_10800, Item(Items.CYLINDER_6898)),
         ICOSAHEDRON(org.rs.consts.Scenery.ICOSAHEDRON_PILE_10801, Item(Items.ICOSAHEDRON_6900)),
         PENTAMID(org.rs.consts.Scenery.PENTAMID_PILE_10802, Item(Items.PENTAMID_6901)),
         ;
 
-        fun take(
-            player: Player,
-            scenery: Scenery?,
-        ) {
+        /**
+         * Handles player taking the shape item from scenery.
+         *
+         * @param player The player taking the item.
+         * @param scenery The scenery object being taken from.
+         */
+        fun take(player: Player, scenery: Scenery?) {
             if (!hasSpaceFor(player, item)) {
                 sendMessage(player, "You have no space left in your inventory.")
                 return
@@ -165,6 +185,11 @@ class EnchantmentChamberPlugin :
             animate(player, Animations.HUMAN_BURYING_BONES_827)
         }
 
+        /**
+         * Updates the interface to set this shape as the current bonus.
+         *
+         * @param player The player whose interface is updated.
+         */
         fun setAsBonus(player: Player) {
             values().forEach {
                 sendInterfaceConfig(player, Components.MAGICTRAINING_ENCHANT_195, it.child, it != this)
@@ -174,31 +199,70 @@ class EnchantmentChamberPlugin :
         val child: Int get() = 1 + ordinal
 
         companion object {
+            /**
+             * Finds a shape by the item.
+             */
             fun forItem(item: Item): Shapes? = values().find { it.item.id == item.id }
 
+            /**
+             * Finds a shape by the scenery id.
+             */
             fun forId(id: Int): Shapes? = values().find { it.sceneryId == id }
         }
     }
 
     companion object {
+        /**
+         * Singleton instance of the zone plugin.
+         */
         val ZONE = EnchantmentChamberPlugin()
+
+        /**
+         * Current bonus shape for players.
+         */
         var BONUS_SHAPE = RandomFunction.getRandomElement(Shapes.values())
+
+        /**
+         * Possible rune rewards for orb deposits.
+         */
         private val RUNES =
             arrayOf(Item(Items.DEATH_RUNE_560, 3), Item(Items.BLOOD_RUNE_565, 3), Item(Items.COSMIC_RUNE_564, 3))
-        private val STONES =
-            arrayOf(
-                Location.create(3354, 9645, 0),
-                Location.create(3353, 9635, 0),
-                Location.create(3359, 9632, 0),
-                Location.create(3375, 9633, 0),
-                Location.create(3374, 9643, 0),
-                Location.create(3373, 9651, 0),
-            )
+
+        /**
+         * Locations of stones where ground items spawn.
+         */
+        private val STONES = arrayOf(
+            Location.create(3354, 9645, 0),
+            Location.create(3353, 9635, 0),
+            Location.create(3359, 9632, 0),
+            Location.create(3375, 9633, 0),
+            Location.create(3374, 9643, 0),
+            Location.create(3373, 9651, 0),
+        )
+
+        /**
+         * Orb item instance used for deposits.
+         */
         private val ORB = Item(Items.ORB_6902)
+
+        /**
+         * Currently active players in the zone.
+         */
         private val PLAYERS = mutableListOf<Player>()
+
+        /**
+         * The guardian NPC in the chamber.
+         */
         private var guardian: NPC? = null
+
+        /**
+         * Maps player names to their ground item spawns.
+         */
         private val DSPAWNS = mutableMapOf<String, MutableList<GroundItem>>()
 
+        /**
+         * Pulse task that changes the bonus shape.
+         */
         private val PULSE =
             object : Pulse(36) {
                 override fun pulse(): Boolean {
@@ -211,10 +275,7 @@ class EnchantmentChamberPlugin :
                     BONUS_SHAPE = newBonusShape
                     PLAYERS.filter(Player::isActive).forEach(BONUS_SHAPE::setAsBonus)
 
-                    sendChat(
-                        guardian!!,
-                        "The bonus shape has changed to the ${BONUS_SHAPE.name.lowercase().replace('_', ' ')}.",
-                    )
+                    sendChat(guardian!!, "The bonus shape has changed to the ${BONUS_SHAPE.name.lowercase().replace('_', ' ')}.")
                     return false
                 }
             }

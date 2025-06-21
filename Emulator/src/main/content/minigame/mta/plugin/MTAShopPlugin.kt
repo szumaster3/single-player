@@ -22,6 +22,12 @@ class MTAShopPlugin : InterfaceListener {
 
     private val viewers: MutableList<Player> = ArrayList(100)
 
+    /**
+     * Array of varbit ids corresponding to pizazz slots.
+     */
+    private val pizazzVarbitIds = intArrayOf(1485, 1489, 1488, 1486)
+
+
     private val component: Component =
         Component(Components.MAGICTRAINING_SHOP_197).setUncloseEvent(
             CloseEvent { player, c ->
@@ -81,11 +87,7 @@ class MTAShopPlugin : InterfaceListener {
      * @param item The item being purchased.
      * @param slot The slot in the shop container from which the item is bought.
      */
-    fun buy(
-        player: Player,
-        item: Item,
-        slot: Int,
-    ) {
+    fun buy(player: Player, item: Item, slot: Int) {
         var item = item
         val prices = PRICES[slot]
 
@@ -153,11 +155,7 @@ class MTAShopPlugin : InterfaceListener {
      * @param item The item being valued.
      * @param slot The slot of the item in the shop container.
      */
-    fun value(
-        player: Player,
-        item: Item,
-        slot: Int,
-    ) {
+    fun value(player: Player, item: Item, slot: Int) {
         val prices = PRICES[slot]
         if (item.id != Items.ARENA_BOOK_6891) {
             sendMessage(
@@ -171,60 +169,61 @@ class MTAShopPlugin : InterfaceListener {
     }
 
     /**
-     * Updates the displayed Pizazz points for a player on the shop interface.
+     * Updates the displayed points for a player on the shop interface.
      *
      * @param player The player whose points are being updated.
      */
     fun updatePoints(player: Player) {
-        sendString(player, getPoints(player, 0).toString(), Components.MAGICTRAINING_SHOP_197, 8)
-        sendString(player, getPoints(player, 2).toString(), Components.MAGICTRAINING_SHOP_197, 9)
-        sendString(player, getPoints(player, 1).toString(), Components.MAGICTRAINING_SHOP_197, 10)
-        sendString(player, getPoints(player, 3).toString(), Components.MAGICTRAINING_SHOP_197, 11)
+        for ((i, varbitId) in pizazzVarbitIds.withIndex()) {
+            setVarbit(player, varbitId, getPoints(player, i), true)
+        }
     }
 
     /**
-     * Increments a player Pizazz points of the specified type.
+     * Increments a player points of the specified type.
      *
      * @param player The player whose points to increase.
      * @param index The type of Pizazz points to increment.
      * @param increment The amount to add.
      */
-    fun incrementPoints(
-        player: Player,
-        index: Int,
-        increment: Int,
-    ) {
-        player.getSavedData().activityData.incrementPizazz(index, increment)
+    fun incrementPoints(player: Player, index: Int, increment: Int) {
+        val varbitId = pizazzVarbitIds[index]
+        val current = getVarbit(player, varbitId)
+        setVarbit(player, varbitId, current + increment)
+        updatePoints(player)
     }
 
     /**
-     * Decrements a player Pizazz points of the specified type.
+     * Decrements a player points of the specified type.
      *
      * @param player The player whose points to decrease.
      * @param index The type of Pizazz points to decrement.
      * @param decrement The amount to subtract.
      */
-    private fun decrementPoints(
-        player: Player,
-        index: Int,
-        decrement: Int,
-    ) {
-        player.getSavedData().activityData.decrementPizazz(index, decrement)
+    private fun decrementPoints(player: Player, index: Int, decrement: Int) {
+        val varbitId = pizazzVarbitIds[index]
+        val current = getVarbit(player, varbitId)
+        val newValue = (current - decrement).coerceAtLeast(0)
+        setVarbit(player, varbitId, newValue)
+        updatePoints(player)
     }
 
     /**
-     * Gets the amount of Pizazz points a player has for the specified type.
+     * Gets the amount of points a player has for the specified type.
      *
      * @param player The player whose points are queried.
      * @param index The type of Pizazz points.
      * @return The number of points the player has.
      */
-    fun getPoints(
-        player: Player,
-        index: Int,
-    ): Int = player.getSavedData().activityData.getPizazzPoints(index)
+    fun getPoints(player: Player, index: Int): Int {
+        val varbitId = pizazzVarbitIds[index]
+        return getVarbit(player, varbitId)
+    }
 
     companion object {
+        /**
+         * An array of items available in the shop.
+         */
         @JvmStatic
         val ITEMS: Array<Item> =
             arrayOf(
@@ -256,6 +255,9 @@ class MTAShopPlugin : InterfaceListener {
                 Item(Items.ARENA_BOOK_6891, 1),
             )
 
+        /**
+         * An array of prices for items.
+         */
         @JvmStatic
         val PRICES: Array<IntArray> =
             arrayOf(
@@ -316,6 +318,8 @@ class MTAShopPlugin : InterfaceListener {
                 value(player, item, slot)
             } else if (opcode == 196) {
                 buy(player, item, slot)
+            } else {
+                sendMessage(player, item.definition.examine)
             }
             update()
             return@on true

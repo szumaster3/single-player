@@ -2,6 +2,7 @@ package content.minigame.mta.plugin.room
 
 import content.minigame.mta.plugin.MTAType
 import content.minigame.mta.plugin.MTAZone
+import core.api.getVarbit
 import core.api.removeAttribute
 import core.api.sendDialogue
 import core.api.sendString
@@ -26,6 +27,9 @@ import org.rs.consts.Items
 import org.rs.consts.Music
 import java.util.*
 
+/**
+ * Represents the Alchemists' Playground.
+ */
 class AlchemistPlaygroundPlugin :
     MTAZone(
         "Alchemists' Playground",
@@ -55,16 +59,10 @@ class AlchemistPlaygroundPlugin :
     }
 
     override fun update(player: Player?) {
-        sendString(
-            player!!,
-            player
-                .getSavedData()
-                .activityData
-                .getPizazzPoints(type!!.ordinal)
-                .toString(),
-            type!!.overlay.id,
-            3,
-        )
+        val player = player ?: return
+        val type = type ?: return
+        val points = getVarbit(player, type.varbit)
+        sendString(player, points.toString(), type.overlay.id, 3)
     }
 
     override fun enter(entity: Entity): Boolean {
@@ -181,15 +179,24 @@ class AlchemistPlaygroundPlugin :
         register(ZoneBorders(3341, 9618, 3393, 9654, 2))
     }
 
-    class AlchemistSession(
-        val player: Player,
-    ) {
+    /**
+     * Holds data for a player session.
+     *
+     * @property player The player associated with the session.
+     */
+    class AlchemistSession(val player: Player) {
         private var indexer = 0
 
         init {
             shuffleObjects()
         }
 
+        /**
+         * Gets the alchemist item associated with the given scenery object id.
+         *
+         * @param id The scenery object id.
+         * @return The [AlchemistItem], or null if none matches.
+         */
         fun getItem(id: Int): AlchemistItem? {
             val ids = intArrayOf(10797, 10795, 10793, 10791, 10789, 10787, 10785, 10783)
             var index = 0
@@ -240,6 +247,9 @@ class AlchemistPlaygroundPlugin :
             return AlchemistItem.values()[finalIndex]
         }
 
+        /**
+         * Randomizes the order of objects in the session.
+         */
         fun shuffleObjects() {
             indexer++
             if (indexer > 7) {
@@ -248,9 +258,12 @@ class AlchemistPlaygroundPlugin :
         }
     }
 
-    enum class AlchemistItem(
-        val item: Item,
-    ) {
+    /**
+     * Represents an item in the Alchemists playground.
+     *
+     * @property item The item instance.
+     */
+    enum class AlchemistItem(val item: Item, ) {
         LEATHER_BOOTS(Item(Items.LEATHER_BOOTS_6893)),
         ADAMANT_KITESHIELD(Item(Items.ADAMANT_KITESHIELD_6894)),
         ADAMANT_HELM(Item(Items.ADAMANT_MED_HELM_6895)),
@@ -258,25 +271,48 @@ class AlchemistPlaygroundPlugin :
         RUNE_LONGSWORD(Item(Items.RUNE_LONGSWORD_6897)),
         ;
 
+        /**
+         * Cost of converting this item.
+         */
         var cost = 0
+
+        /**
+         * Child component id for interface interactions.
+         */
         val child: Int get() = 14 + ordinal
 
         companion object {
+            /**
+             * Gets the AlchemistItem by item id.
+             *
+             * @param id The item id.
+             * @return The [AlchemistItem] or null if none found.
+             */
             fun forItem(id: Int) = values().find { it.item.id == id }
         }
     }
 
     companion object {
+        /**
+         * Singleton instance of this zone plugin.
+         */
         var ZONE: AlchemistPlaygroundPlugin = AlchemistPlaygroundPlugin()
 
+        /**
+         * The coin item used for deposits.
+         */
         val COINS: Item = Item(8890)
-
         private val PLAYERS: MutableList<Player> = ArrayList(20)
-
         private var guardian: NPC? = null
 
+        /**
+         * The currently free conversion item or null if none.
+         */
         var freeConvert: AlchemistItem? = null
 
+        /**
+         * Pulse task controlling dynamic events within the zone.
+         */
         private val PULSE: Pulse =
             object : Pulse(if (settings!!.isDevMode) 15 else 53) {
                 override fun pulse(): Boolean {
@@ -289,8 +325,8 @@ class AlchemistPlaygroundPlugin :
                         freeConvert = RandomFunction.getRandomElement(AlchemistItem.values())
                         forceChat =
                             "The " + freeConvert!!.item.name.lowercase(Locale.getDefault()) + " " +
-                            (if (freeConvert == AlchemistItem.LEATHER_BOOTS) "are" else "is") +
-                            " free to convert!"
+                                    (if (freeConvert == AlchemistItem.LEATHER_BOOTS) "are" else "is") +
+                                    " free to convert!"
                     } else if (freeConvert != null) {
                         freeConvert = null
                     }
@@ -306,6 +342,9 @@ class AlchemistPlaygroundPlugin :
                 }
             }
 
+        /**
+         * Randomizes the prices of Alchemist items.
+         */
         fun shufflePrices() {
             val list: List<Int> = mutableListOf(1, 5, 8, 10, 15, 20, 30)
             Collections.shuffle(list)
@@ -314,6 +353,11 @@ class AlchemistPlaygroundPlugin :
             }
         }
 
+        /**
+         * Updates the player interface to reflect current item costs and free conversion.
+         *
+         * @param player The player whose interface to update.
+         */
         fun updateInterface(player: Player) {
             for (i in AlchemistItem.values()) {
                 player.packetDispatch.sendInterfaceConfig(
@@ -331,12 +375,24 @@ class AlchemistPlaygroundPlugin :
             }
         }
 
+        /**
+         * Sets a new AlchemistSession for the player.
+         *
+         * @param player The player to assign the session.
+         * @return The created AlchemistSession.
+         */
         fun setSession(player: Player): AlchemistSession {
             val session = AlchemistSession(player)
             player.setAttribute("alchemist-session", session)
             return session
         }
 
+        /**
+         * Gets the existing or creates a new AlchemistSession for the player.
+         *
+         * @param player The player whose session to get.
+         * @return The player's AlchemistSession.
+         */
         fun getSession(player: Player): AlchemistSession {
             var session = player.getAttribute<AlchemistSession>("alchemist-session", null)
             if (session == null) {

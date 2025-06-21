@@ -20,6 +20,7 @@ import org.rs.consts.Scenery
 enum class MTAType(
     val sceneryId: Int,
     val overlay: Component,
+    val varbit: Int,
     private val startLocation: Location? = null,
     private val endLocation: Location,
     val mtaZone: MTAZone,
@@ -27,6 +28,7 @@ enum class MTAType(
     TELEKINETIC(
         Scenery.TELEKINETIC_TP_10778,
         Component(Components.MAGICTRAINING_TELE_198),
+        1485, // Telekinetic points
         null,
         Location.create(3363, 3316, 0),
         TelekineticTheatrePlugin(),
@@ -48,6 +50,7 @@ enum class MTAType(
     ALCHEMISTS(
         Scenery.ALCHEMISTS_TP_10780,
         Component(Components.MAGICTRAINING_ALCH_STATS_194),
+        1489, // Alchemists points
         Location(3366, 9623, 2),
         Location(3363, 3320, 0),
         AlchemistPlaygroundPlugin.ZONE,
@@ -81,6 +84,7 @@ enum class MTAType(
     ENCHANTERS(
         Scenery.ENCHANTERS_TP_10779,
         Component(Components.MAGICTRAINING_ENCHANT_195),
+        1488, // Enchanters points
         Location(3363, 9649, 0),
         Location(3361, 3318, 0),
         EnchantmentChamberPlugin.ZONE,
@@ -98,6 +102,7 @@ enum class MTAType(
     GRAVEYARD(
         Scenery.GRAVEYARD_TP_10781,
         Component(Components.MAGICTRAINING_GRAVE_196),
+        1486, // Graveyard points
         Location(3363, 9639, 1),
         Location(3365, 3318, 0),
         CreatureGraveyardPlugin.ZONE,
@@ -124,8 +129,8 @@ enum class MTAType(
 
     fun enter(player: Player) {
         if (!player.getSavedData().activityData.isStartedMta ||
-            !anyInInventory(player, *ProgressHat.hats) &&
-            !anyInEquipment(player, *ProgressHat.hats)
+            !anyInInventory(player, *ProgressHat.hatIds) &&
+            !anyInEquipment(player, *ProgressHat.hatIds)
         ) {
             sendDialogueLines(
                 player,
@@ -158,6 +163,7 @@ enum class MTAType(
 
     companion object {
         private val zoneCache: MutableSet<MTAType> = HashSet(values().toList())
+
         /**
          * Gets the [MTAType] for the given [MTAZone].
          *

@@ -38,8 +38,6 @@ public final class ActivityData {
 
     private boolean startedMta;
 
-    private int[] pizazzPoints = new int[4];
-
     private boolean bonesToPeaches;
 
     private int solvedMazes;
@@ -86,10 +84,6 @@ public final class ActivityData {
         lastBorkBattle = Long.parseLong(data.get("lastBorkBattle").toString());
         startedMta = (boolean) data.get("startedMta");
         lostCannon = (boolean) data.get("lostCannon");
-        JSONArray pp = (JSONArray) data.get("pizazzPoints");
-        for (int i = 0; i < pp.size(); i++) {
-            pizazzPoints[i] = Integer.parseInt(pp.get(i).toString());
-        }
         bonesToPeaches = (boolean) data.get("bonesToPeaches");
         solvedMazes = Integer.parseInt(data.get("solvedMazes").toString());
         fogRating = Integer.parseInt(data.get("fogRating").toString());
@@ -400,72 +394,6 @@ public final class ActivityData {
      */
     public void setStartedMta(boolean startedMta) {
         this.startedMta = startedMta;
-    }
-
-    /**
-     * Increment pizazz.
-     *
-     * @param index the index
-     */
-    public void incrementPizazz(int index) {
-        pizazzPoints[index] += 1;
-    }
-
-    /**
-     * Increment pizazz.
-     *
-     * @param index  the index
-     * @param amount the amount
-     */
-    public void incrementPizazz(int index, int amount) {
-        pizazzPoints[index] += amount;
-    }
-
-    /**
-     * Decrement pizazz.
-     *
-     * @param index  the index
-     * @param amount the amount
-     */
-    public void decrementPizazz(int index, int amount) {
-        pizazzPoints[index] -= amount;
-    }
-
-    /**
-     * Decrement pizazz.
-     *
-     * @param index the index
-     */
-    public void decrementPizazz(int index) {
-        pizazzPoints[index] -= 1;
-    }
-
-    /**
-     * Gets pizazz points.
-     *
-     * @param index the index
-     * @return the pizazz points
-     */
-    public int getPizazzPoints(int index) {
-        return pizazzPoints[index];
-    }
-
-    /**
-     * Get pizazz points int [ ].
-     *
-     * @return the int [ ]
-     */
-    public int[] getPizazzPoints() {
-        return pizazzPoints;
-    }
-
-    /**
-     * Sets pizazz points.
-     *
-     * @param pizazzPoints the pizazz points
-     */
-    public void setPizazzPoints(int[] pizazzPoints) {
-        this.pizazzPoints = pizazzPoints;
     }
 
     /**

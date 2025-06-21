@@ -13,10 +13,8 @@ import core.game.world.map.zone.MapZone
 import core.game.world.map.zone.ZoneRestriction
 import core.game.world.map.zone.ZoneType
 
-open class MTAZone(
-    name: String?,
-    val items: Array<Item>,
-) : MapZone(name, false, ZoneRestriction.RANDOM_EVENTS, ZoneRestriction.FOLLOWERS) {
+open class MTAZone(name: String?, val items: Array<Item>, ) : MapZone(name, false, ZoneRestriction.RANDOM_EVENTS, ZoneRestriction.FOLLOWERS) {
+
     var type: MTAType? = null
 
     init {
@@ -29,43 +27,33 @@ open class MTAZone(
             if (type == null) {
                 type = MTAType.forZone(this)
             }
-            if (type != null) {
-                player.interfaceManager.openOverlay(type!!.overlay)
+            type?.let {
+                player.interfaceManager.openOverlay(it.overlay)
                 update(player)
             }
-            player.properties.spawnLocation = Location(3363, 3302, 0)
+            if (player.properties.spawnLocation == null) {
+                player.properties.spawnLocation = Location(3363, 3302, 0)
+            }
         }
         return super.enter(entity)
     }
 
-    override fun canRequest(
-        type: RequestType,
-        player: Player,
-        target: Player,
-    ): Boolean {
-        sendDialogue(player, "You can't do that right now.")
+    override fun canRequest(type: RequestType, player: Player, target: Player): Boolean {
+        sendMessage(player, "You can't do that right now.")
         return false
     }
 
-    override fun interact(
-        e: Entity,
-        target: Node,
-        option: Option,
-    ): Boolean {
+    override fun interact(e: Entity, target: Node, option: Option): Boolean {
         if (e is Player) {
             if (target.id == 10782) {
-                type!!.exit(e.asPlayer())
+                type?.exit(e.asPlayer())
                 return true
             }
         }
         return super.interact(e, target, option)
     }
 
-    override fun teleport(
-        e: Entity,
-        type: Int,
-        node: Node,
-    ): Boolean {
+    override fun teleport(e: Entity, type: Int, node: Node): Boolean {
         if (e is Player) {
             if (type != -1) {
                 e.asPlayer().sendMessage("You can't teleport out of the training arena!")
@@ -75,13 +63,9 @@ open class MTAZone(
         return super.teleport(e, type, node)
     }
 
-    @Suppress("deprecation")
-    override fun leave(
-        entity: Entity,
-        logout: Boolean,
-    ): Boolean {
+    override fun leave(entity: Entity, logout: Boolean): Boolean {
         if (entity is Player) {
-            val player = entity.asPlayer()
+            val player = entity.asPlayer() ?: return super.leave(entity, logout)
             if (logout) {
                 player.location = Location(3363, 3302, 0)
             } else {
@@ -102,30 +86,48 @@ open class MTAZone(
         }
     }
 
-    fun incrementPoints(
-        player: Player,
-        index: Int,
-        amount: Int,
-    ) {
-        player.getSavedData().activityData.incrementPizazz(index, amount)
-        update(player)
+    /**
+     * Increment player points stored via varbits for the current MTA type.
+     */
+    fun incrementPoints(player: Player, index: Int, amount: Int) {
+        val varbitId = pizazzVarbitIds[index]
+        val current = getVarbit(player, varbitId)
+        setVarbit(player, varbitId, current + amount)
+        updatePoints(player)
     }
 
+    /**
+     * Update points display for the player based on varbits.
+     */
+    fun updatePoints(player: Player) {
+        for ((i, varbitId) in pizazzVarbitIds.withIndex()) {
+            setVarbit(player, varbitId, getPoints(player, i), true)
+        }
+    }
+
+    /**
+     * Get points from varbit for player.
+     */
+    fun getPoints(player: Player, index: Int): Int {
+        val varbitId = pizazzVarbitIds[index]
+        return getVarbit(player, varbitId)
+    }
+
+    /**
+     * Update the overlay with current points.
+     */
     open fun update(player: Player?) {
-        if (type == null) {
-            return
-        }
-        type?.let {
-            sendString(
-                player!!,
-                player
-                    .getSavedData()
-                    .activityData
-                    .getPizazzPoints(it.ordinal)
-                    .toString(),
-                it.overlay.id,
-                9,
-            )
-        }
+        val currentType = type ?: return
+        player ?: return
+
+        val points = getPoints(player, currentType.ordinal)
+        sendString(player, points.toString(), currentType.overlay.id, 9)
+    }
+
+    companion object {
+        /**
+         * Map indexes of pizazz points to varbit ids.
+         */
+        val pizazzVarbitIds = intArrayOf(1485, 1489, 1488, 1486)
     }
 }

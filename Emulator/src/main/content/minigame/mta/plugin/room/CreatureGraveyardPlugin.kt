@@ -22,36 +22,22 @@ import core.tools.StringUtils
 import org.rs.consts.Animations
 import org.rs.consts.Items
 import org.rs.consts.Music
+import org.rs.consts.Sounds
 
+/**
+ * Represents the Creature Graveyard.
+ */
 class CreatureGraveyardPlugin :
-    MTAZone(
-        "Creature Graveyard",
-        arrayOf(
-            Item(Items.ANIMALS_BONES_6904),
-            Item(Items.ANIMALS_BONES_6905),
-            Item(Items.ANIMALS_BONES_6906),
-            Item(Items.ANIMALS_BONES_6907),
-            Item(Items.BANANA_1963),
-            Item(Items.PEACH_6883),
-        ),
-    ) {
+    MTAZone("Creature Graveyard", arrayOf(Item(Items.ANIMALS_BONES_6904), Item(Items.ANIMALS_BONES_6905), Item(Items.ANIMALS_BONES_6906), Item(Items.ANIMALS_BONES_6907), Item(Items.BANANA_1963), Item(Items.PEACH_6883)),) {
+
     override fun update(player: Player?) {
-        sendString(
-            player!!,
-            player
-                .getSavedData()
-                .activityData
-                .getPizazzPoints(type!!.ordinal)
-                .toString(),
-            type!!.overlay.id,
-            12,
-        )
+        val player = player ?: return
+        val type = type ?: return
+        val points = getVarbit(player, type.varbit)
+        sendString(player, points.toString(), type.overlay.id, 12)
     }
 
-    override fun leave(
-        entity: Entity,
-        logout: Boolean,
-    ): Boolean {
+    override fun leave(entity: Entity, logout: Boolean): Boolean {
         if (entity is Player) PLAYERS.remove(entity)
         return super.leave(entity, logout)
     }
@@ -68,18 +54,13 @@ class CreatureGraveyardPlugin :
         return super.enter(entity)
     }
 
-    override fun interact(
-        e: Entity,
-        target: Node,
-        option: Option,
-    ): Boolean {
+    override fun interact(e: Entity, target: Node, option: Option): Boolean {
         if (e is Player) {
             when (target.id) {
                 org.rs.consts.Scenery.FOOD_CHUTE_10735 -> deposit(e)
-                in org.rs.consts.Scenery.BONES_10725..org.rs.consts.Scenery.BONES_10728 ->
-                    BoneType.forObject(
-                        target.id,
-                    )?.grab(e, target.asScenery())
+                in org.rs.consts.Scenery.BONES_10725..org.rs.consts.Scenery.BONES_10728 -> BoneType.forObject(target.id)
+                    ?.grab(e, target.asScenery())
+
                 else -> return super.interact(e, target, option)
             }
             return true
@@ -87,14 +68,16 @@ class CreatureGraveyardPlugin :
         return super.interact(e, target, option)
     }
 
-    override fun death(
-        e: Entity,
-        killer: Entity,
-    ): Boolean {
+    override fun death(e: Entity, killer: Entity): Boolean {
         if (e is Player) {
-            val player = e.asPlayer()
-            val points = player.getSavedData().activityData.getPizazzPoints(MTAType.GRAVEYARD.ordinal)
-            player.getSavedData().activityData.decrementPizazz(MTAType.GRAVEYARD.ordinal, points.coerceAtMost(10))
+            val player = e.asPlayer() ?: return super.death(e, killer)
+            val varbitId = MTAType.GRAVEYARD.varbit
+            val points = getVarbit(player, varbitId)
+            val toRemove = points.coerceAtMost(10)
+            if (toRemove > 0) {
+                setVarbit(player, varbitId, points - toRemove)
+                sendMessage(player, "You lost $toRemove Pizazz Points upon death!")
+            }
         }
         return super.death(e, killer)
     }
@@ -107,10 +90,9 @@ class CreatureGraveyardPlugin :
 
         val items = arrayOf(BANANA, PEACH)
         var totalAmount =
-            player.getAttribute("grave-amt", 0) +
-                items.sumOf { item ->
-                    amountInInventory(player, item).also { removeItem(player, Item(item, it)) }
-                }
+            player.getAttribute("grave-amt", 0) + items.sumOf { item ->
+                amountInInventory(player, item).also { removeItem(player, Item(item, it)) }
+            }
 
         if (totalAmount >= 16) {
             totalAmount = (totalAmount - 16).coerceAtLeast(0)
@@ -119,16 +101,19 @@ class CreatureGraveyardPlugin :
             player.inventory.add(rune, player)
             incrementPoints(player, MTAType.GRAVEYARD.ordinal, 1)
             rewardXP(player, Skills.MAGIC, 50.0)
+            playAudio(player, Sounds.MTA_DEPOSIT_FRUIT_1663)
             sendDialogueLines(
                 player,
-                "Congratulations - you've been awarded a${if (StringUtils.isPlusN(
-                        runeName,
-                    )
-                ) {
-                    "n"
-                } else {
-                    ""
-                }} $runeName and extra",
+                "Congratulations - you've been awarded a${
+                    if (StringUtils.isPlusN(
+                            runeName,
+                        )
+                    ) {
+                        "n"
+                    } else {
+                        ""
+                    }
+                } $runeName and extra",
                 "magic XP.",
             )
         }
@@ -141,10 +126,7 @@ class CreatureGraveyardPlugin :
         register(ZoneBorders(3333, 9610, 3390, 9663, 1, true))
     }
 
-    enum class BoneType(
-        val objectsId: Int,
-        val item: Item,
-    ) {
+    enum class BoneType(val objectsId: Int, val item: Item) {
         FIRST(org.rs.consts.Scenery.BONES_10725, Item(Items.ANIMALS_BONES_6904)),
         SECOND(org.rs.consts.Scenery.BONES_10726, Item(Items.ANIMALS_BONES_6905)),
         THIRD(org.rs.consts.Scenery.BONES_10727, Item(Items.ANIMALS_BONES_6906)),
@@ -162,7 +144,7 @@ class CreatureGraveyardPlugin :
             lock(player, 1)
             addItem(player, item.id)
             animate(player, Animations.HUMAN_BURYING_BONES_827)
-
+            playAudio(player, Sounds.MTA_DEPOSIT_BONE_1660) // ?
             var life = scenery.attributes.getAttribute("life", 4) - 1
             if (life < 1) {
                 life = 4
@@ -238,6 +220,7 @@ class CreatureGraveyardPlugin :
                         locations.forEach { loc ->
                             player.packetDispatch.sendPositionedGraphics(Graphics.create(520), loc)
                         }
+                        playAudio(player, Sounds.MTA_BONEFALL_1661)
                         if (player.dialogueInterpreter.dialogue == null) {
                             player.impactHandler.manualHit(player, 2, ImpactHandler.HitsplatType.NORMAL)
                         }
