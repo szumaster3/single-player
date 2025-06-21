@@ -6,6 +6,7 @@ import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.skill.Skills
 import org.rs.consts.Items
+import kotlin.math.min
 
 /**
  * Handles potato recipes.
@@ -38,12 +39,12 @@ class PotatoRecipePlugin : InteractionListener {
                 return@onUseWith true
             }
 
-            val usedAmount = amountInInventory(player, used.id)
-            val withAmount = amountInInventory(player, with.id)
-            val maxAmount = minOf(usedAmount, withAmount)
+            val usedItem = used.asItem()
+            val withItem = with.asItem()
+            val maxAmount = min(amountInInventory(player, used.id), amountInInventory(player, with.id))
 
             fun process(): Boolean {
-                if (!removeItem(player, used.asItem(), Container.INVENTORY) || !removeItem(player, with.asItem(), Container.INVENTORY)) {
+                if (!removeItem(player, usedItem, Container.INVENTORY) || !removeItem(player, withItem, Container.INVENTORY)) {
                     sendMessage(player, "You don't have the required ingredients to make that.")
                     return false
                 }
@@ -53,7 +54,7 @@ class PotatoRecipePlugin : InteractionListener {
                 return true
             }
 
-            if (maxAmount == 1) {
+            if (maxAmount <= 1) {
                 process()
                 return@onUseWith true
             }
@@ -100,13 +101,13 @@ class PotatoRecipePlugin : InteractionListener {
                     return@onUseWith true
                 }
 
-                val amountUsed = amountInInventory(player, used.id)
-                val amountWith = amountInInventory(player, with.id)
-                val maxAmount = minOf(amountUsed, amountWith)
+                val usedItem = used.asItem()
+                val withItem = with.asItem()
+                val maxAmount = min(amountInInventory(player, used.id), amountInInventory(player, with.id))
                 val dropEmptyBowl = ingredientID != CHEESE
 
                 fun process(): Boolean {
-                    if (!removeItem(player, used.asItem(), Container.INVENTORY) || !removeItem(player, with.asItem(), Container.INVENTORY)) {
+                    if (!removeItem(player, usedItem, Container.INVENTORY) || !removeItem(player, withItem, Container.INVENTORY)) {
                         sendMessage(player, "You don't have the required ingredients to make that.")
                         return false
                     }
@@ -119,7 +120,7 @@ class PotatoRecipePlugin : InteractionListener {
                     return true
                 }
 
-                if (maxAmount == 1) {
+                if (maxAmount <= 1) {
                     process()
                     return@onUseWith true
                 }
@@ -128,7 +129,7 @@ class PotatoRecipePlugin : InteractionListener {
                     withItems(productID)
                     create { _, amount ->
                         runTask(player, 2, amount) {
-                            process()
+                            if (amount > 0) process()
                         }
                     }
                     calculateMaxAmount { maxAmount }
@@ -155,6 +156,5 @@ class PotatoRecipePlugin : InteractionListener {
         private const val POTATO_WITH_CHEESE = Items.POTATO_WITH_CHEESE_6705
         private const val TUNA_AND_CORN      = Items.TUNA_AND_CORN_7068
         private const val TUNA_POTATO        = Items.TUNA_POTATO_7060
-
     }
 }

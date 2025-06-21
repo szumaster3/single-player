@@ -22,7 +22,8 @@ class PieRecipePlugin : InteractionListener {
          */
 
         onUseWith(IntType.ITEM, Items.PASTRY_DOUGH_1953, Items.PIE_DISH_2313) { player, used, _ ->
-            if (removeItem(player, used.asItem())) {
+            val usedItem = used.asItem()
+            if (removeItem(player, usedItem)) {
                 addItem(player, Items.PIE_SHELL_2315, 1)
                 sendMessage(player, "You put the pastry dough into the pie dish to make a pie shell.")
             }
@@ -36,7 +37,11 @@ class PieRecipePlugin : InteractionListener {
         onUseWith(IntType.ITEM, PieShellRecipe.allIngredientIds, Items.PIE_SHELL_2315) { player, used, with ->
             val recipe = PieShellRecipe.byIngredientId[used.id] ?: return@onUseWith false
             handlePieRecipe(
-                player, used.asItem(), with.asItem(), recipe.requiredLevel, recipe.productId,
+                player,
+                used.asItem(),
+                with.asItem(),
+                recipe.requiredLevel,
+                recipe.productId,
                 "You fill the pie with ${used.name.lowercase()}.",
                 returnsBucket = (used.id == Items.COMPOST_6032)
             )
@@ -51,7 +56,11 @@ class PieRecipePlugin : InteractionListener {
             val recipe = PieSecondPartRecipe.byPair[with.id to used.id]
                 ?: PieSecondPartRecipe.byPair[used.id to with.id] ?: return@onUseWith true
             handlePieRecipe(
-                player, used.asItem(), with.asItem(), recipe.requiredLevel, recipe.productId,
+                player,
+                used.asItem(),
+                with.asItem(),
+                recipe.requiredLevel,
+                recipe.productId,
                 "You fill the pie with ${used.name.lowercase()}.",
                 returnsBucket = recipe.returnsBucket
             )
@@ -66,7 +75,11 @@ class PieRecipePlugin : InteractionListener {
             val recipe = RawPieRecipe.byPair[with.id to used.id]
                 ?: RawPieRecipe.byPair[used.id to with.id] ?: return@onUseWith true
             handlePieRecipe(
-                player, used.asItem(), with.asItem(), recipe.requiredLevel, recipe.productId,
+                player,
+                used.asItem(),
+                with.asItem(),
+                recipe.requiredLevel,
+                recipe.productId,
                 "You fill the pie with ${used.name.lowercase()}."
             )
             return@onUseWith true
@@ -94,7 +107,15 @@ class PieRecipePlugin : InteractionListener {
     /**
      * Handle pie cooking steps.
      */
-    private fun handlePieRecipe(player: Player, used: Item, with: Item, requiredLevel: Int, productId: Int, message: String, returnsBucket: Boolean = false): Boolean {
+    private fun handlePieRecipe(
+        player: Player,
+        used: Item,
+        with: Item,
+        requiredLevel: Int,
+        productId: Int,
+        message: String,
+        returnsBucket: Boolean = false
+    ): Boolean {
         if (!hasLevelDyn(player, Skills.COOKING, requiredLevel)) {
             sendDialogue(player, "You need a Cooking level of at least $requiredLevel to make that.")
             return true
@@ -102,20 +123,20 @@ class PieRecipePlugin : InteractionListener {
 
         val maxAmount = min(amountInInventory(player, used.id), amountInInventory(player, with.id))
 
-        val process = {
-            if (!removeItem(player, used.asItem()) || !removeItem(player, with.asItem())) {
+        fun process(): Boolean {
+            if (!removeItem(player, used) || !removeItem(player, with)) {
                 sendMessage(player, "You don't have the required ingredients.")
-                false
-            } else {
-                if (returnsBucket) addItemOrDrop(player, Items.BUCKET_1925, 1)
-                addItem(player, productId, 1)
-                sendMessage(player, message)
-                true
+                return false
             }
+            if (returnsBucket) addItemOrDrop(player, Items.BUCKET_1925, 1)
+            addItem(player, productId, 1)
+            sendMessage(player, message)
+            return true
         }
 
-        if (maxAmount == 1) {
+        return if (maxAmount <= 1) {
             process()
+            true
         } else {
             sendSkillDialogue(player) {
                 withItems(productId)
@@ -126,8 +147,8 @@ class PieRecipePlugin : InteractionListener {
                 }
                 calculateMaxAmount { maxAmount }
             }
+            true
         }
-        return true
     }
 
     enum class PieShellRecipe(val ingredientId: Int, val requiredLevel: Int, val productId: Int) {

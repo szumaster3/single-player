@@ -24,15 +24,25 @@ class KebabRecipePlugin : InteractionListener {
          */
 
         onUseWith(IntType.ITEM, KEBAB_IDS, RED_HOT_SAUCE) { player, used, with ->
-            if (removeItem(player, used.asItem()) && removeItem(player, with.asItem())) {
+            val kebab = if (KEBAB_IDS.contains(used.id)) used else with
+            val sauce = if (used.id == RED_HOT_SAUCE) used else with
+
+            if (removeItem(player, kebab.asItem()) && removeItem(player, sauce.asItem())) {
                 addItem(player, SUPER_KEBAB, 1)
             }
             return@onUseWith true
         }
 
+        /*
+         * Handles making ugthanki kebab in pitta bread.
+         */
+
         onUseWith(IntType.ITEM, PITTA_BREAD, KEBAB_MIX) { player, used, with ->
+            val bread = if (used.id == PITTA_BREAD) used else with
+            val mix = if (used.id == KEBAB_MIX) used else with
+
             fun process(): Boolean {
-                if (!removeItem(player, used.asItem()) || !removeItem(player, with.asItem())) {
+                if (!removeItem(player, bread.asItem()) || !removeItem(player, mix.asItem())) {
                     sendMessage(player, "You don't have the required ingredients.")
                     return false
                 }
@@ -49,9 +59,9 @@ class KebabRecipePlugin : InteractionListener {
                 return true
             }
 
-            val amountUsed = amountInInventory(player, used.id)
-            val amountWith = amountInInventory(player, with.id)
-            if (amountUsed == 1 || amountWith == 1) {
+            val amountBread = amountInInventory(player, bread.id)
+            val amountMix = amountInInventory(player, mix.id)
+            if (amountBread == 1 || amountMix == 1) {
                 process()
                 return@onUseWith true
             }
@@ -59,36 +69,46 @@ class KebabRecipePlugin : InteractionListener {
             sendSkillDialogue(player) {
                 withItems(UGTHANKI_KEBAB)
                 create { _, amount -> runTask(player, 2, amount) { process() } }
-                calculateMaxAmount { minOf(amountUsed, amountWith) }
+                calculateMaxAmount { minOf(amountBread, amountMix) }
             }
             return@onUseWith true
         }
 
+        /*
+         * Handles mixing ugthanki meat with onion or tomato.
+         */
+
         onUseWith(IntType.ITEM, UGTHANKI_IDS, CHOPPED_UGTHANKI) { player, used, with ->
-            val productID = if (used.id == ONION) UGTHANKI_AND_ONION else UGTHANKI_AND_TOMATO
+            val ingredient = if (used.id == ONION || used.id == TOMATO) used else with
+            val choppedUgthanki = if (used.id == CHOPPED_UGTHANKI) used else with
+            val productID = when (ingredient.id) {
+                ONION -> UGTHANKI_AND_ONION
+                TOMATO -> UGTHANKI_AND_TOMATO
+                else -> return@onUseWith true
+            }
 
             if (!inInventory(player, KNIFE)) {
-                sendMessage(player, "You need a knife to slice up the ${used.name.lowercase()}.")
+                sendMessage(player, "You need a knife to slice up the ${ingredient.name.lowercase()}.")
                 return@onUseWith true
             }
 
             fun process(): Boolean {
-                if (!removeItem(player, used.asItem(), Container.INVENTORY) ||
-                    !removeItem(player, with.asItem(), Container.INVENTORY)
+                if (!removeItem(player, ingredient.asItem(), Container.INVENTORY) ||
+                    !removeItem(player, choppedUgthanki.asItem(), Container.INVENTORY)
                 ) {
                     sendMessage(player, "You don't have the required ingredients.")
                     return false
                 }
 
                 addItem(player, productID, 1, Container.INVENTORY)
-                sendMessage(player, "You mix the ${used.name.lowercase()} with the ${with.name.lowercase()}.")
+                sendMessage(player, "You mix the ${ingredient.name.lowercase()} with the ${choppedUgthanki.name.lowercase()}.")
                 return true
             }
 
-            val amountUsed = amountInInventory(player, used.id)
-            val amountWith = amountInInventory(player, with.id)
+            val amountIngredient = amountInInventory(player, ingredient.id)
+            val amountChopped = amountInInventory(player, choppedUgthanki.id)
 
-            if (amountUsed == 1 || amountWith == 1) {
+            if (amountIngredient == 1 || amountChopped == 1) {
                 process()
                 return@onUseWith true
             }
@@ -96,7 +116,7 @@ class KebabRecipePlugin : InteractionListener {
             sendSkillDialogue(player) {
                 withItems(productID)
                 create { _, amount -> runTask(player, 2, amount) { process() } }
-                calculateMaxAmount { minOf(amountUsed, amountWith) }
+                calculateMaxAmount { minOf(amountIngredient, amountChopped) }
             }
             return@onUseWith true
         }
@@ -110,24 +130,27 @@ class KebabRecipePlugin : InteractionListener {
                 return@onUseWith true
             }
 
+            val baseItem = if (used.id == baseID) used else with
+            val secondItem = if (used.id == secondID) used else with
+
             fun process(): Boolean {
-                if (!removeItem(player, used.asItem()) || !removeItem(player, with.asItem())) {
+                if (!removeItem(player, baseItem.asItem()) || !removeItem(player, secondItem.asItem())) {
                     sendMessage(player, "You don't have the required ingredients.")
                     return false
                 }
 
-                val usedName = used.name.lowercase()
-                val usedWith = with.name.lowercase()
+                val baseName = baseItem.name.lowercase()
+                val secondName = secondItem.name.lowercase()
 
-                sendMessage(player, "You mix the $usedName with the $usedWith.")
+                sendMessage(player, "You mix the $baseName with the $secondName.")
                 addItem(player, productID, 1)
                 return true
             }
 
-            val amountUsed = amountInInventory(player, used.id)
-            val amountWith = amountInInventory(player, with.id)
+            val amountBase = amountInInventory(player, baseItem.id)
+            val amountSecond = amountInInventory(player, secondItem.id)
 
-            if (amountUsed == 1 || amountWith == 1) {
+            if (amountBase == 1 || amountSecond == 1) {
                 process()
                 return@onUseWith true
             }
@@ -135,7 +158,7 @@ class KebabRecipePlugin : InteractionListener {
             sendSkillDialogue(player) {
                 withItems(productID)
                 create { _, amount -> runTask(player, 2, amount) { process() } }
-                calculateMaxAmount { minOf(amountUsed, amountWith) }
+                calculateMaxAmount { minOf(amountBase, amountSecond) }
             }
             return@onUseWith true
         }
@@ -159,7 +182,7 @@ class KebabRecipePlugin : InteractionListener {
         private const val CHOPPED_UGTHANKI     = Items.CHOPPED_UGTHANKI_1873
         private const val RED_HOT_SAUCE        = Items.RED_HOT_SAUCE_4610
         private const val SUPER_KEBAB          = Items.SUPER_KEBAB_4608
-        private val UGTHANKI_IDS               = intArrayOf(ONION,TOMATO)
+        private val UGTHANKI_IDS               = intArrayOf(ONION, TOMATO)
         private val KEBAB_IDS                  = intArrayOf(Items.KEBAB_1971, Items.UGTHANKI_KEBAB_1883, Items.UGTHANKI_KEBAB_1885)
     }
 }

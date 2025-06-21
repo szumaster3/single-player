@@ -23,7 +23,7 @@ class ToppingRecipePlugin : InteractionListener {
     }
 
     private fun registerRecipe(baseID: Int, secondID: Int, requiredLevel: Int, xp: Double, productID: Int, message: String) {
-        onUseWith(IntType.ITEM, baseID, secondID) { player, used, with ->
+        onUseWith(IntType.ITEM, baseID, secondID) { player, usedNode, withNode ->
             if (!hasLevelDyn(player, Skills.COOKING, requiredLevel)) {
                 sendDialogue(player, "You need a Cooking level of at least $requiredLevel to make that.")
                 return@onUseWith true
@@ -34,8 +34,11 @@ class ToppingRecipePlugin : InteractionListener {
                 return@onUseWith true
             }
 
+            val usedItem = usedNode.asItem()
+            val withItem = withNode.asItem()
+
             fun process(): Boolean {
-                if (!removeItem(player, used.asItem()) || !removeItem(player, with.asItem())) {
+                if (!removeItem(player, usedItem, Container.INVENTORY) || !removeItem(player, withItem, Container.INVENTORY)) {
                     sendMessage(player, "You don't have the required ingredients to make that.")
                     return false
                 }
@@ -48,10 +51,10 @@ class ToppingRecipePlugin : InteractionListener {
                 return true
             }
 
-            val baseAmount = amountInInventory(player, used.id)
-            val withAmount = amountInInventory(player, with.id)
+            val baseAmount = amountInInventory(player, usedNode.id)
+            val withAmount = amountInInventory(player, withNode.id)
 
-            if (baseAmount == 1 || withAmount == 1) {
+            if (min(baseAmount, withAmount) <= 1) {
                 process()
                 return@onUseWith true
             }
@@ -63,7 +66,7 @@ class ToppingRecipePlugin : InteractionListener {
                         if (amount > 0) process()
                     }
                 }
-                calculateMaxAmount { min(baseAmount, withAmount) }
+                calculateMaxAmount { minOf(baseAmount, withAmount) }
             }
 
             return@onUseWith true
@@ -89,5 +92,4 @@ class ToppingRecipePlugin : InteractionListener {
         private const val COOKED_MEAT        = Items.COOKED_MEAT_2142
         private const val CHILLI_CON_CARNE   = Items.CHILLI_CON_CARNE_7062
     }
-
 }

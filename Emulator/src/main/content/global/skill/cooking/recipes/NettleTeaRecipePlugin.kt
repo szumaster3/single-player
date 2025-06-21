@@ -24,12 +24,19 @@ class NettleTeaRecipePlugin : InteractionListener {
 
         recipes.forEach { recipe ->
             onUseWith(IntType.ITEM, recipe.itemUsed, recipe.itemWith) { player, used, with ->
-                if (removeItem(player, used.asItem(), Container.INVENTORY) &&
-                    removeItem(player, with.asItem(), Container.INVENTORY)) {
+
+                val first = if (used.id == recipe.itemUsed) used else with
+                val second = if (used.id == recipe.itemWith) used else with
+
+                if (removeItem(player, first.asItem(), Container.INVENTORY) &&
+                    removeItem(player, second.asItem(), Container.INVENTORY)) {
+
                     recipe.returnItem?.let { addItemOrDrop(player, it, 1) }
                     addItem(player, recipe.product, 1)
-                    if(used.id == NETTLES && with.id == BOWL_OF_WATER)
+
+                    if (first.id == NETTLES && second.id == BOWL_OF_WATER) {
                         sendMessage(player, "You place the nettles into the bowl of water.")
+                    }
                 }
                 return@onUseWith true
             }

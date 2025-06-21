@@ -36,11 +36,13 @@ class SkeweredRecipePlugin : InteractionListener {
                 return@onUseWith true
             }
 
+            val usedItem = used.asItem()
+            val withItem = with.asItem()
             val ingredientName = used.name.lowercase()
             val maxAmount = min(amountInInventory(player, used.id), amountInInventory(player, with.id))
 
             val process = {
-                if (!removeItem(player, used.asItem()) || !removeItem(player, with.asItem())) {
+                if (!removeItem(player, usedItem) || !removeItem(player, withItem)) {
                     sendMessage(player, "You don't have the required ingredients to make that.")
                     false
                 } else {
@@ -69,10 +71,12 @@ class SkeweredRecipePlugin : InteractionListener {
 
     private fun handleSpiderRecipe(ingredient: Int, tool: Int, result: Int, sound: Int) {
         onUseWith(IntType.ITEM, ingredient, tool) { player, used, with ->
+            val usedItem = used.asItem()
+            val withItem = with.asItem()
             val maxAmount = min(amountInInventory(player, used.id), amountInInventory(player, with.id))
 
             val process = {
-                if (!removeItem(player, used.asItem()) || !removeItem(player, with.asItem())) {
+                if (!removeItem(player, usedItem) || !removeItem(player, withItem)) {
                     sendMessage(player, "You don't have the required ingredients to make that.")
                     false
                 } else {
@@ -90,7 +94,7 @@ class SkeweredRecipePlugin : InteractionListener {
     }
 
     private fun handleMultiItemProcess(player: Player, maxAmount: Int, productID: Int, process: () -> Boolean) {
-        if (maxAmount == 1) {
+        if (maxAmount <= 1) {
             process()
         } else {
             sendSkillDialogue(player) {
@@ -113,6 +117,11 @@ class SkeweredRecipePlugin : InteractionListener {
         private const val SPIDER_ON_SHAFT  = Items.SPIDER_ON_SHAFT_6295
         private const val SPIDER_ON_STICK  = Items.SPIDER_ON_STICK_6293
         private const val IRON_SPIT        = Items.IRON_SPIT_7225
-        private val RAW_INGREDIENTS        = intArrayOf(Items.RAW_CHOMPY_2876, Items.RAW_RABBIT_3226, Items.RAW_BIRD_MEAT_9978, Items.RAW_BEAST_MEAT_9986)
+        private val RAW_INGREDIENTS        = intArrayOf(
+            Items.RAW_CHOMPY_2876,
+            Items.RAW_RABBIT_3226,
+            Items.RAW_BIRD_MEAT_9978,
+            Items.RAW_BEAST_MEAT_9986
+        )
     }
 }

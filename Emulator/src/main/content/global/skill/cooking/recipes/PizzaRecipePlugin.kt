@@ -6,6 +6,7 @@ import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.skill.Skills
 import org.rs.consts.Items
+import kotlin.math.min
 
 /**
  * Handles pizza cooking recipes.
@@ -24,14 +25,15 @@ class PizzaRecipePlugin : InteractionListener {
 
         onUseWith(IntType.ITEM, Items.PIZZA_BASE_2283, Items.TOMATO_1982) { player, used, with ->
             if (!hasLevelDyn(player, Skills.COOKING, 35)) {
-                sendDialogue(player, "You need an Cooking level of at least 35 to make that.")
+                sendDialogue(player, "You need a Cooking level of at least 35 to make that.")
                 return@onUseWith true
             }
-            if (!removeItem(player, used.asItem(), Container.INVENTORY) || !removeItem(player, with.asItem(), Container.INVENTORY)) {
+            val usedItem = used.asItem()
+            val withItem = with.asItem()
+            if (!removeItem(player, usedItem, Container.INVENTORY) || !removeItem(player, withItem, Container.INVENTORY)) {
                 sendMessage(player, "You don't have the required ingredients to make that.")
                 return@onUseWith true
             }
-
             addItem(player, Items.INCOMPLETE_PIZZA_2285, 1, Container.INVENTORY)
             sendMessage(player, "You add the tomato to the pizza base.")
             return@onUseWith true
@@ -47,14 +49,15 @@ class PizzaRecipePlugin : InteractionListener {
 
         onUseWith(IntType.ITEM, Items.CHEESE_1985, Items.INCOMPLETE_PIZZA_2285) { player, used, with ->
             if (!hasLevelDyn(player, Skills.COOKING, 35)) {
-                sendDialogue(player, "You need an Cooking level of at least 35 to make that.")
+                sendDialogue(player, "You need a Cooking level of at least 35 to make that.")
                 return@onUseWith true
             }
-            if (!removeItem(player, used.asItem(), Container.INVENTORY) || !removeItem(player, with.asItem(), Container.INVENTORY)) {
+            val usedItem = used.asItem()
+            val withItem = with.asItem()
+            if (!removeItem(player, usedItem, Container.INVENTORY) || !removeItem(player, withItem, Container.INVENTORY)) {
                 sendMessage(player, "You don't have the required ingredients to make that.")
                 return@onUseWith true
             }
-
             addItem(player, Items.UNCOOKED_PIZZA_2287, 1, Container.INVENTORY)
             sendMessage(player, "You add the cheese to the incomplete pizza.")
             return@onUseWith true
@@ -81,19 +84,18 @@ class PizzaRecipePlugin : InteractionListener {
         )
 
         onUseWith(IntType.ITEM, PIZZA_INGREDIENTS, Items.PLAIN_PIZZA_2289) { player, used, with ->
-            val (productID, requiredLevel, experience) = pizzaMap[used.id] ?: return@onUseWith false
+            val pizzaData = pizzaMap[used.id] ?: return@onUseWith false
+            val (productID, requiredLevel, experience) = pizzaData
 
             if (!hasLevelDyn(player, Skills.COOKING, requiredLevel)) {
-                sendDialogue(player, "You need an Cooking level of at least $requiredLevel to make that.")
+                sendDialogue(player, "You need a Cooking level of at least $requiredLevel to make that.")
                 return@onUseWith true
             }
 
-            val ingredientName = used.name.lowercase()
             val usedItem = used.asItem()
             val withItem = with.asItem()
-            val amountUsed = amountInInventory(player, used.id)
-            val amountWith = amountInInventory(player, with.id)
-            val maxAmount = minOf(amountUsed, amountWith)
+            val ingredientName = used.name.lowercase()
+            val maxAmount = min(amountInInventory(player, used.id), amountInInventory(player, with.id))
 
             fun process(): Boolean {
                 if (!removeItem(player, usedItem, Container.INVENTORY) || !removeItem(player, withItem, Container.INVENTORY)) {
@@ -106,7 +108,7 @@ class PizzaRecipePlugin : InteractionListener {
                 return true
             }
 
-            if (maxAmount == 1) {
+            if (maxAmount <= 1) {
                 process()
                 return@onUseWith true
             }
@@ -120,7 +122,6 @@ class PizzaRecipePlugin : InteractionListener {
                 }
                 calculateMaxAmount { maxAmount }
             }
-
             return@onUseWith true
         }
     }

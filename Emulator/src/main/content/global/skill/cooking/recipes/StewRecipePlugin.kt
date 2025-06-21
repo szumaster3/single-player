@@ -28,32 +28,38 @@ class StewRecipePlugin : InteractionListener {
             successMessage: (Item) -> String,
             onProcess: (Player, Item, Item) -> Boolean
         ) {
-            onUseWith(IntType.ITEM, used, with) { player, used, with ->
+            onUseWith(IntType.ITEM, used, with) { player, usedNode, withNode ->
                 if (!hasLevelDyn(player, Skills.COOKING, requiredLevel)) {
                     sendDialogue(player, "You need an Cooking level of at least $requiredLevel to make that.")
                     return@onUseWith true
                 }
 
+                val usedItem = usedNode.asItem()
+                val withItem = withNode.asItem()
+                val amountUsed = amountInInventory(player, usedNode.id)
+                val amountWith = amountInInventory(player, withNode.id)
+
                 fun process(): Boolean {
-                    if (!onProcess(player, used.asItem(), with.asItem())) {
+                    if (!onProcess(player, usedItem, withItem)) {
                         sendMessage(player, "You don't have the required ingredients.")
                         return false
                     }
-                    sendMessage(player, successMessage(used.asItem()))
+                    sendMessage(player, successMessage(usedItem))
                     return true
                 }
 
-                val amountUsed = amountInInventory(player, used.id)
-                val amountWith = amountInInventory(player, with.id)
-
-                if (amountUsed == 1 || amountWith == 1) {
+                if (minOf(amountUsed, amountWith) <= 1) {
                     process()
                     return@onUseWith true
                 }
 
                 sendSkillDialogue(player) {
                     withItems(output)
-                    create { _, amount -> runTask(player, 2, amount) { process() } }
+                    create { _, amount ->
+                        runTask(player, 2, amount) {
+                            if (amount > 0) process()
+                        }
+                    }
                     calculateMaxAmount { minOf(amountUsed, amountWith) }
                 }
                 return@onUseWith true
@@ -63,7 +69,6 @@ class StewRecipePlugin : InteractionListener {
         /*
          * Handles creating incomplete stew.
          */
-
         listOf(POTATO, COOKED_MEAT).forEach { ingredient ->
             registerRecipe(
                 requiredLevel = 25,
@@ -72,13 +77,13 @@ class StewRecipePlugin : InteractionListener {
                 output = 0,
                 ingredientName = { it.name.lowercase() },
                 successMessage = { item -> "You cut up the ${item.name.lowercase()} and put it into the bowl." }
-            ) { player, used, with ->
-                val stew = when (used.id) {
+            ) { player, usedItem, withItem ->
+                val stew = when (usedItem.id) {
                     POTATO -> POTATO_STEW
                     COOKED_MEAT -> MEAT_STEW
                     else -> return@registerRecipe false
                 }
-                if (!removeItem(player, used) || !removeItem(player, with)) return@registerRecipe false
+                if (!removeItem(player, usedItem, Container.INVENTORY) || !removeItem(player, withItem, Container.INVENTORY)) return@registerRecipe false
                 addItem(player, stew, 1, Container.INVENTORY)
                 return@registerRecipe true
             }
@@ -97,8 +102,8 @@ class StewRecipePlugin : InteractionListener {
                     output = UNCOOKED_STEW,
                     ingredientName = { it.name.lowercase().replace("cooked", "").trim() },
                     successMessage = { item -> "You cut up the ${item.name.lowercase().replace("cooked", "").trim()} and put it into the stew." }
-                ) { player, used, with ->
-                    if (!removeItem(player, used, Container.INVENTORY) || !removeItem(player, with, Container.INVENTORY)) return@registerRecipe false
+                ) { player, usedItem, withItem ->
+                    if (!removeItem(player, usedItem, Container.INVENTORY) || !removeItem(player, withItem, Container.INVENTORY)) return@registerRecipe false
                     addItem(player, UNCOOKED_STEW, 1, Container.INVENTORY)
                     return@registerRecipe true
                 }
@@ -115,8 +120,8 @@ class StewRecipePlugin : InteractionListener {
             with = SPICE,
             output = UNCOOKED_CURRY,
             successMessage = { _ -> "You mix the spice with the stew." }
-        ) { player, used, with ->
-            if (!removeItem(player, used, Container.INVENTORY) || !removeItem(player, with, Container.INVENTORY)) return@registerRecipe false
+        ) { player, usedItem, withItem ->
+            if (!removeItem(player, usedItem, Container.INVENTORY) || !removeItem(player, withItem, Container.INVENTORY)) return@registerRecipe false
             addItem(player, UNCOOKED_CURRY, 1, Container.INVENTORY)
             return@registerRecipe true
         }

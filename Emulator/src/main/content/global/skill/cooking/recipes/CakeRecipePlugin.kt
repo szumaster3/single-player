@@ -34,7 +34,8 @@ class CakeRecipePlugin : InteractionListener {
                 return@onUseWith true
             }
 
-            if (anyInInventory(player, *CAKE_IDS) && !allInInventory(player, *CAKE_IDS)) {
+            val requiredItems = intArrayOf(POT_OF_FLOUR, BUCKET_OF_MILK, EGG, CAKE_TIN)
+            if (!allInInventory(player, *requiredItems)) {
                 sendMessage(player, "You don't have the required items to make a cake.")
                 return@onUseWith true
             }
@@ -43,19 +44,13 @@ class CakeRecipePlugin : InteractionListener {
                 withItems(UNCOOKED_CAKE)
                 create { _, amount ->
                     runTask(player, 2, amount) {
-                        if (player.inventory.remove(Item(POT_OF_FLOUR, 1)) &&
-                            player.inventory.remove(Item(BUCKET_OF_MILK, 1)) &&
-                            player.inventory.remove(Item(EGG, 1)) &&
-                            player.inventory.remove(Item(CAKE_TIN, 1))
-                        ) {
-
-                            addItem(player, UNCOOKED_CAKE, 1)
-                            addItemOrDrop(player, EMPTY_BUCKET, 1)
-                            addItemOrDrop(player, EMPTY_POT, 1)
-
-                            sendMessage(player, "You mix the milk, flour, and egg together to make a raw cake mix.")
-                        }
+                        requiredItems.forEach { player.inventory.remove(Item(it, 1)) }
+                        addItem(player, UNCOOKED_CAKE, 1)
+                        addItemOrDrop(player, EMPTY_BUCKET, 1)
+                        addItemOrDrop(player, EMPTY_POT, 1)
+                        sendMessage(player, "You mix the milk, flour, and egg together to make a raw cake mix.")
                     }
+
                     calculateMaxAmount { _ ->
                         minOf(amountInInventory(player, with.id), amountInInventory(player, used.id))
                     }
@@ -76,12 +71,15 @@ class CakeRecipePlugin : InteractionListener {
 
         onUseWith(IntType.ITEM, CHOC_IDS, CAKE) { player, used, with ->
             if (!hasLevelDyn(player, Skills.COOKING, 50)) {
-                sendDialogue(player, "You need an Cooking level of at least 50 to make that.")
+                sendDialogue(player, "You need a Cooking level of at least 50 to make that.")
                 return@onUseWith true
             }
 
+            val choc = if (CHOC_IDS.contains(used.id)) used else with
+            val cake = if (used.id == CAKE) used else with
+
             fun process(): Boolean {
-                if (!removeItem(player, used.asItem()) || !removeItem(player, with.asItem())) {
+                if (!removeItem(player, choc.asItem()) || !removeItem(player, cake.asItem())) {
                     sendMessage(player, "You don't have the required ingredients.")
                     return false
                 }
@@ -91,10 +89,10 @@ class CakeRecipePlugin : InteractionListener {
                 return true
             }
 
-            val baseAmount = amountInInventory(player, used.id)
-            val withAmount = amountInInventory(player, with.id)
+            val chocAmount = amountInInventory(player, choc.id)
+            val cakeAmount = amountInInventory(player, cake.id)
 
-            if (baseAmount == 1 || withAmount == 1) {
+            if (chocAmount == 1 || cakeAmount == 1) {
                 process()
                 return@onUseWith true
             }
@@ -106,7 +104,7 @@ class CakeRecipePlugin : InteractionListener {
                         if (amount > 0) process()
                     }
                 }
-                calculateMaxAmount { min(baseAmount, withAmount) }
+                calculateMaxAmount { min(chocAmount, cakeAmount) }
             }
 
             return@onUseWith true

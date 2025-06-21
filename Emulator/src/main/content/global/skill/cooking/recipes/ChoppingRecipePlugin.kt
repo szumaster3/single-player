@@ -20,23 +20,25 @@ class ChoppingRecipePlugin : InteractionListener {
          * Handles cutting ingredients with a knife.
          */
 
-        onUseWith(IntType.ITEM, CUTTING_INGREDIENTS, KNIFE) { player, used, _ ->
-            val productID = when (used.id) {
+        onUseWith(IntType.ITEM, CUTTING_INGREDIENTS, KNIFE) { player, used, with ->
+            val ingredient = if (CUTTING_INGREDIENTS.contains(used.id)) used else with
+
+            val productID = when (ingredient.id) {
                 CALQUAT_FRUIT -> CALQUAT_KEG
                 BANANA -> SLICED_BANANA
                 else -> CHOCOLATE_DUST
             }
-            val animation = when (used.id) {
+            val animation = when (ingredient.id) {
                 CALQUAT_FRUIT -> CALQUAT_CARVED_ANIMATION
                 BANANA -> BANANA_SLICE_ANIMATION
                 else -> CHOCOLATE_CUT_ANIMATION
             }
 
             queueScript(player, 1, QueueStrength.NORMAL) {
-                if (amountInInventory(player, used.id) <= 0) {
+                if (amountInInventory(player, ingredient.id) <= 0) {
                     return@queueScript stopExecuting(player)
                 }
-                if (!removeItem(player, used.asItem())) {
+                if (!removeItem(player, ingredient.asItem())) {
                     return@queueScript stopExecuting(player)
                 }
 
@@ -58,7 +60,10 @@ class ChoppingRecipePlugin : InteractionListener {
                 return@onUseWith true
             }
 
-            val (productID, message) = when (used.id) {
+            val ingredient = if (CHOPPING_INGREDIENTS.contains(used.id)) used else with
+            val bowl = if (used.id == EMPTY_BOWL) used else with
+
+            val (productID, message) = when (ingredient.id) {
                 Items.TUNA_361 -> Items.CHOPPED_TUNA_7086 to "You chop the tuna into the bowl."
                 Items.ONION_1957 -> Items.CHOPPED_ONION_1871 to "You chop the onion into small pieces."
                 Items.GARLIC_1550 -> Items.CHOPPED_GARLIC_7074 to "You chop the garlic into the bowl."
@@ -70,7 +75,7 @@ class ChoppingRecipePlugin : InteractionListener {
             }
 
             fun process(): Boolean {
-                if (!removeItem(player, used.asItem()) || !removeItem(player, with.asItem())) {
+                if (!removeItem(player, ingredient.asItem()) || !removeItem(player, bowl.asItem())) {
                     sendMessage(player, "You don't have the required ingredients.")
                     return false
                 }
@@ -80,8 +85,8 @@ class ChoppingRecipePlugin : InteractionListener {
                 return true
             }
 
-            val baseAmount = amountInInventory(player, used.id)
-            val withAmount = amountInInventory(player, with.id)
+            val baseAmount = amountInInventory(player, ingredient.id)
+            val withAmount = amountInInventory(player, bowl.id)
 
             if (baseAmount == 1 || withAmount == 1) {
                 process()
@@ -106,7 +111,10 @@ class ChoppingRecipePlugin : InteractionListener {
          */
 
         onUseWith(IntType.ITEM, EGG, EMPTY_BOWL) { player, used, with ->
-            if (!removeItem(player, used.asItem()) || !removeItem(player, with.asItem())) {
+            val egg = if (used.id == EGG) used else with
+            val bowl = if (used.id == EMPTY_BOWL) used else with
+
+            if (!removeItem(player, egg.asItem()) || !removeItem(player, bowl.asItem())) {
                 sendMessage(player, "You don't have the required ingredients.")
                 return@onUseWith true
             }
@@ -121,11 +129,15 @@ class ChoppingRecipePlugin : InteractionListener {
 
         onUseWith(IntType.ITEM, GNOME_SPICE, CHOPPED_GARLIC) { player, used, with ->
             if (!hasLevelDyn(player, Skills.COOKING, 9)) {
-                sendDialogue(player, "You need an Cooking level of at least 9 to make that.")
+                sendDialogue(player, "You need a Cooking level of at least 9 to make that.")
                 return@onUseWith true
             }
+
+            val spice = if (used.id == GNOME_SPICE) used else with
+            val garlic = if (used.id == CHOPPED_GARLIC) used else with
+
             fun process(): Boolean {
-                if (!removeItem(player, used.asItem()) || !removeItem(player, with.asItem())) {
+                if (!removeItem(player, spice.asItem()) || !removeItem(player, garlic.asItem())) {
                     sendMessage(player, "You don't have the required ingredients.")
                     return false
                 }
@@ -135,10 +147,10 @@ class ChoppingRecipePlugin : InteractionListener {
                 return true
             }
 
-            val amountUsed = amountInInventory(player, used.id)
-            val amountWith = amountInInventory(player, with.id)
+            val amountSpice = amountInInventory(player, spice.id)
+            val amountGarlic = amountInInventory(player, garlic.id)
 
-            if (amountUsed == 1 || amountWith == 1) {
+            if (amountSpice == 1 || amountGarlic == 1) {
                 process()
                 return@onUseWith true
             }
@@ -150,9 +162,7 @@ class ChoppingRecipePlugin : InteractionListener {
                         if (amount > 0) process()
                     }
                 }
-                calculateMaxAmount {
-                    minOf(amountUsed, amountWith)
-                }
+                calculateMaxAmount { minOf(amountSpice, amountGarlic) }
             }
 
             return@onUseWith true
