@@ -14,6 +14,9 @@ import core.game.world.GameWorld.Pulser
 import org.rs.consts.Components
 import org.rs.consts.Items
 
+/**
+ * Handles the Magic Training Arena (MTA) shop interface logic.
+ */
 class MTAShopPlugin : InterfaceListener {
     private val container = Container(ITEMS.size, ContainerType.SHOP)
 
@@ -51,6 +54,9 @@ class MTAShopPlugin : InterfaceListener {
         )
     }
 
+    /**
+     * Updates the shop display for all active viewers.
+     */
     private fun update() {
         for (p in viewers) {
             if (p == null || !p.isActive) {
@@ -68,6 +74,13 @@ class MTAShopPlugin : InterfaceListener {
         }
     }
 
+    /**
+     * Handles the purchase of an item by a player.
+     *
+     * @param player The player attempting to buy an item.
+     * @param item The item being purchased.
+     * @param slot The slot in the shop container from which the item is bought.
+     */
     fun buy(
         player: Player,
         item: Item,
@@ -133,6 +146,13 @@ class MTAShopPlugin : InterfaceListener {
         update()
     }
 
+    /**
+     * Displays the value (cost) of an item to the player.
+     *
+     * @param player The player requesting item price information.
+     * @param item The item being valued.
+     * @param slot The slot of the item in the shop container.
+     */
     fun value(
         player: Player,
         item: Item,
@@ -150,16 +170,25 @@ class MTAShopPlugin : InterfaceListener {
         }
     }
 
+    /**
+     * Updates the displayed Pizazz points for a player on the shop interface.
+     *
+     * @param player The player whose points are being updated.
+     */
     fun updatePoints(player: Player) {
         sendString(player, getPoints(player, 0).toString(), Components.MAGICTRAINING_SHOP_197, 8)
-
         sendString(player, getPoints(player, 2).toString(), Components.MAGICTRAINING_SHOP_197, 9)
-
         sendString(player, getPoints(player, 1).toString(), Components.MAGICTRAINING_SHOP_197, 10)
-
         sendString(player, getPoints(player, 3).toString(), Components.MAGICTRAINING_SHOP_197, 11)
     }
 
+    /**
+     * Increments a player Pizazz points of the specified type.
+     *
+     * @param player The player whose points to increase.
+     * @param index The type of Pizazz points to increment.
+     * @param increment The amount to add.
+     */
     fun incrementPoints(
         player: Player,
         index: Int,
@@ -168,6 +197,13 @@ class MTAShopPlugin : InterfaceListener {
         player.getSavedData().activityData.incrementPizazz(index, increment)
     }
 
+    /**
+     * Decrements a player Pizazz points of the specified type.
+     *
+     * @param player The player whose points to decrease.
+     * @param index The type of Pizazz points to decrement.
+     * @param decrement The amount to subtract.
+     */
     private fun decrementPoints(
         player: Player,
         index: Int,
@@ -176,6 +212,13 @@ class MTAShopPlugin : InterfaceListener {
         player.getSavedData().activityData.decrementPizazz(index, decrement)
     }
 
+    /**
+     * Gets the amount of Pizazz points a player has for the specified type.
+     *
+     * @param player The player whose points are queried.
+     * @param index The type of Pizazz points.
+     * @return The number of points the player has.
+     */
     fun getPoints(
         player: Player,
         index: Int,

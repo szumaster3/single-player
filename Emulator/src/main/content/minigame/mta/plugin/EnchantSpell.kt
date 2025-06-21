@@ -20,13 +20,27 @@ import org.rs.consts.Animations
 import org.rs.consts.Items
 import org.rs.consts.Sounds
 
+/**
+ * Represents an enchantment spell used to enchant jewellery and items.
+ */
 class EnchantSpell : MagicSpell {
+    /**
+     * Holds the list of items that can be enchanted.
+     */
     private val jewellery: Map<Int, Item>?
 
     constructor() {
         jewellery = null
     }
 
+    /**
+     * Creates an enchantment spell.
+     *
+     * @param level The required Magic level to cast the spell.
+     * @param experience The base experience granted on a successful cast.
+     * @param jewellery A map of unenchanted item ids to their enchanted versions.
+     * @param runes The runes required to cast the spell.
+     */
     constructor(level: Int, experience: Double, jewellery: Map<Int, Item>, runes: Array<Item?>?) : super(
         SpellBookManager.SpellBook.MODERN,
         level,
@@ -39,6 +53,9 @@ class EnchantSpell : MagicSpell {
         this.jewellery = jewellery
     }
 
+    /**
+     * Map of spell data.
+     */
     private val spellDataMap =
         mapOf(
             Items.SAPPHIRE_RING_1637 to
@@ -181,6 +198,14 @@ class EnchantSpell : MagicSpell {
                 ),
         )
 
+
+    /**
+     * Attempts to cast the enchant spell on a given target.
+     *
+     * @param entity The player casting the spell.
+     * @param target The target item to enchant.
+     * @return True if the spell cast successfully, false otherwise.
+     */
     override fun cast(
         entity: Entity,
         target: Node,
@@ -219,6 +244,12 @@ class EnchantSpell : MagicSpell {
         return true
     }
 
+    /**
+     * Handles additional logic if the player is inside the Enchanted Chamber.
+     *
+     * @param entity The casting player.
+     * @param target The enchanted item.
+     */
     private fun handleMTAZone(
         entity: Entity,
         target: Node,
@@ -232,6 +263,13 @@ class EnchantSpell : MagicSpell {
         }
     }
 
+    /**
+     * Calculates the number of Pizazz points earned from enchanting in the MTA zone.
+     *
+     * @param entity The casting player.
+     * @param target The enchanted item.
+     * @return The number of points awarded.
+     */
     private fun calculatePizazz(
         entity: Entity,
         target: Node,
@@ -273,9 +311,19 @@ class EnchantSpell : MagicSpell {
         return pizazz
     }
 
+    /**
+     * Gets the spell casting delay.
+     */
     override val delay: Int
         get() = super.delay
 
+    /**
+     * Gets the experience reward for casting this spell,
+     * reduced if the player is in the Enchantment Chamber.
+     *
+     * @param player The player casting the spell.
+     * @return The amount of experience gained.
+     */
     override fun getExperience(player: Player): Double =
         if (player.zoneMonitor.isInZone("Enchantment Chamber")) {
             experience - experience * 0.25
@@ -283,6 +331,12 @@ class EnchantSpell : MagicSpell {
             experience
         }
 
+    /**
+     * Registers new spell instances for the modern spellbook.
+     *
+     * @param arg The spell type.
+     * @return The new spell plugin instance.
+     */
     override fun newInstance(arg: SpellType?): Plugin<SpellType?>? {
         SpellBookManager.SpellBook.MODERN.register(
             buttonId = 5,
@@ -423,6 +477,13 @@ class EnchantSpell : MagicSpell {
         return this
     }
 
+    /**
+     * Data class for enchantment spell.
+     *
+     * @property animation The animation id
+     * @property graphic The graphic id.
+     * @property sound The sound id.
+     */
     private data class SpellData(
         val animation: Int,
         val graphic: Int,

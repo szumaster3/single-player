@@ -14,6 +14,9 @@ import org.rs.consts.Components
 import org.rs.consts.Items
 import org.rs.consts.Scenery
 
+/**
+ * Represents a room type in the Magic Training Arena (MTA) minigame.
+ */
 enum class MTAType(
     val sceneryId: Int,
     val overlay: Component,
@@ -155,10 +158,21 @@ enum class MTAType(
 
     companion object {
         private val zoneCache: MutableSet<MTAType> = HashSet(values().toList())
-
+        /**
+         * Gets the [MTAType] for the given [MTAZone].
+         *
+         * @param mtaZone The zone to check.
+         * @return The MTA type for this zone.
+         */
         @JvmStatic
         fun forZone(mtaZone: MTAZone) = zoneCache.firstOrNull { it.getZone() === mtaZone } ?: TELEKINETIC
 
+        /**
+         * Gets the [MTAType] by scenery object id.
+         *
+         * @param id The object id to match.
+         * @return The matching MTA type.
+         */
         @JvmStatic
         fun forId(id: Int) = values().firstOrNull { it.sceneryId == id }
     }
