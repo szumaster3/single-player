@@ -145,7 +145,6 @@ class PieRecipePlugin : InteractionListener {
         companion object {
             val byIngredientId = values().associateBy { it.ingredientId }
             val allIngredientIds = values().map { it.ingredientId }.toIntArray()
-            val allProductIds = values().map { it.productId }.toIntArray()
         }
     }
 

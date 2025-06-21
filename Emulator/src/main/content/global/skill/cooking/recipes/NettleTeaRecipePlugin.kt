@@ -28,7 +28,8 @@ class NettleTeaRecipePlugin : InteractionListener {
                     removeItem(player, with.asItem(), Container.INVENTORY)) {
                     recipe.returnItem?.let { addItemOrDrop(player, it, 1) }
                     addItem(player, recipe.product, 1)
-                    sendMessage(player, "You combine the items.")
+                    if(used.id == NETTLES && with.id == BOWL_OF_WATER)
+                        sendMessage(player, "You place the nettles into the bowl of water.")
                 }
                 return@onUseWith true
             }

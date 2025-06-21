@@ -25,7 +25,12 @@ import org.rs.consts.Components
 class MainInterface : ComponentPlugin() {
 
     override fun newInstance(arg: Any?): Plugin<Any> {
+        ComponentDefinition.put(Components.TOPLEVEL_548, this)
+        ComponentDefinition.put(Components.SNAPSHOT_MAIN_553, this)
         ComponentDefinition.put(Components.GAME_INTERFACE_740, this)
+        ComponentDefinition.put(Components.TOPLEVEL_FULLSCREEN_746, this)
+        ComponentDefinition.put(Components.TOPSTAT_RUN_750, this)
+        ComponentDefinition.put(Components.FILTERBUTTONS_751, this)
         return this
     }
 

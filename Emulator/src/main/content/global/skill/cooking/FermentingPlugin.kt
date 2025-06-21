@@ -48,10 +48,6 @@ class FermentingPlugin : InteractionListener {
             }
             return@onUseWith true
         }
-
-        onUseWith(IntType.SCENERY, Items.BARLEY_MALT_6008, Scenery.FERMENTING_VAT_7438) { player, used, with ->
-            return@onUseWith true
-        }
     }
 
     companion object {
