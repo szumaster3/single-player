@@ -10,6 +10,9 @@ import org.json.simple.JSONArray
 import org.json.simple.JSONObject
 import org.rs.consts.Items
 
+/**
+ * TODO: Find the source, learn and rewrite it.
+ */
 class BoltPouchManager(val player: Player) {
 
     companion object {
@@ -149,7 +152,7 @@ class BoltPouchManager(val player: Player) {
         val arr = JSONArray()
         boltPouchContainers.forEach { (pouchId, container) ->
             val obj = JSONObject().apply {
-                put("pouchId", pouchId)
+                put("pouch", pouchId)
                 put("bolts", JSONArray().apply {
                     container.toArray().forEach { item ->
                         if (item == null) return@forEach
@@ -162,14 +165,14 @@ class BoltPouchManager(val player: Player) {
             }
             arr.add(obj)
         }
-        root["bolt_pouches"] = arr
+        root["bolt_pouch"] = arr
     }
 
     fun parse(data: JSONArray) {
         boltPouchContainers.clear()
         data.forEach { e ->
             val obj = e as JSONObject
-            val pouchId = obj["pouchId"].toString().toInt()
+            val pouchId = obj["pouch"].toString().toInt()
             val boltsArr = obj["bolts"] as JSONArray
             val container = Container(MAX_SLOTS)
             boltsArr.forEach { b ->

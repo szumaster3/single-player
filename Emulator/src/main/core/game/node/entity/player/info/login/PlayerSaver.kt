@@ -111,7 +111,6 @@ class PlayerSaver(
         player.boltPouchManager.save(root)
     }
 
-
     fun saveVersion(root: JSONObject) {
         root["version"] = player.version
     }

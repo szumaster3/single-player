@@ -7,6 +7,9 @@ import core.game.node.item.Item
 import org.json.simple.JSONArray
 import org.json.simple.JSONObject
 
+/**
+ * Todo: Gear stores scrolls but it's probably all code to be thrown away.
+ */
 class EnchantedHeadgearManager(private val player: Player) {
 
     val enchantedGear: MutableMap<Int, ChargedHeadgear> = mutableMapOf()
@@ -187,8 +190,8 @@ class EnchantedHeadgearManager(private val player: Player) {
         val arr = JSONArray()
         enchantedGear.forEach { (_, chargedGear) ->
             val obj = JSONObject().apply {
-                put("chargedItemId", chargedGear.chargedItemId.toString())
-                put("scrolls", JSONArray().apply {
+                put("item", chargedGear.chargedItemId.toString())
+                put("scroll", JSONArray().apply {
                     chargedGear.container.toArray().forEach { item ->
                         if (item != null) {
                             add(JSONObject().apply {
@@ -201,7 +204,7 @@ class EnchantedHeadgearManager(private val player: Player) {
             }
             arr.add(obj)
         }
-        root["enchanted_headgear"] = arr
+        root["summon_ench_helm"] = arr
     }
 
     /**
@@ -211,8 +214,8 @@ class EnchantedHeadgearManager(private val player: Player) {
         enchantedGear.clear()
         data.forEach { element ->
             val obj = element as JSONObject
-            val chargedItemId = obj["chargedItemId"].toString().toInt()
-            val scrollsArr = obj["scrolls"] as JSONArray
+            val chargedItemId = obj["item"].toString().toInt()
+            val scrollsArr = obj["scroll"] as JSONArray
 
             val headgear = EnchantedHeadgear.forItem(chargedItemId.asItem())
                 ?.takeIf { it.second == EnchantedHeadgear.HeadgearType.CHARGED }?.first
