@@ -3,6 +3,9 @@ package content.global.skill.firemaking
 import org.rs.consts.Items
 import org.rs.consts.Scenery
 
+/**
+ * Represents logs.
+ */
 enum class Log(val logId: Int, val defaultLevel: Int, val barbarianLevel: Int, val life: Int, val fireId: Int, val xp: Double) {
     NORMAL(Items.LOGS_1511, 1, 21, 180, Scenery.FIRE_2732, 40.0),
     PURPLE(Items.PURPLE_LOGS_10329, 1, 21, 200, Scenery.FIRE_20001, 50.0),

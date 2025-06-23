@@ -14,10 +14,7 @@ class BirdNestPlugin : InteractionListener {
         on(nestIds, IntType.ITEM, "search", handler = ::handleNest)
     }
 
-    private fun handleNest(
-        player: Player,
-        node: Node,
-    ): Boolean {
+    private fun handleNest(player: Player, node: Node, ): Boolean {
         val nest = BirdNestDropTable.forNest(node.asItem())
         nest!!.search(player, node.asItem())
         return true

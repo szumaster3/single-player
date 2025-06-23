@@ -16,6 +16,96 @@ import org.rs.consts.Items
  * Represents the ancient pages.
  */
 class AncientPagePlugin : InteractionListener {
+    override fun defineListeners() {
+
+        /*
+         * Handles interaction with ancient pages.
+         */
+
+        on(ancientPages, IntType.ITEM, "copy to log") { player, node ->
+            val logBook = GameAttributes.LORE_ANCIENT_PAGES_TRANSCRIPT + ":" + node.id
+
+            if (removeItem(player, node.asItem())) {
+                if (getAttribute(player, logBook, false)) {
+                    sendMessage(player, "You already have this information in your logbook.")
+                } else {
+                    setAttribute(player, logBook, true)
+                    sendMessage(player, "You copy the scrap of information to your logbook.")
+                }
+
+                openInterface(player, BLOODY_SCROLL_HD).also {
+                    val index = node.id - Items.ANCIENT_PAGE_11341
+                    val pageContent = ancientPageTranscripts.getOrNull(index)?.joinToString("<br>")
+                        ?: "You already have this information in your logbook."
+
+                    sendString(player, pageContent, BLOODY_SCROLL_HD, 1)
+                }
+            }
+            return@on true
+        }
+
+        /*
+         * Handles interaction with my notes.
+         */
+
+        on(Items.MY_NOTES_11339, IntType.ITEM, "read") { player, _ ->
+            val ownedPages = mutableSetOf<Int>()
+
+            for (i in 0..25) {
+                if (getAttribute(player, "${GameAttributes.LORE_ANCIENT_PAGES_TRANSCRIPT}:${Items.ANCIENT_PAGE_11341 + i}", false)) {
+                    ownedPages.add(i)
+                }
+            }
+
+            CONTENTS.clear()
+            ancientPageTranscripts // Generate content pages.
+                .mapIndexed { index, lines ->
+                    val cleanedLines = lines.filter { it.isNotBlank() }.map { it.trim() }
+                    val splitLines = cleanedLines.flatMap { line -> splitText(line).toList() }
+
+                    val isPageLeft = index % 2 == 0
+                    var pageID = if (isPageLeft) 55 else 66
+
+                    // Create book lines.
+                    val bookLines = splitLines.mapIndexed { lineIndex, text ->
+                        if (pageID + lineIndex > 76) {
+                            pageID = 55
+                        } else if (pageID + lineIndex > 65) {
+                            pageID = 66
+                        }
+                        BookLine(text, pageID + lineIndex)
+                    }
+
+                    if (bookLines.isNotEmpty()) {
+                        Page(*bookLines.toTypedArray())
+                    } else {
+                        null
+                    }
+                }
+                .filterNotNull()
+                .chunked(2) // Group pages into pairs.
+                .forEachIndexed { setIndex, pages ->
+                    val leftPageID = setIndex * 2 + 1
+                    val rightPageID = leftPageID + 1
+
+                    val leftPage = if (ownedPages.contains(leftPageID)) {
+                        pages.getOrElse(0) { return@forEachIndexed }
+                    } else {
+                        return@forEachIndexed
+                    }
+
+                    val rightPage = if (pages.size > 1 && ownedPages.contains(rightPageID)) {
+                        pages.getOrElse(1) { return@forEachIndexed }
+                    } else {
+                        return@forEachIndexed
+                    }
+                    CONTENTS.add(PageSet(leftPage, rightPage))
+                }
+
+            BookInterface.openBook(player, BookInterface.FANCY_BOOK_3_49, ::display)
+            return@on true
+        }
+    }
 
     companion object {
         private val ancientPageTranscripts = listOf(
@@ -342,96 +432,5 @@ class AncientPagePlugin : InteractionListener {
     ): Boolean {
         BookInterface.pageSetup(player, BookInterface.FANCY_BOOK_3_49, "My notes", CONTENTS.toTypedArray())
         return true
-    }
-
-    override fun defineListeners() {
-
-        /*
-         * Handles interaction with ancient pages.
-         */
-
-        on(ancientPages, IntType.ITEM, "copy to log") { player, node ->
-            val logBook = GameAttributes.LORE_ANCIENT_PAGES_TRANSCRIPT + ":" + node.id
-
-            if (removeItem(player, node.asItem())) {
-                if (getAttribute(player, logBook, false)) {
-                    sendMessage(player, "You already have this information in your logbook.")
-                } else {
-                    setAttribute(player, logBook, true)
-                    sendMessage(player, "You copy the scrap of information to your logbook.")
-                }
-
-                openInterface(player, BLOODY_SCROLL_HD).also {
-                    val index = node.id - Items.ANCIENT_PAGE_11341
-                    val pageContent = ancientPageTranscripts.getOrNull(index)?.joinToString("<br>")
-                        ?: "You already have this information in your logbook."
-
-                    sendString(player, pageContent, BLOODY_SCROLL_HD, 1)
-                }
-            }
-            return@on true
-        }
-
-        /*
-         * Handles interaction with my notes.
-         */
-
-        on(Items.MY_NOTES_11339, IntType.ITEM, "read") { player, _ ->
-            val ownedPages = mutableSetOf<Int>()
-
-            for (i in 0..25) {
-                if (getAttribute(player, "${GameAttributes.LORE_ANCIENT_PAGES_TRANSCRIPT}:${Items.ANCIENT_PAGE_11341 + i}", false)) {
-                    ownedPages.add(i)
-                }
-            }
-
-            CONTENTS.clear()
-            ancientPageTranscripts // Generate content pages.
-                .mapIndexed { index, lines ->
-                    val cleanedLines = lines.filter { it.isNotBlank() }.map { it.trim() }
-                    val splitLines = cleanedLines.flatMap { line -> splitText(line).toList() }
-
-                    val isPageLeft = index % 2 == 0
-                    var pageID = if (isPageLeft) 55 else 66
-
-                    // Create book lines.
-                    val bookLines = splitLines.mapIndexed { lineIndex, text ->
-                        if (pageID + lineIndex > 76) {
-                            pageID = 55
-                        } else if (pageID + lineIndex > 65) {
-                            pageID = 66
-                        }
-                        BookLine(text, pageID + lineIndex)
-                    }
-
-                    if (bookLines.isNotEmpty()) {
-                        Page(*bookLines.toTypedArray())
-                    } else {
-                        null
-                    }
-                }
-                .filterNotNull()
-                .chunked(2) // Group pages into pairs.
-                .forEachIndexed { setIndex, pages ->
-                    val leftPageID = setIndex * 2 + 1
-                    val rightPageID = leftPageID + 1
-
-                    val leftPage = if (ownedPages.contains(leftPageID)) {
-                        pages.getOrElse(0) { return@forEachIndexed }
-                    } else {
-                        return@forEachIndexed
-                    }
-
-                    val rightPage = if (pages.size > 1 && ownedPages.contains(rightPageID)) {
-                        pages.getOrElse(1) { return@forEachIndexed }
-                    } else {
-                        return@forEachIndexed
-                    }
-                    CONTENTS.add(PageSet(leftPage, rightPage))
-                }
-
-            BookInterface.openBook(player, BookInterface.FANCY_BOOK_3_49, ::display)
-            return@on true
-        }
     }
 }

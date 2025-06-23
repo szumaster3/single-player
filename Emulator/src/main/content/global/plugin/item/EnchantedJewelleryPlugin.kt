@@ -13,6 +13,7 @@ import core.game.node.entity.player.Player
 import org.rs.consts.Items
 
 class EnchantedJewelleryPlugin : InteractionListener {
+
     private val ids = EnchantedJewellery.idMap.keys.toIntArray()
 
     override fun defineListeners() {

@@ -12,6 +12,9 @@ import org.rs.consts.Animations
 import org.rs.consts.Graphics
 import org.rs.consts.Items
 
+/**
+ * Handles interaction with broomstick.
+ */
 class BroomstickPlugin : InteractionListener {
 
     override fun defineListeners() {

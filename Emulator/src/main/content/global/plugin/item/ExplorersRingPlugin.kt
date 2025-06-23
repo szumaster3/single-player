@@ -14,7 +14,15 @@ import org.json.simple.JSONObject
 import org.rs.consts.Graphics
 import org.rs.consts.Items
 
+/**
+ * Handles interactions for explorers ring.
+ */
 class ExplorersRingPlugin : InteractionListener {
+
+    companion object {
+        val RINGS = intArrayOf(Items.EXPLORERS_RING_1_13560, Items.EXPLORERS_RING_2_13561, Items.EXPLORERS_RING_3_13562)
+        val CABBAGE_PORT: Location = Location.create(3051, 3291, 0)
+    }
 
     override fun defineListeners() {
         on(RINGS, IntType.ITEM, "operate", "rub") { player, node ->
@@ -75,10 +83,16 @@ class ExplorersRingPlugin : InteractionListener {
         }
     }
 
+    /**
+     * Teleports the player to the cabbage port location.
+     */
     fun teleport(player: Player) {
         teleport(player, CABBAGE_PORT, TeleportType.CABBAGE)
     }
 
+    /**
+     * Gets the diary level based on item id.
+     */
     fun getRingLevel(id: Int): Int =
         when (id) {
             Items.EXPLORERS_RING_1_13560 -> 1
@@ -87,10 +101,8 @@ class ExplorersRingPlugin : InteractionListener {
             else -> -1
         }
 
+    /**
+     * Gets the persistent storage for daily ring use charges.
+     */
     fun getStoreFile(): JSONObject = ServerStore.getArchive("daily-explorer-ring")
-
-    companion object {
-        val RINGS = intArrayOf(Items.EXPLORERS_RING_1_13560, Items.EXPLORERS_RING_2_13561, Items.EXPLORERS_RING_3_13562)
-        val CABBAGE_PORT: Location = Location.create(3051, 3291, 0)
-    }
 }
