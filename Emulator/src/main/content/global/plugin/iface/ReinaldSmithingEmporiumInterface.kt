@@ -59,7 +59,7 @@ class ReinaldSmithingEmporiumInterface : InterfaceListener {
         val originalIndex = getAttribute(player, "wrists-look", if (player.isMale) 34 else 68)
         if (!getAttribute(player, "bracelet-paid", false)) {
             player.appearance.wrists.changeLook(originalIndex)
-            player.appearance.sync()
+            refreshAppearance(player)
         }
         removeAttribute(player, "bracelet-paid")
         player.toggleWardrobe(false)
@@ -92,7 +92,7 @@ class ReinaldSmithingEmporiumInterface : InterfaceListener {
         setComponentVisibility(player, Components.REINALD_SMITHING_EMPORIUM_593, BRACELET_INTERFACE_CHILD_ID, id == 0)
         player.appearance.wrists.changeLook(appearanceIndex)
         player.debug("USING WRIST APPEARANCE ID $appearanceIndex")
-        player.appearance.sync()
+        refreshAppearance(player)
         sendPlayerOnInterface(player, Components.REINALD_SMITHING_EMPORIUM_593, 60)
     }
 

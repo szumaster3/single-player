@@ -83,7 +83,7 @@ class PhasmatysListener : InteractionListener {
 
         onUnequip(BOTH_BEDSHEET) { player, _ ->
             player.appearance.transformNPC(-1)
-            player.appearance.sync()
+            refreshAppearance(player)
             return@onUnequip true
         }
 

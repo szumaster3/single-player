@@ -59,8 +59,8 @@ class MakeOverInterface : ComponentPlugin() {
                     player.appearance.changeGender(Gender.values()[newGender])
                     player.appearance.skin.changeColor(newColor)
                 }
-                player.appearance.sync()
                 removeAttribute(player, "mm-paid")
+                refreshAppearance(player)
             }
             removeAttribute(pl, "mm-previous")
             removeAttribute(pl, "mm-gender")

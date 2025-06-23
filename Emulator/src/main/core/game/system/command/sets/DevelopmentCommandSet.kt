@@ -18,6 +18,7 @@ import core.game.node.entity.player.link.diary.DiaryType
 import core.game.system.command.Privilege
 import core.game.system.task.Pulse
 import core.game.world.map.Location
+import core.game.world.map.zone.impl.TutorialZone
 import core.net.packet.OutgoingContext
 import core.net.packet.PacketWriteQueue
 import core.net.packet.out.ResetInterface
@@ -39,7 +40,7 @@ class DevelopmentCommandSet : CommandSet(Privilege.ADMIN) {
          */
 
         define(name = "exit", Privilege.ADMIN) { p, _ ->
-            TeleportManager.completeTutorial(p)
+            TutorialZone.completeTutorial(p)
             p.teleporter.send(Location.create(3233, 3230, 0))
         }
 

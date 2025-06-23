@@ -114,7 +114,7 @@ class PhasmatysPlugin : MapZone("Port phasmatys", true), Plugin<Any?> {
             EquipHandler.unequip(player, 0, itemId = Items.BEDSHEET_4285)
             player.logoutListeners.remove("bedsheet-uniform")
             player.appearance.transformNPC(-1)
-            player.appearance.sync()
+            refreshAppearance(player)
         }
 
         return true

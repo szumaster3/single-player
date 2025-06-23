@@ -1,6 +1,7 @@
 package core.game.system.command.oldsys
 
 import content.region.island.tutorial.plugin.CharacterDesign
+import core.api.refreshAppearance
 import core.api.sendMessage
 import core.api.setVarp
 import core.api.submitWorldPulse
@@ -98,7 +99,7 @@ class VisualCommand : CommandPlugin() {
                 }
                 try {
                     player!!.appearance.setAnimations(Animation.create(args[1]!!.toInt()))
-                    player.appearance.sync()
+                    refreshAppearance(player)
                 } catch (e: NumberFormatException) {
                     player!!.packetDispatch.sendMessage("Use: ::remote id")
                 }
@@ -109,7 +110,7 @@ class VisualCommand : CommandPlugin() {
                 player!!.appearance.prepareBodyData(player)
                 player.appearance.setDefaultAnimations()
                 player.appearance.setAnimations()
-                player.appearance.sync()
+                refreshAppearance(player)
                 return true
             }
 

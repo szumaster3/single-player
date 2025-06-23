@@ -3745,4 +3745,13 @@ fun refreshInventory(player: Player) {
     player.inventory.refresh()
 }
 
+/**
+ * Refreshes a player appearance to reflect the current state.
+ *
+ * @param player The player whose appearance will be refreshed.
+ */
+fun refreshAppearance(player : Player) {
+    player.appearance.sync()
+}
+
 private class ContentAPI

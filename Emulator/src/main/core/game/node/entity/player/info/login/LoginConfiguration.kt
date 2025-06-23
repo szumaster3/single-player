@@ -150,7 +150,7 @@ object LoginConfiguration {
             }
         }
 
-        player.appearance.sync()
+        refreshAppearance(player)
     }
 
     @JvmStatic

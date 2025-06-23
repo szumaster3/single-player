@@ -99,7 +99,7 @@ class FishingTrawlerInteractionHandler : InteractionListener {
                 "You make it to the shore tired and weary.",
             )
             player.appearance.setDefaultAnimations()
-            player.appearance.sync()
+            refreshAppearance(player)
             clearLogoutListener(player, "ft-logout")
             player.locks.unlockTeleport()
             return@on true

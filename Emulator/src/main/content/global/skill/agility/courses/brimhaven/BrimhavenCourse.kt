@@ -1,6 +1,7 @@
 package content.global.skill.agility.courses.brimhaven
 
 import content.global.skill.agility.AgilityHandler
+import core.api.refreshAppearance
 import core.cache.def.impl.SceneryDefinition
 import core.game.interaction.OptionHandler
 import core.game.node.Node
@@ -215,7 +216,7 @@ class BrimhavenCourse : OptionHandler() {
             val faceDirection = Direction.get(scenery.direction.toInteger() - 1 and 3)
             val start = player.location
             player.appearance.setAnimations(Animation.create(1118 + m))
-            player.appearance.sync()
+            refreshAppearance(player)
             AgilityHandler.climb(player, -1, Animation(1117 + m), start.transform(dir), 0.0, null)
             player.logoutListeners["brimcourse"] = { p: Player ->
                 p.location = start
@@ -230,7 +231,7 @@ class BrimhavenCourse : OptionHandler() {
                         if (++count == 1) {
                             if (AgilityHandler.hasFailed(player, 1, 0.15)) {
                                 player.appearance.setAnimations()
-                                player.appearance.sync()
+                                refreshAppearance(player)
                                 AgilityHandler.fail(
                                     player,
                                     2,
@@ -244,7 +245,7 @@ class BrimhavenCourse : OptionHandler() {
                             }
                         } else if (count == 6) {
                             player.appearance.setAnimations()
-                            player.appearance.sync()
+                            refreshAppearance(player)
                             AgilityHandler.forceWalk(
                                 player,
                                 -1,
@@ -355,7 +356,7 @@ class BrimhavenCourse : OptionHandler() {
                             )
                         } else if (count == 2 && failed) {
                             player.appearance.setAnimations()
-                            player.appearance.sync()
+                            refreshAppearance(player)
                             AgilityHandler.fail(
                                 player,
                                 2,

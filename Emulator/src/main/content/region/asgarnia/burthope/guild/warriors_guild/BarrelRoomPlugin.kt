@@ -1,5 +1,6 @@
 package content.region.asgarnia.burthope.guild.warriors_guild
 
+import core.api.refreshAppearance
 import core.api.removeAttribute
 import core.api.setAttribute
 import core.api.setVarp
@@ -81,7 +82,7 @@ class BarrelRoomPlugin :
                                 player.equipment.replace(Item(barrelId), EquipmentContainer.SLOT_HAT)
                                 player.appearance.setAnimations(Animation.create(4178))
                                 player.appearance.standAnimation = 4179
-                                player.appearance.sync()
+                                refreshAppearance(player)
                                 setAttribute(player, "barrel_count", barrelId)
                                 (node as Scenery).setChildIndex(player, 1)
                                 if (!players.contains(player)) {
@@ -155,7 +156,7 @@ class BarrelRoomPlugin :
             player.walkingQueue.isRunDisabled = false
             player.equipment.replace(null, EquipmentContainer.SLOT_HAT)
             player.appearance.setAnimations()
-            player.appearance.sync()
+            refreshAppearance(player)
             setVarp(player, 793, 0)
         }
     }

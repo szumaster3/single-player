@@ -11,6 +11,8 @@ import core.game.system.config.ItemConfigParser;
 import core.game.world.update.flag.context.Animation;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.rs.consts.Animations;
+import org.rs.consts.Items;
 
 /**
  * The type Appearance.
@@ -107,7 +109,7 @@ public final class Appearance {
                 setTurn90ccw(def.getConfiguration(ItemConfigParser.TURN90CCW_ANIM, 0x336));
                 renderAnimationId = def.getRenderAnimationId();
             }
-            if (weapon != null && weapon.getId() == 12842) {
+            if (weapon != null && weapon.getId() == Items.GNOMECOPTER_12842) {
                 setStandAnimation(8964);
                 setWalkAnimation(8961);
                 setRunAnimation(8963);
@@ -235,7 +237,7 @@ public final class Appearance {
         Item cape = player.getEquipment().get(EquipmentContainer.SLOT_CAPE);
         Item amulet = player.getEquipment().get(EquipmentContainer.SLOT_AMULET);
         Item weapon = player.getEquipment().get(EquipmentContainer.SLOT_WEAPON);
-        boolean castleWarsHood = cape != null && (cape.getId() == 4041 || cape.getId() == 4042); // Item
+        boolean castleWarsHood = cape != null && (cape.getId() == Items.HOODED_CLOAK_4041 || cape.getId() == Items.HOODED_CLOAK_4042);
         if (hat != null) {
             drawItem(0, hat);
         } else {
@@ -316,7 +318,7 @@ public final class Appearance {
         if (!ride) {
             setAnimations();
         } else {
-            player.getAppearance().setAnimations(Animation.create(211));
+            player.getAppearance().setAnimations(Animation.create(211)); // Animations.RIDE_MINECART_2148
         }
         player.getAppearance().setRidingMinecart(ride);
         player.getAppearance().sync();
@@ -562,7 +564,7 @@ public final class Appearance {
         for (int i = 0; i < animationCache.length; i++) {
             animationCache[i] = AppearanceCache.ANIMATIONS[i];
         }
-        renderAnimationId = 1426;
+        renderAnimationId = Animations.WALK_1426;
     }
 
     /**

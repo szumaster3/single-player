@@ -2,10 +2,7 @@ package content.global.skill.agility.courses.pyramid
 
 import content.global.skill.agility.AgilityCourse
 import content.global.skill.agility.AgilityHandler
-import core.api.getVarp
-import core.api.playAudio
-import core.api.playJingle
-import core.api.setVarp
+import core.api.*
 import core.cache.def.impl.SceneryDefinition
 import core.cache.def.impl.VarbitDefinition
 import core.game.global.action.ClimbActionHandler
@@ -502,7 +499,7 @@ class AgilityPyramidCourse : AgilityCourse {
                             null,
                         )
                         player.appearance.setDefaultAnimations()
-                        player.appearance.sync()
+                        refreshAppearance(player)
                         return true
                     }
                 },

@@ -92,7 +92,7 @@ class BountyHunterActivity
             gamePulse.stop()
             if (type == CraterType.LOW_LEVEL) {
                 val check = Location.create(3166, 3679, 0)
-                for (border in WildernessZone.getInstance().borders) {
+                for (border in WildernessZone.instance.borders) {
                     if (border.insideBorder(check)) {
                         border.addException(ZoneBorders(3140, 3653, 3149, 3670))
                         border.addException(ZoneBorders(3150, 3656, 3154, 3676))
@@ -341,9 +341,9 @@ class BountyHunterActivity
                     }
                 }
             }
-            player.skullManager.isSkulled()
+            player.skullManager.isSkulled
             player.appearance.skullIcon = skull
-            player.appearance.sync()
+            refreshAppearance(player)
         }
 
         fun enterCrater(player: Player) {
@@ -383,7 +383,7 @@ class BountyHunterActivity
                 player.equipment.listeners.remove(listener)
             }
             player.appearance.skullIcon = -1
-            player.appearance.sync()
+            refreshAppearance(player)
             player.interaction.remove(Option._P_ATTACK)
             player.interaction.set(Option._P_ASSIST)
             player.skullManager.isSkullCheckDisabled = false

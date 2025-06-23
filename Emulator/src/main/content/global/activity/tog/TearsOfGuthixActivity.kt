@@ -137,7 +137,7 @@ class TearsOfGuthixActivity :
 
             replaceSlot(player, EquipmentSlot.WEAPON.ordinal, Item(Items.STONE_BOWL_4704), null, Container.EQUIPMENT)
             player.appearance.setAnimations(Animation(357))
-            player.appearance.sync()
+            refreshAppearance(player)
 
             queueScript(player, 0, QueueStrength.SOFT) { stage: Int ->
                 when (stage) {

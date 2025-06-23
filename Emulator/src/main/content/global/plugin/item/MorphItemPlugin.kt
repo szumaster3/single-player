@@ -1,9 +1,6 @@
 package content.global.plugin.item
 
-import core.api.closeInterface
-import core.api.playAudio
-import core.api.removeTabs
-import core.api.toIntArray
+import core.api.*
 import core.api.ui.openSingleTab
 import core.cache.def.impl.ItemDefinition
 import core.game.component.Component
@@ -92,7 +89,7 @@ class MorphItemPlugin : Plugin<Any> {
         removeTabs(player, 0, 1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14)
         lockPlayerActions(player)
         openSingleTab(player, component.id)
-        player.appearance.sync()
+        refreshAppearance(player)
         player.walkingQueue.reset()
     }
 

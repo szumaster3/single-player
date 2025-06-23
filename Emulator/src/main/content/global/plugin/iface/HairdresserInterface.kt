@@ -165,12 +165,12 @@ class HairdresserInterface : ComponentPlugin() {
                 if (originalBeard != -1) {
                     pl.appearance.beard.changeLook(originalBeard)
                 }
-                pl.appearance.sync()
+                refreshAppearance(pl)
             }
             pl.removeAttribute("hairdresser-paid")
             true
         }
-        syncAppearance(player)
+        refreshAppearance(player)
     }
 
     override fun handle(
@@ -248,7 +248,7 @@ class HairdresserInterface : ComponentPlugin() {
             129 -> subtractor += 6
         }
         player.appearance.beard.changeLook(MALE_FACIAL_STYLES[button - subtractor])
-        syncAppearance(player)
+        refreshAppearance(player)
     }
 
     private fun updateHair(
@@ -276,7 +276,7 @@ class HairdresserInterface : ComponentPlugin() {
         }
 
         player.appearance.hair.changeLook(hairArray[button - subtractor])
-        syncAppearance(player)
+        refreshAppearance(player)
     }
 
     private fun updateColor(
@@ -292,10 +292,6 @@ class HairdresserInterface : ComponentPlugin() {
                 else -> 0
             }
         player.appearance.hair.changeColor(HAIR_COLORS[button - subtractor])
-        syncAppearance(player)
-    }
-
-    private fun syncAppearance(player: Player) {
-        player.appearance.sync()
+        refreshAppearance(player)
     }
 }

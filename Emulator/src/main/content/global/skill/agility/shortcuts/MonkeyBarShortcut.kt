@@ -2,6 +2,7 @@ package content.global.skill.agility.shortcuts
 
 import content.global.skill.agility.AgilityHandler
 import content.global.skill.agility.AgilityShortcut
+import core.api.refreshAppearance
 import core.game.node.Node
 import core.game.node.entity.impl.ForceMovement
 import core.game.node.entity.player.Player
@@ -84,7 +85,7 @@ class MonkeyBarShortcut : AgilityShortcut {
                     } else if (count == 2) {
                         if (failed) {
                             player.appearance.setAnimations()
-                            player.appearance.sync()
+                            refreshAppearance(player)
                             AgilityHandler.fail(
                                 player,
                                 2,

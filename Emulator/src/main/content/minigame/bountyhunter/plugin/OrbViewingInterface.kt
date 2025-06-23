@@ -101,7 +101,7 @@ class OrbViewingInterface : ComponentPlugin() {
         player.properties.teleportLocation = location
         if (player.appearance.npcId == -1) {
             player.appearance.transformNPC(-2)
-            player.appearance.sync()
+            refreshAppearance(player)
         }
     }
 
@@ -188,7 +188,7 @@ class OrbViewingInterface : ComponentPlugin() {
             removeAttribute(player, "viewing-orb")
             player.unlock()
             player.appearance.transformNPC(-1)
-            player.appearance.sync()
+            refreshAppearance(player)
             player.pulseManager.clear()
             player.properties.teleportLocation = getAttribute(player, "view-location", ServerConstants.HOME_LOCATION)
         }

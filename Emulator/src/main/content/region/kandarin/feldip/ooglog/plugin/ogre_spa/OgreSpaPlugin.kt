@@ -1,5 +1,6 @@
 package content.region.kandarin.feldip.ooglog.plugin.ogre_spa
 
+import core.api.refreshAppearance
 import core.cache.def.impl.SceneryDefinition
 import core.game.interaction.OptionHandler
 import core.game.node.Node
@@ -58,7 +59,7 @@ class OgreSpaPlugin : OptionHandler() {
         )
 
         if (isInside) player.appearance.setAnimations(Animation(1139)) else player.appearance.setDefaultAnimations()
-        player.appearance.sync()
+        refreshAppearance(player)
         return true
     }
 }

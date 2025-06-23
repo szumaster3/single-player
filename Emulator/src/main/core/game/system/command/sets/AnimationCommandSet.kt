@@ -1,5 +1,6 @@
 package core.game.system.command.sets
 
+import core.api.refreshAppearance
 import core.game.system.command.CommandPlugin.Companion.toInteger
 import core.game.system.command.Privilege
 import core.game.system.task.Pulse
@@ -67,7 +68,7 @@ class AnimationCommandSet : CommandSet(Privilege.ADMIN) {
 
                         override fun pulse(): Boolean {
                             player.appearance.setAnimations(Animation.create(id))
-                            player.appearance.sync()
+                            refreshAppearance(player)
                             player.sendChat("Current: $id")
                             return ++id >= args[2].toInt()
                         }
@@ -76,7 +77,7 @@ class AnimationCommandSet : CommandSet(Privilege.ADMIN) {
             } else {
                 try {
                     player.appearance.setAnimations(Animation.create(args[1].toInt()))
-                    player.appearance.sync()
+                    refreshAppearance(player)
                 } catch (e: NumberFormatException) {
                     reject(player, "Syntax error: ::ranim <Render Animation ID>")
                 }
@@ -92,7 +93,7 @@ class AnimationCommandSet : CommandSet(Privilege.ADMIN) {
             player.appearance.prepareBodyData(player)
             player.appearance.setDefaultAnimations()
             player.appearance.setAnimations()
-            player.appearance.sync()
+            refreshAppearance(player)
         }
     }
 }

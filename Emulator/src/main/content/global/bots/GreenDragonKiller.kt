@@ -129,11 +129,7 @@ class GreenDragonKiller(
                     sendTrashTalk()
                     attemptToBuryBone()
                     scriptAPI.walkTo(
-                        WildernessZone
-                            .getInstance()
-                            .borders
-                            .random()
-                            .randomLoc,
+                        WildernessZone.instance.borders.random().randomLoc,
                     )
                 }
             }

@@ -63,15 +63,15 @@ class ShoeStoreInterface : ComponentPlugin() {
             playGlobalAudio(player.location, Sounds.WARDROBE_CLOSE_95, 1)
             if (!getAttribute(player, paymentCheck, false)) {
                 p.appearance.feet.changeColor(getAttribute(p, previousColor, originalColor))
-                syncAppearance(p)
+                refreshAppearance(player)
             }
 
-            syncAppearance(p)
+            refreshAppearance(player)
             removeAttribute(p, paymentCheck)
             true
         }
 
-        syncAppearance(player)
+        refreshAppearance(player)
         removeAttribute(player, previousColor)
     }
 
@@ -147,14 +147,7 @@ class ShoeStoreInterface : ComponentPlugin() {
         }
         setVarp(player, 261, (button - 14))
         player.appearance.feet.changeColor(colorId[button - subtract])
-        syncAppearance(player)
-    }
-
-    /**
-     * Synchronizes the player appearance with the client.
-     */
-    private fun syncAppearance(player: Player) {
-        player.appearance.sync()
+        refreshAppearance(player)
     }
 
     /**

@@ -216,7 +216,7 @@ object AgilityHandler {
             override fun pulse(): Boolean {
                 animation?.let {
                     player.appearance.setAnimations()
-                    player.appearance.sync()
+                    refreshAppearance(player)
                 }
                 message?.let { sendMessage(player, it) }
                 if (experience > 0.0) rewardXP(player, Skills.AGILITY, experience)

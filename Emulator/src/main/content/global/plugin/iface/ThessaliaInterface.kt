@@ -330,7 +330,7 @@ class ThessaliaInterface : ComponentPlugin() {
         val usedArray = if (male) maleTorsoIDs else femaleTopIDs
         val subtract = if (male) maleTorsoButtonRange.first else femaleTorsoButtonRange.first
         player.appearance.torso.changeLook(usedArray[button - subtract])
-        player.appearance.sync()
+        refreshAppearance(player)
     }
 
     private fun updateLegs(
@@ -341,7 +341,7 @@ class ThessaliaInterface : ComponentPlugin() {
         val usedArray = if (male) maleLegIDs else femaleLegIDs
         val subtract = if (male) maleLegsButtonRange.first else femaleLegsButtonRange.first
         player.appearance.legs.changeLook(usedArray[button - subtract])
-        player.appearance.sync()
+        refreshAppearance(player)
     }
 
     private fun updateArms(
@@ -352,7 +352,7 @@ class ThessaliaInterface : ComponentPlugin() {
         val usedArray = if (male) maleSleeveIDs else femaleArmIDs
         val subtract = if (male) maleArmsButtonRange.first else femaleArmsButtonRange.first
         player.appearance.arms.changeLook(usedArray[button - subtract])
-        player.appearance.sync()
+        refreshAppearance(player)
     }
 
     private fun updateColor(
@@ -367,7 +367,7 @@ class ThessaliaInterface : ComponentPlugin() {
             colorType.LEGS -> player.appearance.legs.changeColor(legColors[button - subtract])
             colorType.TORSO -> player.appearance.torso.changeColor(torsoColors[button - subtract])
         }
-        player.appearance.sync()
+        refreshAppearance(player)
     }
 
     override fun newInstance(arg: Any?): Plugin<Any> {

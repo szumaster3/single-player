@@ -1045,7 +1045,7 @@ class TouristTrapPlugin : OptionHandler() {
                 )
                 player.appearance.setAnimations(Animation.create(211))
                 player.appearance.isRidingMinecart = true
-                player.appearance.sync()
+                refreshAppearance(player)
                 player.walkingQueue.reset()
                 for (l in path) {
                     val loc = base.transform(l.localX, l.localY, 0)
@@ -1075,7 +1075,7 @@ class TouristTrapPlugin : OptionHandler() {
                 super.end()
                 player.appearance.setDefaultAnimations()
                 player.appearance.isRidingMinecart = false
-                player.appearance.sync()
+                refreshAppearance(player)
             }
 
             override fun fade() {
