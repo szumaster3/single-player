@@ -59,34 +59,45 @@ class PlayerSaver(
         return saveFile
     }
 
-    fun save() = runBlocking {
-        if (!player.details.saveParsed) return@runBlocking
+    fun save() =
+        runBlocking {
+            if (!player.details.saveParsed) return@runBlocking
+            val json: String
+            if (ServerConstants.JAVA_VERSION < 11) {
+                val manager = ScriptEngineManager()
+                val scriptEngine = manager.getEngineByName("JavaScript")
+                if (scriptEngine == null) {
+                    log(
+                        this::class.java,
+                        Log.ERR,
+                        "Cannot save: Failed to load ScriptEngineManager, this is a known issue on non Java-11 versions. Set your Java version to 11 to avoid further bugs!",
+                    )
+                    return@runBlocking
+                }
+                scriptEngine.put("jsonString", populate().toJSONString())
+                scriptEngine.eval("result = JSON.stringify(JSON.parse(jsonString), null, 2)")
+                json = scriptEngine["result"] as String
+            } else {
+                json = GsonBuilder().setPrettyPrinting().create().toJson(populate())
+            }
 
-        val json = GsonBuilder()
-            .setPrettyPrinting()
-            .create()
-            .toJson(populate())
-
-        try {
-            val savePath = "${ServerConstants.PLAYER_SAVE_PATH}${player.name}.json"
-            val saveDir = File(ServerConstants.PLAYER_SAVE_PATH)
-
-            if (!saveDir.exists()) {
+            try {
+                if (!File("${ServerConstants.PLAYER_SAVE_PATH}${player.name}.json").exists()) {
+                    File("${ServerConstants.PLAYER_SAVE_PATH}").mkdirs()
+                    withContext(Dispatchers.IO) {
+                        File("${ServerConstants.PLAYER_SAVE_PATH}${player.name}.json").createNewFile()
+                    }
+                }
                 withContext(Dispatchers.IO) {
-                    saveDir.mkdirs()
+                    FileWriter("${ServerConstants.PLAYER_SAVE_PATH}${player.name}.json").use { file ->
+                        file.write(json)
+                        file.flush()
+                    }
                 }
+            } catch (e: IOException) {
+                e.printStackTrace()
             }
-
-            withContext(Dispatchers.IO) {
-                FileWriter(savePath).use { file ->
-                    file.write(json)
-                    file.flush()
-                }
-            }
-        } catch (e: IOException) {
-            e.printStackTrace()
         }
-    }
 
     fun savePouches(root: JSONObject) {
         player.pouchManager.save(root)
