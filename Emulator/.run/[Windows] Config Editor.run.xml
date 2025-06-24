@@ -1,8 +1,8 @@
 <component name="ProjectRunConfigurationManager">
-    <configuration default="false" name="[Windows] Config Editor" type="JarApplication">
-        <option name="JAR_PATH" value="$PROJECT_DIR$/Tools/ConfigEditor.jar"/>
-        <option name="WORKING_DIRECTORY" value="Tools\"/>
-        <option name="ALTERNATIVE_JRE_PATH"/>
-        <method v="2"/>
-    </configuration>
+  <configuration default="false" name="[Windows] Config Editor" type="JarApplication" singleton="false">
+    <option name="JAR_PATH" value="$PROJECT_DIR$/Tools/ConfigEditor.jar" />
+    <option name="WORKING_DIRECTORY" value="Tools\" />
+    <option name="ALTERNATIVE_JRE_PATH" />
+    <method v="2" />
+  </configuration>
 </component>
