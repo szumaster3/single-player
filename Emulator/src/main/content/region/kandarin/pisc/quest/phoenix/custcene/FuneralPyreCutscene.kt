@@ -1,6 +1,6 @@
 package content.region.kandarin.pisc.quest.phoenix.custcene
 
-import content.region.kandarin.pisc.quest.phoenix.plugin.PhoenixLairPlugin.Companion.woundedPhoenix
+import content.region.kandarin.pisc.quest.phoenix.InPyreNeed
 import core.api.sendGraphics
 import core.api.setVarbit
 import core.game.activity.Cutscene
@@ -11,9 +11,8 @@ import core.game.world.map.Location
 import org.rs.consts.NPCs
 import org.rs.consts.Vars
 
-class FuneralPyreCutscene(
-    player: Player,
-) : Cutscene(player) {
+class FuneralPyreCutscene(player: Player, ) : Cutscene(player) {
+
     override fun setup() {
         setExit(Location.create(3533, 5204, 0))
         loadRegion(REGION)
@@ -47,8 +46,10 @@ class FuneralPyreCutscene(
                 // Inside
                 getNPC(PHOENIX)!!.transform(NPCs.PHOENIX_8548)
                 // Outside
-                woundedPhoenix.transform(NPCs.PHOENIX_8548)
-                woundedPhoenix.teleporter.send(Location.create(3535, 5198, 0), TeleportManager.TeleportType.INSTANT)
+                InPyreNeed.WOUNDED_PHOENIX_ID.transform(NPCs.PHOENIX_8548)
+                InPyreNeed.WOUNDED_PHOENIX_ID.teleporter.send(
+                    Location.create(3535, 5198, 0), TeleportManager.TeleportType.INSTANT
+                )
                 setVarbit(player, 5774, 4, true)
                 timedUpdate(1)
             }
@@ -56,7 +57,7 @@ class FuneralPyreCutscene(
             4 -> {
                 endWithoutFade {
                     resetCamera()
-                    setVarbit(player, Vars.VARBIT_QUEST_IN_PYRE_NEED_PROGRESS_5761, 6, true)
+                    setVarbit(player, InPyreNeed.PROGRESS, 6, true)
                 }
             }
         }

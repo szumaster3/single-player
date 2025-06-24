@@ -9,9 +9,9 @@ import org.rs.consts.NPCs;
 import static core.tools.DialogueHelperKt.END_DIALOGUE;
 
 /**
- * The type Brian twitcher dialogue.
+ * Represents the Brian Twitcher dialogue.
+ * TODO: Find varbit to swap Priest with him.
  */
-// TODO: Find varbit to swap Priest with him.
 @Initializable
 public class BrianTwitcherDialogue extends Dialogue {
 

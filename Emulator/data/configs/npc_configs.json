@@ -88782,7 +88782,25 @@
   },
   {
     "examine": "He collects flax.",
+    "melee_animation": "422",
+    "range_animation": "422",
+    "combat_audio": "511,513,512",
+    "attack_speed": "4",
+    "magic_level": "6",
+    "respawn_delay": "18",
+    "defence_animation": "404",
+    "weakness": "9",
+    "slayer_exp": "0",
+    "magic_animation": "422",
+    "death_animation": "9055",
     "name": "Geoffrey",
-    "id": "8590"
+    "defence_level": "5",
+    "safespot": null,
+    "lifepoints": "7",
+    "strength_level": "2",
+    "id": "1",
+    "clue_level": "0",
+    "range_level": "1",
+    "attack_level": "5"
   }
 ]

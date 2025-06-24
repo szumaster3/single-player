@@ -1,6 +1,7 @@
 package content.region.kandarin.pisc.quest.phoenix.dialogue
 
 import content.data.GameAttributes
+import content.region.kandarin.pisc.quest.phoenix.InPyreNeed
 import core.api.*
 import core.api.quest.finishQuest
 import core.api.quest.setQuestStage
@@ -18,8 +19,8 @@ import org.rs.consts.Vars
 /**
  * The Priest dialogue.
  *
- * Relations:
- * [In Pyre Need quest][content.region.kandarin.quest.phoenix.InPyreNeed]
+ * Relations
+ * - [In Pyre Need][content.region.kandarin.pisc.quest.phoenix.InPyreNeed]
  */
 @Initializable
 class PriestDialogue : Dialogue {
@@ -29,7 +30,7 @@ class PriestDialogue : Dialogue {
     constructor(player: Player?) : super(player)
 
     override fun open(vararg args: Any): Boolean {
-        when (getVarbit(player, Vars.VARBIT_QUEST_IN_PYRE_NEED_PROGRESS_5761)) {
+        when (getVarbit(player, InPyreNeed.PROGRESS)) {
             1 -> {
                 npc(FaceAnim.FRIENDLY, "You've returned!")
                 stage = 27

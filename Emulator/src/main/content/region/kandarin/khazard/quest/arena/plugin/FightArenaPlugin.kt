@@ -19,8 +19,8 @@ class FightArenaPlugin : InteractionListener {
         const val GENERAL = NPCs.GENERAL_KHAZARD_258
         const val KELVIN = NPCs.KELVIN_260
         const val JOE = NPCs.JOE_261
-        const val FIGHTSLAVE = NPCs.FIGHTSLAVE_262
-        const val HENGARD = NPCs.HENGRAD_263
+        const val FIGHT_SLAVE = NPCs.FIGHTSLAVE_262
+        const val HENGRAD = NPCs.HENGRAD_263
         const val JEREMY_A = NPCs.JEREMY_SERVIL_265
 
         const val CELL_DOOR_1 = Scenery.PRISON_DOOR_79
@@ -61,7 +61,7 @@ class FightArenaPlugin : InteractionListener {
             return@on true
         }
 
-        on(HENGARD, IntType.NPC, "talk-to") { player, npc ->
+        on(HENGRAD, IntType.NPC, "talk-to") { player, npc ->
             openDialogue(player, HengradDialogue(), npc)
             return@on true
         }
@@ -196,7 +196,7 @@ class FightArenaPlugin : InteractionListener {
             return@setDest Location.create(2617, 3167, 0)
         }
 
-        setDest(IntType.NPC, intArrayOf(FIGHTSLAVE), "talk-to") { player, _ ->
+        setDest(IntType.NPC, intArrayOf(FIGHT_SLAVE), "talk-to") { player, _ ->
             if (inBorders(player, 2585, 3139, 2605, 3148)) {
                 return@setDest Location.create(2595, 3141, 0)
             } else if (inBorders(player, 2616, 3162, 2617, 3165)) {

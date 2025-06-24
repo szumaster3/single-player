@@ -1,6 +1,7 @@
 package content.region.kandarin.pisc.quest.phoenix.custcene
 
-import content.region.kandarin.pisc.quest.phoenix.plugin.PhoenixLairPlugin
+import content.region.kandarin.pisc.quest.phoenix.InPyreNeed
+import content.region.kandarin.pisc.quest.phoenix.plugin.InPyreNeedPlugin
 import core.api.setVarbit
 import core.game.activity.Cutscene
 import core.game.node.entity.player.Player
@@ -47,9 +48,8 @@ class WoundedPhoenixCutscene(
 
             4 -> {
                 teleport(getNPC(PHOENIX)!!, 14, 19) // Inside
-                // Outside
-                PhoenixLairPlugin.woundedPhoenix.teleporter.send(
-                    Location.create(3534, 5203, 0),
+                InPyreNeed.WOUNDED_PHOENIX_ID.teleporter.send(
+                    Location.create(3534, 5203, 0),       // Outside
                     TeleportManager.TeleportType.INSTANT,
                 )
                 rotateCamera(20, 25, 300, 2)

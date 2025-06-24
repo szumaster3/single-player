@@ -91,12 +91,4 @@
     <ObjectAction mode="remove" id="5347" x="2078" y="4468" z="0"/>
     <ObjectAction mode="remove" id="5347" x="2085" y="4472" z="0"/>
     <ObjectAction mode="remove" id="5348" x="2078" y="4464" z="0"/>
-
-    <!-- Phoenix Lair trees - In Pyre Need quest. -->
-    <ObjectAction mode="add" id="41903" x="3481" y="5241" z="0"/>
-    <ObjectAction mode="add" id="41904" x="3514" y="5205" z="0"/>
-    <ObjectAction mode="add" id="41905" x="3503" y="5236" z="0"/>
-    <ObjectAction mode="add" id="41906" x="3473" y="5209" z="0"/>
-    <ObjectAction mode="add" id="41907" x="3535" y="5242" z="0"/>
-
 </parsing>
