@@ -15,12 +15,18 @@ private val movementPath =
     )
 
 class SawmillWorkerNPC : NPCBehavior(NPCs.WILL_7737, NPCs.WILL_7738) {
+    private var ticks = 0
+
     override fun onCreation(self: NPC) {
         self.configureMovementPath(*movementPath)
         self.isWalks = true
     }
 
     override fun tick(self: NPC): Boolean {
+        ticks++
+        if (ticks < 6) return true
+        ticks = 0
+
         when {
             self.location == movementPath[0] -> {
                 if (!finishedMoving(self)) {

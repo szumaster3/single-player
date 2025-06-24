@@ -10,15 +10,14 @@ import org.rs.consts.NPCs
  * Handles the BennyNPC.
  */
 class BennyNPC : NPCBehavior(NPCs.BENNY_5925) {
-
-    private val forceChat =
-        arrayOf(
-            "Read all about it!",
-            "Varrock Herald, on sale here!",
-            "Buy your Varrock Herald now!",
-            "Extra! Extra! Read all about it!",
-            "Varrock Herald, now only 50 gold!",
-        )
+    private var delay = 0
+    private val forceChat = arrayOf(
+        "Read all about it!",
+        "Varrock Herald, on sale here!",
+        "Buy your Varrock Herald now!",
+        "Extra! Extra! Read all about it!",
+        "Varrock Herald, now only 50 gold!",
+    )
 
     override fun onCreation(self: NPC) {
         self.isWalks = true
@@ -27,6 +26,10 @@ class BennyNPC : NPCBehavior(NPCs.BENNY_5925) {
     }
 
     override fun tick(self: NPC): Boolean {
+        delay++
+        if (delay < 20) return true
+        delay = 0
+
         if (RandomFunction.random(100) < 15) {
             sendChat(self, forceChat.random())
         }

@@ -7,14 +7,16 @@ import core.game.interaction.IntType
 import core.game.interaction.InteractionListeners
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
-import core.game.world.map.zone.ZoneBorders
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
 class BarbarianSalmon : Script() {
-    val fishingZone = ZoneBorders(3108, 3421, 3102, 3437)
+    private var ticks = 0L
 
     override fun tick() {
+        val now = System.currentTimeMillis()
+        if (now < ticks) return
+
         val fishingSpot = scriptAPI.getNearestNode(NPCs.FISHING_SPOT_309, false)
         if (fishingSpot != null && !bot.inventory.isFull) {
             InteractionListeners.run(fishingSpot.id, IntType.NPC, "lure", bot, fishingSpot)
@@ -29,14 +31,16 @@ class BarbarianSalmon : Script() {
         }
         if (bot.inventory.isFull &&
             (
-                !bot.inventory.containsAtLeastOneItem(Items.RAW_SALMON_331) ||
-                    !bot.inventory.containsAtLeastOneItem(Items.RAW_TROUT_335)
-            )
+                    !bot.inventory.containsAtLeastOneItem(Items.RAW_SALMON_331) ||
+                            !bot.inventory.containsAtLeastOneItem(Items.RAW_TROUT_335)
+                    )
         ) {
             bot.inventory.clear()
             bot.inventory.add(Item(Items.FLY_FISHING_ROD_309))
             bot.inventory.add(Item(Items.FEATHER_314, 10000))
         }
+
+        ticks = now + 3000
     }
 
     override fun newInstance(): Script {

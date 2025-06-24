@@ -26,20 +26,28 @@ class SkippyNPC : NPCBehavior(NPCs.SKIPPY_2795) {
         "I've got a bottle with your name on it!",
     )
 
+    private val route = arrayOf(
+        Location.create(2980, 3198, 0),
+        Location.create(2973, 3193, 0),
+        Location.create(2977, 3196, 0),
+        Location.create(2984, 3192, 0),
+        Location.create(2982, 3196, 0),
+    )
+
+    private var ticks = 0
+    private val TICK_INTERVAL = 20
+
     override fun onCreation(self: NPC) {
-        val route = arrayOf(
-            Location.create(2980, 3198, 0),
-            Location.create(2973, 3193, 0),
-            Location.create(2977, 3196, 0),
-            Location.create(2984, 3192, 0),
-            Location.create(2982, 3196, 0),
-        )
         self.configureMovementPath(*route)
         self.isWalks = true
-        self.isNeverWalks = !self.isWalks
+        self.isNeverWalks = false
     }
 
     override fun tick(self: NPC): Boolean {
+        ticks++
+        if (ticks < TICK_INTERVAL) return super.tick(self)
+        ticks = 0
+
         if (RandomFunction.roll(8)) {
             sendChat(self, forceChat.random())
             handleThrow(self)

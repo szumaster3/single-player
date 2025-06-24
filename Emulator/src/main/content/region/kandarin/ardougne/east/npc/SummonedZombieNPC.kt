@@ -47,19 +47,26 @@ class SummonedZombieNPC @JvmOverloads constructor(id: Int = NPCs.SUMMONED_ZOMBIE
     override fun canStartCombat(victim: Entity): Boolean = true
 
     override fun handleTickActions() {
-        ticks++
         if (isInvisible) return
-        if (fails == 0 && (ticks % 100) != 0) return
 
-        if (ticks % 2 == 0) {
-            val victim = owner?.properties?.combatPulse?.victim
-            if (++fails >= 3 && victim != null && victim.viewport.currentPlane == viewport.currentPlane) {
-                val path = Pathfinder.find(location, victim.location, 1)
-                if (path.isSuccessful || !path.isMoveNear) {
-                    summon(victim.location)
-                    fails = 0
-                }
-            } else {
+        ticks++
+
+        if (ticks < 100) return
+
+        if (ticks % 3 != 0) return
+
+        val victim = owner?.properties?.combatPulse?.victim ?: return
+
+        if (victim.viewport.currentPlane != viewport.currentPlane) return
+
+        val path = Pathfinder.find(location, victim.location, 1)
+
+        if (path.isSuccessful || !path.isMoveNear) {
+            summon(victim.location)
+            fails = 0
+        } else {
+            fails++
+            if (fails >= 3) {
                 fails = 0
             }
         }

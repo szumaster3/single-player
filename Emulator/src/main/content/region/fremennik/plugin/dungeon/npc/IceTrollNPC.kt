@@ -3,6 +3,8 @@ package content.region.fremennik.plugin.dungeon.npc
 import core.api.findLocalNPC
 import core.game.node.entity.npc.AbstractNPC
 import core.game.world.map.Location
+import core.game.world.map.RegionManager
+import core.game.world.repository.Repository
 import core.plugin.Initializable
 import org.rs.consts.NPCs
 
@@ -12,14 +14,25 @@ import org.rs.consts.NPCs
 @Initializable
 class IceTrollNPC : AbstractNPC {
 
+    private var tickDelay = 0
+
     constructor() : super(NPCs.ICE_TROLL_MALE_5474, null, true)
     private constructor(id: Int, location: Location) : super(id, location)
 
     override fun construct(id: Int, location: Location, vararg objects: Any?): AbstractNPC = IceTrollNPC(id, location)
 
     override fun tick() {
-        val nearbyMiner = findLocalNPC(this, NPCs.MINER_5497) ?: return super.tick()
-        if (!inCombat() && nearbyMiner.location.withinDistance(location, 8)) {
+        tickDelay++
+        if (tickDelay < 5) {
+            super.tick()
+            return
+        }
+        tickDelay = 0
+
+        if (!inCombat()) {
+            val nearbyMiners = RegionManager.getLocalNpcs(this, 8).filter { it.id == NPCs.MINER_5497 }
+            val nearbyMiner = nearbyMiners.firstOrNull() ?: return super.tick()
+
             attack(nearbyMiner)
         }
         super.tick()
@@ -30,5 +43,4 @@ class IceTrollNPC : AbstractNPC {
         NPCs.ICE_TROLL_RUNT_5473,
         NPCs.ICE_TROLL_FEMALE_5475
     )
-
 }

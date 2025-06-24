@@ -18,14 +18,21 @@ class TownCrierNPC : NPCBehavior(NPCs.TOWN_CRIER_6135, NPCs.TOWN_CRIER_6136, NPC
     )
     private val forceChat = forceChatAnimation.entries.toList()
 
+    private var tickDelay = 0
+    private val TICK_INTERVAL = 30
+
     override fun tick(self: NPC): Boolean {
-        if (RandomFunction.random(100) == 5) {
+        tickDelay++
+        if (tickDelay < TICK_INTERVAL) return super.tick(self)
+        tickDelay = 0
+
+        if (RandomFunction.random(100) < 15) {
             self.walkingQueue.reset()
             val (chat, animation) = forceChat.random()
             animate(self, animation)
             sendChat(self, chat)
         }
+
         return super.tick(self)
     }
-
 }

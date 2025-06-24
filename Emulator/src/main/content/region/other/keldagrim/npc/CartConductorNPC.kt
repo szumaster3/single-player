@@ -11,18 +11,46 @@ import org.rs.consts.NPCs
  */
 class CartConductorNPC : NPCBehavior(NPCs.CART_CONDUCTOR_2182, NPCs.CART_CONDUCTOR_2183) {
 
-    private val forceChat = arrayOf("Grand Exchange carts departing from all tracks!", "Ice Mountain carts departing from all tracks!", "White Wolf Mountain carts departing from all tracks!", "Ice Mountain carts departing from all tracks!", "Grand Exchange carts departing from all tracks!", "Mind the cart!", "Careful!")
-    private val secondChat = arrayOf("Tickets! Tickets!", "Buy your tickets here!", "Selling tickets!")
+    private val forceChat = listOf(
+        "Grand Exchange carts departing from all tracks!",
+        "Ice Mountain carts departing from all tracks!",
+        "White Wolf Mountain carts departing from all tracks!",
+        "Ice Mountain carts departing from all tracks!",
+        "Grand Exchange carts departing from all tracks!",
+        "Mind the cart!",
+        "Careful!"
+    )
+
+    private val secondChat = listOf(
+        "Tickets! Tickets!",
+        "Buy your tickets here!",
+        "Selling tickets!"
+    )
+
+    private var ticks = 0
+    private var cachedChatList: List<String>? = null
+    private var cachedId: Int = -1
 
     override fun tick(self: NPC): Boolean {
-        if (RandomFunction.random(100) < 15) {
-            val chat = when (self.id) {
-                NPCs.CART_CONDUCTOR_2182 -> forceChat.random()
-                NPCs.CART_CONDUCTOR_2183 -> secondChat.random()
+        ticks++
+        if (ticks < 20) {
+            return true
+        }
+        ticks = 0
+
+        if (self.id != cachedId) {
+            cachedId = self.id
+            cachedChatList = when (self.id) {
+                NPCs.CART_CONDUCTOR_2182 -> forceChat
+                NPCs.CART_CONDUCTOR_2183 -> secondChat
                 else -> null
             }
-            if (chat != null) sendChat(self, chat)
         }
+
+        cachedChatList?.takeIf { RandomFunction.roll(15) }?.let {
+            sendChat(self, it.random())
+        }
+
         return true
     }
 }

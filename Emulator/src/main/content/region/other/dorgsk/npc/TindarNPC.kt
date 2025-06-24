@@ -10,6 +10,7 @@ import org.rs.consts.NPCs
  * Handles the TindarNPC.
  */
 class TindarNPC : NPCBehavior(NPCs.TINDAR_5795) {
+    private var ticks = 0
     private val forceChat =
         arrayOf(
             "Crispy!",
@@ -20,6 +21,10 @@ class TindarNPC : NPCBehavior(NPCs.TINDAR_5795) {
         )
 
     override fun tick(self: NPC): Boolean {
+        ticks++
+        if (ticks < 20) return true
+
+        ticks = 0
         if (RandomFunction.random(100) < 15) {
             sendChat(self, forceChat.random())
         }

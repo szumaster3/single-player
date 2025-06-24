@@ -4,53 +4,37 @@ import core.net.IoSession
 import java.nio.ByteBuffer
 
 /**
- * Represents an artificial session for bots or simulated clients.
+ * Represents an artificial networking session.
+ * @author Emperor
  */
-class ArtificialSession private constructor() {
-
-    private val session: IoSession = IoSession(null, null)
-
-    /**
-     * Returns the underlying IoSession instance.
-     */
-    val ioSession: IoSession
-        get() = session // Artificial IoSession for bot usage;
-
-    /**
-     * Returns a dummy remote address for the artificial session.
-     */
-    fun getRemoteAddress(): String = "127.0.0.1"
-
-    /**
-     * Writes to the artificial session. This is a no-op.
-     */
-    fun write(context: Any?, instant: Boolean) {
+class ArtificialSession
+/**
+ * Constructs a new `ArtificialSession` `Object`.
+ */
+private constructor() : IoSession(null, null) {
+    override fun getRemoteAddress(): String {
+        return "127.0.0.1"
     }
 
-    /**
-     * Queues a buffer to the artificial session. This is a no-op.
-     */
-    fun queue(buffer: ByteBuffer) {
+    override fun write(context: Any, instant: Boolean) {
     }
 
-    /**
-     * Flushes the artificial session. This is a no-op.
-     */
-    fun write() {
+    override fun queue(buffer: ByteBuffer?) {
     }
 
-    /**
-     * Disconnects the artificial session. This is a no-op.
-     */
-    fun disconnect() {
+    override fun write() {
+    }
+
+    override fun disconnect() {
     }
 
     companion object {
-        private val SINGLETON = ArtificialSession()
-
         /**
-         * Returns the singleton instance of the artificial session.
+         * @return the singleton.
          */
-        fun getSingleton(): ArtificialSession = SINGLETON
+        /**
+         * The artificial session singleton.
+         */
+        val singleton: ArtificialSession = ArtificialSession()
     }
 }

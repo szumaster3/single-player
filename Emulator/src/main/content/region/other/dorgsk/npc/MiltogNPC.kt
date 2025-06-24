@@ -10,6 +10,7 @@ import org.rs.consts.NPCs
  * Handles the Miltog NPC.
  */
 class MiltogNPC : NPCBehavior(NPCs.MILTOG_5781) {
+    private var ticks = 0
     private val forceChat =
         arrayOf(
             "Lamps!",
@@ -20,6 +21,10 @@ class MiltogNPC : NPCBehavior(NPCs.MILTOG_5781) {
         )
 
     override fun tick(self: NPC): Boolean {
+        ticks++
+        if (ticks < 20) return true
+
+        ticks = 0
         if (RandomFunction.random(100) < 15) {
             sendChat(self, forceChat.random())
         }

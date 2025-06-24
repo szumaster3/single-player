@@ -11,7 +11,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class ShanomiNPC(id: Int = 0, location: Location? = null) : AbstractNPC(id, location) {
-
+    private var timer = 0L
     private val forceChat: Array<String> =
         arrayOf(
             "Those things which cannot be seen, perceive them.",
@@ -30,10 +30,12 @@ class ShanomiNPC(id: Int = 0, location: Location? = null) : AbstractNPC(id, loca
 
     override fun getIds(): IntArray = intArrayOf(NPCs.SHANOMI_4290)
 
-    override fun tick() {
+    override fun handleTickActions() {
+        val now = System.currentTimeMillis()
+        if (now < timer) return
         if (RandomFunction.random(100) < 3) {
             sendChat(forceChat[RandomFunction.random(forceChat.size)])
+            timer = now + 3000
         }
-        super.tick()
     }
 }

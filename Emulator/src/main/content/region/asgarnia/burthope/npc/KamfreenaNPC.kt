@@ -11,7 +11,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class KamfreenaNPC(id: Int = 0, location: Location? = null) : AbstractNPC(id, location) {
-
+    var ticks = 0
     private val forceChat: Array<String> =
         arrayOf(
             "When you aim for perfection, you discover it's a moving target.",
@@ -26,6 +26,10 @@ class KamfreenaNPC(id: Int = 0, location: Location? = null) : AbstractNPC(id, lo
     override fun getIds(): IntArray = intArrayOf(NPCs.KAMFREENA_4289)
 
     override fun tick() {
+        ticks++
+        if (ticks < 20) return
+
+        ticks = 0
         if (RandomFunction.random(100) < 3) {
             sendChat(forceChat[RandomFunction.random(forceChat.size)])
         }

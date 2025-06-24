@@ -7,7 +7,7 @@ import core.tools.RandomFunction
 import org.rs.consts.NPCs
 
 class GravingasNPC : NPCBehavior(NPCs.GRAVINGAS_1685) {
-
+    private var timer = 0L
     private val forceChat =
         arrayOf(
             "Down with Necrovaus!!",
@@ -21,8 +21,11 @@ class GravingasNPC : NPCBehavior(NPCs.GRAVINGAS_1685) {
         )
 
     override fun tick(self: NPC): Boolean {
+        val now = System.currentTimeMillis()
+        if (now < timer) return true
         if (RandomFunction.random(10, 100) == 5) {
             sendChat(self, forceChat.random())
+            timer = now + 3000
         }
         return true
     }

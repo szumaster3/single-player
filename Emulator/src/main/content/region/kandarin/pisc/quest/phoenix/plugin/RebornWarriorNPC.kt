@@ -17,7 +17,7 @@ import core.tools.RandomFunction
  * Handles Reborn warrior NPC.
  */
 class RebornWarriorNPC : AbstractNPC {
-
+    var ticks = 0
     constructor() : super(0, null)
     constructor(id: Int, location: Location?) : super(id, location)
 
@@ -39,10 +39,14 @@ class RebornWarriorNPC : AbstractNPC {
 
     override fun handleTickActions() {
         super.handleTickActions()
-        if (InPyreNeed.NON_HOSTILE_IDS.contains(this.id)) {
-            if (RandomFunction.random(30) < 3) {
-                sendChat(this.asNpc(), forceChat.random())
-            }
+        if (!InPyreNeed.NON_HOSTILE_IDS.contains(this.id)) return
+
+        ticks++
+        if (ticks < 20) return
+
+        ticks = 0
+        if (RandomFunction.random(10) < 3) {
+            sendChat(this.asNpc(), forceChat.random())
         }
     }
 

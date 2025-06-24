@@ -20,7 +20,11 @@ import org.rs.consts.Sounds
 class SpinolypBehavior : NPCBehavior(NPCs.SPINOLYP_2894, NPCs.SUSPICIOUS_WATER_2895, NPCs.SPINOLYP_2896) {
 
     private var transformationDelay = 0L
-    private var splashDelay: Long = 0L
+    private var splashDelay = 0L
+
+    companion object {
+        private val spinolypNPCs = listOf(NPCs.SPINOLYP_2894, NPCs.SPINOLYP_2896)
+    }
 
     override fun onCreation(self: NPC) {
         if (self.id == NPCs.SUSPICIOUS_WATER_2895) {
@@ -33,27 +37,24 @@ class SpinolypBehavior : NPCBehavior(NPCs.SPINOLYP_2894, NPCs.SUSPICIOUS_WATER_2
     }
 
     override fun tick(self: NPC): Boolean {
+        val currentTick = GameWorld.ticks
         val nearbyPlayers = RegionManager.getLocalPlayers(self.location, 4)
         if (nearbyPlayers.isEmpty()) return super.tick(self)
 
-        val currentTick = GameWorld.ticks
-
-        // Suspicious Water transform.
         if (self.id == NPCs.SUSPICIOUS_WATER_2895) {
-            if (self.inCombat() || currentTick < transformationDelay) return super.tick(self)
+            if (self.inCombat() || currentTick <= transformationDelay) return super.tick(self)
 
             transformationDelay = currentTick + 20L
             stopWalk(self)
-            val spinolypNPCs = listOf(NPCs.SPINOLYP_2894, NPCs.SPINOLYP_2896)
             self.transform(spinolypNPCs.random())
             return true
         }
 
-        // Spinolyp splash effect.
+        val targetPlayer = nearbyPlayers.firstOrNull { !self.inCombat() && !it.inCombat() }
+
         if (currentTick >= splashDelay) {
             splashDelay = currentTick + RandomFunction.random(300, 500).toLong()
 
-            val targetPlayer = nearbyPlayers.firstOrNull { !self.inCombat() && !it.inCombat() }
             if (targetPlayer != null) {
                 unlock(self)
                 sendGraphics(Graphics.WATER_SPLASH_68, self.location)
@@ -64,7 +65,6 @@ class SpinolypBehavior : NPCBehavior(NPCs.SPINOLYP_2894, NPCs.SUSPICIOUS_WATER_2
             }
         }
 
-        val targetPlayer = nearbyPlayers.firstOrNull { !self.inCombat() && !it.inCombat() }
         if (targetPlayer != null) {
             self.attack(targetPlayer)
             return true
@@ -74,7 +74,7 @@ class SpinolypBehavior : NPCBehavior(NPCs.SPINOLYP_2894, NPCs.SUSPICIOUS_WATER_2
     }
 
     override fun onRespawn(self: NPC) {
-        if (self.id in arrayOf(NPCs.SPINOLYP_2894, NPCs.SPINOLYP_2896)) {
+        if (self.id in spinolypNPCs) {
             self.transform(NPCs.SUSPICIOUS_WATER_2895)
         }
     }

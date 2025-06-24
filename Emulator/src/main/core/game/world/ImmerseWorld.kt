@@ -43,13 +43,13 @@ class ImmerseWorld : StartupListener {
                     Thread.currentThread().name = "BotSpawner"
                     immerseSeersAndCatherby()
                     immerseLumbridgeDraynor()
+                    immerseBarbarianVillage()
                     immerseVarrock()
                     immerseWilderness()
                     immerseFishingGuild()
                     immerseAdventurer()
                     immerseFalador()
-                    immerseBarbarianVillage()
-                    immerseGE()
+                    // immerseGE()
                 }
             }
         }
@@ -108,32 +108,10 @@ class ImmerseWorld : StartupListener {
 
         fun immerseBarbarianVillage() {
             GeneralBotCreator(
-                BarbarianKiller(),
-                CombatBotAssembler().produce(
-                    CombatBotAssembler.Type.values().random(),
-                    CombatBotAssembler.Tier.MED,
-                    Location.create(3082, 3423, 0)
-                ),
-            )
-            GeneralBotCreator(
-                BarbarianSalmon(),
-                skillingBotAssembler.produce(
-                    SkillingBotAssembler.Wealth.values().random(),
-                    Location.create(3105, 3433, 0),
-                ),
-            )
-            GeneralBotCreator(
                 BarbarianSalmon(),
                 skillingBotAssembler.produce(
                     SkillingBotAssembler.Wealth.values().random(),
                     Location.create(3105, 3434, 0),
-                ),
-            )
-            GeneralBotCreator(
-                BarbarianSalmon(),
-                skillingBotAssembler.produce(
-                    SkillingBotAssembler.Wealth.values().random(),
-                    Location.create(3103, 3433, 0),
                 ),
             )
             GeneralBotCreator(

@@ -61,10 +61,17 @@ private val sheepIds =
  */
 class SheepNPC : NPCBehavior(*sheepIds), InteractionListener {
 
+    private var tickDelay = 0
+    private val TICK_INTERVAL = 30
+
     override fun tick(self: NPC): Boolean {
         if (self.properties.combatPulse.isAttacking || DeathTask.isDead(self)) {
             return true
         }
+
+        tickDelay++
+        if (tickDelay < TICK_INTERVAL) return true
+        tickDelay = 0
 
         if (RandomFunction.random(35) == 5) {
             sendChat(self, "Baa!")

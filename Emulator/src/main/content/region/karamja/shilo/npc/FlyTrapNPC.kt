@@ -13,27 +13,32 @@ import org.rs.consts.NPCs
 
 @Initializable
 class FlyTrapNPC(id: Int = 0, location: Location? = null) : AbstractNPC(id, location) {
-    private var attackDelay = 0
+    private var delay = 0
 
     override fun construct(id: Int, location: Location, vararg objects: Any): AbstractNPC = FlyTrapNPC(id, location)
 
     override fun tick() {
         val players = RegionManager.getLocalPlayers(this, 1)
-        if (players.size != 0) {
-            if (attackDelay < GameWorld.ticks) {
-                for (p in players) {
-                    faceTemporary(p, 2)
-                    animator.forceAnimation(Animation(1247, Animator.Priority.HIGH))
-                    val hit = RandomFunction.random(2)
-                    p.impactHandler.manualHit(this, hit, if (hit > 0) ImpactHandler.HitsplatType.NORMAL else ImpactHandler.HitsplatType.MISS)
-                    attackDelay = GameWorld.ticks + 3
-                    p.animate(p.properties.defenceAnimation)
-                    return
-                }
-            }
+        if (players.isNotEmpty() && delay < GameWorld.ticks) {
+            val p = players.first()
+            faceTemporary(p, 2)
+            animator.forceAnimation(ANIMATION)
+            val hit = RandomFunction.random(2)
+            p.impactHandler.manualHit(
+                this,
+                hit,
+                if (hit > 0) ImpactHandler.HitsplatType.NORMAL else ImpactHandler.HitsplatType.MISS
+            )
+            delay = GameWorld.ticks + 3
+            p.animate(p.properties.defenceAnimation)
+            return
         }
         super.tick()
     }
 
     override fun getIds(): IntArray = intArrayOf(NPCs.FLY_TRAP_151)
+
+    companion object {
+        private val ANIMATION = Animation(1247, Animator.Priority.HIGH)
+    }
 }

@@ -10,6 +10,7 @@ import org.rs.consts.NPCs
  * Handles the Zenkog NPC.
  */
 class ZenkogNPC : NPCBehavior(NPCs.ZENKOG_5797) {
+    private var ticks = 0
     private val forceChat =
         arrayOf(
             "Fingers!",
@@ -20,6 +21,10 @@ class ZenkogNPC : NPCBehavior(NPCs.ZENKOG_5797) {
         )
 
     override fun tick(self: NPC): Boolean {
+        ticks++
+        if (ticks < 20) return true
+
+        ticks = 0
         if (RandomFunction.random(100) < 15) {
             sendChat(self, forceChat.random())
         }

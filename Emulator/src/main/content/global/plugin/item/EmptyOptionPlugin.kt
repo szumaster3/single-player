@@ -9,7 +9,6 @@ import core.game.interaction.InteractionListener
 import core.game.node.item.Item
 import org.rs.consts.Items
 import org.rs.consts.Sounds
-import java.util.*
 
 /**
  * Handles item emptying actions such as emptying potions, bowls, and other containers.
@@ -25,8 +24,8 @@ class EmptyOptionPlugin : InteractionListener {
         on(EmptyItem.emptyItemList.toIntArray(), IntType.ITEM, "empty", "empty bowl", "empty dish") { player, node ->
             if (node.name.contains("brew") ||
                 node.name.contains("potion") ||
-                node.name.lowercase(Locale.getDefault()).contains("poison") ||
-                node.name.lowercase(Locale.getDefault()).contains("serum") ||
+                node.name.lowercase().contains("poison") ||
+                node.name.lowercase().contains("serum") ||
                 node.name.contains("cure") ||
                 node.name.contains("mix") ||
                 node.name.contains("balm"))

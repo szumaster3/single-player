@@ -1,18 +1,16 @@
 package content.region.other.dorgsk.npc
 
-import core.game.node.entity.npc.AbstractNPC
-import core.game.world.map.Location
-import core.plugin.Initializable
+import core.api.sendChat
+import core.game.node.entity.npc.NPC
+import core.game.node.entity.npc.NPCBehavior
 import core.tools.RandomFunction
 import org.rs.consts.NPCs
 
 /**
  * Handles the Durgok NPC.
  */
-@Initializable
-class DurgokNPC @JvmOverloads constructor(
-    id: Int = NPCs.DURGOK_5794, location: Location? = null
-) : AbstractNPC(id, location) {
+class DurgokNPC : NPCBehavior(NPCs.DURGOK_5794) {
+    private var ticks = 0
     private val forceChat = arrayOf(
         "Burgers!",
         "Hot frogburgers!",
@@ -21,17 +19,14 @@ class DurgokNPC @JvmOverloads constructor(
         "Tasty frogburgers!",
     )
 
-    override fun construct(id: Int, location: Location, vararg objects: Any): AbstractNPC {
-        return DurgokNPC(id, location)
-    }
+    override fun tick(self: NPC): Boolean {
+        ticks++
+        if (ticks < 20) return true
 
-    override fun tick() {
+        ticks = 0
         if (RandomFunction.random(100) < 15) {
-            sendChat(forceChat.random())
+            sendChat(self, forceChat.random())
         }
-    }
-
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.DURGOK_5794)
+        return super.tick(self)
     }
 }

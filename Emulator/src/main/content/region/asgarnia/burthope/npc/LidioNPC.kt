@@ -10,7 +10,7 @@ import org.rs.consts.NPCs
  * Handles the Lidio NPC.
  */
 class LidioNPC  : NPCBehavior(NPCs.LIDIO_4293) {
-
+    var ticks = 0
     private val forceChat =
         arrayOf(
             "Potatoes are filling and healthy too!",
@@ -19,6 +19,10 @@ class LidioNPC  : NPCBehavior(NPCs.LIDIO_4293) {
         )
 
     override fun tick(self: NPC): Boolean {
+        ticks++
+        if (ticks < 20) return true
+
+        ticks = 0
         if (RandomFunction.random(100) < 3) {
             sendChat(self, forceChat.random())
         }
