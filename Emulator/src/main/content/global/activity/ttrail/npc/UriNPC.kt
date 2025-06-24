@@ -1,4 +1,4 @@
-package content.global.activity.ttrail.npcs
+package content.global.activity.ttrail.npc
 
 import content.global.activity.ttrail.ClueScroll
 import content.global.activity.ttrail.plugin.EmoteScroll

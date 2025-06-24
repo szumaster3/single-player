@@ -1,7 +1,7 @@
 package content.global.activity.ttrail.plugin
 
 import content.global.activity.ttrail.ClueLevel
-import content.global.activity.ttrail.npcs.UriNPC
+import content.global.activity.ttrail.npc.UriNPC
 import core.game.node.entity.player.link.emote.Emotes
 import core.game.world.map.zone.ZoneBorders
 import core.plugin.ClassScanner.definePlugin

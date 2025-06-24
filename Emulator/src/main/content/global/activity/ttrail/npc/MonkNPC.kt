@@ -1,4 +1,4 @@
-package content.global.activity.ttrail.npcs
+package content.global.activity.ttrail.npc
 
 import core.api.hasAnItem
 import core.api.inBorders
