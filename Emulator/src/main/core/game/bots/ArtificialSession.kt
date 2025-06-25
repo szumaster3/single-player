@@ -35,6 +35,7 @@ private constructor() : IoSession(null, null) {
         /**
          * The artificial session singleton.
          */
+        @JvmField
         val singleton: ArtificialSession = ArtificialSession()
     }
 }

@@ -70,7 +70,7 @@ public class AIPlayer extends Player {
         super(new PlayerDetails("/aip" + (currentUID + 1) + ":" + name));
         super.setLocation(startLocation = l);
         super.artificial = true;
-        super.getDetails().setSession(ArtificialSession.Companion.getSingleton().getIoSession());
+        super.getDetails().setSession(ArtificialSession.singleton);
         Repository.getPlayers().add(this);
         this.username = StringUtils.formatDisplayName(name + (currentUID + 1));
         this.uid = currentUID++;
