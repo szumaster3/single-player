@@ -20,29 +20,14 @@ class ParrotyPeteDialogue(player: Player? = null) : Dialogue(player) {
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> options("It's very nice.", "When did you add it?", "What do you feed them?").also { stage++ }
-            1 ->
-                when (buttonId) {
-                    1 -> playerl(FaceAnim.FRIENDLY, "It's very nice.").also { stage++ }
-                    2 -> playerl(FaceAnim.HALF_ASKING, "When did you add it?").also { stage = 3 }
-                    3 -> playerl(FaceAnim.HALF_ASKING, "What do you feed them?").also { stage = 4 }
-                }
+            1 -> when (buttonId) {
+                1 -> playerl(FaceAnim.FRIENDLY, "It's very nice.").also { stage++ }
+                2 -> playerl(FaceAnim.HALF_ASKING, "When did you add it?").also { stage = 3 }
+                3 -> playerl(FaceAnim.HALF_ASKING, "What do you feed them?").also { stage = 4 }
+            }
             2 -> npcl(FaceAnim.FRIENDLY, "Isn't it just?").also { stage = END_DIALOGUE }
-            3 ->
-                npcl(
-                    FaceAnim.FRIENDLY,
-                    "Just recently. It would have been sooner, but some wretch thought it would be amusing to replace their drinking water with vodka. The vet had to nurse them back to health for weeks!",
-                ).also {
-                    stage =
-                        END_DIALOGUE
-                }
-            4 ->
-                npcl(
-                    FaceAnim.NEUTRAL,
-                    "Well, fruit and grain mostly. I try to give them a balanced diet, but their favourite treat is pineapple chunks.",
-                ).also {
-                    stage =
-                        END_DIALOGUE
-                }
+            3 -> npcl(FaceAnim.FRIENDLY, "Just recently. It would have been sooner, but some wretch thought it would be amusing to replace their drinking water with vodka. The vet had to nurse them back to health for weeks!").also { stage = END_DIALOGUE }
+            4 -> npcl(FaceAnim.NEUTRAL, "Well, fruit and grain mostly. I try to give them a balanced diet, but their favourite treat is pineapple chunks.").also { stage = END_DIALOGUE }
         }
         return true
     }

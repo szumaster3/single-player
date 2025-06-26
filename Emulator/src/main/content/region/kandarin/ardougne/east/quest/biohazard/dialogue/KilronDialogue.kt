@@ -26,11 +26,10 @@ class KilronDialogue : DialogueFile() {
                     0 -> player("Hello Kilron.").also { stage++ }
                     1 -> npc("Hello traveller. Do you need to go back over?").also { stage++ }
                     2 -> options("Not yet Kilron.", "Yes I do.").also { stage++ }
-                    3 ->
-                        when (buttonID) {
-                            1 -> player("Not yet Kilron.").also { stage++ }
-                            2 -> player("Yes I do.").also { stage = 6 }
-                        }
+                    3 -> when (buttonID) {
+                        1 -> player("Not yet Kilron.").also { stage++ }
+                        2 -> player("Yes I do.").also { stage = 6 }
+                    }
 
                     4 -> npc("Okay, just give me the word.").also { stage++ }
                     5 -> end()

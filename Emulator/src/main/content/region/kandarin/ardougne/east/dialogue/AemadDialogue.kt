@@ -27,40 +27,15 @@ class AemadDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
-            0 ->
-                options(
-                    "Oh, that sounds interesting.",
-                    "How should I use your shop?",
-                    "No, sorry, I've come to the wrong place.",
-                ).also {
-                    stage++
+            0 -> options("Oh, that sounds interesting.", "How should I use your shop?", "No, sorry, I've come to the wrong place.").also { stage++ }
+            1 -> when (buttonId) {
+                1 -> {
+                    end()
+                    openNpcShop(player, npc.id)
                 }
-            1 ->
-                when (buttonId) {
-                    1 -> {
-                        end()
-                        openNpcShop(player, npc.id)
-                    }
-                    2 ->
-                        npc(
-                            FaceAnim.HAPPY,
-                            "I'm glad you ask! You can buy as many of the items",
-                            "stocked as you wish. You can also sell most items to the",
-                            "shop.",
-                        ).also {
-                            stage =
-                                0
-                        }
-                    3 ->
-                        npc(
-                            FaceAnim.HALF_GUILTY,
-                            "Hmph. Well, perhaps next time you'll need something",
-                            "from me?",
-                        ).also {
-                            stage =
-                                END_DIALOGUE
-                        }
-                }
+                2 -> npc(FaceAnim.HAPPY, "I'm glad you ask! You can buy as many of the items", "stocked as you wish. You can also sell most items to the", "shop.").also { stage = 0 }
+                3 -> npc(FaceAnim.HALF_GUILTY, "Hmph. Well, perhaps next time you'll need something", "from me?").also { stage = END_DIALOGUE }
+            }
         }
         return true
     }

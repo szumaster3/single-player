@@ -18,8 +18,9 @@ import org.rs.consts.Quests
  * Relations
  * - [Biohazard][content.region.kandarin.ardougne.east.quest.biohazard.Biohazard]
  */
-class ChemistDialogue : DialogueFile() {
-    override fun handle(componentID: Int, buttonID: Int, ) {
+class ChemistBiohazardDialogue : DialogueFile() {
+
+    override fun handle(componentID: Int, buttonID: Int) {
         npc = NPC(NPCs.CHEMIST_367)
         when {
             (getQuestStage(player!!, Quests.BIOHAZARD) in 10..15) -> {

@@ -19,7 +19,7 @@ import org.rs.consts.Quests
  * Relations
  * - [Biohazard][content.region.kandarin.ardougne.east.quest.biohazard.Biohazard]
  */
-class ElenaDialogue : DialogueFile() {
+class ElenaBiohazardDialogue : DialogueFile() {
 
     override fun handle(componentID: Int, buttonID: Int) {
         val questStage = getQuestStage(player!!, Quests.BIOHAZARD)

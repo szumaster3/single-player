@@ -13,6 +13,7 @@ import org.rs.consts.Quests
  * - [Biohazard][content.region.kandarin.ardougne.east.quest.biohazard.Biohazard]
  */
 class NurseSarahDialogue : DialogueFile() {
+
     override fun handle(componentID: Int, buttonID: Int) {
         npc = NPC(NPCs.NURSE_SARAH_373)
         when (stage) {

@@ -1,6 +1,8 @@
 package content.region.kandarin.ardougne.east.dialogue
 
+import content.region.kandarin.ardougne.east.quest.biohazard.dialogue.ElenaBiohazardDialogue
 import core.api.openDialogue
+import core.api.quest.getQuestStage
 import core.api.quest.isQuestComplete
 import core.api.quest.isQuestInProgress
 import core.game.dialogue.Dialogue
@@ -19,14 +21,18 @@ class ElenaDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
-        if (isQuestComplete(player, Quests.PLAGUE_CITY) && isQuestInProgress(player, Quests.BIOHAZARD, 0, 100)) {
-            end().also {
-                openDialogue(player, content.region.kandarin.ardougne.east.quest.biohazard.dialogue.ElenaDialogue())
-            }
+
+        return if (
+            isQuestComplete(player, Quests.PLAGUE_CITY) &&
+            !isQuestComplete(player, Quests.BIOHAZARD) && getQuestStage(player, Quests.BIOHAZARD) > 0) {
+            end()
+            openDialogue(player, ElenaBiohazardDialogue())
+            true
         } else {
-            npc("Hello.").also { stage = END_DIALOGUE }
+            npc("Hello.")
+            stage = END_DIALOGUE
+            true
         }
-        return true
     }
 
     override fun handle(

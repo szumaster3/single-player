@@ -48,9 +48,7 @@ class BiohazardPlugin : InteractionListener {
         on(NPCs.DA_VINCI_336, IntType.NPC, "talk-to") { player, _ ->
             if (getQuestStage(player, Quests.BIOHAZARD) in 1..100) {
                 if (getAttribute(player, GameAttributes.SECOND_VIAL_CORRECT, true)) {
-                    openDialogue(player,
-                        content.region.kandarin.ardougne.east.quest.biohazard.dialogue.DaVinciDialogue()
-                    )
+                    openDialogue(player, DaVinciDialogue())
                 } else {
                     sendNPCDialogue(
                         player,
@@ -64,11 +62,18 @@ class BiohazardPlugin : InteractionListener {
             return@on true
         }
 
-        on(NPCs.DA_VINCI_337, IntType.NPC, "talk-to") { player, _ ->
-            if (getQuestStage(player, Quests.BIOHAZARD) in 1..100) {
-                if (getAttribute(player, GameAttributes.SECOND_VIAL_CORRECT, false)) {
-                    openDialogue(player, DaVinciVarrockDialogue())
-                    return@on true
+        on(NPCs.DA_VINCI_337, IntType.NPC, "talk-to") { player, node ->
+            if (getAttribute(player, GameAttributes.SECOND_VIAL_CORRECT, false)) {
+                dialogue(player) {
+                    npc(node.id, "Hello again. I hope your journey was as pleasant as", "mine.")
+                    player("Well, as they say, it's always sunny in Gielinor.")
+                    npc(node.id, "Ok, here it is.")
+                    end {
+                        sendMessage(player, "He gives you the vial of ethenea.")
+                        player("Thanks, you've been a big help.")
+                        addItemOrDrop(player, Items.ETHENEA_415, 1)
+                        removeAttribute(player, GameAttributes.SECOND_VIAL_CORRECT)
+                    }
                 }
             } else {
                 sendDialogue(player, "Da Vinci does not feel sufficiently moved to talk.")
@@ -76,18 +81,40 @@ class BiohazardPlugin : InteractionListener {
             return@on true
         }
 
-        on(NPCs.CHANCY_339, IntType.NPC, "talk-to") { player, _ ->
+        on(NPCs.CHANCY_339, IntType.NPC, "talk-to") { player, node ->
             if (getAttribute(player, GameAttributes.FIRST_VIAL_CORRECT, false)) {
-                openDialogue(player, ChancyVarrockDialogueFile())
+                dialogue(player) {
+                    player("Hi, thanks for doing that.")
+                    npc(node.id, "No problem.")
+                    npc(node.id, "Next time give me something more valuable...", "I couldn't get anything for this on the blackmarket.")
+                    end {
+                        player("That was the idea.")
+                        sendMessage(player, "He gives you the vial of liquid honey.")
+                        addItemOrDrop(player, Items.LIQUID_HONEY_416, 1)
+                        removeAttribute(player, GameAttributes.FIRST_VIAL_CORRECT)
+                    }
+                }
             } else {
                 sendDialogue(player, "Chancy doesn't feel like talking.")
             }
             return@on true
         }
 
-        on(NPCs.HOPS_341, IntType.NPC, "talk-to") { player, _ ->
+        on(NPCs.HOPS_341, IntType.NPC, "talk-to") { player, node ->
             if (getAttribute(player, GameAttributes.THIRD_VIAL_CORRECT, false)) {
-                openDialogue(player, HopsVarrockDialogue())
+                dialogue(player) {
+                    player("Hello, how was your journey?")
+                    npc(node.id, "Pretty thirst-inducing actually...")
+                    player("Please tell me that you haven't drunk the contents...")
+                    npc(node.id, FaceAnim.SCARED, "Oh the gods no! What do you take me for?")
+                    npc(node.id, "Here's your vial anyway.")
+                    end {
+                        sendMessage(player, "He gives you the vial of ethenea.")
+                        addItemOrDrop(player, Items.SULPHURIC_BROLINE_417, 1)
+                        removeAttribute(player, GameAttributes.THIRD_VIAL_CORRECT)
+                        player("Thanks, I'll let you get your drink now.")
+                    }
+                }
             } else {
                 sendDialogue(player, "Hops doesn't feel like talking.")
             }

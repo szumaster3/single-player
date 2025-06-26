@@ -14,33 +14,19 @@ import org.rs.consts.Quests
  * - [Biohazard][content.region.kandarin.ardougne.east.quest.biohazard.Biohazard]
  */
 class JericoDialogue : DialogueFile() {
-    override fun handle(componentID: Int, buttonID: Int, ) {
+
+    override fun handle(componentID: Int, buttonID: Int) {
         val questStage = getQuestStage(player!!, Quests.BIOHAZARD)
         npc = NPC(NPCs.JERICO_366)
         when {
             (questStage in 1..2) -> {
                 when (stage) {
                     0 -> player("Hello Jerico.").also { stage++ }
-                    1 ->
-                        npc(
-                            "Hello, I've been expecting you. Elena tells me you need",
-                            "to cross the wall.",
-                        ).also { stage++ }
+                    1 -> npc("Hello, I've been expecting you. Elena tells me you need", "to cross the wall.").also { stage++ }
                     2 -> player("That's right.").also { stage++ }
                     3 -> npc("My messenger pigeons help me communicate with", "friends over the wall.").also { stage++ }
-                    4 ->
-                        npc(
-                            "I have arranged for two friends to aid you with a rope",
-                            "ladder. Omart is waiting for you at the south end of the",
-                            "wall.",
-                        ).also {
-                            stage++
-                        }
-                    5 ->
-                        npc(
-                            "But be careful, if the mourners catch you the",
-                            "punishment will be severe.",
-                        ).also { stage++ }
+                    4 -> npc("I have arranged for two friends to aid you with a rope", "ladder. Omart is waiting for you at the south end of the", "wall.").also { stage++ }
+                    5 -> npc("But be careful, if the mourners catch you the", "punishment will be severe.").also { stage++ }
                     6 -> player("Thanks Jerico.").also { stage++ }
                     7 -> {
                         end()
@@ -51,28 +37,15 @@ class JericoDialogue : DialogueFile() {
 
             (questStage == 3) -> {
                 when (stage) {
-                    0 ->
-                        player(
-                            "Hello Jerico, I need someway to distract the",
-                            "watch tower, any ideas?",
-                        ).also { stage++ }
-
+                    0 -> player("Hello Jerico, I need someway to distract the", "watch tower, any ideas?").also { stage++ }
                     1 -> npc("Hmmm. Nothing springs to mind.").also { stage++ }
-                    2 ->
-                        options(
-                            "Maybe you could shout and scream, and call them away?",
-                            "Maybe I could use your messenger pigeons to distract them?",
-                            "Maybe if i'm really quiet they won't notice me?",
-                            "I can't think of anything either.",
-                        ).also { stage++ }
-
-                    3 ->
-                        when (buttonID) {
-                            1 -> player("Maybe you could shout and scream, and call them away?").also { stage++ }
-                            2 -> player("Maybe I could use your messenger pigeons to distract them?").also { stage = 7 }
-                            3 -> player("Maybe if i'm really quiet they won't notice me?").also { stage = 11 }
-                            4 -> player("I can't think of anything either.").also { stage = 15 }
-                        }
+                    2 -> options("Maybe you could shout and scream, and call them away?", "Maybe I could use your messenger pigeons to distract them?", "Maybe if i'm really quiet they won't notice me?", "I can't think of anything either.").also { stage++ }
+                    3 -> when (buttonID) {
+                        1 -> player("Maybe you could shout and scream, and call them away?").also { stage++ }
+                        2 -> player("Maybe I could use your messenger pigeons to distract them?").also { stage = 7 }
+                        3 -> player("Maybe if i'm really quiet they won't notice me?").also { stage = 11 }
+                        4 -> player("I can't think of anything either.").also { stage = 15 }
+                    }
 
                     4 -> npc("So they chase after me?").also { stage++ }
                     5 -> player("Yes. How quickly can you run?").also { stage++ }

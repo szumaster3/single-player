@@ -21,18 +21,8 @@ class ArdougneMonkeyDialogue(player: Player? = null) : Dialogue(player) {
             var a = 1..5
             when (a.random()) {
                 1 -> npc(FaceAnim.OLD_LAUGH1, "Arr!").also { stage = 10 }
-                2 ->
-                    npcl(FaceAnim.OLD_LAUGH1, "Let me go, can't ye hear them? Howlin' in the dark...").also {
-                        stage = 20
-                    }
-                3 ->
-                    npcl(
-                        FaceAnim.OLD_DEFAULT,
-                        "I'm not goin' back in that brewery, not fer all the Bitternuts I can carry!",
-                    ).also {
-                        stage =
-                            END_DIALOGUE
-                    }
+                2 -> npcl(FaceAnim.OLD_LAUGH1, "Let me go, can't ye hear them? Howlin' in the dark...").also { stage = 20 }
+                3 -> npcl(FaceAnim.OLD_DEFAULT, "I'm not goin' back in that brewery, not fer all the Bitternuts I can carry!").also { stage = END_DIALOGUE }
                 4 -> npc(FaceAnim.OLD_DEFAULT, "Are ye here for...the stuff?").also { stage = 30 }
                 5 -> npc(FaceAnim.OLD_DISTRESSED, "Arr! Yer messin with me monkey plunder!").also { stage = 40 }
             }
