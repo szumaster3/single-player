@@ -63,7 +63,7 @@ class CannonballSmelter : Script() {
                                 "rocks",
                                 true,
                             )!! &&
-                                MiningNode.forId(node?.id!!)!!.reward == Items.COAL_453
+                                    MiningNode.forId(node.id!!)!!.reward == Items.COAL_453
                         })
                     if (rock != null) {
                         scriptAPI.interact(bot, rock, "mine")
@@ -88,7 +88,7 @@ class CannonballSmelter : Script() {
                                 "rocks",
                                 true,
                             )!! &&
-                                MiningNode.forId(node?.id!!)!!.reward == Items.IRON_ORE_440
+                                    MiningNode.forId(node.id!!)!!.reward == Items.IRON_ORE_440
                         })
                     if (rock != null) {
                         scriptAPI.interact(bot, rock, "mine")
@@ -106,7 +106,6 @@ class CannonballSmelter : Script() {
                         state = State.BANKING
                         bot.pulseManager.run(
                             object : BankingPulse(this, bank) {
-                                override fun pulse(): Boolean = super.pulse()
                             },
                         )
                     }
@@ -277,12 +276,12 @@ class CannonballSmelter : Script() {
             inventory.add(Item(Items.COAL_453, 18))
             inventory.add(Item(Items.IRON_ORE_440, 9))
         }
-        skills.put(Skills.ATTACK, 40)
-        skills.put(Skills.STRENGTH, 60)
-        skills.put(Skills.MINING, 75)
-        skills.put(Skills.HITPOINTS, 99)
-        skills.put(Skills.DEFENCE, 99)
-        skills.put(Skills.SMITHING, 35)
+        skills[Skills.ATTACK] = 40
+        skills[Skills.STRENGTH] = 60
+        skills[Skills.MINING] = 75
+        skills[Skills.HITPOINTS] = 99
+        skills[Skills.DEFENCE] = 99
+        skills[Skills.SMITHING] = 35
         quests.add("Dwarf Cannon")
     }
 }

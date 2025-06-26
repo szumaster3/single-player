@@ -22,6 +22,7 @@ import core.game.world.map.zone.ZoneBorders
 import core.game.world.map.zone.impl.WildernessZone
 import core.tools.RandomFunction
 import org.rs.consts.Items
+import java.util.*
 import kotlin.random.Random
 
 class GreenDragonKiller(
@@ -185,11 +186,11 @@ class GreenDragonKiller(
                         override fun pulse(): Boolean {
                             for (item in bot.inventory.toArray()) {
                                 item ?: continue
-                                if (item.name.toLowerCase().contains("lobster") ||
+                                if (item.name.lowercase(Locale.getDefault()).contains("lobster") ||
                                     item.name
-                                        .toLowerCase()
+                                        .lowercase(Locale.getDefault())
                                         .contains("swordfish") ||
-                                    item.name.toLowerCase().contains("shark")
+                                    item.name.lowercase(Locale.getDefault()).contains("shark")
                                 ) {
                                     continue
                                 }

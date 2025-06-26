@@ -7,40 +7,59 @@ import core.game.interaction.IntType
 import core.game.interaction.InteractionListeners
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
+import core.tools.RandomFunction
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
 class BarbarianSalmon : Script() {
-    private var ticks = 0L
+    private var state = State.FISHING
 
     override fun tick() {
-        val now = System.currentTimeMillis()
-        if (now < ticks) return
+        when (state) {
+            State.FISHING -> {
+                val fishingSpot = scriptAPI.getNearestNode(NPCs.FISHING_SPOT_309, false)
+                if (fishingSpot != null && !bot.inventory.isFull) {
+                    InteractionListeners.run(fishingSpot.id, IntType.NPC, "lure", bot, fishingSpot)
+                } else if (bot.inventory.isFull) {
+                    state = State.DROP_FISH
+                }
+            }
 
-        val fishingSpot = scriptAPI.getNearestNode(NPCs.FISHING_SPOT_309, false)
-        if (fishingSpot != null && !bot.inventory.isFull) {
-            InteractionListeners.run(fishingSpot.id, IntType.NPC, "lure", bot, fishingSpot)
-        }
-        if (bot.inventory.contains(Items.RAW_SALMON_331, 5)) {
-            produceGroundItem(bot, Items.RAW_SALMON_331, 5, bot.location)
-            bot.inventory.remove(Item(Items.RAW_SALMON_331, 5))
-        }
-        if (bot.inventory.contains(Items.RAW_TROUT_335, 5)) {
-            produceGroundItem(bot, Items.RAW_TROUT_335, 5, bot.location)
-            bot.inventory.remove(Item(Items.RAW_TROUT_335, 5))
-        }
-        if (bot.inventory.isFull &&
-            (
-                    !bot.inventory.containsAtLeastOneItem(Items.RAW_SALMON_331) ||
-                            !bot.inventory.containsAtLeastOneItem(Items.RAW_TROUT_335)
-                    )
-        ) {
-            bot.inventory.clear()
-            bot.inventory.add(Item(Items.FLY_FISHING_ROD_309))
-            bot.inventory.add(Item(Items.FEATHER_314, 10000))
-        }
+            State.DROP_FISH -> {
+                var droppedAny = false
 
-        ticks = now + 3000
+                val salmonCount = bot.inventory.getAmount(Items.RAW_SALMON_331)
+                if (salmonCount > 0) {
+                    val dropAmount = RandomFunction.random(1, salmonCount)
+                    produceGroundItem(bot, Items.RAW_SALMON_331, dropAmount, bot.location)
+                    bot.inventory.remove(Item(Items.RAW_SALMON_331, dropAmount))
+                    droppedAny = true
+                }
+
+                val troutCount = bot.inventory.getAmount(Items.RAW_TROUT_335)
+                if (troutCount > 0) {
+                    val dropAmount = RandomFunction.random(1, troutCount)
+                    produceGroundItem(bot, Items.RAW_TROUT_335, dropAmount, bot.location)
+                    bot.inventory.remove(Item(Items.RAW_TROUT_335, dropAmount))
+                    droppedAny = true
+                }
+
+                if (!droppedAny || !bot.inventory.isFull) {
+                    state = State.REFILL_BAIT
+                }
+            }
+
+            State.REFILL_BAIT -> {
+                val hasRod = bot.inventory.containsAtLeastOneItem(Items.FLY_FISHING_ROD_309)
+                val hasFeathers = bot.inventory.containsAtLeastOneItem(Items.FEATHER_314)
+                if (!hasRod || !hasFeathers) {
+                    bot.inventory.clear()
+                    bot.inventory.add(Item(Items.FLY_FISHING_ROD_309))
+                    bot.inventory.add(Item(Items.FEATHER_314, 10000))
+                }
+                state = State.FISHING
+            }
+        }
     }
 
     override fun newInstance(): Script {
@@ -53,5 +72,11 @@ class BarbarianSalmon : Script() {
         skills[Skills.FISHING] = 55
         inventory.add(Item(Items.FLY_FISHING_ROD_309))
         inventory.add(Item(Items.FEATHER_314, 10000))
+    }
+
+    enum class State {
+        FISHING,
+        DROP_FISH,
+        REFILL_BAIT,
     }
 }

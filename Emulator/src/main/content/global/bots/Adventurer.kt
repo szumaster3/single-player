@@ -66,13 +66,13 @@ class Adventurer(
 
     override fun toString(): String =
         "${bot.username} is an Adventurer bot " +
-            "at ${bot.location}! " +
-            "State: $state - " +
-            "City: $city - " +
-            "Ticks: $ticks - " +
-            "Freshspawn: $freshspawn - " +
-            "Sold: $sold - " +
-            "Counter: $counter"
+                "at ${bot.location}! " +
+                "State: $state - " +
+                "City: $city - " +
+                "Ticks: $ticks - " +
+                "Freshspawn: $freshspawn - " +
+                "Sold: $sold - " +
+                "Counter: $counter"
 
     var state = State.START
 

@@ -15,16 +15,16 @@ class FarmerThiever : Script() {
     val bankZone = ZoneBorders(3092, 3245, 3092, 3242)
     val food = Items.JUG_OF_WINE_1993
     val foodAmount = 10
-    var state = content.global.bots.FarmerThiever.State.PICKPOCKETING
+    var state = State.PICKPOCKETING
 
     override fun tick() {
         when (state) {
-            content.global.bots.FarmerThiever.State.PICKPOCKETING -> {
+            State.PICKPOCKETING -> {
                 if (!pickpocketZone.insideBorder(bot)) {
                     scriptAPI.walkTo(pickpocketZone.randomLoc)
                 }
                 if (bot.inventory.isFull) {
-                    state = content.global.bots.FarmerThiever.State.BANKING
+                    state = State.BANKING
                 } else {
                     val farmer = scriptAPI.getNearestNode(NPCs.MASTER_FARMER_2234, false)
                     bot.interfaceManager.close()
@@ -34,7 +34,8 @@ class FarmerThiever : Script() {
                     }
                 }
             }
-            content.global.bots.FarmerThiever.State.BANKING -> {
+
+            State.BANKING -> {
                 val bank = scriptAPI.getNearestNode("Bank Booth", true)
                 bank ?: return
                 if (!bankZone.insideBorder(bot)) {
@@ -43,14 +44,14 @@ class FarmerThiever : Script() {
                     bot.faceLocation(bank.location)
                     bot.inventory.clear()
                     bot.inventory.add(Item(food, foodAmount))
-                    state = content.global.bots.FarmerThiever.State.PICKPOCKETING
+                    state = State.PICKPOCKETING
                 }
             }
         }
     }
 
     override fun newInstance(): Script {
-        val script = content.global.bots.FarmerThiever()
+        val script = FarmerThiever()
         script.bot = SkillingBotAssembler().produce(SkillingBotAssembler.Wealth.POOR, bot.startLocation)
         return script
     }

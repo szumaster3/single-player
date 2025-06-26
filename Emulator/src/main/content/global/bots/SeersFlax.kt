@@ -13,21 +13,21 @@ import core.game.world.map.path.Pathfinder
 import org.rs.consts.Items
 
 class SeersFlax : Script() {
-    var state = content.global.bots.SeersFlax.State.PICKING
+    var state = State.PICKING
     var stage = 0
     var doorOpen = false
 
     override fun tick() {
         when (state) {
-            content.global.bots.SeersFlax.State.PICKING -> {
+            State.PICKING -> {
                 val flax = scriptAPI.getNearestNode(2646, true)
                 flax?.interaction?.handle(bot, flax.interaction[1])
                 if (bot.inventory.getAmount(Items.FLAX_1779) > 25) {
-                    state = content.global.bots.SeersFlax.State.TO_SPINNER
+                    state = State.TO_SPINNER
                 }
             }
 
-            content.global.bots.SeersFlax.State.TO_SPINNER -> {
+            State.TO_SPINNER -> {
                 if (stage == 0) {
                     Pathfinder.find(bot, Location.create(2736, 3442, 0)).walk(bot).also { stage++ }
                 }
@@ -53,7 +53,7 @@ class SeersFlax : Script() {
                                 override fun pulse(): Boolean {
                                     bot.faceLocation(spinner?.location)
                                     state =
-                                        content.global.bots.SeersFlax.State.SPINNING.also {
+                                        State.SPINNING.also {
                                             stage = 0
                                             doorOpen = false
                                         }
@@ -65,7 +65,7 @@ class SeersFlax : Script() {
                 }
             }
 
-            content.global.bots.SeersFlax.State.SPINNING -> {
+            State.SPINNING -> {
                 bot.pulseManager.run(
                     SpinningPulse(
                         bot,
@@ -74,10 +74,10 @@ class SeersFlax : Script() {
                         Spinning.FLAX,
                     ),
                 )
-                state = content.global.bots.SeersFlax.State.FIND_BANK
+                state = State.FIND_BANK
             }
 
-            content.global.bots.SeersFlax.State.FIND_BANK -> {
+            State.FIND_BANK -> {
                 when (bot.location) {
                     Location.create(2711, 3471, 1) -> {
                         val ladder = scriptAPI.getNearestNode(25939, true) ?: return
@@ -96,11 +96,11 @@ class SeersFlax : Script() {
                     }
 
                     Location.create(2726, 3481, 0) -> Pathfinder.find(bot, Location.create(2724, 3491, 0)).walk(bot)
-                    Location.create(2724, 3491, 0) -> state = content.global.bots.SeersFlax.State.BANKING
+                    Location.create(2724, 3491, 0) -> state = State.BANKING
                 }
             }
 
-            content.global.bots.SeersFlax.State.BANKING -> {
+            State.BANKING -> {
                 val bank = scriptAPI.getNearestNode(25808, true)
                 if (bank != null) {
                     bot.pulseManager.run(
@@ -109,10 +109,10 @@ class SeersFlax : Script() {
                                 bot.faceLocation(bank.location)
                                 scriptAPI.bankItem(Items.BOW_STRING_1777)
                                 if (bot.bank.getAmount(Items.BOW_STRING_1777) > 500) {
-                                    state = content.global.bots.SeersFlax.State.TELE_GE
+                                    state = State.TELE_GE
                                     return true
                                 }
-                                state = content.global.bots.SeersFlax.State.RETURN_TO_FLAX
+                                state = State.RETURN_TO_FLAX
                                 return true
                             }
                         },
@@ -120,7 +120,7 @@ class SeersFlax : Script() {
                 }
             }
 
-            content.global.bots.SeersFlax.State.RETURN_TO_FLAX -> {
+            State.RETURN_TO_FLAX -> {
                 if (bot.location == Location.create(2756, 3478, 0)) {
                     Pathfinder.find(bot, Location.create(2726, 3486, 0)).walk(bot)
                 }
@@ -130,24 +130,25 @@ class SeersFlax : Script() {
                 when (bot.location) {
                     Location.create(2726, 3486, 0) -> Pathfinder.find(bot, Location.create(2729, 3469, 0)).walk(bot)
                     Location.create(2729, 3469, 0) -> Pathfinder.find(bot, Location.create(2734, 3447, 0)).walk(bot)
-                    Location.create(2734, 3447, 0) -> state = content.global.bots.SeersFlax.State.PICKING.also { stage = 0 }
+                    Location.create(2734, 3447, 0) -> state =
+                        State.PICKING.also { stage = 0 }
                 }
             }
 
-            content.global.bots.SeersFlax.State.TELE_GE -> {
+            State.TELE_GE -> {
                 scriptAPI.teleportToGE()
-                state = content.global.bots.SeersFlax.State.SELL_GE
+                state = State.SELL_GE
             }
 
-            content.global.bots.SeersFlax.State.SELL_GE -> {
+            State.SELL_GE -> {
                 scriptAPI.sellOnGE(Items.BOW_STRING_1777)
-                state = content.global.bots.SeersFlax.State.TELE_CAMELOT
+                state = State.TELE_CAMELOT
             }
 
-            content.global.bots.SeersFlax.State.TELE_CAMELOT -> {
+            State.TELE_CAMELOT -> {
                 scriptAPI.teleport(Location.create(2756, 3478, 0))
                 stage = 0
-                state = content.global.bots.SeersFlax.State.RETURN_TO_FLAX
+                state = State.RETURN_TO_FLAX
             }
         }
     }
@@ -169,7 +170,7 @@ class SeersFlax : Script() {
     }
 
     override fun newInstance(): Script {
-        val script = content.global.bots.SeersFlax()
+        val script = SeersFlax()
         script.bot = SkillingBotAssembler().produce(SkillingBotAssembler.Wealth.POOR, bot.startLocation)
         return script
     }

@@ -11,6 +11,7 @@ import core.game.world.map.Location
 import core.game.world.map.zone.ZoneBorders
 import core.tools.RandomFunction
 import org.rs.consts.Items
+import java.util.*
 
 class GenericSlayerBot : Script() {
     var state = State.GETTING_TASK
@@ -160,9 +161,9 @@ class GenericSlayerBot : Script() {
     }
 
     fun Item.checkIgnored(): Boolean {
-        if (name.toLowerCase().contains("charm")) return true
-        if (name.toLowerCase().contains("lobster")) return true
-        if (name.toLowerCase().contains("clue")) return true
+        if (name.lowercase(Locale.getDefault()).contains("charm")) return true
+        if (name.lowercase(Locale.getDefault()).contains("lobster")) return true
+        if (name.lowercase(Locale.getDefault()).contains("clue")) return true
         if (!definition.isTradeable) return true
         return when (id) {
             Items.BONES_2530 -> true

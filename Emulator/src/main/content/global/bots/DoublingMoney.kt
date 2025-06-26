@@ -89,6 +89,7 @@ class DoublingMoney : Script() {
                         scriptAPI.sendChat("Doubling money")
                         sleepTime = 7
                     }
+
                     Effort.HIGH -> {
                         val message =
                             arrayOf(
@@ -102,6 +103,7 @@ class DoublingMoney : Script() {
                         bot.updateMasks.register(EntityFlag.Chat, ctx)
                         sleepTime = 8
                     }
+
                     Effort.VERY_HIGH -> {
                         val message = arrayOf("Doubling money!", "Doubling money").random()
                         val messageEffect = arrayOf(771, 2818, 2562, 768, 512, 2304, 2560, 769, 1792).random()
@@ -164,7 +166,8 @@ class DoublingMoney : Script() {
                     coinsFromBot > 0 &&
                     effort == Effort.VERY_HIGH
                 ) {
-                    val message = "Payed ${(if (coinsFromBot < 1000) "${coinsFromBot}gp" else "${coinsFromBot / 1000}k")}"
+                    val message =
+                        "Payed ${(if (coinsFromBot < 1000) "${coinsFromBot}gp" else "${coinsFromBot / 1000}k")}"
                     val ctx = ChatMessage(bot, message, 512, message.length)
                     bot.updateMasks.register(EntityFlag.Chat, ctx)
 
