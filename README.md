@@ -14,28 +14,31 @@ _For Windows users_ - Enable developer mode in Windows settings first.
 
 1. Fork the repository via GitLab.
 2. Clone your fork:
-   ```
-   git clone <your-fork-url>
-   ```
+```
+git clone <your-fork-url>
+```
+   
 3. Import in IntelliJ IDEA:
    File > New > Project from Version Control > Git > Paste URL > Clone.
 
 #### GitLab Setup
 
 - Generate SSH key if needed:
-  ```
-  ssh-keygen -t ed25519 -C "<comment>"
-  ```
+```
+ssh-keygen -t ed25519 -C "<comment>"
+```
+  
 - Add SSH key to GitLab account.
 - Configure Git:
-  ```
-  git config --global user.name "Your Name"
-  git config --global user.email "your_email@example.com"
-  ```
+```
+git config --global user.name "Your Name"
+git config --global user.email "your_email@example.com"
+```
 
 #### Build
 
 From the project root:
+
 ```
 mvn clean install
 ```
