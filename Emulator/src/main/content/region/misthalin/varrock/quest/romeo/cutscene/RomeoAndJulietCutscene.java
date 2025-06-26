@@ -14,7 +14,7 @@ import core.plugin.Initializable;
 import org.rs.consts.Quests;
 
 /**
- * The type Romeo and juliet cutscene.
+ * Handles Romeo and juliet cutscene.
  */
 @Initializable
 public final class RomeoAndJulietCutscene extends CutscenePlugin {
@@ -99,9 +99,9 @@ public final class RomeoAndJulietCutscene extends CutscenePlugin {
     }
 
     /**
-     * Gets phillipia.
+     * Gets npc.
      *
-     * @return the phillipia
+     * @return the npc.
      */
     public NPC getPhillipia() {
         return npcs.get(1);

@@ -15,33 +15,7 @@ import org.rs.consts.Scenery
 
 class TolnaRiftPlugin : InteractionListener {
     private val SCENERY_RIFT =
-        intArrayOf(
-            13967,
-            13969,
-            3971,
-            13972,
-            13973,
-            13974,
-            13975,
-            13976,
-            13977,
-            13978,
-            13979,
-            13980,
-            13968,
-            13981,
-            13982,
-            13983,
-            13985,
-            13986,
-            13987,
-            13988,
-            13989,
-            13990,
-            13991,
-            13992,
-            13993,
-        )
+        intArrayOf(13967, 13969, 3971, 13972, 13973, 13974, 13975, 13976, 13977, 13978, 13979, 13980, 13968, 13981, 13982, 13983, 13985, 13986, 13987, 13988, 13989, 13990, 13991, 13992, 13993)
 
     override fun defineListeners() {
         on(SCENERY_RIFT, SCENERY, "enter") { player, _ ->

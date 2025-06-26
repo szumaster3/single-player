@@ -21,7 +21,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Thrantax dialogue.
  *
- * Relations
+ * # Relations
  * - [Merlin Crystal][content.region.kandarin.camelot.quest.arthur.MerlinCrystal]
  */
 class ThrantaxDialogue : DialogueFile() {

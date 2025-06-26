@@ -21,7 +21,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Skavid dialogue.
  *
- * Relations
+ * # Relations
  * - [Watchtower Quest][content.region.kandarin.yanille.quest.itwatchtower.Watchtower]
  */
 @Initializable

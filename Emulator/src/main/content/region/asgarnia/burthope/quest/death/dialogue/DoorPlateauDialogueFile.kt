@@ -14,7 +14,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Door Plateau dialogue.
  *
- * Relations
+ * # Relations
  * - [Death Plateau][content.region.asgarnia.burthope.quest.death.DeathPlateau]
  */
 class DoorPlateauDialogueFile(val door: Int) : DialogueFile() {

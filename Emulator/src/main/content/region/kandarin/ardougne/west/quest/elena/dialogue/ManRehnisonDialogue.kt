@@ -7,7 +7,7 @@ import core.tools.END_DIALOGUE
 /**
  * Represents the Man Rehnison dialogue.
  *
- * Relations
+ * # Relations
  * - [Plague City][content.region.kandarin.ardougne.west.quest.elena.PlagueCity]
  */
 class ManRehnisonDialogue : DialogueFile() {

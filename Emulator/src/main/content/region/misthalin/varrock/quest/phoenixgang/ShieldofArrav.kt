@@ -16,18 +16,12 @@ import org.rs.consts.Items
 import org.rs.consts.Quests
 import org.rs.consts.Vars
 
+/**
+ * Represents the Shield of Arrav quest.
+ */
 @Initializable
-class ShieldofArrav :
-    Quest(
-        Quests.SHIELD_OF_ARRAV,
-        29,
-        28,
-        1,
-        Vars.VARP_QUEST_SHIELD_OF_ARRAV_PROGRESS_145,
-        0,
-        1,
-        7,
-    ) {
+class ShieldofArrav : Quest(Quests.SHIELD_OF_ARRAV, 29, 28, 1, Vars.VARP_QUEST_SHIELD_OF_ARRAV_PROGRESS_145, 0, 1, 7) {
+
     companion object {
         /**
          * Represents the shield of arrav book item.
@@ -156,7 +150,7 @@ class ShieldofArrav :
     override fun newInstance(arg: Any?): Quest {
         ClassScanner.definePlugins(
             JohnnyBeardNPC(),
-            JonnytheBeardDialogue(),
+            JonnyTheBeardDialogue(),
             KatrineDialogue(),
             KingRoaldDialogue(),
             ReldoDialogue(),
@@ -167,10 +161,7 @@ class ShieldofArrav :
         return this
     }
 
-    override fun drawJournal(
-        player: Player,
-        stage: Int,
-    ) {
+    override fun drawJournal(player: Player, stage: Int) {
         super.drawJournal(player, stage)
         when (stage) {
             0 -> {
@@ -232,47 +223,19 @@ class ShieldofArrav :
                     line(player, "<str>He gave me the location of the Black Arm gang HQ.", 8 + 7)
                     line(player, "<str>According to him there is a criminal organisation known as", 9 + 7)
                     line(player, "<str>the $RED'Black Arm Gang'${BLUE}down the alley near to him.", 10 + 7)
-                    line(
-                        player,
-                        "${BLUE}If I want to join the ${RED}Phoenix Gang ${BLUE}I need to kill$RED Jonny The",
-                        11 + 7,
-                    )
-                    line(
-                        player,
-                        "${RED}Beard ${BLUE}in the ${RED}Blue Moon Inn ${BLUE}and retrieve his ${RED}report.",
-                        12 + 7,
-                    )
-                    line(
-                        player,
-                        "${RED}Katrine ${BLUE}said if I wanted to join the ${RED}Black Arm Gang,$BLUE I'd",
-                        13 + 7,
-                    )
+                    line(player, "${BLUE}If I want to join the ${RED}Phoenix Gang ${BLUE}I need to kill$RED Jonny The", 11 + 7)
+                    line(player, "${RED}Beard ${BLUE}in the ${RED}Blue Moon Inn ${BLUE}and retrieve his ${RED}report.", 12 + 7)
+                    line(player, "${RED}Katrine ${BLUE}said if I wanted to join the ${RED}Black Arm Gang,$BLUE I'd", 13 + 7)
                     line(player, "${BLUE}have to steal ${RED}two Phoenix crossbows ${BLUE}from the rival gang.", 14 + 7)
                     line(player, "${BLUE}Maybe ${RED}Charlie the tramp ${BLUE}can give me some ideas about", 15 + 7)
                     line(player, "${BLUE}how to do this.", 16 + 7)
                 } else if (isPhoenixMission(player)) {
-                    line(
-                        player,
-                        "${BLUE}If I want to join the ${RED}Phoenix Gang ${BLUE}I need to kill$RED Jonny The",
-                        10 + 7,
-                    )
-                    line(
-                        player,
-                        "${RED}Beard ${BLUE}in the ${RED}Blue Moon Inn ${BLUE}and retrieve his ${RED}report.",
-                        11 + 7,
-                    )
-                    line(
-                        player,
-                        "${BLUE}Alternatively, if I want to join the ${RED}Blackarm gang ${BLUE}I should",
-                        12 + 7,
-                    )
+                    line(player, "${BLUE}If I want to join the ${RED}Phoenix Gang ${BLUE}I need to kill$RED Jonny The", 10 + 7)
+                    line(player, "${RED}Beard ${BLUE}in the ${RED}Blue Moon Inn ${BLUE}and retrieve his ${RED}report.", 11 + 7)
+                    line(player, "${BLUE}Alternatively, if I want to join the ${RED}Blackarm gang ${BLUE}I should", 12 + 7)
                     line(player, "${BLUE}speak to their ${RED}leader, Katrine, ${BLUE}about joining.", 13 + 7)
                 } else if (isBlackArmMission(player)) {
-                    line(
-                        player,
-                        "${RED}Katrine ${BLUE}said if I wanted to join the ${RED}Black Arm Gang$BLUE, I'd",
-                        10 + 7,
-                    )
+                    line(player, "${RED}Katrine ${BLUE}said if I wanted to join the ${RED}Black Arm Gang$BLUE, I'd", 10 + 7)
                     line(player, "${BLUE}have to steal ${RED}two Phoenix crossbows ${BLUE}from the rival gang.", 11 + 7)
                     line(player, "${BLUE}Maybe ${RED}Charlie the tramp ${BLUE}can give me some ideas about", 12 + 7)
                     line(player, "${BLUE}how to do this.", 13 + 7)
@@ -290,20 +253,12 @@ class ShieldofArrav :
                         line(player, "$BLUE I need to search the $RED Phoenix Gang's hideout$BLUE to find half", 17)
                         line(player, "$BLUE of the $RED Shield of Arrav.", 18)
                     } else {
-                        line(
-                            player,
-                            "$BLUE I found half of the $RED Shield of Arrav$BLUE in the $RED Phoenix Gang's",
-                            17,
-                        )
+                        line(player, "$BLUE I found half of the $RED Shield of Arrav$BLUE in the $RED Phoenix Gang's", 17)
                         line(player, "$RED hideout.", 18)
                     }
 
                     line(player, "$BLUE The second half of the $RED shield$BLUE belongs to a rival gang", 19)
-                    line(
-                        player,
-                        "$BLUE known as the $RED Black Arm Gang$BLUE. I will need $RED a friend's help$BLUE to",
-                        20,
-                    )
+                    line(player, "$BLUE known as the $RED Black Arm Gang$BLUE. I will need $RED a friend's help$BLUE to", 20)
                     line(player, "$BLUE retrieve it before claiming the $RED reward$BLUE for it.", 21)
                 } else {
                     line(player, "<str>I read about a valuable shield stolen long ago by a gang of", 11)

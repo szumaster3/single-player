@@ -18,7 +18,7 @@ import kotlin.math.abs
 /**
  * Represents the Treasure trails puzzle boxes.
  *
- * Relations
+ * # Relations
  * - Monkey Madness quest
  *
  * @author gabriel_aguido, szu

@@ -12,7 +12,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Head Mourner dialogue.
  *
- * Relations
+ * # Relations
  * - [Plague City][content.region.kandarin.ardougne.west.quest.elena.PlagueCity]
  */
 class HeadMournerDialogue : DialogueFile() {

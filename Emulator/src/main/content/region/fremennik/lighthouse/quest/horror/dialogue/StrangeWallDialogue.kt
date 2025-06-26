@@ -9,7 +9,7 @@ import org.rs.consts.Items
 /**
  * Represents the Strange Wall dialogue.
  *
- * Relations
+ * # Relations
  * - [Horror from the Deep][content.region.fremennik.lighthouse.quest.horror.HorrorFromTheDeep]
  */
 class StrangeWallDialogue(private val items: Int) : DialogueFile() {

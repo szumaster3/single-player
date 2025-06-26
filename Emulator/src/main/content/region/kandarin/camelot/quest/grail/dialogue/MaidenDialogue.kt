@@ -12,7 +12,7 @@ import org.rs.consts.NPCs
 /**
  * Represents the Maiden dialogue.
  *
- * Relations
+ * # Relations
  * - [Holy Grail][content.region.kandarin.camelot.quest.grail.HolyGrail]
  */
 class MaidenDialogue(var forced: Boolean, ) : DialogueFile() {

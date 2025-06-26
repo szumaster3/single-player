@@ -12,33 +12,23 @@ import org.rs.consts.Components
 import org.rs.consts.Items
 import org.rs.consts.Quests
 
+/**
+ * Represents the All Fired Up quest.
+ */
 @Initializable
 class AllFiredUp : Quest(Quests.ALL_FIRED_UP, 157, 156, 1) {
-    override fun drawJournal(
-        player: Player,
-        stage: Int,
-    ) {
+
+    override fun drawJournal(player: Player, stage: Int) {
         super.drawJournal(player, stage)
         var line = 11
-        player ?: return
         if (stage == 0) {
             line(player, "I can start this quest by speaking to !!King Roald?? in !!Varrock??", line++)
             line(player, "!!Palace??.", line++)
             line++
             line++
             line(player, "Minimum requirements:", line++)
-            line(
-                player,
-                "I need level !!43 Firemaking?? to start the quest.",
-                line++,
-                getStatLevel(player, Skills.FIREMAKING) >= 43,
-            )
-            line(
-                player,
-                "I need to have completed !!${Quests.PRIEST_IN_PERIL}??.",
-                line++,
-                isQuestComplete(player, Quests.PRIEST_IN_PERIL),
-            )
+            line(player, "I need level !!43 Firemaking?? to start the quest.", line++, getStatLevel(player, Skills.FIREMAKING) >= 43)
+            line(player, "I need to have completed !!${Quests.PRIEST_IN_PERIL}??.", line++, isQuestComplete(player, Quests.PRIEST_IN_PERIL))
             limitScrolling(player, line, true)
         } else {
             line(player, "I have agreed to help King Roald test the beacon network", line++, true)
@@ -163,10 +153,7 @@ class AllFiredUp : Quest(Quests.ALL_FIRED_UP, 157, 156, 1) {
         updateQuestTab(player)
     }
 
-    override fun getConfig(
-        player: Player?,
-        stage: Int,
-    ): IntArray {
+    override fun getConfig(player: Player?, stage: Int): IntArray {
         if (stage == 100) return intArrayOf(1282, 90)
         if (stage > 0) {
             return intArrayOf(1282, 1)

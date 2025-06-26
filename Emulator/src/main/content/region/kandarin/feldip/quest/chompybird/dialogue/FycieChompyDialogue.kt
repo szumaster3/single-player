@@ -18,7 +18,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Flycie dialogue.
  *
- * Relations
+ * # Relations
  * - [Big Chompy Bird Hunting][content.region.kandarin.feldip.quest.chompybird.BigChompyBirdHunting]
  */
 @Initializable

@@ -12,7 +12,7 @@ import org.rs.consts.NPCs
 /**
  * Represents the Mourner Headquarters dialogue.
  *
- * Relations
+ * # Relations
  * - [Biohazard][content.region.kandarin.ardougne.east.quest.biohazard.Biohazard]
  */
 class MournerHeadquartersDialogue : DialogueFile() {

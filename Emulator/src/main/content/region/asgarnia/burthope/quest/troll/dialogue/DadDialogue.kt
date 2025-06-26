@@ -17,7 +17,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Dad dialogue.
  *
- * Relations
+ * # Relations
  * - [Troll Stronghold][content.region.asgarnia.burthope.quest.troll.TrollStronghold]
  */
 @Initializable
@@ -64,7 +64,7 @@ class DadDialogue(player: Player? = null) : Dialogue(player) {
 /**
  * Represents the Dad dialogue file.
  *
- * Relations
+ * # Relations
  * - [Troll Stronghold][content.region.asgarnia.burthope.quest.troll.TrollStronghold]
  */
 class DadDialogueFile(private val dialogueNum: Int = 0) : DialogueFile() {

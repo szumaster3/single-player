@@ -11,7 +11,7 @@ import org.rs.consts.NPCs
 /**
  * Represents the Door Renegade Knight dialogue.
  *
- * Relations
+ * # Relations
  * - [Merlin Crystal][content.region.kandarin.camelot.quest.arthur.MerlinCrystal]
  */
 class DoorRenegadeKnight : DialogueFile() {

@@ -18,7 +18,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Fremennik Fisherman dialogue.
  *
- * Relations
+ * # Relations
  * - [FremennikTrials]
  */
 class FremennikFishermanDialogue : DialogueFile() {

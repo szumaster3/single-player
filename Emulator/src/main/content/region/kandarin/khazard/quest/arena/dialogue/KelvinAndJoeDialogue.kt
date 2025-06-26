@@ -14,7 +14,7 @@ import org.rs.consts.NPCs
 /**
  * Represents the Kelvin & Joe dialogue.
  *
- * Relations
+ * # Relations
  * - [Fight Arena][content.region.kandarin.khazard.quest.arena.FightArena]
  */
 @Initializable

@@ -12,11 +12,7 @@ class NedNPC : AbstractNPC {
 
     private constructor(id: Int, location: Location) : super(id, location)
 
-    override fun construct(
-        id: Int,
-        location: Location,
-        vararg objects: Any,
-    ): AbstractNPC = NedNPC(id, location)
+    override fun construct(id: Int, location: Location, vararg objects: Any): AbstractNPC = NedNPC(id, location)
 
     override fun isHidden(player: Player): Boolean =
         getQuestStage(player, Quests.DRAGON_SLAYER) != 30 && getQuestStage(player, Quests.DRAGON_SLAYER) != 40

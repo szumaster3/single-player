@@ -21,7 +21,7 @@ import org.rs.consts.*
 /**
  * Represents the Ogre Guards dialogues.
  *
- * Relations
+ * # Relations
  * - [Watchtower Quest][content.region.kandarin.yanille.quest.itwatchtower.Watchtower]
  */
 @Initializable

@@ -20,7 +20,7 @@ import kotlin.random.Random
 /**
  * Represents the Peer The Seer dialogue.
  *
- * Relations
+ * # Relations
  * - [FremennikTrials]
  */
 @Initializable

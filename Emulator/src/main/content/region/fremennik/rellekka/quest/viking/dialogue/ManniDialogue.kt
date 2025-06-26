@@ -24,7 +24,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Manni dialogue.
  *
- * Relations
+ * # Relations
  * - [FremennikTrials]
  */
 @Initializable

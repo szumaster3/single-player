@@ -13,6 +13,7 @@ import org.rs.consts.Items
 import org.rs.consts.Quests
 
 class ShieldofArravBook : InteractionListener {
+
     companion object {
         private val TITLE = "Shield of Arrav"
         private val CONTENTS =
@@ -82,11 +83,7 @@ class ShieldofArravBook : InteractionListener {
             )
 
         @Suppress("UNUSED_PARAMETER")
-        private fun display(
-            player: Player,
-            pageNum: Int,
-            buttonID: Int,
-        ): Boolean {
+        private fun display(player: Player, pageNum: Int, buttonID: Int): Boolean {
             BookInterface.pageSetup(player, BookInterface.FANCY_BOOK_3_49, TITLE, CONTENTS)
             if (BookInterface.isLastPage(pageNum, CONTENTS.size)) {
                 if (getQuestStage(player, Quests.SHIELD_OF_ARRAV) == 10) {

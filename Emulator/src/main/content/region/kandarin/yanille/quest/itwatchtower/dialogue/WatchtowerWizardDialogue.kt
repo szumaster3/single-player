@@ -22,7 +22,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Wizard dialogue.
  *
- * Relations
+ * # Relations
  * - [Watchtower Quest][content.region.kandarin.yanille.quest.itwatchtower.Watchtower]
  */
 @Initializable

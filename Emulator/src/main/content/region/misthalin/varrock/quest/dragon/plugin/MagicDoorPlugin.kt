@@ -9,6 +9,7 @@ import core.game.interaction.UseWithHandler
 import core.game.node.Node
 import core.game.node.entity.player.Player
 import core.game.world.map.Location
+import core.plugin.Initializable
 import core.plugin.Plugin
 import org.rs.consts.Items
 import org.rs.consts.Quests
@@ -17,6 +18,7 @@ import org.rs.consts.Scenery
 /**
  * A plugin that handles the magic door used in the dragon slayer.
  */
+@Initializable
 class MagicDoorPlugin : UseWithHandler(*IDS) {
 
     companion object {

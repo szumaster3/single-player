@@ -11,7 +11,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Mourner (West) dialogue.
  *
- * Relations
+ * # Relations
  * - [Plague City][content.region.kandarin.ardougne.west.quest.elena.PlagueCity]
  */
 class MournerWestDialogue : DialogueFile() {

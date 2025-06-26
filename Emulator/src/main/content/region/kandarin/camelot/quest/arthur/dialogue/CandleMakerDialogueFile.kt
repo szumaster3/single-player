@@ -14,7 +14,7 @@ import org.rs.consts.NPCs
 /**
  * Represents the Candle Maker dialogue.
  *
- * Relations
+ * # Relations
  * - [Merlin Crystal][content.region.kandarin.camelot.quest.arthur.MerlinCrystal]
  */
 class CandleMakerDialogueFile : DialogueFile() {

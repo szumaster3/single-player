@@ -15,7 +15,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Denulth dialogue.
  *
- * Relations
+ * # Relations
  * - [Death Plateau][content.region.asgarnia.burthope.quest.death.DeathPlateau]
  */
 class DenulthDialogueFile : DialogueFile() {

@@ -15,7 +15,7 @@ import org.rs.consts.Quests
 /**
  * Represents the A Lazy guard dialogue.
  *
- * Relations
+ * # Relations
  * - [Fight Arena][content.region.kandarin.khazard.quest.arena.FightArena]
  */
 class ALazyGuardDialogue : DialogueFile() {

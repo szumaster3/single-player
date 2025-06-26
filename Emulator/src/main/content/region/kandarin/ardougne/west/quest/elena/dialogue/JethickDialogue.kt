@@ -18,7 +18,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Jethick dialogue.
  *
- * Relations
+ * # Relations
  * - [Plague City][content.region.kandarin.ardougne.west.quest.elena.PlagueCity]
  */
 @Initializable

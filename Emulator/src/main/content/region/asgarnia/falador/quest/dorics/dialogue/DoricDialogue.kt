@@ -18,7 +18,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Doric dialogue file.
  *
- * Relations
+ * # Relations
  * - [Dorics Quest][content.region.asgarnia.falador.quest.dorics.DoricsQuest]
  */
 class DoricDialogue(private val questStage: Int) : DialogueFile() {

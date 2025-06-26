@@ -1,6 +1,7 @@
 package content.region.misthalin.varrock.quest.romeo.cutscene;
 
 import content.region.misthalin.varrock.quest.romeo.dialogue.JulietDialogue;
+import content.region.misthalin.varrock.quest.romeo.dialogue.RomeoDialogue;
 import core.game.activity.ActivityPlugin;
 import core.game.activity.CutscenePlugin;
 import core.game.node.entity.npc.NPC;
@@ -17,7 +18,7 @@ import core.plugin.ClassScanner;
 import core.plugin.Initializable;
 
 /**
- * The type Juliet cutscene.
+ * Handles Juliet cutscene.
  */
 @Initializable
 public final class JulietCutscene extends CutscenePlugin {
@@ -39,7 +40,7 @@ public final class JulietCutscene extends CutscenePlugin {
     public JulietCutscene(final Player player) {
         super("Juliet Cutscene");
         this.player = player;
-        ClassScanner.definePlugin(new JulietDialogue());
+        ClassScanner.definePlugins(new JulietDialogue());
     }
 
     @Override

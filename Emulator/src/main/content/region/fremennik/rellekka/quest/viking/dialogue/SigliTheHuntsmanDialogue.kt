@@ -16,7 +16,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Sigli The Huntsman dialogue.
  *
- * Relations
+ * # Relations
  * - [FremennikTrials]
  */
 @Initializable

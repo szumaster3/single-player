@@ -12,7 +12,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Kilron dialogue.
  *
- * Relations
+ * # Relations
  * - [Biohazard][content.region.kandarin.ardougne.east.quest.biohazard.Biohazard]
  */
 class KilronDialogue : DialogueFile() {

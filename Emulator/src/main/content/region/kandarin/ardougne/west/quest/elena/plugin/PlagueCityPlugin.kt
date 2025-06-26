@@ -31,7 +31,7 @@ import org.rs.consts.*
 /**
  * Represents the Plague City plugin.
  *
- * Relations
+ * # Relations
  * - [Plague City][content.region.kandarin.ardougne.west.quest.elena.PlagueCity]
  */
 class PlagueCityPlugin : InteractionListener {

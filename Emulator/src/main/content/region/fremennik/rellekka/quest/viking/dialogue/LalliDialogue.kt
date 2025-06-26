@@ -18,7 +18,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Lalli dialogue.
  *
- * Relations
+ * # Relations
  * - [FremennikTrials]
  */
 @Initializable

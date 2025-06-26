@@ -20,7 +20,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Doric dialogue.
  *
- * Relations
+ * # Relations
  * - [Dorics Quest][content.region.asgarnia.falador.quest.dorics.DoricsQuest]
  */
 @Initializable

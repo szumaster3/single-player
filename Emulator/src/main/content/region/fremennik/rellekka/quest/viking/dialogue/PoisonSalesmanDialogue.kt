@@ -19,7 +19,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Poison Salesman dialogue.
  *
- * Relations
+ * # Relations
  * - [FremennikTrials]
  * - [Murder Mystery][content.region.kandarin.seers.quest.murder.MurderMystery]
  */

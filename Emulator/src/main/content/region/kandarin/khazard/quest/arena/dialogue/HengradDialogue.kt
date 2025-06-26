@@ -16,7 +16,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Hengrad dialogue.
  *
- * Relations
+ * # Relations
  * - [Fight Arena][content.region.kandarin.khazard.quest.arena.FightArena]
  */
 class HengradDialogue : DialogueFile() {

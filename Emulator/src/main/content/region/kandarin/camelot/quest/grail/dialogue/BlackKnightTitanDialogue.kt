@@ -12,7 +12,7 @@ import org.rs.consts.NPCs
 /**
  * Represents the Black Knight Titan dialogue.
  *
- * Relations
+ * # Relations
  * - [Holy Grail][content.region.kandarin.camelot.quest.grail.HolyGrail]
  */
 class BlackKnightTitanDialogue(val forced: Boolean, ) : DialogueFile() {

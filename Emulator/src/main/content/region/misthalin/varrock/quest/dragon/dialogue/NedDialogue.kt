@@ -15,7 +15,7 @@ private const val SHIP_DIALOGUE = 2000
 /**
  * Represents the Ned dialogue.
  *
- * Relations
+ * # Relations
  * - [DragonSlayer]
  */
 class NedDialogue(val questStage: Int) : DialogueFile() {

@@ -7,14 +7,11 @@ import org.rs.consts.Quests;
 import org.rs.consts.Vars;
 
 /**
- * The type Romeo and juliet.
+ * Represents the Romeo and juliet quest.
  */
 @Initializable
 public class RomeoAndJuliet extends Quest {
 
-    /**
-     * Instantiates a new Romeo and juliet.
-     */
     public RomeoAndJuliet() {
         super(Quests.ROMEO_JULIET, 26, 25, 5, Vars.VARP_QUEST_ROMEO_JULIET_PROGRESS_144, 0, 1, 100);
     }

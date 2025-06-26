@@ -13,7 +13,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Straven dialogue file.
  *
- * Relations
+ * # Relations
  * - [Heroes Quest][content.region.asgarnia.burthope.quest.hero.HeroesQuest]
  */
 class StravenDialogueFile : DialogueBuilderFile() {

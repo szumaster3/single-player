@@ -21,6 +21,9 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Juliet dialogue.
+ */
 @Initializable
 class RomeoDialogue(player: Player? = null) : Dialogue(player) {
 

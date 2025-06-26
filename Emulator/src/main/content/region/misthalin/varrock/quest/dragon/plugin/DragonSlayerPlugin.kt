@@ -21,6 +21,7 @@ import core.game.node.scenery.Scenery
 import core.game.node.scenery.SceneryBuilder
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
+import core.plugin.Initializable
 import core.plugin.Plugin
 import org.rs.consts.Animations
 import org.rs.consts.NPCs
@@ -31,7 +32,7 @@ import org.rs.consts.Quests
  */
 class DragonSlayerPlugin : OptionHandler() {
 
-    override fun newInstance(arg: Any): Plugin<Any> {
+    override fun newInstance(arg: Any?): Plugin<Any> {
         val npcOptions = listOf(747 to "trade", 742 to "attack", 745 to "attack", 745 to "talk-to")
 
         val sceneryOptions = listOf(25115, 2595, 32968, 2602, 2606, 2600, 2599, 2598, 2601, 2596, 2597, 2603, 2604, 2605, 2604, 1755, 2587, 25036, 2589, 25214, 25038, 1746, 1747, 25045, 1752, 1747, 25038, 2595, 2604, 25161).distinct()
@@ -61,9 +62,9 @@ class DragonSlayerPlugin : OptionHandler() {
         return this
     }
 
-    override fun handle(player: Player, node: Node, option: String): Boolean {
+    override fun handle(player: Player, node: Node?, option: String): Boolean {
         val quest = player.getQuestRepository().getQuest(Quests.DRAGON_SLAYER)
-        val id = node.id
+        val id = node?.id
 
         when (id) {
             NPCs.WORMBRAIN_745 -> {
@@ -96,7 +97,7 @@ class DragonSlayerPlugin : OptionHandler() {
                         player.getSavedData().questData.setDragonSlayerAttribute("memorized", true)
                         player.achievementDiaryManager.finishTask(player, DiaryType.KARAMJA, 1, 1)
                     }
-                    DoorActionHandler.handleAutowalkDoor(player, node as Scenery)
+                    handleAutowalkDoor(player, node as Scenery)
                 }
                 return true
             }

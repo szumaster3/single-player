@@ -12,10 +12,9 @@ import org.rs.consts.Quests
 /**
  * Represents the Cabin Boy dialogue.
  *
- * Relations
+ * # Relations
  * - [DragonSlayer][content.region.misthalin.varrock.quest.dragon.DragonSlayer]
  */
-@Initializable
 class CabinBoyDialogue(player: Player? = null) : Dialogue(player) {
 
     private var quest: Quest? = null

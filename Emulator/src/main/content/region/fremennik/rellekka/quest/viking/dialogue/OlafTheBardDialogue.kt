@@ -15,7 +15,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Olaf The Bard dialogue.
  *
- * Relations
+ * # Relations
  * - [FremennikTrials]
  */
 @Initializable

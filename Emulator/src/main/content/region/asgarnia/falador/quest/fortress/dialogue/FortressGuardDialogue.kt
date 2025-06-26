@@ -17,7 +17,7 @@ import org.rs.consts.NPCs
 /**
  * Represents the Fortress Guard dialogue.
  *
- * Relations
+ * # Relations
  * - [Black Knights Fortress][content.region.asgarnia.falador.quest.fortress.BlackKnightsFortress]
  */
 @Initializable

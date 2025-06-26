@@ -22,7 +22,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Yrsa dialogue.
  *
- * Relations
+ * # Relations
  * - [FremennikTrials]
  */
 @Initializable

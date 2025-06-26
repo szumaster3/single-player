@@ -12,7 +12,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Dunstan (Troll stronghold) dialogue.
  *
- * Relations
+ * # Relations
  * - [Troll Stronghold][content.region.asgarnia.burthope.quest.troll.TrollStronghold]
  */
 class DunstanTrollDialogue : DialogueFile() {

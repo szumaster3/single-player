@@ -12,7 +12,7 @@ import core.game.world.map.Location
 /**
  * Represents the Jogre Cavern dialogue.
  *
- * Relations
+ * # Relations
  * - [JunglePotion][content.region.karamja.taibwo.quest.junglepotion.JunglePotion]
  */
 class JogreCavernDialogue(player: Player? = null) : Dialogue(player) {

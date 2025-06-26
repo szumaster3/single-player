@@ -15,7 +15,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Swensen The Navigator dialogue.
  *
- * Relations
+ * # Relations
  * - [FremennikTrials]
  */
 @Initializable

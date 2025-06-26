@@ -13,11 +13,7 @@ class MazeZombieNPC : AbstractNPC {
     constructor() : super(0, null)
     private constructor(id: Int, location: Location) : super(id, location)
 
-    override fun construct(
-        id: Int,
-        location: Location,
-        vararg objects: Any,
-    ): AbstractNPC = MazeZombieNPC(id, location)
+    override fun construct(id: Int, location: Location, vararg objects: Any): AbstractNPC = MazeZombieNPC(id, location)
 
     override fun finalizeDeath(killer: Entity) {
         super.finalizeDeath(killer)

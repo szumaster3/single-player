@@ -14,7 +14,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Trufitus dialogue.
  *
- * Relations
+ * # Relations
  * - [JunglePotion][content.region.karamja.taibwo.quest.junglepotion.JunglePotion]
  */
 class TrufitusDialogue(player: Player? = null) : Dialogue(player) {

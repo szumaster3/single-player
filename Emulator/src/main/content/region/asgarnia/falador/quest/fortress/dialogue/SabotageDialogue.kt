@@ -12,7 +12,7 @@ import org.rs.consts.*
 /**
  * Represents the Sabotage dialogue.
  *
- * Relations
+ * # Relations
  * - [Black Knights Fortress][content.region.asgarnia.falador.quest.fortress.BlackKnightsFortress]
  */
 @Initializable

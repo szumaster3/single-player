@@ -13,7 +13,7 @@ import org.rs.consts.Quests
 /**
  * Represents the West Door Support dialogue.
  *
- * Relations
+ * # Relations
  * - [Fight Arena][content.region.kandarin.khazard.quest.arena.FightArena]
  */
 class WestDoorSupportDialogue : DialogueFile() {

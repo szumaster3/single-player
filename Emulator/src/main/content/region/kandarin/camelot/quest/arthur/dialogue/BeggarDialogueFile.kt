@@ -19,7 +19,7 @@ import org.rs.consts.NPCs
 /**
  * Represents the Beggar dialogue.
  *
- * Relations
+ * # Relations
  * - [Merlin Crystal][content.region.kandarin.camelot.quest.arthur.MerlinCrystal]
  */
 class BeggarDialogueFile(val door: Scenery?) : DialogueFile() {

@@ -20,7 +20,7 @@ import kotlin.random.Random
 /**
  * Represents the Chieftan Brundt dialogue.
  *
- * Relations
+ * # Relations
  * - [FremennikTrials]
  */
 @Initializable

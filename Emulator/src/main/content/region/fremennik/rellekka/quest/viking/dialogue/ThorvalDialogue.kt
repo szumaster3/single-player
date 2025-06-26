@@ -16,7 +16,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Thorval dialogue.
  *
- * Relations
+ * # Relations
  * - [FremennikTrials]
  */
 @Initializable

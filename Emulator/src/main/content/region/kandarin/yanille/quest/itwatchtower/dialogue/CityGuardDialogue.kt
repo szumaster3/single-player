@@ -17,7 +17,7 @@ import org.rs.consts.Quests
 /**
  * Represents the City Guard dialogue.
  *
- * Relations
+ * # Relations
  * - [Watchtower Quest][content.region.kandarin.yanille.quest.itwatchtower.Watchtower]
  */
 class CityGuardDialogue : DialogueFile() {

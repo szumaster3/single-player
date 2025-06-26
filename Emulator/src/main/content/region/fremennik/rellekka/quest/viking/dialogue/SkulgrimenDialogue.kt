@@ -19,7 +19,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Skulgrimen dialogue.
  *
- * Relations
+ * # Relations
  * - [FremennikTrials]
  */
 @Initializable

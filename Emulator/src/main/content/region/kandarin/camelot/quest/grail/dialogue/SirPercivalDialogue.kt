@@ -20,7 +20,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Sir Percival dialogue.
  *
- * Relations
+ * # Relations
  * - [Holy Grail][content.region.kandarin.camelot.quest.grail.HolyGrail]
  */
 class SirPercivalDialogue(val interactionType: String, ) : DialogueFile() {

@@ -17,7 +17,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Morgan Le Faye dialogue.
  *
- * Relations
+ * # Relations
  * - [Merlin Crystal][content.region.kandarin.camelot.quest.arthur.MerlinCrystal]
  */
 class MorganLeFayeDialogue : DialogueFile() {

@@ -14,7 +14,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Jeremy Servil dialogue file.
  *
- * Relations
+ * # Relations
  * - [Fight Arena][content.region.kandarin.khazard.quest.arena.FightArena]
  */
 class JeremyServilDialogueFile : DialogueFile() {

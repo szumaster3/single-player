@@ -18,7 +18,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Khazard Barman dialogue.
  *
- * Relations
+ * # Relations
  * - [Fight Arena][content.region.kandarin.khazard.quest.arena.FightArena]
  */
 @Initializable

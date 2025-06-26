@@ -18,7 +18,7 @@ import org.rs.consts.Quests
 /**
  * Represents the General Khazard dialogue.
  *
- * Relations
+ * # Relations
  * - [Fight Arena][content.region.kandarin.khazard.quest.arena.FightArena]
  */
 class GeneralKhazardDialogue : DialogueFile() {

@@ -14,7 +14,7 @@ import org.rs.consts.Animations
 /**
  * Represents the Crate dialogue.
  *
- * Relations
+ * # Relations
  * - [Merlin Crystal][content.region.kandarin.camelot.quest.arthur.MerlinCrystal]
  */
 class CrateDialogueFile : DialogueFile() {

@@ -11,7 +11,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Lathas dialogue.
  *
- * Relations
+ * # Relations
  * - [Biohazard][content.region.kandarin.ardougne.east.quest.biohazard.Biohazard]
  */
 class LathasDialogue : DialogueFile() {

@@ -15,7 +15,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Sir Amik Varze dialogue.
  *
- * Relations
+ * # Relations
  * - [Black Knights Fortress][content.region.asgarnia.falador.quest.fortress.BlackKnightsFortress]
  */
 class SirAmikVarzeDialogue(player: Player? = null) : Dialogue(player) {

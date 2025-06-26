@@ -16,7 +16,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Grew dialogue.
  *
- * Relations
+ * # Relations
  * - [Watchtower Quest][content.region.kandarin.yanille.quest.itwatchtower.Watchtower]
  */
 @Initializable

@@ -13,7 +13,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Crone dialogue.
  *
- * Relations
+ * # Relations
  * - [Holy Grail][content.region.kandarin.camelot.quest.grail.HolyGrail]
  */
 class CroneDialogue(val forced: Boolean, ) : DialogueFile() {

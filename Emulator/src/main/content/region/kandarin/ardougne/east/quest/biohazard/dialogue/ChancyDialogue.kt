@@ -11,7 +11,7 @@ import org.rs.consts.NPCs
 /**
  * Represents the Chancy dialogue.
  *
- * Relations
+ * # Relations
  * - [Biohazard][content.region.kandarin.ardougne.east.quest.biohazard.Biohazard]
  */
 class ChancyDialogue : DialogueFile() {

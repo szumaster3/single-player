@@ -13,7 +13,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Fisher king dialogue.
  *
- * Relations
+ * # Relations
  * - [Holy Grail][content.region.kandarin.camelot.quest.grail.HolyGrail]
  */
 class FisherKingDialogue : DialogueFile() {

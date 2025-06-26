@@ -10,7 +10,7 @@ import org.rs.consts.NPCs
 /**
  * Represents the Sir Mordred dialogue.
  *
- * Relations
+ * # Relations
  * - [Merlin Crystal][content.region.kandarin.camelot.quest.arthur.MerlinCrystal]
  */
 class SirMordredDialogueFile : DialogueFile() {

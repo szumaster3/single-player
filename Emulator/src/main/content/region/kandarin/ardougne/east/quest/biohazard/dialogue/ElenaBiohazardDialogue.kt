@@ -16,7 +16,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Elena dialogue.
  *
- * Relations
+ * # Relations
  * - [Biohazard][content.region.kandarin.ardougne.east.quest.biohazard.Biohazard]
  */
 class ElenaBiohazardDialogue : DialogueFile() {

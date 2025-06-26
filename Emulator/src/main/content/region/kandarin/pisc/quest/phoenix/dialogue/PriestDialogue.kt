@@ -19,7 +19,7 @@ import org.rs.consts.Vars
 /**
  * The Priest dialogue.
  *
- * Relations
+ * # Relations
  * - [In Pyre Need][content.region.kandarin.pisc.quest.phoenix.InPyreNeed]
  */
 @Initializable

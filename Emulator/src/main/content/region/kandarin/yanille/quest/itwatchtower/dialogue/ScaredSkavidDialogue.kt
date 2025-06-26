@@ -23,7 +23,7 @@ import org.rs.consts.Quests
  * Sources
  * - [08.04.2009](https://youtu.be/xuFxEioCojs?si=LD0PdsJM48mggLXx&t=122)
  *
- * Relations
+ * # Relations
  * - [Watchtower Quest][content.region.kandarin.yanille.quest.itwatchtower.Watchtower]
  */
 @Initializable

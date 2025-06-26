@@ -14,7 +14,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Local dialogue.
  *
- * Relations
+ * # Relations
  * - [Fight Arena][content.region.kandarin.khazard.quest.arena.FightArena]
  */
 @Initializable

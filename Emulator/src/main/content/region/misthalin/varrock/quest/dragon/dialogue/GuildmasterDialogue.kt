@@ -12,7 +12,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Guildmaster dialogue.
  *
- * Relations
+ * # Relations
  * - [DragonSlayer]
  */
 class GuildmasterDialogue(player: Player? = null) : Dialogue(player) {

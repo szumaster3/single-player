@@ -18,7 +18,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Fremennik Sailor dialogue.
  *
- * Relations
+ * # Relations
  * - [FremennikTrials]
  */
 @Initializable

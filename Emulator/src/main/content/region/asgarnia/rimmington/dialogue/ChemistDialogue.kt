@@ -20,7 +20,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Chemist dialogue.
  *
- * Relations
+ * # Relations
  * - [Biohazard][content.region.kandarin.ardougne.east.quest.biohazard.Biohazard]
  */
 @Initializable

@@ -11,7 +11,7 @@ import org.rs.consts.NPCs
 /**
  * Represents the Carla dialogue.
  *
- * Relations
+ * # Relations
  * - [Plague City][content.region.kandarin.ardougne.west.quest.elena.PlagueCity]
  */
 @Initializable

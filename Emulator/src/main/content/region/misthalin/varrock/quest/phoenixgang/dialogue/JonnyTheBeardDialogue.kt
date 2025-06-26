@@ -9,7 +9,13 @@ import core.game.node.entity.player.Player
 import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 
-class JonnytheBeardDialogue(player: Player? = null) : Dialogue(player) {
+/**
+ * Represents the Jonny the beard dialogue.
+ *
+ * # Relations
+ * - [Shield of Arrav][content.region.misthalin.varrock.quest.phoenixgang.ShieldofArrav]
+ */
+class JonnyTheBeardDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
@@ -30,7 +36,7 @@ class JonnytheBeardDialogue(player: Player? = null) : Dialogue(player) {
         return true
     }
 
-    override fun newInstance(player: Player?): Dialogue = JonnytheBeardDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = JonnyTheBeardDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.JONNY_THE_BEARD_645)
 }

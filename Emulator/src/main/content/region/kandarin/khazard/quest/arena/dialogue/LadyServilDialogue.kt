@@ -15,7 +15,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Lady Servil dialogue.
  *
- * Relations
+ * # Relations
  * - [Fight Arena][content.region.kandarin.khazard.quest.arena.FightArena]
  */
 @Initializable

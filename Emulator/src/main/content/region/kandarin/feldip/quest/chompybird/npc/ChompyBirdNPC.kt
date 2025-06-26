@@ -26,7 +26,7 @@ import org.rs.consts.NPCs
 /**
  * Handles the ChompyBirdNPC.
  *
- * Relations
+ * # Relations
  * - [Big Chompy Bird Hunting][content.region.kandarin.feldip.quest.chompybird.BigChompyBirdHunting]
  */
 @Initializable

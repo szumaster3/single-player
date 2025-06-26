@@ -17,7 +17,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Guidor dialogue.
  *
- * Relations
+ * # Relations
  * - [Biohazard][content.region.kandarin.ardougne.east.quest.biohazard.Biohazard]
  */
 class GuidorDialogue : DialogueFile() {

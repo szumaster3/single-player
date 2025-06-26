@@ -17,7 +17,7 @@ import org.rs.consts.Scenery
 /**
  * Represents the Merlin dialogue.
  *
- * Relations
+ * # Relations
  * - [Merlin Crystal][content.region.kandarin.camelot.quest.arthur.MerlinCrystal]
  */
 class MerlinDialogueFile(val forced: Boolean) : DialogueFile() {

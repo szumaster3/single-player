@@ -19,7 +19,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Alfonse The Waiter dialogue.
  *
- * Relations
+ * # Relations
  * - [HeroesQuest]
  */
 @Initializable
@@ -65,7 +65,7 @@ class AlfonseTheWaiterDialogue(player: Player? = null) : Dialogue(player) {
 /**
  * Represents the Alfonse The Waiter dialogue file.
  *
- * Relations
+ * # Relations
  * - [Heroes Quest][content.region.asgarnia.burthope.quest.hero.HeroesQuest]
  */
 class AlfonseTheWaiterDialogueFile : DialogueBuilderFile() {

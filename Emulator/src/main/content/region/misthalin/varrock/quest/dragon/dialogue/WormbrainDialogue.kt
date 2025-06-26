@@ -14,7 +14,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Wormbrain dialogue.
  *
- * Relations
+ * # Relations
  * - [DragonSlayer][content.region.misthalin.varrock.quest.dragon.DragonSlayer]
  */
 class WormbrainDialogue(player: Player? = null) : Dialogue(player) {

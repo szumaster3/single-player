@@ -14,7 +14,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Underground cutscene.
  *
- * Relations
+ * # Relations
  * - [Plague City][content.region.kandarin.ardougne.west.quest.elena.PlagueCity]
  */
 class UndergroundCutscene(player: Player) : Cutscene(player) {

@@ -20,7 +20,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Achietties dialogue.
  *
- * Relations
+ * # Relations
  * - [HeroesQuest]
  */
 @Initializable
@@ -45,7 +45,7 @@ class AchiettiesDialogue(player: Player? = null) : Dialogue(player) {
 /**
  * Represents the Achietties dialogue file.
  *
- * Relations
+ * # Relations
  * - [Heroes Quest][content.region.asgarnia.burthope.quest.hero.HeroesQuest]
  */
 class AchiettiesDialogueFile : DialogueBuilderFile() {

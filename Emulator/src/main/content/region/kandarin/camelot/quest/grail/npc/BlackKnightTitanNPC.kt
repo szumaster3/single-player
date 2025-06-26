@@ -19,7 +19,7 @@ import org.rs.consts.NPCs
 /**
  * Handles the BlackKnightTitanNPC.
  *
- * Relations
+ * # Relations
  * - [Holy Grail][content.region.kandarin.camelot.quest.grail.HolyGrail]
  */
 @Initializable

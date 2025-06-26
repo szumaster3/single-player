@@ -18,7 +18,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Gorad NPC.
  *
- * Relations
+ * # Relations
  * - [Watchtower Quest][content.region.kandarin.yanille.quest.itwatchtower.Watchtower]
  */
 @Initializable

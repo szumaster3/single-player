@@ -17,7 +17,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Sigmund dialogue.
  *
- * Relations
+ * # Relations
  * - [FremennikTrials]
  */
 @Initializable

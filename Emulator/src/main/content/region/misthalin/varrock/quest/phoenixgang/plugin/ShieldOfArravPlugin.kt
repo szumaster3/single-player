@@ -57,11 +57,7 @@ class ShieldOfArravPlugin : OptionHandler() {
         return this
     }
 
-    override fun handle(
-        player: Player,
-        node: Node,
-        option: String,
-    ): Boolean {
+    override fun handle(player: Player, node: Node, option: String): Boolean {
         val quest = player.questRepository.getQuest(Quests.SHIELD_OF_ARRAV)
         val id =
             when (node) {
@@ -79,12 +75,7 @@ class ShieldOfArravPlugin : OptionHandler() {
                         else -> 529
                     }
                 openInterface(player, Component(componentId).id)
-                sendString(
-                    player,
-                    "The bearer of this certificate has brought both halves of the legendary Shield of Arrav to me, Halg Halen...",
-                    componentId,
-                    2,
-                )
+                sendString(player, "The bearer of this certificate has brought both halves of the legendary Shield of Arrav to me, Halg Halen...", componentId, 2)
             }
 
             2400 -> SceneryBuilder.replace(node as Scenery, node.transform(org.rs.consts.Scenery.CUPBOARD_2401))
@@ -208,15 +199,9 @@ class ShieldOfArravPlugin : OptionHandler() {
 
     override fun isWalk(): Boolean = false
 
-    override fun isWalk(
-        player: Player,
-        node: Node,
-    ): Boolean = if (node is GroundItem) true else node !is Item
+    override fun isWalk(player: Player, node: Node): Boolean = if (node is GroundItem) true else node !is Item
 
-    override fun getDestination(
-        n: Node,
-        node: Node,
-    ): Location? =
+    override fun getDestination(n: Node, node: Node): Location? =
         if (node is Scenery && node.name.lowercase().contains("door")) {
             DoorActionHandler.getDestination(n as Player, node)
         } else {

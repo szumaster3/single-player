@@ -13,7 +13,7 @@ import org.rs.consts.Items
 /**
  * Represents the Chompy dialogue.
  *
- * Relations
+ * # Relations
  * - [Big Chompy Bird Hunting][content.region.kandarin.feldip.quest.chompybird.BigChompyBirdHunting]
  */
 class ChompyDialogue(val quest: Quest) : DialogueFile() {
