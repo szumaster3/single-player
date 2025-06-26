@@ -16640,10 +16640,65 @@
   {
     "shop_price": "1",
     "examine": "A key to Melzar's Maze.",
+    "tradeable": "false",
     "durability": null,
     "name": "Maze key",
     "archery_ticket_price": "0",
     "id": "1542"
+  },
+  {
+    "shop_price": "1",
+    "examine": "A red key from Melzar's Maze.",
+    "tradeable": "false",
+    "durability": null,
+    "name": "Key",
+    "archery_ticket_price": "0",
+    "id": "1543"
+  },
+  {
+    "shop_price": "1",
+    "examine": "An orange key from Melzar's Maze.",
+    "tradeable": "false",
+    "durability": null,
+    "name": "Key",
+    "archery_ticket_price": "0",
+    "id": "1544"
+  },
+  {
+    "shop_price": "1",
+    "examine": "A yellow key from Melzar's Maze.",
+    "tradeable": "false",
+    "durability": null,
+    "name": "Key",
+    "archery_ticket_price": "0",
+    "id": "1545"
+  },
+  {
+    "shop_price": "1",
+    "examine": "A blue key from Melzar's Maze.",
+    "tradeable": "false",
+    "durability": null,
+    "name": "Key",
+    "archery_ticket_price": "0",
+    "id": "1546"
+  },
+  {
+    "shop_price": "1",
+    "examine": "A magenta key from Melzar's Maze.",
+    "tradeable": "false",
+    "durability": null,
+    "name": "Key",
+    "archery_ticket_price": "0",
+    "id": "1547"
+  },
+  {
+    "shop_price": "1",
+    "examine": "A green key from Melzar's Maze.",
+    "tradeable": "false",
+    "durability": null,
+    "name": "Key",
+    "archery_ticket_price": "0",
+    "id": "1548"
   },
   {
     "destroy_message": "You can get another from Dr Harlow in the Blue Moon Inn of Varrock.",

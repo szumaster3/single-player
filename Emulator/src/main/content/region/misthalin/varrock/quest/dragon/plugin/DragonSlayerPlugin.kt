@@ -8,7 +8,6 @@ import core.cache.def.impl.NPCDefinition
 import core.cache.def.impl.SceneryDefinition
 import core.game.dialogue.SequenceDialogue.dialogue
 import core.game.global.action.ClimbActionHandler
-import core.game.global.action.DoorActionHandler
 import core.game.global.action.DoorActionHandler.handleAutowalkDoor
 import core.game.interaction.OptionHandler
 import core.game.node.Node
@@ -21,7 +20,6 @@ import core.game.node.scenery.Scenery
 import core.game.node.scenery.SceneryBuilder
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
-import core.plugin.Initializable
 import core.plugin.Plugin
 import org.rs.consts.Animations
 import org.rs.consts.NPCs
@@ -35,7 +33,38 @@ class DragonSlayerPlugin : OptionHandler() {
     override fun newInstance(arg: Any?): Plugin<Any> {
         val npcOptions = listOf(747 to "trade", 742 to "attack", 745 to "attack", 745 to "talk-to")
 
-        val sceneryOptions = listOf(25115, 2595, 32968, 2602, 2606, 2600, 2599, 2598, 2601, 2596, 2597, 2603, 2604, 2605, 2604, 1755, 2587, 25036, 2589, 25214, 25038, 1746, 1747, 25045, 1752, 1747, 25038, 2595, 2604, 25161).distinct()
+        val sceneryOptions = listOf(
+            25115,
+            2595,
+            32968,
+            2602,
+            2606,
+            2600,
+            2599,
+            2598,
+            2601,
+            2596,
+            2597,
+            2603,
+            2604,
+            2605,
+            2604,
+            1755,
+            2587,
+            25036,
+            2589,
+            25214,
+            25038,
+            1746,
+            1747,
+            25045,
+            1752,
+            1747,
+            25038,
+            2595,
+            2604,
+            25161
+        ).distinct()
 
         npcOptions.forEach { (id, option) ->
             NPCDefinition.forId(id).handlers["option:$option"] = this
@@ -78,7 +107,7 @@ class DragonSlayerPlugin : OptionHandler() {
                     100 -> node.asNpc().openShop(player)
                     10, 15, 20, 30, 40 -> player.dialogueInterpreter.open(node.id, node, true)
                     else -> player.dialogueInterpreter.sendDialogues(
-                        node as NPC, null, "I ain't got nothing to sell ye, adventurer. Leave me be!"
+                        node.asNpc(), null, "I ain't got nothing to sell ye, adventurer. Leave me be!"
                     )
                 }
                 return true
@@ -97,7 +126,7 @@ class DragonSlayerPlugin : OptionHandler() {
                         player.getSavedData().questData.setDragonSlayerAttribute("memorized", true)
                         player.achievementDiaryManager.finishTask(player, DiaryType.KARAMJA, 1, 1)
                     }
-                    handleAutowalkDoor(player, node as Scenery)
+                    handleAutowalkDoor(player, node.asScenery())
                 }
                 return true
             }
@@ -105,14 +134,25 @@ class DragonSlayerPlugin : OptionHandler() {
             25036, 2589 -> return handleShipRepair(player)
 
             2587 -> {
-                if (!player.inventory.containsItem(DragonSlayer.MAGIC_PIECE) &&
-                    !player.bank.containsItem(DragonSlayer.MAGIC_PIECE)
-                ) {
+                if (!player.inventory.containsItem(DragonSlayer.MAGIC_PIECE) && !player.bank.containsItem(DragonSlayer.MAGIC_PIECE)) {
                     dialogue(player) {
                         message("As you open the chest, you notice an inscription on the lid:")
-                        message("Here I rest the map to my beloved home. To whoever finds it, I beg", "of you, let it be. I was honour-bound not to destroy the map piece,", "but I have used all my magical skill to keep it from being recovered.")
-                        message("This map leads to the lair of the beast that destroyed my home,", "devoured my family, and burned to a cinder all that I love. But", "revenge would not benefit me now, and to disturb this beast is to risk", "bringing its wrath down upon another land.")
-                        message("I cannot stop you from taking this map piece now, but think on this:", "if you can slay the Dragon of Crandor, you are a greater hero than", "my land ever produced. There is no shame in backing out now.")
+                        message(
+                            "Here I rest the map to my beloved home. To whoever finds it, I beg",
+                            "of you, let it be. I was honour-bound not to destroy the map piece,",
+                            "but I have used all my magical skill to keep it from being recovered."
+                        )
+                        message(
+                            "This map leads to the lair of the beast that destroyed my home,",
+                            "devoured my family, and burned to a cinder all that I love. But",
+                            "revenge would not benefit me now, and to disturb this beast is to risk",
+                            "bringing its wrath down upon another land."
+                        )
+                        message(
+                            "I cannot stop you from taking this map piece now, but think on this:",
+                            "if you can slay the Dragon of Crandor, you are a greater hero than",
+                            "my land ever produced. There is no shame in backing out now."
+                        )
                         end {
                             addItemOrDrop(player, DragonSlayer.MAGIC_PIECE.id, 1)
                             sendItemDialogue(player, DragonSlayer.MAGIC_PIECE, "You find a map piece in the chest.")
@@ -126,7 +166,7 @@ class DragonSlayerPlugin : OptionHandler() {
 
             2603 -> {
                 player.packetDispatch.sendMessage("You open the chest.")
-                SceneryBuilder.replace(node as Scenery, node.transform(2604))
+                SceneryBuilder.replace(node.asScenery(), node.asScenery().transform(2604))
             }
 
             2604 -> return when (option) {
@@ -136,8 +176,7 @@ class DragonSlayerPlugin : OptionHandler() {
                             GroundItemManager.create(DragonSlayer.MAZE_PIECE, player)
                         }
                         player.dialogueInterpreter.sendItemMessage(
-                            DragonSlayer.MAZE_PIECE.id,
-                            "You find a map piece in the chest."
+                            DragonSlayer.MAZE_PIECE.id, "You find a map piece in the chest."
                         )
                     } else {
                         player.packetDispatch.sendMessage("You find nothing in the chest.")
@@ -147,36 +186,41 @@ class DragonSlayerPlugin : OptionHandler() {
 
                 "close" -> {
                     player.packetDispatch.sendMessage("You shut the chest.")
-                    SceneryBuilder.replace(node as Scenery, node.transform(2603))
+                    SceneryBuilder.replace(node.asScenery(), node.asScenery().transform(2603))
                     true
                 }
 
                 else -> false
             }
 
-            2601 -> return handleKeyDoor(player, node as Scenery, DragonSlayer.GREEN_KEY)
-            2600 -> return handleKeyDoor(player, node as Scenery, DragonSlayer.PURPLE_KEY)
-            2599 -> return handleKeyDoor(player, node as Scenery, DragonSlayer.BLUE_KEY)
-            2598 -> return handleKeyDoor(player, node as Scenery, DragonSlayer.YELLOW_KEY)
-            2596 -> return handleKeyDoor(player, node as Scenery, DragonSlayer.RED_KEY)
-            2597 -> return handleKeyDoor(player, node as Scenery, DragonSlayer.ORANGE_KEY)
+            2601 -> return handleKeyDoor(player, node.asScenery(), DragonSlayer.GREEN_KEY)
+            2600 -> return handleKeyDoor(player, node.asScenery(), DragonSlayer.PURPLE_KEY)
+            2599 -> return handleKeyDoor(player, node.asScenery(), DragonSlayer.BLUE_KEY)
+            2598 -> return handleKeyDoor(player, node.asScenery(), DragonSlayer.YELLOW_KEY)
+            2596 -> return handleKeyDoor(player, node.asScenery(), DragonSlayer.RED_KEY)
+            2597 -> return handleKeyDoor(player, node.asScenery(), DragonSlayer.ORANGE_KEY)
             2595 -> {
-                if (player.location == Location.create(2940, 3248, 0) ||
-                    player.inventory.containsItem(DragonSlayer.MAZE_KEY)
-                ) {
+                if (player.location.x == 2940 && player.location.y == 3248) {
+                    handleAutowalkDoor(player, node.asScenery())
+                    return true
+                }
+                if (player.inventory.containsItem(DragonSlayer.MAZE_KEY)) {
                     player.packetDispatch.sendMessage("You use the key and the door opens.")
-                    handleAutowalkDoor(player, node as Scenery)
+                    handleAutowalkDoor(player, node.asScenery())
+                    return true
                 } else {
                     player.packetDispatch.sendMessage("This door is securely locked.")
                 }
                 return true
             }
 
-            25045 -> return climbIfNear(player, node as Scenery, option,
-                Location(2925, 3259, 1), Location(2924, 3258, 0))
+            25045 -> return climbStairs(
+                player, node.asScenery(), option, Location(2925, 3259, 1), Location(2924, 3258, 0)
+            )
 
-            1747 -> return climbIfNear(player, node as Scenery, option,
-                Location(2940, 3256, 1), Location(2940, 3256, 2))
+            1747 -> return climbStairs(
+                player, node.asScenery(), option, Location(2940, 3256, 1), Location(2940, 3256, 2)
+            )
 
             1746 -> {
                 if (player.location.getDistance(Location(2923, 3241, 1)) < 3) {
@@ -184,7 +228,7 @@ class DragonSlayerPlugin : OptionHandler() {
                 } else if (player.location.getDistance(Location(2932, 3245, 2)) < 3) {
                     ClimbActionHandler.climb(player, Animation(828), Location(2932, 3245, 1))
                 } else {
-                    ClimbActionHandler.climbLadder(player, node as Scenery, option)
+                    ClimbActionHandler.climbLadder(player, node.asScenery(), option)
                 }
                 return true
             }
@@ -194,8 +238,9 @@ class DragonSlayerPlugin : OptionHandler() {
                 return true
             }
 
-            1755 -> return climbIfNear(player, node as Scenery, option,
-                Location(2939, 9656, 0), Location(2939, 3256, 0))
+            1755 -> return climbStairs(
+                player, node.asScenery(), option, Location(2939, 9656, 0), Location(2939, 3256, 0)
+            )
 
             25214 -> {
                 player.packetDispatch.sendMessage("The trapdoor can only be opened from below.")
@@ -203,7 +248,7 @@ class DragonSlayerPlugin : OptionHandler() {
             }
 
             25038, 2605 -> {
-                ClimbActionHandler.climbLadder(player, node as Scenery, option)
+                ClimbActionHandler.climbLadder(player, node.asScenery(), option)
                 return true
             }
         }
@@ -216,7 +261,8 @@ class DragonSlayerPlugin : OptionHandler() {
             player.packetDispatch.sendMessage("This door is securely locked.")
             true
         } else {
-            player.packetDispatch.sendMessage("You use the key and the door opens.")
+            player.inventory.remove(requiredKey)
+            player.packetDispatch.sendMessage("The key disintegrates as it unlocks the door.")
             handleAutowalkDoor(player, node.asScenery())
             true
         }
@@ -248,22 +294,20 @@ class DragonSlayerPlugin : OptionHandler() {
             player.getSavedData().questData.dragonSlayerPlanks += 1
             if (player.getSavedData().questData.dragonSlayerPlanks < 3) {
                 player.dialogueInterpreter.sendDialogue(
-                    "You nail a plank over the hole, but you still need more planks to",
-                    "close the hole completely."
+                    "You nail a plank over the hole, but you still need more planks to", "close the hole completely."
                 )
             } else {
                 player.getSavedData().questData.setDragonSlayerAttribute("repaired", true)
                 setVarp(player, 177, 1967876)
                 player.dialogueInterpreter.sendDialogue(
-                    "You nail a final plank over the hole. You have successfully patched",
-                    "the hole in the ship."
+                    "You nail a final plank over the hole. You have successfully patched", "the hole in the ship."
                 )
             }
         }
         return true
     }
 
-    private fun climbIfNear(player: Player, node: Scenery, option: String, pos1: Location, pos2: Location): Boolean {
+    private fun climbStairs(player: Player, node: Scenery, option: String, pos1: Location, pos2: Location): Boolean {
         return when (option) {
             "climb-up" -> {
                 if (player.location.getDistance(pos1) < 3) {
