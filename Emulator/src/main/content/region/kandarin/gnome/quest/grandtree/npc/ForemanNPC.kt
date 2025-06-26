@@ -15,7 +15,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Foreman NPC.
  *
- * Relations:
+ * # Relations
  * [The Grand Tree][content.region.kandarin.gnome.quest.grandtree.TheGrandTree]
  */
 @Initializable

@@ -32,10 +32,7 @@ class DukeHoracioDialogue(player: Player? = null) : Dialogue(player) {
                     !player.questRepository.getQuest(Quests.DRAGON_SLAYER).isCompleted(player)
             )
         ) {
-            addOption(
-                Quests.DRAGON_SLAYER,
-                DukeDragonSlayerDialogue(player.questRepository.getStage(Quests.DRAGON_SLAYER)),
-            )
+            addOption(Quests.DRAGON_SLAYER, DukeDragonSlayerDialogue(player.questRepository.getStage(Quests.DRAGON_SLAYER)))
         }
         if (!player.questRepository.isComplete(Quests.THE_LOST_TRIBE) &&
             player.questRepository.getQuest(Quests.THE_LOST_TRIBE).isStarted(player)

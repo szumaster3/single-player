@@ -30,7 +30,7 @@ import static core.api.ContentAPIKt.setAttribute;
 import static core.api.ContentAPIKt.setVarp;
 
 /**
- * The type Dragon slayer cutscene.
+ * Handles Dragon slayer cutscene.
  */
 public final class DragonSlayerCutscene extends CutscenePlugin {
 

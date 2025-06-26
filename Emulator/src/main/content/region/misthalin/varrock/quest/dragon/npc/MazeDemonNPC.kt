@@ -1,4 +1,4 @@
-package content.region.misthalin.varrock.quest.dragon.handlers.npc
+package content.region.misthalin.varrock.quest.dragon.npc
 
 import content.region.misthalin.varrock.quest.dragon.DragonSlayer
 import core.game.node.entity.Entity
@@ -6,10 +6,9 @@ import core.game.node.entity.npc.AbstractNPC
 import core.game.node.entity.player.Player
 import core.game.node.item.GroundItemManager
 import core.game.world.map.Location
-import core.tools.RandomFunction
 import org.rs.consts.NPCs
 
-class MazeSkeletonNPC : AbstractNPC {
+class MazeDemonNPC : AbstractNPC {
     constructor() : super(0, null)
 
     private constructor(id: Int, location: Location) : super(id, location)
@@ -18,22 +17,20 @@ class MazeSkeletonNPC : AbstractNPC {
         id: Int,
         location: Location,
         vararg objects: Any,
-    ): AbstractNPC = MazeSkeletonNPC(id, location)
+    ): AbstractNPC = MazeDemonNPC(id, location)
 
     override fun finalizeDeath(killer: Entity) {
         super.finalizeDeath(killer)
         if (killer.location.withinDistance(LOCATION)) {
             if (killer is Player) {
-                if (RandomFunction.random(0, 5) == 2) {
-                    GroundItemManager.create(DragonSlayer.YELLOW_KEY, getLocation(), killer)
-                }
+                GroundItemManager.create(DragonSlayer.GREEN_KEY, getLocation(), killer)
             }
         }
     }
 
-    override fun getIds(): IntArray = intArrayOf(NPCs.SKELETON_90)
+    override fun getIds(): IntArray = intArrayOf(NPCs.LESSER_DEMON_82)
 
     companion object {
-        private val LOCATION: Location = Location.create(2927, 3253, 2)
+        private val LOCATION: Location = Location.create(2936, 9652, 0)
     }
 }

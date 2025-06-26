@@ -24,8 +24,8 @@ import org.rs.consts.Quests
 /**
  * Represents the Aggie dialogue.
  *
- * Relations:
- * - [Swept Away quest][content.region.kandarin.quest.swept.SweptAway]
+ * # Relations
+ * - [Swept Away][content.region.misthalin.draynor.quest.swept.SweptAway]
  */
 @Initializable
 class AggiePuzzleAreaDialogue(player: Player? = null) : Dialogue(player) {

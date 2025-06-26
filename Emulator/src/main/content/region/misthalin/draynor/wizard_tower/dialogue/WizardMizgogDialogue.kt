@@ -20,7 +20,7 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.*
 
 /**
- * Relations: [Imp Catcher quest][content.region.misthalin.quest.imp.ImpCatcher]
+ * # Relations [Imp Catcher quest][content.region.misthalin.quest.imp.ImpCatcher]
  */
 @Initializable
 class WizardMizgogDialogue(player: Player? = null) : Dialogue(player) {

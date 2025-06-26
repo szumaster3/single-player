@@ -10,7 +10,7 @@ import core.tools.END_DIALOGUE
 /**
  * Represents the Grimngnash dialogue.
  *
- * Relations:
+ * # Relations
  * - varbit id: 3717
  * - scenery id: 24839
  */

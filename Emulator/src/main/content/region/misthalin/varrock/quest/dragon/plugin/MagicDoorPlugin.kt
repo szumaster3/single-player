@@ -1,4 +1,4 @@
-package content.region.misthalin.varrock.quest.dragon.handlers
+package content.region.misthalin.varrock.quest.dragon.plugin
 
 import content.region.misthalin.varrock.quest.dragon.DragonSlayer
 import core.api.quest.getQuestStage

@@ -17,7 +17,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Captain Errdo dialogue.
  *
- * Relations:
+ * # Relations
  * [The Grand Tree][content.region.kandarin.gnome.quest.grandtree.TheGrandTree]
  */
 @Initializable

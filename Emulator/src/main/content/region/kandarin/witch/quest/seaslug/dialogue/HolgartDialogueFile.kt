@@ -19,7 +19,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Holgart dialogue extension.
  *
- * Relations:
+ * # Relations
  * - [Sea Slug quest][content.region.kandarin.witch.quest.seaslug.SeaSlug]
  */
 class HolgartDialogueFile : DialogueFile() {

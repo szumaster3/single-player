@@ -14,7 +14,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Tree Gnome Scout dialogue.
  *
- * Relations:
+ * # Relations
  * - [GeneralShadow]
  */
 @Initializable

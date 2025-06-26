@@ -1,4 +1,4 @@
-package content.region.misthalin.varrock.quest.dragon.handlers.npc
+package content.region.misthalin.varrock.quest.dragon.npc
 
 import content.region.misthalin.varrock.quest.dragon.DragonSlayer
 import core.game.node.entity.Entity

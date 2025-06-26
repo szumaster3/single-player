@@ -14,7 +14,7 @@ import org.rs.consts.Quests
 /**
  * Represents the General Khazard dialogue.
  *
- * Relations:
+ * # Relations
  * - [GeneralShadow]
  */
 @Initializable

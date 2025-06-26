@@ -21,7 +21,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Old Crone dialogue.
  *
- * Relations:
+ * # Relations
  * - [Animal Magnetism][content.region.misthalin.quest.anma.AnimalMagnetism]
  * - [Swept away][content.region.kandarin.quest.swept.SweptAway]
  * - [Ghosts Ahoy][content.region.morytania.quest.ahoy.GhostsAhoy]

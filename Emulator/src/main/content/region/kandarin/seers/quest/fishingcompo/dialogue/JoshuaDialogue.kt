@@ -9,7 +9,7 @@ import org.rs.consts.NPCs
 /**
  * Represents the Joshua dialogue.
  *
- * Relations:
+ * # Relations
  * - [Fishing Contest][content.region.kandarin.quest.fishingcompo.FishingContest]
  */
 @Initializable

@@ -13,7 +13,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Falador Scout dialogue.
  *
- * Relations:
+ * # Relations
  * - [GeneralShadow]
  */
 @Initializable

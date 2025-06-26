@@ -12,7 +12,7 @@ import org.rs.consts.NPCs
 /**
  * Represents the Grandpa Jack dialogue.
  *
- * Relations:
+ * # Relations
  * - [Fishing Contest][content.region.kandarin.quest.fishingcompo.FishingContest]
  */
 @Initializable

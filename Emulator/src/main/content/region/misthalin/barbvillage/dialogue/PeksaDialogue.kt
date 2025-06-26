@@ -14,7 +14,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Peksa dialogue.
  *
- * Relations:
+ * # Relations
  * - [Scorpion Catcher quest][content.region.kandarin.seers.quest.scorpcatcher.ScorpionCatcherPlugin]
  */
 @Initializable

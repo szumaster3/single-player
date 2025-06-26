@@ -22,7 +22,7 @@ import org.rs.consts.NPCs
 /**
  * Represents the Romily Weaklax dialogue.
  *
- * Relations:
+ * # Relations
  * [Varrock Achievement Diary][content.region.misthalin.handlers.varrock.VarrockAchievementDiary]
  */
 @Initializable

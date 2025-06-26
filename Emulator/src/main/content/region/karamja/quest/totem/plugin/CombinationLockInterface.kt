@@ -8,7 +8,7 @@ import org.rs.consts.Components
 /**
  * Represents the Combination lock interface.
  *
- * Relations:
+ * # Relations
  * - [Tribal Totem quest][content.region.karamja.quest.totem.TribalTotem]
  */
 class CombinationLockInterface : InterfaceListener {

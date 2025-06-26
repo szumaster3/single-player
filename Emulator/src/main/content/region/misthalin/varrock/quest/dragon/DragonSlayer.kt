@@ -7,9 +7,9 @@ import content.region.misthalin.varrock.quest.dragon.dialogue.ChestDialogue
 import content.region.misthalin.varrock.quest.dragon.dialogue.GuildmasterDialogue
 import content.region.misthalin.varrock.quest.dragon.dialogue.OziachDialogue
 import content.region.misthalin.varrock.quest.dragon.dialogue.WormbrainDialogue
-import content.region.misthalin.varrock.quest.dragon.handlers.DragonSlayerPlugin
-import content.region.misthalin.varrock.quest.dragon.handlers.MagicDoorPlugin
-import content.region.misthalin.varrock.quest.dragon.handlers.npc.*
+import content.region.misthalin.varrock.quest.dragon.plugin.DragonSlayerPlugin
+import content.region.misthalin.varrock.quest.dragon.plugin.MagicDoorPlugin
+import content.region.misthalin.varrock.quest.dragon.npc.*
 import core.api.*
 import core.api.quest.getQuestStage
 import core.game.component.Component
@@ -45,7 +45,6 @@ class DragonSlayer :
             MelzarTheMadNPC(),
             WormbrainNPC(),
             ZombieRatNPC(),
-            ChestDialogue(),
             GuildmasterDialogue(),
             ElvargNPC(),
             WormbrainDialogue(),

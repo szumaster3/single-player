@@ -15,7 +15,7 @@ import org.rs.consts.NPCs
 /**
  * Represents the Glough's Pet cutscene in The Grand Tree quest.
  *
- * Relations:
+ * # Relations
  * [The Grand Tree][content.region.kandarin.quest.grandtree.TheGrandTree]
  */
 class GloughsPetCutscene(

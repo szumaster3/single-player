@@ -17,7 +17,7 @@ import org.rs.consts.NPCs
 /**
  * Represents the Foreman dialogue.
  *
- * Relations:
+ * # Relations
  * [The Grand Tree][content.region.kandarin.gnome.quest.grandtree.TheGrandTree]
  */
 class ForemanDialogue : DialogueFile() {

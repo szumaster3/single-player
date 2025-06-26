@@ -14,7 +14,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Shipyard Worker dialogue.
  *
- * Relations:
+ * # Relations
  * [The Grand Tree][content.region.kandarin.quest.grandtree.TheGrandTree]
  */
 class ShipyardWorkerDialogueFile : DialogueFile(){

@@ -19,7 +19,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Austri & Vestri dwarfs dialogue.
  *
- * Relations:
+ * # Relations
  * - [Fishing Contest][content.region.kandarin.quest.fishingcompo.FishingContest]
  */
 @Initializable

@@ -17,7 +17,7 @@ import org.rs.consts.Vars
 /**
  * Represents the Morris dialogue.
  *
- * Relations:
+ * # Relations
  * - [Fishing Contest][content.region.kandarin.quest.fishingcompo.FishingContest]
  * - [Land of the Goblins][content.region.misthalin.quest.lotg.LandOfTheGoblins]
  */

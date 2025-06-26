@@ -14,7 +14,7 @@ import core.tools.Vector3d
 /**
  * Handles the logic for the Mysterious Statue area in Seers' Village.
  *
- * Relations:
+ * # Relations
  * - [SeersVillageAchievementDiary]
  */
 class MysteriousStatue : MapArea {

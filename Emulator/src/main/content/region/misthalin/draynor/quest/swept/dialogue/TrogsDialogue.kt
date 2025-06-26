@@ -20,8 +20,8 @@ import java.util.*
 /**
  * Represents the Trogs dialogue.
  *
- * Relations:
- * - [Swept Away quest][content.region.kandarin.quest.swept.SweptAway]
+ * # Relations
+ * - [Swept Away][content.region.misthalin.draynor.quest.swept.SweptAway]
  */
 @Initializable
 class TrogsDialogue(player: Player? = null) : Dialogue(player) {

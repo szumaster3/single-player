@@ -18,7 +18,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Glough dialogue.
  *
- * Relations:
+ * # Relations
  * [The Grand Tree][content.region.kandarin.gnome.quest.grandtree.TheGrandTree]
  */
 class GloughDialogue : DialogueFile() {

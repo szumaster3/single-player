@@ -18,7 +18,7 @@ import org.rs.consts.NPCs
 /**
  * Represents The Abbot Langley dialogue.
  *
- * Relations:
+ * # Relations
  * - [CrypticClue][content.global.activity.ttrail.clues.CrypticClue]
  */
 @Initializable

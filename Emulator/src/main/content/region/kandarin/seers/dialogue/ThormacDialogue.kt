@@ -17,7 +17,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Thormac dialogue.
  *
- * Relations:
+ * # Relations
  * - [Scorpion Catcher quest][content.region.kandarin.seers.quest.scorpcatcher.ScorpionCatcherPlugin]
  * - Battlestaff enchanting.
  */

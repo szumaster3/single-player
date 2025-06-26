@@ -20,7 +20,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Bailey dialogue.
  *
- * Relations:
+ * # Relations
  * - [Sea Slug quest][content.region.kandarin.witch.quest.seaslug.SeaSlug]
  */
 @Initializable

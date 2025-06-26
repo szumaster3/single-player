@@ -13,7 +13,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Caroline dialogue extension.
  *
- * Relations:
+ * # Relations
  * - [Sea Slug quest][content.region.kandarin.witch.quest.seaslug.SeaSlug]
  */
 class CarolineDialogueFile : DialogueFile() {

@@ -13,7 +13,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Jungle Scout dialogue.
  *
- * Relations:
+ * # Relations
  * - [GeneralShadow]
  */
 @Initializable

@@ -15,7 +15,7 @@ import org.rs.consts.NPCs
 /**
  * Represents the Shadow Realm Ghost dialogue.
  *
- * Relations:
+ * # Relations
  * - [GeneralShadow]
  */
 @Initializable

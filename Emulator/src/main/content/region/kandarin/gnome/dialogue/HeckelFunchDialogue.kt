@@ -17,7 +17,7 @@ import org.rs.consts.NPCs
 /**
  * Represents The Heckel Funch dialogue.
  *
- * Relations:
+ * # Relations
  * - [CrypticClue][content.global.activity.ttrail.clues.CrypticClue]
  */
 @Initializable
@@ -25,27 +25,6 @@ class HeckelFunchDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
-        if (inBorders(player, 2484, 3486, 2493, 3489) && inInventory(player, Items.CLUE_SCROLL_10248)) {
-            val manager = TreasureTrailManager.getInstance(player)
-            val clueScroll = ClueScroll.getClueScrolls()[manager.clueId]
-
-            clueScroll?.takeIf { removeItem(player, Item(it.clueId, 1), Container.INVENTORY) }?.let {
-                it.reward(player)
-
-                if (manager.isCompleted) {
-                    sendItemDialogue(player, Items.CASKET_405, "You've found a casket!")
-                    manager.clearTrail()
-                } else {
-                    it.level?.let { it1 ->
-                        ClueScroll.getClue(it1)?.let { newClue ->
-                            sendItemDialogue(player, newClue, "You found another clue scroll.")
-                            addItem(player, newClue.id, 1)
-                        }
-                    }
-                }
-            }
-            return true
-        }
         playerl(FaceAnim.FRIENDLY, "Hello there.")
         return true
     }

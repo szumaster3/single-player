@@ -18,7 +18,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Seer's dialogue.
  *
- * Relations:
+ * # Relations
  * - [Scorpion Catcher quest][content.region.kandarin.quest.scorpcatcher.ScorpionCatcher]
  * - [Seers Achievement Diary][content.region.kandarin.handlers.seers.SeersVillageAchievementDiary]
  */

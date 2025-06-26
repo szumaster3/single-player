@@ -11,6 +11,12 @@ import core.game.node.item.Item
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Wormbrain dialogue.
+ *
+ * Relations
+ * - [DragonSlayer][content.region.misthalin.varrock.quest.dragon.DragonSlayer]
+ */
 class WormbrainDialogue(player: Player? = null) : Dialogue(player) {
 
     private var quest: Quest? = null
@@ -18,13 +24,12 @@ class WormbrainDialogue(player: Player? = null) : Dialogue(player) {
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         quest = player.getQuestRepository().getQuest(Quests.DRAGON_SLAYER)
-        stage =
-            when (quest!!.getStage(player)) {
-                else -> {
-                    npc(FaceAnim.OLD_DEFAULT, "Whut you want?")
-                    -1
-                }
+        stage = when (quest!!.getStage(player)) {
+            else -> {
+                npc(FaceAnim.OLD_DEFAULT, "Whut you want?")
+                -1
             }
+        }
         return true
     }
 
@@ -32,15 +37,15 @@ class WormbrainDialogue(player: Player? = null) : Dialogue(player) {
         when (quest!!.getStage(player)) {
             20 -> {
                 when (stage) {
-                    -1 ->
-                        if (!player.inventory.containsItem(DragonSlayer.WORMBRAIN_PIECE) &&
-                            !player.bank.containsItem(DragonSlayer.WORMBRAIN_PIECE)
-                        ) {
-                            player("I believe you've got a piece of a map that I need.")
-                            stage = 500
-                        } else {
-                            defaultDialogue(buttonId)
-                        }
+                    -1 -> if (!player.inventory.containsItem(DragonSlayer.WORMBRAIN_PIECE) && !player.bank.containsItem(
+                            DragonSlayer.WORMBRAIN_PIECE
+                        )
+                    ) {
+                        player("I believe you've got a piece of a map that I need.")
+                        stage = 500
+                    } else {
+                        defaultDialogue(buttonId)
+                    }
 
                     500 -> {
                         npc(FaceAnim.OLD_DEFAULT, "So? Why should I be giving it to you? What you do", "for Wormbrain?")
@@ -62,34 +67,32 @@ class WormbrainDialogue(player: Player? = null) : Dialogue(player) {
                         stage = 504
                     }
 
-                    504 ->
-                        when (buttonId) {
-                            1 -> {
-                                player("You must be joking! Forget it.")
-                                stage = 505
-                            }
-
-                            2 -> {
-                                player("Alright, then, 10,000 it is.")
-                                stage = 506
-                            }
+                    504 -> when (buttonId) {
+                        1 -> {
+                            player("You must be joking! Forget it.")
+                            stage = 505
                         }
+
+                        2 -> {
+                            player("Alright, then, 10,000 it is.")
+                            stage = 506
+                        }
+                    }
 
                     505 -> end()
-                    506 ->
-                        if (player.inventory.containsItem(COINS) && player.inventory.remove(COINS)) {
-                            if (!player.inventory.add(DragonSlayer.WORMBRAIN_PIECE)) {
-                                GroundItemManager.create(DragonSlayer.WORMBRAIN_PIECE, player)
-                            }
-                            interpreter.sendItemMessage(
-                                DragonSlayer.WORMBRAIN_PIECE.id,
-                                "You buy the map piece from Wormbrain.",
-                            )
-                            stage = 507
-                        } else {
-                            end()
-                            player.packetDispatch.sendMessage("You don't have enough coins in order to do that.")
+                    506 -> if (player.inventory.containsItem(COINS) && player.inventory.remove(COINS)) {
+                        if (!player.inventory.add(DragonSlayer.WORMBRAIN_PIECE)) {
+                            GroundItemManager.create(DragonSlayer.WORMBRAIN_PIECE, player)
                         }
+                        interpreter.sendItemMessage(
+                            DragonSlayer.WORMBRAIN_PIECE.id,
+                            "You buy the map piece from Wormbrain.",
+                        )
+                        stage = 507
+                    } else {
+                        end()
+                        player.packetDispatch.sendMessage("You don't have enough coins in order to do that.")
+                    }
 
                     507 -> {
                         npc(FaceAnim.OLD_DEFAULT, "Fank you very much! Now me can bribe da guards,", "hehehe.")
@@ -115,18 +118,17 @@ class WormbrainDialogue(player: Player? = null) : Dialogue(player) {
                 stage = 0
             }
 
-            0 ->
-                when (buttonId) {
-                    1 -> {
-                        player("What are you in for?")
-                        stage = 10
-                    }
-
-                    2 -> {
-                        player("Sorry, thought this was a zoo.")
-                        stage = 15
-                    }
+            0 -> when (buttonId) {
+                1 -> {
+                    player("What are you in for?")
+                    stage = 10
                 }
+
+                2 -> {
+                    player("Sorry, thought this was a zoo.")
+                    stage = 15
+                }
+            }
 
             10 -> {
                 npc(FaceAnim.OLD_DEFAULT, "Me not sure. Me pick some stuff up and take it away.")

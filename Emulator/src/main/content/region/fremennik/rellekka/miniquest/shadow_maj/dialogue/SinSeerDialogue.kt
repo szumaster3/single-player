@@ -14,7 +14,7 @@ import org.rs.consts.NPCs
 /**
  * Represents the Sin Seer dialogue.
  *
- * Relations:
+ * # Relations
  * - [GeneralShadow]
  */
 @Initializable

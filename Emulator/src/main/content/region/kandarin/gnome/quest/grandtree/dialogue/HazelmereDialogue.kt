@@ -19,7 +19,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Hazelmere dialogue.
  *
- * Relations:
+ * # Relations
  * [The Grand Tree][content.region.kandarin.gnome.quest.grandtree.TheGrandTree]
  */
 @Initializable

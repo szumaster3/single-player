@@ -15,7 +15,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Desert Scout dialogue.
  *
- * Relations:
+ * # Relations
  * - [GeneralShadow]
  */
 @Initializable

@@ -16,7 +16,7 @@ import core.plugin.Initializable
  *   1 = NPC_ID: 3678
  * ```
  *
- * Relations:
+ * # Relations
  * - [Fishing Contest][content.region.kandarin.quest.fishingcompo.FishingContest]
  */
 @Initializable

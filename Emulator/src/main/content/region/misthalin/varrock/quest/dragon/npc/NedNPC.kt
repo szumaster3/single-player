@@ -1,4 +1,4 @@
-package content.region.misthalin.varrock.quest.dragon.handlers.npc
+package content.region.misthalin.varrock.quest.dragon.npc
 
 import core.api.quest.getQuestStage
 import core.game.node.entity.npc.AbstractNPC

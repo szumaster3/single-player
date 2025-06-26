@@ -20,7 +20,7 @@ import org.rs.consts.Quests
 /**
  * Represents the Bonzo dialogue.
  *
- * Relations:
+ * # Relations
  * - [Fishing Contest][content.region.kandarin.quest.fishingcompo.FishingContest]
  */
 @Initializable
