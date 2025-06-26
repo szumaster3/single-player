@@ -12,6 +12,7 @@ import core.game.node.item.GroundItem
 import core.game.world.map.RegionManager
 import org.rs.consts.Graphics
 import org.rs.consts.Items
+import org.rs.consts.NPCs
 
 /**
  * Handles the interaction for taking the
@@ -30,22 +31,21 @@ class ZamorakWinePlugin : InteractionListener {
                 return@on true
             }
 
-            RegionManager.getLocalNpcs(player).forEach { npc ->
-                if (npc.id == 188) {
-                    sendChat(npc,"STOP STEALING MY WINE! GAH!")
-                    npc.properties.combatPulse.attack(player)
-                }
+            val monk = RegionManager.getLocalNpcs(player).firstOrNull { it.id == NPCs.MONK_OF_ZAMORAK_188 }
+            monk?.let {
+                sendChat(it, "STOP STEALING MY WINE! GAH!")
+                it.properties.combatPulse.attack(player)
             }
 
             drainCombatStats(player)
             sendGraphics(Graphics.FLAMES_OF_ZAMORAK_78, player.location)
-            impact(player, getHpBasedHit(player), ImpactHandler.HitsplatType.NORMAL)
+            impact(player, calculateImpact(player), ImpactHandler.HitsplatType.NORMAL)
             PickupHandler.take(player, wine as GroundItem)
             return@on true
         }
     }
 
-    private fun getHpBasedHit(player: Player): Int {
+    private fun calculateImpact(player: Player): Int {
         return when (player.skills.lifepoints) {
             in 1..19 -> 1
             in 20..39 -> 2
@@ -57,14 +57,15 @@ class ZamorakWinePlugin : InteractionListener {
 
     private fun drainCombatStats(player: Player) {
         COMBAT_STATS.forEach { stat ->
-            val level = player.skills.getStaticLevel(stat)
-            if (level <= 0) return@forEach
+            val dynamicLevel = player.skills.dynamicLevels[stat]
+            val staticLevel = player.skills.getStaticLevel(stat)
 
-            val drainAmount = if (level > 40) 3 else level / 13
-            if (drainAmount <= 0) return@forEach
+            if (dynamicLevel <= 0 || staticLevel <= 0) return@forEach
 
-            val percentage = drainAmount.toDouble() / level * 100.0
-            player.skills.drainLevel(stat, percentage, 7.5)
+            val drainAmount = if (staticLevel > 40) 3 else 1
+            val percentage = drainAmount.toDouble() / dynamicLevel
+
+            player.skills.drainLevel(stat, percentage, 0.075)
         }
     }
 }
