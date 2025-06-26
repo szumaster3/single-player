@@ -31,10 +31,11 @@ class ZamorakWinePlugin : InteractionListener {
                 return@on true
             }
 
-            val monk = RegionManager.getLocalNpcs(player).firstOrNull { it.id == NPCs.MONK_OF_ZAMORAK_188 }
-            monk?.let {
-                sendChat(it, "STOP STEALING MY WINE! GAH!")
-                it.properties.combatPulse.attack(player)
+            RegionManager.getLocalNpcs(player).forEach { npc ->
+                if (npc.id == NPCs.MONK_OF_ZAMORAK_188) {
+                    sendChat(npc,"STOP STEALING MY WINE! GAH!")
+                    npc.attack(player)
+                }
             }
 
             drainCombatStats(player)
