@@ -17,7 +17,11 @@ import org.rs.consts.Items
 import org.rs.consts.Scenery
 import java.util.*
 
+/**
+ * Handles interactions with dairy churns.
+ */
 class DairyChurnPlugin : InteractionListener {
+
     private val ingredients = intArrayOf(Items.BUCKET_OF_MILK_1927, Items.POT_OF_CREAM_2130, Items.PAT_OF_BUTTER_6697)
     private val churns = intArrayOf(Scenery.DAIRY_CHURN_10093, Scenery.DAIRY_CHURN_10094, Scenery.DAIRY_CHURN_25720, Scenery.DAIRY_CHURN_34800, Scenery.DAIRY_CHURN_35931)
 
@@ -25,40 +29,52 @@ class DairyChurnPlugin : InteractionListener {
         private const val DIALOGUE_ID = 984374
     }
 
+    private fun checkHasIngredients(player: Player): Boolean {
+        if (!anyInInventory(player, *ingredients)) {
+            sendMessage(player, "You need some milk, cream or butter to use in the churn.")
+            return false
+        }
+        return true
+    }
+
     override fun defineListeners() {
         ClassScanner.definePlugin(DairyChurnDialogue())
 
+        /*
+         * Handles interaction with churn scenery objects.
+         */
+
         on(churns, IntType.SCENERY, "churn") { player, _ ->
-            if (!anyInInventory(player, *ingredients)) {
-                sendMessage(player, "You need some milk, cream or butter to use in the churn.")
-                return@on true
-            }
+            if (!checkHasIngredients(player)) return@on true
             player.dialogueInterpreter.open(DIALOGUE_ID)
-            true
+            return@on true
         }
 
+        /*
+         * Handles using milk, cream or butter on churn scenery objects.
+         */
+
         onUseWith(IntType.SCENERY, ingredients, *churns) { player, _, _ ->
-            if (!anyInInventory(player, *ingredients)) {
-                sendMessage(player, "You need some milk, cream or butter to use in the churn.")
-                return@onUseWith true
-            }
+            if (!checkHasIngredients(player)) return@onUseWith true
             player.dialogueInterpreter.open(DIALOGUE_ID)
-            true
+            return@onUseWith true
         }
     }
 }
 
+/**
+ * Handles Dialogue shown to player when interacting with a dairy churn.
+ */
 class DairyChurnDialogue(player: Player? = null) : Dialogue(player) {
 
-    override fun open(vararg args: Any?): Boolean {
-        val hasMilk = inInventory(player, Items.BUCKET_OF_MILK_1927)
-        val hasCream = inInventory(player, Items.POT_OF_CREAM_2130)
-        val hasButter = inInventory(player, Items.PAT_OF_BUTTER_6697)
+    companion object {
+        private const val FALLBACK_INTERFACE_ID = -1
+    }
 
+    override fun open(vararg args: Any?): Boolean {
         val interfaceId = when {
-            hasMilk -> Components.COOKING_CHURN_OP3_74
-            hasCream -> Components.COOKING_CHURN_OP2_73
-            hasButter -> Components.COOKING_CHURN_OP3_74
+            inInventory(player, Items.BUCKET_OF_MILK_1927) || inInventory(player, Items.PAT_OF_BUTTER_6697) -> Components.COOKING_CHURN_OP3_74
+            inInventory(player, Items.POT_OF_CREAM_2130) -> Components.COOKING_CHURN_OP2_73
             else -> return false
         }
 
@@ -66,48 +82,40 @@ class DairyChurnDialogue(player: Player? = null) : Dialogue(player) {
         return true
     }
 
+    private data class ChurnOption(val input: Int, val product: DairyProduct, val amount: Int)
+
+    private val churnOptions: Map<Int, Map<Int, ChurnOption>> = mapOf(
+        Components.COOKING_CHURN_OP3_74 to mapOf(
+            13 to ChurnOption(Items.BUCKET_OF_MILK_1927, DairyProduct.CHEESE, 1),
+            12 to ChurnOption(Items.BUCKET_OF_MILK_1927, DairyProduct.CHEESE, 5),
+            11 to ChurnOption(Items.BUCKET_OF_MILK_1927, DairyProduct.CHEESE, 10),
+            10 to ChurnOption(Items.BUCKET_OF_MILK_1927, DairyProduct.PAT_OF_BUTTER, 1),
+            9  to ChurnOption(Items.BUCKET_OF_MILK_1927, DairyProduct.PAT_OF_BUTTER, 5),
+            8  to ChurnOption(Items.BUCKET_OF_MILK_1927, DairyProduct.PAT_OF_BUTTER, 10),
+            7  to ChurnOption(Items.BUCKET_OF_MILK_1927, DairyProduct.POT_OF_CREAM, 1),
+            6  to ChurnOption(Items.BUCKET_OF_MILK_1927, DairyProduct.POT_OF_CREAM, 5),
+            5  to ChurnOption(Items.BUCKET_OF_MILK_1927, DairyProduct.POT_OF_CREAM, 10),
+        ),
+        Components.COOKING_CHURN_OP2_73 to mapOf(
+            9 to ChurnOption(Items.POT_OF_CREAM_2130, DairyProduct.CHEESE, 1),
+            8 to ChurnOption(Items.POT_OF_CREAM_2130, DairyProduct.CHEESE, 5),
+            7 to ChurnOption(Items.POT_OF_CREAM_2130, DairyProduct.CHEESE, 10),
+            6 to ChurnOption(Items.POT_OF_CREAM_2130, DairyProduct.PAT_OF_BUTTER, 1),
+            5 to ChurnOption(Items.POT_OF_CREAM_2130, DairyProduct.PAT_OF_BUTTER, 5),
+            4 to ChurnOption(Items.POT_OF_CREAM_2130, DairyProduct.PAT_OF_BUTTER, 10),
+        ),
+        FALLBACK_INTERFACE_ID to mapOf(
+            5 to ChurnOption(Items.PAT_OF_BUTTER_6697, DairyProduct.CHEESE, 1),
+            4 to ChurnOption(Items.PAT_OF_BUTTER_6697, DairyProduct.CHEESE, 5),
+            3 to ChurnOption(Items.PAT_OF_BUTTER_6697, DairyProduct.CHEESE, 10),
+        )
+    )
+
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
-        val inputItemId: Int
-        val dairyProduct: DairyProduct
-        val amount: Int
+        val id = if (churnOptions.containsKey(interfaceId)) interfaceId else FALLBACK_INTERFACE_ID
+        val option = churnOptions[id]?.get(buttonId) ?: return false
 
-        when (interfaceId) {
-            Components.COOKING_CHURN_OP3_74 -> {
-                when (buttonId) {
-                    13 -> { inputItemId = Items.BUCKET_OF_MILK_1927; dairyProduct = DairyProduct.CHEESE; amount = 1 }
-                    12 -> { inputItemId = Items.BUCKET_OF_MILK_1927; dairyProduct = DairyProduct.CHEESE; amount = 5 }
-                    11 -> { inputItemId = Items.BUCKET_OF_MILK_1927; dairyProduct = DairyProduct.CHEESE; amount = 10 }
-                    10 -> { inputItemId = Items.BUCKET_OF_MILK_1927; dairyProduct = DairyProduct.PAT_OF_BUTTER; amount = 1 }
-                    9 ->  { inputItemId = Items.BUCKET_OF_MILK_1927; dairyProduct = DairyProduct.PAT_OF_BUTTER; amount = 5 }
-                    8 ->  { inputItemId = Items.BUCKET_OF_MILK_1927; dairyProduct = DairyProduct.PAT_OF_BUTTER; amount = 10 }
-                    7 ->  { inputItemId = Items.BUCKET_OF_MILK_1927; dairyProduct = DairyProduct.POT_OF_CREAM; amount = 1 }
-                    6 ->  { inputItemId = Items.BUCKET_OF_MILK_1927; dairyProduct = DairyProduct.POT_OF_CREAM; amount = 5 }
-                    5 ->  { inputItemId = Items.BUCKET_OF_MILK_1927; dairyProduct = DairyProduct.POT_OF_CREAM; amount = 10 }
-                    else -> return false
-                }
-            }
-            Components.COOKING_CHURN_OP2_73 -> {
-                when (buttonId) {
-                    9 ->  { inputItemId = Items.POT_OF_CREAM_2130; dairyProduct = DairyProduct.CHEESE; amount = 1 }
-                    8 ->  { inputItemId = Items.POT_OF_CREAM_2130; dairyProduct = DairyProduct.CHEESE; amount = 5 }
-                    7 ->  { inputItemId = Items.POT_OF_CREAM_2130; dairyProduct = DairyProduct.CHEESE; amount = 10 }
-                    6 ->  { inputItemId = Items.POT_OF_CREAM_2130; dairyProduct = DairyProduct.PAT_OF_BUTTER; amount = 1 }
-                    5 ->  { inputItemId = Items.POT_OF_CREAM_2130; dairyProduct = DairyProduct.PAT_OF_BUTTER; amount = 5 }
-                    4 ->  { inputItemId = Items.POT_OF_CREAM_2130; dairyProduct = DairyProduct.PAT_OF_BUTTER; amount = 10 }
-                    else -> return false
-                }
-            }
-            else -> {
-                when (buttonId) {
-                    5 ->  { inputItemId = Items.PAT_OF_BUTTER_6697; dairyProduct = DairyProduct.CHEESE; amount = 1 }
-                    4 ->  { inputItemId = Items.PAT_OF_BUTTER_6697; dairyProduct = DairyProduct.CHEESE; amount = 5 }
-                    3 ->  { inputItemId = Items.PAT_OF_BUTTER_6697; dairyProduct = DairyProduct.CHEESE; amount = 10 }
-                    else -> return false
-                }
-            }
-        }
-
-        player.pulseManager.run(DairyChurnPulse(player, Item(inputItemId), dairyProduct, amount))
+        player.pulseManager.run(DairyChurnPulse(player, Item(option.input), option.product, option.amount))
         return true
     }
 
@@ -116,6 +124,9 @@ class DairyChurnDialogue(player: Player? = null) : Dialogue(player) {
     override fun getIds(): IntArray = intArrayOf(984374)
 }
 
+/**
+ * handles the churning process for dairy products.
+ */
 private class DairyChurnPulse(
     player: Player?,
     item: Item?,
@@ -140,12 +151,12 @@ private class DairyChurnPulse(
             return false
         }
 
-        if (player.getSkills().getLevel(Skills.COOKING) < dairy.level) {
+        if (getStatLevel(player, Skills.COOKING) < dairy.level) {
             sendMessage(player, "You need a cooking level of ${dairy.level} to cook this.")
             return false
         }
 
-        val availableAmount = player.inventory.getAmount(input.id)
+        val availableAmount = amountInInventory(player, input.id)
         if (amount > availableAmount) amount = availableAmount
         if (amount < 1) return false
 
@@ -166,7 +177,8 @@ private class DairyChurnPulse(
                 if (input.id == BUCKET_OF_MILK.id) addItemOrDrop(player, BUCKET.id)
 
                 val productName = getItemName(dairy.product.id).lowercase(Locale.getDefault())
-                sendMessage(player, "You make " + (if (productName.firstOrNull()?.isVowel() == true) "an" else "a") + " $productName.")
+                val article = if (productName.firstOrNull()?.isVowel() == true) "an" else "a"
+                sendMessage(player, "You make $article $productName.")
 
                 player.dispatch(ResourceProducedEvent(dairy.product.id, amount, input, BUCKET_OF_MILK.id))
                 player.getSkills().addExperience(Skills.COOKING, dairy.experience, true)
@@ -179,10 +191,18 @@ private class DairyChurnPulse(
     private fun Char.isVowel(): Boolean = this.lowercaseChar() in "aeiou"
 }
 
-enum class DairyProduct(val level: Int, val experience: Double, val product: Item, inputs: List<Int>) {
-    POT_OF_CREAM(21, 18.0, Item(Items.POT_OF_CREAM_2130), listOf(Items.BUCKET_OF_MILK_1927)),
-    PAT_OF_BUTTER(38, 40.5, Item(Items.PAT_OF_BUTTER_6697), listOf(Items.BUCKET_OF_MILK_1927, Items.POT_OF_CREAM_2130)),
-    CHEESE(48, 64.0, Item(Items.CHEESE_1985), listOf(Items.BUCKET_OF_MILK_1927, Items.POT_OF_CREAM_2130, Items.PAT_OF_BUTTER_6697));
+/**
+ * Represents dairy products.
+ *
+ * @property level      The required cooking level to make the product.
+ * @property experience The experience gained per product.
+ * @property product    The resulting item.
+ * @property inputs     The array of possible input item ids.
+ */
+enum class DairyProduct(val level: Int, val experience: Double, val product: Item, inputs: Array<Int>) {
+    POT_OF_CREAM(21, 18.0, Item(Items.POT_OF_CREAM_2130), arrayOf(Items.BUCKET_OF_MILK_1927)),
+    PAT_OF_BUTTER(38, 40.5, Item(Items.PAT_OF_BUTTER_6697), arrayOf(Items.BUCKET_OF_MILK_1927, Items.POT_OF_CREAM_2130)),
+    CHEESE(48, 64.0, Item(Items.CHEESE_1985), arrayOf(Items.BUCKET_OF_MILK_1927, Items.POT_OF_CREAM_2130, Items.PAT_OF_BUTTER_6697));
 
-    val inputsItems: List<Item> = inputs.map { Item(it) }
+    val inputsItems: Array<Item> by lazy { inputs.map { Item(it) }.toTypedArray() }
 }
