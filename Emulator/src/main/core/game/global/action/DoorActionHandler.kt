@@ -17,15 +17,21 @@ import core.game.world.map.path.Pathfinder
 import org.rs.consts.Sounds
 import java.awt.Point
 
+/**
+ * Handles door-related actions.
+ */
 object DoorActionHandler {
     private const val IN_USE_CHARGE = 88
 
+    /**
+     * Handles interaction with a door managing open & close states.
+     *
+     * @param player The player interacting with the door.
+     * @param scenery The door object being interacted with.
+     */
     @JvmStatic
-    fun handleDoor(
-        player: Player,
-        scenery: Scenery,
-    ) {
-        val second = if ((scenery.id == 1530 || scenery.id == 1531)) null else getSecondDoor(scenery, player)
+    fun handleDoor(player: Player, scenery: Scenery) {
+        val second = if ((scenery.id == 1530 || scenery.id == 1531)) null else getSecondDoor(scenery)
         var o: Scenery? = null
         if (scenery is Constructed && (scenery.replaced.also { o = it }) != null) {
             val d = forId(scenery.getId())
@@ -91,17 +97,21 @@ object DoorActionHandler {
         open(scenery, null, d.replaceId, -1, true, 500, d.isFence)
     }
 
+    /**
+     * Handles autowalk through a door for any entity.
+     *
+     * @param entity The entity walking through the door.
+     * @param scenery The door object.
+     * @param location The target location.
+     * @return True if the pulse started, false if door is in use.
+     */
     @JvmStatic
     @JvmOverloads
-    fun handleAutowalkDoor(
-        entity: Entity,
-        scenery: Scenery,
-        endLocation: Location = getEndLocation(entity, scenery),
-    ): Boolean {
+    fun handleAutowalkDoor(entity: Entity, scenery: Scenery, location: Location = getEndLocation(entity, scenery)): Boolean {
         if (scenery.charge == IN_USE_CHARGE) {
             return false
         }
-        val second = if ((scenery.id == 3)) null else getSecondDoor(scenery, entity)
+        val second = if ((scenery.id == 3)) null else getSecondDoor(scenery)
         entity.lock(4)
         val loc = entity.location
         if (entity is Player) {
@@ -128,7 +138,7 @@ object DoorActionHandler {
                     if (!opened) {
                         open(scenery, second, scenery.id, second?.id ?: -1, false, 2, false)
                         entity.walkingQueue.reset()
-                        entity.walkingQueue.addPath(endLocation.x, endLocation.y)
+                        entity.walkingQueue.addPath(location.x, location.y)
                         opened = true
 
                         scenery.charge = IN_USE_CHARGE
@@ -138,7 +148,7 @@ object DoorActionHandler {
                         return false
                     }
                     if (entity is Player) {
-                        val player = entity.asPlayer()
+                        val player = entity as? Player ?: return false
                         if (scenery.id == 2112 && withinDistance(player, Location(3046, 9756, 0), 10)) {
                             finishDiaryTask(player, DiaryType.FALADOR, 2, 6)
                         }
@@ -165,48 +175,56 @@ object DoorActionHandler {
         return true
     }
 
+    /**
+     * Gets the end location on the other side of a door.
+     *
+     * @param entity The entity moving through the door.
+     * @param scenery The door object.
+     * @return The destination.
+     */
     @JvmStatic
-    fun getEndLocation(
-        entity: Entity,
-        scenery: Scenery,
-    ): Location = getEndLocation(entity, scenery, false)
+    fun getEndLocation(entity: Entity, scenery: Scenery): Location = getEndLocation(entity, scenery, false)
 
+    /**
+     * Gets the end location on the other side of a door.
+     *
+     * @param entity The entity moving through the door.
+     * @param scenery The door object.
+     * @param isAutoWalk *Optional* flag indicating if autowalk is used.
+     * @return The destination.
+     */
     @JvmStatic
-    fun getEndLocation(
-        entity: Entity,
-        scenery: Scenery,
-        isAutoWalk: Boolean?,
-    ): Location {
+    fun getEndLocation(entity: Entity, scenery: Scenery, isAutoWalk: Boolean?): Location {
         var l = scenery.location
         when (scenery.rotation) {
-            0 ->
-                if (entity.location.x >= l.x) {
-                    l = l.transform(-1, 0, 0)
-                }
+            0 -> if (entity.location.x >= l.x) {
+                l = l.transform(-1, 0, 0)
+            }
 
-            1 ->
-                if (entity.location.y <= l.y) {
-                    l = l.transform(0, 1, 0)
-                }
+            1 -> if (entity.location.y <= l.y) {
+                l = l.transform(0, 1, 0)
+            }
 
-            2 ->
-                if (entity.location.x <= l.x) {
-                    l = l.transform(1, 0, 0)
-                }
+            2 -> if (entity.location.x <= l.x) {
+                l = l.transform(1, 0, 0)
+            }
 
-            else ->
-                if (entity.location.y >= l.y) {
-                    l = l.transform(0, -1, 0)
-                }
+            else -> if (entity.location.y >= l.y) {
+                l = l.transform(0, -1, 0)
+            }
         }
         return l
     }
 
+    /**
+     * Gets the destination location.
+     *
+     * @param entity The entity moving through the door.
+     * @param door The door object.
+     * @return The final destination location.
+     */
     @JvmStatic
-    fun getDestination(
-        entity: Entity,
-        door: Scenery,
-    ): Location {
+    fun getDestination(entity: Entity, door: Scenery): Location {
         var l = door.location
         var rotation = door.rotation
         if (door is Constructed && door.getDefinition().hasAction("close")) {
@@ -234,51 +252,50 @@ object DoorActionHandler {
             }
         }
         when (rotation) {
-            0 ->
-                if (entity.location.x < l.x) {
-                    if (Pathfinder.find(entity, l.transform(-1, 0, 0)).isMoveNear) {
-                        return l.transform(0, 0, 0)
-                    }
-                    return l.transform(-1, 0, 0)
+            0 -> if (entity.location.x < l.x) {
+                if (Pathfinder.find(entity, l.transform(-1, 0, 0)).isMoveNear) {
+                    return l.transform(0, 0, 0)
                 }
+                return l.transform(-1, 0, 0)
+            }
 
-            1 ->
-                if (entity.location.y > l.y) {
-                    if (Pathfinder.find(entity, l.transform(0, 1, 0)).isMoveNear) {
-                        return l.transform(0, 0, 0)
-                    }
-                    return l.transform(0, 1, 0)
+            1 -> if (entity.location.y > l.y) {
+                if (Pathfinder.find(entity, l.transform(0, 1, 0)).isMoveNear) {
+                    return l.transform(0, 0, 0)
                 }
+                return l.transform(0, 1, 0)
+            }
 
-            2 ->
-                if (entity.location.x > l.x) {
-                    if (Pathfinder.find(entity, l.transform(1, 0, 0)).isMoveNear) {
-                        return l.transform(0, 0, 0)
-                    }
-                    return l.transform(1, 0, 0)
+            2 -> if (entity.location.x > l.x) {
+                if (Pathfinder.find(entity, l.transform(1, 0, 0)).isMoveNear) {
+                    return l.transform(0, 0, 0)
                 }
+                return l.transform(1, 0, 0)
+            }
 
-            3 ->
-                if (entity.location.y < l.y) {
-                    if (Pathfinder.find(entity, l.transform(0, -1, 0)).isMoveNear) {
-                        return l.transform(0, 0, 0)
-                    }
-                    return l.transform(0, -1, 0)
+            3 -> if (entity.location.y < l.y) {
+                if (Pathfinder.find(entity, l.transform(0, -1, 0)).isMoveNear) {
+                    return l.transform(0, 0, 0)
                 }
+                return l.transform(0, -1, 0)
+            }
         }
         return l
     }
 
+    /**
+     * Handles open interaction.
+     *
+     * @param scenery The primary door object to open.
+     * @param second The second door object, if any.
+     * @param replaceId The id of the replacement object for the primary door.
+     * @param secondReplaceId The id of the replacement object for the second door.
+     * @param clip Whether to apply clipping on the door.
+     * @param restoreTicks Ticks after which the door should restore to its original state.
+     * @param fence True if the door is a fence gate, which uses a different open method.
+     */
     @JvmStatic
-    fun open(
-        scenery: Scenery,
-        second: Scenery?,
-        replaceId: Int,
-        secondReplaceId: Int,
-        clip: Boolean,
-        restoreTicks: Int,
-        fence: Boolean,
-    ) {
+    fun open(scenery: Scenery, second: Scenery?, replaceId: Int, secondReplaceId: Int, clip: Boolean, restoreTicks: Int, fence: Boolean) {
         var `object` = scenery
         var second = second
         var replaceId = replaceId
@@ -321,15 +338,18 @@ object DoorActionHandler {
         SceneryBuilder.replace(second, second.transform(secondReplaceId, secondDir, secondLoc), restoreTicks, clip)
     }
 
+    /**
+     * Handles fence & gate interactions.
+     *
+     * @param scenery The primary fence door.
+     * @param second The second fence door.
+     * @param replaceId replacement id for the primary door.
+     * @param secondReplaceId replacement id for the second door.
+     * @param clip Whether clipping should be applied.
+     * @param restoreTicks Ticks before restoring original state.
+     */
     @JvmStatic
-    private fun openFence(
-        scenery: Scenery,
-        second: Scenery,
-        replaceId: Int,
-        secondReplaceId: Int,
-        clip: Boolean,
-        restoreTicks: Int,
-    ) {
+    private fun openFence(scenery: Scenery, second: Scenery, replaceId: Int, secondReplaceId: Int, clip: Boolean, restoreTicks: Int) {
         var replaceId = replaceId
         var secondReplaceId = secondReplaceId
         val offset =
@@ -374,14 +394,18 @@ object DoorActionHandler {
         }
     }
 
+    /**
+     * Handles autowalking through a fence gate.
+     *
+     * @param entity The entity walking through the fence gate.
+     * @param scenery The primary fence door object.
+     * @param replaceId Replacement id for the primary fence door.
+     * @param secondReplaceId Replacement id for the second fence door.
+     * @return True if autowalk was initiated, false otherwise.
+     */
     @JvmStatic
-    fun autowalkFence(
-        entity: Entity,
-        scenery: Scenery,
-        replaceId: Int,
-        secondReplaceId: Int,
-    ): Boolean {
-        val second = getSecondDoor(scenery, entity)
+    fun autowalkFence(entity: Entity, scenery: Scenery, replaceId: Int, secondReplaceId: Int): Boolean {
+        val second = getSecondDoor(scenery)
         if (scenery.charge == IN_USE_CHARGE || second == null) {
             return false
         }
@@ -421,6 +445,12 @@ object DoorActionHandler {
         return true
     }
 
+    /**
+     * Gets the point offset used to calculate the "close" rotation for doors.
+     *
+     * @param scenery The door object.
+     * @return The point offset for close rotation.
+     */
     @JvmStatic
     private fun getCloseRotation(scenery: Scenery): Point {
         when (scenery.rotation) {
@@ -432,6 +462,12 @@ object DoorActionHandler {
         return Point(0, 0)
     }
 
+    /**
+     * Gets the point offset based on door rotation.
+     *
+     * @param rotation The door rotation.
+     * @return The point offset for the given rotation.
+     */
     @JvmStatic
     fun getRotationPoint(rotation: Int): Point? {
         when (rotation) {
@@ -443,21 +479,21 @@ object DoorActionHandler {
         return null
     }
 
+    /**
+     * Gets the second door.
+     *
+     * @param scenery The primary door object.
+     * @return The matching door.
+     */
     @JvmStatic
-    fun getSecondDoor(
-        scenery: Scenery,
-        entity: Entity?,
-    ): Scenery? {
+    fun getSecondDoor(scenery: Scenery): Scenery? {
         val location = scenery.location
-        val player = if (entity is Player) entity else null
-
-        val directions =
-            listOf(
-                location.transform(-1, 0, 0),
-                location.transform(1, 0, 0),
-                location.transform(0, -1, 0),
-                location.transform(0, 1, 0),
-            )
+        val directions = arrayOf(
+            location.transform(-1, 0, 0),
+            location.transform(1, 0, 0),
+            location.transform(0, -1, 0),
+            location.transform(0, 1, 0),
+        )
 
         for (dir in directions) {
             val foundObject = getObject(dir)
@@ -468,12 +504,16 @@ object DoorActionHandler {
         return null
     }
 
+    /**
+     * Gets door rotations.
+     *
+     * @param scenery The primary door.
+     * @param second The second door, or null if none.
+     * @param rp Reference point for rotation calculation.
+     * @return Array of two rotations for the doors.
+     */
     @JvmStatic
-    fun getRotation(
-        scenery: Scenery,
-        second: Scenery?,
-        rp: Point,
-    ): IntArray {
+    fun getRotation(scenery: Scenery, second: Scenery?, rp: Point): IntArray {
         if (second == null) {
             return intArrayOf((scenery.rotation + 1) % 4)
         }

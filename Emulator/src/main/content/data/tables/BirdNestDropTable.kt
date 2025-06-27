@@ -78,10 +78,7 @@ enum class BirdNestDropTable(
 
     val loot: Array<ChanceItem> = loot as Array<ChanceItem>
 
-    fun search(
-        player: Player,
-        item: Item,
-    ) {
+    fun search(player: Player, item: Item) {
         if (freeSlots(player) < 1) {
             sendMessage(player, "You don't have enough inventory space.")
             return

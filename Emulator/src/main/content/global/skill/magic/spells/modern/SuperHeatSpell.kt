@@ -15,6 +15,7 @@ import org.rs.consts.Sounds
  * The Super heat spell.
  */
 class SuperHeatSpell : SpellListener("modern") {
+
     override fun defineListeners() {
         onCast(ModernSpells.SUPERHEAT, ITEM) { player, node ->
             val item = node?.asItem() ?: return@onCast
@@ -33,10 +34,7 @@ class SuperHeatSpell : SpellListener("modern") {
                 return@onCast
             }
 
-            fun returnBar(
-                player: Player,
-                item: Item,
-            ): Bar? {
+            fun returnBar(player: Player, item: Item): Bar? {
                 for (potentialBar in Bar.values().reversed()) {
                     val inputOreInBar = potentialBar.ores.map { it.id }.contains(item.id)
                     val playerHasNecessaryOres =

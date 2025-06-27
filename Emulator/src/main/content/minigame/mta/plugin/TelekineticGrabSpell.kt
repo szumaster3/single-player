@@ -56,13 +56,14 @@ class TelekineticGrabSpell :
     override fun visualize(entity: Entity, target: Node) {
         super.visualize(entity, target)
         entity.faceLocation(target.location)
-        getProjectile(entity, target as GroundItem).send()
+        val ground = target as? GroundItem ?: return
+        getProjectile(entity, ground).send()
     }
 
     private fun getGrabPulse(entity: Entity, ground: GroundItem): Pulse {
         return object : Pulse(getDelay(ground.location.getDistance(entity.location)), entity) {
             override fun pulse(): Boolean {
-                val player = if (entity is Player) entity else null
+                val player = entity as? Player
                 val g = GroundItemManager.get(ground.id, ground.location, player!!)
                 if (g == null) {
                     sendMessage(player, "Too late!")
@@ -116,8 +117,7 @@ class TelekineticGrabSpell :
         return super.meetsRequirements(entity, message = true, remove = true)
     }
 
-    private fun getProjectile(entity: Entity, item: GroundItem): Projectile =
-        Projectile.create(entity.location, item.location, PROJECTILE_ID, START_HEIGHT, END_HEIGHT, START_DELAY, Projectile.getSpeed(entity, item.location), ANGLE, 11)
+    private fun getProjectile(entity: Entity, item: GroundItem): Projectile = Projectile.create(entity.location, item.location, PROJECTILE_ID, START_HEIGHT, END_HEIGHT, START_DELAY, Projectile.getSpeed(entity, item.location), ANGLE, 11)
 
     fun getDelay(distance: Double): Int = (2 + distance * 0.5).toInt()
 

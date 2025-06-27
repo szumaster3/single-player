@@ -35,7 +35,7 @@ class HerbDropTable : StartupListener {
                 override fun roll(receiver: Entity?): ArrayList<Item> {
                     val items = ArrayList(guaranteedItems)
                     var effectiveWeight = totalWeight
-                    val p = if (receiver is Player) receiver else null
+                    val p = receiver as? Player
                     if (p != null && shouldRemoveNothings(p)) {
                         effectiveWeight -= nothingWeight
                     }
@@ -87,7 +87,7 @@ class HerbDropTable : StartupListener {
                 for (i in 0 until itemNodes.length) {
                     val itemNode = itemNodes.item(i)
                     if (itemNode.nodeType == Node.ELEMENT_NODE) {
-                        val item = itemNode as Element
+                        val item = itemNode as? Element ?: continue
                         val itemId = item.getAttribute("id").toInt()
                         val minAmt = item.getAttribute("minAmt").toInt()
                         val maxAmt = item.getAttribute("maxAmt").toInt()

@@ -175,7 +175,7 @@ public final class ErnestTheChickenPlugin extends OptionHandler {
                     final Scenery opened = object.transform(object.getId(), rotation[0]);
                     opened.setCharge(88);
                     opened.setLocation(object.getLocation().transform((int) p.getX(), (int) p.getY(), 0));
-                    final Scenery second = DoorActionHandler.getSecondDoor(object, player);
+                    final Scenery second = DoorActionHandler.getSecondDoor(object);
                     SceneryBuilder.replace(object, opened, 2);
                     if (second != null) {
                         final Scenery secondOpened = second.transform(second.getId(), rotation[1]);

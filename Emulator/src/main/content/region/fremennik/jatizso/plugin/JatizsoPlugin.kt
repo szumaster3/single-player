@@ -28,7 +28,7 @@ class JatizsoPlugin : InteractionListener {
     override fun defineListeners() {
         on(GATES_CLOSED, IntType.SCENERY, "open") { player, node ->
             val scenery = node.asScenery()
-            DoorActionHandler.getSecondDoor(scenery, player)?.let { second ->
+            DoorActionHandler.getSecondDoor(scenery)?.let { second ->
                 DoorActionHandler.open(scenery, second, scenery.id + 1, second.id + 1, true, 500, false)
             }
             return@on true

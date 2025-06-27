@@ -8,6 +8,7 @@ import core.api.*
 import core.api.interaction.openNpcShop
 import core.api.quest.getQuestPoints
 import core.api.quest.getQuestStage
+import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.game.global.action.ClimbActionHandler
 import core.game.global.action.DoorActionHandler
@@ -32,6 +33,8 @@ import core.tools.RandomFunction
 import org.rs.consts.*
 
 class VarrockPlugin : InteractionListener {
+
+
     override fun defineListeners() {
         /*
          * Handles talking to Thessalia.
@@ -209,8 +212,76 @@ class VarrockPlugin : InteractionListener {
         }
 
         /*
+         * Handles opening the gates near .
+         */
+
+        on(VARROCK_GATES, IntType.SCENERY, "open") { player, node ->
+            val gatePair = when (node.id) {
+                Scenery.GATE_2050 -> Pair(Scenery.GATE_2050, Scenery.GATE_2051)
+                Scenery.GATE_2051 -> Pair(Scenery.GATE_2051, Scenery.GATE_2050)
+                else -> null
+            }
+            if (player.location.x < 3264) {
+                openDialogue(
+                    player,
+                    object : DialogueFile() {
+                        override fun handle(componentID: Int, buttonID: Int, ) {
+                            when (stage) {
+                                0 ->
+                                    sendNPCDialogue(player, NPCs.GUARD_368, "Halt. I need to conduct a search on you. There have been reports of someone bringing a virus into Varrock.").also { stage++ }
+
+                                1 -> {
+                                    sendMessage(player, "The guard searches you.")
+                                    if (!anyInInventory(player, Items.SULPHURIC_BROLINE_417, Items.ETHENEA_415, Items.LIQUID_HONEY_416)) {
+                                        sendNPCDialogue(player, NPCs.GUARD_368, "You may now pass.").also { stage++ }
+                                    } else {
+                                        if (removeItem(player, Items.SULPHURIC_BROLINE_417)) {
+                                            sendMessage(player, "He takes the vial of sulphuric broline from you.")
+                                            sendNPCDialogue(player, NPCs.GUARD_368, "You may now pass.").also { stage++ }
+                                        }
+                                        if (removeItem(player, Items.ETHENEA_415)) {
+                                            sendMessage(player, "He takes the vial of ethenea from you.")
+                                            sendNPCDialogue(player, NPCs.GUARD_368, "You may now pass.").also { stage++ }
+                                        }
+                                        if (removeItem(player, Items.LIQUID_HONEY_416)) {
+                                            sendMessage(player, "He takes the vial of liquid honey from you.")
+                                            sendNPCDialogue(player, NPCs.GUARD_368, "You may now pass.").also { stage++ }
+                                        }
+                                    }
+                                }
+
+                                2 -> {
+                                    end()
+                                    if (gatePair != null) {
+                                        DoorActionHandler.autowalkFence(
+                                            player,
+                                            node.asScenery(),
+                                            gatePair.first,
+                                            gatePair.second
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    },
+                )
+            } else {
+                if (gatePair != null) {
+                    DoorActionHandler.autowalkFence(
+                        player,
+                        node.asScenery(),
+                        gatePair.first,
+                        gatePair.second
+                    )
+                }
+            }
+            return@on true
+        }
+
+        /*
          * Handles opening the Cook's Guild doors.
          */
+
         on(intArrayOf(Scenery.DOOR_2712, Scenery.DOOR_26810), IntType.SCENERY, "open") { player, node ->
             val requiredItems = anyInEquipment(
                 player,
@@ -548,16 +619,9 @@ class VarrockPlugin : InteractionListener {
 
     companion object {
         private var COUNTER = 0
-        private val BERRIES =
-            intArrayOf(
-                Scenery.CADAVA_BUSH_23625,
-                Scenery.CADAVA_BUSH_23626,
-                Scenery.CADAVA_BUSH_23627,
-                Scenery.REDBERRY_BUSH_23628,
-                Scenery.REDBERRY_BUSH_23629,
-                Scenery.REDBERRY_BUSH_23630,
-            )
+        private val BERRIES = intArrayOf(Scenery.CADAVA_BUSH_23625, Scenery.CADAVA_BUSH_23626, Scenery.CADAVA_BUSH_23627, Scenery.REDBERRY_BUSH_23628, Scenery.REDBERRY_BUSH_23629, Scenery.REDBERRY_BUSH_23630)
         private const val SAWMILL_OPERATOR = NPCs.SAWMILL_OPERATOR_4250
         private const val CHAMPIONS_GUILD_REGION = 12596
+        private val VARROCK_GATES = intArrayOf(Scenery.GATE_2050, Scenery.GATE_2051)
     }
 }

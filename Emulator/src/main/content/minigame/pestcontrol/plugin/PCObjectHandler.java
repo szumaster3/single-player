@@ -222,7 +222,7 @@ public final class PCObjectHandler extends OptionHandler {
      */
     private static void handleGates(Player player, PestControlSession session, Scenery object) {
         boolean open = (object.getId() % 2) != 0;
-        Scenery second = DoorActionHandler.getSecondDoor(object, player);
+        Scenery second = DoorActionHandler.getSecondDoor(object);
         if (second == null) {
             return;
         }

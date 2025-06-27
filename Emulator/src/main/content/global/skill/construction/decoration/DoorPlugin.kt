@@ -45,11 +45,8 @@ class DoorPlugin : OptionHandler() {
             "pick-lock", "force" -> return false
         }
 
-        val second = DoorActionHandler.getSecondDoor(node, player)
-//val scenery = node.asScenery()
-//            DoorActionHandler.getSecondDoor(scenery, player)?.let { second ->
-//                DoorActionHandler.open(scenery, second, scenery.id + 1, second.id + 1, true, 500, false)
-//            }
+        val second = DoorActionHandler.getSecondDoor(node)
+
         if (second != null) {
             DoorActionHandler.open(
                 node.asScenery(),
