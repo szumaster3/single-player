@@ -14,10 +14,19 @@ import kotlin.math.min
 class CookingRecipePlugin : InteractionListener {
 
     override fun defineListeners() {
+
+        /*
+         * Handles a special-case recipe where the player attempts to use cheese on a "raw potato".
+         */
+
         onUseWith(IntType.ITEM, Items.CHEESE_1985, Items.POTATO_1942) { player, _, _ ->
             sendMessage(player, "You must add butter to the baked potato before adding toppings.")
             return@onUseWith true
         }
+
+        /*
+         * Handles cooking recipes processing logic.
+         */
 
         CookingRecipe.values().forEach { recipe ->
             onUseWith(IntType.ITEM, recipe.ingredientIds, recipe.secondaryId) { player, used, with ->
@@ -666,7 +675,6 @@ class CookingRecipePlugin : InteractionListener {
             secondaryId = Items.BOWL_OF_WATER_1921,
             productId = Items.NETTLE_WATER_4237,
         ),
-
         ADD_MILK_TO_BOWL_OF_NETTLE_TEA(
             ingredientIds = intArrayOf(Items.BUCKET_OF_MILK_1927, Items.NETTLE_TEA_4239),
             secondaryId = Items.NETTLE_TEA_4239,
@@ -674,7 +682,6 @@ class CookingRecipePlugin : InteractionListener {
             requiredLevel = 1,
             onProcess = { player -> addItemOrDrop(player, Items.BUCKET_1925, 1) }
         ),
-
         ADD_MILK_TO_PORCELAIN_CUP_OF_NETTLE_TEA(
             ingredientIds = intArrayOf(Items.BUCKET_OF_MILK_1927, Items.PORCELAIN_CUP_4244),
             secondaryId = Items.PORCELAIN_CUP_4244,
@@ -682,25 +689,21 @@ class CookingRecipePlugin : InteractionListener {
             requiredLevel = 1,
             onProcess = { player -> addItemOrDrop(player, Items.BUCKET_1925, 1) }
         ),
-
         POUR_NETTLE_TEA_INTO_EMPTY_CUP(
             ingredientIds = intArrayOf(Items.NETTLE_TEA_4239, Items.EMPTY_CUP_1980),
             secondaryId = Items.EMPTY_CUP_1980,
             productId = Items.CUP_OF_TEA_4242
         ),
-
         POUR_MILKY_NETTLE_TEA_INTO_EMPTY_CUP(
             ingredientIds = intArrayOf(Items.NETTLE_TEA_4240, Items.EMPTY_CUP_1980),
             secondaryId = Items.EMPTY_CUP_1980,
             productId = Items.CUP_OF_TEA_4243
         ),
-
         POUR_NETTLE_TEA_INTO_EMPTY_PORCELAIN_CUP(
             ingredientIds = intArrayOf(Items.NETTLE_TEA_4239, Items.PORCELAIN_CUP_4244),
             secondaryId = Items.PORCELAIN_CUP_4244,
             productId = Items.CUP_OF_TEA_4245
         ),
-
         POUR_MILKY_NETTLE_TEA_INTO_EMPTY_PORCELAIN_CUP(
             ingredientIds = intArrayOf(Items.NETTLE_TEA_4240, Items.PORCELAIN_CUP_4244),
             secondaryId = Items.PORCELAIN_CUP_4244,
