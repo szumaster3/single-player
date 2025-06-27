@@ -44,7 +44,7 @@ class GardenerGhostNPC : AbstractNPC {
                 ticksLeft = secondsToTicks(4)
                 sendChat("Here is the place where I met me' maker.")
             }
-            if (!properties.spawnLocation.withinDistance(target!!.location, 160) && ticksLeft > secondsToTicks(5)) {
+            if (!properties.spawnLocation!!.withinDistance(target!!.location, 160) && ticksLeft > secondsToTicks(5)) {
                 ticksLeft = secondsToTicks(4)
                 sendChat("Fare thee well - oi must return to me' garden.")
             }

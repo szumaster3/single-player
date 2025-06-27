@@ -37,7 +37,7 @@ class RockSlugNPC :
     override fun tick(self: NPC): Boolean {
         if (getAttribute(self, "shouldRun", false)) {
             self.properties.combatPulse.stop()
-            forceWalk(self, self.properties.spawnLocation, "smart")
+            forceWalk(self, self.properties.spawnLocation!!, "smart")
             removeAttribute(self, "shouldRun")
         }
         return true

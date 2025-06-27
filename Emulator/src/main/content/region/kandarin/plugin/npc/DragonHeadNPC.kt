@@ -25,7 +25,7 @@ class DragonHeadNPC : NPCBehavior(*DRAGON_HEAD) {
             return false
         }
 
-        if (attacker.properties.spell.spellId != 55) {
+        if (attacker.properties.spell!!.spellId != 55) {
             if (shouldSendMessage) sendMessage(attacker, "You can't do that.")
             return false
         }

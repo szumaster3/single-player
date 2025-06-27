@@ -12,11 +12,7 @@ import org.rs.consts.NPCs
  * @author Zerken
  */
 class RickTurpentineBehavior : NPCBehavior(NPCs.RICK_TURPENTINE_2476) {
-    override fun beforeAttackFinalized(
-        self: NPC,
-        victim: Entity,
-        state: BattleState,
-    ) {
+    override fun beforeAttackFinalized(self: NPC, victim: Entity, state: BattleState) {
         state.estimatedHit = RandomFunction.getRandom(3)
     }
 }

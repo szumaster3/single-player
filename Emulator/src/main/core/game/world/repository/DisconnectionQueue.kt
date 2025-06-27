@@ -13,7 +13,7 @@ import core.tools.Log
  * @author Emperor
  */
 class DisconnectionQueue {
-    /**A
+    /**
      * The pending disconnections queue.
      */
     private val queue = HashMap<String, DisconnectionEntry?>()

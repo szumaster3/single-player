@@ -99,10 +99,7 @@ sealed class PlayerFlags(
      * Sends player appearance data.
      */
     class Appearance : PlayerFlags(0x4, 3, EntityFlag.Appearance) {
-        override fun writeTo(
-            buffer: IoBuffer,
-            context: Any?,
-        ) {
+        override fun writeTo(buffer: IoBuffer, context: Any?) {
             if (context !is Player) {
                 logInvalidType(context, typeOf<Player>())
                 return
@@ -139,13 +136,7 @@ sealed class PlayerFlags(
                 buffer.p2(npcId)
                 buffer.p1(255)
             }
-            arrayOf(
-                appearance.hair,
-                appearance.torso,
-                appearance.legs,
-                appearance.feet,
-                appearance.skin,
-            ).forEach { part ->
+            arrayOf(appearance.hair, appearance.torso, appearance.legs, appearance.feet, appearance.skin).forEach { part ->
                 buffer.p1(part.color)
             }
             buffer.p2(appearance.renderAnimation)
@@ -155,12 +146,7 @@ sealed class PlayerFlags(
                 buffer.p2(context.skills.getTotalLevel())
             } else {
                 // combat level calculations
-                if ((
-                        GameWorld.settings!!.isPvp ||
-                            (GameWorld.settings!!.wild_pvp_enabled && context.skullManager.isWilderness)
-                    ) &&
-                    !context.familiarManager.isUsingSummoning
-                ) {
+                if ((GameWorld.settings!!.isPvp || (GameWorld.settings!!.wild_pvp_enabled && context.skullManager.isWilderness)) && !context.familiarManager.isUsingSummoning) {
                     buffer.p1(context.properties.combatLevel)
                     buffer.p1(context.properties.combatLevel + context.familiarManager.summoningCombatLevel)
                 } else {

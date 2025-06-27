@@ -52,7 +52,7 @@ class HarralanderTarPlugin : InteractionListener {
                         index: Int,
                     ) {
                         player.pulseManager.run(
-                            tar?.let { HarralanderTarPulse(player, null, it, amount) },
+                            HarralanderTarPulse(player, null, tar!!, amount),
                         )
                     }
 

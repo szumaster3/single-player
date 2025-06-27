@@ -104,7 +104,7 @@ abstract class RandomEventNPC(
         finalized = false
         timerPaused = false
         spawnLocation ?: terminate()
-        location = spawnLocation
+        location = spawnLocation!!
         player.setAttribute("re-npc", this)
         super.init()
     }

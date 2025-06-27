@@ -668,7 +668,7 @@ object RegionManager {
         val it = npcs.iterator()
         while (it.hasNext()) {
             val p = it.next()
-            if (p.properties.teleportLocation != null && !p.properties.teleportLocation.withinMaxnormDistance(
+            if (p.properties.teleportLocation != null && !p.properties.teleportLocation!!.withinMaxnormDistance(
                     n.location, 1
                 )
             ) {

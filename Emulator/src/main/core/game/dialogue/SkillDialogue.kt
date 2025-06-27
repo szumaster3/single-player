@@ -50,8 +50,11 @@ class SkillDialogue(player: Player? = null) : Dialogue(player) {
             true
         } else {
             sendInputDialogue(player, true, "Enter the amount:") { value ->
-                val amt = if (value is String) value.toInt() else value as Int
-                handler.create(amt, index)
+                if (value is String) {
+                    handler.create(value.toInt(), index)
+                } else {
+                    handler.create(value as Int, index)
+                }
             }
             true
         }

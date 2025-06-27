@@ -34,7 +34,7 @@ class ImplingNPC : NPCBehavior(*Implings.getIds()) {
         if (!isPuroImpling(self)) {
             log(this::class.java, Log.ERR, "Non-puro impling has respawned!")
         }
-        sendGraphics(1119, self.properties.teleportLocation)
+        sendGraphics(1119, self.properties.teleportLocation!!)
     }
 
     override fun canBeAttackedBy(
@@ -60,7 +60,7 @@ class ImplingNPC : NPCBehavior(*Implings.getIds()) {
             return false
         }
 
-        val spellId = attacker.properties.spell.spellId
+        val spellId = attacker.properties.spell!!.spellId
         if (spellId != ModernSpells.BIND && spellId != ModernSpells.SNARE && spellId != ModernSpells.ENTANGLE) {
             if (shouldSendMessage) {
                 sendMessage(attacker, "The impling is immune to that magic.")
