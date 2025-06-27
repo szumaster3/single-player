@@ -32,12 +32,12 @@ class RimmingtonPlugin : InteractionListener {
             DoorActionHandler.handleDoor(player, node.asScenery().wrapper)
             return@on true
         }
-
-        on(Scenery.WARDROBE_33963,IntType.SCENERY, "open") { _, node ->
-            val rand = (Scenery.WARDROBE_35133..Scenery.WARDROBE_35135).random()
-            replaceScenery(node.asScenery(), node.id, rand)
-            return@on true
-        }
-
+        /*
+         * on(Scenery.WARDROBE_33963,IntType.SCENERY, "open") { _, node ->
+         *     val rand = (Scenery.WARDROBE_35133..Scenery.WARDROBE_35135).random()
+         *     replaceScenery(node.asScenery(), node.id, rand)
+         *     return@on true
+         * }
+         */
     }
 }
