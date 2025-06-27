@@ -5,18 +5,15 @@ import core.game.node.entity.Entity
 import core.game.node.entity.combat.BattleState
 import core.game.node.entity.combat.spell.CombatSpell
 import core.game.node.entity.combat.spell.SpellType
-import core.game.node.entity.impl.Animator.Priority
 import core.game.node.entity.player.link.SpellBookManager.SpellBook
-import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.Animations
 
 /**
  * Represents the Fire spell.
  */
 @Initializable
-class FireSpell(
+class FireSpell private constructor(
     private val definition: FireSpellDefinition
 ) : CombatSpell(
     definition.type,
@@ -31,6 +28,7 @@ class FireSpell(
     definition.end,
     *definition.runes
 ) {
+    constructor() : this(FireSpellDefinition.STRIKE)
 
     override fun getMaximumImpact(entity: Entity, victim: Entity, state: BattleState): Int =
         definition.type.getImpactAmount(entity, victim, 4)

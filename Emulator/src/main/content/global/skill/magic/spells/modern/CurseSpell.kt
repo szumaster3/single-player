@@ -16,7 +16,7 @@ import org.rs.consts.Animations
  * Represents the Curse spell.
  */
 @Initializable
-class CurseSpell(
+class CurseSpell private constructor(
     private val definition: CurseSpellDefinition
 ) : CombatSpell(
     definition.type,
@@ -31,6 +31,7 @@ class CurseSpell(
     definition.end,
     *definition.runes
 ) {
+    constructor() : this(CurseSpellDefinition.CURSE)
 
     override fun getMaximumImpact(entity: Entity, victim: Entity, state: BattleState): Int = 1
 

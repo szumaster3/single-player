@@ -5,9 +5,7 @@ import core.game.node.entity.Entity
 import core.game.node.entity.combat.BattleState
 import core.game.node.entity.combat.spell.CombatSpell
 import core.game.node.entity.combat.spell.SpellType
-import core.game.node.entity.impl.Animator.Priority
 import core.game.node.entity.player.link.SpellBookManager.SpellBook
-import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
 import core.plugin.Plugin
 
@@ -15,7 +13,7 @@ import core.plugin.Plugin
  * Represents the Earth spell.
  */
 @Initializable
-class EarthSpell(
+class EarthSpell private constructor(
     private val definition: EarthSpellDefinition
 ) : CombatSpell(
     definition.type,
@@ -30,6 +28,7 @@ class EarthSpell(
     definition.end,
     *definition.runes
 ) {
+    constructor() : this(EarthSpellDefinition.STRIKE)
 
     override fun getMaximumImpact(entity: Entity, victim: Entity, state: BattleState): Int =
         definition.type.getImpactAmount(entity, victim, 3)

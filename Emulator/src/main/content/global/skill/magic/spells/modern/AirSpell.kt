@@ -13,7 +13,7 @@ import core.plugin.Plugin
  * Represents the Air spell.
  */
 @Initializable
-class AirSpell(
+class AirSpell private constructor(
     private val definition: AirSpellDefinition
 ) : CombatSpell(
     definition.type,
@@ -28,6 +28,7 @@ class AirSpell(
     definition.end,
     *definition.runes
 ) {
+    constructor() : this(AirSpellDefinition.STRIKE)
 
     override fun getMaximumImpact(entity: Entity, victim: Entity, state: BattleState): Int =
         definition.type.getImpactAmount(entity, victim, 1)

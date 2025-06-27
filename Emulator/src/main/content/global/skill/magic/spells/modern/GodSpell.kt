@@ -116,8 +116,9 @@ class GodSpell private constructor(
     }
 
     override fun newInstance(type: SpellType?): Plugin<SpellType?> {
-        GodSpellDefinition.values().forEach {
-            SpellBook.MODERN.register(it.buttonId, GodSpell(GOD_SPELLS[it.buttonId]))
+        val buttons = intArrayOf(41, 42, 43)
+        for (i in buttons.indices) {
+            SpellBook.MODERN.register(buttons[i], GodSpell(GOD_SPELLS[i]))
         }
         return this
     }

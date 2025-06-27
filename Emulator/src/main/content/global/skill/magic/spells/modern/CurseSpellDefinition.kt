@@ -6,8 +6,8 @@ import core.game.node.entity.combat.spell.SpellType
 import core.game.node.entity.impl.Projectile
 import core.game.node.item.Item
 import core.game.world.update.flag.context.Graphics
-import org.rs.consts.Graphics as Gfx
 import org.rs.consts.Sounds
+import org.rs.consts.Graphics as Gfx
 
 /**
  * Represents configuration of curse spells.

@@ -5,21 +5,18 @@ import core.game.node.entity.Entity
 import core.game.node.entity.combat.BattleState
 import core.game.node.entity.combat.spell.CombatSpell
 import core.game.node.entity.combat.spell.SpellType
-import core.game.node.entity.impl.Animator.Priority
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.SpellBookManager.SpellBook
 import core.game.world.GameWorld.ticks
-import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.Animations
 
 /**
  * Represents the Bind spell.
  */
 @Initializable
-class BindSpell(
+class BindSpell private constructor(
     private val definition: BindSpellDefinition
 ) : CombatSpell(
     definition.type,
@@ -34,6 +31,7 @@ class BindSpell(
     definition.end,
     *definition.runes
 ) {
+    constructor() : this(BindSpellDefinition.BIND)
 
     override fun fireEffect(entity: Entity, victim: Entity, state: BattleState) {
         if (victim is NPC && victim.name.contains("impling")) {

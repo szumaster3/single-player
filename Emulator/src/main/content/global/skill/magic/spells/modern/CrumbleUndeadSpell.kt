@@ -8,7 +8,6 @@ import core.game.node.entity.combat.spell.CombatSpell
 import core.game.node.entity.combat.spell.Runes
 import core.game.node.entity.combat.spell.SpellType
 import core.game.node.entity.impl.Animator.Priority
-import core.game.node.entity.impl.Projectile
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.SpellBookManager.SpellBook
