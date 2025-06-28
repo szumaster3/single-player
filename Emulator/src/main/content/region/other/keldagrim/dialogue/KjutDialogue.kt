@@ -1,7 +1,7 @@
 package content.region.other.keldagrim.dialogue
 
 import core.api.addItemOrDrop
-import core.api.quest.hasRequirement
+import core.api.hasRequirement
 import core.api.removeItem
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim

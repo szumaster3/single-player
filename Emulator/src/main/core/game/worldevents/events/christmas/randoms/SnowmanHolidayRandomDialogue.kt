@@ -1,6 +1,8 @@
 package core.game.worldevents.events.christmas.randoms
 
 import core.api.*
+import core.api.unlockEmote
+import core.api.hasEmote
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.game.interaction.QueueStrength
@@ -68,7 +70,7 @@ class SnowmanHolidayRandomDialogue : DialogueFile() {
             }
 
             21 -> {
-                if (player!!.emoteManager.isUnlocked(Emotes.SNOWMAN_DANCE)) {
+                if (hasEmote(player!!, Emotes.SNOWMAN_DANCE)) {
                     npcl(
                         FaceAnim.CHILD_NEUTRAL,
                         "Please take this lamp I found on my travels. Happy holidays, ${player!!.username}!",
@@ -98,7 +100,7 @@ class SnowmanHolidayRandomDialogue : DialogueFile() {
 
             23 -> {
                 if (removeItem(player!!, Items.SNOWBALL_11951)) {
-                    player!!.emoteManager.unlock(Emotes.SNOWMAN_DANCE)
+                    unlockEmote(player!!, Emotes.SNOWMAN_DANCE)
                 }
 
                 queueScript(player!!, 2, QueueStrength.SOFT) {

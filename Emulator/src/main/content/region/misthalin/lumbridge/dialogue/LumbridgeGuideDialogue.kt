@@ -1,6 +1,6 @@
 package content.region.misthalin.lumbridge.dialogue
 
-import core.api.quest.isQuestComplete
+import core.api.isQuestComplete
 import core.api.sendGraphics
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim

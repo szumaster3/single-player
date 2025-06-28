@@ -1,7 +1,7 @@
 package content.region.asgarnia.taverley.quest.ball.plugin
 
 import core.api.*
-import core.api.quest.isQuestComplete
+import core.api.isQuestComplete
 import core.game.dialogue.FaceAnim
 import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType

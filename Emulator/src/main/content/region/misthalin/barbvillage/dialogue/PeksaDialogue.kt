@@ -1,7 +1,7 @@
 package content.region.misthalin.barbvillage.dialogue
 
-import core.api.interaction.openNpcShop
-import core.api.quest.isQuestInProgress
+import core.api.openNpcShop
+import core.api.isQuestInProgress
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

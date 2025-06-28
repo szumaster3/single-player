@@ -5,7 +5,7 @@ import content.region.fremennik.rellekka.quest.viking.FremennikTrials
 import content.region.kandarin.miniquest.barcrawl.BarcrawlManager
 import content.region.misthalin.lumbridge.quest.tog.TearsOfGuthix
 import core.api.*
-import core.api.quest.*
+import core.api.*
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.dialogue.splitLines

@@ -3,7 +3,7 @@ package content.minigame.pyramidplunder.plugin
 import content.minigame.pyramidplunder.npc.PyramidPlunderMummyNPC
 import content.minigame.pyramidplunder.npc.PyramidPlunderSwarmNPC
 import core.api.*
-import core.api.event.applyPoison
+import core.api.applyPoison
 import core.game.dialogue.DialogueFile
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener

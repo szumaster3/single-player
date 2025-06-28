@@ -1,6 +1,6 @@
 package content.region.other.keldagrim.quest.giantdwarf.dialogue
 
-import core.api.quest.getQuestStage
+import core.api.getQuestStage
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.player.Player

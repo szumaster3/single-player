@@ -1,9 +1,9 @@
 package content.region.fremennik.rellekka.dialogue
 
 import core.api.*
-import core.api.quest.hasRequirement
-import core.api.quest.isQuestComplete
-import core.api.ui.setMinimapState
+import core.api.hasRequirement
+import core.api.isQuestComplete
+import core.api.setMinimapState
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

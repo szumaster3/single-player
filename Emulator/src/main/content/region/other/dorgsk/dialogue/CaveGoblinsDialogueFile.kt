@@ -3,7 +3,7 @@ package content.region.other.dorgsk.dialogue
 import content.data.LightSource
 import core.api.addItemOrDrop
 import core.api.anyInInventory
-import core.api.quest.isQuestComplete
+import core.api.isQuestComplete
 import core.api.sendDialogue
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim

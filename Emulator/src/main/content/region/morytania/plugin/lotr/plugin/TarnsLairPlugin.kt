@@ -1,8 +1,8 @@
 package content.region.morytania.plugin.lotr.plugin
 
 import core.api.*
-import core.api.interaction.openBankAccount
-import core.api.interaction.openGrandExchangeCollectionBox
+import core.api.openBankAccount
+import core.api.openGrandExchangeCollectionBox
 import core.game.dialogue.FaceAnim
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener

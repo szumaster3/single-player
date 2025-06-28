@@ -3,8 +3,8 @@ package content.region.misthalin.draynor.quest.swept.dialogue
 import content.data.GameAttributes
 import core.api.lock
 import core.api.openInterface
-import core.api.quest.getQuestStage
-import core.api.quest.setQuestStage
+import core.api.getQuestStage
+import core.api.setQuestStage
 import core.api.setAttribute
 import core.api.unlock
 import core.game.dialogue.Dialogue

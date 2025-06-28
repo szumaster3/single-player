@@ -3,7 +3,7 @@ package content.global.skill.herblore
 import core.api.addItem
 import core.api.amountInInventory
 import core.api.removeItem
-import core.api.ui.repositionChild
+import core.api.repositionChild
 import core.game.dialogue.SkillDialogueHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener

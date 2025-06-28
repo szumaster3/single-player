@@ -4,7 +4,7 @@ import core.api.amountInInventory
 import core.api.faceLocation
 import core.api.inInventory
 import core.api.openDialogue
-import core.api.skill.sendSkillDialogue
+import core.api.sendSkillDialogue
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import org.rs.consts.Items

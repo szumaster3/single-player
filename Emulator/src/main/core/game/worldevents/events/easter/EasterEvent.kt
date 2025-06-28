@@ -3,6 +3,7 @@ package core.game.worldevents.events.easter
 import content.data.GameAttributes
 import core.ServerConstants
 import core.api.*
+import core.api.unlockEmote
 import core.api.utils.WeightBasedTable
 import core.api.utils.WeightedItem
 import core.game.event.EventHook
@@ -104,7 +105,7 @@ class EasterEvent : WorldEvent("easter"), TickListener, InteractionListener, Log
         val eggsBroken = getAttribute(player, EGGS_BROKEN, 0) + 1
 
         if (eggsBroken == 10) {
-            player.emoteManager.unlock(Emotes.BUNNY_HOP)
+            unlockEmote(player, Emotes.BUNNY_HOP)
             Emotes.BUNNY_HOP.play(player)
             sendMessage(player, colorize("%RYou have unlocked the 'Bunny Hop' emote!"))
         } else if (eggsBroken % 5 == 0) {

@@ -1,7 +1,7 @@
 package content.global.plugin.item
 
 import core.api.*
-import core.api.ui.openSingleTab
+import core.api.openSingleTab
 import core.cache.def.impl.ItemDefinition
 import core.game.component.Component
 import core.game.component.ComponentDefinition

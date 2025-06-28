@@ -1,6 +1,6 @@
 package content.region.asgarnia.portsarim.dialogue
 
-import core.api.quest.hasRequirement
+import core.api.hasRequirement
 import core.api.sendDialogue
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim

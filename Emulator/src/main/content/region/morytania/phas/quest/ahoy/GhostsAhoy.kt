@@ -1,7 +1,7 @@
 package content.region.morytania.phas.quest.ahoy
 
 import content.region.morytania.phas.quest.ahoy.plugin.GhostsAhoyUtils
-import core.api.quest.isQuestComplete
+import core.api.isQuestComplete
 import core.api.removeAttributes
 import core.api.rewardXP
 import core.api.sendItemZoomOnInterface

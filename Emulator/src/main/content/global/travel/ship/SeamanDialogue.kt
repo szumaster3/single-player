@@ -1,7 +1,7 @@
 package content.global.travel.ship
 
 import core.api.*
-import core.api.quest.isQuestComplete
+import core.api.isQuestComplete
 import core.game.container.impl.EquipmentContainer
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim

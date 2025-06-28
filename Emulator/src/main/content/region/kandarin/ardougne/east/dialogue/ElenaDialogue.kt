@@ -2,9 +2,9 @@ package content.region.kandarin.ardougne.east.dialogue
 
 import content.region.kandarin.ardougne.east.quest.biohazard.dialogue.ElenaBiohazardDialogue
 import core.api.openDialogue
-import core.api.quest.getQuestStage
-import core.api.quest.isQuestComplete
-import core.api.quest.isQuestInProgress
+import core.api.getQuestStage
+import core.api.isQuestComplete
+import core.api.isQuestInProgress
 import core.game.dialogue.Dialogue
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player

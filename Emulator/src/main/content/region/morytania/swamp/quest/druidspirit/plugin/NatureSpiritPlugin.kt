@@ -2,10 +2,10 @@ package content.region.morytania.swamp.quest.druidspirit.plugin
 
 import content.region.morytania.swamp.npc.GhastNPC
 import core.api.*
-import core.api.item.produceGroundItem
-import core.api.quest.getQuestStage
-import core.api.quest.hasRequirement
-import core.api.quest.isQuestComplete
+import core.api.produceGroundItem
+import core.api.getQuestStage
+import core.api.hasRequirement
+import core.api.isQuestComplete
 import core.game.dialogue.FaceAnim
 import core.game.dialogue.SequenceDialogue.dialogue
 import core.game.global.action.PickupHandler

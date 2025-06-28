@@ -1,7 +1,7 @@
 package content.region.asgarnia.burthope.quest.death.dialogue
 
 import core.api.getScenery
-import core.api.quest.getQuestStage
+import core.api.getQuestStage
 import core.api.sendDialogue
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim

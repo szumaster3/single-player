@@ -1,10 +1,10 @@
 package content.region.misthalin.lumbridge.quest.lost_tribe.book
 
-import core.api.quest.setQuestStage
+import core.api.setQuestStage
 import core.api.removeAttribute
 import core.api.sendPlayerDialogue
 import core.api.setAttribute
-import core.api.ui.sendInterfaceConfig
+import core.api.sendInterfaceConfig
 import core.game.component.Component
 import core.game.component.ComponentDefinition
 import core.game.component.ComponentPlugin

@@ -1,8 +1,8 @@
 package content.region.asgarnia.portsarim.plugin
 
 import core.api.*
-import core.api.quest.getQuestStage
-import core.api.ui.closeDialogue
+import core.api.getQuestStage
+import core.api.closeDialogue
 import core.game.dialogue.SequenceDialogue.dialogue
 import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType

@@ -1,9 +1,9 @@
 package content.region.misthalin.lumbridge.quest.priest.dialogue
 
 import core.api.openInterface
-import core.api.quest.getQuestStage
-import core.api.quest.isQuestComplete
-import core.api.quest.updateQuestTab
+import core.api.getQuestStage
+import core.api.isQuestComplete
+import core.api.updateQuestTab
 import core.api.sendDialogueOptions
 import core.api.setTitle
 import core.game.dialogue.Dialogue

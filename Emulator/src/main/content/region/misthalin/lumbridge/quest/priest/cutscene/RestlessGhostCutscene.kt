@@ -1,7 +1,7 @@
 package content.region.misthalin.lumbridge.quest.priest.cutscene
 
 import core.api.*
-import core.api.quest.finishQuest
+import core.api.finishQuest
 import core.game.activity.Cutscene
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.player.Player

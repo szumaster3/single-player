@@ -4,7 +4,7 @@ import content.region.asgarnia.gobvillage.quest.gobdip.dialogue.GrubfootDialogue
 import content.region.asgarnia.gobvillage.quest.gobdip.cutscene.GoblinDiplomacyCutscene
 import core.api.addItemOrDrop
 import core.api.inInventory
-import core.api.quest.updateQuestTab
+import core.api.updateQuestTab
 import core.api.rewardXP
 import core.api.sendItemZoomOnInterface
 import core.game.node.entity.player.Player

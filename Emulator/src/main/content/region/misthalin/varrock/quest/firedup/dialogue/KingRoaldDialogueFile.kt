@@ -1,9 +1,9 @@
 package content.region.misthalin.varrock.quest.firedup.dialogue
 
 import core.api.getStatLevel
-import core.api.quest.finishQuest
-import core.api.quest.setQuestStage
-import core.api.quest.updateQuestTab
+import core.api.finishQuest
+import core.api.setQuestStage
+import core.api.updateQuestTab
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.skill.Skills

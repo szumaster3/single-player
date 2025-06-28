@@ -1,7 +1,7 @@
 package content.global.skill.smithing.smelting
 
 import content.global.skill.smithing.Bar
-import core.api.quest.isQuestComplete
+import core.api.isQuestComplete
 import core.api.sendInputDialogue
 import core.api.sendItemZoomOnInterface
 import core.api.sendString

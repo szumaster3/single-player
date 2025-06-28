@@ -4,8 +4,8 @@ import content.region.kandarin.khazard.quest.arena.dialogue.GeneralKhazardDialog
 import core.api.getAttribute
 import core.api.location
 import core.api.openDialogue
-import core.api.quest.getQuestStage
-import core.api.quest.setQuestStage
+import core.api.getQuestStage
+import core.api.setQuestStage
 import core.api.removeAttribute
 import core.game.node.entity.Entity
 import core.game.node.entity.npc.AbstractNPC

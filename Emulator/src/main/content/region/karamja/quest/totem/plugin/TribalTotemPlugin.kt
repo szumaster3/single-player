@@ -2,9 +2,9 @@ package content.region.karamja.quest.totem.plugin
 
 import content.data.GameAttributes
 import core.api.*
-import core.api.quest.getQuestStage
-import core.api.quest.setQuestStage
-import core.api.ui.closeDialogue
+import core.api.getQuestStage
+import core.api.setQuestStage
+import core.api.closeDialogue
 import core.game.global.action.ClimbActionHandler
 import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType

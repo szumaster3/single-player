@@ -2,7 +2,7 @@ package content.region.kandarin.feldip.jiggig
 
 import content.region.kandarin.feldip.jiggig.quest.zogre.plugin.ZogreUtils
 import core.api.*
-import core.api.ui.closeDialogue
+import core.api.closeDialogue
 import core.api.utils.PlayerCamera
 import core.game.node.entity.Entity
 import core.game.node.entity.player.Player

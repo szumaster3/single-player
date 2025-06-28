@@ -1,7 +1,7 @@
 package content.global.plugin.iface
 
 import core.api.playAudio
-import core.api.ui.restoreTabs
+import core.api.restoreTabs
 import core.game.component.Component
 import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.Player

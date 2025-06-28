@@ -1,6 +1,6 @@
 package content.region.other.dorgsk.quest.dttd.dialogue
 
-import core.api.quest.getQuestStage
+import core.api.getQuestStage
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

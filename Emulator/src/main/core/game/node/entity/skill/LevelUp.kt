@@ -2,6 +2,8 @@ package core.game.node.entity.skill
 
 import content.data.GameAttributes
 import core.api.*
+import core.api.unlockEmote
+import core.api.hasEmote
 import core.game.global.Skillcape
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.emote.Emotes
@@ -41,7 +43,7 @@ object LevelUp {
 
         if (getStatLevel(player, slot) == 99 && !player.isArtificial) {
             Skillcape.trim(player)
-            if(!player.emoteManager.isUnlocked(Emotes.SKILLCAPE)) {
+            if(!hasEmote(player, Emotes.SKILLCAPE)) {
                 unlockEmote(player, 39)
             }
             sendMessage(player, core.tools.RED + "Well done! You've achieved the highest possible level in this skill!")

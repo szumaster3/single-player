@@ -4,7 +4,7 @@ import content.region.kandarin.gnome.quest.tree.dialogue.KingBolrenDialogueFile
 import core.api.addItemOrDrop
 import core.api.hasAnItem
 import core.api.openDialogue
-import core.api.quest.isQuestComplete
+import core.api.isQuestComplete
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

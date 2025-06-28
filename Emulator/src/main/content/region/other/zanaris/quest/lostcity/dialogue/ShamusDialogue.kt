@@ -1,8 +1,8 @@
 package content.region.other.zanaris.quest.lostcity.dialogue
 
 import content.region.other.zanaris.quest.lostcity.plugin.LostCityPlugin
-import core.api.quest.getQuestStage
-import core.api.quest.setQuestStage
+import core.api.getQuestStage
+import core.api.setQuestStage
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.player.Player

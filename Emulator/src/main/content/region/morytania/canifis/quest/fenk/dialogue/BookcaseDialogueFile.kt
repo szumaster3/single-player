@@ -5,7 +5,7 @@ import content.global.plugin.iface.BookLine
 import content.global.plugin.iface.Page
 import content.global.plugin.iface.PageSet
 import core.api.*
-import core.api.quest.getQuestStage
+import core.api.getQuestStage
 import core.game.dialogue.DialogueFile
 import core.game.node.entity.player.Player
 import core.tools.END_DIALOGUE

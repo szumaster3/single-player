@@ -1,8 +1,8 @@
 package content.region.kandarin.witch.quest.seaslug.cutscene
 
 import core.api.animate
-import core.api.interaction.transformNpc
-import core.api.quest.setQuestStage
+import core.api.transformNpc
+import core.api.setQuestStage
 import core.api.replaceScenery
 import core.api.sendDialogueLines
 import core.api.sendPlainDialogue

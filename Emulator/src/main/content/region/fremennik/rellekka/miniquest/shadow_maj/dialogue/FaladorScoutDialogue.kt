@@ -1,7 +1,7 @@
 package content.region.fremennik.rellekka.miniquest.shadow_maj.dialogue
 
 import content.region.fremennik.rellekka.miniquest.shadow_maj.plugin.GeneralShadow
-import core.api.quest.isQuestComplete
+import core.api.isQuestComplete
 import core.api.sendDialogue
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim

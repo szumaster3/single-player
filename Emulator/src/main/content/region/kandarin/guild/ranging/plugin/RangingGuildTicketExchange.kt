@@ -1,7 +1,7 @@
 package content.region.kandarin.guild.ranging.plugin
 
 import core.api.freeSlots
-import core.api.item.itemDefinition
+import core.api.itemDefinition
 import core.api.removeItem
 import core.api.sendMessage
 import core.game.container.access.InterfaceContainer

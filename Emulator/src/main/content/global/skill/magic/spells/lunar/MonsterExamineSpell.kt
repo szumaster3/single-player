@@ -5,7 +5,7 @@ import content.global.skill.magic.spells.LunarSpells
 import core.api.faceLocation
 import core.api.sendMessage
 import core.api.sendString
-import core.api.ui.openSingleTab
+import core.api.openSingleTab
 import core.game.node.item.Item
 import core.game.system.config.NPCConfigParser
 import org.rs.consts.*

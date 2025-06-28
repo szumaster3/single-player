@@ -4,9 +4,9 @@ import content.data.items.SkillingTool
 import content.global.skill.gathering.woodcutting.WoodcuttingPulse
 import content.region.other.zanaris.quest.lostcity.npc.TreeSpiritNPC
 import core.api.*
-import core.api.quest.finishQuest
-import core.api.quest.getQuestStage
-import core.api.quest.isQuestComplete
+import core.api.finishQuest
+import core.api.getQuestStage
+import core.api.isQuestComplete
 import core.game.dialogue.FaceAnim
 import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType

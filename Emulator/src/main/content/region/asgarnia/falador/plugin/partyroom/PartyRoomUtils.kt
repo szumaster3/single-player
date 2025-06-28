@@ -3,7 +3,7 @@ package content.region.asgarnia.falador.plugin.partyroom
 import content.region.asgarnia.falador.plugin.partyroom.PartyRoomPlugin.Companion.balloonManager
 import content.region.asgarnia.falador.plugin.partyroom.PartyRoomPlugin.Companion.isDancing
 import core.api.*
-import core.api.ui.closeDialogue
+import core.api.closeDialogue
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.node.item.Item

@@ -3,7 +3,7 @@ package core.game.node.entity.player.info.login
 import core.ServerConstants
 import core.api.LoginListener
 import core.api.addItemOrBank
-import core.api.quest.getQuestStage
+import core.api.getQuestStage
 import core.api.sendMessage
 import core.game.node.entity.player.Player
 import core.game.node.item.Item

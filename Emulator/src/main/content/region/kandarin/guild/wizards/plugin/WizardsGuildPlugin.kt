@@ -2,7 +2,7 @@ package content.region.kandarin.guild.wizards.plugin
 
 import content.global.travel.EssenceTeleport.teleport
 import core.api.getDynLevel
-import core.api.quest.isQuestComplete
+import core.api.isQuestComplete
 import core.api.sendMessage
 import core.api.sendNPCDialogue
 import core.api.sendPlayerDialogue

@@ -3,9 +3,9 @@ package content.region.asgarnia.burthope.quest.hero
 import content.region.misthalin.varrock.quest.phoenixgang.ShieldofArrav
 import core.api.hasLevelStat
 import core.api.inInventory
-import core.api.quest.getQuestPoints
-import core.api.quest.getQuestStage
-import core.api.quest.isQuestComplete
+import core.api.getQuestPoints
+import core.api.getQuestStage
+import core.api.isQuestComplete
 import core.api.rewardXP
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest

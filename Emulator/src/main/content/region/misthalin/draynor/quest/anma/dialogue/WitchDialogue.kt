@@ -1,7 +1,7 @@
 package content.region.misthalin.draynor.quest.anma.dialogue
 
 import content.region.misthalin.draynor.quest.anma.AnimalMagnetism
-import core.api.quest.setQuestStage
+import core.api.setQuestStage
 import core.game.dialogue.Dialogue
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest

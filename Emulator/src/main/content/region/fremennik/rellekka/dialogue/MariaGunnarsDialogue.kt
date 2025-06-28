@@ -4,8 +4,8 @@ import content.region.fremennik.plugin.FremennikShipHelper.sail
 import content.region.fremennik.plugin.Travel
 import core.api.findLocalNPC
 import core.api.getAttribute
-import core.api.quest.isQuestComplete
-import core.api.quest.requireQuest
+import core.api.isQuestComplete
+import core.api.requireQuest
 import core.api.sendChat
 import core.api.sendNPCDialogue
 import core.game.dialogue.Dialogue

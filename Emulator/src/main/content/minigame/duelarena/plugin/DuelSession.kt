@@ -1,8 +1,8 @@
 package content.minigame.duelarena.plugin
 
 import core.api.*
-import core.api.event.curePoison
-import core.api.event.isPoisoned
+import core.api.curePoison
+import core.api.isPoisoned
 import core.game.component.Component
 import core.game.component.ComponentDefinition
 import core.game.component.ComponentPlugin

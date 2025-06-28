@@ -2,8 +2,8 @@ package content.region.asgarnia.trollheim.dialogue
 
 import content.region.asgarnia.burthope.quest.death.dialogue.TenzingDialogueFile
 import core.api.*
-import core.api.quest.isQuestComplete
-import core.api.quest.isQuestInProgress
+import core.api.isQuestComplete
+import core.api.isQuestInProgress
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

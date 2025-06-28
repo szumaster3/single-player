@@ -1,6 +1,6 @@
 package content.region.asgarnia.rimmington.dialogue
 
-import core.api.quest.hasRequirement
+import core.api.hasRequirement
 import core.api.sendDialogue
 import core.api.sendNPCDialogue
 import core.game.dialogue.DialogueFile

@@ -1,6 +1,6 @@
 package content.global.ame.strangeplant
 
-import core.api.event.applyPoison
+import core.api.applyPoison
 import core.game.node.entity.Entity
 import core.game.node.entity.combat.BattleState
 import core.game.node.entity.combat.CombatStyle

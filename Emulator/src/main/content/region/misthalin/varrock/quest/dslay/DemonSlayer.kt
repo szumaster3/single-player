@@ -10,7 +10,7 @@ import content.region.misthalin.varrock.quest.dslay.plugin.DemonSlayerDrainPlugi
 import content.region.misthalin.varrock.quest.dslay.plugin.DemonSlayerPlugin
 import content.region.misthalin.varrock.quest.dslay.plugin.DemonSlayerUtils
 import core.api.inInventory
-import core.api.quest.updateQuestTab
+import core.api.updateQuestTab
 import core.api.removeAttributes
 import core.api.sendItemZoomOnInterface
 import core.game.node.entity.player.Player

@@ -1,8 +1,8 @@
 package content.region.kandarin.witch.plugin
 
 import core.api.*
-import core.api.quest.getQuestStage
-import core.api.ui.setMinimapState
+import core.api.getQuestStage
+import core.api.setMinimapState
 import core.game.node.entity.player.Player
 import core.game.system.task.Pulse
 import core.game.world.map.Location

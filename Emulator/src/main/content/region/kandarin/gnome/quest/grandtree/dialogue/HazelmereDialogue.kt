@@ -2,8 +2,8 @@ package content.region.kandarin.gnome.quest.grandtree.dialogue
 
 import core.api.addItemOrDrop
 import core.api.inInventory
-import core.api.quest.getQuestStage
-import core.api.quest.setQuestStage
+import core.api.getQuestStage
+import core.api.setQuestStage
 import core.api.removeItem
 import core.api.sendDialogue
 import core.game.dialogue.Dialogue

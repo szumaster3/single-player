@@ -1,6 +1,6 @@
 package content.region.asgarnia.portsarim.dialogue
 
-import core.api.quest.isQuestComplete
+import core.api.isQuestComplete
 import core.api.sendDialogueOptions
 import core.api.setTitle
 import core.game.dialogue.Dialogue

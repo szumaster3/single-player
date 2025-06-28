@@ -1,7 +1,7 @@
 package content.global.activity.creation
 
 import core.api.*
-import core.api.quest.hasRequirement
+import core.api.hasRequirement
 import core.game.dialogue.FaceAnim
 import core.game.dialogue.SequenceDialogue.dialogue
 import core.game.interaction.IntType

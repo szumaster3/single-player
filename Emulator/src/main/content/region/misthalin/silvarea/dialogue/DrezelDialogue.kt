@@ -2,7 +2,7 @@ package content.region.misthalin.silvarea.dialogue
 
 import core.api.addItem
 import core.api.inInventory
-import core.api.quest.setQuestStage
+import core.api.setQuestStage
 import core.api.removeItem
 import core.api.sendMessage
 import core.game.dialogue.Dialogue

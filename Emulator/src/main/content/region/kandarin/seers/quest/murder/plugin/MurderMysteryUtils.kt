@@ -2,7 +2,7 @@ package content.region.kandarin.seers.quest.murder.plugin
 
 import core.api.getAttribute
 import core.api.getRegionBorders
-import core.api.quest.setQuestStage
+import core.api.setQuestStage
 import core.api.setAttribute
 import core.game.node.entity.player.Player
 import org.rs.consts.Items

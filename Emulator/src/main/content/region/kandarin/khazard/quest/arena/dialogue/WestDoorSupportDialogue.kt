@@ -1,8 +1,8 @@
 package content.region.kandarin.khazard.quest.arena.dialogue
 
 import core.api.*
-import core.api.quest.isQuestComplete
-import core.api.quest.setQuestStage
+import core.api.isQuestComplete
+import core.api.setQuestStage
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.game.global.action.DoorActionHandler

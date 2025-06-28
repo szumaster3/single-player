@@ -1,6 +1,6 @@
 package content.global.travel.ship
 
-import core.api.interaction.openNpcShop
+import core.api.openNpcShop
 import core.api.sendDialogueOptions
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim

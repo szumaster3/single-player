@@ -2,7 +2,7 @@ package content.region.karamja.quest.totem
 
 import core.api.addItemOrDrop
 import core.api.getStatLevel
-import core.api.quest.getQuestStage
+import core.api.getQuestStage
 import core.api.rewardXP
 import core.api.sendItemZoomOnInterface
 import core.game.node.entity.player.Player

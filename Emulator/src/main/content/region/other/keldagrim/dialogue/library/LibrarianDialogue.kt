@@ -1,6 +1,6 @@
 package content.region.other.keldagrim.dialogue.library
 
-import core.api.quest.hasRequirement
+import core.api.hasRequirement
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

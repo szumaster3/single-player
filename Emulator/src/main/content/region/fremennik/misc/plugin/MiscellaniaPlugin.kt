@@ -1,7 +1,7 @@
 package content.region.fremennik.misc.plugin
 
-import core.api.interaction.openNpcShop
-import core.api.quest.hasRequirement
+import core.api.openNpcShop
+import core.api.hasRequirement
 import core.api.sendNPCDialogue
 import core.api.sendNPCDialogueLines
 import core.game.dialogue.FaceAnim

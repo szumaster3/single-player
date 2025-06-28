@@ -1,7 +1,7 @@
 package content.region.asgarnia.taverley.quest.druid_quest_2
 
 import core.api.*
-import core.api.quest.getQuestStage
+import core.api.getQuestStage
 import core.game.component.Component
 import core.game.interaction.QueueStrength
 import core.game.node.entity.npc.NPC

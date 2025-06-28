@@ -5,8 +5,8 @@ import content.global.skill.construction.decoration.costumeroom.data.Cape
 import content.global.skill.construction.decoration.costumeroom.data.FancyDress
 import content.global.skill.construction.decoration.costumeroom.data.Toy
 import core.api.*
-import core.api.item.allInInventory
-import core.api.ui.sendInterfaceConfig
+import core.api.allInInventory
+import core.api.sendInterfaceConfig
 import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.Player
 import core.game.node.item.Item

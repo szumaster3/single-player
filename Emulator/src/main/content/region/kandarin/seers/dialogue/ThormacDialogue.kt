@@ -3,7 +3,7 @@ package content.region.kandarin.seers.dialogue
 import content.region.kandarin.seers.quest.scorpcatcher.dialogue.ThormacRequestDialogue
 import core.api.openDialogue
 import core.api.openInterface
-import core.api.quest.isQuestComplete
+import core.api.isQuestComplete
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.player.Player

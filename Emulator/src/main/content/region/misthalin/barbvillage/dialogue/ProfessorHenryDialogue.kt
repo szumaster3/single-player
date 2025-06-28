@@ -2,7 +2,8 @@ package content.region.misthalin.barbvillage.dialogue
 
 import core.ServerConstants
 import core.api.*
-import core.api.quest.getQuestPoints
+import core.api.getQuestPoints
+import core.api.unlockEmote
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.dialogue.Topic
@@ -94,7 +95,7 @@ class ProfessorHenryDialogue(player: Player? = null) : Dialogue(player) {
         player.savedData.globalData.setTestStage(3)
         removeItem(player, Items.TEST_PAPER_12626)
         addItem(player, Items.ANTIQUE_LAMP_4447, 2)
-        player.emoteManager.unlock(Emotes.SAFETY_FIRST)
+        unlockEmote(player, Emotes.SAFETY_FIRST)
         openInterface(player, INTERFACE)
 
         /*

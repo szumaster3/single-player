@@ -4,7 +4,7 @@ import content.data.GameAttributes
 import core.api.closeInterface
 import core.api.openInterface
 import core.api.setAttribute
-import core.api.ui.setMinimapState
+import core.api.setMinimapState
 import core.game.activity.Cutscene
 import core.game.node.entity.player.Player
 import org.rs.consts.Components

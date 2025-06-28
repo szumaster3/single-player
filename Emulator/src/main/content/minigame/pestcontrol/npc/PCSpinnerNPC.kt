@@ -1,7 +1,7 @@
 package content.minigame.pestcontrol.npc
 
 import content.minigame.pestcontrol.plugin.PestControlSession
-import core.api.event.applyPoison
+import core.api.applyPoison
 import core.game.interaction.MovementPulse
 import core.game.node.entity.Entity
 import core.game.node.entity.combat.BattleState

@@ -2,7 +2,7 @@ package content.global.skill.smithing.smelting
 
 import content.global.skill.smithing.Bar
 import core.api.*
-import core.api.quest.isQuestComplete
+import core.api.isQuestComplete
 import core.game.container.impl.EquipmentContainer
 import core.game.event.ResourceProducedEvent
 import core.game.node.entity.player.Player

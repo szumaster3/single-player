@@ -1,7 +1,7 @@
 package content.global.skill.herblore
 
 import core.api.getStatLevel
-import core.api.quest.hasRequirement
+import core.api.hasRequirement
 import core.api.rewardXP
 import core.api.sendMessage
 import core.game.interaction.IntType

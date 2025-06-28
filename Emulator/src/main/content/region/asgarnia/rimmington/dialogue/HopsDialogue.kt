@@ -4,7 +4,7 @@ import content.data.GameAttributes
 import content.region.kandarin.ardougne.east.quest.biohazard.dialogue.HopsDialogue
 import core.api.getAttribute
 import core.api.openDialogue
-import core.api.quest.getQuestStage
+import core.api.getQuestStage
 import core.api.sendDialogue
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim

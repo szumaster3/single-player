@@ -1,7 +1,7 @@
 package content.region.kandarin.gnome.quest.itgronigen.dialogue
 
 import core.api.inInventory
-import core.api.quest.setQuestStage
+import core.api.setQuestStage
 import core.api.sendDialogue
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim

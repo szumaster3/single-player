@@ -1,6 +1,6 @@
 package content.region.asgarnia.falador.dialogue
 
-import core.api.interaction.openNpcShop
+import core.api.openNpcShop
 import core.api.sendDialogueOptions
 import core.game.dialogue.Dialogue
 import core.game.node.entity.player.Player

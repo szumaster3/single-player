@@ -1,6 +1,6 @@
 package content.data
 
-import core.api.quest.hasRequirement
+import core.api.hasRequirement
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import org.rs.consts.Items

@@ -3,8 +3,8 @@ package content.region.fremennik.lunar.dialogue
 import content.data.GameAttributes
 import content.region.misthalin.draynor.quest.swept.plugin.SweptUtils
 import core.api.*
-import core.api.interaction.openNpcShop
-import core.api.quest.isQuestComplete
+import core.api.openNpcShop
+import core.api.isQuestComplete
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

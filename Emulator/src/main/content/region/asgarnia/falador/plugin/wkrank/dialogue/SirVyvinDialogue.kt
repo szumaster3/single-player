@@ -2,7 +2,7 @@ package content.region.asgarnia.falador.plugin.wkrank.dialogue
 
 import content.region.asgarnia.falador.plugin.wkrank.plugin.WhiteKnightRank
 import content.region.asgarnia.falador.plugin.wkrank.plugin.WhiteKnightRankManager
-import core.api.quest.hasRequirement
+import core.api.hasRequirement
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

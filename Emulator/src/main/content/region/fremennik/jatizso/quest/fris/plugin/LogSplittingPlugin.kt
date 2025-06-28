@@ -2,7 +2,7 @@ package content.region.fremennik.jatizso.quest.fris.plugin
 
 import content.data.items.SkillingTool
 import core.api.*
-import core.api.skill.sendSkillDialogue
+import core.api.sendSkillDialogue
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.player.Player

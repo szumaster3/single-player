@@ -1,7 +1,7 @@
 package content.region.morytania.phas.dialogue
 
 import core.api.inEquipment
-import core.api.interaction.openNpcShop
+import core.api.openNpcShop
 import core.api.sendDialogue
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim

@@ -2,8 +2,8 @@ package content.region.kandarin.seers.dialogue
 
 import content.data.GameAttributes
 import core.api.addItemOrDrop
-import core.api.quest.getQuestStage
-import core.api.quest.isQuestComplete
+import core.api.getQuestStage
+import core.api.isQuestComplete
 import core.api.removeItem
 import core.api.setAttribute
 import core.game.dialogue.Dialogue

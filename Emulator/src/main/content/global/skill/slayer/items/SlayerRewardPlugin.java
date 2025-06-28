@@ -22,7 +22,7 @@ import org.rs.consts.Components;
 import org.rs.consts.Items;
 import org.rs.consts.Quests;
 
-import static core.api.quest.QuestAPIKt.hasRequirement;
+import static core.api.QuestAPIKt.hasRequirement;
 
 /**
  * The type Slayer reward plugin.

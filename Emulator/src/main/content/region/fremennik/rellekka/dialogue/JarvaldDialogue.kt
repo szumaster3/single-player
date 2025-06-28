@@ -3,7 +3,7 @@ package content.region.fremennik.rellekka.dialogue
 import content.region.fremennik.plugin.FremennikShipHelper.sail
 import content.region.fremennik.plugin.Travel
 import core.api.*
-import core.api.quest.isQuestComplete
+import core.api.isQuestComplete
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.dialogue.Topic

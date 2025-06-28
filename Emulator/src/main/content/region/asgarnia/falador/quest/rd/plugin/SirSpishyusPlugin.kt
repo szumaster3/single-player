@@ -3,7 +3,7 @@ package content.region.asgarnia.falador.quest.rd.plugin
 import content.region.asgarnia.falador.quest.rd.RecruitmentDrive
 import content.region.asgarnia.falador.quest.rd.cutscene.FailCutscene
 import core.api.*
-import core.api.ui.closeDialogue
+import core.api.closeDialogue
 import core.game.dialogue.DialogueBuilder
 import core.game.dialogue.DialogueBuilderFile
 import core.game.dialogue.FaceAnim

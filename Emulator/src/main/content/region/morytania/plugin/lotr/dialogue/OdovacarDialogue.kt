@@ -1,8 +1,8 @@
 package content.region.morytania.plugin.lotr.dialogue
 
-import core.api.interaction.openBankAccount
-import core.api.interaction.openBankPinSettings
-import core.api.interaction.openGrandExchangeCollectionBox
+import core.api.openBankAccount
+import core.api.openBankPinSettings
+import core.api.openGrandExchangeCollectionBox
 import core.api.removeItem
 import core.api.sendMessage
 import core.game.dialogue.Dialogue

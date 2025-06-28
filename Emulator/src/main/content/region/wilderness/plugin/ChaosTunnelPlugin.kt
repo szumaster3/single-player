@@ -2,7 +2,7 @@ package content.region.wilderness.plugin
 
 import core.ServerStore.Companion.getArchive
 import core.api.lock
-import core.api.quest.hasRequirement
+import core.api.hasRequirement
 import core.api.visualize
 import core.cache.def.impl.SceneryDefinition
 import core.game.activity.ActivityManager

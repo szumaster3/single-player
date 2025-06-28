@@ -2,7 +2,7 @@ package content.region.misthalin.lumbridge.quest.lost_tribe.dialogue
 
 import core.api.addItemOrDrop
 import core.api.inInventory
-import core.api.quest.setQuestStage
+import core.api.setQuestStage
 import core.api.sendItemDialogue
 import core.api.setVarbit
 import core.game.dialogue.DialogueFile

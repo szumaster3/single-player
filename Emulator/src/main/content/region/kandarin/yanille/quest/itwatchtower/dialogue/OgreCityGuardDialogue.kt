@@ -2,7 +2,7 @@ package content.region.kandarin.yanille.quest.itwatchtower.dialogue
 
 import content.data.GameAttributes
 import core.api.*
-import core.api.quest.getQuestStage
+import core.api.getQuestStage
 import core.game.dialogue.Dialogue
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim

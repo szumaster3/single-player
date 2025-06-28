@@ -1,7 +1,7 @@
 package content.global.plugin.iface
 
 import core.api.closeChatBox
-import core.api.quest.updateQuestTab
+import core.api.updateQuestTab
 import core.api.refreshInventory
 import core.api.sendMessage
 import core.api.sendString

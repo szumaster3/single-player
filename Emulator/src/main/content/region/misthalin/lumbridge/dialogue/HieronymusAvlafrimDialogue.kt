@@ -1,7 +1,7 @@
 package content.region.misthalin.lumbridge.dialogue
 
 import core.api.getAttribute
-import core.api.interaction.openNpcShop
+import core.api.openNpcShop
 import core.api.sendDialogueOptions
 import core.api.setAttribute
 import core.api.setTitle

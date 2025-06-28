@@ -1,7 +1,7 @@
 package content.global.plugin.npc
 
 import content.global.skill.slayer.Tasks
-import core.api.event.applyPoison
+import core.api.applyPoison
 import core.api.registerTimer
 import core.api.spawnTimer
 import core.game.node.entity.Entity

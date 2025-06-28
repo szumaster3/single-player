@@ -4,8 +4,10 @@ import content.data.GameAttributes
 import content.data.GlobalStore
 import core.ServerConstants
 import core.api.*
-import core.api.quest.hasRequirement
-import core.api.quest.isQuestComplete
+import core.api.hasRequirement
+import core.api.isQuestComplete
+import core.api.unlockEmote
+import core.api.hasEmote
 import core.game.component.Component
 import core.game.interaction.InteractionListeners
 import core.game.node.entity.player.Player
@@ -281,8 +283,8 @@ object LoginConfiguration {
     private fun Player.isNotReconnecting(): Boolean = getAttribute("login_type", LoginType.NORMAL_LOGIN) != LoginType.RECONNECT_TYPE
 
     private fun checkEmotes(player: Player) {
-        if (player.globalData.getTestStage() == 3 && !player.emoteManager.isUnlocked(Emotes.SAFETY_FIRST)) {
-            player.emoteManager.unlock(Emotes.SAFETY_FIRST)
+        if (player.globalData.getTestStage() == 3 && !hasEmote(player, Emotes.SAFETY_FIRST)) {
+            unlockEmote(player, Emotes.SAFETY_FIRST)
         }
     }
 

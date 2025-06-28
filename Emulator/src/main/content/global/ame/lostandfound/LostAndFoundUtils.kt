@@ -2,7 +2,7 @@ package content.global.ame.lostandfound
 
 import content.data.RandomEvent
 import core.api.*
-import core.api.ui.setMinimapState
+import core.api.setMinimapState
 import core.cache.def.impl.SceneryDefinition
 import core.game.node.entity.player.Player
 import core.game.node.item.Item

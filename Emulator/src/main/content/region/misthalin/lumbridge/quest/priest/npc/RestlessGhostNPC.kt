@@ -1,6 +1,6 @@
 package content.region.misthalin.lumbridge.quest.priest.npc
 
-import core.api.quest.isQuestComplete
+import core.api.isQuestComplete
 import core.game.node.entity.Entity
 import core.game.node.entity.combat.CombatStyle
 import core.game.node.entity.npc.AbstractNPC

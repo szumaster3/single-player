@@ -2,8 +2,8 @@ package content.region.karamja.shilo.npc
 
 import content.region.asgarnia.burthope.quest.hero.HeroesQuest
 import core.api.openDialogue
-import core.api.quest.getQuestStage
-import core.api.quest.setQuestStage
+import core.api.getQuestStage
+import core.api.setQuestStage
 import core.api.sendDialogueLines
 import core.api.sendPlayerDialogue
 import core.game.dialogue.DialogueFile

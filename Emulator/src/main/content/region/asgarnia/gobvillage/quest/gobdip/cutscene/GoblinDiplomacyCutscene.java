@@ -30,6 +30,7 @@ import org.rs.consts.NPCs;
 import org.rs.consts.Quests;
 
 import static core.api.ContentAPIKt.*;
+import static core.api.InterfaceAPIKt.unlockEmote;
 
 /**
  * Represents the goblin diplomacy cutscene plugin.
@@ -365,8 +366,8 @@ public final class GoblinDiplomacyCutscene extends CutscenePlugin {
                     case 5054:
                         interpreter.sendDialogue("The generals show you the goblin bow and", "goblin salute emotes.");
                         setAttribute(player, "/save:tlt-goblin-emotes", true);
-                        player.getEmoteManager().unlock(Emotes.GOBLIN_BOW);
-                        player.getEmoteManager().unlock(Emotes.GOBLIN_SALUTE);
+                        unlockEmote(player, Emotes.GOBLIN_BOW);
+                        unlockEmote(player, Emotes.GOBLIN_SALUTE);
                         setVarbit(player, 532, 7, true);
                         player.getQuestRepository().getQuest(Quests.THE_LOST_TRIBE).setStage(player, 44);
                         stage++;

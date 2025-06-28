@@ -1,9 +1,9 @@
 package content.region.asgarnia.burthope.plugin
 
 import core.api.*
-import core.api.interaction.openBankAccount
-import core.api.interaction.openGrandExchangeCollectionBox
-import core.api.interaction.openNpcShop
+import core.api.openBankAccount
+import core.api.openGrandExchangeCollectionBox
+import core.api.openNpcShop
 import core.game.dialogue.FaceAnim
 import core.game.global.action.ClimbActionHandler
 import core.game.interaction.IntType

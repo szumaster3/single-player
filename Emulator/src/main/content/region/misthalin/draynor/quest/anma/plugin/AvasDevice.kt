@@ -2,7 +2,7 @@ package content.region.misthalin.draynor.quest.anma.plugin
 
 import content.data.GameAttributes
 import core.api.*
-import core.api.quest.isQuestComplete
+import core.api.isQuestComplete
 import core.game.container.impl.EquipmentContainer
 import core.game.event.EventHook
 import core.game.event.TickEvent
@@ -15,6 +15,9 @@ import core.tools.secondsToTicks
 import org.rs.consts.Items
 import org.rs.consts.Quests
 
+/**
+ * Handles functionality related to Ava's devices.
+ */
 class AvasDevice :
     InteractionListener,
     EventHook<TickEvent> {

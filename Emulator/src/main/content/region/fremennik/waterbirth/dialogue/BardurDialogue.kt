@@ -3,7 +3,7 @@ package content.region.fremennik.waterbirth.dialogue
 import content.region.fremennik.rellekka.quest.viking.FremennikTrials
 import content.region.fremennik.waterbirth.plugin.BardurPlugin
 import core.api.*
-import core.api.quest.isQuestComplete
+import core.api.isQuestComplete
 import core.game.dialogue.Dialogue
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim

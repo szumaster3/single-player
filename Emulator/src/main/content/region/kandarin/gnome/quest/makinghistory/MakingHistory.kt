@@ -6,7 +6,7 @@ import content.region.kandarin.gnome.quest.makinghistory.MHUtils.DRON_PROGRESS
 import content.region.kandarin.gnome.quest.makinghistory.MHUtils.ERIN_PROGRESS
 import content.region.kandarin.gnome.quest.makinghistory.MHUtils.PROGRESS
 import core.api.*
-import core.api.quest.isQuestComplete
+import core.api.isQuestComplete
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest
 import core.game.node.entity.skill.Skills

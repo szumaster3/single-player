@@ -1,6 +1,6 @@
 package content.region.kandarin.pisc.dialogue
 
-import core.api.quest.hasRequirement
+import core.api.hasRequirement
 import core.api.sendDialogueOptions
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim

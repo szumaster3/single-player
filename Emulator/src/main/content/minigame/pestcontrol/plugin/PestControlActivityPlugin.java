@@ -29,8 +29,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
 
-import static core.api.event.EventAPIKt.curePoison;
-import static core.api.event.EventAPIKt.isPoisoned;
+import static core.api.EventAPIKt.curePoison;
+import static core.api.EventAPIKt.isPoisoned;
 
 /**
  * The type Pest control activity plugin.

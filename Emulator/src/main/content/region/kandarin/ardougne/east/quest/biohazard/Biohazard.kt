@@ -1,7 +1,7 @@
 package content.region.kandarin.ardougne.east.quest.biohazard
 
 import content.data.GameAttributes
-import core.api.quest.isQuestComplete
+import core.api.isQuestComplete
 import core.api.removeAttributes
 import core.api.rewardXP
 import core.api.sendItemZoomOnInterface

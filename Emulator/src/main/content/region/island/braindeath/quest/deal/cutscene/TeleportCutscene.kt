@@ -2,7 +2,7 @@ package content.region.island.braindeath.quest.deal.cutscene
 
 import content.region.island.braindeath.quest.deal.dialogue.CaptainBraindeathDialogue
 import core.api.*
-import core.api.ui.setMinimapState
+import core.api.setMinimapState
 import core.game.activity.Cutscene
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.player.Player

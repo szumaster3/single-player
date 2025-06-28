@@ -2,7 +2,7 @@ package content.global.skill.summoning.familiar.npc
 
 import content.global.skill.summoning.familiar.Familiar
 import content.global.skill.summoning.familiar.FamiliarSpecial
-import core.api.event.curePoison
+import core.api.curePoison
 import core.api.removeTimer
 import core.game.node.entity.combat.ImpactHandler.HitsplatType
 import core.game.node.entity.combat.equipment.WeaponInterface

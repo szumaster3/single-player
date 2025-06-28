@@ -1,7 +1,7 @@
 package content.region.fremennik.lighthouse.quest.horror.npc
 
 import core.api.*
-import core.api.quest.finishQuest
+import core.api.finishQuest
 import core.game.interaction.QueueStrength
 import core.game.node.entity.Entity
 import core.game.node.entity.combat.BattleState

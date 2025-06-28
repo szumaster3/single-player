@@ -2,7 +2,7 @@ package content.global.skill.agility.shortcuts
 
 import content.global.skill.agility.AgilityHandler
 import content.global.skill.agility.AgilityShortcut
-import core.api.quest.isQuestComplete
+import core.api.isQuestComplete
 import core.api.sendDialogue
 import core.game.node.entity.player.Player
 import core.game.node.scenery.Scenery

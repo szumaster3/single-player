@@ -1,9 +1,9 @@
 package content.region.misthalin.draynor.dialogue
 
 import core.api.openDialogue
-import core.api.quest.getQuest
-import core.api.quest.getQuestStage
-import core.api.quest.updateQuestTab
+import core.api.getQuest
+import core.api.getQuestStage
+import core.api.updateQuestTab
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

@@ -1,10 +1,10 @@
 package content.region.kandarin.camelot.dialogue
 
 import core.api.addItemOrDrop
-import core.api.quest.finishQuest
-import core.api.quest.getQuestStage
-import core.api.quest.isQuestComplete
-import core.api.quest.setQuestStage
+import core.api.finishQuest
+import core.api.getQuestStage
+import core.api.isQuestComplete
+import core.api.setQuestStage
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.dialogue.Topic

@@ -2,7 +2,7 @@ package content.region.misthalin.draynor.dialogue
 
 import content.data.GameAttributes
 import core.api.*
-import core.api.item.produceGroundItem
+import core.api.produceGroundItem
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

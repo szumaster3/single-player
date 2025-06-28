@@ -2,10 +2,10 @@ package content.region.karamja.plugin
 
 import content.data.items.SkillingTool
 import core.api.*
-import core.api.interaction.openNpcShop
-import core.api.item.produceGroundItem
-import core.api.quest.hasRequirement
-import core.api.quest.isQuestComplete
+import core.api.openNpcShop
+import core.api.produceGroundItem
+import core.api.hasRequirement
+import core.api.isQuestComplete
 import core.game.dialogue.FaceAnim
 import core.game.global.action.ClimbActionHandler
 import core.game.interaction.IntType

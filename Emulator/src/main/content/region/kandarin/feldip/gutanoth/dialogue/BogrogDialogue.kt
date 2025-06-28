@@ -1,7 +1,7 @@
 package content.region.kandarin.feldip.gutanoth.dialogue
 
 import content.region.kandarin.feldip.gutanoth.plugin.BogrogPlugin
-import core.api.interaction.openNpcShop
+import core.api.openNpcShop
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.player.Player

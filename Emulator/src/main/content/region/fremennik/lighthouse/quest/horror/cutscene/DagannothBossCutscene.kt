@@ -2,7 +2,7 @@ package content.region.fremennik.lighthouse.quest.horror.cutscene
 
 import content.region.fremennik.lighthouse.quest.horror.npc.DagonnothSessionPulse
 import core.api.clearHintIcon
-import core.api.interaction.transformNpc
+import core.api.transformNpc
 import core.api.registerHintIcon
 import core.api.runTask
 import core.game.activity.Cutscene

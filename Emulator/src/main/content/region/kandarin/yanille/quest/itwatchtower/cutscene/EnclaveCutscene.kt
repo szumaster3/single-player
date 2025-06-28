@@ -1,7 +1,7 @@
 package content.region.kandarin.yanille.quest.itwatchtower.cutscene
 
 import core.api.*
-import core.api.quest.setQuestStage
+import core.api.setQuestStage
 import core.game.activity.Cutscene
 import core.game.node.entity.combat.ImpactHandler
 import core.game.node.entity.impl.Animator.Priority

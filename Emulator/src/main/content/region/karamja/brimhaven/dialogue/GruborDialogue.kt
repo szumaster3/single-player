@@ -3,7 +3,7 @@ package content.region.karamja.brimhaven.dialogue
 import content.region.asgarnia.burthope.quest.hero.HeroesQuest
 import core.api.getAttribute
 import core.api.openDialogue
-import core.api.quest.getQuestStage
+import core.api.getQuestStage
 import core.api.setAttribute
 import core.game.dialogue.Dialogue
 import core.game.dialogue.DialogueBuilder

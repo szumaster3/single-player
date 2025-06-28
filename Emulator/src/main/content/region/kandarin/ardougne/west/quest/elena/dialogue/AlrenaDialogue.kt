@@ -2,8 +2,8 @@ package content.region.kandarin.ardougne.west.quest.elena.dialogue
 
 import content.region.kandarin.ardougne.west.quest.elena.plugin.PlagueCityPlugin
 import core.api.*
-import core.api.quest.getQuestStage
-import core.api.quest.setQuestStage
+import core.api.getQuestStage
+import core.api.setQuestStage
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

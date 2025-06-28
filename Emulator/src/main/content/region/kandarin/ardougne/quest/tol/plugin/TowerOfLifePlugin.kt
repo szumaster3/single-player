@@ -2,7 +2,7 @@ package content.region.kandarin.ardougne.quest.tol.plugin
 
 import content.global.skill.thieving.PickpocketPlugin
 import core.api.*
-import core.api.quest.hasRequirement
+import core.api.hasRequirement
 import core.api.utils.WeightBasedTable
 import core.api.utils.WeightedItem
 import core.game.dialogue.FaceAnim

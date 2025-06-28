@@ -4,7 +4,7 @@ import content.data.consumables.Consumables
 import content.data.consumables.effects.HealingEffect
 import core.ServerConstants
 import core.ServerConstants.Companion.SERVER_GE_NAME
-import core.api.item.itemDefinition
+import core.api.itemDefinition
 import core.api.log
 import core.api.sendNews
 import core.api.utils.Vector

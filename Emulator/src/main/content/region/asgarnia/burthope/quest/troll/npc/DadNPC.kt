@@ -2,8 +2,8 @@ package content.region.asgarnia.burthope.quest.troll.npc
 
 import content.region.asgarnia.burthope.quest.troll.dialogue.DadDialogueFile
 import core.api.openDialogue
-import core.api.quest.getQuestStage
-import core.api.quest.setQuestStage
+import core.api.getQuestStage
+import core.api.setQuestStage
 import core.api.sendMessage
 import core.api.submitWorldPulse
 import core.game.node.entity.Entity

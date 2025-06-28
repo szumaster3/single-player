@@ -6,7 +6,7 @@ import content.global.skill.runecrafting.abyss.dialogue.DarkMageDialogue
 import content.global.skill.runecrafting.abyss.dialogue.MageOfZamorakDialogue
 import content.global.skill.runecrafting.abyss.npc.AbyssalNPC
 import core.api.*
-import core.api.skill.getTool
+import core.api.getTool
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.Node

@@ -1,7 +1,7 @@
 package content.region.karamja.tzhaar.quest.dillo.dialogue
 
 import core.api.*
-import core.api.ui.closeDialogue
+import core.api.closeDialogue
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.interaction.QueueStrength

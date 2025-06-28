@@ -6,7 +6,7 @@ import content.region.tirannwn.lletya.quest.roving_elves.npc.MossGiantNPC
 import content.region.tirannwn.lletya.quest.roving_elves.plugin.RovingElvesObstacles
 import content.region.tirannwn.lletya.quest.roving_elves.plugin.RovingElvesPlugin
 import core.api.inInventory
-import core.api.quest.updateQuestTab
+import core.api.updateQuestTab
 import core.api.rewardXP
 import core.api.sendItemZoomOnInterface
 import core.game.node.entity.player.Player

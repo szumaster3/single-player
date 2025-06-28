@@ -2,7 +2,7 @@ package content.region.misthalin.lumbridge.quest.tog.plugin
 
 import content.region.misthalin.lumbridge.quest.tog.npc.LightCreatureBehavior
 import core.api.*
-import core.api.quest.hasRequirement
+import core.api.hasRequirement
 import core.game.dialogue.DialogueFile
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener

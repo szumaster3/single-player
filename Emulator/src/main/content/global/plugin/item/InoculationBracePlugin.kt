@@ -1,8 +1,8 @@
 package content.global.plugin.item
 
 import core.api.*
-import core.api.event.applyDisease
-import core.api.event.isDiseased
+import core.api.applyDisease
+import core.api.isDiseased
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.system.command.Privilege

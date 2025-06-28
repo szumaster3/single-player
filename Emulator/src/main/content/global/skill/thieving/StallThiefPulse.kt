@@ -1,7 +1,7 @@
 package content.global.skill.thieving
 
 import core.api.*
-import core.api.quest.isQuestComplete
+import core.api.isQuestComplete
 import core.game.event.ResourceProducedEvent
 import core.game.node.entity.combat.ImpactHandler
 import core.game.node.entity.player.Player

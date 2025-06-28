@@ -1,7 +1,7 @@
 package content.region.asgarnia.falador.dialogue
 
 import core.api.getAttribute
-import core.api.interaction.openNpcShop
+import core.api.openNpcShop
 import core.api.setAttribute
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim

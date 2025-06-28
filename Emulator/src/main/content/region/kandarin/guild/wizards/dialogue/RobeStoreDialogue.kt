@@ -1,6 +1,6 @@
 package content.region.kandarin.guild.wizards.dialogue
 
-import core.api.interaction.openNpcShop
+import core.api.openNpcShop
 import core.game.dialogue.Dialogue
 import core.game.global.Skillcape
 import core.game.node.entity.npc.NPC

@@ -1,6 +1,6 @@
 package content.region.wilderness.npc
 
-import core.api.ui.setMinimapState
+import core.api.setMinimapState
 import core.api.utils.BossKillCounter
 import core.game.activity.ActivityPlugin
 import core.game.activity.CutscenePlugin

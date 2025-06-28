@@ -1,6 +1,6 @@
 package content.global.plugin.item
 
-import core.api.quest.hasRequirement
+import core.api.hasRequirement
 import core.game.interaction.InteractionListener
 import core.game.node.entity.player.link.quest.QuestRepository
 import org.rs.consts.Items

@@ -3,7 +3,7 @@ package content.region.kandarin.pisc.quest.phoenix.plugin
 import content.data.GameAttributes
 import content.region.kandarin.pisc.quest.phoenix.InPyreNeed
 import core.api.*
-import core.api.quest.isQuestComplete
+import core.api.isQuestComplete
 import core.game.node.entity.Entity
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player

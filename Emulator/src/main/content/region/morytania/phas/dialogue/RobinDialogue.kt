@@ -3,7 +3,7 @@ package content.region.morytania.phas.dialogue
 import content.region.morytania.phas.quest.ahoy.dialogue.RobinDialogueFile
 import core.api.inInventory
 import core.api.openDialogue
-import core.api.quest.getQuestStage
+import core.api.getQuestStage
 import core.api.removeItem
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim

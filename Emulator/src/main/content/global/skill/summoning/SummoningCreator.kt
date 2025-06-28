@@ -1,7 +1,7 @@
 package content.global.skill.summoning
 
 import core.api.*
-import core.api.quest.isQuestComplete
+import core.api.isQuestComplete
 import core.cache.def.impl.CS2Mapping
 import core.game.component.Component
 import core.game.node.entity.player.Player

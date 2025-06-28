@@ -3,7 +3,7 @@ package content.global.skill.summoning.familiar.npc
 import content.global.skill.summoning.familiar.Familiar
 import content.global.skill.summoning.familiar.FamiliarSpecial
 import content.global.skill.summoning.familiar.Forager
-import core.api.item.produceGroundItem
+import core.api.produceGroundItem
 import core.api.queueScript
 import core.api.sendMessage
 import core.api.stopExecuting

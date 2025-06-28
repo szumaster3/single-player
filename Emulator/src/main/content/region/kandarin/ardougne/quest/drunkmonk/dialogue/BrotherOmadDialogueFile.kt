@@ -1,9 +1,9 @@
 package content.region.kandarin.ardougne.quest.drunkmonk.dialogue
 
-import core.api.quest.finishQuest
-import core.api.quest.getQuestStage
-import core.api.quest.setQuestStage
-import core.api.quest.updateQuestTab
+import core.api.finishQuest
+import core.api.getQuestStage
+import core.api.setQuestStage
+import core.api.updateQuestTab
 import core.api.sendDialogue
 import core.api.sendItemDialogue
 import core.game.dialogue.DialogueFile

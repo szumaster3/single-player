@@ -12,7 +12,7 @@ import content.region.misthalin.draynor.cutscene.TelescopeCutscene.EndDialogue
 import content.region.misthalin.varrock.quest.dragon.dialogue.DukeDragonSlayerDialogue
 import content.region.misthalin.lumbridge.quest.priest.dialogue.FatherUhrneyDialogue
 import core.api.*
-import core.api.quest.getQuestStage
+import core.api.getQuestStage
 import core.game.diary.DiaryAreaTask
 import core.game.diary.DiaryEventHookBase
 import core.game.diary.DiaryLevel

@@ -1,6 +1,6 @@
 package content.region.misthalin.draynor.quest.anma.plugin
 
-import core.api.quest.isQuestComplete
+import core.api.isQuestComplete
 import core.api.sendMessage
 import core.game.interaction.InteractionListener
 import org.rs.consts.Items

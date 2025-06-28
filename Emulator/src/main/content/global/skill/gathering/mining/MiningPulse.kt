@@ -117,7 +117,7 @@ class MiningPulse(private val player: Player, private val node: Node, ) : Pulse(
             sendMessage(player, "You do not have a pickaxe to use.")
             return false
         }
-        if(resource!!.identifier == 19.toByte() && !core.api.quest.hasRequirement(player, Quests.TOKTZ_KET_DILL)) {
+        if(resource!!.identifier == 19.toByte() && !core.api.hasRequirement(player, Quests.TOKTZ_KET_DILL)) {
             sendDialogue(player, "You do not know the technique to mine stone slabs.")
             return false
         }

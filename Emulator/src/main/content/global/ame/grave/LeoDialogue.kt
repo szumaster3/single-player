@@ -2,6 +2,8 @@ package content.global.ame.grave
 
 import content.data.GameAttributes
 import core.api.*
+import core.api.unlockEmote
+import core.api.hasEmote
 import core.game.component.Component
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
@@ -77,11 +79,11 @@ class LeoDialogue : DialogueFile() {
                             }
 
                             addItemOrDrop(player!!, Items.COINS_995, 500)
-                            if (!player!!.emoteManager.isUnlocked(Emotes.ZOMBIE_DANCE)) {
-                                player!!.emoteManager.unlock(Emotes.ZOMBIE_DANCE)
+                            if (!hasEmote(player!!, Emotes.ZOMBIE_DANCE)) {
+                                unlockEmote(player!!, Emotes.ZOMBIE_DANCE)
                             }
-                            if (!player!!.emoteManager.isUnlocked(Emotes.ZOMBIE_WALK)) {
-                                player!!.emoteManager.unlock(Emotes.ZOMBIE_WALK)
+                            if (!hasEmote(player!!, Emotes.ZOMBIE_WALK)) {
+                                unlockEmote(player!!, Emotes.ZOMBIE_WALK)
                             }
                             return true
                         }

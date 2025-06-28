@@ -2,7 +2,7 @@ package content.region.fremennik.lighthouse.quest.horror.npc
 
 import content.region.fremennik.lighthouse.quest.horror.dialogue.JossikLighthouseDialogue
 import core.api.*
-import core.api.quest.setQuestStage
+import core.api.setQuestStage
 import core.game.interaction.QueueStrength
 import core.game.node.entity.Entity
 import core.game.node.entity.npc.AbstractNPC

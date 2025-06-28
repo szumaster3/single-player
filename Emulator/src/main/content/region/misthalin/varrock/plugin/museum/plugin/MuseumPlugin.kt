@@ -16,7 +16,7 @@ import content.region.misthalin.varrock.plugin.museum.dialogue.TalkAboutTerrorBi
 import content.region.misthalin.varrock.plugin.museum.dialogue.TalkAboutTortoises
 import content.region.misthalin.varrock.plugin.museum.dialogue.TalkAboutWyverns
 import core.api.*
-import core.api.quest.isQuestComplete
+import core.api.isQuestComplete
 import core.game.global.action.ClimbActionHandler
 import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType

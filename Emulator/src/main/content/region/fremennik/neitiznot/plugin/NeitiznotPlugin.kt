@@ -1,7 +1,7 @@
 package content.region.fremennik.neitiznot.plugin
 
 import core.api.*
-import core.api.interaction.openBankAccount
+import core.api.openBankAccount
 import core.api.utils.Vector
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener

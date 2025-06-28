@@ -1,6 +1,7 @@
 package content.region.misthalin.barbvillage.dialogue
 
 import core.api.*
+import core.api.unlockEmote
 import core.game.container.Container
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
@@ -24,12 +25,12 @@ class CradleOfLifeDialogue(player: Player? = null) : Dialogue(player) {
             /*
              * Unlocks emotes for older accounts who don't have the previous level emotes.
              */
-            player.emoteManager.unlock(Emotes.FLAP)
-            player.emoteManager.unlock(Emotes.SLAP_HEAD)
-            player.emoteManager.unlock(Emotes.IDEA)
+            unlockEmote(player, Emotes.FLAP)
+            unlockEmote(player, Emotes.SLAP_HEAD)
+            unlockEmote(player, Emotes.IDEA)
         }
-        if (player.inventory.freeSlots() == 0) {
-            player.packetDispatch.sendMessage("You don't have enough inventory space.")
+        if (freeSlots(player) == 0) {
+            sendMessage(player, "You don't have enough inventory space.")
             end()
             return true
         }
@@ -93,7 +94,7 @@ class CradleOfLifeDialogue(player: Player? = null) : Dialogue(player) {
                     1 -> {
                         playerl(FaceAnim.HAPPY, "I'll take the colourful ones!")
                         player.inventory.add(ITEMS[0])
-                        player.emoteManager.unlock(Emotes.STOMP)
+                        unlockEmote(player, Emotes.STOMP)
                         stage = 6
                         player.getSavedData().globalData.getStrongHoldRewards()[3] = true
                     }
@@ -101,7 +102,7 @@ class CradleOfLifeDialogue(player: Player? = null) : Dialogue(player) {
                     2 -> {
                         playerl(FaceAnim.HAPPY, "I'll take the fighting ones!")
                         player.inventory.add(ITEMS[1])
-                        player.emoteManager.unlock(Emotes.STOMP)
+                        unlockEmote(player, Emotes.STOMP)
                         player.getSavedData().globalData.getStrongHoldRewards()[3] = true
                         stage = 6
                     }
@@ -160,7 +161,7 @@ class CradleOfLifeDialogue(player: Player? = null) : Dialogue(player) {
         return true
     }
 
-    fun swap(container: Container): Boolean {
+    private fun swap(container: Container): Boolean {
         if (container.contains(Items.FANCY_BOOTS_9005, 1)) {
             container.replace(Item(Items.FIGHTING_BOOTS_9006), container.getSlot(ITEMS[0]))
             return true

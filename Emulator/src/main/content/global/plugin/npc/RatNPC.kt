@@ -1,6 +1,6 @@
 package content.global.plugin.npc
 
-import core.api.quest.getQuest
+import core.api.getQuest
 import core.game.node.entity.Entity
 import core.game.node.entity.npc.AbstractNPC
 import core.game.node.entity.player.Player

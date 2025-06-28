@@ -1,10 +1,10 @@
 package content.region.asgarnia.burthope.quest.hero.dialogue
 
 import content.region.asgarnia.burthope.quest.hero.HeroesQuest
-import core.api.interaction.openNpcShop
+import core.api.openNpcShop
 import core.api.openDialogue
-import core.api.quest.getQuestStage
-import core.api.quest.setQuestStage
+import core.api.getQuestStage
+import core.api.setQuestStage
 import core.game.dialogue.Dialogue
 import core.game.dialogue.DialogueBuilder
 import core.game.dialogue.DialogueBuilderFile

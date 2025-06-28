@@ -18,7 +18,7 @@ object MosleUtils {
      * @return `true` if the player can understand pirate language, `false` otherwise.
      */
     fun canUnderstandPirateLanguage(player: Player): Boolean {
-        if (core.api.quest.hasRequirement(player, Quests.ROCKING_OUT)) {
+        if (core.api.hasRequirement(player, Quests.ROCKING_OUT)) {
             return true
         }
         if (inInventory(player, Items.BOOK_O_PIRACY_7144)) {

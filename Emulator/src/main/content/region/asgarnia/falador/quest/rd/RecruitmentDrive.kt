@@ -1,8 +1,8 @@
 package content.region.asgarnia.falador.quest.rd
 
 import core.api.*
-import core.api.quest.getQuestStage
-import core.api.quest.isQuestComplete
+import core.api.getQuestStage
+import core.api.isQuestComplete
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest
 import core.game.node.entity.skill.Skills

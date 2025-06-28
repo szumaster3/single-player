@@ -1,7 +1,7 @@
 package content.region.other.zanaris.quest.lostcity.dialogue
 
-import core.api.quest.getQuestStage
-import core.api.quest.startQuest
+import core.api.getQuestStage
+import core.api.startQuest
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.dialogue.Topic

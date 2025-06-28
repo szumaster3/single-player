@@ -211,7 +211,7 @@ class PlayerSaveParser(val player: Player) {
         for (song in unlockedSongs) {
             val s = (song as String).toInt()
             val entry = MusicEntry.forId(s)
-            player.musicPlayer.unlocked[entry.index] = entry
+            player.musicPlayer.unlocked[entry!!.index] = entry
         }
     }
 

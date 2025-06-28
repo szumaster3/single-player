@@ -2,10 +2,10 @@ package content.region.asgarnia.burthope.quest.troll.plugin
 
 import content.region.asgarnia.burthope.quest.troll.dialogue.DadDialogueFile
 import core.api.*
-import core.api.interaction.transformNpc
-import core.api.quest.getQuestStage
-import core.api.quest.isQuestInProgress
-import core.api.quest.setQuestStage
+import core.api.transformNpc
+import core.api.getQuestStage
+import core.api.isQuestInProgress
+import core.api.setQuestStage
 import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener

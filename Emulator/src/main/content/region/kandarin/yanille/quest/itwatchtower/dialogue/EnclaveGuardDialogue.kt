@@ -1,6 +1,6 @@
 package content.region.kandarin.yanille.quest.itwatchtower.dialogue
 
-import core.api.quest.isQuestComplete
+import core.api.isQuestComplete
 import core.api.sendMessage
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim

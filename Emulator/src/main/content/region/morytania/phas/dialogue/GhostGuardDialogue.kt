@@ -2,7 +2,7 @@ package content.region.morytania.phas.dialogue
 
 import content.region.morytania.phas.plugin.EnergyBarrier
 import core.api.*
-import core.api.quest.isQuestComplete
+import core.api.isQuestComplete
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

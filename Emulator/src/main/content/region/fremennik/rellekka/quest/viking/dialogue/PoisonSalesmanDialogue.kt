@@ -4,7 +4,7 @@ import content.region.fremennik.rellekka.quest.viking.FremennikTrials
 import content.region.kandarin.seers.quest.murder.dialogue.PoisonSalesmanDialogueFile
 import core.api.addItemOrDrop
 import core.api.openDialogue
-import core.api.quest.getQuestStage
+import core.api.getQuestStage
 import core.api.removeItem
 import core.game.dialogue.Dialogue
 import core.game.node.entity.player.Player

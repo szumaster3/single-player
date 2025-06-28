@@ -1,7 +1,7 @@
 package content.region.kandarin.gnome.quest.itgronigen.npc
 
-import core.api.item.produceGroundItem
-import core.api.quest.setQuestStage
+import core.api.produceGroundItem
+import core.api.setQuestStage
 import core.api.sendChat
 import core.game.node.entity.Entity
 import core.game.node.entity.npc.AbstractNPC

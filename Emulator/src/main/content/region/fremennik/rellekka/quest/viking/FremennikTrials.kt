@@ -3,7 +3,7 @@ package content.region.fremennik.rellekka.quest.viking
 import content.data.GameAttributes
 import core.api.getAttribute
 import core.api.getStatLevel
-import core.api.quest.getQuestStage
+import core.api.getQuestStage
 import core.api.rewardXP
 import core.api.sendItemZoomOnInterface
 import core.game.node.entity.player.Player

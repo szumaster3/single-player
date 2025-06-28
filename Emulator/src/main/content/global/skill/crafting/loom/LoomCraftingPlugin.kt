@@ -1,7 +1,7 @@
 package content.global.skill.crafting.loom
 
 import core.api.*
-import core.api.ui.repositionChild
+import core.api.repositionChild
 import core.game.dialogue.SkillDialogueHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener

@@ -2,7 +2,7 @@ package content.region.fremennik.rellekka.quest.viking.dialogue
 
 import core.api.addItem
 import core.api.inInventory
-import core.api.quest.getQuestStage
+import core.api.getQuestStage
 import core.api.removeItem
 import core.game.dialogue.DialogueFile
 import core.tools.END_DIALOGUE

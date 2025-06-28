@@ -3,8 +3,8 @@ package content.global.ame.pinball
 import content.data.GameAttributes
 import content.data.RandomEvent
 import core.api.*
-import core.api.ui.restoreTabs
-import core.api.ui.setMinimapState
+import core.api.restoreTabs
+import core.api.setMinimapState
 import core.game.interaction.QueueStrength
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player

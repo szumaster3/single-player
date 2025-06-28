@@ -1,7 +1,7 @@
 package content.region.kandarin.gnome.dialogue
 
 import core.api.addItemOrDrop
-import core.api.interaction.openNpcShop
+import core.api.openNpcShop
 import core.api.removeItem
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim

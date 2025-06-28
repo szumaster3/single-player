@@ -1,7 +1,7 @@
 package content.region.karamja.quest.mm.dialogue
 
 import content.region.kandarin.gnome.quest.grandtree.dialogue.ShipyardWorkerDialogueFile
-import core.api.quest.getQuestStage
+import core.api.getQuestStage
 import core.api.sendItemDialogue
 import core.game.dialogue.DialogueFile
 import core.game.global.action.DoorActionHandler

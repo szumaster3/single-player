@@ -1,6 +1,6 @@
 package content.region.fremennik.waterbirth.npc
 
-import core.api.event.applyPoison
+import core.api.applyPoison
 import core.game.node.entity.Entity
 import core.game.node.entity.combat.*
 import core.game.node.entity.combat.equipment.SwitchAttack

@@ -2,7 +2,7 @@ package content.region.asgarnia.taverley.plugin.dungeon
 
 import content.region.asgarnia.taverley.npc.ArmourSuitNPC
 import core.api.inInventory
-import core.api.quest.isQuestComplete
+import core.api.isQuestComplete
 import core.api.sendMessage
 import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType

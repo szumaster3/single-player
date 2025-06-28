@@ -2,8 +2,8 @@ package content.region.misthalin.lumbridge.quest.tog
 
 import content.data.GameAttributes
 import core.api.*
-import core.api.quest.getQuestPoints
-import core.api.quest.getQuestStage
+import core.api.getQuestPoints
+import core.api.getQuestStage
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest
 import core.game.node.entity.skill.Skills

@@ -1,7 +1,7 @@
 package content.minigame.templetrekking
 
-import core.api.quest.hasRequirement
-import core.api.quest.isQuestComplete
+import core.api.hasRequirement
+import core.api.isQuestComplete
 import core.game.node.entity.player.Player
 import org.rs.consts.Quests
 

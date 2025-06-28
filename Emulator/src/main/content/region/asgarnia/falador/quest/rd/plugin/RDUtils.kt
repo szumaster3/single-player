@@ -2,7 +2,7 @@ package content.region.asgarnia.falador.quest.rd.plugin
 
 import content.region.asgarnia.falador.quest.rd.RecruitmentDrive
 import core.api.*
-import core.api.ui.setMinimapState
+import core.api.setMinimapState
 import core.game.interaction.QueueStrength
 import core.game.node.Node
 import core.game.node.entity.player.Player

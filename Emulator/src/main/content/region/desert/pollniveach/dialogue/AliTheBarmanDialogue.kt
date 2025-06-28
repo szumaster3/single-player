@@ -1,6 +1,6 @@
 package content.region.desert.pollniveach.dialogue
 
-import core.api.interaction.openNpcShop
+import core.api.openNpcShop
 import core.api.sendDialogue
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim

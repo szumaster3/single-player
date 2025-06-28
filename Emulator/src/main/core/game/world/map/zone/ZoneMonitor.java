@@ -392,7 +392,7 @@ public final class ZoneMonitor {
                 musicZones.add(zone);
             }
         }
-        if (musicZones.isEmpty() && !player.getMusicPlayer().isPlaying()) {
+        if (musicZones.isEmpty() && !player.getMusicPlayer().playing) {
             player.getMusicPlayer().playDefault();
         }
     }

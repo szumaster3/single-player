@@ -8,7 +8,7 @@ import content.minigame.gnomecook.plugin.*
 import content.region.kandarin.miniquest.barcrawl.BarcrawlManager
 import content.region.kandarin.miniquest.barcrawl.BarcrawlType
 import core.api.*
-import core.api.interaction.openDepositBox
+import core.api.openDepositBox
 import core.game.dialogue.FaceAnim
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener

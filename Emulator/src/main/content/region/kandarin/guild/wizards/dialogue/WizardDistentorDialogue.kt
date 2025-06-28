@@ -1,7 +1,7 @@
 package content.region.kandarin.guild.wizards.dialogue
 
 import content.global.travel.EssenceTeleport
-import core.api.quest.isQuestComplete
+import core.api.isQuestComplete
 import core.game.dialogue.Dialogue
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player

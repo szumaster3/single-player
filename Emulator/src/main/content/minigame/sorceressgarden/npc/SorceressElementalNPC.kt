@@ -1,7 +1,7 @@
 package content.minigame.sorceressgarden.npc
 
 import core.api.*
-import core.api.ui.setMinimapState
+import core.api.setMinimapState
 import core.game.node.entity.Entity
 import core.game.node.entity.combat.CombatSwingHandler.Companion.isProjectileClipped
 import core.game.node.entity.combat.DeathTask

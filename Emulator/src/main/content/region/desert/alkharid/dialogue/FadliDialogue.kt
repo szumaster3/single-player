@@ -1,6 +1,6 @@
 package content.region.desert.alkharid.dialogue
 
-import core.api.interaction.openBankAccount
+import core.api.openBankAccount
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.dialogue.Topic

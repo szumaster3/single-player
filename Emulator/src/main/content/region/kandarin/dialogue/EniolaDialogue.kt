@@ -1,8 +1,8 @@
 package content.region.kandarin.dialogue
 
 import core.api.hasIronmanRestriction
-import core.api.interaction.hasAwaitingGrandExchangeCollections
-import core.api.interaction.openBankPinSettings
+import core.api.hasAwaitingGrandExchangeCollections
+import core.api.openBankPinSettings
 import core.api.openInterface
 import core.api.setAttribute
 import core.game.dialogue.Dialogue

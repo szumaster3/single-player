@@ -1,8 +1,8 @@
 package content.region.kandarin.ardougne.quest.hazeelcult.dialogue
 
 import core.api.*
-import core.api.quest.getQuestStage
-import core.api.quest.setQuestStage
+import core.api.getQuestStage
+import core.api.setQuestStage
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.player.Player

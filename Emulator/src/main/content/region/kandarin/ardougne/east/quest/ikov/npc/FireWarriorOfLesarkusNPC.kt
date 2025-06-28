@@ -2,8 +2,8 @@ package content.region.kandarin.ardougne.east.quest.ikov.npc
 
 import content.data.GameAttributes
 import core.api.poofClear
-import core.api.quest.getQuestStage
-import core.api.quest.setQuestStage
+import core.api.getQuestStage
+import core.api.setQuestStage
 import core.api.removeAttribute
 import core.api.runTask
 import core.api.sendNPCDialogue

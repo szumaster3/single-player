@@ -2,7 +2,7 @@ package content.region.asgarnia.taverley.quest.wolf.plugin
 
 import content.data.GameAttributes
 import core.api.*
-import core.api.quest.isQuestComplete
+import core.api.isQuestComplete
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.game.interaction.IntType

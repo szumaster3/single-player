@@ -1,8 +1,8 @@
 package content.region.kandarin.ardougne.west.dialogue
 
 import core.api.openDialogue
-import core.api.quest.isQuestComplete
-import core.api.quest.isQuestInProgress
+import core.api.isQuestComplete
+import core.api.isQuestInProgress
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

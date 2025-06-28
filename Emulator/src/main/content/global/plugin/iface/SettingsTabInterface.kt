@@ -1,9 +1,9 @@
 package content.global.plugin.iface
 
-import core.api.interaction.restrictForIronman
+import core.api.restrictForIronman
 import core.api.openInterface
 import core.api.sendMessage
-import core.api.ui.openSingleTab
+import core.api.openSingleTab
 import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.link.IronmanMode
 import org.rs.consts.Components

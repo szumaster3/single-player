@@ -3,9 +3,9 @@ package content.region.asgarnia.portsarim.dialogue
 import content.data.GameAttributes
 import content.region.misthalin.draynor.quest.swept.plugin.SweptUtils
 import core.api.*
-import core.api.interaction.openNpcShop
-import core.api.quest.getQuestStage
-import core.api.quest.hasRequirement
+import core.api.openNpcShop
+import core.api.getQuestStage
+import core.api.hasRequirement
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

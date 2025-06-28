@@ -7,10 +7,10 @@ import content.region.fremennik.rellekka.quest.viking.dialogue.CouncilWorkerDial
 import content.region.fremennik.rellekka.quest.viking.dialogue.FremennikFishermanDialogue
 import content.region.fremennik.rellekka.quest.viking.npc.KoscheiSession
 import core.api.*
-import core.api.interaction.openNpcShop
-import core.api.quest.getQuestPoints
-import core.api.quest.getQuestStage
-import core.api.quest.isQuestComplete
+import core.api.openNpcShop
+import core.api.getQuestPoints
+import core.api.getQuestStage
+import core.api.isQuestComplete
 import core.game.container.impl.EquipmentContainer.SLOT_WEAPON
 import core.game.dialogue.FaceAnim
 import core.game.global.action.ClimbActionHandler

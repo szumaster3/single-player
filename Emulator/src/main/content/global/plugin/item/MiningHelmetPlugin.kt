@@ -1,6 +1,6 @@
 package content.global.plugin.item
 
-import core.api.item.produceGroundItem
+import core.api.produceGroundItem
 import core.api.removeItem
 import core.api.sendMessage
 import core.game.interaction.IntType

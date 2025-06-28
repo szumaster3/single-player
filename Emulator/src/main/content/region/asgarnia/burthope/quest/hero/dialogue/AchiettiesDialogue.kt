@@ -2,9 +2,9 @@ package content.region.asgarnia.burthope.quest.hero.dialogue
 
 import content.region.asgarnia.burthope.quest.hero.HeroesQuest
 import core.api.openDialogue
-import core.api.quest.finishQuest
-import core.api.quest.getQuestStage
-import core.api.quest.setQuestStage
+import core.api.finishQuest
+import core.api.getQuestStage
+import core.api.setQuestStage
 import core.api.removeItem
 import core.game.dialogue.Dialogue
 import core.game.dialogue.DialogueBuilder

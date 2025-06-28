@@ -2,7 +2,7 @@ package content.region.kandarin.ardougne.quest.tol.dialogue
 
 import content.data.GameAttributes
 import core.api.getAttribute
-import core.api.quest.getQuestStage
+import core.api.getQuestStage
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.player.Player

@@ -3,10 +3,10 @@ package content.region.desert.alkharid.plugin
 import content.region.desert.alkharid.dialogue.AlKharidHealDialogue
 import content.region.desert.alkharid.dialogue.BorderGuardDialogue
 import core.api.*
-import core.api.interaction.openBankAccount
-import core.api.interaction.openGrandExchangeCollectionBox
-import core.api.interaction.openNpcShop
-import core.api.quest.getQuestStage
+import core.api.openBankAccount
+import core.api.openGrandExchangeCollectionBox
+import core.api.openNpcShop
+import core.api.getQuestStage
 import core.game.dialogue.FaceAnim
 import core.game.dialogue.SequenceDialogue.dialogue
 import core.game.global.action.DoorActionHandler

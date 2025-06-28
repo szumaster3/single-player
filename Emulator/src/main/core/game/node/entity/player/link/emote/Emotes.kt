@@ -2,6 +2,8 @@ package core.game.node.entity.player.link.emote
 
 import content.data.GameAttributes
 import core.api.*
+import core.api.unlockEmote
+import core.api.hasEmote
 import core.game.container.impl.EquipmentContainer
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.info.Rights
@@ -539,9 +541,9 @@ enum class Emotes(
                 player.debug("Unhandled emote for button id - $buttonId")
                 return
             }
-            if (!player.emoteManager.isUnlocked(emote)) {
+            if (!hasEmote(player, emote)) {
                 if (player.rights == Rights.ADMINISTRATOR) {
-                    player.emoteManager.unlock(emote)
+                    unlockEmote(player, emote)
                     player.pulseManager.clear()
                     emote.play(player)
                     return

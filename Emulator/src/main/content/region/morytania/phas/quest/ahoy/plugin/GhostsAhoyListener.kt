@@ -4,8 +4,8 @@ import content.region.morytania.phas.quest.ahoy.dialogue.RobinDialogueFile
 import content.region.morytania.phas.quest.ahoy.plugin.GhostsAhoyUtils.jumpRockPath
 import content.region.morytania.phas.quest.ahoy.npc.GiantLobsterNPC.Companion.spawnGiantLobster
 import core.api.*
-import core.api.quest.setQuestStage
-import core.api.ui.setMinimapState
+import core.api.setQuestStage
+import core.api.setMinimapState
 import core.game.dialogue.DialogueFile
 import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType

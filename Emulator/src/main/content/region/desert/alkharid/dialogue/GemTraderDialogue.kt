@@ -1,7 +1,7 @@
 package content.region.desert.alkharid.dialogue
 
-import core.api.interaction.openNpcShop
-import core.api.quest.setQuestStage
+import core.api.openNpcShop
+import core.api.setQuestStage
 import core.game.dialogue.Dialogue
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player

@@ -2,10 +2,10 @@ package content.region.misthalin.draynor.quest.swept.dialogue
 
 import core.api.addItemOrDrop
 import core.api.hasAnItem
-import core.api.quest.finishQuest
-import core.api.quest.getQuestStage
-import core.api.quest.isQuestComplete
-import core.api.quest.setQuestStage
+import core.api.finishQuest
+import core.api.getQuestStage
+import core.api.isQuestComplete
+import core.api.setQuestStage
 import core.api.setVarbit
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim

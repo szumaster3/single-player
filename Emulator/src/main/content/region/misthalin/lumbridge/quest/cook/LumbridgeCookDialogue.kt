@@ -2,9 +2,9 @@ package content.region.misthalin.lumbridge.quest.cook
 
 import core.api.getAttribute
 import core.api.inInventory
-import core.api.quest.finishQuest
-import core.api.quest.getQuestStage
-import core.api.quest.setQuestStage
+import core.api.finishQuest
+import core.api.getQuestStage
+import core.api.setQuestStage
 import core.api.setAttribute
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim

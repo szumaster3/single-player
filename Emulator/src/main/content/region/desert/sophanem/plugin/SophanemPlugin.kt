@@ -1,7 +1,7 @@
 package content.region.desert.sophanem.plugin
 
 import core.api.*
-import core.api.quest.hasRequirement
+import core.api.hasRequirement
 import core.game.dialogue.FaceAnim
 import core.game.dialogue.SequenceDialogue.dialogue
 import core.game.global.action.ClimbActionHandler

@@ -2,8 +2,8 @@ package content.region.asgarnia.falador.quest.dorics.dialogue
 
 import core.api.addItemOrDrop
 import core.api.inInventory
-import core.api.quest.finishQuest
-import core.api.quest.startQuest
+import core.api.finishQuest
+import core.api.startQuest
 import core.api.removeItem
 import core.api.sendItemDialogue
 import core.game.dialogue.DialogueFile

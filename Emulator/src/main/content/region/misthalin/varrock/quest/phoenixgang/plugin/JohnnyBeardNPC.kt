@@ -3,7 +3,7 @@ package content.region.misthalin.varrock.quest.phoenixgang.plugin
 import content.region.misthalin.varrock.quest.phoenixgang.ShieldofArrav
 import core.api.inBank
 import core.api.inInventory
-import core.api.quest.getQuestStage
+import core.api.getQuestStage
 import core.game.node.entity.Entity
 import core.game.node.entity.npc.AbstractNPC
 import core.game.node.entity.player.Player

@@ -5,10 +5,10 @@ import content.region.morytania.canifis.quest.fenk.dialogue.BookcaseEastDialogue
 import content.region.morytania.canifis.quest.fenk.dialogue.BookcaseWest
 import content.region.morytania.canifis.quest.fenk.dialogue.RoavarDialogueFile
 import core.api.*
-import core.api.quest.finishQuest
-import core.api.quest.getQuest
-import core.api.quest.getQuestStage
-import core.api.quest.setQuestStage
+import core.api.finishQuest
+import core.api.getQuest
+import core.api.getQuestStage
+import core.api.setQuestStage
 import core.game.dialogue.FaceAnim
 import core.game.global.action.DoorActionHandler
 import core.game.global.action.PickupHandler

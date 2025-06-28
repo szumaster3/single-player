@@ -1,10 +1,10 @@
 package content.region.misthalin.varrock.quest.crest.dialogue
 
 import core.api.*
-import core.api.quest.finishQuest
-import core.api.quest.getQuestStage
-import core.api.quest.isQuestComplete
-import core.api.quest.startQuest
+import core.api.finishQuest
+import core.api.getQuestStage
+import core.api.isQuestComplete
+import core.api.startQuest
 import core.game.dialogue.Dialogue
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player

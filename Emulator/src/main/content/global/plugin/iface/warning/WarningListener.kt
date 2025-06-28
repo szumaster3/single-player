@@ -3,9 +3,9 @@ package content.global.plugin.iface.warning
 import content.global.skill.agility.AgilityHandler
 import content.region.kandarin.yanille.quest.itwatchtower.cutscene.EnclaveCutscene
 import core.api.*
-import core.api.quest.getQuestStage
-import core.api.quest.hasRequirement
-import core.api.quest.isQuestComplete
+import core.api.getQuestStage
+import core.api.hasRequirement
+import core.api.isQuestComplete
 import core.game.dialogue.FaceAnim
 import core.game.global.action.ClimbActionHandler.climb
 import core.game.global.action.DoorActionHandler

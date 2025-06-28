@@ -1,5 +1,6 @@
 package content.region.misthalin.lumbridge.dialogue
 
+import core.api.unlockEmote
 import core.game.dialogue.Dialogue
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.diary.Diary
@@ -117,7 +118,7 @@ class ExplorerJackDiaryDialogue(player: Player? = null) : Dialogue(player) {
             13 -> player("Yes please.").also { stage++ }
             14 -> {
                 Diary.flagRewarded(player, DiaryType.LUMBRIDGE, level)
-                player.emoteManager.unlock(Emotes.EXPLORE)
+                unlockEmote(player, Emotes.EXPLORE)
                 npc(
                     "This ring is a representation of the adventures you",
                     "went on to complete your tasks.",

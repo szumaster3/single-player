@@ -1,7 +1,7 @@
 package content.region.island.entrana.quest.zep.plugin
 
-import core.api.quest.getQuestStage
-import core.api.quest.setQuestStage
+import core.api.getQuestStage
+import core.api.setQuestStage
 import core.api.removeItem
 import core.api.sendMessage
 import core.api.sendNPCDialogue

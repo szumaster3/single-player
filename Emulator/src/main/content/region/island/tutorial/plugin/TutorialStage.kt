@@ -2,8 +2,8 @@ package content.region.island.tutorial.plugin
 
 import content.data.GameAttributes
 import core.api.*
-import core.api.ui.sendInterfaceConfig
-import core.api.ui.setMinimapState
+import core.api.sendInterfaceConfig
+import core.api.setMinimapState
 import core.game.component.Component
 import core.game.node.Node
 import core.game.node.entity.combat.equipment.WeaponInterface

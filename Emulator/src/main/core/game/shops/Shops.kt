@@ -3,10 +3,10 @@ package core.game.shops
 import content.global.skill.crafting.Tanning
 import core.ServerConstants
 import core.api.*
-import core.api.item.itemDefinition
-import core.api.quest.getQuestPoints
-import core.api.quest.getQuestStage
-import core.api.quest.isQuestComplete
+import core.api.itemDefinition
+import core.api.getQuestPoints
+import core.api.getQuestStage
+import core.api.isQuestComplete
 import core.game.dialogue.FaceAnim
 import core.game.dialogue.InputType
 import core.game.ge.GrandExchange

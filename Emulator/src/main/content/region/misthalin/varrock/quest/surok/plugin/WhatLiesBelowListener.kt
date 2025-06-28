@@ -2,8 +2,8 @@ package content.region.misthalin.varrock.quest.surok.plugin
 
 import content.data.items.SkillingTool.Companion.getPickaxe
 import core.api.*
-import core.api.quest.getQuestStage
-import core.api.quest.setQuestStage
+import core.api.getQuestStage
+import core.api.setQuestStage
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.player.link.diary.DiaryType

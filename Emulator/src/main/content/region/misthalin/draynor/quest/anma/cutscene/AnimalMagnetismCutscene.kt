@@ -1,7 +1,7 @@
 package content.region.misthalin.draynor.quest.anma.cutscene
 
 import core.api.*
-import core.api.quest.setQuestStage
+import core.api.setQuestStage
 import core.game.activity.Cutscene
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.combat.ImpactHandler

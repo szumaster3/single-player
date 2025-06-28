@@ -2,7 +2,7 @@ package content.global.skill.fletching.items.darts
 
 import core.api.getStatLevel
 import core.api.hasSpaceFor
-import core.api.quest.isQuestComplete
+import core.api.isQuestComplete
 import core.api.sendDialogue
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.SkillPulse

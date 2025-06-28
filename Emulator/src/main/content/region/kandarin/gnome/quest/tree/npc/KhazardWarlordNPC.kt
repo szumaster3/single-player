@@ -1,7 +1,7 @@
 package content.region.kandarin.gnome.quest.tree.npc
 
 import core.api.addItemOrDrop
-import core.api.quest.getQuestStage
+import core.api.getQuestStage
 import core.api.sendDialogue
 import core.game.node.entity.Entity
 import core.game.node.entity.npc.AbstractNPC

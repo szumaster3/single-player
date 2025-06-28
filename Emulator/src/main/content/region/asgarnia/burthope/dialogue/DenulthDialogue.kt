@@ -3,9 +3,9 @@ package content.region.asgarnia.burthope.dialogue
 import content.region.asgarnia.burthope.quest.death.dialogue.DenulthDialogueFile
 import content.region.asgarnia.burthope.quest.troll.dialogue.DenulthTrollDialogue
 import core.api.openDialogue
-import core.api.quest.isQuestComplete
-import core.api.quest.isQuestInProgress
-import core.api.quest.setQuestStage
+import core.api.isQuestComplete
+import core.api.isQuestInProgress
+import core.api.setQuestStage
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.dialogue.Topic

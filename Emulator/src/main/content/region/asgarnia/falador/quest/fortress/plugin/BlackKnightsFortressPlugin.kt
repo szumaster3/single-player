@@ -2,7 +2,7 @@ package content.region.asgarnia.falador.quest.fortress.plugin
 
 import content.data.GameAttributes
 import core.api.*
-import core.api.quest.getQuestStage
+import core.api.getQuestStage
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.game.dialogue.SequenceDialogue.dialogue

@@ -2,9 +2,9 @@ package content.region.kandarin.witch.quest.seaslug.dialogue
 
 import core.api.addItemOrDrop
 import core.api.freeSlots
-import core.api.quest.getQuestStage
-import core.api.quest.isQuestComplete
-import core.api.quest.setQuestStage
+import core.api.getQuestStage
+import core.api.isQuestComplete
+import core.api.setQuestStage
 import core.api.sendItemDialogue
 import core.api.sendMessage
 import core.game.dialogue.Dialogue

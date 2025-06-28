@@ -1,6 +1,6 @@
 package content.region.karamja.shilo.npc
 
-import core.api.event.applyPoison
+import core.api.applyPoison
 import core.game.node.entity.Entity
 import core.game.node.entity.combat.BattleState
 import core.game.node.entity.npc.NPC

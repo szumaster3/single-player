@@ -1,6 +1,6 @@
 package content.region.morytania.phas.plugin
 
-import core.api.quest.isQuestComplete
+import core.api.isQuestComplete
 import core.api.removeItem
 import core.game.node.Node
 import core.game.node.entity.player.Player

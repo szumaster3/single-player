@@ -1,7 +1,7 @@
 package content.global.skill.slayer.npc
 
 import core.api.*
-import core.api.quest.hasRequirement
+import core.api.hasRequirement
 import core.cache.def.impl.SceneryDefinition
 import core.game.interaction.NodeUsageEvent
 import core.game.interaction.OptionHandler

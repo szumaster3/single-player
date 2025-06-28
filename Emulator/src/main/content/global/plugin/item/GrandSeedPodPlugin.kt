@@ -2,7 +2,7 @@ package content.global.plugin.item
 
 import content.global.travel.glider.Glider
 import core.api.*
-import core.api.ui.setMinimapState
+import core.api.setMinimapState
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.interaction.QueueStrength

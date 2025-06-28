@@ -2,7 +2,7 @@ package content.region.kandarin.gnome.dialogue
 
 import content.data.GameAttributes
 import core.api.*
-import core.api.quest.setQuestStage
+import core.api.setQuestStage
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

@@ -3,9 +3,9 @@ package content.region.other.keldagrim.plugin
 import content.data.GameAttributes
 import content.minigame.blastfurnace.dialogue.BlastFusionHammerDialogue
 import core.api.*
-import core.api.quest.isQuestComplete
-import core.api.ui.closeDialogue
-import core.api.ui.setMinimapState
+import core.api.isQuestComplete
+import core.api.closeDialogue
+import core.api.setMinimapState
 import core.game.dialogue.SequenceDialogue
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
@@ -59,13 +59,13 @@ class KeldagrimPlugin : InteractionListener {
         )
 
         private fun startTravelToKeldagrim(player: Player) {
-            if (core.api.quest.hasRequirement(player, Quests.THE_GIANT_DWARF)) {
+            if (core.api.hasRequirement(player, Quests.THE_GIANT_DWARF)) {
                 submitWorldPulse(TravelToKeldagrimPulse(player))
             }
         }
 
         private fun startTravelFromKeldagrim(player: Player, dest: Location) {
-            if (core.api.quest.hasRequirement(player, Quests.THE_GIANT_DWARF)) {
+            if (core.api.hasRequirement(player, Quests.THE_GIANT_DWARF)) {
                 submitWorldPulse(TravelFromKeldagrimPulse(player, dest))
             }
         }

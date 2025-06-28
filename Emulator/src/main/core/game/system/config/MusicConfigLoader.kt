@@ -13,80 +13,87 @@ import org.json.simple.JSONObject
 import org.json.simple.parser.JSONParser
 import java.io.FileReader
 
+/**
+ * Loads music configuration data from JSON files and cache definitions,
+ * and populates the music entries and music zones in the game world.
+ *
+ * [DataMap] used:
+ * - 1351: buttonID -> song ID
+ * - 1345: buttonID -> song name (capitalized)
+ * - 1347: buttonID -> song name (lowercase)
+ */
 class MusicConfigLoader {
-    // 1351 -> buttonID:songID
-    // 1345 -> buttonID:songName (capitalized)
-    // 1347 -> buttonID:songName (lowercase)
-
-    val parser = JSONParser()
-    var reader: FileReader? = null
+    private val parser = JSONParser()
 
     fun load() {
-        var count = 0
-        reader = FileReader(ServerConstants.CONFIG_PATH + "music_configs.json")
-        var configs = parser.parse(reader) as JSONArray
-
         val songs = DataMap.get(1351)
         val names = DataMap.get(1345)
 
-        for ((index, songId) in songs.dataStore) {
-            val entry = MusicEntry(songId as Int, names?.getString(index as Int), index)
+        songs.dataStore.forEach { (indexAny, songIdAny) ->
+            val index = indexAny as? Int ?: return@forEach
+            val songId = songIdAny as? Int ?: return@forEach
+            val songName = names?.getString(index)
+            val entry = MusicEntry(songId, songName, index)
             MusicEntry.getSongs().putIfAbsent(songId, entry)
         }
 
-        for (config in configs) {
-            val e = config as JSONObject
-            val musicId = Integer.parseInt(e["id"].toString())
-            val string = e["borders"].toString()
-            val borderArray = string.split("-")
-            var tokens: Array<String>? = null
-            var borders: ZoneBorders? = null
-            for (border in borderArray) {
-                if (border.isEmpty()) {
-                    continue
-                }
-                tokens =
-                    border
-                        .replace("{", "")
-                        .replace("}", "")
-                        .split(",")
-                        .toTypedArray()
-                borders = ZoneBorders(tokens[0].toInt(), tokens[1].toInt(), tokens[2].toInt(), tokens[3].toInt())
-                if (border.contains("[")) { // no exception borders
-                    var exceptions: String? = ""
-                    for (i in 4 until tokens.size) {
-                        exceptions +=
-                            tokens[i] +
-                            if (!tokens[i].contains("]~")) {
-                                ","
-                            } else if (tokens[i].contains("[")) {
-                                ","
-                            } else {
-                                ""
-                            }
-                    }
-                    tokens = exceptions!!.split("~".toRegex()).toTypedArray()
-                    var e: Array<String>? = null
-                    for (exception in tokens) {
-                        e =
-                            exception
-                                .replace("[", "")
-                                .replace("]", "")
-                                .split(",".toRegex())
-                                .toTypedArray()
-                        borders.addException(ZoneBorders(e[0].toInt(), e[1].toInt(), e[2].toInt(), e[3].toInt()))
-                    }
-                    e = null
-                    exceptions = null
-                }
-                val zone = MusicZone(musicId, borders)
-                for (id in borders.getRegionIds()) {
-                    RegionManager.forId(id!!).musicZones.add(zone)
-                }
-            }
-            count++
-        }
+        val filePath = ServerConstants.CONFIG_PATH + "music_configs.json"
+        FileReader(filePath).use { reader ->
+            val configs = parser.parse(reader) as JSONArray
+            var count = 0
 
-        log(this::class.java, Log.FINE, "Parsed $count music configs.")
+            for (configAny in configs) {
+                val config = configAny as? JSONObject ?: continue
+                val musicId = (config["id"]?.toString()?.toIntOrNull()) ?: continue
+                val bordersString = config["borders"]?.toString() ?: continue
+
+                val borderStrings = bordersString.split("-").filter { it.isNotBlank() }
+
+                for (borderRaw in borderStrings) {
+                    val cleaned = borderRaw.replace("{", "").replace("}", "")
+                    val tokens = cleaned.split(",")
+                    if (tokens.size < 4) continue
+
+                    val zoneBorders = ZoneBorders(
+                        tokens[0].toInt(),
+                        tokens[1].toInt(),
+                        tokens[2].toInt(),
+                        tokens[3].toInt()
+                    )
+
+                    if ('[' in borderRaw) {
+                        val exceptionsRaw = tokens.drop(4).joinToString(",") {
+                            if (!it.contains("]~") && !it.contains("[")) "$it," else it
+                        }
+
+                        val exceptions = exceptionsRaw.split("~").mapNotNull { ex ->
+                            val cleanedEx = ex.replace("[", "").replace("]", "")
+                            val exTokens = cleanedEx.split(",")
+                            if (exTokens.size < 4) null else exTokens
+                        }
+
+                        exceptions.forEach { exTokens ->
+                            zoneBorders.addException(
+                                ZoneBorders(
+                                    exTokens[0].toInt(),
+                                    exTokens[1].toInt(),
+                                    exTokens[2].toInt(),
+                                    exTokens[3].toInt()
+                                )
+                            )
+                        }
+                    }
+
+                    val zone = MusicZone(musicId, zoneBorders)
+                    zoneBorders.getRegionIds()
+                        .filterNotNull()
+                        .forEach { regionId ->
+                            RegionManager.forId(regionId).musicZones.add(zone)
+                        }
+                }
+                count++
+            }
+            log(this::class.java, Log.FINE, "Parsed $count music configs.")
+        }
     }
 }

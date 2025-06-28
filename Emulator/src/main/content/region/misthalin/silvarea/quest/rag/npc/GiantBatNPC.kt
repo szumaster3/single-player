@@ -1,6 +1,6 @@
 package content.region.misthalin.silvarea.quest.rag.npc
 
-import core.api.quest.isQuestInProgress
+import core.api.isQuestInProgress
 import core.game.node.entity.Entity
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.npc.NPCBehavior

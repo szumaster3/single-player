@@ -2,8 +2,8 @@ package content.region.misthalin.draynor.wizard_tower.guild
 
 import content.global.skill.runecrafting.Talisman
 import core.api.*
-import core.api.quest.isQuestComplete
-import core.api.ui.closeDialogue
+import core.api.isQuestComplete
+import core.api.closeDialogue
 import core.game.dialogue.FaceAnim
 import core.game.dialogue.InputType
 import core.game.interaction.IntType

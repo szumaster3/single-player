@@ -2,7 +2,7 @@ package content.region.misthalin.varrock.quest.crest.dialogue
 
 import content.region.misthalin.varrock.quest.crest.plugin.SwapGauntletsHelper
 import core.api.getAttribute
-import core.api.quest.setQuestStage
+import core.api.setQuestStage
 import core.game.dialogue.Dialogue
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player

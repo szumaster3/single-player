@@ -5,8 +5,8 @@ import content.data.EnchantedJewellery.Companion.idMap
 import content.global.skill.summoning.familiar.Familiar
 import core.api.animate
 import core.api.lock
-import core.api.quest.hasRequirement
-import core.api.quest.isQuestComplete
+import core.api.hasRequirement
+import core.api.isQuestComplete
 import core.api.replaceSlot
 import core.api.sendMessage
 import core.game.global.action.DoorActionHandler.handleAutowalkDoor

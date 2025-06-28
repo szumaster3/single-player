@@ -23,7 +23,7 @@ import java.util.Deque;
 
 import static core.api.ContentAPIKt.clearHintIcon;
 import static core.api.ContentAPIKt.registerHintIcon;
-import static core.api.movement.PathfindingAPIKt.truncateLoc;
+import static core.api.PathfindingAPIKt.truncateLoc;
 
 /**
  * Handles movement pulse.

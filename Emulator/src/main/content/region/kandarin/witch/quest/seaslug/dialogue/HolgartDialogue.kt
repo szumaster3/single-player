@@ -1,8 +1,8 @@
 package content.region.kandarin.witch.quest.seaslug.dialogue
 
 import content.region.kandarin.witch.plugin.PlatformHelper
-import core.api.quest.getQuestStage
-import core.api.quest.isQuestComplete
+import core.api.getQuestStage
+import core.api.isQuestComplete
 import core.api.sendDialogue
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim

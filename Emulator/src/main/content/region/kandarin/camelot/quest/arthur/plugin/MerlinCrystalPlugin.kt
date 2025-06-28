@@ -3,8 +3,8 @@ package content.region.kandarin.camelot.quest.arthur.plugin
 import content.data.GameAttributes
 import content.region.kandarin.camelot.quest.arthur.dialogue.*
 import core.api.*
-import core.api.quest.getQuestStage
-import core.api.quest.isQuestComplete
+import core.api.getQuestStage
+import core.api.isQuestComplete
 import core.game.global.action.DoorActionHandler
 import core.game.global.action.DropListener
 import core.game.interaction.IntType

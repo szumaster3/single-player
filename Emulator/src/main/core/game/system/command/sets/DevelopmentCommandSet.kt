@@ -7,7 +7,7 @@ import content.global.activity.jobs.JobManager
 import content.minigame.mta.plugin.MTAZone
 import content.region.kandarin.plugin.barbtraining.BarbarianTraining
 import core.api.*
-import core.api.ui.closeDialogue
+import core.api.closeDialogue
 import core.cache.def.impl.NPCDefinition
 import core.cache.def.impl.VarbitDefinition
 import core.game.node.entity.combat.ImpactHandler.HitsplatType

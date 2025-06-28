@@ -1,7 +1,7 @@
 package content.region.misthalin.draynor.quest.haunted.dialogue
 
-import core.api.quest.finishQuest
-import core.api.quest.isQuestComplete
+import core.api.finishQuest
+import core.api.isQuestComplete
 import core.api.runTask
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim

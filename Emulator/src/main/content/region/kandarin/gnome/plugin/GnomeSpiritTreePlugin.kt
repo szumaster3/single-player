@@ -1,7 +1,7 @@
 package content.region.kandarin.gnome.plugin
 
 import core.api.*
-import core.api.quest.isQuestComplete
+import core.api.isQuestComplete
 import core.game.dialogue.FaceAnim
 import core.game.dialogue.SequenceDialogue.dialogue
 import core.game.interaction.IntType

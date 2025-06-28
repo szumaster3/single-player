@@ -1,6 +1,6 @@
 package content.global.plugin.scenery
 
-import core.api.interaction.getSceneryName
+import core.api.getSceneryName
 import core.api.sendMessage
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener

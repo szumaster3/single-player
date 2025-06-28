@@ -2,7 +2,7 @@ package content.region.kandarin.gnome.dialogue
 
 import content.region.kandarin.plugin.RowingBoatHelper
 import core.api.inEquipment
-import core.api.quest.hasRequirement
+import core.api.hasRequirement
 import core.api.removeItem
 import core.api.sendDialogueOptions
 import core.api.setTitle

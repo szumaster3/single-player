@@ -1,9 +1,9 @@
 package content.region.asgarnia.taverley.quest.ball.dialogue
 
 import core.api.inInventory
-import core.api.quest.finishQuest
-import core.api.quest.getQuestStage
-import core.api.quest.startQuest
+import core.api.finishQuest
+import core.api.getQuestStage
+import core.api.startQuest
 import core.api.removeItem
 import core.api.sendItemDialogue
 import core.game.dialogue.Dialogue

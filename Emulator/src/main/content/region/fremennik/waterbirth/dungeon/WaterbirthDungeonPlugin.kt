@@ -2,7 +2,7 @@ package content.region.fremennik.waterbirth.dungeon
 
 import content.global.plugin.iface.warning.WarningManager
 import content.global.plugin.iface.warning.Warnings
-import core.api.quest.isQuestComplete
+import core.api.isQuestComplete
 import core.api.sendMessage
 import core.api.teleport
 import core.cache.def.impl.SceneryDefinition

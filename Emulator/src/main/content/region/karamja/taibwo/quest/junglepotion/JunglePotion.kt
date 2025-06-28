@@ -5,7 +5,7 @@ import content.region.karamja.taibwo.quest.junglepotion.dialogue.JogreCavernDial
 import content.region.karamja.taibwo.quest.junglepotion.dialogue.TrufitusDialogue
 import content.region.karamja.taibwo.quest.junglepotion.plugin.JungleObjective
 import core.api.*
-import core.api.quest.updateQuestTab
+import core.api.updateQuestTab
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest
 import core.game.node.entity.skill.Skills

@@ -1,10 +1,10 @@
 package content.region.misthalin.varrock.quest.dragon.npc
 
 import content.region.misthalin.varrock.quest.dragon.DragonSlayer
-import core.api.combat.calculateDragonFireMaxHit
+import core.api.calculateDragonFireMaxHit
 import core.api.inInventory
 import core.api.playJingle
-import core.api.quest.getQuestStage
+import core.api.getQuestStage
 import core.api.sendMessage
 import core.game.node.entity.Entity
 import core.game.node.entity.combat.BattleState

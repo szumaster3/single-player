@@ -3,7 +3,7 @@ package content.region.kandarin.gnome.quest.makinghistory.dialogue
 import content.region.kandarin.gnome.quest.makinghistory.MHUtils
 import content.region.kandarin.gnome.quest.makinghistory.cutscene.OutpostHistoryCutscene
 import core.api.*
-import core.api.quest.*
+import core.api.*
 import core.game.dialogue.Dialogue
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim

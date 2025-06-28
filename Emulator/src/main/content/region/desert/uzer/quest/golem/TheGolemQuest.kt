@@ -2,8 +2,8 @@ package content.region.desert.uzer.quest.golem
 
 import content.global.skill.thieving.PickpocketPlugin
 import core.api.*
-import core.api.quest.getQuestStage
-import core.api.quest.setQuestStage
+import core.api.getQuestStage
+import core.api.setQuestStage
 import core.api.utils.WeightBasedTable
 import core.api.utils.WeightedItem
 import core.game.global.action.ClimbActionHandler

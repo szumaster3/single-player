@@ -1,6 +1,6 @@
 package content.region.karamja.shilo.dialogue
 
-import core.api.quest.hasRequirement
+import core.api.hasRequirement
 import core.api.sendMessage
 import core.api.sendMessageWithDelay
 import core.game.dialogue.Dialogue

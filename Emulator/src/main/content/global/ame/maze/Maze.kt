@@ -3,7 +3,7 @@ package content.global.ame.maze
 import content.data.GameAttributes
 import content.data.RandomEvent
 import core.api.*
-import core.api.ui.restoreTabs
+import core.api.restoreTabs
 import core.game.event.EventHook
 import core.game.event.TickEvent
 import core.game.node.entity.Entity

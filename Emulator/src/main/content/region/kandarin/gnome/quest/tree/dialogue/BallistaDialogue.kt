@@ -1,8 +1,8 @@
 package content.region.kandarin.gnome.quest.tree.dialogue
 
 import core.api.getAttribute
-import core.api.quest.getQuestStage
-import core.api.quest.setQuestStage
+import core.api.getQuestStage
+import core.api.setQuestStage
 import core.api.sendDialogue
 import core.api.sendDialogueOptions
 import core.api.setTitle

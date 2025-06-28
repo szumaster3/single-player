@@ -1,7 +1,7 @@
 package content.global.plugin.scenery
 
 import core.api.*
-import core.api.quest.hasRequirement
+import core.api.hasRequirement
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.Node

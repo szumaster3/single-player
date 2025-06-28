@@ -2,7 +2,7 @@ package content.region.kandarin.miniquest.ctr.dialogue
 
 import content.data.GameAttributes
 import core.api.getAttribute
-import core.api.quest.hasRequirement
+import core.api.hasRequirement
 import core.api.setAttribute
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim

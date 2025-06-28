@@ -3,7 +3,7 @@ package content.region.island.apeatoll.dialogue
 import content.global.plugin.item.withnpc.ItemsOnZooknockPlugin
 import content.region.karamja.quest.mm.cutscene.DungeonPlanCutscene
 import core.api.*
-import core.api.quest.setQuestStage
+import core.api.setQuestStage
 import core.game.component.Component
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim

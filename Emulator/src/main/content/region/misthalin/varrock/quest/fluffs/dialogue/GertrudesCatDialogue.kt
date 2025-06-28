@@ -1,7 +1,7 @@
 package content.region.misthalin.varrock.quest.fluffs.dialogue
 
 import core.api.animate
-import core.api.quest.getQuestStage
+import core.api.getQuestStage
 import core.api.sendChat
 import core.game.dialogue.Dialogue
 import core.game.node.entity.npc.NPC

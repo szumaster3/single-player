@@ -1,8 +1,8 @@
 package content.global.skill.firemaking
 
 import core.api.*
-import core.api.quest.getQuestStage
-import core.api.skill.sendSkillDialogue
+import core.api.getQuestStage
+import core.api.sendSkillDialogue
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.impl.Projectile

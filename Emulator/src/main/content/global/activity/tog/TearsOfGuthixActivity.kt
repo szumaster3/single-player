@@ -2,8 +2,8 @@ package content.global.activity.tog
 
 import content.data.GameAttributes
 import core.api.*
-import core.api.quest.getQuestPoints
-import core.api.quest.isQuestComplete
+import core.api.getQuestPoints
+import core.api.isQuestComplete
 import core.game.component.Component
 import core.game.event.EventHook
 import core.game.event.TickEvent

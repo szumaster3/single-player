@@ -29,7 +29,7 @@ class ZanarisPlugin : InteractionListener {
          * Checks requirements to use rings.
          */
         private fun fairyMagic(player: Player): Boolean {
-            if (!core.api.quest.hasRequirement(player, Quests.FAIRYTALE_I_GROWING_PAINS) ||
+            if (!core.api.hasRequirement(player, Quests.FAIRYTALE_I_GROWING_PAINS) ||
                 !anyInEquipment(player, Items.DRAMEN_STAFF_772, Items.LUNAR_STAFF_9084)
             ) {
                 sendMessage(player, "The fairy ring only works for those who weld fairy magic.")

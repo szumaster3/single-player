@@ -1,7 +1,7 @@
 package content.region.misthalin.varrock.quest.crest.plugin
 
 import core.api.hasAnItem
-import core.api.quest.getQuestStage
+import core.api.getQuestStage
 import core.game.node.entity.Entity
 import core.game.node.entity.player.Player
 import core.game.world.map.Location

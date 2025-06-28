@@ -2,7 +2,7 @@ package content.region.kandarin.ardougne.quest.tol.dialogue
 
 import core.api.addItemOrDrop
 import core.api.inInventory
-import core.api.quest.getQuestStage
+import core.api.getQuestStage
 import core.api.sendMessage
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim

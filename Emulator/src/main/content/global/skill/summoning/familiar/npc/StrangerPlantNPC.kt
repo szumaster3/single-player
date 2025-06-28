@@ -3,7 +3,7 @@ package content.global.skill.summoning.familiar.npc
 import content.global.skill.summoning.familiar.Familiar
 import content.global.skill.summoning.familiar.FamiliarSpecial
 import content.global.skill.summoning.familiar.Forager
-import core.api.event.applyPoison
+import core.api.applyPoison
 import core.game.node.entity.impl.Projectile
 import core.game.node.entity.player.Player
 import core.game.node.item.Item

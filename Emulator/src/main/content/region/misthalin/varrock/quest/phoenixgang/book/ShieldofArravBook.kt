@@ -4,8 +4,8 @@ import content.global.plugin.iface.BookInterface
 import content.global.plugin.iface.BookLine
 import content.global.plugin.iface.Page
 import content.global.plugin.iface.PageSet
-import core.api.quest.getQuestStage
-import core.api.quest.setQuestStage
+import core.api.getQuestStage
+import core.api.setQuestStage
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.player.Player

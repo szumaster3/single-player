@@ -2,10 +2,10 @@ package core.game.node.entity.combat
 
 import content.global.skill.slayer.SlayerEquipmentFlags.getDamAccBonus
 import core.api.EquipmentSlot
-import core.api.event.applyPoison
+import core.api.applyPoison
 import core.api.getItemFromEquipment
 import core.api.inEquipment
-import core.api.interaction.getSlayerTask
+import core.api.getSlayerTask
 import core.game.container.impl.EquipmentContainer
 import core.game.node.entity.Entity
 import core.game.node.entity.combat.equipment.ArmourSet

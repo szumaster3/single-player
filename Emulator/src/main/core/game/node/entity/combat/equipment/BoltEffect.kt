@@ -1,6 +1,6 @@
 package core.game.node.entity.combat.equipment
 
-import core.api.event.applyPoison
+import core.api.applyPoison
 import core.api.playGlobalAudio
 import core.game.node.entity.combat.BattleState
 import core.game.node.entity.combat.ImpactHandler.HitsplatType

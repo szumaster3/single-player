@@ -8,7 +8,7 @@ import content.region.misthalin.varrock.quest.dragon.plugin.DragonSlayerPlugin
 import content.region.misthalin.varrock.quest.dragon.plugin.MagicDoorPlugin
 import content.region.misthalin.varrock.quest.dragon.npc.*
 import core.api.*
-import core.api.quest.getQuestStage
+import core.api.getQuestStage
 import core.game.event.EventHook
 import core.game.event.PickUpEvent
 import core.game.event.SpellCastEvent

@@ -2,7 +2,7 @@ package content.region.asgarnia.falador.quest.rd.cutscene
 
 import content.region.asgarnia.falador.quest.rd.plugin.SirKuamPlugin
 import core.api.*
-import core.api.ui.setMinimapState
+import core.api.setMinimapState
 import core.game.activity.Cutscene
 import core.game.interaction.QueueStrength
 import core.game.node.entity.npc.NPC

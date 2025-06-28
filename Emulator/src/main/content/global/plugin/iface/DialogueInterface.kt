@@ -1,6 +1,6 @@
 package content.global.plugin.iface
 
-import core.api.ui.repositionChild
+import core.api.repositionChild
 import core.game.interaction.InterfaceListener
 import org.rs.consts.Components
 

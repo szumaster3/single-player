@@ -1,4 +1,4 @@
-package core.api.region.contracts
+package core.api.regionspec.contracts
 
 import core.game.world.map.BuildRegionChunk
 import core.game.world.map.Region

@@ -1,7 +1,7 @@
 package content.region.morytania.phas.dialogue
 
 import core.api.*
-import core.api.quest.hasRequirement
+import core.api.hasRequirement
 import core.game.dialogue.*
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player

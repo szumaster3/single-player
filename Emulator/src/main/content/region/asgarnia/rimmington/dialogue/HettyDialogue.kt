@@ -1,9 +1,9 @@
 package content.region.asgarnia.rimmington.dialogue
 
 import core.api.inInventory
-import core.api.quest.finishQuest
-import core.api.quest.getQuestStage
-import core.api.quest.updateQuestTab
+import core.api.finishQuest
+import core.api.getQuestStage
+import core.api.updateQuestTab
 import core.api.replaceSlot
 import core.api.sendDialogueLines
 import core.game.dialogue.Dialogue

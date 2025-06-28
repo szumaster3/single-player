@@ -2,7 +2,7 @@ package content.region.kandarin.gnome.quest.grandtree.dialogue
 
 import content.region.kandarin.gnome.quest.grandtree.plugin.TheGrandTreeUtils
 import core.api.getAttribute
-import core.api.quest.getQuestStage
+import core.api.getQuestStage
 import core.api.removeItem
 import core.api.sendDialogue
 import core.api.sendItemDialogue

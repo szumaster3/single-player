@@ -1,7 +1,7 @@
 package content.region.kandarin.camelot.quest.arthur.cutscene
 
 import core.api.addScenery
-import core.api.ui.setMinimapState
+import core.api.setMinimapState
 import core.game.activity.Cutscene
 import core.game.node.entity.player.Player
 import core.game.node.scenery.Scenery

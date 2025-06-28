@@ -1,6 +1,6 @@
 package content.region.desert.nardah.dialogue
 
-import core.api.interaction.decantContainer
+import core.api.decantContainer
 import core.game.dialogue.Dialogue
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player

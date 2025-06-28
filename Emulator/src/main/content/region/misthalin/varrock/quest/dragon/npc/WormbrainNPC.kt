@@ -3,7 +3,7 @@ package content.region.misthalin.varrock.quest.dragon.npc
 import content.region.misthalin.varrock.quest.dragon.DragonSlayer
 import core.api.inBank
 import core.api.inInventory
-import core.api.quest.getQuestStage
+import core.api.getQuestStage
 import core.api.sendMessage
 import core.game.node.entity.Entity
 import core.game.node.entity.combat.CombatStyle

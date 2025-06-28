@@ -1,6 +1,6 @@
 package content.region.kandarin.ardougne.east.quest.biohazard.dialogue
 
-import core.api.quest.getQuestStage
+import core.api.getQuestStage
 import core.api.sendMessage
 import core.api.teleport
 import core.game.dialogue.DialogueFile

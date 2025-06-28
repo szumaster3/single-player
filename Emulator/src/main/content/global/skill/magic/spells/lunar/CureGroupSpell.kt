@@ -2,7 +2,7 @@ package content.global.skill.magic.spells.lunar
 
 import content.global.skill.magic.SpellListener
 import content.global.skill.magic.spells.LunarSpells
-import core.api.event.curePoison
+import core.api.curePoison
 import core.api.sendMessage
 import core.game.node.item.Item
 import core.game.world.map.RegionManager

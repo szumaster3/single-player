@@ -1,8 +1,8 @@
 package content.global.skill.crafting.rawmaterial
 
 import core.api.*
-import core.api.skill.sendSkillDialogue
-import core.api.ui.closeDialogue
+import core.api.sendSkillDialogue
+import core.api.closeDialogue
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.player.Player

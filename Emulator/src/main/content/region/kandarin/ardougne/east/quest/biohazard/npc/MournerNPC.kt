@@ -2,8 +2,8 @@ package content.region.kandarin.ardougne.east.quest.biohazard.npc
 
 import core.api.addItemOrDrop
 import core.api.inInventory
-import core.api.quest.isQuestInProgress
-import core.api.quest.setQuestStage
+import core.api.isQuestInProgress
+import core.api.setQuestStage
 import core.api.sendMessage
 import core.game.node.entity.Entity
 import core.game.node.entity.npc.AbstractNPC

@@ -1,8 +1,8 @@
 package content.region.morytania.canifis.npc
 
 import core.api.*
-import core.api.combat.delayAttack
-import core.api.interaction.transformNpc
+import core.api.delayAttack
+import core.api.transformNpc
 import core.game.interaction.QueueStrength
 import core.game.node.entity.Entity
 import core.game.node.entity.combat.BattleState

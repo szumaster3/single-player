@@ -2,10 +2,10 @@ package content.global.skill.summoning.familiar.npc
 
 import content.global.skill.summoning.familiar.Familiar
 import content.global.skill.summoning.familiar.FamiliarSpecial
-import core.api.event.cureDisease
-import core.api.event.curePoison
-import core.api.event.isDiseased
-import core.api.event.isPoisoned
+import core.api.cureDisease
+import core.api.curePoison
+import core.api.isDiseased
+import core.api.isPoisoned
 import core.api.getStatLevel
 import core.api.playAudio
 import core.api.sendMessage

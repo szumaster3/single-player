@@ -1,8 +1,8 @@
 package content.region.desert.uzer.quest.golem
 
-import core.api.quest.finishQuest
-import core.api.quest.isQuestComplete
-import core.api.quest.setQuestStage
+import core.api.finishQuest
+import core.api.isQuestComplete
+import core.api.setQuestStage
 import core.game.dialogue.Dialogue
 import core.game.dialogue.DialogueBuilder
 import core.game.dialogue.DialogueBuilderFile

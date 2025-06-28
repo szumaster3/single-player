@@ -1,7 +1,7 @@
 package content.region.karamja.quest.mm
 
 import core.api.addItemOrDrop
-import core.api.quest.updateQuestTab
+import core.api.updateQuestTab
 import core.api.sendItemZoomOnInterface
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest

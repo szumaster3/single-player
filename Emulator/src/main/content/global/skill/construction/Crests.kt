@@ -2,7 +2,7 @@ package content.global.skill.construction
 
 import core.api.anyInInventory
 import core.api.hasLevelStat
-import core.api.quest.isQuestComplete
+import core.api.isQuestComplete
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
 import org.rs.consts.Items

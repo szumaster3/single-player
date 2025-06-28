@@ -1,7 +1,7 @@
 package content.region.kandarin.gnome.quest.grandtree.npc
 
 import core.api.location
-import core.api.quest.setQuestStage
+import core.api.setQuestStage
 import core.game.node.entity.Entity
 import core.game.node.entity.npc.AbstractNPC
 import core.game.node.entity.player.Player

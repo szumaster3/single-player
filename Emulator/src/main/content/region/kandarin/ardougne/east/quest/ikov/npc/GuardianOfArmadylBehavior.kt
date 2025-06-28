@@ -1,6 +1,6 @@
 package content.region.kandarin.ardougne.east.quest.ikov.npc
 
-import core.api.quest.isQuestComplete
+import core.api.isQuestComplete
 import core.game.node.entity.Entity
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.npc.NPCBehavior

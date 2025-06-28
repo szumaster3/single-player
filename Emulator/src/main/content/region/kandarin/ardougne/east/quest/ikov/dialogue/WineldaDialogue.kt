@@ -2,8 +2,8 @@ package content.region.kandarin.ardougne.east.quest.ikov.dialogue
 
 import content.data.GameAttributes
 import core.api.*
-import core.api.quest.getQuestStage
-import core.api.quest.setQuestStage
+import core.api.getQuestStage
+import core.api.setQuestStage
 import core.game.dialogue.Dialogue
 import core.game.dialogue.DialogueBuilder
 import core.game.dialogue.DialogueBuilderFile

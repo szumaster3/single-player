@@ -1,6 +1,6 @@
 package content.region.kandarin.feldip.ooglog.dialogue
 
-import core.api.quest.hasRequirement
+import core.api.hasRequirement
 import core.api.sendDialogue
 import core.api.sendDialogueOptions
 import core.game.dialogue.Dialogue

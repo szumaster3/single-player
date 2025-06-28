@@ -3,9 +3,9 @@ package content.region.kandarin.pisc.quest.phoenix.dialogue
 import content.data.GameAttributes
 import content.region.kandarin.pisc.quest.phoenix.InPyreNeed
 import core.api.*
-import core.api.quest.finishQuest
-import core.api.quest.setQuestStage
-import core.api.quest.updateQuestTab
+import core.api.finishQuest
+import core.api.setQuestStage
+import core.api.updateQuestTab
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.player.Player

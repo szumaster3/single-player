@@ -6,10 +6,10 @@ import content.region.kandarin.ardougne.west.quest.elena.dialogue.HeadMournerDia
 import content.region.kandarin.ardougne.west.quest.elena.dialogue.ManRehnisonDialogue
 import content.region.kandarin.ardougne.west.quest.elena.dialogue.MournerWestDialogue
 import core.api.*
-import core.api.quest.getQuestStage
-import core.api.quest.isQuestComplete
-import core.api.quest.isQuestInProgress
-import core.api.quest.setQuestStage
+import core.api.getQuestStage
+import core.api.isQuestComplete
+import core.api.isQuestInProgress
+import core.api.setQuestStage
 import core.game.dialogue.FaceAnim
 import core.game.dialogue.SequenceDialogue.itemLine
 import core.game.dialogue.SequenceDialogue.npcLine

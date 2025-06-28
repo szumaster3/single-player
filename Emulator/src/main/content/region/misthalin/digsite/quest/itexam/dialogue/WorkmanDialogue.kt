@@ -1,8 +1,8 @@
 package content.region.misthalin.digsite.quest.itexam.dialogue
 
 import core.api.openDialogue
-import core.api.quest.getQuestStage
-import core.api.quest.setQuestStage
+import core.api.getQuestStage
+import core.api.setQuestStage
 import core.api.removeItem
 import core.game.dialogue.*
 import core.game.interaction.IntType

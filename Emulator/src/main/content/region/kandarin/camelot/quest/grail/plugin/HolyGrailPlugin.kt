@@ -3,7 +3,7 @@ package content.region.kandarin.camelot.quest.grail.plugin
 import content.region.kandarin.camelot.quest.grail.HolyGrail
 import content.region.kandarin.camelot.quest.grail.dialogue.*
 import core.api.*
-import core.api.quest.getQuestStage
+import core.api.getQuestStage
 import core.game.dialogue.FaceAnim
 import core.game.global.action.ClimbActionHandler
 import core.game.global.action.DoorActionHandler

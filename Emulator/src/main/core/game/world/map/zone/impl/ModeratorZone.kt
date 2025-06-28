@@ -2,7 +2,7 @@ package core.game.world.map.zone.impl
 
 import core.ServerConstants
 import core.api.sendMessage
-import core.api.ui.restoreTabs
+import core.api.restoreTabs
 import core.game.interaction.Option
 import core.game.node.Node
 import core.game.node.entity.Entity

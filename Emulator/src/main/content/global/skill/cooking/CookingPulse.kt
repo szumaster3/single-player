@@ -2,7 +2,7 @@ package content.global.skill.cooking
 
 import core.api.getStatLevel
 import core.api.playAudio
-import core.api.quest.isQuestComplete
+import core.api.isQuestComplete
 import core.api.sendDialogue
 import core.api.sendMessage
 import core.game.event.ResourceProducedEvent

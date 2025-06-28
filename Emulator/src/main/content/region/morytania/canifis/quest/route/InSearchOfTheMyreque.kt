@@ -1,6 +1,6 @@
 package content.region.morytania.canifis.quest.route
 
-import core.api.quest.isQuestComplete
+import core.api.isQuestComplete
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest
 import org.rs.consts.Items

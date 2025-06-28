@@ -2,7 +2,7 @@ package content.region.fremennik.jatizso.dialogue
 
 import content.region.fremennik.plugin.FremennikShipHelper
 import content.region.fremennik.plugin.Travel
-import core.api.quest.requireQuest
+import core.api.requireQuest
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

@@ -2,7 +2,7 @@ package content.region.desert.bedabin.quest.deserttreasure.npc
 
 import content.region.desert.bedabin.quest.deserttreasure.DesertTreasure
 import core.api.getAttribute
-import core.api.quest.getQuestStage
+import core.api.getQuestStage
 import core.api.sendMessage
 import core.api.setAttribute
 import core.api.setVarbit

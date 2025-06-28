@@ -1,6 +1,6 @@
 package content.region.misthalin.draynor.quest.hetty
 
-import core.api.quest.getQuestStage
+import core.api.getQuestStage
 import core.api.sendMessage
 import core.api.sendPlayerDialogue
 import core.game.interaction.IntType

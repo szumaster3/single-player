@@ -1,6 +1,6 @@
-package core.api.region
+package core.api.regionspec
 
-import core.api.region.contracts.*
+import core.api.regionspec.contracts.*
 import core.game.world.map.Region
 import core.game.world.map.RegionChunk
 import core.game.world.map.build.DynamicRegion

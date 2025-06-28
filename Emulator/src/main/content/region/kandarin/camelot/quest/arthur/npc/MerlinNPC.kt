@@ -1,6 +1,6 @@
 package content.region.kandarin.camelot.quest.arthur.npc
 
-import core.api.quest.getQuestStage
+import core.api.getQuestStage
 import core.game.node.entity.npc.AbstractNPC
 import core.game.node.entity.player.Player
 import core.game.world.map.Location

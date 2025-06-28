@@ -1,9 +1,9 @@
 package content.region.misthalin.digsite.quest.itexam.plugin
 
 import core.api.*
-import core.api.quest.finishQuest
-import core.api.quest.getQuestStage
-import core.api.quest.setQuestStage
+import core.api.finishQuest
+import core.api.getQuestStage
+import core.api.setQuestStage
 import core.game.dialogue.DialogueBuilder
 import core.game.dialogue.DialogueBuilderFile
 import core.game.dialogue.FaceAnim

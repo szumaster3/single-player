@@ -1,7 +1,7 @@
 package content.region.kandarin.gnome.quest.grandtree.dialogue
 
 import core.api.addItemOrDrop
-import core.api.quest.getQuestStage
+import core.api.getQuestStage
 import core.api.sendDialogue
 import core.api.sendItemDialogue
 import core.game.dialogue.Dialogue

@@ -1,7 +1,7 @@
 package content.global.skill.cooking
 
 import core.api.*
-import core.api.ui.repositionChild
+import core.api.repositionChild
 import core.game.dialogue.DialogueFile
 import core.game.node.scenery.Scenery
 import core.tools.START_DIALOGUE

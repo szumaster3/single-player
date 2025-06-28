@@ -1,7 +1,7 @@
 package content.global.plugin.iface
 
 import core.api.*
-import core.api.item.itemDefinition
+import core.api.itemDefinition
 import core.game.component.Component
 import core.game.component.ComponentDefinition
 import core.game.component.ComponentPlugin

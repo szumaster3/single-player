@@ -2,7 +2,7 @@ package content.region.misthalin.draynor.quest.hetty
 
 import core.api.closeChatBox
 import core.api.inInventory
-import core.api.quest.updateQuestTab
+import core.api.updateQuestTab
 import core.api.rewardXP
 import core.api.sendItemZoomOnInterface
 import core.game.node.entity.player.Player

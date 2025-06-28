@@ -2,7 +2,7 @@ package core.game.world.map.zone.impl
 
 import content.data.LightSource.Companion.forProductId
 import content.data.LightSource.Companion.getActiveLightSource
-import core.api.Event.UsedWith
+import core.api.UsedWith
 import core.api.getItemName
 import core.api.impact
 import core.api.runTask

@@ -2,7 +2,7 @@ package content.region.island.entrana.quest.zep.cutscene
 
 import core.api.face
 import core.api.location
-import core.api.quest.setQuestStage
+import core.api.setQuestStage
 import core.api.visualize
 import core.game.activity.Cutscene
 import core.game.dialogue.FaceAnim

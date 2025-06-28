@@ -4,7 +4,7 @@ import content.data.GameAttributes
 import content.region.kandarin.seers.quest.scorpcatcher.ScorpionCatcherPlugin
 import core.api.getAttribute
 import core.api.lock
-import core.api.quest.setQuestStage
+import core.api.setQuestStage
 import core.api.removeAttribute
 import core.api.setAttribute
 import core.game.component.Component

@@ -1,12 +1,12 @@
 package content.region.fremennik.plugin
 
 import core.api.addDialogueAction
-import core.api.quest.isQuestComplete
-import core.api.quest.requireQuest
+import core.api.isQuestComplete
+import core.api.requireQuest
 import core.api.removeItem
 import core.api.sendDialogueOptions
 import core.api.setTitle
-import core.api.ui.closeDialogue
+import core.api.closeDialogue
 import core.cache.def.impl.NPCDefinition
 import core.cache.def.impl.SceneryDefinition
 import core.game.dialogue.FaceAnim

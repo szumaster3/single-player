@@ -2,8 +2,8 @@ package content.global.skill.construction;
 
 import content.data.GameAttributes;
 import content.global.skill.construction.servants.Servant;
-import core.api.region.RegionSpecification;
-import core.api.region.contracts.FillChunkContract;
+import core.api.regionspec.RegionSpecification;
+import core.api.regionspec.contracts.FillChunkContract;
 import core.game.dialogue.FaceAnim;
 import core.game.node.entity.player.Player;
 import core.game.node.entity.skill.Skills;
@@ -31,9 +31,9 @@ import java.awt.*;
 import java.nio.ByteBuffer;
 
 import static core.api.ContentAPIKt.*;
-import static core.api.region.RegionSpecificationKt.fillWith;
-import static core.api.region.RegionSpecificationKt.using;
-import static core.api.ui.InterfaceAPIKt.setMinimapState;
+import static core.api.regionspec.RegionSpecificationKt.fillWith;
+import static core.api.regionspec.RegionSpecificationKt.using;
+import static core.api.InterfaceAPIKt.setMinimapState;
 import static core.tools.GlobalsKt.DARK_BLUE;
 
 /**

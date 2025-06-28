@@ -1,7 +1,7 @@
 package content.region.kandarin.camelot.quest.arthur.dialogue
 
 import content.data.GameAttributes
-import core.api.quest.getQuest
+import core.api.getQuest
 import core.api.removeAttribute
 import core.api.sendDialogue
 import core.game.dialogue.DialogueFile

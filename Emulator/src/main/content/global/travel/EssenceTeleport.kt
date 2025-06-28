@@ -2,7 +2,7 @@ package content.global.travel
 
 import content.global.skill.magic.TeleportMethod
 import core.api.*
-import core.api.quest.isQuestComplete
+import core.api.isQuestComplete
 import core.game.event.TeleportEvent
 import core.game.node.Node
 import core.game.node.entity.impl.Projectile

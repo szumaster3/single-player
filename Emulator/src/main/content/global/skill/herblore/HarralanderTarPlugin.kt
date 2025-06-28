@@ -1,8 +1,8 @@
 package content.global.skill.herblore
 
 import core.api.*
-import core.api.quest.isQuestComplete
-import core.api.ui.repositionChild
+import core.api.isQuestComplete
+import core.api.repositionChild
 import core.game.dialogue.SkillDialogueHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener

@@ -2,8 +2,8 @@ package content.region.wilderness.plugin
 
 import content.data.GameAttributes
 import core.api.*
-import core.api.movement.finishedMoving
-import core.api.ui.closeDialogue
+import core.api.finishedMoving
+import core.api.closeDialogue
 import core.game.global.action.ClimbActionHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
@@ -191,7 +191,7 @@ class WildernessPlugin : InteractionListener {
         }
 
         on(Scenery.TRAPDOOR_39188, IntType.SCENERY, "open") { player, _ ->
-            if (!core.api.quest.hasRequirement(player, Quests.DEFENDER_OF_VARROCK)) return@on true
+            if (!core.api.hasRequirement(player, Quests.DEFENDER_OF_VARROCK)) return@on true
             ClimbActionHandler.climb(
                 player,
                 ClimbActionHandler.CLIMB_DOWN,

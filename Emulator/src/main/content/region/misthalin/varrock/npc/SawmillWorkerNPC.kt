@@ -1,6 +1,6 @@
 package content.region.misthalin.varrock.npc
 
-import core.api.movement.finishedMoving
+import core.api.finishedMoving
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.npc.NPCBehavior
 import core.game.world.map.Location

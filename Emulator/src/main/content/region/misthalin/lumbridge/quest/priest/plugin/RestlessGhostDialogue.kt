@@ -2,8 +2,8 @@ package content.region.misthalin.lumbridge.quest.priest.plugin
 
 import core.api.inEquipment
 import core.api.inInventory
-import core.api.quest.getQuestStage
-import core.api.quest.setQuestStage
+import core.api.getQuestStage
+import core.api.setQuestStage
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

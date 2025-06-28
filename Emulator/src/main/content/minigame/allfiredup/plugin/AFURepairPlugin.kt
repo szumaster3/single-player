@@ -2,7 +2,7 @@ package content.minigame.allfiredup.plugin
 
 import content.global.skill.construction.items.Nail
 import core.api.*
-import core.api.quest.hasRequirement
+import core.api.hasRequirement
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.impl.ForceMovement

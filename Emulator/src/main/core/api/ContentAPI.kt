@@ -2,21 +2,27 @@ package core.api
 
 import com.moandjiezana.toml.Toml
 import content.data.God
+import content.data.consumables.Consumables
+import content.data.items.SkillingTool
+import content.global.plugin.iface.ge.StockMarket
+import content.global.skill.slayer.SlayerManager
+import content.global.skill.slayer.Tasks
 import core.ServerConstants
-import core.api.item.itemDefinition
-import core.api.movement.finishedMoving
+import core.api.itemDefinition
+import core.api.finishedMoving
 import core.api.utils.PlayerCamera
 import core.api.utils.PlayerStatsCounter
 import core.api.utils.Vector
-import core.cache.def.impl.AnimationDefinition
-import core.cache.def.impl.ItemDefinition
-import core.cache.def.impl.SceneryDefinition
-import core.cache.def.impl.VarbitDefinition
+import core.cache.def.impl.*
 import core.game.activity.Cutscene
 import core.game.component.Component
+import core.game.consumable.Consumable
+import core.game.consumable.Potion
 import core.game.container.impl.EquipmentContainer
 import core.game.dialogue.*
 import core.game.dialogue.DialogueInterpreter.getDialogueKey
+import core.game.ge.ExchangeHistory
+import core.game.global.action.DoorActionHandler
 import core.game.interaction.Clocks
 import core.game.interaction.InteractionListeners
 import core.game.interaction.QueueStrength
@@ -39,19 +45,23 @@ import core.game.node.entity.player.link.audio.Audio
 import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.entity.player.link.emote.Emotes
 import core.game.node.entity.player.link.prayer.PrayerType
-import core.game.node.entity.player.link.quest.QPCumulative
-import core.game.node.entity.player.link.quest.QPReq
-import core.game.node.entity.player.link.quest.QuestReq
+import core.game.node.entity.player.link.quest.*
 import core.game.node.entity.skill.Skills
+import core.game.node.item.GroundItem
 import core.game.node.item.GroundItemManager
 import core.game.node.item.Item
 import core.game.node.scenery.Scenery
 import core.game.node.scenery.SceneryBuilder
+import core.game.shops.Shops
 import core.game.system.config.ItemConfigParser
 import core.game.system.config.ServerConfigParser
 import core.game.system.task.Pulse
 import core.game.system.timer.RSTimer
 import core.game.system.timer.TimerRegistry
+import core.game.system.timer.impl.Disease
+import core.game.system.timer.impl.DragonFireImmunity
+import core.game.system.timer.impl.Poison
+import core.game.system.timer.impl.PoisonImmunity
 import core.game.world.GameWorld
 import core.game.world.GameWorld.Pulser
 import core.game.world.map.Direction
@@ -71,16 +81,20 @@ import core.game.world.update.flag.context.Graphics
 import core.net.packet.OutgoingContext
 import core.net.packet.PacketRepository
 import core.net.packet.out.AudioPacket
+import core.net.packet.out.MinimapState
 import core.net.packet.out.MusicPacket
+import core.net.packet.out.RepositionChild
 import core.tools.Log
 import core.tools.SystemLogger
 import core.tools.colorize
 import core.tools.cyclesToTicks
 import org.rs.consts.Components
 import org.rs.consts.Items
+import org.rs.consts.NPCs
 import org.rs.consts.Sounds
 import java.io.PrintWriter
 import java.io.StringWriter
+import java.util.regex.Pattern
 import kotlin.math.abs
 import kotlin.math.absoluteValue
 import kotlin.math.max
@@ -1007,19 +1021,6 @@ fun closeAllInterfaces(player: Player) {
     player.interfaceManager.close()
     player.interfaceManager.closeChatbox()
     player.dialogueInterpreter.close()
-}
-
-/**
- * Unlocks a specific emote for the given player.
- *
- * @param player The player for whom the emote will be unlocked.
- * @param emoteId The ID of the emote to unlock.
- */
-fun unlockEmote(
-    player: Player,
-    emoteId: Int,
-) {
-    player.emoteManager.unlock(Emotes.forId(emoteId))
 }
 
 /**
@@ -3752,6 +3753,1218 @@ fun refreshInventory(player: Player) {
  */
 fun refreshAppearance(player : Player) {
     player.appearance.sync()
+}
+
+/**
+ * Delays the next attack of an entity by a specified number of ticks.
+ *
+ * @param entity The entity whose attack is being delayed.
+ * @param ticks The number of game ticks to delay the next attack.
+ */
+fun delayAttack(
+    entity: Entity,
+    ticks: Int,
+) {
+    entity.properties.combatPulse.delayNextAttack(3)
+    entity.clocks[Clocks.NEXT_ATTACK] = getWorldTicks() + ticks
+}
+
+/**
+ * Restores the player's interface tabs to their default state.
+ *
+ * @param player The player whose interface tabs are being restored.
+ */
+fun restoreTabs(player: Player) = player.interfaceManager.restoreTabs()
+
+/**
+ * Opens a specific interface tab for a player.
+ *
+ * @param player The player who will open the interface tab.
+ * @param component The id of the component (interface tab) to open.
+ */
+fun openSingleTab(
+    player: Player,
+    component: Int,
+) {
+    player.interfaceManager.openSingleTab(Component(component))
+}
+
+/**
+ * Sets the state of the player's minimap (visible or hidden).
+ *
+ * @param player The player whose minimap state is being updated.
+ * @param state The state of the minimap. This could represent whether the minimap is visible or hidden.
+ */
+fun setMinimapState(
+    player: Player,
+    state: Int,
+) = PacketRepository.send(MinimapState::class.java, OutgoingContext.MinimapState(player, state))
+
+/**
+ * Sends an interface configuration update to the player.
+ *
+ * @param player The player to whom the interface configuration is being sent.
+ * @param interfaceId The interface id containing the child component.
+ * @param childId The id of the specific child component within the interface.
+ * @param hide If true, the child component will be hidden; if false, it will be shown.
+ */
+fun sendInterfaceConfig(
+    player: Player,
+    interfaceId: Int,
+    childId: Int,
+    hide: Boolean,
+) {
+    player.packetDispatch.sendInterfaceConfig(interfaceId, childId, hide)
+}
+
+/**
+ * Repositions a child interface element for the player.
+ *
+ * @param player The player whose interface is being modified.
+ * @param interfaceId The interface id.
+ * @param childId The id of the element to move.
+ * @param positionX The new X coordinate.
+ * @param positionY The new Y coordinate.
+ */
+fun repositionChild(
+    player: Player,
+    interfaceId: Int,
+    childId: Int,
+    positionX: Int,
+    positionY: Int,
+) = PacketRepository.send(
+    RepositionChild::class.java,
+    OutgoingContext.ChildPosition(player, interfaceId, childId, positionX, positionY),
+)
+
+/**
+ * Lock emote for player.
+ *
+ * @param player the player.
+ * @param emoteId the id of emote.
+ * @throws IllegalArgumentException if emoteId is invalid.
+ */
+fun lockEmote(player: Player, emoteId: Any) {
+    val emote = when (emoteId) {
+        is Emotes -> emoteId
+        is Int -> {
+            val emotes = Emotes.values()
+            if (emoteId !in emotes.indices) {
+                throw IllegalArgumentException("Invalid emote ID: [$emoteId]!")
+            }
+            emotes[emoteId]
+        }
+        else -> throw IllegalArgumentException("Parameter must be [Emotes] or [Int]!")
+    }
+    player.emoteManager.lock(emote)
+    player.emoteManager.refresh()
+}
+
+/**
+ * Unlock emote for player.
+ *
+ * @param player the player.
+ * @param emoteId the id of emote.
+ * @throws IllegalArgumentException if emoteId is invalid.
+ */
+fun unlockEmote(player: Player, emoteId: Any) {
+    val emote = when (emoteId) {
+        is Emotes -> emoteId
+        is Int -> {
+            val emotes = Emotes.values()
+            if (emoteId !in emotes.indices) {
+                throw IllegalArgumentException("Invalid emote ID: [$emoteId]!")
+            }
+            emotes[emoteId]
+        }
+        else -> throw IllegalArgumentException("Parameter must use [Emotes] or [Int]!")
+    }
+    player.emoteManager.unlock(emote)
+    player.emoteManager.refresh()
+}
+
+/**
+ * Check if emote is unlocked for player.
+ *
+ * @param player the player.
+ * @param emoteId the id of emote.
+ * @return true if emote is unlocked, false otherwise.
+ * @throws IllegalArgumentException if emoteId is invalid.
+ */
+fun hasEmote(player: Player, emoteId: Any): Boolean {
+    val emote = when (emoteId) {
+        is Emotes -> emoteId
+        is Int -> {
+            val emotes = Emotes.values()
+            if (emoteId !in emotes.indices) {
+                throw IllegalArgumentException("Invalid emote ID: [$emoteId]!")
+            }
+            emotes[emoteId]
+        }
+        else -> throw IllegalArgumentException("Parameter must be [Emotes] or [Int]!")
+    }
+
+    return player.emoteManager.isUnlocked(emote)
+}
+
+/**
+ * Closes the current dialogue and chatbox for the player.
+ *
+ * @param player The player whose dialogue and chatbox are being closed.
+ */
+fun closeDialogue(player: Player) {
+    player.dialogueInterpreter.close()
+    player.interfaceManager.closeChatbox()
+}
+
+/**
+ * A builder class for constructing a skill dialogue, allowing customization of the items displayed,
+ * as well as the logic for item creation and maximum amount calculations.
+ */
+class SkillDialogueBuilder {
+    internal lateinit var player: Player
+    internal var items: Array<Item> = arrayOf<Item>()
+    internal var creationCallback: (itemId: Int, amount: Int) -> Unit = { _, _ -> }
+    internal var totalAmountCallback: (itemId: Int) -> Int = { id -> amountInInventory(player, id) }
+
+    /**
+     * Sets the items to be included in the skill dialogue.
+     *
+     * @param item The items to be added to the dialogue.
+     */
+    fun withItems(vararg item: Item) {
+        items = arrayOf(*item)
+    }
+
+    /**
+     * Sets the items to be included in the skill dialogue by their item ids.
+     *
+     * @param item The item ids to be added to the dialogue.
+     */
+    fun withItems(vararg item: Int) {
+        items = item.map { Item(it) }.toTypedArray()
+    }
+
+    /**
+     * Sets the callback method that will be invoked when an item is created.
+     *
+     * @param method The method that takes an item id and the amount of that item.
+     */
+    fun create(method: (itemId: Int, amount: Int) -> Unit) {
+        creationCallback = method
+    }
+
+    /**
+     * Sets the callback method that calculates the total amount of an item available for the player.
+     *
+     * @param method The method that calculates the amount of an item.
+     */
+    fun calculateMaxAmount(method: (itemId: Int) -> Int) {
+        totalAmountCallback = method
+    }
+}
+
+/**
+ * Sends a skill dialogue to the player, allowing the player to choose from a set of items for a skill interaction.
+ *
+ * The skill dialogue is constructed based on the provided builder, and validation is performed to ensure
+ * the correct number of items is passed.
+ *
+ * @param player The player who will receive the skill dialogue.
+ * @param init The lambda block to initialize the skill dialogue using the builder.
+ * @throws IllegalStateException if the number of items in the dialogue is not between 1 and 5.
+ */
+fun sendSkillDialogue(
+    player: Player,
+    init: SkillDialogueBuilder.() -> Unit,
+) {
+    val builder = SkillDialogueBuilder()
+    builder.player = player
+    builder.init()
+
+    if (builder.items.size !in 1..5) {
+        throw IllegalStateException(
+            "Invalid number of items passed to skill dialogue (min 1, max 5): ${builder.items.size}",
+        )
+    }
+
+    val type =
+        when (builder.items.size) {
+            1 -> SkillDialogueHandler.SkillDialogue.ONE_OPTION
+            2 -> SkillDialogueHandler.SkillDialogue.TWO_OPTION
+            3 -> SkillDialogueHandler.SkillDialogue.THREE_OPTION
+            4 -> SkillDialogueHandler.SkillDialogue.FOUR_OPTION
+            5 -> SkillDialogueHandler.SkillDialogue.FIVE_OPTION
+            else -> null
+        }
+
+    object : SkillDialogueHandler(player, type, *builder.items) {
+        /**
+         * Handles the creation of an item when selected in the dialogue.
+         *
+         * @param amount The amount of the selected item to be created.
+         * @param index The index of the selected item.
+         */
+        override fun create(
+            amount: Int,
+            index: Int,
+        ) {
+            builder.creationCallback(builder.items[index].id, amount)
+        }
+
+        /**
+         * Retrieves the total amount of the selected item available for the player.
+         *
+         * @param index The index of the selected item.
+         * @return The total amount of the item available for the player.
+         */
+        override fun getAll(index: Int): Int = builder.totalAmountCallback(builder.items[index].id)
+    }.open()
+}
+
+/**
+ * Gets the appropriate skilling tool for the player.
+ **
+ * @param player The player for whom the tool is being retrieved.
+ * @param pickaxe If true, the function returns a pickaxe; otherwise, it returns a hatchet.
+ * @return The appropriate [SkillingTool] for the player, or null if none is available.
+ */
+fun getTool(
+    player: Player,
+    pickaxe: Boolean,
+): SkillingTool? = if (pickaxe) SkillingTool.getPickaxe(player) else SkillingTool.getAxe(player)
+
+/**
+ * Delays an entity's clock by a specified number of ticks.
+ *
+ * @param entity The entity whose clock is being delayed.
+ * @param clock The clock ID to update (defines which action or event is delayed).
+ * @param ticks The number of game ticks to delay the clock by.
+ * @return Always returns false.
+ */
+fun delayClock(
+    entity: Entity,
+    clock: Int,
+    ticks: Int,
+): Boolean {
+    entity.clocks[clock] = getWorldTicks() + ticks
+    return false
+}
+
+/**
+ * Checks if the specified clock for an entity has expired and is ready for use.
+ *
+ * @param entity The entity whose clock is being checked.
+ * @param clock The clock ID to check.
+ * @return True if the clock is ready, otherwise false.
+ */
+fun clockReady(
+    entity: Entity,
+    clock: Int,
+): Boolean = entity.clocks[clock] <= getWorldTicks()
+
+/**
+ * Gets the total number of quest points a player has earned.
+ *
+ * @param player The player whose quest points are being retrieved.
+ * @return The total quest points the player has earned.
+ */
+fun getQuestPoints(player: Player): Int = player.questRepository.points
+
+/**
+ * Retrieves the current stage of a specific quest for a player.
+ *
+ * @param player The player whose quest stage is being retrieved.
+ * @param quest The name of the quest.
+ * @return The stage of the quest, or 0 if the quest is not started.
+ */
+fun getQuestStage(
+    player: Player,
+    quest: String,
+): Int = player.questRepository.getStage(quest)
+
+/**
+ * Sets the stage of a specific quest for a player.
+ *
+ * @param player The player whose quest stage is being set.
+ * @param quest The name of the quest.
+ * @param stage The new stage to set for the quest.
+ */
+fun setQuestStage(
+    player: Player,
+    quest: String,
+    stage: Int,
+) {
+    player.questRepository.setStage(QuestRepository.getQuests()[quest]!!, stage)
+    player.questRepository.syncronizeTab(player)
+}
+
+/**
+ * Updates the quest tab to reflect the latest quest information for a player.
+ *
+ * @param player The player whose quest tab is being updated.
+ */
+fun updateQuestTab(player: Player) {
+    player.questRepository.syncronizeTab(player)
+}
+
+/**
+ * Checks if a quest is in progress for a player within a specified stage range.
+ *
+ * @param player The player whose quest status is being checked.
+ * @param quest The name of the quest.
+ * @param startStage The starting stage of the quest to check.
+ * @param endStage The ending stage of the quest to check.
+ * @return True if the player's quest is within the specified range, otherwise false.
+ */
+fun isQuestInProgress(
+    player: Player,
+    quest: String,
+    startStage: Int,
+    endStage: Int,
+): Boolean = player.questRepository.getStage(quest) in startStage..endStage
+
+/**
+ * Checks if a quest is complete for a player (stage 100).
+ *
+ * @param player The player whose quest completion status is being checked.
+ * @param quest The name of the quest.
+ * @return True if the quest is complete, otherwise false.
+ */
+fun isQuestComplete(
+    player: Player,
+    quest: String,
+): Boolean = player.questRepository.getStage(quest) == 100
+
+/**
+ * Gets the quest object for a player.
+ *
+ * @param player The player whose quest is being retrieved.
+ * @param quest The name of the quest.
+ * @return The Quest object representing the quest for the player.
+ */
+fun getQuest(
+    player: Player,
+    quest: String,
+): Quest = player.questRepository.getQuest(quest)
+
+/**
+ * Starts a quest for a player if they meet the necessary requirements.
+ *
+ * @param player The player who is starting the quest.
+ * @param quest The name of the quest to start.
+ * @return True if the quest was successfully started, false if the player doesn't meet the requirements.
+ */
+fun startQuest(
+    player: Player,
+    quest: String,
+): Boolean {
+    val quest = player.questRepository.getQuest(quest)
+    val canStart = quest.hasRequirements(player)
+    if (!canStart) return false
+    quest.start(player)
+    return true
+}
+
+/**
+ * Finishes a quest for a player, marking it as complete.
+ *
+ * @param player The player who is finishing the quest.
+ * @param quest The name of the quest to finish.
+ */
+fun finishQuest(
+    player: Player,
+    quest: String,
+) {
+    player.questRepository.getQuest(quest).finish(player)
+}
+
+/**
+ * Checks if a player has completed a specific quest before allowing them to proceed with another quest.
+ * Sends a message to the player if they haven't completed the required quest.
+ *
+ * @param player The player whose quest completion status is being checked.
+ * @param questName The name of the required quest.
+ * @param message The message to send to the player if they have not completed the required quest.
+ * @return True if the player has completed the required quest, otherwise false.
+ */
+fun requireQuest(
+    player: Player,
+    questName: String,
+    message: String,
+): Boolean {
+    if (!isQuestComplete(player, questName)) {
+        sendMessage(player, "You must have completed the $questName quest. $message")
+        return false
+    }
+    return true
+}
+
+/**
+ * Checks if a player has met the requirements to start a specific quest.
+ *
+ * @param player The player whose quest requirements are being checked.
+ * @param quest The name of the quest.
+ * @param message If true, a message will be sent to the player if they do not meet the requirements.
+ * @return True if the player meets the requirements for the quest, otherwise false.
+ */
+@JvmOverloads
+fun hasRequirement(
+    player: Player,
+    quest: String,
+    message: Boolean = true,
+): Boolean {
+    val questReq = QuestRequirements.values().filter { it.questName.equals(quest, true) }.firstOrNull() ?: return false
+    return core.api.hasRequirement(player, QuestReq(questReq), message)
+}
+
+/**
+ * Checks if the player has started the given quest.
+ *
+ * @param player The player whose quest status to check.
+ * @param quest The name or identifier of the quest.
+ * @return `true` if the player has started the quest, `false` otherwise.
+ */
+fun hasStarted(player: Player, quest: String): Boolean {
+    return player.getQuestRepository().hasStarted(quest)
+}
+
+/**
+ * Checks if the specified entity has finished its movement.
+ *
+ * @param entity The entity whose movement status is being checked.
+ * @return True if the entity has finished moving, otherwise false.
+ */
+fun finishedMoving(entity: Entity): Boolean = entity.clocks[Clocks.MOVEMENT] < GameWorld.ticks
+
+/**
+ * Truncates the movement path of an entity towards a destination location if the distance is too far.
+ *
+ * @param mover The entity (either player or NPC) that is moving.
+ * @param destination The target destination location to move towards.
+ * @return A pair where the first value indicates whether the path was truncated,
+ *         and the second value is the new truncated destination location.
+ */
+fun truncateLoc(
+    mover: Entity,
+    destination: Location,
+): Pair<Boolean, Location> {
+    val vector = Vector.betweenLocs(mover.location, destination)
+    val normVec = vector.normalized()
+    val mag = vector.magnitude()
+
+    var multiplier = if (mover is NPC) 14.0 else ServerConstants.MAX_PATHFIND_DISTANCE.toDouble()
+    var clampedMultiplier = min(multiplier, mag)
+
+    var truncated = multiplier == clampedMultiplier
+
+    return Pair(truncated, mover.location.transform(normVec * clampedMultiplier))
+}
+
+/**
+ * Produces a ground item at the player's location.
+ *
+ * @param player The player for whom the ground item will be produced.
+ * @param item The item id of the ground item to be created.
+ */
+fun produceGroundItem(
+    player: Player,
+    item: Int,
+) {
+    GroundItemManager.create(Item(item), player)
+}
+
+/**
+ * Produces a ground item at a specified location.
+ *
+ * @param owner The player who owns the ground item, or null if the item has no owner.
+ * @param id The item id of the ground item to be created.
+ * @param amount The quantity of the item to be created.
+ * @param location The location where the ground item will be placed.
+ * @return The created [GroundItem] at the specified location.
+ */
+fun produceGroundItem(
+    owner: Player?,
+    id: Int,
+    amount: Int,
+    location: Location,
+): GroundItem = GroundItemManager.create(Item(id, amount), location, owner)
+
+/**
+ * Removes a ground item from the game world.
+ *
+ * @param node The [GroundItem] to be removed from the game world.
+ */
+fun removeGroundItem(node: GroundItem) {
+    GroundItemManager.destroy(node)
+}
+
+/**
+ * Checks if a ground item is valid and exists in the game world.
+ *
+ * @param node The [GroundItem] to be checked for validity.
+ * @return True if the ground item exists in the world, otherwise false.
+ */
+fun isValidGroundItem(node: GroundItem): Boolean = GroundItemManager.getItems().contains(node)
+
+/**
+ * Retrieves the item definition for a given item id.
+ *
+ * @param id The id for the item.
+ * @return The [ItemDefinition] associated with the provided item id.
+ */
+fun itemDefinition(id: Int): ItemDefinition = ItemDefinition.forId(id)
+
+/**
+ * Checks if all specified items are present in the player's inventory.
+ *
+ * @param player The player whose inventory is being checked.
+ * @param ids The ids of the items to check for in the inventory.
+ * @return True if all specified items are present in the inventory, otherwise false.
+ */
+fun allInInventory(
+    player: Player,
+    vararg ids: Int,
+): Boolean =
+    ids.all { id ->
+        inInventory(player, id)
+    }
+
+/**
+ * Retrieves the name of the NPC based on its id.
+ *
+ * @param id The NPC id.
+ * @return The name of the NPC as a String.
+ */
+fun getNPCName(id: Int): String = NPCDefinition.forId(id).name
+
+/**
+ * Decants items in a container, organizing them by dosage and creating new items with the correct dosage.
+ * It removes the original items and adds the newly decanted items to the container.
+ *
+ * @param container The container to decant the items from.
+ * @return A pair of lists where:
+ *  - The first list contains the items to be removed from the container.
+ *  - The second list contains the items to be added to the container.
+ */
+fun decantContainer(container: core.game.container.Container): Pair<List<Item>, List<Item>> {
+    val doseCount = HashMap<Consumable, Int>()
+    val toRemove = ArrayList<Item>()
+    val toAdd = ArrayList<Item>()
+    val doseRegex = Pattern.compile("(\\([0-9]\\))")
+
+    for (item in container.toArray()) {
+        if (item == null) continue
+        val potionType = Consumables.getConsumableById(item.id)?.consumable as? Potion ?: continue
+        val matcher = doseRegex.matcher(item.name)
+        if (!matcher.find()) continue
+        val dosage =
+            matcher
+                .group(1)
+                .replace("(", "")
+                .replace(")", "")
+                .toIntOrNull() ?: continue
+        doseCount[potionType] = (doseCount[potionType] ?: 0) + dosage
+        toRemove.add(item)
+    }
+
+    for ((consumable, count) in doseCount) {
+        val maxDose = consumable.ids.size
+        val totalMaxDosePotions = count / maxDose
+        val remainderDose = count % maxDose
+        if (totalMaxDosePotions > 0) toAdd.add(Item(consumable.ids[0], totalMaxDosePotions))
+        if (remainderDose > 0) toAdd.add(Item(consumable.ids[consumable.ids.size - remainderDose]))
+    }
+
+    val emptyVials = toRemove.size - toAdd.sumOf { it.amount }
+    if (emptyVials > 0) toAdd.add(Item(229, emptyVials))
+    return Pair<List<Item>, List<Item>>(toRemove, toAdd)
+}
+
+/**
+ * Opens the shop associated with a given NPC for a player.
+ *
+ * @param player The player who is opening the shop.
+ * @param npc The NPC whose shop should be opened.
+ * @return True if the shop was successfully opened, false otherwise.
+ */
+fun openNpcShop(
+    player: Player,
+    npc: Int,
+): Boolean {
+    val shop = Shops.shopsByNpc[npc]
+
+    if (shop != null) {
+        shop.openFor(player)
+        return true
+    }
+
+    return false
+}
+
+/**
+ * Retrieves the Slayer Master assigned to the player.
+ *
+ * @param player The player whose Slayer Master is being retrieved.
+ * @return The [NPC] representing the player's Slayer Master.
+ */
+fun getSlayerMaster(player: Player): NPC = findNPC(SlayerManager.getInstance(player).master?.npc as Int) as NPC
+
+/**
+ * Retrieves the location of the player's assigned Slayer Master.
+ *
+ * @param player The player whose Slayer Master location is being retrieved.
+ * @return A string representing the location of the Slayer Master.
+ */
+fun getSlayerMasterLocation(player: Player): String =
+    when (getSlayerMaster(player).id) {
+        NPCs.CHAELDAR_1598 -> "Zanaris"
+        NPCs.DURADEL_8275 -> "Shilo Village"
+        NPCs.MAZCHNA_8274 -> "Canifis"
+        NPCs.TURAEL_8273 -> "Taverley"
+        NPCs.VANNAKA_1597 -> "Edgeville Dungeon"
+        else -> "The Backrooms"
+    }
+
+/**
+ * Retrieves the player's current Slayer task.
+ *
+ * @param player The player whose Slayer task is being retrieved.
+ * @return The active [Tasks] assigned to the player, or null if no task is assigned.
+ */
+fun getSlayerTask(player: Player): Tasks? = SlayerManager.getInstance(player).activeTask
+
+/**
+ * Checks if the player has an active Slayer task.
+ *
+ * @param player The player whose task status is being checked.
+ * @return True if the player has an active Slayer task, otherwise false.
+ */
+fun hasSlayerTask(player: Player): Boolean = SlayerManager.getInstance(player).hasTask()
+
+/**
+ * Retrieves the name of the player's current Slayer task.
+ *
+ * @param player The player whose Slayer task name is being retrieved.
+ * @return A string representing the name of the Slayer task.
+ */
+fun getSlayerTaskName(player: Player): String = SlayerManager.getInstance(player).taskName
+
+/**
+ * Retrieves the number of kills remaining for the player's current Slayer task.
+ *
+ * @param player The player whose remaining kills are being retrieved.
+ * @return An int representing the number of kills left to complete the Slayer task.
+ */
+fun getSlayerTaskKillsRemaining(player: Player): Int = SlayerManager.getInstance(player).amount
+
+/**
+ * Retrieves the task flags for the player's current Slayer task.
+ *
+ * @param player The player whose task flags are being retrieved.
+ * @return An int representing the task flags.
+ */
+fun getSlayerTaskFlags(player: Player): Int = SlayerManager.getInstance(player).flags.taskFlags
+
+/**
+ * Provides a tip or hint about the player's current Slayer task.
+ *
+ * @param player The player whose Slayer task tip is being retrieved.
+ * @return An array of string containing the Slayer task tip.
+ */
+fun getSlayerTip(player: Player): Array<out String> =
+    if (hasSlayerTask(player)) {
+        getSlayerTask(player)?.tip!!
+    } else {
+        arrayOf("You need something new to hunt.")
+    }
+
+/**
+ * Transforms an NPC into another NPC for a specified duration before reverting back.
+ *
+ * @param npc The [NPC] to be transformed.
+ * @param transformTo The id of the NPC to transform into.
+ * @param restoreTicks The number of game ticks before the NPC reverts to its original form.
+ */
+fun transformNpc(
+    npc: NPC,
+    transformTo: Int,
+    restoreTicks: Int,
+) {
+    npc.transform(transformTo)
+    Pulser.submit(
+        object : Pulse(restoreTicks) {
+            override fun pulse(): Boolean {
+                npc.reTransform()
+                return true
+            }
+        },
+    )
+}
+
+/**
+ * Restricts an action for a player based on their Ironman mode.
+ *
+ * @param player The player to check the restriction for.
+ * @param restriction The [IronmanMode] that restricts access to the action.
+ * @param action The action to execute if the restriction is not applied.
+ */
+fun restrictForIronman(
+    player: Player,
+    restriction: IronmanMode,
+    action: () -> Unit,
+) {
+    if (!player.ironmanManager.checkRestriction(restriction)) {
+        action()
+    }
+}
+
+/**
+ * Checks if the player has any awaiting Grand Exchange collections.
+ *
+ * @param player The player whose Grand Exchange records are being checked.
+ * @return true if there is at least one offer with an item awaiting collection, otherwise false.
+ */
+fun hasAwaitingGrandExchangeCollections(player: Player): Boolean {
+    val records = ExchangeHistory.getInstance(player)
+
+    for (record in records.offerRecords) {
+        val offer = records.getOffer(record)
+
+        return offer != null && offer.withdraw[0] != null
+    }
+
+    return false
+}
+
+/**
+ * Opens the Grand Exchange collection box for the player, with restrictions based on Ironman mode.
+ *
+ * @param player The player who is attempting to open the Grand Exchange collection box.
+ */
+fun openGrandExchangeCollectionBox(player: Player) {
+    restrictForIronman(player, IronmanMode.ULTIMATE) {
+        ExchangeHistory.getInstance(player).openCollectionBox()
+    }
+}
+
+/**
+ * Opens the player's bank account interface, with restrictions based on Ironman mode.
+ *
+ * @param player The player who is attempting to open the bank account.
+ */
+fun openBankAccount(player: Player) {
+    restrictForIronman(player, IronmanMode.ULTIMATE) {
+        player.bank.open()
+    }
+}
+
+/**
+ * Opens the player's deposit box interface, with restrictions based on Ironman mode.
+ *
+ * @param player The player who is attempting to open the deposit box.
+ */
+fun openDepositBox(player: Player) {
+    restrictForIronman(player, IronmanMode.ULTIMATE) {
+        player.bank.openDepositBox()
+    }
+}
+
+/**
+ * Opens the player's bank pin settings, with restrictions based on Ironman mode.
+ *
+ * @param player The player who is attempting to open the bank pin settings.
+ */
+fun openBankPinSettings(player: Player) {
+    restrictForIronman(player, IronmanMode.ULTIMATE) {
+        player.bankPinManager.openSettings()
+    }
+}
+
+/**
+ * Toggles the player's bank account between primary and secondary accounts, with restrictions based on Ironman mode.
+ *
+ * @param player The player who is attempting to toggle their bank account.
+ */
+fun toggleBankAccount(player: Player) {
+    restrictForIronman(player, IronmanMode.ULTIMATE) {
+        if (!hasActivatedSecondaryBankAccount(player)) {
+            return@restrictForIronman
+        }
+
+        player.useSecondaryBank = !player.useSecondaryBank
+    }
+}
+
+/**
+ * Returns the name of the player's bank account (primary or secondary), with an option to invert the result.
+ *
+ * @param player The player whose bank account name is being retrieved.
+ * @param invert If true, inverts the result between primary and secondary.
+ * @return The name of the player's bank account ("primary" or "secondary").
+ */
+fun getBankAccountName(
+    player: Player,
+    invert: Boolean = false,
+): String =
+    if (isUsingSecondaryBankAccount(player)) {
+        if (invert) "primary" else "secondary"
+    } else {
+        if (invert) "secondary" else "primary"
+    }
+
+/**
+ * Activates the player's secondary bank account if they meet the required conditions.
+ *
+ * @param player The player who is attempting to activate their secondary bank account.
+ * @return The result of the secondary bank account activation.
+ */
+fun activateSecondaryBankAccount(player: Player): SecondaryBankAccountActivationResult {
+    if (hasIronmanRestriction(player, IronmanMode.ULTIMATE)) {
+        return SecondaryBankAccountActivationResult.INTERNAL_FAILURE
+    }
+
+    if (hasActivatedSecondaryBankAccount(player)) {
+        return SecondaryBankAccountActivationResult.ALREADY_ACTIVE
+    }
+
+    val cost = 10000
+    val coinsInInventory = amountInInventory(player, Items.COINS_995)
+    val coinsInBank = amountInBank(player, Items.COINS_995)
+    val coinsTotal = coinsInInventory + coinsInBank
+
+    if (cost > coinsTotal) {
+        return SecondaryBankAccountActivationResult.NOT_ENOUGH_MONEY
+    }
+
+    val operationResult =
+        if (cost > coinsInInventory) {
+            val amountToTakeFromBank = cost - coinsInInventory
+
+            removeItem(player, Item(Items.COINS_995, coinsInInventory), Container.INVENTORY) &&
+                    removeItem(
+                        player,
+                        Item(Items.COINS_995, amountToTakeFromBank),
+                        Container.BANK,
+                    )
+        } else {
+            removeItem(player, Item(Items.COINS_995, cost))
+        }
+
+    return if (operationResult) {
+        setAttribute(player, "/save:UnlockedSecondaryBank", true)
+        SecondaryBankAccountActivationResult.SUCCESS
+    } else {
+        sendMessage(player, "$cost;$coinsInInventory;$coinsInBank;$coinsTotal")
+        SecondaryBankAccountActivationResult.INTERNAL_FAILURE
+    }
+}
+
+/**
+ * Represents the result of an attempt to activate a secondary bank account.
+ *
+ * This enum is used to indicate the outcome of a player's attempt to activate their secondary bank account.
+ * The possible results are:
+ * - [SUCCESS]: The secondary bank account was successfully activated.
+ * - [ALREADY_ACTIVE]: The player already has an active secondary bank account.
+ * - [NOT_ENOUGH_MONEY]: The player does not have enough money to activate the secondary bank account.
+ * - [INTERNAL_FAILURE]: An internal failure occurred during the activation process.
+ */
+enum class SecondaryBankAccountActivationResult {
+    /**
+     * The secondary bank account was successfully activated.
+     */
+    SUCCESS,
+
+    /**
+     * The player already has an active secondary bank account.
+     */
+    ALREADY_ACTIVE,
+
+    /**
+     * The player does not have enough money to activate the secondary bank account.
+     */
+    NOT_ENOUGH_MONEY,
+
+    /**
+     * An internal failure occurred during the activation process.
+     */
+    INTERNAL_FAILURE,
+}
+
+/**
+ * Checks if the player has activated their secondary bank account.
+ *
+ * @param player The player to check the secondary bank account activation for.
+ * @return True if the secondary bank account is activated, otherwise false.
+ */
+fun hasActivatedSecondaryBankAccount(player: Player): Boolean = getAttribute(player, "UnlockedSecondaryBank", false)
+
+/**
+ * Checks if the player is using their secondary bank account.
+ *
+ * @param player The player to check the usage of their secondary bank account.
+ * @return True if the player is using the secondary bank account, otherwise false.
+ */
+fun isUsingSecondaryBankAccount(player: Player): Boolean = player.useSecondaryBank
+
+/**
+ * Opens the Grand Exchange interface for the player, with restrictions based on their Ironman mode.
+ *
+ * @param player The player who is attempting to access the Grand Exchange.
+ */
+fun openGrandExchange(player: Player) {
+    restrictForIronman(player, IronmanMode.ULTIMATE) {
+        StockMarket.openFor(player)
+    }
+}
+
+/**
+ * Opens a door and instantly moves the player through it.
+ *
+ * @param player The player interacting with the door.
+ * @param node The scenery object representing the door to be opened.
+ */
+fun openDoor(player: Player, node: Scenery) {
+    val destination = DoorActionHandler.getEndLocation(player, node, true)
+
+    DoorActionHandler.open(
+        node,
+        node,
+        node.id + 1,
+        node.id + 1,
+        true,
+        3,
+        false
+    )
+    forceWalk(player, destination, "")
+}
+
+/**
+ * Gets the name of a scenery.
+ *
+ * @param id The id for the scenery object.
+ * @return The name.
+ */
+fun getSceneryName(id: Int): String = SceneryDefinition.forId(id).name
+
+/**
+ * Cures the poison effect from an entity if it is currently poisoned.
+ *
+ * @param entity The entity to cure of poison.
+ */
+fun curePoison(entity: Entity) {
+    if (!hasTimerActive<Poison>(entity)) return
+    removeTimer<Poison>(entity)
+    if (entity is Player) sendMessage(entity, "Your poison has been cured.")
+}
+
+/**
+ * Cures the disease effect from an entity.
+ *
+ * @param entity The entity to cure of disease.
+ */
+fun cureDisease(entity: Entity) {
+    if (!hasTimerActive<Disease>(entity)) return
+    removeTimer<Disease>(entity)
+    if (entity is Player) sendMessage(entity, "Your disease has been cured.")
+}
+
+/**
+ * Checks if an entity is currently poisoned.
+ *
+ * @param entity The entity to check for poison.
+ * @return True if the entity is poisoned, otherwise false.
+ */
+fun isPoisoned(entity: Entity): Boolean = getTimer<Poison>(entity) != null
+
+/**
+ * Checks if an entity is currently diseased.
+ *
+ * @param entity The entity to check for disease.
+ * @return True if the entity is diseased, otherwise false.
+ */
+fun isDiseased(entity: Entity): Boolean = getTimer<Disease>(entity) != null
+
+/**
+ * Checks if an entity is currently stunned.
+ *
+ * @param entity The entity to check for stun status.
+ * @return True if the entity is stunned, otherwise false.
+ */
+fun isStunned(entity: Entity): Boolean = entity.clocks[Clocks.STUN] >= getWorldTicks()
+
+/**
+ * Applies a poison effect to an entity, or refreshes the existing poison effect if already active.
+ *
+ * @param entity The entity to apply or refresh the poison effect on.
+ * @param source The entity responsible for applying the poison (e.g., attacker or source of poison).
+ * @param severity The number of remaining hits for the poison effect.
+ */
+fun applyPoison(
+    entity: Entity,
+    source: Entity,
+    severity: Int,
+) {
+    if (hasTimerActive<PoisonImmunity>(entity)) {
+        return
+    }
+    val existingTimer = getTimer<Poison>(entity)
+
+    if (existingTimer != null) {
+        existingTimer.severity = severity
+        existingTimer.damageSource = source
+    } else {
+        registerTimer(entity, spawnTimer<Poison>(source, severity))
+    }
+}
+
+/**
+ * Applies a disease effect to an entity, or refreshes the existing disease effect if already active.
+ *
+ * @param entity The entity to apply or refresh the disease effect on.
+ * @param source The entity responsible for applying the disease (e.g., attacker or source of disease).
+ * @param hits The number of remaining hits for the disease effect.
+ */
+fun applyDisease(entity: Entity, source: Entity, hits: Int) {
+    if (hasTimerActive<Disease>(entity)) return
+    registerTimer(entity, spawnTimer<Disease>(source, hits))
+}
+
+/**
+ * Updates the player's credit balance by adding the specified amount.
+ *
+ * @param player The player whose credits are being updated.
+ * @param amount The amount to adjust the player's credits by. Positive values add credits, negative values subtract.
+ * @return true if the update was successful, false if the resulting balance would be negative.
+ */
+fun updateCredits(
+    player: Player,
+    amount: Int,
+): Boolean {
+    val creds = getCredits(player) + amount
+
+    if (creds < 0) {
+        return false
+    } else {
+        player.details.accountInfo.credits = creds
+    }
+
+    return true
+}
+
+/**
+ * Gets the current credit balance of the player.
+ *
+ * @param player The player whose credit balance is being retrieved.
+ * @return The player's current credit balance.
+ */
+fun getCredits(player: Player): Int = player.details.accountInfo.credits
+
+
+/**
+ * Calculates the maximum damage a player or entity will take from a dragon's fire breath,
+ * considering the presence of protection methods such as dragonfire shields, potions, and prayers.
+ *
+ * This function applies damage reduction based on the player's or entity's protection
+ * from dragonfire. The final damage is calculated by reducing the maximum possible damage
+ * according to whether the entity has protection from fire breath via shield, potion, or prayer.
+ * If no protection is available, the full damage is taken.
+ *
+ * @param entity The entity (either player or NPC) receiving the dragonfire attack.
+ * @param maxDamage The maximum potential damage that the dragonfire breath can cause.
+ * @param wyvern A flag indicating if the dragonfire is from a wyvern. Defaults to false (meaning it's regular dragonfire).
+ * @param unprotectableDamage The portion of damage that cannot be reduced by any protection. Defaults to 0.
+ * @param sendMessage A flag to send a message to the entity about the protection effect. Defaults to false.
+ * @return The final calculated damage after applying the protection effects.
+ *         If protection is present, it will reduce the damage accordingly.
+ */
+fun calculateDragonFireMaxHit(
+    entity: Entity,
+    maxDamage: Int,
+    wyvern: Boolean = false,
+    unprotectableDamage: Int = 0,
+    sendMessage: Boolean = false,
+): Int {
+    val hasShield: Boolean
+    val hasPotion: Boolean
+    val hasPrayer: Boolean
+
+    if (entity is Player) {
+        // Check for player-specific protection methods.
+        hasShield = hasDragonfireShieldProtection(entity, wyvern)
+        hasPotion = !wyvern && hasTimerActive<DragonFireImmunity>(entity)
+        hasPrayer = entity.prayer.get(PrayerType.PROTECT_FROM_MAGIC)
+
+        if (sendMessage) {
+            var message = "You are horribly burnt by the ${if (wyvern) "icy" else "fiery"} breath."
+            if (hasShield && hasPotion) {
+                message =
+                    "Your potion and shield fully absorb the ${if (wyvern) "icy" else "fiery"} breath."
+            } else if (hasShield) {
+                message = "Your shield absorbs most of the ${if (wyvern) "icy" else "fiery"} breath."
+            } else if (hasPotion) {
+                message = "Your potion absorbs some of the fiery breath."
+            } else if (hasPrayer) {
+                message = "Your prayer absorbs some of the ${if (wyvern) "icy" else "fiery"} breath."
+            }
+            sendMessage(entity, message)
+        }
+    } else {
+        // Check for NPC-specific protection methods.
+        val dragonFireTokens = entity.getDragonfireProtection(!wyvern)
+        hasShield = dragonFireTokens and 0x2 != 0
+        hasPotion = dragonFireTokens and 0x4 != 0
+        hasPrayer = dragonFireTokens and 0x8 != 0
+    }
+
+    var effectiveDamage = maxDamage.toDouble()
+    if (hasPrayer && !hasShield && !hasPotion) {
+        effectiveDamage -= 0.6 * maxDamage
+    } else {
+        if (hasShield) effectiveDamage -= 0.9 * maxDamage
+        if (hasPotion) effectiveDamage -= 0.1 * maxDamage
+    }
+
+    return Math.max(unprotectableDamage, effectiveDamage.toInt())
+}
+
+/**
+ * Checks if the player has protection against dragonfire or wyvern attacks based on their equipped shield.
+ *
+ * @param player The player whose equipment is being checked for protection.
+ * @param wyvern If true, checks for protection against wyvern attacks; otherwise, checks for dragonfire protection.
+ * @return True if the player has the appropriate shield for protection, otherwise false.
+ */
+fun hasDragonfireShieldProtection(
+    player: Player,
+    wyvern: Boolean = false,
+): Boolean {
+    val shield = getItemFromEquipment(player, EquipmentSlot.SHIELD) ?: return false
+    return when (shield.id) {
+        Items.ELEMENTAL_SHIELD_2890, Items.MIND_SHIELD_9731 -> wyvern
+        Items.ANTI_DRAGON_SHIELD_1540 -> !wyvern
+        Items.DRAGONFIRE_SHIELD_11283, Items.DRAGONFIRE_SHIELD_11284 -> true
+        else -> false
+    }
+}
+
+/**
+ * Gets an existing timer for the specified entity and identifier, or starts a new one if none exists.
+ *
+ * @param entity The entity for which the timer is being retrieved or created.
+ * @param identifier The unique identifier for the timer.
+ * @param args The additional arguments to pass when creating the timer, if needed.
+ * @return The existing timer if one exists, or the newly created timer if no existing timer is found.
+ */
+fun getOrStartTimer(
+    entity: Entity,
+    identifier: String,
+    vararg args: Any,
+): RSTimer? {
+    val existing = getTimer(entity, identifier)
+    if (existing != null) return existing
+    return spawnTimer(identifier, *args).also { registerTimer(entity, it) }
 }
 
 private class ContentAPI

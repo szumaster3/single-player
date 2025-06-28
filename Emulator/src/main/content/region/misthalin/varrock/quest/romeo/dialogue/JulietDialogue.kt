@@ -3,8 +3,8 @@ package content.region.misthalin.varrock.quest.romeo.dialogue
 import content.region.misthalin.varrock.quest.romeo.cutscene.JulietCutscene
 import core.api.inBank
 import core.api.inInventory
-import core.api.quest.setQuestStage
-import core.api.quest.updateQuestTab
+import core.api.setQuestStage
+import core.api.updateQuestTab
 import core.api.sendItemDialogue
 import core.game.activity.ActivityManager
 import core.game.dialogue.Dialogue

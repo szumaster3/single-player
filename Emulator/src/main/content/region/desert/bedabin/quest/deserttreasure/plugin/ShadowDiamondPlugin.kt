@@ -3,8 +3,8 @@ package content.region.desert.bedabin.quest.deserttreasure.plugin
 import content.region.desert.bedabin.quest.deserttreasure.DTUtils
 import content.region.desert.bedabin.quest.deserttreasure.DesertTreasure
 import core.api.*
-import core.api.event.applyPoison
-import core.api.quest.getQuestStage
+import core.api.applyPoison
+import core.api.getQuestStage
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.game.dialogue.Topic

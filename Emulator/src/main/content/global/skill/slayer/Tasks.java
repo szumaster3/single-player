@@ -7,7 +7,7 @@ import org.rs.consts.NPCs;
 import java.util.Arrays;
 import java.util.HashMap;
 
-import static core.api.quest.QuestAPIKt.hasRequirement;
+import static core.api.QuestAPIKt.hasRequirement;
 
 /**
  * The enum Tasks.

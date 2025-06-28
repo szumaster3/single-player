@@ -2,8 +2,8 @@ package content.region.fremennik.lighthouse.quest.horror.plugin
 
 import content.data.GameAttributes
 import core.api.*
-import core.api.quest.isQuestComplete
-import core.api.quest.setQuestStage
+import core.api.isQuestComplete
+import core.api.setQuestStage
 import core.game.interaction.InterfaceListener
 import core.game.interaction.QueueStrength
 import org.rs.consts.Components

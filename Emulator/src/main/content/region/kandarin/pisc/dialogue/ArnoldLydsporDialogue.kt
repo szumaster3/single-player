@@ -2,10 +2,10 @@ package content.region.kandarin.pisc.dialogue
 
 import core.api.addItemOrDrop
 import core.api.hasIronmanRestriction
-import core.api.interaction.openBankAccount
-import core.api.interaction.openBankPinSettings
-import core.api.interaction.openGrandExchangeCollectionBox
-import core.api.interaction.openNpcShop
+import core.api.openBankAccount
+import core.api.openBankPinSettings
+import core.api.openGrandExchangeCollectionBox
+import core.api.openNpcShop
 import core.api.sendItemDialogue
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim

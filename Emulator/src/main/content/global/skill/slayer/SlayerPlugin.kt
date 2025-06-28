@@ -1,7 +1,7 @@
 package content.global.skill.slayer
 
 import core.api.*
-import core.api.quest.hasRequirement
+import core.api.hasRequirement
 import core.game.global.action.ClimbActionHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener

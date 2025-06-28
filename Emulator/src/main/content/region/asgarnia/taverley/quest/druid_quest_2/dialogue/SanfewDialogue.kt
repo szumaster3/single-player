@@ -1,8 +1,8 @@
 package content.region.asgarnia.taverley.quest.druid_quest_2.dialogue
 
-import core.api.quest.getQuestStage
-import core.api.quest.setQuestStage
-import core.api.quest.updateQuestTab
+import core.api.getQuestStage
+import core.api.setQuestStage
+import core.api.updateQuestTab
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

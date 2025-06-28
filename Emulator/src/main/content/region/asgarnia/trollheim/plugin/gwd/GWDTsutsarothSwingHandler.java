@@ -13,7 +13,7 @@ import core.game.world.update.flag.context.Animation;
 import core.game.world.update.flag.context.Graphics;
 import core.tools.RandomFunction;
 
-import static core.api.event.EventAPIKt.applyPoison;
+import static core.api.EventAPIKt.applyPoison;
 
 /**
  * The type Gwd tsutsaroth swing handler.

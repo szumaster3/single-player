@@ -19,7 +19,7 @@ import org.rs.consts.Sounds;
 import java.util.List;
 
 import static core.api.ContentAPIKt.playGlobalAudio;
-import static core.api.event.EventAPIKt.applyPoison;
+import static core.api.EventAPIKt.applyPoison;
 
 /**
  * The type Smoke spells.

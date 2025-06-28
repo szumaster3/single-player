@@ -1,7 +1,7 @@
 package content.global.skill.farming
 
 import core.api.*
-import core.api.ui.openSingleTab
+import core.api.openSingleTab
 import core.game.dialogue.InputType
 import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.Player

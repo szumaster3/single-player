@@ -1,6 +1,6 @@
 package core.game.system.command.sets
 
-import core.api.quest.finishQuest
+import core.api.finishQuest
 import core.api.sendString
 import core.game.component.Component
 import core.game.node.entity.player.Player

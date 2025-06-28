@@ -1,6 +1,6 @@
 package core.game.node.entity.combat.equipment
 
-import core.api.event.applyPoison
+import core.api.applyPoison
 import core.api.registerTimer
 import core.api.spawnTimer
 import core.game.node.Node

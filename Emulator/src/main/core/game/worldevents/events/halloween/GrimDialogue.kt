@@ -3,6 +3,8 @@ package core.game.worldevents.events.halloween
 import core.ServerStore
 import core.ServerStore.Companion.getInt
 import core.api.addItem
+import core.api.unlockEmote
+import core.api.hasEmote
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.player.Player
@@ -96,7 +98,7 @@ class GrimDialogue(player: Player? = null) : Dialogue(player) {
         val hasUnlocked = player.getAttribute("sotr:purchased", false)
         val hasRecolor1 = player.getAttribute("sotr:recolor1", false)
         val hasRecolor2 = player.getAttribute("sotr:recolor2", false)
-        val hasEmote = player.emoteManager.isUnlocked(Emotes.TRICK)
+        val hasEmote = hasEmote(player, Emotes.TRICK)
 
         if (!hasUnlocked && !hasEmote) {
             when (stage) {
@@ -339,31 +341,22 @@ class GrimDialogue(player: Player? = null) : Dialogue(player) {
     }
 
     private fun buyEmote(player: Player) {
-        player.emoteManager.unlock(Emotes.TRICK)
+        unlockEmote(player, Emotes.TRICK)
         removeCandies(player, 10)
         stage = 104
         handleRewardShop(player, -1)
     }
 
-    private fun canPurchase(
-        player: Player,
-        cost: Int,
-    ): Boolean = getCandyTotals(player) >= cost
+    private fun canPurchase(player: Player, cost: Int, ): Boolean = getCandyTotals(player) >= cost
 
-    private fun removeCandies(
-        player: Player,
-        amount: Int,
-    ) {
+    private fun removeCandies(player: Player, amount: Int, ) {
         addToCandyTotal(player, -amount)
     }
 
     private fun getCandyTotals(player: Player): Int =
         ServerStore.getArchive("hween2021-candies").getInt(player.username.lowercase())
 
-    private fun addToCandyTotal(
-        player: Player,
-        amount: Int,
-    ) {
+    private fun addToCandyTotal(player: Player, amount: Int, ) {
         ServerStore.getArchive("hween2021-candies")[player.username.lowercase()] = getCandyTotals(player) + amount
     }
 

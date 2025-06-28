@@ -1,7 +1,7 @@
 package content.region.desert.bedabin.quest.deserttreasure.dialogue
 
-import core.api.quest.finishQuest
-import core.api.quest.getQuestStage
+import core.api.finishQuest
+import core.api.getQuestStage
 import core.api.sendMessage
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim

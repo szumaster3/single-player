@@ -2,7 +2,7 @@ package content.global.activity.ttrail.npc
 
 import core.api.hasAnItem
 import core.api.inBorders
-import core.api.item.produceGroundItem
+import core.api.produceGroundItem
 import core.game.node.entity.Entity
 import core.game.node.entity.npc.AbstractNPC
 import core.game.node.entity.player.Player

@@ -1,7 +1,7 @@
 package content.region.misthalin.varrock.quest.dragon.plugin
 
 import content.region.misthalin.varrock.quest.dragon.DragonSlayer
-import core.api.quest.getQuestStage
+import core.api.getQuestStage
 import core.api.removeItem
 import core.api.sendMessage
 import core.game.interaction.NodeUsageEvent

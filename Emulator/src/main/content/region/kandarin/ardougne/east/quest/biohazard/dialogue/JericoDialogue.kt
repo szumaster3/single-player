@@ -1,7 +1,7 @@
 package content.region.kandarin.ardougne.east.quest.biohazard.dialogue
 
-import core.api.quest.getQuestStage
-import core.api.quest.setQuestStage
+import core.api.getQuestStage
+import core.api.setQuestStage
 import core.game.dialogue.DialogueFile
 import core.game.node.entity.npc.NPC
 import org.rs.consts.NPCs

@@ -1,7 +1,7 @@
 package content.region.misthalin.lumbridge.quest.lost_tribe.dialogue
 
 import content.region.misthalin.lumbridge.quest.lost_tribe.cutscene.LostTribeCutscene
-import core.api.quest.setQuestStage
+import core.api.setQuestStage
 import core.game.component.Component
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim

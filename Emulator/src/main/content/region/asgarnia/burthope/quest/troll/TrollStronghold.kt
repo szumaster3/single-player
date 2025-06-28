@@ -3,8 +3,8 @@ package content.region.asgarnia.burthope.quest.troll
 import core.api.addItemOrDrop
 import core.api.hasAnItem
 import core.api.hasLevelStat
-import core.api.quest.getQuestStage
-import core.api.quest.isQuestComplete
+import core.api.getQuestStage
+import core.api.isQuestComplete
 import core.api.sendItemZoomOnInterface
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest

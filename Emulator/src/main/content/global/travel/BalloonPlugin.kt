@@ -2,8 +2,8 @@ package content.global.travel
 
 import content.data.GameAttributes
 import core.api.*
-import core.api.quest.isQuestComplete
-import core.api.ui.setMinimapState
+import core.api.isQuestComplete
+import core.api.setMinimapState
 import core.cache.def.impl.ItemDefinition
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim

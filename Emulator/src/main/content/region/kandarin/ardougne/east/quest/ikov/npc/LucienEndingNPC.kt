@@ -2,8 +2,8 @@ package content.region.kandarin.ardougne.east.quest.ikov.npc
 
 import core.api.inEquipment
 import core.api.openDialogue
-import core.api.quest.finishQuest
-import core.api.quest.getQuestStage
+import core.api.finishQuest
+import core.api.getQuestStage
 import core.api.sendNPCDialogue
 import core.game.dialogue.DialogueFile
 import core.game.node.entity.Entity

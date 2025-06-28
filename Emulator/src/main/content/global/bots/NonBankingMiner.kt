@@ -1,6 +1,6 @@
 package content.global.bots
 
-import core.api.item.produceGroundItem
+import core.api.produceGroundItem
 import core.game.bots.Script
 import core.game.bots.SkillingBotAssembler
 import core.game.interaction.IntType

@@ -2,7 +2,7 @@ package content.region.misthalin.varrock.quest.surok.dialogue
 
 import core.api.addItem
 import core.api.inInventory
-import core.api.quest.getQuestStage
+import core.api.getQuestStage
 import core.game.dialogue.Dialogue
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest

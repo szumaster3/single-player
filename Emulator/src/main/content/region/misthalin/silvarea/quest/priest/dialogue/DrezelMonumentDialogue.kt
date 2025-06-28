@@ -3,7 +3,7 @@ package content.region.misthalin.silvarea.quest.priest.dialogue
 import content.data.GameAttributes
 import content.region.morytania.swamp.quest.druidspirit.dialogue.DrezelDialogueFile
 import core.api.*
-import core.api.quest.finishQuest
+import core.api.finishQuest
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

@@ -1,7 +1,7 @@
 package content.region.other.zanaris.quest.lostcity.npc
 
-import core.api.quest.getQuestStage
-import core.api.quest.setQuestStage
+import core.api.getQuestStage
+import core.api.setQuestStage
 import core.api.sendDialogue
 import core.game.node.entity.Entity
 import core.game.node.entity.npc.AbstractNPC

@@ -1,8 +1,8 @@
 package content.region.kandarin.khazard.quest.arena.dialogue
 
 import core.api.addItem
-import core.api.quest.getQuestStage
-import core.api.quest.setQuestStage
+import core.api.getQuestStage
+import core.api.setQuestStage
 import core.api.removeItem
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim

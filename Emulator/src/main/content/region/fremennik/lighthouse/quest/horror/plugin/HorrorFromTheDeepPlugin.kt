@@ -4,10 +4,10 @@ import content.data.GameAttributes
 import content.region.fremennik.lighthouse.quest.horror.dialogue.JossikLighthouseDialogue
 import content.region.fremennik.lighthouse.quest.horror.dialogue.StrangeWallDialogue
 import core.api.*
-import core.api.interaction.openDoor
-import core.api.quest.getQuestStage
-import core.api.quest.isQuestComplete
-import core.api.quest.setQuestStage
+import core.api.openDoor
+import core.api.getQuestStage
+import core.api.isQuestComplete
+import core.api.setQuestStage
 import core.game.dialogue.FaceAnim
 import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType

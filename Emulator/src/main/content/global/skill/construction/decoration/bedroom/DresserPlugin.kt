@@ -3,7 +3,7 @@ package content.global.skill.construction.decoration.bedroom
 import core.api.animate
 import core.api.openInterface
 import core.api.sendString
-import core.api.ui.sendInterfaceConfig
+import core.api.sendInterfaceConfig
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import org.rs.consts.Animations

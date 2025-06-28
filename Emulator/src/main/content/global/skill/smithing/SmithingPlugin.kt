@@ -3,8 +3,8 @@ package content.global.skill.smithing
 import content.global.skill.smithing.special.DragonShieldPulse
 import content.global.skill.smithing.special.DragonfireShieldPulse
 import core.api.*
-import core.api.quest.isQuestComplete
-import core.api.ui.sendInterfaceConfig
+import core.api.isQuestComplete
+import core.api.sendInterfaceConfig
 import core.game.component.Component
 import core.game.container.access.InterfaceContainer
 import core.game.interaction.IntType

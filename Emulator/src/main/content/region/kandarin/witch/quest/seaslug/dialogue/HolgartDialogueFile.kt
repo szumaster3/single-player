@@ -4,8 +4,8 @@ import content.region.kandarin.witch.plugin.PlatformHelper
 import content.region.kandarin.witch.quest.seaslug.cutscene.HolgartCutscene
 import core.api.Container
 import core.api.inInventory
-import core.api.quest.getQuestStage
-import core.api.quest.setQuestStage
+import core.api.getQuestStage
+import core.api.setQuestStage
 import core.api.removeItem
 import core.api.sendItemDialogue
 import core.game.dialogue.DialogueFile

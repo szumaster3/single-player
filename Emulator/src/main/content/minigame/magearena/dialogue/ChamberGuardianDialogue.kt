@@ -2,7 +2,7 @@ package content.minigame.magearena.dialogue
 
 import content.data.GodType
 import core.api.hasSpaceFor
-import core.api.interaction.openNpcShop
+import core.api.openNpcShop
 import core.api.sendItemDialogue
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim

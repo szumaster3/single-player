@@ -1,6 +1,6 @@
 package content.region.kandarin.gnome.quest.tree.dialogue
 
-import core.api.quest.getQuestStage
+import core.api.getQuestStage
 import core.game.dialogue.DialogueFile
 import core.tools.END_DIALOGUE
 import org.rs.consts.Quests

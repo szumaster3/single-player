@@ -1,10 +1,10 @@
 package content.region.asgarnia.falador.quest.rd.cutscene
 
 import core.api.*
-import core.api.quest.getQuestStage
-import core.api.quest.setQuestStage
-import core.api.ui.closeDialogue
-import core.api.ui.setMinimapState
+import core.api.getQuestStage
+import core.api.setQuestStage
+import core.api.closeDialogue
+import core.api.setMinimapState
 import core.game.activity.Cutscene
 import core.game.interaction.QueueStrength
 import core.game.node.entity.npc.NPC

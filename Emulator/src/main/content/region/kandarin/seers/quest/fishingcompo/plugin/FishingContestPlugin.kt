@@ -2,8 +2,8 @@ package content.region.kandarin.seers.quest.fishingcompo.plugin
 
 import content.data.GameAttributes
 import core.api.*
-import core.api.quest.isQuestComplete
-import core.api.quest.isQuestInProgress
+import core.api.isQuestComplete
+import core.api.isQuestInProgress
 import core.game.dialogue.FaceAnim
 import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType

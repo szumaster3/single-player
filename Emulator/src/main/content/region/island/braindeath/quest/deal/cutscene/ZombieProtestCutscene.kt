@@ -3,7 +3,7 @@ package content.region.island.braindeath.quest.deal.cutscene
 import content.region.island.braindeath.quest.deal.dialogue.CaptainBraindeathDialogue
 import core.api.openDialogue
 import core.api.openOverlay
-import core.api.ui.setMinimapState
+import core.api.setMinimapState
 import core.game.activity.Cutscene
 import core.game.node.entity.player.Player
 import core.game.world.map.Direction

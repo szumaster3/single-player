@@ -2,7 +2,7 @@ package content.region.morytania.phas.dialogue
 
 import core.api.inEquipment
 import core.api.openDialogue
-import core.api.quest.getQuestStage
+import core.api.getQuestStage
 import core.api.sendDialogue
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim

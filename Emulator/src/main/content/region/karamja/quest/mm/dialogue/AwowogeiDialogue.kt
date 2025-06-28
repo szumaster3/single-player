@@ -1,6 +1,6 @@
 package content.region.karamja.quest.mm.dialogue
 
-import core.api.quest.setQuestStage
+import core.api.setQuestStage
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import org.rs.consts.NPCs

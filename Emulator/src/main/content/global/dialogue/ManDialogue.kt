@@ -1,6 +1,6 @@
 package content.global.dialogue
 
-import core.api.item.produceGroundItem
+import core.api.produceGroundItem
 import core.api.sendMessage
 import core.api.setAttribute
 import core.game.dialogue.Dialogue

@@ -1,7 +1,7 @@
 package content.region.asgarnia.burthope.quest.troll.dialogue
 
-import core.api.quest.getQuestStage
-import core.api.quest.setQuestStage
+import core.api.getQuestStage
+import core.api.setQuestStage
 import core.api.sendMessage
 import core.game.dialogue.Dialogue
 import core.game.dialogue.DialogueFile

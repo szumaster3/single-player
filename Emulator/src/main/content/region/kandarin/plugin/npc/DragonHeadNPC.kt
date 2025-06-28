@@ -1,6 +1,6 @@
 package content.region.kandarin.plugin.npc
 
-import core.api.interaction.transformNpc
+import core.api.transformNpc
 import core.api.location
 import core.api.sendMessage
 import core.game.node.entity.Entity

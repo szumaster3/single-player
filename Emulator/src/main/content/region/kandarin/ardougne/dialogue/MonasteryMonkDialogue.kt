@@ -2,7 +2,7 @@ package content.region.kandarin.ardougne.dialogue
 
 import content.region.kandarin.ardougne.quest.drunkmonk.dialogue.MonasteryMonkDialogueFile
 import core.api.openDialogue
-import core.api.quest.getQuestStage
+import core.api.getQuestStage
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

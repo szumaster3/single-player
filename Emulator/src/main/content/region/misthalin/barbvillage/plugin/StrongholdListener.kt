@@ -1,6 +1,7 @@
 package content.region.misthalin.barbvillage.plugin
 
 import core.api.*
+import core.api.unlockEmote
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.player.link.emote.Emotes
@@ -69,7 +70,7 @@ class StrongholdListener : InteractionListener {
                             sendMessage(player, "You don't have enough inventory space.")
                             return@addDialogueAction
                         }
-                        player.emoteManager.unlock(emote)
+                        unlockEmote(player, emote)
                         player.getSavedData().globalData.getStrongHoldRewards()[rewardIndex] = true
                         sendItemDialogue(player, Items.COINS_8898, "...congratulations adventurer, you have been deemed worthy of this reward. $emoteMessage")
                         if (rewardIndex == 2) {

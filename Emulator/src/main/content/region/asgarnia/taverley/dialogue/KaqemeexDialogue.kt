@@ -1,8 +1,8 @@
 package content.region.asgarnia.taverley.dialogue
 
-import core.api.quest.finishQuest
-import core.api.quest.getQuestStage
-import core.api.quest.startQuest
+import core.api.finishQuest
+import core.api.getQuestStage
+import core.api.startQuest
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.global.Skillcape.isMaster

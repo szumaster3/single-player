@@ -1,7 +1,7 @@
 package content.region.tirannwn.lletya.quest.roving_elves.plugin
 
 import content.global.skill.agility.AgilityHandler
-import core.api.quest.hasRequirement
+import core.api.hasRequirement
 import core.api.sendMessage
 import core.cache.def.impl.SceneryDefinition
 import core.game.interaction.OptionHandler

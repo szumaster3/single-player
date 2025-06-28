@@ -2,7 +2,7 @@ package content.region.kandarin.seers.dialogue
 
 import content.region.kandarin.seers.quest.scorpcatcher.dialogue.SeerMirrorDialogue
 import core.api.openDialogue
-import core.api.quest.isQuestInProgress
+import core.api.isQuestInProgress
 import core.api.sendItemDialogue
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim

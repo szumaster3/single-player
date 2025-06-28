@@ -6,7 +6,7 @@ import content.global.skill.magic.TeleportMethod
 import content.global.skill.magic.spells.ModernSpells
 import core.ServerConstants
 import core.api.*
-import core.api.quest.hasRequirement
+import core.api.hasRequirement
 import core.game.event.TeleportEvent
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.TeleportManager

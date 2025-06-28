@@ -3,7 +3,7 @@ package core.game.node.entity.player.link
 import content.data.GameAttributes
 import content.region.island.tutorial.plugin.TutorialStage.hideTabs
 import core.api.log
-import core.api.quest.isQuestComplete
+import core.api.isQuestComplete
 import core.api.setVarp
 import core.game.component.CloseEvent
 import core.game.component.Component

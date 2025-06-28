@@ -3,8 +3,8 @@ package content.global.plugin.npc
 import content.global.plugin.scenery.BankBoothPlugin
 import core.api.getScenery
 import core.api.hasSealOfPassage
-import core.api.interaction.openBankAccount
-import core.api.interaction.openGrandExchangeCollectionBox
+import core.api.openBankAccount
+import core.api.openGrandExchangeCollectionBox
 import core.api.openDialogue
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener

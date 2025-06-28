@@ -2,7 +2,7 @@ package content.global.skill.construction.decoration.costumeroom
 
 import content.global.skill.construction.decoration.costumeroom.data.Cape
 import core.api.*
-import core.api.ui.sendInterfaceConfig
+import core.api.sendInterfaceConfig
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.item.Item

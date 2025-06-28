@@ -1,8 +1,8 @@
 package content.region.kandarin.gnome.quest.tree.dialogue
 
 import core.api.inInventory
-import core.api.quest.getQuestStage
-import core.api.quest.setQuestStage
+import core.api.getQuestStage
+import core.api.setQuestStage
 import core.api.removeItem
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim

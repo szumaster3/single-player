@@ -2,7 +2,7 @@ package content.region.kandarin.camelot.quest.arthur
 
 import content.data.GameAttributes
 import core.api.inInventory
-import core.api.quest.updateQuestTab
+import core.api.updateQuestTab
 import core.api.sendItemZoomOnInterface
 import core.api.sendString
 import core.api.setVarbit

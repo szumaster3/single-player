@@ -1,7 +1,7 @@
 package content.region.kandarin.gnome.quest.tree.dialogue.trackergnomes
 
 import core.api.inInventory
-import core.api.quest.getQuestStage
+import core.api.getQuestStage
 import core.api.sendDialogue
 import core.api.setAttribute
 import core.game.dialogue.Dialogue

@@ -2,7 +2,7 @@ package content.global.plugin.item
 
 import content.data.GameAttributes
 import core.api.*
-import core.api.quest.isQuestComplete
+import core.api.isQuestComplete
 import core.cache.def.impl.ItemDefinition
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener

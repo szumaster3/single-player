@@ -3,7 +3,7 @@ package core.game.global
 import core.api.freeSlots
 import core.api.removeItem
 import core.api.sendDialogue
-import core.api.ui.closeDialogue
+import core.api.closeDialogue
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import org.rs.consts.Items

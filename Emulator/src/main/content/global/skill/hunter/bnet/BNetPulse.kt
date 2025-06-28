@@ -3,7 +3,7 @@ package content.global.skill.hunter.bnet
 import core.api.animate
 import core.api.getStatLevel
 import core.api.playAudio
-import core.api.quest.hasRequirement
+import core.api.hasRequirement
 import core.api.sendMessage
 import core.game.container.impl.EquipmentContainer
 import core.game.node.entity.combat.DeathTask

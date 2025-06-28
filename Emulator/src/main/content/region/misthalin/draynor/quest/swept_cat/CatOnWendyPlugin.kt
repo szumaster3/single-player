@@ -2,7 +2,7 @@ package content.region.misthalin.draynor.quest.swept_cat
 
 import core.api.Container
 import core.api.openDialogue
-import core.api.quest.isQuestComplete
+import core.api.isQuestComplete
 import core.api.removeItem
 import core.api.sendMessage
 import core.game.dialogue.DialogueFile

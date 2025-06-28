@@ -1,7 +1,7 @@
 package content.region.desert.alkharid.dialogue
 
 import core.api.getScenery
-import core.api.quest.getQuestStage
+import core.api.getQuestStage
 import core.api.removeItem
 import core.api.sendMessage
 import core.game.dialogue.DialogueFile

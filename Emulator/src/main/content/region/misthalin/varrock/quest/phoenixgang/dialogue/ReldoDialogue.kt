@@ -1,7 +1,7 @@
 package content.region.misthalin.varrock.quest.phoenixgang.dialogue
 
 import content.region.misthalin.varrock.quest.phoenixgang.ShieldofArrav
-import core.api.quest.getQuestStage
+import core.api.getQuestStage
 import core.game.dialogue.Dialogue
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player

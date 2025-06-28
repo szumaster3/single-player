@@ -4,8 +4,8 @@ import content.region.asgarnia.falador.dialogue.ChemistDiaryDialogue
 import content.region.kandarin.ardougne.east.quest.biohazard.dialogue.ChemistBiohazardDialogue
 import core.api.addItemOrDrop
 import core.api.openDialogue
-import core.api.quest.isQuestComplete
-import core.api.quest.isQuestInProgress
+import core.api.isQuestComplete
+import core.api.isQuestInProgress
 import core.api.sendDialogueOptions
 import core.api.setTitle
 import core.game.dialogue.Dialogue

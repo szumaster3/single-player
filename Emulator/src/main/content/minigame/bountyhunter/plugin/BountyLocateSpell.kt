@@ -1,6 +1,6 @@
 package content.minigame.bountyhunter.plugin
 
-import core.api.event.isStunned
+import core.api.isStunned
 import core.api.hasTimerActive
 import core.api.sendMessage
 import core.game.interaction.MovementPulse

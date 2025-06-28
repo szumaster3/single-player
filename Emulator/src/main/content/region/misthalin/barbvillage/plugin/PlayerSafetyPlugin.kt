@@ -2,6 +2,7 @@ package content.region.misthalin.barbvillage.plugin
 
 import content.data.GameAttributes
 import core.api.*
+import core.api.unlockEmote
 import core.game.activity.Cutscene
 import core.game.component.Component
 import core.game.global.action.DoorActionHandler
@@ -274,7 +275,7 @@ class PlayerSafetyPlugin :
             }
 
             if (player.globalData.getTestStage() == 3) {
-                player.emoteManager.unlock(Emotes.SAFETY_FIRST)
+                unlockEmote(player, Emotes.SAFETY_FIRST)
                 addItemOrDrop(player, Items.COINS_995, 10000)
                 addItemOrDrop(player, Items.SAFETY_GLOVES_12629)
                 sendItemDialogue(

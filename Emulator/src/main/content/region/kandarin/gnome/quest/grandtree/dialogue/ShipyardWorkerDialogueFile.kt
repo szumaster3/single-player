@@ -1,7 +1,7 @@
 package content.region.kandarin.gnome.quest.grandtree.dialogue
 
 import core.api.getAttribute
-import core.api.quest.getQuestStage
+import core.api.getQuestStage
 import core.api.setAttribute
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim

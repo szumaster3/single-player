@@ -1,7 +1,7 @@
 package content.region.morytania.phas.quest.ahoy.plugin
 
 import core.api.*
-import core.api.quest.setQuestStage
+import core.api.setQuestStage
 import core.game.component.Component
 import core.game.interaction.QueueStrength
 import core.game.node.entity.combat.ImpactHandler

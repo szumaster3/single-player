@@ -1,7 +1,7 @@
 package content.region.island.apeatoll.dialogue
 
 import core.api.addItem
-import core.api.interaction.openNpcShop
+import core.api.openNpcShop
 import core.api.removeItem
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim

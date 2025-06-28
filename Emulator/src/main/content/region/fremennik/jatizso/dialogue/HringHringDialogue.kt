@@ -1,6 +1,6 @@
 package content.region.fremennik.jatizso.dialogue
 
-import core.api.interaction.openNpcShop
+import core.api.openNpcShop
 import core.game.dialogue.Dialogue
 import core.game.dialogue.Topic
 import core.game.node.entity.npc.NPC

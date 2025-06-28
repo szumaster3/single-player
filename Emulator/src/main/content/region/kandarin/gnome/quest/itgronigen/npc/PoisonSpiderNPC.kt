@@ -1,6 +1,6 @@
 package content.region.kandarin.gnome.quest.itgronigen.npc
 
-import core.api.event.applyPoison
+import core.api.applyPoison
 import core.game.node.entity.Entity
 import core.game.node.entity.npc.AbstractNPC
 import core.game.node.entity.player.Player

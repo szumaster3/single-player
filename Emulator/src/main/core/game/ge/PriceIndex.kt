@@ -1,6 +1,6 @@
 package core.game.ge
 
-import core.api.item.itemDefinition
+import core.api.itemDefinition
 import java.sql.ResultSet
 
 /**

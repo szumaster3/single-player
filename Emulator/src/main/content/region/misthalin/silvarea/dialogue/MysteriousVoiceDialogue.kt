@@ -1,7 +1,7 @@
 package content.region.misthalin.silvarea.dialogue
 
-import core.api.quest.getQuestStage
-import core.api.quest.setQuestStage
+import core.api.getQuestStage
+import core.api.setQuestStage
 import core.api.sendDialogue
 import core.api.sendDialogueLines
 import core.game.dialogue.DialogueFile

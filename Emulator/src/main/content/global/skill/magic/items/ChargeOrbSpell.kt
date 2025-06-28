@@ -3,7 +3,7 @@ package content.global.skill.magic.items
 import content.global.skill.magic.SpellListener
 import content.global.skill.magic.spells.ModernSpells
 import core.api.*
-import core.api.skill.sendSkillDialogue
+import core.api.sendSkillDialogue
 import core.game.event.ResourceProducedEvent
 import core.game.node.Node
 import core.game.node.entity.impl.Animator

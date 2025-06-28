@@ -1,7 +1,7 @@
 package content.region.misthalin.varrock.dialogue
 
-import core.api.interaction.openNpcShop
-import core.api.quest.isQuestComplete
+import core.api.openNpcShop
+import core.api.isQuestComplete
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.dialogue.IfTopic

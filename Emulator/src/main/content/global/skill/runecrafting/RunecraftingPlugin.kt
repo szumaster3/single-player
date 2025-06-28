@@ -3,9 +3,9 @@ package content.global.skill.runecrafting
 import content.global.travel.EssenceTeleport.home
 import content.global.travel.EssenceTeleport.teleport
 import core.api.*
-import core.api.quest.hasRequirement
-import core.api.quest.isQuestComplete
-import core.api.ui.setMinimapState
+import core.api.hasRequirement
+import core.api.isQuestComplete
+import core.api.setMinimapState
 import core.cache.def.impl.ItemDefinition
 import core.cache.def.impl.NPCDefinition
 import core.cache.def.impl.SceneryDefinition

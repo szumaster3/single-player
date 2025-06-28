@@ -4,7 +4,7 @@ import content.region.fremennik.waterbirth.dialogue.BardurDialogue
 import content.region.fremennik.waterbirth.dialogue.BardurExchangeDialogue
 import content.region.fremennik.waterbirth.npc.BardurNPC
 import core.api.openDialogue
-import core.api.quest.isQuestComplete
+import core.api.isQuestComplete
 import core.api.sendMessage
 import core.api.sendNPCDialogue
 import core.game.interaction.IntType

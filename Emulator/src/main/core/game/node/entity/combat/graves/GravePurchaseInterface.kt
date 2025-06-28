@@ -1,7 +1,7 @@
 package core.game.node.entity.combat.graves
 
 import core.api.*
-import core.api.quest.isQuestComplete
+import core.api.isQuestComplete
 import core.game.interaction.InterfaceListener
 import core.game.node.item.Item
 import org.rs.consts.Components

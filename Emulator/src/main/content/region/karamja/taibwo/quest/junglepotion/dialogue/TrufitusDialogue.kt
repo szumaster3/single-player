@@ -2,7 +2,7 @@ package content.region.karamja.taibwo.quest.junglepotion.dialogue
 
 import content.region.karamja.taibwo.quest.junglepotion.plugin.JungleObjective
 import core.api.*
-import core.api.quest.finishQuest
+import core.api.finishQuest
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.player.Player

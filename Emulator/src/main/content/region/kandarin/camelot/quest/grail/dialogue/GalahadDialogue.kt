@@ -1,8 +1,8 @@
 package content.region.kandarin.camelot.quest.grail.dialogue
 
 import core.api.addItemOrDrop
-import core.api.quest.getQuestStage
-import core.api.quest.isQuestComplete
+import core.api.getQuestStage
+import core.api.isQuestComplete
 import core.api.sendDialogue
 import core.api.sendItemDialogue
 import core.game.dialogue.DialogueFile

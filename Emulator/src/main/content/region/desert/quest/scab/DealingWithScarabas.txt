@@ -2,7 +2,7 @@
 
 import org.rs.consts.Vars
 import core.api.hasLevelStat
-import core.api.quest.isQuestComplete
+import core.api.isQuestComplete
 import core.api.rewardXP
 import core.api.setVarbit
 import core.game.node.entity.player.Player

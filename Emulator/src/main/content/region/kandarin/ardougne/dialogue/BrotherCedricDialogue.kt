@@ -2,7 +2,7 @@ package content.region.kandarin.ardougne.dialogue
 
 import content.region.kandarin.ardougne.quest.drunkmonk.dialogue.BrotherCedricDialogueFile
 import core.api.openDialogue
-import core.api.quest.getQuestStage
+import core.api.getQuestStage
 import core.api.sendDialogue
 import core.game.dialogue.Dialogue
 import core.game.node.entity.npc.NPC

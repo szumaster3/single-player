@@ -5,8 +5,8 @@ import content.region.misthalin.varrock.quest.firedup.dialogue.KingRoaldDialogue
 import content.region.misthalin.varrock.quest.phoenixgang.dialogue.KingRoaldDialogue
 import content.region.misthalin.silvarea.quest.priest.dialogue.KingRoaldPriestInPerilDialogue
 import core.api.getAttribute
-import core.api.quest.getQuestStage
-import core.api.quest.isQuestComplete
+import core.api.getQuestStage
+import core.api.isQuestComplete
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

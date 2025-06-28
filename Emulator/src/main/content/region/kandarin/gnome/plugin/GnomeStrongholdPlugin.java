@@ -22,7 +22,7 @@ import core.plugin.Plugin;
 import org.rs.consts.Quests;
 
 import static core.api.ContentAPIKt.*;
-import static core.api.quest.QuestAPIKt.getQuestStage;
+import static core.api.QuestAPIKt.getQuestStage;
 
 /**
  * The type Gnome stronghold plugin.

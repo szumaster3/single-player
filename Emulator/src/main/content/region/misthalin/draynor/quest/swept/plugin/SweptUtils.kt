@@ -2,9 +2,10 @@ package content.region.misthalin.draynor.quest.swept.plugin
 
 import content.data.GameAttributes
 import core.api.*
-import core.api.interaction.getNPCName
-import core.api.quest.getQuestStage
-import core.api.quest.setQuestStage
+import core.api.getNPCName
+import core.api.getQuestStage
+import core.api.setQuestStage
+import core.api.unlockEmote
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
@@ -235,7 +236,7 @@ internal object SweptUtils {
         emote: Emotes,
         emoteName: String,
     ) {
-        player.emoteManager.unlock(emote)
+        unlockEmote(player, emote)
         openInterface(player, Components.DOUBLEOBJBOX_131).also {
             sendModelOnInterface(player, Components.DOUBLEOBJBOX_131, 2, BROOM_MODEL, -1)
             sendAngleOnInterface(player, Components.DOUBLEOBJBOX_131, 2, 850, 200, 1500)
@@ -246,8 +247,6 @@ internal object SweptUtils {
                 1,
             )
         }
-
-        player.emoteManager.refresh()
     }
 
     /**

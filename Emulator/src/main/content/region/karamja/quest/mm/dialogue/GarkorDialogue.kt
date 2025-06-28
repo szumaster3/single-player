@@ -3,8 +3,8 @@ package content.region.karamja.quest.mm.dialogue
 import content.region.karamja.quest.mm.cutscene.DungeonPlanWithAwowogeiCutscene
 import core.api.addItem
 import core.api.anyInEquipment
-import core.api.quest.getQuestStage
-import core.api.quest.setQuestStage
+import core.api.getQuestStage
+import core.api.setQuestStage
 import core.api.sendDialogue
 import core.api.sendItemDialogue
 import core.game.dialogue.Dialogue

@@ -2,7 +2,7 @@ package content.global.plugin.scenery
 
 import core.api.dumpContainer
 import core.api.getUsedOption
-import core.api.interaction.restrictForIronman
+import core.api.restrictForIronman
 import core.api.removeTabs
 import core.api.sendString
 import core.game.component.CloseEvent

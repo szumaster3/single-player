@@ -1,8 +1,8 @@
 package content.region.karamja.quest.totem.dialogue
 
 import core.api.inInventory
-import core.api.quest.finishQuest
-import core.api.quest.isQuestComplete
+import core.api.finishQuest
+import core.api.isQuestComplete
 import core.api.removeItem
 import core.api.sendItemDialogue
 import core.game.dialogue.Dialogue

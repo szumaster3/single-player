@@ -1,7 +1,7 @@
 package content.global.plugin.item
 
 import content.data.consumables.Consumables
-import core.api.combat.delayAttack
+import core.api.delayAttack
 import core.api.getUsedOption
 import core.api.getWorldTicks
 import core.game.interaction.Clocks

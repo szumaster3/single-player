@@ -2,7 +2,7 @@ package content.region.misthalin.lumbridge.quest.lost_tribe.cutscene
 
 import core.api.animate
 import core.api.face
-import core.api.quest.finishQuest
+import core.api.finishQuest
 import core.game.activity.Cutscene
 import core.game.component.Component
 import core.game.dialogue.FaceAnim

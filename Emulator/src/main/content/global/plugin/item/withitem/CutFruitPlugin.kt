@@ -1,7 +1,7 @@
 package content.global.plugin.item.withitem
 
 import core.api.*
-import core.api.skill.sendSkillDialogue
+import core.api.sendSkillDialogue
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.item.Item

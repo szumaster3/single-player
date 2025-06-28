@@ -5,8 +5,8 @@ import content.global.skill.slayer.SlayerManager
 import core.ServerConstants
 import core.Util
 import core.api.*
-import core.api.interaction.getSlayerTaskKillsRemaining
-import core.api.interaction.getSlayerTaskName
+import core.api.getSlayerTaskKillsRemaining
+import core.api.getSlayerTaskName
 import core.game.dialogue.FaceAnim
 import core.game.event.TeleportEvent
 import core.game.node.entity.player.Player

@@ -2,7 +2,7 @@ package content.region.kandarin.seers.quest.elemental_quest_2
 
 import content.region.kandarin.seers.quest.elemental_quest_2.plugin.EW2Utils
 import core.api.hasLevelStat
-import core.api.quest.isQuestComplete
+import core.api.isQuestComplete
 import core.api.removeAttributes
 import core.api.rewardXP
 import core.api.setVarbit

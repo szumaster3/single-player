@@ -1,7 +1,7 @@
 package content.region.asgarnia.falador.quest.fortress.dialogue
 
 import core.api.*
-import core.api.quest.*
+import core.api.*
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

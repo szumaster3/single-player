@@ -2,8 +2,8 @@ package content.region.kandarin.ardougne.east.quest.biohazard.dialogue
 
 import core.api.anyInInventory
 import core.api.inInventory
-import core.api.quest.getQuestStage
-import core.api.quest.setQuestStage
+import core.api.getQuestStage
+import core.api.setQuestStage
 import core.api.removeItem
 import core.api.sendMessage
 import core.game.dialogue.DialogueFile

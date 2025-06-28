@@ -1,6 +1,6 @@
 package core.game.node.entity.combat
 
-import core.api.event.applyPoison
+import core.api.applyPoison
 import core.api.log
 import core.game.container.impl.EquipmentContainer
 import core.game.node.entity.Entity

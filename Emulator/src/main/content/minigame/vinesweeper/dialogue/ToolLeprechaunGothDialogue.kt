@@ -1,7 +1,7 @@
 package content.minigame.vinesweeper.dialogue
 
 import content.minigame.vinesweeper.plugin.VinesweeperPlugin
-import core.api.interaction.openNpcShop
+import core.api.openNpcShop
 import core.api.openInterface
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim

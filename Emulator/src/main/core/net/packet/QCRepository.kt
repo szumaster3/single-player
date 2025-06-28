@@ -1,7 +1,7 @@
 package core.net.packet
 
 import content.global.skill.slayer.SlayerManager
-import core.api.interaction.getSlayerTask
+import core.api.getSlayerTask
 import core.cache.Cache
 import core.cache.CacheIndex
 import core.cache.def.impl.DataMap

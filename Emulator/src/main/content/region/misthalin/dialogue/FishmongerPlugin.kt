@@ -1,7 +1,7 @@
 package content.region.misthalin.dialogue
 
 import content.region.fremennik.rellekka.quest.viking.FremennikTrials
-import core.api.interaction.openNpcShop
+import core.api.openNpcShop
 import core.api.sendNPCDialogue
 import core.game.dialogue.FaceAnim
 import core.game.interaction.IntType

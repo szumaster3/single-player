@@ -1,7 +1,7 @@
 package content.region.other.zanaris.npc
 
 import core.api.*
-import core.api.interaction.transformNpc
+import core.api.transformNpc
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.Node

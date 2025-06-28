@@ -1,6 +1,6 @@
 package content.region.asgarnia.quest.eadgar
 
-import core.api.quest.isQuestComplete
+import core.api.isQuestComplete
 import core.api.sendDialogue
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim

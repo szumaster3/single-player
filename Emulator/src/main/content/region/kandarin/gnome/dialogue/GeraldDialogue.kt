@@ -1,7 +1,7 @@
 package content.region.kandarin.gnome.dialogue
 
 import core.api.animate
-import core.api.quest.getQuestStage
+import core.api.getQuestStage
 import core.api.runTask
 import core.api.stopWalk
 import core.game.dialogue.Dialogue
