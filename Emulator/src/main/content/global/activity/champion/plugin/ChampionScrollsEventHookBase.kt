@@ -1,5 +1,6 @@
 package content.global.activity.champion.plugin
 
+import core.api.Event.NPCKilled
 import core.api.LoginListener
 import core.game.event.Event
 import core.game.event.EventHook
@@ -37,7 +38,7 @@ abstract class ChampionScrollsEventHookBase : LoginListener {
     }
 
     final override fun login(player: Player) {
-        player.hook(core.api.NPCKilled, EventHandler(this, ::onNpcKilled))
+        player.hook(NPCKilled, EventHandler(this, ::onNpcKilled))
     }
 
     protected open fun onNpcKilled(player: Player, event: NPCKillEvent) {}

@@ -24,9 +24,7 @@ import core.tools.colorize
 import core.tools.secondsToTicks
 import org.json.simple.JSONArray
 import org.json.simple.JSONObject
-import org.rs.consts.Animations
-import org.rs.consts.Items
-import org.rs.consts.Sounds
+import org.rs.consts.*
 import java.util.Map
 import kotlin.math.min
 
@@ -43,7 +41,7 @@ class GraveController : PersistWorld, TickListener, InteractionListener, Command
         define("forcegravedeath", Privilege.ADMIN, "", "Forces a death that should produce a grave.") { player, _ ->
             player.details.rights = Rights.REGULAR_PLAYER
             setAttribute(player, GameAttributes.TUTORIAL_COMPLETE, true)
-            player.impactHandler.manualHit(player, player.skills.lifepoints, ImpactHandler.HitsplatType.NORMAL)
+            impact(player, player.skills.lifepoints, ImpactHandler.HitsplatType.NORMAL)
             notify(player, "Grave created at ${player.getAttribute("/save:original-loc", player.location)}")
             GameWorld.Pulser.submit(
                 object : Pulse(15) {
@@ -84,10 +82,10 @@ class GraveController : PersistWorld, TickListener, InteractionListener, Command
             else -> {}
         }
 
-        setVarbit(player, 4191, if (isGraniteBackground) 1 else 0)
+        setVarbit(player, Vars.VARBIT_IFACE_GRAVE_DISPLAY_4191, if (isGraniteBackground) 1 else 0)
 
-        openInterface(player, 266)
-        sendString(player, grave.getFormattedText(), 266, 23)
+        openInterface(player, Components.GRAVESTONE_266)
+        sendString(player, grave.getFormattedText(), Components.GRAVESTONE_266, 23)
         sendMessage(player, "It looks like it'll survive another ${grave.getFormattedTimeRemaining()}.")
 
         if (player.details.uid == grave.ownerUid) {

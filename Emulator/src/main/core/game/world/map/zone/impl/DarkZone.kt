@@ -2,11 +2,7 @@ package core.game.world.map.zone.impl
 
 import content.data.LightSource.Companion.forProductId
 import content.data.LightSource.Companion.getActiveLightSource
-import core.api.UsedWith
-import core.api.getItemName
-import core.api.impact
-import core.api.runTask
-import core.api.sendMessage
+import core.api.*
 import core.game.component.Component
 import core.game.event.EventHook
 import core.game.event.UseWithEvent
@@ -93,7 +89,7 @@ class DarkZone : MapZone("Dark zone", true), EventHook<UseWithEvent> {
                 player.interfaceManager.openOverlay(Component(source.interfaceId))
             }
         }
-        entity.hook(UsedWith, this)
+        entity.hook(Event.UsedWith, this)
         return true
     }
 

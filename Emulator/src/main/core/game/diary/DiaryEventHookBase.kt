@@ -1,7 +1,7 @@
 package core.game.diary
 
 import core.api.*
-import core.api
+import core.api.Event
 import core.game.event.*
 import core.game.node.entity.Entity
 import core.game.node.entity.player.Player

@@ -91,12 +91,7 @@ class Grave : AbstractNPC {
         }
 
         GraveController.activeGraves[ownerUid] = this
-        sendMessage(
-            player,
-            colorize(
-                "%RBecause of your current gravestone, you have ${type.durationMinutes} minutes to get your items back.",
-            ),
-        )
+        sendMessage(player, colorize("%RBecause of your current gravestone, you have ${type.durationMinutes} minutes to get your items back."))
     }
 
     fun setupFromJsonParams(playerUid: Int, ticks: Int, location: Location, items: Array<Item>, username: String) {

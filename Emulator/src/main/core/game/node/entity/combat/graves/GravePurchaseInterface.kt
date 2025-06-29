@@ -6,20 +6,19 @@ import core.game.interaction.InterfaceListener
 import core.game.node.item.Item
 import org.rs.consts.Components
 import org.rs.consts.Items
-import org.rs.consts.Quests
 import org.rs.consts.Vars
 
 class GravePurchaseInterface : InterfaceListener {
     val BUTTON_CONFIRM = 34
     val AVAILABLE_GRAVES_BITFIELD = 0xFFF
-    val AVAILABLE_GRAVES_VARBIT = 4191
-    val CURRENT_GRAVE_VARBIT = 4190
+    private val availableGraveVarbit = Vars.VARBIT_IFACE_GRAVE_DISPLAY_4191
+    private val currentGraveVarbit = Vars.VARBIT_CURRENT_GRAVE_4190
 
     override fun defineInterfaceListeners() {
         onOpen(Components.GRAVESTONE_SHOP_652) { player, _ ->
             val userType = GraveController.getGraveType(player).ordinal
-            setVarbit(player, AVAILABLE_GRAVES_VARBIT, AVAILABLE_GRAVES_BITFIELD)
-            setVarbit(player, CURRENT_GRAVE_VARBIT, userType)
+            setVarbit(player, availableGraveVarbit, AVAILABLE_GRAVES_BITFIELD)
+            setVarbit(player, currentGraveVarbit, userType)
             val settings = IfaceSettingsBuilder().enableAllOptions().build()
             player.packetDispatch.sendIfaceSettings(settings, 34, Components.GRAVESTONE_SHOP_652, 0, 13)
             return@onOpen true
