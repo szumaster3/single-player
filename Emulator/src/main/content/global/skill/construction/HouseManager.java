@@ -33,7 +33,6 @@ import java.nio.ByteBuffer;
 import static core.api.ContentAPIKt.*;
 import static core.api.regionspec.RegionSpecificationKt.fillWith;
 import static core.api.regionspec.RegionSpecificationKt.using;
-import static core.api.InterfaceAPIKt.setMinimapState;
 import static core.tools.GlobalsKt.DARK_BLUE;
 
 /**

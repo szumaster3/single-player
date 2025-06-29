@@ -21,9 +21,7 @@ import kotlin.jvm.functions.Function2;
 
 import java.util.Deque;
 
-import static core.api.ContentAPIKt.clearHintIcon;
-import static core.api.ContentAPIKt.registerHintIcon;
-import static core.api.PathfindingAPIKt.truncateLoc;
+import static core.api.ContentAPIKt.*;
 
 /**
  * Handles movement pulse.

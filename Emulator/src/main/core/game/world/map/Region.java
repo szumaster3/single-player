@@ -310,57 +310,72 @@ public class Region {
 
     /**
      * Loads the flags for a region.
-     * @param r The region.
+     * @param region The region.
      * @param build if all objects in this region should be stored (rather than just the ones with options).
      */
-    public static void load(Region r, boolean build) {
+    public static void load(Region region, boolean build) {
         try {
-            if (r.isLoaded() && r.isBuild() == build) {
+            if (region.isLoaded() && region.isBuild() == build) {
                 return;
             }
-            r.build = build;
-            boolean dynamic = r instanceof DynamicRegion;
-            int regionId = dynamic ? ((DynamicRegion) r).getRegionId() : r.getId();
-            int regionX = regionId >> 8 & 0xFF;
-            int regionY = regionId & 0xFF;
-            int mapscapeId = Cache.getArchiveId(CacheIndex.LANDSCAPES, "m" + regionX + "_" + regionY);
 
-            if (mapscapeId < 0 && !dynamic) {
-                r.setLoaded(true);
+            region.build = build;
+            boolean isDynamic = region instanceof DynamicRegion;
+            int regionId = isDynamic ? region.getRegionId() : region.getId();
+            int regionX = (regionId >> 8) & 0xFF;
+            int regionY = regionId & 0xFF;
+
+            String regionName = regionX + "_" + regionY;
+            int mapscapeId = Cache.getArchiveId(CacheIndex.LANDSCAPES, "m" + regionName);
+
+            if (mapscapeId < 0 && !isDynamic) {
+                region.setLoaded(true);
                 return;
             }
 
             byte[][][] mapscapeData = new byte[4][SIZE][SIZE];
-            for (RegionPlane plane : r.planes) {
+            for (RegionPlane plane : region.planes) {
                 plane.getFlags().setLandscape(new boolean[SIZE][SIZE]);
-                //plane.getFlags().setClippingFlags(new int[SIZE][SIZE]);
-                //plane.getProjectileFlags().setClippingFlags(new int[SIZE][SIZE]);
+                plane.getFlags().setClippingFlags(new int[SIZE][SIZE]);
+                plane.getProjectileFlags().setClippingFlags(new int[SIZE][SIZE]);
             }
+
             if (mapscapeId > -1) {
-                ByteBuffer mapscape = ByteBuffer.wrap(Cache.getData(CacheIndex.LANDSCAPES, "m" + regionX + "_"+ regionY));
-                MapscapeParser.parse(r, mapscapeData, mapscape);
+                byte[] mapscapeBytes = Cache.getData(CacheIndex.LANDSCAPES, "m" + regionName);
+                ByteBuffer mapscapeBuffer = ByteBuffer.wrap(mapscapeBytes);
+                MapscapeParser.parse(region, mapscapeData, mapscapeBuffer);
             }
-            r.hasFlags = dynamic;
-            r.setLoaded(true);
-            int landscapeId = Cache.getArchiveId(CacheIndex.LANDSCAPES, "l" + regionX + "_" + regionY);
+
+            region.hasFlags = isDynamic;
+            region.setLoaded(true);
+
+            int landscapeId = Cache.getArchiveId(CacheIndex.LANDSCAPES, "l" + regionName);
             if (landscapeId > -1) {
-                byte[] landscape = Cache.getData(CacheIndex.LANDSCAPES, "l" + regionX + "_"+ regionY, XteaParser.Companion.getRegionXTEA(regionId));
-                if (landscape == null || landscape.length < 4) {
+                byte[] landscapeBytes = Cache.getData(
+                        CacheIndex.LANDSCAPES,
+                        "l" + regionName,
+                        XteaParser.Companion.getRegionXTEA(regionId)
+                );
+
+                if (landscapeBytes == null || landscapeBytes.length < 4) {
                     return;
                 }
-                r.hasFlags = true;
+
+                region.hasFlags = true;
                 try {
-                    LandscapeParser.parse(r, mapscapeData, ByteBuffer.wrap(landscape), build);
+                    ByteBuffer landscapeBuffer = ByteBuffer.wrap(landscapeBytes);
+                    LandscapeParser.parse(region, mapscapeData, landscapeBuffer, build);
                 } catch (Throwable t) {
-                    new Throwable("Failed parsing region " + regionId + "!", t).printStackTrace();
+                    log(Region.class, Log.ERR, "Failed parsing region " + regionId + "!");
                 }
             }
-            MapscapeParser.clipMapscape(r, mapscapeData);
+
+            MapscapeParser.clipMapscape(region, mapscapeData);
+
         } catch (Throwable e) {
-            e.printStackTrace();
+            log(Region.class, Log.ERR, "Exception while loading region: " + e.getMessage());
         }
     }
-
 
     public static boolean unload(Region r) {
         return unload(r, false);

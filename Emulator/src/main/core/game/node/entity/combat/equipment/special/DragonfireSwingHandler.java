@@ -18,7 +18,6 @@ import core.tools.RandomFunction;
 import org.rs.consts.Sounds;
 
 import static core.api.ContentAPIKt.*;
-import static core.api.DamageCalculatorKt.calculateDragonFireMaxHit;
 
 /**
  * Handles dragonfire combat.

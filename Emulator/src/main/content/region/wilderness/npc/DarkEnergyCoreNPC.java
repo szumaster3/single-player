@@ -15,8 +15,8 @@ import core.plugin.Initializable;
 import core.tools.RandomFunction;
 import org.rs.consts.NPCs;
 
-import static core.api.EventAPIKt.isPoisoned;
-import static core.api.EventAPIKt.isStunned;
+import static core.api.ContentAPIKt.isPoisoned;
+import static core.api.ContentAPIKt.isStunned;
 
 /**
  * The type Dark energy core npc.

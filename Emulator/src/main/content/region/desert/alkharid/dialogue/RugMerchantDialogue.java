@@ -17,7 +17,6 @@ import kotlin.Unit;
 import org.rs.consts.*;
 
 import static core.api.ContentAPIKt.*;
-import static core.api.QuestAPIKt.hasRequirement;
 import static core.tools.GlobalsKt.colorize;
 
 /**

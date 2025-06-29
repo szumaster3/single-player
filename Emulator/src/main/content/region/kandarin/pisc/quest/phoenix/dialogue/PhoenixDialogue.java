@@ -14,7 +14,6 @@ import org.rs.consts.Quests;
 import org.rs.consts.Vars;
 
 import static core.api.ContentAPIKt.*;
-import static core.api.QuestAPIKt.isQuestComplete;
 import static core.tools.DialogueHelperKt.END_DIALOGUE;
 
 /**

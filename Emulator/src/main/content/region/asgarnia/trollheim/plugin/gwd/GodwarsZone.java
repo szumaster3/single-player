@@ -32,7 +32,6 @@ import core.tools.Log;
 import core.tools.StringUtils;
 
 import static core.api.ContentAPIKt.*;
-import static core.api.InterfaceAPIKt.setMinimapState;
 
 /**
  * The type Godwars zone.

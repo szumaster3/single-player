@@ -1,6 +1,6 @@
 package content.global.skill.hunter;
 
-import core.api;
+import core.api.Event;
 import core.api.LoginListener;
 import core.api.LogoutListener;
 import core.game.event.EventHook;

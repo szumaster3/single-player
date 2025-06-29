@@ -30,7 +30,6 @@ import org.rs.consts.NPCs;
 import org.rs.consts.Quests;
 
 import static core.api.ContentAPIKt.*;
-import static core.api.InterfaceAPIKt.unlockEmote;
 
 /**
  * Represents the goblin diplomacy cutscene plugin.

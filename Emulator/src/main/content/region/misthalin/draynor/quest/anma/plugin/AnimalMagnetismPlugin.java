@@ -38,9 +38,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static core.api.ContentAPIKt.*;
-import static core.api.NPCInteractionAPIKt.openNpcShop;
-import static core.api.QuestAPIKt.getQuestStage;
-import static core.api.QuestAPIKt.hasRequirement;
 
 /**
  * The type Animal magnetism plugin.
