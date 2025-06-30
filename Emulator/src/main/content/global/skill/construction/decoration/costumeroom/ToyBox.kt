@@ -1,8 +1,8 @@
-package content.global.skill.construction.decoration.costumeroom.data
+package content.global.skill.construction.decoration.costumeroom
 
 import org.rs.consts.Items
 
-enum class Toy(val displayId: Int, vararg val takeId: Int) {
+enum class ToyBox(val displayId: Int, vararg val takeId: Int) {
     JackLanternMask(Items.JACK_LANTERN_MASK_10723, Items.JACK_LANTERN_MASK_9920),
     SkeletonBoots(Items.SKELETON_BOOTS_10724, Items.SKELETON_BOOTS_9921),
     SkeletonGloves(Items.SKELETON_GLOVES_10725, Items.SKELETON_GLOVES_9922),

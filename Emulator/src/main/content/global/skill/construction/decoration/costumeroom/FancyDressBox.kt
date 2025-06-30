@@ -1,8 +1,8 @@
-package content.global.skill.construction.decoration.costumeroom.data
+package content.global.skill.construction.decoration.costumeroom
 
 import org.rs.consts.Items
 
-enum class FancyDress(val displayId: Int, vararg val takeId: Int) {
+enum class FancyDressBox(val displayId: Int, vararg val takeId: Int) {
     MimeCostume(Items.MIME_MASK_10629, Items.MIME_MASK_3057, Items.MIME_TOP_3058, Items.MIME_LEGS_3059, Items.MIME_GLOVES_3060, Items.MIME_BOOTS_3061),
     RoyalFrogCostume(Items.PRINCESS_BLOUSE_10630, Items.PRINCE_TUNIC_6184, Items.PRINCE_LEGGINGS_6185, Items.PRINCESS_BLOUSE_6186, Items.PRINCESS_SKIRT_6187),
     ZombieOutfit(Items.ZOMBIE_SHIRT_10631, Items.ZOMBIE_MASK_7594, Items.ZOMBIE_SHIRT_7592, Items.ZOMBIE_TROUSERS_7593, Items.ZOMBIE_GLOVES_7595, Items.ZOMBIE_BOOTS_7596),

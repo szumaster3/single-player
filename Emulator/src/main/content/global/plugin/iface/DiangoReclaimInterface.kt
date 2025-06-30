@@ -1,6 +1,6 @@
 package content.global.plugin.iface
 
-import content.global.skill.construction.decoration.costumeroom.data.Toy
+import content.global.skill.construction.decoration.costumeroom.ToyBox
 import core.api.openInterface
 import core.api.sendMessage
 import core.api.setAttribute
@@ -64,7 +64,7 @@ class DiangoReclaimInterface : ComponentPlugin() {
          * @return List of eligible reclaimable items.
          */
         private fun getEligibleItemsList(): List<Item> {
-            return Toy.values().filter { it != Toy.More && it != Toy.Back }
+            return ToyBox.values().filter { it != ToyBox.More && it != ToyBox.Back }
                 .map { Item(it.takeId.first()) }
         }
 

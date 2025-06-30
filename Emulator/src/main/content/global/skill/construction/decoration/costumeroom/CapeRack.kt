@@ -1,8 +1,8 @@
-package content.global.skill.construction.decoration.costumeroom.data
+package content.global.skill.construction.decoration.costumeroom
 
 import org.rs.consts.Items
 
-enum class Cape(val displayId: Int, vararg val takeId: Int) {
+enum class CapeRack(val displayId: Int, vararg val takeId: Int) {
     LegendsCape(Items.CAPE_OF_LEGENDS_10635, Items.CAPE_OF_LEGENDS_1052),
     ObsidianCape(Items.OBSIDIAN_CAPE_10636, Items.OBSIDIAN_CAPE_6568),
     FireCape(Items.FIRE_CAPE_10637, Items.FIRE_CAPE_6570),

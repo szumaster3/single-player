@@ -1,8 +1,8 @@
-package content.global.skill.construction.decoration.costumeroom.data
+package content.global.skill.construction.decoration.costumeroom
 
 import org.rs.consts.Items
 
-enum class Bookcase(val takeId: Int,) {
+enum class BookStorage(val takeId: Int) {
     ArenaBook(Items.ARENA_BOOK_6891),
     MyNotes(Items.MY_NOTES_11339),
     CrumblingTome(Items.CRUMBLING_TOME_4707),
@@ -35,4 +35,5 @@ enum class Bookcase(val takeId: Int,) {
     VarmensNotes(Items.VARMENS_NOTES_4616);
 
     val labelId: Int get() = 56 + (ordinal * 2)
+    val iconId: Int get() = 165 + (ordinal * 2)
 }
