@@ -39,10 +39,10 @@ class MountedGloryPlugin : InteractionListener {
                     )
                     addDialogueAction(player) { player, button ->
                         when (button) {
-                            2 -> mountedGloryAction(player, node, 0)
-                            3 -> mountedGloryAction(player, node, 1)
-                            4 -> mountedGloryAction(player, node, 2)
-                            5 -> mountedGloryAction(player, node, 3)
+                            2 -> teleport(player, node, 0)
+                            3 -> teleport(player, node, 1)
+                            4 -> teleport(player, node, 2)
+                            5 -> teleport(player, node, 3)
                             6 -> closeDialogue(player)
                         }
                     }
@@ -62,7 +62,7 @@ class MountedGloryPlugin : InteractionListener {
         }
     }
 
-    private fun mountedGloryAction(
+    private fun teleport(
         player: Player,
         `object`: Node,
         int: Int,
