@@ -43,7 +43,7 @@ class CookingRecipeTests {
                 assertTrue(success, "Recipe ${recipe.name} should cook successfully")
                 assertEquals(initialIngredientAmount - 1, player.inventory.getAmount(recipe.ingredientIds.first()), "Ingredient should decrease by 1")
                 assertEquals(initialSecondaryAmount - 1, player.inventory.getAmount(recipe.secondaryId), "Secondary ingredient should decrease by 1")
-                assertTrue(inInventory(player, recipe.productId), "Product should be added to inventory")
+                assertTrue(inInventory(player, recipe.productId!!), "Product should be added to inventory")
 
                 val expectedProduct = recipe.productId
                 val actualProduct = getProductFromIngredients(recipe.ingredientIds, recipe.secondaryId)
@@ -65,7 +65,7 @@ class CookingRecipeTests {
         if (!player.inventory.remove(Item(ingredientId, 1))) return false
         if (!player.inventory.remove(Item(recipe.secondaryId, 1))) return false
 
-        addItem(player, recipe.productId, 1)
+        addItem(player, recipe.productId!!, 1)
         recipe.onProcess?.invoke(player)
 
         return true
