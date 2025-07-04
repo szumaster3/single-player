@@ -1,7 +1,7 @@
 package content.global.skill.magic.spells.lunar
 
-import content.global.skill.construction.items.Plank
-import content.global.skill.construction.items.Plank.Companion.spellPrice
+import content.global.skill.construction.items.Planks
+import content.global.skill.construction.items.Planks.Companion.spellPrice
 import content.global.skill.magic.SpellListener
 import content.global.skill.magic.spells.LunarSpells
 import core.api.*
@@ -24,18 +24,18 @@ class PlankMakeSpell : SpellListener("lunar") {
                 ),
             )
 
-            val plank = Plank.getForLog(node!!.id)
-            if (plank == null) {
+            val planks = Planks.getForLog(node!!.id)
+            if (planks == null) {
                 sendMessage(player, "You need to use this spell on logs.")
                 return@onCast
             }
-            if (amountInInventory(player, Items.COINS_995) < plank.spellPrice() ||
+            if (amountInInventory(player, Items.COINS_995) < planks.spellPrice() ||
                 !removeItem(
                     player,
-                    Item(Items.COINS_995, plank.spellPrice()),
+                    Item(Items.COINS_995, planks.spellPrice()),
                 )
             ) {
-                sendMessage(player, "You need ${plank.spellPrice()} coins to convert that log into a plank.")
+                sendMessage(player, "You need ${planks.spellPrice()} coins to convert that log into a plank.")
                 return@onCast
             }
 
@@ -49,7 +49,7 @@ class PlankMakeSpell : SpellListener("lunar") {
                 Sounds.LUNAR_MAKE_PLANK_3617,
             )
             removeRunes(player)
-            replaceSlot(player, node.asItem().slot, Item(plank.plank))
+            replaceSlot(player, node.asItem().slot, Item(planks.plank))
             addXP(player, 90.0)
             showMagicTab(player)
         }

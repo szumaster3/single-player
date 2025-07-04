@@ -1,6 +1,6 @@
 package content.global.skill.construction;
 
-import content.global.skill.construction.items.Nail;
+import content.global.skill.construction.items.Nails;
 import core.cache.def.impl.ItemDefinition;
 import core.game.component.Component;
 import core.game.node.entity.player.Player;
@@ -174,7 +174,7 @@ public final class BuildingUtils {
     public static void buildDecoration(final Player player, final Hotspot hotspot, final Decoration deco, final Scenery object, final boolean usingFlatpack) {
 
         final int nailAmount = deco.getNailAmount();
-        final Nail type = nailAmount > 0 ? Nail.get(player, nailAmount) : null;
+        final Nails type = nailAmount > 0 ? Nails.get(player, nailAmount) : null;
         if (nailAmount > 0 && type == null && !usingFlatpack && !player.isAdmin()) {
             player.getPacketDispatch().sendMessage("You don't have the right materials.");
             return;
@@ -197,7 +197,7 @@ public final class BuildingUtils {
         if (!usingFlatpack) {
             player.getPulseManager().run(new Pulse(3, player, object) {
                 int nails = nailAmount;
-                Nail nail = type;
+                Nails nail = type;
 
                 @Override
                 public boolean pulse() {

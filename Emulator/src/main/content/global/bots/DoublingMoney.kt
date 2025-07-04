@@ -7,7 +7,7 @@ import core.game.bots.Script
 import core.game.container.Container
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListeners
-import core.game.interaction.Option._P_TRADE
+import core.game.interaction.Option
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.request.trade.TradeModule
 import core.game.node.entity.skill.Skills
@@ -217,7 +217,7 @@ class DoublingMoney : Script() {
                     }
                 }
                 stateString = "Sending trade request to ${playerOwed!!.name} to give them $debtOwed coins"
-                playerOwed!!.interaction.handle(bot, _P_TRADE)
+                playerOwed!!.interaction.handle(bot, Option.Companion.P_TRADE)
                 InteractionListeners.run(-1, IntType.PLAYER, "trade with", bot, playerOwed!!)
                 sentTradeRequest = true
             },

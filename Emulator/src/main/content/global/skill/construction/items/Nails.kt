@@ -7,7 +7,7 @@ import org.rs.consts.Items
 /**
  * Represents different types of nails.
  */
-enum class Nail(
+enum class Nails(
     val itemId: Int,
     val bendRate: Int,
 ) {
@@ -47,7 +47,7 @@ enum class Nail(
     fun isBend(): Boolean = RandomFunction.getRandom(bendRate) == 0
 
     companion object {
-        val values = enumValues<Nail>()
+        val values = enumValues<Nails>()
         val product = values.associateBy { it.itemId }
 
         /**
@@ -55,7 +55,7 @@ enum class Nail(
          * @return Nail type or null if none found.
          */
         @JvmStatic
-        fun get(player: Player, requiredAmount: Int): Nail? {
+        fun get(player: Player, requiredAmount: Int): Nails? {
             for (nailType in values()) {
                 if (player.inventory.contains(nailType.itemId, requiredAmount)) {
                     return nailType

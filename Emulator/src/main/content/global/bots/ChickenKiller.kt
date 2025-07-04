@@ -89,7 +89,7 @@ class ChickenKiller : Script() {
                 var hasBone = bot.hasItem(Item(Items.BONES_526))
                 var bone = bot.inventory.getItem(Item(Items.BONES_526))
                 if (hasBone) {
-                    bone.interaction.handleItemOption(bot, bone.interaction.get(0), bot.inventory)
+                    bone.interaction.get(0)?.let { bone.interaction.handleItemOption(bot, it, bot.inventory) }
                 }
                 state = State.KILLING
             }

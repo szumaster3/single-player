@@ -84782,8 +84782,7 @@
     "attack_level": "1"
   },
   {
-    "examine": "A naturalist.
-",
+    "examine": "A naturalist.",
     "name": "Larry",
     "safespot": null,
     "id": "5424"
@@ -110845,7 +110844,7 @@
     "attack_level": "1"
   },
   {
-    "examine": "",
+    "examine": "A most unlikely creature.",
     "name": "Baby platypus",
     "defence_level": "1",
     "safespot": null,
@@ -110857,7 +110856,7 @@
     "attack_level": "1"
   },
   {
-    "examine": "",
+    "examine": "A most unlikely creature.",
     "name": "Baby platypus",
     "defence_level": "1",
     "safespot": null,

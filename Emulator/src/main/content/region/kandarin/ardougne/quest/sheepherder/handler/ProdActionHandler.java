@@ -24,7 +24,7 @@ public class ProdActionHandler extends PluginInteraction {
     @Override
     public boolean handle(Player player, NPC npc, Option option) {
         HerderSheepNPC n = (HerderSheepNPC) npc;
-        if (option.getName().equalsIgnoreCase("prod")) {
+        if (option.name.equalsIgnoreCase("prod")) {
             player.getPulseManager().run(new MovementPulse(player, getDestination(player, n)) {
                 @Override
                 public boolean pulse() {
