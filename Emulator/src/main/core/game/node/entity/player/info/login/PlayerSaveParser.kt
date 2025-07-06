@@ -74,6 +74,7 @@ class PlayerSaveParser(val player: Player) {
         parsePouches()
         parseHeadgear()
         parseBoltPouch()
+        parseCostumeRoom()
         parseVersion()
     }
 
@@ -328,6 +329,12 @@ class PlayerSaveParser(val player: Player) {
         }
 
         if (timerData != null) player.timers.parseTimers(timerData)
+    }
+
+    fun parseCostumeRoom() {
+        val costumeRaw = saveFile?.get("costumeRoom") ?: return
+        val costumeJson = costumeRaw as? JSONObject ?: return
+        player.getCostumeRoomState().readJson(costumeJson)
     }
 
     fun parseSkills() {

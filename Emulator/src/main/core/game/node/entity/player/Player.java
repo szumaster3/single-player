@@ -3,6 +3,7 @@ package core.game.node.entity.player;
 import content.global.plugin.item.equipment.EquipmentDegrade;
 import content.global.skill.construction.HouseManager;
 import content.global.plugin.item.equipment.bolt_pouch.BoltPouchManager;
+import content.global.skill.construction.decoration.costumeroom.CostumeRoomPlayerState;
 import content.global.skill.runecrafting.PouchManager;
 import content.global.skill.summoning.familiar.FamiliarManager;
 import content.global.skill.summoning.items.EnchantedHeadgearManager;
@@ -211,6 +212,19 @@ public class Player extends Entity {
      * Handles packet dispatching for the player.
      */
     private final PacketDispatch packetDispatch = new PacketDispatch(this);
+
+    private CostumeRoomPlayerState costumeRoomState;
+
+    public CostumeRoomPlayerState getCostumeRoomState() {
+        if (costumeRoomState == null) {
+            costumeRoomState = new CostumeRoomPlayerState(this);
+        }
+        return costumeRoomState;
+    }
+
+    public void setCostumeRoomState(CostumeRoomPlayerState state) {
+        this.costumeRoomState = state;
+    }
 
     /**
      * Manages the player's spell book.

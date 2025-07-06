@@ -53,6 +53,7 @@ class PlayerSaver(val player: Player) {
         savePouches(saveFile)
         saveHeadgear(saveFile)
         saveBoltPouch(saveFile)
+        saveCostumeRoom(saveFile)
         saveVersion(saveFile)
         contentHooks.forEach { it.savePlayer(player, saveFile) }
         return saveFile
@@ -275,6 +276,10 @@ class PlayerSaver(val player: Player) {
             bankPinManager["tryDelay"] = player.bankPinManager.tryDelay.toString()
         }
         root["bankPinManager"] = bankPinManager
+    }
+
+    fun saveCostumeRoom(root: JSONObject) {
+        root["costumeRoom"] = player.getCostumeRoomState().toJson()
     }
 
     fun saveStateManager(root: JSONObject) {
