@@ -20,60 +20,60 @@ class StorageBoxInterface : InterfaceListener {
     override fun defineInterfaceListeners() {
         on(INTERFACE) { player, _, _, buttonID, _, _ ->
             val typeName = getAttribute(player, "con:storage:type", null) as? String ?: return@on true
-            val type = CostumeRoomStorage.Type.valueOf(typeName.uppercase())
+            val type = Storable.Type.valueOf(typeName.uppercase())
             handleStorageInteraction(player, buttonID, type)
             return@on true
         }
     }
 
-    private fun getContainer(player: Player, type: CostumeRoomStorage.Type) =
-        player.getCostumeRoomState().containers.getOrPut(type) { CostumeRoomContainer() }
+    private fun getContainer(player: Player, type: Storable.Type) =
+        player.getCostumeRoomState().containers.getOrPut(type) { StorageContainer() }
 
-    private fun getRelevantItems(type: CostumeRoomStorage.Type): List<CostumeRoomStorage> {
+    private fun getRelevantItems(type: Storable.Type): List<Storable> {
         val trailTiers = listOf(
-            CostumeRoomStorage.Type.LOW_LEVEL_TRAILS,
-            CostumeRoomStorage.Type.MED_LEVEL_TRAILS,
-            CostumeRoomStorage.Type.HIGH_LEVEL_TRAILS
+            Storable.Type.LOW_LEVEL_TRAILS,
+            Storable.Type.MED_LEVEL_TRAILS,
+            Storable.Type.HIGH_LEVEL_TRAILS
         )
         val magicTiers = listOf(
-            CostumeRoomStorage.Type.ONE_SET_OF_ARMOUR,
-            CostumeRoomStorage.Type.TWO_SETS_OF_ARMOUR,
-            CostumeRoomStorage.Type.THREE_SETS_OF_ARMOUR,
-            CostumeRoomStorage.Type.FOUR_SETS_OF_ARMOUR,
-            CostumeRoomStorage.Type.FIVE_SETS_OF_ARMOUR,
-            CostumeRoomStorage.Type.SIX_SETS_OF_ARMOUR
+            Storable.Type.ONE_SET_OF_ARMOUR,
+            Storable.Type.TWO_SETS_OF_ARMOUR,
+            Storable.Type.THREE_SETS_OF_ARMOUR,
+            Storable.Type.FOUR_SETS_OF_ARMOUR,
+            Storable.Type.FIVE_SETS_OF_ARMOUR,
+            Storable.Type.SIX_SETS_OF_ARMOUR
         )
         val armourTiers = listOf(
-            CostumeRoomStorage.Type.TWO_SETS_ARMOUR_CASE,
-            CostumeRoomStorage.Type.FOUR_SETS_ARMOUR_CASE,
-            CostumeRoomStorage.Type.ALL_SETS_ARMOUR_CASE
+            Storable.Type.TWO_SETS_ARMOUR_CASE,
+            Storable.Type.FOUR_SETS_ARMOUR_CASE,
+            Storable.Type.ALL_SETS_ARMOUR_CASE
         )
 
-        return CostumeRoomStorage.values().filter {
+        return Storable.values().filter {
             when (type) {
                 // Treasures
-                CostumeRoomStorage.Type.LOW_LEVEL_TRAILS -> it.type == type
-                CostumeRoomStorage.Type.MED_LEVEL_TRAILS -> it.type in trailTiers.take(2)
-                CostumeRoomStorage.Type.HIGH_LEVEL_TRAILS -> it.type in trailTiers
+                Storable.Type.LOW_LEVEL_TRAILS -> it.type == type
+                Storable.Type.MED_LEVEL_TRAILS -> it.type in trailTiers.take(2)
+                Storable.Type.HIGH_LEVEL_TRAILS -> it.type in trailTiers
                 // Magic wardrobe
-                CostumeRoomStorage.Type.ONE_SET_OF_ARMOUR -> it.type == CostumeRoomStorage.Type.ONE_SET_OF_ARMOUR
-                CostumeRoomStorage.Type.TWO_SETS_OF_ARMOUR -> it.type in magicTiers.take(2)
-                CostumeRoomStorage.Type.THREE_SETS_OF_ARMOUR -> it.type in magicTiers.take(3)
-                CostumeRoomStorage.Type.FOUR_SETS_OF_ARMOUR -> it.type in magicTiers.take(4)
-                CostumeRoomStorage.Type.FIVE_SETS_OF_ARMOUR -> it.type in magicTiers.take(5)
-                CostumeRoomStorage.Type.SIX_SETS_OF_ARMOUR -> it.type in magicTiers.take(6)
-                CostumeRoomStorage.Type.ALL_SETS_OF_ARMOUR -> it.type in magicTiers
+                Storable.Type.ONE_SET_OF_ARMOUR -> it.type == Storable.Type.ONE_SET_OF_ARMOUR
+                Storable.Type.TWO_SETS_OF_ARMOUR -> it.type in magicTiers.take(2)
+                Storable.Type.THREE_SETS_OF_ARMOUR -> it.type in magicTiers.take(3)
+                Storable.Type.FOUR_SETS_OF_ARMOUR -> it.type in magicTiers.take(4)
+                Storable.Type.FIVE_SETS_OF_ARMOUR -> it.type in magicTiers.take(5)
+                Storable.Type.SIX_SETS_OF_ARMOUR -> it.type in magicTiers.take(6)
+                Storable.Type.ALL_SETS_OF_ARMOUR -> it.type in magicTiers
                 // Armour case
-                CostumeRoomStorage.Type.TWO_SETS_ARMOUR_CASE -> it.type in armourTiers.take(1)
-                CostumeRoomStorage.Type.FOUR_SETS_ARMOUR_CASE -> it.type in armourTiers.take(2)
-                CostumeRoomStorage.Type.ALL_SETS_ARMOUR_CASE -> it.type in armourTiers
+                Storable.Type.TWO_SETS_ARMOUR_CASE -> it.type in armourTiers.take(1)
+                Storable.Type.FOUR_SETS_ARMOUR_CASE -> it.type in armourTiers.take(2)
+                Storable.Type.ALL_SETS_ARMOUR_CASE -> it.type in armourTiers
                 // Default
                 else -> it.type == type
             }
         }
     }
 
-    private fun handleStorageInteraction(player: Player, id: Int, type: CostumeRoomStorage.Type) {
+    private fun handleStorageInteraction(player: Player, id: Int, type: Storable.Type) {
         val container = getContainer(player, type)
         val items = getRelevantItems(type)
         val start = container.currentPage * (TOTAL_SLOTS - 1)
@@ -88,14 +88,14 @@ class StorageBoxInterface : InterfaceListener {
             when (val clicked = pageItems.getOrNull((id - 56) / 2)) {
                 "MORE" -> container.nextPage()
                 "BACK" -> container.prevPage()
-                is CostumeRoomStorage -> handleInteraction(player, container, clicked, type)
+                is Storable -> handleInteraction(player, container, clicked, type)
             }
             openInterface(player, INTERFACE)
             renderPage(player, type)
         }
     }
 
-    private fun handleInteraction(player: Player, container: CostumeRoomContainer, item: CostumeRoomStorage, type: CostumeRoomStorage.Type) {
+    private fun handleInteraction(player: Player, container: StorageContainer, item: Storable, type: Storable.Type) {
         val id = item.takeIds.firstOrNull() ?: item.displayId
         val boxName = if (type.name.contains("TRAILS")) "Treasure chest" else if(type.name.contains("SET_OF_ARMOUR")) "Magic wardrobe" else if(type.name.contains("ARMOUR_CASE")) "Armour case" else type.name.lowercase()
 
@@ -120,7 +120,7 @@ class StorageBoxInterface : InterfaceListener {
         }
     }
 
-    private fun renderPage(player: Player, type: CostumeRoomStorage.Type) {
+    private fun renderPage(player: Player, type: Storable.Type) {
         val container = getContainer(player, type)
         val items = getRelevantItems(type)
         val stored = container.storedItems.toSet()
@@ -137,7 +137,7 @@ class StorageBoxInterface : InterfaceListener {
 
         val itemsArray = Array<Item?>(TOTAL_SLOTS) { index ->
             when (val obj = pageItems.getOrNull(index)) {
-                is CostumeRoomStorage -> Item(obj.displayId)
+                is Storable -> Item(obj.displayId)
                 "MORE" -> Item(BUTTON_MORE)
                 "BACK" -> Item(BUTTON_BACK)
                 else -> null
@@ -155,7 +155,7 @@ class StorageBoxInterface : InterfaceListener {
             val obj = pageItems.getOrNull(index)
 
             val (name, hidden) = when (obj) {
-                is CostumeRoomStorage -> getItemName(obj.takeIds.firstOrNull() ?: obj.displayId) to (obj !in stored)
+                is Storable -> getItemName(obj.takeIds.firstOrNull() ?: obj.displayId) to (obj !in stored)
                 "MORE" -> "More..." to false
                 "BACK" -> "Back..." to false
                 else -> "" to true
@@ -167,7 +167,7 @@ class StorageBoxInterface : InterfaceListener {
         }
     }
 
-    private fun openStorageInterface(player: Player, type: CostumeRoomStorage.Type) {
+    private fun openStorageInterface(player: Player, type: Storable.Type) {
         setAttribute(player, "con:storage:type", type.name)
         openInterface(player, INTERFACE)
         renderPage(player, type)
@@ -183,7 +183,7 @@ class StorageBoxInterface : InterfaceListener {
          * @param player The player.
          * @param type The storage type.
          */
-        fun openStorage(player: Player, type: CostumeRoomStorage.Type) {
+        fun openStorage(player: Player, type: Storable.Type) {
             instance.openStorageInterface(player, type)
         }
     }

@@ -1,6 +1,6 @@
 package content.global.plugin.iface
 
-import content.global.skill.construction.decoration.costumeroom.CostumeRoomStorage
+import content.global.skill.construction.decoration.costumeroom.Storable
 import core.api.openInterface
 import core.api.sendMessage
 import core.api.setAttribute
@@ -22,7 +22,7 @@ import org.rs.consts.Components
 class DiangoReclaimInterface : ComponentPlugin() {
     override fun newInstance(arg: Any?): Plugin<Any> {
         ComponentDefinition.put(COMPONENT_ID, this)
-        ITEMS.addAll(getEligibleItemsList(CostumeRoomStorage.Type.TOY))
+        ITEMS.addAll(getEligibleItemsList(Storable.Type.TOY))
         return this
     }
 
@@ -63,9 +63,9 @@ class DiangoReclaimInterface : ComponentPlugin() {
          *
          * @return List of eligible reclaimable items.
          */
-        private fun getEligibleItemsList(type: CostumeRoomStorage.Type): List<Item> {
-            return CostumeRoomStorage.values()
-                .filter { it.type == CostumeRoomStorage.Type.TOY && it.takeIds.isNotEmpty() }
+        private fun getEligibleItemsList(type: Storable.Type): List<Item> {
+            return Storable.values()
+                .filter { it.type == Storable.Type.TOY && it.takeIds.isNotEmpty() }
                 .map { Item(it.takeIds.first()) }
         }
 

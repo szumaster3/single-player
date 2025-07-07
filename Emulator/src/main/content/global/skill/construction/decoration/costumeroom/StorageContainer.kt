@@ -3,39 +3,39 @@ package content.global.skill.construction.decoration.costumeroom
 import org.json.simple.JSONArray
 import org.json.simple.JSONObject
 
-class CostumeRoomContainer {
+class StorageContainer {
     private val maxSize = 30
-    val storedItems = mutableListOf<CostumeRoomStorage>()
+    val storedItems = mutableListOf<Storable>()
     var currentPage = 0
     val pageSize = 30
 
-    fun addItem(item: CostumeRoomStorage): Boolean {
+    fun addItem(item: Storable): Boolean {
         if (storedItems.size >= maxSize) return false
         if (!storedItems.contains(item)) storedItems.add(item)
         return true
     }
 
-    fun removeItem(item: CostumeRoomStorage): Boolean {
+    fun removeItem(item: Storable): Boolean {
         return storedItems.remove(item)
     }
 
-    fun hasItem(item: CostumeRoomStorage): Boolean {
+    fun hasItem(item: Storable): Boolean {
         return storedItems.contains(item)
     }
 
-    fun store(item: CostumeRoomStorage): Boolean = addItem(item)
+    fun store(item: Storable): Boolean = addItem(item)
 
-    fun withdraw(item: CostumeRoomStorage): Boolean = removeItem(item)
+    fun withdraw(item: Storable): Boolean = removeItem(item)
 
     fun nextPage() {
-        if ((currentPage + 1) * pageSize < CostumeRoomStorage.values().size) currentPage++
+        if ((currentPage + 1) * pageSize < Storable.values().size) currentPage++
     }
 
     fun prevPage() {
         if (currentPage > 0) currentPage--
     }
 
-    fun getPageItems(): List<CostumeRoomStorage> {
+    fun getPageItems(): List<Storable> {
         val start = currentPage * pageSize
         val end = (start + pageSize).coerceAtMost(storedItems.size)
         if (start >= storedItems.size) return emptyList()
@@ -58,14 +58,14 @@ class CostumeRoomContainer {
     }
 
     companion object {
-        fun fromJson(root: JSONObject): CostumeRoomContainer {
-            val container = CostumeRoomContainer()
+        fun fromJson(root: JSONObject): StorageContainer {
+            val container = StorageContainer()
             val itemsArray = root["items"] as? JSONArray ?: JSONArray()
             for (i in 0 until itemsArray.size) {
                 val itemObj = itemsArray[i] as JSONObject
                 val name = itemObj["name"].toString()
                 val itemEnum = try {
-                    CostumeRoomStorage.valueOf(name)
+                    Storable.valueOf(name)
                 } catch (e: Exception) {
                     null
                 }

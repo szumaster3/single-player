@@ -69,11 +69,11 @@ class StorageBoxPlugin : OptionHandler() {
 
         when (obj.id) {
             in bookcase -> {
-                StorageBoxInterface.openStorage(player, CostumeRoomStorage.Type.BOOK)
+                StorageBoxInterface.openStorage(player, Storable.Type.BOOK)
             }
 
             in capeRack -> {
-                StorageBoxInterface.openStorage(player, CostumeRoomStorage.Type.CAPE)
+                StorageBoxInterface.openStorage(player, Storable.Type.CAPE)
             }
 
             in fancyDressClosed + toyBoxClosed + treasureBoxClosed + magicWardrobeClosed -> {
@@ -90,7 +90,7 @@ class StorageBoxPlugin : OptionHandler() {
                         replaceScenery(obj.asScenery(), obj.id - 1, -1)
                     }
                     "search" -> {
-                        StorageBoxInterface.openStorage(player, CostumeRoomStorage.Type.FANCY)
+                        StorageBoxInterface.openStorage(player, Storable.Type.FANCY)
                     }
                 }
             }
@@ -102,7 +102,7 @@ class StorageBoxPlugin : OptionHandler() {
                         replaceScenery(obj.asScenery(), obj.id - 1, -1)
                     }
                     "search" -> {
-                        StorageBoxInterface.openStorage(player, CostumeRoomStorage.Type.TOY)
+                        StorageBoxInterface.openStorage(player, Storable.Type.TOY)
                     }
                 }
             }
@@ -114,9 +114,9 @@ class StorageBoxPlugin : OptionHandler() {
                         replaceScenery(obj.asScenery(), obj.id - 1, -1)
                     }
                     "search" -> when(obj.id){
-                        Obj.TREASURE_CHEST_18805 -> StorageBoxInterface.openStorage(player, CostumeRoomStorage.Type.LOW_LEVEL_TRAILS)
-                        Obj.TREASURE_CHEST_18807 -> StorageBoxInterface.openStorage(player, CostumeRoomStorage.Type.MED_LEVEL_TRAILS)
-                        Obj.TREASURE_CHEST_18809 -> StorageBoxInterface.openStorage(player, CostumeRoomStorage.Type.HIGH_LEVEL_TRAILS)
+                        Obj.TREASURE_CHEST_18805 -> StorageBoxInterface.openStorage(player, Storable.Type.LOW_LEVEL_TRAILS)
+                        Obj.TREASURE_CHEST_18807 -> StorageBoxInterface.openStorage(player, Storable.Type.MED_LEVEL_TRAILS)
+                        Obj.TREASURE_CHEST_18809 -> StorageBoxInterface.openStorage(player, Storable.Type.HIGH_LEVEL_TRAILS)
                     }
                 }
             }
@@ -128,13 +128,13 @@ class StorageBoxPlugin : OptionHandler() {
                         replaceScenery(obj.asScenery(), obj.id - 1, -1)
                     }
                     "search" -> when(obj.id){
-                        Obj.MAGIC_WARDROBE_18785 -> StorageBoxInterface.openStorage(player, CostumeRoomStorage.Type.ONE_SET_OF_ARMOUR)
-                        Obj.MAGIC_WARDROBE_18787 -> StorageBoxInterface.openStorage(player, CostumeRoomStorage.Type.TWO_SETS_OF_ARMOUR)
-                        Obj.MAGIC_WARDROBE_18789 -> StorageBoxInterface.openStorage(player, CostumeRoomStorage.Type.THREE_SETS_OF_ARMOUR)
-                        Obj.MAGIC_WARDROBE_18791 -> StorageBoxInterface.openStorage(player, CostumeRoomStorage.Type.FOUR_SETS_OF_ARMOUR)
-                        Obj.MAGIC_WARDROBE_18793 -> StorageBoxInterface.openStorage(player, CostumeRoomStorage.Type.FIVE_SETS_OF_ARMOUR)
-                        Obj.MAGIC_WARDROBE_18795 -> StorageBoxInterface.openStorage(player, CostumeRoomStorage.Type.SIX_SETS_OF_ARMOUR)
-                        Obj.MAGIC_WARDROBE_18797 -> StorageBoxInterface.openStorage(player, CostumeRoomStorage.Type.ALL_SETS_OF_ARMOUR)
+                        Obj.MAGIC_WARDROBE_18785 -> StorageBoxInterface.openStorage(player, Storable.Type.ONE_SET_OF_ARMOUR)
+                        Obj.MAGIC_WARDROBE_18787 -> StorageBoxInterface.openStorage(player, Storable.Type.TWO_SETS_OF_ARMOUR)
+                        Obj.MAGIC_WARDROBE_18789 -> StorageBoxInterface.openStorage(player, Storable.Type.THREE_SETS_OF_ARMOUR)
+                        Obj.MAGIC_WARDROBE_18791 -> StorageBoxInterface.openStorage(player, Storable.Type.FOUR_SETS_OF_ARMOUR)
+                        Obj.MAGIC_WARDROBE_18793 -> StorageBoxInterface.openStorage(player, Storable.Type.FIVE_SETS_OF_ARMOUR)
+                        Obj.MAGIC_WARDROBE_18795 -> StorageBoxInterface.openStorage(player, Storable.Type.SIX_SETS_OF_ARMOUR)
+                        Obj.MAGIC_WARDROBE_18797 -> StorageBoxInterface.openStorage(player, Storable.Type.ALL_SETS_OF_ARMOUR)
                     }
                 }
             }
@@ -146,9 +146,9 @@ class StorageBoxPlugin : OptionHandler() {
                         replaceScenery(obj.asScenery(), obj.id - 1, -1)
                     }
                     "search" -> when(obj.id){
-                        Obj.ARMOUR_CASE_18779 -> StorageBoxInterface.openStorage(player, CostumeRoomStorage.Type.TWO_SETS_ARMOUR_CASE)
-                        Obj.ARMOUR_CASE_18781 -> StorageBoxInterface.openStorage(player, CostumeRoomStorage.Type.FOUR_SETS_ARMOUR_CASE)
-                        Obj.ARMOUR_CASE_18783 -> StorageBoxInterface.openStorage(player, CostumeRoomStorage.Type.ALL_SETS_ARMOUR_CASE)
+                        Obj.ARMOUR_CASE_18779 -> StorageBoxInterface.openStorage(player, Storable.Type.TWO_SETS_ARMOUR_CASE)
+                        Obj.ARMOUR_CASE_18781 -> StorageBoxInterface.openStorage(player, Storable.Type.FOUR_SETS_ARMOUR_CASE)
+                        Obj.ARMOUR_CASE_18783 -> StorageBoxInterface.openStorage(player, Storable.Type.ALL_SETS_ARMOUR_CASE)
                     }
                 }
             }

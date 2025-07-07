@@ -5,7 +5,7 @@ import org.rs.consts.Items
 /**
  * Represents a storable item in the Costume Room across all box types.
  */
-enum class CostumeRoomStorage(
+enum class Storable(
     val displayId: Int,
     val takeIds: IntArray,
     val type: Type
