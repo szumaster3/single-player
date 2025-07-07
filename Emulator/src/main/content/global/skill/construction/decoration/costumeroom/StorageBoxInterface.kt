@@ -52,12 +52,12 @@ class StorageBoxInterface : InterfaceListener {
                     when (clicked) {
                         "MORE" -> {
                             container.nextPage()
-                            openInterface(player, INTERFACE)
+                            openInterface(player, INTERFACE) // "refresh"
                             renderPage(player, type)
                         }
                         "BACK" -> {
                             container.prevPage()
-                            openInterface(player, INTERFACE)
+                            openInterface(player, INTERFACE) // "refresh"
                             renderPage(player, type)
                         }
                     }
@@ -105,7 +105,7 @@ class StorageBoxInterface : InterfaceListener {
         if (hasNext) pageItems.add("MORE")
         else if (hasPrev) pageItems.add("BACK")
 
-        sendString(player, type.name.lowercase().replaceFirstChar(Char::titlecase), INTERFACE, 225)
+        sendString(player, type.name.lowercase().replaceFirstChar(Char::titlecase) + " box", INTERFACE, 225)
 
         val itemsArray = Array<Item?>(TOTAL_SLOTS) { null }
         pageItems.forEachIndexed { index, obj ->
