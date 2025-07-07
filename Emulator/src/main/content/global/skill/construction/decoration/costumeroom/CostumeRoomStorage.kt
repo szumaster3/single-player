@@ -120,9 +120,6 @@ enum class CostumeRoomStorage(
     GreenMarionette(Items.GREEN_MARIONETTE_6866, intArrayOf(Items.GREEN_MARIONETTE_6866), type = Type.TOY),
     BlueMarionette(Items.BLUE_MARIONETTE_6865, intArrayOf(Items.BLUE_MARIONETTE_6865), type = Type.TOY);
 
-    val labelId: Int get() = 56 + (ordinal * 2)
-    val iconId: Int get() = 165 + (ordinal * 2)
-
     enum class Type {
         BOOK, CAPE, FANCY, TOY
     }

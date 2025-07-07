@@ -11,7 +11,7 @@ class CostumeRoomContainer {
 
     fun addItem(item: CostumeRoomStorage): Boolean {
         if (storedItems.size >= maxSize) return false
-        storedItems.add(item)
+        if (!storedItems.contains(item)) storedItems.add(item)
         return true
     }
 
@@ -28,7 +28,7 @@ class CostumeRoomContainer {
     fun withdraw(item: CostumeRoomStorage): Boolean = removeItem(item)
 
     fun nextPage() {
-        if ((currentPage + 1) * pageSize < storedItems.size) currentPage++
+        if ((currentPage + 1) * pageSize < CostumeRoomStorage.values().size) currentPage++
     }
 
     fun prevPage() {
@@ -54,7 +54,6 @@ class CostumeRoomContainer {
             itemsArray.add(itemObj)
         }
         root["items"] = itemsArray
-        root["page"] = currentPage.toString()
         return root
     }
 
@@ -74,7 +73,7 @@ class CostumeRoomContainer {
                     container.storedItems.add(itemEnum)
                 }
             }
-            container.currentPage = root["page"]?.toString()?.toIntOrNull() ?: 0
+            container.currentPage = 0
             return container
         }
     }
