@@ -76,7 +76,7 @@ class StorageBoxPlugin : OptionHandler() {
                 StorageBoxInterface.openStorage(player, Storable.Type.CAPE)
             }
 
-            in fancyDressClosed + toyBoxClosed + treasureBoxClosed + magicWardrobeClosed -> {
+            in fancyDressClosed + toyBoxClosed + treasureBoxClosed + magicWardrobeClosed + armourCaseClosed -> {
                 if (option == "open") {
                     animate(player, Animations.OPEN_CHEST_536)
                     replaceScenery(obj.asScenery(), obj.id + 1, -1)
