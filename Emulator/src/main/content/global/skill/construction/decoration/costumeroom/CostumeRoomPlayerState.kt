@@ -8,7 +8,20 @@ class CostumeRoomPlayerState(val player: Player) {
         CostumeRoomStorage.Type.BOOK to CostumeRoomContainer(),
         CostumeRoomStorage.Type.CAPE to CostumeRoomContainer(),
         CostumeRoomStorage.Type.FANCY to CostumeRoomContainer(),
-        CostumeRoomStorage.Type.TOY to CostumeRoomContainer()
+        CostumeRoomStorage.Type.TOY to CostumeRoomContainer(),
+        CostumeRoomStorage.Type.LOW_LEVEL_TRAILS to CostumeRoomContainer(),
+        CostumeRoomStorage.Type.MED_LEVEL_TRAILS to CostumeRoomContainer(),
+        CostumeRoomStorage.Type.HIGH_LEVEL_TRAILS to CostumeRoomContainer(),
+        CostumeRoomStorage.Type.ONE_SET_OF_ARMOUR to CostumeRoomContainer(),
+        CostumeRoomStorage.Type.TWO_SETS_OF_ARMOUR to CostumeRoomContainer(),
+        CostumeRoomStorage.Type.THREE_SETS_OF_ARMOUR to CostumeRoomContainer(),
+        CostumeRoomStorage.Type.FOUR_SETS_OF_ARMOUR to CostumeRoomContainer(),
+        CostumeRoomStorage.Type.FIVE_SETS_OF_ARMOUR to CostumeRoomContainer(),
+        CostumeRoomStorage.Type.SIX_SETS_OF_ARMOUR to CostumeRoomContainer(),
+        CostumeRoomStorage.Type.ALL_SETS_OF_ARMOUR to CostumeRoomContainer(),
+        CostumeRoomStorage.Type.TWO_SETS_ARMOUR_CASE to CostumeRoomContainer(),
+        CostumeRoomStorage.Type.FOUR_SETS_ARMOUR_CASE to CostumeRoomContainer(),
+        CostumeRoomStorage.Type.ALL_SETS_ARMOUR_CASE to CostumeRoomContainer()
     )
 
     fun toJson(): JSONObject {
