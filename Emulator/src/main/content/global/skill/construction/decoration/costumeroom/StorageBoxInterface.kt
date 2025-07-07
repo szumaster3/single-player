@@ -29,104 +29,124 @@ class StorageBoxInterface : InterfaceListener {
     private fun getContainer(player: Player, type: CostumeRoomStorage.Type) =
         player.getCostumeRoomState().containers.getOrPut(type) { CostumeRoomContainer() }
 
+    private fun getRelevantItems(type: CostumeRoomStorage.Type): List<CostumeRoomStorage> {
+        val trailTiers = listOf(
+            CostumeRoomStorage.Type.LOW_LEVEL_TRAILS,
+            CostumeRoomStorage.Type.MED_LEVEL_TRAILS,
+            CostumeRoomStorage.Type.HIGH_LEVEL_TRAILS
+        )
+        val magicTiers = listOf(
+            CostumeRoomStorage.Type.ONE_SET_OF_ARMOUR,
+            CostumeRoomStorage.Type.TWO_SETS_OF_ARMOUR,
+            CostumeRoomStorage.Type.THREE_SETS_OF_ARMOUR,
+            CostumeRoomStorage.Type.FOUR_SETS_OF_ARMOUR,
+            CostumeRoomStorage.Type.FIVE_SETS_OF_ARMOUR,
+            CostumeRoomStorage.Type.SIX_SETS_OF_ARMOUR
+        )
+        val armourTiers = listOf(
+            CostumeRoomStorage.Type.TWO_SETS_ARMOUR_CASE,
+            CostumeRoomStorage.Type.FOUR_SETS_ARMOUR_CASE,
+            CostumeRoomStorage.Type.ALL_SETS_ARMOUR_CASE
+        )
+
+        return CostumeRoomStorage.values().filter {
+            when (type) {
+                // Treasures
+                CostumeRoomStorage.Type.LOW_LEVEL_TRAILS -> it.type == type
+                CostumeRoomStorage.Type.MED_LEVEL_TRAILS -> it.type in trailTiers.take(2)
+                CostumeRoomStorage.Type.HIGH_LEVEL_TRAILS -> it.type in trailTiers
+                // Magic wardrobe
+                CostumeRoomStorage.Type.ONE_SET_OF_ARMOUR -> it.type == CostumeRoomStorage.Type.ONE_SET_OF_ARMOUR
+                CostumeRoomStorage.Type.TWO_SETS_OF_ARMOUR -> it.type in magicTiers.take(2)
+                CostumeRoomStorage.Type.THREE_SETS_OF_ARMOUR -> it.type in magicTiers.take(3)
+                CostumeRoomStorage.Type.FOUR_SETS_OF_ARMOUR -> it.type in magicTiers.take(4)
+                CostumeRoomStorage.Type.FIVE_SETS_OF_ARMOUR -> it.type in magicTiers.take(5)
+                CostumeRoomStorage.Type.SIX_SETS_OF_ARMOUR -> it.type in magicTiers.take(6)
+                CostumeRoomStorage.Type.ALL_SETS_OF_ARMOUR -> it.type in magicTiers
+                // Armour case
+                CostumeRoomStorage.Type.TWO_SETS_ARMOUR_CASE -> it.type in armourTiers.take(1)
+                CostumeRoomStorage.Type.FOUR_SETS_ARMOUR_CASE -> it.type in armourTiers.take(2)
+                CostumeRoomStorage.Type.ALL_SETS_ARMOUR_CASE -> it.type in armourTiers
+                // Default
+                else -> it.type == type
+            }
+        }
+    }
+
     private fun handleStorageInteraction(player: Player, id: Int, type: CostumeRoomStorage.Type) {
         val container = getContainer(player, type)
-        val allItemsOfType = CostumeRoomStorage.values().filter { it.type == type }
-        val startIndex = container.currentPage * (TOTAL_SLOTS - 1)
-        val itemsOnPage = allItemsOfType.drop(startIndex).take(TOTAL_SLOTS - 1)
+        val items = getRelevantItems(type)
+        val start = container.currentPage * (TOTAL_SLOTS - 1)
+        val pageItems = items.drop(start).take(TOTAL_SLOTS - 1).toMutableList<Any>()
 
-        val pageItems = buildList<Any> {
-            addAll(itemsOnPage)
-            val hasNext = allItemsOfType.size > startIndex + (TOTAL_SLOTS - 1)
-            val hasPrev = container.currentPage > 0
-            if (hasNext) add("MORE")
-            if (hasPrev) add("BACK")
-        }
+        val hasNext = items.size > start + (TOTAL_SLOTS - 1)
+        val hasPrev = container.currentPage > 0
+        if (hasNext) pageItems.add("MORE")
+        if (hasPrev) pageItems.add("BACK")
 
-        if (id >= 56 && (id - 56) % 2 == 0) {
-            val indexOnPage = (id - 56) / 2
-            val clicked = pageItems.getOrNull(indexOnPage) ?: return
-
-            when (clicked) {
-                is String -> {
-                    when (clicked) {
-                        "MORE" -> {
-                            container.nextPage()
-                            openInterface(player, INTERFACE) // "refresh"
-                            renderPage(player, type)
-                        }
-                        "BACK" -> {
-                            container.prevPage()
-                            openInterface(player, INTERFACE) // "refresh"
-                            renderPage(player, type)
-                        }
-                    }
-                }
-                is CostumeRoomStorage -> {
-                    val takeId = clicked.takeIds.firstOrNull() ?: clicked.displayId
-                    val boxName = type.name.lowercase()
-
-                    when {
-                        container.hasItem(clicked) -> {
-                            if (freeSlots(player) <= 0) {
-                                sendMessage(player, "You don't have enough inventory space.")
-                                return
-                            }
-                            sendMessage(player, "You take the item from the $boxName box.")
-                            addItem(player, takeId, 1)
-                            container.withdraw(clicked)
-                        }
-                        allInInventory(player, takeId) -> {
-                            sendMessage(player, "You put the item into the $boxName box.")
-                            removeItem(player, Item(takeId))
-                            container.store(clicked)
-                        }
-                        else -> sendMessage(player, "That isn't currently stored in the $boxName box.")
-                    }
-                    renderPage(player, type)
-                }
+        if (id in 56..(56 + (TOTAL_SLOTS - 1) * 2) step 2) {
+            when (val clicked = pageItems.getOrNull((id - 56) / 2)) {
+                "MORE" -> container.nextPage()
+                "BACK" -> container.prevPage()
+                is CostumeRoomStorage -> handleInteraction(player, container, clicked, type)
             }
+            openInterface(player, INTERFACE)
+            renderPage(player, type)
+        }
+    }
+
+    private fun handleInteraction(player: Player, container: CostumeRoomContainer, item: CostumeRoomStorage, type: CostumeRoomStorage.Type) {
+        val id = item.takeIds.firstOrNull() ?: item.displayId
+        val boxName = if (type.name.contains("TRAILS")) "Treasure chest" else if(type.name.contains("SET_OF_ARMOUR")) "Magic wardrobe" else if(type.name.contains("ARMOUR_CASE")) "Armour case" else type.name.lowercase()
+
+        when {
+            container.hasItem(item) -> {
+                if (freeSlots(player) <= 0) {
+                    sendMessage(player, "You don't have enough inventory space.")
+                    return
+                }
+                sendMessage(player, "You take the item from the $boxName box.")
+                addItem(player, id, 1)
+                container.withdraw(item)
+            }
+
+            allInInventory(player, id) -> {
+                sendMessage(player, "You put the item into the $boxName box.")
+                removeItem(player, Item(id))
+                container.store(item)
+            }
+
+            else -> sendMessage(player, "That isn't currently stored in the $boxName box.")
         }
     }
 
     private fun renderPage(player: Player, type: CostumeRoomStorage.Type) {
         val container = getContainer(player, type)
-        val allItemsOfType = CostumeRoomStorage.values().filter { it.type == type }
-        val storedItems = container.storedItems.toSet()
-        val startIndex = container.currentPage * (TOTAL_SLOTS - 1)
-        val itemsOnPage = allItemsOfType.drop(startIndex).take(TOTAL_SLOTS - 1)
+        val items = getRelevantItems(type)
+        val stored = container.storedItems.toSet()
+        val start = container.currentPage * (TOTAL_SLOTS - 1)
+        val pageItems = items.drop(start).take(TOTAL_SLOTS - 1).toMutableList<Any>()
 
-        val hasNext = allItemsOfType.size > startIndex + (TOTAL_SLOTS - 1)
+        val hasNext = items.size > start + (TOTAL_SLOTS - 1)
         val hasPrev = container.currentPage > 0
+        if (hasNext) pageItems.add("MORE") else if (hasPrev) pageItems.add("BACK")
 
-        val pageItems = mutableListOf<Any>()
-        pageItems.addAll(itemsOnPage)
+        val title = if (type.name.contains("TRAILS")) "Treasure chest" else if(type.name.contains("SET_OF_ARMOUR")) "Magic wardrobe" else if(type.name.contains("ARMOUR_CASE")) "Armour case" else type.name.lowercase()
+            .replaceFirstChar(Char::titlecase) + " box"
+        sendString(player, title, INTERFACE, 225)
 
-        if (hasNext) pageItems.add("MORE")
-        else if (hasPrev) pageItems.add("BACK")
-
-        sendString(player, type.name.lowercase().replaceFirstChar(Char::titlecase) + " box", INTERFACE, 225)
-
-        val itemsArray = Array<Item?>(TOTAL_SLOTS) { null }
-        pageItems.forEachIndexed { index, obj ->
-            itemsArray[index] = when (obj) {
+        val itemsArray = Array<Item?>(TOTAL_SLOTS) { index ->
+            when (val obj = pageItems.getOrNull(index)) {
                 is CostumeRoomStorage -> Item(obj.displayId)
                 "MORE" -> Item(BUTTON_MORE)
                 "BACK" -> Item(BUTTON_BACK)
                 else -> null
             }
-        }
+        }.filterNotNull().toTypedArray()
 
         PacketRepository.send(
             ContainerPacket::class.java,
-            OutgoingContext.Container(
-                player,
-                INTERFACE,
-                CONTAINER_COMPONENT,
-                TOTAL_SLOTS,
-                itemsArray.filterNotNull().toTypedArray(),
-                false
-            )
+            OutgoingContext.Container(player, INTERFACE, CONTAINER_COMPONENT, TOTAL_SLOTS, itemsArray, false)
         )
 
         repeat(TOTAL_SLOTS) { index ->
@@ -134,27 +154,16 @@ class StorageBoxInterface : InterfaceListener {
             val iconComponent = 56 + index * 2
             val obj = pageItems.getOrNull(index)
 
-            if (obj == null) {
-                sendString(player, "", INTERFACE, nameComponent)
-                sendInterfaceConfig(player, INTERFACE, nameComponent, false)
-                sendInterfaceConfig(player, INTERFACE, iconComponent, true)
-            } else {
-                val name = when (obj) {
-                    is CostumeRoomStorage -> getItemName(obj.takeIds.firstOrNull() ?: obj.displayId)
-                    "MORE" -> "More..."
-                    "BACK" -> "Back..."
-                    else -> ""
-                }
-
-                val hidden = when (obj) {
-                    is CostumeRoomStorage -> obj in storedItems
-                    else -> true
-                }
-
-                sendString(player, name, INTERFACE, nameComponent)
-                sendInterfaceConfig(player, INTERFACE, nameComponent, false)
-                sendInterfaceConfig(player, INTERFACE, iconComponent, hidden)
+            val (name, hidden) = when (obj) {
+                is CostumeRoomStorage -> getItemName(obj.takeIds.firstOrNull() ?: obj.displayId) to (obj !in stored)
+                "MORE" -> "More..." to false
+                "BACK" -> "Back..." to false
+                else -> "" to true
             }
+
+            sendString(player, name, INTERFACE, nameComponent)
+            sendInterfaceConfig(player, INTERFACE, nameComponent, false)
+            sendInterfaceConfig(player, INTERFACE, iconComponent, hidden)
         }
     }
 
@@ -168,6 +177,12 @@ class StorageBoxInterface : InterfaceListener {
         lateinit var instance: StorageBoxInterface
             private set
 
+        /**
+         * Open the storage box interface.
+         *
+         * @param player The player.
+         * @param type The storage type.
+         */
         fun openStorage(player: Player, type: CostumeRoomStorage.Type) {
             instance.openStorageInterface(player, type)
         }
