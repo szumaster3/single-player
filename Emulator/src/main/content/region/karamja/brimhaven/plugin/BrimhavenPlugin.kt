@@ -80,24 +80,6 @@ class BrimhavenPlugin : InteractionListener {
             }
             return@on true
         }
-
-        on(Items.LOCKED_DIARY_11761, IntType.ITEM, "unlock") { player, _ ->
-            val success: Boolean = success(player, Skills.THIEVING)
-            if (removeItem(player, Item(Items.LOCKED_DIARY_11761, 1))) {
-                if (!success) {
-                    sendMessage(player, "You fail to open the diary.")
-                    player.impactHandler.manualHit(
-                        player,
-                        (getDynLevel(player, Skills.HITPOINTS) * 0.50).toInt(),
-                        ImpactHandler.HitsplatType.NORMAL,
-                    )
-                } else {
-                    sendMessage(player, "You successfully opened the diary.")
-                    addItemOrDrop(player, Items.UNLOCKED_DIARY_11762, 1)
-                }
-            }
-            return@on true
-        }
     }
 
     companion object {
