@@ -758,7 +758,8 @@ object TutorialStage {
 
             43 -> {
                 hideTabs(player, login)
-                registerHintIcon(player, Location.create(3095, 9502), 125)
+                removeHintIcon(player)
+                registerHintIcon(player, Location(3095, 9502), 125)
                 Component.setUnclosable(
                     player,
                     player.dialogueInterpreter.sendPlaneMessageWithBlueTitle(
@@ -835,6 +836,7 @@ object TutorialStage {
 
             47 -> {
                 hideTabs(player, login)
+                removeHintIcon(player)
                 registerHintIcon(player, Repository.findNPC(NPCs.COMBAT_INSTRUCTOR_944)!!)
                 Component.setUnclosable(
                     player,
@@ -887,6 +889,7 @@ object TutorialStage {
             50 -> {
                 hideTabs(player, login)
                 setVarbit(player, FLASHING_ICON, 0)
+                removeHintIcon(player)
                 registerHintIcon(player, Location.create(3111, 9518, 0), 125)
                 Component.setUnclosable(
                     player,
