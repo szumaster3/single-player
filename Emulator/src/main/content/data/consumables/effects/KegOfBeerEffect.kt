@@ -4,7 +4,17 @@ import core.game.consumable.ConsumableEffect
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
 
+/**
+ * Applies a combined effect of healing and stat changes when consumed.
+ *
+ * Heals 15 hitpoints, boosts Strength by 10,
+ * but reduces Attack by 40.
+ */
 class KegOfBeerEffect : ConsumableEffect() {
+
+    /**
+     * Activates healing and skill effects on the player.
+     */
     override fun activate(player: Player) {
         val effect =
             MultiEffect(

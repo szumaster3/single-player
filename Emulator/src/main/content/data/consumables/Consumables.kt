@@ -1,0 +1,436 @@
+package content.data.consumables
+
+import content.data.consumables.effects.*
+import core.game.consumable.*
+import core.game.node.entity.player.link.diary.DiaryType
+import core.game.node.entity.skill.Skills
+import core.game.world.update.flag.context.Animation
+import core.tools.minutesToTicks
+import core.tools.secondsToTicks
+import org.rs.consts.Items
+
+/**
+ * Enum represents a repository of active consumables in the framework.
+ */
+enum class Consumables {
+    FINGERS(Food(intArrayOf(Items.FINGERS_10965), HealingEffect(2))),
+    COATED_FROG_LEGS(Food(intArrayOf(Items.COATED_FROGS_LEGS_10963), HealingEffect(2))),
+    COOKED_MEAT(Food(intArrayOf(Items.COOKED_MEAT_2142), HealingEffect(3))),
+    COOKED_TURKEY(Food(intArrayOf(Items.COOKED_TURKEY_14540), HealingEffect(2))),
+    COOKED_TURKEY_DRUMSTICK(Food(intArrayOf(Items.COOKED_TURKEY_DRUMSTICK_14543), HealingEffect(10), "You eat the turkey drumstick.")),
+    SHRIMPS(Food(intArrayOf(Items.SHRIMPS_315), HealingEffect(3))),
+    COOKED_CHICKEN(Food(intArrayOf(Items.COOKED_CHICKEN_2140), HealingEffect(3))),
+    COOKED_RABBIT(Food(intArrayOf(Items.COOKED_RABBIT_3228), HealingEffect(5))),
+    ANCHOVIES(Food(intArrayOf(Items.ANCHOVIES_319), HealingEffect(1))),
+    SARDINE(Food(intArrayOf(Items.SARDINE_325), HealingEffect(3))),
+    POISON_KARAMBWAN(Food(intArrayOf(Items.POISON_KARAMBWAN_3146), PoisonKarambwanEffect())),
+    UGTHANKI_MEAT(Food(intArrayOf(Items.UGTHANKI_MEAT_1861), HealingEffect(3))),
+    HERRING(Food(intArrayOf(Items.HERRING_347), HealingEffect(5))),
+    MACKEREL(Food(intArrayOf(Items.MACKEREL_355), HealingEffect(6))),
+    ROAST_BIRD_MEAT(Food(intArrayOf(Items.ROAST_BIRD_MEAT_9980), HealingEffect(6))),
+    THIN_SNAIL_MEAT(Food(intArrayOf(Items.THIN_SNAIL_MEAT_3369), RandomHealthEffect(5, 7))),
+    TROUT(Food(intArrayOf(Items.TROUT_333), HealingEffect(7))),
+    SPIDER_ON_STICK(Food(intArrayOf(Items.SPIDER_ON_STICK_6297, Items.SKEWER_STICK_6305), RandomHealthEffect(7, 10), "You eat the spider. The meat has a silky texture with a delicate web of flavours.")),
+    SPIDER_ON_SHAFT(Food(intArrayOf(Items.SPIDER_ON_SHAFT_6299), RandomHealthEffect(7, 10))),
+    ROAST_RABBIT(Food(intArrayOf(Items.ROAST_RABBIT_7223), HealingEffect(7))),
+    LEAN_SNAIL_MEAT(Food(intArrayOf(Items.LEAN_SNAIL_MEAT_3371), RandomHealthEffect(6, 8))),
+    COD(Food(intArrayOf(Items.COD_339), HealingEffect(7))),
+    PIKE(Food(intArrayOf(Items.PIKE_351), HealingEffect(8))),
+    ROAST_BEAST_MEAT(Food(intArrayOf(Items.ROAST_BEAST_MEAT_9988), HealingEffect(8))),
+    COOKED_CRAB_MEAT(Food(intArrayOf(Items.COOKED_CRAB_MEAT_7521, Items.COOKED_CRAB_MEAT_7523, Items.COOKED_CRAB_MEAT_7524, Items.COOKED_CRAB_MEAT_7525, Items.COOKED_CRAB_MEAT_7526), HealingEffect(10))),
+    FAT_SNAIL(Food(intArrayOf(Items.FAT_SNAIL_MEAT_3373), RandomHealthEffect(7, 9))),
+    SALMON(Food(intArrayOf(Items.SALMON_329), HealingEffect(9))),
+    SLIMY_EEL(Food(intArrayOf(Items.COOKED_SLIMY_EEL_3381), RandomHealthEffect(7, 9))),
+    TUNA(Food(intArrayOf(Items.TUNA_361), HealingEffect(10))),
+    CHOPPED_TUNA(Food(intArrayOf(Items.CHOPPED_TUNA_7086, Items.BOWL_1923), HealingEffect(10))),
+    CHOPPED_ONION(Food(intArrayOf(Items.CHOPPED_ONION_1871, Items.BOWL_1923), HealingEffect(1), "It's sad to see a grown man/woman cry.")),
+    COOKED_KARAMBWAN(Food(intArrayOf(Items.COOKED_KARAMBWAN_3144), HealingEffect(18)), true),
+    COOKED_CHOMPY(Food(intArrayOf(Items.COOKED_CHOMPY_2878), HealingEffect(7))),
+    ROASTED_CHOMPY(Food(intArrayOf(Items.COOKED_CHOMPY_7228), HealingEffect(7))),
+    RAINBOW_FISH(Food(intArrayOf(Items.RAINBOW_FISH_10136), HealingEffect(11))),
+    CAVE_EEL(Food(intArrayOf(Items.CAVE_EEL_5003), RandomHealthEffect(8, 10))),
+    CAVIAR(Food(intArrayOf(Items.CAVIAR_11326), HealingEffect(5))),
+    LOBSTER(Food(intArrayOf(Items.LOBSTER_379), HealingEffect(12))),
+    COOKED_JUBBLY(Food(intArrayOf(Items.COOKED_JUBBLY_7568), HealingEffect(15))),
+    BASS(Food(intArrayOf(Items.BASS_365), HealingEffect(13))),
+    SWORDFISH(Food(intArrayOf(Items.SWORDFISH_373), HealingEffect(14))),
+    LAVA_EEL(Food(intArrayOf(Items.LAVA_EEL_2149), RandomHealthEffect(9, 11))),
+    MONKFISH(Food(intArrayOf(Items.MONKFISH_7946), HealingEffect(16))),
+    SHARK(Food(intArrayOf(Items.SHARK_385), HealingEffect(20))),
+    SEA_TURTLE(Food(intArrayOf(Items.SEA_TURTLE_397), HealingEffect(21))),
+    MANTA_RAY(Food(intArrayOf(Items.MANTA_RAY_391), HealingEffect(22))),
+    KARAMBWANJI(Food(intArrayOf(Items.KARAMBWANJI_3151), HealingEffect(3))),
+    STUFFED_SNAKE(Food(intArrayOf(Items.STUFFED_SNAKE_7579), HealingEffect(20), "You eat the stuffed snake-it's quite a meal! It tastes like chicken.")),
+    CRAYFISH(Food(intArrayOf(Items.CRAYFISH_13433), HealingEffect(1))),
+    GIANT_FROG_LEGS(Food(intArrayOf(Items.GIANT_FROG_LEGS_4517), HealingEffect(6))),
+    GIANT_CARP(Food(intArrayOf(Items.GIANT_CARP_337), HealingEffect(6))),
+    BREAD(Food(intArrayOf(Items.BREAD_2309), HealingEffect(5))),
+    BAGUETTE(Food(intArrayOf(Items.BAGUETTE_6961), HealingEffect(6))),
+    TRIANGLE_SANDWICH(Food(intArrayOf(Items.TRIANGLE_SANDWICH_6962), HealingEffect(6))),
+    SQUARE_SANDWICH(Food(intArrayOf(Items.SQUARE_SANDWICH_6965), HealingEffect(6))),
+    SEAWEED_SANDWICH(FakeConsumable(Items.SEAWEED_SANDWICH_3168, "You really, really do not want to eat that.")),
+    FROGBURGER(Food(intArrayOf(Items.FROGBURGER_10962), HealingEffect(2))),
+    UGTHANKI_KEBAB(Food(intArrayOf(Items.UGTHANKI_KEBAB_1883), UgthankiKebabEffect())),
+    UGTHANKI_KEBAB_SMELLING(Food(intArrayOf(Items.UGTHANKI_KEBAB_1885), SmellingUgthankiKebabEffect())),
+    KEBAB(Food(intArrayOf(Items.KEBAB_1971), KebabEffect())),
+    SUPER_KEBAB(Food(intArrayOf(Items.SUPER_KEBAB_4608), SuperKebabEffect())),
+    REDBERRY_PIE(HalfableFood(intArrayOf(Items.REDBERRY_PIE_2325, Items.HALF_A_REDBERRY_PIE_2333, Items.PIE_DISH_2313), HealingEffect(5))),
+    MINCED_MEAT(Food(intArrayOf(Items.MINCED_MEAT_7070, Items.BOWL_1923), HealingEffect(2))),
+    MEAT_PIE(HalfableFood(intArrayOf(Items.MEAT_PIE_2327, Items.HALF_A_MEAT_PIE_2331, Items.PIE_DISH_2313), HealingEffect(6))),
+    APPLE_PIE(HalfableFood(intArrayOf(Items.APPLE_PIE_2323, Items.HALF_AN_APPLE_PIE_2335, Items.PIE_DISH_2313), HealingEffect(7))),
+    GARDEN_PIE(HalfableFood(intArrayOf(Items.GARDEN_PIE_7178, Items.HALF_A_GARDEN_PIE_7180, Items.PIE_DISH_2313), MultiEffect(HealingEffect(6), SkillEffect(Skills.FARMING, 3.0, 0.0)))),
+    FISH_PIE(HalfableFood(intArrayOf(Items.FISH_PIE_7188, Items.HALF_A_FISH_PIE_7190, Items.PIE_DISH_2313), MultiEffect(HealingEffect(6), SkillEffect(Skills.FISHING, 3.0, 0.0)))),
+    ADMIRAL_PIE(HalfableFood(intArrayOf(Items.ADMIRAL_PIE_7198, Items.HALF_AN_ADMIRAL_PIE_7200, Items.PIE_DISH_2313), MultiEffect(HealingEffect(8), SkillEffect(Skills.FISHING, 5.0, 0.0)))),
+    WILD_PIE(HalfableFood(intArrayOf(Items.WILD_PIE_7208, Items.HALF_A_WILD_PIE_7210, Items.PIE_DISH_2313), MultiEffect(SkillEffect(Skills.SLAYER, 5.0, 0.0), SkillEffect(Skills.RANGE, 4.0, 0.0), HealingEffect(11)))),
+    SUMMER_PIE(HalfableFood(intArrayOf(Items.SUMMER_PIE_7218, Items.HALF_A_SUMMER_PIE_7220, Items.PIE_DISH_2313), MultiEffect(HealingEffect(11), SkillEffect(Skills.AGILITY, 5.0, 0.0), EnergyEffect(10)))),
+    PEACH(Food(intArrayOf(Items.PEACH_6883), HealingEffect(8))),
+    WHITE_TREE_FRUIT(Food(intArrayOf(Items.WHITE_TREE_FRUIT_6469), MultiEffect(RandomEnergyEffect(5, 10), HealingEffect(2)))),
+    STRANGE_FRUIT(Food(intArrayOf(Items.STRANGE_FRUIT_464), MultiEffect(RemoveTimerEffect("poison"), EnergyEffect(30)), "You eat the fruit.", "It tastes great; some of your run energy is restored!")),
+    TOAD_CRUNCHIES(Food(intArrayOf(Items.TOAD_CRUNCHIES_2217), HealingEffect(12))),
+    PREMADE_TD_CRUNCH(Food(intArrayOf(Items.PREMADE_TD_CRUNCH_2243), HealingEffect(12))),
+    SPICY_CRUNCHIES(Food(intArrayOf(Items.SPICY_CRUNCHIES_2213), HealingEffect(7))),
+    PREMADE_SY_CRUNCH(Food(intArrayOf(Items.PREMADE_SY_CRUNCH_2241), HealingEffect(7))),
+    WORM_CRUNCHIES(Food(intArrayOf(Items.WORM_CRUNCHIES_2205), HealingEffect(8))),
+    PREMADE_WM_CRUNC(Food(intArrayOf(Items.PREMADE_WM_CRUN_2237), HealingEffect(8))),
+    CHOCCHIP_CRUNCHIES(Food(intArrayOf(Items.CHOCCHIP_CRUNCHIES_2209), HealingEffect(7))),
+    PREMADE_CH_CRUNCH(Food(intArrayOf(Items.PREMADE_CH_CRUNCH_2239), HealingEffect(7))),
+    FRUIT_BATTA(Food(intArrayOf(Items.FRUIT_BATTA_2277), HealingEffect(11))),
+    PREMADE_FRT_BATTA(Food(intArrayOf(Items.PREMADE_FRT_BATTA_2225), HealingEffect(11))),
+    TOAD_BATTA(Food(intArrayOf(Items.TOAD_BATTA_2255), HealingEffect(11))),
+    PREMADE_TD_BATTA(Food(intArrayOf(Items.PREMADE_TD_BATTA_2221), HealingEffect(11))),
+    WORM_BATTA(Food(intArrayOf(Items.WORM_BATTA_2253), HealingEffect(11))),
+    PREMADE_WM_BATTA(Food(intArrayOf(Items.PREMADE_WM_BATTA_2219), HealingEffect(11))),
+    VEGETABLE_BATTA(Food(intArrayOf(Items.VEGETABLE_BATTA_2281), HealingEffect(11))),
+    PREMADE_VEG_BATTA(Food(intArrayOf(Items.PREMADE_VEG_BATTA_2227), HealingEffect(11))),
+    CHEESE_AND_TOMATOES_BATTA(Food(intArrayOf(Items.CHEESE_PLUSTOM_BATTA_2259), HealingEffect(11))),
+    PREMADE_CT_BATTA(Food(intArrayOf(Items.PREMADE_C_PLUST_BATTA_2223), HealingEffect(11))),
+    WORM_HOLE(Food(intArrayOf(Items.WORM_HOLE_2191), HealingEffect(12))),
+    PREMADE_WORM_HOLE(Food(intArrayOf(Items.PREMADE_WORM_HOLE_2233), HealingEffect(12))),
+    VEG_BALL(Food(intArrayOf(Items.VEG_BALL_2195), HealingEffect(12))),
+    PREMADE_VEG_BALL(Food(intArrayOf(Items.PREMADE_VEG_BALL_2235), HealingEffect(12))),
+    TANGLED_TOADS_LEGS(Food(intArrayOf(Items.TANGLED_TOADS_LEGS_2187), HealingEffect(15))),
+    PREMADE_TTL(Food(intArrayOf(Items.PREMADE_TTL_2231), HealingEffect(15))),
+    CHOCOLATE_BOMB(Food(intArrayOf(Items.VEG_BALL_2195), HealingEffect(15))),
+    PREMADE_CHOC_BOMB(Food(intArrayOf(Items.PREMADE_CHOC_BOMB_2229), HealingEffect(15))),
+    STEW(Food(intArrayOf(Items.STEW_2003, Items.BOWL_1923), HealingEffect(11))),
+    SPICY_STEW(Food(intArrayOf(Items.SPICY_STEW_7479, Items.BOWL_1923), HealingEffect(11))),
+    CURRY(Food(intArrayOf(Items.CURRY_2011, Items.BOWL_1923), HealingEffect(19))),
+    BANANA_STEW(Food(intArrayOf(Items.BANANA_STEW_4016, Items.BOWL_1923), HealingEffect(11))),
+    PLAIN_PIZZA(HalfableFood(intArrayOf(Items.PLAIN_PIZZA_2289, Items.HALF_PLAIN_PIZZA_2291), HealingEffect(7))),
+    MEAT_PIZZA(HalfableFood(intArrayOf(Items.MEAT_PIZZA_2293, Items.HALF_MEAT_PIZZA_2295), HealingEffect(8))),
+    ANCHOVY_PIZZA(HalfableFood(intArrayOf(Items.ANCHOVY_PIZZA_2297, Items.HALF_ANCHOVY_PIZZA_2299), HealingEffect(9))),
+    WHITE_PEARL(HalfableFood(intArrayOf(Items.WHITE_PEARL_4485, Items.WHITE_PEARL_SEED_4486), HealingEffect(2), "You eat the white pearl and spit out the seed when you're done. Mmm, tasty.")),
+    PINEAPPLE_PIZZA(HalfableFood(intArrayOf(Items.PINEAPPLE_PIZZA_2301, Items.HALF_PAPPLE_PIZZA_2303), HealingEffect(11))),
+    CAKE(Cake(intArrayOf(Items.CAKE_1891, Items.TWO_THIRDS_CAKE_1893, Items.SLICE_OF_CAKE_1895), HealingEffect(4), "You eat part of the cake.", "You eat some more cake.", "You eat the slice of cake.")),
+    CHOCOLATE_CAKE(Cake(intArrayOf(Items.CHOCOLATE_CAKE_1897, Items.TWO_THIRDS_CHOCOLATE_CAKE_1899, Items.CHOCOLATE_SLICE_1901), HealingEffect(5), "You eat part of the chocolate cake.", "You eat some more of the chocolate cake.", "You eat the slice of cake.")),
+    ROCK_CAKE(Food(intArrayOf(Items.ROCK_CAKE_2379), RockCakeEffect(), "The rock cake resists all attempts to eat it.")),
+    CAVE_NIGHTSHADE(Food(intArrayOf(Items.CAVE_NIGHTSHADE_2398), DamageEffect(15.0, false), "Ahhhh! What have I done!")),
+    DWARVEN_ROCK_CAKE(Food(intArrayOf(Items.DWARVEN_ROCK_CAKE_7510, Items.DWARVEN_ROCK_CAKE_7510), DwarvenRockCakeEffect(), "Ow! You nearly broke a tooth!", "The rock cake resists all attempts to eat it.")),
+    HOT_DWARVEN_ROCK_CAKE(Food(intArrayOf(Items.DWARVEN_ROCK_CAKE_7509, Items.DWARVEN_ROCK_CAKE_7509), DwarvenRockCakeEffect(), "Ow! You nearly broke a tooth!", "The rock cake resists all attempts to eat it.")),
+    COOKED_FISHCAKE(Food(intArrayOf(Items.COOKED_FISHCAKE_7530), HealingEffect(11))),
+    MINT_CAKE(Food(intArrayOf(Items.MINT_CAKE_9475), EnergyEffect(50))),
+    POTATO(Food(intArrayOf(Items.POTATO_1942), HealingEffect(1), "You eat the potato. Yuck!")),
+    BAKED_POTATO(Food(intArrayOf(Items.BAKED_POTATO_6701), HealingEffect(4))),
+    POISONED_CHEESE(FakeConsumable(Items.POISONED_CHEESE_6768, "Ummm... let me think about this one.....No! That would be stupid.")),
+    POISON_CHALICE(Drink(intArrayOf(Items.POISON_CHALICE_197, Items.COCKTAIL_GLASS_2026), PoisonChaliceEffect(), "You drink the strange green liquid.")),
+    SPICY_SAUCE(Food(intArrayOf(Items.SPICY_SAUCE_7072, Items.BOWL_1923), HealingEffect(2))),
+    LOCUST_MEAT(Food(intArrayOf(Items.LOCUST_MEAT_9052), HealingEffect(3), "Juices spurt into your mouth as you chew. It's tastier than it looks.")),
+    CHILLI_CON_CARNE(Food(intArrayOf(Items.CHILLI_CON_CARNE_7062, Items.BOWL_1923), HealingEffect(5))),
+    SCRAMBLED_EGG(Food(intArrayOf(Items.SCRAMBLED_EGG_7078, Items.BOWL_1923), HealingEffect(5))),
+    EGG_AND_TOMATO(Food(intArrayOf(Items.EGG_AND_TOMATO_7064, Items.BOWL_1923), HealingEffect(8))),
+    SWEET_CORN(Food(intArrayOf(Items.COOKED_SWEETCORN_5988), MultiEffect(HealingEffect(1), PercentageHealthEffect(10)))),
+    SWEETCORN_BOWL(Food(intArrayOf(Items.SWEETCORN_7088, Items.BOWL_1923), MultiEffect(HealingEffect(1), PercentageHealthEffect(10)))),
+    POTATO_WITH_BUTTER(Food(intArrayOf(Items.POTATO_WITH_BUTTER_6703), HealingEffect(7))),
+    CHILLI_POTATO(Food(intArrayOf(Items.CHILLI_POTATO_7054), HealingEffect(14))),
+    FRIED_ONIONS(Food(intArrayOf(Items.FRIED_ONIONS_7084, Items.BOWL_1923), HealingEffect(5))),
+    FRIED_MUSHROOMS(Food(intArrayOf(Items.FRIED_MUSHROOMS_7082, Items.BOWL_1923), HealingEffect(5))),
+    BLACK_MUSHROOM(FakeConsumable(Items.BLACK_MUSHROOM_4620, "Eugh! It tastes horrible, and stains your fingers black.")),
+    CHOPPED_TOMATO(Food(intArrayOf(Items.CHOPPED_TOMATO_1869, Items.BOWL_1923), HealingEffect(2))),
+    ONION_AND_TOMATO(Food(intArrayOf(Items.ONION_AND_TOMATO_1875, Items.BOWL_1923), HealingEffect(2))),
+    POTATO_WITH_CHEESE(Food(intArrayOf(Items.POTATO_WITH_CHEESE_6705), HealingEffect(16))),
+    EGG_POTATO(Food(intArrayOf(Items.EGG_POTATO_7056), HealingEffect(11))),
+    MUSHROOMS_AND_ONIONS(Food(intArrayOf(Items.MUSHROOM_AND_ONION_7066, Items.BOWL_1923), HealingEffect(11))),
+    MUSHROOM_POTATO(Food(intArrayOf(Items.MUSHROOM_POTATO_7058), HealingEffect(20))),
+    TUNA_AND_CORN(Food(intArrayOf(Items.TUNA_AND_CORN_7068, Items.BOWL_1923), HealingEffect(13))),
+    TUNA_POTATO(Food(intArrayOf(Items.TUNA_POTATO_7060), HealingEffect(22))),
+    ONION(Food(intArrayOf(Items.ONION_1957), HealingEffect(2), "It's always sad to see a grown man/woman cry.")),
+    CABBAGE(Food(intArrayOf(Items.CABBAGE_1965), HealingEffect(2), "You eat the cabbage. Yuck!")),
+    DRAYNOR_CABBAGE(Food(intArrayOf(Items.CABBAGE_1967), DraynorCabbageEffect(), "You eat the cabbage.", "It seems to taste nicer than normal.")),
+    ROTTEN_APPLE(Food(intArrayOf(Items.ROTTEN_APPLE_1984), HealingEffect(2), "It's rotten, you spit it out.")),
+    EVIL_TURNIP(Food(intArrayOf(Items.EVIL_TURNIP_12134, Items.TWO_THIRDS_EVIL_TURNIP_12136, Items.ONE_THIRD_EVIL_TURNIP_12138), HealingEffect(6))),
+    SPINACH_ROLL(Food(intArrayOf(Items.SPINACH_ROLL_1969), HealingEffect(2), "It tastes a bit weird, but it fills you up.")),
+    POT_OF_CREAM(Food(intArrayOf(Items.POT_OF_CREAM_2130), HealingEffect(1), "You eat the cream. You get some on your nose.")),
+    CHEESE(Food(intArrayOf(Items.CHEESE_1985), HealingEffect(2))),
+    CHOCOLATEY_MILK(Drink(intArrayOf(Items.CHOCOLATEY_MILK_1977, Items.BUCKET_1925), HealingEffect(4))),
+    BANANA(Food(intArrayOf(Items.BANANA_1963), HealingEffect(2))),
+    SLICED_BANANA(Food(intArrayOf(Items.SLICED_BANANA_3162), HealingEffect(2))),
+    RED_BANANA(Food(intArrayOf(Items.RED_BANANA_7572), HealingEffect(5), "You eat the red banana. It's tastier than your average banana.")),
+    SLICED_RED_BANANA(Food(intArrayOf(Items.SLICED_RED_BANANA_7574), HealingEffect(5), "You eat the sliced red banana. Yum.")),
+    ORANGE(Food(intArrayOf(Items.ORANGE_2108), HealingEffect(2))),
+    ORANGE_CHUNKS(Food(intArrayOf(Items.ORANGE_CHUNKS_2110), HealingEffect(2))),
+    ORANGE_SLICES(Food(intArrayOf(Items.ORANGE_SLICES_2112), HealingEffect(2))),
+    LIME_CHUNKS(Food(intArrayOf(Items.LIME_CHUNKS_2122), HealingEffect(2))),
+    LIME_SLICES(Food(intArrayOf(Items.LIME_SLICES_2124), HealingEffect(2))),
+    PAPAYA_FRUIT(Food(intArrayOf(Items.PAPAYA_FRUIT_5972), HealingEffect(2))),
+    TENTI_PINEAPPLE(FakeConsumable(Items.TENTI_PINEAPPLE_1851, "Try using a knife to slice it into pieces.")),
+    PINEAPPLE(FakeConsumable(Items.PINEAPPLE_2114, "Try using a knife to slice it into pieces.")),
+    PINEAPPLE_CHUNKS(Food(intArrayOf(Items.PINEAPPLE_CHUNKS_2116), HealingEffect(2))),
+    PINEAPPLE_RING(Food(intArrayOf(Items.PINEAPPLE_RING_2118), HealingEffect(2))),
+    DWELLBERRIES(Food(intArrayOf(Items.DWELLBERRIES_2126), HealingEffect(2))),
+    JANGERBERRIES(Food(intArrayOf(Items.JANGERBERRIES_247), MultiEffect(SkillEffect(Skills.ATTACK, 2.0, 0.0), SkillEffect(Skills.STRENGTH, 1.0, 0.0), PrayerEffect(1.0, 0.0), SkillEffect(Skills.DEFENCE, -1.0, 0.0)), "You eat the jangerberries.", "They taste very bitter.")),
+    STRAWBERRY(Food(intArrayOf(Items.STRAWBERRY_5504), MultiEffect(HealingEffect(1), PercentageHealthEffect(6)))),
+    TOMATO(Food(intArrayOf(Items.TOMATO_1982), HealingEffect(2))),
+    WATERMELON(FakeConsumable(Items.WATERMELON_5982, "You can't eat it whole; maybe you should cut it up.")),
+    WATERMELON_SLICE(Food(intArrayOf(Items.WATERMELON_SLICE_5984), PercentageHealthEffect(5), "You eat the slice of watermelon.")),
+    LEMON(Food(intArrayOf(Items.LEMON_2102), HealingEffect(2))),
+    LEMON_CHUNKS(Food(intArrayOf(Items.LEMON_CHUNKS_2104), HealingEffect(2))),
+    LEMON_SLICES(Food(intArrayOf(Items.LEMON_SLICES_2106), HealingEffect(2), "You eat the slice of lemon.")),
+    TOAD_LEGS(Food(intArrayOf(Items.TOADS_LEGS_2152), HealingEffect(3), "You eat the toad's legs. They're a bit chewy.")),
+    KING_WORM(Food(intArrayOf(Items.KING_WORM_2162), HealingEffect(2))),
+    ASGOLDIAN_ALE(FakeConsumable(Items.ASGOLDIAN_ALE_7508, "I don't think I'd like gold in beer thanks. Leave it for the dwarves.")),
+    ASGARNIAN_ALE(Drink(intArrayOf(Items.ASGARNIAN_ALE_1905, Items.BEER_GLASS_1919), MultiEffect(HealingEffect(2), SkillEffect(Skills.STRENGTH, 2.0, 0.0), SkillEffect(Skills.ATTACK, -4.0, 0.0)), "You drink the ale. You feel slightly reinvigorated...", "...and slightly dizzy too.")),
+    ASGARNIAN_ALE_KEG(Drink(intArrayOf(Items.ASGARNIAN_ALE4_5785, Items.ASGARNIAN_ALE3_5783, Items.ASGARNIAN_ALE2_5781, Items.ASGARNIAN_ALE1_5779, Items.CALQUAT_KEG_5769), MultiEffect(SkillEffect(Skills.STRENGTH, 2.0, 0.0), SkillEffect(Skills.ATTACK, -4.0, 0.0)), Animation(2289), "You drink the ale. You feel slightly reinvigorated...", "...and slightly dizzy too.")),
+    ASGARNIAN_ALE_M(Drink(intArrayOf(Items.ASGARNIAN_ALEM_5739, Items.BEER_GLASS_1919), MultiEffect(SkillEffect(Skills.STRENGTH, 3.0, 0.0), SkillEffect(Skills.ATTACK, -6.0, 0.0)))),
+    ASGARNIAN_ALE_M_KEG(Drink(intArrayOf(Items.ASGARNIAN_ALEM4_5865, Items.ASGARNIAN_ALEM3_5863, Items.ASGARNIAN_ALEM2_5861, Items.ASGARNIAN_ALEM1_5859, Items.CALQUAT_KEG_5769), MultiEffect(SkillEffect(Skills.STRENGTH, 3.0, 0.0), SkillEffect(Skills.ATTACK, -6.0, 0.0)), Animation(2289))),
+    AXEMANS_FOLLY(Drink(intArrayOf(Items.AXEMANS_FOLLY_5751, Items.BEER_GLASS_1919), MultiEffect(SkillEffect(Skills.WOODCUTTING, 1.0, 0.0), HealingEffect(1), SkillEffect(Skills.STRENGTH, -3.0, 0.0), SkillEffect(Skills.ATTACK, -3.0, 0.0)))),
+    AXEMANS_FOLLY_KEG(Drink(intArrayOf(Items.AXEMANS_FOLLY4_5825, Items.AXEMANS_FOLLY3_5823, Items.AXEMANS_FOLLY2_5821, Items.AXEMANS_FOLLY1_5819, Items.CALQUAT_KEG_5769), MultiEffect(SkillEffect(Skills.WOODCUTTING, 1.0, 0.0), HealingEffect(1), SkillEffect(Skills.STRENGTH, -3.0, 0.0), SkillEffect(Skills.ATTACK, -3.0, 0.0)), Animation(2289))),
+    AXEMANS_FOLLY_M(Drink(intArrayOf(Items.AXEMANS_FOLLYM_5753, Items.BEER_GLASS_1919), MultiEffect(SkillEffect(Skills.WOODCUTTING, 2.0, 0.0), HealingEffect(2), SkillEffect(Skills.STRENGTH, -4.0, 0.0), SkillEffect(Skills.ATTACK, -4.0, 0.0)))),
+    AXEMANS_FOLLY_M_KEG(Drink(intArrayOf(Items.AXEMANS_FOLLYM4_5905, Items.AXEMANS_FOLLYM3_5903, Items.AXEMANS_FOLLYM2_5901, Items.AXEMANS_FOLLYM1_5899, Items.CALQUAT_KEG_5769), MultiEffect(SkillEffect(Skills.WOODCUTTING, 2.0, 0.0), HealingEffect(2), SkillEffect(Skills.STRENGTH, -4.0, 0.0), SkillEffect(Skills.ATTACK, -4.0, 0.0)), Animation(2289))),
+    BANDITS_BREW(Drink(intArrayOf(Items.BANDITS_BREW_4627, Items.BEER_GLASS_1919), MultiEffect(SkillEffect(Skills.THIEVING, 1.0, 0.0), SkillEffect(Skills.ATTACK, 1.0, 0.0), SkillEffect(Skills.STRENGTH, -1.0, 0.0), SkillEffect(Skills.DEFENCE, -6.0, 0.0), HealingEffect(1)), "You drink the beer. You feel slightly reinvigorated...", "...and slightly dizzy too.")),
+    BEER(Drink(intArrayOf(Items.BEER_1917, Items.BEER_GLASS_1919), MultiEffect(HealingEffect(1), SkillEffect(Skills.STRENGTH, 0.0, 0.04), SkillEffect(Skills.ATTACK, 0.0, -0.07)), "You drink the beer. You feel slightly reinvigorated...", "...and slightly dizzy too.")),
+    BEER_TANKARD(Drink(intArrayOf(Items.BEER_3803, Items.TANKARD_3805), MultiEffect(SkillEffect(Skills.ATTACK, -9.0, 0.0), SkillEffect(Skills.STRENGTH, 4.0, 0.0)), "You quaff the beer. You feel slightly reinvigorated...", "...but very dizzy too.")),
+    KEG_OF_BEER(Drink(intArrayOf(Items.KEG_OF_BEER_3801), KegOfBeerEffect(), Animation(1330), "You chug the keg. You feel reinvigorated...", "...but extremely drunk too.")),
+    CHEFS_DELIGHT(Drink(intArrayOf(Items.CHEFS_DELIGHT_5755, Items.BEER_GLASS_1919), MultiEffect(SkillEffect(Skills.COOKING, 1.0, 0.05), HealingEffect(1), SkillEffect(Skills.ATTACK, -2.0, 0.0), SkillEffect(Skills.STRENGTH, -2.0, 0.0)))),
+    CHEFS_DELIGHT_KEG(Drink(intArrayOf(Items.CHEFS_DELIGHT4_5833, Items.CHEFS_DELIGHT3_5831, Items.CHEFS_DELIGHT2_5829, Items.CHEFS_DELIGHT1_5827, Items.CALQUAT_KEG_5769), MultiEffect(SkillEffect(Skills.COOKING, 1.0, 0.05), HealingEffect(1), SkillEffect(Skills.ATTACK, -2.0, 0.0), SkillEffect(Skills.STRENGTH, -2.0, 0.0)), Animation(2289))),
+    CHEFS_DELIGHT_M(Drink(intArrayOf(Items.CHEFS_DELIGHTM_5757, Items.BEER_GLASS_1919), MultiEffect(SkillEffect(Skills.COOKING, 2.0, 0.05), HealingEffect(2), SkillEffect(Skills.ATTACK, -3.0, 0.0), SkillEffect(Skills.STRENGTH, -3.0, 0.0)))),
+    CHEFS_DELIGHT_M_KEG(Drink(intArrayOf(Items.CHEFS_DELIGHTM4_5913, Items.CHEFS_DELIGHTM3_5911, Items.CHEFS_DELIGHTM2_5909, Items.CHEFS_DELIGHTM1_5907, Items.CALQUAT_KEG_5769), MultiEffect(SkillEffect(Skills.COOKING, 2.0, 0.05), HealingEffect(2), SkillEffect(Skills.ATTACK, -3.0, 0.0), SkillEffect(Skills.STRENGTH, -3.0, 0.0)), Animation(2289))),
+    CIDER(Drink(intArrayOf(Items.CIDER_5763, Items.BEER_GLASS_1919), MultiEffect(MultiEffect(HealingEffect(2), SkillEffect(Skills.FARMING, 1.0, 0.0), SkillEffect(Skills.ATTACK, -2.0, 0.0), SkillEffect(Skills.STRENGTH, -2.0, 0.0))))),
+    CIDER_KEG(Drink(intArrayOf(Items.CIDER4_5849, Items.CIDER3_5847, Items.CIDER2_5845, Items.CIDER1_5843, Items.CALQUAT_KEG_5769), MultiEffect(MultiEffect(HealingEffect(2), SkillEffect(Skills.FARMING, 1.0, 0.0), SkillEffect(Skills.ATTACK, -2.0, 0.0), SkillEffect(Skills.STRENGTH, -2.0, 0.0))), Animation(2289))),
+    MATURE_CIDER(Drink(intArrayOf(Items.MATURE_CIDER_5765, Items.BEER_GLASS_1919), MultiEffect(MultiEffect(HealingEffect(2), SkillEffect(Skills.FARMING, 2.0, 0.0), SkillEffect(Skills.ATTACK, -5.0, 0.0), SkillEffect(Skills.STRENGTH, -5.0, 0.0))))),
+    CIDER_M_KEG(Drink(intArrayOf(Items.CIDERM4_5929, Items.CIDERM3_5927, Items.CIDERM2_5925, Items.CIDERM1_5923, Items.CALQUAT_KEG_5769), MultiEffect(MultiEffect(HealingEffect(2), SkillEffect(Skills.FARMING, 2.0, 0.0), SkillEffect(Skills.ATTACK, -5.0, 0.0), SkillEffect(Skills.STRENGTH, -5.0, 0.0))), Animation(2289))),
+    DRAGON_BITTER(Drink(intArrayOf(Items.DRAGON_BITTER_1911, Items.BEER_GLASS_1919), MultiEffect(HealingEffect(1), SkillEffect(Skills.STRENGTH, 2.0, 0.0), SkillEffect(Skills.ATTACK, -4.0, 0.0)), "You drink the Dragon Bitter. You feel slightly reinvigorated...", "...and slightly dizzy too.")),
+    DRAGON_BITTER_KEG(Drink(intArrayOf(Items.DRAGON_BITTER4_5809, Items.DRAGON_BITTER3_5807, Items.DRAGON_BITTER2_5805, Items.DRAGON_BITTER1_5803, Items.CALQUAT_KEG_5769), MultiEffect(HealingEffect(1), SkillEffect(Skills.STRENGTH, 2.0, 0.0), SkillEffect(Skills.ATTACK, -4.0, 0.0)), Animation(2289))),
+    DRAGON_BITTER_M(Drink(intArrayOf(Items.DRAGON_BITTERM_5745, Items.BEER_GLASS_1919), MultiEffect(HealingEffect(2), SkillEffect(Skills.STRENGTH, 3.0, 0.0), SkillEffect(Skills.ATTACK, -6.0, 0.0)))),
+    DRAGON_BITTER_M_KEG(Drink(intArrayOf(Items.DRAGON_BITTERM4_5889, Items.DRAGON_BITTERM3_5887, Items.DRAGON_BITTERM2_5885, Items.DRAGON_BITTERM1_5883, Items.CALQUAT_KEG_5769), MultiEffect(HealingEffect(2), SkillEffect(Skills.STRENGTH, 3.0, 0.0), SkillEffect(Skills.ATTACK, -6.0, 0.0)), Animation(2289))),
+    DWARVEN_STOUT(Drink(intArrayOf(Items.DWARVEN_STOUT_1913, Items.BEER_GLASS_1919), MultiEffect(SkillEffect(Skills.MINING, 1.0, 0.0), SkillEffect(Skills.SMITHING, 1.0, 0.0), SkillEffect(Skills.ATTACK, -2.0, 0.0), SkillEffect(Skills.STRENGTH, -2.0, 0.0), SkillEffect(Skills.DEFENCE, -2.0, 0.0), HealingEffect(1)), "You drink the Dwarven Stout. It tastes foul.", "It tastes pretty strong too.")),
+    DWARVEN_STOUT_KEG(Drink(intArrayOf(Items.DWARVEN_STOUT4_5777, Items.DWARVEN_STOUT3_5775, Items.DWARVEN_STOUT2_5773, Items.DWARVEN_STOUT1_5771, Items.CALQUAT_KEG_5769), MultiEffect(SkillEffect(Skills.MINING, 1.0, 0.0), SkillEffect(Skills.SMITHING, 1.0, 0.0), SkillEffect(Skills.ATTACK, -2.0, 0.0), SkillEffect(Skills.STRENGTH, -2.0, 0.0), SkillEffect(Skills.DEFENCE, -2.0, 0.0), HealingEffect(1)), Animation(2289), "You drink the Dwarven Stout. It tastes foul.", "It tastes pretty strong too.")),
+    DWARVEN_STOUT_M(Drink(intArrayOf(Items.DWARVEN_STOUTM_5747, Items.BEER_GLASS_1919), MultiEffect(SkillEffect(Skills.MINING, 2.0, 0.0), SkillEffect(Skills.SMITHING, 2.0, 0.0), SkillEffect(Skills.ATTACK, -7.0, 0.0), SkillEffect(Skills.STRENGTH, -7.0, 0.0), SkillEffect(Skills.DEFENCE, -7.0, 0.0), HealingEffect(1)))),
+    DWARVEN_STOUT_M_KEG(Drink(intArrayOf(Items.DWARVEN_STOUTM4_5857, Items.DWARVEN_STOUTM3_5855, Items.DWARVEN_STOUTM2_5853, Items.DWARVEN_STOUTM1_5851, Items.CALQUAT_KEG_5769), MultiEffect(SkillEffect(Skills.MINING, 2.0, 0.0), SkillEffect(Skills.SMITHING, 2.0, 0.0), SkillEffect(Skills.ATTACK, -7.0, 0.0), SkillEffect(Skills.STRENGTH, -7.0, 0.0), SkillEffect(Skills.DEFENCE, -7.0, 0.0), HealingEffect(1)), Animation(2289))),
+    GREENMANS_ALE(Drink(intArrayOf(Items.GREENMANS_ALE_1909, Items.BEER_GLASS_1919), MultiEffect(HealingEffect(1), SkillEffect(Skills.HERBLORE, 1.0, 0.0), SkillEffect(Skills.ATTACK, -3.0, 0.0), SkillEffect(Skills.STRENGTH, -3.0, 0.0), SkillEffect(Skills.DEFENCE, -3.0, 0.0)))),
+    GREENMANS_ALE_KEG(Drink(intArrayOf(Items.GREENMANS_ALE4_5793, Items.GREENMANS_ALE3_5791, Items.GREENMANS_ALE2_5789, Items.GREENMANS_ALE1_5787, Items.CALQUAT_KEG_5769), MultiEffect(HealingEffect(1), SkillEffect(Skills.HERBLORE, 1.0, 0.0), SkillEffect(Skills.ATTACK, -3.0, 0.0), SkillEffect(Skills.STRENGTH, -3.0, 0.0), SkillEffect(Skills.DEFENCE, -3.0, 0.0)), Animation(2289))),
+    GREENMANS_ALE_M(Drink(intArrayOf(Items.GREENMANS_ALEM_5743, Items.BEER_GLASS_1919), MultiEffect(HealingEffect(1), SkillEffect(Skills.HERBLORE, 2.0, 0.0), SkillEffect(Skills.ATTACK, -2.0, 0.0), SkillEffect(Skills.STRENGTH, -2.0, 0.0)))),
+    GREENMANS_ALE_M_KEG(Drink(intArrayOf(Items.GREENMANS_ALEM4_5873, Items.GREENMANS_ALEM3_5871, Items.GREENMANS_ALEM2_5869, Items.GREENMANS_ALEM1_5867, Items.CALQUAT_KEG_5769), MultiEffect(HealingEffect(1), SkillEffect(Skills.HERBLORE, 2.0, 0.0), SkillEffect(Skills.ATTACK, -2.0, 0.0), SkillEffect(Skills.STRENGTH, -2.0, 0.0)), Animation(2289))),
+    GROG(Drink(intArrayOf(Items.GROG_1915, Items.BEER_GLASS_1919), MultiEffect(SkillEffect(Skills.STRENGTH, 3.0, 0.0), SkillEffect(Skills.ATTACK, -6.0, 0.0)))),
+    MOONLIGHT_MEAD(Drink(intArrayOf(Items.MOONLIGHT_MEAD_2955, Items.BEER_GLASS_1919), HealingEffect(4), "It tastes like something just died in your mouth.")),
+    MOONLIGHT_MEAD_KEG(Drink(intArrayOf(Items.MOONLIGHT_MEAD4_5817, Items.MOONLIGHT_MEAD3_5815, Items.MOONLIGHT_MEAD2_5813, Items.MOONLIGHT_MEAD1_5811, Items.CALQUAT_KEG_5769), HealingEffect(4), Animation(2289), "It tastes like something just died in your mouth.")),
+    MOONLIGHT_MEAD_M(Drink(intArrayOf(Items.MOONLIGHT_MEADM_5749, Items.BEER_GLASS_1919), HealingEffect(6))),
+    MOONLIGHT_MEAD_M_KEG(Drink(intArrayOf(Items.MLIGHT_MEADM4_5897, Items.MLIGHT_MEADM3_5895, Items.MLIGHT_MEADM2_5893, Items.MLIGHT_MEADM1_5891, Items.CALQUAT_KEG_5769), HealingEffect(6), Animation(2289))),
+    SLAYERS_RESPITE(Drink(intArrayOf(Items.SLAYERS_RESPITE_5759, Items.BEER_GLASS_1919), MultiEffect(HealingEffect(1), SkillEffect(Skills.SLAYER, 2.0, 0.0), SkillEffect(Skills.ATTACK, -2.0, 0.0), SkillEffect(Skills.STRENGTH, -2.0, 0.0)))),
+    SLAYERS_RESPITE_KEG(Drink(intArrayOf(Items.SLAYERS_RESPITE4_5841, Items.SLAYERS_RESPITE3_5839, Items.SLAYERS_RESPITE2_5837, Items.SLAYERS_RESPITE1_5835, Items.CALQUAT_KEG_5769), MultiEffect(HealingEffect(1), SkillEffect(Skills.SLAYER, 2.0, 0.0), SkillEffect(Skills.ATTACK, -2.0, 0.0), SkillEffect(Skills.STRENGTH, -2.0, 0.0)), Animation(2289))),
+    SLAYERS_RESPITE_M(Drink(intArrayOf(Items.SLAYERS_RESPITEM_5761, Items.BEER_GLASS_1919), MultiEffect(HealingEffect(1), SkillEffect(Skills.SLAYER, 4.0, 0.0), SkillEffect(Skills.ATTACK, -2.0, 0.0), SkillEffect(Skills.STRENGTH, -2.0, 0.0)))),
+    SLAYERS_RESPITE_M_KEG(Drink(intArrayOf(Items.SLAYERS_RESPITE4_5841, Items.SLAYERS_RESPITE3_5839, Items.SLAYERS_RESPITE2_5837, Items.SLAYERS_RESPITE1_5835, Items.CALQUAT_KEG_5769), MultiEffect(HealingEffect(1), SkillEffect(Skills.SLAYER, 4.0, 0.0), SkillEffect(Skills.ATTACK, -2.0, 0.0), SkillEffect(Skills.STRENGTH, -2.0, 0.0)), Animation(2289))),
+    WIZARDS_MIND_BOMB(Drink(intArrayOf(Items.WIZARDS_MIND_BOMB_1907, Items.BEER_GLASS_1919), WizardsMindBombEffect(), "You drink the Wizard's Mind Bomb.", "You feel very strange.")),
+    MATURE_WMB(Drink(intArrayOf(Items.MATURE_WMB_5741, Items.BEER_GLASS_1919), MatureWmbEffect())),
+    FRUIT_BLAST(Drink(intArrayOf(Items.FRUIT_BLAST_2084, Items.COCKTAIL_GLASS_2026), HealingEffect(9))),
+    PREMADE_FR_BLAST(Drink(intArrayOf(Items.PREMADE_FR_BLAST_2034, Items.COCKTAIL_GLASS_2026), HealingEffect(9))),
+    CRAFTED_FR_BLAST(Drink(intArrayOf(Items.FRUIT_BLAST_9514, Items.COCKTAIL_GLASS_2026), HealingEffect(9))),
+    PINEAPPLE_PUNCH(Drink(intArrayOf(Items.PINEAPPLE_PUNCH_2048, Items.COCKTAIL_GLASS_2026), HealingEffect(9), "You drink the cocktail. It tastes great.")),
+    PREMADE_P_PUNCH(Drink(intArrayOf(Items.PREMADE_P_PUNCH_2036, Items.COCKTAIL_GLASS_2026), HealingEffect(9), "You drink the cocktail. It tastes great.")),
+    CRAFTED_P_PUNCH(Drink(intArrayOf(Items.PINEAPPLE_PUNCH_9512, Items.COCKTAIL_GLASS_2026), HealingEffect(9))),
+    WIZARD_BLIZZARD(Drink(intArrayOf(Items.WIZARD_BLIZZARD_2054, Items.COCKTAIL_GLASS_2026), MultiEffect(HealingEffect(5), SkillEffect(Skills.STRENGTH, 6.0, 0.0), SkillEffect(Skills.ATTACK, -4.0, 0.0)))),
+    PREMADE_WIZ_BLZD(Drink(intArrayOf(Items.PREMADE_WIZ_BLZD_2040, Items.COCKTAIL_GLASS_2026), MultiEffect(HealingEffect(5), SkillEffect(Skills.STRENGTH, 6.0, 0.0), SkillEffect(Skills.ATTACK, -4.0, 0.0)))),
+    CRAFTED_WIZ_BLZD(Drink(intArrayOf(Items.WIZARD_BLIZZARD_9508, Items.COCKTAIL_GLASS_2026), MultiEffect(HealingEffect(5), SkillEffect(Skills.STRENGTH, 6.0, 0.0), SkillEffect(Skills.ATTACK, -4.0, 0.0)))),
+    SHORT_GREEN_GUY(Drink(intArrayOf(Items.SHORT_GREEN_GUY_2080, Items.COCKTAIL_GLASS_2026), MultiEffect(HealingEffect(5), SkillEffect(Skills.STRENGTH, 4.0, 0.0), SkillEffect(Skills.ATTACK, -3.0, 0.0)))),
+    PREMADE_SGG(Drink(intArrayOf(Items.PREMADE_SGG_2038, Items.COCKTAIL_GLASS_2026), MultiEffect(HealingEffect(5), SkillEffect(Skills.STRENGTH, 4.0, 0.0), SkillEffect(Skills.ATTACK, -3.0, 0.0)))),
+    CRAFTED_SGG(Drink(intArrayOf(Items.SHORT_GREEN_GUY_9510, Items.COCKTAIL_GLASS_2026), MultiEffect(HealingEffect(5), SkillEffect(Skills.STRENGTH, 4.0, 0.0), SkillEffect(Skills.ATTACK, -3.0, 0.0)))),
+    DRUNK_DRAGON(Drink(intArrayOf(Items.DRUNK_DRAGON_2092, Items.COCKTAIL_GLASS_2026), MultiEffect(HealingEffect(5), SkillEffect(Skills.STRENGTH, 7.0, 0.0), SkillEffect(Skills.ATTACK, -4.0, 0.0)))),
+    PREMADE_DR_DRAGON(Drink(intArrayOf(Items.PREMADE_DR_DRAGON_2032, Items.COCKTAIL_GLASS_2026), MultiEffect(HealingEffect(5), SkillEffect(Skills.STRENGTH, 7.0, 0.0), SkillEffect(Skills.ATTACK, -4.0, 0.0)))),
+    CRAFTED_DR_DRAGON(Drink(intArrayOf(Items.DRUNK_DRAGON_9516, Items.COCKTAIL_GLASS_2026), MultiEffect(HealingEffect(5), SkillEffect(Skills.STRENGTH, 7.0, 0.0), SkillEffect(Skills.ATTACK, -4.0, 0.0)))),
+    CHOC_SATURDAY(Drink(intArrayOf(Items.CHOC_SATURDAY_2074, Items.COCKTAIL_GLASS_2026), MultiEffect(HealingEffect(5), SkillEffect(Skills.STRENGTH, 7.0, 0.0), SkillEffect(Skills.ATTACK, -4.0, 0.0)))),
+    PREMADE_CHOC_SDY(Drink(intArrayOf(Items.PREMADE_CHOC_SDY_2030, Items.COCKTAIL_GLASS_2026), MultiEffect(HealingEffect(5), SkillEffect(Skills.STRENGTH, 7.0, 0.0), SkillEffect(Skills.ATTACK, -4.0, 0.0)))),
+    CRAFTED_CHOC_SDY(Drink(intArrayOf(Items.CHOC_SATURDAY_9518, Items.COCKTAIL_GLASS_2026), MultiEffect(HealingEffect(5), SkillEffect(Skills.STRENGTH, 7.0, 0.0), SkillEffect(Skills.ATTACK, -4.0, 0.0)))),
+    BLURBERRY_SPECIAL(Drink(intArrayOf(Items.BLURBERRY_SPECIAL_2064, Items.COCKTAIL_GLASS_2026), MultiEffect(HealingEffect(6), SkillEffect(Skills.STRENGTH, 6.0, 0.0), SkillEffect(Skills.ATTACK, -4.0, 0.0)))),
+    PREMADE_BLURB_SP(Drink(intArrayOf(Items.PREMADE_BLURB_SP_2028, Items.COCKTAIL_GLASS_2026), MultiEffect(HealingEffect(6), SkillEffect(Skills.STRENGTH, 6.0, 0.0), SkillEffect(Skills.ATTACK, -4.0, 0.0)), "You drink the cocktail. It tastes great,", "though you feel slightly dizzy.")),
+    CRAFTED_BLURB_SP(Drink(intArrayOf(Items.BLURBERRY_SPECIAL_9520, Items.COCKTAIL_GLASS_2026), MultiEffect(HealingEffect(6), SkillEffect(Skills.STRENGTH, 6.0, 0.0), SkillEffect(Skills.ATTACK, -4.0, 0.0)))),
+    KARAMJAN_RUM(Drink(intArrayOf(Items.KARAMJAN_RUM_431), MultiEffect(HealingEffect(5), SkillEffect(Skills.STRENGTH, 5.0, 0.0), SkillEffect(Skills.ATTACK, -4.0, 0.0)), Animation(1194))),
+    BRAINDEATH_RUM(Drink(intArrayOf(Items.BRAINDEATH_RUM_7157), MultiEffect(SkillEffect(Skills.DEFENCE, 0.0, -0.1), SkillEffect(Skills.ATTACK, 0.0, -0.05), SkillEffect(Skills.PRAYER, 0.0, -0.05), SkillEffect(Skills.RANGE, 0.0, -0.05), SkillEffect(Skills.MAGIC, 0.0, -0.05), SkillEffect(Skills.HERBLORE, 0.0, -0.05), SkillEffect(Skills.STRENGTH, 3.0, 0.0), SkillEffect(Skills.MINING, 1.0, 0.0)), "With a sense of impending doom you drink the 'rum'. You try very hard not to die.")),
+    RUM_TROUBLE_BREWING_RED(Drink(intArrayOf(Items.RUM_8940, Items.RUM_8940), TroubleBrewingRumEffect("Oh gods! It tastes like burning!"), Animation(9605))),
+    RUM_TROUBLE_BREWING_BLUE(Drink(intArrayOf(Items.RUM_8941, Items.RUM_8941), TroubleBrewingRumEffect("My Liver! My Liver is melting!"), Animation(9604))),
+    VODKA(Drink(intArrayOf(Items.VODKA_2015), MultiEffect(HealingEffect(2), SkillEffect(Skills.ATTACK, -4.0, 0.0), SkillEffect(Skills.STRENGTH, 4.0, 0.0)))),
+    GIN(Drink(intArrayOf(Items.GIN_2019), MultiEffect(SkillEffect(Skills.STRENGTH, 1.0, 0.0), SkillEffect(Skills.ATTACK, 4.0, 0.0), RandomHealthEffect(3, 4)))),
+    BRANDY(Drink(intArrayOf(Items.BRANDY_2021), MultiEffect(HealingEffect(5), SkillEffect(Skills.ATTACK, 4.0, 0.0)))),
+    WHISKY(Drink(intArrayOf(Items.WHISKY_2017), MultiEffect(HealingEffect(5), SkillEffect(Skills.STRENGTH, 3.0, 0.0), SkillEffect(Skills.ATTACK, -4.0, 0.0)))),
+    BOTTLE_OF_WINE(Drink(intArrayOf(Items.BOTTLE_OF_WINE_7919, Items.EMPTY_WINE_BOTTLE_7921), MultiEffect(HealingEffect(14), SkillEffect(Skills.ATTACK, -3.0, 0.0)))),
+    JUG_OF_WINE(Drink(intArrayOf(Items.JUG_OF_WINE_1993, Items.JUG_1935), MultiEffect(HealingEffect(11), SkillEffect(Skills.ATTACK, -2.0, 0.0)))),
+    HALF_FULL_WINE_JUG(Drink(intArrayOf(Items.HALF_FULL_WINE_JUG_1989, Items.JUG_1935), HealingEffect(7))),
+    JUG_OF_BAD_WINE(Drink(intArrayOf(Items.JUG_OF_BAD_WINE_1991, Items.JUG_1935), SkillEffect(Skills.ATTACK, -3.0, 0.0))),
+    CUP_OF_TEA(Drink(intArrayOf(Items.CUP_OF_TEA_712, Items.EMPTY_CUP_1980), MultiEffect(HealingEffect(3), SkillEffect(Skills.ATTACK, 3.0, 0.0)), "Aaah, nothing like a nice cuppa tea!")),
+    CUP_OF_TEA_NETTLE(Drink(intArrayOf(Items.CUP_OF_TEA_4242, Items.EMPTY_CUP_1980), EnergyEffect(10))),
+    CUP_OF_TEA_MILKY_NETTLE(Drink(intArrayOf(Items.CUP_OF_TEA_4243, Items.EMPTY_CUP_1980), EnergyEffect(10))),
+    NETTLE_WATER(Drink(intArrayOf(Items.NETTLE_WATER_4237, Items.BOWL_1923), HealingEffect(1))),
+    NETTLE_TEA(Drink(intArrayOf(Items.NETTLE_TEA_4239, Items.BOWL_1923), NettleTeaEffect())),
+    NETTLE_TEA_MILKY(Drink(intArrayOf(Items.NETTLE_TEA_4240, Items.BOWL_1923), NettleTeaEffect())),
+    NETTLE_TEA_PORCELAIN(Drink(intArrayOf(Items.CUP_OF_TEA_4245, Items.PORCELAIN_CUP_4244), NettleTeaEffect())),
+    NETTLE_TEA_MILKY_PORCELAIN(Drink(intArrayOf(Items.CUP_OF_TEA_4246, Items.PORCELAIN_CUP_4244), NettleTeaEffect())),
+    CUP_OF_TEA_CLAY(Drink(intArrayOf(Items.CUP_OF_TEA_7730, Items.EMPTY_CUP_7728), SkillEffect(Skills.CONSTRUCTION, 1.0, 0.0), "You feel refreshed and ready for more building.")),
+    CUP_OF_TEA_CLAY_MILKY(Drink(intArrayOf(Items.CUP_OF_TEA_7731, Items.EMPTY_CUP_7728), SkillEffect(Skills.CONSTRUCTION, 1.0, 0.0), "You feel refreshed and ready for more building.")),
+    CUP_OF_TEA_WHITE(Drink(intArrayOf(Items.CUP_OF_TEA_7733, Items.PORCELAIN_CUP_7732), SkillEffect(Skills.CONSTRUCTION, 2.0, 0.0), "You feel refreshed and ready for more building.")),
+    CUP_OF_TEA_WHITE_MILKY(Drink(intArrayOf(Items.CUP_OF_TEA_7734, Items.PORCELAIN_CUP_7732), SkillEffect(Skills.CONSTRUCTION, 2.0, 0.0), "You feel refreshed and ready for more building.")),
+    CUP_OF_TEA_GOLD(Drink(intArrayOf(Items.CUP_OF_TEA_7736, Items.PORCELAIN_CUP_7735), SkillEffect(Skills.CONSTRUCTION, 3.0, 0.0), "You feel refreshed and ready for more building.")),
+    CUP_OF_TEA_GOLD_MILKY(Drink(intArrayOf(Items.CUP_OF_TEA_7737, Items.PORCELAIN_CUP_7735), SkillEffect(Skills.CONSTRUCTION, 3.0, 0.0), "You feel refreshed and ready for more building.")),
+    CHOCOLATE_BAR(Food(intArrayOf(Items.CHOCOLATE_BAR_1973), HealingEffect(3))),
+    PURPLE_SWEETS(Food(intArrayOf(Items.PURPLE_SWEETS_4561), HealingEffect(0))),
+    PURPLE_SWEETS_STACKABLE(Food(intArrayOf(Items.PURPLE_SWEETS_10476), MultiEffect(EnergyEffect(10), RandomHealthEffect(1, 3)), "The sugary goodness heals some energy.", "The sugary goodness is yummy.")),
+    FIELD_RATION(Food(intArrayOf(Items.FIELD_RATION_7934), HealingEffect(10))),
+    ROLL(Food(intArrayOf(Items.ROLL_6963), HealingEffect(6))),
+    TCHIKI_MONKEY_NUTS(Food(intArrayOf(Items.TCHIKI_MONKEY_NUTS_7573), HealingEffect(5), "You eat the Tchiki monkey nuts. They taste nutty.")),
+    TCHIKI_MONKEY_PASTE(Food(intArrayOf(Items.TCHIKI_NUT_PASTE_7575), HealingEffect(5), "You eat the Tchiki monkey nut paste. It sticks to the roof of your mouth.")),
+    OOMLIE_WRAP(Food(intArrayOf(Items.COOKED_OOMLIE_WRAP_2343), MultiEffect(HealingEffect(14), AchievementEffect(DiaryType.KARAMJA, 2, 2)))),
+    POPCORN_BALL(Food(intArrayOf(Items.POPCORN_BALL_14082), HealingEffect(3))),
+    CHOCOLATE_DROP(Food(intArrayOf(Items.CHOCOLATE_DROP_14083), HealingEffect(3))),
+    WRAPPED_CANDY(Food(intArrayOf(Items.WRAPPED_CANDY_14084), HealingEffect(3))),
+    ROE(Food(intArrayOf(Items.ROE_11324), HealingEffect(3))),
+    EQUA_LEAVES(Food(intArrayOf(Items.EQUA_LEAVES_2128), HealingEffect(1), "You eat the leaves; chewy but tasty.")),
+    CHOC_ICE(Food(intArrayOf(Items.CHOC_ICE_6794), HealingEffect(6))),
+    EDIBLE_SEAWEED(Food(intArrayOf(Items.EDIBLE_SEAWEED_403), HealingEffect(4))),
+    FROG_SPAWN(Food(intArrayOf(Items.FROG_SPAWN_5004), FrogSpawnEffect(), "You eat the frogspawn. Yuck.")),
+    PUMPKIN(Food(intArrayOf(Items.PUMPKIN_1959), HealingEffect(14))),
+    EASTER_EGG(Food(intArrayOf(Items.EASTER_EGG_1961), HealingEffect(14))),
+    STRENGTH(Potion(intArrayOf(Items.STRENGTH_POTION4_113, Items.STRENGTH_POTION3_115, Items.STRENGTH_POTION2_117, Items.STRENGTH_POTION1_119), SkillEffect(Skills.STRENGTH, 3.0, 0.1))),
+    ATTACK(Potion(intArrayOf(Items.ATTACK_POTION4_2428, Items.ATTACK_POTION3_121, Items.ATTACK_POTION2_123, Items.ATTACK_POTION1_125), SkillEffect(Skills.ATTACK, 3.0, 0.1))),
+    DEFENCE(Potion(intArrayOf(Items.DEFENCE_POTION4_2432, Items.DEFENCE_POTION3_133, Items.DEFENCE_POTION2_135, Items.DEFENCE_POTION1_137), SkillEffect(Skills.DEFENCE, 3.0, 0.1))),
+    RANGING(Potion(intArrayOf(Items.RANGING_POTION4_2444, Items.RANGING_POTION3_169, Items.RANGING_POTION2_171, Items.RANGING_POTION1_173), SkillEffect(Skills.RANGE, 4.0, 0.1))),
+    MAGIC(Potion(intArrayOf(Items.MAGIC_POTION4_3040, Items.MAGIC_POTION3_3042, Items.MAGIC_POTION2_3044, Items.MAGIC_POTION1_3046), SkillEffect(Skills.MAGIC, 4.0, 0.1))),
+    SUPER_STRENGTH(Potion(intArrayOf(Items.SUPER_STRENGTH4_2440, Items.SUPER_STRENGTH3_157, Items.SUPER_STRENGTH2_159, Items.SUPER_STRENGTH1_161), SkillEffect(Skills.STRENGTH, 5.0, 0.15))),
+    SUPER_ATTACK(Potion(intArrayOf(Items.SUPER_ATTACK4_2436, Items.SUPER_ATTACK3_145, Items.SUPER_ATTACK2_147, Items.SUPER_ATTACK1_149), SkillEffect(Skills.ATTACK, 5.0, 0.15))),
+    SUPER_DEFENCE(Potion(intArrayOf(Items.SUPER_DEFENCE4_2442, Items.SUPER_DEFENCE3_163, Items.SUPER_DEFENCE2_165, Items.SUPER_DEFENCE1_167), SkillEffect(Skills.DEFENCE, 5.0, 0.15))),
+    ANTIPOISON(Potion(intArrayOf(Items.ANTIPOISON4_2446, Items.ANTIPOISON3_175, Items.ANTIPOISON2_177, Items.ANTIPOISON1_179), AddTimerEffect("poison:immunity", secondsToTicks(90)))),
+    ANTIPOISON_(Potion(intArrayOf(Items.ANTIPOISON_PLUS4_5943, Items.ANTIPOISON_PLUS3_5945, Items.ANTIPOISON_PLUS2_5947, Items.ANTIPOISON_PLUS1_5949), AddTimerEffect("poison:immunity", minutesToTicks(9)))),
+    ANTIPOISON__(Potion(intArrayOf(Items.ANTIPOISON_PLUS_PLUS4_5952, Items.ANTIPOISON_PLUS_PLUS3_5954, Items.ANTIPOISON_PLUS_PLUS2_5956, Items.ANTIPOISON_PLUS_PLUS1_5958), AddTimerEffect("poison:immunity", minutesToTicks(12)))),
+    SUPER_ANTIP(Potion(intArrayOf(Items.SUPER_ANTIPOISON4_2448, Items.SUPER_ANTIPOISON3_181, Items.SUPER_ANTIPOISON2_183, Items.SUPER_ANTIPOISON1_185), AddTimerEffect("poison:immunity", minutesToTicks(6)))),
+    RELICYM(Potion(intArrayOf(Items.RELICYMS_BALM4_4842, Items.RELICYMS_BALM3_4844, Items.RELICYMS_BALM2_4846, Items.RELICYMS_BALM1_4848), MultiEffect(CureDiseaseEffect()))),
+    AGILITY(Potion(intArrayOf(Items.AGILITY_POTION4_3032, Items.AGILITY_POTION3_3034, Items.AGILITY_POTION2_3036, Items.AGILITY_POTION1_3038), SkillEffect(Skills.AGILITY, 3.0, 0.0))),
+    HUNTER(Potion(intArrayOf(Items.HUNTER_POTION4_9998, Items.HUNTER_POTION3_10000, Items.HUNTER_POTION2_10002, Items.HUNTER_POTION1_10004), SkillEffect(Skills.HUNTER, 3.0, 0.0))),
+    RESTORE(Potion(intArrayOf(Items.RESTORE_POTION4_2430, Items.RESTORE_POTION3_127, Items.RESTORE_POTION2_129, Items.RESTORE_POTION1_131), RestoreEffect(10.0, 0.3))),
+    SARA_BREW(Potion(intArrayOf(Items.SARADOMIN_BREW4_6685, Items.SARADOMIN_BREW3_6687, Items.SARADOMIN_BREW2_6689, Items.SARADOMIN_BREW1_6691), MultiEffect(PercentHeal(0, 0.15), SkillEffect(Skills.ATTACK, 0.0, -0.10), SkillEffect(Skills.STRENGTH, 0.0, -0.10), SkillEffect(Skills.MAGIC, 0.0, -0.10), SkillEffect(Skills.RANGE, 0.0, -0.10), SkillEffect(Skills.DEFENCE, 0.0, 0.25)))),
+    SUMMONING(Potion(intArrayOf(Items.SUMMONING_POTION4_12140, Items.SUMMONING_POTION3_12142, Items.SUMMONING_POTION2_12144, Items.SUMMONING_POTION1_12146), MultiEffect(RestoreSummoningSpecial(), SummoningEffect(7.0, 0.25)))),
+    COMBAT(Potion(intArrayOf(Items.COMBAT_POTION4_9739, Items.COMBAT_POTION3_9741, Items.COMBAT_POTION2_9743, Items.COMBAT_POTION1_9745), MultiEffect(SkillEffect(Skills.STRENGTH, 3.0, 0.1), SkillEffect(Skills.ATTACK, 3.0, 0.1)))),
+    ENERGY(Potion(intArrayOf(Items.ENERGY_POTION4_3008, Items.ENERGY_POTION3_3010, Items.ENERGY_POTION2_3012, Items.ENERGY_POTION1_3014), MultiEffect(EnergyEffect(10)))),
+    FISHING(Potion(intArrayOf(Items.FISHING_POTION4_2438, Items.FISHING_POTION3_151, Items.FISHING_POTION2_153, Items.FISHING_POTION1_155), SkillEffect(Skills.FISHING, 3.0, 0.0))),
+    PRAYER(Potion(intArrayOf(Items.PRAYER_POTION4_2434, Items.PRAYER_POTION3_139, Items.PRAYER_POTION2_141, Items.PRAYER_POTION1_143), PrayerEffect(7.0, 0.25))),
+    SUPER_RESTO(Potion(intArrayOf(Items.SUPER_RESTORE4_3024, Items.SUPER_RESTORE3_3026, Items.SUPER_RESTORE2_3028, Items.SUPER_RESTORE1_3030), MultiEffect(RestoreEffect(8.0, 0.25, true), PrayerEffect(8.0, 0.25), SummoningEffect(8.0, 0.25)))),
+    ZAMMY_BREW(Potion(intArrayOf(Items.ZAMORAK_BREW4_2450, Items.ZAMORAK_BREW3_189, Items.ZAMORAK_BREW2_191, Items.ZAMORAK_BREW1_193), MultiEffect(DamageEffect(10.0, true), SkillEffect(Skills.ATTACK, 0.0, 0.25), SkillEffect(Skills.STRENGTH, 0.0, 0.15), SkillEffect(Skills.DEFENCE, 0.0, -0.1), RandomPrayerEffect(0, 10)))),
+    ANTIFIRE(Potion(intArrayOf(Items.ANTIFIRE_POTION4_2452, Items.ANTIFIRE_POTION3_2454, Items.ANTIFIRE_POTION2_2456, Items.ANTIFIRE_POTION1_2458), AddTimerEffect("dragonfire:immunity", 600, true))),
+    GUTH_REST(Potion(intArrayOf(Items.GUTHIX_REST4_4417, Items.GUTHIX_REST3_4419, Items.GUTHIX_REST2_4421, Items.GUTHIX_REST1_4423), GuthixRestEffect())),
+    MAGIC_ESS(Potion(intArrayOf(Items.MAGIC_ESS_MIX1_11491, Items.MAGIC_ESS_MIX2_11489), SkillEffect(Skills.MAGIC, 3.0, 0.0))),
+    SANFEW(Potion(intArrayOf(Items.SANFEW_SERUM4_10925, Items.SANFEW_SERUM3_10927, Items.SANFEW_SERUM2_10929, Items.SANFEW_SERUM1_10931), MultiEffect(RestoreEffect(8.0, 0.25, true), AddTimerEffect("poison:immunity", secondsToTicks(90), RemoveTimerEffect("disease"))))),
+    SUPER_ENERGY(Potion(intArrayOf(Items.SUPER_ENERGY4_3016, Items.SUPER_ENERGY3_3018, Items.SUPER_ENERGY2_3020, Items.SUPER_ENERGY1_3022), EnergyEffect(20))),
+    BLAMISH_OIL(FakeConsumable(Items.BLAMISH_OIL_1582, "You know... I'd really rather not.")),
+    PRAYERMIX(BarbarianMix(intArrayOf(Items.PRAYER_MIX2_11465, Items.PRAYER_MIX1_11467), MultiEffect(PrayerEffect(7.0, 0.25), HealingEffect(6)))),
+    ZAMMY_MIX(BarbarianMix(intArrayOf(Items.ZAMORAK_MIX2_11521, Items.ZAMORAK_MIX1_11523), MultiEffect(DamageEffect(10.0, true), SkillEffect(Skills.ATTACK, 0.0, 0.15), SkillEffect(Skills.STRENGTH, 0.0, 0.25), SkillEffect(Skills.DEFENCE, 0.0, -0.1), RandomPrayerEffect(0, 10)))),
+    ATT_MIX(BarbarianMix(intArrayOf(Items.ATTACK_MIX2_11429, Items.ATTACK_MIX1_11431), MultiEffect(SkillEffect(Skills.ATTACK, 3.0, 0.1), HealingEffect(3)))),
+    ANTIP_MIX(BarbarianMix(intArrayOf(Items.ANTIPOISON_MIX2_11433, Items.ANTIPOISON_MIX1_11435), MultiEffect(AddTimerEffect("poison:immunity", secondsToTicks(90)), HealingEffect(3)))),
+    RELIC_MIX(BarbarianMix(intArrayOf(Items.RELICYMS_MIX2_11437, Items.RELICYMS_MIX1_11439), MultiEffect(CureDiseaseEffect(), HealingEffect(3)))),
+    STR_MIX(BarbarianMix(intArrayOf(Items.STRENGTH_MIX2_11443, Items.STRENGTH_MIX1_11441), MultiEffect(SkillEffect(Skills.STRENGTH, 3.0, 0.1), HealingEffect(3)))),
+    RESTO_MIX(BarbarianMix(intArrayOf(Items.RESTORE_MIX2_11449, Items.RESTORE_MIX1_11451), MultiEffect(RestoreEffect(10.0, 0.3), HealingEffect(3)))),
+    SUPER_RESTO_MIX(BarbarianMix(intArrayOf(Items.SUP_RESTORE_MIX2_11493, Items.SUP_RESTORE_MIX1_11495), MultiEffect(RestoreEffect(8.0, 0.25), PrayerEffect(8.0, 0.25), SummoningEffect(8.0, 0.25), HealingEffect(6)))),
+    ENERGY_MIX(BarbarianMix(intArrayOf(Items.ENERGY_MIX2_11453, Items.ENERGY_MIX1_11455), MultiEffect(EnergyEffect(10), HealingEffect(6)))),
+    DEF_MIX(BarbarianMix(intArrayOf(Items.DEFENCE_MIX2_11457, Items.DEFENCE_MIX1_11459), MultiEffect(SkillEffect(Skills.DEFENCE, 3.0, 0.1), HealingEffect(6)))),
+    AGIL_MIX(BarbarianMix(intArrayOf(Items.AGILITY_MIX2_11461, Items.AGILITY_MIX1_11463), MultiEffect(SkillEffect(Skills.AGILITY, 3.0, 0.0), HealingEffect(6)))),
+    COMBAT_MIX(BarbarianMix(intArrayOf(Items.COMBAT_MIX2_11445, Items.COMBAT_MIX1_11447), MultiEffect(SkillEffect(Skills.ATTACK, 3.0, 0.1), SkillEffect(Skills.STRENGTH, 3.0, 0.1), HealingEffect(6)))),
+    SUPER_ATT_MIX(BarbarianMix(intArrayOf(Items.SUPERATTACK_MIX2_11469, Items.SUPERATTACK_MIX1_11471), MultiEffect(SkillEffect(Skills.ATTACK, 5.0, 0.15), HealingEffect(6)))),
+    FISH_MIX(BarbarianMix(intArrayOf(Items.FISHING_MIX2_11477, Items.FISHING_MIX1_11479), MultiEffect(SkillEffect(Skills.FISHING, 3.0, 0.0), HealingEffect(6)))),
+    SUPER_ENERGY_MIX(BarbarianMix(intArrayOf(Items.SUP_ENERGY_MIX2_11481, Items.SUP_ENERGY_MIX1_11483), MultiEffect(EnergyEffect(20), HealingEffect(6)))),
+    HUNTING_MIX(BarbarianMix(intArrayOf(Items.HUNTING_MIX2_11517, Items.HUNTING_MIX1_11519), MultiEffect(SkillEffect(Skills.HUNTER, 3.0, 0.0), HealingEffect(6)))),
+    SUPER_STR_MIX(BarbarianMix(intArrayOf(Items.SUP_STR_MIX2_11485, Items.SUP_STR_MIX1_11487), MultiEffect(SkillEffect(Skills.STRENGTH, 5.0, 0.15), HealingEffect(6)))),
+    ANTIDOTE_PLUS_MIX(BarbarianMix(intArrayOf(Items.ANTIDOTE_PLUS_MIX2_11501, Items.ANTIDOTE_PLUS_MIX1_11503), MultiEffect(AddTimerEffect("poison:immunity", minutesToTicks(9)), RandomHealthEffect(3, 7)))),
+    ANTIFIRE_MIX(BarbarianMix(intArrayOf(11505, 11507), MultiEffect(AddTimerEffect("dragonfire:immunity", 600, true), RandomHealthEffect(3, 7)))),
+    ANTIP_SUPERMIX(BarbarianMix(intArrayOf(Items.ANTI_P_SUPERMIX2_11473, Items.ANTI_P_SUPERMIX1_11475), MultiEffect(AddTimerEffect("poison:immunity", minutesToTicks(6)), RandomHealthEffect(3, 7)))),
+    SC_PRAYER(Potion(intArrayOf(Items.PRAYER_POTION5_14207, Items.PRAYER_POTION4_14209, Items.PRAYER_POTION3_14211, Items.PRAYER_POTION2_14213, Items.PRAYER_POTION1_14215), PrayerEffect(7.0, 0.25))),
+    SC_ENERGY(Potion(intArrayOf(Items.ENERGY_POTION_5_14217, Items.ENERGY_POTION_4_14219, Items.ENERGY_POTION_3_14221, Items.ENERGY_POTION_2_14223, Items.ENERGY_POTION_1_14225), EnergyEffect(20))),
+    SC_ATTACK(Potion(intArrayOf(Items.SUPER_ATTACK5_14227, Items.SUPER_ATTACK4_14229, Items.SUPER_ATTACK3_14231, Items.SUPER_ATTACK2_14233, Items.SUPER_ATTACK1_14235), SkillEffect(Skills.ATTACK, 3.0, 0.2))),
+    SC_STRENGTH(Potion(intArrayOf(Items.SUPER_STRENGTH5_14237, Items.SUPER_STRENGTH4_14239, Items.SUPER_STRENGTH3_14241, Items.SUPER_STRENGTH2_14243, Items.SUPER_STRENGTH1_14245), SkillEffect(Skills.STRENGTH, 3.0, 0.2))),
+    SC_RANGE(Potion(intArrayOf(Items.RANGING_POTION5_14247, Items.RANGING_POTION4_14249, Items.RANGING_POTION3_14251, Items.RANGING_POTION2_14253, Items.RANGING_POTION1_14255), SkillEffect(Skills.RANGE, 3.0, 0.1))),
+    SC_DEFENCE(Potion(intArrayOf(Items.DEFENCE_POTION5_14257, Items.DEFENCE_POTION4_14259, Items.DEFENCE_POTION3_14261, Items.DEFENCE_POTION2_14263, Items.DEFENCE_POTION1_14265), SkillEffect(Skills.DEFENCE, 3.0, 0.1))),
+    SC_MAGIC(Potion(intArrayOf(Items.MAGIC_POTION5_14267, Items.MAGIC_POTION4_14269, Items.MAGIC_POTION3_14271, Items.MAGIC_POTION2_14273, Items.MAGIC_POTION1_14275), SkillEffect(Skills.MAGIC, 3.0, 0.1))),
+    SC_SUMMONING(Potion(intArrayOf(Items.SUMMONING_POTION5_14277, Items.SUMMONING_POTION4_14279, Items.SUMMONING_POTION3_14281, Items.SUMMONING_POTION2_14283, Items.SUMMONING_POTION1_14285), SummoningEffect(7.0, 0.25)));
+
+    /**
+     * Wrapper for a consumable item and its metadata.
+     *
+     * @property consumable The consumable logic definition.
+     * @property isIgnoreMainClock Whether to ignore the main clock when consuming.
+     */
+    val consumable: Consumable
+
+    /**
+     * Whether this consumable should ignore the main clock tick system.
+     */
+    var isIgnoreMainClock: Boolean = false
+
+    /**
+     * Creates a consumable entry with default clock behavior.
+     *
+     * @param consumable The consumable logic.
+     */
+    constructor(consumable: Consumable) {
+        this.consumable = consumable
+    }
+
+    /**
+     * Creates a consumable entry with custom clock behavior.
+     *
+     * @param consumable The consumable logic.
+     * @param isIgnoreMainClock Whether to ignore the main clock tick.
+     */
+    constructor(consumable: Consumable, isIgnoreMainClock: Boolean) {
+        this.consumable = consumable
+        this.isIgnoreMainClock = isIgnoreMainClock
+    }
+
+    companion object {
+
+        /**
+         * Mapping of item ids to their corresponding consumables.
+         */
+        @JvmStatic val consumables: MutableMap<Int, Consumables> = HashMap()
+
+        /**
+         * List of all item ids that are potions.
+         */
+        @JvmStatic val potions: MutableList<Int> = ArrayList()
+
+        /**
+         * Retrieves the consumable entry by its item id.
+         *
+         * @param itemId The id of the item.
+         * @return The corresponding [Consumables] entry, or null if not found.
+         */
+        @JvmStatic
+        fun getConsumableById(itemId: Int): Consumables? = consumables[itemId]
+
+        /**
+         * Adds a new consumable entry and indexes it by all its associated item IDs.
+         *
+         * @param consumable The consumable entry to add.
+         */
+        @JvmStatic
+        fun add(consumable: Consumables) {
+            for (id in consumable.consumable.ids) {
+                consumables.putIfAbsent(id, consumable)
+            }
+        }
+
+        /**
+         * Initializes the static maps by indexing all enum values.
+         */
+        init {
+            for (consumable in values()) {
+                add(consumable)
+                if (consumable.consumable is Potion) {
+                    potions.addAll(consumable.consumable.ids.toList())
+                }
+            }
+        }
+    }
+}

@@ -8,7 +8,15 @@ import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
 import core.tools.RandomFunction
 
+/**
+ * Restores health, run energy, and cures minor poison on use.
+ */
 class GuthixRestEffect : ConsumableEffect() {
+
+    /**
+     * Heals player, boosts HP if at full health,
+     * restores run energy, cures poison, and sends a message.
+     */
     override fun activate(player: Player) {
         val energyRestore = RandomFunction.random(5, 15)
 

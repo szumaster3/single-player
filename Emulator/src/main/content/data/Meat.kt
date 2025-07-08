@@ -2,6 +2,9 @@ package content.data
 
 import org.rs.consts.Items
 
+/**
+ * Represents the state of meat, affecting edibility and cooking results.
+ */
 enum class MeatState {
     INEDIBLE_RAW,
     INEDIBLE_BURNT,
@@ -9,6 +12,12 @@ enum class MeatState {
     EDIBLE_COOKED,
 }
 
+/**
+ * Represents types of meat with their item id and state.
+ *
+ * @property id The item id representing this meat.
+ * @property state The current state of the meat (raw, cooked, burnt, etc.).
+ */
 enum class Meat(val id: Int, val state: MeatState, ) {
     ENCHANTED_BEEF(Items.ENCHANTED_BEEF_522, MeatState.INEDIBLE_SPECIAL),
     ENCHANTED_RAT_MEAT(Items.ENCHANTED_RAT_MEAT_523, MeatState.INEDIBLE_SPECIAL),

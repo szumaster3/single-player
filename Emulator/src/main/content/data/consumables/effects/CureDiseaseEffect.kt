@@ -7,7 +7,13 @@ import core.game.consumable.ConsumableEffect
 import core.game.node.entity.player.Player
 import core.game.system.timer.impl.Disease
 
+/**
+ * Reduces disease timer hits or cures disease on use.
+ */
 class CureDiseaseEffect : ConsumableEffect() {
+    /**
+     * Decreases disease hits; removes timer if cured and notifies player.
+     */
     override fun activate(p: Player) {
         val existingTimer = getTimer<Disease>(p)
         if (existingTimer != null) {

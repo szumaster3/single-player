@@ -5,7 +5,15 @@ import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
 import core.tools.RandomFunction
 
+/**
+ * Has a ~62.5% chance to heal the player, and a small chance to reduce a random skill by 1.
+ */
 class SuperKebabEffect : ConsumableEffect() {
+
+    /**
+     * Activates healing effect most of the time, and occasionally
+     * debuffs a random skill.
+     */
     override fun activate(player: Player) {
         if (RandomFunction.nextInt(8) < 5) {
             healingEffect.activate(player)
@@ -17,6 +25,9 @@ class SuperKebabEffect : ConsumableEffect() {
         }
     }
 
+    /**
+     * Returns the amount healed if healing occurs; otherwise zero.
+     */
     override fun getHealthEffectValue(player: Player): Int =
         if (RandomFunction.nextInt(8) < 5) (3 + (player.getSkills().maximumLifepoints * 0.07)).toInt() else 0
 

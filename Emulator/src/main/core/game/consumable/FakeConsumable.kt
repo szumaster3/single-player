@@ -6,7 +6,7 @@ import core.game.node.item.Item
 
 class FakeConsumable(
     id: Int,
-    messages: Array<String?>,
+    vararg messages: String?,
 ) : Consumable(intArrayOf(id), null, *messages) {
     override fun consume(
         item: Item,

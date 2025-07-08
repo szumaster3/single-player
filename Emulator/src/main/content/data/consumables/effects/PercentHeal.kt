@@ -5,6 +5,13 @@ import core.game.node.entity.player.Player
 import kotlin.math.floor
 import kotlin.math.min
 
+/**
+ * Heals the player by a base amount plus a percentage of max hitpoints,
+ * ensuring not to exceed a calculated cap.
+ *
+ * @param base Flat heal amount.
+ * @param percent Percentage (as decimal) of max hitpoints to heal.
+ */
 class PercentHeal(
     base: Int,
     percent: Double,
@@ -17,6 +24,9 @@ class PercentHeal(
         this.percent = percent
     }
 
+    /**
+     * Heals the player by the sum of [base] and a capped percentage of max HP.
+     */
     override fun activate(player: Player) {
         val maxHp = player.getSkills().maximumLifepoints
         val curHp = player.getSkills().lifepoints

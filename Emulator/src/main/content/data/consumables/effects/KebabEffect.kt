@@ -6,7 +6,21 @@ import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
 import core.tools.RandomFunction
 
+/**
+ * Applies a random health or skill effect when consumed,
+ * with chances for healing, no effect, or stat boosts/penalties.
+ */
 class KebabEffect : ConsumableEffect() {
+
+    /**
+     * Activates a random effect based on chance:
+     * - 66%: heals 10% health,
+     * - 21%: heals random 10-20 health,
+     * - 9%: chance to reduce combat stats or no effect,
+     * - 4%: heals 30 and boosts combat stats.
+     *
+     * Sends appropriate player messages.
+     */
     override fun activate(player: Player) {
         val randomNumber = RandomFunction.nextInt(100)
         val effect: ConsumableEffect
@@ -32,7 +46,6 @@ class KebabEffect : ConsumableEffect() {
                                 SkillEffect(Skills.DEFENCE, -3.0, 0.0),
                                 SkillEffect(Skills.STRENGTH, -3.0, 0.0),
                             )
-
                         else -> SkillEffect(affectedSkillSlot, -3.0, 0.0)
                     }
                 sendMessage(player, "That tasted a bit dodgy. You feel a bit ill.")
