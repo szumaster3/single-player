@@ -9,10 +9,7 @@ import core.game.system.task.Pulse
 import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
-import org.rs.consts.Animations
-import org.rs.consts.Items
-import org.rs.consts.Sounds
-import org.rs.consts.Vars
+import org.rs.consts.*
 
 /**
  * Represents the Skippy dialogue.
@@ -25,7 +22,7 @@ class SkippyDialogue(player: Player? = null) : Dialogue(player) {
         return false
     }
     override fun newInstance(player: Player?): Dialogue = SkippyDialogue(player)
-    override fun getIds(): IntArray = intArrayOf(2795, 2796, 2797, 2798, 2799)
+    override fun getIds(): IntArray = intArrayOf(NPCs.SKIPPY_2795, NPCs.SKIPPY_2796, NPCs.SKIPPY_2797, NPCs.SKIPPY_2798, NPCs.SKIPPY_2799)
 }
 
 class SkippyDialogueFile : DialogueFile() {

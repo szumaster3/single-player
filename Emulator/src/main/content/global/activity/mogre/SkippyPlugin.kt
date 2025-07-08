@@ -12,7 +12,14 @@ import org.rs.consts.Vars
  * @author szu
  */
 class SkippyPlugin : InteractionListener {
-    private val SKIPPY_NPC = intArrayOf(2795, 2796, 2797, 2798, 2799)
+
+    private val SKIPPY_NPC = intArrayOf(
+        NPCs.SKIPPY_2795,
+        NPCs.SKIPPY_2796,
+        NPCs.SKIPPY_2797,
+        NPCs.SKIPPY_2798,
+        NPCs.SKIPPY_2799
+    )
 
     override fun defineListeners() {
 

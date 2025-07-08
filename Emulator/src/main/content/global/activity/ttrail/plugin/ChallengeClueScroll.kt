@@ -40,7 +40,7 @@ abstract class ChallengeClueScroll(
             player.packetDispatch.sendString("", interfaceId, i)
         }
         super.read(player)
-        player.packetDispatch.sendString(question?.replace("<br>", "<br><br>"), interfaceId, 1)
+        player.packetDispatch.sendString("<br><br><br><br><br>" + question?.replace("<br>", "<br><br>"), interfaceId, 1)
     }
 
     /**
