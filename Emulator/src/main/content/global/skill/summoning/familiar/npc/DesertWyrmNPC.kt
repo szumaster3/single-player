@@ -31,65 +31,62 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 
 @Initializable
-class DesertWyrmNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.DESERT_WYRM_6831) :
-    Forager(owner, id, 1900, Items.DESERT_WYRM_POUCH_12049, 6, WeaponInterface.STYLE_AGGRESSIVE) {
+class DesertWyrmNPC @JvmOverloads constructor(
+    owner: Player? = null,
+    id: Int = NPCs.DESERT_WYRM_6831
+) : Forager(owner, id, 1900, Items.DESERT_WYRM_POUCH_12049, 6, WeaponInterface.STYLE_AGGRESSIVE) {
 
     init {
         boosts.add(SkillBonus(Skills.MINING, 1.0))
     }
 
-    override fun construct(owner: Player, id: Int): Familiar {
-        return DesertWyrmNPC(owner, id)
-    }
+    override fun construct(owner: Player, id: Int): Familiar = DesertWyrmNPC(owner, id)
+
+    override fun getIds(): IntArray = intArrayOf(NPCs.DESERT_WYRM_6831, NPCs.DESERT_WYRM_6832)
 
     override fun specialMove(special: FamiliarSpecial): Boolean {
-        val target = special.node as Entity
-        if (!canCombatSpecial(target)) {
-            return false
-        }
-        faceTemporary(special.node as Entity, 2)
+        val target = special.node as? Entity ?: return false
+        if (!canCombatSpecial(target)) return false
+
+        faceTemporary(target, 2)
         visualize(Animation(7795), Graphics(1410))
         Projectile.magic(this, target, 1411, 40, 36, 51, 10).send()
         sendFamiliarHit(target, 5)
         return true
     }
 
-    public override fun configureFamiliar() {
+    override fun configureFamiliar() {
         definePlugin(object : OptionHandler() {
-            @Throws(Throwable::class)
             override fun newInstance(arg: Any?): Plugin<Any> {
-                for (i in ids) {
-                    NPCDefinition.forId(i).handlers["option:burrow"] = this
+                ids.forEach { id ->
+                    NPCDefinition.forId(id).handlers["option:burrow"] = this
                 }
                 return this
             }
 
             override fun handle(player: Player, node: Node, option: String): Boolean {
-                val rock = getClosestRock(player)
-                if (!player.familiarManager.isOwner(node as Familiar)) {
+                val familiar = node as? Familiar ?: return false
+                if (!player.familiarManager.isOwner(familiar) || (node as NPC).locks.isMovementLocked()) {
                     return true
                 }
-                if ((node as NPC).locks.isMovementLocked()) {
-                    return true
-                }
-                if (rock == null) {
-                    sendMessage(player, "There are no rocks around here for the desert wyrm to mine from!")
-                    return true
-                }
-                val resource = MiningNode.forId(rock.id)
+
+                val rock = findClosestRock(player)
+                val resource = rock?.let { MiningNode.forId(it.id) }
+
                 if (resource == null) {
                     sendMessage(player, "There are no rocks around here for the desert wyrm to mine from!")
                     return true
                 }
-                val familiar = node
+
                 player.lock(9)
                 familiar.lock(8)
                 familiar.visualize(Animation(7800), Graphics(1412))
-                Pulser.submit(object : Pulse(1, player, familiar) {
-                    var counter: Int = 0
 
+                Pulser.submit(object : Pulse(1, player, familiar) {
+                    var counter = 0
                     override fun pulse(): Boolean {
-                        when (++counter) {
+                        counter++
+                        when (counter) {
                             4 -> familiar.isInvisible = true
                             8 -> {
                                 familiar.call()
@@ -100,36 +97,26 @@ class DesertWyrmNPC @JvmOverloads constructor(owner: Player? = null, id: Int = N
                         return false
                     }
                 })
+
                 return true
             }
 
-            fun getClosestRock(player: Player): Scenery? {
-                val rocks: MutableList<Scenery> = ArrayList(20)
-                for (k in 0..6) {
-                    for (i in 0..3) {
-                        val dir = Direction.get(i)
-                        val loc = player.location.transform(dir.stepX * k, dir.stepY * k, 0)
-                        val `object` = getObject(loc)
-                        if (`object` != null && `object`.name == "Rocks") {
-                            rocks.add(`object`)
+            private fun findClosestRock(player: Player): Scenery? {
+                val rocks = mutableListOf<Scenery>()
+                for (radius in 0..6) {
+                    Direction.values().forEach { dir ->
+                        val loc = player.location.transform(dir.stepX * radius, dir.stepY * radius, 0)
+                        val obj = getObject(loc)
+                        if (obj != null && obj.name == "Rocks") {
+                            rocks.add(obj)
                         }
                     }
                 }
-                var ordinal = 0
-                var o: Scenery? = null
-                for (r in rocks) {
-                    val resource = MiningNode.forId(r.id)
-                    if (resource != null && MiningNode.SILVER_ORE_0.ordinal > resource.ordinal && resource.ordinal > ordinal) {
-                        ordinal = resource.ordinal
-                        o = r
-                    }
-                }
-                return o
+
+                return rocks
+                    .filter { MiningNode.forId(it.id) != null }
+                    .maxByOrNull { MiningNode.forId(it.id)!!.ordinal.takeIf { ord -> ord < MiningNode.SILVER_ORE_0.ordinal } ?: -1 }
             }
         })
-    }
-
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.DESERT_WYRM_6831, NPCs.DESERT_WYRM_6832)
     }
 }

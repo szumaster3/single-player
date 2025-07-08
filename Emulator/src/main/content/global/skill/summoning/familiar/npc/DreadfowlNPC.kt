@@ -2,6 +2,7 @@ package content.global.skill.summoning.familiar.npc
 
 import content.global.skill.summoning.familiar.Familiar
 import content.global.skill.summoning.familiar.FamiliarSpecial
+import core.api.sendMessage
 import core.game.node.entity.Entity
 import core.game.node.entity.combat.*
 import core.game.node.entity.combat.equipment.WeaponInterface
@@ -22,12 +23,13 @@ import org.rs.consts.NPCs
 import kotlin.math.floor
 
 @Initializable
-class DreadfowlNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.DREADFOWL_6825) :
-    Familiar(owner, id, 400, Items.DREADFOWL_POUCH_12043, 3, WeaponInterface.STYLE_CAST) {
-    private var specialMove = false
+class DreadfowlNPC @JvmOverloads constructor(
+    owner: Player? = null,
+    id: Int = NPCs.DREADFOWL_6825
+) : Familiar(owner, id, 400, Items.DREADFOWL_POUCH_12043, 3, WeaponInterface.STYLE_CAST) {
 
     init {
-        super.setCombatHandler(COMBAT_HANDLER)
+        super.setCombatHandler(DreadfowlCombatHandler)
         boosts.add(SkillBonus(Skills.FARMING, 1.0))
     }
 
@@ -36,64 +38,87 @@ class DreadfowlNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NP
     }
 
     override fun specialMove(special: FamiliarSpecial): Boolean {
-        val target = special.node as Entity
-        if (!canAttack(target)) {
+        val target = special.node as? Entity ?: return false
+
+        if (!canAttack(target)) return false
+
+        if (!owner.inCombat()) {
+            sendMessage(owner, "Your familiar can only attack when you're in combat.")
             return false
         }
-        if (!owner.properties.combatPulse.isAttacking && !owner.inCombat()) {
-            owner.packetDispatch.sendMessage("Your familiar can only attack when you're in combat.")
-            return false
-        }
-        if (properties.combatPulse.getNextAttack() > GameWorld.ticks || CombatStyle.MAGIC.swingHandler.canSwing(
-                this,
-                target
-            ) == InteractionType.NO_INTERACT
-        ) {
-            specialMove = true
-            properties.combatPulse.attack(target)
+
+        if (!canSwingAt(target)) {
+            DreadfowlCombatHandler.queueMagicAttack(this, target)
             return true
         }
+
+        performMagicAttack(target)
+        return true
+    }
+
+    private fun canSwingAt(target: Entity): Boolean {
+        return properties.combatPulse.getNextAttack() <= GameWorld.ticks &&
+                CombatStyle.MAGIC.swingHandler.canSwing(this, target) != InteractionType.NO_INTERACT
+    }
+
+    fun performMagicAttack(target: Entity) {
         visualize(Animation(5387, Priority.HIGH), Graphics.create(1523))
         Projectile.magic(this, target, 1318, 40, 36, 51, 10).send()
-        val ticks = 2 + floor(getLocation().getDistance(target.location) * 0.5).toInt()
+
+        val ticks = 2 + floor(location.getDistance(target.location) * 0.5).toInt()
         properties.combatPulse.setNextAttack(4)
+
         Pulser.submit(object : Pulse(ticks, this, target) {
             override fun pulse(): Boolean {
                 val state = BattleState(this@DreadfowlNPC, target)
-                var hit = 0
-                if (CombatStyle.MAGIC.swingHandler.isAccurateImpact(this@DreadfowlNPC, target)) {
-                    hit = RandomFunction.randomize(3)
-                }
+                val hit = if (CombatStyle.MAGIC.swingHandler.isAccurateImpact(this@DreadfowlNPC, target))
+                    RandomFunction.randomize(3)
+                else 0
+
                 state.estimatedHit = hit
                 target.impactHandler.handleImpact(owner, hit, CombatStyle.MAGIC, state)
                 return true
             }
         })
-        return true
     }
 
-    override fun getIds(): IntArray {
-        return intArrayOf(NPCs.DREADFOWL_6825, NPCs.DREADFOWL_6826)
-    }
+    override fun getIds(): IntArray = intArrayOf(NPCs.DREADFOWL_6825, NPCs.DREADFOWL_6826)
 
     companion object {
-        private val COMBAT_HANDLER: CombatSwingHandler = object : MeleeSwingHandler() {
-            override fun canSwing(entity: Entity, victim: Entity): InteractionType? {
-                if ((entity as DreadfowlNPC).specialMove) {
-                    return CombatStyle.MAGIC.swingHandler.canSwing(entity, victim)
+        private object DreadfowlCombatHandler : MeleeSwingHandler() {
+            private val specialQueue = mutableSetOf<Int>()
+
+            fun queueMagicAttack(npc: DreadfowlNPC, target: Entity) {
+                specialQueue.add(npc.index)
+                npc.properties.combatPulse.attack(target)
+            }
+
+            override fun canSwing(entity: Entity, victim: Entity): InteractionType {
+                val npc = entity as DreadfowlNPC
+                val interaction = if (specialQueue.contains(npc.index)) {
+                    CombatStyle.MAGIC.swingHandler.canSwing(npc, victim)
+                } else {
+                    super.canSwing(npc, victim)
                 }
-                return super.canSwing(entity, victim)
+                return interaction ?: InteractionType.NO_INTERACT
             }
 
             override fun swing(entity: Entity?, victim: Entity?, state: BattleState?): Int {
-                val npc = entity as DreadfowlNPC?
-                if (npc!!.specialMove) {
-                    victim?.let { FamiliarSpecial(it) }?.let { npc.specialMove(it) }
-                    npc.specialMove = false
+                val npc = entity as? DreadfowlNPC ?: return -1
+                val target = victim ?: return -1
+
+                if (specialQueue.remove(npc.index)) {
+                    npc.performMagicAttack(target)
+                    return -1 // Skip Melee attack.
+                }
+
+                // Optional: 10% chance to trigger magic auto-attack.
+                if (RandomFunction.randomize(10) == 0) {
+                    queueMagicAttack(npc, target)
                     return -1
                 }
-                npc.specialMove = RandomFunction.randomize(10) == 0
-                return super.swing(entity, victim, state)
+
+                return super.swing(npc, target, state)
             }
         }
     }

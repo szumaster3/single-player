@@ -7,6 +7,7 @@ import core.game.interaction.OptionHandler;
 import core.game.node.Node;
 import core.game.node.entity.Entity;
 import core.game.node.entity.combat.ImpactHandler.HitsplatType;
+import core.game.node.entity.combat.equipment.WeaponInterface;
 import core.game.node.entity.player.Player;
 import core.game.world.map.RegionManager;
 import core.game.world.update.flag.context.Animation;
@@ -27,7 +28,7 @@ public class SmokeDevilNPC extends content.global.skill.summoning.familiar.Famil
     }
 
     public SmokeDevilNPC(Player owner, int id) {
-        super(owner, id, 4800, Items.SMOKE_DEVIL_POUCH_12085, 6);
+        super(owner, id, 4800, Items.SMOKE_DEVIL_POUCH_12085, 6, WeaponInterface.STYLE_CAST);
     }
 
     @Override
