@@ -62,7 +62,7 @@ class GargoyleNPC : AbstractNPC {
     }
 
     @Throws(Throwable::class)
-    override fun newInstance(arg: Any): Plugin<Any> {
+    override fun newInstance(arg: Any?): Plugin<Any> {
         definePlugin(RockHammerHandler())
         return super.newInstance(arg)
     }
@@ -78,11 +78,7 @@ class GargoyleNPC : AbstractNPC {
     /**
      * The type Rock hammer handler.
      */
-    inner class RockHammerHandler
-    /**
-     * Instantiates a new Rock hammer handler.
-     */
-        : UseWithHandler(Items.ROCK_HAMMER_4162) {
+    inner class RockHammerHandler : UseWithHandler(Items.ROCK_HAMMER_4162) {
         override fun newInstance(arg: Any): Plugin<Any> {
             for (id in Tasks.GARGOYLES.npcs) {
                 addHandler(id, NPC_TYPE, this)
