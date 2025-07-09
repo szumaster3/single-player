@@ -84,7 +84,7 @@ class MageArenaPlugin: InteractionListener {
                                         player.location,
                                         Location(2542, 4720, 0),
                                         0,
-                                        30,
+                                        60,
                                         Direction.NORTH,
                                         Animations.JUMP_INTO_WATER_7269,
                                     )
@@ -124,7 +124,7 @@ class MageArenaPlugin: InteractionListener {
                                 player.location,
                                 Location(2509, 4687, 0),
                                 0,
-                                30,
+                                60,
                                 Direction.SOUTH,
                                 Animations.JUMP_INTO_WATER_7269,
                             )
@@ -147,6 +147,13 @@ class MageArenaPlugin: InteractionListener {
                 }
                 return@on true
             }
+        }
+    }
+
+
+    override fun defineDestinationOverrides() {
+        setDest(IntType.SCENERY, Scenery.SPARKLING_POOL_2878) { _, _ ->
+            return@setDest Location.create(2542, 4718, 0)
         }
     }
 }

@@ -1,6 +1,7 @@
 package content.global.skill.magic.spells.modern
 
 import core.api.playGlobalAudio
+import core.api.sendMessage
 import core.cache.def.impl.ItemDefinition
 import core.game.container.impl.EquipmentContainer
 import core.game.node.Node
@@ -64,11 +65,11 @@ class GodSpell private constructor(
                 idx
             }
             val castData = p.getSavedData().activityData
-
+            val spellName = getSpellName(data.name)
             if (castData.godCasts[index] < data.requiredCasts) {
                 castData.godCasts[index]++
                 if (castData.godCasts[index] == data.requiredCasts) {
-                    p.sendMessage("You can now cast ${data.name} outside the Arena.")
+                    sendMessage(p, "You can now cast $spellName outside the Arena.")
                 }
             }
 
@@ -93,9 +94,9 @@ class GodSpell private constructor(
             INDEX_CACHE[data] = idx
             idx
         }
-
+        val spellName = getSpellName(data.name)
         if (castData.godCasts[index] < data.requiredCasts && !caster.zoneMonitor.isInZone("mage arena")) {
-            caster.sendMessage("You need to cast ${data.name} ${data.requiredCasts - castData.godCasts[index]} more times inside the Mage Arena.")
+            sendMessage(caster, "You need to cast $spellName ${data.requiredCasts - castData.godCasts[index]} more times inside the Mage Arena.")
             return false
         }
 
@@ -103,7 +104,7 @@ class GodSpell private constructor(
             staffId == data.staffId || (data == GodSpellDefinition.GUTHIX && staffId == Items.VOID_KNIGHT_MACE_8841)
         if (!hasCorrectStaff) {
             if (message) {
-                caster.packetDispatch.sendMessage("You need to wear a ${ItemDefinition.forId(data.staffId).name} to cast this spell.")
+                sendMessage(caster, "You need to wear a ${ItemDefinition.forId(data.staffId).name} to cast this spell.")
             }
             return false
         }
@@ -113,6 +114,14 @@ class GodSpell private constructor(
 
     override fun getMaximumImpact(entity: Entity, victim: Entity, state: BattleState): Int {
         return getType().getImpactAmount(entity, victim, 0)
+    }
+
+    private fun getSpellName(name: String): String {
+        return when (name) {
+            "SARADOMIN" -> "Saradomin strike"
+            "ZAMORAK" -> "Flames of Zamorak"
+            else -> "Claws of Guthix"
+        }
     }
 
     override fun newInstance(type: SpellType?): Plugin<SpellType?> {

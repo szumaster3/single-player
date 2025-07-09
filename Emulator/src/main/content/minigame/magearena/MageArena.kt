@@ -2,13 +2,12 @@ package content.minigame.magearena
 
 import content.minigame.magearena.npc.KolodionNPC
 import content.minigame.magearena.npc.KolodionSession
-import core.api.submitIndividualPulse
-import core.api.teleport
 import core.game.node.Node
 import core.game.node.entity.Entity
 import core.game.node.entity.combat.CombatStyle
 import core.game.node.entity.player.Player
 import core.game.system.task.Pulse
+import core.game.world.GameWorld.Pulser
 import core.game.world.map.Location
 import core.game.world.map.zone.MapZone
 import core.game.world.map.zone.ZoneBorders
@@ -16,58 +15,52 @@ import core.game.world.map.zone.ZoneBuilder
 import core.game.world.map.zone.ZoneRestriction
 import core.plugin.Plugin
 
-class MageArena :
-    MapZone("mage arena", true, ZoneRestriction.RANDOM_EVENTS),
-    Plugin<Any?> {
-    override fun newInstance(arg: Any?): Plugin<Any?> {
+/**
+ * Handles the mage arena zone.
+ * @author Vexia
+ */
+class MageArenaZone : MapZone("mage arena", true, ZoneRestriction.RANDOM_EVENTS), Plugin<Any> {
+    @Throws(Throwable::class)
+    override fun newInstance(arg: Any?): Plugin<Any> {
         ZoneBuilder.configure(this)
         return this
     }
 
-    override fun fireEvent(
-        identifier: String,
-        vararg args: Any,
-    ): Any? = null
+    override fun fireEvent(identifier: String, vararg args: Any): Any? {
+        return null
+    }
 
-    override fun enter(e: Entity): Boolean = super.enter(e)
+    override fun enter(e: Entity): Boolean {
+        return super.enter(e)
+    }
 
-    override fun leave(
-        e: Entity,
-        logout: Boolean,
-    ): Boolean {
+    override fun leave(e: Entity, logout: Boolean): Boolean {
         if (e is Player) {
+            val p = e
             if (!logout) {
-                submitIndividualPulse(
-                    e,
-                    object : Pulse(1, e) {
-                        override fun pulse(): Boolean {
-                            if (!e.zoneMonitor.isInZone("mage arena")) {
-                                if (hasSession(e)) {
-                                    getSession(e).close()
-                                }
+                Pulser.submit(object : Pulse(1, e) {
+                    override fun pulse(): Boolean {
+                        if (!p.zoneMonitor.isInZone("mage arena")) {
+                            if (hasSession(p)) {
+                                getSession(p).close()
                             }
-                            return true
                         }
-                    },
-                )
+                        return true
+                    }
+                })
                 return true
             }
-            if (hasSession(e)) {
-                getSession(e).close()
+            if (hasSession(p)) {
+                getSession(p).close()
             }
-            if (logout && hasSession(e)) {
-                teleport(e, Location.create(2540, 4717, 0))
+            if (logout && hasSession(p)) {
+                p.location = Location.create(2540, 4717, 0)
             }
         }
         return super.leave(e, logout)
     }
 
-    override fun continueAttack(
-        e: Entity,
-        target: Node,
-        style: CombatStyle,
-        message: Boolean,
-    ): Boolean {
+    override fun continueAttack(e: Entity, target: Node, style: CombatStyle, message: Boolean): Boolean {
         if (style != CombatStyle.MAGIC) {
             return false
         }
@@ -79,15 +72,26 @@ class MageArena :
         return super.continueAttack(e, target, style, message)
     }
 
-    fun getSession(player: Player?): KolodionSession = KolodionSession.getSession(player!!)
+    /**
+     * Gets the session.
+     * @param player the player.
+     * @return the session.
+     */
+    fun getSession(player: Player?): KolodionSession {
+        return KolodionSession.getSession(player!!)
+    }
 
+    /**
+     * Checks if the player has a session.
+     * @param player the player.
+     * @return `True` if so.
+     */
     fun hasSession(player: Player?): Boolean {
-        KolodionSession.getSession(player!!)
-        return true
+        return KolodionSession.getSession(player!!) != null
     }
 
     override fun configure() {
-        register(ZoneBorders(3093, 3914, 3115, 3952))
+        register(ZoneBorders(3093, 3914, 3115, 3952)) // the main
         register(ZoneBorders(3084, 3923, 3086, 3942))
         register(ZoneBorders(3118, 3924, 3126, 3941))
         register(ZoneBorders(3082, 3921, 3096, 3942))
