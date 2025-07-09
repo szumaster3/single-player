@@ -128,7 +128,6 @@ object TutorialStage {
             3 -> {
                 hideTabs(player, login)
                 removeHintIcon(player)
-                registerHintIcon(player, Repository.findNPC(NPCs.SURVIVAL_EXPERT_943)!!)
                 Component.setUnclosable(
                     player,
                     player.dialogueInterpreter.sendPlaneMessageWithBlueTitle(
@@ -143,6 +142,7 @@ object TutorialStage {
 
             4 -> {
                 hideTabs(player, login)
+                registerHintIcon(player, Repository.findNPC(NPCs.SURVIVAL_EXPERT_943)!!)
                 Component.setUnclosable(
                     player,
                     player.dialogueInterpreter.sendPlaneMessageWithBlueTitle(
@@ -189,7 +189,6 @@ object TutorialStage {
 
             7 -> {
                 hideTabs(player, login)
-                removeHintIcon(player)
                 Component.setUnclosable(
                     player,
                     player.dialogueInterpreter.sendPlaneMessageWithBlueTitle(
@@ -264,8 +263,8 @@ object TutorialStage {
 
             12 -> {
                 hideTabs(player, login)
-                setVarp(player, 406, 2)
                 removeHintIcon(player)
+                setVarp(player, 406, 2)
                 registerHintIcon(player, Repository.findNPC(NPCs.TUTORIAL_FISHING_SPOT_952)!!)
                 Component.setUnclosable(
                     player,
@@ -447,10 +446,8 @@ object TutorialStage {
 
             23 -> {
                 hideTabs(player, login)
-                removeHintIcon(player)
                 player.interfaceManager.openTab(Component(Components.EMOTES_464))
                 setVarbit(player, FLASHING_ICON, 13)
-                stopWalk(player)
                 Component.setUnclosable(
                     player,
                     player.dialogueInterpreter.sendPlaneMessageWithBlueTitle(
@@ -528,6 +525,7 @@ object TutorialStage {
             28 -> {
                 hideTabs(player, login)
                 setVarbit(player, FLASHING_ICON, 0)
+                removeHintIcon(player)
                 registerHintIcon(player, Repository.findNPC(NPCs.QUEST_GUIDE_949)!!)
                 Component.setUnclosable(
                     player,
@@ -545,7 +543,7 @@ object TutorialStage {
                 hideTabs(player, login)
                 removeHintIcon(player)
                 setVarbit(player, FLASHING_ICON, 0)
-                registerHintIcon(player, Location.create(3088, 3119))
+                registerHintIcon(player, Location.create(3088, 3119), 125)
                 Component.setUnclosable(
                     player,
                     player.dialogueInterpreter.sendPlaneMessageWithBlueTitle(
@@ -593,7 +591,6 @@ object TutorialStage {
 
             32 -> {
                 hideTabs(player, login)
-                removeHintIcon(player)
                 Component.setUnclosable(
                     player,
                     player.dialogueInterpreter.sendPlaneMessageWithBlueTitle(
@@ -665,7 +662,6 @@ object TutorialStage {
 
             36 -> {
                 hideTabs(player, login)
-                removeHintIcon(player)
                 Component.setUnclosable(
                     player,
                     player.dialogueInterpreter.sendPlaneMessageWithBlueTitle(
@@ -680,6 +676,7 @@ object TutorialStage {
 
             37 -> {
                 hideTabs(player, login)
+                removeHintIcon(player)
                 registerHintIcon(player, Location.create(3086, 9501), 50)
                 Component.setUnclosable(
                     player,
@@ -696,7 +693,7 @@ object TutorialStage {
             38 -> {
                 hideTabs(player, login)
                 removeHintIcon(player)
-                registerHintIcon(player, Location(3079, 9496), 125)
+                registerHintIcon(player, Location.create(3079, 9496), 125)
                 Component.setUnclosable(
                     player,
                     player.dialogueInterpreter.sendPlaneMessageWithBlueTitle(
@@ -758,7 +755,6 @@ object TutorialStage {
 
             43 -> {
                 hideTabs(player, login)
-                removeHintIcon(player)
                 registerHintIcon(player, Location(3095, 9502), 125)
                 Component.setUnclosable(
                     player,
@@ -889,7 +885,6 @@ object TutorialStage {
             50 -> {
                 hideTabs(player, login)
                 setVarbit(player, FLASHING_ICON, 0)
-                removeHintIcon(player)
                 registerHintIcon(player, Location.create(3111, 9518, 0), 125)
                 Component.setUnclosable(
                     player,
@@ -923,6 +918,7 @@ object TutorialStage {
 
             52 -> {
                 hideTabs(player, login)
+                removeHintIcon(player)
                 Component.setUnclosable(
                     player,
                     player.dialogueInterpreter.sendPlaneMessageWithBlueTitle(
@@ -937,7 +933,6 @@ object TutorialStage {
 
             53 -> {
                 hideTabs(player, login)
-                removeHintIcon(player)
                 registerHintIcon(player, Repository.findNPC(NPCs.COMBAT_INSTRUCTOR_944)!!)
                 Component.setUnclosable(
                     player,
@@ -1001,7 +996,6 @@ object TutorialStage {
 
             57 -> {
                 hideTabs(player, login)
-                removeHintIcon(player)
                 Component.setUnclosable(
                     player,
                     player.dialogueInterpreter.sendPlaneMessageWithBlueTitle(
@@ -1016,6 +1010,7 @@ object TutorialStage {
 
             58 -> {
                 hideTabs(player, login)
+                removeHintIcon(player)
                 registerHintIcon(player, Repository.findNPC(NPCs.FINANCIAL_ADVISOR_947)!!)
                 Component.setUnclosable(
                     player,
@@ -1046,7 +1041,6 @@ object TutorialStage {
 
             60 -> {
                 hideTabs(player, login)
-                removeHintIcon(player)
                 registerHintIcon(player, Repository.findNPC(NPCs.BROTHER_BRACE_954)!!)
                 Component.setUnclosable(
                     player,
@@ -1223,6 +1217,7 @@ object TutorialStage {
             }
 
             71 -> {
+                hideTabs(player, login)
                 removeHintIcon(player)
                 player.interfaceManager.restoreTabs()
                 registerHintIcon(player, Repository.findNPC(NPCs.MAGIC_INSTRUCTOR_946)!!)
