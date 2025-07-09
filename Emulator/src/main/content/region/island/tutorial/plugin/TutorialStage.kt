@@ -30,7 +30,7 @@ object TutorialStage {
     @JvmStatic
     fun rollback(player: Player) {
         val stage = getAttribute(player, TUTORIAL_STAGE, -1)
-        return load(player, stage)
+        load(player, stage)
     }
 
     fun load(player: Player, stage: Int, login: Boolean = false) {
