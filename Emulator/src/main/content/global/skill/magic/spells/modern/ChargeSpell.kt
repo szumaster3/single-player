@@ -1,5 +1,6 @@
 package content.global.skill.magic.spells.modern
 
+import content.global.skill.magic.spells.ModernSpells
 import core.api.registerTimer
 import core.api.removeTimer
 import core.api.spawnTimer
@@ -34,7 +35,7 @@ class ChargeSpell : MagicSpell(
 
     @Throws(Throwable::class)
     override fun newInstance(arg: SpellType?): Plugin<SpellType?> {
-        SpellBook.MODERN.register(58, this)
+        SpellBook.MODERN.register(ModernSpells.CHARGE, this)
         return this
     }
 

@@ -1,5 +1,6 @@
 package content.global.skill.magic.spells.modern
 
+import content.global.skill.magic.spells.ModernSpells
 import content.global.skill.magic.spells.SpellProjectile
 import core.game.node.Node
 import core.game.node.entity.Entity
@@ -49,7 +50,7 @@ class CrumbleUndeadSpell : CombatSpell(
 
     @Throws(Throwable::class)
     override fun newInstance(arg: SpellType?): Plugin<SpellType?> {
-        SpellBook.MODERN.register(22, this)
+        SpellBook.MODERN.register(ModernSpells.CRUMBLE_UNDEAD, this)
         return this
     }
 

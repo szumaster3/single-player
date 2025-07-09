@@ -1,5 +1,6 @@
 package content.global.skill.magic.spells.modern
 
+import content.global.skill.magic.spells.ModernSpells
 import core.api.playGlobalAudio
 import core.api.sendMessage
 import core.cache.def.impl.ItemDefinition
@@ -125,7 +126,11 @@ class GodSpell private constructor(
     }
 
     override fun newInstance(type: SpellType?): Plugin<SpellType?> {
-        val buttons = intArrayOf(41, 42, 43)
+        val buttons = intArrayOf(
+            ModernSpells.SARADOMIN_STRIKE,
+            ModernSpells.CLAWS_OF_GUTHIX,
+            ModernSpells.FLAMES_OF_ZAMORAK,
+        )
         for (i in buttons.indices) {
             SpellBook.MODERN.register(buttons[i], GodSpell(GOD_SPELLS[i]))
         }

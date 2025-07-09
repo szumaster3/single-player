@@ -1,5 +1,6 @@
 package content.global.skill.magic.spells.modern
 
+import content.global.skill.magic.spells.ModernSpells
 import content.global.skill.magic.spells.SpellProjectile
 import core.game.container.impl.EquipmentContainer
 import core.game.node.Node
@@ -48,7 +49,7 @@ class IbanBlastSpell : CombatSpell(
 
     @Throws(Throwable::class)
     override fun newInstance(arg: SpellType?): Plugin<SpellType?> {
-        SpellBook.MODERN.register(29, this)
+        SpellBook.MODERN.register(ModernSpells.IBAN_BLAST, this)
         return this
     }
 

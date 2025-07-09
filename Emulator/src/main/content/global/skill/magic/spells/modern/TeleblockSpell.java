@@ -1,6 +1,7 @@
 package content.global.skill.magic.spells.modern;
 
 import content.data.GameAttributes;
+import content.global.skill.magic.spells.ModernSpells;
 import core.game.node.Node;
 import core.game.node.entity.Entity;
 import core.game.node.entity.combat.BattleState;
@@ -59,7 +60,7 @@ public final class TeleblockSpell extends CombatSpell {
 
     @Override
     public Plugin<SpellType> newInstance(SpellType arg) throws Throwable {
-        SpellBook.MODERN.register(63, new TeleblockSpell(SpellType.TELEBLOCK, 85, 80, Sounds.TPBLOCK_IMPACT_203, new Animation(10503, Priority.HIGH), TELEBLOCK_START, TELEBLOCK_ORB, TELEBLOCK_SUCCESS, Runes.LAW_RUNE.getItem(1), Runes.DEATH_RUNE.getItem(1), Runes.CHAOS_RUNE.getItem(1)));
+        SpellBook.MODERN.register(ModernSpells.TELEBLOCK, new TeleblockSpell(SpellType.TELEBLOCK, 85, 80, Sounds.TPBLOCK_IMPACT_203, new Animation(10503, Priority.HIGH), TELEBLOCK_START, TELEBLOCK_ORB, TELEBLOCK_SUCCESS, Runes.LAW_RUNE.getItem(1), Runes.DEATH_RUNE.getItem(1), Runes.CHAOS_RUNE.getItem(1)));
         return this;
     }
 

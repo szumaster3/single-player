@@ -1,5 +1,6 @@
 package content.global.skill.magic.spells.modern
 
+import content.global.skill.magic.spells.ModernSpells
 import content.global.skill.magic.spells.SpellProjectile
 import core.game.container.impl.EquipmentContainer
 import core.game.node.Node
@@ -53,7 +54,7 @@ class MagicDartSpell : CombatSpell(
 
     @Throws(Throwable::class)
     override fun newInstance(arg: SpellType?): Plugin<SpellType?> {
-        SpellBook.MODERN.register(31, this)
+        SpellBook.MODERN.register(ModernSpells.MAGIC_DART, this)
         return this
     }
 
