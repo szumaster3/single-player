@@ -19,7 +19,7 @@ import core.plugin.Plugin
  * Handles the mage arena zone.
  * @author Vexia
  */
-class MageArenaZone : MapZone("mage arena", true, ZoneRestriction.RANDOM_EVENTS), Plugin<Any> {
+class MageArena : MapZone("mage arena", true, ZoneRestriction.RANDOM_EVENTS), Plugin<Any> {
     @Throws(Throwable::class)
     override fun newInstance(arg: Any?): Plugin<Any> {
         ZoneBuilder.configure(this)

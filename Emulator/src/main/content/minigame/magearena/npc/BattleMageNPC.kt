@@ -9,6 +9,8 @@ import core.game.node.entity.npc.AbstractNPC
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.SpellBookManager.SpellBook
 import core.game.world.map.Location
+import core.game.world.update.flag.context.Animation
+import core.game.world.update.flag.context.Graphics
 import core.tools.RandomFunction
 import org.rs.consts.NPCs
 
@@ -36,6 +38,10 @@ class BattleMageNPC : AbstractNPC {
         properties.spell = spell
         properties.autocastSpell = spell
         properties.combatPulse.style = CombatStyle.MAGIC
+    }
+
+    override fun visualize(animation: Animation?, graphics: Graphics?): Boolean {
+        return super.visualize(animation, graphics)
     }
 
     override fun handleTickActions() {

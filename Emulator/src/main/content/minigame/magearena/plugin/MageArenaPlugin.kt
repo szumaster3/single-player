@@ -27,10 +27,7 @@ class MageArenaPlugin: InteractionListener {
                 val capeOnGround = node as GroundItem
                 if (GodType.hasAny(player)) {
                     GroundItemManager.destroy(capeOnGround)
-                    sendMessage(
-                        player,
-                        "You may only possess one sacred cape at a time. The conflicting powers of the capes drive them apart.",
-                    )
+                    sendMessage(player, "You may only possess one sacred cape at a time. The conflicting powers of the capes drive them apart.")
                 } else {
                     take(player, capeOnGround)
                 }
@@ -45,17 +42,22 @@ class MageArenaPlugin: InteractionListener {
         }
 
         on(godStatue, IntType.SCENERY, "pray at") { player, node ->
+            player.lock(5)
             queueScript(player, 1, QueueStrength.STRONG) { stage: Int ->
                 when (stage) {
                     0 -> {
                         forceWalk(player, player.location.transform(0, -1, 0), "DUMB")
-                        return@queueScript keepRunning(player)
+                        return@queueScript delayScript(player, 2)
                     }
 
                     1 -> {
-                        player.faceLocation(player.location.transform(0, 1, 0))
+                        player.faceLocation(node.location)
+                        return@queueScript delayScript(player, 1)
+                    }
+
+                    2 -> {
                         GodType.forScenery(node.id)?.pray(player, node.asScenery())
-                        return@queueScript delayScript(player, 5)
+                        return@queueScript stopExecuting(player)
                     }
 
                     else -> return@queueScript stopExecuting(player)
@@ -76,6 +78,7 @@ class MageArenaPlugin: InteractionListener {
                         "through your veins.",
                     )
                     addDialogueAction(player) { _, _ ->
+                        player.lock(3)
                         queueScript(player, 1, QueueStrength.STRONG) { stage: Int ->
                             when (stage) {
                                 0 -> {
@@ -84,7 +87,7 @@ class MageArenaPlugin: InteractionListener {
                                         player.location,
                                         Location(2542, 4720, 0),
                                         0,
-                                        60,
+                                        30,
                                         Direction.NORTH,
                                         Animations.JUMP_INTO_WATER_7269,
                                     )
@@ -116,6 +119,7 @@ class MageArenaPlugin: InteractionListener {
                 }
                 return@on true
             } else {
+                player.lock(3)
                 queueScript(player, 1, QueueStrength.STRONG) { stage: Int ->
                     when (stage) {
                         0 -> {
@@ -124,7 +128,7 @@ class MageArenaPlugin: InteractionListener {
                                 player.location,
                                 Location(2509, 4687, 0),
                                 0,
-                                60,
+                                30,
                                 Direction.SOUTH,
                                 Animations.JUMP_INTO_WATER_7269,
                             )
