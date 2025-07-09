@@ -14,6 +14,9 @@ import org.rs.consts.NPCs
 import org.rs.consts.Quests
 import org.rs.consts.Vars
 
+/**
+ * Represents the Gunnjorn dialogue.
+ */
 @Initializable
 class GunnjornDialogue(player: Player? = null) : Dialogue(player) {
 

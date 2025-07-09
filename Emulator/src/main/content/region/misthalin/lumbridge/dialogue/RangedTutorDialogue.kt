@@ -9,6 +9,9 @@ import core.game.node.item.Item
 import core.plugin.Initializable
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Ranged Tutor dialogue.
+ */
 @Initializable
 class RangedTutorDialogue(player: Player? = null) : Dialogue(player) {
 

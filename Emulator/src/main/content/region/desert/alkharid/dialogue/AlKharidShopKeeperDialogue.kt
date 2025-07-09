@@ -8,6 +8,9 @@ import core.game.node.entity.player.Player
 import core.plugin.Initializable
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Shopkeeper (Al-Kharid) dialogue.
+ */
 @Initializable
 class AlKharidShopKeeperDialogue(player: Player? = null) : Dialogue(player) {
 

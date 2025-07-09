@@ -12,6 +12,9 @@ import core.tools.START_DIALOGUE
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the High Priest Entrana dialogue.
+ */
 @Initializable
 class HighPriestEntranaDialogue(player: Player? = null) : Dialogue(player) {
 

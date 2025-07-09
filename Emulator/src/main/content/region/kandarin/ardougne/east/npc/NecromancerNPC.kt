@@ -77,7 +77,7 @@ class NecromancerNPC : NPCBehavior(NPCs.INVRIGAR_THE_NECROMANCER_173, NPCs.NECRO
      */
     private fun rollZombieSpawn(entity: Entity, npc: NecromancerNPC, victim: Entity) {
         if (summonedZombieCounter >= 3) return
-        if (npc.summonedZombie != null && npc.summonedZombie!!.isActive && !DeathTask.isDead(npc.summonedZombie)) {
+        if (npc.summonedZombie != null && npc.summonedZombie!!.isActive && !DeathTask.isDead(npc.summonedZombie!!)) {
             return
         }
         if (!RandomFunction.roll(8)) {

@@ -13,6 +13,9 @@ import core.tools.START_DIALOGUE
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Ordan dialogue.
+ */
 @Initializable
 class OrdanDialogue(player: Player? = null) : Dialogue(player) {
 

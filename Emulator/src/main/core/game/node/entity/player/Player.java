@@ -696,7 +696,7 @@ public class Player extends Entity {
                 }
             }
             GroundItemManager.create(new Item(Items.BONES_526), this.getAttribute("/save:original-loc", location), k);
-            final Container[] c = DeathTask.getContainers(this);
+            final Container[] c = DeathTask.Companion.getContainers(this);
 
             for (Item i : getEquipment().toArray()) {
                 if (i == null) continue;
@@ -1025,7 +1025,7 @@ public class Player extends Entity {
      * @return the boolean
      */
     public boolean allowRemoval() {
-        return !(inCombat() || getSkills().getLifepoints() < 1 || DeathTask.isDead(this) || isTeleporting() || scripts.hasTypeInQueue(QueueStrength.SOFT));
+        return !(inCombat() || getSkills().getLifepoints() < 1 || DeathTask.Companion.isDead(this) || isTeleporting() || scripts.hasTypeInQueue(QueueStrength.SOFT));
     }
 
     /**

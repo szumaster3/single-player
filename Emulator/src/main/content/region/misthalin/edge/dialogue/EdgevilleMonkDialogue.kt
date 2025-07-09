@@ -12,6 +12,9 @@ import org.rs.consts.Animations
 import org.rs.consts.Graphics
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Monk (Edgeville) dialogue.
+ */
 @Initializable
 class EdgevilleMonkDialogue(player: Player? = null) : Dialogue(player) {
 

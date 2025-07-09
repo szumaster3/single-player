@@ -7,6 +7,9 @@ import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Anleif dialogue.
+ */
 class AnleifDialogue : DialogueFile() {
 
     override fun handle(componentID: Int, buttonID: Int, ) {

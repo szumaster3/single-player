@@ -13,6 +13,9 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.*
 import kotlin.random.Random
 
+/**
+ * Represents the Pirate Pete dialogue.
+ */
 @Initializable
 class PiratePeteDialogue(player: Player? = null) : Dialogue(player) {
     override fun open(vararg args: Any?): Boolean {

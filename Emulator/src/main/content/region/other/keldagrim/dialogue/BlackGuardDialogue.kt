@@ -9,6 +9,9 @@ import core.tools.END_DIALOGUE
 import core.tools.START_DIALOGUE
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Black Guard (Keldagrim) dialogue.
+ */
 @Initializable
 class BlackGuardDialogue(player: Player? = null) : Dialogue(player) {
 

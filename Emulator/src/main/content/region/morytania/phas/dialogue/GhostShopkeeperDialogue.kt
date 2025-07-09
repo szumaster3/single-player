@@ -12,6 +12,9 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Shopkeeper (Port Phasmatys) dialogue.
+ */
 @Initializable
 class GhostShopkeeperDialogue(player: Player? = null) : Dialogue(player) {
 

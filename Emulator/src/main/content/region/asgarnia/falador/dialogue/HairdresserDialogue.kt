@@ -10,6 +10,9 @@ import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Hairdresser (Falador) dialogue.
+ */
 @Initializable
 class HairdresserDialogue(player: Player? = null) : Dialogue(player) {
     

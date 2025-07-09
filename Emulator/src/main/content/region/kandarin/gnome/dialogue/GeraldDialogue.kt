@@ -13,6 +13,9 @@ import org.rs.consts.Animations
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Gerald dialogue.
+ */
 @Initializable
 class GeraldDialogue(player: Player? = null) : Dialogue(player) {
 

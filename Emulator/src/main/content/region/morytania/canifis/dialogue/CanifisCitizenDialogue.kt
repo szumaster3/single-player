@@ -10,6 +10,9 @@ import core.tools.RandomFunction
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the random Canifis citizens dialogue.
+ */
 @Initializable
 class CanifisCitizenDialogue(player: Player? = null) : Dialogue(player) {
 

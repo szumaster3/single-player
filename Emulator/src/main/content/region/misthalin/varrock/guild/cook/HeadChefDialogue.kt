@@ -9,6 +9,9 @@ import core.game.node.entity.skill.Skills
 import core.plugin.Initializable
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Head Chef (Cooking guild) dialogue.
+ */
 @Initializable
 class HeadChefDialogue(player: Player? = null) : Dialogue(player) {
     

@@ -11,6 +11,9 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Ali The Carter dialogue.
+ */
 @Initializable
 class AliTheCarterDialogue(player: Player? = null) : Dialogue(player) {
 

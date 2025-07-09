@@ -10,6 +10,9 @@ import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Fadli dialogue.
+ */
 @Initializable
 class FadliDialogue(player: Player? = null) : Dialogue(player) {
 

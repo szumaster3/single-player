@@ -6,6 +6,9 @@ import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Trade Referee dialogue.
+ */
 @Initializable
 class TradeRefereeDialogue(player: Player? = null) : Dialogue(player) {
 

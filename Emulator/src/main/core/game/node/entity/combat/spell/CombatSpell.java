@@ -78,7 +78,7 @@ public abstract class CombatSpell extends MagicSpell {
      * @param animation      the cast animation.
      * @param startGraphic   The start graphic.
      * @param projectile     The projectile.
-     * @param endGraphics     The end graphic.
+     * @param endGraphics    The end graphic.
      * @param runes          The runes required to cast this spell.
      */
     public CombatSpell(SpellType type, SpellBookManager.SpellBook book, int level, double baseExperience, int castAudio, int impactAudio, Animation animation, Graphics startGraphic, Projectile projectile, Graphics endGraphics, Item... runes) {

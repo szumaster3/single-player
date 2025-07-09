@@ -12,6 +12,9 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Ghost Disciple dialogue.
+ */
 @Initializable
 class GhostDiscipleDialogue(player: Player? = null) : Dialogue(player) {
 

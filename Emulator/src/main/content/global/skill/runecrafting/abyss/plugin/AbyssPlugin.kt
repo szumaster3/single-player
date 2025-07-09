@@ -36,8 +36,8 @@ import kotlin.random.Random
  * @author cfunny
  */
 class AbyssPlugin : InteractionListener {
-    override fun defineListeners() {
 
+    override fun defineListeners() {
         definePlugin(AbyssalNPC())
         definePlugin(DarkMageDialogue())
         definePlugin(MageOfZamorakDialogue())

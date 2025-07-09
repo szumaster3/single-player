@@ -5,6 +5,9 @@ import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
 import core.tools.END_DIALOGUE
 
+/**
+ * Represents the Challenge dialogue.
+ */
 class ChallengeDialogue(var npcId: Int) : DialogueFile() {
 
     override fun handle(componentID: Int, buttonID: Int) {

@@ -14,6 +14,9 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Ali The Snake Charmer dialogue.
+ */
 @Initializable
 class AliTheSnakeCharmerDialogue(player: Player? = null) : Dialogue(player) {
 

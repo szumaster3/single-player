@@ -15,6 +15,9 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Kjut dialogue.
+ */
 @Initializable
 class KjutDialogue(player: Player? = null) : Dialogue(player) {
 

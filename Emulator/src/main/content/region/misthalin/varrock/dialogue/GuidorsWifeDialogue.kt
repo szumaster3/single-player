@@ -9,6 +9,9 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Guidors wife dialogue.
+ */
 @Initializable
 class GuidorsWifeDialogue(player: Player? = null) : Dialogue(player) {
 

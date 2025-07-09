@@ -8,6 +8,9 @@ import core.tools.END_DIALOGUE
 import core.tools.START_DIALOGUE
 import org.rs.consts.Items
 
+/**
+ * Represents the King Roald (All Fired Up quest) dialogue.
+ */
 class KingRoaldAFUDialogue : DialogueFile() {
 
     override fun handle(componentID: Int, buttonID: Int) {

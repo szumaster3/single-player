@@ -12,6 +12,9 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Barman at Ratpit dialogue.
+ */
 @Initializable
 class RatpitBarmanDialogue(player: Player? = null) : Dialogue(player) {
 

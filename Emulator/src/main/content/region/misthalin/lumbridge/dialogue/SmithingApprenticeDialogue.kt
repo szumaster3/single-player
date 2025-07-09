@@ -13,6 +13,9 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Smithing Apprentice dialogue.
+ */
 @Initializable
 class SmithingApprenticeDialogue(player: Player? = null) : Dialogue(player) {
 

@@ -13,6 +13,9 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Matthias (Falconry) dialogue.
+ */
 @Initializable
 class MatthiasFalconryDialogue(player: Player? = null) : Dialogue(player) {
 

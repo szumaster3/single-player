@@ -8,6 +8,9 @@ import core.game.world.map.Location
 import org.rs.consts.Animations
 import org.rs.consts.Graphics
 
+/**
+ * Represents the Abidor Crank dialogue.
+ */
 class AbidorCrankDialogue : DialogueFile() {
     override fun handle(
         componentID: Int,

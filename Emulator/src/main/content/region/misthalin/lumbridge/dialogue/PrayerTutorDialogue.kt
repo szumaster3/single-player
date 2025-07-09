@@ -10,6 +10,9 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Prayer Tutor dialogue.
+ */
 @Initializable
 class PrayerTutorDialogue(player: Player? = null) : Dialogue(player) {
     

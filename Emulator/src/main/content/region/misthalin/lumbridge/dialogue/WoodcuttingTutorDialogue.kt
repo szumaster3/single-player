@@ -12,6 +12,9 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Woodcutting Tutor dialogue.
+ */
 @Initializable
 class WoodcuttingTutorDialogue(player: Player? = null) : Dialogue(player) {
 

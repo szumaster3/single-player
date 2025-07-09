@@ -27,6 +27,9 @@ private val VALID_LOGS = arrayOf(
     Items.MAGIC_LOGS_1513,
 )
 
+/**
+ * Represents the Beacon Keepers dialogue.
+ */
 @Initializable
 class BeaconKeeperDialogue(player: Player? = null) : Dialogue(player) {
     var index = 0

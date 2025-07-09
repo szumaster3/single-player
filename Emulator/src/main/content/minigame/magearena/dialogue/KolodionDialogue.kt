@@ -17,6 +17,9 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.Animations
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Kolodion dialogue.
+ */
 @Initializable
 class KolodionDialogue(player: Player? = null) : Dialogue(player) {
 

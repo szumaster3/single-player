@@ -11,6 +11,9 @@ import org.rs.consts.Components
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Elnock Inquisitor dialogue.
+ */
 @Initializable
 class ElnockInquisitorDialogue(player: Player? = null) : Dialogue(player) {
     override fun open(vararg args: Any?): Boolean {

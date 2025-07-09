@@ -9,6 +9,9 @@ import core.plugin.Initializable
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Veronica (Draynor Mansion) dialogue.
+ */
 @Initializable
 class VeronicaDialogue(player: Player? = null) : Dialogue(player) {
 

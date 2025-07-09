@@ -12,6 +12,9 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Tree Guard (Draynor tree) dialogue.
+ */
 class TreeGuardDialogue : DialogueFile() {
     override fun handle(componentID: Int, buttonID: Int, ) {
         npc = NPC(NPCs.GUARD_345)

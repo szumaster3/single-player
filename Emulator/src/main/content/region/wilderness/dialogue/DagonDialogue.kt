@@ -6,6 +6,9 @@ import core.game.dialogue.DialogueInterpreter
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 
+/**
+ * Represents the Dagon dialogue.
+ */
 class DagonDialogue(player: Player? = null) : Dialogue(player) {
 
     private var cutscene: BorkCutscene? = null

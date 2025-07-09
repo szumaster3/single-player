@@ -10,6 +10,9 @@ import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Rommik dialogue.
+ */
 @Initializable
 class RoomikDialogue(player: Player? = null) : Dialogue(player) {
 

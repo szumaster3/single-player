@@ -7,6 +7,9 @@ import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.plugin.Initializable
 
+/**
+ * Represents the random Childrens dialogue.
+ */
 @Initializable
 class RandomChildrenDialogue(player: Player? = null) : Dialogue(player) {
 

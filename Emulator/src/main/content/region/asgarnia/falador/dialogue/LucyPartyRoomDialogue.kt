@@ -12,6 +12,9 @@ import core.plugin.Initializable
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Lucy (Falador party room) dialogue.
+ */
 @Initializable
 class LucyPartyRoomDialogue(player: Player? = null) : Dialogue(player) {
 

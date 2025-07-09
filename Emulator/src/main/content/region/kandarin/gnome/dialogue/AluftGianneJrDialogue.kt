@@ -10,6 +10,9 @@ import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Aluft Gianne Junior dialogue.
+ */
 @Initializable
 class AluftGianneJrDialogue(player: Player? = null) : Dialogue(player) {
     

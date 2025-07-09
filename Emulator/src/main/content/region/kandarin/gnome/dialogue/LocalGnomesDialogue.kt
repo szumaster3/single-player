@@ -8,6 +8,9 @@ import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Local gnomes dialogue.
+ */
 @Initializable
 class LocalGnomesDialogue(player: Player? = null) : Dialogue(player) {
 

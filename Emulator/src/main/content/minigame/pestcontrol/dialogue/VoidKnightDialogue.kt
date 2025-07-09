@@ -9,6 +9,9 @@ import core.game.world.GameWorld.settings
 import core.plugin.Initializable
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Void Knight dialogue.
+ */
 @Initializable
 class VoidKnightDialogue(player: Player? = null) : Dialogue(player) {
     var reward: Item = Item()

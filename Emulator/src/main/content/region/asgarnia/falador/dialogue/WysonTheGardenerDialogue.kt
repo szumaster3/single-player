@@ -14,6 +14,9 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Wyson The Gardener dialogue.
+ */
 @Initializable
 class WysonTheGardenerDialogue(player: Player? = null) : Dialogue(player) {
 

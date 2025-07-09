@@ -11,6 +11,9 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Sailor (Port Phasmatys) dialogue.
+ */
 @Initializable
 class GhostSailorDialogue(player: Player? = null) : Dialogue(player) {
     

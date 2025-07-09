@@ -11,6 +11,9 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Silk Trader dialogue.
+ */
 @Initializable
 class SilkTraderDialogue(player: Player? = null) : Dialogue(player) {
 

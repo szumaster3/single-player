@@ -14,6 +14,9 @@ import core.tools.START_DIALOGUE
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Barmaid dialogue.
+ */
 @Initializable
 class BarmaidDialogue(player: Player? = null) : Dialogue(player) {
 

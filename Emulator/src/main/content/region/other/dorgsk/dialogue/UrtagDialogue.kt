@@ -10,6 +10,9 @@ import core.tools.END_DIALOGUE
 import core.tools.START_DIALOGUE
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Urtag dialogue.
+ */
 @Initializable
 class UrtagDialogue(player: Player? = null) : Dialogue(player) {
 

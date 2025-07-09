@@ -10,6 +10,9 @@ import core.plugin.Initializable
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Cook (Varrock) dialogue.
+ */
 @Initializable
 class VarrockCookDialogue(player: Player? = null) : Dialogue(player) {
 

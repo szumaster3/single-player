@@ -16,8 +16,11 @@ import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
 import org.rs.consts.*
 
+/**
+ * Represents the Aggie dialogue.
+ */
 @Initializable
-class AggieDialogue(player: Player? = null, ) : Dialogue(player) {
+class AggieDialogue(player: Player? = null) : Dialogue(player) {
     private var quest: Quest? = null
 
     override fun open(vararg args: Any?): Boolean {

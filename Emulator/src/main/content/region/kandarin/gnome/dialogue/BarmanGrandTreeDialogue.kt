@@ -12,6 +12,9 @@ import core.plugin.Initializable
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Barman (Grand Tree) dialogue.
+ */
 @Initializable
 class BarmanGrandTreeDialogue(player: Player? = null) : Dialogue(player) {
 

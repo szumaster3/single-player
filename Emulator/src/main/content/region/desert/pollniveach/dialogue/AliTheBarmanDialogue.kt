@@ -8,6 +8,9 @@ import core.game.node.entity.npc.NPC
 import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Ali The Barman dialogue.
+ */
 class AliTheBarmanDialogue : DialogueFile() {
 
     override fun handle(componentID: Int, buttonID: Int) {

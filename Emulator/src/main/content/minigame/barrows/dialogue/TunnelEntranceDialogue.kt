@@ -8,6 +8,9 @@ import core.game.node.entity.player.Player
 import core.game.world.map.Location
 import core.plugin.Initializable
 
+/**
+ * Represents the Tunnel entrance dialogue.
+ */
 @Initializable
 class TunnelEntranceDialogue(player: Player? = null, ) : Dialogue(player) {
 

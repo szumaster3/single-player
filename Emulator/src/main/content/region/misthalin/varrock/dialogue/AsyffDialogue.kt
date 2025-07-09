@@ -11,6 +11,9 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.Components
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Asyff dialogue.
+ */
 @Initializable
 class AsyffDialogue(player: Player? = null) : Dialogue(player) {
 

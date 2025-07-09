@@ -14,6 +14,9 @@ import core.tools.START_DIALOGUE
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Elsie dialogue.
+ */
 @Initializable
 class ElsieDialogue(player: Player? = null) : Dialogue(player) {
 

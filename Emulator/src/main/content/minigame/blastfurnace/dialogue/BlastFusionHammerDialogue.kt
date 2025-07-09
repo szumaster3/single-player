@@ -8,6 +8,9 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Blast Fusion Hammer dialogue.
+ */
 class BlastFusionHammerDialogue : DialogueFile() {
     override fun handle(componentID: Int, buttonID: Int) {
         npc = NPC(NPCs.BLAST_FURNACE_FOREMAN_2553)

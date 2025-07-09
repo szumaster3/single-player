@@ -66,7 +66,7 @@ class BNetPulse(
             )
             return false
         }
-        return !node!!.isInvisible && !DeathTask.isDead(node)
+        return !node!!.isInvisible && !DeathTask.isDead(node!!)
     }
 
     override fun animate() {
@@ -77,7 +77,7 @@ class BNetPulse(
     }
 
     override fun reward(): Boolean {
-        if (node!!.isInvisible || DeathTask.isDead(node)) {
+        if (node!!.isInvisible || DeathTask.isDead(node!!)) {
             return true
         }
         if (++ticks % 2 != 0) {

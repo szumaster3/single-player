@@ -9,6 +9,9 @@ import core.plugin.Initializable
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Ali The Dyer dialogue.
+ */
 @Initializable
 class AliTheDyerDialogue(player: Player? = null) : Dialogue(player) {
 

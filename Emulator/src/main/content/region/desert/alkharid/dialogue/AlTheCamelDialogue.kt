@@ -11,6 +11,9 @@ import core.tools.RandomFunction
 import org.rs.consts.NPCs
 import org.rs.consts.Sounds
 
+/**
+ * Represents the Al The Camel dialogue.
+ */
 @Initializable
 class AlTheCamelDialogue(player: Player? = null) : Dialogue(player) {
     

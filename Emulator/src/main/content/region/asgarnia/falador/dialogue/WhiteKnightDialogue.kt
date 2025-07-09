@@ -7,6 +7,9 @@ import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 
+/**
+ * Represents the White Knight (Falador party room) dialogue.
+ */
 @Initializable
 class WhiteKnightDialogue(player: Player? = null) : Dialogue(player) {
 

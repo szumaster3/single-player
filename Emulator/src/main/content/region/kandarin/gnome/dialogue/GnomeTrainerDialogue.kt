@@ -14,6 +14,9 @@ import core.tools.END_DIALOGUE
 import core.tools.RandomFunction
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Gnome Trainer dialogue.
+ */
 @Initializable
 class GnomeTrainerDialogue(player: Player? = null) : Dialogue(player) {
 

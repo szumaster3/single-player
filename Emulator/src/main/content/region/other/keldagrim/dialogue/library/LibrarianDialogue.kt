@@ -10,6 +10,9 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Librarian (Keldagrim) dialogue.
+ */
 @Initializable
 class LibrarianDialogue(player: Player? = null) : Dialogue(player) {
 

@@ -9,6 +9,9 @@ import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Aabla dialogue.
+ */
 @Initializable
 class AablaDialogue(player: Player? = null) : Dialogue(player) {
 

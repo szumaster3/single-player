@@ -8,6 +8,9 @@ import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Private Pendron dialogue.
+ */
 @Initializable
 class PrivatePendronDialogue(player: Player? = null, ) : Dialogue(player) {
 

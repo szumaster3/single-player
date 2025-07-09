@@ -8,6 +8,9 @@ import core.tools.END_DIALOGUE
 import core.tools.START_DIALOGUE
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Drunken Dwarf dialogue.
+ */
 @Initializable
 class DrunkenDwarfDialogue(player: Player? = null) : Dialogue(player) {
 

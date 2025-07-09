@@ -10,6 +10,9 @@ import core.game.node.entity.player.Player
 import core.plugin.Initializable
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Haera dialogue.
+ */
 @Initializable
 class HaeraDialogue(player: Player? = null) : Dialogue(player) {
 

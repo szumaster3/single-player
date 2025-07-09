@@ -11,7 +11,7 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 
 /**
- * The Tanner dialogue.
+ * The Tanner (Varrock) dialogue.
  */
 @Initializable
 class TannerDialogue : Dialogue {

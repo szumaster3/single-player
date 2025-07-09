@@ -11,6 +11,9 @@ import core.tools.RandomFunction
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Strange old man dialogue.
+ */
 @Initializable
 class StrangeOldManDialogue(player: Player? = null) : Dialogue(player) {
     private var conversationNum = RandomFunction.getRandom(4)

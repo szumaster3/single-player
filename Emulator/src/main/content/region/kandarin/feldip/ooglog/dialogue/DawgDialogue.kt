@@ -10,6 +10,9 @@ import core.tools.START_DIALOGUE
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Dawg dialogue.
+ */
 @Initializable
 class DawgDialogue(player: Player? = null) : Dialogue(player) {
 

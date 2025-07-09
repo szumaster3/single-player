@@ -9,8 +9,11 @@ import core.tools.END_DIALOGUE
 import core.tools.RandomFunction
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Afflicted dialogue.
+ */
 @Initializable
-class AfflictedDialogue(player: Player? = null, ) : Dialogue(player) {
+class AfflictedDialogue(player: Player? = null) : Dialogue(player) {
 
     private val forceChat = arrayOf(
         "ughugh",

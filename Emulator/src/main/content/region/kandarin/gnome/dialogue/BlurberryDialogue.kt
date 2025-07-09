@@ -15,6 +15,9 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Blurberry (barman) dialogue.
+ */
 @Initializable
 class BlurberryDialogue(player: Player? = null) : Dialogue(player) {
 

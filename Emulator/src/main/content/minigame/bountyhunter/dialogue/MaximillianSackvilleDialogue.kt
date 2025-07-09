@@ -15,9 +15,12 @@ import core.tools.END_DIALOGUE
 import core.tools.START_DIALOGUE
 import org.rs.consts.NPCs
 
-class MaximillianSackvilleDialogue(player: Player? = null, ) : Dialogue(player) {
+/**
+ * Represents the Maximillian Sackville dialogue.
+ */
+class MaximillianSackvilleDialogue(player: Player? = null) : Dialogue(player) {
 
-    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             START_DIALOGUE -> when {
                 hasIronmanRestriction(player, IronmanMode.ULTIMATE) -> {

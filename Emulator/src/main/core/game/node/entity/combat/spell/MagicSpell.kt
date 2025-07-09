@@ -17,7 +17,6 @@ import core.game.world.GameWorld.ticks
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
 import core.plugin.Plugin
-import java.util.function.Consumer
 
 abstract class MagicSpell @JvmOverloads constructor(
     val book: SpellBook = SpellBook.MODERN,
@@ -42,7 +41,7 @@ abstract class MagicSpell @JvmOverloads constructor(
         playGlobalAudio(entity.location, audio!!.id, 20)
     }
 
-    fun usingStaff(p: Player, rune: Int): Boolean {
+    private fun usingStaff(p: Player, rune: Int): Boolean {
         val weapon = p.equipment[3] ?: return false
         val staff = forId(rune) ?: return false
         return staff.staves.contains(weapon.id)
@@ -79,7 +78,7 @@ abstract class MagicSpell @JvmOverloads constructor(
         return true
     }
 
-    fun checkLevelRequirement(caster: Entity, message: Boolean): Boolean {
+    private fun checkLevelRequirement(caster: Entity, message: Boolean): Boolean {
         if (caster is Player && caster.getSkills().getLevel(Skills.MAGIC, this is CombatSpell) < level) {
             if (message) caster.packetDispatch.sendMessage("You need a Magic level of $level to cast this spell.")
             return false
@@ -87,7 +86,7 @@ abstract class MagicSpell @JvmOverloads constructor(
         return true
     }
 
-    fun hasRune(p: Player, item: Item?, toRemove: MutableList<Item?>, message: Boolean): Boolean {
+    private fun hasRune(p: Player, item: Item?, toRemove: MutableList<Item?>, message: Boolean): Boolean {
         if (usingStaff(p, item!!.id)) return true
 
         val hasBase = p.inventory.contains(item.id, item.amount)

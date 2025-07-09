@@ -10,6 +10,9 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.Components
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Captain Cain dialogue.
+ */
 @Initializable
 class CaptainCainDialogue(player: Player? = null) : Dialogue(player) {
 

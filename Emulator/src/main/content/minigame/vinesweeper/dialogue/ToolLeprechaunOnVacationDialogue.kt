@@ -1,6 +1,5 @@
 package content.minigame.vinesweeper.dialogue
 
-import content.minigame.vinesweeper.plugin.VinesweeperPlugin
 import core.api.openNpcShop
 import core.api.openInterface
 import core.game.dialogue.Dialogue
@@ -13,6 +12,9 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.Components
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Tool Leprechaun (Trollweis) dialogue.
+ */
 @Initializable
 class ToolLeprechaunOnVacationDialogue(player: Player? = null) : Dialogue(player) {
 

@@ -6,6 +6,9 @@ import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Iffie dialogue.
+ */
 @Initializable
 class IffieDialogue(player: Player? = null) : Dialogue(player) {
 

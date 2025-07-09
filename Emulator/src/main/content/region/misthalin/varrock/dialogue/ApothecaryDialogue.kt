@@ -11,6 +11,9 @@ import core.plugin.Initializable
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Apothecary dialogue.
+ */
 @Initializable
 class ApothecaryDialogue(player: Player? = null) : Dialogue(player) {
     

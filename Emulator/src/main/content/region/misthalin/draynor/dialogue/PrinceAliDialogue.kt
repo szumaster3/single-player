@@ -12,6 +12,9 @@ import core.plugin.Initializable
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Prince Ali dialogue.
+ */
 @Initializable
 class PrinceAliDialogue(player: Player? = null) : Dialogue(player) {
 

@@ -10,6 +10,9 @@ import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Guardian Mummy dialogue.
+ */
 @Initializable
 class GuardianMummyDialogue(player: Player? = null) : Dialogue(player) {
 

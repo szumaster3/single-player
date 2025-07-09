@@ -17,6 +17,9 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Betty dialogue.
+ */
 @Initializable
 class BettyDialogue(player: Player? = null) : Dialogue(player) {
 

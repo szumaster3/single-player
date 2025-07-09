@@ -9,6 +9,9 @@ import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Wydin dialogue.
+ */
 @Initializable
 class WydinDialogue(player: Player? = null) : Dialogue(player) {
 

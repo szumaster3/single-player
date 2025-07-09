@@ -13,7 +13,7 @@ import static core.api.ContentAPIKt.sendMessage;
 import static core.tools.DialogueHelperKt.END_DIALOGUE;
 
 /**
- * The type Lanthus dialogue.
+ * Represents the Lanthus dialogue.
  */
 @Initializable
 public class LanthusDialogue extends Dialogue {

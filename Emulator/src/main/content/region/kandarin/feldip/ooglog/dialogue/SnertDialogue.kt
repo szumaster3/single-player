@@ -11,6 +11,9 @@ import core.tools.RandomFunction
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Snert dialogue.
+ */
 @Initializable
 class SnertDialogue(player: Player? = null) : Dialogue(player) {
 

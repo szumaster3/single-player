@@ -11,6 +11,9 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 import org.rs.consts.Sounds
 
+/**
+ * Represents the Private Pierreb dialogue.
+ */
 @Initializable
 class PrivatePierrebDialogue(player: Player? = null, ) : Dialogue(player) {
 

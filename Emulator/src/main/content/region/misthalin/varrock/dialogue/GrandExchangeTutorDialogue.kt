@@ -10,6 +10,9 @@ import core.tools.DARK_RED
 import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Tutor (Grand Exchange) dialogue.
+ */
 @Initializable
 class GrandExchangeTutorDialogue(player: Player? = null) : Dialogue(player) {
 

@@ -68,27 +68,27 @@ enum class Runes(val id: Int, ) {
                 return false
             }
             if (type != null) {
-                if (weapon.id == 2415 && rune == SARADOMIN_STAFF && type.size == 1) {
+                if (weapon.id == Items.SARADOMIN_STAFF_2415 && rune == SARADOMIN_STAFF && type.size == 1) {
                     if (type[0] === SpellType.GOD_STRIKE) {
                         return true
                     }
                 }
-                if (weapon.id == 2415 && rune == SARADOMIN_STAFF && type.size == 1) {
+                if (weapon.id == Items.SARADOMIN_STAFF_2415 && rune == SARADOMIN_STAFF && type.size == 1) {
                     if (type[0] === SpellType.GOD_STRIKE) {
                         return true
                     }
                 }
-                if (weapon.id == 2416 && rune == GUTHIX_STAFF && type.size == 1) {
+                if (weapon.id == Items.GUTHIX_STAFF_2416 && rune == GUTHIX_STAFF && type.size == 1) {
                     if (type[0] === SpellType.GOD_STRIKE) {
                         return true
                     }
                 }
-                if (weapon.id == 13867 && rune == ZURIELS_STAFF && type.size == 1) {
+                if (weapon.id == Items.ZURIELS_STAFF_13867 && rune == ZURIELS_STAFF && type.size == 1) {
                     if (type[0] === SpellType.BARRAGE || type[0] === SpellType.BLITZ || type[0] === SpellType.RUSH || type[0] === SpellType.BURST) {
                         return true
                     }
                 }
-                if (weapon.id == 2417 && rune == ZAMORAK_STAFF && type.size == 1) {
+                if (weapon.id == Items.ZAMORAK_STAFF_2417 && rune == ZAMORAK_STAFF && type.size == 1) {
                     if (type[0] === SpellType.GOD_STRIKE) {
                         return true
                     }

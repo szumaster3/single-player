@@ -12,6 +12,9 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.Components
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Rewards Mystic dialogue.
+ */
 @Initializable
 class RewardsMysticDialogue(player: Player? = null) : Dialogue(player) {
 

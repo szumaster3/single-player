@@ -13,6 +13,9 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Border Guard dialogue.
+ */
 class BorderGuardDialogue : DialogueFile() {
     override fun handle(
         componentID: Int,

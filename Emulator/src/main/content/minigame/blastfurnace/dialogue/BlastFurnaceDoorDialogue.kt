@@ -8,6 +8,9 @@ import core.game.node.item.Item
 import core.tools.END_DIALOGUE
 import org.rs.consts.Items
 
+/**
+ * Represents the Blast furnace door dialogue.
+ */
 class BlastFurnaceDoorDialogue(val fee: Int) : DialogueFile() {
 
     var init = true

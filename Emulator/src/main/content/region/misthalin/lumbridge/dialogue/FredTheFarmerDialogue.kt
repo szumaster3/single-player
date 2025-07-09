@@ -15,6 +15,9 @@ import core.tools.START_DIALOGUE
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Fred The Farmer dialogue.
+ */
 @Initializable
 class FredTheFarmerDialogue(player: Player? = null) : Dialogue(player) {
 

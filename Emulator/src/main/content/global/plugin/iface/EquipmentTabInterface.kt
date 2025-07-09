@@ -134,7 +134,7 @@ class EquipmentTabInterface : ComponentPlugin() {
 
                     val itemArray = DeathTask.getContainers(p)
                     val kept = itemArray[0]
-                    val amtKeptOnDeath = kept.itemCount()
+                    val amtKeptOnDeath = kept!!.itemCount()
                     if (amtKeptOnDeath > 4 && zoneType == 0) {
                         log(
                             this.javaClass,
@@ -143,10 +143,10 @@ class EquipmentTabInterface : ComponentPlugin() {
                         )
                     }
 
-                    val slot0 = kept.getId(0)
-                    val slot1 = kept.getId(1)
-                    val slot2 = kept.getId(2)
-                    val slot3 = kept.getId(3)
+                    val slot0 = kept!!.getId(0)
+                    val slot1 = kept!!.getId(1)
+                    val slot2 = kept!!.getId(2)
+                    val slot3 = kept!!.getId(3)
                     val skulled = if (p.skullManager.isSkulled) 1 else 0
                     val hasBoB = if (p.familiarManager.hasFamiliar()) {
                         if (p.familiarManager.familiar.isBurdenBeast) {

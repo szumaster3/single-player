@@ -8,6 +8,9 @@ import core.plugin.Initializable
 import org.rs.consts.Components
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Reinald dialogue.
+ */
 @Initializable
 class ReinaldDialogue(player: Player? = null) : Dialogue(player) {
 

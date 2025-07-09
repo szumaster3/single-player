@@ -10,6 +10,9 @@ import core.plugin.Initializable
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the leela dialogue.
+ */
 @Initializable
 class LeelaDialogue(player: Player? = null) : Dialogue(player) {
 

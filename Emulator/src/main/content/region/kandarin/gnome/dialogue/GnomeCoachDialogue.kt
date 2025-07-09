@@ -9,6 +9,9 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Gnome Coach dialogue.
+ */
 @Initializable
 class GnomeCoachDialogue(player: Player? = null) : Dialogue(player) {
 

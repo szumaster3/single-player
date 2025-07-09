@@ -13,6 +13,9 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.Animations
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Party Pete dialogue.
+ */
 @Initializable
 class PartyPeteDialogue(player: Player? = null) : Dialogue(player) {
     

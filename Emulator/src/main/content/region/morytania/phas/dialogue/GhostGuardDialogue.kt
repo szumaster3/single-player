@@ -13,8 +13,11 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Ghost Guard (Port Phasmatys) dialogue.
+ */
 @Initializable
-class GhostGuardDialogue(player: Player? = null, ) : Dialogue(player) {
+class GhostGuardDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC

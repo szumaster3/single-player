@@ -10,6 +10,9 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Shiratti The Custodian dialogue.
+ */
 @Initializable
 class ShirattiTheCustodianDialogue(player: Player? = null) : Dialogue(player) {
 

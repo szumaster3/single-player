@@ -30,7 +30,6 @@ enum class MagicStaff(val runeId: Int, vararg val staves: Int, ) {
          * @param runeId The rune id to look up.
          * @return The corresponding [MagicStaff], or `null` if not found.
          */
-        @JvmStatic
         fun forId(runeId: Int): MagicStaff? = MAGIC_STAVES[runeId]
     }
 }

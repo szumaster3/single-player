@@ -10,6 +10,9 @@ import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Clerk (Grand Exchange) dialogue.
+ */
 @Initializable
 class GrandExchangeClerkDialogue(player: Player? = null) : Dialogue(player) {
 

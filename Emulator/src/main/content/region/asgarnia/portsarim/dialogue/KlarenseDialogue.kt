@@ -12,6 +12,9 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Klarense dialogue.
+ */
 @Initializable
 class KlarenseDialogue(player: Player? = null) : Dialogue(player) {
     

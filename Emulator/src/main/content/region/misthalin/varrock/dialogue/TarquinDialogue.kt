@@ -7,6 +7,9 @@ import core.game.node.entity.player.Player
 import core.plugin.Initializable
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Tarquin dialogue.
+ */
 @Initializable
 class TarquinDialogue(player: Player? = null) : Dialogue(player) {
 

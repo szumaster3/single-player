@@ -19,6 +19,9 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Professor Oddenstein dialogue.
+ */
 @Initializable
 class ProfessorOddensteinDialogue(player: Player? = null) : Dialogue(player) {
 

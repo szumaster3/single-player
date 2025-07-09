@@ -17,6 +17,9 @@ import core.tools.RandomFunction
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Blast Furnace Foreman dialogue.
+ */
 @Initializable
 class BlastFurnaceForemanDialogue(player: Player? = null) : Dialogue(player) {
 

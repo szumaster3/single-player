@@ -7,6 +7,9 @@ import core.game.node.entity.player.Player
 import core.plugin.Initializable
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Ali The Smith dialogue.
+ */
 @Initializable
 class AliTheSmithDialogue(player: Player? = null) : Dialogue(player) {
 

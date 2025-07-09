@@ -11,6 +11,9 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 import java.util.concurrent.TimeUnit
 
+/**
+ * Represents the Hans dialogue.
+ */
 @Initializable
 class HansDialogue(player: Player? = null) : Dialogue(player) {
 

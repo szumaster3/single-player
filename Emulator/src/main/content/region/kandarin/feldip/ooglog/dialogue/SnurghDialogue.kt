@@ -7,6 +7,9 @@ import core.plugin.Initializable
 import core.tools.START_DIALOGUE
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Snurgh dialogue.
+ */
 @Initializable
 class SnurghDialogue(player: Player? = null) : Dialogue(player) {
 

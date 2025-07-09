@@ -16,6 +16,9 @@ import core.tools.RandomFunction
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Shantay dialogue.
+ */
 @Initializable
 class ShantayDialogue(player: Player? = null) : Dialogue(player) {
 

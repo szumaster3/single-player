@@ -8,6 +8,9 @@ import core.game.node.entity.player.Player
 import core.plugin.Initializable
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Dwarven Shopkeeper dialogue.
+ */
 @Initializable
 class DwarvenShopkeeperDialogue(player: Player? = null) : Dialogue(player) {
 

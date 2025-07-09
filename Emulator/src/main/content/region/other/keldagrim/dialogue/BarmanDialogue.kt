@@ -12,6 +12,9 @@ import core.plugin.Initializable
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Barman dialogue.
+ */
 @Initializable
 class BarmanDialogue(player: Player? = null) : Dialogue(player) {
 

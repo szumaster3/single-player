@@ -10,6 +10,9 @@ import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Tarik dialogue.
+ */
 @Initializable
 class TarikDialogue(player: Player? = null) : Dialogue(player) {
 

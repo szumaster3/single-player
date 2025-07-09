@@ -13,6 +13,9 @@ import core.tools.END_DIALOGUE
 import core.tools.RED
 import org.rs.consts.Quests
 
+/**
+ * Represents the Mysterious Voice dialogue.
+ */
 class MysteriousVoiceDialogue(private val doors: Scenery) : DialogueFile() {
     override fun handle(componentID: Int, buttonID: Int) {
         val questStage = getQuestStage(player!!, Quests.PRIEST_IN_PERIL)

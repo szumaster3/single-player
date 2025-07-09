@@ -9,6 +9,9 @@ import core.tools.END_DIALOGUE
 import core.tools.RandomUtils
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Lumbridge Guardsman dialogue.
+ */
 @Initializable
 class LumbridgeGuardsmanDialogue(player: Player? = null) : Dialogue(player) {
 

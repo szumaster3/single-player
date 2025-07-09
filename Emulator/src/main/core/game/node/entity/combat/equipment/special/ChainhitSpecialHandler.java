@@ -89,7 +89,7 @@ public final class ChainhitSpecialHandler extends RangeSwingHandler implements P
                     if (n == null) {
                         continue;
                     }
-                    if (DeathTask.isDead(n) || n.getId() != n.getOriginalId()) {
+                    if (DeathTask.Companion.isDead(n) || n.getId() != n.getOriginalId()) {
                         continue;
                     }
                     int speed = (int) (32 + (victim.getLocation().getDistance(n.getLocation()) * 5));

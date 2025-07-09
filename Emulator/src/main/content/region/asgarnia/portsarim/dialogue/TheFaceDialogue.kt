@@ -12,6 +12,9 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Face dialogue.
+ */
 @Initializable
 class TheFaceDialogue(player: Player? = null) : Dialogue(player) {
 

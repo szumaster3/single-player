@@ -8,6 +8,9 @@ import core.tools.END_DIALOGUE
 import core.tools.START_DIALOGUE
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Dwarfs (Keldagrim) dialogue.
+ */
 @Initializable
 class DwarfsDialogue(player: Player? = null) : Dialogue(player) {
 

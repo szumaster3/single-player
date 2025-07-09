@@ -10,6 +10,9 @@ import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Mama dialogue.
+ */
 @Initializable
 class MamaDialogue(player: Player? = null) : Dialogue(player) {
 

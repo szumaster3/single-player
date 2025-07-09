@@ -11,6 +11,9 @@ import core.plugin.Initializable
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Barlak dialogue.
+ */
 @Initializable
 class BarlakDialogue(player: Player? = null) : Dialogue(player) {
     

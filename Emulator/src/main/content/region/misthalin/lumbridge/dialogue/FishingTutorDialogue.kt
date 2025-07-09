@@ -11,6 +11,9 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Fishing Tutor dialogue.
+ */
 @Initializable
 class FishingTutorDialogue(player: Player? = null) : Dialogue(player) {
 

@@ -10,6 +10,9 @@ import core.tools.END_DIALOGUE
 import core.tools.START_DIALOGUE
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Gunslik dialogue.
+ */
 @Initializable
 class GunslikDialogue(player: Player? = null) : Dialogue(player) {
 

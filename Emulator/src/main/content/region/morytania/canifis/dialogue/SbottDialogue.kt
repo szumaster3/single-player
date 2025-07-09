@@ -10,8 +10,11 @@ import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Sbott dialogue.
+ */
 @Initializable
-class SbottDialogue(player: Player? = null, ) : Dialogue(player) {
+class SbottDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC

@@ -15,8 +15,11 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Roavar dialogue.
+ */
 @Initializable
-class RoavarDialogue(player: Player? = null, ) : Dialogue(player) {
+class RoavarDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC

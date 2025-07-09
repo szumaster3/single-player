@@ -13,6 +13,9 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Kringk dialogue.
+ */
 @Initializable
 class KringkDialogue(player: Player? = null) : Dialogue(player) {
 

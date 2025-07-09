@@ -5,6 +5,9 @@ import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
 
+/**
+ * Represents the Sigra dialogue.
+ */
 class SigraDialogue : DialogueFile() {
 
     override fun handle(componentID: Int, buttonID: Int, ) {

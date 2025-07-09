@@ -42,6 +42,9 @@ private val gnomeItems = arrayOf(
 )
 private val ALUFT_ALOFT_BOX = Item(Items.ALUFT_ALOFT_BOX_9477)
 
+/**
+ * Represents the Aluft Gianne Snr dialogue.
+ */
 @Initializable
 class AluftGianneSnrDialogue(player: Player? = null) : Dialogue(player) {
     var tutorialProgress = -1

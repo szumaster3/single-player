@@ -13,6 +13,9 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Sir Vyvin dialogue.
+ */
 @Initializable
 class SirVyvinDialogue(player: Player? = null) : Dialogue(player) {
 

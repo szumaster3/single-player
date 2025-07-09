@@ -9,6 +9,9 @@ import core.game.node.entity.skill.Skills
 import core.plugin.Initializable
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Martin The Master Gardener dialogue.
+ */
 @Initializable
 class MartinTheMasterGardenerDialogue(player: Player? = null) : Dialogue(player) {
 

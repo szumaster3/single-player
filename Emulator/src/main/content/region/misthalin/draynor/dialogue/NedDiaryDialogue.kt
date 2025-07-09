@@ -5,6 +5,9 @@ import core.game.node.entity.player.link.diary.Diary
 import core.game.node.entity.player.link.diary.DiaryType
 import core.game.world.GameWorld
 
+/**
+ * Represents the Ned (diaries) dialogue.
+ */
 class NedDiaryDialogue : DialogueFile() {
     override fun handle(
         componentID: Int,

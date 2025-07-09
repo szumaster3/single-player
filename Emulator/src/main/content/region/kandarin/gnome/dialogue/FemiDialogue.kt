@@ -14,6 +14,9 @@ import core.plugin.Initializable
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Femi dialogue.
+ */
 @Initializable
 class FemiDialogue(player: Player? = null) : Dialogue(player) {
 

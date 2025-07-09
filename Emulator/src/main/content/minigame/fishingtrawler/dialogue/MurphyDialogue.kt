@@ -12,6 +12,9 @@ import core.plugin.Initializable
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Murphy dialogue.
+ */
 @Initializable
 class MurphyDialogue(player: Player? = null) : Dialogue(player) {
 

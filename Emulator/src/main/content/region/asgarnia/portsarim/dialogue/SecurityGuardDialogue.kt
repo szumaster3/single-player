@@ -11,6 +11,9 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Security Guard dialogue.
+ */
 @Initializable
 class SecurityGuardDialogue(player: Player? = null) : Dialogue(player) {
 

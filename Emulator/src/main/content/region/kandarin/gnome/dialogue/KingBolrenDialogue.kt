@@ -15,6 +15,9 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the King Bolren dialogue.
+ */
 @Initializable
 class KingBolrenDialogue(player: Player? = null) : Dialogue(player) {
 

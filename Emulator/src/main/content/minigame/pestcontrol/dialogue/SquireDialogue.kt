@@ -13,6 +13,9 @@ import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Squire dialogue.
+ */
 @Initializable
 class SquireDialogue(player: Player? = null) : Dialogue(player) {
 

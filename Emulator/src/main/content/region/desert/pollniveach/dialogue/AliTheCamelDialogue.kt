@@ -11,6 +11,9 @@ import core.plugin.Initializable
 import core.tools.RandomFunction
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Ali The Camel dialogue.
+ */
 @Initializable
 class AliTheCamelDialogue(player: Player? = null) : Dialogue(player) {
 

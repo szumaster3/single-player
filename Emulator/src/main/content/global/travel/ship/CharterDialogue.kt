@@ -1,5 +1,6 @@
 package content.global.travel.ship
 
+import core.api.inInventory
 import core.api.openNpcShop
 import core.api.sendDialogueOptions
 import core.game.dialogue.Dialogue
@@ -12,8 +13,11 @@ import core.tools.StringUtils
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Charter dialogue.
+ */
 @Initializable
-class CharterDialogue(player: Player? = null, ) : Dialogue(player) {
+class CharterDialogue(player: Player? = null) : Dialogue(player) {
 
     private var destination: CharterUtils.Destination? = null
     private var cost = 0
@@ -23,10 +27,7 @@ class CharterDialogue(player: Player? = null, ) : Dialogue(player) {
         if (args.size > 1) {
             destination = (args[1] as CharterUtils.Destination)
             cost = args[2] as Int
-            core.api.sendDialogue(
-                player,
-                "To sail to " + StringUtils.formatDisplayName(destination!!.name) + " from here will cost you " + cost + " gold. Are you sure you want to pay that?",
-            )
+            core.api.sendDialogue(player, "To sail to " + StringUtils.formatDisplayName(destination!!.name) + " from here will cost you " + cost + " gold. Are you sure you want to pay that?")
             stage = 14
             return true
         }
@@ -35,10 +36,7 @@ class CharterDialogue(player: Player? = null, ) : Dialogue(player) {
         return true
     }
 
-    override fun handle(
-        interfaceId: Int,
-        buttonId: Int,
-    ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> sendDialogueOptions(player, "Choose an option:", "Yes, who are you?", "Yes, I would like to charter a ship.").also {
                 stage++
@@ -78,7 +76,7 @@ class CharterDialogue(player: Player? = null, ) : Dialogue(player) {
                     if (cost == 0) {
                         destination!!.sail(player)
                     }
-                    if (!player.inventory.containsItem(Item(Items.COINS_995, cost))) {
+                    if (!inInventory(player, Items.COINS_995, cost)) {
                         player(FaceAnim.HALF_GUILTY, "I don't have the money for that.")
                         return true
                     }

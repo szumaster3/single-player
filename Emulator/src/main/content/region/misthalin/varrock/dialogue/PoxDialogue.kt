@@ -8,6 +8,9 @@ import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Pox (cat) dialogue.
+ */
 @Initializable
 class PoxDialogue(player: Player? = null) : Dialogue(player) {
 

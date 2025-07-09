@@ -10,8 +10,11 @@ import core.game.node.entity.player.Player
 import core.plugin.Initializable
 import org.rs.consts.Quests
 
+/**
+ * Represents the Vanstrom Klause dialogue.
+ */
 @Initializable
-class VanstromKlauseDialogue(player: Player? = null, ) : Dialogue(player) {
+class VanstromKlauseDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC

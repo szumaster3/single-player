@@ -14,6 +14,9 @@ import core.tools.START_DIALOGUE
 import org.rs.consts.Components
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Dwarven Boatman (Keldagrim) dialogue.
+ */
 @Initializable
 class DwarvenBoatmanForthDialogue(player: Player? = null) : Dialogue(player) {
 

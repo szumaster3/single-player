@@ -9,6 +9,9 @@ import core.game.node.item.Item
 import core.plugin.Initializable
 import org.rs.consts.Items
 
+/**
+ * Represents the Manor Fountain dialogue.
+ */
 @Initializable
 class ManorFountainDialogue(player: Player? = null) : Dialogue(player) {
 

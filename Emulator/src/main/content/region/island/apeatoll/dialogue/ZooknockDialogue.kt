@@ -6,6 +6,9 @@ import core.game.node.entity.player.Player
 import core.plugin.Initializable
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Zooknock dialogue.
+ */
 @Initializable
 class ZooknockDialogue(player: Player? = null) : Dialogue(player) {
     var hasSpokenToZook = false

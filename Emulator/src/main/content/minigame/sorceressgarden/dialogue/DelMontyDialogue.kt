@@ -9,6 +9,9 @@ import core.plugin.Initializable
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Del Monty dialogue.
+ */
 @Initializable
 class DelMontyDialogue(player: Player? = null, ) : Dialogue(player) {
 

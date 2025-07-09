@@ -92,7 +92,7 @@ public final class GodwarsBossNPC extends AbstractNPC {
             behavior = new AggressiveBehavior() {
                 @Override
                 public boolean canSelectTarget(Entity entity, Entity target) {
-                    if (!target.isActive() || DeathTask.isDead(target)) {
+                    if (!target.isActive() || DeathTask.Companion.isDead(target)) {
                         return false;
                     }
                     if (!target.getProperties().isMultiZone() && target.inCombat()) {

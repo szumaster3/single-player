@@ -13,6 +13,9 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Sounds
 
+/**
+ * Represents the Thessalia dialogue.
+ */
 @Initializable
 class ThessaliaDialogue(player: Player? = null) : Dialogue(player) {
 

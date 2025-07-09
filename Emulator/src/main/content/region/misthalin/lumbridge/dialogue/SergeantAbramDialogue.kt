@@ -9,6 +9,9 @@ import core.tools.END_DIALOGUE
 import core.tools.RandomUtils
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Sergeant Abram dialogue.
+ */
 @Initializable
 class SergeantAbramDialogue(player: Player? = null) : Dialogue(player) {
 

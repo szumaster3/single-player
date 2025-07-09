@@ -8,6 +8,9 @@ import core.game.node.entity.player.Player
 import core.plugin.Initializable
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Dalila And Perrdur dialogue.
+ */
 @Initializable
 class DalilaAndPerrdurDialogue(player: Player? = null) : Dialogue(player) {
 

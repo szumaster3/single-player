@@ -8,6 +8,9 @@ import core.game.world.GameWorld
 import core.plugin.Initializable
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Reggie dialogue.
+ */
 @Initializable
 class ReggieDialogue(player: Player? = null) : Dialogue(player) {
 

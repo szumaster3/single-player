@@ -16,6 +16,9 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Ali The Hag dialogue.
+ */
 @Initializable
 class AliTheHagDialogue(player: Player? = null) : Dialogue(player) {
 

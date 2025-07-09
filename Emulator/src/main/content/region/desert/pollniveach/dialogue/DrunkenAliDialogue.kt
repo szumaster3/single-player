@@ -10,6 +10,9 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Drunken Ali dialogue.
+ */
 @Initializable
 class DrunkenAliDialogue(player: Player? = null) : Dialogue(player) {
 

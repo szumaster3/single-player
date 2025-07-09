@@ -11,6 +11,9 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Cooking Tutor dialogue.
+ */
 @Initializable
 class CookingTutorDialogue(player: Player? = null) : Dialogue(player) {
 

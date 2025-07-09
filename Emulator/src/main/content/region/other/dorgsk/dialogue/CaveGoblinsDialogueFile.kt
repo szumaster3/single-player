@@ -13,6 +13,9 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Cave Goblins dialogue.
+ */
 class CaveGoblinsDialogueFile : DialogueFile() {
     override fun handle(
         componentID: Int,

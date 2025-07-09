@@ -18,6 +18,9 @@ import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Mistag dialogue.
+ */
 @Initializable
 class MistagDialogue(player: Player? = null) : Dialogue(player) {
 

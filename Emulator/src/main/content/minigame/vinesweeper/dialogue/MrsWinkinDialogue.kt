@@ -14,6 +14,9 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Mrs Winkin dialogue.
+ */
 @Initializable
 class MrsWinkinDialogue(player: Player? = null) : Dialogue(player) {
 

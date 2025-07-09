@@ -13,6 +13,9 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.Animations
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Jaraah dialogue.
+ */
 @Initializable
 class JaraahDialogue(player: Player? = null) : Dialogue(player) {
 

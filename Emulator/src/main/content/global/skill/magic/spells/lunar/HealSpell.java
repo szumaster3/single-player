@@ -76,7 +76,7 @@ public final class HealSpell extends MagicSpell {
 
             final Player o = (Player) target;
             player.face(o);
-            if (DeathTask.isDead(o)) {
+            if (DeathTask.Companion.isDead(o)) {
                 player.getPacketDispatch().sendMessage("Player is beyond saving.");
                 return false;
             }

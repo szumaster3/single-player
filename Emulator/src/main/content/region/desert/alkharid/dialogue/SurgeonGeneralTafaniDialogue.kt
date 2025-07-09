@@ -13,6 +13,9 @@ import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Surgeon General Tafani dialogue.
+ */
 @Initializable
 class SurgeonGeneralTafaniDialogue(player: Player? = null) : Dialogue(player) {
 

@@ -8,6 +8,9 @@ import core.game.node.entity.player.link.diary.DiaryType
 import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Squire (Falador diaries) dialogue.
+ */
 class SquireDiaryDialogue : DialogueFile() {
 
     override fun handle(componentID: Int, buttonID: Int, ) {

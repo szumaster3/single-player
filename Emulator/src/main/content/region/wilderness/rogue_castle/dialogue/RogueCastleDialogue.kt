@@ -6,6 +6,9 @@ import core.game.node.entity.npc.NPC
 import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Rogue at Rogue Castle dialogue.
+ */
 class RogueCastleDialogue : DialogueFile() {
     override fun handle(componentID: Int, buttonID: Int, ) {
         npc = NPC(NPCs.ROGUE_8122)

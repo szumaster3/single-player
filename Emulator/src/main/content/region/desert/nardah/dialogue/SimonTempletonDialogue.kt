@@ -9,6 +9,9 @@ import core.plugin.Initializable
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Simon Templeton dialogue.
+ */
 @Initializable
 class SimonTempletonDialogue(player: Player? = null) : Dialogue(player) {
 

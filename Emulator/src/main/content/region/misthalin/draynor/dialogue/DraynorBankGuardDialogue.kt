@@ -14,6 +14,9 @@ import core.plugin.Initializable
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Draynor Bank Guard dialogue.
+ */
 @Initializable
 class DraynorBankGuardDialogue(player: Player? = null) : Dialogue(player) {
 

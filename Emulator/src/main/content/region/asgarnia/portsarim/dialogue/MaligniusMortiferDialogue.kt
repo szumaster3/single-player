@@ -10,6 +10,9 @@ import core.game.world.update.flag.context.Graphics
 import core.plugin.Initializable
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Malignius Mortifer dialogue.
+ */
 @Initializable
 class MaligniusMortiferDialogue(player: Player? = null) : Dialogue(player) {
 

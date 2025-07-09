@@ -11,6 +11,9 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Miss Schism dialogue.
+ */
 @Initializable
 class MissSchismDialogue(player: Player? = null) : Dialogue(player) {
     

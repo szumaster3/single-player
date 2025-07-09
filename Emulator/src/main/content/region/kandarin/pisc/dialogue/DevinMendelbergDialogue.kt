@@ -11,6 +11,9 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Devin Mendelberg dialogue.
+ */
 @Initializable
 class DevinMendelbergDialogue(player: Player? = null) : Dialogue(player) {
     

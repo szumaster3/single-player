@@ -9,9 +9,6 @@ import core.plugin.Initializable;
 import org.rs.consts.Animations;
 import org.rs.consts.Items;
 
-/**
- * The Godsword dialogue.
- */
 @Initializable
 public final class GodswordDialogue extends Dialogue {
 

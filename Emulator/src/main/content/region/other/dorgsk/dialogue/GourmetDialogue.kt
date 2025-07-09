@@ -8,6 +8,9 @@ import core.tools.END_DIALOGUE
 import core.tools.START_DIALOGUE
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Gourmet dialogue.
+ */
 @Initializable
 class GourmetDialogue(player: Player? = null) : Dialogue(player) {
 

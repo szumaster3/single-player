@@ -10,6 +10,9 @@ import core.game.world.GameWorld
 import core.plugin.Initializable
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Sani dialogue.
+ */
 @Initializable
 class SaniDialogue(player: Player? = null) : Dialogue(player) {
 

@@ -9,6 +9,9 @@ import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Bob Barter dialogue.
+ */
 @Initializable
 class BobBarterDialogue(player: Player? = null) : Dialogue(player) {
 

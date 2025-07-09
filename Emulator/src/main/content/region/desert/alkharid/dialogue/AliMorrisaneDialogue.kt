@@ -10,6 +10,9 @@ import core.plugin.Initializable
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Ali Morrisane dialogue.
+ */
 @Initializable
 class AliMorrisaneDialogue(player: Player? = null) : Dialogue(player) {
 

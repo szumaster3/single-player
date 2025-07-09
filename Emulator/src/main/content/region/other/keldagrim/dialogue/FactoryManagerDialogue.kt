@@ -8,6 +8,9 @@ import core.tools.END_DIALOGUE
 import core.tools.START_DIALOGUE
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Factory Manager dialogue.
+ */
 @Initializable
 class FactoryManagerDialogue(player: Player? = null) : Dialogue(player) {
 

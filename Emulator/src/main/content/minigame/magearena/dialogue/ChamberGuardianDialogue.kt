@@ -12,6 +12,9 @@ import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Chamber Guardian dialogue.
+ */
 @Initializable
 class ChamberGuardianDialogue(player: Player? = null) : Dialogue(player) {
 

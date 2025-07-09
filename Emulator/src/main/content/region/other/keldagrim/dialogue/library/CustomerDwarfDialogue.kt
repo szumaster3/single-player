@@ -8,6 +8,9 @@ import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Customer Dwarf (Keldagrim) dialogue.
+ */
 @Initializable
 class CustomerDwarfDialogue(player: Player? = null) : Dialogue(player) {
 

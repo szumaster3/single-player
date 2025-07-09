@@ -7,6 +7,9 @@ import core.game.dialogue.Topic
 import core.game.node.entity.npc.NPC
 import org.rs.consts.NPCs
 
+/**
+ * Represents the Tindel Merchant dialogue.
+ */
 class TindelMerchantDialogue : DialogueFile() {
 
     override fun handle(componentID: Int, buttonID: Int) {
