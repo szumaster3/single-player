@@ -5,6 +5,7 @@ import core.cache.Cache
 import core.cache.CacheArchive
 import core.cache.CacheIndex
 import core.cache.def.impl.*
+//import core.cache.def.type.*
 import core.game.component.ComponentDefinition
 import core.game.system.command.Privilege
 import core.plugin.Initializable
@@ -237,7 +238,7 @@ class CacheCommandSet : CommandSet(Privilege.ADMIN) {
             usage = "::dumpidk",
             description = "Dumps identity kits data to a .csv file.",
         ) { p, _ ->
-            val length = Cache.getArchiveCapacity(CacheIndex.CONFIGURATION, CacheArchive.PLAYER_KIT)
+            val length = Cache.getArchiveCapacity(CacheIndex.CONFIGURATION, CacheArchive.IDK_TYPE)
 
             val dump = File("identity_kits.csv")
             val headers = listOf("id", "bodyPartId", "bodyModelIds", "isSelectable", "headModelIds")
@@ -376,7 +377,7 @@ class CacheCommandSet : CommandSet(Privilege.ADMIN) {
                 for (fID in 0 until Cache.getArchiveFileCount(CacheIndex.CONFIGURATION, 26)) {
                     val file = Cache.getData(CacheIndex.CONFIGURATION, CacheArchive.STRUCT_TYPE, fID)
                     if (file != null) {
-                        val def = Struct.parse(fID, file)
+                        val def = Struct.decode(fID, file)
                         if (def.dataStore.isNotEmpty()) {
                             val structData = def.dataStore.map { it.toString() }.joinToString(", ")
                             writer.appendLine("${def.id}, $structData")
@@ -425,7 +426,7 @@ class CacheCommandSet : CommandSet(Privilege.ADMIN) {
 
                         // Parse the file data
                         try {
-                            val def = DataMap.parse(archiveId shl 8 or fileId, fileData)
+                            val def = DataMap.decode(archiveId shl 8 or fileId, fileData)
 
                             val dataMap =
                                 mapOf(
