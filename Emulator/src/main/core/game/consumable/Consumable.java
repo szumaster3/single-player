@@ -9,36 +9,37 @@ import core.game.world.update.flag.context.Animation;
 import static core.api.ContentAPIKt.replaceSlot;
 
 /**
- * The type Consumable.
+ * Abstract base class for consumable items.
+ * Handles consumption logic.
  */
 public abstract class Consumable {
 
     /**
-     * The Ids.
+     * Array of item ids representing this consumable's variants or stages.
      */
     protected final int[] ids;
 
     /**
-     * The Effect.
+     * Effect applied when this consumable is used.
      */
     protected final ConsumableEffect effect;
 
     /**
-     * The Messages.
+     * Optional messages to send upon consumption.
      */
     protected final String[] messages;
 
     /**
-     * The Animation.
+     * Animation played on consumption (nullable).
      */
     protected Animation animation = null;
 
     /**
-     * Instantiates a new Consumable.
+     * Constructs a consumable with item ids, effect, and optional messages.
      *
-     * @param ids      the ids
-     * @param effect   the effect
-     * @param messages the messages
+     * @param ids      Item IDs representing this consumable.
+     * @param effect   Effect to apply on consumption.
+     * @param messages Optional messages to display when consumed.
      */
     public Consumable(final int[] ids, final ConsumableEffect effect, final String... messages) {
         this.ids = ids;
@@ -47,12 +48,12 @@ public abstract class Consumable {
     }
 
     /**
-     * Instantiates a new Consumable.
+     * Constructs a consumable with item ids, effect, animation, and optional messages.
      *
-     * @param ids       the ids
-     * @param effect    the effect
-     * @param animation the animation
-     * @param messages  the messages
+     * @param ids       Item IDs representing this consumable.
+     * @param effect    Effect to apply on consumption.
+     * @param animation Animation to play when consumed.
+     * @param messages  Optional messages to display when consumed.
      */
     public Consumable(final int[] ids, final ConsumableEffect effect, final Animation animation, final String... messages) {
         this.ids = ids;
@@ -62,18 +63,20 @@ public abstract class Consumable {
     }
 
     /**
-     * Consume.
+     * Handles consumption logic.
      *
-     * @param item   the item
-     * @param player the player
+     * @param item   The item being consumed.
+     * @param player The player consuming the item.
      */
     public void consume(final Item item, final Player player) {
         executeConsumptionActions(player);
         final int nextItemId = getNextItemId(item.getId());
 
         if (ids.length == 1) {
-            replaceSlot(player, item.getSlot(), new Item(item.getId(), (item.getAmount() - 1)), item, Container.INVENTORY);
+            // For stackable items, decrease amount by 1
+            replaceSlot(player, item.getSlot(), new Item(item.getId(), item.getAmount() - 1), item, Container.INVENTORY);
         } else {
+            // For staged items, replace with next stage item
             replaceSlot(player, item.getSlot(), new Item(nextItemId, 1), item, Container.INVENTORY);
         }
 
@@ -83,12 +86,12 @@ public abstract class Consumable {
     }
 
     /**
-     * Send messages.
+     * Sends appropriate messages to the player after consumption.
      *
-     * @param player            the player
-     * @param initialLifePoints the initial life points
-     * @param item              the item
-     * @param messages          the messages
+     * @param player            The player receiving messages.
+     * @param initialLifePoints Player's life points before consumption.
+     * @param item              The consumed item.
+     * @param messages          Custom messages to send.
      */
     protected void sendMessages(final Player player, final int initialLifePoints, final Item item, String[] messages) {
         if (messages.length == 0) {
@@ -100,10 +103,10 @@ public abstract class Consumable {
     }
 
     /**
-     * Send healing message.
+     * Sends a healing message if the player life points increased after consumption.
      *
-     * @param player            the player
-     * @param initialLifePoints the initial life points
+     * @param player            The player who consumed the item.
+     * @param initialLifePoints Player's life points before consumption.
      */
     protected void sendHealingMessage(final Player player, final int initialLifePoints) {
         if (player.getSkills().getLifepoints() > initialLifePoints) {
@@ -112,10 +115,10 @@ public abstract class Consumable {
     }
 
     /**
-     * Send custom messages.
+     * Sends custom messages to the player.
      *
-     * @param player   the player
-     * @param messages the messages
+     * @param player   The player receiving the messages.
+     * @param messages Array of messages to send.
      */
     protected void sendCustomMessages(final Player player, final String[] messages) {
         for (String message : messages) {
@@ -124,25 +127,25 @@ public abstract class Consumable {
     }
 
     /**
-     * Send default messages.
+     * Sends the default message to the player upon consumption.
      *
-     * @param player the player
-     * @param item   the item
+     * @param player The player receiving the message.
+     * @param item   The consumed item.
      */
     protected abstract void sendDefaultMessages(final Player player, final Item item);
 
     /**
-     * Execute consumption actions.
+     * Executes any additional actions (animation, sound, etc.) upon consumption.
      *
-     * @param player the player
+     * @param player The player consuming the item.
      */
     protected abstract void executeConsumptionActions(Player player);
 
     /**
-     * Gets next item id.
+     * Gets the next item id in the consumable sequence after the current one.
      *
-     * @param currentConsumableId the current consumable id
-     * @return the next item id
+     * @param currentConsumableId The current consumables item id.
+     * @return The next item ID or -1 if none exists.
      */
     protected int getNextItemId(final int currentConsumableId) {
         for (int i = 0; i < ids.length; i++) {
@@ -154,38 +157,38 @@ public abstract class Consumable {
     }
 
     /**
-     * Gets formatted name.
+     * Returns a formatted item name, removing dose indicators and trimming whitespace.
      *
-     * @param item the item
-     * @return the formatted name
+     * @param item The item to format.
+     * @return The formatted name.
      */
     public String getFormattedName(Item item) {
         return item.getName().replaceAll("\\(\\d\\)", "").trim().toLowerCase();
     }
 
     /**
-     * Gets health effect value.
+     * Gets the health effect value applied by this consumable.
      *
-     * @param player the player
-     * @return the health effect value
+     * @param player The player affected.
+     * @return The health effect value.
      */
     public int getHealthEffectValue(Player player) {
         return effect.getHealthEffectValue(player);
     }
 
     /**
-     * Gets effect.
+     * Gets the consumable effect.
      *
-     * @return the effect
+     * @return The effect.
      */
     public ConsumableEffect getEffect() {
         return effect;
     }
 
     /**
-     * Get ids int [ ].
+     * Returns the item ids for this consumable.
      *
-     * @return the int [ ]
+     * @return The array of item ids.
      */
     public int[] getIds() {
         return ids;

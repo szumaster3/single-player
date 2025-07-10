@@ -195,9 +195,9 @@ class ExchangeHistory(
     }
 
     /**
-     * Opens the player's Grand Exchange history log interface.
+     * Opens the history log.
      *
-     * @param p The player whose history log is being opened.
+     * @param p The player to open it for.
      */
     fun openHistoryLog(p: Player) {
         p.interfaceManager.open(Component(643))
@@ -262,9 +262,9 @@ class ExchangeHistory(
     }
 
     /**
-     * Formats the player's Grand Exchange offers into a string representation.
+     * Formats the grand exchange.
      *
-     * @return A string representation of the player's offers.
+     * @return the formatted offer for the SQL database.
      */
     fun format(): String {
         var log = ""

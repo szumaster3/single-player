@@ -18,80 +18,42 @@ import static core.tools.DialogueHelperKt.DIALOGUE_INITIAL_OPTIONS_HANDLE;
 import static core.tools.DialogueHelperKt.START_DIALOGUE;
 
 /**
- * The type Dialogue.
+ * Handles player dialogues.
+ * <p>
+ * Registered as a {@link Plugin} of type {@link PluginType#DIALOGUE}.
  */
 @PluginManifest(type = PluginType.DIALOGUE)
 public abstract class Dialogue implements Plugin<Player> {
-    /**
-     * The constant RED.
-     */
+
     protected static final String RED = "<col=8A0808>";
-    /**
-     * The constant BLUE.
-     */
     protected static final String BLUE = "<col=08088A>";
-    /**
-     * The Player.
-     */
+
     protected Player player;
-    /**
-     * The Interpreter.
-     */
     protected DialogueInterpreter interpreter;
-    /**
-     * The File.
-     */
     public DialogueFile file;
-    /**
-     * The Option names.
-     */
+
     protected ArrayList<String> optionNames = new ArrayList<>(10);
-    /**
-     * The Option files.
-     */
     protected ArrayList<DialogueFile> optionFiles = new ArrayList<>(10);
 
-    /**
-     * The Two options.
-     */
     protected final int TWO_OPTIONS = Components.MULTI2_228;
-    /**
-     * The Three options.
-     */
     protected final int THREE_OPTIONS = Components.MULTI3_230;
-    /**
-     * The Four options.
-     */
     protected final int FOUR_OPTIONS = Components.MULTI4_232;
-    /**
-     * The Five options.
-     */
     protected final int FIVE_OPTIONS = Components.MULTI5_234;
 
-    /**
-     * The Npc.
-     */
     protected NPC npc;
-    /**
-     * The Stage.
-     */
     public int stage;
-    /**
-     * The Finished.
-     */
     protected boolean finished;
 
     /**
-     * Instantiates a new Dialogue.
+     * Default constructor.
      */
     public Dialogue() {
-        //
     }
 
     /**
-     * Instantiates a new Dialogue.
+     * Constructs a Dialogue for the given player.
      *
-     * @param player the player
+     * @param player the player this dialogue is for
      */
     public Dialogue(Player player) {
         this.player = player;
@@ -101,7 +63,7 @@ public abstract class Dialogue implements Plugin<Player> {
     }
 
     /**
-     * Init.
+     * Registers this dialogue with the interpreter for all associated dialogue ids.
      */
     public void init() {
         for (int id : getIds()) {
@@ -110,9 +72,9 @@ public abstract class Dialogue implements Plugin<Player> {
     }
 
     /**
-     * Close boolean.
+     * Closes the dialogue, resets interfaces and marks as finished.
      *
-     * @return the boolean
+     * @return true when closed
      */
     public boolean close() {
         player.getInterfaceManager().closeChatbox();
@@ -123,34 +85,34 @@ public abstract class Dialogue implements Plugin<Player> {
     }
 
     /**
-     * Send normal dialogue.
+     * Sends a normal dialogue line from the given entity with optional expression.
      *
-     * @param entity     the entity
-     * @param expression the expression
-     * @param messages   the messages
+     * @param entity     speaker (player or NPC)
+     * @param expression facial animation
+     * @param messages   dialogue lines
      */
     public void sendNormalDialogue(Entity entity, FaceAnim expression, String... messages) {
         interpreter.sendDialogues(entity, expression, messages);
     }
 
     /**
-     * Increment.
+     * Increments the dialogue stage.
      */
     public void increment() {
         stage++;
     }
 
     /**
-     * Gets and increment.
+     * Returns current stage and increments it.
      *
-     * @return the and increment
+     * @return current stage before increment
      */
     public int getAndIncrement() {
         return stage++;
     }
 
     /**
-     * End.
+     * Ends the dialogue by closing the interpreter.
      */
     public void end() {
         if (interpreter != null) {
@@ -159,7 +121,7 @@ public abstract class Dialogue implements Plugin<Player> {
     }
 
     /**
-     * Finish.
+     * Marks the dialogue as finished by setting stage to -1.
      */
     public void finish() {
         setStage(-1);
@@ -173,9 +135,7 @@ public abstract class Dialogue implements Plugin<Player> {
     @Override
     public Dialogue newInstance(Player player) {
         try {
-            return (Dialogue) Class.forName(this.getClass().getCanonicalName())
-                .getDeclaredConstructor(Player.class)
-                .newInstance(player);
+            return (Dialogue) Class.forName(this.getClass().getCanonicalName()).getDeclaredConstructor(Player.class).newInstance(player);
         } catch (ReflectiveOperationException e) {
             e.printStackTrace();
             return null;
@@ -183,155 +143,149 @@ public abstract class Dialogue implements Plugin<Player> {
     }
 
     /**
-     * Open boolean.
+     * Opens the dialogue, optionally initializing NPC.
      *
-     * @param args the args
-     * @return the boolean
+     * @param args optional arguments; first arg may be NPC
+     * @return true if opened successfully
      */
     public boolean open(Object... args) {
         player.getDialogueInterpreter().activeTopics.clear();
         if (args.length > 0 && args[0] instanceof NPC) {
             npc = (NPC) args[0];
         }
-
         if (npc == null) {
             log(this.getClass(), Log.WARN, args[0].getClass().getSimpleName() + " is not assigning an NPC.");
         }
-
         player.getDialogueInterpreter().handle(0, 0);
         return true;
     }
 
     /**
-     * Handle boolean.
+     * Handles dialogue interface button clicks.
      *
-     * @param interfaceId the interface id
-     * @param buttonId    the button id
-     * @return the boolean
+     * @param interfaceId interface id clicked
+     * @param buttonId    button id clicked
+     * @return true if handled
      */
     public abstract boolean handle(int interfaceId, int buttonId);
 
     /**
-     * Get ids int [ ].
+     * Returns the dialogue ids this dialogue handles.
      *
-     * @return the int [ ]
+     * @return array of dialogue ids
      */
     public abstract int[] getIds();
 
     /**
-     * Npc component.
+     * Sends NPC dialogue with default expression.
      *
-     * @param messages the messages
-     * @return the component
+     * @param messages dialogue lines
+     * @return dialogue component
      */
-    public Component npc(final String... messages) {
-        return npc == null
-            ? interpreter.sendDialogues(getIds()[0], getIds()[0] > 8591 ? FaceAnim.OLD_NORMAL : FaceAnim.FRIENDLY, messages)
-            : interpreter.sendDialogues(npc, npc.getId() > 8591 ? FaceAnim.OLD_NORMAL : FaceAnim.FRIENDLY, messages);
+    public Component npc(String... messages) {
+        return npc == null ? interpreter.sendDialogues(getIds()[0], getIds()[0] > 8591 ? FaceAnim.OLD_NORMAL : FaceAnim.FRIENDLY, messages) : interpreter.sendDialogues(npc, npc.getId() > 8591 ? FaceAnim.OLD_NORMAL : FaceAnim.FRIENDLY, messages);
     }
 
     /**
-     * Npc component.
+     * Sends NPC dialogue with given NPC id.
      *
-     * @param id       the id
-     * @param messages the messages
-     * @return the component
+     * @param id       NPC id
+     * @param messages dialogue lines
+     * @return dialogue component
      */
-    public Component npc(int id, final String... messages) {
+    public Component npc(int id, String... messages) {
         return interpreter.sendDialogues(id, FaceAnim.FRIENDLY, messages);
     }
 
     /**
-     * Send dialogue component.
+     * Sends generic dialogue lines.
      *
-     * @param messages the messages
-     * @return the component
+     * @param messages dialogue lines
+     * @return dialogue component
      */
     public Component sendDialogue(String... messages) {
         return interpreter.sendDialogue(messages);
     }
 
     /**
-     * Npc component.
+     * Sends NPC dialogue with specified expression.
      *
-     * @param expression the expression
-     * @param messages   the messages
-     * @return the component
+     * @param expression facial animation
+     * @param messages   dialogue lines
+     * @return dialogue component
      */
-    public Component npc(FaceAnim expression, final String... messages) {
-        return npc == null
-            ? interpreter.sendDialogues(getIds()[0], expression, messages)
-            : interpreter.sendDialogues(npc, expression, messages);
+    public Component npc(FaceAnim expression, String... messages) {
+        return npc == null ? interpreter.sendDialogues(getIds()[0], expression, messages) : interpreter.sendDialogues(npc, expression, messages);
     }
 
     /**
-     * Player component.
+     * Sends player dialogue lines without expression.
      *
-     * @param messages the messages
-     * @return the component
+     * @param messages dialogue lines
+     * @return dialogue component
      */
-    public Component player(final String... messages) {
+    public Component player(String... messages) {
         return interpreter.sendDialogues(player, null, messages);
     }
 
     /**
-     * Player component.
+     * Sends player dialogue lines with expression.
      *
-     * @param expression the expression
-     * @param messages   the messages
-     * @return the component
+     * @param expression facial animation
+     * @param messages   dialogue lines
+     * @return dialogue component
      */
-    public Component player(FaceAnim expression, final String... messages) {
+    public Component player(FaceAnim expression, String... messages) {
         return interpreter.sendDialogues(player, expression, messages);
     }
 
     /**
-     * Options.
+     * Sends dialogue options to the player.
      *
-     * @param options the options
+     * @param options option texts
      */
-    public void options(final String... options) {
+    public void options(String... options) {
         interpreter.sendOptions("Select an Option", options);
     }
 
     /**
-     * Is finished boolean.
+     * Checks if dialogue has finished.
      *
-     * @return the boolean
+     * @return true if finished
      */
     public boolean isFinished() {
         return finished;
     }
 
     /**
-     * Gets player.
+     * Returns the player associated with this dialogue.
      *
-     * @return the player
+     * @return player instance
      */
     public Player getPlayer() {
         return player;
     }
 
     /**
-     * Sets stage.
+     * Sets the current dialogue stage.
      *
-     * @param i the
+     * @param i new stage value
      */
     public void setStage(int i) {
         this.stage = i;
     }
 
     /**
-     * Next.
+     * Advances to the next dialogue stage.
      */
     public void next() {
-        this.stage++;
+        stage++;
     }
 
     /**
-     * Load file.
+     * Loads a dialogue file to start a new dialogue section.
      *
-     * @param file the file
+     * @param file dialogue file to load
      */
     public void loadFile(DialogueFile file) {
         if (file != null) {
@@ -342,10 +296,10 @@ public abstract class Dialogue implements Plugin<Player> {
     }
 
     /**
-     * Add option.
+     * Adds an option with its associated dialogue file.
      *
-     * @param name the name
-     * @param file the file
+     * @param name option name
+     * @param file dialogue file to load on selection
      */
     public void addOption(String name, DialogueFile file) {
         optionNames.add("Talk about " + name);
@@ -353,9 +307,9 @@ public abstract class Dialogue implements Plugin<Player> {
     }
 
     /**
-     * Send choices boolean.
+     * Sends dialogue choices or loads dialogue directly depending on option count.
      *
-     * @return the boolean
+     * @return true if options were sent, false if dialogue was loaded
      */
     public boolean sendChoices() {
         if (optionNames.size() == 1) {
@@ -372,32 +326,32 @@ public abstract class Dialogue implements Plugin<Player> {
     }
 
     /**
-     * Npcl component.
+     * Sends NPC dialogue with expression, splitting long lines.
      *
-     * @param expr the expr
-     * @param msg  the msg
-     * @return the component
+     * @param expr facial animation
+     * @param msg  dialogue text
+     * @return dialogue component
      */
     public Component npcl(FaceAnim expr, String msg) {
         return npc(expr, splitLines(msg, 54));
     }
 
     /**
-     * Playerl component.
+     * Sends player dialogue with expression, splitting long lines.
      *
-     * @param expr the expr
-     * @param msg  the msg
-     * @return the component
+     * @param expr facial animation
+     * @param msg  dialogue text
+     * @return dialogue component
      */
     public Component playerl(FaceAnim expr, String msg) {
         return player(expr, splitLines(msg, 54));
     }
 
     /**
-     * Show topics boolean.
+     * Displays selectable topics in dialogue.
      *
-     * @param topics the topics
-     * @return the boolean
+     * @param topics dialogue topics to show
+     * @return true if no valid topics were shown, false otherwise
      */
     public boolean showTopics(Topic<?>... topics) {
         ArrayList<String> validTopics = new ArrayList<>();

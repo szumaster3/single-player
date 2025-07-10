@@ -26,7 +26,9 @@ import java.util.regex.Pattern;
 import static core.tools.DialogueHelperKt.END_DIALOGUE;
 
 /**
- * The type Dialogue interpreter.
+ * Handles the dialogues.
+ *
+ * @author Emperor
  */
 @PluginManifest(type = PluginType.DIALOGUE)
 public final class DialogueInterpreter {
@@ -377,12 +379,7 @@ public final class DialogueInterpreter {
 
         player.getPacketDispatch().sendItemOnInterface(itemId, 1, 131, 2);
 
-        player.getPacketDispatch()
-                .sendAngleOnInterface(131, 2,
-                        (int) (itemDef.getModelZoom() / 1.1337),
-                        itemDef.getModelRotationX(),
-                        itemDef.getModelRotationY()
-                );
+        player.getPacketDispatch().sendAngleOnInterface(131, 2, (int) (itemDef.getModelZoom() / 1.1337), itemDef.getModelRotationX(), itemDef.getModelRotationY());
 
         return player.getInterfaceManager().chatbox;
     }

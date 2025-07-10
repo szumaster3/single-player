@@ -1,8 +1,9 @@
 package core.game.dialogue
 
-enum class FaceAnim(
-    val animationId: Int,
-) {
+/**
+ * Represents the entity face expressions.
+ */
+enum class FaceAnim(val animationId: Int) {
     OLD_NEUTRAL(570),
     OLD_HAPPY(588),
     OLD_CALM_TALK1(589),

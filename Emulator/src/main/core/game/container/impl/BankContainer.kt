@@ -35,19 +35,11 @@ class BankContainer(player: Player) : Container(SIZE, ContainerType.ALWAYS_STACK
     private var listener: BankListener? = null
 
     /**
-     * Checks if the bank is opened.
-     * @return `True` if so.
-     */
-    /**
      * If the bank is open.
      */
     var isOpen: Boolean = false
         private set
 
-    /**
-     * Gets the last x-amount.
-     * @return The last x-amount.
-     */
     /**
      * The last x-amount entered.
      */
@@ -59,10 +51,6 @@ class BankContainer(player: Player) : Container(SIZE, ContainerType.ALWAYS_STACK
      */
     private var tabIndex = 10
 
-    /**
-     * Gets the tabStartSlot value.
-     * @return The tabStartSlot.
-     */
     /**
      * The tab start indexes.
      */
@@ -447,7 +435,9 @@ class BankContainer(player: Player) : Container(SIZE, ContainerType.ALWAYS_STACK
                 )
             } else {
                 val items: Array<Item> = c?.toArray()?.copyOf() ?: emptyArray()
-                PacketRepository.send(ContainerPacket::class.java, OutgoingContext.Container(player, 763, 64000, 93, items, 28, false))
+                PacketRepository.send(
+                    ContainerPacket::class.java, OutgoingContext.Container(player, 763, 64000, 93, items, 28, false)
+                )
             }
             player.bank.setTabConfigurations()
             player.bank.sendBankSpace()

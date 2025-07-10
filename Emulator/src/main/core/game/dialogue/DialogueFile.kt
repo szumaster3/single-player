@@ -80,12 +80,11 @@ abstract class DialogueFile {
     open fun npc(
         expr: FaceAnim?,
         vararg msg: String?,
-    ): Component? =
-        if (npc == null) {
-            interpreter!!.sendDialogues(0, expr, *msg)
-        } else {
-            interpreter!!.sendDialogues(npc, expr, *msg)
-        }
+    ): Component? = if (npc == null) {
+        interpreter!!.sendDialogues(0, expr, *msg)
+    } else {
+        interpreter!!.sendDialogues(npc, expr, *msg)
+    }
 
     open fun npc(
         id: Int,

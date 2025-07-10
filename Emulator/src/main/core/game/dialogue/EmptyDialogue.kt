@@ -10,7 +10,7 @@ import core.tools.START_DIALOGUE
  * @property player Player involved in the dialogue.
  * @property file Optional associated dialogue file.
  */
-class EmptyDialogue(player: Player? = null, val file: DialogueFile?, ) : Dialogue(player) {
+class EmptyDialogue(player: Player? = null, val file: DialogueFile?) : Dialogue(player) {
 
     /**
      * Creates a new instance for the given player.

@@ -10,19 +10,13 @@ class BotPrices {
 
     companion object {
         /**
-         * Returns the price of an item by id, using overrides if available.
-         *
-         * @param id Item id.
-         * @return Item price.
+         * Gets price of item by id.
          */
         @JvmStatic
         fun getPrice(id: Int): Int = getPriceOverrides(id) ?: ItemDefinition.forId(id).value
 
         /**
-         * Returns custom price override for an item, or null if none.
-         *
-         * @param id Item id.
-         * @return Overridden price or null.
+         * Returns price override for given item id or null if none.
          */
         @JvmStatic
         fun getPriceOverrides(id: Int): Int? = when (id) {

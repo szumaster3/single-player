@@ -5,35 +5,25 @@ import core.game.node.entity.player.Player
 import core.game.world.map.zone.ZoneBorders
 
 /**
- * Represents a task within a diary that requires the player to be inside a specific zone.
+ * Represents a diary task.
  *
- * @property zoneBorders The defined area where the task is valid.
- * @property diaryLevel The level of the diary this task belongs to.
- * @property taskId The unique identifier for the task.
- * @property condition An optional condition that must be met in addition to being inside the zone.
+ * @property zoneBorders Area where the task applies.
+ * @property diaryLevel Diary level this task belongs to.
+ * @property taskId Unique task identifier.
+ * @property condition Optional predicate that must be true for completion.
  */
 class DiaryAreaTask(
     val zoneBorders: ZoneBorders,
     val diaryLevel: DiaryLevel,
     val taskId: Int,
-    private val condition: ((player: Player) -> Boolean)? = null,
+    private val condition: ((Player) -> Boolean)? = null,
 ) {
     /**
-     * Checks if the player satisfies the task conditions and executes the provided action if they do.
-     *
-     * @param player The player whose status is being checked.
-     * @param then The action to execute if the task conditions are met.
+     * Executes [then] if player is inside [zoneBorders] and meets [condition] (if any).
      */
-    fun whenSatisfied(
-        player: Player,
-        then: () -> Unit,
-    ) {
-        var result = inBorders(player, zoneBorders)
-
-        condition?.let {
-            result = it(player)
-        }
-
-        if (result) then()
+    fun whenSatisfied(player: Player, then: () -> Unit) {
+        val inZone = inBorders(player, zoneBorders)
+        val meetsCondition = condition?.invoke(player) ?: true
+        if (inZone && meetsCondition) then()
     }
 }
