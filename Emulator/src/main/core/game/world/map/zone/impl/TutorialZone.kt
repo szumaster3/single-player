@@ -1,6 +1,8 @@
 package core.game.world.map.zone.impl
 
 import content.region.island.tutorial.plugin.*
+import core.api.getRegionBorders
+import core.api.inBorders
 import core.game.node.Node
 import core.game.node.entity.Entity
 import core.game.node.entity.player.Player
@@ -13,20 +15,23 @@ import core.game.world.map.zone.MapZone
 class TutorialZone : MapZone("tutorial", true) {
 
     override fun configure() {
-        for (regionId in REGIONS) {
-            registerRegion(regionId)
-        }
+        REGIONS.forEach(::registerRegion)
     }
 
     override fun teleport(entity: Entity, type: Int, node: Node?): Boolean {
         if (entity is Player) {
-            val a = Rights.ADMINISTRATOR
-            if (entity.rights == a) {
+            if (entity.rights == Rights.ADMINISTRATOR) {
                 return super.teleport(entity, type, node)
             }
-            if (entity.getAttribute(TutorialStage.TUTORIAL_STAGE, -1) < 71) {
-                return false
-            }
+
+            val stage = entity.getAttribute(TutorialStage.TUTORIAL_STAGE, -1)
+
+            // Don't allow teleport if still in tutorial.
+            if (stage < 71) return false
+
+            // Block teleport from inside final tutorial area unless it's completed.
+            val lastStage = inBorders(entity, getRegionBorders(12592))
+            if (lastStage && stage != 72) return false
         }
         return super.teleport(entity, type, node)
     }
@@ -36,12 +41,7 @@ class TutorialZone : MapZone("tutorial", true) {
          * Represents the tutorial region ids.
          */
         private val REGIONS = intArrayOf(
-            12079,
-            12180,
-            12592,
-            12436,
-            12335,
-            12336
+            12079, 12180, 12592, 12436, 12335, 12336
         )
     }
 }
