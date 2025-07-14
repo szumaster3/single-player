@@ -402,5 +402,6 @@ class GrandExchange : StartupListener, Commands {
     override fun startup() {
         GEDatabase.init()
         boot()
+        AutoStock.autostock()
     }
 }

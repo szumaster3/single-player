@@ -14,7 +14,7 @@ public abstract class Script {
     public ArrayList<Item> inventory = new ArrayList<>(20);
     public ArrayList<Item> equipment = new ArrayList<>(20);
     public Map<Integer, Integer> skills = new HashMap<>();
-    public ArrayList<Quests> quests = new ArrayList<>(20);
+    public ArrayList<String> quests = new ArrayList<>(20);
 
 
     public Player bot;
@@ -32,8 +32,8 @@ public abstract class Script {
             for (Map.Entry<Integer, Integer> skill : skills.entrySet()) {
                 setLevel(skill.getKey(), skill.getValue());
             }
-            for (Quests quest : quests) {
-                bot.getQuestRepository().setStage(bot.getQuestRepository().getQuest(quest.toString()), 100);
+            for (String quest : quests) {
+                bot.getQuestRepository().setStage(bot.getQuestRepository().getQuest(quest), 100);
             }
             for (Item i : equipment) {
                 bot.getEquipment().add(i, true, false);

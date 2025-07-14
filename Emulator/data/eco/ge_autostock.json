@@ -1,0 +1,44 @@
+{
+  "offers": [
+    {
+      "item_id": 440,
+      "amount": 100
+    },
+    {
+      "item_id": 385,
+      "amount": 500
+    },
+    {
+      "item_id": 1347,
+      "amount": 5
+    },
+    {
+      "item_id": 9144,
+      "amount": 200
+    },
+    {
+      "item_id": 561,
+      "amount": 1000
+    },
+    {
+      "item_id": 562,
+      "amount": 2000
+    },
+    {
+      "item_id": 1127,
+      "amount": 10
+    },
+    {
+      "item_id": 537,
+      "amount": 150
+    },
+    {
+      "item_id": 3144,
+      "amount": 250
+    },
+    {
+      "item_id": 2440,
+      "amount": 300
+    }
+  ]
+}
