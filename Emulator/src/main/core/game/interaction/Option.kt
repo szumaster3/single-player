@@ -68,12 +68,7 @@ class Option(@JvmField val name: String, val index: Int) {
         val NULL = Option("null", 0)
 
         /**
-         * Gets the default handler for a node and option name.
-         *
-         * @param node The node the option applies to.
-         * @param nodeId The definition ID of the node.
-         * @param name The option name.
-         * @return A matching option handler or null.
+         * Returns the default option handler for a node and option name.
          */
         fun defaultHandler(node: Node?, nodeId: Int, name: String): OptionHandler? {
             val normalized = name.lowercase(Locale.getDefault())

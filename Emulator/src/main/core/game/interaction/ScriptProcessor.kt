@@ -17,9 +17,9 @@ import java.io.StringWriter
 import java.lang.Integer.max
 
 /**
- * Manages the execution and queueing of scripts for an entity, processing interactions and movements.
+ * Handles movement-based interaction scripts for an entity (player or NPC).
  *
- * @property entity The [Player] or [NPC] that this processor is managing.
+ * @property entity The controlled entity.
  */
 class ScriptProcessor(
     val entity: Entity,
@@ -38,8 +38,7 @@ class ScriptProcessor(
     var targetDestination: Location? = null
 
     /**
-     * Pre-movement function that processes the interaction scripts and queues for the entity.
-     * Checks for stun status, delay, and interaction with the target.
+     * Called before movement to handle interaction range checks and processing.
      */
     fun preMovement() {
         var allSkipped = false
@@ -70,10 +69,9 @@ class ScriptProcessor(
     }
 
     /**
-     * Post-movement function that processes interaction scripts and checks if the entity moved.
-     * Resets interaction states and checks operable distances for interaction.
+     * Called after movement to process interactions and reset state if needed.
      *
-     * @param didMove Flag indicating if the entity moved.
+     * @param didMove Whether the entity moved.
      */
     fun postMovement(didMove: Boolean) {
         if (didMove) {
@@ -107,10 +105,9 @@ class ScriptProcessor(
     }
 
     /**
-     * Processes any queued scripts that are ready to be executed.
-     * Executes scripts in order of priority based on their type and timing.
+     * Executes any ready scripts in the queue.
      *
-     * @return Returns `true` if all scripts were skipped, `false` otherwise.
+     * @return `true` if all scripts were skipped.
      */
     fun processQueue(): Boolean {
         var strongInQueue = false
@@ -186,17 +183,12 @@ class ScriptProcessor(
     }
 
     /**
-     * Determines if a script is persistent (i.e., should continue even if the entity moves or other conditions occur).
-     *
-     * @param script The script to check for persistence.
-     * @return Returns `true` if the script is persistent, `false` otherwise.
+     * Whether a script is persistent (runs across multiple ticks).
      */
     fun isPersist(script: Script<*>): Boolean = script.persist
 
     /**
-     * Processes interaction scripts when the entity is within range and ready to interact.
-     *
-     * @param script The interaction script to execute.
+     * Executes an interaction script.
      */
     fun processInteractScript(script: Script<*>) {
         if (interactTarget == null || !interactTarget!!.isActive) {
@@ -214,10 +206,9 @@ class ScriptProcessor(
     }
 
     /**
-     * Executes a given script.
+     * Executes the given script.
      *
-     * @param script The script to execute.
-     * @return Returns `true` if the script finished execution, `false` otherwise.
+     * @return `true` if the script completed.
      */
     fun executeScript(script: Script<*>): Boolean {
         currentScript = script
@@ -290,10 +281,7 @@ class ScriptProcessor(
     }
 
     /**
-     * Checks if the entity is within the approach distance to the target for an interaction.
-     *
-     * @param script The script to check for distance.
-     * @return Returns `true` if the entity is within approach distance to the target, `false` otherwise.
+     * Checks if the entity is in approach range of the target.
      */
     fun inApproachDistance(script: Script<*>): Boolean {
         val distance =
@@ -309,9 +297,7 @@ class ScriptProcessor(
     }
 
     /**
-     * Checks if the entity is within operable distance to the target for interaction.
-     *
-     * @return Returns `true` if the entity is within operable distance, `false` otherwise.
+     * Checks if the entity is in direct operable distance to the target.
      */
     fun inOperableDistance(): Boolean {
         targetDestination?.let {
@@ -337,15 +323,9 @@ class ScriptProcessor(
     }
 
     /**
-     * Sets a new interaction script with the target, adjusting ranges and persistent states as needed.
-     *
-     * @param target The target node the entity is interacting with.
-     * @param script The script to associate with the interaction.
+     * Sets the interaction script for the given target node.
      */
-    fun setInteractionScript(
-        target: Node,
-        script: Script<*>?,
-    ) {
+    fun setInteractionScript(target: Node, script: Script<*>?) {
         if (apScript != null && script != null && script.execution == apScript!!.execution) return
         if (opScript != null && script != null && script.execution == opScript!!.execution) return
         reset()
@@ -387,15 +367,9 @@ class ScriptProcessor(
     }
 
     /**
-     * Adds a script to the queue for future execution with a specified strength.
-     *
-     * @param script The script to add to the queue.
-     * @param strength The priority strength of the script.
+     * Adds a script to the queue with the specified strength.
      */
-    fun addToQueue(
-        script: Script<*>,
-        strength: QueueStrength,
-    ) {
+    fun addToQueue(script: Script<*>, strength: QueueStrength) {
         if (script !is QueuedScript && script !is QueuedUseWith) {
             log(
                 this::class.java,
@@ -414,19 +388,14 @@ class ScriptProcessor(
     }
 
     /**
-     * Gets the active script being processed, either the current interaction or a queued script.
-     *
-     * @return The currently active script or null if no script is active.
+     * Gets the currently executing or active interaction script.
      */
     fun getActiveScript(): Script<*>? = currentScript ?: getActiveInteraction()
 
     private fun getActiveInteraction(): Script<*>? = opScript ?: apScript
 
     /**
-     * Checks if a specific type of script is present in the queue.
-     *
-     * @param type The strength of the queue to check.
-     * @return Returns `true` if a script of the specified type is in the queue, `false` otherwise.
+     * Checks if a script of the given strength exists in the queue.
      */
     fun hasTypeInQueue(type: QueueStrength): Boolean {
         for (script in queue) {

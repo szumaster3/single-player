@@ -2,12 +2,10 @@ package core.game.component
 
 import org.rs.consts.Components
 
-enum class InterfaceType(
-    @JvmField val fixedPaneId: Int,
-    @JvmField val resizablePaneId: Int,
-    @JvmField val fixedChildId: Int,
-    @JvmField val resizableChildId: Int,
-) {
+/**
+ * Represents interface types for different components.
+ */
+enum class InterfaceType(val fixedPaneId: Int, val resizablePaneId: Int, val fixedChildId: Int, val resizableChildId: Int) {
     DEFAULT(Components.TOPLEVEL_548, Components.TOPLEVEL_FULLSCREEN_746, 11, 6),
     OVERLAY(Components.TOPLEVEL_548, Components.TOPLEVEL_FULLSCREEN_746, 4, 5),
     TAB(Components.TOPLEVEL_548, Components.TOPLEVEL_FULLSCREEN_746, 83, 93),
