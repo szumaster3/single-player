@@ -10,7 +10,7 @@ public abstract class Pulse implements Runnable {
     /**
      * Indicates whether this pulse is currently running.
      */
-    private boolean running = true;
+    public boolean running = true;
 
     /**
      * Number of ticks between executions.
@@ -20,7 +20,7 @@ public abstract class Pulse implements Runnable {
     /**
      * Number of ticks passed since last execution.
      */
-    private int ticksPassed;
+    int ticksPassed;
 
     /**
      * Nodes monitored by this pulse; pulse stops if any become inactive.
@@ -56,7 +56,9 @@ public abstract class Pulse implements Runnable {
 
     @Override
     public void run() {
-        update();
+        if (update()) {
+            //GameWorld.TASKS.remove(this);
+        }
     }
 
     /**
@@ -72,7 +74,6 @@ public abstract class Pulse implements Runnable {
         if (!isRunning()) {
             return true;
         }
-
         if (++ticksPassed >= delay) {
             ticksPassed = 0;
             try {
@@ -85,8 +86,9 @@ public abstract class Pulse implements Runnable {
                 stop();
                 return true;
             }
+            return !isRunning();
         }
-        return !isRunning();
+        return false;
     }
 
     /**
@@ -96,8 +98,10 @@ public abstract class Pulse implements Runnable {
      */
     public boolean hasInactiveNode() {
         if (checks != null) {
-            for (Node node : checks) {
-                if (node != null && !node.isActive()) {
+            int size = checks.length;
+            for (int i = 0; i < size; i++) {
+                Node n = checks[i];
+                if (n != null && !n.isActive()) {
                     return true;
                 }
             }
@@ -115,10 +119,10 @@ public abstract class Pulse implements Runnable {
     /**
      * Determines if the pulse should be removed for a given reason.
      *
-     * @param reason The removal reason.
+     * @param pulse The removal pulse.
      * @return {@code true} if the pulse should be removed; otherwise {@code false}.
      */
-    public boolean removeFor(String reason) {
+    public boolean removeFor(String pulse) {
         return true;
     }
 
@@ -131,6 +135,7 @@ public abstract class Pulse implements Runnable {
     public void addNodeCheck(int index, Node node) {
         checks[index] = node;
     }
+
 
     /**
      * Gets the node at the specified index.
@@ -164,45 +169,45 @@ public abstract class Pulse implements Runnable {
     }
 
     /**
-     * Checks if the pulse is currently running.
+     * Is running boolean.
      *
-     * @return {@code true} if running, {@code false} otherwise.
+     * @return the boolean
      */
     public boolean isRunning() {
         return running;
     }
 
     /**
-     * Gets the delay between pulse executions.
+     * Gets delay.
      *
-     * @return The delay in ticks.
+     * @return the delay
      */
     public int getDelay() {
         return delay;
     }
 
     /**
-     * Sets the delay between pulse executions.
+     * Sets delay.
      *
-     * @param delay The delay in ticks.
+     * @param delay the delay
      */
     public void setDelay(int delay) {
         this.delay = delay;
     }
 
     /**
-     * Sets the number of ticks that have passed since last execution.
+     * Sets ticks passed.
      *
-     * @param ticks The number of ticks.
+     * @param ticks the ticks
      */
     public void setTicksPassed(int ticks) {
         this.ticksPassed = ticks;
     }
 
     /**
-     * Gets the number of ticks passed since the last execution.
+     * Gets ticks passed.
      *
-     * @return The number of ticks passed.
+     * @return the ticks passed
      */
     public int getTicksPassed() {
         return ticksPassed;

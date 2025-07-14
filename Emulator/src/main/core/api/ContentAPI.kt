@@ -1910,6 +1910,52 @@ fun setVarbit(
 }
 
 /**
+ * Increments the value of a varbit.
+ *
+ * @param player The player.
+ * @param def The varbit definition containing the necessary details.
+ * @param amount The amount to increment by (default is 1).
+ * @param save If `true`, the varbit value will be saved.
+ */
+@JvmOverloads
+fun incrementVarbit(
+    player: Player,
+    def: VarbitDefinition,
+    amount: Int = 1,
+    save: Boolean = false,
+) {
+    val currentVarp = getVarp(player, def.varpId)
+    val currentValue = (currentVarp shr def.startBit) and def.mask
+    val newValue = (currentValue + amount).coerceIn(0, def.mask)
+    setVarbit(player, def, newValue, save)
+}
+
+/**
+ * Increments the value of a varbit for the player based on the provided varbit ID.
+ *
+ * @param player The player whose varbit value is to be incremented.
+ * @param varbitId The ID of the varbit to be incremented.
+ * @param amount The amount to increment by (default is 1).
+ * @param save If `true`, the varbit value will be saved.
+ */
+@JvmOverloads
+fun incrementVarbit(
+    player: Player,
+    varbitId: Int,
+    amount: Int = 1,
+    save: Boolean = false,
+) {
+    val def = VarbitDefinition.forId(varbitId)
+
+    if (def == null) {
+        logWithStack(ContentAPI::class.java, Log.ERR, "Trying to incrementVarbit $varbitId, which doesn't seem to exist.")
+        return
+    }
+
+    incrementVarbit(player, def, amount, save)
+}
+
+/**
  * Sets the value of a varc for the player.
  *
  * @param player The player whose varc value is to be set.

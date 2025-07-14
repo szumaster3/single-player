@@ -70,10 +70,4 @@ class PollnivneahPlugin : InteractionListener {
             return@onUseWith true
         }
     }
-
-    override fun defineDestinationOverrides() {
-        setDest(IntType.NPC, NPCs.ALI_THE_BARMAN_1864) { _, _ ->
-            return@setDest Location.create(3361, 2956, 0)
-        }
-    }
 }

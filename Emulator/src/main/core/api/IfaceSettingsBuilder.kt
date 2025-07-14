@@ -76,14 +76,26 @@ class IfaceSettingsBuilder {
      * @param component Include the component itself.
      * @return This builder for chaining.
      */
-    fun setUseOnSettings(groundItems: Boolean, npcs: Boolean, objects: Boolean, otherPlayer: Boolean, selfPlayer: Boolean, component: Boolean, ): IfaceSettingsBuilder {
+    fun setUseOnSettings(groundItems: Boolean, npcs: Boolean, objects: Boolean, otherPlayer: Boolean, selfPlayer: Boolean, component: Boolean): IfaceSettingsBuilder {
         var useFlag = 0
-        if (groundItems) useFlag = useFlag or 0x1
-        if (npcs) useFlag = useFlag or 0x2
-        if (objects) useFlag = useFlag or 0x4
-        if (otherPlayer) useFlag = useFlag or 0x8
-        if (selfPlayer) useFlag = useFlag or 0x10
-        if (component) useFlag = useFlag or 0x20
+        if (groundItems) {
+            useFlag = useFlag or 0x1
+        }
+        if (npcs) {
+            useFlag = useFlag or 0x2
+        }
+        if (objects) {
+            useFlag = useFlag or 0x4
+        }
+        if (otherPlayer) {
+            useFlag = useFlag or 0x8
+        }
+        if (selfPlayer) {
+            useFlag = useFlag or 0x10
+        }
+        if (component) {
+            useFlag = useFlag or 0x20
+        }
         value = value or (useFlag shl 11)
         return this
     }
@@ -97,7 +109,7 @@ class IfaceSettingsBuilder {
      * @throws IllegalArgumentException if depth is out of range.
      */
     fun setInterfaceEventsDepth(depth: Int): IfaceSettingsBuilder {
-        require(depth in 0..7) { "depth must be 0-7." }
+        require(!(depth < 0 || depth > 7)) { "depth must be 0-7." }
         value = value and (0x7 shl 18).inv()
         value = value or (depth shl 18)
         return this
