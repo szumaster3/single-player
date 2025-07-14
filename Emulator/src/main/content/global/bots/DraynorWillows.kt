@@ -61,7 +61,6 @@ class DraynorWillows : Script(){
                                 logCount += logs
                                 bot.inventory.remove(Item(Items.WILLOW_LOGS_1519,logs))
                                 bot.bank.add(Item(Items.WILLOW_LOGS_1519,logs))
-                                bot.inventory.add(Item(Items.ADAMANT_AXE_1357,1))
                                 state = State.CHOPPING
                                 return true
                             }
