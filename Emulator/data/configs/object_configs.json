@@ -15354,5 +15354,9 @@
   {
     "examine": "Wild cadava berries are growing here.",
     "ids": "23625,23626,23627"
+  },
+  {
+    "examine": "All that remains of a loyal follower of Saradomin.",
+    "ids": "14523"
   }
 ]
