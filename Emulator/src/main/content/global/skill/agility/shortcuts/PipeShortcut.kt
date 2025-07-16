@@ -1,11 +1,13 @@
 package content.global.skill.agility.shortcuts
 
-import content.global.skill.agility.AgilityCourse.Companion.getHitAmount
+import content.global.skill.agility.AgilityCourse
 import content.global.skill.agility.AgilityHandler
 import content.global.skill.agility.AgilityShortcut
 import core.api.impact
+import core.api.lock
 import core.api.sendMessage
 import core.game.node.entity.combat.ImpactHandler
+import core.game.node.entity.impl.Animator
 import core.game.node.entity.player.Player
 import core.game.node.scenery.Scenery
 import core.game.system.task.Pulse
@@ -36,15 +38,13 @@ class PipeShortcut : AgilityShortcut {
 
     override fun run(player: Player, obj: Scenery, option: String, failed: Boolean) {
         val pipe = obj.id
-        val roll = getHitAmount(player)
-        val fail = AgilityHandler.hasFailed(player, 1, 0.015)
-
-        player.lock(3)
+        val roll = AgilityCourse.getHitAmount(player)
         GameWorld.Pulser.submit(object : Pulse(1, player) {
+            var fail = AgilityHandler.hasFailed(player, 1, 0.015)
             override fun pulse(): Boolean {
                 when (pipe) {
                     YANILLE_DUNGEON, TAVERLEY_DUNGEON -> {
-                        player.lock(7)
+                        lock(player, 7)
                         AgilityHandler.forceWalk(
                             player,
                             -1,
@@ -55,13 +55,14 @@ class PipeShortcut : AgilityShortcut {
                             0.0,
                             null
                         )
-                        player.animate(CRAWL, 4)
+                        player.animate(CRAWL, 3)
                         player.animate(CLIMB_OUT, 5)
                         if (fail) impact(player, amount = roll, ImpactHandler.HitsplatType.NORMAL, 7)
+                        return true
                     }
 
                     BRIMHAVEN_GIANTS, BRIMHAVEN_DRAGONS -> {
-                        player.lock(5)
+                        lock(player, 5)
                         AgilityHandler.forceWalk(
                             player,
                             -1,
@@ -72,9 +73,10 @@ class PipeShortcut : AgilityShortcut {
                             0.0,
                             null
                         )
-                        player.animate(CRAWL, 5)
+                        player.animate(CRAWL, 3)
                         player.animate(CLIMB_OUT, 6)
                         if (fail) impact(player, amount = roll, ImpactHandler.HitsplatType.NORMAL, 5)
+                        return true
                     }
 
                     BARBARIAN_OUTPOST -> {
@@ -82,13 +84,13 @@ class PipeShortcut : AgilityShortcut {
                             sendMessage(player, "I can't get into this pipe at that angle.")
                             return true
                         }
-                        player.lock(3)
+                        lock(player, 3)
                         AgilityHandler.forceWalk(
                             player,
                             -1,
                             player.location,
                             pipeDestination(player, obj, 3),
-                            Animation.create(10580),
+                            CLIMB_THROUGH,
                             15,
                             0.0,
                             null
@@ -101,7 +103,7 @@ class PipeShortcut : AgilityShortcut {
                             sendMessage(player, "I can't get into this pipe at that angle.")
                             return true
                         }
-                        player.lock(7)
+                        lock(player, 7)
                         AgilityHandler.forceWalk(
                             player,
                             -1,
@@ -112,7 +114,7 @@ class PipeShortcut : AgilityShortcut {
                             0.0,
                             null
                         )
-                        player.animate(CRAWL, 4)
+                        player.animate(CRAWL, 3)
                         player.animate(CLIMB_OUT, 5)
                         if (fail) impact(player, amount = roll, ImpactHandler.HitsplatType.NORMAL, 7)
                         return true
@@ -131,7 +133,7 @@ class PipeShortcut : AgilityShortcut {
         private const val BARBARIAN_OUTPOST = 20210
         private const val EDGEVILLE_DUNGEON = 29370
 
-        private val CRAWL = Animation(Animations.HUMAN_CRAWLS_844)
+        private val CRAWL = Animation(Animations.HUMAN_CRAWLS_844, Animator.Priority.HIGH)
         private val CLIMB_THROUGH = Animation(Animations.CLIMB_THROUGH_OBSTACLE_10580)
         private val CLIMB_OUT = Animation(Animations.CLIMB_OUT_OF_OBSTACLE_10579)
     }
