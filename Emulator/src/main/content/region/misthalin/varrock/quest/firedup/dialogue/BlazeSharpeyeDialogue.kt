@@ -255,5 +255,5 @@ class BlazeSharpeyeDialogue(player: Player? = null) : Dialogue(player) {
         return true
     }
 
-    override fun getIds(): IntArray = intArrayOf(NPCs.BLAZE_SHARPEYE_5191)
+    override fun getIds(): IntArray = intArrayOf(NPCs.BLAZE_SHARPEYE_5191, 8065)
 }

@@ -24,13 +24,22 @@ import kotlin.random.Random
 class AFURepairPlugin : InteractionListener {
     private val repairIDs = intArrayOf(Scenery.IRON_PEGS_38480, Scenery.WINDBREAK_38494, Scenery.LADDER_38470)
     private val climbIDs = intArrayOf(Scenery.LADDER_38469, Scenery.LADDER_38471, Scenery.IRON_PEG_38486, Scenery.IRON_PEGS_38481)
+    private val itemIDs = intArrayOf(Items.HAMMER_2347, Items.IRON_BAR_2351, Items.PLANK_960)
 
     override fun defineListeners() {
+        // TODO
         on(repairIDs, IntType.SCENERY, "repair") { player, _ ->
             if (!hasRequirement(player, Quests.ALL_FIRED_UP)) return@on false
             val rco = getClimbingObject(player) ?: return@on false
             repair(player, rco)
             return@on true
+        }
+
+        onUseWith(IntType.SCENERY, itemIDs, *repairIDs) { player, used, with ->
+            if (!hasRequirement(player, Quests.ALL_FIRED_UP)) return@onUseWith false
+            val rco = getClimbingObject(player) ?: return@onUseWith false
+            repair(player, rco)
+            return@onUseWith true
         }
 
         on(climbIDs, IntType.SCENERY, "climb") { player, node ->

@@ -55,13 +55,16 @@ enum class Nails(
          * @return Nail type or null if none found.
          */
         @JvmStatic
-        fun get(player: Player, requiredAmount: Int): Nails? {
-            for (nailType in values()) {
-                if (player.inventory.contains(nailType.itemId, requiredAmount)) {
-                    return nailType
+        fun get(player: Player, amount: Int): Nails? {
+            val allTypes = values()
+            for (i in allTypes.indices.reversed()) {
+                val type = allTypes[i]
+                if (player.inventory.contains(type.itemId, amount)) {
+                    return type
                 }
             }
             return null
         }
+
     }
 }

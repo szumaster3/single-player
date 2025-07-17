@@ -15,6 +15,7 @@ import core.game.node.item.Item
 import core.game.world.map.Location
 import core.game.world.map.zone.ZoneBorders
 import org.rs.consts.Items
+import org.rs.consts.Quests
 
 @PlayerCompatible
 @ScriptName("Falador Cannonball Smelter")
@@ -282,6 +283,6 @@ class CannonballSmelter : Script() {
         skills[Skills.HITPOINTS] = 99
         skills[Skills.DEFENCE] = 99
         skills[Skills.SMITHING] = 35
-        quests.add("Dwarf Cannon")
+        quests.add(Quests.DWARF_CANNON)
     }
 }

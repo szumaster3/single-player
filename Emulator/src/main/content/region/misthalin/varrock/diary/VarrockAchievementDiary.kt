@@ -24,6 +24,7 @@ import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.game.world.map.zone.ZoneBorders
+import core.game.world.map.zone.impl.WildernessZone
 import org.rs.consts.*
 
 class VarrockAchievementDiary : DiaryEventHookBase(DiaryType.VARROCK) {
@@ -442,6 +443,9 @@ class VarrockAchievementDiary : DiaryEventHookBase(DiaryType.VARROCK) {
             inInventory(player, Items.LAW_RUNE_563, 1) &&
             inInventory(player, Items.AIR_RUNE_556, 3) &&
             !hasTimerActive(player, GameAttributes.TELEBLOCK_TIMER)) {
+            if (WildernessZone.isInZone(player)) {
+                return
+            }
             finishTask(
                 player,
                 DiaryLevel.MEDIUM,

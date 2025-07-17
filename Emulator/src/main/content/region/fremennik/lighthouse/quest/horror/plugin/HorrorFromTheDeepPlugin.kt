@@ -297,17 +297,20 @@ class HorrorFromTheDeepPlugin : InteractionListener {
             val bridgeUnlock = getAttribute(player, GameAttributes.QUEST_HFTD_UNLOCK_BRIDGE, 0)
             val cycle = animationCycles(Animations.AGILITY_START_3276)
             val destination = Location(2598, 3608, 0)
-
+            if (getAttribute(player, GameAttributes.QUEST_HFTD_UNLOCK_BRIDGE, 0) == 0) {
+                sendMessage(player, "I might be able to make it to the other side.")
+                return@on true
+            }
             when (bridgeUnlock) {
                 1 -> {
                     player.animate(Animation(Animations.JUMP_BRIDGE_769), 1)
-                    forceWalk(player, destination.transform(1, 0, 0), "like travolta")
+                    forceWalk(player, destination.transform(1, 0, 0), "")
                     teleport(player, destination, TeleportManager.TeleportType.INSTANT, 2)
                     runTask(player, 3) { forceWalk(player, destination.transform(1, 0, 0), "") }
                 }
                 2 -> {
                     forceMove(player, player.location, destination, 0, cycle, Direction.EAST, Animations.AGILITY_START_3276)
-                    runTask(player, 6) { forceWalk(player, destination.transform(1, 0, 0), "like jeffrey") }
+                    runTask(player, 6) { forceWalk(player, destination.transform(1, 0, 0), "") }
                 }
                 else -> return@on false
             }
@@ -325,7 +328,7 @@ class HorrorFromTheDeepPlugin : InteractionListener {
                 return@on true
             }
             forceMove(player, player.location, Location(2596, 3608, 0), 0, 120, Direction.WEST, Animations.AGILITY_START_ALT_3277)
-            runTask(player, 6) { forceWalk(player, Location.create(2595, 3608, 0), "jeffrey only") }
+            runTask(player, 6) { forceWalk(player, Location.create(2595, 3608, 0), "") }
             return@on true
         }
     }

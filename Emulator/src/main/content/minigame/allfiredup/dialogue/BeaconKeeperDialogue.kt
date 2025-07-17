@@ -36,7 +36,7 @@ class BeaconKeeperDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         npc = (args[0] as NPC).getShownNPC(player)
-        index = getIndexOf((args[0] as NPC).originalId, listOf(npc.id))
+        index = getIndexOf((args[0] as NPC).originalId)
         val faceExpression = getFaceExpression()
         if (index == AFUBeacon.GWD.ordinal && getStatLevel(player, Skills.SUMMONING) < 81) {
             npc(faceExpression, "Awwf uurrrhur", "(You need 81 Summoning to communicate with Nanuq.)").also { stage = 15 }
@@ -105,11 +105,11 @@ class BeaconKeeperDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun newInstance(player: Player?): Dialogue = BeaconKeeperDialogue(player)
 
-    private fun getIndexOf(id: Int, ids: List<Int>, ): Int {
-        if (id == NPCs.NANUQ_8065) return 0
-        if (id == NPCs.NANUQ_8066) return 1
-        for (index in ids.indices) {
-            if (ids[index] == id) return index + 2
+    fun getIndexOf(id: Int): Int {
+        if(id == 8065) return 0
+        if(id == 8066) return 1
+        for(index in ids.indices){
+            if(ids[index] == id) return index + 2
         }
         return -1
     }

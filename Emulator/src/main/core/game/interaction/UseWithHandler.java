@@ -143,8 +143,11 @@ public abstract class UseWithHandler implements Plugin<Object> {
                     event.getPlayer().getPulseManager().run(new MovementPulse(event.getPlayer(), event.getUsedWith()) {
                         @Override
                         public boolean pulse() {
-                            event.getPlayer().debug("Unhandled use with interaction: item used: " + event.getUsed() + " with: " + event.getUsedWith());
-                            event.getPlayer().getPacketDispatch().sendMessage("Nothing interesting happens.");
+                            Player player = event.getPlayer();
+                            player.debug("Unhandled use with interaction: ");
+                                    player.debug("item used =" + event.getUsed().getName()  + " [" + event.getUsed().getId() + "]");
+                            player.debug("with =" + event.getUsedWith().getName()   + " [" + event.getUsedWith().getId() + "]");
+                            player.getPacketDispatch().sendMessage("Nothing interesting happens.");
                             return true;
                         }
                     }, PulseType.STANDARD);
@@ -166,8 +169,9 @@ public abstract class UseWithHandler implements Plugin<Object> {
                             if (!h.nodeAllowed(((Item) event.getUsedWith()).getId()) && !h.nodeAllowed(event.getUsedItem().getId()) || !h.handle(event)) {
                                 continue;
                             }
-                            event.getPlayer().debug("Handler=" + h.getClass().getSimpleName() + ", used item=" + event.getUsedItem() + ", used with=" + event.getUsedWith());
-                            handled = true;
+                            event.getPlayer().debug("Handler=" + h.getClass().getSimpleName() +
+                                    ", used item=" + event.getUsedItem().getName() + " [" + event.getUsedItem().getId() + "]" +
+                                    ", used with=" + event.getUsedWith().getName() + " [" + event.getUsedWith().getId() + "]");                            handled = true;
                             break;
                         }
                         if (!handled) {
