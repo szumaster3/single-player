@@ -1,8 +1,8 @@
 package content.region.karamja.quest.mm.dialogue
 
 import core.api.getQuestStage
-import core.api.setQuestStage
 import core.api.sendItemDialogue
+import core.api.setQuestStage
 import core.game.dialogue.DialogueFile
 import core.tools.END_DIALOGUE
 import org.rs.consts.Items

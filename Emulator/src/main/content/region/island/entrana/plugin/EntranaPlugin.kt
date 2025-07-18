@@ -1,7 +1,6 @@
 package content.region.island.entrana.plugin
 
 import core.api.*
-import core.api.openNpcShop
 import core.cache.def.impl.ItemDefinition
 import core.game.bots.AIPlayer
 import core.game.dialogue.FaceAnim

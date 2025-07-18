@@ -1,11 +1,7 @@
 package content.global.plugin.npc
 
 import content.global.plugin.scenery.BankBoothPlugin
-import core.api.getScenery
-import core.api.hasSealOfPassage
-import core.api.openBankAccount
-import core.api.openGrandExchangeCollectionBox
-import core.api.openDialogue
+import core.api.*
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.Node

@@ -2,7 +2,6 @@ package content.region.morytania.phas.dialogue
 
 import content.region.morytania.phas.quest.ahoy.dialogue.VelorinaDialogueFile
 import core.api.*
-import core.api.isQuestComplete
 import core.game.dialogue.Dialogue
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player

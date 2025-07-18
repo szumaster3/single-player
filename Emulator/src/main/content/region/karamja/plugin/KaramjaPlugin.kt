@@ -2,21 +2,15 @@ package content.region.karamja.plugin
 
 import content.data.items.SkillingTool
 import core.api.*
-import core.api.openNpcShop
-import core.api.produceGroundItem
-import core.api.hasRequirement
-import core.api.isQuestComplete
 import core.game.dialogue.FaceAnim
 import core.game.global.action.ClimbActionHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.interaction.QueueStrength
-import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.game.system.task.Pulse
 import core.game.world.map.Location
-import core.game.world.update.flag.context.Animation
 import org.rs.consts.*
 
 class KaramjaPlugin : InteractionListener {

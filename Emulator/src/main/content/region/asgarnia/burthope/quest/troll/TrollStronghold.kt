@@ -1,11 +1,6 @@
 package content.region.asgarnia.burthope.quest.troll
 
-import core.api.addItemOrDrop
-import core.api.hasAnItem
-import core.api.hasLevelStat
-import core.api.getQuestStage
-import core.api.isQuestComplete
-import core.api.sendItemZoomOnInterface
+import core.api.*
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest
 import core.game.node.entity.skill.Skills

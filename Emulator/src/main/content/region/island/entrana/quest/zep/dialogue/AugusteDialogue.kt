@@ -3,10 +3,6 @@ package content.region.island.entrana.quest.zep.dialogue
 import content.region.island.entrana.quest.zep.cutscene.FirstExperimentCutscene
 import content.region.island.entrana.quest.zep.cutscene.SecondExperimentCutscene
 import core.api.*
-import core.api.finishQuest
-import core.api.getQuestPoints
-import core.api.getQuestStage
-import core.api.setQuestStage
 import core.game.dialogue.Dialogue
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim

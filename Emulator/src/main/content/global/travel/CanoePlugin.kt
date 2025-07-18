@@ -2,8 +2,6 @@ package content.global.travel
 
 import content.data.items.SkillingTool
 import core.api.*
-import core.api.restoreTabs
-import core.api.setMinimapState
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.interaction.InterfaceListener

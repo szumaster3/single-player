@@ -1,10 +1,6 @@
 package content.region.karamja.quest.totem
 
-import core.api.addItemOrDrop
-import core.api.getStatLevel
-import core.api.getQuestStage
-import core.api.rewardXP
-import core.api.sendItemZoomOnInterface
+import core.api.*
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest
 import core.game.node.entity.skill.Skills

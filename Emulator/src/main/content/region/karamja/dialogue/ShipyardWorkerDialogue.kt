@@ -1,8 +1,8 @@
 package content.region.karamja.dialogue
 
 import content.region.kandarin.gnome.quest.grandtree.dialogue.ShipyardWorkerDialogueFile
-import core.api.openDialogue
 import core.api.getQuestStage
+import core.api.openDialogue
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

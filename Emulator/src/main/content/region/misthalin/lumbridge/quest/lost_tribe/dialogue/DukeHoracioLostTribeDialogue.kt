@@ -1,10 +1,6 @@
 package content.region.misthalin.lumbridge.quest.lost_tribe.dialogue
 
-import core.api.addItemOrDrop
-import core.api.inInventory
-import core.api.setQuestStage
-import core.api.sendItemDialogue
-import core.api.setVarbit
+import core.api.*
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

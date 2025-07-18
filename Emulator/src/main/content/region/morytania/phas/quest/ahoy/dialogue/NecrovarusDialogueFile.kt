@@ -2,9 +2,6 @@ package content.region.morytania.phas.quest.ahoy.dialogue
 
 import content.region.morytania.phas.quest.ahoy.plugin.GhostsAhoyUtils
 import core.api.*
-import core.api.produceGroundItem
-import core.api.getQuestStage
-import core.api.setQuestStage
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

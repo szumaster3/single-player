@@ -2,7 +2,6 @@ package content.region.karamja.brimhaven.dialogue
 
 import content.global.travel.ship.Charter
 import core.api.*
-import core.api.hasRequirement
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

@@ -1,7 +1,7 @@
 package content.global.plugin.scenery
 
-import core.api.log
 import core.api.hasRequirement
+import core.api.log
 import core.api.sendDialogueLines
 import core.api.sendMessage
 import core.game.interaction.IntType

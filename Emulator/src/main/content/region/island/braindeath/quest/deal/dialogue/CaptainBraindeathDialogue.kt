@@ -2,7 +2,6 @@ package content.region.island.braindeath.quest.deal.dialogue
 
 import content.region.island.braindeath.quest.deal.cutscene.ZombieProtestCutscene
 import core.api.*
-import core.api.getQuestStage
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

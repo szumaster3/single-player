@@ -1,8 +1,6 @@
 package content.global.plugin.iface
 
 import core.api.*
-import core.api.requireQuest
-import core.api.openSingleTab
 import core.game.event.FairyRingDialEvent
 import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.Player

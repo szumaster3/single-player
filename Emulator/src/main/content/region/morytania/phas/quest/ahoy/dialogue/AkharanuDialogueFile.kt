@@ -1,12 +1,7 @@
 package content.region.morytania.phas.quest.ahoy.dialogue
 
 import content.region.morytania.phas.quest.ahoy.plugin.GhostsAhoyUtils
-import core.api.addItemOrDrop
-import core.api.inInventory
-import core.api.getQuestStage
-import core.api.setQuestStage
-import core.api.sendItemDialogue
-import core.api.setAttribute
+import core.api.*
 import core.game.dialogue.DialogueFile
 import core.game.node.entity.npc.NPC
 import core.tools.END_DIALOGUE

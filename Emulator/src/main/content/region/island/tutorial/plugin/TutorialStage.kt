@@ -3,8 +3,6 @@ package content.region.island.tutorial.plugin
 import content.data.GameAttributes
 import core.ServerConstants
 import core.api.*
-import core.api.sendInterfaceConfig
-import core.api.setMinimapState
 import core.game.component.Component
 import core.game.interaction.QueueStrength
 import core.game.node.Node

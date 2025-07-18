@@ -2,9 +2,9 @@ package content.region.asgarnia.burthope.dialogue
 
 import content.region.asgarnia.burthope.quest.death.dialogue.DunstanDialogueFile
 import content.region.asgarnia.burthope.quest.troll.dialogue.DunstanTrollDialogue
-import core.api.openDialogue
 import core.api.isQuestComplete
 import core.api.isQuestInProgress
+import core.api.openDialogue
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.dialogue.Topic

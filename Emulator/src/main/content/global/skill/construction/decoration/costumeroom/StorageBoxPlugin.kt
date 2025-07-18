@@ -1,6 +1,7 @@
 package content.global.skill.construction.decoration.costumeroom
 
-import core.api.*
+import core.api.animate
+import core.api.replaceScenery
 import core.cache.def.impl.SceneryDefinition
 import core.game.interaction.OptionHandler
 import core.game.node.Node

@@ -3,12 +3,7 @@ package content.region.desert.bedabin.quest.deserttreasure.dialogue
 import content.global.plugin.iface.BookInterface
 import content.region.desert.bedabin.quest.deserttreasure.DesertTreasure
 import content.region.desert.bedabin.quest.deserttreasure.book.TranslationBook
-import core.api.addItemOrDrop
-import core.api.inInventory
-import core.api.openDialogue
-import core.api.getQuestStage
-import core.api.setQuestStage
-import core.api.removeItem
+import core.api.*
 import core.game.dialogue.Dialogue
 import core.game.dialogue.DialogueBuilder
 import core.game.dialogue.DialogueBuilderFile

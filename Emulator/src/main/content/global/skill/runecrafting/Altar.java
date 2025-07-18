@@ -9,9 +9,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import static core.api.ContentAPIKt.hasRequirement;
-import static core.api.ContentAPIKt.isQuestComplete;
-import static core.api.ContentAPIKt.sendMessage;
+import static core.api.ContentAPIKt.*;
 
 /**
  * Represents an altar used in the Runecrafting skill.

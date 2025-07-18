@@ -5,11 +5,6 @@ import content.region.asgarnia.falador.quest.rd.plugin.RDUtils
 import content.region.asgarnia.falador.quest.rd.plugin.RecruitmentDrivePlugin
 import content.region.asgarnia.falador.quest.rd.plugin.RecruitmentDrivePlugin.Companion.initRoomStage
 import core.api.*
-import core.api.finishQuest
-import core.api.getQuestStage
-import core.api.setQuestStage
-import core.api.closeDialogue
-import core.api.setMinimapState
 import core.game.activity.Cutscene
 import core.game.dialogue.DialogueBuilder
 import core.game.dialogue.DialogueBuilderFile

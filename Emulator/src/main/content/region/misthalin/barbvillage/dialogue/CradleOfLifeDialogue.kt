@@ -1,7 +1,6 @@
 package content.region.misthalin.barbvillage.dialogue
 
 import core.api.*
-import core.api.unlockEmote
 import core.game.container.Container
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim

@@ -1,6 +1,7 @@
 package content.region.desert.alkharid.quest.feud.dialogue
 
-import core.game.dialogue.*
+import core.game.dialogue.Dialogue
+import core.game.dialogue.FaceAnim
 import core.game.node.entity.player.Player
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE

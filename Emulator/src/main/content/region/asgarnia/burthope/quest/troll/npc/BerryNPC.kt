@@ -1,8 +1,8 @@
 package content.region.asgarnia.burthope.quest.troll.npc
 
 import core.api.inInventory
-import core.api.produceGroundItem
 import core.api.isQuestInProgress
+import core.api.produceGroundItem
 import core.game.node.entity.Entity
 import core.game.node.entity.combat.CombatStyle
 import core.game.node.entity.npc.AbstractNPC

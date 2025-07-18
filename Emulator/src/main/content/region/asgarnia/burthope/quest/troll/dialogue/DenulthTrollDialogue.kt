@@ -1,7 +1,7 @@
 package content.region.asgarnia.burthope.quest.troll.dialogue
 
-import core.api.hasAnItem
 import core.api.getQuestStage
+import core.api.hasAnItem
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.tools.END_DIALOGUE

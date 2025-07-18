@@ -1,9 +1,9 @@
 package content.global.plugin.iface.warning
 
 import core.api.getVarbit
+import core.api.sendInterfaceConfig
 import core.api.sendMessage
 import core.api.setVarbit
-import core.api.sendInterfaceConfig
 import core.game.component.Component
 import core.game.node.entity.player.Player
 import core.tools.DARK_PURPLE

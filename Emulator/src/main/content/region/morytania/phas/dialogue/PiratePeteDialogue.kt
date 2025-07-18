@@ -1,8 +1,10 @@
 package content.region.morytania.phas.dialogue
 
 import core.api.*
-import core.api.hasRequirement
-import core.game.dialogue.*
+import core.game.dialogue.Dialogue
+import core.game.dialogue.DialogueFile
+import core.game.dialogue.FaceAnim
+import core.game.dialogue.Topic
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.system.task.Pulse

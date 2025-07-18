@@ -2,7 +2,6 @@ package content.global.skill.construction.decoration.workshop
 
 import content.data.GameAttributes
 import core.api.*
-import core.api.getSceneryName
 import core.game.dialogue.DialogueFile
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener

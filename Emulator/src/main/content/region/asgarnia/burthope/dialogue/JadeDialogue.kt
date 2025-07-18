@@ -1,10 +1,6 @@
 package content.region.asgarnia.burthope.dialogue
 
-import core.api.hasIronmanRestriction
-import core.api.hasAwaitingGrandExchangeCollections
-import core.api.openBankAccount
-import core.api.openBankPinSettings
-import core.api.openGrandExchangeCollectionBox
+import core.api.*
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.dialogue.Topic

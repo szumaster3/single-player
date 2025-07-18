@@ -1,9 +1,6 @@
 package content.region.karamja.shilo.plugin
 
 import core.api.*
-import core.api.getNPCName
-import core.api.hasRequirement
-import core.api.closeDialogue
 import core.game.dialogue.FaceAnim
 import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType

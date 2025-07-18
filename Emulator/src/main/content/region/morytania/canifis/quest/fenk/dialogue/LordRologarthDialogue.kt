@@ -1,7 +1,7 @@
 package content.region.morytania.canifis.quest.fenk.dialogue
 
-import core.api.openDialogue
 import core.api.getQuestStage
+import core.api.openDialogue
 import core.api.setQuestStage
 import core.game.dialogue.Dialogue
 import core.game.dialogue.DialogueBuilder

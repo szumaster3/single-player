@@ -1,10 +1,10 @@
 package content.region.misthalin.varrock.quest.dragon.dialogue
 
 import content.region.misthalin.varrock.quest.dragon.DragonSlayer
-import core.api.setQuestStage
 import core.api.removeItem
 import core.api.sendItemDialogue
 import core.api.sendMessage
+import core.api.setQuestStage
 import core.game.dialogue.DialogueFile
 import core.tools.END_DIALOGUE
 import core.tools.START_DIALOGUE

@@ -2,7 +2,6 @@ package content.region.other.dorgsk.plugin
 
 import content.region.other.dorgsk.dialogue.CaveGoblinsDialogueFile
 import core.api.*
-import core.api.isQuestComplete
 import core.game.dialogue.FaceAnim
 import core.game.dialogue.SequenceDialogue.dialogue
 import core.game.global.action.DoorActionHandler

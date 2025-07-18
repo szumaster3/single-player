@@ -2,8 +2,6 @@ package content.region.misthalin.varrock.quest.dragon.plugin
 
 import content.region.misthalin.varrock.quest.dragon.DragonSlayer
 import core.api.*
-import core.api.getQuestStage
-import core.api.isQuestComplete
 import core.game.global.action.ClimbActionHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener

@@ -1,7 +1,6 @@
 package content.global.travel.glider
 
 import core.api.*
-import core.api.setMinimapState
 import core.api.utils.PlayerCamera
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player

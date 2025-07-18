@@ -1,8 +1,6 @@
 package content.global.plugin.item.withnpc
 
 import core.api.*
-import core.api.getQuestStage
-import core.api.setQuestStage
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import org.rs.consts.Items

@@ -2,7 +2,6 @@ package content.global.activity.champion.plugin
 
 import content.data.GameAttributes
 import core.api.*
-import core.api.getNPCName
 import core.game.node.entity.Entity
 import core.game.node.entity.combat.BattleState
 import core.game.node.entity.combat.CombatStyle

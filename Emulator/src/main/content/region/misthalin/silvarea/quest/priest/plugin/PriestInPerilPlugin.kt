@@ -3,9 +3,6 @@ package content.region.misthalin.silvarea.quest.priest.plugin
 import content.data.GameAttributes
 import content.region.misthalin.silvarea.dialogue.MysteriousVoiceDialogue
 import core.api.*
-import core.api.getQuestStage
-import core.api.isQuestComplete
-import core.api.setQuestStage
 import core.game.dialogue.FaceAnim
 import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType

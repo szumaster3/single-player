@@ -1,10 +1,6 @@
 package content.global.plugin.iface
 
-import core.api.closeChatBox
-import core.api.updateQuestTab
-import core.api.refreshInventory
-import core.api.sendMessage
-import core.api.sendString
+import core.api.*
 import core.game.component.CloseEvent
 import core.game.component.Component
 import core.game.component.ComponentDefinition

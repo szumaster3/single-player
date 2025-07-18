@@ -1,10 +1,6 @@
 package content.region.asgarnia.burthope.quest.hero.dialogue
 
-import core.api.addItemOrDrop
-import core.api.inInventory
-import core.api.getQuestStage
-import core.api.setQuestStage
-import core.api.removeItem
+import core.api.*
 import core.game.dialogue.DialogueBuilder
 import core.game.dialogue.DialogueBuilderFile
 import org.rs.consts.Items

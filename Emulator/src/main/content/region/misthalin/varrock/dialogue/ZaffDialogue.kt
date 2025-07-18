@@ -3,7 +3,6 @@ package content.region.misthalin.varrock.dialogue
 import core.ServerStore
 import core.ServerStore.Companion.getInt
 import core.api.*
-import core.api.openNpcShop
 import core.cache.def.impl.NPCDefinition
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim

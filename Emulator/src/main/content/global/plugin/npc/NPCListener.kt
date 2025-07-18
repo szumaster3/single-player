@@ -4,11 +4,13 @@ import content.global.activity.ttrail.plugin.AnagramScroll
 import content.global.activity.ttrail.plugin.ChallengeClueScroll
 import content.global.ame.RandomEvents
 import content.minigame.gnomecook.dialogue.GCCompletionDialogue
-import content.minigame.gnomecook.plugin.*
+import content.minigame.gnomecook.plugin.GC_BASE_ATTRIBUTE
+import content.minigame.gnomecook.plugin.GC_JOB_COMPLETE
+import content.minigame.gnomecook.plugin.GC_JOB_ORDINAL
+import content.minigame.gnomecook.plugin.GnomeCookingJob
 import content.region.kandarin.miniquest.barcrawl.BarcrawlManager
 import content.region.kandarin.miniquest.barcrawl.BarcrawlType
 import core.api.*
-import core.api.openDepositBox
 import core.game.dialogue.FaceAnim
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener

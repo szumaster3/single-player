@@ -1,13 +1,12 @@
 package content.region.morytania.canifis.plugin
 
-import core.api.*
-import core.game.dialogue.DialogueFile
+import core.api.inInventory
+import core.api.removeItem
+import core.api.replaceSlot
 import core.game.dialogue.FaceAnim
 import core.game.dialogue.SequenceDialogue.dialogue
-import core.game.dialogue.splitLines
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import core.game.node.entity.npc.NPC
 import core.game.node.item.Item
 import org.rs.consts.Items
 import org.rs.consts.NPCs

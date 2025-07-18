@@ -4,9 +4,9 @@ import content.region.misthalin.lumbridge.quest.lost_tribe.dialogue.MistagLostTr
 import content.region.misthalin.lumbridge.quest.lost_tribe.plugin.GoblinFollower
 import content.region.other.dorgsk.quest.dttd.dialogue.MistagDialogueFile
 import core.api.getAttribute
+import core.api.getQuestStage
 import core.api.inInventory
 import core.api.openDialogue
-import core.api.getQuestStage
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

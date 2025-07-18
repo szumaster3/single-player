@@ -1,7 +1,6 @@
 package content.global.travel.ship
 
 import core.api.*
-import core.api.setMinimapState
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.diary.DiaryType
 import core.game.system.task.Pulse

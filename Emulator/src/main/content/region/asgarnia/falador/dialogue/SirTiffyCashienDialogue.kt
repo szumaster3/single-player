@@ -4,10 +4,10 @@ import content.data.RespawnPoint
 import content.data.setRespawnLocation
 import content.region.asgarnia.falador.quest.rd.cutscene.SirTiffyCashienDialogueFile
 import core.ServerConstants
-import core.api.openNpcShop
-import core.api.openDialogue
 import core.api.isQuestComplete
 import core.api.isQuestInProgress
+import core.api.openDialogue
+import core.api.openNpcShop
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

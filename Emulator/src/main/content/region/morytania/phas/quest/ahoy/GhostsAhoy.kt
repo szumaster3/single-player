@@ -1,11 +1,7 @@
 package content.region.morytania.phas.quest.ahoy
 
 import content.region.morytania.phas.quest.ahoy.plugin.GhostsAhoyUtils
-import core.api.isQuestComplete
-import core.api.removeAttributes
-import core.api.rewardXP
-import core.api.sendItemZoomOnInterface
-import core.api.setVarbit
+import core.api.*
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest
 import core.game.node.entity.skill.Skills

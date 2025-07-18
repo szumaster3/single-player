@@ -7,13 +7,9 @@ import core.game.dialogue.FaceAnim
 import core.game.global.action.ClimbActionHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import core.game.node.entity.combat.ImpactHandler
 import core.game.node.entity.player.Player
-import core.game.node.entity.skill.Skills
-import core.game.node.item.Item
 import core.tools.RandomFunction
 import org.rs.consts.Components
-import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Scenery
 import kotlin.math.ceil

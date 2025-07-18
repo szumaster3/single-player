@@ -1,9 +1,9 @@
 package content.region.karamja.quest.totem.dialogue
 
 import content.global.travel.EssenceTeleport
-import core.api.playAudio
 import core.api.isQuestComplete
 import core.api.isQuestInProgress
+import core.api.playAudio
 import core.api.setQuestStage
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim

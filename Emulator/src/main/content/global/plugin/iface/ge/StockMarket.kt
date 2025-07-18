@@ -1,7 +1,6 @@
 package content.global.plugin.iface.ge
 
 import core.api.*
-import core.api.itemDefinition
 import core.game.component.Component
 import core.game.dialogue.InputType
 import core.game.ge.*

@@ -1,9 +1,14 @@
 package content.region.morytania.phas.quest.hauntedmine.plugin
 
-import core.api.*
+import core.api.openInterface
+import core.api.removeItem
+import core.api.sendMessage
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import org.rs.consts.*
+import org.rs.consts.Components
+import org.rs.consts.Items
+import org.rs.consts.NPCs
+import org.rs.consts.Scenery
 
 class HauntedMinePlugin : InteractionListener {
     override fun defineListeners() {

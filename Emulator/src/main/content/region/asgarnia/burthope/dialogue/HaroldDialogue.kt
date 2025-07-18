@@ -1,7 +1,6 @@
 package content.region.asgarnia.burthope.dialogue
 
 import core.api.*
-import core.api.isQuestInProgress
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.player.Player

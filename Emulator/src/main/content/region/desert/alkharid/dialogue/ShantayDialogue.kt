@@ -1,8 +1,6 @@
 package content.region.desert.alkharid.dialogue
 
 import core.api.*
-import core.api.openNpcShop
-import core.api.produceGroundItem
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.interaction.QueueStrength

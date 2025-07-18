@@ -2,8 +2,6 @@ package content.region.wilderness.plugin
 
 import content.data.GameAttributes
 import core.api.*
-import core.api.finishedMoving
-import core.api.closeDialogue
 import core.game.global.action.ClimbActionHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener

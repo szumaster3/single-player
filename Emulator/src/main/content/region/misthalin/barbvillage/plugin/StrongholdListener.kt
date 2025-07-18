@@ -1,7 +1,6 @@
 package content.region.misthalin.barbvillage.plugin
 
 import core.api.*
-import core.api.unlockEmote
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.player.link.emote.Emotes

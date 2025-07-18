@@ -1,8 +1,6 @@
 package content.region.wilderness.rogue_castle.plugin
 
 import core.api.*
-import core.api.hasRequirement
-import core.api.closeDialogue
 import core.game.dialogue.FaceAnim
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener

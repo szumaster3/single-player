@@ -1,9 +1,9 @@
 package content.region.morytania.phas.dialogue
 
 import content.region.morytania.phas.quest.ahoy.dialogue.OldManGADialogue
-import core.api.openDialogue
 import core.api.getQuestStage
 import core.api.isQuestComplete
+import core.api.openDialogue
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

@@ -5,9 +5,6 @@ import content.global.skill.construction.Crests
 import core.ServerConstants
 import core.Util
 import core.api.*
-import core.api.getQuestPoints
-import core.api.hasRequirement
-import core.api.isQuestComplete
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

@@ -3,7 +3,6 @@ package content.region.morytania.phas.plugin
 import content.region.morytania.phas.plugin.EnergyBarrier.passGate
 import content.region.morytania.phas.plugin.EnergyBarrier.passGateAfterQuest
 import core.api.*
-import core.api.isQuestComplete
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.game.interaction.IntType

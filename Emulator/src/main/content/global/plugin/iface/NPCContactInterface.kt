@@ -1,8 +1,8 @@
 package content.global.plugin.iface
 
 import core.api.closeInterface
-import core.api.openDialogue
 import core.api.isQuestComplete
+import core.api.openDialogue
 import core.api.visualize
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim

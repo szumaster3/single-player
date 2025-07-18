@@ -2,7 +2,6 @@ package content.global.skill.herblore
 
 import content.data.consumables.Consumables
 import core.api.*
-import core.api.decantContainer
 import core.game.consumable.Potion
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener

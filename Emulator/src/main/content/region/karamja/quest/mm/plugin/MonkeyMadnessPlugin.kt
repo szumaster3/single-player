@@ -5,8 +5,6 @@ import content.region.island.apeatoll.dialogue.ZooknockDialogue
 import content.region.island.apeatoll.dialogue.ZooknockDialogueFile
 import content.region.karamja.quest.mm.dialogue.*
 import core.api.*
-import core.api.getQuestStage
-import core.api.setQuestStage
 import core.game.dialogue.FaceAnim
 import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType

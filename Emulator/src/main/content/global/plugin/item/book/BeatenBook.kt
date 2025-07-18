@@ -6,7 +6,6 @@ import content.global.plugin.iface.Page
 import content.global.plugin.iface.PageSet
 import content.region.kandarin.seers.quest.elemental_quest_2.plugin.EW2Utils
 import core.api.*
-import core.api.setQuestStage
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.player.Player

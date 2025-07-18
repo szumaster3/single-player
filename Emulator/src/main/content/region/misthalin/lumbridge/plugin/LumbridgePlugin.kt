@@ -2,7 +2,6 @@ package content.region.misthalin.lumbridge.plugin
 
 import core.GlobalStatistics
 import core.api.*
-import core.api.openBankAccount
 import core.game.activity.ActivityManager
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener

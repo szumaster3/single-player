@@ -3,7 +3,6 @@ package content.region.desert.bedabin.quest.deserttreasure.dialogue
 import content.region.desert.bedabin.quest.deserttreasure.DTUtils
 import content.region.desert.bedabin.quest.deserttreasure.DesertTreasure
 import core.api.*
-import core.api.getQuestStage
 import core.game.dialogue.Dialogue
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim

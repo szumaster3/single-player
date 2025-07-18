@@ -4,8 +4,8 @@ import content.global.travel.glider.Glider
 import content.global.travel.glider.GliderPulse
 import content.region.karamja.quest.mm.cutscene.ShipyardCutscene
 import core.api.getQuestStage
-import core.api.setQuestStage
 import core.api.sendNPCDialogue
+import core.api.setQuestStage
 import core.api.submitWorldPulse
 import core.game.component.Component
 import core.game.dialogue.DialogueFile

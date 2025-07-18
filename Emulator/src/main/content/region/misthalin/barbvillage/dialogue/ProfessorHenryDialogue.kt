@@ -2,8 +2,6 @@ package content.region.misthalin.barbvillage.dialogue
 
 import core.ServerConstants
 import core.api.*
-import core.api.getQuestPoints
-import core.api.unlockEmote
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.dialogue.Topic

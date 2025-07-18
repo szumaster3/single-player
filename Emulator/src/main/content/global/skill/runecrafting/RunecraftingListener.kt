@@ -1,7 +1,6 @@
 package content.global.skill.runecrafting
 
 import core.api.*
-import core.api.closeDialogue
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.player.Player

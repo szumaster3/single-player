@@ -1,9 +1,9 @@
 package content.region.misthalin.varrock.quest.phoenixgang
 
 import content.region.misthalin.dialogue.KingRoaldDialogue
+import content.region.misthalin.varrock.quest.phoenixgang.dialogue.*
 import content.region.misthalin.varrock.quest.phoenixgang.plugin.JohnnyBeardNPC
 import content.region.misthalin.varrock.quest.phoenixgang.plugin.ShieldOfArravPlugin
-import content.region.misthalin.varrock.quest.phoenixgang.dialogue.*
 import core.api.removeAttribute
 import core.api.setAttribute
 import core.api.setVarbit

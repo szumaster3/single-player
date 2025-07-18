@@ -1,12 +1,7 @@
 package content.region.misthalin.lumbridge.quest.sheep.dialogue
 
 import content.region.misthalin.lumbridge.quest.sheep.SheepShearer
-import core.api.getAttribute
-import core.api.inInventory
-import core.api.finishQuest
-import core.api.setQuestStage
-import core.api.startQuest
-import core.api.sendDialogue
+import core.api.*
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.tools.END_DIALOGUE

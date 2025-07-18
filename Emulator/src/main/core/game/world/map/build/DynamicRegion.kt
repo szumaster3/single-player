@@ -1,16 +1,15 @@
 package core.game.world.map.build
 
 import core.game.node.entity.npc.NPC
-import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.music.MusicZone
-import core.game.node.item.GroundItem
 import core.game.node.item.GroundItemManager
-import core.game.node.scenery.Scenery
-import core.game.world.map.*
+import core.game.world.map.Location
+import core.game.world.map.Region
+import core.game.world.map.RegionChunk
+import core.game.world.map.RegionManager
 import core.game.world.map.zone.RegionZone
 import core.game.world.map.zone.ZoneBorders
 import core.game.world.map.zone.impl.MultiwayCombatZone
-import java.util.*
 
 class DynamicRegion(
     private val regionCopyId: Int,

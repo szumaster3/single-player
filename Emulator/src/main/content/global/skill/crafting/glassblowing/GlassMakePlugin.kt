@@ -1,7 +1,6 @@
 package content.global.skill.crafting.glassblowing
 
 import core.api.*
-import core.api.sendSkillDialogue
 import core.game.event.ResourceProducedEvent
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener

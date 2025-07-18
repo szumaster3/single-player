@@ -3,7 +3,6 @@ package content.region.desert.bedabin.quest.deserttreasure.npc
 import content.region.desert.bedabin.quest.deserttreasure.DTUtils
 import content.region.desert.bedabin.quest.deserttreasure.DesertTreasure
 import core.api.*
-import core.api.transformNpc
 import core.game.interaction.QueueStrength
 import core.game.node.entity.Entity
 import core.game.node.entity.combat.BattleState

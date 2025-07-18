@@ -1,8 +1,6 @@
 package content.region.morytania.phas.quest.ahoy.dialogue
 
 import core.api.*
-import core.api.getQuestStage
-import core.api.setQuestStage
 import core.game.dialogue.DialogueFile
 import core.game.interaction.QueueStrength
 import core.game.node.entity.npc.NPC

@@ -4,8 +4,6 @@ import core.game.activity.Cutscene
 import core.game.component.Component
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.player.Player
-import core.game.system.task.Pulse
-import core.game.world.GameWorld
 import core.game.world.map.Direction
 import core.game.world.map.Location
 import org.rs.consts.Components

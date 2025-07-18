@@ -1,9 +1,9 @@
 package content.region.misthalin.varrock.dialogue
 
 import content.region.wilderness.rogue_castle.dialogue.RogueCastleDialogue
+import core.api.hasRequirement
 import core.api.inBorders
 import core.api.openDialogue
-import core.api.hasRequirement
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

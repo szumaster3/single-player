@@ -1,8 +1,8 @@
 package content.region.desert.uzer.quest.agrith.plugin
 
 import core.api.addItem
-import core.api.inInventory
 import core.api.hasRequirement
+import core.api.inInventory
 import core.api.removeItem
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener

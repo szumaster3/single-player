@@ -1,7 +1,6 @@
 package content.global.plugin.item
 
 import core.api.*
-import core.api.hasRequirement
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.interaction.QueueStrength

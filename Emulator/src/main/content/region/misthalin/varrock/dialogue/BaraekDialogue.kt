@@ -1,8 +1,6 @@
 package content.region.misthalin.varrock.dialogue
 
 import core.api.*
-import core.api.getQuestStage
-import core.api.setQuestStage
 import core.game.dialogue.Dialogue
 import core.game.dialogue.IfTopic
 import core.game.dialogue.Topic

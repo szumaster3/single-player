@@ -3,9 +3,6 @@ package content.region.desert.bedabin.quest.deserttreasure.plugin
 import content.region.desert.bedabin.quest.deserttreasure.DTUtils
 import content.region.desert.bedabin.quest.deserttreasure.DesertTreasure
 import core.api.*
-import core.api.getQuestStage
-import core.api.isQuestComplete
-import core.api.setQuestStage
 import core.game.activity.Cutscene
 import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType

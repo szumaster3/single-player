@@ -5,9 +5,6 @@ import content.region.misthalin.varrock.dialogue.KnockatDoorDialogue
 import content.region.misthalin.varrock.dialogue.SawmillOperatorDialogue
 import core.GlobalStatistics
 import core.api.*
-import core.api.openNpcShop
-import core.api.getQuestPoints
-import core.api.getQuestStage
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.game.global.action.ClimbActionHandler

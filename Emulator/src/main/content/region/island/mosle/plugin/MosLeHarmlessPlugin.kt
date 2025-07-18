@@ -2,7 +2,6 @@ package content.region.island.mosle.plugin
 
 import content.minigame.troublebrewing.MosleUtils
 import core.api.*
-import core.api.openNpcShop
 import core.game.dialogue.FaceAnim
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener

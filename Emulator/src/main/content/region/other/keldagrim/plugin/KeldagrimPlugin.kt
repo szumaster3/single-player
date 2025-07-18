@@ -3,9 +3,6 @@ package content.region.other.keldagrim.plugin
 import content.data.GameAttributes
 import content.minigame.blastfurnace.dialogue.BlastFusionHammerDialogue
 import core.api.*
-import core.api.isQuestComplete
-import core.api.closeDialogue
-import core.api.setMinimapState
 import core.game.dialogue.SequenceDialogue
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener

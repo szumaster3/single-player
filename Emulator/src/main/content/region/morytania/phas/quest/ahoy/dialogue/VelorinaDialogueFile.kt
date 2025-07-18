@@ -1,10 +1,6 @@
 package content.region.morytania.phas.quest.ahoy.dialogue
 
-import core.api.addItemOrDrop
-import core.api.finishQuest
-import core.api.getQuestStage
-import core.api.setQuestStage
-import core.api.sendItemDialogue
+import core.api.*
 import core.game.dialogue.DialogueFile
 import core.game.node.entity.npc.NPC
 import core.game.world.GameWorld

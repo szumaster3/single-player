@@ -1,5 +1,8 @@
 package content.global.plugin.scenery
 
+import core.api.animate
+import core.api.playAudio
+import core.api.sendMessage
 import core.cache.def.impl.SceneryDefinition
 import core.game.global.action.DoorActionHandler
 import core.game.interaction.OptionHandler
@@ -13,10 +16,6 @@ import core.plugin.Initializable
 import core.plugin.Plugin
 import org.rs.consts.Animations
 import org.rs.consts.Sounds
-
-import core.api.animate
-import core.api.playAudio
-import core.api.sendMessage
 
 /**
  * Plugin used for handling the opening and closing

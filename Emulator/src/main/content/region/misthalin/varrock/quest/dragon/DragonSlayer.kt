@@ -3,12 +3,14 @@ package content.region.misthalin.varrock.quest.dragon
 import content.global.skill.agility.AgilityHandler
 import content.region.misthalin.lumbridge.dialogue.DukeHoracioDialogue
 import content.region.misthalin.varrock.quest.dragon.cutscene.DragonSlayerCutscene
-import content.region.misthalin.varrock.quest.dragon.dialogue.*
+import content.region.misthalin.varrock.quest.dragon.dialogue.CabinBoyDialogue
+import content.region.misthalin.varrock.quest.dragon.dialogue.GuildmasterDialogue
+import content.region.misthalin.varrock.quest.dragon.dialogue.OziachDialogue
+import content.region.misthalin.varrock.quest.dragon.dialogue.WormbrainDialogue
+import content.region.misthalin.varrock.quest.dragon.npc.*
 import content.region.misthalin.varrock.quest.dragon.plugin.DragonSlayerPlugin
 import content.region.misthalin.varrock.quest.dragon.plugin.MagicDoorPlugin
-import content.region.misthalin.varrock.quest.dragon.npc.*
 import core.api.*
-import core.api.getQuestStage
 import core.game.event.EventHook
 import core.game.event.PickUpEvent
 import core.game.event.SpellCastEvent

@@ -2,7 +2,6 @@ package content.region.other.ench.plugin
 
 import content.data.items.SkillingTool
 import core.api.*
-import core.api.hasRequirement
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.npc.NPC

@@ -1,7 +1,6 @@
 package core.game.system
 
 import core.ServerConstants
-import core.game.node.entity.player.Player
 import core.game.system.SystemManager.flag
 import core.game.system.SystemManager.terminator
 import core.game.system.task.Pulse

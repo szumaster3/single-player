@@ -1,6 +1,9 @@
 package content.region.morytania.swamp.quest.druidspirit.plugin
 
-import core.api.*
+import core.api.findLocalNPC
+import core.api.openDialogue
+import core.api.spawnProjectile
+import core.api.unlock
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.system.task.Pulse

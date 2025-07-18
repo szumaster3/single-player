@@ -1,7 +1,6 @@
 package content.region.asgarnia.falador.quest.dorics
 
 import core.api.*
-import core.api.updateQuestTab
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest
 import core.game.node.entity.skill.Skills

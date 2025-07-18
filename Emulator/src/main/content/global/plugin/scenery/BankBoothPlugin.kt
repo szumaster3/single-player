@@ -3,8 +3,6 @@ package content.global.plugin.scenery
 import content.global.plugin.npc.BankerNPC
 import core.ServerConstants
 import core.api.*
-import core.api.openBankAccount
-import core.api.openGrandExchangeCollectionBox
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.Node

@@ -2,8 +2,6 @@ package content.region.wilderness.npc.revenants
 
 import content.data.GameAttributes
 import core.api.*
-import core.api.applyPoison
-import core.api.isPoisoned
 import core.game.node.entity.Entity
 import core.game.node.entity.combat.BattleState
 import core.game.node.entity.combat.CombatStyle

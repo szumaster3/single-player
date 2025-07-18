@@ -2,7 +2,6 @@ package content.region.misthalin.barbvillage.plugin
 
 import content.data.GameAttributes
 import core.api.*
-import core.api.unlockEmote
 import core.game.activity.Cutscene
 import core.game.component.Component
 import core.game.global.action.DoorActionHandler

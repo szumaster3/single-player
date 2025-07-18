@@ -1,7 +1,6 @@
 package content.global.activity.mogre
 
 import core.api.*
-import core.api.finishedMoving
 import core.game.interaction.QueueStrength
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.npc.NPCBehavior

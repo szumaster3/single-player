@@ -2,8 +2,6 @@ package content.region.morytania.canifis.quest.fenk.dialogue
 
 import content.region.morytania.canifis.quest.fenk.CreatureOfFenkenstrain
 import core.api.*
-import core.api.getQuestStage
-import core.api.setQuestStage
 import core.game.dialogue.Dialogue
 import core.game.dialogue.DialogueBuilder
 import core.game.dialogue.DialogueBuilderFile

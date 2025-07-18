@@ -2,9 +2,6 @@ package content.region.asgarnia.burthope.quest.death.plugin
 
 import content.region.asgarnia.burthope.quest.death.dialogue.DoorPlateauDialogueFile
 import core.api.*
-import core.api.produceGroundItem
-import core.api.getQuestStage
-import core.api.setQuestStage
 import core.game.dialogue.FaceAnim
 import core.game.dialogue.SequenceDialogue.dialogue
 import core.game.global.action.DoorActionHandler

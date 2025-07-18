@@ -1,7 +1,6 @@
 package content.region.island.entrana.quest.zep
 
 import core.api.*
-import core.api.getQuestPoints
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest
 import core.game.node.entity.skill.Skills

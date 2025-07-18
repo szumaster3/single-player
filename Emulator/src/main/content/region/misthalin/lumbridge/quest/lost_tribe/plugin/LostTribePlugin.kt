@@ -3,8 +3,6 @@ package content.region.misthalin.lumbridge.quest.lost_tribe.plugin
 import content.data.GameAttributes
 import content.data.items.SkillingTool
 import core.api.*
-import core.api.getQuestStage
-import core.api.setQuestStage
 import core.game.dialogue.FaceAnim
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener

@@ -4,7 +4,6 @@ import content.global.plugin.item.equipment.gloves.FOGGlovesListener.Companion.u
 import content.global.skill.runecrafting.Talisman.Companion.forName
 import core.ServerConstants
 import core.api.*
-import core.api.hasRequirement
 import core.game.container.impl.EquipmentContainer
 import core.game.node.entity.impl.Animator.Priority
 import core.game.node.entity.player.Player

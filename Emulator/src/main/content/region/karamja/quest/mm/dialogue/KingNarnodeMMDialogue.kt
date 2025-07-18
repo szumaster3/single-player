@@ -1,10 +1,6 @@
 package content.region.karamja.quest.mm.dialogue
 
 import core.api.*
-import core.api.finishQuest
-import core.api.getQuestStage
-import core.api.setQuestStage
-import core.api.startQuest
 import core.game.component.Component
 import core.game.dialogue.DialogueFile
 import core.tools.END_DIALOGUE

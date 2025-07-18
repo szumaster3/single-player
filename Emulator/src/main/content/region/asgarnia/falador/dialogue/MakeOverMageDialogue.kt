@@ -2,7 +2,6 @@ package content.region.asgarnia.falador.dialogue
 
 import content.region.asgarnia.falador.quest.rd.RecruitmentDrive
 import core.api.*
-import core.api.getQuestStage
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

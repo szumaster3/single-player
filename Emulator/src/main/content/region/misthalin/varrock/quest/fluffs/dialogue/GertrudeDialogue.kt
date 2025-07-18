@@ -1,8 +1,6 @@
 package content.region.misthalin.varrock.quest.fluffs.dialogue
 
 import core.api.*
-import core.api.finishQuest
-import core.api.updateQuestTab
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

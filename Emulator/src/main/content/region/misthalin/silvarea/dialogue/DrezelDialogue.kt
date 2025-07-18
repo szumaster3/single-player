@@ -1,10 +1,6 @@
 package content.region.misthalin.silvarea.dialogue
 
-import core.api.addItem
-import core.api.inInventory
-import core.api.setQuestStage
-import core.api.removeItem
-import core.api.sendMessage
+import core.api.*
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

@@ -1,22 +1,8 @@
 package content.region.misthalin.varrock.plugin.museum.plugin
 
 import content.region.misthalin.digsite.dialogue.GateGuardDialogue
-import content.region.misthalin.varrock.plugin.museum.dialogue.TalkAboutCamels
-import content.region.misthalin.varrock.plugin.museum.dialogue.TalkAboutDragons
-import content.region.misthalin.varrock.plugin.museum.dialogue.TalkAboutKalphiteQueen
-import content.region.misthalin.varrock.plugin.museum.dialogue.TalkAboutLeeches
-import content.region.misthalin.varrock.plugin.museum.dialogue.TalkAboutLizards
-import content.region.misthalin.varrock.plugin.museum.dialogue.TalkAboutMoles
-import content.region.misthalin.varrock.plugin.museum.dialogue.TalkAboutMonkeys
-import content.region.misthalin.varrock.plugin.museum.dialogue.TalkAboutPenguins
-import content.region.misthalin.varrock.plugin.museum.dialogue.TalkAboutSeaSlugs
-import content.region.misthalin.varrock.plugin.museum.dialogue.TalkAboutSnails
-import content.region.misthalin.varrock.plugin.museum.dialogue.TalkAboutSnakes
-import content.region.misthalin.varrock.plugin.museum.dialogue.TalkAboutTerrorBirds
-import content.region.misthalin.varrock.plugin.museum.dialogue.TalkAboutTortoises
-import content.region.misthalin.varrock.plugin.museum.dialogue.TalkAboutWyverns
+import content.region.misthalin.varrock.plugin.museum.dialogue.*
 import core.api.*
-import core.api.isQuestComplete
 import core.game.global.action.ClimbActionHandler
 import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType

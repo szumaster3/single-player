@@ -1,7 +1,6 @@
 package content.global.skill.construction.decoration.questhall
 
 import core.api.*
-import core.api.closeDialogue
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.Node

@@ -1,6 +1,6 @@
 package core.game.world.map.zone.impl
 
-import content.region.island.tutorial.plugin.*
+import content.region.island.tutorial.plugin.TutorialStage
 import core.api.getRegionBorders
 import core.api.inBorders
 import core.game.node.Node

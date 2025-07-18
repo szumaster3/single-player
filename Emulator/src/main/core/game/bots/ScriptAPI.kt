@@ -36,17 +36,17 @@ import core.game.world.update.flag.context.Graphics
 import core.tools.Log
 import core.tools.RandomFunction
 import core.tools.colorize
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import org.json.simple.JSONArray
+import org.json.simple.JSONObject
+import org.rs.consts.Items
 import java.util.*
 import java.util.concurrent.CountDownLatch
 import kotlin.math.max
 import kotlin.math.pow
 import kotlin.math.sqrt
 import kotlin.random.Random
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import org.json.simple.JSONArray
-import org.json.simple.JSONObject
-import org.rs.consts.Items
 
 class ScriptAPI(private val bot: Player) {
     val GRAPHICSUP = Graphics(1576)

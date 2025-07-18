@@ -1,7 +1,7 @@
 package content.region.morytania.plugin.lotr.plugin
 
-import core.game.world.map.Location
 import core.game.node.scenery.Scenery
+import core.game.world.map.Location
 
 /**
  * Represents the tarn lair passages.

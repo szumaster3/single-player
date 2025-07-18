@@ -1,15 +1,15 @@
 package core.game.bots
 
+import content.global.bots.Idler
+import core.Server
+import core.api.TickListener
+import core.api.getWorldTicks
+import core.game.interaction.MovementPulse
 import core.game.node.entity.player.Player
 import core.game.system.task.Pulse
 import core.game.world.GameWorld
 import core.game.world.map.Location
 import core.tools.RandomFunction
-import core.Server
-import content.global.bots.Idler
-import core.api.*
-import core.game.interaction.MovementPulse
-import core.tools.Log
 
 class GBCTick : TickListener {
     override fun tick() {

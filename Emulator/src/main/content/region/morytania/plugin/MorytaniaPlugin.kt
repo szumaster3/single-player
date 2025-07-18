@@ -3,9 +3,6 @@ package content.region.morytania.plugin
 import content.global.skill.agility.AgilityHandler
 import content.region.morytania.swamp.dialogue.AbidorCrankDialogue
 import core.api.*
-import core.api.hasRequirement
-import core.api.isQuestComplete
-import core.api.setMinimapState
 import core.game.bots.AIPlayer
 import core.game.global.action.ClimbActionHandler
 import core.game.interaction.IntType

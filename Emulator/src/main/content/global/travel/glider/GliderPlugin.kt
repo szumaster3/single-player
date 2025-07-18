@@ -1,13 +1,11 @@
 package content.global.travel.glider
 
 import core.api.*
-import core.api.isQuestComplete
 import core.game.dialogue.FaceAnim
 import core.game.dialogue.SequenceDialogue.dialogue
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.interaction.InterfaceListener
-import core.tools.END_DIALOGUE
 import org.rs.consts.Components
 import org.rs.consts.NPCs
 import org.rs.consts.Quests

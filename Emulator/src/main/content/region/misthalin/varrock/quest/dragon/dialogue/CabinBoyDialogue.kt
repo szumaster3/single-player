@@ -5,7 +5,6 @@ import core.game.dialogue.Dialogue
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest
-import core.plugin.Initializable
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 

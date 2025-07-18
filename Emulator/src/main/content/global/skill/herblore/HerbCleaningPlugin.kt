@@ -1,7 +1,6 @@
 package content.global.skill.herblore
 
 import core.api.*
-import core.api.requireQuest
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.skill.Skills

@@ -2,7 +2,10 @@ package core.game.world.map.build
 
 import core.cache.misc.buffer.ByteBufferUtils
 import core.game.node.scenery.Scenery
-import core.game.world.map.*
+import core.game.world.map.Location
+import core.game.world.map.Region
+import core.game.world.map.RegionManager
+import core.game.world.map.RegionPlane
 import java.nio.ByteBuffer
 
 /**

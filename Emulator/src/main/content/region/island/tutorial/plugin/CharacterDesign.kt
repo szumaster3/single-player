@@ -1,7 +1,6 @@
 package content.region.island.tutorial.plugin
 
 import core.api.*
-import core.api.sendInterfaceConfig
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.appearance.Gender
 import core.tools.RandomFunction
