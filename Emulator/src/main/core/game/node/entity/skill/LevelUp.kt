@@ -23,6 +23,10 @@ object LevelUp {
      * Bitmask for flashing icons per skill level-up.
      */
     private val FLASH_ICONS = intArrayOf(1, 4, 2, 64, 8, 16, 32, 32768, 131072, 2048, 16384, 65536, 1024, 8192, 4096, 256, 128, 512, 524288, 1048576, 262144, 4194304, 2097152, 8388608, 16777216)
+    /**
+     * Varbits for flashing icons.
+     */
+    private val FLASH_VARBITS = intArrayOf(4732, 4744, 4738, 4750, 4733, 4745, 4739, 4751, 4734, 4746, 4740, 4752, 4735, 4747, 4741, 4753, 4736, 4748, 4742, 4754, 4737, 4749, 4743, 4755)
     private val ADVANCE_CONFIGS = intArrayOf(9, 40, 17, 49, 25, 57, 33, 641, 659, 664, 121, 649, 89, 114, 107, 72, 64, 80, 673, 680, 99, 698, 689, 705)
     private val CLIENT_ID = intArrayOf(1, 5, 2, 6, 3, 7, 4, 16, 18, 19, 15, 17, 11, 14, 13, 9, 8, 10, 20, 21, 12, 23, 22, 24, 24)
 
