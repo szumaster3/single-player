@@ -77,7 +77,7 @@ object RegionManager {
      */
     @JvmStatic
     fun getClippingFlag(l: Location): Int {
-        return getClippingFlag(l.z, l.x, l.y)
+        return getClippingFlag(l.z.toInt(), l.x, l.y)
     }
 
     /**
@@ -206,7 +206,7 @@ object RegionManager {
      */
     @JvmStatic
     fun isLandscape(l: Location): Boolean {
-        return isLandscape(l.z, l.x, l.y)
+        return isLandscape(l.z.toInt(), l.x, l.y)
     }
 
     /**
@@ -401,7 +401,7 @@ object RegionManager {
      */
     @JvmStatic
     fun getObject(l: Location): Scenery? {
-        return getObject(l.z, l.x, l.y)
+        return getObject(l.z.toInt(), l.x, l.y)
     }
 
     /**
@@ -447,7 +447,7 @@ object RegionManager {
     @JvmStatic
     fun getRegionPlane(l: Location): RegionPlane {
         val regionId = ((l.x shr 6) shl 8) or (l.y shr 6)
-        return forId(regionId).planes[l.z]
+        return forId(regionId).planes[l.z.toInt()]
     }
 
     /**
@@ -458,7 +458,7 @@ object RegionManager {
     @JvmStatic
     fun getRegionChunk(l: Location): RegionChunk {
         val plane = getRegionPlane(l)
-        return plane.getRegionChunk(l.localX / RegionChunk.SIZE, l.localY / RegionChunk.SIZE)
+        return plane.getRegionChunk(l.getLocalX() / RegionChunk.SIZE, l.getLocalY() / RegionChunk.SIZE)
     }
 
     /**
@@ -765,7 +765,7 @@ object RegionManager {
         val b = ZoneBorders(l.x, l.y, l.x + 24, l.y + 24)
         for (regionX in ((l.regionX - 6) shr 3)..((l.regionX + 6) shr 3)) {
             for (regionY in ((l.regionY - 6) shr 3)..((l.regionY + 6) shr 3)) {
-                for (player in forId(regionX shl 8 or regionY).planes[l.z].players) {
+                for (player in forId(regionX shl 8 or regionY).planes[l.z.toInt()].players) {
                     l = player.location
                     if (b.insideBorder(l.x, l.y)) {
                         players.add(player)
@@ -812,7 +812,7 @@ object RegionManager {
         val players: MutableList<Player> = LinkedList()
         for (regionX in ((l.regionX - 6) shr 3)..((l.regionX + 6) shr 3)) {
             for (regionY in ((l.regionY - 6) shr 3)..((l.regionY + 6) shr 3)) {
-                for (player in forId((regionX shl 8) or regionY).planes[l.z].players) {
+                for (player in forId((regionX shl 8) or regionY).planes[l.z.toInt()].players) {
                     if (player.location.withinDistance(l, distance)) {
                         players.add(player)
                     }
@@ -834,8 +834,8 @@ object RegionManager {
         val players: MutableList<Player> = LinkedList()
         for (regionX in ((l.regionX - 6) shr 3)..((l.regionX + 6) shr 3)) {
             for (regionY in ((l.regionY - 6) shr 3)..((l.regionY + 6) shr 3)) {
-                for (player in forId((regionX shl 8) or regionY).planes[l.z].players) {
-                    if (player.location.x >= l.getX() - xdist && player.location.x <= l.getX() + xdist && player.location.y >= l.getY() - ydist && player.location.y <= l.getY() + ydist) {
+                for (player in forId((regionX shl 8) or regionY).planes[l.z.toInt()].players) {
+                    if (player.location.x >= l.x - xdist && player.location.x <= l.x + xdist && player.location.y >= l.y - ydist && player.location.y <= l.y + ydist) {
                         players.add(player)
                     }
                 }
@@ -855,7 +855,7 @@ object RegionManager {
         val players: MutableList<Player> = LinkedList()
         for (regionX in ((l.regionX - 6) shr 3)..((l.regionX + 6) shr 3)) {
             for (regionY in ((l.regionY - 6) shr 3)..((l.regionY + 6) shr 3)) {
-                for (player in forId((regionX shl 8) or regionY).planes[l.z].players) {
+                for (player in forId((regionX shl 8) or regionY).planes[l.z.toInt()].players) {
                     if (player.location.withinMaxnormDistance(l, distance)) {
                         players.add(player)
                     }
@@ -925,7 +925,7 @@ object RegionManager {
         val npcs: MutableList<NPC> = LinkedList()
         for (regionX in ((l.regionX - 6) shr 3)..((l.regionX + 6) shr 3)) {
             for (regionY in ((l.regionY - 6) shr 3)..((l.regionY + 6) shr 3)) {
-                for (n in forId(regionX shl 8 or regionY).planes[l.z].npcs) {
+                for (n in forId(regionX shl 8 or regionY).planes[l.z.toInt()].npcs) {
                     if (n.location.withinDistance(l, (n.size() shr 1) + distance)) {
                         npcs.add(n)
                     }

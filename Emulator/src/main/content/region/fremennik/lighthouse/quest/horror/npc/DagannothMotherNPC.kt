@@ -42,7 +42,7 @@ class DagannothMotherNPC(
 
     override fun init() {
         super.init()
-        if (session?.player?.location?.regionId == 10056) {
+        if (session?.player?.location?.getRegionId() == 10056) {
             Pulser.submit(DagannothTransform(session.player, this))
         } else {
             session?.close()

@@ -65,10 +65,7 @@ class PulseRunner {
         return System.currentTimeMillis() - startTime
     }
 
-    private fun notifyIfTooLong(
-        pulse: Pulse,
-        elapsedTime: Long,
-    ) {
+    private fun notifyIfTooLong(pulse: Pulse, elapsedTime: Long) {
         if (elapsedTime >= 100) {
             if (pulse is GeneralBotCreator.BotScriptPulse) {
                 log(

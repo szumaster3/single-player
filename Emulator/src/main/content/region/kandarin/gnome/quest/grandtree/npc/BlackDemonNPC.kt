@@ -57,7 +57,7 @@ class BlackDemonNPC(
     }
 
     override fun finalizeDeath(killer: Entity?) {
-        if (killer!!.asPlayer().location.regionId == 9882) {
+        if (killer!!.asPlayer().location.getRegionId() == 9882) {
             setQuestStage(killer.asPlayer(), Quests.THE_GRAND_TREE, 98)
             this.isRespawn = false
         }

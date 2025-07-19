@@ -152,7 +152,7 @@ class WildernessObeliskPlugin : OptionHandler() {
         companion object {
             @JvmStatic
             fun forLocation(location: Location?): Obelisk? {
-                for (obelisk in values()) if (obelisk.location.getDistance(location) <= 20) return obelisk
+                for (obelisk in values()) if (obelisk.location.getDistance(location!!) <= 20) return obelisk
                 return null
             }
         }

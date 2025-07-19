@@ -743,7 +743,7 @@ class AgilityPyramidCourse : AgilityCourse {
         fun transformLevel(location: Location): Location {
             val xDiff = 320
             val yDiff = 1856
-            if (location.regionId == 12105 && location.z == 2) {
+            if (location.getRegionId() == 12105 && location.z == 2) {
                 return Location(location.x + xDiff, location.y - yDiff, 3)
             }
             return location.transform(0, 0, -1)

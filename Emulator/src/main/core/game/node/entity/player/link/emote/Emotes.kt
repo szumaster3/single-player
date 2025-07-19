@@ -621,6 +621,6 @@ enum class Emotes(
          * @return True if the player can use it.
          */
         private fun isEligibleForGoblinBow(player: Player): Boolean =
-            player.location.regionId == 13206 && !player.getAttribute("mistag-greeted", false)
+            player.location.getRegionId() == 13206 && !player.getAttribute("mistag-greeted", false)
     }
 }

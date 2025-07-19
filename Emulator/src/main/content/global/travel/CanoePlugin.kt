@@ -167,7 +167,7 @@ class CanoePlugin :
                 private val stationRegionMap = CanoeStationLocations.values().associateBy { it.region }
 
                 @JvmStatic
-                fun getCanoeStationbyLocation(location: Location): CanoeStationLocations = stationRegionMap[location.regionId]!!
+                fun getCanoeStationbyLocation(location: Location): CanoeStationLocations = stationRegionMap[location.getRegionId()]!!
             }
         }
     }

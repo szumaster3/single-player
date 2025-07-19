@@ -77,7 +77,7 @@ class EvilTwinListener :
 
         on(doorsId, IntType.SCENERY, "open") { player, node ->
             val end = DoorActionHandler.getEndLocation(player, node.asScenery())
-            if (player.location.localX < 9 && !player.getAttribute(GameAttributes.RE_TWIN_DIAL, false)) {
+            if (player.location.getLocalX() < 9 && !player.getAttribute(GameAttributes.RE_TWIN_DIAL, false)) {
                 openDialogue(player, MollyDialogue(3), EvilTwinUtils.mollyNPC!!)
                 return@on true
             }

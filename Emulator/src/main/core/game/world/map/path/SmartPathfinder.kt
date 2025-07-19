@@ -141,8 +141,8 @@ internal constructor() : Pathfinder() {
         }
         val z = start!!.z
         val location = Location.create(start.regionX - 6 shl 3, start.regionY - 6 shl 3, z)
-        curX = start.sceneX
-        curY = start.sceneY
+        curX = start.getSceneX()
+        curY = start.getSceneY()
         dstX = end!!.getSceneX(start)
         dstY = end.getSceneY(start)
         var attempts: Int
@@ -243,7 +243,7 @@ internal constructor() : Pathfinder() {
         var previousDirection: Int
         attempts = 0
         var directionFlag = via[curX][curY].also { previousDirection = it }
-        while (curX != start.sceneX || curY != start.sceneY) {
+        while (curX != start.getSceneX() || curY != start.getSceneY()) {
             if (++attempts > queueX.size) {
                 return path
             }
@@ -266,7 +266,7 @@ internal constructor() : Pathfinder() {
             directionFlag = via[curX][curY]
         }
         if (debugImg != null) {
-            debugImg.setRGB(3 * 105 + start.sceneX, 103 - start.sceneY, 0xff0000)
+            debugImg.setRGB(3 * 105 + start.getSceneX(), 103 - start.getSceneY(), 0xff0000)
             debugImg.setRGB(3 * 105 + dstX, 103 - dstY, 0x00ff00)
             if (GameWorld.settings?.smartpathfinder_bfs ?: false) {
                 ImageIO.write(
@@ -308,9 +308,9 @@ internal constructor() : Pathfinder() {
             val qy: UInt = (q and 0x000000ffu)
             //val dp = pc.toInt() + Math.abs(end.sceneX - (px.toInt())) + Math.abs(end.sceneY - (py.toInt()))
             //val dq = qc.toInt() + Math.abs(end.sceneX - (qx.toInt())) + Math.abs(end.sceneY - (qy.toInt()))
-            val dp = pc.toDouble() + Math.max(Math.abs(end.sceneX - px.toInt()), Math.abs(end.sceneY - py.toInt()))
+            val dp = pc.toDouble() + Math.max(Math.abs(end.getSceneX() - px.toInt()), Math.abs(end.getSceneY() - py.toInt()))
                 .toDouble()
-            val dq = qc.toDouble() + Math.max(Math.abs(end.sceneX - qx.toInt()), Math.abs(end.sceneY - qy.toInt()))
+            val dq = qc.toDouble() + Math.max(Math.abs(end.getSceneX() - qx.toInt()), Math.abs(end.getSceneY() - qy.toInt()))
                 .toDouble()
             if (dp < dq) {
                 return -1

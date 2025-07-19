@@ -13,7 +13,7 @@ class IncubatorPlugin : InteractionListener {
 
     override fun defineListeners() {
         on(incubatorIds, IntType.SCENERY, "take-egg") { player, _ ->
-            val region = player.location.regionId
+            val region = player.location.getRegionId()
             val activeEgg = IncubatorTimer.getEggFor(player, region) ?: return@on false
 
             if (!activeEgg.finished) {
@@ -36,7 +36,7 @@ class IncubatorPlugin : InteractionListener {
         }
 
         on(incubatorIds, IntType.SCENERY, "inspect") { player, _ ->
-            val activeEgg = IncubatorTimer.getEggFor(player, player.location.regionId)
+            val activeEgg = IncubatorTimer.getEggFor(player, player.location.getRegionId())
 
             if (activeEgg == null) {
                 sendMessage(player, "The incubator is currently empty.")
@@ -59,7 +59,7 @@ class IncubatorPlugin : InteractionListener {
 
         onUseWith(IntType.SCENERY, eggIds, *incubatorIds) { player, used, _ ->
             val egg = IncubatorEgg.forItem(used.asItem()) ?: return@onUseWith false
-            val activeEgg = IncubatorTimer.getEggFor(player, player.location.regionId)
+            val activeEgg = IncubatorTimer.getEggFor(player, player.location.getRegionId())
 
             if (activeEgg != null) {
                 sendMessage(player, "You already have an egg in this incubator.")
@@ -67,7 +67,7 @@ class IncubatorPlugin : InteractionListener {
             }
 
             if (removeItem(player, used.asItem())) {
-                IncubatorTimer.registerEgg(player, player.location.regionId, egg)
+                IncubatorTimer.registerEgg(player, player.location.getRegionId(), egg)
             }
             return@onUseWith true
         }

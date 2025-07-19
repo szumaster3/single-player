@@ -5,6 +5,7 @@ import core.game.node.entity.player.Player
 import core.game.node.scenery.Constructed
 import core.game.node.scenery.Scenery
 import core.game.node.scenery.SceneryBuilder
+import core.game.node.scenery.SceneryManager
 import core.game.world.map.*
 import core.tools.Log
 
@@ -63,6 +64,7 @@ class Room(
      * @param style The housing style used for decoration.
      */
     fun configure(style: HousingStyle) {
+        unregisterRoomScenery()
         hotspots = Array(properties.hotspots.size) { i -> properties.hotspots[i].copy() }
         decorate(style)
     }
@@ -76,6 +78,17 @@ class Room(
         val region = RegionManager.forId(style.regionId)
         Region.load(region, true)
         chunk = region.planes[style.plane].getRegionChunk(properties.chunkX, properties.chunkY)
+        val buildChunk = chunk as? BuildRegionChunk ?: return
+        for (plane in 0 until BuildRegionChunk.ARRAY_SIZE) {
+            for (x in 0 until 8) {
+                for (y in 0 until 8) {
+                    val scenery = buildChunk.get(x, y, plane)
+                    if (scenery != null) {
+                        SceneryManager.registerTile(scenery, scenery.location)
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -166,6 +179,34 @@ class Room(
                             SceneryBuilder.remove(scenery)
                             chunk.remove(scenery)
                         }
+                    }
+                }
+            }
+        }
+    }
+
+    fun registerRoomScenery() {
+        val buildChunk = chunk as? BuildRegionChunk ?: return
+        for (plane in 0 until BuildRegionChunk.ARRAY_SIZE) {
+            for (x in 0 until 8) {
+                for (y in 0 until 8) {
+                    val scenery = buildChunk.get(x, y, plane)
+                    if (scenery != null) {
+                        SceneryManager.registerTile(scenery, scenery.location)
+                    }
+                }
+            }
+        }
+    }
+
+    fun unregisterRoomScenery() {
+        val buildChunk = chunk as? BuildRegionChunk ?: return
+        for (plane in 0 until BuildRegionChunk.ARRAY_SIZE) {
+            for (x in 0 until 8) {
+                for (y in 0 until 8) {
+                    val scenery = buildChunk.get(x, y, plane)
+                    if (scenery != null) {
+                        SceneryManager.unregisterTile(scenery, scenery.location)
                     }
                 }
             }

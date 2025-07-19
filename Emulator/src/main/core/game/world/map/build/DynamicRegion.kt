@@ -3,6 +3,7 @@ package core.game.world.map.build
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.link.music.MusicZone
 import core.game.node.item.GroundItemManager
+import core.game.node.scenery.SceneryManager
 import core.game.world.map.Location
 import core.game.world.map.Region
 import core.game.world.map.RegionChunk
@@ -14,7 +15,7 @@ import core.game.world.map.zone.impl.MultiwayCombatZone
 class DynamicRegion(
     private val regionCopyId: Int,
     x: Int,
-    y: Int
+    y: Int,
 ) : Region(x, y) {
 
     companion object {
@@ -208,6 +209,8 @@ class DynamicRegion(
                     val obj = plane.objects[i][j]
                     if (obj != null) {
                         LandscapeParser.removeScenery(obj)
+                        SceneryManager.unregister(obj)
+                        SceneryManager.unregisterTile(obj, obj.location)
                     } else {
                         plane.add(null, i, j, true)
                     }
@@ -219,6 +222,14 @@ class DynamicRegion(
             val rp = fromRegion.planes[l.z]
             chunk.currentBase = baseLocation.transform(x shl 3, y shl 3, z)
             chunk.rebuildFlags(rp)
+            for (row in chunk.objects) {
+                for (obj in row) {
+                    if (obj != null) {
+                        SceneryManager.register(obj)
+                        SceneryManager.registerTile(obj, obj.location)
+                    }
+                }
+            }
         }
     }
 
@@ -237,6 +248,14 @@ class DynamicRegion(
                 chunks[plane.plane].forEach { row ->
                     row.forEach { chunk ->
                         chunk?.items?.forEach { GroundItemManager.getItems().remove(it) }
+                        for (row in chunk!!.objects) {
+                            for (obj in row) {
+                                if (obj != null) {
+                                    SceneryManager.register(obj)
+                                    SceneryManager.registerTile(obj, obj.location)
+                                }
+                            }
+                        }
                     }
                 }
             }

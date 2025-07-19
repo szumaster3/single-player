@@ -23,14 +23,8 @@ class GardenerGhostDialogue(player: Player? = null) : Dialogue(player) {
             } else {
                 sendChat(
                     gardenerGhost,
-                    "Go " +
-                        gardenerGhost.location
-                            .deriveDirection(
-                                gardenerGhost.graveLocation,
-                            ).name
-                            .lowercase()
-                            .replace('_', '-') +
-                        ", mate",
+                    "Go " + gardenerGhost.location.deriveDirection(gardenerGhost.graveLocation)!!.name.lowercase()
+                        .replace('_', '-') + ", mate",
                 )
                 gardenerGhost.continueFollowing(player)
             }

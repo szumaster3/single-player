@@ -119,7 +119,7 @@ class PCShifterNPC : AbstractNPC {
             entity: Entity,
             destination: Location?,
         ) {
-            if (destination == null || session != null && destination.regionId != session.region.id) {
+            if (destination == null || session != null && destination.getRegionId() != session.region.id) {
                 return
             }
             Graphics.send(Graphics.create(org.rs.consts.Graphics.PEST_CONTROL_SPAWN_654), entity.location)

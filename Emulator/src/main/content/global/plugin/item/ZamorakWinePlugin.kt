@@ -26,7 +26,7 @@ class ZamorakWinePlugin : InteractionListener {
 
     override fun defineListeners() {
         on(Items.WINE_OF_ZAMORAK_245, IntType.GROUND_ITEM, "take") { player, wine ->
-            if (player.location.regionId != 11574) {
+            if (player.location.getRegionId() != 11574) {
                 PickupHandler.take(player, wine as GroundItem)
                 return@on true
             }

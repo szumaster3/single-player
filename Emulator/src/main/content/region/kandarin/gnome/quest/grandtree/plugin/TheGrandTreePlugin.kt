@@ -63,8 +63,8 @@ class TheGrandTreePlugin : InteractionListener {
                         npc,
                     )
 
-                player.location.regionId == aboveground -> openDialogue(player, KingNarnodeDialogue(), npc)
-                player.location.regionId != aboveground -> openDialogue(player, KingNarnodeUnderGroundDialogue(), npc)
+                player.location.getRegionId() == aboveground -> openDialogue(player, KingNarnodeDialogue(), npc)
+                player.location.getRegionId() != aboveground -> openDialogue(player, KingNarnodeUnderGroundDialogue(), npc)
             }
             return@on true
         }

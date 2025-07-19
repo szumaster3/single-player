@@ -1,7 +1,7 @@
 package core.net.packet;
 
 import core.cache.crypto.ISAACCipher;
-import core.cache.misc.buffer.ByteBufferUtils;
+import core.cache.ByteBufferExtensions;
 
 import java.nio.ByteBuffer;
 
@@ -657,7 +657,7 @@ public class IoBuffer {
      */
     public IoBuffer putJagString2(String val) {
         byte[] packed = new byte[256];
-        int length = ByteBufferUtils.packGJString2(0, packed, val);
+        int length = ByteBufferExtensions.packGJString2(0, packed, val);
         buf.put((byte) 0).put(packed, 0, length).put((byte) 0);
         return this;
     }
@@ -964,7 +964,7 @@ public class IoBuffer {
      * @return The decoded string.
      */
     public String getString() {
-        return ByteBufferUtils.getString(buf);
+        return ByteBufferExtensions.getString(buf);
     }
 
     /**
@@ -976,7 +976,7 @@ public class IoBuffer {
     public String getJagString() {
         byte b = buf.get();
         if (b == 0) return "";
-        return ((char) b) + ByteBufferUtils.getString(buf);
+        return ((char) b) + ByteBufferExtensions.getString(buf);
     }
 
     /**

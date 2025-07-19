@@ -1,6 +1,6 @@
 package content.minigame.bountyhunter.plugin
 
-import core.cache.misc.buffer.ByteBufferUtils.putString
+import core.cache.ByteBufferExtensions
 import core.game.component.Component
 import core.game.node.entity.player.Player
 import core.tools.StringUtils
@@ -76,11 +76,11 @@ class BHScoreBoard {
             val buffer = ByteBuffer.allocate(500)
             for (i in 0 until SIZE) {
                 buffer.putInt(HUNTERS.scores[i])
-                putString(HUNTERS.names[i]!!, buffer)
+                ByteBufferExtensions.putString(HUNTERS.names[i]!!, buffer)
             }
             for (i in 0 until SIZE) {
                 buffer.putInt(ROGUES.scores[i])
-                putString(ROGUES.names[i]!!, buffer)
+                ByteBufferExtensions.putString(ROGUES.names[i]!!, buffer)
             }
             buffer.flip()
         }

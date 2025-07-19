@@ -26,7 +26,7 @@ class CaptainErrdoDialogue(player: Player? = null) : Dialogue(player) {
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (getQuestStage(player!!, Quests.THE_GRAND_TREE)) {
             55 -> {
-                if (player!!.location.regionId == 11567) {
+                if (player!!.location.getRegionId() == 11567) {
                     when (stage) {
                         0 -> npcl(FaceAnim.OLD_DEFAULT, "Sorry about that.").also { stage++ }
                         1 ->
@@ -64,7 +64,7 @@ class CaptainErrdoDialogue(player: Player? = null) : Dialogue(player) {
                         7 -> npcl(FaceAnim.OLD_DEFAULT, "Take care adventurer!").also { stage++ }
                         8 -> playerl(FaceAnim.FRIENDLY, "Take care little man.").also { stage = END_DIALOGUE }
                     }
-                } else if (player!!.location.regionId == 9782) {
+                } else if (player!!.location.getRegionId() == 9782) {
                     when (stage) {
                         0 -> npcl(FaceAnim.OLD_DEFAULT, "Hi. The king said that you need to leave?").also { stage++ }
                         1 -> playerl(FaceAnim.FRIENDLY, "Apparently, humans are invading!").also { stage++ }

@@ -31,10 +31,10 @@ class WaterSourcePlugin : InteractionListener {
                 )
                 return@onUseWith true
             }
-            if (with.id == 9695 && player.location.regionId != 11571) {
+            if (with.id == 9695 && player.location.getRegionId() != 11571) {
                 return@onUseWith false
             }
-            if (used.id in intArrayOf(434, 721, 722, 1980, 11151) && player.location.regionId != 11571) {
+            if (used.id in intArrayOf(434, 721, 722, 1980, 11151) && player.location.getRegionId() != 11571) {
                 return@onUseWith false
             }
 
@@ -67,7 +67,7 @@ class WaterSourcePlugin : InteractionListener {
          */
 
         setDest(IntType.SCENERY, intArrayOf(9695), "use") { player, node ->
-            if (player.location.regionId == 11571){
+            if (player.location.getRegionId() == 11571){
                 return@setDest Location.create(2934, 3280, 0)
             }
             return@setDest node.location

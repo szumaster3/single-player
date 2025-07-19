@@ -1,6 +1,6 @@
 package core.game.system.monitor;
 
-import core.cache.misc.buffer.ByteBufferUtils;
+import core.cache.ByteBufferExtensions;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -104,7 +104,7 @@ public class MessageLog {
         buffer.putShort((short) size);
 
         for (String message : messages) {
-            ByteBufferUtils.putString(message, buffer);
+            ByteBufferExtensions.putString(message, buffer);
             buffer.put((byte) '\n');
         }
 

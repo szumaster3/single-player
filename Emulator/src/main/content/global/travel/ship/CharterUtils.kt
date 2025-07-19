@@ -42,7 +42,7 @@ object CharterUtils {
      * @return The nearest [Destination] base if within [MAX_SAFE_DISTANCE], or `null` otherwise.
      */
     private fun findNearestBase(location: Location?): Destination? =
-        values().find { it.base?.withinDistance(location, MAX_SAFE_DISTANCE) == true }
+        values().find { it.base?.withinDistance(location!!, MAX_SAFE_DISTANCE) == true }
 
     /**
      * Opens the charter travel interface.

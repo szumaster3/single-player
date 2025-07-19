@@ -24,7 +24,7 @@ class CameraCommandSet : CommandSet(Privilege.ADMIN) {
                 height = args[3].toIntOrNull() ?: return@define
             }
 
-            val region = RegionManager.forId(player.location.regionId)
+            val region = RegionManager.forId(player.location.getRegionId())
             val base = region.baseLocation
 
             val globalLoc = base.transform(regionX, regionY, 0)
@@ -54,7 +54,7 @@ class CameraCommandSet : CommandSet(Privilege.ADMIN) {
                 speed = args[4].toIntOrNull() ?: return@define
             }
 
-            val region = RegionManager.forId(player.location.regionId)
+            val region = RegionManager.forId(player.location.getRegionId())
             val base = region.baseLocation
 
             val globalLoc = base.transform(regionX, regionY, 0)
@@ -84,7 +84,7 @@ class CameraCommandSet : CommandSet(Privilege.ADMIN) {
                 speed = args[4].toIntOrNull() ?: return@define
             }
 
-            val region = RegionManager.forId(player.location.regionId)
+            val region = RegionManager.forId(player.location.getRegionId())
             val base = region.baseLocation
 
             val globalLoc = base.transform(regionX, regionY, 0)

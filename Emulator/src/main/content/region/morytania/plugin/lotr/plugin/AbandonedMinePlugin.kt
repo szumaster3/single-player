@@ -56,7 +56,7 @@ class AbandonedMinePlugin : InteractionListener, MapArea {
                 musicPlayer.unlock(Music.SPOOKY2_11)
             }
 
-            when (player.location.regionId) {
+            when (player.location.getRegionId()) {
                 11079 -> if (!musicPlayer.hasUnlocked(Music.DEEP_DOWN_278)) {
                     musicPlayer.unlock(Music.DEEP_DOWN_278)
                 }

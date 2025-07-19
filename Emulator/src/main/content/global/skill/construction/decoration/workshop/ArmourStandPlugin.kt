@@ -24,8 +24,8 @@ import kotlin.math.ceil
  */
 @Initializable
 class ArmourStandPlugin : UseWithHandler(
-    /*
-     * itemIDs that can be used with the repair stand.
+    /**
+     * Represents the items that can be repaired on the stand.
      */
     Items.BROKEN_AXE_494,
     Items.BROKEN_PICKAXE_468,

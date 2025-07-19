@@ -334,8 +334,8 @@ abstract class Cutscene(val player: Player) {
      */
     fun start(hideMiniMap: Boolean) {
         logCutscene("Starting cutscene for ${player.username}.")
-        region = RegionManager.forId(player.location.regionId)
-        base = RegionManager.forId(player.location.regionId).baseLocation
+        region = RegionManager.forId(player.location.getRegionId())
+        base = RegionManager.forId(player.location.getRegionId()).baseLocation
         setup()
         if (hideMiniMap) {
             setMinimapState(player, 2)

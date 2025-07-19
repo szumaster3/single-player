@@ -6,6 +6,7 @@ import core.game.node.entity.player.Player;
 import core.game.node.item.GroundItem;
 import core.game.node.item.Item;
 import core.game.node.scenery.Scenery;
+import core.game.node.scenery.SceneryManager;
 import core.game.world.map.build.DynamicRegion;
 import core.game.world.map.build.RegionFlags;
 import core.game.world.update.flag.chunk.ItemUpdateFlag;
@@ -124,6 +125,7 @@ public final class RegionPlane {
         }
         if (object != null) {
             object.setRenderable(true);
+            SceneryManager.register(object);
         }
     }
 
@@ -172,13 +174,30 @@ public final class RegionPlane {
         int offsetX = x - chunkX * CHUNK_SIZE;
         int offsetY = y - chunkY * CHUNK_SIZE;
         RegionChunk chunk = getRegionChunk(chunkX, chunkY);
-        Scenery remove = new Scenery(0, region.getBaseLocation().transform(x, y, plane), 22, 0);
-        remove.setRenderable(false);
+
+        Scenery oldObject;
         if (chunk instanceof BuildRegionChunk) {
             int index = ((BuildRegionChunk) chunk).getIndex(offsetX, offsetY, objectId);
+            oldObject = ((BuildRegionChunk) chunk).getObjects(index)[offsetX][offsetY];
+            Scenery remove = new Scenery(0, region.getBaseLocation().transform(x, y, plane), 22, 0);
+            remove.setRenderable(false);
+
+            if (oldObject != null) {
+                SceneryManager.unregister(oldObject);
+            }
+
             ((BuildRegionChunk) chunk).getObjects(index)[offsetX][offsetY] = remove;
             return;
         }
+
+        oldObject = chunk.getObjects()[offsetX][offsetY];
+        Scenery remove = new Scenery(0, region.getBaseLocation().transform(x, y, plane), 22, 0);
+        remove.setRenderable(false);
+
+        if (oldObject != null) {
+            SceneryManager.unregister(oldObject);
+        }
+
         chunk.getObjects()[offsetX][offsetY] = remove;
     }
 
@@ -311,7 +330,8 @@ public final class RegionPlane {
             return;
         }
         if (item.isPrivate()) {
-            if (item.getDropper() != null && item.getDropper().isPlaying() && item.getDropper().getLocation().withinDistance(l)) {
+                                                                                                        // https://runescape.wiki/w/Drops
+            if (item.getDropper() != null && item.getDropper().isPlaying() && item.getDropper().getLocation().withinDistance(l, 7)) {
                 PacketRepository.send(ClearGroundItem.class, new OutgoingContext.BuildItem(item.getDropper(), item, 0));
             }
             return;

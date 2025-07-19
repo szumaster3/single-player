@@ -93,7 +93,7 @@ object NSUtils {
         }
         lock(player, 1)
         handleVisuals(player)
-        val locs = player.location.surroundingTiles
+        val locs = player.location.getSurroundingTiles()
         for (o in locs) {
             val obj = RegionManager.getObject(o)
             if (obj != null) {
@@ -128,7 +128,7 @@ object NSUtils {
     private fun handleVisuals(player: Player) {
         player.skills.decrementPrayerPoints(RandomFunction.random(1, 5).toDouble())
         playAudio(player, Sounds.CAST_BLOOM_1493)
-        val aroundPlayer = player.location.surroundingTiles
+        val aroundPlayer = player.location.getSurroundingTiles()
         for (location in aroundPlayer) {
             player.packetDispatch.sendGlobalPositionGraphic(
                 org.rs.consts.Graphics.SMALLS_STARS_SILVER_SICKLEB_263,

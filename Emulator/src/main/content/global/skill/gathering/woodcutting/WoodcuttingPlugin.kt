@@ -222,7 +222,7 @@ class WoodcuttingPlugin : InteractionListener {
         resource: WoodcuttingNode,
         node: Node,
     ): Boolean {
-        var regionId = player.location.regionId
+        var regionId = player.location.getRegionId()
         if (regionId == 10300 || regionId == 10044) {
             var npc = if (regionId == 10300) NPCs.CARPENTER_KJALLAK_3916 else NPCs.LUMBERJACK_LEIF_1395
             sendNPCDialogue(player, npc, "Hey! You're not allowed to chop those!")
@@ -280,7 +280,7 @@ class WoodcuttingPlugin : InteractionListener {
         var amount = amount
         var experience: Double = resource.experience
         val reward = resource.reward
-        if (player.location.regionId == 10300) {
+        if (player.location.getRegionId() == 10300) {
             return 1.0
         }
 

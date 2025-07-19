@@ -207,7 +207,7 @@ class CannonballSmelter : Script() {
                 if (ironMine.insideBorder(bot.location)) {
                     state = State.MINING_IRON
                 } else if (bot.location.y < 9757) {
-                    if (bot.location.regionId == ((47 shl 8) or 152)) {
+                    if (bot.location.getRegionId() == ((47 shl 8) or 152)) {
                         val door = scriptAPI.getNearestNode(2112, true)
                         if (door != null) {
                             scriptAPI.interact(bot, door, "open")

@@ -117,7 +117,7 @@ class CatapultRoomPlugin :
     }
 
     override fun enter(e: Entity): Boolean {
-        if (e is Player && e.getLocation().z == 1) {
+        if (e is Player && e.getLocation().z.toInt() == 1) {
             players.add(e)
             if (!pulse.isRunning) {
                 pulse.restart()

@@ -6,7 +6,7 @@ import core.cache.Cache
 import core.cache.CacheIndex
 import core.cache.def.impl.DataMap
 import core.cache.def.impl.ItemDefinition
-import core.cache.misc.buffer.ByteBufferUtils
+import core.cache.ByteBufferExtensions
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
 import core.game.system.task.Pulse
@@ -366,6 +366,6 @@ object QCRepository {
 
     private fun getQCString(index: Int): String {
         val data = Cache.getData(CacheIndex.QUICK_CHAT_MESSAGES, 1, index)
-        return ByteBufferUtils.getString(ByteBuffer.wrap(data))
+        return ByteBufferExtensions.getString(ByteBuffer.wrap(data))
     }
 }

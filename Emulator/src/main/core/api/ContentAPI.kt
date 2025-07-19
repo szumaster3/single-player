@@ -3275,9 +3275,9 @@ fun getPathableRandomLocalCoordinate(
 ): Location {
     var maxRadius = Vector.deriveWithEqualComponents(ServerConstants.MAX_PATHFIND_DISTANCE.toDouble()).x - 1
     var effectiveRadius = min(radius, maxRadius.toInt())
-    val swCorner = center.transform(-effectiveRadius, -effectiveRadius, center.z)
-    val neCorner = center.transform(effectiveRadius, effectiveRadius, center.z)
-    val borders = ZoneBorders(swCorner.x, swCorner.y, neCorner.x, neCorner.y, center.z)
+    val swCorner = center.transform(-effectiveRadius, -effectiveRadius, center.z.toInt())
+    val neCorner = center.transform(effectiveRadius, effectiveRadius, center.z.toInt())
+    val borders = ZoneBorders(swCorner.x, swCorner.y, neCorner.x, neCorner.y, center.z.toInt())
 
     var attempts = maxAttempts
     var success: Boolean
@@ -3302,7 +3302,7 @@ fun getPathableCardinal(
     target: Entity,
     center: Location,
 ): Location {
-    var tiles = center.cardinalTiles
+    var tiles = center.getCardinalTiles()
 
     for (tile in tiles) {
         val path = Pathfinder.find(center, tile, target.size())

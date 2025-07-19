@@ -8,6 +8,7 @@ import core.game.dialogue.FaceAnim;
 import core.game.node.entity.player.Player;
 import core.game.node.entity.skill.Skills;
 import core.game.node.scenery.Scenery;
+import core.game.node.scenery.SceneryManager;
 import core.game.system.task.Pulse;
 import core.game.world.GameWorld;
 import core.game.world.map.*;
@@ -28,7 +29,11 @@ import org.rs.consts.Music;
 import org.rs.consts.NPCs;
 
 import java.awt.*;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.nio.ByteBuffer;
+import java.util.Iterator;
 
 import static core.api.ContentAPIKt.*;
 import static core.api.regionspec.RegionSpecificationKt.fillWith;
@@ -67,6 +72,50 @@ public final class HouseManager {
      */
     public HouseManager() {
 
+    }
+
+    private void registerRoomsScenery(Room[][][] rooms) {
+        for (int z = 0; z < rooms.length; z++) {
+            for (int x = 0; x < rooms[z].length; x++) {
+                for (int y = 0; y < rooms[z][x].length; y++) {
+                    Room room = rooms[z][x][y];
+                    if (room == null) continue;
+                    RegionChunk chunk = room.getChunk();
+                    if (chunk == null) continue;
+
+                    Scenery[][] objects = chunk.getObjects();
+                    for (int i = 0; i < objects.length; i++) {
+                        for (int j = 0; j < objects[i].length; j++) {
+                            Scenery scenery = objects[i][j];
+                            if (scenery == null) continue;
+                            SceneryManager.registerTile(scenery, scenery.getLocation());
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void unregisterRoomsScenery(Room[][][] rooms) {
+        for (int z = 0; z < rooms.length; z++) {
+            for (int x = 0; x < rooms[z].length; x++) {
+                for (int y = 0; y < rooms[z][x].length; y++) {
+                    Room room = rooms[z][x][y];
+                    if (room == null) continue;
+                    RegionChunk chunk = room.getChunk();
+                    if (chunk == null) continue;
+
+                    Scenery[][] objects = chunk.getObjects();
+                    for (int i = 0; i < objects.length; i++) {
+                        for (int j = 0; j < objects[i].length; j++) {
+                            Scenery scenery = objects[i][j];
+                            if (scenery == null) continue;
+                            SceneryManager.unregisterTile(scenery, scenery.getLocation());
+                        }
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -303,8 +352,12 @@ public final class HouseManager {
         int diffY = player.getLocation().getLocalY();
         int diffZ = player.getLocation().getZ();
         boolean inDungeon = player.getViewport().getRegion() == dungeonRegion;
+
+        unregisterRoomsScenery(rooms);
+
         this.buildingMode = buildingMode;
         construct();
+
         Location newLoc = (dungeonRegion == null ? houseRegion : (inDungeon ? dungeonRegion : houseRegion)).getBaseLocation().transform(diffX, diffY, diffZ);
         player.getProperties().setTeleportLocation(newLoc);
     }
@@ -387,6 +440,7 @@ public final class HouseManager {
      */
     @Deprecated
     public void clearRooms() {
+        unregisterRoomsScenery(rooms);
         for (int z = 0; z < 4; z++) {
             for (int x = 0; x < 8; x++) {
                 for (int y = 0; y < 8; y++) {
@@ -420,10 +474,14 @@ public final class HouseManager {
         prepareHouseChunks(style, houseRegion, buildingMode, rooms);
         houseRegion.flagActive();
 
+        registerRoomsScenery(rooms);
+
         if (hasDungeon()) {
             dungeonRegion = getPreparedRegion();
             prepareDungeonChunks(style, dungeonRegion, houseRegion, buildingMode, rooms[3]);
             dungeonRegion.flagActive();
+
+            registerRoomsScenery(new Room[][][]{rooms[3]});
         }
 
         ZoneBuilder.configure(zone);

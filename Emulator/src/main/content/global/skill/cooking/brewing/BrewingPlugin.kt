@@ -142,6 +142,6 @@ class BrewingPlugin : InteractionListener {
     }
 
     private fun getVat(player: Player): FermentingVat {
-        return varbits.getValue(player.location.regionId).getVat(player)
+        return varbits.getValue(player.location.getRegionId()).getVat(player)
     }
 }

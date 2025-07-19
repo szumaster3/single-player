@@ -70,7 +70,7 @@ public final class BuildingUtils {
      */
     public static final int WATERING_CAN = 5340;
 
-    private static final int[] BUILD_INDEXES = { 0, 2, 4, 6, 1, 3, 5 };
+    private static final int[] BUILD_INDEXES = {0, 2, 4, 6, 1, 3, 5};
 
     /**
      * Open build interface.
@@ -275,7 +275,7 @@ public final class BuildingUtils {
             player.sendMessage("You need to have a Construction level of " + deco.getLevel() + " to build that.");
             return;
         }
-        if (deco.getLevel()>player.getAttribute("maxFlatpackLevel",0)) {
+        if (deco.getLevel() > player.getAttribute("maxFlatpackLevel", 0)) {
             player.sendMessage("You need a better workbench to build that item.");
             return;
         }
@@ -283,13 +283,13 @@ public final class BuildingUtils {
         for (Item item : deco.getItems()) {
             player.sendMessage(item.getName());
         }
-        if( player.getInventory().remove(deco.getItems()) || debug){
+        if (player.getInventory().remove(deco.getItems()) || debug) {
             addItemOrDrop(player, deco.getFlatpackItemID(), 1);
             player.skills.addExperience(Skills.CONSTRUCTION, deco.getExperience());
             player.animate(new Animation(4110));
-            player.animate(new Animation(4110),3);
-            player.animate(new Animation(4110),5);
-            lock(player,8);
+            player.animate(new Animation(4110), 3);
+            player.animate(new Animation(4110), 5);
+            lock(player, 8);
         }
     }
 
@@ -298,7 +298,7 @@ public final class BuildingUtils {
         Location l = object.getLocation();
         HousingStyle style = player.getHouseManager().getStyle();
         int decIndex = hotspot.getHotspot().getDecorationIndex(deco);
-        switch(hotspot.getHotspot().getType()) {
+        switch (hotspot.getHotspot().getType()) {
             case STAIRCASE:
                 int z = l.getZ();
                 if (region == player.getHouseManager().getDungeonRegion()) {
@@ -532,7 +532,7 @@ public final class BuildingUtils {
             case STAIRWAYS:
             case QUEST_STAIRWAYS:
             case STAIRWAYS_DUNGEON:
-                BuildHotspot[] stairs = { BuildHotspot.STAIRS_DOWN, BuildHotspot.STAIRS_DOWN2, BuildHotspot.STAIRWAYS, BuildHotspot.QUEST_STAIRWAYS, BuildHotspot.STAIRWAYS_DUNGEON };
+                BuildHotspot[] stairs = {BuildHotspot.STAIRS_DOWN, BuildHotspot.STAIRS_DOWN2, BuildHotspot.STAIRWAYS, BuildHotspot.QUEST_STAIRWAYS, BuildHotspot.STAIRWAYS_DUNGEON};
                 for (int i = 0; i < 2; i++) {
                     int plane = (z + 1 + (i * 2)) % 4;
                     Room r = player.getHouseManager().getRooms()[plane][l.getChunkX()][l.getChunkY()];
@@ -599,11 +599,11 @@ public final class BuildingUtils {
     }
 
     /**
-     * Room exists int [ ].
+     * Room exists int.
      *
      * @param player the player
      * @param door   the door
-     * @return the int [ ]
+     * @return the int
      */
     public static int[] roomExists(Player player, Scenery door) {
         int[] location = getRoomPosition(player, door);
@@ -618,41 +618,41 @@ public final class BuildingUtils {
     }
 
     /**
-     * Get room position int [ ].
+     * Get room position int
      *
      * @param player the player
      * @param door   the door
-     * @return the int [ ]
+     * @return the int
      */
     public static int[] getRoomPosition(Player player, Scenery door) {
         Location l = door.getLocation();
         int rotation = door.getRotation();
         if (player.getLocation().getChunkX() != l.getLocation().getChunkX()
                 || player.getLocation().getChunkY() != l.getLocation().getChunkY()) {
-            return new int[] { l.getChunkX(), l.getChunkY() };
+            return new int[]{l.getChunkX(), l.getChunkY()};
         }
         switch (rotation) {
             case 0: //West
-                return new int[] { l.getChunkX() - 1, l.getChunkY() };
+                return new int[]{l.getChunkX() - 1, l.getChunkY()};
             case 1: //North
-                return new int[] { l.getChunkX(), l.getChunkY() + 1};
+                return new int[]{l.getChunkX(), l.getChunkY() + 1};
             case 2: //East
-                return new int[] { l.getChunkX() + 1, l.getChunkY() };
+                return new int[]{l.getChunkX() + 1, l.getChunkY()};
             case 3: //South
-                return new int[] { l.getChunkX(), l.getChunkY() - 1};
+                return new int[]{l.getChunkX(), l.getChunkY() - 1};
         }
         return null;
     }
 
     /**
-     * Get available rotations direction [ ].
+     * Get available rotations direction..
      *
      * @param player the player
      * @param exits  the exits
      * @param z      the z
      * @param roomX  the room x
      * @param roomY  the room y
-     * @return the direction [ ]
+     * @return the direction.
      */
     public static Direction[] getAvailableRotations(Player player, boolean[] exits, int z, int roomX, int roomY) {
         Direction[] directions = new Direction[4];
@@ -672,7 +672,7 @@ public final class BuildingUtils {
                 directions[i] = DIRECTIONS[i];
             }
             for (int j = 0; j < exit.length; j++) {
-                exit[(j + i + 1) % exit.length] = exits[j];
+                exit[(j + 1) % exit.length] = exit[j];
             }
         }
         return directions;

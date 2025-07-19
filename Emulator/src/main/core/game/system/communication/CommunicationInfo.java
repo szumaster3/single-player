@@ -1,7 +1,7 @@
 package core.game.system.communication;
 
 import core.auth.UserAccountInfo;
-import core.cache.misc.buffer.ByteBufferUtils;
+import core.cache.ByteBufferExtensions;
 import core.game.node.entity.player.Player;
 import core.game.system.mysql.SQLTable;
 import core.game.system.task.Pulse;
@@ -176,17 +176,17 @@ public final class CommunicationInfo {
     public void parsePrevious(ByteBuffer buffer) {
         int size = buffer.get() & 0xFF;
         for (int i = 0; i < size; i++) {
-            String name = ByteBufferUtils.getString(buffer);
+            String name = ByteBufferExtensions.getString(buffer);
             Contact contact = new Contact(name);
             contact.rank = ClanRank.ANY_FRIEND;
             contacts.put(name, contact);
         }
         size = buffer.get() & 0xFF;
         for (int i = 0; i < size; i++) {
-            blocked.add(ByteBufferUtils.getString(buffer));
+            blocked.add(ByteBufferExtensions.getString(buffer));
         }
         if (buffer.get() == 1) {
-            ByteBufferUtils.getString(buffer);
+            ByteBufferExtensions.getString(buffer);
         }
     }
 

@@ -19,10 +19,10 @@ class BuildDynamicScene : OutgoingPacket<OutgoingContext.DynamicScene> {
         val buffer = IoBuffer(214, PacketHeader.SHORT)
         val regionIds: MutableList<Int> = ArrayList(20)
         val player = context.player
-        buffer.putLEShortA(player.location.sceneX)
+        buffer.putLEShortA(player.location.getSceneX())
         buffer.putLEShortA(player.location.regionX)
         buffer.putS(player.location.z)
-        buffer.putLEShortA(player.location.sceneY)
+        buffer.putLEShortA(player.location.getSceneY())
         buffer.setBitAccess()
         var r = player.viewport.region
         val chunks = Array(4) { Array(13) { arrayOfNulls<RegionChunk>(13) } }
@@ -58,7 +58,7 @@ class BuildDynamicScene : OutgoingPacket<OutgoingContext.DynamicScene> {
                     buffer.putBits(1, 1)
                     buffer.putBits(
                         26,
-                        (rotation shl 1) or (realPlane shl 24) or (realRegionX shl 14) or (realRegionY shl 3)
+                        (rotation shl 1) or (realPlane.toInt() shl 24) or (realRegionX shl 14) or (realRegionY shl 3)
                     )
                 }
             }

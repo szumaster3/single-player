@@ -810,7 +810,7 @@ class TouristTrapPlugin : OptionHandler() {
                                 4 -> {
                                     cart!!.walkingQueue.reset()
                                     for (l in PATHS[1]) {
-                                        val loc = base.transform(l.localX, l.localY, 0)
+                                        val loc = base.transform(l.getLocalX(), l.getLocalY(), 0)
                                         cart!!.walkingQueue.addPath(loc.x, loc.y)
                                     }
                                 }
@@ -821,7 +821,7 @@ class TouristTrapPlugin : OptionHandler() {
                                     cart!!.init()
                                     cart!!.walkingQueue.reset()
                                     for (l in PATHS[0]) {
-                                        val loc = base.transform(l.localX, l.localY, 0)
+                                        val loc = base.transform(l.getLocalX(), l.getLocalY(), 0)
                                         cart!!.walkingQueue.addPath(loc.x, loc.y)
                                     }
                                 }
@@ -1033,12 +1033,12 @@ class TouristTrapPlugin : OptionHandler() {
             }
 
             override fun open() {
-                SceneryBuilder.remove(getObject(base.location.transform(path[0].localX, path[0].localY, 0)))
+                SceneryBuilder.remove(getObject(base.location.transform(path[0].getLocalX(), path[0].getLocalY(), 0)))
                 SceneryBuilder.remove(
                     getObject(
                         base.location.transform(
-                            path[path.size - 1].localX,
-                            path[path.size - 1].localY,
+                            path[path.size - 1].getLocalX(),
+                            path[path.size - 1].getLocalY(),
                             0,
                         ),
                     ),
@@ -1048,7 +1048,7 @@ class TouristTrapPlugin : OptionHandler() {
                 refreshAppearance(player)
                 player.walkingQueue.reset()
                 for (l in path) {
-                    val loc = base.transform(l.localX, l.localY, 0)
+                    val loc = base.transform(l.getLocalX(), l.getLocalY(), 0)
                     player.walkingQueue.addPath(loc.x, loc.y, true)
                 }
                 Pulser.submit(
@@ -1097,7 +1097,7 @@ class TouristTrapPlugin : OptionHandler() {
 
             override fun getSpawnLocation(): Location? = null
 
-            override fun getStartLocation(): Location = base.transform(path[0].localX, path[0].localY, 0)
+            override fun getStartLocation(): Location = base.transform(path[0].getLocalX(), path[0].getLocalY(), 0)
 
             override fun configure() {
                 region = DynamicRegion.create(13203)

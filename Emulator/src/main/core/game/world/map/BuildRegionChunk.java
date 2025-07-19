@@ -1,15 +1,16 @@
 package core.game.world.map;
 
+import core.cache.def.impl.ConstructedEncoder;
 import core.game.node.entity.player.Player;
 import core.game.node.item.GroundItem;
 import core.game.node.scenery.Constructed;
 import core.game.node.scenery.Scenery;
 import core.game.node.scenery.SceneryBuilder;
+import core.game.node.scenery.SceneryManager;
 import core.game.world.map.build.LandscapeParser;
 import core.net.packet.IoBuffer;
 import core.net.packet.out.ClearScenery;
 import core.net.packet.out.ConstructGroundItem;
-import core.net.packet.out.ConstructScenery;
 import core.tools.Log;
 
 import java.util.ArrayList;
@@ -51,6 +52,7 @@ public class BuildRegionChunk extends RegionChunk {
             for (int y = 0; y < SIZE; y++) {
                 if (objects[x][y] != null) {
                     this.objects[0][x][y] = new Scenery(objects[x][y]);
+                    SceneryManager.register(this.objects[0][x][y]);
                 }
             }
         }
@@ -58,13 +60,13 @@ public class BuildRegionChunk extends RegionChunk {
 
     @Override
     protected boolean appendUpdate(Player player, IoBuffer buffer) {
-        boolean updated = false;//super.appendUpdate(player, buffer);
+        boolean updated = false;
         for (int i = 0; i < objects.length; i++) {
             for (int x = 0; x < SIZE; x++) {
                 for (int y = 0; y < SIZE; y++) {
                     Scenery o = objects[i][x][y];
                     if (o instanceof Constructed) {
-                        ConstructScenery.write(buffer, o);
+                        ConstructedEncoder.encode(buffer.toByteBuffer(), (Constructed) o);
                         updated = true;
                     } else if (o != null && !o.isRenderable()) {
                         ClearScenery.write(buffer, o);
@@ -101,6 +103,8 @@ public class BuildRegionChunk extends RegionChunk {
                     if (object != null) {
                         SceneryBuilder.remove(object);
                         this.remove(object);
+                        // Unregister removed object
+                        SceneryManager.unregister(object);
                     }
                 }
             }
@@ -124,7 +128,6 @@ public class BuildRegionChunk extends RegionChunk {
                 log(this.getClass(), Log.ERR, "Attempted to rotate a chunk in a non-cardinal direction - using fallback rotation code. This should be investigated!");
                 break;
         }
-        ;
         for (int i = 0; i < objects.length; i++) {
             for (int x = 0; x < SIZE; x++) {
                 for (int y = 0; y < SIZE; y++) {
@@ -138,6 +141,7 @@ public class BuildRegionChunk extends RegionChunk {
                         obj.setActive(object.isActive());
                         obj.setRenderable(object.isRenderable());
                         LandscapeParser.flagScenery(plane, baseX + pos[0], baseY + pos[1], obj, true, true);
+                        SceneryManager.register(obj);
                     }
                 }
             }
@@ -157,6 +161,9 @@ public class BuildRegionChunk extends RegionChunk {
                         chunk.objects[i][x][y] = o.transform(o.getId());
                         chunk.objects[i][x][y].setActive(o.isActive());
                         chunk.objects[i][x][y].setRenderable(o.isRenderable());
+                    }
+                    if (chunk.objects[i][x][y] != null) {
+                        SceneryManager.register(chunk.objects[i][x][y]);
                     }
                 }
             }
@@ -183,14 +190,17 @@ public class BuildRegionChunk extends RegionChunk {
 
     @Override
     public void clear() {
-        super.clear();
         for (int i = 0; i < objects.length; i++) {
             for (int x = 0; x < objects[i].length; x++) {
                 for (int y = 0; y < objects[i][x].length; y++) {
+                    if (objects[i][x][y] != null) {
+                        SceneryManager.unregister(objects[i][x][y]);
+                    }
                     objects[i][x][y] = null;
                 }
             }
         }
+        super.clear();
     }
 
     /**
@@ -218,6 +228,7 @@ public class BuildRegionChunk extends RegionChunk {
         }
         object.setActive(false);
         object.setRenderable(false);
+        SceneryManager.unregister(current);
     }
 
     /**
@@ -244,6 +255,7 @@ public class BuildRegionChunk extends RegionChunk {
             throw new IllegalStateException("Insufficient array length for storing object!");
         } else {
             objects[index][chunkX][chunkY] = object = object.asConstructed();
+            SceneryManager.register(object);
         }
         object.setActive(true);
         object.setRenderable(true);
@@ -266,6 +278,7 @@ public class BuildRegionChunk extends RegionChunk {
                 objects[i][chunkX][chunkY] = object;
                 object.setActive(true);
                 object.setRenderable(true);
+                SceneryManager.register(object);
                 return;
             }
         }

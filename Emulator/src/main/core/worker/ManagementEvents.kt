@@ -39,17 +39,16 @@ object ManagementEvents {
     /**
      * Coroutine that processes the event queue continuously.
      */
-    val job =
-        GlobalScope.launch {
-            while (isRunning) {
-                val event = withContext(Dispatchers.IO) { eventQueue.take() }
-                try {
-                    handleEvent(event)
-                    handleLoggingFor(event)
-                } catch (ignored: Exception) {
-                }
+    val job = GlobalScope.launch {
+        while (isRunning) {
+            val event = withContext(Dispatchers.IO) { eventQueue.take() }
+            try {
+                handleEvent(event)
+                handleLoggingFor(event)
+            } catch (ignored: Exception) {
             }
         }
+    }
 
     /**
      * Logs event-specific messages for debugging.
@@ -88,24 +87,22 @@ object ManagementEvents {
              * Handles player status updates by notifying friends or all players.
              */
             is PlayerStatusUpdate -> {
-                val notifiablePlayers =
-                    if (event.notifyFriendsOnly) {
-                        GameWorld.accountStorage.getOnlineFriends(event.username)
-                    } else {
-                        Repository.playerNames.keys.toList()
-                    }.filter {
-                        Repository
-                            .getPlayerByName(
-                                it,
-                            )?.communication
-                            ?.contacts
-                            ?.containsKey(event.username) == true
-                    }
+                val notifiablePlayers = if (event.notifyFriendsOnly) {
+                    GameWorld.accountStorage.getOnlineFriends(event.username)
+                } else {
+                    Repository.playerNames.keys.toList()
+                }.filter {
+                    Repository.getPlayerByName(
+                            it,
+                        )?.communication?.contacts?.containsKey(event.username) == true
+                }
 
                 for (playerName in notifiablePlayers) {
                     val p = Repository.getPlayerByName(playerName) ?: continue
                     p.communication.contacts[event.username]?.worldId = event.world
-                    PacketRepository.send(ContactPackets::class.java, OutgoingContext.Contact(p, event.username, event.world))
+                    PacketRepository.send(
+                        ContactPackets::class.java, OutgoingContext.Contact(p, event.username, event.world)
+                    )
                 }
             }
 
@@ -148,9 +145,7 @@ object ManagementEvents {
                 p.communication.blocked.clear()
 
                 for (contact in event.contactsList) {
-                    val c =
-                        core.game.system.communication
-                            .Contact(contact.username)
+                    val c = core.game.system.communication.Contact(contact.username)
                     p.communication.contacts[contact.username] = c
                     c.worldId = contact.world
                     c.rank = ClanRank.values()[contact.rank]
@@ -187,7 +182,13 @@ object ManagementEvents {
                 if (sender != null) {
                     PacketRepository.send(
                         CommunicationMessage::class.java,
-                        OutgoingContext.MessageContext(sender, event.receiver, event.rank, OutgoingContext.MessageContext.SEND_MESSAGE, event.message),
+                        OutgoingContext.MessageContext(
+                            sender,
+                            event.receiver,
+                            event.rank,
+                            OutgoingContext.MessageContext.SEND_MESSAGE,
+                            event.message
+                        ),
                     )
                 }
 
@@ -318,9 +319,7 @@ object ManagementEvents {
                         initializeClanWith(info)
                     } else {
                         SystemLogger.logMS("Creating default server clan")
-                        if (GameWorld.settings!!.enable_default_clan &&
-                            event.clanOwner == ServerConstants.SERVER_NAME.lowercase()
-                        ) {
+                        if (GameWorld.settings!!.enable_default_clan && event.clanOwner == ServerConstants.SERVER_NAME.lowercase()) {
                             if (info == UserAccountInfo.createDefault()) {
                                 info.username = ServerConstants.SERVER_NAME.lowercase()
                                 info.password = ServerConstants.MS_SECRET_KEY

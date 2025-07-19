@@ -40,9 +40,7 @@ class RovingElvesPlugin : OptionHandler() {
                     "should look for them.",
                 )
             4206 ->
-                if (Location.getDistance(Location(2603, 9911), player.location) <= 3 &&
-                    quest.getStage(player) == 15
-                ) {
+                if ((Location(2603, 9911).getDistance(player.location) <= 3) && quest.getStage(player) == 15) {
                     if (!player.inventory.containsItem(Item(952, 1))) {
                         player.packetDispatch.sendMessage("You need a spade to plant the seed.")
                     } else {

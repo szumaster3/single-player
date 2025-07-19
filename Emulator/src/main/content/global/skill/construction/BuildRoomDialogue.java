@@ -7,6 +7,7 @@ import core.game.node.entity.skill.Skills;
 import core.game.node.item.Item;
 import core.game.node.scenery.Scenery;
 import core.game.node.scenery.SceneryBuilder;
+import core.game.node.scenery.SceneryManager;
 import core.game.world.map.Direction;
 import core.game.world.map.Location;
 import core.game.world.map.RegionChunk;
@@ -182,7 +183,6 @@ public final class BuildRoomDialogue extends Dialogue {
     private void rotate(boolean counter) {
         Direction direction = null;
         while ((direction = directions[index = (index + (counter ? 3 : 1)) % 4]) == null) {
-
         }
         room.setRotation(direction);
         drawGhostRoom();

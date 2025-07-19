@@ -255,7 +255,7 @@ class VisualCommand : CommandPlugin() {
                     } else {
                         player!!.location
                     }
-                scenery = RegionManager.getObject(location)
+                scenery = RegionManager.getObject(location!!)
                 if (scenery == null) {
                     player.debug("error: object not found in region cache.")
                     return true

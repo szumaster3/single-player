@@ -253,7 +253,7 @@ class NatureSpiritDialogue(player: Player? = null) : Dialogue(player) {
         val spirit: NPC,
     ) : Pulse() {
         var ticks = 0
-        val locs: MutableList<Location> = player.location.surroundingTiles
+        val locs: MutableList<Location> = player.location.getSurroundingTiles()!!.toMutableList()
 
         override fun pulse(): Boolean {
             when (ticks++) {

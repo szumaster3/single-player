@@ -185,7 +185,7 @@ class ClockTowerListener : InteractionListener {
                                 Pathfinder
                                     .find(
                                         rat.location,
-                                        location(loc.x + xDeath, loc.y + yDeath, loc.z),
+                                        location(loc.x + xDeath, loc.y + yDeath, loc.z.toInt()),
                                         true,
                                         Pathfinder.SMART,
                                     ).walk(rat)

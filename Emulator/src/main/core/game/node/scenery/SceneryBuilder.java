@@ -1,5 +1,6 @@
 package core.game.node.scenery;
 
+import core.cache.buffer.write.BufferWriter;
 import core.game.node.item.GroundItem;
 import core.game.node.item.GroundItemManager;
 import core.game.system.task.Pulse;
@@ -8,6 +9,8 @@ import core.game.world.map.Location;
 import core.game.world.map.RegionManager;
 import core.game.world.map.build.LandscapeParser;
 import core.game.world.update.flag.chunk.ObjectUpdateFlag;
+
+import java.nio.ByteBuffer;
 
 /**
  * An aiding class for object constructing/removing.
@@ -44,6 +47,8 @@ public final class SceneryBuilder {
         if (current == null) {
             return false;
         }
+        SceneryManager.unregister(current);
+
         if (current.getRestorePulse() != null) {
             current.getRestorePulse().stop();
             current.setRestorePulse(null);
@@ -52,6 +57,7 @@ public final class SceneryBuilder {
             Scenery previous = ((Constructed) current).getReplaced();
             if (previous != null && previous.equals(construct)) {
                 LandscapeParser.addScenery(previous);
+                SceneryManager.register(previous);
                 update(current, previous);
                 return true;
             }
@@ -61,6 +67,8 @@ public final class SceneryBuilder {
             constructed.setReplaced(current);
         }
         LandscapeParser.addScenery(constructed);
+        SceneryManager.register(constructed);
+
         update(current, constructed);
         return true;
     }
@@ -213,8 +221,17 @@ public final class SceneryBuilder {
     public static Constructed add(Scenery object, int ticks, final GroundItem... items) {
         object = object.getWrapper();
         final Constructed constructed = object.asConstructed();
+
         LandscapeParser.addScenery(constructed);
+
+        SceneryManager.register(constructed);
+
         update(constructed);
+
+        ByteBuffer buffer = ByteBuffer.allocate(1024);
+        BufferWriter.putObject(buffer, constructed);
+        buffer.flip();
+
         if (ticks > -1) {
             GameWorld.getPulser().submit(new Pulse(ticks, object) {
                 @Override
@@ -231,6 +248,7 @@ public final class SceneryBuilder {
         }
         return constructed;
     }
+
 
     /**
      * Removes all objects with the given [objectId] within the defined rectangular area.
@@ -270,6 +288,9 @@ public final class SceneryBuilder {
         if (current == null) {
             return false;
         }
+
+        SceneryManager.unregister(current);
+
         update(current);
         return true;
     }

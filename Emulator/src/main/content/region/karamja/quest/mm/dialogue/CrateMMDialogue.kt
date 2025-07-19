@@ -142,7 +142,7 @@ class CrateMMDialogue(val it: Int) : DialogueFile() {
     }
 
     private fun monkeyMadnessGoIntoBasementDamage() {
-        if (player!!.location.isInRegion(monkeymadnessDungeon.regionId)) {
+        if (player!!.location.isInRegion(monkeymadnessDungeon.getRegionId())) {
             player!!.interfaceManager.close()
             openInterface(player!!, Components.FADE_FROM_BLACK_170)
             player!!.pulseManager.run(

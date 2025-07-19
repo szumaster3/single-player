@@ -1,7 +1,7 @@
 package core.net.event
 
 import core.ServerConstants
-import core.cache.misc.buffer.ByteBufferUtils
+import core.cache.ByteBufferExtensions
 import core.game.world.GameWorld
 import core.net.IoSession
 import core.net.IoWriteEvent
@@ -27,7 +27,7 @@ class RegistryWriteEvent(session: IoSession, context: Any) : IoWriteEvent(sessio
         buffer.put(if (GameWorld.settings!!.isPvp) 1 else 0)
         buffer.put(if (GameWorld.settings!!.isQuickChat) 1 else 0)
         buffer.put(if (GameWorld.settings!!.isLootshare) 1 else 0)
-        ByteBufferUtils.putString(GameWorld.settings!!.activity, buffer)
+        ByteBufferExtensions.putString(GameWorld.settings!!.activity, buffer)
         buffer.put(CHECK.toByteArray())
         buffer.flip()
         session.queue(buffer)

@@ -7,9 +7,9 @@ import core.ServerStore.Companion.addToList
 import core.ServerStore.Companion.getList
 import core.api.log
 import core.auth.AuthResponse
+import core.cache.ByteBufferExtensions
 import core.cache.crypto.ISAACCipher
 import core.cache.crypto.ISAACPair
-import core.cache.misc.buffer.ByteBufferUtils
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.info.*
 import core.game.node.entity.player.info.login.LoginParser
@@ -71,7 +71,7 @@ object Login {
             info.screenHeight = buffer.short.toInt()
             info.displayMode = buffer.get().toInt()
             noop(buffer, 24) // Skip past a bunch of random (actually random) data the client sends
-            ByteBufferUtils.getString(buffer) // same as above
+            ByteBufferExtensions.getString(buffer) // same as above
             info.adAffiliateId = buffer.int
             info.settingsHash = buffer.int
             info.currentPacketCount = buffer.short.toInt()
@@ -88,7 +88,7 @@ object Login {
 
             info.isaacPair = produceISAACPairFrom(decryptedBuffer)
             info.username = StringUtils.longToString(decryptedBuffer.long)
-            info.password = ByteBufferUtils.getString(decryptedBuffer)
+            info.password = ByteBufferExtensions.getString(decryptedBuffer)
 
             if (Repository.getPlayerByName(info.username) != null) {
                 return Pair(AuthResponse.AlreadyOnline, info)

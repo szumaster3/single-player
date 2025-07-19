@@ -320,8 +320,8 @@ class TelekineticTheatrePlugin @JvmOverloads constructor(val player: Player? = n
      */
     private val dir: Direction?
         get() {
-            val myX = player!!.location.localX
-            val myY = player.location.localY
+            val myX = player!!.location.getLocalX()
+            val myY = player.location.getLocalY()
 
             val data = maze!!.data
             if (myY >= data[0]) {

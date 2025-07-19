@@ -359,14 +359,14 @@ class PlayerSafetyPlugin :
                 when (stage) {
                     0 -> {
                         moveCamera(
-                            regionX = player.location.localX,
-                            regionY = player.location.localY,
+                            regionX = player.location.getLocalX(),
+                            regionY = player.location.getLocalY(),
                             height = 200,
                             speed = 15,
                         )
                         rotateCamera(
-                            regionX = player.location.localX + rotationMapping[component.id]!![0],
-                            regionY = player.location.localY + rotationMapping[component.id]!![1],
+                            regionX = player.location.getLocalX() + rotationMapping[component.id]!![0],
+                            regionY = player.location.getLocalY() + rotationMapping[component.id]!![1],
                             height = 200,
                             speed = 30,
                         )

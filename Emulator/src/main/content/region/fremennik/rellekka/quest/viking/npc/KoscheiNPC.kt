@@ -36,7 +36,7 @@ class KoscheiNPC(
 
     override fun init() {
         super.init()
-        if (session?.player?.location?.regionId == 10653) {
+        if (session?.player?.location?.getRegionId() == 10653) {
             Pulser.submit(KoscheiSpawnPulse(session.player, this))
         } else {
             session?.close()

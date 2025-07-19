@@ -118,7 +118,7 @@ class BloatedToadListeners :
             val neloc = player.location.transform(5, 5, 0)
             for (x in swloc.x until neloc.x) {
                 for (y in swloc.y until neloc.y) {
-                    val npc = BloatedToadNPC().construct(NPCs.BLOATED_TOAD_1014, Location.create(x, y, swloc.z))
+                    val npc = BloatedToadNPC().construct(NPCs.BLOATED_TOAD_1014, Location.create(x, y, swloc.z.toInt()))
                     npc.isNeverWalks = true
                     npc.isWalks = false
                     (npc as BloatedToadNPC).ticksToLive = 5

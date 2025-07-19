@@ -57,7 +57,7 @@ class CropCircleController :
     private fun constructCircle(location: Location) {
         activeSceneries.add(addScenery(center, location, rotation = 0, type = 10))
 
-        for ((index, tile) in location.surroundingTiles.withIndex()) {
+        for ((index, tile) in location.getSurroundingTiles().withIndex()) {
             activeSceneries.add(addScenery(surrounding[index % 4], tile, rotation = (index / 4) * 2, type = 10))
         }
     }

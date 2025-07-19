@@ -89,7 +89,7 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
             var obj: Scenery? = null
             notify(
                 player,
-                "Absolute: " + l + ", regional: [" + l.localX + ", " + l.localY + "], chunk: [" + l.chunkOffsetX + ", " +
+                "Absolute: " + l + ", regional: [" + l.getLocalX() + ", " + l.getLocalY() + "], chunk: [" + l.chunkOffsetX + ", " +
                     l.chunkOffsetY +
                     "], flag: [" +
                     RegionManager.isTeleportPermitted(l) +
@@ -101,12 +101,12 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
             )
             notify(
                 player,
-                "Region: [id=" + l.regionId + ", active=" + r!!.active + ", instanced=" + (r is DynamicRegion) +
+                "Region: [id=" + l.getRegionId() + ", active=" + r!!.active + ", instanced=" + (r is DynamicRegion) +
                     "], obj=" +
                     RegionManager.getObject(l) +
                     ".",
             )
-            notify(player, "Jagex: ${l.z}_${l.regionId shr 8}_${l.regionId and 0xFF}_${l.localX}_${l.localY}")
+            notify(player, "Jagex: ${l.z}_${l.getRegionId() shr 8}_${l.getRegionId() and 0xFF}_${l.getLocalX()}_${l.getLocalY()}")
             notify(player, "Object: " + RegionManager.getObject(l).also { obj = it } + ".")
             notify(
                 player,
@@ -131,7 +131,7 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
             log(
                 this::class.java,
                 Log.FINE,
-                loc + "; " + player.playerFlags.lastSceneGraph + ", " + l.localX + ", " + l.localY,
+                loc + "; " + player.playerFlags.lastSceneGraph + ", " + l.getLocalX() + ", " + l.getLocalY(),
             )
             try {
                 val stringSelection = StringSelection(loc)

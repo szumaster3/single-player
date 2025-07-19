@@ -207,7 +207,7 @@ class SorceressElementalNPC : AbstractNPC {
                         setMinimapState(player, 2)
                         face(player)
                     } else if (counter == 6) {
-                        teleport(player, Location.create(respawnLocation))
+                        teleport(player, Location.create(respawnLocation!!))
                         setMinimapState(player, 0)
                         closeOverlay(player)
                         closeInterface(player)

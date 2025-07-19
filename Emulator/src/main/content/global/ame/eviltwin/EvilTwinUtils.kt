@@ -134,9 +134,9 @@ object EvilTwinUtils {
             PacketRepository.send(CameraViewPacket::class.java, OutgoingContext.Camera(player, OutgoingContext.CameraType.POSITION, l.x + 2, l.y + 3, 520, 1, 5))
             PacketRepository.send(CameraViewPacket::class.java, OutgoingContext.Camera(player, OutgoingContext.CameraType.ROTATION, l.x - 3, l.y - 3, 420, 1, 5))
         } else if (entity == player) {
-            if (mollyNPC!!.isHidden(player) && entity.location.localX < 9) {
+            if (mollyNPC!!.isHidden(player) && entity.location.getLocalX() < 9) {
                 showNPCs(true)
-            } else if (!mollyNPC!!.isHidden(player) && entity.location.localX > 8) {
+            } else if (!mollyNPC!!.isHidden(player) && entity.location.getLocalX() > 8) {
                 showNPCs(false)
             }
         }

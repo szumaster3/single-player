@@ -301,7 +301,7 @@ class ScriptProcessor(
      */
     fun inOperableDistance(): Boolean {
         targetDestination?.let {
-            return it.cardinalTiles.any { loc -> loc == entity.location } && hasLineOfSight(entity, it)
+            return it.getCardinalTiles().any { loc -> loc == entity.location } && hasLineOfSight(entity, it)
         }
         return false
     }

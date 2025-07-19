@@ -1,7 +1,8 @@
 package core.game.world.map.build
 
-import core.cache.misc.buffer.ByteBufferUtils
+import core.cache.buffer.read.BufferReader
 import core.game.node.scenery.Scenery
+import core.game.node.scenery.SceneryManager
 import core.game.world.map.Location
 import core.game.world.map.Region
 import core.game.world.map.RegionManager
@@ -16,12 +17,12 @@ object LandscapeParser {
     fun parse(r: Region, mapscape: Array<Array<ByteArray>>, buffer: ByteBuffer, storeObjects: Boolean) {
         var objectId = -1
         while (true) {
-            val offset = ByteBufferUtils.getBigSmart(buffer)
+            val offset = BufferReader.getBigSmart(buffer)
             if (offset == 0) break
             objectId += offset
             var location = 0
             while (true) {
-                val locOffset = ByteBufferUtils.getSmart(buffer)
+                val locOffset = BufferReader.getSmart(buffer)
                 if (locOffset == 0) break
                 location += locOffset - 1
 
@@ -53,7 +54,7 @@ object LandscapeParser {
     @JvmStatic
     fun addScenery(object_: Scenery, landscape: Boolean) {
         val loc = object_.location
-        flagScenery(RegionManager.getRegionPlane(loc), loc.localX, loc.localY, object_, landscape, storeObjects = false)
+        flagScenery(RegionManager.getRegionPlane(loc), loc.getLocalX(), loc.getLocalY(), object_, landscape, storeObjects = false)
     }
 
     @JvmStatic
@@ -136,7 +137,7 @@ object LandscapeParser {
         if (landscape && !storeAll) {
             val current = plane.objects!![localX][localY]
             if (current != null && current.definition.getChildObject(null)
-                    !!.hasOptions(!object_.definition.getChildObject(null)!!.hasOptions(false))
+                !!.hasOptions(!object_.definition.getChildObject(null)!!.hasOptions(false))
             ) {
                 return
             }
@@ -150,7 +151,7 @@ object LandscapeParser {
 
         val plane = RegionManager.getRegionPlane(object_.location)
         Region.load(plane.region)
-        val (localX, localY) = object_.location.localX to object_.location.localY
+        val (localX, localY) = object_.location.getLocalX() to object_.location.getLocalY()
         val current = plane.getChunkObject(localX, localY, object_.id)
         if (current == null || current.id != object_.id) return null
 

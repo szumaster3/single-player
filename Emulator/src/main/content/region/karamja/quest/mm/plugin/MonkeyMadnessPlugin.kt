@@ -45,7 +45,7 @@ class MonkeyMadnessPlugin : InteractionListener {
         }
 
         on(intArrayOf(NPCs.WAYDAR_1408, NPCs.WAYDAR_1409, NPCs.WAYDAR_1410), IntType.NPC, "talk-to") { player, npc ->
-            when (player.location.regionId) {
+            when (player.location.getRegionId()) {
                 9626 -> openDialogue(player, WaydarDialogue(), npc)
                 11562 -> openDialogue(player, WaydarCrashIslandDialogue(), npc)
             }
@@ -126,7 +126,7 @@ class MonkeyMadnessPlugin : InteractionListener {
                 openDialogue(player, DaeroTrainingPostQuestDialogue(), npc)
             } else if (getAttribute(player, "mm:xp_reward", false)) {
             } else {
-                when (player.location.regionId) {
+                when (player.location.getRegionId()) {
                     9782 -> openDialogue(player, DaeroDialogue(), npc)
                     9626 -> openDialogue(player, DaeroHangarDialogue(), npc)
                 }

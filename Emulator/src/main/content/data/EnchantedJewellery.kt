@@ -29,7 +29,7 @@ enum class EnchantedJewellery(val options: Array<String>, val locations: Array<L
     DIGSITE_PENDANT(options = arrayOf(), locations = arrayOf(Location.create(3342, 3445, 0)), crumbled = true, Items.DIGSITE_PENDANT_5_11194, Items.DIGSITE_PENDANT_4_11193, Items.DIGSITE_PENDANT_3_11192, Items.DIGSITE_PENDANT_2_11191, Items.DIGSITE_PENDANT_1_11190),
     COMBAT_BRACELET(options = arrayOf("Warriors' Guild", "Champions' Guild", "Monastery", "Ranging Guild", "Nowhere"), locations = arrayOf(Location.create(2878, 3546, 0), Location.create(3191, 3365, 0), Location.create(3051, 3489, 0), Location.create(2657, 3439, 0)), crumbled = false, Items.COMBAT_BRACELET4_11118, Items.COMBAT_BRACELET3_11120, Items.COMBAT_BRACELET2_11122, Items.COMBAT_BRACELET1_11124, Items.COMBAT_BRACELET_11126,),
     SKILLS_NECKLACE(options = arrayOf("Fishing Guild.", "Mining Guild.", "Crafting Guild.", "Cooking Guild.", "Nowhere."), locations = arrayOf(Location.create(2611, 3392, 0), Location.create(3016, 3338, 0), Location.create(2933, 3290, 0), Location.create(3143, 3442, 0)), crumbled = false, Items.SKILLS_NECKLACE4_11105, Items.SKILLS_NECKLACE3_11107, Items.SKILLS_NECKLACE2_11109, Items.SKILLS_NECKLACE1_11111, Items.SKILLS_NECKLACE_11113,),
-    RING_OF_LIFE(options = arrayOf(), locations = arrayOf(Location.create(ServerConstants.HOME_LOCATION)), crumbled = true, Items.RING_OF_LIFE_2570),
+    RING_OF_LIFE(options = arrayOf(), locations = arrayOf(Location.create(ServerConstants.HOME_LOCATION!!)), crumbled = true, Items.RING_OF_LIFE_2570),
     ;
 
     /**
