@@ -87,7 +87,7 @@ public final class GiantMoleNPC extends AbstractNPC {
         setDirection(dir);
         int index = RandomFunction.randomize(DIG_LOCATIONS.length);
         Location dest = DIG_LOCATIONS[index];
-        if (dest.withinDistance(getLocation())) {
+        if (getLocation().withinDistance(dest)) {
             dest = DIG_LOCATIONS[(index + 1) % DIG_LOCATIONS.length];
         }
         final Location destination = dest;

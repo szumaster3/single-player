@@ -6,7 +6,7 @@ import core.game.node.Node
 import core.game.world.map.path.Pathfinder
 import core.tools.RandomFunction
 
-class Location(
+open class Location(
     x: Int,
     y: Int,
     z: Int = 0,
@@ -101,6 +101,10 @@ class Location(
         val b = other.y - y
         val product = kotlin.math.sqrt((a * a + b * b).toDouble())
         return product <= dist
+    }
+
+    fun withinDistance(other: Location): Boolean {
+        return withinDistance(other, MapDistance.RENDERING.distance)
     }
 
     fun withinMaxnormDistance(other: Location, dist: Int): Boolean {

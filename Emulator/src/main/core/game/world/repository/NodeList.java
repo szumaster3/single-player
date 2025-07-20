@@ -39,7 +39,6 @@ public class NodeList<E extends Node> implements Collection<E>, Iterable<E> {
      *
      * @param index The index.
      * @return The Node.
-     * @throws IndexOutOufBoundException if the index is out of bounds.
      */
     @SuppressWarnings("unchecked")
     public E get(int index) {
