@@ -222,7 +222,7 @@ class BrimhavenArena : MapZone("Brimhaven agility arena", true), Plugin<Any?> {
             object : Pulse(1) {
                 override fun pulse(): Boolean {
                     val r = forId(11157)
-                    if (!r.active) {
+                    if (!r.isActive) {
                         return false
                     }
                     if (ticks % 100 == 0) {

@@ -171,17 +171,17 @@ public final class HouseManager {
         checkForAndSpawnServant(player);
         updateVarbits(player, buildingMode);
         unlockMusicTrack(player);
+        PacketRepository.send(MinimapState.class, new OutgoingContext.MinimapState(player, 2));
     }
 
     private void openLoadInterface(Player player) {
-        setMinimapState(player, 2);
         openInterface(player, Components.POH_HOUSE_LOADING_SCREEN_399);
         playAudio(player, Sounds.POH_TP_984);
         submitCloseLoadInterfacePulse(player);
     }
 
     private void submitCloseLoadInterfacePulse(Player player) {
-        GameWorld.getPulser().submit(new Pulse(1, player) {
+        GameWorld.getPulser().submit(new Pulse(6, player) {
             @Override
             public boolean pulse() {
                 PacketRepository.send(MinimapState.class, new OutgoingContext.MinimapState(player, 0));

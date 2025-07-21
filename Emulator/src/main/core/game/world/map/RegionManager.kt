@@ -9,13 +9,14 @@ import core.game.node.scenery.Scenery
 import core.game.world.map.zone.ZoneBorders
 import core.tools.Log
 import core.tools.RandomFunction
+import core.tools.SystemLogger
 import java.util.*
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.locks.ReentrantLock
+import kotlin.collections.HashMap
 
 /**
  * Manages the regions.
- *
  * @author Emperor
  */
 object RegionManager {
@@ -23,12 +24,8 @@ object RegionManager {
      * The region cache mapping.
      */
     private val REGION_CACHE: MutableMap<Int, Region> = HashMap()
-
-    @JvmStatic
-    val CLIPPING_FLAGS = HashMap<Int, Array<Int>>()
-
-    @JvmStatic
-    val PROJECTILE_FLAGS = HashMap<Int, Array<Int>>()
+    @JvmStatic val CLIPPING_FLAGS = HashMap<Int, Array<Int>>()
+    @JvmStatic val PROJECTILE_FLAGS = HashMap<Int, Array<Int>>()
 
     public val LOCK = ReentrantLock()
 
@@ -39,7 +36,7 @@ object RegionManager {
      */
     @JvmStatic
     fun forId(regionId: Int): Region {
-        if (LOCK.tryLock() || LOCK.tryLock(10000, TimeUnit.MILLISECONDS)) {
+        if(LOCK.tryLock() || LOCK.tryLock(10000, TimeUnit.MILLISECONDS)) {
             var region = REGION_CACHE[regionId]
             if (region == null) {
                 region = Region((regionId shr 8) and 0xFF, regionId and 0xFF)
@@ -48,8 +45,8 @@ object RegionManager {
             LOCK.unlock()
             return REGION_CACHE[regionId]!!
         }
-        log(this::class.java, Log.ERR, "UNABLE TO OBTAIN LOCK WHEN GETTING REGION BY ID. RETURNING BLANK REGION.")
-        return Region(0, 0)
+        log(this::class.java, Log.ERR,  "UNABLE TO OBTAIN LOCK WHEN GETTING REGION BY ID. RETURNING BLANK REGION.")
+        return Region(0,0)
     }
 
     /**
@@ -57,9 +54,9 @@ object RegionManager {
      */
     @JvmStatic
     fun pulse() {
-        if (LOCK.tryLock() || LOCK.tryLock(10000, TimeUnit.MILLISECONDS)) {
+        if(LOCK.tryLock() || LOCK.tryLock(10000,TimeUnit.MILLISECONDS)) {
             for (r in REGION_CACHE.values) {
-                if (r.active) {
+                if (r.isActive) {
                     for (p in r.planes) {
                         p.pulse()
                     }
@@ -69,7 +66,6 @@ object RegionManager {
         }
     }
 
-
     /**
      * Gets the clipping flag on the given location.
      * @param l The location.
@@ -77,54 +73,7 @@ object RegionManager {
      */
     @JvmStatic
     fun getClippingFlag(l: Location): Int {
-        return getClippingFlag(l.z.toInt(), l.x, l.y)
-    }
-
-    /**
-     * Sets the clipping flag at the specified coordinates and level.
-     *
-     * @param z The plane (height level) of the tile.
-     * @param x The absolute X-coordinate of the tile.
-     * @param y The absolute Y-coordinate of the tile.
-     * @param flag The clipping flag value to set.
-     * @param projectile Whether the flag is for projectile clipping (true) or movement clipping (false).
-     */
-    @JvmStatic
-    fun setClippingFlags(z: Int, x: Int, y: Int, flag: Int, projectile: Boolean = false) {
-        val regionX = x shr 6
-        val regionY = y shr 6
-        val localX = x and 63
-        val localY = y and 63
-        val regionId = (regionX shl 8) or regionY
-        val index = (z * 64 * 64) + (localX * 64) + localY
-
-        val flags = getFlags(regionId, projectile)
-        flags[index] = flag
-    }
-
-
-    /**
-     * Adds a npc clipping flag.
-     *
-     * This prevents NPCs from walking through the given location.
-     *
-     * @param z The plane (height level) of the tile.
-     * @param x The absolute X-coordinate of the tile.
-     * @param y The absolute Y-coordinate of the tile.
-     */
-    @JvmStatic
-    fun addNPCClipping(z: Int, x: Int, y: Int) {
-        val regionX = x shr 6
-        val regionY = y shr 6
-        val localX = x and 63
-        val localY = y and 63
-        val regionId = (regionX shl 8) or regionY
-        val index = (z * 64 * 64) + (localX * 64) + localY
-
-        val flags = getFlags(regionId, projectile = false)
-        val npcBlockFlag = 0x200000
-
-        flags[index] = flags[index] or npcBlockFlag
+        return getClippingFlag(l.z, l.x, l.y)
     }
 
     /**
@@ -148,42 +97,44 @@ object RegionManager {
      * e.g 0_50_50_13_13 gets plane 0, region 50-50 (12850), (13, 13) which is in lumbridge.
      */
     @JvmStatic
-    fun getClippingFlag(
-        z: Int, regionX: Int, regionY: Int, localX: Int, localY: Int, projectile: Boolean = false
-    ): Int {
+    fun getClippingFlag(z: Int, regionX: Int, regionY: Int, localX: Int, localY: Int, projectile: Boolean = false) : Int {
         val (region, index) = getFlagIndex(z, regionX, regionY, localX, localY)
         var flag = getFlags(region, projectile)[index]
 
         if (flag == -1) {
             val r = forId((regionX shr 8) or regionY)
-            if (!r.loaded) Region.load(r)
-            if (!r.hasFlags) return -1
+            if (!r.isLoaded)
+                Region.load(r)
+            if (!r.isHasFlags)
+                return -1
             flag = getFlags(region, projectile)[index]
         }
 
         return flag
     }
 
-    private fun getFlagIndex(z: Int, regionX: Int, regionY: Int, localX: Int, localY: Int): Pair<Int, Int> {
+    private fun getFlagIndex(z: Int, regionX: Int, regionY: Int, localX: Int, localY: Int) : Pair<Int,Int> {
         return Pair((regionX shl 8) or regionY, (z * 64 * 64) + (localX * 64) + localY)
     }
 
     @JvmStatic
-    fun getFlags(regionX: Int, regionY: Int, projectile: Boolean): Array<Int> {
+    fun getFlags(regionX: Int, regionY: Int, projectile: Boolean) : Array<Int> {
         val region = (regionX shl 8) or regionY
         return getFlags(region, projectile)
     }
 
     @JvmStatic
-    fun getFlags(regionId: Int, projectile: Boolean): Array<Int> {
-        return if (projectile) PROJECTILE_FLAGS.getOrPut(regionId) { Array(16384) { 0 } }
-        else CLIPPING_FLAGS.getOrPut(regionId) { Array(16384) { -1 } }
+    fun getFlags(regionId: Int, projectile: Boolean) : Array<Int> {
+        return if (projectile)
+            PROJECTILE_FLAGS.getOrPut (regionId) {Array(16384){0}}
+        else
+            CLIPPING_FLAGS.getOrPut (regionId) {Array(16384){-1}}
     }
 
     @JvmStatic
     fun resetFlags(regionId: Int) {
-        PROJECTILE_FLAGS.put(regionId, Array(16384) { 0 })
-        CLIPPING_FLAGS.put(regionId, Array(16384) { -1 })
+        PROJECTILE_FLAGS.put (regionId, Array(16384){0})
+        CLIPPING_FLAGS.put (regionId, Array(16384){-1})
     }
 
     /**
@@ -206,7 +157,7 @@ object RegionManager {
      */
     @JvmStatic
     fun isLandscape(l: Location): Boolean {
-        return isLandscape(l.z.toInt(), l.x, l.y)
+        return isLandscape(l.z, l.x, l.y)
     }
 
     /**
@@ -222,7 +173,7 @@ object RegionManager {
         var y = y
         val region = forId(((x shr 6) shl 8) or (y shr 6))
         Region.load(region)
-        if (!region.hasFlags || region.planes[z].flags.landscape == null) {
+        if (!region.isHasFlags || region.planes[z].flags.landscape == null) {
             return false
         }
         x -= x shr 6 shl 6
@@ -244,7 +195,7 @@ object RegionManager {
         var y = y
         val region = forId(((x shr 6) shl 8) or (y shr 6))
         Region.load(region)
-        if (!region.hasFlags) {
+        if (!region.isHasFlags) {
             return
         }
         x -= (x shr 6) shl 6
@@ -270,7 +221,7 @@ object RegionManager {
         var y = y
         val region = forId(((x shr 6) shl 8) or (y shr 6))
         Region.load(region)
-        if (!region.hasFlags) {
+        if (!region.isHasFlags) {
             return
         }
         x -= (x shr 6) shl 6
@@ -401,7 +352,7 @@ object RegionManager {
      */
     @JvmStatic
     fun getObject(l: Location): Scenery? {
-        return getObject(l.z.toInt(), l.x, l.y)
+        return getObject(l.z, l.x, l.y)
     }
 
     /**
@@ -447,7 +398,7 @@ object RegionManager {
     @JvmStatic
     fun getRegionPlane(l: Location): RegionPlane {
         val regionId = ((l.x shr 6) shl 8) or (l.y shr 6)
-        return forId(regionId).planes[l.z.toInt()]
+        return forId(regionId).planes[l.z]
     }
 
     /**
@@ -458,7 +409,7 @@ object RegionManager {
     @JvmStatic
     fun getRegionChunk(l: Location): RegionChunk {
         val plane = getRegionPlane(l)
-        return plane.getRegionChunk(l.getLocalX() / RegionChunk.SIZE, l.getLocalY() / RegionChunk.SIZE)
+        return plane.getRegionChunk(l.localX / RegionChunk.SIZE, l.localY / RegionChunk.SIZE)
     }
 
     /**
@@ -622,10 +573,10 @@ object RegionManager {
         val it = players.iterator()
         while (it.hasNext()) {
             val p = it.next()
-            if (p.isInvisible()) {
+            if(p.isInvisible()) {
                 it.remove()
             }
-            if (!p.location.withinMaxnormDistance(n.location, 1)) {
+            if(!p.location.withinMaxnormDistance(n.location, 1)) {
                 it.remove()
                 continue
             }
@@ -668,22 +619,19 @@ object RegionManager {
         val it = npcs.iterator()
         while (it.hasNext()) {
             val p = it.next()
-            if (p.properties.teleportLocation != null && !p.properties.teleportLocation!!.withinMaxnormDistance(
-                    n.location, 1
-                )
-            ) {
+            if(p.properties.teleportLocation != null && !p.properties.teleportLocation!!.withinMaxnormDistance(n.location, 1)) {
                 it.remove()
                 continue
             }
-            if (p.getAttribute("state:death", false)) {
+            if(p.getAttribute("state:death", false)) {
                 it.remove()
                 continue
             }
-            if (p.isInvisible()) {
+            if(p.isInvisible()) {
                 it.remove()
                 continue
             }
-            if (!p.location.withinMaxnormDistance(n.location, 1)) {
+            if(!p.location.withinMaxnormDistance(n.location, 1)) {
                 it.remove()
                 continue
             }
@@ -765,7 +713,7 @@ object RegionManager {
         val b = ZoneBorders(l.x, l.y, l.x + 24, l.y + 24)
         for (regionX in ((l.regionX - 6) shr 3)..((l.regionX + 6) shr 3)) {
             for (regionY in ((l.regionY - 6) shr 3)..((l.regionY + 6) shr 3)) {
-                for (player in forId(regionX shl 8 or regionY).planes[l.z.toInt()].players) {
+                for (player in forId(regionX shl 8 or regionY).planes[l.z].players) {
                     l = player.location
                     if (b.insideBorder(l.x, l.y)) {
                         players.add(player)
@@ -812,7 +760,7 @@ object RegionManager {
         val players: MutableList<Player> = LinkedList()
         for (regionX in ((l.regionX - 6) shr 3)..((l.regionX + 6) shr 3)) {
             for (regionY in ((l.regionY - 6) shr 3)..((l.regionY + 6) shr 3)) {
-                for (player in forId((regionX shl 8) or regionY).planes[l.z.toInt()].players) {
+                for (player in forId((regionX shl 8) or regionY).planes[l.z].players) {
                     if (player.location.withinDistance(l, distance)) {
                         players.add(player)
                     }
@@ -834,8 +782,11 @@ object RegionManager {
         val players: MutableList<Player> = LinkedList()
         for (regionX in ((l.regionX - 6) shr 3)..((l.regionX + 6) shr 3)) {
             for (regionY in ((l.regionY - 6) shr 3)..((l.regionY + 6) shr 3)) {
-                for (player in forId((regionX shl 8) or regionY).planes[l.z.toInt()].players) {
-                    if (player.location.x >= l.x - xdist && player.location.x <= l.x + xdist && player.location.y >= l.y - ydist && player.location.y <= l.y + ydist) {
+                for (player in forId((regionX shl 8) or regionY).planes[l.z].players) {
+                    if (player.location.x >= l.getX() - xdist &&
+                        player.location.x <= l.getX() + xdist &&
+                        player.location.y >= l.getY() - ydist &&
+                        player.location.y <= l.getY() + ydist) {
                         players.add(player)
                     }
                 }
@@ -855,7 +806,7 @@ object RegionManager {
         val players: MutableList<Player> = LinkedList()
         for (regionX in ((l.regionX - 6) shr 3)..((l.regionX + 6) shr 3)) {
             for (regionY in ((l.regionY - 6) shr 3)..((l.regionY + 6) shr 3)) {
-                for (player in forId((regionX shl 8) or regionY).planes[l.z.toInt()].players) {
+                for (player in forId((regionX shl 8) or regionY).planes[l.z].players) {
                     if (player.location.withinMaxnormDistance(l, distance)) {
                         players.add(player)
                     }
@@ -925,7 +876,7 @@ object RegionManager {
         val npcs: MutableList<NPC> = LinkedList()
         for (regionX in ((l.regionX - 6) shr 3)..((l.regionX + 6) shr 3)) {
             for (regionY in ((l.regionY - 6) shr 3)..((l.regionY + 6) shr 3)) {
-                for (n in forId(regionX shl 8 or regionY).planes[l.z.toInt()].npcs) {
+                for (n in forId(regionX shl 8 or regionY).planes[l.z].npcs) {
                     if (n.location.withinDistance(l, (n.size() shr 1) + distance)) {
                         npcs.add(n)
                     }
@@ -936,8 +887,8 @@ object RegionManager {
     }
 
     @JvmStatic
-    fun addRegion(id: Int, region: Region) {
-        if (lock.tryLock() || LOCK.tryLock(10000, TimeUnit.MILLISECONDS)) {
+    fun addRegion(id: Int, region: Region){
+        if(lock.tryLock() || LOCK.tryLock(10000, TimeUnit.MILLISECONDS)) {
             REGION_CACHE[id] = region
             LOCK.unlock()
         }
@@ -957,7 +908,7 @@ object RegionManager {
      * @return The regionCache.
      */
     val regionCache: Map<Int, Region>
-        @JvmStatic get() {
+        @JvmStatic get(){
             return REGION_CACHE
         }
 

@@ -61,13 +61,13 @@ public final class BuildRoomDialogue extends Dialogue {
     public boolean open(java.lang.Object... args) {
         player.getInterfaceManager().close();
         RoomProperties props = (RoomProperties) args[0];
-        if (player.getSkills().getStaticLevel(Skills.CONSTRUCTION) < props.level) {
-            interpreter.sendPlainMessage(false, "You need a Construction level of " + props.level + " to buy this room.");
+        if (player.getSkills().getStaticLevel(Skills.CONSTRUCTION) < props.getLevel()) {
+            interpreter.sendPlainMessage(false, "You need a Construction level of " + props.getLevel() + " to buy this room.");
             stage = 2;
             return true;
         }
-        if (!player.getInventory().contains(995, props.cost)) {
-            interpreter.sendPlainMessage(false, "You need " + props.cost + " coins to buy this room.");
+        if (!player.getInventory().contains(995, props.getCost())) {
+            interpreter.sendPlainMessage(false, "You need " + props.getCost() + " coins to buy this room.");
             stage = 2;
             return true;
         }
@@ -155,7 +155,7 @@ public final class BuildRoomDialogue extends Dialogue {
                         options("Rotate clockwise", "Rotate anticlockwise", "Build", "Cancel");
                         return true;
                     case 3:
-                        if (player.getInventory().remove(new Item(995, room.getProperties().cost))) {
+                        if (player.getInventory().remove(new Item(995, room.getProperties().getCost()))) {
                             room.setRotation(directions[index]);
                             boolean[] exit = new boolean[exits.length];
                             for (int i = 0; i < exit.length; i++) {
@@ -165,7 +165,7 @@ public final class BuildRoomDialogue extends Dialogue {
                             end();
                             return true;
                         }
-                        interpreter.sendPlainMessage(false, "You need " + room.getProperties().cost + " coins to buy this room.");
+                        interpreter.sendPlainMessage(false, "You need " + room.getProperties().getCost() + " coins to buy this room.");
                         stage = 2;
                         return true;
                     case 4:

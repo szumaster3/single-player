@@ -411,7 +411,7 @@ class BorkNPC : AbstractNPC {
 
         override fun configure() {
             region = DynamicRegion.create(BORK_REGION)
-            region.multicombat = true
+            region.isMulticombat = true
             setRegionBase()
             registerRegion(region.id)
         }

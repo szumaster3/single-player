@@ -1,17 +1,14 @@
 #!/bin/bash
 
-set -e  # Exit
+set -e
 
-# git submodules
-echo "[SCRIPT] Initializing submodules..."
+echo "[SCRIPT] Initializing git submodules..."
 git submodule update --init --recursive
 
-# constants
-echo "[SCRIPT] Building submodule 530-consts..."
-cd submodules/530-consts
+echo "[SCRIPT] Building 530-Consts..."
+cd 530-Consts
 mvn clean package -DskipTests
 
-# local maven
 echo "[SCRIPT] Installing 530-Consts JAR to local Maven repository..."
 mvn install:install-file \
   -Dfile=target/530-Consts-1.0.0.jar \
@@ -21,9 +18,10 @@ mvn install:install-file \
   -Dpackaging=jar \
   -DgeneratePom=true
 
-# build
-cd ../../
-echo "[SCRIPT] Building the main project..."
+cd ..
+
+echo "[SCRIPT] Building Emulator..."
+cd Emulator
 mvn clean install -DskipTests
 
-echo "[SCRIPT] Initializing complete."
+echo "[SCRIPT] Initialization complete."

@@ -17,7 +17,6 @@
     <packaging>jar</packaging>
 
     <name>530-Consts</name>
-    <description>Shared constants.</description>
 
     <properties>
         <kotlin.version>1.8.20</kotlin.version>

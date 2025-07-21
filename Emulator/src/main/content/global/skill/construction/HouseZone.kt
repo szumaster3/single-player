@@ -81,11 +81,11 @@ class HouseZone(
                             val dr = if (dungRemove != -1) forId(dungRemove) else null
                             removeRegion(toRemove)
                             unregisterRegion(toRemove)
-                            r.active = false
+                            r.isActive = false
                             if (dungRemove != -1) {
                                 removeRegion(dungRemove)
                                 unregisterRegion(dungRemove)
-                                dr!!.active = false
+                                dr!!.isActive = false
                             }
                             return true
                         }

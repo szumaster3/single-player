@@ -141,7 +141,7 @@ public final class RegionPlane {
         if (r != null) {
             return r;
         }
-        if (region.getBuild()) {
+        if (region.isBuild()) {
             return chunks[chunkX][chunkY] = new BuildRegionChunk(region.getBaseLocation().transform(chunkX << 3, chunkY << 3, plane), 0, this);
         }
         return chunks[chunkX][chunkY] = new RegionChunk(region.getBaseLocation().transform(chunkX << 3, chunkY << 3, plane), 0, this);

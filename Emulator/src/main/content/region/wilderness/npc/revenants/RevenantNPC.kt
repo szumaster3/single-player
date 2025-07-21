@@ -72,7 +72,7 @@ class RevenantNPC @JvmOverloads constructor(
         override fun tick() {
             skills.pulse()
             walkingQueue.update()
-            if (viewport.region!!.active) {
+            if (viewport.region!!.isActive) {
                 updateMasks.prepare(this)
             }
             if (!DeathTask.isDead(this)) {
