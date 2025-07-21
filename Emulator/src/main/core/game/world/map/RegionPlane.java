@@ -95,7 +95,7 @@ public final class RegionPlane {
         this.players = new CopyOnWriteArrayList<Player>();
         this.npcs = new CopyOnWriteArrayList<NPC>();
         Location base = region.getBaseLocation();
-        this.flags = new RegionFlags(plane, base.getX(), base.getY(),false);
+        this.flags = new RegionFlags(plane, base.getX(), base.getY(), false);
         this.projectileFlags = new RegionFlags(plane, base.getX(), base.getY(), true);
         this.objects = new Scenery[REGION_SIZE][REGION_SIZE];
         this.chunks = new RegionChunk[CHUNK_SIZE][CHUNK_SIZE];
@@ -330,7 +330,7 @@ public final class RegionPlane {
             return;
         }
         if (item.isPrivate()) {
-                                                                                                        // https://runescape.wiki/w/Drops
+            // https://runescape.wiki/w/Drops
             if (item.getDropper() != null && item.getDropper().isPlaying() && item.getDropper().getLocation().withinDistance(l, 7)) {
                 PacketRepository.send(ClearGroundItem.class, new OutgoingContext.BuildItem(item.getDropper(), item, 0));
             }

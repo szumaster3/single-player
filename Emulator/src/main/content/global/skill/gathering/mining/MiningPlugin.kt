@@ -26,13 +26,12 @@ import org.rs.consts.Items
 import org.rs.consts.Quests
 
 class MiningPlugin : InteractionListener {
-    private val gemRewards =
-        arrayOf(
-            ChanceItem(Items.UNCUT_SAPPHIRE_1623, 1, DropFrequency.COMMON),
-            ChanceItem(Items.UNCUT_EMERALD_1621, 1, DropFrequency.COMMON),
-            ChanceItem(Items.UNCUT_RUBY_1619, 1, DropFrequency.UNCOMMON),
-            ChanceItem(Items.UNCUT_DIAMOND_1617, 1, DropFrequency.RARE),
-        )
+    private val gemRewards = arrayOf(
+        ChanceItem(Items.UNCUT_SAPPHIRE_1623, 1, DropFrequency.COMMON),
+        ChanceItem(Items.UNCUT_EMERALD_1621, 1, DropFrequency.COMMON),
+        ChanceItem(Items.UNCUT_RUBY_1619, 1, DropFrequency.UNCOMMON),
+        ChanceItem(Items.UNCUT_DIAMOND_1617, 1, DropFrequency.RARE),
+    )
 
     override fun defineListeners() {
         defineInteraction(
@@ -156,8 +155,7 @@ class MiningPlugin : InteractionListener {
         val resource = MiningNode.forId(node.id)
         val tool = SkillingTool.getPickaxe(player)
         val isEssence = resource!!.id in intArrayOf(
-            org.rs.consts.Scenery.RUNE_ESSENCE_2491,
-            /*
+            org.rs.consts.Scenery.RUNE_ESSENCE_2491,/*
              * Lunar essence rock.
              */
             org.rs.consts.Scenery.ROCK_16684
@@ -228,12 +226,11 @@ class MiningPlugin : InteractionListener {
                 reward = Items.PERFECT_GOLD_ORE_446
             }
 
-            val rewardName =
-                if (reward == Items.PERFECT_GOLD_ORE_446) {
-                    getItemName(Items.GOLD_ORE_444).lowercase()
-                } else {
-                    getItemName(reward).lowercase()
-                }
+            val rewardName = if (reward == Items.PERFECT_GOLD_ORE_446) {
+                getItemName(Items.GOLD_ORE_444).lowercase()
+            } else {
+                getItemName(reward).lowercase()
+            }
 
             if (isGems) {
                 sendMessage(player, "You get ${prependArticle(rewardName)}.")
@@ -347,29 +344,22 @@ class MiningPlugin : InteractionListener {
                 Items.CLAY_434, Items.COPPER_ORE_436, Items.TIN_ORE_438, Items.LIMESTONE_3211,
                 Items.BLURITE_ORE_668, Items.IRON_ORE_440, Items.ELEMENTAL_ORE_2892, Items.SILVER_ORE_442,
                 Items.COAL_453,
-                ->
-                    if (player.achievementDiaryManager.armour >= 0 && RandomFunction.random(100) < 4) {
-                        amount += 1
-                        sendMessage(player, "The Varrock armour allows you to mine an additional ore.")
-                    }
+                    -> if (player.achievementDiaryManager.armour >= 0 && RandomFunction.random(100) < 4) {
+                    amount += 1
+                    sendMessage(player, "The Varrock armour allows you to mine an additional ore.")
+                }
 
                 Items.GOLD_ORE_444, Items.GRANITE_500G_6979, Items.GRANITE_2KG_6981, Items.GRANITE_5KG_6983,
                 Items.MITHRIL_ORE_447,
-                ->
-                    if (player.achievementDiaryManager.armour >= 1 &&
-                        RandomFunction.random(100) < 3
-                    ) {
-                        amount += 1
-                        sendMessage(player, "The Varrock armour allows you to mine an additional ore.")
-                    }
+                    -> if (player.achievementDiaryManager.armour >= 1 && RandomFunction.random(100) < 3) {
+                    amount += 1
+                    sendMessage(player, "The Varrock armour allows you to mine an additional ore.")
+                }
 
-                Items.ADAMANTITE_ORE_449 ->
-                    if (player.achievementDiaryManager.armour >= 2 &&
-                        RandomFunction.random(100) < 2
-                    ) {
-                        amount += 1
-                        sendMessage(player, "The Varrock armour allows you to mine an additional ore.")
-                    }
+                Items.ADAMANTITE_ORE_449 -> if (player.achievementDiaryManager.armour >= 2 && RandomFunction.random(100) < 2) {
+                    amount += 1
+                    sendMessage(player, "The Varrock armour allows you to mine an additional ore.")
+                }
             }
         }
 
@@ -421,9 +411,7 @@ class MiningPlugin : InteractionListener {
     fun getDelay(): Int = 1
 
     fun anim(
-        player: Player,
-        resource: MiningNode?,
-        tool: SkillingTool
+        player: Player, resource: MiningNode?, tool: SkillingTool
     ) {
         val isEssence = resource?.identifier == 14.toByte()
         val isObsidian = resource?.identifier == 19.toByte()
@@ -454,18 +442,21 @@ class MiningPlugin : InteractionListener {
             sendMessage(player, "You do not have a pickaxe to use.")
             return false
         }
-        if(resource.identifier == 19.toByte() && !hasRequirement(player, Quests.TOKTZ_KET_DILL)) {
+        if (resource.identifier == 19.toByte() && !hasRequirement(player, Quests.TOKTZ_KET_DILL)) {
             sendDialogue(player, "You do not know the technique to mine stone slabs.")
             return false
         }
-        if (resource.identifier == 19.toByte() && (SkillingTool.getPickaxe(player) == SkillingTool.INFERNO_ADZE || SkillingTool.getPickaxe(player) == SkillingTool.INFERNO_ADZE2)) {
+        if (resource.identifier == 19.toByte() && (SkillingTool.getPickaxe(player) == SkillingTool.INFERNO_ADZE || SkillingTool.getPickaxe(
+                player
+            ) == SkillingTool.INFERNO_ADZE2)
+        ) {
             sendDialogue(player, "I don't think I should use the Inferno Adze in here.")
             return false
         }
 
         if (freeSlots(player) == 0) {
             val messages = mapOf(
-                4.toByte()  to "Your inventory is too full to hold any more limestone.",
+                4.toByte() to "Your inventory is too full to hold any more limestone.",
                 13.toByte() to "Your inventory is too full to hold any more gems.",
                 14.toByte() to "Your inventory is too full to hold any more essence.",
                 15.toByte() to "Your inventory is too full to hold any more sandstone.",

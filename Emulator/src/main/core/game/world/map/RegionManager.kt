@@ -9,11 +9,9 @@ import core.game.node.scenery.Scenery
 import core.game.world.map.zone.ZoneBorders
 import core.tools.Log
 import core.tools.RandomFunction
-import core.tools.SystemLogger
 import java.util.*
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.locks.ReentrantLock
-import kotlin.collections.HashMap
 
 /**
  * Manages the regions.
@@ -24,8 +22,10 @@ object RegionManager {
      * The region cache mapping.
      */
     private val REGION_CACHE: MutableMap<Int, Region> = HashMap()
-    @JvmStatic val CLIPPING_FLAGS = HashMap<Int, Array<Int>>()
-    @JvmStatic val PROJECTILE_FLAGS = HashMap<Int, Array<Int>>()
+    @JvmStatic
+    val CLIPPING_FLAGS = HashMap<Int, Array<Int>>()
+    @JvmStatic
+    val PROJECTILE_FLAGS = HashMap<Int, Array<Int>>()
 
     public val LOCK = ReentrantLock()
 
@@ -36,7 +36,7 @@ object RegionManager {
      */
     @JvmStatic
     fun forId(regionId: Int): Region {
-        if(LOCK.tryLock() || LOCK.tryLock(10000, TimeUnit.MILLISECONDS)) {
+        if (LOCK.tryLock() || LOCK.tryLock(10000, TimeUnit.MILLISECONDS)) {
             var region = REGION_CACHE[regionId]
             if (region == null) {
                 region = Region((regionId shr 8) and 0xFF, regionId and 0xFF)
@@ -45,8 +45,8 @@ object RegionManager {
             LOCK.unlock()
             return REGION_CACHE[regionId]!!
         }
-        log(this::class.java, Log.ERR,  "UNABLE TO OBTAIN LOCK WHEN GETTING REGION BY ID. RETURNING BLANK REGION.")
-        return Region(0,0)
+        log(this::class.java, Log.ERR, "UNABLE TO OBTAIN LOCK WHEN GETTING REGION BY ID. RETURNING BLANK REGION.")
+        return Region(0, 0)
     }
 
     /**
@@ -54,7 +54,7 @@ object RegionManager {
      */
     @JvmStatic
     fun pulse() {
-        if(LOCK.tryLock() || LOCK.tryLock(10000,TimeUnit.MILLISECONDS)) {
+        if (LOCK.tryLock() || LOCK.tryLock(10000, TimeUnit.MILLISECONDS)) {
             for (r in REGION_CACHE.values) {
                 if (r.isActive) {
                     for (p in r.planes) {
@@ -97,7 +97,14 @@ object RegionManager {
      * e.g 0_50_50_13_13 gets plane 0, region 50-50 (12850), (13, 13) which is in lumbridge.
      */
     @JvmStatic
-    fun getClippingFlag(z: Int, regionX: Int, regionY: Int, localX: Int, localY: Int, projectile: Boolean = false) : Int {
+    fun getClippingFlag(
+        z: Int,
+        regionX: Int,
+        regionY: Int,
+        localX: Int,
+        localY: Int,
+        projectile: Boolean = false
+    ): Int {
         val (region, index) = getFlagIndex(z, regionX, regionY, localX, localY)
         var flag = getFlags(region, projectile)[index]
 
@@ -113,28 +120,28 @@ object RegionManager {
         return flag
     }
 
-    private fun getFlagIndex(z: Int, regionX: Int, regionY: Int, localX: Int, localY: Int) : Pair<Int,Int> {
+    private fun getFlagIndex(z: Int, regionX: Int, regionY: Int, localX: Int, localY: Int): Pair<Int, Int> {
         return Pair((regionX shl 8) or regionY, (z * 64 * 64) + (localX * 64) + localY)
     }
 
     @JvmStatic
-    fun getFlags(regionX: Int, regionY: Int, projectile: Boolean) : Array<Int> {
+    fun getFlags(regionX: Int, regionY: Int, projectile: Boolean): Array<Int> {
         val region = (regionX shl 8) or regionY
         return getFlags(region, projectile)
     }
 
     @JvmStatic
-    fun getFlags(regionId: Int, projectile: Boolean) : Array<Int> {
+    fun getFlags(regionId: Int, projectile: Boolean): Array<Int> {
         return if (projectile)
-            PROJECTILE_FLAGS.getOrPut (regionId) {Array(16384){0}}
+            PROJECTILE_FLAGS.getOrPut(regionId) { Array(16384) { 0 } }
         else
-            CLIPPING_FLAGS.getOrPut (regionId) {Array(16384){-1}}
+            CLIPPING_FLAGS.getOrPut(regionId) { Array(16384) { -1 } }
     }
 
     @JvmStatic
     fun resetFlags(regionId: Int) {
-        PROJECTILE_FLAGS.put (regionId, Array(16384){0})
-        CLIPPING_FLAGS.put (regionId, Array(16384){-1})
+        PROJECTILE_FLAGS.put(regionId, Array(16384) { 0 })
+        CLIPPING_FLAGS.put(regionId, Array(16384) { -1 })
     }
 
     /**
@@ -573,10 +580,10 @@ object RegionManager {
         val it = players.iterator()
         while (it.hasNext()) {
             val p = it.next()
-            if(p.isInvisible()) {
+            if (p.isInvisible()) {
                 it.remove()
             }
-            if(!p.location.withinMaxnormDistance(n.location, 1)) {
+            if (!p.location.withinMaxnormDistance(n.location, 1)) {
                 it.remove()
                 continue
             }
@@ -619,19 +626,23 @@ object RegionManager {
         val it = npcs.iterator()
         while (it.hasNext()) {
             val p = it.next()
-            if(p.properties.teleportLocation != null && !p.properties.teleportLocation!!.withinMaxnormDistance(n.location, 1)) {
+            if (p.properties.teleportLocation != null && !p.properties.teleportLocation!!.withinMaxnormDistance(
+                    n.location,
+                    1
+                )
+            ) {
                 it.remove()
                 continue
             }
-            if(p.getAttribute("state:death", false)) {
+            if (p.getAttribute("state:death", false)) {
                 it.remove()
                 continue
             }
-            if(p.isInvisible()) {
+            if (p.isInvisible()) {
                 it.remove()
                 continue
             }
-            if(!p.location.withinMaxnormDistance(n.location, 1)) {
+            if (!p.location.withinMaxnormDistance(n.location, 1)) {
                 it.remove()
                 continue
             }
@@ -786,7 +797,8 @@ object RegionManager {
                     if (player.location.x >= l.getX() - xdist &&
                         player.location.x <= l.getX() + xdist &&
                         player.location.y >= l.getY() - ydist &&
-                        player.location.y <= l.getY() + ydist) {
+                        player.location.y <= l.getY() + ydist
+                    ) {
                         players.add(player)
                     }
                 }
@@ -887,8 +899,8 @@ object RegionManager {
     }
 
     @JvmStatic
-    fun addRegion(id: Int, region: Region){
-        if(lock.tryLock() || LOCK.tryLock(10000, TimeUnit.MILLISECONDS)) {
+    fun addRegion(id: Int, region: Region) {
+        if (lock.tryLock() || LOCK.tryLock(10000, TimeUnit.MILLISECONDS)) {
             REGION_CACHE[id] = region
             LOCK.unlock()
         }
@@ -908,7 +920,7 @@ object RegionManager {
      * @return The regionCache.
      */
     val regionCache: Map<Int, Region>
-        @JvmStatic get(){
+        @JvmStatic get() {
             return REGION_CACHE
         }
 

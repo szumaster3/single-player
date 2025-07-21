@@ -12,7 +12,7 @@ import core.plugin.Plugin
 class CompostBinOptionHandler : OptionHandler() {
     override fun newInstance(arg: Any?): Plugin<Any> {
         for (i in 7836..7839) {
-            SceneryDefinition.forId(i).configObjectIds!!.forEach {
+            SceneryDefinition.forId(i).childrenIds!!.forEach {
                 val def = SceneryDefinition.forId(it)
                 def.handlers["option:open"] = this
                 def.handlers["option:close"] = this

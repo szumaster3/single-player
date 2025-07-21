@@ -4,8 +4,6 @@ import core.game.node.entity.player.Player;
 import core.game.node.item.GroundItem;
 import core.game.node.item.Item;
 import core.game.node.scenery.Scenery;
-import core.tools.Log;
-import core.tools.SystemLogger;
 import core.game.world.map.build.DynamicRegion;
 import core.game.world.map.build.LandscapeParser;
 import core.game.world.update.flag.UpdateFlag;
@@ -14,6 +12,7 @@ import core.net.packet.out.ClearScenery;
 import core.net.packet.out.ConstructGroundItem;
 import core.net.packet.out.ConstructScenery;
 import core.net.packet.out.UpdateAreaPosition;
+import core.tools.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +21,8 @@ import static core.api.ContentAPIKt.log;
 
 /**
  * Represents a region chunk.
- * @author Emperor
  *
+ * @author Emperor
  */
 public class RegionChunk {
 
@@ -69,7 +68,8 @@ public class RegionChunk {
 
     /**
      * Constructs a new {@code RegionChunk} {@code Object}.
-     * @param base The base location of the region chunk.
+     *
+     * @param base     The base location of the region chunk.
      * @param rotation The rotation.
      */
     public RegionChunk(Location base, int rotation, RegionPlane plane) {
@@ -82,6 +82,7 @@ public class RegionChunk {
 
     /**
      * Copies the region chunk.
+     *
      * @param plane The region plane.
      * @return The region chunk.
      */
@@ -91,6 +92,7 @@ public class RegionChunk {
 
     /**
      * Registers an update flag.
+     *
      * @param flag The flag.
      */
     public void flag(UpdateFlag<?> flag) {
@@ -110,6 +112,7 @@ public class RegionChunk {
 
     /**
      * Updates the region chunk.
+     *
      * @param player The player.
      */
     public void synchronize(Player player) {
@@ -121,6 +124,7 @@ public class RegionChunk {
 
     /**
      * Writes the region chunk update data on the buffer.
+     *
      * @param player The player we're updating for.
      * @param buffer The buffer to write on.
      * @return {@code True} if an update occured.
@@ -139,8 +143,7 @@ public class RegionChunk {
                 if (!dyn.isRenderable() && stat != null) {
                     ClearScenery.write(buffer, stat);
                     updated = true;
-                }
-                else if (dyn != stat) {
+                } else if (dyn != stat) {
                     if (stat != null) {
                         ClearScenery.write(buffer, stat);
                     }
@@ -200,7 +203,7 @@ public class RegionChunk {
                             add = true;
 
                     if (add)
-                        totalItems.add(new GroundItem(new Item(13444), l.transform(x,y,0), player));
+                        totalItems.add(new GroundItem(new Item(13444), l.transform(x, y, 0), player));
                 }
         }
 
@@ -237,11 +240,12 @@ public class RegionChunk {
 
     /**
      * Rotates the chunk.
+     *
      * @param direction The direction.
      */
     public void rotate(Direction direction) {
         if (rotation != 0) {
-            log(this.getClass(), Log.ERR,  "Region chunk was already rotated!");
+            log(this.getClass(), Log.ERR, "Region chunk was already rotated!");
             return;
         }
         Scenery[][] copy = new Scenery[SIZE][SIZE];
@@ -282,11 +286,12 @@ public class RegionChunk {
 
     /**
      * Gets the new coordinates for an object/chunk tile when rotating.
-     * @param x The current x-coordinate.
-     * @param y The current y-coordinate.
-     * @param sizeX The x-size of the object.
-     * @param sizeY The y-size of the object.
-     * @param rotation The object rotation.
+     *
+     * @param x             The current x-coordinate.
+     * @param y             The current y-coordinate.
+     * @param sizeX         The x-size of the object.
+     * @param sizeY         The y-size of the object.
+     * @param rotation      The object rotation.
      * @param chunkRotation The chunk rotation.
      * @return The new x-coordinate.
      */
@@ -297,19 +302,20 @@ public class RegionChunk {
             sizeY = s;
         }
         if (chunkRotation == 0) {
-            return new int[] { x, y };
+            return new int[]{x, y};
         }
         if (chunkRotation == 1) {
-            return new int[] { y, 7 - x - (sizeX - 1) };
+            return new int[]{y, 7 - x - (sizeX - 1)};
         }
         if (chunkRotation == 2) {
-            return new int[] { 7 - x - (sizeX - 1), 7 - y - (sizeY - 1) };
+            return new int[]{7 - x - (sizeX - 1), 7 - y - (sizeY - 1)};
         }
-        return new int[] { 7 - y - (sizeY - 1), x };
+        return new int[]{7 - y - (sizeY - 1), x};
     }
 
     /**
      * Gets the items.
+     *
      * @return The items.
      */
     public List<GroundItem> getItems() {
@@ -321,6 +327,7 @@ public class RegionChunk {
 
     /**
      * Sets the items.
+     *
      * @param items The items to set.
      */
     public void setItems(List<GroundItem> items) {
@@ -329,16 +336,18 @@ public class RegionChunk {
 
     /**
      * Gets the scenerys located on the coordinates in this chunk.
+     *
      * @param chunkX The chunk x-coordinate (0-7).
      * @param chunkY The chunk y-coordinate (0-7).
      * @return The objects.
      */
     public Scenery[] getObjects(int chunkX, int chunkY) {
-        return new Scenery[] { objects[chunkX][chunkY] };
+        return new Scenery[]{objects[chunkX][chunkY]};
     }
 
     /**
      * Gets the objects.
+     *
      * @return The objects.
      */
     public Scenery[][] getObjects() {
@@ -347,6 +356,7 @@ public class RegionChunk {
 
     /**
      * Sets the objects.
+     *
      * @param objects The objects to set.
      */
     public void setObjects(Scenery[][] objects) {
@@ -355,6 +365,7 @@ public class RegionChunk {
 
     /**
      * Gets the base.
+     *
      * @return The base.
      */
     public Location getBase() {
@@ -363,6 +374,7 @@ public class RegionChunk {
 
     /**
      * Sets the base location of the region to copy.
+     *
      * @param base The base location.
      */
     public void setBase(Location base) {
@@ -371,6 +383,7 @@ public class RegionChunk {
 
     /**
      * Gets the rotation.
+     *
      * @return The rotation.
      */
     public int getRotation() {
@@ -379,6 +392,7 @@ public class RegionChunk {
 
     /**
      * Sets the rotation of the region chunk.
+     *
      * @param rotation The rotation
      */
     public void setRotation(int rotation) {
@@ -387,6 +401,7 @@ public class RegionChunk {
 
     /**
      * Gets the updated.
+     *
      * @return The updated.
      */
     public boolean isUpdated() {
@@ -402,6 +417,7 @@ public class RegionChunk {
 
     /**
      * Gets the region plane.
+     *
      * @return The plane.
      */
     public RegionPlane getPlane() {
@@ -410,6 +426,7 @@ public class RegionChunk {
 
     /**
      * Gets the currentBase.
+     *
      * @return The currentBase.
      */
     public Location getCurrentBase() {
@@ -418,6 +435,7 @@ public class RegionChunk {
 
     /**
      * Sets the currentBase.
+     *
      * @param currentBase The currentBase to set.
      */
     public void setCurrentBase(Location currentBase) {
@@ -427,8 +445,8 @@ public class RegionChunk {
     public void rebuildFlags(RegionPlane from) {
         for (int x = 0; x < 8; x++) {
             for (int y = 0; y < 8; y++) {
-                Location loc = currentBase.transform(x,y,0);
-                Location fromLoc = base.transform(x,y,0);
+                Location loc = currentBase.transform(x, y, 0);
+                Location fromLoc = base.transform(x, y, 0);
                 plane.getFlags().getLandscape()[loc.getLocalX()][loc.getLocalY()] = from.getFlags().getLandscape()[fromLoc.getLocalX()][fromLoc.getLocalY()];
                 plane.getFlags().clearFlag(x, y);
                 Scenery obj = objects[x][y];

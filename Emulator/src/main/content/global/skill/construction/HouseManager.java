@@ -134,53 +134,50 @@ public final class HouseManager {
     }
 
     /**
-     * Prepares for entering the player's house.
-     * @param player
-     * @param buildingMode
-     */
-    public void preEnter(final Player player, boolean buildingMode) {
-        if (this.buildingMode != buildingMode || !isLoaded()) {
-            this.buildingMode = buildingMode;
-            construct();
-        }
-        player.setAttribute("poh_entry", HouseManager.this);
-        player.setAttribute("/save:original-loc", location.getExitLocation());
-        player.lock(1);
-        player.debug("House location: " + houseRegion.getBaseLocation() + ", entry: " + getEnterLocation());
-    }
-
-    /**
-     * Enters the player's house and plays the ding sound.
-     * @param player
-     * @param buildingMode
+     * Handles entering the player house, including construction and teleport logic.
      */
     public void enter(final Player player, boolean buildingMode) {
         preEnter(player, buildingMode);
         player.getProperties().setTeleportLocation(getEnterLocation());
         player.getInterfaceManager().closeSingleTab();
-        openLoadInterface(player);
         postEnter(player, buildingMode);
     }
 
     /**
-     * Performs post-house-enter administration.
-     * @param player
-     * @param buildingMode
+     * Prepares the house for entry. Constructs the house if needed.
+     */
+    public void preEnter(final Player player, boolean buildingMode) {
+        if (!isLoaded() || this.buildingMode != buildingMode) {
+            this.buildingMode = buildingMode;
+            construct();
+        }
+
+        player.setAttribute("poh_entry", HouseManager.this);
+        player.setAttribute("/save:original-loc", location.getExitLocation());
+        player.lock(1);
+
+        player.debug("House location: " + houseRegion.getBaseLocation() +
+                ", entry: " + getEnterLocation());
+    }
+
+    /**
+     * Called after the player enters the house.
      */
     public void postEnter(final Player player, boolean buildingMode) {
         checkForAndSpawnServant(player);
         updateVarbits(player, buildingMode);
         unlockMusicTrack(player);
-        PacketRepository.send(MinimapState.class, new OutgoingContext.MinimapState(player, 2));
+        openLoadInterface(player);
     }
 
+    /**
+     * Opens the loading screen.
+     */
     private void openLoadInterface(Player player) {
         openInterface(player, Components.POH_HOUSE_LOADING_SCREEN_399);
+        PacketRepository.send(MinimapState.class, new OutgoingContext.MinimapState(player, 2));
         playAudio(player, Sounds.POH_TP_984);
-        submitCloseLoadInterfacePulse(player);
-    }
 
-    private void submitCloseLoadInterfacePulse(Player player) {
         GameWorld.getPulser().submit(new Pulse(6, player) {
             @Override
             public boolean pulse() {
@@ -737,7 +734,7 @@ public final class HouseManager {
     //	return (houseRegion != null) || (dungeonRegion != null);
     //}
     public boolean isLoaded() {
-        return (houseRegion != null && houseRegion.getActive()) || (dungeonRegion != null && dungeonRegion.getActive());
+        return (houseRegion != null && houseRegion.isActive()) || (dungeonRegion != null && dungeonRegion.isActive());
     }
 
     /**

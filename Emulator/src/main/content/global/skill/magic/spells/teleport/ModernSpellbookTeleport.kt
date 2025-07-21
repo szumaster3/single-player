@@ -12,13 +12,19 @@ import core.game.node.entity.player.link.TeleportManager
 import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.item.Item
 import core.game.system.task.Pulse
+import core.game.world.GameWorld
 import core.game.world.map.Location
-import org.rs.consts.Components
 import org.rs.consts.Items
 import org.rs.consts.Quests
 
 class ModernSpellbookTeleport : SpellListener("modern") {
+
+    private val POH_START_TICK = 0
+    private val POH_POST_TICK = 4
+    private val POH_END_TICK = 6
+
     override fun defineListeners() {
+
         /*
          * Handles home teleport.
          */
@@ -184,9 +190,7 @@ class ModernSpellbookTeleport : SpellListener("modern") {
                         Item(Items.FIRE_RUNE_554, 2),
                         Item(Items.WATER_RUNE_555, 2),
                         Item(Items.LAW_RUNE_563, 2),
-                        Item(
-                            Items.BANANA_1963,
-                        ),
+                        Item(Items.BANANA_1963),
                     ),
             )
             sendTeleport(player, 74.0, Location.create(2754, 2784, 0))
@@ -230,31 +234,32 @@ class ModernSpellbookTeleport : SpellListener("modern") {
 
     private fun attemptHouseTeleport(player: Player) {
         if (player.isTeleBlocked) {
-            removeAttribute(player, "spell:runes")
-            sendMessage(player, "A magical force prevents you from teleporting.")
+            player.removeAttribute("spell:runes")
+            player.sendMessage("A magical force prevents you from teleporting.")
             return
         }
+
         val hasHouse = player.houseManager.location.exitLocation != null
         if (!hasHouse) {
-            sendMessage(player, "You must have bought a house before you can use the spell.")
+            player.sendMessage("You must have bought a house before you can use the spell.")
             return
         }
 
         player.houseManager.preEnter(player, false)
+
+        val enterLocation = player.houseManager.getEnterLocation()
         val teleType = TeleportManager.TeleportType.NORMAL
-        val loc = player.houseManager.getEnterLocation()
-        player.teleporter.send(loc, teleType)
+        player.teleporter.send(enterLocation, teleType)
+
         removeRunes(player)
         addXP(player, 30.0)
         setDelay(player, true)
-        submitWorldPulse(
-            object : Pulse(4) {
-                override fun pulse(): Boolean {
-                    openInterface(player, Components.POH_HOUSE_LOADING_SCREEN_399)
-                    player.houseManager.postEnter(player, false)
-                    return true
-                }
-            },
-        )
+
+        GameWorld.Pulser.submit(object : Pulse(POH_POST_TICK, player) {
+            override fun pulse(): Boolean {
+                player.houseManager.postEnter(player, false)
+                return true
+            }
+        })
     }
 }

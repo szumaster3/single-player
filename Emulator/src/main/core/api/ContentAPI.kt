@@ -2096,7 +2096,7 @@ fun stopWalk(entity: Entity) {
 fun getChildren(scenery: Int): IntArray =
     SceneryDefinition
         .forId(scenery)
-        .configObjectIds!!
+        .childrenIds!!
         .filter { it != -1 }
         .toIntArray()
 
