@@ -10,8 +10,8 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>game-constants</module>
-        <module>game-server</module>
+        <module>constants</module>
+        <module>server</module>
     </modules>
 
     <properties>
