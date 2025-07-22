@@ -29,20 +29,20 @@
 /build/tmp/
 /out/
 
-Emulator/**/*.class
-Emulator/.gradle/
-Emulator/build/
-Emulator/data/eco/bot_offers.json
-Emulator/data/eco/grand_exchange_db.emp
-Emulator/data/eco/grandexchange.db
-Emulator/data/global_kill_stats.json
-Emulator/data/serverstore/*
-Emulator/data/logs/*
-Emulator/ge_test.db
-Emulator/gradle/
-Emulator/hasRan.txt
-Emulator/latestdump.txt
-Emulator/target/*
+server/**/*.class
+server/.gradle/
+server/build/
+server/data/eco/bot_offers.json
+server/data/eco/grand_exchange_db.emp
+server/data/eco/grandexchange.db
+server/data/global_kill_stats.json
+server/data/serverstore/*
+server/data/logs/*
+server/ge_test.db
+server/gradle/
+server/hasRan.txt
+server/latestdump.txt
+server/target/*
 
 __pycache__/
 

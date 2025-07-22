@@ -6,7 +6,6 @@ import core.game.node.entity.player.Player;
 import core.game.node.item.GroundItem;
 import core.game.node.item.Item;
 import core.game.node.scenery.Scenery;
-import core.game.node.scenery.SceneryManager;
 import core.game.world.map.build.DynamicRegion;
 import core.game.world.map.build.RegionFlags;
 import core.game.world.update.flag.chunk.ItemUpdateFlag;
@@ -125,7 +124,7 @@ public final class RegionPlane {
         }
         if (object != null) {
             object.setRenderable(true);
-            SceneryManager.register(object);
+
         }
     }
 
@@ -183,7 +182,7 @@ public final class RegionPlane {
             remove.setRenderable(false);
 
             if (oldObject != null) {
-                SceneryManager.unregister(oldObject);
+
             }
 
             ((BuildRegionChunk) chunk).getObjects(index)[offsetX][offsetY] = remove;
@@ -195,7 +194,7 @@ public final class RegionPlane {
         remove.setRenderable(false);
 
         if (oldObject != null) {
-            SceneryManager.unregister(oldObject);
+
         }
 
         chunk.getObjects()[offsetX][offsetY] = remove;
