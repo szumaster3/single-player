@@ -29,20 +29,20 @@
 /build/tmp/
 /out/
 
-server/**/*.class
-server/.gradle/
-server/build/
-server/data/eco/bot_offers.json
-server/data/eco/grand_exchange_db.emp
-server/data/eco/grandexchange.db
-server/data/global_kill_stats.json
-server/data/serverstore/*
-server/data/logs/*
-server/ge_test.db
-server/gradle/
-server/hasRan.txt
-server/latestdump.txt
-server/target/*
+Server/**/*.class
+Server/.gradle/
+Server/build/
+Server/data/eco/bot_offers.json
+Server/data/eco/grand_exchange_db.emp
+Server/data/eco/grandexchange.db
+Server/data/global_kill_stats.json
+Server/data/serverstore/*
+Server/data/logs/*
+Server/ge_test.db
+Server/gradle/
+Server/hasRan.txt
+Server/latestdump.txt
+Server/target/*
 
 __pycache__/
 
@@ -67,7 +67,7 @@ out/**
 pyvenv.cfg
 share/
 logs.txt
-tools/cache_location.txt
+Tools/cache_location.txt
 
 nullmain_file_cache.dat2
 nullmain_file_cache.idx255

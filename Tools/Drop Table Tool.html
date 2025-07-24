@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>💀 Drop Table Tool</title>
+    <title>Drop Table Tool</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8">
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
@@ -16,7 +16,8 @@
             <div class="field is-grouped">
                 <div class="file control has-name">
                     <label class="file-label">
-                        <input id="files" class="file-input" type="file" name="files" accept=".json" multiple @change="readFiles">
+                        <input id="files" class="file-input" type="file" name="files" accept=".json" multiple
+                               @change="readFiles">
                         <span class="file-cta">
                       <span class="file-label">
                         Select all the JSON config files
@@ -71,7 +72,8 @@
                         <div class="field has-addons">
                             <div class="control select">
                                 <select v-model="selectedNPC">
-                                    <option v-for="npc in npc_configs" :value="npc.id">{{ npc.id }} - {{ npc.name }}</option>
+                                    <option v-for="npc in npc_configs" :value="npc.id">{{ npc.id }} - {{ npc.name }}
+                                    </option>
                                 </select>
                             </div>
                             <div class="control">
@@ -83,7 +85,9 @@
 
                         <div class="field is-grouped is-grouped-multiline">
                             <div class="control">
-                                <button class="button is-primary" @click="findMissingDropTables">Find Missing Drop Tables</button>
+                                <button class="button is-primary" @click="findMissingDropTables">Find Missing Drop
+                                    Tables
+                                </button>
                             </div>
                             <div class="control">
                                 <button class="button is-primary" @click="findDupes">Find Duplicate NPC drops</button>
@@ -126,41 +130,43 @@
                         Total Weight: {{ results.weights[section] }}
                         <table class="table">
                             <thead>
-                                <tr>
-                                    <td>Item ID</td>
-                                    <td>Name</td>
-                                    <td>Min Amount</td>
-                                    <td>Max Amount</td>
-                                    <td>Weight</td>
-                                    <td>Odds</td>
-                                </tr>
+                            <tr>
+                                <td>Item ID</td>
+                                <td>Name</td>
+                                <td>Min Amount</td>
+                                <td>Max Amount</td>
+                                <td>Weight</td>
+                                <td>Odds</td>
+                            </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="row in results[section]">
-                                    <td>{{ row.id }}</td>
-                                    <td>
-                                        <span v-if="row.id == 31">Rare Drop Table</span>
-                                        <a v-else-if="item_configs.find(x => x.id == row.id)" @click="inspectModal = item_configs.find(x => x.id == row.id)">{{ item_configs.find(x => x.id == row.id).name }}</a>
-                                        <span v-else>UNKNOWN ITEM</span>
-                                    </td>
-                                    <td>{{ row.minAmount }}</td>
-                                    <td>{{ row.maxAmount }}</td>
-                                    <td>{{ row.weight }}</td>
-                                    <td>{{ Number(row.weight/results.weights[section]*100).toPrecision(3) }}%</td>
-                                </tr>
+                            <tr v-for="row in results[section]">
+                                <td>{{ row.id }}</td>
+                                <td>
+                                    <span v-if="row.id == 31">Rare Drop Table</span>
+                                    <a v-else-if="item_configs.find(x => x.id == row.id)"
+                                       @click="inspectModal = item_configs.find(x => x.id == row.id)">{{
+                                        item_configs.find(x => x.id == row.id).name }}</a>
+                                    <span v-else>UNKNOWN ITEM</span>
+                                </td>
+                                <td>{{ row.minAmount }}</td>
+                                <td>{{ row.maxAmount }}</td>
+                                <td>{{ row.weight }}</td>
+                                <td>{{ Number(row.weight/results.weights[section]*100).toPrecision(3) }}%</td>
+                            </tr>
                             </tbody>
                         </table>
                     </template>
                     <p><strong>NPCs using this droptable:</strong>
-                        <div class="content is-small">
-                            <ul>
-                                <li v-for="id in results.ids.split(',')">
-                                    <a @click="inspectModal = npc_configs.find(x => x.id == id)">
-                                        {{ id }} - {{ npc_configs.find(x => x.id == id)?.name || 'UNKNOWN NAME' }}
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
+                    <div class="content is-small">
+                        <ul>
+                            <li v-for="id in results.ids.split(',')">
+                                <a @click="inspectModal = npc_configs.find(x => x.id == id)">
+                                    {{ id }} - {{ npc_configs.find(x => x.id == id)?.name || 'UNKNOWN NAME' }}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                     </p>
                 </div>
             </div>

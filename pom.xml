@@ -10,9 +10,8 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>constants</module>
-        <module>server</module>
-        <module>config-editor</module>
+        <module>Constants</module>
+        <module>Server</module>
     </modules>
 
     <properties>
