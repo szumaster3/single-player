@@ -1558,18 +1558,12 @@ object Sounds {
     const val FIRE_ELEMENTAL_ATTACK_1534 = 1534
     const val FIRE_ELEMENTAL_DEATH_1535 = 1535
     const val FIRE_ELEMENTAL_HIT_1536 = 1536
-    const val LAVA_BOWL_FILL_1537 = 1537
-    const val LAVA_BOWL_POUR_1538 = 1538
     const val SHIELD_APPEAR_1539 = 1539
-    const val SLUICE_GATE_1540 = 1540
-    const val SQUEAKY_VALVE_1541 = 1541
     const val SQUEAKY_VALVE_GUSH_1542 = 1542
     const val WATER_ELEMENTAL_ATTACK_1543 = 1543
     const val WATER_ELEMENTAL_DEATH_1544 = 1544
     const val WATER_ELEMENTAL_DEATH2_1545 = 1545
     const val WATER_ELEMENTAL_HIT_1546 = 1546
-    const val WATER_WHEEL_START_1547 = 1547
-    const val WATER_WHEEL_STOP_1548 = 1548
     const val ENAK_CHISEL_WALL_1549 = 1549
     const val ENAK_ATTACH_1550 = 1550
     const val ENAK_BARRIER_1551 = 1551
@@ -3303,7 +3297,6 @@ object Sounds {
     const val ANMA_PUZZLE_COMPLETE_3283 = 3283
     const val EQUIP_BACKPACK_3284 = 3284
     const val EQUIP_JESTER_3285 = 3285
-    const val FI_JESTER_JANGLE_3285 = 3285
     const val GUBLINCH_MAKE_SNOWBALL_3287 = 3287
     const val GUBLINCH_HIT_3292 = 3292
     const val GUBLINCH_SNOWBALL_3295 = 3295

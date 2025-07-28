@@ -219,14 +219,6 @@ object Graphics {
 
     const val RE_PUFF_86 = 86
 
-    const val GUTHIX_ARROW_DRAWBACK_95 = 95
-    const val SARADOMIN_ARROW_DRAWBACK_96 = 96
-    const val ZAMORAK_ARROW_DRAWBACK_97 = 97
-
-    const val GUTHIX_ARROW_PROJECTILE_98 = 98
-    const val SARADOMIN_ARROW_PROJECTILE_99 = 99
-    const val ZAMORAK_ARROW_PROJECTILE_100 = 100
-
     const val BRONZE_JAVELIN_IN_200 = 200
     const val IRON_JAVELIN_ON_GROUND_201 = 201
     const val STEEL_JAVELIN_ON_GROUND_202 = 202
@@ -265,6 +257,37 @@ object Graphics {
     const val TP_RING_OF_DUELING_1684 = 1684
     const val EXPLORERS_RING_ALCH_1698 = 1698
 
+    const val ABYSSAL_LURKER_GFX_1_8 = 8
+    const val ABYSSAL_LURKER_GFX_2_1296 = 1296
+
+    const val ABYSSAL_PARASITE_GFX_1422 = 1422
+    const val ABYSSAL_PARASITE_PROJECTILE_1423 = 1423
+
+    const val ABYSSAL_TITAN_GFX_1_1316 = 1316
+    const val ABYSSAL_TITAN_GFX_2_1457 = 1457
+
+    const val ALBINO_RAT_GFX_1384 = 1384
+
+    const val ARCTIC_BEAR_GFX_1405 = 1405
+    const val ARCTIC_BEAR_PROJECTILE_1406 = 1406
+    const val ARCTIC_BEAR_IMPACT_1407 = 1407
+
+    const val BARKER_TOAD_GFX_1403 = 1403
+    const val BARKER_TOAD_PROJECTILE_1404 = 1404
+
+    const val BULL_ANT_GFX_1_1382 = 1382
+    const val BULL_ANT_GFX_2_1296 = 1296
+
+    const val BUNYIP_GFX_1_1481 = 1481
+    const val BUNYIP_GFX_2_1316 = 1316
+
+    const val BUNYIP_TRANSMUTE_PROJECTILE_1435 = 1435
+
+    const val COCKATRICE_GFX_1467 = 1467
+    const val COCKATRICE_PROJECTILE_1468 = 1468
+    const val COCKATRICE_IMPACT_1469 = 1469
+
+    const val COMPOST_MOUND_GFX_1424 = 1424
 
     /*
      * Not sorted.
@@ -311,27 +334,6 @@ object Graphics {
     const val GIANT_TENTICAL_BLOOD_RED_83 = 83
     const val MONK_CAST_HEAL_84 = 84
     const val RANDOM_EVENT_PUFF_OF_SMOKE_86 = 86
-    const val WEIRD_TINY_ROCKS_CITADEL_TEASER_90 = 90
-    const val TIER_3_DUELIST_CAP_BLUE_SKULLS_91 = 91
-    const val TIER_6_DUELIST_CAP_BLUE_SKULLS_GHOST_92 = 92
-    const val BLUE_SPIRALS_93 = 93
-    const val BLUE_SPIRALS_WITH_YELLOW_SPARKLES_STARS_94 = 94
-    const val BAT_STAFF_EMOTE_101 = 101
-    const val ENCHANT_HIGH_LEVEL_NECKLACE_116 = 116
-    const val DRAGON_STAFF_EMOTE_118 = 118
-    const val PENGUIN_STAFF_EMOTE_119 = 119
-    const val WOLF_STAFF_EMOTE_120 = 120
-    const val WINDSTALKER_TIER_5_DUELIST_STUFF_121 = 121
-    const val WINDSTALKER_TIER_6_122 = 122
-    const val BLUE_STUFF_123 = 123
-    const val DOUBLE_GUTHIX_ARROW_DRAWBACK_124 = 124
-    const val DOUBLE_SARADOMIN_ARROW_DRAWBACK_125 = 125
-    const val DOUBLE_ZAMORAK_ARROW_DRAWBACK_126 = 126
-    const val GREEN_POINTS_SPIRALING_UPWARDS_GUTHIX_127 = 127
-    const val BLUE_POINTS_SPIRALING_UPWARDS_SARADOMIN_128 = 128
-    const val RED_POINTS_SPIRALING_UPWARDS_ZAMORAK_129 = 129
-    const val SHAKING_AND_BREAKING_MYSTERIOUS_BOX_QUEST_BOX_FROM_FALADOR_130 = 130
-    const val SHAKING_MYSTERIOUS_BOX_QUEST_BOX_FROM_FALADOR_131 = 131
     const val SPELL_VIAL_UNKNOWN_176 = 176
     const val PUFF_OF_SMOKE_184 = 184
     const val SHOOTING_STAR_185 = 185
@@ -352,7 +354,7 @@ object Graphics {
     const val BARREL_FALLING_APART_239 = 239
     const val TOAD_DETONATION_240 = 240
     const val USING_BELLOWS = 241
-    const val FILLING_TOAD_WITH_BELLOWS_241 = 241
+    const val FILLING_TOAD_WITH_BELLOWS_242 = 242
     const val GIANT_OGRE_ARROW_DRAW_BACK_243 = 243
     const val ELEMENTAL_SHIELD_APPEARING_244 = 244
     const val BIRDIES_ABOVE_HEAD_245 = 245
@@ -419,16 +421,11 @@ object Graphics {
     const val SNOW_EMOTE_364 = 364
     const val STORM_EMOTE_365 = 365
     const val ANCIENTS_ICE_BLITZ_366 = 366
-    const val ANCIENTS_ICE_BARRAGE_NORMAL_369 = 369
     const val ANCIENTS_ICE_BARRAGE_HUGE_370 = 370
     const val ANCIENTS_BLOOD_SPELLS_373 = 373
     const val ANCIENTS_SHADOW_SPELLS_378 = 378
     const val ANCIENTS_SMOKE_SPELLS_383 = 383
     const val ANCIENTS_TP_392 = 392
-    const val KBD_RED_PROJECTILE_393 = 393
-    const val KBD_GREEN_PROJECTILE_394 = 394
-    const val KBD_WHITE_PROJECTILE_395 = 395
-    const val KBD_BLUE_PROJECTILE_396 = 396
     const val GUTHAN_SPECIAL_398 = 398
     const val TORAGS_SPECIAL_399 = 399
     const val AHRIMS_SPECIAL_400 = 400
@@ -526,7 +523,6 @@ object Graphics {
     const val DANCE_MARIONETTE_GREEN_518 = 518
     const val IN_A_DOOR_WAY_519 = 519
     const val BONES_DROP_ON_YOU_520 = 520
-    const val WHITE_SPIKEY_BALL_UNDER_YOU_524 = 524
     const val SAME_AS_520_DIF_COLOR_BONES_521 = 521
     const val SAME_AS_520_521_DIF_COLOR_BONES_522 = 522
     const val SAME_AS_520_521_522_DIF_COLOR_BONES_523 = 523
@@ -1280,9 +1276,6 @@ object Graphics {
     const val STONE_CIRCLES_1455 = 1456
     const val BEAVER_CUTTING_DOWN_TREE_1458 = 1458
     const val RAINING_FLAMES_1463 = 1463
-    const val CLASSIC_CAPE_1466 = 1466
-    const val CLASSIC_CAPE_1447 = 1447
-    const val CLASSIC_CAPE_1471 = 1471
     const val PEST_CONTROL_PORTAL_1499 = 1499
     const val PORTAL_1500 = 1500
     const val PEST_CONTROL_CREATURE_1501 = 1501
@@ -1368,7 +1361,6 @@ object Graphics {
     const val ANCIENTS_TP_1681 = 1681
     const val USE_LYRE_1682 = 1682
     const val USE_SCEPTRE_1683 = 1683
-    const val DUELING_RING_TP_1684 = 1684
     const val LUNAR_TP_1685 = 1685
     const val TP_1687 = 1687
     const val ECTOFUNGUS_TP_1688 = 1688

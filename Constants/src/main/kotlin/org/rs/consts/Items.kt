@@ -14697,19 +14697,9 @@ object Items {
     const val TAUPE_AFRO_14693 = 14693
     const val BLACK_AFRO_14694 = 14694
     const val BLACK_AFRO_14695 = 14695
-    const val NULL_14696 = 14696
-    const val NULL_14697 = 14697
-    const val NULL_14698 = 14698
-    const val NULL_14699 = 14699
-    const val NULL_14700 = 14700
-    const val NULL_14701 = 14701
-    const val NULL_14702 = 14702
-    const val NULL_14703 = 14703
-    const val NULL_14704 = 14704
-    const val NULL_14705 = 14705
-    const val NULL_14706 = 14706
-    const val AGILE_TOP_14707 = 14707
-    const val AGILE_TOP_14708 = 14708
-    const val AGILE_LEGS_14709 = 14709
-    const val AGILE_LEGS_14710 = 14710
+    const val AGILE_TOP_14696 = 14696
+    const val AGILE_TOP_14697 = 14697
+    const val AGILE_LEGS_14698 = 14698
+    const val AGILE_LEGS_14699 = 14699
+    const val SUMMONING_OBELISK_14700 = 14700
 }
