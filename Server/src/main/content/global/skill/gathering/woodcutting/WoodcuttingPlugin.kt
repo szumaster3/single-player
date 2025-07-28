@@ -39,6 +39,7 @@ class WoodcuttingPlugin : InteractionListener {
 
     private val woodcuttingSounds =
         intArrayOf(
+            Sounds.WOODCUTTING_HIT_3037,
             Sounds.WOODCUTTING_HIT_3038,
             Sounds.WOODCUTTING_HIT_3039,
             Sounds.WOODCUTTING_HIT_3040,

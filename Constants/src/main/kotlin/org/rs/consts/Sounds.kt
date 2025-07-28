@@ -15,6 +15,7 @@ object Sounds {
     const val TRAIBORN_SUMMON_WARDROBE_2973 = 2973
     const val RECEIVE_SILVERLIGHT_2990 = 2990
     const val TREE_FALLING_2734 = 2734
+    const val WOODCUTTING_HIT_3037 = 3037
     const val WOODCUTTING_HIT_3038 = 3038
     const val WOODCUTTING_HIT_3039 = 3039
     const val WOODCUTTING_HIT_3040 = 3040
@@ -3051,11 +3052,6 @@ object Sounds {
     const val SLUG_PRINCE_DEATH_3035 = 3035
     const val SLUG_PRINCE_HIT_3036 = 3036
     const val WOODCHOP1_3037 = 3037
-    const val WOODCHOP2_3038 = 3038
-    const val WOODCHOP3_3039 = 3039
-    const val WOODCHOP4_3040 = 3040
-    const val WOODCHOP5_3041 = 3041
-    const val WOODCHOP6_3042 = 3042
     const val TROLL_CHAMPION_SWORD_ATTACK_3043 = 3043
     const val COW_ATMOSPHERIC_3044 = 3044
     const val BEE_LOOP_1_3045 = 3045
