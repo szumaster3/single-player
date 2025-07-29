@@ -1,11 +1,11 @@
 package core.game.worldevents
 
+import com.google.gson.JsonObject
 import core.ServerStore
 import core.api.ContentInterface
 import core.plugin.ClassScanner
 import core.plugin.Plugin
 import core.tools.Log
-import org.json.simple.JSONObject
 import java.util.*
 
 /**
@@ -108,5 +108,5 @@ object WorldEvents {
      *
      * @return A [JSONObject] representing the archive of world event status.
      */
-    fun getArchive(): JSONObject = ServerStore.getArchive("world-event-status")
+    fun getArchive(): JsonObject = ServerStore.getArchive("world-event-status")
 }

@@ -1,5 +1,6 @@
 package core.game.system.timer.impl
 
+import com.google.gson.JsonObject
 import core.api.hasTimerActive
 import core.api.playAudio
 import core.api.sendMessage
@@ -10,7 +11,6 @@ import core.game.system.timer.PersistTimer
 import core.game.system.timer.RSTimer
 import core.game.system.timer.TimerFlag
 import core.game.world.repository.Repository
-import org.json.simple.JSONObject
 import org.rs.consts.Sounds
 
 class Poison :
@@ -35,20 +35,20 @@ class Poison :
         }
 
     override fun save(
-        root: JSONObject,
+        root: JsonObject,
         entity: Entity,
     ) {
-        root["source-uid"] = (damageSource as? Player)?.details?.uid ?: -1
-        root["severity"] = severity.toString()
+        root.addProperty("source-uid", (damageSource as? Player)?.details?.uid ?: -1)
+        root.addProperty("severity", severity)
     }
 
     override fun parse(
-        root: JSONObject,
+        root: JsonObject,
         entity: Entity,
     ) {
-        val uid = root["source-uid"].toString().toInt()
+        val uid = root.get("source-uid")?.asInt ?: -1
         damageSource = Repository.getPlayerByUid(uid) ?: entity
-        severity = root["severity"].toString().toInt()
+        severity = root.get("severity")?.asInt ?: 0
     }
 
     override fun onRegister(entity: Entity) {

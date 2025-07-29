@@ -1,5 +1,6 @@
 package core.game.system.timer.impl
 
+import com.google.gson.JsonObject
 import core.api.playAudio
 import core.api.removeTimer
 import core.api.sendMessage
@@ -10,7 +11,6 @@ import core.game.system.timer.RSTimer
 import core.game.system.timer.TimerFlag
 import core.tools.colorize
 import core.tools.secondsToTicks
-import org.json.simple.JSONObject
 import org.rs.consts.Sounds
 
 class PoisonImmunity :
@@ -23,17 +23,17 @@ class PoisonImmunity :
     var ticksRemaining = 0
 
     override fun save(
-        root: JSONObject,
+        root: JsonObject,
         entity: Entity,
     ) {
-        root["ticksRemaining"] = ticksRemaining.toString()
+        root.addProperty("ticksRemaining", ticksRemaining)
     }
 
     override fun parse(
-        root: JSONObject,
+        root: JsonObject,
         entity: Entity,
     ) {
-        ticksRemaining = root["ticksRemaining"].toString().toInt()
+        ticksRemaining = root.get("ticksRemaining")?.asInt ?: ticksRemaining
     }
 
     override fun onRegister(entity: Entity) {

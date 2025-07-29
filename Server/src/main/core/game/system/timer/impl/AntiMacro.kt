@@ -13,7 +13,7 @@ import core.game.world.map.zone.ZoneRestriction
 import core.game.world.repository.Repository
 import core.tools.RandomFunction
 import core.tools.colorize
-import org.json.simple.JSONObject
+import com.google.gson.JsonObject
 
 class AntiMacro :
     PersistTimer(
@@ -58,17 +58,17 @@ class AntiMacro :
     }
 
     override fun save(
-        root: JSONObject,
+        root: JsonObject,
         entity: Entity,
     ) {
-        root["ticksRemaining"] = (nextExecution - getWorldTicks()).toString()
+        root.addProperty("ticksRemaining", (nextExecution - getWorldTicks()))
     }
 
     override fun parse(
-        root: JSONObject,
+        root: JsonObject,
         entity: Entity,
     ) {
-        runInterval = (root["ticksRemaining"]?.toString()?.toIntOrNull() ?: 0)
+        runInterval = root.get("ticksRemaining")?.asInt ?: 0
         nextExecution = getWorldTicks() + runInterval
     }
 

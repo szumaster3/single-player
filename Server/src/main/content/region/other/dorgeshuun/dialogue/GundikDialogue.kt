@@ -21,11 +21,10 @@ class GundikDialogue(player: Player? = null) : Dialogue(player) {
         when (stage) {
             START_DIALOGUE -> npcl(FaceAnim.OLD_NORMAL, "You want some Bat shish? Just 10gp.").also { stage++ }
             1 -> options("Yes please.", "No thanks.").also { stage++ }
-            2 ->
-                when (buttonId) {
-                    1 -> playerl(FaceAnim.FRIENDLY, "Yes please.").also { stage++ }
-                    2 -> playerl(FaceAnim.NEUTRAL, "No thanks.").also { stage = 4 }
-                }
+            2 -> when (buttonId) {
+                1 -> playerl(FaceAnim.FRIENDLY, "Yes please.").also { stage++ }
+                2 -> playerl(FaceAnim.NEUTRAL, "No thanks.").also { stage = 4 }
+            }
 
             3 -> {
                 end()

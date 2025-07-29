@@ -1,12 +1,12 @@
 package core.game.system.timer.impl
 
+import com.google.gson.JsonObject
 import core.api.hasTimerActive
 import core.api.removeTimer
 import core.game.node.entity.Entity
 import core.game.system.timer.PersistTimer
 import core.game.system.timer.RSTimer
 import core.game.system.timer.TimerFlag
-import org.json.simple.JSONObject
 import kotlin.math.min
 
 class HealOverTime :
@@ -19,28 +19,28 @@ class HealOverTime :
     var healPerTick = 0
 
     override fun run(entity: Entity): Boolean {
-        var amt = min(healRemaining, healPerTick)
+        val amt = min(healRemaining, healPerTick)
         healRemaining -= amt
         entity.skills.heal(amt)
         return healRemaining > 0
     }
 
     override fun save(
-        root: JSONObject,
+        root: JsonObject,
         entity: Entity,
     ) {
         super.save(root, entity)
-        root["healRemaining"] = healRemaining.toString()
-        root["healPerTick"] = healPerTick.toString()
+        root.addProperty("healRemaining", healRemaining)
+        root.addProperty("healPerTick", healPerTick)
     }
 
     override fun parse(
-        root: JSONObject,
+        root: JsonObject,
         entity: Entity,
     ) {
         super.parse(root, entity)
-        healRemaining = root["healRemaining"].toString().toInt()
-        healPerTick = root["healPerTick"].toString().toInt()
+        healRemaining = root.get("healRemaining")?.asInt ?: 0
+        healPerTick = root.get("healPerTick")?.asInt ?: 0
     }
 
     override fun onRegister(entity: Entity) {

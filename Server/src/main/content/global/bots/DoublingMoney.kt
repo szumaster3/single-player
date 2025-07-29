@@ -1,5 +1,8 @@
 package content.global.bots
 
+import com.google.gson.Gson
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
 import content.global.bots.Adventurer.Companion.lumbridge
 import core.ServerConstants
 import core.game.bots.AIRepository
@@ -17,9 +20,6 @@ import core.game.world.map.Location
 import core.game.world.map.RegionManager
 import core.game.world.update.flag.EntityFlag
 import core.game.world.update.flag.context.ChatMessage
-import org.json.simple.JSONArray
-import org.json.simple.JSONObject
-import org.json.simple.parser.JSONParser
 import org.rs.consts.Items
 import java.io.File
 import java.io.FileReader
@@ -69,8 +69,12 @@ class DoublingMoney : Script() {
                 stateString = "Putting on my outfit.."
                 var appearance = if (Math.random() < 0.5) "noob" else "intermediate"
                 if (effort == Effort.VERY_HIGH && Math.random() < 0.5) appearance = "veteran"
-                val appearancesArray = botAppearances[appearance] as JSONArray
-                scriptAPI.loadAppearanceAndEquipment(appearancesArray.random() as JSONObject)
+                val appearancesArray = botAppearances[appearance] as JsonArray
+                if (appearancesArray != null && appearancesArray.size() > 0) {
+                    val randomIndex = (0 until appearancesArray.size()).random()
+                    val randomAppearance = appearancesArray.get(randomIndex).asJsonObject
+                    scriptAPI.loadAppearanceAndEquipment(randomAppearance)
+                }
                 setup = true
             },
             fun(): Int {
@@ -336,7 +340,9 @@ class DoublingMoney : Script() {
 
         private val jsonFilePath = "${ServerConstants.BOT_DATA_PATH}/ge_bot_appearances_and_equipment.json"
         private val jsonFile = File(jsonFilePath)
-        private val parser = JSONParser()
-        val botAppearances = parser.parse(FileReader(jsonFile)) as JSONObject
+        private val parser = Gson()
+        val botAppearances: JsonObject = FileReader(jsonFile).use { reader ->
+            parser.fromJson(reader, JsonObject::class.java)
+        }
     }
 }

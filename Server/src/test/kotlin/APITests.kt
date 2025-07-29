@@ -1,3 +1,5 @@
+import com.google.gson.Gson
+import com.google.gson.JsonObject
 import content.data.consumables.Consumables
 import content.global.skill.slayer.SlayerManager
 import content.global.skill.slayer.SlayerMaster
@@ -7,8 +9,6 @@ import core.api.utils.Vector
 import core.game.dialogue.splitLines
 import core.game.node.item.Item
 import core.game.world.map.Direction
-import org.json.simple.JSONObject
-import org.json.simple.parser.JSONParser
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.rs.consts.Items
@@ -16,6 +16,7 @@ import org.rs.consts.Items
 class APITests {
     var testPlayer: MockPlayer
     var testPlayer2: MockPlayer
+    private val gson = Gson()
 
     init {
         TestUtils.preTestSetup()
@@ -67,7 +68,8 @@ class APITests {
         Assertions.assertEquals(15466494, testAllOptions, "Testing all options")
     }
 
-    @Test fun testSlayerManagerSaveAndLoadAndSaveProducesEquivalentJSON() {
+    @Test
+    fun testSlayerManagerSaveAndLoadAndSaveProducesEquivalentJSON() {
         var manager = SlayerManager()
         manager.login(testPlayer)
         manager.login(testPlayer2)
@@ -79,16 +81,18 @@ class APITests {
 
         val manager2 = SlayerManager.getInstance(testPlayer2)
 
-        val jsonFirst = JSONObject()
+        val jsonFirst = JsonObject()
         manager.savePlayer(testPlayer, jsonFirst)
-        manager.parsePlayer(testPlayer2, jsonFirst)
+        manager2.parsePlayer(testPlayer2, jsonFirst)
 
-        val jsonSecond = JSONObject()
+        val jsonSecond = JsonObject()
         manager2.savePlayer(testPlayer2, jsonSecond)
-        Assertions.assertEquals(jsonFirst.toJSONString(), jsonSecond.toJSONString())
+
+        Assertions.assertEquals(jsonFirst.toString(), jsonSecond.toString())
     }
 
-    @Test fun testSlayerSaveAndParseProducesEquivalent() {
+    @Test
+    fun testSlayerSaveAndParseProducesEquivalent() {
         var manager = SlayerManager()
         manager.login(testPlayer)
         manager = SlayerManager.getInstance(testPlayer)
@@ -97,17 +101,19 @@ class APITests {
         manager.flags.unlockBroads()
         manager.flags.unlockRing()
 
-        val json = JSONObject()
+        val json = JsonObject()
         manager.savePlayer(testPlayer, json)
         manager.flags.fullClear()
         manager.parsePlayer(testPlayer, json)
+
         Assertions.assertEquals(500, manager.flags.getPoints(), "Points were not 500!")
-        Assertions.assertEquals(true, manager.flags.isHelmUnlocked(), "Helm was not unlocked!")
-        Assertions.assertEquals(true, manager.flags.isBroadsUnlocked(), "Broads were not unlocked!")
-        Assertions.assertEquals(true, manager.flags.isRingUnlocked(), "Ring was not unlocked!")
+        Assertions.assertTrue(manager.flags.isHelmUnlocked(), "Helm was not unlocked!")
+        Assertions.assertTrue(manager.flags.isBroadsUnlocked(), "Broads were not unlocked!")
+        Assertions.assertTrue(manager.flags.isRingUnlocked(), "Ring was not unlocked!")
     }
 
-    @Test fun testSlayerDecrementTaskAmountHasNoSideEffects() {
+    @Test
+    fun testSlayerDecrementTaskAmountHasNoSideEffects() {
         var manager = SlayerManager()
         manager.login(testPlayer)
         manager = SlayerManager.getInstance(testPlayer)
@@ -128,20 +134,22 @@ class APITests {
         Assertions.assertEquals(SlayerMaster.MAZCHNA, manager.flags.getMaster(), "Master was not Mazchna!")
     }
 
-    @Test fun testKnownProblemSaveParsesCorrectly() {
-        val jsonString =
-            "{\"slayer\": {\n" +
-                "    \"taskStreak\": \"21\",\n" +
-                "    \"rewardFlags\": 17301511,\n" +
-                "    \"equipmentFlags\": 31,\n" +
-                "    \"taskFlags\": 307220,\n" +
-                "    \"removedTasks\": [\n" +
-                "      \"73\"\n" +
-                "    ],\n" +
-                "    \"totalTasks\": \"108\"\n" +
-                "  }}"
+    @Test
+    fun testKnownProblemSaveParsesCorrectly() {
+        val jsonString = """
+        {
+          "slayer": {
+            "taskStreak": "21",
+            "rewardFlags": 17301511,
+            "equipmentFlags": 31,
+            "taskFlags": 307220,
+            "removedTasks": ["73"],
+            "totalTasks": "108"
+          }
+        }
+        """
 
-        val slayerData = JSONParser().parse(jsonString) as JSONObject
+        val slayerData = gson.fromJson(jsonString, JsonObject::class.java)
         var manager = SlayerManager()
         manager.login(testPlayer)
         manager = SlayerManager.getInstance(testPlayer)
@@ -149,7 +157,7 @@ class APITests {
 
         Assertions.assertEquals(21, manager.flags.taskStreak)
         Assertions.assertNotEquals(0, manager.flags.getPoints())
-        Assertions.assertEquals(true, manager.flags.isHelmUnlocked())
+        Assertions.assertTrue(manager.flags.isHelmUnlocked())
     }
 
     @Test fun lineSplitShouldSplitAtLimitAndPreserveAllWords() {

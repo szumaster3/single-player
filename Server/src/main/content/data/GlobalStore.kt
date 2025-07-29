@@ -21,9 +21,11 @@ object GlobalStore {
                 Items.EXPLORERS_RING_2_13561,
                 Items.EXPLORERS_RING_3_13562,
             ).container != null
+        val runValue = ringStore[player.username.lowercase() + "run"]?.asInt ?: 0
+        val alchsValue = ringStore[player.username.lowercase() + "alchs"]?.asInt ?: 0
+
         if (hasExplorerRing &&
-            ringStore[player.username.lowercase() + "run"] != 0 ||
-            ringStore[player.username.lowercase() + "alchs"] == 30
+            (runValue != 0 || alchsValue == 30)
         ) {
             sendMessage(player, "Your explorer's ring has been recharged.")
         }

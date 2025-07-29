@@ -1,5 +1,6 @@
 package content.global.activity.jobs
 
+import com.google.gson.JsonObject
 import content.global.activity.jobs.impl.BoneBuryingJobs
 import content.global.activity.jobs.impl.CombatJobs
 import content.global.activity.jobs.impl.ProductionJobs
@@ -15,7 +16,6 @@ import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.tools.StringUtils
-import org.json.simple.JSONObject
 import org.rs.consts.Items
 import java.lang.Integer.min
 
@@ -63,7 +63,10 @@ class JobManager(
         this.jobOriginalAmount = instance.jobAmount
 
         player.dispatch(JobAssignmentEvent(job.type, npc))
-        getStoreFile()[player.username.lowercase()] = getStoreFile().getInt(player.username.lowercase()) + 1
+
+        val key = player.username.lowercase()
+        val current = if (getStoreFile().has(key)) getStoreFile().get(key).asInt else 0
+        getStoreFile().addProperty(key, current + 1)
     }
 
     fun getAssignmentMessage(): String? {
@@ -181,7 +184,7 @@ class JobManager(
 
     override fun savePlayer(
         player: Player,
-        save: JSONObject,
+        save: JsonObject,
     ) {
         val instance = getInstance(player)
         val jobId: Int =
@@ -201,7 +204,7 @@ class JobManager(
 
     override fun parsePlayer(
         player: Player,
-        data: JSONObject,
+        data: JsonObject,
     ) {
         val instance = getInstance(player)
         val jobId = getAttribute(player, "jobs:id", -1)
@@ -222,6 +225,6 @@ class JobManager(
         @JvmStatic
         fun getInstance(player: Player): JobManager = player.getAttribute("job-manager", JobManager(player))
 
-        fun getStoreFile(): JSONObject = ServerStore.getArchive("daily-jobs-tracking")
+        fun getStoreFile(): JsonObject = ServerStore.getArchive("daily-jobs-tracking")
     }
 }

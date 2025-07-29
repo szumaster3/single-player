@@ -17,19 +17,12 @@ class ZenkogDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
-            START_DIALOGUE ->
-                npcl(
-                    FaceAnim.OLD_NORMAL,
-                    "Wall beast fingers! How about a tasty snack of wall beast fingers?",
-                ).also {
-                    stage++
-                }
+            START_DIALOGUE -> npcl(FaceAnim.OLD_NORMAL, "Wall beast fingers! How about a tasty snack of wall beast fingers?").also { stage++ }
             1 -> options("Yes please.", "No thanks.").also { stage++ }
-            2 ->
-                when (buttonId) {
-                    1 -> playerl(FaceAnim.FRIENDLY, "Yes please.").also { stage++ }
-                    2 -> playerl(FaceAnim.NEUTRAL, "No thanks.").also { stage = 4 }
-                }
+            2 -> when (buttonId) {
+                1 -> playerl(FaceAnim.FRIENDLY, "Yes please.").also { stage++ }
+                2 -> playerl(FaceAnim.NEUTRAL, "No thanks.").also { stage = 4 }
+            }
             3 -> {
                 end()
                 openNpcShop(player, NPCs.ZENKOG_5797)

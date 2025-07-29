@@ -1,6 +1,8 @@
 package core.game.node.entity.player.link.appearance;
 
-import org.json.simple.JSONObject;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 
 /**
  * The type Body part.
@@ -41,9 +43,40 @@ public final class BodyPart {
      *
      * @param part the part
      */
-    public void parse(JSONObject part) {
-        changeLook(Integer.parseInt(part.get("look").toString()));
-        changeColor(Integer.parseInt(part.get("color").toString()));
+    public void parse(JsonObject part) {
+        int look = 0;
+        int color = 0;
+
+        try {
+            JsonElement lookEl = part.get("look");
+            if (lookEl != null && lookEl.isJsonPrimitive()) {
+                JsonPrimitive prim = lookEl.getAsJsonPrimitive();
+                if (prim.isNumber()) {
+                    look = prim.getAsInt();
+                } else if (prim.isString()) {
+                    look = Integer.parseInt(prim.getAsString().replace("\"", "").trim());
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Failed to parse 'look': " + part.get("look"));
+        }
+
+        try {
+            JsonElement colorEl = part.get("color");
+            if (colorEl != null && colorEl.isJsonPrimitive()) {
+                JsonPrimitive prim = colorEl.getAsJsonPrimitive();
+                if (prim.isNumber()) {
+                    color = prim.getAsInt();
+                } else if (prim.isString()) {
+                    color = Integer.parseInt(prim.getAsString().replace("\"", "").trim());
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Failed to parse 'color': " + part.get("color"));
+        }
+
+        changeLook(look);
+        changeColor(color);
     }
 
     /**

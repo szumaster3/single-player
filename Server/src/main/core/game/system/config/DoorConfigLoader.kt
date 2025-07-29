@@ -1,11 +1,10 @@
 package core.game.system.config
 
+import com.google.gson.Gson
+import com.google.gson.JsonArray
 import core.ServerConstants
 import core.api.log
 import core.tools.Log
-import org.json.simple.JSONArray
-import org.json.simple.JSONObject
-import org.json.simple.parser.JSONParser
 import java.io.FileReader
 
 class DoorConfigLoader {
@@ -15,30 +14,32 @@ class DoorConfigLoader {
         @JvmStatic fun forId(id: Int): Door? = DOORS[id]
     }
 
-    val parser = JSONParser()
-    var reader: FileReader? = null
+    private val gson = Gson()
 
     fun load() {
         var count = 0
-        reader = FileReader(ServerConstants.CONFIG_PATH + "door_configs.json")
-        var configs = parser.parse(reader) as JSONArray
-        for (config in configs) {
-            val e = config as JSONObject
-            val door = Door(e["id"].toString().toInt())
-            door.replaceId = e["replaceId"].toString().toInt()
-            door.isFence = e["fence"].toString().toBoolean()
-            door.isMetal = e["metal"].toString().toBoolean()
-            door.isAutoWalk = e["autowalk"]?.toString()?.toBoolean() ?: false
-            door.questRequirement = e["questRequirement"]?.toString() ?: ""
-            DOORS[door.id] = door
-            val replacedDoor = Door(door.replaceId)
-            replacedDoor.replaceId = door.id
-            replacedDoor.isFence = door.isFence
-            replacedDoor.isMetal = door.isMetal
-            replacedDoor.isAutoWalk = door.isAutoWalk
-            replacedDoor.questRequirement = door.questRequirement
-            DOORS[door.replaceId] = replacedDoor
-            count++
+        FileReader(ServerConstants.CONFIG_PATH + "door_configs.json").use { reader ->
+            val configs = gson.fromJson(reader, JsonArray::class.java)
+            for (configElement in configs) {
+                val e = configElement.asJsonObject
+                val door = Door(e.get("id").asInt)
+                door.replaceId = e.get("replaceId").asInt
+                door.isFence = e.get("fence").asBoolean
+                door.isMetal = e.get("metal").asBoolean
+                door.isAutoWalk = e.get("autowalk")?.asBoolean ?: false
+                door.questRequirement = e.get("questRequirement")?.asString ?: ""
+
+                DOORS[door.id] = door
+
+                val replacedDoor = Door(door.replaceId)
+                replacedDoor.replaceId = door.id
+                replacedDoor.isFence = door.isFence
+                replacedDoor.isMetal = door.isMetal
+                replacedDoor.isAutoWalk = door.isAutoWalk
+                replacedDoor.questRequirement = door.questRequirement
+                DOORS[door.replaceId] = replacedDoor
+                count++
+            }
         }
 
         log(this::class.java, Log.DEBUG, "Parsed $count door configs.")

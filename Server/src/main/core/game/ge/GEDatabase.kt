@@ -3,8 +3,7 @@ package core.game.ge
 import core.ServerConstants
 import core.cache.def.impl.ItemDefinition
 import core.integration.mysql.SQLiteProvider
-import org.json.simple.JSONArray
-import org.json.simple.JSONObject
+import com.google.gson.JsonArray
 import java.sql.Connection
 
 object GEDatabase {
@@ -28,16 +27,16 @@ object GEDatabase {
         db.run(closure)
     }
 
-    private fun convertJsonArray(arr: JSONArray): String {
+    private fun convertJsonArray(arr: JsonArray): String {
         val sb = StringBuilder()
-        for ((index, data) in arr.withIndex()) {
-            val item = data as JSONObject
-            sb.append("$index")
+        for (index in 0 until arr.size()) {
+            val item = arr[index].asJsonObject
+            sb.append(index)
             sb.append(",")
-            sb.append(item["id"])
+            sb.append(item.get("id").asInt)
             sb.append(",")
-            sb.append(item["amount"])
-            if (index + 1 < arr.size) {
+            sb.append(item.get("amount").asInt)
+            if (index + 1 < arr.size()) {
                 sb.append(":")
             }
         }

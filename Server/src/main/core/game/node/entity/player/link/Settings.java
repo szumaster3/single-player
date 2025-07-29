@@ -1,10 +1,10 @@
 package core.game.node.entity.player.link;
 
+import com.google.gson.JsonObject;
 import core.game.node.entity.player.Player;
 import core.game.node.item.Item;
 import core.game.system.config.ItemConfigParser;
 import core.net.packet.IoBuffer;
-import org.json.simple.JSONObject;
 
 import java.nio.ByteBuffer;
 
@@ -181,25 +181,25 @@ public final class Settings {
      *
      * @param settingsData the settings data
      */
-    public void parse(JSONObject settingsData) {
-        brightness = Integer.parseInt(settingsData.get("brightness").toString());
-        musicVolume = Integer.parseInt(settingsData.get("musicVolume").toString());
-        soundEffectVolume = Integer.parseInt(settingsData.get("soundEffectVolume").toString());
-        areaSoundVolume = Integer.parseInt(settingsData.get("areaSoundVolume").toString());
-        singleMouseButton = (boolean) settingsData.get("singleMouse");
-        disableChatEffects = (boolean) settingsData.get("disableChatEffects");
-        splitPrivateChat = (boolean) settingsData.get("splitPrivate");
-        acceptAid = (boolean) settingsData.get("acceptAid");
-        runToggled = (boolean) settingsData.get("runToggled");
-        publicChatSetting = Integer.parseInt(settingsData.get("publicChatSetting").toString());
-        privateChatSetting = Integer.parseInt(settingsData.get("privateChatSetting").toString());
-        clanChatSetting = Integer.parseInt(settingsData.get("clanChatSetting").toString());
-        tradeSetting = Integer.parseInt(settingsData.get("tradeSetting").toString());
-        assistSetting = Integer.parseInt(settingsData.get("assistSetting").toString());
-        runEnergy = Double.parseDouble(settingsData.get("runEnergy").toString());
-        specialEnergy = Integer.parseInt(settingsData.get("specialEnergy").toString());
-        attackStyleIndex = Integer.parseInt(settingsData.get("attackStyle").toString());
-        player.getProperties().setRetaliating((boolean) settingsData.get("retaliation"));
+    public void parse(JsonObject settingsData) {
+        brightness = settingsData.get("brightness").getAsInt();
+        musicVolume = settingsData.get("musicVolume").getAsInt();
+        soundEffectVolume = settingsData.get("soundEffectVolume").getAsInt();
+        areaSoundVolume = settingsData.get("areaSoundVolume").getAsInt();
+        singleMouseButton = settingsData.get("singleMouse").getAsBoolean();
+        disableChatEffects = settingsData.get("disableChatEffects").getAsBoolean();
+        splitPrivateChat = settingsData.get("splitPrivate").getAsBoolean();
+        acceptAid = settingsData.get("acceptAid").getAsBoolean();
+        runToggled = settingsData.get("runToggled").getAsBoolean();
+        publicChatSetting = settingsData.get("publicChatSetting").getAsInt();
+        privateChatSetting = settingsData.get("privateChatSetting").getAsInt();
+        clanChatSetting = settingsData.get("clanChatSetting").getAsInt();
+        tradeSetting = settingsData.get("tradeSetting").getAsInt();
+        assistSetting = settingsData.get("assistSetting").getAsInt();
+        runEnergy = settingsData.get("runEnergy").getAsDouble();
+        specialEnergy = settingsData.get("specialEnergy").getAsInt();
+        attackStyleIndex = settingsData.get("attackStyle").getAsInt();
+        player.getProperties().setRetaliating(settingsData.get("retaliation").getAsBoolean());
     }
 
     /**

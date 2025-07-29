@@ -1,12 +1,12 @@
 package core.game.ge
 
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
 import core.api.*
 import core.cache.def.impl.ItemDefinition
 import core.game.component.Component
 import core.game.node.entity.player.Player
 import core.tools.SystemLogger
-import org.json.simple.JSONArray
-import org.json.simple.JSONObject
 import org.rs.consts.Components
 import java.text.NumberFormat
 import java.util.*
@@ -36,20 +36,16 @@ class ExchangeHistory(
     /**
      * Parses the player Grand Exchange history from a JSON obj.
      */
-    override fun parsePlayer(
-        player: Player,
-        data: JSONObject,
-    ) {
-        val historyRaw = data["ge-history"]
+    override fun parsePlayer(player: Player, data: JsonObject) {
+        val historyRaw = data.getAsJsonArray("ge-history")
         if (historyRaw != null) {
-            val history = historyRaw as JSONArray
-            for (i in history.indices) {
-                val offer = history[i] as JSONObject
+            for (i in 0 until historyRaw.size()) {
+                val offer = historyRaw.get(i).asJsonObject
                 val o = GrandExchangeOffer()
-                o.itemID = offer["itemId"].toString().toInt()
-                o.sell = offer["isSell"] as Boolean
-                o.totalCoinExchange = (offer["totalCoinExchange"].toString().toInt())
-                o.completedAmount = (offer["completedAmount"].toString().toInt())
+                o.itemID = offer.get("itemId").asInt
+                o.sell = offer.get("isSell").asBoolean
+                o.totalCoinExchange = offer.get("totalCoinExchange").asInt
+                o.completedAmount = offer.get("completedAmount").asInt
                 getInstance(player).history[i] = o
             }
         }
@@ -59,12 +55,10 @@ class ExchangeHistory(
 
         GEDatabase.run { conn ->
             val stmt = conn.createStatement()
-            val offer_records = stmt.executeQuery(
-                "SELECT * from player_offers where player_uid = ${player.details.uid} AND offer_state < 6",
-            )
+            val offerRecords = stmt.executeQuery("SELECT * from player_offers where player_uid = ${player.details.uid} AND offer_state < 6")
 
-            while (offer_records.next()) {
-                val offer = GrandExchangeOffer.fromQuery(offer_records)
+            while (offerRecords.next()) {
+                val offer = GrandExchangeOffer.fromQuery(offerRecords)
                 if (offer.index == -1) {
                     needsIndex.push(offer)
                 } else {
@@ -75,8 +69,8 @@ class ExchangeHistory(
         }
 
         if (needsIndex.isNotEmpty()) {
-            for ((index, offer) in offerRecords.withIndex()) {
-                if (offer == null) {
+            for ((index, offer) in instance.offerRecords.withIndex()) {
+                if (offer == null && needsIndex.isNotEmpty()) {
                     val o = needsIndex.pop()
                     o.index = index
                     instance.offerRecords[o.index] = OfferRecord(o.uid, o.index)
@@ -86,37 +80,31 @@ class ExchangeHistory(
 
             while (needsIndex.isNotEmpty()) {
                 val o = needsIndex.pop()
-                SystemLogger.logGE(
-                    "[WARN] PLAYER HAD EXTRA OFFER - RECOMMEND IMMEDIATE REFUND OF CONTENTS -> OFFER UID: ${o.uid}",
-                )
-                SystemLogger.logGE(
-                    "[WARN] AS PER ABOVE MESSAGE, REFUND CONTENTS OF OFFER AND MANUALLY SET offer_state = 6",
-                )
+                SystemLogger.logGE("[WARN] PLAYER HAD EXTRA OFFER - RECOMMEND IMMEDIATE REFUND OF CONTENTS -> OFFER UID: ${o.uid}")
+                SystemLogger.logGE("[WARN] AS PER ABOVE MESSAGE, REFUND CONTENTS OF OFFER AND MANUALLY SET offer_state = 6")
             }
         }
 
         instance.init()
     }
 
+
     /**
      * Saves the player's Grand Exchange history to a JSON object.
      */
-    override fun savePlayer(
-        player: Player,
-        save: JSONObject,
-    ) {
-        val history = JSONArray()
-        getInstance(player).history.map {
+    override fun savePlayer(player: Player, save: JsonObject) {
+        val history = JsonArray()
+        getInstance(player).history.forEach { it ->
             if (it != null) {
-                val historyEntry = JSONObject()
-                historyEntry["isSell"] = it.sell
-                historyEntry["itemId"] = it.itemID.toString()
-                historyEntry["totalCoinExchange"] = it.totalCoinExchange.toString()
-                historyEntry["completedAmount"] = it.completedAmount.toString()
+                val historyEntry = JsonObject()
+                historyEntry.addProperty("isSell", it.sell)
+                historyEntry.addProperty("itemId", it.itemID)
+                historyEntry.addProperty("totalCoinExchange", it.totalCoinExchange)
+                historyEntry.addProperty("completedAmount", it.completedAmount)
                 history.add(historyEntry)
             }
         }
-        save["ge-history"] = history
+        save.add("ge-history", history)
     }
 
     /**

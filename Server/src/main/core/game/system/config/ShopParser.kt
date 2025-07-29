@@ -1,16 +1,15 @@
 package core.game.system.config
 
+import com.google.gson.Gson
+import com.google.gson.JsonArray
 import core.ServerConstants
 import core.api.log
 import core.game.node.entity.player.Player
 import core.tools.Log
-import org.json.simple.JSONArray
-import org.json.simple.parser.JSONParser
 import java.io.FileReader
 
 class ShopParser {
-    val parser = JSONParser()
-    var reader: FileReader? = null
+    private val gson = Gson()
 
     companion object {
         fun openUid(
@@ -21,10 +20,11 @@ class ShopParser {
 
     fun load() {
         var count = 0
-        reader = FileReader(ServerConstants.CONFIG_PATH + "shops.json")
-        val configList = parser.parse(reader) as JSONArray
-        for (config in configList) {
-            count++
+        FileReader(ServerConstants.CONFIG_PATH + "shops.json").use { reader ->
+            val configList = gson.fromJson(reader, JsonArray::class.java)
+            for (config in configList) {
+                count++
+            }
         }
 
         log(this::class.java, Log.DEBUG, "Parsed $count shops.")

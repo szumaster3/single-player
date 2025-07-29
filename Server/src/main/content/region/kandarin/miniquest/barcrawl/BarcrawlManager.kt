@@ -1,10 +1,9 @@
 package content.region.kandarin.miniquest.barcrawl
 
+import com.google.gson.JsonObject
 import core.api.*
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
-import org.json.simple.JSONArray
-import org.json.simple.JSONObject
 import org.rs.consts.Components
 import org.rs.consts.Items
 
@@ -32,28 +31,30 @@ class BarcrawlManager :
 
     override fun parsePlayer(
         player: Player,
-        data: JSONObject,
+        data: JsonObject,
     ) {
-        val bcData = data["barCrawl"] as JSONObject? ?: return
-        val barsVisited = bcData["bars"] as JSONArray
+        val bcData = data.getAsJsonObject("barCrawl") ?: return
+        val barsVisited = bcData.getAsJsonArray("bars")
         val instance = getInstance(player)
-        instance.started = bcData["started"] as Boolean
-        for (i in barsVisited.indices) {
-            instance.bars[i] = barsVisited[i] as Boolean
+        instance.started = bcData.get("started").asBoolean
+        for (i in 0 until barsVisited.size()) {
+            instance.bars[i] = barsVisited[i].asBoolean
         }
     }
 
     override fun savePlayer(
         player: Player,
-        save: JSONObject,
+        save: JsonObject,
     ) {
         val instance = getInstance(player)
-        val barCrawl = JSONObject()
-        barCrawl["started"] = instance.started
-        val barsVisited = JSONArray()
-        for (visited in instance.bars) barsVisited.add(visited)
-        barCrawl["bars"] = barsVisited
-        save["barCrawl"] = barCrawl
+        val barCrawl = JsonObject()
+        barCrawl.addProperty("started", instance.started)
+        val barsVisited = com.google.gson.JsonArray()
+        instance.bars.forEach { visited ->
+            barsVisited.add(visited)
+        }
+        barCrawl.add("bars", barsVisited)
+        save.add("barCrawl", barCrawl)
     }
 
     fun read() {

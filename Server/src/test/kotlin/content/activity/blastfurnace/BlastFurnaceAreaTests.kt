@@ -1,6 +1,7 @@
 package content.activity.blastfurnace
 
 import TestUtils
+import com.google.gson.JsonObject
 import content.minigame.blastfurnace.plugin.BlastFurnace
 import content.minigame.blastfurnace.plugin.BlastFurnacePlugin
 import content.minigame.blastfurnace.plugin.BlastUtils
@@ -10,7 +11,6 @@ import core.api.amountInInventory
 import core.game.node.entity.skill.Skills
 import core.game.world.map.Location
 import core.game.world.map.RegionManager
-import org.json.simple.JSONObject
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.rs.consts.Items
@@ -223,7 +223,7 @@ class BlastFurnaceAreaTests {
             BlastFurnace.addOreToBelt(p, Items.COAL_453, 20)
 
             val area = BlastFurnace()
-            val saveObj = JSONObject()
+            val saveObj = JsonObject()
             area.savePlayer(p, saveObj)
 
             BlastFurnace.playerStates.clear()

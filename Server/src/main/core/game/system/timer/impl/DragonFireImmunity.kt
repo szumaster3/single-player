@@ -1,5 +1,6 @@
 package core.game.system.timer.impl
 
+import com.google.gson.JsonObject
 import core.api.playAudio
 import core.api.sendMessage
 import core.game.node.entity.Entity
@@ -9,29 +10,23 @@ import core.game.system.timer.RSTimer
 import core.game.system.timer.TimerFlag
 import core.tools.colorize
 import core.tools.secondsToTicks
-import org.json.simple.JSONObject
 import org.rs.consts.Sounds
 
-/**
- * A timer that replicates the behavior of Dragon Fire immunity mechanics. Runs every tick.
- * Will notify the player of various levels of remaining Dragon Fire immunity, and then remove itself once it has run out.
- * This timer is a "soft" timer, meaning it will tick down even while other timers would normally stall (e.g. during entity delays or when the entity has a modal open.)
-**/
 class DragonFireImmunity : PersistTimer(1, "dragonfire:immunity", isSoft = true, flags = arrayOf(TimerFlag.ClearOnDeath)) {
     var ticksRemaining = 0
 
     override fun save(
-        root: JSONObject,
+        root: JsonObject,
         entity: Entity,
     ) {
-        root["ticksRemaining"] = ticksRemaining.toString()
+        root.addProperty("ticksRemaining", ticksRemaining)
     }
 
     override fun parse(
-        root: JSONObject,
+        root: JsonObject,
         entity: Entity,
     ) {
-        ticksRemaining = root["ticksRemaining"].toString().toInt()
+        ticksRemaining = root.get("ticksRemaining")?.asInt ?: 0
     }
 
     override fun run(entity: Entity): Boolean {

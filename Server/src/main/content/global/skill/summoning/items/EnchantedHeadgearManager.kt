@@ -1,11 +1,11 @@
 package content.global.skill.summoning.items
 
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
 import core.api.*
 import core.game.container.Container
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
-import org.json.simple.JSONArray
-import org.json.simple.JSONObject
 
 /**
  * Todo: Gear stores scrolls but it's probably all code to be thrown away.
@@ -186,36 +186,37 @@ class EnchantedHeadgearManager(private val player: Player) {
     /**
      * Saves enchanted headgear scroll data into a JSON root object.
      */
-    fun save(root: JSONObject) {
-        val arr = JSONArray()
+    fun save(root: JsonObject) {
+        val arr = JsonArray()
         enchantedGear.forEach { (_, chargedGear) ->
-            val obj = JSONObject().apply {
-                put("item", chargedGear.chargedItemId.toString())
-                put("scroll", JSONArray().apply {
-                    chargedGear.container.toArray().forEach { item ->
-                        if (item != null) {
-                            add(JSONObject().apply {
-                                put("id", item.id.toString())
-                                put("amount", item.amount.toString())
-                            })
+            val obj = JsonObject().apply {
+                addProperty("item", chargedGear.chargedItemId.toString())
+                val scrollArray = JsonArray()
+                chargedGear.container.toArray().forEach { item ->
+                    if (item != null) {
+                        val itemObj = JsonObject().apply {
+                            addProperty("id", item.id.toString())
+                            addProperty("amount", item.amount.toString())
                         }
+                        scrollArray.add(itemObj)
                     }
-                })
+                }
+                add("scroll", scrollArray)
             }
             arr.add(obj)
         }
-        root["summon_ench_helm"] = arr
+        root.add("summon_ench_helm", arr)
     }
 
     /**
      * Parses enchanted headgear scroll data from JSON array.
      */
-    fun parse(data: JSONArray) {
+    fun parse(data: JsonArray) {
         enchantedGear.clear()
         data.forEach { element ->
-            val obj = element as JSONObject
-            val chargedItemId = obj["item"].toString().toInt()
-            val scrollsArr = obj["scroll"] as JSONArray
+            val obj = element.asJsonObject
+            val chargedItemId = obj.get("item").asInt
+            val scrollsArr = obj.getAsJsonArray("scroll")
 
             val headgear = EnchantedHeadgear.forItem(chargedItemId.asItem())
                 ?.takeIf { it.second == EnchantedHeadgear.HeadgearType.CHARGED }?.first
@@ -224,9 +225,9 @@ class EnchantedHeadgearManager(private val player: Player) {
             val container = Container(headgear.scrollCapacity)
 
             scrollsArr.forEach { s ->
-                val scrollObj = s as JSONObject
-                val id = scrollObj["id"].toString().toInt()
-                val amount = scrollObj["amount"].toString().toInt()
+                val scrollObj = s.asJsonObject
+                val id = scrollObj.get("id").asInt
+                val amount = scrollObj.get("amount").asInt
                 container.add(Item(id, amount))
             }
             enchantedGear[chargedItemId] = ChargedHeadgear(chargedItemId, container)

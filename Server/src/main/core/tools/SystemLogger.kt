@@ -16,7 +16,7 @@ import java.util.*
 object SystemLogger {
     val t = Terminal()
     val errT = t.forStdErr()
-    val formatter = SimpleDateFormat("dd-MM-yyyy HH:mm:ss")
+    val formatter = SimpleDateFormat("HH:mm:ss")
 
     private fun getTime(): String = "[" + formatter.format(Date(System.currentTimeMillis())) + "]"
 
@@ -53,7 +53,7 @@ object SystemLogger {
                     return
                 }
 
-                val msg = TextColors.yellow("${getTime()}: [${clazz.simpleName}] $message")
+                val msg = TextColors.green("${getTime()}: [${clazz.simpleName}] $message")
                 t.println(msg)
             }
 

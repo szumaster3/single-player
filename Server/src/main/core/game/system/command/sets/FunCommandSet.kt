@@ -1,5 +1,7 @@
 package core.game.system.command.sets
 
+import com.google.gson.Gson
+import com.google.gson.JsonObject
 import content.global.plugin.item.SpadeDigUtils
 import content.region.island.tutorial.plugin.CharacterDesign
 import core.api.*
@@ -19,7 +21,6 @@ import core.game.world.update.flag.context.Graphics
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import core.tools.RandomFunction
-import org.json.simple.JSONObject
 import org.rs.consts.Sounds
 import java.awt.HeadlessException
 import java.awt.Toolkit
@@ -141,14 +142,17 @@ class FunCommandSet : CommandSet(Privilege.ADMIN) {
         }
 
         define(name = "dumpappearance", privilege = Privilege.MODERATOR) { player, _ ->
-            val json = JSONObject()
-            PlayerSaver(player).saveAppearance(json)
-            val equipJson = PlayerSaver(player).saveContainer(player.equipment)
-            json["equipment"] = equipJson
-            val jsonString = json.toJSONString()
+            val gson = Gson()
+            val json = JsonObject().apply {
+                PlayerSaver(player).saveAppearance(this)
+                this.add("equipment", PlayerSaver(player).saveContainer(player.equipment))
+            }
+
+            val jsonString = gson.toJson(json)
+
             try {
-                val clpbrd = Toolkit.getDefaultToolkit().systemClipboard
-                clpbrd.setContents(StringSelection(jsonString), null)
+                val clipboard = Toolkit.getDefaultToolkit().systemClipboard
+                clipboard.setContents(StringSelection(jsonString), null)
                 notify(player, "Appearance and equipment copied to clipboard.")
             } catch (e: HeadlessException) {
                 reject(player, "NOTE: Paste will not be available due to remote server.")

@@ -1,5 +1,6 @@
 package content.global.activity.shootingstar
 
+import com.google.gson.JsonObject
 import core.ServerStore
 import core.ServerStore.Companion.getBoolean
 import core.api.*
@@ -11,7 +12,6 @@ import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import core.tools.RandomFunction
 import core.tools.colorize
-import org.json.simple.JSONObject
 import org.rs.consts.NPCs
 
 /**
@@ -145,7 +145,7 @@ class StarSpriteDialogue(player: Player? = null) : Dialogue(player) {
                         "cosmic runes, $astralRunes astral runes, $goldOre gold ore and $coins",
                         "coins.",
                     )
-                    getStoreFile()[player.username.lowercase()] = true
+                    getStoreFile().addProperty(player.username.lowercase(), true)
                     val timer = getOrStartTimer<ShootingStarBonus>(player)
                     timer.ticksLeft = 1500
                 }
@@ -175,10 +175,10 @@ class StarSpriteDialogue(player: Player? = null) : Dialogue(player) {
             addItem(player, bonusId, bonusBaseAmt)
             sendMessage(player, colorize("%RYour ring shines brightly as if surging with energy and then fades out."))
         } else if (RandomFunction.roll(25)) {
-            getStoreFile()[player.username.lowercase()] = false
+            getStoreFile().addProperty(player.username.lowercase(), false)
             sendMessage(player, colorize("%RYour ring vibrates briefly as if surging with power, and then stops."))
         }
     }
 
-    fun getStoreFile(): JSONObject = ServerStore.getArchive("daily-shooting-star")
+    fun getStoreFile(): JsonObject = ServerStore.getArchive("daily-shooting-star")
 }

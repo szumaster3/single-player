@@ -28,6 +28,7 @@ class DartogDialogue(player: Player? = null) : Dialogue(player) {
                     "Can you show me the way to the mine?",
                     "Can you show me the way to Lumbridge Castle cellar?",
                 ).also { stage++ }
+
             1 ->
                 when (buttonId) {
                     1 -> player(FaceAnim.ASKING, "Who are you?").also { stage++ }
@@ -36,12 +37,14 @@ class DartogDialogue(player: Player? = null) : Dialogue(player) {
                             stage =
                                 END_DIALOGUE
                         }
+
                     3 ->
                         player(
                             FaceAnim.ASKING,
                             "Can you show me the way to Lumbridge Castle cellar?",
                         ).also { stage = 6 }
                 }
+
             2 ->
                 npcl(
                     FaceAnim.OLD_NORMAL,
@@ -49,12 +52,14 @@ class DartogDialogue(player: Player? = null) : Dialogue(player) {
                 ).also {
                     stage++
                 }
+
             3 ->
                 options(
                     "Can you show me the way to the mine?",
                     "Can you show me the way to Lumbridge Castle cellar?",
                     "Maybe some other time",
                 ).also { stage++ }
+
             4 ->
                 when (buttonId) {
                     1 -> player(FaceAnim.ASKING, "Can you show me the way to the mine?").also { stage = 5 }
@@ -63,13 +68,16 @@ class DartogDialogue(player: Player? = null) : Dialogue(player) {
                             FaceAnim.ASKING,
                             "Can you show me the way to Lumbridge Castle cellar?",
                         ).also { stage = 6 }
+
                     3 -> player(FaceAnim.FRIENDLY, "Maybe some other time.").also { stage = END_DIALOGUE }
                 }
+
             5 ->
                 npcl(
                     FaceAnim.OLD_NORMAL,
                     "Of course! You're always welcome in our mines!",
                 ).also { stage = END_DIALOGUE }
+
             6 -> npc(FaceAnim.OLD_NORMAL, "Of course!").also { stage = END_DIALOGUE }
         }
         return true

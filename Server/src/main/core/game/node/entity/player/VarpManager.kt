@@ -1,35 +1,23 @@
 package core.game.node.entity.player
 
-import org.json.simple.JSONArray
-import org.json.simple.JSONObject
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
 
-/**
- * Represents Varp manager.
- */
 class VarpManager(val player: Player) {
 
-    /**
-     * Saves varp data into the provided JSON root object.
-     */
-    fun save(root: JSONObject) {
-        // Empty
+    fun save(root: JsonObject) {
     }
 
-    /**
-     * Parses varp data from a JSON array and updates the player's varp map.
-     *
-     * @param data JSON array of varp entries.
-     */
-    fun parse(data: JSONArray) {
-        for (varpObj in data) {
-            val vobj = varpObj as JSONObject
-            val index = vobj["index"].toString().toInt()
-            val bits = vobj["bitArray"] as JSONArray
+    fun parse(data: JsonArray) {
+        for (varpElem in data) {
+            val vobj = varpElem.asJsonObject
+            val index = vobj.get("index").asInt
+            val bits = vobj.getAsJsonArray("bitArray")
             var total = 0
-            for (vbit in bits) {
-                val varbit = vbit as JSONObject
-                val offset = varbit["offset"].toString().toInt()
-                val value = varbit["value"].toString().toInt()
+            for (vbitElem in bits) {
+                val varbit = vbitElem.asJsonObject
+                val offset = varbit.get("offset").asInt
+                val value = varbit.get("value").asInt
                 total = total or (value shl offset)
             }
             player.varpMap[index] = total

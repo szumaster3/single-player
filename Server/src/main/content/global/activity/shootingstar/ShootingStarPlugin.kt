@@ -1,5 +1,6 @@
 package content.global.activity.shootingstar
 
+import com.google.gson.JsonObject
 import core.ServerStore
 import core.api.*
 import core.game.interaction.IntType
@@ -9,7 +10,6 @@ import core.game.system.command.Privilege
 import core.game.world.GameWorld
 import core.tools.Log
 import core.tools.secondsToTicks
-import org.json.simple.JSONObject
 import org.rs.consts.Items
 import org.rs.consts.Scenery
 
@@ -23,7 +23,7 @@ class ShootingStarPlugin :
         if (star.isSpawned && !star.spriteSpawned) {
             sendMessage(
                 player,
-                "<img=12><col=CC6600>News: A shooting star (Level ${star.level.ordinal + 1}) has just crashed near the ${star.location}!",
+                "<col=CC6600>News: A shooting star (Level ${star.level.ordinal + 1}) has just crashed near the ${star.location}!",
             )
         }
     }
@@ -108,7 +108,7 @@ class ShootingStarPlugin :
         fun getStar(): ShootingStar = star
 
         @JvmStatic
-        fun getStoreFile(): JSONObject = ServerStore.getArchive("shooting-star")
+        fun getStoreFile(): JsonObject = ServerStore.getArchive("shooting-star")
 
         fun getStarDust(player: Player): Int = player.inventory.getAmount(STAR_DUST) + player.bank.getAmount(STAR_DUST)
     }

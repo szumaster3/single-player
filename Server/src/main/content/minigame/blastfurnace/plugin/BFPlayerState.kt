@@ -1,12 +1,12 @@
 package content.minigame.blastfurnace.plugin
 
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
 import content.global.skill.smithing.Bar
 import core.api.*
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
 import core.game.world.map.Location
-import org.json.simple.JSONArray
-import org.json.simple.JSONObject
 
 class BFPlayerState(
     val player: Player,
@@ -103,39 +103,43 @@ class BFPlayerState(
             else -> 0
         }
 
-    fun toJson(): JSONObject {
-        val save = JSONObject()
-        save["bf-ore-cont"] = container.toJson()
+    fun toJson(): JsonObject {
+        val save = JsonObject()
+        save.add("bf-ore-cont", container.toJson())
 
-        val beltOres = JSONArray()
+        val beltOres = JsonArray()
         for (ore in oresOnBelt) {
             beltOres.add(ore.toJson())
         }
 
-        if (beltOres.isNotEmpty()) save["bf-belt-ores"] = beltOres
-        save["barsHot"] = barsNeedCooled
+        if (beltOres.size() > 0) {
+            save.add("bf-belt-ores", beltOres)
+        }
+        save.addProperty("barsHot", barsNeedCooled)
 
         return save
     }
 
-    fun readJson(data: JSONObject) {
+    fun readJson(data: JsonObject) {
         oresOnBelt.clear()
-        if (data.containsKey("bf-ore-cont")) {
-            val contJson = data["bf-ore-cont"] as JSONObject
+        if (data.has("bf-ore-cont")) {
+            val contJson = data.getAsJsonObject("bf-ore-cont")
             container = BFOreContainer.fromJson(contJson)
         }
-        if (data.containsKey("bf-belt-ores")) {
-            val beltArray = data["bf-belt-ores"] as JSONArray
-            for (oreObj in beltArray) {
-                val oreInfo = oreObj as JSONObject
-                val id = oreInfo["id"].toString().toInt()
-                val amount = oreInfo["amount"].toString().toInt()
-                val location = Location.fromString(oreInfo["location"].toString())
+        if (data.has("bf-belt-ores")) {
+            val beltArray = data.getAsJsonArray("bf-belt-ores")
+            for (oreElem in beltArray) {
+                val oreInfo = oreElem.asJsonObject
+                val id = oreInfo.get("id").asInt
+                val amount = oreInfo.get("amount").asInt
+                val location = Location.fromString(oreInfo.get("location").asString)
                 val ore = BFBeltOre(player, id, amount, location)
                 oresOnBelt.add(ore)
             }
         }
-        if (data.containsKey("barsHot")) barsNeedCooled = data["barsHot"] as Boolean
+        if (data.has("barsHot")) {
+            barsNeedCooled = data.get("barsHot").asBoolean
+        }
     }
 
     companion object {

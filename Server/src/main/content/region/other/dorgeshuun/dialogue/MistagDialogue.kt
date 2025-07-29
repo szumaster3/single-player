@@ -62,6 +62,7 @@ class MistagDialogue(player: Player? = null) : Dialogue(player) {
                 ).also {
                     stage++
                 }
+
             -99 -> end()
             START_DIALOGUE -> {
                 if (getQuestStage(player, Quests.THE_LOST_TRIBE) == 100 &&
@@ -91,6 +92,7 @@ class MistagDialogue(player: Player? = null) : Dialogue(player) {
                     "What happened to your arm?",
                     "Can you show me the way out of the mines?",
                 ).also { stage = 3 }
+
             2 ->
                 when (buttonId) {
                     1 -> player("Can I sell you some ore?").also { stage = 4 }
@@ -98,6 +100,7 @@ class MistagDialogue(player: Player? = null) : Dialogue(player) {
                     3 -> player("What happened to your arm?").also { stage = 5 }
                     4 -> player("Can you show me the way out of the mines?").also { stage = 7 }
                 }
+
             3 ->
                 when (buttonId) {
                     1 ->
@@ -105,6 +108,7 @@ class MistagDialogue(player: Player? = null) : Dialogue(player) {
                             end()
                             openDialogue(player, MistagDialogueFile(), npc)
                         }
+
                     2 -> player("Can I sell you some ore?").also { stage = 4 }
                     3 -> player("Why do the dorgeshuun live underground?").also { stage = 8 }
                     4 -> player("What happened to your arm?").also { stage = 5 }
@@ -141,6 +145,7 @@ class MistagDialogue(player: Player? = null) : Dialogue(player) {
                     stage =
                         END_DIALOGUE
                 }
+
             6 -> npc(FaceAnim.OLD_NORMAL, "Certainly, friend!").also { stage = END_DIALOGUE }
             7 ->
                 npc(FaceAnim.OLD_NORMAL, "Certainly. Come back soon!").also {
@@ -148,6 +153,7 @@ class MistagDialogue(player: Player? = null) : Dialogue(player) {
                     stage =
                         END_DIALOGUE
                 }
+
             8 ->
                 npcl(
                     FaceAnim.OLD_NORMAL,
@@ -155,6 +161,7 @@ class MistagDialogue(player: Player? = null) : Dialogue(player) {
                 ).also {
                     stage++
                 }
+
             9 ->
                 npcl(
                     FaceAnim.OLD_NORMAL,
@@ -162,6 +169,7 @@ class MistagDialogue(player: Player? = null) : Dialogue(player) {
                 ).also {
                     stage++
                 }
+
             10 ->
                 options(
                     "The war is over now, so you can return to the surface.",
@@ -169,6 +177,7 @@ class MistagDialogue(player: Player? = null) : Dialogue(player) {
                 ).also {
                     stage++
                 }
+
             11 ->
                 when (buttonId) {
                     1 ->
@@ -176,8 +185,10 @@ class MistagDialogue(player: Player? = null) : Dialogue(player) {
                             stage =
                                 12
                         }
+
                     2 -> playerl(FaceAnim.HALF_ASKING, "What was the name of your god?").also { stage = 14 }
                 }
+
             12 ->
                 npcl(
                     FaceAnim.OLD_NORMAL,
@@ -185,6 +196,7 @@ class MistagDialogue(player: Player? = null) : Dialogue(player) {
                 ).also {
                     stage++
                 }
+
             13 ->
                 npcl(
                     FaceAnim.OLD_NORMAL,
@@ -193,6 +205,7 @@ class MistagDialogue(player: Player? = null) : Dialogue(player) {
                     stage =
                         END_DIALOGUE
                 }
+
             14 ->
                 npcl(
                     FaceAnim.OLD_NORMAL,
@@ -200,6 +213,7 @@ class MistagDialogue(player: Player? = null) : Dialogue(player) {
                 ).also {
                     stage++
                 }
+
             15 ->
                 npcl(
                     FaceAnim.OLD_NORMAL,

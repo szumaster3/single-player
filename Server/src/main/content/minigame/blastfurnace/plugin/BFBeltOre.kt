@@ -1,5 +1,6 @@
 package content.minigame.blastfurnace.plugin
 
+import com.google.gson.JsonObject
 import core.api.animate
 import core.api.queueScript
 import core.api.teleport
@@ -8,7 +9,6 @@ import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.world.map.Direction
 import core.game.world.map.Location
-import org.json.simple.JSONObject
 
 class BFBeltOre(
     val player: Player,
@@ -50,11 +50,11 @@ class BFBeltOre(
         npcInstance = npc
     }
 
-    fun toJson(): JSONObject {
-        val root = JSONObject()
-        root["id"] = id.toString()
-        root["amount"] = amount.toString()
-        root["location"] = location.toString()
+    fun toJson(): JsonObject {
+        val root = JsonObject()
+        root.addProperty("id", id)
+        root.addProperty("amount", amount)
+        root.addProperty("location", location.toString())
         return root
     }
 

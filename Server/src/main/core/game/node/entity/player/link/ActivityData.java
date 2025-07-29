@@ -1,7 +1,8 @@
 package core.game.node.entity.player.link;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 /**
  * The type Activity data.
@@ -40,33 +41,60 @@ public final class ActivityData {
      *
      * @param data the data
      */
-    public void parse(JSONObject data) {
-        pestPoints = Integer.parseInt(data.get("pestPoints").toString());
-        warriorGuildTokens = Integer.parseInt(data.get("warriorGuildTokens").toString());
-        bountyHunterRate = Integer.parseInt(data.get("bountyHunterRate").toString());
-        bountyRogueRate = Integer.parseInt(data.get("bountyRogueRate").toString());
-        barrowKills = Integer.parseInt(data.get("barrowKills").toString());
-        JSONArray bb = (JSONArray) data.get("barrowBrothers");
-        for (int i = 0; i < bb.size(); i++) {
-            barrowBrothers[i] = (boolean) bb.get(i);
+    public void parse(JsonObject data) {
+        if (data == null) return;
+
+        pestPoints = getInt(data, "pestPoints");
+        warriorGuildTokens = getInt(data, "warriorGuildTokens");
+        bountyHunterRate = getInt(data, "bountyHunterRate");
+        bountyRogueRate = getInt(data, "bountyRogueRate");
+        barrowKills = getInt(data, "barrowKills");
+
+        JsonArray bb = data.getAsJsonArray("barrowBrothers");
+        if (bb != null && barrowBrothers != null) {
+            int len = Math.min(bb.size(), barrowBrothers.length);
+            for (int i = 0; i < len; i++) {
+                barrowBrothers[i] = bb.get(i).getAsBoolean();
+            }
         }
-        barrowTunnelIndex = Integer.parseInt(data.get("barrowTunnelIndex").toString());
-        kolodionStage = Integer.parseInt(data.get("kolodionStage").toString());
-        JSONArray gc = (JSONArray) data.get("godCasts");
-        for (int i = 0; i < gc.size(); i++) {
-            godCasts[i] = Integer.parseInt(gc.get(i).toString());
+
+        barrowTunnelIndex = getInt(data, "barrowTunnelIndex");
+        kolodionStage = getInt(data, "kolodionStage");
+
+        JsonArray gc = data.getAsJsonArray("godCasts");
+        if (gc != null && godCasts != null) {
+            int len = Math.min(gc.size(), godCasts.length);
+            for (int i = 0; i < len; i++) {
+                godCasts[i] = gc.get(i).getAsInt();
+            }
         }
-        kolodionBoss = Integer.parseInt(data.get("kolodionBoss").toString());
-        elnockSupplies = (boolean) data.get("elnockSupplies");
-        lastBorkBattle = Long.parseLong(data.get("lastBorkBattle").toString());
-        startedMta = (boolean) data.get("startedMta");
-        lostCannon = (boolean) data.get("lostCannon");
-        bonesToPeaches = (boolean) data.get("bonesToPeaches");
-        solvedMazes = Integer.parseInt(data.get("solvedMazes").toString());
-        fogRating = Integer.parseInt(data.get("fogRating").toString());
-        borkKills = Byte.parseByte(data.get("borkKills").toString());
-        hardcoreDeath = (boolean) data.get("hardcoreDeath");
-        topGrabbed = (boolean) data.get("topGrabbed");
+
+        kolodionBoss = getInt(data, "kolodionBoss");
+        elnockSupplies = getBoolean(data, "elnockSupplies");
+        lastBorkBattle = getLong(data, "lastBorkBattle");
+        startedMta = getBoolean(data, "startedMta");
+        lostCannon = getBoolean(data, "lostCannon");
+        bonesToPeaches = getBoolean(data, "bonesToPeaches");
+        solvedMazes = getInt(data, "solvedMazes");
+        fogRating = getInt(data, "fogRating");
+        borkKills = (byte) getInt(data, "borkKills");
+        hardcoreDeath = getBoolean(data, "hardcoreDeath");
+        topGrabbed = getBoolean(data, "topGrabbed");
+    }
+
+    private int getInt(JsonObject obj, String memberName) {
+        JsonElement el = obj.get(memberName);
+        return (el != null && !el.isJsonNull()) ? el.getAsInt() : 0;
+    }
+
+    private long getLong(JsonObject obj, String memberName) {
+        JsonElement el = obj.get(memberName);
+        return (el != null && !el.isJsonNull()) ? el.getAsLong() : 0L;
+    }
+
+    private boolean getBoolean(JsonObject obj, String memberName) {
+        JsonElement el = obj.get(memberName);
+        return (el != null && !el.isJsonNull()) && el.getAsBoolean();
     }
 
     /**

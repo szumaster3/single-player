@@ -1,5 +1,6 @@
 package content.global.plugin.item
 
+import com.google.gson.JsonObject
 import content.global.skill.magic.spells.modern.AlchemySpell
 import core.ServerStore
 import core.ServerStore.Companion.getInt
@@ -10,7 +11,6 @@ import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.TeleportManager.TeleportType
 import core.game.node.entity.skill.Skills
 import core.game.world.map.Location
-import org.json.simple.JSONObject
 import org.rs.consts.Graphics
 import org.rs.consts.Items
 
@@ -48,8 +48,7 @@ class ExplorersRingPlugin : InteractionListener {
             player.settings.updateRunEnergy(-50.0)
             playAudio(player, 5035)
 
-            getStoreFile()[player.username.lowercase() + ":run"] = charges + 1
-
+            getStoreFile().addProperty(player.username.lowercase() + ":run", charges + 1)
             sendMessage(player, "You feel refreshed as the ring revitalises you and a charge is used up.")
             visualize(player, 9988, Graphics.RECHARGE_RUN_1733)
             return@on true
@@ -71,7 +70,7 @@ class ExplorersRingPlugin : InteractionListener {
                     val item = player.inventory[slot]
                     if (item == null) return@sendItemSelect
                     if (!AlchemySpell().alchemize(player, item, false, explorersRing = true)) return@sendItemSelect
-                    getStoreFile()[player.username.lowercase() + ":alchs"] = remaining - 1
+                    getStoreFile().addProperty(player.username.lowercase() + ":alchs", remaining - 1)
                 }
             }
             return@on true
@@ -104,5 +103,5 @@ class ExplorersRingPlugin : InteractionListener {
     /**
      * Gets the persistent storage for daily ring use charges.
      */
-    fun getStoreFile(): JSONObject = ServerStore.getArchive("daily-explorer-ring")
+    fun getStoreFile(): JsonObject = ServerStore.getArchive("daily-explorer-ring")
 }

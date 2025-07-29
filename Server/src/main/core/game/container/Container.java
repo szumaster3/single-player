@@ -1,13 +1,13 @@
 package core.game.container;
 
 import com.google.errorprone.annotations.CheckReturnValue;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import core.api.ContainerListener;
 import core.cache.def.impl.ItemDefinition;
 import core.game.node.entity.player.Player;
 import core.game.node.item.GroundItemManager;
 import core.game.node.item.Item;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import org.rs.consts.Items;
 
 import java.nio.ByteBuffer;
@@ -579,21 +579,23 @@ public class Container {
      *
      * @param itemArray the JSON array containing item data
      */
-    public void parse(JSONArray itemArray) {
+    public void parse(JsonArray itemArray) {
         AtomicInteger total = new AtomicInteger(0);
-        itemArray.forEach(item -> {
-            JSONObject i = (JSONObject) item;
-            int slot = Integer.parseInt(i.get("slot").toString());
-            int id = Integer.parseInt(i.get("id").toString());
-            int amount = Integer.parseInt(i.get("amount").toString());
-            int charge = Integer.parseInt(i.get("charge").toString());
+        for (int idx = 0; idx < itemArray.size(); idx++) {
+            JsonObject i = itemArray.get(idx).getAsJsonObject();
+            int slot = Integer.parseInt(i.get("slot").getAsString());
+            int id = Integer.parseInt(i.get("id").getAsString());
+            int amount = Integer.parseInt(i.get("amount").getAsString());
+            int charge = Integer.parseInt(i.get("charge").getAsString());
+
             if (id >= ItemDefinition.definitions.size() || id < 0 || slot >= items.length || id == Items.MAGIC_CARPET_5614) {
+                // skip invalid or special items
             } else {
                 Item it = items[slot] = new Item(id, amount, charge);
                 it.setIndex(slot);
                 total.set(total.get() + (int) it.getValue());
             }
-        });
+        }
     }
 
     /**

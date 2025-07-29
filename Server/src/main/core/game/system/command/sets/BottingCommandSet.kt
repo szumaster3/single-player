@@ -44,7 +44,7 @@ class BottingCommandSet : CommandSet(Privilege.ADMIN) {
                 script.description.forEach { line ->
                     player.packetDispatch.sendString(line, 275, lineid++)
                 }
-                player.packetDispatch.sendString("<img=3> ::script ${script.identifier}", 275, lineid++)
+                player.packetDispatch.sendString("::script ${script.identifier}", 275, lineid++)
                 player.packetDispatch.sendString("<str>                                 </str>", 275, lineid++)
             }
             player.interfaceManager.open(Component(Components.QUESTJOURNAL_SCROLL_275))

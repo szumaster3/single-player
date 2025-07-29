@@ -1,4 +1,8 @@
 package content.global.skill.construction;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import content.data.GameAttributes;
 import content.global.skill.construction.servants.Servant;
 import core.api.regionspec.RegionSpecification;
@@ -19,8 +23,6 @@ import core.net.packet.out.MinimapState;
 import core.tools.Log;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import core.game.world.GameWorld;
 import org.rs.consts.Components;
 import org.rs.consts.Music;
@@ -107,28 +109,34 @@ public final class HouseManager {
     }
 
 
-    public void parse(JSONObject data){
-        location = HouseLocation.values()[Integer.parseInt( data.get("location").toString())];
-        style = HousingStyle.values()[Integer.parseInt( data.get("style").toString())];
-        Object servRaw = data.get("servant");
-        if(servRaw != null){
-            servant = Servant.parse((JSONObject) servRaw);
+    public void parse(JsonObject data) {
+        location = HouseLocation.values()[data.get("location").getAsInt()];
+        style = HousingStyle.values()[data.get("style").getAsInt()];
+
+        if (data.has("servant") && !data.get("servant").isJsonNull()) {
+            servant = Servant.parse(data.getAsJsonObject("servant"));
         }
-        JSONArray rArray = (JSONArray) data.get("rooms");
-        for(int i = 0; i < rArray.size(); i++){
-            JSONObject rm = (JSONObject) rArray.get(i);
-            int z =  Integer.parseInt(rm.get("z").toString());
-            int x = Integer.parseInt(rm.get("x").toString());
-            int y = Integer.parseInt(rm.get("y").toString());
-            if(z == 3)
-                hasDungeon = true;
-            Room room = rooms[z][x][y] = new Room(RoomProperties.values()[Integer.parseInt(rm.get("properties").toString())]);
+
+        JsonArray rArray = data.getAsJsonArray("rooms");
+        for (JsonElement elem : rArray) {
+            JsonObject rm = elem.getAsJsonObject();
+
+            int z = rm.get("z").getAsInt();
+            int x = rm.get("x").getAsInt();
+            int y = rm.get("y").getAsInt();
+
+            if (z == 3) hasDungeon = true;
+
+            Room room = rooms[z][x][y] = new Room(RoomProperties.values()[rm.get("properties").getAsInt()]);
             room.configure(style);
-            room.setRotation(Direction.get(Integer.parseInt(rm.get("rotation").toString())));
-            JSONArray hotspots = (JSONArray) rm.get("hotspots");
-            for(int j = 0; j < hotspots.size(); j++){
-                JSONObject spot = (JSONObject) hotspots.get(j);
-                room.getHotspots()[Integer.parseInt(spot.get("hotspotIndex").toString())].setDecorationIndex(Integer.parseInt(spot.get("decorationIndex").toString()));
+            room.setRotation(Direction.get(rm.get("rotation").getAsInt()));
+
+            JsonArray hotspots = rm.getAsJsonArray("hotspots");
+            for (JsonElement hElem : hotspots) {
+                JsonObject spot = hElem.getAsJsonObject();
+                int hotspotIndex = spot.get("hotspotIndex").getAsInt();
+                int decorationIndex = spot.get("decorationIndex").getAsInt();
+                room.getHotspots()[hotspotIndex].setDecorationIndex(decorationIndex);
             }
         }
     }

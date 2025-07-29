@@ -1,5 +1,7 @@
 package core.game.worldevents.events.christmas
 
+import com.google.gson.JsonObject
+import com.google.gson.JsonPrimitive
 import core.ServerStore
 import core.ServerStore.Companion.getBoolean
 import core.ServerStore.Companion.getInt
@@ -17,7 +19,6 @@ import core.game.world.repository.Repository
 import core.game.worldevents.WorldEvents
 import core.tools.RandomFunction
 import core.tools.colorize
-import org.json.simple.JSONObject
 import org.rs.consts.Items
 
 class Giftmas : Commands, StartupListener, LoginListener, InteractionListener {
@@ -62,8 +63,9 @@ class Giftmas : Commands, StartupListener, LoginListener, InteractionListener {
 
     override fun defineCommands() {
         define("toggle-giftmas", Privilege.ADMIN, "", "Toggles the giftmas christmas event.") { player, _ ->
-            val enabled = checkActive()
-            getArchive()["active"] = !enabled
+            val archive = getArchive()
+            val enabled = archive.get("active")?.asBoolean ?: false
+            archive.addProperty("active", !enabled)
             notify(player, "Giftmas is now ${if (enabled) "DISABLED" else "ENABLED"}.")
             if (!enabled) {
                 init()
@@ -114,8 +116,10 @@ class Giftmas : Commands, StartupListener, LoginListener, InteractionListener {
             wasCombat: Boolean,
         ) {
             val start = getDailyGifts(player, wasCombat)
-            val archive = if (wasCombat) "daily-xmas-gifts-combat" else "daily-xmas-gifts-skilling"
-            ServerStore.getArchive(archive)[player.name] = start + 1
+            val archiveName = if (wasCombat) "daily-xmas-gifts-combat" else "daily-xmas-gifts-skilling"
+            val archive = ServerStore.getArchive(archiveName)
+
+            archive.add(player.name, JsonPrimitive(start + 1))
         }
     }
 
@@ -126,13 +130,15 @@ class Giftmas : Commands, StartupListener, LoginListener, InteractionListener {
         private val DAILY_LIMIT_SKILLING = 15
         private val DAILY_LIMIT_COMBAT = 5
 
-        private fun getArchive(): JSONObject {
+
+        private fun getArchive(): JsonObject {
             val mainArchive = WorldEvents.getArchive()
-            if (!mainArchive.containsKey("giftmas")) {
-                mainArchive["giftmas"] = JSONObject()
+            if (!mainArchive.has("giftmas")) {
+                mainArchive.add("giftmas", JsonObject())
             }
-            return mainArchive["giftmas"] as JSONObject
+            return mainArchive.getAsJsonObject("giftmas")
         }
+
 
         private val MESSAGE_DAILYXP_REACHED_SKILLING =
             colorize("%RYou have reached your daily limit of presents from skilling!")

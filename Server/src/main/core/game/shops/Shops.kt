@@ -1,5 +1,8 @@
 package core.game.shops
 
+import com.google.gson.Gson
+import com.google.gson.JsonObject
+import com.google.gson.reflect.TypeToken
 import content.global.skill.crafting.Tanning
 import core.ServerConstants
 import core.api.*
@@ -15,9 +18,6 @@ import core.game.system.command.Privilege
 import core.game.world.GameWorld
 import core.tools.Log
 import core.tools.secondsToTicks
-import org.json.simple.JSONArray
-import org.json.simple.JSONObject
-import org.json.simple.parser.JSONParser
 import org.rs.consts.Components
 import org.rs.consts.Items
 import org.rs.consts.NPCs
@@ -124,23 +124,28 @@ class Shops : StartupListener, TickListener, InteractionListener, InterfaceListe
         val path = ServerConstants.CONFIG_PATH + "shops.json"
         logShop("Using JSON path: $path")
 
-        val reader = FileReader(path)
-        val data = JSONParser().parse(reader) as JSONArray
+        FileReader(path).use { reader ->
+            val gson = Gson()
+            val shopListType = object : TypeToken<List<JsonObject>>() {}.type
+            val data: List<JsonObject> = gson.fromJson(reader, shopListType)
 
-        data.forEach { rawShop ->
-            val shopData = rawShop as JSONObject
-            val id = shopData["id"].toString().toInt()
-            val title = shopData["title"].toString()
-            val general = shopData["general_store"].toString().toBoolean()
-            val stock = parseStock(shopData["stock"].toString(), id)
-            val npcs = shopData["npcs"]?.toString()?.split(",")?.mapNotNull { it.toIntOrNull() } ?: emptyList()
-            val currency = shopData["currency"].toString().toInt()
-            val highAlch = shopData["high_alch"].toString() == "1"
-            val forceShared = shopData.getOrDefault("force_shared", "false").toString().toBoolean()
+            data.forEach { shopData ->
+                val id = shopData.get("id").asInt
+                val title = shopData.get("title").asString
+                val general = shopData.get("general_store").asBoolean
+                val stockString = shopData.get("stock").asString
+                val stock = parseStock(stockString, id)
+                val npcs = shopData.get("npcs")?.asString
+                    ?.split(",")
+                    ?.mapNotNull { it.toIntOrNull() } ?: emptyList()
+                val currency = shopData.get("currency").asInt
+                val highAlch = shopData.get("high_alch").asString == "1"
+                val forceShared = shopData.get("force_shared")?.asString?.toBoolean() ?: false
 
-            val shop = Shop(title, stock.toTypedArray(), general, currency, highAlch, forceShared)
-            npcs.forEach { shopsByNpc[it] = shop }
-            shopsById[id] = shop
+                val shop = Shop(title, stock.toTypedArray(), general, currency, highAlch, forceShared)
+                npcs.forEach { shopsByNpc[it] = shop }
+                shopsById[id] = shop
+            }
         }
 
         logShop("Parsed ${shopsById.size} shops.")

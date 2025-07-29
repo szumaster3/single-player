@@ -19,15 +19,16 @@ class ReldakDialogue(player: Player? = null) : Dialogue(player) {
         when (stage) {
             START_DIALOGUE -> npcl(FaceAnim.OLD_NORMAL, "Do you want to buy some leather armour?").also { stage++ }
             1 -> options("Yes please.", "No thanks.").also { stage++ }
-            2 ->
-                when (buttonId) {
-                    1 -> playerl(FaceAnim.FRIENDLY, "Yes please.").also { stage++ }
-                    2 -> playerl(FaceAnim.NEUTRAL, "No thanks.").also { stage = 4 }
-                }
+            2 -> when (buttonId) {
+                1 -> playerl(FaceAnim.FRIENDLY, "Yes please.").also { stage++ }
+                2 -> playerl(FaceAnim.NEUTRAL, "No thanks.").also { stage = 4 }
+            }
+
             3 -> {
                 end()
                 openNpcShop(player, NPCs.RELDAK_5780)
             }
+
             4 -> npcl(FaceAnim.OLD_NORMAL, "Have a good day!").also { stage = END_DIALOGUE }
         }
         return true

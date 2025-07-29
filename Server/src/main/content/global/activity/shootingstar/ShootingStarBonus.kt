@@ -1,10 +1,10 @@
 package content.global.activity.shootingstar
 
+import com.google.gson.JsonObject
 import core.api.sendMessage
 import core.game.node.entity.Entity
 import core.game.node.entity.player.Player
 import core.game.system.timer.PersistTimer
-import org.json.simple.JSONObject
 
 /**
  * Star bonus timer.
@@ -14,17 +14,17 @@ class ShootingStarBonus : PersistTimer(1, "shootingstar:bonus") {
     var ticksLeft = 1500
 
     override fun save(
-        root: JSONObject,
+        root: JsonObject,
         entity: Entity,
     ) {
-        root["ticksLeft"] = ticksLeft.toString()
+        root.addProperty("ticksLeft", ticksLeft)
     }
 
     override fun parse(
-        root: JSONObject,
+        root: JsonObject,
         entity: Entity,
     ) {
-        ticksLeft = root["ticksLeft"].toString().toInt()
+        ticksLeft = root.get("ticksLeft")?.asInt ?: 0
     }
 
     override fun run(entity: Entity): Boolean {

@@ -1,7 +1,7 @@
 package core.api
 
+import com.google.gson.JsonObject
 import core.game.node.entity.player.Player
-import org.json.simple.JSONObject
 
 /**
  * Interface for managing player data that needs to be saved and loaded during player sessions.
@@ -18,7 +18,7 @@ interface PersistPlayer : ContentInterface {
      */
     fun savePlayer(
         player: Player,
-        save: JSONObject,
+        save: JsonObject,
     )
 
     /**
@@ -29,6 +29,6 @@ interface PersistPlayer : ContentInterface {
      */
     fun parsePlayer(
         player: Player,
-        data: JSONObject,
+        data: JsonObject,
     )
 }

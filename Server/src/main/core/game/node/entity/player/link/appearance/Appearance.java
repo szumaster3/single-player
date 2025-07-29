@@ -1,5 +1,7 @@
 package core.game.node.entity.player.link.appearance;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import core.cache.def.impl.ItemDefinition;
 import core.cache.def.impl.NPCDefinition;
 import core.game.container.impl.EquipmentContainer;
@@ -9,8 +11,6 @@ import core.game.node.entity.player.Player;
 import core.game.node.item.Item;
 import core.game.system.config.ItemConfigParser;
 import core.game.world.update.flag.context.Animation;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import org.rs.consts.Animations;
 import org.rs.consts.Items;
 
@@ -42,11 +42,11 @@ public final class Appearance {
      *
      * @param appearance the appearance
      */
-    public void parse(JSONObject appearance) {
-        gender = gender.asByte(Byte.parseByte(appearance.get("gender").toString()));
-        JSONArray appCache = (JSONArray) appearance.get("appearance_cache");
+    public void parse(JsonObject appearance) {
+        gender = gender.asByte(Byte.parseByte(appearance.get("gender").getAsString()));
+        JsonArray appCache = appearance.getAsJsonArray("appearance_cache");
         for (int i = 0; i < appearanceCache.length; i++) {
-            (appearanceCache[i]).parse((JSONObject) appCache.get(i));
+            appearanceCache[i].parse(appCache.get(i).getAsJsonObject());
         }
     }
 

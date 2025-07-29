@@ -34,6 +34,7 @@ class CaveGoblinsDialogueFile : DialogueFile() {
                             stage = END_DIALOGUE
                         }
                     }
+
                 1 ->
                     when (stage) {
                         0 -> npcl(FaceAnim.OLD_NORMAL, "Where did you come from?").also { stage = 50 }
@@ -47,8 +48,10 @@ class CaveGoblinsDialogueFile : DialogueFile() {
                                 stage =
                                     80
                             }
+
                         80 -> npcl(FaceAnim.OLD_NORMAL, "Ick. Sounds horrible.").also { stage = END_DIALOGUE }
                     }
+
                 2 ->
                     when (stage) {
                         0 -> npcl(FaceAnim.OLD_NORMAL, "Don't tread on my feet!").also { stage = 90 }
@@ -58,6 +61,7 @@ class CaveGoblinsDialogueFile : DialogueFile() {
                                 "I'm not going to tread on your feet.",
                             ).also { stage = END_DIALOGUE }
                     }
+
                 3 ->
                     when (stage) {
                         0 ->
@@ -65,8 +69,10 @@ class CaveGoblinsDialogueFile : DialogueFile() {
                                 FaceAnim.OLD_NORMAL,
                                 "Beware of swamp gas! Look out for the warning marks!",
                             ).also { stage++ }
+
                         100 -> playerl(FaceAnim.NEUTRAL, "Um, Thanks.").also { stage = END_DIALOGUE }
                     }
+
                 4 ->
                     when (stage) {
                         0 -> playerl(FaceAnim.NEUTRAL, "Hello, how are you?").also { stage = 110 }
@@ -78,12 +84,14 @@ class CaveGoblinsDialogueFile : DialogueFile() {
                                 stage =
                                     120
                             }
+
                         120 ->
                             npcl(
                                 FaceAnim.OLD_NORMAL,
                                 "Present company excluded, of course!",
                             ).also { stage = END_DIALOGUE }
                     }
+
                 5 ->
                     when (stage) {
                         0 -> npcl(FaceAnim.OLD_NORMAL, "Nice weather we're having!").also { stage = 130 }
@@ -95,6 +103,7 @@ class CaveGoblinsDialogueFile : DialogueFile() {
                                 stage =
                                     140
                             }
+
                         140 -> npcl(FaceAnim.OLD_NORMAL, "Yes, it's always nice!").also { stage = END_DIALOGUE }
                     }
             }

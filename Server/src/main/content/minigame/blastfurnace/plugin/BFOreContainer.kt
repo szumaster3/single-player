@@ -1,12 +1,12 @@
 package content.minigame.blastfurnace.plugin
 
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
 import content.global.skill.smithing.Bar
 import content.minigame.blastfurnace.plugin.BlastFurnace.Companion.getBarForOreId
 import content.minigame.blastfurnace.plugin.BlastFurnace.Companion.getNeededCoal
 import content.minigame.blastfurnace.plugin.BlastUtils.BAR_LIMIT
 import core.game.node.item.Item
-import org.json.simple.JSONArray
-import org.json.simple.JSONObject
 import org.rs.consts.Items
 
 class BFOreContainer {
@@ -160,29 +160,33 @@ class BFOreContainer {
 
     fun hasAnyOre(): Boolean = ores[0] != -1
 
-    fun toJson(): JSONObject {
-        val root = JSONObject()
-        val ores = JSONArray()
-        val bars = JSONArray()
+    fun toJson(): JsonObject {
+        val root = JsonObject()
+        val oresJson = JsonArray()
+        val barsJson = JsonArray()
 
-        for (ore in this.ores) ores.add(ore.toString())
-        for (amount in barAmounts) bars.add(amount.toString())
+        for (ore in this.ores) oresJson.add(ore)
+        for (amount in barAmounts) barsJson.add(amount)
 
-        root["ores"] = ores
-        root["bars"] = bars
-        root["coal"] = coalRemaining.toString()
+        root.add("ores", oresJson)
+        root.add("bars", barsJson)
+        root.addProperty("coal", coalRemaining)
         return root
     }
 
     companion object {
-        fun fromJson(root: JSONObject): BFOreContainer {
+        fun fromJson(root: JsonObject): BFOreContainer {
             val cont = BFOreContainer()
-            val jsonOres = root["ores"] as? JSONArray ?: return cont
-            val jsonBars = root["bars"] as? JSONArray ?: return cont
+            val jsonOres = root.getAsJsonArray("ores") ?: return cont
+            val jsonBars = root.getAsJsonArray("bars") ?: return cont
 
-            for (i in 0 until BlastUtils.ORE_LIMIT) cont.ores[i] = jsonOres[i].toString().toIntOrNull() ?: -1
-            for (i in 0 until 9) cont.barAmounts[i] = jsonBars[i].toString().toIntOrNull() ?: 0
-            cont.coalRemaining = root["coal"].toString().toIntOrNull() ?: 0
+            for (i in 0 until BlastUtils.ORE_LIMIT) {
+                cont.ores[i] = jsonOres.get(i)?.asInt ?: -1
+            }
+            for (i in 0 until 9) {
+                cont.barAmounts[i] = jsonBars.get(i)?.asInt ?: 0
+            }
+            cont.coalRemaining = root.get("coal")?.asInt ?: 0
             return cont
         }
     }

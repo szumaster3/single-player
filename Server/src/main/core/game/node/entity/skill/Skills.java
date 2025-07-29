@@ -1,5 +1,7 @@
 package core.game.node.entity.skill;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import content.data.GameAttributes;
 import content.global.plugin.item.equipment.gloves.BrawlingGloves;
 import content.global.plugin.item.equipment.gloves.BrawlingGlovesManager;
@@ -18,8 +20,6 @@ import core.net.packet.PacketRepository;
 import core.net.packet.out.SkillLevel;
 import core.plugin.type.ExperiencePlugins;
 import kotlin.Pair;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import org.rs.consts.Items;
 import org.rs.consts.Sounds;
 
@@ -378,22 +378,24 @@ public final class Skills {
     }
 
     /**
-     * Parses skill data from a JSONArray and updates skill levels and experience.
+     * Parses skill data from a json and updates skill levels and experience.
      *
-     * @param skillData The JSONArray containing skill data.
+     * @param skillData The containing skill data.
      */
-    public void parse(JSONArray skillData) {
+    public void parse(JsonArray skillData) {
         for (int i = 0; i < skillData.size(); i++) {
-            JSONObject skill = (JSONObject) skillData.get(i);
-            int id = Integer.parseInt(skill.get("id").toString());
-            dynamicLevels[id] = Integer.parseInt(skill.get("dynamic").toString());
+            JsonObject skill = skillData.get(i).getAsJsonObject();
+            int id = skill.get("id").getAsInt();
+            dynamicLevels[id] = skill.get("dynamic").getAsInt();
+
             if (id == HITPOINTS) {
-                lifepoints = dynamicLevels[i];
+                lifepoints = dynamicLevels[id];
             } else if (id == PRAYER) {
-                prayerPoints = dynamicLevels[i];
+                prayerPoints = dynamicLevels[id];
             }
-            staticLevels[id] = Integer.parseInt(skill.get("static").toString());
-            experience[id] = Double.parseDouble(skill.get("experience").toString());
+
+            staticLevels[id] = skill.get("static").getAsInt();
+            experience[id] = skill.get("experience").getAsDouble();
         }
     }
 

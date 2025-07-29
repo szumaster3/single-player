@@ -141,21 +141,29 @@ class TrickOrTreatHandler : InteractionListener {
     }
 
     fun incrementDailyToT(player: Player) {
-        ServerStore.getArchive("daily-tot-total")[player.username.lowercase()] = getDailyTrickOrTreats(player) + 1
+        val archive = ServerStore.getArchive("daily-tot-total")
+        val key = player.username.lowercase()
+        val current = if (archive.has(key)) archive.get(key).asInt else 0
+        archive.addProperty(key, current + 1)
     }
 
-    fun getDailyTrickOrTreats(player: Player): Int =
-        ServerStore.getArchive("daily-tot-total").getInt(player.username.lowercase())
+    fun getDailyTrickOrTreats(player: Player): Int {
+        val archive = ServerStore.getArchive("daily-tot-total")
+        val key = player.username.lowercase()
+        return if (archive.has(key)) archive.get(key).asInt else 0
+    }
 
-    fun getTrickOrTreatedNPCs(player: Player): String =
-        ServerStore.getArchive("daily-tot-npcs").getString(player.username.lowercase())
+    fun getTrickOrTreatedNPCs(player: Player): String {
+        val archive = ServerStore.getArchive("daily-tot-npcs")
+        val key = player.username.lowercase()
+        return if (archive.has(key)) archive.get(key).asString else ""
+    }
 
-    fun registerNpc(
-        player: Player,
-        npc: NPC,
-    ) {
-        var soFar = getTrickOrTreatedNPCs(player)
-        soFar += ":" + npc.name.lowercase() + ":"
-        ServerStore.getArchive("daily-tot-npcs")[player.username.lowercase()] = soFar
+    fun registerNpc(player: Player, npc: NPC) {
+        val archive = ServerStore.getArchive("daily-tot-npcs")
+        val key = player.username.lowercase()
+        val soFar = if (archive.has(key)) archive.get(key).asString else ""
+        val newVal = soFar + ":" + npc.name.lowercase() + ":"
+        archive.addProperty(key, newVal)
     }
 }

@@ -1,5 +1,6 @@
 package core.game.system.timer.impl
 
+import com.google.gson.JsonObject
 import core.api.getWorldTicks
 import core.api.hasTimerActive
 import core.api.removeTimer
@@ -8,7 +9,6 @@ import core.game.node.entity.player.Player
 import core.game.system.timer.PersistTimer
 import core.game.system.timer.RSTimer
 import core.game.system.timer.TimerFlag
-import org.json.simple.JSONObject
 
 class FrozenImmunity :
     PersistTimer(
@@ -19,17 +19,17 @@ class FrozenImmunity :
     var ticksRemaining = 0
 
     override fun save(
-        root: JSONObject,
+        root: JsonObject,
         entity: Entity,
     ) {
-        root["ticksLeft"] = (nextExecution - getWorldTicks()).toString()
+        root.addProperty("ticksLeft", (nextExecution - getWorldTicks()))
     }
 
     override fun parse(
-        root: JSONObject,
+        root: JsonObject,
         entity: Entity,
     ) {
-        runInterval = root["ticksLeft"].toString().toInt()
+        runInterval = root.get("ticksLeft")?.asInt ?: runInterval
     }
 
     override fun onRegister(entity: Entity) {

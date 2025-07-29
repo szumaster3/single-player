@@ -1,56 +1,57 @@
 package core.game.system.config
 
+import com.google.gson.Gson
+import com.google.gson.JsonArray
+import com.google.gson.JsonElement
 import core.ServerConstants
 import core.api.log
 import core.game.node.entity.npc.NPC
 import core.game.world.map.Direction
 import core.game.world.map.Location
 import core.tools.Log
-import org.json.simple.JSONArray
-import org.json.simple.JSONObject
-import org.json.simple.parser.JSONParser
 import java.io.FileReader
 
 class NPCSpawner {
-    val parser = JSONParser()
-    var reader: FileReader? = null
+    private val gson = Gson()
 
     fun load() {
         var count = 0
-        reader = FileReader(ServerConstants.CONFIG_PATH + "npc_spawns.json")
-        val configs = parser.parse(reader) as JSONArray
-        for (config in configs) {
-            val e = config as JSONObject
-            val data: Array<String> = e["loc_data"].toString().split("-".toRegex()).toTypedArray()
-            var tokens: Array<String>? = null
-            val id = e["npc_id"].toString().toInt()
-            for (d in data) {
-                if (d.isEmpty()) {
-                    continue
-                }
-                tokens =
-                    d
-                        .replace("{", "")
-                        .replace("}", "")
-                        .split(",".toRegex())
-                        .toTypedArray()
-                val npc =
-                    NPC.create(
+        FileReader(ServerConstants.CONFIG_PATH + "npc_spawns.json").use { reader ->
+            val configs = gson.fromJson(reader, JsonArray::class.java)
+            for (configElement: JsonElement in configs) {
+                val e = configElement.asJsonObject
+                val locData = e.get("loc_data").asString
+                val data = locData.split("-").map { it.trim() }.filter { it.isNotEmpty() }
+                val id = e.get("npc_id").asInt
+
+                for (d in data) {
+                    // oczyszczanie nawiasów {}
+                    val cleaned = d.removePrefix("{").removeSuffix("}")
+                    val tokens = cleaned.split(",").map { it.trim() }
+
+                    if (tokens.size < 5) {
+                        // Jeśli brakuje danych, pomiń
+                        continue
+                    }
+
+                    val npc = NPC.create(
                         id,
                         Location.create(
-                            Integer.valueOf(tokens[0].trim { it <= ' ' }),
-                            Integer.valueOf(tokens[1].trim { it <= ' ' }),
-                            Integer.valueOf(tokens[2].trim { it <= ' ' }),
-                        ),
+                            tokens[0].toInt(),
+                            tokens[1].toInt(),
+                            tokens[2].toInt()
+                        )
                     )
-                npc.isWalks = tokens[3].trim { it <= ' ' } == "1"
-                npc.direction = Direction.values()[Integer.valueOf(tokens[4].trim { it <= ' ' })]
-                npc.setAttribute("spawned:npc", true)
-                if (npc.definition.getConfiguration("facing_booth", false)) {
-                    npc.setAttribute("facing_booth", true)
+                    npc.isWalks = tokens[3] == "1"
+                    npc.direction = Direction.values()[tokens[4].toInt()]
+                    npc.setAttribute("spawned:npc", true)
+
+                    if (npc.definition.getConfiguration("facing_booth", false)) {
+                        npc.setAttribute("facing_booth", true)
+                    }
+                    npc.init()
+                    count++
                 }
-                npc.init()
-                count++
             }
         }
 

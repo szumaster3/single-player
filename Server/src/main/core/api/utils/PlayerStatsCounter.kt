@@ -1,16 +1,14 @@
 package core.api.utils
 
+import com.google.gson.JsonElement
+import com.google.gson.JsonParser
 import core.ServerConstants
 import core.api.StartupListener
-import core.api.log
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.game.world.GameWorld
 import core.integration.mysql.SQLiteProvider
-import core.tools.Log
 import core.tools.SystemLogger.logStartup
-import org.json.simple.JSONObject
-import org.json.simple.parser.JSONParser
 import java.io.File
 import java.io.FileReader
 import kotlin.io.path.Path
@@ -36,83 +34,53 @@ class PlayerStatsCounter(
 
         private fun portLegacyKillCounterJsonToSQLite() {
             val file = File(Path(ServerConstants.DATA_PATH ?: "", "global_kill_stats.json").toString())
-            if (!file.exists()) {
-                return
-            }
+            if (!file.exists()) return
 
-            val reader = FileReader(file)
-            val parser = JSONParser()
-            try {
-                val data = parser.parse(reader) as JSONObject
-                val json_kills = data.get("kills")
-                if (json_kills != null && json_kills is JSONObject) {
-                    var progress = 1
-                    val totalPlayers = json_kills.size
-                    for ((player, killStats) in json_kills.asIterable()) {
-                        log(
-                            PlayerStatsCounter::class.java,
-                            Log.INFO,
-                            "Porting kill counters for player $progress/$totalPlayers",
-                        )
-                        if (player is String) {
+            FileReader(file).use { reader ->
+                try {
+                    val dataElement: JsonElement = JsonParser.parseReader(reader)
+                    if (!dataElement.isJsonObject) return
+                    val data = dataElement.asJsonObject
+
+                    val jsonKills = data.getAsJsonObject("kills")
+                    jsonKills?.entrySet()?.let { entries ->
+                        var progress = 1
+                        val totalPlayers = entries.size
+                        for ((player, killStatsElement) in entries) {
+                            System.out.println("Porting kill counters for player $progress/$totalPlayers")
                             val playerUid = resolveUIDFromPlayerUsername(player.replace(" ", "_"))
-                            log(
-                                PlayerStatsCounter::class.java,
-                                Log.INFO,
-                                "Player $player ($playerUid)",
-                            )
-                            for ((npc_id, count) in (killStats as JSONObject).asIterable()) {
-                                log(
-                                    PlayerStatsCounter::class.java,
-                                    Log.INFO,
-                                    "Inserting kill for $player ($playerUid, $npc_id, $count)",
-                                )
-                                incrementKills(
-                                    playerUid,
-                                    (npc_id as String).toInt(),
-                                    count as Long,
-                                )
+                            System.out.println("Player $player ($playerUid)")
+                            val killStats = killStatsElement.asJsonObject
+                            for ((npcId, countElement) in killStats.entrySet()) {
+                                val count = countElement.asLong
+                                System.out.println("Inserting kill for $player ($playerUid, $npcId, $count)")
+                                incrementKills(playerUid, npcId.toInt(), count)
                             }
+                            progress++
                         }
-                        progress++
                     }
-                }
-                val json_rare_drops = data.get("rare_drops")
-                if (json_rare_drops != null && json_rare_drops is JSONObject) {
-                    var progress = 1
-                    val totalPlayers = json_rare_drops.size
-                    for ((player, rareDrops) in json_rare_drops.asIterable()) {
-                        log(
-                            PlayerStatsCounter::class.java,
-                            Log.INFO,
-                            "Porting rare drops for player $progress/$totalPlayers",
-                        )
-                        if (player is String) {
+
+                    val jsonRareDrops = data.getAsJsonObject("rare_drops")
+                    jsonRareDrops?.entrySet()?.let { entries ->
+                        var progress = 1
+                        val totalPlayers = entries.size
+                        for ((player, rareDropsElement) in entries) {
+                            System.out.println("Porting rare drops for player $progress/$totalPlayers")
                             val playerUid = resolveUIDFromPlayerUsername(player.replace(" ", "_"))
-                            log(
-                                PlayerStatsCounter::class.java,
-                                Log.INFO,
-                                "Player $player ($playerUid)",
-                            )
-                            for ((item_id, count) in (rareDrops as JSONObject).asIterable()) {
-                                log(
-                                    PlayerStatsCounter::class.java,
-                                    Log.INFO,
-                                    "Inserting rare drop for $player ($playerUid, $item_id, $count)",
-                                )
-                                incrementRareDrop(
-                                    playerUid,
-                                    (item_id as String).toInt(),
-                                    count as Long,
-                                )
+                            System.out.println("Player $player ($playerUid)")
+                            val rareDrops = rareDropsElement.asJsonObject
+                            for ((itemId, countElement) in rareDrops.entrySet()) {
+                                val count = countElement.asLong
+                                System.out.println("Inserting rare drop for $player ($playerUid, $itemId, $count)")
+                                incrementRareDrop(playerUid, itemId.toInt(), count)
                             }
+                            progress++
                         }
-                        progress++
                     }
+
+                } catch (e: Exception) {
+                    e.printStackTrace()
                 }
-            } catch (e: Exception) {
-                log(this::class.java, Log.ERR, "Failed parsing ${file.name} - stack trace below.")
-                e.printStackTrace()
             }
         }
 

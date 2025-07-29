@@ -1,5 +1,7 @@
 package core.game.system.config
 
+import com.google.gson.Gson
+import com.google.gson.JsonArray
 import core.ServerConstants
 import core.api.exceptionToString
 import core.api.log
@@ -8,74 +10,66 @@ import core.api.utils.NPCDropTable
 import core.api.utils.WeightedItem
 import core.cache.def.impl.NPCDefinition
 import core.tools.Log
-import org.json.simple.JSONArray
-import org.json.simple.JSONObject
-import org.json.simple.parser.JSONParser
 import java.io.FileReader
 
 class DropTableParser {
-    val parser = JSONParser()
-    var reader: FileReader? = null
+    private val gson = Gson()
 
     fun load() {
         var count = 0
-        reader = FileReader(ServerConstants.CONFIG_PATH + "drop_tables.json")
-        val obj = parser.parse(reader) as JSONArray
-        for (i in obj) {
-            val tab = i as JSONObject
-            val ids = tab["ids"].toString().split(",")
+        FileReader(ServerConstants.CONFIG_PATH + "drop_tables.json").use { reader ->
+            val obj = gson.fromJson(reader, JsonArray::class.java)
+            for (element in obj) {
+                val tab = element.asJsonObject
+                val ids = tab.get("ids").asString.split(",")
 
-            try {
-                val table = NPCDropTable()
-                parseTable(tab["main"] as JSONArray, table, isAlways = false)
-                parseTable(tab["charm"] as JSONArray, table, isAlways = false, isCharms = true)
-                (tab["tertiary"] as? JSONArray)?.let { parseTable(it, table, isAlways = false, isTertiary = true) }
-                parseTable(tab["default"] as JSONArray, table, true)
+                try {
+                    val table = NPCDropTable()
+                    parseTable(tab.getAsJsonArray("main"), table, isAlways = false)
+                    parseTable(tab.getAsJsonArray("charm"), table, isAlways = false, isCharms = true)
+                    tab.getAsJsonArray("tertiary")?.let { parseTable(it, table, isAlways = false, isTertiary = true) }
+                    parseTable(tab.getAsJsonArray("default"), table, true)
 
-                for (n in ids) {
-                    val def = NPCDefinition.forId(n.toInt()).dropTables
-                    def.table = table
-                    count++
+                    for (n in ids) {
+                        val def = NPCDefinition.forId(n.toInt()).dropTables
+                        def.table = table
+                        count++
+                    }
+                } catch (e: ConfigParseException) {
+                    val npcName = NPCDefinition.forId(ids[0].toInt()).name
+                    log(this::class.java, Log.ERR, "Error parsing drop tables for NPC $npcName: ${exceptionToString(e)}")
                 }
-            } catch (e: ConfigParseException) {
-                log(
-                    this::class.java,
-                    Log.ERR,
-                    "Error parsing drop tables for NPC ${NPCDefinition.forId(ids[0].toInt()).name}: ${
-                        exceptionToString(e)
-                    }",
-                )
             }
         }
-
         log(this::class.java, Log.DEBUG, "Parsed $count drop tables.")
     }
 
     private fun parseTable(
-        data: JSONArray,
+        data: JsonArray?,
         destinationTable: NPCDropTable,
         isAlways: Boolean,
         isTertiary: Boolean = false,
         isCharms: Boolean = false,
     ) {
-        for (it in data) {
-            val item = it as JSONObject
-            val id = item["id"].toString().toInt()
-            val minAmount = item["minAmount"].toString().toInt()
-            val maxAmount = item["maxAmount"].toString().toInt()
+        if (data == null) return
+
+        for (element in data) {
+            val item = element.asJsonObject
+            val id = item.get("id").asInt
+            val minAmount = item.get("minAmount").asInt
+            val maxAmount = item.get("maxAmount").asInt
 
             if (minAmount > maxAmount) {
                 throw ConfigParseException("Table is invalid! Specified minimum amount is > specified maximum amount.")
             }
 
-            val weight = item["weight"].toString().toDouble()
+            val weight = item.get("weight").asDouble
             val newItem = WeightedItem(id, minAmount, maxAmount, weight, isAlways)
-            if (isCharms) {
-                destinationTable.addToCharms(newItem)
-            } else if (isTertiary) {
-                destinationTable.addToTertiary(newItem)
-            } else {
-                destinationTable.add(newItem)
+
+            when {
+                isCharms -> destinationTable.addToCharms(newItem)
+                isTertiary -> destinationTable.addToTertiary(newItem)
+                else -> destinationTable.add(newItem)
             }
         }
     }

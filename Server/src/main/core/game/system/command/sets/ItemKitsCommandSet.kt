@@ -16,23 +16,6 @@ class ItemKitsCommandSet : CommandSet(Privilege.ADMIN) {
     override fun defineCommands() {
 
         /*
-         * Provides a set of dyes.
-         */
-
-        define(
-            name = "dyeskit",
-            privilege = Privilege.ADMIN,
-            usage = "::dyeskit",
-            description = "Provides a set of dyes.",
-        ) { player, _ ->
-            for (item in dyeKitItems) {
-                player.inventory.add(Item(item))
-            }
-            addItem(player, Items.RED_CAPE_1007, 8)
-            return@define
-        }
-
-        /*
          * Provide a set of talismans.
          */
 
@@ -78,43 +61,6 @@ class ItemKitsCommandSet : CommandSet(Privilege.ADMIN) {
                 addItem(player, item, 1000)
             }
             return@define
-        }
-
-        /*
-         * Provides all required items to making a tea.
-         */
-
-        define(
-            name = "teakit",
-            privilege = Privilege.ADMIN,
-            usage = "::teakit",
-            description = "Stuff to making cup of tea.",
-        ) { player, _ ->
-
-            val itemsToAdd =
-                listOf(
-                    Items.TEA_LEAVES_7738 to 3,
-                    Items.HOT_KETTLE_7691 to 1,
-                    Items.TEAPOT_7702 to 1,
-                    Items.TEAPOT_7714 to 1,
-                    Items.TEAPOT_7726 to 1,
-                    Items.HOT_KETTLE_7691 to 1,
-                    Items.TEAPOT_WITH_LEAVES_7700 to 1,
-                    Items.TEAPOT_WITH_LEAVES_7712 to 1,
-                    Items.TEAPOT_WITH_LEAVES_7724 to 1,
-                    Items.HOT_KETTLE_7691 to 1,
-                    Items.BUCKET_OF_MILK_1927 to 3,
-                    Items.EMPTY_CUP_7728 to 1,
-                    Items.CUP_OF_TEA_7730 to 1,
-                    Items.CUP_OF_TEA_7733 to 2,
-                    Items.PORCELAIN_CUP_7732 to 1,
-                    Items.CUP_OF_TEA_7736 to 2,
-                    Items.PORCELAIN_CUP_7735 to 1,
-                )
-
-            itemsToAdd.forEach { (item, amount) ->
-                addItem(player, item, amount)
-            }
         }
     }
 }

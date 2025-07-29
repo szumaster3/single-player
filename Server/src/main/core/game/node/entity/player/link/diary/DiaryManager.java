@@ -1,12 +1,13 @@
 package core.game.node.entity.player.link.diary;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import content.global.skill.smithing.Bar;
 import core.game.component.Component;
 import core.game.container.impl.EquipmentContainer;
 import core.game.node.entity.player.Player;
 import core.game.node.item.Item;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import org.rs.consts.Components;
 
 /**
@@ -39,14 +40,27 @@ public class DiaryManager {
      *
      * @param data the data
      */
-    public void parse(JSONArray data) {
-        for (int i = 0; i < data.size(); i++) {
-            JSONObject diary = (JSONObject) data.get(i);
-            String name = (String) diary.keySet().toArray()[0];
-            name = name.replace("_", "' ");
-            for (int ii = 0; ii < diarys.length; ii++) {
-                if (diarys[ii].getType().getName().equalsIgnoreCase(name)) {
-                    diarys[ii].parse((JSONObject) diary.get(name.replace("' ", "_")));
+    public void parse(JsonArray data) {
+        for (JsonElement element : data) {
+            if (!element.isJsonObject()) continue;
+
+            JsonObject diary = element.getAsJsonObject();
+
+            if (diary.entrySet().isEmpty()) continue;
+            String rawName = diary.entrySet().iterator().next().getKey();
+
+            String name = rawName.replace("_", "' ");
+
+            for (int i = 0; i < diarys.length; i++) {
+                if (diarys[i].getType().getName().equalsIgnoreCase(name)) {
+                    String jsonKey = name.replace("' ", "_");
+
+                    JsonElement toParseElement = diary.get(jsonKey);
+                    if (toParseElement != null && toParseElement.isJsonObject()) {
+                        JsonObject toParse = toParseElement.getAsJsonObject();
+                        diarys[i].parse(toParse);
+                    }
+                    break;
                 }
             }
         }

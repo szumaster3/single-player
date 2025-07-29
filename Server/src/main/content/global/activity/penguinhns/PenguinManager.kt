@@ -1,127 +1,80 @@
 package content.global.activity.penguinhns
 
-import core.ServerStore.Companion.toJSONArray
 import core.api.log
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.world.map.Location
 import core.tools.Log
-import org.json.simple.JSONArray
-import org.json.simple.JSONObject
 
 /**
  * Manages the Penguin Hunter activity state.
  */
+
 class PenguinManager {
     companion object {
-
-        /**
-         * List of ordinal identifiers representing currently spawned penguins.
-         */
-        var penguins: MutableList<Int> = ArrayList()
-
-        /**
-         * List of NPC instances representing penguins currently spawned in the world.
-         */
-        var npcs = ArrayList<NPC>()
-
-        /**
-         * Instance responsible for spawning penguins.
-         */
+        var penguins: MutableList<Int> = mutableListOf()
+        var npcs = mutableListOf<NPC>()
         val spawner = PenguinSpawner()
 
-        /**
-         * Mapping from penguin ordinal to a JSON array of player usernames
-         * who have tagged that penguin.
-         */
-        var tagMapping: MutableMap<Int, JSONArray> = HashMap()
+        var tagMapping: MutableMap<Int, JsonArray> = mutableMapOf()
 
-        /**
-         * Registers that a player has tagged a penguin at a given location.
-         *
-         * @param player The player who tagged the penguin.
-         * @param location The location of the penguin that was tagged.
-         */
-        fun registerTag(
-            player: Player,
-            location: Location,
-        ) {
+        fun registerTag(player: Player, location: Location) {
             val penguin = PenguinLocation.forLocation(location) ?: return
             val ordinal = penguin.ordinal
 
-            val list = tagMapping[ordinal] ?: JSONArray()
+            val list = tagMapping[ordinal] ?: JsonArray()
 
             list.add(player.username.lowercase())
             tagMapping[ordinal] = list
             updateStoreFile()
         }
 
-        /**
-         * Checks whether a player has already tagged the penguin at the given location.
-         *
-         * @param player The player to check.
-         * @param location The location of the penguin.
-         * @return `True` if the player has tagged this penguin, `false` otherwise.
-         */
-        fun hasTagged(
-            player: Player,
-            location: Location,
-        ): Boolean {
+        fun hasTagged(player: Player, location: Location): Boolean {
             val ordinal = PenguinLocation.forLocation(location)?.ordinal
-            return tagMapping[ordinal]?.contains(player.username.lowercase()) ?: false
+            return ordinal != null && tagMapping[ordinal]?.any { it.asString == player.username.lowercase() } == true
         }
 
-        /**
-         * Updates the persistent storage file with the current tag mappings.
-         */
         private fun updateStoreFile() {
-            val jsonTags = JSONArray()
-            tagMapping.filter { it.value.isNotEmpty() }.forEach { (ordinal, taggers) ->
-                log(this::class.java, Log.FINE, "$ordinal - ${taggers.first()}")
+            val jsonTags = JsonArray()
+            tagMapping.filter { it.value.size() > 0 }.forEach { (ordinal, taggers) ->
+                log(this::class.java, Log.FINE, "$ordinal - ${taggers[0].asString}")
 
-                val tag = JSONObject()
-                tag["ordinal"] = ordinal
-                tag["taggers"] = taggers
+                val tag = JsonObject()
+                tag.addProperty("ordinal", ordinal)
+                tag.add("taggers", taggers)
                 jsonTags.add(tag)
             }
 
-            PenguinHNSEvent.getStoreFile()["tag-mapping"] = jsonTags
+            PenguinHNSEvent.getStoreFile().add("tag-mapping", jsonTags)
         }
     }
 
-    /**
-     * Rebuilds the internal variables based on the saved store file.
-     *
-     * - If no penguins are currently spawned, spawns 10 penguins and initializes tag mappings.
-     * - Otherwise, loads the spawned penguins and tag mappings from persistent storage.
-     */
     fun rebuildVars() {
-        if (!PenguinHNSEvent.getStoreFile().containsKey("spawned-penguins")) {
+        val store = PenguinHNSEvent.getStoreFile()
+        if (!store.has("spawned-penguins")) {
             penguins = spawner.spawnPenguins(10)
-            PenguinHNSEvent.getStoreFile()["spawned-penguins"] = penguins.toJSONArray()
-            tagMapping.clear()
+            val ja = JsonArray()
+            penguins.forEach { ja.add(it) }
+            store.add("spawned-penguins", ja)
 
+            tagMapping.clear()
             for (p in penguins) {
-                tagMapping[p] = JSONArray()
+                tagMapping[p] = JsonArray()
             }
             updateStoreFile()
         } else {
-            val spawnedOrdinals =
-                (PenguinHNSEvent.getStoreFile()["spawned-penguins"] as JSONArray).map {
-                    it
-                        .toString()
-                        .toInt()
-                }
+            val spawnedOrdinals = store.getAsJsonArray("spawned-penguins").map { it.asInt }.toMutableList()
             spawner.spawnPenguins(spawnedOrdinals)
-            val storedTags =
-                (PenguinHNSEvent.getStoreFile()["tag-mapping"] as? JSONArray)
-                    ?.associate { jRaw ->
-                        val jObj = jRaw as JSONObject
-                        jObj["ordinal"].toString().toInt() to (jObj["taggers"] as JSONArray)
-                    }?.toMutableMap() ?: HashMap()
+
+            val storedTags = store.getAsJsonArray("tag-mapping")?.associate { jRaw ->
+                val jObj = jRaw.asJsonObject
+                jObj.get("ordinal").asInt to jObj.getAsJsonArray("taggers")
+            }?.toMutableMap() ?: mutableMapOf()
 
             tagMapping = storedTags
-            penguins = spawnedOrdinals.toMutableList()
+            penguins = spawnedOrdinals
         }
     }
 }

@@ -1,12 +1,12 @@
 package content.global.skill.farming
 
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
 import core.api.*
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.tools.RandomFunction
-import org.json.simple.JSONArray
-import org.json.simple.JSONObject
 import org.rs.consts.Animations
 import org.rs.consts.Items
 import org.rs.consts.Sounds
@@ -160,32 +160,39 @@ class CompostBin(
         }
     }
 
-    fun save(root: JSONObject) {
-        val binObject = JSONObject()
-        binObject["isSuper"] = this.isSuperCompost
-        val items = JSONArray()
+    fun save(root: JsonObject) {
+        val binObject = JsonObject()
+        binObject.addProperty("isSuper", this.isSuperCompost)
+
+        val items = JsonArray()
         for (id in this.items) {
             items.add(id)
         }
-        binObject["items"] = items
-        binObject["finishTime"] = finishedTime
-        binObject["isTomato"] = isTomatoes
-        binObject["isClosed"] = isClosed
-        binObject["isFinished"] = isFinished
-        root["binData"] = binObject
+        binObject.add("items", items)
+
+        binObject.addProperty("finishTime", finishedTime)
+        binObject.addProperty("isTomato", isTomatoes)
+        binObject.addProperty("isClosed", isClosed)
+        binObject.addProperty("isFinished", isFinished)
+
+        root.add("binData", binObject)
     }
 
-    fun parse(_data: JSONObject) {
-        val isSuper = if (_data.containsKey("isSuper")) (_data["isSuper"] as Boolean) else true
-        if (_data.containsKey("items")) {
-            (_data["items"] as JSONArray).forEach {
-                addItem(it.toString().toInt())
+    fun parse(_data: JsonObject) {
+        val isSuper = if (_data.has("isSuper")) _data.get("isSuper").asBoolean else true
+
+        if (_data.has("items")) {
+            val itemsArray = _data.getAsJsonArray("items")
+            itemsArray?.forEach {
+                addItem(it.asInt)
             }
         }
-        if (_data.containsKey("finishTime")) finishedTime = _data["finishTime"].toString().toLong()
-        if (_data.containsKey("isTomato")) isTomatoes = _data["isTomato"] as Boolean
-        if (_data.containsKey("isClosed")) isClosed = _data["isClosed"] as Boolean
-        if (_data.containsKey("isFinished")) isFinished = _data["isFinished"] as Boolean
+
+        if (_data.has("finishTime")) finishedTime = _data.get("finishTime").asLong
+        if (_data.has("isTomato")) isTomatoes = _data.get("isTomato").asBoolean
+        if (_data.has("isClosed")) isClosed = _data.get("isClosed").asBoolean
+        if (_data.has("isFinished")) isFinished = _data.get("isFinished").asBoolean
+
         updateBit()
     }
 

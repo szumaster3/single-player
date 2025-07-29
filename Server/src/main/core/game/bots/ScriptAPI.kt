@@ -1,5 +1,6 @@
 package core.game.bots
 
+import com.google.gson.JsonObject
 import content.data.consumables.Consumables
 import content.data.consumables.effects.HealingEffect
 import core.ServerConstants
@@ -38,8 +39,6 @@ import core.tools.RandomFunction
 import core.tools.colorize
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import org.json.simple.JSONArray
-import org.json.simple.JSONObject
 import org.rs.consts.Items
 import java.util.*
 import java.util.concurrent.CountDownLatch
@@ -931,24 +930,30 @@ class ScriptAPI(private val bot: Player) {
      * @param json the JSON object to load from (dumped via ::dumpappearance)
      * @author dginovker
      */
-    fun loadAppearanceAndEquipment(json: JSONObject?) {
+    fun loadAppearanceAndEquipment(json: JsonObject?) {
         if (json == null) return
         bot.equipment.clear()
-        bot.appearance.parse(json["appearance"] as JSONObject)
-        val equipment = json["equipment"] as JSONArray
-        bot.equipment.parse(equipment)
+
+        val appearanceJson = json.getAsJsonObject("appearance")
+        bot.appearance.parse(appearanceJson)
+
+        val equipmentJson = json.getAsJsonArray("equipment")
+        bot.equipment.parse(equipmentJson)
+
         bot.appearance.sync()
+
         for (i in 0 until bot.equipment.capacity()) {
             val item = bot.equipment.get(i)
             if (item != null) {
                 equipAndSetStats(item)
             }
         }
-        // Set all combat stats to a function of the highest combat stat(otherwise you end up with
-        // lopsided stats)
+
+        // Set all combat stats to a function of the highest combat stat.
         val highestCombatSkill = bot.skills.getStaticLevel(bot.skills.highestCombatSkillId)
         for (i in 0 until 7) {
-            bot.skills.setStaticLevel(i, max((highestCombatSkill * 0.75).toInt(), bot.skills.getStaticLevel(i)))
+            val newLevel = max((highestCombatSkill * 0.75).toInt(), bot.skills.getStaticLevel(i))
+            bot.skills.setStaticLevel(i, newLevel)
         }
         bot.skills.updateCombatLevel()
     }

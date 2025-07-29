@@ -1,13 +1,13 @@
 package content.global.plugin.item.equipment.bolt_pouch
 
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
 import core.api.addItem
 import core.api.getItemName
 import core.api.sendMessage
 import core.game.container.Container
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
-import org.json.simple.JSONArray
-import org.json.simple.JSONObject
 import org.rs.consts.Items
 
 /**
@@ -148,37 +148,38 @@ class BoltPouchManager(val player: Player) {
         return true
     }
 
-    fun save(root: JSONObject) {
-        val arr = JSONArray()
+    fun save(root: JsonObject) {
+        val arr = JsonArray()
         boltPouchContainers.forEach { (pouchId, container) ->
-            val obj = JSONObject().apply {
-                put("pouch", pouchId)
-                put("bolts", JSONArray().apply {
-                    container.toArray().forEach { item ->
-                        if (item == null) return@forEach
-                        add(JSONObject().apply {
-                            put("id", item.id)
-                            put("amount", item.amount)
-                        })
+            val obj = JsonObject().apply {
+                addProperty("pouch", pouchId)
+                val boltsArray = JsonArray()
+                container.toArray().forEach { item ->
+                    if (item == null) return@forEach
+                    val itemObj = JsonObject().apply {
+                        addProperty("id", item.id)
+                        addProperty("amount", item.amount)
                     }
-                })
+                    boltsArray.add(itemObj)
+                }
+                add("bolts", boltsArray)
             }
             arr.add(obj)
         }
-        root["bolt_pouch"] = arr
+        root.add("bolt_pouch", arr)
     }
 
-    fun parse(data: JSONArray) {
+    fun parse(data: JsonArray) {
         boltPouchContainers.clear()
         data.forEach { e ->
-            val obj = e as JSONObject
-            val pouchId = obj["pouch"].toString().toInt()
-            val boltsArr = obj["bolts"] as JSONArray
+            val obj = e.asJsonObject
+            val pouchId = obj.get("pouch").asInt
+            val boltsArr = obj.getAsJsonArray("bolts")
             val container = Container(MAX_SLOTS)
             boltsArr.forEach { b ->
-                val boltObj = b as JSONObject
-                val id = boltObj["id"].toString().toInt()
-                val amount = boltObj["amount"].toString().toInt()
+                val boltObj = b.asJsonObject
+                val id = boltObj.get("id").asInt
+                val amount = boltObj.get("amount").asInt
                 container.add(Item(id, amount))
             }
             boltPouchContainers[pouchId] = container

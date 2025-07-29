@@ -1,7 +1,7 @@
 package content.global.skill.construction.decoration.costumeroom
 
+import com.google.gson.JsonObject
 import core.game.node.entity.player.Player
-import org.json.simple.JSONObject
 
 class StorageState(val player: Player) {
 
@@ -46,24 +46,25 @@ class StorageState(val player: Player) {
         return containers[ContainerGroup.fromType(type)]!!
     }
 
-    fun toJson(): JSONObject {
-        val save = JSONObject()
-        val containersJson = JSONObject()
+    fun toJson(): JsonObject {
+        val save = JsonObject()
+        val containersJson = JsonObject()
         containers.forEach { (group, container) ->
-            containersJson[group.name.lowercase()] = container.toJson()
+            containersJson.add(group.name.lowercase(), container.toJson())
         }
-        save["containers"] = containersJson
+        save.add("containers", containersJson)
         return save
     }
 
-    fun readJson(data: JSONObject) {
-        val containersJson = data["containers"] as? JSONObject ?: return
+    fun readJson(data: JsonObject) {
+        val containersJson = data.getAsJsonObject("containers") ?: return
         for (group in ContainerGroup.values()) {
-            if (containersJson.containsKey(group.name.lowercase())) {
+            if (containersJson.has(group.name.lowercase())) {
                 containers[group] = StorageContainer.fromJson(
-                    containersJson[group.name.lowercase()] as JSONObject
+                    containersJson.getAsJsonObject(group.name.lowercase())
                 )
             }
         }
     }
+
 }

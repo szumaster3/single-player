@@ -1,7 +1,7 @@
 package core.game.world
 
+import com.google.gson.JsonObject
 import core.ServerConstants
-import org.json.simple.JSONObject
 import java.io.FileInputStream
 import java.io.IOException
 import java.util.*
@@ -47,39 +47,32 @@ class GameSettings internal constructor(
         "GameSettings [name=$name, debug=$isBeta, devMode=$isDevMode, gui=$isGui, worldId=$worldId]"
 
     companion object {
-        /**
-         * Parses a JSONObject and creates a new GameSettings object from it.
-         * @author Ceikry
-         *
-         * @param data the JSONObject to parse.
-         * @return the settings object.
-         */
-        fun parse(data: JSONObject): GameSettings {
+        fun parse(data: JsonObject): GameSettings {
             val name = ServerConstants.SERVER_NAME
-            val debug = data["debug"] as Boolean
-            val dev = data["dev"] as Boolean
-            val startGui = data["startGui"] as Boolean
-            val worldId = data["worldID"].toString().toInt()
-            val countryId = data["countryID"].toString().toInt()
-            val activity = data["activity"].toString()
-            val pvpWorld = data["pvpWorld"] as Boolean
-            val msip = data["msip"].toString()
-            val default_xp_rate = data["default_xp_rate"].toString().toDouble()
-            val enable_default_clan = data["enable_default_clan"] as Boolean
-            val enable_bots = data["enable_bots"] as Boolean
-            val autostock_ge = data["autostock_ge"] as Boolean
-            val increased_door_time = data["increased_door_time"] as? Boolean ?: false
-            val enable_botting = data["botting_enabled"] as? Boolean ?: false
-            val max_adv_bots = data["max_adv_bots"].toString().toIntOrNull() ?: 100
-            val enable_doubling_money_scammers = data["enable_doubling_money_scammers"] as? Boolean ?: false
-            val wild_pvp_enabled = data["wild_pvp_enabled"] as? Boolean ?: true
-            val jad_practice_enabled = data["jad_practice_enabled"] as? Boolean ?: true
-            val ge_announcement_limit = data["ge_announcement_limit"].toString().toInt()
-            val smartpathfinder_bfs = data["smartpathfinder_bfs"] as? Boolean ?: false
-            val enable_castle_wars = data["enable_castle_wars"] as? Boolean ?: false
-            val allow_token_purchase = data["allow_token_purchase"] as Boolean
-            val message_of_the_week_identifier = data["message_of_the_week_identifier"].toString().toInt()
-            val message_of_the_week_text = data["message_of_the_week_text"].toString()
+            val debug = data.get("debug")?.asBoolean ?: false
+            val dev = data.get("dev")?.asBoolean ?: false
+            val startGui = data.get("startGui")?.asBoolean ?: false
+            val worldId = data.get("worldID")?.asInt ?: 0
+            val countryId = data.get("countryID")?.asInt ?: 0
+            val activity = data.get("activity")?.asString ?: ""
+            val pvpWorld = data.get("pvpWorld")?.asBoolean ?: false
+            val msip = data.get("msip")?.asString ?: ""
+            val default_xp_rate = data.get("default_xp_rate")?.asDouble ?: 1.0
+            val enable_default_clan = data.get("enable_default_clan")?.asBoolean ?: false
+            val enable_bots = data.get("enable_bots")?.asBoolean ?: false
+            val autostock_ge = data.get("autostock_ge")?.asBoolean ?: false
+            val increased_door_time = data.get("increased_door_time")?.asBoolean ?: false
+            val enable_botting = data.get("botting_enabled")?.asBoolean ?: false
+            val max_adv_bots = data.get("max_adv_bots")?.asInt ?: 100
+            val enable_doubling_money_scammers = data.get("enable_doubling_money_scammers")?.asBoolean ?: false
+            val wild_pvp_enabled = data.get("wild_pvp_enabled")?.asBoolean ?: true
+            val jad_practice_enabled = data.get("jad_practice_enabled")?.asBoolean ?: true
+            val ge_announcement_limit = data.get("ge_announcement_limit")?.asInt ?: 0
+            val smartpathfinder_bfs = data.get("smartpathfinder_bfs")?.asBoolean ?: false
+            val enable_castle_wars = data.get("enable_castle_wars")?.asBoolean ?: false
+            val allow_token_purchase = data.get("allow_token_purchase")?.asBoolean ?: false
+            val message_of_the_week_identifier = data.get("message_of_the_week_identifier")?.asInt ?: 0
+            val message_of_the_week_text = data.get("message_of_the_week_text")?.asString ?: ""
 
             return GameSettings(
                 name,
@@ -89,10 +82,10 @@ class GameSettings internal constructor(
                 worldId,
                 countryId,
                 activity,
-                true,
+                true,  // ??? hardcoded true? Jeśli tak, zostaw
                 pvpWorld,
-                false,
-                false,
+                false, // hardcoded false
+                false, // hardcoded false
                 msip,
                 default_xp_rate,
                 enable_default_clan,
@@ -112,6 +105,7 @@ class GameSettings internal constructor(
                 message_of_the_week_text,
             )
         }
+
 
         /**
          * Gets the properties.

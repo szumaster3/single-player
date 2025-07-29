@@ -1,12 +1,12 @@
 package content.global.skill.runecrafting
 
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
 import core.api.*
 import core.game.container.Container
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
-import org.json.simple.JSONArray
-import org.json.simple.JSONObject
 import org.rs.consts.Items
 
 class PouchManager(val player: Player) {
@@ -108,45 +108,49 @@ class PouchManager(val player: Player) {
         addItem(player, essence.id, essence.amount)
     }
 
-    fun save(root: JSONObject) {
-        val pouches = JSONArray()
+    fun save(root: JsonObject) {
+        val pouches = JsonArray()
 
-        for (i in this.pouches) {
-            val pouch = JSONObject()
-            pouch["id"] = i.key.toString()
-            val items = JSONArray()
-            for (item in i.value.container.toArray()) {
-                item ?: continue
-                val it = JSONObject()
-                it["itemId"] = item.id.toString()
-                it["amount"] = item.amount.toString()
+        for ((id, pouch) in this.pouches) {
+            val pouchJson = JsonObject()
+            pouchJson.addProperty("id", id.toString())
+
+            val items = JsonArray()
+            for (item in pouch.container.toArray()) {
+                if (item == null) continue
+                val it = JsonObject()
+                it.addProperty("itemId", item.id.toString())
+                it.addProperty("amount", item.amount.toString())
                 items.add(it)
             }
-            pouch["container"] = items
-            pouch["charges"] = i.value.charges.toString()
-            pouch["currentCap"] = i.value.currentCap.toString()
-            pouches.add(pouch)
+            pouchJson.add("container", items)
+            pouchJson.addProperty("charges", pouch.charges.toString())
+            pouchJson.addProperty("currentCap", pouch.currentCap.toString())
+
+            pouches.add(pouchJson)
         }
-        root["pouches"] = pouches
+        root.add("pouches", pouches)
     }
 
-    fun parse(data: JSONArray) {
-        for (e in data) {
-            val pouch = e as JSONObject
-            val id = pouch["id"].toString().toInt()
-            val p = pouches[id]
-            p ?: return
-            val charges = pouch["charges"].toString().toInt()
-            val currentCap = pouch["currentCap"].toString().toInt()
+    fun parse(data: JsonArray) {
+        for (element in data) {
+            val pouchJson = element.asJsonObject
+            val id = pouchJson.get("id").asInt
+            val p = pouches[id] ?: continue
+            val charges = pouchJson.get("charges").asInt
+            val currentCap = pouchJson.get("currentCap").asInt
+
             p.charges = charges
             p.currentCap = currentCap
             p.remakeContainer()
-            for (i in pouch["container"] as JSONArray) {
-                val it = i as JSONObject
-                it["itemId"] ?: continue
-                val item = it["itemId"].toString().toInt()
-                val amount = it["amount"].toString().toInt()
-                p.container.add(Item(item, amount))
+
+            val containerArray = pouchJson.getAsJsonArray("container")
+            for (itemElement in containerArray) {
+                val it = itemElement.asJsonObject
+                if (!it.has("itemId")) continue
+                val itemId = it.get("itemId").asInt
+                val amount = it.get("amount").asInt
+                p.container.add(Item(itemId, amount))
             }
         }
     }

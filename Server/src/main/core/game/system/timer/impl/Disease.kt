@@ -11,7 +11,7 @@ import core.game.system.timer.PersistTimer
 import core.game.system.timer.RSTimer
 import core.game.system.timer.TimerFlag
 import core.tools.RandomFunction
-import org.json.simple.JSONObject
+import com.google.gson.JsonObject
 import org.rs.consts.Sounds
 
 class Disease :
@@ -23,17 +23,17 @@ class Disease :
     var hitsLeft = 25
 
     override fun save(
-        root: JSONObject,
+        root: JsonObject,
         entity: Entity,
     ) {
-        root["hitsLeft"] = hitsLeft.toString()
+        root.addProperty("hitsLeft", hitsLeft)
     }
 
     override fun parse(
-        root: JSONObject,
+        root: JsonObject,
         entity: Entity,
     ) {
-        hitsLeft = root["hitsLeft"].toString().toInt()
+        hitsLeft = root.get("hitsLeft")?.asInt ?: 25
     }
 
     override fun onRegister(entity: Entity) {
@@ -49,7 +49,7 @@ class Disease :
             playAudio(entity, Sounds.DISEASE_HITSPLAT_2388)
         }
 
-        var damage = RandomFunction.random(1, 5)
+        val damage = RandomFunction.random(1, 5)
 
         // The disease hit is purely visual,
         // it doesn't deal any damage to the player.

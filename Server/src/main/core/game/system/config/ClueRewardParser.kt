@@ -1,11 +1,11 @@
 package core.game.system.config
 
+import com.google.gson.Gson
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
 import core.ServerConstants
 import core.api.utils.WeightBasedTable
 import core.api.utils.WeightedItem
-import org.json.simple.JSONArray
-import org.json.simple.JSONObject
-import org.json.simple.parser.JSONParser
 import java.io.FileReader
 
 class ClueRewardParser {
@@ -23,33 +23,33 @@ class ClueRewardParser {
         var rareTable = WeightBasedTable()
     }
 
-    val parser = JSONParser()
-    var reader: FileReader? = null
+    private val gson = Gson()
 
     fun load() {
-        reader = FileReader(ServerConstants.CONFIG_PATH + "clue_rewards.json")
+        FileReader(ServerConstants.CONFIG_PATH + "clue_rewards.json").use { reader ->
+            val rawData = gson.fromJson(reader, JsonObject::class.java)
 
-        val rawData = parser.parse(reader) as JSONObject
-        easyTable = parseClueTable(rawData["easy"] as JSONArray)
-        medTable = parseClueTable(rawData["medium"] as JSONArray)
-        hardTable = parseClueTable(rawData["hard"] as JSONArray)
-        rareTable = parseClueTable(rawData["rare"] as JSONArray)
+            easyTable = parseClueTable(rawData.getAsJsonArray("easy"))
+            medTable = parseClueTable(rawData.getAsJsonArray("medium"))
+            hardTable = parseClueTable(rawData.getAsJsonArray("hard"))
+            rareTable = parseClueTable(rawData.getAsJsonArray("rare"))
+        }
     }
 
-    private fun parseClueTable(data: JSONArray): WeightBasedTable {
+    private fun parseClueTable(data: JsonArray): WeightBasedTable {
         val table = WeightBasedTable()
 
         for (element in data) {
-            val itemData = element as JSONObject
+            val itemData = element.asJsonObject
 
             table.add(
                 WeightedItem(
-                    itemData["id"].toString().toInt(),
-                    itemData["minAmount"].toString().toInt(),
-                    itemData["maxAmount"].toString().toInt(),
-                    itemData["weight"].toString().toDouble(),
+                    itemData.get("id").asInt,
+                    itemData.get("minAmount").asInt,
+                    itemData.get("maxAmount").asInt,
+                    itemData.get("weight").asDouble,
                     false,
-                ),
+                )
             )
         }
 

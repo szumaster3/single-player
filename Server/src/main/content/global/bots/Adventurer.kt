@@ -1,5 +1,8 @@
 package content.global.bots
 
+import com.google.gson.Gson
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
 import core.ServerConstants
 import core.game.bots.AIRepository
 import core.game.bots.CombatBotAssembler
@@ -17,8 +20,6 @@ import core.game.world.GameWorld
 import core.game.world.map.Location
 import core.game.world.map.RegionManager
 import core.game.world.map.zone.ZoneBorders
-import org.json.simple.JSONArray
-import org.json.simple.JSONObject
 import java.io.File
 import java.io.FileReader
 import java.time.LocalDateTime
@@ -478,25 +479,25 @@ class Adventurer(
 
     fun dialogue() {
         val until = 1225 - dateCode
-        val lineStd = dialogue.getLines("standard").rand()
+        val lineStd = dialogue.getLines("standard")?.rand()
         var lineAlt = ""
 
-        when {
-            dateCode == 1031 -> lineAlt = dialogue.getLines("halloween").rand()
+        fun dialogue() {
+            val until = 1225 - dateCode
+            val lineStd = dialogue.getLines("standard")?.rand() ?: ""
+            var lineAlt = ""
 
-            until in 2..23 -> lineAlt = dialogue.getLines("approaching_christmas").rand()
+            when {
+                dateCode == 1031 -> lineAlt = dialogue.getLines("halloween")?.rand() ?: ""
+                until in 2..23 -> lineAlt = dialogue.getLines("approaching_christmas")?.rand() ?: ""
+                dateCode == 1225 -> lineAlt = dialogue.getLines("christmas_day")?.rand() ?: ""
+                dateCode == 1224 -> lineAlt = dialogue.getLines("christmas_eve")?.rand() ?: ""
+                dateCode == 1231 -> lineAlt = dialogue.getLines("new_years_eve")?.rand() ?: ""
+                dateCode == 101 -> lineAlt = dialogue.getLines("new_years")?.rand() ?: ""
+                dateCode == 214 -> lineAlt = dialogue.getLines("valentines")?.rand() ?: ""
+                dateCode == 404 -> lineAlt = dialogue.getLines("easter")?.rand() ?: ""
+            }
 
-            dateCode == 1225 -> lineAlt = dialogue.getLines("christmas_day").rand()
-
-            dateCode == 1224 -> lineAlt = dialogue.getLines("christmas_eve").rand()
-
-            dateCode == 1231 -> lineAlt = dialogue.getLines("new_years_eve").rand()
-
-            dateCode == 101 -> lineAlt = dialogue.getLines("new_years").rand()
-
-            dateCode == 214 -> lineAlt = dialogue.getLines("valentines").rand()
-
-            dateCode == 404 -> lineAlt = dialogue.getLines("easter").rand()
         }
 
         var localPlayers = RegionManager.getLocalPlayers(bot)
@@ -511,9 +512,11 @@ class Adventurer(
                         lineAlt
                     } else {
                         lineStd
-                    }.replace("@name", localPlayer.username)
-                        .replace("@timer", until.toString())
-                scriptAPI.sendChat(chat)
+                    }?.replace("@name", localPlayer.username)
+                        ?.replace("@timer", until.toString())
+                if (chat != null) {
+                    scriptAPI.sendChat(chat)
+                }
             } else {
                 val chat =
                     if (lineAlt.isNotEmpty() && Random.nextBoolean()) {
@@ -521,7 +524,9 @@ class Adventurer(
                     } else {
                         lineStd
                     }
-                scriptAPI.sendChat(chat)
+                if (chat != null) {
+                    scriptAPI.sendChat(chat)
+                }
             }
         }
     }
@@ -748,17 +753,14 @@ class Adventurer(
                 },
             )
 
-        val dialogue: JSONObject
+        val dialogue: JsonObject
         val dateCode: Int
 
         init {
             val reader = FileReader(ServerConstants.BOT_DATA_PATH + File.separator + "bot_dialogue.json")
-            val parser =
-                org.json.simple.parser
-                    .JSONParser()
-            val data = parser.parse(reader) as JSONObject
-
-            dialogue = data
+            val gson = Gson()
+            dialogue = gson.fromJson(reader, JsonObject::class.java)
+            reader.close()
 
             val formatter = DateTimeFormatter.ofPattern("MMdd")
             val current = LocalDateTime.now()
@@ -766,8 +768,13 @@ class Adventurer(
             dateCode = formatted.toInt()
         }
 
-        private fun JSONObject.getLines(category: String): JSONArray = this[category] as JSONArray
+        private fun JsonObject.getLines(category: String): JsonArray? = this.getAsJsonArray(category)
 
-        private fun JSONArray.rand(): String = this.random() as String
+        private fun JsonArray.rand(): String? {
+            if (this.size() == 0) return null
+            val index = (0 until this.size()).random()
+            val element = this.get(index)
+            return if (element.isJsonPrimitive && element.asJsonPrimitive.isString) element.asString else element.toString()
+        }
     }
 }

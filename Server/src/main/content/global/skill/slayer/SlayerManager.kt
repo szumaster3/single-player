@@ -1,5 +1,6 @@
 package content.global.skill.slayer
 
+import com.google.gson.JsonObject
 import content.global.plugin.item.equipment.gloves.FOGGlovesListener
 import core.api.*
 import core.cache.def.impl.NPCDefinition
@@ -8,8 +9,6 @@ import core.game.event.NPCKillEvent
 import core.game.node.entity.Entity
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
-import org.json.simple.JSONArray
-import org.json.simple.JSONObject
 import org.rs.consts.Items
 
 class SlayerManager(
@@ -28,76 +27,97 @@ class SlayerManager(
 
     override fun savePlayer(
         player: Player,
-        save: JSONObject,
+        save: JsonObject,
     ) {
-        val slayer = JSONObject()
+        val slayer = JsonObject()
         val slayerManager = getInstance(player)
+
         if (slayerManager.removed.isNotEmpty()) {
-            val removedTasks = JSONArray()
-            slayerManager.removed.map {
-                removedTasks.add(it.ordinal.toString())
+            val removedTasks = com.google.gson.JsonArray()
+            slayerManager.removed.forEach {
+                removedTasks.add(it.ordinal)
             }
-            slayer["removedTasks"] = removedTasks
+            slayer.add("removedTasks", removedTasks)
         }
-        slayer["taskStreak"] = slayerManager.flags.taskStreak.toString()
-        slayer["totalTasks"] = slayerManager.flags.completedTasks.toString()
-        slayer["equipmentFlags"] = slayerManager.flags.equipmentFlags
-        slayer["taskFlags"] = slayerManager.flags.taskFlags
-        slayer["rewardFlags"] = slayerManager.flags.rewardFlags
-        save["slayer"] = slayer
+
+        slayer.addProperty("taskStreak", slayerManager.flags.taskStreak)
+        slayer.addProperty("totalTasks", slayerManager.flags.completedTasks)
+        slayer.addProperty("equipmentFlags", slayerManager.flags.equipmentFlags)
+        slayer.addProperty("taskFlags", slayerManager.flags.taskFlags)
+        slayer.addProperty("rewardFlags", slayerManager.flags.rewardFlags)
+
+        save.add("slayer", slayer)
     }
 
     override fun parsePlayer(
         player: Player,
-        data: JSONObject,
+        data: JsonObject,
     ) {
-        val slayerData = data["slayer"] as JSONObject
-        val m = slayerData["master"]
+        val slayerData = data.getAsJsonObject("slayer") ?: return
+        val m = slayerData.get("master")
         val flags = getInstance(player).flags
-        if (m != null) {
-            flags.setMaster(SlayerMaster.forId(m.toString().toInt()))
+
+        if (m != null && !m.isJsonNull) {
+            flags.setMaster(SlayerMaster.forId(m.asInt))
         }
-        val t = slayerData["taskId"]
-        if (t != null) flags.setTask(Tasks.values()[t.toString().toInt()])
-        val a = slayerData["taskAmount"]
-        if (a != null) flags.setTaskAmount(a.toString().toInt())
-        val points = slayerData["points"]
-        if (points != null) {
-            flags.setPoints(points.toString().toInt())
+
+        val t = slayerData.get("taskId")
+        if (t != null && !t.isJsonNull) {
+            flags.setTask(Tasks.values()[t.asInt])
         }
-        val taskStreak = slayerData["taskStreak"]
-        if (taskStreak != null) {
-            flags.taskStreak = taskStreak.toString().toInt()
+
+        val a = slayerData.get("taskAmount")
+        if (a != null && !a.isJsonNull) {
+            flags.setTaskAmount(a.asInt)
         }
-        val la = slayerData["learned_rewards"]
-        if (la != null) {
-            val learnedArray = slayerData["learned_rewards"] as JSONArray?
-            for (i in learnedArray!!.indices) {
-                val unlocked = learnedArray[i] as Boolean
+
+        val points = slayerData.get("points")
+        if (points != null && !points.isJsonNull) {
+            flags.setPoints(points.asInt)
+        }
+
+        val taskStreak = slayerData.get("taskStreak")
+        if (taskStreak != null && !taskStreak.isJsonNull) {
+            flags.taskStreak = taskStreak.asInt
+        }
+
+        val learnedArray = slayerData.getAsJsonArray("learned_rewards")
+        if (learnedArray != null) {
+            for (i in 0 until learnedArray.size()) {
+                val unlocked = learnedArray.get(i).asBoolean
                 when (i) {
                     0 -> if (unlocked) flags.unlockBroads()
                     1 -> if (unlocked) flags.unlockRing()
                     2 -> if (unlocked) flags.unlockHelm()
-                    else -> {}
                 }
             }
         }
-        val removedTasks = slayerData["removedTasks"] as JSONArray?
+
+        val removedTasks = slayerData.getAsJsonArray("removedTasks")
         if (removedTasks != null) {
-            for (i in removedTasks.indices) {
-                flags.removed.add(Tasks.values()[removedTasks[i].toString().toInt()])
+            for (i in 0 until removedTasks.size()) {
+                val taskOrdinal = removedTasks.get(i).asInt
+                flags.removed.add(Tasks.values()[taskOrdinal])
             }
         }
-        val completedTasks: Any = slayerData["totalTasks"].toString()
-        flags.completedTasks = completedTasks.toString().toInt()
+
+        val completedTasks = slayerData.get("totalTasks")
+        if (completedTasks != null && !completedTasks.isJsonNull) {
+            flags.completedTasks = completedTasks.asInt
+        }
         if (flags.completedTasks >= 4) flags.flagCanEarnPoints()
 
-        if (slayerData.containsKey("equipmentFlags")) {
-            flags.equipmentFlags =
-                slayerData["equipmentFlags"].toString().toInt()
+        slayerData.get("equipmentFlags")?.takeIf { !it.isJsonNull }?.let {
+            flags.equipmentFlags = it.asInt
         }
-        if (slayerData.containsKey("taskFlags")) flags.taskFlags = slayerData["taskFlags"].toString().toInt()
-        if (slayerData.containsKey("rewardFlags")) flags.rewardFlags = slayerData["rewardFlags"].toString().toInt()
+
+        slayerData.get("taskFlags")?.takeIf { !it.isJsonNull }?.let {
+            flags.taskFlags = it.asInt
+        }
+
+        slayerData.get("rewardFlags")?.takeIf { !it.isJsonNull }?.let {
+            flags.rewardFlags = it.asInt
+        }
     }
 
     override fun process(

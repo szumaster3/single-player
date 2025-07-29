@@ -27,7 +27,8 @@ class KaramjaAchievementDiary : DiaryEventHookBase(DiaryType.KARAMJA) {
         private val TAI_BWO_WANNAI_WOODCUTTING_AREA = ZoneBorders(2817, 3076, 2829, 3090)
 
         private val KET_ZEKS = arrayOf(NPCs.KET_ZEK_2743, NPCs.KET_ZEK_2744)
-        private val METAL_DRAGONS = arrayOf(NPCs.BRONZE_DRAGON_1590, NPCs.IRON_DRAGON_1591, NPCs.STEEL_DRAGON_1592)
+        private val METAL_DRAGONS =
+            arrayOf(NPCs.BRONZE_DRAGON_1590, NPCs.IRON_DRAGON_1591, NPCs.STEEL_DRAGON_1592)
 
         private val FRUIT_TREES =
             arrayOf(
@@ -158,8 +159,8 @@ class KaramjaAchievementDiary : DiaryEventHookBase(DiaryType.KARAMJA) {
                         task = EasyTasks.BRIMHAVEN_MINE_GOLD,
                     )
                 }
-
-            11310, 11410 ->
+            11310,
+            11410 ->
                 if (event.itemId == Items.UNCUT_RED_TOPAZ_1629) {
                     finishTask(
                         player = player,
@@ -167,7 +168,6 @@ class KaramjaAchievementDiary : DiaryEventHookBase(DiaryType.KARAMJA) {
                         task = MediumTasks.MINE_RED_TOPAZ,
                     )
                 }
-
             11569 ->
                 if (event.itemId == Items.BANANA_1963) {
                     progressIncrementalTask(
@@ -183,7 +183,8 @@ class KaramjaAchievementDiary : DiaryEventHookBase(DiaryType.KARAMJA) {
         when {
             inBorders(player, BANANA_FISHING_SPOT_AREA) -> {
                 when (event.source.id) {
-                    NPCs.FISHING_SPOT_323, NPCs.FISHING_SPOT_333 -> {
+                    NPCs.FISHING_SPOT_323,
+                    NPCs.FISHING_SPOT_333 -> {
                         finishTask(
                             player = player,
                             level = DiaryLevel.EASY,
@@ -192,7 +193,6 @@ class KaramjaAchievementDiary : DiaryEventHookBase(DiaryType.KARAMJA) {
                     }
                 }
             }
-
             inBorders(player, TAI_BWO_WANNAI_WOODCUTTING_AREA) -> {
                 when (event.itemId) {
                     Items.MAHOGANY_LOGS_6332 -> {
@@ -202,7 +202,6 @@ class KaramjaAchievementDiary : DiaryEventHookBase(DiaryType.KARAMJA) {
                             task = MediumTasks.CUT_MAHOGANY_TREE,
                         )
                     }
-
                     Items.TEAK_LOGS_6333 -> {
                         finishTask(
                             player = player,
@@ -220,7 +219,8 @@ class KaramjaAchievementDiary : DiaryEventHookBase(DiaryType.KARAMJA) {
         event: NPCKillEvent,
     ) {
         when (player.viewport.region!!.id) {
-            10899, 10900 ->
+            10899,
+            10900 ->
                 if (event.npc.id in METAL_DRAGONS) {
                     finishTask(
                         player = player,
@@ -228,7 +228,6 @@ class KaramjaAchievementDiary : DiaryEventHookBase(DiaryType.KARAMJA) {
                         task = HardTasks.BRIMHAVEN_DUNGEON_KILL_METAL_DRAGON,
                     )
                 }
-
             11412 ->
                 if (event.npc.id == NPCs.JOGRE_113) {
                     finishTask(
@@ -237,7 +236,6 @@ class KaramjaAchievementDiary : DiaryEventHookBase(DiaryType.KARAMJA) {
                         task = EasyTasks.POTHOLE_DUNGEON_KILL_JOGRE,
                     )
                 }
-
             else ->
                 if (event.npc.id in KET_ZEKS) {
                     finishTask(
@@ -291,7 +289,6 @@ class KaramjaAchievementDiary : DiaryEventHookBase(DiaryType.KARAMJA) {
                         task = MediumTasks.BRIMHAVEN_DUNGEON_CLIMB_STAIRS,
                     )
                 }
-
             11058 -> {
                 if (event.target.id == NPCs.HAJEDY_510 && event.option == "pay-fare") {
                     finishTask(
@@ -308,8 +305,8 @@ class KaramjaAchievementDiary : DiaryEventHookBase(DiaryType.KARAMJA) {
                     )
                 }
             }
-
-            11054, 11055 ->
+            11054,
+            11055 ->
                 if (event.target.id == 19231) {
                     finishTask(
                         player,

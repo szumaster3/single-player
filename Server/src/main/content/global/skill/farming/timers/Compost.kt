@@ -1,12 +1,12 @@
 package content.global.skill.farming.timers
 
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
 import content.global.skill.farming.CompostBin
 import content.global.skill.farming.CompostBins
 import core.game.node.entity.Entity
 import core.game.node.entity.player.Player
 import core.game.system.timer.PersistTimer
-import org.json.simple.JSONArray
-import org.json.simple.JSONObject
 
 class Compost : PersistTimer(500, "farming:compost", isSoft = true) {
     private val binMap = HashMap<CompostBins, CompostBin>()
@@ -38,29 +38,31 @@ class Compost : PersistTimer(500, "farming:compost", isSoft = true) {
     fun getBins(): MutableCollection<CompostBin> = binMap.values
 
     override fun save(
-        root: JSONObject,
+        root: JsonObject,
         entity: Entity,
     ) {
-        val bins = JSONArray()
+        val bins = JsonArray()
         for ((key, bin) in binMap) {
-            val b = JSONObject()
-            b["bin-ordinal"] = key.ordinal
+            val b = JsonObject()
+            b.addProperty("bin-ordinal", key.ordinal)
             bin.save(b)
             bins.add(b)
         }
-        root["bins"] = bins
+        root.add("bins", bins)
     }
 
     override fun parse(
-        root: JSONObject,
+        root: JsonObject,
         entity: Entity,
     ) {
-        (root["bins"] as JSONArray).forEach {
-            val bin = it as JSONObject
-            val binOrdinal = bin["bin-ordinal"].toString().toInt()
+        val binsArray = root.getAsJsonArray("bins") ?: return
+        for (element in binsArray) {
+            val bin = element.asJsonObject
+            val binOrdinal = bin.get("bin-ordinal").asInt
             val cBin = CompostBins.values()[binOrdinal]
             val b = CompostBin((entity as? Player)!!, cBin).also { binMap[cBin] = it }
-            b.parse(bin["binData"] as JSONObject)
+            b.parse(bin.getAsJsonObject("binData"))
         }
     }
+
 }

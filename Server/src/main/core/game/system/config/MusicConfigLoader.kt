@@ -1,5 +1,8 @@
 package core.game.system.config
 
+import com.google.gson.Gson
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
 import core.ServerConstants
 import core.api.log
 import core.cache.def.impl.DataMap
@@ -8,22 +11,13 @@ import core.game.node.entity.player.link.music.MusicZone
 import core.game.world.map.RegionManager
 import core.game.world.map.zone.ZoneBorders
 import core.tools.Log
-import org.json.simple.JSONArray
-import org.json.simple.JSONObject
-import org.json.simple.parser.JSONParser
 import java.io.FileReader
 
 /**
- * Loads music configuration data from JSON files and cache definitions,
- * and populates the music entries and music zones in the game world.
- *
- * [DataMap] used:
- * - 1351: buttonID -> song ID
- * - 1345: buttonID -> song name (capitalized)
- * - 1347: buttonID -> song name (lowercase)
- */
+ * Loads music configuration data from JSON.
+*/
 class MusicConfigLoader {
-    private val parser = JSONParser()
+    private val gson = Gson()
 
     fun load() {
         val songs = DataMap.get(1351)
@@ -39,13 +33,13 @@ class MusicConfigLoader {
 
         val filePath = ServerConstants.CONFIG_PATH + "music_configs.json"
         FileReader(filePath).use { reader ->
-            val configs = parser.parse(reader) as JSONArray
+            val configs = gson.fromJson(reader, JsonArray::class.java)
             var count = 0
 
-            for (configAny in configs) {
-                val config = configAny as? JSONObject ?: continue
-                val musicId = (config["id"]?.toString()?.toIntOrNull()) ?: continue
-                val bordersString = config["borders"]?.toString() ?: continue
+            for (element in configs) {
+                val config = element.asJsonObject
+                val musicId = config.get("id")?.asInt ?: continue
+                val bordersString = config.get("borders")?.asString ?: continue
 
                 val borderStrings = bordersString.split("-").filter { it.isNotBlank() }
 

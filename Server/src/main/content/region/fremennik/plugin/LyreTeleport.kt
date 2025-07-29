@@ -1,5 +1,6 @@
 package content.region.fremennik.plugin
 
+import com.google.gson.JsonObject
 import content.data.GameAttributes
 import core.ServerStore.Companion.getArchive
 import core.api.*
@@ -10,7 +11,6 @@ import core.game.world.GameWorld
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
-import org.json.simple.JSONObject
 import org.rs.consts.Animations
 import org.rs.consts.Items
 
@@ -24,14 +24,14 @@ class LyreTeleport(val player: Player) : Pulse() {
         val rellekaProvince = Location(2663, 3646, 0)
 
         @JvmStatic
-        fun getStoreFile(): JSONObject = getArchive("daily-lyre-teleport")
+        fun getStoreFile(): JsonObject = getArchive("daily-lyre-teleport")
 
         fun teleport(player: Player) {
             if (hasTimerActive(player, GameAttributes.TELEBLOCK_TIMER)) {
                 sendMessage(player, "A magical force has stopped you from teleporting.")
             } else {
                 GameWorld.Pulser.submit(LyreTeleport(player))
-                getStoreFile()[player.username.lowercase()] = true
+                getStoreFile().addProperty(player.username.lowercase(), true)
             }
         }
     }

@@ -1,8 +1,7 @@
 package core.game.node.entity.player.link
 
+import com.google.gson.JsonObject
 import content.data.GodBook
-import org.json.simple.JSONArray
-import org.json.simple.JSONObject
 
 class GlobalData {
     private var runReplenishCharges: Int = 0
@@ -69,88 +68,121 @@ class GlobalData {
     private var godBooks: BooleanArray = BooleanArray(3)
     var godPages: BooleanArray = BooleanArray(4)
 
-    fun parse(data: JSONObject) {
-        tutorialStage = data["tutorialStage"].toString().toInt()
-        homeTeleportDelay = data["homeTeleportDelay"].toString().toLong()
-        lumbridgeRope = data["lumbridgeRope"] as Boolean
-        apprentice = data["apprentice"] as Boolean
-        assistTime = data["assistTime"].toString().toLong()
-        val ae = data["assistExperience"] as JSONArray
-        for (i in 0 until ae.size) {
-            assistExperience[i] = ae[i].toString().toDouble()
+    fun parse(data: JsonObject) {
+        tutorialStage = data["tutorialStage"]?.asInt ?: 0
+        homeTeleportDelay = data["homeTeleportDelay"]?.asLong ?: 0L
+        lumbridgeRope = data["lumbridgeRope"]?.asBoolean ?: false
+        apprentice = data["apprentice"]?.asBoolean ?: false
+        assistTime = data["assistTime"]?.asLong ?: 0L
+
+        val ae = data["assistExperience"]?.asJsonArray
+        if (ae != null) {
+            for (i in 0 until ae.size()) {
+                assistExperience[i] = ae[i].asDouble
+            }
         }
-        val sr = data["strongHoldRewards"] as JSONArray
-        for (i in 0 until sr.size) {
-            strongholdRewards[i] = sr[i] as Boolean
+
+        val sr = data["strongHoldRewards"]?.asJsonArray
+        if (sr != null) {
+            for (i in 0 until sr.size()) {
+                strongholdRewards[i] = sr[i].asBoolean
+            }
         }
-        chatPing = data["chatPing"].toString().toLong()
-        tutorClaim = data["tutorClaim"].toString().toLong()
-        luthasTask = data["luthasTask"] as Boolean
-        karamjaBananas = data["karamjaBananas"].toString().toInt()
-        silkSteal = data["silkSteal"].toString().toLong()
-        teaSteal = data["teaSteal"].toString().toLong()
-        zaffAmount = data["zafAmount"].toString().toInt()
-        zaffTime = data["zafTime"].toString().toLong()
-        fritzGlass = data["fritzGlass"] as Boolean
-        wydinEmployee = data["wydinEmployee"] as Boolean
-        draynorRecording = data["draynorRecording"] as Boolean
-        geTutorial = data["geTutorial"] as Boolean
-        essenceTeleporter = data["essenceTeleporter"].toString().toInt()
-        recoilDamage = data["recoilDamage"].toString().toInt()
-        doubleExpDelay = data["doubleExpDelay"].toString().toLong()
-        joinedMonastery = data["joinedMonastery"] as Boolean
-        val rp = data["readPlaques"] as JSONArray
-        for (i in 0 until rp.size) {
-            readPlaques[i] = rp[i] as Boolean
+
+        chatPing = data["chatPing"]?.asLong ?: 0L
+        tutorClaim = data["tutorClaim"]?.asLong ?: 0L
+        luthasTask = data["luthasTask"]?.asBoolean ?: false
+        karamjaBananas = data["karamjaBananas"]?.asInt ?: 0
+        silkSteal = data["silkSteal"]?.asLong ?: 0L
+        teaSteal = data["teaSteal"]?.asLong ?: 0L
+        zaffAmount = data["zafAmount"]?.asInt ?: 0
+        zaffTime = data["zafTime"]?.asLong ?: 0L
+        fritzGlass = data["fritzGlass"]?.asBoolean ?: false
+        wydinEmployee = data["wydinEmployee"]?.asBoolean ?: false
+        draynorRecording = data["draynorRecording"]?.asBoolean ?: false
+        geTutorial = data["geTutorial"]?.asBoolean ?: false
+        essenceTeleporter = data["essenceTeleporter"]?.asInt ?: 0
+        recoilDamage = data["recoilDamage"]?.asInt ?: 0
+        doubleExpDelay = data["doubleExpDelay"]?.asLong ?: 0L
+        joinedMonastery = data["joinedMonastery"]?.asBoolean ?: false
+
+        val rp = data["readPlaques"]?.asJsonArray
+        if (rp != null) {
+            for (i in 0 until rp.size()) {
+                readPlaques[i] = rp[i].asBoolean
+            }
         }
-        forgingUses = data["forgingUses"].toString().toInt()
-        ectoCharges = data["ectoCharges"].toString().toInt()
-        dropDelay = data["dropDelay"].toString().toLong()
-        val ad = data["abyssData"] as JSONArray
-        for (i in 0 until ad.size) {
-            abyssData[i] = ad[i] as Boolean
+
+        forgingUses = data["forgingUses"]?.asInt ?: 0
+        ectoCharges = data["ectoCharges"]?.asInt ?: 0
+        dropDelay = data["dropDelay"]?.asLong ?: 0L
+
+        val ad = data["abyssData"]?.asJsonArray
+        if (ad != null) {
+            for (i in 0 until ad.size()) {
+                abyssData[i] = ad[i].asBoolean
+            }
         }
-        val rd = data["rcDecays"] as JSONArray
-        for (i in 0 until rd.size) {
-            rcDecays[i] = rd[i].toString().toInt()
+
+        val rd = data["rcDecays"]?.asJsonArray
+        if (rd != null) {
+            for (i in 0 until rd.size()) {
+                rcDecays[i] = rd[i].asInt
+            }
         }
-        disableDeathScreen = data["disableDeathScreen"] as Boolean
-        playerTestStage = data["playerTestStage"].toString().toInt()
-        charmingDelay = data["charmingDelay"].toString().toLong()
-        val tl = data["travelLogs"] as JSONArray
-        for (i in 0 until tl.size) {
-            travelLogs[i] = tl[i] as Boolean
+
+        disableDeathScreen = data["disableDeathScreen"]?.asBoolean ?: false
+        playerTestStage = data["playerTestStage"]?.asInt ?: 0
+        charmingDelay = data["charmingDelay"]?.asLong ?: 0L
+
+        val tl = data["travelLogs"]?.asJsonArray
+        if (tl != null) {
+            for (i in 0 until tl.size()) {
+                travelLogs[i] = tl[i].asBoolean
+            }
         }
-        val gb = data["godBooks"] as JSONArray
-        for (i in 0 until gb.size) {
-            godBooks[i] = gb[i] as Boolean
+
+        val gb = data["godBooks"]?.asJsonArray
+        if (gb != null) {
+            for (i in 0 until gb.size()) {
+                godBooks[i] = gb[i].asBoolean
+            }
         }
-        disableNews = data["disableNews"] as Boolean
-        val gp = data["godPages"] as JSONArray
-        for (i in 0 until gp.size) {
-            godPages[i] = gp[i] as Boolean
+
+        disableNews = data["disableNews"]?.asBoolean ?: false
+
+        val gp = data["godPages"]?.asJsonArray
+        if (gp != null) {
+            for (i in 0 until gp.size()) {
+                godPages[i] = gp[i].asBoolean
+            }
         }
-        overChargeDelay = data["overChargeDelay"].toString().toLong()
-        val bc = data["bossCounters"] as JSONArray
-        for (i in 0 until bc.size) {
-            bossCounters[i] = bc[i].toString().toInt()
+
+        overChargeDelay = data["overChargeDelay"]?.asLong ?: 0L
+
+        val bc = data["bossCounters"]?.asJsonArray
+        if (bc != null) {
+            for (i in 0 until bc.size()) {
+                bossCounters[i] = bc[i].asInt
+            }
         }
-        barrowsLoots = data["barrowsLoots"].toString().toInt()
-        lootShareDelay = data["lootShareDelay"].toString().toLong()
-        lootSharePoints = data["lootSharePoints"].toString().toInt()
-        doubleExp = data["doubleExp"].toString().toLong()
-        globalTeleporterDelay = data["globalTeleporterDelay"].toString().toLong()
-        starSpriteDelay = data["starSpriteDelay"].toString().toLong()
-        runReplenishDelay = data["runReplenishDelay"].toString().toLong()
-        runReplenishCharges = data["runReplenishCharges"].toString().toInt()
-        lowAlchemyCharges = data["lowAlchemyCharges"].toString().toInt()
-        lowAlchemyDelay = data["lowAlchemyDelay"].toString().toLong()
-        magicSkillCapeDelay = data["magicSkillCapeDelay"].toString().toLong()
-        hunterCapeDelay = data["hunterCapeDelay"].toString().toLong()
-        hunterCapeCharges = data["hunterCapeCharges"].toString().toInt()
-        taskAmount = data["taskAmount"].toString().toInt()
-        taskPoints = data["taskPoints"].toString().toInt()
-        macroDisabled = data["macroDisabled"] as Boolean
+
+        barrowsLoots = data["barrowsLoots"]?.asInt ?: 0
+        lootShareDelay = data["lootShareDelay"]?.asLong ?: 0L
+        lootSharePoints = data["lootSharePoints"]?.asInt ?: 0
+        doubleExp = data["doubleExp"]?.asLong ?: 0L
+        globalTeleporterDelay = data["globalTeleporterDelay"]?.asLong ?: 0L
+        starSpriteDelay = data["starSpriteDelay"]?.asLong ?: 0L
+        runReplenishDelay = data["runReplenishDelay"]?.asLong ?: 0L
+        runReplenishCharges = data["runReplenishCharges"]?.asInt ?: 0
+        lowAlchemyCharges = data["lowAlchemyCharges"]?.asInt ?: 0
+        lowAlchemyDelay = data["lowAlchemyDelay"]?.asLong ?: 0L
+        magicSkillCapeDelay = data["magicSkillCapeDelay"]?.asLong ?: 0L
+        hunterCapeDelay = data["hunterCapeDelay"]?.asLong ?: 0L
+        hunterCapeCharges = data["hunterCapeCharges"]?.asInt ?: 0
+        taskAmount = data["taskAmount"]?.asInt ?: 0
+        taskPoints = data["taskPoints"]?.asInt ?: 0
+        macroDisabled = data["macroDisabled"]?.asBoolean ?: false
     }
 
     fun setSavedLocation(

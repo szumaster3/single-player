@@ -1,6 +1,7 @@
 package content.global.skill.construction.decoration.costumeroom
 
-import org.json.simple.JSONObject
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
 
 class StorageContainer {
     private val stored: MutableMap<Storable.Type, MutableList<Int>> = mutableMapOf()
@@ -60,21 +61,26 @@ class StorageContainer {
         stored.getOrPut(type) { mutableListOf() }.add(id)
     }
 
-    fun toJson(): JSONObject {
-        val obj = JSONObject()
+    fun toJson(): JsonObject {
+        val obj = JsonObject()
         for ((type, list) in stored) {
-            obj[type.name.lowercase()] = list
+            val jsonArray = JsonArray()
+            for (item in list) {
+                jsonArray.add(item)
+            }
+            obj.add(type.name.lowercase(), jsonArray)
         }
         return obj
     }
 
     companion object {
-        fun fromJson(json: JSONObject): StorageContainer {
+        fun fromJson(json: JsonObject): StorageContainer {
             val container = StorageContainer()
-            for (key in json.keys) {
-                val type = Storable.Type.valueOf((key as String).uppercase())
-                val list = json[key] as List<Long>
-                container.stored[type] = list.map { it.toInt() }.toMutableList()
+            for (key in json.keySet()) {
+                val type = Storable.Type.valueOf(key.uppercase())
+                val jsonArray = json.getAsJsonArray(key)
+                val list = jsonArray.map { it.asLong.toInt() }.toMutableList()
+                container.stored[type] = list
             }
             return container
         }

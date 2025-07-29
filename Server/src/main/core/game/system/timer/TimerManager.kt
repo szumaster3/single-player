@@ -1,12 +1,12 @@
 package core.game.system.timer
 
+import com.google.gson.JsonObject
 import core.api.getWorldTicks
 import core.api.log
 import core.api.registerTimer
 import core.game.node.entity.Entity
 import core.game.node.entity.player.Player
 import core.tools.Log
-import org.json.simple.JSONObject
 
 /**
  * Manages timers associated with an [Entity], handling their lifecycle and execution.
@@ -100,18 +100,18 @@ class TimerManager(
      *
      * @param root JSON object to store timers in.
      */
-    fun saveTimers(root: JSONObject) {
+    fun saveTimers(root: JsonObject) {
         for (timer in activeTimers) {
             if (timer !is PersistTimer) continue
-            val obj = JSONObject()
+            val obj = JsonObject()
             timer.save(obj, entity)
-            root[timer.identifier] = obj
+            root.add(timer.identifier, obj)
         }
         for (timer in newTimers) {
             if (timer !is PersistTimer) continue
-            val obj = JSONObject()
+            val obj = JsonObject()
             timer.save(obj, entity)
-            root[timer.identifier] = obj
+            root.add(timer.identifier, obj)
         }
     }
 
@@ -120,16 +120,17 @@ class TimerManager(
      *
      * @param root JSON object containing timer data.
      */
-    fun parseTimers(root: JSONObject) {
-        for ((identifier, dataObj) in root) {
-            val data = dataObj as JSONObject
-            val timer = TimerRegistry.getTimerInstance(identifier.toString()) as? PersistTimer
+    fun parseTimers(root: JsonObject) {
+        for ((identifier, dataElement) in root.entrySet()) {
+            if (!dataElement.isJsonObject) continue
+            val data = dataElement.asJsonObject
+            val timer = TimerRegistry.getTimerInstance(identifier) as? PersistTimer
             if (timer == null) {
                 log(this::class.java, Log.ERR, "No persistent timer found for identifier $identifier.")
                 continue
             }
             timer.parse(data, entity)
-            registerTimer(entity, timer)
+            registerTimer(timer)
         }
     }
 

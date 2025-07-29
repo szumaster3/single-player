@@ -1,12 +1,12 @@
 package core.game.node.entity.player.link.diary;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import core.cache.def.impl.NPCDefinition;
 import core.game.component.Component;
 import core.game.diary.DiaryLevel;
 import core.game.node.entity.player.Player;
 import core.game.node.item.Item;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import org.rs.consts.Components;
 
 import java.util.ArrayList;
@@ -16,31 +16,15 @@ import java.util.Arrays;
  * The Diary.
  */
 public class Diary {
-
-    /**
-     * The diary component.
-     */
     public static final int DIARY_COMPONENT = Components.QUESTJOURNAL_SCROLL_275;
-
-    /**
-     * The constant completedLevels.
-     */
     public static final ArrayList<Integer> completedLevels = new ArrayList<Integer>();
-
     private static final String RED = "<col=8A0808>";
-
     private static final String BLUE = "<col=08088A>";
-
     private static final String YELLOW = "<col=F7FE2E>";
-
     private static final String GREEN = "<col=3ADF00>";
-
     private final DiaryType type;
-
     private final boolean[] levelStarted = new boolean[3];
-
     private final boolean[] levelRewarded = new boolean[3];
-
     private final boolean[][] taskCompleted;
 
     /**
@@ -109,31 +93,30 @@ public class Diary {
         }
     }
 
-    /**
-     * Parse.
-     *
-     * @param data the data
-     */
-    public void parse(JSONObject data) {
-        JSONArray startedArray = (JSONArray) data.get("startedLevels");
+    public void parse(JsonObject data) {
+        JsonArray startedArray = data.getAsJsonArray("startedLevels");
         for (int i = 0; i < startedArray.size(); i++) {
-            levelStarted[i] = (boolean) startedArray.get(i);
+            levelStarted[i] = startedArray.get(i).getAsBoolean();
         }
-        JSONArray completedArray = (JSONArray) data.get("completedLevels");
+
+        JsonArray completedArray = data.getAsJsonArray("completedLevels");
         for (int i = 0; i < completedArray.size(); i++) {
-            JSONArray level = (JSONArray) completedArray.get(i);
+            JsonArray level = completedArray.get(i).getAsJsonArray();
             boolean completed = true;
             for (int j = 0; j < level.size(); j++) {
-                taskCompleted[i][j] = (boolean) level.get(j);
+                taskCompleted[i][j] = level.get(j).getAsBoolean();
                 if (!taskCompleted[i][j]) {
-                    completed = !completed;
+                    completed = false;
                 }
+            }
+            if (completed) {
                 completedLevels.add(i);
             }
         }
-        JSONArray rewardedArray = (JSONArray) data.get("rewardedLevels");
+
+        JsonArray rewardedArray = data.getAsJsonArray("rewardedLevels");
         for (int i = 0; i < rewardedArray.size(); i++) {
-            levelRewarded[i] = (boolean) rewardedArray.get(i);
+            levelRewarded[i] = rewardedArray.get(i).getAsBoolean();
         }
     }
 

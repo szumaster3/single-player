@@ -13,19 +13,12 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class UrVassDialogue(player: Player? = null) : Dialogue(player) {
-    
+
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             START_DIALOGUE -> npcl(FaceAnim.OLD_NORMAL, "Ah. ${player.username}, I presume?").also { stage++ }
             1 -> player("That's me.").also { stage++ }
-            2 ->
-                npcl(
-                    FaceAnim.OLD_NORMAL,
-                    "Pleased to meet you. On behalf of the Dorgeshuun Council, I should say how grateful we are that you saved our city.",
-                ).also {
-                    stage =
-                        END_DIALOGUE
-                }
+            2 -> npcl(FaceAnim.OLD_NORMAL, "Pleased to meet you. On behalf of the Dorgeshuun Council, I should say how grateful we are that you saved our city.").also { stage = END_DIALOGUE }
         }
         return true
     }

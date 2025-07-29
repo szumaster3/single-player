@@ -1,12 +1,12 @@
 package content.global.skill.farming.timers
 
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
 import content.global.skill.farming.*
 import core.game.node.entity.Entity
 import core.game.node.entity.player.Player
 import core.game.system.timer.PersistTimer
 import core.tools.secondsToTicks
-import org.json.simple.JSONArray
-import org.json.simple.JSONObject
 import java.time.LocalTime
 import java.util.concurrent.TimeUnit
 
@@ -95,52 +95,54 @@ class CropGrowth : PersistTimer(500, "farming:crops", isSoft = true) {
     fun getPatches(): MutableCollection<Patch> = patchMap.values
 
     override fun save(
-        root: JSONObject,
+        root: JsonObject,
         entity: Entity,
     ) {
-        val patches = JSONArray()
+        val patches = JsonArray()
         for ((key, patch) in patchMap) {
-            val p = JSONObject()
-            p["patch-ordinal"] = key.ordinal
-            p["patch-plantable-ordinal"] = patch.plantable?.ordinal ?: -1
-            p["patch-watered"] = patch.isWatered
-            p["patch-diseased"] = patch.isDiseased
-            p["patch-dead"] = patch.isDead
-            p["patch-stage"] = patch.currentGrowthStage
-            p["patch-state"] = patch.getCurrentState()
-            p["patch-nextGrowth"] = patch.nextGrowth
-            p["patch-harvestAmt"] = patch.harvestAmt
-            p["patch-checkHealth"] = patch.isCheckHealth
-            p["patch-compost"] = patch.compost.ordinal
-            p["patch-paidprot"] = patch.protectionPaid
-            p["patch-croplives"] = patch.cropLives
+            val p = JsonObject()
+            p.addProperty("patch-ordinal", key.ordinal)
+            p.addProperty("patch-plantable-ordinal", patch.plantable?.ordinal ?: -1)
+            p.addProperty("patch-watered", patch.isWatered)
+            p.addProperty("patch-diseased", patch.isDiseased)
+            p.addProperty("patch-dead", patch.isDead)
+            p.addProperty("patch-stage", patch.currentGrowthStage)
+            p.addProperty("patch-state", patch.getCurrentState())
+            p.addProperty("patch-nextGrowth", patch.nextGrowth)
+            p.addProperty("patch-harvestAmt", patch.harvestAmt)
+            p.addProperty("patch-checkHealth", patch.isCheckHealth)
+            p.addProperty("patch-compost", patch.compost.ordinal)
+            p.addProperty("patch-paidprot", patch.protectionPaid)
+            p.addProperty("patch-croplives", patch.cropLives)
             patches.add(p)
         }
-        root["patches"] = patches
+        root.add("patches", patches)
     }
 
     override fun parse(
-        root: JSONObject,
+        root: JsonObject,
         entity: Entity,
     ) {
-        val data = root["patches"] as JSONArray
+        val data = root.getAsJsonArray("patches") ?: return
         for (d in data) {
-            val p = d as JSONObject
-            val patchOrdinal = p["patch-ordinal"].toString().toInt()
-            val patchPlantableOrdinal = p["patch-plantable-ordinal"].toString().toInt()
-            val patchWatered = p["patch-watered"] as Boolean
-            val patchDiseased = p["patch-diseased"] as Boolean
-            val patchDead = p["patch-dead"] as Boolean
-            val patchStage = p["patch-stage"].toString().toInt()
-            val nextGrowth = p["patch-nextGrowth"].toString().toLong()
-            val harvestAmt = (p["patch-harvestAmt"] ?: 0).toString().toInt()
-            val checkHealth = p["patch-checkHealth"] as Boolean
-            val savedState = p["patch-state"].toString().toInt()
-            val compostOrdinal = p["patch-compost"].toString().toInt()
-            val protectionPaid = p["patch-paidprot"] as Boolean
-            val cropLives = if (p["patch-croplives"] != null) p["patch-croplives"].toString().toInt() else 3
+            val p = d.asJsonObject
+            val patchOrdinal = p.get("patch-ordinal").asInt
+            val patchPlantableOrdinal = p.get("patch-plantable-ordinal").asInt
+            val patchWatered = p.get("patch-watered").asBoolean
+            val patchDiseased = p.get("patch-diseased").asBoolean
+            val patchDead = p.get("patch-dead").asBoolean
+            val patchStage = p.get("patch-stage").asInt
+            val nextGrowth = p.get("patch-nextGrowth").asLong
+            val harvestAmt = if (p.has("patch-harvestAmt")) p.get("patch-harvestAmt").asInt else 0
+            val checkHealth = p.get("patch-checkHealth").asBoolean
+            val savedState = p.get("patch-state").asInt
+            val compostOrdinal = p.get("patch-compost").asInt
+            val protectionPaid = p.get("patch-paidprot").asBoolean
+            val cropLives = if (p.has("patch-croplives")) p.get("patch-croplives").asInt else 3
+
             val fPatch = FarmingPatch.values()[patchOrdinal]
             val plantable = if (patchPlantableOrdinal != -1) Plantable.values()[patchPlantableOrdinal] else null
+
             val patch = Patch(
                 (entity as? Player)!!,
                 fPatch,
@@ -159,7 +161,7 @@ class CropGrowth : PersistTimer(500, "farming:crops", isSoft = true) {
             patch.protectionPaid = protectionPaid
             patch.setCurrentState(savedState)
 
-            if ((savedState - (patch?.plantable?.value ?: 0)) > patch.currentGrowthStage) {
+            if ((savedState - (patch.plantable?.value ?: 0)) > patch.currentGrowthStage) {
                 patch.setCurrentState(savedState)
             } else {
                 patch.setCurrentState((patch.plantable?.value ?: 0) + patch.currentGrowthStage)

@@ -1,8 +1,8 @@
 package core.game.node.entity.player.link;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import core.game.node.item.Item;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
 import java.nio.ByteBuffer;
 import java.util.Arrays;
@@ -45,33 +45,43 @@ public final class QuestData {
      *
      * @param data the data
      */
-    public void parse(JSONObject data) {
-        JSONArray dl = (JSONArray) data.get("draynorLever");
+    public void parse(JsonObject data) {
+        JsonArray dl = data.getAsJsonArray("draynorLever");
         for (int i = 0; i < dl.size(); i++) {
-            draynorLever[i] = (boolean) dl.get(i);
+            draynorLever[i] = dl.get(i).getAsBoolean();
         }
-        JSONArray drs = (JSONArray) data.get("dragonSlayer");
+
+        JsonArray drs = data.getAsJsonArray("dragonSlayer");
         for (int i = 0; i < drs.size(); i++) {
-            dragonSlayer[i] = (boolean) drs.get(i);
+            dragonSlayer[i] = drs.get(i).getAsBoolean();
         }
-        dragonSlayerPlanks = Integer.parseInt(data.get("dragonSlayerPlanks").toString());
-        JSONArray des = (JSONArray) data.get("demonSlayer");
+
+        dragonSlayerPlanks = data.get("dragonSlayerPlanks").getAsInt();
+
+        JsonArray des = data.getAsJsonArray("demonSlayer");
         for (int i = 0; i < des.size(); i++) {
-            demonSlayer[i] = (boolean) des.get(i);
+            demonSlayer[i] = des.get(i).getAsBoolean();
         }
-        JSONArray ca = (JSONArray) data.get("cooksAssistant");
+
+        JsonArray ca = data.getAsJsonArray("cooksAssistant");
         for (int i = 0; i < ca.size(); i++) {
-            cooksAssistant[i] = (boolean) ca.get(i);
+            cooksAssistant[i] = ca.get(i).getAsBoolean();
         }
-        gardenerAttack = (boolean) data.get("gardenerAttack");
-        talkedDrezel = (boolean) data.get("talkedDrezel");
-        JSONArray dtn = (JSONArray) data.get("desertTreasureNode");
+
+        gardenerAttack = data.get("gardenerAttack").getAsBoolean();
+        talkedDrezel = data.get("talkedDrezel").getAsBoolean();
+
+        JsonArray dtn = data.getAsJsonArray("desertTreasureNode");
         for (int i = 0; i < dtn.size(); i++) {
-            JSONObject item = (JSONObject) dtn.get(i);
-            desertTreasure[i] = new Item(Integer.parseInt(item.get("id").toString()), Integer.parseInt(item.get("amount").toString()));
+            JsonObject itemObj = dtn.get(i).getAsJsonObject();
+            desertTreasure[i] = new Item(
+                    itemObj.get("id").getAsInt(),
+                    itemObj.get("amount").getAsInt()
+            );
         }
-        witchsExperimentKilled = (boolean) data.get("witchsExperimentKilled");
-        witchsExperimentStage = Integer.parseInt(data.get("witchsExperimentStage").toString());
+
+        witchsExperimentKilled = data.get("witchsExperimentKilled").getAsBoolean();
+        witchsExperimentStage = data.get("witchsExperimentStage").getAsInt();
     }
 
     private final void saveDesertTreasureNode(ByteBuffer buffer) {

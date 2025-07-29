@@ -1,5 +1,6 @@
 package content.region.misthalin.varrock.dialogue
 
+import com.google.gson.JsonObject
 import core.ServerStore
 import core.ServerStore.Companion.getInt
 import core.api.*
@@ -16,7 +17,6 @@ import core.game.node.entity.player.link.quest.Quest
 import core.game.node.item.Item
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.json.simple.JSONObject
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
@@ -392,7 +392,7 @@ class ZaffDialogue : OptionHandler() {
 
                             if (removeItem(player, Item(Items.COINS_995, coinage), Container.INVENTORY)) {
                                 addItem(player, Items.BATTLESTAFF_1392, amt)
-                                getStoreFile()[player.username.lowercase()] = amt + ammount
+                                getStoreFile().addProperty(player.username.lowercase(), amt + ammount)
                             }
                         }
                     }
@@ -421,6 +421,6 @@ class ZaffDialogue : OptionHandler() {
     companion object {
         val BEACON_RING = Item(Items.BEACON_RING_11014)
 
-        fun getStoreFile(): JSONObject = ServerStore.getArchive("daily-zaff")
+        fun getStoreFile(): JsonObject = ServerStore.getArchive("daily-zaff")
     }
 }

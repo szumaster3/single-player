@@ -1,5 +1,6 @@
 package content.region.wilderness.plugin
 
+import com.google.gson.JsonObject
 import core.ServerStore.Companion.getArchive
 import core.api.hasRequirement
 import core.api.lock
@@ -27,7 +28,6 @@ import core.plugin.Plugin
 import core.tools.Log
 import core.tools.RandomFunction
 import core.tools.SystemLogger
-import org.json.simple.JSONObject
 import org.rs.consts.Quests
 import java.util.*
 
@@ -260,7 +260,7 @@ class ChaosTunnelPlugin :
 
         lock(player, 10)
         visualize(player, -1, org.rs.consts.Graphics.CURSE_IMPACT_110)
-        storeFile[usernameKey] = true
+        storeFile.addProperty(usernameKey, true)
         ActivityManager.start(player, "Bork cutscene", false)
     }
 
@@ -309,7 +309,7 @@ class ChaosTunnelPlugin :
 
     companion object {
         @JvmStatic
-        fun getBorkStoreFile(): JSONObject = getArchive("daily-bork-killed")
+        fun getBorkStoreFile(): JsonObject = getArchive("daily-bork-killed")
 
         private val ENTRANCE_DATA =
             arrayOf(

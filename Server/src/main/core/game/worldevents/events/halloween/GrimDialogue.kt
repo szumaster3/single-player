@@ -356,8 +356,11 @@ class GrimDialogue(player: Player? = null) : Dialogue(player) {
     private fun getCandyTotals(player: Player): Int =
         ServerStore.getArchive("hween2021-candies").getInt(player.username.lowercase())
 
-    private fun addToCandyTotal(player: Player, amount: Int, ) {
-        ServerStore.getArchive("hween2021-candies")[player.username.lowercase()] = getCandyTotals(player) + amount
+    private fun addToCandyTotal(player: Player, amount: Int) {
+        val archive = ServerStore.getArchive("hween2021-candies")
+        val key = player.username.lowercase()
+        val current = if (archive.has(key)) archive.get(key).asInt else 0
+        archive.addProperty(key, current + amount)
     }
 
     override fun getIds(): IntArray = intArrayOf(6390)

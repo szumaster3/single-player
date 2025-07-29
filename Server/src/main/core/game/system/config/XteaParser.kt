@@ -1,11 +1,10 @@
 package core.game.system.config
 
+import com.google.gson.Gson
+import com.google.gson.JsonObject
 import core.ServerConstants
 import core.api.log
 import core.tools.Log
-import org.json.simple.JSONArray
-import org.json.simple.JSONObject
-import org.json.simple.parser.JSONParser
 import java.io.FileReader
 
 class XteaParser {
@@ -16,22 +15,24 @@ class XteaParser {
         fun getRegionXTEA(regionId: Int): IntArray = REGION_XTEA.getOrDefault(regionId, DEFAULT_REGION_KEYS)
     }
 
-    val parser = JSONParser()
-    var reader: FileReader? = null
+    private val gson = Gson()
 
     fun load() {
         var count = 0
-        reader = FileReader(ServerConstants.CONFIG_PATH + "xteas.json")
-        val obj = parser.parse(reader) as JSONObject
-        val configList = obj["xteas"] as JSONArray
-        for (config in configList) {
-            val e = config as JSONObject
-            val id = e["regionId"].toString().toInt()
-            val keys = e["keys"].toString().split(",").map(String::toInt)
-            REGION_XTEA[id] = intArrayOf(keys[0], keys[1], keys[2], keys[3])
-            count++
+        FileReader(ServerConstants.CONFIG_PATH + "xteas.json").use { reader ->
+            val obj = gson.fromJson(reader, JsonObject::class.java)
+            val configList = obj.getAsJsonArray("xteas") ?: return@use
+            for (configElement in configList) {
+                val e = configElement.asJsonObject
+                val id = e.get("regionId")?.asInt ?: continue
+                val keysString = e.get("keys")?.asString ?: continue
+                val keys = keysString.split(",").map { it.trim().toInt() }
+                if (keys.size >= 4) {
+                    REGION_XTEA[id] = intArrayOf(keys[0], keys[1], keys[2], keys[3])
+                    count++
+                }
+            }
         }
-
         log(this::class.java, Log.DEBUG, "Parsed $count region keys.")
     }
 }

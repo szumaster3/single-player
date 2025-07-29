@@ -1,11 +1,11 @@
 package core.integration.grafana
 
+import com.google.gson.JsonObject
 import core.ServerConstants
 import core.api.StartupListener
 import core.game.bots.AIRepository
 import core.integration.mysql.SQLiteProvider
 import kotlinx.coroutines.Job
-import org.json.simple.JSONObject
 import java.util.*
 
 class Grafana : StartupListener {
@@ -98,13 +98,13 @@ class Grafana : StartupListener {
                     with(it.prepareStatement(INSERT_TOP_PULSES)) {
                         for (i in 0 until 50) {
                             val topSorted = cycleData[i].pulseTimes.sortedByDescending { entry -> entry.value }
-                            val rootObj = JSONObject()
-                            val contentObj = JSONObject()
+                            val rootObj = JsonObject()
+                            val contentObj = JsonObject()
                             for (j in 0 until 5) {
-                                contentObj[topSorted[j].key] = topSorted[j].value
+                                contentObj.addProperty(topSorted[j].key, topSorted[j].value)
                             }
-                            rootObj["pulses"] = contentObj
-                            setString(1, rootObj.toJSONString())
+                            rootObj.add("pulses", contentObj)
+                            setString(1, rootObj.toString())
                             setInt(2, cycleData[i].timeSecs)
                             execute()
                         }
@@ -113,18 +113,19 @@ class Grafana : StartupListener {
                     with(it.prepareStatement(INSERT_PULSE_COUNT)) {
                         for (i in 0 until 50) {
                             val topSorted = cycleData[i].pulseCounts.sortedByDescending { entry -> entry.value }
-                            val rootObj = JSONObject()
-                            val contentObj = JSONObject()
+                            val rootObj = JsonObject()
+                            val contentObj = JsonObject()
                             for (j in 0 until 5) {
-                                contentObj[topSorted[j].key] = topSorted[j].value
+                                contentObj.addProperty(topSorted[j].key, topSorted[j].value)
                             }
-                            rootObj["pulses"] = contentObj
-                            setString(1, rootObj.toJSONString())
+                            rootObj.add("pulses", contentObj)
+                            setString(1, rootObj.toString())
                             setInt(2, cycleData[i].timeSecs)
                             execute()
                         }
                     }
 
+                    // Insert bot count data
                     with(it.prepareStatement(INSERT_BOT_COUNT)) {
                         for (i in 0 until 50) {
                             setInt(1, cycleData[i].botCount)
@@ -133,6 +134,7 @@ class Grafana : StartupListener {
                         }
                     }
 
+                    // Insert tick measurement data
                     with(it.prepareStatement(INSERT_TICK_MEAS)) {
                         for (i in 0 until 50) {
                             setInt(1, cycleData[i].botPulseTime)
@@ -144,13 +146,13 @@ class Grafana : StartupListener {
                             setInt(
                                 7,
                                 cycleData[i].totalTickTime -
-                                    (
-                                        cycleData[i].botPulseTime + cycleData[i].otherPulseTime +
-                                            cycleData[i].npcTickTime +
-                                            cycleData[i].playerTickTime +
-                                            cycleData[i].playerRenderTime +
-                                            cycleData[i].packetProcessTime
-                                    ),
+                                        (
+                                                cycleData[i].botPulseTime + cycleData[i].otherPulseTime +
+                                                        cycleData[i].npcTickTime +
+                                                        cycleData[i].playerTickTime +
+                                                        cycleData[i].playerRenderTime +
+                                                        cycleData[i].packetProcessTime
+                                                ),
                             )
                             setInt(8, cycleData[i].timeSecs)
                             execute()

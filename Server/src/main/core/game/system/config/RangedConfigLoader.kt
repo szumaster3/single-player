@@ -1,5 +1,7 @@
 package core.game.system.config
 
+import com.google.gson.Gson
+import com.google.gson.JsonArray
 import core.ServerConstants
 import core.api.log
 import core.cache.def.impl.ItemDefinition
@@ -12,79 +14,74 @@ import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
 import core.tools.Log
-import org.json.simple.JSONArray
-import org.json.simple.JSONObject
-import org.json.simple.parser.JSONParser
 import java.io.FileReader
 
 class RangedConfigLoader {
-    val parser = JSONParser()
-    var reader: FileReader? = null
+    private val gson = Gson()
 
     fun load() {
         var count = 0
-        reader = FileReader(ServerConstants.CONFIG_PATH + "ammo_configs.json")
-        var configs = parser.parse(reader) as JSONArray
-        for (entry in configs) {
-            val e = entry as JSONObject
-            var dbowgfx: Graphics? = null
-            val projectile = e["projectile"].toString().split(",")
-            if (e["darkbow_graphic"].toString().isNotBlank()) {
-                val darkbow = e["darkbow_graphic"].toString().split(",")
-                dbowgfx =
-                    Graphics(
-                        Integer.parseInt(darkbow[0]),
-                        Integer.parseInt(darkbow[1]),
-                    )
-            }
-            val gfx = e["start_graphic"].toString().split(",")
-            val ammo =
-                Ammunition(
-                    Integer.parseInt(e["itemId"] as String),
-                    Graphics(
-                        Integer.parseInt(gfx[0]),
-                        Integer.parseInt(gfx[1]),
-                    ),
+
+        FileReader(ServerConstants.CONFIG_PATH + "ammo_configs.json").use { reader ->
+            val configs = gson.fromJson(reader, JsonArray::class.java)
+            for (entry in configs) {
+                val e = entry.asJsonObject
+
+                var dbowgfx: Graphics? = null
+
+                val projectile = e.get("projectile").asString.split(",")
+                if (e.get("darkbow_graphic")?.asString?.isNotBlank() == true) {
+                    val darkbow = e.get("darkbow_graphic").asString.split(",")
+                    dbowgfx = Graphics(darkbow[0].toInt(), darkbow[1].toInt())
+                }
+
+                val gfx = e.get("start_graphic").asString.split(",")
+                val ammo = Ammunition(
+                    e.get("itemId").asInt,
+                    Graphics(gfx[0].toInt(), gfx[1].toInt()),
                     dbowgfx,
                     Projectile.create(
                         NPC(0, Location(0, 0, 0)),
                         NPC(0, Location(0, 0, 0)),
-                        Integer.parseInt(projectile[0]),
-                        Integer.parseInt(projectile[1]),
-                        Integer.parseInt(projectile[2]),
-                        Integer.parseInt(projectile[3]),
-                        Integer.parseInt(projectile[4]),
-                        Integer.parseInt(projectile[5]),
-                        Integer.parseInt(projectile[6]),
+                        projectile[0].toInt(),
+                        projectile[1].toInt(),
+                        projectile[2].toInt(),
+                        projectile[3].toInt(),
+                        projectile[4].toInt(),
+                        projectile[5].toInt(),
+                        projectile[6].toInt()
                     ),
-                    Integer.parseInt(e["poison_damage"].toString()),
+                    e.get("poison_damage").asInt
                 )
-            val effect = BoltEffect.forId(Integer.parseInt(e["itemId"].toString()))
-            if (effect != null) {
-                ammo.effect = effect
+
+                val effect = BoltEffect.forId(e.get("itemId").asInt)
+                if (effect != null) {
+                    ammo.effect = effect
+                }
+                Ammunition.getAmmunition()[e.get("itemId").asInt] = ammo
+                count++
             }
-            Ammunition.getAmmunition()[Integer.parseInt(e["itemId"].toString())] = ammo
-            count++
         }
 
         count = 0
-        reader = FileReader(ServerConstants.CONFIG_PATH + "ranged_weapon_configs.json")
-        configs = parser.parse(reader) as JSONArray
-        for (entry in configs) {
-            val e = entry as JSONObject
-            val id = Integer.parseInt(e["itemId"].toString())
-            val weapon =
-                RangeWeapon(
+        FileReader(ServerConstants.CONFIG_PATH + "ranged_weapon_configs.json").use { reader ->
+            val configs = gson.fromJson(reader, JsonArray::class.java)
+            for (entry in configs) {
+                val e = entry.asJsonObject
+                val id = e.get("itemId").asInt
+
+                val weapon = RangeWeapon(
                     id,
-                    Animation(Integer.parseInt(e["animation"].toString())),
+                    Animation(e.get("animation").asInt),
                     ItemDefinition.forId(id).getConfiguration("attack_speed", 4),
-                    Integer.parseInt(e["ammo_slot"].toString()),
-                    Integer.parseInt(e["weapon_type"].toString()),
-                    (e["drop_ammo"].toString().toBoolean()),
-                    e["ammunition"].toString().split(",").map { Integer.parseInt(it) },
+                    e.get("ammo_slot").asInt,
+                    e.get("weapon_type").asInt,
+                    e.get("drop_ammo").asBoolean,
+                    e.get("ammunition").asString.split(",").map { it.toInt() }
                 )
-            RangeWeapon.getRangeWeapons().putIfAbsent(weapon.itemId, weapon)
-            count++
+                RangeWeapon.getRangeWeapons().putIfAbsent(id, weapon)
+                count++
+            }
         }
 
         log(this::class.java, Log.DEBUG, "Parsed $count ranged weapon configs.")

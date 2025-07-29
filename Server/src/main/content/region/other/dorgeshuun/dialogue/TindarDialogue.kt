@@ -19,19 +19,14 @@ class TindarDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
-            START_DIALOGUE ->
-                npcl(
-                    FaceAnim.OLD_NORMAL,
-                    "Creeespy frogs' legs! Get your creeeespy frogs' legs! You want some crispy frogs' legs? Just 10gp.",
-                ).also {
-                    stage++
-                }
+            START_DIALOGUE -> npcl(FaceAnim.OLD_NORMAL, "Creeespy frogs' legs! Get your creeeespy frogs' legs! You want some crispy frogs' legs? Just 10gp.").also {
+                stage++
+            }
             1 -> options("Yes please.", "No thanks.").also { stage++ }
-            2 ->
-                when (buttonId) {
-                    1 -> playerl(FaceAnim.FRIENDLY, "Yes please.").also { stage++ }
-                    2 -> playerl(FaceAnim.NEUTRAL, "No thanks.").also { stage = 4 }
-                }
+            2 -> when (buttonId) {
+                1 -> playerl(FaceAnim.FRIENDLY, "Yes please.").also { stage++ }
+                2 -> playerl(FaceAnim.NEUTRAL, "No thanks.").also { stage = 4 }
+            }
             3 -> {
                 end()
                 if (freeSlots(player) == 0) {
@@ -47,6 +42,7 @@ class TindarDialogue(player: Player? = null) : Dialogue(player) {
                     addItem(player, Items.COATED_FROGS_LEGS_10963)
                 }
             }
+
             4 -> npcl(FaceAnim.OLD_NORMAL, "Have a good day!").also { stage = END_DIALOGUE }
         }
         return true

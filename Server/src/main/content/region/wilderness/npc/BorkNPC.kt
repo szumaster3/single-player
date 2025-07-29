@@ -35,6 +35,7 @@ import core.plugin.Initializable
 import core.plugin.Plugin
 import core.tools.RandomFunction
 import org.rs.consts.NPCs
+import org.rs.consts.Regions
 
 @Initializable
 class BorkNPC : AbstractNPC {
@@ -460,7 +461,7 @@ class BorkNPC : AbstractNPC {
     }
 
     companion object {
-        private val BORK_REGION = 12374
+        private val BORK_REGION = Regions.BORK_CAVE_12374
         private val LEGION_CHATS =
             arrayOf(
                 "For Bork!",

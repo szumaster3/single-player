@@ -1,9 +1,9 @@
 package core.game.node.entity.player.link.quest;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import core.game.node.entity.player.Player;
 import core.tools.Log;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -41,13 +41,15 @@ public final class QuestRepository {
      *
      * @param questData the quest data
      */
-    public void parse(JSONObject questData) {
-        points = Integer.parseInt(questData.get("points").toString());
-        JSONArray questArray = (JSONArray) questData.get("questStages");
-        questArray.forEach(quest -> {
-            JSONObject q = (JSONObject) quest;
-            quests.put(Integer.parseInt(q.get("questId").toString()), Integer.parseInt(q.get("questStage").toString()));
-        });
+    public void parse(JsonObject questData) {
+        points = questData.get("points").getAsInt();
+        JsonArray questArray = questData.getAsJsonArray("questStages");
+        for (int i = 0; i < questArray.size(); i++) {
+            JsonObject q = questArray.get(i).getAsJsonObject();
+            int questId = q.get("questId").getAsInt();
+            int questStage = q.get("questStage").getAsInt();
+            quests.put(questId, questStage);
+        }
         syncPoints();
     }
 

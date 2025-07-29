@@ -1,11 +1,10 @@
 package content.global.activity.ttrail
 
+import com.google.gson.JsonObject
 import core.api.LoginListener
 import core.api.PersistPlayer
 import core.game.node.entity.player.Player
 import core.tools.RandomFunction
-import org.json.simple.JSONArray
-import org.json.simple.JSONObject
 import org.rs.consts.Items
 
 /**
@@ -58,65 +57,55 @@ class TreasureTrailManager :
      */
     override fun parsePlayer(
         player: Player,
-        data: JSONObject,
+        data: JsonObject,
     ) {
         val instance = getInstance(player)
-        val ttData = data["treasureTrails"] as JSONObject? ?: return
-        val cc = ttData["completedClues"] as JSONArray
-        for (i in cc.indices) {
-            instance.completedClues[i] = cc[i].toString().toInt()
+        val ttData = data.getAsJsonObject("treasureTrails") ?: return
+        val cc = ttData.getAsJsonArray("completedClues")
+        cc.forEachIndexed { i, jsonElement ->
+            instance.completedClues[i] = jsonElement.asInt
         }
-        if (ttData.containsKey("trail")) {
-            val trail = ttData["trail"] as JSONObject
-            instance.clueId = trail["clueId"].toString().toInt()
-            instance.trailLength = trail["length"].toString().toInt()
-            instance.trailStage = trail["stage"].toString().toInt()
+        if (ttData.has("trail")) {
+            val trail = ttData.getAsJsonObject("trail")
+            instance.clueId = trail.get("clueId").asInt
+            instance.trailLength = trail.get("length").asInt
+            instance.trailStage = trail.get("stage").asInt
         }
     }
 
-    /**
-     * Saves the current treasure trail state into the player data.
-     *
-     * @param player the player whose data is being saved.
-     * @param save the JSON object to write the data into.
-     */
     override fun savePlayer(
         player: Player,
-        save: JSONObject,
+        save: JsonObject,
     ) {
         val instance = getInstance(player)
-        val treasureTrailManager = JSONObject()
+        val treasureTrailManager = JsonObject()
         if (instance.hasTrail()) {
-            val trail = JSONObject()
-            trail["clueId"] = instance.clueId.toString()
-            trail["length"] = instance.trailLength.toString()
-            trail["stage"] = instance.trailStage.toString()
-            treasureTrailManager["trail"] = trail
+            val trail = JsonObject().apply {
+                addProperty("clueId", instance.clueId)
+                addProperty("length", instance.trailLength)
+                addProperty("stage", instance.trailStage)
+            }
+            treasureTrailManager.add("trail", trail)
         }
-        val completedClues = JSONArray()
+        val completedClues = com.google.gson.JsonArray()
         for (clue in instance.completedClues) {
-            completedClues.add(clue.toString())
+            completedClues.add(clue)
         }
-        treasureTrailManager["completedClues"] = completedClues
-        save["treasureTrails"] = treasureTrailManager
+        treasureTrailManager.add("completedClues", completedClues)
+        save.add("treasureTrails", treasureTrailManager)
     }
 
-    /**
-     * Parses treasure trail data from a generic JSON object.
-     *
-     * @param data the JSON object containing treasure trail data.
-     */
-    fun parse(data: JSONObject) {
-        val cc = data["completedClues"] as JSONArray
-        for (i in cc.indices) {
-            completedClues[i] = cc[i].toString().toInt()
+    fun parse(data: JsonObject) {
+        val cc = data.getAsJsonArray("completedClues")
+        cc.forEachIndexed { i, jsonElement ->
+            completedClues[i] = jsonElement.asInt
         }
 
-        if (data.containsKey("trail")) {
-            val trail = data["trail"] as JSONObject
-            clueId = trail["clueId"].toString().toInt()
-            trailLength = trail["length"].toString().toInt()
-            trailStage = trail["stage"].toString().toInt()
+        if (data.has("trail")) {
+            val trail = data.getAsJsonObject("trail")
+            clueId = trail.get("clueId").asInt
+            trailLength = trail.get("length").asInt
+            trailStage = trail.get("stage").asInt
         }
     }
 

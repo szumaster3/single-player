@@ -1,5 +1,6 @@
 package core.game.worldevents.events
 
+import com.google.gson.JsonObject
 import content.global.ame.RandomEventNPC
 import core.ServerConstants
 import core.api.*
@@ -12,7 +13,6 @@ import core.game.world.repository.Repository
 import core.tools.RandomFunction
 import core.tools.colorize
 import core.tools.minutesToTicks
-import org.json.simple.JSONObject
 import java.time.LocalDate
 import java.time.Month
 
@@ -96,17 +96,17 @@ class HolidayRandoms :
     }
 
     override fun save(
-        root: JSONObject,
+        root: JsonObject,
         entity: Entity,
     ) {
-        root["ticksRemaining"] = (nextExecution - getWorldTicks()).toString()
+        root.addProperty("ticksRemaining", (nextExecution - getWorldTicks()))
     }
 
     override fun parse(
-        root: JSONObject,
+        root: JsonObject,
         entity: Entity,
     ) {
-        runInterval = (root["ticksRemaining"]?.toString()?.toIntOrNull() ?: 0)
+        runInterval = root.get("ticksRemaining")?.asInt ?: 0
         nextExecution = getWorldTicks() + runInterval
     }
 

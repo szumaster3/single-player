@@ -1,5 +1,7 @@
 package core.game.system.config
 
+import com.google.gson.Gson
+import com.google.gson.JsonArray
 import core.ServerConstants
 import core.api.log
 import core.cache.def.impl.ItemDefinition
@@ -7,9 +9,6 @@ import core.game.node.entity.impl.Animator
 import core.game.node.entity.player.link.audio.Audio
 import core.game.world.update.flag.context.Animation
 import core.tools.Log
-import org.json.simple.JSONArray
-import org.json.simple.JSONObject
-import org.json.simple.parser.JSONParser
 import java.io.FileReader
 
 class ItemConfigParser {
@@ -59,62 +58,48 @@ class ItemConfigParser {
         const val CASTLE_WARS_TICKET_PRICE = "castle_wars_ticket_price"
     }
 
-    val parser = JSONParser()
-    var reader: FileReader? = null
+    private val gson = Gson()
 
     fun load() {
         var count = 0
-        reader = FileReader(ServerConstants.CONFIG_PATH + "item_configs.json")
-        val configList = parser.parse(reader) as JSONArray
-        for (config in configList) {
-            val e = config as JSONObject
-            val def = ItemDefinition.forId(e["id"].toString().toInt())
-            val configs = def.handlers
-            val requirements = HashMap<Int, Int>()
-            e.map {
-                if (it.value.toString().isNotEmpty() && it.value.toString() != "null") {
-                    when (it.key.toString()) {
-                        // Special cases
-                        "defence_anim" ->
-                            configs[it.key.toString()] =
-                                Animation(it.value.toString().toInt(), Animator.Priority.HIGH)
+        FileReader(ServerConstants.CONFIG_PATH + "item_configs.json").use { reader ->
+            val configList = gson.fromJson(reader, JsonArray::class.java)
+            for (element in configList) {
+                val e = element.asJsonObject
+                val id = e.get("id").asInt
+                val def = ItemDefinition.forId(id)
+                val configs = def.handlers
+                val requirements = HashMap<Int, Int>()
+
+                for ((key, value) in e.entrySet()) {
+                    val keyStr = key
+                    if (value.isJsonNull) continue
+                    val valStr = value.toString().removeSurrounding("\"")
+                    if (valStr.isEmpty() || valStr == "null") continue
+
+                    when (keyStr) {
+                        "defence_anim" -> configs[keyStr] = Animation(value.asInt, Animator.Priority.HIGH)
 
                         "requirements" -> {
-                            configs[it.key.toString()] = requirements
-                            it.value.toString().split("-").map { en ->
+                            configs[keyStr] = requirements
+                            val reqStr = value.asString
+                            reqStr.split("-").forEach { en ->
                                 val tokens = en.replace("{", "").replace("}", "").split(",")
-                                requirements.put(tokens[0].toInt(), tokens[1].toInt())
+                                if (tokens.size == 2) {
+                                    requirements[tokens[0].toInt()] = tokens[1].toInt()
+                                }
                             }
                         }
 
-                        "attack_audios" ->
-                            configs[it.key.toString()] =
-                                it.value
-                                    .toString()
-                                    .split(",")
-                                    .map { i -> Audio(i.toInt()) }
-                                    .toTypedArray()
+                        "attack_audios" -> configs[keyStr] =
+                            valStr.split(",").map { Audio(it.toInt()) }.toTypedArray()
 
-                        "attack_anims" ->
-                            configs[it.key.toString()] =
-                                it.value
-                                    .toString()
-                                    .split(",")
-                                    .map { i -> Animation(i.toInt(), Animator.Priority.HIGH) }
-                                    .toTypedArray()
+                        "attack_anims" -> configs[keyStr] =
+                            valStr.split(",").map { Animation(it.toInt(), Animator.Priority.HIGH) }.toTypedArray()
 
-                        // int arrays
-                        "absorb",
-                        "bonuses",
-                        ->
-                            configs[it.key.toString()] =
-                                it.value
-                                    .toString()
-                                    .split(",")
-                                    .map { i -> i.toInt() }
-                                    .toIntArray()
+                        "absorb", "bonuses" -> configs[keyStr] =
+                            valStr.split(",").map { it.toInt() }.toIntArray()
 
-                        // booleans
                         "fun_weapon",
                         "rare_item",
                         "bankable",
@@ -126,15 +111,12 @@ class ItemConfigParser {
                         "hat",
                         "destroy",
                         "lendable",
-                        "tradeable",
-                        -> configs[it.key.toString()] = it.value.toString().toBoolean()
+                        "tradeable" -> configs[keyStr] = value.asBoolean
 
-                        "alchemizable" -> configs[it.key.toString()] = it.value.toString().toBoolean()
+                        "alchemizable" -> configs[keyStr] = value.asBoolean
 
-                        // doubles
-                        "weight" -> configs[it.key.toString()] = it.value.toString().toDouble()
+                        "weight" -> configs[keyStr] = value.asDouble
 
-                        // ints
                         "equip_audio",
                         "point_price",
                         TOKKUL_PRICE,
@@ -154,20 +136,19 @@ class ItemConfigParser {
                         "low_alchemy",
                         "high_alchemy",
                         "grand_exchange_price",
-                        "id",
-                        -> configs[it.key.toString()] = it.value.toString().toInt()
+                        "id" -> configs[keyStr] = value.asInt
 
-                        // Strings
                         "examine",
                         "destroy_message",
-                        "name",
-                        -> configs[it.key.toString()] = it.value.toString()
+                        "name" -> configs[keyStr] = valStr
+
+                        else -> {
+                        }
                     }
                 }
+                count++
             }
-            count++
         }
-
         log(this::class.java, Log.DEBUG, "Parsed $count item configs.")
     }
 }

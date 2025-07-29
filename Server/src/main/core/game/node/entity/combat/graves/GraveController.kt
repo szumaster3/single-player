@@ -1,5 +1,7 @@
 package core.game.node.entity.combat.graves
 
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
 import content.data.GameAttributes
 import core.ServerStore
 import core.api.*
@@ -21,8 +23,6 @@ import core.game.world.map.zone.impl.WildernessZone
 import core.game.world.repository.Repository
 import core.tools.colorize
 import core.tools.secondsToTicks
-import org.json.simple.JSONArray
-import org.json.simple.JSONObject
 import org.rs.consts.*
 import java.util.Map
 import kotlin.math.min
@@ -252,44 +252,51 @@ class GraveController : PersistWorld, TickListener, InteractionListener, Command
         fun hasGraveAt(loc: Location): Boolean = activeGraves.values.toTypedArray().any { it.location == loc }
 
         fun serializeToServerStore() {
-            val archive = ServerStore.getArchive("active-graves")
-            archive.clear()
+            val archive = ServerStore.getArchive("active-graves") as JsonObject
+
+            val keysToRemove = archive.keySet().toList()
+            for (key in keysToRemove) {
+                archive.remove(key)
+            }
+
             for ((uid, grave) in activeGraves) {
-                val g = JSONObject()
-                g["ticksRemaining"] = grave.ticksRemaining
-                g["location"] = grave.location.toString()
-                g["type"] = grave.type.ordinal
-                g["username"] = grave.ownerUsername
-                val items = JSONArray()
+                val g = JsonObject()
+                g.addProperty("ticksRemaining", grave.ticksRemaining)
+                g.addProperty("location", grave.location.toString())
+                g.addProperty("type", grave.type.ordinal)
+                g.addProperty("username", grave.ownerUsername)
+
+                val items = JsonArray()
                 for (item in grave.getItems()) {
-                    val i = JSONObject()
-                    i["id"] = item.id
-                    i["amount"] = item.amount
-                    i["charge"] = item.charge
+                    val i = JsonObject()
+                    i.addProperty("id", item.id)
+                    i.addProperty("amount", item.amount)
+                    i.addProperty("charge", item.charge)
                     items.add(i)
                 }
+                g.add("items", items)
 
-                g["items"] = items
-                archive["$uid"] = g
+                archive.add(uid.toString(), g)
             }
         }
 
         fun deserializeFromServerStore() {
-            val archive = ServerStore.getArchive("active-graves")
-            for (entry in archive.entries as Set<Map.Entry<String, JSONObject>>) {
-                val g = entry.value as JSONObject
-                val uid = (entry.key as String).toInt()
-                val type = g["type"].toString().toInt()
-                val ticks = g["ticksRemaining"].toString().toInt()
-                val location = Location.fromString(g["location"].toString())
-                val username = g["username"].toString()
+            val archive = ServerStore.getArchive("active-graves") as JsonObject
+            for ((key, value) in archive.entrySet()) {
+                val g = value.asJsonObject
+                val uid = key.toInt()
+                val type = g.get("type").asInt
+                val ticks = g.get("ticksRemaining").asInt
+                val location = Location.fromString(g.get("location").asString)
+                val username = g.get("username").asString
+
+                val itemsRaw = g.getAsJsonArray("items")
                 val items = ArrayList<Item>()
-                val itemsRaw = g["items"] as JSONArray
                 for (itemRaw in itemsRaw) {
-                    val item = itemRaw as JSONObject
-                    val id = item["id"].toString().toInt()
-                    val amount = item["amount"].toString().toInt()
-                    val charge = item["charge"].toString().toInt()
+                    val item = itemRaw.asJsonObject
+                    val id = item.get("id").asInt
+                    val amount = item.get("amount").asInt
+                    val charge = item.get("charge").asInt
                     items.add(Item(id, amount, charge))
                 }
 

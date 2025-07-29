@@ -1,15 +1,17 @@
 package content.global.plugin.item.equipment.gloves;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import core.api.LoginListener;
 import core.api.PersistPlayer;
 import core.cache.def.impl.ItemDefinition;
 import core.game.node.entity.player.Player;
 import core.game.node.item.Item;
 import org.jetbrains.annotations.NotNull;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import static core.api.ContentAPIKt.setAttribute;
@@ -52,28 +54,31 @@ public class BrawlingGlovesManager implements LoginListener, PersistPlayer {
     }
 
     @Override
-    public void parsePlayer(@NotNull Player player, @NotNull JSONObject data) {
+    public void parsePlayer(@NotNull Player player, @NotNull JsonObject data) {
         BrawlingGlovesManager instance = getInstance(player);
-        if (data.containsKey("brawlingGloves")) {
-            JSONArray bgData = (JSONArray) data.get("brawlingGloves");
-            for (Object bg : bgData) {
-                JSONObject glove = (JSONObject) bg;
-                instance.registerGlove(BrawlingGloves.forIndicator(Integer.parseInt(glove.get("gloveId").toString())).id, Integer.parseInt(glove.get("charges").toString()));
+        if (data.has("brawlingGloves")) {
+            JsonArray bgData = data.getAsJsonArray("brawlingGloves");
+            for (JsonElement bg : bgData) {
+                JsonObject glove = bg.getAsJsonObject();
+                int gloveId = Integer.parseInt(glove.get("gloveId").getAsString());
+                int charges = Integer.parseInt(glove.get("charges").getAsString());
+                instance.registerGlove(BrawlingGloves.forIndicator(gloveId).id, charges);
             }
         }
     }
 
     @Override
-    public void savePlayer(@NotNull Player player, @NotNull JSONObject save) {
-        if (getInstance(player).GloveCharges.size() > 0) {
-            JSONArray brawlingGloves = new JSONArray();
-            getInstance(player).GloveCharges.entrySet().forEach(glove -> {
-                JSONObject bGlove = new JSONObject();
-                bGlove.put("gloveId", Integer.toString(BrawlingGloves.forId(glove.getKey()).indicator));
-                bGlove.put("charges", Integer.toString(glove.getValue()));
+    public void savePlayer(@NotNull Player player, @NotNull JsonObject save) {
+        BrawlingGlovesManager instance = getInstance(player);
+        if (instance.GloveCharges.size() > 0) {
+            JsonArray brawlingGloves = new JsonArray();
+            for (Map.Entry<Integer, Integer> glove : instance.GloveCharges.entrySet()) {
+                JsonObject bGlove = new JsonObject();
+                bGlove.addProperty("gloveId", Integer.toString(BrawlingGloves.forId(glove.getKey()).indicator));
+                bGlove.addProperty("charges", Integer.toString(glove.getValue()));
                 brawlingGloves.add(bGlove);
-            });
-            save.put("brawlingGloves", brawlingGloves);
+            }
+            save.add("brawlingGloves", brawlingGloves);
         }
     }
 

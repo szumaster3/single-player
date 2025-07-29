@@ -1,6 +1,8 @@
 package core.game.node.entity.player.info.login
 
 import com.google.gson.GsonBuilder
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
 import content.global.skill.summoning.familiar.BurdenBeast
 import content.global.skill.summoning.pet.Pet
 import core.ServerConstants
@@ -15,8 +17,6 @@ import core.tools.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
-import org.json.simple.JSONArray
-import org.json.simple.JSONObject
 import java.io.File
 import java.io.FileWriter
 import java.io.IOException
@@ -30,8 +30,8 @@ class PlayerSaver(val player: Player) {
         val contentHooks = ArrayList<PersistPlayer>()
     }
 
-    fun populate(): JSONObject {
-        val saveFile = JSONObject()
+    fun populate(): JsonObject {
+        val saveFile = JsonObject()
         saveCoreData(saveFile)
         saveSkills(saveFile)
         saveSettings(saveFile)
@@ -61,30 +61,22 @@ class PlayerSaver(val player: Player) {
 
     fun save() = runBlocking {
         if (!player.details.saveParsed) return@runBlocking
-        val json: String
-        if (ServerConstants.JAVA_VERSION < 11) {
-            val manager = ScriptEngineManager()
-            val scriptEngine = manager.getEngineByName("JavaScript")
-            if (scriptEngine == null) {
-                log(this::class.java, Log.ERR, "Cannot save: Failed to load ScriptEngineManager, this is a known issue on non Java-11 versions. Set your Java version to 11 to avoid further bugs!")
-                return@runBlocking
-            }
-            scriptEngine.put("jsonString", populate().toJSONString())
-            scriptEngine.eval("result = JSON.stringify(JSON.parse(jsonString), null, 2)")
-            json = scriptEngine["result"] as String
-        } else {
-            json = GsonBuilder().setPrettyPrinting().create().toJson(populate())
-        }
+
+        val gson = GsonBuilder().setPrettyPrinting().create()
+        val json = gson.toJson(populate())
 
         try {
-            if (!File("${ServerConstants.PLAYER_SAVE_PATH}${player.name}.json").exists()) {
-                File("${ServerConstants.PLAYER_SAVE_PATH}").mkdirs()
-                withContext(Dispatchers.IO) {
-                    File("${ServerConstants.PLAYER_SAVE_PATH}${player.name}.json").createNewFile()
-                }
+            val saveDir = File(ServerConstants.PLAYER_SAVE_PATH)
+            if (!saveDir.exists()) {
+                saveDir.mkdirs()
             }
+            val saveFile = File("${ServerConstants.PLAYER_SAVE_PATH}${player.name}.json")
+            if (!saveFile.exists()) {
+                saveFile.createNewFile()
+            }
+
             withContext(Dispatchers.IO) {
-                FileWriter("${ServerConstants.PLAYER_SAVE_PATH}${player.name}.json").use { file ->
+                FileWriter(saveFile).use { file ->
                     file.write(json)
                     file.flush()
                 }
@@ -94,30 +86,25 @@ class PlayerSaver(val player: Player) {
         }
     }
 
-    fun savePouches(root: JSONObject) {
+    fun savePouches(root: JsonObject) {
         player.pouchManager.save(root)
     }
 
-    fun saveHeadgear(root: JSONObject) {
+    fun saveHeadgear(root: JsonObject) {
         player.enchgearManager.save(root)
     }
 
-    fun saveBoltPouch(root: JSONObject) {
+    fun saveBoltPouch(root: JsonObject) {
         player.boltPouchManager.save(root)
     }
 
-    fun saveVersion(root: JSONObject) {
-        root["version"] = player.version
-    }
-
-    fun saveAttributes(root: JSONObject) {
+    fun saveAttributes(root: JsonObject) {
         if (player.gameAttributes.savedAttributes.isNotEmpty()) {
-            val attrs = JSONArray()
+            val attrs = JsonArray()
             for (key in player.gameAttributes.savedAttributes) {
-                val value = player.gameAttributes.attributes[key]
-                value ?: continue
+                val value = player.gameAttributes.attributes[key] ?: continue
                 val isExpirable = player.gameAttributes.keyExpirations.containsKey(key)
-                val attr = JSONObject()
+                val attr = JsonObject()
                 val type = when (value) {
                     is Int -> "int"
                     is Boolean -> "bool"
@@ -126,128 +113,130 @@ class PlayerSaver(val player: Player) {
                     is String -> "str"
                     is Byte -> "byte"
                     is Location -> "location"
-                    else -> "null".also {
+                    else -> {
                         log(
                             this::class.java,
                             Log.WARN,
                             "Invalid attribute type for key: $key in PlayerSaver.kt Line 115",
                         )
+                        "null"
                     }
                 }
-                attr["type"] = type
-                attr["key"] = key
+                attr.addProperty("type", type)
+                attr.addProperty("key", key)
                 if (value is Byte) {
                     val asString = Base64.getEncoder().encodeToString(byteArrayOf(value))
-                    attr["value"] = asString
+                    attr.addProperty("value", asString)
                 } else {
-                    attr["value"] = if (value is Boolean) value else value.toString()
+                    if (value is Boolean) {
+                        attr.addProperty("value", value)
+                    } else {
+                        attr.addProperty("value", value.toString())
+                    }
                 }
                 if (isExpirable) {
-                    attr["expirable"] = true
-                    attr["expiration-time"] = player.gameAttributes.keyExpirations[key].toString()
+                    attr.addProperty("expirable", true)
+                    attr.addProperty("expiration-time", player.gameAttributes.keyExpirations[key].toString())
                 }
                 attrs.add(attr)
             }
-            root["attributes"] = attrs
+            root.add("attributes", attrs)
         }
     }
 
-    fun saveStatManager(root: JSONObject) {
-        val statistics = JSONArray()
+    fun saveStatManager(root: JsonObject) {
+        val statistics = JsonArray()
         var index = 0
-        root["statistics"] = statistics
+        root.add("statistics", statistics)
     }
 
-    fun saveEmoteData(root: JSONObject) {
+    fun saveEmoteData(root: JsonObject) {
         if (player.emoteManager.isSaveRequired) {
-            val emoteData = JSONArray()
-            player.emoteManager.emotes.map {
+            val emoteData = JsonArray()
+            player.emoteManager.emotes.forEach {
                 emoteData.add(it.ordinal.toString())
             }
-            root["emoteData"] = emoteData
+            root.add("emoteData", emoteData)
         }
     }
 
-    fun saveIronManData(root: JSONObject) {
+    fun saveIronManData(root: JsonObject) {
         if (player.ironmanManager.mode != IronmanMode.NONE) {
-            root["ironManMode"] = player.ironmanManager.mode.ordinal.toString()
+            root.addProperty("ironManMode", player.ironmanManager.mode.ordinal.toString())
         }
     }
 
-    fun saveAchievementData(root: JSONObject) {
-        val achievementData = JSONArray()
-        player.achievementDiaryManager.diarys.map {
-            val diary = JSONObject()
-            val startedLevels = JSONArray()
-            it.levelStarted.map {
-                startedLevels.add(it)
-            }
-            diary["startedLevels"] = startedLevels
-            val completedLevels = JSONArray()
-            it.taskCompleted.map {
-                val level = JSONArray()
-                it.map {
-                    level.add(it)
-                }
+    fun saveAchievementData(root: JsonObject) {
+        val achievementData = JsonArray()
+        player.achievementDiaryManager.diarys.forEach {
+            val diary = JsonObject()
+            val startedLevels = JsonArray()
+            it.levelStarted.forEach { startedLevels.add(it) }
+            diary.add("startedLevels", startedLevels)
+
+            val completedLevels = JsonArray()
+            it.taskCompleted.forEach { levelTasks ->
+                val level = JsonArray()
+                levelTasks.forEach { level.add(it) }
                 completedLevels.add(level)
             }
-            diary["completedLevels"] = completedLevels
-            val rewardedLevels = JSONArray()
-            it.levelRewarded.map {
-                rewardedLevels.add(it)
-            }
-            diary["rewardedLevels"] = rewardedLevels
-            val diaryCollector = JSONObject()
-            diaryCollector[it.type.name] = diary
+            diary.add("completedLevels", completedLevels)
+
+            val rewardedLevels = JsonArray()
+            it.levelRewarded.forEach { rewardedLevels.add(it) }
+            diary.add("rewardedLevels", rewardedLevels)
+
+            val diaryCollector = JsonObject()
+            diaryCollector.add(it.type.name, diary)
             achievementData.add(diaryCollector)
         }
-        root["achievementDiaries"] = achievementData
+        root.add("achievementDiaries", achievementData)
     }
 
-    fun saveHouseData(root: JSONObject) {
+    fun saveHouseData(root: JsonObject) {
         val manager = player.houseManager
-        val houseData = JSONObject()
-        houseData["location"] = manager.location.ordinal.toString()
-        houseData["style"] = manager.style.ordinal.toString()
+        val houseData = JsonObject()
+        houseData.addProperty("location", manager.location.ordinal.toString())
+        houseData.addProperty("style", manager.style.ordinal.toString())
         if (manager.hasServant()) {
-            val servant = JSONObject()
-            servant["type"] = manager.servant.type.ordinal.toString()
-            servant["uses"] = manager.servant.uses.toString()
-            if (manager.servant.item != null) {
-                val item = JSONObject()
-                item["id"] = manager.servant.item.id.toString()
-                item["amount"] = manager.servant.item.amount.toString()
-                servant["item"] = item
+            val servant = JsonObject()
+            servant.addProperty("type", manager.servant.type.ordinal.toString())
+            servant.addProperty("uses", manager.servant.uses.toString())
+            manager.servant.item?.let {
+                val item = JsonObject()
+                item.addProperty("id", it.id.toString())
+                item.addProperty("amount", it.amount.toString())
+                servant.add("item", item)
             }
-            servant["greet"] = manager.servant.isGreet
-            houseData["servant"] = servant
+            servant.addProperty("greet", manager.servant.isGreet)
+            houseData.add("servant", servant)
         }
-        val rooms = JSONArray()
+        val rooms = JsonArray()
         var z = 0
-        for (room in player.houseManager.rooms) {
+        for (room in manager.rooms) {
             var x = 0
             for (xr in room) {
                 var y = 0
                 for (yr in xr) {
                     if (yr != null) {
-                        val r = JSONObject()
-                        r["z"] = z.toString()
-                        r["x"] = x.toString()
-                        r["y"] = y.toString()
-                        r["properties"] = yr.properties.ordinal.toString()
-                        r["rotation"] = yr.rotation.toInteger().toString()
-                        val hotspots = JSONArray()
+                        val r = JsonObject()
+                        r.addProperty("z", z.toString())
+                        r.addProperty("x", x.toString())
+                        r.addProperty("y", y.toString())
+                        r.addProperty("properties", yr.properties.ordinal.toString())
+                        r.addProperty("rotation", yr.rotation.toInteger().toString())
+                        val hotspots = JsonArray()
                         var hotspotIndex = 0
-                        yr.hotspots.map {
+                        yr.hotspots.forEach {
                             if (it.decorationIndex > -1) {
-                                val hotspot = JSONObject()
-                                hotspot["hotspotIndex"] = hotspotIndex.toString()
-                                hotspot["decorationIndex"] = it.decorationIndex.toString()
+                                val hotspot = JsonObject()
+                                hotspot.addProperty("hotspotIndex", hotspotIndex.toString())
+                                hotspot.addProperty("decorationIndex", it.decorationIndex.toString())
                                 hotspots.add(hotspot)
                             }
                             hotspotIndex++
                         }
-                        r["hotspots"] = hotspots
+                        r.add("hotspots", hotspots)
                         rooms.add(r)
                     }
                     y++
@@ -256,421 +245,420 @@ class PlayerSaver(val player: Player) {
             }
             z++
         }
-        houseData["rooms"] = rooms
-        root["houseData"] = houseData
+        houseData.add("rooms", rooms)
+        root.add("houseData", houseData)
     }
 
-    fun saveBankPinData(root: JSONObject) {
-        val bankPinManager = JSONObject()
+    fun saveBankPinData(root: JsonObject) {
+        val bankPinManager = JsonObject()
         if (player.bankPinManager.hasPin()) {
-            bankPinManager["pin"] = player.bankPinManager.pin.toString()
+            bankPinManager.addProperty("pin", player.bankPinManager.pin.toString())
         }
-        bankPinManager["longRecovery"] = player.bankPinManager.isLongRecovery
+        bankPinManager.addProperty("longRecovery", player.bankPinManager.isLongRecovery)
         if (player.bankPinManager.status.ordinal != 0) {
-            bankPinManager["status"] = player.bankPinManager.status.ordinal.toString()
+            bankPinManager.addProperty("status", player.bankPinManager.status.ordinal.toString())
         }
         if (player.bankPinManager.pendingDelay != -1L && player.bankPinManager.pendingDelay > System.currentTimeMillis()) {
-            bankPinManager["pendingDelay"] = player.bankPinManager.pendingDelay.toString()
+            bankPinManager.addProperty("pendingDelay", player.bankPinManager.pendingDelay.toString())
         }
         if (player.bankPinManager.tryDelay > System.currentTimeMillis()) {
-            bankPinManager["tryDelay"] = player.bankPinManager.tryDelay.toString()
+            bankPinManager.addProperty("tryDelay", player.bankPinManager.tryDelay.toString())
         }
-        root["bankPinManager"] = bankPinManager
+        root.add("bankPinManager", bankPinManager)
     }
 
-    fun saveCostumeRoom(root: JSONObject) {
-        root["costumeRoom"] = player.getCostumeRoomState().toJson()
+    fun saveCostumeRoom(root: JsonObject) {
+        root.add("costumeRoom", player.getCostumeRoomState().toJson())
     }
 
-    fun saveStateManager(root: JSONObject) {
-        val states = JSONArray()
-        player.states.forEach { key, clazz ->
+    fun saveStateManager(root: JsonObject) {
+        val states = JsonArray()
+        player.states.forEach { (key, clazz) ->
             if (clazz != null && clazz.pulse != null) {
-                val stateObj = JSONObject()
-                stateObj["stateKey"] = key
+                val stateObj = JsonObject()
+                stateObj.addProperty("stateKey", key)
                 clazz.save(stateObj)
                 states.add(stateObj)
             }
         }
-        root["states"] = states
+        root.add("states", states)
     }
 
-    fun saveFamiliarManager(root: JSONObject) {
-        val familiarManager = JSONObject()
-        val petDetails = JSONArray()
-        player.familiarManager.petDetails.map {
-            val detail = JSONObject()
-            detail["petId"] = it.key.toString()
-            detail["hunger"] = it.value.hunger.toString()
-            detail["growth"] = it.value.growth.toString()
+    fun saveFamiliarManager(root: JsonObject) {
+        val familiarManager = JsonObject()
+        val petDetails = JsonArray()
+        player.familiarManager.petDetails.forEach { (key, value) ->
+            val detail = JsonObject()
+            detail.addProperty("petId", key.toString())
+            detail.addProperty("hunger", value.hunger.toString())
+            detail.addProperty("growth", value.growth.toString())
             petDetails.add(detail)
         }
-        familiarManager["petDetails"] = petDetails
+        familiarManager.add("petDetails", petDetails)
         if (player.familiarManager.hasPet()) {
-            familiarManager["currentPet"] = (player.familiarManager.familiar as Pet).getItemIdHash().toString()
+            familiarManager.addProperty("currentPet", (player.familiarManager.familiar as Pet).getItemIdHash().toString())
         } else if (player.familiarManager.hasFamiliar()) {
-            val familiar = JSONObject()
-            familiar["originalId"] = player.familiarManager.familiar.originalId.toString()
-            familiar["ticks"] = player.familiarManager.familiar.ticks.toString()
-            familiar["specialPoints"] = player.familiarManager.familiar.specialPoints.toString()
+            val familiar = JsonObject()
+            familiar.addProperty("originalId", player.familiarManager.familiar.originalId.toString())
+            familiar.addProperty("ticks", player.familiarManager.familiar.ticks.toString())
+            familiar.addProperty("specialPoints", player.familiarManager.familiar.specialPoints.toString())
             if (player.familiarManager.familiar.isBurdenBeast && !(player.familiarManager.familiar as BurdenBeast).container.isEmpty) {
                 val familiarInventory = saveContainer((player.familiarManager.familiar as BurdenBeast).container)
-                familiar["inventory"] = familiarInventory
+                familiar.add("inventory", familiarInventory)
             }
-            familiar["lifepoints"] = player.familiarManager.familiar.skills.lifepoints
-            familiarManager["familiar"] = familiar
+            familiar.addProperty("lifepoints", player.familiarManager.familiar.skills.lifepoints)
+            familiarManager.add("familiar", familiar)
         }
-        root["familiarManager"] = familiarManager
+        root.add("familiarManager", familiarManager)
     }
 
-    fun saveMusicPlayer(root: JSONObject) {
-        val unlockedMusic = JSONArray()
-        player.musicPlayer.unlocked.values.map {
+    fun saveMusicPlayer(root: JsonObject) {
+        val unlockedMusic = JsonArray()
+        player.musicPlayer.unlocked.values.forEach {
             unlockedMusic.add(it.id.toString())
         }
-        root["unlockedMusic"] = unlockedMusic
+        root.add("unlockedMusic", unlockedMusic)
     }
 
-    fun saveAutocast(root: JSONObject) {
+    fun saveAutocast(root: JsonObject) {
         player.properties.autocastSpell ?: return
-        val spell = JSONObject()
-        spell["book"] = player.properties.autocastSpell!!.book.ordinal.toString()
-        spell["spellId"] = player.properties.autocastSpell!!.spellId.toString()
-        root["autocastSpell"] = spell
+        val spell = JsonObject()
+        spell.addProperty("book", player.properties.autocastSpell!!.book.ordinal.toString())
+        spell.addProperty("spellId", player.properties.autocastSpell!!.spellId.toString())
+        root.add("autocastSpell", spell)
     }
 
-    fun saveSavedData(root: JSONObject) {
+
+    fun saveSavedData(root: JsonObject) {
         saveActivityData(root)
         saveQuestData(root)
         saveGlobalData(root)
     }
 
-    fun saveGlobalData(root: JSONObject) {
-        val globalData = JSONObject()
-        globalData["tutorialStage"] = player.savedData.globalData.getTutorialStage().toString()
-        globalData["homeTeleportDelay"] = player.savedData.globalData.getHomeTeleportDelay().toString()
-        globalData["lumbridgeRope"] = player.savedData.globalData.hasTiedLumbridgeRope()
-        globalData["apprentice"] = player.savedData.globalData.hasSpokenToApprentice()
-        globalData["assistTime"] = player.savedData.globalData.getAssistTime().toString()
-        val assistExperience = JSONArray()
-        player.savedData.globalData.getAssistExperience().map {
-            assistExperience.add(it.toString())
-        }
-        globalData["assistExperience"] = assistExperience
-        val strongholdRewards = JSONArray()
-        player.savedData.globalData.getStrongHoldRewards().map {
-            strongholdRewards.add(it)
-        }
-        globalData["strongHoldRewards"] = strongholdRewards
-        globalData["chatPing"] = player.savedData.globalData.getChatPing().toString()
-        globalData["tutorClaim"] = player.savedData.globalData.getTutorClaim().toString()
-        globalData["luthasTask"] = player.savedData.globalData.isLuthasTask()
-        globalData["karamjaBananas"] = player.savedData.globalData.getKaramjaBananas().toString()
-        globalData["silkSteal"] = player.savedData.globalData.getSilkSteal().toString()
-        globalData["teaSteal"] = player.savedData.globalData.getTeaSteal().toString()
-        globalData["zafAmount"] = player.savedData.globalData.getZaffAmount().toString()
-        globalData["zafTime"] = player.savedData.globalData.getZaffTime().toString()
-        globalData["fritzGlass"] = player.savedData.globalData.isFritzGlass()
-        globalData["wydinEmployee"] = player.savedData.globalData.isWydinEmployee()
-        globalData["draynorRecording"] = player.savedData.globalData.isDraynorRecording()
-        globalData["geTutorial"] = player.savedData.globalData.isGeTutorial()
-        globalData["essenceTeleporter"] = player.savedData.globalData.getEssenceTeleporter().toString()
-        globalData["recoilDamage"] = player.savedData.globalData.getRecoilDamage().toString()
-        globalData["doubleExpDelay"] = player.savedData.globalData.getDoubleExpDelay().toString()
-        globalData["joinedMonastery"] = player.savedData.globalData.isJoinedMonastery()
-        val readPlaques = JSONArray()
-        player.savedData.globalData.readPlaques.map {
-            readPlaques.add(it)
-        }
-        globalData["readPlaques"] = readPlaques
-        globalData["forgingUses"] = player.savedData.globalData.getForgingUses().toString()
-        globalData["ectoCharges"] = player.savedData.globalData.getEctoCharges().toString()
-        globalData["dropDelay"] = player.savedData.globalData.getDropDelay().toString()
-        val abyssData = JSONArray()
-        player.savedData.globalData.getAbyssData().map {
-            abyssData.add(it)
-        }
-        globalData["abyssData"] = abyssData
-        val rcDecays = JSONArray()
-        player.savedData.globalData.getRcDecays().map {
-            rcDecays.add(it.toString())
-        }
-        globalData["rcDecays"] = rcDecays
-        globalData["disableDeathScreen"] = player.savedData.globalData.isDeathScreenDisabled()
-        globalData["playerTestStage"] = player.savedData.globalData.getTestStage().toString()
-        globalData["charmingDelay"] = player.savedData.globalData.getCharmingDelay().toString()
-        val travelLogs = JSONArray()
-        player.savedData.globalData.getTravelLogs().map {
-            travelLogs.add(it)
-        }
-        globalData["travelLogs"] = travelLogs
-        val godBooks = JSONArray()
-        player.savedData.globalData.getGodBooks().map {
-            godBooks.add(it)
-        }
-        globalData["godBooks"] = godBooks
-        globalData["disableNews"] = player.savedData.globalData.isDisableNews()
-        val godPages = JSONArray()
-        player.savedData.globalData.godPages.map {
-            godPages.add(it)
-        }
-        globalData["godPages"] = godPages
-        globalData["overChargeDelay"] = player.savedData.globalData.getOverChargeDelay().toString()
-        val bossCounters = JSONArray()
-        player.savedData.globalData.getBossCounters().map {
-            bossCounters.add(it.toString())
-        }
-        globalData["bossCounters"] = bossCounters
-        globalData["barrowsLoots"] = player.savedData.globalData.getBarrowsLoots().toString()
-        globalData["lootSharePoints"] = player.savedData.globalData.getLootSharePoints().toString()
-        globalData["lootShareDelay"] = player.savedData.globalData.getLootShareDelay().toString()
-        globalData["doubleExp"] = player.savedData.globalData.getDoubleExp().toString()
-        globalData["globalTeleporterDelay"] = player.savedData.globalData.getGlobalTeleporterDelay().toString()
-        globalData["starSpriteDelay"] = player.savedData.globalData.starSpriteDelay.toString()
-        globalData["runReplenishDelay"] = player.savedData.globalData.getRunReplenishDelay().toString()
-        globalData["runReplenishCharges"] = player.savedData.globalData.getRunReplenishCharges().toString()
-        globalData["lowAlchemyCharges"] = player.savedData.globalData.getLowAlchemyCharges().toString()
-        globalData["lowAlchemyDelay"] = player.savedData.globalData.getLowAlchemyDelay().toString()
-        globalData["magicSkillCapeDelay"] = player.savedData.globalData.getMagicSkillCapeDelay().toString()
-        globalData["hunterCapeDelay"] = player.savedData.globalData.getHunterCapeDelay().toString()
-        globalData["hunterCapeCharges"] = player.savedData.globalData.getHunterCapeCharges().toString()
-        globalData["taskAmount"] = player.savedData.globalData.getTaskAmount().toString()
-        globalData["taskPoints"] = player.savedData.globalData.getTaskPoints().toString()
-        globalData["macroDisabled"] = player.savedData.globalData.getMacroDisabled()
-        root["globalData"] = globalData
+    fun saveGlobalData(root: JsonObject) {
+        val globalData = JsonObject()
+        globalData.addProperty("tutorialStage", player.savedData.globalData.getTutorialStage().toString())
+        globalData.addProperty("homeTeleportDelay", player.savedData.globalData.getHomeTeleportDelay().toString())
+        globalData.addProperty("lumbridgeRope", player.savedData.globalData.hasTiedLumbridgeRope())
+        globalData.addProperty("apprentice", player.savedData.globalData.hasSpokenToApprentice())
+        globalData.addProperty("assistTime", player.savedData.globalData.getAssistTime().toString())
+
+        val assistExperience = JsonArray()
+        player.savedData.globalData.getAssistExperience().forEach { assistExperience.add(it.toString()) }
+        globalData.add("assistExperience", assistExperience)
+
+        val strongholdRewards = JsonArray()
+        player.savedData.globalData.getStrongHoldRewards().forEach { strongholdRewards.add(it) }
+        globalData.add("strongHoldRewards", strongholdRewards)
+
+        globalData.addProperty("chatPing", player.savedData.globalData.getChatPing().toString())
+        globalData.addProperty("tutorClaim", player.savedData.globalData.getTutorClaim().toString())
+        globalData.addProperty("luthasTask", player.savedData.globalData.isLuthasTask())
+        globalData.addProperty("karamjaBananas", player.savedData.globalData.getKaramjaBananas().toString())
+        globalData.addProperty("silkSteal", player.savedData.globalData.getSilkSteal().toString())
+        globalData.addProperty("teaSteal", player.savedData.globalData.getTeaSteal().toString())
+        globalData.addProperty("zafAmount", player.savedData.globalData.getZaffAmount().toString())
+        globalData.addProperty("zafTime", player.savedData.globalData.getZaffTime().toString())
+        globalData.addProperty("fritzGlass", player.savedData.globalData.isFritzGlass())
+        globalData.addProperty("wydinEmployee", player.savedData.globalData.isWydinEmployee())
+        globalData.addProperty("draynorRecording", player.savedData.globalData.isDraynorRecording())
+        globalData.addProperty("geTutorial", player.savedData.globalData.isGeTutorial())
+        globalData.addProperty("essenceTeleporter", player.savedData.globalData.getEssenceTeleporter().toString())
+        globalData.addProperty("recoilDamage", player.savedData.globalData.getRecoilDamage().toString())
+        globalData.addProperty("doubleExpDelay", player.savedData.globalData.getDoubleExpDelay().toString())
+        globalData.addProperty("joinedMonastery", player.savedData.globalData.isJoinedMonastery())
+
+        val readPlaques = JsonArray()
+        player.savedData.globalData.readPlaques.forEach { readPlaques.add(it) }
+        globalData.add("readPlaques", readPlaques)
+
+        globalData.addProperty("forgingUses", player.savedData.globalData.getForgingUses().toString())
+        globalData.addProperty("ectoCharges", player.savedData.globalData.getEctoCharges().toString())
+        globalData.addProperty("dropDelay", player.savedData.globalData.getDropDelay().toString())
+
+        val abyssData = JsonArray()
+        player.savedData.globalData.getAbyssData().forEach { abyssData.add(it) }
+        globalData.add("abyssData", abyssData)
+
+        val rcDecays = JsonArray()
+        player.savedData.globalData.getRcDecays().forEach { rcDecays.add(it.toString()) }
+        globalData.add("rcDecays", rcDecays)
+
+        globalData.addProperty("disableDeathScreen", player.savedData.globalData.isDeathScreenDisabled())
+        globalData.addProperty("playerTestStage", player.savedData.globalData.getTestStage().toString())
+        globalData.addProperty("charmingDelay", player.savedData.globalData.getCharmingDelay().toString())
+
+        val travelLogs = JsonArray()
+        player.savedData.globalData.getTravelLogs().forEach { travelLogs.add(it) }
+        globalData.add("travelLogs", travelLogs)
+
+        val godBooks = JsonArray()
+        player.savedData.globalData.getGodBooks().forEach { godBooks.add(it) }
+        globalData.add("godBooks", godBooks)
+
+        globalData.addProperty("disableNews", player.savedData.globalData.isDisableNews())
+
+        val godPages = JsonArray()
+        player.savedData.globalData.godPages.forEach { godPages.add(it) }
+        globalData.add("godPages", godPages)
+
+        globalData.addProperty("overChargeDelay", player.savedData.globalData.getOverChargeDelay().toString())
+
+        val bossCounters = JsonArray()
+        player.savedData.globalData.getBossCounters().forEach { bossCounters.add(it.toString()) }
+        globalData.add("bossCounters", bossCounters)
+
+        globalData.addProperty("barrowsLoots", player.savedData.globalData.getBarrowsLoots().toString())
+        globalData.addProperty("lootSharePoints", player.savedData.globalData.getLootSharePoints().toString())
+        globalData.addProperty("lootShareDelay", player.savedData.globalData.getLootShareDelay().toString())
+        globalData.addProperty("doubleExp", player.savedData.globalData.getDoubleExp().toString())
+        globalData.addProperty("globalTeleporterDelay", player.savedData.globalData.getGlobalTeleporterDelay().toString())
+        globalData.addProperty("starSpriteDelay", player.savedData.globalData.starSpriteDelay.toString())
+        globalData.addProperty("runReplenishDelay", player.savedData.globalData.getRunReplenishDelay().toString())
+        globalData.addProperty("runReplenishCharges", player.savedData.globalData.getRunReplenishCharges().toString())
+        globalData.addProperty("lowAlchemyCharges", player.savedData.globalData.getLowAlchemyCharges().toString())
+        globalData.addProperty("lowAlchemyDelay", player.savedData.globalData.getLowAlchemyDelay().toString())
+        globalData.addProperty("magicSkillCapeDelay", player.savedData.globalData.getMagicSkillCapeDelay().toString())
+        globalData.addProperty("hunterCapeDelay", player.savedData.globalData.getHunterCapeDelay().toString())
+        globalData.addProperty("hunterCapeCharges", player.savedData.globalData.getHunterCapeCharges().toString())
+        globalData.addProperty("taskAmount", player.savedData.globalData.getTaskAmount().toString())
+        globalData.addProperty("taskPoints", player.savedData.globalData.getTaskPoints().toString())
+        globalData.addProperty("macroDisabled", player.savedData.globalData.getMacroDisabled())
+
+        root.add("globalData", globalData)
     }
 
-    fun saveQuestData(root: JSONObject) {
-        val questData = JSONObject()
-        val draynorLever = JSONArray()
-        player.savedData.questData.draynorLever.map {
-            draynorLever.add(it)
-        }
-        questData["draynorLever"] = draynorLever
-        val dslayer = JSONArray()
-        player.savedData.questData.dragonSlayer.map {
-            dslayer.add(it)
-        }
-        questData["dragonSlayer"] = dslayer
-        questData["dragonSlayerPlanks"] = player.savedData.questData.dragonSlayerPlanks.toString()
-        val demonSlayer = JSONArray()
-        player.savedData.questData.demonSlayer.map {
-            demonSlayer.add(it)
-        }
-        questData["demonSlayer"] = demonSlayer
-        val cooksAssistant = JSONArray()
-        player.savedData.questData.cooksAssistant.map {
-            cooksAssistant.add(it)
-        }
-        questData["cooksAssistant"] = cooksAssistant
-        questData["gardenerAttack"] = player.savedData.questData.isGardenerAttack
-        questData["talkedDrezel"] = player.savedData.questData.isTalkedDrezel
-        val desertTreasureNode = JSONArray()
-        player.savedData.questData.desertTreasure.map {
-            val item = JSONObject()
-            item["id"] = it.id.toString()
-            item["amount"] = it.amount.toString()
+    fun saveQuestData(root: JsonObject) {
+        val questData = JsonObject()
+        val draynorLever = JsonArray()
+        player.savedData.questData.draynorLever.forEach { draynorLever.add(it) }
+        questData.add("draynorLever", draynorLever)
+
+        val dslayer = JsonArray()
+        player.savedData.questData.dragonSlayer.forEach { dslayer.add(it) }
+        questData.add("dragonSlayer", dslayer)
+
+        questData.addProperty("dragonSlayerPlanks", player.savedData.questData.dragonSlayerPlanks.toString())
+
+        val demonSlayer = JsonArray()
+        player.savedData.questData.demonSlayer.forEach { demonSlayer.add(it) }
+        questData.add("demonSlayer", demonSlayer)
+
+        val cooksAssistant = JsonArray()
+        player.savedData.questData.cooksAssistant.forEach { cooksAssistant.add(it) }
+        questData.add("cooksAssistant", cooksAssistant)
+
+        questData.addProperty("gardenerAttack", player.savedData.questData.isGardenerAttack)
+        questData.addProperty("talkedDrezel", player.savedData.questData.isTalkedDrezel)
+
+        val desertTreasureNode = JsonArray()
+        player.savedData.questData.desertTreasure.forEach {
+            val item = JsonObject()
+            item.addProperty("id", it.id.toString())
+            item.addProperty("amount", it.amount.toString())
             desertTreasureNode.add(item)
         }
-        questData["desertTreasureNode"] = desertTreasureNode
-        questData["witchsExperimentStage"] = player.savedData.questData.witchsExperimentStage.toString()
-        questData["witchsExperimentKilled"] = player.savedData.questData.isWitchsExperimentKilled
-        root["questData"] = questData
+        questData.add("desertTreasureNode", desertTreasureNode)
+
+        questData.addProperty("witchsExperimentStage", player.savedData.questData.witchsExperimentStage.toString())
+        questData.addProperty("witchsExperimentKilled", player.savedData.questData.isWitchsExperimentKilled)
+
+        root.add("questData", questData)
     }
 
-    fun saveActivityData(root: JSONObject) {
-        val activityData = JSONObject()
-        activityData["pestPoints"] = player.savedData.activityData.pestPoints.toString()
-        activityData["warriorGuildTokens"] = player.savedData.activityData.warriorGuildTokens.toString()
-        activityData["bountyHunterRate"] = player.savedData.activityData.bountyHunterRate.toString()
-        activityData["bountyRogueRate"] = player.savedData.activityData.bountyRogueRate.toString()
-        activityData["barrowKills"] = player.savedData.activityData.barrowKills.toString()
-        val barrowBrothers = JSONArray()
-        player.savedData.activityData.barrowBrothers.map {
-            barrowBrothers.add(it)
-        }
-        activityData["barrowBrothers"] = barrowBrothers
-        activityData["barrowTunnelIndex"] = player.savedData.activityData.barrowTunnelIndex.toString()
-        activityData["kolodionStage"] = player.savedData.activityData.kolodionStage.toString()
-        val godCasts = JSONArray()
-        player.savedData.activityData.godCasts.map {
-            godCasts.add(it.toString())
-        }
-        activityData["godCasts"] = godCasts
-        activityData["kolodionBoss"] = player.savedData.activityData.kolodionBoss.toString()
-        activityData["elnockSupplies"] = player.savedData.activityData.isElnockSupplies
-        activityData["lastBorkBattle"] = player.savedData.activityData.lastBorkBattle.toString()
-        activityData["startedMta"] = player.savedData.activityData.isStartedMta
-        activityData["lostCannon"] = player.savedData.activityData.isLostCannon
-        activityData["bonesToPeaches"] = player.savedData.activityData.isBonesToPeaches
-        activityData["solvedMazes"] = player.savedData.activityData.solvedMazes.toString()
-        activityData["fogRating"] = player.savedData.activityData.fogRating.toString()
-        activityData["borkKills"] = player.savedData.activityData.borkKills.toString()
-        activityData["hardcoreDeath"] = player.savedData.activityData.hardcoreDeath
-        activityData["topGrabbed"] = player.savedData.activityData.isTopGrabbed
-        root["activityData"] = activityData
+    fun saveActivityData(root: JsonObject) {
+        val activityData = JsonObject()
+        activityData.addProperty("pestPoints", player.savedData.activityData.pestPoints.toString())
+        activityData.addProperty("warriorGuildTokens", player.savedData.activityData.warriorGuildTokens.toString())
+        activityData.addProperty("bountyHunterRate", player.savedData.activityData.bountyHunterRate.toString())
+        activityData.addProperty("bountyRogueRate", player.savedData.activityData.bountyRogueRate.toString())
+        activityData.addProperty("barrowKills", player.savedData.activityData.barrowKills.toString())
+
+        val barrowBrothers = JsonArray()
+        player.savedData.activityData.barrowBrothers.forEach { barrowBrothers.add(it) }
+        activityData.add("barrowBrothers", barrowBrothers)
+
+        activityData.addProperty("barrowTunnelIndex", player.savedData.activityData.barrowTunnelIndex.toString())
+        activityData.addProperty("kolodionStage", player.savedData.activityData.kolodionStage.toString())
+
+        val godCasts = JsonArray()
+        player.savedData.activityData.godCasts.forEach { godCasts.add(it.toString()) }
+        activityData.add("godCasts", godCasts)
+
+        activityData.addProperty("kolodionBoss", player.savedData.activityData.kolodionBoss.toString())
+        activityData.addProperty("elnockSupplies", player.savedData.activityData.isElnockSupplies)
+        activityData.addProperty("lastBorkBattle", player.savedData.activityData.lastBorkBattle.toString())
+        activityData.addProperty("startedMta", player.savedData.activityData.isStartedMta)
+        activityData.addProperty("lostCannon", player.savedData.activityData.isLostCannon)
+        activityData.addProperty("bonesToPeaches", player.savedData.activityData.isBonesToPeaches)
+        activityData.addProperty("solvedMazes", player.savedData.activityData.solvedMazes.toString())
+        activityData.addProperty("fogRating", player.savedData.activityData.fogRating.toString())
+        activityData.addProperty("borkKills", player.savedData.activityData.borkKills.toString())
+        activityData.addProperty("hardcoreDeath", player.savedData.activityData.hardcoreDeath)
+        activityData.addProperty("topGrabbed", player.savedData.activityData.isTopGrabbed)
+
+        root.add("activityData", activityData)
     }
 
-    fun saveSpellbook(root: JSONObject) {
-        root["spellbook"] = player.spellBookManager.spellBook.toString()
+    fun saveSpellbook(root: JsonObject) {
+        root.addProperty("spellbook", player.spellBookManager.spellBook.toString())
     }
 
-    fun saveAppearance(root: JSONObject) {
-        val appearance = JSONObject()
-        appearance["gender"] = player.appearance.gender.toByte().toString()
-        val appearanceCache = JSONArray()
-        player.appearance.appearanceCache.map {
-            val bodyPart = JSONObject()
-            bodyPart["look"] = it.look.toString()
-            bodyPart["color"] = it.color.toString()
+    fun saveAppearance(root: JsonObject) {
+        val appearance = JsonObject()
+        appearance.addProperty("gender", player.appearance.gender.toByte().toString())
+
+        val appearanceCache = JsonArray()
+        player.appearance.appearanceCache.forEach {
+            val bodyPart = JsonObject()
+            bodyPart.addProperty("look", it.look.toString())
+            bodyPart.addProperty("color", it.color.toString())
             appearanceCache.add(bodyPart)
         }
-        appearance["appearance_cache"] = appearanceCache
-        root["appearance"] = appearance
+        appearance.add("appearance_cache", appearanceCache)
+
+        root.add("appearance", appearance)
     }
 
-    fun saveQuests(root: JSONObject) {
-        val quests = JSONObject()
-        quests["points"] = player.questRepository.points.toString()
-        val questStages = JSONArray()
-        player.questRepository.questList.map {
-            val quest = JSONObject()
-            quest["questId"] = it.key.toString()
-            quest["questStage"] = it.value.toString()
+    fun saveQuests(root: JsonObject) {
+        val quests = JsonObject()
+        quests.addProperty("points", player.questRepository.points.toString())
+
+        val questStages = JsonArray()
+        player.questRepository.questList.forEach {
+            val quest = JsonObject()
+            quest.addProperty("questId", it.key.toString())
+            quest.addProperty("questStage", it.value.toString())
             questStages.add(quest)
         }
-        quests["questStages"] = questStages
-        root["quests"] = quests
+        quests.add("questStages", questStages)
+
+        root.add("quests", quests)
     }
 
-    fun saveSettings(root: JSONObject) {
-        val settings = JSONObject()
-        settings["brightness"] = player.settings.brightness.toString()
-        settings["musicVolume"] = player.settings.musicVolume.toString()
-        settings["soundEffectVolume"] = player.settings.soundEffectVolume.toString()
-        settings["areaSoundVolume"] = player.settings.areaSoundVolume.toString()
-        settings["publicChatSetting"] = player.settings.publicChatSetting.toString()
-        settings["privateChatSetting"] = player.settings.privateChatSetting.toString()
-        settings["clanChatSetting"] = player.settings.clanChatSetting.toString()
-        settings["tradeSetting"] = player.settings.tradeSetting.toString()
-        settings["assistSetting"] = player.settings.assistSetting.toString()
-        settings["runEnergy"] = player.settings.runEnergy.toString()
-        settings["specialEnergy"] = player.settings.specialEnergy.toString()
-        settings["attackStyle"] = player.settings.attackStyleIndex.toString()
-        settings["singleMouse"] = player.settings.isSingleMouseButton
-        settings["disableChatEffects"] = player.settings.isDisableChatEffects
-        settings["splitPrivate"] = player.settings.isSplitPrivateChat
-        settings["acceptAid"] = player.settings.isAcceptAid
-        settings["runToggled"] = player.settings.isRunToggled
-        settings["retaliation"] = player.properties.isRetaliating
-        root["settings"] = settings
+    fun saveSettings(root: JsonObject) {
+        val settings = JsonObject()
+        settings.addProperty("brightness", player.settings.brightness.toString())
+        settings.addProperty("musicVolume", player.settings.musicVolume.toString())
+        settings.addProperty("soundEffectVolume", player.settings.soundEffectVolume.toString())
+        settings.addProperty("areaSoundVolume", player.settings.areaSoundVolume.toString())
+        settings.addProperty("publicChatSetting", player.settings.publicChatSetting.toString())
+        settings.addProperty("privateChatSetting", player.settings.privateChatSetting.toString())
+        settings.addProperty("clanChatSetting", player.settings.clanChatSetting.toString())
+        settings.addProperty("tradeSetting", player.settings.tradeSetting.toString())
+        settings.addProperty("assistSetting", player.settings.assistSetting.toString())
+        settings.addProperty("runEnergy", player.settings.runEnergy.toString())
+        settings.addProperty("specialEnergy", player.settings.specialEnergy.toString())
+        settings.addProperty("attackStyle", player.settings.attackStyleIndex.toString())
+        settings.addProperty("singleMouse", player.settings.isSingleMouseButton)
+        settings.addProperty("disableChatEffects", player.settings.isDisableChatEffects)
+        settings.addProperty("splitPrivate", player.settings.isSplitPrivateChat)
+        settings.addProperty("acceptAid", player.settings.isAcceptAid)
+        settings.addProperty("runToggled", player.settings.isRunToggled)
+        settings.addProperty("retaliation", player.properties.isRetaliating)
+
+        root.add("settings", settings)
     }
 
-    fun saveSkills(root: JSONObject) {
-        val skills = JSONArray()
+    fun saveSkills(root: JsonObject) {
+        val skills = JsonArray()
         for (i in 0 until 24) {
-            val skill = JSONObject()
-            skill["id"] = i.toString()
-            skill["static"] = player.skills.staticLevels[i].toString()
-            if (i == Skills.HITPOINTS) {
-                skill["dynamic"] = player.skills.lifepoints.toString()
-            } else if (i == Skills.PRAYER) {
-                skill["dynamic"] = ceil(player.skills.prayerPoints).toInt().toString()
-            } else {
-                skill["dynamic"] = player.skills.dynamicLevels[i].toString()
-            }
-            skill["experience"] = player.skills.getExperience(i).toString()
+            val skill = JsonObject()
+            skill.addProperty("id", i.toString())
+            skill.addProperty("static", player.skills.staticLevels[i].toString())
+            skill.addProperty(
+                "dynamic",
+                when (i) {
+                    Skills.HITPOINTS -> player.skills.lifepoints.toString()
+                    Skills.PRAYER -> ceil(player.skills.prayerPoints).toInt().toString()
+                    else -> player.skills.dynamicLevels[i].toString()
+                }
+            )
+            skill.addProperty("experience", player.skills.getExperience(i).toString())
             skills.add(skill)
         }
-        root["skills"] = skills
-        root["totalEXP"] = player.skills.experienceGained.toString()
-        root["exp_multiplier"] = player.skills.experienceMultiplier.toString()
+        root.add("skills", skills)
+        root.addProperty("totalEXP", player.skills.experienceGained.toString())
+        root.addProperty("exp_multiplier", player.skills.experienceMultiplier.toString())
+
         if (player.skills.combatMilestone > 0 || player.skills.skillMilestone > 0) {
-            val milestone = JSONObject()
-            milestone["combatMilestone"] = player.skills.combatMilestone.toString()
-            milestone["skillMilestone"] = player.skills.skillMilestone.toString()
-            root["milestone"] = milestone
+            val milestone = JsonObject()
+            milestone.addProperty("combatMilestone", player.skills.combatMilestone.toString())
+            milestone.addProperty("skillMilestone", player.skills.skillMilestone.toString())
+            root.add("milestone", milestone)
         }
     }
 
-    fun saveContainer(container: Container): JSONArray {
-        val json = JSONArray()
-        container.toArray().map {
+    fun saveContainer(container: Container): JsonArray {
+        val json = JsonArray()
+        container.toArray().forEach {
             if (it != null) {
-                val item = JSONObject()
-                item["slot"] = it.slot.toString()
-                item["id"] = it.id.toString()
-                item["amount"] = it.amount.toString()
-                item["charge"] = it.charge.toString()
+                val item = JsonObject()
+                item.addProperty("slot", it.slot.toString())
+                item.addProperty("id", it.id.toString())
+                item.addProperty("amount", it.amount.toString())
+                item.addProperty("charge", it.charge.toString())
                 json.add(item)
             }
         }
         return json
     }
 
-    fun saveCoreData(root: JSONObject) {
-        val coreData = JSONObject()
-        val inventory = saveContainer(player.inventory)
-        coreData["inventory"] = inventory
+    fun saveCoreData(root: JsonObject) {
+        val coreData = JsonObject()
+        coreData.add("inventory", saveContainer(player.inventory))
+        coreData.add("bank", saveContainer(player.bankPrimary))
+        coreData.add("bankSecondary", saveContainer(player.bankSecondary))
+        coreData.add("blastBars", saveContainer(player.blastBars))
+        coreData.add("blastOre", saveContainer(player.blastOre))
+        coreData.add("blastCoal", saveContainer(player.blastCoal))
 
-        val bank = saveContainer(player.bankPrimary)
-        coreData["bank"] = bank
-
-        val bankSecondary = saveContainer(player.bankSecondary)
-        coreData["bankSecondary"] = bankSecondary
-
-        val bBars = saveContainer(player.blastBars)
-        coreData["blastBars"] = bBars
-
-        val bOre = saveContainer(player.blastOre)
-        coreData["blastOre"] = bOre
-
-        val bCoal = saveContainer(player.blastCoal)
-        coreData["blastCoal"] = bCoal
-
-        val bankTabs = JSONArray()
-        for (i in player.bankPrimary.tabStartSlot.indices) {
-            val tab = JSONObject()
-            tab["index"] = i.toString()
-            tab["startSlot"] = player.bankPrimary.tabStartSlot[i].toString()
+        val bankTabs = JsonArray()
+        player.bankPrimary.tabStartSlot.forEachIndexed { i, startSlot ->
+            val tab = JsonObject()
+            tab.addProperty("index", i.toString())
+            tab.addProperty("startSlot", startSlot.toString())
             bankTabs.add(tab)
         }
-        coreData["bankTabs"] = bankTabs
+        coreData.add("bankTabs", bankTabs)
 
-        val bankTabsSecondary = JSONArray()
-        for (i in player.bankSecondary.tabStartSlot.indices) {
-            val tab = JSONObject()
-            tab["index"] = i.toString()
-            tab["startSlot"] = player.bankSecondary.tabStartSlot[i].toString()
+        val bankTabsSecondary = JsonArray()
+        player.bankSecondary.tabStartSlot.forEachIndexed { i, startSlot ->
+            val tab = JsonObject()
+            tab.addProperty("index", i.toString())
+            tab.addProperty("startSlot", startSlot.toString())
             bankTabsSecondary.add(tab)
         }
-        coreData["bankTabsSecondary"] = bankTabsSecondary
+        coreData.add("bankTabsSecondary", bankTabsSecondary)
 
-        coreData["useSecondaryBank"] = player.useSecondaryBank
+        coreData.addProperty("useSecondaryBank", player.useSecondaryBank)
 
-        val equipment = saveContainer(player.equipment)
-        coreData["equipment"] = equipment
+        coreData.add("equipment", saveContainer(player.equipment))
 
-        val loctemp = player.location
-        val locStr = "${loctemp.x},${loctemp.y},${loctemp.z}"
-        coreData["location"] = locStr
+        val locTemp = player.location
+        val locStr = "${locTemp.x},${locTemp.y},${locTemp.z}"
+        coreData.addProperty("location", locStr)
 
-        val varpData = JSONArray()
+        val varpData = JsonArray()
         for ((index, value) in player.varpMap) {
             if (player.saveVarp[index] != true) continue
             if (value == 0) continue
 
-            val varpObj = JSONObject()
-            varpObj["index"] = index.toString()
-            varpObj["value"] = value.toString()
+            val varpObj = JsonObject()
+            varpObj.addProperty("index", index.toString())
+            varpObj.addProperty("value", value.toString())
             varpData.add(varpObj)
         }
-        coreData["varp"] = varpData
+        coreData.add("varp", varpData)
 
-        val timerData = JSONObject()
+        val timerData = JsonObject()
         player.timers.saveTimers(timerData)
-        coreData["timers"] = timerData
+        coreData.add("timers", timerData)
 
-        root["core_data"] = coreData
+        root.add("core_data", coreData)
+    }
+
+    fun saveVersion(root: JsonObject) {
+        root.addProperty("version", player.version)
     }
 }

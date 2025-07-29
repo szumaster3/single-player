@@ -1,12 +1,13 @@
 package core.integration.discord
 
+import com.google.gson.Gson
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
 import core.ServerConstants
 import core.api.TickListener
 import core.api.getItemName
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import org.json.simple.JSONArray
-import org.json.simple.JSONObject
 import java.io.BufferedReader
 import java.io.DataOutputStream
 import java.io.InputStreamReader
@@ -97,7 +98,8 @@ class Discord : TickListener {
             }
         }
 
-        @JvmStatic fun sendToOpenRSC(
+        @JvmStatic
+        fun sendToOpenRSC(
             player: String,
             type: String,
         ) {
@@ -112,32 +114,33 @@ class Discord : TickListener {
             }
         }
 
+        private val gson = Gson()
+
         private fun encodeUpdateJson(
             sale: Boolean,
             itemId: Int,
             value: Int,
             amtLeft: Int,
         ): String {
-            val obj = JSONObject()
-            val embeds = JSONArray()
-            val embed = JSONObject()
+            val obj = JsonObject()
+            val embeds = JsonArray()
+            val embed = JsonObject()
 
-            val fields =
-                arrayOf(
-                    EmbedField("Item", getItemName(itemId), false),
-                    EmbedField("Amount Remaining", "%,d".format(amtLeft), true),
-                    EmbedField("Price", "%,d".format(value) + "gp", true),
-                )
+            val fields = arrayOf(
+                EmbedField("Item", getItemName(itemId), false),
+                EmbedField("Amount Remaining", "%,d".format(amtLeft), true),
+                EmbedField("Price", "%,d".format(value) + "gp", true),
+            )
 
-            embed["title"] = if (sale) "Sell Offer Updated" else "Buy Offer Updated"
-            embed["color"] = COLOR_OFFER_UPDATE
-            embed["thumbnail"] = getItemImage(itemId)
-            embed["fields"] = getFields(fields)
+            embed.addProperty("title", if (sale) "Sell Offer Updated" else "Buy Offer Updated")
+            embed.addProperty("color", COLOR_OFFER_UPDATE)
+            embed.add("thumbnail", getItemImage(itemId))
+            embed.add("fields", getFields(fields))
 
             embeds.add(embed)
-            obj["embeds"] = embeds
+            obj.add("embeds", embeds)
 
-            return obj.toJSONString()
+            return gson.toJson(obj)
         }
 
         private fun encodeOfferJson(
@@ -147,58 +150,57 @@ class Discord : TickListener {
             qty: Int,
             user: String,
         ): String {
-            val obj = JSONObject()
-            val embeds = JSONArray()
-            val embed = JSONObject()
+            val obj = JsonObject()
+            val embeds = JsonArray()
+            val embed = JsonObject()
 
-            val fields =
-                arrayOf(
-                    EmbedField("Player", user, false),
-                    EmbedField("Item", getItemName(itemId), false),
-                    EmbedField("Amount", "%,d".format(qty), true),
-                    EmbedField("Price", "%,d".format(value) + "gp", true),
-                )
+            val fields = arrayOf(
+                EmbedField("Player", user, false),
+                EmbedField("Item", getItemName(itemId), false),
+                EmbedField("Amount", "%,d".format(qty), true),
+                EmbedField("Price", "%,d".format(value) + "gp", true),
+            )
 
-            embed["title"] = if (isSale) "New Sell Offer" else "New Buy Offer"
-            embed["color"] = if (isSale) COLOR_NEW_SALE_OFFER else COLOR_NEW_BUY_OFFER
-            embed["thumbnail"] = getItemImage(itemId)
-            embed["fields"] = getFields(fields)
+            embed.addProperty("title", if (isSale) "New Sell Offer" else "New Buy Offer")
+            embed.addProperty("color", if (isSale) COLOR_NEW_SALE_OFFER else COLOR_NEW_BUY_OFFER)
+            embed.add("thumbnail", getItemImage(itemId))
+            embed.add("fields", getFields(fields))
 
             embeds.add(embed)
-            obj["embeds"] = embeds
+            obj.add("embeds", embeds)
 
-            return obj.toJSONString()
+            return gson.toJson(obj)
         }
 
         private fun encodeUserAlert(
             type: String,
             player: String,
         ): String {
-            val obj = JSONObject()
-            val embeds = JSONArray()
-            val embed = JSONObject()
+            val obj = JsonObject()
+            val embeds = JsonArray()
+            val embed = JsonObject()
 
-            val fields =
-                arrayOf(
-                    EmbedField("Player", player, false),
-                    EmbedField("Type", type, false),
-                )
+            val fields = arrayOf(
+                EmbedField("Player", player, false),
+                EmbedField("Type", type, false),
+            )
 
-            embed["title"] = "Player Alert"
-            embed["fields"] = getFields(fields)
+            embed.addProperty("title", "Player Alert")
+            embed.add("fields", getFields(fields))
             embeds.add(embed)
-            obj["embeds"] = embeds
-            return obj.toJSONString()
+            obj.add("embeds", embeds)
+
+            return gson.toJson(obj)
         }
 
-        private fun getFields(fields: Array<EmbedField>): JSONArray {
-            val arr = JSONArray()
+        private fun getFields(fields: Array<EmbedField>): JsonArray {
+            val arr = JsonArray()
 
             for (field in fields) {
-                val o = JSONObject()
-                o["name"] = field.name
-                o["value"] = field.value
-                if (field.inline) o["inline"] = true
+                val o = JsonObject()
+                o.addProperty("name", field.name)
+                o.addProperty("value", field.value)
+                if (field.inline) o.addProperty("inline", true)
                 arr.add(o)
             }
 
@@ -211,9 +213,9 @@ class Discord : TickListener {
             val inline: Boolean,
         )
 
-        fun getItemImage(id: Int): JSONObject {
-            val obj = JSONObject()
-            obj["url"] = "https://github.com/szumaster3/web/raw/master/services/m%3Ddata/img/items/$id.png"
+        fun getItemImage(id: Int): JsonObject {
+            val obj = JsonObject()
+            obj.addProperty("url", "https://github.com/szumaster3/web/raw/master/services/m%3Ddata/img/items/$id.png")
             return obj
         }
 

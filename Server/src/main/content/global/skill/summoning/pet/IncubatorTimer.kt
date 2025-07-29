@@ -1,13 +1,13 @@
 package content.global.skill.summoning.pet
 
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
 import core.api.*
 import core.game.node.entity.Entity
 import core.game.node.entity.player.Player
 import core.game.system.timer.PersistTimer
 import core.tools.colorize
 import core.tools.ticksToSeconds
-import org.json.simple.JSONArray
-import org.json.simple.JSONObject
 
 class IncubatorTimer : PersistTimer(500, "incubation") {
     val incubatingEggs = HashMap<Int, IncubatingEgg>()
@@ -15,36 +15,36 @@ class IncubatorTimer : PersistTimer(500, "incubation") {
     override fun getInitialRunDelay(): Int = 50
 
     override fun parse(
-        root: JSONObject,
+        root: JsonObject,
         entity: Entity,
     ) {
-        val eggs = root["eggs"] as? JSONArray ?: return
-        for (eggData in eggs) {
-            val eggInfo = eggData as JSONArray
+        val eggs = root.getAsJsonArray("eggs") ?: return
+        for (eggElement in eggs) {
+            val eggInfo = eggElement.asJsonArray
             val egg = IncubatingEgg(
-                eggInfo[0].toString().toInt(),
-                IncubatorEgg.values()[eggInfo[1].toString().toInt()],
-                eggInfo[2].toString().toLong(),
-                eggInfo[3].toString().toBoolean(),
+                eggInfo[0].asInt,
+                IncubatorEgg.values()[eggInfo[1].asInt],
+                eggInfo[2].asLong,
+                eggInfo[3].asBoolean,
             )
             incubatingEggs[egg.region] = egg
         }
     }
 
     override fun save(
-        root: JSONObject,
+        root: JsonObject,
         entity: Entity,
     ) {
-        val arr = JSONArray()
+        val arr = JsonArray()
         for ((_, eggInfo) in incubatingEggs) {
-            val eggArr = JSONArray()
-            eggArr.add(eggInfo.region.toString())
-            eggArr.add(eggInfo.egg.ordinal.toString())
-            eggArr.add(eggInfo.endTime.toString())
+            val eggArr = JsonArray()
+            eggArr.add(eggInfo.region)
+            eggArr.add(eggInfo.egg.ordinal)
+            eggArr.add(eggInfo.endTime)
             eggArr.add(eggInfo.finished)
             arr.add(eggArr)
         }
-        root["eggs"] = arr
+        root.add("eggs", arr)
     }
 
     override fun onRegister(entity: Entity) {

@@ -1,5 +1,7 @@
 package content.global.skill.summoning.familiar;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import content.global.skill.summoning.SummoningPouch;
 import content.global.skill.summoning.pet.Pet;
 import content.global.skill.summoning.pet.PetDetails;
@@ -15,8 +17,6 @@ import core.game.world.map.Location;
 import core.game.world.map.zone.ZoneRestriction;
 import core.game.world.update.flag.context.Animation;
 import core.tools.Log;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,22 +50,26 @@ public final class FamiliarManager {
      *
      * @param familiarData the familiar data
      */
-    public final void parse(JSONObject familiarData) {
+    public final void parse(JsonObject familiarData) {
         int currentPet = -1;
-        if (familiarData.containsKey("currentPet")) {
-            currentPet = Integer.parseInt(familiarData.get("currentPet").toString());
+        if (familiarData.has("currentPet")) {
+            currentPet = familiarData.get("currentPet").getAsInt();
         }
-        JSONArray petDetails = (JSONArray) familiarData.get("petDetails");
+
+        JsonArray petDetails = familiarData.getAsJsonArray("petDetails");
         for (int i = 0; i < petDetails.size(); i++) {
-            JSONObject detail = (JSONObject) petDetails.get(i);
+            JsonObject detail = petDetails.get(i).getAsJsonObject();
             PetDetails details = new PetDetails(0);
-            details.updateHunger(Double.parseDouble(detail.get("hunger").toString()));
-            details.updateGrowth(Double.parseDouble(detail.get("growth").toString()));
-            int itemIdHash = Integer.parseInt(detail.get("petId").toString());
-            if (detail.containsKey("stage")) {
+            details.updateHunger(detail.get("hunger").getAsDouble());
+            details.updateGrowth(detail.get("growth").getAsDouble());
+
+            int itemIdHash = detail.get("petId").getAsInt();
+
+            if (detail.has("stage")) {
                 int babyItemId = itemIdHash;
                 int itemId = babyItemId;
-                int stage = Integer.parseInt(detail.get("stage").toString());
+                int stage = detail.get("stage").getAsInt();
+
                 if (stage > 0) {
                     Pets pets = Pets.forId(babyItemId);
                     itemId = pets.getNextStageItemId(itemId);
@@ -73,36 +77,43 @@ public final class FamiliarManager {
                         itemId = pets.getNextStageItemId(itemId);
                     }
                 }
+
                 Item item = new Item(itemId);
                 item.setCharge(1000);
                 itemIdHash = item.getIdHash();
+
                 if (currentPet != -1 && currentPet == babyItemId) {
                     currentPet = itemIdHash;
                 }
             }
+
             this.petDetails.put(itemIdHash, details);
         }
 
         if (currentPet != -1) {
             PetDetails details = this.petDetails.get(currentPet);
-            int itemId = currentPet >> 16 & 0xFFFF;
+            int itemId = (currentPet >> 16) & 0xFFFF;
             Pets pets = Pets.forId(itemId);
+
             if (details == null) {
                 details = new PetDetails(pets.growthRate == 0.0 ? 100.0 : 0.0);
                 this.petDetails.put(currentPet, details);
             }
+
             familiar = new Pet(player, details, itemId, pets.getNpcId(itemId));
-        } else if (familiarData.containsKey("familiar")) {
-            JSONObject currentFamiliar = (JSONObject) familiarData.get("familiar");
-            int familiarId = Integer.parseInt(currentFamiliar.get("originalId").toString());
+        } else if (familiarData.has("familiar")) {
+            JsonObject currentFamiliar = familiarData.getAsJsonObject("familiar");
+            int familiarId = currentFamiliar.get("originalId").getAsInt();
             familiar = FAMILIARS.get(familiarId).construct(player, familiarId);
-            familiar.ticks = Integer.parseInt(currentFamiliar.get("ticks").toString());
-            familiar.specialPoints = Integer.parseInt(currentFamiliar.get("specialPoints").toString());
-            JSONArray famInv = (JSONArray) currentFamiliar.get("inventory");
+            familiar.ticks = currentFamiliar.get("ticks").getAsInt();
+            familiar.specialPoints = currentFamiliar.get("specialPoints").getAsInt();
+
+            JsonArray famInv = currentFamiliar.getAsJsonArray("inventory");
             if (famInv != null) {
                 ((BurdenBeast) familiar).getContainer().parse(famInv);
             }
-            familiar.setAttribute("hp", Integer.parseInt(currentFamiliar.get("lifepoints").toString()));
+
+            familiar.setAttribute("hp", currentFamiliar.get("lifepoints").getAsInt());
         }
     }
 

@@ -1,11 +1,11 @@
 package content.global.activity.penguinhns
 
+import com.google.gson.JsonObject
 import core.ServerStore
 import core.api.StartupListener
 import core.api.log
 import core.plugin.ClassScanner
 import core.tools.Log
-import org.json.simple.JSONObject
 
 /**
  * Handles startup initialization for the Penguin Hunter activity.
@@ -37,6 +37,6 @@ class PenguinHNSEvent : StartupListener {
          * @return The JSON object representing stored activity data.
          */
         @JvmStatic
-        fun getStoreFile(): JSONObject = ServerStore.getArchive("weekly-penguinhns")
+        fun getStoreFile(): JsonObject = ServerStore.getArchive("weekly-penguinhns")
     }
 }

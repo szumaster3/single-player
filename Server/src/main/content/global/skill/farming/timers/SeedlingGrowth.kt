@@ -1,12 +1,12 @@
 package content.global.skill.farming.timers
 
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
 import content.global.skill.farming.Seedling
 import core.game.node.entity.Entity
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.game.system.timer.PersistTimer
-import org.json.simple.JSONArray
-import org.json.simple.JSONObject
 import java.util.concurrent.TimeUnit
 
 class SeedlingGrowth : PersistTimer(1, "farming:seedling", isSoft = true) {
@@ -52,29 +52,30 @@ class SeedlingGrowth : PersistTimer(1, "farming:seedling", isSoft = true) {
     }
 
     override fun save(
-        root: JSONObject,
+        root: JsonObject,
         entity: Entity,
     ) {
-        val seedArray = JSONArray()
+        val seedArray = JsonArray()
         for (s in seedlings) {
-            val seed = JSONObject()
-            seed["id"] = s.id
-            seed["ttl"] = s.TTL
-            seed["sapling"] = s.sapling
+            val seed = JsonObject()
+            seed.addProperty("id", s.id)
+            seed.addProperty("ttl", s.TTL)
+            seed.addProperty("sapling", s.sapling)
             seedArray.add(seed)
         }
-        root["seedlings"] = seedArray
+        root.add("seedlings", seedArray)
     }
 
     override fun parse(
-        root: JSONObject,
+        root: JsonObject,
         entity: Entity,
     ) {
-        (root["seedlings"] as JSONArray).forEach {
-            val s = it as JSONObject
-            val id = s["id"].toString().toInt()
-            val ttl = s["ttl"].toString().toLong()
-            val sapling = s["sapling"].toString().toInt()
+        val seedlingsArray = root.getAsJsonArray("seedlings") ?: return
+        for (element in seedlingsArray) {
+            val s = element.asJsonObject
+            val id = s.get("id").asInt
+            val ttl = s.get("ttl").asLong
+            val sapling = s.get("sapling").asInt
             seedlings.add(Seedling(id, ttl, sapling))
         }
     }

@@ -1,5 +1,6 @@
 package core.game.node.entity.player.link;
 
+import com.google.gson.JsonObject;
 import content.global.plugin.iface.ge.StockMarket;
 import core.game.component.CloseEvent;
 import core.game.component.Component;
@@ -12,7 +13,6 @@ import core.net.packet.PacketRepository;
 import core.net.packet.out.RepositionChild;
 import core.net.packet.out.StringPacket;
 import core.tools.RandomFunction;
-import org.json.simple.JSONObject;
 import org.rs.consts.Components;
 import org.rs.consts.Sounds;
 
@@ -88,21 +88,27 @@ public class BankPinManager {
      *
      * @param data the data
      */
-    public void parse(JSONObject data) {
-        if (data.containsKey("pin")) {
-            pin = data.get("pin").toString();
+    public void parse(JsonObject data) {
+        if (data.has("pin") && !data.get("pin").isJsonNull()) {
+            pin = data.get("pin").getAsString();
         }
-        if (data.containsKey("status")) {
-            int st = Integer.parseInt(data.get("status").toString());
+
+        if (data.has("status") && !data.get("status").isJsonNull()) {
+            int st = data.get("status").getAsInt();
             status = PinStatus.values()[st];
         }
-        if (data.containsKey("pendingDelay")) {
-            this.pendingDelay = Long.parseLong(data.get("pendingDelay").toString());
+
+        if (data.has("pendingDelay") && !data.get("pendingDelay").isJsonNull()) {
+            this.pendingDelay = data.get("pendingDelay").getAsLong();
         }
-        if (data.containsKey("tryDelay")) {
-            this.tryDelay = Long.parseLong(data.get("tryDelay").toString());
+
+        if (data.has("tryDelay") && !data.get("tryDelay").isJsonNull()) {
+            this.tryDelay = data.get("tryDelay").getAsLong();
         }
-        longRecovery = (boolean) data.get("longRecovery");
+
+        if (data.has("longRecovery") && !data.get("longRecovery").isJsonNull()) {
+            longRecovery = data.get("longRecovery").getAsBoolean();
+        }
     }
 
     /**

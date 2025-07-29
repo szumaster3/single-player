@@ -1,5 +1,6 @@
 package content.minigame.blastfurnace.plugin
 
+import com.google.gson.JsonObject
 import content.global.skill.smithing.Bar
 import core.api.*
 import core.game.node.entity.Entity
@@ -8,7 +9,6 @@ import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.game.world.map.zone.ZoneBorders
 import core.tools.RandomFunction
-import org.json.simple.JSONObject
 import org.rs.consts.Items
 import org.rs.consts.NPCs
 
@@ -20,21 +20,21 @@ class BlastFurnace :
 
     override fun savePlayer(
         player: Player,
-        save: JSONObject,
+        save: JsonObject,
     ) {
         val state = playerStates[player.details.uid]
         if (state != null) {
-            save["bf-state"] = state.toJson()
+            save.add("bf-state", state.toJson())
         }
     }
 
     override fun parsePlayer(
         player: Player,
-        data: JSONObject,
+        data: JsonObject,
     ) {
         playerStates.remove(player.details.uid)
-        if (data.containsKey("bf-state")) {
-            val stateObj = data["bf-state"] as JSONObject
+        if (data.has("bf-state")) {
+            val stateObj = data.getAsJsonObject("bf-state")
             getPlayerState(player).readJson(stateObj)
         }
     }

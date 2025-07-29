@@ -1,6 +1,7 @@
 package core.game.system.config
 
-import content.global.activity.ttrail.ClueLevel
+import com.google.gson.Gson
+import com.google.gson.JsonArray
 import core.ServerConstants
 import core.api.log
 import core.cache.def.impl.NPCDefinition
@@ -8,9 +9,7 @@ import core.game.node.entity.combat.CombatStyle
 import core.game.node.entity.impl.Animator
 import core.game.world.update.flag.context.Animation
 import core.tools.Log
-import org.json.simple.JSONArray
-import org.json.simple.JSONObject
-import org.json.simple.parser.JSONParser
+import content.global.activity.ttrail.ClueLevel
 import java.io.FileReader
 
 class NPCConfigParser {
@@ -53,46 +52,59 @@ class NPCConfigParser {
         const val PROTECT_STYLE = "protect_style"
     }
 
-    val parser = JSONParser()
-    var reader: FileReader? = null
+    private val gson = Gson()
 
     fun load() {
         var count = 0
-        reader = FileReader(ServerConstants.CONFIG_PATH + "npc_configs.json")
-        val configList = parser.parse(reader) as JSONArray
-        for (config in configList) {
-            val e = config as JSONObject
-            val def = NPCDefinition.forId(e["id"].toString().toInt())
-            val configs = def.handlers
-            e.map {
-                if (it.value.toString().isNotEmpty() && it.value.toString() != "null") {
-                    when (it.key.toString()) {
+        FileReader(ServerConstants.CONFIG_PATH + "npc_configs.json").use { reader ->
+            val configList = gson.fromJson(reader, JsonArray::class.java)
+            for (element in configList) {
+                val e = element.asJsonObject
+                val id = e.get("id")?.asInt ?: continue
+                val def = NPCDefinition.forId(id)
+                val configs = def.handlers
+
+                for ((key, jsonElement) in e.entrySet()) {
+                    if (jsonElement == null || jsonElement.isJsonNull) continue
+
+                    val valueStr = try {
+                        jsonElement.asString
+                    } catch (ex: UnsupportedOperationException) {
+                        ""
+                    }
+
+                    if (valueStr.isEmpty() || valueStr == "null") continue
+
+                    when (key) {
                         "melee_animation",
                         "range_animation",
                         "magic_animation",
                         "death_animation",
-                        "defence_animation",
-                        ->
-                            configs[it.key.toString()] =
-                                Animation(it.value.toString().toInt(), Animator.Priority.HIGH)
+                        "defence_animation" -> {
+                            val animId = jsonElement.asInt
+                            configs[key] = Animation(animId, Animator.Priority.HIGH)
+                        }
 
                         "combat_style",
-                        "protect_style",
-                        ->
-                            configs[it.key.toString()] =
-                                CombatStyle.values()[it.value.toString().toInt()]
+                        "protect_style" -> {
+                            val enumIndex = jsonElement.asInt
+                            configs[key] = CombatStyle.values()[enumIndex]
+                        }
 
-                        "clue_level" -> configs[it.key.toString()] = ClueLevel.values()[it.value.toString().toInt()]
-                        "name", "examine" -> configs[it.key.toString()] = it.value.toString()
-                        "combat_audio", "bonuses" ->
-                            configs[it.key.toString()] =
-                                it.value
-                                    .toString()
-                                    .split(",")
-                                    .map { v -> v.toInt() }
-                                    .toIntArray()
+                        "clue_level" -> {
+                            val clueIndex = jsonElement.asInt
+                            configs[key] = ClueLevel.values()[clueIndex]
+                        }
 
-                        "force_talk" -> configs[it.key.toString()] = it.value.toString()
+                        "name", "examine", "force_talk" -> {
+                            configs[key] = valueStr
+                        }
+
+                        "combat_audio", "bonuses" -> {
+                            // Zakładam, że format jest np. "1,2,3"
+                            val arr = valueStr.split(",").map { it.toInt() }.toIntArray()
+                            configs[key] = arr
+                        }
 
                         "spawn_animation",
                         "id",
@@ -116,12 +128,13 @@ class NPCConfigParser {
                         "end_height",
                         "spell_id",
                         "death_gfx",
-                        "magic_level",
-                        ->
-                            configs[it.key.toString()] =
-                                if (it.value.toString().isEmpty()) Unit else it.value.toString().toInt()
+                        "magic_level" -> {
+                            configs[key] = jsonElement.asInt
+                        }
 
-                        "slayer_exp" -> configs[it.key.toString()] = it.value.toString().toDouble()
+                        "slayer_exp" -> {
+                            configs[key] = jsonElement.asDouble
+                        }
 
                         "safespot",
                         "aggressive",
@@ -129,14 +142,17 @@ class NPCConfigParser {
                         "poison_immune",
                         "facing_booth",
                         "can_tolerate",
-                        "water_npc",
-                        -> configs[it.key.toString()] = it.value.toString().toBoolean()
+                        "water_npc" -> {
+                            configs[key] = jsonElement.asBoolean
+                        }
 
-                        else -> log(this::class.java, Log.WARN, "Unhandled key for npc config: [${it.key}]")
+                        else -> {
+                            log(this::class.java, Log.WARN, "Unhandled key for npc config: [$key]")
+                        }
                     }
                 }
+                count++
             }
-            count++
         }
 
         log(this::class.java, Log.DEBUG, "Parsed $count NPC configurations.")
