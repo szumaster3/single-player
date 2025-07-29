@@ -1,5 +1,7 @@
 This project is a fork of [2009scape](https://gitlab.com/2009scape/2009scape).
 
+For more information, please visit: [szumaster.com](https://szumaster.com/)
+
 ___
 
 #### Requirements

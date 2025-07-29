@@ -289,6 +289,12 @@ object Graphics {
 
     const val COMPOST_MOUND_GFX_1424 = 1424
 
+    const val INTERACT_SUMMONING_OBELISK_1308 = 1308
+    const val SPIRIT_TERRORBIRD_SPECIAL_MOVE_1295 = 1295
+    const val UNICORN_STALLION_SPECIAL_MOVE_1298 = 1298
+    const val WOLPERTINGER_SPECIAL_MOVE_1306 = 1306
+    const val WAR_TORTOISE_SPECIAL_MOVE_1310 = 1310
+
     /*
      * Not sorted.
      */

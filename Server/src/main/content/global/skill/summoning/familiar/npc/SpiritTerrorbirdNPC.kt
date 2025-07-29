@@ -30,7 +30,7 @@ class SpiritTerrorbirdNPC @JvmOverloads constructor(owner: Player? = null, id: I
     override fun visualizeSpecialMove() {
         owner.visualize(
             Animation(Animations.CAST_FAMILIAR_SCROLL_7660),
-            Graphics(org.rs.consts.Graphics.WHITE_FAMILIAR_GRAPHIC_1295)
+            Graphics(org.rs.consts.Graphics.SPIRIT_TERRORBIRD_SPECIAL_MOVE_1295)
         )
     }
 

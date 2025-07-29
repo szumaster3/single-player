@@ -81,7 +81,7 @@ class UnicornStallionNPC(owner: Player? = null, id: Int = NPCs.UNICORN_STALLION_
         visualize(
             owner,
             Animation.create(Animations.CAST_FAMILIAR_SCROLL_7660),
-            Graphics.create(org.rs.consts.Graphics.WHITE_FAMILIAR_GRAPHIC_1298),
+            Graphics.create(org.rs.consts.Graphics.UNICORN_STALLION_SPECIAL_MOVE_1298),
         )
     }
 

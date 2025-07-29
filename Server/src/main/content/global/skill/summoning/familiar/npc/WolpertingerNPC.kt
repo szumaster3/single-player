@@ -32,7 +32,7 @@ class WolpertingerNPC @JvmOverloads constructor(owner: Player? = null, id: Int =
     }
 
     override fun visualizeSpecialMove() {
-        owner.visualize(Animation.create(Animations.CAST_FAMILIAR_SCROLL_7660), Graphics.create(org.rs.consts.Graphics.WHITE_FAMILIAR_GRAPHIC_1306))
+        owner.visualize(Animation.create(Animations.CAST_FAMILIAR_SCROLL_7660), Graphics.create(org.rs.consts.Graphics.WOLPERTINGER_SPECIAL_MOVE_1306))
     }
 
     override fun getIds(): IntArray {
