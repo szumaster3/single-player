@@ -44,6 +44,10 @@ Server/hasRan.txt
 Server/latestdump.txt
 Server/target/*
 
+Tools/settings.json
+Tools/*
+/Tools/data/*
+
 __pycache__/
 
 bin/
