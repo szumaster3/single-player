@@ -148,7 +148,7 @@
     <ObjectAction mode="add" id="39415" x="3296" y="4509" z="0" type="22" direction="e"/>
     <ObjectAction mode="add" id="39416" x="3297" y="4509" z="0" type="22" direction="w"/>
 
-    <!-- Construction house. - Temporary for tests scenery. -->
+    <!-- Construction house. - Temporary for debug scenery. -->
     <ObjectAction mode="add" id="10816" x="1954" y="5096" z="0" type="0" direction="w"/>
     <ObjectAction mode="add" id="10816" x="1957" y="5096" z="0" type="0" direction="w"/>
 
