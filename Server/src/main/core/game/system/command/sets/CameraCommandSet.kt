@@ -98,7 +98,7 @@ class CameraCommandSet : CommandSet(Privilege.ADMIN) {
         define(
             name = "shakecam",
             privilege = Privilege.ADMIN,
-            usage = "::shakecam <lt>Camera Movement Type (0-4)<gt> [<lt>Jitter<gt> <lt>Amplitude<gt> <lt>Frequency<gt> <lt>Speed<gt>]",
+            usage = "::shakecam <lt>Type (0-4)<gt> [<lt>Jitter<gt> <lt>Amplitude<gt> <lt>Frequency<gt> <lt>Speed<gt>]",
             description = "Type (0-4) Jitter, Amplitude, Frequency (0-255)",
         ) { player, args ->
             val cameraMovementType = args[1].toIntOrNull() ?: return@define

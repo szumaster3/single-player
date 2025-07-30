@@ -304,40 +304,35 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
             )
 
             for (i in pages[page] until end) {
-                var command = CommandMapping.getCommands()[i]
-                var title = command.name
-                var rights = command.privilege.ordinal
-                var icon = rights - 1
+                val command = CommandMapping.getCommands()[i]
+                val rights = command.privilege.ordinal
+                val icon = rights - 1
 
                 if (rights > player.rights.ordinal) continue
 
-                if (rights > 0) {
-                    title = "(<img=$icon>) $title"
+                val title = buildString {
+                    if (rights > 0) append("(<img=$icon>) ")
+                    append("<col=ffb000>::${command.name}</col>")
                 }
 
                 sendString(player, title, Components.QUESTJOURNAL_SCROLL_275, lineid++)
 
                 if (command.usage.isNotEmpty()) {
-                    sendString(player, "Usage: ${command.usage}", Components.QUESTJOURNAL_SCROLL_275, lineid++)
+                    sendString(player, "<col=aaaaaa> Usage:</col> <col=ffffff>${command.usage}</col>", Components.QUESTJOURNAL_SCROLL_275, lineid++)
                 }
 
                 if (command.description.isNotEmpty()) {
-                    sendString(player, command.description, Components.QUESTJOURNAL_SCROLL_275, lineid++)
+                    sendString(player, "<col=aaaaaa> Info:</col> <col=ffffff>${command.description}</col>", Components.QUESTJOURNAL_SCROLL_275, lineid++)
                 }
 
-                sendString(
-                    player,
-                    "<str>-------------------------------</str>",
-                    Components.QUESTJOURNAL_SCROLL_275,
-                    lineid++,
-                )
+                sendString(player, "", Components.QUESTJOURNAL_SCROLL_275, lineid++)
 
                 if (lineid > 306) {
                     sendString(
                         player,
-                        "To view the next page, use ::commands ${page + 2}",
+                        "<col=ff0000>To view the next page, use ::commands ${page + 2}</col>",
                         Components.QUESTJOURNAL_SCROLL_275,
-                        lineid,
+                        lineid
                     )
                     break
                 }
