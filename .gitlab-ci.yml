@@ -21,8 +21,9 @@ cache:
 verify:jdk11:
   stage: build
   script:
-    - 'mvn $MAVEN_CLI_OPTS -f constants/pom.xml install'
-    - 'cd Server'
+    - 'cd Constants'
+    - 'mvn $MAVEN_CLI_OPTS install'
+    - 'cd ../Server'
     - 'mvn $MAVEN_CLI_OPTS verify'
   except:
     variables:
