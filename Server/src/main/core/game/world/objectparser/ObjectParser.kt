@@ -75,9 +75,8 @@ class ObjectParser : StartupListener {
                     }
                 }
             }
-
-            log(this::class.java, Log.INFO, "Object parser: added=$added, removed=$removed.")
-
+            val total = added + removed
+            log(this::class.java, Log.DEBUG, "Total objects parsed: $total, Added: $added, Removed: $removed")
         } catch (e: Exception) {
             e.printStackTrace()
         }

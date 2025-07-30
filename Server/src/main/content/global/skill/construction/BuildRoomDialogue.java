@@ -1,5 +1,6 @@
 package content.global.skill.construction;
 
+import core.cache.def.impl.SceneryDefinition;
 import core.game.dialogue.Dialogue;
 import core.game.dialogue.DialogueInterpreter;
 import core.game.node.entity.player.Player;
@@ -15,7 +16,6 @@ import core.tools.Log;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static core.api.ContentAPIKt.log;
@@ -209,31 +209,28 @@ public final class BuildRoomDialogue extends Dialogue {
         Location base = player.getViewport().getRegion().getBaseLocation()
                 .transform(roomX << 3, roomY << 3, player.getLocation().getZ());
 
-        Scenery[][] objects = room.getChunk().getObjects();
-
-        int plane = roomZ;
-
-        if (plane < 0 || plane >= objects.length) {
-            plane = 0;
-        }
-
         for (int x = 0; x < 8; x++) {
             for (int y = 0; y < 8; y++) {
-                Scenery scenery = objects[x][y];
-                if (scenery != null && scenery.getDefinition().hasAction("build")) {
+                Scenery[] scenery = room.getChunk().getObjects(x, y);
+                if (scenery == null) continue;
+
+                for (Scenery object : scenery) {
+                    if (object == null) continue;
+
+                    SceneryDefinition obj = object.getDefinition();
+                    if (obj == null || !obj.hasAction("build")) continue;
+
                     int[] pos = RegionChunk.getRotatedPosition(
                             x, y,
-                            scenery.getDefinition().sizeX,
-                            scenery.getDefinition().sizeY,
-                            scenery.getRotation(),
-                            rotation
+                            obj.sizeX, obj.sizeY,
+                            object.getRotation(), rotation
                     );
-                    Scenery obj = scenery.transform(
-                            scenery.getId(),
-                            (scenery.getRotation() + rotation) % 4,
-                            base.transform(pos[0], pos[1], 0)
-                    );
-                    boundaries.add(SceneryBuilder.add(obj));
+
+                    Location transformedLoc = base.transform(pos[0], pos[1], 0);
+                    int rotatedRot = (object.getRotation() + rotation) % 4;
+
+                    Scenery transformed = object.transform(object.getId(), rotatedRot, transformedLoc);
+                    boundaries.add(SceneryBuilder.add(transformed));
                 }
             }
         }

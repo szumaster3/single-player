@@ -32,61 +32,45 @@ class DoorPlugin : OptionHandler() {
         return this
     }
 
-    override fun handle(
-        player: Player,
-        node: Node,
-        option: String,
-    ): Boolean {
-        if (node !is Scenery) {
-            return false
-        }
-
-        when (option) {
-            "pick-lock", "force" -> return false
-        }
-
-        val second = DoorActionHandler.getSecondDoor(node)
-
-        if (second != null) {
-              DoorActionHandler.open(
-                node.asScenery(),
-                second,
-                getReplaceId(node.asScenery()),
-                getReplaceId(second),
-                true,
-                -1,
-                false,
-            )
+    override fun handle(player: Player, node: Node, option: String): Boolean {
+        val `object` = node as Scenery
+        val second = DoorActionHandler.getSecondDoor(`object`)
+        if(option == "close") {
+            if(second != null)
+            DoorActionHandler.close(`object`, second, getReplaceId(`object`), getReplaceId(second), true, 500, false)
+        } else {
+            if(second != null)
+        DoorActionHandler.open(`object`, second, getReplaceId(`object`), getReplaceId(second), true, 500, false)
         }
         return true
     }
 
-    private fun getReplaceId(scenery: Scenery): Int {
+
+    private fun getReplaceId(`object`: Scenery): Int {
         for (data in REPLACEMENT) {
-            if (scenery.id == data[0]) {
+            if (`object`.id == data[0]) {
                 return data[1]
             }
         }
-        return scenery.id + 6
+        return `object`.id + 6
     }
 
+
+
     companion object {
-        val REPLACEMENT =
-            arrayOf(
-                intArrayOf(13100, 13104),
-                intArrayOf(13103, 13102),
-                intArrayOf(13100, 13102),
-                intArrayOf(13101, 13103),
-                intArrayOf(13006, 13008),
-                intArrayOf(13007, 13008),
-                intArrayOf(13015, 13017),
-                intArrayOf(13016, 13018),
-                intArrayOf(13094, 13095),
-                intArrayOf(13096, 13097),
-                intArrayOf(13109, 13110),
-                intArrayOf(13107, 13108),
-                intArrayOf(13118, 13120),
-                intArrayOf(13119, 13121),
-            )
+        val REPLACEMENT = arrayOf(
+            intArrayOf(13100, 13102),
+            intArrayOf(13101, 13103),
+            intArrayOf(13006, 13008),
+            intArrayOf(13007, 13008),
+            intArrayOf(13015, 13017),
+            intArrayOf(13016, 13018),
+            intArrayOf(13094, 13095),
+            intArrayOf(13096, 13097),
+            intArrayOf(13109, 13110),
+            intArrayOf(13107, 13108),
+            intArrayOf(13118, 13120),
+            intArrayOf(13119, 13121)
+        )
     }
 }
