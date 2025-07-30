@@ -222,7 +222,7 @@ public enum BuildHotspot {
         linkedHotspots.add(new BuildHotspot[]{RUG, RUG2, RUG3});
         linkedHotspots.add(new BuildHotspot[]{BEDROOM_RUG, BEDROOM_RUG2, BEDROOM_RUG3});
         linkedHotspots.add(new BuildHotspot[]{HALL_RUG, HALL_RUG2, HALL_RUG3});
-        linkedHotspots.add(new BuildHotspot[]{CR_CORNER, CR_CORNER2, CR_CORNER3, CR_CORNER4, CR_RING, CR_RING2, CR_RING3, CR_RING4, CR_FLOOR, CR_FLOOR2, CR_FLOOR3, CR_FLOOR4, CR_FLOOR5, CR_FLOOR6, CR_FLOOR7, CR_FLOOR8, CR_INVISIBLE_WALL, CR_INVISIBLE_WALL2, CR_INVISIBLE_WALL3});
+        linkedHotspots.add(new BuildHotspot[]{CR_RING, CR_RING2, CR_RING3, CR_RING4, CR_CORNER, CR_CORNER2, CR_CORNER3, CR_CORNER4, CR_FLOOR, CR_FLOOR2, CR_FLOOR3, CR_FLOOR4, CR_FLOOR5, CR_FLOOR6, CR_FLOOR7, CR_FLOOR8, CR_INVISIBLE_WALL, CR_INVISIBLE_WALL2, CR_INVISIBLE_WALL3});
         linkedHotspots.add(new BuildHotspot[]{Q_HALL_RUG, Q_HALL_RUG2, Q_HALL_RUG3});
         linkedHotspots.add(new BuildHotspot[]{CHAPEL_RUG, CHAPEL_RUG2});
         linkedHotspots.add(new BuildHotspot[]{HEDGE1, HEDGE2, HEDGE3});
@@ -231,7 +231,7 @@ public enum BuildHotspot {
         linkedHotspots.add(new BuildHotspot[]{DUNGEON_DOOR_LEFT, DUNGEON_DOOR_RIGHT});
         linkedHotspots.add(new BuildHotspot[]{DUNGEON_DOOR_LEFT2, DUNGEON_DOOR_RIGHT2});
         linkedHotspots.add(new BuildHotspot[]{SMALL_PLANT_1, SMALL_PLANT1});
-        linkedHotspots.add(new BuildHotspot[]{SHELVES, SHELVES_2});
+        linkedHotspots.add(new BuildHotspot[]{SHELVES, SHELVES_2});// linkedHotspots.add(new BuildHotspot[]{HABITAT_1, HABITAT_2});
     }
 
     private BuildHotspot(int objectId, BuildHotspotType type, Animation buildingAnimation, Decoration... decorations) {

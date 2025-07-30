@@ -203,6 +203,30 @@ class TeleportCommandSet : CommandSet(Privilege.ADMIN) {
             player.properties.teleportLocation = ServerConstants.HOME_LOCATION
         }
 
+        val roomProperties = mapOf(
+            "GARDEN" to setOf("CENTREPIECE", "TREE", "BIG_TREE", "SMALL_PLANT_1", "SMALL_PLANT_2", "BIG_PLANT_1", "BIG_PLANT_2"),
+            "PARLOUR" to setOf("CHAIR", "RUG", "FIREPLACE", "CURTAINS", "BOOKCASE"),
+            "KITCHEN" to setOf("BARREL", "TABLE", "STOVE", "LARDER", "SHELVES", "SINK", "CAT_BASKET"),
+            "DINING_ROOM" to setOf("TABLE", "BENCH", "FIREPLACE", "DECORATION", "BELL_PULL", "CURTAINS"),
+            "WORKSHOP" to setOf("WORKBENCH", "REPAIR", "HERALDRY", "CLOCKMAKING", "TOOL"),
+            "BEDROOM" to setOf("BED", "DRESSER", "FIREPLACE", "CLOCK", "RUG", "CURTAIN", "WARDROBE"),
+            "QUEST_HALL" to setOf("STAIR", "RUG", "GUILD_TROPHY", "PORTRAIT", "LANDSCAPE", "SWORD", "MAP", "BOOKCASE"),
+            "STUDY_ROOM" to setOf("GLOBE", "LECTERN", "CRYSTAL_BALL", "TELESCOPE", "WALL_CHART", "BOOKCASE", "STATUE"),
+            "COMBAT_ROOM" to setOf("COMBAT_RING", "STORAGE", "DECORATION"),
+            "PORTAL" to setOf("PORTAL", "CENTREPIECE"),
+            "CHAPEL" to setOf("ALTAR", "LAMP", "ICON", "WINDOW", "STATUE", "MUSICAL", "RUG"),
+            "THRONE_ROOM" to setOf("THRONE", "LEVER", "FLOOR", "TRAPDOOR", "SEATING", "DECORATION"),
+            "GAME_ROOM" to setOf("STONE", "RANGING_GAME", "ELEMENTAL_BALANCE", "PRIZE_CHEST", "GAME"),
+            "SKILL_HALL" to setOf("STAIR", "RUG", "CASTLE_WARS_ARMOUR", "ARMOUR", "HEAD_TROPHY", "FISHING_TROPHY", "RUNE_CASE", "RUNEFEST_CASE")
+        )
+
+        fun roomType(match: BuildHotspot): String? {
+            for ((room, types) in roomProperties) {
+                if (types.contains(match.name)) return room
+            }
+            return null
+        }
+
         define(
             name = "findobjs",
             privilege = Privilege.ADMIN,
@@ -223,40 +247,62 @@ class TeleportCommandSet : CommandSet(Privilege.ADMIN) {
             val dump = File(exportDir, filename)
 
             GlobalScope.launch {
-                val writer = dump.bufferedWriter()
-                for (plane in region.planes)
-                {
-                    for (objects in plane.objects!!.filterNotNull())
-                    {
-                        for (parent in objects.filterNotNull())
-                        {
-                            if (parent.id in sceneryId..sceneryIdEnd)
-                            {
+                val groupMap = LinkedHashMap<String, MutableList<String>>()
+                groupMap["UNKNOWN"] = mutableListOf()
+                for (plane in region.planes) {
+                    for (objects in plane.objects!!.filterNotNull()) {
+                        for (parent in objects.filterNotNull()) {
+                            if (parent.id in sceneryId..sceneryIdEnd) {
                                 val loc = parent.location
                                 /*
-                                val text = buildString {
-                                    appendLine("id=${parent.id}, name=${parent.name}")
-                                    appendLine("wrapper=${parent.wrapper}")
-                                    appendLine("chunkX=${loc.chunkX}, chunkY=${loc.chunkY}")
-                                    appendLine("config=${parent.definition.configFile}, varbit=${parent.definition.varbitID}")
-                                    appendLine()
-                                }*/
+                                                               val text = buildString {
+                                                                   appendLine("id=${parent.id}, name=${parent.name}")
+                                                                   appendLine("wrapper=${parent.wrapper}")
+                                                                   appendLine("chunkX=${loc.chunkX}, chunkY=${loc.chunkY}")
+                                                                   appendLine("config=${parent.definition.configFile}, varbit=${parent.definition.varbitID}")
+                                                                   appendLine()
+                                                               }*/
 
-                                val match = BuildHotspot.values().find { hotspot ->
-                                    (hotspot.objectIds?.contains(parent.id) == true) ||
-                                            (hotspot.objectId == parent.id)
+                                val match = BuildHotspot.values().find {
+                                    (it.objectIds?.contains(parent.id) == true) || (it.objectId == parent.id)
                                 }
 
-                                if (match != null){
-                                    writer.write("new Hotspot(BuildHotspot.${match.name.uppercase()}, "+/*"_${match.objectId}, " +*/"${loc.chunkX}, ${loc.chunkY}),\n")
+                                if (match != null) {
+                                    val type = roomType(match) ?: "UNKNOWN"
+                                    val line = "new Hotspot(BuildHotspot.${match.name}, ${loc.chunkX}, ${loc.chunkY}), // Room: $type"
+                                    groupMap.getOrPut(type) { mutableListOf() }.add(line)
                                 } else {
-                                    writer.write("No match found for object ID=${parent.id} at (${loc.chunkX}, ${loc.chunkY})\n")
+                                    val line = "// No match found for object ID=${parent.id} at (${loc.chunkX}, ${loc.chunkY})"
+                                    groupMap["UNKNOWN"]!!.add(line)
                                 }
                                 /*writer.write(text)*/
                             }
                         }
                     }
                 }
+
+                val writer = dump.bufferedWriter()
+
+                for (room in roomProperties.keys) {
+                    groupMap[room]?.let { lines ->
+                        writer.write("//=== $room ===\n")
+                        for (line in lines) {
+                            writer.write("$line\n")
+                        }
+                        writer.write("\n")
+                    }
+                }
+
+                groupMap.forEach { (room, lines) ->
+                    if (room !in roomProperties.keys) {
+                        writer.write("//=== $room ===\n")
+                        for (line in lines) {
+                            writer.write("$line\n")
+                        }
+                        writer.write("\n")
+                    }
+                }
+
                 writer.close()
                 player.debug("Saved: ${dump.path}")
             }
