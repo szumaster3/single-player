@@ -403,7 +403,7 @@ public final class BuildingUtils {
      */
     public static void removeDecoration(Player player, Scenery object) {
         if (object.getId() == Decoration.PORTAL.getObjectId() && player.getHouseManager().getPortalAmount() <= 1) {
-            sendMessage(player, "You need at least one portal, how else would you leave your house?");
+            sendMessage(player, "Your house must have at least one exit portal.");
             return;
         }
         Location l = object.getLocation();

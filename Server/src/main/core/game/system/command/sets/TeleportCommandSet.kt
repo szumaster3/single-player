@@ -1,5 +1,6 @@
 package core.game.system.command.sets
 
+import content.global.skill.construction.BuildHotspot
 import core.ServerConstants
 import core.game.node.entity.player.link.TeleportManager
 import core.game.system.command.Privilege
@@ -232,14 +233,26 @@ class TeleportCommandSet : CommandSet(Privilege.ADMIN) {
                             if (parent.id in sceneryId..sceneryIdEnd)
                             {
                                 val loc = parent.location
+                                /*
                                 val text = buildString {
                                     appendLine("id=${parent.id}, name=${parent.name}")
                                     appendLine("wrapper=${parent.wrapper}")
                                     appendLine("chunkX=${loc.chunkX}, chunkY=${loc.chunkY}")
                                     appendLine("config=${parent.definition.configFile}, varbit=${parent.definition.varbitID}")
                                     appendLine()
+                                }*/
+
+                                val match = BuildHotspot.values().find { hotspot ->
+                                    (hotspot.objectIds?.contains(parent.id) == true) ||
+                                            (hotspot.objectId == parent.id)
                                 }
-                                writer.write(text)
+
+                                if (match != null){
+                                    writer.write("new Hotspot(BuildHotspot.${match.name.uppercase()}, "+/*"_${match.objectId}, " +*/"${loc.chunkX}, ${loc.chunkY}),\n")
+                                } else {
+                                    writer.write("No match found for object ID=${parent.id} at (${loc.chunkX}, ${loc.chunkY})\n")
+                                }
+                                /*writer.write(text)*/
                             }
                         }
                     }
