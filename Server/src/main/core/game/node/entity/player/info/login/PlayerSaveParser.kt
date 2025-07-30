@@ -28,22 +28,28 @@ class PlayerSaveParser(val player: Player) {
         val contentHooks = ArrayList<PersistPlayer>()
     }
 
+    var reader: FileReader? = null
     var saveFile: JsonObject? = null
     var read = true
 
     fun parse() {
         val jsonFile = File(ServerConstants.PLAYER_SAVE_PATH + player.name + ".json")
-        if (!jsonFile.exists()) {
-            log(this::class.java, Log.WARN, "Couldn't find save file for ${player.name}, or save is corrupted.")
+        if (jsonFile.exists()) {
+            FileReader(jsonFile).use { fileReader ->
+                val element = JsonParser.parseReader(fileReader)
+                if (element.isJsonObject) {
+                    saveFile = element.asJsonObject
+                    parseData()
+                    player.details.saveParsed = true
+                } else {
+                    log(this::class.java, Log.WARN, "Save file for ${player.name} is not a valid JSON object.")
+                    read = false
+                }
+            }
+        } else {
+            player.details.saveParsed = true
             read = false
-            return
-        }
-        FileReader(jsonFile).use { reader ->
-            saveFile = JsonParser.parseReader(reader).asJsonObject
-        }
-
-        if (read) {
-            parseData()
+            log(this::class.java, Log.INFO, "No save file found for ${player.name}, assuming new player. Marking as saveParsed=true.")
         }
     }
 

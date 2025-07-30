@@ -3131,12 +3131,8 @@ fun dumpContainer(
             }
         }
     }
-
-    return dumpedCount.also {
-        container.update()
-        bank.update()
-    }
-
+    bank.refresh()
+    return dumpedCount
 }
 
 /**

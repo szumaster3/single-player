@@ -22,7 +22,6 @@ import java.io.FileWriter
 import java.io.IOException
 import java.lang.Math.ceil
 import java.util.*
-import javax.script.ScriptEngineManager
 
 class PlayerSaver(val player: Player) {
 
