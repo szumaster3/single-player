@@ -48,10 +48,10 @@ class ArcheryCompetitionPulse(
             delay = player.properties.attackSpeed
         }
         if (player.equipment.remove(Item(Items.BRONZE_ARROW_882, 1))) {
-            val p = Ammunition.get(Items.BRONZE_ARROW_882).projectile.transform(player, sceneryId.location)
-            p.endLocation = sceneryId.location
-            p.endHeight = 25
-            p.send()
+            val p = Ammunition.get(Items.BRONZE_ARROW_882)?.projectile?.transform(player, sceneryId.location)
+            p?.endLocation = sceneryId.location
+            p?.endHeight = 25
+            p?.send()
             player.animate(Animation(Animations.FIRE_BOW_426))
             player.lock(delay)
 

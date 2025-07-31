@@ -45,6 +45,11 @@ class CombatPulse(val entity: Entity?) : Pulse(1, entity, null) {
     var temporaryHandler: CombatSwingHandler? = null
 
     /**
+     * Last used style.
+     */
+    var lastUsedStyle: CombatStyle? = null
+
+    /**
      * The default handler for the current combat style.
      */
     var handler = style.swingHandler
@@ -376,10 +381,9 @@ class CombatPulse(val entity: Entity?) : Pulse(1, entity, null) {
             val state = BattleState(entity, victim)
             val set = handler.getArmourSet(entity)
             entity.properties.armourSet = set
-
             val delay = handler.swing(entity, victim, state)
             if (delay < 0) return false
-
+            entity.properties.combatPulse.lastUsedStyle = state.style
             entity.faceTemporary(victim, 1)
             handler.adjustBattleState(entity, victim, state)
             handler.addExperience(entity, victim, state)
