@@ -1,6 +1,5 @@
 package content.global.skill.construction;
 
-import core.cache.def.impl.SceneryDefinition;
 import core.game.dialogue.Dialogue;
 import core.game.dialogue.DialogueInterpreter;
 import core.game.node.entity.player.Player;
@@ -12,40 +11,76 @@ import core.game.world.map.Direction;
 import core.game.world.map.Location;
 import core.game.world.map.RegionChunk;
 import core.plugin.Initializable;
-import core.tools.Log;
+import org.rs.consts.Items;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static core.api.ContentAPIKt.log;
-
 /**
- * Represents the build room dialogue.
+ * Handles the building a room dialogue.
+ *
+ * @author Emperor
  */
 @Initializable
 public final class BuildRoomDialogue extends Dialogue {
-    private List<Scenery> boundaries = new ArrayList<>();
+
+    /**
+     * The door hotspot.
+     */
     private Scenery door;
+
+    /**
+     * The direction.
+     */
     private Direction[] directions;
+
+    /**
+     * The room exits.
+     */
     private boolean[] exits;
+
+    /**
+     * The rotation index.
+     */
     private int index;
+
+    /**
+     * The boundaries of the room to build.
+     */
+    private List<Scenery> boundaries = new ArrayList<>(20);
+
+    /**
+     * The room we're building.
+     */
     private Room room;
+
+    /**
+     * The room x-coordinate.
+     */
     private int roomX;
+
+    /**
+     * The room y-coordinate.
+     */
     private int roomY;
+
+    /**
+     * The room z-coordinate (3 for dungeon).
+     */
     private int roomZ;
 
     /**
-     * Instantiates a new Build room dialogue.
+     * Constructs a new {@code BuildRoomDialogue} {@code Object}
      */
     public BuildRoomDialogue() {
         super();
     }
 
     /**
-     * Instantiates a new Build room dialogue.
+     * Constructs a new {@code BuildRoomDialogue} {@code Object}
      *
-     * @param player the player
+     * @param player The player.
      */
     public BuildRoomDialogue(Player player) {
         super(player);
@@ -57,7 +92,7 @@ public final class BuildRoomDialogue extends Dialogue {
     }
 
     @Override
-    public boolean open(java.lang.Object... args) {
+    public boolean open(Object... args) {
         player.getInterfaceManager().close();
         RoomProperties props = (RoomProperties) args[0];
         if (player.getSkills().getStaticLevel(Skills.CONSTRUCTION) < props.getLevel()) {
@@ -75,7 +110,7 @@ public final class BuildRoomDialogue extends Dialogue {
         roomX = pos[0];
         roomY = pos[1];
         if (!inBounds()) {
-            interpreter.sendPlainMessage(false, "Your house is too large. TODO: correct message");
+            interpreter.sendPlainMessage(false, "You can't build a room here, you need a room to build on.");
             stage = 2;
             return true;
         }
@@ -117,11 +152,16 @@ public final class BuildRoomDialogue extends Dialogue {
             }
         }
         options("Rotate clockwise", "Rotate anticlockwise", "Build", "Cancel");
-        drawGhostRoom();
         stage = 1;
+        drawGhostRoom();
         return true;
     }
 
+    /**
+     * Checks if the room to be built is in the available boundaries of the house.
+     *
+     * @return The boundaries.
+     */
     private boolean inBounds() {
         Rectangle bounds = player.getHouseManager().getBoundaries();
         int max = player.getHouseManager().getMaximumDimension(player);
@@ -150,11 +190,11 @@ public final class BuildRoomDialogue extends Dialogue {
                 switch (buttonId) {
                     case 1:
                     case 2:
-                        options("Rotate clockwise", "Rotate anticlockwise", "Build", "Cancel");
                         rotate(buttonId == 2);
+                        options("Rotate clockwise", "Rotate anticlockwise", "Build", "Cancel");
                         return true;
                     case 3:
-                        if (player.getInventory().remove(new Item(995, room.getProperties().getCost()))) {
+                        if (player.getInventory().remove(new Item(Items.COINS_995, room.getProperties().getCost()))) {
                             room.setRotation(directions[index].toInteger());
                             boolean[] exit = new boolean[exits.length];
                             for (int i = 0; i < exit.length; i++) {
@@ -179,20 +219,17 @@ public final class BuildRoomDialogue extends Dialogue {
         return false;
     }
 
+    /**
+     * Rotates the room.
+     *
+     * @param counter If we're rotating counter clockwise.
+     */
     private void rotate(boolean counter) {
-        final int totalDirections = directions.length;
-        int attempts = 0;
+        Direction direction = null;
+        while ((direction = directions[index = (index + (counter ? 3 : 1)) % 4]) == null) {
 
-        do {
-            index = (index + (counter ? -1 : 1) + totalDirections) % totalDirections;
-            attempts++;
-            if (attempts > totalDirections) {
-                log(this.getClass(), Log.DEBUG, "Direction = [null] Cannot rotate.");
-                return;
-            }
-        } while (directions[index] == null);
-        Integer direction = directions[index].toInteger();
-        room.setRotation(direction);
+        }
+        room.setRotation(direction.toInteger());
         drawGhostRoom();
     }
 
@@ -200,37 +237,21 @@ public final class BuildRoomDialogue extends Dialogue {
      * Draws the current boundaries of the room to build.
      */
     private void drawGhostRoom() {
-        for (Scenery scenery : boundaries) {
-            SceneryBuilder.remove(scenery);
+        for (Scenery object : boundaries) {
+            SceneryBuilder.remove(object);
         }
-        boundaries.clear();
-
         int rotation = directions[index].toInteger();
-        Location base = player.getViewport().getRegion().getBaseLocation()
-                .transform(roomX << 3, roomY << 3, player.getLocation().getZ());
-
+        boundaries.clear();
+        Location base = player.getViewport().getRegion().getBaseLocation().transform(roomX << 3, roomY << 3, player.getLocation().getZ());
         for (int x = 0; x < 8; x++) {
             for (int y = 0; y < 8; y++) {
-                Scenery[] scenery = room.getChunk().getObjects(x, y);
-                if (scenery == null) continue;
-
-                for (Scenery object : scenery) {
-                    if (object == null) continue;
-
-                    SceneryDefinition obj = object.getDefinition();
-                    if (obj == null || !obj.hasAction("build")) continue;
-
-                    int[] pos = RegionChunk.getRotatedPosition(
-                            x, y,
-                            obj.sizeX, obj.sizeY,
-                            object.getRotation(), rotation
-                    );
-
-                    Location transformedLoc = base.transform(pos[0], pos[1], 0);
-                    int rotatedRot = (object.getRotation() + rotation) % 4;
-
-                    Scenery transformed = object.transform(object.getId(), rotatedRot, transformedLoc);
-                    boundaries.add(SceneryBuilder.add(transformed));
+                Scenery[] objects = room.getChunk().getObjects(x, y);
+                for (Scenery object : objects) {
+                    if (object != null && object.getDefinition().hasAction("build")) {
+                        int[] pos = RegionChunk.getRotatedPosition(x, y, object.getDefinition().sizeX, object.getDefinition().sizeY, object.getRotation(), rotation);
+                        Scenery obj = object.transform(object.getId(), (object.getRotation() + rotation) % 4, base.transform(pos[0], pos[1], 0));
+                        boundaries.add(SceneryBuilder.add(obj));
+                    }
                 }
             }
         }
