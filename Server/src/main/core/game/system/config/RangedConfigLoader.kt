@@ -58,7 +58,7 @@ class RangedConfigLoader {
                 if (effect != null) {
                     ammo.effect = effect
                 }
-                Ammunition.getAmmunition()[e.get("itemId").asInt] = ammo
+                Ammunition.putAmmunition(e.get("itemId").asInt, ammo)
                 count++
             }
         }
