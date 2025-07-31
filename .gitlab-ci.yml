@@ -21,7 +21,6 @@ cache:
 verify:jdk11:
   stage: build
   script:
-    - 'cd Emulator'
     - 'mvn $MAVEN_CLI_OPTS verify'
   except:
     variables:

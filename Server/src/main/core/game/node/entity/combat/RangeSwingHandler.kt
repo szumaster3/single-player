@@ -20,6 +20,8 @@ import core.game.world.map.RegionManager
 import core.game.world.update.flag.context.Graphics
 import core.tools.Log
 import core.tools.RandomFunction
+import org.rs.consts.Animations
+import org.rs.consts.Components
 import kotlin.math.ceil
 import kotlin.math.floor
 
@@ -34,7 +36,7 @@ open class RangeSwingHandler(vararg flags: SwingHandlerFlag) : CombatSwingHandle
             return InteractionType.NO_INTERACT
         }
         var distance = 7
-        if (entity is Player && (entity.getExtension<Any>(WeaponInterface::class.java) as WeaponInterface).weaponInterface?.interfaceId == 91) {
+        if (entity is Player && (entity.getExtension<Any>(WeaponInterface::class.java) as WeaponInterface).weaponInterface?.interfaceId == Components.WEAPON_THROWN_SEL_91) {
             distance -= 2
         }
         if (entity.properties.attackStyle!!.style == WeaponInterface.STYLE_LONG_RANGE) {
@@ -72,6 +74,7 @@ open class RangeSwingHandler(vararg flags: SwingHandlerFlag) : CombatSwingHandle
     override fun swing(entity: Entity?, victim: Entity?, state: BattleState?): Int {
         configureRangeData(entity, state)
         if (state!!.weapon == null || !hasAmmo(entity, state)) {
+            entity!!.properties.combatPulse.lastUsedStyle = CombatStyle.RANGE
             entity!!.properties.combatPulse.stop()
             return -1
         }
@@ -104,26 +107,48 @@ open class RangeSwingHandler(vararg flags: SwingHandlerFlag) : CombatSwingHandle
     }
 
     fun configureRangeData(entity: Entity?, state: BattleState?) {
-        state!!.style = CombatStyle.RANGE
-        val w: Weapon?
+        if (entity == null || state == null) return
+        var style = entity.properties.combatPulse.lastUsedStyle
+        state.style = CombatStyle.RANGE
+
         if (entity is Player) {
-            val rw = RangeWeapon.get(entity.equipment.getNew(3).id)
-            if (rw == null) {
-                log(
-                    this::class.java,
-                    Log.ERR,
-                    "Unhandled range weapon used - [item id=" + entity.equipment.getNew(3).id + "].",
-                )
+            val weaponItem = entity.equipment.getAsId(EquipmentContainer.SLOT_WEAPON)
+            if (weaponItem == null) {
+                entity.properties.combatPulse.stop()
+                log(this::class.java, Log.ERR, "No $weaponItem for player ${entity}.")
                 return
             }
-            w = Weapon(entity.equipment[3], rw.ammunitionSlot, entity.equipment.getNew(rw.ammunitionSlot))
-            w.type = rw.weaponType
-            state.rangeWeapon = rw
-            state.ammunition = Ammunition.get(w.ammunition!!.id)
+
+            val rangeWeapon = RangeWeapon.get(weaponItem)
+            if (rangeWeapon == null) {
+                log(this::class.java, Log.ERR, "Unhandled range weapon used - [item id=${weaponItem}].")
+                entity.properties.combatPulse.stop()
+                return
+            }
+
+            if (rangeWeapon.weaponType == WeaponType.THROWN) {
+                val weaponObj = Weapon(Item(weaponItem), -1, null, WeaponType.THROWN)
+                weaponObj.type = WeaponType.THROWN
+                state.weapon = weaponObj
+                state.rangeWeapon = rangeWeapon
+                state.ammunition = null
+                entity.properties.combatPulse.lastUsedStyle = CombatStyle.RANGE
+                return
+            }
+
+            val ammoItem = entity.equipment.getNew(rangeWeapon.ammunitionSlot)
+            val w = Weapon(Item(weaponItem), rangeWeapon.ammunitionSlot, ammoItem)
+            w.type = rangeWeapon.weaponType
+            state.weapon = w
+            state.rangeWeapon = rangeWeapon
+            state.ammunition = ammoItem?.let { Ammunition.get(it.id) }
+
+
+            entity.properties.combatPulse.lastUsedStyle = CombatStyle.RANGE
         } else {
-            w = Weapon(null)
+            val w = Weapon(null)
+            state.weapon = w
         }
-        state.weapon = w
     }
 
     override fun adjustBattleState(entity: Entity, victim: Entity, state: BattleState) {
@@ -159,7 +184,7 @@ open class RangeSwingHandler(vararg flags: SwingHandlerFlag) : CombatSwingHandle
         val weapon: RangeWeapon? = state.weapon?.let { RangeWeapon.get(it.id) }
         val anim = entity.properties.attackAnimation.id
         weapon?.let {
-            if ((anim == 422 || anim == 423)) {
+            if ((anim == Animations.PUNCH_422 || anim == Animations.KICK_423)) {
                 entity.visualize(it.animation, start)
                 return
             }
@@ -259,63 +284,87 @@ open class RangeSwingHandler(vararg flags: SwingHandlerFlag) : CombatSwingHandle
 
     companion object {
         fun hasAmmo(e: Entity?, state: BattleState?): Boolean {
-            if (e !is Player) {
+            if (e !is Player) return true
+            val weaponType = state?.weapon?.type ?: return false
+            if (weaponType == WeaponType.DEGRADING) {
                 return true
             }
-            val type = state!!.weapon.type
-            val amount = if (type == WeaponType.DOUBLE_SHOT) 2 else 1
-            if (type == WeaponType.DEGRADING) {
-                return true
+            if (weaponType == WeaponType.THROWN) {
+                val weaponItem = e.equipment[EquipmentContainer.SLOT_WEAPON]
+                if (weaponItem != null && weaponItem.amount > 0) {
+                    return true
+                }
+                e.packetDispatch.sendMessage("You do not have enough ammo left.")
+                return false
             }
-            val item = e.equipment[state.weapon.ammunitionSlot]
-            if (item != null && item.amount >= amount) {
-                if (!state.rangeWeapon.ammunition.contains(item.id)) {
+            val ammoItem = e.equipment[state.weapon.ammunitionSlot]
+            val amountNeeded = if (weaponType == WeaponType.DOUBLE_SHOT) 2 else 1
+
+            if (ammoItem != null && ammoItem.amount >= amountNeeded) {
+                if (!state.rangeWeapon.ammunition.contains(ammoItem.id)) {
                     e.packetDispatch.sendMessage("You can't use this type of ammunition with this bow.")
                     return false
                 }
                 return true
             }
-            if (type == WeaponType.DOUBLE_SHOT) {
+
+            if (weaponType == WeaponType.DOUBLE_SHOT) {
                 state.weapon.type = WeaponType.DEFAULT
                 return hasAmmo(e, state)
             }
+
             e.packetDispatch.sendMessage("You do not have enough ammo left.")
             return false
         }
 
         fun useAmmo(e: Entity, state: BattleState, location: Location?) {
-            var dropLocation = location
-            if (e !is Player) {
+            if (e !is Player) return
+
+            val weaponType = state.weapon.type
+            val amount = if (weaponType == WeaponType.DOUBLE_SHOT) 2 else 1
+
+            if (weaponType == WeaponType.DEGRADING) {
                 return
             }
-            val type = state.weapon.type
-            val amount = if (type == WeaponType.DOUBLE_SHOT) 2 else 1
-            if (type == WeaponType.DEGRADING) {
+
+            if (weaponType == WeaponType.THROWN) {
+                val weaponItem = e.equipment[EquipmentContainer.SLOT_WEAPON] ?: return
+                if (weaponItem.amount < amount) {
+                    e.packetDispatch.sendMessage("You do not have enough ammo left.")
+                    return
+                }
+                e.equipment.replace(Item(weaponItem.id, weaponItem.amount - amount, weaponItem.charge), EquipmentContainer.SLOT_WEAPON)
                 return
             }
-            val ammo = state.weapon.ammunition
-            if (state.weapon.ammunitionSlot == -1 || ammo == null) {
-                return
-            }
+
+            val ammo = state.weapon.ammunition ?: return
+            if (state.weapon.ammunitionSlot == -1) return
+
             val dropRate = getDropRate(e)
-            if (dropRate == -1.0) {
+            if (dropRate == -1.0) return
+
+            val ammoItem = e.equipment[state.weapon.ammunitionSlot] ?: return
+            if (ammoItem.amount < amount) {
+                e.packetDispatch.sendMessage("You do not have enough ammo left.")
                 return
             }
-            e.equipment.replace(Item(ammo.id, ammo.amount - amount, ammo.charge), state.weapon.ammunitionSlot)
-            if (dropLocation == null) {
-                return
-            }
-            val flag = RegionManager.getClippingFlag(dropLocation)
-            if (flag and 0x200000 != 0) { // Water
-                dropLocation = null
-            }
-            if (dropLocation != null && state.rangeWeapon.isDropAmmo) {
-                val rate = 5 * (1.0 + e.skills.getLevel(Skills.RANGE) * 0.01) * dropRate
-                if (RandomFunction.randomize(rate.toInt()) != 0) {
-                    val drop = GroundItemManager.increase(Item(ammo.id, amount), dropLocation, e)
-                    if (drop != null) {
-                        if (e.getAttribute<Any?>("duel:ammo", null) != null) {
-                            (e.getAttribute<Any>("duel:ammo") as ArrayList<GroundItem?>).add(drop)
+
+            e.equipment.replace(Item(ammo.id, ammoItem.amount - amount, ammoItem.charge), state.weapon.ammunitionSlot)
+
+            var dropLocation = location
+            if (dropLocation != null) {
+                val flag = RegionManager.getClippingFlag(dropLocation)
+                if (flag and 0x200000 != 0) {
+                    dropLocation = null
+                }
+                if (dropLocation != null && state.rangeWeapon.isDropAmmo) {
+                    val rate = 5 * (1.0 + e.skills.getLevel(Skills.RANGE) * 0.01) * dropRate
+                    if (RandomFunction.randomize(rate.toInt()) != 0) {
+                        val drop = GroundItemManager.increase(Item(ammo.id, amount), dropLocation, e)
+                        if (drop != null) {
+                            if (e.getAttribute<Any?>("duel:ammo", null) != null) {
+                                (e.getAttribute<Any>("duel:ammo") as ArrayList<GroundItem?>).add(drop)
+                            }
                         }
                     }
                 }

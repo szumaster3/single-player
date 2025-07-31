@@ -479,21 +479,28 @@ abstract class CombatSwingHandler(var type: CombatStyle?) {
         if (entity == null || (victim is Player && entity is Player && entity.asPlayer().ironmanManager.isIronman)) {
             return
         }
-        var player: Player
-        var attStyle: Int
+        val player: Player
+        val attStyle: Int
+        val style: CombatStyle
 
         when (entity) {
             is Familiar -> {
-                player = entity.owner; attStyle = entity.attackStyle
+                player = entity.owner
+                attStyle = player.properties.attackStyle!!.style
+                style = state?.style ?: player.properties.combatPulse.lastUsedStyle ?: CombatStyle.MELEE
             }
 
             is Player -> {
-                player = entity; attStyle = entity.properties.attackStyle!!.style
+                player = entity
+                attStyle = player.properties.attackStyle!!.style
+                style = state?.style ?: player.properties.combatPulse.lastUsedStyle ?: CombatStyle.MELEE
             }
 
             else -> return
         }
+
         if (victim is NPC) EXPERIENCE_MOD *= victim.behavior.getXpMultiplier(victim, player)
+
         if (state != null) {
             val hit = state.totalDamage
             if (entity is Player) {
@@ -502,39 +509,45 @@ abstract class CombatSwingHandler(var type: CombatStyle?) {
                 player.skills.addExperience(Skills.HITPOINTS, experience, true)
             }
 
-            var skill = -1
-            when (attStyle) {
-                WeaponInterface.STYLE_DEFENSIVE -> skill = Skills.DEFENCE
-                WeaponInterface.STYLE_ACCURATE -> skill = Skills.ATTACK
-                WeaponInterface.STYLE_AGGRESSIVE -> skill = Skills.STRENGTH
-                WeaponInterface.STYLE_CONTROLLED -> {
-                    var experience = hit * EXPERIENCE_MOD
-                    experience /= 3.0
-                    player.skills.addExperience(Skills.ATTACK, experience, true)
-                    player.skills.addExperience(Skills.STRENGTH, experience, true)
-                    player.skills.addExperience(Skills.DEFENCE, experience, true)
-                    return
+            when (style) {
+                CombatStyle.MELEE -> {
+                    var skill = -1
+                    when (attStyle) {
+                        WeaponInterface.STYLE_DEFENSIVE -> skill = Skills.DEFENCE
+                        WeaponInterface.STYLE_ACCURATE -> skill = Skills.ATTACK
+                        WeaponInterface.STYLE_AGGRESSIVE -> skill = Skills.STRENGTH
+                        WeaponInterface.STYLE_CONTROLLED -> {
+                            val experience = hit * EXPERIENCE_MOD / 3.0
+                            player.skills.addExperience(Skills.ATTACK, experience, true)
+                            player.skills.addExperience(Skills.STRENGTH, experience, true)
+                            player.skills.addExperience(Skills.DEFENCE, experience, true)
+                            return
+                        }
+                    }
+                    if (skill < 0) return
+                    player.skills.addExperience(skill, hit * EXPERIENCE_MOD, true)
                 }
 
-                WeaponInterface.STYLE_RANGE_ACCURATE -> skill = Skills.RANGE
-                WeaponInterface.STYLE_RAPID -> skill = Skills.RANGE
-                WeaponInterface.STYLE_LONG_RANGE -> {
-                    player.skills.addExperience(Skills.RANGE, hit * (EXPERIENCE_MOD / 2), true)
-                    player.skills.addExperience(Skills.DEFENCE, hit * (EXPERIENCE_MOD / 2), true)
-                    return
+                CombatStyle.RANGE -> {
+                    if (attStyle == WeaponInterface.STYLE_LONG_RANGE) {
+                        player.skills.addExperience(Skills.RANGE, hit * (EXPERIENCE_MOD / 2), true)
+                        player.skills.addExperience(Skills.DEFENCE, hit * (EXPERIENCE_MOD / 2), true)
+                    } else {
+                        player.skills.addExperience(Skills.RANGE, hit * EXPERIENCE_MOD, true)
+                    }
                 }
 
-                WeaponInterface.STYLE_CAST -> skill = Skills.MAGIC
-                WeaponInterface.STYLE_DEFENSIVE_CAST -> {
-                    var experience = hit.toDouble()
-                    if (victim is NPC) experience *= victim.behavior.getXpMultiplier(victim, player)
-                    player.skills.addExperience(Skills.MAGIC, experience * 1.33, true)
-                    player.skills.addExperience(Skills.DEFENCE, experience, true)
-                    return
+                CombatStyle.MAGIC -> {
+                    if (attStyle == WeaponInterface.STYLE_DEFENSIVE_CAST) {
+                        var experience = hit.toDouble()
+                        if (victim is NPC) experience *= victim.behavior.getXpMultiplier(victim, player)
+                        player.skills.addExperience(Skills.MAGIC, experience * 1.33, true)
+                        player.skills.addExperience(Skills.DEFENCE, experience, true)
+                    } else {
+                        player.skills.addExperience(Skills.MAGIC, hit * EXPERIENCE_MOD, true)
+                    }
                 }
             }
-            if (skill < 0) return
-            player.skills.addExperience(skill, hit * EXPERIENCE_MOD, true)
         }
     }
 
