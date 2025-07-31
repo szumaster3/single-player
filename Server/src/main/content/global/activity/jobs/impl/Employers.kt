@@ -43,4 +43,6 @@ enum class Employers(
     GILLIE_GROATS(NPCs.GILLIE_GROATS_3807),
 
     AGGIE(NPCs.AGGIE_922),
+
+    FRED(NPCs.FRED_THE_FARMER_758)
 }

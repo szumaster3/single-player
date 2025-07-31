@@ -1,8 +1,10 @@
 package content.region.misthalin.lumbridge.plugin
 
+import content.data.GameAttributes
 import core.GlobalStatistics
 import core.api.*
 import core.game.activity.ActivityManager
+import core.game.dialogue.FaceAnim
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.Entity
@@ -56,6 +58,17 @@ class LumbridgePlugin : InteractionListener {
         }
 
         /*
+         * Handles interaction with penguin sheep.
+         * TODO: Mission report (Lumbridge)
+         */
+
+        on(NPCs.SHEEP_3579, IntType.NPC, "talk-to") { player, _ ->
+            sendPlayerDialogue(player, "That's a sheep...I think. I can't talk to sheep.", FaceAnim.THINKING)
+            setAttribute(player, GameAttributes.FRED_SEEN_THE_THING, true)
+            return@on true
+        }
+
+        /*
          * Handles reading the cow field signpost.
          */
 
@@ -103,7 +116,7 @@ class LumbridgePlugin : InteractionListener {
          */
 
         on(org.rs.consts.Scenery.CHEST_12309, IntType.SCENERY, "buy-items", "buy-food") { player, _ ->
-            CulinoChestPlugin.openShop(player, food = getUsedOption(player).lowercase() == "buy-food")
+            CulinaromancerChestPlugin.openShop(player, food = getUsedOption(player).lowercase() == "buy-food")
             return@on true
         }
 

@@ -408,4 +408,7 @@ internal object GameAttributes {
 
     const val ELENA_REPLACE = "/save:biohazard-items"
     const val FEED_ON_FENCE = "/save:biohazard:fed-fence"
+
+    // Fred the farmer.
+    const val FRED_SEEN_THE_THING = "/save:activity-shapeshifter"
 }

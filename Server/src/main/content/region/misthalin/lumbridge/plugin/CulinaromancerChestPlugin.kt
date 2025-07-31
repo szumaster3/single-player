@@ -13,7 +13,7 @@ import java.lang.Integer.min
 /**
  * handling player login events related to the Culinaromancer questline.
  */
-class CulinoChestPlugin : LoginListener {
+class CulinaromancerChestPlugin : LoginListener {
     override fun login(player: Player) {
         if (getQuestPoints(player) >= 18) {
             setVarbit(player, 1850, 5)

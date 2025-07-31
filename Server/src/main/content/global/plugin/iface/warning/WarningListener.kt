@@ -1,9 +1,11 @@
 package content.global.plugin.iface.warning
 
+import content.global.plugin.iface.FairyRing
 import content.global.skill.agility.AgilityHandler
 import content.region.kandarin.yanille.quest.itwatchtower.cutscene.EnclaveCutscene
 import core.api.*
 import core.game.dialogue.FaceAnim
+import core.game.event.FairyRingDialEvent
 import core.game.global.action.ClimbActionHandler.climb
 import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType
@@ -12,6 +14,7 @@ import core.game.interaction.InterfaceListener
 import core.game.interaction.QueueStrength
 import core.game.node.Node
 import core.game.node.entity.player.Player
+import core.game.node.entity.player.link.TeleportManager
 import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.item.Item
 import core.game.world.GameWorld
@@ -45,7 +48,8 @@ class WarningListener : InteractionListener, InterfaceListener {
             Components.CWS_WARNING_1_574,
             Components.CWS_WARNING_24_581,
             Components.CWS_WARNING_26_627,
-            Components.CWS_WARNING_13_572
+            Components.CWS_WARNING_13_572,
+            Components.CWS_WARNING_15_578
         )
 
     override fun defineInterfaceListeners() {
@@ -61,6 +65,7 @@ class WarningListener : InteractionListener, InterfaceListener {
         /*
          * Handles each warning interface.
          */
+
         warningInterfaces.forEach { interfaceId ->
             on(interfaceId) { player, component, _, buttonID, _, _ ->
                 when (buttonID) {
@@ -195,6 +200,13 @@ class WarningListener : InteractionListener, InterfaceListener {
                                     }
                                 climb(player, Animation(Animations.MULTI_BEND_OVER_827), ladderLocation!!)
                                 WarningManager.increment(player, component.id)
+                            }
+
+                            Components.CWS_WARNING_15_578 -> {
+                                closeInterface(player)
+                                WarningManager.increment(player, component.id)
+                                player.dispatch(FairyRingDialEvent(FairyRing.AJQ))
+                                teleport(player, FairyRing.AJQ.tile!!, TeleportManager.TeleportType.FAIRY_RING)
                             }
 
                             Components.CWS_WARNING_23_564 -> {

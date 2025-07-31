@@ -86,6 +86,8 @@ enum class ProductionJobs(
 
     BONES(22, 28, 1, Items.BONES_526, 0, Employers.HANS),
     ASHES(24, 26, 1, Items.ASHES_592, 0, Employers.AGGIE),
+
+    BALL_OF_WOOLS(20, 28, 1, Items.BALL_OF_WOOL_1759, Skills.CRAFTING, Employers.FRED),
     ;
 
     override val type = JobType.PRODUCTION

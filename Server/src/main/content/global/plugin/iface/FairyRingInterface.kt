@@ -5,6 +5,8 @@ import core.game.event.FairyRingDialEvent
 import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.TeleportManager
+import content.global.plugin.iface.warning.WarningManager
+import content.global.plugin.iface.warning.Warnings
 import core.game.system.task.Pulse
 import core.game.world.GameWorld
 import core.game.world.map.Location
@@ -133,6 +135,12 @@ class FairyRingInterface : InterfaceListener {
             } catch (e: Exception) {
                 null
             }
+
+        if (ring != null && !WarningManager.isDisabled(player, Warnings.FAIRY_RING_TO_DORGESH_KAAN)) {
+            WarningManager.openWarning(player, Warnings.FAIRY_RING_TO_DORGESH_KAAN)
+            return
+        }
+
 
         var tile = ring?.tile
         if (ring?.checkAccess(player) != true) {
