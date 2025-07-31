@@ -5532,7 +5532,7 @@
     "attack_level": "1"
   },
   {
-    "examine": "A strange chicken.",
+    "examine": "A former chicken.",
     "name": "Ernest",
     "defence_level": "1",
     "safespot": null,
@@ -5544,7 +5544,7 @@
     "attack_level": "1"
   },
   {
-    "examine": "Yep. Definitely a chicken.",
+    "examine": "A strange chicken.",
     "melee_animation": "5387",
     "range_animation": "5387",
     "combat_audio": "355,357,356",
@@ -31761,7 +31761,7 @@
     "attack_level": "39"
   },
   {
-    "examine": "",
+    "examine": "An animated clay statue with some clay missing.",
     "name": "Broken clay golem",
     "defence_level": "1",
     "safespot": null,
@@ -31773,13 +31773,13 @@
     "attack_level": "1"
   },
   {
-    "examine": "",
+    "examine": "An animated clay statue with a lot of clay missing.",
     "name": "Broken clay golem",
     "safespot": null,
     "id": "1908"
   },
   {
-    "examine": "",
+    "examine": "An animated clay statue with some clay missing.",
     "name": "Damaged clay golem",
     "defence_level": "1",
     "safespot": null,
@@ -46980,7 +46980,7 @@
     "attack_level": "1"
   },
   {
-    "examine": "",
+    "examine": "He looks very pious.",
     "name": "Father Badden",
     "safespot": null,
     "id": "2902"

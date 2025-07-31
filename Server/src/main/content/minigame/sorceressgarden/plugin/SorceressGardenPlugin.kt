@@ -65,12 +65,16 @@ class SorceressGardenPlugin : InteractionListener {
             return@on true
         }
 
+        /*
+         * Handles Apprentice NPC options.
+         */
+
         on(APPRENTICE, IntType.NPC, "teleport") { player, node ->
             val npc = node as NPC
             if (player.getSavedData().globalData.hasSpokenToApprentice()) {
                 SorceressApprenticeDialogue.teleport(npc, player)
             } else {
-                sendNPCDialogue(player, node.id, "I can't do that now, I'm far too busy sweeping.")
+                sendNPCDialogue(player, node.id, "I can't do that now, I'm far too busy sweeping.", FaceAnim.HALF_GUILTY)
             }
             return@on true
         }

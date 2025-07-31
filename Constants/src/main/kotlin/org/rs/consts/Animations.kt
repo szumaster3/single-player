@@ -1695,6 +1695,7 @@ object Animations {
     const val KICK_SMASH_ATTACK_SMASH_ATTACK_KICK_5418 = 5418
     const val KING_ROALD_ATK_6101 = 6101
     const val KING_ROALD_DEF_6100 = 6100
+    const val KITTEN_STROKE_ANIMATION_9173 = 9173
     const val KITTEN_STROKE_9224 = 9224
     const val KNEEL_ACTION_8501 = 8501
     const val KNEEL_ACTION_8688 = 8688
