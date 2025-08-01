@@ -9,7 +9,9 @@ import core.game.node.scenery.Scenery
 import core.game.world.GameWorld
 import core.game.world.map.Location
 import core.game.world.map.RegionManager
+import org.rs.consts.Items
 import org.rs.consts.Sounds
+import org.rs.consts.Scenery as Objects
 
 class CropCircleController :
     TickListener,
@@ -22,7 +24,7 @@ class CropCircleController :
         val (name, loc) = possibleLocations.random()
         constructCircle(loc)
         sendNews("A crop circle has appeared near $name.")
-        val ticks = if(GameWorld.settings!!.isDevMode) 100 else 1500
+        val ticks = if(GameWorld.settings!!.isDevMode) 500 else 1500
         nextCircle = getWorldTicks() + ticks
         currentLocName = name
     }
@@ -76,7 +78,7 @@ class CropCircleController :
         activeScenery.clear()
     }
 
-    private fun hasImpBox(player: Player): Boolean = inInventory(player, 10025) || inInventory(player, 10027) || inInventory(player, 10028)
+    private fun hasImpBox(player: Player): Boolean = inInventory(player, Items.MAGIC_BOX_10025) || inInventory(player, Items.IMP_IN_A_BOX2_10027) || inInventory(player, Items.IMP_IN_A_BOX1_10028)
 
     companion object {
         var currentLocName = ""
@@ -92,10 +94,10 @@ class CropCircleController :
                 Pair("Southern Varrock", Location.create(3218, 3348, 0)),
                 Pair("Northern Ardougne", Location.create(2644, 3350, 0)),
             )
-        val surrounding = arrayOf(24984, 24985, 24986, 24987)
-        val center = 24991
-        val puroExit = 25014
-        val fairyTeleport = Sounds.FT_FAIRY_TP_1098
+        val surrounding = arrayOf(Objects.CROP_CIRCLE_24984, Objects.CROP_CIRCLE_24985, Objects.CROP_CIRCLE_24986, Objects.CROP_CIRCLE_24987)
+        const val center = Objects.CENTRE_OF_CROP_CIRCLE_24991
+        const val puroExit = Objects.PORTAL_25014
+        const val fairyTeleport = Sounds.FT_FAIRY_TP_1098
         val puroLocation = Location.create(2591, 4320, 0)
         var nextCircle = 0
     }
