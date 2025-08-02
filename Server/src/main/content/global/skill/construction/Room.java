@@ -14,22 +14,22 @@ import static core.api.ContentAPIKt.log;
  * @author Emperor
  */
 public final class Room {
-	
+
 	/**
 	 * The default room type.
 	 */
 	public static final int CHAMBER = 0x0;
-	
+
 	/**
 	 * The rooftop room type.
 	 */
 	public static final int ROOF = 0x1;
-	
+
 	/**
 	 * The dungeon room type.
 	 */
 	public static final int DUNGEON = 0x2;
-	
+
 	/**
 	 * The dungeon room type.
 	 */
@@ -44,17 +44,17 @@ public final class Room {
 	 * The region chunk.
 	 */
 	private RegionChunk chunk;
-		
+
 	/**
 	 * The hotspots.
 	 */
-	private Hotspot[] hotspots; 
-	
+	private Hotspot[] hotspots;
+
 	/**
 	 * The current rotation of the room.
 	 */
-	private Integer rotation = 0;
-	
+	private Direction rotation = Direction.NORTH;
+
 	/**
 	 * Constructs a new {@code Room} {@code Object}.
 	 * @param properties The room properties.
@@ -74,7 +74,7 @@ public final class Room {
 		room.configure(player.getHouseManager().getStyle());
 		return room;
 	}
-	
+
 	/**
 	 * Configures the room.
 	 */
@@ -109,7 +109,7 @@ public final class Room {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Checks if the building hotspot has been built.
 	 * @param hotspot The building hotspot.
@@ -119,12 +119,12 @@ public final class Room {
 		Hotspot h = getHotspot(hotspot);
 		return h != null && h.getDecorationIndex() > -1;
 	}
-	
+
 	/**
 	 * Loads all the decorations.
 	 * @param housePlane The plane.
 	 * @param chunk The chunk used in the dynamic region.
-     */
+	 */
 	public void loadDecorations(int housePlane, BuildRegionChunk chunk, HouseManager house) {
 		for (int i = 0; i < hotspots.length; i++) {
 			Hotspot spot = hotspots[i];
@@ -147,20 +147,20 @@ public final class Room {
 				else if (object.getId() == BuildHotspot.WINDOW.getObjectId(house.getStyle()) || (!house.isBuildingMode() && object.getId() == BuildHotspot.CHAPEL_WINDOW.getObjectId(house.getStyle()))) {
 					chunk.add(object.transform(house.getStyle().getWindow().getObjectId(house.getStyle()), object.getRotation(), object.getType()));
 				}
-				int[] pos = RegionChunk.getRotatedPosition(x, y, object.getSizeX(), object.getSizeY(), 0, rotation);
+				int[] pos = RegionChunk.getRotatedPosition(x, y, object.getSizeX(), object.getSizeY(), 0, rotation.toInteger());
 				spot.setCurrentX(pos[0]);
 				spot.setCurrentY(pos[1]);
 			}
 		}
-		if (chunk.getRotation() == 0 && rotation >= 1 && rotation <= 3) {
-			chunk.rotate(Direction.get(rotation));
+		if (rotation != Direction.NORTH && chunk.getRotation() == 0) {
+			chunk.rotate(rotation);
 		}
 		if (!house.isBuildingMode()) {
 			placeDoors(housePlane, house, chunk);
 			removeHotspots(housePlane, house, chunk);
 		}
 	}
-	
+
 	/**
 	 * Removes the building hotspots from the room.
 	 * @param housePlane The room's plane in house.
@@ -303,7 +303,7 @@ public final class Room {
 		}
 		return null;
 	}
-		
+
 	/**
 	 * Gets the exit directions
 	 * @return The exits information.
@@ -316,11 +316,11 @@ public final class Room {
 	 * Gets the exit directions.
 	 * @return The directions at which you can exit the room (0=east, 1=south, 2=west, 3=north).
 	 */
-	public boolean[] getExits(Integer rotation) {
+	public boolean[] getExits(Direction rotation) {
 		boolean[] exits = properties.getExits();
-		if (chunk.getRotation() != rotation) {
+		if (chunk.getRotation() != rotation.toInteger()) {
 			boolean[] exit = new boolean[exits.length];
-			int offset = rotation - chunk.getRotation();
+			int offset = rotation.toInteger() - chunk.getRotation();
 			for (int i = 0; i < 4; i++) {
 				exit[(i + offset) % 4] = exits[i];
 			}
@@ -409,17 +409,16 @@ public final class Room {
 	 * Sets the room rotation.
 	 * @param rotation The rotation.
 	 */
-	public void setRotation(Integer rotation) {
+	public void setRotation(Direction rotation) {
 		this.rotation = rotation;
 	}
 
 	/**
 	 * Gets the rotation.
-	 *
 	 * @return The rotation.
 	 */
-	public Integer getRotation() {
+	public Direction getRotation() {
 		return rotation;
 	}
-	
+
 }

@@ -11,11 +11,13 @@ import core.game.world.map.Direction;
 import core.game.world.map.Location;
 import core.game.world.map.RegionChunk;
 import core.plugin.Initializable;
-import org.rs.consts.Items;
+import core.tools.Log;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import static core.api.ContentAPIKt.log;
 
 /**
  * Handles the building a room dialogue.
@@ -26,7 +28,12 @@ import java.util.List;
 public final class BuildRoomDialogue extends Dialogue {
 
     /**
-     * The door hotspot.
+     * The boundaries of the room to build.
+     */
+    private List<Scenery> boundaries = new ArrayList<>();
+
+    /**
+     * The doors.
      */
     private Scenery door;
 
@@ -46,11 +53,6 @@ public final class BuildRoomDialogue extends Dialogue {
     private int index;
 
     /**
-     * The boundaries of the room to build.
-     */
-    private List<Scenery> boundaries = new ArrayList<>(20);
-
-    /**
      * The room we're building.
      */
     private Room room;
@@ -64,23 +66,19 @@ public final class BuildRoomDialogue extends Dialogue {
      * The room y-coordinate.
      */
     private int roomY;
-
-    /**
-     * The room z-coordinate (3 for dungeon).
-     */
     private int roomZ;
 
     /**
-     * Constructs a new {@code BuildRoomDialogue} {@code Object}
+     * Instantiates a new Build room dialogue.
      */
     public BuildRoomDialogue() {
         super();
     }
 
     /**
-     * Constructs a new {@code BuildRoomDialogue} {@code Object}
+     * Instantiates a new Build room dialogue.
      *
-     * @param player The player.
+     * @param player the player
      */
     public BuildRoomDialogue(Player player) {
         super(player);
@@ -92,7 +90,7 @@ public final class BuildRoomDialogue extends Dialogue {
     }
 
     @Override
-    public boolean open(Object... args) {
+    public boolean open(java.lang.Object... args) {
         player.getInterfaceManager().close();
         RoomProperties props = (RoomProperties) args[0];
         if (player.getSkills().getStaticLevel(Skills.CONSTRUCTION) < props.getLevel()) {
@@ -110,7 +108,7 @@ public final class BuildRoomDialogue extends Dialogue {
         roomX = pos[0];
         roomY = pos[1];
         if (!inBounds()) {
-            interpreter.sendPlainMessage(false, "You can't build a room here, you need a room to build on.");
+            interpreter.sendPlainMessage(false, "Your house is too large. TODO: correct message");
             stage = 2;
             return true;
         }
@@ -141,7 +139,7 @@ public final class BuildRoomDialogue extends Dialogue {
             return true;
         }
         this.room = Room.create(player, props);
-        this.exits = room.getExits();
+        this.exits = room.getExits(Direction.NORTH);
         this.index = 0;
         this.directions = BuildingUtils.getAvailableRotations(player, exits, roomZ, roomX, roomY);
         while (directions[index] == null) {
@@ -152,16 +150,11 @@ public final class BuildRoomDialogue extends Dialogue {
             }
         }
         options("Rotate clockwise", "Rotate anticlockwise", "Build", "Cancel");
-        stage = 1;
         drawGhostRoom();
+        stage = 1;
         return true;
     }
 
-    /**
-     * Checks if the room to be built is in the available boundaries of the house.
-     *
-     * @return The boundaries.
-     */
     private boolean inBounds() {
         Rectangle bounds = player.getHouseManager().getBoundaries();
         int max = player.getHouseManager().getMaximumDimension(player);
@@ -190,12 +183,12 @@ public final class BuildRoomDialogue extends Dialogue {
                 switch (buttonId) {
                     case 1:
                     case 2:
-                        rotate(buttonId == 2);
                         options("Rotate clockwise", "Rotate anticlockwise", "Build", "Cancel");
+                        rotate(buttonId == 2);
                         return true;
                     case 3:
-                        if (player.getInventory().remove(new Item(Items.COINS_995, room.getProperties().getCost()))) {
-                            room.setRotation(directions[index].toInteger());
+                        if (player.getInventory().remove(new Item(995, room.getProperties().getCost()))) {
+                            room.setRotation(directions[index]);
                             boolean[] exit = new boolean[exits.length];
                             for (int i = 0; i < exit.length; i++) {
                                 exit[(i + index) % exit.length] = exits[i];
@@ -219,17 +212,20 @@ public final class BuildRoomDialogue extends Dialogue {
         return false;
     }
 
-    /**
-     * Rotates the room.
-     *
-     * @param counter If we're rotating counter clockwise.
-     */
     private void rotate(boolean counter) {
-        Direction direction = null;
-        while ((direction = directions[index = (index + (counter ? 3 : 1)) % 4]) == null) {
+        final int totalDirections = directions.length;
+        int attempts = 0;
 
-        }
-        room.setRotation(direction.toInteger());
+        do {
+            index = (index + (counter ? -1 : 1) + totalDirections) % totalDirections;
+            attempts++;
+            if (attempts > totalDirections) {
+                log(this.getClass(), Log.DEBUG, "Direction = [null] Cannot rotate.");
+                return;
+            }
+        } while (directions[index] == null);
+        Direction direction = directions[index];
+        room.setRotation(direction);
         drawGhostRoom();
     }
 
@@ -256,6 +252,7 @@ public final class BuildRoomDialogue extends Dialogue {
             }
         }
     }
+
 
     @Override
     public int[] getIds() {

@@ -926,32 +926,8 @@ public enum RoomProperties {
 		Region region = RegionManager.forId(7503);
 		Region.load(region, true);
 		RegionChunk chunk = region.getPlanes()[0].getRegionChunk(chunkX, chunkY);
+		return new boolean[] { isExit(chunk, 7, 3), isExit(chunk, 3, 0), isExit(chunk, 0, 3), isExit(chunk, 3, 7) };
 
-		boolean[] exits = new boolean[]{
-				isExit(chunk, 7, 3),
-				isExit(chunk, 3, 0),
-				isExit(chunk, 0, 3),
-				isExit(chunk, 3, 7)
-		};
-
-		if (rotation != Direction.NORTH && chunk.getRotation() == 0) {
-			int rotations = 0;
-			for (int i = 0; i < BuildingUtils.DIRECTIONS.length; i++) {
-				if (rotation == BuildingUtils.DIRECTIONS[i]) {
-					rotations = i;
-					break;
-				}
-			}
-			for (int r = 0; r < rotations; r++) {
-				boolean first = exits[0];
-				for (int j = 0; j < exits.length - 1; j++) {
-					exits[j] = exits[j + 1];
-				}
-				exits[exits.length - 1] = first;
-			}
-		}
-
-		return exits;
 	}
 
 	/**
