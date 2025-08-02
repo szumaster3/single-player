@@ -47,6 +47,7 @@ Server/target/*
 Tools/settings.json
 Tools/*
 /Tools/data/*
+settings.json
 
 __pycache__/
 
