@@ -16,7 +16,7 @@ class ThievingOptionPlugin : InteractionListener {
          */
 
         on(IntType.SCENERY, "steal-from", "steal from", "steal") { player, node ->
-            submitIndividualPulse(player, StallThiefPulse(player, node as Scenery, Stall.forScenery(node)), type = PulseType.STRONG)
+            submitIndividualPulse(player, StallThiefPulse(player, node as Scenery, Stall.forScenery(node)), type = PulseType.STANDARD)
             lockInteractions(player, 6)
             return@on true
         }
