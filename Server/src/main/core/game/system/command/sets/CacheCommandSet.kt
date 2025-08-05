@@ -7,7 +7,6 @@ import core.cache.CacheIndex
 import core.cache.def.impl.*
 import core.game.system.command.Privilege
 import core.plugin.Initializable
-import kotlinx.coroutines.launch
 import java.io.*
 import java.lang.reflect.Modifier
 import kotlin.reflect.full.memberProperties
@@ -17,6 +16,98 @@ import kotlin.reflect.jvm.isAccessible
 class CacheCommandSet : CommandSet(Privilege.ADMIN) {
 
     override fun defineCommands() {
+        /*
+         * Dump render animations.
+         */
+
+        define(
+            name = "dumprenders",
+            privilege = Privilege.ADMIN,
+            usage = "::dumprenders",
+            description = "Dumps all RenderAnimationDefinition definitions to a .txt file.",
+        ) { p, _ ->
+            val dumpFile = File("dumps/render_animations.txt")
+            val result = mutableListOf<String>()
+
+            val index = CacheIndex.CONFIGURATION
+
+            val fileCount = Cache.getArchiveFileCount(index, 32)
+            if (fileCount <= 0) {
+                p.debug("No BAS_TYPE archive found.")
+                return@define
+            }
+
+            for (id in 0 until fileCount) {
+                val data = Cache.getData(index, 32, id) ?: continue
+
+                try {
+                    val def = RenderAnimationDefinition.forId(id) ?: continue
+                    val builder = StringBuilder()
+                    builder.append("RenderAnimationDefinition ID: $id\n")
+
+                    RenderAnimationDefinition::class.java.declaredFields
+                        .filter { !Modifier.isStatic(it.modifiers) }
+                        .forEach { field ->
+                            field.isAccessible = true
+                            val value = field.get(def)
+
+                            if (value is Array<*>) {
+                                builder.append("${field.name} = [${value.joinToString()}]\n")
+                            } else {
+                                builder.append("${field.name} = $value\n")
+                            }
+                        }
+
+                    builder.append("\n")
+                    result.add(builder.toString())
+                } catch (e: Exception) {
+                    println("Error parsing RenderAnimationDefinition ID $id: ${e.message}")
+                }
+            }
+
+            dumpFile.parentFile.mkdirs()
+            dumpFile.writeText(result.joinToString(separator = "\n"))
+            p.debug("RenderAnimationDefinitions dumped to ${dumpFile.path}.")
+        }
+
+        /*
+         * Dump datamaps.
+         */
+
+        define(
+            name = "dumpdatamaps",
+            privilege = Privilege.ADMIN,
+            usage = "::dumpdatamaps",
+            description = "Dumps all DataMap definitions to a .txt file.",
+        ) { p, _ ->
+            val dump = File("dumps/datamap_definitions.txt")
+            val dataMapStrings = mutableListOf<String>()
+
+            val index = CacheIndex.ENUM_CONFIGURATION
+            val archiveCount = Cache.getIndex(index).archives().size
+
+            for (archiveId in 0 until archiveCount) {
+                val fileCount = Cache.getArchiveFileCount(index, archiveId)
+                if (fileCount <= 0) continue
+
+                for (fileId in 0 until fileCount) {
+                    val id = (archiveId shl 8) or fileId
+
+                    val data = Cache.getData(index, archiveId, fileId) ?: continue
+
+                    try {
+                        val def = DataMap.get(id)
+                        dataMapStrings.add(def.toString())
+                    } catch (e: Exception) {
+                        println("Error parsing DataMap ID $id: ${e.message}")
+                    }
+                }
+            }
+
+            dump.parentFile.mkdirs()
+            dump.writeText(dataMapStrings.joinToString(separator = "\n"))
+            p.debug("DataMap have been successfully dumped to ${dump.path}.")
+        }
 
         /*
          * Show icons.
@@ -31,58 +122,6 @@ class CacheCommandSet : CommandSet(Privilege.ADMIN) {
             val maxIconId = 4
             for (iconId in 0..maxIconId) {
                 p.debug("Icon sprite: <img=$iconId> Icon ID: $iconId")
-            }
-        }
-
-        /*
-         * Dumps detailed info about all interface.
-         */
-
-        define(
-            name = "dumpalliface",
-            privilege = Privilege.ADMIN,
-            usage = "::dumpalliface",
-            description = "Dumps all interface definitions to a JSON file."
-        ) { player, _ ->
-
-            kotlinx.coroutines.GlobalScope.launch {
-                val gson = GsonBuilder().setPrettyPrinting().create()
-                val exportDir = File("dumps")
-                if (!exportDir.exists()) exportDir.mkdirs()
-                val dump = File(exportDir, "all_interfaces.json")
-
-                val interfacesList = mutableListOf<Map<String, Any?>>()
-
-                val maxInterfaceId = Cache.getIndexCapacity(CacheIndex.COMPONENTS) - 1
-
-                for (ifaceId in 0..maxInterfaceId) {
-                    val ifaceDef = try {
-                        IfaceDefinition.forId(ifaceId)
-                    } catch (e: Exception) {
-                        null
-                    } ?: continue
-
-                    val children = ifaceDef.children ?: emptyArray()
-
-                    val childrenMaps = children.filterNotNull().map { child ->
-                        child::class.memberProperties.filter { prop ->
-                            val cls = prop.returnType.classifier
-                            cls != List::class && cls != Map::class
-                        }.associate { prop ->
-                            prop.isAccessible = true
-                            prop.name to (prop.getter.call(child) ?: "null")
-                        }
-                    }
-
-                    val ifaceMap = mapOf(
-                        "interfaceId" to ifaceId,
-                        "children" to childrenMaps
-                    )
-                    interfacesList.add(ifaceMap)
-                }
-
-                dump.writeText(gson.toJson(interfacesList))
-                player.debug("All interface definitions have been dumped to $dump.")
             }
         }
 
@@ -137,7 +176,7 @@ class CacheCommandSet : CommandSet(Privilege.ADMIN) {
                     val isEmpty = (child.type == null) && (child.baseWidth ?: 0) == 0 && (child.baseHeight ?: 0) == 0
                     if (isEmpty) return@forEachIndexed
 
-                    writer.write("Child: $index, type: ${child.type ?: "unknown"}, width: ${child.baseWidth ?: 0}, height: ${child.baseHeight ?: 0}\n")
+                    writer.write("Child: $index")
 
                     fun appendIfNotDefault(name: String, value: Any?, default: Any?) {
                         if (value != null && value != default) {
@@ -245,57 +284,6 @@ class CacheCommandSet : CommandSet(Privilege.ADMIN) {
         }
 
         /*
-         * Dumps for educational purposes the interface id data.
-         */
-
-        define(
-            name = "dumpinterfaces",
-            privilege = Privilege.ADMIN,
-            usage = "::dumpinterfaces",
-            description = "Dumps all interface definitions to a .json file.",
-        ) { p, _ ->
-            val gson = GsonBuilder().setPrettyPrinting().create()
-            val dump = File("dumps/interface_definitions.json")
-            val interfaces = mutableListOf<Map<String, Any?>>()
-
-            for (interfaceId in 0 until Cache.getIndexCapacity(CacheIndex.COMPONENTS)) {
-                val ifaceDef =
-                    try {
-                        IfaceDefinition.forId(interfaceId)
-                    } catch (e: Exception) {
-                        println("Error loading interface ID $interfaceId: ${e.message}")
-                        null
-                    } ?: continue
-
-                try {
-                    val ifaceMap =
-                        ifaceDef::class
-                            .memberProperties
-                            .filter { prop ->
-                                prop.returnType.classifier !in
-                                    listOf(
-                                        IfaceDefinition::class,
-                                        List::class,
-                                        Map::class,
-                                    )
-                            }.associate { prop ->
-                                prop.isAccessible = true
-                                prop.name to (prop.getter.call(ifaceDef) ?: "null")
-                            }
-
-                    if (ifaceMap.isNotEmpty()) {
-                        interfaces.add(ifaceMap)
-                    }
-                } catch (e: Exception) {
-                    println("Error processing interface ID $interfaceId: ${e.message}")
-                }
-            }
-
-            dump.writeText(gson.toJson(interfaces))
-            p.debug("Interface definitions have been successfully dumped to $dump.")
-        }
-
-        /*
          * Dumps for educational purposes identity kit configurations to a .csv file.
          */
 
@@ -303,31 +291,42 @@ class CacheCommandSet : CommandSet(Privilege.ADMIN) {
             name = "dumpidk",
             privilege = Privilege.ADMIN,
             usage = "::dumpidk",
-            description = "Dumps identity kits data to a .csv file.",
+            description = "Dumps identity kits data to a .json file.",
         ) { p, _ ->
+
             val length = Cache.getArchiveCapacity(CacheIndex.CONFIGURATION, CacheArchive.IDK_TYPE)
+            val dump = File("dumps/identity_kits.json")
+            val gson = GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create()
 
-            val dump = File("dumps/identity_kits.csv")
-            val headers = listOf("id", "bodyPartId", "bodyModelIds", "isSelectable", "headModelIds")
+            try {
+                val dataList = mutableListOf<Map<String, Any?>>()
 
-            if (dump.exists()) {
-                dump.delete()
+                for (i in 0 until length) {
+                    val def = ClothDefinition.forId(i) ?: continue
+
+                    val bodyModelIdsString = def.bodyModelIds?.joinToString(";") { it.toString() }
+                    val headModelIdsString = def.headModelIds?.joinToString(";") { it.toString() }
+
+                    val map = mapOf(
+                        "id" to i,
+                        "bodyPartId" to def.bodyPartId,
+                        "bodyModelIds" to bodyModelIdsString,
+                        "isSelectable" to !def.notSelectable,
+                        "headModelIds" to headModelIdsString
+                    )
+
+                    dataList.add(map)
+                }
+
+                dump.bufferedWriter().use { writer ->
+                    gson.toJson(dataList, writer)
+                }
+
+                p.debug("Identity kits data has been successfully dumped to $dump.")
+            } catch (e: IOException) {
+                e.printStackTrace()
+                p.debug("Error writing to JSON file: ${e.message}")
             }
-
-            val writer = dump.bufferedWriter()
-            writer.appendLine(headers.joinToString(","))
-
-            for (i in 0 until length) {
-                val def = ClothDefinition.forId(i)
-
-                val bodyModelIdsString = def.bodyModelIds?.joinToString(",") { it.toString() } ?: ""
-                val headModelIdsString = def.headModelIds?.joinToString(",") { it.toString() }
-
-                writer.appendLine("$i,${def.bodyPartId},$bodyModelIdsString,${def.notSelectable},$headModelIdsString")
-            }
-
-            writer.close()
-            p.debug("Identity kits data has been successfully dumped to $dump.")
         }
 
         /*
@@ -341,7 +340,8 @@ class CacheCommandSet : CommandSet(Privilege.ADMIN) {
             description = "Dumps item definitions data to a .json file.",
         ) { p, _ ->
             val gson = GsonBuilder().setPrettyPrinting().create()
-            val dump = File("dumps/dumps/item_definitions.json")
+            val dump = File("dumps/item_definitions.json")
+            if(dump.exists()) dump.delete()
             val items = mutableListOf<Map<String, Any?>>()
 
             for (itemId in 0 until Cache.getIndexCapacity(CacheIndex.ITEM_CONFIGURATION)) {
@@ -376,49 +376,47 @@ class CacheCommandSet : CommandSet(Privilege.ADMIN) {
             name = "dumpcs2",
             privilege = Privilege.ADMIN,
             usage = "::dumpcs2",
-            description = "Dumps CS2 mapping data to a .csv file.",
+            description = "Dumps CS2 mapping data to a .json file.",
         ) { p, _ ->
-            val dump = File("dumps/clientscripts.csv")
-            val gson = GsonBuilder().disableHtmlEscaping().create()
+
+            val dump = File("dumps/clientscripts.json")
+            val gson = GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create()
 
             try {
-                BufferedWriter(FileWriter(dump)).use { writer ->
-                    val allProperties = CS2Mapping::class.memberProperties.map { it.name }
+                val allProperties = CS2Mapping::class.memberProperties.map { it.name }
+                val dataList = mutableListOf<Map<String, Any?>>()
 
-                    writer.write(allProperties.joinToString(","))
-                    writer.newLine()
+                for (itemId in 0 until 6000) {
+                    val itemDef = CS2Mapping.forId(itemId) ?: continue
 
-                    for (itemId in 0 until 6000) {
-                        val itemDef = CS2Mapping.forId(itemId) ?: continue
-
-                        val values =
-                            allProperties.map { propName ->
-                                val prop = CS2Mapping::class.memberProperties.find { it.name == propName }
-                                prop?.let {
-                                    it.isAccessible = true
-                                    try {
-                                        val value = it.getter.call(itemDef)
-                                        when (value) {
-                                            is Array<*> -> value.joinToString(";") { it.toString() }
-                                            is List<*> -> value.joinToString(";") { it.toString() }
-                                            is Map<*, *> -> gson.toJson(value)
-                                            null -> "null"
-                                            else -> value.toString()
-                                        }
-                                    } catch (e: Exception) {
-                                        "Error"
-                                    }
-                                } ?: "null"
+                    val map = allProperties.associateWith { propName ->
+                        val prop = CS2Mapping::class.memberProperties.find { it.name == propName }
+                        prop?.let {
+                            it.isAccessible = true
+                            try {
+                                val value = it.getter.call(itemDef)
+                                when (value) {
+                                    is Array<*> -> value.joinToString(";") { it.toString() }
+                                    is List<*> -> value.joinToString(";") { it.toString() }
+                                    is Map<*, *> -> value
+                                    null -> null
+                                    else -> value
+                                }
+                            } catch (e: Exception) {
+                                "Error"
                             }
-
-                        writer.write(values.joinToString(", "))
-                        writer.newLine()
+                        } ?: null
                     }
+
+                    dataList.add(map)
+                }
+                dump.bufferedWriter().use { writer ->
+                    gson.toJson(dataList, writer)
                 }
 
                 p.debug("CS2 data has been successfully dumped to $dump.")
             } catch (e: IOException) {
-                p.debug("Error writing to CSV file: ${e.message}")
+                p.debug("Error writing to JSON file: ${e.message}")
                 e.printStackTrace()
             }
         }
@@ -431,94 +429,38 @@ class CacheCommandSet : CommandSet(Privilege.ADMIN) {
             name = "dumpstructs",
             privilege = Privilege.ADMIN,
             usage = "::dumpstructs",
-            description = "Dumps structs data to a .csv file.",
+            description = "Dumps structs data to a .json file.",
         ) { player, _ ->
+
+            val dump = File("dumps/structs.json")
+            val gson = GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create()
+
             try {
-                val dump = File("dumps/structs.csv")
-                val headers = listOf("id", "data")
-                if (dump.exists()) {
-                    dump.delete()
-                }
-                val writer = dump.bufferedWriter()
-                writer.appendLine(headers.joinToString(", "))
-                for (fID in 0 until Cache.getArchiveFileCount(CacheIndex.CONFIGURATION, 26)) {
+                val dataList = mutableListOf<Map<String, Any?>>()
+
+                val archiveFileCount = Cache.getArchiveFileCount(CacheIndex.CONFIGURATION, 26)
+                for (fID in 0 until archiveFileCount) {
                     val file = Cache.getData(CacheIndex.CONFIGURATION, CacheArchive.STRUCT_TYPE, fID)
                     if (file != null) {
                         val def = Struct.decode(fID, file)
-                        if (def.dataStore.isNotEmpty()) {
-                            val structData = def.dataStore.map { it.toString() }.joinToString(", ")
-                            writer.appendLine("${def.id}, $structData")
-                        }
+                        val map = mapOf(
+                            "id" to def.id,
+                            "data" to when (val data = def.dataStore) {
+                                is Array<*> -> data.joinToString(";") { it.toString() }
+                                is Iterable<*> -> data.joinToString(";") { it.toString() }
+                                null -> null
+                                else -> data.toString()
+                            }
+                        )
+                        dataList.add(map)
                     }
                 }
-                writer.close()
+
+                dump.bufferedWriter().use { writer ->
+                    gson.toJson(dataList, writer)
+                }
+
                 player.debug("Struct data has been successfully dumped to $dump.")
-            } catch (e: IOException) {
-                e.printStackTrace()
-                reject(player, "Error writing to file: ${e.message}")
-            }
-        }
-
-        /*
-         * Dumps for educational purposes data map configurations to a .json file.
-         */
-
-        define(
-            name = "dumpdatamaps",
-            privilege = Privilege.ADMIN,
-            usage = "::dumpdatamaps",
-            description = "Dumps data maps configurations to a JSON file.",
-        ) { player, _ ->
-            try {
-                val dump = File("dumps/datamaps.json")
-                val gson = GsonBuilder().setPrettyPrinting().create()
-                val dataMapsList = mutableListOf<Map<String, Any>>()
-                val archiveIds = Cache.getIndexCapacity(CacheIndex.CONFIGURATION)
-
-                if (archiveIds == 0) {
-                    reject(player, "No archives found in index CONFIGURATION.")
-                    return@define
-                }
-
-                for (archiveId in 0 until archiveIds) {
-                    val archive = Cache.getArchiveCapacity(CacheIndex.CONFIGURATION, CacheArchive.STRUCT_TYPE)
-
-                    for (fileId in 0 until archive) {
-                        val fileData = Cache.getData(CacheIndex.CONFIGURATION, archiveId, fileId)
-
-                        if (fileData == null || fileData.isEmpty()) {
-                            // Skip invalid or empty files
-                            continue
-                        }
-
-                        // Parse the file data
-                        try {
-                            val def = DataMap.decode(archiveId shl 8 or fileId, fileData)
-
-                            val dataMap =
-                                mapOf(
-                                    "id" to def.id,
-                                    "keyType" to def.keyType,
-                                    "valueType" to
-                                        when (def.valueType) {
-                                            'K' -> "Normal"
-                                            'J' -> "Struct Pointer"
-                                            else -> "Unknown"
-                                        },
-                                    "defaultString" to (def.defaultString ?: "N/A"),
-                                    "defaultInt" to def.defaultInt,
-                                    "dataStore" to def.dataStore,
-                                )
-
-                            dataMapsList.add(dataMap)
-                        } catch (e: Exception) {
-                        }
-                    }
-                }
-
-                // Write the data to a JSON file
-                dump.writeText(gson.toJson(dataMapsList))
-                player.debug("Data maps successfully dumped to $dump.")
             } catch (e: IOException) {
                 e.printStackTrace()
                 reject(player, "Error writing to file: ${e.message}")
