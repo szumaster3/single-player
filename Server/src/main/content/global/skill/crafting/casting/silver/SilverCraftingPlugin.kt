@@ -6,6 +6,7 @@ import core.game.event.ResourceProducedEvent
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.interaction.InterfaceListener
+import core.game.node.entity.impl.PulseType
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
 import core.game.system.task.Pulse
@@ -97,6 +98,7 @@ class SilverCraftingPlugin : InteractionListener, InterfaceListener {
                 getAttribute(player, "crafting:silver:furnace_id", core.game.node.scenery.Scenery(-1, -1, 0)),
                 amount
             ),
+            type = PulseType.STRONG
         )
     }
 

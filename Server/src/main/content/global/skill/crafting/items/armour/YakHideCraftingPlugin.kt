@@ -4,6 +4,7 @@ import content.global.skill.crafting.items.leather.ThreadUtils
 import core.api.*
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
+import core.game.node.entity.impl.PulseType
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.SkillPulse
 import core.game.node.entity.skill.Skills
@@ -19,13 +20,13 @@ class YakHideCraftingPlugin : InteractionListener {
                 create { index, amount ->
                     submitIndividualPulse(
                         entity = player,
-                        pulse =
-                            YakArmourCraftingPulse(
-                                player,
-                                if (index == 1) BODY else LEGS,
-                                index,
-                                amount,
-                            ),
+                        pulse = YakArmourCraftingPulse(
+                            player,
+                            if (index == 1) BODY else LEGS,
+                            index,
+                            amount
+                        ),
+                        type = PulseType.STRONG
                     )
                 }
 

@@ -4,6 +4,7 @@ import core.api.*
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.interaction.InterfaceListener
+import core.game.node.entity.impl.PulseType
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import org.rs.consts.Components
@@ -37,6 +38,7 @@ class LeatherCraftingListener : InteractionListener , InterfaceListener {
                     submitIndividualPulse(
                         entity = player,
                         pulse = StuddedArmourPulse(player, Item(item.leather), item, amount),
+                        type = PulseType.STRONG
                     )
                 }
 
@@ -61,6 +63,7 @@ class LeatherCraftingListener : InteractionListener , InterfaceListener {
                         submitIndividualPulse(
                             entity = player,
                             pulse = SnakeskinCraftingPulse(player, null, amount, it),
+                            type = PulseType.STRONG
                         )
                     } ?: sendMessage(player, "Invalid snakeskin item selected.")
                 }
@@ -83,7 +86,11 @@ class LeatherCraftingListener : InteractionListener , InterfaceListener {
             sendSkillDialogue(player) {
                 withItems(Items.HARDLEATHER_BODY_1131)
                 create { _, amount ->
-                    submitIndividualPulse(entity = player, pulse = HardLeatherCraftingPulse(player, used.asItem(), amount))
+                    submitIndividualPulse(
+                        entity = player,
+                        pulse = HardLeatherCraftingPulse(player, used.asItem(), amount),
+                        type = PulseType.STRONG
+                    )
                 }
                 calculateMaxAmount {
                     amountInInventory(player, used.id)
@@ -124,7 +131,11 @@ class LeatherCraftingListener : InteractionListener , InterfaceListener {
                 withItems(*index)
                 create { id, amount ->
                     val item = DragonLeather.forId(id)
-                    submitIndividualPulse(entity = player, pulse = DragonLeatherCraftingPulse(player, null, item!!, amount))
+                    submitIndividualPulse(
+                        entity = player,
+                        pulse = DragonLeatherCraftingPulse(player, null, item!!, amount),
+                        type = PulseType.STRONG
+                    )
                 }
                 calculateMaxAmount {
                     amountInInventory(player, used.id)
@@ -145,14 +156,19 @@ class LeatherCraftingListener : InteractionListener , InterfaceListener {
                 199 -> {
                     sendInputDialogue(player, true, "Enter the amount:") { value: Any ->
                         submitIndividualPulse(
-                            player,
-                            SoftLeatherCraftingPulse(player, Item(Items.LEATHER_1741), soft, value as Int),
+                            entity = player,
+                            pulse = SoftLeatherCraftingPulse(player, Item(Items.LEATHER_1741), soft, value as Int),
+                            type = PulseType.STRONG
                         )
                     }
                     return@on true
                 }
             }
-            submitIndividualPulse(player, SoftLeatherCraftingPulse(player, null, soft, amount))
+            submitIndividualPulse(
+                player,
+                SoftLeatherCraftingPulse(player, null, soft, amount),
+                type = PulseType.STRONG
+            )
             return@on true
         }
     }

@@ -9,6 +9,7 @@ import core.game.event.ResourceProducedEvent
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.interaction.QueueStrength
+import core.game.node.entity.impl.PulseType
 import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
@@ -61,7 +62,7 @@ class SmeltingPlugin : InteractionListener {
                         amount: Int,
                         index: Int,
                     ) {
-                        submitIndividualPulse(player, CannonballPulse(player, used.asItem(), amount))
+                        submitIndividualPulse(player, CannonballPulse(player, used.asItem(), amount), type = PulseType.STRONG)
                     }
 
                     override fun getAll(index: Int): Int = amountInInventory(player, used.id)

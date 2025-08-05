@@ -4,6 +4,7 @@ import core.api.*
 import core.game.dialogue.SkillDialogueHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
+import core.game.node.entity.impl.PulseType
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.entity.skill.SkillPulse
@@ -42,6 +43,7 @@ class WeavingListener : InteractionListener {
                     submitIndividualPulse(
                         entity = player,
                         pulse = WeavingPulse(player, node.asScenery(), Weaving.values()[index], amount),
+                        type = PulseType.STRONG
                     )
                 }
             }.open()

@@ -5,6 +5,7 @@ import core.api.sendMessage
 import core.api.submitIndividualPulse
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
+import core.game.node.entity.impl.PulseType
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.game.node.scenery.Scenery
@@ -199,7 +200,7 @@ class CookingRewrite : InteractionListener {
                     else -> CookingPulse(player, scenery!!, initial, product, amount)
                 }
 
-            submitIndividualPulse(player, cookingPulse)
+            submitIndividualPulse(player, cookingPulse, type = PulseType.STRONG)
         }
     }
 }

@@ -3,6 +3,7 @@ package content.global.skill.cooking
 import core.api.*
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
+import core.game.node.entity.impl.PulseType
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import org.rs.consts.Animations
@@ -26,7 +27,7 @@ class FermentingPlugin : InteractionListener {
             }
             if (removeItem(player, with.asItem())) {
                 replaceSlot(player, itemSlot, Item(Items.UNFERMENTED_WINE_1995, 1))
-                submitIndividualPulse(player, WineFermentingPulse(1, player))
+                submitIndividualPulse(player, WineFermentingPulse(1, player), type = PulseType.STRONG)
             }
             return@onUseWith true
         }

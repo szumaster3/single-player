@@ -7,6 +7,7 @@ import core.api.sendInputDialogue
 import core.api.sendInterfaceConfig
 import core.api.submitIndividualPulse
 import core.game.interaction.InterfaceListener
+import core.game.node.entity.impl.PulseType
 import core.game.node.item.Item
 import org.rs.consts.Components
 
@@ -45,11 +46,12 @@ class SmithingInterface : InterfaceListener {
                             player.gameAttributes.getAttribute<Any>("smith-bar") as Bars,
                             value,
                         ),
+                        type = PulseType.STRONG
                     )
                 }
                 return@on true
             }
-            submitIndividualPulse(player, SmithingPulse(player, Item(item, amount), Bars.forId(item)!!, amount))
+            submitIndividualPulse(player, SmithingPulse(player, Item(item, amount), Bars.forId(item)!!, amount), type = PulseType.STRONG)
             return@on true
         }
 

@@ -10,6 +10,7 @@ import core.api.submitIndividualPulse
 import core.game.dialogue.SkillDialogueHandler
 import core.game.interaction.NodeUsageEvent
 import core.game.interaction.UseWithHandler
+import core.game.node.entity.impl.PulseType
 import core.game.node.item.Item
 import core.plugin.Initializable
 import core.plugin.Plugin
@@ -77,6 +78,7 @@ class FletchingPlugin :
                     submitIndividualPulse(
                         entity = event.player,
                         pulse = DartPulse(event.player, event.usedItem, dart, amount),
+                        type = PulseType.STRONG
                     )
                 }
 
@@ -111,6 +113,7 @@ class FletchingPlugin :
                     submitIndividualPulse(
                         entity = event.player,
                         pulse = BoltPulse(event.player, event.usedItem, bolt, Item(featherId), amount),
+                        type = PulseType.STRONG
                     )
                 }
 

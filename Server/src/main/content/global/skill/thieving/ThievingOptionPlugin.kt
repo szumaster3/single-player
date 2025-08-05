@@ -5,6 +5,7 @@ import core.api.sendDialogue
 import core.api.submitIndividualPulse
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
+import core.game.node.entity.impl.PulseType
 import core.game.node.scenery.Scenery
 
 class ThievingOptionPlugin : InteractionListener {
@@ -15,7 +16,7 @@ class ThievingOptionPlugin : InteractionListener {
          */
 
         on(IntType.SCENERY, "steal-from", "steal from", "steal") { player, node ->
-            submitIndividualPulse(player, StallThiefPulse(player, node as Scenery, Stall.forScenery(node)))
+            submitIndividualPulse(player, StallThiefPulse(player, node as Scenery, Stall.forScenery(node)), type = PulseType.STRONG)
             lockInteractions(player, 6)
             return@on true
         }

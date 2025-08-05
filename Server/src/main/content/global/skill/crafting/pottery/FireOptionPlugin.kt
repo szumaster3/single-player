@@ -3,6 +3,7 @@ package content.global.skill.crafting.pottery
 import core.api.*
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
+import core.game.node.entity.impl.PulseType
 import org.rs.consts.Items
 import org.rs.consts.Scenery
 
@@ -38,7 +39,8 @@ class FireOptionPlugin : InteractionListener {
                                 node = pottery.unfinished,
                                 pottery = pottery,
                                 amount = amount,
-                            )
+                            ),
+                            pulseType = PulseType.STRONG
                         )
                     }
                 }

@@ -3,6 +3,7 @@ package content.global.skill.smithing.smelting
 import content.global.skill.smithing.Bar
 import core.api.*
 import core.game.interaction.InterfaceListener
+import core.game.node.entity.impl.PulseType
 import org.rs.consts.Components
 import org.rs.consts.Quests
 
@@ -41,9 +42,9 @@ class SmeltingInterface : InterfaceListener {
                 player.interfaceManager.closeChatbox()
                 sendInputDialogue(player, true, "Enter the amount:") { value: Any ->
                     if (value is String) {
-                        submitIndividualPulse(player, SmeltingPulse(player, null, barType.bar, value.toInt()))
+                        submitIndividualPulse(player, SmeltingPulse(player, null, barType.bar, value.toInt()), type = PulseType.STRONG)
                     } else {
-                        submitIndividualPulse(player, SmeltingPulse(player, null, barType.bar, value as Int))
+                        submitIndividualPulse(player, SmeltingPulse(player, null, barType.bar, value as Int), type = PulseType.STRONG)
                     }
                 }
             } else {

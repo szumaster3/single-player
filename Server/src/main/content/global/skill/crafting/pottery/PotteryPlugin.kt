@@ -7,6 +7,7 @@ import core.game.interaction.NodeUsageEvent
 import core.game.interaction.OptionHandler
 import core.game.interaction.UseWithHandler
 import core.game.node.Node
+import core.game.node.entity.impl.PulseType
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.entity.skill.SkillPulse
@@ -47,7 +48,7 @@ class PotteryPlugin : UseWithHandler(Items.SOFT_CLAY_1761) {
                 amount: Int,
                 index: Int,
             ) {
-                player.pulseManager.run(PotteryCraftingPulse(player, event.usedItem, amount, Pottery.values()[index]))
+                player.pulseManager.run(PotteryCraftingPulse(player, event.usedItem, amount, Pottery.values()[index]), pulseType = PulseType.STRONG)
             }
 
             override fun getAll(index: Int): Int = amountInInventory(player, SOFT_CLAY)
@@ -125,6 +126,7 @@ class PotteryPlugin : UseWithHandler(Items.SOFT_CLAY_1761) {
                             pottery = Pottery.values()[index],
                             amount = amount,
                         ),
+                        pulseType = PulseType.STRONG
                     )
                 }
 

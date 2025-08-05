@@ -4,6 +4,7 @@ import core.api.*
 import core.cache.def.impl.ItemDefinition
 import core.game.interaction.OptionHandler
 import core.game.node.Node
+import core.game.node.entity.impl.PulseType
 import core.game.node.entity.player.Player
 import core.game.node.item.GroundItem
 import core.game.node.item.Item
@@ -12,10 +13,10 @@ import core.plugin.Plugin
 
 @Initializable
 class FiremakingHandler : OptionHandler() {
-    override fun handle(player: Player, node: Node, option: String, ): Boolean {
+    override fun handle(player: Player, node: Node, option: String): Boolean {
         submitIndividualPulse(
             player,
-            FiremakingPulse(player, (node as Item), (node as GroundItem))
+            FiremakingPulse(player, (node as Item), (node as GroundItem)), type = PulseType.STANDARD
         )
         return true
     }

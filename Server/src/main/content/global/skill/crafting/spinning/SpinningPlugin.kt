@@ -4,6 +4,7 @@ import core.api.*
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.interaction.InterfaceListener
+import core.game.node.entity.impl.PulseType
 import core.game.node.item.Item
 import org.rs.consts.Components
 import org.rs.consts.Scenery
@@ -37,11 +38,13 @@ class SpinningPlugin : InteractionListener, InterfaceListener {
                             submitIndividualPulse(
                                 entity = player,
                                 pulse = SpinningPulse(player, Item(spin.need, 1), value.toInt(), spin),
+                                type = PulseType.STRONG
                             )
                         } else {
                             submitIndividualPulse(
                                 entity = player,
                                 pulse = SpinningPulse(player, Item(spin.need, 1), value as Int, spin),
+                                type = PulseType.STRONG
                             )
                         }
                     }
@@ -52,6 +55,7 @@ class SpinningPlugin : InteractionListener, InterfaceListener {
             submitIndividualPulse(
                 entity = player,
                 pulse = SpinningPulse(player, Item(spin.need, 1), amt, spin),
+                type = PulseType.STRONG
             )
             return@on true
         }

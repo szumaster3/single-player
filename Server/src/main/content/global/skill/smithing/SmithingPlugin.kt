@@ -7,6 +7,7 @@ import core.game.component.Component
 import core.game.container.access.InterfaceContainer
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
+import core.game.node.entity.impl.PulseType
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
@@ -113,7 +114,7 @@ class SmithingPlugin : InteractionListener {
             addDialogueAction(player) { _, _ ->
                 lock(player, 10)
                 animate(player, Animations.HUMAN_ANVIL_HAMMER_SMITHING_898)
-                submitIndividualPulse(player, DragonShieldPulse(player, used.asItem()))
+                submitIndividualPulse(player, DragonShieldPulse(player, used.asItem()), type = PulseType.STRONG)
                 return@addDialogueAction
             }
 
@@ -150,7 +151,7 @@ class SmithingPlugin : InteractionListener {
             addDialogueAction(player) { _, _ ->
                 lock(player, 5)
                 animate(player, Animations.HUMAN_ANVIL_HAMMER_SMITHING_898)
-                submitIndividualPulse(player, DragonfireShieldPulse(player, used.asItem()))
+                submitIndividualPulse(player, DragonfireShieldPulse(player, used.asItem()), type = PulseType.STRONG)
                 return@addDialogueAction
             }
             return@onUseWith true

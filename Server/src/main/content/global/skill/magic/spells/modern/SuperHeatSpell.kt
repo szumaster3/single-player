@@ -5,6 +5,7 @@ import content.global.skill.magic.spells.ModernSpells
 import content.global.skill.smithing.Bar
 import content.global.skill.smithing.smelting.SmeltingPulse
 import core.api.*
+import core.game.node.entity.impl.PulseType
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
@@ -57,7 +58,7 @@ class SuperHeatSpell : SpellListener("modern") {
             addXP(player, 53.0)
             playAudio(player, Sounds.SUPERHEAT_ALL_190)
             showMagicTab(player)
-            submitIndividualPulse(player, SmeltingPulse(player, item, bar, 1, true))
+            submitIndividualPulse(player, SmeltingPulse(player, item, bar, 1, true), type = PulseType.STRONG)
             setDelay(player, false)
         }
     }
