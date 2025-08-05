@@ -33,6 +33,7 @@ import core.game.node.entity.combat.ImpactHandler
 import core.game.node.entity.impl.Animator
 import core.game.node.entity.impl.ForceMovement
 import core.game.node.entity.impl.Projectile
+import core.game.node.entity.impl.PulseType
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.info.LogType
@@ -2815,6 +2816,21 @@ fun submitIndividualPulse(
     pulse: Pulse,
 ) {
     entity.pulseManager.run(pulse)
+}
+
+/**
+ * Submits a pulse for an entity.
+ *
+ * @param entity The entity to execute the pulse for.
+ * @param pulse The pulse to execute.
+ * @param type The pulse type.
+ */
+fun submitIndividualPulse(
+    entity: Entity,
+    pulse: Pulse,
+    type: PulseType
+) {
+    entity.pulseManager.run(pulse, type)
 }
 
 /**
