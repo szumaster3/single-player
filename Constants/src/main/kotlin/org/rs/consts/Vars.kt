@@ -965,4 +965,6 @@ object Vars {
     const val VARBIT_BEACON_GWD_5157 = 5157
     const val VARBIT_BEACON_TEMPLE_5158 = 5158
     const val VARBIT_BEACON_PLATEAU_5159 = 5159
+
+    const val VARBIT_TOL_TRAPDOOR_3372 = 3372
 }

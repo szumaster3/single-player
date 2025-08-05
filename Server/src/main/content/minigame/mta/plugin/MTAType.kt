@@ -9,6 +9,7 @@ import core.game.world.map.Location
 import org.rs.consts.Components
 import org.rs.consts.Items
 import org.rs.consts.Scenery
+import org.rs.consts.Vars
 
 /**
  * Represents a room type in the Magic Training Arena (MTA) minigame.
@@ -24,7 +25,7 @@ enum class MTAType(
     TELEKINETIC(
         Scenery.TELEKINETIC_TP_10778,
         Component(Components.MAGICTRAINING_TELE_198),
-        1485, // Telekinetic points
+        Vars.VARBIT_MTA_TELEKINETIC_POINTS_1485,
         null,
         Location.create(3363, 3316, 0),
         TelekineticTheatrePlugin(),
@@ -46,7 +47,7 @@ enum class MTAType(
     ALCHEMISTS(
         Scenery.ALCHEMISTS_TP_10780,
         Component(Components.MAGICTRAINING_ALCH_STATS_194),
-        1489, // Alchemists points
+        Vars.VARBIT_MTA_ALCHEMIST_POINTS_1489,
         Location(3366, 9623, 2),
         Location(3363, 3320, 0),
         AlchemistPlaygroundPlugin.ZONE,
@@ -80,7 +81,7 @@ enum class MTAType(
     ENCHANTERS(
         Scenery.ENCHANTERS_TP_10779,
         Component(Components.MAGICTRAINING_ENCHANT_195),
-        1488, // Enchanters points
+        Vars.VARBIT_MTA_ENCHANTMENT_POINTS_1488,
         Location(3363, 9649, 0),
         Location(3361, 3318, 0),
         EnchantmentChamberPlugin.ZONE,
@@ -98,7 +99,7 @@ enum class MTAType(
     GRAVEYARD(
         Scenery.GRAVEYARD_TP_10781,
         Component(Components.MAGICTRAINING_GRAVE_196),
-        1486, // Graveyard points
+        Vars.VARBIT_MTA_GRAVEYARD_POINTS_1486,
         Location(3363, 9639, 1),
         Location(3365, 3318, 0),
         CreatureGraveyardPlugin.ZONE,

@@ -368,7 +368,7 @@ class BankContainer(player: Player) : Container(SIZE, ContainerType.ALWAYS_STACK
          */
         set(noteItems) {
             setVarbit(player, Vars.VARBIT_BANK_WITHDRAW_MODE_3958, if (noteItems) 1 else 0, true)
-        }
+        }//var115
 
     /**
      * Gets the tabIndex value.

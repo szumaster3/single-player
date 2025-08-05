@@ -425,6 +425,7 @@ object PacketProcessor {
                         pkt.player.bank.increaseTabStartSlots(tabIndex)
                         pkt.player.bank.decreaseTabStartSlots(childId)
                         pkt.player.bank.setTabConfigurations()
+                        pkt.player.bank.update()
                         return
                     }
                 }

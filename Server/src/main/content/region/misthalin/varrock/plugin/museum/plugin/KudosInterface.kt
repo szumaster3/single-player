@@ -5,6 +5,7 @@ import core.api.sendString
 import core.game.interaction.InterfaceListener
 import core.tools.colorize
 import org.rs.consts.Components
+import org.rs.consts.Vars
 
 class KudosInterface : InterfaceListener {
     override fun defineInterfaceListeners() {
@@ -13,7 +14,7 @@ class KudosInterface : InterfaceListener {
          */
 
         onOpen(Components.VM_KUDOS_532) { player, _ ->
-            val kudosAmount = getVarbit(player, 3637)
+            val kudosAmount = getVarbit(player, Vars.VARBIT_KUDOS_VALUE_3637)
             sendString(
                 player,
                 if (kudosAmount == 163) {

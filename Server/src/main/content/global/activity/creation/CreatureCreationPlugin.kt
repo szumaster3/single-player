@@ -51,7 +51,7 @@ class CreatureCreationPlugin : InteractionListener {
 
         on(Scenery.TRAPDOOR_21921, IntType.SCENERY, "open") { player, _ ->
             if (hasRequirement(player, Quests.TOWER_OF_LIFE, false)) {
-                setVarbit(player, 3372, 1)
+                setVarbit(player,  Vars.VARBIT_TOL_TRAPDOOR_3372, 1)
                 sendMessage(player, "You open the trapdoor.")
             } else {
                 sendDialogue(player, "The trapdoor won't open.")
@@ -64,7 +64,7 @@ class CreatureCreationPlugin : InteractionListener {
          */
 
         on(Scenery.TRAPDOOR_21922, IntType.SCENERY, "close") { player, _ ->
-            setVarbit(player, 3372, 0)
+            setVarbit(player, Vars.VARBIT_TOL_TRAPDOOR_3372, 0)
             sendMessage(player, "You close the trapdoor.")
             return@on true
         }

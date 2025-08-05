@@ -12,6 +12,7 @@ import core.game.world.map.Location
 import core.game.world.map.zone.MapZone
 import core.game.world.map.zone.ZoneRestriction
 import core.game.world.map.zone.ZoneType
+import org.rs.consts.Vars
 
 open class MTAZone(name: String?, val items: Array<Item>) : MapZone(name, false, ZoneRestriction.RANDOM_EVENTS, ZoneRestriction.FOLLOWERS) {
 
@@ -123,7 +124,12 @@ open class MTAZone(name: String?, val items: Array<Item>) : MapZone(name, false,
         /**
          * Map indexes of pizazz points to varbit ids.
          */
-        val pizazzVarbitIds = intArrayOf(1485, 1489, 1488, 1486)
+        val pizazzVarbitIds = intArrayOf(
+            Vars.VARBIT_MTA_TELEKINETIC_POINTS_1485,
+            Vars.VARBIT_MTA_ALCHEMIST_POINTS_1489,
+            Vars.VARBIT_MTA_ENCHANTMENT_POINTS_1488,
+            Vars.VARBIT_MTA_GRAVEYARD_POINTS_1486
+        )
 
         fun incrementPoints(player: Player, index: Int, amount: Int) {
             val varbitId = pizazzVarbitIds[index]
