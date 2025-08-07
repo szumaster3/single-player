@@ -15,6 +15,7 @@ import core.net.packet.out.ConstructGroundItem
 import java.util.*
 import java.util.concurrent.CopyOnWriteArrayList
 
+
 /**
  * Represents one of the 4 planes of a region.
  *
@@ -267,7 +268,7 @@ class RegionPlane(
         val g = item
         if (g.isPrivate) {
             if (g.dropper != null) {
-                send(ConstructGroundItem::class.java, BuildItem(g.dropper, item, 0))
+                send(ConstructGroundItem::class.java, BuildItem(g.dropper, item))
             }
             return
         }
@@ -305,8 +306,8 @@ class RegionPlane(
         }
         if (item.isPrivate) {
             // https://runescape.wiki/w/Drops
-            if (item.dropper != null && item.dropper.isPlaying && item.dropper.location.withinDistance(l, 7)) {
-                send(ClearGroundItem::class.java, BuildItem(item.dropper, item, 0))
+            if (item.dropper != null && item.dropper.isPlaying && item.dropper.location.withinDistance(l)) {
+                send(ClearGroundItem::class.java, BuildItem(item.dropper, item))
             }
             return
         }
