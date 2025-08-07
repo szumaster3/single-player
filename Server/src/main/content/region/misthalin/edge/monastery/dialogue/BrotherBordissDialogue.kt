@@ -29,7 +29,7 @@ class BrotherBordissDialogue(player: Player? = null) : Dialogue(player) {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> if (getSigil(player) != null && inInventory(player, Items.BLESSED_SPIRIT_SHIELD_13736, 1)) {
                 npc(FaceAnim.OLD_HAPPY, "Say, what are you carrying there?").also { stage++ }

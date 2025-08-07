@@ -78,7 +78,7 @@ class FletchingPlugin :
                     submitIndividualPulse(
                         entity = event.player,
                         pulse = DartPulse(event.player, event.usedItem, dart, amount),
-                        type = PulseType.STRONG
+                        type = PulseType.STANDARD
                     )
                 }
 
@@ -113,7 +113,7 @@ class FletchingPlugin :
                     submitIndividualPulse(
                         entity = event.player,
                         pulse = BoltPulse(event.player, event.usedItem, bolt, Item(featherId), amount),
-                        type = PulseType.STRONG
+                        type = PulseType.STANDARD
                     )
                 }
 

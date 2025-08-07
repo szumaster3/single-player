@@ -21,7 +21,7 @@ class LundailDialogue(player: Player? = null) : Dialogue(player) {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> npc("How can I help you, brave adventurer?").also { stage++ }
             1 -> options("What are you selling?", "What's that big old building above us?").also { stage++ }

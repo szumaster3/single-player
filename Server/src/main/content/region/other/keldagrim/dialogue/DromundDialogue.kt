@@ -16,22 +16,13 @@ class DromundDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
-        npc(
-            FaceAnim.OLD_NORMAL,
-            "Someone stole my beautiful boots...",
-            "I had to buy some crummy replicas,",
-            "the real boots were one of a kind.",
-        )
+        npc(FaceAnim.OLD_NORMAL, "Someone stole my beautiful boots...", "I had to buy some crummy replicas,", "the real boots were one of a kind.")
         return true
     }
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
-            0 ->
-                player(FaceAnim.FRIENDLY, "Don't worry, if I find out who did it", "I'll take care of them.").also {
-                    stage =
-                        END_DIALOGUE
-                }
+            0 -> player(FaceAnim.FRIENDLY, "Don't worry, if I find out who did it", "I'll take care of them.").also { stage = END_DIALOGUE }
         }
         return true
     }

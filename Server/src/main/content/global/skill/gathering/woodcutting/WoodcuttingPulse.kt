@@ -230,7 +230,7 @@ class WoodcuttingPulse(private val player: Player, private val node: Scenery) : 
 
         // Seers village medium reward - extra normal log while in seer's village
         if (reward == Items.LOGS_1511 && player.achievementDiaryManager.getDiary(DiaryType.SEERS_VILLAGE)
-                .isComplete(1) && player.viewport.region.id == 10806
+                .isComplete(1) && player.viewport.region!!.id == 10806
         ) {
             amount = 2
         }

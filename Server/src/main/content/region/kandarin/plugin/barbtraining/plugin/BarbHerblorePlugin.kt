@@ -41,7 +41,7 @@ class BarbHerblorePlugin : InteractionListener {
     /*
      * Handles the potion mixing process.
      */
-    private fun handle(player: Player, inputPotion: Node, egg: Node, ): Boolean {
+    private fun handle(player: Player, inputPotion: Node, egg: Node): Boolean {
         val potion = BarbarianMix.forId(inputPotion.id) ?: return false
         if (!getAttribute(player, BarbarianTraining.HERBLORE_START, false)) {
             sendMessage(player, "You must begin the relevant section of Otto Godblessed's barbarian training.")

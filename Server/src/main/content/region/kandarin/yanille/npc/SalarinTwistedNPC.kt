@@ -17,7 +17,7 @@ class SalarinTwistedNPC : AbstractNPC {
         super.setAggressive(true)
     }
 
-    override fun construct(id: Int, location: Location, vararg objects: Any?, ): AbstractNPC = SalarinTwistedNPC(id, location)
+    override fun construct(id: Int, location: Location, vararg objects: Any?): AbstractNPC = SalarinTwistedNPC(id, location)
 
     override fun checkImpact(state: BattleState) {
         if (state.style != CombatStyle.MAGIC) {

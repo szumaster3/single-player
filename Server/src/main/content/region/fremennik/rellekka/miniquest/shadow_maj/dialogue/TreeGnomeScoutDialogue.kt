@@ -44,7 +44,7 @@ class TreeGnomeScoutDialogue(player: Player? = null, ) : Dialogue(player) {
         }
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> npc("What news, skinbag?").also { stage++ }
             1 -> player("Hey, no need to be rude.").also { stage++ }

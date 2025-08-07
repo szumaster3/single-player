@@ -18,7 +18,7 @@ class RPUseWithNPCDialogue(player: Player? = null) : Dialogue(player) {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (buttonId) {
             // remove NPC
             1 -> {

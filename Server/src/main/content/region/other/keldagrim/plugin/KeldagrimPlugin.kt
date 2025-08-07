@@ -56,21 +56,18 @@ class KeldagrimPlugin : InteractionListener {
         )
 
         private fun startTravelToKeldagrim(player: Player) {
-            if (core.api.hasRequirement(player, Quests.THE_GIANT_DWARF)) {
+            if (hasRequirement(player, Quests.THE_GIANT_DWARF)) {
                 submitWorldPulse(TravelToKeldagrimPulse(player))
             }
         }
 
         private fun startTravelFromKeldagrim(player: Player, dest: Location) {
-            if (core.api.hasRequirement(player, Quests.THE_GIANT_DWARF)) {
+            if (hasRequirement(player, Quests.THE_GIANT_DWARF)) {
                 submitWorldPulse(TravelFromKeldagrimPulse(player, dest))
             }
         }
 
-        private class TravelFromKeldagrimPulse(
-            val player: Player,
-            val dest: Location
-        ) : Pulse() {
+        private class TravelFromKeldagrimPulse(val player: Player, val dest: Location) : Pulse() {
             private var counter = 0
 
             override fun pulse(): Boolean {

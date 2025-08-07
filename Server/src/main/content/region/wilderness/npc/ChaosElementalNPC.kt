@@ -44,11 +44,7 @@ class ChaosElementalNPC @JvmOverloads constructor(id: Int = -1, location: Locati
         super.sendImpact(state)
     }
 
-    override fun construct(
-        id: Int,
-        location: Location,
-        vararg objects: Any,
-    ): AbstractNPC = ChaosElementalNPC(id, location)
+    override fun construct(id: Int, location: Location, vararg objects: Any): AbstractNPC = ChaosElementalNPC(id, location)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.CHAOS_ELEMENTAL_3200)
 
@@ -101,103 +97,26 @@ class ChaosElementalNPC @JvmOverloads constructor(id: Int = -1, location: Locati
         fun getRandomLoc(entity: Entity): Location {
             val l = entity.location
             val negative = RandomFunction.random(2) == 1
-            return l.location.transform(
-                (
-                        if (negative) {
-                            RandomFunction.random(-10, 10)
-                        } else {
-                            RandomFunction.random(
-                                0,
-                                10,
-                            )
-                        }),
-                (if (negative) RandomFunction.random(-10, 10) else RandomFunction.random(0, 10)),
-                0,
-            )
+            return l.location.transform((if (negative) {
+                RandomFunction.random(-10, 10)
+            } else {
+                RandomFunction.random(0, 10)
+            }),(if (negative) RandomFunction.random(-10, 10) else RandomFunction.random(0, 10)), 0,)
         }
 
         companion object {
             private val PROJECTILE_ANIM = Animation(Animations.CHAOS_ELEMENTAL_PROJECTILE_3148)
-            private val PRIMARY_PROJECTILE: Projectile = Projectile.create(
-                null as Entity?,
-                null,
-                org.rs.consts.Graphics.MULTICOLORS_2_557,
-                60,
-                55,
-                41,
-                46,
-                20,
-                255,
-            )
+            private val PRIMARY_PROJECTILE: Projectile = Projectile.create(null as Entity?, null, org.rs.consts.Graphics.MULTICOLORS_2_557, 60, 55, 41, 46, 20, 255)
             private val ATTACKS = arrayOf(
-                SwitchAttack(
-                    CombatStyle.MELEE.swingHandler,
-                    PROJECTILE_ANIM,
-                    Graphics(org.rs.consts.Graphics.MULTICOLORS_556),
-                    null,
-                    PRIMARY_PROJECTILE,
-                ),
-                SwitchAttack(
-                    CombatStyle.RANGE.swingHandler,
-                    PROJECTILE_ANIM,
-                    Graphics(org.rs.consts.Graphics.MULTICOLORS_556),
-                    null,
-                    PRIMARY_PROJECTILE,
-                ),
-                SwitchAttack(
-                    CombatStyle.MAGIC.swingHandler,
-                    PROJECTILE_ANIM,
-                    Graphics(org.rs.consts.Graphics.MULTICOLORS_556),
-                    null,
-                    PRIMARY_PROJECTILE,
-                ),
-                object : SwitchAttack(
-                    CombatStyle.MAGIC.swingHandler,
-                    PROJECTILE_ANIM,
-                    Graphics(org.rs.consts.Graphics.RED_550_553),
-                    null,
-                    Projectile.create(
-                        null as Entity?,
-                        null,
-                        org.rs.consts.Graphics.RED_FLYING_554,
-                        60,
-                        55,
-                        41,
-                        46,
-                        20,
-                        255,
-                    ),
-                ) {
-                    override fun canSelect(
-                        entity: Entity?,
-                        victim: Entity?,
-                        state: BattleState?,
-                    ): Boolean = true
+                SwitchAttack(CombatStyle.MELEE.swingHandler, PROJECTILE_ANIM, Graphics(org.rs.consts.Graphics.MULTICOLORS_556), null, PRIMARY_PROJECTILE),
+                SwitchAttack(CombatStyle.RANGE.swingHandler, PROJECTILE_ANIM, Graphics(org.rs.consts.Graphics.MULTICOLORS_556), null, PRIMARY_PROJECTILE),
+                SwitchAttack(CombatStyle.MAGIC.swingHandler, PROJECTILE_ANIM, Graphics(org.rs.consts.Graphics.MULTICOLORS_556), null, PRIMARY_PROJECTILE),
+                object : SwitchAttack(CombatStyle.MAGIC.swingHandler, PROJECTILE_ANIM, Graphics(org.rs.consts.Graphics.RED_550_553), null, Projectile.create(null as Entity?, null, org.rs.consts.Graphics.RED_FLYING_554, 60, 55, 41, 46, 20, 255)) {
+                    override fun canSelect(entity: Entity?, victim: Entity?, state: BattleState?): Boolean = true
                 },
-                object : SwitchAttack(
-                    CombatStyle.MAGIC.swingHandler,
-                    PROJECTILE_ANIM,
-                    Graphics(org.rs.consts.Graphics.GREEN_BALLS_550),
-                    null,
-                    Projectile.create(
-                        null as Entity?,
-                        null,
-                        org.rs.consts.Graphics.GREEN_BALLS_SPIN_551,
-                        60,
-                        55,
-                        41,
-                        46,
-                        20,
-                        255,
-                    ),
-                ) {
-                    override fun canSelect(
-                        entity: Entity?,
-                        victim: Entity?,
-                        state: BattleState?,
-                    ): Boolean = true
-                },
-            )
+                object : SwitchAttack(CombatStyle.MAGIC.swingHandler, PROJECTILE_ANIM, Graphics(org.rs.consts.Graphics.GREEN_BALLS_550), null, Projectile.create(null as Entity?, null, org.rs.consts.Graphics.GREEN_BALLS_SPIN_551, 60, 55, 41, 46, 20, 255),) {
+                    override fun canSelect(entity: Entity?, victim: Entity?, state: BattleState?): Boolean = true
+                },)
         }
     }
 }

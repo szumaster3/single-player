@@ -22,7 +22,7 @@ class CaptainCainDialogue(player: Player? = null) : Dialogue(player) {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> npcl(FaceAnim.FRIENDLY, "Why you wretched Son-of-a-Big-Nosed-Warty-Smelly-Goblin! How dare you speak to a commanding officer like that?").also { stage++ }
             1 -> playerl(FaceAnim.FRIENDLY, "I...err... What?").also { stage++ }

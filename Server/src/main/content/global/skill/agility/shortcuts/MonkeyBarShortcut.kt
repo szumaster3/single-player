@@ -116,7 +116,7 @@ class MonkeyBarShortcut : AgilityShortcut {
         )
     }
 
-    override fun getDestination(n: Node, node: Node, ): Location? {
+    override fun getDestination(n: Node, node: Node): Location? {
         if (node.location == Location(2598, 9489, 0)) {
             return Location(2597, 9488, 0)
         } else if (node.location == Location(2598, 9494, 0)) {

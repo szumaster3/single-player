@@ -109,7 +109,7 @@ class CatapultRoomPlugin :
         return this
     }
 
-    override fun fireEvent(identifier: String, vararg args: Any, ): Any? = null
+    override fun fireEvent(identifier: String, vararg args: Any): Any? = null
 
     override fun configure() {
         super.register(ZoneBorders(2837, 3542, 2847, 3556))
@@ -117,7 +117,7 @@ class CatapultRoomPlugin :
     }
 
     override fun enter(e: Entity): Boolean {
-        if (e is Player && e.getLocation().z.toInt() == 1) {
+        if (e is Player && e.getLocation().z == 1) {
             players.add(e)
             if (!pulse.isRunning) {
                 pulse.restart()
@@ -128,7 +128,7 @@ class CatapultRoomPlugin :
         return super.enter(e)
     }
 
-    override fun leave(e: Entity, logout: Boolean, ): Boolean {
+    override fun leave(e: Entity, logout: Boolean): Boolean {
         if (e is Player) {
             players.remove(e)
             unequipShield(e)
@@ -136,7 +136,7 @@ class CatapultRoomPlugin :
         return super.leave(e, logout)
     }
 
-    override fun locationUpdate(e: Entity, last: Location, ) {
+    override fun locationUpdate(e: Entity, last: Location) {
         if (e is Player && last == TARGET) {
             unequipShield(e)
         }

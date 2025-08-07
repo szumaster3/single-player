@@ -31,7 +31,7 @@ class TrainingGroundActivity : ActivityPlugin("Knight's training", true, false, 
     /**
      * Called when an entity dies inside the area.
      */
-    override fun death(entity: Entity, killer: Entity, ): Boolean {
+    override fun death(entity: Entity, killer: Entity): Boolean {
         if (entity is Player) {
             entity.getProperties().teleportLocation = Location.create(2751, 3507, 2)
             return true
@@ -55,7 +55,7 @@ class TrainingGroundActivity : ActivityPlugin("Knight's training", true, false, 
     /**
      * Called when the activity starts.
      */
-    override fun start(player: Player?, login: Boolean, vararg args: Any?, ): Boolean = super.start(player, login, *args)
+    override fun start(player: Player?, login: Boolean, vararg args: Any?): Boolean = super.start(player, login, *args)
 
     /**
      * Called when an entity enters the activity area.

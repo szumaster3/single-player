@@ -33,7 +33,7 @@ class CerilCarnilleanDialogue(player: Player? = null) : Dialogue(player) {
         return true
     }
 
-    override fun handle(componentID: Int, buttonID: Int, ): Boolean {
+    override fun handle(componentID: Int, buttonID: Int): Boolean {
         when (getQuestStage(player!!, Quests.HAZEEL_CULT)) {
             0 -> {
                 when (stage) {

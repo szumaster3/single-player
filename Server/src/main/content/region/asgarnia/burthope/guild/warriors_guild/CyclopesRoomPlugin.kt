@@ -37,7 +37,7 @@ import org.rs.consts.NPCs
 class CyclopesRoomPlugin :
     MapZone("wg cyclopes", true, ZoneRestriction.RANDOM_EVENTS),
     Plugin<Any> {
-    override fun leave(e: Entity, logout: Boolean, ): Boolean {
+    override fun leave(e: Entity, logout: Boolean): Boolean {
         if (e is Player) {
             leave(e)
             PLAYERS.remove(e)
@@ -49,7 +49,7 @@ class CyclopesRoomPlugin :
         return super.leave(e, logout)
     }
 
-    override fun death(e: Entity, killer: Entity, ): Boolean {
+    override fun death(e: Entity, killer: Entity): Boolean {
         if (killer is Player && e is NPC && (e.getId() == NPCs.CYCLOPS_4292 || e.getId() == NPCs.CYCLOPS_4291)) {
             var defenderId = getDefenderIndex(killer)
             if (RandomFunction.randomize(50) == 10) {
@@ -118,7 +118,7 @@ class CyclopesRoomPlugin :
         return this
     }
 
-    override fun fireEvent(identifier: String, vararg args: Any, ): Any? = null
+    override fun fireEvent(identifier: String, vararg args: Any): Any? = null
 
     private class KamfreenaCyclopsRoomDialogue : Dialogue {
         private var defenderId = 0
@@ -138,7 +138,7 @@ class CyclopesRoomPlugin :
             return true
         }
 
-        override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
+        override fun handle(interfaceId: Int, buttonId: Int): Boolean {
             when (stage) {
                 0 -> {
                     setAttribute(player, "sent_dialogue", true)

@@ -386,7 +386,7 @@ private class SqirkMakingDialogue(
 
     override fun getIds(): IntArray = intArrayOf(43382)
 
-    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (dialogueId) {
             0 -> end()
             1 -> when (stage) {

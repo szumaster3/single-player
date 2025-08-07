@@ -16,24 +16,16 @@ class ReinaldDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
-            0 ->
-                npc(
-                    FaceAnim.OLD_DEFAULT,
-                    "Hello, human! Would you like to browse",
-                    "my little shop of bracelets?",
-                ).also {
-                    stage++
-                }
+            0 -> npc(FaceAnim.OLD_DEFAULT, "Hello, human! Would you like to browse", "my little shop of bracelets?").also { stage++ }
             1 -> options("Yes, please!", "No, thanks.").also { stage++ }
-            2 ->
-                when (buttonId) {
-                    1 -> {
-                        end()
-                        openInterface(player, Components.REINALD_SMITHING_EMPORIUM_593)
-                    }
-
-                    2 -> end()
+            2 -> when (buttonId) {
+                1 -> {
+                    end()
+                    openInterface(player, Components.REINALD_SMITHING_EMPORIUM_593)
                 }
+
+                2 -> end()
+            }
         }
         return true
     }

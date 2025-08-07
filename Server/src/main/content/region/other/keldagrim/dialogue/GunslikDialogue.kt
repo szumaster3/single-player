@@ -18,18 +18,11 @@ class GunslikDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
-            START_DIALOGUE ->
-                npcl(
-                    FaceAnim.OLD_DEFAULT,
-                    "What can I interest you in? We have something of everything here!",
-                ).also {
-                    stage++
-                }
-            1 ->
-                showTopics(
-                    Topic(FaceAnim.FRIENDLY, "Oh good!", 2),
-                    Topic(FaceAnim.FRIENDLY, "Nothing, thanks.", END_DIALOGUE),
-                )
+            START_DIALOGUE -> npcl(FaceAnim.OLD_DEFAULT, "What can I interest you in? We have something of everything here!").also { stage++ }
+            1 -> showTopics(
+                Topic(FaceAnim.FRIENDLY, "Oh good!", 2),
+                Topic(FaceAnim.FRIENDLY, "Nothing, thanks.", END_DIALOGUE),
+            )
             2 -> {
                 end()
                 openNpcShop(player, NPCs.GUNSLIK_2154)

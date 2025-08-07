@@ -120,10 +120,7 @@ class RoguesCastlePlugin : InteractionListener {
         private const val JAIL_DOORS = 38837
     }
 
-    private fun openChest(
-        player: Player,
-        scenery: Scenery,
-    ) {
+    private fun openChest(player: Player, scenery: Scenery) {
         animate(player, CHEST_ANIM)
         submitIndividualPulse(
             player,
@@ -133,10 +130,7 @@ class RoguesCastlePlugin : InteractionListener {
         )
     }
 
-    private fun addLoot(
-        player: Player,
-        item: Item,
-    ) {
+    private fun addLoot(player: Player, item: Item) {
         sendMessage(player, "You search the chest...")
         submitIndividualPulse(
             player,
@@ -144,7 +138,7 @@ class RoguesCastlePlugin : InteractionListener {
                 override fun pulse(): Boolean {
                     sendMessage(
                         player,
-                        "... and find some ${item.name.lowercase() + if (!item.name.endsWith("s")) "s" else ""}!",
+                        "... and find some ${item.name.lowercase() + if (!item.name.endsWith("s")) "s" else ""}!"
                     )
                     addItemOrDrop(player, item.id, item.amount)
                     return true
@@ -153,21 +147,19 @@ class RoguesCastlePlugin : InteractionListener {
         )
     }
 
-    private val firstFloorLoot =
-        WeightBasedTable.create(
-            WeightedItem(Items.COINS_995, 8, 25, 70.0),
-            WeightedItem(Items.NATURE_RUNE_561, 2, 3, 10.0),
-            WeightedItem(Items.BLOOD_RUNE_565, 2, 3, 10.0),
-            WeightedItem(Items.DEATH_RUNE_560, 3, 5, 10.0),
-        )
+    private val firstFloorLoot = WeightBasedTable.create(
+        WeightedItem(Items.COINS_995, 8, 25, 70.0),
+        WeightedItem(Items.NATURE_RUNE_561, 2, 3, 10.0),
+        WeightedItem(Items.BLOOD_RUNE_565, 2, 3, 10.0),
+        WeightedItem(Items.DEATH_RUNE_560, 3, 5, 10.0),
+    )
 
-    private val secondFloorLoot =
-        WeightBasedTable.create(
-            WeightedItem(Items.COINS_995, 4, 57, 75.0),
-            WeightedItem(Items.COINS_995, 107, 243, 5.0),
-            WeightedItem(Items.BLOOD_RUNE_565, 2, 5, 5.0),
-            WeightedItem(Items.GOLD_ORE_445, 1, 1, 5.0),
-            WeightedItem(Items.STEEL_MED_HELM_1141, 1, 1, 5.0),
-            WeightedItem(Items.STEEL_PLATELEGS_1069, 1, 1, 5.0),
-        )
+    private val secondFloorLoot = WeightBasedTable.create(
+        WeightedItem(Items.COINS_995, 4, 57, 75.0),
+        WeightedItem(Items.COINS_995, 107, 243, 5.0),
+        WeightedItem(Items.BLOOD_RUNE_565, 2, 5, 5.0),
+        WeightedItem(Items.GOLD_ORE_445, 1, 1, 5.0),
+        WeightedItem(Items.STEEL_MED_HELM_1141, 1, 1, 5.0),
+        WeightedItem(Items.STEEL_PLATELEGS_1069, 1, 1, 5.0),
+    )
 }

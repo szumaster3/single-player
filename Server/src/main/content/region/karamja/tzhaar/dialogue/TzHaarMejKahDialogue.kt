@@ -17,7 +17,7 @@ class TzHaarMejKahDialogue(player: Player? = null, ) : Dialogue(player) {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> options("What is this place?", "Who's the current champion?", "What did you call me?", "No I'm fine thanks.").also { stage++ }
             1 -> when (buttonId) {

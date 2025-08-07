@@ -25,7 +25,7 @@ class SummoningCreationPlugin : ComponentPlugin() {
         return this
     }
 
-    override fun handle(player: Player, component: Component, opcode: Int, button: Int, slot: Int, itemId: Int, ): Boolean {
+    override fun handle(player: Player, component: Component, opcode: Int, button: Int, slot: Int, itemId: Int): Boolean {
         when (button) {
             17, 18 -> {
                 closeInterface(player)

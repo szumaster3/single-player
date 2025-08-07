@@ -24,7 +24,7 @@ object Skillcape {
      * @return `true` if successful.
      */
     @JvmStatic
-    fun purchase(player: Player, skill: Int, ): Boolean {
+    fun purchase(player: Player, skill: Int): Boolean {
         if (!isMaster(player, skill)) {
             return false
         }
@@ -70,13 +70,13 @@ object Skillcape {
      * Checks if the player has level 99 in a skill.
      */
     @JvmStatic
-    fun isMaster(player: Player, skill: Int, ): Boolean = player.getSkills().getStaticLevel(skill) == 99
+    fun isMaster(player: Player, skill: Int): Boolean = player.getSkills().getStaticLevel(skill) == 99
 
     /**
      * Gets skillcape and trimmed version for a skill.
      */
     @JvmStatic
-    fun getItems(player: Player, skill: Int, ): Array<Item> =
+    fun getItems(player: Player, skill: Int): Array<Item> =
         arrayOf(
             Item(ids[skill] + if (player.getSkills().getMasteredSkills() > 1) 1 else 0),
             Item(ids[skill] + 2),

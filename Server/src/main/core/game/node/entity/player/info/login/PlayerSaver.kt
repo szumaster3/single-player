@@ -53,6 +53,7 @@ class PlayerSaver(val player: Player) {
         saveHeadgear(saveFile)
         saveBoltPouch(saveFile)
         saveCostumeRoom(saveFile)
+        savePlayingTime(saveFile)
         saveVersion(saveFile)
         contentHooks.forEach { it.savePlayer(player, saveFile) }
         return saveFile
@@ -190,6 +191,11 @@ class PlayerSaver(val player: Player) {
             achievementData.add(diaryCollector)
         }
         root.add("achievementDiaries", achievementData)
+    }
+
+    fun savePlayingTime(root: JsonObject) {
+        val detailsJson = player.details.serializeTimeData()
+        root.add("playingTime", detailsJson)
     }
 
     fun saveHouseData(root: JsonObject) {

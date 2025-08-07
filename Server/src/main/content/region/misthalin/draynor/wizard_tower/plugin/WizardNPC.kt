@@ -14,7 +14,7 @@ import org.rs.consts.NPCs
 @Initializable
 class WizardNPC(id: Int = 0, location: Location? = null, ) : AbstractNPC(id, location) {
 
-    override fun construct(id: Int, location: Location, vararg objects: Any, ): AbstractNPC = WizardNPC(id, location)
+    override fun construct(id: Int, location: Location, vararg objects: Any): AbstractNPC = WizardNPC(id, location)
 
     override fun init() {
         super.init()

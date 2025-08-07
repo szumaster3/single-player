@@ -43,7 +43,7 @@ class FaladorScoutDialogue(player: Player? = null, ) : Dialogue(player) {
         }
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> npc("Finally, news! What message does he send?").also { stage++ }
             1 -> player("Err, it was something about planets.").also { stage++ }

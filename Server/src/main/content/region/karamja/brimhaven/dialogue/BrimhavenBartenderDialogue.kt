@@ -21,7 +21,7 @@ class BrimhavenBartenderDialogue(player: Player? = null, ) : Dialogue(player) {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> options("Nothing, thank you.", "A pint of Grog please.", "A bottle of rum please.").also { stage++ }
             1 -> when (buttonId) {

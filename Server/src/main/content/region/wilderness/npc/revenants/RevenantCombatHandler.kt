@@ -44,9 +44,7 @@ class RevenantCombatHandler(meleeAnimation: Animation?, magicAnimation: Animatio
     ) {
         if (victim is Player) {
             val attack = current
-            if (attack.style == CombatStyle.RANGE &&
-                !hasTimerActive(victim, "frozen") &&
-                !hasTimerActive(
+            if (attack.style == CombatStyle.RANGE && !hasTimerActive(victim, "frozen") && !hasTimerActive(
                     victim,
                     "frozen:immunity",
                 )
@@ -92,6 +90,7 @@ class RevenantCombatHandler(meleeAnimation: Animation?, magicAnimation: Animatio
         private val MAGIC_Graphics: Graphics = Graphics.create(org.rs.consts.Graphics.PUFF_OF_GREY_1276)
         private val RANGE_Graphics: Graphics = Graphics.create(org.rs.consts.Graphics.BIT_OF_WATER_1278)
 
-        fun createProjectile(graphics: Graphics): Projectile = Projectile.create(null, null, graphics.id, 48, 36, 34, 20)
+        fun createProjectile(graphics: Graphics): Projectile =
+            Projectile.create(null, null, graphics.id, 48, 36, 34, 20)
     }
 }

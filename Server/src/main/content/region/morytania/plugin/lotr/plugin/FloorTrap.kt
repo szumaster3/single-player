@@ -41,6 +41,6 @@ enum class FloorTrap(
          * @param y Y coordinate.
          * @return [FloorTrap] or `null` if none found.
          */
-        fun getFromCoords(x: Int, y: Int, ): FloorTrap? = trapMap[Location(x, y)]
+        fun getFromCoords(x: Int, y: Int): FloorTrap? = trapMap[Location(x, y)]
     }
 }

@@ -427,7 +427,7 @@ class VinesweeperPlugin :
             val seeds = min(1.0 * MAX_SEEDS, holes * 0.13).toInt()
             var tries = 0
             while (SEED_LOCS.size < seeds && tries++ < 1000) {
-                val loc = VINESWEEPER_BORDERS.getRandomLoc()
+                val loc = VINESWEEPER_BORDERS.randomLoc
                 val scenery = getScenery(loc)
                 if (scenery != null && HOLES.contains(scenery.id)) {
                     SEED_LOCS.add(loc)

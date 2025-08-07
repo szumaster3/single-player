@@ -21,7 +21,7 @@ class ZahwaDialogue(player: Player? = null) : Dialogue(player) {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> when ((1..7).random()) {
                 1 -> npc(FaceAnim.HALF_GUILTY, "Ughhhh....").also { stage = END_DIALOGUE }

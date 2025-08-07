@@ -49,7 +49,7 @@ class FishbowlOptionPlugin : OptionHandler() {
         return this
     }
 
-    override fun handle(player: Player, node: Node, option: String, ): Boolean {
+    override fun handle(player: Player, node: Node, option: String): Boolean {
         if (node is Item) {
             val item = node.asItem()
             when (item.id) {
@@ -210,7 +210,7 @@ class FishbowlOptionPlugin : OptionHandler() {
             return this
         }
 
-        override fun handle(player: Player, node: Node, option: String, ): Boolean = getFish(player)
+        override fun handle(player: Player, node: Node, option: String): Boolean = getFish(player)
 
         /**
          * Attempts to catch fish using a tiny net and fishbowl seaweed.

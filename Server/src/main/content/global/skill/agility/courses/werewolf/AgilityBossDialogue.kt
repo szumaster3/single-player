@@ -32,7 +32,7 @@ class AgilityBossDialogue(player: Player? = null, ) : Dialogue(player) {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> npc(FaceAnim.CHILD_NORMAL, "I'll throw you a stick, which you need to fetch as", "quickly as possible, from the area beyond the pipes.").also { stage++ }
             1 -> npc(FaceAnim.CHILD_NORMAL, "Be wary of the deathslide - you must hang by your", "teeth, and if your strength is not up to the job you will", "fall into a pit of spikes. Also, I would advise not", "carrying too much extra weight.").also { stage++ }

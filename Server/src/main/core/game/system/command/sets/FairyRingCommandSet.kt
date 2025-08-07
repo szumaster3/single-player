@@ -54,7 +54,7 @@ class FairyRingCommandSet : CommandPlugin() {
             "DIQ" to arrayOf(null, "Player owned home if it exists", 69),
         )
 
-    override fun parse(player: Player?, name: String?, arguments: Array<String?>?, ): Boolean {
+    override fun parse(player: Player?, name: String?, arguments: Array<String?>?): Boolean {
         when (name) {
             "f" -> {
                 if (arguments!!.size < 2) {

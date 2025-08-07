@@ -24,11 +24,10 @@ class HerviDialogue(player: Player? = null) : Dialogue(player) {
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> options("Show me the wares!", "No thanks.").also { stage++ }
-            1 ->
-                when (buttonId) {
-                    1 -> player("Show me the wares!").also { stage++ }
-                    2 -> player("No thanks.").also { stage = END_DIALOGUE }
-                }
+            1 -> when (buttonId) {
+                1 -> player("Show me the wares!").also { stage++ }
+                2 -> player("No thanks.").also { stage = END_DIALOGUE }
+            }
             2 -> end().also { openNpcShop(player, NPCs.HERVI_2157) }
         }
         return true

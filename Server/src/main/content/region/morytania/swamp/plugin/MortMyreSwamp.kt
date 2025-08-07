@@ -19,7 +19,7 @@ class MortMyreSwamp : MapZone("Mort Myre Swamp", true) {
     fun getRestrictions(): Array<ZoneRestriction> = arrayOf(ZoneRestriction.CANNON)
 
 
-    override fun leave(e: Entity?, logout: Boolean): Boolean {
+    override fun leave(e: Entity, logout: Boolean): Boolean {
         if (e is Player) {
             removeAttribute(e, "lastRepelTick")
         }

@@ -200,7 +200,7 @@ class CookingRewrite : InteractionListener {
                     else -> CookingPulse(player, scenery!!, initial, product, amount)
                 }
 
-            submitIndividualPulse(player, cookingPulse, type = PulseType.STRONG)
+            submitIndividualPulse(player, cookingPulse, type = PulseType.STANDARD)
         }
     }
 }

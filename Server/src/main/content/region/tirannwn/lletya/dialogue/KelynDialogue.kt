@@ -19,7 +19,7 @@ class KelynDialogue(player: Player? = null, ) : Dialogue(player) {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> npcl(FaceAnim.FRIENDLY, "Huh... Oh sorry, you made me jump. I was miles away, day dreaming.").also { stage++ }
             1 -> player(FaceAnim.FRIENDLY, "About what may I ask?").also { stage++ }

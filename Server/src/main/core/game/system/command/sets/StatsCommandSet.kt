@@ -45,7 +45,7 @@ class StatsCommandSet : CommandSet(Privilege.STANDARD) {
 
     companion object {
         @Suppress("UNUSED_PARAMETER")
-        private fun display(player: Player, pageNum: Int, buttonId: Int, ): Boolean {
+        private fun display(player: Player, pageNum: Int, buttonId: Int): Boolean {
             val queryPlayer: Player? = player.getAttribute("stats-command-query-player", null)
             if (queryPlayer == null) {
                 return false

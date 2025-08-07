@@ -26,7 +26,7 @@ class YakHideCraftingPlugin : InteractionListener {
                             index,
                             amount
                         ),
-                        type = PulseType.STRONG
+                        type = PulseType.STANDARD
                     )
                 }
 

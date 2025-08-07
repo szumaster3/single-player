@@ -20,7 +20,7 @@ import org.rs.consts.NPCs
 class AbyssalTitanNPC(owner: Player? = null, id: Int = NPCs.ABYSSAL_TITAN_7349) :
     BurdenBeast(owner, id, 3200, Items.ABYSSAL_TITAN_POUCH_12796, 6, 7, WeaponInterface.STYLE_ACCURATE) {
 
-    override fun construct(owner: Player, id: Int, ): Familiar = AbyssalTitanNPC(owner, id)
+    override fun construct(owner: Player, id: Int): Familiar = AbyssalTitanNPC(owner, id)
 
     override fun isAllowed(
         owner: Player,

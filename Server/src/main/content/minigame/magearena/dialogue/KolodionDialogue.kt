@@ -37,7 +37,7 @@ class KolodionDialogue(player: Player? = null) : Dialogue(player) {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         if (player.getSavedData().activityData.hasStartedKolodion()) {
             when (stage) {
                 0 -> npc("You return, young conjurer. You obviously have a", "taste for the dark side of magic.").also { stage++ }

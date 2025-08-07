@@ -12,6 +12,9 @@ import org.rs.consts.Animations
 import org.rs.consts.Items
 import org.rs.consts.Quests
 
+/**
+ * Represents the fletching skill pulse.
+ */
 class FletchingPulse(
     player: Player?,
     node: Item?,
@@ -43,13 +46,13 @@ class FletchingPulse(
             amount = amountInInventory(player, node!!.id)
         }
         if (fletch == Fletching.FletchingItems.OGRE_ARROW_SHAFT) {
-            if (player.getQuestRepository().getQuest(Quests.BIG_CHOMPY_BIRD_HUNTING).getStage(player) == 0) {
+            if (getQuestStage(player, Quests.BIG_CHOMPY_BIRD_HUNTING) == 0) {
                 sendMessage(player, "You must have started Big Chompy Bird Hunting to make those.")
                 return false
             }
         }
         if (fletch == Fletching.FletchingItems.OGRE_COMPOSITE_BOW) {
-            if (player.getQuestRepository().getQuest(Quests.ZOGRE_FLESH_EATERS).getStage(player) == 0) {
+            if (getQuestStage(player, Quests.ZOGRE_FLESH_EATERS) == 0) {
                 sendMessage(player, "You must have started Zogre Flesh Eaters to make those.")
                 return false
             }
@@ -82,25 +85,22 @@ class FletchingPulse(
             val message = message
             sendMessage(player, message)
 
-            if (fletch.id == Fletching.FletchingItems.MAGIC_SHORTBOW.id &&
-                (
-                    ZoneBorders(
-                        2721,
-                        3489,
-                        2724,
-                        3493,
-                        0,
-                    ).insideBorder(player) ||
+            if (fletch.id == Fletching.FletchingItems.MAGIC_SHORTBOW.id && (
+                        ZoneBorders(
+                            2721,
+                            3489,
+                            2724,
+                            3493,
+                            0
+                        ).insideBorder(player) ||
                         ZoneBorders(
                             2727,
                             3487,
                             2730,
                             3490,
-                            0,
-                        ).insideBorder(player)
-                ) &&
-                !hasDiaryTaskComplete(player, DiaryType.SEERS_VILLAGE, 2, 2)
-            ) {
+                            0
+                        ).insideBorder(player)) &&
+                !hasDiaryTaskComplete(player, DiaryType.SEERS_VILLAGE, 2, 2)) {
                 setAttribute(player, "/save:diary:seers:fletch-magic-short-bow", true)
             }
         } else {

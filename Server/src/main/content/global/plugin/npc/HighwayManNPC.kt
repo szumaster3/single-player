@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
 @Initializable
 class HighwayManNPC(id: Int = 0, location: Location? = null, ) : AbstractNPC(id, location) {
 
-    override fun construct(id: Int, location: Location, vararg objects: Any, ): AbstractNPC = HighwayManNPC(id, location)
+    override fun construct(id: Int, location: Location, vararg objects: Any): AbstractNPC = HighwayManNPC(id, location)
 
     override fun finalizeDeath(killer: Entity) {
         super.finalizeDeath(killer)

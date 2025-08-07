@@ -43,7 +43,7 @@ class WeavingListener : InteractionListener {
                     submitIndividualPulse(
                         entity = player,
                         pulse = WeavingPulse(player, node.asScenery(), Weaving.values()[index], amount),
-                        type = PulseType.STRONG
+                        type = PulseType.STANDARD
                     )
                 }
             }.open()

@@ -20,7 +20,7 @@ class SpikeWallPlugin: OptionHandler() {
         return this
     }
 
-    override fun handle(player: Player?, node: Node?, option: String?, ): Boolean {
+    override fun handle(player: Player?, node: Node?, option: String?): Boolean {
         if (player == null || node !is Scenery || option != "search") return false
 
         val anim = Animation(Animations.PICK_POCKET_881)

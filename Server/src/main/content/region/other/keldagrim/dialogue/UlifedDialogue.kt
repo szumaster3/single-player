@@ -16,13 +16,7 @@ class UlifedDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
-            START_DIALOGUE ->
-                npcl(
-                    FaceAnim.OLD_DEFAULT,
-                    "Say, aren't you the human who got arrested here the other day, by the boat?",
-                ).also {
-                    stage++
-                }
+            START_DIALOGUE -> npcl(FaceAnim.OLD_DEFAULT, "Say, aren't you the human who got arrested here the other day, by the boat?").also { stage++ }
             1 -> playerl(FaceAnim.FRIENDLY, "Yes, but we cleared up the whole situation.").also { stage++ }
             2 -> npcl(FaceAnim.OLD_DEFAULT, "Right, right.").also { stage = END_DIALOGUE }
         }

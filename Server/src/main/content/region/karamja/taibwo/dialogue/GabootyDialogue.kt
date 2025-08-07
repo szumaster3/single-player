@@ -21,7 +21,7 @@ class GabootyDialogue(player: Player? = null, ) : Dialogue(player) {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> npc(FaceAnim.FRIENDLY, "Not much really... I run a local shop which earns", "me a few trading sticks, but that's about it.", "I keep myself to myself really.").also { stage++ }
             1 -> player(FaceAnim.FRIENDLY, "What are trading sticks?").also { stage++ }

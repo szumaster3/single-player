@@ -23,7 +23,7 @@ class FishingGuildPlugin : OptionHandler() {
         return this
     }
 
-    override fun handle(player: Player, node: Node, option: String, ): Boolean {
+    override fun handle(player: Player, node: Node, option: String): Boolean {
         when (option) {
             "open" ->
                 when (node.id) {

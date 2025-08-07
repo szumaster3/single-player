@@ -172,7 +172,7 @@ enum class EnchantedJewellery(val options: Array<String>, val locations: Array<L
     /**
      * Checks if the player can teleport using the item.
      */
-    private fun canTeleport(player: Player, item: Item, ): Boolean = player.zoneMonitor.teleport(1, item)
+    private fun canTeleport(player: Player, item: Item): Boolean = player.zoneMonitor.teleport(1, item)
 
     /**
      * Gets the next item in the sequence.

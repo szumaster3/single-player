@@ -16,9 +16,6 @@ class FredHouse :
     }
 
     override fun enter(entity: Entity): Boolean {
-        if (entity.isPlayer) {
-            
-        }
         return super.enter(entity)
     }
 

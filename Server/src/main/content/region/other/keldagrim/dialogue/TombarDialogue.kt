@@ -24,21 +24,11 @@ class TombarDialogue(player: Player? = null) : Dialogue(player) {
         when (stage) {
             0 -> npc(FaceAnim.OLD_NORMAL, "Was there anything in particular you wanted?").also { stage++ }
             1 -> options("I'd like a quest please.", "No, I just like talking to strangers.").also { stage++ }
-            2 ->
-                when (buttonId) {
-                    1 -> player("I'd like a quest please.").also { stage++ }
-                    2 -> player("No, I just like talking to strangers.").also { stage = 4 }
-                }
-            3 ->
-                npc(
-                    FaceAnim.OLD_NORMAL,
-                    "I have nothing to do for you, I'm afraid.",
-                    "Ask around town, though, there are always people",
-                    "who need some work done around here.",
-                ).also {
-                    stage =
-                        END_DIALOGUE
-                }
+            2 -> when (buttonId) {
+                1 -> player("I'd like a quest please.").also { stage++ }
+                2 -> player("No, I just like talking to strangers.").also { stage = 4 }
+            }
+            3 -> npc(FaceAnim.OLD_NORMAL, "I have nothing to do for you, I'm afraid.", "Ask around town, though, there are always people", "who need some work done around here.").also { stage = END_DIALOGUE }
             4 -> npc(FaceAnim.OLD_NORMAL, "Well I don't.").also { stage = END_DIALOGUE }
         }
         return true

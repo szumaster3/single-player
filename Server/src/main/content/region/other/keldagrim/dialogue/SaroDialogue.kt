@@ -24,11 +24,10 @@ class SaroDialogue(player: Player? = null) : Dialogue(player) {
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> options("Yes, I'm looking for some armour.", "No thanks.").also { stage++ }
-            1 ->
-                when (buttonId) {
-                    1 -> player(FaceAnim.FRIENDLY, "Yes, I'm looking for some armour.").also { stage++ }
-                    2 -> player(FaceAnim.NEUTRAL, "No thanks.").also { stage = END_DIALOGUE }
-                }
+            1 -> when (buttonId) {
+                1 -> player(FaceAnim.FRIENDLY, "Yes, I'm looking for some armour.").also { stage++ }
+                2 -> player(FaceAnim.NEUTRAL, "No thanks.").also { stage = END_DIALOGUE }
+            }
             2 -> {
                 end()
                 openNpcShop(player, NPCs.SARO_2153)

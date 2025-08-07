@@ -9,42 +9,113 @@ import content.global.skill.fletching.items.crossbow.Limb
 import content.global.skill.fletching.items.darts.Dart
 import core.game.node.item.Item
 import org.rs.consts.Items
-
+/**
+ * Utility object for handling all logic related to the Fletching skill.
+ */
 object Fletching {
+
+    /** The map of log item ids to their possible fletching outcomes (FletchingItems). */
     val logMap = Item.values().associateTo(HashMap()) { it.id to it.items }
 
+    /** The id of an arrow shaft. */
     const val arrowShaftId = Items.ARROW_SHAFT_52
+
+    /** The id of a headless arrow (shaft with feather). */
     const val fletchedShaftId = Items.HEADLESS_ARROW_53
+
+    /** The id of a flighted ogre arrow. */
     const val fligtedOgreArrowId = Items.FLIGHTED_OGRE_ARROW_2865
 
-    val featherIds = intArrayOf(Items.FEATHER_314, Items.STRIPY_FEATHER_10087, Items.RED_FEATHER_10088, Items.BLUE_FEATHER_10089, Items.YELLOW_FEATHER_10090, Items.ORANGE_FEATHER_10091)
-    val stringIds = intArrayOf(Items.BOW_STRING_1777, Items.CROSSBOW_STRING_9438)
-    val kebbitSpikeIds = intArrayOf(Items.KEBBIT_SPIKE_10105, Items.LONG_KEBBIT_SPIKE_10107)
-    val gemIds = intArrayOf(Items.OYSTER_PEARL_411, Items.OYSTER_PEARLS_413, Items.OPAL_1609, Items.JADE_1611, Items.RED_TOPAZ_1613, Items.SAPPHIRE_1607, Items.EMERALD_1605, Items.RUBY_1603, Items.DIAMOND_1601, Items.DRAGONSTONE_1615, Items.ONYX_6573)
+    /** List of valid feather item ids usable in fletching. */
+    val featherIds = intArrayOf(
+        Items.FEATHER_314, Items.STRIPY_FEATHER_10087, Items.RED_FEATHER_10088,
+        Items.BLUE_FEATHER_10089, Items.YELLOW_FEATHER_10090, Items.ORANGE_FEATHER_10091
+    )
 
+    /** List of valid string item ids for bows and crossbows. */
+    val stringIds = intArrayOf(Items.BOW_STRING_1777, Items.CROSSBOW_STRING_9438)
+
+    /** List of valid kebbit spike item ids used in certain types of fletching. */
+    val kebbitSpikeIds = intArrayOf(Items.KEBBIT_SPIKE_10105, Items.LONG_KEBBIT_SPIKE_10107)
+
+    /** List of gem item ids used for crafting gem-tipped bolts. */
+    val gemIds = intArrayOf(
+        Items.OYSTER_PEARL_411, Items.OYSTER_PEARLS_413,
+        Items.OPAL_1609, Items.JADE_1611, Items.RED_TOPAZ_1613,
+        Items.SAPPHIRE_1607, Items.EMERALD_1605, Items.RUBY_1603,
+        Items.DIAMOND_1601, Items.DRAGONSTONE_1615, Items.ONYX_6573
+    )
+
+    /** All limb item ids for crossbow construction. */
     val limbIds = Limb.values().map(Limb::limb).toIntArray()
+
+    /** All stock item ids for crossbow construction. */
     val stockIds = Limb.values().map(Limb::stock).toIntArray()
+
+    /** All nail item ids used for brutal arrows. */
     val nailIds = BrutalArrow.values().map(BrutalArrow::base).toIntArray()
+
+    /** All unfinished arrow ids (shafts with heads not yet combined). */
     val unfinishedArrows = ArrowHead.values().map { it.unfinished }.toIntArray()
+
+    /** All unstrung bow item ids. */
     val unstrungBows = Strings.values().map(Strings::unfinished).toIntArray()
+
+    /** All bolt base item ids for gem-tipped bolts. */
     val boltBaseIds = GemBolt.values().map { it.base }.toIntArray()
+
+    /** All bolt tip item ids for gem-tipped bolts. */
     val boltTipIds = GemBolt.values().map { it.tip }.toIntArray()
 
+    /**
+     * Retrieves the fletching entries (possible outcomes) for a given item id.
+     *
+     * @param id The item id to look up.
+     * @return An array of [FletchingItems] if found, or null otherwise.
+     */
     @JvmStatic
     fun getEntries(id: Int): Array<FletchingItems>? = logMap[id]
 
+    /**
+     * Checks if the given item id represents a log that can be used in fletching.
+     *
+     * @param id The item id to check.
+     * @return True if the item is a fletchable log, false otherwise.
+     */
     @JvmStatic
     fun isLog(id: Int): Boolean = logMap.containsKey(id)
 
+    /**
+     * Checks if the given item id is a valid bolt.
+     *
+     * @param id The item id to check.
+     * @return True if the item is a bolt, false otherwise.
+     */
     @JvmStatic
     fun isBolt(id: Int): Boolean = Bolt.product[id] != null
 
+    /**
+     * Checks if the given item id is a dart.
+     *
+     * @param id The item id to check.
+     * @return True if the item is a dart, false otherwise.
+     */
     @JvmStatic
     fun isDart(id: Int): Boolean = Dart.product[id] != null
 
+    /**
+     * Gets the actual item instances for a given log or base item id.
+     *
+     * @param id The item id to get outcomes for.
+     * @return An array of resulting [Item]s, or null if the item cannot be fletched.
+     */
     @JvmStatic
-    fun getItems(id: Int): Array<core.game.node.item.Item>? = getEntries(id)?.map { Item(it.id) }?.toTypedArray()
+    fun getItems(id: Int): Array<core.game.node.item.Item>? =
+        getEntries(id)?.map { Item(it.id) }?.toTypedArray()
 
+    /**
+     * Represents the fletching stocks.
+     */
     private enum class Item(
         val id: Int,
         vararg fletchingItems: FletchingItems,
@@ -103,6 +174,9 @@ object Fletching {
         val items: Array<FletchingItems> = fletchingItems as Array<FletchingItems>
     }
 
+    /**
+     * Represents the fletching items.
+     */
     enum class FletchingItems(
         val id: Int,
         val experience: Double,

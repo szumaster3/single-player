@@ -14,7 +14,7 @@ import core.plugin.Plugin
 class CowPen : MapZone("lumbridge cows", true), Plugin<Any?> {
     private val COW_PEN_AREA = ZoneBorders(3242, 3255, 3265, 3297)
 
-    override fun fireEvent(identifier: String, vararg args: Any, ): Any? = null
+    override fun fireEvent(identifier: String, vararg args: Any): Any? = null
 
     override fun configure() {
         super.register(COW_PEN_AREA)

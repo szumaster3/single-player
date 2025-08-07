@@ -45,7 +45,7 @@ class DesertScoutDialogue(player: Player? = null, ) : Dialogue(player) {
         }
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> npc(FaceAnim.SCARED, "Gah! Don't sneak up on me!").also { stage++ }
             1 -> player(FaceAnim.GUILTY, "Uh, sorry.").also { stage++ }

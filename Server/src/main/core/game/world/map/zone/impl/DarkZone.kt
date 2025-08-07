@@ -43,14 +43,14 @@ class DarkZone : MapZone("Dark zone", true), EventHook<UseWithEvent> {
         register(ZoneBorders(2496, 9408, 2559, 9471)) // Skavid caves.
     }
 
-    override fun continueAttack(entity: Entity, target: Node, style: CombatStyle, message: Boolean, ): Boolean {
+    override fun continueAttack(entity: Entity, target: Node, style: CombatStyle, message: Boolean): Boolean {
         if (entity is Player) {
             return entity.interfaceManager.overlay != DARKNESS_OVERLAY
         }
         return true
     }
 
-    override fun interact(entity: Entity, target: Node, option: Option, ): Boolean {
+    override fun interact(entity: Entity, target: Node, option: Option): Boolean {
         if (target is Item) {
             val s = forProductId(target.id)
             if (s != null) {
@@ -93,7 +93,7 @@ class DarkZone : MapZone("Dark zone", true), EventHook<UseWithEvent> {
         return true
     }
 
-    override fun leave(entity: Entity, logout: Boolean, ): Boolean {
+    override fun leave(entity: Entity, logout: Boolean): Boolean {
         if (entity is Player) {
             entity.interfaceManager.closeOverlay()
         }

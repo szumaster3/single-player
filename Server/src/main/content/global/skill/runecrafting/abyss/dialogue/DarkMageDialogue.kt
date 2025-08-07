@@ -29,7 +29,7 @@ class DarkMageDialogue(player: Player? = null) : Dialogue(player) {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> npc("Quiet!", "You must not break my concentration!").also { stage++ }
             1 -> options("Why not?", "What are you doing here?", "Can you repair my pouches?", "Ok, Sorry").also { stage++ }

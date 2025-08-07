@@ -12,14 +12,14 @@ import org.rs.consts.NPCs
 class DuckNPC : NPCBehavior(NPCs.DUCK_46, NPCs.DUCK_2693, NPCs.DUCK_6113) {
     private val forceChat = listOf("Eep!", "Quack!")
     private var tickDelay = 0
-    private val TICK_INTERVAL = 30
+    private val TICK_INTERVAL = 10
 
     override fun tick(self: NPC): Boolean {
         tickDelay++
         if (tickDelay < TICK_INTERVAL) return true
         tickDelay = 0
 
-        if (RandomFunction.random(45) == 5) {
+        if (RandomFunction.random(15) == 5) {
             sendChat(self, forceChat.random())
         }
         return true

@@ -18,21 +18,54 @@ private enum class CreatureCreation(
     val description: String,
     val npcId: Int,
     val location: Location,
-    val firstMaterial: Int,
-    val secondMaterial: Int
+    val materials: Set<Int>
 ) {
-    NEWROOST("Feather of chicken and eye of newt", NPCs.NEWTROOST_5597, Location(3058, 4410, 0), Items.FEATHER_314, Items.EYE_OF_NEWT_221),
-    UNICOW("Horn of unicorn and hide of cow", NPCs.UNICOW_5603, Location(3018, 4410, 0), Items.COWHIDE_1739, Items.UNICORN_HORN_237),
-    SPIDINE("Red spiders' eggs and a sardine raw", NPCs.SPIDINE_5594, Location(3043, 4361, 0), Items.RED_SPIDERS_EGGS_223, Items.RAW_SARDINE_327),
-    SWORDCHICK("Swordfish raw and chicken uncooked", NPCs.SWORDCHICK_5595, Location(3034, 4361, 0), Items.RAW_SWORDFISH_371, Items.RAW_CHICKEN_2138),
-    JUBSTER("Raw meat of jubbly bird and a lobster raw", NPCs.JUBSTER_5596, Location(3066, 4380, 0), Items.RAW_JUBBLY_7566, Items.RAW_LOBSTER_377),
-    FROGEEL("Legs of giant frog and a cave eel uncooked", NPCs.FROGEEL_5593, Location(3012, 4380, 0), Items.GIANT_FROG_LEGS_4517, Items.RAW_CAVE_EEL_5001);
-
-    val materials = setOf(firstMaterial, secondMaterial)
+    NEWROOST(
+        "Feather of chicken and eye of newt",
+        NPCs.NEWTROOST_5597,
+        Location(3058, 4410, 0),
+        setOf(Items.FEATHER_314, Items.EYE_OF_NEWT_221)
+    ),
+    UNICOW(
+        "Horn of unicorn and hide of cow",
+        NPCs.UNICOW_5603,
+        Location(3018, 4410, 0),
+        setOf(Items.COWHIDE_1739, Items.UNICORN_HORN_237)
+    ),
+    SPIDINE(
+        "Red spiders' eggs and a sardine raw",
+        NPCs.SPIDINE_5594,
+        Location(3043, 4361, 0),
+        setOf(Items.RED_SPIDERS_EGGS_223, Items.RAW_SARDINE_327)
+    ),
+    SWORDCHICK(
+        "Swordfish raw and chicken uncooked",
+        NPCs.SWORDCHICK_5595,
+        Location(3034, 4361, 0),
+        setOf(Items.RAW_SWORDFISH_371, Items.RAW_CHICKEN_2138)
+    ),
+    JUBSTER(
+        "Raw meat of jubbly bird and a lobster raw",
+        NPCs.JUBSTER_5596,
+        Location(3066, 4380, 0),
+        setOf(Items.RAW_JUBBLY_7566, Items.RAW_LOBSTER_377)
+    ),
+    FROGEEL(
+        "Legs of giant frog and a cave eel uncooked",
+        NPCs.FROGEEL_5593,
+        Location(3012, 4380, 0),
+        setOf(Items.GIANT_FROG_LEGS_4517, Items.RAW_CAVE_EEL_5001)
+    );
 
     companion object {
-        fun forLocation(location: Location): CreatureCreation? = values().find { it.location == location }
-        fun forItemId(itemId: Int): CreatureCreation? = values().find { itemId in it.materials }
+        private val byLocation = values().associateBy { it.location }
+        private val byItemId = values().flatMap { c -> c.materials.map { it to c } }.toMap()
+
+        fun forLocation(location: Location): CreatureCreation? = byLocation[location]
+        fun forItemId(itemId: Int): CreatureCreation? = byItemId[itemId]
+
+        val UNICOW_SPAWN_BASE = Location(3018, 4410, 0)
+        val UNICOW_SPAWN_RANDOM_BASE = Location(3022, 4403, 0)
     }
 }
 
@@ -41,7 +74,7 @@ private enum class CreatureCreation(
  */
 class CreatureCreationPlugin : InteractionListener {
 
-    private val allMaterialIds = CreatureCreation.values().flatMap { it.materials }.toIntArray()
+    private val allMaterialIds = CreatureCreation.values().flatMap { it.materials }.distinct().toIntArray()
 
     override fun defineListeners() {
 
@@ -51,7 +84,7 @@ class CreatureCreationPlugin : InteractionListener {
 
         on(Scenery.TRAPDOOR_21921, IntType.SCENERY, "open") { player, _ ->
             if (hasRequirement(player, Quests.TOWER_OF_LIFE, false)) {
-                setVarbit(player,  Vars.VARBIT_TOL_TRAPDOOR_3372, 1)
+                setVarbit(player, Vars.VARBIT_TOL_TRAPDOOR_3372, 1)
                 sendMessage(player, "You open the trapdoor.")
             } else {
                 sendDialogue(player, "The trapdoor won't open.")
@@ -86,7 +119,12 @@ class CreatureCreationPlugin : InteractionListener {
             CreatureCreation.forLocation(node.location)?.let {
                 sendDialogue(player, "You see some text scrolled above the altar on a symbol...")
                 addDialogueAction(player) { _, _ ->
-                    sendDoubleItemDialogue(player, it.firstMaterial, it.secondMaterial, "${it.description}...")
+                    sendDoubleItemDialogue(
+                        player,
+                        it.materials.elementAt(0),
+                        it.materials.elementAt(1),
+                        "${it.description}..."
+                    )
                 }
             }
             return@on true
@@ -99,7 +137,11 @@ class CreatureCreationPlugin : InteractionListener {
         onUseWith(IntType.SCENERY, allMaterialIds, Scenery.SYMBOL_OF_LIFE_21893) { player, used, with ->
             val item = used.asItem()
             val symbol = CreatureCreation.forItemId(item.id) ?: return@onUseWith true
-            if (with.location != symbol.location) return@onUseWith sendMessage(player, "You can't reach.").let { true }
+
+            if (with.location != symbol.location) {
+                sendMessage(player, "You can't reach.")
+                return@onUseWith true
+            }
 
             val key = "${symbol.name}:${item.id}"
             if (getAttribute(player, key, false)) {
@@ -142,17 +184,10 @@ class CreatureCreationPlugin : InteractionListener {
                 player(FaceAnim.HALF_ASKING, "Hi there, you mentioned something about creating monsters...?")
                 npc(node.id, FaceAnim.OLD_NORMAL, "Good! I gain know from alchemists and builders. Me make beings.")
                 player(FaceAnim.THINKING, "Interesting. Tell me if I'm right.")
-                player(
-                    FaceAnim.THINKING,
-                    "By the alchemists and builders creating you, you have inherited their combined knowledge in much the same way that a child might inherit the looks of their parents."
-                )
+                player(FaceAnim.THINKING, "By the alchemists and builders creating you, you have inherited their combined knowledge in much the same way that a child might inherit the looks of their parents.")
                 npc(node.id, FaceAnim.OLD_NORMAL, "Yes, you right!")
                 player(FaceAnim.HALF_ASKING, "So what do you need me to do?")
-                npc(
-                    node.id,
-                    FaceAnim.OLD_NORMAL,
-                    "Inspect symbol of life altars around dungeon. You see item give. Use item on altar. Activate altar to create, you fight."
-                )
+                npc(node.id, FaceAnim.OLD_NORMAL, "Inspect symbol of life altars around dungeon. You see item give. Use item on altar. Activate altar to create, you fight.")
                 player(FaceAnim.NOD_YES, "Okay. Sounds like a challenge.")
             }
             return@on true
@@ -173,8 +208,8 @@ class CreatureCreationPlugin : InteractionListener {
     }
 
     private fun spawnCreature(player: Player, symbol: CreatureCreation) {
-        val spawnLocation = if (symbol.location == Location(3018, 4410, 0))
-            Location.getRandomLocation(Location(3022, 4403, 0), 2, true)
+        val spawnLocation = if (symbol.location == CreatureCreation.UNICOW_SPAWN_BASE)
+            Location.getRandomLocation(CreatureCreation.UNICOW_SPAWN_RANDOM_BASE, 2, true)
         else
             Location.create(symbol.location.x - 1, symbol.location.y - 3, 0)
 

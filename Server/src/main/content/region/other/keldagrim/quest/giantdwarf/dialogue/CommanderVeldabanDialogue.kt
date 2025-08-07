@@ -9,6 +9,9 @@ import core.tools.END_DIALOGUE
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Commander Veldaban dialogue (The Giant Dwarf start)
+ */
 @Initializable
 class CommanderVeldabanDialogue(player: Player? = null) : Dialogue(player) {
 

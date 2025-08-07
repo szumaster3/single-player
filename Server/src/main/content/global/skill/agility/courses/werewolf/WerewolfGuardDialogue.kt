@@ -20,7 +20,7 @@ class WerewolfGuardDialogue(
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> {
                 val hasCharos = inEquipment(player, Items.RING_OF_CHAROS_4202, 1)

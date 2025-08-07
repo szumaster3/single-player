@@ -114,7 +114,7 @@ class BeaconKeeperDialogue(player: Player? = null) : Dialogue(player) {
         return -1
     }
 
-    private fun getLogs(player: Player, amount: Int, ): Item {
+    private fun getLogs(player: Player, amount: Int): Item {
         var logId = 0
         for (log in VALID_LOGS) {
             if (player.inventory.getAmount(log) >= amount) {

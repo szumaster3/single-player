@@ -15,7 +15,7 @@ import org.rs.consts.Quests
 class ClausTheChefDialogue(player: Player? = null) : Dialogue(player) {
     
 
-    override fun handle(componentID: Int, buttonID: Int, ): Boolean {
+    override fun handle(componentID: Int, buttonID: Int): Boolean {
         val questStage = getQuestStage(player!!, Quests.HAZEEL_CULT)
         when {
             (questStage in 0..2) -> {

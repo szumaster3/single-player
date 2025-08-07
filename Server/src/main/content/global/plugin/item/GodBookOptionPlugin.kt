@@ -26,7 +26,7 @@ class GodBookOptionPlugin : OptionHandler() {
         return this
     }
 
-    override fun handle(player: Player, node: Node, option: String, ): Boolean {
+    override fun handle(player: Player, node: Node, option: String): Boolean {
         val book = GodBook.forItem(node.asItem(), option.equals("check", ignoreCase = true))
         if (book != null) {
             when (option) {

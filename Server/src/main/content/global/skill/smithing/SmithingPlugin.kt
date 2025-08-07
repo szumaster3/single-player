@@ -114,7 +114,7 @@ class SmithingPlugin : InteractionListener {
             addDialogueAction(player) { _, _ ->
                 lock(player, 10)
                 animate(player, Animations.HUMAN_ANVIL_HAMMER_SMITHING_898)
-                submitIndividualPulse(player, DragonShieldPulse(player, used.asItem()), type = PulseType.STRONG)
+                submitIndividualPulse(player, DragonShieldPulse(player, used.asItem()), type = PulseType.STANDARD)
                 return@addDialogueAction
             }
 
@@ -151,7 +151,7 @@ class SmithingPlugin : InteractionListener {
             addDialogueAction(player) { _, _ ->
                 lock(player, 5)
                 animate(player, Animations.HUMAN_ANVIL_HAMMER_SMITHING_898)
-                submitIndividualPulse(player, DragonfireShieldPulse(player, used.asItem()), type = PulseType.STRONG)
+                submitIndividualPulse(player, DragonfireShieldPulse(player, used.asItem()), type = PulseType.STANDARD)
                 return@addDialogueAction
             }
             return@onUseWith true

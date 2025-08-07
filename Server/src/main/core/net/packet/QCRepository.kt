@@ -317,7 +317,7 @@ object QCRepository {
     /**
      * For Double-replacement quick chat messages with 2 selection replacements.
      */
-    fun getFromMap(map: Int, index: Int, ): String = DataMap.get(map).getString(index)!!
+    fun getFromMap(map: Int, index: Int): String = DataMap.get(map).getString(index)!!
 
     @JvmStatic
     fun getDoubleQC(

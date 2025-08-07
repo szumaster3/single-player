@@ -149,13 +149,9 @@ enum class PenguinLocation(
     ;
 
     companion object {
-        private val locationMap: Map<Location, PenguinLocation> = buildMap {
-            for (penguin in values()) {
-                for (location in penguin.locations) {
-                    put(location, penguin)
-                }
-            }
-        }
+        private val locationMap: Map<Location, PenguinLocation> = values()
+            .flatMap { penguin -> penguin.locations.map { location -> location to penguin } }
+            .toMap()
 
         fun forLocation(location: Location): PenguinLocation? = locationMap[location]
     }

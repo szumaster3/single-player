@@ -77,7 +77,7 @@ class FletchingListener : InteractionListener {
                     submitIndividualPulse(
                         entity = player,
                         pulse = StringPulse(player, Item(string.id), enum, amount),
-                        type = PulseType.STRONG
+                        type = PulseType.STANDARD
                     )
                 }
                 calculateMaxAmount {
@@ -104,7 +104,7 @@ class FletchingListener : InteractionListener {
                     submitIndividualPulse(
                         entity = player,
                         pulse = HeadlessArrowPulse(player, Item(shaft.id), Item(feather.id), amount),
-                        type = PulseType.STRONG
+                        type = PulseType.STANDARD
                     )
                 }
 
@@ -132,7 +132,7 @@ class FletchingListener : InteractionListener {
                     submitIndividualPulse(
                         entity = player,
                         pulse = ArrowHeadPulse(player, Item(shaft.id), arrowHead, amount),
-                        type = PulseType.STRONG
+                        type = PulseType.STANDARD
                     )
                 }
 
@@ -239,7 +239,7 @@ class FletchingListener : InteractionListener {
                     submitIndividualPulse(
                         entity = player,
                         pulse = LimbPulse(player, Item(stock.id), limbEnum, amount),
-                        type = PulseType.STRONG
+                        type = PulseType.STANDARD
                     )
                 }
                 calculateMaxAmount {
@@ -267,7 +267,7 @@ class FletchingListener : InteractionListener {
                     submitIndividualPulse(
                         entity = player,
                         pulse = GemBoltCutPulse(player, Item(with.id), gem, amount),
-                        type = PulseType.STRONG
+                        type = PulseType.STANDARD
                     )
                 }
 
@@ -319,7 +319,7 @@ class FletchingListener : InteractionListener {
                     submitIndividualPulse(
                         entity = player,
                         pulse = KebbitBoltPulse(player, Item(base.id), KebbitBolt.forId(base.asItem())!!, amount),
-                        type = PulseType.STRONG
+                        type = PulseType.STANDARD
                     )
                 }
 
@@ -445,7 +445,7 @@ class FletchingListener : InteractionListener {
                     submitIndividualPulse(
                         entity = player,
                         pulse = BrutalArrowPulse(player, Item(used.id), brutalArrow, amount),
-                        type = PulseType.STRONG
+                        type = PulseType.STANDARD
                     )
                 }
 

@@ -40,7 +40,7 @@ class GoradDialogue(player: Player? = null) : Dialogue(player) {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> player("I seek another task.").also { stage++ }
             1 -> npcl(FaceAnim.OLD_CALM_TALK2, "You know who I is?").also { stage++ }

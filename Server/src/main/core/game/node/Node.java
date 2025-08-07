@@ -11,6 +11,7 @@ import core.game.world.map.Direction;
 import core.game.world.map.Location;
 import core.tools.StringUtils;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -359,6 +360,16 @@ public abstract class Node {
          */
         public static void registerNode(Node node) {
             nodeMap.put(node.getIndex(), node);
+        }
+
+        /**
+         * Gets a collection of all registered nodes.
+         *
+         * @return an unmodifiable collection containing all {@link Node} instances currently
+         *         stored in the repository.
+         */
+        public static Collection<Node> getAllNodes() {
+            return nodeMap.values();
         }
 
         /**

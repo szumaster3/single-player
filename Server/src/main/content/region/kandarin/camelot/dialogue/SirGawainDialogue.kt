@@ -20,7 +20,7 @@ class SirGawainDialogue(player: Player? = null, ) : Dialogue(player) {
     val STAGE_LE_FAYE_END = 20
     val STAGE_PROGRESS = 15
 
-    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         if (!isQuestComplete(player, Quests.MERLINS_CRYSTAL)) {
             when (stage) {
                 0 -> {

@@ -129,7 +129,7 @@ class AltarPlugin : InteractionListener {
         else -> 150.0
     }
 
-    private fun getMod(altar: Scenery, isLeft: Boolean, isRight: Boolean, ): Double {
+    private fun getMod(altar: Scenery, isLeft: Boolean, isRight: Boolean): Double {
         var total = getBase(altar)
         if (isLeft) {
             total += 50.0
@@ -140,7 +140,7 @@ class AltarPlugin : InteractionListener {
         return total / 100
     }
 
-    private fun getMessage(isLeft: Boolean, isRight: Boolean, ): String =
+    private fun getMessage(isLeft: Boolean, isRight: Boolean): String =
         when {
             isLeft && isRight -> "The gods are very pleased with your offering."
             isLeft || isRight -> "The gods are pleased with your offering."

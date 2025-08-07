@@ -28,7 +28,7 @@ class ArheinDialogue(player: Player? = null) : Dialogue(player) {
     private var goodsName = ""
     private var stock = 0
 
-    private fun getGoods(requestedItem: Int, requestedAmount: Int, ): Int {
+    private fun getGoods(requestedItem: Int, requestedAmount: Int): Int {
         val price = 2
         val afford = player.inventory.getAmount(Items.COINS_995) / price
         var realamount = minOf(requestedAmount, afford)

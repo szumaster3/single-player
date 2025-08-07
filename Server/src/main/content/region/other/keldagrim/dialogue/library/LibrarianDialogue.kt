@@ -26,20 +26,11 @@ class LibrarianDialogue(player: Player? = null) : Dialogue(player) {
         when (stage) {
             0 -> {
                 if (!hasRequirement(player, Quests.BETWEEN_A_ROCK)) {
-                    options(
-                        "Can you tell me more about the library?",
-                        "How do these eras correspond with the Ages of the world?",
-                    ).also {
-                        stage++
-                    }
+                    options("Can you tell me more about the library?", "How do these eras correspond with the Ages of the world?").also { stage++ }
                 } else {
-                    options(
-                        "Can you tell me more about the library?",
-                        "What do you know about impenetrable rocks?",
-                    ).also { stage++ }
+                    options("Can you tell me more about the library?", "What do you know about impenetrable rocks?").also { stage++ }
                 }
             }
-
             1 -> when (buttonId) {
                 1 -> playerl(FaceAnim.HALF_ASKING, "Can you tell me more about the library?").also { stage++ }
                 2 -> {

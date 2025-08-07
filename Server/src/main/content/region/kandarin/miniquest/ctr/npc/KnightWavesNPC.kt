@@ -65,7 +65,7 @@ class KnightWavesNPC : AbstractNPC {
         }
     }
 
-    override fun isAttackable(entity: Entity, style: CombatStyle, message: Boolean, ): Boolean = player == entity
+    override fun isAttackable(entity: Entity, style: CombatStyle, message: Boolean): Boolean = player == entity
 
     override fun canSelectTarget(target: Entity): Boolean = target is Player && target == player
 
@@ -99,7 +99,7 @@ class KnightWavesNPC : AbstractNPC {
         }
     }
 
-    override fun construct(id: Int, location: Location, vararg objects: Any, ): AbstractNPC = KnightWavesNPC(id, location, null)
+    override fun construct(id: Int, location: Location, vararg objects: Any): AbstractNPC = KnightWavesNPC(id, location, null)
 
     override fun getIds(): IntArray = intArrayOf(
         NPCs.SIR_BEDIVERE_6177,

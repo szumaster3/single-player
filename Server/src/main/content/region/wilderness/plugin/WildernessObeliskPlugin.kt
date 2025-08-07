@@ -1,6 +1,7 @@
 package content.region.wilderness.plugin
 
 import core.api.playAudio
+import core.api.sendMessage
 import core.cache.def.impl.SceneryDefinition
 import core.game.interaction.OptionHandler
 import core.game.node.Node
@@ -19,25 +20,22 @@ import core.plugin.Initializable
 import core.plugin.Plugin
 import core.tools.RandomFunction
 import org.rs.consts.Sounds
+import org.rs.consts.Scenery as Objects
 
 @Initializable
 class WildernessObeliskPlugin : OptionHandler() {
 
     override fun newInstance(arg: Any?): Plugin<Any> {
-        SceneryDefinition.forId(org.rs.consts.Scenery.OBELISK_14829).handlers["option:activate"] = this
-        SceneryDefinition.forId(org.rs.consts.Scenery.OBELISK_14826).handlers["option:activate"] = this
-        SceneryDefinition.forId(org.rs.consts.Scenery.OBELISK_14827).handlers["option:activate"] = this
-        SceneryDefinition.forId(org.rs.consts.Scenery.OBELISK_14828).handlers["option:activate"] = this
-        SceneryDefinition.forId(org.rs.consts.Scenery.OBELISK_14830).handlers["option:activate"] = this
-        SceneryDefinition.forId(org.rs.consts.Scenery.OBELISK_14831).handlers["option:activate"] = this
+        SceneryDefinition.forId(Objects.OBELISK_14829).handlers["option:activate"] = this
+        SceneryDefinition.forId(Objects.OBELISK_14826).handlers["option:activate"] = this
+        SceneryDefinition.forId(Objects.OBELISK_14827).handlers["option:activate"] = this
+        SceneryDefinition.forId(Objects.OBELISK_14828).handlers["option:activate"] = this
+        SceneryDefinition.forId(Objects.OBELISK_14830).handlers["option:activate"] = this
+        SceneryDefinition.forId(Objects.OBELISK_14831).handlers["option:activate"] = this
         return this
     }
 
-    override fun handle(
-        player: Player,
-        node: Node,
-        option: String,
-    ): Boolean {
+    override fun handle(player: Player, node: Node, option: String): Boolean {
         val scenery = node as Scenery
         val stationObelisk = Obelisk.forLocation(player.location) ?: return false
 
@@ -115,9 +113,7 @@ class WildernessObeliskPlugin : OptionHandler() {
                     val newObelisk = newObelisks[index]
 
                     for (player in getLocalPlayersBoundingBox(center, 1, 1)) {
-                        player.packetDispatch.sendMessage(
-                            "Ancient magic teleports you to a place within the wilderness!",
-                        )
+                        sendMessage(player, "Ancient magic teleports you to a place within the wilderness!")
                         val xOffset = player.location.x - center.x
                         val yOffset = player.location.y - center.y
                         player.teleporter.send(
@@ -138,9 +134,14 @@ class WildernessObeliskPlugin : OptionHandler() {
         return true
     }
 
-    enum class Obelisk(
-        val location: Location,
-    ) {
+    /**
+     * Enum representing various Obelisks in the game world.
+     *
+     * Each obelisk is associated with a specific location coordinate.
+     *
+     * @property location The coordinates of the obelisk in the game world.
+     */
+    enum class Obelisk(val location: Location) {
         LEVEL_13(Location(3156, 3620, 0)),
         LEVEL_19(Location(3219, 3656, 0)),
         LEVEL_27(Location(3035, 3732, 0)),
@@ -150,9 +151,17 @@ class WildernessObeliskPlugin : OptionHandler() {
         ;
 
         companion object {
+            /**
+             * Finds an Obelisk near the given location.
+             *
+             * @param location The location to check proximity against.
+             * @return The Obelisk within 20 units distance of the location, or null if none found.
+             */
             @JvmStatic
             fun forLocation(location: Location?): Obelisk? {
-                for (obelisk in values()) if (obelisk.location.getDistance(location!!) <= 20) return obelisk
+                for (obelisk in values()) {
+                    if (obelisk.location.getDistance(location!!) <= 20) return obelisk
+                }
                 return null
             }
         }

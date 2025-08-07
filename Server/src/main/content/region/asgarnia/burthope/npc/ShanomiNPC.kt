@@ -26,7 +26,7 @@ class ShanomiNPC(id: Int = 0, location: Location? = null) : AbstractNPC(id, loca
             "Judgment and understanding for everything develop you must.",
         )
 
-    override fun construct(id: Int, location: Location, vararg objects: Any, ): AbstractNPC = ShanomiNPC(id, location)
+    override fun construct(id: Int, location: Location, vararg objects: Any): AbstractNPC = ShanomiNPC(id, location)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.SHANOMI_4290)
 

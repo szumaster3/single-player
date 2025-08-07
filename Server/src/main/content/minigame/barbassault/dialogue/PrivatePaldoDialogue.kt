@@ -20,7 +20,7 @@ class PrivatePaldoDialogue(player: Player? = null) : Dialogue(player) {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> npcl(FaceAnim.HALF_GUILTY, "Why hello there! Have you heard about Primalmoose?").also { stage++ }
             1 -> playerl(FaceAnim.HALF_GUILTY, "What's a primal moose?").also { stage++ }

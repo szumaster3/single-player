@@ -49,7 +49,7 @@ class GlassMakePlugin : InteractionListener {
                     submitIndividualPulse(
                         player,
                         GlassMakePulse(player, id, amount),
-                        type = PulseType.STRONG
+                        type = PulseType.STANDARD
                     )
                 }
                 calculateMaxAmount { _ ->

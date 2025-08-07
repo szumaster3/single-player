@@ -42,7 +42,7 @@ class BonesBuryPlugin : InteractionListener {
         }
     }
 
-    private fun removeBones(player: Player, item: Item, ): Boolean {
+    private fun removeBones(player: Player, item: Item): Boolean {
         val removedItem = replaceSlot(player, item.slot, Item())
         return removedItem == item && removedItem.slot == item.slot
     }

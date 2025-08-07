@@ -26,7 +26,7 @@ class RoavarDialogue(player: Player? = null) : Dialogue(player) {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> npc(FaceAnim.HALF_GUILTY, "Greeting traveller. Welcome to 'The Hair Of The Dog'", "Tavern. What can I do you for?").also { stage++ }
             1 -> showTopics(

@@ -42,7 +42,7 @@ class PetshopOwnerDialogue(player: Player? = null) : Dialogue(player) {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             1 -> when (buttonId) {
                 1 -> player(FaceAnim.HAPPY, "Can I see your shop please?").also { stage = 100 }

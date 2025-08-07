@@ -37,7 +37,7 @@ class CropHarvester : OptionHandler() {
 
     companion object {
         @JvmStatic
-        fun harvestPulse(player: Player?, node: Node?, crop: Int, ): Pulse? {
+        fun harvestPulse(player: Player?, node: Node?, crop: Int): Pulse? {
             player ?: return null
             node ?: return null
             val fPatch = FarmingPatch.forObject(node.asScenery())

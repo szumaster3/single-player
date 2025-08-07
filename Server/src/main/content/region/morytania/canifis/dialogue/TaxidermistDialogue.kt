@@ -20,7 +20,7 @@ class TaxidermistDialogue(player: Player? = null, ) : Dialogue(player) {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> options("Yes please", "Not right now", "What?").also { stage++ }
             1 -> when (buttonId) {

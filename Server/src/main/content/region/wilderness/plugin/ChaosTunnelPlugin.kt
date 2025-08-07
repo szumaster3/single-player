@@ -31,10 +31,20 @@ import core.tools.SystemLogger
 import org.rs.consts.Quests
 import java.util.*
 
+/**
+ * Plugin representing the Chaos Tunnel zone.
+ *
+ * This plugin manages player interactions with the Chaos Tunnel area, including
+ * entering the tunnel, climbing mechanics, and NPC aggression behavior.
+ */
 @Initializable
 class ChaosTunnelPlugin :
     MapZone("Chaos tunnel", true, ZoneRestriction.CANNON),
     Plugin<Any?> {
+
+    /**
+     * Initializes and configures the plugin instance.
+     */
     @Throws(Throwable::class)
     override fun newInstance(arg: Any?): Plugin<Any?> {
         ZoneBuilder.configure(this)
@@ -50,11 +60,15 @@ class ChaosTunnelPlugin :
                     return this
                 }
 
-                override fun handle(
-                    player: Player,
-                    node: Node,
-                    option: String,
-                ): Boolean {
+                /**
+                 * Handles player interactions with the Chaos Tunnel entrances and climbable scenery.
+                 *
+                 * @param player The player performing the action.
+                 * @param node The game node (object) being interacted with.
+                 * @param option The interaction option chosen by the player.
+                 * @return True if the interaction was handled, false otherwise.
+                 */
+                override fun handle(player: Player, node: Node, option: String): Boolean {
                     var data: Array<Any>? = null
                     when (option) {
                         "enter", "climb-up" ->
@@ -71,13 +85,7 @@ class ChaosTunnelPlugin :
                                         if (ENTRANCE_DATA[i][if (option == "enter") 0 else 2] as Int == node.id &&
                                             player.location.withinDistance(
                                                 ENTRANCE_DATA[i][
-                                                    if (option ==
-                                                        "enter"
-                                                    ) {
-                                                        3
-                                                    } else {
-                                                        1
-                                                    },
+                                                    if (option == "enter") 3 else 1,
                                                 ] as Location,
                                             )
                                         ) {
@@ -105,11 +113,15 @@ class ChaosTunnelPlugin :
         return this
     }
 
-    override fun interact(
-        entity: Entity,
-        target: Node,
-        option: Option,
-    ): Boolean {
+    /**
+     * Handles interaction between an entity and a target node within the zone.
+     *
+     * @param entity The entity performing the interaction (usually a player).
+     * @param target The target node being interacted with.
+     * @param option The interaction option chosen.
+     * @return True if the interaction was handled, false otherwise.
+     */
+    override fun interact(entity: Entity, target: Node, option: Option): Boolean {
         if (entity is Player) {
             when (target.id) {
                 29537 -> {}
@@ -125,6 +137,14 @@ class ChaosTunnelPlugin :
         return super.interact(entity, target, option)
     }
 
+    /**
+     * Called when an entity enters the Chaos Tunnel zone.
+     *
+     * Sets NPC aggression status upon entering.
+     *
+     * @param entity The entity entering the zone.
+     * @return True if the event was handled, false otherwise.
+     */
     override fun enter(entity: Entity): Boolean {
         if (entity is NPC) {
             val n = entity.asNpc()
@@ -135,10 +155,15 @@ class ChaosTunnelPlugin :
         return super.enter(entity)
     }
 
-    override fun fireEvent(
-        identifier: String,
-        vararg args: Any,
-    ): Any? = null
+    /**
+     * Handles custom plugin events.
+     *
+     * @param identifier The event identifier.
+     * @param args Arguments associated with the event.
+     * @return Result of event processing or null.
+     */
+    override fun fireEvent(identifier: String, vararg args: Any): Any? = null
+
 
     override fun configure() {
         register(ZoneBorders(3116, 5412, 3362, 5584))
@@ -216,10 +241,13 @@ class ChaosTunnelPlugin :
         addLink(3222, 5488, 3218, 5497)
     }
 
-    private fun teleport(
-        player: Player,
-        scenery: Scenery,
-    ) {
+    /**
+     * Teleports the given player using the specified scenery portal.
+     *
+     * @param player The player to teleport.
+     * @param scenery The scenery portal used for teleportation.
+     */
+    private fun teleport(player: Player, scenery: Scenery) {
         if (scenery.location.x == 3142 && scenery.location.y == 5545) {
             if (hasRequirement(player, Quests.WHAT_LIES_BELOW)) commenceBorkBattle(player)
             return
@@ -248,6 +276,14 @@ class ChaosTunnelPlugin :
         player.graphics(Graphics.create(org.rs.consts.Graphics.CURSE_IMPACT_110))
     }
 
+    /**
+     * Starts the Bork battle sequence for the player.
+     *
+     * Checks if the portal's magic is weakened for the player and handles
+     * locking, visual effects, and starting the Bork cutscene activity.
+     *
+     * @param player The player who will commence the Bork battle.
+     */
     private fun commenceBorkBattle(player: Player) {
         val usernameKey = player.username.lowercase(Locale.getDefault())
         val storeFile = getBorkStoreFile()
@@ -264,20 +300,55 @@ class ChaosTunnelPlugin :
         ActivityManager.start(player, "Bork cutscene", false)
     }
 
+    /**
+     * Returns a random teleport location from available portals.
+     */
     private val randomLocation: Location
-
         get() = RandomFunction.getRandomElement<Any>(PORTALS.values.toTypedArray()) as Location
 
+    /**
+     * Checks if the given scenery portal is currently stained by dark magic.
+     *
+     * @param scenery The portal scenery to check.
+     * @return True if stained, false otherwise.
+     */
     private fun isStained(scenery: Scenery): Boolean = getStainedTime(scenery) > ticks
 
+    /**
+     * Sets the stained time attribute for the scenery portal.
+     *
+     * This marks the portal as stained with dark magic for a random duration.
+     *
+     * @param scenery The portal scenery to set stained time on.
+     */
     private fun setStainedTime(scenery: Scenery) {
         scenery.attributes.setAttribute("stained", ticks + RandomFunction.random(50, 150))
     }
 
+    /**
+     * Gets the stained time attribute of the portal scenery.
+     *
+     * @param scenery The portal scenery to get the stained time from.
+     * @return The tick count until which the portal remains stained.
+     */
     private fun getStainedTime(scenery: Scenery): Int = scenery.attributes.getAttribute("stained", 0)
 
+    /**
+     * Checks if the portal for the player is fixed (immune to random teleport effects).
+     *
+     * @param player The player to check.
+     * @return Always returns false in current implementation.
+     */
     private fun isFixed(player: Player): Boolean = false
 
+    /**
+     * Gets the linked teleport location for a given location.
+     *
+     * Searches the PORTALS map for a matching entry or reverse lookup.
+     *
+     * @param location The location of the portal.
+     * @return The linked teleport location, or null if not found.
+     */
     fun getLocation(location: Location): Location? {
         val l = PORTALS[location]
         if (l != null) {
@@ -291,6 +362,14 @@ class ChaosTunnelPlugin :
         return null
     }
 
+    /**
+     * Adds a portal link between two locations (using coordinates).
+     *
+     * @param x X-coordinate of first location.
+     * @param y Y-coordinate of first location.
+     * @param x2 X-coordinate of second location.
+     * @param y2 Y-coordinate of second location.
+     */
     private fun addLink(
         x: Int,
         y: Int,
@@ -300,6 +379,12 @@ class ChaosTunnelPlugin :
         addLink(Location(x, y, 0), Location(x2, y2, 0))
     }
 
+    /**
+     * Adds a portal link between two locations.
+     *
+     * @param location The first location.
+     * @param loc The linked location.
+     */
     private fun addLink(
         location: Location,
         loc: Location,
@@ -308,6 +393,11 @@ class ChaosTunnelPlugin :
     }
 
     companion object {
+        /**
+         * Gets the JSON object used to store Bork battle status per player.
+         *
+         * @return JsonObject representing the Bork status store.
+         */
         @JvmStatic
         fun getBorkStoreFile(): JsonObject = getArchive("daily-bork-killed")
 
@@ -320,6 +410,10 @@ class ChaosTunnelPlugin :
                 arrayOf(28892, Location(3290, 5538, 0), 28782, Location(3165, 3617, 0)),
             )
 
+        /**
+         * Map of portal locations linking one to another
+         */
         private val PORTALS: MutableMap<Location, Location> = HashMap()
     }
+
 }

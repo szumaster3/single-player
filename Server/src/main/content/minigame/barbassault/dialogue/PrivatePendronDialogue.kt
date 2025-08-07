@@ -20,7 +20,7 @@ class PrivatePendronDialogue(player: Player? = null, ) : Dialogue(player) {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> npcl(FaceAnim.HALF_GUILTY, "Don't suppose you've seen a battleaxe around here?").also { stage++ }
             1 -> playerl(FaceAnim.HALF_GUILTY, "A battleaxe? Nope, afraid not.").also { stage++ }

@@ -78,7 +78,7 @@ class DummyRoomPlugin : OptionHandler() {
         return this
     }
 
-    override fun handle(player: Player, node: Node, option: String, ): Boolean {
+    override fun handle(player: Player, node: Node, option: String): Boolean {
         val scenery = node as Scenery
         if (scenery.id == org.rs.consts.Scenery.INFORMATION_SCROLL_15656) {
             openInterface(player, Components.WARGUILD_DUMMY_412)

@@ -32,7 +32,7 @@ class ChronozonCave :
         to: Location?,
     ): Boolean = super.move(e, from, to)
 
-    override fun enter(e: Entity?): Boolean {
+    override fun enter(e: Entity): Boolean {
         if (e != null) {
             if (e.isPlayer) {
                 val player = e as Player
@@ -56,7 +56,7 @@ class ChronozonCave :
     }
 
     override fun leave(
-        e: Entity?,
+        e: Entity,
         logout: Boolean,
     ): Boolean {
         if (e!!.isPlayer) {

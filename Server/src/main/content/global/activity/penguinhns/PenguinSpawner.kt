@@ -11,13 +11,14 @@ class PenguinSpawner {
      * Spawns penguins randomly.
      */
     fun spawnPenguins(amount: Int): ArrayList<Int> {
-        val availablePenguins = PenguinLocation.values().toMutableList()
-        val spawnedOrdinals = ArrayList<Int>()
+        val selectedPenguins = PenguinLocation.values()
+            .toList()
+            .shuffled()
+            .take(amount.coerceAtMost(PenguinLocation.values().size))
 
-        repeat(amount.coerceAtMost(availablePenguins.size)) {
-            val penguin = availablePenguins.random()
-            availablePenguins.remove(penguin)
+        val spawnedOrdinals = ArrayList<Int>(selectedPenguins.size)
 
+        for (penguin in selectedPenguins) {
             val location = penguin.locations.random()
             spawnedOrdinals.add(penguin.ordinal)
 
@@ -27,7 +28,6 @@ class PenguinSpawner {
                 PenguinManager.npcs.add(it)
             }.init()
         }
-
         return spawnedOrdinals
     }
 
@@ -35,7 +35,7 @@ class PenguinSpawner {
      * Spawns penguins by their ordinals.
      */
     fun spawnPenguins(ordinals: List<Int>) {
-        ordinals.forEach { ordinal ->
+        ordinals.distinct().forEach { ordinal ->
             val penguin = PenguinLocation.values()[ordinal]
             val location = penguin.locations.random()
 

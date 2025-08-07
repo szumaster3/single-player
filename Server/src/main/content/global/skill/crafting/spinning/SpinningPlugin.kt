@@ -38,13 +38,13 @@ class SpinningPlugin : InteractionListener, InterfaceListener {
                             submitIndividualPulse(
                                 entity = player,
                                 pulse = SpinningPulse(player, Item(spin.need, 1), value.toInt(), spin),
-                                type = PulseType.STRONG
+                                type = PulseType.STANDARD
                             )
                         } else {
                             submitIndividualPulse(
                                 entity = player,
                                 pulse = SpinningPulse(player, Item(spin.need, 1), value as Int, spin),
-                                type = PulseType.STRONG
+                                type = PulseType.STANDARD
                             )
                         }
                     }
@@ -55,7 +55,7 @@ class SpinningPlugin : InteractionListener, InterfaceListener {
             submitIndividualPulse(
                 entity = player,
                 pulse = SpinningPulse(player, Item(spin.need, 1), amt, spin),
-                type = PulseType.STRONG
+                type = PulseType.STANDARD
             )
             return@on true
         }

@@ -51,7 +51,7 @@ enum class SmithingType(
          *
          * @return the amount to smith, or `-1` if invalid
          */
-        fun forButton(player: Player, bar: Bars?, button: Int, item: Int, ): Int {
+        fun forButton(player: Player, bar: Bars?, button: Int, item: Int): Int {
             var count = 0
             if (bar == null) {
                 return -1

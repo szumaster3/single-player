@@ -94,11 +94,7 @@ class WildernessPlugin : InteractionListener {
 
                 Scenery.LEVER_1815, Scenery.LEVER_5959, Scenery.LEVER_5960, Scenery.LEVER_9706, Scenery.LEVER_9707 -> {
                     if (!player.savedData.activityData.hasKilledKolodion() && node.id == Scenery.LEVER_9706) {
-                        sendNPCDialogue(
-                            player,
-                            NPCs.KOLODION_905,
-                            "You're not allowed in there. Come downstairs if you want to enter my arena."
-                        )
+                        sendNPCDialogue(player, NPCs.KOLODION_905, "You're not allowed in there. Come downstairs if you want to enter my arena.")
                         return@on false
                     }
 
@@ -189,7 +185,7 @@ class WildernessPlugin : InteractionListener {
         }
 
         on(Scenery.TRAPDOOR_39188, IntType.SCENERY, "open") { player, _ ->
-            if (!core.api.hasRequirement(player, Quests.DEFENDER_OF_VARROCK)) return@on true
+            if (!hasRequirement(player, Quests.DEFENDER_OF_VARROCK)) return@on true
             ClimbActionHandler.climb(
                 player,
                 ClimbActionHandler.CLIMB_DOWN,

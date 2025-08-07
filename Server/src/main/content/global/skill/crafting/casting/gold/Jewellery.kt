@@ -193,7 +193,7 @@ object Jewellery {
             items[index] = Item(data.items[i], 1 * amount)
         }
         closeInterface(player)
-        submitIndividualPulse(player, JewelleryCraftingPulse(player, null, data, amount), type = PulseType.STRONG)
+        submitIndividualPulse(player, JewelleryCraftingPulse(player, null, data, amount), type = PulseType.STANDARD)
     }
 
     /**

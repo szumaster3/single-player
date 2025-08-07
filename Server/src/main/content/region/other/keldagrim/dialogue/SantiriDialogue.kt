@@ -24,15 +24,13 @@ class SantiriDialogue(player: Player? = null) : Dialogue(player) {
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> options("Yes, I'm looking for some weapons.", "No thanks.").also { stage++ }
-            1 ->
-                when (buttonId) {
-                    1 -> player(FaceAnim.GUILTY, "Yes, I'm looking for some weapons.").also { stage++ }
-                    2 ->
-                        playerl(FaceAnim.NEUTRAL, "No thanks.").also {
-                            end()
-                            stage = END_DIALOGUE
-                        }
+            1 -> when (buttonId) {
+                1 -> player(FaceAnim.GUILTY, "Yes, I'm looking for some weapons.").also { stage++ }
+                2 -> playerl(FaceAnim.NEUTRAL, "No thanks.").also {
+                    end()
+                    stage = END_DIALOGUE
                 }
+            }
             2 -> {
                 end()
                 openNpcShop(player, NPCs.SANTIRI_2152)

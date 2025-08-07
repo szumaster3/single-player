@@ -14,7 +14,7 @@ import java.io.File
 @Initializable
 class DumpCommand : CommandPlugin() {
 
-    override fun parse(player: Player?, name: String?, args: Array<String?>?, ): Boolean {
+    override fun parse(player: Player?, name: String?, args: Array<String?>?): Boolean {
         when (name) {
             "make" -> handleMake(player, args?.toList() as List<String>?).also { return true }
         }

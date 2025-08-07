@@ -433,7 +433,7 @@ class Shop(val title: String, val stock: Array<ShopItem>, val general: Boolean =
         return TransactionStatus.Success()
     }
 
-    fun sell(player: Player, slot: Int, amount: Int, ): TransactionStatus {
+    fun sell(player: Player, slot: Int, amount: Int): TransactionStatus {
         if (amount !in 1..Integer.MAX_VALUE) return TransactionStatus.Failure("Invalid amount: $amount")
         val playerInventory = player.inventory[slot]
         if (playerInventory.id in intArrayOf(Items.COINS_995, Items.TOKKUL_6529, Items.ARCHERY_TICKET_1464)) {

@@ -46,7 +46,7 @@ class ScaredSkavidDialogue(player: Player? = null) : Dialogue(player) {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> player(FaceAnim.NEUTRAL, " ???").also { stage++ }
             1 -> npc(FaceAnim.OLD_DEFAULT, "Don't hurt me, don't hurt me!").also { stage++ }

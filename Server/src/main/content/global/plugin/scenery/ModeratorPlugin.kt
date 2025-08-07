@@ -22,7 +22,7 @@ class ModeratorPlugin : OptionHandler() {
         return this
     }
 
-    override fun handle(player: Player, node: Node, option: String, ): Boolean {
+    override fun handle(player: Player, node: Node, option: String): Boolean {
         when (option) {
             "climb-up" -> climb(player, Animation(Animations.USE_LADDER_828), Location.create(3222, 3218, 0))
             "j-mod options" -> {

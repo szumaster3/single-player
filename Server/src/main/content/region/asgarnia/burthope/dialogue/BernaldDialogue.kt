@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
 @Initializable
 class BernaldDialogue(player: Player? = null, ) : Dialogue(player) {
 
-    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             START_DIALOGUE -> {
                 npcl(FaceAnim.WORRIED, "Do you know anything about grapevine diseases?")

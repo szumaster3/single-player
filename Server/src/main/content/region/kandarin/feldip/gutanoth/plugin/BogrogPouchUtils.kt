@@ -89,7 +89,7 @@ object BogrogPouchUtils {
     /**
      * Show exchange values.
      */
-    private fun sendValue(itemID: Int, player: Player, ): Boolean {
+    private fun sendValue(itemID: Int, player: Player): Boolean {
         val value = getValue(itemID)
         if (value == 0.0) {
             sendMessage(player, "This item cannot be swapped here.")

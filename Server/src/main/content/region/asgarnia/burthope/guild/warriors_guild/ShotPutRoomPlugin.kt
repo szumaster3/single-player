@@ -71,7 +71,7 @@ class ShotPutRoomPlugin(player: Player? = null) : Dialogue(player) {
         init {
             definePlugin(
                 object : OptionHandler() {
-                    override fun handle(player: Player, node: Node, option: String, ): Boolean {
+                    override fun handle(player: Player, node: Node, option: String): Boolean {
                         val lowWeight = node.id == 15664
                         if (node is GroundItem) {
                             player.dialogueInterpreter.sendDialogues(

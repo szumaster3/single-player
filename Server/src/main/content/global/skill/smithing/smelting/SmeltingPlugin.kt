@@ -62,7 +62,7 @@ class SmeltingPlugin : InteractionListener {
                         amount: Int,
                         index: Int,
                     ) {
-                        submitIndividualPulse(player, CannonballPulse(player, used.asItem(), amount), type = PulseType.STRONG)
+                        submitIndividualPulse(player, CannonballPulse(player, used.asItem(), amount), type = PulseType.STANDARD)
                     }
 
                     override fun getAll(index: Int): Int = amountInInventory(player, used.id)

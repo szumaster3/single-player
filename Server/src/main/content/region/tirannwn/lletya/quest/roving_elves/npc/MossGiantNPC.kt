@@ -16,6 +16,9 @@ import core.plugin.Plugin
 import org.rs.consts.NPCs
 import org.rs.consts.Quests
 
+/**
+ * Represents the Moss giant NPC.
+ */
 class MossGiantNPC : AbstractNPC {
     constructor() : super(0, null)
 
@@ -23,11 +26,7 @@ class MossGiantNPC : AbstractNPC {
         this.isAggressive = true
     }
 
-    override fun construct(
-        id: Int,
-        location: Location,
-        vararg objects: Any,
-    ): AbstractNPC = MossGiantNPC(id, location)
+    override fun construct(id: Int, location: Location, vararg objects: Any): AbstractNPC = MossGiantNPC(id, location)
 
     override fun finalizeDeath(killer: Entity) {
         super.finalizeDeath(killer)
@@ -49,11 +48,7 @@ class MossGiantNPC : AbstractNPC {
                     return this
                 }
 
-                override fun handle(
-                    player: Player,
-                    node: Node,
-                    option: String,
-                ): Boolean {
+                override fun handle(player: Player, node: Node, option: String): Boolean {
                     (node as NPC).attack(player)
                     return true
                 }

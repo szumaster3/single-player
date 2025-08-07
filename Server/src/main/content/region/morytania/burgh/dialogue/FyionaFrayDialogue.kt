@@ -22,7 +22,7 @@ class FyionaFrayDialogue(player: Player? = null, ) : Dialogue(player) {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> npcl(FaceAnim.HALF_GUILTY, "I'm waiting here hoping that someone can guide me to the Paterdomus, the temple on the Salve.").also { stage++ }
             1 -> options("Where is Paterdomus?", "Why do you want to go to Paterdomus?", "Could you defend yourself if we met enemies...?", "I can take you to Paterdomus.", "Ok, thanks.").also { stage++ }

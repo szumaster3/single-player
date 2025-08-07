@@ -75,7 +75,7 @@ class RawMaterialPlugin : InteractionListener {
                     submitIndividualPulse(
                         player,
                         GraniteCuttingPulse(player, Item(with.id), amount),
-                        type = PulseType.STRONG
+                        type = PulseType.STANDARD
                     )
                 } else {
                     return@addDialogueAction closeDialogue(player)

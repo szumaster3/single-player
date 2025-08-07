@@ -47,11 +47,7 @@ class BorkNPC : AbstractNPC {
     constructor() : super(-1, null)
     constructor(id: Int, location: Location?) : super(id, location)
 
-    override fun construct(
-        id: Int,
-        location: Location,
-        vararg objects: Any,
-    ): AbstractNPC = BorkNPC(id, location)
+    override fun construct(id: Int, location: Location, vararg objects: Any): AbstractNPC = BorkNPC(id, location)
 
     override fun handleTickActions() {
         if (player == null) {
@@ -107,26 +103,18 @@ class BorkNPC : AbstractNPC {
         )
     }
 
-    override fun handleDrops(
-        p: Player,
-        killer: Entity,
-    ) {
+    override fun handleDrops(p: Player, killer: Entity) {
         if (player!!.getAttribute("first-bork", false)) {
             player!!.removeAttribute("first-bork")
             player!!.getSkills().addExperience(Skills.SLAYER, 5000.0, true)
         } else {
             player!!.getSkills().addExperience(Skills.SLAYER, 1500.0, true)
         }
-        val drops =
-            if (Item(player!!.equipment.getId(12))
-                    .name
-                    .lowercase()
-                    .contains("ring of wealth")
-            ) {
-                RING_DROPS
-            } else {
-                DROPS
-            }
+        val drops = if (Item(player!!.equipment.getId(12)).name.lowercase().contains("ring of wealth")) {
+            RING_DROPS
+        } else {
+            DROPS
+        }
         for (i in drops.indices) {
             val item = Item(drops[i].id, RandomFunction.random(drops[i].minimumAmount, drops[i].maximumAmount))
             GroundItemManager.create(item, getLocation(), player!!)
@@ -143,6 +131,9 @@ class BorkNPC : AbstractNPC {
         }
     }
 
+    /**
+     * Spawn legion npc.
+     */
     private fun spawnLegion() {
         player!!.interfaceManager.removeTabs(0, 1, 2, 3, 4, 5, 6, 11, 12)
         setMinimapState(player!!, 2)
@@ -173,16 +164,15 @@ class BorkNPC : AbstractNPC {
                             override fun pulse(): Boolean {
                                 player!!.interfaceManager.close()
                                 for (i in 0..2) {
-                                    val legion =
-                                        create(
-                                            7135,
-                                            getLocation().transform(
-                                                RandomFunction.random(1, 3),
-                                                RandomFunction.random(1, 3),
-                                                0,
-                                            ),
-                                            player,
-                                        )
+                                    val legion = create(
+                                        7135,
+                                        getLocation().transform(
+                                            RandomFunction.random(1, 3),
+                                            RandomFunction.random(1, 3),
+                                            0,
+                                        ),
+                                        player,
+                                    )
                                     legion.init()
                                     legion.graphics(Graphics.create(1314))
                                     legion.isAggressive = true
@@ -226,6 +216,9 @@ class BorkNPC : AbstractNPC {
 
     override fun getIds(): IntArray = intArrayOf(NPCs.BORK_7133)
 
+    /**
+     * Represents the Ork Legion NPC.
+     */
     inner class OrkLegion : AbstractNPC {
         private var player: Player? = null
 
@@ -265,6 +258,9 @@ class BorkNPC : AbstractNPC {
         override fun getIds(): IntArray = intArrayOf(NPCs.ORK_LEGION_7135)
     }
 
+    /**
+     * Represents the Dagon elite NPC.
+     */
     inner class DagonElite : AbstractNPC {
         private var player: Player? = null
 
@@ -309,6 +305,9 @@ class BorkNPC : AbstractNPC {
         override fun getIds(): IntArray = intArrayOf(7137)
     }
 
+    /**
+     * Represents the Bork cutscene.
+     */
     inner class BorkCutscene() : CutscenePlugin("Bork cutscene") {
         private var bork: BorkNPC? = null
         var wizard: NPC? = null
@@ -321,11 +320,7 @@ class BorkNPC : AbstractNPC {
             this.player = player
         }
 
-        override fun interact(
-            e: Entity,
-            target: Node,
-            option: Option,
-        ): Boolean {
+        override fun interact(e: Entity, target: Node, option: Option): Boolean {
             if (e is Player) {
                 when (target.id) {
                     29537 -> {
@@ -338,10 +333,7 @@ class BorkNPC : AbstractNPC {
             return super.interact(e, target, option)
         }
 
-        override fun leave(
-            entity: Entity,
-            logout: Boolean,
-        ): Boolean {
+        override fun leave(entity: Entity, logout: Boolean): Boolean {
             if (entity is Player) {
                 PacketRepository.send(
                     CameraViewPacket::class.java,
@@ -351,11 +343,7 @@ class BorkNPC : AbstractNPC {
             return super.leave(entity, logout)
         }
 
-        override fun start(
-            player: Player,
-            login: Boolean,
-            vararg args: Any,
-        ): Boolean {
+        override fun start(player: Player, login: Boolean, vararg args: Any): Boolean {
             player.lock()
             bork = BorkNPC(7133, base.transform(26, 33, 0))
             bork!!.init()
@@ -418,6 +406,9 @@ class BorkNPC : AbstractNPC {
         }
     }
 
+    /**
+     * Represents the Dagon dialogue.
+     */
     inner class DagonDialogue : Dialogue {
         private var cutscene: BorkCutscene? = null
 
@@ -430,18 +421,11 @@ class BorkNPC : AbstractNPC {
         override fun open(vararg args: Any?): Boolean {
             npc = args[0] as NPC
             cutscene = args[1] as BorkCutscene
-            npc(
-                "Our Lord Zamorak has power over life and death,",
-                player.username + "! He has seen fit to resurrect Bork to",
-                "continue his great work...and now you will fall before him",
-            )
+            npc("Our Lord Zamorak has power over life and death,", player.username + "! He has seen fit to resurrect Bork to", "continue his great work...and now you will fall before him")
             return true
         }
 
-        override fun handle(
-            interfaceId: Int,
-            buttonId: Int,
-        ): Boolean {
+        override fun handle(interfaceId: Int, buttonId: Int): Boolean {
             when (stage) {
                 0 -> {
                     val played = player.getSavedData().activityData.hasKilledBork()
@@ -462,39 +446,36 @@ class BorkNPC : AbstractNPC {
 
     companion object {
         private val BORK_REGION = Regions.BORK_CAVE_12374
-        private val LEGION_CHATS =
-            arrayOf(
-                "For Bork!",
-                "Die, human!",
-                "Resistance is futile!",
-                "We are the collective!",
-                "Form a triangle!!",
-                "To the attack!",
-                "Hup! 2... 3... 4!!",
-            )
+        private val LEGION_CHATS = arrayOf(
+            "For Bork!",
+            "Die, human!",
+            "Resistance is futile!",
+            "We are the collective!",
+            "Form a triangle!!",
+            "To the attack!",
+            "Hup! 2... 3... 4!!",
+        )
 
-        private val DROPS =
-            arrayOf(
-                ChanceItem(532, 1, 1, 0.0),
-                ChanceItem(12163, 5, 5, 0.0),
-                ChanceItem(12160, 7, 7, 0.0),
-                ChanceItem(12159, 2, 2, 0.0),
-                ChanceItem(995, 2000, 10000, 0.0),
-                ChanceItem(1619, 1, 1, 0.0),
-                ChanceItem(1621, 1, 1, 0.0),
-                ChanceItem(1623, 1, 1, 0.0),
-            )
+        private val DROPS = arrayOf(
+            ChanceItem(532, 1, 1, 0.0),
+            ChanceItem(12163, 5, 5, 0.0),
+            ChanceItem(12160, 7, 7, 0.0),
+            ChanceItem(12159, 2, 2, 0.0),
+            ChanceItem(995, 2000, 10000, 0.0),
+            ChanceItem(1619, 1, 1, 0.0),
+            ChanceItem(1621, 1, 1, 0.0),
+            ChanceItem(1623, 1, 1, 0.0),
+        )
 
-        private val RING_DROPS =
-            arrayOf(
-                ChanceItem(532, 1, 1, 0.0),
-                ChanceItem(12163, 5, 5, 0.0),
-                ChanceItem(12160, 10, 10, 0.0),
-                ChanceItem(12159, 3, 3, 0.0),
-                ChanceItem(1601, 1, 1, 0.0),
-                ChanceItem(995, 2000, 10000, 0.0),
-                ChanceItem(1619, 2, 2, 0.0),
-                ChanceItem(1621, 3, 3, 0.0),
-            )
+        private val RING_DROPS = arrayOf(
+            ChanceItem(532, 1, 1, 0.0),
+            ChanceItem(12163, 5, 5, 0.0),
+            ChanceItem(12160, 10, 10, 0.0),
+            ChanceItem(12159, 3, 3, 0.0),
+            ChanceItem(1601, 1, 1, 0.0),
+            ChanceItem(995, 2000, 10000, 0.0),
+            ChanceItem(1619, 2, 2, 0.0),
+            ChanceItem(1621, 3, 3, 0.0),
+        )
     }
 }

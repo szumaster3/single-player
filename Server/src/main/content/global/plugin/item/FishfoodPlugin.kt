@@ -46,7 +46,7 @@ class FishfoodPlugin : UseWithHandler(*FishFood.usables) {
             /**
              * Returns the product item for a given combination.
              */
-            fun product(used: Int, with: Int, ): Item? {
+            fun product(used: Int, with: Int): Item? {
                 for (value in values()) {
                     if (value.used == used && value.with == with) {
                         return Item(value.product)
@@ -58,7 +58,7 @@ class FishfoodPlugin : UseWithHandler(*FishFood.usables) {
             /**
              * Returns the message to display for a given combination.
              */
-            fun message(used: Int, with: Int, ): String? {
+            fun message(used: Int, with: Int): String? {
                 for (value in values()) {
                     if (value.used == used && value.with == with) {
                         return value.msg

@@ -122,7 +122,7 @@ object PCHelper {
      * @return True if inside a lander, false otherwise.
      */
     fun landerContainsLoc(l: Location?): Boolean {
-        for (i in BoatInfo.values()) if (i.boatBorder.insideBorder(l)) return true
+        for (i in BoatInfo.values()) if (l?.let { i.boatBorder.insideBorder(it) } == true) return true
         return false
     }
 
@@ -133,7 +133,7 @@ object PCHelper {
      * @return True if outside a lander gangplank, false otherwise.
      */
     fun outsideGangplankContainsLoc(l: Location?): Boolean {
-        for (i in BoatInfo.values()) if (i.outsideBoatBorder.insideBorder(l)) return true
+        for (i in BoatInfo.values()) if (l?.let { i.outsideBoatBorder.insideBorder(it) } == true) return true
         return false
     }
 
@@ -145,7 +145,7 @@ object PCHelper {
      * @return True if inside a lander, false otherwise.
      */
     fun landerContainsLoc2(l: Location?): Boolean {
-        for (n in BoatInfo.values()) if (n.boatBorder.insideBorder(l)) return true
+        for (n in BoatInfo.values()) if (l?.let { n.boatBorder.insideBorder(it) } == true) return true
         return false
     }
 
@@ -157,7 +157,7 @@ object PCHelper {
      * @return True if outside a lander gangplank, false otherwise.
      */
     fun outsideGangplankContainsLoc2(l: Location?): Boolean {
-        for (n in BoatInfo.values()) if (n.outsideBoatBorder.insideBorder(l)) return true
+        for (n in BoatInfo.values()) if (l?.let { n.outsideBoatBorder.insideBorder(it) } == true) return true
         return false
     }
 

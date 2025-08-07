@@ -20,7 +20,7 @@ class PrivatePaldonDialogue(player: Player? = null, ) : Dialogue(player) {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> npcl(FaceAnim.HALF_GUILTY, "Shhh. Don't talk to me.").also { stage++ }
             1 -> playerl(FaceAnim.HALF_GUILTY, "What? Why?").also { stage++ }

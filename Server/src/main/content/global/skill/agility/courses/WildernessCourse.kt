@@ -346,7 +346,7 @@ class WildernessCourse : AgilityCourse {
         )
     }
 
-    override fun getDestination(node: Node, n: Node, ): Location? {
+    override fun getDestination(node: Node, n: Node): Location? {
         when (n.id) {
             2283 -> return Location.create(3005, 3953, 0)
             37704 -> return Location.create(3002, 3960, 0)

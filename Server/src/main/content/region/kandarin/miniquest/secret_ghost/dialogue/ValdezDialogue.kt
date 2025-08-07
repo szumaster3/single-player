@@ -15,7 +15,7 @@ import org.rs.consts.Items
  */
 @Initializable
 class ValdezDialogue(player: Player? = null) : Dialogue(player) {
-    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         openDialogue(player, ValdezDialogueFile(), npc)
         return false
     }

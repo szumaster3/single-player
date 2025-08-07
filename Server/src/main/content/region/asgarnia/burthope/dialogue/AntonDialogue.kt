@@ -19,7 +19,7 @@ class AntonDialogue(player: Player? = null, ) : Dialogue(player) {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> {
                 playerl(FaceAnim.NEUTRAL, "Looks like you have a good selection of weapons around here...")

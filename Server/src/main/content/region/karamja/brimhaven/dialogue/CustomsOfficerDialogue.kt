@@ -34,7 +34,7 @@ class CustomsOfficerDialogue(player: Player? = null, ) : Dialogue(player) {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         val amount = if (isDiaryComplete(player!!, DiaryType.KARAMJA, 0)) 15 else 30
         when (stage) {
             0 -> options("Can I journey on this ship?", "Does Karamja have unusual customs then?").also { stage++ }

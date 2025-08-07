@@ -40,7 +40,7 @@ class FireOptionPlugin : InteractionListener {
                                 pottery = pottery,
                                 amount = amount,
                             ),
-                            pulseType = PulseType.STRONG
+                            pulseType = PulseType.STANDARD
                         )
                     }
                 }

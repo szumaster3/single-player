@@ -34,7 +34,7 @@ class CaptainShanksDialogue(player: Player? = null, ) : Dialogue(player) {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             -1 -> npc(FaceAnim.HALF_ASKING, "I see you don't have a ticket for the ship, my colleague", "normally only sells them in Shilo village. But I could sell", "you one for a small additional charge.").also { stage = 3 }
             0 -> {

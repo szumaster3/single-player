@@ -19,19 +19,14 @@ import java.util.function.Consumer
  *
  * @property details The details of the player attempting to log in.
  */
-class LoginParser(
-    val details: PlayerDetails,
-) {
+class LoginParser(val details: PlayerDetails) {
     /**
      * Initializes the login process.
      *
      * @param player The player instance being logged in.
      * @param reconnect Whether the player is reconnecting to an active session.
      */
-    fun initialize(
-        player: Player,
-        reconnect: Boolean,
-    ) {
+    fun initialize(player: Player, reconnect: Boolean) {
         if (!validateRequest()) return
 
         lateinit var parser: PlayerSaveParser
@@ -59,6 +54,9 @@ class LoginParser(
                             if (reconnect) {
                                 reconnect(player)
                             } else {
+                                details.lastLogin = System.currentTimeMillis()
+                                details.saveParsed = true
+                                details.save()
                                 flag(AuthResponse.Success)
                                 player.init()
                                 reinitVarps(player)

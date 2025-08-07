@@ -80,6 +80,7 @@ class PlayerSaveParser(val player: Player) {
         parseHeadgear()
         parseBoltPouch()
         parseCostumeRoom()
+        parsePlayingTime()
         parseVersion()
     }
 
@@ -184,6 +185,19 @@ class PlayerSaveParser(val player: Player) {
         player.savedData.activityData.parse(activityData)
         player.savedData.questData.parse(questData)
         player.savedData.globalData.parse(globalData)
+    }
+
+    fun parsePlayingTime() {
+        val playingTimeData = saveFile?.getAsJsonObject("playingTime") ?: return
+
+        val timePlayed = playingTimeData.get("timePlayed")?.asString?.toLongOrNull()
+        if (timePlayed != null) player.details.timePlayed = timePlayed
+
+        val lastLogin = playingTimeData.get("lastLogin")?.asString?.toLongOrNull()
+        if (lastLogin != null) player.details.lastLogin = lastLogin
+
+        val accountCreationTime = playingTimeData.get("accountCreationTime")?.asString?.toLongOrNull()
+        if (accountCreationTime != null) player.details.accountCreationTime = accountCreationTime
     }
 
     fun parseAutocastSpell() {

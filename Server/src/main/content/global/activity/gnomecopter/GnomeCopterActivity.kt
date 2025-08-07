@@ -27,7 +27,7 @@ class GnomeCopterActivity : ActivityPlugin("Gnome copters", false, false, true) 
 
     override fun newInstance(p: Player?): ActivityPlugin = this
 
-    override fun interact(e: Entity, target: Node, option: Option, ): Boolean {
+    override fun interact(e: Entity, target: Node, option: Option): Boolean {
         if (target is Scenery) {
             val `object` = target
             if (`object`.id == 30032) {
@@ -45,10 +45,7 @@ class GnomeCopterActivity : ActivityPlugin("Gnome copters", false, false, true) 
         return false
     }
 
-    override fun leave(
-        e: Entity,
-        logout: Boolean,
-    ): Boolean {
+    override fun leave(e: Entity, logout: Boolean): Boolean {
         if (logout && e.getAttribute("gc:flying", false)) {
             e.location = spawnLocation
             (e as Player).equipment.remove(COPTER_ITEM)

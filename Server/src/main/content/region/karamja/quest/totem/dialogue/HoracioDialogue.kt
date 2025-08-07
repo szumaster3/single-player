@@ -20,7 +20,7 @@ class HoracioDialogue(player: Player? = null, ) : Dialogue(player) {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> playerl(FaceAnim.HAPPY, "Yes it's very nice.").also { stage++ }
             1 -> npcl(FaceAnim.HAPPY, "Days like these make me glad to be alive!").also { stage = END_DIALOGUE }

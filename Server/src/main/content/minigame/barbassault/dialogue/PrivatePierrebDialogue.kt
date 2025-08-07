@@ -23,7 +23,7 @@ class PrivatePierrebDialogue(player: Player? = null, ) : Dialogue(player) {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> npcl(FaceAnim.FRIENDLY, "Show some respect! It's more than you'll achieve.").also { stage++ }
             1 -> playerl(FaceAnim.FRIENDLY, "I beg to differ. I'm in perfect shape!").also { stage++ }

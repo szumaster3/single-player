@@ -27,7 +27,7 @@ class TamayuDialogue(player: Player? = null, ) : Dialogue(player) {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> npc(FaceAnim.HALF_ASKING, "Stranger, why you have returned?").also { stage++ }
             1 -> player("I'm just passing through.").also { stage++ }

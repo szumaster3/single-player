@@ -24,7 +24,7 @@ class CharlieTheCookDialogue(player: Player? = null, ) : Dialogue(player) {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> options("I'm looking for a gherkin...", "I'm a fellow member of the Phoenix Gang.", "Just exploring.").also { stage++ }
             1 -> when (buttonId) {

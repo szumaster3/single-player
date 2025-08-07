@@ -79,7 +79,7 @@ class ChampionChallengeNPC(id: Int = 0, location: Location? = null) : AbstractNP
                 meta.varbitId?.let { setVarbit(killer, it, 1, true) }
                 rewardXP(killer, Skills.HITPOINTS, meta.xp)
                 rewardXP(killer, Skills.SLAYER, meta.xp)
-                ChampionChallengePlugin.isFinalBattle(killer)
+                ChampionChallengePlugin.tryStartFinalBattle(killer)
             }
             clearHintIcon(killer)
             removeAttributes(killer, GameAttributes.ACTIVITY_CHAMPION_CHALLENGE, GameAttributes.PRAYER_LOCK)

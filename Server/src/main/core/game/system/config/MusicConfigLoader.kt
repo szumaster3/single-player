@@ -79,7 +79,7 @@ class MusicConfigLoader {
                     }
 
                     val zone = MusicZone(musicId, zoneBorders)
-                    zoneBorders.getRegionIds()
+                    zoneBorders.regionIds
                         .filterNotNull()
                         .forEach { regionId ->
                             RegionManager.forId(regionId).musicZones.add(zone)

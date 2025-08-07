@@ -33,7 +33,7 @@ class ChamberGuardianDialogue(player: Player? = null) : Dialogue(player) {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         if (player.getSavedData().activityData.hasReceivedKolodionReward()) {
             when (stage) {
                 0 -> npc(FaceAnim.FRIENDLY, "Hello adventurer, are you looking for another staff?").also { stage++ }

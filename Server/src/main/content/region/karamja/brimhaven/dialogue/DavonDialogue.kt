@@ -18,7 +18,7 @@ class DavonDialogue(player: Player? = null, ) : Dialogue(player) {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> options("What are you selling?", "What do you mean pssst?", "Why don't you ever restock some types of amulets?").also { stage++ }
             1 -> when (buttonId) {

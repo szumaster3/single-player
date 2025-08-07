@@ -64,9 +64,16 @@ class HansDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             2 -> {
-                val details = player!!.details
-                val totalPlayTime = formatPlayTime(details.timePlayed)
-                val timeSinceLastLogin = formatPlayTime(System.currentTimeMillis() - details.lastLogin) + " ago"
+                val detailsJson = player!!.details.serializeTimeData()
+                val timePlayed = detailsJson.get("timePlayed")?.asLong ?: 0L
+                val lastLogin = detailsJson.get("lastLogin")?.asLong ?: System.currentTimeMillis()
+
+                val totalPlayTime = formatPlayTime(timePlayed)
+
+                val diff = System.currentTimeMillis() - lastLogin
+                val safeDiff = if (diff >= 0) diff else 0L
+                val timeSinceLastLogin = formatPlayTime(safeDiff) + " ago"
+
                 npcl(FaceAnim.THINKING, "You've spent $totalPlayTime in the world since you arrived $timeSinceLastLogin.")
                 stage++
             }

@@ -86,7 +86,7 @@ class FaladorShieldPlugin : InteractionListener {
             else -> -1
         }
 
-    private fun getPulse(entity: Entity, level: Int, ): Pulse =
+    private fun getPulse(entity: Entity, level: Int): Pulse =
         object : Pulse(1) {
             override fun pulse(): Boolean =
                 when (delay++) {

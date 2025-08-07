@@ -36,7 +36,7 @@ class PhasmatysPlugin : MapZone("Port phasmatys", true), Plugin<Any?> {
         return this
     }
 
-    override fun interact(e: Entity, target: Node, option: Option, ): Boolean {
+    override fun interact(e: Entity, target: Node, option: Option): Boolean {
         if (e is Player) {
             val player = e.asPlayer()
             val usedOption = getUsedOption(player)
@@ -105,7 +105,7 @@ class PhasmatysPlugin : MapZone("Port phasmatys", true), Plugin<Any?> {
         return super.interact(e, target, option)
     }
 
-    override fun leave(e: Entity?, logout: Boolean): Boolean {
+    override fun leave(e: Entity, logout: Boolean): Boolean {
         val player = e as? Player ?: return false
 
         val outside = !inBorders(player, 3673, 9955, 3685, 9964) && !inBorders(player, 3650, 3456, 3689, 3508)
@@ -165,5 +165,5 @@ class PhasmatysPlugin : MapZone("Port phasmatys", true), Plugin<Any?> {
         register(ZoneBorders.forRegion(14747))
     }
 
-    override fun fireEvent(identifier: String, vararg args: Any, ): Any? = null
+    override fun fireEvent(identifier: String, vararg args: Any): Any? = null
 }

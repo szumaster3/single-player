@@ -9,7 +9,6 @@ import org.rs.consts.NPCs
 /**
  * Handles the CartConductorNPC.
  */
-
 class TradeRefereeNPC : NPCBehavior(NPCs.TRADE_REFEREE_2127) {
     private var ticks = 0
     private val forceChat = arrayOf(

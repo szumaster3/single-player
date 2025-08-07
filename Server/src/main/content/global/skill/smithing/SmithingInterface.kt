@@ -46,12 +46,12 @@ class SmithingInterface : InterfaceListener {
                             player.gameAttributes.getAttribute<Any>("smith-bar") as Bars,
                             value,
                         ),
-                        type = PulseType.STRONG
+                        type = PulseType.STANDARD
                     )
                 }
                 return@on true
             }
-            submitIndividualPulse(player, SmithingPulse(player, Item(item, amount), Bars.forId(item)!!, amount), type = PulseType.STRONG)
+            submitIndividualPulse(player, SmithingPulse(player, Item(item, amount), Bars.forId(item)!!, amount), type = PulseType.STANDARD)
             return@on true
         }
 

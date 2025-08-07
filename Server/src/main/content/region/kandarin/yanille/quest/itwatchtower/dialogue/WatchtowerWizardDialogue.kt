@@ -161,7 +161,7 @@ class WatchtowerWizardDialogue(player: Player? = null) : Dialogue(player) {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> player("No, I'm an adventurer.").also { stage++ }
             1 -> npc("Well what are you doing here?").also { stage++ }

@@ -249,7 +249,7 @@ class BookInterface : InterfaceListener {
         /**
          * Checks if given page is the last one.
          */
-        fun isLastPage(pageNum: Int, totalPages: Int, ): Boolean = pageNum == totalPages - 1
+        fun isLastPage(pageNum: Int, totalPages: Int): Boolean = pageNum == totalPages - 1
 
         /**
          * Changes page and triggers content refresh callback.

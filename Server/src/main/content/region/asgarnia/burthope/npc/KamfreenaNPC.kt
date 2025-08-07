@@ -21,7 +21,7 @@ class KamfreenaNPC(id: Int = 0, location: Location? = null) : AbstractNPC(id, lo
             "Life isn't fair, that doesn't mean you can't win.",
         )
 
-    override fun construct(id: Int, location: Location, vararg objects: Any, ): AbstractNPC = KamfreenaNPC(id, location)
+    override fun construct(id: Int, location: Location, vararg objects: Any): AbstractNPC = KamfreenaNPC(id, location)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.KAMFREENA_4289)
 

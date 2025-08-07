@@ -43,7 +43,7 @@ enum class Traps(
         BoxTrapNode(intArrayOf(7012, 7014), 66, 400.0, arrayOf(Item(12535)), 1),
         BoxTrapNode(intArrayOf(8654), 73, 315.0, arrayOf(Item(14861)), 1),
         object : BoxTrapNode(intArrayOf(7010, 7011), 77, 0.0, arrayOf(Item(12539, 1)), 1) {
-            override fun canCatch(wrapper: TrapWrapper, npc: NPC, ): Boolean {
+            override fun canCatch(wrapper: TrapWrapper, npc: NPC): Boolean {
                 wrapper.player.sendMessage(
                     "Note: Giving 0 xp for grenwalls until this area and its requirements are implemented.",
                 )

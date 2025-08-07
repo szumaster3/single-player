@@ -21,7 +21,7 @@ class RufusDialogue(player: Player? = null) : Dialogue(player) {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> npc(FaceAnim.HAPPY, "Grreeting frrriend! Welcome to my worrrld famous", "food emporrium! All my meats are so frrresh you'd", "swear you killed them yourrrself!").also { stage++ }
             1 -> options("Why do you only sell meats?", "Do you sell cooked food?", "Can I buy some food?").also { stage++ }

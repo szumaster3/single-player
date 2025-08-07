@@ -29,7 +29,7 @@ class IlfeenDialogue(player: Player? = null) : Dialogue(player) {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> playerl(FaceAnim.FRIENDLY, "I'm just wandering, it's a lovely day for a walk in the woods.").also { stage++ }
             1 -> npc(FaceAnim.FRIENDLY, "It is that.").also { stage++ }

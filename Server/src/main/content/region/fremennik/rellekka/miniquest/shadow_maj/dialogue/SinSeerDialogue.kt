@@ -41,7 +41,7 @@ class SinSeerDialogue(player: Player? = null, ) : Dialogue(player) {
         }
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         val hasNote = hasAnItem(player, Items.SIN_SEERS_NOTE_10856).container != null
         when (stage) {
             0 ->

@@ -18,7 +18,7 @@ class WizardTowerPlugin : OptionHandler() {
         return this
     }
 
-    override fun handle(player: Player, node: Node, option: String, ): Boolean {
+    override fun handle(player: Player, node: Node, option: String): Boolean {
         when (option) {
             "open" -> {
                 if (node.location == Location(3107, 3162, 0)) {
@@ -39,7 +39,7 @@ class WizardTowerPlugin : OptionHandler() {
         return true
     }
 
-    override fun getDestination(node: Node, n: Node, ): Location? {
+    override fun getDestination(node: Node, n: Node): Location? {
         if (n is Scenery) {
             val `object` = n
             if (`object`.id == org.rs.consts.Scenery.DOOR_11993 && `object`.location == Location(3107, 3162, 0)) {

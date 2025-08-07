@@ -42,9 +42,9 @@ class SmeltingInterface : InterfaceListener {
                 player.interfaceManager.closeChatbox()
                 sendInputDialogue(player, true, "Enter the amount:") { value: Any ->
                     if (value is String) {
-                        submitIndividualPulse(player, SmeltingPulse(player, null, barType.bar, value.toInt()), type = PulseType.STRONG)
+                        submitIndividualPulse(player, SmeltingPulse(player, null, barType.bar, value.toInt()), type = PulseType.STANDARD)
                     } else {
-                        submitIndividualPulse(player, SmeltingPulse(player, null, barType.bar, value as Int), type = PulseType.STRONG)
+                        submitIndividualPulse(player, SmeltingPulse(player, null, barType.bar, value as Int), type = PulseType.STANDARD)
                     }
                 }
             } else {

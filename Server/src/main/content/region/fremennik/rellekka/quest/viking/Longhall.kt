@@ -20,14 +20,14 @@ class Longhall : MapZone("LonghallStageZone", true), Plugin<Any?> {
         super.register(ZoneBorders(2655, 3682, 2662, 3685))
     }
 
-    override fun enter(e: Entity?): Boolean {
+    override fun enter(e: Entity): Boolean {
         if (e != null && e.isPlayer) {
             e.setAttribute(GameAttributes.QUEST_VIKING_PLAYER_ON_STAGE, true)
         }
         return super.enter(e)
     }
 
-    override fun leave(e: Entity?, logout: Boolean): Boolean {
+    override fun leave(e: Entity, logout: Boolean): Boolean {
         if (e != null && e.isPlayer) {
             e.removeAttribute(GameAttributes.QUEST_VIKING_PLAYER_ON_STAGE)
         }

@@ -25,12 +25,7 @@ class RoguesJewelleryPlugin : InteractionListener {
             val invAmount = amountInInventory(player, jewellery.item)
             val itemName = getItemName(used.id)
 
-            sendNPCDialogue(
-                player,
-                NPCs.ROGUE_8122,
-                "I'll give you ${jewellery.price * invAmount} coins each for that $itemName. Do we have a deal?",
-                FaceAnim.HALF_ASKING
-            )
+            sendNPCDialogue(player, NPCs.ROGUE_8122, "I'll give you ${jewellery.price * invAmount} coins each for that $itemName. Do we have a deal?", FaceAnim.HALF_ASKING)
             addDialogueAction(player) { _, _ ->
                 sendDialogueOptions(player, "Select an option", "Yes, we do.", "No, we do not.")
                 addDialogueAction(player) { _, button ->
@@ -39,11 +34,7 @@ class RoguesJewelleryPlugin : InteractionListener {
                             closeDialogue(player)
 
                             if (invAmount >= 10000) {
-                                sendNPCDialogue(
-                                    player,
-                                    NPCs.ROGUE_8122,
-                                    "Whoa, that's quite a bit of jewellery you've got there! Please try to keep it in amounts smaller than 10000. Big numbers make my head hurt."
-                                )
+                                sendNPCDialogue(player, NPCs.ROGUE_8122, "Whoa, that's quite a bit of jewellery you've got there! Please try to keep it in amounts smaller than 10000. Big numbers make my head hurt.")
                                 return@addDialogueAction
                             }
 
@@ -55,17 +46,9 @@ class RoguesJewelleryPlugin : InteractionListener {
                             val removed = removeItem(player, Item(jewellery.item, invAmount), Container.INVENTORY)
                             if (removed) {
                                 addItem(player, Items.COINS_995, invAmount * jewellery.price)
-                                sendNPCDialogue(
-                                    player,
-                                    NPCs.ROGUE_8122,
-                                    "It was a pleasure doing business with you. Come back if you have more jewellery to sell."
-                                )
+                                sendNPCDialogue(player, NPCs.ROGUE_8122, "It was a pleasure doing business with you. Come back if you have more jewellery to sell.")
                             } else {
-                                sendNPCDialogue(
-                                    player,
-                                    NPCs.ROGUE_8122,
-                                    "Sorry, but I can’t seem to take those from you. Make sure it's unenchanted gold jewellery, and not noted."
-                                )
+                                sendNPCDialogue(player, NPCs.ROGUE_8122, "Sorry, but I can’t seem to take those from you. Make sure it's unenchanted gold jewellery, and not noted.")
                             }
                         }
 

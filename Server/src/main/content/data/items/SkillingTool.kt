@@ -261,7 +261,7 @@ enum class SkillingTool(val id: Int, val level: Int, val ratio: Double, val anim
          * Returns the tool for the skill.
          */
         @JvmStatic
-        fun getToolForSkill(player: Player?, skill: Int, ): SkillingTool? =
+        fun getToolForSkill(player: Player?, skill: Int): SkillingTool? =
             when (skill) {
                 Skills.MINING -> getPickaxe(player!!)
                 Skills.WOODCUTTING -> getAxe(player!!)
@@ -275,7 +275,7 @@ enum class SkillingTool(val id: Int, val level: Int, val ratio: Double, val anim
          * Checks for tool.
          */
         @JvmStatic
-        fun checkTool(player: Player, skillId: Int, tool: SkillingTool, ): Boolean {
+        fun checkTool(player: Player, skillId: Int, tool: SkillingTool): Boolean {
             if (player.getSkills().getStaticLevel(skillId) < tool.level) {
                 return false
             }

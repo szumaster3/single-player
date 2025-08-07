@@ -34,7 +34,7 @@ class BankDepositBoxInterface : InterfaceListener {
         }
     }
 
-    private fun handleDepositBoxMenu(player: Player, component: Component, opcode: Int, buttonID: Int, slot: Int, itemID: Int, ): Boolean {
+    private fun handleDepositBoxMenu(player: Player, component: Component, opcode: Int, buttonID: Int, slot: Int, itemID: Int): Boolean {
         val item = player.inventory.get(slot) ?: return true
 
         if (opcode == OP_EXAMINE) {

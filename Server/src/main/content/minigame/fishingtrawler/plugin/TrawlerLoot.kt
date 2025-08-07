@@ -75,7 +75,7 @@ object TrawlerLoot {
     }
 
     @JvmStatic
-    fun getLoot(fishLevel: Int, rolls: Int, skipJunk: Boolean, ): ArrayList<Item> {
+    fun getLoot(fishLevel: Int, rolls: Int, skipJunk: Boolean): ArrayList<Item> {
         val loot = ArrayList<Item>()
         for (i in 0 until rolls) {
             val item = RandomFunction.rollWeightedChanceTable(listOf(*lootTable))

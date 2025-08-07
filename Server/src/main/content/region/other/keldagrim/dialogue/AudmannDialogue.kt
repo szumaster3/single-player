@@ -23,14 +23,7 @@ class AudmannDialogue(player: Player? = null) : Dialogue(player) {
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> player(FaceAnim.HALF_ASKING, "Why not? What's wrong?").also { stage++ }
-            1 ->
-                npc(
-                    FaceAnim.OLD_NORMAL,
-                    "You are wrong, human. Your attire is outrageous.",
-                    "Your presence is obnoxious.",
-                ).also {
-                    stage++
-                }
+            1 -> npc(FaceAnim.OLD_NORMAL, "You are wrong, human. Your attire is outrageous.", "Your presence is obnoxious.").also { stage++ }
             2 -> player(FaceAnim.HALF_ASKING, "What? What are you saying?").also { stage++ }
             3 -> npc(FaceAnim.OLD_NORMAL, "I'm saying you're in my way.").also { stage = END_DIALOGUE }
         }

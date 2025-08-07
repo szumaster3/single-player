@@ -25,7 +25,7 @@ class SanibochDialogue(player: Player? = null, ) : Dialogue(player) {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> options("Can I go through that door please?", "Where does this strange entrance lead?", "Good day to you too.", "I'm impressed, that tree  is growing on that shed.").also { stage++ }
             1 -> when (buttonId) {

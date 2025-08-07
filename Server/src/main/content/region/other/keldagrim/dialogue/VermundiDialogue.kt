@@ -24,19 +24,12 @@ class VermundiDialogue(player: Player? = null) : Dialogue(player) {
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> options("Yes, what clothes do you have in stock?", "No, I'm just browsing.").also { stage++ }
-            1 ->
-                when (buttonId) {
-                    1 -> player("Yes, what clothes do you have in stock?").also { stage++ }
-                    2 -> player("No, I'm just browsing.").also { stage = END_DIALOGUE }
-                }
-            2 ->
-                npc(
-                    FaceAnim.OLD_NORMAL,
-                    "Not a lot, I'm afraid, most of what I produce goes to my",
-                    "sister. Her shop is in Keldagrim-West.",
-                ).also {
-                    stage++
-                }
+            1 -> when (buttonId) {
+                1 -> player("Yes, what clothes do you have in stock?").also { stage++ }
+                2 -> player("No, I'm just browsing.").also { stage = END_DIALOGUE }
+            }
+
+            2 -> npc(FaceAnim.OLD_NORMAL, "Not a lot, I'm afraid, most of what I produce goes to my", "sister. Her shop is in Keldagrim-West.").also { stage++ }
             3 -> player("Well, show me what you do have then.").also { stage++ }
             4 -> {
                 end()

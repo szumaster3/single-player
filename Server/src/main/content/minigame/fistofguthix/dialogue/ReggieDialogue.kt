@@ -23,7 +23,7 @@ class ReggieDialogue(player: Player? = null) : Dialogue(player) {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         var buyAmount = 0
         when (stage) {
             0 -> when (buttonId) {

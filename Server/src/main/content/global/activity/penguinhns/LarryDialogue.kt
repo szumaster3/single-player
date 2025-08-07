@@ -24,7 +24,7 @@ class LarryDialogue(player: Player? = null, ) : Dialogue(player) {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         val points = player.getAttribute(GameAttributes.ACTIVITY_PENGUINS_HNS_SCORE, 0)
         val lostNotebook = hasAnItem(player, Items.SPY_NOTEBOOK_13732).container != null
         when (stage) {

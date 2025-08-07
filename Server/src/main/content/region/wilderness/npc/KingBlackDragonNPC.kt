@@ -102,8 +102,7 @@ class KingBlackDragonNPC : AbstractNPC {
             if (victim.centerLocation.withinMaxnormDistance(
                     entity.centerLocation,
                     getCombatDistance(entity, victim, 9),
-                ) &&
-                super.canSwing(entity, victim) == InteractionType.STILL_INTERACT
+                ) && super.canSwing(entity, victim) == InteractionType.STILL_INTERACT
             ) {
                 entity.walkingQueue.reset()
                 return InteractionType.STILL_INTERACT
@@ -127,8 +126,7 @@ class KingBlackDragonNPC : AbstractNPC {
             if (victim!!.centerLocation.withinMaxnormDistance(
                     entity!!.centerLocation,
                     getCombatDistance(entity, victim, 1),
-                ) &&
-                RandomFunction.random(10) < 7
+                ) && RandomFunction.random(10) < 7
             ) {
                 style = CombatStyle.MELEE
             } else {

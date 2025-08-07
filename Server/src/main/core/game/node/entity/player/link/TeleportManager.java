@@ -2,6 +2,7 @@ package core.game.node.entity.player.link;
 
 import content.region.island.tutorial.plugin.*;
 import core.ServerConstants;
+import core.game.node.Node;
 import core.game.node.entity.Entity;
 import core.game.node.entity.impl.Animator.Priority;
 import core.game.node.entity.player.Player;
@@ -101,7 +102,8 @@ public class TeleportManager {
         if (teleportType == WILDERNESS_TELEPORT || type == TeleportType.OBELISK) {
             if (hasTimerActive(entity, "teleblock")) return false;
         } else {
-            if (!entity.getZoneMonitor().teleport(teleportType, null)) {
+            Node targetNode = getOrCreateNodeByLocation(location);
+            if (!entity.getZoneMonitor().teleport(teleportType, targetNode)) {
                 return false;
             }
             if (teleportType != -1 && entity.isTeleBlocked()) {
@@ -110,6 +112,7 @@ public class TeleportManager {
                 return false;
             }
         }
+
         if (teleportType != -1) {
             if (entity instanceof Player) {
                 Player p = (Player) entity;
@@ -965,5 +968,13 @@ public class TeleportManager {
         this.teleportType = teleportType;
     }
 
+    public static Node getOrCreateNodeByLocation(Location location) {
+        for (Node node : Node.NodeRepository.getAllNodes()) {
+            if (node.getLocation().equals(location)) {
+                return node;
+            }
+        }
+        return new Node("Teleport destination", location) { };
+    }
 }
 

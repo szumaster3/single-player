@@ -19,7 +19,7 @@ import org.rs.consts.Quests
 
 class GripNPC : NPCBehavior(NPCs.GRIP_792) {
 
-    override fun canBeAttackedBy(self: NPC, attacker: Entity, style: CombatStyle, shouldSendMessage: Boolean, ): Boolean {
+    override fun canBeAttackedBy(self: NPC, attacker: Entity, style: CombatStyle, shouldSendMessage: Boolean): Boolean {
         if (attacker is Player && HeroesQuest.isBlackArm(attacker)) {
             openDialogue(
                 attacker,

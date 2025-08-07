@@ -53,6 +53,8 @@ class ScriptAPI(private val bot: Player) {
     val GRAPHICSDOWN = Graphics(1577)
     val ANIMATIONDOWN = Animation(8941)
 
+    fun List<Scenery?>.toNodeList(): List<Node> = this.filterNotNull().map { it as Node }
+
     /**
      * Gets the distance between two nodes
      *
@@ -125,14 +127,15 @@ class ScriptAPI(private val bot: Player) {
      * @author Ceikry
      */
     fun getNearestNodeFromList(acceptedNames: List<String>, isObject: Boolean): Node? {
-        if (isObject)
-            return processEvaluationList(
-                RegionManager.forId(bot.location.getRegionId()).planes[bot.location.z].objectList,
+        val region = RegionManager.forId(bot.location.getRegionId()).planes[bot.location.z]
+        return if (isObject)
+            processEvaluationList(
+                region.objectList.filterNotNull().map { it as Node },
                 acceptedName = acceptedNames
             )
         else
-            return processEvaluationList(
-                RegionManager.forId(bot.location.getRegionId()).planes[bot.location.z].entities,
+            processEvaluationList(
+                region.entities,
                 acceptedName = acceptedNames
             )
     }
@@ -146,14 +149,15 @@ class ScriptAPI(private val bot: Player) {
      * @author Ceikry
      */
     fun getNearestNode(id: Int, isObject: Boolean): Node? {
-        if (isObject)
-            return processEvaluationList(
-                RegionManager.forId(bot.location.getRegionId()).planes[bot.location.z].objectList,
+        val region = RegionManager.forId(bot.location.regionId).planes[bot.location.z]
+        return if (isObject)
+            processEvaluationList(
+                region.objectList.toNodeList(),
                 acceptedId = id
             )
         else
-            return processEvaluationList(
-                RegionManager.forId(bot.location.getRegionId()).planes[bot.location.z].entities,
+            processEvaluationList(
+                region.entities,
                 acceptedId = id
             )
     }
@@ -167,7 +171,7 @@ class ScriptAPI(private val bot: Player) {
      */
     fun getNearestNode(entityName: String): Node? {
         return processEvaluationList(
-            RegionManager.forId(bot.location.getRegionId()).planes[bot.location.z].entities,
+            RegionManager.forId(bot.location.regionId).planes[bot.location.z].entities,
             acceptedName = listOf(entityName)
         )
     }
@@ -181,21 +185,23 @@ class ScriptAPI(private val bot: Player) {
      * @author Ceikry
      */
     fun getNearestNode(name: String, isObject: Boolean): Node? {
-        if (isObject)
-            return processEvaluationList(
-                RegionManager.forId(bot.location.getRegionId()).planes[bot.location.z].objectList,
+        val region = RegionManager.forId(bot.location.regionId).planes[bot.location.z]
+        return if (isObject)
+            processEvaluationList(
+                region.objectList.toNodeList(),
                 acceptedName = listOf(name)
             )
         else
-            return processEvaluationList(
-                RegionManager.forId(bot.location.getRegionId()).planes[bot.location.z].entities,
+            processEvaluationList(
+                region.entities,
                 acceptedName = listOf(name)
             )
     }
 
     fun getNearestObjectByPredicate(predicate: (Node?) -> Boolean): Node? {
+        val region = RegionManager.forId(bot.location.regionId).planes[bot.location.z]
         return processEvaluationList(
-            RegionManager.forId(bot.location.getRegionId()).planes[bot.location.z].objectList,
+            region.objectList.filterNotNull().map { it as Node },
             acceptedPredicate = predicate
         )
     }
@@ -300,18 +306,11 @@ class ScriptAPI(private val bot: Player) {
      * @author Ceikry
      */
     fun getNearestGameObject(loc: Location, objectId: Int): Scenery? {
-        var nearestObject: Scenery? = null
-        val minDistance = Double.MAX_VALUE
-        for (o in RegionManager.forId(loc.getRegionId()).planes[0].objects) {
-            for (obj in o) {
-                if (obj != null) {
-                    if (distance(loc, obj) < minDistance && obj.id == objectId) {
-                        nearestObject = obj
-                    }
-                }
-            }
-        }
-        return nearestObject
+        return RegionManager.forId(loc.regionId).planes[0].objects
+            ?.flatten()
+            ?.filterNotNull()
+            ?.filter { it.id == objectId }
+            ?.minByOrNull { distance(loc, it) }
     }
 
     /**

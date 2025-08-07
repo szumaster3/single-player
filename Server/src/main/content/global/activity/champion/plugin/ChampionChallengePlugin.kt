@@ -277,11 +277,11 @@ class ChampionChallengePlugin : InteractionListener, MapArea {
 
     companion object {
         /**
-         * Checks if player has completed all prerequisite tasks for the final battle.
+         * Checks if the player meets the conditions to start the final battle.
          */
-        fun isFinalBattle(player: Player) {
-            val allSet = (1452..1461).all { getVarbit(player, it) == 1 }
-            if (allSet) {
+        fun tryStartFinalBattle(player: Player) {
+            val allPrerequisitesMet = (1452..1461).all { getVarbit(player, it) == 1 }
+            if (allPrerequisitesMet) {
                 queueScript(player, 3, QueueStrength.SOFT) {
                     player.lock(1)
                     sendNPCDialogueLines(

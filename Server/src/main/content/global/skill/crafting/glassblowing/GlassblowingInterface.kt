@@ -73,6 +73,6 @@ class GlassblowingInterface :
         amount: Int,
     ) {
         closeInterface(player)
-        submitIndividualPulse(player, GlassblowingPulse(player, product, amount), type = PulseType.STRONG)
+        submitIndividualPulse(player, GlassblowingPulse(player, product, amount), type = PulseType.STANDARD)
     }
 }

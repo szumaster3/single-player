@@ -20,7 +20,7 @@ class JungleForesterDialogue(player: Player? = null) : Dialogue(player) {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> {
                 if (Diary.canClaimLevelRewards(player, DiaryType.KARAMJA, 2)) {

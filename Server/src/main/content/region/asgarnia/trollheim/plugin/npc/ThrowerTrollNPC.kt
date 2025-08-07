@@ -15,7 +15,7 @@ class ThrowerTrollNPC(
     id: Int = 0,
     location: Location? = null,
 ) : AbstractNPC(id, location) {
-    override fun construct(id: Int, location: Location, vararg objects: Any, ): AbstractNPC = ThrowerTrollNPC(id, location)
+    override fun construct(id: Int, location: Location, vararg objects: Any): AbstractNPC = ThrowerTrollNPC(id, location)
 
     override fun setDefaultBehavior() {
         super.setAggressive(true)
@@ -23,7 +23,7 @@ class ThrowerTrollNPC(
             AggressiveHandler(
                 this,
                 object : AggressiveBehavior() {
-                    override fun canSelectTarget(entity: Entity, target: Entity, ): Boolean {
+                    override fun canSelectTarget(entity: Entity, target: Entity): Boolean {
                         if (!target.isActive || DeathTask.isDead(target)) {
                             return false
                         }

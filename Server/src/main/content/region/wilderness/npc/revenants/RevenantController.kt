@@ -383,8 +383,7 @@ class RevenantController : TickListener, Commands {
 
             fun canMove(revenantNPC: RevenantNPC): Boolean =
                 !revenantNPC.walkingQueue.isMoving && !revenantNPC.pulseManager.hasPulseRunning() && !revenantNPC.properties.combatPulse.isAttacking && !revenantNPC.properties.combatPulse.isInCombat && revenantNPC.properties.teleportLocation == null && !revenantNPC.getAttribute(
-                    "done",
-                    false
+                    "done", false
                 )
         }, ;
 

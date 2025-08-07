@@ -38,7 +38,7 @@ class LeatherCraftingListener : InteractionListener , InterfaceListener {
                     submitIndividualPulse(
                         entity = player,
                         pulse = StuddedArmourPulse(player, Item(item.leather), item, amount),
-                        type = PulseType.STRONG
+                        type = PulseType.STANDARD
                     )
                 }
 
@@ -63,7 +63,7 @@ class LeatherCraftingListener : InteractionListener , InterfaceListener {
                         submitIndividualPulse(
                             entity = player,
                             pulse = SnakeskinCraftingPulse(player, null, amount, it),
-                            type = PulseType.STRONG
+                            type = PulseType.STANDARD
                         )
                     } ?: sendMessage(player, "Invalid snakeskin item selected.")
                 }
@@ -89,7 +89,7 @@ class LeatherCraftingListener : InteractionListener , InterfaceListener {
                     submitIndividualPulse(
                         entity = player,
                         pulse = HardLeatherCraftingPulse(player, used.asItem(), amount),
-                        type = PulseType.STRONG
+                        type = PulseType.STANDARD
                     )
                 }
                 calculateMaxAmount {
@@ -134,7 +134,7 @@ class LeatherCraftingListener : InteractionListener , InterfaceListener {
                     submitIndividualPulse(
                         entity = player,
                         pulse = DragonLeatherCraftingPulse(player, null, item!!, amount),
-                        type = PulseType.STRONG
+                        type = PulseType.STANDARD
                     )
                 }
                 calculateMaxAmount {
@@ -158,7 +158,7 @@ class LeatherCraftingListener : InteractionListener , InterfaceListener {
                         submitIndividualPulse(
                             entity = player,
                             pulse = SoftLeatherCraftingPulse(player, Item(Items.LEATHER_1741), soft, value as Int),
-                            type = PulseType.STRONG
+                            type = PulseType.STANDARD
                         )
                     }
                     return@on true
@@ -167,7 +167,7 @@ class LeatherCraftingListener : InteractionListener , InterfaceListener {
             submitIndividualPulse(
                 player,
                 SoftLeatherCraftingPulse(player, null, soft, amount),
-                type = PulseType.STRONG
+                type = PulseType.STANDARD
             )
             return@on true
         }

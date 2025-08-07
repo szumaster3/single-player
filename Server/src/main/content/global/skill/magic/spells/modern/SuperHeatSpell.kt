@@ -58,7 +58,7 @@ class SuperHeatSpell : SpellListener("modern") {
             addXP(player, 53.0)
             playAudio(player, Sounds.SUPERHEAT_ALL_190)
             showMagicTab(player)
-            submitIndividualPulse(player, SmeltingPulse(player, item, bar, 1, true), type = PulseType.STRONG)
+            submitIndividualPulse(player, SmeltingPulse(player, item, bar, 1, true), type = PulseType.STANDARD)
             setDelay(player, false)
         }
     }

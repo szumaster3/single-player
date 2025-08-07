@@ -20,7 +20,7 @@ class SquireMagicDialogue(player: Player? = null) : Dialogue(player) {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> options("What do you have for sale?", "I'm fine thanks.").also { stage++ }
             1 -> when (buttonId) {

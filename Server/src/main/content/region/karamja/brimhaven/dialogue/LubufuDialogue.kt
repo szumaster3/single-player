@@ -16,7 +16,7 @@ class LubufuDialogue(player: Player? = null, ) : Dialogue(player) {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> options("I wasn't going anywhere...", "What's a whippersnapper?", "Who are you?").also { stage++ }
             1 -> when (buttonId) {

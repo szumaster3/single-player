@@ -51,7 +51,7 @@ class WizardKorvakDialogue(player: Player? = null, ) : Dialogue(player) {
         return true
     }
 
-    override fun handle(interfaceId: Int, buttonId: Int, ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         // Constants
         val hasMediumPouch = hasAnItem(player, Items.MEDIUM_POUCH_5510).container != null || hasAnItem(player, Items.MEDIUM_POUCH_5511).container != null
         val hasOmniItem = inInventory(player, Items.OMNI_TALISMAN_13649) || inInventory(player, Items.OMNI_TIARA_13655)

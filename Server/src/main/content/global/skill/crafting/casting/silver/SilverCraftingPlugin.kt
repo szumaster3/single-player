@@ -98,7 +98,7 @@ class SilverCraftingPlugin : InteractionListener, InterfaceListener {
                 getAttribute(player, "crafting:silver:furnace_id", core.game.node.scenery.Scenery(-1, -1, 0)),
                 amount
             ),
-            type = PulseType.STRONG
+            type = PulseType.STANDARD
         )
     }
 

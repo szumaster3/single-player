@@ -48,7 +48,7 @@ class PotteryPlugin : UseWithHandler(Items.SOFT_CLAY_1761) {
                 amount: Int,
                 index: Int,
             ) {
-                player.pulseManager.run(PotteryCraftingPulse(player, event.usedItem, amount, Pottery.values()[index]), pulseType = PulseType.STRONG)
+                player.pulseManager.run(PotteryCraftingPulse(player, event.usedItem, amount, Pottery.values()[index]), pulseType = PulseType.STANDARD)
             }
 
             override fun getAll(index: Int): Int = amountInInventory(player, SOFT_CLAY)
@@ -126,7 +126,7 @@ class PotteryPlugin : UseWithHandler(Items.SOFT_CLAY_1761) {
                             pottery = Pottery.values()[index],
                             amount = amount,
                         ),
-                        pulseType = PulseType.STRONG
+                        pulseType = PulseType.STANDARD
                     )
                 }
 

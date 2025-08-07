@@ -141,24 +141,17 @@ object ClassScanner {
                 if (clazz is MapArea) {
                     val zone =
                         object : MapZone(clazz.javaClass.simpleName + "MapArea", true, *clazz.getRestrictions()) {
-                            override fun enter(e: Entity?): Boolean {
-                                clazz.areaEnter(e ?: return super.enter(null))
+                            override fun enter(e: Entity): Boolean {
+                                clazz.areaEnter(e)
                                 return super.enter(e)
                             }
 
-                            override fun leave(
-                                e: Entity?,
-                                logout: Boolean,
-                            ): Boolean {
-                                clazz.areaLeave(e ?: return super.leave(null, logout), logout)
+                            override fun leave(e: Entity, logout: Boolean): Boolean {
+                                clazz.areaLeave(e, logout)
                                 return super.leave(e, logout)
                             }
 
-                            override fun move(
-                                e: Entity?,
-                                from: Location?,
-                                to: Location?,
-                            ): Boolean {
+                            override fun move(e: Entity?, from: Location?, to: Location?): Boolean {
                                 if (e != null && from != null && to != null) clazz.entityStep(e, to, from)
                                 return super.move(e, from, to)
                             }

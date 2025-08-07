@@ -56,7 +56,7 @@ class MorphItemPlugin : Plugin<Any> {
      * @param args Arguments including [Player] and [Item].
      * @return `false` to cancel the original "equip" behavior, `true` otherwise.
      */
-    override fun fireEvent(identifier: String, vararg args: Any, ): Any {
+    override fun fireEvent(identifier: String, vararg args: Any): Any {
         val player = args[0] as Player
         val item = args[1] as Item
         return when (identifier) {
@@ -122,7 +122,7 @@ class MorphItemPlugin : Plugin<Any> {
          *
          * @return Always returns `true` after closing the interface.
          */
-        override fun handle(player: Player, component: Component, opcode: Int, button: Int, slot: Int, itemId: Int, ): Boolean {
+        override fun handle(player: Player, component: Component, opcode: Int, button: Int, slot: Int, itemId: Int): Boolean {
             player.interfaceManager.closeSingleTab()
             return true
         }

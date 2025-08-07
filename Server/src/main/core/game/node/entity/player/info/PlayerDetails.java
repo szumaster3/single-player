@@ -1,5 +1,6 @@
 package core.game.node.entity.player.info;
 
+import com.google.gson.JsonObject;
 import core.auth.UserAccountInfo;
 import core.game.system.communication.CommunicationInfo;
 import core.game.world.GameWorld;
@@ -19,6 +20,8 @@ public class PlayerDetails {
     public UserAccountInfo accountInfo = UserAccountInfo.createDefault();
 
     private final CommunicationInfo communicationInfo = new CommunicationInfo();
+
+    private long accountCreationTime = 0L;
 
     /**
      * Gets credits.
@@ -284,6 +287,24 @@ public class PlayerDetails {
         this.accountInfo.setBanEndTime(banTime);
     }
 
+
+    /**
+     * Gets the account creation time.
+     *
+     * @return the creation time
+     */
+    public long getAccountCreationTime() {
+        return accountCreationTime;
+    }
+
+    /**
+     * Sets account creation time.
+     *
+     * @param accountCreationTime the creation time
+     */
+    public void setAccountCreationTime(long accountCreationTime) {
+        this.accountCreationTime = accountCreationTime;
+    }
     /**
      * Save.
      */
@@ -299,6 +320,18 @@ public class PlayerDetails {
             GameWorld.getAccountStorage().update(accountInfo);
         } catch (IllegalStateException ignored) {
         }
+    }
+    /**
+     * Serializes time-related fields to JsonObject.
+     *
+     * @return JsonObject with player time data
+     */
+    public JsonObject serializeTimeData() {
+        JsonObject json = new JsonObject();
+        json.addProperty("timePlayed", getTimePlayed());
+        json.addProperty("lastLogin", getLastLogin());
+        json.addProperty("accountCreationTime", getAccountCreationTime());
+        return json;
     }
 
     /**

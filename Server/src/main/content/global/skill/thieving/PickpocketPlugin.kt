@@ -107,7 +107,7 @@ class PickpocketPlugin : InteractionListener {
         val PICKPOCKET_ANIM = Animation(Animations.HUMAN_PICKPOCKETING_881, Animator.Priority.HIGH)
         val NPC_ANIM = Animation(Animations.PUNCH_422)
 
-        fun pickpocketRoll(player: Player, low: Double, high: Double, table: WeightBasedTable, ): ArrayList<Item>? {
+        fun pickpocketRoll(player: Player, low: Double, high: Double, table: WeightBasedTable): ArrayList<Item>? {
             var successMod = 0.0
             if (inInventory(player, Items.GLOVES_OF_SILENCE_10075, 1)) {
                 successMod += 3

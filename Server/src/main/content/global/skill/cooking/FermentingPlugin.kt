@@ -27,7 +27,7 @@ class FermentingPlugin : InteractionListener {
             }
             if (removeItem(player, with.asItem())) {
                 replaceSlot(player, itemSlot, Item(Items.UNFERMENTED_WINE_1995, 1))
-                submitIndividualPulse(player, WineFermentingPulse(1, player), type = PulseType.STRONG)
+                submitIndividualPulse(player, WineFermentingPulse(1, player), type = PulseType.STANDARD)
             }
             return@onUseWith true
         }

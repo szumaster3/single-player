@@ -2,10 +2,7 @@ package content.global.travel
 
 import content.data.items.SkillingTool
 import core.api.*
-import core.game.interaction.IntType
-import core.game.interaction.InteractionListener
-import core.game.interaction.InterfaceListener
-import core.game.interaction.QueueStrength
+import core.game.interaction.*
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
 import core.game.node.scenery.SceneryBuilder
@@ -182,6 +179,11 @@ class CanoePlugin :
         }
     }
 
+    fun getChopDurationTicks(level: Int, minTicks: Int = 5, maxTicks: Int = 20): Int {
+        val value = (minTicks * ((99 - level) / 98.0) + maxTicks * ((level - 1) / 98.0)).toInt()
+        return (maxTicks * ((99 - level) / 98.0) + minTicks * ((level - 1) / 98.0)).toInt()
+    }
+
     override fun defineListeners() {
         on(CanoeStationSceneries.stationIdArray, IntType.SCENERY, "chop-down") { player, node ->
             val canoeStation = CanoeStationLocations.getCanoeStationbyLocation(node.location)
@@ -195,12 +197,16 @@ class CanoePlugin :
                 sendMessage(player, "You do not have an axe which you have the woodcutting level to use.")
                 return@on true
             }
-            val anim = Animation(axe.animation).duration
-            lock(player, anim + CANOE_TREE_FALLING_ANIMATION.duration)
-            queueScript(player, anim + 1, QueueStrength.SOFT) { stage: Int ->
+            val woodcuttingLevel = getStatLevel(player, Skills.WOODCUTTING)
+            val chopTicks = getChopDurationTicks(woodcuttingLevel)
+
+            if (!clockReady(player, Clocks.SKILLING)) return@on true
+
+            player.animate(Animation.create(axe.animation))
+
+            queueScript(player, chopTicks, QueueStrength.WEAK) { stage ->
                 when (stage) {
                     0 -> {
-                        resetAnimator(player)
                         setVarbit(player, stationVarbit!!, CanoeStationSceneries.TREE_FALLING.varbitValue)
                         animateScenery(player, node.asScenery(), CANOE_TREE_FALLING_ANIMATION.id)
                         return@queueScript delayScript(player, CANOE_TREE_FALLING_ANIMATION.duration)
@@ -346,7 +352,7 @@ class CanoePlugin :
                 player,
                 object : Pulse() {
                     var counter = 0
-
+                    val endTimer = Animation(interfaceAnimationId).duration + Animation(Components.FADE_FROM_BLACK_170).duration + 3
                     override fun pulse(): Boolean {
                         when (counter++) {
                             0 -> {
@@ -355,6 +361,7 @@ class CanoePlugin :
                                 animateInterface(player, CANOE_TRAVEL_INTERFACE, 3, interfaceAnimationId)
                                 setMinimapState(player, 2)
                                 removeTabs(player, 0, 1, 2, 3, 4, 5, 6, 11, 12)
+                                return false
                             }
 
                             Animation(interfaceAnimationId).duration + 1 -> {
@@ -362,15 +369,15 @@ class CanoePlugin :
                                 closeInterface(player)
                                 closeOverlay(player)
                                 openOverlay(player, Components.FADE_FROM_BLACK_170)
+                                return false
                             }
 
-                            Animation(interfaceAnimationId).duration + 1 +
-                                Animation(Components.FADE_FROM_BLACK_170).duration,
+                            Animation(interfaceAnimationId).duration + Animation(Components.FADE_FROM_BLACK_170).duration + 3,
                             -> {
                                 unlock(player)
                                 restoreTabs(player)
                                 setMinimapState(player, 0)
-                                val sinkingScenery = SceneryBuilder.add(core.game.node.scenery.Scenery(Scenery.A_SINKING_CANOE_12159, destination.sinkLocation, 1), 3,).asScenery()
+                                val sinkingScenery = SceneryBuilder.add(core.game.node.scenery.Scenery(Scenery.A_SINKING_CANOE_12159, destination.sinkLocation, 1), 10).asScenery()
                                 animateScenery(sinkingScenery, CANOE_SINKING_ANIMATION.id)
                                 sendMessage(player, "You arrive at $arrivalMessage.")
                                 sendMessage(player, "Your canoe sinks from the long journey.")

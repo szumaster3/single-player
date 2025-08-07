@@ -85,25 +85,18 @@ class Properties(val entity: Entity) {
     var attackSpeed: Int = 4
 
     /**
-     * Gets the timestamp of the last animation end for the entity.
-     *
-     * @return The timestamp of the last animation end.
-     */
-    val lastAnimationEnd: Long = 0
-
-    /**
      * Gets the attack animation for the entity.
      *
      * @return The attack animation for the entity.
      */
-    var attackAnimation: Animation = Animation(422, Animator.Priority.HIGH)
+    var attackAnimation: Animation = Animation(Animations.PUNCH_422, Animator.Priority.HIGH)
 
     /**
      * Gets the defence animation for the entity.
      *
      * @return The defence animation for the entity.
      */
-    var defenceAnimation: Animation = Animation(404)
+    var defenceAnimation: Animation = Animation(Animations.DEFEND_MACE_SHIELD_404)
 
     /**
      * Gets the death animation for the entity.

@@ -13,7 +13,7 @@ import org.rs.consts.NPCs
  */
 @Initializable
 class CustomerDialogue(player: Player? = null) : Dialogue(player) {
-    
+
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npcl(FaceAnim.FRIENDLY, "Oh, that's nice, another human visitor to Keldagrim!")
@@ -23,17 +23,9 @@ class CustomerDialogue(player: Player? = null) : Dialogue(player) {
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> playerl(FaceAnim.FRIENDLY, "Indeed!").also { stage++ }
-            1 ->
-                npcl(
-                    FaceAnim.FRIENDLY,
-                    "And what brings you to this city? Come to seek knowledge as well?",
-                ).also { stage++ }
+            1 -> npcl(FaceAnim.FRIENDLY, "And what brings you to this city? Come to seek knowledge as well?").also { stage++ }
             2 -> playerl(FaceAnim.FRIENDLY, "I think it's mostly fame and riches I'm after.").also { stage++ }
-            3 ->
-                npcl(FaceAnim.FRIENDLY, "To each " + (if (player.isMale) "his" else "her") + " own, I suppose.").also {
-                    stage =
-                        END_DIALOGUE
-                }
+            3 -> npcl(FaceAnim.FRIENDLY, "To each " + (if (player.isMale) "his" else "her") + " own, I suppose.").also { stage = END_DIALOGUE }
         }
         return true
     }

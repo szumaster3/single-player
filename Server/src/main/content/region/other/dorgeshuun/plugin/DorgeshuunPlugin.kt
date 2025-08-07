@@ -45,6 +45,9 @@ class DorgeshuunPlugin : InteractionListener {
             return@on true
         }
 
+        /**
+         * Exchange
+         */
         onUseWith(IntType.NPC, Items.BROOCH_5008, NPCs.MISTAG_2084) { player, used, npc ->
             val randomReward = arrayOf(Items.MINING_HELMET_5013, Items.MINING_HELMET_5014).random()
 

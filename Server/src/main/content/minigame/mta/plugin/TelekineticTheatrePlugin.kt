@@ -83,7 +83,7 @@ class TelekineticTheatrePlugin @JvmOverloads constructor(val player: Player? = n
         sendString(player, solved.toString(), Components.MAGICTRAINING_TELE_198, 7)
     }
 
-    override fun leave(entity: Entity, logout: Boolean, ): Boolean {
+    override fun leave(entity: Entity, logout: Boolean): Boolean {
         if (entity is Player) {
             val player = entity.asPlayer()
             if (player == null || player !== this.player) {
@@ -100,9 +100,9 @@ class TelekineticTheatrePlugin @JvmOverloads constructor(val player: Player? = n
         return super.leave(entity, logout)
     }
 
-    override fun interact(e: Entity, target: Node, option: Option, ): Boolean = super.interact(e, target, option)
+    override fun interact(e: Entity, target: Node, option: Option): Boolean = super.interact(e, target, option)
 
-    override fun parseCommand(player: Player, name: String, arguments: Array<String>, ): Boolean {
+    override fun parseCommand(player: Player, name: String, arguments: Array<String>): Boolean {
         when (name) {
             "childs" -> {
                 var i = 0

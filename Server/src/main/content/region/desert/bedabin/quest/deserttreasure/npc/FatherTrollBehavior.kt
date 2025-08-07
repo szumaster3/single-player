@@ -14,7 +14,7 @@ import org.rs.consts.NPCs
 
 class FatherTrollBehavior : NPCBehavior(NPCs.ICE_TROLL_1943,) {
 
-    override fun canBeAttackedBy(self: NPC, attacker: Entity, style: CombatStyle, shouldSendMessage: Boolean, ): Boolean = attacker is Player
+    override fun canBeAttackedBy(self: NPC, attacker: Entity, style: CombatStyle, shouldSendMessage: Boolean): Boolean = attacker is Player
 
     override fun beforeDamageReceived(self: NPC, attacker: Entity, state: BattleState, ) {
         if (attacker is Player) {

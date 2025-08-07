@@ -11,7 +11,7 @@ import org.rs.consts.NPCs
 @Initializable
 class ShopNPC(id: Int = 0, location: Location? = null, ) : AbstractNPC(id, location) {
 
-    override fun construct(id: Int, location: Location, vararg objects: Any, ): AbstractNPC = ShopNPC(id, location)
+    override fun construct(id: Int, location: Location, vararg objects: Any): AbstractNPC = ShopNPC(id, location)
 
     override fun getIds(): IntArray = ID
 
