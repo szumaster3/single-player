@@ -64,9 +64,8 @@ class HansDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             2 -> {
-                val detailsJson = player!!.details.serializeTimeData()
-                val timePlayed = detailsJson.get("timePlayed")?.asLong ?: 0L
-                val lastLogin = detailsJson.get("lastLogin")?.asLong ?: System.currentTimeMillis()
+                val timePlayed = player.details.timePlayed
+                val lastLogin = player.details.lastLogin
 
                 val totalPlayTime = formatPlayTime(timePlayed)
 

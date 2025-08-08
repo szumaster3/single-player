@@ -1,6 +1,5 @@
 package core.game.node.entity.player.info;
 
-import com.google.gson.JsonObject;
 import core.auth.UserAccountInfo;
 import core.game.system.communication.CommunicationInfo;
 import core.game.world.GameWorld;
@@ -20,8 +19,6 @@ public class PlayerDetails {
     public UserAccountInfo accountInfo = UserAccountInfo.createDefault();
 
     private final CommunicationInfo communicationInfo = new CommunicationInfo();
-
-    private long accountCreationTime = 0L;
 
     /**
      * Gets credits.
@@ -293,18 +290,20 @@ public class PlayerDetails {
      *
      * @return the creation time
      */
-    public long getAccountCreationTime() {
-        return accountCreationTime;
-    }
+    //public long getAccountCreationTime() {
+    //    Timestamp joinDate = accountInfo.getJoinDate();
+    //    return joinDate != null ? joinDate.getTime() : 0L;
+    //}
 
     /**
      * Sets account creation time.
      *
      * @param accountCreationTime the creation time
      */
-    public void setAccountCreationTime(long accountCreationTime) {
-        this.accountCreationTime = accountCreationTime;
-    }
+   // public void setAccountCreationTime(long accountCreationTime) {
+   //     accountInfo.setJoinDate(new Timestamp(accountCreationTime));
+   // }
+
     /**
      * Save.
      */
@@ -321,18 +320,48 @@ public class PlayerDetails {
         } catch (IllegalStateException ignored) {
         }
     }
+
     /**
-     * Serializes time-related fields to JsonObject.
+     * Sets initial creation and last login timestamps if not set.
      *
-     * @return JsonObject with player time data
+     * @param details the player details to update
      */
-    public JsonObject serializeTimeData() {
-        JsonObject json = new JsonObject();
-        json.addProperty("timePlayed", getTimePlayed());
-        json.addProperty("lastLogin", getLastLogin());
-        json.addProperty("accountCreationTime", getAccountCreationTime());
-        return json;
-    }
+    //public static void setAccountTimer(Player player, PlayerDetails details) {
+    //    long timestamp = System.currentTimeMillis();
+    //    boolean changed = false;
+//
+    //    if (player.isArtificial()) return;
+//
+    //    if (details.getAccountCreationTime() <= 0) {
+    //        details.setAccountCreationTime(timestamp);
+    //        System.out.println("Set accountCreationTime for user " + details.getUsername() + " to " + timestamp);
+    //        changed = true;
+    //    }
+//
+    //    if (details.getLastLogin() <= 0) {
+    //        details.setLastLogin(timestamp);
+    //        System.out.println("Set lastLogin for user " + details.getUsername() + " to " + timestamp);
+    //        changed = true;
+    //    }
+//
+    //    if (changed) {
+    //        details.save();
+    //        System.out.println("Saved updated timestamps for user " + details.getUsername());
+    //    }
+    //}
+
+    //public static PlayerDetails getDetails(@NotNull String username) {
+    //    UserAccountInfo info = GameWorld.getAccountStorage().getAccountInfo(username);
+    //    if (info == null) {
+    //        info = UserAccountInfo.createDefault();
+    //        info.setUsername(username);
+    //    }
+    //    return new PlayerDetails(info);
+    //}
+//
+    //public PlayerDetails(UserAccountInfo accountInfo) {
+    //    this.accountInfo = accountInfo;
+    //}
 
     /**
      * Gets details.

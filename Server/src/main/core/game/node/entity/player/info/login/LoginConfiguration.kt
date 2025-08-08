@@ -7,6 +7,7 @@ import core.api.*
 import core.game.component.Component
 import core.game.interaction.InteractionListeners
 import core.game.node.entity.player.Player
+import core.game.node.entity.player.info.PlayerDetails
 import core.game.node.entity.player.link.SpellBookManager
 import core.game.node.entity.player.link.emote.Emotes
 import core.game.world.GameWorld
@@ -65,6 +66,9 @@ object LoginConfiguration {
      */
     @JvmStatic
     fun configureLobby(player: Player) {
+        //val details = PlayerDetails.getDetails(player.username)
+        //PlayerDetails.setAccountTimer(player, details)
+
         player.updateSceneGraph(true)
         if (isTutorialCompleted(player) && player.isNotReconnecting()) {
             sendLobbyScreen(player)
@@ -100,10 +104,6 @@ object LoginConfiguration {
             selectedMessageModel,
             getMessageChild(selectedMessageModel),
         )
-        player.details.lastLogin = System.currentTimeMillis()
-        if (player.details.accountCreationTime <= 0) {
-            player.details.accountCreationTime = System.currentTimeMillis()
-        }
     }
 
     /**

@@ -35,21 +35,29 @@ class PlayerSaveParser(val player: Player) {
     fun parse() {
         val jsonFile = File(ServerConstants.PLAYER_SAVE_PATH + player.name + ".json")
         if (jsonFile.exists()) {
-            FileReader(jsonFile).use { fileReader ->
-                val element = JsonParser.parseReader(fileReader)
-                if (element.isJsonObject) {
-                    saveFile = element.asJsonObject
-                    parseData()
-                    player.details.saveParsed = true
-                } else {
-                    log(this::class.java, Log.WARN, "Save file for ${player.name} is not a valid JSON object.")
-                    read = false
+            try {
+                FileReader(jsonFile).use { fileReader ->
+                    val element = JsonParser.parseReader(fileReader)
+                    if (element.isJsonObject) {
+                        saveFile = element.asJsonObject
+                        parseData()
+                        player.details.saveParsed = true
+                        read = true
+                    } else {
+                        log(this::class.java, Log.WARN, "Save file for ${player.name} is not a valid JSON object.")
+                        read = false
+                        player.details.saveParsed = false
+                    }
                 }
+            } catch (e: Exception) {
+                log(this::class.java, Log.ERR, "Error reading save file for ${player.name}: ${e.message}")
+                read = false
+                player.details.saveParsed = false
             }
         } else {
             player.details.saveParsed = true
             read = false
-            log(this::class.java, Log.INFO, "No save file found for ${player.name}, assuming new player. Marking as saveParsed=true.")
+            log(this::class.java, Log.INFO, "No save file found for ${player.name}. Treating as a new player (saveParsed = true).")
         }
     }
 
@@ -80,7 +88,6 @@ class PlayerSaveParser(val player: Player) {
         parseHeadgear()
         parseBoltPouch()
         parseCostumeRoom()
-        parsePlayingTime()
         parseVersion()
     }
 
@@ -185,19 +192,6 @@ class PlayerSaveParser(val player: Player) {
         player.savedData.activityData.parse(activityData)
         player.savedData.questData.parse(questData)
         player.savedData.globalData.parse(globalData)
-    }
-
-    fun parsePlayingTime() {
-        val playingTimeData = saveFile?.getAsJsonObject("playingTime") ?: return
-
-        val timePlayed = playingTimeData.get("timePlayed")?.asString?.toLongOrNull()
-        if (timePlayed != null) player.details.timePlayed = timePlayed
-
-        val lastLogin = playingTimeData.get("lastLogin")?.asString?.toLongOrNull()
-        if (lastLogin != null) player.details.lastLogin = lastLogin
-
-        val accountCreationTime = playingTimeData.get("accountCreationTime")?.asString?.toLongOrNull()
-        if (accountCreationTime != null) player.details.accountCreationTime = accountCreationTime
     }
 
     fun parseAutocastSpell() {
