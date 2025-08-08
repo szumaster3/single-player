@@ -408,12 +408,9 @@ public class Player extends Entity {
             finishClear();
             return;
         }
-        getDetails().setTimePlayed(getDetails().getTimePlayed());
-        getDetails().setLastLogin(getDetails().getLastLogin());
-        getDetails().setAccountCreationTime(getDetails().getAccountCreationTime());
         Repository.getDisconnectionQueue().remove(getName());
         Repository.getDisconnectionQueue().add(this, true);
-        updateDetails(this.details);
+        // updateDetails(this.details);
         details.save();
     }
 
@@ -421,20 +418,8 @@ public class Player extends Entity {
      * Final cleanup when the player logs out or is removed.
      */
     public void finishClear() {
-        if (!isArtificial()) {
-            GameWorld.getLogoutListeners().forEach((it) -> it.logout(this));
-
-            long currentTime = System.currentTimeMillis();
-            long sessionStart = getDetails().getLastLogin();
-            long playedThisSession = currentTime - sessionStart;
-
-            long sessionTime = getDetails().getTimePlayed() + playedThisSession;
-            getDetails().setTimePlayed(sessionTime);
-            getDetails().setLastLogin(currentTime);
-
-            getDetails().saveParsed = true;
-            getDetails().save();
-        }
+        if (!isArtificial()) GameWorld.getLogoutListeners().forEach((it) -> it.logout(this));
+        updatePlayTime();
 
         setPlaying(false);
         getWalkingQueue().reset();
@@ -1035,12 +1020,23 @@ public class Player extends Entity {
             details.setBanTime(this.details.getBanTime());
             details.setMuteTime(this.details.getMuteTime());
             details.setTimePlayed(this.details.getTimePlayed());
-            details.setTimePlayed(this.getDetails().getTimePlayed());
-            details.setLastLogin(this.getDetails().getLastLogin());
-            details.setAccountCreationTime(this.getDetails().getAccountCreationTime());
         }
         details.getSession().setObject(this);
         this.details = details;
+    }
+
+    /**
+     * Update play time.
+     */
+    private void updatePlayTime() {
+        long currentTime = System.currentTimeMillis();
+        long sessionStart = this.details.getLastLogin();
+        long playedThisSession = currentTime - sessionStart;
+
+        long sessionTime = this.details.getTimePlayed() + playedThisSession;
+
+        this.details.setLastLogin(currentTime);
+        this.details.setTimePlayed(sessionTime);
     }
 
     /**

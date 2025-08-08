@@ -101,6 +101,9 @@ object LoginConfiguration {
             getMessageChild(selectedMessageModel),
         )
         player.details.lastLogin = System.currentTimeMillis()
+        if (player.details.accountCreationTime <= 0) {
+            player.details.accountCreationTime = System.currentTimeMillis()
+        }
     }
 
     /**

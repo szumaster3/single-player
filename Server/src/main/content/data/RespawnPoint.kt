@@ -34,6 +34,14 @@ fun Player.setRespawnLocation(respawnPoint: RespawnPoint) {
 }
 
 /**
+ * Get the respawn location for a player.
+ */
+fun Player.getRespawnLocation(): Location {
+    return this.getAttribute("/save:spawnLocation") as? Location
+        ?: RespawnPoint.LUMBRIDGE.location
+}
+
+/**
  * Example.
  *
  * Possible to test in-game via command: `::respawn <point>`

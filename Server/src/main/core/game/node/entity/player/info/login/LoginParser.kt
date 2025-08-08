@@ -1,8 +1,7 @@
 package core.game.node.entity.player.info.login
 
-import core.ServerConstants
+import content.data.getRespawnLocation
 import core.api.LoginListener
-import core.api.getAttribute
 import core.api.reinitVarps
 import core.auth.AuthResponse
 import core.game.node.entity.player.Player
@@ -45,8 +44,7 @@ class LoginParser(val details: PlayerDetails) {
                 override fun pulse(): Boolean {
                     try {
                         if (details.session.isActive()) {
-                            player.properties.spawnLocation =
-                                getAttribute(player, "/save:spawnLocation", ServerConstants.HOME_LOCATION)
+                            player.properties.spawnLocation = player.getRespawnLocation()
                             loginListeners.forEach(Consumer { listener: LoginListener -> listener.login(player) }) // Execute login hooks
                             parser.runContentHooks()
                             player.details.session.setObject(player)
@@ -54,9 +52,6 @@ class LoginParser(val details: PlayerDetails) {
                             if (reconnect) {
                                 reconnect(player)
                             } else {
-                                details.lastLogin = System.currentTimeMillis()
-                                details.saveParsed = true
-                                details.save()
                                 flag(AuthResponse.Success)
                                 player.init()
                                 reinitVarps(player)

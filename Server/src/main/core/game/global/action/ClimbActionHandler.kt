@@ -18,14 +18,98 @@ object ClimbActionHandler {
     val CLIMB_DOWN = Animation(Animations.MULTI_BEND_OVER_827)
     var CLIMB_DIALOGUE: Dialogue = ClimbDialogue()
 
+    /**
+     * Handles the climbing action for ropes.
+     *
+     * @param player The player interacting with the rope.
+     * @param scenery The rope scenery object.
+     * @param option The climbing option.
+     */
+    @JvmStatic
     fun climbRope(player: Player, scenery: Scenery, option: String) {
-        // TODO
+        val currentLoc = scenery.location
+        var destination: Location? = null
+        val animation: Animation?
+
+        when (option.lowercase()) {
+            "climb-up" -> {
+                for (z in (currentLoc.z + 1)..3) {
+                    val obj = RegionManager.getObject(currentLoc.transform(0, 0, z - currentLoc.z))
+                    if (obj != null && isClimbable(obj)) {
+                        destination = obj.location
+                        break
+                    }
+                }
+                animation = CLIMB_UP
+            }
+            "climb-down" -> {
+                for (z in (currentLoc.z - 1) downTo 0) {
+                    val obj = RegionManager.getObject(currentLoc.transform(0, 0, z - currentLoc.z))
+                    if (obj != null && isClimbable(obj)) {
+                        destination = obj.location
+                        break
+                    }
+                }
+                animation = CLIMB_DOWN
+            }
+            "climb" -> {
+                var upLoc: Location? = null
+                var downLoc: Location? = null
+
+                for (z in (currentLoc.z + 1)..3) {
+                    val obj = RegionManager.getObject(currentLoc.transform(0, 0, z - currentLoc.z))
+                    if (obj != null && isClimbable(obj)) {
+                        upLoc = obj.location
+                        break
+                    }
+                }
+                for (z in (currentLoc.z - 1) downTo 0) {
+                    val obj = RegionManager.getObject(currentLoc.transform(0, 0, z - currentLoc.z))
+                    if (obj != null && isClimbable(obj)) {
+                        downLoc = obj.location
+                        break
+                    }
+                }
+
+                when {
+                    upLoc != null && downLoc == null -> climbRope(player, scenery, "climb-up")
+                    downLoc != null && upLoc == null -> climbRope(player, scenery, "climb-down")
+                    upLoc != null && downLoc != null -> {
+                        val dialogue = CLIMB_DIALOGUE.newInstance(player)
+                        if (dialogue != null && dialogue.open(scenery)) {
+                            player.dialogueInterpreter.dialogue = dialogue
+                        }
+                    }
+                    else -> sendMessage(player, "You can't climb that way.")
+                }
+                return
+            }
+            else -> {
+                sendMessage(player, "You can't climb that way.")
+                return
+            }
+        }
+
+        if (destination == null || !RegionManager.isTeleportPermitted(destination)) {
+            sendMessage(player, "You can't seem to climb there.")
+            return
+        }
+
+        climb(player, animation, destination)
     }
 
+    @JvmStatic
     fun climbTrapdoor(player: Player, scenery: Scenery, option: String) {
-        // TODO
+       //
     }
 
+    /**
+     * Handles the climbing action for ladders.
+     * @param player The player interacting with the ladder.
+     * @param startLadder The ladder scenery object the player is climbing.
+     * @param option The climbing option chosen by the player: "climb-up", "climb-down", "walk-up", "walk-down", or "climb".
+     * @return True if the climbing action was successfully started, false otherwise.
+     */
     @JvmStatic
     fun climbLadder(player: Player, startLadder: Scenery, option: String): Boolean {
         var endLadder: Scenery? = null
@@ -118,6 +202,12 @@ object ClimbActionHandler {
 
         return if (count >= 3) null
         else getDestination(scenery, sizeX, sizeY, Direction.get((dir.toInteger() + 1) % 4), count + 1)
+    }
+
+    @JvmStatic
+    private fun isClimbable(scenery: Scenery): Boolean {
+        scenery.definition.options.forEach { if (it.contains("Climb", ignoreCase = true)) return true }
+        return scenery.name.equals("Trapdoor", ignoreCase = true) || scenery.name.equals("Rope", ignoreCase = true)
     }
 
     @JvmStatic
