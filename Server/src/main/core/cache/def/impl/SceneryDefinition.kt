@@ -68,6 +68,8 @@ class SceneryDefinition : Definition<Scenery?>() {
     @JvmField var mapFunction: Short
     @JvmField var isSolidFlag: Boolean
     @JvmField var render: Boolean
+    @JvmField var hasAnimation: Boolean
+    @JvmField var mapSceneRotated: Boolean
 
     /**
      * Instantiates a new Scenery definition.
@@ -125,6 +127,8 @@ class SceneryDefinition : Definition<Scenery?>() {
 
         breakRouteFinding = false
         isInteractable = false
+        hasAnimation = false
+        mapSceneRotated = false
     }
 
     /**
@@ -510,7 +514,8 @@ class SceneryDefinition : Definition<Scenery?>() {
                     }
                     94 -> def.contouredGround = 4.toByte()
                     95 -> def.contouredGround = 5.toByte()
-
+                    96 -> def.hasAnimation = true
+                    97 -> def.mapSceneRotated = true
                     100 -> {
                         buffer.get() // cursor2Op
                         buffer.getShort() // cursor2
