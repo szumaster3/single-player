@@ -29,128 +29,116 @@ class SceneryDefinition : Definition<Scenery?>() {
     @JvmField var mirrored: Boolean
     @JvmField var contrast: Int
     @JvmField var modelSizeZ: Int
-    @JvmField var anInt3844: Int
-    @JvmField var anInt3851: Int
     @JvmField var blocksLand: Boolean
-    @JvmField var aBoolean3853: Boolean
     @JvmField var supportItems: Int
-    @JvmField var ignoreOnRoute: Boolean
-    @JvmField var anInt3857: Int
+    @JvmField var breakRouteFinding: Boolean
     @JvmField var recolourPalette: ByteArray? = null
     @JvmField var alternateModelIds: IntArray? = null
     @JvmField var ambientSoundId: Int
     @JvmField var varbitID: Int
     @JvmField var modifiedColors: ShortArray? = null
     @JvmField var delayShading: Boolean = false
-    @JvmField var blocksSky: Boolean
-    @JvmField val anIntArray3869: IntArray?
+    @JvmField var blockRange: Boolean
     @JvmField var isInteractable: Boolean
     @JvmField var sizeY: Int
     @JvmField var castsShadow: Boolean = true
-    @JvmField var membersOnly: Boolean
-    @JvmField var cullingType: Boolean
-    @JvmField val anInt3875: Int
+    @JvmField var members: Boolean
+    @JvmField var hide: Boolean
     @JvmField var animations: Int
-    @JvmField val anInt3877: Int
     @JvmField var brightness: Int
-    @JvmField var solid: Int
-    @JvmField var anInt3882: Int
+    @JvmField var blockwalk: Int
     @JvmField var offsetX: Int
     @JvmField var offsetZ: Int
     @JvmField var sizeX: Int
-    @JvmField var aBoolean3891: Boolean
     @JvmField var offsetMultiplier: Int
-    @JvmField var interactive: Int
-    @JvmField var aBoolean3894: Boolean
+    @JvmField var interactable: Int
     @JvmField var forceAnimation: Boolean
     @JvmField var configId: Int
     @JvmField var ambientSoundMaxDelay: Int
     @JvmField var modelSizeX: Int
     @JvmField var ambientSoundMinDelay: Int
     @JvmField var animationId: Int
-    @JvmField var aBoolean3906: Boolean
     @JvmField var contouredGround: Byte
-    @JvmField var anInt3913: Int
-    @JvmField val aByte3914: Byte
     @JvmField var offsetY: Int
     @JvmField var modelSizeY: Int
     @JvmField var modifiedTextureColours: ShortArray? = null
     @JvmField var originalTextureColours: ShortArray? = null
-    @JvmField var anInt3921: Int
-    @JvmField var aBoolean3923: Boolean
-    @JvmField var aBoolean3924: Boolean
     @JvmField var blockFlag: Int
     @JvmField var hasHiddenOptions = false
-    @JvmField var mapIcon: Short
+    @JvmField var mapFunction: Short
+    @JvmField var isSolidFlag: Boolean
+    @JvmField var render: Boolean
 
     /**
      * Instantiates a new Scenery definition.
      */
     init {
         ambientSoundId = -1
-        varbitID = -1
-        anInt3851 = -1
-        anInt3844 = -1
-        anInt3857 = -1
-        anInt3882 = -1
-        options = arrayOfNulls(5)
-        anInt3875 = 0
-        mirrored = false
-        anIntArray3869 = null
-        sizeY = 1
-        cullingType = false
-        blocksSky = true
-        offsetX = 0
-        forceAnimation = true
-        contrast = 0
-        isInteractable = false
-        offsetZ = 0
-        aBoolean3853 = true
-        blocksLand = false
-        solid = 2
-        supportItems = -1
-        brightness = 0
         ambientSoundMinDelay = 0
-        sizeX = 1
-        animations = -1
-        ignoreOnRoute = false
-        aBoolean3891 = false
-        animationId = 0
-        name = "null"
-        anInt3913 = -1
-        aBoolean3906 = false
-        membersOnly = false
-        aByte3914 = 0.toByte()
-        offsetY = 0
         ambientSoundMaxDelay = 0
-        interactive = -1
-        aBoolean3894 = false
-        contouredGround = 0.toByte()
-        anInt3921 = 0
-        modelSizeX = 128
+
+        varbitID = -1
         configId = -1
-        anInt3877 = 0
-        blockFlag = 0
+        animationId = 0
+        animations = -1
+
+        options = arrayOfNulls(5)
+        hasHiddenOptions = false
+
+        mirrored = false
+        castsShadow = true
+
+        sizeX = 1
+        sizeY = 1
+
+        offsetX = 0
+        offsetY = 0
+        offsetZ = 0
         offsetMultiplier = 64
-        aBoolean3923 = false
-        aBoolean3924 = false
-        modelSizeZ = 128
+
+        blockRange = true
+        blocksLand = false
+        blockwalk = 2
+
+        interactable = -1
+
+        contouredGround = 0.toByte()
+
+        hide = false
+        render = false
+
+        isSolidFlag = true
+
+        forceAnimation = true
+
+        supportItems = -1
+        blockFlag = 0
+        brightness = 0
+        contrast = 0
+
+        mapFunction = -1
+        members = false
+
+        modelSizeX = 128
         modelSizeY = 128
-        mapIcon = -1
+        modelSizeZ = 128
+
+        breakRouteFinding = false
+        isInteractable = false
     }
 
     /**
      * Configure object.
      */
     fun configureObject() {
-        if (interactive == -1) {
-            interactive = 0
+        if (interactable == -1) {
+            interactable = 0
             if (modelIds != null && (modelTypes == null || modelTypes!![0] == 10)) {
-                interactive = 1
+                interactable = 1
             }
             for (i in 0..4) {
                 if (options[i] != null) {
-                    interactive = 1
+                    interactable = 1
                     break
                 }
             }
@@ -162,7 +150,7 @@ class SceneryDefinition : Definition<Scenery?>() {
             }
         }
         if (supportItems == -1) {
-            supportItems = if (solid == 0) 0 else 1
+            supportItems = if (blockwalk == 0) 0 else 1
         }
         // Manual changes
         if (id == shared.consts.Scenery.TENT_31017) {
@@ -170,7 +158,7 @@ class SceneryDefinition : Definition<Scenery?>() {
             sizeX = sizeY
         }
         if (id == 29292) {
-            blocksSky = false
+            blockRange = false
         }
     }
 
@@ -180,7 +168,7 @@ class SceneryDefinition : Definition<Scenery?>() {
      * @return the boolean
      */
     fun hasActions(): Boolean {
-        if (interactive > 0) {
+        if (interactable > 0) {
             return true
         }
         if (childrenIds == null) {
@@ -319,7 +307,6 @@ class SceneryDefinition : Definition<Scenery?>() {
                 }
                 val def = decode(objectId, ByteBuffer.wrap(data))
                 definitions[objectId] = def
-                data = null
             }
         }
 
@@ -394,24 +381,24 @@ class SceneryDefinition : Definition<Scenery?>() {
                     15 -> def.sizeY = buffer.g1()
 
                     17 -> {
-                        def.blocksSky = false
-                        def.solid = 0
+                        def.blockwalk = 0
+                        def.blockRange = false
                     }
 
-                    18 -> def.blocksSky = false
+                    18 -> def.blockRange = false
 
-                    19 -> def.interactive = buffer.g1()
+                    19 -> def.interactable = buffer.g1()
 
                     21 -> def.contouredGround = 1.toByte()
                     22 -> def.delayShading = true
-                    23 -> def.cullingType = true
+                    23 -> def.hide = true
 
                     24 -> {
                         def.animations = buffer.g2()
                         if (def.animations == 65535) def.animations = -1
                     }
 
-                    27 -> def.solid = 1
+                    27 -> def.blockwalk = 1
 
                     28 -> def.offsetMultiplier = buffer.g1() shl 2
 
@@ -455,7 +442,7 @@ class SceneryDefinition : Definition<Scenery?>() {
                             def.recolourPalette!![it] = buffer.get()
                         }
                     }
-                    60 -> def.mapIcon = buffer.getShort()
+                    60 -> def.mapFunction = buffer.getShort()
                     62 -> def.mirrored = true
                     64 -> def.castsShadow = false
                     65 -> def.modelSizeX = buffer.getShort().toInt() and 0xFFFF
@@ -466,7 +453,7 @@ class SceneryDefinition : Definition<Scenery?>() {
                     71 -> def.offsetZ = (buffer.getShort().toInt() and 0xFFFF) shl 2
                     72 -> def.offsetY = (buffer.getShort().toInt() and 0xFFFF) shl 2
                     73 -> def.blocksLand = true
-                    74 -> def.ignoreOnRoute = true
+                    74 -> def.breakRouteFinding = true
                     75 -> def.supportItems = buffer.get().toInt() and 0xFF
 
                     77, 92 -> {
@@ -511,13 +498,11 @@ class SceneryDefinition : Definition<Scenery?>() {
                         def.contouredGround = 2.toByte()
                         def.configId = buffer.g1() * 256
                     }
-                    /*
-                    82 -> def.hideMinimap = true
+                    82 -> def.render = true
                     88 -> def.isSolidFlag = false
-                    89 -> def.animateImmediately = false
-                    */
+                    89 -> def.forceAnimation = false
                     90 -> def.isInteractable = true
-                    91 -> def.membersOnly = true
+                    91 -> def.members = true
 
                     93 -> {
                         def.contouredGround = 3.toByte()
@@ -526,62 +511,12 @@ class SceneryDefinition : Definition<Scenery?>() {
                     94 -> def.contouredGround = 4.toByte()
                     95 -> def.contouredGround = 5.toByte()
 
-                    /*
-                    96 -> def.blocksProjectile = true
-                    97 -> def.adjustMapSceneRotation = true
-                    98 -> def.hasAnimation = true
-                    99 -> {
-                        def.animationFrameCount = buffer.g1()
-                        def.animationDuration = buffer.g2()
-                    }
                     100 -> {
-                        def.unknownAnimationField = buffer.g1()
-                        def.unknownField1 = buffer.g2()
+                        buffer.get() // cursor2Op
+                        buffer.getShort() // cursor2
                     }
-                    */
-                    100 -> {
-                        buffer.get()
-                        buffer.getShort()
-                    }
-                    101 -> buffer.get()
-                    102 -> buffer.getShort()
-                    /*
-                    103 -> def.cullingType = 0
-                    104 -> def.brightnessOverride = buffer.g1()
-                    105 -> def.invertMapScene = true
-                    */
-                    /*
-                    106 -> {
-                        val length = buffer.g1()
-                        var total = 0
-                        def.animations = IntArray(length)
-                        def.percents = IntArray(length)
-                        repeat(length) { i ->
-                            def.animations!![i] = buffer.g2()
-                            if (def.animations!![i] == 65535) def.animations!![i] = -1
-                            def.percents!![i] = buffer.g1()
-                            total += def.percents!![i]
-                        }
-                        repeat(length) { i ->
-                            def.percents!![i] = 65535 * def.percents!![i] / total
-                        }
-                    }
-                    */
-                    /*
-                    107 -> def.mapDefinitionId = buffer.g2()
-                    in 150..154 -> {
-                        def.options[opcode - 150] = buffer.gjstr()
-                    }
-                    */
-                    /*
-                    160 -> {
-                        val length = buffer.g1()
-                        def.transformVarbitIds = IntArray(length)
-                        repeat(length) { i ->
-                            def.transformVarbitIds!![i] = buffer.g2()
-                        }
-                    }
-                    */
+                    101 -> buffer.get() // mapSceneAngleOffset
+                    102 -> buffer.getShort() // mapScene
                     249 -> {
                         val length = buffer.g1()
                         repeat(length) {
@@ -604,9 +539,9 @@ class SceneryDefinition : Definition<Scenery?>() {
 
             def.configureObject()
 
-            if (def.ignoreOnRoute) {
-                def.solid = 0
-                def.blocksSky = false
+            if (def.breakRouteFinding) {
+                def.blockwalk = 0
+                def.blockRange = false
             }
 
             return def
