@@ -3,7 +3,7 @@ package content.global.plugin.item.book
 import core.api.sendItemDialogue
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import org.rs.consts.Items
+import shared.consts.Items
 
 class PortraitureBook : InteractionListener {
     override fun defineListeners() {

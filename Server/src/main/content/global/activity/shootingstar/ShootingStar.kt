@@ -11,7 +11,7 @@ import core.game.node.entity.player.Player
 import core.game.node.scenery.Scenery
 import core.game.node.scenery.SceneryBuilder
 import core.game.world.map.Location
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 /**
  * Represents a shooting star object.

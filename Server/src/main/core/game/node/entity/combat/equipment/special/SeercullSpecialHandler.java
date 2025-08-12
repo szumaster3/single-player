@@ -12,8 +12,8 @@ import core.game.world.update.flag.context.Graphics;
 import core.plugin.Initializable;
 import core.plugin.Plugin;
 import core.tools.RandomFunction;
-import org.rs.consts.Items;
-import org.rs.consts.Sounds;
+import shared.consts.Items;
+import shared.consts.Sounds;
 
 import static core.api.ContentAPIKt.playGlobalAudio;
 
@@ -27,7 +27,7 @@ public final class SeercullSpecialHandler extends RangeSwingHandler implements P
 
     private static final int SPECIAL_ENERGY = 100;
 
-    private static final Graphics DRAWBACK_GFX = new Graphics(org.rs.consts.Graphics.BOW_SPECIAL_WHITE_472, 96);
+    private static final Graphics DRAWBACK_GFX = new Graphics(shared.consts.Graphics.BOW_SPECIAL_WHITE_472, 96);
 
     /**
      * Instantiates a new Seercull special handler.

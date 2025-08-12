@@ -6,8 +6,8 @@ import core.game.interaction.InteractionListener
 import core.game.interaction.InterfaceListener
 import core.game.node.entity.impl.PulseType
 import core.game.node.item.Item
-import org.rs.consts.Components
-import org.rs.consts.Scenery
+import shared.consts.Components
+import shared.consts.Scenery
 
 class SpinningPlugin : InteractionListener, InterfaceListener {
 

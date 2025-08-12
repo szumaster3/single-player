@@ -12,7 +12,7 @@ import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
 import core.game.world.map.path.Pathfinder
 import core.tools.RandomFunction
-import org.rs.consts.Items
+import shared.consts.Items
 import kotlin.math.floor
 
 /**

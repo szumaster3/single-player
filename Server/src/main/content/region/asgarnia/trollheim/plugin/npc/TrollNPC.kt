@@ -3,7 +3,7 @@ package content.region.asgarnia.trollheim.plugin.npc
 import core.game.node.entity.npc.AbstractNPC
 import core.game.world.map.Location
 import core.plugin.Initializable
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 @Initializable
 class TrollNPC : AbstractNPC {

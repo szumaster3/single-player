@@ -10,7 +10,7 @@ import core.game.system.task.Pulse
 import core.game.world.GameWorld.Pulser
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
-import org.rs.consts.Components
+import shared.consts.Components
 import java.util.*
 
 /**
@@ -351,7 +351,7 @@ class AssistSessionPulse : Pulse, RequestModule {
 
     companion object {
         private val ANIMATION: Animation = Animation.create(7299)
-        private val GRAPHICS: Graphics = Graphics.create(org.rs.consts.Graphics.ASSIST_LEVELS_1247)
+        private val GRAPHICS: Graphics = Graphics.create(shared.consts.Graphics.ASSIST_LEVELS_1247)
         private const val TIME_OUT: Long = 86400000 // 60000; //86400000;
         private val CONFIG_VALUES = byteArrayOf(3, 4, 6, 8, 9, 11, 13, 14, 15)
         private val CHILD_VALUES = intArrayOf(46, 48, 50, 52, 54, 56, 58, 60, 62)

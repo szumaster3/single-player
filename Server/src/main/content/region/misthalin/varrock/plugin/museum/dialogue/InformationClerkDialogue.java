@@ -4,8 +4,8 @@ import core.game.dialogue.Dialogue;
 import core.game.node.entity.player.Player;
 import core.game.world.GameWorld;
 import core.plugin.Initializable;
-import org.rs.consts.Items;
-import org.rs.consts.NPCs;
+import shared.consts.Items;
+import shared.consts.NPCs;
 
 import static core.api.ContentAPIKt.addItemOrDrop;
 import static core.api.ContentAPIKt.sendDialogueOptions;

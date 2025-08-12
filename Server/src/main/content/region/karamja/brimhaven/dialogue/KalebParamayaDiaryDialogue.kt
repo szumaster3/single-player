@@ -4,7 +4,7 @@ import core.game.dialogue.DialogueFile
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.link.diary.Diary
 import core.game.node.entity.player.link.diary.DiaryType
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 class KalebParamayaDiaryDialogue : DialogueFile() {
     override fun handle(

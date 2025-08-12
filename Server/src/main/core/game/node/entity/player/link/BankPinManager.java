@@ -13,8 +13,8 @@ import core.net.packet.PacketRepository;
 import core.net.packet.out.RepositionChild;
 import core.net.packet.out.StringPacket;
 import core.tools.RandomFunction;
-import org.rs.consts.Components;
-import org.rs.consts.Sounds;
+import shared.consts.Components;
+import shared.consts.Sounds;
 
 import java.util.ArrayList;
 import java.util.Arrays;

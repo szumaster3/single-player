@@ -5,7 +5,7 @@ import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.entity.skill.Skills
-import org.rs.consts.Items
+import shared.consts.Items
 import kotlin.math.min
 
 class BattlestaffPlugin : InteractionListener {

@@ -10,7 +10,7 @@ import core.game.system.timer.RSTimer
 import core.game.system.timer.TimerFlag
 import core.tools.colorize
 import core.tools.secondsToTicks
-import org.rs.consts.Sounds
+import shared.consts.Sounds
 
 class DragonFireImmunity : PersistTimer(1, "dragonfire:immunity", isSoft = true, flags = arrayOf(TimerFlag.ClearOnDeath)) {
     var ticksRemaining = 0

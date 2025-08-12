@@ -1,6 +1,6 @@
 package content.global.skill.summoning
 
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Represents the summoning scrolls.

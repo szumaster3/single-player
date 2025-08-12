@@ -10,17 +10,17 @@ import core.game.system.task.Pulse
 import core.game.world.GameWorld
 import core.game.world.update.flag.context.Graphics
 import core.tools.StringUtils
-import org.rs.consts.Animations
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Animations
+import shared.consts.Items
+import shared.consts.NPCs
 
 /**
  * Represents god books.
  */
 enum class GodType(val cape: Item, val staff: Item, val statueId: Int, val npcId: Int, val dropMessage: String, ) {
-    SARADOMIN(Item(Items.SARADOMIN_CAPE_2412), Item(Items.SARADOMIN_STAFF_2415), org.rs.consts.Scenery.STATUE_OF_SARADOMIN_2873, NPCs.BATTLE_MAGE_913, "The cape disappears in a flash of light as it touches the ground."),
-    GUTHIX(Item(Items.GUTHIX_CAPE_2413), Item(Items.GUTHIX_STAFF_2416), org.rs.consts.Scenery.STATUE_OF_GUTHIX_2875, NPCs.BATTLE_MAGE_914, "The cape disintegrates as it touches the earth."),
-    ZAMORAK(Item(Items.ZAMORAK_CAPE_2414), Item(Items.ZAMORAK_STAFF_2417), org.rs.consts.Scenery.STATUE_OF_ZAMORAK_2874, NPCs.BATTLE_MAGE_912, "The cape ignites and burns up as it touches the ground."), ;
+    SARADOMIN(Item(Items.SARADOMIN_CAPE_2412), Item(Items.SARADOMIN_STAFF_2415), shared.consts.Scenery.STATUE_OF_SARADOMIN_2873, NPCs.BATTLE_MAGE_913, "The cape disappears in a flash of light as it touches the ground."),
+    GUTHIX(Item(Items.GUTHIX_CAPE_2413), Item(Items.GUTHIX_STAFF_2416), shared.consts.Scenery.STATUE_OF_GUTHIX_2875, NPCs.BATTLE_MAGE_914, "The cape disintegrates as it touches the earth."),
+    ZAMORAK(Item(Items.ZAMORAK_CAPE_2414), Item(Items.ZAMORAK_STAFF_2417), shared.consts.Scenery.STATUE_OF_ZAMORAK_2874, NPCs.BATTLE_MAGE_912, "The cape ignites and burns up as it touches the ground."), ;
 
     /**
      * Allows the player to pray to the associated god statue.
@@ -55,7 +55,7 @@ enum class GodType(val cape: Item, val staff: Item, val statueId: Int, val npcId
 
                                 sendGraphics(
                                     Graphics(
-                                        org.rs.consts.Graphics.RANDOM_EVENT_PUFF_OF_SMOKE_86,
+                                        shared.consts.Graphics.RANDOM_EVENT_PUFF_OF_SMOKE_86,
                                         0,
                                         0,
                                     ),

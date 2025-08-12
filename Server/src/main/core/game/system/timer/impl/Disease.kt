@@ -12,7 +12,7 @@ import core.game.system.timer.RSTimer
 import core.game.system.timer.TimerFlag
 import core.tools.RandomFunction
 import com.google.gson.JsonObject
-import org.rs.consts.Sounds
+import shared.consts.Sounds
 
 class Disease :
     PersistTimer(

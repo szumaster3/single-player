@@ -7,8 +7,8 @@ import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
 import core.tools.END_DIALOGUE
 import core.tools.START_DIALOGUE
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 class SpiritKyattDialogueFile : DialogueFile() {
     private val randomConversation = (0..3).random()

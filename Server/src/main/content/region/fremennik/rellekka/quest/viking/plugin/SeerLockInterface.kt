@@ -7,7 +7,7 @@ import core.api.sendMessage
 import core.api.setAttribute
 import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.Player
-import org.rs.consts.Components
+import shared.consts.Components
 
 /**
  * Handles the lock interface for the Seer's riddle door in the Fremennik Trials quest.

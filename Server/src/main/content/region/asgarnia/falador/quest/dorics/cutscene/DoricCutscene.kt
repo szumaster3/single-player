@@ -7,7 +7,7 @@ import core.game.activity.Cutscene
 import core.game.node.entity.player.Player
 import core.game.world.map.Direction
 import core.game.world.map.Location
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 class DoricCutscene(player: Player) : Cutscene(player) {
 

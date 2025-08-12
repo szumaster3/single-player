@@ -10,7 +10,7 @@ import core.game.dialogue.Topic
 import core.game.node.item.Item
 import core.tools.END_DIALOGUE
 import core.tools.START_DIALOGUE
-import org.rs.consts.Items
+import shared.consts.Items
 
 class RoavarDialogueFile(
     private val dialogueNum: Int = 0,

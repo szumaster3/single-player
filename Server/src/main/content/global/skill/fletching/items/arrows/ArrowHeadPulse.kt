@@ -9,7 +9,7 @@ import core.game.node.entity.player.Player
 import core.game.node.entity.skill.SkillPulse
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
-import org.rs.consts.Items
+import shared.consts.Items
 
 class ArrowHeadPulse(
     player: Player?,

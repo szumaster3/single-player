@@ -24,7 +24,7 @@ import core.game.world.map.zone.ZoneBorders
 import core.game.world.update.flag.context.Animation
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import org.rs.consts.*
+import shared.consts.*
 
 /**
  * Handles interactions related to warning screens.

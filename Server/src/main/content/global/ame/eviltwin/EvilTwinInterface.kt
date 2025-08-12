@@ -8,8 +8,8 @@ import core.game.system.task.Pulse
 import core.game.world.GameWorld
 import core.game.world.map.Direction
 import core.game.world.update.flag.context.Animation
-import org.rs.consts.Components
-import org.rs.consts.Sounds
+import shared.consts.Components
+import shared.consts.Sounds
 
 /**
  * Handles interfaces for Evil Twin random event.

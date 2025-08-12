@@ -10,7 +10,7 @@ import core.game.node.entity.player.Player
 import core.game.world.GameWorld.settings
 import core.game.world.map.Direction
 import core.game.world.map.Location
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 /**
  * Represents the Glough's Pet cutscene in The Grand Tree quest.

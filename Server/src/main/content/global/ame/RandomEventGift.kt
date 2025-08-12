@@ -7,7 +7,7 @@ import core.api.utils.WeightBasedTable
 import core.api.utils.WeightedItem
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Handles interaction with random event box.

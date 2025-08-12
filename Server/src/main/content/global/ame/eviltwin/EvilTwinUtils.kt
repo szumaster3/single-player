@@ -17,8 +17,8 @@ import core.net.packet.OutgoingContext
 import core.net.packet.PacketRepository
 import core.net.packet.out.CameraViewPacket
 import core.tools.RandomFunction
-import org.rs.consts.Components
-import org.rs.consts.Items
+import shared.consts.Components
+import shared.consts.Items
 
 /**
  * Evil twin utils.

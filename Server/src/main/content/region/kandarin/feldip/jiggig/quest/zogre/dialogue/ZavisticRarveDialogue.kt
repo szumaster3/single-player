@@ -12,10 +12,10 @@ import core.game.node.item.Item
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import core.tools.START_DIALOGUE
-import org.rs.consts.Items
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
-import org.rs.consts.Vars
+import shared.consts.Items
+import shared.consts.NPCs
+import shared.consts.Quests
+import shared.consts.Vars
 
 @Initializable
 class ZavisticRarveDialogue(player: Player? = null) : Dialogue(player) {

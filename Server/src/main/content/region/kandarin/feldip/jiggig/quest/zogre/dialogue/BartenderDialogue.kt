@@ -6,9 +6,9 @@ import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
 import core.tools.END_DIALOGUE
-import org.rs.consts.Items
-import org.rs.consts.NPCs
-import org.rs.consts.Vars
+import shared.consts.Items
+import shared.consts.NPCs
+import shared.consts.Vars
 
 class BartenderDialogue : DialogueFile() {
     override fun handle(

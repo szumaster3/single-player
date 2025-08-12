@@ -9,8 +9,8 @@ import core.game.world.map.Location
 import core.game.world.map.build.DynamicRegion
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
-import org.rs.consts.Music
-import org.rs.consts.NPCs
+import shared.consts.Music
+import shared.consts.NPCs
 
 @Initializable
 class SurokMagisDialogue(player: Player? = null) : Dialogue(player) {

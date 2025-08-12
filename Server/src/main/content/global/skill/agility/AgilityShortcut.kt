@@ -12,7 +12,7 @@ import core.game.node.scenery.Scenery
 import core.game.world.map.Direction
 import core.game.world.map.Location
 import core.plugin.Plugin
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Represents a base class for agility shortcuts in the game.

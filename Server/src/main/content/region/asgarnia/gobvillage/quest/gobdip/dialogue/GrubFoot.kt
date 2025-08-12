@@ -4,7 +4,7 @@ import core.api.getVarp
 import core.api.setVarp
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Enum representing different GrubFoot types.

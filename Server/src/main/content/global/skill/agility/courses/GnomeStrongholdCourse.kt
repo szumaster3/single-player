@@ -16,7 +16,7 @@ import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
 import core.tools.DARK_GREEN
-import org.rs.consts.Sounds
+import shared.consts.Sounds
 
 @Initializable
 class GnomeStrongholdCourse : AgilityCourse {

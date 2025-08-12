@@ -4,8 +4,8 @@ import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.world.map.Direction
 import core.game.world.map.Location
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 /**
  * Holds data and state for the [PyramidPlunderMinigame].

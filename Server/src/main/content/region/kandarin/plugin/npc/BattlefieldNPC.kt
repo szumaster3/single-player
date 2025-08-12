@@ -7,7 +7,7 @@ import core.game.world.map.Location
 import core.game.world.map.RegionManager.getLocalNpcs
 import core.plugin.Initializable
 import core.tools.RandomFunction
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 /**
  * Handles the BattlefieldNPC.

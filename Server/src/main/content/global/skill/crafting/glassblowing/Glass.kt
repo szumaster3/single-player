@@ -1,6 +1,6 @@
 package content.global.skill.crafting.glassblowing
 
-import org.rs.consts.Items
+import shared.consts.Items
 
 enum class Glass(
     val buttonId: Int,

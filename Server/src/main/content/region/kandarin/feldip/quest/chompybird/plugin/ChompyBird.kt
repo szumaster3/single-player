@@ -3,7 +3,7 @@ package content.region.kandarin.feldip.quest.chompybird.plugin
 import core.api.*
 import core.game.node.entity.player.Player
 import core.tools.colorize
-import org.rs.consts.Items
+import shared.consts.Items
 
 enum class ChompyBird(val id: Int, val kills: Int, val rankName: String) {
     O_BOWMAN(Items.CHOMPY_BIRD_HAT_2978, 30, "an Ogre Bowman"),

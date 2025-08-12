@@ -3,7 +3,7 @@ package content.data.items
 import core.game.node.item.Item
 import core.game.node.item.WeightedChanceItem
 import core.tools.RandomFunction
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * The [BrokenItem] object manages the logic of retrieving damaged

@@ -12,7 +12,7 @@ import core.game.node.item.Item
 import core.game.system.task.Pulse
 import core.game.world.GameWorld
 import core.game.world.update.flag.context.Animation
-import org.rs.consts.*
+import shared.consts.*
 
 class LostTribePlugin : InteractionListener {
     override fun defineListeners() {

@@ -1,6 +1,6 @@
 package content.global.skill.prayer
 
-import org.rs.consts.Items
+import shared.consts.Items
 
 enum class Bones(val itemId: Int, val experience: Double, val bonemealId: Int? = null, ) {
     BONES(Items.BONES_2530, 4.5, Items.BONEMEAL_4255),

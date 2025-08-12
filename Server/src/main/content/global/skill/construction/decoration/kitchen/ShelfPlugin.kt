@@ -6,8 +6,8 @@ import core.game.dialogue.IfTopic
 import core.game.dialogue.Topic
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import org.rs.consts.Items
-import org.rs.consts.Scenery
+import shared.consts.Items
+import shared.consts.Scenery
 
 class ShelfPlugin : InteractionListener {
     override fun defineListeners() {

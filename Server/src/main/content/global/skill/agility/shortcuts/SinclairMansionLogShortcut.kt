@@ -11,9 +11,9 @@ import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
 import core.plugin.Initializable
-import org.rs.consts.Animations
-import org.rs.consts.Scenery
-import org.rs.consts.Sounds
+import shared.consts.Animations
+import shared.consts.Scenery
+import shared.consts.Sounds
 import kotlin.random.Random
 
 /**
@@ -80,6 +80,6 @@ class SinclairMansionLogShortcut :
         private val swimmingAnimation = Animation(Animations.SWIMMING_6988)
         private val swimmingLoopAnimation = Animation(Animations.SWIMMING_LOOP_6989)
         private val failAnimation = Animation(Animations.FALL_LOG_2582)
-        private val splashGraphics = Graphics(org.rs.consts.Graphics.WATER_SPLASH_68)
+        private val splashGraphics = Graphics(shared.consts.Graphics.WATER_SPLASH_68)
     }
 }

@@ -1,7 +1,7 @@
 package content.global.skill.smithing
 
 import core.game.node.item.Item
-import org.rs.consts.Items
+import shared.consts.Items
 
 enum class Bar(val level: Int, val experience: Double, @JvmField val product: Item, vararg ores: Item, ) {
     BRONZE(1, 6.2, Item(Items.BRONZE_BAR_2349, 1), Item(Items.COPPER_ORE_436, 1), Item(Items.TIN_ORE_438, 1)),

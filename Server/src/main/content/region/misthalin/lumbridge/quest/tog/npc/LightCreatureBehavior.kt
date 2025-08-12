@@ -6,7 +6,7 @@ import core.game.world.GameWorld.ticks
 import core.game.world.map.Location
 import core.game.world.map.path.Pathfinder
 import core.tools.RandomFunction
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 class LightCreatureBehavior : NPCBehavior(NPCs.LIGHT_CREATURE_2021) {
     companion object {

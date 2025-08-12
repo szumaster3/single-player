@@ -9,9 +9,9 @@ import core.game.worldevents.events.HolidayRandoms
 import core.game.worldevents.events.ResetHolidayAppearance
 import core.tools.RandomFunction
 import core.tools.colorize
-import org.rs.consts.Animations
-import org.rs.consts.NPCs
-import org.rs.consts.Sounds
+import shared.consts.Animations
+import shared.consts.NPCs
+import shared.consts.Sounds
 
 class ZombieHolidayRandomNPC : HolidayRandomEventNPC(NPCs.ZOMBIE_2714) {
     override fun init() {

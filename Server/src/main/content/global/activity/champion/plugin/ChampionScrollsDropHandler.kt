@@ -9,8 +9,8 @@ import core.game.node.item.Item
 import core.game.world.GameWorld
 import core.tools.RandomFunction
 import core.tools.colorize
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 /**
  * Handles the drop for champion challenge.

@@ -7,10 +7,10 @@ import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
-import org.rs.consts.Components
-import org.rs.consts.Items
-import org.rs.consts.NPCs
-import org.rs.consts.Sounds
+import shared.consts.Components
+import shared.consts.Items
+import shared.consts.NPCs
+import shared.consts.Sounds
 
 /**
  * Represents the Thessalia dialogue.

@@ -13,7 +13,7 @@ import core.game.world.map.RegionManager.isTeleportPermitted
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
 import core.tools.RandomFunction
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 import java.util.*
 
 class PCShifterNPC : AbstractNPC {
@@ -122,7 +122,7 @@ class PCShifterNPC : AbstractNPC {
             if (destination == null || session != null && destination.getRegionId() != session.region.id) {
                 return
             }
-            Graphics.send(Graphics.create(org.rs.consts.Graphics.PEST_CONTROL_SPAWN_654), entity.location)
+            Graphics.send(Graphics.create(shared.consts.Graphics.PEST_CONTROL_SPAWN_654), entity.location)
             entity.properties.teleportLocation = destination
             entity.walkingQueue.reset()
             entity.locks.lockMovement(2)
@@ -131,7 +131,7 @@ class PCShifterNPC : AbstractNPC {
                 object : Pulse(1, entity) {
                     override fun pulse(): Boolean {
                         entity.animate(Animation.create(3904))
-                        Graphics.send(Graphics.create(org.rs.consts.Graphics.PEST_CONTROL_SPAWN_654), destination)
+                        Graphics.send(Graphics.create(shared.consts.Graphics.PEST_CONTROL_SPAWN_654), destination)
                         return true
                     }
                 },

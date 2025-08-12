@@ -1,7 +1,7 @@
 package content.global.skill.fletching.items.bow
 
-import org.rs.consts.Animations
-import org.rs.consts.Items
+import shared.consts.Animations
+import shared.consts.Items
 
 /**
  * Represents the types of bow strings.

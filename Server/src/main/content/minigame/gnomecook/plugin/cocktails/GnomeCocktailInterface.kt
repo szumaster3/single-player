@@ -8,7 +8,7 @@ import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.Items
+import shared.consts.Items
 
 private const val WIZARD_BLIZZARD = 2054
 private const val SHORT_GREEN_GUY = 2080

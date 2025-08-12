@@ -10,9 +10,9 @@ import core.game.node.item.Item
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.plugin.Plugin
-import org.rs.consts.Animations
-import org.rs.consts.Items
-import org.rs.consts.Quests
+import shared.consts.Animations
+import shared.consts.Items
+import shared.consts.Quests
 
 class DemonSlayerDrainPlugin : UseWithHandler(Items.BUCKET_OF_WATER_1929) {
     override fun newInstance(arg: Any?): Plugin<Any> {

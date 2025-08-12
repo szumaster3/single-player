@@ -14,9 +14,9 @@ import core.game.system.task.Pulse
 import core.game.world.GameWorld
 import core.game.world.update.flag.context.Animation
 import core.tools.DARK_BLUE
-import org.rs.consts.Animations
-import org.rs.consts.Items
-import org.rs.consts.Quests
+import shared.consts.Animations
+import shared.consts.Items
+import shared.consts.Quests
 
 class AFUBeaconPlugin : InteractionListener {
     private val VALID_LOGS = intArrayOf(Items.LOGS_1511, Items.OAK_LOGS_1521, Items.WILLOW_LOGS_1519, Items.MAPLE_LOGS_1517, Items.YEW_LOGS_1515, Items.MAGIC_LOGS_1513)

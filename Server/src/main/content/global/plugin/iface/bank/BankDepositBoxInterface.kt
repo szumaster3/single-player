@@ -5,8 +5,8 @@ import core.game.component.Component
 import core.game.dialogue.InputType
 import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.Player
-import org.rs.consts.Animations
-import org.rs.consts.Components
+import shared.consts.Animations
+import shared.consts.Components
 
 class BankDepositBoxInterface : InterfaceListener {
     companion object {

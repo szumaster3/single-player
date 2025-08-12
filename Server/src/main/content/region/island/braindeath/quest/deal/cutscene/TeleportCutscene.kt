@@ -8,8 +8,8 @@ import core.game.node.entity.player.Player
 import core.game.world.map.Direction
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Graphics
-import org.rs.consts.Music
-import org.rs.consts.NPCs
+import shared.consts.Music
+import shared.consts.NPCs
 
 class TeleportCutscene(player: Player) : Cutscene(player) {
 
@@ -86,7 +86,7 @@ class TeleportCutscene(player: Player) : Cutscene(player) {
                 endWithoutFade()
                 openDialogue(player, CaptainBraindeathDialogue(1))
                 sendGraphics(
-                    Graphics(org.rs.consts.Graphics.STUN_BIRDIES_ABOVE_HEAD_80, 96),
+                    Graphics(shared.consts.Graphics.STUN_BIRDIES_ABOVE_HEAD_80, 96),
                     player.location,
                 )
             }

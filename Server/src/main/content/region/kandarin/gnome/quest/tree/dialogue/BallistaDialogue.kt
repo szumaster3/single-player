@@ -8,7 +8,7 @@ import core.api.sendDialogueOptions
 import core.api.setTitle
 import core.game.dialogue.DialogueFile
 import core.tools.END_DIALOGUE
-import org.rs.consts.Quests
+import shared.consts.Quests
 
 class BallistaDialogue : DialogueFile() {
     override fun handle(

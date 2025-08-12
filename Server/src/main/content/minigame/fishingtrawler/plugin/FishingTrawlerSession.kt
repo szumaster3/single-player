@@ -22,9 +22,9 @@ import core.tools.Log
 import core.tools.RandomFunction
 import core.tools.secondsToTicks
 import core.tools.ticksToSeconds
-import org.rs.consts.Components
-import org.rs.consts.Items
-import org.rs.consts.Music
+import shared.consts.Components
+import shared.consts.Items
+import shared.consts.Music
 import java.util.concurrent.TimeUnit
 import kotlin.math.ceil
 import kotlin.random.Random

@@ -2,8 +2,8 @@ package core.game.node.entity.player.link.diary;
 
 import core.game.node.entity.player.Player;
 import core.game.node.item.Item;
-import org.rs.consts.Items;
-import org.rs.consts.NPCs;
+import shared.consts.Items;
+import shared.consts.NPCs;
 
 /**
  * The Diary type.

@@ -1,6 +1,6 @@
 package content.global.activity.jobs.impl
 
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 /**
  * Enum represents the npc that can assign the player a job.

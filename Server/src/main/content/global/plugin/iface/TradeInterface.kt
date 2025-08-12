@@ -9,7 +9,7 @@ import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.request.trade.TradeModule.Companion.getExtension
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.Components
+import shared.consts.Components
 
 /**
  * Represents the interface plugin used to handle all trade related functions.

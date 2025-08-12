@@ -16,7 +16,7 @@ import core.game.system.config.NPCConfigParser
 import core.game.system.task.Pulse
 import core.game.world.GameWorld
 import core.plugin.Initializable
-import org.rs.consts.*
+import shared.consts.*
 
 /**
  * Represents the Scorpion Catcher quest.

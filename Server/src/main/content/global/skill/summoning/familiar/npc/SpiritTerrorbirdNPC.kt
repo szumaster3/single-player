@@ -9,9 +9,9 @@ import core.game.node.entity.skill.Skills
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
 import core.plugin.Initializable
-import org.rs.consts.Animations
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Animations
+import shared.consts.Items
+import shared.consts.NPCs
 
 @Initializable
 class SpiritTerrorbirdNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.SPIRIT_TERRORBIRD_6794) :
@@ -21,7 +21,7 @@ class SpiritTerrorbirdNPC @JvmOverloads constructor(owner: Player? = null, id: I
     }
 
     override fun specialMove(special: FamiliarSpecial): Boolean {
-        visualize(Animation.create(1009), Graphics.create(org.rs.consts.Graphics.WHITE_SEAGALS_1521))
+        visualize(Animation.create(1009), Graphics.create(shared.consts.Graphics.WHITE_SEAGALS_1521))
         owner.getSkills().updateLevel(Skills.AGILITY, 2)
         owner.settings.updateRunEnergy(-owner.getSkills().getStaticLevel(Skills.AGILITY) / 2.0)
         return true
@@ -30,7 +30,7 @@ class SpiritTerrorbirdNPC @JvmOverloads constructor(owner: Player? = null, id: I
     override fun visualizeSpecialMove() {
         owner.visualize(
             Animation(Animations.CAST_FAMILIAR_SCROLL_7660),
-            Graphics(org.rs.consts.Graphics.SPIRIT_TERRORBIRD_SPECIAL_MOVE_1295)
+            Graphics(shared.consts.Graphics.SPIRIT_TERRORBIRD_SPECIAL_MOVE_1295)
         )
     }
 

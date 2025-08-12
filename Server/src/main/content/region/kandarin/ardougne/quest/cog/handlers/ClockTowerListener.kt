@@ -15,10 +15,10 @@ import core.game.world.map.Direction
 import core.game.world.map.Location
 import core.game.world.map.path.Pathfinder
 import core.game.world.update.flag.context.Animation
-import org.rs.consts.Items
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
-import org.rs.consts.Scenery
+import shared.consts.Items
+import shared.consts.NPCs
+import shared.consts.Quests
+import shared.consts.Scenery
 
 class ClockTowerListener : InteractionListener {
     companion object {

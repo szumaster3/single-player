@@ -15,7 +15,7 @@ import core.game.world.update.flag.context.Animation;
 import core.game.world.update.flag.context.Graphics;
 import core.plugin.Initializable;
 import core.plugin.Plugin;
-import org.rs.consts.Sounds;
+import shared.consts.Sounds;
 
 /**
  * Represents the Teleport other spell.
@@ -44,7 +44,7 @@ public final class TeleportOtherSpell extends MagicSpell {
      * @param runes       the runes
      */
     public TeleportOtherSpell(int level, double experience, String destination, Location location, Item... runes) {
-        super(SpellBook.MODERN, level, experience, Animation.create(1818), Graphics.create(org.rs.consts.Graphics.TELEOTHER_CAST_343), new Audio(Sounds.TELE_OTHER_CAST_199, 1, 0), runes);
+        super(SpellBook.MODERN, level, experience, Animation.create(1818), Graphics.create(shared.consts.Graphics.TELEOTHER_CAST_343), new Audio(Sounds.TELE_OTHER_CAST_199, 1, 0), runes);
         this.destination = destination;
         this.location = location;
     }

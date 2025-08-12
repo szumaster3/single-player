@@ -10,7 +10,7 @@ import core.game.interaction.InteractionListener
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.game.world.GameWorld.settings
-import org.rs.consts.Items
+import shared.consts.Items
 
 class ConstructionGuide : InteractionListener {
     companion object {

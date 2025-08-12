@@ -12,8 +12,8 @@ import core.game.world.GameWorld.Pulser
 import core.game.world.map.Location
 import core.game.world.repository.Repository
 import core.game.world.update.flag.context.Animation
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 /**
  * Represents Koschei the Deathless NPC.

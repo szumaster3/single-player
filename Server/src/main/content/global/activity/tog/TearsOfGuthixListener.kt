@@ -4,7 +4,7 @@ import core.api.TickListener
 import core.api.addScenery
 import core.api.getScenery
 import core.game.world.map.Location
-import org.rs.consts.Scenery
+import shared.consts.Scenery
 
 /**
  * Handles interaction for tog activity

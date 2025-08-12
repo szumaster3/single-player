@@ -10,7 +10,7 @@ import core.game.system.timer.impl.AntiMacro
 import core.game.world.update.flag.context.Animation
 import core.tools.minutesToTicks
 import core.tools.secondsToTicks
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 /**
  * Handles strange plant NPC.

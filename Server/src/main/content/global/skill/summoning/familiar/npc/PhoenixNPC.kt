@@ -6,8 +6,8 @@ import core.game.node.entity.combat.equipment.WeaponInterface
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
 import core.plugin.Initializable
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 @Initializable
 class PhoenixNPC(owner: Player? = null, id: Int = NPCs.PHOENIX_8575) :

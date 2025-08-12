@@ -5,10 +5,10 @@ import core.api.*
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.interaction.QueueStrength
-import org.rs.consts.Animations
-import org.rs.consts.Graphics
-import org.rs.consts.Items
-import org.rs.consts.Sounds
+import shared.consts.Animations
+import shared.consts.Graphics
+import shared.consts.Items
+import shared.consts.Sounds
 
 class EnchantSpellPlugin : InteractionListener {
 

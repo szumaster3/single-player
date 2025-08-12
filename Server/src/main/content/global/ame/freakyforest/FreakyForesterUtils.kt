@@ -6,8 +6,8 @@ import core.api.*
 import core.game.node.entity.player.Player
 import core.game.world.map.zone.ZoneBorders
 import core.tools.RandomFunction
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 /**
  * Utils for Freaky Forester random event.

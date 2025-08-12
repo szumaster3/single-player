@@ -6,8 +6,8 @@ import core.game.dialogue.FaceAnim
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest
 import core.game.node.item.Item
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
+import shared.consts.NPCs
+import shared.consts.Quests
 
 class CaptainLawgofDialogue(player: Player? = null) : Dialogue(player) {
 

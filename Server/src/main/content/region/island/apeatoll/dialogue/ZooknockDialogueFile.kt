@@ -10,9 +10,9 @@ import core.game.node.entity.npc.NPC
 import core.game.node.item.Item
 import core.game.world.update.flag.context.Graphics
 import core.tools.END_DIALOGUE
-import org.rs.consts.Components
-import org.rs.consts.Items
-import org.rs.consts.Quests
+import shared.consts.Components
+import shared.consts.Items
+import shared.consts.Quests
 
 class ZooknockAfterBattleDialogueFile : DialogueFile() {
     override fun handle(componentID: Int, buttonID: Int) {
@@ -99,7 +99,7 @@ class ZooknockDialogueFile(val it: Int) : DialogueFile() {
                 addItemOrDrop(player!!, Items.MONKEY_GREEGREE_4024, 1)
                 npc!!.graphics(
                     Graphics(
-                        org.rs.consts.Graphics.WIND_BLAST_IMPACT_134,
+                        shared.consts.Graphics.WIND_BLAST_IMPACT_134,
                         96,
                     ),
                 )
@@ -229,7 +229,7 @@ class ZooknockDialogueFile(val it: Int) : DialogueFile() {
                 FaceAnim.OLD_CALM_TALK1,
                 "Somewhere in the village. It out to be obvious. Now give me a moment.",
             ).also {
-                npc!!.graphics(Graphics(org.rs.consts.Graphics.WIND_BLAST_IMPACT_134, 96))
+                npc!!.graphics(Graphics(shared.consts.Graphics.WIND_BLAST_IMPACT_134, 96))
                 stage++
             }
 

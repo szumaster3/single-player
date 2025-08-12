@@ -10,9 +10,9 @@ import core.game.interaction.InteractionListener
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.game.world.update.flag.context.Animation
-import org.rs.consts.Animations
-import org.rs.consts.Items
-import org.rs.consts.Sounds
+import shared.consts.Animations
+import shared.consts.Items
+import shared.consts.Sounds
 
 class SpellTablet : InteractionListener {
     val B2B_TABLET = Items.BONES_TO_BANANAS_8014

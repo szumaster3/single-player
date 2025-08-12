@@ -14,7 +14,7 @@ import core.game.world.GameWorld
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
-import org.rs.consts.*
+import shared.consts.*
 
 /**
  * Represents the Aggie dialogue.

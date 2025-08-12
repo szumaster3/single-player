@@ -13,9 +13,9 @@ import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.entity.skill.Skills
 import core.game.world.map.zone.ZoneBorders
-import org.rs.consts.Items
-import org.rs.consts.NPCs
-import org.rs.consts.Scenery
+import shared.consts.Items
+import shared.consts.NPCs
+import shared.consts.Scenery
 
 class FaladorAchievementDiary : DiaryEventHookBase(DiaryType.FALADOR) {
     companion object {

@@ -11,8 +11,8 @@ import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.game.system.task.Pulse
 import core.game.world.GameWorld.Pulser
-import org.rs.consts.Components
-import org.rs.consts.Items
+import shared.consts.Components
+import shared.consts.Items
 
 /**
  * Handles the Magic Training Arena (MTA) shop interface logic.

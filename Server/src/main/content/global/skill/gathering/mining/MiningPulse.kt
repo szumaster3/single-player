@@ -18,8 +18,8 @@ import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.tools.RandomFunction
 import core.tools.prependArticle
-import org.rs.consts.Items
-import org.rs.consts.Quests
+import shared.consts.Items
+import shared.consts.Quests
 
 class MiningPulse(private val player: Player, private val node: Node) : Pulse(1, player, node) {
 
@@ -79,11 +79,11 @@ class MiningPulse(private val player: Player, private val node: Node) : Pulse(1,
             return
         }
 
-        if (resource!!.id == org.rs.consts.Scenery.ROCKS_2099 && !perfectGoldOreLocations.contains(node.location)) {
-            resource = MiningNode.forId(org.rs.consts.Scenery.ROCKS_2098)
+        if (resource!!.id == shared.consts.Scenery.ROCKS_2099 && !perfectGoldOreLocations.contains(node.location)) {
+            resource = MiningNode.forId(shared.consts.Scenery.ROCKS_2098)
         }
-        if (resource!!.id == org.rs.consts.Scenery.RUNE_ESSENCE_2491 ||
-            resource!!.id == org.rs.consts.Scenery.ROCK_16684
+        if (resource!!.id == shared.consts.Scenery.RUNE_ESSENCE_2491 ||
+            resource!!.id == shared.consts.Scenery.ROCK_16684
         ) {
             isMiningEssence = true
         }
@@ -254,12 +254,12 @@ class MiningPulse(private val player: Player, private val node: Node) : Pulse(1,
              * Handles limestone respawn.
              */
 
-            if (resource!!.id == org.rs.consts.Scenery.PILE_OF_ROCK_4030 && !isMiningEssence && resource!!.respawnRate != 0) {
+            if (resource!!.id == shared.consts.Scenery.PILE_OF_ROCK_4030 && !isMiningEssence && resource!!.respawnRate != 0) {
                 removeScenery(node as Scenery)
                 GameWorld.Pulser.submit(
                     object : Pulse(resource!!.respawnDuration, player) {
                         override fun pulse(): Boolean {
-                            SceneryBuilder.add(Scenery(org.rs.consts.Scenery.PILE_OF_ROCK_4027, node.location))
+                            SceneryBuilder.add(Scenery(shared.consts.Scenery.PILE_OF_ROCK_4027, node.location))
                             return true
                         }
                     },
@@ -272,11 +272,11 @@ class MiningPulse(private val player: Player, private val node: Node) : Pulse(1,
              * Handles obsidian respawn.
              */
 
-            if (resource!!.id == org.rs.consts.Scenery.OBSIDIAN_WALL_31229 && !isMiningEssence && resource!!.respawnRate != 0) {
+            if (resource!!.id == shared.consts.Scenery.OBSIDIAN_WALL_31229 && !isMiningEssence && resource!!.respawnRate != 0) {
                 SceneryBuilder.replaceWithTempBeforeNew(
                     node.asScenery(),
-                    node.asScenery().transform(org.rs.consts.Scenery.OBSIDIAN_WALL_31230),
-                    node.asScenery().transform(org.rs.consts.Scenery.OBSIDIAN_WALL_9376),
+                    node.asScenery().transform(shared.consts.Scenery.OBSIDIAN_WALL_31230),
+                    node.asScenery().transform(shared.consts.Scenery.OBSIDIAN_WALL_9376),
                     resource!!.respawnDuration,
                     true,
                 )

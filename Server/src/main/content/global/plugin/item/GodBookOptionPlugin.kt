@@ -11,7 +11,7 @@ import core.game.node.item.ItemPlugin
 import core.plugin.ClassScanner
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Handles interactions related to damaged God books.

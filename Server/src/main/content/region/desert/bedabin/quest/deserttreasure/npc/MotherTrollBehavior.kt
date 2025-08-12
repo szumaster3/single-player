@@ -11,7 +11,7 @@ import core.game.node.entity.combat.CombatStyle
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.npc.NPCBehavior
 import core.game.node.entity.player.Player
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 class MotherTrollBehavior : NPCBehavior(NPCs.ICE_BLOCK_1945) {
     override fun canBeAttackedBy(self: NPC, attacker: Entity, style: CombatStyle, shouldSendMessage: Boolean): Boolean = attacker is Player

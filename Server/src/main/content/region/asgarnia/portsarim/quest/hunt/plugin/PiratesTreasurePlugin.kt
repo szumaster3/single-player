@@ -15,13 +15,13 @@ import core.game.node.item.GroundItemManager
 import core.game.node.scenery.Scenery
 import core.game.world.map.Location
 import core.plugin.Plugin
-import org.rs.consts.Items
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
+import shared.consts.Items
+import shared.consts.NPCs
+import shared.consts.Quests
 
 class PiratesTreasurePlugin : OptionHandler() {
     override fun newInstance(arg: Any?): Plugin<Any> {
-        SceneryDefinition.forId(org.rs.consts.Scenery.CHEST_2079).handlers["option:open"] = this
+        SceneryDefinition.forId(shared.consts.Scenery.CHEST_2079).handlers["option:open"] = this
         ItemDefinition.forId(Items.PIRATE_MESSAGE_433).handlers["option:read"] = this
         ItemDefinition.forId(Items.CASKET_7956).handlers["option:open"] = this
         for (l in TreasureDigPlugin.LOCATIONS) {

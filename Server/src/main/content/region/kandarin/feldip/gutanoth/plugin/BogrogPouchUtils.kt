@@ -8,7 +8,7 @@ import core.api.sendMessage
 import core.game.dialogue.InputType
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
-import org.rs.consts.Items
+import shared.consts.Items
 import kotlin.math.ceil
 import kotlin.math.floor
 

@@ -8,8 +8,8 @@ import core.game.node.item.GroundItem
 import core.game.node.item.GroundItemManager
 import core.game.node.item.Item
 import core.plugin.Initializable
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
+import shared.consts.NPCs
+import shared.consts.Quests
 
 /**
  * Represents the Apothecary dialogue.

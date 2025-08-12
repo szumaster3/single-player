@@ -7,7 +7,7 @@ import core.game.shops.Shop
 import core.game.shops.ShopItem
 import core.game.system.task.Pulse
 import core.game.world.GameWorld
-import org.rs.consts.Items
+import shared.consts.Items
 import java.lang.Integer.min
 
 /**

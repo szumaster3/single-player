@@ -1,7 +1,7 @@
 package content.global.skill.firemaking
 
-import org.rs.consts.Items
-import org.rs.consts.Scenery
+import shared.consts.Items
+import shared.consts.Scenery
 
 /**
  * Represents logs.

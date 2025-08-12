@@ -7,7 +7,7 @@ import core.game.interaction.QueueStrength
 import core.game.node.entity.player.Player
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 /**
  * Represents the dialogue plugin used for the Frog NPC.

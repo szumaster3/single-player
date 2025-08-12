@@ -11,8 +11,8 @@ import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 @Initializable
 class BrotherJeredDialogue(player: Player? = null) : Dialogue(player) {

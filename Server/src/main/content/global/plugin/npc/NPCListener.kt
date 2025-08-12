@@ -20,9 +20,9 @@ import core.game.system.timer.impl.AntiMacro
 import core.game.worldevents.events.HolidayRandomEventNPC
 import core.game.worldevents.events.HolidayRandomEvents
 import core.game.worldevents.events.HolidayRandoms
-import org.rs.consts.Components
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Components
+import shared.consts.Items
+import shared.consts.NPCs
 
 class NPCListener : InteractionListener {
 

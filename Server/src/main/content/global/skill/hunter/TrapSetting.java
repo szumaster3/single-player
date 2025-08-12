@@ -16,7 +16,7 @@ import core.game.world.GameWorld;
 import core.game.world.map.Location;
 import core.game.world.update.flag.context.Animation;
 import core.tools.RandomFunction;
-import org.rs.consts.Sounds;
+import shared.consts.Sounds;
 
 import static core.api.ContentAPIKt.playAudio;
 

@@ -6,7 +6,7 @@ import core.api.sendMessage
 import core.api.sendString
 import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.Player
-import org.rs.consts.Components
+import shared.consts.Components
 
 class StealingCreationStore : InterfaceListener {
     override fun defineInterfaceListeners() {

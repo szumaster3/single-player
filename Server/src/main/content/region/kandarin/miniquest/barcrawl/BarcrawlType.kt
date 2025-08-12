@@ -12,8 +12,8 @@ import core.net.packet.OutgoingContext
 import core.net.packet.PacketRepository
 import core.net.packet.out.CameraViewPacket
 import core.tools.StringUtils
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 enum class BarcrawlType {
     BLUE_MOON(

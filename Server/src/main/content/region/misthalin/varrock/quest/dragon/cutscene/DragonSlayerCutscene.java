@@ -20,8 +20,8 @@ import core.net.packet.OutgoingContext;
 import core.net.packet.PacketRepository;
 import core.net.packet.out.CameraViewPacket;
 import core.net.packet.out.MinimapState;
-import org.rs.consts.Animations;
-import org.rs.consts.Quests;
+import shared.consts.Animations;
+import shared.consts.Quests;
 
 import java.util.ArrayList;
 import java.util.List;

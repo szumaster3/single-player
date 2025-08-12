@@ -7,7 +7,7 @@ import core.game.dialogue.FaceAnim
 import core.game.dialogue.Topic
 import core.game.node.entity.player.Player
 import core.plugin.Initializable
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 @Initializable
 class CatolaxDialogue(player: Player? = null) : Dialogue(player) {

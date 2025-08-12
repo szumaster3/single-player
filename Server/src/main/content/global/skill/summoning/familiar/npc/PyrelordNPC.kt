@@ -27,8 +27,8 @@ import core.game.world.update.flag.context.Graphics
 import core.plugin.ClassScanner.definePlugin
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 @Initializable
 class PyrelordNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.PYRELORD_7377) :
@@ -54,7 +54,7 @@ class PyrelordNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPC
             return false
         }
         lock(owner, 1)
-        visualize(Animation.create(8081), Graphics.create(org.rs.consts.Graphics.RAINING_FLAMES_1463))
+        visualize(Animation.create(8081), Graphics.create(shared.consts.Graphics.RAINING_FLAMES_1463))
         Jewellery.open(owner)
         return true
     }

@@ -10,8 +10,8 @@ import core.game.node.entity.player.Player
 import core.game.world.map.Location
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 @Initializable
 class AgilityBossDialogue(player: Player? = null, ) : Dialogue(player) {

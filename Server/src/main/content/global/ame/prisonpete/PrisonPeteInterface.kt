@@ -3,7 +3,7 @@ package content.global.ame.prisonpete
 import core.api.sendAnimationOnInterface
 import core.api.sendModelOnInterface
 import core.game.interaction.InterfaceListener
-import org.rs.consts.Components
+import shared.consts.Components
 
 /**
  * Represents the Prison Pete random event interface.

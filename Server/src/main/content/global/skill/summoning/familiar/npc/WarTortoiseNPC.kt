@@ -9,9 +9,9 @@ import core.game.node.entity.skill.Skills
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
 import core.plugin.Initializable
-import org.rs.consts.Animations
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Animations
+import shared.consts.Items
+import shared.consts.NPCs
 
 @Initializable
 class WarTortoiseNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.WAR_TORTOISE_6815) :
@@ -22,14 +22,14 @@ class WarTortoiseNPC @JvmOverloads constructor(owner: Player? = null, id: Int = 
 
     override fun specialMove(special: FamiliarSpecial): Boolean {
         owner.getSkills().updateLevel(Skills.DEFENCE, 9, owner.getSkills().getStaticLevel(Skills.DEFENCE) + 9)
-        visualize(Animation.create(8288), Graphics.create(org.rs.consts.Graphics.TURTLE_SHELL_SPIN_1414))
+        visualize(Animation.create(8288), Graphics.create(shared.consts.Graphics.TURTLE_SHELL_SPIN_1414))
         return true
     }
 
     override fun visualizeSpecialMove() {
         owner.visualize(
             Animation.create(Animations.CAST_FAMILIAR_SCROLL_7660),
-            Graphics.create(org.rs.consts.Graphics.WAR_TORTOISE_SPECIAL_MOVE_1310)
+            Graphics.create(shared.consts.Graphics.WAR_TORTOISE_SPECIAL_MOVE_1310)
         )
     }
 

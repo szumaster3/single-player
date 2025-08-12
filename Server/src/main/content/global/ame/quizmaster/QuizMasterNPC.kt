@@ -7,7 +7,7 @@ import core.game.node.entity.npc.NPC
 import core.game.system.task.Pulse
 import core.game.system.timer.impl.AntiMacro
 import core.game.world.update.flag.context.Animation
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 /**
  * Represents the Quizmaster random event NPC.

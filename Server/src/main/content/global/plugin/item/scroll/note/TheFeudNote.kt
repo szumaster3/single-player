@@ -5,8 +5,8 @@ import core.api.sendString
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.player.Player
-import org.rs.consts.Components
-import org.rs.consts.Items
+import shared.consts.Components
+import shared.consts.Items
 
 class TheFeudNote : InteractionListener {
     companion object {

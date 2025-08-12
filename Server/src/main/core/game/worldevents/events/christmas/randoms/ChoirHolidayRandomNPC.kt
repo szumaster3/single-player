@@ -5,7 +5,7 @@ import core.game.interaction.QueueStrength
 import core.game.node.entity.npc.NPC
 import core.game.worldevents.events.HolidayRandomEventNPC
 import core.tools.RandomFunction
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 class ChoirHolidayRandomNPC : HolidayRandomEventNPC(NPCs.ZANARIS_CHOIR_3312) {
     override fun init() {

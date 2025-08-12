@@ -5,7 +5,7 @@ import core.api.removeAttribute
 import core.game.interaction.InterfaceListener
 import core.game.node.entity.combat.equipment.WeaponInterface
 import core.game.node.entity.player.Player
-import org.rs.consts.Components
+import shared.consts.Components
 
 /**
  * Represents the auto casting interfaces

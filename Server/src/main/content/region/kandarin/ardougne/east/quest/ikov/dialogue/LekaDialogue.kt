@@ -7,7 +7,7 @@ import core.game.node.entity.player.Player
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import core.tools.START_DIALOGUE
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 @Initializable
 class LekaDialogue(player: Player? = null) : Dialogue(player) {

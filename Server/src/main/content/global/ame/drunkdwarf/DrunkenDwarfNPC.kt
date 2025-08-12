@@ -12,10 +12,10 @@ import core.game.node.entity.npc.NPC
 import core.game.system.timer.impl.AntiMacro
 import core.game.world.update.flag.context.Animation
 import core.tools.RandomFunction
-import org.rs.consts.Animations
-import org.rs.consts.Items
-import org.rs.consts.NPCs
-import org.rs.consts.Sounds
+import shared.consts.Animations
+import shared.consts.Items
+import shared.consts.NPCs
+import shared.consts.Sounds
 
 /**
  * Represents the Drunken Dwarf NPC.

@@ -15,7 +15,7 @@ import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.game.world.GameWorld
 import core.game.world.update.flag.context.Animation
-import org.rs.consts.*
+import shared.consts.*
 
 class SmeltingPlugin : InteractionListener {
 

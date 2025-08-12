@@ -14,9 +14,9 @@ import core.game.world.map.Direction
 import core.game.world.map.RegionManager
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
-import org.rs.consts.Animations
-import org.rs.consts.Items
-import org.rs.consts.Sounds
+import shared.consts.Animations
+import shared.consts.Items
+import shared.consts.Sounds
 
 class AltarPlugin : InteractionListener {
     override fun defineListeners() {
@@ -117,15 +117,15 @@ class AltarPlugin : InteractionListener {
     }
 
     private fun isLit(obj: Scenery?): Boolean =
-        obj != null && obj.id != org.rs.consts.Scenery.LAMP_SPACE_15271 && !SceneryDefinition.forId(obj.id).hasAction("light")
+        obj != null && obj.id != shared.consts.Scenery.LAMP_SPACE_15271 && !SceneryDefinition.forId(obj.id).hasAction("light")
 
     private fun getBase(altar: Scenery?): Double = when (altar?.id) {
-        org.rs.consts.Scenery.ALTAR_13182 -> 110.0
-        org.rs.consts.Scenery.ALTAR_13185 -> 125.0
-        org.rs.consts.Scenery.ALTAR_13188 -> 150.0
-        org.rs.consts.Scenery.ALTAR_13191 -> 175.0
-        org.rs.consts.Scenery.ALTAR_13194 -> 200.0
-        org.rs.consts.Scenery.ALTAR_13197 -> 250.0
+        shared.consts.Scenery.ALTAR_13182 -> 110.0
+        shared.consts.Scenery.ALTAR_13185 -> 125.0
+        shared.consts.Scenery.ALTAR_13188 -> 150.0
+        shared.consts.Scenery.ALTAR_13191 -> 175.0
+        shared.consts.Scenery.ALTAR_13194 -> 200.0
+        shared.consts.Scenery.ALTAR_13197 -> 250.0
         else -> 150.0
     }
 
@@ -148,9 +148,9 @@ class AltarPlugin : InteractionListener {
         }
 
     companion object {
-        private val GFX = Graphics(org.rs.consts.Graphics.BONE_ON_ALTAR_624)
+        private val GFX = Graphics(shared.consts.Graphics.BONE_ON_ALTAR_624)
         private val ANIM = Animation(Animations.HUMAN_COOKING_RANGE_896)
         private val BONES = Bones.array
-        private val ALTAR = intArrayOf(org.rs.consts.Scenery.ALTAR_13185, org.rs.consts.Scenery.ALTAR_13188, org.rs.consts.Scenery.ALTAR_13191, org.rs.consts.Scenery.ALTAR_13194, org.rs.consts.Scenery.ALTAR_13197)
+        private val ALTAR = intArrayOf(shared.consts.Scenery.ALTAR_13185, shared.consts.Scenery.ALTAR_13188, shared.consts.Scenery.ALTAR_13191, shared.consts.Scenery.ALTAR_13194, shared.consts.Scenery.ALTAR_13197)
     }
 }

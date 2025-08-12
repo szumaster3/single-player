@@ -19,9 +19,9 @@ import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.Animations
-import org.rs.consts.Graphics as Gfx
-import org.rs.consts.Sounds
+import shared.consts.Animations
+import shared.consts.Graphics as Gfx
+import shared.consts.Sounds
 
 @Initializable
 class TeleblockSpell : CombatSpell {

@@ -4,7 +4,7 @@ import core.ServerConstants;
 import core.game.node.entity.skill.Skills;
 import core.game.world.repository.Repository;
 import core.game.world.update.flag.context.Animation;
-import org.rs.consts.Scenery;
+import shared.consts.Scenery;
 
 import java.util.HashMap;
 import java.util.Map;

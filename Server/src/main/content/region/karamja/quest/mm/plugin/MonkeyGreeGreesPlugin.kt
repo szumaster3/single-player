@@ -7,8 +7,8 @@ import core.game.node.entity.Entity
 import core.game.node.entity.player.Player
 import core.game.world.map.zone.ZoneBorders
 import core.game.world.update.flag.context.Graphics
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 class MonkeyGreeGreesPlugin :
     InteractionListener,

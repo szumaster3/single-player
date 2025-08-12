@@ -8,8 +8,8 @@ import core.game.interaction.InteractionListener
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.game.world.update.flag.context.Animation
-import org.rs.consts.Animations
-import org.rs.consts.Items
+import shared.consts.Animations
+import shared.consts.Items
 import java.util.*
 
 

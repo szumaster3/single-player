@@ -13,9 +13,9 @@ import core.net.packet.out.Config
 import core.net.packet.out.ContainerPacket
 import core.tools.Log
 import core.tools.SystemLogger
-import org.rs.consts.Components
-import org.rs.consts.Items
-import org.rs.consts.Sounds
+import shared.consts.Components
+import shared.consts.Items
+import shared.consts.Sounds
 import kotlin.math.min
 
 /**

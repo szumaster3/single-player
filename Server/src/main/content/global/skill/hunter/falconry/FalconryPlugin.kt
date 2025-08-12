@@ -25,10 +25,10 @@ import core.game.world.repository.Repository
 import core.plugin.ClassScanner
 import core.plugin.Plugin
 import core.tools.RandomFunction
-import org.rs.consts.Graphics
-import org.rs.consts.Items
-import org.rs.consts.NPCs
-import org.rs.consts.Sounds
+import shared.consts.Graphics
+import shared.consts.Items
+import shared.consts.NPCs
+import shared.consts.Sounds
 
 class FalconryPlugin : ActivityPlugin(FALCONRY_ZONE, false, false, false), MapArea {
 

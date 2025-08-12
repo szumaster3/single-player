@@ -7,7 +7,7 @@ import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
 import core.plugin.Initializable
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 /**
  * Represents the Martin The Master Gardener dialogue.

@@ -13,8 +13,8 @@ import core.game.node.entity.player.Player
 import core.game.system.command.Privilege
 import core.game.world.repository.Repository
 import core.plugin.Initializable
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 val TUROTH_IDS          = intArrayOf(NPCs.TUROTH_1622, NPCs.TUROTH_1623, NPCs.TUROTH_1626, NPCs.TUROTH_1627, NPCs.TUROTH_1628, NPCs.TUROTH_1629, NPCs.TUROTH_1630)
 val KURASK_IDS          = intArrayOf(NPCs.KURASK_1608, NPCs.KURASK_1609, NPCs.KURASK_4229, NPCs.KURASK_7811)

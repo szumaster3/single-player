@@ -4,7 +4,7 @@ import core.api.playAudio
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.game.world.update.flag.context.Animation
-import org.rs.consts.Animations
+import shared.consts.Animations
 
 /**
  * Represents a generic drinkable consumable.

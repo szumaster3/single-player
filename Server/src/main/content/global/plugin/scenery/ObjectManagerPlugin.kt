@@ -14,8 +14,8 @@ import core.game.world.map.Location
 import core.game.world.map.RegionManager
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.Animations
-import org.rs.consts.Sounds
+import shared.consts.Animations
+import shared.consts.Sounds
 
 /**
  * Plugin used for handling the opening and closing

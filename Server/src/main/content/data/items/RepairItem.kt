@@ -1,7 +1,7 @@
 package content.data.items
 
 import core.game.node.item.Item
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Represents a repairable item, its repaired product, and the repair cost.

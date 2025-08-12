@@ -12,7 +12,7 @@ import core.game.system.task.Pulse
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 @Initializable
 class ElementalRockNPC(

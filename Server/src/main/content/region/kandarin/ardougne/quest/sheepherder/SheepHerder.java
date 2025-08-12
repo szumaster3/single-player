@@ -6,8 +6,8 @@ import core.game.node.entity.player.link.quest.Quest;
 import core.game.node.item.Item;
 import core.game.world.map.Location;
 import core.plugin.Initializable;
-import org.rs.consts.Items;
-import org.rs.consts.Vars;
+import shared.consts.Items;
+import shared.consts.Vars;
 
 import java.util.HashMap;
 

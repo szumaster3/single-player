@@ -9,8 +9,8 @@ import core.game.world.map.RegionManager.getLocalEntitys
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
 import core.plugin.Initializable
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 @Initializable
 class SpiritTzKihNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.SPIRIT_TZ_KIH_7361) :

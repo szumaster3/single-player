@@ -9,9 +9,9 @@ import core.game.node.entity.player.Player
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.tools.DARK_RED
-import org.rs.consts.Animations
-import org.rs.consts.Components
-import org.rs.consts.Scenery
+import shared.consts.Animations
+import shared.consts.Components
+import shared.consts.Scenery
 
 /**
  * Handles the quest shortcut at Lunar isle.

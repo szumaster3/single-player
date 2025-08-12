@@ -6,8 +6,8 @@ import core.game.node.entity.npc.NPCBehavior
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.tools.RandomFunction
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 class ChromaticDragonBehavior : NPCBehavior(*greenDragons, *blueDragons, *redDragons, *blackDragons) {
 

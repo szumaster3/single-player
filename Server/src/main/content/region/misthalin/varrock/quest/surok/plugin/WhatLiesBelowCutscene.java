@@ -22,8 +22,8 @@ import core.net.packet.OutgoingContext;
 import core.net.packet.PacketRepository;
 import core.net.packet.OutgoingContext.CameraType;
 import core.net.packet.out.CameraViewPacket;
-import org.rs.consts.Music;
-import org.rs.consts.Quests;
+import shared.consts.Music;
+import shared.consts.Quests;
 
 import static core.api.ContentAPIKt.removeAttribute;
 import static core.api.ContentAPIKt.setAttribute;

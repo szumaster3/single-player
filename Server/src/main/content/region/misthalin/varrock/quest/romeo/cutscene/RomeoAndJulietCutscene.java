@@ -11,7 +11,7 @@ import core.net.packet.OutgoingContext;
 import core.net.packet.PacketRepository;
 import core.net.packet.out.CameraViewPacket;
 import core.plugin.Initializable;
-import org.rs.consts.Quests;
+import shared.consts.Quests;
 
 /**
  * Handles Romeo and juliet cutscene.

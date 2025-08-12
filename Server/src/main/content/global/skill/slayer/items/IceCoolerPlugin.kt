@@ -10,7 +10,7 @@ import core.game.interaction.InteractionListener
 import core.game.node.entity.combat.ImpactHandler
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.skill.Skills
-import org.rs.consts.Items
+import shared.consts.Items
 
 class IceCoolerPlugin : InteractionListener {
 

@@ -28,7 +28,7 @@ import core.net.packet.PacketRepository;
 import core.net.packet.OutgoingContext.CameraType;
 import core.net.packet.out.CameraViewPacket;
 import core.net.packet.out.MinimapState;
-import org.rs.consts.Quests;
+import shared.consts.Quests;
 
 import static core.api.ContentAPIKt.*;
 

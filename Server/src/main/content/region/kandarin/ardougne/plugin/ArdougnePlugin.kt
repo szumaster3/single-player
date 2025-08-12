@@ -10,9 +10,9 @@ import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.item.Item
-import org.rs.consts.Items
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
+import shared.consts.Items
+import shared.consts.NPCs
+import shared.consts.Quests
 
 class ArdougnePlugin : InteractionListener {
 

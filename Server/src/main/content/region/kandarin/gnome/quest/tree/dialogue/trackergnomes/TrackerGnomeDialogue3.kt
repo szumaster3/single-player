@@ -9,8 +9,8 @@ import core.game.dialogue.FaceAnim
 import core.game.node.entity.player.Player
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
+import shared.consts.NPCs
+import shared.consts.Quests
 
 @Initializable
 class TrackerGnomeDialogue3(player: Player? = null) : Dialogue(player) {

@@ -10,10 +10,10 @@ import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest
 import core.plugin.ClassScanner.definePlugins
 import core.plugin.Initializable
-import org.rs.consts.Components
-import org.rs.consts.Items
-import org.rs.consts.Quests
-import org.rs.consts.Vars
+import shared.consts.Components
+import shared.consts.Items
+import shared.consts.Quests
+import shared.consts.Vars
 
 @Initializable
 class BlackKnightsFortress : Quest(Quests.BLACK_KNIGHTS_FORTRESS, 14, 13, 3, Vars.VARP_QUEST_BLACK_KNIGHTS_FORTRESS_PROGRESS_130, 0, 1, 4) {

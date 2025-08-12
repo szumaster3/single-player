@@ -15,10 +15,10 @@ import core.game.world.map.Location
 import core.game.world.map.zone.ZoneBorders
 import core.game.world.map.zone.ZoneRestriction
 import core.game.world.update.flag.context.Animation
-import org.rs.consts.Components
-import org.rs.consts.Items
-import org.rs.consts.Quests
-import org.rs.consts.Scenery
+import shared.consts.Components
+import shared.consts.Items
+import shared.consts.Quests
+import shared.consts.Scenery
 
 /**
  * Tears of Guthix Activity

@@ -2,8 +2,8 @@ package content.region.kandarin.feldip.gutanoth.plugin
 
 import core.api.utils.WeightBasedTable
 import core.api.utils.WeightedItem
-import org.rs.consts.Items
-import org.rs.consts.Scenery
+import shared.consts.Items
+import shared.consts.Scenery
 
 enum class OgreCoffin(
     val sceneryId: IntArray,

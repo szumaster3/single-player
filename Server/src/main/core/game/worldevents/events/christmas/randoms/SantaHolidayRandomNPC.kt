@@ -8,7 +8,7 @@ import core.game.node.entity.npc.NPC
 import core.game.worldevents.events.HolidayRandomEventNPC
 import core.tools.RandomFunction
 import core.tools.minutesToTicks
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 class SantaHolidayRandomNPC : HolidayRandomEventNPC(NPCs.SANTA_CLAUS_8540) {
     override fun init() {

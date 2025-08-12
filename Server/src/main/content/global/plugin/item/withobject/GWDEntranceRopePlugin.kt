@@ -4,8 +4,8 @@ import core.api.removeItem
 import core.api.setVarbit
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import org.rs.consts.Items
-import org.rs.consts.Scenery
+import shared.consts.Items
+import shared.consts.Scenery
 
 class GWDEntranceRopePlugin : InteractionListener {
     override fun defineListeners() {

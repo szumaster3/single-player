@@ -16,7 +16,7 @@ import core.game.node.entity.player.link.TeleportManager
 import core.game.world.map.Location
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
-import org.rs.consts.*
+import shared.consts.*
 
 /**
  * Represents the Ogre Guards dialogues.

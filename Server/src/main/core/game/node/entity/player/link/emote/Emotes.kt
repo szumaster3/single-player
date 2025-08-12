@@ -12,10 +12,10 @@ import core.game.world.map.Location
 import core.game.world.map.RegionManager.getLocalNpcs
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
-import org.rs.consts.Animations
-import org.rs.consts.Items
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
+import shared.consts.Animations
+import shared.consts.Items
+import shared.consts.NPCs
+import shared.consts.Quests
 
 enum class Emotes(
     val buttonId: Int,
@@ -121,7 +121,7 @@ enum class Emotes(
     HEADBANG(buttonId = 17, animation = Animations.HEADBANG_EMOTE_2108), CRY(
         buttonId = 18, animation = Animations.CRY_860
     ),
-    BLOW_KISS(buttonId = 19, animation = Animations.HUMAN_BLOW_KISS_1374, graphics = org.rs.consts.Graphics.HEART_574), PANIC(
+    BLOW_KISS(buttonId = 19, animation = Animations.HUMAN_BLOW_KISS_1374, graphics = shared.consts.Graphics.HEART_574), PANIC(
         buttonId = 20, animation = Animations.PANIC_2105
     ),
     RASPBERRY(buttonId = 21, animation = Animations.RASPBERRY_2110), CLAP(
@@ -196,7 +196,7 @@ enum class Emotes(
     IDEA(
         buttonId = 33,
         animation = Animations.HUMAN_IDEA_4276,
-        graphics = org.rs.consts.Graphics.LIGHT_BULB_IDEA_EMOTE_712,
+        graphics = shared.consts.Graphics.LIGHT_BULB_IDEA_EMOTE_712,
         lockedMessage = "You can't use this emote yet. Visit the Stronghold of Security to unlock it.",
     ),
     STOMP(
@@ -235,7 +235,7 @@ enum class Emotes(
     ZOMBIE_HAND(
         buttonId = 36,
         animation = Animations.HUMAN_ZOMBIE_HAND_7272,
-        graphics = org.rs.consts.Graphics.ZOMBIE_HAND_EMOTE_TAB_1244,
+        graphics = shared.consts.Graphics.ZOMBIE_HAND_EMOTE_TAB_1244,
         lockedMessage = "This emote can be unlocked during the Gravedigger random event.",
     ),
     SCARED(
@@ -281,25 +281,25 @@ enum class Emotes(
     SAFETY_FIRST(
         buttonId = 42,
         animation = Animations.HUMAN_SAFETY_FIRST_8770,
-        graphics = org.rs.consts.Graphics.SAFETY_FIRST_1553,
+        graphics = shared.consts.Graphics.SAFETY_FIRST_1553,
         lockedMessage = "You can't use this emote yet. Visit the Stronghold of Player safety to unlock it.",
     ),
     EXPLORE(
         buttonId = 43,
         animation = Animations.HUMAN_EXPLORE_9990,
-        graphics = org.rs.consts.Graphics.EXPLORE_EMOTE_1734,
+        graphics = shared.consts.Graphics.EXPLORE_EMOTE_1734,
         lockedMessage = "You can't use this emote yet. You must complete all the Lumbridge and Draynor beginner tasks to unlock it.",
     ),
     TRICK(
         buttonId = 44,
         animation = Animations.HUMAN_TRICK_10530,
-        graphics = org.rs.consts.Graphics.TRICK_1863,
+        graphics = shared.consts.Graphics.TRICK_1863,
         lockedMessage = "This emote can be unlocked by playing a Halloween holiday event.",
     ),
     FREEZE(
         buttonId = 45,
         animation = Animations.HUMAN_FREEZE_MELT_11044,
-        graphics = org.rs.consts.Graphics.FREEZE_EMOTE_1973,
+        graphics = shared.consts.Graphics.FREEZE_EMOTE_1973,
         lockedMessage = "This emote can be unlocked by playing a Christmas holiday event.",
     ),
     GIVE_THANKS(
@@ -317,7 +317,7 @@ enum class Emotes(
                             1 -> forceEmote(
                                 player,
                                 Animation(Animations.GIVE_THANKS_BEGIN_10994),
-                                Graphics(org.rs.consts.Graphics.RANDOM_EVENT_PUFF_OF_SMOKE_86),
+                                Graphics(shared.consts.Graphics.RANDOM_EVENT_PUFF_OF_SMOKE_86),
                             )
 
                             3 -> player.appearance.transformNPC(NPCs.THANKSGIVING_TURKEY_8499).also {
@@ -329,7 +329,7 @@ enum class Emotes(
                                 forceEmote(
                                     player,
                                     Animation(Animations.GIVE_THANKS_END_10995),
-                                    Graphics(org.rs.consts.Graphics.RANDOM_EVENT_PUFF_OF_SMOKE_86),
+                                    Graphics(shared.consts.Graphics.RANDOM_EVENT_PUFF_OF_SMOKE_86),
                                 )
                             }
                         }
@@ -368,146 +368,146 @@ enum class Emotes(
             intArrayOf(
                 Items.ATTACK_CAPE_9747,
                 Items.ATTACK_CAPET_9748,
-                org.rs.consts.Graphics.ATTACK_SKILLCAPE_823,
+                shared.consts.Graphics.ATTACK_SKILLCAPE_823,
                 4959,
             ),
             intArrayOf(
                 Items.STRENGTH_CAPE_9750,
                 Items.STRENGTH_CAPET_9751,
-                org.rs.consts.Graphics.STRENGTH_SKILLCAPE_828,
+                shared.consts.Graphics.STRENGTH_SKILLCAPE_828,
                 4981,
             ),
             intArrayOf(
                 Items.DEFENCE_CAPE_9753,
                 Items.DEFENCE_CAPET_9754,
-                org.rs.consts.Graphics.DEFENCE_SKILLCAPE_824,
+                shared.consts.Graphics.DEFENCE_SKILLCAPE_824,
                 4961,
             ),
             intArrayOf(
                 Items.RANGING_CAPE_9756,
                 Items.RANGING_CAPET_9757,
-                org.rs.consts.Graphics.RANGED_SKILLCAPE_832,
+                shared.consts.Graphics.RANGED_SKILLCAPE_832,
                 4973,
             ),
             intArrayOf(
                 Items.PRAYER_CAPE_9759,
                 Items.PRAYER_CAPET_9760,
-                org.rs.consts.Graphics.PRAYER_SKILLCAPE_829,
+                shared.consts.Graphics.PRAYER_SKILLCAPE_829,
                 4979,
             ),
             intArrayOf(
                 Items.MAGIC_CAPE_9762,
                 Items.MAGIC_CAPET_9763,
-                org.rs.consts.Graphics.MAGIC_SKILLCAPE_813,
+                shared.consts.Graphics.MAGIC_SKILLCAPE_813,
                 4939,
             ),
             intArrayOf(
                 Items.RUNECRAFT_CAPE_9765,
                 Items.RUNECRAFT_CAPET_9766,
-                org.rs.consts.Graphics.RC_SKILLCAPE_817,
+                shared.consts.Graphics.RC_SKILLCAPE_817,
                 4947,
             ),
             intArrayOf(
                 Items.HITPOINTS_CAPE_9768,
                 Items.HITPOINTS_CAPET_9769,
-                org.rs.consts.Graphics.HP_SKILLCAPE_MALE_833,
+                shared.consts.Graphics.HP_SKILLCAPE_MALE_833,
                 4971,
             ),
             intArrayOf(
                 Items.AGILITY_CAPE_9771,
                 Items.AGILITY_CAPET_9772,
-                org.rs.consts.Graphics.AGILITY_SKILLCAPE_830,
+                shared.consts.Graphics.AGILITY_SKILLCAPE_830,
                 4977,
             ),
             intArrayOf(
                 Items.HERBLORE_CAPE_9774,
                 Items.HERBLORE_CAPET_9775,
-                org.rs.consts.Graphics.HERBLORE_SKILLCAPE_835,
+                shared.consts.Graphics.HERBLORE_SKILLCAPE_835,
                 4969,
             ),
             intArrayOf(
                 Items.THIEVING_CAPE_9777,
                 Items.THIEVING_CAPET_9778,
-                org.rs.consts.Graphics.THIEVING_SKILLCAPE_826,
+                shared.consts.Graphics.THIEVING_SKILLCAPE_826,
                 4965,
             ),
             intArrayOf(
                 Items.CRAFTING_CAPE_9780,
                 Items.CRAFTING_CAPET_9781,
-                org.rs.consts.Graphics.CRAFTING_SKILLCAPE_818,
+                shared.consts.Graphics.CRAFTING_SKILLCAPE_818,
                 4949,
             ),
             intArrayOf(
                 Items.FLETCHING_CAPE_9783,
                 Items.FLETCHING_CAPET_9784,
-                org.rs.consts.Graphics.FLETCHING_SKILLCAPE_812,
+                shared.consts.Graphics.FLETCHING_SKILLCAPE_812,
                 4937,
             ),
             intArrayOf(
                 Items.SLAYER_CAPE_9786,
                 Items.SLAYER_CAPET_9787,
-                org.rs.consts.Graphics.SLAYER_ACCOMPLISHMENT_CAPE_1656,
+                shared.consts.Graphics.SLAYER_ACCOMPLISHMENT_CAPE_1656,
                 4967,
             ),
             intArrayOf(
                 Items.CONSTRUCT_CAPE_9789,
                 Items.CONSTRUCT_CAPET_9790,
-                org.rs.consts.Graphics.CON_SKILLCAPE_820,
+                shared.consts.Graphics.CON_SKILLCAPE_820,
                 4953,
             ),
             intArrayOf(
                 Items.MINING_CAPE_9792,
                 Items.MINING_CAPET_9793,
-                org.rs.consts.Graphics.MINING_SKILLCAPE_814,
+                shared.consts.Graphics.MINING_SKILLCAPE_814,
                 4941,
             ),
             intArrayOf(
                 Items.SMITHING_CAPE_9795,
                 Items.SMITHING_CAPET_9796,
-                org.rs.consts.Graphics.SMITHING_SKILLCAPE_815,
+                shared.consts.Graphics.SMITHING_SKILLCAPE_815,
                 4943,
             ),
             intArrayOf(
                 Items.FISHING_CAPE_9798,
                 Items.FISHING_CAPET_9799,
-                org.rs.consts.Graphics.FISHING_SKILLCAPE_819,
+                shared.consts.Graphics.FISHING_SKILLCAPE_819,
                 4951,
             ),
             intArrayOf(
                 Items.COOKING_CAPE_9801,
                 Items.COOKING_CAPET_9802,
-                org.rs.consts.Graphics.COOKING_SKILLCAPE_821,
+                shared.consts.Graphics.COOKING_SKILLCAPE_821,
                 4955,
             ),
             intArrayOf(
                 Items.FIREMAKING_CAPE_9804,
                 Items.FIREMAKING_CAPET_9805,
-                org.rs.consts.Graphics.FIREMAKING_SKILLCAPE_831,
+                shared.consts.Graphics.FIREMAKING_SKILLCAPE_831,
                 4975,
             ),
             intArrayOf(
                 Items.WOODCUTTING_CAPE_9807,
                 Items.WOODCUT_CAPET_9808,
-                org.rs.consts.Graphics.WC_SKILLCAPE_822,
+                shared.consts.Graphics.WC_SKILLCAPE_822,
                 4957,
             ),
             intArrayOf(
                 Items.FARMING_CAPE_9810,
                 Items.FARMING_CAPET_9811,
-                org.rs.consts.Graphics.FARMING_SKILLCAPE_825,
+                shared.consts.Graphics.FARMING_SKILLCAPE_825,
                 4963,
             ),
             intArrayOf(
                 Items.SUMMONING_CAPE_12169,
                 Items.SUMMONING_CAPET_12170,
-                org.rs.consts.Graphics.SUMMONING_SKILLCAPE_EMOTE_1515,
+                shared.consts.Graphics.SUMMONING_SKILLCAPE_EMOTE_1515,
                 8525,
             ),
-            intArrayOf(Items.QUEST_POINT_CAPE_9813, -1, org.rs.consts.Graphics.QUEST_SKILLCAPE_816, 4945),
+            intArrayOf(Items.QUEST_POINT_CAPE_9813, -1, shared.consts.Graphics.QUEST_SKILLCAPE_816, 4945),
             intArrayOf(
                 Items.HUNTER_CAPE_9948,
                 Items.HUNTER_CAPET_9949,
-                org.rs.consts.Graphics.HUNTER_SKILLCAPE_EMOTE_907,
+                shared.consts.Graphics.HUNTER_SKILLCAPE_EMOTE_907,
                 5158,
             ),
         )

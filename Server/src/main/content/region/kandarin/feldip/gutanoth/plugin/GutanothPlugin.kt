@@ -20,7 +20,7 @@ import core.game.world.update.flag.context.Animation
 import core.tools.BLUE
 import core.tools.RandomFunction
 import core.tools.minutesToTicks
-import org.rs.consts.*
+import shared.consts.*
 
 class GutanothPlugin : InteractionListener {
     companion object {

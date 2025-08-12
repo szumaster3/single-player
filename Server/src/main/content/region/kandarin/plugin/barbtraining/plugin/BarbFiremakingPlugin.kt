@@ -21,7 +21,7 @@ import core.game.world.map.RegionManager.getObject
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
 import core.tools.RandomFunction
-import org.rs.consts.Items
+import shared.consts.Items
 import kotlin.math.ceil
 
 class BarbFiremakingPlugin : InteractionListener {
@@ -112,7 +112,7 @@ class BarbFiremakingPlugin : InteractionListener {
 private class BarbFiremakingPulse(player: Player, node: Item, groundItem: GroundItem?, ) : SkillPulse<Item?>(player, node) {
     val tools = SkillingTool.getFiremakingTool(player)
     private val animationId = Animation(tools!!.animation)
-    private val graphicsId = Graphics(org.rs.consts.Graphics.BARBARIAN_FIREMAKING_1169)
+    private val graphicsId = Graphics(shared.consts.Graphics.BARBARIAN_FIREMAKING_1169)
     private val fire = forId(node.id)
     private var groundItem: GroundItem? = null
     private var ticks = 0

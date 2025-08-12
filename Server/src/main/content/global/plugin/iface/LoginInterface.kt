@@ -4,7 +4,7 @@ import core.api.closeInterface
 import core.api.runTask
 import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.info.login.LoginConfiguration
-import org.rs.consts.Components
+import shared.consts.Components
 
 /**
  * Represents the plugin used for the login interface.

@@ -7,8 +7,8 @@ import core.api.sendMessage
 import core.game.container.access.InterfaceContainer
 import core.game.interaction.InterfaceListener
 import core.game.node.item.Item
-import org.rs.consts.Components
-import org.rs.consts.Items
+import shared.consts.Components
+import shared.consts.Items
 
 /**
  * Ticket exchange.

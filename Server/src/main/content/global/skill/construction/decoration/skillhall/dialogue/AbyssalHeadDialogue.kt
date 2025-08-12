@@ -5,7 +5,7 @@ import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
 import core.tools.DARK_RED
 import core.tools.END_DIALOGUE
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 class AbyssalHeadDialogue : DialogueFile() {
     override fun handle(

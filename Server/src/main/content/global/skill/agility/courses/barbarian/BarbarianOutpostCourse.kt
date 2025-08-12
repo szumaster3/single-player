@@ -20,23 +20,23 @@ import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
 import core.plugin.Initializable
-import org.rs.consts.Animations
-import org.rs.consts.Items
-import org.rs.consts.NPCs
-import org.rs.consts.Sounds
-import org.rs.consts.Scenery as Objs
+import shared.consts.Animations
+import shared.consts.Items
+import shared.consts.NPCs
+import shared.consts.Sounds
+import shared.consts.Scenery as Objs
 
 @Initializable
 class BarbarianOutpostCourse : AgilityCourse {
 
     override fun configure() {
-        SceneryDefinition.forId(org.rs.consts.Scenery.GATE_2115).handlers["option:open"] = this
-        SceneryDefinition.forId(org.rs.consts.Scenery.GATE_2116).handlers["option:open"] = this
-        SceneryDefinition.forId(org.rs.consts.Scenery.ROPESWING_2282).handlers["option:swing-on"] = this
-        SceneryDefinition.forId(org.rs.consts.Scenery.LOG_BALANCE_2294).handlers["option:walk-across"] = this
-        SceneryDefinition.forId(org.rs.consts.Scenery.OBSTACLE_NET_20211).handlers["option:climb-over"] = this
-        SceneryDefinition.forId(org.rs.consts.Scenery.BALANCING_LEDGE_2302).handlers["option:walk-across"] = this
-        SceneryDefinition.forId(org.rs.consts.Scenery.CRUMBLING_WALL_1948).handlers["option:climb-over"] = this
+        SceneryDefinition.forId(shared.consts.Scenery.GATE_2115).handlers["option:open"] = this
+        SceneryDefinition.forId(shared.consts.Scenery.GATE_2116).handlers["option:open"] = this
+        SceneryDefinition.forId(shared.consts.Scenery.ROPESWING_2282).handlers["option:swing-on"] = this
+        SceneryDefinition.forId(shared.consts.Scenery.LOG_BALANCE_2294).handlers["option:walk-across"] = this
+        SceneryDefinition.forId(shared.consts.Scenery.OBSTACLE_NET_20211).handlers["option:climb-over"] = this
+        SceneryDefinition.forId(shared.consts.Scenery.BALANCING_LEDGE_2302).handlers["option:walk-across"] = this
+        SceneryDefinition.forId(shared.consts.Scenery.CRUMBLING_WALL_1948).handlers["option:climb-over"] = this
         ItemDefinition.forId(Items.BARCRAWL_CARD_455).handlers["option:read"] = this
         NPCDefinition.forId(NPCs.KHARID_SCORPION_385).handlers["option:pick-up"] = this
         NPCDefinition.forId(NPCs.KHARID_SCORPION_386).handlers["option:pick-up"] = this
@@ -160,7 +160,7 @@ class BarbarianOutpostCourse : AgilityCourse {
                     }
 
                     7 -> {
-                        player.graphics(Graphics.create(org.rs.consts.Graphics.WATER_SPLASH_68))
+                        player.graphics(Graphics.create(shared.consts.Graphics.WATER_SPLASH_68))
                         player.properties.teleportLocation = Location.create(2545, 3545, 0)
                         player.impactHandler.manualHit(player, getHitAmount(player), HitsplatType.NORMAL)
                         AgilityHandler.walk(player, -1, Location.create(2545, 3545, 0), Location.create(2545, 3543, 0), Animation.create(152), 0.0, null)

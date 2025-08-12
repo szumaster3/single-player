@@ -4,7 +4,7 @@ import core.api.*
 import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
-import org.rs.consts.Components
+import shared.consts.Components
 
 private const val BRACELET_INTERFACE_CHILD_ID = 69
 private val COINS = Item(995, 500)

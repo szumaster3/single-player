@@ -10,7 +10,7 @@ import core.game.interaction.InteractionListener
 import core.game.node.entity.player.Player
 import core.tools.DARK_BLUE
 import core.tools.DARK_RED
-import org.rs.consts.Items
+import shared.consts.Items
 
 class BarbarianAssaultGuide : InteractionListener {
 

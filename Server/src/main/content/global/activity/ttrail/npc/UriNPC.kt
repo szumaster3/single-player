@@ -14,8 +14,8 @@ import core.game.world.map.Location
 import core.game.world.map.RegionManager.getSpawnLocation
 import core.plugin.ClassScanner.definePlugin
 import core.plugin.Plugin
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 /**
  * Represents the Uri Molotov NPC.

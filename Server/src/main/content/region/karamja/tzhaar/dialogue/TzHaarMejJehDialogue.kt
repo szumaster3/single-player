@@ -11,8 +11,8 @@ import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.game.world.GameWorld.settings
 import core.plugin.Initializable
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 @Initializable
 class TzHaarMejJehDialogue(player: Player? = null) : Dialogue(player) {

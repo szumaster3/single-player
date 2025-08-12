@@ -13,8 +13,8 @@ import core.game.world.map.RegionManager.isTeleportPermitted
 import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
 import core.tools.RandomFunction
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 @Initializable
 class SpiritSpiderNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.SPIRIT_SPIDER_6841) :

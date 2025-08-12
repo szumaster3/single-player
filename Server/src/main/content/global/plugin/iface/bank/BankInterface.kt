@@ -9,8 +9,8 @@ import core.game.container.Container
 import core.game.dialogue.InputType
 import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.Player
-import org.rs.consts.Components
-import org.rs.consts.Items
+import shared.consts.Components
+import shared.consts.Items
 
 /**
  * Handles player interaction with the bank interface.

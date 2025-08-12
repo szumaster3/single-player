@@ -17,7 +17,7 @@ import core.game.world.map.Location
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.rs.consts.*
+import shared.consts.*
 
 /**
  * Represents utils for [Swept Away quest][content.region.kandarin.quest.swept.SweptAway].
@@ -44,9 +44,9 @@ internal object SweptUtils {
     const val TAKE_FROG_FROM_CRATE_ANIMATION = 10550
     const val TAKE_NEWT_FROM_CRATE_ANIMATION = 10551
 
-    const val NT_CRATE = org.rs.consts.Scenery.WRONGLY_LABELLED_CRATE_NEWTS_AND_TOADS_39336
-    const val N_CRATE = org.rs.consts.Scenery.WRONGLY_LABELLED_CRATE_NEWTS_39335
-    const val T_CRATE = org.rs.consts.Scenery.WRONGLY_LABELLED_CRATE_TOADS_39334
+    const val NT_CRATE = shared.consts.Scenery.WRONGLY_LABELLED_CRATE_NEWTS_AND_TOADS_39336
+    const val N_CRATE = shared.consts.Scenery.WRONGLY_LABELLED_CRATE_NEWTS_39335
+    const val T_CRATE = shared.consts.Scenery.WRONGLY_LABELLED_CRATE_TOADS_39334
 
     val GUS_CRATES =
         intArrayOf(
@@ -64,13 +64,13 @@ internal object SweptUtils {
 
     val CREATURE_PEN =
         intArrayOf(
-            org.rs.consts.Scenery.SNAIL_PEN_39292,
-            org.rs.consts.Scenery.SPIDER_PEN_39297,
-            org.rs.consts.Scenery.BAT_PEN_39287,
-            org.rs.consts.Scenery.BLACKBIRD_PEN_39281,
-            org.rs.consts.Scenery.RAT_PEN_39309,
-            org.rs.consts.Scenery.HOLDING_PEN_39314,
-            org.rs.consts.Scenery.REPTILE_PEN_39303,
+            shared.consts.Scenery.SNAIL_PEN_39292,
+            shared.consts.Scenery.SPIDER_PEN_39297,
+            shared.consts.Scenery.BAT_PEN_39287,
+            shared.consts.Scenery.BLACKBIRD_PEN_39281,
+            shared.consts.Scenery.RAT_PEN_39309,
+            shared.consts.Scenery.HOLDING_PEN_39314,
+            shared.consts.Scenery.REPTILE_PEN_39303,
         )
 
     val CREATURE_PEN_ITEM =
@@ -97,13 +97,13 @@ internal object SweptUtils {
 
     private val PEN_LOCATIONS =
         mapOf(
-            org.rs.consts.Scenery.BAT_PEN_39287 to Location(3222, 4513, 0),
-            org.rs.consts.Scenery.RAT_PEN_39309 to Location(3240, 4513, 0),
-            org.rs.consts.Scenery.REPTILE_PEN_39303 to Location(3240, 4504, 0),
-            org.rs.consts.Scenery.BLACKBIRD_PEN_39281 to Location(3231, 4513, 0),
-            org.rs.consts.Scenery.SPIDER_PEN_39297 to Location(3231, 4504, 0),
-            org.rs.consts.Scenery.SNAIL_PEN_39292 to Location(3222, 4504, 0),
-            org.rs.consts.Scenery.HOLDING_PEN_39314 to Location(3231, 4523, 0),
+            shared.consts.Scenery.BAT_PEN_39287 to Location(3222, 4513, 0),
+            shared.consts.Scenery.RAT_PEN_39309 to Location(3240, 4513, 0),
+            shared.consts.Scenery.REPTILE_PEN_39303 to Location(3240, 4504, 0),
+            shared.consts.Scenery.BLACKBIRD_PEN_39281 to Location(3231, 4513, 0),
+            shared.consts.Scenery.SPIDER_PEN_39297 to Location(3231, 4504, 0),
+            shared.consts.Scenery.SNAIL_PEN_39292 to Location(3222, 4504, 0),
+            shared.consts.Scenery.HOLDING_PEN_39314 to Location(3231, 4523, 0),
         )
 
     /**
@@ -111,18 +111,18 @@ internal object SweptUtils {
      */
     @JvmStatic
     fun spawnBettyBasementNPCs() {
-        CREATURES[org.rs.consts.Scenery.BAT_PEN_39287] =
-            NPC.create(NPCs.BAT_8208, PEN_LOCATIONS[org.rs.consts.Scenery.BAT_PEN_39287]!!)
-        CREATURES[org.rs.consts.Scenery.RAT_PEN_39309] =
-            NPC.create(NPCs.RAT_8209, PEN_LOCATIONS[org.rs.consts.Scenery.RAT_PEN_39309]!!)
-        CREATURES[org.rs.consts.Scenery.REPTILE_PEN_39303] =
-            NPC.create(NPCs.LIZARD_8210, PEN_LOCATIONS[org.rs.consts.Scenery.REPTILE_PEN_39303]!!)
-        CREATURES[org.rs.consts.Scenery.BLACKBIRD_PEN_39281] =
-            NPC.create(NPCs.BLACKBIRD_8211, PEN_LOCATIONS[org.rs.consts.Scenery.BLACKBIRD_PEN_39281]!!)
-        CREATURES[org.rs.consts.Scenery.SPIDER_PEN_39297] =
-            NPC.create(NPCs.SPIDER_8212, PEN_LOCATIONS[org.rs.consts.Scenery.SPIDER_PEN_39297]!!)
-        CREATURES[org.rs.consts.Scenery.SNAIL_PEN_39292] =
-            NPC.create(NPCs.SNAIL_8213, PEN_LOCATIONS[org.rs.consts.Scenery.SNAIL_PEN_39292]!!)
+        CREATURES[shared.consts.Scenery.BAT_PEN_39287] =
+            NPC.create(NPCs.BAT_8208, PEN_LOCATIONS[shared.consts.Scenery.BAT_PEN_39287]!!)
+        CREATURES[shared.consts.Scenery.RAT_PEN_39309] =
+            NPC.create(NPCs.RAT_8209, PEN_LOCATIONS[shared.consts.Scenery.RAT_PEN_39309]!!)
+        CREATURES[shared.consts.Scenery.REPTILE_PEN_39303] =
+            NPC.create(NPCs.LIZARD_8210, PEN_LOCATIONS[shared.consts.Scenery.REPTILE_PEN_39303]!!)
+        CREATURES[shared.consts.Scenery.BLACKBIRD_PEN_39281] =
+            NPC.create(NPCs.BLACKBIRD_8211, PEN_LOCATIONS[shared.consts.Scenery.BLACKBIRD_PEN_39281]!!)
+        CREATURES[shared.consts.Scenery.SPIDER_PEN_39297] =
+            NPC.create(NPCs.SPIDER_8212, PEN_LOCATIONS[shared.consts.Scenery.SPIDER_PEN_39297]!!)
+        CREATURES[shared.consts.Scenery.SNAIL_PEN_39292] =
+            NPC.create(NPCs.SNAIL_8213, PEN_LOCATIONS[shared.consts.Scenery.SNAIL_PEN_39292]!!)
 
         CREATURES.values.forEach { it.init() }
     }

@@ -24,7 +24,7 @@ import core.game.worldevents.WorldEvent
 import core.tools.RandomFunction
 import core.tools.StringUtils
 import core.tools.colorize
-import org.rs.consts.Items
+import shared.consts.Items
 import java.util.*
 
 class EasterEvent : WorldEvent("easter"), TickListener, InteractionListener, LoginListener, Commands {

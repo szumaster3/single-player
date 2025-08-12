@@ -6,7 +6,7 @@ import core.game.interaction.NodeUsageEvent
 import core.game.interaction.UseWithHandler
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 @Initializable
 class RepairItemHandler : UseWithHandler() {

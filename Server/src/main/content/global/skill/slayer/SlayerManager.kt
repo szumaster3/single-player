@@ -9,7 +9,7 @@ import core.game.event.NPCKillEvent
 import core.game.node.entity.Entity
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
-import org.rs.consts.Items
+import shared.consts.Items
 
 class SlayerManager(
     val player: Player? = null,

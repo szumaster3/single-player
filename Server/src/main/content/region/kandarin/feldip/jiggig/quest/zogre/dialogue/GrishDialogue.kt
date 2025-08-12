@@ -9,10 +9,10 @@ import core.game.node.entity.npc.NPC
 import core.tools.BLUE
 import core.tools.DARK_BLUE
 import core.tools.END_DIALOGUE
-import org.rs.consts.Items
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
-import org.rs.consts.Vars
+import shared.consts.Items
+import shared.consts.NPCs
+import shared.consts.Quests
+import shared.consts.Vars
 
 class GrishDialogue : DialogueFile() {
     override fun handle(

@@ -39,7 +39,7 @@ import core.tools.RandomFunction
 import core.tools.colorize
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import org.rs.consts.Items
+import shared.consts.Items
 import java.util.*
 import java.util.concurrent.CountDownLatch
 import kotlin.math.max

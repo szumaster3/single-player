@@ -21,8 +21,8 @@ import core.game.world.map.RegionManager.getNpc
 import core.game.world.map.zone.ZoneBorders
 import core.game.world.update.flag.context.Animation
 import core.tools.RandomFunction
-import org.rs.consts.Items
-import org.rs.consts.Music
+import shared.consts.Items
+import shared.consts.Music
 import java.util.*
 
 /**

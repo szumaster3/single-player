@@ -12,8 +12,8 @@ import core.game.node.scenery.Scenery
 import core.game.world.map.Location
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.Animations
-import org.rs.consts.Items
+import shared.consts.Animations
+import shared.consts.Items
 
 @Initializable
 class KalphiteEntrancePlugin : OptionHandler() {

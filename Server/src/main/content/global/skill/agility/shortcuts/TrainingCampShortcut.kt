@@ -8,8 +8,8 @@ import core.game.system.task.Pulse
 import core.game.world.GameWorld
 import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
-import org.rs.consts.Animations
-import org.rs.consts.Scenery.LOOSE_RAILING_19171
+import shared.consts.Animations
+import shared.consts.Scenery.LOOSE_RAILING_19171
 
 /**
  * Handles the combat training wall shortcut.

@@ -6,7 +6,7 @@ import core.game.bots.Script
 import core.game.bots.SkillingBotAssembler
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
-import org.rs.consts.Items
+import shared.consts.Items
 
 class FletchingBankstander : Script() {
     var state = State.FLETCHING

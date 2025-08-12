@@ -10,8 +10,8 @@ import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
+import shared.consts.NPCs
+import shared.consts.Quests
 
 private const val DWARVEN_MINE_CONDUCTOR = NPCs.CART_CONDUCTOR_2186
 private const val WHITE_WOLF_CONDUCTOR = NPCs.CART_CONDUCTOR_2185

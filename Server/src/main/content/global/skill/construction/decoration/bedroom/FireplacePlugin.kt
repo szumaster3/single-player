@@ -7,9 +7,9 @@ import core.game.interaction.QueueStrength
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.game.node.scenery.SceneryBuilder
-import org.rs.consts.Animations
-import org.rs.consts.Items
-import org.rs.consts.Scenery
+import shared.consts.Animations
+import shared.consts.Items
+import shared.consts.Scenery
 
 class FireplacePlugin : InteractionListener {
     private val animationId = Animations.TINDERBOX_3658

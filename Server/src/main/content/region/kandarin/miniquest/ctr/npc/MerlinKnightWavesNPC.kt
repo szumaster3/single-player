@@ -8,7 +8,7 @@ import core.game.node.entity.player.Player
 import core.game.system.task.Pulse
 import core.game.world.GameWorld.Pulser
 import core.game.world.map.Location
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 /**
  * Represents the Merlin NPC that spawns after the final wave of the miniquest.

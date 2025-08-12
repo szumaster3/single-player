@@ -16,9 +16,9 @@ import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.Animations
-import org.rs.consts.Items
-import org.rs.consts.Sounds
+import shared.consts.Animations
+import shared.consts.Items
+import shared.consts.Sounds
 
 /**
  * Represents the Iban blast spell.
@@ -32,9 +32,9 @@ class IbanBlastSpell : CombatSpell(
     Sounds.FIREWAVE_CAST_AND_FIRE_162,
     Sounds.FIREWAVE_HIT_163,
     Animation(Animations.IBAN_STAFF_708, Priority.HIGH),
-    Graphics(org.rs.consts.Graphics.IBAN_BLAST_CAST_87, 96),
-    SpellProjectile.create(org.rs.consts.Graphics.IBAN_BLAST_PROJECTILE_88),
-    Graphics(org.rs.consts.Graphics.IBAN_BLAST_IMPACT_89, 96),
+    Graphics(shared.consts.Graphics.IBAN_BLAST_CAST_87, 96),
+    SpellProjectile.create(shared.consts.Graphics.IBAN_BLAST_PROJECTILE_88),
+    Graphics(shared.consts.Graphics.IBAN_BLAST_IMPACT_89, 96),
     Runes.FIRE_RUNE.getItem(5),
     Runes.DEATH_RUNE.getItem(1),
 ) {

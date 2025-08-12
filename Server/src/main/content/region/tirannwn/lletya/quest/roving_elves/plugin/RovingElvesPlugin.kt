@@ -15,8 +15,8 @@ import core.game.world.GameWorld.Pulser
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.plugin.Plugin
-import org.rs.consts.Quests
-import org.rs.consts.Scenery
+import shared.consts.Quests
+import shared.consts.Scenery
 
 /**
  * Represents the Roving elves option handler.

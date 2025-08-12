@@ -17,7 +17,7 @@ import core.game.world.map.Location
 import core.game.world.map.zone.ZoneBorders
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
-import org.rs.consts.*
+import shared.consts.*
 import kotlin.random.Random
 
 class MorytaniaPlugin : InteractionListener, MapArea {
@@ -28,7 +28,7 @@ class MorytaniaPlugin : InteractionListener, MapArea {
         private val SWIMMING_ANIMATION = Animation(Animations.SWIMMING_6988)
         private val JUMP_ANIMATION = Animation(Animations.JUMP_OBSTACLE_5355)
         private val FAIL_LOCATION = Location(3439, 3330)
-        private val SPLASH_GFX = Graphics(org.rs.consts.Graphics.WATER_SPLASH_68)
+        private val SPLASH_GFX = Graphics(shared.consts.Graphics.WATER_SPLASH_68)
     }
 
     override fun defineAreaBorders(): Array<ZoneBorders> = arrayOf(ZoneBorders(3426, 3191, 3715, 3588))

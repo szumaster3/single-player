@@ -1,6 +1,6 @@
 /*package content.kingdom.kandarin.quest.handsand
 
-import org.rs.consts.Vars
+import shared.consts.Vars
 import core.api.rewardXP
 import core.api.setVarbit
 import core.game.node.entity.player.Player

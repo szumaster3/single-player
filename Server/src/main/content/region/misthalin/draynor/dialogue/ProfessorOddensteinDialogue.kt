@@ -14,10 +14,10 @@ import core.game.world.repository.Repository.findNPC
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
 import core.plugin.Initializable
-import org.rs.consts.Animations
-import org.rs.consts.Items
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
+import shared.consts.Animations
+import shared.consts.Items
+import shared.consts.NPCs
+import shared.consts.Quests
 
 /**
  * Represents the Professor Oddenstein dialogue.
@@ -338,7 +338,7 @@ class ProfessorOddensteinDialogue(player: Player? = null) : Dialogue(player) {
         private val RUBBER_TUBE = Item(Items.RUBBER_TUBE_276)
         private val ANIMATION = Animation(Animations.HUMAN_MULTI_USE_832)
         private val FACE_LOCATION = Location.create(3112, 3367, 2)
-        private val WEAKEN_START = Graphics(org.rs.consts.Graphics.WEAKEN_CAST_105, 96)
-        private val WEAKEN_END = Graphics(org.rs.consts.Graphics.WEAKEN_IMPACT_107, 96)
+        private val WEAKEN_START = Graphics(shared.consts.Graphics.WEAKEN_CAST_105, 96)
+        private val WEAKEN_END = Graphics(shared.consts.Graphics.WEAKEN_IMPACT_107, 96)
     }
 }

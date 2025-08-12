@@ -9,10 +9,10 @@ import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.item.Item
-import org.rs.consts.Items
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
-import org.rs.consts.Scenery
+import shared.consts.Items
+import shared.consts.NPCs
+import shared.consts.Quests
+import shared.consts.Scenery
 
 class AlkharidPlugin : InteractionListener {
 

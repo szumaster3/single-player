@@ -5,10 +5,10 @@ import core.game.node.entity.combat.spell.Runes
 import core.game.node.entity.impl.Projectile
 import core.game.node.item.Item
 import core.game.world.update.flag.context.Graphics
-import org.rs.consts.Items
-import org.rs.consts.Sounds
+import shared.consts.Items
+import shared.consts.Sounds
 import core.game.node.entity.skill.Skills as Skill
-import org.rs.consts.Graphics as Graphic
+import shared.consts.Graphics as Graphic
 
 /**
  * Represents configuration of gods spells.

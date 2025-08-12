@@ -16,8 +16,8 @@ import core.game.world.GameWorld
 import core.net.packet.OutgoingContext
 import core.net.packet.PacketRepository
 import core.net.packet.out.ContainerPacket
-import org.rs.consts.Components
-import org.rs.consts.Items
+import shared.consts.Components
+import shared.consts.Items
 import java.lang.Integer.max
 import java.lang.Integer.min
 import kotlin.math.ceil

@@ -15,9 +15,9 @@ import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.Animations
-import org.rs.consts.Components
-import org.rs.consts.Items
+import shared.consts.Animations
+import shared.consts.Components
+import shared.consts.Items
 
 @Initializable
 class YanilleGrapple : OptionHandler() {
@@ -102,7 +102,7 @@ class YanilleGrapple : OptionHandler() {
                                         player,
                                         Animation(Animations.FIRE_CROSSBOW_TO_CLIMB_WALL_4455),
                                         Graphics(
-                                            org.rs.consts.Graphics.MITHRIL_GRAPPLE_760,
+                                            shared.consts.Graphics.MITHRIL_GRAPPLE_760,
                                             100,
                                         ),
                                     )

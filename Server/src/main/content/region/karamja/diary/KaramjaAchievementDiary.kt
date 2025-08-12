@@ -11,9 +11,9 @@ import core.game.event.ResourceProducedEvent
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.diary.DiaryType
 import core.game.world.map.zone.ZoneBorders
-import org.rs.consts.Items
-import org.rs.consts.NPCs
-import org.rs.consts.Scenery
+import shared.consts.Items
+import shared.consts.NPCs
+import shared.consts.Scenery
 
 class KaramjaAchievementDiary : DiaryEventHookBase(DiaryType.KARAMJA) {
     companion object {

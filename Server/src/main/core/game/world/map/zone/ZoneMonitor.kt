@@ -9,7 +9,7 @@ import core.game.node.entity.player.link.music.MusicZone
 import core.game.node.entity.player.link.request.RequestType
 import core.game.node.item.Item
 import core.game.world.map.Location
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Handles the zones for an entity.

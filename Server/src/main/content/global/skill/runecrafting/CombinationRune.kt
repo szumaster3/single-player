@@ -1,7 +1,7 @@
 package content.global.skill.runecrafting
 
 import core.game.node.item.Item
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Represents a combination runes.

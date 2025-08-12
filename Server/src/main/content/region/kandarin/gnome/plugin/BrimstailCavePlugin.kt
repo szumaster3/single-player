@@ -8,8 +8,8 @@ import core.game.dialogue.FaceAnim
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.world.map.Location
-import org.rs.consts.NPCs
-import org.rs.consts.Scenery
+import shared.consts.NPCs
+import shared.consts.Scenery
 
 class BrimstailCavePlugin : InteractionListener {
     companion object {

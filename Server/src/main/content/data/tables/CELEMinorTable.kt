@@ -11,7 +11,7 @@ import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.tools.Log
 import core.tools.RandomFunction
-import org.rs.consts.Items
+import shared.consts.Items
 import org.w3c.dom.Element
 import org.w3c.dom.Node
 import java.io.File

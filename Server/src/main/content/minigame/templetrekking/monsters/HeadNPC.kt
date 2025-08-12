@@ -10,7 +10,7 @@ import core.game.system.task.Pulse
 import core.game.world.GameWorld
 import core.game.world.map.Direction
 import core.game.world.map.Location
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 class HeadNPC(
     id: Int = 0,

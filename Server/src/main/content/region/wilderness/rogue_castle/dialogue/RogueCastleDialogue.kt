@@ -4,7 +4,7 @@ import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
 import core.tools.END_DIALOGUE
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 /**
  * Represents the Rogue at Rogue Castle dialogue.

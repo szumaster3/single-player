@@ -10,8 +10,8 @@ import core.game.node.entity.player.link.emote.Emotes.Companion.forId
 import core.game.world.map.zone.ZoneBorders
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
-import org.rs.consts.Animations
-import org.rs.consts.NPCs
+import shared.consts.Animations
+import shared.consts.NPCs
 
 /**
  * Represents an emote-based clue scroll.

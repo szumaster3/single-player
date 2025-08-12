@@ -14,8 +14,8 @@ import core.game.system.task.Pulse
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
-import org.rs.consts.Items
-import org.rs.consts.Sounds
+import shared.consts.Items
+import shared.consts.Sounds
 
 /**
  * Represents enchanted jewellery items and their corresponding teleport options.
@@ -216,7 +216,7 @@ enum class EnchantedJewellery(val options: Array<String>, val locations: Array<L
 
     companion object {
         private val ANIMATION = Animation(9603)
-        private val Graphics = Graphics(org.rs.consts.Graphics.TP_RING_OF_DUELING_1684)
+        private val Graphics = Graphics(shared.consts.Graphics.TP_RING_OF_DUELING_1684)
         val idMap = HashMap<Int, EnchantedJewellery>()
 
         init {

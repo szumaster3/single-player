@@ -7,7 +7,7 @@ import core.game.node.entity.player.link.SpellBookManager.SpellBook
 import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.entity.skill.Skills
 import core.tools.RandomFunction
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Utilities for Slayer-related helper functions.

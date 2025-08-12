@@ -19,7 +19,7 @@ import core.game.world.map.MapDistance
 import core.game.world.map.path.Pathfinder
 import core.game.world.map.zone.ZoneBorders
 import core.tools.RandomFunction
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 class PCRavagerNPC : AbstractNPC {
     private var session: PestControlSession? = null

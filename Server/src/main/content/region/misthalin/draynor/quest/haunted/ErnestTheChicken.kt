@@ -11,10 +11,10 @@ import core.game.node.item.GroundItemManager
 import core.game.node.item.Item
 import core.plugin.ClassScanner.definePlugins
 import core.plugin.Initializable
-import org.rs.consts.Components
-import org.rs.consts.Items
-import org.rs.consts.Quests
-import org.rs.consts.Vars
+import shared.consts.Components
+import shared.consts.Items
+import shared.consts.Quests
+import shared.consts.Vars
 
 /**
  * Represents the Ernest the Chicken quest.

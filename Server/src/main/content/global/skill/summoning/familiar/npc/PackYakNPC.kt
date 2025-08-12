@@ -17,8 +17,8 @@ import core.game.system.config.ItemConfigParser
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
 import core.plugin.Initializable
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 @Initializable
 class PackYakNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.PACK_YAK_6873) :

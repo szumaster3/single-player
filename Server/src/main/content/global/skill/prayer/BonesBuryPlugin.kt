@@ -9,8 +9,8 @@ import core.game.interaction.QueueStrength
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
-import org.rs.consts.Animations
-import org.rs.consts.Sounds
+import shared.consts.Animations
+import shared.consts.Sounds
 
 class BonesBuryPlugin : InteractionListener {
     private val bones = Bones.values().map { it.itemId }.toIntArray()

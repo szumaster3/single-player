@@ -8,8 +8,8 @@ import core.game.interaction.InteractionListener
 import core.game.node.item.GroundItemManager
 import core.game.node.item.Item
 import core.game.world.GameWorld.ticks
-import org.rs.consts.Items
-import org.rs.consts.Scenery
+import shared.consts.Items
+import shared.consts.Scenery
 
 class GoblinDiplomacyPlugin : InteractionListener {
 

@@ -3,7 +3,7 @@ package content.region.karamja.quest.totem.plugin
 import content.data.GameAttributes
 import core.api.*
 import core.game.interaction.InterfaceListener
-import org.rs.consts.Components
+import shared.consts.Components
 
 /**
  * Represents the Combination lock interface.

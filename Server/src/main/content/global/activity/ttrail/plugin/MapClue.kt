@@ -4,9 +4,9 @@ import content.global.activity.ttrail.ClueLevel
 import core.game.world.map.Location
 import core.game.world.map.zone.ZoneBorders
 import core.plugin.Plugin
-import org.rs.consts.Components
-import org.rs.consts.Items
-import org.rs.consts.Scenery
+import shared.consts.Components
+import shared.consts.Items
+import shared.consts.Scenery
 
 /**
  * Represents the emote clues.

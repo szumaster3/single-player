@@ -18,8 +18,8 @@ import core.game.system.task.Pulse
 import core.game.world.GameWorld.Pulser
 import core.game.world.map.zone.MapZone
 import core.game.world.map.zone.ZoneBorders
-import org.rs.consts.Components
-import org.rs.consts.Items
+import shared.consts.Components
+import shared.consts.Items
 import java.util.*
 
 /**

@@ -11,8 +11,8 @@ import core.game.world.update.flag.context.Graphics;
 import core.plugin.Initializable;
 import core.plugin.Plugin;
 import core.tools.RandomFunction;
-import org.rs.consts.Items;
-import org.rs.consts.Sounds;
+import shared.consts.Items;
+import shared.consts.Sounds;
 
 import static core.api.ContentAPIKt.playGlobalAudio;
 
@@ -28,7 +28,7 @@ public final class SliceAndDiceSpecialHandler extends MeleeSwingHandler implemen
 
     private static final Animation ANIMATION = new Animation(10961, Priority.HIGH);
 
-    private static final Graphics GRAPHICS = new Graphics(org.rs.consts.Graphics.DRAGON_CLAW_SPECIAL_1950);
+    private static final Graphics GRAPHICS = new Graphics(shared.consts.Graphics.DRAGON_CLAW_SPECIAL_1950);
 
     @Override
     public Object fireEvent(String identifier, Object... args) {

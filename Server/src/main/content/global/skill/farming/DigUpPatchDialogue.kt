@@ -5,8 +5,8 @@ import core.game.dialogue.Dialogue
 import core.game.interaction.QueueStrength
 import core.game.node.entity.player.Player
 import core.plugin.Initializable
-import org.rs.consts.Animations
-import org.rs.consts.Sounds
+import shared.consts.Animations
+import shared.consts.Sounds
 
 @Initializable
 class DigUpPatchDialogue(

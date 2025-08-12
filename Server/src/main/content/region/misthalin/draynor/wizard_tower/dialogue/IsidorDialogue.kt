@@ -10,8 +10,8 @@ import core.game.world.GameWorld
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
 import core.plugin.Initializable
-import org.rs.consts.NPCs
-import org.rs.consts.Sounds
+import shared.consts.NPCs
+import shared.consts.Sounds
 
 @Initializable
 class IsidorDialogue(player: Player? = null) : Dialogue(player) {

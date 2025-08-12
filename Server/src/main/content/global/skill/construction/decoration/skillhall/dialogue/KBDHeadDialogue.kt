@@ -5,7 +5,7 @@ import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.game.world.GameWorld
 import core.tools.END_DIALOGUE
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 class KBDHeadDialogue : DialogueFile() {
     override fun handle(

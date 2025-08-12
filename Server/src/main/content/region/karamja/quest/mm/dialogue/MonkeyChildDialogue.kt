@@ -5,7 +5,7 @@ import core.api.sendItemDialogue
 import core.api.setAttribute
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
-import org.rs.consts.Items
+import shared.consts.Items
 
 class MonkeyChildFirstDialogue : DialogueFile() {
 

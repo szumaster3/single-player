@@ -7,7 +7,7 @@ import core.game.interaction.InteractionListener
 import core.game.node.item.Item
 import core.game.world.map.Location
 import core.tools.DARK_RED
-import org.rs.consts.*
+import shared.consts.*
 
 class FaladorPlugin : InteractionListener {
     override fun defineListeners() {

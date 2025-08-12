@@ -4,7 +4,7 @@ import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.item.Item
 import core.tools.RandomFunction
-import org.rs.consts.Items
+import shared.consts.Items
 
 class OysterOptionPlugin : InteractionListener {
 

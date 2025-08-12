@@ -5,9 +5,9 @@ import core.api.*
 import core.game.dialogue.FaceAnim
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import org.rs.consts.Items
-import org.rs.consts.NPCs
-import org.rs.consts.Vars
+import shared.consts.Items
+import shared.consts.NPCs
+import shared.consts.Vars
 
 class TheFeudPlugin : InteractionListener {
 

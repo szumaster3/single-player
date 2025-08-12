@@ -3,8 +3,8 @@ package content.region.asgarnia.burthope.quest.hero.dialogue
 import core.api.*
 import core.game.dialogue.DialogueBuilder
 import core.game.dialogue.DialogueBuilderFile
-import org.rs.consts.Items
-import org.rs.consts.Quests
+import shared.consts.Items
+import shared.consts.Quests
 
 /**
  * Represents the Straven dialogue file.

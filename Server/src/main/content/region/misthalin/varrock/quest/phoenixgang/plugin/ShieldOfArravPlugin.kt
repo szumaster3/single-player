@@ -20,8 +20,8 @@ import core.game.world.map.Location
 import core.game.world.map.RegionManager
 import core.game.world.repository.Repository
 import core.plugin.Plugin
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
+import shared.consts.NPCs
+import shared.consts.Quests
 
 class ShieldOfArravPlugin : OptionHandler() {
     @Throws(Throwable::class)
@@ -78,7 +78,7 @@ class ShieldOfArravPlugin : OptionHandler() {
                 sendString(player, "The bearer of this certificate has brought both halves of the legendary Shield of Arrav to me, Halg Halen...", componentId, 2)
             }
 
-            2400 -> SceneryBuilder.replace(node as Scenery, node.transform(org.rs.consts.Scenery.CUPBOARD_2401))
+            2400 -> SceneryBuilder.replace(node as Scenery, node.transform(shared.consts.Scenery.CUPBOARD_2401))
 
             2401 ->
                 when (option) {

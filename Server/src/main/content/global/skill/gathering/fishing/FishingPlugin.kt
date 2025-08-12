@@ -18,8 +18,8 @@ import core.game.system.command.sets.STATS_FISH
 import core.game.world.GameWorld
 import core.game.world.map.path.Pathfinder
 import core.tools.RandomFunction
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 class FishingPlugin : InteractionListener {
     override fun defineListeners() {

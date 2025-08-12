@@ -12,8 +12,8 @@ import core.game.world.map.Direction
 import core.game.world.map.Location
 import core.game.world.map.zone.ZoneBorders
 import core.game.world.map.zone.ZoneRestriction
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
+import shared.consts.NPCs
+import shared.consts.Quests
 
 /**
  * Represents the Phoenix Lair area.

@@ -5,9 +5,9 @@ import core.api.sendMessage
 import core.api.sendPlayerDialogue
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
-import org.rs.consts.Scenery
+import shared.consts.NPCs
+import shared.consts.Quests
+import shared.consts.Scenery
 
 class WitchPotionPlugin: InteractionListener {
     override fun defineListeners() {

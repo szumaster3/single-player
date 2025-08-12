@@ -1,6 +1,6 @@
 package content.global.skill.farming
 
-import org.rs.consts.Items
+import shared.consts.Items
 
 enum class BasketsAndSacks(
     val produceID: Int,

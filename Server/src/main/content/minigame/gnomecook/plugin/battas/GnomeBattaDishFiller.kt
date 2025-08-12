@@ -5,7 +5,7 @@ import core.game.interaction.UseWithHandler
 import core.game.node.item.Item
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.Items
+import shared.consts.Items
 
 private const val GIANNE_DOUGH = 2171
 private const val BATTA_MOULD = 2164

@@ -10,7 +10,7 @@ import core.game.node.Node
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.game.world.map.zone.ZoneBorders
-import org.rs.consts.Items
+import shared.consts.Items
 
 @PlayerCompatible
 @ScriptName("Falador Coal Miner")

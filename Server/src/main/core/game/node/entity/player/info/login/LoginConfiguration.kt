@@ -20,8 +20,8 @@ import core.net.packet.out.Interface
 import core.plugin.Plugin
 import core.tools.Log
 import core.tools.colorize
-import org.rs.consts.Components
-import org.rs.consts.Quests
+import shared.consts.Components
+import shared.consts.Quests
 import java.util.*
 import java.util.concurrent.TimeUnit
 import java.util.stream.IntStream

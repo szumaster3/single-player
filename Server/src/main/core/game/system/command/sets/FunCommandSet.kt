@@ -21,7 +21,7 @@ import core.game.world.update.flag.context.Graphics
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import core.tools.RandomFunction
-import org.rs.consts.Sounds
+import shared.consts.Sounds
 import java.awt.HeadlessException
 import java.awt.Toolkit
 import java.awt.datatransfer.StringSelection

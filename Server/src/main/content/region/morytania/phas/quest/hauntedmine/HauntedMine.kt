@@ -7,9 +7,9 @@ import core.api.rewardXP
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest
 import core.game.node.entity.skill.Skills
-import org.rs.consts.Items
-import org.rs.consts.Quests
-import org.rs.consts.Vars
+import shared.consts.Items
+import shared.consts.Quests
+import shared.consts.Vars
 
 class HauntedMine : Quest(Quests.HAUNTED_MINE, 73, 72, 2, Vars.VARP_QUEST_HAUNTED_MINE_PROGRESS_382, 0, 1, 11) {
     override fun drawJournal(

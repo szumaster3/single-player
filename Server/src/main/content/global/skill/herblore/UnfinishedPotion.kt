@@ -1,6 +1,6 @@
 package content.global.skill.herblore
 
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Enum representing unfinished potions used in Herblore.

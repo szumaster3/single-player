@@ -10,9 +10,9 @@ import core.game.node.item.Item
 import core.net.packet.OutgoingContext
 import core.net.packet.PacketRepository
 import core.net.packet.out.ContainerPacket
-import org.rs.consts.Components
-import org.rs.consts.Items
-import org.rs.consts.Scenery
+import shared.consts.Components
+import shared.consts.Items
+import shared.consts.Scenery
 import kotlin.math.abs
 
 /**

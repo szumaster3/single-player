@@ -2,8 +2,8 @@ package content.minigame.troublebrewing
 
 import core.api.inInventory
 import core.game.node.entity.player.Player
-import org.rs.consts.Items
-import org.rs.consts.Quests
+import shared.consts.Items
+import shared.consts.Quests
 
 object MosleUtils {
 

@@ -7,8 +7,8 @@ import core.game.node.entity.player.Player
 import core.game.node.entity.skill.SkillBonus
 import core.game.node.entity.skill.Skills
 import core.plugin.Initializable
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 @Initializable
 class SpiritKyattNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.SPIRIT_KYATT_7366) :

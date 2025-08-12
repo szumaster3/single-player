@@ -8,8 +8,8 @@ import core.game.system.task.Pulse
 import core.game.world.map.RegionManager
 import core.game.world.update.flag.context.Graphics
 import core.tools.RandomFunction
-import org.rs.consts.Items
-import org.rs.consts.Sounds
+import shared.consts.Items
+import shared.consts.Sounds
 
 object NSUtils {
     fun flagFungusPlaced(player: Player) {
@@ -58,7 +58,7 @@ object NSUtils {
                                 visualize(
                                     attacker,
                                     -1,
-                                    Graphics(org.rs.consts.Graphics.FIRST_CONTACT_GOES_WITH_ABOVE_269, 125),
+                                    Graphics(shared.consts.Graphics.FIRST_CONTACT_GOES_WITH_ABOVE_269, 125),
                                 )
                             }
                             3 -> {
@@ -131,7 +131,7 @@ object NSUtils {
         val aroundPlayer = player.location.getSurroundingTiles()
         for (location in aroundPlayer) {
             player.packetDispatch.sendGlobalPositionGraphic(
-                org.rs.consts.Graphics.SMALLS_STARS_SILVER_SICKLEB_263,
+                shared.consts.Graphics.SMALLS_STARS_SILVER_SICKLEB_263,
                 location,
             )
         }

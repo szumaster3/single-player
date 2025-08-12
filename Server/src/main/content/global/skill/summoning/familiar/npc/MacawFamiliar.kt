@@ -15,8 +15,8 @@ import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 @Initializable
 class MacawFamiliar(owner: Player? = null, id: Int = NPCs.MACAW_6851, ) : Forager(owner, id, 3100, Items.MACAW_POUCH_12071, 12, *HERBS_IDS) {

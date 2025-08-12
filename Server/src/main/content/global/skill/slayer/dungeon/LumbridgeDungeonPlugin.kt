@@ -21,7 +21,7 @@ import core.plugin.ClassScanner
 import core.plugin.Initializable
 import core.plugin.Plugin
 import core.tools.RandomFunction
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 @Initializable
 class LumbridgeDungeonPlugin : MapZone("lumbridge swamp dungeon", true), Plugin<Any?> {

@@ -8,7 +8,7 @@ import core.game.node.entity.skill.Skills
 import core.game.system.task.Pulse
 import core.game.world.GameWorld
 import core.game.world.map.Location
-import org.rs.consts.*
+import shared.consts.*
 
 class GodwarsEntrancePlugin : InteractionListener {
     override fun defineListeners() {

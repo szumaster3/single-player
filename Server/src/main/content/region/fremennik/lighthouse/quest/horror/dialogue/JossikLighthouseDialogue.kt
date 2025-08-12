@@ -7,8 +7,8 @@ import core.api.sendMessage
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
+import shared.consts.NPCs
+import shared.consts.Quests
 
 /**
  * Represents the Jossik dialogue under lighthouse.

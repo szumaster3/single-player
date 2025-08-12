@@ -10,10 +10,10 @@ import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.TeleportManager
 import core.game.node.entity.skill.Skills
 import core.game.world.map.Location
-import org.rs.consts.Animations
-import org.rs.consts.Quests
-import org.rs.consts.Scenery
-import org.rs.consts.Sounds
+import shared.consts.Animations
+import shared.consts.Quests
+import shared.consts.Scenery
+import shared.consts.Sounds
 
 class PrayerAltarPlugin : InteractionListener {
     override fun defineListeners() {

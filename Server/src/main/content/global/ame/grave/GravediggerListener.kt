@@ -10,7 +10,7 @@ import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.game.world.map.zone.ZoneBorders
 import core.game.world.update.flag.context.Animation
-import org.rs.consts.*
+import shared.consts.*
 
 /**
  * Handles interactions for Gravedigger random event.

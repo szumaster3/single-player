@@ -12,7 +12,7 @@ import core.game.node.entity.player.link.TeleportManager
 import core.game.system.task.Pulse
 import core.game.world.map.Location
 import core.game.world.repository.Repository
-import org.rs.consts.*
+import shared.consts.*
 
 class TutorialPlugin : InteractionListener {
 

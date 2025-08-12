@@ -1,8 +1,8 @@
 package content.global.skill.construction.servants
 
 import core.game.node.item.Item
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 enum class ServantType(
     val id: Int,

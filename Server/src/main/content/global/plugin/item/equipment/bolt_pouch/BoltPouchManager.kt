@@ -8,7 +8,7 @@ import core.api.sendMessage
 import core.game.container.Container
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * TODO: Find the source, learn and rewrite it.

@@ -1,7 +1,7 @@
 package content.global.activity.penguinhns
 
 import core.game.world.map.Location
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 /**
  * Represents all possible penguins for the Penguin Hunter activity.

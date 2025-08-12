@@ -5,8 +5,8 @@ import core.api.sendItemDialogue
 import core.api.setQuestStage
 import core.game.dialogue.DialogueFile
 import core.tools.END_DIALOGUE
-import org.rs.consts.Items
-import org.rs.consts.Quests
+import shared.consts.Items
+import shared.consts.Quests
 
 class LumdoDialogue : DialogueFile() {
     override fun handle(

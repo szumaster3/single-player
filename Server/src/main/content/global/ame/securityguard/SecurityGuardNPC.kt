@@ -8,8 +8,8 @@ import core.game.dialogue.SequenceDialogue.dialogue
 import core.game.node.entity.Entity
 import core.game.node.entity.npc.NPC
 import core.game.system.timer.impl.AntiMacro
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 /**
  * Represents the Security guard NPC.

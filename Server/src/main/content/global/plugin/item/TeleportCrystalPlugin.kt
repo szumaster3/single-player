@@ -9,8 +9,8 @@ import core.game.node.entity.player.link.TeleportManager.TeleportType
 import core.game.node.item.Item
 import core.game.world.map.Location
 import core.game.world.map.zone.impl.WildernessZone
-import org.rs.consts.Items
-import org.rs.consts.Quests
+import shared.consts.Items
+import shared.consts.Quests
 
 class TeleportCrystalPlugin : InteractionListener {
 

@@ -2,7 +2,7 @@ package content.global.skill.construction.items
 
 import core.game.node.entity.player.Player
 import core.tools.RandomFunction
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Represents different types of nails.

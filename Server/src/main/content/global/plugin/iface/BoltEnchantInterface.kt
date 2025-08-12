@@ -7,10 +7,10 @@ import core.game.interaction.QueueStrength
 import core.game.node.entity.combat.spell.Runes
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
-import org.rs.consts.Animations
-import org.rs.consts.Components
-import org.rs.consts.Items
-import org.rs.consts.Sounds
+import shared.consts.Animations
+import shared.consts.Components
+import shared.consts.Items
+import shared.consts.Sounds
 
 /**
  * Represents the bolt enchant interface.

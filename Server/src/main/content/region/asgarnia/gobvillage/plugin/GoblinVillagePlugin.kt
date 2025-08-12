@@ -7,8 +7,8 @@ import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.combat.DeathTask
 import core.game.world.map.RegionManager.getLocalNpcs
-import org.rs.consts.NPCs
-import org.rs.consts.Scenery
+import shared.consts.NPCs
+import shared.consts.Scenery
 
 class GoblinVillagePlugin: InteractionListener {
 

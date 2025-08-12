@@ -7,8 +7,8 @@ import core.api.*
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.skill.Skills
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 class ToyMousePlugin : InteractionListener {
     override fun defineListeners() {

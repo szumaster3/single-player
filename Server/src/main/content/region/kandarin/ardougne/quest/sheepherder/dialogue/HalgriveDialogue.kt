@@ -8,9 +8,9 @@ import core.api.getQuestStage
 import core.game.dialogue.Dialogue
 import core.game.node.entity.player.Player
 import core.plugin.Initializable
-import org.rs.consts.Items
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
+import shared.consts.Items
+import shared.consts.NPCs
+import shared.consts.Quests
 
 @Initializable
 class HalgriveDialogue(player: Player? = null) : Dialogue(player) {

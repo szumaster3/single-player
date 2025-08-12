@@ -3,7 +3,7 @@ package content.region.misthalin.varrock.quest.soulbane.plugin
 import core.api.sendDialogueLines
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import org.rs.consts.Scenery
+import shared.consts.Scenery
 
 class ASoulsBanePlugin : InteractionListener {
     override fun defineListeners() {

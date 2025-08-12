@@ -1,6 +1,6 @@
 package content.global.skill.construction.items
 
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Represents different types of planks.

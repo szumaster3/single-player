@@ -16,8 +16,8 @@ import core.net.packet.PacketRepository;
 import core.net.packet.out.CameraViewPacket;
 import core.plugin.Initializable;
 import kotlin.Unit;
-import org.rs.consts.Animations;
-import org.rs.consts.Components;
+import shared.consts.Animations;
+import shared.consts.Components;
 
 import static core.api.ContentAPIKt.*;
 

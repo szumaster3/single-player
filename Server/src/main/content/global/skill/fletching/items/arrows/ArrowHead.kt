@@ -1,6 +1,6 @@
 package content.global.skill.fletching.items.arrows
 
-import org.rs.consts.Items
+import shared.consts.Items
 
 enum class ArrowHead(val unfinished: Int, val finished: Int, val level: Int, val experience: Double) {
     BRONZE_ARROW(Items.BRONZE_ARROWTIPS_39, Items.BRONZE_ARROW_882, 1, 1.3),

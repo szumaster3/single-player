@@ -4,7 +4,7 @@ import core.api.getQuestStage
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.tools.END_DIALOGUE
-import org.rs.consts.Quests
+import shared.consts.Quests
 
 class MonasteryMonkDialogueFile : DialogueFile() {
     override fun handle(

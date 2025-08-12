@@ -4,7 +4,7 @@ import core.api.openNpcShop
 import core.game.dialogue.Dialogue
 import core.game.node.entity.player.Player
 import core.plugin.Initializable
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 /**
  * Represents the Roachey dialogue.

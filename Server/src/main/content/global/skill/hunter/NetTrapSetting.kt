@@ -9,7 +9,7 @@ import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.game.node.scenery.SceneryBuilder
 import core.game.world.update.flag.context.Animation
-import org.rs.consts.Scenery
+import shared.consts.Scenery
 
 class NetTrapSetting :
     TrapSetting(

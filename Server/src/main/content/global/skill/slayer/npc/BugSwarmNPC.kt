@@ -7,7 +7,7 @@ import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.game.world.map.Location
 import core.plugin.Initializable
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * The type Bug swarm npc.

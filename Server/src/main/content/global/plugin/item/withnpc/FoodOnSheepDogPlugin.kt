@@ -6,9 +6,9 @@ import content.global.skill.prayer.Bones
 import core.api.*
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import org.rs.consts.Animations
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Animations
+import shared.consts.Items
+import shared.consts.NPCs
 
 class FoodOnSheepDogPlugin : InteractionListener {
 

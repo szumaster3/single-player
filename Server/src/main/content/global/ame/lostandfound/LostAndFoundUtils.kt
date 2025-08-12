@@ -9,7 +9,7 @@ import core.game.node.scenery.Scenery
 import core.game.world.GameWorld
 import core.game.world.map.Location
 import core.tools.RandomFunction
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Utils for Lost And Found random event.

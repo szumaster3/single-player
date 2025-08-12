@@ -10,8 +10,8 @@ import core.game.world.GameWorld.settings
 import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
-import org.rs.consts.Animations
-import org.rs.consts.NPCs
+import shared.consts.Animations
+import shared.consts.NPCs
 
 /**
  * Represents the Party Pete dialogue.

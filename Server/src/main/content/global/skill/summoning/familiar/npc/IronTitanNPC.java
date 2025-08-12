@@ -13,8 +13,8 @@ import core.game.world.update.flag.context.Animation;
 import core.game.world.update.flag.context.Graphics;
 import core.plugin.Initializable;
 import core.tools.RandomFunction;
-import org.rs.consts.Items;
-import org.rs.consts.NPCs;
+import shared.consts.Items;
+import shared.consts.NPCs;
 
 @Initializable
 public class IronTitanNPC extends content.global.skill.summoning.familiar.Familiar {

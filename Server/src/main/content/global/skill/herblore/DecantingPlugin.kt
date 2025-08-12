@@ -7,8 +7,8 @@ import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.interaction.QueueStrength
 import core.game.node.item.Item
-import org.rs.consts.Items
-import org.rs.consts.Sounds
+import shared.consts.Items
+import shared.consts.Sounds
 
 class DecantingPlugin : InteractionListener {
 

@@ -7,8 +7,8 @@ import core.game.node.entity.combat.equipment.WeaponInterface
 import core.game.node.entity.player.Player
 import core.game.node.scenery.Scenery
 import core.plugin.Initializable
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 @Initializable
 class HydraNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.HYDRA_6811) :

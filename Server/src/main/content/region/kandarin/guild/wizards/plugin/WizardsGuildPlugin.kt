@@ -14,9 +14,9 @@ import core.game.interaction.InteractionListener
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.skill.Skills
 import core.game.world.map.Location
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
-import org.rs.consts.Scenery
+import shared.consts.NPCs
+import shared.consts.Quests
+import shared.consts.Scenery
 
 class WizardsGuildPlugin : InteractionListener {
     override fun defineListeners() {

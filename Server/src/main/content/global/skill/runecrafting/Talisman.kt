@@ -2,7 +2,7 @@ package content.global.skill.runecrafting
 
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Represents the various talismans used in Runecrafting.

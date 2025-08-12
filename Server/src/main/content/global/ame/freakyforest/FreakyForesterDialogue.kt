@@ -5,8 +5,8 @@ import core.api.*
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.tools.END_DIALOGUE
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 /**
  * Represents the Freaky forester random event dialogue.

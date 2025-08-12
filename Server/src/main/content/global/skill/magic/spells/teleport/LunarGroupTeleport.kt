@@ -9,9 +9,9 @@ import core.game.node.entity.player.link.TeleportManager
 import core.game.node.item.Item
 import core.game.world.map.Location
 import core.game.world.map.RegionManager
-import org.rs.consts.Components
-import org.rs.consts.Items
-import org.rs.consts.Sounds
+import shared.consts.Components
+import shared.consts.Items
+import shared.consts.Sounds
 
 class LunarGroupTeleport : SpellListener("lunar") {
     override fun defineListeners() {

@@ -6,7 +6,7 @@ import core.game.node.entity.player.link.emote.Emotes
 import core.game.world.map.zone.ZoneBorders
 import core.plugin.ClassScanner.definePlugin
 import core.plugin.Plugin
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Represents the emote clues plugin.

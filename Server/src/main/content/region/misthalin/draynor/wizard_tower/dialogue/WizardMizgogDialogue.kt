@@ -17,7 +17,7 @@ import core.game.system.task.Pulse
 import core.game.world.map.Location
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
-import org.rs.consts.*
+import shared.consts.*
 
 /**
  * # Relations [Imp Catcher quest][content.region.misthalin.quest.imp.ImpCatcher]
@@ -115,12 +115,12 @@ class WizardMizgogDialogue(player: Player? = null) : Dialogue(player) {
                                     playAudio(player!!, Sounds.CURSE_LIFT_1634, 0, 0, player.location)
                                     replaceScenery(
                                         toReplace = Scenery(
-                                            org.rs.consts.Scenery.TABLE_16169,
+                                            shared.consts.Scenery.TABLE_16169,
                                             Location(3102, 3163, 2),
                                             10,
                                             1
                                         ),
-                                        with = org.rs.consts.Scenery.TABLE_16170,
+                                        with = shared.consts.Scenery.TABLE_16170,
                                         forTicks = 80
                                     )
                                 }

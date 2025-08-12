@@ -7,7 +7,7 @@ import core.game.component.Component;
 import core.game.diary.DiaryLevel;
 import core.game.node.entity.player.Player;
 import core.game.node.item.Item;
-import org.rs.consts.Components;
+import shared.consts.Components;
 
 import java.util.ArrayList;
 import java.util.Arrays;

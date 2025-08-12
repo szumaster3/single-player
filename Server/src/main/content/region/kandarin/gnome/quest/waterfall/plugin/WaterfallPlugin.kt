@@ -23,7 +23,7 @@ import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.plugin.ClassScanner.definePlugin
 import core.plugin.Plugin
-import org.rs.consts.Quests
+import shared.consts.Quests
 
 class WaterfallPlugin : OptionHandler() {
     override fun newInstance(arg: Any?): Plugin<Any> {

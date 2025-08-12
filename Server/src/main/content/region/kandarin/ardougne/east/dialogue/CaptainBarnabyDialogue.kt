@@ -6,7 +6,7 @@ import core.game.dialogue.DialogueFile
 import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.item.Item
 import core.tools.END_DIALOGUE
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Represents dialogue extension for Captain barnaby who takes players

@@ -7,9 +7,9 @@ import core.game.node.Node
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.game.system.task.Pulse
-import org.rs.consts.Animations
-import org.rs.consts.Items
-import org.rs.consts.Scenery
+import shared.consts.Animations
+import shared.consts.Items
+import shared.consts.Scenery
 
 /**
  * Handles the logic for filling containers (buckets and sandbags) with sand from sandpits or sand piles.

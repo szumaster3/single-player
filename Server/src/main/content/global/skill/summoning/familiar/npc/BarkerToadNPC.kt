@@ -6,8 +6,8 @@ import core.game.node.entity.combat.equipment.WeaponInterface
 import core.game.node.entity.player.Player
 import core.game.world.update.flag.context.Graphics
 import core.plugin.Initializable
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 @Initializable
 class BarkerToadNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.BARKER_TOAD_6889) :

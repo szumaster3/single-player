@@ -8,8 +8,8 @@ import core.api.setAttribute
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.system.timer.impl.AntiMacro
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 /**
  * Handles interaction with strange plant NPC.

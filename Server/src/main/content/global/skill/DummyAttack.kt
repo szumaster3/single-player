@@ -9,7 +9,7 @@ import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.Scenery
+import shared.consts.Scenery
 
 @Initializable
 class DummyAttack : OptionHandler() {

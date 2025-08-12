@@ -15,9 +15,9 @@ import core.game.world.map.Direction
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.tools.RandomFunction
-import org.rs.consts.Animations
-import org.rs.consts.Items
-import org.rs.consts.Sounds
+import shared.consts.Animations
+import shared.consts.Items
+import shared.consts.Sounds
 import java.util.concurrent.TimeUnit
 
 class PitfallPlugin : InteractionListener {
@@ -27,11 +27,11 @@ class PitfallPlugin : InteractionListener {
 
     private val pitIds =
         listOf(
-            org.rs.consts.Scenery.PIT_19227,
-            org.rs.consts.Scenery.SPIKED_PIT_19228,
-            org.rs.consts.Scenery.COLLAPSED_TRAP_19231,
-            org.rs.consts.Scenery.COLLAPSED_TRAP_19232,
-            org.rs.consts.Scenery.COLLAPSED_TRAP_19233,
+            shared.consts.Scenery.PIT_19227,
+            shared.consts.Scenery.SPIKED_PIT_19228,
+            shared.consts.Scenery.COLLAPSED_TRAP_19231,
+            shared.consts.Scenery.COLLAPSED_TRAP_19232,
+            shared.consts.Scenery.COLLAPSED_TRAP_19233,
         )
 
     override fun defineListeners() {
@@ -41,7 +41,7 @@ class PitfallPlugin : InteractionListener {
             return@setDest dst
         }
 
-        on(org.rs.consts.Scenery.PIT_19227, IntType.SCENERY, "trap") { player, node ->
+        on(shared.consts.Scenery.PIT_19227, IntType.SCENERY, "trap") { player, node ->
             val pit = node as Scenery
             if (getStatLevel(player, Skills.HUNTER) < 31) {
                 sendMessage(player, "You need a hunter level of 31 to set a pitfall trap.")
@@ -84,7 +84,7 @@ class PitfallPlugin : InteractionListener {
             return@on true
         }
 
-        on(org.rs.consts.Scenery.SPIKED_PIT_19228, IntType.SCENERY, "jump") { player, node ->
+        on(shared.consts.Scenery.SPIKED_PIT_19228, IntType.SCENERY, "jump") { player, node ->
             val pit = node as Scenery
             val src = player.location
             val dir = Pitfall.pitJumpSpots(pit.location)!![src]
@@ -109,27 +109,27 @@ class PitfallPlugin : InteractionListener {
             return@on true
         }
 
-        on(org.rs.consts.Scenery.SPIKED_PIT_19228, IntType.SCENERY, "dismantle") { player, node ->
+        on(shared.consts.Scenery.SPIKED_PIT_19228, IntType.SCENERY, "dismantle") { player, node ->
             dismantlePit(player, node as Scenery)
             return@on true
         }
 
         handleDismantlePit(
-            pitId = org.rs.consts.Scenery.COLLAPSED_TRAP_19232,
+            pitId = shared.consts.Scenery.COLLAPSED_TRAP_19232,
             goodFur = Items.LARUPIA_FUR_10095,
             badFur = Items.TATTY_LARUPIA_FUR_10093,
             name = "larupia",
             xp = 180.0,
         )
         handleDismantlePit(
-            pitId = org.rs.consts.Scenery.COLLAPSED_TRAP_19231,
+            pitId = shared.consts.Scenery.COLLAPSED_TRAP_19231,
             goodFur = Items.GRAAHK_FUR_10099,
             badFur = Items.TATTY_GRAAHK_FUR_10097,
             name = "graahk",
             xp = 240.0,
         )
         handleDismantlePit(
-            pitId = org.rs.consts.Scenery.COLLAPSED_TRAP_19233,
+            pitId = shared.consts.Scenery.COLLAPSED_TRAP_19233,
             goodFur = Items.KYATT_FUR_10103,
             badFur = Items.TATTY_KYATT_FUR_10101,
             name = "kyatt",

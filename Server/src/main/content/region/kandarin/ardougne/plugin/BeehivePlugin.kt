@@ -6,7 +6,7 @@ import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.combat.ImpactHandler
 import core.game.node.item.Item
-import org.rs.consts.Items
+import shared.consts.Items
 
 class BeehivePlugin : InteractionListener {
 
@@ -16,7 +16,7 @@ class BeehivePlugin : InteractionListener {
          * Handle interaction with the beehive.
          */
 
-        on(org.rs.consts.Scenery.BEEHIVE_68, IntType.SCENERY, "take-from", "take-honey") { player, _ ->
+        on(shared.consts.Scenery.BEEHIVE_68, IntType.SCENERY, "take-from", "take-honey") { player, _ ->
             if (!inInventory(player, Items.INSECT_REPELLENT_28, 1)) {
                 sendMessage(player, "The bees fly out of the hive and sting you!")
                 impact(player, 2, ImpactHandler.HitsplatType.NORMAL, 1)
@@ -49,7 +49,7 @@ class BeehivePlugin : InteractionListener {
          * Handle using insect repellent or bucket with Beehive.
          */
 
-        onUseWith(IntType.SCENERY, intArrayOf(Items.INSECT_REPELLENT_28, Items.BUCKET_1925), org.rs.consts.Scenery.BEEHIVE_68) { player, used, _ ->
+        onUseWith(IntType.SCENERY, intArrayOf(Items.INSECT_REPELLENT_28, Items.BUCKET_1925), shared.consts.Scenery.BEEHIVE_68) { player, used, _ ->
             val usedItem = used.asItem() ?: return@onUseWith true
 
             when (usedItem.id) {

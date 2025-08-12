@@ -6,7 +6,7 @@ import core.api.setVarbit
 import core.game.node.entity.Entity
 import core.game.node.entity.player.Player
 import core.game.world.map.zone.ZoneBorders
-import org.rs.consts.Vars
+import shared.consts.Vars
 
 class Yanille : MapArea {
 

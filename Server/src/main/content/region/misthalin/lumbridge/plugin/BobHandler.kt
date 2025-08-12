@@ -7,7 +7,7 @@ import core.game.interaction.UseWithHandler
 import core.plugin.ClassScanner.definePlugin
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 @Initializable
 class BobHandler :

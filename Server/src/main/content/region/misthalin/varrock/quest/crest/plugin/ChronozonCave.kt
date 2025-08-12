@@ -11,9 +11,9 @@ import core.game.world.map.zone.ZoneBorders
 import core.game.world.map.zone.ZoneBuilder
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.Items
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
+import shared.consts.Items
+import shared.consts.NPCs
+import shared.consts.Quests
 
 @Initializable
 class ChronozonCave :

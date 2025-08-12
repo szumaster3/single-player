@@ -4,8 +4,8 @@ import core.api.getVarbit
 import core.api.sendString
 import core.game.interaction.InterfaceListener
 import core.tools.colorize
-import org.rs.consts.Components
-import org.rs.consts.Vars
+import shared.consts.Components
+import shared.consts.Vars
 
 class KudosInterface : InterfaceListener {
     override fun defineInterfaceListeners() {

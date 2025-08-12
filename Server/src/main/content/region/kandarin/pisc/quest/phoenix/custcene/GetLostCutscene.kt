@@ -5,7 +5,7 @@ import core.game.dialogue.FaceAnim
 import core.game.node.entity.player.Player
 import core.game.world.map.Direction
 import core.game.world.map.Location
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 class GetLostCutscene(player: Player) : Cutscene(player) {
 

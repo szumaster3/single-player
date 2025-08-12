@@ -7,7 +7,7 @@ import core.game.dialogue.DialogueBuilder
 import core.game.dialogue.DialogueBuilderFile
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 class HynnTerprettPlugin(
     private val dialogueNum: Int = 0,

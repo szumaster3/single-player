@@ -100,7 +100,7 @@
                         <phase>verify</phase>
                         <goals><goal>java</goal></goals>
                         <configuration>
-                            <mainClass>org.rs.Utils</mainClass>
+                            <mainClass>shared.utils.DuplicateFinder</mainClass>
                             <arguments>
                                 <argument>${project.build.directory}/reports/duplicates_report.csv</argument>
                             </arguments>

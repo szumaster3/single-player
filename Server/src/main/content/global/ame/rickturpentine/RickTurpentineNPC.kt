@@ -8,7 +8,7 @@ import core.api.utils.WeightBasedTable
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
 import core.game.system.timer.impl.AntiMacro
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 /**
  * Represents the Rick Turpentine NPC.

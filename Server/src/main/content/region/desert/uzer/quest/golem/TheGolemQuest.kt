@@ -17,7 +17,7 @@ import core.game.node.item.Item
 import core.game.world.map.Location
 import core.plugin.Initializable
 import core.tools.RandomFunction
-import org.rs.consts.*
+import shared.consts.*
 
 @Initializable
 class TheGolemQuest : Quest(Quests.THE_GOLEM, 70, 69, 1, Vars.VARBIT_QUEST_THE_GOLEM_PROGRESS_346, 0, 1, 10) {
@@ -247,7 +247,7 @@ class TheGolemListeners :
          * Handles climbing down the staircase.
          */
 
-        on(org.rs.consts.Scenery.STAIRCASE_34978, IntType.SCENERY, "climb-down") { player, node ->
+        on(shared.consts.Scenery.STAIRCASE_34978, IntType.SCENERY, "climb-down") { player, node ->
             ClimbActionHandler.climb(
                 player,
                 null,
@@ -260,7 +260,7 @@ class TheGolemListeners :
          * Handles climbing up the staircase.
          */
 
-        on(org.rs.consts.Scenery.STAIRCASE_6372, IntType.SCENERY, "climb-up") { player, node ->
+        on(shared.consts.Scenery.STAIRCASE_6372, IntType.SCENERY, "climb-up") { player, node ->
             ClimbActionHandler.climb(player, null, SpecialLadder.getDestination(node.location)!!)
             return@on true
         }
@@ -280,7 +280,7 @@ class TheGolemListeners :
          * Handles searching a bookcase.
          */
 
-        on(org.rs.consts.Scenery.BOOKCASE_35226, IntType.SCENERY, "search") { player, _ ->
+        on(shared.consts.Scenery.BOOKCASE_35226, IntType.SCENERY, "search") { player, _ ->
             val notes = hasAnItem(player, Items.VARMENS_NOTES_4616).container != null
             val readLetter = player.getAttribute("the-golem:read-elissa-letter", false)
 
@@ -300,7 +300,7 @@ class TheGolemListeners :
          * Handles opening a door.
          */
 
-        on(org.rs.consts.Scenery.DOOR_6363, IntType.SCENERY, "open") { player, _ ->
+        on(shared.consts.Scenery.DOOR_6363, IntType.SCENERY, "open") { player, _ ->
             sendMessage(player, "The door doesn't open.")
             return@on true
         }
@@ -309,7 +309,7 @@ class TheGolemListeners :
          * Handles entering a (portal) for first time.
          */
 
-        on(org.rs.consts.Scenery.DOOR_6364, IntType.SCENERY, "enter") { player, _ ->
+        on(shared.consts.Scenery.DOOR_6364, IntType.SCENERY, "enter") { player, _ ->
             sendMessage(player, "You step into the portal.")
             if (!player.getAttribute("the-golem:seen-demon", false)) {
                 sendMessage(player, "The room is dominated by a colossal horned skeleton!")
@@ -325,7 +325,7 @@ class TheGolemListeners :
          * Handles entering portal.
          */
 
-        on(org.rs.consts.Scenery.PORTAL_6282, IntType.SCENERY, "enter") { player, _ ->
+        on(shared.consts.Scenery.PORTAL_6282, IntType.SCENERY, "enter") { player, _ ->
             sendMessage(player, "You step into the portal.")
             playGlobalAudio(player.location, Sounds.GOLEM_TP_1851)
             teleport(player, Location.create(2722, 4911, 0))

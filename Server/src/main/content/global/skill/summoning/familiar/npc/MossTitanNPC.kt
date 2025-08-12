@@ -4,8 +4,8 @@ import content.global.skill.summoning.familiar.Familiar
 import core.game.node.entity.combat.equipment.WeaponInterface
 import core.game.node.entity.player.Player
 import core.plugin.Initializable
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 @Initializable
 class MossTitanNPC

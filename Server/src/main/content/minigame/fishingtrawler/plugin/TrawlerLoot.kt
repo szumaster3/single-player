@@ -8,7 +8,7 @@ import core.game.node.item.Item
 import core.game.node.item.WeightedChanceItem
 import core.tools.RandomFunction
 import core.tools.colorize
-import org.rs.consts.Items
+import shared.consts.Items
 
 object TrawlerLoot {
     private val junkItems =

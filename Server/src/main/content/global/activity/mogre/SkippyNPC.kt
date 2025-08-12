@@ -7,10 +7,10 @@ import core.game.node.entity.npc.NPCBehavior
 import core.game.world.map.Direction
 import core.game.world.map.Location
 import core.tools.RandomFunction
-import org.rs.consts.Animations
-import org.rs.consts.Graphics
-import org.rs.consts.NPCs
-import org.rs.consts.Sounds
+import shared.consts.Animations
+import shared.consts.Graphics
+import shared.consts.NPCs
+import shared.consts.Sounds
 
 /**
  * Represents Skippy NPC for Mogre lore activity.

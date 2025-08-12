@@ -8,7 +8,7 @@ import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.Items
+import shared.consts.Items
 
 private const val WIZ_BLIZ_MIX = 9566
 private const val SGG_MIX = 9567

@@ -7,9 +7,9 @@ import core.api.sendMessage
 import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import org.rs.consts.Items
-import org.rs.consts.Quests
-import org.rs.consts.Scenery
+import shared.consts.Items
+import shared.consts.Quests
+import shared.consts.Scenery
 
 class TaverleyDungeonPlugin : InteractionListener {
 

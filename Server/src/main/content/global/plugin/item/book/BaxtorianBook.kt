@@ -9,8 +9,8 @@ import core.api.setQuestStage
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.player.Player
-import org.rs.consts.Items
-import org.rs.consts.Quests
+import shared.consts.Items
+import shared.consts.Quests
 
 class BaxtorianBook : InteractionListener {
     companion object {

@@ -11,7 +11,7 @@ import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
-import org.rs.consts.*
+import shared.consts.*
 
 class DragonForgePlugin : InteractionListener {
     override fun defineListeners() {
@@ -143,6 +143,6 @@ class DragonForgePlugin : InteractionListener {
         private val STRANGE_KEYS = intArrayOf(Items.STRANGE_KEY_LOOP_14469, Items.STRANGE_KEY_TEETH_14470)
         private val DRAGONKIN_KEY = Item(Items.DRAGONKIN_KEY_14471, 1)
         private val DRAGON_BREATH_ANIMATION = Animation(Animations.DRAGON_BREATH_81, Animator.Priority.HIGH)
-        private val DRAGON_BREATH_GFX = Graphics(org.rs.consts.Graphics.DRAGON_FIRE_BREATH_DARKER_COLOR_953)
+        private val DRAGON_BREATH_GFX = Graphics(shared.consts.Graphics.DRAGON_FIRE_BREATH_DARKER_COLOR_953)
     }
 }

@@ -11,7 +11,7 @@ import core.game.world.map.path.Pathfinder
 import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
-import org.rs.consts.Animations
+import shared.consts.Animations
 
 @Initializable
 class KittenInteractDialogue(player: Player? = null) : Dialogue(player) {

@@ -9,8 +9,8 @@ import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.Components
-import org.rs.consts.NPCs
+import shared.consts.Components
+import shared.consts.NPCs
 
 val TL_IDS = arrayOf(NPCs.TOOL_LEPRECHAUN_3021, NPCs.GOTH_LEPRECHAUN_8000, NPCs.TOOL_LEPRECHAUN_4965, NPCs.TECLYN_2861)
 

@@ -4,8 +4,8 @@ import core.api.inEquipment
 import core.api.sendMessage
 import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.link.emote.Emotes
-import org.rs.consts.Components
-import org.rs.consts.Items
+import shared.consts.Components
+import shared.consts.Items
 
 /**
  * Handles the emote tab interface.

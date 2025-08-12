@@ -5,9 +5,9 @@ import core.api.getAttribute
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest
 import core.plugin.Initializable
-import org.rs.consts.Items
-import org.rs.consts.Quests
-import org.rs.consts.Vars
+import shared.consts.Items
+import shared.consts.Quests
+import shared.consts.Vars
 
 @Initializable
 class ClockTower : Quest(Quests.CLOCK_TOWER, 38, 37, 1, Vars.VARP_QUEST_CLOCK_TOWER_PROGRESS_10, 0, 1, 8) {

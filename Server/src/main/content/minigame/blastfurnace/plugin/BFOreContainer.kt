@@ -7,7 +7,7 @@ import content.minigame.blastfurnace.plugin.BlastFurnace.Companion.getBarForOreI
 import content.minigame.blastfurnace.plugin.BlastFurnace.Companion.getNeededCoal
 import content.minigame.blastfurnace.plugin.BlastUtils.BAR_LIMIT
 import core.game.node.item.Item
-import org.rs.consts.Items
+import shared.consts.Items
 
 class BFOreContainer {
     private var coalRemaining = 0

@@ -2,7 +2,7 @@ package content.global.plugin.item.withitem
 
 import core.api.sendDialogue
 import core.game.interaction.InteractionListener
-import org.rs.consts.Items
+import shared.consts.Items
 
 class BowSwordPlugin : InteractionListener {
 

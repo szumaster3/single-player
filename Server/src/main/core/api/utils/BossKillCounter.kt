@@ -5,7 +5,7 @@ import core.api.toIntArray
 import core.game.node.entity.player.Player
 import core.tools.RED
 import core.tools.StringUtils.formatDisplayName
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 /**
  * Represents various bosses for kill tracking.

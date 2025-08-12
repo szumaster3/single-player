@@ -1,7 +1,7 @@
 package content.global.skill.summoning.items
 
 import core.game.node.item.Item
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Represents the enchanted headgear items for the Summoning skill.

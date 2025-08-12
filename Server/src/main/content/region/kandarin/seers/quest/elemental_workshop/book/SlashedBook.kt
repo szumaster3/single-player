@@ -6,7 +6,7 @@ import core.api.sendMessage
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.player.Player
-import org.rs.consts.Items
+import shared.consts.Items
 
 class SlashedBook : InteractionListener {
     companion object {

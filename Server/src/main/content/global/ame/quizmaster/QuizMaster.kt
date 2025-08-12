@@ -5,8 +5,8 @@ import core.api.*
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.TeleportManager
 import core.game.world.map.Location
-import org.rs.consts.Animations
-import org.rs.consts.Items
+import shared.consts.Animations
+import shared.consts.Items
 
 /**
  * Utils for quiz master.

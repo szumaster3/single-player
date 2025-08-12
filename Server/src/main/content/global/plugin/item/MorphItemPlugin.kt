@@ -12,10 +12,10 @@ import core.plugin.ClassScanner
 import core.plugin.Initializable
 import core.plugin.Plugin
 import core.tools.RandomFunction
-import org.rs.consts.Components
-import org.rs.consts.Items
-import org.rs.consts.NPCs
-import org.rs.consts.Sounds
+import shared.consts.Components
+import shared.consts.Items
+import shared.consts.NPCs
+import shared.consts.Sounds
 
 /**
  * Represents a plugin that handles the transformation effects for morph items.

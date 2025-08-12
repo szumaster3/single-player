@@ -8,7 +8,7 @@ import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
 import core.game.world.map.zone.ZoneBorders
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 class FarmingPatchZone : MapArea, TickListener {
     private val playersInZone = hashMapOf<Player, Int>()

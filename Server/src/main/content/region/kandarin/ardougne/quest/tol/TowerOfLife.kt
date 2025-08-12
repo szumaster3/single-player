@@ -7,10 +7,10 @@ import core.api.setVarbit
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest
 import core.game.node.entity.skill.Skills
-import org.rs.consts.Components
-import org.rs.consts.Items
-import org.rs.consts.Quests
-import org.rs.consts.Vars
+import shared.consts.Components
+import shared.consts.Items
+import shared.consts.Quests
+import shared.consts.Vars
 
 class TowerOfLife : Quest(Quests.TOWER_OF_LIFE, 134, 133, 2, Vars.VARBIT_QUEST_TOWER_OF_LIFE_PROGRESS_3337, 0, 1, 18) {
     override fun drawJournal(

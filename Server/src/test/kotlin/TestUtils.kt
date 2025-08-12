@@ -38,7 +38,7 @@ import core.net.IoSession
 import core.net.packet.IoBuffer
 import core.net.packet.PacketProcessor
 import core.tools.Log
-import org.rs.consts.Items
+import shared.consts.Items
 import java.net.URI
 import java.nio.ByteBuffer
 

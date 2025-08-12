@@ -4,8 +4,8 @@ import content.global.plugin.iface.ScrollInterface
 import content.global.plugin.iface.ScrollLine
 import core.api.setAttribute
 import core.game.node.entity.player.Player
-import org.rs.consts.Components
-import org.rs.consts.NPCs
+import shared.consts.Components
+import shared.consts.NPCs
 
 /**
  * Utils for Wise old man delivery.

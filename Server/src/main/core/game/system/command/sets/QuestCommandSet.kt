@@ -8,7 +8,7 @@ import core.game.node.entity.player.link.quest.QuestRepository
 import core.game.system.command.Privilege
 import core.game.world.repository.Repository
 import core.plugin.Initializable
-import org.rs.consts.Quests
+import shared.consts.Quests
 
 @Initializable
 class QuestCommandSet : CommandSet(Privilege.ADMIN) {

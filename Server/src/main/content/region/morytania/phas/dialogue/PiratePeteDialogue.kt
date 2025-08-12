@@ -12,7 +12,7 @@ import core.game.world.map.Location
 import core.game.world.update.flag.context.Graphics
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
-import org.rs.consts.*
+import shared.consts.*
 import kotlin.random.Random
 
 /**
@@ -126,7 +126,7 @@ class PiratePeteDialogue(player: Player? = null) : Dialogue(player) {
         findNPC(NPCs.PIRATE_PETE_2825)?.let { animate(it, Animations.HUMAN_THROW_DART_806) }
 
         faceLocation(player, Location(3680, 3533, 0))
-        sendGraphics(Graphics(org.rs.consts.Graphics.STUN_BIRDIES_ABOVE_HEAD_80, 96), player.location)
+        sendGraphics(Graphics(shared.consts.Graphics.STUN_BIRDIES_ABOVE_HEAD_80, 96), player.location)
         playAudio(player, Sounds.STUNNED_2727, 1)
         sendChat(player, "Ow!")
 
@@ -137,7 +137,7 @@ class PiratePeteDialogue(player: Player? = null) : Dialogue(player) {
                 override fun pulse(): Boolean {
                     when(counter++) {
                         0 -> {
-                            sendGraphics(Graphics(org.rs.consts.Graphics.STUN_BIRDIES_ABOVE_HEAD_80, 96), player.location)
+                            sendGraphics(Graphics(shared.consts.Graphics.STUN_BIRDIES_ABOVE_HEAD_80, 96), player.location)
                             playAudio(player, Sounds.STUNNED_2727, 1)
                         }
 

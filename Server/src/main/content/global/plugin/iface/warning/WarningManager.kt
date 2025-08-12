@@ -7,7 +7,7 @@ import core.api.setVarbit
 import core.game.component.Component
 import core.game.node.entity.player.Player
 import core.tools.DARK_PURPLE
-import org.rs.consts.Components
+import shared.consts.Components
 
 /**
  * Handles warning screen logic, including display, tracking, and toggling.

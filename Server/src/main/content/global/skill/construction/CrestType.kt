@@ -5,8 +5,8 @@ import core.api.hasLevelStat
 import core.api.isQuestComplete
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
-import org.rs.consts.Items
-import org.rs.consts.Quests
+import shared.consts.Items
+import shared.consts.Quests
 
 private val CREST_SYMBOLS =
     mapOf(

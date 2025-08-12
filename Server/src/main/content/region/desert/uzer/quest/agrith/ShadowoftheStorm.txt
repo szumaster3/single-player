@@ -1,6 +1,6 @@
 /*package content.kingdom.desert.quest.member.agrith
 
-import org.rs.consts.Vars
+import shared.consts.Vars
 import core.api.addItemOrDrop
 import core.api.getStatLevel
 import core.api.isQuestComplete

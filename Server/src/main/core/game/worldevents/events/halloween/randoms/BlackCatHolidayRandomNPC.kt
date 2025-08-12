@@ -6,8 +6,8 @@ import core.game.node.entity.combat.ImpactHandler.HitsplatType
 import core.game.node.entity.npc.NPC
 import core.game.worldevents.events.HolidayRandomEventNPC
 import core.game.worldevents.events.HolidayRandoms
-import org.rs.consts.NPCs
-import org.rs.consts.Sounds
+import shared.consts.NPCs
+import shared.consts.Sounds
 
 class BlackCatHolidayRandomNPC : HolidayRandomEventNPC(NPCs.BLACK_CAT_4607) {
     override fun init() {

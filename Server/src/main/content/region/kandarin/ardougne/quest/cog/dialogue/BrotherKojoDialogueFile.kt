@@ -10,7 +10,7 @@ import core.game.dialogue.FaceAnim
 import core.game.dialogue.Topic
 import core.tools.END_DIALOGUE
 import core.tools.START_DIALOGUE
-import org.rs.consts.Quests
+import shared.consts.Quests
 
 class BrotherKojoDialogueFile : DialogueFile() {
 

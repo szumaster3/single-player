@@ -23,7 +23,7 @@ import core.game.world.map.RegionManager
 import core.game.world.map.build.DynamicRegion
 import core.game.world.map.path.Pathfinder
 import core.tools.Log
-import org.rs.consts.Components
+import shared.consts.Components
 
 /**
  * A utility class for making cutscenes.

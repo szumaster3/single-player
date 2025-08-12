@@ -8,8 +8,8 @@ import core.game.node.entity.player.Player
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
 import core.plugin.Initializable
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 @Initializable
 class SpiritMosquitoNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.SPIRIT_MOSQUITO_7331) :

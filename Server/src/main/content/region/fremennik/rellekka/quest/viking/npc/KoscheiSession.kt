@@ -1,7 +1,7 @@
 package content.region.fremennik.rellekka.quest.viking.npc
 
 import core.game.node.entity.player.Player
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 /**
  * Manages the session for the Koschei the Deathless warrior's trial during the Fremennik Trials quest.

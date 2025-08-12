@@ -2,7 +2,7 @@ package content.global.skill.gathering.fishing
 
 import core.api.asItem
 import core.game.node.item.Item
-import org.rs.consts.Items
+import shared.consts.Items
 
 enum class Fish(val id: Int, val level: Int, val experience: Double, val lowChance: Double, val highChance: Double, ) {
     SWAMP_WEED(Items.SWAMP_WEED_10978, 1, 1.0, 0.121, 0.16),

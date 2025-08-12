@@ -9,9 +9,9 @@ import core.game.interaction.InteractionListener
 import core.game.node.entity.skill.Skills
 import core.game.world.map.Location
 import core.game.world.map.zone.ZoneBorders
-import org.rs.consts.Animations
-import org.rs.consts.Graphics
-import org.rs.consts.Scenery
+import shared.consts.Animations
+import shared.consts.Graphics
+import shared.consts.Scenery
 
 class PillarsPlugin : InteractionListener {
     private val PILLAR_IDS =

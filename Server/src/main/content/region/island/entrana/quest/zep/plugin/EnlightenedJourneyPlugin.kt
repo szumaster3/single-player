@@ -4,10 +4,10 @@ import core.api.*
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.item.Item
-import org.rs.consts.Items
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
-import org.rs.consts.Scenery
+import shared.consts.Items
+import shared.consts.NPCs
+import shared.consts.Quests
+import shared.consts.Scenery
 
 // First:2x sandbag, 1x log, 5x relax, 1x red rope, 1x log, 2xrelax, 1x red rope, 2x relax, 2x logs, 3x relax.
 // Second:1x log, 2x relax, 1x red rope, 1x rope, 7x relax, 1x sandbag, 2x relax, 1x red rope, 1x log, 1x rope, 1x relax.

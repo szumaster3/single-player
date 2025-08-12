@@ -13,8 +13,8 @@ import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
 import core.tools.RandomUtils
-import org.rs.consts.Scenery
-import org.rs.consts.Sounds
+import shared.consts.Scenery
+import shared.consts.Sounds
 
 /**
  * Handles the jutting wall shortcut.

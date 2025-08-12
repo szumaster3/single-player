@@ -6,7 +6,7 @@ import core.game.component.ComponentPlugin
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.plugin.Plugin
-import org.rs.consts.Components
+import shared.consts.Components
 import kotlin.math.ceil
 
 class FishingTrawlerRewardInterface : ComponentPlugin() {

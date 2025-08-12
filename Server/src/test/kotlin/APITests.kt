@@ -11,7 +11,7 @@ import core.game.node.item.Item
 import core.game.world.map.Direction
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import org.rs.consts.Items
+import shared.consts.Items
 
 class APITests {
     var testPlayer: MockPlayer

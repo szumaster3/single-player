@@ -5,7 +5,7 @@ import core.api.inBorders
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.npc.NPCBehavior
 import core.game.world.map.Location
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 class MineCartNPC : NPCBehavior(NPCs.MINE_CART_4980) {
     override fun onCreation(self: NPC) {

@@ -10,9 +10,9 @@ import core.game.node.entity.player.link.TeleportManager
 import core.game.world.map.Location
 import core.game.world.map.RegionManager
 import core.tools.RandomFunction
-import org.rs.consts.Items
-import org.rs.consts.Quests
-import org.rs.consts.Scenery
+import shared.consts.Items
+import shared.consts.Quests
+import shared.consts.Scenery
 
 class WitchHouseListener : InteractionListener {
 

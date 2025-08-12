@@ -10,8 +10,8 @@ import core.game.system.command.Privilege
 import core.game.world.GameWorld
 import core.tools.Log
 import core.tools.secondsToTicks
-import org.rs.consts.Items
-import org.rs.consts.Scenery
+import shared.consts.Items
+import shared.consts.Scenery
 
 class ShootingStarPlugin :
     LoginListener,

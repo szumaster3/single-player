@@ -11,8 +11,8 @@ import core.game.node.entity.Entity
 import core.game.world.map.zone.ZoneBorders
 import core.plugin.Initializable
 import core.tools.RandomFunction
-import org.rs.consts.Components
-import org.rs.consts.Scenery
+import shared.consts.Components
+import shared.consts.Scenery
 
 @Initializable
 class WindSpeedInterface :

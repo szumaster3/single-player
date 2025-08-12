@@ -10,8 +10,8 @@ import core.game.node.Node
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.IronmanMode
 import core.game.world.GameWorld
-import org.rs.consts.Components
-import org.rs.consts.Scenery
+import shared.consts.Components
+import shared.consts.Scenery
 
 class DepositBoxPlugin : InteractionListener {
 

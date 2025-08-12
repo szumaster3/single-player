@@ -9,7 +9,7 @@ import core.game.node.entity.player.link.TeleportManager;
 import core.game.world.GameWorld;
 import core.game.world.map.Location;
 import core.tools.RandomFunction;
-import org.rs.consts.NPCs;
+import shared.consts.NPCs;
 
 import java.util.ArrayList;
 import java.util.List;

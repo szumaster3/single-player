@@ -5,9 +5,9 @@ import core.api.getRegionBorders
 import core.api.setQuestStage
 import core.api.setAttribute
 import core.game.node.entity.player.Player
-import org.rs.consts.Items
-import org.rs.consts.Quests
-import org.rs.consts.Scenery
+import shared.consts.Items
+import shared.consts.Quests
+import shared.consts.Scenery
 
 object MurderMysteryUtils {
     val ATTRIBUTE_ELIZABETH = "/save:murdermystery:elizabeth"

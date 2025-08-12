@@ -16,8 +16,8 @@ import core.plugin.Initializable
 import core.plugin.Plugin
 import core.tools.END_DIALOGUE
 import core.tools.RandomFunction
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 /**
  * Represents the Romily Weaklax dialogue.

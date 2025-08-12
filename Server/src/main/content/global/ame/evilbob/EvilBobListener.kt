@@ -12,10 +12,10 @@ import core.game.world.GameWorld
 import core.game.world.map.Location
 import core.game.world.map.zone.ZoneBorders
 import core.game.world.map.zone.ZoneRestriction
-import org.rs.consts.Animations
-import org.rs.consts.Items
-import org.rs.consts.NPCs
-import org.rs.consts.Sounds
+import shared.consts.Animations
+import shared.consts.Items
+import shared.consts.NPCs
+import shared.consts.Sounds
 
 /**
  * Handles interaction for Evil bob random event.

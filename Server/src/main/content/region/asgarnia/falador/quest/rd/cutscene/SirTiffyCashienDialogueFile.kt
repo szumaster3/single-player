@@ -11,8 +11,8 @@ import core.game.dialogue.DialogueBuilderFile
 import core.game.dialogue.FaceAnim
 import core.game.interaction.QueueStrength
 import core.game.node.entity.player.Player
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
+import shared.consts.NPCs
+import shared.consts.Quests
 
 class SirTiffyCashienDialogueFile : DialogueBuilderFile() {
     override fun create(b: DialogueBuilder) {

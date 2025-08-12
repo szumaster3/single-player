@@ -10,9 +10,9 @@ import core.game.interaction.InteractionListener
 import core.game.node.entity.skill.SkillPulse
 import core.game.node.item.Item
 import core.game.world.update.flag.context.Animation
-import org.rs.consts.Animations
-import org.rs.consts.Components
-import org.rs.consts.Items
+import shared.consts.Animations
+import shared.consts.Components
+import shared.consts.Items
 import kotlin.math.ceil
 import kotlin.math.roundToInt
 

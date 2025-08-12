@@ -17,7 +17,7 @@ import core.game.world.update.flag.context.Graphics;
 import core.plugin.Initializable;
 import core.plugin.Plugin;
 import core.tools.RandomFunction;
-import org.rs.consts.Sounds;
+import shared.consts.Sounds;
 
 import java.util.Iterator;
 import java.util.List;

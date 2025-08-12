@@ -23,9 +23,9 @@ import core.net.packet.OutgoingContext
 import core.net.packet.PacketRepository
 import core.net.packet.out.CameraViewPacket
 import core.tools.RandomFunction
-import org.rs.consts.Components
-import org.rs.consts.NPCs
-import org.rs.consts.Sounds
+import shared.consts.Components
+import shared.consts.NPCs
+import shared.consts.Sounds
 
 /**
  * Represents the Telekinetic Theatre.

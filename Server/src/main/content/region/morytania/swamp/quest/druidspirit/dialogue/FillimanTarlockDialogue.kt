@@ -12,9 +12,9 @@ import core.game.world.map.Location
 import core.game.world.update.flag.context.Graphics
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
-import org.rs.consts.Items
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
+import shared.consts.Items
+import shared.consts.NPCs
+import shared.consts.Quests
 
 @Initializable
 class FillimanTarlockDialogue(player: Player? = null) : Dialogue(player) {

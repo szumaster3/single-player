@@ -13,8 +13,8 @@ import core.game.world.update.flag.context.Graphics
 import core.plugin.Initializable
 import core.plugin.Plugin
 import core.tools.RandomFunction
-import org.rs.consts.Items
-import org.rs.consts.Sounds
+import shared.consts.Items
+import shared.consts.Sounds
 
 @Initializable
 class SunderSpecialHandler :
@@ -66,7 +66,7 @@ class SunderSpecialHandler :
     ) {
         entity.visualize(
             Animation(5870),
-            Graphics(org.rs.consts.Graphics.BARRELCHEST_ANCHOR_SPECIAL_1027),
+            Graphics(shared.consts.Graphics.BARRELCHEST_ANCHOR_SPECIAL_1027),
         )
     }
 

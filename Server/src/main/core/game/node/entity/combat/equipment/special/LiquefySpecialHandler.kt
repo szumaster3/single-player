@@ -6,7 +6,7 @@ import core.game.node.entity.combat.CombatStyle
 import core.game.node.entity.combat.MeleeSwingHandler
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.Items
+import shared.consts.Items
 
 @Initializable
 class LiquefySpecialHandler :

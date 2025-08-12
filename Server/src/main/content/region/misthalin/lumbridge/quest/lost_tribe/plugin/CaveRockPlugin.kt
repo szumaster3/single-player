@@ -9,8 +9,8 @@ import core.game.world.map.Direction
 import core.game.world.map.Location
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.Components
-import org.rs.consts.Scenery
+import shared.consts.Components
+import shared.consts.Scenery
 
 @Initializable
 class CaveRockPlugin : OptionHandler() {

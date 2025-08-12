@@ -1,7 +1,7 @@
 package content.global.skill.firemaking
 
-import org.rs.consts.Graphics
-import org.rs.consts.Items
+import shared.consts.Graphics
+import shared.consts.Items
 
 /**
  * Represents origami items.

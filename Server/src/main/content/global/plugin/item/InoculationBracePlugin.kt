@@ -6,7 +6,7 @@ import core.game.interaction.InteractionListener
 import core.game.system.command.Privilege
 import core.game.system.timer.impl.Disease
 import core.game.world.repository.Repository
-import org.rs.consts.Items
+import shared.consts.Items
 import kotlin.math.min
 
 class InoculationBracePlugin :

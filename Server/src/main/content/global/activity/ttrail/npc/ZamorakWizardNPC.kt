@@ -10,7 +10,7 @@ import core.game.node.entity.player.link.SpellBookManager.SpellBook
 import core.game.world.map.Location
 import core.game.world.map.RegionManager.getSpawnLocation
 import core.plugin.Plugin
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 /**
  * Represents the Zamorak wizard NPC.

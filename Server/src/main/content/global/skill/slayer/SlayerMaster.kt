@@ -2,7 +2,7 @@ package content.global.skill.slayer
 
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 import java.util.*
 
 /**

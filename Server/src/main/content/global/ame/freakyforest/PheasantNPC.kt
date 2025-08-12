@@ -8,8 +8,8 @@ import core.game.node.entity.combat.BattleState
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.npc.NPCBehavior
 import core.game.node.item.Item
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 /**
  * Represents Pheasant NPC for Freaky Forester random event.

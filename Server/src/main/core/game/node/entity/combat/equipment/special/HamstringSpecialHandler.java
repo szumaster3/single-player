@@ -11,7 +11,7 @@ import core.game.system.timer.TimerFlag;
 import core.plugin.Initializable;
 import core.plugin.Plugin;
 import core.tools.RandomFunction;
-import org.rs.consts.Items;
+import shared.consts.Items;
 
 /**
  * The type Hamstring special handler.

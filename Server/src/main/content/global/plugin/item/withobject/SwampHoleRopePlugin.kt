@@ -5,8 +5,8 @@ import core.api.sendDialogue
 import core.api.sendItemDialogue
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import org.rs.consts.Items
-import org.rs.consts.Scenery
+import shared.consts.Items
+import shared.consts.Scenery
 
 class SwampHoleRopePlugin : InteractionListener {
 

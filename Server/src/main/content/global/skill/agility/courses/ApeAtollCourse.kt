@@ -14,7 +14,7 @@ import core.game.world.GameWorld
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
-import org.rs.consts.Items
+import shared.consts.Items
 
 @Initializable
 class ApeAtollCourse : AgilityCourse {

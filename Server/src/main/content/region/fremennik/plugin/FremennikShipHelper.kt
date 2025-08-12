@@ -6,7 +6,7 @@ import core.game.node.entity.player.link.TeleportManager
 import core.game.system.task.Pulse
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
-import org.rs.consts.Components
+import shared.consts.Components
 
 /**
  * Represents all possible ship destinations and their properties.

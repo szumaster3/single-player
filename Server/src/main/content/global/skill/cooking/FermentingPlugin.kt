@@ -6,10 +6,10 @@ import core.game.interaction.InteractionListener
 import core.game.node.entity.impl.PulseType
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
-import org.rs.consts.Animations
-import org.rs.consts.Items
-import org.rs.consts.Scenery
-import org.rs.consts.Vars
+import shared.consts.Animations
+import shared.consts.Items
+import shared.consts.Scenery
+import shared.consts.Vars
 
 class FermentingPlugin : InteractionListener {
 

@@ -5,7 +5,7 @@ import core.api.LoginListener
 import core.api.PersistPlayer
 import core.game.node.entity.player.Player
 import core.tools.RandomFunction
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Handles the treasure trail of a player.

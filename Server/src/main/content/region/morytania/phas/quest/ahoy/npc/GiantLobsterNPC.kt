@@ -8,7 +8,7 @@ import core.game.node.entity.player.Player
 import core.game.system.task.Pulse
 import core.game.world.GameWorld
 import core.game.world.map.Location
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 class GiantLobsterNPC(
     id: Int = 0,

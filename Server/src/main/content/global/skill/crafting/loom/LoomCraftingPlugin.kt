@@ -13,9 +13,9 @@ import core.game.node.item.Item
 import core.game.node.scenery.Scenery
 import core.game.world.map.Location
 import core.tools.StringUtils
-import org.rs.consts.Animations
-import org.rs.consts.Components
-import org.rs.consts.Items
+import shared.consts.Animations
+import shared.consts.Components
+import shared.consts.Items
 
 /**
  * Represents weaving items.

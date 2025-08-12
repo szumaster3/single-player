@@ -10,7 +10,7 @@ import core.game.node.entity.player.link.TeleportManager
 import core.game.node.item.Item
 import core.game.system.timer.impl.AntiMacro
 import core.game.world.map.zone.ZoneBorders
-import org.rs.consts.Components
+import shared.consts.Components
 
 /**
  * Handles Lost and Found random event NPC.

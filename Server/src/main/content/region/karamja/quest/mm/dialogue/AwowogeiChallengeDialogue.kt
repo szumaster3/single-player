@@ -2,7 +2,7 @@ package content.region.karamja.quest.mm.dialogue
 
 import core.api.setQuestStage
 import core.game.dialogue.DialogueFile
-import org.rs.consts.Quests
+import shared.consts.Quests
 
 class AwowogeiChallengeDialogue : DialogueFile() {
 

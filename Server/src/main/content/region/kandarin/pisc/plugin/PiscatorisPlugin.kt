@@ -8,7 +8,7 @@ import core.game.interaction.InteractionListener
 import core.game.node.item.Item
 import core.game.system.task.Pulse
 import core.game.world.map.Location
-import org.rs.consts.*
+import shared.consts.*
 
 class PiscatorisPlugin : InteractionListener {
     companion object {

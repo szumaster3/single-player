@@ -48,7 +48,7 @@ import core.net.packet.`in`.RunScript
 import core.net.packet.out.ClearMinimapFlag
 import core.tools.Log
 import core.worker.ManagementEvents
-import org.rs.consts.Components
+import shared.consts.Components
 import proto.management.ClanMessage
 import proto.management.JoinClanRequest
 import proto.management.LeaveClanRequest

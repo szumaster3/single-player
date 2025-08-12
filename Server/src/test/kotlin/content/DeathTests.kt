@@ -14,7 +14,7 @@ import core.game.world.map.Location
 import core.tools.secondsToTicks
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import org.rs.consts.Items
+import shared.consts.Items
 
 class DeathTests {
     init {

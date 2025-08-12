@@ -3,7 +3,7 @@ package content.global.skill.hunter
 import core.api.anyInEquipment
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
-import org.rs.consts.Items
+import shared.consts.Items
 
 enum class HunterGear(val chanceRate: Double, vararg equipment: Item, ) {
     GLOVE_OF_SILENCE(3.0, Item(Items.GLOVES_OF_SILENCE_10075)),

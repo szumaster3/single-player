@@ -8,7 +8,7 @@ import content.global.skill.fletching.items.bow.Strings
 import content.global.skill.fletching.items.crossbow.Limb
 import content.global.skill.fletching.items.darts.Dart
 import core.game.node.item.Item
-import org.rs.consts.Items
+import shared.consts.Items
 /**
  * Utility object for handling all logic related to the Fletching skill.
  */

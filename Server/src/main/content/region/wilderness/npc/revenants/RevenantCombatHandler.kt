@@ -13,7 +13,7 @@ import core.game.node.entity.player.link.prayer.PrayerType
 import core.game.world.map.zone.impl.WildernessZone
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
-import org.rs.consts.Sounds
+import shared.consts.Sounds
 
 class RevenantCombatHandler(meleeAnimation: Animation?, magicAnimation: Animation?, rangeAnimation: Animation?) :
     MultiSwingHandler(
@@ -87,8 +87,8 @@ class RevenantCombatHandler(meleeAnimation: Animation?, magicAnimation: Animatio
     }
 
     companion object {
-        private val MAGIC_Graphics: Graphics = Graphics.create(org.rs.consts.Graphics.PUFF_OF_GREY_1276)
-        private val RANGE_Graphics: Graphics = Graphics.create(org.rs.consts.Graphics.BIT_OF_WATER_1278)
+        private val MAGIC_Graphics: Graphics = Graphics.create(shared.consts.Graphics.PUFF_OF_GREY_1276)
+        private val RANGE_Graphics: Graphics = Graphics.create(shared.consts.Graphics.BIT_OF_WATER_1278)
 
         fun createProjectile(graphics: Graphics): Projectile =
             Projectile.create(null, null, graphics.id, 48, 36, 34, 20)

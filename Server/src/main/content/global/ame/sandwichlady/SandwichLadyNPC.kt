@@ -5,8 +5,8 @@ import content.global.ame.RandomEventNPC
 import core.api.utils.WeightBasedTable
 import core.game.node.entity.npc.NPC
 import core.tools.RandomFunction
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 /**
  * Represents the Sandwich lady NPC.

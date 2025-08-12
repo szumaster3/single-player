@@ -6,10 +6,10 @@ import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.game.world.map.Location
-import org.rs.consts.Components
-import org.rs.consts.Items
-import org.rs.consts.Scenery
-import org.rs.consts.Vars
+import shared.consts.Components
+import shared.consts.Items
+import shared.consts.Scenery
+import shared.consts.Vars
 
 /**
  * Represents a room type in the Magic Training Arena (MTA) minigame.

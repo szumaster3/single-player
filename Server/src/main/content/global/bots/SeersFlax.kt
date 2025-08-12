@@ -10,7 +10,7 @@ import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.game.world.map.Location
 import core.game.world.map.path.Pathfinder
-import org.rs.consts.Items
+import shared.consts.Items
 
 class SeersFlax : Script() {
     var state = State.PICKING

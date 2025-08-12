@@ -4,8 +4,8 @@ import com.google.gson.JsonObject
 import core.api.*
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
-import org.rs.consts.Components
-import org.rs.consts.Items
+import shared.consts.Components
+import shared.consts.Items
 
 class BarcrawlManager :
     LoginListener,

@@ -18,9 +18,9 @@ import core.game.world.map.path.Pathfinder
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
 import core.plugin.Initializable
-import org.rs.consts.Items
-import org.rs.consts.NPCs
-import org.rs.consts.Sounds
+import shared.consts.Items
+import shared.consts.NPCs
+import shared.consts.Sounds
 
 @Initializable
 class SpiritWolfNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.SPIRIT_WOLF_6829) :

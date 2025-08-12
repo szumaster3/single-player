@@ -3,7 +3,7 @@ package content.region.misthalin.varrock.quest.dslay.plugin
 import core.api.setAttribute
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
-import org.rs.consts.Items
+import shared.consts.Items
 import java.util.*
 
 object DemonSlayerUtils {

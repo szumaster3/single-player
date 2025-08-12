@@ -9,8 +9,8 @@ import core.game.node.entity.player.link.quest.Quest
 import core.game.node.scenery.SceneryBuilder
 import core.game.world.map.Location
 import core.game.world.map.RegionManager.getObject
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
+import shared.consts.NPCs
+import shared.consts.Quests
 
 class BedabinNomadDialogue(player: Player? = null) : Dialogue(player) {
 

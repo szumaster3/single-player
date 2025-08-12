@@ -5,7 +5,7 @@ import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
 import core.game.world.map.Location
 import core.tools.StringUtils
-import org.rs.consts.Scenery
+import shared.consts.Scenery
 
 enum class HouseLocation(
     val portalId: Int,

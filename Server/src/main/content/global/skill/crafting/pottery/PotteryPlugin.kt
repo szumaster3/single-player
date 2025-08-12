@@ -17,10 +17,10 @@ import core.game.world.map.Location
 import core.plugin.Initializable
 import core.plugin.Plugin
 import core.tools.StringUtils
-import org.rs.consts.Animations
-import org.rs.consts.Items
-import org.rs.consts.Quests
-import org.rs.consts.Scenery
+import shared.consts.Animations
+import shared.consts.Items
+import shared.consts.Quests
+import shared.consts.Scenery
 import java.util.*
 
 @Initializable

@@ -5,8 +5,8 @@ import content.global.skill.summoning.familiar.FamiliarSpecial
 import core.game.node.entity.combat.equipment.WeaponInterface
 import core.game.node.entity.player.Player
 import core.plugin.Initializable
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 @Initializable
 class SwampTitanNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.SWAMP_TITAN_7329) :

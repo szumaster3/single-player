@@ -10,9 +10,9 @@ import core.game.interaction.InteractionListener
 import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.link.IronmanMode
 import core.game.node.item.Item
-import org.rs.consts.Components
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Components
+import shared.consts.Items
+import shared.consts.NPCs
 
 class OuraniaBankPlugin : InteractionListener, InterfaceListener {
 

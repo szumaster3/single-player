@@ -14,8 +14,8 @@ import core.game.world.GameWorld.Pulser
 import core.game.world.map.Location
 import core.game.world.map.path.Pathfinder
 import core.tools.RandomFunction
-import org.rs.consts.Animations
-import org.rs.consts.Items
+import shared.consts.Animations
+import shared.consts.Items
 
 /**
  * A pulse that handles the fishing skill.

@@ -3,9 +3,9 @@ package content.global.plugin.item.withnpc
 import core.api.*
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import org.rs.consts.Items
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
+import shared.consts.Items
+import shared.consts.NPCs
+import shared.consts.Quests
 
 class RopeOnLadyKeliPlugin : InteractionListener {
     override fun defineListeners() {

@@ -13,7 +13,7 @@ import core.game.system.task.Pulse
 import core.game.world.GameWorld.Pulser
 import core.game.world.GameWorld.ticks
 import core.plugin.Plugin
-import org.rs.consts.Animations
+import shared.consts.Animations
 
 class DropPartyLeverPlugin : OptionHandler() {
     override fun newInstance(arg: Any?): Plugin<Any> {

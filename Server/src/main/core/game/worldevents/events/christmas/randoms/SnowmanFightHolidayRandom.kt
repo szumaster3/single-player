@@ -4,7 +4,7 @@ import core.api.*
 import core.game.node.entity.npc.NPC
 import core.game.worldevents.events.HolidayRandomEventNPC
 import core.tools.minutesToTicks
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 class SnowmanFightHolidayRandom : HolidayRandomEventNPC(NPCs.BARBARIAN_SNOWMAN_6742) {
     private lateinit var otherSnowman: NPC

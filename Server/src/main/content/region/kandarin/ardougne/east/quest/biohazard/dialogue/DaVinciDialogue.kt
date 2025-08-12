@@ -4,8 +4,8 @@ import content.data.GameAttributes
 import core.api.*
 import core.game.dialogue.DialogueFile
 import core.game.node.entity.npc.NPC
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 /**
  * Represents the Da Vinci dialogue.

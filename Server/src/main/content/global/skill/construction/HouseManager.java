@@ -24,10 +24,10 @@ import core.tools.Log;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import core.game.world.GameWorld;
-import org.rs.consts.Components;
-import org.rs.consts.Music;
-import org.rs.consts.NPCs;
-import org.rs.consts.Sounds;
+import shared.consts.Components;
+import shared.consts.Music;
+import shared.consts.NPCs;
+import shared.consts.Sounds;
 
 import java.awt.*;
 

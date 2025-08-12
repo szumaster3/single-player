@@ -3,8 +3,8 @@ package content.global.skill.thieving
 import core.game.node.item.Item
 import core.game.node.scenery.Scenery
 import core.tools.RandomFunction
-import org.rs.consts.Items
-import org.rs.consts.Scenery as Objects
+import shared.consts.Items
+import shared.consts.Scenery as Objects
 
 enum class Stall(full: Array<Int>, empty: Array<Int>, var level: Int, var rewards: Array<Item>, var experience: Double, var delay: Int, var message: String, ) {
     VEGETABLE_STALL(arrayOf(Objects.VEG_STALL_4706, Objects.VEG_STALL_4708), arrayOf(Objects.MARKET_STALL_634), 2, arrayOf(Item(Items.ONION_1957, 1), Item(Items.CABBAGE_1965, 1), Item(Items.POTATO_1942, 1), Item(Items.TOMATO_1982, 1), Item(Items.GARLIC_1550, 1)), 10.0, 4, "vegetables",),

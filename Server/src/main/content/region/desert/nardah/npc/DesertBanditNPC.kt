@@ -8,8 +8,8 @@ import core.game.node.entity.player.Player
 import core.game.world.map.Location
 import core.game.world.map.RegionManager
 import core.plugin.Initializable
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 @Initializable
 class DesertBanditNPC(

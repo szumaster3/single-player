@@ -9,7 +9,7 @@ import core.game.node.entity.npc.AbstractNPC
 import core.game.node.entity.player.link.SpellBookManager
 import core.game.world.map.Location
 import core.tools.RandomFunction
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 /**
  * Handles the Spinolyp NPC behavior and combat.

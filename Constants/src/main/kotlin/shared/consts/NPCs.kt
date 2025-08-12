@@ -1,4 +1,4 @@
-package org.rs.consts
+package shared.consts
 
 object NPCs {
     const val HANS_0 = 0

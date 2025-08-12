@@ -4,7 +4,7 @@ import core.game.node.entity.Entity
 import core.game.node.entity.impl.Animator.Priority
 import core.game.node.entity.impl.Projectile
 import core.game.world.update.flag.context.Animation
-import org.rs.consts.Animations
+import shared.consts.Animations
 
 /**
  * Helper object responsible for creating projectiles used in spell casting.

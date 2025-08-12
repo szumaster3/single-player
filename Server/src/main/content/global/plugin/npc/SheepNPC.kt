@@ -14,7 +14,7 @@ import core.game.world.map.Direction
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.tools.RandomFunction
-import org.rs.consts.*
+import shared.consts.*
 
 private val sheepIds =
     intArrayOf(

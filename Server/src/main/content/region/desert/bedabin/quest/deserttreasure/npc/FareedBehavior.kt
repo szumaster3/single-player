@@ -12,8 +12,8 @@ import core.game.node.entity.combat.CombatStyle
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.npc.NPCBehavior
 import core.game.node.entity.player.Player
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 class FareedBehavior : NPCBehavior(NPCs.FAREED_1977) {
     var clearTime = 0

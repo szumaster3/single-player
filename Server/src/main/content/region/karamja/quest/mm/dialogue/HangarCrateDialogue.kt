@@ -5,7 +5,7 @@ import core.api.sendDialogueOptions
 import core.api.sendItemDialogue
 import core.api.setTitle
 import core.game.dialogue.DialogueFile
-import org.rs.consts.Items
+import shared.consts.Items
 
 class HangarCrateDialogue : DialogueFile() {
 

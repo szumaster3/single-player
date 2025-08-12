@@ -9,8 +9,8 @@ import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.game.world.map.Location
 import core.plugin.Initializable
-import org.rs.consts.Items
-import org.rs.consts.Quests
+import shared.consts.Items
+import shared.consts.Quests
 
 @Initializable
 class HolyGrail : Quest(Quests.HOLY_GRAIL, 76, 75, 1, 5, 0, 1, 10) {

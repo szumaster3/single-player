@@ -11,7 +11,7 @@ import core.game.node.scenery.Scenery;
 import core.game.world.map.Location;
 import core.plugin.Initializable;
 import core.plugin.Plugin;
-import org.rs.consts.NPCs;
+import shared.consts.NPCs;
 
 import static core.api.ContentAPIKt.*;
 
@@ -23,11 +23,11 @@ public final class LegendsGuildPlugin extends OptionHandler {
 
     @Override
     public Plugin<Object> newInstance(Object arg) throws Throwable {
-        SceneryDefinition.forId(org.rs.consts.Scenery.GATE_2391).getHandlers().put("option:open", this);
-        SceneryDefinition.forId(org.rs.consts.Scenery.GATE_2392).getHandlers().put("option:open", this);
-        SceneryDefinition.forId(org.rs.consts.Scenery.LEGENDS_GUILD_DOOR_2896).getHandlers().put("option:open", this);
-        SceneryDefinition.forId(org.rs.consts.Scenery.LEGENDS_GUILD_DOOR_2897).getHandlers().put("option:open", this);
-        SceneryDefinition.forId(org.rs.consts.Scenery.STAIRCASE_32048).getHandlers().put("option:climb-up", this);
+        SceneryDefinition.forId(shared.consts.Scenery.GATE_2391).getHandlers().put("option:open", this);
+        SceneryDefinition.forId(shared.consts.Scenery.GATE_2392).getHandlers().put("option:open", this);
+        SceneryDefinition.forId(shared.consts.Scenery.LEGENDS_GUILD_DOOR_2896).getHandlers().put("option:open", this);
+        SceneryDefinition.forId(shared.consts.Scenery.LEGENDS_GUILD_DOOR_2897).getHandlers().put("option:open", this);
+        SceneryDefinition.forId(shared.consts.Scenery.STAIRCASE_32048).getHandlers().put("option:climb-up", this);
         return this;
     }
 
@@ -58,7 +58,7 @@ public final class LegendsGuildPlugin extends OptionHandler {
                 }
                 break;
             case "climb-up":
-                if (id == org.rs.consts.Scenery.STAIRCASE_32048) {
+                if (id == shared.consts.Scenery.STAIRCASE_32048) {
                     teleport(player, Location.create(2723, 3375, 0), TeleportManager.TeleportType.INSTANT);
                 }
                 break;

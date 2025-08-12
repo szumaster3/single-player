@@ -1,4 +1,4 @@
-package org.rs.consts
+package shared.consts
 
 object Network {
     const val ACCESS_MASK = 165

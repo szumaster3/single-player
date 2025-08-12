@@ -4,8 +4,8 @@ import core.api.allInEquipment
 import core.api.getVarbit
 import core.api.setVarbit
 import core.game.node.entity.player.Player
-import org.rs.consts.Items
-import org.rs.consts.Vars
+import shared.consts.Items
+import shared.consts.Vars
 
 /**
  * General shadow mini-quest

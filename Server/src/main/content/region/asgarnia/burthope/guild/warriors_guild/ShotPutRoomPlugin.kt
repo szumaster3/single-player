@@ -26,9 +26,9 @@ import core.plugin.ClassScanner.definePlugin
 import core.plugin.Initializable
 import core.plugin.Plugin
 import core.tools.RandomFunction
-import org.rs.consts.Animations
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Animations
+import shared.consts.Items
+import shared.consts.NPCs
 import kotlin.math.ceil
 
 @Initializable
@@ -120,8 +120,8 @@ class ShotPutRoomPlugin(player: Player? = null) : Dialogue(player) {
                     }
 
                     override fun newInstance(arg: Any?): Plugin<Any> {
-                        SceneryDefinition.forId(org.rs.consts.Scenery.SHOT_15664).handlers["option:throw"] = this
-                        SceneryDefinition.forId(org.rs.consts.Scenery.SHOT_15665).handlers["option:throw"] = this
+                        SceneryDefinition.forId(shared.consts.Scenery.SHOT_15664).handlers["option:throw"] = this
+                        SceneryDefinition.forId(shared.consts.Scenery.SHOT_15665).handlers["option:throw"] = this
                         ItemDefinition.forId(Items.EIGHTEEN_LB_SHOT_8858).handlers["option:take"] = this
                         ItemDefinition.forId(Items.TWENTY_TWO_LB_SHOT_8859).handlers["option:take"] = this
                         return this

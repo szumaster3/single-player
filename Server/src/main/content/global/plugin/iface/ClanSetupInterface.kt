@@ -10,7 +10,7 @@ import core.game.system.communication.ClanRepository
 import core.net.amsc.MSPacketRepository
 import core.net.amsc.WorldCommunicator
 import core.tools.StringUtils
-import org.rs.consts.Components
+import shared.consts.Components
 
 /**
  * Represents the clan setup interface interactions for players.

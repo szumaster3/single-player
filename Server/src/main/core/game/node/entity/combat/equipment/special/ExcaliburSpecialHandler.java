@@ -12,9 +12,9 @@ import core.game.world.update.flag.context.Animation;
 import core.game.world.update.flag.context.Graphics;
 import core.plugin.Initializable;
 import core.plugin.Plugin;
-import org.rs.consts.Animations;
-import org.rs.consts.Items;
-import org.rs.consts.Sounds;
+import shared.consts.Animations;
+import shared.consts.Items;
+import shared.consts.Sounds;
 
 import static core.api.ContentAPIKt.*;
 
@@ -30,7 +30,7 @@ public final class ExcaliburSpecialHandler extends MeleeSwingHandler implements 
 
     private static final Animation ANIMATION = new Animation(Animations.OLD_EXCALIBUR_1057, Priority.HIGH);
 
-    private static final Graphics GRAPHICS = new Graphics(org.rs.consts.Graphics.EXCALIBUR_SPECIAL_247);
+    private static final Graphics GRAPHICS = new Graphics(shared.consts.Graphics.EXCALIBUR_SPECIAL_247);
 
     @Override
     public Object fireEvent(String identifier, Object... args) {

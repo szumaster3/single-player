@@ -8,7 +8,7 @@ import core.game.dialogue.FaceAnim
 import core.game.interaction.QueueStrength
 import core.game.node.entity.player.Player
 import core.plugin.Initializable
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 /**
  * Represents the dialogue plugin used for the Prince/Princess NPC.

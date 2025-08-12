@@ -25,7 +25,7 @@ import core.game.world.map.Location
 import core.game.world.map.RegionManager.getObject
 import core.plugin.ClassScanner.definePlugins
 import core.plugin.Initializable
-import org.rs.consts.*
+import shared.consts.*
 
 /**
  * Represents the dragon slayer quest.

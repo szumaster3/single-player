@@ -7,7 +7,7 @@ import core.game.node.item.Item
 import core.plugin.type.ExperiencePlugin
 import core.tools.RandomFunction
 import core.tools.colorize
-import org.rs.consts.Items
+import shared.consts.Items
 
 class CandyRewardPlugin : ExperiencePlugin() {
 

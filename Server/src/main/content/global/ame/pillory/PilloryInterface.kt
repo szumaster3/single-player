@@ -7,7 +7,7 @@ import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.interaction.InterfaceListener
 import core.tools.DARK_RED
-import org.rs.consts.Scenery
+import shared.consts.Scenery
 
 /**
  * Represents the Pillory random event interface.

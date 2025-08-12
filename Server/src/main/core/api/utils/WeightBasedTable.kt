@@ -10,7 +10,7 @@ import core.game.node.entity.Entity
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.tools.RandomFunction
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Represents a table of items with assigned weights that can be rolled

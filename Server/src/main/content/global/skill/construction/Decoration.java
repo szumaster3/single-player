@@ -4,7 +4,7 @@ import core.game.node.entity.player.Player;
 import core.game.node.item.Item;
 import core.game.node.scenery.Scenery;
 import core.game.world.map.Location;
-import org.rs.consts.Items;
+import shared.consts.Items;
 
 public enum Decoration {
     PORTAL(13405, 8168, 1, 100, new Item[]{new Item(Items.IRON_BAR_2351, 10)}),

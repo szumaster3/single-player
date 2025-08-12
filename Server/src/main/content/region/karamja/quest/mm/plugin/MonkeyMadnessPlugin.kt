@@ -18,7 +18,7 @@ import core.game.world.update.flag.context.Graphics
 import core.net.packet.OutgoingContext
 import core.net.packet.PacketRepository
 import core.net.packet.out.CameraViewPacket
-import org.rs.consts.*
+import shared.consts.*
 
 class MonkeyMadnessPlugin : InteractionListener {
     companion object {

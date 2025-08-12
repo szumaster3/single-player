@@ -9,7 +9,7 @@ import core.game.node.item.Item
 import core.game.system.task.Pulse
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Plugin that allows players to convert [Items.CLAY_434] into [Items.SOFT_CLAY_1761].

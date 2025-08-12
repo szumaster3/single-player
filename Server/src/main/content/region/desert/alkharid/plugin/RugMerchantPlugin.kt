@@ -3,7 +3,7 @@ package content.region.desert.alkharid.plugin
 import core.api.openDialogue
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 class RugMerchantPlugin : InteractionListener {
 

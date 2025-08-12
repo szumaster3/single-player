@@ -12,7 +12,7 @@ import core.game.node.entity.player.link.TeleportManager
 import core.game.system.task.Pulse
 import core.game.world.map.Direction
 import core.game.world.map.Location
-import org.rs.consts.*
+import shared.consts.*
 
 class KeldagrimPlugin : InteractionListener {
 

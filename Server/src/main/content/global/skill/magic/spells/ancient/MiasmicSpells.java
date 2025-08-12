@@ -17,7 +17,7 @@ import core.game.world.update.flag.context.Animation;
 import core.game.world.update.flag.context.Graphics;
 import core.plugin.Initializable;
 import core.plugin.Plugin;
-import org.rs.consts.Items;
+import shared.consts.Items;
 
 import java.util.List;
 
@@ -28,10 +28,10 @@ import static core.api.ContentAPIKt.*;
  */
 @Initializable
 public final class MiasmicSpells extends CombatSpell {
-    private static final Graphics RUSH_START = new Graphics(org.rs.consts.Graphics.MIASMIC_SPELL_1845, 0, 15);
-    private static final Graphics RUSH_END = new Graphics(org.rs.consts.Graphics.MIASMIC_SPELL_1847, 40);
-    private static final Graphics BURST_START = new Graphics(org.rs.consts.Graphics.RED_CLOUD_1848, 0);
-    private static final Graphics BURST_END = new Graphics(org.rs.consts.Graphics.RED_CLOUD_1849, 20, 30);
+    private static final Graphics RUSH_START = new Graphics(shared.consts.Graphics.MIASMIC_SPELL_1845, 0, 15);
+    private static final Graphics RUSH_END = new Graphics(shared.consts.Graphics.MIASMIC_SPELL_1847, 40);
+    private static final Graphics BURST_START = new Graphics(shared.consts.Graphics.RED_CLOUD_1848, 0);
+    private static final Graphics BURST_END = new Graphics(shared.consts.Graphics.RED_CLOUD_1849, 20, 30);
     private static final Graphics BLITZ_START = new Graphics(1850, 15);
     private static final Graphics BLITZ_END = new Graphics(1851, 0);
     private static final Graphics BARRAGE_START = new Graphics(1853, 0);

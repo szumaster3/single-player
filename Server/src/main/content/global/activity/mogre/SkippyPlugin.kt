@@ -3,9 +3,9 @@ package content.global.activity.mogre
 import core.api.*
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import org.rs.consts.Items
-import org.rs.consts.NPCs
-import org.rs.consts.Vars
+import shared.consts.Items
+import shared.consts.NPCs
+import shared.consts.Vars
 
 /**
  * Handles interaction for lore activity that teaches players how to fight mogre npc.

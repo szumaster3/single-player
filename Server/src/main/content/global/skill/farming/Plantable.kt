@@ -1,7 +1,7 @@
 package content.global.skill.farming
 
 import core.game.node.item.Item
-import org.rs.consts.Items
+import shared.consts.Items
 
 enum class Plantable(
     val itemID: Int,

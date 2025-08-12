@@ -6,8 +6,8 @@ import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.tools.Log
-import org.rs.consts.Components
-import org.rs.consts.Items
+import shared.consts.Components
+import shared.consts.Items
 
 class FOGRewardInterface : InterfaceListener {
     class ShopItem(

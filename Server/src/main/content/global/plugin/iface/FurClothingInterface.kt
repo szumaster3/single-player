@@ -12,8 +12,8 @@ import core.plugin.Plugin
 import core.tools.colorize
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import org.rs.consts.Components
-import org.rs.consts.Items
+import shared.consts.Components
+import shared.consts.Items
 
 private val POLAR_CAMO_TOP = Item(Items.POLAR_CAMO_TOP_10065)
 private val POLAR_CAMO_LEGS = Item(Items.POLAR_CAMO_LEGS_10067)

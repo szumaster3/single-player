@@ -1,7 +1,7 @@
 package content.global.plugin.iface.bank
 
 import core.game.interaction.InterfaceListener
-import org.rs.consts.Components
+import shared.consts.Components
 
 /**
  * Handles the bank pin interfaces.

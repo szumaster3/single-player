@@ -12,7 +12,7 @@ import core.game.node.entity.player.link.TeleportManager
 import core.game.world.map.Location
 import core.game.world.map.zone.impl.WildernessZone
 import core.plugin.Initializable
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 /**
  * The type Spirit kyatt dialogue.

@@ -8,9 +8,9 @@ import core.game.node.entity.Entity
 import core.game.system.task.Pulse
 import core.game.world.map.zone.ZoneBorders
 import core.game.world.map.zone.ZoneRestriction
-import org.rs.consts.Items
-import org.rs.consts.NPCs
-import org.rs.consts.Scenery
+import shared.consts.Items
+import shared.consts.NPCs
+import shared.consts.Scenery
 
 /**
  * Handles interaction for Freaky forester random event.

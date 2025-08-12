@@ -7,7 +7,7 @@ import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.game.system.timer.impl.AntiMacro
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Represents the Certer interface.

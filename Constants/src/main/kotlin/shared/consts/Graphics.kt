@@ -1,4 +1,4 @@
-package org.rs.consts
+package shared.consts
 
 object Graphics {
     const val SARADOMIN_STRIKE_76 = 76

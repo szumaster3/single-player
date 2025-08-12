@@ -11,8 +11,8 @@ import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.tools.DIALOGUE_INITIAL_OPTIONS_HANDLE
 import core.tools.END_DIALOGUE
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
+import shared.consts.NPCs
+import shared.consts.Quests
 
 /**
  * Represents the Duke Horacio dialogues.

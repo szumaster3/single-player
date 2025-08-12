@@ -8,7 +8,7 @@ import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.interaction.QueueStrength
 import core.game.node.entity.combat.ImpactHandler
-import org.rs.consts.Scenery
+import shared.consts.Scenery
 
 class RatTrap : InteractionListener {
     val RatTrapAnimFirst = 2897

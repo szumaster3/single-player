@@ -1,7 +1,7 @@
 package content.global.skill.smithing
 
 import core.game.node.entity.player.Player
-import org.rs.consts.Items
+import shared.consts.Items
 
 enum class Bars(
     val barType: BarType,

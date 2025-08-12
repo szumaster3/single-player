@@ -8,7 +8,7 @@ import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.plugin.Initializable
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 /**
  * Represents the Dwarf (Mining guild) dialogue.

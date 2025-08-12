@@ -9,8 +9,8 @@ import core.game.node.entity.skill.Skills
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
 import core.plugin.Initializable
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 @Initializable
 class BullAntNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.BULL_ANT_6867) :

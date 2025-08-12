@@ -8,7 +8,7 @@ import core.game.node.entity.npc.NPC
 import core.game.node.entity.npc.NPCBehavior
 import core.tools.RandomFunction
 import core.tools.minutesToTicks
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 class SlashBashBehavior : NPCBehavior(NPCs.SLASH_BASH_2060) {
 

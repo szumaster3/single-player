@@ -2,8 +2,8 @@ package content.data.items
 
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
-import org.rs.consts.Animations
-import org.rs.consts.Items
+import shared.consts.Animations
+import shared.consts.Items
 
 /**
  * Represents a skilling tool items.

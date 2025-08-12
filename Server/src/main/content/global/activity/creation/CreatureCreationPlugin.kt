@@ -9,7 +9,7 @@ import core.game.node.Node
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.music.MusicEntry
 import core.game.world.map.Location
-import org.rs.consts.*
+import shared.consts.*
 
 /**
  * Represents the creature creation combinations.

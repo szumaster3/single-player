@@ -4,7 +4,7 @@ import core.api.addItem
 import core.game.node.item.Item
 import core.game.system.command.Privilege
 import core.plugin.Initializable
-import org.rs.consts.Items
+import shared.consts.Items
 
 @Initializable
 class ItemKitsCommandSet : CommandSet(Privilege.ADMIN) {

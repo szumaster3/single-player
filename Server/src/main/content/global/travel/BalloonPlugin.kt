@@ -18,7 +18,7 @@ import core.game.node.item.Item
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.tools.END_DIALOGUE
-import org.rs.consts.*
+import shared.consts.*
 
 /**
  * Represents balloon travel data.

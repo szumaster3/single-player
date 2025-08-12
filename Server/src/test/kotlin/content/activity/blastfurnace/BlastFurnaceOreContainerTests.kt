@@ -5,7 +5,7 @@ import content.minigame.blastfurnace.plugin.BFOreContainer
 import content.minigame.blastfurnace.plugin.BlastUtils
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import org.rs.consts.Items
+import shared.consts.Items
 
 class BlastFurnaceOreContainerTests {
     @Test fun shouldBeAbleToAddCoal() {

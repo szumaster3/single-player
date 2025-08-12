@@ -8,7 +8,7 @@ import core.game.node.entity.skill.SkillPulse
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.game.world.map.Location
-import org.rs.consts.Animations
+import shared.consts.Animations
 
 /**
  * Represents the Fire pottery pulse.

@@ -4,7 +4,7 @@ import core.ServerStore
 import core.api.hasAnItem
 import core.api.sendMessage
 import core.game.node.entity.player.Player
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * A class that checks whether an item has been regenerated

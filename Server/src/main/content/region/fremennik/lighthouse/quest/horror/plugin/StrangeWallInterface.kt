@@ -6,9 +6,9 @@ import core.api.isQuestComplete
 import core.api.setQuestStage
 import core.game.interaction.InterfaceListener
 import core.game.interaction.QueueStrength
-import org.rs.consts.Components
-import org.rs.consts.Quests
-import org.rs.consts.Sounds
+import shared.consts.Components
+import shared.consts.Quests
+import shared.consts.Sounds
 
 class StrangeWallInterface : InterfaceListener {
     override fun defineInterfaceListeners() {

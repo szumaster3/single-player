@@ -26,8 +26,8 @@ import core.game.world.map.Location
 import core.plugin.ClassScanner.definePlugin
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.Animations
-import org.rs.consts.Items
+import shared.consts.Animations
+import shared.consts.Items
 import java.util.*
 
 @Initializable

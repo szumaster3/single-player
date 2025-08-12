@@ -11,7 +11,7 @@ import core.game.system.timer.impl.AntiMacro
 import core.game.world.map.Location
 import core.tools.END_DIALOGUE
 import core.tools.START_DIALOGUE
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 /**
  * Represents the dialogue file used for the Frog Herald NPC.

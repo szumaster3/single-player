@@ -10,9 +10,9 @@ import core.game.node.entity.player.Player
 import core.game.node.item.GroundItemManager
 import core.game.node.item.Item
 import core.tools.RandomFunction
-import org.rs.consts.Components
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Components
+import shared.consts.Items
+import shared.consts.NPCs
 
 object RewardChest {
     private val REGULAR_DROPS = WeightBasedTable.create(

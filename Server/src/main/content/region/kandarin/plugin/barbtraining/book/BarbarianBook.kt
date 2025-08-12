@@ -10,7 +10,7 @@ import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.player.Player
 import core.tools.BLUE
-import org.rs.consts.Items
+import shared.consts.Items
 
 class BarbarianBook : InteractionListener {
     companion object {

@@ -16,9 +16,9 @@ import core.game.world.update.flag.context.Graphics;
 import core.plugin.Initializable;
 import core.plugin.Plugin;
 import core.tools.RandomFunction;
-import org.rs.consts.Animations;
-import org.rs.consts.Items;
-import org.rs.consts.Sounds;
+import shared.consts.Animations;
+import shared.consts.Items;
+import shared.consts.Sounds;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +37,7 @@ public final class SweepSpecialHandler extends MeleeSwingHandler implements Plug
 
     private static final Animation ANIMATION = new Animation(Animations.ATTACK_WEAPON_1203, Priority.HIGH);
 
-    private static final Graphics GRAPHICS = new Graphics(org.rs.consts.Graphics.DRAGON_HALBERD_SPECIAL_282, 96);
+    private static final Graphics GRAPHICS = new Graphics(shared.consts.Graphics.DRAGON_HALBERD_SPECIAL_282, 96);
 
     @Override
     public Plugin<Object> newInstance(Object arg) throws Throwable {

@@ -3,7 +3,7 @@ package content.global.plugin.item.equipment
 import core.Util.convertToIntegerArray
 import core.api.StartupListener
 import core.plugin.Initializable
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * The Crystal equipment.

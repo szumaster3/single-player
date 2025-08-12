@@ -6,9 +6,9 @@ import core.game.dialogue.FaceAnim
 import core.game.node.entity.player.Player
 import core.game.world.map.Direction
 import core.game.world.update.flag.context.Graphics
-import org.rs.consts.Animations
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
+import shared.consts.Animations
+import shared.consts.NPCs
+import shared.consts.Quests
 
 class RestlessGhostCutscene(
     player: Player,
@@ -57,7 +57,7 @@ class RestlessGhostCutscene(
                 visualize(
                     getNPC(NPCs.RESTLESS_GHOST_457)!!,
                     Animations.RESTLESS_GHOST_ASCENDS_4018,
-                    Graphics(org.rs.consts.Graphics.GREY_SWIVELS_604, 30),
+                    Graphics(shared.consts.Graphics.GREY_SWIVELS_604, 30),
                 )
                 timedUpdate(2)
             }
@@ -72,7 +72,7 @@ class RestlessGhostCutscene(
                 spawnProjectile(
                     source = npc.transform(-4, 1, 0),
                     dest = npc.transform(-4, -4, 0),
-                    projectile = org.rs.consts.Graphics.SWIRLEY_GREY_SMOKE_668,
+                    projectile = shared.consts.Graphics.SWIRLEY_GREY_SMOKE_668,
                     startHeight = 42,
                     endHeight = 30,
                     delay = 0,
@@ -87,7 +87,7 @@ class RestlessGhostCutscene(
                 spawnProjectile(
                     source = npc.transform(-4, -3, 0),
                     dest = npc.transform(0, -7, 0),
-                    projectile = org.rs.consts.Graphics.SWIRLEY_GREY_SMOKE_668,
+                    projectile = shared.consts.Graphics.SWIRLEY_GREY_SMOKE_668,
                     startHeight = 30,
                     endHeight = 100,
                     delay = 0,

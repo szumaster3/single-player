@@ -32,7 +32,7 @@ import core.plugin.ClassScanner;
 import core.plugin.Initializable;
 import core.plugin.Plugin;
 import core.tools.RandomFunction;
-import org.rs.consts.*;
+import shared.consts.*;
 
 import java.util.HashMap;
 import java.util.Map;

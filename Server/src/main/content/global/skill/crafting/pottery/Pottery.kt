@@ -1,7 +1,7 @@
 package content.global.skill.crafting.pottery
 
 import core.game.node.item.Item
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Represents the different pottery crafting.

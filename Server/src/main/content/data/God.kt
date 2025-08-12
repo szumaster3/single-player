@@ -1,6 +1,6 @@
 package content.data
 
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Represents the GOD items.

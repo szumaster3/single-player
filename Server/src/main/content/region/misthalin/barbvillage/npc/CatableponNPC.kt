@@ -10,7 +10,7 @@ import core.game.node.entity.player.link.SpellBookManager.SpellBook
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 /**
  * Represents the Catablepon NPC.

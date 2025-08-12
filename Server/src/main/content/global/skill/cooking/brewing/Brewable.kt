@@ -1,6 +1,6 @@
 package content.global.skill.cooking.brewing
 
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Represents brewable data.

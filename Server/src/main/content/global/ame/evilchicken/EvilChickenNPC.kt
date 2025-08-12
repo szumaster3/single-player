@@ -8,8 +8,8 @@ import core.game.node.entity.npc.NPC
 import core.game.node.item.GroundItemManager
 import core.game.node.item.Item
 import core.tools.RandomFunction
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 import java.lang.Integer.max
 
 val ids = NPCs.EVIL_CHICKEN_2463..NPCs.EVIL_CHICKEN_2468

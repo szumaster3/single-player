@@ -1,4 +1,4 @@
-package org.rs.consts
+package shared.consts
 
 object Music {
     const val IBAN_1 = 1

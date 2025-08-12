@@ -12,9 +12,9 @@ import core.game.system.task.Pulse
 import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.Animations
-import org.rs.consts.Items
-import org.rs.consts.Sounds
+import shared.consts.Animations
+import shared.consts.Items
+import shared.consts.Sounds
 
 val livesBased =
     arrayOf(

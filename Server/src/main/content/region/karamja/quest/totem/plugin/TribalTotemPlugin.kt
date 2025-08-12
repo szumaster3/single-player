@@ -8,7 +8,7 @@ import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.skill.Skills
 import core.game.world.map.Location
-import org.rs.consts.*
+import shared.consts.*
 
 class TribalTotemPlugin : InteractionListener {
     override fun defineListeners() {

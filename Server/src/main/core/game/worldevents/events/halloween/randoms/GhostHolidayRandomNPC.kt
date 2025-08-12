@@ -7,9 +7,9 @@ import core.api.sendMessage
 import core.game.node.entity.npc.NPC
 import core.game.worldevents.events.HolidayRandomEventNPC
 import core.tools.RandomFunction
-import org.rs.consts.Animations
-import org.rs.consts.NPCs
-import org.rs.consts.Sounds
+import shared.consts.Animations
+import shared.consts.NPCs
+import shared.consts.Sounds
 
 class GhostHolidayRandomNPC : HolidayRandomEventNPC(NPCs.GHOST_2716) {
     override fun init() {

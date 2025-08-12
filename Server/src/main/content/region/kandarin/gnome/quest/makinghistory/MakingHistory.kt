@@ -8,10 +8,10 @@ import core.game.node.entity.player.link.quest.Quest
 import core.game.node.entity.skill.Skills
 import core.game.world.GameWorld
 import core.plugin.Initializable
-import org.rs.consts.Components
-import org.rs.consts.Items
-import org.rs.consts.Quests
-import org.rs.consts.Vars
+import shared.consts.Components
+import shared.consts.Items
+import shared.consts.Quests
+import shared.consts.Vars
 
 @Initializable
 class MakingHistory : Quest(Quests.MAKING_HISTORY, 86, 85, 3, Vars.VARBIT_QUEST_MAKING_HISTORY_PROGRESS_1383, 0, 1, 4) {

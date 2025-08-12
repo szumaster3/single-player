@@ -5,9 +5,9 @@ import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.impl.PulseType
 import core.game.system.task.Pulse
-import org.rs.consts.Animations
-import org.rs.consts.Items
-import org.rs.consts.Scenery
+import shared.consts.Animations
+import shared.consts.Items
+import shared.consts.Scenery
 
 class RagAndBoneManPlugin : InteractionListener {
     override fun defineListeners() {

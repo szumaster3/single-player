@@ -13,8 +13,8 @@ import core.game.world.map.Location
 import core.plugin.ClassScanner.definePlugin
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 @Initializable
 class WitchHousePlugin : OptionHandler() {
@@ -32,7 +32,7 @@ class WitchHousePlugin : OptionHandler() {
 
     class WitchHouseUseWithHandler : UseWithHandler(Items.CHEESE_1985) {
         override fun newInstance(arg: Any?): Plugin<Any> {
-            addHandler(org.rs.consts.Scenery.MOUSE_HOLE_15518, OBJECT_TYPE, this)
+            addHandler(shared.consts.Scenery.MOUSE_HOLE_15518, OBJECT_TYPE, this)
             addHandler(
                 NPCs.MOUSE_901,
                 NPC_TYPE,
@@ -83,7 +83,7 @@ class WitchHousePlugin : OptionHandler() {
                 sendDialogue(player, "You can't do this right now.")
             }
             if (used.id == Items.CHEESE_1985 &&
-                scenery.id == org.rs.consts.Scenery.MOUSE_HOLE_15518 &&
+                scenery.id == shared.consts.Scenery.MOUSE_HOLE_15518 &&
                 player.getAttribute<Any?>(
                     "mouse_out",
                 ) == null

@@ -10,9 +10,9 @@ import core.game.node.item.Item
 import core.game.system.task.Pulse
 import core.game.world.map.Direction
 import core.game.world.map.Location
-import org.rs.consts.Animations
-import org.rs.consts.Items
-import org.rs.consts.Scenery
+import shared.consts.Animations
+import shared.consts.Items
+import shared.consts.Scenery
 
 class MashedApplePlugin : InteractionListener {
 

@@ -10,7 +10,7 @@ import core.game.node.scenery.Scenery;
 import core.plugin.Initializable;
 import core.plugin.Plugin;
 import core.tools.Log;
-import org.rs.consts.Components;
+import shared.consts.Components;
 
 import static core.api.ContentAPIKt.log;
 

@@ -18,7 +18,7 @@ import core.game.world.map.zone.ZoneBorders
 import core.game.world.repository.Repository.findNPC
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
-import org.rs.consts.*
+import shared.consts.*
 
 class EntranaPlugin : InteractionListener, MapArea {
 
@@ -154,7 +154,7 @@ class EntranaPlugin : InteractionListener, MapArea {
                         openInterface(entity.asPlayer(), Components.FADE_FROM_BLACK_170)
                         entity.asPlayer().animator.animate(Animation(Animations.DEATH_4200))
                         sendGraphics(
-                            Graphics(org.rs.consts.Graphics.STUN_BIRDIES_ABOVE_HEAD_80, 96), entity.asPlayer().location
+                            Graphics(shared.consts.Graphics.STUN_BIRDIES_ABOVE_HEAD_80, 96), entity.asPlayer().location
                         )
                         sendChat(entity.asPlayer(), "Urrrrrgh!", 6)
                         if (!entity.isActive) poofClear(monk)

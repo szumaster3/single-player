@@ -1,6 +1,6 @@
 package content.data
 
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Represents the state of meat, affecting edibility and cooking results.

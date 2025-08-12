@@ -12,7 +12,7 @@ import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import core.tools.RandomFunction
 import core.tools.colorize
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 /**
  * Represents the Star Sprite dialogue.

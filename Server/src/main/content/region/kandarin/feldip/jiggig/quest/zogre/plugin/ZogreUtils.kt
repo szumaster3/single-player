@@ -1,6 +1,6 @@
 package content.region.kandarin.feldip.jiggig.quest.zogre.plugin
 
-import org.rs.consts.Items
+import shared.consts.Items
 
 object ZogreUtils {
     const val UNREALIST_PORTRAIT = Items.SITHIK_PORTRAIT_4814

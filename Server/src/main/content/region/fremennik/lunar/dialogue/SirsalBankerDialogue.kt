@@ -13,7 +13,7 @@ import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.IronmanMode
 import core.tools.END_DIALOGUE
 import core.tools.START_DIALOGUE
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 class SirsalBankerDialogue(player: Player? = null) : Dialogue(player) {
 

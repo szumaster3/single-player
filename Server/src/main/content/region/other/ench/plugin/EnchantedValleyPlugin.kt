@@ -7,7 +7,7 @@ import core.game.interaction.InteractionListener
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.system.task.Pulse
-import org.rs.consts.*
+import shared.consts.*
 import kotlin.math.ceil
 
 class EnchantedValleyPlugin : InteractionListener {

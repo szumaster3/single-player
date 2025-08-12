@@ -6,7 +6,7 @@ import core.game.node.entity.skill.SkillPulse
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.game.world.GameWorld.ticks
-import org.rs.consts.Animations
+import shared.consts.Animations
 
 class KebbitBoltPulse(
     player: Player?,

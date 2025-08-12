@@ -8,7 +8,7 @@ import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest
 import core.game.world.map.Location
-import org.rs.consts.Quests
+import shared.consts.Quests
 
 class MercenaryCaptainDialogue(player: Player? = null) : Dialogue(player) {
 

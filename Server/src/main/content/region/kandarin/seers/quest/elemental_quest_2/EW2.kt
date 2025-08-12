@@ -9,8 +9,8 @@ import core.api.setVarbit
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest
 import core.game.node.entity.skill.Skills
-import org.rs.consts.Items
-import org.rs.consts.Vars
+import shared.consts.Items
+import shared.consts.Vars
 
 // @Initializable
 class EW2 : Quest("Elemental Workshop II", 53, 52, 1, Vars.VARBIT_QUEST_ELEMENTAL_WORKSHOP_II_PROGRESS_2639, 0, 1, 11) {

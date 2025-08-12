@@ -9,7 +9,7 @@ import core.game.world.GameWorld
 import core.game.world.map.Location
 import core.tools.GREEN
 import core.tools.RED
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Holds [The Grand Tree][content.region.kandarin.quest.grandtree.TheGrandTree] utils.

@@ -14,7 +14,7 @@ import core.game.system.task.Pulse
 import core.game.world.map.Direction
 import core.game.world.map.Location
 import core.tools.BLUE
-import org.rs.consts.*
+import shared.consts.*
 
 class ZogreFleshEatersPlugin : InteractionListener {
     companion object {

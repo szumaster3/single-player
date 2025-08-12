@@ -6,7 +6,7 @@ import core.api.*
 import core.game.interaction.InterfaceListener
 import core.game.node.entity.skill.LevelUp
 import core.game.node.entity.skill.Skills
-import org.rs.consts.Components
+import shared.consts.Components
 
 /**
  * Represents the plugin used to handle the skilling tab.

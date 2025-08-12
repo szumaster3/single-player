@@ -6,7 +6,7 @@ import core.game.dialogue.FaceAnim
 import core.game.interaction.QueueStrength
 import core.game.node.entity.player.link.emote.Emotes
 import core.game.worldevents.events.HolidayRandoms
-import org.rs.consts.Items
+import shared.consts.Items
 
 class SnowmanHolidayRandomDialogue : DialogueFile() {
     override fun handle(

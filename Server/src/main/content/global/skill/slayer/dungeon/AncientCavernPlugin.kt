@@ -25,10 +25,10 @@ import core.plugin.ClassScanner
 import core.plugin.Initializable
 import core.plugin.Plugin
 import core.tools.RandomFunction
-import org.rs.consts.Animations
-import org.rs.consts.Components
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Animations
+import shared.consts.Components
+import shared.consts.Items
+import shared.consts.NPCs
 
 @Initializable
 class AncientCavernPlugin : MapZone("ancient cavern", true, ZoneRestriction.CANNON), Plugin<Any?> {
@@ -43,7 +43,7 @@ class AncientCavernPlugin : MapZone("ancient cavern", true, ZoneRestriction.CANN
         ClassScanner.definePlugin(
             object : OptionHandler() {
                 override fun newInstance(arg: Any?): Plugin<Any?> {
-                    SceneryDefinition.forId(org.rs.consts.Scenery.WHIRLPOOL_25274).handlers["option:dive in"] = this
+                    SceneryDefinition.forId(shared.consts.Scenery.WHIRLPOOL_25274).handlers["option:dive in"] = this
                     return this
                 }
 

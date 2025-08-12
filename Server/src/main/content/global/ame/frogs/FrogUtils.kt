@@ -8,7 +8,7 @@ import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.system.task.Pulse
 import core.game.world.update.flag.context.Animation
-import org.rs.consts.*
+import shared.consts.*
 
 /**
  * Utils for Frog random event.

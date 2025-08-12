@@ -10,10 +10,10 @@ import core.game.system.task.Pulse
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.tools.RandomFunction
-import org.rs.consts.Animations
-import org.rs.consts.Components
-import org.rs.consts.Scenery
-import org.rs.consts.Sounds
+import shared.consts.Animations
+import shared.consts.Components
+import shared.consts.Scenery
+import shared.consts.Sounds
 import kotlin.math.abs
 
 class CanoePlugin :

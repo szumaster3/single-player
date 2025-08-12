@@ -6,7 +6,7 @@ import core.game.dialogue.FaceAnim
 import core.game.dialogue.Topic
 import core.game.node.entity.npc.NPC
 import core.tools.END_DIALOGUE
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 /**
  * Represents the Door Renegade Knight dialogue.

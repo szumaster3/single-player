@@ -26,8 +26,8 @@ import core.net.packet.PacketRepository;
 import core.net.packet.out.CameraViewPacket;
 import core.tools.RandomFunction;
 import core.tools.StringUtils;
-import org.rs.consts.NPCs;
-import org.rs.consts.Quests;
+import shared.consts.NPCs;
+import shared.consts.Quests;
 
 import static core.api.ContentAPIKt.*;
 

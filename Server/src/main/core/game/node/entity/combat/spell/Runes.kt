@@ -1,7 +1,7 @@
 package core.game.node.entity.combat.spell
 
 import core.game.node.item.Item
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Represents the constants of runes.

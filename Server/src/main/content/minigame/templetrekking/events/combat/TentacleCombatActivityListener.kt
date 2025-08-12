@@ -3,7 +3,7 @@ package content.minigame.templetrekking.events.combat
 import core.api.getUsedOption
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import org.rs.consts.Scenery
+import shared.consts.Scenery
 
 class TentacleCombatActivityListener : InteractionListener {
     override fun defineListeners() {

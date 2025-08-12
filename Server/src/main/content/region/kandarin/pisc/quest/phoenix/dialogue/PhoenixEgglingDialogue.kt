@@ -8,8 +8,8 @@ import core.game.interaction.QueueStrength
 import core.game.node.entity.npc.NPC
 import core.tools.END_DIALOGUE
 import core.tools.RandomFunction
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 class PhoenixEgglingDialogue : DialogueFile() {
 

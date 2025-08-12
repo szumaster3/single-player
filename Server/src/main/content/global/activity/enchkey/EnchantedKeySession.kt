@@ -2,7 +2,7 @@ package content.global.activity.enchkey
 
 import core.api.*
 import core.game.node.entity.player.Player
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Represents a session for the Enchanted Key activity.

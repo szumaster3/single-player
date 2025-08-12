@@ -15,7 +15,7 @@ import core.game.node.entity.combat.equipment.WeaponInterface
 import core.game.node.entity.player.Player
 import core.game.system.config.ItemConfigParser
 import core.plugin.Plugin
-import org.rs.consts.Sounds
+import shared.consts.Sounds
 
 /**
  * `EquipHandler` manages the logic for equipping and unequipping items for players.

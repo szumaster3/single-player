@@ -7,8 +7,8 @@ import core.game.node.entity.skill.SkillPulse
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.tools.StringUtils
-import org.rs.consts.Animations
-import org.rs.consts.Items
+import shared.consts.Animations
+import shared.consts.Items
 
 class SoftLeatherCraftingPulse(player: Player?, node: Item?, val soft: SoftLeather, var amount: Int, ) : SkillPulse<Item?>(player, node) {
     private var ticks = 0

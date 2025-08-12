@@ -14,7 +14,7 @@ import core.game.world.map.Location;
 import core.game.world.update.flag.context.Animation;
 import core.plugin.Initializable;
 import kotlin.Unit;
-import org.rs.consts.*;
+import shared.consts.*;
 
 import static core.api.ContentAPIKt.*;
 import static core.tools.GlobalsKt.colorize;

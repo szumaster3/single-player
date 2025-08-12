@@ -4,7 +4,7 @@ import core.game.bots.*
 import core.game.node.item.Item
 import core.game.world.map.Location
 import core.game.world.map.zone.ZoneBorders
-import org.rs.consts.Items
+import shared.consts.Items
 
 @PlayerCompatible
 @ScriptName("Chicken Killer")

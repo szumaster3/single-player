@@ -32,7 +32,7 @@ import core.tools.Log
 import core.tools.StringUtils
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import org.rs.consts.Components
+import shared.consts.Components
 import java.awt.HeadlessException
 import java.awt.Toolkit
 import java.awt.datatransfer.StringSelection

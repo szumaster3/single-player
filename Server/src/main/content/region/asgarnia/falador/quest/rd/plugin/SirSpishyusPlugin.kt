@@ -11,9 +11,9 @@ import core.game.interaction.InteractionListener
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.game.world.map.zone.ZoneBorders
-import org.rs.consts.Items
-import org.rs.consts.NPCs
-import org.rs.consts.Scenery
+import shared.consts.Items
+import shared.consts.NPCs
+import shared.consts.Scenery
 
 class SirSpishyusPlugin : InteractionListener {
     companion object {

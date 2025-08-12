@@ -6,8 +6,8 @@ import core.game.node.entity.skill.Skills;
 import core.game.node.item.GroundItemManager;
 import core.game.node.item.Item;
 import core.plugin.Initializable;
-import org.rs.consts.Quests;
-import org.rs.consts.Vars;
+import shared.consts.Quests;
+import shared.consts.Vars;
 
 import static core.api.ContentAPIKt.removeAttribute;
 

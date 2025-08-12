@@ -11,7 +11,7 @@ import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.game.world.map.zone.ZoneBorders
 import core.tools.ticksPerMinute
-import org.rs.consts.Components
+import shared.consts.Components
 
 class CastleWarsWaitingArea :
     CastleWarsArea(),

@@ -7,7 +7,7 @@ import core.api.setAttribute
 import core.api.setMinimapState
 import core.game.activity.Cutscene
 import core.game.node.entity.player.Player
-import org.rs.consts.Components
+import shared.consts.Components
 
 /**
  * Represents the Servant cutscenes.

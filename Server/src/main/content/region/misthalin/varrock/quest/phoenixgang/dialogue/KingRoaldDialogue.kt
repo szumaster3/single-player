@@ -6,8 +6,8 @@ import core.game.node.item.GroundItemManager
 import core.game.node.item.Item
 import core.tools.END_DIALOGUE
 import core.tools.START_DIALOGUE
-import org.rs.consts.Items
-import org.rs.consts.Quests
+import shared.consts.Items
+import shared.consts.Quests
 
 private val CERTIFICATE = Item(Items.CERTIFICATE_769)
 

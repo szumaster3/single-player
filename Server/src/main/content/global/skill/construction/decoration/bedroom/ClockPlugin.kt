@@ -3,7 +3,7 @@ package content.global.skill.construction.decoration.bedroom
 import core.api.sendMessage
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import org.rs.consts.Scenery
+import shared.consts.Scenery
 import java.text.SimpleDateFormat
 import java.util.*
 

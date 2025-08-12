@@ -8,7 +8,7 @@ import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
-import org.rs.consts.Items
+import shared.consts.Items
 
 class TzhaarMejJalDialogue(player: Player? = null) : Dialogue(player) {
 

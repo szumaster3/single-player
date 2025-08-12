@@ -1,6 +1,6 @@
 package content.minigame.shadesofmorton
 
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 enum class LogType(
     val doses: Int,

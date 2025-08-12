@@ -10,8 +10,8 @@ import core.game.world.GameWorld
 import core.game.world.map.Direction
 import core.game.world.map.Location
 import core.plugin.Initializable
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
+import shared.consts.NPCs
+import shared.consts.Quests
 
 /**
  * Represents the Black Demon NPC.

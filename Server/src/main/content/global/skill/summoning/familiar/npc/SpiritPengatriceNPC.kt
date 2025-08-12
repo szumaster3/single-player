@@ -3,8 +3,8 @@ package content.global.skill.summoning.familiar.npc
 import content.global.skill.summoning.familiar.Familiar
 import content.global.skill.summoning.familiar.FamiliarSpecial
 import core.game.node.entity.player.Player
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 class SpiritPengatriceNPC
 @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.SPIRIT_PENGATRICE_6883) :

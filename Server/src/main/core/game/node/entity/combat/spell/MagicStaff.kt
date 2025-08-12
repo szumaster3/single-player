@@ -1,6 +1,6 @@
 package core.game.node.entity.combat.spell
 
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Represents a magic staff.

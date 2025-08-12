@@ -6,7 +6,7 @@ import core.game.node.entity.combat.BattleState
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.npc.NPCBehavior
 import core.tools.RandomFunction
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 private val TRIBESMAN_NPC = intArrayOf(NPCs.TRIBESMAN_191, NPCs.TRIBESMAN_2496, NPCs.TRIBESMAN_2497)
 

@@ -9,7 +9,7 @@ import core.game.interaction.MovementPulse
 import core.game.node.item.Item
 import core.game.world.map.Location
 import core.game.world.map.zone.ZoneBorders
-import org.rs.consts.Items
+import shared.consts.Items
 
 class DraynorFisher : Script() {
     val fishingZone = ZoneBorders(3085, 3223, 3089, 3233)

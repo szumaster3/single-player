@@ -7,8 +7,8 @@ import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.game.node.item.Item
 import core.tools.END_DIALOGUE
-import org.rs.consts.Items
-import org.rs.consts.Quests
+import shared.consts.Items
+import shared.consts.Quests
 
 class BrotherCedricDialogueFile : DialogueFile() {
     override fun handle(

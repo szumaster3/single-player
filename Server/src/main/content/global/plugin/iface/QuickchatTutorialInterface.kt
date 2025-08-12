@@ -3,8 +3,8 @@ package content.global.plugin.iface
 import core.api.openInterface
 import core.api.setVarbit
 import core.game.interaction.InterfaceListener
-import org.rs.consts.Components
-import org.rs.consts.Vars
+import shared.consts.Components
+import shared.consts.Vars
 
 /**
  * Handles quick chat tutorial.

@@ -3,7 +3,7 @@ package content.global.plugin.iface
 import core.api.closeInterface
 import core.api.openInterface
 import core.game.node.entity.player.Player
-import org.rs.consts.Components
+import shared.consts.Components
 
 /**
  * Represents the scroll interface.

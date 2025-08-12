@@ -10,7 +10,7 @@ import core.game.system.command.CommandSystem
 import core.plugin.Initializable
 import core.plugin.Plugin
 import core.tools.colorize
-import org.rs.consts.Items
+import shared.consts.Items
 
 private val ROTTEN_POTATO_OPTIONS = arrayOf("RS HD", "Heal", "Extra", "Commands")
 

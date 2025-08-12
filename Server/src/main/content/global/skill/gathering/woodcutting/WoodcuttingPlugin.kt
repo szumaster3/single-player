@@ -25,9 +25,9 @@ import core.game.system.command.sets.STATS_BASE
 import core.game.system.command.sets.STATS_LOGS
 import core.game.world.map.RegionManager
 import core.tools.RandomFunction
-import org.rs.consts.Items
-import org.rs.consts.NPCs
-import org.rs.consts.Sounds
+import shared.consts.Items
+import shared.consts.NPCs
+import shared.consts.Sounds
 import kotlin.streams.toList
 
 class WoodcuttingPlugin : InteractionListener {

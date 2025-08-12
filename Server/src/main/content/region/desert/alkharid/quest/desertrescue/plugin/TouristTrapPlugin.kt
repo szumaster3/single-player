@@ -39,9 +39,9 @@ import core.game.world.update.flag.context.Animation
 import core.plugin.ClassScanner.definePlugin
 import core.plugin.Plugin
 import core.tools.RandomFunction
-import org.rs.consts.Animations
-import org.rs.consts.Quests
-import org.rs.consts.Vars
+import shared.consts.Animations
+import shared.consts.Quests
+import shared.consts.Vars
 
 class TouristTrapPlugin : OptionHandler() {
 
@@ -1174,7 +1174,7 @@ class TouristTrapPlugin : OptionHandler() {
 
     class BedabinKeyHandler : UseWithHandler(TouristTrap.BEDABIN_KEY.id) {
         override fun newInstance(arg: Any?): Plugin<Any> {
-            addHandler(org.rs.consts.Scenery.CHEST_2677, OBJECT_TYPE, this)
+            addHandler(shared.consts.Scenery.CHEST_2677, OBJECT_TYPE, this)
             return this
         }
 

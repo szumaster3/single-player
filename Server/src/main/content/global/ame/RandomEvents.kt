@@ -29,7 +29,7 @@ import content.global.ame.zombie.ZombieNPC
 import core.api.utils.WeightBasedTable
 import core.api.utils.WeightedItem
 import core.game.node.entity.skill.Skills
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Handles random events.

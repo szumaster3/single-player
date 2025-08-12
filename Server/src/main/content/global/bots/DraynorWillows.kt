@@ -9,7 +9,7 @@ import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.game.world.map.zone.ZoneBorders
 import core.tools.colorize
-import org.rs.consts.Items
+import shared.consts.Items
 
 @PlayerCompatible
 @ScriptName("Draynor Willows")

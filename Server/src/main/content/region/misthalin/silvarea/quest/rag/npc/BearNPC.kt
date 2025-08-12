@@ -7,9 +7,9 @@ import core.game.node.entity.npc.NPCBehavior
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.tools.RandomFunction
-import org.rs.consts.Items
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
+import shared.consts.Items
+import shared.consts.NPCs
+import shared.consts.Quests
 
 class BearNPC : NPCBehavior(*bearIds) {
     companion object {

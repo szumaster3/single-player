@@ -17,8 +17,8 @@ import core.game.system.config.ItemConfigParser
 import core.net.*
 import core.tools.Log
 import core.tools.StringUtils.isPlusN
-import org.rs.consts.Components
-import org.rs.consts.Items
+import shared.consts.Components
+import shared.consts.Items
 import java.nio.ByteBuffer
 import java.util.*
 import kotlin.math.round

@@ -6,8 +6,8 @@ import core.api.openDialogue
 import core.game.dialogue.DialogueFile
 import core.game.node.entity.npc.NPC
 import core.tools.END_DIALOGUE
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 class GhostVillagerDialogueFile : DialogueFile() {
     override fun handle(

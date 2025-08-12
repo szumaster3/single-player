@@ -10,7 +10,7 @@ import core.game.component.ComponentPlugin
 import core.game.node.entity.player.Player
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.Components
+import shared.consts.Components
 
 /**
  * Plugin responsible for handling the Summoning creation interface and pouch usage at obelisks.

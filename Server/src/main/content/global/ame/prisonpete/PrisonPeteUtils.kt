@@ -9,9 +9,9 @@ import core.game.world.GameWorld
 import core.game.world.map.Location
 import core.game.world.map.zone.ZoneBorders
 import core.game.world.update.flag.context.Graphics
-import org.rs.consts.Items
-import org.rs.consts.NPCs
-import org.rs.consts.Sounds
+import shared.consts.Items
+import shared.consts.NPCs
+import shared.consts.Sounds
 
 object PrisonPeteUtils {
     val PRISON_LOCATION: Location = Location.create(2086, 4462, 0)

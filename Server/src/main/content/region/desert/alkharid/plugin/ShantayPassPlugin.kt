@@ -10,10 +10,10 @@ import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.item.Item
 import core.tools.DARK_RED
-import org.rs.consts.Components
-import org.rs.consts.Items
-import org.rs.consts.NPCs
-import org.rs.consts.Scenery
+import shared.consts.Components
+import shared.consts.Items
+import shared.consts.NPCs
+import shared.consts.Scenery
 
 class ShantayPassPlugin : InteractionListener {
 

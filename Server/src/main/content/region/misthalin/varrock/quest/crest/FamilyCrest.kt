@@ -9,9 +9,9 @@ import core.game.node.entity.player.link.quest.Quest
 import core.game.node.entity.skill.Skills
 import core.plugin.Initializable
 import core.tools.Log
-import org.rs.consts.Items
-import org.rs.consts.Quests
-import org.rs.consts.Vars
+import shared.consts.Items
+import shared.consts.Quests
+import shared.consts.Vars
 
 /* TODO:
  *  You can talk to Avan or Caleb to re-obtain their crest parts via the drop trick.

@@ -22,8 +22,8 @@ import core.game.world.GameWorld
 import core.game.world.map.zone.ZoneBorders
 import core.tools.RandomFunction
 import core.tools.prependArticle
-import org.rs.consts.Items
-import org.rs.consts.Quests
+import shared.consts.Items
+import shared.consts.Quests
 
 class MiningPlugin : InteractionListener {
     private val gemRewards = arrayOf(
@@ -155,10 +155,10 @@ class MiningPlugin : InteractionListener {
         val resource = MiningNode.forId(node.id)
         val tool = SkillingTool.getPickaxe(player)
         val isEssence = resource!!.id in intArrayOf(
-            org.rs.consts.Scenery.RUNE_ESSENCE_2491,/*
+            shared.consts.Scenery.RUNE_ESSENCE_2491,/*
              * Lunar essence rock.
              */
-            org.rs.consts.Scenery.ROCK_16684
+            shared.consts.Scenery.ROCK_16684
         )
         val isGems = resource.identifier == MiningNode.GEM_ROCK_0.identifier
         val isGranite = resource.identifier == MiningNode.GRANITE.identifier
@@ -278,12 +278,12 @@ class MiningPlugin : InteractionListener {
          * Handles limestone respawn.
          */
 
-        if (resource.id == org.rs.consts.Scenery.PILE_OF_ROCK_4030 && !isEssence && resource.respawnRate != 0) {
+        if (resource.id == shared.consts.Scenery.PILE_OF_ROCK_4030 && !isEssence && resource.respawnRate != 0) {
             removeScenery(node as Scenery)
             GameWorld.Pulser.submit(
                 object : Pulse(resource.respawnDuration, player) {
                     override fun pulse(): Boolean {
-                        SceneryBuilder.add(Scenery(org.rs.consts.Scenery.PILE_OF_ROCK_4027, node.location))
+                        SceneryBuilder.add(Scenery(shared.consts.Scenery.PILE_OF_ROCK_4027, node.location))
                         return true
                     }
                 },
@@ -296,18 +296,18 @@ class MiningPlugin : InteractionListener {
          * Handles obsidian respawn.
          */
 
-        if (resource.id == org.rs.consts.Scenery.OBSIDIAN_WALL_31229 && !isEssence && resource.respawnRate != 0) {
+        if (resource.id == shared.consts.Scenery.OBSIDIAN_WALL_31229 && !isEssence && resource.respawnRate != 0) {
             SceneryBuilder.replaceWithTempBeforeNew(
                 node.asScenery(),
-                node.asScenery().transform(org.rs.consts.Scenery.OBSIDIAN_WALL_31230),
-                node.asScenery().transform(org.rs.consts.Scenery.OBSIDIAN_WALL_9376),
+                node.asScenery().transform(shared.consts.Scenery.OBSIDIAN_WALL_31230),
+                node.asScenery().transform(shared.consts.Scenery.OBSIDIAN_WALL_9376),
                 resource.respawnDuration,
                 true,
             )
             return true
         }
 
-        if (resource.id in org.rs.consts.Scenery.GEM_ROCK_9030..org.rs.consts.Scenery.GEM_ROCK_9032) {
+        if (resource.id in shared.consts.Scenery.GEM_ROCK_9030..shared.consts.Scenery.GEM_ROCK_9032) {
             SceneryBuilder.replaceWithTempBeforeNew(
                 node.asScenery(),
                 node.asScenery().transform(resource.emptyId + 4),

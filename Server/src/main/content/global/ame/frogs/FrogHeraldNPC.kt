@@ -4,7 +4,7 @@ import content.global.ame.RandomEventNPC
 import core.api.utils.WeightBasedTable
 import core.game.node.entity.npc.NPC
 import core.tools.RandomFunction
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 /**
  * Represents Frog herald random event NPC.

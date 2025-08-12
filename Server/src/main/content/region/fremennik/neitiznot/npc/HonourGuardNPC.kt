@@ -5,7 +5,7 @@ import core.game.world.map.Location
 import core.game.world.map.RegionManager
 import core.plugin.Initializable
 import core.tools.RandomFunction
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 @Initializable
 class HonourGuardNPC : AbstractNPC {

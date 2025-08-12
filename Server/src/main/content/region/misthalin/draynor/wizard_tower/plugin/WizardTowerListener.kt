@@ -12,7 +12,7 @@ import core.game.node.entity.npc.NPC
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Graphics
 import core.tools.RandomFunction
-import org.rs.consts.*
+import shared.consts.*
 
 class WizardTowerListener : InteractionListener {
     private val WIZARD_BOOKCASE = intArrayOf(Scenery.BOOKCASE_12539, Scenery.BOOKCASE_12540)

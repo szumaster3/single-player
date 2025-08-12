@@ -16,9 +16,9 @@ import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
 import core.plugin.Initializable
-import org.rs.consts.Animations
-import org.rs.consts.Quests
-import org.rs.consts.Sounds
+import shared.consts.Animations
+import shared.consts.Quests
+import shared.consts.Sounds
 
 @Initializable
 class CrompertyDialogue(player: Player? = null, ) : Dialogue(player) {
@@ -106,10 +106,10 @@ class CrompertyDialogue(player: Player? = null, ) : Dialogue(player) {
         val LOCATIONS = arrayOf(Location.create(2649, 3272, 0), Location.create(2638, 3321, 0))
         npc.animate(Animation(Animations.ATTACK_437))
         npc.faceTemporary(player, 1)
-        npc.graphics(Graphics(org.rs.consts.Graphics.CURSE_CAST_108))
+        npc.graphics(Graphics(shared.consts.Graphics.CURSE_CAST_108))
         player.lock()
         playAudio(player, Sounds.CURSE_ALL_125, 0, 1)
-        Projectile.create(npc, player, org.rs.consts.Graphics.CURSE_PROJECTILE_109).send()
+        Projectile.create(npc, player, shared.consts.Graphics.CURSE_PROJECTILE_109).send()
         npc.sendChat("Dipsolum sententa sententi!")
         GameWorld.Pulser.submit(
             object : Pulse(1) {
@@ -128,7 +128,7 @@ class CrompertyDialogue(player: Player? = null, ) : Dialogue(player) {
                         }
 
                         3 -> {
-                            player.graphics(Graphics(org.rs.consts.Graphics.CURSE_IMPACT_110))
+                            player.graphics(Graphics(shared.consts.Graphics.CURSE_IMPACT_110))
                             player.unlock()
                             return true
                         }

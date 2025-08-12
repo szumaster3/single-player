@@ -6,7 +6,7 @@ import core.game.world.map.Location
 import core.game.world.map.RegionManager
 import core.game.world.repository.Repository
 import core.plugin.Initializable
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 /**
  * Handles Ice trolls NPC.

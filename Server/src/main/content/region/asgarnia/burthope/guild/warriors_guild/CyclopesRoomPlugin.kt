@@ -30,8 +30,8 @@ import core.plugin.ClassScanner.definePlugin
 import core.plugin.Initializable
 import core.plugin.Plugin
 import core.tools.RandomFunction
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 @Initializable
 class CyclopesRoomPlugin :
@@ -73,8 +73,8 @@ class CyclopesRoomPlugin :
         definePlugin(
             object : OptionHandler() {
                 override fun newInstance(arg: Any?): Plugin<Any> {
-                    SceneryDefinition.forId(org.rs.consts.Scenery.DOOR_15641).handlers["option:open"] = this
-                    SceneryDefinition.forId(org.rs.consts.Scenery.DOOR_15644).handlers["option:open"] = this
+                    SceneryDefinition.forId(shared.consts.Scenery.DOOR_15641).handlers["option:open"] = this
+                    SceneryDefinition.forId(shared.consts.Scenery.DOOR_15644).handlers["option:open"] = this
                     return this
                 }
 

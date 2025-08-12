@@ -10,8 +10,8 @@ import core.game.dialogue.Topic
 import core.game.node.item.Item
 import core.tools.END_DIALOGUE
 import core.tools.START_DIALOGUE
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 /**
  * Represents the Farmer protection dialogue.

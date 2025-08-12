@@ -11,7 +11,7 @@ import core.game.node.scenery.Scenery
 import core.tools.BLUE
 import core.tools.END_DIALOGUE
 import core.tools.RED
-import org.rs.consts.Quests
+import shared.consts.Quests
 
 /**
  * Represents the Mysterious Voice dialogue.

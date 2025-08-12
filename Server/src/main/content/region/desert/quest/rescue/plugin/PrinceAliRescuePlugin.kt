@@ -15,16 +15,16 @@ import core.game.world.GameWorld.ticks
 import core.game.world.map.Location
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.Items
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
+import shared.consts.Items
+import shared.consts.NPCs
+import shared.consts.Quests
 
 @Initializable
 class PrinceAliRescuePlugin : OptionHandler() {
     @Throws(Throwable::class)
     override fun newInstance(arg: Any?): Plugin<Any> {
-        SceneryDefinition.forId(org.rs.consts.Scenery.PRISON_DOOR_2881).handlers["option:open"] = this
-        SceneryDefinition.forId(org.rs.consts.Scenery.DOOR_4639).handlers["option:open"] = this
+        SceneryDefinition.forId(shared.consts.Scenery.PRISON_DOOR_2881).handlers["option:open"] = this
+        SceneryDefinition.forId(shared.consts.Scenery.DOOR_4639).handlers["option:open"] = this
         NPCDefinition.forId(NPCs.BORDER_GUARD_7912).handlers["option:talk-to"] = this
         return this
     }

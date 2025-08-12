@@ -31,8 +31,8 @@ import core.plugin.ClassScanner.definePlugin
 import core.plugin.Initializable
 import core.plugin.Plugin
 import core.tools.RandomFunction
-import org.rs.consts.Animations
-import org.rs.consts.Components
+import shared.consts.Animations
+import shared.consts.Components
 import java.util.*
 
 @Initializable

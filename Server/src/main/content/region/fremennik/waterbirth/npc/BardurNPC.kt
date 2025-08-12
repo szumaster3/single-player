@@ -4,7 +4,7 @@ import core.api.*
 import core.game.node.entity.npc.AbstractNPC
 import core.game.world.map.Location
 import core.tools.RandomFunction
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 /**
  * Handles BardurNPC.

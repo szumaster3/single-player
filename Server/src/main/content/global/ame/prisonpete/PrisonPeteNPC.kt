@@ -6,7 +6,7 @@ import core.api.lockInteractions
 import core.api.sendMessage
 import core.api.utils.WeightBasedTable
 import core.game.node.entity.npc.NPC
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 /**
  * Represents the Prison Pete random event NPC.
  * @author szu

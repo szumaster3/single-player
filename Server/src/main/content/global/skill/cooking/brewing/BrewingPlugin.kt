@@ -4,8 +4,8 @@ import core.api.*
 import core.game.interaction.InteractionListener
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
-import org.rs.consts.Items
-import org.rs.consts.Scenery
+import shared.consts.Items
+import shared.consts.Scenery
 
 val KELDAGRIM_LOC = 11679
 val PORT_PHASMATYS_LOC = 14747

@@ -1,6 +1,6 @@
 package content.global.skill.fletching.items.arrows
 
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Represents the types of brutal arrows.

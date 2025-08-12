@@ -1,4 +1,4 @@
-package org.rs.consts
+package shared.consts
 
 object Quests {
     const val ALL_FIRED_UP = "All Fired Up"

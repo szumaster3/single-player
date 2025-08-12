@@ -17,9 +17,9 @@ import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
 import core.tools.RandomFunction
-import org.rs.consts.Animations
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Animations
+import shared.consts.Items
+import shared.consts.NPCs
 
 @Initializable
 class WerewolfCourse : AgilityCourse {
@@ -32,14 +32,14 @@ class WerewolfCourse : AgilityCourse {
         getCourse(p)
         val n = node as Scenery
         when (n.id) {
-            org.rs.consts.Scenery.STEPPING_STONE_35996 -> steppingStoneObstacle(p, n)
-            org.rs.consts.Scenery.HURDLE_5133, org.rs.consts.Scenery.HURDLE_5134, org.rs.consts.Scenery.HURDLE_5135 -> jumpHurdleObstacle(
+            shared.consts.Scenery.STEPPING_STONE_35996 -> steppingStoneObstacle(p, n)
+            shared.consts.Scenery.HURDLE_5133, shared.consts.Scenery.HURDLE_5134, shared.consts.Scenery.HURDLE_5135 -> jumpHurdleObstacle(
                 p, n
             )
 
-            org.rs.consts.Scenery.PIPE_5152 -> squeezeThroughPipeObstacle(p, n)
-            org.rs.consts.Scenery.SKULL_SLOPE_5136 -> climbSkullSlopeObstacle(p, n)
-            org.rs.consts.Scenery.ZIP_LINE_5139, org.rs.consts.Scenery.ZIP_LINE_5140, org.rs.consts.Scenery.ZIP_LINE_5141 -> zipLineObstacle(
+            shared.consts.Scenery.PIPE_5152 -> squeezeThroughPipeObstacle(p, n)
+            shared.consts.Scenery.SKULL_SLOPE_5136 -> climbSkullSlopeObstacle(p, n)
+            shared.consts.Scenery.ZIP_LINE_5139, shared.consts.Scenery.ZIP_LINE_5140, shared.consts.Scenery.ZIP_LINE_5141 -> zipLineObstacle(
                 p, n
             )
         }
@@ -173,7 +173,7 @@ class WerewolfCourse : AgilityCourse {
         }
         face(p, loc.transform(Direction.SOUTH))
         animate(p, Animations.WEREWOLF_ZIPLINE_1601)
-        replaceScenery(n.asScenery(), org.rs.consts.Scenery.ZIP_LINE_5142, 6)
+        replaceScenery(n.asScenery(), shared.consts.Scenery.ZIP_LINE_5142, 6)
         sendMessage(p, "You bravely cling on to the death slide by your teeth.")
         GameWorld.Pulser.submit(
             object : Pulse() {
@@ -203,20 +203,20 @@ class WerewolfCourse : AgilityCourse {
     }
 
     override fun configure() {
-        SceneryDefinition.forId(org.rs.consts.Scenery.STEPPING_STONE_35996).handlers["option:jump-to"] = this
+        SceneryDefinition.forId(shared.consts.Scenery.STEPPING_STONE_35996).handlers["option:jump-to"] = this
         for (i in intArrayOf(
-            org.rs.consts.Scenery.HURDLE_5133,
-            org.rs.consts.Scenery.HURDLE_5134,
-            org.rs.consts.Scenery.HURDLE_5135,
+            shared.consts.Scenery.HURDLE_5133,
+            shared.consts.Scenery.HURDLE_5134,
+            shared.consts.Scenery.HURDLE_5135,
         )) {
             SceneryDefinition.forId(i).handlers["option:jump"] = this
         }
-        SceneryDefinition.forId(org.rs.consts.Scenery.PIPE_5152).handlers["option:squeeze-through"] = this
-        SceneryDefinition.forId(org.rs.consts.Scenery.SKULL_SLOPE_5136).handlers["option:climb-up"] = this
+        SceneryDefinition.forId(shared.consts.Scenery.PIPE_5152).handlers["option:squeeze-through"] = this
+        SceneryDefinition.forId(shared.consts.Scenery.SKULL_SLOPE_5136).handlers["option:climb-up"] = this
         for (i in intArrayOf(
-            org.rs.consts.Scenery.ZIP_LINE_5139,
-            org.rs.consts.Scenery.ZIP_LINE_5140,
-            org.rs.consts.Scenery.ZIP_LINE_5141,
+            shared.consts.Scenery.ZIP_LINE_5139,
+            shared.consts.Scenery.ZIP_LINE_5140,
+            shared.consts.Scenery.ZIP_LINE_5141,
         )) {
             SceneryDefinition.forId(i).handlers["option:teeth-grip"] = this
         }
@@ -227,7 +227,7 @@ class WerewolfCourse : AgilityCourse {
         node: Node,
     ): Location? {
         val scenery = node as Scenery
-        if (scenery.id == org.rs.consts.Scenery.STEPPING_STONE_35996) {
+        if (scenery.id == shared.consts.Scenery.STEPPING_STONE_35996) {
             when (scenery.location.x) {
                 3538 -> return scenery.location.transform(0, -2, 0)
                 3540 -> return if (scenery.location.y == 9877) {
@@ -243,13 +243,13 @@ class WerewolfCourse : AgilityCourse {
         }
         if (scenery.location.y in intArrayOf(9893, 9896, 9899)) {
             when (scenery.id) {
-                org.rs.consts.Scenery.HURDLE_5133, org.rs.consts.Scenery.HURDLE_5135 -> return scenery.location.transform(
+                shared.consts.Scenery.HURDLE_5133, shared.consts.Scenery.HURDLE_5135 -> return scenery.location.transform(
                     1,
                     -1,
                     0,
                 )
 
-                org.rs.consts.Scenery.HURDLE_5134 -> return if (scenery.location.x == 3543) {
+                shared.consts.Scenery.HURDLE_5134 -> return if (scenery.location.x == 3543) {
                     scenery.location.transform(
                         -1,
                         -1,

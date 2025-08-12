@@ -9,7 +9,7 @@ import core.game.node.entity.npc.NPC
 import core.game.node.entity.npc.NPCBehavior
 import core.game.node.entity.player.Player
 import core.game.world.update.flag.context.Animation
-import org.rs.consts.Items
+import shared.consts.Items
 
 private val HUMAN_NPCS = (6026..6045).toIntArray()
 private val WEREWOLF_NPCS = (6006..6025).toIntArray()

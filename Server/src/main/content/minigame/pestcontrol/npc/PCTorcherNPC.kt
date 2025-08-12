@@ -16,7 +16,7 @@ import core.game.world.map.MapDistance
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
 import core.plugin.Plugin
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 class PCTorcherNPC : AbstractNPC {
     private var session: PestControlSession? = null
@@ -115,9 +115,9 @@ class PCTorcherNPC : AbstractNPC {
             -1,
             -1,
             Animation(3882, Priority.HIGH),
-            Graphics.create(org.rs.consts.Graphics.ORANGE_BALL_CHARGE_646),
-            Projectile.create(null as Entity?, null, org.rs.consts.Graphics.ORANGE_BALL_647, 40, 36, 52, 75, 15, 11),
-            Graphics(org.rs.consts.Graphics.RED_SPELL_648, 96),
+            Graphics.create(shared.consts.Graphics.ORANGE_BALL_CHARGE_646),
+            Projectile.create(null as Entity?, null, shared.consts.Graphics.ORANGE_BALL_647, 40, 36, 52, 75, 15, 11),
+            Graphics(shared.consts.Graphics.RED_SPELL_648, 96),
         ) {
         override fun getMaximumImpact(
             entity: Entity,

@@ -11,7 +11,7 @@ import core.game.node.item.ChanceItem
 import core.game.node.item.Item
 import core.game.world.update.flag.context.Animation
 import core.tools.RandomFunction
-import org.rs.consts.*
+import shared.consts.*
 import kotlin.math.ceil
 
 class RoguesDenPlugin : InteractionListener {

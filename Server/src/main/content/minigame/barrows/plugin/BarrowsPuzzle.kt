@@ -11,7 +11,7 @@ import core.net.packet.PacketRepository
 import core.net.packet.out.DisplayModel
 import core.plugin.Plugin
 import core.tools.RandomFunction
-import org.rs.consts.Components
+import shared.consts.Components
 import java.util.*
 
 class BarrowsPuzzle private constructor(

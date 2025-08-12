@@ -16,7 +16,7 @@ import core.game.world.map.Location;
 import core.game.world.map.zone.ZoneBorders;
 import core.plugin.ClassScanner;
 import core.plugin.Initializable;
-import org.rs.consts.*;
+import shared.consts.*;
 
 import static core.api.ContentAPIKt.setVarp;
 

@@ -6,7 +6,7 @@ import core.game.node.entity.player.Player
 import core.game.node.entity.skill.SkillPulse
 import core.game.node.entity.skill.Skills
 import core.game.node.scenery.Scenery
-import org.rs.consts.Sounds
+import shared.consts.Sounds
 
 class TrapDismantlePulse(
     player: Player?,

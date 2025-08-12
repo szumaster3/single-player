@@ -12,7 +12,7 @@ import core.game.node.entity.player.info.Rights
 import core.game.world.GameWorld
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.Components
+import shared.consts.Components
 
 /**
  * Handles the main game interface.

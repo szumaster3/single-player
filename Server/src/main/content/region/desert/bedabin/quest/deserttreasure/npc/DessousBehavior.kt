@@ -21,7 +21,7 @@ import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
 import core.tools.END_DIALOGUE
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 class DessousBehavior : NPCBehavior(NPCs.DESSOUS_1914, NPCs.DESSOUS_1915) {
     var clearTime = 0
@@ -51,7 +51,7 @@ class DessousBehavior : NPCBehavior(NPCs.DESSOUS_1914, NPCs.DESSOUS_1915) {
             self.transform(NPCs.DESSOUS_1915)
             Graphics.send(
                 Graphics(
-                    org.rs.consts.Graphics.RANDOM_EVENT_PUFF_OF_SMOKE_86,
+                    shared.consts.Graphics.RANDOM_EVENT_PUFF_OF_SMOKE_86,
                 ),
                 self.location,
             )
@@ -67,7 +67,7 @@ class DessousBehavior : NPCBehavior(NPCs.DESSOUS_1914, NPCs.DESSOUS_1915) {
             self.transform(NPCs.DESSOUS_1914)
             Graphics.send(
                 Graphics(
-                    org.rs.consts.Graphics.RANDOM_EVENT_PUFF_OF_SMOKE_86,
+                    shared.consts.Graphics.RANDOM_EVENT_PUFF_OF_SMOKE_86,
                 ),
                 self.location,
             )
@@ -104,14 +104,14 @@ class DessousBehavior : NPCBehavior(NPCs.DESSOUS_1914, NPCs.DESSOUS_1915) {
             if (victim.location.getDistance(self.location) >= 5) {
                 Graphics.send(
                     Graphics(
-                        org.rs.consts.Graphics.RANDOM_EVENT_PUFF_OF_SMOKE_86,
+                        shared.consts.Graphics.RANDOM_EVENT_PUFF_OF_SMOKE_86,
                     ),
                     self.location,
                 )
                 self.properties.teleportLocation = victim.location
                 Graphics.send(
                     Graphics(
-                        org.rs.consts.Graphics.RANDOM_EVENT_PUFF_OF_SMOKE_86,
+                        shared.consts.Graphics.RANDOM_EVENT_PUFF_OF_SMOKE_86,
                     ),
                     self.location,
                 )

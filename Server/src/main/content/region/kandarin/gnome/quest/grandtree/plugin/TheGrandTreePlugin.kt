@@ -23,7 +23,7 @@ import core.game.node.scenery.Scenery
 import core.game.node.scenery.SceneryBuilder
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
-import org.rs.consts.*
+import shared.consts.*
 
 class TheGrandTreePlugin : InteractionListener {
     fun unlockTUZODoor(player: Player) {

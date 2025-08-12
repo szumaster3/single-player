@@ -12,10 +12,10 @@ import core.game.node.item.Item
 import core.plugin.ClassScanner
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.Animations
-import org.rs.consts.Components
-import org.rs.consts.Graphics
-import org.rs.consts.Items
+import shared.consts.Animations
+import shared.consts.Components
+import shared.consts.Graphics
+import shared.consts.Items
 
 @Initializable
 class SnowGlobePlugin : OptionHandler() {

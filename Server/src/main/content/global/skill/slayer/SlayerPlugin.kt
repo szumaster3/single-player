@@ -9,10 +9,10 @@ import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.TeleportManager
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Graphics
-import org.rs.consts.Components
-import org.rs.consts.Quests
-import org.rs.consts.Scenery
-import org.rs.consts.Sounds
+import shared.consts.Components
+import shared.consts.Quests
+import shared.consts.Scenery
+import shared.consts.Sounds
 
 class SlayerPlugin : InteractionListener {
 

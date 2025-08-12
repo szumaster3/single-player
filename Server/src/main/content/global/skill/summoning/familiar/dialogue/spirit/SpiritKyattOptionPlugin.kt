@@ -12,7 +12,7 @@ import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 /**
  * The type Spirit kyatt option plugin.
@@ -22,10 +22,10 @@ class SpiritKyattOptionPlugin : OptionHandler() {
     @Throws(Throwable::class)
     override fun newInstance(arg: Any?): Plugin<Any> {
         NPCDefinition.forId(NPCs.SPIRIT_KYATT_7365).handlers["option:interact"] = this
-        SceneryDefinition.forId(org.rs.consts.Scenery.TRAPDOOR_28741).handlers["option:open"] = this
-        SceneryDefinition.forId(org.rs.consts.Scenery.LADDER_28743).handlers["option:climb-up"] = this
-        SceneryDefinition.forId(org.rs.consts.Scenery.BRONZE_PICKAXE_14910).handlers["option:take"] = this
-        SceneryDefinition.forId(org.rs.consts.Scenery.RANGE_14919).handlers["option:take"] = this
+        SceneryDefinition.forId(shared.consts.Scenery.TRAPDOOR_28741).handlers["option:open"] = this
+        SceneryDefinition.forId(shared.consts.Scenery.LADDER_28743).handlers["option:climb-up"] = this
+        SceneryDefinition.forId(shared.consts.Scenery.BRONZE_PICKAXE_14910).handlers["option:take"] = this
+        SceneryDefinition.forId(shared.consts.Scenery.RANGE_14919).handlers["option:take"] = this
         return this
     }
 

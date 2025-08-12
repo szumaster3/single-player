@@ -10,8 +10,8 @@ import core.game.node.entity.player.link.IronmanMode
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import core.tools.START_DIALOGUE
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 /**
  * Represents the dialogue plugin used for the Banker NPC.

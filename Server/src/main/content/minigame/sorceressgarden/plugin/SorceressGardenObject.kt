@@ -10,7 +10,7 @@ import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
 import core.game.node.scenery.Scenery
 import core.plugin.Plugin
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Handles the sorceress garden gates.

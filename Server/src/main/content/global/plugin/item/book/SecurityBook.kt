@@ -8,7 +8,7 @@ import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.player.Player
 import core.game.world.GameWorld
-import org.rs.consts.Items
+import shared.consts.Items
 
 class SecurityBook : InteractionListener {
     companion object {

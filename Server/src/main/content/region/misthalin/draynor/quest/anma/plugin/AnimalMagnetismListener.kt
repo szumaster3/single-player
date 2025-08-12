@@ -3,8 +3,8 @@ package content.region.misthalin.draynor.quest.anma.plugin
 import core.api.isQuestComplete
 import core.api.sendMessage
 import core.game.interaction.InteractionListener
-import org.rs.consts.Items
-import org.rs.consts.Quests
+import shared.consts.Items
+import shared.consts.Quests
 
 class AnimalMagnetismListener : InteractionListener {
     override fun defineListeners() {

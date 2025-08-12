@@ -13,7 +13,7 @@ import core.game.world.map.Location
 import core.game.world.map.RegionManager
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import org.rs.consts.Items
+import shared.consts.Items
 
 class BlastFurnaceAreaTests {
     @Test fun shouldBeAbleToEnterBfArea() {

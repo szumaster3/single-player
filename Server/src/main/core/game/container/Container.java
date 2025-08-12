@@ -8,7 +8,7 @@ import core.cache.def.impl.ItemDefinition;
 import core.game.node.entity.player.Player;
 import core.game.node.item.GroundItemManager;
 import core.game.node.item.Item;
-import org.rs.consts.Items;
+import shared.consts.Items;
 
 import java.nio.ByteBuffer;
 import java.util.*;

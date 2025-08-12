@@ -15,7 +15,7 @@ import core.game.node.scenery.Scenery;
 import core.game.world.map.Location;
 import core.plugin.Initializable;
 import core.plugin.Plugin;
-import org.rs.consts.Items;
+import shared.consts.Items;
 
 import static core.api.ContentAPIKt.*;
 

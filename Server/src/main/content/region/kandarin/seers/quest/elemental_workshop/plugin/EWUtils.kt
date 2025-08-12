@@ -5,7 +5,7 @@ import content.global.plugin.iface.Page
 import content.global.plugin.iface.PageSet
 import core.api.getVarbit
 import core.game.node.entity.player.Player
-import org.rs.consts.Quests
+import shared.consts.Quests
 
 object EWUtils {
     val PAGES =

@@ -1,4 +1,4 @@
-package org.rs.consts
+package shared.consts
 
 object Animations {
     const val ABOUT_TO_JUMP_2376 = 2376

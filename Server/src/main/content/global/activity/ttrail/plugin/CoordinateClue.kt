@@ -3,7 +3,7 @@ package content.global.activity.ttrail.plugin
 import content.global.activity.ttrail.ClueLevel
 import core.game.world.map.Location
 import core.plugin.Plugin
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Represents the coordinate clues.

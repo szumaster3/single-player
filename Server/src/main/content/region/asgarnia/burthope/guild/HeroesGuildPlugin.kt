@@ -12,10 +12,10 @@ import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.game.node.scenery.Scenery
 import core.game.world.update.flag.context.Animation
-import org.rs.consts.Animations
-import org.rs.consts.Items
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
+import shared.consts.Animations
+import shared.consts.Items
+import shared.consts.NPCs
+import shared.consts.Quests
 
 class HeroesGuildPlugin : InteractionListener {
     override fun defineListeners() {
@@ -53,8 +53,8 @@ class HeroesGuildPlugin : InteractionListener {
     }
 
     companion object {
-        private val GUILD_GATE = intArrayOf(org.rs.consts.Scenery.DOOR_2624, org.rs.consts.Scenery.DOOR_2625)
-        private val FOUNTAIN = org.rs.consts.Scenery.FOUNTAIN_OF_HEROES_36695
+        private val GUILD_GATE = intArrayOf(shared.consts.Scenery.DOOR_2624, shared.consts.Scenery.DOOR_2625)
+        private val FOUNTAIN = shared.consts.Scenery.FOUNTAIN_OF_HEROES_36695
         private val SPECIAL = intArrayOf(*EnchantedJewellery.AMULET_OF_GLORY.ids, *EnchantedJewellery.AMULET_OF_GLORY_T.ids)
         private val JEWELLERY = intArrayOf(Items.RING_OF_SLAYING7_13282, Items.RING_OF_SLAYING6_13283, Items.RING_OF_SLAYING5_13284, Items.RING_OF_SLAYING4_13285, Items.RING_OF_SLAYING3_13286, Items.RING_OF_SLAYING2_13287, Items.RING_OF_SLAYING1_13288, Items.AMULET_OF_GLORY3_1710, Items.AMULET_OF_GLORY2_1708, Items.AMULET_OF_GLORY1_1706, Items.AMULET_OF_GLORY_1704, Items.AMULET_OF_GLORYT3_10356, Items.AMULET_OF_GLORYT2_10358, Items.AMULET_OF_GLORYT1_10360, Items.AMULET_OF_GLORYT_10362)
     }

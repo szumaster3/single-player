@@ -12,7 +12,7 @@ import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.game.world.map.Location
-import org.rs.consts.*
+import shared.consts.*
 
 class WarriorsGuildPlugin: InteractionListener {
     private val warriorGuildDoors = intArrayOf(Scenery.DOOR_15653, Scenery.DOOR_1530)

@@ -6,7 +6,7 @@ import core.game.dialogue.FaceAnim
 import core.game.node.entity.player.Player
 import core.tools.END_DIALOGUE
 import core.tools.START_DIALOGUE
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 /**
  * Represents the Ogress Banker dialogue.

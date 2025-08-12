@@ -8,7 +8,7 @@ import core.game.node.item.Item
 import core.plugin.Initializable
 import core.plugin.Plugin
 import core.tools.StringUtils
-import org.rs.consts.Items
+import shared.consts.Items
 
 @Initializable
 class GodswordHiltAttachHandler : UseWithHandler(

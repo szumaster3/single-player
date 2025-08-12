@@ -16,7 +16,7 @@ import core.game.node.scenery.Scenery
 import core.game.world.map.Location
 import core.game.world.map.zone.MapZone
 import core.game.world.map.zone.ZoneBorders
-import org.rs.consts.*
+import shared.consts.*
 
 class PlayerSafetyPlugin :
     MapZone("player-safety", true),
@@ -63,13 +63,13 @@ class PlayerSafetyPlugin :
 
         private val DTI_MAP =
             mapOf(
-                org.rs.consts.Scenery.JAIL_DOOR_29595 to Components.JAIL_PLAQUE_701,
-                org.rs.consts.Scenery.JAIL_DOOR_29596 to Components.JAIL_PLAQUE_703,
-                org.rs.consts.Scenery.JAIL_DOOR_29597 to Components.JAIL_PLAQUE_711,
-                org.rs.consts.Scenery.JAIL_DOOR_29598 to Components.JAIL_PLAQUE_695,
-                org.rs.consts.Scenery.JAIL_DOOR_29599 to Components.SAFETY_JAIL_312,
-                org.rs.consts.Scenery.JAIL_DOOR_29600 to Components.JAIL_PLAQUE_706,
-                org.rs.consts.Scenery.JAIL_DOOR_29601 to Components.JAIL_PLAQUE_698,
+                shared.consts.Scenery.JAIL_DOOR_29595 to Components.JAIL_PLAQUE_701,
+                shared.consts.Scenery.JAIL_DOOR_29596 to Components.JAIL_PLAQUE_703,
+                shared.consts.Scenery.JAIL_DOOR_29597 to Components.JAIL_PLAQUE_711,
+                shared.consts.Scenery.JAIL_DOOR_29598 to Components.JAIL_PLAQUE_695,
+                shared.consts.Scenery.JAIL_DOOR_29599 to Components.SAFETY_JAIL_312,
+                shared.consts.Scenery.JAIL_DOOR_29600 to Components.JAIL_PLAQUE_706,
+                shared.consts.Scenery.JAIL_DOOR_29601 to Components.JAIL_PLAQUE_698,
             )
         private const val ATTRIBUTE_CLIMB_CREVICE = "player_strong:crevice_climbed"
     }
@@ -93,7 +93,7 @@ class PlayerSafetyPlugin :
             return@on true
         }
 
-        on(org.rs.consts.Scenery.JAIL_ENTRANCE_29603, IntType.SCENERY, "use") { player, _ ->
+        on(shared.consts.Scenery.JAIL_ENTRANCE_29603, IntType.SCENERY, "use") { player, _ ->
             teleport(player, Location.create(3082, 4229, 0))
             if (!player.musicPlayer.hasUnlocked(Music.INCARCERATION_494)) {
                 player.musicPlayer.unlock(Music.INCARCERATION_494)
@@ -101,12 +101,12 @@ class PlayerSafetyPlugin :
             return@on true
         }
 
-        on(org.rs.consts.Scenery.JAIL_ENTRANCE_29602, IntType.SCENERY, "leave") { player, _ ->
+        on(shared.consts.Scenery.JAIL_ENTRANCE_29602, IntType.SCENERY, "leave") { player, _ ->
             teleport(player, Location.create(3074, 3456, 0))
             return@on true
         }
 
-        on(org.rs.consts.Scenery.STAIRS_29589, IntType.SCENERY, "climb-up") { player, _ ->
+        on(shared.consts.Scenery.STAIRS_29589, IntType.SCENERY, "climb-up") { player, _ ->
             if (player.globalData.hasReadPlaques() && getAttribute(player, GameAttributes.PLAYER_SAFETY_TRAINING_CENTRE_ACCESS, false)) {
                 if (!player.musicPlayer.hasUnlocked(Music.EXAM_CONDITIONS_492)) {
                     player.musicPlayer.unlock(Music.EXAM_CONDITIONS_492)
@@ -118,7 +118,7 @@ class PlayerSafetyPlugin :
             return@on true
         }
 
-        on(org.rs.consts.Scenery.DOOR_29732, IntType.SCENERY, "open") { player, node ->
+        on(shared.consts.Scenery.DOOR_29732, IntType.SCENERY, "open") { player, node ->
             if (player.globalData.getTestStage() > 0) {
                 DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
             } else {
@@ -127,7 +127,7 @@ class PlayerSafetyPlugin :
             return@on true
         }
 
-        on(org.rs.consts.Scenery.STAIRS_29592, IntType.SCENERY, "climb-down") { player, _ ->
+        on(shared.consts.Scenery.STAIRS_29592, IntType.SCENERY, "climb-down") { player, _ ->
             teleport(player, Location.create(3086, 4247, 0))
             return@on true
         }
@@ -136,7 +136,7 @@ class PlayerSafetyPlugin :
          * Handles enter the crevice outside the traning centre.
          */
 
-        on(org.rs.consts.Scenery.CREVICE_29728, IntType.SCENERY, "enter") { player, _ ->
+        on(shared.consts.Scenery.CREVICE_29728, IntType.SCENERY, "enter") { player, _ ->
             if (getAttribute(player, ATTRIBUTE_CLIMB_CREVICE, false)) {
                 teleport(player, Location.create(3159, 4279, 3))
             } else {
@@ -145,7 +145,7 @@ class PlayerSafetyPlugin :
             return@on true
         }
 
-        on(org.rs.consts.Scenery.ROPE_29729, IntType.SCENERY, "climb") { player, _ ->
+        on(shared.consts.Scenery.ROPE_29729, IntType.SCENERY, "climb") { player, _ ->
             if (!getAttribute(player, ATTRIBUTE_CLIMB_CREVICE, false)) {
                 setAttribute(player, ATTRIBUTE_CLIMB_CREVICE, true)
             }
@@ -158,7 +158,7 @@ class PlayerSafetyPlugin :
          */
 
         on(
-            (org.rs.consts.Scenery.JAIL_DOOR_29595..org.rs.consts.Scenery.JAIL_DOOR_29601).toIntArray(),
+            (shared.consts.Scenery.JAIL_DOOR_29595..shared.consts.Scenery.JAIL_DOOR_29601).toIntArray(),
             IntType.SCENERY,
             "Read-plaque on",
         ) { player, node ->
@@ -167,7 +167,7 @@ class PlayerSafetyPlugin :
             return@on true
         }
 
-        on(org.rs.consts.Scenery.TUNNEL_29623, IntType.SCENERY, "use") { player, _ ->
+        on(shared.consts.Scenery.TUNNEL_29623, IntType.SCENERY, "use") { player, _ ->
             teleport(player, Location.create(3077, 4235, 0))
             return@on true
         }
@@ -176,7 +176,7 @@ class PlayerSafetyPlugin :
          * Handles lever interaction.
          */
 
-        on(org.rs.consts.Scenery.AN_OLD_LEVER_29730, IntType.SCENERY, "pull") { player, _ ->
+        on(shared.consts.Scenery.AN_OLD_LEVER_29730, IntType.SCENERY, "pull") { player, _ ->
             animate(player, Animations.PULL_LEVER_798)
             playAudio(player, Sounds.PULL_LEVER_ENABLED_1547)
             sendMessage(player, "You hear the cogs and gears moving and a distant unlocking sound.")
@@ -184,7 +184,7 @@ class PlayerSafetyPlugin :
             return@on true
         }
 
-        on(org.rs.consts.Scenery.AN_OLD_LEVER_29731, IntType.SCENERY, "pull") { player, _ ->
+        on(shared.consts.Scenery.AN_OLD_LEVER_29731, IntType.SCENERY, "pull") { player, _ ->
             animate(player, Animations.PULL_LEVER_798)
             playAudio(player, Sounds.PULL_LEVER_ENABLED_1547)
             sendMessage(player, "You hear cogs and gears moving and the sound of heavy locks falling into place.")
@@ -192,7 +192,7 @@ class PlayerSafetyPlugin :
             return@on true
         }
 
-        on(org.rs.consts.Scenery.JAIL_DOOR_29624, IntType.SCENERY, "open") { player, _ ->
+        on(shared.consts.Scenery.JAIL_DOOR_29624, IntType.SCENERY, "open") { player, _ ->
             if (getVarp(player, 1203) and (1 shl 26) == 0) {
                 sendMessage(player, "The door seems to be locked by some kind of mechanism.")
                 return@on true
@@ -212,42 +212,42 @@ class PlayerSafetyPlugin :
             return@on true
         }
 
-        on(org.rs.consts.Scenery.STAIRS_29667, IntType.SCENERY, "climb-down") { player, _ ->
+        on(shared.consts.Scenery.STAIRS_29667, IntType.SCENERY, "climb-down") { player, _ ->
             teleport(player, Location.create(3160, 4249, 1))
             return@on true
         }
 
-        on(org.rs.consts.Scenery.STAIRS_29668, IntType.SCENERY, "climb-up") { player, _ ->
+        on(shared.consts.Scenery.STAIRS_29668, IntType.SCENERY, "climb-up") { player, _ ->
             teleport(player, Location.create(3158, 4250, 2))
             return@on true
         }
 
-        on(org.rs.consts.Scenery.STAIRS_29663, IntType.SCENERY, "climb-down") { player, _ ->
+        on(shared.consts.Scenery.STAIRS_29663, IntType.SCENERY, "climb-down") { player, _ ->
             teleport(player, Location.create(3160, 4246, 1))
             return@on true
         }
 
-        on(org.rs.consts.Scenery.STAIRS_29664, IntType.SCENERY, "climb-up") { player, _ ->
+        on(shared.consts.Scenery.STAIRS_29664, IntType.SCENERY, "climb-up") { player, _ ->
             teleport(player, Location.create(3158, 4245, 2))
             return@on true
         }
 
-        on(org.rs.consts.Scenery.STAIRS_29655, IntType.SCENERY, "climb-down") { player, _ ->
+        on(shared.consts.Scenery.STAIRS_29655, IntType.SCENERY, "climb-down") { player, _ ->
             teleport(player, Location.create(3146, 4246, 1))
             return@on true
         }
 
-        on(org.rs.consts.Scenery.STAIRS_29656, IntType.SCENERY, "climb-up") { player, _ ->
+        on(shared.consts.Scenery.STAIRS_29656, IntType.SCENERY, "climb-up") { player, _ ->
             teleport(player, Location.create(3149, 4244, 2))
             return@on true
         }
 
-        on(org.rs.consts.Scenery.STAIRS_29659, IntType.SCENERY, "climb-down") { player, _ ->
+        on(shared.consts.Scenery.STAIRS_29659, IntType.SCENERY, "climb-down") { player, _ ->
             teleport(player, Location.create(3146, 4249, 1))
             return@on true
         }
 
-        on(org.rs.consts.Scenery.STAIRS_29660, IntType.SCENERY, "climb-up") { player, _ ->
+        on(shared.consts.Scenery.STAIRS_29660, IntType.SCENERY, "climb-up") { player, _ ->
             teleport(player, Location.create(3148, 4250, 2))
             return@on true
         }
@@ -256,7 +256,7 @@ class PlayerSafetyPlugin :
          * Handles opening the treasure chest.
          */
 
-        on(org.rs.consts.Scenery.TREASURE_CHEST_29577, IntType.SCENERY, "open") { player, _ ->
+        on(shared.consts.Scenery.TREASURE_CHEST_29577, IntType.SCENERY, "open") { player, _ ->
             setVarbit(player, 4499, 1, true)
             return@on true
         }
@@ -265,7 +265,7 @@ class PlayerSafetyPlugin :
          * Handles searching for reward the treasure chest.
          */
 
-        on(org.rs.consts.Scenery.TREASURE_CHEST_29578, IntType.SCENERY, "search") { player, _ ->
+        on(shared.consts.Scenery.TREASURE_CHEST_29578, IntType.SCENERY, "search") { player, _ ->
             val hasAnGloves = hasAnItem(player, Items.SAFETY_GLOVES_12629).container != null
 
             if(freeSlots(player) < 2) {

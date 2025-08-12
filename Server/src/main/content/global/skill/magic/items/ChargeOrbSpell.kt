@@ -11,10 +11,10 @@ import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
-import org.rs.consts.Items
-import org.rs.consts.Scenery
-import org.rs.consts.Sounds
-import org.rs.consts.Graphics as Gfx
+import shared.consts.Items
+import shared.consts.Scenery
+import shared.consts.Sounds
+import shared.consts.Graphics as Gfx
 
 class ChargeOrbSpell : SpellListener("modern") {
     private val chargeOrbSpellAnimation = Animation(726, Animator.Priority.HIGH)

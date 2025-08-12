@@ -8,7 +8,7 @@ import core.game.interaction.InteractionListeners
 import core.game.interaction.MovementPulse
 import core.game.node.item.Item
 import core.game.world.map.zone.ZoneBorders
-import org.rs.consts.Items
+import shared.consts.Items
 
 class ManThiever : Script() {
     private var state = State.INIT

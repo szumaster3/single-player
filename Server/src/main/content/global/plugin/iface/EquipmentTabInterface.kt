@@ -24,7 +24,7 @@ import core.net.packet.out.ContainerPacket
 import core.plugin.Initializable
 import core.plugin.Plugin
 import core.tools.Log
-import org.rs.consts.Components
+import shared.consts.Components
 
 /**
  * Represents the equipment interface.

@@ -4,7 +4,7 @@ import content.global.plugin.iface.warning.WarningManager
 import content.global.plugin.iface.warning.Warnings
 import core.api.sendMessage
 import core.game.interaction.InterfaceListener
-import org.rs.consts.Components
+import shared.consts.Components
 
 class HouseOptionInterface : InterfaceListener {
     override fun defineInterfaceListeners() {

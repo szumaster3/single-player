@@ -5,8 +5,8 @@ import core.api.sendMessage
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.interaction.InterfaceListener
-import org.rs.consts.Components
-import org.rs.consts.Items
+import shared.consts.Components
+import shared.consts.Items
 
 /**
  * Represents sextant interface for solving coordinate clues on Treasure Trails.

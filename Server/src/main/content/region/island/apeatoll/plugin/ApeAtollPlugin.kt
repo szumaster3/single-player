@@ -6,7 +6,7 @@ import core.game.dialogue.FaceAnim
 import core.game.dialogue.SequenceDialogue.dialogue
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 class ApeAtollPlugin : InteractionListener {
 

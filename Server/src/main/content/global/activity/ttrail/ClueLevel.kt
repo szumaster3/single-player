@@ -8,8 +8,8 @@ import core.game.node.item.Item
 import core.game.system.config.ClueRewardParser
 import core.game.world.GameWorld
 import core.tools.RandomFunction
-import org.rs.consts.Components
-import org.rs.consts.Items
+import shared.consts.Components
+import shared.consts.Items
 
 /**
  * A clue scroll level.

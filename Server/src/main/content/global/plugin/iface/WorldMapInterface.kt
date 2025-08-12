@@ -9,7 +9,7 @@ import core.api.setVarbit
 import core.game.component.Component
 import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.Player
-import org.rs.consts.Components
+import shared.consts.Components
 
 /**
  * Handles the world map interface.

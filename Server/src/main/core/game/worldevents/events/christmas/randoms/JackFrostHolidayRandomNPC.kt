@@ -8,8 +8,8 @@ import core.game.world.map.path.Pathfinder
 import core.game.world.update.flag.context.Graphics
 import core.game.worldevents.events.HolidayRandomEventNPC
 import core.tools.minutesToTicks
-import org.rs.consts.NPCs
-import org.rs.consts.Sounds
+import shared.consts.NPCs
+import shared.consts.Sounds
 
 class JackFrostHolidayRandomNPC : HolidayRandomEventNPC(NPCs.JACK_FROST_8517) {
     override fun init() {

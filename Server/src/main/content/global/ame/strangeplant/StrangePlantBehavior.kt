@@ -9,7 +9,7 @@ import core.game.node.entity.npc.NPCBehavior
 import core.game.node.entity.player.Player
 import core.game.system.timer.impl.AntiMacro
 import core.tools.RandomFunction
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 /**
  * Represents the Strange plant NPC behavior.

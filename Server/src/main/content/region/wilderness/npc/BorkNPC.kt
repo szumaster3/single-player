@@ -34,8 +34,8 @@ import core.plugin.ClassScanner.definePlugin
 import core.plugin.Initializable
 import core.plugin.Plugin
 import core.tools.RandomFunction
-import org.rs.consts.NPCs
-import org.rs.consts.Regions
+import shared.consts.NPCs
+import shared.consts.Regions
 
 @Initializable
 class BorkNPC : AbstractNPC {

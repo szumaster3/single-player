@@ -1,7 +1,7 @@
 /*package content.region.morytania.phas.quest.rocko
 
-import org.rs.consts.Items
-import org.rs.consts.Vars
+import shared.consts.Items
+import shared.consts.Vars
 import core.api.getStatLevel
 import core.api.isQuestComplete
 import core.api.rewardXP

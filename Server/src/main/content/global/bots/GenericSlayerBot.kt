@@ -10,7 +10,7 @@ import core.game.system.task.Pulse
 import core.game.world.map.Location
 import core.game.world.map.zone.ZoneBorders
 import core.tools.RandomFunction
-import org.rs.consts.Items
+import shared.consts.Items
 import java.util.*
 
 class GenericSlayerBot : Script() {

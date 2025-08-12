@@ -5,7 +5,7 @@ import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
-import org.rs.consts.Quests
+import shared.consts.Quests
 
 class HerbCleaningPlugin : InteractionListener {
 

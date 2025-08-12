@@ -8,7 +8,7 @@ import core.game.node.scenery.Scenery
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
-import org.rs.consts.Animations
+import shared.consts.Animations
 
 /**
  * Represents the trellis shortcut behind watchtower.

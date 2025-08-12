@@ -4,8 +4,8 @@ import content.region.island.apeatoll.dialogue.ZooknockDialogueFile
 import core.api.openDialogue
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 open class ItemsOnZooknockPlugin: InteractionListener {
     private val goldBar = Items.GOLD_BAR_2357

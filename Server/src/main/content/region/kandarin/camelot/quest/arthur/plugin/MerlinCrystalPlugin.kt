@@ -12,10 +12,10 @@ import core.game.interaction.InteractionListener
 import core.game.interaction.QueueStrength
 import core.game.node.entity.player.Player
 import core.game.world.map.Location
-import org.rs.consts.Items
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
-import org.rs.consts.Scenery
+import shared.consts.Items
+import shared.consts.NPCs
+import shared.consts.Quests
+import shared.consts.Scenery
 
 class MerlinCrystalPlugin : InteractionListener {
     override fun defineListeners() {

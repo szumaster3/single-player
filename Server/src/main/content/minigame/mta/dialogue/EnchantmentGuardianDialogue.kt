@@ -5,7 +5,7 @@ import core.game.dialogue.FaceAnim
 import core.game.node.entity.player.Player
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 /**
  * Represents the Enchantment guardian dialogue.

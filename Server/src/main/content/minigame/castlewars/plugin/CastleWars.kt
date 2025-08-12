@@ -1,9 +1,9 @@
 package content.minigame.castlewars.plugin
 
 import core.game.world.map.zone.ZoneBorders
-import org.rs.consts.Items
-import org.rs.consts.NPCs
-import org.rs.consts.Scenery
+import shared.consts.Items
+import shared.consts.NPCs
+import shared.consts.Scenery
 
 /**
  * Castle Wars

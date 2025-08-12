@@ -1,7 +1,7 @@
 package content.minigame.allfiredup.plugin
 
 import core.game.interaction.InterfaceListener
-import org.rs.consts.Components
+import shared.consts.Components
 
 class BeaconMapInterface : InterfaceListener {
     companion object {

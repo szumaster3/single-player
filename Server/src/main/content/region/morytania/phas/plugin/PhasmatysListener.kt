@@ -12,7 +12,7 @@ import core.game.system.task.Pulse
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.tools.END_DIALOGUE
-import org.rs.consts.*
+import shared.consts.*
 
 class PhasmatysListener : InteractionListener {
 

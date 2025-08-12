@@ -7,8 +7,8 @@ import core.game.interaction.QueueStrength
 import core.game.node.entity.npc.NPC
 import core.game.system.timer.impl.AntiMacro
 import core.tools.RED
-import org.rs.consts.Music
-import org.rs.consts.NPCs
+import shared.consts.Music
+import shared.consts.NPCs
 
 /**
  * Represents the Sergeant Damien NPC random event npc.

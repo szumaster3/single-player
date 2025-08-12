@@ -9,9 +9,9 @@ import core.game.system.task.Pulse
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Graphics
 import core.tools.END_DIALOGUE
-import org.rs.consts.Animations
-import org.rs.consts.NPCs
-import org.rs.consts.Sounds
+import shared.consts.Animations
+import shared.consts.NPCs
+import shared.consts.Sounds
 
 class PiratePeteDialogueFile : DialogueFile() {
 
@@ -78,7 +78,7 @@ class PiratePeteDialogueFile : DialogueFile() {
                     player!!,
                     object : Pulse(3) {
                         override fun pulse(): Boolean {
-                            sendGraphics(Graphics(org.rs.consts.Graphics.STUN_BIRDIES_ABOVE_HEAD_80, 96), player!!.location)
+                            sendGraphics(Graphics(shared.consts.Graphics.STUN_BIRDIES_ABOVE_HEAD_80, 96), player!!.location)
                             playAudio(player!!, Sounds.STUNNED_2727, 1)
                             TeleportCutscene(player!!).start()
                             return true

@@ -8,9 +8,9 @@ import core.api.sendMessage
 import core.api.visualize
 import core.game.node.entity.combat.ImpactHandler
 import core.game.node.item.Item
-import org.rs.consts.Animations
-import org.rs.consts.Items
-import org.rs.consts.Sounds
+import shared.consts.Animations
+import shared.consts.Items
+import shared.consts.Sounds
 import kotlin.math.floor
 
 class EnergyTransferSpell : SpellListener("lunar") {

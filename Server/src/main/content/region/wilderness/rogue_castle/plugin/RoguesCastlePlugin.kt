@@ -12,9 +12,9 @@ import core.game.node.item.Item
 import core.game.node.scenery.Scenery
 import core.game.system.task.Pulse
 import core.tools.RandomFunction
-import org.rs.consts.Animations
-import org.rs.consts.Items
-import org.rs.consts.Sounds
+import shared.consts.Animations
+import shared.consts.Items
+import shared.consts.Sounds
 
 class RoguesCastlePlugin : InteractionListener {
     override fun defineListeners() {

@@ -7,8 +7,8 @@ import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.TeleportManager
 import core.game.node.item.Item
 import core.game.world.map.Location
-import org.rs.consts.Items
-import org.rs.consts.Sounds
+import shared.consts.Items
+import shared.consts.Sounds
 
 class LunarSpellbookTeleport : SpellListener("lunar") {
     override fun defineListeners() {

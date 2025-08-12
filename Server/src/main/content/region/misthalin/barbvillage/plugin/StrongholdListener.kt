@@ -4,10 +4,10 @@ import core.api.*
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.player.link.emote.Emotes
-import org.rs.consts.Animations
-import org.rs.consts.Items
-import org.rs.consts.Scenery
-import org.rs.consts.Sounds
+import shared.consts.Animations
+import shared.consts.Items
+import shared.consts.Scenery
+import shared.consts.Sounds
 
 class StrongholdListener : InteractionListener {
 

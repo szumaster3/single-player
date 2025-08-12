@@ -1,6 +1,6 @@
 package content.region.kandarin.gnome.quest.makinghistory
 
-import org.rs.consts.Vars
+import shared.consts.Vars
 
 object MHUtils {
     const val PROGRESS = Vars.VARBIT_MAKING_HISTORY_PROGRESS_1383

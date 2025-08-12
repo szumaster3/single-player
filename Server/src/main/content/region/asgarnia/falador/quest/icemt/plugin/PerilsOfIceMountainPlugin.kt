@@ -3,7 +3,7 @@ package content.region.asgarnia.falador.quest.icemt.plugin
 import core.api.sendDialogueLines
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import org.rs.consts.Items
+import shared.consts.Items
 
 class PerilsOfIceMountainPlugin : InteractionListener {
 

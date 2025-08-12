@@ -6,8 +6,8 @@ import core.game.node.entity.player.Player
 import core.game.node.item.ChanceItem
 import core.game.node.item.Item
 import core.game.world.update.flag.context.Graphics
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 /**
  * Represents the Butterfly net types.
@@ -21,8 +21,8 @@ enum class BNetTypes(
             intArrayOf(15, 80, 75),
             doubleArrayOf(24.0, 300.0, 50.0),
             arrayOf(
-                Graphics(org.rs.consts.Graphics.RELEASE_A_BUTTERFLY_RED_913),
-                Graphics(org.rs.consts.Graphics.RELEASE_A_BUTTERFLY_RED_917),
+                Graphics(shared.consts.Graphics.RELEASE_A_BUTTERFLY_RED_913),
+                Graphics(shared.consts.Graphics.RELEASE_A_BUTTERFLY_RED_917),
             ),
             ChanceItem(Items.RUBY_HARVEST_10020),
         ),
@@ -33,8 +33,8 @@ enum class BNetTypes(
             intArrayOf(25, 85, 80),
             doubleArrayOf(34.0, 400.0, 70.0),
             arrayOf(
-                Graphics(org.rs.consts.Graphics.RELEASE_A_BUTTERFLY_BLUE_912),
-                Graphics(org.rs.consts.Graphics.RELEASE_A_BUTTERFLY_BLUE_916),
+                Graphics(shared.consts.Graphics.RELEASE_A_BUTTERFLY_BLUE_912),
+                Graphics(shared.consts.Graphics.RELEASE_A_BUTTERFLY_BLUE_916),
             ),
             ChanceItem(Items.SAPPHIRE_GLACIALIS_10018),
         ),
@@ -45,8 +45,8 @@ enum class BNetTypes(
             intArrayOf(35, 90, 85),
             doubleArrayOf(44.0, 500.0, 100.0),
             arrayOf(
-                Graphics(org.rs.consts.Graphics.RELEASE_A_BUTTERFLY_WHITE_911),
-                Graphics(org.rs.consts.Graphics.RELEASE_A_BUTTERFLY_WHITE_915),
+                Graphics(shared.consts.Graphics.RELEASE_A_BUTTERFLY_WHITE_911),
+                Graphics(shared.consts.Graphics.RELEASE_A_BUTTERFLY_WHITE_915),
             ),
             ChanceItem(Items.SNOWY_KNIGHT_10016),
         ),
@@ -57,8 +57,8 @@ enum class BNetTypes(
             intArrayOf(45, 95, 90),
             doubleArrayOf(54.0, 650.0, 125.0),
             arrayOf(
-                Graphics(org.rs.consts.Graphics.RELEASE_A_BUTTERFLY_BLACK_910),
-                Graphics(org.rs.consts.Graphics.RELEASE_A_BUTTERFLY_BLACK_914),
+                Graphics(shared.consts.Graphics.RELEASE_A_BUTTERFLY_BLACK_910),
+                Graphics(shared.consts.Graphics.RELEASE_A_BUTTERFLY_BLACK_914),
             ),
             ChanceItem(Items.BLACK_WARLOCK_10014),
         ),

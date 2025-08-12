@@ -4,7 +4,7 @@ import core.api.*
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.tools.StringUtils
-import org.rs.consts.Scenery
+import shared.consts.Scenery
 
 class IncubatorPlugin : InteractionListener {
 

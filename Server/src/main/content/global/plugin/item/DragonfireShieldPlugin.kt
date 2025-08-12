@@ -22,15 +22,15 @@ import core.plugin.Initializable
 import core.plugin.Plugin
 import core.tools.minutesToTicks
 import core.tools.secondsToTicks
-import org.rs.consts.Animations
-import org.rs.consts.Items
-import org.rs.consts.Sounds
+import shared.consts.Animations
+import shared.consts.Items
+import shared.consts.Sounds
 
 class DragonfireShieldPlugin : InteractionListener {
 
     private val dragonFireShields = intArrayOf(Items.DRAGONFIRE_SHIELD_11283, Items.DRAGONFIRE_SHIELD_11284)
     private val dfsEmptyAnim = Animations.SHIELD_DRAGONFIRE_6700
-    private val dfsEmptyGfx = org.rs.consts.Graphics.DFS_FUSE_DRAGONKIN_KEY_CHARGE_1160
+    private val dfsEmptyGfx = shared.consts.Graphics.DFS_FUSE_DRAGONKIN_KEY_CHARGE_1160
     val dfsRecharge = if (ServerConstants.BETTER_DFS) secondsToTicks(30) else minutesToTicks(2)
 
     override fun defineListeners() {
@@ -63,12 +63,12 @@ class DragonfireShieldPlugin : InteractionListener {
                 SwitchAttack(
                     null,
                     Animation.create(6696),
-                    Graphics.create(org.rs.consts.Graphics.DFS_HIT_PROJECTILE_1165),
-                    Graphics(org.rs.consts.Graphics.DRAGONFIRE_SHIELD_BURST_1167, 96),
+                    Graphics.create(shared.consts.Graphics.DFS_HIT_PROJECTILE_1165),
+                    Graphics(shared.consts.Graphics.DRAGONFIRE_SHIELD_BURST_1167, 96),
                     Projectile.create(
                         player,
                         null,
-                        org.rs.consts.Graphics.DRAGONFIRE_SHIELD_PROJECTILE_1166,
+                        shared.consts.Graphics.DRAGONFIRE_SHIELD_PROJECTILE_1166,
                         36,
                         36,
                         80,

@@ -14,7 +14,7 @@ import core.game.world.map.path.Pathfinder
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
 import core.tools.RandomFunction
-import org.rs.consts.Items
+import shared.consts.Items
 import kotlin.random.Random
 
 @PlayerCompatible

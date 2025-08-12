@@ -9,10 +9,10 @@ import core.api.sendPlainDialogue
 import core.game.activity.Cutscene
 import core.game.node.entity.player.Player
 import core.game.world.map.Direction
-import org.rs.consts.Animations
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
-import org.rs.consts.Scenery
+import shared.consts.Animations
+import shared.consts.NPCs
+import shared.consts.Quests
+import shared.consts.Scenery
 
 /**
  * Represents saving Kennith cutscene.

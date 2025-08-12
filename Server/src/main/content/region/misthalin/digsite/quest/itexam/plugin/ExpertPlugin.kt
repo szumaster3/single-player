@@ -12,9 +12,9 @@ import core.game.interaction.InteractionListener
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
-import org.rs.consts.Items
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
+import shared.consts.Items
+import shared.consts.NPCs
+import shared.consts.Quests
 
 class ExpertPlugin : InteractionListener {
     val staff = Items.ANCIENT_STAFF_4675

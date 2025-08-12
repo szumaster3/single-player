@@ -5,8 +5,8 @@ import core.game.activity.ActivityManager
 import core.game.node.entity.Entity
 import core.game.node.entity.player.Player
 import core.game.world.map.zone.ZoneBorders
-import org.rs.consts.Items
-import org.rs.consts.Quests
+import shared.consts.Items
+import shared.consts.Quests
 
 class DemonSlayerCutscene : MapArea {
     override fun defineAreaBorders(): Array<ZoneBorders> = arrayOf(ZoneBorders(3222, 3364, 3234, 3375))

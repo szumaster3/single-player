@@ -9,10 +9,10 @@ import core.game.worldevents.events.HolidayRandoms
 import core.game.worldevents.events.ResetHolidayAppearance
 import core.tools.RandomFunction
 import core.tools.colorize
-import org.rs.consts.Animations
-import org.rs.consts.Graphics
-import org.rs.consts.NPCs
-import org.rs.consts.Sounds
+import shared.consts.Animations
+import shared.consts.Graphics
+import shared.consts.NPCs
+import shared.consts.Sounds
 
 class VampireHolidayRandomNPC : HolidayRandomEventNPC(NPCs.VAMPIRE_1023) {
     override fun init() {

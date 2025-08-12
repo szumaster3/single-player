@@ -18,10 +18,10 @@ import core.plugin.Initializable
 import core.tools.RandomFunction
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import org.rs.consts.Animations
-import org.rs.consts.Items
-import org.rs.consts.NPCs
-import org.rs.consts.Sounds
+import shared.consts.Animations
+import shared.consts.Items
+import shared.consts.NPCs
+import shared.consts.Sounds
 
 @Initializable
 class GhastNPC : AbstractNPC {

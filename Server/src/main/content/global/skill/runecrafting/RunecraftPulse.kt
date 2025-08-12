@@ -17,10 +17,10 @@ import core.game.world.GameWorld.ticks
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
 import core.tools.RandomFunction
-import org.rs.consts.Animations
-import org.rs.consts.Items
-import org.rs.consts.Quests
-import org.rs.consts.Sounds
+import shared.consts.Animations
+import shared.consts.Items
+import shared.consts.Quests
+import shared.consts.Sounds
 import kotlin.math.max
 
 class RunecraftPulse(
@@ -273,7 +273,7 @@ class RunecraftPulse(
         private const val PURE_ESSENCE = Items.PURE_ESSENCE_7936
         private const val BINDING_NECKLACE = Items.BINDING_NECKLACE_5521
         private val ANIMATION = Animation(Animations.OLD_RUNECRAFT_791, Priority.HIGH)
-        private val Graphics = Graphics(org.rs.consts.Graphics.RUNECRAFTING_GRAPHIC_186, 100)
+        private val Graphics = Graphics(shared.consts.Graphics.RUNECRAFTING_GRAPHIC_186, 100)
 
         fun getMultiplier(
             rcLevel: Int,

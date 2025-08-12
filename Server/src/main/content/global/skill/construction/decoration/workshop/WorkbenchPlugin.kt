@@ -16,8 +16,8 @@ import core.game.node.scenery.Scenery
 import core.net.packet.OutgoingContext
 import core.net.packet.PacketRepository
 import core.net.packet.out.ContainerPacket
-import org.rs.consts.Components
-import org.rs.consts.Items
+import shared.consts.Components
+import shared.consts.Items
 import kotlin.math.min
 
 class WorkbenchPlugin :
@@ -25,18 +25,18 @@ class WorkbenchPlugin :
     InteractionListener {
     private val flatpackItemIDs = Decoration.values().map { it.interfaceItem }.toIntArray()
     private val buildHotspot = BuildHotspot.values().map { it.objectId }.toIntArray()
-    private val workBenchIDs = intArrayOf(org.rs.consts.Scenery.WORKBENCH_13704, org.rs.consts.Scenery.WORKBENCH_13705, org.rs.consts.Scenery.WORKBENCH_13706, org.rs.consts.Scenery.WORKBENCH_13707, org.rs.consts.Scenery.WORKBENCH_13708)
+    private val workBenchIDs = intArrayOf(shared.consts.Scenery.WORKBENCH_13704, shared.consts.Scenery.WORKBENCH_13705, shared.consts.Scenery.WORKBENCH_13706, shared.consts.Scenery.WORKBENCH_13707, shared.consts.Scenery.WORKBENCH_13708)
 
     override fun defineListeners() {
         on(workBenchIDs, IntType.SCENERY, "work-at") { player, obj ->
             player.interfaceManager.close()
             openInterface(player, Components.POH_WORKBENCH_397)
             when (obj.id) {
-                org.rs.consts.Scenery.WORKBENCH_13704 -> setAttribute(player, GameAttributes.CON_FLATPACK_TIER, 20)
-                org.rs.consts.Scenery.WORKBENCH_13705 -> setAttribute(player, GameAttributes.CON_FLATPACK_TIER, 40)
-                org.rs.consts.Scenery.WORKBENCH_13706 -> setAttribute(player, GameAttributes.CON_FLATPACK_TIER, 60)
-                org.rs.consts.Scenery.WORKBENCH_13707 -> setAttribute(player, GameAttributes.CON_FLATPACK_TIER, 80)
-                org.rs.consts.Scenery.WORKBENCH_13708 -> setAttribute(player, GameAttributes.CON_FLATPACK_TIER, 99)
+                shared.consts.Scenery.WORKBENCH_13704 -> setAttribute(player, GameAttributes.CON_FLATPACK_TIER, 20)
+                shared.consts.Scenery.WORKBENCH_13705 -> setAttribute(player, GameAttributes.CON_FLATPACK_TIER, 40)
+                shared.consts.Scenery.WORKBENCH_13706 -> setAttribute(player, GameAttributes.CON_FLATPACK_TIER, 60)
+                shared.consts.Scenery.WORKBENCH_13707 -> setAttribute(player, GameAttributes.CON_FLATPACK_TIER, 80)
+                shared.consts.Scenery.WORKBENCH_13708 -> setAttribute(player, GameAttributes.CON_FLATPACK_TIER, 99)
             }
 
             return@on true

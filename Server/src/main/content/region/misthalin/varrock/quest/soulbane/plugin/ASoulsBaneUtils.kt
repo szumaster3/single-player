@@ -1,7 +1,7 @@
 package content.region.misthalin.varrock.quest.soulbane.plugin
 
 import core.api.getAnimation
-import org.rs.consts.Animations
+import shared.consts.Animations
 
 object ASoulsBaneUtils {
     val ANIMATION_TOLNA_RIFT_CRAWL = getAnimation(Animations.CRAWL_TOLNA_RIFT_3838)

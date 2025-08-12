@@ -6,7 +6,7 @@ import core.api.modPrayerPoints
 import core.game.consumable.ConsumableEffect
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
-import org.rs.consts.Items
+import shared.consts.Items
 import kotlin.math.floor
 
 /**

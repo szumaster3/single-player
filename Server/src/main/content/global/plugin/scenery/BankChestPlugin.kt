@@ -3,7 +3,7 @@ package content.global.plugin.scenery
 import core.api.openBankAccount
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import org.rs.consts.Scenery
+import shared.consts.Scenery
 
 class BankChestPlugin : InteractionListener {
 

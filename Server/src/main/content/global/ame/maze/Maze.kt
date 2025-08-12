@@ -44,8 +44,8 @@ class Maze : EventHook<TickEvent>, MapArea {
              */
             for (i in CHEST_LOCATIONS) {
                 SceneryBuilder.replace(
-                    Scenery(org.rs.consts.Scenery.WALL_3626, i),
-                    Scenery(org.rs.consts.Scenery.CHEST_3635, i),
+                    Scenery(shared.consts.Scenery.WALL_3626, i),
+                    Scenery(shared.consts.Scenery.CHEST_3635, i),
                     -1
                 )
             }

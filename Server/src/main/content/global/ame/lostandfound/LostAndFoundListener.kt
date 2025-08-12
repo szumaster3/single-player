@@ -6,7 +6,7 @@ import core.game.interaction.InteractionListener
 import core.game.interaction.QueueStrength
 import core.game.node.entity.skill.Skills
 import core.tools.RandomFunction
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Handles interaction for Lost and Found random event.

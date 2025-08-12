@@ -4,7 +4,7 @@ import core.game.node.entity.npc.NPCBehavior
 import core.game.world.map.Location
 import core.tools.Log
 import core.tools.SystemLogger
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 class PostiePeteNPC : NPCBehavior(NPCs.POSTIE_PETE_3805) {
     val POSTIE_PETE_LOCATIONS =

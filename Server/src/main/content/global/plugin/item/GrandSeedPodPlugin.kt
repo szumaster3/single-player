@@ -8,9 +8,9 @@ import core.game.interaction.QueueStrength
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
 import core.game.world.map.Location
-import org.rs.consts.Animations
-import org.rs.consts.Components
-import org.rs.consts.Items
+import shared.consts.Animations
+import shared.consts.Components
+import shared.consts.Items
 
 private const val SQUASH_GRAPHICS_BEGIN = 767
 private const val SQUASH_GRAPHICS_END = 769

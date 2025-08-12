@@ -7,7 +7,7 @@ import core.api.toIntArray
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.item.Item
-import org.rs.consts.Items
+import shared.consts.Items
 
 class FungicideSprayPlugin : InteractionListener {
     override fun defineListeners() {

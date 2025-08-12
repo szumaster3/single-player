@@ -9,9 +9,9 @@ import core.game.system.task.Pulse
 import core.game.world.map.Location
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
-import org.rs.consts.NPCs
-import org.rs.consts.Sounds
-import org.rs.consts.Vars
+import shared.consts.NPCs
+import shared.consts.Sounds
+import shared.consts.Vars
 
 @Initializable
 class OgreGuardDialogue(player: Player? = null) : Dialogue(player) {

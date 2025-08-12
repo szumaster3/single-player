@@ -8,7 +8,7 @@ import core.game.worldevents.events.HolidayRandoms
 import core.game.worldevents.events.christmas.Giftmas
 import core.tools.END_DIALOGUE
 import core.tools.RandomFunction
-import org.rs.consts.Items
+import shared.consts.Items
 
 class SantaHolidayRandomDialogue : DialogueFile() {
     override fun handle(
