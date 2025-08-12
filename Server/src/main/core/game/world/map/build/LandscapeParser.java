@@ -120,26 +120,26 @@ public final class LandscapeParser {
         int type = object.getType();
         if (type == 22) { //Tile
             plane.getFlags().getLandscape()[localX][localY] = true;
-            if (def.interactive != 0 || def.solid == 1 || def.isBlocksLand) {
+            if (def.interactive != 0 || def.solid == 1 || def.blocksLand) {
                 if (def.solid == 1) {
                     plane.getFlags().flagTileObject(localX, localY);
-                    if (def.isProjectileClipped) {
+                    if (def.blocksSky) {
                         plane.getProjectileFlags().flagTileObject(localX, localY);
                     }
                 }
             }
         } else if (type >= 9) { //Default objects
             if (def.solid != 0) {
-                plane.getFlags().flagSolidObject(localX, localY, sizeX, sizeY, def.isProjectileClipped);
-                if (def.isProjectileClipped) {
+                plane.getFlags().flagSolidObject(localX, localY, sizeX, sizeY, def.blocksSky);
+                if (def.blocksSky) {
                     plane.getProjectileFlags().flagSolidObject(localX, localY, sizeX, sizeY, true);
                 }
             }
         } else if (type >= 0 && type <= 3) { //Doors/walls
             if (def.solid != 0) {
-                plane.getFlags().flagDoorObject(localX, localY, object.getRotation(), type, def.isProjectileClipped);
-                if (def.isProjectileClipped) {
-                    plane.getProjectileFlags().flagDoorObject(localX, localY, object.getRotation(), type, def.isProjectileClipped);
+                plane.getFlags().flagDoorObject(localX, localY, object.getRotation(), type, def.blocksSky);
+                if (def.blocksSky) {
+                    plane.getProjectileFlags().flagDoorObject(localX, localY, object.getRotation(), type, def.blocksSky);
                 }
             }
         } else {
@@ -200,26 +200,26 @@ public final class LandscapeParser {
         }
         int type = object.getType();
         if (type == 22) { //Tile
-            if (def.interactive != 0 || def.solid == 1 || def.isBlocksLand) {
+            if (def.interactive != 0 || def.solid == 1 || def.blocksLand) {
                 if (def.solid == 1) {
                     plane.getFlags().unflagTileObject(localX, localY);
-                    if (def.isProjectileClipped) {
+                    if (def.blocksSky) {
                         plane.getProjectileFlags().unflagTileObject(localX, localY);
                     }
                 }
             }
         } else if (type >= 9) { //Default objects
             if (def.solid != 0) {
-                plane.getFlags().unflagSolidObject(localX, localY, sizeX, sizeY, def.isProjectileClipped);
-                if (def.isProjectileClipped) {
+                plane.getFlags().unflagSolidObject(localX, localY, sizeX, sizeY, def.blocksSky);
+                if (def.blocksSky) {
                     plane.getProjectileFlags().unflagSolidObject(localX, localY, sizeX, sizeY, true);
                 }
             }
         } else if (type >= 0 && type <= 3) { //Doors/walls
             if (def.solid != 0) {
-                plane.getFlags().unflagDoorObject(localX, localY, object.getRotation(), type, def.isProjectileClipped);
-                if (def.isProjectileClipped) {
-                    plane.getProjectileFlags().unflagDoorObject(localX, localY, object.getRotation(), type, def.isProjectileClipped);
+                plane.getFlags().unflagDoorObject(localX, localY, object.getRotation(), type, def.blocksSky);
+                if (def.blocksSky) {
+                    plane.getProjectileFlags().unflagDoorObject(localX, localY, object.getRotation(), type, def.blocksSky);
                 }
             }
         }

@@ -169,7 +169,7 @@ object ClimbActionHandler {
             sizeX = scenery.definition.sizeY.also { sizeY = scenery.definition.sizeX }
         }
 
-        val dir = Direction.forWalkFlag(scenery.definition.walkingFlag, scenery.rotation)
+        val dir = Direction.forWalkFlag(scenery.definition.blockFlag, scenery.rotation)
         return dir?.let { getDestination(scenery, sizeX, sizeY, it, 0) }
             ?: when (scenery.rotation) {
                 0 -> getDestination(scenery, sizeX, sizeY, Direction.SOUTH, 0)

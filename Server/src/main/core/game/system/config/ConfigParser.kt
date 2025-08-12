@@ -12,7 +12,7 @@ class ConfigParser : Commands {
     fun prePlugin() {
         NPCConfigParser().load()
         ItemConfigParser().load()
-        ObjectConfigParser().load()
+        SceneryConfigParser().load()
         XteaParser().load()
         InterfaceConfigParser().load()
     }

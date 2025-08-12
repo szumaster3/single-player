@@ -200,7 +200,7 @@ public abstract class Pathfinder {
                     sizeX = object.getDefinition().sizeY;
                     sizeY = object.getDefinition().sizeX;
                 }
-                int walkingFlag = object.getDefinition().walkingFlag;
+                int walkingFlag = object.getDefinition().blockFlag;
                 if (rotation != 0) {
                     walkingFlag = (walkingFlag << rotation & 0xf) + (walkingFlag >> 4 - rotation);
                 }

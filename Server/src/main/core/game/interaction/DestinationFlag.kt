@@ -183,7 +183,7 @@ open class DestinationFlag {
                             sizeX = sizeY
                             sizeY = tmp
                         }
-                        val dir = Direction.forWalkFlag(scenery.definition.walkingFlag, scenery.rotation)
+                        val dir = Direction.forWalkFlag(scenery.definition.blockFlag, scenery.rotation)
                         val destination = if (dir != null) {
                             getDestination(mover, scenery, sizeX, sizeY, dir, 3)
                         } else {

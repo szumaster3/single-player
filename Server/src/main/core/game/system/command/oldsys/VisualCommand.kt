@@ -262,7 +262,7 @@ class VisualCommand : CommandPlugin() {
                 }
                 player.packetDispatch.sendSceneryAnimation(scenery, Animation(toInteger(args[args.size - 1]!!)))
                 // sendMessage(player, `object`.definition.modelIds.map { it.toString() }.toString())
-                sendMessage(player, scenery.definition.addObjectCheck.toString())
+                sendMessage(player, scenery.definition.animations.toString())
                 return true
             }
 
