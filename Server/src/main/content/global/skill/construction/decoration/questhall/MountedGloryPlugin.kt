@@ -9,7 +9,7 @@ import core.game.node.entity.player.link.TeleportManager
 import core.game.node.item.Item
 import core.game.system.task.Pulse
 import core.game.world.map.Location
-import org.rs.consts.Items
+import shared.consts.Items
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
@@ -22,7 +22,7 @@ class MountedGloryPlugin : InteractionListener {
     )
 
     override fun defineListeners() {
-        on(org.rs.consts.Scenery.AMULET_OF_GLORY_13523, IntType.SCENERY, "rub", "remove") { player, node ->
+        on(shared.consts.Scenery.AMULET_OF_GLORY_13523, IntType.SCENERY, "rub", "remove") { player, node ->
             val option = getUsedOption(player)
             when (option) {
                 "rub" -> {

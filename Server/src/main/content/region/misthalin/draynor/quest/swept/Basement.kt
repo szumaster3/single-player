@@ -7,7 +7,7 @@ import core.game.node.entity.Entity
 import core.game.node.entity.player.Player
 import core.game.world.map.zone.ZoneBorders
 import core.game.world.map.zone.ZoneRestriction
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Represents the Basement (Betty & Hetty) area for Swept Away quest.

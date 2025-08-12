@@ -8,7 +8,7 @@ import core.api.setQuestStage
 import core.game.dialogue.DialogueFile
 import core.tools.END_DIALOGUE
 import core.tools.START_DIALOGUE
-import org.rs.consts.Quests
+import shared.consts.Quests
 
 private const val SHIP_DIALOGUE = 2000
 

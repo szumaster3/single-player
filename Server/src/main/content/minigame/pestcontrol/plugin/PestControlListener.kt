@@ -11,10 +11,10 @@ import core.game.node.item.Item
 import core.game.world.map.RegionManager.getLocalNpcs
 import core.game.world.update.flag.context.Graphics
 import core.tools.RandomFunction
-import org.rs.consts.Animations
-import org.rs.consts.Items
-import org.rs.consts.NPCs
-import org.rs.consts.Scenery
+import shared.consts.Animations
+import shared.consts.Items
+import shared.consts.NPCs
+import shared.consts.Scenery
 
 class PestControlListener : InteractionListener {
     override fun defineListeners() {
@@ -46,7 +46,7 @@ class PestControlListener : InteractionListener {
             }
 
             animate(player, Animations.HANDS_TOGETHER_709)
-            player.graphics(Graphics.create(org.rs.consts.Graphics.GREEN_CIRCLE_WAVES_1177))
+            player.graphics(Graphics.create(shared.consts.Graphics.GREEN_CIRCLE_WAVES_1177))
 
             for (npc in getLocalNpcs(player, 2)) {
                 if (npc is PCDefilerNPC ||
@@ -58,7 +58,7 @@ class PestControlListener : InteractionListener {
                     npc is PCBrawlerNPC
                 ) {
                     npc.impactHandler.manualHit(player, 7 + RandomFunction.randomize(5), HitsplatType.NORMAL, 1)
-                    npc.graphics(Graphics.create(org.rs.consts.Graphics.RED_CIRCLE_WAVES_1176))
+                    npc.graphics(Graphics.create(shared.consts.Graphics.RED_CIRCLE_WAVES_1176))
                 }
             }
 

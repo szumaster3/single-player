@@ -40,7 +40,7 @@ import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
 import core.plugin.Initializable
 import core.tools.RandomFunction
-import org.rs.consts.*
+import shared.consts.*
 import kotlin.math.min
 
 class VinesweeperPlugin :
@@ -85,7 +85,7 @@ class VinesweeperPlugin :
 
     override fun defineListeners() {
         populateSeeds()
-        on(org.rs.consts.Scenery.PORTAL_29534, IntType.SCENERY, "enter") { player, _ ->
+        on(shared.consts.Scenery.PORTAL_29534, IntType.SCENERY, "enter") { player, _ ->
             val x = player.getAttribute("vinesweeper:return-tele:x", 3052)
             val y = player.getAttribute("vinesweeper:return-tele:y", 3304)
             teleport(player, Location(x, y))
@@ -101,7 +101,7 @@ class VinesweeperPlugin :
             } else {
                 player.visualize(
                     Animation(Animations.HUMAN_VINESWEEPER_DIG_8709),
-                    Graphics(org.rs.consts.Graphics.VINESWEEPER_DIRT_DIG_1543),
+                    Graphics(shared.consts.Graphics.VINESWEEPER_DIRT_DIG_1543),
                 )
                 dig(player, node.location)
             }
@@ -110,7 +110,7 @@ class VinesweeperPlugin :
         onUseWith(IntType.SCENERY, Items.SPADE_952, *HOLES) { player, _, with ->
             player.visualize(
                 Animation(Animations.HUMAN_VINESWEEPER_DIG_8709),
-                Graphics(org.rs.consts.Graphics.VINESWEEPER_DIRT_DIG_1543),
+                Graphics(shared.consts.Graphics.VINESWEEPER_DIRT_DIG_1543),
             )
             dig(player, with.location)
             return@onUseWith true
@@ -302,17 +302,17 @@ class VinesweeperPlugin :
 
         val SIGNS =
             intArrayOf(
-                org.rs.consts.Scenery.INSTRUCTION_SIGN_29461,
-                org.rs.consts.Scenery.INSTRUCTION_SIGN_29462,
-                org.rs.consts.Scenery.INSTRUCTION_SIGN_29463,
-                org.rs.consts.Scenery.INSTRUCTION_SIGN_29464,
+                shared.consts.Scenery.INSTRUCTION_SIGN_29461,
+                shared.consts.Scenery.INSTRUCTION_SIGN_29462,
+                shared.consts.Scenery.INSTRUCTION_SIGN_29463,
+                shared.consts.Scenery.INSTRUCTION_SIGN_29464,
             )
 
         val HOLES =
             intArrayOf(
-                org.rs.consts.Scenery.HOLE_29476,
-                org.rs.consts.Scenery.HOLE_29477,
-                org.rs.consts.Scenery.HOLE_29478,
+                shared.consts.Scenery.HOLE_29476,
+                shared.consts.Scenery.HOLE_29477,
+                shared.consts.Scenery.HOLE_29478,
             )
 
         val NUMBERS = intArrayOf(29447, 29448, 29449, 29450, 29451, 29452, 29453, 29454, 29455)
@@ -460,13 +460,13 @@ class VinesweeperPlugin :
                 player.lock()
                 player.visualize(
                     Animation(Animations.HUMAN_PLANT_FLAG_8711),
-                    Graphics(org.rs.consts.Graphics.VINESWEEPER_PLANT_FLAG_1541),
+                    Graphics(shared.consts.Graphics.VINESWEEPER_PLANT_FLAG_1541),
                 )
                 sendMessage(player, "You add a flag to the patch.")
                 GameWorld.Pulser.submit(
                     object : Pulse(2, player) {
                         override fun pulse(): Boolean {
-                            SceneryBuilder.replace(hole, hole.transform(org.rs.consts.Scenery.FLAG_29457))
+                            SceneryBuilder.replace(hole, hole.transform(shared.consts.Scenery.FLAG_29457))
                             scheduleNPCs(player, hole.location, true, true)
                             player.unlock()
                             return true
@@ -521,7 +521,7 @@ class VinesweeperPlugin :
                 scheduleNPCs(player, loc, false, false)
                 val scenery = getScenery(loc)
                 if (scenery != null) {
-                    SceneryBuilder.replace(scenery, scenery.transform(org.rs.consts.Scenery.DEAD_PLANT_29456))
+                    SceneryBuilder.replace(scenery, scenery.transform(shared.consts.Scenery.DEAD_PLANT_29456))
                 }
             } else {
                 player.incrementAttribute("/save:vinesweeper:points", 1)
@@ -603,14 +603,14 @@ class VinesweeperPlugin :
                     return
                 }
                 when (npc.id) {
-                    NPCs.TECLYN_2861 -> visualize(npc, Animations.ATTACK_437, org.rs.consts.Graphics.CURSE_CAST_108)
-                    else -> visualize(npc, Animations.BALLER_THROW_201, org.rs.consts.Graphics.CURSE_CAST_108)
+                    NPCs.TECLYN_2861 -> visualize(npc, Animations.ATTACK_437, shared.consts.Graphics.CURSE_CAST_108)
+                    else -> visualize(npc, Animations.BALLER_THROW_201, shared.consts.Graphics.CURSE_CAST_108)
                 }
                 stopWalk(npc)
                 npc.faceTemporary(player, 1)
                 lock(player, 3)
                 playAudio(player, Sounds.CURSE_ALL_125, 0, 1)
-                spawnProjectile(npc, player, org.rs.consts.Graphics.CURSE_PROJECTILE_109)
+                spawnProjectile(npc, player, shared.consts.Graphics.CURSE_PROJECTILE_109)
                 sendChat(npc, "Avach nimporto!")
                 GameWorld.Pulser.submit(
                     object : Pulse(1, player) {
@@ -626,7 +626,7 @@ class VinesweeperPlugin :
                                 }
 
                                 3 -> {
-                                    visualize(player, -1, org.rs.consts.Graphics.CURSE_IMPACT_110)
+                                    visualize(player, -1, shared.consts.Graphics.CURSE_IMPACT_110)
                                     return true
                                 }
                             }
@@ -699,7 +699,7 @@ class VinesweeperNPC : AbstractNPC {
         dest: VinesweeperPlugin.SeedDestination,
     ) {
         if (SEED_LOCS.contains(dest.loc)) {
-            val replacement = org.rs.consts.Scenery.DEAD_PLANT_29456
+            val replacement = shared.consts.Scenery.DEAD_PLANT_29456
             lock(4)
             animate(Animation(Animations.RABBIT_EAT_SEED_8718))
             SceneryBuilder.replace(scenery, scenery.transform(replacement))
@@ -801,7 +801,7 @@ class VinesweeperNPC : AbstractNPC {
                 val toClear = getScenery(dest.loc.transform(dx, dy, 0))
                 if (toClear != null &&
                     intArrayOf(
-                        org.rs.consts.Scenery.DEAD_PLANT_29456,
+                        shared.consts.Scenery.DEAD_PLANT_29456,
                         *NUMBERS,
                     ).contains(toClear.id)
                 ) {

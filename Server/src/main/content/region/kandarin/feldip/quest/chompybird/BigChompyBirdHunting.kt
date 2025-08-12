@@ -12,7 +12,7 @@ import core.game.world.GameWorld
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Graphics
 import core.plugin.Initializable
-import org.rs.consts.*
+import shared.consts.*
 import kotlin.random.Random
 
 @Initializable
@@ -205,7 +205,7 @@ class BigChompyBirdHunting :
         onUseWith(IntType.SCENERY, Items.OGRE_BELLOWS_2871, Scenery.SWAMP_BUBBLES_684) { player, used, _ ->
             if (removeItem(player, used.asItem())) {
                 lock(player, 2)
-                visualize(player, Animations.HUMAN_USING_BELLOWS_1026, Graphics(org.rs.consts.Graphics.USING_BELLOWS, 80))
+                visualize(player, Animations.HUMAN_USING_BELLOWS_1026, Graphics(shared.consts.Graphics.USING_BELLOWS, 80))
                 addItem(player, Items.OGRE_BELLOWS_3_2872)
                 sendMessage(player, "You fill the bellows with swamp gas.")
             }
@@ -222,7 +222,7 @@ class BigChompyBirdHunting :
 
             sendChat(player, "Come here toady!")
             sendMessage(player, "You manage to catch the toad and inflate it with swamp gas.")
-            visualize(player, Animations.HUMAN_USING_BELLOWS_1026, Graphics(org.rs.consts.Graphics.USING_BELLOWS, 80))
+            visualize(player, Animations.HUMAN_USING_BELLOWS_1026, Graphics(shared.consts.Graphics.USING_BELLOWS, 80))
             animate(with.asNpc(), Animations.TOAD_INFLATION_1019)
             runTask(player, 2) {
                 if (removeItem(player, used.asItem())) {

@@ -5,7 +5,7 @@ import core.api.replaceSlot
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.item.Item
-import org.rs.consts.Items
+import shared.consts.Items
 
 class CertificatePlugin: InteractionListener {
 

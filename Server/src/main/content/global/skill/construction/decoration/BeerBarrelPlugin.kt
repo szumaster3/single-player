@@ -7,9 +7,9 @@ import core.game.node.scenery.Scenery
 import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.Animations
-import org.rs.consts.Items
-import org.rs.consts.Scenery as Obj
+import shared.consts.Animations
+import shared.consts.Items
+import shared.consts.Scenery as Obj
 
 /**
  * The type Beer barrel plugin.

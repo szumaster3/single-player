@@ -10,8 +10,8 @@ import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.link.TeleportManager
 import core.game.system.timer.impl.AntiMacro
 import core.tools.RandomFunction
-import org.rs.consts.Music
-import org.rs.consts.NPCs
+import shared.consts.Music
+import shared.consts.NPCs
 
 /**
  * Represents the Mime NPC.

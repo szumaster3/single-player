@@ -1,7 +1,7 @@
 package content.global.plugin.iface
 
 import core.game.interaction.InterfaceListener
-import org.rs.consts.Components
+import shared.consts.Components
 
 /**
  * Handles the death interface.

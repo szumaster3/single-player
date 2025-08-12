@@ -11,9 +11,9 @@ import core.game.node.entity.skill.Skills
 import core.game.world.GameWorld.ticks
 import core.game.world.update.flag.context.Graphics
 import core.tools.RandomFunction
-import org.rs.consts.Items
-import org.rs.consts.NPCs
-import org.rs.consts.Sounds
+import shared.consts.Items
+import shared.consts.NPCs
+import shared.consts.Sounds
 import kotlin.math.ceil
 
 /**

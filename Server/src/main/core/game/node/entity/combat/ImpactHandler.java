@@ -14,7 +14,7 @@ import core.game.system.task.Pulse;
 import core.game.world.GameWorld;
 import core.game.world.map.zone.ZoneType;
 import core.game.world.repository.Repository;
-import org.rs.consts.Items;
+import shared.consts.Items;
 
 import java.util.HashMap;
 import java.util.LinkedList;

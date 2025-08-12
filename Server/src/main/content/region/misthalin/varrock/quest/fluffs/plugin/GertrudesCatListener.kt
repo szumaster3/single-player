@@ -10,7 +10,7 @@ import core.game.world.map.Location
 import core.game.world.map.path.Path
 import core.game.world.map.path.Pathfinder
 import core.tools.RandomFunction
-import org.rs.consts.*
+import shared.consts.*
 
 class GertrudesCatListener : InteractionListener {
     private val CRATE = intArrayOf(Scenery.CRATE_767, Scenery.CRATE_2620)

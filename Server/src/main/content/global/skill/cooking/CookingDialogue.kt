@@ -4,8 +4,8 @@ import core.api.*
 import core.game.dialogue.DialogueFile
 import core.game.node.scenery.Scenery
 import core.tools.START_DIALOGUE
-import org.rs.consts.Components
-import org.rs.consts.Items
+import shared.consts.Components
+import shared.consts.Items
 
 /**
  * Represents the cooking dialogue.

@@ -5,7 +5,7 @@ import core.api.spawnTimer
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.npc.NPCBehavior
 import core.game.system.timer.impl.PoisonImmunity
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 private val GODWARS_NPC =
     intArrayOf(

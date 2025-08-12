@@ -10,9 +10,9 @@ import core.game.world.GameWorld
 import core.game.world.map.RegionManager
 import core.game.world.map.path.ClipMaskSupplier
 import core.tools.RandomFunction
-import org.rs.consts.Graphics
-import org.rs.consts.NPCs
-import org.rs.consts.Sounds
+import shared.consts.Graphics
+import shared.consts.NPCs
+import shared.consts.Sounds
 
 /**
  * Behavior for spinolyp and suspicious water NPC.

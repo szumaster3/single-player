@@ -13,7 +13,7 @@ import core.game.world.map.Direction
 import core.game.world.map.Location
 import core.game.world.map.RegionManager.getObject
 import core.game.world.map.path.Pathfinder
-import org.rs.consts.Sounds
+import shared.consts.Sounds
 import java.awt.Point
 
 /**

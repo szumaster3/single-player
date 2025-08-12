@@ -12,8 +12,8 @@ import core.game.world.update.flag.context.Graphics;
 import core.plugin.Initializable;
 import core.plugin.Plugin;
 import core.tools.RandomFunction;
-import org.rs.consts.Items;
-import org.rs.consts.Sounds;
+import shared.consts.Items;
+import shared.consts.Sounds;
 
 import static core.api.ContentAPIKt.playGlobalAudio;
 
@@ -82,7 +82,7 @@ public final class WarstrikeSpecialHandler extends MeleeSwingHandler implements 
     public void visualize(Entity entity, Entity victim, BattleState state) {
         playGlobalAudio(entity.getLocation(), Sounds.GODWARS_SARADOMIN_MAGIC_CASTANDFIRE_3834);
         if (entity.asPlayer().getEquipment().getId(3) == Items.GRANITE_MACE_14642 || entity.asPlayer().getEquipment().getId(3) == Items.GRANITE_MACE_14644) {
-            entity.visualize(Animation.create(6147), Graphics.create(org.rs.consts.Graphics.ANCIENT_MACE_SPECIAL_1052));
+            entity.visualize(Animation.create(6147), Graphics.create(shared.consts.Graphics.ANCIENT_MACE_SPECIAL_1052));
         } else {
             entity.visualize(ANIMATION, GRAPHICS);
         }

@@ -8,7 +8,7 @@ import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.world.map.Location
 import core.game.world.map.MapDistance
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 class PCDefilerNPC : AbstractNPC {
     private var session: PestControlSession? = null

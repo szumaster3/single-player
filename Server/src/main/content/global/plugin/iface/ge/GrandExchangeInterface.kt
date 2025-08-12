@@ -18,8 +18,8 @@ import core.net.packet.PacketRepository
 import core.net.packet.out.ContainerPacket
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.Components
-import org.rs.consts.Sounds
+import shared.consts.Components
+import shared.consts.Sounds
 
 /**
  * Handles the Grand Exchange interface options.

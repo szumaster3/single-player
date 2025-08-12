@@ -3,8 +3,8 @@ package content.region.misthalin.draynor.quest.haunted.npc
 import core.game.node.entity.npc.AbstractNPC
 import core.game.node.entity.player.Player
 import core.game.world.map.Location
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
+import shared.consts.NPCs
+import shared.consts.Quests
 
 /**
  * Represents the abstract npc class to handle Ernest the Chicken.

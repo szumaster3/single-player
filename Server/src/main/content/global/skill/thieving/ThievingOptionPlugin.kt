@@ -25,7 +25,7 @@ class ThievingOptionPlugin : InteractionListener {
          * Handles clothes stall interaction in Keldagrim.
          */
 
-        on(org.rs.consts.Scenery.CLOTHES_STALL_6165, IntType.SCENERY, "steal-from") { player, _ ->
+        on(shared.consts.Scenery.CLOTHES_STALL_6165, IntType.SCENERY, "steal-from") { player, _ ->
             sendDialogue(player, "You don't really see anything you'd want to steal from this stall.")
             return@on true
         }

@@ -10,8 +10,8 @@ import core.game.node.entity.player.link.quest.QuestReq
 import core.game.node.entity.player.link.quest.QuestRequirements
 import core.game.node.item.Item
 import core.game.system.task.Pulse
-import org.rs.consts.Animations
-import org.rs.consts.Items
+import shared.consts.Animations
+import shared.consts.Items
 
 /**
  * Represents interactions with the mysterious ruins in the game.

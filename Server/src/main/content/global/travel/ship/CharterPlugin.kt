@@ -11,7 +11,7 @@ import core.game.node.entity.player.Player
 import core.game.world.map.Location
 import core.game.world.repository.Repository.findNPC
 import core.game.world.update.flag.context.Animation
-import org.rs.consts.*
+import shared.consts.*
 
 class CharterPlugin : InteractionListener, InterfaceListener {
 

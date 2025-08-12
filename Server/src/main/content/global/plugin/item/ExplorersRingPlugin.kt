@@ -11,8 +11,8 @@ import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.TeleportManager.TeleportType
 import core.game.node.entity.skill.Skills
 import core.game.world.map.Location
-import org.rs.consts.Graphics
-import org.rs.consts.Items
+import shared.consts.Graphics
+import shared.consts.Items
 
 /**
  * Handles interactions for explorers ring.

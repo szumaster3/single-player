@@ -14,7 +14,7 @@ import core.plugin.Plugin
 class WizardTowerPlugin : OptionHandler() {
     @Throws(Throwable::class)
     override fun newInstance(arg: Any?): Plugin<Any> {
-        SceneryDefinition.forId(org.rs.consts.Scenery.DOOR_11993).handlers["option:open"] = this
+        SceneryDefinition.forId(shared.consts.Scenery.DOOR_11993).handlers["option:open"] = this
         return this
     }
 
@@ -42,7 +42,7 @@ class WizardTowerPlugin : OptionHandler() {
     override fun getDestination(node: Node, n: Node): Location? {
         if (n is Scenery) {
             val `object` = n
-            if (`object`.id == org.rs.consts.Scenery.DOOR_11993 && `object`.location == Location(3107, 3162, 0)) {
+            if (`object`.id == shared.consts.Scenery.DOOR_11993 && `object`.location == Location(3107, 3162, 0)) {
                 return if (node.location.x >= 3107) Location.create(3108, 3163, 0) else Location.create(3106, 3161, 0)
             }
         }

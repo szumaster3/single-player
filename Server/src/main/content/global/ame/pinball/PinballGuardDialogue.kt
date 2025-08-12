@@ -4,7 +4,7 @@ import core.api.*
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.tools.BLUE
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 /**
  * Represents the Flippa and Tilt dialogue for Pinball random event.

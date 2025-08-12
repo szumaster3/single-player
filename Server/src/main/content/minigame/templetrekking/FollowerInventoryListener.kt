@@ -1,7 +1,7 @@
 package content.minigame.templetrekking
 
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 class FollowerInventoryListener {
     companion object {

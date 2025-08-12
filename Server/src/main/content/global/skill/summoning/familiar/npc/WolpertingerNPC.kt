@@ -9,9 +9,9 @@ import core.game.node.entity.skill.Skills
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
 import core.plugin.Initializable
-import org.rs.consts.Animations
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Animations
+import shared.consts.Items
+import shared.consts.NPCs
 
 @Initializable
 class WolpertingerNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.WOLPERTINGER_6869) :
@@ -32,7 +32,7 @@ class WolpertingerNPC @JvmOverloads constructor(owner: Player? = null, id: Int =
     }
 
     override fun visualizeSpecialMove() {
-        owner.visualize(Animation.create(Animations.CAST_FAMILIAR_SCROLL_7660), Graphics.create(org.rs.consts.Graphics.WOLPERTINGER_SPECIAL_MOVE_1306))
+        owner.visualize(Animation.create(Animations.CAST_FAMILIAR_SCROLL_7660), Graphics.create(shared.consts.Graphics.WOLPERTINGER_SPECIAL_MOVE_1306))
     }
 
     override fun getIds(): IntArray {

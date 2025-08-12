@@ -5,8 +5,8 @@ import core.api.log
 import core.api.sendString
 import core.game.interaction.InterfaceListener
 import core.tools.Log
-import org.rs.consts.Components
-import org.rs.consts.Items
+import shared.consts.Components
+import shared.consts.Items
 
 class BuildInterface : InterfaceListener {
 

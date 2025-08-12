@@ -4,7 +4,7 @@ import core.api.getUsedOption
 import core.api.sendItemDialogue
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Handles options for cadava potion.

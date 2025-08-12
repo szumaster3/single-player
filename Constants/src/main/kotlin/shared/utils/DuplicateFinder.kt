@@ -1,9 +1,8 @@
-package org.rs
+package shared.utils
 
 import java.io.File
-import org.rs.consts.*
 
-object Utils {
+object DuplicateFinder {
     @JvmStatic
     fun duplicateDetection(vararg classes: Class<*>, report: File) {
         val rows = mutableListOf(listOf("Class", "Value", "Fields"))
@@ -47,18 +46,18 @@ object Utils {
     fun main(args: Array<String>) {
         val reportFile = if (args.isNotEmpty()) File(args[0]) else File("duplicates_report.csv")
         duplicateDetection(
-            Graphics::class.java,
-            Items::class.java,
-            Music::class.java,
-            Network::class.java,
-            NPCs::class.java,
-            Quests::class.java,
-            Regions::class.java,
-            Scenery::class.java,
-            Sounds::class.java,
-            Vars::class.java,
-            Animations::class.java,
-            Components::class.java,
+            shared.consts.Graphics::class.java,
+            shared.consts.Items::class.java,
+            shared.consts.Music::class.java,
+            shared.consts.Network::class.java,
+            shared.consts.NPCs::class.java,
+            shared.consts.Quests::class.java,
+            shared.consts.Regions::class.java,
+            shared.consts.Scenery::class.java,
+            shared.consts.Sounds::class.java,
+            shared.consts.Vars::class.java,
+            shared.consts.Animations::class.java,
+            shared.consts.Components::class.java,
             report = reportFile
         )
     }

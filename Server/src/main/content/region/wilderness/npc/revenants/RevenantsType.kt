@@ -1,7 +1,7 @@
 package content.region.wilderness.npc.revenants
 
 import core.cache.def.impl.NPCDefinition
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 enum class RevenantsType(val maxHit: Int, vararg val ids: Int) {
     IMP(8, NPCs.REVENANT_IMP_6604, NPCs.REVENANT_IMP_6635, NPCs.REVENANT_IMP_6655, NPCs.REVENANT_IMP_6666, NPCs.REVENANT_IMP_6677, NPCs.REVENANT_IMP_6697, NPCs.REVENANT_IMP_6703, NPCs.REVENANT_IMP_6715),

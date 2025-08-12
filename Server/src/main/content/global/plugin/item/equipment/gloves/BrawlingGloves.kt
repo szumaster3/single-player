@@ -1,7 +1,7 @@
 package content.global.plugin.item.equipment.gloves
 
 import core.game.node.entity.skill.Skills
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * The enum Brawling gloves.

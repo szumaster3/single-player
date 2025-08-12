@@ -8,10 +8,10 @@ import core.game.node.entity.player.Player
 import core.game.world.map.Direction
 import core.game.world.map.Location
 import core.tools.DARK_RED
-import org.rs.consts.Animations
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
-import org.rs.consts.Vars
+import shared.consts.Animations
+import shared.consts.NPCs
+import shared.consts.Quests
+import shared.consts.Vars
 
 class ObservatoryCutscene(
     player: Player,

@@ -8,8 +8,8 @@ import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.Components
-import org.rs.consts.Items
+import shared.consts.Components
+import shared.consts.Items
 
 private const val THESSALIA_MALE_COMPONENT = Components.THESSALIA_CLOTHES_MALE_591
 private const val THESSALIA_FEMALE_COMPONENT = Components.THESSALIA_CLOTHES_FEMALE_594

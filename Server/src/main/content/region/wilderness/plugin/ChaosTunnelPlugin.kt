@@ -28,7 +28,7 @@ import core.plugin.Plugin
 import core.tools.Log
 import core.tools.RandomFunction
 import core.tools.SystemLogger
-import org.rs.consts.Quests
+import shared.consts.Quests
 import java.util.*
 
 /**
@@ -273,7 +273,7 @@ class ChaosTunnelPlugin :
             }
         }
         player.teleport(loc)
-        player.graphics(Graphics.create(org.rs.consts.Graphics.CURSE_IMPACT_110))
+        player.graphics(Graphics.create(shared.consts.Graphics.CURSE_IMPACT_110))
     }
 
     /**
@@ -295,7 +295,7 @@ class ChaosTunnelPlugin :
         }
 
         lock(player, 10)
-        visualize(player, -1, org.rs.consts.Graphics.CURSE_IMPACT_110)
+        visualize(player, -1, shared.consts.Graphics.CURSE_IMPACT_110)
         storeFile.addProperty(usernameKey, true)
         ActivityManager.start(player, "Bork cutscene", false)
     }

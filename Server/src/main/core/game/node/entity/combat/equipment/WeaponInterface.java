@@ -16,7 +16,7 @@ import core.net.packet.PacketRepository;
 import core.net.packet.out.Interface;
 import core.net.packet.out.InterfaceConfig;
 import core.net.packet.out.StringPacket;
-import org.rs.consts.Components;
+import shared.consts.Components;
 
 import static core.api.ContentAPIKt.setVarp;
 

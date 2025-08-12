@@ -8,8 +8,8 @@ import core.game.node.entity.npc.NPC
 import core.game.node.item.Item
 import core.game.system.task.Pulse
 import core.tools.END_DIALOGUE
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 class SithikDialogue : DialogueFile() {
     override fun handle(

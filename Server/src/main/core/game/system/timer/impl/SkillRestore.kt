@@ -9,7 +9,7 @@ import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.prayer.PrayerType
 import core.game.node.entity.skill.Skills
 import core.game.system.timer.RSTimer
-import org.rs.consts.Items
+import shared.consts.Items
 
 class SkillRestore :
     RSTimer(

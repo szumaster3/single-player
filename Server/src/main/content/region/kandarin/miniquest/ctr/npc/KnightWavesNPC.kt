@@ -15,7 +15,7 @@ import core.game.world.GameWorld.Pulser
 import core.game.world.map.Direction
 import core.game.world.map.Location
 import core.game.world.map.RegionManager.getLocalPlayers
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 /**
  * Represents a Knight NPC participating in the wave battles.

@@ -15,7 +15,7 @@ import core.game.interaction.InteractionListener
 import core.game.node.entity.npc.NPC
 import core.game.node.item.Item
 import core.tools.StringUtils
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Handles the read option of the Task List item.

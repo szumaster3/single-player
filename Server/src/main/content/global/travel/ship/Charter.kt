@@ -6,7 +6,7 @@ import core.game.node.entity.player.link.diary.DiaryType
 import core.game.system.task.Pulse
 import core.game.world.map.Location
 import core.tools.StringUtils
-import org.rs.consts.Components
+import shared.consts.Components
 
 /**
  * Represents various charter routes with their data.

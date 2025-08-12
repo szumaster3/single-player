@@ -12,7 +12,7 @@ import core.game.world.map.zone.ZoneBuilder;
 import core.plugin.Initializable;
 import core.plugin.Plugin;
 import core.tools.RandomFunction;
-import org.rs.consts.Components;
+import shared.consts.Components;
 
 import static core.api.ContentAPIKt.setAttribute;
 

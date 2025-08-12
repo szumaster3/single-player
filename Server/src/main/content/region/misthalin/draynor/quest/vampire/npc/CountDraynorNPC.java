@@ -11,9 +11,9 @@ import core.game.world.map.Location;
 import core.game.world.update.flag.context.Animation;
 import core.plugin.Initializable;
 import core.tools.RandomFunction;
-import org.rs.consts.Items;
-import org.rs.consts.NPCs;
-import org.rs.consts.Quests;
+import shared.consts.Items;
+import shared.consts.NPCs;
+import shared.consts.Quests;
 
 import static core.api.ContentAPIKt.inInventory;
 import static core.api.ContentAPIKt.sendMessage;

@@ -14,7 +14,7 @@ import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.Animations
+import shared.consts.Animations
 
 @Initializable
 class BasementPlugin : OptionHandler() {

@@ -2,7 +2,7 @@ package content.minigame.shadesofmorton
 
 import core.api.inInventory
 import core.game.node.entity.player.Player
-import org.rs.consts.Items
+import shared.consts.Items
 
 class ShadowOfMortonPlugin {
     fun getLogTypeFromInventory(player: Player): LogType? = when {

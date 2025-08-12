@@ -1,4 +1,4 @@
-package org.rs.consts
+package shared.consts
 
 object Regions {
     const val TUTORIAL_ISLAND_12079 = 12079

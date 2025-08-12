@@ -11,7 +11,7 @@ import core.game.system.timer.RSTimer
 import core.game.system.timer.TimerFlag
 import core.tools.colorize
 import core.tools.secondsToTicks
-import org.rs.consts.Sounds
+import shared.consts.Sounds
 
 class PoisonImmunity :
     PersistTimer(

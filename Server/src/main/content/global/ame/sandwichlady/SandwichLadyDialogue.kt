@@ -10,7 +10,7 @@ import core.game.node.item.GroundItemManager
 import core.game.node.item.Item
 import core.game.system.timer.impl.AntiMacro
 import core.tools.END_DIALOGUE
-import org.rs.consts.Components
+import shared.consts.Components
 
 /**
  * Represents the Sandwich Lady dialogue.

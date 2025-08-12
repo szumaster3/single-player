@@ -8,8 +8,8 @@ import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.game.world.update.flag.context.Graphics
 import core.tools.RandomFunction
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 /**
  * Represents the types of armour sets.
@@ -22,7 +22,7 @@ enum class ArmourSet(private val endGraphics: Graphics?, set: Array<IntArray>) {
      * Ahrim the blighted barrows set.
      */
     AHRIM(
-        endGraphics = Graphics(org.rs.consts.Graphics.KARILS_SPECIAL_401, 96),
+        endGraphics = Graphics(shared.consts.Graphics.KARILS_SPECIAL_401, 96),
         set = arrayOf(
             intArrayOf(
                 Items.AHRIMS_HOOD_4708,
@@ -118,7 +118,7 @@ enum class ArmourSet(private val endGraphics: Graphics?, set: Array<IntArray>) {
      * Guthan the infested barrows set.
      */
     GUTHAN(
-        endGraphics = Graphics(org.rs.consts.Graphics.GUTHAN_SPECIAL_398, 96),
+        endGraphics = Graphics(shared.consts.Graphics.GUTHAN_SPECIAL_398, 96),
         set = arrayOf(
             intArrayOf(
                 Items.GUTHANS_HELM_4724,
@@ -174,7 +174,7 @@ enum class ArmourSet(private val endGraphics: Graphics?, set: Array<IntArray>) {
      * Karil the tainted barrows set.
      */
     KARIL(
-        endGraphics = Graphics(org.rs.consts.Graphics.AHRIMS_SPECIAL_400, 96),
+        endGraphics = Graphics(shared.consts.Graphics.AHRIMS_SPECIAL_400, 96),
         set = arrayOf(
             intArrayOf(
                 Items.KARILS_COIF_4732,
@@ -230,7 +230,7 @@ enum class ArmourSet(private val endGraphics: Graphics?, set: Array<IntArray>) {
      * Torag the corrupted barrows set.
      */
     TORAG(
-        endGraphics = Graphics(org.rs.consts.Graphics.TORAGS_SPECIAL_399, 96),
+        endGraphics = Graphics(shared.consts.Graphics.TORAGS_SPECIAL_399, 96),
         set = arrayOf(
             intArrayOf(
                 Items.TORAGS_HELM_4745,

@@ -11,8 +11,8 @@ import core.game.world.GameWorld
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
-import org.rs.consts.Animations
-import org.rs.consts.Items
+import shared.consts.Animations
+import shared.consts.Items
 
 /**
  * Handles teleport using lyre.
@@ -44,7 +44,7 @@ class LyreTeleport(val player: Player) : Pulse() {
                 lock(player, 1000)
                 player.animator.animate(
                     Animation(Animations.HUMAN_USE_LYRE_9600, Animator.Priority.VERY_HIGH),
-                    Graphics(org.rs.consts.Graphics.USE_LYRE_1682),
+                    Graphics(shared.consts.Graphics.USE_LYRE_1682),
                 )
             }
 

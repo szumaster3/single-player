@@ -7,7 +7,7 @@ import core.api.teleport
 import core.game.interaction.InterfaceListener
 import core.game.interaction.QueueStrength
 import core.game.world.map.Location
-import org.rs.consts.Components
+import shared.consts.Components
 
 /**
  * Represents the Evil Bob random event dialogue.

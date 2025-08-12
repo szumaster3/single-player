@@ -11,8 +11,8 @@ import core.game.world.update.flag.context.Graphics;
 import core.plugin.Initializable;
 import core.plugin.Plugin;
 import core.tools.RandomFunction;
-import org.rs.consts.Items;
-import org.rs.consts.Sounds;
+import shared.consts.Items;
+import shared.consts.Sounds;
 
 import static core.api.ContentAPIKt.playGlobalAudio;
 
@@ -28,7 +28,7 @@ public final class PunctureSpecialHandler extends MeleeSwingHandler implements P
 
     private static final Animation ANIMATION = new Animation(1062, Priority.HIGH);
 
-    private static final Graphics GRAPHICS = new Graphics(org.rs.consts.Graphics.DRAGON_DAGGER_SPECIAL_252, 96);
+    private static final Graphics GRAPHICS = new Graphics(shared.consts.Graphics.DRAGON_DAGGER_SPECIAL_252, 96);
 
     @Override
     public Object fireEvent(String identifier, Object... args) {

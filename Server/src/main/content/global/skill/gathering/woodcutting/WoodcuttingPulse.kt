@@ -23,9 +23,9 @@ import core.game.world.map.Location
 import core.game.world.map.RegionManager.getLocalPlayers
 import core.game.world.update.flag.context.Animation
 import core.tools.RandomFunction
-import org.rs.consts.Items
-import org.rs.consts.NPCs
-import org.rs.consts.Sounds
+import shared.consts.Items
+import shared.consts.NPCs
+import shared.consts.Sounds
 import java.util.*
 import java.util.stream.Collectors
 
@@ -125,7 +125,7 @@ class WoodcuttingPulse(private val player: Player, private val node: Scenery) : 
         if (++ticks % 4 != 0) {
             return false
         }
-        if (node.id == org.rs.consts.Scenery.TREE_10041) {
+        if (node.id == shared.consts.Scenery.TREE_10041) {
             sendNPCDialogue(
                 player,
                 NPCs.BANK_GUARD_2574,

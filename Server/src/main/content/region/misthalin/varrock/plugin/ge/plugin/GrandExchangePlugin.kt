@@ -9,8 +9,8 @@ import core.game.ge.GuidePrices
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.npc.NPC
-import org.rs.consts.NPCs
-import org.rs.consts.Scenery
+import shared.consts.NPCs
+import shared.consts.Scenery
 
 class GrandExchangePlugin : InteractionListener {
     companion object {

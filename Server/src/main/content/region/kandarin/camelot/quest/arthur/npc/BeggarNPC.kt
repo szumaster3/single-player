@@ -5,7 +5,7 @@ import core.api.removeAttribute
 import core.game.node.entity.npc.AbstractNPC
 import core.game.node.entity.player.Player
 import core.game.world.map.Location
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 /**
  * Represents the Beggar NPC (Draynor Village).

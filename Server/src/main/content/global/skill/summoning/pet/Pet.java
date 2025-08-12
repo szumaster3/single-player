@@ -5,7 +5,7 @@ import content.global.skill.summoning.familiar.FamiliarSpecial;
 import core.game.node.entity.player.Player;
 import core.game.node.item.Item;
 import core.game.world.GameWorld;
-import org.rs.consts.NPCs;
+import shared.consts.NPCs;
 
 import static core.api.ContentAPIKt.setVarp;
 

@@ -9,7 +9,7 @@ import core.game.system.task.Pulse
 import core.game.world.GameWorld.Pulser
 import core.game.world.map.Location
 import core.tools.RandomFunction
-import org.rs.consts.Quests
+import shared.consts.Quests
 
 class MaleSlaveDialogue(player: Player? = null) : Dialogue(player) {
 

@@ -13,9 +13,9 @@ import core.game.world.map.Location
 import core.game.world.update.flag.context.Graphics
 import core.tools.END_DIALOGUE
 import core.tools.RandomFunction
-import org.rs.consts.Components
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
+import shared.consts.Components
+import shared.consts.NPCs
+import shared.consts.Quests
 
 /**
  * Represents the NPC contact interface.
@@ -802,7 +802,7 @@ class NPCContactInterface : InterfaceListener {
                         player!!,
                         -1,
                         Graphics(
-                            org.rs.consts.Graphics.FIRE_WAVE_IMPACT_157,
+                            shared.consts.Graphics.FIRE_WAVE_IMPACT_157,
                             50,
                         ),
                     )

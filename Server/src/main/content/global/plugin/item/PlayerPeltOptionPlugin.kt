@@ -12,7 +12,7 @@ import core.game.node.item.Item
 import core.game.system.task.Pulse
 import core.game.world.map.path.Pathfinder
 import core.game.world.update.flag.context.Graphics
-import org.rs.consts.Items
+import shared.consts.Items
 
 class PlayerPeltOptionPlugin : InteractionListener {
     override fun defineListeners() {

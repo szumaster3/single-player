@@ -20,7 +20,7 @@ import core.game.world.map.zone.ZoneRestriction;
 import core.game.world.update.flag.context.Animation;
 import core.tools.RandomFunction;
 import org.jetbrains.annotations.NotNull;
-import org.rs.consts.Sounds;
+import shared.consts.Sounds;
 
 import static core.api.ContentAPIKt.*;
 

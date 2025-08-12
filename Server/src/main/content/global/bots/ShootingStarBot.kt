@@ -9,7 +9,7 @@ import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.game.world.map.Location
 import core.tools.RandomFunction
-import org.rs.consts.Items
+import shared.consts.Items
 
 class ShootingStarBot : Script() {
     private var state = State.FULL_IDLE

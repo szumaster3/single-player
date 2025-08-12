@@ -7,7 +7,7 @@ import core.api.addItem
 import core.api.amountInInventory
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import org.rs.consts.Items
+import shared.consts.Items
 
 class BFPlayerStateTests {
     init {

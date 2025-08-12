@@ -16,8 +16,8 @@ import core.game.world.map.Location
 import core.plugin.Initializable
 import core.plugin.Plugin
 import core.tools.RandomFunction
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 /**
  * Handles the interaction with pickable doors in the thieving skill.

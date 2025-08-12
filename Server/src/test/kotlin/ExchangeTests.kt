@@ -9,7 +9,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.*
-import org.rs.consts.Items
+import shared.consts.Items
 import java.io.File
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)

@@ -7,8 +7,8 @@ import core.api.openDialogue
 import core.api.sendMessage
 import core.game.interaction.InterfaceListener
 import core.game.node.entity.npc.NPC
-import org.rs.consts.Components
-import org.rs.consts.NPCs
+import shared.consts.Components
+import shared.consts.NPCs
 
 /**
  * Represents the pattern recognition interface for surprise exam random event.

@@ -6,8 +6,8 @@ import core.api.inInventory
 import core.api.removeItem
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import org.rs.consts.Items
-import org.rs.consts.Quests
+import shared.consts.Items
+import shared.consts.Quests
 
 class DarklightPlugin : InteractionListener {
 

@@ -5,7 +5,7 @@ import content.minigame.pestcontrol.bots.PestControlNoviceBot
 import core.game.node.entity.player.Player
 import core.game.world.map.Location
 import core.game.world.map.zone.ZoneBorders
-import org.rs.consts.Scenery
+import shared.consts.Scenery
 import kotlin.random.Random
 
 /**

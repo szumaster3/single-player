@@ -19,8 +19,8 @@ import core.net.packet.out.CloseInterface
 import core.net.packet.out.Interface
 import core.net.packet.out.WindowsPane
 import core.tools.Log
-import org.rs.consts.Components
-import org.rs.consts.Quests
+import shared.consts.Components
+import shared.consts.Quests
 
 /**
  * Manages interface components for a player.

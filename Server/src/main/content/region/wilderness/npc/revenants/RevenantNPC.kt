@@ -22,7 +22,7 @@ import core.game.world.map.zone.impl.WildernessZone
 import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
 import core.tools.RandomFunction
-import org.rs.consts.Sounds
+import shared.consts.Sounds
 import kotlin.math.abs
 
 @Initializable

@@ -34,7 +34,7 @@ class SpellbookSwapSpell :
         arrayOf(Item(Runes.LAW_RUNE.id, 1), Item(Runes.COSMIC_RUNE.id, 2), Item(Runes.ASTRAL_RUNE.id, 3)),
     ) {
     private val ANIMATION = Animation(6299)
-    private val Graphics = Graphics(org.rs.consts.Graphics.SPELLBOOK_SWAP_GFX_1062)
+    private val Graphics = Graphics(shared.consts.Graphics.SPELLBOOK_SWAP_GFX_1062)
 
     @Throws(Throwable::class)
     override fun newInstance(arg: SpellType?): Plugin<SpellType?> {

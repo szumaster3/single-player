@@ -5,7 +5,7 @@ import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 class BankerTutorDialogue(player: Player? = null) : Dialogue(player) {
 

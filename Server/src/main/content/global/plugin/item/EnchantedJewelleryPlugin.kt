@@ -10,7 +10,7 @@ import core.game.interaction.InteractionListener
 import core.game.node.Node
 import core.game.node.entity.impl.PulseType
 import core.game.node.entity.player.Player
-import org.rs.consts.Items
+import shared.consts.Items
 
 class EnchantedJewelleryPlugin : InteractionListener {
 

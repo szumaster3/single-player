@@ -4,7 +4,7 @@ import core.game.dialogue.Dialogue
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest
-import org.rs.consts.Quests
+import shared.consts.Quests
 
 class CaptainSiadDialogue(player: Player? = null) : Dialogue(player) {
 

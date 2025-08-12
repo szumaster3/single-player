@@ -3,7 +3,7 @@ package content.global.skill.slayer
 import core.api.EquipmentSlot
 import core.api.getItemFromEquipment
 import core.game.node.entity.player.Player
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Contains helper functions and constants for identifying and handling Slayer-related equipment.

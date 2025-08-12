@@ -6,7 +6,7 @@ import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.game.node.item.Item
 import core.tools.END_DIALOGUE
-import org.rs.consts.Items
+import shared.consts.Items
 
 abstract class FlagsHandler : DialogueFile() {
     companion object {

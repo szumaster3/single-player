@@ -20,7 +20,7 @@ import core.game.world.map.Location
 import core.game.world.map.RegionManager
 import core.game.world.update.flag.EntityFlag
 import core.game.world.update.flag.context.ChatMessage
-import org.rs.consts.Items
+import shared.consts.Items
 import java.io.File
 import java.io.FileReader
 import java.util.*

@@ -7,7 +7,7 @@ import core.game.node.entity.skill.Skills
 import core.game.world.update.flag.context.Animation
 import core.tools.minutesToTicks
 import core.tools.secondsToTicks
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Enum represents a repository of active consumables in the framework.

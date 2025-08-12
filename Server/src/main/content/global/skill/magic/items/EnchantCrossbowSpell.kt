@@ -9,8 +9,8 @@ import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.SpellBookManager.SpellBook
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.Components
-import org.rs.consts.Items
+import shared.consts.Components
+import shared.consts.Items
 
 @Initializable
 class EnchantCrossbowSpell : MagicSpell(SpellBook.MODERN, 4, 0.0, null, null, null, null) {

@@ -4,7 +4,7 @@ import core.api.addItemOrDrop
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.game.worldevents.events.HolidayRandoms
-import org.rs.consts.Items
+import shared.consts.Items
 
 class CookHolidayRandomDialogue : DialogueFile() {
     private val cakes = listOf(Items.CAKE_1891, Items.CHOCOLATE_CAKE_1897, Items.MINT_CAKE_9475)

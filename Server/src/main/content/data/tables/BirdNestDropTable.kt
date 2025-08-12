@@ -8,8 +8,8 @@ import core.game.node.item.GroundItemManager
 import core.game.node.item.Item
 import core.tools.RandomFunction
 import core.tools.StringUtils
-import org.rs.consts.Items
-import org.rs.consts.Sounds
+import shared.consts.Items
+import shared.consts.Sounds
 
 enum class BirdNestDropTable(
     val nest: ChanceItem,

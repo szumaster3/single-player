@@ -8,8 +8,8 @@ import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.TeleportManager
 import core.game.world.map.Direction
 import core.game.world.map.Location
-import org.rs.consts.NPCs
-import org.rs.consts.Vars
+import shared.consts.NPCs
+import shared.consts.Vars
 
 class WoundedPhoenixCutscene(
     player: Player,

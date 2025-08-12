@@ -5,7 +5,7 @@ import core.api.animateInterface
 import core.api.submitIndividualPulse
 import core.game.interaction.InterfaceListener
 import core.game.system.task.Pulse
-import org.rs.consts.Components
+import shared.consts.Components
 
 class BlastFurnaceInterface : InterfaceListener {
     override fun defineInterfaceListeners() {

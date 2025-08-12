@@ -7,7 +7,7 @@ import core.game.dialogue.Topic
 import core.game.node.entity.npc.NPC
 import core.game.world.repository.Repository
 import core.tools.END_DIALOGUE
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 /**
  * Represents the Black Knight Titan dialogue.

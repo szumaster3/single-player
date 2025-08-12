@@ -17,10 +17,10 @@ import core.game.world.map.zone.ZoneBorders
 import core.game.world.update.flag.context.Graphics
 import core.tools.RandomFunction
 import core.tools.StringUtils
-import org.rs.consts.Animations
-import org.rs.consts.Items
-import org.rs.consts.Music
-import org.rs.consts.Sounds
+import shared.consts.Animations
+import shared.consts.Items
+import shared.consts.Music
+import shared.consts.Sounds
 
 /**
  * Represents the Creature Graveyard.
@@ -55,8 +55,8 @@ class CreatureGraveyardPlugin :
     override fun interact(e: Entity, target: Node, option: Option): Boolean {
         if (e is Player) {
             when (target.id) {
-                org.rs.consts.Scenery.FOOD_CHUTE_10735 -> deposit(e)
-                in org.rs.consts.Scenery.BONES_10725..org.rs.consts.Scenery.BONES_10728 -> BoneType.forObject(target.id)
+                shared.consts.Scenery.FOOD_CHUTE_10735 -> deposit(e)
+                in shared.consts.Scenery.BONES_10725..shared.consts.Scenery.BONES_10728 -> BoneType.forObject(target.id)
                     ?.grab(e, target.asScenery())
 
                 else -> return super.interact(e, target, option)
@@ -125,10 +125,10 @@ class CreatureGraveyardPlugin :
     }
 
     enum class BoneType(val objectsId: Int, val item: Item) {
-        FIRST(org.rs.consts.Scenery.BONES_10725, Item(Items.ANIMALS_BONES_6904)),
-        SECOND(org.rs.consts.Scenery.BONES_10726, Item(Items.ANIMALS_BONES_6905)),
-        THIRD(org.rs.consts.Scenery.BONES_10727, Item(Items.ANIMALS_BONES_6906)),
-        FOURTH(org.rs.consts.Scenery.BONES_10728, Item(Items.ANIMALS_BONES_6907)),
+        FIRST(shared.consts.Scenery.BONES_10725, Item(Items.ANIMALS_BONES_6904)),
+        SECOND(shared.consts.Scenery.BONES_10726, Item(Items.ANIMALS_BONES_6905)),
+        THIRD(shared.consts.Scenery.BONES_10727, Item(Items.ANIMALS_BONES_6906)),
+        FOURTH(shared.consts.Scenery.BONES_10728, Item(Items.ANIMALS_BONES_6907)),
         ;
 
         fun grab(

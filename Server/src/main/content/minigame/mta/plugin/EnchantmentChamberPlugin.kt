@@ -18,7 +18,7 @@ import core.game.world.map.Location
 import core.game.world.map.RegionManager.getNpc
 import core.game.world.map.zone.ZoneBorders
 import core.tools.RandomFunction
-import org.rs.consts.*
+import shared.consts.*
 
 /**
  * Represents the Enchantment Chamber.
@@ -162,10 +162,10 @@ class EnchantmentChamberPlugin :
      * @property item The item associated with the shape.
      */
     enum class Shapes(val sceneryId: Int, val item: Item) {
-        CUBE(org.rs.consts.Scenery.CUBE_PILE_10799, Item(Items.CUBE_6899)),
-        CYLINDER(org.rs.consts.Scenery.CYLINDER_PILE_10800, Item(Items.CYLINDER_6898)),
-        ICOSAHEDRON(org.rs.consts.Scenery.ICOSAHEDRON_PILE_10801, Item(Items.ICOSAHEDRON_6900)),
-        PENTAMID(org.rs.consts.Scenery.PENTAMID_PILE_10802, Item(Items.PENTAMID_6901)),
+        CUBE(shared.consts.Scenery.CUBE_PILE_10799, Item(Items.CUBE_6899)),
+        CYLINDER(shared.consts.Scenery.CYLINDER_PILE_10800, Item(Items.CYLINDER_6898)),
+        ICOSAHEDRON(shared.consts.Scenery.ICOSAHEDRON_PILE_10801, Item(Items.ICOSAHEDRON_6900)),
+        PENTAMID(shared.consts.Scenery.PENTAMID_PILE_10802, Item(Items.PENTAMID_6901)),
         ;
 
         /**

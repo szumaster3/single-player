@@ -11,8 +11,8 @@ import core.game.world.map.Location
 import core.game.world.map.zone.ZoneBorders
 import core.game.world.map.zone.ZoneRestriction
 import core.tools.BLUE
-import org.rs.consts.Animations
-import org.rs.consts.Components
+import shared.consts.Animations
+import shared.consts.Components
 
 /**
  * Handles pinball re interactions.

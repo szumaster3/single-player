@@ -9,8 +9,8 @@ import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.game.world.map.Location
 import core.game.world.map.zone.ZoneBorders
-import org.rs.consts.Items
-import org.rs.consts.Quests
+import shared.consts.Items
+import shared.consts.Quests
 
 @PlayerCompatible
 @ScriptDescription("Start in varrock bank with rune mysteries complete and a pickaxe equipped/in inventory")

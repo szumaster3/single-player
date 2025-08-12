@@ -12,7 +12,7 @@ import core.game.node.item.Item;
 import core.plugin.ClassScanner;
 import core.plugin.Initializable;
 import core.plugin.Plugin;
-import org.rs.consts.Quests;
+import shared.consts.Quests;
 
 /**
  * The type Dwarf multi cannon plugin.

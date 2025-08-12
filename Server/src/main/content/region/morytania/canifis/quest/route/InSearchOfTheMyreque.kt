@@ -3,9 +3,9 @@ package content.region.morytania.canifis.quest.route
 import core.api.isQuestComplete
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest
-import org.rs.consts.Items
-import org.rs.consts.Quests
-import org.rs.consts.Vars
+import shared.consts.Items
+import shared.consts.Quests
+import shared.consts.Vars
 
 class InSearchOfTheMyreque :
     Quest(Quests.IN_SEARCH_OF_THE_MYREQUE, 80, 79, 2, Vars.VARP_QUEST_IN_SEARCH_OF_MYREQUE_PROGRESS_387, 0, 1, 101) {

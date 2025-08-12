@@ -14,8 +14,8 @@ import core.tools.END_DIALOGUE
 import core.tools.colorize
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 import java.util.concurrent.TimeUnit
 
 private val gnomeItems = arrayOf(

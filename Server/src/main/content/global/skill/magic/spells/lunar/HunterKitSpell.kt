@@ -6,10 +6,10 @@ import core.api.addItem
 import core.api.freeSlots
 import core.api.sendMessage
 import core.game.node.item.Item
-import org.rs.consts.Animations
-import org.rs.consts.Graphics
-import org.rs.consts.Items
-import org.rs.consts.Sounds
+import shared.consts.Animations
+import shared.consts.Graphics
+import shared.consts.Items
+import shared.consts.Sounds
 
 class HunterKitSpell : SpellListener("lunar") {
     override fun defineListeners() {

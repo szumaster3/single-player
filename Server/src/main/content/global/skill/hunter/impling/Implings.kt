@@ -5,7 +5,7 @@ import core.game.world.map.Location
 import core.game.world.map.RegionManager
 import core.game.world.map.build.RegionFlags
 import core.game.world.map.path.ClipMaskSupplier
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 enum class Implings(val npcId: Int, val puroId: Int) {
     BABY(NPCs.BABY_IMPLING_1028, NPCs.BABY_IMPLING_6055),

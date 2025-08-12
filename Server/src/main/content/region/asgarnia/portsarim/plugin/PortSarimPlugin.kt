@@ -11,7 +11,7 @@ import core.game.interaction.QueueStrength
 import core.game.node.entity.npc.NPC
 import core.game.world.map.Location
 import core.tools.RandomFunction
-import org.rs.consts.*
+import shared.consts.*
 
 class PortSarimPlugin : InteractionListener {
 

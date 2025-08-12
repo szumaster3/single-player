@@ -6,7 +6,7 @@ import core.game.container.Container
 import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
-import org.rs.consts.Components
+import shared.consts.Components
 
 class BurdenBeastInterface : InterfaceListener {
 

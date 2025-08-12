@@ -7,7 +7,7 @@ import core.game.interaction.MovementPulse
 import core.game.system.task.Pulse
 import core.game.world.map.Location
 import core.game.world.map.zone.ZoneBorders
-import org.rs.consts.Items
+import shared.consts.Items
 
 class CowKiller : Script() {
     var state = State.KILLING

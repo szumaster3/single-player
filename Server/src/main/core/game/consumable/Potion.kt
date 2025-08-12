@@ -3,8 +3,8 @@ package core.game.consumable
 import core.api.playAudio
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
-import org.rs.consts.Items
-import org.rs.consts.Sounds
+import shared.consts.Items
+import shared.consts.Sounds
 
 /**
  * Represents a consumable potion with multiple doses.

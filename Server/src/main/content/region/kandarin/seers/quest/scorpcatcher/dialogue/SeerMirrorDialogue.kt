@@ -12,9 +12,9 @@ import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
 import core.tools.END_DIALOGUE
-import org.rs.consts.Components
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
+import shared.consts.Components
+import shared.consts.NPCs
+import shared.consts.Quests
 
 /**
  * Represents the Seer's dialogue extension for [ScorpionCatcherPlugin] quest.

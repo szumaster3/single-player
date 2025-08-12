@@ -2,7 +2,7 @@ package content.global.skill.gathering.woodcutting;
 
 import core.ServerConstants;
 import core.game.world.repository.Repository;
-import org.rs.consts.Scenery;
+import shared.consts.Scenery;
 
 import java.util.HashMap;
 

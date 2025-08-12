@@ -19,7 +19,7 @@ import core.game.world.map.Location
 import core.game.world.repository.Repository
 import core.tools.BLUE
 import core.worker.ManagementEvents
-import org.rs.consts.*
+import shared.consts.*
 import proto.management.JoinClanRequest
 
 object TutorialStage {

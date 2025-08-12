@@ -6,7 +6,7 @@ import core.game.dialogue.FaceAnim
 import core.game.node.entity.player.Player
 import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
-import org.rs.consts.*
+import shared.consts.*
 
 /**
  * Represents the Sabotage dialogue.

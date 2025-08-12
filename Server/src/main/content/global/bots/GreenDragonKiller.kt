@@ -21,7 +21,7 @@ import core.game.world.map.RegionManager
 import core.game.world.map.zone.ZoneBorders
 import core.game.world.map.zone.impl.WildernessZone
 import core.tools.RandomFunction
-import org.rs.consts.Items
+import shared.consts.Items
 import kotlin.random.Random
 
 class GreenDragonKiller(val style: CombatStyle) : Script() {

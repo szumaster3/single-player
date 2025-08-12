@@ -7,7 +7,7 @@ import core.game.node.scenery.SceneryBuilder
 import core.game.world.map.Location
 import core.game.world.map.RegionManager.getObject
 import core.plugin.Initializable
-import org.rs.consts.Scenery
+import shared.consts.Scenery
 
 @Initializable
 class SlayerTowerPlugin : InteractionListener {

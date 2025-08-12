@@ -10,9 +10,9 @@ import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
 import core.plugin.Initializable
-import org.rs.consts.Animations
-import org.rs.consts.Scenery
-import org.rs.consts.Sounds
+import shared.consts.Animations
+import shared.consts.Scenery
+import shared.consts.Sounds
 import kotlin.random.Random
 
 /**
@@ -24,7 +24,7 @@ class ArdougneLogShortcut : AgilityShortcut(intArrayOf(Scenery.LOG_BALANCE_35997
     private val logBalanceAnimation = Animation(Animations.BALANCE_WALK_ACROSS_LOG_9908)
     private val swimmingAnimation = Animation(Animations.SWIMMING_6988)
     private val swimmingLoopAnimation = Animation(Animations.SWIMMING_LOOP_6989)
-    private val splashGraphics = Graphics.create(org.rs.consts.Graphics.WATER_SPLASH_68)
+    private val splashGraphics = Graphics.create(shared.consts.Graphics.WATER_SPLASH_68)
     private val failLocation = Location(2600, 3335, 0)
 
     override fun run(player: Player, scenery: core.game.node.scenery.Scenery, option: String, failed: Boolean) {

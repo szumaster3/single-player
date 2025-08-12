@@ -8,7 +8,7 @@ import core.api.setAttribute
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.player.Player
-import org.rs.consts.Items
+import shared.consts.Items
 
 class VarmensNotes : InteractionListener {
     companion object {

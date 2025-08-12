@@ -19,7 +19,7 @@ import core.tools.RandomFunction
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.rs.consts.*
+import shared.consts.*
 
 class SweptAwayPlugin :
     InteractionListener,

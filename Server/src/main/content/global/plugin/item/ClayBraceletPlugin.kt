@@ -5,7 +5,7 @@ import core.api.sendMessage
 import core.api.setCharge
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import org.rs.consts.Items
+import shared.consts.Items
 
 class ClayBraceletPlugin : InteractionListener {
     override fun defineListeners() {

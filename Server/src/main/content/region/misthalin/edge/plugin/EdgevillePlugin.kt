@@ -6,8 +6,8 @@ import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
-import org.rs.consts.Animations
-import org.rs.consts.Scenery
+import shared.consts.Animations
+import shared.consts.Scenery
 
 class EdgevillePlugin : InteractionListener {
     override fun defineListeners() {

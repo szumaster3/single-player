@@ -4,7 +4,7 @@ import content.region.misthalin.varrock.quest.phoenixgang.ShieldofArrav
 import core.api.sendItemDialogue
 import core.game.dialogue.DialogueFile
 import core.game.node.entity.npc.NPC
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 class CuratorHaigHalenDialogueFile : DialogueFile() {
 

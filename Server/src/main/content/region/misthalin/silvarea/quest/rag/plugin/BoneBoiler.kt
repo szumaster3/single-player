@@ -1,6 +1,6 @@
 package content.region.misthalin.silvarea.quest.rag.plugin
 
-import org.rs.consts.Items
+import shared.consts.Items
 
 enum class BoneBoiler(
     val bone: Int,

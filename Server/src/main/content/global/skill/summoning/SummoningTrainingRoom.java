@@ -30,7 +30,7 @@ import core.net.packet.out.MinimapState;
 import core.plugin.ClassScanner;
 import core.plugin.Initializable;
 import core.plugin.Plugin;
-import org.rs.consts.Quests;
+import shared.consts.Quests;
 
 import static core.api.ContentAPIKt.*;
 

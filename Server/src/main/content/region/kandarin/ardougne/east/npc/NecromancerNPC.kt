@@ -10,7 +10,7 @@ import core.game.system.task.Pulse
 import core.game.world.GameWorld
 import core.game.world.map.RegionManager
 import core.tools.RandomFunction
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 /**
  * Behavior class for the Necromancer NPC.

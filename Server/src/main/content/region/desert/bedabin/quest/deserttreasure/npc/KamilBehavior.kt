@@ -14,7 +14,7 @@ import core.game.node.entity.npc.NPCBehavior
 import core.game.node.entity.player.Player
 import core.game.world.update.flag.context.Animation
 import core.tools.RandomFunction
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 class KamilBehavior : NPCBehavior(NPCs.KAMIL_1913) {
     var clearTime = 0

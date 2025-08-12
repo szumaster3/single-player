@@ -11,7 +11,7 @@ import core.game.node.entity.combat.ImpactHandler
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.npc.NPCBehavior
 import core.game.node.entity.player.Player
-import org.rs.consts.Items
+import shared.consts.Items
 import java.lang.Integer.max
 
 class RockSlugNPC :

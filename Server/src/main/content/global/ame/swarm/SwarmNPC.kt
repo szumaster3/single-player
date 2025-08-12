@@ -6,8 +6,8 @@ import core.api.utils.WeightBasedTable
 import core.api.withinDistance
 import core.game.node.entity.npc.NPC
 import core.tools.minutesToTicks
-import org.rs.consts.NPCs
-import org.rs.consts.Sounds
+import shared.consts.NPCs
+import shared.consts.Sounds
 
 /**
  * Handles the swarm npc.

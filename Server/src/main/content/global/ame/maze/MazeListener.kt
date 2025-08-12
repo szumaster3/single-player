@@ -11,9 +11,9 @@ import core.game.interaction.InteractionListener
 import core.game.interaction.QueueStrength
 import core.game.node.entity.player.Player
 import core.game.world.map.Location
-import org.rs.consts.Animations
-import org.rs.consts.Items
-import org.rs.consts.Scenery
+import shared.consts.Animations
+import shared.consts.Items
+import shared.consts.Scenery
 
 /**
  * Handles interactions for Maze random event.

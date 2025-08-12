@@ -7,7 +7,7 @@ import core.game.node.Node
 import core.game.node.entity.Entity
 import core.game.node.entity.player.Player
 import core.game.world.map.zone.MapZone
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Represents the karamja zone area.

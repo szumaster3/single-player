@@ -6,7 +6,7 @@ import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.game.world.GameWorld
 import core.plugin.Initializable
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 /**
  * Represents the Reggie dialogue.

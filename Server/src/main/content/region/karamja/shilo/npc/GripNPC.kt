@@ -13,9 +13,9 @@ import core.game.node.item.GroundItemManager
 import core.game.node.item.Item
 import core.tools.END_DIALOGUE
 import core.tools.START_DIALOGUE
-import org.rs.consts.Items
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
+import shared.consts.Items
+import shared.consts.NPCs
+import shared.consts.Quests
 
 class GripNPC : NPCBehavior(NPCs.GRIP_792) {
 

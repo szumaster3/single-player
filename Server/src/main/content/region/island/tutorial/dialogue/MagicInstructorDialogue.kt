@@ -12,8 +12,8 @@ import core.game.world.GameWorld
 import core.plugin.Initializable
 import core.tools.DARK_BLUE
 import core.tools.END_DIALOGUE
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 @Initializable
 class MagicInstructorDialogue(player: Player? = null) : Dialogue(player) {

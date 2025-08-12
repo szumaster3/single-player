@@ -3,8 +3,8 @@ package content.global.skill.summoning.pet
 import core.api.log
 import core.game.node.entity.player.Player
 import core.tools.Log
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 /**
  * Represents the Pets.

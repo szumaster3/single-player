@@ -12,10 +12,10 @@ import core.game.world.GameWorld
 import core.game.world.map.Location
 import core.game.world.map.RegionManager
 import core.tools.Log
-import org.rs.consts.Items
-import org.rs.consts.Music
-import org.rs.consts.Sounds
-import org.rs.consts.Scenery as Objects
+import shared.consts.Items
+import shared.consts.Music
+import shared.consts.Sounds
+import shared.consts.Scenery as Objects
 
 class CropCircleController :
     TickListener,

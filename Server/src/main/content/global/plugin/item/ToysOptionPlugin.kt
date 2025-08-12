@@ -5,7 +5,7 @@ import core.api.*
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.world.update.flag.context.Animation
-import org.rs.consts.*
+import shared.consts.*
 
 class ToysOptionPlugin : InteractionListener {
     override fun defineListeners() {

@@ -9,9 +9,9 @@ import core.game.node.item.Item
 import core.game.world.map.RegionManager
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
-import org.rs.consts.Components
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Components
+import shared.consts.Items
+import shared.consts.NPCs
 
 /**
  * Represents the Petshop owner dialogue.

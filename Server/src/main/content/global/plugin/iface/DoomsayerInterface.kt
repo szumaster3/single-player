@@ -6,7 +6,7 @@ import core.api.getVarbit
 import core.api.sendMessage
 import core.api.sendMessages
 import core.game.interaction.InterfaceListener
-import org.rs.consts.Components
+import shared.consts.Components
 
 /**
  * Represents the warning interface.

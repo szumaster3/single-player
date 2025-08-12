@@ -1,6 +1,6 @@
 package content.global.skill.crafting.items.leather
 
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Represents the different types of studded leather armour that can be crafted.

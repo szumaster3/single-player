@@ -5,9 +5,9 @@ import core.game.dialogue.InputType
 import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
-import org.rs.consts.Components
-import org.rs.consts.Items
-import org.rs.consts.Vars
+import shared.consts.Components
+import shared.consts.Items
+import shared.consts.Vars
 
 class ToolLeprechaunInterface : InterfaceListener {
     private val FARMING_TOOLS = Components.FARMING_TOOLS_125

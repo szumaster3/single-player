@@ -4,7 +4,7 @@ import core.api.*
 import core.game.node.entity.Entity
 import core.game.node.entity.player.Player
 import core.game.world.map.zone.ZoneBorders
-import org.rs.consts.Items
+import shared.consts.Items
 
 class WerewolfCourseZone : MapArea {
 

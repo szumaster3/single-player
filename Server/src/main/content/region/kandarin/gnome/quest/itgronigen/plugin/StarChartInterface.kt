@@ -2,7 +2,7 @@ package content.region.kandarin.gnome.quest.itgronigen.plugin
 
 import core.api.sendString
 import core.game.interaction.InterfaceListener
-import org.rs.consts.Components
+import shared.consts.Components
 
 class StarChartInterface : InterfaceListener {
     override fun defineInterfaceListeners() {

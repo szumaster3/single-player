@@ -8,10 +8,10 @@ import core.game.interaction.InterfaceListener
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.tools.StringUtils
-import org.rs.consts.Components
-import org.rs.consts.Items
-import org.rs.consts.Quests
-import org.rs.consts.Scenery
+import shared.consts.Components
+import shared.consts.Items
+import shared.consts.Quests
+import shared.consts.Scenery
 
 class JewelleryCraftingPlugin : InteractionListener , InterfaceListener {
 

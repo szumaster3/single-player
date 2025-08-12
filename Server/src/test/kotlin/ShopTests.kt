@@ -6,7 +6,7 @@ import core.game.shops.Shops
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.rs.consts.Items
+import shared.consts.Items
 import kotlin.math.min
 import kotlin.math.roundToInt
 

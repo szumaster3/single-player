@@ -18,9 +18,9 @@ import core.game.system.task.Pulse
 import core.game.world.GameWorld
 import core.game.world.map.Location
 import core.plugin.Initializable
-import org.rs.consts.Items
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
+import shared.consts.Items
+import shared.consts.NPCs
+import shared.consts.Quests
 
 @Initializable
 class LostCityPlugin : InteractionListener {
@@ -72,7 +72,7 @@ class LostCityPlugin : InteractionListener {
     }
 
     override fun defineListeners() {
-        on(org.rs.consts.Scenery.TREE_2409, IntType.SCENERY, "chop") { player, _ ->
+        on(shared.consts.Scenery.TREE_2409, IntType.SCENERY, "chop") { player, _ ->
             if (SkillingTool.getAxe(player) == null) {
                 sendMessage(player, "You do not have an axe which you have the level to use.")
                 return@on true
@@ -81,7 +81,7 @@ class LostCityPlugin : InteractionListener {
             return@on true
         }
 
-        on(org.rs.consts.Scenery.DOOR_2406, IntType.SCENERY, "open") { player, node ->
+        on(shared.consts.Scenery.DOOR_2406, IntType.SCENERY, "open") { player, node ->
             DoorActionHandler.handleAutowalkDoor(player, node as Scenery)
             val quest = Quests.LOST_CITY
             val isOutsideShed = player.location.x < node.location.x
@@ -120,7 +120,7 @@ class LostCityPlugin : InteractionListener {
             return@on true
         }
 
-        on(org.rs.consts.Scenery.DRAMEN_TREE_1292, IntType.SCENERY, "chop down") { player, node ->
+        on(shared.consts.Scenery.DRAMEN_TREE_1292, IntType.SCENERY, "chop down") { player, node ->
             val questStage = getQuestStage(player, Quests.LOST_CITY)
             if (SkillingTool.getAxe(player) == null) {
                 sendMessage(player, "You do not have an axe which you have the level to use.")

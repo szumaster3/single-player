@@ -2,7 +2,7 @@ package content.data.items
 
 import core.api.toIntArray
 import core.cache.def.impl.ItemDefinition
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Represents a distinct charged item, i.e. items with (#).

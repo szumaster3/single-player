@@ -10,8 +10,8 @@ import core.game.world.map.Location
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import core.tools.START_DIALOGUE
-import org.rs.consts.Components
-import org.rs.consts.NPCs
+import shared.consts.Components
+import shared.consts.NPCs
 
 /**
  * Represents the Dwarven Boatman (Keldagrim) dialogue.

@@ -3,8 +3,8 @@ package content.region.fremennik.quest.olaf
 import core.api.openInterface
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import org.rs.consts.Components
-import org.rs.consts.Items
+import shared.consts.Components
+import shared.consts.Items
 
 class OlafsQuestPlugin : InteractionListener {
 

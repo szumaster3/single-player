@@ -15,8 +15,8 @@ import core.game.node.item.Item
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
 import core.tools.RandomFunction
-import org.rs.consts.Animations
-import org.rs.consts.Items
+import shared.consts.Animations
+import shared.consts.Items
 import kotlin.math.ceil
 import kotlin.math.floor
 
@@ -96,7 +96,7 @@ class SalamanderSwingHandler(private var style: CombatStyle) : CombatSwingHandle
     ) {
         entity.visualize(
             Animation.create(Animations.SALAMANDER_WEAPON_ATTACK_5247),
-            Graphics(org.rs.consts.Graphics.DRAGON_FIRE_BREATH_REGULAR_952, 100),
+            Graphics(shared.consts.Graphics.DRAGON_FIRE_BREATH_REGULAR_952, 100),
         )
     }
 

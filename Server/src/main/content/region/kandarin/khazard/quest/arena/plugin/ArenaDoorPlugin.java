@@ -10,7 +10,7 @@ import core.game.node.scenery.Scenery;
 import core.game.world.map.Location;
 import core.plugin.Initializable;
 import core.plugin.Plugin;
-import org.rs.consts.Quests;
+import shared.consts.Quests;
 
 /**
  * The type Arena door handler.

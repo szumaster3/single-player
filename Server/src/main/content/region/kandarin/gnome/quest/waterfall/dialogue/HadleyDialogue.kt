@@ -6,7 +6,7 @@ import core.game.dialogue.FaceAnim
 import core.game.node.entity.player.Player
 import core.game.world.GameWorld.settings
 import core.tools.END_DIALOGUE
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 class HadleyDialogue(player: Player? = null) : Dialogue(player) {
 

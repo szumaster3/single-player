@@ -13,7 +13,7 @@ import core.game.node.entity.skill.Skills
 import core.game.world.map.Location
 import core.plugin.Initializable
 import core.tools.RandomFunction
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 @Initializable
 class ElementalWizardNPC(id: Int, location: Location?) : AbstractNPC(id, location, true) {

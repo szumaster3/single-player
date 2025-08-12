@@ -29,9 +29,9 @@ import core.game.world.map.RegionManager.getObject
 import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
 import core.tools.RandomFunction
-import org.rs.consts.Animations
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
+import shared.consts.Animations
+import shared.consts.NPCs
+import shared.consts.Quests
 import kotlin.math.ceil
 
 class ElvargNPC : AbstractNPC {

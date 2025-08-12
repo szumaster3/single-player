@@ -8,7 +8,7 @@ import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.SpellBookManager
 import core.game.world.map.path.Pathfinder
 import core.tools.Log
-import org.rs.consts.Items
+import shared.consts.Items
 
 object SpellListeners {
     val castMap = HashMap<String, (Player, Node?) -> Unit>()

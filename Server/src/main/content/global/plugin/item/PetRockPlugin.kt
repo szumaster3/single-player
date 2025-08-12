@@ -11,10 +11,10 @@ import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.tools.END_DIALOGUE
 import core.tools.RandomFunction
-import org.rs.consts.Animations
-import org.rs.consts.Graphics
-import org.rs.consts.Items
-import org.rs.consts.Sounds
+import shared.consts.Animations
+import shared.consts.Graphics
+import shared.consts.Items
+import shared.consts.Sounds
 
 class PetRockPlugin : InteractionListener {
     override fun defineListeners() {

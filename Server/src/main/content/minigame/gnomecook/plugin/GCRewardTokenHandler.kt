@@ -10,7 +10,7 @@ import core.game.world.GameWorld
 import core.plugin.Initializable
 import core.plugin.Plugin
 import core.tools.RandomFunction
-import org.rs.consts.Items
+import shared.consts.Items
 
 val gnomeItems = arrayOf(
     Items.FRUIT_BATTA_2277,

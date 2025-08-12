@@ -12,7 +12,7 @@ import core.game.node.item.Item
 import core.game.node.scenery.SceneryBuilder
 import core.game.world.map.Location
 import core.game.world.map.RegionManager.getObject
-import org.rs.consts.Sounds
+import shared.consts.Sounds
 
 class TrapCreatePulse(
     player: Player,

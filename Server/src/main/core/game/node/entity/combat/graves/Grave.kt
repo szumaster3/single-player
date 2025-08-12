@@ -15,7 +15,7 @@ import core.plugin.Initializable
 import core.tools.colorize
 import core.tools.secondsToTicks
 import core.tools.ticksToSeconds
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 @Initializable
 class Grave : AbstractNPC {

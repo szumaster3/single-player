@@ -17,7 +17,7 @@ import core.game.node.item.Item
 import core.tools.END_DIALOGUE
 import core.tools.START_DIALOGUE
 import core.tools.StringUtils
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * The dialogue file to handle a player asking about work with the employer that assigned them

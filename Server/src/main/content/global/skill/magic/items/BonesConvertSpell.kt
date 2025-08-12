@@ -11,14 +11,14 @@ import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
-import org.rs.consts.Animations
-import org.rs.consts.Items
-import org.rs.consts.Sounds
+import shared.consts.Animations
+import shared.consts.Items
+import shared.consts.Sounds
 
 class BonesConvertSpell : SpellListener("modern") {
     private val boneConvertAnimation = Animation(Animations.ENCHANT_JEWEL_722, Animator.Priority.HIGH)
     private val boneConvertGraphics =
-        Graphics(org.rs.consts.Graphics.BONES_TO_BANANAS_141, 96)
+        Graphics(shared.consts.Graphics.BONES_TO_BANANAS_141, 96)
 
     override fun defineListeners() {
         onCast(ModernSpells.BONES_TO_BANANAS, NONE) { player, _ ->

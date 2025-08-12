@@ -14,9 +14,9 @@ import core.game.node.item.Item
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Graphics
 import core.tools.END_DIALOGUE
-import org.rs.consts.Items
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
+import shared.consts.Items
+import shared.consts.NPCs
+import shared.consts.Quests
 
 /**
  * Represents the Thrantax dialogue.
@@ -162,7 +162,7 @@ class ThrantaxDialogue : DialogueFile() {
         var thrantax = ThrantaxTheMightyNPC(NPCs.THRANTAX_THE_MIGHTY_238, Location(2780, 3515, 0))
         thrantax.player = player
         thrantax.locks.lockMovement(10000)
-        thrantax.graphics(Graphics.create(org.rs.consts.Graphics.RE_PUFF_86))
+        thrantax.graphics(Graphics.create(shared.consts.Graphics.RE_PUFF_86))
         thrantax.init()
         thrantax.isRespawn = false
         setAttribute(player, GameAttributes.TEMP_ATTR_THRANTAX, thrantax)

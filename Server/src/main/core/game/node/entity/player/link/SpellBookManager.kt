@@ -3,7 +3,7 @@ package core.game.node.entity.player.link
 import core.game.component.Component
 import core.game.node.entity.combat.spell.MagicSpell
 import core.game.node.entity.player.Player
-import org.rs.consts.Components
+import shared.consts.Components
 
 /**
  * Manages a player's spellbook, allowing switching between different magic spellbooks.

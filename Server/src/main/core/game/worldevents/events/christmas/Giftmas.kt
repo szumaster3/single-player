@@ -19,7 +19,7 @@ import core.game.world.repository.Repository
 import core.game.worldevents.WorldEvents
 import core.tools.RandomFunction
 import core.tools.colorize
-import org.rs.consts.Items
+import shared.consts.Items
 
 class Giftmas : Commands, StartupListener, LoginListener, InteractionListener {
     override fun startup() {

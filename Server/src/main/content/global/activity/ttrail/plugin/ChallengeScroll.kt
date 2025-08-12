@@ -2,8 +2,8 @@ package content.global.activity.ttrail.plugin
 
 import content.global.activity.ttrail.ClueLevel
 import core.plugin.Plugin
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 /**
  * Represents the challenge scroll clues.

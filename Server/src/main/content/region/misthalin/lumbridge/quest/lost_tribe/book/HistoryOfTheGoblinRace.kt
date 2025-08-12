@@ -7,8 +7,8 @@ import core.game.component.ComponentPlugin
 import core.game.node.entity.player.Player
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.Components
-import org.rs.consts.Quests
+import shared.consts.Components
+import shared.consts.Quests
 
 @Initializable
 class HistoryOfTheGoblinRace : ComponentPlugin() {

@@ -10,8 +10,8 @@ import core.game.node.entity.player.link.appearance.Gender
 import core.game.node.item.Item
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.Components
-import org.rs.consts.Items
+import shared.consts.Components
+import shared.consts.Items
 
 private const val MALE_CHILD_ID = 90
 private const val FEMALE_CHILD_ID = 92

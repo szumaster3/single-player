@@ -7,8 +7,8 @@ import core.game.interaction.InteractionListener
 import core.game.node.item.Item
 import core.game.world.map.zone.ZoneBorders
 import core.game.world.map.zone.ZoneRestriction
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 /**
  * Represents Tarn's Lair.

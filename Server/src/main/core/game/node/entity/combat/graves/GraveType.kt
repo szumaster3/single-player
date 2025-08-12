@@ -1,7 +1,7 @@
 package core.game.node.entity.combat.graves
 
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
+import shared.consts.NPCs
+import shared.consts.Quests
 
 /**
  * Enum represents grave different grave type.

@@ -6,8 +6,8 @@ import core.game.node.entity.skill.Skills;
 import core.game.node.item.Item;
 import core.game.world.update.flag.context.Animation;
 import core.plugin.Initializable;
-import org.rs.consts.Animations;
-import org.rs.consts.Items;
+import shared.consts.Animations;
+import shared.consts.Items;
 
 @Initializable
 public final class GodswordDialogue extends Dialogue {

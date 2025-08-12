@@ -2,7 +2,7 @@ package content.global.plugin.iface
 
 import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.link.request.assist.AssistSessionPulse
-import org.rs.consts.Components
+import shared.consts.Components
 
 /**
  * Represents the Request assist interface.

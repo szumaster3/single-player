@@ -5,7 +5,7 @@ import core.game.node.entity.npc.NPC
 import core.game.system.command.Privilege
 import core.game.world.map.Location
 import core.tools.secondsToTicks
-import org.rs.consts.Components
+import shared.consts.Components
 import kotlin.math.ceil
 import kotlin.math.min
 

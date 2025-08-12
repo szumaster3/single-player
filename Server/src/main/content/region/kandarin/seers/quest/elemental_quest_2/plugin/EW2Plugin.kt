@@ -13,7 +13,7 @@ import core.game.node.entity.skill.Skills
 import core.game.node.scenery.SceneryBuilder
 import core.game.system.task.Pulse
 import core.game.world.map.Location
-import org.rs.consts.*
+import shared.consts.*
 
 class EW2Plugin : InteractionListener {
     init {

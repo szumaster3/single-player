@@ -6,9 +6,9 @@ import core.api.setMinimapState
 import core.game.node.entity.player.Player
 import core.game.system.task.Pulse
 import core.game.world.map.Location
-import org.rs.consts.Components
-import org.rs.consts.Music
-import org.rs.consts.Quests
+import shared.consts.Components
+import shared.consts.Music
+import shared.consts.Quests
 
 /**
  * Handles travel between Witchaven and the Fishing Platform.

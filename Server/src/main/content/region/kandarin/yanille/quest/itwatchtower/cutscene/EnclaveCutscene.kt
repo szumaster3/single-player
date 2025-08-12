@@ -10,9 +10,9 @@ import core.game.world.map.Direction
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
-import org.rs.consts.Animations
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
+import shared.consts.Animations
+import shared.consts.NPCs
+import shared.consts.Quests
 
 class EnclaveCutscene(player: Player) : Cutscene(player) {
 
@@ -48,7 +48,7 @@ class EnclaveCutscene(player: Player) : Cutscene(player) {
                 visualize(
                     getNPC(NPCs.BLUE_DRAGON_5178)!!,
                     Animation(Animations.DRAGON_BREATH_81, Priority.HIGH),
-                    Graphics(org.rs.consts.Graphics.DRAGON_BREATH_1, 64)
+                    Graphics(shared.consts.Graphics.DRAGON_BREATH_1, 64)
                 )
                 impact(getNPC(NPCs.BLUE_DRAGON_5178)!!, 30, ImpactHandler.HitsplatType.NORMAL)
                 face(getNPC(NPCs.OGRE_SHAMAN_5187)!!, getNPC(NPCs.BLUE_DRAGON_5178)!!)

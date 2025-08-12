@@ -2,7 +2,7 @@ package content.global.plugin.iface
 
 import core.api.repositionChild
 import core.game.interaction.InterfaceListener
-import org.rs.consts.Components
+import shared.consts.Components
 
 /**
  * Handles repositioning of text on the dialogue interface.

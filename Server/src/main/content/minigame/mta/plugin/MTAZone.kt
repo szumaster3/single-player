@@ -12,7 +12,7 @@ import core.game.world.map.Location
 import core.game.world.map.zone.MapZone
 import core.game.world.map.zone.ZoneRestriction
 import core.game.world.map.zone.ZoneType
-import org.rs.consts.Vars
+import shared.consts.Vars
 
 open class MTAZone(name: String?, val items: Array<Item>) : MapZone(name, false, ZoneRestriction.RANDOM_EVENTS, ZoneRestriction.FOLLOWERS) {
 

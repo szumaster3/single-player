@@ -3,7 +3,7 @@ package content.region.karamja.quest.onesmallfavour
 import core.api.sendDialogue
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import org.rs.consts.Items
+import shared.consts.Items
 
 class OneSmallFavourPlugin : InteractionListener {
     override fun defineListeners() {

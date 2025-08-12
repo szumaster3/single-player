@@ -5,7 +5,7 @@ import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.game.system.task.Pulse
 import core.tools.colorize
-import org.rs.consts.Items
+import shared.consts.Items
 
 class AFUSession(val player: Player? = null) : LogoutListener {
 

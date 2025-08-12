@@ -7,7 +7,7 @@ import core.game.interaction.QueueStrength
 import core.game.world.map.Location
 import core.game.world.map.zone.ZoneRestriction
 import core.game.world.update.flag.context.Graphics
-import org.rs.consts.*
+import shared.consts.*
 
 /**
  * Handles the interactions for Prison pete random event.
@@ -68,7 +68,7 @@ class PrisonPeteListener : InteractionListener, MapArea {
                         visualize(
                             player,
                             Animations.STOMP_BALLOON_794,
-                            Graphics(org.rs.consts.Graphics.WHITE_SPIKE_BALL_POPS_524, 0, 10)
+                            Graphics(shared.consts.Graphics.WHITE_SPIKE_BALL_POPS_524, 0, 10)
                         )
                         playAudio(player, Sounds.POP3_3252, 5)
                         return@queueScript delayScript(player, 4)

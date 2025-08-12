@@ -17,9 +17,9 @@ import core.game.node.entity.player.link.TeleportManager
 import core.game.world.map.Location
 import core.game.world.map.zone.ZoneBorders
 import core.game.world.update.flag.context.Animation
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
-import org.rs.consts.Scenery
+import shared.consts.NPCs
+import shared.consts.Quests
+import shared.consts.Scenery
 import java.util.*
 
 class RellekkaPlugin : InteractionListener, MapArea {

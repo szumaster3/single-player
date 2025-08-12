@@ -16,8 +16,8 @@ import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.Animations
-import org.rs.consts.Sounds
+import shared.consts.Animations
+import shared.consts.Sounds
 
 /**
  * The Crumble undead spell.
@@ -31,9 +31,9 @@ class CrumbleUndeadSpell : CombatSpell(
     Sounds.CRUMBLE_CAST_AND_FIRE_122,
     Sounds.CRUMBLE_HIT_124,
     Animation(Animations.CAST_SPELL_PUSH_724, Priority.HIGH),
-    Graphics(org.rs.consts.Graphics.CRUMBLE_UNDEAD_CAST_145, 96),
-    SpellProjectile.create(org.rs.consts.Graphics.CRUMBLE_UNDEAD_PROJECTILE_146),
-    Graphics(org.rs.consts.Graphics.CRUMBLE_UNDEAD_IMPACT_147, 96),
+    Graphics(shared.consts.Graphics.CRUMBLE_UNDEAD_CAST_145, 96),
+    SpellProjectile.create(shared.consts.Graphics.CRUMBLE_UNDEAD_PROJECTILE_146),
+    Graphics(shared.consts.Graphics.CRUMBLE_UNDEAD_IMPACT_147, 96),
     Runes.EARTH_RUNE.getItem(2),
     Runes.AIR_RUNE.getItem(2),
     Runes.CHAOS_RUNE.getItem(1)

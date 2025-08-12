@@ -5,7 +5,7 @@ import core.api.restoreTabs
 import core.game.component.Component
 import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.Player
-import org.rs.consts.Components
+import shared.consts.Components
 
 class UnmorphInterface : InterfaceListener {
     override fun defineInterfaceListeners() {

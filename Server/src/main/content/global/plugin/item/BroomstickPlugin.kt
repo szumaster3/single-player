@@ -8,9 +8,9 @@ import core.game.interaction.QueueStrength
 import core.game.node.item.Item
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
-import org.rs.consts.Animations
-import org.rs.consts.Graphics
-import org.rs.consts.Items
+import shared.consts.Animations
+import shared.consts.Graphics
+import shared.consts.Items
 
 /**
  * Handles interaction with broomstick.

@@ -9,8 +9,8 @@ import core.game.node.entity.npc.NPC
 import core.game.system.timer.impl.AntiMacro
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Graphics
-import org.rs.consts.NPCs
-import org.rs.consts.Sounds
+import shared.consts.NPCs
+import shared.consts.Sounds
 
 class FreakyForesterNPC(
     override var loot: WeightBasedTable? = null,
@@ -22,7 +22,7 @@ class FreakyForesterNPC(
             when (stage) {
                 0 -> {
                     lock(player, 6)
-                    visualize(player, 714, Graphics(org.rs.consts.Graphics.TP_GRAPHIC_308, 85, 50))
+                    visualize(player, 714, Graphics(shared.consts.Graphics.TP_GRAPHIC_308, 85, 50))
                     playAudio(player, Sounds.TP_ALL_200)
                     return@queueScript delayScript(player, 3)
                 }

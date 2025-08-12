@@ -8,7 +8,7 @@ import core.game.component.Component;
 import core.game.container.impl.EquipmentContainer;
 import core.game.node.entity.player.Player;
 import core.game.node.item.Item;
-import org.rs.consts.Components;
+import shared.consts.Components;
 
 /**
  * The Diary manager.

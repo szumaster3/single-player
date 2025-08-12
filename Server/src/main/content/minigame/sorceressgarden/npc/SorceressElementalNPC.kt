@@ -15,8 +15,8 @@ import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.Components
-import org.rs.consts.NPCs
+import shared.consts.Components
+import shared.consts.NPCs
 
 @Initializable
 class SorceressElementalNPC : AbstractNPC {

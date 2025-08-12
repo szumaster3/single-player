@@ -10,10 +10,10 @@ import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
-import org.rs.consts.Animations
-import org.rs.consts.Graphics
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Animations
+import shared.consts.Graphics
+import shared.consts.Items
+import shared.consts.NPCs
 
 /**
  * Represents The Abbot Langley dialogue.

@@ -27,7 +27,7 @@ import core.game.world.map.zone.ZoneBorders
 import core.game.world.update.flag.context.Animation
 import core.tools.Log
 import core.tools.RandomFunction
-import org.rs.consts.*
+import shared.consts.*
 
 class VarrockPlugin : InteractionListener {
 

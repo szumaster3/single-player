@@ -6,7 +6,7 @@ import core.api.restrictForIronman
 import core.api.sendMessage
 import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.link.IronmanMode
-import org.rs.consts.Components
+import shared.consts.Components
 
 /**
  * Represents the setting tab interface listener.

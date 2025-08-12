@@ -6,10 +6,10 @@ import core.api.*
 import core.game.node.item.Item
 import core.game.system.command.Privilege
 import core.game.world.update.flag.context.Animation
-import org.rs.consts.Animations
-import org.rs.consts.Graphics
-import org.rs.consts.Items
-import org.rs.consts.Sounds
+import shared.consts.Animations
+import shared.consts.Graphics
+import shared.consts.Items
+import shared.consts.Sounds
 
 class HumidifySpell :
     SpellListener("lunar"),

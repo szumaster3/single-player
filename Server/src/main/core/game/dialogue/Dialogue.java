@@ -8,7 +8,7 @@ import core.plugin.Plugin;
 import core.plugin.PluginManifest;
 import core.plugin.PluginType;
 import core.tools.Log;
-import org.rs.consts.Components;
+import shared.consts.Components;
 
 import java.util.ArrayList;
 

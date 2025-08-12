@@ -8,7 +8,7 @@ import core.game.world.GameWorld
 import core.plugin.Initializable
 import core.tools.DARK_RED
 import core.tools.END_DIALOGUE
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 /**
  * Represents the Tutor (Grand Exchange) dialogue.

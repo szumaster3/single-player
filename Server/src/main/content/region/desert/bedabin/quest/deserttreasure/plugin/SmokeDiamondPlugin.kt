@@ -15,10 +15,10 @@ import core.game.node.item.Item
 import core.game.system.timer.RSTimer
 import core.game.world.map.Location
 import core.tools.secondsToTicks
-import org.rs.consts.Items
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
-import org.rs.consts.Scenery
+import shared.consts.Items
+import shared.consts.NPCs
+import shared.consts.Quests
+import shared.consts.Scenery
 
 class SmokeDiamondPlugin : InteractionListener {
     companion object {

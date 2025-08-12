@@ -1,6 +1,6 @@
 package content.global.skill.fletching.items.darts
 
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Represents types of darts.

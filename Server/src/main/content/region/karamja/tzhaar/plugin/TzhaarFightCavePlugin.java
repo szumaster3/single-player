@@ -24,9 +24,9 @@ import core.game.world.map.build.DynamicRegion;
 import core.game.world.map.zone.ZoneRestriction;
 import core.plugin.Initializable;
 import core.tools.RandomFunction;
-import org.rs.consts.Items;
-import org.rs.consts.Music;
-import org.rs.consts.NPCs;
+import shared.consts.Items;
+import shared.consts.Music;
+import shared.consts.NPCs;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -303,7 +303,7 @@ public final class TzhaarFightCavePlugin extends ActivityPlugin {
 
     @Override
     public boolean interact(Entity e, Node target, Option option) {
-        if (target instanceof Scenery && target.getId() == org.rs.consts.Scenery.CAVE_ENTRANCE_9357) {
+        if (target instanceof Scenery && target.getId() == shared.consts.Scenery.CAVE_ENTRANCE_9357) {
             leave((Player) e, e.getAttribute("fc_wave", 0));
             removeAttribute(player, "fc_wave");
             removeAttribute(player, "fc_offset");

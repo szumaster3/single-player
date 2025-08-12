@@ -11,7 +11,7 @@ import core.game.system.timer.PersistTimer
 import core.game.system.timer.RSTimer
 import core.game.system.timer.TimerFlag
 import core.game.world.repository.Repository
-import org.rs.consts.Sounds
+import shared.consts.Sounds
 
 class Poison :
     PersistTimer(

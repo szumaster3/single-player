@@ -1,6 +1,6 @@
 package content.global.skill.construction.decoration.costumeroom
 
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Represents a storable item in the Costume Room across all box types.

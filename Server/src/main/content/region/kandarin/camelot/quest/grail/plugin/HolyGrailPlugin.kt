@@ -19,9 +19,9 @@ import core.game.world.map.Direction
 import core.game.world.map.Location
 import core.game.world.map.zone.ZoneBorders
 import core.tools.secondsToTicks
-import org.rs.consts.Items
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
+import shared.consts.Items
+import shared.consts.NPCs
+import shared.consts.Quests
 
 class HolyGrailPlugin : InteractionListener {
 
@@ -144,29 +144,29 @@ class HolyGrailPlugin : InteractionListener {
             return@on true
         }
 
-        on(org.rs.consts.Scenery.SACKS_23, IntType.SCENERY, "prod") { player, _ ->
+        on(shared.consts.Scenery.SACKS_23, IntType.SCENERY, "prod") { player, _ ->
             openDialogue(player, SirPercivalDialogue("prod"))
             return@on true
         }
 
-        on(org.rs.consts.Scenery.SACKS_23, IntType.SCENERY, "open") { player, _ ->
+        on(shared.consts.Scenery.SACKS_23, IntType.SCENERY, "open") { player, _ ->
             openDialogue(player, SirPercivalDialogue("open"))
             return@on true
         }
 
-        on(org.rs.consts.Scenery.STAIRCASE_1730, IntType.SCENERY, "walk-up") { player, stairs ->
+        on(shared.consts.Scenery.STAIRCASE_1730, IntType.SCENERY, "walk-up") { player, stairs ->
             ClimbActionHandler.climbLadder(player, stairs.asScenery(), "walk-up")
             spawnGrail(player)
             return@on true
         }
 
-        on(org.rs.consts.Scenery.LADDER_1750, IntType.SCENERY, "climb-up") { player, stairs ->
+        on(shared.consts.Scenery.LADDER_1750, IntType.SCENERY, "climb-up") { player, stairs ->
             ClimbActionHandler.climbLadder(player, stairs.asScenery(), "climb-up")
             spawnGrail(player)
             return@on true
         }
 
-        on(org.rs.consts.Scenery.DOOR_24, IntType.SCENERY, "open") { player, node ->
+        on(shared.consts.Scenery.DOOR_24, IntType.SCENERY, "open") { player, node ->
             if (getQuestStage(player, Quests.HOLY_GRAIL) == 0) {
                 sendMessage(player, "The door won't open.")
                 return@on false
@@ -177,7 +177,7 @@ class HolyGrailPlugin : InteractionListener {
             return@on true
         }
 
-        on(org.rs.consts.Scenery.DOOR_22, IntType.SCENERY, "open") { player, door ->
+        on(shared.consts.Scenery.DOOR_22, IntType.SCENERY, "open") { player, door ->
             if (!door.location.equals(HolyGrail.DOOR_MAGIC_WHISTLE_LOCATION)) {
                 DoorActionHandler.handleDoor(player, door.asScenery())
                 return@on true

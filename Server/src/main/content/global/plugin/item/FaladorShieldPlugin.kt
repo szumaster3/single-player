@@ -9,8 +9,8 @@ import core.game.node.item.Item
 import core.game.system.task.Pulse
 import core.game.world.GameWorld.Pulser
 import core.game.world.update.flag.context.Graphics
-import org.rs.consts.Animations
-import org.rs.consts.Items
+import shared.consts.Animations
+import shared.consts.Items
 import java.util.concurrent.TimeUnit
 
 /**
@@ -118,12 +118,12 @@ class FaladorShieldPlugin : InteractionListener {
         /**
          * Graphics ids for shield emotes per shield level.
          */
-        val GFX_EMOTE: IntArray = intArrayOf(org.rs.consts.Graphics.FALADOR_SHIELD_1_EMOTE_1966, org.rs.consts.Graphics.FALADOR_SHIELD_3_EMOTE_1965, org.rs.consts.Graphics.FALADOR_SHIELD_3_EMOTE_1965)
+        val GFX_EMOTE: IntArray = intArrayOf(shared.consts.Graphics.FALADOR_SHIELD_1_EMOTE_1966, shared.consts.Graphics.FALADOR_SHIELD_3_EMOTE_1965, shared.consts.Graphics.FALADOR_SHIELD_3_EMOTE_1965)
 
         /**
          * Graphics ids used for prayer restore effect per shield level.
          */
-        val GFX_PRAYER_RESTORE: IntArray = intArrayOf(1962, 1963, org.rs.consts.Graphics.FALADOR_SHIELD_PRAY_RESTORE_1964)
+        val GFX_PRAYER_RESTORE: IntArray = intArrayOf(1962, 1963, shared.consts.Graphics.FALADOR_SHIELD_PRAY_RESTORE_1964)
 
         /**
          * Item ids corresponding to Falador shields supported.

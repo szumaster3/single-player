@@ -7,9 +7,9 @@ import core.game.interaction.InteractionListener
 import core.game.system.task.Pulse
 import core.game.world.GameWorld.Pulser
 import core.tools.RandomFunction
-import org.rs.consts.Animations
-import org.rs.consts.Components
-import org.rs.consts.Scenery
+import shared.consts.Animations
+import shared.consts.Components
+import shared.consts.Scenery
 import java.util.concurrent.TimeUnit
 
 class TelescopePlugin : InteractionListener {

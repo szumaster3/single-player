@@ -5,7 +5,7 @@ import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
-import org.rs.consts.Items
+import shared.consts.Items
 
 class WarbonnetsCraftingPlugin : InteractionListener {
     private val featherIDs = FeatherHeaddress.values().map { it.base }.toIntArray()

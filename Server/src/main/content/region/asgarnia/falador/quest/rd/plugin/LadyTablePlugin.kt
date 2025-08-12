@@ -8,8 +8,8 @@ import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
 import core.game.system.task.Pulse
 import core.game.world.GameWorld
-import org.rs.consts.Components
-import org.rs.consts.NPCs
+import shared.consts.Components
+import shared.consts.NPCs
 
 class LadyTablePlugin(
     private val state: Int = 0,

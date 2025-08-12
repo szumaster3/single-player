@@ -10,9 +10,9 @@ import core.game.world.GameWorld
 import core.game.world.map.Location
 import core.game.world.map.RegionManager
 import core.tools.END_DIALOGUE
-import org.rs.consts.Components
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Components
+import shared.consts.Items
+import shared.consts.NPCs
 
 /**
  * Represents the Foreman dialogue.

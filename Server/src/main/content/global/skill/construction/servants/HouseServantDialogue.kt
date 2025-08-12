@@ -18,8 +18,8 @@ import core.game.world.map.Location
 import core.game.world.map.path.Pathfinder
 import core.tools.BLACK
 import core.tools.DARK_BLUE
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 class HouseServantDialogue(
     player: Player? = null,

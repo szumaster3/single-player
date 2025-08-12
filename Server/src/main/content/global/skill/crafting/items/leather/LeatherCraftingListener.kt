@@ -7,8 +7,8 @@ import core.game.interaction.InterfaceListener
 import core.game.node.entity.impl.PulseType
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
-import org.rs.consts.Components
-import org.rs.consts.Items
+import shared.consts.Components
+import shared.consts.Items
 
 class LeatherCraftingListener : InteractionListener , InterfaceListener {
     val STUDDED_LEATHER = StuddedArmour.values().map { it.leather }.toIntArray()

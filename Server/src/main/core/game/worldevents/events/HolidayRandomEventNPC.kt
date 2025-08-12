@@ -10,7 +10,7 @@ import core.game.world.map.Location
 import core.game.world.map.RegionManager
 import core.game.world.map.path.Pathfinder
 import core.tools.secondsToTicks
-import org.rs.consts.Sounds
+import shared.consts.Sounds
 import kotlin.reflect.full.createInstance
 
 abstract class HolidayRandomEventNPC(

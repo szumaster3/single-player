@@ -12,8 +12,8 @@ import core.game.system.task.Pulse
 import core.game.world.map.RegionManager
 import core.game.world.map.zone.ZoneBorders
 import core.tools.RandomFunction
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 class ImpDefenderNPC : NPCBehavior(NPCs.IMP_DEFENDER_6074) {
     override fun onCreation(self: NPC) {

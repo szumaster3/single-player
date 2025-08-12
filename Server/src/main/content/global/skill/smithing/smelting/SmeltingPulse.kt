@@ -13,10 +13,10 @@ import core.game.world.map.Location
 import core.game.world.update.flag.context.Graphics
 import core.tools.RandomFunction
 import core.tools.StringUtils
-import org.rs.consts.Animations
-import org.rs.consts.Items
-import org.rs.consts.Quests
-import org.rs.consts.Sounds
+import shared.consts.Animations
+import shared.consts.Items
+import shared.consts.Quests
+import shared.consts.Sounds
 
 class SmeltingPulse : SkillPulse<Item?> {
     private val bar: Bar?
@@ -73,7 +73,7 @@ class SmeltingPulse : SkillPulse<Item?> {
                 visualize(
                     player,
                     Animations.HUMAN_CAST_SUPERHEAT_SPELL_725,
-                    Graphics(org.rs.consts.Graphics.SUPERHEAT_ITEM_148, 96),
+                    Graphics(shared.consts.Graphics.SUPERHEAT_ITEM_148, 96),
                 )
             } else {
                 animate(player, Animations.HUMAN_FURNACE_SMELT_3243)

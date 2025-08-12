@@ -32,9 +32,9 @@ import core.net.packet.out.Interface;
 import core.plugin.Initializable;
 import core.plugin.Plugin;
 import core.tools.RandomFunction;
-import org.rs.consts.Animations;
-import org.rs.consts.NPCs;
-import org.rs.consts.Sounds;
+import shared.consts.Animations;
+import shared.consts.NPCs;
+import shared.consts.Sounds;
 
 import static core.api.ContentAPIKt.playAudio;
 
@@ -45,10 +45,10 @@ import static core.api.ContentAPIKt.playAudio;
 public final class GiantMoleNPC extends AbstractNPC {
     private static final Location[] DIG_LOCATIONS = new Location[]{Location.create(1760, 5183, 0), Location.create(1736, 5223, 0), Location.create(1777, 5235, 0), Location.create(1739, 5150, 0), Location.create(1769, 5148, 0), Location.create(1750, 5195, 0), Location.create(1778, 5207, 0), Location.create(1772, 5199, 0), Location.create(1774, 5173, 0), Location.create(1760, 5162, 0), Location.create(1753, 5151, 0), Location.create(1739, 5152, 0)};
     private static final Animation DIG_ANIMATION = new Animation(3314, Priority.VERY_HIGH);
-    private static final Graphics DIG_GRAPHIC = new Graphics(org.rs.consts.Graphics.HOLE_OPENS_IN_GROUND_572);
+    private static final Graphics DIG_GRAPHIC = new Graphics(shared.consts.Graphics.HOLE_OPENS_IN_GROUND_572);
     private static final Animation DIG_UP_ANIMATION = new Animation(3315, Priority.VERY_HIGH);
-    private static final Graphics DIG_UP_GRAPHIC = new Graphics(org.rs.consts.Graphics.HOLE_OPENS_IN_GROUND_SHORTER_573);
-    private static final Graphics DUST_GRAPHIC = new Graphics(org.rs.consts.Graphics.BUNCHA_SMOKE_BROWN_COLORED_571);
+    private static final Graphics DIG_UP_GRAPHIC = new Graphics(shared.consts.Graphics.HOLE_OPENS_IN_GROUND_SHORTER_573);
+    private static final Graphics DUST_GRAPHIC = new Graphics(shared.consts.Graphics.BUNCHA_SMOKE_BROWN_COLORED_571);
 
     private boolean digging;
 

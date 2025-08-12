@@ -9,7 +9,7 @@ import core.game.node.entity.player.link.diary.Diary;
 import core.game.node.entity.player.link.diary.DiaryType;
 import core.game.node.entity.player.link.quest.Quest;
 import core.plugin.Initializable;
-import org.rs.consts.Quests;
+import shared.consts.Quests;
 
 /**
  * The type Rat burgiss dialogue.

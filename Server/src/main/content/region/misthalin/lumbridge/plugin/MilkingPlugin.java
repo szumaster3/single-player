@@ -13,9 +13,9 @@ import core.game.world.update.flag.context.Animation;
 import core.plugin.ClassScanner;
 import core.plugin.Initializable;
 import core.plugin.Plugin;
-import org.rs.consts.Items;
-import org.rs.consts.NPCs;
-import org.rs.consts.Sounds;
+import shared.consts.Items;
+import shared.consts.NPCs;
+import shared.consts.Sounds;
 
 import static core.api.ContentAPIKt.*;
 

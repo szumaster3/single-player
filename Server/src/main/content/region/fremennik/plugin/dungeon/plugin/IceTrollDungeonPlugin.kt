@@ -8,9 +8,9 @@ import core.game.interaction.QueueStrength
 import core.game.node.entity.player.link.TeleportManager
 import core.game.world.map.Direction
 import core.game.world.map.Location
-import org.rs.consts.Components
-import org.rs.consts.NPCs
-import org.rs.consts.Scenery
+import shared.consts.Components
+import shared.consts.NPCs
+import shared.consts.Scenery
 
 class IceTrollDungeonPlugin : InteractionListener {
 

@@ -4,8 +4,8 @@ import core.game.component.Component
 import core.game.ge.GrandExchange.Companion.getRecommendedPrice
 import core.game.node.entity.player.Player
 import core.tools.StringUtils.formatDisplayName
-import org.rs.consts.Components
-import org.rs.consts.Items
+import shared.consts.Components
+import shared.consts.Items
 
 /**
  * Provides functionality for managing and displaying guide prices in the Grand Exchange.

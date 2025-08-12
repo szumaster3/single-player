@@ -2,7 +2,7 @@ package content.global.plugin.iface
 
 import content.region.island.tutorial.plugin.CharacterDesign
 import core.game.interaction.InterfaceListener
-import org.rs.consts.Components
+import shared.consts.Components
 
 /**
  * Listener for character design.

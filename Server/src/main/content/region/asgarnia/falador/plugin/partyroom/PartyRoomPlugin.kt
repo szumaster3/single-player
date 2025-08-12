@@ -17,7 +17,7 @@ import core.game.node.item.Item
 import core.plugin.ClassScanner.definePlugin
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.Animations
+import shared.consts.Animations
 
 @Initializable
 class PartyRoomPlugin : OptionHandler() {

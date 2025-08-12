@@ -6,9 +6,9 @@ import core.api.setVarbit
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest
 import core.game.node.entity.skill.Skills
-import org.rs.consts.Items
-import org.rs.consts.Quests
-import org.rs.consts.Vars
+import shared.consts.Items
+import shared.consts.Quests
+import shared.consts.Vars
 
 // @Initializable
 class KingsRansom : Quest(Quests.KINGS_RANSOM, 141, 140, 1, Vars.VARBIT_QUEST_KING_RANSOM_PROGRESS_3888, 0, 1, 90) {

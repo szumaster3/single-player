@@ -4,7 +4,7 @@ import core.api.getWorldTicks
 import core.api.sendChat
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.npc.NPCBehavior
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 class GunsNPC : NPCBehavior(NPCs.THE_GUNS_5592) {
     private var lifts = 0

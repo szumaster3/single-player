@@ -6,7 +6,7 @@ import core.game.node.entity.npc.NPC
 import core.game.worldevents.events.HolidayRandomEventNPC
 import core.tools.RandomFunction
 import core.tools.minutesToTicks
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 class SnowmanHolidayRandomNPC : HolidayRandomEventNPC(NPCs.SNOWMAN_6746) {
     private val snowmanLines =

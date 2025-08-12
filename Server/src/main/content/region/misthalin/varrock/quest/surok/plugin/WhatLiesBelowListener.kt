@@ -11,7 +11,7 @@ import core.game.system.task.Pulse
 import core.game.world.GameWorld.Pulser
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
-import org.rs.consts.*
+import shared.consts.*
 
 class WhatLiesBelowListener : InteractionListener {
     override fun defineListeners() {

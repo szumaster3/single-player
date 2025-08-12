@@ -6,15 +6,15 @@ import core.api.*
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.game.world.update.flag.context.Graphics
-import org.rs.consts.Animations
-import org.rs.consts.Items
-import org.rs.consts.Sounds
+import shared.consts.Animations
+import shared.consts.Items
+import shared.consts.Sounds
 
 class MTASpellLPlugin : SpellListener("modern") {
     private val lowAlchemyAnimation = Animations.HUMAN_CAST_LOW_ALCHEMY_SPELL_712
     private val lowAlchemyGraphics = Graphics(112, 5)
     private val highAlchemyAnimation = Animations.HUMAN_CAST_HIGH_ALCHEMY_SPELL_713
-    private val highAlchemyGraphics = Graphics(org.rs.consts.Graphics.HIGH_LEVEL_ALCHEMY_113, 5)
+    private val highAlchemyGraphics = Graphics(shared.consts.Graphics.HIGH_LEVEL_ALCHEMY_113, 5)
     private val mtaAlchemyItems =
         AlchemistPlaygroundPlugin.AlchemistItem
             .values()

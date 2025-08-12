@@ -10,8 +10,8 @@ import core.game.node.entity.player.link.diary.Diary;
 import core.game.node.entity.player.link.diary.DiaryType;
 import core.game.node.item.Item;
 import core.game.world.GameWorld;
-import org.rs.consts.Items;
-import org.rs.consts.NPCs;
+import shared.consts.Items;
+import shared.consts.NPCs;
 
 /**
  * Represents the Bob dialogue.

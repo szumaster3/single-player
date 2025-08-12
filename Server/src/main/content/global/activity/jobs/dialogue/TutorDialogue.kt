@@ -12,7 +12,7 @@ import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
 import core.game.node.item.Item
 import core.tools.END_DIALOGUE
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * The dialogue file to handle a player asking about work with npc.

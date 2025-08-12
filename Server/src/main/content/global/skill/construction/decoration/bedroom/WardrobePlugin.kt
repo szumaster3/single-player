@@ -4,9 +4,9 @@ import core.api.*
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.system.task.Pulse
-import org.rs.consts.Animations
-import org.rs.consts.Components
-import org.rs.consts.Scenery
+import shared.consts.Animations
+import shared.consts.Components
+import shared.consts.Scenery
 
 class WardrobePlugin : InteractionListener {
     private val wardrobeSpaceFurniture =

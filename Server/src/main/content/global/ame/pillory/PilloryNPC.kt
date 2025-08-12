@@ -9,7 +9,7 @@ import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.link.TeleportManager
 import core.game.system.task.Pulse
 import core.game.system.timer.impl.AntiMacro
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 /**
  * Represents the Pillory random event NPC.

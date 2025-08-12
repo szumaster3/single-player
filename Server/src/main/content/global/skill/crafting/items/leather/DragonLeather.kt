@@ -1,6 +1,6 @@
 package content.global.skill.crafting.items.leather
 
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Represents the dragon leather.

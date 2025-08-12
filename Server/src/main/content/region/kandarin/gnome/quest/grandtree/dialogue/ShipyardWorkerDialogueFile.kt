@@ -9,7 +9,7 @@ import core.game.global.action.DoorActionHandler
 import core.game.node.scenery.Scenery
 import core.game.world.map.Location
 import core.tools.END_DIALOGUE
-import org.rs.consts.Quests
+import shared.consts.Quests
 
 /**
  * Represents the Shipyard Worker dialogue.

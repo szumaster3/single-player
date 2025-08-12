@@ -15,7 +15,7 @@ import core.game.world.map.Location;
 import core.game.world.map.RegionManager;
 import core.game.world.update.flag.context.Graphics;
 import core.tools.RandomFunction;
-import org.rs.consts.Sounds;
+import shared.consts.Sounds;
 
 import java.util.ArrayList;
 import java.util.List;

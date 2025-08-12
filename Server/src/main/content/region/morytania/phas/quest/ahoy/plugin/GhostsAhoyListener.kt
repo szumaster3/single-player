@@ -12,7 +12,7 @@ import core.game.interaction.InterfaceListener
 import core.game.node.entity.npc.NPC
 import core.game.world.map.Location
 import core.tools.END_DIALOGUE
-import org.rs.consts.*
+import shared.consts.*
 
 class GhostsAhoyListener :
     InteractionListener,

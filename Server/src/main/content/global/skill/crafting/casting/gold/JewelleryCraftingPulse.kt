@@ -8,8 +8,8 @@ import core.game.node.entity.player.Player
 import core.game.node.entity.skill.SkillPulse
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
-import org.rs.consts.Animations
-import org.rs.consts.Sounds
+import shared.consts.Animations
+import shared.consts.Sounds
 
 class JewelleryCraftingPulse(player: Player?, node: Item?, val type: Jewellery.JewelleryItem, var amount: Int, ) : SkillPulse<Item?>(player, node) {
     companion object {

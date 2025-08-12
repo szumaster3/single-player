@@ -6,8 +6,8 @@ import core.game.node.entity.Entity
 import core.game.node.entity.player.Player
 import core.game.system.timer.RSTimer
 import core.tools.minutesToTicks
-import org.rs.consts.Graphics
-import org.rs.consts.Sounds
+import shared.consts.Graphics
+import shared.consts.Sounds
 
 class ResetHolidayAppearance : RSTimer(minutesToTicks(1), "reset-holiday-appearance") {
     override fun run(entity: Entity): Boolean {

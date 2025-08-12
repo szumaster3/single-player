@@ -9,10 +9,10 @@ import core.game.system.task.Pulse
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
 import core.tools.END_DIALOGUE
-import org.rs.consts.Animations
-import org.rs.consts.Items
-import org.rs.consts.Quests
-import org.rs.consts.Sounds
+import shared.consts.Animations
+import shared.consts.Items
+import shared.consts.Quests
+import shared.consts.Sounds
 
 class DrezelDialogueFile : DialogueFile() {
     var questStage = 0
@@ -264,7 +264,7 @@ private class BlessingPulse(
                 visualize(
                     player,
                     Animation(Animations.HUMAN_PRAY_645),
-                    Graphics(org.rs.consts.Graphics.BRIGHT_GREEN_PUFF_OF_STUFF_267, 100),
+                    Graphics(shared.consts.Graphics.BRIGHT_GREEN_PUFF_OF_STUFF_267, 100),
                 )
 
             4 -> {

@@ -8,8 +8,8 @@ import core.game.interaction.InteractionListener
 import core.game.node.entity.npc.NPC
 import core.game.world.map.Direction
 import core.game.world.map.zone.ZoneBorders
-import org.rs.consts.NPCs
-import org.rs.consts.Scenery
+import shared.consts.NPCs
+import shared.consts.Scenery
 
 class NeitiznotPlugin : InteractionListener, MapArea {
 

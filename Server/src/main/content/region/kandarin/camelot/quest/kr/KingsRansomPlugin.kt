@@ -3,7 +3,7 @@ package content.region.kandarin.camelot.quest.kr
 import core.api.openInterface
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import org.rs.consts.Items
+import shared.consts.Items
 
 class KingsRansomPlugin : InteractionListener {
 

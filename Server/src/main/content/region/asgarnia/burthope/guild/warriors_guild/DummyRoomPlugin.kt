@@ -21,22 +21,22 @@ import core.game.world.update.flag.context.Graphics
 import core.plugin.Initializable
 import core.plugin.Plugin
 import core.tools.RandomFunction
-import org.rs.consts.Components
+import shared.consts.Components
 
 @Initializable
 class DummyRoomPlugin : OptionHandler() {
     private enum class Dummy(val scenery: Scenery, val attackStyle: Int, val bonusType: Int, ) {
-        STAB(Scenery(org.rs.consts.Scenery.DUMMY_15629, 2857, 3549, 0, 10, 2), -1, WeaponInterface.BONUS_STAB),
-        SLASH(Scenery(org.rs.consts.Scenery.DUMMY_15625, 2858, 3554, 0), -1, WeaponInterface.BONUS_SLASH),
-        CRUSH(Scenery(org.rs.consts.Scenery.DUMMY_15628, 2859, 3549, 0, 10, 2), -1, WeaponInterface.BONUS_CRUSH),
-        CONTROLLED(Scenery(org.rs.consts.Scenery.DUMMY_15627, 2855, 3552, 0, 10, 3), WeaponInterface.STYLE_CONTROLLED, -1),
-        DEFENCE(Scenery(org.rs.consts.Scenery.DUMMY_15630, 2855, 3550, 0, 10, 3), WeaponInterface.STYLE_DEFENSIVE, -1,),
-        AGGRESSIVE(Scenery(org.rs.consts.Scenery.DUMMY_15626, 2860, 3553, 0, 10, 1), WeaponInterface.STYLE_AGGRESSIVE, -1,),
-        ACCURATE(Scenery(org.rs.consts.Scenery.DUMMY_15624, 2856, 3554, 0), WeaponInterface.STYLE_ACCURATE, -1),
+        STAB(Scenery(shared.consts.Scenery.DUMMY_15629, 2857, 3549, 0, 10, 2), -1, WeaponInterface.BONUS_STAB),
+        SLASH(Scenery(shared.consts.Scenery.DUMMY_15625, 2858, 3554, 0), -1, WeaponInterface.BONUS_SLASH),
+        CRUSH(Scenery(shared.consts.Scenery.DUMMY_15628, 2859, 3549, 0, 10, 2), -1, WeaponInterface.BONUS_CRUSH),
+        CONTROLLED(Scenery(shared.consts.Scenery.DUMMY_15627, 2855, 3552, 0, 10, 3), WeaponInterface.STYLE_CONTROLLED, -1),
+        DEFENCE(Scenery(shared.consts.Scenery.DUMMY_15630, 2855, 3550, 0, 10, 3), WeaponInterface.STYLE_DEFENSIVE, -1,),
+        AGGRESSIVE(Scenery(shared.consts.Scenery.DUMMY_15626, 2860, 3553, 0, 10, 1), WeaponInterface.STYLE_AGGRESSIVE, -1,),
+        ACCURATE(Scenery(shared.consts.Scenery.DUMMY_15624, 2856, 3554, 0), WeaponInterface.STYLE_ACCURATE, -1),
     }
 
     override fun newInstance(arg: Any?): Plugin<Any> {
-        SceneryDefinition.forId(org.rs.consts.Scenery.INFORMATION_SCROLL_15656).handlers["option:view"] = this
+        SceneryDefinition.forId(shared.consts.Scenery.INFORMATION_SCROLL_15656).handlers["option:view"] = this
         for (dummy in Dummy.values()) {
             SceneryDefinition.forId(dummy.scenery.id).handlers["option:hit"] = this
         }
@@ -80,7 +80,7 @@ class DummyRoomPlugin : OptionHandler() {
 
     override fun handle(player: Player, node: Node, option: String): Boolean {
         val scenery = node as Scenery
-        if (scenery.id == org.rs.consts.Scenery.INFORMATION_SCROLL_15656) {
+        if (scenery.id == shared.consts.Scenery.INFORMATION_SCROLL_15656) {
             openInterface(player, Components.WARGUILD_DUMMY_412)
             return true
         }
@@ -91,7 +91,7 @@ class DummyRoomPlugin : OptionHandler() {
             }
             if (player.properties.attackStyle!!.style != dummy!!.attackStyle && player.properties.attackStyle!!.bonusType != dummy!!.bonusType) {
                 lock(player, 5)
-                visualize(player, player.properties.attackAnimation, Graphics(org.rs.consts.Graphics.STUN_BIRDIES_ABOVE_HEAD_80, 96))
+                visualize(player, player.properties.attackAnimation, Graphics(shared.consts.Graphics.STUN_BIRDIES_ABOVE_HEAD_80, 96))
                 sendMessage(player, "You whack the dummy with the wrong attack style.")
             } else {
                 player.getSkills().addExperience(Skills.ATTACK, 15.0, true)

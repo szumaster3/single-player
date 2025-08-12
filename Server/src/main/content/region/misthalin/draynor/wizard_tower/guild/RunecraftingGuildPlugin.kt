@@ -18,7 +18,7 @@ import core.game.world.map.Location
 import core.game.world.map.zone.ZoneBorders
 import core.game.world.map.zone.ZoneRestriction
 import core.tools.Log
-import org.rs.consts.*
+import shared.consts.*
 
 private data class ShopItem(
     val id: Int,

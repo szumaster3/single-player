@@ -7,7 +7,7 @@ import core.game.node.entity.combat.ImpactHandler
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.tools.RandomFunction
-import org.rs.consts.*
+import shared.consts.*
 
 object GhostsAhoyUtils {
     val signatures = 0

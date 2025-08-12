@@ -5,7 +5,7 @@ import core.api.*
 import core.game.interaction.InteractionListener
 import core.game.interaction.QueueStrength
 import core.game.node.entity.skill.Skills
-import org.rs.consts.Scenery
+import shared.consts.Scenery
 
 class WhiteWolfMountainPlugin : InteractionListener {
 

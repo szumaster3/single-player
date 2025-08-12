@@ -25,8 +25,8 @@ import core.game.world.update.flag.context.Animation;
 import core.plugin.Plugin;
 import core.tools.Log;
 import core.tools.RandomFunction;
-import org.rs.consts.Components;
-import org.rs.consts.Quests;
+import shared.consts.Components;
+import shared.consts.Quests;
 
 import static core.api.ContentAPIKt.*;
 

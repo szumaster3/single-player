@@ -26,7 +26,7 @@ import core.game.system.task.Pulse
 import core.game.world.map.Direction
 import core.game.world.map.Location
 import core.game.world.map.RegionManager.getObject
-import org.rs.consts.*
+import shared.consts.*
 
 /**
  * Represents the Plague City plugin.

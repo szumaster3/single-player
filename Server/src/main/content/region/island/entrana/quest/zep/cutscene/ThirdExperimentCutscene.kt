@@ -6,9 +6,9 @@ import core.game.activity.Cutscene
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.player.Player
 import core.game.world.map.Direction
-import org.rs.consts.Music
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
+import shared.consts.Music
+import shared.consts.NPCs
+import shared.consts.Quests
 
 class ThirdExperimentCutscene(
     player: Player,

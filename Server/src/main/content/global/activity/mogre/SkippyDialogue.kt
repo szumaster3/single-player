@@ -10,7 +10,7 @@ import core.game.system.task.Pulse
 import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
-import org.rs.consts.*
+import shared.consts.*
 
 /**
  * Represents the Skippy dialogue.

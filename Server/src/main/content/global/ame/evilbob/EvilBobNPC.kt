@@ -8,9 +8,9 @@ import core.game.interaction.QueueStrength
 import core.game.node.entity.npc.NPC
 import core.game.system.timer.impl.AntiMacro
 import core.game.world.map.Location
-import org.rs.consts.Music
-import org.rs.consts.NPCs
-import org.rs.consts.Sounds
+import shared.consts.Music
+import shared.consts.NPCs
+import shared.consts.Sounds
 
 /**
  * Represents the Evil Bob random event NPC.

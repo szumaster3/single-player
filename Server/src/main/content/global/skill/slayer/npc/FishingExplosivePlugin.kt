@@ -27,7 +27,7 @@ import core.game.world.update.flag.context.Graphics
 import core.plugin.Initializable
 import core.plugin.Plugin
 import core.tools.RandomFunction
-import org.rs.consts.*
+import shared.consts.*
 
 /**
  * Represents the fishing explosive interaction
@@ -63,7 +63,7 @@ class FishingExplosivePlugin : OptionHandler() {
 
         companion object {
             private val ANIMATION = Animation(Animations.THROW_385)
-            private val SPLASH_GRAPHICS = Graphics(org.rs.consts.Graphics.WATER_SPLASH_68)
+            private val SPLASH_GRAPHICS = Graphics(shared.consts.Graphics.WATER_SPLASH_68)
             private const val MOGRE_ID = NPCs.MOGRE_114
             private val MESSAGES = arrayOf("Da boom-boom kill all da fishies!", "I smack you good!", "Smash stupid human!", "Tasty human!", "Human hit me on the head!", "I get you!", "Human scare all da fishies!")
         }

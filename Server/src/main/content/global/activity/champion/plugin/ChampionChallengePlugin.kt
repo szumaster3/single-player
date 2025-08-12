@@ -16,7 +16,7 @@ import core.game.system.task.Pulse
 import core.game.world.map.Location
 import core.game.world.map.zone.ZoneBorders
 import core.game.world.map.zone.ZoneRestriction
-import org.rs.consts.*
+import shared.consts.*
 
 /**
  * Champion's Challenge plugin.

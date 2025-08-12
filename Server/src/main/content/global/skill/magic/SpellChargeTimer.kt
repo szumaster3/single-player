@@ -5,7 +5,7 @@ import core.api.sendMessage
 import core.game.node.entity.Entity
 import core.game.node.entity.player.Player
 import core.game.system.timer.PersistTimer
-import org.rs.consts.Sounds
+import shared.consts.Sounds
 
 class SpellChargeTimer : PersistTimer(700, "magic:spellcharge") {
     override fun run(entity: Entity): Boolean {

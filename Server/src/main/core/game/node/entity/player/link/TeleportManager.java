@@ -12,7 +12,7 @@ import core.game.world.map.Location;
 import core.game.world.update.flag.context.Animation;
 import core.game.world.update.flag.context.Graphics;
 import core.worker.ManagementEvents;
-import org.rs.consts.Sounds;
+import shared.consts.Sounds;
 import proto.management.JoinClanRequest;
 
 import static core.api.ContentAPIKt.*;

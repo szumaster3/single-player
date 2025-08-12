@@ -3,7 +3,7 @@ package content.region.misthalin.barbvillage.plugin
 import core.api.*
 import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.Player
-import org.rs.consts.Components
+import shared.consts.Components
 
 class PlayerSafetyTestInterface : InterfaceListener {
     companion object {

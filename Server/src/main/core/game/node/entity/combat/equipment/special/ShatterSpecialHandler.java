@@ -11,8 +11,8 @@ import core.game.world.update.flag.context.Graphics;
 import core.plugin.Initializable;
 import core.plugin.Plugin;
 import core.tools.RandomFunction;
-import org.rs.consts.Items;
-import org.rs.consts.Sounds;
+import shared.consts.Items;
+import shared.consts.Sounds;
 
 import static core.api.ContentAPIKt.playGlobalAudio;
 
@@ -26,7 +26,7 @@ public final class ShatterSpecialHandler extends MeleeSwingHandler implements Pl
 
     private static final int SPECIAL_ENERGY = 25;
     private static final Animation ANIMATION = new Animation(1060, Priority.HIGH);
-    private static final Graphics GRAPHICS = new Graphics(org.rs.consts.Graphics.DRAGON_MACE_SPECIAL_251, 96);
+    private static final Graphics GRAPHICS = new Graphics(shared.consts.Graphics.DRAGON_MACE_SPECIAL_251, 96);
 
     @Override
     public Object fireEvent(String identifier, Object... args) {

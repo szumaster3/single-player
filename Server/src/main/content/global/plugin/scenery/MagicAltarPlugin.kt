@@ -7,10 +7,10 @@ import core.game.node.Node
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.SpellBookManager.SpellBook
 import core.game.node.entity.skill.Skills
-import org.rs.consts.Animations
-import org.rs.consts.Quests
-import org.rs.consts.Scenery
-import org.rs.consts.Sounds
+import shared.consts.Animations
+import shared.consts.Quests
+import shared.consts.Scenery
+import shared.consts.Sounds
 
 class MagicAltarPlugin : InteractionListener {
 

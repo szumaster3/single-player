@@ -11,8 +11,8 @@ import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.Animations
-import org.rs.consts.Scenery
+import shared.consts.Animations
+import shared.consts.Scenery
 
 @Initializable
 class ModeratorPlugin : OptionHandler() {

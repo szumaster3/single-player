@@ -14,7 +14,7 @@ import core.game.interaction.InteractionListener
 import core.game.node.entity.impl.PulseType
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
-import org.rs.consts.Items
+import shared.consts.Items
 import kotlin.math.min
 
 class FletchingListener : InteractionListener {

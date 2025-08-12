@@ -5,8 +5,8 @@ import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
 import core.game.node.item.Item
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 class ClaimTokenDialogue(private val npcId: NPC) : DialogueFile() {
     override fun handle(componentID: Int, buttonID: Int, ) {

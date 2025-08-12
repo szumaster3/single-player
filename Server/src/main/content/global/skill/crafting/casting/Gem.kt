@@ -2,8 +2,8 @@ package content.global.skill.crafting.casting
 
 import core.game.node.item.Item
 import core.game.world.update.flag.context.Animation
-import org.rs.consts.Animations
-import org.rs.consts.Items
+import shared.consts.Animations
+import shared.consts.Items
 
 /**
  * Represents different types of gems that can be cut.

@@ -2,7 +2,7 @@ package content.global.skill.slayer;
 
 import core.cache.def.impl.NPCDefinition;
 import core.game.node.entity.player.Player;
-import org.rs.consts.NPCs;
+import shared.consts.NPCs;
 
 import java.util.Arrays;
 import java.util.HashMap;

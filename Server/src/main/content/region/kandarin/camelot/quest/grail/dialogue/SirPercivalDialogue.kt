@@ -13,9 +13,9 @@ import core.game.world.map.Location
 import core.game.world.repository.Repository
 import core.tools.END_DIALOGUE
 import core.tools.secondsToTicks
-import org.rs.consts.Items
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
+import shared.consts.Items
+import shared.consts.NPCs
+import shared.consts.Quests
 
 /**
  * Represents the Sir Percival dialogue.

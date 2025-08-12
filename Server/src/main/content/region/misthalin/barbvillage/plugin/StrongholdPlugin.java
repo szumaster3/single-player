@@ -28,9 +28,9 @@ import core.plugin.ClassScanner;
 import core.plugin.Initializable;
 import core.plugin.Plugin;
 import core.tools.RandomFunction;
-import org.rs.consts.Animations;
-import org.rs.consts.Components;
-import org.rs.consts.Sounds;
+import shared.consts.Animations;
+import shared.consts.Components;
+import shared.consts.Sounds;
 
 import static core.api.ContentAPIKt.*;
 

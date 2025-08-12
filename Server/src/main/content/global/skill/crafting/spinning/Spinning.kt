@@ -1,7 +1,7 @@
 package content.global.skill.crafting.spinning
 
 import core.game.node.item.Item
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Enum representing different spinning activities.

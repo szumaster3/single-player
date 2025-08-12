@@ -20,8 +20,8 @@ import core.net.packet.PacketRepository;
 import core.net.packet.out.SkillLevel;
 import core.plugin.type.ExperiencePlugins;
 import kotlin.Pair;
-import org.rs.consts.Items;
-import org.rs.consts.Sounds;
+import shared.consts.Items;
+import shared.consts.Sounds;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;

@@ -14,8 +14,8 @@ import core.game.node.entity.player.info.login.PlayerParser
 import core.game.node.item.GroundItemManager
 import core.game.node.item.Item
 import core.game.system.config.ItemConfigParser
-import org.rs.consts.Items
-import org.rs.consts.Sounds
+import shared.consts.Items
+import shared.consts.Sounds
 
 /**
  * Represents the item drop, destroy, or dissolve handler.

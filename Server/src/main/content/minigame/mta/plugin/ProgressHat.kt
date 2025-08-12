@@ -2,7 +2,7 @@ package content.minigame.mta.plugin
 
 import core.api.*
 import core.game.node.entity.player.Player
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Handles the interaction with progress hat.

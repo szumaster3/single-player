@@ -5,7 +5,7 @@ import core.game.node.entity.Entity
 import core.game.node.entity.player.Player
 import core.game.world.map.zone.ZoneBorders
 import core.game.world.map.zone.ZoneRestriction
-import org.rs.consts.Music
+import shared.consts.Music
 
 class IceTrollDungeon : MapArea {
 

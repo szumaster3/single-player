@@ -5,7 +5,7 @@ import core.api.utils.WeightBasedTable
 import core.api.utils.WeightedItem
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import org.rs.consts.Items
+import shared.consts.Items
 
 class ImplingJarPlugin : InteractionListener {
     private val IMPLING_JARS = ImplingLoot.values().map { it.jarId }.toIntArray()

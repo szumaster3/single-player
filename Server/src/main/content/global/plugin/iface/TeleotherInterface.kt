@@ -6,9 +6,9 @@ import core.api.teleport
 import core.api.visualize
 import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.link.TeleportManager.TeleportType
-import org.rs.consts.Animations
-import org.rs.consts.Components
-import org.rs.consts.Graphics
+import shared.consts.Animations
+import shared.consts.Components
+import shared.consts.Graphics
 
 class TeleotherInterface : InterfaceListener {
     override fun defineInterfaceListeners() {

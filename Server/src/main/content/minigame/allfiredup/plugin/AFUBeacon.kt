@@ -6,7 +6,7 @@ import core.api.setVarbit
 import core.game.node.entity.player.Player
 import core.game.world.map.Location
 import core.tools.Log
-import org.rs.consts.Vars
+import shared.consts.Vars
 
 /**
  * Represents a beacon in the All Fired Up minigame.

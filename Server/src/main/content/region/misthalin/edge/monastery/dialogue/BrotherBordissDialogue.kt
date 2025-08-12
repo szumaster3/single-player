@@ -11,8 +11,8 @@ import core.game.node.item.Item
 import core.game.world.GameWorld
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 @Initializable
 class BrotherBordissDialogue(player: Player? = null) : Dialogue(player) {

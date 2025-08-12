@@ -9,8 +9,8 @@ import core.game.node.entity.npc.NPC
 import core.game.node.entity.skill.Skills
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 class DropTableTests {
     init {

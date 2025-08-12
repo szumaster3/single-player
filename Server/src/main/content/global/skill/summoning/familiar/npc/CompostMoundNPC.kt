@@ -18,8 +18,8 @@ import core.plugin.ClassScanner.definePlugin
 import core.plugin.Initializable
 import core.plugin.Plugin
 import core.tools.RandomFunction
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 @Initializable
 class CompostMoundNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.COMPOST_MOUND_6871) :

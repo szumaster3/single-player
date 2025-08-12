@@ -1,7 +1,7 @@
 package content.global.skill.construction;
 
 import core.game.world.update.flag.context.Animation;
-import org.rs.consts.Scenery;
+import shared.consts.Scenery;
 
 import java.util.ArrayList;
 import java.util.List;

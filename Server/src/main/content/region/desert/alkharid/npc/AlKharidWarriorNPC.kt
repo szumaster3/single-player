@@ -8,7 +8,7 @@ import core.game.node.entity.player.Player
 import core.game.world.map.Location
 import core.game.world.map.RegionManager
 import core.plugin.Initializable
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 @Initializable
 class AlKharidWarriorNPC(id: Int = NPCs.AL_KHARID_WARRIOR_18, location: Location? = null) : AbstractNPC(id, location, true) {

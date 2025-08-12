@@ -6,7 +6,7 @@ import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.Items
+import shared.consts.Items
 
 @Initializable
 class CrestCombiningHandler : UseWithHandler(Items.CREST_PART_779, Items.CREST_PART_780, Items.CREST_PART_781) {

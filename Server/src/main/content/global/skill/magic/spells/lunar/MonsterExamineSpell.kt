@@ -8,7 +8,7 @@ import core.api.sendMessage
 import core.api.sendString
 import core.game.node.item.Item
 import core.game.system.config.NPCConfigParser
-import org.rs.consts.*
+import shared.consts.*
 
 class MonsterExamineSpell : SpellListener("lunar") {
     override fun defineListeners() {

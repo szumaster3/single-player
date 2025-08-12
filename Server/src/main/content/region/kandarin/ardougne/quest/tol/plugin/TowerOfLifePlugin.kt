@@ -13,7 +13,7 @@ import core.game.interaction.QueueStrength
 import core.game.node.entity.skill.Skills
 import core.game.world.update.flag.context.Animation
 import core.tools.RandomFunction
-import org.rs.consts.*
+import shared.consts.*
 
 class TowerOfLifePlugin : InteractionListener {
     override fun defineListeners() {

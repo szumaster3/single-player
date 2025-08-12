@@ -3,7 +3,7 @@ package core.game.worldevents.events.halloween
 import core.game.dialogue.SequenceDialogue.dialogue
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 class ZombieHalloweenPlugin : InteractionListener {
 

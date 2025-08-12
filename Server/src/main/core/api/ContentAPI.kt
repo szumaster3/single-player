@@ -89,10 +89,10 @@ import core.tools.Log
 import core.tools.SystemLogger
 import core.tools.colorize
 import core.tools.cyclesToTicks
-import org.rs.consts.Components
-import org.rs.consts.Items
-import org.rs.consts.NPCs
-import org.rs.consts.Sounds
+import shared.consts.Components
+import shared.consts.Items
+import shared.consts.NPCs
+import shared.consts.Sounds
 import java.io.PrintWriter
 import java.io.StringWriter
 import java.util.regex.Pattern

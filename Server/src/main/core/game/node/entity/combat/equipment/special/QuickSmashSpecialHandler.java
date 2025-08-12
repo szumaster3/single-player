@@ -13,8 +13,8 @@ import core.game.world.update.flag.context.Graphics;
 import core.plugin.Initializable;
 import core.plugin.Plugin;
 import core.tools.RandomFunction;
-import org.rs.consts.Animations;
-import org.rs.consts.Sounds;
+import shared.consts.Animations;
+import shared.consts.Sounds;
 
 import static core.api.ContentAPIKt.playGlobalAudio;
 
@@ -30,7 +30,7 @@ public final class QuickSmashSpecialHandler extends MeleeSwingHandler implements
 
     private static final Animation ANIMATION = new Animation(Animations.ATTACK_MAUL_1667, Priority.HIGH);
 
-    private static final Graphics GRAPHICS = new Graphics(org.rs.consts.Graphics.GRANITE_MAUL_SPECIAL_340, 96);
+    private static final Graphics GRAPHICS = new Graphics(shared.consts.Graphics.GRANITE_MAUL_SPECIAL_340, 96);
 
     @Override
     public Object fireEvent(String identifier, Object... args) {

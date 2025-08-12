@@ -6,7 +6,7 @@ import core.api.removeItem
 import core.api.sendDialogue
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Handles skillcape purchasing, trimming and mastery checks.

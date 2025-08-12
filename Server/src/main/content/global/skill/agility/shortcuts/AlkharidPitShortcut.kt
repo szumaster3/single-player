@@ -10,7 +10,7 @@ import core.game.world.GameWorld
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
-import org.rs.consts.Animations
+import shared.consts.Animations
 
 /**
  * Handles shortcut for climbing the pit in Al Kharid.

@@ -14,8 +14,8 @@ import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 @Initializable
 class NoraTHaggNPC : AbstractNPC {
@@ -91,7 +91,7 @@ class NoraTHaggNPC : AbstractNPC {
                             visualize(
                                 player,
                                 -1,
-                                Graphics(org.rs.consts.Graphics.CURSE_IMPACT_110, 100),
+                                Graphics(shared.consts.Graphics.CURSE_IMPACT_110, 100),
                             )
                             setMinimapState(player, 2)
                         }

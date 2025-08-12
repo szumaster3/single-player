@@ -18,7 +18,7 @@ import core.plugin.ClassScanner
 import core.plugin.Initializable
 import core.plugin.Plugin
 import core.tools.RandomFunction
-import org.rs.consts.Components
+import shared.consts.Components
 
 @Initializable
 class SmokeDungeonPlugin : MapZone("smoke dungeon", true), Plugin<Any?> {

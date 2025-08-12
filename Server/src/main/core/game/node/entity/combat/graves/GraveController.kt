@@ -23,7 +23,7 @@ import core.game.world.map.zone.impl.WildernessZone
 import core.game.world.repository.Repository
 import core.tools.colorize
 import core.tools.secondsToTicks
-import org.rs.consts.*
+import shared.consts.*
 import java.util.Map
 import kotlin.math.min
 

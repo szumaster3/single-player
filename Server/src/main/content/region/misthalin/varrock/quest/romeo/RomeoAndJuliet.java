@@ -3,8 +3,8 @@ package content.region.misthalin.varrock.quest.romeo;
 import core.game.node.entity.player.Player;
 import core.game.node.entity.player.link.quest.Quest;
 import core.plugin.Initializable;
-import org.rs.consts.Quests;
-import org.rs.consts.Vars;
+import shared.consts.Quests;
+import shared.consts.Vars;
 
 /**
  * Represents the Romeo and juliet quest.

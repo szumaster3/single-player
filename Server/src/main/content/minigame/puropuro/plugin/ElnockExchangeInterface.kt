@@ -2,9 +2,9 @@ package content.minigame.puropuro.plugin
 
 import core.api.*
 import core.game.interaction.InterfaceListener
-import org.rs.consts.Components
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Components
+import shared.consts.Items
+import shared.consts.NPCs
 
 class ElnockExchangeInterface : InterfaceListener {
     override fun defineInterfaceListeners() {

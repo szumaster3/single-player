@@ -8,7 +8,7 @@ import core.game.world.GameWorld
 import core.game.world.map.Location
 import core.game.world.map.path.Pathfinder
 import core.plugin.Initializable
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 /**
  * The Summoned zombie NPC, which is summoned by a Necromancer NPC.

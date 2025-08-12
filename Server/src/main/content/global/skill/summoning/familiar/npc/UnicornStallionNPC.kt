@@ -14,10 +14,10 @@ import core.game.world.update.flag.context.Graphics
 import core.plugin.ClassScanner.definePlugin
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.Animations
-import org.rs.consts.Items
-import org.rs.consts.NPCs
-import org.rs.consts.Sounds
+import shared.consts.Animations
+import shared.consts.Items
+import shared.consts.NPCs
+import shared.consts.Sounds
 
 @Initializable
 class UnicornStallionNPC(owner: Player? = null, id: Int = NPCs.UNICORN_STALLION_6822) :
@@ -27,7 +27,7 @@ class UnicornStallionNPC(owner: Player? = null, id: Int = NPCs.UNICORN_STALLION_
     override fun specialMove(special: FamiliarSpecial): Boolean {
         val player = special.node as Player
         playAudio(player, Sounds.HEALING_AURA_4372)
-        visualize(Animation.create(8267), Graphics.create(org.rs.consts.Graphics.ELECTRIC_BALL_OVER_HEAD_1356))
+        visualize(Animation.create(8267), Graphics.create(shared.consts.Graphics.ELECTRIC_BALL_OVER_HEAD_1356))
         player.getSkills().heal((player.getSkills().maximumLifepoints * 0.15).toInt())
         return true
     }
@@ -66,7 +66,7 @@ class UnicornStallionNPC(owner: Player? = null, id: Int = NPCs.UNICORN_STALLION_
                     playAudio(player, Sounds.HEALING_AURA_4372)
                     familiar.visualize(
                         Animation.create(8267),
-                        Graphics.create(org.rs.consts.Graphics.ELECTRIC_BALL_OVER_HEAD_1356),
+                        Graphics.create(shared.consts.Graphics.ELECTRIC_BALL_OVER_HEAD_1356),
                     )
                     curePoison(player)
                     cureDisease(player)
@@ -81,7 +81,7 @@ class UnicornStallionNPC(owner: Player? = null, id: Int = NPCs.UNICORN_STALLION_
         visualize(
             owner,
             Animation.create(Animations.CAST_FAMILIAR_SCROLL_7660),
-            Graphics.create(org.rs.consts.Graphics.UNICORN_STALLION_SPECIAL_MOVE_1298),
+            Graphics.create(shared.consts.Graphics.UNICORN_STALLION_SPECIAL_MOVE_1298),
         )
     }
 

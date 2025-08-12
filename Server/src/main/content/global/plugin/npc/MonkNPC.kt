@@ -10,8 +10,8 @@ import core.game.node.entity.npc.AbstractNPC
 import core.game.world.map.Location
 import core.plugin.Initializable
 import core.tools.RandomFunction
-import org.rs.consts.Animations
-import org.rs.consts.NPCs
+import shared.consts.Animations
+import shared.consts.NPCs
 
 @Initializable
 class MonkNPC(id: Int = 0, location: Location? = null, ) : AbstractNPC(id, location) {

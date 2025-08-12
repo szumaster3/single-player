@@ -12,8 +12,8 @@ import core.game.node.entity.Entity
 import core.game.node.entity.player.Player
 import core.tools.colorize
 import core.tools.secondsToTicks
-import org.rs.consts.Items
-import org.rs.consts.Quests
+import shared.consts.Items
+import shared.consts.Quests
 
 /**
  * Handles functionality related to Ava's devices.

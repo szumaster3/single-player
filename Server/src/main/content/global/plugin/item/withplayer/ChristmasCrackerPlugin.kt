@@ -9,7 +9,7 @@ import core.game.world.update.flag.context.Graphics
 import core.plugin.Initializable
 import core.plugin.Plugin
 import core.tools.RandomFunction
-import org.rs.consts.Items
+import shared.consts.Items
 
 @Initializable
 class ChristmasCrackerPlugin : UseWithHandler() {

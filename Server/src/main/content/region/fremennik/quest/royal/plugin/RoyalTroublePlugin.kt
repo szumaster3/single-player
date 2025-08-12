@@ -6,7 +6,7 @@ import core.api.removeItem
 import core.api.sendMessage
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import org.rs.consts.Items
+import shared.consts.Items
 
 class RoyalTroublePlugin : InteractionListener {
     private val FIRE_REMAINS = intArrayOf(15206, 15207, 15208, 15209, 15210)

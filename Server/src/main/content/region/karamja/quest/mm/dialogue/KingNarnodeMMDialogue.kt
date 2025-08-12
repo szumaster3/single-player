@@ -4,9 +4,9 @@ import core.api.*
 import core.game.component.Component
 import core.game.dialogue.DialogueFile
 import core.tools.END_DIALOGUE
-import org.rs.consts.Components
-import org.rs.consts.Items
-import org.rs.consts.Quests
+import shared.consts.Components
+import shared.consts.Items
+import shared.consts.Quests
 
 class KingNarnodeMMDialogue : DialogueFile() {
 

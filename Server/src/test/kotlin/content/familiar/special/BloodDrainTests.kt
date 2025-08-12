@@ -11,8 +11,8 @@ import core.game.system.timer.impl.Disease
 import core.game.system.timer.impl.Poison
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 class BloodDrainTests {
     init {

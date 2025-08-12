@@ -4,8 +4,8 @@ import content.global.skill.magic.SpellListener
 import content.global.skill.magic.spells.LunarSpells
 import core.api.openInterface
 import core.game.node.item.Item
-import org.rs.consts.Components
-import org.rs.consts.Items
+import shared.consts.Components
+import shared.consts.Items
 
 class NpcContactSpell : SpellListener("lunar") {
     override fun defineListeners() {

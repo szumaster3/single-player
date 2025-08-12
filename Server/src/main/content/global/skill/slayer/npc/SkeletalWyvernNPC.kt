@@ -11,8 +11,8 @@ import core.game.node.entity.npc.NPCBehavior
 import core.game.node.entity.player.Player
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
-import org.rs.consts.Animations
-import org.rs.consts.Items
+import shared.consts.Animations
+import shared.consts.Items
 
 class SkeletalWyvernNPC : NPCBehavior(*Tasks.SKELETAL_WYVERN.ids) {
 

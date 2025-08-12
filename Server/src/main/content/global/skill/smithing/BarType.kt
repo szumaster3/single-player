@@ -1,6 +1,6 @@
 package content.global.skill.smithing
 
-import org.rs.consts.Items
+import shared.consts.Items
 
 enum class BarType(val barType: Int, @JvmField val experience: Double, val barName: String, ) {
     BRONZE(Items.BRONZE_BAR_2349, 12.5, "Bronze Smithing"),

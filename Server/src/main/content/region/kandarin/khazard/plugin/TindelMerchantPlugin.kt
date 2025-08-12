@@ -11,9 +11,9 @@ import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.game.world.map.Location
 import core.tools.RandomFunction
-import org.rs.consts.Items
-import org.rs.consts.NPCs
-import org.rs.consts.Sounds
+import shared.consts.Items
+import shared.consts.NPCs
+import shared.consts.Sounds
 
 /**
  * Handles the exchange of rusty weapons.
@@ -25,7 +25,7 @@ class TindelMerchantPlugin : InteractionListener {
         private const val SWORD = Items.RUSTY_SWORD_686
         private const val SCIMITAR = Items.RUSTY_SCIMITAR_6721
 
-        private const val STALL = org.rs.consts.Scenery.ANTIQUES_SHOP_STALL_5831
+        private const val STALL = shared.consts.Scenery.ANTIQUES_SHOP_STALL_5831
         private const val BELL_SFX = Sounds.BELL_2192
 
         private const val COINS = Items.COINS_995

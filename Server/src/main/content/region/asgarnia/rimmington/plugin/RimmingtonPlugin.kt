@@ -12,7 +12,7 @@ import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.player.Player
-import org.rs.consts.Scenery
+import shared.consts.Scenery
 
 class RimmingtonPlugin : InteractionListener {
 

@@ -10,7 +10,7 @@ import core.game.node.item.Item
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
-import org.rs.consts.*
+import shared.consts.*
 
 class EctophialPlugin : InteractionListener {
 

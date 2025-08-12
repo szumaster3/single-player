@@ -10,8 +10,8 @@ import core.game.dialogue.Topic
 import core.game.node.entity.player.Player
 import core.tools.END_DIALOGUE
 import core.tools.Log
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 /**
  * Represents the Larry dialogue.

@@ -18,7 +18,7 @@ import core.game.world.map.RegionManager.getLocalPlayers
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
 import core.tools.RandomFunction
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 class PCSpinnerNPC : AbstractNPC {
     private var session: PestControlSession? = null
@@ -60,7 +60,7 @@ class PCSpinnerNPC : AbstractNPC {
             return
         }
         faceTemporary(portal, 1)
-        visualize(Animation(3911, Priority.HIGH), Graphics.create(org.rs.consts.Graphics.TURMOIL_658))
+        visualize(Animation(3911, Priority.HIGH), Graphics.create(shared.consts.Graphics.TURMOIL_658))
         portal.getSkills().heal(portal.getSkills().maximumLifepoints / 10)
         (portal as PCPortalNPC).updateLifepoints = true
     }

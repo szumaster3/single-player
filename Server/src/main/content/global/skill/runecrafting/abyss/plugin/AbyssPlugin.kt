@@ -24,7 +24,7 @@ import core.plugin.ClassScanner.definePlugin
 import core.tools.Log
 import core.tools.RandomFunction
 import core.tools.colorize
-import org.rs.consts.*
+import shared.consts.*
 import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.random.Random
@@ -202,7 +202,7 @@ class AbyssPlugin : InteractionListener {
             player.lock(3)
             npc.visualize(
                 Animation(Animations.CAST_SPELL_1979),
-                Graphics(org.rs.consts.Graphics.DELRIGHT_DEFEATED_4),
+                Graphics(shared.consts.Graphics.DELRIGHT_DEFEATED_4),
             )
             npc.sendChat("Veniens! Sallakar! Rinnesset!")
             player.skills.decrementPrayerPoints(100.0)

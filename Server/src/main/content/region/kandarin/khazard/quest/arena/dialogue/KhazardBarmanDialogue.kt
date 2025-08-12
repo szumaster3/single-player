@@ -10,10 +10,10 @@ import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
-import org.rs.consts.Items
-import org.rs.consts.Items.COINS_995
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
+import shared.consts.Items
+import shared.consts.Items.COINS_995
+import shared.consts.NPCs
+import shared.consts.Quests
 
 /**
  * Represents the Khazard Barman dialogue.

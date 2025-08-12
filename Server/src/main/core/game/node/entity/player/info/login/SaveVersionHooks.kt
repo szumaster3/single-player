@@ -7,9 +7,9 @@ import core.api.getQuestStage
 import core.api.sendMessage
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
-import org.rs.consts.Items
-import org.rs.consts.Music
-import org.rs.consts.Quests
+import shared.consts.Items
+import shared.consts.Music
+import shared.consts.Quests
 
 class SaveVersionHooks : LoginListener {
     override fun login(player: Player) {

@@ -8,7 +8,7 @@ import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.Sounds
+import shared.consts.Sounds
 
 @Initializable
 class MetalWandHandler : UseWithHandler(WhatLiesBelowListener.WAND) {

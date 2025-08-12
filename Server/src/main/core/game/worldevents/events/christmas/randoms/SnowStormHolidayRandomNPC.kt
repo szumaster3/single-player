@@ -10,8 +10,8 @@ import core.game.world.map.path.Pathfinder
 import core.game.worldevents.events.HolidayRandomEventNPC
 import core.tools.RandomFunction
 import core.tools.minutesToTicks
-import org.rs.consts.NPCs
-import org.rs.consts.Sounds
+import shared.consts.NPCs
+import shared.consts.Sounds
 
 class SnowStormHolidayRandomNPC : HolidayRandomEventNPC(NPCs.SNOW_6740) {
     private lateinit var snowTwoNPC: NPC

@@ -7,7 +7,7 @@ import core.game.node.item.GroundItemManager
 import core.game.node.item.Item
 import core.game.world.GameWorld.settings
 import core.plugin.Initializable
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 /**
  * Represents the Void Knight dialogue.

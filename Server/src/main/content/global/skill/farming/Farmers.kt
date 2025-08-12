@@ -1,6 +1,6 @@
 package content.global.skill.farming
 
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 enum class Farmers(
     val id: Int,

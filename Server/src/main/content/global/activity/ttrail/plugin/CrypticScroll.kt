@@ -13,9 +13,9 @@ import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.game.world.map.Location
 import core.game.world.map.zone.ZoneBorders
-import org.rs.consts.Components
-import org.rs.consts.Items
-import org.rs.consts.Scenery
+import shared.consts.Components
+import shared.consts.Items
+import shared.consts.Scenery
 
 /**
  * Represents a cryptic clue scroll.

@@ -8,9 +8,9 @@ import core.game.system.task.Pulse
 import core.game.world.GameWorld
 import core.game.world.map.Location
 import core.tools.END_DIALOGUE
-import org.rs.consts.Components
-import org.rs.consts.Items
-import org.rs.consts.Quests
+import shared.consts.Components
+import shared.consts.Items
+import shared.consts.Quests
 
 class DaeroDialogue : DialogueFile() {
 

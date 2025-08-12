@@ -9,8 +9,8 @@ import core.game.node.entity.player.Player
 import core.game.node.scenery.Scenery
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.Animations
-import org.rs.consts.Scenery as Obj
+import shared.consts.Animations
+import shared.consts.Scenery as Obj
 
 @Initializable
 class StorageBoxPlugin : OptionHandler() {

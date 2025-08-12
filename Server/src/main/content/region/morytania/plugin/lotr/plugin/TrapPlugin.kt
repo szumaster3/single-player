@@ -11,11 +11,11 @@ import core.game.node.scenery.Scenery
 import core.plugin.Initializable
 import core.plugin.Plugin
 import core.tools.RandomFunction
-import org.rs.consts.Animations
+import shared.consts.Animations
 
 @Initializable
 class TrapPlugin : OptionHandler() {
-    private val buttonID = org.rs.consts.Scenery.FLOOR_20966
+    private val buttonID = shared.consts.Scenery.FLOOR_20966
 
     override fun newInstance(arg: Any?): Plugin<Any> {
         SceneryDefinition.forId(buttonID).handlers["option:search"] = this

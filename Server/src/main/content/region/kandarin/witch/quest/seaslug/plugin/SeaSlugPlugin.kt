@@ -14,7 +14,7 @@ import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.game.world.map.Location
 import core.tools.Log
-import org.rs.consts.*
+import shared.consts.*
 
 class SeaSlugPlugin : InteractionListener {
     private fun getSmack(player: Player) {

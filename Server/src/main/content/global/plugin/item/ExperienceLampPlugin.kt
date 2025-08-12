@@ -9,8 +9,8 @@ import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.tools.BLUE
-import org.rs.consts.Components
-import org.rs.consts.Items
+import shared.consts.Components
+import shared.consts.Items
 
 class ExperienceLampPlugin : InteractionListener {
     private val xpGainItems = Lamps.values().map { it.item }.toIntArray()

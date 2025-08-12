@@ -12,10 +12,10 @@ import core.game.node.entity.player.Player
 import core.game.world.map.zone.ZoneBorders
 import core.game.world.map.zone.ZoneRestriction
 import core.tools.secondsToTicks
-import org.rs.consts.Components
-import org.rs.consts.NPCs
-import org.rs.consts.Scenery
-import org.rs.consts.Sounds
+import shared.consts.Components
+import shared.consts.NPCs
+import shared.consts.Scenery
+import shared.consts.Sounds
 
 /**
  * Handles interaction for Drill demon random event.

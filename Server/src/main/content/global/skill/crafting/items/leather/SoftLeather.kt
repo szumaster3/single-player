@@ -1,7 +1,7 @@
 package content.global.skill.crafting.items.leather
 
 import core.game.node.item.Item
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Represents the different types of soft leather armour.

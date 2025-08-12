@@ -11,7 +11,7 @@ import core.game.world.GameWorld.Pulser
 import core.game.world.map.RegionManager.getLocalNpcs
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 @Initializable
 class SilkMerchantDialogue(player: Player? = null) : Dialogue(player) {

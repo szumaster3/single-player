@@ -16,8 +16,8 @@ import core.game.world.update.flag.context.Graphics
 import core.plugin.Initializable
 import core.plugin.Plugin
 import core.tools.RandomFunction
-import org.rs.consts.Items
-import org.rs.consts.Sounds
+import shared.consts.Items
+import shared.consts.Sounds
 
 /**
  * Handles the Dragon axe special attack.
@@ -62,7 +62,7 @@ class ClobberSpecialHandler : MeleeSwingHandler(), Plugin<Any> {
     companion object {
         private const val SPECIAL_ENERGY = 100
         private val ANIMATION = Animation(2876, Priority.HIGH)
-        private val Graphics = Graphics(org.rs.consts.Graphics.DRAGON_AXE_SPECIAL_479, 96)
+        private val Graphics = Graphics(shared.consts.Graphics.DRAGON_AXE_SPECIAL_479, 96)
         private val ITEM = Item(Items.DRAGON_AXE_6739)
     }
 }

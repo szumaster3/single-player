@@ -24,7 +24,7 @@ import core.game.world.map.path.Pathfinder.*
 import core.game.world.update.flag.context.Animation
 import core.tools.Log
 import core.tools.RandomFunction
-import org.rs.consts.Sounds
+import shared.consts.Sounds
 
 /**
  * Handles a combat swing.

@@ -5,7 +5,7 @@ import core.game.dialogue.FaceAnim
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.item.Item
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 class LeprechaunNote : InteractionListener {
     private val cropId = Plantable.values().map { it.harvestItem }.toIntArray()

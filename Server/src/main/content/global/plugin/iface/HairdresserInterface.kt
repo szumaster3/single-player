@@ -8,7 +8,7 @@ import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.Components
+import shared.consts.Components
 
 private const val HAIRDRESSER_MALE_COMPONENT_ID = Components.HAIRDRESSER_MALE_596
 private const val HAIRDRESSER_FEMALE_COMPONENT_ID = Components.HAIRDRESSER_FEMALE_592

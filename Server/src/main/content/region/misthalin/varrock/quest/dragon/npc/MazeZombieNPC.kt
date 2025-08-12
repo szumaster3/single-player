@@ -7,7 +7,7 @@ import core.game.node.entity.player.Player
 import core.game.node.item.GroundItemManager
 import core.game.world.map.Location
 import core.tools.RandomFunction
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 class MazeZombieNPC : AbstractNPC {
     constructor() : super(0, null)

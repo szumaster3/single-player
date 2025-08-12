@@ -1,4 +1,4 @@
-package org.rs.consts
+package shared.consts
 
 object Vars {
     const val VARP_QUEST_CHOMPY_293 = 293
@@ -945,7 +945,7 @@ object Vars {
     const val VARBIT_VINE_PATCH_STATUS_11_4963 = 4963
     const val VARBIT_VINE_PATCH_STATUS_12_4964 = 4964
     const val VARBIT_WILDERNESS_OBELISK_DESTINATION_4966 = 4966
-	
+
 	const val VARBIT_MTA_TELEKINETIC_POINTS_1485 = 1485
 	const val VARBIT_MTA_ALCHEMIST_POINTS_1489 = 1489
 	const val VARBIT_MTA_ENCHANTMENT_POINTS_1488 = 1488

@@ -9,7 +9,7 @@ import core.game.node.item.Item
 import core.game.world.GameWorld.settings
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 /**
  * Represents the Bartender (East Varrock) dialogue.

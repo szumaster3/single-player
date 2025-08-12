@@ -15,8 +15,8 @@ import core.game.world.update.flag.context.Animation;
 import core.game.world.update.flag.context.Graphics;
 import core.plugin.Initializable;
 import core.plugin.Plugin;
-import org.rs.consts.Animations;
-import org.rs.consts.Sounds;
+import shared.consts.Animations;
+import shared.consts.Sounds;
 
 import java.util.List;
 
@@ -29,7 +29,7 @@ import static core.api.ContentAPIKt.playGlobalAudio;
 public final class BloodSpells extends CombatSpell {
 
     private static final Projectile RUSH_PROJECTILE = Projectile.create((Entity) null, null, 372, 40, 36, 52, 75, 15, 11);
-    private static final Graphics RUSH_END = new Graphics(org.rs.consts.Graphics.ANCIENTS_BLOOD_SPELLS_373, 96);
+    private static final Graphics RUSH_END = new Graphics(shared.consts.Graphics.ANCIENTS_BLOOD_SPELLS_373, 96);
     private static final Graphics BURST_END = new Graphics(376, 0);
     private static final Projectile BLITZ_PROJECTILE = Projectile.create((Entity) null, null, 374, 40, 36, 52, 75, 15, 11);
     private static final Graphics BLITZ_END = new Graphics(375, 96);

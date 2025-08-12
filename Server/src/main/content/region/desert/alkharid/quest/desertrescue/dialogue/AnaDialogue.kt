@@ -16,7 +16,7 @@ import core.game.world.GameWorld.Pulser
 import core.game.world.map.Location
 import core.game.world.map.RegionManager.getNpc
 import core.plugin.Plugin
-import org.rs.consts.Quests
+import shared.consts.Quests
 
 class AnaDialogue(player: Player? = null) : Dialogue(player) {
 

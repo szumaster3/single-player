@@ -19,8 +19,8 @@ import core.game.world.update.flag.context.Graphics
 import core.plugin.Initializable
 import core.plugin.Plugin
 import core.tools.RandomFunction
-import org.rs.consts.Sounds
-import org.rs.consts.Scenery as Objects
+import shared.consts.Sounds
+import shared.consts.Scenery as Objects
 
 @Initializable
 class WildernessObeliskPlugin : OptionHandler() {
@@ -49,7 +49,7 @@ class WildernessObeliskPlugin : OptionHandler() {
                     y = y + 2
                     SceneryBuilder.replace(
                         Scenery(scenery.id, Location.create(x, y, z)),
-                        Scenery(org.rs.consts.Scenery.OBELISK_14825, Location.create(x, y, 0)),
+                        Scenery(shared.consts.Scenery.OBELISK_14825, Location.create(x, y, 0)),
                         6,
                     )
                 }
@@ -59,7 +59,7 @@ class WildernessObeliskPlugin : OptionHandler() {
                     y = y + 2
                     SceneryBuilder.replace(
                         Scenery(scenery.id, Location.create(x, y, z)),
-                        Scenery(org.rs.consts.Scenery.OBELISK_14825, Location.create(x, y, 0)),
+                        Scenery(shared.consts.Scenery.OBELISK_14825, Location.create(x, y, 0)),
                         6,
                     )
                 }
@@ -69,7 +69,7 @@ class WildernessObeliskPlugin : OptionHandler() {
                     y = y - 2
                     SceneryBuilder.replace(
                         Scenery(scenery.id, Location.create(x, y, z)),
-                        Scenery(org.rs.consts.Scenery.OBELISK_14825, Location.create(x, y, 0)),
+                        Scenery(shared.consts.Scenery.OBELISK_14825, Location.create(x, y, 0)),
                         6,
                     )
                 }
@@ -79,7 +79,7 @@ class WildernessObeliskPlugin : OptionHandler() {
                     y = y - 2
                     SceneryBuilder.replace(
                         Scenery(scenery.id, Location.create(x, y, z)),
-                        Scenery(org.rs.consts.Scenery.OBELISK_14825, Location.create(x, y, 0)),
+                        Scenery(shared.consts.Scenery.OBELISK_14825, Location.create(x, y, 0)),
                         6,
                     )
                 }

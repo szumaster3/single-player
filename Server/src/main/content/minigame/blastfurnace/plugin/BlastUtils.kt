@@ -1,7 +1,7 @@
 package content.minigame.blastfurnace.plugin
 
 import core.game.world.map.Location
-import org.rs.consts.Scenery
+import shared.consts.Scenery
 
 object BlastUtils {
     val ENTRANCE_LOC = Location(1940, 4958, 0)

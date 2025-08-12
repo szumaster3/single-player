@@ -6,9 +6,9 @@ import core.api.removeItem
 import core.api.sendMessage
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import org.rs.consts.Animations
-import org.rs.consts.Items
-import org.rs.consts.Scenery
+import shared.consts.Animations
+import shared.consts.Items
+import shared.consts.Scenery
 
 class CauldronOfThunderPlugin : InteractionListener {
 

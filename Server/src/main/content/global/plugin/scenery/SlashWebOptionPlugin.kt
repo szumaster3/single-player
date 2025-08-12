@@ -16,18 +16,18 @@ import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
 import core.plugin.Plugin
 import core.tools.RandomFunction
-import org.rs.consts.Animations
-import org.rs.consts.Items
-import org.rs.consts.Sounds
+import shared.consts.Animations
+import shared.consts.Items
+import shared.consts.Sounds
 
 @Initializable
 class SlashWebOptionPlugin : OptionHandler() {
     private val sceneryIDs =
         intArrayOf(
-            org.rs.consts.Scenery.WEB_733,
-            org.rs.consts.Scenery.WEB_1810,
-            org.rs.consts.Scenery.WEB_11400,
-            org.rs.consts.Scenery.WEB_33237,
+            shared.consts.Scenery.WEB_733,
+            shared.consts.Scenery.WEB_1810,
+            shared.consts.Scenery.WEB_11400,
+            shared.consts.Scenery.WEB_33237,
         )
     private val baseAnimation = Animation(Animations.PICK_OBJECT_GROUND_451)
     private val cutSpiderWebAnimation = Animation(Animations.CUT_SPIDER_WEB_911)
@@ -38,8 +38,8 @@ class SlashWebOptionPlugin : OptionHandler() {
         for (objectId in sceneryIDs) {
             SceneryDefinition.forId(objectId).handlers["option:slash"] = this
         }
-        SceneryDefinition.forId(org.rs.consts.Scenery.SPIDER_WEB_27266).handlers["option:pass"] = this
-        SceneryDefinition.forId(org.rs.consts.Scenery.SPIDERWEB_29354).handlers["option:pass"] = this
+        SceneryDefinition.forId(shared.consts.Scenery.SPIDER_WEB_27266).handlers["option:pass"] = this
+        SceneryDefinition.forId(shared.consts.Scenery.SPIDERWEB_29354).handlers["option:pass"] = this
         return this
     }
 
@@ -68,8 +68,8 @@ class SlashWebOptionPlugin : OptionHandler() {
             sendMessage(player, "You slash the web apart.")
             SceneryBuilder.replace(
                 scenery,
-                if (scenery.id == org.rs.consts.Scenery.SPIDER_WEB_27266 ||
-                    scenery.id == org.rs.consts.Scenery.SPIDERWEB_29354
+                if (scenery.id == shared.consts.Scenery.SPIDER_WEB_27266 ||
+                    scenery.id == shared.consts.Scenery.SPIDERWEB_29354
                 ) {
                     scenery.transform(734)
                 } else {
@@ -80,11 +80,11 @@ class SlashWebOptionPlugin : OptionHandler() {
                 100,
             )
 
-            if (scenery.id == org.rs.consts.Scenery.SPIDERWEB_29354) {
+            if (scenery.id == shared.consts.Scenery.SPIDERWEB_29354) {
                 finishDiaryTask(player, DiaryType.VARROCK, 0, 17)
             }
 
-            if (scenery.id == org.rs.consts.Scenery.SPIDERWEB_29354 &&
+            if (scenery.id == shared.consts.Scenery.SPIDERWEB_29354 &&
                 player.inventory.containsAtLeastOneItem(Items.RED_SPIDERS_EGGS_223) &&
                 player.location.y <= 9897
             ) {

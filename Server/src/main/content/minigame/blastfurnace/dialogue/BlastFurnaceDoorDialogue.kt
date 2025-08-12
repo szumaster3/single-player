@@ -6,7 +6,7 @@ import core.api.sendDialogue
 import core.game.dialogue.DialogueFile
 import core.game.node.item.Item
 import core.tools.END_DIALOGUE
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Represents the Blast furnace door dialogue.

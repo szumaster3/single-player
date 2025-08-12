@@ -11,9 +11,9 @@ import core.game.dialogue.FaceAnim
 import core.game.node.entity.player.Player
 import core.game.world.GameWorld
 import core.plugin.Initializable
-import org.rs.consts.Items
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
+import shared.consts.Items
+import shared.consts.NPCs
+import shared.consts.Quests
 
 @Initializable
 class ExaminerDialogue(player: Player? = null) : Dialogue(player) {

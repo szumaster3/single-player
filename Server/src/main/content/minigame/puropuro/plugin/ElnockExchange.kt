@@ -3,7 +3,7 @@ package content.minigame.puropuro.plugin
 import content.global.skill.hunter.bnet.BNetTypes
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
-import org.rs.consts.Items
+import shared.consts.Items
 
 enum class ElnockExchange(
     val button: Int,

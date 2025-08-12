@@ -11,7 +11,7 @@ import core.game.interaction.QueueStrength
 import core.game.node.entity.combat.ImpactHandler
 import core.game.node.item.Item
 import core.game.world.map.Location
-import org.rs.consts.*
+import shared.consts.*
 
 class PriestInPerilPlugin: InteractionListener {
 

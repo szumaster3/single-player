@@ -5,8 +5,8 @@ import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
-import org.rs.consts.Animations
-import org.rs.consts.Items
+import shared.consts.Animations
+import shared.consts.Items
 
 class TribalMaskPlugin : InteractionListener {
     private val itemIDs = mapOf(Items.TRIBAL_MASK_6335 to Items.BROODOO_SHIELD_10_6215, Items.TRIBAL_MASK_6337 to Items.BROODOO_SHIELD_10_6237, Items.TRIBAL_MASK_6339 to Items.BROODOO_SHIELD_10_6259)

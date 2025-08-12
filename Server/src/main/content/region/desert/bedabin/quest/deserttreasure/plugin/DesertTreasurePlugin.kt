@@ -10,7 +10,7 @@ import core.game.interaction.InteractionListener
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
 import core.game.world.map.Location
-import org.rs.consts.*
+import shared.consts.*
 
 class DesertTreasurePlugin : InteractionListener {
     var temp = 6517

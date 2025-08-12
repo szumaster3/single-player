@@ -22,7 +22,7 @@ import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.entity.skill.Skills
 import core.game.world.map.zone.ZoneBorders
-import org.rs.consts.*
+import shared.consts.*
 
 class LumbridgeAchievementDiary : DiaryEventHookBase(DiaryType.LUMBRIDGE) {
     companion object {

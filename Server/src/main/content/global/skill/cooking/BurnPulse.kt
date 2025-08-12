@@ -7,7 +7,7 @@ import core.api.sendMessage
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.game.node.scenery.Scenery
-import org.rs.consts.Sounds
+import shared.consts.Sounds
 
 class BurnPulse
     internal constructor(

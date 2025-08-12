@@ -7,10 +7,10 @@ import core.game.dialogue.FaceAnim
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.tools.END_DIALOGUE
-import org.rs.consts.Animations
-import org.rs.consts.Items
-import org.rs.consts.Quests
-import org.rs.consts.Scenery
+import shared.consts.Animations
+import shared.consts.Items
+import shared.consts.Quests
+import shared.consts.Scenery
 
 class WolfWhistlePlugin : InteractionListener {
     override fun defineListeners() {

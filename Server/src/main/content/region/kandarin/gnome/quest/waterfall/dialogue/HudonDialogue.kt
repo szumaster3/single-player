@@ -4,7 +4,7 @@ import core.game.dialogue.Dialogue
 import core.game.dialogue.DialogueInterpreter
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.player.Player
-import org.rs.consts.Quests
+import shared.consts.Quests
 
 class HudonDialogue(player: Player? = null) : Dialogue(player) {
 

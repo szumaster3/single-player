@@ -9,7 +9,7 @@ import core.game.world.GameWorld.Pulser
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.tools.Log
-import org.rs.consts.Animations
+import shared.consts.Animations
 
 /**
  * The `DigSpadeHandler` object manages the logic for digging actions.

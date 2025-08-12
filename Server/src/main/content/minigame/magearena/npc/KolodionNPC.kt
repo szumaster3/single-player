@@ -14,7 +14,7 @@ import core.game.world.GameWorld.Pulser
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.tools.RandomFunction
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 class KolodionNPC(id: Int = 0, location: Location? = null, session: KolodionSession? = null) : AbstractNPC(id, location) {
 

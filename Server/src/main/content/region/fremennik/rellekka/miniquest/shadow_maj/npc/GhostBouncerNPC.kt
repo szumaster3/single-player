@@ -12,9 +12,9 @@ import core.game.world.GameWorld
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
-import org.rs.consts.Animations
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Animations
+import shared.consts.Items
+import shared.consts.NPCs
 
 @Initializable
 class GhostBouncerNPC(id: Int = 0, location: Location? = null) : AbstractNPC(id, location) {

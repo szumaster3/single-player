@@ -12,10 +12,10 @@ import core.game.world.GameWorld
 import core.game.world.map.Location
 import core.plugin.Initializable
 import core.tools.RandomFunction
-import org.rs.consts.Graphics
-import org.rs.consts.Items
-import org.rs.consts.NPCs
-import org.rs.consts.Vars
+import shared.consts.Graphics
+import shared.consts.Items
+import shared.consts.NPCs
+import shared.consts.Vars
 
 @Initializable
 class SlashBashNPC(

@@ -9,10 +9,10 @@ import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.item.Item
 import core.game.world.map.Location
-import org.rs.consts.Components
-import org.rs.consts.Items
-import org.rs.consts.Scenery
-import org.rs.consts.Sounds
+import shared.consts.Components
+import shared.consts.Items
+import shared.consts.Scenery
+import shared.consts.Sounds
 
 class MakingHistoryPlugin : InteractionListener {
 

@@ -6,9 +6,9 @@ import core.game.dialogue.SequenceDialogue.dialogue
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.interaction.InterfaceListener
-import org.rs.consts.Components
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
+import shared.consts.Components
+import shared.consts.NPCs
+import shared.consts.Quests
 
 class GliderPlugin : InteractionListener, InterfaceListener {
 

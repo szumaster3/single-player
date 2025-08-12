@@ -13,7 +13,7 @@ import core.game.world.map.zone.ZoneRestriction
 import core.net.packet.OutgoingContext
 import core.net.packet.PacketRepository
 import core.net.packet.out.CameraViewPacket
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 /**
  * Handles the evil twin random event.
@@ -23,8 +23,8 @@ class EvilTwinListener :
     InteractionListener,
     MapArea {
     private val mollyId = (NPCs.MOLLY_3892..NPCs.MOLLY_3911).toIntArray()
-    private val doorsId = org.rs.consts.Scenery.DOOR_14982
-    private val controlPanel = org.rs.consts.Scenery.CONTROL_PANEL_14978
+    private val doorsId = shared.consts.Scenery.DOOR_14982
+    private val controlPanel = shared.consts.Scenery.CONTROL_PANEL_14978
 
     override fun defineAreaBorders(): Array<ZoneBorders> = arrayOf(getRegionBorders(EvilTwinUtils.region.id))
     override fun getRestrictions(): Array<ZoneRestriction> = arrayOf(ZoneRestriction.CANNON, ZoneRestriction.FOLLOWERS)

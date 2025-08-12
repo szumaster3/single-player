@@ -8,10 +8,10 @@ import core.game.node.item.Item
 import core.game.world.map.Direction
 import core.game.world.map.RegionManager.getObject
 import core.tools.RandomFunction
-import org.rs.consts.Components
-import org.rs.consts.Graphics
-import org.rs.consts.Items
-import org.rs.consts.Scenery
+import shared.consts.Components
+import shared.consts.Graphics
+import shared.consts.Items
+import shared.consts.Scenery
 
 class ImpetuousImpulsesPlugin : InteractionListener {
     override fun defineListeners() {

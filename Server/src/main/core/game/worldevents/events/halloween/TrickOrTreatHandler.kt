@@ -15,10 +15,10 @@ import core.game.world.GameWorld.Pulser
 import core.game.world.map.Location
 import core.tools.END_DIALOGUE
 import core.tools.RandomFunction
-import org.rs.consts.Animations
-import org.rs.consts.Components
-import org.rs.consts.Graphics
-import org.rs.consts.Items
+import shared.consts.Animations
+import shared.consts.Components
+import shared.consts.Graphics
+import shared.consts.Items
 
 class TrickOrTreatHandler : InteractionListener {
     override fun defineListeners() {

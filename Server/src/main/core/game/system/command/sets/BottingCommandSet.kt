@@ -8,7 +8,7 @@ import core.game.system.command.Privilege
 import core.game.world.GameWorld
 import core.plugin.Initializable
 import core.tools.colorize
-import org.rs.consts.Components
+import shared.consts.Components
 
 @Initializable
 class BottingCommandSet : CommandSet(Privilege.ADMIN) {

@@ -13,7 +13,7 @@ import core.game.node.entity.npc.NPCBehavior
 import core.game.node.entity.player.Player
 import core.game.world.GameWorld
 import core.tools.RandomFunction
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 class NechryaelNPC : NPCBehavior(*Tasks.NECHRYAELS.npcs) {
     private val ATTR_SPAWNS = "deathSpawns"

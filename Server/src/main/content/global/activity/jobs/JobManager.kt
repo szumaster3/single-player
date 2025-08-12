@@ -16,7 +16,7 @@ import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.tools.StringUtils
-import org.rs.consts.Items
+import shared.consts.Items
 import java.lang.Integer.min
 
 /**

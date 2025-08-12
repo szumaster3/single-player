@@ -3,7 +3,7 @@ package content.global.plugin.iface
 import core.api.sendMessage
 import core.game.interaction.InterfaceListener
 import core.game.world.repository.Repository
-import org.rs.consts.Components
+import shared.consts.Components
 
 /**
  * Represents the interface.

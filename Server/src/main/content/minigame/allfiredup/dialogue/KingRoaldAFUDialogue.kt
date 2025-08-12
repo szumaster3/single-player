@@ -6,7 +6,7 @@ import core.api.removeAttribute
 import core.game.dialogue.DialogueFile
 import core.tools.END_DIALOGUE
 import core.tools.START_DIALOGUE
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Represents the King Roald (All Fired Up quest) dialogue.

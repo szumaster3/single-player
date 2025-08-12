@@ -12,25 +12,25 @@ import core.game.world.update.flag.context.Animation
 import core.net.packet.out.ClearScenery
 import core.net.packet.out.ConstructScenery
 import core.net.packet.out.UpdateAreaPosition
-import org.rs.consts.Animations
-import org.rs.consts.Items
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
+import shared.consts.Animations
+import shared.consts.Items
+import shared.consts.NPCs
+import shared.consts.Quests
 
 class FamilyCrestListener : InteractionListener {
     private val poisonId =
         intArrayOf(Items.ANTIPOISON4_2446, Items.ANTIPOISON3_175, Items.ANTIPOISON2_177, Items.ANTIPOISON1_179)
     private val pullDownAnimation = Animation(Animations.PULL_DOWN_LEVER_2140)
     private val pullUpAnimation = Animation(Animations.PULL_UP_LEVER_2139)
-    private val northLeverA = org.rs.consts.Scenery.LEVER_2421
-    private val northLeverB = org.rs.consts.Scenery.LEVER_2425
-    private val southLever = org.rs.consts.Scenery.LEVER_2423
+    private val northLeverA = shared.consts.Scenery.LEVER_2421
+    private val northLeverB = shared.consts.Scenery.LEVER_2425
+    private val southLever = shared.consts.Scenery.LEVER_2423
     private val leverId =
         intArrayOf(northLeverA, northLeverA + 1, northLeverB, northLeverB + 1, southLever, southLever + 1)
-    private val northDoorId = org.rs.consts.Scenery.DOOR_2431
-    private val hellhoundDoorId = org.rs.consts.Scenery.DOOR_2430
-    private val southwestDoorId = org.rs.consts.Scenery.DOOR_2427
-    private val southEastDoorId = org.rs.consts.Scenery.DOOR_2429
+    private val northDoorId = shared.consts.Scenery.DOOR_2431
+    private val hellhoundDoorId = shared.consts.Scenery.DOOR_2430
+    private val southwestDoorId = shared.consts.Scenery.DOOR_2427
+    private val southEastDoorId = shared.consts.Scenery.DOOR_2429
     private val doorsIDs = intArrayOf(northDoorId, hellhoundDoorId, southwestDoorId, southEastDoorId)
 
     override fun defineListeners() {

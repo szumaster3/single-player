@@ -12,7 +12,7 @@ import core.game.node.entity.player.info.PlayerMonitor
 import core.game.node.entity.player.link.request.RequestModule
 import core.game.node.item.GroundItemManager
 import core.game.node.item.Item
-import org.rs.consts.Components
+import shared.consts.Components
 import java.text.DecimalFormat
 import java.util.*
 

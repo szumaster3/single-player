@@ -6,8 +6,8 @@ import core.game.node.entity.skill.SkillPulse
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.tools.StringUtils
-import org.rs.consts.Animations
-import org.rs.consts.Items
+import shared.consts.Animations
+import shared.consts.Items
 
 class DragonLeatherCraftingPulse(player: Player?, node: Item?, val leather: DragonLeather, var amount: Int, ) : SkillPulse<Item?>(player, node) {
 

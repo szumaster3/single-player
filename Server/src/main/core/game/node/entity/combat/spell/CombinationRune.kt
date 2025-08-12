@@ -1,6 +1,6 @@
 package core.game.node.entity.combat.spell
 
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Represents a combination rune, which substitutes multiple elemental or catalytic runes.

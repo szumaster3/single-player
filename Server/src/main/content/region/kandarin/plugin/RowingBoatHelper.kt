@@ -7,8 +7,8 @@ import core.game.node.entity.player.link.TeleportManager
 import core.game.system.task.Pulse
 import core.game.world.GameWorld
 import core.game.world.map.Location
-import org.rs.consts.Components
-import org.rs.consts.NPCs
+import shared.consts.Components
+import shared.consts.NPCs
 
 object RowingBoatHelper {
     @JvmStatic

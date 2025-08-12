@@ -10,8 +10,8 @@ import core.game.node.item.Item
 import core.plugin.ClassScanner
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 @Initializable
 class TzRekJadNPC : OptionHandler() {

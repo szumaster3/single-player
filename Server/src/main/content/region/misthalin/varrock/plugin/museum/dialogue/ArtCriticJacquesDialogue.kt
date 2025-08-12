@@ -6,7 +6,7 @@ import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.world.map.Location
 import core.plugin.Initializable
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 @Initializable
 class ArtCriticJacquesDialogue(player: Player? = null) : Dialogue(player) {

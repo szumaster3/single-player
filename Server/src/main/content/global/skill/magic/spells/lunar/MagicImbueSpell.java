@@ -13,7 +13,7 @@ import core.game.world.update.flag.context.Animation;
 import core.game.world.update.flag.context.Graphics;
 import core.plugin.Initializable;
 import core.plugin.Plugin;
-import org.rs.consts.Sounds;
+import shared.consts.Sounds;
 
 import static core.api.ContentAPIKt.playAudio;
 import static core.api.ContentAPIKt.setAttribute;

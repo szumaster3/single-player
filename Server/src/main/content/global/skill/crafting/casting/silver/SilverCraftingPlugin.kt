@@ -10,7 +10,7 @@ import core.game.node.entity.impl.PulseType
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
 import core.game.system.task.Pulse
-import org.rs.consts.*
+import shared.consts.*
 
 class SilverCraftingPlugin : InteractionListener, InterfaceListener {
 

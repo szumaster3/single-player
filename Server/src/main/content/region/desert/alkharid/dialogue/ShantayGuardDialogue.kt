@@ -14,8 +14,8 @@ import core.game.world.map.Location
 import core.game.world.map.path.Pathfinder
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 /**
  * Represents the Shantay Guard dialogue.

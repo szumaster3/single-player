@@ -27,8 +27,8 @@ import core.plugin.ClassScanner.definePlugin
 import core.plugin.Initializable
 import core.plugin.Plugin
 import core.tools.RandomFunction
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 @Initializable
 class ForgeRegentNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.FORGE_REGENT_7335) :
@@ -74,7 +74,7 @@ class ForgeRegentNPC @JvmOverloads constructor(owner: Player? = null, id: Int = 
             }
         }
         graphics(Graphics.create(1394))
-        target.graphics(Graphics.create(org.rs.consts.Graphics.RAINING_FIRE_ON_YOU_1393))
+        target.graphics(Graphics.create(shared.consts.Graphics.RAINING_FIRE_ON_YOU_1393))
         if (target.equipment.remove(remove)) {
             target.inventory.add(remove)
         }

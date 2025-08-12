@@ -8,8 +8,8 @@ import core.api.sendString
 import core.game.dialogue.DialogueFile
 import core.game.node.item.Item
 import core.tools.START_DIALOGUE
-import org.rs.consts.Components
-import org.rs.consts.Items
+import shared.consts.Components
+import shared.consts.Items
 
 /**
  * Represents the dialogue shown when the user presses the "?" button on the Bank Interface.

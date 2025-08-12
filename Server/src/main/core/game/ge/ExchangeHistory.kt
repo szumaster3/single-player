@@ -7,7 +7,7 @@ import core.cache.def.impl.ItemDefinition
 import core.game.component.Component
 import core.game.node.entity.player.Player
 import core.tools.SystemLogger
-import org.rs.consts.Components
+import shared.consts.Components
 import java.text.NumberFormat
 import java.util.*
 

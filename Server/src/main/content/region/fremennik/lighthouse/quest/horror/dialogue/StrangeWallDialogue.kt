@@ -4,7 +4,7 @@ import content.data.GameAttributes
 import core.api.*
 import core.game.dialogue.DialogueFile
 import core.game.node.item.Item
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Represents the Strange Wall dialogue.

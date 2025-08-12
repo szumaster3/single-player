@@ -9,8 +9,8 @@ import core.game.world.map.Location
 import core.game.world.map.RegionManager.getObject
 import core.game.world.update.flag.context.Animation
 import core.tools.END_DIALOGUE
-import org.rs.consts.Animations
-import org.rs.consts.NPCs
+import shared.consts.Animations
+import shared.consts.NPCs
 
 class GateGuardDialogue : DialogueFile() {
     override fun handle(

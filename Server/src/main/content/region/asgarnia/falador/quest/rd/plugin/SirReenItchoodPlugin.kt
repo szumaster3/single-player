@@ -9,8 +9,8 @@ import core.game.dialogue.FaceAnim
 import core.game.interaction.InterfaceListener
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
-import org.rs.consts.Components
-import org.rs.consts.NPCs
+import shared.consts.Components
+import shared.consts.NPCs
 
 class SirReenItchoodPlugin(
     private val dialogueNum: Int = 0,

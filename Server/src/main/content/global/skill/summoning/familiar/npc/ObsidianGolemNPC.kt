@@ -8,8 +8,8 @@ import core.game.node.entity.skill.SkillBonus
 import core.game.node.entity.skill.Skills
 import core.game.world.update.flag.context.Graphics
 import core.plugin.Initializable
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 @Initializable
 class ObsidianGolemNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs.OBSIDIAN_GOLEM_7345) :

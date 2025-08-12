@@ -19,8 +19,8 @@ import core.net.packet.PacketRepository;
 import core.net.packet.out.CameraViewPacket;
 import core.plugin.Initializable;
 import core.plugin.Plugin;
-import org.rs.consts.Components;
-import org.rs.consts.NPCs;
+import shared.consts.Components;
+import shared.consts.NPCs;
 
 import static core.api.ContentAPIKt.setAttribute;
 

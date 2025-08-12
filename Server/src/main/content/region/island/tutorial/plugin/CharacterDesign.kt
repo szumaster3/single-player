@@ -4,7 +4,7 @@ import core.api.*
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.appearance.Gender
 import core.tools.RandomFunction
-import org.rs.consts.Components
+import shared.consts.Components
 import kotlin.math.abs
 
 /**

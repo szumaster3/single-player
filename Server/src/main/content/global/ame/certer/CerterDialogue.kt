@@ -8,7 +8,7 @@ import core.game.dialogue.DialogueFile
 import core.game.node.entity.impl.PulseType
 import core.game.system.timer.impl.AntiMacro
 import core.tools.END_DIALOGUE
-import org.rs.consts.Animations
+import shared.consts.Animations
 
 /**
  * Represents the Certer dialogue.

@@ -7,7 +7,7 @@ import core.game.node.entity.combat.CombatStyle
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.npc.NPCBehavior
 import core.game.worldevents.events.HolidayRandomEventNPC
-import org.rs.consts.Sounds
+import shared.consts.Sounds
 
 class SpiderHolidayRandomBehavior : NPCBehavior() {
     override fun canBeAttackedBy(

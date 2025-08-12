@@ -1,4 +1,4 @@
-package org.rs.consts
+package shared.consts
 
 object Components {
     const val GUIDE_EGGS_OVERLAY_0 = 0
@@ -454,7 +454,6 @@ object Components {
     const val WEAPON_CHINCHOMPA_SEL_473 = 473
     const val WEAPON_SALAMANDER_SEL_474 = 474
     const val CUSTOM_FUR_CLOTHING_477 = 477
-    const val IMP_BOX_482 = 482
     const val ANMA_RGB_480 = 480
     const val SNOW_B_OVERLAY_481 = 481
     const val SNOW_A_OVERLAY_482 = 482

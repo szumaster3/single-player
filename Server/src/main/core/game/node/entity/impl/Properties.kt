@@ -16,7 +16,7 @@ import core.game.world.GameWorld.settings
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
-import org.rs.consts.Animations
+import shared.consts.Animations
 
 /**
  * A class that holds various properties related to an entity.

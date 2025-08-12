@@ -1,7 +1,7 @@
 /*package content.region.asgarnia.entrana.quest
 
-import org.rs.consts.Items
-import org.rs.consts.Vars
+import shared.consts.Items
+import shared.consts.Vars
 import core.api.rewardXP
 import core.api.setVarbit
 import core.game.node.entity.player.Player

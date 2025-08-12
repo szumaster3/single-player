@@ -10,9 +10,9 @@ import core.game.interaction.InteractionListener
 import core.game.node.entity.skill.Skills
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
-import org.rs.consts.Animations
-import org.rs.consts.NPCs
-import org.rs.consts.Scenery
+import shared.consts.Animations
+import shared.consts.NPCs
+import shared.consts.Scenery
 
 class MiningGuildPlugin : InteractionListener {
 

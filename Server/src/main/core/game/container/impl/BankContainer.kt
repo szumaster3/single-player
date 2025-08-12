@@ -17,7 +17,7 @@ import core.game.world.GameWorld.settings
 import core.net.packet.OutgoingContext
 import core.net.packet.PacketRepository
 import core.net.packet.out.ContainerPacket
-import org.rs.consts.Vars
+import shared.consts.Vars
 
 /**
  * Represents the bank container.

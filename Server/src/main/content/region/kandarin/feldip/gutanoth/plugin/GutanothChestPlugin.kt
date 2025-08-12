@@ -11,12 +11,12 @@ import core.game.node.scenery.Scenery
 import core.game.node.scenery.SceneryBuilder
 import core.game.system.task.Pulse
 import core.game.world.GameWorld
-import org.rs.consts.Animations
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Animations
+import shared.consts.Items
+import shared.consts.NPCs
 import java.util.concurrent.TimeUnit
 
-private const val CHEST = org.rs.consts.Scenery.CHEST_2827
+private const val CHEST = shared.consts.Scenery.CHEST_2827
 /**
  * Handles interactions with the Gutanoth chest.
  */

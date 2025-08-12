@@ -11,8 +11,8 @@ import core.game.node.entity.skill.Skills
 import core.game.system.timer.impl.Disease
 import core.plugin.Initializable
 import core.tools.RandomFunction
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 import kotlin.math.ceil
 
 @Initializable

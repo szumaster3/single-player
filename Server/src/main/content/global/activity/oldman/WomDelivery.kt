@@ -1,7 +1,7 @@
 package content.global.activity.oldman
 
 import core.tools.RandomFunction
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Enum represents Wise old man delivery data.

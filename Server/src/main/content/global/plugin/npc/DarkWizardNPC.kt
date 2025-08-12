@@ -9,7 +9,7 @@ import core.game.node.entity.player.link.SpellBookManager.SpellBook
 import core.game.world.map.Location
 import core.plugin.Initializable
 import core.tools.RandomFunction
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 @Initializable
 class DarkWizardNPC(id: Int = 0, location: Location? = null, ) : AbstractNPC(id, location) {

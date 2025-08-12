@@ -8,7 +8,7 @@ import core.game.node.entity.skill.Skills
 import core.game.shops.Shops.Companion.openId
 import core.game.world.GameWorld
 import core.plugin.Initializable
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 /**
  * Represents the Sani dialogue.

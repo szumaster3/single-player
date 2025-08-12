@@ -3,7 +3,7 @@ package content.region.kandarin.seers.quest.elemental_quest_2.plugin
 import core.api.*
 import core.game.dialogue.FaceAnim
 import core.game.interaction.InterfaceListener
-import org.rs.consts.Components
+import shared.consts.Components
 
 class JunctionBoxInterface : InterfaceListener {
     private val junctionBox = Components.JUNCTION_BOX_262

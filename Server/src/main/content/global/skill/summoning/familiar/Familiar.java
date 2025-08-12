@@ -29,8 +29,8 @@ import core.game.world.update.flag.context.Graphics;
 import core.plugin.Plugin;
 import core.tools.Log;
 import core.tools.RandomFunction;
-import org.rs.consts.Animations;
-import org.rs.consts.Sounds;
+import shared.consts.Animations;
+import shared.consts.Sounds;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,11 +46,11 @@ public abstract class Familiar extends NPC implements Plugin<Object> {
     /**
      * The constant small summon graphics.
      */
-    protected static final Graphics SMALL_SUMMON_GRAPHICS = Graphics.create(org.rs.consts.Graphics.SUMMON_FAMILIAR_SMALL_1314);
+    protected static final Graphics SMALL_SUMMON_GRAPHICS = Graphics.create(shared.consts.Graphics.SUMMON_FAMILIAR_SMALL_1314);
     /**
      * The constant large summon graphics.
      */
-    protected static final Graphics LARGE_SUMMON_GRAPHICS = Graphics.create(org.rs.consts.Graphics.SUMMON_FAMILIAR_LARGE_1315);
+    protected static final Graphics LARGE_SUMMON_GRAPHICS = Graphics.create(shared.consts.Graphics.SUMMON_FAMILIAR_LARGE_1315);
     /**
      * The constant special animation.
      */
@@ -58,7 +58,7 @@ public abstract class Familiar extends NPC implements Plugin<Object> {
     /**
      * The constant special graphics.
      */
-    protected static final Graphics SPECIAL_GRAPHICS = Graphics.create(org.rs.consts.Graphics.FRUIT_BAT_SPECIAL_1316);
+    protected static final Graphics SPECIAL_GRAPHICS = Graphics.create(shared.consts.Graphics.FRUIT_BAT_SPECIAL_1316);
 
     /**
      * The Owner.

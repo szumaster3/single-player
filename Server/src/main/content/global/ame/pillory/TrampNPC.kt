@@ -8,9 +8,9 @@ import core.game.world.map.Location
 import core.game.world.map.RegionManager
 import core.plugin.Initializable
 import core.tools.RandomFunction
-import org.rs.consts.Animations
-import org.rs.consts.Graphics
-import org.rs.consts.NPCs
+import shared.consts.Animations
+import shared.consts.Graphics
+import shared.consts.NPCs
 
 /**
  * Represents the Tramp random event NPC.

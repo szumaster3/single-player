@@ -8,8 +8,8 @@ import core.game.node.entity.player.link.emote.Emotes
 import core.game.world.GameWorld
 import core.game.world.update.flag.context.Graphics
 import core.tools.DARK_RED
-import org.rs.consts.Components
-import org.rs.consts.Vars
+import shared.consts.Components
+import shared.consts.Vars
 
 /**
  * Handles level-up logic.
@@ -61,7 +61,7 @@ object LevelUp {
     fun levelUp(player: Player, slot: Int, amount: Int) {
         if (!getAttribute(player, GameAttributes.TUTORIAL_COMPLETE, false)) return
 
-        Graphics.send(Graphics(org.rs.consts.Graphics.FIREWORKS_WHEN_A_LVL_IS_GAINED_199, 100), player.location)
+        Graphics.send(Graphics(shared.consts.Graphics.FIREWORKS_WHEN_A_LVL_IS_GAINED_199, 100), player.location)
         playJingle(player, getSkillJingle(player, slot))
 
         handleMilestones(player, slot, amount)

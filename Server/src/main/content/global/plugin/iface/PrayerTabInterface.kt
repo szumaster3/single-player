@@ -8,7 +8,7 @@ import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.prayer.PrayerType
 import core.tools.DARK_BLUE
-import org.rs.consts.Components
+import shared.consts.Components
 
 /**
  * Represents the prayer interface.

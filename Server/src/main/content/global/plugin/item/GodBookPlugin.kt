@@ -10,8 +10,8 @@ import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.game.system.task.Pulse
 import core.game.world.update.flag.context.Animation
-import org.rs.consts.Animations
-import org.rs.consts.Items
+import shared.consts.Animations
+import shared.consts.Items
 
 class GodBookPlugin : InteractionListener {
     private val saradominBook = Items.HOLY_BOOK_3840

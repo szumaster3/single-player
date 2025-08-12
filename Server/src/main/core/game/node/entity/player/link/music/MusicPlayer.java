@@ -7,7 +7,7 @@ import core.net.packet.OutgoingContext;
 import core.net.packet.PacketRepository;
 import core.net.packet.out.MusicPacket;
 import core.net.packet.out.StringPacket;
-import org.rs.consts.Music;
+import shared.consts.Music;
 
 import java.util.HashMap;
 import java.util.Set;

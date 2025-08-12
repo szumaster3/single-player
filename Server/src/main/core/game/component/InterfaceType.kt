@@ -1,6 +1,6 @@
 package core.game.component
 
-import org.rs.consts.Components
+import shared.consts.Components
 
 /**
  * Represents interface types for different components.

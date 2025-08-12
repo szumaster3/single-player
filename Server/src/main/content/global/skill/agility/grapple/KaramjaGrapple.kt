@@ -19,8 +19,8 @@ import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.Animations
-import org.rs.consts.Items
+import shared.consts.Animations
+import shared.consts.Items
 
 @Initializable
 class KaramjaGrapple : OptionHandler() {
@@ -227,7 +227,7 @@ class KaramjaGrapple : OptionHandler() {
                                     SceneryBuilder.replace(islandTree, islandTree!!.transform(islandTree.id + 2), 10)
                                 }
 
-                                5 -> visualize(player, -1, Graphics.create(org.rs.consts.Graphics.WATER_SPLASH_68))
+                                5 -> visualize(player, -1, Graphics.create(shared.consts.Graphics.WATER_SPLASH_68))
                                 6 -> {
                                     ForceMovement.run(
                                         player,

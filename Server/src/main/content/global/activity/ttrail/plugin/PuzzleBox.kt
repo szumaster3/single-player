@@ -3,7 +3,7 @@ package content.global.activity.ttrail.plugin
 import core.api.getAttribute
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Represents a sliding puzzle boxes.

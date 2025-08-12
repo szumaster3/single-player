@@ -14,8 +14,8 @@ import core.game.world.update.flag.context.Graphics;
 import core.plugin.Initializable;
 import core.plugin.Plugin;
 import core.tools.RandomFunction;
-import org.rs.consts.Items;
-import org.rs.consts.Sounds;
+import shared.consts.Items;
+import shared.consts.Sounds;
 
 import java.util.List;
 
@@ -33,7 +33,7 @@ public final class PowerStabSpecialHandler extends MeleeSwingHandler implements 
 
     private static final Animation ANIMATION = new Animation(3157, Priority.HIGH);
 
-    private static final Graphics GRAPHICS = new Graphics(org.rs.consts.Graphics.DRAGON_2H_SPECIAL_1225);
+    private static final Graphics GRAPHICS = new Graphics(shared.consts.Graphics.DRAGON_2H_SPECIAL_1225);
 
     @Override
     public Object fireEvent(String identifier, Object... args) {

@@ -9,9 +9,9 @@ import core.game.node.entity.skill.Skills
 import core.plugin.Initializable
 import core.plugin.Plugin
 import core.tools.Log
-import org.rs.consts.Components
-import org.rs.consts.Quests
-import org.rs.consts.Sounds
+import shared.consts.Components
+import shared.consts.Quests
+import shared.consts.Sounds
 
 /**
  * Represents the experience interface.

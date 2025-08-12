@@ -9,8 +9,8 @@ import core.game.node.item.Item
 import core.game.system.task.Pulse
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Graphics
-import org.rs.consts.Animations
-import org.rs.consts.Items
+import shared.consts.Animations
+import shared.consts.Items
 
 class SkullSceptrePlugin : InteractionListener {
 
@@ -41,7 +41,7 @@ class SkullSceptrePlugin : InteractionListener {
                     override fun pulse(): Boolean {
                         when(count++) {
                             0 -> {
-                                visualize(player, Animations.HUMAN_USE_SCEPTRE_9601, Graphics(org.rs.consts.Graphics.USE_SCEPTRE_1683, 100))
+                                visualize(player, Animations.HUMAN_USE_SCEPTRE_9601, Graphics(shared.consts.Graphics.USE_SCEPTRE_1683, 100))
                             }
                             6 -> {
                                 teleport(player, Location.create(3081, 3421, 0), TeleportManager.TeleportType.INSTANT)

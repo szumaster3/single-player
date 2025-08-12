@@ -4,7 +4,7 @@ import TestUtils
 import core.game.node.item.Item
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import org.rs.consts.Items
+import shared.consts.Items
 import kotlin.math.roundToInt
 
 class ItemDefinitionTests {

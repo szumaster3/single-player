@@ -7,7 +7,7 @@ import core.game.interaction.InteractionListener
 import core.game.node.Node
 import core.game.node.entity.player.Player
 import core.tools.prependArticle
-import org.rs.consts.Items
+import shared.consts.Items
 
 class SeedlingListener : InteractionListener {
     override fun defineListeners() {

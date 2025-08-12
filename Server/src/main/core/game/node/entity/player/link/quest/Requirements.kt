@@ -3,7 +3,7 @@ package core.game.node.entity.player.link.quest
 import core.api.getStatLevel
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
-import org.rs.consts.Quests
+import shared.consts.Quests
 import kotlin.math.min
 
 interface Requirements {

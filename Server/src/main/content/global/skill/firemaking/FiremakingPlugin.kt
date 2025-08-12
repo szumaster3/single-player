@@ -7,9 +7,9 @@ import core.game.node.entity.impl.Projectile
 import core.game.node.entity.skill.Skills
 import core.game.node.item.GroundItem
 import core.game.node.item.Item
-import org.rs.consts.Animations
-import org.rs.consts.Items
-import org.rs.consts.Quests
+import shared.consts.Animations
+import shared.consts.Items
+import shared.consts.Quests
 import kotlin.math.min
 
 

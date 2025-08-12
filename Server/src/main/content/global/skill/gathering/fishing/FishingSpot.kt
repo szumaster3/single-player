@@ -1,6 +1,6 @@
 package content.global.skill.gathering.fishing
 
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 /**
  * Represents fishing spots.

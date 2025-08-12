@@ -3,7 +3,7 @@ package content.global.plugin.iface
 import core.api.sendMessage
 import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.link.music.MusicEntry
-import org.rs.consts.Components
+import shared.consts.Components
 
 /**
  * Handles the interface tab buttons.

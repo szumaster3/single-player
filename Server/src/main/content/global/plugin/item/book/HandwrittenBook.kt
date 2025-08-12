@@ -7,7 +7,7 @@ import content.global.plugin.iface.PageSet
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.player.Player
-import org.rs.consts.Items
+import shared.consts.Items
 
 class HandwrittenBook : InteractionListener {
     /*

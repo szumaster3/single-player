@@ -6,7 +6,7 @@ import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.skill.Skills
 import core.tools.END_DIALOGUE
-import org.rs.consts.Animations
+import shared.consts.Animations
 
 class AlKharidHealDialogue(val skipFirst: Boolean) : DialogueFile() {
 

@@ -1,4 +1,4 @@
-package org.rs.consts
+package shared.consts
 
 object Scenery {
     const val CRATE_1 = 1

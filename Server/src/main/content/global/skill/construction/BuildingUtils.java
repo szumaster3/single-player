@@ -19,7 +19,7 @@ import core.net.packet.PacketRepository;
 import core.net.packet.out.ContainerPacket;
 import core.tools.Log;
 import org.jetbrains.annotations.NotNull;
-import org.rs.consts.Items;
+import shared.consts.Items;
 
 import java.util.ArrayList;
 import java.util.Arrays;

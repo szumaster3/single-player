@@ -14,8 +14,8 @@ import core.game.system.task.Pulse
 import core.game.world.map.Location
 import core.plugin.ClassScanner.definePlugin
 import core.plugin.Plugin
-import org.rs.consts.Components
-import org.rs.consts.Scenery
+import shared.consts.Components
+import shared.consts.Scenery
 
 class OrbViewingInterface : ComponentPlugin() {
     override fun newInstance(arg: Any?): Plugin<Any> {

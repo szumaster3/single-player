@@ -4,7 +4,7 @@ import core.api.sendDialogue
 import core.api.sendNPCDialogue
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 class NardahPlugin: InteractionListener {
 

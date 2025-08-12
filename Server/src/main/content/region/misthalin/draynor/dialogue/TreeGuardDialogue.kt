@@ -9,8 +9,8 @@ import core.game.node.entity.npc.NPC
 import core.game.system.task.Pulse
 import core.game.world.map.Location
 import core.tools.END_DIALOGUE
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 /**
  * Represents the Tree Guard (Draynor tree) dialogue.

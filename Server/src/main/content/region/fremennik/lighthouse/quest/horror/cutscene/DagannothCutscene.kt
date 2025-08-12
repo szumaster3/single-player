@@ -8,7 +8,7 @@ import core.api.runTask
 import core.game.activity.Cutscene
 import core.game.node.entity.player.Player
 import core.game.world.map.Direction
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 class DagannothCutscene(
     player: Player,

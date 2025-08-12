@@ -23,17 +23,17 @@ import core.game.world.update.flag.context.Animation
 import core.plugin.ClassScanner
 import core.plugin.Plugin
 import core.tools.RandomFunction
-import org.rs.consts.*
+import shared.consts.*
 
 class SorceressGardenPlugin : InteractionListener {
-    private val GATES = intArrayOf(org.rs.consts.Scenery.GATE_21709, org.rs.consts.Scenery.GATE_21753, org.rs.consts.Scenery.GATE_21731, org.rs.consts.Scenery.GATE_21687)
-    private val SQIRK_TREES = intArrayOf(org.rs.consts.Scenery.SQ_IRK_TREE_21767, org.rs.consts.Scenery.SQ_IRK_TREE_21768, org.rs.consts.Scenery.SQ_IRK_TREE_21769, org.rs.consts.Scenery.SQ_IRK_TREE_21766)
+    private val GATES = intArrayOf(shared.consts.Scenery.GATE_21709, shared.consts.Scenery.GATE_21753, shared.consts.Scenery.GATE_21731, shared.consts.Scenery.GATE_21687)
+    private val SQIRK_TREES = intArrayOf(shared.consts.Scenery.SQ_IRK_TREE_21767, shared.consts.Scenery.SQ_IRK_TREE_21768, shared.consts.Scenery.SQ_IRK_TREE_21769, shared.consts.Scenery.SQ_IRK_TREE_21766)
     private val HERBS_ITEMS = intArrayOf(Items.GRIMY_GUAM_199, Items.GRIMY_MARRENTILL_201, Items.GRIMY_TARROMIN_203, Items.GRIMY_HARRALANDER_205, Items.GRIMY_RANARR_207, Items.GRIMY_IRIT_209, Items.GRIMY_AVANTOE_211, Items.GRIMY_KWUARM_213, Items.GRIMY_CADANTINE_215, Items.GRIMY_DWARF_WEED_217, Items.GRIMY_TORSTOL_219, Items.GRIMY_LANTADYME_2485, Items.GRIMY_TOADFLAX_3049, Items.GRIMY_SNAPDRAGON_3051)
     private val HERB_DEFINITIONS = HashMap<Int, HerbDefinition>()
     private val SEASON_DEFINITIONS = HashMap<Int, SeasonDefinitions>()
     private val APPRENTICE = NPCs.APPRENTICE_5532
-    private val FOUNTAIN = org.rs.consts.Scenery.FOUNTAIN_21764
-    private val SHELVES = org.rs.consts.Scenery.SHELVES_21794
+    private val FOUNTAIN = shared.consts.Scenery.FOUNTAIN_21764
+    private val SHELVES = shared.consts.Scenery.SHELVES_21794
 
     init {
         for (herb in HerbDefinition.values()) {

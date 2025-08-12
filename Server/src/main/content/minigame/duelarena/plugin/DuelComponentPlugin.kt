@@ -8,7 +8,7 @@ import core.game.component.ComponentPlugin
 import core.game.node.entity.player.Player
 import core.game.world.GameWorld
 import core.plugin.Plugin
-import org.rs.consts.Components
+import shared.consts.Components
 
 class DuelComponentPlugin : ComponentPlugin() {
     @Throws(Throwable::class)

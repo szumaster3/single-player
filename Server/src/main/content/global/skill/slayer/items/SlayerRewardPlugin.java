@@ -18,9 +18,9 @@ import core.game.node.item.Item;
 import core.plugin.ClassScanner;
 import core.plugin.Initializable;
 import core.plugin.Plugin;
-import org.rs.consts.Components;
-import org.rs.consts.Items;
-import org.rs.consts.Quests;
+import shared.consts.Components;
+import shared.consts.Items;
+import shared.consts.Quests;
 
 import static core.api.ContentAPIKt.hasRequirement;
 

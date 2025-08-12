@@ -4,7 +4,7 @@ import content.minigame.ratpits.dialogue.*
 import core.api.openDialogue
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 class RatpitListener : InteractionListener {
     override fun defineListeners() {

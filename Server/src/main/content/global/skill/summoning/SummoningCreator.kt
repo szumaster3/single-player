@@ -9,7 +9,7 @@ import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.game.world.map.Location
 import core.game.world.map.RegionManager.getObject
-import org.rs.consts.*
+import shared.consts.*
 
 /**
  * Object responsible for summoning creation tasks.

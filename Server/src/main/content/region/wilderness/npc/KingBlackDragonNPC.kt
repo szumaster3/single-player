@@ -20,7 +20,7 @@ import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
 import core.plugin.Plugin
 import core.tools.RandomFunction
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 import kotlin.math.ceil
 
 @Initializable

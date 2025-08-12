@@ -1,7 +1,7 @@
 package core.game.ge
 
 import core.cache.def.impl.ItemDefinition
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Provides item prices with support for custom overrides.

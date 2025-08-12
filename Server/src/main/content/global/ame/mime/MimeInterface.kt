@@ -4,7 +4,7 @@ import content.data.GameAttributes
 import core.api.*
 import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.link.emote.Emotes
-import org.rs.consts.Components
+import shared.consts.Components
 
 /**
  * Represents the Mime interface.

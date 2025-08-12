@@ -10,8 +10,8 @@ import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.entity.player.link.quest.*
 import core.game.node.entity.skill.Skills
 import core.tools.colorize
-import org.rs.consts.Components
-import org.rs.consts.Quests
+import shared.consts.Components
+import shared.consts.Quests
 import kotlin.math.max
 import kotlin.math.min
 

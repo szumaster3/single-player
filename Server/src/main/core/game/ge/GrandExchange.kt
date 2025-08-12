@@ -13,8 +13,8 @@ import core.game.world.repository.Repository
 import core.tools.Log
 import core.tools.SystemLogger
 import core.tools.colorize
-import org.rs.consts.Items
-import org.rs.consts.Sounds
+import shared.consts.Items
+import shared.consts.Sounds
 import java.lang.Integer.max
 import java.util.concurrent.LinkedBlockingDeque
 

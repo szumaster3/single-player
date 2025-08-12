@@ -13,7 +13,7 @@ import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.Animations
+import shared.consts.Animations
 
 /**
  * Represents the climb through desert wall shortcut.
@@ -71,7 +71,7 @@ class DesertWallShortcut : OptionHandler() {
 
     companion object {
         const val REQUIRED_AGILITY_LEVEL = 21
-        const val SCENERY_ID = org.rs.consts.Scenery.HOLE_6620
+        const val SCENERY_ID = shared.consts.Scenery.HOLE_6620
         val START_LOCATION: Location = Location.create(3320, 2796, 0)
         val END_LOCATION: Location = Location.create(3324, 2796, 0)
         val CLIMB_DOWN: Animation = Animation.create(Animations.CRAWL_UNDER_WALL_A_2589)

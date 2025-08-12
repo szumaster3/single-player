@@ -8,8 +8,8 @@ import core.api.utils.WeightBasedTable
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.link.emote.Emotes
 import core.tools.RandomFunction
-import org.rs.consts.NPCs
-import org.rs.consts.Sounds
+import shared.consts.NPCs
+import shared.consts.Sounds
 
 /**
  * Represents the Certer NPC.

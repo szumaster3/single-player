@@ -5,7 +5,7 @@ import content.global.skill.gathering.woodcutting.WoodcuttingPulse
 import core.api.submitIndividualPulse
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import org.rs.consts.Items
+import shared.consts.Items
 
 class AxeOnTreePlugin : InteractionListener {
 

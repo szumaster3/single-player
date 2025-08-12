@@ -10,7 +10,7 @@ import core.net.packet.OutgoingContext
 import core.net.packet.PacketRepository
 import core.net.packet.out.RepositionChild
 import core.tools.StringUtils
-import org.rs.consts.Components
+import shared.consts.Components
 
 /**
  * Handles dialogues related to skills and item interactions.

@@ -16,7 +16,7 @@ import core.game.world.map.RegionManager.getLocalPlayers
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
 import core.tools.RandomFunction
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 class PCSplatterNPC : AbstractNPC {
     private var session: PestControlSession? = null
@@ -72,7 +72,7 @@ class PCSplatterNPC : AbstractNPC {
         visualize(
             Animation(3888, Priority.VERY_HIGH),
             Graphics.create(
-                org.rs.consts.Graphics.SPLATTER_DAMAGE_WHITE_649 + (id - NPCs.SPLATTER_3727),
+                shared.consts.Graphics.SPLATTER_DAMAGE_WHITE_649 + (id - NPCs.SPLATTER_3727),
             ),
         )
         Pulser.submit(

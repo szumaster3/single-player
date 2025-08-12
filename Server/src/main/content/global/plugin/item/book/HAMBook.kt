@@ -12,7 +12,7 @@ import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.player.Player
 import core.tools.END_DIALOGUE
-import org.rs.consts.Items
+import shared.consts.Items
 
 class HAMBook : InteractionListener {
     /*

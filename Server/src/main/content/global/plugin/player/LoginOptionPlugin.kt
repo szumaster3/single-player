@@ -10,8 +10,8 @@ import core.plugin.Initializable
 import core.plugin.Plugin
 import core.plugin.PluginManifest
 import core.plugin.PluginType
-import org.rs.consts.Items
-import org.rs.consts.Music
+import shared.consts.Items
+import shared.consts.Music
 import java.util.concurrent.TimeUnit
 
 @Initializable

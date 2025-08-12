@@ -32,8 +32,8 @@ import core.game.world.update.flag.context.Animation
 import core.plugin.ClassScanner.definePlugin
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 @Initializable
 class WaterbirthDungeon : MapZone("Waterbirth dungeon", true, ZoneRestriction.RANDOM_EVENTS), Plugin<Any?> {

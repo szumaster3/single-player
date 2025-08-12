@@ -6,7 +6,7 @@ import core.api.sendDialogue
 import core.api.sendItemDialogue
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import org.rs.consts.Items
+import shared.consts.Items
 
 class ChompyBirdPlugin : InteractionListener {
     override fun defineListeners() {

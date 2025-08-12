@@ -12,7 +12,7 @@ import core.game.world.map.zone.MapZone
 import core.game.world.map.zone.ZoneBorders
 import core.game.world.map.zone.ZoneBuilder
 import core.plugin.Plugin
-import org.rs.consts.Quests
+import shared.consts.Quests
 
 class MiningCampZone : MapZone("mining camp", true), Plugin<Any> {
 

@@ -13,8 +13,8 @@ import core.game.node.item.Item
 import core.game.world.map.Direction
 import core.game.world.map.Location
 import core.game.world.repository.Repository
-import org.rs.consts.NPCs
-import org.rs.consts.Scenery
+import shared.consts.NPCs
+import shared.consts.Scenery
 
 class BankBoothPlugin : InteractionListener {
     /**

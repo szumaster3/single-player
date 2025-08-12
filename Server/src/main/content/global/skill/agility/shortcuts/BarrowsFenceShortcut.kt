@@ -11,8 +11,8 @@ import core.game.world.GameWorld
 import core.game.world.map.Direction
 import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
-import org.rs.consts.Animations
-import org.rs.consts.Quests
+import shared.consts.Animations
+import shared.consts.Quests
 
 /**
  * Handles the barrows shortcut.

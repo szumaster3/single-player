@@ -2,7 +2,7 @@ package content.global.activity.gnomecopter
 
 import core.game.component.Component
 import core.game.node.entity.player.Player
-import org.rs.consts.Components
+import shared.consts.Components
 
 enum class GnomeCopterSign(
     private val button: String,

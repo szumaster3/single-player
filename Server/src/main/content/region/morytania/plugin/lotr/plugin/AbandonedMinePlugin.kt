@@ -12,10 +12,10 @@ import core.game.node.item.Item
 import core.game.system.task.Pulse
 import core.game.world.map.Location
 import core.game.world.map.zone.ZoneBorders
-import org.rs.consts.Animations
-import org.rs.consts.Items
-import org.rs.consts.Music
-import org.rs.consts.Scenery
+import shared.consts.Animations
+import shared.consts.Items
+import shared.consts.Music
+import shared.consts.Scenery
 
 class AbandonedMinePlugin : InteractionListener, MapArea {
 

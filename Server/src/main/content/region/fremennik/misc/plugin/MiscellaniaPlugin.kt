@@ -7,8 +7,8 @@ import core.api.sendNPCDialogueLines
 import core.game.dialogue.FaceAnim
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import org.rs.consts.NPCs
-import org.rs.consts.Quests
+import shared.consts.NPCs
+import shared.consts.Quests
 
 class MiscellaniaPlugin : InteractionListener {
 

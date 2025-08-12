@@ -3,7 +3,7 @@ package content.global.activity.jobs.impl
 import content.global.activity.jobs.Job
 import content.global.activity.jobs.JobType
 import core.game.node.entity.skill.Skills
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Enum represents the production only jobs.

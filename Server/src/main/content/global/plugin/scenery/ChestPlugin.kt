@@ -4,7 +4,7 @@ import core.api.replaceScenery
 import core.api.sendMessage
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import org.rs.consts.Scenery
+import shared.consts.Scenery
 
 class ChestPlugin : InteractionListener {
 

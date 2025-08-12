@@ -4,7 +4,7 @@ import core.api.sendChat
 import core.game.dialogue.Dialogue
 import core.game.node.entity.player.Player
 import core.plugin.Initializable
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 @Initializable
 class EdWoodDialogue(player: Player? = null) : Dialogue(player) {

@@ -14,9 +14,9 @@ import core.game.world.update.flag.context.Animation;
 import core.game.world.update.flag.context.Graphics;
 import core.plugin.Initializable;
 import core.plugin.Plugin;
-import org.rs.consts.Animations;
-import org.rs.consts.Items;
-import org.rs.consts.Sounds;
+import shared.consts.Animations;
+import shared.consts.Items;
+import shared.consts.Sounds;
 
 import static core.api.ContentAPIKt.playGlobalAudio;
 import static core.api.ContentAPIKt.stun;
@@ -31,7 +31,7 @@ public final class ShoveSpecialHandler extends MeleeSwingHandler implements Plug
 
     private static final int SPECIAL_ENERGY = 25;
     private static final Animation ANIMATION = new Animation(Animations.TIPTOE_A_1064, Priority.HIGH);
-    private static final Graphics GRAPHICS = new Graphics(org.rs.consts.Graphics.DRAGON_SPEAR_SPECIAL_253, 96);
+    private static final Graphics GRAPHICS = new Graphics(shared.consts.Graphics.DRAGON_SPEAR_SPECIAL_253, 96);
     private static Animation STUN_ANIM = new Animation(Animations.DEFEND_UNARMED_424);
 
     @Override

@@ -2,8 +2,8 @@ package content.global.activity.oldman
 
 import core.api.utils.WeightBasedTable
 import core.api.utils.WeightedItem
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Items
+import shared.consts.NPCs
 
 /**
  * Enum represents Wise old man delivery activity reward table.

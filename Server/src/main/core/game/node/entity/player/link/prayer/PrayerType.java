@@ -9,7 +9,7 @@ import core.game.node.entity.skill.SkillBonus;
 import core.game.node.entity.skill.Skills;
 import core.game.world.map.zone.ZoneBorders;
 import core.tools.StringUtils;
-import org.rs.consts.Sounds;
+import shared.consts.Sounds;
 
 import java.util.List;
 

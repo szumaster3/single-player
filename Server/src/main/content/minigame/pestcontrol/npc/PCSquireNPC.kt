@@ -9,7 +9,7 @@ import core.game.node.entity.npc.AbstractNPC
 import core.game.node.entity.player.Player
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 class PCSquireNPC : AbstractNPC {
     private var session: PestControlSession? = null

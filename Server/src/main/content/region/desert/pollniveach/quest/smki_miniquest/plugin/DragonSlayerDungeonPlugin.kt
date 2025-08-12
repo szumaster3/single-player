@@ -4,7 +4,7 @@ import core.api.sendMessages
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.world.map.Location
-import org.rs.consts.Scenery
+import shared.consts.Scenery
 
 class DragonSlayerDungeonPlugin : InteractionListener {
 

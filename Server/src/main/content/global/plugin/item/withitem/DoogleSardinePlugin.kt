@@ -5,7 +5,7 @@ import core.api.removeItem
 import core.api.sendDialogue
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import org.rs.consts.Items
+import shared.consts.Items
 
 class DoogleSardinePlugin : InteractionListener {
 

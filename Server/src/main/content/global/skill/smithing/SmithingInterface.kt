@@ -9,7 +9,7 @@ import core.api.submitIndividualPulse
 import core.game.interaction.InterfaceListener
 import core.game.node.entity.impl.PulseType
 import core.game.node.item.Item
-import org.rs.consts.Components
+import shared.consts.Components
 
 class SmithingInterface : InterfaceListener {
     override fun defineInterfaceListeners() {

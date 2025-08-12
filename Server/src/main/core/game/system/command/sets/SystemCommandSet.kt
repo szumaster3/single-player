@@ -15,7 +15,7 @@ import core.game.system.command.Privilege
 import core.game.world.GameWorld
 import core.game.world.repository.Repository
 import core.plugin.Initializable
-import org.rs.consts.Items
+import shared.consts.Items
 import kotlin.system.exitProcess
 
 @Initializable

@@ -3,7 +3,7 @@ package content.global.skill.crafting
 import core.api.sendInputDialogue
 import core.game.interaction.InterfaceListener
 import core.game.node.item.Item
-import org.rs.consts.Components
+import shared.consts.Components
 
 class TanningInterface : InterfaceListener {
     override fun defineInterfaceListeners() {

@@ -9,7 +9,7 @@ import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.Items
+import shared.consts.Items
 
 private val itemIDs =
     intArrayOf(Items.CANDLE_36, Items.BLACK_CANDLE_38, Items.OIL_LAMP_4525, Items.LANTERN_LENS_4542, Items.SAPPHIRE_1607)

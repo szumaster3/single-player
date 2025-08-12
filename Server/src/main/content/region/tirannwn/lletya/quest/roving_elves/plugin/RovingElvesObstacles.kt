@@ -12,9 +12,9 @@ import core.game.world.map.Direction
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.plugin.Plugin
-import org.rs.consts.Animations
-import org.rs.consts.Quests
-import org.rs.consts.Scenery
+import shared.consts.Animations
+import shared.consts.Quests
+import shared.consts.Scenery
 
 class RovingElvesObstacles : OptionHandler() {
     private val LEAF_SUCCESS_MSG = "You safely jump across."

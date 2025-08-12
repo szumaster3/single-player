@@ -2,7 +2,7 @@ package content.global.activity.gnomecopter
 
 import core.api.closeTabInterface
 import core.game.interaction.InterfaceListener
-import org.rs.consts.Components
+import shared.consts.Components
 
 class GnomeCopterSignInterface : InterfaceListener {
     override fun defineInterfaceListeners() {

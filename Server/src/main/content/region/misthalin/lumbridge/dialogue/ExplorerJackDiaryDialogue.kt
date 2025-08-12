@@ -9,7 +9,7 @@ import core.game.node.entity.player.link.emote.Emotes
 import core.game.world.GameWorld.settings
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 /**
  * Represents the Explorer Jack (Lumbridge diaries) dialogue.

@@ -7,7 +7,7 @@ import core.game.node.entity.player.Player
 import core.game.node.item.GroundItemManager
 import core.game.node.item.Item
 import core.plugin.Initializable
-import org.rs.consts.Items
+import shared.consts.Items
 
 /**
  * Represents the Manor Fountain dialogue.

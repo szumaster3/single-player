@@ -9,8 +9,8 @@ import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest
 
 import core.game.world.map.Location
-import org.rs.consts.Quests
-import org.rs.consts.Scenery
+import shared.consts.Quests
+import shared.consts.Scenery
 
 class JunglePotionListener : InteractionListener {
 

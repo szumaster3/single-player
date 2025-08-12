@@ -8,8 +8,8 @@ import core.game.system.task.Pulse
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.tools.RandomFunction
-import org.rs.consts.Animations
-import org.rs.consts.Scenery
+import shared.consts.Animations
+import shared.consts.Scenery
 
 class HideoutPlugin : InteractionListener {
     override fun defineListeners() {

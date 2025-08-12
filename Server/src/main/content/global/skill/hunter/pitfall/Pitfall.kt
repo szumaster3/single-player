@@ -2,7 +2,7 @@ package content.global.skill.hunter.pitfall
 
 import core.game.world.map.Direction
 import core.game.world.map.Location
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 object Pitfall {
     val LARUPIA_IDS = intArrayOf(NPCs.SPINED_LARUPIA_5104)

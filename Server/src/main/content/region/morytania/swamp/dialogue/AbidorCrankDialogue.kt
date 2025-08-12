@@ -5,8 +5,8 @@ import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.game.interaction.QueueStrength
 import core.game.world.map.Location
-import org.rs.consts.Animations
-import org.rs.consts.Graphics
+import shared.consts.Animations
+import shared.consts.Graphics
 
 /**
  * Represents the Abidor Crank dialogue.

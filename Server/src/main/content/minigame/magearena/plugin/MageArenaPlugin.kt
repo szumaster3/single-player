@@ -11,9 +11,9 @@ import core.game.node.item.GroundItemManager
 import core.game.world.map.Direction
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Graphics
-import org.rs.consts.Animations
-import org.rs.consts.Items
-import org.rs.consts.Scenery
+import shared.consts.Animations
+import shared.consts.Items
+import shared.consts.Scenery
 
 class MageArenaPlugin: InteractionListener {
     private val godCapes = intArrayOf(Items.SARADOMIN_CAPE_2412, Items.GUTHIX_CAPE_2413, Items.ZAMORAK_CAPE_2414)

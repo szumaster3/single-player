@@ -18,10 +18,10 @@ import core.game.world.update.flag.context.Animation;
 import core.plugin.Initializable;
 import core.plugin.Plugin;
 import kotlin.Unit;
-import org.rs.consts.Animations;
-import org.rs.consts.Items;
-import org.rs.consts.NPCs;
-import org.rs.consts.Sounds;
+import shared.consts.Animations;
+import shared.consts.Items;
+import shared.consts.NPCs;
+import shared.consts.Sounds;
 
 import static core.api.ContentAPIKt.playAudio;
 import static core.api.ContentAPIKt.setAttribute;
@@ -179,7 +179,7 @@ public final class AnimationRoomPlugin extends MapZone implements Plugin<java.la
                 ids[index++] = id;
             }
         }
-        UseWithHandler.addHandler(org.rs.consts.Scenery.MAGICAL_ANIMATOR_15621, UseWithHandler.OBJECT_TYPE, new UseWithHandler(ids) {
+        UseWithHandler.addHandler(shared.consts.Scenery.MAGICAL_ANIMATOR_15621, UseWithHandler.OBJECT_TYPE, new UseWithHandler(ids) {
 
             @Override
             public boolean handle(NodeUsageEvent event) {

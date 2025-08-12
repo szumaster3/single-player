@@ -10,7 +10,7 @@ import core.game.node.entity.player.Player
 import core.game.world.GameWorld
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 @Initializable
 class HistorianNorthDialogue(player: Player? = null) : Dialogue(player) {

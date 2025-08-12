@@ -10,10 +10,10 @@ import core.game.node.item.Item
 import core.game.system.task.Pulse
 import core.tools.StringUtils
 import core.tools.prependArticle
-import org.rs.consts.Animations
-import org.rs.consts.Items
-import org.rs.consts.Quests
-import org.rs.consts.Sounds
+import shared.consts.Animations
+import shared.consts.Items
+import shared.consts.Quests
+import shared.consts.Sounds
 
 class UseWithPatchHandler : InteractionListener {
     val RAKE = Items.RAKE_5341

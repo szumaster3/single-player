@@ -15,7 +15,7 @@ import core.game.world.map.zone.ZoneBuilder
 import core.plugin.ClassScanner.definePlugins
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.*
+import shared.consts.*
 
 /**
  * Handles interactions and initialization related to the Magic Training Arena (MTA).

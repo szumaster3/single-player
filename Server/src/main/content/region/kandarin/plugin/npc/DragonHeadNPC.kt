@@ -9,7 +9,7 @@ import core.game.node.entity.combat.CombatStyle
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.npc.NPCBehavior
 import core.game.node.entity.player.Player
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 class DragonHeadNPC : NPCBehavior(*DRAGON_HEAD) {
     override fun canBeAttackedBy(

@@ -6,9 +6,9 @@ import core.game.node.entity.combat.ImpactHandler
 import core.game.node.entity.npc.NPC
 import core.game.worldevents.events.HolidayRandomEventNPC
 import core.game.worldevents.events.HolidayRandoms
-import org.rs.consts.Animations
-import org.rs.consts.NPCs
-import org.rs.consts.Sounds
+import shared.consts.Animations
+import shared.consts.NPCs
+import shared.consts.Sounds
 
 class SpiderHolidayRandomNPC : HolidayRandomEventNPC(NPCs.SPIDER_61) {
     override fun init() {

@@ -26,7 +26,7 @@ import core.tools.RED
 import core.tools.colorize
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import org.rs.consts.Items
+import shared.consts.Items
 
 @Initializable
 class DevelopmentCommandSet : CommandSet(Privilege.ADMIN) {

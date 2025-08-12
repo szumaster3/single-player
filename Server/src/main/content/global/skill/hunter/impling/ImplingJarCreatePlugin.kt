@@ -8,7 +8,7 @@ import core.game.node.item.Item
 import core.game.node.scenery.Scenery
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.Items
+import shared.consts.Items
 
 @Initializable
 class ImplingJarCreatePlugin : UseWithHandler(

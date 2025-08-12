@@ -10,9 +10,9 @@ import core.game.node.scenery.Scenery
 import core.game.system.task.Pulse
 import core.game.world.GameWorld.Pulser
 import core.game.world.map.Location
-import org.rs.consts.Animations
-import org.rs.consts.Items
-import org.rs.consts.NPCs
+import shared.consts.Animations
+import shared.consts.Items
+import shared.consts.NPCs
 
 object PartyRoomUtils {
     private val isCluttered: Boolean

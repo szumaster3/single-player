@@ -2,7 +2,7 @@ package content.region.kandarin.plugin.barbtraining.plugin
 
 import core.game.node.entity.npc.NPC
 import core.game.world.map.Location
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 class BarbFishingSpot(var loc: Location? = null, var ttl: Int) : NPC(NPCs.FISHING_SPOT_1176) {
 

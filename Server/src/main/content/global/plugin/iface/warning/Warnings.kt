@@ -1,6 +1,6 @@
 package content.global.plugin.iface.warning
 
-import org.rs.consts.Components
+import shared.consts.Components
 
 /**
  * Enum represents the Warnings.

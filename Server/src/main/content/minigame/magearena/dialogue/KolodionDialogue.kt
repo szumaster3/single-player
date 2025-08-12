@@ -14,8 +14,8 @@ import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
-import org.rs.consts.Animations
-import org.rs.consts.NPCs
+import shared.consts.Animations
+import shared.consts.NPCs
 
 /**
  * Represents the Kolodion dialogue.
@@ -111,7 +111,7 @@ class KolodionDialogue(player: Player? = null) : Dialogue(player) {
         visualize(
             player,
             Animation.create(Animations.OLD_SHRINK_AND_RISE_UP_TP_1816),
-            Graphics.create(org.rs.consts.Graphics.LIGHT_TP_GRAPHIC_301, 50),
+            Graphics.create(shared.consts.Graphics.LIGHT_TP_GRAPHIC_301, 50),
         )
         KolodionSession.create(player).start()
     }

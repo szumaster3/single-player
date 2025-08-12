@@ -9,7 +9,7 @@ import core.game.activity.Cutscene
 import core.game.node.entity.player.Player
 import core.game.world.GameWorld
 import core.game.world.map.Direction
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 class DagannothBossCutscene(
     player: Player,

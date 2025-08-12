@@ -11,10 +11,10 @@ import core.game.node.entity.Entity
 import core.game.node.entity.player.Player
 import core.game.node.item.GroundItemManager
 import core.game.world.map.zone.ZoneBorders
-import org.rs.consts.Components
-import org.rs.consts.Items
-import org.rs.consts.Quests
-import org.rs.consts.Scenery
+import shared.consts.Components
+import shared.consts.Items
+import shared.consts.Quests
+import shared.consts.Scenery
 
 class DeathPlateauPlugin : InteractionListener, MapArea {
 

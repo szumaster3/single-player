@@ -2,7 +2,7 @@ package content.region.fremennik.lighthouse.quest.horror.npc
 
 import core.api.location
 import core.game.node.entity.player.Player
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 class DagannothSession(
     val player: Player,

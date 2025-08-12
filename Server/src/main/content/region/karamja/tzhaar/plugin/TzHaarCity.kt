@@ -11,7 +11,7 @@ import core.game.world.map.zone.ZoneBuilder
 import core.game.world.map.zone.ZoneRestriction
 import core.plugin.Initializable
 import core.plugin.Plugin
-import org.rs.consts.Scenery
+import shared.consts.Scenery
 
 @Initializable
 class TzHaarCity :

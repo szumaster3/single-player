@@ -15,7 +15,7 @@ import core.game.world.update.flag.context.Graphics
 import core.tools.colorize
 import core.tools.secondsToTicks
 import core.tools.ticksToCycles
-import org.rs.consts.Sounds
+import shared.consts.Sounds
 import kotlin.random.Random
 import kotlin.reflect.full.createInstance
 
@@ -29,7 +29,7 @@ abstract class RandomEventNPC(
     lateinit var player: Player
     abstract var loot: WeightBasedTable?
     var spawnLocation: Location? = null
-    val SMOKE_Graphics = Graphics(org.rs.consts.Graphics.RANDOM_EVENT_PUFF_OF_SMOKE_86)
+    val SMOKE_Graphics = Graphics(shared.consts.Graphics.RANDOM_EVENT_PUFF_OF_SMOKE_86)
     var initialized = false
     var finalized = false
     var timerPaused = false

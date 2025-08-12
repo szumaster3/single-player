@@ -8,7 +8,7 @@ import core.game.ge.ExchangeHistory.Companion.getInstance
 import core.game.node.entity.player.Player
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
-import org.rs.consts.NPCs
+import shared.consts.NPCs
 
 /**
  * Represents the Clerk (Grand Exchange) dialogue.

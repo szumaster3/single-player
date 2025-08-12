@@ -4,7 +4,7 @@ import content.global.skill.construction.decoration.skillhall.dialogue.*
 import core.api.openDialogue
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import org.rs.consts.Scenery
+import shared.consts.Scenery
 
 class HeadPlugin : InteractionListener {
     override fun defineListeners() {

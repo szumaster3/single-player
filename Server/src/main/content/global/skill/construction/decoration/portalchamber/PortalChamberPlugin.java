@@ -16,7 +16,7 @@ import core.game.world.update.flag.context.Animation;
 import core.plugin.ClassScanner;
 import core.plugin.Initializable;
 import core.plugin.Plugin;
-import org.rs.consts.Animations;
+import shared.consts.Animations;
 
 import static core.api.ContentAPIKt.*;
 import static core.tools.GlobalsKt.DARK_RED;
@@ -117,11 +117,11 @@ public class PortalChamberPlugin extends OptionHandler {
 
     @Override
     public Plugin<java.lang.Object> newInstance(java.lang.Object arg) throws Throwable {
-        SceneryDefinition.forId(org.rs.consts.Scenery.SCRYING_POOL_13639).getHandlers().put("option:direct-portal", this);
-        SceneryDefinition.forId(org.rs.consts.Scenery.SCRYING_POOL_13639).getHandlers().put("option:scry", this);
-        SceneryDefinition.forId(org.rs.consts.Scenery.TPATION_FOCUS_13640).getHandlers().put("option:direct-portal", this);
-        SceneryDefinition.forId(org.rs.consts.Scenery.GREATER_TP_FOCUS_13641).getHandlers().put("option:direct-portal", this);
-        for (int i = org.rs.consts.Scenery.VARROCK_PORTAL_13615; i <= org.rs.consts.Scenery.KHARYRLL_PORTAL_13635; i++) {
+        SceneryDefinition.forId(shared.consts.Scenery.SCRYING_POOL_13639).getHandlers().put("option:direct-portal", this);
+        SceneryDefinition.forId(shared.consts.Scenery.SCRYING_POOL_13639).getHandlers().put("option:scry", this);
+        SceneryDefinition.forId(shared.consts.Scenery.TPATION_FOCUS_13640).getHandlers().put("option:direct-portal", this);
+        SceneryDefinition.forId(shared.consts.Scenery.GREATER_TP_FOCUS_13641).getHandlers().put("option:direct-portal", this);
+        for (int i = shared.consts.Scenery.VARROCK_PORTAL_13615; i <= shared.consts.Scenery.KHARYRLL_PORTAL_13635; i++) {
             SceneryDefinition.forId(i).getHandlers().put("option:enter", this);
         }
         ClassScanner.definePlugin(new DirectPortalDialogue());

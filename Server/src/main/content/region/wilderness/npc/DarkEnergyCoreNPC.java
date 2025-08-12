@@ -13,7 +13,7 @@ import core.game.world.map.path.Path;
 import core.game.world.map.path.Pathfinder;
 import core.plugin.Initializable;
 import core.tools.RandomFunction;
-import org.rs.consts.NPCs;
+import shared.consts.NPCs;
 
 import static core.api.ContentAPIKt.isPoisoned;
 import static core.api.ContentAPIKt.isStunned;

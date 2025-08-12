@@ -3,8 +3,8 @@ package content.global.skill.gathering.mining;
 import core.ServerConstants;
 import core.game.node.item.WeightedChanceItem;
 import core.game.world.repository.Repository;
-import org.rs.consts.Items;
-import org.rs.consts.Scenery;
+import shared.consts.Items;
+import shared.consts.Scenery;
 
 import java.util.ArrayList;
 import java.util.HashMap;

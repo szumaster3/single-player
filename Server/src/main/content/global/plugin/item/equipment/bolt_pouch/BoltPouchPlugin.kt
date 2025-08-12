@@ -9,8 +9,8 @@ import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.Player
-import org.rs.consts.Components
-import org.rs.consts.Items
+import shared.consts.Components
+import shared.consts.Items
 
 private val BOLT_POUCH = Items.BOLT_POUCH_9433
 private val EQUIP_SLOTS = listOf(3, 7, 11, 15)
