@@ -94,7 +94,7 @@ enum class FarmingPatch(
 
             for (patch in patchNodes) {
                 val def = SceneryDefinition.forId(patch)
-                nodeMap[def.varbitID] = def
+                nodeMap[def.multiLocVarbit] = def
             }
         }
 
@@ -104,7 +104,7 @@ enum class FarmingPatch(
         @JvmStatic
         fun forObjectID(id: Int): FarmingPatch? {
             val objDef = SceneryDefinition.forId(id)
-            return patches[objDef.varbitID]
+            return patches[objDef.multiLocVarbit]
         }
 
         fun getSceneryDefByVarbit(id: Int): SceneryDefinition? = nodeMap[id]

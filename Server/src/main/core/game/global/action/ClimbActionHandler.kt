@@ -169,7 +169,7 @@ object ClimbActionHandler {
             sizeX = scenery.definition.sizeY.also { sizeY = scenery.definition.sizeX }
         }
 
-        val dir = Direction.forWalkFlag(scenery.definition.blockFlag, scenery.rotation)
+        val dir = Direction.forWalkFlag(scenery.definition.blocksides, scenery.rotation)
         return dir?.let { getDestination(scenery, sizeX, sizeY, it, 0) }
             ?: when (scenery.rotation) {
                 0 -> getDestination(scenery, sizeX, sizeY, Direction.SOUTH, 0)
@@ -206,7 +206,11 @@ object ClimbActionHandler {
 
     @JvmStatic
     private fun isClimbable(scenery: Scenery): Boolean {
-        scenery.definition.options.forEach { if (it.contains("Climb", ignoreCase = true)) return true }
+        scenery.definition.options.forEach {
+            if (it != null) {
+                if (it.contains("Climb", ignoreCase = true)) return true
+            }
+        }
         return scenery.name.equals("Trapdoor", ignoreCase = true) || scenery.name.equals("Rope", ignoreCase = true)
     }
 

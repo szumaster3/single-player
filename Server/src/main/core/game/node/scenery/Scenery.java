@@ -153,10 +153,10 @@ public class Scenery extends Node {
 		this.type = type;
 		this.definition = SceneryDefinition.forId(id);
 		super.size = definition.sizeX;
-		if (definition.childrenIds != null && definition.childrenIds.length > 0) {
-			this.childs = new Scenery[definition.childrenIds.length];
+		if (definition.multiLocs != null && definition.multiLocs.length > 0) {
+			this.childs = new Scenery[definition.multiLocs.length];
 			for (int i = 0; i < childs.length; i++) {
-				childs[i] = transform(definition.childrenIds[i]);
+				childs[i] = transform(definition.multiLocs[i]);
 				childs[i].wrapper = this;
 			}
 		} else {
@@ -230,13 +230,13 @@ public class Scenery extends Node {
 		if (childs == null && wrapper != null) {
 			def = wrapper.getDefinition();
 		}
-		if (def.varbitID > -1) {
+		if (def.multiLocVarbit > -1) {
 			VarbitDefinition config = def.getConfigFile();
 			if (config != null) {
-                                setVarbit(player, def.varbitID, index);
+                                setVarbit(player, def.multiLocVarbit, index);
 			}
-		} else if (def.configId > -1) {
-                        setVarp(player, def.configId, index);
+		} else if (def.multiLocVarp > -1) {
+                        setVarp(player, def.multiLocVarp, index);
 		}
 	}
 

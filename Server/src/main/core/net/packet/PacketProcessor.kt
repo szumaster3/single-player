@@ -826,7 +826,7 @@ object PacketProcessor {
                 "WrapperID: ${scenery.id}, ${
                     scenery.definition.configFile?.let {
                         "Varbit: ${it.id}"
-                    } ?: "Varp: ${scenery.definition.configId}"
+                    } ?: "Varp: ${scenery.definition.multiLocVarp}"
                 }",
             )
         }

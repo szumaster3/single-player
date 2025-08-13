@@ -756,7 +756,7 @@ class AgilityPyramidCourse : AgilityCourse {
             value: Int,
             save: Boolean,
         ) {
-            val definition = VarbitDefinition.forSceneryId(SceneryDefinition.forId(objectId).varbitID)
+            val definition = VarbitDefinition.forSceneryId(SceneryDefinition.forId(objectId).multiLocVarbit)
             val oldVal = (definition.getValue(player) shl definition.startBit)
             val newVal = (value shl definition.startBit)
             setVarp(player, CONFIG_ID, (getVarp(player, CONFIG_ID) - oldVal) + newVal, save)

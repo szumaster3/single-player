@@ -19,292 +19,238 @@ import core.tools.Log
 import java.nio.ByteBuffer
 
 /**
- * The type Scenery definition.
+ * Represents the scenery definition.
  */
 class SceneryDefinition : Definition<Scenery?>() {
-    @JvmField var originalColors: ShortArray? = null
-    @JvmField var childrenIds: IntArray? = null
+    @JvmField var id: Int = -1
+    @JvmField var name: String = ""
+    @JvmField var options: Array<String?> = arrayOfNulls(5)
     @JvmField var modelIds: IntArray? = null
     @JvmField var modelTypes: IntArray? = null
-    @JvmField var mirrored: Boolean
-    @JvmField var contrast: Int
-    @JvmField var modelSizeZ: Int
-    @JvmField var blocksLand: Boolean
-    @JvmField var supportItems: Int
-    @JvmField var breakRouteFinding: Boolean
-    @JvmField var recolourPalette: ByteArray? = null
-    @JvmField var alternateModelIds: IntArray? = null
-    @JvmField var ambientSoundId: Int
-    @JvmField var varbitID: Int
-    @JvmField var modifiedColors: ShortArray? = null
+    @JvmField var sizeX: Int = 1
+    @JvmField var sizeY: Int = 1
+    @JvmField var blockwalk: Int = 2
+    @JvmField var blockRange: Boolean = true
+    @JvmField var blocksides: Int = 0
+    @JvmField var forcedecor: Boolean = false
+    @JvmField var breakroutefinding: Boolean = false
+    @JvmField var supportitems: Int = -1
     @JvmField var delayShading: Boolean = false
-    @JvmField var blockRange: Boolean
-    @JvmField var isInteractable: Boolean
-    @JvmField var sizeY: Int
-    @JvmField var castsShadow: Boolean = true
-    @JvmField var members: Boolean
-    @JvmField var hide: Boolean
-    @JvmField var animations: Int
-    @JvmField var brightness: Int
-    @JvmField var blockwalk: Int
-    @JvmField var offsetX: Int
-    @JvmField var offsetZ: Int
-    @JvmField var sizeX: Int
-    @JvmField var offsetMultiplier: Int
-    @JvmField var interactable: Int
-    @JvmField var forceAnimation: Boolean
-    @JvmField var configId: Int
-    @JvmField var ambientSoundMaxDelay: Int
-    @JvmField var modelSizeX: Int
-    @JvmField var ambientSoundMinDelay: Int
-    @JvmField var animationId: Int
-    @JvmField var contouredGround: Byte
-    @JvmField var offsetY: Int
-    @JvmField var modelSizeY: Int
-    @JvmField var modifiedTextureColours: ShortArray? = null
-    @JvmField var originalTextureColours: ShortArray? = null
-    @JvmField var blockFlag: Int
-    @JvmField var hasHiddenOptions = false
-    @JvmField var mapFunction: Short
-    @JvmField var isSolidFlag: Boolean
-    @JvmField var render: Boolean
-    @JvmField var hasAnimation: Boolean
-    @JvmField var mapSceneRotated: Boolean
+    @JvmField var occlude: Boolean = false
+    @JvmField var walloff: Int = 0
+    @JvmField var ambient: Int = 0
+    @JvmField var contrast: Int = 0
+    @JvmField var recol_s: ShortArray? = null
+    @JvmField var recol_d: ShortArray? = null
+    @JvmField var retex_s: ShortArray? = null
+    @JvmField var retex_d: ShortArray? = null
+    @JvmField var recol_p: ByteArray? = null
+    @JvmField var mirror: Boolean = false
+    @JvmField var active: Boolean = true
+    @JvmField var resizex: Int = 128
+    @JvmField var resizey: Int = 128
+    @JvmField var resizez: Int = 128
+    @JvmField var xoff: Int = 0
+    @JvmField var yoff: Int = 0
+    @JvmField var zoff: Int = 0
+    @JvmField var render: Boolean = false
+    @JvmField var castshadow: Boolean = true
+    @JvmField var allowrandomizedanimation: Boolean = true
+    @JvmField var hasanimation: Boolean = false
+    @JvmField var mapSceneRotated: Boolean = false
+    @JvmField var aBoolean214: Boolean = false
+    @JvmField var interactable: Int = -1
+    @JvmField var cursor1Op: Int = 0
+    @JvmField var cursor1: Int = 0
+    @JvmField var cursor2Op: Int = 0
+    @JvmField var cursor2: Int = 0
+    @JvmField var mapSceneAngleOffset: Int = 0
+    @JvmField var mapscene: Int = -1
+    @JvmField var animations: Int = -1
+    @JvmField var hillskewType: Int = 0
+    @JvmField var hillskewAmount: Short = 0
+    @JvmField var mapFunction: Int = -1
+    @JvmField var multiLocVarbit: Int = -1
+    @JvmField var multiLocVarp: Int = -1
+    @JvmField var multiLocs: IntArray? = null
+    @JvmField var isInteractable: Boolean = false
+    @JvmField var members: Boolean = false
+    @JvmField var bgsound: Int = -1
+    @JvmField var bgsoundrange: Int = 0
+    @JvmField var bgsoundmin: Int = 0
+    @JvmField var bgsoundmax: Int = 0
+    @JvmField var bgsounds: IntArray? = null
+    @JvmField var params: MutableMap<Int, Any>? = null
 
     /**
-     * Instantiates a new Scenery definition.
+     * Initializes default values for a new SceneryDefinition instance.
      */
     init {
-        ambientSoundId = -1
-        ambientSoundMinDelay = 0
-        ambientSoundMaxDelay = 0
-
-        varbitID = -1
-        configId = -1
-        animationId = 0
-        animations = -1
-
-        options = arrayOfNulls(5)
-        hasHiddenOptions = false
-
-        mirrored = false
-        castsShadow = true
-
-        sizeX = 1
-        sizeY = 1
-
-        offsetX = 0
-        offsetY = 0
-        offsetZ = 0
-        offsetMultiplier = 64
-
-        blockRange = true
-        blocksLand = false
-        blockwalk = 2
-
+        id = -1
         interactable = -1
-
-        contouredGround = 0.toByte()
-
-        hide = false
-        render = false
-
-        isSolidFlag = true
-
-        forceAnimation = true
-
-        supportItems = -1
-        blockFlag = 0
-        brightness = 0
-        contrast = 0
-
+        supportitems = -1
         mapFunction = -1
-        members = false
-
-        modelSizeX = 128
-        modelSizeY = 128
-        modelSizeZ = 128
-
-        breakRouteFinding = false
-        isInteractable = false
-        hasAnimation = false
-        mapSceneRotated = false
+        options = arrayOfNulls(5)
+        walloff = 64
     }
 
     /**
-     * Configure object.
+     * Configures the object after loading.
      */
     fun configureObject() {
         if (interactable == -1) {
             interactable = 0
-            if (modelIds != null && (modelTypes == null || modelTypes!![0] == 10)) {
+
+            if (modelIds != null && (modelTypes == null || modelTypes?.firstOrNull() == 10)) {
                 interactable = 1
             }
-            for (i in 0..4) {
-                if (options[i] != null) {
-                    interactable = 1
-                    break
-                }
+
+            if (options.size >= 5 && options.take(5).any { it != null }) {
+                interactable = 1
             }
         }
-        if (childrenIds != null) {
-            for (i in childrenIds!!.indices) {
-                val def = forId(childrenIds!![i])
-                def.varbitID = varbitID
+
+        multiLocs?.forEach { childId ->
+            val def = forId(childId)
+            def.multiLocVarbit = multiLocVarbit
+        }
+
+        if (supportitems == -1) {
+            supportitems = if (blockwalk == 0) 0 else 1
+        }
+
+        when (id) {
+            shared.consts.Scenery.TENT_31017 -> {
+                sizeY = 2
+                sizeX = sizeY
             }
-        }
-        if (supportItems == -1) {
-            supportItems = if (blockwalk == 0) 0 else 1
-        }
-        // Manual changes
-        if (id == shared.consts.Scenery.TENT_31017) {
-            sizeY = 2
-            sizeX = sizeY
-        }
-        if (id == 29292) {
-            blockRange = false
+            29292 -> blockRange = false
         }
     }
 
     /**
-     * Has actions boolean.
+     * Checks whether the object has any usable options.
      *
-     * @return the boolean
+     * @return `true` if the object is interactable or has valid options; otherwise `false`.
      */
-    fun hasActions(): Boolean {
-        if (interactable > 0) {
-            return true
-        }
-        if (childrenIds == null) {
+    override fun hasOptions(): Boolean {
+        if (interactable > 0) return true
+
+        val children = multiLocs
+        if (children == null || children.isEmpty()) {
             return hasOptions(false)
         }
-        for (i in childrenIds!!.indices) {
-            if (childrenIds!![i] != -1) {
-                val def = forId(childrenIds!![i])
-                if (def.hasOptions(false)) {
-                    return true
-                }
+
+        for (childId in children) {
+            if (childId != -1) {
+                val def = forId(childId)
+                if (def.hasOptions(false)) return true
             }
         }
+
         return hasOptions(false)
     }
 
     /**
-     * Gets child object.
+     * Gets the child object for this scenery based on the given configuration.
      *
-     * @param player the player
-     * @return the child object
+     * @param player The player for whom to get the child object, or `null` for default.
+     * @return The child [SceneryDefinition] corresponding to the player config or this instance if none.
      */
-    fun getChildObject(player: Player?): SceneryDefinition? {
-        if (childrenIds == null || childrenIds!!.size < 1) {
-            return this
-        }
+    fun getChildObject(player: Player?): SceneryDefinition {
+        val children = multiLocs
+        if (children == null || children.isEmpty()) return this
+
         var configValue = -1
         if (player != null) {
-            if (varbitID != -1) {
-                val def = VarbitDefinition.forSceneryId(varbitID)
-                if (def != null) {
-                    configValue = def.getValue(player)
+            if (multiLocVarbit != -1) {
+                val varbitDef = VarbitDefinition.forSceneryId(multiLocVarbit)
+                if (varbitDef != null) {
+                    configValue = varbitDef.getValue(player)
                 }
-            } else if (configId != -1) {
-                configValue = getVarp(player, configId)
+            } else if (multiLocVarp != -1) {
+                configValue = getVarp(player, multiLocVarp)
             }
         } else {
             configValue = 0
         }
+
         val childDef = getChildObjectAtIndex(configValue)
-        if (childDef != null) childDef.varbitID = this.varbitID
+        if (childDef != null) childDef.multiLocVarbit = this.multiLocVarbit
         return childDef
     }
 
+
     /**
-     * Gets child object at index.
+     * Gets the child object at the specified index from the multiLocs array.
      *
-     * @param index the index
-     * @return the child object at index
+     * @param index The index of the child object to retrieve.
+     * @return The child [SceneryDefinition] at the index or the default child or this instance if invalid.
      */
     fun getChildObjectAtIndex(index: Int): SceneryDefinition {
-        if (childrenIds == null || childrenIds!!.size < 1) {
+        val children = multiLocs
+        if (children == null || children.isEmpty()) return this
+
+        if (index < 0 || index >= children.size - 1 || children[index] == -1) {
+            val defaultId = children[children.size - 1]
+            if (defaultId != -1) return forId(defaultId)
             return this
         }
-        if (index < 0 || index >= childrenIds!!.size - 1 || childrenIds!![index] == -1) {
-            val objectId = childrenIds!![childrenIds!!.size - 1]
-            if (objectId != -1) {
-                return forId(objectId)
-            }
-            return this
-        }
-        return forId(childrenIds!![index])
+
+        return forId(children[index])
     }
 
+    /**
+     * The VarbitDefinition linked to this scenery, if any.
+     */
     val configFile: VarbitDefinition?
-        /**
-         * Gets config file.
-         *
-         * @return the config file
-         */
         get() {
-            if (varbitID != -1) {
-                return VarbitDefinition.forSceneryId(varbitID)
+            if (multiLocVarbit != -1) {
+                return VarbitDefinition.forSceneryId(multiLocVarbit)
             }
             return null
         }
 
+    /**
+     * Gets the interaction options available on this scenery object.
+     *
+     * @return An array of option strings.
+     */
     override fun getOptions(): Array<String> = options
 
+    /**
+     * Gets the display name of this scenery object.
+     *
+     * @return The name.
+     */
     override fun getName(): String = name
 
     /**
-     * Has action boolean.
+     * Checks if this scenery has a specific option.
      *
-     * @param action the action
-     * @return the boolean
+     * @param option The option name to check.
+     * @return `true` if the option exists (case-insensitive), otherwise `false`.
      */
-    fun hasAction(action: String?): Boolean {
-        if (options == null) {
-            return false
-        }
-        for (option in options) {
-            if (option == null) {
-                continue
-            }
-            if (option.equals(action, ignoreCase = true)) {
-                return true
-            }
-        }
-        return false
+    fun hasOption(option: String?): Boolean {
+        if (option == null || options == null) return false
+        return options.any { it?.equals(option, ignoreCase = true) == true }
     }
 
     companion object {
-        /**
-         * Gets definitions.
-         *
-         * @return the definitions
-         */
         val definitions: MutableMap<Int, SceneryDefinition> = HashMap()
         private val OPTION_HANDLERS: MutableMap<String, OptionHandler?> = HashMap()
 
-        /**
-         * The entry point of application.
-         *
-         * @param args the input arguments
-         * @throws Throwable the throwable
-         */
         @Throws(Throwable::class)
         @JvmStatic
         fun main(args: Array<String>) {
             prompt(false)
         }
 
-        /**
-         * Parse.
-         *
-         * @throws Throwable the throwable
-         */
         @Throws(Throwable::class)
         fun parse() {
-            for (objectId in 0 until getIndexCapacity(CacheIndex.SCENERY_CONFIGURATION)) {
-                var data = getData(CacheIndex.SCENERY_CONFIGURATION, objectId ushr 8, objectId and 0xFF)
+            val capacity = getIndexCapacity(CacheIndex.SCENERY_CONFIGURATION)
+            for (objectId in 0 until capacity) {
+                val data = getData(CacheIndex.SCENERY_CONFIGURATION, objectId ushr 8, objectId and 0xFF)
                 if (data == null) {
                     definitions[objectId] = SceneryDefinition()
                     continue
@@ -314,21 +260,12 @@ class SceneryDefinition : Definition<Scenery?>() {
             }
         }
 
-        /**
-         * For id scenery definition.
-         *
-         * @param objectId the object id
-         * @return the scenery definition
-         */
         @JvmStatic
         fun forId(objectId: Int): SceneryDefinition {
-            var def = definitions[objectId]
-            if (def != null) {
-                return def
+            return definitions[objectId] ?: SceneryDefinition().also {
+                it.id = objectId
+                definitions[objectId] = it
             }
-            definitions[objectId] = SceneryDefinition().also { def = it }
-            def!!.id = objectId
-            return def!!
         }
 
         /**
@@ -344,10 +281,8 @@ class SceneryDefinition : Definition<Scenery?>() {
 
             while (buffer.hasRemaining()) {
                 val opcode = buffer.g1()
-
                 when (opcode) {
                     0 -> break
-
                     1 -> {
                         val count = buffer.g1()
                         if (count > 0) {
@@ -365,7 +300,6 @@ class SceneryDefinition : Definition<Scenery?>() {
                     }
 
                     2 -> def.name = buffer.gjstr()
-
                     5 -> {
                         val count = buffer.g1()
                         if (count > 0) {
@@ -383,168 +317,147 @@ class SceneryDefinition : Definition<Scenery?>() {
 
                     14 -> def.sizeX = buffer.g1()
                     15 -> def.sizeY = buffer.g1()
-
                     17 -> {
                         def.blockwalk = 0
                         def.blockRange = false
                     }
-
                     18 -> def.blockRange = false
-
                     19 -> def.interactable = buffer.g1()
-
-                    21 -> def.contouredGround = 1.toByte()
+                    21 -> def.hillskewType = 1
                     22 -> def.delayShading = true
-                    23 -> def.hide = true
-
+                    23 -> def.occlude = true
                     24 -> {
                         def.animations = buffer.g2()
                         if (def.animations == 65535) def.animations = -1
                     }
-
                     27 -> def.blockwalk = 1
-
-                    28 -> def.offsetMultiplier = buffer.g1() shl 2
-
-                    29 -> def.brightness = buffer.get().toInt()
-
-                    30, 31, 32, 33, 34 -> {
+                    28 -> def.walloff = buffer.g1()
+                    29 -> def.ambient = buffer.g1()
+                    in 30..34 -> {
                         val idx = opcode - 30
                         def.options[idx] = buffer.gjstr()
-                        if (def.options[idx] == "Hidden") {
-                            def.options[idx] = null
-                            def.hasHiddenOptions = true
-                        }
+                        if (def.options[idx]?.equals("Hidden", ignoreCase = true) == true) def.options[idx] = null
                     }
-
-                    39 -> def.contrast = buffer.get().toInt() * 5
-
+                    39 -> def.contrast = buffer.g1().toByte() * 5
                     40 -> {
-                        val length = buffer.g1()
-                        def.originalColors = ShortArray(length)
-                        def.modifiedColors = ShortArray(length)
-                        repeat(length) {
-                            def.originalColors!![it] = buffer.getShort()
-                            def.modifiedColors!![it] = buffer.getShort()
+                        val count = buffer.g1()
+                        def.recol_s = ShortArray(count)
+                        def.recol_d = ShortArray(count)
+                        repeat(count) {
+                            def.recol_s!![it] = buffer.g2().toShort()
+                            def.recol_d!![it] = buffer.g2().toShort()
                         }
                     }
-
                     41 -> {
-                        val length = buffer.g1()
-                        def.originalTextureColours = ShortArray(length)
-                        def.modifiedTextureColours = ShortArray(length)
-                        repeat(length) {
-                            def.originalTextureColours!![it] = buffer.getShort()
-                            def.modifiedTextureColours!![it] = buffer.getShort()
+                        val count = buffer.g1()
+                        def.retex_s = ShortArray(count)
+                        def.retex_d = ShortArray(count)
+                        repeat(count) {
+                            def.retex_s!![it] = buffer.g2().toShort()
+                            def.retex_d!![it] = buffer.g2().toShort()
                         }
                     }
-
                     42 -> {
-                        val length = buffer.g1()
-                        def.recolourPalette = ByteArray(length)
-                        repeat(length) {
-                            def.recolourPalette!![it] = buffer.get()
+                        val count = buffer.g1()
+                        def.recol_p = ByteArray(count)
+                        repeat(count) {
+                            def.recol_p!![it] = buffer.g1().toByte()
                         }
                     }
-                    60 -> def.mapFunction = buffer.getShort()
-                    62 -> def.mirrored = true
-                    64 -> def.castsShadow = false
-                    65 -> def.modelSizeX = buffer.getShort().toInt() and 0xFFFF
-                    66 -> def.modelSizeZ = buffer.getShort().toInt() and 0xFFFF
-                    67 -> def.modelSizeY = buffer.getShort().toInt() and 0xFFFF
-                    69 -> def.blockFlag = buffer.get().toInt() and 0xFF
-                    70 -> def.offsetX = (buffer.getShort().toInt() and 0xFFFF) shl 2
-                    71 -> def.offsetZ = (buffer.getShort().toInt() and 0xFFFF) shl 2
-                    72 -> def.offsetY = (buffer.getShort().toInt() and 0xFFFF) shl 2
-                    73 -> def.blocksLand = true
-                    74 -> def.breakRouteFinding = true
-                    75 -> def.supportItems = buffer.get().toInt() and 0xFF
-
+                    60 -> def.mapFunction = buffer.g2()
+                    62 -> def.mirror = true
+                    64 -> def.active = false
+                    65 -> def.resizex = buffer.g2()
+                    66 -> def.resizey = buffer.g2()
+                    67 -> def.resizez = buffer.g2()
+                    69 -> def.blocksides = buffer.g1()
+                    70 -> def.xoff = buffer.g2()
+                    71 -> def.yoff = buffer.g2()
+                    72 -> def.zoff = buffer.g2()
+                    73 -> def.forcedecor = true
+                    74 -> def.breakroutefinding = true
+                    75 -> def.supportitems = buffer.g1()
                     77, 92 -> {
-                        def.varbitID = buffer.g2()
-                        if (def.varbitID == 65535) def.varbitID = -1
-
-                        def.configId = buffer.g2()
-                        if (def.configId == 65535) def.configId = -1
-
-                        var defaultId = -1
+                        var count = -1
+                        def.multiLocVarbit = buffer.g2()
+                        if (def.multiLocVarbit == 65535) def.multiLocVarbit = -1
+                        def.multiLocVarp = buffer.g2()
+                        if (def.multiLocVarp == 65535) def.multiLocVarp = -1
                         if (opcode == 92) {
-                            defaultId = buffer.g2()
-                            if (defaultId == 65535) defaultId = -1
+                            count = buffer.g2()
+                            if (count == 65535) count = -1
                         }
-
-                        val childrenAmount = buffer.g1()
-                        def.childrenIds = IntArray(childrenAmount + 2)
-                        for (index in 0..childrenAmount) {
-                            def.childrenIds!![index] = buffer.g2()
-                            if (def.childrenIds!![index] == 65535) def.childrenIds!![index] = -1
+                        val len = buffer.g1()
+                        def.multiLocs = IntArray(len + 2)
+                        for (i in 0..len) {
+                            def.multiLocs!![i] = buffer.g2()
+                            if (def.multiLocs!![i] == 65535) def.multiLocs!![i] = -1
                         }
-                        def.childrenIds!![childrenAmount + 1] = defaultId
+                        def.multiLocs!![len + 1] = count
                     }
-
                     78 -> {
-                        def.ambientSoundId = buffer.g2()
-                        def.ambientSoundMinDelay = buffer.g1()
+                        def.bgsound = buffer.g2()
+                        def.bgsoundrange = buffer.g1()
                     }
-
                     79 -> {
-                        def.ambientSoundMaxDelay = buffer.g2()
-                        def.animationId = buffer.g2()
-                        def.ambientSoundMinDelay = buffer.g1()
-                        val length = buffer.g1()
-                        def.alternateModelIds = IntArray(length)
-                        repeat(length) { i ->
-                            def.alternateModelIds!![i] = buffer.g2()
+                        def.bgsoundmin = buffer.g2()
+                        def.bgsoundmax = buffer.g2()
+                        def.bgsoundrange = buffer.g1()
+                        val count = buffer.g1()
+                        def.bgsounds = IntArray(count)
+                        for (i in 0 until count) {
+                            def.bgsounds!![i] = buffer.g2()
                         }
                     }
-
                     81 -> {
-                        def.contouredGround = 2.toByte()
-                        def.configId = buffer.g1() * 256
+                        def.hillskewType = 2
+                        def.hillskewAmount = (buffer.g1() * 256).toShort()
                     }
                     82 -> def.render = true
-                    88 -> def.isSolidFlag = false
-                    89 -> def.forceAnimation = false
+                    88 -> def.castshadow = false
+                    89 -> def.allowrandomizedanimation = false
                     90 -> def.isInteractable = true
                     91 -> def.members = true
-
                     93 -> {
-                        def.contouredGround = 3.toByte()
-                        def.configId = buffer.g2()
+                        def.hillskewType = 3
+                        def.hillskewAmount = buffer.g2().toShort()
                     }
-                    94 -> def.contouredGround = 4.toByte()
-                    95 -> def.contouredGround = 5.toByte()
-                    96 -> def.hasAnimation = true
+                    94 -> def.hillskewType = 4
+                    95 -> def.hillskewType = 5
+                    96 -> def.hasanimation = true
                     97 -> def.mapSceneRotated = true
-                    100 -> {
-                        buffer.get() // cursor2Op
-                        buffer.getShort() // cursor2
+                    98 -> def.aBoolean214 = true
+                    99 -> {
+                        def.cursor1Op = buffer.g1()
+                        def.cursor1 = buffer.g2()
                     }
-                    101 -> buffer.get() // mapSceneAngleOffset
-                    102 -> buffer.getShort() // mapScene
+                    100 -> {
+                        def.cursor2Op = buffer.g1()
+                        def.cursor2 = buffer.g2()
+                    }
+                    101 -> def.mapSceneAngleOffset = buffer.g1()
+                    102 -> def.mapscene = buffer.g2()
                     249 -> {
-                        val length = buffer.g1()
-                        repeat(length) {
+                        val count = buffer.g1()
+                        if (def.params == null) {
+                            def.params = mutableMapOf()
+                        }
+                        repeat(count) {
                             val isString = buffer.g1() == 1
-                            BufferReader.getMedium(buffer) // script id
-                            if (isString) {
-                                buffer.gjstr()
-                            } else {
-                                buffer.g4()
-                            }
+                            val key = BufferReader.getMedium(buffer)
+                            val value = if (isString) buffer.gjstr() else buffer.g4()
+                            def.params!![key] = value
                         }
                     }
-
                     else -> {
                         log(SceneryDefinition::class.java, Log.ERR, "Unhandled object definition opcode: $opcode")
                         break
                     }
                 }
             }
-
             def.configureObject()
 
-            if (def.breakRouteFinding) {
+            if (def.breakroutefinding) {
                 def.blockwalk = 0
                 def.blockRange = false
             }

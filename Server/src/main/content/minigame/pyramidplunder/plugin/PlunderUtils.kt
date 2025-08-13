@@ -388,7 +388,7 @@ object PlunderUtils {
      * @param door The door to check.
      * @return True if the entrance matches, false otherwise.
      */
-    fun checkEntrance(door: Node): Boolean = door.asScenery().definition.varbitID == PlunderData.currentEntrance
+    fun checkEntrance(door: Node): Boolean = door.asScenery().definition.multiLocVarbit == PlunderData.currentEntrance
 
     fun rollUrnSuccess(
         player: Player,
