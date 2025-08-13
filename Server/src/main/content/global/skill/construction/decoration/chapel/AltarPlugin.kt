@@ -117,7 +117,7 @@ class AltarPlugin : InteractionListener {
     }
 
     private fun isLit(obj: Scenery?): Boolean =
-        obj != null && obj.id != shared.consts.Scenery.LAMP_SPACE_15271 && !SceneryDefinition.forId(obj.id).hasAction("light")
+        obj != null && obj.id != shared.consts.Scenery.LAMP_SPACE_15271 && !SceneryDefinition.forId(obj.id).hasOption("light")
 
     private fun getBase(altar: Scenery?): Double = when (altar?.id) {
         shared.consts.Scenery.ALTAR_13182 -> 110.0

@@ -93,7 +93,7 @@ public final class LandscapeParser {
         Region.load(plane.getRegion());
         SceneryDefinition def = object.getDefinition();
         object.setActive(true);
-        boolean add = storeObjects || !landscape || def.getChildObject(null).hasActions();
+        boolean add = storeObjects || !landscape || def.getChildObject(null).hasOptions();
         if (add) {
             addPlaneObject(plane, object, localX, localY, landscape, storeObjects);
         }
@@ -120,7 +120,7 @@ public final class LandscapeParser {
         int type = object.getType();
         if (type == 22) { //Tile
             plane.getFlags().getLandscape()[localX][localY] = true;
-            if (def.interactable != 0 || def.blockwalk == 1 || def.blocksLand) {
+            if (def.interactable != 0 || def.blockwalk == 1 || def.forcedecor) {
                 if (def.blockwalk == 1) {
                     plane.getFlags().flagTileObject(localX, localY);
                     if (def.blockRange) {
@@ -200,7 +200,7 @@ public final class LandscapeParser {
         }
         int type = object.getType();
         if (type == 22) { //Tile
-            if (def.interactable != 0 || def.blockwalk == 1 || def.blocksLand) {
+            if (def.interactable != 0 || def.blockwalk == 1 || def.forcedecor) {
                 if (def.blockwalk == 1) {
                     plane.getFlags().unflagTileObject(localX, localY);
                     if (def.blockRange) {

@@ -825,7 +825,7 @@ fun hasOption(
 ): Boolean =
     when (node) {
         is NPC -> node.definition.hasAction(option)
-        is Scenery -> node.definition.hasAction(option)
+        is Scenery -> node.definition.hasOption(option)
         is Item -> node.definition.hasAction(option)
         else -> throw IllegalArgumentException("Expected an NPC, Scenery or an Item, got ${node.javaClass.simpleName}.")
     }
@@ -2097,7 +2097,7 @@ fun stopWalk(entity: Entity) {
 fun getChildren(scenery: Int): IntArray =
     SceneryDefinition
         .forId(scenery)
-        .childrenIds!!
+        .multiLocs!!
         .filter { it != -1 }
         .toIntArray()
 

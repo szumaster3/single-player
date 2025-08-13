@@ -81,7 +81,7 @@ class RangingGuildPlugin : OptionHandler() {
         n: Node,
     ): Location? {
         if (n is Scenery) {
-            if (n.definition.hasAction("open")) {
+            if (n.definition.hasOption("open")) {
                 if (n.getId() == 2514) {
                     return if (node.location.y >= 3438) {
                         Location.create(2657, 3439, 0)

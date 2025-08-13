@@ -25,7 +25,7 @@ enum class CompostBins(
         @JvmStatic
         fun forObjectID(id: Int): CompostBins? {
             val objDef = SceneryDefinition.forId(id)
-            return bins[objDef.varbitID]
+            return bins[objDef.multiLocVarbit]
         }
     }
 

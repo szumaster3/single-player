@@ -127,7 +127,7 @@ class PyramidPlunderMinigame :
                     sendMessage(player, "You successfully loot the urn!")
                     rewardXP(player, Skills.THIEVING, PlunderUtils.getUrnXp(player, false))
                     addItemOrDrop(player, PlunderUtils.rollArtifact(player, 1))
-                    setVarbit(player, node.asScenery().definition.varbitID, 1)
+                    setVarbit(player, node.asScenery().definition.multiLocVarbit, 1)
                 }
                 return@queueScript stopExecuting(player)
             }
@@ -141,7 +141,7 @@ class PyramidPlunderMinigame :
             lock(player, 1)
             queueScript(player, 1, QueueStrength.SOFT) {
                 animate(player, urnBitAnim)
-                setVarbit(player, urn.definition.varbitID, 2)
+                setVarbit(player, urn.definition.multiLocVarbit, 2)
                 animateScenery(urn, snakeUrnAnim)
                 return@queueScript stopExecuting(player)
             }
@@ -156,7 +156,7 @@ class PyramidPlunderMinigame :
             lock(player, 2)
             animate(player, charmAnim)
             queueScript(player, 1, QueueStrength.SOFT) {
-                setVarbit(player, node.asScenery().definition.varbitID, 3)
+                setVarbit(player, node.asScenery().definition.multiLocVarbit, 3)
                 sendMessage(player, "You charm the snake with your music.")
                 return@queueScript stopExecuting(player)
             }
@@ -179,7 +179,7 @@ class PyramidPlunderMinigame :
                     sendMessage(player, "You successfully loot the urn.")
                     addItemOrDrop(player, PlunderUtils.rollArtifact(player, 1))
                     rewardXP(player, Skills.THIEVING, PlunderUtils.getUrnXp(player, false) * 0.66)
-                    setVarbit(player, node.asScenery().definition.varbitID, 1)
+                    setVarbit(player, node.asScenery().definition.multiLocVarbit, 1)
                 }
                 return@queueScript stopExecuting(player)
             }
@@ -211,7 +211,7 @@ class PyramidPlunderMinigame :
                             return true
                         }
                         runTask(player, 3) {
-                            setVarbit(player, node.asScenery().definition.varbitID, 1)
+                            setVarbit(player, node.asScenery().definition.multiLocVarbit, 1)
                             rewardXP(player, Skills.STRENGTH, PlunderUtils.getSarcophagusXp(player))
                             if (RandomFunction.roll(25)) {
                                 val mummy =
@@ -254,7 +254,7 @@ class PyramidPlunderMinigame :
                     rewardXP(player, Skills.THIEVING, PlunderUtils.getChestXp(player))
                     if (!PlunderUtils.rollSceptre(player)) addItemOrDrop(player, PlunderUtils.rollArtifact(player, 3))
                 }
-                setVarbit(player, node.asScenery().definition.varbitID, 1)
+                setVarbit(player, node.asScenery().definition.multiLocVarbit, 1)
             }
             return@on true
         }
@@ -280,7 +280,7 @@ class PyramidPlunderMinigame :
                 }
             runTask(player, duration) {
                 if (RandomFunction.roll(rate)) {
-                    val varbitId = node.asScenery().definition.varbitID
+                    val varbitId = node.asScenery().definition.multiLocVarbit
                     val door = PlunderUtils.getDoor(player)
 
                     if (door == -1) {

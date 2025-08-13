@@ -89,7 +89,7 @@ class PickableDoorPlugin : OptionHandler() {
     ): Location? {
         if (n is Scenery) {
             val `object` = n
-            if (`object`.definition.hasAction("pick-lock")) {
+            if (`object`.definition.hasOption("pick-lock")) {
                 return DoorActionHandler.getDestination((node as Entity), `object`)
             }
         }

@@ -243,7 +243,7 @@ public final class BuildRoomDialogue extends Dialogue {
             for (int y = 0; y < 8; y++) {
                 Scenery[] objects = room.getChunk().getObjects(x, y);
                 for (Scenery object : objects) {
-                    if (object != null && object.getDefinition().hasAction("build")) {
+                    if (object != null && object.getDefinition().hasOption("build")) {
                         int[] pos = RegionChunk.getRotatedPosition(x, y, object.getDefinition().sizeX, object.getDefinition().sizeY, object.getRotation(), rotation);
                         Scenery obj = object.transform(object.getId(), (object.getRotation() + rotation) % 4, base.transform(pos[0], pos[1], 0));
                         boundaries.add(SceneryBuilder.add(obj));

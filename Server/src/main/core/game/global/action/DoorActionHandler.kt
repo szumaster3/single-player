@@ -48,7 +48,7 @@ object DoorActionHandler {
             }
             return
         }
-        if (scenery.definition.hasAction("close")) {
+        if (scenery.definition.hasOption("close")) {
             if (second != null) {
                 sendMessage(player, "The doors appear to be stuck.")
                 playAudio(player, Sounds.DOOR_CREAK_61)
@@ -226,7 +226,7 @@ object DoorActionHandler {
     fun getDestination(entity: Entity, door: Scenery): Location {
         var l = door.location
         var rotation = door.rotation
-        if (door is Constructed && door.getDefinition().hasAction("close")) {
+        if (door is Constructed && door.getDefinition().hasOption("close")) {
             val o = door.replaced
             if (o != null) {
                 l = o.location
