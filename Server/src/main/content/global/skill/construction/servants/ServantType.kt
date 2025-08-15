@@ -12,52 +12,12 @@ enum class ServantType(
     val timer: Int,
     vararg val food: Item?,
 ) {
-    NONE(
-        id = -1,
-        cost = -1,
-        capacity = -1,
-        level = -1,
-        timer = -1,
-    ),
-    RICK(
-        id = NPCs.RICK_4235,
-        cost = 500,
-        capacity = 6,
-        level = 20,
-        timer = 60,
-    ),
-    MAID(
-        id = NPCs.MAID_4237,
-        cost = 1000,
-        capacity = 10,
-        level = 25,
-        timer = 50,
-        Item(Items.STEW_2003),
-    ),
-    COOK(
-        id = NPCs.COOK_4239,
-        cost = 3000,
-        capacity = 16,
-        level = 30,
-        timer = 17,
-        Item(Items.PINEAPPLE_PIZZA_2301), Item(Items.AMULET_OF_GLORY4_1712),
-    ),
-    BUTLER(
-        id = NPCs.BUTLER_4241,
-        cost = 5000,
-        capacity = 20,
-        level = 40,
-        timer = 12,
-        Item(Items.CHOCOLATE_CAKE_1897), Item(Items.CUP_OF_TEA_712),
-    ),
-    DEMON_BUTLER(
-        id = NPCs.DEMON_BUTLER_4243,
-        cost = 10000,
-        capacity = 26,
-        level = 50,
-        timer = 7,
-        Item(Items.CURRY_2011),
-    ), ;
+    NONE(-1, -1, -1, -1, -1),
+    RICK(NPCs.RICK_4235, 500, 6, 20, 60),
+    MAID(NPCs.MAID_4237, 1000, 10, 25, 50, Item(Items.STEW_2003)),
+    COOK(NPCs.COOK_4239, 3000, 16, 30, 17, Item(Items.PINEAPPLE_PIZZA_2301), Item(Items.AMULET_OF_GLORY4_1712)),
+    BUTLER(NPCs.BUTLER_4241, 5000, 20, 40, 12, Item(Items.CHOCOLATE_CAKE_1897), Item(Items.CUP_OF_TEA_712)),
+    DEMON_BUTLER(NPCs.DEMON_BUTLER_4243, 10000, 26, 50, 7, Item(Items.CURRY_2011)), ;
 
     companion object {
         @JvmStatic
