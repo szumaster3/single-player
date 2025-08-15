@@ -43,6 +43,7 @@ Server/gradle/
 Server/hasRan.txt
 Server/latestdump.txt
 Server/target/*
+Server/data/cache.zip
 
 Tools/settings.json
 Tools/*

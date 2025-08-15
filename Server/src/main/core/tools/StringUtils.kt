@@ -5,12 +5,60 @@ import java.text.DecimalFormat
 import java.util.*
 
 object StringUtils {
-    @JvmStatic
-    private val VALID_CHARS = charArrayOf('_', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9')
 
-    @JvmStatic
-    private val anIntArray241 = intArrayOf(215, 203, 83, 158, 104, 101, 93, 84, 107, 103, 109, 95, 94, 98, 89, 86, 70, 41, 32, 27, 24, 23, -1, -2, 26, -3, -4, 31, 30, -5, -6, -7, 37, 38, 36, -8, -9, -10, 40, -11, -12, 55, 48, 46, 47, -13, -14, -15, 52, 51, -16, -17, 54, -18, -19, 63, 60, 59, -20, -21, 62, -22, -23, 67, 66, -24, -25, 69, -26, -27, 199, 132, 80, 77, 76, -28, -29, 79, -30, -31, 87, 85, -32, -33, -34, -35, -36, 197, -37, 91, -38, 134, -39, -40, -41, 97, -42, -43, 133, 106, -44, 117, -45, -46, 139, -47, -48, 110, -49, -50, 114, 113, -51, -52, 116, -53, -54, 135, 138, 136, 129, 125, 124, -55, -56, 130, 128, -57, -58, -59, 183, -60, -61, -62, -63, -64, 148, -65, -66, 153, 149, 145, 144, -67, -68, 147, -69, -70, -71, 152, 154, -72, -73, -74, 157, 171, -75, -76, 207, 184, 174, 167, 166, 165, -77, -78, -79, 172, 170, -80, -81, -82, 178, -83, 177, 182, -84, -85, 187, 181, -86, -87, -88, -89, 206, 221, -90, 189, -91, 198, 254, 262, 195, 196, -92, -93, -94, -95, -96, 252, 255, 250, -97, 211, 209, -98, -99, 212, -100, 213, -101, -102, -103, 224, -104, 232, 227, 220, 226, -105, -106, 246, 236, -107, 243, -108, -109, 231, 237, 235, -110, -111, 239, 238, -112, -113, -114, -115, -116, 241, -117, 244, -118, -119, 248, -120, 249, -121, -122, -123, 253, -124, -125, -126, -127, 259, 258, -128, -129, 261, -130, -131, 390, 327, 296, 281, 274, 271, 270, -132, -133, 273, -134, -135, 278, 277, -136, -137, 280, -138, -139, 289, 286, 285, -140, -141, 288, -142, -143, 293, 292, -144, -145, 295, -146, -147, 312, 305, 302, 301, -148, -149, 304, -150, -151, 309, 308, -152, -153, 311, -154, -155, 320, 317, 316, -156, -157, 319, -158, -159, 324, 323, -160, -161, 326, -162, -163, 359, 344, 337, 334, 333, -164, -165, 336, -166, -167, 341, 340, -168, -169, 343, -170, -171, 352, 349, 348, -172, -173, 351, -174, -175, 356, 355, -176, -177, 358, -178, -179, 375, 368, 365, 364, -180, -181, 367, -182, -183, 372, 371, -184, -185, 374, -186, -187, 383, 380, 379, -188, -189, 382, -190, -191, 387, 386, -192, -193, 389, -194, -195, 454, 423, 408, 401, 398, 397, -196, -197, 400, -198, -199, 405, 404, -200, -201, 407, -202, -203, 416, 413, 412, -204, -205, 415, -206, -207, 420, 419, -208, -209, 422, -210, -211, 439, 432, 429, 428, -212, -213, 431, -214, -215, 436, 435, -216, -217, 438, -218, -219, 447, 444, 443, -220, -221, 446, -222, -223, 451, 450, -224, -225, 453, -226, -227, 486, 471, 464, 461, 460, -228, -229, 463, -230, -231, 468, 467, -232, -233, 470, -234, -235, 479, 476, 475, -236, -237, 478, -238, -239, 483, 482, -240, -241, 485, -242, -243, 499, 495, 492, 491, -244, -245, 494, -246, -247, 497, -248, 502, -249, 506, 503, -250, -251, 505, -252, -253, 508, -254, 510, -255, -256, 0)
+    /**
+     * Valid characters allowed in names or identifiers.
+     */
+    val VALID_CHARS = charArrayOf('_', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9')
 
+    /**
+     * Lookup table for internal integer mappings used in encoding/decoding.
+     */
+    val anIntArray241 = intArrayOf(215, 203, 83, 158, 104, 101, 93, 84, 107, 103, 109, 95, 94, 98, 89, 86, 70, 41, 32, 27, 24, 23, -1, -2, 26, -3, -4, 31, 30, -5, -6, -7, 37, 38, 36, -8, -9, -10, 40, -11, -12, 55, 48, 46, 47, -13, -14, -15, 52, 51, -16, -17, 54, -18, -19, 63, 60, 59, -20, -21, 62, -22, -23, 67, 66, -24, -25, 69, -26, -27, 199, 132, 80, 77, 76, -28, -29, 79, -30, -31, 87, 85, -32, -33, -34, -35, -36, 197, -37, 91, -38, 134, -39, -40, -41, 97, -42, -43, 133, 106, -44, 117, -45, -46, 139, -47, -48, 110, -49, -50, 114, 113, -51, -52, 116, -53, -54, 135, 138, 136, 129, 125, 124, -55, -56, 130, 128, -57, -58, -59, 183, -60, -61, -62, -63, -64, 148, -65, -66, 153, 149, 145, 144, -67, -68, 147, -69, -70, -71, 152, 154, -72, -73, -74, 157, 171, -75, -76, 207, 184, 174, 167, 166, 165, -77, -78, -79, 172, 170, -80, -81, -82, 178, -83, 177, 182, -84, -85, 187, 181, -86, -87, -88, -89, 206, 221, -90, 189, -91, 198, 254, 262, 195, 196, -92, -93, -94, -95, -96, 252, 255, 250, -97, 211, 209, -98, -99, 212, -100, 213, -101, -102, -103, 224, -104, 232, 227, 220, 226, -105, -106, 246, 236, -107, 243, -108, -109, 231, 237, 235, -110, -111, 239, 238, -112, -113, -114, -115, -116, 241, -117, 244, -118, -119, 248, -120, 249, -121, -122, -123, 253, -124, -125, -126, -127, 259, 258, -128, -129, 261, -130, -131, 390, 327, 296, 281, 274, 271, 270, -132, -133, 273, -134, -135, 278, 277, -136, -137, 280, -138, -139, 289, 286, 285, -140, -141, 288, -142, -143, 293, 292, -144, -145, 295, -146, -147, 312, 305, 302, 301, -148, -149, 304, -150, -151, 309, 308, -152, -153, 311, -154, -155, 320, 317, 316, -156, -157, 319, -158, -159, 324, 323, -160, -161, 326, -162, -163, 359, 344, 337, 334, 333, -164, -165, 336, -166, -167, 341, 340, -168, -169, 343, -170, -171, 352, 349, 348, -172, -173, 351, -174, -175, 356, 355, -176, -177, 358, -178, -179, 375, 368, 365, 364, -180, -181, 367, -182, -183, 372, 371, -184, -185, 374, -186, -187, 383, 380, 379, -188, -189, 382, -190, -191, 387, 386, -192, -193, 389, -194, -195, 454, 423, 408, 401, 398, 397, -196, -197, 400, -198, -199, 405, 404, -200, -201, 407, -202, -203, 416, 413, 412, -204, -205, 415, -206, -207, 420, 419, -208, -209, 422, -210, -211, 439, 432, 429, 428, -212, -213, 431, -214, -215, 436, 435, -216, -217, 438, -218, -219, 447, 444, 443, -220, -221, 446, -222, -223, 451, 450, -224, -225, 453, -226, -227, 486, 471, 464, 461, 460, -228, -229, 463, -230, -231, 468, 467, -232, -233, 470, -234, -235, 479, 476, 475, -236, -237, 478, -238, -239, 483, 482, -240, -241, 485, -242, -243, 499, 495, 492, 491, -244, -245, 494, -246, -247, 497, -248, 502, -249, 506, 503, -250, -251, 505, -252, -253, 508, -254, 510, -255, -256, 0)
+
+    /**
+     * The modified set of 'extended ASCII' characters used by the client.
+     */
+    val CHAR_MAP = charArrayOf('\u20AC', '\u0000', '\u201A', '\u0192', '\u201E', '\u2026', '\u2020', '\u2021',
+        '\u02C6', '\u2030', '\u0160', '\u2039', '\u0152', '\u0000', '\u017D', '\u0000', '\u0000', '\u2018', '\u2019',
+        '\u201C', '\u201D', '\u2022', '\u2013', '\u2014', '\u02DC', '\u2122', '\u0161', '\u203A', '\u0153', '\u0000',
+        '\u017E', '\u0178')
+
+    /**
+     * Hashes the specified string.
+     */
+    fun hash(string: String): Int {
+        return string.hashCode()
+    }
+
+    /**
+     * Converts a byte value to a CP1252 character.
+     *
+     * @param value the byte to convert
+     * @return the corresponding CP1252 character
+     * @throws IllegalArgumentException if the byte represents 0 (invalid character)
+     */
+    fun getFromByte(value: Byte): Char {
+        var out = value.toInt() and 0xFF
+        if (out == 0) {
+            throw IllegalArgumentException("Non cp1252 character 0x${out.toString(16)} provided")
+        }
+        if (out in 128 until 160) {
+            var cp1252 = CHAR_MAP[out - 128]
+            if (cp1252 == '\u0000') {
+                cp1252 = '?'
+            }
+            out = cp1252.code
+        }
+        return out.toChar()
+    }
+
+    /**
+     * Formats an integer as a string with commas as thousand separators.
+     *
+     * @param amount the number to format
+     * @return formatted string
+     */
     @JvmStatic
     fun getFormattedNumber(amount: Int): String = DecimalFormat("#,###,##0").format(amount.toLong()).toString()
 
@@ -29,6 +77,12 @@ object StringUtils {
         return false
     }
 
+    /**
+     * Returns the plural form of a word.
+     *
+     * @param word the word to pluralize
+     * @return pluralized word
+     */
     @JvmStatic
     fun plusS(word: String): String {
         if (word.endsWith("s")) {
@@ -40,6 +94,12 @@ object StringUtils {
         return word + "s"
     }
 
+    /**
+     * Checks if a word should use 'an' instead of 'a'.
+     *
+     * @param word the word to check
+     * @return true if 'an' should be used, false otherwise
+     */
     @JvmStatic
     fun isPlusN(word: String?): Boolean {
         if (word == null) return false
@@ -52,6 +112,13 @@ object StringUtils {
             (s[0] == 'h' && s.length > 1 && s[1] != 'e')
     }
 
+    /**
+     * Formats a display name by replacing underscores with spaces
+     * and capitalizing the first letter of each word.
+     *
+     * @param name the name to format
+     * @return formatted display name
+     */
     @JvmStatic
     fun formatDisplayName(name: String): String {
         var name = name
@@ -73,6 +140,12 @@ object StringUtils {
         return newName.toString()
     }
 
+    /**
+     * Converts a character to its byte representation in CP1252.
+     *
+     * @param c the character to convert
+     * @return byte representation
+     */
     @JvmStatic
     private fun getByte(c: Char): Byte {
         val charByte =
@@ -160,6 +233,12 @@ object StringUtils {
         return charByte
     }
 
+    /**
+     * Converts a string to a [Double], ignoring commas and non-numeric characters.
+     *
+     * @param s the input string containing a number
+     * @return parsed double value, or 0.0 if parsing fails
+     */
     @JvmStatic
     fun getDouble(s: String): Double {
         var s = s
@@ -184,6 +263,14 @@ object StringUtils {
         }
     }
 
+    /**
+     * Generates a hash code for a name string.
+     *
+     * Lowercases the string and computes a hash using RSPS 530-specific byte conversion.
+     *
+     * @param str the input string
+     * @return hash code as an [Int]
+     */
     @JvmStatic
     fun getNameHash(str: String): Int {
         var str = str
@@ -193,6 +280,12 @@ object StringUtils {
         return hash
     }
 
+    /**
+     * Cleans up a string by removing HTML-like tags and specific substrings.
+     *
+     * @param s the input string
+     * @return cleaned string
+     */
     @JvmStatic
     fun getString(s: String): String =
         s
@@ -200,6 +293,15 @@ object StringUtils {
             .replace("&#160;".toRegex(), "")
             .replace("Discontinued Item:".toRegex(), "")
 
+    /**
+     * Splits a string into multiple lines, each with at most [maxCharInLine] characters.
+     *
+     * Words that are too long are split across lines.
+     *
+     * @param input the input string
+     * @param maxCharInLine maximum number of characters per line
+     * @return array of lines
+     */
     @JvmStatic
     fun splitIntoLine(
         input: String,
@@ -240,6 +342,16 @@ object StringUtils {
     @JvmStatic
     private val aByteArray235 = byteArrayOf(22, 22, 22, 22, 22, 22, 21, 22, 22, 20, 22, 22, 22, 21, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 3, 8, 22, 16, 22, 16, 17, 7, 13, 13, 13, 16, 7, 10, 6, 16, 10, 11, 12, 12, 12, 12, 13, 13, 14, 14, 11, 14, 19, 15, 17, 8, 11, 9, 10, 10, 10, 10, 11, 10, 9, 7, 12, 11, 10, 10, 9, 10, 10, 12, 10, 9, 8, 12, 12, 9, 14, 8, 12, 17, 16, 17, 22, 13, 21, 4, 7, 6, 5, 3, 6, 6, 5, 4, 10, 7, 5, 6, 4, 4, 6, 10, 5, 4, 4, 5, 7, 6, 10, 6, 10, 22, 19, 22, 14, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 21, 22, 21, 22, 22, 22, 21, 22, 22)
 
+    /**
+     * Encrypts player chat using RSPS 530-specific byte/bit mapping.
+     *
+     * @param is destination byte array for encrypted chat
+     * @param i_25_ starting index in the source array
+     * @param i_26_ number of characters to encrypt
+     * @param i_27_ additional offset for encryption
+     * @param is_28_ source byte array containing plaintext chat
+     * @return number of bytes written
+     */
     @JvmStatic
     fun encryptPlayerChat(`is`: ByteArray, i_25_: Int, i_26_: Int, i_27_: Int, is_28_: ByteArray): Int {
         var i_25_ = i_25_
@@ -288,6 +400,12 @@ object StringUtils {
         return 0
     }
 
+    /**
+     * Parses an integer value from a string, ignoring commas and non-numeric characters.
+     *
+     * @param s the input string
+     * @return parsed integer value, or 0 if parsing fails
+     */
     @JvmStatic
     fun getValue(s: String): Int {
         var s = s
@@ -312,6 +430,12 @@ object StringUtils {
         }
     }
 
+    /**
+     * Checks whether an account name is invalid.
+     *
+     * @param name the account name
+     * @return true if invalid, false otherwise
+     */
     @JvmStatic
     fun invalidAccountName(name: String): Boolean =
         name.length < 2 ||
@@ -323,6 +447,12 @@ object StringUtils {
                 name,
             )
 
+    /**
+     * Converts a long value to a string.
+     *
+     * @param l the long value
+     * @return corresponding string representation
+     */
     @JvmStatic
     fun longToString(l: Long): String {
         var l = l
@@ -336,6 +466,12 @@ object StringUtils {
         return String(ac, 12 - i, i)
     }
 
+    /**
+     * Maps a character code to its reduced value for hashing.
+     *
+     * @param x the ASCII code of the character
+     * @return reduced numeric mapping
+     */
     @JvmStatic
     fun reducedMapping(x: Int): Long {
         var out: Long = -1
@@ -351,6 +487,14 @@ object StringUtils {
         return out
     }
 
+    /**
+     * Converts a string to a long using base-37 mapping.
+     *
+     * Only the first 12 characters are considered. Trailing zeros are removed.
+     *
+     * @param s the input string
+     * @return long representation
+     */
     @JvmStatic
     fun stringToLong(s: String): Long {
         var l = 0L
@@ -371,6 +515,13 @@ object StringUtils {
         return l
     }
 
+    /**
+     * Decrypts player chat from a buffer using bit mapping.
+     *
+     * @param buffer the input buffer containing encrypted chat
+     * @param totalChars the total number of characters expected
+     * @return decrypted chat string
+     */
     @JvmStatic
     fun decryptPlayerChat(
         buffer: IoBuffer,

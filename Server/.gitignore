@@ -25,5 +25,6 @@ data/eco/offer_dispatch_db.emp
 data/logs/**
 data/players/**
 data/profile/**
+data/cache.zip
 out/**
 /data/playerstats/player_stats.db
