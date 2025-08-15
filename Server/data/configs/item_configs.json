@@ -69541,13 +69541,12 @@
   {
     "destroy_message": "You can get another Ancient Book by searching the library in the temple on the Salve.",
     "shop_price": "5000",
-    "examine": "The unholy book of a forgotten god.",
+    "examine": "A book about seven warrior priests, written about 200 years ago.",
     "durability": null,
     "name": "Ancient book",
     "weight": "1",
     "archery_ticket_price": "0",
-    "id": "7633",
-    "bonuses": "4,4,4,6,0,4,4,4,6,0,2,0,0,5,0"
+    "id": "7633"
   },
   {
     "destroy_message": "You can get another Crumbling tome by searching the library in the temple on the Salve.",
