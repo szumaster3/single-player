@@ -14,6 +14,7 @@ import core.plugin.Plugin;
 import core.tools.Log;
 
 import static core.api.ContentAPIKt.log;
+import static core.api.ContentAPIKt.setTitle;
 
 /**
  * Handles the build options.
@@ -139,6 +140,7 @@ public final class BuildOptionPlugin extends OptionHandler {
 
         @Override
         public boolean open(java.lang.Object... args) {
+            setTitle(player, 2);
             interpreter.sendOptions("Really remove it?", "Yes", "No");
             scenery = (Scenery) args[0];
             return true;

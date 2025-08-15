@@ -19,9 +19,52 @@ import kotlin.reflect.jvm.isAccessible
 class CacheCommandSet : CommandSet(Privilege.ADMIN) {
 
     override fun defineCommands() {
+
         /*
-             * Modify object_configs.json.
-             */
+         * Print xteas to txt.
+         */
+
+        define(
+            name = "dumpxteas",
+            privilege = Privilege.ADMIN,
+            usage = "::dumpxteas",
+            description = "Dumps XTEA keys from xteas.json into individual txt files."
+        ) { player, _ ->
+
+            val gson = GsonBuilder()
+                .disableHtmlEscaping()
+                .setPrettyPrinting()
+                .create()
+
+            val source = File(ServerConstants.CONFIG_PATH + "xteas.json")
+            val output = File(ServerConstants.CONFIG_PATH + "xteas_txt")
+
+            if (!output.exists())
+                output.mkdirs()
+
+            val data = gson.fromJson(FileReader(source), JsonObject::class.java)
+            val xteas = data.getAsJsonArray("xteas")
+
+            for (entry in xteas) {
+                val obj = entry.asJsonObject
+                val regionId = obj.get("regionId").asInt
+                val keysString = obj.get("keys").asString
+                val keys = keysString.split(",").map { it.trim() }
+
+                val filePath = File(output, "$regionId.txt")
+
+                filePath.printWriter().use { writer ->
+                    keys.forEach { key ->
+                        writer.println(key)
+                    }
+                }
+                player.debug("Dumped XTEA keys to txt=${filePath.name}")
+            }
+        }
+
+        /*
+         * Modify object_configs.json.
+         */
 
         define(
             name = "dumpobjects",
@@ -206,8 +249,12 @@ class CacheCommandSet : CommandSet(Privilege.ADMIN) {
             description = "Dumps all RenderAnimationDefinition definitions to a .txt file.",
         ) { p, _ ->
             val dumpFile = File("dumps/render_animations.txt")
-            val result = mutableListOf<String>()
 
+            dumpFile.parentFile?.let { parent ->
+                if (!parent.exists()) parent.mkdirs()
+            }
+
+            val result = mutableListOf<String>()
             val index = CacheIndex.CONFIGURATION
 
             val fileCount = Cache.getArchiveFileCount(index, 32)
@@ -240,13 +287,12 @@ class CacheCommandSet : CommandSet(Privilege.ADMIN) {
                     builder.append("\n")
                     result.add(builder.toString())
                 } catch (e: Exception) {
-                    println("Error parsing RenderAnimationDefinition ID $id: ${e.message}")
+                    println("Error parsing render animation id $id: ${e.message}")
                 }
             }
 
-            dumpFile.parentFile.mkdirs()
             dumpFile.writeText(result.joinToString(separator = "\n"))
-            p.debug("RenderAnimationDefinitions dumped to ${dumpFile.path}.")
+            p.debug("Render animation definitions dumped to ${dumpFile.path}.")
         }
 
         /*
@@ -259,9 +305,13 @@ class CacheCommandSet : CommandSet(Privilege.ADMIN) {
             usage = "::dumpdatamaps",
             description = "Dumps all DataMap definitions to a .txt file.",
         ) { p, _ ->
-            val dump = File("dumps/datamap_definitions.txt")
-            val dataMapStrings = mutableListOf<String>()
+            val dump = File("dumps/datamaps_config.txt")
 
+            dump.parentFile?.let { parent ->
+                if (!parent.exists()) parent.mkdirs()
+            }
+
+            val dataMapStrings = mutableListOf<String>()
             val index = CacheIndex.ENUM_CONFIGURATION
             val archiveCount = Cache.getIndex(index).archives().size
 
@@ -271,7 +321,6 @@ class CacheCommandSet : CommandSet(Privilege.ADMIN) {
 
                 for (fileId in 0 until fileCount) {
                     val id = (archiveId shl 8) or fileId
-
                     val data = Cache.getData(index, archiveId, fileId) ?: continue
 
                     try {
@@ -283,8 +332,10 @@ class CacheCommandSet : CommandSet(Privilege.ADMIN) {
                 }
             }
 
-            dump.parentFile.mkdirs()
-            dump.writeText(dataMapStrings.joinToString(separator = "\n"))
+            dump.printWriter().use { writer ->
+                dataMapStrings.forEach { writer.println(it) }
+            }
+
             p.debug("DataMap have been successfully dumped to ${dump.path}.")
         }
 
@@ -478,6 +529,9 @@ class CacheCommandSet : CommandSet(Privilege.ADMIN) {
             val gson = GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create()
 
             try {
+                dump.parentFile?.let { parent ->
+                    if (!parent.exists()) parent.mkdirs()
+                }
                 val dataList = mutableListOf<Map<String, Any?>>()
 
                 for (i in 0 until length) {
@@ -520,7 +574,9 @@ class CacheCommandSet : CommandSet(Privilege.ADMIN) {
         ) { p, _ ->
             val gson = GsonBuilder().setPrettyPrinting().create()
             val dump = File("dumps/item_definitions.json")
-            if(dump.exists()) dump.delete()
+            dump.parentFile?.let { parent ->
+                if (!parent.exists()) parent.mkdirs()
+            }
             val items = mutableListOf<Map<String, Any?>>()
 
             for (itemId in 0 until Cache.getIndexCapacity(CacheIndex.ITEM_CONFIGURATION)) {
@@ -615,6 +671,12 @@ class CacheCommandSet : CommandSet(Privilege.ADMIN) {
             val gson = GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create()
 
             try {
+                dump.parentFile?.let { parent ->
+                    if (!parent.exists()) {
+                        parent.mkdirs()
+                    }
+                }
+
                 val dataList = mutableListOf<Map<String, Any?>>()
 
                 val archiveFileCount = Cache.getArchiveFileCount(CacheIndex.CONFIGURATION, 26)
@@ -664,6 +726,9 @@ class CacheCommandSet : CommandSet(Privilege.ADMIN) {
                     .create()
 
             val dump = File("dumps/npc_definitions.json")
+            dump.parentFile?.let { parent ->
+                if (!parent.exists()) parent.mkdirs()
+            }
             val items = mutableListOf<Map<String, Any?>>()
 
             val excludedFields = setOf("handlers")

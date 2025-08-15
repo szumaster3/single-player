@@ -42,11 +42,6 @@ class DoorPlugin : OptionHandler() {
                 getReplaceId(door), getReplaceId(second),
                  true, -1,  false
             )
-            "close" -> DoorActionHandler.close(
-                door, second,
-                getReplaceId(door), getReplaceId(second.asScenery().wrapper),
-                true, -1, false
-            )
         }
 
         return true

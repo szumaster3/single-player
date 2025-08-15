@@ -13,6 +13,16 @@ import shared.consts.Items
 import shared.consts.Scenery
 
 class CrystalBallPlugin : InteractionListener {
+
+    /**
+     * Represents magical staves used in combination with the crystal ball or elemental magic.
+     *
+     * @property staffId the item ID of the staff
+     * @property start the animation played when beginning to use the staff
+     * @property end the animation played when finishing use
+     * @property cost the optional cost item (e.g., runes) required for using the staff
+     * @property type the type of the staff ([StaffType.REGULAR], [StaffType.BATTLE], or [StaffType.MYSTIC])
+     */
     private enum class Staff(
         val staffId: Int,
         val start: Animation,
@@ -37,31 +47,49 @@ class CrystalBallPlugin : InteractionListener {
         ;
 
         companion object {
+            /**
+             * All staff enum entries.
+             */
             val VALUES = values()
+
+            /**
+             * Map of staffId to [Staff] entry.
+             */
             val MAP = VALUES.associateBy { it.staffId }
+
+            /**
+             * Array of all staff ids.
+             */
             val ALL_STAFFS = VALUES.map { it.staffId }.toIntArray()
 
-            fun getProduct(
-                type: StaffType,
-                element: String,
-            ): Int? = VALUES.firstOrNull { it.type == type && it.name.contains(element, ignoreCase = true) }?.staffId
+            /**
+             * Gets the staff id for a type and elemental name.
+             *
+             * @param type the staff type.
+             * @param element the element contained in the staffs name.
+             * @return the matching staff id.
+             */
+            fun getProduct(type: StaffType, element: String, ): Int? = VALUES.firstOrNull { it.type == type && it.name.contains(element, ignoreCase = true) }?.staffId
 
+            /**
+             * Gets the cost item for the given staff id.
+             *
+             * @param staffId the id the staff.
+             * @return the cost item or null.
+             */
             fun getCost(staffId: Int): Item? = MAP[staffId]?.cost
         }
     }
 
-    private enum class StaffType {
-        REGULAR,
-        BATTLE,
-        MYSTIC,
-    }
+    /**
+     * Represents the category of a staff.
+     */
+    private enum class StaffType { REGULAR, BATTLE, MYSTIC }
 
-    private val crystalBallObjects =
-        intArrayOf(
-            Scenery.CRYSTAL_BALL_13659,
-            Scenery.ELEMENTAL_SPHERE_13660,
-            Scenery.CRYSTAL_OF_POWER_13661,
-        )
+    /**
+     * Represents the ids rystal ball and elemental sphere objects used with staves.
+     */
+    private val crystalBallObjects = intArrayOf(Scenery.CRYSTAL_BALL_13659, Scenery.ELEMENTAL_SPHERE_13660, Scenery.CRYSTAL_OF_POWER_13661)
 
     override fun defineListeners() {
         onUseWith(IntType.SCENERY, Staff.ALL_STAFFS, *crystalBallObjects) { player, staff, scenery ->
@@ -102,6 +130,9 @@ class CrystalBallPlugin : InteractionListener {
         }
     }
 
+    /**
+     * Select an element for the given staff.
+     */
     private fun handleElementSelection(
         player: Player,
         staff: Staff,
@@ -117,18 +148,18 @@ class CrystalBallPlugin : InteractionListener {
             }
         }
     }
-
-    private fun changeStaffElement(
-        player: Player,
-        staff: Staff,
-        element: String,
-    ) {
+    /**
+     * Changes the staffs element.
+     *
+     * @param element the element to change.
+     */
+    private fun changeStaffElement(player: Player, staff: Staff, element: String) {
         val elementRunes =
             mapOf(
-                "Air" to Items.AIR_RUNE_556,
+                "Air"   to Items.AIR_RUNE_556,
                 "Water" to Items.WATER_RUNE_555,
                 "Earth" to Items.EARTH_RUNE_557,
-                "Fire" to Items.FIRE_RUNE_554,
+                "Fire"  to Items.FIRE_RUNE_554,
             )
 
         val runeId = elementRunes[element] ?: return

@@ -22,9 +22,8 @@ import shared.consts.NPCs
 /**
  * Represents the house servants dialogue.
  */
-class HouseServantDialogue(
-    player: Player? = null,
-) : Dialogue(player) {
+class HouseServantDialogue(player: Player? = null) : Dialogue(player) {
+
     private var sawmill = false
     private var logs: Item? = null
 
@@ -304,7 +303,19 @@ class HouseServantDialogue(
                 servant.location = Location(0, 0)
                 manager.servant = null
             }
-            100 -> end()
+            100 -> {
+                val hideMap = mapOf(
+                    NPCs.RICK_4235 to 1,
+                    NPCs.MAID_4237 to 3,
+                    NPCs.COOK_4239 to 5,
+                    NPCs.BUTLER_4241 to 6,
+                    NPCs.DEMON_BUTLER_4243 to 7
+                )
+
+                val hide = hideMap[type?.id] ?: 0
+                setVarbit(player, 2190, hide)
+                end()
+            }
             // Sawmill run.
             110 -> {
                 end()

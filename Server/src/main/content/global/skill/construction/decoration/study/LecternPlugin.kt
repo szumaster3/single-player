@@ -187,17 +187,17 @@ class LecternPlugin : OptionHandler() {
                                             player.skills.addExperience(Skills.MAGIC, ttb.xp, true)
                                             if (ttb == TeleTabButton.VARROCK &&
                                                 (
-                                                    player.getAttribute(
-                                                        "ttb:objectid",
-                                                        0,
-                                                    ) ==
-                                                        Decoration.MAHOGANY_EAGLE_LECTERN.objectId ||
                                                         player.getAttribute(
                                                             "ttb:objectid",
                                                             0,
                                                         ) ==
-                                                        Decoration.MAHOGANY_DEMON_LECTERN.objectId
-                                                )
+                                                                Decoration.MAHOGANY_EAGLE_LECTERN.objectId ||
+                                                                player.getAttribute(
+                                                                    "ttb:objectid",
+                                                                    0,
+                                                                ) ==
+                                                                Decoration.MAHOGANY_DEMON_LECTERN.objectId
+                                                        )
                                             ) {
                                                 player.achievementDiaryManager.finishTask(
                                                     player,
