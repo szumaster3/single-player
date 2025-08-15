@@ -1,0 +1,4 @@
+push_i 16776960
+push_i 10289182
+op2101 0
+return 0

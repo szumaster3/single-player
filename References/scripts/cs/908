@@ -1,0 +1,3 @@
+push_i 1
+store_global_i 117
+return 0

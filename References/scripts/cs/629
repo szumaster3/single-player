@@ -1,0 +1,3 @@
+load_i 0
+call 630
+return 0

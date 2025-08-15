@@ -1,0 +1,3 @@
+push_i 5
+call 817
+return 0

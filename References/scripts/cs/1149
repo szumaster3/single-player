@@ -1,0 +1,4 @@
+push_i 3
+set_bright_pref 0
+call 1152
+return 0

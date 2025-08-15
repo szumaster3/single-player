@@ -1,0 +1,4 @@
+push_i 1149
+load_i 0
+op2105 0
+return 0

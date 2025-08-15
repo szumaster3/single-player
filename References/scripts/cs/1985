@@ -1,0 +1,4 @@
+push_i 11
+return 0
+push_i 0
+return 0

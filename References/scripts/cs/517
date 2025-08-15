@@ -1,0 +1,5 @@
+close_wgt 0
+push_i -1
+push_i 0
+op3101 0
+return 0

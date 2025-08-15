@@ -1,0 +1,3 @@
+load_i 0
+call 1741
+return 0

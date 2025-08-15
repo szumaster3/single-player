@@ -1,0 +1,6 @@
+push_i 0
+store_global_i 82
+push_i 0
+store_global_i 83
+call 621
+return 0

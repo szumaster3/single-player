@@ -1,0 +1,4 @@
+call 132
+push_i 0
+store_global_i 11
+return 0
