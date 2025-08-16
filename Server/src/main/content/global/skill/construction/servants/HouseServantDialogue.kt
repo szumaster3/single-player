@@ -29,7 +29,6 @@ class HouseServantDialogue(player: Player? = null) : Dialogue(player) {
     private var logs: Item? = null
     private val lastFetch = "con:lastfetch"
     private val lastFetchType = "con:lastfetchtype"
-    val gender = if (player!!.isMale) "sir" else "madam"
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
@@ -37,6 +36,7 @@ class HouseServantDialogue(player: Player? = null) : Dialogue(player) {
         val type = ServantType.forId(npc.id)
         val expression = if (type?.id in NPCs.DEMON_BUTLER_4243..NPCs.DEMON_BUTLER_4244) FaceAnim.OLD_DEFAULT else FaceAnim.HALF_GUILTY
         val fontColor = if (type?.id in NPCs.DEMON_BUTLER_4243..NPCs.DEMON_BUTLER_4244) DARK_BLUE else BLACK
+        val gender = if (player!!.isMale) "sir" else "madam"
         val inHouse = manager.isInHouse(player)
 
         if (args.size > 1) {
@@ -127,7 +127,7 @@ class HouseServantDialogue(player: Player? = null) : Dialogue(player) {
         var type = ServantType.forId(npc.id)
         val expression = if (type?.id in NPCs.DEMON_BUTLER_4243..NPCs.DEMON_BUTLER_4244) FaceAnim.OLD_DEFAULT else FaceAnim.HALF_GUILTY
         val fontColor = if (type?.id in NPCs.DEMON_BUTLER_4243..NPCs.DEMON_BUTLER_4244) DARK_BLUE else BLACK
-
+        val gender = if (player!!.isMale) "sir" else "madam"
         when (stage) {
             0 -> options("What can you do?", "Tell me about your previous jobs.", "You're hired!").also { stage++ }
             1 -> when (buttonId) {
