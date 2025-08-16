@@ -33,6 +33,9 @@ import core.tools.RandomFunction
 import shared.consts.Items
 import shared.consts.NPCs
 
+/*
+ * TODO: "Kamfreena reports that # cyclopes have been slain in the guild today. She hopes that warriors will step up and kill more!"
+ */
 @Initializable
 class CyclopesRoomPlugin :
     MapZone("wg cyclopes", true, ZoneRestriction.RANDOM_EVENTS),

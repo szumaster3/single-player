@@ -17,7 +17,7 @@ import shared.consts.NPCs
 class JimmyDialogue(player: Player? = null, ) : Dialogue(player) {
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
-        npc(FaceAnim.FRIENDLY, "'Ello there.")
+        npc(FaceAnim.DRUNK, "'Ello there.")
         return true
     }
 
