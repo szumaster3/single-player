@@ -29,7 +29,7 @@ class MarketSignpostPlugin : OptionHandler() {
 
     override fun handle(player: Player?, node: Node?, option: String?): Boolean {
         player ?: return false
-        val totalSteals = GlobalStatistics.getDailyStealCakes()
+        val totalSteals = GlobalStatistics.getDailyBakersStallThefts()
         sendDialogue(player, "The knights and paladins of East Ardougne are keeping a watchful eye on the market stalls today. So far, a total of $totalSteals delicious cakes and loaves of bread have been stolen from the bakers' stalls.")
         // One of East Ardougne's bakers was slightly upset to find one of his delicious wares has been stolen from his stall today. Be vigilant.
         return true
