@@ -163,7 +163,8 @@ object Graphics {
     const val ABYSSAL_WHIP_SPECIAL_341 = 341
     const val DRAGON_SCIMITAR_SPECIAL_347 = 347
     const val DRAGON_AXE_SPECIAL_479 = 479
-    const val BARRELCHEST_ANCHOR_SPECIAL_1027 = 1027
+    const val BARRELCHEST_ANCHOR_SPECIAL_M_1027 = 1027
+    const val BARRELCHEST_ANCHOR_SPECIAL_F_1052 = 1052
     const val BRINE_SABRE_SPECIAL_1048 = 1048
     const val ANCIENT_MACE_SPECIAL_1052 = 1052
     const val DARK_BOW_SPECIAL_1099 = 1099
@@ -296,6 +297,12 @@ object Graphics {
     const val WAR_TORTOISE_SPECIAL_MOVE_1310 = 1310
     const val SUMMON_FAMILIAR_SMALL_1314 = 1314
     const val SUMMON_FAMILIAR_LARGE_1315 = 1315
+
+    const val TARN_ATTACK_1002 = 1002
+    const val TARN_ATTACK_1003 = 1003
+    const val TARN_TRANSFORM_1004 = 1004
+
+    const val ENCHANT_SALVE_1012 = 1012
 
     /*
      * Not sorted.
