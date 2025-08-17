@@ -936,6 +936,16 @@ public class Player extends Entity {
     }
 
     /**
+     * Send messages.
+     *
+     * @param messages the messages
+     * @param ticks the ticks
+     */
+    public void sendMessages(int ticks, String... messages) {
+        packetDispatch.sendMessages(ticks, messages);
+    }
+
+    /**
      * Send message.
      *
      * @param message the message

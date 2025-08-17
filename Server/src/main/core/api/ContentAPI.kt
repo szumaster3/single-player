@@ -1033,8 +1033,14 @@ fun closeAllInterfaces(player: Player) {
 fun sendMessage(
     player: Player,
     message: String,
+    ticks: Int? = null
 ) {
-    player.sendMessages(*splitLines(message, 86))
+    val lines = splitLines(message, 86)
+    if (ticks != null) {
+        player.sendMessages(ticks, *lines)
+    } else {
+        player.sendMessages(0, *lines)
+    }
 }
 
 /**

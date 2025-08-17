@@ -89,6 +89,24 @@ public final class PacketDispatch {
     }
 
     /**
+     * Send messages.
+     *
+     * @param messages the messages
+     * @param ticks the ticks
+     */
+    public void sendMessages(int ticks, final String... messages) {
+        GameWorld.getPulser().submit(new Pulse(ticks, player) {
+            @Override
+            public boolean pulse() {
+                for (String message : messages) {
+                    sendMessage(message);
+                }
+                return true;
+            }
+        });
+    }
+
+    /**
      * Send message.
      *
      * @param message the message
