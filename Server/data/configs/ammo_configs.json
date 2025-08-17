@@ -1555,7 +1555,7 @@
     "itemId": "11212",
     "name": "Dragon arrow",
     "start_graphic": "1116,96",
-    "darkbow_graphic": "1114,96",
+    "darkbow_graphic": "1111,96",
     "projectile": "1120,40,36,41,46,5,0",
     "poison_damage": "0"
   },
