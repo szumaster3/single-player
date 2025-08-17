@@ -206,7 +206,7 @@ class InteractPlugin(private val node: Node) {
     }
 
     /**
-     * Sets a interaction option.
+     * Sets an interaction option.
      *
      * @param option the option to set
      */
@@ -275,7 +275,7 @@ class InteractPlugin(private val node: Node) {
                     override fun pulse(): Boolean {
                         try {
                             player.faceLocation(node.getFaceLocation(player.location))
-                            if (player.locks.isInteractionLocked() || player.zoneMonitor.interact(node, option)) {
+                            if (player.locks.isInteractionLocked() || player.zoneMonitor.interact(node, option?: Option.NULL)) {
                                 return true
                             }
                             player.packetDispatch.sendMessage("Nothing interesting happens.")
