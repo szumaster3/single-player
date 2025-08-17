@@ -744,11 +744,6 @@ class MuseumDisplayInterface :
             "who decide to split the city between them.",
         )
 
-    val removedForCleaning =
-        arrayOf(
-            "Item removed for cleaning.",
-        )
-
     override fun defineInterfaceListeners() {
         onOpen(Components.VM_TIMELINE_534) { player, _ ->
             val model = player.getAttribute(interfaceModel, 0)
@@ -889,7 +884,7 @@ class MuseumDisplayInterface :
             val model = n.definition.modelIds!![0]
             setAttribute(player, interfaceModel, model)
             openInterface(player, Components.VM_TIMELINE_534)
-            sendString(player, removedForCleaning.toString(), Components.VM_TIMELINE_534, 2)
+            sendString(player, "Item removed for cleaning.", Components.VM_TIMELINE_534, 2)
             return@on true
         }
 

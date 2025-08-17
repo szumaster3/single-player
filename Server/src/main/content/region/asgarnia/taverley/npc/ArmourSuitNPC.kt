@@ -73,7 +73,7 @@ class ArmourSuitNPC(
         /**
          * Currently active armour suits.
          */
-        private val activeSuits = mutableSetOf<ArmourSuitNPC>()
+        val activeSuits = mutableSetOf<ArmourSuitNPC>()
 
         /**
          * Locations already occupied by spawned suits.
