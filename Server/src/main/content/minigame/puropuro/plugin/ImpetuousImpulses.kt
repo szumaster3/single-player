@@ -22,11 +22,10 @@ import core.plugin.Plugin
 import core.tools.RandomFunction
 
 @Initializable
-class ImpetuousImpulses :
-    MapZone("puro puro", true),
-    Plugin<Any> {
+class ImpetuousImpulses : MapZone("puro puro", true), Plugin<Any> {
+
     init {
-        zoneType = ZoneType.SAFE.id
+        setZoneType(ZoneType.SAFE.id)
     }
 
     @Throws(Throwable::class)
@@ -36,10 +35,7 @@ class ImpetuousImpulses :
         return this
     }
 
-    override fun fireEvent(
-        identifier: String,
-        vararg args: Any,
-    ): Any? = null
+    override fun fireEvent(identifier: String, vararg args: Any): Any? = null
 
     override fun enter(e: Entity): Boolean {
         if (e is Player) {
@@ -55,10 +51,7 @@ class ImpetuousImpulses :
         return super.enter(e)
     }
 
-    override fun leave(
-        e: Entity,
-        logout: Boolean,
-    ): Boolean {
+    override fun leave(e: Entity, logout: Boolean): Boolean {
         if (e is Player) {
             val p = e.asPlayer()
             if (!logout) {
@@ -69,11 +62,7 @@ class ImpetuousImpulses :
         return super.leave(e, logout)
     }
 
-    override fun interact(
-        e: Entity,
-        target: Node,
-        option: Option,
-    ): Boolean = super.interact(e, target, option)
+    override fun interact(e: Entity, target: Node, option: Option): Boolean = super.interact(e, target, option)
 
     private fun spawnWheat() {
         for (set in WHEAT) {
@@ -120,16 +109,43 @@ class ImpetuousImpulses :
         WHEAT.add(WheatSet(0, Location.create(2583, 4304, 0), Location.create(2583, 4303, 0)))
     }
 
-    class WheatSet(
-        private val rot: Int,
-        vararg locations: Location,
-    ) {
-        val locations: Array<Location> = locations as Array<Location>
-        private val scenery = arrayOfNulls<Scenery>(2)
+    /**
+     * Represents a set of wheat patches.
+     *
+     * @property rot The rotation applied to all scenery objects in this set.
+     * @property locations The locations of each wheat patch in this set.
+     */
+    class WheatSet(private val rot: Int, vararg locations: Location) {
+
+        /**
+         * The list of locations for this wheat set.
+         */
+        val locations: List<Location> = locations.toList()
+
+        /**
+         * The array of scenery objects corresponding to each location.
+         */
+        private val scenery = arrayOfNulls<Scenery>(locations.size)
+
+        /**
+         * The game tick when the next whilt can occur.
+         */
         var nextWhilt: Int = 0
+            private set
+
+        /**
+         * The tick when the wheat set is busy performing an action.
+         */
         private var busyTicks = 0
+
+        /**
+         * Whether the wheat has been removed (used for animation state).
+         */
         private var removed = false
 
+        /**
+         * Initializes the scenery objects for this wheat set.
+         */
         fun init() {
             for ((index, location) in locations.withIndex()) {
                 val scenery = Scenery(25021, location, 22, rot)
@@ -139,60 +155,65 @@ class ImpetuousImpulses :
             setNextWhilt()
         }
 
+        /**
+         * Handles the action on all wheat patches in this set.
+         *
+         * This handles animation, removal, and adding of scenery objects, and
+         * schedules pulses for the animation timing.
+         */
         fun whilt() {
             busyTicks = ticks + 5
             for (`object` in scenery) {
-                if (`object` == null) {
-                    continue
-                }
+                if (`object` == null) continue
                 if (removed) {
-                    submitWorldPulse(
-                        object : Pulse() {
-                            var counter: Int = 0
-
-                            override fun pulse(): Boolean {
-                                if (counter++ == 0) {
-                                    animateScenery(`object`, 6596)
-                                    delay = animationDuration(Animation(6596))
-                                    return false
-                                }
-                                return true
+                    submitWorldPulse(object : Pulse() {
+                        var counter = 0
+                        override fun pulse(): Boolean {
+                            if (counter++ == 0) {
+                                animateScenery(`object`, 6596)
+                                delay = animationDuration(Animation(6596))
+                                return false
                             }
-                        },
-                    )
+                            return true
+                        }
+                    })
                     addScenery(`object`)
                     continue
                 }
-                submitWorldPulse(
-                    object : Pulse() {
-                        var counter: Int = 0
-
-                        override fun pulse(): Boolean {
-                            if (counter++ == 0) {
-                                animateScenery(`object`, 6599)
-                                delay = animationDuration(Animation(6599))
-                                return false
-                            }
-                            removeScenery(`object`)
-                            return true
+                submitWorldPulse(object : Pulse() {
+                    var counter = 0
+                    override fun pulse(): Boolean {
+                        if (counter++ == 0) {
+                            animateScenery(`object`, 6599)
+                            delay = animationDuration(Animation(6599))
+                            return false
                         }
-                    },
-                )
+                        removeScenery(`object`)
+                        return true
+                    }
+                })
             }
             removed = !removed
             setNextWhilt()
         }
 
+        /**
+         * Resets scenery objects based on their locations.
+         */
         fun setScenery() {
-            for (i in locations.indices) {
-                scenery[i] = getObject(locations[i])
-            }
+            for (i in locations.indices) scenery[i] = getObject(locations[i])
         }
 
+        /**
+         * Schedules the next whilt tick randomly.
+         */
         fun setNextWhilt() {
-            this.nextWhilt = ticks + RandomFunction.random(40, 300)
+            nextWhilt = ticks + RandomFunction.random(40, 300)
         }
 
+        /**
+         * Checks if the wheat can currently whilt.
+         */
         fun canWhilt(): Boolean = ticks > nextWhilt && ticks > busyTicks
     }
 

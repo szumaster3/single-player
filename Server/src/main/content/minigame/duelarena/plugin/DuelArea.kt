@@ -256,11 +256,7 @@ class DuelArea
             return true
         }
 
-        override fun teleport(
-            e: Entity,
-            type: Int,
-            node: Node,
-        ): Boolean {
+        override fun teleport(e: Entity, type: Int, node: Node?): Boolean {
             if (e.isPlayer) {
                 e.asPlayer().dialogueInterpreter.sendDialogue("Coward! You can't teleport from a duel.")
             }
@@ -271,10 +267,7 @@ class DuelArea
             if (e is Player) {
                 val p = e.asPlayer()
                 if (!WarningManager.isDisabled(p, Warnings.DUEL_ARENA) && inBorders(p, 3312, 3233, 3313, 3236)) {
-                    WarningManager.openWarning(
-                        p,
-                        Warnings.DUEL_ARENA,
-                    )
+                    WarningManager.openWarning(p, Warnings.DUEL_ARENA)
                 }
             }
             if (e.isPlayer) {
@@ -334,7 +327,9 @@ class DuelArea
         }
 
         override fun configure() {
-            register(border)
+            if (border != null) {
+                register(border)
+            }
         }
 
         private fun leave(p: Player) {

@@ -16,11 +16,8 @@ import shared.consts.NPCs
  * @author Zerken, szu
  */
 class PheasantNPC : NPCBehavior(NPCs.PHEASANT_2459, NPCs.PHEASANT_2460, NPCs.PHEASANT_2461, NPCs.PHEASANT_2462) {
-    override fun onDropTableRolled(
-        self: NPC,
-        killer: Entity,
-        drops: ArrayList<Item>,
-    ) {
+
+    override fun onDropTableRolled(self: NPC, killer: Entity, drops: ArrayList<Item>) {
         val assignedPheasant = getAttribute(killer, GameAttributes.RE_FREAK_TASK, -1)
         if (assignedPheasant == -1) return
         drops.removeLast()
@@ -32,17 +29,10 @@ class PheasantNPC : NPCBehavior(NPCs.PHEASANT_2459, NPCs.PHEASANT_2460, NPCs.PHE
         setAttribute(killer, GameAttributes.RE_FREAK_KILLS, true)
     }
 
-    override fun beforeDamageReceived(
-        self: NPC,
-        attacker: Entity,
-        state: BattleState,
-    ) {
+    override fun beforeDamageReceived(self: NPC, attacker: Entity, state: BattleState) {
         state.estimatedHit = 5
         state.secondaryHit = 0
     }
 
-    override fun getXpMultiplier(
-        self: NPC,
-        attacker: Entity,
-    ): Double = 0.0
+    override fun getXpMultiplier(self: NPC, attacker: Entity): Double = 0.0
 }

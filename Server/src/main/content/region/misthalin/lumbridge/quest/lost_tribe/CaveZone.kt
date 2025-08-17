@@ -38,11 +38,7 @@ class CaveZone :
         triggers.add(Location.create(3302, 9618, 0))
     }
 
-    override fun move(
-        e: Entity?,
-        from: Location?,
-        to: Location?,
-    ): Boolean {
+    override fun move(e: Entity, from: Location, to: Location): Boolean {
         if (triggers.contains(from) && e is Player) {
             e.asPlayer().walkingQueue.reset()
             e.asPlayer().lock()

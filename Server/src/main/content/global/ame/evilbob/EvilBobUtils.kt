@@ -23,7 +23,7 @@ object EvilBobUtils {
     const val exitPortal = Scenery.PORTAL_8987
 
     const val uncookingPot = Scenery.UNCOOKING_POT_8985
-    const val fishingSpot = 8986
+    const val fishingSpot = Scenery.FISHING_SPOT_8986
 
     val fishlikeThings = intArrayOf(Items.FISHLIKE_THING_6202, Items.FISHLIKE_THING_6206)
     val rawFishlikeThings = intArrayOf(Items.RAW_FISHLIKE_THING_6200, Items.RAW_FISHLIKE_THING_6204)

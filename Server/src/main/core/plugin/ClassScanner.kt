@@ -151,7 +151,7 @@ object ClassScanner {
                                 return super.leave(e, logout)
                             }
 
-                            override fun move(e: Entity?, from: Location?, to: Location?): Boolean {
+                            override fun move(e: Entity, from: Location, to: Location): Boolean {
                                 if (e != null && from != null && to != null) clazz.entityStep(e, to, from)
                                 return super.move(e, from, to)
                             }

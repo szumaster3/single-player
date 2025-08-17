@@ -383,16 +383,12 @@ class VarrockPlugin : InteractionListener {
         }
 
         /*
-         * Zone for Varrock Guards to track pickpocket attempts.
+         * Handles zone for Varrock guards to track pickpocket attempts.
          */
 
         val zone =
             object : MapZone("Varrock Guards", true) {
-                override fun interact(
-                    e: Entity?,
-                    target: Node?,
-                    option: Option?,
-                ): Boolean {
+                override fun interact(e: Entity, target: Node, option: Option): Boolean {
                     if (option != null &&
                         option.name
                             .lowercase()

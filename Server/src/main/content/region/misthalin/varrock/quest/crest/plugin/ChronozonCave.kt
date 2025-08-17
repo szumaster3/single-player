@@ -26,11 +26,7 @@ class ChronozonCave :
         register(ZoneBorders(3079, 9927, 3095, 9944))
     }
 
-    override fun move(
-        e: Entity?,
-        from: Location?,
-        to: Location?,
-    ): Boolean = super.move(e, from, to)
+    override fun move(e: Entity, from: Location, to: Location): Boolean = super.move(e, from, to)
 
     override fun enter(e: Entity): Boolean {
         if (e != null) {
@@ -55,11 +51,8 @@ class ChronozonCave :
         return false
     }
 
-    override fun leave(
-        e: Entity,
-        logout: Boolean,
-    ): Boolean {
-        if (e!!.isPlayer) {
+    override fun leave(e: Entity, logout: Boolean): Boolean {
+        if (e.isPlayer) {
             if (RegionManager.getLocalPlayers(spawnLoc, 5).size <= 0) {
                 chronozon.clear()
             }
@@ -72,8 +65,5 @@ class ChronozonCave :
         return this
     }
 
-    override fun fireEvent(
-        identifier: String?,
-        vararg args: Any?,
-    ): Any = UInt
+    override fun fireEvent(identifier: String?, vararg args: Any?): Any = UInt
 }

@@ -32,9 +32,9 @@ abstract class AnagramScroll(
     /**
      * Handles player interaction with the NPC for this clue.
      */
-    override fun interact(e: Entity?, target: Node?, option: Option?): Boolean {
-        val player = e!!.asPlayer()
-        val npc = target!!.asNpc()
+    override fun interact(e: Entity, target: Node, option: Option): Boolean {
+        val player = e.asPlayer()
+        val npc = target.asNpc()
         return handleClue(player, npc)
     }
 

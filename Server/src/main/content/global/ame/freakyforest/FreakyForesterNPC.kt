@@ -22,7 +22,7 @@ class FreakyForesterNPC(
             when (stage) {
                 0 -> {
                     lock(player, 6)
-                    visualize(player, 714, Graphics(shared.consts.Graphics.TP_GRAPHIC_308, 85, 50))
+                    visualize(player, 714, Graphics(308, 85, 50))
                     playAudio(player, Sounds.TP_ALL_200)
                     return@queueScript delayScript(player, 3)
                 }

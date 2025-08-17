@@ -14,11 +14,9 @@ import shared.consts.NPCs
  * @author szu
  */
 @Initializable
-class FrogDialogue(player: Player? = null, ) : Dialogue(player) {
-    override fun handle(
-        interfaceId: Int,
-        buttonId: Int,
-    ): Boolean {
+class FrogDialogue(player: Player? = null) : Dialogue(player) {
+
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         val failRandom = (player!!.getAttribute(FrogUtils.ATTRIBUTE_FROG_TASK_FAIL, 0))
         if (failRandom == 1) {
             when (stage) {

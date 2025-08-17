@@ -34,7 +34,6 @@ class ChildDialogue(player: Player? = null) : Dialogue(player) {
     }
 
     override fun getIds(): IntArray = intArrayOf(
-        NPCs.CHILD_6339,
         NPCs.CHILD_6345,
         NPCs.CHILD_355,
         NPCs.CHILD_356,
@@ -47,6 +46,6 @@ class ChildDialogue(player: Player? = null) : Dialogue(player) {
         NPCs.CHILD_6340,
         NPCs.CHILD_6341,
         NPCs.CHILD_6342,
-        NPCs.CHILD_6343
+        NPCs.CHILD_6343,
     )
 }

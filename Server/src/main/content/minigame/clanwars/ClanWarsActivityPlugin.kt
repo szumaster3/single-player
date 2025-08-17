@@ -176,11 +176,7 @@ class ClanWarsActivityPlugin : ActivityPlugin("Clan wars", true, false, true) {
         p.packetDispatch.sendString(name, 265, 2)
     }
 
-    override fun teleport(
-        e: Entity,
-        type: Int,
-        node: Node,
-    ): Boolean {
+    override fun teleport(e: Entity, type: Int, node: Node?): Boolean {
         if (type != -1 && type != 2 && e is Player) {
             e.packetDispatch.sendMessage("You can't teleport away from a war.")
             return false

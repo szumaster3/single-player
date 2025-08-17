@@ -23,7 +23,7 @@ abstract class ClueScroll(
     val level: ClueLevel?,
     val interfaceId: Int,
     private val borders: Array<out ZoneBorders> = emptyArray()
-) : MapZone(name, true), Plugin<Any> {
+) : MapZone(name.toString(), true), Plugin<Any> {
 
     /**
      * No-op event handler. Override if needed.

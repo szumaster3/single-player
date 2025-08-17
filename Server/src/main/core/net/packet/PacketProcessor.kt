@@ -780,7 +780,7 @@ object PacketProcessor {
         var scenery = RegionManager.getObject(player.location.z, pkt.x, pkt.y, pkt.id)
         var objId = pkt.id
 
-        if (player.locks.isInteractionLocked() || player.zoneMonitor.interact(scenery, Option.NULL)) {
+        if (player.locks.isInteractionLocked() || scenery?.let { player.zoneMonitor.interact(it, Option.NULL) } == true) {
             return sendClearMinimap(player)
         }
 

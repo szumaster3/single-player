@@ -14,12 +14,12 @@ import core.game.world.map.zone.ZoneRestriction
 import core.game.world.map.zone.ZoneType
 import shared.consts.Vars
 
-open class MTAZone(name: String?, val items: Array<Item>) : MapZone(name, false, ZoneRestriction.RANDOM_EVENTS, ZoneRestriction.FOLLOWERS) {
+open class MTAZone(name: String?, val items: Array<Item>) : MapZone(name.toString(), false, ZoneRestriction.RANDOM_EVENTS, ZoneRestriction.FOLLOWERS) {
 
     var type: MTAType? = null
 
     init {
-        zoneType = ZoneType.SAFE.id
+        setZoneType(ZoneType.SAFE.id)
     }
 
     override fun enter(entity: Entity): Boolean {
@@ -54,7 +54,7 @@ open class MTAZone(name: String?, val items: Array<Item>) : MapZone(name, false,
         return super.interact(e, target, option)
     }
 
-    override fun teleport(e: Entity, type: Int, node: Node): Boolean {
+    override fun teleport(e: Entity, type: Int, node: Node?): Boolean {
         if (e is Player) {
             if (type != -1) {
                 e.asPlayer().sendMessage("You can't teleport out of the training arena!")

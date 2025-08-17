@@ -22,16 +22,16 @@ class KaramjaZone : MapZone("karamja", true) {
         }
     }
 
-    override fun teleport(entity: Entity, type: Int, node: Node): Boolean {
-        if (entity is Player) {
-            val p = entity
+    override fun teleport(e: Entity, type: Int, node: Node?): Boolean {
+        if (e is Player) {
+            val p = e
             val amt = amountInInventory(p, KARAMJAN_RUM)
             if (amt != 0) {
                 removeAll(p, KARAMJAN_RUM)
                 sendMessage(p, "During the trip you lose your rum to a sailor in a game of dice. Better luck next time!")
             }
         }
-        return super.teleport(entity, type, node)
+        return super.teleport(e, type, node)
     }
 
     companion object {

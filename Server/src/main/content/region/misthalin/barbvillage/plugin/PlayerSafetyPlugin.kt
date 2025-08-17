@@ -26,10 +26,7 @@ class PlayerSafetyPlugin :
         register(GOBLIN_JAIL)
     }
 
-    override fun locationUpdate(
-        e: Entity?,
-        last: Location?,
-    ) {
+    override fun locationUpdate(e: Entity, last: Location) {
         if (e is Player) {
             val player = e.asPlayer()
 

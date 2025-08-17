@@ -130,7 +130,7 @@ class EquipmentTabInterface : ComponentPlugin() {
                         return true
                     }
 
-                    val zoneType = p.zoneMonitor.type
+                    val zoneType = p.zoneMonitor.getType()
 
                     val itemArray = DeathTask.getContainers(p)
                     val kept = itemArray[0]

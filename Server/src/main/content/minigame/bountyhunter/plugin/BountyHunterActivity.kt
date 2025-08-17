@@ -558,11 +558,7 @@ class BountyHunterActivity
             entry.updatePenalty(player, true)
         }
 
-        override fun teleport(
-            e: Entity,
-            type: Int,
-            node: Node,
-        ): Boolean {
+        override fun teleport(e: Entity, type: Int, node: Node?): Boolean {
             if (e is Player && type != -1) {
                 e.packetDispatch.sendMessage("A magical force stops you from teleporting.")
                 return false

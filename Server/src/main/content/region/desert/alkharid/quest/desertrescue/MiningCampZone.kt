@@ -51,7 +51,7 @@ class MiningCampZone : MapZone("mining camp", true), Plugin<Any> {
         return super.interact(e, node, option)
     }
 
-    override fun teleport(entity: Entity, type: Int, node: Node): Boolean =
+    override fun teleport(entity: Entity, type: Int, node: Node?): Boolean =
         if (entity is Player && type != -1) {
             !checkAnna(entity)
         } else {

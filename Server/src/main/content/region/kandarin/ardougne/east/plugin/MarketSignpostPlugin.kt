@@ -31,14 +31,14 @@ class MarketSignpostPlugin : OptionHandler() {
         player ?: return false
         val totalSteals = GlobalStatistics.getDailyBakersStallThefts()
         sendDialogue(player, "The knights and paladins of East Ardougne are keeping a watchful eye on the market stalls today. So far, a total of $totalSteals delicious cakes and loaves of bread have been stolen from the bakers' stalls.")
-        // One of East Ardougne's bakers was slightly upset to find one of his delicious wares has been stolen from his stall today. Be vigilant.
+        // TODO: One of East Ardougne's bakers was slightly upset to find one of his delicious wares has been stolen from his stall today. Be vigilant.
         return true
     }
 
     private fun registerActivity() {
         val zone = object : MapZone("bustling area", true) {
-            override fun interact(e: Entity?, target: Node?, option: Option?): Boolean {
-                if (option?.name?.lowercase()?.contains("steal-from") == true && target?.id == Scenery.BAKER_S_STALL_34384) {
+            override fun interact(e: Entity, target: Node, option: Option): Boolean {
+                if (option.name.lowercase().contains("steal-from") && target.id == Scenery.BAKER_S_STALL_34384) {
                     GlobalStatistics.incrementStealCakes()
                 }
                 return false

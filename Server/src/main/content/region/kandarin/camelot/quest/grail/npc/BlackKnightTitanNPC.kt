@@ -35,15 +35,9 @@ class BlackKnightTitanNPC :
         super.register(ZoneBorders(Location.create(2792, 4721, 0), Location.create(2790, 4723, 0)))
     }
 
-    override fun fireEvent(
-        identifier: String?,
-        vararg args: Any?,
-    ): Any = Unit
+    override fun fireEvent(identifier: String?, vararg args: Any?): Any = Unit
 
-    override fun startDeath(
-        e: Entity?,
-        killer: Entity?,
-    ): Boolean {
+    override fun startDeath(e: Entity, killer: Entity): Boolean {
         if (e != null && e is NPC && e.asNpc().id == NPCs.BLACK_KNIGHT_TITAN_221) {
             if (killer != null && killer.isPlayer && killer.asPlayer().equipment.contains(Items.EXCALIBUR_35, 1)) {
                 sendMessage(killer.asPlayer(), "Well done! You have defeated the Black Knight Titan!")
@@ -51,7 +45,7 @@ class BlackKnightTitanNPC :
             }
         }
 
-        setAttribute(killer!!.asPlayer(), GameAttributes.BLACK_KNIGHT_TITAN, true)
+        setAttribute(killer.asPlayer(), GameAttributes.BLACK_KNIGHT_TITAN, true)
         openDialogue(killer.asPlayer(), BlackKnightTitanDialogue(true), NPCs.BLACK_KNIGHT_TITAN_221)
         return false
     }

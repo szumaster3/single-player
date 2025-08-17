@@ -5,6 +5,7 @@ import core.game.node.entity.Entity
 import core.game.node.entity.npc.AbstractNPC
 import core.game.world.map.Location
 import core.plugin.Initializable
+import shared.consts.NPCs
 
 /**
  * Represents the Suspect NPC for Evil twin random event.
@@ -26,6 +27,6 @@ class SuspectNPC(
     override fun shouldPreventStacking(mover: Entity?): Boolean = true
 
     companion object {
-        val SUSPECT_IDS = (3852..3891).toIntArray()
+        val SUSPECT_IDS = (NPCs.SUSPECT_3852..NPCs.SUSPECT_3891).toIntArray()
     }
 }

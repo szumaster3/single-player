@@ -102,8 +102,7 @@ public class TeleportManager {
         if (teleportType == WILDERNESS_TELEPORT || type == TeleportType.OBELISK) {
             if (hasTimerActive(entity, "teleblock")) return false;
         } else {
-            Node targetNode = getOrCreateNodeByLocation(location);
-            if (!entity.getZoneMonitor().teleport(teleportType, targetNode)) {
+            if (!entity.getZoneMonitor().teleport(teleportType, null)) {
                 return false;
             }
             if (teleportType != -1 && entity.isTeleBlocked()) {
@@ -145,7 +144,7 @@ public class TeleportManager {
      * Fires a random event.
      *
      * @param entity   The entity teleporting.
-     * @param location The destination lcoation.
+     * @param location The destination location.
      */
     public static void fireRandom(Entity entity, Location location) {
         if (entity instanceof Player && entity.getTeleporter().getTeleportType() == 0) {
@@ -967,15 +966,6 @@ public class TeleportManager {
      */
     public void setTeleportType(int teleportType) {
         this.teleportType = teleportType;
-    }
-
-    public static Node getOrCreateNodeByLocation(Location location) {
-        for (Node node : Node.NodeRepository.getAllNodes()) {
-            if (node.getLocation().equals(location)) {
-                return node;
-            }
-        }
-        return new Node("Teleport destination", location) { };
     }
 }
 

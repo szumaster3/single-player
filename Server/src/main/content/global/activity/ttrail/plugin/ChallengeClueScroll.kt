@@ -46,7 +46,7 @@ abstract class ChallengeClueScroll(
     /**
      * Handles player interaction with the NPC for this clue.
      */
-    override fun interact(e: Entity?, target: Node?, option: Option?): Boolean {
+    override fun interact(e: Entity, target: Node, option: Option): Boolean {
         val player = e?.asPlayer() ?: return false
         val npc = target?.asNpc() ?: return false
 

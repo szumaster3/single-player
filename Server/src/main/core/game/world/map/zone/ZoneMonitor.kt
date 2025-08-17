@@ -9,457 +9,321 @@ import core.game.node.entity.player.link.music.MusicZone
 import core.game.node.entity.player.link.request.RequestType
 import core.game.node.item.Item
 import core.game.world.map.Location
+import core.game.world.map.Region
 import shared.consts.Items
 
 /**
  * Handles the zones for an entity.
  *
+ * @param entity The entity whose zones are being monitored.
+ *
  * @author Emperor
  */
-class ZoneMonitor(private val entity: Entity) {
-    internal val zones: MutableList<RegionZone> = ArrayList(20)
-    private val musicZones: MutableList<MusicZone> = ArrayList(20)
-    val type: Int
-        /**
-         * Gets type.
-         *
-         * @return the type
-         */
-        get() {
-            for (zone in zones) {
-                if (zone.zone.zoneType != 0) {
-                    return zone.zone.zoneType
-                }
-            }
-            return 0
-        }
+class ZoneMonitor(val entity: Entity) {
 
     /**
-     * Checks if the player can logout.
-     *
-     * @return `True` if so.
+     * List of region zones the entity is currently in.
+     */
+    val zones: MutableList<RegionZone> = ArrayList(20)
+
+    /**
+     * List of music zones the entity is currently in.
+     */
+    val musicZones: MutableList<MusicZone> = ArrayList(20)
+
+    /**
+     * Returns the type of the first non-zero zone type the entity is in.
+     * @return The zone type, or 0 if no zones have a type.
+     */
+    fun getType(): Int {
+        for (zone in zones) {
+            if (zone.zone.getZoneType() != 0) return zone.zone.getZoneType()
+        }
+        return 0
+    }
+
+    /**
+     * Checks if the entity (player) can log out.
+     * @return True if logout is allowed in all zones.
      */
     fun canLogout(): Boolean {
-        for (z in zones) {
-            if (!z.zone.canLogout(entity as Player)) {
-                return false
-            }
-        }
-        return true
+        return zones.all { it.zone.canLogout(entity as? Player ?: return true) }
     }
 
     /**
-     * Is restricted boolean.
-     *
-     * @param restriction the restriction
-     * @return the boolean
+     * Checks if an any restriction is active for this entity.
+     * @param restriction The restriction to check.
+     * @return True if restricted.
      */
-    fun isRestricted(restriction: ZoneRestriction): Boolean {
-        return isRestricted(restriction.flag)
-    }
+    fun isRestricted(restriction: ZoneRestriction): Boolean = isRestricted(restriction.flag)
 
     /**
-     * Checks if the restriction was flagged.
-     *
+     * Checks if an any restriction flag is active for this entity.
      * @param flag The restriction flag.
-     * @return `True` if so.
+     * @return True if restricted.
      */
     fun isRestricted(flag: Int): Boolean {
-        for (z in zones) {
-            if (z.zone.isRestricted(flag)) {
-                return true
-            }
-        }
-        return false
+        return zones.any { it.zone.isRestricted(flag) }
     }
 
     /**
-     * Handles a death.
-     *
-     * @param killer The killer.
-     * @return `True` if the death got handled.
+     * Handles death logic in zones.
+     * @param killer The entity that killed this entity.
+     * @return True if death was handled by any zone.
      */
-    fun handleDeath(killer: Entity?): Boolean {
-        for (z in zones) {
-            if (z.zone.death(entity, killer)) {
-                return true
-            }
-        }
-        return false
+    fun handleDeath(killer: Entity): Boolean {
+        return zones.any { it.zone.death(entity, killer) }
     }
 
     /**
-     * Checks if the entity is able to continue attacking the target.
-     *
-     * @param target The target.
-     * @param style  The combat style used.
-     * @return `True` if so.
+     * Checks if the entity can continue attacking a target.
+     * @param target The target node.
+     * @param style The combat style being used.
+     * @param message Whether to send a failure message to the player.
+     * @return True if attack can continue.
      */
-    fun continueAttack(target: Node?, style: CombatStyle?, message: Boolean): Boolean {
+    fun continueAttack(target: Node, style: CombatStyle, message: Boolean): Boolean {
         if (target is Entity) {
-            if (!entity.continueAttack(target, style, message)) {
-                return false
-            }
+            if (!entity.continueAttack(target, style, message)) return false
         }
-        for (z in zones) {
-            if (!z.zone.continueAttack(entity, target, style, message)) {
-                return false
-            }
-        }
+        if (zones.any { !it.zone.continueAttack(entity, target, style, message) }) return false
         if (entity is Player && target is Player) {
             if (!entity.skullManager.isWilderness || !target.skullManager.isWilderness) {
-                if (message) {
-                    entity.packetDispatch.sendMessage("You can only attack other players in the wilderness.")
-                }
+                if (message) entity.packetDispatch.sendMessage("You can only attack other players in the wilderness.")
                 return false
             }
         }
-        if (target is Entity && !MapZone.checkMulti(entity, target, message)) {
-            return false
-        }
+        if (target is Entity && !MapZone.checkMulti(entity, target, message)) return false
         return true
     }
 
     /**
-     * Interact boolean.
-     *
-     * @param target the target
-     * @param option the option
-     * @return the boolean
+     * Checks if the entity can interact with a target using a specific option.
+     * @param target The target node.
+     * @param option The interaction option.
+     * @return True if handled by any zone.
      */
-    fun interact(target: Node?, option: Option?): Boolean {
-        for (z in zones) {
-            if (z.zone.interact(entity, target, option)) {
-                return true
-            }
-        }
-        return false
+    fun interact(target: Node, option: Option): Boolean {
+        return zones.any { it.zone.interact(entity, target, option) }
     }
 
     /**
-     * Use with boolean.
-     *
-     * @param used the used
-     * @param with the with
-     * @return the boolean
+     * Handles useWith interaction for items and nodes.
+     * @param used The item being used.
+     * @param with The node it is used with.
+     * @return True if any zone handled it.
      */
-    fun useWith(used: Item?, with: Node?): Boolean {
-        for (z in zones) {
-            if (z.zone.handleUseWith(entity.asPlayer(), used, with)) {
-                return true
-            }
-        }
-        return false
+    fun useWith(used: Item, with: Node): Boolean {
+        return zones.any { it.zone.handleUseWith(entity.asPlayer(), used, with) }
     }
 
     /**
-     * Checks if the player handled the reward button using a map zone.
-     *
-     * @param interfaceId The interface id.
-     * @param buttonId    The button id.
-     * @param slot        The slot.
-     * @param itemId      The item id.
-     * @param opcode      The packet opcode.
-     * @return `True` if the button got handled.
+     * Handles interface button clicks in zones.
+     * @param interfaceId The interface ID.
+     * @param buttonId The button ID.
+     * @param slot The slot ID.
+     * @param itemId The item ID.
+     * @param opcode The packet opcode.
+     * @return True if any zone handled the button.
      */
     fun clickButton(interfaceId: Int, buttonId: Int, slot: Int, itemId: Int, opcode: Int): Boolean {
-        for (z in zones) {
-            if (z.zone.actionButton(entity as Player, interfaceId, buttonId, slot, itemId, opcode)) {
-                return true
-            }
-        }
-        return false
+        return zones.any { it.zone.actionButton(entity as Player, interfaceId, buttonId, slot, itemId, opcode) }
     }
 
     /**
-     * Checks if multiway combat zone rules should be ignored.
-     *
-     * @param victim The victim.
-     * @return `True` if this entity can attack regardless of multiway
-     * combat zone.
+     * Checks if multi-combat boundaries should be ignored for a victim entity.
+     * @param victim The entity to check against.
+     * @return True if multiway restrictions are ignored.
      */
-    fun isIgnoreMultiBoundaries(victim: Entity?): Boolean {
-        for (z in zones) {
-            if (z.zone.ignoreMultiBoundaries(entity, victim)) {
-                return true
-            }
-        }
-        return false
+    fun isIgnoreMultiBoundaries(victim: Entity): Boolean {
+        return zones.any { it.zone.ignoreMultiBoundaries(entity, victim) }
     }
 
     /**
-     * Teleport boolean.
-     *
-     * @param type the type
-     * @param node the node
-     * @return the boolean
+     * Checks if the entity can teleport.
+     * @param type Teleport type (0=spell, 1=item, 2=object, 3=npc, -1=force).
+     * @param node Optional node involved in teleportation.
+     * @return True if teleportation is allowed.
      */
     fun teleport(type: Int, node: Node): Boolean {
         if (type != -1 && entity.isTeleBlocked && !canTeleportByJewellery(type, node)) {
-            if (entity.isPlayer) {
-                entity.asPlayer().sendMessage("A magical force has stopped you from teleporting.")
-            }
+            if (entity.isPlayer()) entity.asPlayer().sendMessage("A magical force has stopped you from teleporting.")
             return false
         }
-        for (z in zones) {
-            if (!z.zone.teleport(entity, type, node)) {
-                return false
-            }
-        }
-        return true
+        return zones.all { it.zone.teleport(entity, type, node) }
     }
 
+    /**
+     * Checks if a player can teleport using jewellery in low-level wilderness.
+     */
     private fun canTeleportByJewellery(type: Int, node: Node): Boolean {
-        if (type != 1 || !WILDERNESS_LEVEL_30_TELEPORT_ITEMS.contains(node.asItem().id)) {
-            return false
-        }
+        if (type != 1 || !WILDERNESS_LEVEL_30_TELEPORT_ITEMS.contains(node.asItem().id)) return false
         if (entity.timers.getTimer("teleblock") != null) return false
-
-        if (entity.zoneMonitor.isRestricted(ZoneRestriction.TELEPORT)) {
-            return false
-        }
-
+        if (entity.zoneMonitor.isRestricted(ZoneRestriction.TELEPORT)) return false
         if (entity.locks.isTeleportLocked()) {
-            if (entity.isPlayer) {
-                val p = entity.asPlayer()
-                if (p.skullManager.level >= 1 && p.skullManager.level <= 30) {
-                    return true
-                }
-            }
+            val p = entity.asPlayer()
+            return p.skullManager.level in 1..30
         }
-
         return false
     }
 
     /**
-     * Start death boolean.
-     *
-     * @param entity the entity
-     * @param killer the killer
-     * @return the boolean
+     * Starts death sequence for an entity.
+     * @param entity The dying entity.
+     * @param killer The killer.
+     * @return True if all zones allowed the death to start.
      */
-    fun startDeath(entity: Entity?, killer: Entity?): Boolean {
-        for (z in zones) {
-            if (!z.zone.startDeath(entity, killer)) {
-                return false
-            }
-        }
-        return true
+    fun startDeath(entity: Entity, killer: Entity): Boolean {
+        return zones.all { it.zone.startDeath(entity, killer) }
     }
 
     /**
-     * Can fire random event boolean.
-     *
-     * @return the boolean
+     * Checks if the entity can trigger random events.
+     * @return True if allowed in all zones.
      */
     fun canFireRandomEvent(): Boolean {
-        for (z in zones) {
-            if (!z.zone.isFireRandoms) {
-                return false
-            }
-        }
-        return true
+        return zones.all { it.zone.isFireRandoms() }
     }
 
     /**
-     * Clear boolean.
-     *
-     * @return the boolean
+     * Clears all zones the entity is in.
+     * @return True if successfully left all zones.
      */
     fun clear(): Boolean {
-        for (z in zones) {
-            if (!z.zone.leave(entity, true)) {
-                return false
-            }
-        }
-        for (z in musicZones) {
-            z.leave(entity, true)
-        }
+        if (!zones.all { it.zone.leave(entity, true) }) return false
+        musicZones.forEach { it.leave(entity, true) }
         zones.clear()
         musicZones.clear()
         return true
     }
 
     /**
-     * Move boolean.
-     *
-     * @param location    the location
-     * @param destination the destination
-     * @return the boolean
+     * Checks if entity can move from one location to another.
+     * @param location Current location.
+     * @param destination Destination location.
+     * @return True if movement allowed.
      */
-    fun move(location: Location?, destination: Location?): Boolean {
-        for (z in zones) {
-            if (!z.zone.move(entity, location, destination)) {
-                return false
-            }
-        }
-        return true
+    fun move(location: Location, destination: Location): Boolean {
+        return zones.all { it.zone.move(entity, location, destination) }
     }
 
     /**
-     * Update location boolean.
-     *
-     * @param last the last
-     * @return the boolean
+     * Updates entity location and manages entering/exiting zones.
+     * @param last Last known location.
+     * @return True if location update succeeded in all zones.
      */
-    fun updateLocation(last: Location?): Boolean {
-        if (entity is Player && !entity.asPlayer().isArtificial) {
-            checkMusicZones()
-        }
+    fun updateLocation(last: Location): Boolean {
+        if (entity is Player && !entity.isArtificial) checkMusicZones()
         entity.updateLocation(last)
-        val it = zones.iterator()
-        while (it.hasNext()) {
-            val zone = it.next()
+
+        zones.removeIf { zone ->
             if (!zone.borders.insideBorder(entity)) {
-                if (zone.zone.isDynamicZone) {
-                    continue
-                }
-                if (!zone.zone.leave(entity, false)) {
-                    return false
-                }
-                it.remove()
+                if (zone.zone.isDynamicZone()) return@removeIf false
+                if (!zone.zone.leave(entity, false)) return@removeIf false
+                return@removeIf true
             }
+            false
         }
-        for (zone in entity.viewport.region!!.regionZones) {
-            if (!zone.borders.insideBorder(entity)) {
-                continue
-            }
-            var alreadyEntered = false
-            for (z in zones) {
-                if (z.zone === zone.zone) {
-                    alreadyEntered = true
-                    break
-                }
-            }
-            if (alreadyEntered) {
+
+        for (zone in entity.viewport.region?.regionZones!!) {
+            if (!zone.borders.insideBorder(entity)) continue
+            if (zones.any { it.zone == zone.zone }) {
                 zone.zone.locationUpdate(entity, last)
                 continue
             }
-            if (!zone.zone.enter(entity)) {
-                return false
-            }
+            if (!zone.zone.enter(entity)) return false
             zones.add(zone)
             zone.zone.locationUpdate(entity, last)
         }
+
         return true
     }
 
     /**
-     * Check music zones.
+     * Checks and updates music zones for a player.
      */
     fun checkMusicZones() {
-        if (entity !is Player) {
-            return
-        }
+        if (entity !is Player) return
         val player = entity
         val l = player.location
-        val it = musicZones.iterator()
-        while (it.hasNext()) {
-            val zone = it.next()
+
+        musicZones.removeIf { zone ->
             if (!zone.borders.insideBorder(l.x, l.y)) {
-                zone.leave(player, false)
-                it.remove()
+                if (zone.leave(player, false)) return@removeIf true
+            }
+            false
+        }
+
+        val r = player.viewport.region
+        if (r != null) {
+            for (zone in r.musicZones) {
+                if (zone.borders.insideBorder(l.x, l.y)) {
+                    zone.enter(player)
+                    return
+                }
             }
         }
-        for (zone in player.viewport.region!!.musicZones) {
-            if (!zone.borders.insideBorder(l.x, l.y)) {
-                continue
-            }
-            if (!musicZones.contains(zone)) {
-                zone.enter(player)
-                musicZones.add(zone)
-            }
-        }
-        if (musicZones.isEmpty() && !player.musicPlayer.isPlaying) {
-            player.musicPlayer.playDefault()
+
+        val music = r?.music
+        if (music == -1) {
+            if (!player.musicPlayer.isPlaying) player.musicPlayer.playDefault()
+        } else {
+            if (music != null) player.musicPlayer.unlock(music, true)
         }
     }
 
     /**
-     * Parse command boolean.
-     *
-     * @param player    the player
-     * @param name      the name
-     * @param arguments the arguments
-     * @return the boolean
+     * Parses commands in all zones.
+     * @param player The player executing the command.
+     * @param name Command name.
+     * @param arguments Command arguments.
+     * @return True if any zone handled the command.
      */
-    fun parseCommand(player: Player?, name: String?, arguments: Array<String?>?): Boolean {
-        for (zone in zones) {
-            if (zone.zone.parseCommand(player, name, arguments)) {
-                return true
-            }
-        }
-        return false
+    fun parseCommand(player: Player, name: String, arguments: Array<String>): Boolean {
+        return zones.any { it.zone.parseCommand(player, name, arguments) }
     }
 
     /**
-     * Can request boolean.
-     *
-     * @param type   the type
-     * @param target the target
-     * @return the boolean
+     * Checks if requests (like trade or duel) are allowed in current zones.
+     * @param type Type of request.
+     * @param target Target player.
+     * @return True if allowed in all zones.
      */
-    fun canRequest(type: RequestType?, target: Player?): Boolean {
-        for (zone in zones) {
-            if (!zone.zone.canRequest(type, entity.asPlayer(), target)) {
-                return false
-            }
-        }
-        return true
+    fun canRequest(type: RequestType, target: Player): Boolean {
+        return zones.all { it.zone.canRequest(type, entity.asPlayer(), target) }
     }
 
     /**
-     * Is in zone boolean.
-     *
-     * @param name the name
-     * @return the boolean
+     * Checks if the entity is in a zone by name.
+     * @param name Zone name.
+     * @return True if entity is in the zone.
      */
     fun isInZone(name: String): Boolean {
         val uid = name.hashCode()
-        for (zone in zones) {
-            if (zone.zone.uid == uid) {
-                return true
-            }
-        }
-        return false
+        return zones.any { it.zone.uid == uid }
     }
 
     /**
-     * Remove.
-     *
-     * @param zone the zone
+     * Removes a zone from the entity's list of zones.
+     * @param zone The zone to remove.
      */
     fun remove(zone: MapZone) {
-        val it = zones.iterator()
-        while (it.hasNext()) {
-            if (it.next().zone === zone) {
-                it.remove()
-                break
-            }
-        }
+        zones.removeIf { it.zone == zone }
     }
 
     /**
-     * Gets zones.
-     *
-     * @return the zones
+     * Returns a list of current region zones.
      */
-    fun getZones(): List<RegionZone> {
-        return zones
-    }
+    fun getZones(): List<RegionZone> = zones
 
     /**
-     * Gets music zones.
-     *
-     * @return the music zones
+     * Returns a list of current music zones.
      */
-    fun getMusicZones(): List<MusicZone> {
-        return musicZones
-    }
+    fun getMusicZones(): List<MusicZone> = musicZones
 
     companion object {
         /**
-         * Represents the jewellery that allows teleporting out from the Wilderness at level 30 or below.
+         * Jewellery items that allow teleporting out from wilderness levels 1–30.
          */
         val WILDERNESS_LEVEL_30_TELEPORT_ITEMS: Set<Int> = java.util.Set.of(
             Items.AMULET_OF_GLORY_1704,
