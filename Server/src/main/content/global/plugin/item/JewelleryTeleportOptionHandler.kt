@@ -5,54 +5,52 @@ import core.api.addDialogueAction
 import core.api.sendDialogueOptions
 import core.api.sendMessage
 import core.api.setTitle
-import core.game.interaction.IntType
-import core.game.interaction.InteractionListener
+import core.cache.def.impl.ItemDefinition
+import core.game.interaction.OptionHandler
 import core.game.node.Node
 import core.game.node.entity.impl.PulseType
 import core.game.node.entity.player.Player
+import core.plugin.Initializable
+import core.plugin.Plugin
 import shared.consts.Items
 
-class EnchantedJewelleryPlugin : InteractionListener {
+/**
+ * Handles the options for enchanted jewellery items.
+ */
+@Initializable
+class JewelleryTeleportOptionHandler : OptionHandler() {
 
-    private val ids = EnchantedJewellery.idMap.keys.toIntArray()
+    private val itemIds = EnchantedJewellery.idMap.keys
 
-    override fun defineListeners() {
-        /*
-         * Handles the rub interaction for jewellery items.
-         */
-
-        on(ids, IntType.ITEM, "rub") { player, node ->
-            handle(player, node, false)
-            return@on true
+    override fun newInstance(arg: Any?): Plugin<Any>? {
+        itemIds.forEach { id ->
+            ItemDefinition.forId(id).handlers["option:rub"] = this
+            ItemDefinition.forId(id).handlers["option:operate"] = this
         }
-
-        /*
-         * Handles the "operate" interaction for jewellery items.
-         */
-
-        on(ids, IntType.ITEM, "operate") { player, node ->
-            handle(player, node, true)
-            return@on true
-        }
+        return null
     }
 
-    private fun handle(player: Player, node: Node, isEquipped: Boolean) {
-        player.pulseManager.clear(PulseType.STANDARD)
+    override fun handle(player: Player, node: Node, option: String): Boolean {
         val item = node.asItem()
+        val isEquipped = option.equals("operate", ignoreCase = true)
+
+        player.pulseManager.clear(PulseType.STANDARD)
 
         if (item.id == Items.RING_OF_LIFE_2570) {
             sendMessage(player, "You can't operate that.")
-            return
+            return true
         }
 
-        val jewellery = EnchantedJewellery.idMap[item.id] ?: return
+        val jewellery = EnchantedJewellery.idMap[item.id] ?: return true
 
         if (!jewellery.crumbled && jewellery.isLastItemIndex(jewellery.getItemIndex(item))) {
             sendMessage(player, "You will need to recharge your ${jewellery.getJewelleryType(item)} before you can use it again.")
-            return
+            return true
         }
 
-        val typeName = jewellery.getJewelleryType(item).replace("combat bracelet", "bracelet", ignoreCase = true)
+        val typeName = jewellery.getJewelleryType(item)
+            .replace("combat bracelet", "bracelet", ignoreCase = true)
+
         sendMessage(player, "You rub the $typeName...")
 
         if (jewellery.options.isEmpty()) {
@@ -64,6 +62,6 @@ class EnchantedJewelleryPlugin : InteractionListener {
                 jewellery.use(p, item, buttonID - 2, isEquipped)
             }
         }
+        return true
     }
-
 }

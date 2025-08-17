@@ -110,10 +110,7 @@ class FaladorGrapple : OptionHandler() {
                                     player.faceLocation(destination)
                                     player.visualize(
                                         Animation(Animations.FIRE_CROSSBOW_TO_CLIMB_WALL_4455),
-                                        Graphics(
-                                            shared.consts.Graphics.MITHRIL_GRAPPLE_760,
-                                            100,
-                                        ),
+                                        Graphics(shared.consts.Graphics.MITHRIL_GRAPPLE_760),
                                     )
                                 }
 
