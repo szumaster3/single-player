@@ -41,7 +41,7 @@ class DumpCommand : CommandPlugin() {
                 writer.writeLn("${i.name}(${i.id}) - ${i.examine}")
             }
 
-            "object" -> for (i in SceneryDefinition.definitions.values) {
+            "object" -> for (i in SceneryDefinition.getDefinitions().values) {
                 writer.writeLn("${i.name}(${i.id}) - ${i.examine}")
             }
 
@@ -74,7 +74,7 @@ class DumpCommand : CommandPlugin() {
                 writer.writeLn("</tr>")
             }
 
-            "object" -> for (i in SceneryDefinition.definitions.values) {
+            "object" -> for (i in SceneryDefinition.getDefinitions().values) {
                 writer.writeLn("<tr>")
                 writer.writeLn("<td>${i.name}</td>")
                 writer.writeLn("<td>${i.id}</td>")

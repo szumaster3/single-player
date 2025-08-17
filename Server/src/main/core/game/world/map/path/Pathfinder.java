@@ -19,6 +19,7 @@ public abstract class Pathfinder {
     public static final int PREVENT_SOUTHWEST = 0x12c010e;
     public static final int PREVENT_NORTHWEST = 0x12c0138;
 
+
     /**
      * The smart path finder.
      */
@@ -75,49 +76,38 @@ public abstract class Pathfinder {
     public static final int NORTH_EAST_FLAG = NORTH_FLAG | EAST_FLAG;
 
     public static int flagForDirection(Direction d) {
-        switch (d) {
-            case NORTH_WEST:
-                return NORTH_WEST_FLAG;
-            case NORTH:
-                return NORTH_FLAG;
-            case NORTH_EAST:
-                return NORTH_EAST_FLAG;
-            case WEST:
-                return WEST_FLAG;
-            case EAST:
-                return EAST_FLAG;
-            case SOUTH_WEST:
-                return SOUTH_WEST_FLAG;
-            case SOUTH:
-                return SOUTH_FLAG;
-            case SOUTH_EAST:
-                return SOUTH_EAST_FLAG;
-            default:
-                return 0;
+        switch(d) {
+            case NORTH_WEST: return NORTH_WEST_FLAG;
+            case NORTH: return NORTH_FLAG;
+            case NORTH_EAST: return NORTH_EAST_FLAG;
+            case WEST: return WEST_FLAG;
+            case EAST: return EAST_FLAG;
+            case SOUTH_WEST: return SOUTH_WEST_FLAG;
+            case SOUTH: return SOUTH_FLAG;
+            case SOUTH_EAST: return SOUTH_EAST_FLAG;
+            default: return 0;
         }
     }
 
     /**
      * Finds a path from the location to the end location.
-     *
-     * @param location    The start location.
-     * @param size        The mover size.
-     * @param end         The end location.
-     * @param sizeX       The x-size of the destination node.
-     * @param sizeY       The y-size of the destination node.
-     * @param rotation    The object rotation.
-     * @param type        The object type.
+     * @param location The start location.
+     * @param size The mover size.
+     * @param end The end location.
+     * @param sizeX The x-size of the destination node.
+     * @param sizeY The y-size of the destination node.
+     * @param rotation The object rotation.
+     * @param type The object type.
      * @param walkingFlag The object walking flag.
-     * @param near        If we should find the nearest location if a path can't be
-     *                    found.
+     * @param near If we should find the nearest location if a path can't be
+     * found.
      * @return The path.
      */
     public abstract Path find(Location location, int size, Location end, int sizeX, int sizeY, int rotation, int type, int walkingFlag, boolean near, ClipMaskSupplier clipMaskSupplier);
 
     /**
      * Finds a path from the start location to the end location.
-     *
-     * @param mover       The moving entity.
+     * @param mover The moving entity.
      * @param destination The destination node.
      * @return The path.
      */
@@ -127,12 +117,11 @@ public abstract class Pathfinder {
 
     /**
      * Finds a path from the start location to the end location.
-     *
-     * @param mover       The moving entity.
+     * @param mover The moving entity.
      * @param destination The destination node.
-     * @param near        If we should move near the end location, if we can't reach
-     *                    it.
-     * @param finder      The pathfinder to use.
+     * @param near If we should move near the end location, if we can't reach
+     * it.
+     * @param finder The pathfinder to use.
      * @return The path.
      */
     public static Path find(Entity mover, Node destination, boolean near, Pathfinder finder) {
@@ -140,12 +129,13 @@ public abstract class Pathfinder {
         if (mover instanceof NPC) {
             cms = ((NPC) mover).behavior.getClippingSupplier(((NPC) mover));
         }
-        if (cms == null) cms = RegionManager::getClippingFlag;
+        if (cms == null)
+            cms = RegionManager::getClippingFlag;
         return find(mover.getLocation(), mover.size(), destination, near, finder, cms);
     }
 
-    public static Path findWater(Entity mover, Node destination, boolean near, Pathfinder finder) {
-        return find(mover.getLocation(), mover.size(), destination, near, finder, RegionManager::getWaterClipFlag);
+    public static Path findWater(Entity mover, Node destination, boolean near, Pathfinder finder){
+        return find(mover.getLocation(),mover.size(),destination,near,finder, RegionManager::getWaterClipFlag);
     }
 
     public static Path find(Entity mover, Node destination, boolean near, Pathfinder finder, ClipMaskSupplier clipMaskSupplier) {
@@ -154,7 +144,6 @@ public abstract class Pathfinder {
 
     /**
      * Finds a path from the start location to the end location.
-     *
      * @param destination The destination node.
      * @return The path.
      */
@@ -168,11 +157,10 @@ public abstract class Pathfinder {
 
     /**
      * Finds a path from the start location to the end location.
-     *
      * @param destination The destination node.
-     * @param near        If we should move near the end location, if we can't reach
-     *                    it.
-     * @param finder      The pathfinder to use.
+     * @param near If we should move near the end location, if we can't reach
+     * it.
+     * @param finder The pathfinder to use.
      * @return The path.
      */
     public static Path find(Location start, Node destination, boolean near, Pathfinder finder) {
@@ -181,11 +169,10 @@ public abstract class Pathfinder {
 
     /**
      * Finds a path from the start location to the end location.
-     *
      * @param destination The destination node.
-     * @param near        If we should move near the end location, if we can't reach
-     *                    it.
-     * @param finder      The pathfinder to use.
+     * @param near If we should move near the end location, if we can't reach
+     * it.
+     * @param finder The pathfinder to use.
      * @return The path.
      */
     public static Path find(Location start, int moverSize, Node destination, boolean near, Pathfinder finder, ClipMaskSupplier clipMaskSupplier) {
@@ -200,7 +187,7 @@ public abstract class Pathfinder {
                     sizeX = object.getDefinition().sizeY;
                     sizeY = object.getDefinition().sizeX;
                 }
-                int walkingFlag = object.getDefinition().blockFlag;
+                int walkingFlag = object.getDefinition().getWalkingFlag();
                 if (rotation != 0) {
                     walkingFlag = (walkingFlag << rotation & 0xf) + (walkingFlag >> 4 - rotation);
                 }
@@ -219,13 +206,12 @@ public abstract class Pathfinder {
 
     /**
      * Checks if interaction with decoration is possible.
-     *
-     * @param curX     The current x-coordinate in viewport.
-     * @param curY     The current y-coordinate in viewport.
-     * @param size     The mover size.
-     * @param destX    The destination x-coordinate in viewport.
-     * @param destY    The destination y-coordinate in viewport.
-     * @param type     The object type.
+     * @param curX The current x-coordinate in viewport.
+     * @param curY The current y-coordinate in viewport.
+     * @param size The mover size.
+     * @param destX The destination x-coordinate in viewport.
+     * @param destY The destination y-coordinate in viewport.
+     * @param type The object type.
      * @param rotation The object rotation.
      * @return {@code True} if so.
      */
@@ -344,13 +330,12 @@ public abstract class Pathfinder {
 
     /**
      * Checks if interaction with a door is possible.
-     *
-     * @param curX     The current x-coordinate in viewport.
-     * @param curY     The current y-coordinate in viewport.
-     * @param size     The mover size.
-     * @param destX    The destination x-coordinate in viewport.
-     * @param destY    The destination y-coordinate in viewport.
-     * @param type     The object type.
+     * @param curX The current x-coordinate in viewport.
+     * @param curY The current y-coordinate in viewport.
+     * @param size The mover size.
+     * @param destX The destination x-coordinate in viewport.
+     * @param destY The destination y-coordinate in viewport.
+     * @param type The object type.
      * @param rotation The object rotation.
      * @return {@code True} if so.
      */
@@ -595,15 +580,14 @@ public abstract class Pathfinder {
 
     /**
      * Checks if the mover is standing on the destination.
-     *
-     * @param x          The current x-location (in viewport).
-     * @param y          The current y-location (in viewport).
+     * @param x The current x-location (in viewport).
+     * @param y The current y-location (in viewport).
      * @param moverSizeX The mover x size.
      * @param moverSizeY The mover y size.
-     * @param destX      The destination x-location in viewport.
-     * @param destY      The destination y-location in viewport.
-     * @param sizeX      The destination node x-size.
-     * @param sizeY      The destination node y-size.
+     * @param destX The destination x-location in viewport.
+     * @param destY The destination y-location in viewport.
+     * @param sizeX The destination node x-size.
+     * @param sizeY The destination node y-size.
      * @return {@code True} if so.
      */
     public static boolean isStandingIn(int x, int y, int moverSizeX, int moverSizeY, int destX, int destY, int sizeX, int sizeY) {
@@ -618,15 +602,14 @@ public abstract class Pathfinder {
 
     /**
      * Checks if interaction is possible from the current location.
-     *
-     * @param x         The current x-location (in viewport).
-     * @param y         The current y-location (in viewport).
+     * @param x The current x-location (in viewport).
+     * @param y The current y-location (in viewport).
      * @param moverSize The mover size.
-     * @param destX     The destination x-location in viewport.
-     * @param destY     The destination y-location in viewport.
-     * @param sizeX     The destination node x-size.
-     * @param sizeY     The destination node y-size.
-     * @param walkFlag  The walking flag.
+     * @param destX The destination x-location in viewport.
+     * @param destY The destination y-location in viewport.
+     * @param sizeX The destination node x-size.
+     * @param sizeY The destination node y-size.
+     * @param walkFlag The walking flag.
      * @return {@code True} if so.
      */
     public static boolean canInteract(int x, int y, int moverSize, int destX, int destY, int sizeX, int sizeY, int walkFlag, int z, ClipMaskSupplier clipMaskSupplier) {
@@ -656,7 +639,6 @@ public abstract class Pathfinder {
 
     /**
      * Checks if interaction is possible from the current location.
-     *
      * @param destX The destination x-location in viewport.
      * @param destY The destination y-location in viewport.
      * @param sizeX The destination node x-size.

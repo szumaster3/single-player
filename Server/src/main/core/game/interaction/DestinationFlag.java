@@ -112,7 +112,7 @@ public class DestinationFlag {
                 sizeX = sizeY;
                 sizeY = switcher;
             }
-            Direction dir = Direction.forWalkFlag(object.getDefinition().blockFlag, object.getRotation());
+            Direction dir = Direction.forWalkFlag(object.getDefinition().getWalkingFlag(), object.getRotation());
             if (dir != null) {
                 return getDestination(mover, object, sizeX, sizeY, dir, 3);
             }

@@ -1,7 +1,6 @@
 package core.game.interaction
 
 import core.api.*
-import core.game.bots.AIPlayer
 import core.game.node.Node
 import core.game.node.entity.Entity
 import core.game.node.entity.npc.NPC
@@ -11,19 +10,17 @@ import core.game.node.scenery.Scenery
 import core.game.world.GameWorld
 import core.game.world.map.Location
 import core.game.world.map.path.Pathfinder
+import core.game.bots.AIPlayer
 import core.tools.Log
-import java.io.PrintWriter
-import java.io.StringWriter
 import java.lang.Integer.max
+import java.io.*
 
 /**
- * Handles movement-based interaction scripts for an entity (player or NPC).
+ * Handles movement-based interaction scripts for an entity.
  *
  * @property entity The controlled entity.
  */
-class ScriptProcessor(
-    val entity: Entity,
-) {
+class ScriptProcessor(val entity: Entity) {
     private var apScript: Script<*>? = null
     private var opScript: Script<*>? = null
     private var interactTarget: Node? = null
@@ -50,9 +47,8 @@ class ScriptProcessor(
         if (entity.delayed()) return
 
         var canProcess = !entity.delayed()
-        if (entity is Player && entity !is AIPlayer) {
+        if (entity is Player && entity !is AIPlayer)
             canProcess = canProcess && !entity.hasModalOpen()
-        }
 
         if (entity !is Player) return
         if (!entity.delayed() && canProcess && interactTarget != null) {
@@ -74,13 +70,11 @@ class ScriptProcessor(
      * @param didMove Whether the entity moved.
      */
     fun postMovement(didMove: Boolean) {
-        if (didMove) {
+        if (didMove)
             entity.clocks[Clocks.MOVEMENT] = GameWorld.ticks + if (entity.walkingQueue.isRunning) 0 else 1
-        }
         var canProcess = !entity.delayed()
-        if (entity is Player && entity !is AIPlayer) {
+        if (entity is Player && entity !is AIPlayer)
             canProcess = canProcess && !entity.interfaceManager.isOpened() && !entity.interfaceManager.hasChatbox()
-        }
 
         if (entity !is Player) return
         if (!entity.delayed() && canProcess && interactTarget != null && !interacted) {
@@ -131,48 +125,43 @@ class ScriptProcessor(
         for (i in 0 until queue.size) {
             when (val script = queue[i]) {
                 is QueuedScript -> {
-                    if (entity.delayed() && script.strength != QueueStrength.SOFT) {
+                    if (entity.delayed() && script.strength != QueueStrength.SOFT)
                         continue
-                    }
-                    if (script.nextExecution > GameWorld.ticks) {
+                    if (script.nextExecution > GameWorld.ticks)
                         continue
-                    }
                     if ((script.strength == QueueStrength.STRONG) && entity is Player) {
                         closeAllInterfaces(entity)
                     }
                     script.nextExecution = GameWorld.ticks + 1
                     val finished = executeScript(script)
                     script.state++
-                    if (finished && !script.persist) {
+                    if (finished && !script.persist)
                         toRemove.add(script)
-                    } else if (finished) {
+                    else if (finished)
                         script.state = 0
-                    }
                     anyExecuted = true
                 }
+
                 is QueuedUseWith -> {
-                    if (entity.delayed() && script.strength != QueueStrength.SOFT) {
+                    if (entity.delayed() && script.strength != QueueStrength.SOFT)
                         continue
-                    }
                     if (entity !is Player) {
                         toRemove.add(script)
                         log(this::class.java, Log.ERR, "Tried to queue an item UseWith interaction for a non-player!")
                         continue
                     }
-                    if (script.nextExecution > GameWorld.ticks) {
+                    if (script.nextExecution > GameWorld.ticks)
                         continue
-                    }
                     if ((script.strength == QueueStrength.STRONG)) {
                         closeAllInterfaces(entity)
                     }
                     script.nextExecution = GameWorld.ticks + 1
                     val finished = executeScript(script)
                     script.state++
-                    if (finished && !script.persist) {
+                    if (finished && !script.persist)
                         toRemove.add(script)
-                    } else if (finished) {
+                    else if (finished)
                         script.state = 0
-                    }
                     anyExecuted = true
                 }
             }
@@ -185,7 +174,9 @@ class ScriptProcessor(
     /**
      * Whether a script is persistent (runs across multiple ticks).
      */
-    fun isPersist(script: Script<*>): Boolean = script.persist
+    fun isPersist(script: Script<*>): Boolean {
+        return script.persist
+    }
 
     /**
      * Executes an interaction script.
@@ -198,9 +189,8 @@ class ScriptProcessor(
         if (script.nextExecution < GameWorld.ticks) {
             val finished = executeScript(script)
             script.state++
-            if (finished && isPersist(script)) {
+            if (finished && isPersist(script))
                 script.state = 0
-            }
             interacted = true
         }
     }
@@ -217,14 +207,14 @@ class ScriptProcessor(
                 is Interaction -> return script.execution.invoke(
                     entity as? Player ?: return true,
                     interactTarget ?: return true,
-                    script.state,
+                    script.state
                 )
 
                 is UseWithInteraction -> return script.execution.invoke(
                     entity as? Player ?: return true,
                     script.used,
                     script.with,
-                    script.state,
+                    script.state
                 )
 
                 is QueuedScript -> return script.execution.invoke(script.state)
@@ -232,7 +222,7 @@ class ScriptProcessor(
                     entity as? Player ?: return true,
                     script.used,
                     script.with,
-                    script.state,
+                    script.state
                 )
             }
         } catch (e: Exception) {
@@ -242,7 +232,7 @@ class ScriptProcessor(
             log(
                 this::class.java,
                 Log.ERR,
-                "Error processing ${script::class.java.simpleName} - stopping the script. Exception follows: $sw",
+                "Error processing ${script::class.java.simpleName} - stopping the script. Exception follows: $sw"
             )
             reset()
         }
@@ -254,42 +244,27 @@ class ScriptProcessor(
      * Removes weak scripts from the queue.
      */
     fun removeWeakScripts() {
-        queue.removeAll(
-            queue
-                .filter {
-                    it is QueuedScript &&
-                        it.strength == QueueStrength.WEAK ||
-                        it is QueuedUseWith &&
-                        it.strength == QueueStrength.WEAK
-                }.toSet(),
-        )
+        queue.removeAll(queue.filter { it is QueuedScript && it.strength == QueueStrength.WEAK || it is QueuedUseWith && it.strength == QueueStrength.WEAK }
+            .toSet())
     }
 
     /**
      * Removes normal priority scripts from the queue.
      */
     fun removeNormalScripts() {
-        queue.removeAll(
-            queue
-                .filter {
-                    it is QueuedScript &&
-                        it.strength == QueueStrength.NORMAL ||
-                        it is QueuedUseWith &&
-                        it.strength == QueueStrength.NORMAL
-                }.toSet(),
-        )
+        queue.removeAll(queue.filter { it is QueuedScript && it.strength == QueueStrength.NORMAL || it is QueuedUseWith && it.strength == QueueStrength.NORMAL }
+            .toSet())
     }
 
     /**
      * Checks if the entity is in approach range of the target.
      */
     fun inApproachDistance(script: Script<*>): Boolean {
-        val distance =
-            when (script) {
-                is Interaction -> script.distance
-                is UseWithInteraction -> script.distance
-                else -> 10
-            }
+        val distance = when (script) {
+            is Interaction -> script.distance
+            is UseWithInteraction -> script.distance
+            else -> 10
+        }
         targetDestination?.let {
             return it.location.getDistance(entity.location) <= distance && hasLineOfSight(entity, it)
         }
@@ -297,11 +272,11 @@ class ScriptProcessor(
     }
 
     /**
-     * Checks if the entity is in direct operable distance to the target.
+     * Checks if the entity is in approach range of the target.
      */
     fun inOperableDistance(): Boolean {
         targetDestination?.let {
-            return it.getCardinalTiles().any { loc -> loc == entity.location } && hasLineOfSight(entity, it)
+            return it.cardinalTiles.any { loc -> loc == entity.location } && hasLineOfSight(entity, it)
         }
         return false
     }
@@ -331,38 +306,35 @@ class ScriptProcessor(
         reset()
         interactTarget = target
         if (script != null) {
-            apRange =
-                when (script) {
-                    is Interaction -> script.distance
-                    is UseWithInteraction -> script.distance
-                    else -> 10
-                }
-            persistent = script.persist
-            if (apRange == -1) {
-                opScript = script
-            } else {
-                apScript = script
+            apRange = when (script) {
+                is Interaction -> script.distance
+                is UseWithInteraction -> script.distance
+                else -> 10
             }
-            targetDestination =
-                when (interactTarget) {
-                    is NPC -> DestinationFlag.ENTITY.getDestination(entity, interactTarget!!)
-                    is Scenery -> {
-                        val basicPath = Pathfinder.find(entity, interactTarget)
-                        val path = basicPath.points.lastOrNull()
-                        if (basicPath.isMoveNear) {
-                            target.location
-                            return
-                        }
-                        if (path == null) {
-                            clearScripts(entity)
-                            return
-                        }
-                        Location.create(path.x, path.y, entity.location.z)
+            persistent = script.persist
+            if (apRange == -1)
+                opScript = script
+            else
+                apScript = script
+            targetDestination = when (interactTarget) {
+                is NPC -> DestinationFlag.ENTITY.getDestination(entity, interactTarget)
+                is Scenery -> {
+                    val basicPath = Pathfinder.find(entity, interactTarget)
+                    val path = basicPath.points.lastOrNull()
+                    if (basicPath.isMoveNear) {
+                        target.location
+                        return
                     }
-
-                    is GroundItem -> DestinationFlag.ITEM.getDestination(entity, interactTarget!!)
-                    else -> target.location
+                    if (path == null) {
+                        clearScripts(entity)
+                        return
+                    }
+                    Location.create(path.x, path.y, entity.location.z)
                 }
+
+                is GroundItem -> DestinationFlag.ITEM.getDestination(entity, interactTarget)
+                else -> target.location
+            }
         }
     }
 
@@ -374,14 +346,12 @@ class ScriptProcessor(
             log(
                 this::class.java,
                 Log.ERR,
-                "Tried to queue ${script::class.java.simpleName} as a queueable script but it's not!",
+                "Tried to queue ${script::class.java.simpleName} as a queueable script but it's not!"
             )
             return
         }
         if (strength == QueueStrength.STRONG && entity is Player) {
-            entity.interfaceManager.close()
-            entity.interfaceManager.closeChatbox()
-            entity.dialogueInterpreter.close()
+            closeAllInterfaces(entity)
         }
         script.nextExecution = max(GameWorld.ticks + 1, script.nextExecution)
         queue.add(script)
@@ -390,20 +360,23 @@ class ScriptProcessor(
     /**
      * Gets the currently executing or active interaction script.
      */
-    fun getActiveScript(): Script<*>? = currentScript ?: getActiveInteraction()
+    fun getActiveScript(): Script<*>? {
+        return currentScript ?: getActiveInteraction()
+    }
 
-    private fun getActiveInteraction(): Script<*>? = opScript ?: apScript
+    private fun getActiveInteraction(): Script<*>? {
+        return opScript ?: apScript
+    }
 
     /**
      * Checks if a script of the given strength exists in the queue.
      */
     fun hasTypeInQueue(type: QueueStrength): Boolean {
         for (script in queue) {
-            if (script is QueuedScript && script.strength == type) {
+            if (script is QueuedScript && script.strength == type)
                 return true
-            } else if (script is QueuedUseWith && script.strength == type) {
+            else if (script is QueuedUseWith && script.strength == type)
                 return true
-            }
         }
         return false
     }

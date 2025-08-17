@@ -1,7 +1,7 @@
 package core.game.system.config
 
 import com.google.gson.Gson
-import com.google.gson.JsonArray
+import com.google.gson.reflect.TypeToken
 import core.ServerConstants
 import core.api.log
 import core.cache.def.impl.SceneryDefinition
@@ -12,34 +12,30 @@ class SceneryConfigParser {
     private val gson = Gson()
 
     fun load() {
+        val reader = FileReader("${ServerConstants.CONFIG_PATH}object_configs.json")
+        val type = object : TypeToken<List<Map<String, Any>>>() {}.type
+        val configList: List<Map<String, Any>> = gson.fromJson(reader, type)
+
         var count = 0
-        FileReader(ServerConstants.CONFIG_PATH + "object_configs.json").use { reader ->
-            val configList = gson.fromJson(reader, JsonArray::class.java)
-            for (element in configList) {
-                val e = element.asJsonObject
-                val ids = e.get("ids")?.asString
-                    ?.split(",")
-                    ?.mapNotNull { it.trim().toIntOrNull() }
-                    ?: continue
 
-                for (id in ids) {
-                    val def = SceneryDefinition.forId(id)
-                    val configs = def.handlers
+        configList.forEach { config ->
+            val ids = (config["ids"] as String).split(",").map { it.toInt() }
+            ids.forEach { id ->
+                val def = SceneryDefinition.forId(id)
+                val handlers = def.handlers
 
-                    for ((key, value) in e.entrySet()) {
-                        val keyStr = key
-                        val valueStr = value.asString
-                        if (valueStr.isEmpty() || valueStr == "null") continue
-
-                        when (keyStr) {
-                            "examine" -> configs[keyStr] = valueStr
-                            "render_anim" -> def.animations = valueStr.toIntOrNull() ?: def.animations
-                        }
-                    }
-                    count++
+                (config["examine"] as? String)?.takeIf { it.isNotBlank() && it != "null" }?.let {
+                    handlers["examine"] = it
                 }
+
+                (config["render_anim"] as? Number)?.toInt()?.let {
+                    def.animationId = it
+                }
+
+                count++
             }
         }
-        log(this::class.java, Log.DEBUG, "Parsed $count object configs.")
+
+        log(this::class.java, Log.FINE, "Parsed $count object configs.")
     }
 }

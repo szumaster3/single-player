@@ -38,7 +38,7 @@ class HunterPlugin : OptionHandler() {
             for (nodeId in trap.settings.nodeIds) {
                 definition =
                     if (trap.settings.isObjectTrap) SceneryDefinition.forId(nodeId) else ItemDefinition.forId(nodeId)
-                definition.handlers["option:" + trap.settings.option] = this
+                definition!!.handlers["option:" + trap.settings.option] = this
             }
             if (trap.settings.failId != -1) {
                 definition = SceneryDefinition.forId(trap.settings.failId)
