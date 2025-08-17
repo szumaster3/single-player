@@ -24,7 +24,7 @@ class ChildDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
-            0 -> if(hasStorableEquipped(player, Storable.MournerGear)) {
+            0 -> if(!hasStorableEquipped(player, Storable.MournerGear)) {
                 npcl(FaceAnim.CHILD_NEUTRAL, "I'm not allowed to speak with strangers.").also { stage = END_DIALOGUE }
             } else {
                 npcl(FaceAnim.CHILD_NEUTRAL, "I'm not allowed to speak with Mourners.").also { stage = END_DIALOGUE }
