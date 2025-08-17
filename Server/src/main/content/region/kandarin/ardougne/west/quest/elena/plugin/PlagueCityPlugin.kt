@@ -78,22 +78,6 @@ class PlagueCityPlugin : InteractionListener {
         }
 
         /*
-         * Handles trying to open the Ardougne wooden wall doors.
-         */
-
-        on(intArrayOf(Scenery.ARDOUGNE_WALL_DOOR_9738, Scenery.ARDOUGNE_WALL_DOOR_9330), IntType.SCENERY, "open",) { player, _ ->
-            if (inBorders(player, 2556, 3298, 2557, 3301)) {
-                sendMessage(player, "You pull on the large wooden doors...")
-                sendMessageWithDelay(player, "...But they will not open.", 1)
-            } else {
-                sendMessage(player, "You try to open the large wooden doors...")
-                sendMessageWithDelay(player, "...But they will not open.", 1)
-                sendNPCDialogue(player, NPCs.MOURNER_2349, "Oi! What are you doing? Get away from there!")
-            }
-            return@on true
-        }
-
-        /*
          * Handles opening the manhole at the north square.
          */
 
