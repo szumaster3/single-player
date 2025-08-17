@@ -300,7 +300,7 @@ class ZoneMonitor(val entity: Entity) {
      */
     fun isInZone(name: String): Boolean {
         val uid = name.hashCode()
-        return zones.any { it.zone.uid == uid }
+        return zones.any { it.zone.getUid() == uid }
     }
 
     /**

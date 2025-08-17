@@ -317,4 +317,12 @@ abstract class MapZone(
      * Computes the UID based on the zone name
      */
     fun getUid(): Int = name.hashCode()
+
+    /**
+     * Sets the uid for this map zone.
+     * @param uid The uid.
+     */
+    fun setUid(uid: Int) {
+        this.uid = uid
+    }
 }

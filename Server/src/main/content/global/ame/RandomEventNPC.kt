@@ -25,8 +25,8 @@ import kotlin.reflect.full.createInstance
  * @author Ceikry
  */
 abstract class RandomEventNPC(
-    vararg val ids: Int
-) : NPC(ids.first()) {
+    vararg val id: Int
+) : NPC(id.first()) {
     lateinit var player: Player
     abstract var loot: WeightBasedTable?
     var spawnLocation: Location? = null
