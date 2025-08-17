@@ -1,6 +1,7 @@
 package core.game.global.action
 
 import core.api.sendMessage
+import core.api.setTitle
 import core.game.dialogue.Dialogue
 import core.game.node.entity.player.Player
 import core.game.node.scenery.Scenery
@@ -276,7 +277,8 @@ object ClimbActionHandler {
 
         override fun open(vararg args: Any?): Boolean {
             scenery = args[0] as Scenery?
-            interpreter.sendOptions("What would you like to do?", "Climb Up.", "Climb Down.")
+            setTitle(player, 2)
+            interpreter.sendOptions("Climb up or down the stairs?", "Climb up the stairs.", "Climb down the stairs.")
             stage = 0
             return true
         }
