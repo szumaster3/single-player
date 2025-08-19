@@ -31,6 +31,11 @@ class BogrogPlugin : InteractionListener {
          * Opens the pouch swap.
          */
         fun openSwap(player: Player) {
+            if(player.inCombat()) {
+                sendMessage(player, "You can't swap while in combat.")
+                return
+            }
+
             if (getStatLevel(player, Skills.SUMMONING) < 21) {
                 sendMessage(player, "You need a Summoning level of at least 21 in order to do that.")
                 return
