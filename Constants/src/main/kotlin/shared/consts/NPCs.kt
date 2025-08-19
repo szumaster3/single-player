@@ -3814,6 +3814,7 @@ object NPCs {
     const val CAPTAIN_BLEEMADGE_3810 = 3810
     const val CAPTAIN_ERRDO_3811 = 3811
     const val CAPTAIN_KLEMFOODLE_3812 = 3812
+    const val NPC_3813 = 3813
     const val GNOME_ARCHER_3814 = 3814
     const val GNOME_DRIVER_3815 = 3815
     const val GNOME_MAGE_3816 = 3816
