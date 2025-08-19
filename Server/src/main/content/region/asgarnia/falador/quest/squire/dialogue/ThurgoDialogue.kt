@@ -26,7 +26,8 @@ class ThurgoDialogue(player: Player? = null) : Dialogue(player) {
         removeAttribute(player, "thurgo:1")
         when (quest!!.getStage(player)) {
             else -> {
-                sendDialogueOptions(player, "Ask a Question", "Skillcape of Smithing.", "Something else.").also {
+                setTitle(player, 2)
+                sendDialogueOptions(player, "What would you like to ask about?", "Skillcape of Smithing.", "Something else.").also {
                     stage =
                         0
                 }

@@ -51,7 +51,7 @@ class CakeBandit : Script() {
 
         if (!destinationReached) {
             bot.pulseManager.run(
-                object : MovementPulse(bot, cakeStall.location, DestinationFlag.OBJECT) {
+                object : MovementPulse(bot, cakeStall, DestinationFlag.OBJECT) {
                     override fun pulse(): Boolean {
                         InteractionListeners.run(
                             stallId,
@@ -77,7 +77,7 @@ class CakeBandit : Script() {
         } else {
             val bank = scriptAPI?.getNearestNode(bankId, true) ?: return
             bot.pulseManager.run(
-                object : MovementPulse(bot, bank.location, DestinationFlag.OBJECT) {
+                object : MovementPulse(bot, bank, DestinationFlag.OBJECT) {
                     override fun pulse(): Boolean {
                         state = State.BANKING
                         return true
