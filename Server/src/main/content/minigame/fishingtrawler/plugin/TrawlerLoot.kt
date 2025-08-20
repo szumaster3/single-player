@@ -1,13 +1,9 @@
 package content.minigame.fishingtrawler.plugin
 
 import content.global.skill.gathering.fishing.Fish
-import core.game.dialogue.splitLines
-import core.game.node.entity.player.Player
-import core.game.node.item.GroundItemManager
 import core.game.node.item.Item
 import core.game.node.item.WeightedChanceItem
 import core.tools.RandomFunction
-import core.tools.colorize
 import shared.consts.Items
 
 object TrawlerLoot {

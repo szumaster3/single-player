@@ -31,6 +31,19 @@ class FishingTrawlerContainer(val player: Player) :
      * Opens the reward interface
      */
     fun open() {
+        val rolls = player.getAttribute<Int>("/save:ft-rolls") ?: 0
+        if (rolls > 0) {
+            val fishingLevel = player.skills.getLevel(core.game.node.entity.skill.Skills.FISHING)
+            val exp = (((0.015 * fishingLevel)) * fishingLevel) * rolls
+            player.skills.addExperience(core.game.node.entity.skill.Skills.FISHING, exp)
+            val loot = TrawlerLoot.getLoot(fishingLevel, rolls, skipJunk = false)
+            for (item in loot) {
+                add(item)
+            }
+            player.removeAttribute("ft-rolls")
+        }
+
+        player.setAttribute("ft-container", this)
         player.interfaceManager.openComponent(INTERFACE_ID)
         rewardListener?.update(this, null)
         rewardListener?.refresh(this)

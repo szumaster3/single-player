@@ -494,20 +494,12 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
         define(
             name = "rolltrawlerloot",
             privilege = Privilege.ADMIN,
-            usage = "::rolltrawlerloot <ROLL COUNT>",
+            usage = "::rolltrawlerloot <lt>ROLL COUNT<gt>",
             description = "Rolls some trawler loot and opens the reward interface."
         ) { player, args ->
             val rolls = if (args.size < 2) 100 else args[1].toIntOrNull() ?: 100
-
-            val fishingLevel = player.skills.getLevel(Skills.FISHING)
-            val exp = (((0.015 * fishingLevel)) * fishingLevel) * rolls
-            player.skills.addExperience(Skills.FISHING, exp)
-
-            val loot = TrawlerLoot.getLoot(fishingLevel, rolls, false)
+            player.setAttribute("/save:ft-rolls", rolls)
             val container = FishingTrawlerContainer(player)
-            loot.forEach { item -> container.add(item) }
-            player.setAttribute("ft-container", container)
-
             container.open()
             player.sendMessage("Opened Fishing Trawler reward interface with $rolls rolls.")
         }

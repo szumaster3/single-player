@@ -89,7 +89,7 @@ class FishingTrawlerInteractionHandler : InteractionListener {
                 return@on true
             }
             animate(player, Animations.MULTI_BEND_OVER_827)
-            openInterface(player, Components.TRAWLER_REWARD_367)
+            FishingTrawlerContainer(player).open()
             return@on true
         }
 
