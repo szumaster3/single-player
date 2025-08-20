@@ -100,7 +100,15 @@ class FishingTrawlerContainer(val player: Player) :
     private fun dropAllRemainingItems() {
         for (slot in 0 until CONTAINER_SIZE) {
             val item = get(slot) ?: continue
-            GroundItemManager.create(item, player.location, player)
+
+            if (item.definition.isStackable()) {
+                GroundItemManager.create(item, player.location, player)
+            } else {
+                repeat(item.amount) {
+                    GroundItemManager.create(Item(item.id, 1), player.location, player)
+                }
+            }
+
             remove(item, slot, true)
         }
     }
