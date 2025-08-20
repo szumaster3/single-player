@@ -21,6 +21,7 @@ private var activity: FishingTrawlerActivity? = null
 private var nextStart = GameWorld.ticks + WAIT_TIME
 private val ftWaitingArea = arrayOf(ZoneBorders(2668, 3165, 2675, 3184))
 
+// You're too far from shore to teleport!
 @Initializable
 class FishingTrawlerActivity :
     ActivityPlugin(

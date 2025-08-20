@@ -139,7 +139,7 @@ class FishingTrawlerContainer(val player: Player) :
         /**
          * The available options.
          */
-        private val WITHDRAW_OPTIONS = arrayOf("Withdraw-1", "Withdraw-All")
+        private val WITHDRAW_OPTIONS = arrayOf("Withdraw 1", "Withdraw All")
 
         /**
          * The fishing trawler reward interface id.
