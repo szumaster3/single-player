@@ -1,12 +1,10 @@
 package content.region.misthalin.varrock.quest.dragon.plugin
 
 import content.region.misthalin.varrock.quest.dragon.DragonSlayer
-import core.api.addItemOrDrop
-import core.api.sendItemDialogue
-import core.api.setVarp
+import core.api.*
 import core.cache.def.impl.NPCDefinition
 import core.cache.def.impl.SceneryDefinition
-import core.game.dialogue.SequenceDialogue.dialogue
+import core.game.dialogue.DialogueFile
 import core.game.global.action.ClimbActionHandler
 import core.game.global.action.DoorActionHandler.handleAutowalkDoor
 import core.game.interaction.OptionHandler
@@ -135,29 +133,7 @@ class DragonSlayerPlugin : OptionHandler() {
 
             2587 -> {
                 if (!player.inventory.containsItem(DragonSlayer.MAGIC_PIECE) && !player.bank.containsItem(DragonSlayer.MAGIC_PIECE)) {
-                    dialogue(player) {
-                        message("As you open the chest, you notice an inscription on the lid:")
-                        message(
-                            "Here I rest the map to my beloved home. To whoever finds it, I beg",
-                            "of you, let it be. I was honour-bound not to destroy the map piece,",
-                            "but I have used all my magical skill to keep it from being recovered."
-                        )
-                        message(
-                            "This map leads to the lair of the beast that destroyed my home,",
-                            "devoured my family, and burned to a cinder all that I love. But",
-                            "revenge would not benefit me now, and to disturb this beast is to risk",
-                            "bringing its wrath down upon another land."
-                        )
-                        message(
-                            "I cannot stop you from taking this map piece now, but think on this:",
-                            "if you can slay the Dragon of Crandor, you are a greater hero than",
-                            "my land ever produced. There is no shame in backing out now."
-                        )
-                        end {
-                            addItemOrDrop(player, DragonSlayer.MAGIC_PIECE.id, 1)
-                            sendItemDialogue(player, DragonSlayer.MAGIC_PIECE, "You find a map piece in the chest.")
-                        }
-                    }
+                    openDialogue(player, MapPieceDialogue())
                 } else {
                     player.packetDispatch.sendMessage("You already have the map piece.")
                 }
@@ -254,6 +230,47 @@ class DragonSlayerPlugin : OptionHandler() {
         }
 
         return true
+    }
+
+    inner class MapPieceDialogue : DialogueFile() {
+        override fun handle(componentID: Int, buttonID: Int) {
+            when(stage) {
+                0 -> {
+                    sendDialogueLines(player!!, "As you open the chest, you notice an inscription on the lid:")
+                    stage++
+                }
+                1 -> {
+                    sendDialogueLines(player!!,
+                        "Here I rest the map to my beloved home. To whoever finds it, I beg",
+                        "of you, let it be. I was honour-bound not to destroy the map piece,",
+                        "but I have used all my magical skill to keep it from being recovered."
+                    )
+                    stage++
+                }
+                2 -> {
+                    sendDialogueLines(player!!,
+                        "This map leads to the lair of the beast that destroyed my home,",
+                        "devoured my family, and burned to a cinder all that I love. But",
+                        "revenge would not benefit me now, and to disturb this beast is to risk",
+                        "bringing its wrath down upon another land."
+                    )
+                    stage++
+                }
+                3 -> {
+                    sendDialogueLines(player!!,
+                        "I cannot stop you from taking this map piece now, but think on this:",
+                        "if you can slay the Dragon of Crandor, you are a greater hero than",
+                        "my land ever produced. There is no shame in backing out now."
+                    )
+                    stage++
+                }
+                4 -> {
+                    end()
+                    addItemOrDrop(player!!, DragonSlayer.MAGIC_PIECE.id, 1)
+                    sendItemDialogue(player!!, DragonSlayer.MAGIC_PIECE, "You find a map piece in the chest.")
+                }
+            }
+        }
     }
 
     private fun handleKeyDoor(player: Player, node: Node, requiredKey: Item): Boolean {

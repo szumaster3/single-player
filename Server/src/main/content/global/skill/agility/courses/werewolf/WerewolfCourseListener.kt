@@ -1,10 +1,8 @@
 package content.global.skill.agility.courses.werewolf
 
 import core.api.*
+import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
-import core.game.dialogue.SequenceDialogue.npcLine
-import core.game.dialogue.SequenceDialogue.playerLine
-import core.game.dialogue.SequenceDialogue.sendSequenceDialogue
 import core.game.global.action.ClimbActionHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
@@ -60,18 +58,23 @@ class WerewolfCourseListener : InteractionListener {
                 rewardXP(player, Skills.AGILITY, 190.0)
                 sendMessage(player, "You give the stick to the werewolf.")
             } else {
-                val npc = node.asNpc()
-                sendSequenceDialogue(player,
-                    npcLine(npc, FaceAnim.CHILD_NORMAL, "Have you brought the stick yet?"),
-                    playerLine(FaceAnim.EXTREMELY_SHOCKED, "What stick?"),
-                    npcLine(npc, FaceAnim.CHILD_NORMAL, "Come on, get round that course - I need something to chew!")
-                )
+                openDialogue(player, AgilityTrainerDialogue(), node.asNpc())
             }
             removeAttribute(player, "werewolf-agility-course")
             return@on true
         }
     }
 
+    inner class AgilityTrainerDialogue : DialogueFile() {
+        override fun handle(componentID: Int, buttonID: Int) {
+            when(stage) {
+                0 -> npcl(FaceAnim.CHILD_NORMAL, "Have you brought the stick yet?").also { stage++ }
+                1 -> player(FaceAnim.EXTREMELY_SHOCKED, "What stick?").also { stage++ }
+                2 -> npcl(FaceAnim.CHILD_NORMAL, "Come on, get round that course - I need something to chew!").also { stage++ }
+                3 -> end()
+            }
+        }
+    }
     override fun defineDestinationOverrides() {
         setDest(IntType.SCENERY, ZIP_LINE, "teeth-grip") { _, _ ->
             return@setDest Location(3528, 9910, 0)

@@ -3,7 +3,6 @@ package content.region.other.keldagrim.plugin
 import content.data.GameAttributes
 import content.minigame.blastfurnace.dialogue.BlastFusionHammerDialogue
 import core.api.*
-import core.game.dialogue.SequenceDialogue
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.npc.NPC
@@ -170,27 +169,30 @@ class KeldagrimPlugin : InteractionListener {
                 sendMessage(player, "You must visit Keldagrim to use this shortcut.")
                 return@on true
             }
-
-            SequenceDialogue.dialogue(player) {
-                if (node.id == Scenery.HIDDEN_TRAPDOOR_28094) {
-                    message(
+            when (node.id) {
+                Scenery.HIDDEN_TRAPDOOR_28094 -> {
+                    sendDialogueLines(
+                        player,
                         "This trapdoor leads to a small dwarven mine cart station. The mine",
                         "cart will take you to Keldagrim."
                     )
                 }
-                if (node.id == Scenery.TRAIN_CART_7028) {
-                    options("What would you like to do?", *options) { choice ->
+                Scenery.TRAIN_CART_7028 -> {
+                    sendDialogueOptions(player, "What would you like to do?", *options)
+                    addDialogueAction(player) { p, choice ->
                         when {
-                            choice == options.size -> closeDialogue(player)
-                            choice == 1 -> startTravelFromKeldagrim(player, destinations[0])
-                            choice == 2 -> startTravelFromKeldagrim(player, destinations[1])
-                            questDone && choice == 3 -> startTravelFromKeldagrim(player, destinations[2])
-                            else -> closeDialogue(player)
+                            choice == options.size -> closeDialogue(p)
+                            choice == 1 -> startTravelFromKeldagrim(p, destinations[0])
+                            choice == 2 -> startTravelFromKeldagrim(p, destinations[1])
+                            questDone && choice == 3 -> startTravelFromKeldagrim(p, destinations[2])
+                            else -> closeDialogue(p)
                         }
                     }
-                } else {
-                    options("What would you like to do?", "Travel to Keldagrim", "Stay here") { choice ->
-                        if (choice == 1) startTravelToKeldagrim(player) else closeDialogue(player)
+                }
+                else -> {
+                    sendDialogueOptions(player, "What would you like to do?", "Travel to Keldagrim", "Stay here")
+                    addDialogueAction(player) { p, choice ->
+                        if (choice == 1) startTravelToKeldagrim(p) else closeDialogue(p)
                     }
                 }
             }

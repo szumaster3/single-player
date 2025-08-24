@@ -4,7 +4,6 @@ import content.region.kandarin.gnome.quest.makinghistory.MHUtils
 import content.region.kandarin.gnome.quest.makinghistory.book.HistoryoftheOutpost
 import content.region.kandarin.gnome.quest.makinghistory.book.TheMysteriousAdventurer
 import core.api.*
-import core.game.dialogue.SequenceDialogue.dialogue
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.item.Item
@@ -112,13 +111,12 @@ class MakingHistoryPlugin : InteractionListener {
         }
 
         on(Scenery.BOOKCASE_10273, IntType.SCENERY, "study") { player, _ ->
-            dialogue(player) {
-                options(null, "The Times of Lathas", "The History of the Outpost", "The Mysterious Adventurer",) { buttonID ->
-                    when (buttonID) {
-                        1 -> sendDialogue(player, "You pick up a new looking book: 'The Times of Lathas'. You skim over the heavy book. " + "It talks about the heritage of the line of kings who carry the name Ardignas. " + "They only came into power 68 years ago, but in which time there have been five kings, the current being King Lathas.")
-                        2 -> HistoryoftheOutpost.openBook(player)
-                        3 -> TheMysteriousAdventurer.openBook(player)
-                    }
+            sendDialogueOptions(player, "Select an option", "The Times of Lathas", "The History of the Outpost", "The Mysterious Adventurer")
+            addDialogueAction(player) { p, button ->
+                when (button) {
+                    1 -> sendDialogue(p, "You pick up a new looking book: 'The Times of Lathas'. You skim over the heavy book. " + "It talks about the heritage of the line of kings who carry the name Ardignas. " + "They only came into power 68 years ago, but in which time there have been five kings, the current being King Lathas.")
+                    2 -> HistoryoftheOutpost.openBook(p)
+                    3 -> TheMysteriousAdventurer.openBook(p)
                 }
             }
             return@on true

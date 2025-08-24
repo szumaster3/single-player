@@ -2,11 +2,8 @@ package content.region.fremennik.waterbirth.dungeon
 
 import content.global.plugin.iface.warning.WarningManager
 import content.global.plugin.iface.warning.Warnings
-import core.api.isQuestComplete
-import core.api.sendMessage
-import core.api.teleport
+import core.api.*
 import core.cache.def.impl.SceneryDefinition
-import core.game.dialogue.SequenceDialogue.dialogue
 import core.game.global.action.ClimbActionHandler
 import core.game.interaction.OptionHandler
 import core.game.node.Node
@@ -46,22 +43,23 @@ class WaterbirthDungeonPlugin : OptionHandler() {
             10193 -> player.properties.teleportLocation = Location(2545, 10143, 0)
             10177 -> when (option) {
                 "climb" -> {
-                    dialogue(player) {
-                        options(null, "Climb Up.", "Climb Down.") { select ->
-                            when (select) {
-                                1 -> ClimbActionHandler.climb(
-                                    player,
-                                    ClimbActionHandler.CLIMB_UP,
-                                    Location.create(2544, 3741, 0)
-                                )
+                    sendDialogueOptions(player, "Climb Up.", "Climb Down.")
+                    addDialogueAction(player) { p, button ->
+                        when (button) {
+                            1 -> ClimbActionHandler.climb(
+                                p,
+                                ClimbActionHandler.CLIMB_UP,
+                                Location.create(2544, 3741, 0)
+                            )
 
-                                2 -> ClimbActionHandler.climb(
-                                    player,
-                                    ClimbActionHandler.CLIMB_DOWN,
-                                    Location.create(1799, 4406, 3)
-                                )
-                            }
+                            2 -> ClimbActionHandler.climb(
+                                p,
+                                ClimbActionHandler.CLIMB_DOWN,
+                                Location.create(1799, 4406, 3)
+                            )
+                            else -> closeDialogue(p)
                         }
+
                     }
                 }
 

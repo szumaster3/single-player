@@ -1,8 +1,8 @@
 package content.region.desert.sophanem.plugin
 
 import core.api.*
+import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
-import core.game.dialogue.SequenceDialogue.dialogue
 import core.game.global.action.ClimbActionHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
@@ -40,12 +40,7 @@ class SophanemPlugin : InteractionListener {
 
         onUseWith(IntType.NPC, Items.POTION_195, NPCs.EMBALMER_1980) { player, _, with ->
             val npc  = with.asNpc()
-            dialogue(player) {
-                npc(npc, FaceAnim.SUSPICIOUS, "What are you doing?")
-                player(FaceAnim.FRIENDLY,"I have this potion which I thought might help ease your itching.")
-                npc(npc, FaceAnim.NEUTRAL, "If I thought that these spots could be cured by some potion, I would have mixed up one for myself before now.")
-                player(FaceAnim.HALF_GUILTY, "Sorry... I was just trying to help.")
-            }
+            openDialogue(player, EmbalmerDialogue(), npc)
             return@onUseWith true
         }
 
@@ -58,6 +53,18 @@ class SophanemPlugin : InteractionListener {
             return@on true
         }
 
+    }
+
+    inner class EmbalmerDialogue : DialogueFile() {
+        override fun handle(componentID: Int, buttonID: Int) {
+            when(stage) {
+                0 -> npcl(FaceAnim.SUSPICIOUS, "What are you doing?").also { stage++ }
+                1 -> playerl(FaceAnim.FRIENDLY,"I have this potion which I thought might help ease your itching.").also { stage++ }
+                2 -> npcl(FaceAnim.NEUTRAL, "If I thought that these spots could be cured by some potion, I would have mixed up one for myself before now.").also { stage++ }
+                3 -> playerl(FaceAnim.HALF_GUILTY, "Sorry... I was just trying to help.").also { stage++ }
+                4 -> end()
+            }
+        }
     }
 
     companion object {

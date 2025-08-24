@@ -1,17 +1,19 @@
 package content.region.morytania.canifis.plugin
 
 import core.api.inInventory
+import core.api.openDialogue
 import core.api.removeItem
 import core.api.replaceSlot
+import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
-import core.game.dialogue.SequenceDialogue.dialogue
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.item.Item
+import core.tools.END_DIALOGUE
 import shared.consts.Items
 import shared.consts.NPCs
 
-private enum class StuffedItem(val dropId: Int, val stuffedId: Int, val price: Int, val message: String, ) {
+public enum class StuffedItem(val dropId: Int, val stuffedId: Int, val price: Int, val message: String, ) {
     CRAWLING_HAND_DROP(Items.CRAWLING_HAND_7975, Items.CRAWLING_HAND_7982, 1000, "That's a very fine crawling hand."),
     COCKATRICE_HEAD_DROP(Items.COCKATRICE_HEAD_7976, Items.COCKATRICE_HEAD_7983, 2000, "A cockatrice! Beautiful, isn't it? Look at the plumage!"),
     BASILISK_HEAD_DROP(Items.BASILISK_HEAD_7977, Items.BASILISK_HEAD_7984, 4000, "My, he's a scary-looking fellow, isn't he? He'll look good on your wall!"),
@@ -40,33 +42,90 @@ class TaxidermistPlugin : InteractionListener {
         onUseWith(IntType.NPC, ITEM_IDS, NPCs.TAXIDERMIST_4246) { player, used, with ->
             val stuffed = StuffedItem.product[used.id] ?: return@onUseWith true
             val npc = with.asNpc()
-
-            dialogue(player) {
-                npc(npc, FaceAnim.OLD_DEFAULT, stuffed.message)
-
-                player(FaceAnim.HALF_ASKING, "I want to preserve this item.")
-                npc(npc, FaceAnim.OLD_DEFAULT, "I can preserve that for you for ${stuffed.price} coins.")
-
-                options(null, "Yes please.", "No thanks.") { selected ->
-                    when (selected) {
-                        1 -> {
-                            if (stuffed.dropId != used.id) {
-                                npc(npc, FaceAnim.OLD_DEFAULT, "Don't be silly, I can't preserve that!")
-                            } else if (!inInventory(player, Items.COINS_995, stuffed.price)) {
-                                npc(npc, FaceAnim.OLD_DEFAULT, "You don't have enough coins in order to do that.")
-                            } else {
-                                removeItem(player, Item(Items.COINS_995, stuffed.price))
-                                replaceSlot(player, used.index, Item(stuffed.stuffedId, 1))
-                                npc(npc, FaceAnim.OLD_DEFAULT, "There you go!")
-                            }
-                        }
-                        2 -> npc(npc, FaceAnim.OLD_DEFAULT, "All right, come back if you change your mind, eh?")
-                    }
-                }
-            }
+            openDialogue(player, TaxidermistDialogue(stuffed, used.asItem()), npc)
             return@onUseWith true
         }
     }
+
+    /**
+     * Represents taxidermist dialogue (stuffed trophy preservation)
+     */
+    inner class TaxidermistDialogue(
+        private val stuffed: StuffedItem? = null,
+        private val used: Item
+    ) : DialogueFile() {
+
+        override fun handle(componentID: Int, buttonID: Int) {
+            when (stage) {
+                0 -> {
+                    npc(
+                        FaceAnim.OLD_DEFAULT,
+                        stuffed?.message
+                    )
+                    stage++
+                }
+
+                1 -> {
+                    player(
+                        FaceAnim.HALF_ASKING,
+                        "I want to preserve this item."
+                    )
+                    stage++
+                }
+
+                2 -> {
+                    npc(
+                        FaceAnim.OLD_DEFAULT,
+                        "I can preserve that for you for ${stuffed?.price} coins."
+                    )
+                    stage++
+                }
+
+                3 -> {
+                    options(
+                        "Yes please.",
+                        "No thanks."
+                    )
+                    stage++
+                }
+
+                4 -> {
+                    if (buttonID == 1) {
+                        if (stuffed!!.dropId != used.id) {
+                            npc(
+                                FaceAnim.OLD_DEFAULT,
+                                "Don't be silly, I can't preserve that!"
+                            )
+                            stage = END_DIALOGUE
+                        } else if (!inInventory(player!!, Items.COINS_995, stuffed!!.price)) {
+                            npc(
+                                FaceAnim.OLD_DEFAULT,
+                                "You don't have enough coins in order to do that."
+                            )
+                            stage = END_DIALOGUE
+                        } else {
+                            removeItem(player!!, Item(Items.COINS_995, stuffed.price))
+                            replaceSlot(player!!, used.index, Item(stuffed.stuffedId, 1))
+                            npc(
+                                FaceAnim.OLD_DEFAULT,
+                                "There you go!"
+                            )
+                            stage = END_DIALOGUE
+                        }
+                    } else if (buttonID == 2) {
+                        npc(
+                            FaceAnim.OLD_DEFAULT,
+                            "All right, come back if you change your mind, eh?"
+                        )
+                        stage = END_DIALOGUE
+                    } else{
+                        end()
+                    }
+                }
+            }
+        }
+    }
+
 
     companion object {
         private val ITEM_IDS = StuffedItem.values.map { it.dropId }.toIntArray()

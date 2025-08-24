@@ -4,7 +4,6 @@ import content.data.GameAttributes
 import core.api.*
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
-import core.game.dialogue.SequenceDialogue.dialogue
 import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
@@ -64,9 +63,9 @@ class BlackKnightsFortressPlugin : InteractionListener {
                     sendPlayerDialogue(player, "Why exactly would I want to do that?", FaceAnim.THINKING)
                 }
                 used.id == Items.CABBAGE_1967 -> {
-                    dialogue(player) {
-                        message("This is the wrong sort of cabbage!")
-                        player("I'm not supposed to be HELPING the witch you know...")
+                    sendDialogue(player,"This is the wrong sort of cabbage!")
+                    runTask(player, 3){
+                        sendPlayerDialogue(player,"I'm not supposed to be HELPING the witch you know...")
                     }
                 }
                 else -> {

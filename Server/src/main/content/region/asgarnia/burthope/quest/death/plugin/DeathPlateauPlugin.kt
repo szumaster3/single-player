@@ -2,8 +2,8 @@ package content.region.asgarnia.burthope.quest.death.plugin
 
 import content.region.asgarnia.burthope.quest.death.dialogue.DoorPlateauDialogueFile
 import core.api.*
+import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
-import core.game.dialogue.SequenceDialogue.dialogue
 import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
@@ -77,21 +77,6 @@ class DeathPlateauPlugin : InteractionListener, MapArea {
 
         on(Items.IOU_3103, ITEM, "read") { player, _ ->
             if(getQuestStage(player, Quests.DEATH_PLATEAU) in 15..16) {
-                dialogue(player) {
-                    player(FaceAnim.NEUTRAL, "The IOU says that Harold owes me some money.")
-                    player(FaceAnim.EXTREMELY_SHOCKED, "Wait just a minute!")
-                    player(FaceAnim.EXTREMELY_SHOCKED, "The IOU is written on the back of the combination! The stupid guard had it in his back pocket all the time!")
-                    end {
-                        if (removeItem(player, Items.IOU_3103)) {
-                            addItemOrDrop(player, Items.COMBINATION_3102)
-                            setQuestStage(player, Quests.DEATH_PLATEAU, 16)
-                            sendItemDialogue(player, Items.COMBINATION_3102, "You have found the combination!")
-                            sendMessage(player, "You have found the combination!")
-                            runTask(player, 1){openInterface(player, Components.BLANK_SCROLL_222)
-                                sendString(player, combinationScroll.joinToString("<br>"), Components.BLANK_SCROLL_222, 4)}
-                        }
-                    }
-                }
             }
             return@on true
         }
@@ -135,6 +120,31 @@ class DeathPlateauPlugin : InteractionListener, MapArea {
                 sendMessage(player, "The door is locked.")
             }
             return@on true
+        }
+    }
+
+    inner class ScrollDialogue : DialogueFile() {
+        override fun handle(componentID: Int, buttonID: Int) {
+            when(stage) {
+                0 -> playerl(FaceAnim.NEUTRAL, "The IOU says that Harold owes me some money.").also { stage++ }
+                1 -> playerl(FaceAnim.EXTREMELY_SHOCKED, "Wait just a minute!").also { stage++ }
+                2 -> playerl(FaceAnim.EXTREMELY_SHOCKED, "The IOU is written on the back of the combination! The stupid guard had it in his back pocket all the time!").also { stage++ }
+                3 -> {
+                    if (!removeItem(player!!, Items.IOU_3103)) {
+                        closeDialogue(player!!)
+                    } else {
+                        addItemOrDrop(player!!, Items.COMBINATION_3102)
+                        setQuestStage(player!!, Quests.DEATH_PLATEAU, 16)
+                        sendItemDialogue(player!!, Items.COMBINATION_3102, "You have found the combination!")
+                        runTask(player!!, 1) {
+                            end()
+                            sendMessage(player!!, "You have found the combination!")
+                            openInterface(player!!, Components.BLANK_SCROLL_222)
+                            sendString(player!!, combinationScroll.joinToString("<br>"), Components.BLANK_SCROLL_222, 4)
+                        }
+                    }
+                }
+            }
         }
     }
 }

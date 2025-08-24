@@ -4,6 +4,7 @@ import content.region.fremennik.plugin.FremennikShipHelper
 import content.region.fremennik.plugin.Travel
 import core.api.isQuestComplete
 import core.api.removeItem
+import core.api.sendMessage
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.game.node.item.Item
@@ -33,8 +34,11 @@ class JarvaldTravelDialogue : DialogueFile() {
             3 -> {
                 end()
                 if (buttonID == 1) {
-                    removeItem(player!!, Item(Items.COINS_995, 1000))
-                    FremennikShipHelper.sail(player!!, Travel.RELLEKKA_TO_WATERBIRTH)
+                    if (!removeItem(player!!, Item(Items.COINS_995, 1000))) {
+                        sendMessage(player!!, "You don't have enough coins.")
+                    } else {
+                        FremennikShipHelper.sail(player!!, Travel.RELLEKKA_TO_WATERBIRTH)
+                    }
                 }
             }
         }

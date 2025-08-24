@@ -1,8 +1,8 @@
 package content.region.fremennik.jatizso.plugin
 
 import core.api.*
+import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
-import core.game.dialogue.SequenceDialogue.dialogue
 import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
@@ -35,9 +35,9 @@ class JatizsoPlugin : InteractionListener {
         }
 
         on(NPCs.SLUG_HEMLIGSSEN_5520, IntType.NPC, "talk-to") { player, node ->
-            dialogue(player) {
-                npc(node.id, "Shhh. Go away. I'm not allowed to talk to you.")
-                player("Fine, whatever.")
+            sendNPCDialogue(player, node.id, "Shhh. Go away. I'm not allowed to talk to you.")
+            runTask(player,3){
+                sendPlayerDialogue(player, "Fine, whatever.")
             }
             return@on true
         }
@@ -57,20 +57,8 @@ class JatizsoPlugin : InteractionListener {
             return@setDest Location.create(2416, 3801, 0)
         }
 
-        on(GUARDS, IntType.NPC, "talk-to") { player, _ ->
-            dialogue(player) {
-                npc(NPCs.GUARD_5491, "Are you all right? Leftie?")
-                npc(NPCs.GUARD_5492, "No, I'm on the left.")
-                npc(NPCs.GUARD_5491, "Only from your perspective. Someone entering the gate should call you Rightie, right Leftie?")
-                npc(NPCs.GUARD_5492, "Right, Rightie. So you'd be Leftie not Rightie, right?")
-                npc(NPCs.GUARD_5491, "That's right Leftie, that's right.")
-                npc(NPCs.GUARD_5492, "Rightie-oh Rightie, or should I call you Leftie?")
-                npc(NPCs.GUARD_5491, "No, Rightie's fine Leftie.")
-                player(FaceAnim.ANGRY, "Aaagh! Enough! If either of you mention left or right in my presence I'll have to scream! Can I come through the gate?")
-                npc(NPCs.GUARD_5492, "Don't let us stop you.")
-                npc(NPCs.GUARD_5491, "Yes, head right on in, sir.")
-                player(FaceAnim.ANGRY, "You said it! You said it! ARRRRRRRRGH!")
-            }
+        on(GUARDS, IntType.NPC, "talk-to") { player, node ->
+            openDialogue(player, JatizsoGuardDialogue() , node.id)
             return@on true
         }
 
@@ -118,6 +106,25 @@ class JatizsoPlugin : InteractionListener {
                 },
             )
             return@on true
+        }
+    }
+
+    inner class JatizsoGuardDialogue : DialogueFile() {
+        override fun handle(componentID: Int, buttonID: Int) {
+            when(stage) {
+                0  -> npc(NPCs.GUARD_5491, "Are you all right? Leftie?").also { stage++ }
+                1  -> npc(NPCs.GUARD_5492, "No, I'm on the left.").also { stage++ }
+                2  -> npc(NPCs.GUARD_5491, "Only from your perspective. Someone entering the gate should call you Rightie, right Leftie?").also { stage++ }
+                3  -> npc(NPCs.GUARD_5492, "Right, Rightie. So you'd be Leftie not Rightie, right?").also { stage++ }
+                4  -> npc(NPCs.GUARD_5491, "That's right Leftie, that's right.").also { stage++ }
+                5  -> npc(NPCs.GUARD_5492, "Rightie-oh Rightie, or should I call you Leftie?").also { stage++ }
+                6  -> npc(NPCs.GUARD_5491, "No, Rightie's fine Leftie.").also { stage++ }
+                7  -> player(FaceAnim.ANGRY, "Aaagh! Enough! If either of you mention left or right in my presence I'll have to scream! Can I come through the gate?").also { stage++ }
+                8  -> npc(NPCs.GUARD_5492, "Don't let us stop you.").also { stage++ }
+                9  -> npc(NPCs.GUARD_5491, "Yes, head right on in, sir.").also { stage++ }
+                10 -> player(FaceAnim.ANGRY, "You said it! You said it! ARRRRRRRRGH!").also { stage++ }
+                11 -> end()
+            }
         }
     }
 }

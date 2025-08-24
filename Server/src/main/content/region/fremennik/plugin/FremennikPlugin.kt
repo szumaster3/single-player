@@ -109,8 +109,8 @@ class FremennikPlugin : InteractionListener {
          * Handles travel between Waterbirth Island and Rellekka.
          */
 
-        on(intArrayOf(2435, NPCs.JARVALD_2436, NPCs.JARVALD_2437, NPCs.JARVALD_2438), IntType.NPC, "option:travel") { player, npc ->
-            openDialogue(player, JarvaldTravelDialogue())
+        on(intArrayOf(2435, NPCs.JARVALD_2436, NPCs.JARVALD_2437, NPCs.JARVALD_2438), IntType.NPC, "option:travel") { player, node ->
+            openDialogue(player, JarvaldTravelDialogue(), node.id)
             return@on true
         }
     }

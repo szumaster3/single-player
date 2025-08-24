@@ -1,14 +1,13 @@
 package content.region.island.braindeath.plugin
 
-import core.api.faceLocation
-import core.api.findLocalNPC
-import core.api.sendChat
-import core.api.sendMessage
+import core.api.*
+import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
-import core.game.dialogue.SequenceDialogue.dialogue
 import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
+import core.game.node.Node
+import core.game.node.entity.npc.NPC
 import core.game.world.map.Location
 import shared.consts.NPCs
 import shared.consts.Scenery
@@ -34,37 +33,10 @@ class BraindeathIslandPlugin : InteractionListener {
             val lukeNPC = findLocalNPC(player, NPCs.LUKE_50PERCENT_2828)
             faceLocation(lukeNPC!!, player.location)
             if(player.location.y > 5098) {
-                dialogue(player) {
-                    npc(NPCs.LUKE_50PERCENT_2828, FaceAnim.OLD_DEFAULT, "Hey! What are you doing out there?")
-                    player("Nothing.")
-                    npc(NPCs.LUKE_50PERCENT_2828, FaceAnim.OLD_DEFAULT, "Well Cap'n Donnie said no livin' landlubbers were", "allowed out of the compound.")
-                    npc(NPCs.LUKE_50PERCENT_2828, FaceAnim.OLD_DEFAULT,  "So get yerself back in here, or yer for it!")
-                    end {
-                        DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
-                    }
-                }
+                openDialogue(player, LukeFiftyPercentDialogue(node))
                 return@on true
             }
-
-            val distractionDialogue = arrayOf(
-                "Hey you! Look over there!",
-                "Who's that making faces behind you?",
-                "Oh my! Is that a genuine 3rd Age Diversion?",
-                "Is that your distraction?",
-                "Who is that behind you?",
-                "That is the most amazing thing I have ever seen!"
-            )
-
-            val index = distractionDialogue.random()
-            dialogue(player) {
-                npc(NPCs.LUKE_50PERCENT_2828, FaceAnim.OLD_DEFAULT, "Arr! Tryin' ter get away eh? Well ye'll never sneak", "past me, I'm the best lookout this crew has ever seen!")
-                player(index)
-                end {
-                    faceLocation(lukeNPC, Location(2120, 5095, 0))
-                    sendChat(lukeNPC, "Where?", 1)
-                    DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
-                }
-            }
+            openDialogue(player, LukeDistractionDialogue(node))
             return@on true
         }
 
@@ -75,6 +47,50 @@ class BraindeathIslandPlugin : InteractionListener {
         on(ZOMBIE_SWAB_ID, IntType.NPC, "talk-to") {player, _ ->
             sendMessage(player, "I don't think he wants to talk to you.")
             return@on true
+        }
+    }
+
+    inner class LukeFiftyPercentDialogue(val n : Node) : DialogueFile() {
+        override fun handle(componentID: Int, buttonID: Int) {
+            when(stage) {
+                0 -> sendNPCDialogueLines(player!!, NPCs.LUKE_50PERCENT_2828, FaceAnim.OLD_DEFAULT, false,"Hey! What are you doing out there?").also { stage++ }
+                1 -> player("Nothing.")
+                2 -> sendNPCDialogueLines(player!!, NPCs.LUKE_50PERCENT_2828, FaceAnim.OLD_DEFAULT, false, "Well Cap'n Donnie said no livin' landlubbers were", "allowed out of the compound.").also { stage++ }
+                3 -> sendNPCDialogueLines(player!!, NPCs.LUKE_50PERCENT_2828, FaceAnim.OLD_DEFAULT, false, "So get yerself back in here, or yer for it!").also { stage++ }
+                4 -> {
+                    end()
+                    DoorActionHandler.handleAutowalkDoor(player!!, n.asScenery())
+                }
+            }
+        }
+    }
+
+    inner class LukeDistractionDialogue(val n : Node) : DialogueFile() {
+        override fun handle(componentID: Int, buttonID: Int) {
+            val distractionDialogue = arrayOf(
+                "Hey you! Look over there!",
+                "Who's that making faces behind you?",
+                "Oh my! Is that a genuine 3rd Age Diversion?",
+                "Is that your distraction?",
+                "Who is that behind you?",
+                "That is the most amazing thing I have ever seen!"
+            )
+
+            val index = distractionDialogue.random()
+
+            when(stage) {
+                0 -> sendNPCDialogueLines(player!!, NPCs.LUKE_50PERCENT_2828, FaceAnim.OLD_DEFAULT, false,"Arr! Tryin' ter get away eh? Well ye'll never sneak", "past me, I'm the best lookout this crew has ever seen!").also { stage++ }
+                1 -> playerl(FaceAnim.FRIENDLY, index)
+                4 -> {
+                    val npc = NPC(NPCs.LUKE_50PERCENT_2828)
+                    faceLocation(npc, Location(2120, 5095, 0))
+                    sendChat(npc, "Where?", 1)
+                    end()
+                    runTask(player!!, 1) {
+                    DoorActionHandler.handleAutowalkDoor(player!!, n.asScenery())
+                        }
+                }
+            }
         }
     }
 }

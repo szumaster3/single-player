@@ -9,7 +9,6 @@ import core.api.isQuestComplete
 import core.api.setQuestStage
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
-import core.game.dialogue.SequenceDialogue.dialogue
 import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
@@ -19,7 +18,6 @@ import core.game.system.task.Pulse
 import core.game.world.map.Direction
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
-import core.tools.END_DIALOGUE
 import shared.consts.*
 
 class BiohazardPlugin : InteractionListener {
@@ -64,17 +62,7 @@ class BiohazardPlugin : InteractionListener {
 
         on(NPCs.DA_VINCI_337, IntType.NPC, "talk-to") { player, node ->
             if (getAttribute(player, GameAttributes.SECOND_VIAL_CORRECT, false)) {
-                dialogue(player) {
-                    npc(node.id, "Hello again. I hope your journey was as pleasant as", "mine.")
-                    player("Well, as they say, it's always sunny in Gielinor.")
-                    npc(node.id, "Ok, here it is.")
-                    end {
-                        sendMessage(player, "He gives you the vial of ethenea.")
-                        player("Thanks, you've been a big help.")
-                        addItemOrDrop(player, Items.ETHENEA_415, 1)
-                        removeAttribute(player, GameAttributes.SECOND_VIAL_CORRECT)
-                    }
-                }
+                openDialogue(player, DaVinciDialogue(), node.id)
             } else {
                 sendDialogue(player, "Da Vinci does not feel sufficiently moved to talk.")
             }
@@ -83,17 +71,7 @@ class BiohazardPlugin : InteractionListener {
 
         on(NPCs.CHANCY_339, IntType.NPC, "talk-to") { player, node ->
             if (getAttribute(player, GameAttributes.FIRST_VIAL_CORRECT, false)) {
-                dialogue(player) {
-                    player("Hi, thanks for doing that.")
-                    npc(node.id, "No problem.")
-                    npc(node.id, "Next time give me something more valuable...", "I couldn't get anything for this on the blackmarket.")
-                    end {
-                        player("That was the idea.")
-                        sendMessage(player, "He gives you the vial of liquid honey.")
-                        addItemOrDrop(player, Items.LIQUID_HONEY_416, 1)
-                        removeAttribute(player, GameAttributes.FIRST_VIAL_CORRECT)
-                    }
-                }
+                openDialogue(player, ChancyDialogue(), node.id)
             } else {
                 sendDialogue(player, "Chancy doesn't feel like talking.")
             }
@@ -102,19 +80,7 @@ class BiohazardPlugin : InteractionListener {
 
         on(NPCs.HOPS_341, IntType.NPC, "talk-to") { player, node ->
             if (getAttribute(player, GameAttributes.THIRD_VIAL_CORRECT, false)) {
-                dialogue(player) {
-                    player("Hello, how was your journey?")
-                    npc(node.id, "Pretty thirst-inducing actually...")
-                    player("Please tell me that you haven't drunk the contents...")
-                    npc(node.id, FaceAnim.SCARED, "Oh the gods no! What do you take me for?")
-                    npc(node.id, "Here's your vial anyway.")
-                    end {
-                        sendMessage(player, "He gives you the vial of ethenea.")
-                        addItemOrDrop(player, Items.SULPHURIC_BROLINE_417, 1)
-                        removeAttribute(player, GameAttributes.THIRD_VIAL_CORRECT)
-                        player("Thanks, I'll let you get your drink now.")
-                    }
-                }
+                openDialogue(player, HopsDialogue(), node.id)
             } else {
                 sendDialogue(player, "Hops doesn't feel like talking.")
             }
@@ -285,16 +251,12 @@ class BiohazardPlugin : InteractionListener {
                 }
 
                 if (!inEquipment(player, Items.DOCTORS_GOWN_430) || getQuestStage(player, Quests.BIOHAZARD) == 0) {
-                    dialogue(player) {
-                        npc(NPCs.MOURNER_347, "Stay away from there.")
-                        player("Why?")
-                        npc(NPCs.MOURNER_347, "Several mourners are ill with food poisoning, we're waiting for a doctor.")
-                    }
-                } else {
-                    sendNPCDialogue(player, NPCs.MOURNER_347, "In you go dot.")
-                    setQuestStage(player, Quests.BIOHAZARD, 7)
-                    DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
+                    openDialogue(player, MournerDialogue(), NPCs.MOURNER_347)
+                    return@on true
                 }
+                sendNPCDialogue(player, NPCs.MOURNER_347, "In you go dot.")
+                setQuestStage(player, Quests.BIOHAZARD, 7)
+                DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
             } else {
                 DoorActionHandler.handleDoor(player, node.asScenery())
             }
@@ -398,6 +360,70 @@ class BiohazardPlugin : InteractionListener {
                 return@setDest Location(2542, 3331, 0)
             } else {
                 return@setDest Location.create(2541, 3331, 0)
+            }
+        }
+    }
+
+    inner class DaVinciDialogue : DialogueFile() {
+        override fun handle(componentID: Int, buttonID: Int) {
+            when(stage) {
+                0 -> npc("Hello again. I hope your journey was as pleasant as", "mine.").also { stage++ }
+                1 -> player("Well, as they say, it's always sunny in Gielinor.").also { stage++ }
+                2 -> npc("Ok, here it is.").also { stage++ }
+                3 -> {
+                    end()
+                    sendMessage(player!!, "He gives you the vial of ethenea.")
+                    player("Thanks, you've been a big help.")
+                    addItemOrDrop(player!!, Items.ETHENEA_415, 1)
+                    removeAttribute(player!!, GameAttributes.SECOND_VIAL_CORRECT)
+                }
+            }
+        }
+    }
+
+    inner class ChancyDialogue : DialogueFile() {
+        override fun handle(componentID: Int, buttonID: Int) {
+            when(stage) {
+                0 -> player("Hi, thanks for doing that.").also { stage++ }
+                1 -> npc("No problem.").also { stage++ }
+                2 -> npc("Next time give me something more valuable...", "I couldn't get anything for this on the blackmarket.").also { stage++ }
+                3 -> {
+                    end()
+                    player("That was the idea.")
+                    sendMessage(player!!, "He gives you the vial of liquid honey.")
+                    addItemOrDrop(player!!, Items.LIQUID_HONEY_416, 1)
+                    removeAttribute(player!!, GameAttributes.FIRST_VIAL_CORRECT)
+                }
+            }
+        }
+    }
+
+    inner class HopsDialogue : DialogueFile() {
+        override fun handle(componentID: Int, buttonID: Int) {
+            when(stage) {
+                0 -> player("Hello, how was your journey?").also { stage++ }
+                1 -> npc("Pretty thirst-inducing actually...").also { stage++ }
+                2 -> player("Please tell me that you haven't drunk the contents...").also { stage++ }
+                3 -> npc(FaceAnim.SCARED, "Oh the gods no! What do you take me for?").also { stage++ }
+                4 -> npc("Here's your vial anyway.").also { stage++ }
+                5 -> {
+                    end()
+                    sendMessage(player!!, "He gives you the vial of ethenea.")
+                    addItemOrDrop(player!!, Items.SULPHURIC_BROLINE_417, 1)
+                    removeAttribute(player!!, GameAttributes.THIRD_VIAL_CORRECT)
+                    player("Thanks, I'll let you get your drink now.")
+                }
+            }
+        }
+    }
+
+    inner class MournerDialogue : DialogueFile() {
+        override fun handle(componentID: Int, buttonID: Int) {
+            when(stage) {
+                0 -> npc("Stay away from there.").also { stage++ }
+                1 -> player("Why?").also { stage++ }
+                2 -> npc("Several mourners are ill with food poisoning, we're waiting for a doctor.").also { stage++ }
+                3 -> end()
             }
         }
     }

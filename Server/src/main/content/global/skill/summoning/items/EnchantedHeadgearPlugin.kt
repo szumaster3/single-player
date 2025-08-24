@@ -2,7 +2,6 @@ package content.global.skill.summoning.items
 
 import core.api.*
 import core.game.dialogue.FaceAnim
-import core.game.dialogue.SequenceDialogue.dialogue
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.player.Player
@@ -149,9 +148,9 @@ class EnchantedHeadgearPlugin : InteractionListener {
                     EnchantedHeadgear.HeadgearType.DEFAULT -> {
                         removeItem(player, item.id)
                         addItem(player, headgear.enchantedItem.id)
-                        dialogue(player) {
-                            npc(NPCs.PIKKUPSTIX_6971, FaceAnim.NEUTRAL, "Good choice. Here you go, you can now store spells on", "it.")
-                            player(FaceAnim.CALM_TALK, "Excellent. Thank you!")
+                        sendNPCDialogueLines(player, NPCs.PIKKUPSTIX_6971, FaceAnim.NEUTRAL, false, "Good choice. Here you go, you can now store spells on", "it.")
+                        runTask(player, 3) {
+                            sendPlayerDialogue(player, "Excellent. Thank you!", FaceAnim.CALM_TALK)
                         }
                         return true
                     }

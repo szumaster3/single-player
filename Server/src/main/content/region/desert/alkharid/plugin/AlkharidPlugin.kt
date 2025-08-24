@@ -3,8 +3,8 @@ package content.region.desert.alkharid.plugin
 import content.region.desert.alkharid.dialogue.AlKharidHealDialogue
 import content.region.desert.alkharid.dialogue.BorderGuardDialogue
 import core.api.*
+import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
-import core.game.dialogue.SequenceDialogue.dialogue
 import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
@@ -87,15 +87,28 @@ class AlkharidPlugin : InteractionListener {
                 player.inventory.containItems(Items.AL_KHARID_FLYER_7922) -> {
                     sendNPCDialogue(player, node.id, "Are you trying to be funny or has age turned your brain to mush? You already have a flyer!", FaceAnim.CHILD_SUSPICIOUS)
                 }
-                addItem(player, Items.AL_KHARID_FLYER_7922) -> {
-                    dialogue(player) {
-                        npc(node.id, FaceAnim.CHILD_NORMAL, "Here! Take one and let me get back to work.")
-                        npc(node.id, FaceAnim.CHILD_THINKING, "I still have hundreds of these flyers to hand out. I wonder if Ali would notice if I quietly dumped them somewhere?")
+                else -> {
+                    if(freeSlots(player) == 0) {
+                        return@on true
+                    } else {
+                        openDialogue(player, LeafletDialogue(), LEAFLET_DROPPER)
                     }
                 }
-                else -> return@on false
             }
             return@on true
+        }
+    }
+
+    inner class LeafletDialogue : DialogueFile() {
+        override fun handle(componentID: Int, buttonID: Int) {
+            when(stage) {
+                0 -> npcl(FaceAnim.CHILD_NORMAL, "Here! Take one and let me get back to work.").also { stage++ }
+                1 -> npcl(FaceAnim.CHILD_THINKING, "I still have hundreds of these flyers to hand out. I wonder if Ali would notice if I quietly dumped them somewhere?").also { stage++ }
+                2 -> {
+                    end()
+                    addItem(player!!, Items.AL_KHARID_FLYER_7922)
+                }
+            }
         }
     }
 

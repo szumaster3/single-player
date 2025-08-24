@@ -2,8 +2,8 @@ package content.region.other.dorgeshuun.plugin
 
 import content.region.other.dorgeshuun.dialogue.CaveGoblinsDialogueFile
 import core.api.*
+import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
-import core.game.dialogue.SequenceDialogue.dialogue
 import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
@@ -64,18 +64,7 @@ class DorgeshuunPlugin : InteractionListener {
                 sendMessage(player, "Nothing interesting happens.")
                 return@onUseWith true
             }
-
-            dialogue(player) {
-                player(FaceAnim.HALF_ASKING, "Is this your brooch?")
-                npc(npc.id, FaceAnim.OLD_NORMAL,
-                    "Yes! I thought I'd lost it. Thank you. Have one of these",
-                    "helmets. It will be useful if you want to work in the mine."
-                )
-                end {
-                    addItemOrDrop(player, randomReward, 1)
-                    sendItemDialogue(player, randomReward, "Mistag hands you a Mining helmet.")
-                }
-            }
+            openDialogue(player, MistagDialogue(randomReward), npc)
             return@onUseWith true
         }
 
@@ -110,6 +99,40 @@ class DorgeshuunPlugin : InteractionListener {
         on(DOORS, IntType.SCENERY, "open") { player, node ->
             DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
             return@on true
+        }
+    }
+
+    /**
+     * Represents mistag dialogue (Lost brooch reward)
+     */
+    inner class MistagDialogue(private val randomReward: Int) : DialogueFile() {
+
+        override fun handle(componentID: Int, buttonID: Int) {
+            when (stage) {
+                0 -> {
+                    player(
+                        FaceAnim.HALF_ASKING,
+                        "Is this your brooch?"
+                    )
+                    stage++
+                }
+
+                1 -> {
+                    npc(
+                        FaceAnim.OLD_NORMAL,
+                        "Yes! I thought I'd lost it. Thank you. Have one of these",
+                        "helmets. It will be useful if you want to work in the mine."
+                    )
+                    stage++
+                }
+
+                2 -> {
+                    end()
+                        addItemOrDrop(player!!, randomReward, 1)
+                        sendItemDialogue(player!!, randomReward, "Mistag hands you a Mining helmet.")
+                    }
+                }
+            }
         }
     }
 }

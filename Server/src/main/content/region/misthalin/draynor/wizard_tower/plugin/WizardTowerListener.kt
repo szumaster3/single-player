@@ -3,7 +3,6 @@ package content.region.misthalin.draynor.wizard_tower.plugin
 import content.global.travel.EssenceTeleport
 import core.api.*
 import core.api.hasRequirement
-import core.game.dialogue.SequenceDialogue.dialogue
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.interaction.QueueStrength
@@ -17,8 +16,6 @@ import shared.consts.*
 class WizardTowerListener : InteractionListener {
     private val WIZARD_BOOKCASE = intArrayOf(Scenery.BOOKCASE_12539, Scenery.BOOKCASE_12540)
     private val WIZARD_PORTAL = intArrayOf(Scenery.MAGIC_PORTAL_2156, Scenery.MAGIC_PORTAL_2157, Scenery.MAGIC_PORTAL_2158)
-    private val booksContent = arrayOf("Living with a Wizard Husband - a Housewife's Story", "Wind Strike for Beginners", "So you think you're a Mage? Volume 28", "101 Ways to Impress your Mates with Magic", "The Life & Times of a Thingummywut by Traiborn the Wizard", "How to become the Ultimate Wizard of the Universe", "The Dark Arts of Magical Wands")
-    private val bookName = booksContent[RandomFunction.random(booksContent.size)]
 
     override fun defineListeners() {
         on(NPCs.SEDRIDOR_300, IntType.NPC, "teleport") { player, node ->
@@ -94,11 +91,15 @@ class WizardTowerListener : InteractionListener {
         }
 
         on(WIZARD_BOOKCASE, IntType.SCENERY, "search") { player, _ ->
-            dialogue(player) {
-                message("There's a large selection of books, the majority of which look fairly", "old. Some very strange names... You pick one at random:")
-                message(bookName)
-                end {
-                    sendPlayerDialogue(player, "Interesting...")
+            val booksContent = arrayOf("Living with a Wizard Husband - a Housewife's Story", "Wind Strike for Beginners", "So you think you're a Mage? Volume 28", "101 Ways to Impress your Mates with Magic", "The Life & Times of a Thingummywut by Traiborn the Wizard", "How to become the Ultimate Wizard of the Universe", "The Dark Arts of Magical Wands")
+            val bookName = booksContent[RandomFunction.random(booksContent.size)]
+            sendDialogueLines(player, "There's a large selection of books, the majority of which look fairly", "old. Some very strange names... You pick one at random:")
+            addDialogueAction(player) { p, button ->
+                if(button > 0) {
+                    sendDialogue(player, bookName.toString())
+                    runTask(player, 3) {
+                        sendPlayerDialogue(player, "Interesting...")
+                    }
                 }
             }
             return@on true

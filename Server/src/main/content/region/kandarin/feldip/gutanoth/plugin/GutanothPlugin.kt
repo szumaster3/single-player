@@ -7,7 +7,6 @@ import content.region.kandarin.feldip.jiggig.quest.zogre.plugin.ZogreUtils
 import core.api.*
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
-import core.game.dialogue.SequenceDialogue.dialogue
 import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
@@ -499,9 +498,9 @@ class GutanothPlugin : InteractionListener {
         }
 
         on(TORN_PAGE, IntType.ITEM, "read") { player, _ ->
-            dialogue(player) {
-                message("You don't manage to understand all of it as there is only a half page here. But it seems the spell was used to place a curse on an area and for all time raise the dead.")
-                message("If you look very carefully, you see what looks like a guild emblem.")
+            sendDialogue(player, "You don't manage to understand all of it as there is only a half page here. But it seems the spell was used to place a curse on an area and for all time raise the dead.")
+            runTask(player, 3) {
+                sendDialogue(player, "If you look very carefully, you see what looks like a guild emblem.")
             }
             return@on true
         }

@@ -10,12 +10,8 @@ import core.api.getQuestStage
 import core.api.isQuestComplete
 import core.api.isQuestInProgress
 import core.api.setQuestStage
+import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
-import core.game.dialogue.SequenceDialogue.itemLine
-import core.game.dialogue.SequenceDialogue.npcLine
-import core.game.dialogue.SequenceDialogue.options
-import core.game.dialogue.SequenceDialogue.playerLine
-import core.game.dialogue.SequenceDialogue.sendSequenceDialogue
 import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
@@ -472,18 +468,7 @@ class PlagueCityPlugin : InteractionListener {
                 sendNPCDialogue(player, npc.id, "Go away. We don't want any.", FaceAnim.FRIENDLY)
                 return@on true
             }
-
-            sendSequenceDialogue(player,
-                playerLine(FaceAnim.FRIENDLY, "I'm a friend of Jethick's, I have come to return a book he borrowed."),
-                npcLine(npc, FaceAnim.HALF_THINKING, "Oh... why didn't you say, come in then."),
-                itemLine(Items.BOOK_1509, "You hand the book to Ted as you enter."),
-                onComplete = {
-                    removeItem(player, Items.BOOK_1509)
-                    DoorActionHandler.handleAutowalkDoor(player, getScenery(2531, 3328, 0)!!)
-                    setQuestStage(player, Quests.PLAGUE_CITY, 9)
-                    sendNPCDialogue(player, npc.id, "Thanks, I've been missing that.", FaceAnim.NEUTRAL)
-                }
-            )
+            openDialogue(player, TedDialogue(), npc)
             return@on true
         }
 
@@ -542,27 +527,47 @@ class PlagueCityPlugin : InteractionListener {
             }
             val npc = NPC(NPCs.ELENA_3215)
             sendMessage(player, "The door is locked.")
-            sendSequenceDialogue(player,
-                npcLine(npc, FaceAnim.CRYING, "Hey get me out of here please!"),
-                playerLine(FaceAnim.FRIENDLY, "I would do but I don't have a key."),
-                npcLine(npc, FaceAnim.SAD, "I think there may be one around somewhere. I'm sure I heard them stashing it somewhere."),
-                options("What do you say?", "Have you caught the plague?", "Okay, I'll look for it.") { op ->
-                    when (op) {
-                        1 -> {
-                            sendSequenceDialogue(player,
-                                playerLine(FaceAnim.FRIENDLY, "Have you caught the plague?"),
-                                npcLine(npc, FaceAnim.HALF_WORRIED, "No, I have none of the symptoms."),
-                                playerLine(FaceAnim.THINKING, "Strange, I was told this house was plague infected."),
-                                playerLine(FaceAnim.THINKING, "I suppose that was a cover up by the kidnappers.")
-                            )
-                        }
-                        2 -> {
-                            sendSequenceDialogue(player, playerLine(FaceAnim.FRIENDLY, "Okay, I'll look for it."))
-                        }
-                    }
-                }
-            )
+            openDialogue(player, ElenaDialogue() , npc)
             return@on true
+        }
+    }
+
+    inner class ElenaDialogue : DialogueFile() {
+        override fun handle(componentID: Int, buttonID: Int) {
+            when (stage) {
+                0 -> npcl(FaceAnim.CRYING, "Hey get me out of here please!").also { stage++ }
+                1 -> playerl(FaceAnim.FRIENDLY, "I would do but I don't have a key.").also { stage++ }
+                2 -> npcl(FaceAnim.SAD, "I think there may be one around somewhere. I'm sure I heard them stashing it somewhere.").also { stage++ }
+                3 -> options("What do you say?", "Have you caught the plague?", "Okay, I'll look for it.").also { stage++ }
+                4 -> when(buttonID) {
+                    1 -> {
+                        playerl(FaceAnim.FRIENDLY, "Have you caught the plague?")
+                        stage = 6
+                    }
+                    2 -> playerl(FaceAnim.FRIENDLY, "Okay, I'll look for it.").also { stage++ }
+                }
+                5 -> end()
+                6 -> npcl(FaceAnim.HALF_WORRIED, "No, I have none of the symptoms.").also { stage++ }
+                7 -> playerl(FaceAnim.THINKING, "Strange, I was told this house was plague infected.").also { stage++ }
+                8 -> playerl(FaceAnim.THINKING, "I suppose that was a cover up by the kidnappers.").also { stage = 5 }
+            }
+        }
+    }
+
+    inner class TedDialogue : DialogueFile() {
+        override fun handle(componentID: Int, buttonID: Int) {
+            when (stage) {
+                0 -> playerl(FaceAnim.FRIENDLY, "I'm a friend of Jethick's, I have come to return a book he borrowed.").also { stage++ }
+                1 -> npcl(FaceAnim.HALF_THINKING, "Oh... why didn't you say, come in then.").also { stage++ }
+                2 -> sendItemDialogue(player!!, Items.BOOK_1509, "You hand the book to Ted as you enter.").also { stage++ }
+                3 -> {
+                    end()
+                    removeItem(player!!, Items.BOOK_1509)
+                    DoorActionHandler.handleAutowalkDoor(player!!, getScenery(2531, 3328, 0)!!)
+                    setQuestStage(player!!, Quests.PLAGUE_CITY, 9)
+                    sendNPCDialogue(player!!, npc!!.id, "Thanks, I've been missing that.", FaceAnim.NEUTRAL)
+                }
+            }
         }
     }
 

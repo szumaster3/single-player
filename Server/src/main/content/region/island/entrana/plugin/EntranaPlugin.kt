@@ -3,8 +3,8 @@ package content.region.island.entrana.plugin
 import core.api.*
 import core.cache.def.impl.ItemDefinition
 import core.game.bots.AIPlayer
+import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
-import core.game.dialogue.SequenceDialogue.dialogue
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.Entity
@@ -102,25 +102,14 @@ class EntranaPlugin : InteractionListener, MapArea {
         }
 
         on(NPCs.FRINCOS_578, IntType.NPC, "talk-to") { player, node ->
-            dialogue(player) {
-                npc(node.id, FaceAnim.HALF_GUILTY, "Hello, how can I help you?")
-                options(null, "What are you selling?", "You can't; I'm beyond help.", "I'm okay, thank you.") { selected ->
-                    when (selected) {
-                        1 -> player(FaceAnim.HALF_GUILTY, "What are you selling?").also {
-                            openNpcShop(player, node.id)
-                        }
-                        2 -> player(FaceAnim.HALF_GUILTY, "You can't; I'm beyond help.")
-                        3 -> player(FaceAnim.HALF_GUILTY, "I'm okay, thank you.")
-                    }
-                }
-            }
+            openDialogue(player, FrincosDialogue(), node.id)
             return@on true
         }
 
         on(NPCs.CRONE_217, IntType.NPC, "talk-to") { player, node ->
-            dialogue(player) {
-                npc(node.id, FaceAnim.HALF_GUILTY, "Hello deary.")
-                player(FaceAnim.HALF_GUILTY, "Um... hello.")
+            sendNPCDialogue(player, node.id, "Hello deary.",  FaceAnim.HALF_GUILTY)
+            runTask(player, 3) {
+                sendPlayerDialogue(player,  "Um... hello.", FaceAnim.HALF_GUILTY)
             }
             return@on true
         }
@@ -162,6 +151,28 @@ class EntranaPlugin : InteractionListener, MapArea {
                     }
                 },
             )
+        }
+    }
+
+    inner class FrincosDialogue : DialogueFile() {
+        override fun handle(componentID: Int, buttonID: Int) {
+            when (stage) {
+                0 -> npc(FaceAnim.HALF_GUILTY, "Hello, how can I help you?").also { stage++ }
+                1 -> options(
+                    "What are you selling?",
+                    "You can't; I'm beyond help.",
+                    "I'm okay, thank you."
+                ).also { stage++ }
+                2 -> when (buttonID) {
+                    1 -> player(FaceAnim.HALF_GUILTY, "What are you selling?").also {
+                        end()
+                        openNpcShop(player!!, NPCs.FRINCOS_578)
+                    }
+                    2 -> player(FaceAnim.HALF_GUILTY, "You can't; I'm beyond help.").also { stage++ }
+                    3 -> player(FaceAnim.HALF_GUILTY, "I'm okay, thank you.").also { stage++ }
+                }
+                3 -> end()
+            }
         }
     }
 }
