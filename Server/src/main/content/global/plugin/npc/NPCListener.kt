@@ -93,7 +93,7 @@ class NPCListener : InteractionListener {
             if (AnagramScroll.handleClue(player, npc)) return@on true
             val clueScroll = ChallengeClueScroll.getClueForNpc(player, npc)
             if (clueScroll != null) {
-                ChallengeClueScroll.handleNPC(player, npc, clueScroll)
+                ChallengeClueScroll.Companion.ChallengeDialogue(player, npc, clueScroll)
                 return@on true
             }
 

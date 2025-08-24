@@ -60,7 +60,12 @@ class DorgeshuunPlugin : InteractionListener {
         onUseWith(IntType.NPC, Items.BROOCH_5008, NPCs.MISTAG_2084) { player, used, npc ->
             val randomReward = arrayOf(Items.MINING_HELMET_5013, Items.MINING_HELMET_5014).random()
 
-            if (!isQuestComplete(player, Quests.THE_LOST_TRIBE) || !removeItem(player, used.asItem(), Container.INVENTORY)) {
+            if (!isQuestComplete(player, Quests.THE_LOST_TRIBE) || !removeItem(
+                    player,
+                    used.asItem(),
+                    Container.INVENTORY
+                )
+            ) {
                 sendMessage(player, "Nothing interesting happens.")
                 return@onUseWith true
             }
@@ -128,9 +133,8 @@ class DorgeshuunPlugin : InteractionListener {
 
                 2 -> {
                     end()
-                        addItemOrDrop(player!!, randomReward, 1)
-                        sendItemDialogue(player!!, randomReward, "Mistag hands you a Mining helmet.")
-                    }
+                    addItemOrDrop(player!!, randomReward, 1)
+                    sendItemDialogue(player!!, randomReward, "Mistag hands you a Mining helmet.")
                 }
             }
         }
