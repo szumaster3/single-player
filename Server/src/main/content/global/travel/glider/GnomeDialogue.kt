@@ -11,11 +11,11 @@ class GnomeDialogue : DialogueFile() {
 
     override fun handle(componentID: Int, buttonID: Int) {
         when(stage) {
-            0 -> npc(FaceAnim.OLD_DEFAULT, "What do you want human?").also { stage++ }
-            1 -> player(FaceAnim.HALF_GUILTY, "May you fly me somewhere on your glider?").also { stage++ }
+            0 -> npcl(FaceAnim.OLD_DEFAULT, "What do you want human?").also { stage++ }
+            1 -> playerl(FaceAnim.HALF_GUILTY, "May you fly me somewhere on your glider?").also { stage++ }
             2 -> if (!isQuestComplete(player!!, Quests.THE_GRAND_TREE)) {
                 end()
-                npc(FaceAnim.OLD_ANGRY3, "I only fly friends of the gnomes!")
+                npcl(FaceAnim.OLD_ANGRY3, "I only fly friends of the gnomes!")
             } else {
                 npc(FaceAnim.OLD_DEFAULT, "If you wish.")
                 stage++

@@ -46,14 +46,14 @@ class ApeAtollPlugin : InteractionListener {
             val outside = true
             val cornerGuard = false
             when(stage) {
-                0 -> npc(FaceAnim.OLD_ANGRY1, "Grrr ... What do you want?")
-                1 -> player(FaceAnim.ASKING, "I must speak with Awowogei on a subject of great import.")
-                2 -> npc(FaceAnim.OLD_NORMAL, "Only the Captain of the Monkey Guard or those he authorizes may enter this building. You will need his permission to enter.")
-                3 -> player(FaceAnim.ASKING, "Who is the Captain of the Monkey Guard?")
-                4 -> player(FaceAnim.ASKING, "He goes by the name of Kruk.")
+                0 -> npcl(FaceAnim.OLD_ANGRY1, "Grrr ... What do you want?")
+                1 -> playerl(FaceAnim.ASKING, "I must speak with Awowogei on a subject of great import.")
+                2 -> npcl(FaceAnim.OLD_NORMAL, "Only the Captain of the Monkey Guard or those he authorizes may enter this building. You will need his permission to enter.")
+                3 -> playerl(FaceAnim.ASKING, "Who is the Captain of the Monkey Guard?")
+                4 -> playerl(FaceAnim.ASKING, "He goes by the name of Kruk.")
 
-                5 -> npc(FaceAnim.OLD_ANGRY1, "Grrr ... What do you want?")
-                6 -> player(FaceAnim.ASKING, "I would like to leave now.")
+                5 -> npcl(FaceAnim.OLD_ANGRY1, "Grrr ... What do you want?")
+                6 -> playerl(FaceAnim.ASKING, "I would like to leave now.")
                 7 -> npc(FaceAnim.OLD_NORMAL, "As you wish.")
                 else -> {
                     npc(FaceAnim.OLD_ANGRY1, "Move!")

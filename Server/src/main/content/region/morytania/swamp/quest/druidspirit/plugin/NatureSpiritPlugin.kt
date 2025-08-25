@@ -296,7 +296,7 @@ class NatureSpiritPlugin : InteractionListener {
         override fun handle(componentID: Int, buttonID: Int) {
             when (stage) {
                 0 -> {
-                    npc(
+                    npcl(
                         NPCs.FILLIMAN_TARLOCK_1050,
                         FaceAnim.NEUTRAL,
                         "Well, hello there again. I was just enjoying the grotto. Many thanks for your help, I couldn't have become a Spirit of nature without you."
@@ -305,7 +305,7 @@ class NatureSpiritPlugin : InteractionListener {
                 }
 
                 1 -> {
-                    npc(
+                    npcl(
                         NPCs.FILLIMAN_TARLOCK_1050,
                         FaceAnim.NEUTRAL,
                         "I must complete the transformation now. Just stand there and watch the show, apparently it's quite good!"

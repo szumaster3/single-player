@@ -822,36 +822,22 @@ class WatchTowerPlugin : InteractionListener {
         override fun handle(componentID: Int, buttonID: Int) {
             when (stage) {
                 0 -> {
-                    npc(
-                        FaceAnim.OLD_DEFAULT,
-                        "Oi! Little thing. If you want to cross here, you must",
-                        "pay me 20 gold pieces first!"
-                    )
+                    npc(FaceAnim.OLD_DEFAULT, "Oi! Little thing. If you want to cross here, you must", "pay me 20 gold pieces first!")
                     stage++
                 }
 
                 1 -> {
-                    player(
-                        FaceAnim.HALF_ASKING,
-                        "You want me to give you 20 gold pieces to let me",
-                        "jump off a bridge?"
-                    )
+                    player(FaceAnim.HALF_ASKING, "You want me to give you 20 gold pieces to let me", "jump off a bridge?")
                     stage++
                 }
 
                 2 -> {
-                    npc(
-                        FaceAnim.OLD_DEFAULT,
-                        "That's what I said, like it or lump it."
-                    )
+                    npcl(FaceAnim.OLD_DEFAULT, "That's what I said, like it or lump it.")
                     stage++
                 }
 
                 3 -> {
-                    options(
-                        "Okay, I'll pay it.",
-                        "Forget it, I'm not paying."
-                    )
+                    options("Okay, I'll pay it.", "Forget it, I'm not paying.")
                     stage++
                 }
 
@@ -860,29 +846,20 @@ class WatchTowerPlugin : InteractionListener {
                         // Pay attempt
                         if (inInventory(player!!, Items.COINS_995, 20)) {
                             removeItem(player!!, Item(Items.COINS_995, 20))
-                            player(
-                                FaceAnim.HALF_ASKING,
-                                "Okay, I'll pay it."
-                            )
+                            player(FaceAnim.HALF_ASKING, "Okay, I'll pay it.")
                             stage = 5
                         } else {
-                            npc(
-                                FaceAnim.OLD_DEFAULT,
-                                "You don't have enough gold pieces!"
-                            )
+                            npcl(FaceAnim.OLD_DEFAULT, "You don't have enough gold pieces!")
                             stage = END_DIALOGUE
                         }
                     } else if (buttonID == 2) {
-                        player(
-                            FaceAnim.HALF_ASKING,
-                            "Forget it, I'm not paying."
-                        )
+                        playerl(FaceAnim.HALF_ASKING, "Forget it, I'm not paying.")
                         stage = 6
                     }
                 }
 
                 5 -> {
-                    npc(
+                    npcl(
                         FaceAnim.OLD_DEFAULT,
                         "A wise choice, little thing."
                     )
@@ -892,7 +869,7 @@ class WatchTowerPlugin : InteractionListener {
                 6 -> {
                     if (buttonID == 2) {
                         end()
-                        npc(FaceAnim.OLD_DEFAULT, "In that case you're not crossing.")
+                        npcl(FaceAnim.OLD_DEFAULT, "In that case you're not crossing.")
                         sendMessage(player!!, "The guard blocks your path.")
                     } else {
                         end ()

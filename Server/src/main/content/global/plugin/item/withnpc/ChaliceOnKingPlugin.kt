@@ -29,9 +29,9 @@ class ChaliceOnKingPlugin : InteractionListener {
             when(stage) {
                 0 -> npc(FaceAnim.SAD, "You have chosen poorly.").also { stage++ }
                 1 -> player(FaceAnim.ANNOYED, "Excuse me?").also { stage++ }
-                2 -> npc(FaceAnim.FRIENDLY, "Sorry, I meant to say 'thank you'. Most refreshing.").also { stage++ }
-                3 -> player(FaceAnim.DISGUSTED_HEAD_SHAKE, "Are you sure that stuff is safe to drink?").also { stage++ }
-                4 -> npc(FaceAnim.HAPPY, "Oh yes, Stankers' creations may be dangerous for those with weak constitutions, but, personally. I find them rather invigorating.").also { stage++ }
+                2 -> npcl(FaceAnim.FRIENDLY, "Sorry, I meant to say 'thank you'. Most refreshing.").also { stage++ }
+                3 -> playerl(FaceAnim.DISGUSTED_HEAD_SHAKE, "Are you sure that stuff is safe to drink?").also { stage++ }
+                4 -> npcl(FaceAnim.HAPPY, "Oh yes, Stankers' creations may be dangerous for those with weak constitutions, but, personally. I find them rather invigorating.").also { stage++ }
                 5 -> {
                     end()
                     if(!removeItem(player!!, Items.POISON_CHALICE_197, Container.INVENTORY)) return

@@ -24,7 +24,7 @@ class JarvaldTravelDialogue : DialogueFile() {
                 end()
                 FremennikShipHelper.sail(player!!, Travel.WATERBIRTH_TO_RELLEKKA)
             } else if (!isQuestComplete(player!!, Quests.THE_FREMENNIK_TRIALS)) {
-                npc(FaceAnim.HALF_ASKING, "So do you have the 1000 coins for my service, and are you ready to leave now?")
+                npcl(FaceAnim.HALF_ASKING, "So do you have the 1000 coins for my service, and are you ready to leave now?")
                 stage++
             }
             2 -> {

@@ -368,7 +368,7 @@ class BiohazardPlugin : InteractionListener {
         override fun handle(componentID: Int, buttonID: Int) {
             when(stage) {
                 0 -> npc("Hello again. I hope your journey was as pleasant as", "mine.").also { stage++ }
-                1 -> player("Well, as they say, it's always sunny in Gielinor.").also { stage++ }
+                1 -> playerl("Well, as they say, it's always sunny in Gielinor.").also { stage++ }
                 2 -> npc("Ok, here it is.").also { stage++ }
                 3 -> {
                     end()

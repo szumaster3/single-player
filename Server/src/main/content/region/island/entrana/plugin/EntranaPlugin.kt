@@ -157,19 +157,19 @@ class EntranaPlugin : InteractionListener, MapArea {
     inner class FrincosDialogue : DialogueFile() {
         override fun handle(componentID: Int, buttonID: Int) {
             when (stage) {
-                0 -> npc(FaceAnim.HALF_GUILTY, "Hello, how can I help you?").also { stage++ }
+                0 -> npcl(FaceAnim.HALF_GUILTY, "Hello, how can I help you?").also { stage++ }
                 1 -> options(
                     "What are you selling?",
                     "You can't; I'm beyond help.",
                     "I'm okay, thank you."
                 ).also { stage++ }
                 2 -> when (buttonID) {
-                    1 -> player(FaceAnim.HALF_GUILTY, "What are you selling?").also {
+                    1 -> playerl(FaceAnim.HALF_GUILTY, "What are you selling?").also {
                         end()
                         openNpcShop(player!!, NPCs.FRINCOS_578)
                     }
-                    2 -> player(FaceAnim.HALF_GUILTY, "You can't; I'm beyond help.").also { stage++ }
-                    3 -> player(FaceAnim.HALF_GUILTY, "I'm okay, thank you.").also { stage++ }
+                    2 -> playerl(FaceAnim.HALF_GUILTY, "You can't; I'm beyond help.").also { stage++ }
+                    3 -> playerl(FaceAnim.HALF_GUILTY, "I'm okay, thank you.").also { stage++ }
                 }
                 3 -> end()
             }

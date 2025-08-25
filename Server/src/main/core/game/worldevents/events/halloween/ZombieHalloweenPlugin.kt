@@ -29,18 +29,18 @@ class ZombieHalloweenPlugin : InteractionListener {
                 2 -> npc("Who? Me?").also { stage++ }
                 3 -> player("Yes, you!").also { stage++ }
                 4 -> npc("Give me a moment...I can't move that fast.").also { stage++ }
-                5 -> player("Why not?").also { stage++ }
-                6 -> npc("I used to be a magician's assistant until the accident...").also { stage++ }
-                7 -> player("What accident?").also { stage++ }
+                5 -> playerl("Why not?").also { stage++ }
+                6 -> npcl("I used to be a magician's assistant until the accident...").also { stage++ }
+                7 -> playerl("What accident?").also { stage++ }
                 8 -> npc("Looook...").also { stage++ }
 
                 9 -> {
                     end()
                 }
 
-                10 -> player("Zombie, it has come to my attention that you are a fool, a nitwit if you will.").also { stage++ }
-                11 -> player("I propose that your head, instead of being filled with the brains you so crave, is instead filled with a mixture of crushed lemons and kelp!").also { stage++ }
-                12 -> npc("Oh noooo..I'd best take it off then...").also { stage++ }
+                10 -> playerl("Zombie, it has come to my attention that you are a fool, a nitwit if you will.").also { stage++ }
+                11 -> playerl("I propose that your head, instead of being filled with the brains you so crave, is instead filled with a mixture of crushed lemons and kelp!").also { stage++ }
+                12 -> npcl("Oh noooo..I'd best take it off then...").also { stage++ }
                 13 -> player("What?").also { stage = 9 }
 
                 14 -> player("Oogaboogabooga!").also { stage++ }

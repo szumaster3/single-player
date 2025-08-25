@@ -74,7 +74,7 @@ class TaxidermistPlugin : InteractionListener {
                 }
 
                 2 -> {
-                    npc(
+                    npcl(
                         FaceAnim.OLD_DEFAULT,
                         "I can preserve that for you for ${stuffed?.price} coins."
                     )
@@ -92,13 +92,13 @@ class TaxidermistPlugin : InteractionListener {
                 4 -> {
                     if (buttonID == 1) {
                         if (stuffed!!.dropId != used.id) {
-                            npc(
+                            npcl(
                                 FaceAnim.OLD_DEFAULT,
                                 "Don't be silly, I can't preserve that!"
                             )
                             stage = END_DIALOGUE
-                        } else if (!inInventory(player!!, Items.COINS_995, stuffed!!.price)) {
-                            npc(
+                        } else if (!inInventory(player!!, Items.COINS_995, stuffed.price)) {
+                            npcl(
                                 FaceAnim.OLD_DEFAULT,
                                 "You don't have enough coins in order to do that."
                             )
@@ -113,7 +113,7 @@ class TaxidermistPlugin : InteractionListener {
                             stage = END_DIALOGUE
                         }
                     } else if (buttonID == 2) {
-                        npc(
+                        npcl(
                             FaceAnim.OLD_DEFAULT,
                             "All right, come back if you change your mind, eh?"
                         )
