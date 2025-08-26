@@ -61014,6 +61014,11 @@
     "lifepoints": "42",
     "strength_level": "1",
     "id": "3814",
+    "start_gfx": "19",
+    "start_height": "42",
+    "prj_height": "40",
+    "end_height": "5",
+    "projectile": "10",
     "aggressive": "true",
     "range_level": "30",
     "attack_level": "1"
