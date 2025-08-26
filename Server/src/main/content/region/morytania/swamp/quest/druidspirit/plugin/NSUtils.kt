@@ -88,7 +88,7 @@ object NSUtils {
     fun castBloom(player: Player): Boolean {
         var success = false
         if (player.skills.prayerPoints < 1) {
-            sendMessage(player, "You don't have enough prayer points to do this.")
+            sendMessage(player, "You need to recharge your Prayer at an altar.")
             return false
         }
         lock(player, 1)

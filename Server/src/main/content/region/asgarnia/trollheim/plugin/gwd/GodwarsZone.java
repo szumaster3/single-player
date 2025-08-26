@@ -214,7 +214,7 @@ public final class GodwarsZone extends MapZone implements Plugin<java.lang.Objec
             return;
         }
         if (player.getSkills().getPrayerPoints() >= player.getSkills().getStaticLevel(5)) {
-            player.getPacketDispatch().sendMessage("You already have full prayer points.");
+            player.getPacketDispatch().sendMessage("You already have full Prayer points.");
             return;
         }
         player.lock(2);

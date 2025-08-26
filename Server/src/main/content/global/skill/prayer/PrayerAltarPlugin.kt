@@ -50,7 +50,7 @@ class PrayerAltarPlugin : InteractionListener {
         val prayerLevel = getStatLevel(player, Skills.PRAYER).plus(if (node.id in BOOSTED_ALTAR) 2 else 0)
 
         if (player.skills.prayerPoints >= prayerLevel.toDouble()) {
-            sendMessage(player, "You already have full prayer points.")
+            sendMessage(player, "You already have full Prayer points.")
             return false
         }
 

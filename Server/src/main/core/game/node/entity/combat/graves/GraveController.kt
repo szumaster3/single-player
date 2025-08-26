@@ -112,7 +112,7 @@ class GraveController : PersistWorld, TickListener, InteractionListener, Command
         val blessAmount = min(60, player.skills.prayerPoints.toInt() - 10)
 
         if (blessAmount <= 0) {
-            sendMessage(player, "You do not have enough prayer points to do that.")
+            sendMessage(player, "You need to recharge your Prayer at an altar.")
             return true
         }
 
@@ -143,7 +143,7 @@ class GraveController : PersistWorld, TickListener, InteractionListener, Command
         }
 
         if (player.skills.prayerPoints < 1.0) {
-            sendMessage(player, "You do not have enough prayer points to do that.")
+            sendMessage(player, "You need to recharge your Prayer at an altar.")
             return true
         }
 

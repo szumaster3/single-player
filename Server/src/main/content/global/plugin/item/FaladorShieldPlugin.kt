@@ -62,7 +62,7 @@ class FaladorShieldPlugin : InteractionListener {
                                     "/save:diary:falador:shield-restore-time",
                                     System.currentTimeMillis() + TimeUnit.DAYS.toMillis(1),
                                 )
-                                sendMessage(player, "You restore ${if (level < 2) "some" else "your"} prayer points.")
+                                sendMessage(player, "You restore ${if (level < 2) "some" else "your"} Prayer points.")
                                 effect.activate(player)
                             }
                         }

@@ -40,7 +40,7 @@ class GodBookPlugin : InteractionListener {
             if (getStatLevel(player, Skills.PRAYER) < 50) {
                 sendMessage(player, "You need a Prayer level of at least 50 in order to do this.")
             } else if (player.skills.prayerPoints < 4) {
-                sendMessage(player, "You need at least 4 prayer points in order to do this.")
+                sendMessage(player, "You need at least 4 Prayer points in order to do this.")
             } else {
                 sendMessage(player, "You bless the ${node.asItem().name.lowercase()}.")
                 player.skills.decrementPrayerPoints(4.0)
