@@ -147,7 +147,7 @@ open class SkillDialogueHandler(
             ) {
                 val item = handler.data[0] as Item
                 sendItemZoomOnInterface(player, Components.SKILL_MULTI1_SMALL_582, 2, item.id, 160)
-                sendString(player, "<br><br><br><br>${item.name}", 582, 5)
+                sendString(player, "<br><br><br><br>${item.name}", Components.SKILL_MULTI1_SMALL_582, 5)
                 repositionChild(player, Components.SKILL_MULTI1_SMALL_582, 0, 12, 15)
                 repositionChild(player, Components.SKILL_MULTI1_SMALL_582, 1, 431, 15)
                 repositionChild(player, Components.SKILL_MULTI1_SMALL_582, 6, 6, 16)
