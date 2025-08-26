@@ -749,7 +749,7 @@ object Graphics {
     const val GRAPHIC_744 = 744
     const val GRAPHIC_745 = 745
     const val GRAPHIC_746 = 746
-    const val GRAPHIC_747 = 747
+    const val LUNARS_TP_747 = 747
     const val GRAPHIC_748 = 748
     const val GRAPHIC_749 = 749
     const val GRAPHIC_750 = 750
@@ -1549,7 +1549,7 @@ object Graphics {
     const val GRAPHIC_1534 = 1534
     const val GRAPHIC_1535 = 1535
     const val GRAPHIC_1536 = 1536
-    const val GRAPHIC_1537 = 1537
+    const val AIR_GUITAR_EMOTE_1537 = 1537
     const val GRAPHIC_1538 = 1538
     const val GRAPHIC_1539 = 1539
     const val GRAPHIC_1540 = 1540

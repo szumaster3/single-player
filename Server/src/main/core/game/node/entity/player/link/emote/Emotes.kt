@@ -97,25 +97,10 @@ enum class Emotes(
     ) {
         override fun play(player: Player) {
             val weapon = player.equipment[EquipmentContainer.SLOT_WEAPON]
+            val requiredItem = anyInEquipment(player, Items.HARD_HAT_10862, Items.BUILDERS_SHIRT_10863, Items.BUILDERS_TROUSERS_10864, Items.BUILDERS_BOOTS_10865, Items.PLAIN_SATCHEL_10877, Items.GREEN_SATCHEL_10878, Items.RED_SATCHEL_10879, Items.BLACK_SATCHEL_10880, Items.GOLD_SATCHEL_10881, Items.RUNE_SATCHEL_10882)
             when {
-                weapon?.id == Items.SLED_4084 -> forceEmote(
-                    player, Animation(Animations.BECKON_ON_SLED_1484), Graphics(-1)
-                )
-
-                anyInEquipment(
-                    player,
-                    Items.HARD_HAT_10862,
-                    Items.BUILDERS_SHIRT_10863,
-                    Items.BUILDERS_TROUSERS_10864,
-                    Items.BUILDERS_BOOTS_10865,
-                    Items.PLAIN_SATCHEL_10877,
-                    Items.GREEN_SATCHEL_10878,
-                    Items.RED_SATCHEL_10879,
-                    Items.BLACK_SATCHEL_10880,
-                    Items.GOLD_SATCHEL_10881,
-                    Items.RUNE_SATCHEL_10882,
-                ) -> forceEmote(player, Animation(Animations.EMOTE_BECKON_5845), Graphics(-1))
-
+                weapon?.id == Items.SLED_4084 -> forceEmote(player, Animation(Animations.BECKON_ON_SLED_1484), Graphics(-1))
+                requiredItem -> forceEmote(player, Animation(Animations.EMOTE_BECKON_5845), Graphics(-1))
                 else -> super.play(player)
             }
         }

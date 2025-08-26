@@ -2,7 +2,6 @@ package core.game.node.entity.player.link;
 
 import content.region.island.tutorial.plugin.*;
 import core.ServerConstants;
-import core.game.node.Node;
 import core.game.node.entity.Entity;
 import core.game.node.entity.impl.Animator.Priority;
 import core.game.node.entity.player.Player;
@@ -202,7 +201,7 @@ public class TeleportManager {
      * @author SonicForce41
      */
     public enum TeleportType {
-        NORMAL(new TeleportSettings(8939, 8941, 1576, 1577)) {
+        NORMAL(new TeleportSettings(8939, 8941, shared.consts.Graphics.NORMAL_TP_UPWARDS_1576, shared.consts.Graphics.NORMAL_TP_DOWNWARDS_1577)) {
             @Override
             public Pulse getPulse(final Entity entity, final Location location) {
                 return new TeleportPulse(entity) {
@@ -237,7 +236,7 @@ public class TeleportManager {
             }
         },
 
-        ANCIENT(new TeleportSettings(1979, -1, 392, -1)) {
+        ANCIENT(new TeleportSettings(1979, -1, shared.consts.Graphics.ANCIENTS_TP_392, -1)) {
             @Override
             public Pulse getPulse(final Entity entity, final Location location) {
                 return new TeleportPulse(entity) {
@@ -400,7 +399,7 @@ public class TeleportManager {
             }
         },
 
-        OBELISK(new TeleportSettings(8939, 8941, 661, -1)) {
+        OBELISK(new TeleportSettings(8939, 8941, shared.consts.Graphics.WILDERNESS_OBELISK_TP_661, -1)) {
             @Override
             public Pulse getPulse(final Entity entity, final Location location) {
                 return new TeleportPulse(entity) {
@@ -425,7 +424,7 @@ public class TeleportManager {
             }
         },
 
-        TELE_OTHER(new TeleportSettings(1816, -1, 342, -1)) {
+        TELE_OTHER(new TeleportSettings(1816, -1, shared.consts.Graphics.TELEOTHER_ACCEPT_342, -1)) {
             @Override
             public Pulse getPulse(final Entity entity, final Location location) {
                 return new TeleportPulse(entity) {

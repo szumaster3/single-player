@@ -9201,9 +9201,9 @@ object Animations {
     const val ANIMATION_8936 = 8936
     const val ANIMATION_8937 = 8937
     const val ANIMATION_8938 = 8938
-    const val ANIMATION_8939 = 8939
+    const val MODERN_TELEPORT_START_8939 = 8939
     const val ANIMATION_8940 = 8940
-    const val ANIMATION_8941 = 8941
+    const val MODERN_TELEPORT_END_8941 = 8941
     const val ANIMATION_8942 = 8942
     const val SACRED_CLAY_HAMMER_UP_HIGH_8943 = 8943
     const val ANIMATION_8944 = 8944
