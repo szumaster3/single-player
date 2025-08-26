@@ -264,8 +264,7 @@ class RunecraftPulse(
             }
             val rcLevel = getStatLevel(player, Skills.RUNECRAFTING)
             val runecraftingFormulaRevision = ServerConstants.RUNECRAFTING_FORMULA_REVISION
-            val lumbridgeDiary = player.achievementDiaryManager.getDiary(DiaryType.LUMBRIDGE)!!.isComplete(1)
-            return getMultiplier(rcLevel, rune, runecraftingFormulaRevision, lumbridgeDiary)
+            return getMultiplier(rcLevel, rune, runecraftingFormulaRevision)
         }
 
     fun hasBindingNecklace(): Boolean = inEquipment(player, BINDING_NECKLACE)
@@ -280,12 +279,12 @@ class RunecraftPulse(
         fun getMultiplier(
             rcLevel: Int,
             rune: Rune,
-            rcFormulaRevision: Int,
-            lumbridgeDiary: Boolean,
+            rcFormulaRevision: Int
         ): Int {
-            val multipleLevels = rune.getMultiple()
+            val multipleLevels = rune.getMultiple() ?: return 1
             var i = 0
-            for (level in multipleLevels!!) {
+
+            for (level in multipleLevels) {
                 if (rcLevel >= level) {
                     i++
                 }
@@ -295,23 +294,14 @@ class RunecraftPulse(
                 val a = max(multipleLevels[i - 1].toDouble(), rune.level.toDouble()).toInt()
                 val b = multipleLevels[i]
                 if (b <= 99 || rcFormulaRevision >= 581) {
-                    val chance = (rcLevel.toDouble() - a.toDouble()) / (b.toDouble() - a.toDouble())
+                    val chance = (rcLevel - a).toDouble() / (b - a).toDouble()
                     if (RandomFunction.random(0.0, 1.0) < chance) {
-                        i += 1
+                        i++
                     }
                 }
             }
 
-            if ((lumbridgeDiary && ArrayList(
-                    listOf(
-                        Rune.AIR, Rune.WATER, Rune.FIRE, Rune.EARTH
-                    )
-                ).contains(rune)) && RandomFunction.getRandom(10) == 0
-            ) {
-                i += 1
-            }
-
-            return if (i != 0) i else 1
+            return if (i > 0) i else 1
         }
     }
 }
