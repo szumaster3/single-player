@@ -3,6 +3,7 @@ package content.region.kandarin.gnome.dialogue
 import content.minigame.gnomecook.plugin.GC_BASE_ATTRIBUTE
 import content.minigame.gnomecook.plugin.GC_TUT_PROG
 import core.api.setAttribute
+import core.game.component.Component
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.player.Player
@@ -23,14 +24,14 @@ class AluftGianneJrDialogue(player: Player? = null) : Dialogue(player) {
         if (tutorialStage == -1) {
             player("Hey can I get a job here?")
         } else {
-            npc(FaceAnim.OLD_NORMAL, "Having fun?").also { stage = END_DIALOGUE }
+            npc("Having fun?").also { stage = END_DIALOGUE }
         }
         return true
     }
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
-            0 -> npc(FaceAnim.OLD_NORMAL, "Sure, go talk to my dad. I'll put", "a good word in!").also { stage++ }
+            0 -> npc("Sure, go talk to my dad. I'll put", "a good word in!").also { stage++ }
             1 -> player(FaceAnim.THINKING, "Th-thanks...?").also { stage++ }
             2 -> {
                 end()
@@ -38,6 +39,10 @@ class AluftGianneJrDialogue(player: Player? = null) : Dialogue(player) {
             }
         }
         return true
+    }
+
+    override fun npc(vararg messages: String?): Component {
+        return super.npc(FaceAnim.OLD_NORMAL,*messages)
     }
 
     override fun newInstance(player: Player?): Dialogue = AluftGianneJrDialogue(player)
