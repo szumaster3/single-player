@@ -12,6 +12,7 @@ import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import shared.consts.NPCs
 import shared.consts.Quests
+import shared.consts.Sounds
 
 class SirPyrsinDialogue(player: Player? = null) : Dialogue(player) {
 
@@ -186,6 +187,7 @@ class SirPyrsinDialogue(player: Player? = null) : Dialogue(player) {
                                                 )
                                             ) {
                                                 if (player.inventory.add(DemonSlayerUtils.SILVERLIGHT)) {
+                                                    playAudio(player, Sounds.RECEIVE_SILVERLIGHT_2990)
                                                     npc.animate(Animation(4608))
                                                     player.animate(Animation(4604))
                                                     quest!!.setStage(player, 30)

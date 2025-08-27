@@ -28,7 +28,10 @@ import core.net.packet.PacketRepository;
 import core.net.packet.OutgoingContext.CameraType;
 import core.net.packet.out.CameraViewPacket;
 import core.net.packet.out.MinimapState;
+import shared.consts.Animations;
+import shared.consts.NPCs;
 import shared.consts.Quests;
+import shared.consts.Sounds;
 
 import static core.api.ContentAPIKt.*;
 
@@ -38,15 +41,34 @@ import static core.api.ContentAPIKt.*;
 public final class DemonSlayerCutscenePlugin extends CutscenePlugin {
 
     /**
-     * The constant DELRITH.
+     * The delrith.
      */
-    public static final int DELRITH = 879;
+    public static final int DELRITH = NPCs.DELRITH_879;
 
     /**
-     * The constant WEAKENED_DELRITH.
+     * The weakened delrith.
      */
-    public static final int WEAKENED_DELRITH = 880;
+    public static final int WEAKENED_DELRITH = NPCs.WEAKENED_DELRITH_880;
+
+    /**
+     * The wizard animation.
+     */
     private static final Animation WIZARD_ANIM = new Animation(4617);
+
+    /**
+     * The summoning demon sound effect.
+     */
+    public static final int SUMMON_DEMON = Sounds.DS_SUMMON_DEMON_2987;
+
+    /**
+     * The appearing demon sound effect.
+     */
+    public static final int DELRITH_APPEAR = Sounds.DS_DELRITH_APPEAR_2980;
+
+    /**
+     * The banished demon sound effect.
+     */
+    public static final int DELRITH_BANISHED = Sounds.DS_DELRITH_BANISHED_2981;
 
     /**
      * The Stone table.
@@ -84,6 +106,7 @@ public final class DemonSlayerCutscenePlugin extends CutscenePlugin {
     public boolean start(final Player player, final boolean login, java.lang.Object... args) {
         final NPC[] npcs = new NPC[]{NPC.create(4658, base.transform(29, 43, 0)), NPC.create(4659, base.transform(29, 40, 0)), NPC.create(4662, base.transform(26, 40, 0)), NPC.create(4660, base.transform(26, 43, 0))};
         for (NPC n : npcs) {
+            playAudio(player, DELRITH_APPEAR);
             n.init();
             n.faceLocation(base.transform(27, 42, 0));
             this.npcs.add(n);
@@ -102,7 +125,7 @@ public final class DemonSlayerCutscenePlugin extends CutscenePlugin {
         PacketRepository.send(CameraViewPacket.class, new OutgoingContext.Camera(player, OutgoingContext.CameraType.POSITION, player.getLocation().getX(), player.getLocation().getY(), 450, 1, 100));
         PacketRepository.send(CameraViewPacket.class, new OutgoingContext.Camera(player, OutgoingContext.CameraType.ROTATION, player.getLocation().getX() - 15, player.getLocation().getY() + -55, 450, 1, 100));
         player.lock();
-        player.getDialogueInterpreter().open(4662, npcs.get(3), this);
+        player.getDialogueInterpreter().open(NPCs.DENATH_4662, npcs.get(3), this);
     }
 
     @Override
@@ -446,12 +469,14 @@ public final class DemonSlayerCutscenePlugin extends CutscenePlugin {
                     interpreter.sendDialogues(cutscene.getNPCS().get(0), null, "Arise, Delrith!");
                     for (NPC n : cutscene.getNPCS()) {
                         n.sendChat("Arise, Delrith!");
+
                     }
                     stage = 1;
                     break;
                 case 1:
                     player.getProperties().setTeleportLocation(cutscene.getBase().transform(28, 35, 0));
                     cutscene.stoneTable = new Scenery(17437, cutscene.getBase().transform(27, 41, 0));
+                    playAudio(player, Sounds.DS_REPLACE_TABLE_2986);
                     SceneryBuilder.add(cutscene.stoneTable);
                     PacketRepository.send(CameraViewPacket.class, new OutgoingContext.Camera(player, OutgoingContext.CameraType.POSITION, player.getLocation().getX() - 1, player.getLocation().getY() + 2, 380, 1, 98));
                     PacketRepository.send(CameraViewPacket.class, new OutgoingContext.Camera(player, OutgoingContext.CameraType.ROTATION, player.getLocation().getX() + 19, player.getLocation().getY() - 55, 380, 1, 98));
@@ -464,6 +489,7 @@ public final class DemonSlayerCutscenePlugin extends CutscenePlugin {
                         public boolean pulse() {
                             switch (counter++) {
                                 case 5:
+                                    playAudio(player, SUMMON_DEMON);
                                     cutscene.delrith = NPC.create(DemonSlayerCutscenePlugin.DELRITH, cutscene.getBase().transform(27, 40, 0));
                                     cutscene.delrith.init();
                                     cutscene.delrith.animate(ANIMATION);
@@ -472,6 +498,7 @@ public final class DemonSlayerCutscenePlugin extends CutscenePlugin {
                                     PacketRepository.send(CameraViewPacket.class, new OutgoingContext.Camera(player, CameraType.POSITION, player.getLocation().getX() - 1, player.getLocation().getY() - 3, 390, 1, 100));
                                     PacketRepository.send(CameraViewPacket.class, new OutgoingContext.Camera(player, CameraType.ROTATION, player.getLocation().getX() + 30, player.getLocation().getY() - 55, 390, 1, 100));
                                     setVarp(player, 222, 14194946, true);
+                                    playAudio(player, Sounds.DS_TABLE_EXPLOSION_2988, 1);
                                     SceneryBuilder.replace(cutscene.stoneTable, cutscene.stoneTable.transform(17438));
                                     npc("Ha ha ha! At last you are free, my demonic brother!", "Rest now, and then have your revenge on this pitiful", "city!");
                                     stage = 2;

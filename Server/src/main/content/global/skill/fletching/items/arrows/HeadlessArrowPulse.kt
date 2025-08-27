@@ -1,12 +1,14 @@
 package content.global.skill.fletching.items.arrows
 
 import core.api.hasSpaceFor
+import core.api.playAudio
 import core.api.sendDialogue
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.SkillPulse
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import shared.consts.Items
+import shared.consts.Sounds
 import kotlin.math.min
 
 class HeadlessArrowPulse(

@@ -9,6 +9,7 @@ import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.game.world.map.Location
 import shared.consts.Animations
+import shared.consts.Sounds
 
 /**
  * Represents the Fire pottery pulse.
@@ -39,6 +40,7 @@ class FirePotteryPulse(
     override fun animate() {
         if (ticks % 5 == 0) {
             animate(player, ANIMATION)
+            playAudio(player, Sounds.POTTERY_2588)
         }
     }
 

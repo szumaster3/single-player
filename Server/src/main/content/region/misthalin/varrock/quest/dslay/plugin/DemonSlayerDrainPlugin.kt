@@ -1,5 +1,6 @@
 package content.region.misthalin.varrock.quest.dslay.plugin
 
+import core.api.playAudio
 import core.api.setAttribute
 import core.api.setVarp
 import core.game.interaction.NodeUsageEvent
@@ -13,6 +14,7 @@ import core.plugin.Plugin
 import shared.consts.Animations
 import shared.consts.Items
 import shared.consts.Quests
+import shared.consts.Sounds
 
 class DemonSlayerDrainPlugin : UseWithHandler(Items.BUCKET_OF_WATER_1929) {
     override fun newInstance(arg: Any?): Plugin<Any> {
@@ -25,6 +27,7 @@ class DemonSlayerDrainPlugin : UseWithHandler(Items.BUCKET_OF_WATER_1929) {
         val quest = player.getQuestRepository().getQuest(Quests.DEMON_SLAYER)
         if (player.inventory.remove(BUCKET_OF_WATER)) {
             player.inventory.add(BUCKET)
+            playAudio(player, Sounds.DS_DRAIN_2982)
             player.animate(ANIMATION)
             player.packetDispatch.sendMessage("You pour the liquid down the drain.")
             if (quest.getStage(player) != 20) {
@@ -40,6 +43,7 @@ class DemonSlayerDrainPlugin : UseWithHandler(Items.BUCKET_OF_WATER_1929) {
                 !player.hasItem(DemonSlayerUtils.FIRST_KEY) &&
                 !player.getSavedData().questData.demonSlayer[0]
             ) {
+                playAudio(player, Sounds.DS_KEY_FALL_2983)
                 player.dialogueInterpreter.sendDialogues(
                     player,
                     null,
