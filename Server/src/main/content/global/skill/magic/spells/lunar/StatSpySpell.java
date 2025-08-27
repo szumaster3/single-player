@@ -1,5 +1,6 @@
 package content.global.skill.magic.spells.lunar;
 
+import content.global.skill.magic.spells.LunarSpells;
 import core.game.component.CloseEvent;
 import core.game.component.Component;
 import core.game.node.Node;
@@ -22,7 +23,7 @@ import shared.consts.Sounds;
 import static core.api.ContentAPIKt.playAudio;
 
 /**
- * The type Stat spy spell.
+ * The Stat spy spell.
  */
 @Initializable
 public final class StatSpySpell extends MagicSpell {
@@ -42,7 +43,7 @@ public final class StatSpySpell extends MagicSpell {
 
     @Override
     public Plugin<SpellType> newInstance(SpellType arg) throws Throwable {
-        SpellBook.LUNAR.register(9, this);
+        SpellBook.LUNAR.register(LunarSpells.STAT_SPY, this);
         return this;
     }
 

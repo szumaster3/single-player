@@ -38,18 +38,8 @@ class MonsterExamineSpell : SpellListener("lunar") {
             openSingleTab(player, Components.DREAM_MONSTER_STAT_522)
             sendString(player, "Monster name : " + npc.definition.name, Components.DREAM_MONSTER_STAT_522, 0)
             sendString(player, "Combat Level : ${npc.definition.combatLevel}", Components.DREAM_MONSTER_STAT_522, 1)
-            sendString(
-                player,
-                "Hitpoints : ${npc.definition.handlers[NPCConfigParser.LIFEPOINTS] ?: 0}",
-                Components.DREAM_MONSTER_STAT_522,
-                2,
-            )
-            sendString(
-                player,
-                "Max hit : ${npc.getSwingHandler(false).calculateHit(npc, player, 1.0)}",
-                Components.DREAM_MONSTER_STAT_522,
-                3,
-            )
+            sendString(player, "Hitpoints : ${npc.definition.handlers[NPCConfigParser.LIFEPOINTS] ?: 0}", Components.DREAM_MONSTER_STAT_522, 2)
+            sendString(player, "Max hit : ${npc.getSwingHandler(false).calculateHit(npc, player, 1.0)}", Components.DREAM_MONSTER_STAT_522, 3)
 
             val poisonStatus =
                 if (npc.definition.handlers.getOrDefault(NPCConfigParser.POISON_IMMUNE, false) == true) {

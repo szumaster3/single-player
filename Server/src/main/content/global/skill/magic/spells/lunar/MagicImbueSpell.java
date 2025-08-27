@@ -1,5 +1,6 @@
 package content.global.skill.magic.spells.lunar;
 
+import content.global.skill.magic.spells.LunarSpells;
 import core.game.node.Node;
 import core.game.node.entity.Entity;
 import core.game.node.entity.combat.spell.MagicSpell;
@@ -19,7 +20,7 @@ import static core.api.ContentAPIKt.playAudio;
 import static core.api.ContentAPIKt.setAttribute;
 
 /**
- * The type Magic imbue spell.
+ * The Magic imbue spell.
  */
 @Initializable
 public class MagicImbueSpell extends MagicSpell {
@@ -36,7 +37,7 @@ public class MagicImbueSpell extends MagicSpell {
 
     @Override
     public Plugin<SpellType> newInstance(SpellType arg) throws Throwable {
-        SpellBook.LUNAR.register(13, this);
+        SpellBook.LUNAR.register(LunarSpells.MAGIC_IMBUE, this);
         return this;
     }
 

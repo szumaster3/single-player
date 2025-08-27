@@ -1,5 +1,6 @@
 package content.global.skill.magic.spells.lunar;
 
+import content.global.skill.magic.spells.LunarSpells;
 import core.game.node.Node;
 import core.game.node.entity.Entity;
 import core.game.node.entity.combat.DeathTask;
@@ -24,7 +25,7 @@ import java.util.List;
 import static core.api.ContentAPIKt.playGlobalAudio;
 
 /**
- * The type Heal spell.
+ * The Heal spell.
  */
 @Initializable
 public final class HealSpell extends MagicSpell {
@@ -54,8 +55,8 @@ public final class HealSpell extends MagicSpell {
 
     @Override
     public Plugin<SpellType> newInstance(SpellType arg) throws Throwable {
-        SpellBook.LUNAR.register(29, new HealSpell(92, 101, new Item[]{new Item(Runes.BLOOD_RUNE.getId(), 1), new Item(Runes.LAW_RUNE.getId(), 3), new Item(Runes.ASTRAL_RUNE.getId(), 3)}));
-        SpellBook.LUNAR.register(30, new HealSpell(92, 101, new Item[]{new Item(Runes.BLOOD_RUNE.getId(), 3), new Item(Runes.LAW_RUNE.getId(), 6), new Item(Runes.ASTRAL_RUNE.getId(), 4)}));
+        SpellBook.LUNAR.register(LunarSpells.HEAL_OTHER, new HealSpell(92, 101, new Item[]{new Item(Runes.BLOOD_RUNE.getId(), 1), new Item(Runes.LAW_RUNE.getId(), 3), new Item(Runes.ASTRAL_RUNE.getId(), 3)}));
+        SpellBook.LUNAR.register(LunarSpells.HEAL_GROUP, new HealSpell(92, 101, new Item[]{new Item(Runes.BLOOD_RUNE.getId(), 3), new Item(Runes.LAW_RUNE.getId(), 6), new Item(Runes.ASTRAL_RUNE.getId(), 4)}));
         return this;
     }
 

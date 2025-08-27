@@ -1,5 +1,6 @@
 package content.global.skill.magic.spells.lunar
 
+import content.global.skill.magic.spells.LunarSpells
 import core.api.*
 import core.game.component.Component
 import core.game.dialogue.Dialogue
@@ -37,7 +38,7 @@ class SpellbookSwapSpell :
 
     @Throws(Throwable::class)
     override fun newInstance(arg: SpellType?): Plugin<SpellType?> {
-        SpellBook.LUNAR.register(12, this)
+        SpellBook.LUNAR.register(LunarSpells.SPELLBOOK_SWAP, this)
         ClassScanner.definePlugin(SpellbookSwapDialogue())
         return this
     }

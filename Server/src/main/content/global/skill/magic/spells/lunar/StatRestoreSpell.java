@@ -1,6 +1,7 @@
 package content.global.skill.magic.spells.lunar;
 
 import content.data.consumables.Consumables;
+import content.global.skill.magic.spells.LunarSpells;
 import core.game.bots.AIPlayer;
 import core.game.consumable.Potion;
 import core.game.node.Node;
@@ -24,7 +25,7 @@ import java.util.List;
 import static core.api.ContentAPIKt.playGlobalAudio;
 
 /**
- * The type Stat restore spell.
+ * The Stat restore spell.
  */
 @Initializable
 public class StatRestoreSpell extends MagicSpell {
@@ -41,7 +42,7 @@ public class StatRestoreSpell extends MagicSpell {
 
     @Override
     public Plugin<SpellType> newInstance(SpellType arg) throws Throwable {
-        SpellBook.LUNAR.register(27, this);
+        SpellBook.LUNAR.register(LunarSpells.STAT_RESTORE_POT_SHARE, this);
         return this;
     }
 

@@ -1,5 +1,6 @@
 package content.global.skill.magic.spells.lunar;
 
+import content.global.skill.magic.spells.LunarSpells;
 import core.game.node.Node;
 import core.game.node.entity.Entity;
 import core.game.node.entity.combat.spell.MagicSpell;
@@ -18,7 +19,7 @@ import shared.consts.Sounds;
 import static core.api.ContentAPIKt.playGlobalAudio;
 
 /**
- * The type Vengeance spell.
+ * The Vengeance spell.
  */
 @Initializable
 public final class VengeanceSpell extends MagicSpell {
@@ -45,10 +46,8 @@ public final class VengeanceSpell extends MagicSpell {
 
     @Override
     public Plugin<SpellType> newInstance(SpellType arg) throws Throwable {
-
-        SpellBook.LUNAR.register(19, new VengeanceSpell(93, 78, Animation.create(4411), new Graphics(725, 96), Runes.ASTRAL_RUNE.getItem(3), Runes.DEATH_RUNE.getItem(2), Runes.EARTH_RUNE.getItem(10)));
-
-        SpellBook.LUNAR.register(14, new VengeanceSpell(94, 112, Animation.create(4410), new Graphics(726, 96), Runes.ASTRAL_RUNE.getItem(4), Runes.DEATH_RUNE.getItem(2), Runes.EARTH_RUNE.getItem(10)));
+        SpellBook.LUNAR.register(LunarSpells.VENGEANCE_OTHER, new VengeanceSpell(93, 78, Animation.create(4411), new Graphics(725, 96), Runes.ASTRAL_RUNE.getItem(3), Runes.DEATH_RUNE.getItem(2), Runes.EARTH_RUNE.getItem(10)));
+        SpellBook.LUNAR.register(LunarSpells.VENGEANCE, new VengeanceSpell(94, 112, Animation.create(4410), new Graphics(726, 96), Runes.ASTRAL_RUNE.getItem(4), Runes.DEATH_RUNE.getItem(2), Runes.EARTH_RUNE.getItem(10)));
         return this;
     }
 

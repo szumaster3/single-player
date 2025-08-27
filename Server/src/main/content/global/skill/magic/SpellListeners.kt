@@ -10,63 +10,89 @@ import core.game.world.map.path.Pathfinder
 import core.tools.Log
 import shared.consts.Items
 
+/**
+ * Manages magic spell casting listeners.
+ */
 object SpellListeners {
+    /**
+     * Maps spell ids to their casting method.
+     */
     val castMap = HashMap<String, (Player, Node?) -> Unit>()
 
+    /**
+     * Maps spell ids to their max casting distance.
+     */
     val spellRanges = HashMap<String, Int>()
 
-    fun add(
-        spellID: Int,
-        type: Int,
-        book: String,
-        distance: Int,
-        method: (Player, Node?) -> Unit,
-    ) {
+    /**
+     * Registers a spell with a single identifier.
+     *
+     * @param spellID the id of the spell.
+     * @param type the target type.
+     * @param book the spellbook name.
+     * @param distance the maximum casting distance.
+     * @param method the function to execute when the spell is cast.
+     */
+    fun add(spellID: Int, type: Int, book: String, distance: Int, method: (Player, Node?) -> Unit, ) {
         castMap["$book:$spellID:$type"] = method
         spellRanges["$book:$spellID:$type"] = distance
     }
 
-    fun add(
-        spellID: Int,
-        type: Int,
-        ids: IntArray,
-        book: String,
-        distance: Int,
-        method: (Player, Node?) -> Unit,
-    ) {
+    /**
+     * Registers a spell for multiple target ids.
+     *
+     * @param spellID the id of the spell.
+     * @param type the target type.
+     * @param ids an array of target ids.
+     * @param book the spellbook name.
+     * @param distance the max casting distance.
+     * @param method the function to execute when the spell is cast.
+     */
+    fun add(spellID: Int, type: Int, ids: IntArray, book: String, distance: Int, method: (Player, Node?) -> Unit, ) {
         for (id in ids) {
             castMap["$book:$spellID:$type:$id"] = method
             spellRanges["$book:$spellID:$type:$id"] = distance
         }
     }
 
-    fun get(
-        spellID: Int,
-        type: Int,
-        book: String,
-    ): Pair<Int, ((Player, Node?) -> Unit)?> {
+    /**
+     * Gets a spells casting range and method by spell id and type.
+     *
+     * @param spellID the id of the spell
+     * @param type the target type
+     * @param book the spellbook name
+     * @return a pair of the spells range and method
+     */
+    fun get(spellID: Int, type: Int, book: String, ): Pair<Int, ((Player, Node?) -> Unit)?> {
         log(this::class.java, Log.FINE, "Getting $book:$spellID:$type")
         return Pair(spellRanges["$book:$spellID:$type"] ?: 10, castMap["$book:$spellID:$type"])
     }
 
-    fun get(
-        spellID: Int,
-        type: Int,
-        id: Int,
-        book: String,
-    ): Pair<Int, ((Player, Node?) -> Unit)?> {
+    /**
+     * Gets a spells casting range and method by spell id, type, and target.
+     *
+     * @param spellID the id of the spell.
+     * @param type the target type.
+     * @param id the targets id.
+     * @param book the spellbook name.
+     * @return a pair of the spells range and method.
+     */
+    fun get(spellID: Int, type: Int, id: Int, book: String, ): Pair<Int, ((Player, Node?) -> Unit)?> {
         log(this::class.java, Log.FINE, "Getting $book:$spellID:$type:$id")
         return Pair(spellRanges["$book:$spellID:$type:$id"] ?: 10, castMap["$book:$spellID:$type:$id"])
     }
 
+    /**
+     * Executes a spell cast by a player on a target node or directly.
+     *
+     * @param button the spell button id.
+     * @param type the target type.
+     * @param book the spellbook name.
+     * @param player the player casting the spell.
+     * @param node (optional) the target node.
+     */
     @JvmStatic
-    fun run(
-        button: Int,
-        type: Int,
-        book: String,
-        player: Player,
-        node: Node? = null,
-    ) {
+    fun run(button: Int, type: Int, book: String, player: Player, node: Node? = null, ) {
         if (inEquipment(player, Items.SLED_4084)) {
             sendMessage(player, "You can't do that right now.")
             return
