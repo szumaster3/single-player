@@ -19,28 +19,24 @@ class OttoGodblessedDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
-        if (player.savedData.activityData.hasCompleteBarbarianTraining()){
+
+        if (player.savedData.activityData.hasCompleteBarbarianTraining()) {
             npcl(FaceAnim.FRIENDLY, "Welcome back oh friend of the spirits, I am humbled in your presence.")
             stage = 500
             return true
         }
 
-        if (!hasItem(player, Item(Items.BARBARIAN_SKILLS_11340))) {
-            if (freeSlots(player) > 0) {
-                npc("I see you have free space and no record of the tasks I", "have set you. Please take this book as a record of your", "progress - between the spirits and your diligence, I", "expect it will always be up to date.").also { stage = END_DIALOGUE }
-                addItem(player, Items.BARBARIAN_SKILLS_11340)
-                stage = END_DIALOGUE
-                return true
-            }
+        if (!hasItem(player, Item(Items.BARBARIAN_SKILLS_11340)) && freeSlots(player) > 0) {
+            npc("I see you have free space and no record of the tasks I", "have set you. Please take this book as a record of your", "progress - between the spirits and your diligence, I", "expect it will always be up to date.").also { stage = END_DIALOGUE }
+            addItem(player, Items.BARBARIAN_SKILLS_11340)
+            return true
         }
 
-        if (!hasItem(player, Item(Items.MY_NOTES_11339))) {
-            if (freeSlots(player) > 0) {
-                npcl(FaceAnim.NEUTRAL, "I see you have free space and no way to record any information you may recover from the caverns. Please take this book as a record of your researches - between the spirits and your diligence I expect it will always be up to date.")
-                addItem(player, Items.MY_NOTES_11339)
-                stage = END_DIALOGUE
-                return true
-            }
+        if (!hasItem(player, Item(Items.MY_NOTES_11339)) && freeSlots(player) > 0) {
+            npcl(FaceAnim.NEUTRAL, "I see you have free space and no way to record any information you may recover from the caverns. Please take this book as a record of your researches - between the spirits and your diligence I expect it will always be up to date.")
+            addItem(player, Items.MY_NOTES_11339)
+            stage = END_DIALOGUE
+            return true
         }
 
         if (getAttribute(player, BarbarianTraining.BARBARIAN_TRAINING, false)) {
@@ -49,36 +45,25 @@ class OttoGodblessedDialogue(player: Player? = null) : Dialogue(player) {
                 player,
                 "Choose an option:",
                 "Please, supply me details of your cunning with harpoons.",
-                if (player.savedData.activityData.isBarbarianFishingRod || player.savedData.activityData.isBarbarianFishingBarehand || getAttribute(player, BarbarianTraining.FISHING_FULL, false)) {
-                    "What was that secret knowledge of Herblore we talked of?"
-                } else {
-                    "Are there any ways to use a fishing rod which I might learn?"
-                },
-                if (player.savedData.activityData.isBarbarianFiremakingBow || player.savedData.activityData.isBarbarianFiremakingPyre || getAttribute(player, BarbarianTraining.FM_FULL, false)) {
-                    "I have completed Firemaking with a bow. What follows this?"
-                } else {
-                    "My mind is ready for your Firemaking wisdom, please instruct me."
-                },
-                if (player.savedData.activityData.isBarbarianSmithingSpear || player.savedData.activityData.isBarbarianSmithingHasta) {
-                    "I have advanced in smithing. What else can I learn?"
-                } else {
-                    "Teach me your barbarian smithing techniques."
-                }
+                if (player.savedData.activityData.isBarbarianFishingRod) "What was that secret knowledge of Herblore we talked of?" else "Are there any ways to use a fishing rod which I might learn?",
+                if (player.savedData.activityData.isBarbarianFiremakingBow) "I have completed Firemaking with a bow. What follows this?" else "My mind is ready for your Firemaking wisdom, please instruct me.",
+                if (player.savedData.activityData.isBarbarianSmithingSpear) "Tell me more about the one-handed spears." else "Tell me more about the use of spears."
             )
             stage = 14
         }
+
+        npcl(FaceAnim.FRIENDLY, "Good day, you seem a hearty warrior. Maybe even some barbarian blood in that body of yours?")
         return true
     }
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
-        when (stage) {
-            // Basic dialogue.
+        when(stage) {
             0 -> options("I really don't think I am related to any barbarian.", "You think so?", "Who are you?", "Sorry, I'm too busy to talk about genealogy today.").also { stage++ }
             1 -> when (buttonId) {
                 1 -> playerl(FaceAnim.HALF_GUILTY, "I really don't think I am related to any barbarian.").also { stage++ }
-                2 -> player("You think so?").also { stage = 6 }
-                3 -> player("Who are you?").also { stage = 4 }
-                4 -> player("Sorry, I'm too busy to talk about genealogy today.").also { stage = 3 }
+                2 -> playerl(FaceAnim.HALF_ASKING, "You think so?").also { stage = 6 }
+                3 -> playerl(FaceAnim.HALF_ASKING, "Who are you?").also { stage = 4 }
+                4 -> playerl(FaceAnim.HALF_ASKING, "Sorry, I'm too busy to talk about genealogy today.").also { stage = 3 }
             }
             2 -> npc("Your scepticism will be your loss.").also { stage = END_DIALOGUE }
             3 -> npc("We will talk when you learn to be less impetuous.").also { stage = END_DIALOGUE }
@@ -97,29 +82,9 @@ class OttoGodblessedDialogue(player: Player? = null) : Dialogue(player) {
                     player,
                     "Choose an option:",
                     "Please, supply me details of your cunning with harpoons.",
-                    if (player.savedData.activityData.isBarbarianFishingRod ||
-                        player.savedData.activityData.isBarbarianFishingBarehand ||
-                        getAttribute(player, BarbarianTraining.FISHING_FULL, false)
-                    ) {
-                        "What was that secret knowledge of Herblore we talked of?"
-                    } else {
-                        "Are there any ways to use a fishing rod which I might learn?"
-                    },
-                    if (player.savedData.activityData.isBarbarianFiremakingBow ||
-                        player.savedData.activityData.isBarbarianFiremakingPyre ||
-                        getAttribute(player, BarbarianTraining.FM_FULL, false)
-                    ) {
-                        "I have completed Firemaking with a bow. What follows this?"
-                    } else {
-                        "My mind is ready for your Firemaking wisdom, please instruct me."
-                    },
-                    if (player.savedData.activityData.isBarbarianSmithingSpear ||
-                        player.savedData.activityData.isBarbarianSmithingHasta
-                    ) {
-                        "I have advanced in smithing. What else can I learn?"
-                    } else {
-                        "Teach me your barbarian smithing techniques."
-                    }
+                    if (player.savedData.activityData.isBarbarianFishingRod) "What was that secret knowledge of Herblore we talked of?" else "Are there any ways to use a fishing rod which I might learn?",
+                    if (player.savedData.activityData.isBarbarianFiremakingBow) "I have completed Firemaking with a bow. What follows this?" else "My mind is ready for your Firemaking wisdom, please instruct me.",
+                    if (player.savedData.activityData.isBarbarianSmithingSpear) "Tell me more about the one-handed spears." else "Tell me more about the use of spears."
                 )
                 setAttribute(player, BarbarianTraining.BARBARIAN_TRAINING, true)
                 stage = 14
@@ -127,46 +92,30 @@ class OttoGodblessedDialogue(player: Player? = null) : Dialogue(player) {
 
             14 -> when (buttonId) {
                 1 -> player("Please, supply me details of your cunning with harpoons.").also { stage = 116 }
-
-                // Fishing Rod / Barehand
-                2 -> {
-                    if (player.savedData.activityData.isBarbarianFishingRod || player.savedData.activityData.isBarbarianFishingBarehand) {
-                        npc("Alas, I do not sense that you have been successful in your Fishing yet. The look in your eyes is not that of the osprey.")
-                        stage = 106
-                        return true
-                    }
-
-                    if (player.savedData.activityData.isBarbarianFishingRod || player.savedData.activityData.isBarbarianFishingBarehand || getAttribute(player, BarbarianTraining.FISHING_FULL, false)) {
-                        player("What was that secret knowledge of Herblore we talked of?")
-                        stage = 110
-                    } else {
-                        player("Are there any ways to use a fishing rod which I might learn?")
-                        stage = 100
-                    }
+                2 -> if (player.savedData.activityData.isBarbarianFishingRod || player.savedData.activityData.isBarbarianFishingBarehand || getAttribute(player, BarbarianTraining.FISHING_FULL, false)) {
+                    player("What was that secret knowledge of Herblore we talked of?")
+                    stage = 110
+                } else {
+                    player("Are there any ways to use a fishing rod which I might learn?")
+                    stage = 100
                 }
-
-                // Firemaking
-                3 -> {
-                    if (player.savedData.activityData.isBarbarianFiremakingBow || player.savedData.activityData.isBarbarianFiremakingPyre || getAttribute(player, BarbarianTraining.FM_BASE, false)) {
-                        npcl(FaceAnim.NEUTRAL, "The next stage is quite complex, so listen well. In order to send our ancestors into the spirit world, their mortal remains must be burned with due ceremony.")
-                        stage = 200
-                        return true
-                    }
-                    player("My mind is ready for your Firemaking wisdom, please instruct me.").also { stage = 15 }
+                3 -> if (!player.savedData.activityData.isBarbarianFiremakingPyre) {
+                    npcl(FaceAnim.NEUTRAL, "The next stage is quite complex, so listen well...")
+                    stage = 200
+                } else {
+                    player("My mind is ready for your Firemaking wisdom, please instruct me.")
+                    stage = 15
                 }
-
-                // Smithing
-                4 -> {
-                    if (player.savedData.activityData.isBarbarianSmithingSpear || player.savedData.activityData.isBarbarianSmithingHasta) {
-                        npc("You have progressed in smithing. Now, you can attempt more advanced weapons and armor.")
-                        stage = 300
-                    } else {
-                        player("Teach me your barbarian smithing techniques.").also { stage = 301 }
-                    }
+                4 -> if (player.savedData.activityData.isBarbarianSmithingSpear) {
+                    // TODO: NOT COMPLETED.
+                    npcl(FaceAnim.FRIENDLY, "You have progressed in smithing. Now, you can attempt more advanced weapons and armor.")
+                    stage = 300
+                } else {
+                    player("Tell me more about the use of spears.")
+                    stage = 301
                 }
             }
 
-            // Firemaking Bow
             15 -> if (getStatLevel(player, Skills.FIREMAKING) < 35) {
                 npcl(FaceAnim.NEUTRAL, "You must have a Firemaking level of at least 35 in order to burn the oak log that is required for the firemaking portion of Barbarian training.").also { stage = END_DIALOGUE }
             } else {
@@ -184,23 +133,15 @@ class OttoGodblessedDialogue(player: Player? = null) : Dialogue(player) {
                 2 -> player("I have no more questions at this time.").also { stage++ }
             }
             22 -> if (!inInventory(player, Items.BARBARIAN_SKILLS_11340) && freeSlots(player) > 0) {
-                npc("I see you have free space and no record of the tasks I", "have set you. Please take this book as a record of your", "progress - between the spirits and your diligence, I", "expect it will always be up to date.").also { stage = END_DIALOGUE }
+                npc("I see you have free space and no record of the tasks I", "have set you. Please take this book as a record of your", "progress - between the spirits and your diligence, I", "expect it will always be up to date.")
                 addItem(player, Items.BARBARIAN_SKILLS_11340)
+                stage = 1000
             } else {
-                npc("In that case, farewell.").also { stage = END_DIALOGUE }
+                npc("In that case, farewell.").also { stage = 1000 }
             }
-
             25 -> npc("Fine news indeed, secrets of our spirit", "boats now await your attention.").also { stage = END_DIALOGUE }
 
-            // Firemaking Pyre
-            200 -> {
-                npc("Now that you have mastered the bow, it is time to learn to build pyre ships for our ancestors.")
-                stage = 201
-            }
-            201 -> player("How do I build a pyre ship?").also { stage++ }
-            202 -> npc("Collect logs and construct a small boat upon the pyre site, then set it alight. The spirits will guide you.").also { stage = END_DIALOGUE }
-
-            // Fishing Rod / Barehand
+            // Barbarian rod
             100 -> npc("While you civilised folk use small, weak fishing rods, we", "barbarians are skilled with heavier tackle. We fish in the", "lake nearby.").also { stage++ }
             101 -> player("So can you teach me of this Fishing method?").also { stage++ }
             102 -> npc("Certainly. Take the rod from under the bed in my", "dwelling and fish in the lake. When you have caught a", "few fish I am sure you will be ready to talk more with", "me.").also { stage++ }
@@ -225,13 +166,17 @@ class OttoGodblessedDialogue(player: Player? = null) : Dialogue(player) {
                 player.savedData.activityData.isBarbarianHerbloreAttackMix = true
                 stage = 113
             }
+
             111 -> player("What was it you needed again?").also { stage++ }
             112 -> npc("Bring me a lesser attack potion combined with fish roe.", "There is more importance in this than you will ever", "know.").also {
                 setAttribute(player, BarbarianTraining.HERBLORE_BASE, true)
                 stage = 20
             }
+
             113 -> player("I feel I am missing some vital information about your", "need for this potion, though I often have this suspicion.").also { stage++ }
             114 -> npc("I will not reveal all of my private matters to you. Some", "secrets are best kept rather than revealed.").also { stage = 20 }
+
+            // Barehand
             115 -> player("Please, supple me details of your cunning with", "harpoons.").also { stage++ }
             116 -> npc("First you must know more of harpoons through special", "study of fish that are usually caught with such a device.").also { stage++ }
             117 -> player("What do I need to know?").also { stage++ }
@@ -240,95 +185,70 @@ class OttoGodblessedDialogue(player: Player? = null) : Dialogue(player) {
             120 -> npc("Use your arm as bait. Wriggle your fingers as if they", "are a tasty snack and hungry tuna and swordfish will", "throng to be caught by you.").also { stage++ }
             121 -> player("That sounds rather insanely dangerous. I'm glad you", "didn't mention sharks too.").also { stage++ }
             122 -> npc("Oh, my mind slipped for a moment, this method does", "indeed work with sharks - though in this case the action", "must be more of a frenzied thrashing of the arm than a", "wriggle.").also { stage++ }
-            123 -> player("..and I thought Fishing was a safe way to pass the time.").also { stage = 20 }
+            123 -> playerl(FaceAnim.NEUTRAL, "...and I thought Fishing was a safe way to pass the time.").also { stage = 20 }
+
+            // Firemaking Pyre
+            200 -> npcl(FaceAnim.FRIENDLY, "In order to send our ancestors into the spirit world, their mortal remains must be burned with due ceremony.").also { stage++ }
+            201 -> npcl(FaceAnim.FRIENDLY, "This can only be performed close to the water on the shore of the lake, just to our north-east. You will recognise the correct places by the ashes to be seen there.").also { stage++ }
+            202 -> npcl(FaceAnim.FRIENDLY, "You will need to construct a small ship by using a hatchet upon logs in this area, then add the bones of a long dead barbarian hero.").also { stage++ }
+            203 -> playerl(FaceAnim.HALF_ASKING, "Where do I obtain these bones?").also { stage++ }
+            204 -> npcl(FaceAnim.FRIENDLY, "From the caverns beneath this lake. Many of our ancestors travelled to these caverns in order to hunt for glory and found only death. Their bones must still lie inside, their spirits trapped in torment.").also { stage++ }
+            205 -> playerl(FaceAnim.HALF_ASKING, "So I make sure I am in the right place, then throw these bones on a ceremonial ship before I set light to it?").also { stage++ }
+            206 -> npcl(FaceAnim.FRIENDLY, "Correct. The spirit will ascend to glory; the pyre will send the earthly remains to the depths. You will also obtain a closer link to the spirit world. During this heightened contact, any bones you bury will have increased importance to the gods.").also { stage++ }
+            207 -> npcl(FaceAnim.FRIENDLY, "The number of bones that may be buried, before the link fades, is increased with the difficulty of obtaining the wood which you use.").also { stage++ }
+            208 -> playerl(FaceAnim.HALF_ASKING, "Do you foresee any problems?").also { stage++ }
+            209 -> npcl(FaceAnim.FRIENDLY, "I have little knowledge of the caverns - they are blocked from the sight of the spirits with whom I commune. I can only suspect that whatever slew barbarian heroes is indeed mighty. I would also suggest that these bones might well be very uncommon, since heroes are not found in vast numbers. Good luck.").also { stage++ }
+            210 -> playerl(FaceAnim.HALF_ASKING, "How do I enter these caverns then?").also { stage++ }
+            211 -> npcl(FaceAnim.FRIENDLY, "Dive into the whirlpool in the lake to the east. The spirits will use their abilities to ensure you arrive in the correct location, though their influence fades, so you must find your own way out.").also {
+                player.setAttribute(BarbarianTraining.PYRESHIP_START, true)
+                stage = 1000
+            }
 
             // Smithing
-            300 -> npc("You have mastered spear smithing. Next, learn the one-handed hasta smithing.").also { stage = 301 }
-            301 -> {
-                player.savedData.activityData.isBarbarianSmithingSpear = true
-                npc("Smith a steel hasta on the barbarian anvil with willow logs and a steel bar.").also { stage = 302 }
-            }
-            302 -> {
-                player.savedData.activityData.isBarbarianSmithingHasta = true
-                npc("You have now mastered the barbarian smithing techniques.").also { stage = END_DIALOGUE }
-            }
+            300 -> npcl(FaceAnim.FRIENDLY, "You have mastered spear smithing. Next, learn the one-handed hasta smithing.").also { stage++ }
+            301 -> npcl(FaceAnim.FRIENDLY, "The next step is to manufacture a spear, suitable for combat.").also { stage++ }
+            302 -> npcl(FaceAnim.FRIENDLY, "Our distance cousins on Karamja are in need of help, however, and you must aid them before I can aid you. You must go now and complete the Tai Bwo Wannai Trio quest.").also { stage++ }
+            303 -> playerl(FaceAnim.FRIENDLY, "Couldn't you just take a bribe or something? I am sure you could do with some cash.").also { stage++ }
+            304 -> npcl(FaceAnim.HALF_GUILTY, "I am afraid this is a vital step; the spirits foresee that your understanding of spears will increase through this quest.").also { stage++ }
+            305 -> npcl(FaceAnim.NEUTRAL, "You may not progress in the use of spears until you have completed this mission.").also { stage = 20 }
 
-            // After complete.
-            500 -> {
-                player("That's very kind, but I was wondering whether you have any more information for me?")
-                stage++
-            }
-            501 -> {
-                npcl(FaceAnim.FRIENDLY,"You are no longer the apprentice, but the master. Seek to inspire us with your daring deeds and legendary feats. Aspire to join the spirits when your time comes.")
-                stage++
-            }
+            // After complete
+            500 -> playerl(FaceAnim.HALF_ASKING, "That's very kind, but I was wondering whether you have any more information for me?").also { stage++ }
+            501 -> npcl(FaceAnim.FRIENDLY, "You are no longer the apprentice, but the master. Seek to inspire us with your daring deeds and legendary feats. Aspire to join the spirits when your time comes.").also { stage++ }
             502 -> {
                 setTitle(player, 3)
                 sendDialogueOptions(player, "Choose an option:", "Could you tell me more of these spirits you continually refer to?", "I wish to change how I fish.", "I have no more questions at this time.")
                 stage++
             }
-            503 -> when(buttonId) {
-                1 -> {
-                    // Spirits explanation.
-                    player("Could you tell me more of these spirits you continually refer to?")
-                    stage++
-                }
-                2 -> {
-                    // Change fishing.
-                    player("I wish to change how I fish.")
-                    stage = 520
-                }
-                3 -> {
-                    // End dialogue.
-                    player("I have no more questions at this time.")
-                    stage = 530
-                }
+            503 -> when (buttonId) {
+                1 -> playerl(FaceAnim.HALF_ASKING, "Could you tell me more of these spirits you continually refer to?").also { stage++ }
+                2 -> playerl(FaceAnim.HALF_ASKING, "I wish to change how I fish.").also { stage = 520 }
+                3 -> playerl(FaceAnim.HALF_ASKING, "I have no more questions at this time.").also { stage = 530 }
             }
-            504 -> {
-                npcl(FaceAnim.FRIENDLY, "Certainly, though it is quite simple - they are the barbarians of the past, who have died in the passing of the years.").also { stage++ }
-                stage++
-            }
-            505 -> {
-                npcl(FaceAnim.FRIENDLY, "There are three categories which learned sages claim may describe all spirits encountered. The majority are at peace, having died with their ambitions sated, even if this ambition was as simple as a glorious death.")
-                stage++
-            }
-            506 -> {
-                player("So those are the spirits who give us guidance. What of the other sorts?")
-                stage++
-            }
-            507 -> {
-                npc("A second category of spirit is made up of those who are not yet at peace. However, all that is needed is for their mortal remains to be laid to rest and they will join the peaceful majority.")
-                stage++
-            }
-            508 -> {
-                player("I can see the pyres serve this purpose. The final category is also restless?")
-                stage++
-            }
-            509 -> {
-                npc("Alas, there is a small minority who will never be at rest. These have been slain in moments of insanity by their brothers or by adventurers.")
-                stage++
-            }
-            510 -> {
-                npcl(FaceAnim.FRIENDLY, "They are not at rest and will attack those they blame for their tortured state. They are not known, however, for being able to determine this blame with any great accuracy, so may be considered as dangerous to all.")
-                stage++
-            }
-            511 -> {
-                player("I thank you Otto, it makes a bit more sense now.")
-                stage = 502
-            }
+            504 -> npcl(FaceAnim.FRIENDLY, "Certainly, though it is quite simple - they are the barbarians of the past, who have died in the passing of the years.").also { stage++ }
+            505 -> npcl(FaceAnim.FRIENDLY, "There are three categories which learned sages claim may describe all spirits encountered.").also { stage++ }
+            506 -> npcl(FaceAnim.FRIENDLY, "The majority are at peace, having died with their ambitions sated, even if this ambition was as simple as a glorious death.").also { stage++ }
+            507 -> playerl(FaceAnim.NEUTRAL, "So those are the spirits who give us guidance. What of the other sorts?").also { stage++ }
+            508 -> npcl(FaceAnim.FRIENDLY, "A second category of spirit is made up of those who are not yet at peace. However, all that is needed is for their mortal remains to be laid to rest and they will join the peaceful majority.").also { stage++ }
+            509 -> playerl(FaceAnim.NEUTRAL, "I can see the pyres serve this purpose. The final category is also restless?").also { stage++ }
+            510 -> npcl(FaceAnim.FRIENDLY, "Alas, there is a small minority who will never be at rest. These have been slain in moments of insanity by their brothers or by adventurers.").also { stage++ }
+            511 -> npcl(FaceAnim.FRIENDLY, "They are not at rest and will attack those they blame for their tortured state. They are not known, however, for being able to determine this blame with any great accuracy, so may be considered as dangerous to all.").also { stage++ }
+            512 -> playerl(FaceAnim.NEUTRAL, "I thank you Otto, it makes a bit more sense now.").also { stage = 502 }
 
-            // Change fishing technique.
+            // Change fishing technique
             520 -> {
-                npc("So be it.")
+                npc("So be it.");
                 toggleBarbarianFishing(player)
-                stage = END_DIALOGUE
+                stage = 1000
             }
 
+            // End dialogue
             530 -> {
                 npc("In that case, farewell.")
-                stage = END_DIALOGUE
+                stage = 1000
             }
-            else -> return true
+
+            1000 -> end()
         }
         return true
     }

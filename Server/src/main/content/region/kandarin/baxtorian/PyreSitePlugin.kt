@@ -2,6 +2,8 @@ package content.region.kandarin.baxtorian
 
 import content.data.items.SkillingTool
 import content.global.skill.firemaking.Log
+import content.region.kandarin.baxtorian.barbtraining.BarbarianTraining
+import core.api.sendDialogueLines
 import core.cache.def.impl.SceneryDefinition
 import core.game.interaction.OptionHandler
 import core.game.node.Node
@@ -45,6 +47,18 @@ class PyreSitePlugin : OptionHandler() {
             if (location.withinDistance(node.location, 3)) {
                 player.sendMessage("This pyre site is in use currently.")
                 return true
+            }
+        }
+
+        val hasStarted = player.getAttribute(BarbarianTraining.PYRESHIP_START, false)
+        val hasCompleted = player.savedData.activityData.isBarbarianFiremakingPyre
+
+        if (!hasCompleted) {
+            if (!hasStarted) {
+                player.dialogueInterpreter.sendDialogue("You must begin the relevant section of Otto Godblessed's barbarian training.")
+                return true
+            } else {
+                player.removeAttribute(BarbarianTraining.PYRESHIP_START)
             }
         }
 
@@ -152,6 +166,10 @@ class PyreSitePlugin : OptionHandler() {
             override fun stop() {
                 super.stop()
                 player.unlock()
+                if(!player.savedData.activityData.isBarbarianFiremakingPyre) {
+                    player.savedData.activityData.isBarbarianFiremakingPyre = true
+                    sendDialogueLines(player, "You feel you have learned more of barbarian ways. Otto might wish", "to talk to you more.")
+                }
                 replace(25286, scenery, player)
                 USED_LOCATIONS.remove(scenery.location)
             }

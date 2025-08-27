@@ -87,16 +87,12 @@ private class BarbarianSmithingPulse(player: Player?, val weapon: BarbarianWeapo
 
         var index = button
         if (player.inventory.remove(Item(weapon.requiredBar, 1)) &&
-            player.inventory.remove(
-                Item(
-                    weapon.requiredWood,
-                    1,
-                ),
-            )
+            player.inventory.remove(Item(weapon.requiredWood, 1))
         ) {
-            sendMessage(player, "You make a ${getItemName(if (index == 0) spear else hasta)}.")
-            player.inventory.add(Item(if (index == 0) spear else hasta, 1))
             rewardXP(player, Skills.SMITHING, weapon.experience)
+            player.inventory.add(Item(if (index == 0) spear else hasta, 1))
+
+            sendMessage(player, "You make a ${getItemName(if (index == 0) spear else hasta)}.")
             amount--
             return amount == 0
         }
