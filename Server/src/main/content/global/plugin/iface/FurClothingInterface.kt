@@ -160,7 +160,7 @@ class FurClothingInterface : InterfaceListener {
      */
     internal enum class FurClothing(val requirements: List<Item>, val price: Int, val product: Item, val textChildID: Int, val textContent: String) {
         POLAR_KEBBIT_TOP(listOf(Item(Items.POLAR_KEBBIT_FUR_10117, 2)), 20, POLAR_CAMO_TOP, 18, "Polar kebbit"),
-        POLAR_KEBBIT_BOTTOM(listOf(Item(Items.POLAR_KEBBIT_FUR_10117, 2), Item(Items.COMMON_KEBBIT_FUR_10121, 2)), 20, POLAR_CAMO_LEGS, 18, "Polar kebbit"),
+        POLAR_KEBBIT_BOTTOM(listOf(Item(Items.POLAR_KEBBIT_FUR_10117, 2)), 20, POLAR_CAMO_LEGS, 18, "Polar kebbit"),
         COMMON_KEBBIT_TOP(listOf(Item(Items.COMMON_KEBBIT_FUR_10121, 2)), 20, WOOD_CAMO_TOP, 19, "Common kebbit"),
         COMMON_KEBBIT_BOTTOM(listOf(Item(Items.COMMON_KEBBIT_FUR_10121, 2)), 20, WOOD_CAMO_LEGS, 19, "Common kebbit"),
         FELDIP_WEASEL_TOP(listOf(Item(Items.FELDIP_WEASEL_FUR_10119, 2)), 20, JUNGLE_CAMO_TOP, 20, "Feldip weasel"),
