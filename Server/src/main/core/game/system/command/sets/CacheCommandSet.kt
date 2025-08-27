@@ -19,6 +19,56 @@ import kotlin.reflect.jvm.isAccessible
 class CacheCommandSet : CommandSet(Privilege.ADMIN) {
 
     override fun defineCommands() {
+        define(
+            name = "droptabledesc",
+            privilege = Privilege.ADMIN,
+            usage = "::droptabledesc",
+            description = "Fill descriptions for drop tables."
+        ) { player, _ ->
+
+            val gson = GsonBuilder()
+                .disableHtmlEscaping()
+                .setPrettyPrinting()
+                .create()
+
+            val sourceFile = File(ServerConstants.CONFIG_PATH + "drop_tables.json")
+            val outputFile = File(ServerConstants.CONFIG_PATH + "drop_table_descriptions.json")
+
+            if (!sourceFile.exists()) {
+                player.debug("drop_tables.json not found.")
+                return@define
+            }
+
+            val configs = gson.fromJson(FileReader(sourceFile), JsonArray::class.java)
+            var filledCount = 0
+
+            for (element in configs) {
+                val e = element.asJsonObject
+                val currentDescription = e.get("description")?.asString ?: ""
+
+                if (currentDescription.isEmpty()) {
+                    val ids = e.get("ids")?.asString
+                        ?.split(",")
+                        ?.mapNotNull { it.trim().toIntOrNull() }
+                        ?: continue
+
+                    val firstNpcDescription = ids.mapNotNull { npcId ->
+                        NPCDefinition.forId(npcId)
+                    }.firstOrNull()?.let { "${it.name} (level: ${it.combatLevel})" }
+
+                    if (firstNpcDescription != null) {
+                        e.addProperty("description", firstNpcDescription)
+                        filledCount++
+                    }
+                }
+            }
+
+            FileWriter(outputFile).use { writer ->
+                gson.toJson(configs, writer)
+            }
+
+            player.debug("Filled empty descriptions for $filledCount drop table entries. Output: ${outputFile.name}")
+        }
 
         /*
          * Print xteas to txt.

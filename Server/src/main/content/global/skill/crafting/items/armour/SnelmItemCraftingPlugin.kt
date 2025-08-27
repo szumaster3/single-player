@@ -26,11 +26,12 @@ class SnelmItemCraftingPlugin : InteractionListener {
                 return@onUseWith false
             }
 
-            queueScript(player, 1, QueueStrength.SOFT) {
-                sendMessage(player, "You craft the shell into a helmet.")
-                if(removeItem(player, Item(item.shell, 1), Container.INVENTORY)){
-                    addItem(player, item.product, 1, Container.INVENTORY)
+            queueScript(player, 1, QueueStrength.WEAK) {
+                val shell = Item(item.shell, 1)
+                if (removeItem(player, shell, Container.INVENTORY)) {
                     rewardXP(player, Skills.CRAFTING, 32.5)
+                    addItem(player, item.product, 1, Container.INVENTORY)
+                    sendMessage(player, "You craft the shell into a helmet.")
                 }
                 return@queueScript stopExecuting(player)
             }
@@ -40,7 +41,10 @@ class SnelmItemCraftingPlugin : InteractionListener {
     }
 }
 
-private enum class Snelm(val shell: Int, val product: Int, ) {
+/**
+ * Represents the snelm data to produce Snelm helmets.
+ */
+private enum class Snelm(val shell: Int, val product: Int) {
     MYRE_ROUNDED(Items.BLAMISH_MYRE_SHELL_3345, Items.MYRE_SNELM_3327),
     MYRE_POINTED(Items.BLAMISH_MYRE_SHELL_3355, Items.MYRE_SNELM_3337),
     BLOOD_ROUNDED(Items.BLAMISH_RED_SHELL_3347, Items.BLOODNTAR_SNELM_3329),
