@@ -220,19 +220,19 @@ public enum WoodcuttingNode {
     /**
      * Jungle tree 2 woodcutting node.
      */
-    JUNGLE_TREE_2(Scenery.JUNGLE_TREE_2889,0, (byte) 4),
+    JUNGLE_TREE_2(Scenery.JUNGLE_TREE_2889,Scenery.JUNGLE_TREE_STUMP_4819, (byte) 4),
     /**
      * Jungle tree 3 woodcutting node.
      */
-    JUNGLE_TREE_3(Scenery.JUNGLE_TREE_2890,0, (byte) 4),
+    JUNGLE_TREE_3(Scenery.JUNGLE_TREE_2890,Scenery.JUNGLE_TREE_STUMP_4821, (byte) 4),
     /**
      * Jungle tree 4 woodcutting node.
      */
-    JUNGLE_TREE_4(Scenery.JUNGLE_TREE_4818,0, (byte) 4),
+    JUNGLE_TREE_4(Scenery.JUNGLE_TREE_4818,Scenery.JUNGLE_TREE_STUMP_4819, (byte) 4),
     /**
      * Jungle tree 5 woodcutting node.
      */
-    JUNGLE_TREE_5(Scenery.JUNGLE_TREE_4820,0, (byte) 4),
+    JUNGLE_TREE_5(Scenery.JUNGLE_TREE_4820,Scenery.JUNGLE_TREE_STUMP_4821, (byte) 4),
 
     /**
      * Jungle bush 1 woodcutting node.
@@ -379,7 +379,7 @@ public enum WoodcuttingNode {
     /**
      * Dramen tree woodcutting node.
      */
-    DRAMEN_TREE(Scenery.DRAMEN_TREE_1292, -1, (byte) 18),
+    DRAMEN_TREE(Scenery.DRAMEN_TREE_1292, 771, (byte) 18),
 
     /**
      * Windswept tree woodcutting node.

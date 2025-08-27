@@ -14,7 +14,7 @@ class InstancedLocationUpdate : OutgoingPacket<OutgoingContext.LocationContext> 
         val buffer = IoBuffer(110)
         val l = context.location
         val player = context.player
-        var flag = l.z.toInt() shl 1
+        var flag = l.z shl 1
         if (context.teleport) {
             flag = flag or 0x1
         }

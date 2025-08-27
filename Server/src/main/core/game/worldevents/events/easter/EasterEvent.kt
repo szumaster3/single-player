@@ -342,7 +342,7 @@ class EasterEvent : WorldEvent("easter"), TickListener, InteractionListener, Log
             val dir = dirs[RandomFunction.random(dirs.size)]
             var loc = player.location.transform(dir, 3)
             val path = Pathfinder.find(player, loc)
-            loc = Location.create(path.points.last.x, path.points.last.y, loc.z.toInt())
+            loc = Location.create(path.points.last.x, path.points.last.y, loc.z)
             GroundItemManager.create(Item(eggs.random()), loc, player)
             sendMessage(player, colorize("%RAn egg has appeared nearby."))
         }

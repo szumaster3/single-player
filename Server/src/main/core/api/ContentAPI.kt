@@ -2954,6 +2954,25 @@ fun <G> sendGraphics(
 }
 
 /**
+ * Sends a graphic to the player.
+ *
+ * @param player    The player to send the graphic to.
+ * @param graphics  The graphic, either an Int (ID) or a Graphics object.
+ * @param height    The height to use if gfx is an Int (optional, default 0).
+ */
+fun sendGraphics(player: Player, graphics: Any, height: Int = 0) {
+    when (graphics) {
+        is Int -> {
+            player.packetDispatch.sendGraphic(graphics, height)
+        }
+        is Graphics -> {
+            player.packetDispatch.sendGraphic(graphics.id, graphics.height)
+        }
+        else -> throw IllegalArgumentException("graphics must be either an Int or a Graphics object")
+    }
+}
+
+/**
  * Executes a run script on the player's client with a given script ID and arguments.
  *
  * @param player The player executing the script.
@@ -3139,7 +3158,11 @@ fun dumpContainer(
         }
     }
     bank.refresh()
-    return dumpedCount
+    return dumpedCount.also{
+        runTask(player, 1) {
+            bank.update()
+        }
+    }
 }
 
 /**
@@ -3278,9 +3301,9 @@ fun getPathableRandomLocalCoordinate(
 ): Location {
     var maxRadius = Vector.deriveWithEqualComponents(ServerConstants.MAX_PATHFIND_DISTANCE.toDouble()).x - 1
     var effectiveRadius = min(radius, maxRadius.toInt())
-    val swCorner = center.transform(-effectiveRadius, -effectiveRadius, center.z.toInt())
-    val neCorner = center.transform(effectiveRadius, effectiveRadius, center.z.toInt())
-    val borders = ZoneBorders(swCorner.x, swCorner.y, neCorner.x, neCorner.y, center.z.toInt())
+    val swCorner = center.transform(-effectiveRadius, -effectiveRadius, center.z)
+    val neCorner = center.transform(effectiveRadius, effectiveRadius, center.z)
+    val borders = ZoneBorders(swCorner.x, swCorner.y, neCorner.x, neCorner.y, center.z)
 
     var attempts = maxAttempts
     var success: Boolean
