@@ -55,14 +55,15 @@ class NeitiznotPlugin : InteractionListener, MapArea {
          */
 
         on(ROPE_BRIDGE, IntType.SCENERY, "walk-across") { player, node ->
-            val destination = Vector.betweenLocs(player.location, node.location)
+            val playerLocation = player.location
+            val destination = Vector.betweenLocs(playerLocation, node.location)
             val direction = when (node.id) {
                 Scenery.ROPE_BRIDGE_21307, Scenery.ROPE_BRIDGE_21309 -> Direction.SOUTH
                 else -> Direction.NORTH
             }
             lock(player,10)
-            registerLogoutListener(player,"rope-bridge"){ p -> p.location = node.location }
-            forceMove(player, player.location, player.location.transform(destination.toDirection(), 11), 0, 330, direction)
+            registerLogoutListener(player,"rope-bridge"){ p -> p.location = playerLocation }
+            forceMove(player, playerLocation, playerLocation.transform(destination.toDirection(), 11), 0, 330, direction)
             runTask(player, 10) { clearLogoutListener(player, "rope-bridge") }
             return@on true
         }
