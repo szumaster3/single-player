@@ -82,6 +82,10 @@ class WaterOrbGrapple : OptionHandler() {
                     return true
                 }
                 player.lock()
+                val start = player.location
+                player.logoutListeners["waterorb-grapple"] = { p: Player ->
+                    p.location = start
+                }
                 Pulser.submit(
                     object : Pulse(1, player) {
                         var counter = 1
@@ -110,6 +114,7 @@ class WaterOrbGrapple : OptionHandler() {
                                 14 -> {
                                     player.unlock()
                                     player.achievementDiaryManager.finishTask(player, DiaryType.SEERS_VILLAGE, 2, 10)
+                                    player.logoutListeners.remove("waterorb-grapple")
                                     return true
                                 }
                             }

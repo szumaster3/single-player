@@ -70,6 +70,9 @@ class FaladorGrapple : OptionHandler() {
     ): Boolean {
         val destination: Location
         val current = player.location
+        player.logoutListeners["karamja-grapple"] = { p: Player ->
+            p.location = current
+        }
         when (option) {
             "jump" ->
                 ForceMovement.run(
@@ -125,6 +128,7 @@ class FaladorGrapple : OptionHandler() {
 
                                 13 -> player.properties.teleportLocation = destination
                                 14 -> {
+                                    player.unlock()
                                     restoreTabs(player)
                                     if (tab != null) {
                                         player.interfaceManager.openTab(tab!!)
@@ -132,8 +136,8 @@ class FaladorGrapple : OptionHandler() {
                                     setMinimapState(player, 0)
                                     closeOverlay(player)
                                     closeInterface(player)
-                                    player.unlock()
                                     finishDiaryTask(player, DiaryType.FALADOR, 1, 2)
+                                    player.logoutListeners.remove("falador-grapple")
                                     return true
                                 }
                             }

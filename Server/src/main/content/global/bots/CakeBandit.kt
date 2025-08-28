@@ -21,6 +21,7 @@ class CakeBandit : Script() {
     private val bankId = Scenery.BANK_BOOTH_34752
     private val stallId = Scenery.BAKER_S_STALL_34384
     private val foodIds = listOf(Items.CAKE_1891, Items.BREAD_2309, Items.CHOCOLATE_SLICE_1901)
+    private var nextStealTick: Long = 0
 
     override fun tick() {
         for (id in foodIds) {
@@ -29,6 +30,7 @@ class CakeBandit : Script() {
                 break
             }
         }
+
         when (state) {
             State.INIT -> handleStealState()
             State.TO_BANK -> goToBank()
@@ -39,43 +41,45 @@ class CakeBandit : Script() {
 
     private fun handleStealState() {
         if (!stealZone.insideBorder(bot)) {
-            scriptAPI?.walkTo(stealZone.randomLoc)
+            scriptAPI.walkTo(stealZone.randomLoc)
             return
         }
 
-        val cakeStall = scriptAPI?.getNearestNode(stallId, true) ?: return
+        val cakeStall = scriptAPI.getNearestNode(stallId, true) ?: return
+        val now = System.currentTimeMillis()
+
         val destinationReached =
-            bot.destinationFlag
-                .getDestination(bot, cakeStall)
+            bot.destinationFlag.getDestination(bot, cakeStall)
                 ?.withinDistance(cakeStall.location) == true
+
+        if (now < nextStealTick) return
 
         if (!destinationReached) {
             bot.pulseManager.run(
                 object : MovementPulse(bot, cakeStall, DestinationFlag.OBJECT) {
                     override fun pulse(): Boolean {
-                        InteractionListeners.run(
-                            stallId,
-                            IntType.SCENERY,
-                            "steal-from",
-                            bot,
-                            cakeStall
-                        )
+                        steal(cakeStall)
                         return true
                     }
                 }
             )
         } else {
-            InteractionListeners.run(stallId, IntType.SCENERY, "steal-from", bot, cakeStall)
+            steal(cakeStall)
         }
 
         if (bot.inventory.isFull) state = State.TO_BANK
     }
 
+    private fun steal(cakeStall: core.game.node.Node) {
+        InteractionListeners.run(stallId, IntType.SCENERY, "steal-from", bot, cakeStall)
+        nextStealTick = System.currentTimeMillis() + (3 * 600) // 3 ticki
+    }
+
     private fun goToBank() {
         if (!bankZone.insideBorder(bot)) {
-            scriptAPI?.walkTo(bankZone.randomLoc)
+            scriptAPI.walkTo(bankZone.randomLoc)
         } else {
-            val bank = scriptAPI?.getNearestNode(bankId, true) ?: return
+            val bank = scriptAPI.getNearestNode(bankId, true) ?: return
             bot.pulseManager.run(
                 object : MovementPulse(bot, bank, DestinationFlag.OBJECT) {
                     override fun pulse(): Boolean {
@@ -88,29 +92,28 @@ class CakeBandit : Script() {
     }
 
     private fun handleBanking() {
-        val bank = scriptAPI?.getNearestNode(bankId, true) ?: return
-        if (bank != null) {
-            bot.pulseManager.run(
-                object : Pulse(25) {
-                    override fun pulse(): Boolean {
-                        bot.inventory.toArray().filterNotNull().forEach {
-                            if (it.id in foodIds) bot.bank.add(it)
-                        }
-                        bot.inventory.toArray().filterNotNull().forEach {
-                            if (it.id in foodIds) bot.inventory.remove(it)
-                        }
-                        bot.fullRestore()
-                        state = State.RETURN
-                        return true
-                    }
+        val bank = scriptAPI.getNearestNode(bankId, true) ?: return
+        bot.pulseManager.run(object : Pulse(1) {
+            private val itemsToBank = bot.inventory.toArray().filterNotNull().filter { it.id in foodIds }.toMutableList()
+
+            override fun pulse(): Boolean {
+                if (itemsToBank.isEmpty()) {
+                    bot.fullRestore()
+                    state = State.RETURN
+                    return true
                 }
-            )
-        }
+
+                val item = itemsToBank.removeFirst()
+                bot.bank.add(item)
+                bot.inventory.remove(item)
+                return false
+            }
+        })
     }
 
     private fun returnToStealZone() {
         if (!stealZone.insideBorder(bot)) {
-            scriptAPI?.walkTo(stealZone.randomLoc)
+            scriptAPI.walkTo(stealZone.randomLoc)
         } else {
             state = State.INIT
         }

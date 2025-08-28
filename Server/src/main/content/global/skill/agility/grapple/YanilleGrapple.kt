@@ -89,6 +89,10 @@ class YanilleGrapple : OptionHandler() {
                     return true
                 }
                 lock(player, 1000)
+                val start = player.location
+                player.logoutListeners["yanille-grapple"] = { p: Player ->
+                    p.location = start
+                }
                 Pulser.submit(
                     object : Pulse(1, player) {
                         var counter = 1
@@ -117,6 +121,7 @@ class YanilleGrapple : OptionHandler() {
 
                                 13 -> player.properties.teleportLocation = destination
                                 14 -> {
+                                    unlock(player)
                                     restoreTabs(player)
                                     if (tab != null) {
                                         player.interfaceManager.openTab(tab!!)
@@ -124,7 +129,7 @@ class YanilleGrapple : OptionHandler() {
                                     setMinimapState(player, 0)
                                     closeOverlay(player)
                                     closeInterface(player)
-                                    unlock(player)
+                                    player.logoutListeners.remove("yanille-grapple")
                                     return true
                                 }
                             }

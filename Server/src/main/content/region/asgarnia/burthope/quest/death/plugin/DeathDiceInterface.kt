@@ -5,6 +5,7 @@ import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.Player
 import core.game.system.task.Pulse
 import shared.consts.Components
+import shared.consts.Sounds
 
 class DeathDiceInterface : InterfaceListener {
     companion object {
@@ -156,6 +157,7 @@ class DeathDiceInterface : InterfaceListener {
                     } else {
                         sendString(player, "Your roll...", Components.DEATH_DICE_99, 13)
                     }
+                    playAudio(player, Sounds.DICE_ROLL_1474)
                     sendAnimationOnInterface(player, DICEANIM[roll1], Components.DEATH_DICE_99, component1)
                 }
 

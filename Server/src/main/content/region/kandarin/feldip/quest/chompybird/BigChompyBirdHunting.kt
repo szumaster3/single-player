@@ -107,7 +107,7 @@ class BigChompyBirdHunting :
     override fun finish(player: Player) {
         super.finish(player)
         var ln = 10
-        player.packetDispatch.sendItemZoomOnInterface(Items.OGRE_BOW_2883, 230, 277, 5)
+        sendItemOnInterface(player, Components.QUEST_COMPLETE_SCROLL_277, 5, Items.OGRE_BOW_2883, 1)
         drawReward(player, "2 Quest Points, 262 Fletching", ln++)
         drawReward(player, "XP, 1470 Cooking XP, 735", ln++)
         drawReward(player, "Ranged XP", ln++)
@@ -181,6 +181,7 @@ class BigChompyBirdHunting :
                 amountInInventory(player, fycieIngredient) > 0
             ) {
                 lock(player, 5)
+                playAudio(player, Sounds.SPIT_ROAST_1456)
                 setVarbit(player, Vars.VARBIT_QUEST_CHOMPY_SPITROAST_1770, 1)
                 animate(player, Animations.HUMAN_COOKING_RANGE_896)
                 sendMessage(player, "You carefully place the chompy bird on the spit-roast.")

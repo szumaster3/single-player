@@ -41,7 +41,7 @@ class CatherbyGrapple : InteractionListener {
     override fun defineListeners() {
         flagInstant()
         on(Scenery.ROCKS_17042, IntType.SCENERY, "grapple") { player, _ ->
-            if (isPlayerInRangeToGrapple(player)) {
+            if (checkArea(player)) {
                 forceWalk(player, START_LOCATION, "smart")
             } else {
                 sendMessage(player, "Nothing interesting happens.")
@@ -53,7 +53,7 @@ class CatherbyGrapple : InteractionListener {
                 return@on true
             }
 
-            if (!doesPlayerHaveRequiredLevels(player)) {
+            if (!hasRequirements(player)) {
                 sendDialogueLines(
                     player,
                     "You need at least " +
@@ -65,12 +65,14 @@ class CatherbyGrapple : InteractionListener {
                 )
                 return@on true
             }
-
             lock(player, 15)
+            val start = player.location
+            player.logoutListeners["yanille-grapple"] = { p: Player ->
+                p.location = start
+            }
             submitWorldPulse(
                 object : Pulse(2) {
                     var counter = 0
-
                     override fun pulse(): Boolean {
                         when (counter++) {
                             1 -> {
@@ -87,8 +89,9 @@ class CatherbyGrapple : InteractionListener {
                             }
 
                             9 -> {
-                                sendMessage(player, "You successfully grapple the rock and climb the cliffside.")
                                 unlock(player)
+                                player.logoutListeners.remove("catherby-grapple")
+                                sendMessage(player, "You successfully grapple the rock and climb the cliffside.")
                                 return true
                             }
                         }
@@ -101,7 +104,7 @@ class CatherbyGrapple : InteractionListener {
         }
     }
 
-    private fun doesPlayerHaveRequiredLevels(player: Player): Boolean {
+    private fun hasRequirements(player: Player): Boolean {
         for ((skill, requiredLevel) in REQUIREMENTS) {
             if (!hasLevelDyn(player, skill, requiredLevel)) {
                 return false
@@ -110,6 +113,6 @@ class CatherbyGrapple : InteractionListener {
         return true
     }
 
-    private fun isPlayerInRangeToGrapple(player: Player): Boolean =
+    private fun checkArea(player: Player): Boolean =
         inBorders(player, START_LOCATION.x - 2, START_LOCATION.y - 2, START_LOCATION.x, START_LOCATION.y)
 }
