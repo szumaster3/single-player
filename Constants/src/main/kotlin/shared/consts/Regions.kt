@@ -91,4 +91,6 @@ object Regions {
     const val WIZARDS_TOWER_12337 = 12337
     const val BORK_CAVE_12374 = 12374
     const val SCAPE_RUNE_13642 = 13642
+    const val FISHING_PLATFORM_11059 = 11059
+    const val WITCHAVEN_10803 = 10803
 }

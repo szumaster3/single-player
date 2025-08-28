@@ -16,7 +16,7 @@ import shared.consts.Quests
 object PlatformHelper {
 
     /**
-     * Pulse travel between Witchaven and the Fishing Platform.
+     * Starts a travel sequence between Witchaven and another location.
      */
     @JvmStatic
     fun sail(player: Player, travel: Travel) {
@@ -31,31 +31,37 @@ object PlatformHelper {
         }
 
         player.lock()
+
         submitWorldPulse(object : Pulse() {
-            var counter = 0
+            private var counter = 0
+            private val fadeDelay = 3
+            private val teleportDelay = 4
 
             override fun pulse(): Boolean {
-                when (counter++) {
-                    3 -> {
-                        setMinimapState(player, 2)
-                        openInterface(player, Components.SEASLUG_BOAT_TRAVEL_461)
-                        setComponentVisibility(player, Components.SEASLUG_BOAT_TRAVEL_461, travel.component, false)
+                counter++
+                if (counter == fadeDelay) {
+                    setMinimapState(player, 2)
+                    openInterface(player, Components.SEASLUG_BOAT_TRAVEL_461)
+                    setComponentVisibility(player, Components.SEASLUG_BOAT_TRAVEL_461, travel.component, false)
+                    return false
+                }
+                if (counter == teleportDelay) {
+                    teleport(player, travel.destinationLoc)
+                    return false
+                }
+                if (counter >= travel.ticks) {
+                    openInterface(player, Components.FADE_FROM_BLACK_170)
+                    val message = if (getQuestStage(player, Quests.SEA_SLUG) > 50) {
+                        "The boat arrives ${travel.destName}."
+                    } else {
+                        "You arrive ${travel.destName}."
                     }
-                    4 -> teleport(player, travel.destinationLoc)
-                    travel.ticks -> {
-                        openInterface(player, Components.FADE_FROM_BLACK_170)
-                        val message = if (getQuestStage(player, Quests.SEA_SLUG) > 50) {
-                            "The boat arrives ${travel.destName}."
-                        } else {
-                            "You arrive ${travel.destName}."
-                        }
-                        sendDialogue(player, message)
-                        setMinimapState(player, 0)
-                        closeInterface(player)
-                        closeOverlay(player)
-                        player.unlock()
-                        return true
-                    }
+                    sendDialogue(player, message)
+                    setMinimapState(player, 0)
+                    closeInterface(player)
+                    closeOverlay(player)
+                    player.unlock()
+                    return true
                 }
                 return false
             }
@@ -63,7 +69,7 @@ object PlatformHelper {
     }
 
     /**
-     * Represents a travel route.
+     * Represents a travel routes.
      */
     enum class Travel(val destName: String, val destinationLoc: Location, val component: Int, val ticks: Int) {
         WITCHAVEN_TO_FISHING_PLATFORM("at the fishing platform", Location.create(2782, 3273, 0), 10, 10),
