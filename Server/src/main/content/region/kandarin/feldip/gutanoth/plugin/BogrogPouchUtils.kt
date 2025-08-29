@@ -39,14 +39,13 @@ object BogrogPouchUtils {
                     swap(player, value as Int, item.id)
                 }
             }
-            OP_SWAP_ALL -> swap(player, item.amount, item.id)
+            OP_SWAP_ALL -> swap(player, 0, item.id, swapAll = true)
             EXAMINE -> {
                 item.definition?.let {
                     player.packetDispatch.sendMessage(it.examine)
                 }
                 false
             }
-
             else -> false
         }
     }
@@ -54,31 +53,42 @@ object BogrogPouchUtils {
     /**
      * Swaps the given amount of summoning pouches for spirit shards.
      */
-    private fun swap(player: Player, amount: Int, itemID: Int): Boolean {
-        var amt = amount
+    private fun swap(player: Player, amount: Int, itemID: Int, swapAll: Boolean = false): Boolean {
         val value = getValue(itemID)
         if (value == 0.0) {
             sendMessage(player, "This item cannot be swapped here.")
             return false
         }
-        val inInventory = player.inventory.getAmount(itemID)
-        if (amt > inInventory) {
-            amt = inInventory
+
+        val itemsInInventory = player.inventory.toArray().filter { it?.id == itemID }
+        if (itemsInInventory.isEmpty()) {
+            sendMessage(player, "You don't have any pouches to swap.")
+            return false
         }
+
+        var amt = if (swapAll) itemsInInventory.sumOf { it!!.amount } else minOf(amount, itemsInInventory.sumOf { it!!.amount })
+
         if (amt == 0) {
             sendMessage(player, "You don't have any pouches to swap.")
             return false
         }
 
-        if(amt > 30_000) {
+        if (amt > 30_000) {
             sendMessage(player, "You can't swap more than 30,000 at a time.")
-            return false
+            amt = 30_000
         }
 
-        player.inventory.remove(Item(itemID, amt))
-        val shardsReceived = floor(value * amt).toInt()
+        var remaining = amt
+        itemsInInventory.forEach {
+            val removeAmt = minOf(it!!.amount, remaining)
+            player.inventory.remove(Item(it.id, removeAmt))
+            remaining -= removeAmt
+            if (remaining <= 0) return@forEach
+        }
 
+        val shardsReceived = floor(value * amt).toInt()
         player.inventory.add(Item(SPIRIT_SHARD, shardsReceived))
+
         sendMessage(
             player,
             "You swapped $amt pouch${if (amt != 1) "es" else ""} and received $shardsReceived shard${if (shardsReceived != 1) "s" else ""}."

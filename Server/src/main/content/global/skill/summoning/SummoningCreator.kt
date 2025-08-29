@@ -64,7 +64,7 @@ object SummoningCreator {
      * @param pouch A boolean indicating whether to open the pouch or scroll interface.
      */
     @JvmStatic
-    fun open(player: Player, pouch: Boolean, ) = configure(player, pouch)
+    fun open(player: Player, pouch: Boolean) = configure(player, pouch)
 
     /**
      * Configures the summoning interface based on whether the pouch or scroll interface is to be shown.
@@ -73,7 +73,7 @@ object SummoningCreator {
      * @param pouch A boolean indicating whether to show the pouch or scroll interface.
      */
     @JvmStatic
-    fun configure(player: Player, pouch: Boolean, ) {
+    fun configure(player: Player, pouch: Boolean) {
         val component = if (pouch) SUMMONING_COMPONENT else SCROLL_COMPONENT
         val scriptParams = if (pouch) POUCH_PARAMS else SCROLL_PARAMS
         val ifaceId = if (pouch) 190 else 126
@@ -117,7 +117,7 @@ object SummoningCreator {
      * Skill pulse used for creating a summoning item, which handles the animation, requirements check,
      * item removal, and experience reward.
      */
-    class CreatePulse(player: Player?, private val type: SummoningNode, private val amount: Int, ) : SkillPulse<Item?>(player, null) {
+    class CreatePulse(player: Player?, private val type: SummoningNode, private val amount: Int) : SkillPulse<Item?>(player, null) {
         private val objectIDs = getObject(Location(2209, 5344, 0))
 
         /**
@@ -172,7 +172,7 @@ object SummoningCreator {
          */
         override fun reward(): Boolean {
             if (delay == 1) {
-                delay = 4
+                delay = 6
                 animateScenery(player, objectIDs!!, 8509, true)
                 playAudio(player, Sounds.CRAFT_POUCH_4164)
                 return false

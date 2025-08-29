@@ -57307,6 +57307,11 @@
     "render_anim": "8510"
   },
   {
+    "ids": "28722",
+    "examine": "Glowing with barely-suppressed energies.",
+    "render_anim": "8510"
+  },
+  {
     "ids": "28891",
     "examine": "I'd be careful going in there."
   },

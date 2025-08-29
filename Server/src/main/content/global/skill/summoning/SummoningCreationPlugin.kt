@@ -62,7 +62,7 @@ class SummoningCreationPlugin : ComponentPlugin() {
     /**
      * Gets the pouch or scroll based on component and slot.
      */
-    private fun getPouch(component: Component, slot: Int, ) = if (component.id == Components.SUMMONING_POUCHES_669) {
+    private fun getPouch(component: Component, slot: Int) = if (component.id == Components.SUMMONING_POUCHES_669) {
         SummoningPouch.forSlot(getAdjustedSlot(slot))
     } else {
         SummoningScroll.forId(getAdjustedSlot(slot))
