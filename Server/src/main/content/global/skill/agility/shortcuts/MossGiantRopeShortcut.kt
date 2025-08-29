@@ -29,12 +29,15 @@ class MossGiantRopeShortcut : AgilityShortcut(intArrayOf(2322, 2323), 10, 0.0, "
             sendMessage(player, "I can't reach that.")
             return
         }
-
+        if (AgilityHandler.delay > GameWorld.ticks) {
+            sendMessage(player, "The rope is being used.")
+            return
+        }
         val end = if (obj.id == 2322) Location(2704, 3209, 0) else Location(2709, 3205, 0)
 
         playAudio(player, Sounds.SWING_ACROSS_2494)
         animateScenery(player, obj, 497, true)
-
+        AgilityHandler.delay = GameWorld.ticks + 2
         player.lock(1)
         GameWorld.Pulser.submit(object : Pulse(1, player) {
             override fun pulse(): Boolean {

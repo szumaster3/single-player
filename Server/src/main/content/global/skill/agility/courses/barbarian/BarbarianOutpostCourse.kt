@@ -33,7 +33,6 @@ import shared.consts.Scenery as Objects
 class BarbarianOutpostCourse(player: Player? = null) : AgilityCourse(player, 6, 46.2) {
 
     companion object {
-        private var ropeDelay = 0
         /**
          * Represents scenery ids in course order.
          */
@@ -165,7 +164,7 @@ class BarbarianOutpostCourse(player: Player? = null) : AgilityCourse(player, 6, 
 
     private fun handleRopeSwing(player: Player, scenery: Scenery) {
         if (player.location.y < 3554) { sendMessage(player, "You cannot do that from here."); return }
-        if (ropeDelay > GameWorld.ticks) { sendMessage(player, "The rope is being used."); return }
+        if (AgilityHandler.delay > GameWorld.ticks) { sendMessage(player, "The rope is being used."); return }
         animateScenery(player, scenery, 497, true)
         handleObstacle(
             player, scenery,
@@ -178,7 +177,7 @@ class BarbarianOutpostCourse(player: Player? = null) : AgilityCourse(player, 6, 
             failMessage = "You slip and fall to the pit below.",
             extraFailAction = { p -> AgilityHandler.fail(p, 0, Location.create(2549, 9951, 0), null, getHitAmount(p), "") }
         )
-        ropeDelay = GameWorld.ticks + 2
+        AgilityHandler.delay = GameWorld.ticks + 2
         playAudio(player, Sounds.SWING_ACROSS_2494, 1)
     }
 

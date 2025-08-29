@@ -22,6 +22,10 @@ import kotlin.random.Random
  * @author Emperor
  */
 object AgilityHandler {
+    /**
+     * Delay between interactions.
+     */
+    var delay = 0
 
     /**
      * Determines if the player fails an agility obstacle.

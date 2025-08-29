@@ -218,7 +218,7 @@ class WildernessCourse : AgilityCourse {
             sendMessage(player, "You cannot do that from here.")
             return
         }
-        if (ropeDelay > GameWorld.ticks) {
+        if (AgilityHandler.delay > GameWorld.ticks) {
             sendMessage(player, "The rope is being used.")
             return
         }
@@ -233,7 +233,7 @@ class WildernessCourse : AgilityCourse {
             )
             return
         }
-        ropeDelay = GameWorld.ticks + 2
+        AgilityHandler.delay = GameWorld.ticks + 2
         player.packetDispatch.sendSceneryAnimation(scenery, Animation.create(497), true)
         AgilityHandler.forceWalk(
             player,
@@ -368,8 +368,4 @@ class WildernessCourse : AgilityCourse {
     }
 
     override fun createInstance(player: Player): AgilityCourse = WildernessCourse(player)
-
-    companion object {
-        private var ropeDelay = 0
-    }
 }

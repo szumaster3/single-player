@@ -36,7 +36,7 @@ class ZanarisSqueezeShortcut : AgilityShortcut(intArrayOf(Scenery.JUTTING_WALL_1
         player.lock(3)
         GameWorld.Pulser.submit(object : Pulse(1, player) {
             override fun pulse(): Boolean {
-                if (AgilityHandler.hasFailed(player, 10, 0.00300)) {
+                if (AgilityHandler.hasFailed(player, 1, 0.015)) {
                     handleFailure(player, direction, sc.rotation, end)
                 } else {
                     AgilityHandler.walk(
