@@ -113,6 +113,12 @@ enum class Pets(@JvmField val babyItemId: Int, @JvmField val grownItemId: Int, @
         if (itemId == overgrownItemId) {
             return overgrownNpcId
         }
+        if(itemId == wilyItemId) {
+            return wilyNpcId
+        }
+        if(itemId == lazyItemId) {
+            return lazyItemId
+        }
         log(this.javaClass, Log.ERR, "Could not locate NPC ID for pet item $itemId")
         return -1
     }
