@@ -7,7 +7,7 @@ import shared.consts.Items
 import shared.consts.Scenery
 import shared.consts.Sounds
 
-class ChestKeyPlugin : InteractionListener {
+class PirateTreasureChestPlugin : InteractionListener {
     override fun defineListeners() {
 
         /*

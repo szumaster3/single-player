@@ -24,7 +24,8 @@ class HouseTeleportTabletPlugin : InteractionListener {
                 return@on true
             }
             closeInterface(player)
-            lock(player, 5)
+            player.locks.lockComponent(8)
+            player.lock(8)
             if (inInventory(player, node.id)) {
                 player.houseManager.preEnter(player, false)
                 val location = player.houseManager.getEnterLocation()

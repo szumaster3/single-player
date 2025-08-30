@@ -62,25 +62,25 @@ class CivilianDialogue(player: Player? = null) : Dialogue(player) {
         when (stage) {
             0 -> {
                 when (npc.id) {
-                    NPCs.CIVILIAN_785 -> npcl(FaceAnim.FRIENDLY, "Oh hello, I'm sorry, I'm a bit worn out.")
+                    NPCs.CIVILIAN_785 -> npcl(FaceAnim.HALF_GUILTY, "Oh hello, I'm sorry, I'm a bit worn out.")
                     NPCs.CIVILIAN_786 -> npcl(FaceAnim.FRIENDLY, "Good day to you traveller.")
-                    NPCs.CIVILIAN_787 -> npcl(FaceAnim.FRIENDLY, "I'm a bit busy to talk right now, sorry.")
+                    NPCs.CIVILIAN_787 -> npcl(FaceAnim.HALF_GUILTY, "I'm a bit busy to talk right now, sorry.")
                 }
                 stage++
             }
             1 -> {
                 when (npc.id) {
-                    NPCs.CIVILIAN_785 -> playerl(FaceAnim.FRIENDLY, "Busy day?")
-                    NPCs.CIVILIAN_786 -> playerl(FaceAnim.FRIENDLY, "What are you up to?")
-                    NPCs.CIVILIAN_787 -> playerl(FaceAnim.FRIENDLY, "Why? What are you doing?")
+                    NPCs.CIVILIAN_785 -> playerl(FaceAnim.HALF_ASKING, "Busy day?")
+                    NPCs.CIVILIAN_786 -> playerl(FaceAnim.HALF_ASKING, "What are you up to?")
+                    NPCs.CIVILIAN_787 -> playerl(FaceAnim.HALF_ASKING, "Why? What are you doing?")
                 }
                 stage++
             }
             2 -> {
                 when (npc.id) {
-                    NPCs.CIVILIAN_785 -> npcl(FaceAnim.FRIENDLY, "Oh, It's those mice! They're everywhere! What I really need is a cat. But they're hard to come by nowadays.")
+                    NPCs.CIVILIAN_785 -> npcl(FaceAnim.HAPPY, "Oh, It's those mice! They're everywhere! What I really need is a cat. But they're hard to come by nowadays.")
                     NPCs.CIVILIAN_786 -> npcl(FaceAnim.FRIENDLY, "Chasing mice as usual! It's all I seem to do nowadays.")
-                    NPCs.CIVILIAN_787 -> npcl(FaceAnim.FRIENDLY, "Trying to kill these mice! What I really need is a cat!")
+                    NPCs.CIVILIAN_787 -> npcl(FaceAnim.HAPPY, "Trying to kill these mice! What I really need is a cat!")
                 }
                 stage++
             }
@@ -88,7 +88,7 @@ class CivilianDialogue(player: Player? = null) : Dialogue(player) {
                 val hasCat = cats.any { inInventory(player, it) }
                 when {
                     hasCat -> {
-                        playerl(FaceAnim.HAPPY, "I have a cat that I could sell.")
+                        playerl(FaceAnim.FRIENDLY, "I have a cat that I could sell.")
                         stage = 10
                     }
                     inInventory(player, Items.WITCHS_CAT_1491) -> {
@@ -101,11 +101,11 @@ class CivilianDialogue(player: Player? = null) : Dialogue(player) {
                     }
                 }
             }
-            10 -> npcl(FaceAnim.FRIENDLY, "You don't say, is that it?").also { stage++ }
+            10 -> npcl(FaceAnim.HALF_ASKING, "You don't say, is that it?").also { stage++ }
             11 -> player("Say hello to a real mouse-killer!").also { stage++ }
-            12 -> npcl(FaceAnim.FRIENDLY, "Hmmm, not bad, not bad at all. Looks like it's a lively one.").also { stage++ }
-            13 -> playerl(FaceAnim.THINKING, "Erm...kind of...").also { stage++ }
-            14 -> npcl(FaceAnim.FRIENDLY, "I don't have much in the way of money, but I do have these!").also { stage++ }
+            12 -> npcl(FaceAnim.THINKING, "Hmmm, not bad, not bad at all. Looks like it's a lively one.").also { stage++ }
+            13 -> playerl(FaceAnim.HALF_THINKING, "Erm...kind of...").also { stage++ }
+            14 -> npcl(FaceAnim.HAPPY, "I don't have much in the way of money, but I do have these!").also { stage++ }
             15 -> {
                 cats.forEachIndexed { index, catItem ->
                     if (removeItem(player, catItem)) {

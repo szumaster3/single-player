@@ -161,10 +161,7 @@ public final class HouseManager {
 
         player.setAttribute("poh_entry", HouseManager.this);
         player.setAttribute("/save:original-loc", location.getExitLocation());
-        player.lock(1);
-
-        player.debug("House location: " + houseRegion.getBaseLocation() +
-                ", entry: " + getEnterLocation());
+        player.debug("House location: " + houseRegion.getBaseLocation() + ", entry: " + getEnterLocation());
     }
 
     /**
