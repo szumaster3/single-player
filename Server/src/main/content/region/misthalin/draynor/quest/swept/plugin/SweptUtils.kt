@@ -267,10 +267,7 @@ internal object SweptUtils {
             getVarbit(player, VARBIT_TOAD_CRATE_LABEL) == 2 &&
             getVarbit(player, VARBIT_NEWT_CRATE_LABEL) == 1
         ) {
-            player.dialogueInterpreter.sendDialogue(
-                NPCs.GUS_8205,
-                "Hurray! I do believe that you've labelled the crates correctly! Ms Hetty will be so pleased."
-            )
+            sendNPCDialogue(player, NPCs.GUS_8205, "Hurray! I do believe that you've labelled the crates correctly! Ms Hetty will be so pleased.")
             removeAttribute(player, GameAttributes.QUEST_SWEPT_AWAY_LABELS)
             setAttribute(player, GameAttributes.QUEST_SWEPT_AWAY_LABELS_COMPLETE, true)
         } else {
