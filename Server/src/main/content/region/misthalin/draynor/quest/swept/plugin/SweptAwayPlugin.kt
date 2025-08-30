@@ -54,7 +54,7 @@ class SweptAwayPlugin :
          */
 
         on(Scenery.TRAPDOOR_39330, IntType.SCENERY, "open") { player, _ ->
-            if (!isQuestComplete(player, Quests.SWEPT_AWAY)) {
+            if (!isQuestComplete(player, Quests.SWEPT_AWAY) && getQuestStage(player, Quests.SWEPT_AWAY) >= 1) {
                 setVarbit(player, SweptUtils.VARBIT_RIMMINGTON_TRAPDOOR, 1)
             } else {
                 sendMessage(player, "It's locked.")
@@ -236,6 +236,7 @@ class SweptAwayPlugin :
 
         onUseWith(IntType.SCENERY, Items.NEWTS_AND_TOADS_LABEL_14067, SweptUtils.NT_CRATE) { player, used, _ ->
             SweptUtils.handleCrateLabelling(player, used.id, SweptUtils.VARBIT_NEWT_AND_TOAD_CRATE_LABEL, 3)
+            SweptUtils.checkGusTask(player)
             return@onUseWith true
         }
 
@@ -245,6 +246,7 @@ class SweptAwayPlugin :
 
         onUseWith(IntType.SCENERY, Items.TOAD_LABEL_14066, SweptUtils.T_CRATE) { player, used, _ ->
             SweptUtils.handleCrateLabelling(player, used.id, SweptUtils.VARBIT_TOAD_CRATE_LABEL, 2)
+            SweptUtils.checkGusTask(player)
             return@onUseWith true
         }
 

@@ -73,10 +73,15 @@ class BroomstickPlugin : InteractionListener {
          */
 
         onUseWith(IntType.ITEM, Items.BROOM_OINTMENT_14062, Items.BROOMSTICK_14057) { player, used, _ ->
-            replaceSlot(player, used.asItem().slot, Item(Items.VIAL_229, 1))
-            addItem(player, Items.VIAL_229)
-            sendMessages(player, "You smear the broom ointment onto Maggie's broom and feel it tingle as the", "enchantment permeates the wood.")
-            setAttribute(player, GameAttributes.QUEST_SWEPT_AWAY_HETTY_ENCH, true)
+            val enchanted = player.getAttribute(GameAttributes.QUEST_SWEPT_AWAY_HETTY_ENCH, false)
+            val ointmentID = player.inventory.getSlot(used.asItem())
+            val vialID = Item(Items.VIAL_229, 1)
+
+            if (!enchanted) {
+                replaceSlot(player, ointmentID, vialID)
+                sendMessages(player, "You smear the broom ointment onto Maggie's broom and feel it tingle as the", "enchantment permeates the wood.")
+                setAttribute(player, GameAttributes.QUEST_SWEPT_AWAY_HETTY_ENCH, true)
+            }
             return@onUseWith true
         }
     }

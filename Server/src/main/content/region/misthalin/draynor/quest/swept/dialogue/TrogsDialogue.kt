@@ -19,9 +19,6 @@ import java.util.*
 
 /**
  * Represents the Trogs dialogue.
- *
- * # Relations
- * - [Swept Away][content.region.misthalin.draynor.quest.swept.SweptAway]
  */
 @Initializable
 class TrogsDialogue(player: Player? = null) : Dialogue(player) {
@@ -30,7 +27,6 @@ class TrogsDialogue(player: Player? = null) : Dialogue(player) {
         npc = args[0] as NPC
         if (!inEquipment(player, Items.CATSPEAK_AMULET_4677, 1)) {
             npc(FaceAnim.CHILD_NEUTRAL, "Meow?")
-            stage = END_DIALOGUE
             return true
         }
 
@@ -39,10 +35,7 @@ class TrogsDialogue(player: Player? = null) : Dialogue(player) {
             if (hasCostumeItems(player, eligibleItems)) {
                 npc(FaceAnim.CHILD_NEUTRAL, "Rather nice costume, that. Are you trick-or-treating this year, then?")
             } else if (hasAnyCostumeItem(player, eligibleItems)) {
-                npc(
-                    FaceAnim.CHILD_NEUTRAL,
-                    "Oh, I see you're wearing one costume item! Aren't you planning on trick-or-treating this year?"
-                )
+                npc(FaceAnim.CHILD_NEUTRAL, "Oh, I see you're wearing one costume item! Aren't you planning on trick-or-treating this year?")
             } else {
                 npc(FaceAnim.CHILD_NEUTRAL, "No costume, eh? Aren't you planning on trick-or-treating this year?")
             }

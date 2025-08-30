@@ -258,7 +258,10 @@ class HettyDialogue(player: Player? = null) : Dialogue(player) {
             210 -> player("Yes, it's right here.").also { stage++ }
             211 -> npc("Excellent. I'll just take it and add a little newt slime to", "the ointment.").also { stage++ }
             212 -> {
-                replaceSlot(player, Item(Items.NEWT_14064, 1).slot, Item(Items.BROOM_OINTMENT_14062, 1))
+                val slot = player.inventory.getSlot(Item(Items.NEWT_14064))
+                if (slot != -1) {
+                    replaceSlot(player, slot, Item(Items.BROOM_OINTMENT_14062, 1))
+                }
                 npc("That should do it. Just rub this ointment on the broom;", "that should suit Maggie's purposes.")
                 stage++
             }

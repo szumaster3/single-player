@@ -31,8 +31,8 @@ class SweptAway : Quest(Quests.SWEPT_AWAY, 160, 159, 1, Vars.VARBIT_QUEST_SWEPT_
             line++
         }
         if (stage >= 1) {
-            line(player, "I have agreed to help Maggie prepare a batch of the 'good stuff'", line++, stage > 4)
-            line(player, "that she is concocting in her pauldron.", line++, stage > 4)
+            line(player, "I have agreed to help Maggie prepare a batch of the 'good stuff'", line++, true)
+            line(player, "that she is concocting in her pauldron.", line++, true)
             line(player, "Maggie gave me a broom which I've had enchanted by", line++, stage > 4)
             line(
                 player,
