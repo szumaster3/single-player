@@ -15,8 +15,10 @@ import shared.consts.NPCs
 import shared.consts.Quests
 
 val purpleCats = intArrayOf(
+    Items.PET_KITTEN_14089,
     Items.PET_CAT_14090,
     Items.LAZY_CAT_14091,
+    Items.OVERGROWN_CAT_14092,
     Items.WILY_CAT_14093,
 )
 
@@ -28,30 +30,28 @@ class CatOnWendyPlugin : InteractionListener {
          * Handles using cats on Wendy NPC (Purple cats mini-quest).
          */
 
-        onUseWith(IntType.NPC, NPCs.WENDY_8201) { player, item, _ ->
+        onUseAnyWith(IntType.NPC, NPCs.WENDY_8201) { player, item, _ ->
             val petData = Pets.forId(item.id)
             if (petData == null) {
                 sendMessage(player, "I can't do anything with that.")
-                return@onUseWith false
+                return@onUseAnyWith false
             }
+
+            val isPurpleCat = item.id in purpleCats
 
             if (!isQuestComplete(player, Quests.SWEPT_AWAY)) {
                 sendMessage(player, "You can't use your cat on Wendy yet.")
-                return@onUseWith false
+                return@onUseAnyWith false
             }
 
-            openDialogue(player, WendyRegularCatDialogueExtension())
-            return@onUseWith true
-        }
+            if (isPurpleCat) {
+                sendMessage(player, "You show your purple cat to Wendy.")
+                openDialogue(player, WendyPurpleCatDialogueExtension())
+            } else {
+                openDialogue(player, WendyRegularCatDialogueExtension())
+            }
 
-        /*
-         * Handles using purple cats on Wendy NPC.
-         */
-
-        onUseWith(IntType.NPC, NPCs.WENDY_8201, *purpleCats) { player, _, _ ->
-            sendMessage(player, "You show your purple cat to Wendy.")
-            openDialogue(player, WendyPurpleCatDialogueExtension())
-            return@onUseWith true
+            return@onUseAnyWith true
         }
     }
 }
@@ -98,8 +98,8 @@ class WendyRegularCatDialogueExtension : DialogueFile() {
                     }
                 }
 
-                player?.familiarManager?.morphPet(Item(purpleCatID), false, familiar?.location ?: player?.location)
-                npcl(null, "There you go! Oh, such a beautiful colour.")
+                player?.familiarManager?.morphPet(Item(purpleCatID), true, familiar?.location ?: player?.location)
+                npcl(FaceAnim.HAPPY, "There you go! Oh, such a beautiful colour.")
                 stage = 6
             }
             6 -> player("Thank you.").also { stage++ }
