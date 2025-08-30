@@ -90,8 +90,8 @@ class WendyRegularCatDialogueExtension : DialogueFile() {
                     petData.babyItemId -> Pets.CAT_6.babyItemId
                     petData.grownItemId -> Pets.CAT_6.grownItemId
                     petData.overgrownItemId -> Pets.CAT_6.overgrownItemId
-                    petData.lazyItemId -> Pets.CAT_6.lazyItemId
-                    petData.wilyItemId -> Pets.CAT_6.wilyItemId
+                    // petData.lazyItemId -> Pets.CAT_6.lazyItemId
+                    // petData.wilyItemId -> Pets.CAT_6.wilyItemId
                     else -> run {
                         end()
                         return

@@ -90,8 +90,8 @@ class KittenInteractDialogue(player: Player? = null) : Dialogue(player) {
                                     pets.babyItemId -> Items.HELL_KITTEN_7583
                                     pets.grownItemId -> Items.HELL_CAT_7582
                                     pets.overgrownItemId -> Items.OVERGROWN_HELLCAT_7581
-                                    pets.lazyItemId -> Items.LAZY_HELL_CAT_7584
-                                    pets.wilyItemId -> Items.WILY_CAT_6560
+                                    // pets.lazyItemId -> Items.LAZY_HELL_CAT_7584
+                                    // pets.wilyItemId -> Items.WILY_CAT_6560
                                     else -> return true
                                 }
                                 val item = Item(hellcatID)
