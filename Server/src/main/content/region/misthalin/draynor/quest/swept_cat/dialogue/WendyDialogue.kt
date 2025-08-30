@@ -1,5 +1,6 @@
-package content.region.misthalin.draynor.quest.swept.dialogue
+package content.region.misthalin.draynor.quest.swept_cat.dialogue
 
+import content.global.skill.summoning.pet.Pets
 import core.api.isQuestComplete
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
@@ -7,16 +8,11 @@ import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.plugin.Initializable
-import content.global.skill.summoning.pet.Pets
 import shared.consts.NPCs
 import shared.consts.Quests
 
 /**
  * Represents the Wendy dialogue.
- *
- * # Relations
- * - [Swept Away][content.region.misthalin.draynor.quest.swept.SweptAway]
- * - Purple cat miniquest.
  */
 @Initializable
 class WendyDialogue(player: Player? = null) : Dialogue(player) {
