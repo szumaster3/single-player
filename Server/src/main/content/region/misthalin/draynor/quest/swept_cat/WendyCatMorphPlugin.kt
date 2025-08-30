@@ -11,7 +11,7 @@ import core.game.node.item.Item
 import core.game.world.update.flag.context.Animation
 import shared.consts.*
 
-val purpleCats = intArrayOf(
+private val purpleCats = intArrayOf(
     Items.PET_KITTEN_14089,
     Items.PET_CAT_14090,
     Items.LAZY_CAT_14091,
@@ -19,7 +19,10 @@ val purpleCats = intArrayOf(
     Items.WILY_CAT_14093,
 )
 
-class CatOnWendyPlugin : InteractionListener {
+/**
+ * Handles Wendy transforming a player cat into a purple cat.
+ */
+class WendyCatMorphPlugin : InteractionListener {
 
     override fun defineListeners() {
 
@@ -27,7 +30,7 @@ class CatOnWendyPlugin : InteractionListener {
          * Handles using cats on Wendy NPC (Purple cats mini-quest).
          */
 
-        onUseAnyWith(IntType.NPC, NPCs.WENDY_8201) { player, item, _ ->
+        onUseAnyWith(IntType.NPC, NPCs.WENDY_8201) { player, item, node ->
             val petData = Pets.forId(item.id)
             if (petData == null) {
                 sendMessage(player, "I can't do anything with that.")
@@ -46,6 +49,12 @@ class CatOnWendyPlugin : InteractionListener {
                 return@onUseAnyWith false
             }
 
+            val npc = node.asNpc()
+
+            npc.resetWalk()
+            npc.lock(10)
+            npc.faceTemporary(player, 10)
+
             if (isPurpleCat) {
                 openDialogue(player, WendyPurpleCatDialogueExtension())
             } else {
@@ -57,7 +66,7 @@ class CatOnWendyPlugin : InteractionListener {
     }
 }
 
-class WendyRegularCatDialogueExtension : DialogueFile() {
+private class WendyRegularCatDialogueExtension : DialogueFile() {
     override fun handle(componentID: Int, buttonID: Int) {
         npc = NPC(NPCs.WENDY_8201)
 
@@ -75,13 +84,13 @@ class WendyRegularCatDialogueExtension : DialogueFile() {
                 val petID = inv.firstOrNull { it != null && Pets.forId(it.id) != null }
 
                 if (familiar == null && petID == null) {
-                    stage = 7
+                    end()
                     return
                 }
 
                 val petItemID = familiar?.id ?: petID?.id
                 val petData = Pets.forId(petItemID!!) ?: run {
-                    stage = 7
+                    end()
                     return
                 }
 
@@ -97,14 +106,21 @@ class WendyRegularCatDialogueExtension : DialogueFile() {
                     }
                 }
 
-                player?.familiarManager?.morphPet(Item(purpleCatID), true, familiar?.location ?: player?.location)
+                if(!removeItem(player!!, petItemID)) return
+                val spawnTile = familiar?.getClosestOccupiedTile(player?.location ?: return) ?: player?.location
+                player?.familiarManager?.morphPet(Item(purpleCatID), false, spawnTile)
 
                 val newFamiliar = player?.familiarManager?.familiar
                 if (newFamiliar != null) {
-                    player?.face(newFamiliar)
-                    player?.animate(Animation(Animations.MULTI_BEND_OVER_827))
-                    sendGraphics(Graphics.PUFF_OF_GREY_1276, newFamiliar.location)
-                    newFamiliar.sendChat("Miaow!")
+                    runTask(player!!, 1) {
+                        player?.face(newFamiliar)
+                        player?.animate(Animation(Animations.MULTI_BEND_OVER_827))
+                        newFamiliar.graphics(
+                            core.game.world.update.flag.context.Graphics(Graphics.PUFF_OF_GREY_1276),
+                            1
+                        )
+                        newFamiliar.sendChat("Miaow!", 1)
+                    }
                 }
 
                 npcl(FaceAnim.HAPPY, "There you go! Oh, such a beautiful colour.")
@@ -117,7 +133,7 @@ class WendyRegularCatDialogueExtension : DialogueFile() {
     }
 }
 
-class WendyPurpleCatDialogueExtension : DialogueFile() {
+private class WendyPurpleCatDialogueExtension : DialogueFile() {
     override fun handle(componentID: Int, buttonID: Int) {
         npc = NPC(NPCs.WENDY_8201)
         when (stage) {
