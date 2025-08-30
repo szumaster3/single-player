@@ -87,9 +87,9 @@ class WendyRegularCatDialogueExtension : DialogueFile() {
                 }
 
                 val purpleCatID = when (petItemID) {
-                    petData.babyItemId -> Pets.CAT_6.babyItemId
-                    petData.grownItemId -> Pets.CAT_6.grownItemId
-                    petData.overgrownItemId -> Pets.CAT_6.overgrownItemId
+                    petData.babyItemId -> Pets.PURPLE_CAT.babyItemId
+                    petData.grownItemId -> Pets.PURPLE_CAT.grownItemId
+                    petData.overgrownItemId -> Pets.PURPLE_CAT.overgrownItemId
                     // petData.lazyItemId -> Pets.CAT_6.lazyItemId
                     // petData.wilyItemId -> Pets.CAT_6.wilyItemId
                     else -> run {
