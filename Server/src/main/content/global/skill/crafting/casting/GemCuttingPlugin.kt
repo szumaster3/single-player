@@ -15,7 +15,7 @@ import shared.consts.Sounds
 class GemCuttingPlugin : InteractionListener {
 
     private val itemIDs = intArrayOf(Items.UNCUT_DIAMOND_1617, Items.UNCUT_RUBY_1619, Items.UNCUT_EMERALD_1621, Items.UNCUT_SAPPHIRE_1623, Items.UNCUT_OPAL_1625, Items.UNCUT_JADE_1627, Items.UNCUT_RED_TOPAZ_1629, Items.UNCUT_DRAGONSTONE_1631, Items.UNCUT_ONYX_6571)
-    private val semiprecious = setOf(Items.UNCUT_OPAL_1625, Items.UNCUT_JADE_1627, Items.UNCUT_RED_TOPAZ_1629)
+    private val semipreciousGemIDs = intArrayOf(Items.UNCUT_OPAL_1625, Items.UNCUT_JADE_1627, Items.UNCUT_RED_TOPAZ_1629, Items.OPAL_1609, Items.JADE_1611, Items.RED_TOPAZ_1613)
 
     override fun defineListeners() {
 
@@ -45,18 +45,12 @@ class GemCuttingPlugin : InteractionListener {
         }
 
         /*
-         * Handles crushing by using a hammer gems.
+         * Handles crushing gems by using a hammer.
+         * Patch: 27 January 2009
          */
 
-        onUseWith(IntType.ITEM, Items.HAMMER_2347, *semiprecious.toIntArray()) { player, used, with ->
+        onUseWith(IntType.ITEM, Items.HAMMER_2347, *semipreciousGemIDs) { player, used, with ->
             val gemId = if (used.id == Items.HAMMER_2347) with.id else used.id
-            val crushedGemId = when (gemId) {
-                Items.UNCUT_OPAL_1625,Items.UNCUT_JADE_1627,Items.UNCUT_RED_TOPAZ_1629 -> Items.CRUSHED_GEM_1633
-                else -> null
-            }
-
-            if (crushedGemId == null) return@onUseWith true
-
             val handler: SkillDialogueHandler =
                 object : SkillDialogueHandler(player, SkillDialogue.ONE_OPTION, Item(gemId)) {
                     override fun create(amount: Int, index: Int) {
@@ -72,9 +66,7 @@ class GemCuttingPlugin : InteractionListener {
 
                             override fun reward(): Boolean {
                                 if (player.inventory.remove(Item(gemId))) {
-                                    player.inventory.add(Item(crushedGemId))
-                                    val xp = if (gemId == Items.UNCUT_OPAL_1625) 3.8 else 5.0
-                                    player.skills.addExperience(Skills.CRAFTING, xp, true)
+                                    player.inventory.add(Item(Items.CRUSHED_GEM_1633))
                                     sendMessage(player, "You deliberately crush the gem with the hammer.")
                                 }
                                 remaining--
@@ -119,6 +111,10 @@ private class GemCuttingPulse(player: Player?, item: Item?, var amount: Int, val
         if (!inInventory(player, gem.uncut.id)) {
             return false
         }
+        if (!hasSpaceFor(player, Item(gem.uncut.id))) {
+            sendDialogue(player, "You do not have enough inventory space.")
+            return false
+        }
         return true
     }
 
@@ -138,15 +134,19 @@ private class GemCuttingPulse(player: Player?, item: Item?, var amount: Int, val
                 Items.UNCUT_RED_TOPAZ_1629 -> if (random(100) < getGemCrushChance(9.2, 0.0, craftingLevel)) Item(Items.CRUSHED_GEM_1633) else null
                 else -> null
             }
-
+            val gemName = getItemName(gem.gem.id)
             if (crushedGem != null) {
                 player.inventory.add(crushedGem)
-                rewardXP(player, Skills.CRAFTING, if (gem.uncut.id == Items.UNCUT_OPAL_1625) 3.8 else 5.0)
-                sendMessage(player, "You mis-hit the chisel and smash the ${gem.gem} to pieces!")
+                rewardXP(player, Skills.CRAFTING, when (gem.uncut.id) {
+                    Items.UNCUT_OPAL_1625 -> 3.8
+                    Items.UNCUT_RED_TOPAZ_1629 -> 6.3
+                    else -> 5.0
+                })
+                sendMessage(player, "You mis-hit the chisel and smash the $gemName to pieces!")
             } else {
                 player.inventory.add(gem.gem)
                 rewardXP(player, Skills.CRAFTING, gem.exp)
-                sendMessage(player, "You cut the ${gem.gem}.")
+                sendMessage(player, "You cut the $gemName.")
             }
         }
 

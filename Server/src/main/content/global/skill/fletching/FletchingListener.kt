@@ -14,6 +14,7 @@ import core.game.interaction.InteractionListener
 import core.game.node.entity.impl.PulseType
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
+import shared.consts.Components
 import shared.consts.Items
 import kotlin.math.min
 
@@ -274,6 +275,7 @@ class FletchingListener : InteractionListener {
                 override fun getAll(index: Int): Int = amountInInventory(player, with.id)
             }
             handler.open()
+            sendString(player, "How many gems would you like to cut into bolt tips?", Components.SKILL_MULTI1_309, 7)
             return@onUseWith true
         }
 

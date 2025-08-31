@@ -7,6 +7,7 @@ import core.game.node.entity.player.Player
 import core.game.node.entity.skill.SkillPulse
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
+import core.game.world.update.flag.context.Animation
 import shared.consts.Items
 
 class GemBoltCutPulse(player: Player?, node: Item?, private val gem: GemBolt, private var amount: Int, ) : SkillPulse<Item?>(player, node) {
@@ -19,7 +20,7 @@ class GemBoltCutPulse(player: Player?, node: Item?, private val gem: GemBolt, pr
     /**
      * Represents the cut animations.
      */
-    private val animation = gem.animation
+    private val animation = lastAnimation ?: gem.animation
 
     override fun checkRequirements(): Boolean {
         if (getStatLevel(player, Skills.FLETCHING) < gem.level) {
@@ -38,6 +39,7 @@ class GemBoltCutPulse(player: Player?, node: Item?, private val gem: GemBolt, pr
     override fun animate() {
         if (ticks % 6 == 0) {
             player.animate(animation)
+            lastAnimation = gem.animation
         }
     }
 
@@ -55,8 +57,13 @@ class GemBoltCutPulse(player: Player?, node: Item?, private val gem: GemBolt, pr
         if (player.inventory.remove(Item(gem.gem))) {
             player.inventory.add(reward)
             player.skills.addExperience(Skills.FLETCHING, gem.experience, true)
+            player?.sendMessage("You use your chisel to fetch small bolt tips.")
         }
         amount--
         return amount <= 0
+    }
+
+    companion object {
+        private var lastAnimation: Animation? = null
     }
 }
