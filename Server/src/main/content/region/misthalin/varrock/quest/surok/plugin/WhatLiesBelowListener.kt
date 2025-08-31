@@ -4,6 +4,7 @@ import content.data.items.SkillingTool.Companion.getPickaxe
 import core.api.*
 import core.api.getQuestStage
 import core.api.setQuestStage
+import core.game.dialogue.FaceAnim
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.player.link.diary.DiaryType
@@ -31,6 +32,11 @@ class WhatLiesBelowListener : InteractionListener {
         on(Items.ZAFFS_INSTRUCTIONS_11011, IntType.ITEM, "read") { player, _ ->
             openInterface(player, Components.ZAFFS_INSTRUCTIONS_251)
             return@on true
+        }
+
+        onUseWith(IntType.NPC, Items.BEACON_RING_11014, NPCs.RAT_BURGISS_5833) { player, _, with ->
+            sendNPCDialogue(player, with.id, "Ooh! Shiny! I would take it, but I'd probably have to sell it. I have a wife and 17 children to feed! Besides, you probably need it more than me right now!", FaceAnim.SCARED)
+            return@onUseWith true
         }
 
         on(Items.BEACON_RING_11014, IntType.ITEM, "summon", "operate") { player, _ ->

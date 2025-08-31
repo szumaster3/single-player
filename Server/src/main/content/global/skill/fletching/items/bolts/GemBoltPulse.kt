@@ -15,13 +15,7 @@ import kotlin.math.min
  *
  * @author Ceikry
  */
-class GemBoltPulse(
-    player: Player?, node: Item?,
-    /**
-     * Represents the gem bolt being made.
-     */
-    private val bolt: GemBolt, sets: Int
-) : SkillPulse<Item?>(player, node) {
+class GemBoltPulse(player: Player?, node: Item?, private val bolt: GemBolt, sets: Int) : SkillPulse<Item?>(player, node) {
     /**
      * Represents the sets to make.
      */
@@ -32,14 +26,6 @@ class GemBoltPulse(
      */
     private var ticks = 0
 
-    /**
-     * Constructs a new `GemBoltPulse` `Object`.
-     *
-     * @param player the player.
-     * @param node   the node.
-     * @param bolt   the bolt
-     * @param sets   the sets.
-     */
     init {
         this.sets = sets
     }
@@ -68,6 +54,11 @@ class GemBoltPulse(
         }
         val baseAmount = player.inventory.getAmount(bolt.base)
         val tipAmount = player.inventory.getAmount(bolt.tip)
+        if (baseAmount <= 0 || tipAmount <= 0) {
+            val materials = if (baseAmount <= 0) bolt.base else bolt.tip
+            player.packetDispatch.sendMessage("You do not have any more $materials to fletch.")
+            return true
+        }
         val base = Item(bolt.base)
         val tip = Item(bolt.tip)
         val product = Item(bolt.product)
