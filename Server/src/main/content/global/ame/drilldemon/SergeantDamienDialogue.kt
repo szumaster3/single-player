@@ -17,7 +17,7 @@ import shared.consts.NPCs
  */
 class SergeantDamienDialogue(var isCorrect: Boolean = false, var eventStart: Boolean = false, ) : DialogueFile() {
 
-    override fun handle(componentID: Int, buttonID: Int, ) {
+    override fun handle(componentID: Int, buttonID: Int) {
         npc = NPC(NPCs.SERGEANT_DAMIEN_2790)
         val correctCounter = player!!.getAttribute(GameAttributes.DRILL_COUNTER, 0)
         when (stage) {

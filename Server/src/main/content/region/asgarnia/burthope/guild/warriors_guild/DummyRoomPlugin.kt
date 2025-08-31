@@ -25,7 +25,7 @@ import shared.consts.Components
 
 @Initializable
 class DummyRoomPlugin : OptionHandler() {
-    private enum class Dummy(val scenery: Scenery, val attackStyle: Int, val bonusType: Int, ) {
+    private enum class Dummy(val scenery: Scenery, val attackStyle: Int, val bonusType: Int) {
         STAB(Scenery(shared.consts.Scenery.DUMMY_15629, 2857, 3549, 0, 10, 2), -1, WeaponInterface.BONUS_STAB),
         SLASH(Scenery(shared.consts.Scenery.DUMMY_15625, 2858, 3554, 0), -1, WeaponInterface.BONUS_SLASH),
         CRUSH(Scenery(shared.consts.Scenery.DUMMY_15628, 2859, 3549, 0, 10, 2), -1, WeaponInterface.BONUS_CRUSH),

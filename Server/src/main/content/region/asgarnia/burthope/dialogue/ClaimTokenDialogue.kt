@@ -9,7 +9,7 @@ import shared.consts.Items
 import shared.consts.NPCs
 
 class ClaimTokenDialogue(private val npcId: NPC) : DialogueFile() {
-    override fun handle(componentID: Int, buttonID: Int, ) {
+    override fun handle(componentID: Int, buttonID: Int) {
         npc = npcId
 
         val amount = player!!.getSavedData().activityData.warriorGuildTokens

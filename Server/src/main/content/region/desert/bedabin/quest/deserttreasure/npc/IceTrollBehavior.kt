@@ -15,7 +15,7 @@ class IceTrollBehavior : NPCBehavior(*iceTrollIds) {
         private val iceTrollIds = intArrayOf(NPCs.ICE_TROLL_1936, NPCs.ICE_TROLL_1937, NPCs.ICE_TROLL_1938, NPCs.ICE_TROLL_1939, NPCs.ICE_TROLL_1940, NPCs.ICE_TROLL_1941, NPCs.ICE_TROLL_1942)
     }
 
-    override fun onDeathFinished(self: NPC, killer: Entity, ) {
+    override fun onDeathFinished(self: NPC, killer: Entity) {
         if (killer is Player) {
             if (getQuestStage(killer, Quests.DESERT_TREASURE) >= 9) {
                 val currentIceTrollKill = getAttribute(killer, DesertTreasure.attributeTrollKillCount, 0)

@@ -16,7 +16,7 @@ import kotlin.math.min
 /**
  * Represents the barbarian weapons.
  */
-private enum class BarbarianWeapon(val requiredWood: Int, val requiredBar: Int, val spearId: Int, val hastaId: Int, var amount: Int, val requiredLevel: Int, val experience: Double, ) {
+private enum class BarbarianWeapon(val requiredWood: Int, val requiredBar: Int, val spearId: Int, val hastaId: Int, var amount: Int, val requiredLevel: Int, val experience: Double) {
     BRONZE(Items.LOGS_1511, Items.BRONZE_BAR_2349, Items.BRONZE_SPEAR_1237, Items.BRONZE_HASTA_11367, 1, 5, 25.00),
     IRON(Items.OAK_LOGS_1521, Items.IRON_BAR_2351, Items.IRON_SPEAR_1239, Items.IRON_HASTA_11369, 1, 20, 50.00),
     STEEL(Items.WILLOW_LOGS_1519, Items.STEEL_BAR_2353, Items.STEEL_SPEAR_1241, Items.STEEL_HASTA_11371, 1, 35, 75.00),

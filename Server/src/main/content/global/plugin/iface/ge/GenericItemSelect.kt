@@ -41,7 +41,7 @@ class GenericItemSelect : InterfaceListener {
         }
     }
 
-    private fun processResponse(player: Player, opcode: Int, slot: Int, ) {
+    private fun processResponse(player: Player, opcode: Int, slot: Int) {
         val callback = getAttribute<((Int, Int) -> Unit)?>(player, "itemselect-callback", null)
         if (callback == null) {
             log(this::class.java, Log.WARN, "${player.name} is trying to use an item select prompt with no callback!")

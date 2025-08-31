@@ -258,7 +258,7 @@ class TheGrandTreePlugin : InteractionListener {
         }
     }
 
-    private fun scrollHandler(player: Player, item: Item, ) {
+    private fun scrollHandler(player: Player, item: Item) {
         val id = item.id
 
         openInterface(player, Components.BLANK_SCROLL_222).also {

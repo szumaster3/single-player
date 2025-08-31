@@ -5,7 +5,7 @@ import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import shared.consts.Items
 
-enum class HunterGear(val chanceRate: Double, vararg equipment: Item, ) {
+enum class HunterGear(val chanceRate: Double, vararg equipment: Item) {
     GLOVE_OF_SILENCE(3.0, Item(Items.GLOVES_OF_SILENCE_10075)),
     SPOTIER_CAPE(5.0, Item(Items.SPOTTIER_CAPE_10071)),
     SPOTTED_CAPE(5.0, Item(Items.SPOTTED_CAPE_10069)),

@@ -2,7 +2,7 @@ package content.global.skill.gathering.fishing
 
 import core.game.world.map.Location
 
-enum class FishingSpots(vararg val locations: Location, ) {
+enum class FishingSpots(vararg val locations: Location) {
     CATHERBY(Location(2844, 3429, 0), Location(2839, 3431, 0), Location(2836, 3431, 0), Location(2837, 3431, 0), Location(2838, 3431, 0), Location(2839, 3431, 0), Location(2840, 3431, 0), Location(2844, 3429, 0), Location(2845, 3429, 0), Location(2846, 3429, 0), Location(2853, 3423, 0), Location(2854, 3423, 0), Location(2855, 3423, 0), Location(2859, 3426, 0), Location(2860, 3426, 0)),
     ENTRANA(Location(2842, 3359, 0), Location(2843, 3359, 0), Location(2844, 3359, 0), Location(2847, 3361, 0), Location(2848, 3361, 0), Location(2849, 3361, 0), Location(2850, 3361, 0)),
     ENTRANA_PLATFORM(Location(2879, 3334, 0), Location(2879, 3335, 0), Location(2879, 3338, 0), Location(2879, 3339, 0), Location(2877, 3342, 0), Location(2876, 3342, 0), Location(2875, 3342, 0), Location(2875, 3331, 0), Location(2876, 3331, 0), Location(2877, 3331, 0)),

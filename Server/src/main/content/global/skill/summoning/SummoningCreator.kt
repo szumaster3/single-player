@@ -223,7 +223,7 @@ object SummoningCreator {
      * @property experience The experience awarded for creating the item.
      * @property level The level required to create the item.
      */
-    class SummoningNode(val base: Any, val required: Array<Item>, val product: Item, val experience: Double, val level: Int, ) {
+    class SummoningNode(val base: Any, val required: Array<Item>, val product: Item, val experience: Double, val level: Int) {
         val isPouch: Boolean get() = base is SummoningPouch
 
         companion object {

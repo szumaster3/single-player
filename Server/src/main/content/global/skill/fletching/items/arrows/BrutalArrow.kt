@@ -5,7 +5,7 @@ import shared.consts.Items
 /**
  * Represents the types of brutal arrows.
  */
-enum class BrutalArrow(val base: Int, val product: Int, val level: Int, val experience: Double, ) {
+enum class BrutalArrow(val base: Int, val product: Int, val level: Int, val experience: Double) {
     BRONZE_BRUTAL(Items.BRONZE_NAILS_4819, Items.BRONZE_BRUTAL_4773, 7, 1.4),
     IRON_BRUTAL(Items.IRON_NAILS_4820, Items.IRON_BRUTAL_4778, 18, 2.6),
     STEEL_BRUTAL(Items.STEEL_NAILS_1539, Items.STEEL_BRUTAL_4783, 33, 5.1),

@@ -6,7 +6,7 @@ import shared.consts.Items
 /**
  * Represents an experience lamp.
  */
-enum class Lamps(val item: Int, val experience: Int, val requiredLevel: Int = 0, ) {
+enum class Lamps(val item: Int, val experience: Int, val requiredLevel: Int = 0) {
     GENIE_LAMP(Items.LAMP_2528, 10),
     STRONGHOLD_LAMP(Items.ANTIQUE_LAMP_4447, 500),
     BLESSED_LAMP(Items.BLESSED_LAMP_10889, 5000, 30),

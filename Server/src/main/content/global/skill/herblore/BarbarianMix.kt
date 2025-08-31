@@ -5,7 +5,7 @@ import shared.consts.Items
 /**
  * Represents barbarian mixes.
  */
-enum class BarbarianMix(val item: Int, val level: Int, val product: Int, val exp: Double, val both: Boolean, ) {
+enum class BarbarianMix(val item: Int, val level: Int, val product: Int, val exp: Double, val both: Boolean) {
     ATTACK_POTION(Items.ATTACK_POTION2_123, 4, Items.ATTACK_MIX2_11429, 8.0, true),
     ANTI_POISON_POTION(Items.ANTIPOISON2_177, 6, Items.ANTIPOISON_MIX2_11433, 12.0, true),
     RELIC(Items.RELICYMS_BALM2_4846, 9, Items.RELICYMS_MIX2_11437, 14.0, true),

@@ -130,7 +130,7 @@ class DarkZone : MapZone("Dark zone", true), EventHook<UseWithEvent> {
         }
     }
 
-    override fun process(entity: Entity, event: UseWithEvent, ) {
+    override fun process(entity: Entity, event: UseWithEvent) {
         val isTinderbox = getItemName(event.used) == "Tinderbox" || getItemName(event.with) == "Tinderbox"
 
         if (isTinderbox && entity is Player) {

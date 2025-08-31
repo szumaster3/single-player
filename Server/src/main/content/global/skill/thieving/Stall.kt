@@ -6,7 +6,7 @@ import core.tools.RandomFunction
 import shared.consts.Items
 import shared.consts.Scenery as Objects
 
-enum class Stall(full: Array<Int>, empty: Array<Int>, var level: Int, var rewards: Array<Item>, var experience: Double, var delay: Int, var message: String, ) {
+enum class Stall(full: Array<Int>, empty: Array<Int>, var level: Int, var rewards: Array<Item>, var experience: Double, var delay: Int, var message: String) {
     VEGETABLE_STALL(arrayOf(Objects.VEG_STALL_4706, Objects.VEG_STALL_4708), arrayOf(Objects.MARKET_STALL_634), 2, arrayOf(Item(Items.ONION_1957, 1), Item(Items.CABBAGE_1965, 1), Item(Items.POTATO_1942, 1), Item(Items.TOMATO_1982, 1), Item(Items.GARLIC_1550, 1)), 10.0, 4, "vegetables",),
     BAKER_STALL(arrayOf(Objects.BAKER_S_STALL_2561, Objects.BAKERY_STALL_6163, Objects.BAKER_S_STALL_34384,), arrayOf(Objects.MARKET_STALL_634, Objects.MARKET_STALL_6984, Objects.MARKET_STALL_34381,), 5, arrayOf(Item(Items.CAKE_1891, 1), Item(Items.BREAD_2309, 1), Item(Items.CHOCOLATE_SLICE_1901, 1)), 16.0, 4, "bread",),
     CRAFTING_STALL(arrayOf(Objects.CRAFTING_STALL_4874, Objects.CRAFTING_STALL_6166), arrayOf(Objects.BAMBOO_DESK_4797, Objects.MARKET_STALL_6984), 5, arrayOf(Item(Items.RING_MOULD_1592, 1), Item(Items.NECKLACE_MOULD_1597, 1), Item(Items.CHISEL_1755, 1),), 16.0, 12, "tool",),

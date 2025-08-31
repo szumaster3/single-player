@@ -18,7 +18,7 @@ enum class MeatState {
  * @property id The item id representing this meat.
  * @property state The current state of the meat (raw, cooked, burnt, etc.).
  */
-enum class Meat(val id: Int, val state: MeatState, ) {
+enum class Meat(val id: Int, val state: MeatState) {
     ENCHANTED_BEEF(Items.ENCHANTED_BEEF_522, MeatState.INEDIBLE_SPECIAL),
     ENCHANTED_RAT_MEAT(Items.ENCHANTED_RAT_MEAT_523, MeatState.INEDIBLE_SPECIAL),
     ENCHANTED_BEAR_MEAT(Items.ENCHANTED_BEAR_MEAT_524, MeatState.INEDIBLE_SPECIAL),

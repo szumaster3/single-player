@@ -13,7 +13,7 @@ import shared.consts.NPCs
 
 class CapnIzzyDialogue(private val it: Int, ) : DialogueFile() {
 
-    override fun handle(componentID: Int, buttonID: Int, ) {
+    override fun handle(componentID: Int, buttonID: Int) {
         when (it) {
             0 -> when (stage) {
                 0 -> playerl(FaceAnim.HAPPY, "Ahoy Cap'n!").also { stage++ }

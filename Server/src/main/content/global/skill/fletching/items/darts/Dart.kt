@@ -5,7 +5,7 @@ import shared.consts.Items
 /**
  * Represents types of darts.
  */
-enum class Dart(val unfinished: Int, val finished: Int, val level: Int, val experience: Double, ) {
+enum class Dart(val unfinished: Int, val finished: Int, val level: Int, val experience: Double) {
     BRONZE_DART(Items.BRONZE_DART_TIP_819, Items.BRONZE_DART_806, 1, 1.8),
     IRON_DART(Items.IRON_DART_TIP_820, Items.IRON_DART_807, 22, 3.8),
     STEEL_DART(Items.STEEL_DART_TIP_821, Items.STEEL_DART_808, 37, 7.5),

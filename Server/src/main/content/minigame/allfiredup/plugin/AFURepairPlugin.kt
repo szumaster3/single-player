@@ -163,7 +163,7 @@ class AFURepairPlugin : InteractionListener {
         ForceMovement.run(player, location, destination, animation, animation, direction, 20).endAnimation = Animation.RESET
     }
 
-    private enum class RepairClimbObject(val varbit: Int, val destinationUp: Location?, val destinationDown: Location?, val levelRequirement: Pair<Int, Int>?, ) {
+    private enum class RepairClimbObject(val varbit: Int, val destinationUp: Location?, val destinationDown: Location?, val levelRequirement: Pair<Int, Int>?) {
         DEATH_PLATEAU(5161, Location.create(2949, 3623, 0), Location.create(2954, 3623, 0), Skills.CONSTRUCTION to 42),
         BURTHORPE(5160, Location.create(2941, 3563, 0), Location.create(2934, 3563, 0), Skills.SMITHING to 56),
         GWD(5163, null, null, Skills.CRAFTING to 60),

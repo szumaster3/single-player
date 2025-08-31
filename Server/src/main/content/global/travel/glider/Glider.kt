@@ -27,7 +27,7 @@ enum class Glider(val button: Int, val location: Location, val config: Int, val 
         /**
          * Sends glider config to the player based on NPC.
          */
-        fun sendConfig(npc: NPC, player: Player, ) {
+        fun sendConfig(npc: NPC, player: Player) {
             val g = forNpc(npc.id)
             if (g != null) {
                 setVarp(player, 153, g.config)

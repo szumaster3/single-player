@@ -25,7 +25,7 @@ class CiderOnForesterPlugin : InteractionListener {
                 openDialogue(
                     player,
                     object : DialogueFile() {
-                        override fun handle(componentID: Int, buttonID: Int, ) {
+                        override fun handle(componentID: Int, buttonID: Int) {
                             if (init) stage = 0
                             init = false
                             when (stage) {

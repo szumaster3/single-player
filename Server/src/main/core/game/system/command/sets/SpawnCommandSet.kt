@@ -31,7 +31,7 @@ class SpawnCommandSet : CommandSet(Privilege.ADMIN) {
             }
         }
 
-        fun writeJsonArrayToFile(filePath: String, jsonArray: JsonArray, gson: Gson, ) {
+        fun writeJsonArrayToFile(filePath: String, jsonArray: JsonArray, gson: Gson) {
             val file = File(filePath)
             file.parentFile.mkdirs()
             file.writeText(gson.toJson(jsonArray))

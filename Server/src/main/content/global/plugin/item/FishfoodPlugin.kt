@@ -29,7 +29,7 @@ class FishfoodPlugin : UseWithHandler(*FishFood.usables) {
     /**
      * Represents fish food item combinations.
      */
-    enum class FishFood(private val used: Int, val with: Int, private val product: Int, private val msg: String, ) {
+    enum class FishFood(private val used: Int, val with: Int, private val product: Int, private val msg: String) {
         POISONED(POISON, FISH_FOOD, POISONED_FISH_FOOD, "You poison the fish food."),
         GUAMBOX(Items.GROUND_GUAM_6681, Items.AN_EMPTY_BOX_6675, Items.GUAM_IN_A_BOX_6677, "You put the ground Guam into the box."),
         SEAWEEDBOX(Items.GROUND_SEAWEED_6683, Items.AN_EMPTY_BOX_6675, Items.SEAWEED_IN_A_BOX_6679, "You put the ground Seaweed into the box."),

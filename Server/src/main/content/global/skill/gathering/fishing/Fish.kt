@@ -4,7 +4,7 @@ import core.api.asItem
 import core.game.node.item.Item
 import shared.consts.Items
 
-enum class Fish(val id: Int, val level: Int, val experience: Double, val lowChance: Double, val highChance: Double, ) {
+enum class Fish(val id: Int, val level: Int, val experience: Double, val lowChance: Double, val highChance: Double) {
     SWAMP_WEED(Items.SWAMP_WEED_10978, 1, 1.0, 0.121, 0.16),
     CRAYFISH(Items.RAW_CRAYFISH_13435, 1, 10.0, 0.15, 0.5),
     SHRIMP(Items.RAW_SHRIMPS_317, 1, 10.0, 0.191, 0.5),

@@ -11,7 +11,7 @@ import shared.consts.NPCs
  */
 class KnightNotesDialogue : DialogueFile() {
 
-    override fun handle(componentID: Int, buttonID: Int, ) {
+    override fun handle(componentID: Int, buttonID: Int) {
         npc = NPC(NPCs.SIR_TIFFY_CASHIEN_2290)
         when (stage) {
             0 -> playerl(FaceAnim.FRIENDLY, "Sir Tiffy! I got this scroll from a knight near Trollheim. He said I should deliver it to you urgently.").also { stage = 1 }
@@ -44,7 +44,7 @@ class KnightNotesDialogue : DialogueFile() {
     }
 
     class BrokenKnightNotes : DialogueFile() {
-        override fun handle(componentID: Int, buttonID: Int, ) {
+        override fun handle(componentID: Int, buttonID: Int) {
             when (stage) {
                 0 -> npcl(FaceAnim.FRIENDLY, "Now, let's see what is so urgent. Hmm... I see that this scroll has been tampered with! The wax seal is broken.").also { stage = 1 }
                 1 -> playerl(FaceAnim.FRIENDLY, "Err, yes. It was that way when I got it.").also { stage = 2 }

@@ -151,7 +151,7 @@ class LarryDialogue(player: Player? = null, ) : Dialogue(player) {
         return true
     }
 
-    override fun handleSelectionCallback(skill: Int, player: Player, ) {
+    override fun handleSelectionCallback(skill: Int, player: Player) {
         val points = player.getAttribute(GameAttributes.ACTIVITY_PENGUINS_HNS_SCORE, 0)
         if (points == 0) {
             sendMessage(player, "Sorry, but you have no points to redeem.")

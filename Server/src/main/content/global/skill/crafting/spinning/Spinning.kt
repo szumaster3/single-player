@@ -6,7 +6,7 @@ import shared.consts.Items
 /**
  * Enum representing different spinning activities.
  */
-enum class Spinning(val button: Int, val need: Int, val product: Int, val level: Int, val exp: Double, ) {
+enum class Spinning(val button: Int, val need: Int, val product: Int, val level: Int, val exp: Double) {
     WOOL(19, Items.WOOL_1737, Items.BALL_OF_WOOL_1759, 1, 2.5),
     FLAX(17, Items.FLAX_1779, Items.BOW_STRING_1777, 10, 15.0),
     ROOT(23, Items.MAGIC_ROOTS_6051, Items.MAGIC_STRING_6038, 19, 30.0),

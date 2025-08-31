@@ -89,7 +89,7 @@ class MillingPlugin : InteractionListener {
     /**
      * Fills the hopper with an item.
      */
-    private fun fillHopper(player: Player, used: Item, ) {
+    private fun fillHopper(player: Player, used: Item) {
         playAudio(player, Sounds.FILL_GRAIN_2576)
         animate(player, Animations.PUT_OBJECT_ON_TABLE_537)
         if (getAttribute(player, "milling:hopper", 0) == 0 && removeItem(player, used)) {

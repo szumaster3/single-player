@@ -18,7 +18,7 @@ import shared.consts.Vars
 @Initializable
 class BlackKnightsFortress : Quest(Quests.BLACK_KNIGHTS_FORTRESS, 14, 13, 3, Vars.VARP_QUEST_BLACK_KNIGHTS_FORTRESS_PROGRESS_130, 0, 1, 4) {
 
-    override fun drawJournal(player: Player, stage: Int, ) {
+    override fun drawJournal(player: Player, stage: Int) {
         super.drawJournal(player, stage)
         var line = 12
 

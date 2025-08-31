@@ -17,7 +17,7 @@ import shared.consts.Quests
  */
 class DunstanDialogueFile : DialogueFile() {
 
-    override fun handle(componentID: Int, buttonID: Int, ) {
+    override fun handle(componentID: Int, buttonID: Int) {
         when (getQuestStage(player!!, Quests.DEATH_PLATEAU)) {
             21 -> {
                 when (stage) {

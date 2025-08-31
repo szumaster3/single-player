@@ -6,7 +6,7 @@ import shared.consts.Items
 /**
  * Represents the various elemental tiaras.
  */
-enum class Tiara(val item: Item, val experience: Double, ) {
+enum class Tiara(val item: Item, val experience: Double) {
     AIR(Item(Items.AIR_TIARA_5527), 25.0),
     MIND(Item(Items.MIND_TIARA_5529), 27.5),
     WATER(Item(Items.WATER_TIARA_5531), 30.0),

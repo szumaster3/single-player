@@ -20,7 +20,7 @@ import shared.consts.NPCs
 
 @Initializable
 class SorceressElementalNPC : AbstractNPC {
-    internal enum class ElementalDefinition(private val npcId: Int, private val locations: Array<Location>, ) {
+    internal enum class ElementalDefinition(private val npcId: Int, private val locations: Array<Location>) {
         AUTUMN_ELEMENTAL_5533(NPCs.AUTUMN_ELEMENTAL_5533, arrayOf(Location(2908, 5460, 0), Location(2898, 5460, 0))),
         AUTUMN_ELEMENTAL_5534(NPCs.AUTUMN_ELEMENTAL_5534, arrayOf(Location(2900, 5448, 0), Location(2900, 5455, 0))),
         AUTUMN_ELEMENTAL_5535(NPCs.AUTUMN_ELEMENTAL_5535, arrayOf(Location(2905, 5449, 0), Location(2899, 5449, 0))),

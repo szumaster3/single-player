@@ -203,7 +203,7 @@ object InteractionListeners {
      * Adds destination overrides for multiple ids and options.
      */
     @JvmStatic
-    fun addDestOverrides(type: Int, ids: IntArray, options: Array<out String>, method: (Entity, Node) -> Location, ) {
+    fun addDestOverrides(type: Int, ids: IntArray, options: Array<out String>, method: (Entity, Node) -> Location) {
         for (id in ids) {
             for (opt in options) {
                 destinationOverrides["$type:$id:${opt.lowercase()}"] = method

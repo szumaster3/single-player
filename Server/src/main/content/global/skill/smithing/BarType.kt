@@ -2,7 +2,7 @@ package content.global.skill.smithing
 
 import shared.consts.Items
 
-enum class BarType(val barType: Int, @JvmField val experience: Double, val barName: String, ) {
+enum class BarType(val barType: Int, @JvmField val experience: Double, val barName: String) {
     BRONZE(Items.BRONZE_BAR_2349, 12.5, "Bronze Smithing"),
     BLURITE(Items.BLURITE_BAR_9467, 16.0, "Blurite Smithing"),
     IRON(Items.IRON_BAR_2351, 25.0, "Iron Smithing"),

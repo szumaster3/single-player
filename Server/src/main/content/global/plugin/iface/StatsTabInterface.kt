@@ -62,7 +62,7 @@ class StatsTabInterface : InterfaceListener {
             }
         }
 
-        enum class SkillConfig(val buttonID: Int, val configID: Int, val skillID: Int, ) {
+        enum class SkillConfig(val buttonID: Int, val configID: Int, val skillID: Int) {
             ATTACK(125, 1, Skills.ATTACK),
             STRENGTH(126, 2, Skills.STRENGTH),
             DEFENCE(127, 5, Skills.DEFENCE),

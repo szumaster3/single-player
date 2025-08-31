@@ -4,7 +4,7 @@ import core.game.dialogue.DialogueFile
 
 class KrukDialogue : DialogueFile() {
 
-    override fun handle(componentID: Int, buttonID: Int, ) {
+    override fun handle(componentID: Int, buttonID: Int) {
         when (stage) {
             0 -> playerl("Hello?").also { stage++ }
             1 -> npcl("What brings you up here, monkey?").also { stage++ }

@@ -16,7 +16,7 @@ import shared.consts.NPCs
  * Represents the Tree Guard (Draynor tree) dialogue.
  */
 class TreeGuardDialogue : DialogueFile() {
-    override fun handle(componentID: Int, buttonID: Int, ) {
+    override fun handle(componentID: Int, buttonID: Int) {
         npc = NPC(NPCs.GUARD_345)
         when (stage) {
             0 -> if (getAttribute(player!!, GameAttributes.TREE_GUARD, false)) {

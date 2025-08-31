@@ -10,7 +10,7 @@ import shared.consts.Vars
 
 class UglugNarDialogue : DialogueFile() {
 
-    override fun handle(componentID: Int, buttonID: Int, ) {
+    override fun handle(componentID: Int, buttonID: Int) {
         npc = NPC(NPCs.UGLUG_NAR_2039)
         when (stage) {
             0 -> sendItemDialogue(player!!, Items.RELICYMS_BALM3_4844, "You show the potion to Uglug Nar.")

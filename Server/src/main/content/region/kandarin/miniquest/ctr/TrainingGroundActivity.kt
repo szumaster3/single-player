@@ -42,7 +42,7 @@ class TrainingGroundActivity : ActivityPlugin("Knight's training", true, false, 
     /**
      * Called when an entity leaves the activity area.
      */
-    override fun areaLeave(entity: Entity, logout: Boolean, ) {
+    override fun areaLeave(entity: Entity, logout: Boolean) {
         super.areaLeave(entity, logout)
         if (entity is Player) {
             removeAttributes(entity, GameAttributes.PRAYER_LOCK, GameAttributes.KW_SPAWN, GameAttributes.KW_TIER, GameAttributes.KW_BEGIN)

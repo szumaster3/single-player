@@ -60,7 +60,7 @@ class QuizMasterDialogue : DialogueFile() {
         }
     }
 
-    override fun handle(componentID: Int, buttonID: Int, ) {
+    override fun handle(componentID: Int, buttonID: Int) {
         npc = NPC(NPCs.QUIZ_MASTER_2477)
         when (stage) {
             0 -> npc(FaceAnim.FRIENDLY, "WELCOME to the GREATEST QUIZ SHOW in the", "whole of ${ServerConstants.SERVER_NAME}:", "<col=8A0808>O D D</col>  <col=8A088A>O N E</col>  <col=08088A>O U T</col>").also { stage++ }

@@ -20,7 +20,7 @@ import shared.consts.Sounds
 /**
  * Represents enchanted jewellery items and their corresponding teleport options.
  */
-enum class EnchantedJewellery(val options: Array<String>, val locations: Array<Location>, val crumbled: Boolean, vararg val ids: Int, ) {
+enum class EnchantedJewellery(val options: Array<String>, val locations: Array<Location>, val crumbled: Boolean, vararg val ids: Int) {
     RING_OF_SLAYING(options = arrayOf("Sumona in Pollnivneach.", "Morytania Slayer Tower.", "Rellekka Slayer Caves.", "Tarn's Lair", "Nowhere. Give me a Slayer update."), locations = arrayOf(Location.create(3361, 2994, 0), Location.create(3428, 3535, 0), Location.create(2792, 3615, 0), Location.create(3424, 9660, 0)), crumbled = true, Items.RING_OF_SLAYING8_13281, Items.RING_OF_SLAYING7_13282, Items.RING_OF_SLAYING6_13283, Items.RING_OF_SLAYING5_13284, Items.RING_OF_SLAYING4_13285, Items.RING_OF_SLAYING3_13286, Items.RING_OF_SLAYING2_13287, Items.RING_OF_SLAYING1_13288,),
     RING_OF_DUELING(options = arrayOf("Al Kharid Duel Arena.", "Castle Wars Arena.", "Fist of Guthix.", "Nowhere."), locations = arrayOf(Location.create(3314, 3235, 0), Location.create(2442, 3089, 0), Location.create(1693, 5600, 0)), crumbled = true, Items.RING_OF_DUELLING8_2552, Items.RING_OF_DUELLING7_2554, Items.RING_OF_DUELLING6_2556, Items.RING_OF_DUELLING5_2558, Items.RING_OF_DUELLING4_2560, Items.RING_OF_DUELLING3_2562, Items.RING_OF_DUELLING2_2564, Items.RING_OF_DUELLING1_2566,),
     AMULET_OF_GLORY(options = arrayOf("Edgeville.", "Karamja.", "Draynor Village.", "Al-Kharid.", "Nowhere."), locations = arrayOf(Location.create(3087, 3495, 0), Location.create(2919, 3175, 0), Location.create(3104, 3249, 0), Location.create(3304, 3124, 0)), crumbled = false, Items.AMULET_OF_GLORY4_1712, Items.AMULET_OF_GLORY3_1710, Items.AMULET_OF_GLORY2_1708, Items.AMULET_OF_GLORY1_1706, Items.AMULET_OF_GLORY_1704,),
@@ -35,7 +35,7 @@ enum class EnchantedJewellery(val options: Array<String>, val locations: Array<L
     /**
      * Handles the use of the enchanted jewellery.
      */
-    fun use(player: Player, item: Item, buttonID: Int, isEquipped: Boolean, ) {
+    fun use(player: Player, item: Item, buttonID: Int, isEquipped: Boolean) {
         if (buttonID >= locations.size) {
             if (isSlayerRing(item)) {
                 slayerProgressDialogue(player)
@@ -121,7 +121,7 @@ enum class EnchantedJewellery(val options: Array<String>, val locations: Array<L
     /**
      * Replaces the current jewellery item with the next one.
      */
-    private fun replaceJewellery(player: Player, item: Item, nextID: Item, isEquipped: Boolean, ) {
+    private fun replaceJewellery(player: Player, item: Item, nextID: Item, isEquipped: Boolean) {
         if (isEquipped) {
             replaceSlot(player, item.slot, nextID, item, Container.EQUIPMENT)
         } else {

@@ -15,7 +15,7 @@ import shared.consts.Quests
  * - [Fight Arena][content.region.kandarin.khazard.quest.arena.FightArena]
  */
 class HengradDialogue : DialogueFile() {
-    override fun handle(componentID: Int, buttonID: Int, ) {
+    override fun handle(componentID: Int, buttonID: Int) {
         npc = NPC(NPCs.HENGRAD_263)
         when (getQuestStage(player!!, Quests.FIGHT_ARENA)) {
             in 72..88 ->

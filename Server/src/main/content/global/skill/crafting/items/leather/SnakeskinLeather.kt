@@ -5,7 +5,7 @@ import shared.consts.Items
 /**
  * Represents the snakeskin armour items.
  */
-enum class SnakeskinLeather(val product: Int, val level: Int, val experience: Double, val amount: Int, ) {
+enum class SnakeskinLeather(val product: Int, val level: Int, val experience: Double, val amount: Int) {
     SNAKESKIN_BOOTS(Items.SNAKESKIN_BOOTS_6328, 45, 30.0, 6),
     SNAKESKIN_VAMBRACES(Items.SNAKESKIN_VBRACE_6330, 47, 35.0, 8),
     SNAKESKIN_BANDANA(Items.SNAKESKIN_BANDANA_6326, 48, 45.0, 5),

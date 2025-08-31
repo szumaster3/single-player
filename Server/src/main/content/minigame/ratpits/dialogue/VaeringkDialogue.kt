@@ -11,7 +11,7 @@ import shared.consts.NPCs
  */
 class VaeringkDialogue : DialogueFile() {
 
-    override fun handle(componentID: Int, buttonID: Int, ) {
+    override fun handle(componentID: Int, buttonID: Int) {
         npc = NPC(NPCs.VAERINGK_2992)
         when (stage) {
             0 -> player("Hello. Shouldn't you be on guard duty?").also { stage++ }

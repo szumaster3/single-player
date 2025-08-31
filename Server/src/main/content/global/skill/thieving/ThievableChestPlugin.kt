@@ -61,7 +61,7 @@ class ThievableChestPlugin : OptionHandler() {
     /**
      * Represents the different types of thievable chests in the game.
      */
-    enum class Chest(val objectIds: IntArray, val level: Int, val experience: Double, val rewards: Array<Item>, val respawn: Int, ) {
+    enum class Chest(val objectIds: IntArray, val level: Int, val experience: Double, val rewards: Array<Item>, val respawn: Int) {
         TEN_COIN(Obj.CHEST_2566, 13, 7.8, arrayOf(Item(Items.COINS_995, 10)), 7),
         NATURE_RUNE(Obj.CHEST_2567, 28, 25.0, arrayOf(Item(Items.COINS_995, 3), Item(Items.NATURE_RUNE_561, 1)), 8),
         FIFTY_COIN(Obj.CHEST_2568, 43, 125.0, arrayOf(Item(Items.COINS_995, 50)), 55),
@@ -77,7 +77,7 @@ class ThievableChestPlugin : OptionHandler() {
         /**
          * Opens the chest.
          */
-        internal fun open(player: Player, scenery: Scenery, ) {
+        internal fun open(player: Player, scenery: Scenery) {
             if (isRespawning) {
                 sendMessage(player, "It looks like this chest has already been looted.")
                 return
@@ -90,7 +90,7 @@ class ThievableChestPlugin : OptionHandler() {
         /**
          * Searches the chest for traps.
          */
-        fun searchTraps(player: Player, scenery: Scenery, ) {
+        fun searchTraps(player: Player, scenery: Scenery) {
             player.faceLocation(scenery.location)
             if (isRespawning) {
                 sendMessage(player, "It looks like this chest has already been looted.")

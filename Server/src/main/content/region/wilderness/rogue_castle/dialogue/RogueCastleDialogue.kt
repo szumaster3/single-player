@@ -10,7 +10,7 @@ import shared.consts.NPCs
  * Represents the Rogue at Rogue Castle dialogue.
  */
 class RogueCastleDialogue : DialogueFile() {
-    override fun handle(componentID: Int, buttonID: Int, ) {
+    override fun handle(componentID: Int, buttonID: Int) {
         npc = NPC(NPCs.ROGUE_8122)
         when (stage) {
             0 -> npcl(FaceAnim.HALF_ASKING, "Have you come to bust me out of here?").also { stage++ }

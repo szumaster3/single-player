@@ -208,7 +208,7 @@ class MerlinCrystalPlugin : InteractionListener {
         }
     }
 
-    private fun smashCrystal(player: Player, wielding: Boolean, ) {
+    private fun smashCrystal(player: Player, wielding: Boolean) {
         if(isQuestComplete(player, Quests.MERLINS_CRYSTAL)) {
             sendMessage(player, "You have already freed Merlin from the crystal.")
             return

@@ -14,7 +14,7 @@ import shared.consts.Vars
 @Initializable
 class Watchtower : Quest(Quests.WATCHTOWER, 131, 130, 4, Vars.VARP_QUEST_WATCHTOWER_PROGRESS_212, 0, 1, 13) {
 
-    override fun drawJournal(player: Player, stage: Int, ) {
+    override fun drawJournal(player: Player, stage: Int) {
         super.drawJournal(player, stage)
         var line = 12
 

@@ -67,7 +67,7 @@ class SpikedVambracesCraftingPlugin : InteractionListener {
         }
     }
 
-    private fun craft(player: Player, base: Item, product: Int, leather: String, ) {
+    private fun craft(player: Player, base: Item, product: Int, leather: String) {
         if (removeItem(player, Item(base.id, 1), Container.INVENTORY)) {
             addItem(player, product, 1)
             rewardXP(player, Skills.CRAFTING, 6.0)

@@ -11,7 +11,7 @@ import shared.consts.NPCs
 
 class ChromaticDragonBehavior : NPCBehavior(*greenDragons, *blueDragons, *redDragons, *blackDragons) {
 
-    override fun onDropTableRolled(self: NPC, killer: Entity, drops: ArrayList<Item>, ) {
+    override fun onDropTableRolled(self: NPC, killer: Entity, drops: ArrayList<Item>) {
         val removeList = ArrayList<Item>()
         for (item in drops) {
             when (item.id) {

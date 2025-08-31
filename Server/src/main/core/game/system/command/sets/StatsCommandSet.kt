@@ -169,7 +169,7 @@ class StatsCommandSet : CommandSet(Privilege.STANDARD) {
             return true
         }
 
-        private fun sendLine(player: Player, line: String, child: Int, ) {
+        private fun sendLine(player: Player, line: String, child: Int) {
             player.packetDispatch.sendString(line, BookInterface.FANCY_BOOK_26, child)
         }
     }

@@ -9,7 +9,7 @@ import shared.consts.Items
 
 class MonkeyChildFirstDialogue : DialogueFile() {
 
-    override fun handle(componentID: Int, buttonID: Int, ) {
+    override fun handle(componentID: Int, buttonID: Int) {
         when (stage) {
             0 -> playerl("Hello there little monkey.").also { stage++ }
             1 -> npcl(FaceAnim.OLD_NEUTRAL, "Hello big-big. Aunty told me not to talk to strangers.").also { stage++ }
@@ -24,7 +24,7 @@ class MonkeyChildFirstDialogue : DialogueFile() {
 
 class MonkeyChildSecondDialogue : DialogueFile() {
 
-    override fun handle(componentID: Int, buttonID: Int, ) {
+    override fun handle(componentID: Int, buttonID: Int) {
         when (stage) {
             0 -> playerl("Hello again little monkey.").also { stage++ }
             1 -> npcl(FaceAnim.OLD_NEUTRAL, "You're stranger. Go away!").also { stage++ }
@@ -46,7 +46,7 @@ class MonkeyChildSecondDialogue : DialogueFile() {
 
 class MonkeyChildThirdDialogue : DialogueFile() {
 
-    override fun handle(componentID: Int, buttonID: Int, ) {
+    override fun handle(componentID: Int, buttonID: Int) {
         when (stage) {
             0 -> npcl(FaceAnim.OLD_NEUTRAL, "You look a lot bigger than last time, Uncle!").also { stage++ }
             1 -> playerl("I've been ... eating more bananas... just like you should be!").also { stage++ }

@@ -346,7 +346,7 @@ class TelekineticTheatrePlugin @JvmOverloads constructor(val player: Player? = n
      * @property cameraLocation Camera position for observation.
      * @property data Boundary coordinates used for directional checks.
      */
-    enum class Maze(val base: Location, val statueLocation: Location, val guardianLocation: Location, val endLocation: Location, val cameraLocation: Location, val data: IntArray, ) {
+    enum class Maze(val base: Location, val statueLocation: Location, val guardianLocation: Location, val endLocation: Location, val cameraLocation: Location, val data: IntArray) {
         FIRST(Location(8, 54, 0), Location(15, 41, 0), Location(8, 39, 0), Location(19, 50, 0), Location(15, 45, 0), intArrayOf(51, 40, 9, 20)),
         SECOND(Location(34, 49, 1), Location(22, 53, 1), Location(26, 48, 1), Location(13, 44, 1), Location(17, 48, 1), intArrayOf(54, 43, 12, 23)),
         THIRD(Location(54, 34, 1), Location(48, 22, 1), Location(45, 15, 1), Location(57, 22, 1), Location(53, 17, 1), intArrayOf(23, 12, 47, 58)),

@@ -8,7 +8,7 @@ import shared.consts.Items
 /**
  * Represents the light sources.
  */
-enum class LightSource(val level: Int, val raw: Item, val product: Item, val open: Boolean, val interfaceId: Int, ) {
+enum class LightSource(val level: Int, val raw: Item, val product: Item, val open: Boolean, val interfaceId: Int) {
     CANDLE(1, Item(Items.CANDLE_36, 1), Item(Items.LIT_CANDLE_33, 1), true, Components.DARKNESS_MEDIUM_98),
     BLACK_CANDLE(1, Item(Items.BLACK_CANDLE_38, 1), Item(Items.LIT_BLACK_CANDLE_32, 1), true, Components.DARKNESS_MEDIUM_98),
     TORCH(1, Item(Items.UNLIT_TORCH_596, 1), Item(Items.LIT_TORCH_594, 1), true, Components.DARKNESS_MEDIUM_98),

@@ -33,7 +33,7 @@ object SpellListeners {
      * @param distance the maximum casting distance.
      * @param method the function to execute when the spell is cast.
      */
-    fun add(spellID: Int, type: Int, book: String, distance: Int, method: (Player, Node?) -> Unit, ) {
+    fun add(spellID: Int, type: Int, book: String, distance: Int, method: (Player, Node?) -> Unit) {
         castMap["$book:$spellID:$type"] = method
         spellRanges["$book:$spellID:$type"] = distance
     }
@@ -48,7 +48,7 @@ object SpellListeners {
      * @param distance the max casting distance.
      * @param method the function to execute when the spell is cast.
      */
-    fun add(spellID: Int, type: Int, ids: IntArray, book: String, distance: Int, method: (Player, Node?) -> Unit, ) {
+    fun add(spellID: Int, type: Int, ids: IntArray, book: String, distance: Int, method: (Player, Node?) -> Unit) {
         for (id in ids) {
             castMap["$book:$spellID:$type:$id"] = method
             spellRanges["$book:$spellID:$type:$id"] = distance
@@ -92,7 +92,7 @@ object SpellListeners {
      * @param node (optional) the target node.
      */
     @JvmStatic
-    fun run(button: Int, type: Int, book: String, player: Player, node: Node? = null, ) {
+    fun run(button: Int, type: Int, book: String, player: Player, node: Node? = null) {
         if (inEquipment(player, Items.SLED_4084)) {
             sendMessage(player, "You can't do that right now.")
             return

@@ -6,7 +6,7 @@ import shared.consts.Items
 /**
  * Represents types of herbs.
  */
-enum class HerbItem(@JvmField val herb: Item, val experience: Double, val level: Int, @JvmField val product: Item, ) {
+enum class HerbItem(@JvmField val herb: Item, val experience: Double, val level: Int, @JvmField val product: Item) {
     GUAM(Item(Items.GRIMY_GUAM_199), 2.5, 3, Item(Items.CLEAN_GUAM_249)),
     MARRENTILL(Item(Items.GRIMY_MARRENTILL_201), 3.8, 5, Item(Items.CLEAN_MARRENTILL_251)),
     TARROMIN(Item(Items.GRIMY_TARROMIN_203), 5.0, 11, Item(Items.CLEAN_TARROMIN_253)),

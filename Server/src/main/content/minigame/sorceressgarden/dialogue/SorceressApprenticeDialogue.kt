@@ -122,7 +122,7 @@ class SorceressApprenticeDialogue(player: Player? = null) : Dialogue(player) {
     override fun getIds(): IntArray = intArrayOf(NPCs.APPRENTICE_5532)
 
     companion object {
-        fun teleport(npc: NPC, player: Player, ) {
+        fun teleport(npc: NPC, player: Player) {
             if (!hasRequirement(player, Quests.PRINCE_ALI_RESCUE)) return
             npc.faceTemporary(player, 4)
             npc.graphics(Graphics(108))

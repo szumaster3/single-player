@@ -84,7 +84,7 @@ class AltarPlugin : InteractionListener {
         }
     }
 
-    private fun worship(player: Player, altar: Scenery, left: Scenery?, right: Scenery?, bones: Bones, ) {
+    private fun worship(player: Player, altar: Scenery, left: Scenery?, right: Scenery?, bones: Bones) {
         if (player.ironmanManager.isIronman && !player.houseManager.isInHouse(player)) {
             sendMessage(player, "You cannot do this on someone else's altar.")
             return

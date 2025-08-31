@@ -64,7 +64,7 @@ class BattlestaffPlugin : InteractionListener {
 /**
  * Represents the different types of battlestaffs that can be crafted.
  */
-private enum class Battlestaff(val required: Int, val productId: Int, val amount: Int = 1, val requiredLevel: Int, val experience: Double, ) {
+private enum class Battlestaff(val required: Int, val productId: Int, val amount: Int = 1, val requiredLevel: Int, val experience: Double) {
     WATER_BATTLESTAFF(Items.WATER_ORB_571, Items.WATER_BATTLESTAFF_1395, requiredLevel = 54, experience = 100.0),
     EARTH_BATTLESTAFF(Items.EARTH_ORB_575, Items.EARTH_BATTLESTAFF_1399, requiredLevel = 58, experience = 112.5),
     FIRE_BATTLESTAFF(Items.FIRE_ORB_569, Items.FIRE_BATTLESTAFF_1393, requiredLevel = 62, experience = 125.0),

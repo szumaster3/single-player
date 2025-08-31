@@ -130,7 +130,7 @@ class SheepNPC : NPCBehavior(*sheepIds), InteractionListener {
         }
     }
 
-    private fun sheepBackAway(player: Player, sheep: NPC, messagePlayer: String, ) {
+    private fun sheepBackAway(player: Player, sheep: NPC, messagePlayer: String) {
         val playerLocation = player.location
         val sheepLocation = sheep.location
         val sheepDirection = Direction.getDirection(sheepLocation, playerLocation)

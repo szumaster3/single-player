@@ -12,7 +12,7 @@ import shared.consts.Quests
 
 class DaeroHangarDialogue : DialogueFile() {
 
-    override fun handle(componentID: Int, buttonID: Int, ) {
+    override fun handle(componentID: Int, buttonID: Int) {
         when (stage) {
             0 -> if (getAttribute(player!!, "mm:puzzle:done", false)) {
                 npcl(FaceAnim.OLD_DEFAULT, "Well done adventurer. You have managed to break Glough's code. Now the process of reinitialisation is complete, you can truly begin your journey into the unknown.").also { stage = 21 }

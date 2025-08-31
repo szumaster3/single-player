@@ -145,7 +145,7 @@ class FieldPickingPlugin : OptionHandler() {
         scenery.charge = charge + 1
     }
 
-    private enum class PickingPlant(val objectId: Int, val reward: Int, val respawn: Int, ) {
+    private enum class PickingPlant(val objectId: Int, val reward: Int, val respawn: Int) {
         POTATO(Scenery.POTATO_312, Items.POTATO_1942, 30),
         WHEAT_0(Scenery.WHEAT_313, Items.GRAIN_1947, 30),
         WHEAT_1(Scenery.WHEAT_5583, Items.GRAIN_1947, 30),

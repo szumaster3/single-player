@@ -9,7 +9,7 @@ import shared.consts.Items
 
 class HangarCrateDialogue : DialogueFile() {
 
-    override fun handle(componentID: Int, buttonID: Int, ) {
+    override fun handle(componentID: Int, buttonID: Int) {
         when (stage) {
             0 -> sendItemDialogue(player!!, Items.SPARE_CONTROLS_4002, "This crate is full of ... spare controls!").also { stage++ }
             1 -> {

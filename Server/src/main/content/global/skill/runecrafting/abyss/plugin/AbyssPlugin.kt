@@ -193,7 +193,7 @@ class AbyssPlugin : InteractionListener {
         /**
          * Teleports the player to a random valid Abyss location.
          */
-        fun teleport(player: Player, npc: NPC, ) {
+        fun teleport(player: Player, npc: NPC) {
             var teleportLoc = AbyssLocation.randomLocation()
             while (!teleportLoc.isValid()) {
                 teleportLoc = teleportLoc.attract()

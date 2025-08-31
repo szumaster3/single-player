@@ -101,7 +101,7 @@ object EssenceTeleport {
      * Handles the scrying orb mechanics during tp.
      *
      * Relations:
-     * - [RuneMysteries quest][content.region.misthalin.quest.runemysteries.RuneMysteries]
+     * - [RuneMysteries quest][content.region.misthalin.lumbridge.quest.ariane1.RuneMysteries]
      */
     private fun handleScryingOrb(player: Player, npc: NPC) {
         if (getStage(player) != 2) return

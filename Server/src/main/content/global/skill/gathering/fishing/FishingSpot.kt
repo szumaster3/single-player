@@ -5,7 +5,7 @@ import shared.consts.NPCs
 /**
  * Represents fishing spots.
  */
-enum class FishingSpot(val ids: IntArray, vararg val options: FishingOption, ) {
+enum class FishingSpot(val ids: IntArray, vararg val options: FishingOption) {
     NET_BAIT(
         intArrayOf(NPCs.TUTORIAL_FISHING_SPOT_952, NPCs.FISHING_SPOT_316, NPCs.FISHING_SPOT_319, NPCs.FISHING_SPOT_320, NPCs.FISHING_SPOT_323, NPCs.FISHING_SPOT_325, NPCs.FISHING_SPOT_326, NPCs.FISHING_SPOT_327, NPCs.FISHING_SPOT_330, NPCs.FISHING_SPOT_332, NPCs.FISHING_SPOT_404, NPCs.FISHING_SPOT_1331, NPCs.FISHING_SPOT_2724, NPCs.FISHING_SPOT_4908, NPCs.FISHING_SPOT_7045),
         FishingOption.SMALL_NET, FishingOption.BAIT),

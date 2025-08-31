@@ -206,7 +206,7 @@ class PyreSitePlugin : OptionHandler() {
             else -> null
         }
 
-    enum class LogType(val log: Log, val level: Int, val experiences: DoubleArray, val enhancedExp: Int, ) {
+    enum class LogType(val log: Log, val level: Int, val experiences: DoubleArray, val enhancedExp: Int) {
         NORMAL(Log.NORMAL, 11, doubleArrayOf(10.0, 40.0), 1),
         ACHEY(Log.ACHEY, 11, doubleArrayOf(10.0, 40.0), 1),
         OAK(Log.OAK, 25, doubleArrayOf(15.0, 60.0), 2),

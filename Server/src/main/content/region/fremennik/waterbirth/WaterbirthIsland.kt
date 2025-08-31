@@ -20,7 +20,7 @@ class WaterbirthIsland : MapArea {
         }
     }
 
-    override fun areaLeave(entity: Entity, logout: Boolean, ) {
+    override fun areaLeave(entity: Entity, logout: Boolean) {
         super.areaLeave(entity, logout)
         if (entity is Player) {
             val player = entity.asPlayer()

@@ -12,7 +12,7 @@ import shared.consts.NPCs
  */
 class AnleifDialogue : DialogueFile() {
 
-    override fun handle(componentID: Int, buttonID: Int, ) {
+    override fun handle(componentID: Int, buttonID: Int) {
         npc = NPC(NPCs.ANLEIF_2996)
         when (stage) {
             0 -> playerl("Hello.").also { stage++ }

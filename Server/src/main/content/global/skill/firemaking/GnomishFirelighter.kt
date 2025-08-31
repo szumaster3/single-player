@@ -5,7 +5,7 @@ import shared.consts.Items
 /**
  * Represents gnomish firelighters.
  */
-enum class GnomishFirelighter(val base: Int, val product: Int, ) {
+enum class GnomishFirelighter(val base: Int, val product: Int) {
     RED(Items.RED_FIRELIGHTER_7329, Items.RED_LOGS_7404),
     GREEN(Items.GREEN_FIRELIGHTER_7330, Items.GREEN_LOGS_7405),
     BLUE(Items.BLUE_FIRELIGHTER_7331, Items.BLUE_LOGS_7406),

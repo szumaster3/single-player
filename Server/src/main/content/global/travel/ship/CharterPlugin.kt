@@ -100,7 +100,7 @@ class CharterPlugin : InteractionListener, InterfaceListener {
         /**
          * Teleports the player.
          */
-        private fun cross(player: Player, location: Location?, ) {
+        private fun cross(player: Player, location: Location?) {
             queueScript(player, 2, QueueStrength.STRONG) {
                 player.properties.teleportLocation = location
                 return@queueScript stopExecuting(player)

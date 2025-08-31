@@ -43,7 +43,7 @@ class DoughMakingPlugin : InteractionListener {
             }
         }
 
-        override fun handle(componentID: Int, buttonID: Int, ) {
+        override fun handle(componentID: Int, buttonID: Int) {
             when (stage) {
                 STAGE_PRESENT_OPTIONS -> {
                     player!!.dialogueInterpreter.sendOptions("What do you wish to make?", *DoughProduct.values().map { it.itemName }.toTypedArray())

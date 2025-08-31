@@ -10,7 +10,7 @@ import shared.consts.Animations
 
 class AlKharidHealDialogue(val skipFirst: Boolean) : DialogueFile() {
 
-    override fun handle(componentID: Int, buttonID: Int, ) {
+    override fun handle(componentID: Int, buttonID: Int) {
         if (stage == 0 && skipFirst) stage++
         when (stage) {
             0 -> playerl(FaceAnim.ASKING, "Can you heal me?").also { stage++ }

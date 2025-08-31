@@ -31,7 +31,7 @@ class BigChompyBirdHunting :
         val ATTR_FYCIE_ASKED = "/save:chompybird:fycie-asked"
     }
 
-    override fun drawJournal(player: Player, stage: Int, ) {
+    override fun drawJournal(player: Player, stage: Int) {
         super.drawJournal(player, stage)
         var ln = 11
         if (stage == 0) {

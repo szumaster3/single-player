@@ -5,7 +5,7 @@ import shared.consts.Items
 /**
  * Represents a types of limbs for crossbows.
  */
-enum class Limb(val stock: Int, val limb: Int, val product: Int, val level: Int, val experience: Double, val animation: Int, ) {
+enum class Limb(val stock: Int, val limb: Int, val product: Int, val level: Int, val experience: Double, val animation: Int) {
     WOODEN_STOCK(Items.WOODEN_STOCK_9440, Items.BRONZE_LIMBS_9420, Items.BRONZE_CBOW_U_9454, 9, 12.0, 4436),
     OAK_STOCK(Items.OAK_STOCK_9442, Items.BLURITE_LIMBS_9422, Items.BLURITE_CBOW_U_9456, 24, 32.0, 4437),
     WILLOW_STOCK(Items.WILLOW_STOCK_9444, Items.IRON_LIMBS_9423, Items.IRON_CBOW_U_9457, 39, 44.0, 4438),

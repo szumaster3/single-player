@@ -17,7 +17,7 @@ import shared.consts.Quests
  * - [Dorics Quest][content.region.asgarnia.falador.quest.dorics.DoricsQuest]
  */
 class DoricDialogue(private val questStage: Int) : DialogueFile() {
-    override fun handle(componentID: Int, buttonID: Int, ) {
+    override fun handle(componentID: Int, buttonID: Int) {
         when (questStage) {
             10 -> handleQuestStartDialogue(player, false)
             20 -> handleQuestStartDialogue(player, true)
@@ -25,7 +25,7 @@ class DoricDialogue(private val questStage: Int) : DialogueFile() {
         }
     }
 
-    private fun handleQuestStartDialogue(player: Player?, isWhetstone: Boolean, ) {
+    private fun handleQuestStartDialogue(player: Player?, isWhetstone: Boolean) {
         player ?: return
         when (stage) {
             0 -> {

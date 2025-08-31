@@ -6,7 +6,7 @@ import shared.consts.Quests
 /**
  * Enum represents grave different grave type.
  */
-enum class GraveType(val npcId: Int, val cost: Int, val durationMinutes: Int, val isMembers: Boolean, val requiredQuest: String = "", val text: String, ) {
+enum class GraveType(val npcId: Int, val cost: Int, val durationMinutes: Int, val isMembers: Boolean, val requiredQuest: String = "", val text: String) {
     MEM_PLAQUE(NPCs.GRAVE_MARKER_6565, 0, 2, false, text = "In memory of @name,<br>who died here."),
     FLAG(NPCs.GRAVE_MARKER_6568, 50, 2, false, text = MEM_PLAQUE.text), SMALL_GS(NPCs.GRAVESTONE_6571, 500, 2, false, text = "In loving memory of our dear friend @name,<br>who died in this place @mins ago."),
     ORNATE_GS(NPCs.GRAVESTONE_6574, 5000, 3, false, text = SMALL_GS.text), FONT_OF_LIFE(NPCs.GRAVESTONE_6577, 50000, 4, true, text = "In your travels,<br>pause awhile to remember @name,<br>who passed away at this spot."),

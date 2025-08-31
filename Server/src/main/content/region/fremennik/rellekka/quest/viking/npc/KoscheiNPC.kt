@@ -128,7 +128,7 @@ class KoscheiNPC(
     /**
      * Enum representing the transformation phases of Koschei NPC.
      */
-    enum class KoscheiType(var npcId: Int, var appearMessage: String?, vararg var appearDialogues: String?, ) {
+    enum class KoscheiType(var npcId: Int, var appearMessage: String?, vararg var appearDialogues: String?) {
         FIRST_FORM(NPCs.KOSCHEI_THE_DEATHLESS_1290, "You must prove yourself... now!"),
         SECOND_FORM(NPCs.KOSCHEI_THE_DEATHLESS_1291, "This is only the beginning; you can't beat me!", "It seems you have some idea of combat after all,", "Outlander! I will not hold back so much this time!"),
         THIRD_FORM(NPCs.KOSCHEI_THE_DEATHLESS_1292, "Foolish mortal; I am unstoppable.", "Impressive start... But now we fight for real!"),

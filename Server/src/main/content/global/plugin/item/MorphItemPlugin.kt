@@ -75,7 +75,7 @@ class MorphItemPlugin : Plugin<Any> {
      * @param player The player to transform.
      * @param item The item being used for the transformation.
      */
-    private fun morph(player: Player, item: Item, ) {
+    private fun morph(player: Player, item: Item) {
         val morphId =
             if (item.id == Items.RING_OF_STONE_6583) {
                 NPCs.ROCKS_2626

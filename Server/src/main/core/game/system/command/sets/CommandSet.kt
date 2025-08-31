@@ -18,14 +18,14 @@ abstract class CommandSet(val defaultPrivilege: Privilege) : Plugin<Any?> {
 
     abstract fun defineCommands()
 
-    fun reject(player: Player, vararg message: String, ) {
+    fun reject(player: Player, vararg message: String) {
         for (msg in message) {
             player.sendMessage(colorize("-->%R$msg"))
         }
         throw IllegalStateException()
     }
 
-    fun notify(player: Player, message: String, ) {
+    fun notify(player: Player, message: String) {
         player.sendMessage(colorize("-->$message"))
     }
 

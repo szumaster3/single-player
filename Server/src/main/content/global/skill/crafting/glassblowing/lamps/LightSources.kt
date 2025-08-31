@@ -3,7 +3,7 @@ package content.global.skill.crafting.glassblowing.lamps
 import shared.consts.Items
 import shared.consts.Sounds
 
-enum class LightSources(val emptyId: Int, val fullId: Int, val litId: Int, val sfxId: Int, val levelRequired: Int, val openFlame: Boolean, ) {
+enum class LightSources(val emptyId: Int, val fullId: Int, val litId: Int, val sfxId: Int, val levelRequired: Int, val openFlame: Boolean) {
     WHITE_CANDLE(0, Items.CANDLE_36, Items.LIT_CANDLE_33, Sounds.SKILL_LIGHT_CANDLE_3226, 0, true),
     BLACK_CANDLE(0, Items.BLACK_CANDLE_38, Items.LIT_BLACK_CANDLE_32, Sounds.SKILL_LIGHT_CANDLE_3226, 0, true),
     TORCH(0, Items.UNLIT_TORCH_596, Items.LIT_TORCH_594, Sounds.SLUG_TORCH_LIT_3028, 0, true),

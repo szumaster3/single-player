@@ -16,7 +16,7 @@ class WerewolfCourseZone : MapArea {
         }
     }
 
-    override fun areaLeave(entity: Entity, logout: Boolean, ) {
+    override fun areaLeave(entity: Entity, logout: Boolean) {
         if (entity is Player) {
             val p = entity.asPlayer()
             removeAttribute(p, "werewolf-agility-course")

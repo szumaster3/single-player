@@ -20,7 +20,7 @@ class FrogNPC : NPCBehavior(*Tasks.FROGS.npcs) {
         registerTimer(self, spawnTimer<PoisonImmunity>())
     }
 
-    override fun beforeAttackFinalized(self: NPC, victim: Entity, state: BattleState, ) {
+    override fun beforeAttackFinalized(self: NPC, victim: Entity, state: BattleState) {
         super.beforeAttackFinalized(self, victim, state)
         if (self.id == NPCs.FROG_3783) {
             if (RandomFunction.roll(10)) {

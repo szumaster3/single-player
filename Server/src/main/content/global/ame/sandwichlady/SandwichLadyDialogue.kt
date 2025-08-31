@@ -19,7 +19,7 @@ import shared.consts.Components
 class SandwichLadyDialogue(val isChoice: Boolean) : DialogueFile() {
     private val sandwichInterface = Components.MACRO_SANDWICH_TRAY_297
 
-    override fun handle(componentID: Int, buttonID: Int, ) {
+    override fun handle(componentID: Int, buttonID: Int) {
         val assigned = getAttribute(player!!, GameAttributes.S_LADY_ITEM, 0)
         val choice = getAttribute(player!!, GameAttributes.S_LADY_ITEM_VALUE, 0)
         if (!isChoice) {

@@ -30,7 +30,7 @@ class MonkeyBarShortcut : AgilityShortcut {
         return super.newInstance(arg)
     }
 
-    override fun run(player: Player, scenery: Scenery, option: String, failed: Boolean, ) {
+    override fun run(player: Player, scenery: Scenery, option: String, failed: Boolean) {
         player.lock(5)
         var direct = Direction.get((scenery.direction.toInteger() + 2) % 4)
         if (scenery.id == 29375) {

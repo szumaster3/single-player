@@ -14,7 +14,7 @@ class AdvisorDialogue : DialogueFile() {
 
     var level = 2
 
-    override fun handle(componentID: Int, buttonID: Int, ) {
+    override fun handle(componentID: Int, buttonID: Int) {
         npc = NPC(NPCs.ADVISOR_GHRIM_1375)
         when (stage) {
             0 -> {

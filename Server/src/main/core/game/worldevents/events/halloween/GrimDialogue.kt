@@ -349,7 +349,7 @@ class GrimDialogue(player: Player? = null) : Dialogue(player) {
 
     private fun canPurchase(player: Player, cost: Int): Boolean = getCandyTotals(player) >= cost
 
-    private fun removeCandies(player: Player, amount: Int, ) {
+    private fun removeCandies(player: Player, amount: Int) {
         addToCandyTotal(player, -amount)
     }
 

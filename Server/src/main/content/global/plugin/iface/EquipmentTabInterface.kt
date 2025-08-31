@@ -195,7 +195,7 @@ class EquipmentTabInterface : ComponentPlugin() {
                         return true
                     }
                     val listener: ContainerListener = object : ContainerListener {
-                        override fun update(c: Container?, e: ContainerEvent?, ) {
+                        override fun update(c: Container?, e: ContainerEvent?) {
                             PacketRepository.send(
                                 ContainerPacket::class.java,
                                 OutgoingContext.Container(p, -1, -1, 98, e!!.items, false, *e.slots),
@@ -236,7 +236,7 @@ class EquipmentTabInterface : ComponentPlugin() {
         return true
     }
 
-    private fun operate(player: Player, slot: Int, itemId: Int, ) {
+    private fun operate(player: Player, slot: Int, itemId: Int) {
         if (slot < 0 || slot > 13) {
             return
         }

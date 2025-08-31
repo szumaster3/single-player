@@ -11,7 +11,7 @@ import shared.consts.Items
 /**
  * Represents fishing options.
  */
-enum class FishingOption(val tool: Int, val level: Int, val animation: Animation, val bait: IntArray?, val option: String, vararg val fish: Fish, ) {
+enum class FishingOption(val tool: Int, val level: Int, val animation: Animation, val bait: IntArray?, val option: String, vararg val fish: Fish) {
     CRAYFISH_CAGE(Items.CRAYFISH_CAGE_13431, 1, Animation(Animations.USE_CRAYFISH_CAGE_10009), null, "cage", Fish.CRAYFISH),
     SMALL_NET(Items.SMALL_FISHING_NET_303, 1, Animation(Animations.NET_FISHING_621), null, "net", Fish.SHRIMP, Fish.ANCHOVY),
     BAIT(Items.FISHING_ROD_307, 5, Animation(Animations.ROD_FISHING_622), intArrayOf(Items.FISHING_BAIT_313), "bait", Fish.SARDINE, Fish.HERRING),

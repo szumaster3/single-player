@@ -106,7 +106,7 @@ class FairyRingInterface : InterfaceListener {
         setVarbit(player, vbit, nextIndex)
     }
 
-    private fun decrement(player: Player, ring: Int, ) {
+    private fun decrement(player: Player, ring: Int) {
         val vbit =
             when (ring) {
                 1 -> VB_RING_1

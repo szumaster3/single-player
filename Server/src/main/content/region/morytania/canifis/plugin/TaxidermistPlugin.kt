@@ -13,7 +13,7 @@ import core.tools.END_DIALOGUE
 import shared.consts.Items
 import shared.consts.NPCs
 
-public enum class StuffedItem(val dropId: Int, val stuffedId: Int, val price: Int, val message: String, ) {
+public enum class StuffedItem(val dropId: Int, val stuffedId: Int, val price: Int, val message: String) {
     CRAWLING_HAND_DROP(Items.CRAWLING_HAND_7975, Items.CRAWLING_HAND_7982, 1000, "That's a very fine crawling hand."),
     COCKATRICE_HEAD_DROP(Items.COCKATRICE_HEAD_7976, Items.COCKATRICE_HEAD_7983, 2000, "A cockatrice! Beautiful, isn't it? Look at the plumage!"),
     BASILISK_HEAD_DROP(Items.BASILISK_HEAD_7977, Items.BASILISK_HEAD_7984, 4000, "My, he's a scary-looking fellow, isn't he? He'll look good on your wall!"),

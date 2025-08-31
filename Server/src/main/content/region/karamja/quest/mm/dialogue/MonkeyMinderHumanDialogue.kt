@@ -10,7 +10,7 @@ import core.game.world.map.Location
 import shared.consts.Components
 
 class MonkeyMinderHumanDialogue : DialogueFile() {
-    override fun handle(componentID: Int, buttonID: Int, ) {
+    override fun handle(componentID: Int, buttonID: Int) {
         when (stage) {
             0 -> npcl(FaceAnim.OLD_NEUTRAL,"My word - what are you doing in there?").also { stage++ }
             1 -> playerl("I ... er ... I don't know! One minute I was asleep, and the next minute I was here surrounded by monkeys!").also { stage++ }

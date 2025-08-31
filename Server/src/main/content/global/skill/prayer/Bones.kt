@@ -2,7 +2,7 @@ package content.global.skill.prayer
 
 import shared.consts.Items
 
-enum class Bones(val itemId: Int, val experience: Double, val bonemealId: Int? = null, ) {
+enum class Bones(val itemId: Int, val experience: Double, val bonemealId: Int? = null) {
     BONES(Items.BONES_2530, 4.5, Items.BONEMEAL_4255),
     BONES_2(Items.BONES_526, 4.5, Items.BONEMEAL_4256),
     WOLF_BONES(Items.WOLF_BONES_2859, 4.5, Items.BONEMEAL_4257),

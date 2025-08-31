@@ -16,7 +16,7 @@ import shared.consts.Quests
 /**
  * Enum representing different types of herb tars used in Herblore.
  */
-private enum class TarItem(val ingredient: Int, val level: Int, val experience: Double, val product: Int, ) {
+private enum class TarItem(val ingredient: Int, val level: Int, val experience: Double, val product: Int) {
     GUAM_TAR(HerbItem.GUAM.product.id, 19, 30.0, Items.GUAM_TAR_10142),
     GROUND_GUAM_TAR(Items.GROUND_GUAM_6681, 19, 30.0, Items.GUAM_TAR_10142),
     MARRENTILL_TAR(HerbItem.MARRENTILL.product.id, 31, 42.5, Items.MARRENTILL_TAR_10143),

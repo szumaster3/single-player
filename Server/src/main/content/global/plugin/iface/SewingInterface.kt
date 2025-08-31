@@ -46,7 +46,7 @@ class SewingInterface : InterfaceListener {
     }
 }
 
-enum class PirateClothes(val firstItem: Int, val secondItem: Int, val product: Int, val buttonId: Int, ) {
+enum class PirateClothes(val firstItem: Int, val secondItem: Int, val product: Int, val buttonId: Int) {
     WHITE_RIGHT_EYE(
         firstItem = Items.PIRATE_BANDANA_7112,
         secondItem = Items.EYE_PATCH_1025,

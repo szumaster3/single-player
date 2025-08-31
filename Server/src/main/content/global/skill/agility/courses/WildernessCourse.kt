@@ -45,7 +45,7 @@ class WildernessCourse : AgilityCourse {
         return true
     }
 
-    private fun handleEntrance(player: Player, scenery: Scenery, ) {
+    private fun handleEntrance(player: Player, scenery: Scenery) {
         if (player.location.y > 3916 || player.skills.getLevel(Skills.AGILITY) >= 52) {
             DoorActionHandler.handleAutowalkDoor(player, scenery)
             if (player.location.y <= 3916) {
@@ -56,7 +56,7 @@ class WildernessCourse : AgilityCourse {
         }
     }
 
-    private fun handleEntranceObstacle(player: Player, scenery: Scenery, ) {
+    private fun handleEntranceObstacle(player: Player, scenery: Scenery) {
         GameWorld.Pulser.submit(
             object : Pulse(1, player) {
                 var counter = 0
@@ -124,7 +124,7 @@ class WildernessCourse : AgilityCourse {
         )
     }
 
-    private fun handlePipe(player: Player, scenery: Scenery, ) {
+    private fun handlePipe(player: Player, scenery: Scenery) {
         if (scenery.location.y == 3948) {
             sendMessage(player, "You can't do that from here.")
             return
@@ -213,7 +213,7 @@ class WildernessCourse : AgilityCourse {
         )
     }
 
-    private fun handleRopeSwing(player: Player, scenery: Scenery, ) {
+    private fun handleRopeSwing(player: Player, scenery: Scenery) {
         if (player.location.y < 3554) {
             sendMessage(player, "You cannot do that from here.")
             return
@@ -248,7 +248,7 @@ class WildernessCourse : AgilityCourse {
         )
     }
 
-    private fun handleSteppingStones(player: Player, scenery: Scenery, ) {
+    private fun handleSteppingStones(player: Player, scenery: Scenery) {
         lock(player, 50)
         val fail = AgilityHandler.hasFailed(player, 1, 0.3)
         val origLoc = player.location
@@ -291,7 +291,7 @@ class WildernessCourse : AgilityCourse {
         )
     }
 
-    private fun handleLogBalance(player: Player, scenery: Scenery, ) {
+    private fun handleLogBalance(player: Player, scenery: Scenery) {
         val failed = AgilityHandler.hasFailed(player, 1, 0.5)
         val end = if (failed) Location.create(2998, 3945, 0) else Location.create(2994, 3945, 0)
         sendMessage(player, "You walk carefully across the slippery log...")
@@ -325,7 +325,7 @@ class WildernessCourse : AgilityCourse {
         }
     }
 
-    private fun handleRockClimb(player: Player, scenery: Scenery, ) {
+    private fun handleRockClimb(player: Player, scenery: Scenery) {
         AgilityHandler.forceWalk(
             player,
             4,

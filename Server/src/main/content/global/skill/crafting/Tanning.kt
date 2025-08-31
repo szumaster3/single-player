@@ -11,7 +11,7 @@ import shared.consts.Items
 /**
  * Represents the different types of tanning.
  */
-enum class Tanning(val button: Int, val item: Int, val product: Int, ) {
+enum class Tanning(val button: Int, val item: Int, val product: Int) {
     /**
      * Tanning soft leather from cowhide.
      */

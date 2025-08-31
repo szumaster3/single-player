@@ -261,7 +261,7 @@ class AlchemistPlaygroundPlugin :
      *
      * @property item The item instance.
      */
-    enum class AlchemistItem(val item: Item, ) {
+    enum class AlchemistItem(val item: Item) {
         LEATHER_BOOTS(Item(Items.LEATHER_BOOTS_6893)),
         ADAMANT_KITESHIELD(Item(Items.ADAMANT_KITESHIELD_6894)),
         ADAMANT_HELM(Item(Items.ADAMANT_MED_HELM_6895)),

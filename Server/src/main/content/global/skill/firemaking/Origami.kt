@@ -6,7 +6,7 @@ import shared.consts.Items
 /**
  * Represents origami items.
  */
-enum class Origami(val base: Int, val product: Int, val graphic: Int, ) {
+enum class Origami(val base: Int, val product: Int, val graphic: Int) {
     YELLOW(Items.YELLOW_DYE_1765, Items.YELLOW_BALLOON_9935, Graphics.YELLOW_BALLOON_FLY_UPWARDS_883),
     BLUE(Items.BLUE_DYE_1767, Items.BLUE_BALLOON_9936, Graphics.BLUE_BALLOON_FLY_UPWARDS_886),
     RED(Items.RED_DYE_1763, Items.RED_BALLOON_9937, Graphics.RED_BALLOON_FLY_UPWARDS_889),

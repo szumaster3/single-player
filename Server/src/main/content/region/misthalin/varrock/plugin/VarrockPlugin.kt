@@ -222,7 +222,7 @@ class VarrockPlugin : InteractionListener {
                 openDialogue(
                     player,
                     object : DialogueFile() {
-                        override fun handle(componentID: Int, buttonID: Int, ) {
+                        override fun handle(componentID: Int, buttonID: Int) {
                             when (stage) {
                                 0 ->
                                     sendNPCDialogue(player, NPCs.GUARD_368, "Halt. I need to conduct a search on you. There have been reports of someone bringing a virus into Varrock.").also { stage++ }

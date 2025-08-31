@@ -37,7 +37,7 @@ import shared.consts.*
 class CatapultRoomPlugin :
     MapZone("wg catapult", true),
     Plugin<Any> {
-    private enum class CatapultAttack(val graphicId: Int, val objectId: Int, val success: Animation, val fail: Animation, ) {
+    private enum class CatapultAttack(val graphicId: Int, val objectId: Int, val success: Animation, val fail: Animation) {
         SPIKY_BALL(Graphics.W_GUILD_SPIKE_BALL_679, Scenery.CATAPULT_15617, Animation.create(Animations.BEND_DOWN_ON_KNEES_HAND_IN_FRONT_OF_FACE_4169), Animation.create(Animations.FALL_BACK_KNEES_4173)),
         FLUNG_ANVIL(Graphics.W_GUILD_ANVIL_CAT_680, Scenery.CATAPULT_15619, Animation.create(Animations.MOVE_HEAD_TO_LISTEN_ON_DOOR_4168), Animation.create(Animations.FALL_BACK_BUTT_4172)),
         SLASHING_BLADES(Graphics.W_GUILD_BLADE_CAT_681, Scenery.CATAPULT_15620, Animation.create(Animations.STRETCH_KNEE_4170), Animation.create(Animations.BENDING_BOWING_IN_PAIN_4174)),

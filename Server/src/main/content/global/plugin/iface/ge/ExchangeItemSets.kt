@@ -54,7 +54,7 @@ class ExchangeItemSets : InterfaceListener {
         /**
          * Called when the inventory container updates.
          */
-        override fun update(c: Container?, event: ContainerEvent?, ) {
+        override fun update(c: Container?, event: ContainerEvent?) {
             createContainers(player)
         }
 

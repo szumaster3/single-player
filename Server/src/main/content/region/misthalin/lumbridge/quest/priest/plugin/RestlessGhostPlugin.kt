@@ -18,6 +18,11 @@ import shared.consts.*
 
 class RestlessGhostPlugin : InteractionListener {
     override fun defineListeners() {
+
+        /*
+         * Handles interaction with coffin.
+         */
+
         on(COFFIN_IDS, IntType.SCENERY, "open", "close", "search") { player, node ->
             val option = getUsedOption(player)
             val obj = node.asScenery()
@@ -56,6 +61,10 @@ class RestlessGhostPlugin : InteractionListener {
             return@on true
         }
 
+        /*
+         * Handles using skull on coffin.
+         */
+
         onUseWith(IntType.SCENERY, Items.SKULL_964, *COFFIN_IDS) { player, _, with ->
             val coffin = with.asScenery().id
             if (coffin == Scenery.COFFIN_2145) {
@@ -78,16 +87,19 @@ class RestlessGhostPlugin : InteractionListener {
             return@onUseWith true
         }
 
+        /*
+         * Handles trying to drop the skull.
+         */
         on(Items.SKULL_964, IntType.ITEM, "drop") { player, _ ->
             sendMessage(player, "You can't drop this! Return it to the ghost.")
             return@on false
         }
     }
 
-    private fun toggleCoffin(
-        player: Player,
-        n: Node,
-    ) {
+    /**
+     * Handles interaction with coffin.
+     */
+    private fun toggleCoffin(player: Player, n: Node) {
         val coffin = n.asScenery()
         val closedCoffin = n.id == Scenery.COFFIN_2145
 
@@ -139,10 +151,11 @@ class RestlessGhostPlugin : InteractionListener {
         }
     }
 
-    private fun searchAltar(
-        player: Player,
-        n: Node,
-    ) {
+    /**
+     * Handles searching an altar for skull
+     * and triggers [spawnSkeleton].
+     */
+    private fun searchAltar(player: Player, n: Node) {
         if (getQuestStage(player, Quests.THE_RESTLESS_GHOST) != 30) {
             sendMessage(player, "You search the altar and find nothing.")
             return
@@ -153,12 +166,15 @@ class RestlessGhostPlugin : InteractionListener {
             queueScript(player, 1, QueueStrength.NORMAL) {
                 setQuestStage(player, Quests.THE_RESTLESS_GHOST, 40)
                 sendMessage(player, "The skeleton in the corner suddenly comes to life!")
-                sendSkeleton(player)
+                spawnSkeleton(player)
                 return@queueScript stopExecuting(player)
             }
         }
     }
 
+    /**
+     * Handles the ghost visible temporarily.
+     */
     private fun sendGhost() {
         if (!GHOST!!.isInvisible) {
             return
@@ -176,10 +192,11 @@ class RestlessGhostPlugin : InteractionListener {
         )
     }
 
-    private fun sendSkeleton(player: Player) {
-        val skeleton =
-            core.game.node.entity.npc.NPC
-                .create(NPCs.SKELETON_459, Location.create(3120, 9568, 0))
+    /**
+     * Spawns a skeleton NPC.
+     */
+    private fun spawnSkeleton(player: Player) {
+        val skeleton = core.game.node.entity.npc.NPC.create(NPCs.SKELETON_459, Location.create(3120, 9568, 0))
         skeleton.isWalks = false
         skeleton.isRespawn = false
         skeleton.setAttribute("player", player)

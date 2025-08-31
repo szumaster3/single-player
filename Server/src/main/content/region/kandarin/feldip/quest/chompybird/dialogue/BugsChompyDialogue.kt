@@ -77,7 +77,7 @@ class BugsChompyDialogueFile(val quest: Quest, ) : DialogueFile() {
         }
     }
 
-    private fun handleIngredientDialogue(player: Player?, buttonId: Int, ) {
+    private fun handleIngredientDialogue(player: Player?, buttonId: Int) {
         val bugsIngredient = getAttribute(player!!, BigChompyBirdHunting.ATTR_ING_BUGS, -1)
         when (stage) {
             0 -> npcl(

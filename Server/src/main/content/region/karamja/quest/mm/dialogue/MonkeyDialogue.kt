@@ -7,7 +7,7 @@ import shared.consts.Quests
 
 class MonkeyDialogue : DialogueFile() {
 
-    override fun handle(componentID: Int, buttonID: Int, ) {
+    override fun handle(componentID: Int, buttonID: Int) {
         when (stage) {
             0 -> playerl("Hello there, little money.").also { stage++ }
             1 -> npcl(FaceAnim.OLD_NEUTRAL, "Hello there!").also { stage++ }

@@ -23,7 +23,7 @@ import shared.consts.Quests
  */
 class GloughDialogue : DialogueFile() {
 
-    override fun handle(componentID: Int, buttonID: Int, ) {
+    override fun handle(componentID: Int, buttonID: Int) {
         npc = NPC(NPCs.GLOUGH_671)
         when (getQuestStage(player!!, Quests.THE_GRAND_TREE)) {
             40 -> {

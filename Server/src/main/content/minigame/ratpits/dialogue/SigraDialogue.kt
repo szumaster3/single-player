@@ -10,7 +10,7 @@ import core.game.node.entity.npc.NPC
  */
 class SigraDialogue : DialogueFile() {
 
-    override fun handle(componentID: Int, buttonID: Int, ) {
+    override fun handle(componentID: Int, buttonID: Int) {
         npc = NPC(2995)
         when (stage) {
             0 -> playerl("Hello.").also { stage++ }

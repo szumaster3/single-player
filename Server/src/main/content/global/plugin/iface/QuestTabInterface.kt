@@ -49,7 +49,7 @@ class QuestTabInterface : InterfaceListener {
 
     companion object {
         @JvmStatic
-        private fun showRequirementsInterface(player: Player, button: Int, ) {
+        private fun showRequirementsInterface(player: Player, button: Int) {
             val questName = getNameForButton(button)
             val questReq =
                 QuestRequirements.values().filter { it.questName.equals(questName, true) }.firstOrNull() ?: return

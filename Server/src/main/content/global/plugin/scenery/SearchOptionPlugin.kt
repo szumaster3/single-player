@@ -18,7 +18,7 @@ class SearchOptionPlugin : OptionHandler() {
     /**
      * Represents different types of searches.
      */
-    enum class Search(val scenery: Int, val item: Item, ) {
+    enum class Search(val scenery: Int, val item: Item) {
         DEFAULT(-1, Item(Items.LEATHER_GLOVES_1059, 1)),
         ;
 

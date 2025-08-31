@@ -8,7 +8,7 @@ import shared.consts.Items
 /**
  * Represents a skilling tool items.
  */
-enum class SkillingTool(val id: Int, val level: Int, val ratio: Double, val animation: Int, ) {
+enum class SkillingTool(val id: Int, val level: Int, val ratio: Double, val animation: Int) {
     BRONZE_AXE(Items.BRONZE_AXE_1351, 1, 0.05, Animations.BRONZE_AXE_879),
     IRON_AXE(Items.IRON_AXE_1349, 1, 0.1, Animations.IRON_AXE_877),
     STEEL_AXE(Items.STEEL_AXE_1353, 6, 0.2, Animations.STEEL_AXE_ALT3_875),

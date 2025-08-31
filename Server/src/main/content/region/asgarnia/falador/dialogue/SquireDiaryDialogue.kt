@@ -13,7 +13,7 @@ import shared.consts.NPCs
  */
 class SquireDiaryDialogue : DialogueFile() {
 
-    override fun handle(componentID: Int, buttonID: Int, ) {
+    override fun handle(componentID: Int, buttonID: Int) {
         val replacementReward: Boolean = Diary.canReplaceReward(player!!, DiaryType.FALADOR, 2)
         npc = NPC(NPCs.SQUIRE_606)
         when (stage) {

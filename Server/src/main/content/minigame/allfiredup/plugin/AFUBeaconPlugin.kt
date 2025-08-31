@@ -48,7 +48,7 @@ class AFUBeaconPlugin : InteractionListener {
         }
     }
 
-    private fun fillBeacon(player: Player, beacon: AFUBeacon, questComplete: Boolean, ) {
+    private fun fillBeacon(player: Player, beacon: AFUBeacon, questComplete: Boolean) {
         when (beacon) {
             AFUBeacon.MONASTERY -> {
                 if (getStatLevel(player, Skills.PRAYER) < 31) {
@@ -125,7 +125,7 @@ class AFUBeaconPlugin : InteractionListener {
         }
     }
 
-    private fun lightBeacon(player: Player, beacon: AFUBeacon, questComplete: Boolean, ) {
+    private fun lightBeacon(player: Player, beacon: AFUBeacon, questComplete: Boolean) {
         var session: AFUSession? = null
         if (questComplete) {
             session = player.getAttribute("afu-session", null)
@@ -188,7 +188,7 @@ class AFUBeaconPlugin : InteractionListener {
         }
     }
 
-    private fun restoreBeacon(player: Player, beacon: AFUBeacon, questComplete: Boolean, ) {
+    private fun restoreBeacon(player: Player, beacon: AFUBeacon, questComplete: Boolean) {
         var session: AFUSession? = null
         if (questComplete) {
             session = player.getAttribute("afu-session", null)

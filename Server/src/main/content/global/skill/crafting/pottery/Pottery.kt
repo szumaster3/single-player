@@ -6,7 +6,7 @@ import shared.consts.Items
 /**
  * Represents the different pottery crafting.
  */
-enum class Pottery(val unfinished: Item, val product: Item, val level: Int, val exp: Double, val fireExp: Double, ) {
+enum class Pottery(val unfinished: Item, val product: Item, val level: Int, val exp: Double, val fireExp: Double) {
     POT(Item(Items.UNFIRED_POT_1787), Item(Items.EMPTY_POT_1931), 1, 6.3, 6.3),
     DISH(Item(Items.UNFIRED_PIE_DISH_1789), Item(Items.PIE_DISH_2313), 7, 15.0, 10.0),
     BOWL(Item(Items.UNFIRED_BOWL_1791), Item(Items.BOWL_1923), 8, 18.0, 15.0),
