@@ -1,6 +1,5 @@
 package content.global.skill.fletching.items.bolts
 
-import content.global.skill.crafting.casting.Gem
 import core.api.getStatLevel
 import core.api.hasSpaceFor
 import core.api.sendDialogue
@@ -20,7 +19,7 @@ class GemBoltCutPulse(player: Player?, node: Item?, private val gem: GemBolt, pr
     /**
      * Represents the cut animations.
      */
-    private val animation = Gem.forItem(Item(gem.gem))?.animation
+    private val animation = gem.animation
 
     override fun checkRequirements(): Boolean {
         if (getStatLevel(player, Skills.FLETCHING) < gem.level) {
