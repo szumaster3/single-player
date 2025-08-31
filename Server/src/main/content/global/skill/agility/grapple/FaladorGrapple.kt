@@ -1,5 +1,6 @@
 package content.global.skill.agility.grapple
 
+import content.global.skill.agility.AgilityHandler
 import core.api.*
 import core.cache.def.impl.SceneryDefinition
 import core.game.component.Component
@@ -137,6 +138,7 @@ class FaladorGrapple : OptionHandler() {
                                     closeOverlay(player)
                                     closeInterface(player)
                                     finishDiaryTask(player, DiaryType.FALADOR, 1, 2)
+                                    AgilityHandler.checkGrappleBreak(player)
                                     player.logoutListeners.remove("falador-grapple")
                                     return true
                                 }

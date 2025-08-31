@@ -1,5 +1,6 @@
 package content.global.skill.agility.grapple
 
+import content.global.skill.agility.AgilityHandler
 import core.api.*
 import core.cache.def.impl.SceneryDefinition
 import core.game.interaction.OptionHandler
@@ -168,6 +169,7 @@ class RiverLumGrapple : OptionHandler() {
                     26 -> {
                         player.unlock()
                         handleRopeScenery(false, player)
+                        AgilityHandler.checkGrappleBreak(player)
                         player.logoutListeners.remove("riverlum-grapple")
                         return true
                     }

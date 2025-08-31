@@ -34,26 +34,8 @@ class RockClimbShortcut :
         when (scenery.id) {
             2231 -> handleClimbShortcut(player, scenery, scalingAnim)
             19849 -> handleEaglesPeakShortcut(player, scalingAnim)
-            9335 -> ForceMovement.run(
-                player,
-                player.location,
-                Location.create(3427, 3478, 0),
-                scalingAnim,
-                scalingAnim,
-                Direction.WEST,
-                13
-            ).endAnimation = Animation.RESET
-
-            9336 -> ForceMovement.run(
-                player,
-                player.location,
-                Location.create(3424, 3476, 0),
-                scalingAnim,
-                scalingAnim,
-                Direction.WEST,
-                13
-            ).endAnimation = Animation.RESET
-
+            9335 -> ForceMovement.run(player, player.location, Location.create(3427, 3478, 0), scalingAnim, scalingAnim, Direction.WEST, 13).endAnimation = Animation.RESET
+            9336 -> ForceMovement.run(player, player.location, Location.create(3424, 3476, 0), scalingAnim, scalingAnim, Direction.WEST, 13).endAnimation = Animation.RESET
             in arrayOf(26327, 26328, 26324, 26323) -> handleGodWarsShortcut(player, scenery, scalingAnim)
             in arrayOf(9297, 9296) -> handleArandarShortcut(player, scenery, scalingAnim, req)
         }

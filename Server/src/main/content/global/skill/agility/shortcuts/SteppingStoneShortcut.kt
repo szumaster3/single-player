@@ -40,12 +40,12 @@ class SteppingStoneShortcut : OptionHandler() {
 
         lock(player, 3)
         player.locks.lockTeleport(3)
-        queueScript(player, 2, QueueStrength.SOFT) {
+        queueScript(player, 1, QueueStrength.SOFT) {
             if (player.location != destination) {
                 ForceMovement.run(
                     player, player.location, player.location.transform(offsetX, offsetY, 0), ANIMATION, 10
                 )
-                return@queueScript delayScript(player, 2)
+                return@queueScript delayScript(player, 3)
             } else {
                 return@queueScript stopExecuting(player)
             }
@@ -71,6 +71,7 @@ class SteppingStoneShortcut : OptionHandler() {
             "cross",
             30
         )
+        // Stepping stones (Champions' guild).
         configure(
             intArrayOf(Scenery.STEPPING_STONE_9315),
             Location.create(3149, 3363, 0),

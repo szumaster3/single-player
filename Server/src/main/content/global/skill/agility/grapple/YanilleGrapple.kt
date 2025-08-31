@@ -1,5 +1,6 @@
 package content.global.skill.agility.grapple
 
+import content.global.skill.agility.AgilityHandler
 import core.api.*
 import core.cache.def.impl.SceneryDefinition
 import core.game.component.Component
@@ -129,6 +130,7 @@ class YanilleGrapple : OptionHandler() {
                                     setMinimapState(player, 0)
                                     closeOverlay(player)
                                     closeInterface(player)
+                                    AgilityHandler.checkGrappleBreak(player)
                                     player.logoutListeners.remove("yanille-grapple")
                                     return true
                                 }

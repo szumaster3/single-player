@@ -1,5 +1,6 @@
 package content.global.skill.agility.grapple
 
+import content.global.skill.agility.AgilityHandler
 import core.api.*
 import core.cache.def.impl.SceneryDefinition
 import core.game.interaction.OptionHandler
@@ -140,6 +141,7 @@ class KaramjaGrapple : OptionHandler() {
                         player.unlock()
                         finishDiaryTask(player, DiaryType.KARAMJA, 2, 6)
                         handleObjects(false, player)
+                        AgilityHandler.checkGrappleBreak(player)
                         player.logoutListeners.remove("karamja-grapple")
                         return true
                     }

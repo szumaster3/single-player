@@ -1,6 +1,7 @@
 package content.global.skill.agility
 
 import core.api.*
+import core.game.container.impl.EquipmentContainer
 import core.game.interaction.MovementPulse
 import core.game.interaction.QueueStrength
 import core.game.node.entity.combat.ImpactHandler.HitsplatType
@@ -9,11 +10,15 @@ import core.game.node.entity.impl.PulseType
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.TeleportManager
 import core.game.node.entity.skill.Skills
+import core.game.node.item.GroundItemManager
+import core.game.node.item.Item
 import core.game.system.task.Pulse
 import core.game.world.GameWorld
 import core.game.world.map.Direction
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
+import core.tools.RandomFunction
+import shared.consts.Items
 import kotlin.random.Random
 
 /**
@@ -242,4 +247,28 @@ object AgilityHandler {
             course.flag(courseIndex)
         }
     }
+
+    /**
+     * Handles the potential break of a mithril grapple after use.
+     */
+    @JvmStatic
+    fun checkGrappleBreak(player: Player) {
+        val ammo = player.equipment.get(EquipmentContainer.SLOT_ARROWS) ?: return
+        if (ammo.id != Items.MITH_GRAPPLE_9419) return
+
+        if (RandomFunction.random(25) == 0) {
+            player.equipment.replace(null, EquipmentContainer.SLOT_ARROWS)
+
+            val broken = Item(Items.MITH_GRAPPLE_9418)
+            if (player.inventory.hasSpaceFor(broken)) {
+                player.inventory.add(broken)
+            } else {
+                GroundItemManager.create(broken, player.location, player)
+            }
+            player.packetDispatch.sendMessage(
+                core.tools.RED+ "After untying the rope, you find that your grapple is broken and useless."
+            )
+        }
+    }
+
 }

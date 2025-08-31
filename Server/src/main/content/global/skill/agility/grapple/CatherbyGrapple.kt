@@ -1,5 +1,6 @@
 package content.global.skill.agility.grapple
 
+import content.global.skill.agility.AgilityHandler
 import core.api.*
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
@@ -90,8 +91,9 @@ class CatherbyGrapple : InteractionListener {
 
                             9 -> {
                                 unlock(player)
-                                player.logoutListeners.remove("catherby-grapple")
                                 sendMessage(player, "You successfully grapple the rock and climb the cliffside.")
+                                AgilityHandler.checkGrappleBreak(player)
+                                player.logoutListeners.remove("catherby-grapple")
                                 return true
                             }
                         }

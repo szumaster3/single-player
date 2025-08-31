@@ -1,5 +1,6 @@
 package content.global.skill.agility.grapple
 
+import content.global.skill.agility.AgilityHandler
 import core.api.anyInEquipment
 import core.api.inEquipment
 import core.api.sendDialogue
@@ -114,6 +115,7 @@ class WaterOrbGrapple : OptionHandler() {
                                 14 -> {
                                     player.unlock()
                                     player.achievementDiaryManager.finishTask(player, DiaryType.SEERS_VILLAGE, 2, 10)
+                                    AgilityHandler.checkGrappleBreak(player)
                                     player.logoutListeners.remove("waterorb-grapple")
                                     return true
                                 }
