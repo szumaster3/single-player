@@ -17,7 +17,7 @@ import shared.consts.NPCs
 class DoorRenegadeKnight : DialogueFile() {
     var STAGE_NO = 10
 
-    override fun handle(componentID: Int, buttonID: Int, ) {
+    override fun handle(componentID: Int, buttonID: Int) {
         npc = NPC(NPCs.RENEGADE_KNIGHT_237)
 
         when (stage) {

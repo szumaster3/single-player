@@ -28,12 +28,9 @@ class ThrantaxDialogue : DialogueFile() {
     val options = arrayOf("Snarthanto Candon Termtrick", "Snarthtrick Candanto Termon", "Snarthon Candtrick Termanto")
     var correct = options[2]
     var shuffled = emptyArray<String>()
-    var incantation = ""
+    private var incantation = ""
 
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
+    override fun handle(componentID: Int, buttonID: Int) {
         npc = NPC(NPCs.THRANTAX_THE_MIGHTY_238)
 
         when (stage) {
@@ -92,11 +89,7 @@ class ThrantaxDialogue : DialogueFile() {
                     end()
                     stage = END_DIALOGUE
                 } else {
-                    npc(
-                        FaceAnim.OLD_HAPPY,
-                        "Thou hast me in thine control. So that I mayst",
-                        "return from whence I came, I must grant thee a boon.",
-                    ).also { stage++ }
+                    npc(FaceAnim.OLD_HAPPY, "Thou hast me in thine control. So that I mayst", "return from whence I came, I must grant thee a boon.").also { stage++ }
                 }
             }
 
@@ -104,20 +97,8 @@ class ThrantaxDialogue : DialogueFile() {
             9 -> playerl(FaceAnim.SCARED, "I wish to free Merlin from his giant crystal!").also { stage++ }
             10 -> npcl(FaceAnim.OLD_HAPPY, "GRAAAAAARGH!").also { stage++ }
             11 -> npcl(FaceAnim.OLD_HAPPY, "the deed is done.").also { stage++ }
-            12 ->
-                npc(
-                    FaceAnim.OLD_HAPPY,
-                    "Thou mayst now shatter Merlins' crystal with",
-                    "excalibur, ",
-                ).also { stage++ }
-
-            13 ->
-                npc(
-                    FaceAnim.OLD_HAPPY,
-                    "and I can once more rest. Begone! And leave me once",
-                    "more in peace.",
-                ).also { stage++ }
-
+            12 -> npc(FaceAnim.OLD_HAPPY, "Thou mayst now shatter Merlins' crystal with", "excalibur, ").also { stage++ }
+            13 -> npc(FaceAnim.OLD_HAPPY, "and I can once more rest. Begone! And leave me once", "more in peace.").also { stage++ }
             14 -> {
                 setQuestStage(player!!, Quests.MERLINS_CRYSTAL, 50)
                 disappear(player!!)
@@ -127,7 +108,7 @@ class ThrantaxDialogue : DialogueFile() {
         }
     }
 
-    fun disappear(player: Player) {
+    private fun disappear(player: Player) {
         val thrantax = player.getAttribute<ThrantaxTheMightyNPC>(GameAttributes.TEMP_ATTR_THRANTAX, null)
 
         if (thrantax != null) {
@@ -135,7 +116,7 @@ class ThrantaxDialogue : DialogueFile() {
         }
     }
 
-    fun attackPlayer(player: Player) {
+    private fun attackPlayer(player: Player) {
         val thrantax = player.getAttribute<NPC>(GameAttributes.TEMP_ATTR_THRANTAX, null)
 
         if (thrantax != null) {
@@ -143,7 +124,7 @@ class ThrantaxDialogue : DialogueFile() {
         }
     }
 
-    fun initThrantax(
+    private fun initThrantax(
         player: Player,
         checkMissing: Boolean,
     ) {
@@ -158,7 +139,7 @@ class ThrantaxDialogue : DialogueFile() {
         }
     }
 
-    fun spawn(player: Player) {
+    private fun spawn(player: Player) {
         var thrantax = ThrantaxTheMightyNPC(NPCs.THRANTAX_THE_MIGHTY_238, Location(2780, 3515, 0))
         thrantax.player = player
         thrantax.locks.lockMovement(10000)

@@ -8,9 +8,7 @@ import core.game.node.scenery.Scenery
 import core.game.system.timer.impl.AntiMacro
 import core.game.world.map.Location
 
-class CrateCutscene(
-    player: Player,
-) : Cutscene(player) {
+class CrateCutscene(player: Player) : Cutscene(player) {
     override fun setup() {
         setExit(Location.create(2778, 3401, 0))
         loadRegion(12609)

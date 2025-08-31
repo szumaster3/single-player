@@ -22,7 +22,7 @@ import shared.consts.Scenery
  */
 class MerlinDialogueFile(val forced: Boolean) : DialogueFile() {
 
-    override fun handle(componentID: Int, buttonID: Int, ) {
+    override fun handle(componentID: Int, buttonID: Int) {
         npc = NPC(NPCs.MERLIN_249)
 
         when (stage) {
@@ -34,13 +34,7 @@ class MerlinDialogueFile(val forced: Boolean) : DialogueFile() {
                     npcl(FaceAnim.HAPPY, "Thank you! Thank you! Thank you!")
                     stage++
                 } else {
-                    npcl(
-                        FaceAnim.NEUTRAL,
-                        "Excuse me for rushing off like this, but I must get back to my workroom.",
-                    ).also {
-                        stage =
-                            END_DIALOGUE
-                    }
+                    npcl(FaceAnim.NEUTRAL, "Excuse me for rushing off like this, but I must get back to my workroom.").also { stage = END_DIALOGUE }
                 }
             }
 

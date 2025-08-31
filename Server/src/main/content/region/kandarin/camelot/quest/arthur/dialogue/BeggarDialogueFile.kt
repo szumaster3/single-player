@@ -37,21 +37,13 @@ class BeggarDialogueFile(val door: Scenery?) : DialogueFile() {
                 }
             }
 
-            1 ->
-                npcl(
-                    FaceAnim.SAD,
-                    "Could you find it in your heart to spare me a simple loaf of bread?",
-                ).also { stage++ }
-
-            2 ->
-                showTopics(
-                    Topic(FaceAnim.NEUTRAL, "Yes certainly.", 3),
-                    Topic(FaceAnim.NEUTRAL, "No I don't have any bread with me.", 20),
-                )
-
+            1 -> npcl(FaceAnim.SAD, "Could you find it in your heart to spare me a simple loaf of bread?").also { stage++ }
+            2 -> showTopics(
+                Topic(FaceAnim.NEUTRAL, "Yes certainly.", 3),
+                Topic(FaceAnim.NEUTRAL, "No I don't have any bread with me.", 20),
+            )
             3 -> {
                 player!!.setAttribute(GameAttributes.ATTR_STATE_TALK_BEGGAR, true)
-
                 if (player!!.inventory.contains(Items.BREAD_2309, 1)) {
                     sendDialogue(player!!, "You give the bread to the beggar.")
                     stage++
@@ -87,7 +79,6 @@ class BeggarDialogueFile(val door: Scenery?) : DialogueFile() {
 
             8 -> {
                 player!!.setAttribute(GameAttributes.ATTR_STATE_CLAIM_EXCALIBUR, true)
-
                 disappearLady(player!!)
                 player!!.inventory.add(Item(Items.EXCALIBUR_35, 1))
                 end()

@@ -15,7 +15,7 @@ import shared.consts.NPCs
  * # Relations
  * - [Holy Grail][content.region.kandarin.camelot.quest.grail.HolyGrail]
  */
-class MaidenDialogue(var forced: Boolean, ) : DialogueFile() {
+class MaidenDialogue(var forced: Boolean) : DialogueFile() {
     override fun handle(
         componentID: Int,
         buttonID: Int,
@@ -24,22 +24,18 @@ class MaidenDialogue(var forced: Boolean, ) : DialogueFile() {
 
         if (forced) {
             when (stage) {
-                0 ->
-                    sendDialogue(player!!, "Ting-a-ling-a-ling!").also {
-                        var center = Location.create(2764, 4687, 0)
-                        var dist = center.location.getDistance(player!!.location)
+                0 -> sendDialogue(player!!, "Ting-a-ling-a-ling!").also {
+                    var center = Location.create(2764, 4687, 0)
+                    var dist = center.location.getDistance(player!!.location)
 
-                        if (dist <= 12) {
-                            stage++
-                        } else {
-                            stage = END_DIALOGUE
-                        }
+                    if (dist <= 12) {
+                        stage++
+                    } else {
+                        stage = END_DIALOGUE
                     }
-                1 ->
-                    npcl(
-                        FaceAnim.NEUTRAL,
-                        "Welcome to the Grail castle. You should come inside, it's cold out here.",
-                    ).also { stage++ }
+                }
+
+                1 -> npcl(FaceAnim.NEUTRAL, "Welcome to the Grail castle. You should come inside, it's cold out here.").also { stage++ }
                 2 -> {
                     sendDialogue(player!!, "Somehow you are now inside the castle.")
                     moveInsideCastle()

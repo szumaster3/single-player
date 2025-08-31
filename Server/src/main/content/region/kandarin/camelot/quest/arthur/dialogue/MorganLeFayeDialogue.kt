@@ -38,90 +38,46 @@ class MorganLeFayeDialogue : DialogueFile() {
                 stage++
             }
 
-            1 ->
-                showTopics(
-                    Topic(FaceAnim.ANGRY, "Tell me how to untrap Merlin and I might.", 3),
-                    Topic(FaceAnim.ANGRY, "No. He deserves to die.", STAGE_KILL),
-                    Topic(FaceAnim.NEUTRAL, "Ok then.", STAGE_VANISH),
-                )
+            1 -> showTopics(
+                Topic(FaceAnim.ANGRY, "Tell me how to untrap Merlin and I might.", 3),
+                Topic(FaceAnim.ANGRY, "No. He deserves to die.", STAGE_KILL),
+                Topic(FaceAnim.NEUTRAL, "Ok then.", STAGE_VANISH),
+            )
 
             2 -> npcl(FaceAnim.NEUTRAL, "You have guessed correctly that I'm responsible for that.").also { stage++ }
-            3 ->
-                npcl(
-                    FaceAnim.NEUTRAL,
-                    "I suppose I can live with that fool Merlin being loose for the sake of my son.",
-                ).also {
-                    stage++
-                }
-
+            3 -> npcl(FaceAnim.NEUTRAL, "I suppose I can live with that fool Merlin being loose for the sake of my son.").also { stage++ }
             4 -> npcl(FaceAnim.NEUTRAL, "Setting him free won't be easy though.").also { stage++ }
-            5 ->
-                npcl(
-                    FaceAnim.NEUTRAL,
-                    "You will need to find a magic symbol as close to the crystal as you can find.",
-                ).also {
-                    stage++
-                }
-
-            6 ->
-                npcl(
-                    FaceAnim.NEUTRAL,
-                    "You will then need to drop some bats' bones on the magic symbol while holding a lit black candle.",
-                ).also {
-                    stage++
-                }
-
+            5 -> npcl(FaceAnim.NEUTRAL, "You will need to find a magic symbol as close to the crystal as you can find.").also { stage++ }
+            6 -> npcl(FaceAnim.NEUTRAL, "You will then need to drop some bats' bones on the magic symbol while holding a lit black candle.").also { stage++ }
             7 -> npcl(FaceAnim.NEUTRAL, "This will summon a mighty spirit named Thrantax.").also { stage++ }
             8 -> npcl(FaceAnim.NEUTRAL, "You will need to bind him with magic words.").also { stage++ }
-            9 ->
-                npcl(
-                    FaceAnim.NEUTRAL,
-                    "Then you will need the sword Excalibur with which the spell was bound in order to shatter the crystal.",
-                ).also {
-                    stage++
+            9 -> npcl(FaceAnim.NEUTRAL, "Then you will need the sword Excalibur with which the spell was bound in order to shatter the crystal.").also { stage++ }
+            10 -> showTopics(
+                Topic(FaceAnim.NEUTRAL, "So where can I find Excalibur?", STAGE_EXCALIBUR),
+                Topic(FaceAnim.NEUTRAL, "OK I will do all that.", STAGE_VANISH),
+                Topic(FaceAnim.NEUTRAL, "What are the magic words?", STAGE_MAGIC_WORDS),
+            )
+
+            STAGE_EXCALIBUR -> npcl(FaceAnim.NEUTRAL, "The lady of the lake has it. I don't know if she'll give it to you though, she can be rather temperamental.").also {
+                var quest = getQuest(player!!, Quests.MERLINS_CRYSTAL)
+
+                if (quest.getStage(player) == 30) {
+                    player!!.questRepository.setStage(quest, 40)
                 }
+                stage = 31
+            }
 
-            10 ->
-                showTopics(
-                    Topic(FaceAnim.NEUTRAL, "So where can I find Excalibur?", STAGE_EXCALIBUR),
-                    Topic(FaceAnim.NEUTRAL, "OK I will do all that.", STAGE_VANISH),
-                    Topic(FaceAnim.NEUTRAL, "What are the magic words?", STAGE_MAGIC_WORDS),
-                )
+            31 -> showTopics(
+                Topic(FaceAnim.NEUTRAL, "OK, I will go do all that.", STAGE_VANISH),
+                Topic(FaceAnim.NEUTRAL, "What are the magic words?", STAGE_MAGIC_WORDS),
+            )
 
-            STAGE_EXCALIBUR ->
-                npcl(
-                    FaceAnim.NEUTRAL,
-                    "The lady of the lake has it. I don't know if she'll give it to you though, she can be rather temperamental.",
-                ).also {
-                    var quest = getQuest(player!!, Quests.MERLINS_CRYSTAL)
-
-                    if (quest.getStage(player) == 30) {
-                        player!!.questRepository.setStage(quest, 40)
-                    }
-                    stage = 31
-                }
-
-            31 ->
-                showTopics(
-                    Topic(FaceAnim.NEUTRAL, "OK, I will go do all that.", STAGE_VANISH),
-                    Topic(FaceAnim.NEUTRAL, "What are the magic words?", STAGE_MAGIC_WORDS),
-                )
-
-            STAGE_MAGIC_WORDS ->
-                npcl(
-                    FaceAnim.NEUTRAL,
-                    "You will find the magic words at the base of one of the chaos altars.",
-                ).also {
-                    stage++
-                }
-
+            STAGE_MAGIC_WORDS -> npcl(FaceAnim.NEUTRAL, "You will find the magic words at the base of one of the chaos altars.").also { stage++ }
             33 -> npcl(FaceAnim.NEUTRAL, "Which chaos altar I cannot remember.").also { stage++ }
-            34 ->
-                showTopics(
-                    Topic(FaceAnim.NEUTRAL, "So where can I find Excalibur?", STAGE_EXCALIBUR),
-                    Topic(FaceAnim.NEUTRAL, "OK I will go do all that.", STAGE_VANISH),
-                )
-
+            34 -> showTopics(
+                Topic(FaceAnim.NEUTRAL, "So where can I find Excalibur?", STAGE_EXCALIBUR),
+                Topic(FaceAnim.NEUTRAL, "OK I will go do all that.", STAGE_VANISH),
+            )
             STAGE_VANISH -> {
                 morganDisapear(true)
                 stage = END_DIALOGUE

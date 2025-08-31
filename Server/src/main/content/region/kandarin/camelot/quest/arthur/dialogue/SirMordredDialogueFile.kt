@@ -20,11 +20,9 @@ class SirMordredDialogueFile : DialogueFile() {
 
         when (stage) {
             0 -> npcl(FaceAnim.ANGRY, "You DARE to invade MY stronghold?!?! Have at thee knave!!!").also { stage++ }
-
             1 -> {
                 end()
                 val mord = findNPC(NPCs.SIR_MORDRED_247)
-
                 if (mord != null) {
                     mord.attack(player!!)
                 }
