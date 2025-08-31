@@ -51,7 +51,7 @@ class MimeNPC(
                         player,
                         "You need to copy the mime's performance, then you'll be returned to where you were.",
                     )
-                    forceWalk(player, MimeUtils.PLAYER_LOCATION, "")
+                    forceMove(player, MimeUtils.MIME_EVENT_LOCATION, MimeUtils.MIME_LOCATION, 0, 90, null)
                     return@queueScript delayScript(player, 6)
                 }
 

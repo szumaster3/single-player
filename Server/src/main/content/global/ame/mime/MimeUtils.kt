@@ -15,6 +15,7 @@ import shared.consts.NPCs
 
 object MimeUtils {
     val MIME_EVENT_LOCATION = Location(2008, 4764, 0)
+    val MIME_LOCATION = Location(2008, 4762, 0)
     val PLAYER_LOCATION = Location(2007, 4761, 0)
     val SCENERY_LOCATION = Location(2010, 4761, 0)
 
