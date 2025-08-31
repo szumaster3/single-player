@@ -1039,7 +1039,7 @@ fun sendMessage(
     if (ticks != null) {
         player.sendMessages(ticks, *lines)
     } else {
-        player.sendMessages(0, *lines)
+        player.sendMessages(*lines)
     }
 }
 

@@ -7,10 +7,9 @@ import core.game.node.entity.player.Player
 import core.game.node.entity.skill.SkillPulse
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
-import core.game.world.update.flag.context.Animation
 import shared.consts.Items
 
-class GemBoltCutPulse(player: Player?, node: Item?, private val gem: GemBolt, private var amount: Int, ) : SkillPulse<Item?>(player, node) {
+class GemBoltCutPulse(player: Player?, node: Item?, private val gem: GemBolt, private var amount: Int) : SkillPulse<Item?>(player, node) {
 
     /**
      * Represents the ticks passed.
@@ -20,7 +19,7 @@ class GemBoltCutPulse(player: Player?, node: Item?, private val gem: GemBolt, pr
     /**
      * Represents the cut animations.
      */
-    private val animation = lastAnimation ?: gem.animation
+    private val animation = gem.animation
 
     override fun checkRequirements(): Boolean {
         if (getStatLevel(player, Skills.FLETCHING) < gem.level) {
@@ -39,7 +38,6 @@ class GemBoltCutPulse(player: Player?, node: Item?, private val gem: GemBolt, pr
     override fun animate() {
         if (ticks % 6 == 0) {
             player.animate(animation)
-            lastAnimation = gem.animation
         }
     }
 
@@ -61,9 +59,5 @@ class GemBoltCutPulse(player: Player?, node: Item?, private val gem: GemBolt, pr
         }
         amount--
         return amount <= 0
-    }
-
-    companion object {
-        private var lastAnimation: Animation? = null
     }
 }
