@@ -17,9 +17,12 @@ import shared.consts.Vars
  * Author: [Ovenbreado](https://gitlab.com/ovenbreado)
  */
 @Initializable
-class
-TearsOfGuthix : Quest(Quests.TEARS_OF_GUTHIX, 120, 119, 1, 449, Vars.VARBIT_QUEST_TEARS_OF_GUTHIX_PROGRESS_451, 0, 1, 2) {
+class TearsOfGuthix : Quest(Quests.TEARS_OF_GUTHIX, 120, 119, 1, 449, Vars.VARBIT_QUEST_TEARS_OF_GUTHIX_PROGRESS_451, 0, 1, 2) {
+
     companion object {
+        /**
+         * Gets the number of days left for collecting tears.
+         */
         fun daysLeft(player: Player): Int {
             val currentTime = System.currentTimeMillis()
             val previousTime = getAttribute<Long>(player, GameAttributes.QUEST_TOG_LAST_DATE, 0)
@@ -28,18 +31,27 @@ TearsOfGuthix : Quest(Quests.TEARS_OF_GUTHIX, 120, 119, 1, 449, Vars.VARBIT_QUES
             return 6 - numberOfDaysLeft.toInt()
         }
 
+        /**
+         * Gets the amount of experience points left to reach the daily cap.
+         */
         fun xpLeft(player: Player): Int {
             val currentXP = player.skills.totalXp
             val previousXP = getAttribute(player, GameAttributes.QUEST_TOG_LAST_XP_AMOUNT, 0)
             return 100000 - (currentXP - previousXP)
         }
 
+        /**
+         * Gets the number of quest points left need for collecting tears.
+         */
         fun questPointsLeft(player: Player): Int {
             val currentQuestPoints = getQuestPoints(player)
             val previousQuestPoints = getAttribute(player, GameAttributes.QUEST_TOG_LAST_QP, 0)
             return 1 - (currentQuestPoints - previousQuestPoints)
         }
 
+        /**
+         * Checks whether the player meets the level requirements for the quest.
+         */
         fun hasRequirements(player: Player): Boolean =
             arrayOf(
                 hasLevelStat(player, Skills.FIREMAKING, 49),
@@ -48,14 +60,10 @@ TearsOfGuthix : Quest(Quests.TEARS_OF_GUTHIX, 120, 119, 1, 449, Vars.VARBIT_QUES
             ).all { it }
     }
 
-    override fun drawJournal(
-        player: Player,
-        stage: Int,
-    ) {
+    override fun drawJournal(player: Player, stage: Int) {
         super.drawJournal(player, stage)
         var line = 12
         var stage = getStage(player)
-
         var started = getQuestStage(player, Quests.TEARS_OF_GUTHIX) > 0
 
         if (!started) {
@@ -66,18 +74,8 @@ TearsOfGuthix : Quest(Quests.TEARS_OF_GUTHIX, 120, 119, 1, 449, Vars.VARBIT_QUES
             line(player, "!!Level 20 crafting??", line++, hasLevelStat(player, Skills.CRAFTING, 20))
             line(player, "!!Level 20 mining??", line++, hasLevelStat(player, Skills.MINING, 20))
             line(player, "!!43 quest points??", line++, getQuestPoints(player) >= 43)
-            line(
-                player,
-                "!!Level 49 crafting would be an advantage??",
-                line++,
-                hasLevelStat(player, Skills.CRAFTING, 49),
-            )
-            line(
-                player,
-                "!!Level 49 smithing would be an advantage??",
-                line++,
-                hasLevelStat(player, Skills.SMITHING, 49),
-            )
+            line(player, "!!Level 49 crafting would be an advantage??", line++, hasLevelStat(player, Skills.CRAFTING, 49))
+            line(player, "!!Level 49 smithing would be an advantage??", line++, hasLevelStat(player, Skills.SMITHING, 49))
         } else if (stage < 100) {
             line(player, "I met Juna the serpent in a deep chasm beneath the", line++, true)
             line(player, "Lumbridge Swamp Caves.", line++, true)
@@ -94,28 +92,13 @@ TearsOfGuthix : Quest(Quests.TEARS_OF_GUTHIX, 120, 119, 1, 449, Vars.VARBIT_QUES
             line(player, "Now Juna will let me into the cave to collect the Tears if I", line++, false)
             line(player, "!!tell her stories?? of my adventures.", line++, false)
             if (daysLeft(player) > 0 && xpLeft(player) > 0 && questPointsLeft(player) > 0) {
-                line(
-                    player,
-                    "I will be able to collect the Tears of Guthix !!in ${daysLeft(player)} days??, as",
-                    line++,
-                    false,
-                )
-                line(
-                    player,
-                    "long as I gain either !!1 Quest Point?? or !!${xpLeft(player)} total XP??",
-                    line++,
-                    false,
-                )
+                line(player, "I will be able to collect the Tears of Guthix !!in ${daysLeft(player)} days??, as", line++, false)
+                line(player, "long as I gain either !!1 Quest Point?? or !!${xpLeft(player)} total XP??", line++, false)
             } else if (xpLeft(player) > 0 && questPointsLeft(player) > 0) {
                 line(player, "I will be able to collect the Tears of Guthix, as long as I", line++, false)
                 line(player, "gain either !!1 Quest Point?? or !!${xpLeft(player)} total XP??.", line++, false)
             } else if (daysLeft(player) > 0) {
-                line(
-                    player,
-                    "I will be able to collect the Tears of Guthix !!in ${daysLeft(player)} days??.",
-                    line++,
-                    false,
-                )
+                line(player, "I will be able to collect the Tears of Guthix !!in ${daysLeft(player)} days??.", line++, false)
             } else {
                 line(player, "I have had enough adventures to tell Juna more stories,", line++, false)
                 line(player, "and a week has passed since I last collected the Tears. I", line++, false)
@@ -127,12 +110,7 @@ TearsOfGuthix : Quest(Quests.TEARS_OF_GUTHIX, 120, 119, 1, 449, Vars.VARBIT_QUES
     override fun finish(player: Player) {
         var ln = 10
         super.finish(player)
-        player.packetDispatch.sendItemZoomOnInterface(
-            Items.STONE_BOWL_4704,
-            240,
-            Components.QUEST_COMPLETE_SCROLL_277,
-            5,
-        )
+        sendItemZoomOnInterface(player, Components.QUEST_COMPLETE_SCROLL_277, 5, Items.STONE_BOWL_4704)
         drawReward(player, "1 quest point", ln++)
         drawReward(player, "1000 Crafting XP", ln++)
         drawReward(player, "Access to the Tears of Guthix", ln++)

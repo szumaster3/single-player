@@ -10,10 +10,7 @@ import shared.consts.NPCs
 
 class LightCreatureBehavior : NPCBehavior(NPCs.LIGHT_CREATURE_2021) {
     companion object {
-        fun moveLightCreature(
-            self: NPC,
-            location: Location,
-        ) {
+        fun moveLightCreature(self: NPC, location: Location) {
             self.setNextWalk()
             Pathfinder.find(self, location, true, Pathfinder.PROJECTILE).walk(self)
         }

@@ -17,71 +17,41 @@ import shared.consts.Quests
 import shared.consts.Scenery
 
 class TearsOfGuthixListener : InteractionListener {
-    companion object {
-        fun crossTheChasm(
-            player: Player,
-            with: NPC,
-        ) {
-            // You have to do the following:
-            // 1 - Get the light creature to your location.
-            // 2 - Animate both you and the light creature to float up.
-            // 3 - Walk both YOU AND THE LIGHT CREATURE to the other side.
-            // 4 - Float both you and the light creature to the ground.
-            //
-            // 2046 - Magically float into the air
-            // 2047 - Magically float back to the ground
-            // 2048 - Keep floating in the air
-
-            val lightCreature = with as NPC
-            sendMessage(player, "The light-creature is attracted to your beam and comes towards you...")
-            LightCreatureBehavior.moveLightCreature(lightCreature, player.location)
-            // Could also do player.appearance.setAnimations(Animation(913)) which is the group animation for floating.
-            if (player.location.y > 9516) {
-                forceMove(player, player.location, Location.create(3229, 9504, 2), 0, 400, null, 2048)
-            } else {
-                forceMove(player, player.location, Location.create(3228, 9527, 2), 0, 400, null, 2048)
-            }
-        }
-    }
 
     override fun defineListeners() {
+
+        /*
+         * Handles quest dialogue with Juna NPC.
+         */
+
         on(Scenery.JUNA_31302, SCENERY, "talk-to") { player, node ->
             openDialogue(player, NPCs.JUNA_2023, node.location)
             return@on true
         }
 
-        // Quest complete
+        /*
+         * Handles talk with Juna NPC after quest.
+         */
+
         on(Scenery.JUNA_31303, SCENERY, "talk-to", "tell-story") { player, node ->
             openDialogue(player, NPCs.JUNA_2023, node.location)
             return@on true
         }
 
         on(Scenery.ROCKS_6673, SCENERY, "climb") { player, _ ->
-            if (player.location.x > 3240) {
-                ForceMovement
-                    .run(
-                        player,
-                        player.location,
-                        Location.create(player.location).transform(-2, 0, 0),
-                        Animation(1148),
-                        Animation(1148),
-                        Direction.WEST,
-                        13,
-                    ).endAnimation =
-                    Animation.RESET
-            } else {
-                ForceMovement
-                    .run(
-                        player,
-                        player.location,
-                        Location.create(player.location).transform(2, 0, 0),
-                        Animation(1148),
-                        Animation(1148),
-                        Direction.WEST,
-                        13,
-                    ).endAnimation =
-                    Animation.RESET
-            }
+            val dx = if (player.location.x > 3240) -2 else 2
+            val destination = Location.create(player.location).transform(dx, 0, 0)
+
+            ForceMovement.run(
+                player,
+                player.location,
+                destination,
+                Animation(1148),
+                Animation(1148),
+                Direction.WEST,
+                13
+            ).endAnimation = Animation.RESET
+
             return@on true
         }
 
@@ -89,17 +59,16 @@ class TearsOfGuthixListener : InteractionListener {
             if (player.location.x > 3239) {
                 sendMessage(player, "You could climb down here, but it is too uneven to climb up.")
             } else {
-                ForceMovement
-                    .run(
-                        player,
-                        player.location,
-                        Location.create(player.location).transform(2, 0, 0),
-                        Animation(1148),
-                        Animation(1148),
-                        Direction.WEST,
-                        13,
-                    ).endAnimation =
-                    Animation.RESET
+                val destination = Location.create(player.location).transform(2, 0, 0)
+                ForceMovement.run(
+                    player,
+                    player.location,
+                    destination,
+                    Animation(1148),
+                    Animation(1148),
+                    Direction.WEST,
+                    13
+                ).endAnimation = Animation.RESET
                 sendMessage(player, "You leap across with a mighty leap!")
             }
             return@on true
@@ -124,66 +93,32 @@ class TearsOfGuthixListener : InteractionListener {
             return@onUseWith true
         }
 
-        onUseWith(ITEM, Items.SAPPHIRE_1607, Items.BULLSEYE_LANTERN_4549) { player, _, _ ->
+        onUseWith(ITEM, Items.SAPPHIRE_1607, Items.BULLSEYE_LANTERN_4549, Items.BULLSEYE_LANTERN_4550, Items.LANTERN_LENS_4542) { player, _, _ ->
             sendMessage(player, "The lantern is too hot to do that while it is lit.")
             return@onUseWith true
         }
 
-        onUseWith(ITEM, Items.SAPPHIRE_1607, Items.BULLSEYE_LANTERN_4550) { player, _, _ ->
-            sendMessage(player, "The lantern is too hot to do that while it is lit.")
-            return@onUseWith true
-        }
-
-        onUseWith(ITEM, Items.SAPPHIRE_LANTERN_4702, Items.LANTERN_LENS_4542) { player, _, _ ->
-            sendMessage(player, "The lantern is too hot to do that while it is lit.")
-            return@onUseWith true
-        }
-
-        onUseWith(ITEM, Items.MAGIC_STONE_4703, Items.CHISEL_1755) { player, used, _ ->
-            sendMessage(player, "You make a stone bowl.")
-            if (removeItem(player, used)) {
+        onUseWith(ITEM, Items.CHISEL_1755, Items.MAGIC_STONE_4703) { player, _, with ->
+            if (removeItem(player, with.asItem())) {
+                sendMessage(player, "You make a stone bowl.")
                 addItemOrDrop(player, Items.STONE_BOWL_4704)
             }
             return@onUseWith true
         }
 
-        onUseWith(NPC, Items.SAPPHIRE_LANTERN_4702, NPCs.LIGHT_CREATURE_2021) { player, _, with ->
+        onUseWith(NPC, Items.SAPPHIRE_LANTERN_4702, NPCs.LIGHT_CREATURE_2021) { player, _, npc ->
+            val target = npc as NPC
+
             if (!hasRequirement(player, Quests.WHILE_GUTHIX_SLEEPS)) {
-                crossTheChasm(player, with as NPC)
+                crossTheChasm(player, target)
             } else {
-                // Options when you have WGS - B6KHH7AQc2Q
-                openDialogue(
-                    player,
-                    object : DialogueFile() {
-                        override fun handle(
-                            componentID: Int,
-                            buttonID: Int,
-                        ) {
-                            when (stage) {
-                                0 ->
-                                    interpreter!!
-                                        .sendOptions(
-                                            "Select an Option",
-                                            "Across the Chasm.",
-                                            "Into the Chasm.",
-                                        ).also { stage++ }
-                                1 ->
-                                    when (buttonID) {
-                                        1 -> {
-                                            crossTheChasm(player, with as NPC)
-                                            end()
-                                        }
-                                        2 -> {
-                                            player.lock(2)
-                                            player.teleport(Location.create(2538, 5881, 0))
-                                            end()
-                                        }
-                                    }
-                            }
-                        }
-                    },
-                )
+                sendDialogueOptions(player, "Select an Option", "Across the Chasm.", "Into the Chasm.")
+                addDialogueAction(player) { _, button ->
+                    if (button == 2) crossTheChasm(player, target)
+                    else player.teleport(Location.create(2538, 5881, 0))
+                }
             }
+
             return@onUseWith true
         }
     }
@@ -191,6 +126,22 @@ class TearsOfGuthixListener : InteractionListener {
     override fun defineDestinationOverrides() {
         setDest(IntType.NPC, intArrayOf(NPCs.LIGHT_CREATURE_2021), "use") { player, _ ->
             return@setDest player.location
+        }
+    }
+
+    companion object {
+        /**
+         * Handles the player cross the chasm with the help of a light creature.
+         */
+        fun crossTheChasm(player: Player, npc: NPC) {
+            sendMessage(player, "The light-creature is attracted to your beam and comes towards you...")
+            LightCreatureBehavior.moveLightCreature(npc, player.location)
+            val destination = if (player.location.y > 9516) {
+                Location.create(3229, 9504, 2)
+            } else {
+                Location.create(3228, 9527, 2)
+            }
+            forceMove(player, player.location, destination, 0, 400, null, 2048)
         }
     }
 }
