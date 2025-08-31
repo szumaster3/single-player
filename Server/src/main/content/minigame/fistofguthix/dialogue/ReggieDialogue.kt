@@ -1,6 +1,7 @@
 package content.minigame.fistofguthix.dialogue
 
 import core.api.openInterface
+import core.api.sendDialogueOptions
 import core.api.setTitle
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
@@ -32,7 +33,7 @@ class ReggieDialogue(player: Player? = null) : Dialogue(player) {
         when (stage) {
             0 -> showTopics(
                 Topic("Yes, I want to see what you're selling.", 1, true),
-                Topic("No, I have some questions.", 1,false),
+                Topic("No, I have some questions.", 3,false),
                 IfTopic("I want to buy tokens.",10,GameWorld.settings?.allow_token_purchase == true)
             )
             1 -> npcl(FaceAnim.HAPPY, "Certainly!").also { stage++ }
@@ -41,7 +42,7 @@ class ReggieDialogue(player: Player? = null) : Dialogue(player) {
                 Topic("What currency are you trading in?", 4, true),
                 Topic("Can you recharge my items?", 20,false),
                 Topic("Can you uncharge my items?", 30,false),
-                Topic("Why do all of your wares degrade?", 40,false),
+                Topic("Why do all of your wares degrade?", 40,true),
                 Topic("No, I'm just passing by.", 100,false),
             )
             4 -> playerl(FaceAnim.HALF_ASKING, "What currency are you trading in? It doesn't seem to be regular coins.").also { stage++ }
@@ -60,7 +61,7 @@ class ReggieDialogue(player: Player? = null) : Dialogue(player) {
             9 -> npcl(FaceAnim.FRIENDLY, "Oh, they're nothing special in themselves. They are just tokens we use as currency.").also { stage = 8 }
             10 -> {
                 setTitle(player, 4)
-                player?.dialogueInterpreter?.sendOptions("How many?", "50", "100", "250", "500").also { stage = 11 }
+                sendDialogueOptions(player, title = "How many tokens do you want to buy?", "50", "100", "250", "500").also { stage++ }
             }
             11 -> {
                 buyAmount = when (buttonId) {
@@ -94,15 +95,17 @@ class ReggieDialogue(player: Player? = null) : Dialogue(player) {
             30 -> npcl(FaceAnim.FRIENDLY, "You don't want to keep the power of Guthix? That's strange. But yes, of course I can do this for you. Please be aware that you won't get anything in return, except the degraded item, and it will cost you tokens to have it charged again.").also { stage++ }
             31 -> playerl(FaceAnim.FRIENDLY, "Yes, I will keep that in mind.").also { stage++ }
             32 -> npcl(FaceAnim.FRIENDLY, "Good. In that case, just hand me the item from which you want the charge removed.").also { stage = 25 }
-            40 -> npcl(FaceAnim.FRIENDLY, "Why do all of your wares degrade? I have seen plenty of similar items in my days, but they all seem to last a lot longer than yours.").also { stage++ }
+            40 -> playerl(FaceAnim.HALF_ASKING, "Why do all of your wares degrade? I have seen plenty of similar items in my days, but they all seem to last a lot longer than yours.").also { stage++ }
             41 -> npcl(FaceAnim.FRIENDLY, "A most accurate observation, my friend. But the other items you've come across in your travels most certainly have not been directly infused with the power emanating from the Fist of Guthix.").also { stage++ }
             42 -> playerl(FaceAnim.THINKING, "Umm...I suppose not. But wouldn't the power of Guthix have made the items stronger?").also { stage++ }
-            43 -> npcl(FaceAnim.FRIENDLY, "Why, yes, they have. Keeping a shop so close to the source of this power has resulted in the items being infused with energy. This makes them stronger than they normally would have been, but, unfortunately, they are hardly suitable vessels for such divine power.").also { stage++ }
-            44 -> npcl(FaceAnim.FRIENDLY, "As they are being used, the power will be spent, and all that will remain is an empty, weakened shell. When this happens, just come back to me and I will gladly recharge them for you.").also { stage++ }
-            45 -> playerl(FaceAnim.HALF_WORRIED, "...For a small fee.").also { stage++ }
-            46 -> npcl(FaceAnim.FRIENDLY, "Haha. Yes, my friend, for a small fee. The power of a god does not come cheaply, not even in small doses. If we were to give it out for free, we would run out of resources in an instant. Balance must be maintained.").also { stage++ }
-            47 -> playerl(FaceAnim.FRIENDLY, "Okay, I will keep that in mind. Thank you.").also { stage++ }
-            48 -> npcl(FaceAnim.HALF_ASKING, "Now, is there anything else I can help you with?").also { stage = 3 }
+            43 -> npcl(FaceAnim.FRIENDLY, "Why, yes, they have. Keeping a shop so close to the source of this power has resulted in the items being infused with energy.").also { stage++ }
+            44 -> npcl(FaceAnim.FRIENDLY, "This makes them stronger than they normally would have been, but, unfortunately, they are hardly suitable vessels for such divine power.").also { stage++ }
+            45 -> npcl(FaceAnim.FRIENDLY, "As they are being used, the power will be spent, and all that will remain is an empty, weakened shell.").also { stage++ }
+            46 -> npcl(FaceAnim.FRIENDLY, "When this happens, just come back to me and I will gladly recharge them for you.").also { stage++ }
+            47 -> playerl(FaceAnim.HALF_WORRIED, "...For a small fee.").also { stage++ }
+            48 -> npcl(FaceAnim.LAUGH, "Haha. Yes, my friend, for a small fee. The power of a god does not come cheaply, not even in small doses. If we were to give it out for free, we would run out of resources in an instant. Balance must be maintained.").also { stage++ }
+            49 -> playerl(FaceAnim.FRIENDLY, "Okay, I will keep that in mind. Thank you.").also { stage++ }
+            50 -> npcl(FaceAnim.HALF_ASKING, "Now, is there anything else I can help you with?").also { stage = 3 }
             99 -> playerl(FaceAnim.HALF_GUILTY, "Sorry, but I have to leave now. Goodbye.").also { stage = 100 }
             100 -> end()
         }
