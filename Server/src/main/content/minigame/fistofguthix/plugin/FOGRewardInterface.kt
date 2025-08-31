@@ -74,7 +74,6 @@ class FOGRewardInterface : InterfaceListener {
             }
 
             val action: (() -> Unit)? = when {
-                button >= 139 && opcode == 155 -> { { sendMessage(player, "${getItemName(stock.itemId).replace("100", "")} costs ${stock.price} tokens.") } }
                 button >= 139 && opcode == 124 -> { { sendMessage(player, ItemDefinition.forId(stock.itemId).examine.replace("100", "")) } }
                 opcode in listOf(196, 124, 199) -> { { handlePurchase(player, stock, opcode) } }
                 opcode == 155 -> { { sendMessage(player, "${getItemName(stock.itemId).replace("100", "")} costs ${stock.price} tokens.") } }
