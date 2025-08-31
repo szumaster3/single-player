@@ -7,6 +7,7 @@ import core.game.interaction.InterfaceListener
 import core.game.node.entity.skill.LevelUp
 import core.game.node.entity.skill.Skills
 import shared.consts.Components
+import shared.consts.Vars
 
 /**
  * Represents the plugin used to handle the skilling tab.
@@ -34,8 +35,8 @@ class StatsTabInterface : InterfaceListener {
         }
 
         on(Components.SKILL_GUIDE_V2_499) { player, _, _, buttonID, _, _ ->
-            setVarbit(player, 3288, getAttribute(player, "skillMenu", -1))
-            setVarbit(player, 3289, buttonID - 10)
+            setVarbit(player, Vars.VARBIT_SKILL_MENU_BUTTON_3288, getAttribute(player, "skillMenu", -1))
+            setVarbit(player, Vars.VARBIT_SKILL_MENU_BUTTON_3289, buttonID - 10)
             if (!getAttribute(player, GameAttributes.TUTORIAL_COMPLETE, false)) {
                 TutorialStage.rollback(player)
             }

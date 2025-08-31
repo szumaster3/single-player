@@ -10,6 +10,7 @@ import core.game.component.Component
 import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.Player
 import shared.consts.Components
+import shared.consts.Vars
 
 /**
  * Handles the world map interface.
@@ -19,7 +20,7 @@ class WorldMapInterface : InterfaceListener {
     companion object {
         private const val RESIZABLE_WINDOW = Components.TOPLEVEL_FULLSCREEN_746
         private const val REGULAR_WINDOW = Components.TOPLEVEL_548
-        private const val KEY_SORT_VARBIT = 5367
+        private const val KEY_SORT_VARBIT = Vars.VARBIT_INTERFACE_WORLD_MAP_KEY_SORT_5367
         private const val RESET_KEY_SORT = 0
         private const val MAX_KEY_SORT_VALUE = 3
     }
