@@ -51,14 +51,13 @@ class MimeNPC(
                         player,
                         "You need to copy the mime's performance, then you'll be returned to where you were.",
                     )
-
-                    forceMove(player, MimeUtils.MIME_EVENT_LOCATION, MimeUtils.MIME_LOCATION, 20, 80)
+                    forceWalk(player, MimeUtils.PLAYER_LOCATION, "")
                     return@queueScript delayScript(player, 6)
                 }
 
                 2 -> {
                     setAttribute(player, GameAttributes.RE_MIME_INDEX, 0)
-                    setAttribute(player, GameAttributes.RE_MIME_EMOTE, RandomFunction.random(2, 9))
+                    setAttribute(player, GameAttributes.RE_MIME_EMOTE, (2..9).random())
                     MimeUtils.getEmote(player)
                     return@queueScript stopExecuting(player)
                 }

@@ -89,10 +89,10 @@ internal object GameAttributes {
     const val RE_BOB_OBJ = "/save:random:evil_bob:objs"
 
     // Mime random event.
-    const val RE_MIME_EMOTE = "/save:random:mime_emote"
-    const val RE_MIME_INDEX = "/save:random:mime_index"
-    const val RE_MIME_CORRECT = "/save:random:mime_correct"
-    const val RE_MIME_WRONG = "/save:random:mime_wrong"
+    const val RE_MIME_EMOTE = "random:mime_emote"
+    const val RE_MIME_INDEX = "random:mime_index"
+    const val RE_MIME_CORRECT = "random:mime_correct"
+    const val RE_MIME_WRONG = "random:mime_wrong"
 
     // Quiz master random event.
     const val RE_QUIZ_REWARD = "/save:quiz:random_reward"

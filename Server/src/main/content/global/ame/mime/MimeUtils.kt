@@ -9,22 +9,17 @@ import core.game.node.entity.player.link.emote.Emotes
 import core.game.node.scenery.Scenery
 import core.game.system.task.Pulse
 import core.game.world.map.Location
-import core.tools.RandomFunction
 import shared.consts.Components
 import shared.consts.Items
 import shared.consts.NPCs
 
-/**
- * Utils for Mime random event.
- */
 object MimeUtils {
     val MIME_EVENT_LOCATION = Location(2008, 4764, 0)
-    val MIME_LOCATION = Location(2008, 4762, 0)
     val PLAYER_LOCATION = Location(2007, 4761, 0)
     val SCENERY_LOCATION = Location(2010, 4761, 0)
 
-    const val LIGHT_ON = 3644
-    const val LIGHT_OFF = 3645
+    const val SPOTLIGHT_ON = 3644
+    const val SPOTLIGHT_OFF = 3645
 
     fun cleanup(player: Player) {
         player.properties.teleportLocation = getAttribute(player, RandomEvent.save(), null)
@@ -91,51 +86,25 @@ object MimeUtils {
                 override fun pulse(): Boolean {
                     when (counter++) {
                         0 -> npc.faceLocation(location(2011, 4759, 0))
-                        1 ->
-                            replaceScenery(
-                                Scenery(
-                                    LIGHT_ON,
-                                    PLAYER_LOCATION,
-                                ),
-                                LIGHT_OFF,
-                                -1,
-                            )
-
+                        1 -> replaceScenery(Scenery(SPOTLIGHT_ON, PLAYER_LOCATION), SPOTLIGHT_OFF, -1)
                         3 -> {
                             when (emoteId) {
-                                2 -> Emotes.THINK
-                                3 -> Emotes.CRY
-                                4 -> Emotes.LAUGH
-                                5 -> Emotes.DANCE
-                                6 -> Emotes.CLIMB_ROPE
-                                7 -> Emotes.LEAN_ON_AIR
-                                8 -> Emotes.GLASS_BOX
-                                9 -> Emotes.GLASS_WALL
+                                2 -> animate(npc, Emotes.THINK.animation)
+                                3 -> animate(npc, Emotes.CRY.animation)
+                                4 -> animate(npc, Emotes.LAUGH.animation)
+                                5 -> animate(npc, Emotes.DANCE.animation)
+                                6 -> animate(npc, Emotes.CLIMB_ROPE.animation)
+                                7 -> animate(npc, Emotes.LEAN_ON_AIR.animation)
+                                8 -> animate(npc, Emotes.GLASS_BOX.animation)
+                                9 -> animate(npc, Emotes.GLASS_WALL.animation)
                             }
                             setAttribute(player, GameAttributes.RE_MIME_INDEX, emoteId)
                         }
-
-                        10 -> npc.faceLocation(location(2008, 4762, 0))
-                        11 -> Emotes.BOW
-                        14 ->
-                            replaceScenery(
-                                Scenery(
-                                    LIGHT_ON,
-                                    SCENERY_LOCATION,
-                                ),
-                                LIGHT_OFF,
-                                -1,
-                            )
-
+                        10 -> npc.faceLocation(player.location)
+                        11 -> animate(npc, Emotes.BOW.animation)
+                        14 -> replaceScenery(Scenery(SPOTLIGHT_ON, SCENERY_LOCATION), SPOTLIGHT_OFF, -1)
                         15 -> {
-                            replaceScenery(
-                                Scenery(
-                                    LIGHT_OFF,
-                                    PLAYER_LOCATION,
-                                ),
-                                LIGHT_ON,
-                                -1,
-                            )
+                            replaceScenery(Scenery(SPOTLIGHT_OFF, PLAYER_LOCATION), SPOTLIGHT_ON, -1)
                             openInterface(player, Components.MACRO_MIME_EMOTES_188)
                             return true
                         }
@@ -164,32 +133,12 @@ object MimeUtils {
                                 }
                             } else {
                                 if (getAttribute(player, GameAttributes.RE_MIME_WRONG, -1) == 1) {
-                                    setAttribute(player, GameAttributes.RE_MIME_EMOTE, RandomFunction.random(2, 9))
+                                    setAttribute(player, GameAttributes.RE_MIME_EMOTE, (2..9).random())
                                     removeAttribute(player, GameAttributes.RE_MIME_WRONG)
                                     openInterface(player, Components.CHATDEFAULT_137)
-                                    replaceScenery(
-                                        Scenery(
-                                            LIGHT_ON,
-                                            PLAYER_LOCATION,
-                                        ),
-                                        LIGHT_OFF,
-                                        -1,
-                                    )
-                                    replaceScenery(
-                                        Scenery(
-                                            LIGHT_OFF,
-                                            SCENERY_LOCATION,
-                                        ),
-                                        LIGHT_ON,
-                                        -1,
-                                    )
-                                    sendUnclosablePlainDialogue(
-                                        player,
-                                        true,
-                                        "",
-                                        "Watch the Mime.",
-                                        "See what emote he performs.",
-                                    )
+                                    replaceScenery(Scenery(SPOTLIGHT_ON, PLAYER_LOCATION), SPOTLIGHT_OFF, -1)
+                                    replaceScenery(Scenery(SPOTLIGHT_OFF, SCENERY_LOCATION), SPOTLIGHT_ON, -1)
+                                    sendUnclosablePlainDialogue(player, true, "", "Watch the Mime.", "See what emote he performs.")
                                     getEmote(player)
                                 }
                             }
