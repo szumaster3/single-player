@@ -73107,7 +73107,7 @@
     "id": "8054"
   },
   {
-    "examine": "When unanimated: A dusty old suit of armour. When animated: Aaargh, it's alive!",
+    "examine": "A dusty old suit of armour.",
     "durability": null,
     "name": "Suit of armour",
     "archery_ticket_price": "0",
@@ -73229,7 +73229,7 @@
     "id": "8131"
   },
   {
-    "examine": "He doesn't seem pleased to see me./Beware of the dog! (Construction)",
+    "examine": "Beware of the dog!",
     "durability": null,
     "name": "Guard dog",
     "archery_ticket_price": "0",
@@ -105318,7 +105318,7 @@
     "id": "12183"
   },
   {
-    "examine": "(Baby) It's so adorably tiny!  (Adult) How cute!",
+    "examine": "How cute!",
     "durability": null,
     "name": "Gecko",
     "archery_ticket_price": "0",
@@ -105381,42 +105381,42 @@
     "id": "12194"
   },
   {
-    "examine": "This little puppy is very quiet. (Puppy)Come by! Come by! (Adult)",
+    "examine": "This little puppy is very quiet.",
     "durability": null,
     "name": "Sheepdog puppy",
     "archery_ticket_price": "0",
     "id": "12195"
   },
   {
-    "examine": "One proud little puppy. (Puppy)Looks like it's chewing a wasp. (Adult)",
+    "examine": "One proud little puppy.",
     "durability": null,
     "name": "Bulldog puppy",
     "archery_ticket_price": "0",
     "id": "12196"
   },
   {
-    "examine": "(hatchling) A hatchling &lt;dragon colour&gt; dragon.(baby) A bigger baby &lt;colour&gt; dragon.",
+    "examine": "A hatchling green dragon.",
     "durability": null,
     "name": "Dragon hatchling",
     "archery_ticket_price": "0",
     "id": "12197"
   },
   {
-    "examine": "Baby: Little NipperAdult: Bigger Nipper.",
+    "examine": "Little Nipper.",
     "durability": null,
     "name": "Baby giant crab",
     "archery_ticket_price": "0",
     "id": "12198"
   },
   {
-    "examine": "(Baby) A stripy little baby raccoon.(Adult) He can run with us.",
+    "examine": "A stripy little baby raccoon.",
     "durability": null,
     "name": "Baby raccoon",
     "archery_ticket_price": "0",
     "id": "12199"
   },
   {
-    "examine": "Adult: An experienced nut-thief.Baby: A tiny nut-thief.",
+    "examine": "An experienced nut-thief.",
     "durability": null,
     "name": "Squirrel",
     "archery_ticket_price": "0",
@@ -106649,28 +106649,28 @@
     "id": "12468"
   },
   {
-    "examine": "(hatchling) A hatchling &lt;dragon colour&gt; dragon.(baby) A bigger baby &lt;colour&gt; dragon.",
+    "examine": "A hatchling red dragon.",
     "durability": null,
     "name": "Hatchling dragon",
     "archery_ticket_price": "0",
     "id": "12469"
   },
   {
-    "examine": "(hatchling) A hatchling &lt;dragon colour&gt; dragon.(baby) A bigger baby &lt;colour&gt; dragon.",
+    "examine": "A hatchling blue dragon.",
     "durability": null,
     "name": "Hatchling dragon",
     "archery_ticket_price": "0",
     "id": "12471"
   },
   {
-    "examine": "(hatchling) A hatchling &lt;dragon colour&gt; dragon.(baby) A bigger baby &lt;colour&gt; dragon.",
+    "examine": "A hatchling green dragon.",
     "durability": null,
     "name": "Hatchling dragon",
     "archery_ticket_price": "0",
     "id": "12473"
   },
   {
-    "examine": "(hatchling) A hatchling &lt;dragon colour&gt; dragon.(baby) A bigger baby &lt;colour&gt; dragon.",
+    "examine": "A hatchling black dragon.",
     "durability": null,
     "name": "Hatchling dragon",
     "archery_ticket_price": "0",
@@ -106717,7 +106717,7 @@
     "id": "12480"
   },
   {
-    "examine": "(Baby) Can't fly and can barely walk, but adorable nonetheless. (adult) Emperor of all he surveys.",
+    "examine": "Can't fly and can barely walk, but adorable nonetheless.",
     "durability": null,
     "name": "Baby penguin",
     "archery_ticket_price": "0",
@@ -106745,42 +106745,42 @@
     "id": "12485"
   },
   {
-    "examine": "(Baby) A stripy little baby raccoon.(Adult) He can run with us.",
+    "examine": "A stripy little baby raccoon.",
     "durability": null,
     "name": "Baby raccoon",
     "archery_ticket_price": "0",
     "id": "12486"
   },
   {
-    "examine": "(Baby) A stripy little baby raccoon.(Adult) He can run with us.",
+    "examine": "He can run with us.",
     "durability": null,
     "name": "Raccoon",
     "archery_ticket_price": "0",
     "id": "12487"
   },
   {
-    "examine": "(Baby) It's so adorably tiny!  (Adult) How cute!",
+    "examine": "It's so adorably tiny!",
     "durability": null,
     "name": "Baby gecko",
     "archery_ticket_price": "0",
     "id": "12488"
   },
   {
-    "examine": "(Baby) It's so adorably tiny!  (Adult) How cute!",
+    "examine": "It's so adorably tiny!",
     "durability": null,
     "name": "Gecko",
     "archery_ticket_price": "0",
     "id": "12489"
   },
   {
-    "examine": "Adult: An experienced nut-thief.Baby: A tiny nut-thief.",
+    "examine": "A tiny nut-thief.",
     "durability": null,
     "name": "Baby squirrel",
     "archery_ticket_price": "0",
     "id": "12490"
   },
   {
-    "examine": "Adult: An experienced nut-thief.Baby: A tiny nut-thief.",
+    "examine": "An experienced nut-thief.",
     "durability": null,
     "name": "Squirrel",
     "archery_ticket_price": "0",
@@ -106817,7 +106817,7 @@
     "id": "12495"
   },
   {
-    "examine": "(Baby) It's a tiny, cheeky monkey. (Adult) Hide the bananas!",
+    "examine": "It's a tiny, cheeky monkey.",
     "durability": null,
     "name": "Baby monkey",
     "archery_ticket_price": "0",
@@ -106839,7 +106839,7 @@
   },
   {
     "requirements": "{23,40}",
-    "examine": "Baby: Little NipperAdult: Bigger Nipper.",
+    "examine": "Little Nipper.",
     "durability": null,
     "name": "Baby giant crab",
     "archery_ticket_price": "0",
@@ -106847,7 +106847,7 @@
   },
   {
     "requirements": "{23,40}",
-    "examine": "Baby: Little NipperAdult: Bigger Nipper.",
+    "examine": "Bigger Nipper.",
     "durability": null,
     "name": "Giant crab",
     "archery_ticket_price": "0",
@@ -108980,84 +108980,84 @@
     "id": "12733"
   },
   {
-    "examine": "(Baby) A stripy little baby raccoon.(Adult) He can run with us.",
+    "examine": "A stripy little baby raccoon.",
     "durability": null,
     "name": "Baby raccoon",
     "archery_ticket_price": "0",
     "id": "12734"
   },
   {
-    "examine": "(Baby) A stripy little baby raccoon.(Adult) He can run with us.",
+    "examine": "He can run with us.",
     "durability": null,
     "name": "Raccoon",
     "archery_ticket_price": "0",
     "id": "12735"
   },
   {
-    "examine": "(Baby) A stripy little baby raccoon.(Adult) He can run with us.",
+    "examine": "A stripy little baby raccoon.",
     "durability": null,
     "name": "Baby raccoon",
     "archery_ticket_price": "0",
     "id": "12736"
   },
   {
-    "examine": "(Baby) A stripy little baby raccoon.(Adult) He can run with us.",
+    "examine": "He can run with us.",
     "durability": null,
     "name": "Raccoon",
     "archery_ticket_price": "0",
     "id": "12737"
   },
   {
-    "examine": "(Baby) It's so adorably tiny!  (Adult) How cute!",
+    "examine": "It's so adorably tiny!",
     "durability": null,
     "name": "Baby gecko",
     "archery_ticket_price": "0",
     "id": "12738"
   },
   {
-    "examine": "(Baby) It's so adorably tiny!  (Adult) How cute!",
+    "examine": "It's so adorably tiny!",
     "durability": null,
     "name": "Baby gecko",
     "archery_ticket_price": "0",
     "id": "12739"
   },
   {
-    "examine": "(Baby) It's so adorably tiny!  (Adult) How cute!",
+    "examine": "It's so adorably tiny!",
     "durability": null,
     "name": "Baby gecko",
     "archery_ticket_price": "0",
     "id": "12740"
   },
   {
-    "examine": "(Baby) It's so adorably tiny!  (Adult) How cute!",
+    "examine": "It's so adorably tiny!",
     "durability": null,
     "name": "Baby gecko",
     "archery_ticket_price": "0",
     "id": "12741"
   },
   {
-    "examine": "(Baby) It's so adorably tiny!  (Adult) How cute!",
+    "examine": "How cute!",
     "durability": null,
     "name": "Gecko",
     "archery_ticket_price": "0",
     "id": "12742"
   },
   {
-    "examine": "(Baby) It's so adorably tiny!  (Adult) How cute!",
+    "examine": "How cute!",
     "durability": null,
     "name": "Gecko",
     "archery_ticket_price": "0",
     "id": "12743"
   },
   {
-    "examine": "(Baby) It's so adorably tiny!  (Adult) How cute!",
+    "examine": "How cute!",
     "durability": null,
     "name": "Gecko",
     "archery_ticket_price": "0",
     "id": "12744"
   },
   {
-    "examine": "(Baby) It's so adorably tiny!  (Adult) How cute!",
+    "examine": "How cute!",
     "durability": null,
     "name": "Gecko",
     "archery_ticket_price": "0",
@@ -109065,7 +109065,7 @@
   },
   {
     "requirements": "{23,40}",
-    "examine": "Baby: Little NipperAdult: Bigger Nipper.",
+    "examine": "Little Nipper.",
     "durability": null,
     "name": "Baby giant crab",
     "archery_ticket_price": "0",
@@ -109073,7 +109073,7 @@
   },
   {
     "requirements": "{23,40}",
-    "examine": "Baby: Little NipperAdult: Bigger Nipper.",
+    "examine": "Bigger Nipper.",
     "durability": null,
     "name": "Giant crab",
     "archery_ticket_price": "0",
@@ -109081,7 +109081,7 @@
   },
   {
     "requirements": "{23,40}",
-    "examine": "Baby: Little NipperAdult: Bigger Nipper.",
+    "examine": "Little Nipper.",
     "durability": null,
     "name": "Baby giant crab",
     "archery_ticket_price": "0",
@@ -109089,7 +109089,7 @@
   },
   {
     "requirements": "{23,40}",
-    "examine": "Baby: Little NipperAdult: Bigger Nipper.",
+    "examine": "Bigger Nipper.",
     "durability": null,
     "name": "Giant crab",
     "archery_ticket_price": "0",
@@ -109097,7 +109097,7 @@
   },
   {
     "requirements": "{23,40}",
-    "examine": "Baby: Little NipperAdult: Bigger Nipper.",
+    "examine": "Little Nipper.",
     "durability": null,
     "name": "Baby giant crab",
     "archery_ticket_price": "0",
@@ -109105,7 +109105,7 @@
   },
   {
     "requirements": "{23,40}",
-    "examine": "Baby: Little NipperAdult: Bigger Nipper.",
+    "examine": "Bigger Nipper.",
     "durability": null,
     "name": "Giant crab",
     "archery_ticket_price": "0",
@@ -109113,7 +109113,7 @@
   },
   {
     "requirements": "{23,40}",
-    "examine": "Baby: Little NipperAdult: Bigger Nipper.",
+    "examine": "Little Nipper.",
     "durability": null,
     "name": "Baby giant crab",
     "archery_ticket_price": "0",
@@ -109121,77 +109121,77 @@
   },
   {
     "requirements": "{23,40}",
-    "examine": "Baby: Little NipperAdult: Bigger Nipper.",
+    "examine": "Bigger Nipper.",
     "durability": null,
     "name": "Giant crab",
     "archery_ticket_price": "0",
     "id": "12753"
   },
   {
-    "examine": "Adult: An experienced nut-thief.Baby: A tiny nut-thief.",
+    "examine": "A tiny nut-thief.",
     "durability": null,
     "name": "Baby squirrel",
     "archery_ticket_price": "0",
     "id": "12754"
   },
   {
-    "examine": "Adult: An experienced nut-thief.Baby: A tiny nut-thief.",
+    "examine": "An experienced nut-thief.",
     "durability": null,
     "name": "Squirrel",
     "archery_ticket_price": "0",
     "id": "12755"
   },
   {
-    "examine": "Adult: An experienced nut-thief.Baby: A tiny nut-thief.",
+    "examine": "A tiny nut-thief.",
     "durability": null,
     "name": "Baby squirrel",
     "archery_ticket_price": "0",
     "id": "12756"
   },
   {
-    "examine": "Adult: An experienced nut-thief.Baby: A tiny nut-thief.",
+    "examine": "An experienced nut-thief.",
     "durability": null,
     "name": "Squirrel",
     "archery_ticket_price": "0",
     "id": "12757"
   },
   {
-    "examine": "Adult: An experienced nut-thief.Baby: A tiny nut-thief.",
+    "examine": "A tiny nut-thief.",
     "durability": null,
     "name": "Baby squirrel",
     "archery_ticket_price": "0",
     "id": "12758"
   },
   {
-    "examine": "Adult: An experienced nut-thief.Baby: A tiny nut-thief.",
+    "examine": "An experienced nut-thief.",
     "durability": null,
     "name": "Squirrel",
     "archery_ticket_price": "0",
     "id": "12759"
   },
   {
-    "examine": "Adult: An experienced nut-thief.Baby: A tiny nut-thief.",
+    "examine": "A tiny nut-thief.",
     "durability": null,
     "name": "Baby squirrel",
     "archery_ticket_price": "0",
     "id": "12760"
   },
   {
-    "examine": "Adult: An experienced nut-thief.Baby: A tiny nut-thief.",
+    "examine": "An experienced nut-thief.",
     "durability": null,
     "name": "Squirrel",
     "archery_ticket_price": "0",
     "id": "12761"
   },
   {
-    "examine": "(Baby) Can't fly and can barely walk, but adorable nonetheless. (adult) Emperor of all he surveys.",
+    "examine": "Can't fly and can barely walk, but adorable nonetheless.",
     "durability": null,
     "name": "Baby penguin",
     "archery_ticket_price": "0",
     "id": "12763"
   },
   {
-    "examine": "(Baby) Can't fly and can barely walk, but adorable nonetheless. (adult) Emperor of all he surveys.",
+    "examine": "Can't fly and can barely walk, but adorable nonetheless.",
     "durability": null,
     "name": "Baby penguin",
     "archery_ticket_price": "0",
@@ -110589,7 +110589,7 @@
     "remove_head": "true",
     "requirements": "{1,10}-{6,20}",
     "shop_price": "100",
-    "examine": "A worn-out hood, formerly worn by the followers of Guthix.",
+    "examine": "A magical hood worn by the followers of Guthix.",
     "durability": null,
     "weight": "7",
     "equipment_slot": "0",
@@ -111198,7 +111198,7 @@
   {
     "requirements": "{1,45}",
     "shop_price": "300",
-    "examine": "A Large, spiked metal shield.",
+    "examine": "A large, spiked metal shield.",
     "durability": null,
     "weight": "6",
     "absorb": "3,0,7",
@@ -111214,7 +111214,7 @@
   {
     "requirements": "{1,45}",
     "shop_price": "300",
-    "examine": "A Large, spiked metal shield.",
+    "examine": "A large, spiked metal shield.",
     "durability": null,
     "weight": "6",
     "absorb": "3,0,7",
@@ -111229,7 +111229,7 @@
   {
     "requirements": "{1,45}",
     "shop_price": "300",
-    "examine": "A Large, spiked metal shield.",
+    "examine": "A large, spiked metal shield.",
     "durability": null,
     "weight": "6",
     "absorb": "3,0,7",
@@ -111244,7 +111244,7 @@
   {
     "requirements": "{1,45}",
     "shop_price": "300",
-    "examine": "A Large, spiked metal shield.",
+    "examine": "A large, spiked metal shield.",
     "durability": null,
     "weight": "6",
     "absorb": "3,0,7",
@@ -111259,7 +111259,7 @@
   {
     "requirements": "{1,45}",
     "shop_price": "300",
-    "examine": "A Large, spiked metal shield.",
+    "examine": "A large, spiked metal shield.",
     "durability": null,
     "weight": "6",
     "absorb": "3,0,7",
@@ -112238,7 +112238,7 @@
   {
     "requirements": "{1,30}",
     "shop_price": "150",
-    "examine": "I have to keep my hands safe! Uncharged: A bit worse for wear.",
+    "examine": "I have to keep my hands safe!",
     "grand_exchange_price": "74526",
     "durability": null,
     "name": "Adamant gauntlets",
@@ -112253,7 +112253,7 @@
     "requirements": "{1,30}",
     "shop_price": "150",
     "ge_buy_limit": "100",
-    "examine": "I have to keep my hands safe! Uncharged: A bit worse for wear.",
+    "examine": "A bit worse for wear.",
     "durability": null,
     "weight": "0.2",
     "equipment_slot": "9",
@@ -112276,7 +112276,7 @@
   {
     "requirements": "{1,40}",
     "shop_price": "200",
-    "examine": "Fully charged: I have to keep my hands safe!  Worn-Out: A bit worse for wear.",
+    "examine": "I have to keep my hands safe!",
     "grand_exchange_price": "95700",
     "durability": null,
     "name": "Rune gauntlets",
@@ -112291,7 +112291,7 @@
     "requirements": "{1,40}",
     "shop_price": "200",
     "ge_buy_limit": "100",
-    "examine": "Fully charged: I have to keep my hands safe!  Worn-Out: A bit worse for wear.",
+    "examine": "A bit worse for wear.",
     "durability": null,
     "weight": "0.2",
     "equipment_slot": "9",
@@ -112314,7 +112314,7 @@
   {
     "requirements": "{1,60}",
     "shop_price": "300",
-    "examine": "Uncharged: A bit worse for wear. Charged: I have to keep my hands safe!",
+    "examine": "I have to keep my hands safe!",
     "grand_exchange_price": "214700",
     "durability": null,
     "name": "Dragon gauntlets",
@@ -112329,7 +112329,7 @@
     "requirements": "{1,60}",
     "shop_price": "300",
     "ge_buy_limit": "100",
-    "examine": "Uncharged: A bit worse for wear. Charged: I have to keep my hands safe!",
+    "examine": "A bit worse for wear.",
     "durability": null,
     "weight": "0.2",
     "equipment_slot": "9",
