@@ -6,6 +6,7 @@ import core.game.interaction.InteractionListener
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
+import core.game.system.task.Pulse
 import shared.consts.Items
 
 /**
@@ -83,11 +84,24 @@ class SpecialCraftingPlugin : InteractionListener {
                 return@onUseWith true
             }
 
-            repeat(available) {
-                if (removeItem(player, Item(used.id, amount))) {
-                    action(player, used.asItem())
+            player.pulseManager.run(object : Pulse(2, player) {
+                var remaining = available
+
+                override fun pulse(): Boolean {
+                    if (remaining <= 0 || !inInventory(player, used.id, amount)) {
+                        stop()
+                        return true
+                    }
+
+                    if (removeItem(player, Item(used.id, amount))) {
+                        action(player, used.asItem())
+                    }
+
+                    remaining--
+                    return false
                 }
-            }
+            })
+
             return@onUseWith true
         }
     }
