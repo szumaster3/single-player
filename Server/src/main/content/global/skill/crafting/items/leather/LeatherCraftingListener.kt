@@ -31,7 +31,7 @@ class LeatherCraftingListener : InteractionListener, InterfaceListener {
                 )
                 return@onUseWith true
             }
-            
+
             closeDialogue(player)
             openLeatherInterface(player, craft.type, with.id)
             return@onUseWith true
