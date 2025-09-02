@@ -1,6 +1,8 @@
 package core.game.dialogue
 
+import core.api.clockReady
 import core.api.sendInputDialogue
+import core.game.interaction.Clocks
 import core.game.node.entity.player.Player
 import core.plugin.Initializable
 
@@ -27,6 +29,9 @@ class SkillDialogue(player: Player? = null) : Dialogue(player) {
      */
     override fun open(vararg args: Any?): Boolean {
         handler = args[0] as SkillDialogueHandler
+        if (!clockReady(player, Clocks.SKILLING)) {
+            return false
+        }
         handler.display()
         handler.type?.let { player.interfaceManager.openChatbox(it.interfaceId) }
         return true
