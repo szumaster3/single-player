@@ -168,7 +168,7 @@ open class MeleeSwingHandler(
 
             if (skillToReduce != null &&
                 RandomFunction.random(10) == 0 && // 10% chance
-                entity.location.withinDistance(victim.location, requiredDistance) &&
+                canMelee(entity, victim, requiredDistance) &&
                 victim.skills.lifepoints > victim.skills.maximumLifepoints / 2 &&
                 victim.skills.getLevel(skillToReduce) <= victim.skills.getStaticLevel(skillToReduce)
             ) {
