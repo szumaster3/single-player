@@ -144,10 +144,9 @@ open class MeleeSwingHandler(
             return
         }
 
-        val weapon = entity.equipment.getNew(3)
-        weapon?.let {
+        entity.equipment.getNew(3)?.let { weapon ->
             var damage = -1
-            val name = it.name
+            val name = weapon.name
             if (name.contains("(p++") || name.contains("(s)") || name.contains("(kp)")) damage = 68
             else if (name.contains("(p+)")) damage = 58
             else if (name.contains("(p)")) damage = 48
@@ -156,58 +155,39 @@ open class MeleeSwingHandler(
             }
         }
 
-        val shield = entity.equipment[EquipmentContainer.SLOT_SHIELD] ?: run {
-            super.adjustBattleState(entity, victim, state)
-            return
+        val shield = entity.equipment[EquipmentContainer.SLOT_SHIELD]
+        val charged = shield?.let { ChargedItem.forId(it.id) }
+
+        if (shield != null && charged != null) {
+            val (skillToReduce, requiredDistance) = when (shield.id) {
+                in ChargedItem.BROODOO_SHIELDA.ids -> Skills.DEFENCE to 1
+                in ChargedItem.BROODOO_SHIELDB.ids -> Skills.STRENGTH to 1
+                in ChargedItem.BROODOO_SHIELDC.ids -> Skills.ATTACK to 1
+                else -> null to 0
+            }
+
+            if (skillToReduce != null &&
+                RandomFunction.random(10) == 0 && // 10% chance
+                entity.location.withinDistance(victim.location, requiredDistance) &&
+                victim.skills.lifepoints > victim.skills.maximumLifepoints / 2 &&
+                victim.skills.getLevel(skillToReduce) <= victim.skills.getStaticLevel(skillToReduce)
+            ) {
+                val currentLevel = victim.skills.getLevel(skillToReduce)
+                val reduction = 1 + (currentLevel * 0.05).toInt()
+                victim.skills.setLevel(skillToReduce, (currentLevel - reduction).coerceAtLeast(0))
+
+                val currentCharge = ChargedItem.getCharge(shield.id) ?: 0
+                if (currentCharge > 0) {
+                    val newId = charged.forCharge(currentCharge - 1)
+                    entity.equipment.add(Item(newId), true)
+                }
+
+                sendMessage(entity, "Your Broodoo Shield casts a spell and reduces the enemy's ${Skills.SKILL_NAME[skillToReduce]}!")
+            }
         }
-
-        val charged = ChargedItem.forId(shield.id) ?: run {
-            super.adjustBattleState(entity, victim, state)
-            return
-        }
-
-        if (shield.id !in ChargedItem.BROODOO_SHIELDA.ids &&
-            shield.id !in ChargedItem.BROODOO_SHIELDB.ids &&
-            shield.id !in ChargedItem.BROODOO_SHIELDC.ids
-        ) {
-            super.adjustBattleState(entity, victim, state)
-            return
-        }
-
-        if (RandomFunction.random(10) != 0) {
-            super.adjustBattleState(entity, victim, state)
-            return
-        }
-
-        val skillToReduce = when (shield.id) {
-            in ChargedItem.BROODOO_SHIELDA.ids -> Skills.DEFENCE   // blue
-            in ChargedItem.BROODOO_SHIELDB.ids -> Skills.STRENGTH  // orange
-            in ChargedItem.BROODOO_SHIELDC.ids -> Skills.ATTACK    // green
-            else -> null
-        } ?: run {
-            super.adjustBattleState(entity, victim, state)
-            return
-        }
-
-        if (victim.skills.lifepoints <= victim.skills.maximumLifepoints / 2) return
-        val baseLevel = victim.skills.getStaticLevel(skillToReduce)
-        val currentLevel = victim.skills.getLevel(skillToReduce)
-        if (currentLevel > baseLevel) return
-
-        val reduction = 1 + (currentLevel * 0.05).toInt()
-        victim.skills.setLevel(skillToReduce, (currentLevel - reduction).coerceAtLeast(0))
-
-        val currentCharge = ChargedItem.getCharge(shield.id) ?: 0
-        if (currentCharge > 0) {
-            val newId = charged.forCharge(currentCharge - 1)
-            entity.equipment.add(Item(newId), true)
-        }
-
-        sendMessage(entity, "Your Broodoo Shield casts a spell and reduces the enemy's ${Skills.SKILL_NAME[skillToReduce]}!")
 
         super.adjustBattleState(entity, victim, state)
     }
-
 
     override fun calculateAccuracy(entity: Entity?): Int {
         entity ?: return 0
