@@ -36,8 +36,8 @@ class FireOptionPlugin : InteractionListener {
                     }
                 }
 
-                calculateMaxAmount { amount ->
-                    amountInInventory(player, amount)
+                calculateMaxAmount { selectedItemId ->
+                    amountInInventory(player, selectedItemId)
                 }
             }
             return@on true

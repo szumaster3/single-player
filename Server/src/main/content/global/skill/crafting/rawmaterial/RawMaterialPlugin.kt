@@ -6,6 +6,7 @@ import core.game.interaction.InteractionListener
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
+import core.game.system.task.Pulse
 import core.tools.RandomUtils
 import shared.consts.Animations
 import shared.consts.Items
@@ -64,33 +65,56 @@ class RawMaterialPlugin : InteractionListener {
         }
 
         /*
-         * Handles limestone cutting into a bricks.
+         * Handles limestone cutting into bricks.
          */
 
         onUseWith(IntType.ITEM, Items.LIMESTONE_3211, Items.CHISEL_1755) { player, used, _ ->
             if (!hasLevel(player, Skills.CRAFTING, 12) || !hasTool(player, Items.CHISEL_1755)) return@onUseWith true
-            if (!inInventory(player, used.id)) {
-                sendMessage(player, "You have ran out of limestone.")
-                return@onUseWith true
-            }
 
             sendSkillDialogue(player) {
                 withItems(Items.LIMESTONE_BRICK_3420)
                 create { _, amount ->
-                    runTask(player, 2, amount) {
-                        if (amount < 1) return@runTask
-                        val successProbability = BASE_SUCCESS_PROBABILITY + getStatLevel(player, Skills.CRAFTING) * SUCCESS_PER_LEVEL
-                        attemptCraft(player, used.id, Items.LIMESTONE_BRICK_3420, 6.0, 1.5, successProbability)
-                    }
+                    player.pulseManager.run(object : Pulse(1, player) {
+                        var remaining = amount
+
+                        override fun pulse(): Boolean {
+                            if (remaining <= 0 || !inInventory(player, used.id)) {
+                                sendMessage(player, "You have ran out of limestone.")
+                                stop()
+                                return true
+                            }
+
+                            animate(player, Animations.HUMAN_CHISEL_LIMESTONE_4470)
+                            playAudio(player, Sounds.CHISEL_2586)
+
+                            if (removeItem(player, used.id)) {
+                                val successProbability = BASE_SUCCESS_PROBABILITY + getStatLevel(player, Skills.CRAFTING) * SUCCESS_PER_LEVEL
+                                if (RandomUtils.randomDouble() <= successProbability) {
+                                    rewardXP(player, Skills.CRAFTING, 6.0)
+                                    addItem(player, Items.LIMESTONE_BRICK_3420)
+                                    sendMessage(player, "You successfully craft ${getItemName(Items.LIMESTONE_BRICK_3420)}.")
+                                } else {
+                                    rewardXP(player, Skills.CRAFTING, 1.5)
+                                    addItem(player, Items.ROCK_968)
+                                    sendMessage(player, "You fail to craft ${getItemName(Items.LIMESTONE_BRICK_3420)}.")
+                                }
+                            }
+
+                            remaining--
+                            return false
+                        }
+                    })
                 }
+
                 calculateMaxAmount { min(amountInInventory(player, used.id), amountInInventory(player, used.id)) }
             }
+
             return@onUseWith true
         }
     }
 
     /**
-     * Checks if the player has the required crafting level
+     * Checks if the player has the required crafting level.
      */
     private fun hasLevel(player: Player, skill: Int, level: Int): Boolean {
         if (getStatLevel(player, skill) < level) {
@@ -101,7 +125,7 @@ class RawMaterialPlugin : InteractionListener {
     }
 
     /**
-     * Checks if the player has the required tool
+     * Checks if the player has the required tool.
      */
     private fun hasTool(player: Player, toolId: Int): Boolean {
         if (!inInventory(player, toolId)) {
@@ -110,25 +134,4 @@ class RawMaterialPlugin : InteractionListener {
         }
         return true
     }
-
-    /**
-     * Handles crafting failing.
-     */
-    private fun attemptCraft(player: Player, input: Int, output: Int, successXP: Double, failXP: Double, successChance: Double) {
-        playAudio(player, Sounds.CHISEL_2586)
-        animate(player, Animations.HUMAN_CHISEL_LIMESTONE_4470)
-        if (removeItem(player, input)) {
-            if (RandomUtils.randomDouble() <= successChance) {
-                rewardXP(player, Skills.CRAFTING, successXP)
-                addItem(player, output)
-                sendMessage(player, "You successfully craft ${getItemName(output)}.")
-            } else {
-                rewardXP(player, Skills.CRAFTING, failXP)
-                addItem(player, Items.ROCK_968)
-                sendMessage(player, "You fail to craft ${getItemName(output)}.")
-            }
-        }
-    }
 }
-
-/** Granite cutting pulse */

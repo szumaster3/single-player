@@ -9,7 +9,6 @@ import core.game.interaction.NodeUsageEvent
 import core.game.interaction.OptionHandler
 import core.game.interaction.UseWithHandler
 import core.game.node.Node
-import core.game.node.entity.impl.PulseType
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.plugin.Initializable
@@ -42,14 +41,8 @@ class PotteryPlugin : UseWithHandler(Items.SOFT_CLAY_1761) {
     override fun handle(event: NodeUsageEvent): Boolean {
         val player = event.player
         object : SkillDialogueHandler(player, SkillDialogueHandler.SkillDialogue.FIVE_OPTION, *getPottery(false)) {
-            override fun create(
-                amount: Int,
-                index: Int,
-            ) {
-                player.pulseManager.run(
-                    PotteryCraftingPulse(player, event.usedItem, amount, Pottery.values()[index]),
-                    pulseType = PulseType.STANDARD
-                )
+            override fun create(amount: Int, index: Int) {
+                player.pulseManager.run(PotteryCraftingPulse(player, event.usedItem, amount, Pottery.values()[index]),)
             }
 
             override fun getAll(index: Int): Int = amountInInventory(player, SOFT_CLAY)
