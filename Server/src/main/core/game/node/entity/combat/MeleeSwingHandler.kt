@@ -161,16 +161,16 @@ open class MeleeSwingHandler(
         if (shield != null && charged != null) {
             val (skillToReduce, requiredDistance) = when (shield.id) {
                 in ChargedItem.BROODOO_SHIELDA.ids -> Skills.DEFENCE to 1
-                in ChargedItem.BROODOO_SHIELDB.ids -> Skills.STRENGTH to 1
-                in ChargedItem.BROODOO_SHIELDC.ids -> Skills.ATTACK to 1
+                in ChargedItem.BROODOO_SHIELDB.ids -> Skills.ATTACK to 1
+                in ChargedItem.BROODOO_SHIELDC.ids -> Skills.STRENGTH to 1
                 else -> null to 0
             }
 
             if (skillToReduce != null &&
                 RandomFunction.random(10) == 0 && // 10% chance
                 canMelee(entity, victim, requiredDistance) &&
-                victim.skills.lifepoints > victim.skills.maximumLifepoints / 2 &&
-                victim.skills.getLevel(skillToReduce) <= victim.skills.getStaticLevel(skillToReduce)
+                victim.skills.lifepoints <= victim.skills.maximumLifepoints / 2 && // 50% HP or less
+                victim.skills.getLevel(skillToReduce) >= victim.skills.getStaticLevel(skillToReduce)
             ) {
                 val currentLevel = victim.skills.getLevel(skillToReduce)
                 val reduction = 1 + (currentLevel * 0.05).toInt()
@@ -179,10 +179,9 @@ open class MeleeSwingHandler(
                 val currentCharge = ChargedItem.getCharge(shield.id) ?: 0
                 if (currentCharge > 0) {
                     val newId = charged.forCharge(currentCharge - 1)
-                    entity.equipment.add(Item(newId), true)
+                    entity.equipment.replace(Item(newId), EquipmentContainer.SLOT_SHIELD, true)
                 }
-
-                sendMessage(entity, "Your Broodoo Shield casts a spell and reduces the enemy's ${Skills.SKILL_NAME[skillToReduce]}!")
+                entity.debug("Broodoo Shield effect reduces enemy [${Skills.SKILL_NAME[skillToReduce]}]")
             }
         }
 
