@@ -14,7 +14,7 @@ import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.interaction.QueueStrength
 import core.game.node.entity.impl.Projectile
-import core.game.system.task.Pulse
+import core.game.node.item.Item
 import core.game.world.map.Direction
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
@@ -22,8 +22,8 @@ import shared.consts.*
 
 class BiohazardPlugin : InteractionListener {
 
-    val FENCE_CORNER_LOCATION = Location(2563, 3301, 0)
-    val WATCHTOWER_CORNER_LOCATION = Location(2561, 3303, 0)
+    private val FENCE_CORNER_LOCATION = Location(2563, 3301, 0)
+    private val WATCHTOWER_CORNER_LOCATION = Location(2561, 3303, 0)
 
     override fun defineListeners() {
         on(NPCs.GUIDOR_343, IntType.NPC, "talk-to") { player, _ ->
@@ -52,19 +52,39 @@ class BiohazardPlugin : InteractionListener {
             return@onUseWith true
         }
 
-        on(Items.PIGEON_CAGE_424, IntType.ITEM, "open") { player, _ ->
-            if (getAttribute(player, GameAttributes.FEED_ON_FENCE, false)) {
-                if (player.location != FENCE_CORNER_LOCATION) return@on true
-                face(player, WATCHTOWER_CORNER_LOCATION)
-                sendMessage(player, "You open the cage.")
-                spawnProjectile(Projectile.getLocation(player), Location(2561, 3303, 0), 72, 40, 200, 0, 250, 25)
-                sendMessage(player, "The pigeons fly towards the watch tower.", 1)
-                sendMessage(player, "The mourners are frantically trying to scare the pigeons away.", 2)
-                setQuestStage(player, Quests.BIOHAZARD, 4)
-            } else {
-                sendMessage(player, "You open the cage.")
+        on(Items.PIGEON_CAGE_424, IntType.ITEM, "open") { player, node ->
+            val hasFenceFeed = getAttribute(player, GameAttributes.FEED_ON_FENCE, false)
+            val item = node.asItem()
+
+            sendMessage(player, "You open the cage.")
+
+            if (!hasFenceFeed) {
                 sendMessage(player, "The pigeons don't want to leave.", 1)
+                return@on true
             }
+
+            if (player.location != FENCE_CORNER_LOCATION) {
+                return@on true
+            }
+
+            if (!inInventory(player, node.id)) {
+                return@on true
+            }
+
+            val slot = player.inventory.getSlot(item)
+            replaceSlot(player, slot, Item(Items.PIGEON_CAGE_425))
+
+            face(player, WATCHTOWER_CORNER_LOCATION)
+            spawnProjectile(
+                Projectile.getLocation(player),
+                Location.create(2561, 3303, 0),
+                72, 40, 200, 0, 250, 25
+            )
+
+            sendMessage(player, "The pigeons fly towards the watch tower.", 1)
+            sendMessage(player, "The mourners are frantically trying to scare the pigeons away.", 2)
+
+            setQuestStage(player, Quests.BIOHAZARD, 4)
             return@on true
         }
 
@@ -73,6 +93,12 @@ class BiohazardPlugin : InteractionListener {
             playAudio(player, Sounds.CUPBOARD_OPEN_58)
             replaceScenery(node.asScenery(), Scenery.CUPBOARD_2057, -1)
             sendMessage(player, "You open the cupboard.")
+            return@on true
+        }
+
+        on(Items.PIGEON_CAGE_425, IntType.ITEM, "open") { player, _ ->
+            sendMessage(player, "You open the cage.")
+            sendMessage(player, "It's empty.", 1)
             return@on true
         }
 

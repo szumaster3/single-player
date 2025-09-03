@@ -4,6 +4,7 @@ import content.region.kandarin.gnome.quest.makinghistory.MHUtils
 import content.region.kandarin.gnome.quest.makinghistory.book.HistoryoftheOutpost
 import content.region.kandarin.gnome.quest.makinghistory.book.TheMysteriousAdventurer
 import core.api.*
+import core.game.dialogue.DialogueFile
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.item.Item
@@ -40,7 +41,7 @@ class MakingHistoryPlugin : InteractionListener {
         }
 
         on(Scenery.SHIELD_DISPLAY_10267, IntType.SCENERY, "study") { player, _ ->
-            sendMessage(player, "A shield worn by Fremennik warriors.")
+            sendDialogue(player, "Inside the case is a giant shield, the plate reads: 'This shield comes from the Fourth age when people were fighting to become more settled and less nomadic'.")
             return@on true
         }
 
@@ -111,15 +112,28 @@ class MakingHistoryPlugin : InteractionListener {
         }
 
         on(Scenery.BOOKCASE_10273, IntType.SCENERY, "study") { player, _ ->
-            sendDialogueOptions(player, "Select an option", "The Times of Lathas", "The History of the Outpost", "The Mysterious Adventurer")
+            sendDialogueOptions(player, "There's a great variety of books. Which shall you choose?", "The History of the Outpost.", "The Times of Lathas.", "The Mysterious Adventurer.")
             addDialogueAction(player) { p, button ->
+                closeDialogue(player)
                 when (button) {
-                    1 -> sendDialogue(p, "You pick up a new looking book: 'The Times of Lathas'. You skim over the heavy book. " + "It talks about the heritage of the line of kings who carry the name Ardignas. " + "They only came into power 68 years ago, but in which time there have been five kings, the current being King Lathas.")
-                    2 -> HistoryoftheOutpost.openBook(p)
+                    1 -> HistoryoftheOutpost.openBook(p)
+                    2 -> openDialogue(player, TimeOfLathasBookcaseDialogue())
                     3 -> TheMysteriousAdventurer.openBook(p)
                 }
+                player.dialogueInterpreter.actions.clear()
             }
             return@on true
+        }
+    }
+
+    inner class TimeOfLathasBookcaseDialogue : DialogueFile() {
+        override fun handle(componentID: Int, buttonID: Int) {
+            when(stage) {
+                0 -> sendDialogue(player!!, "You pick up a new looking book: 'The Times of Lathas'.").also { stage++ }
+                1 -> sendDialogue(player!!, "You skim over the heavy book. It talks about the heritage of the line of kings who carry the name Ardignas.").also { stage++ }
+                2 -> sendDialogue(player!!, "They only came into power 68 years ago, but in which time there have been five kings, the current being King Lathas.").also { stage++ }
+                3 -> end()
+            }
         }
     }
 }

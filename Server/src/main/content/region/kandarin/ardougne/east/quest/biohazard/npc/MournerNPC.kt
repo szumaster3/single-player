@@ -1,10 +1,6 @@
 package content.region.kandarin.ardougne.east.quest.biohazard.npc
 
-import core.api.addItemOrDrop
-import core.api.inInventory
-import core.api.isQuestInProgress
-import core.api.setQuestStage
-import core.api.sendMessage
+import core.api.*
 import core.game.node.entity.Entity
 import core.game.node.entity.npc.AbstractNPC
 import core.game.node.entity.player.Player
@@ -15,31 +11,29 @@ import shared.consts.NPCs
 import shared.consts.Quests
 
 @Initializable
-class MournerNPC(
-    id: Int = 0,
-    location: Location? = null,
-) : AbstractNPC(id, location) {
-    override fun construct(
-        id: Int,
-        location: Location,
-        vararg objects: Any,
-    ): AbstractNPC = MournerNPC(id, location)
+class MournerNPC(id: Int = 0, location: Location? = null) : AbstractNPC(id, location) {
+
+    override fun construct(id: Int, location: Location, vararg objects: Any): AbstractNPC = MournerNPC(id, location)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.MOURNER_370)
 
     override fun finalizeDeath(killer: Entity?) {
-        if (killer is Player) {
-            if (isQuestInProgress(killer, Quests.BIOHAZARD, 6, 15)) {
-                sendMessage(killer.asPlayer(), "You search the mourner...")
-                if (!inInventory(killer.asPlayer(), Items.KEY_2832)) {
-                    addItemOrDrop(killer.asPlayer(), Items.KEY_2832)
-                    killer.asPlayer().sendMessage("and find a key.", 1)
-                    setQuestStage(killer.asPlayer(), Quests.BIOHAZARD, 8)
-                } else {
-                    sendMessage(killer.asPlayer(), "...but find nothing.")
-                }
-            }
-            super.finalizeDeath(killer)
+        val player = killer?.asPlayer() ?: return super.finalizeDeath(killer)
+
+        if (getQuestStage(player, Quests.BIOHAZARD) < 6) {
+            return super.finalizeDeath(killer)
         }
+
+        sendMessage(player, "You search the mourner...")
+
+        if (inInventory(player, Items.KEY_2832)) {
+            sendMessage(player, "...but find nothing.")
+        } else {
+            addItemOrDrop(player, Items.KEY_2832)
+            sendMessage(player, "and find a key.", 1)
+            setQuestStage(player, Quests.BIOHAZARD, 8)
+        }
+
+        super.finalizeDeath(killer)
     }
 }
