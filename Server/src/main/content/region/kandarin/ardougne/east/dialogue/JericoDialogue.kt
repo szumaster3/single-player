@@ -1,5 +1,7 @@
 package content.region.kandarin.ardougne.east.dialogue
 
+import content.region.kandarin.ardougne.east.quest.biohazard.dialogue.JericoBiohazardDialogue
+import core.api.isQuestComplete
 import core.api.openDialogue
 import core.api.isQuestInProgress
 import core.game.dialogue.Dialogue
@@ -19,12 +21,9 @@ class JericoDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
-        if (isQuestInProgress(player, Quests.BIOHAZARD, 1, 99)) {
+        if (!isQuestComplete(player, Quests.BIOHAZARD)) {
             end()
-            openDialogue(
-                player,
-                content.region.kandarin.ardougne.east.quest.biohazard.dialogue.JericoDialogue(),
-            )
+            openDialogue(player, JericoBiohazardDialogue())
         } else {
             npcl(FaceAnim.SUSPICIOUS, "Hello.")
         }

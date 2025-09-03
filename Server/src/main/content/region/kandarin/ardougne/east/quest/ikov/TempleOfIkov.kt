@@ -14,16 +14,12 @@ import shared.consts.Vars
 
 @Initializable
 class TempleOfIkov : Quest(Quests.TEMPLE_OF_IKOV, 121, 120, 1, Vars.VARP_QUEST_TEMPLE_OF_IKOV_PROGRESS_26, 0, 1, 80) {
-    override fun drawJournal(
-        player: Player,
-        stage: Int,
-    ) {
+
+    override fun drawJournal(player: Player, stage: Int) {
         super.drawJournal(player, stage)
         var line = 12
         var stage = getStage(player)
-
         var started = getQuestStage(player, Quests.TEMPLE_OF_IKOV) > 0
-
         if (!started) {
             line(player, "I can start this quest at the !!Flying Horse Inn?? in !!Ardougne??", line++, false)
             line(player, "by speaking to !!Lucien??", line++, false)
@@ -150,35 +146,11 @@ class TempleOfIkov : Quest(Quests.TEMPLE_OF_IKOV, 121, 120, 1, Vars.VARP_QUEST_T
         var ln = 10
         super.finish(player)
         when (getAttribute(player, GameAttributes.QUEST_IKOV_SELECTED_END, 0)) {
-            1 ->
-                sendString(
-                    player,
-                    "${Quests.TEMPLE_OF_IKOV} Quest completed for Armadyl!",
-                    Components.QUEST_COMPLETE_SCROLL_277,
-                    4,
-                )
-            2 ->
-                sendString(
-                    player,
-                    "${Quests.TEMPLE_OF_IKOV} Quest completed for Lucien!",
-                    Components.QUEST_COMPLETE_SCROLL_277,
-                    4,
-                )
-            else ->
-                sendString(
-                    player,
-                    "${Quests.TEMPLE_OF_IKOV} Quest completed!!",
-                    Components.QUEST_COMPLETE_SCROLL_277,
-                    4,
-                )
+            1 -> sendString(player, "${Quests.TEMPLE_OF_IKOV} Quest completed for Armadyl!", Components.QUEST_COMPLETE_SCROLL_277, 4)
+            2 -> sendString(player, "${Quests.TEMPLE_OF_IKOV} Quest completed for Lucien!", Components.QUEST_COMPLETE_SCROLL_277, 4)
+            else -> sendString(player, "${Quests.TEMPLE_OF_IKOV} Quest completed!!", Components.QUEST_COMPLETE_SCROLL_277, 4)
         }
-        player.packetDispatch.sendItemZoomOnInterface(
-            Items.YEW_LONGBOW_855,
-            230,
-            Components.QUEST_COMPLETE_SCROLL_277,
-            5,
-        )
-
+        player.packetDispatch.sendItemZoomOnInterface(Items.YEW_LONGBOW_855, 230, Components.QUEST_COMPLETE_SCROLL_277, 5)
         drawReward(player, "1 Quest Point", ln++)
         drawReward(player, "10,500 Ranged XP", ln++)
         drawReward(player, "8,000 Fletching XP", ln++)

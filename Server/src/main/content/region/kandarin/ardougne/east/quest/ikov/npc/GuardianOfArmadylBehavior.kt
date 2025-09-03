@@ -11,22 +11,9 @@ import shared.consts.Items
 import shared.consts.NPCs
 import shared.consts.Quests
 
-class GuardianOfArmadylBehavior : NPCBehavior(*guardianOfArmadylIds) {
-    companion object {
-        private val guardianOfArmadylIds =
-            intArrayOf(
-                NPCs.GUARDIAN_OF_ARMADYL_274,
-                NPCs.GUARDIAN_OF_ARMADYL_275,
-            )
-    }
-
-    override fun onDropTableRolled(
-        self: NPC,
-        killer: Entity,
-        drops: ArrayList<Item>,
-    ) {
+class GuardianOfArmadylBehavior : NPCBehavior(NPCs.GUARDIAN_OF_ARMADYL_274, NPCs.GUARDIAN_OF_ARMADYL_275) {
+    override fun onDropTableRolled(self: NPC, killer: Entity, drops: ArrayList<Item>) {
         super.onDropTableRolled(self, killer, drops)
-
         if (killer is Player && isQuestComplete(killer, Quests.TEMPLE_OF_IKOV)) {
             if (RandomFunction.roll(4)) {
                 drops.add(Item(Items.ARMADYL_PENDANT_87))

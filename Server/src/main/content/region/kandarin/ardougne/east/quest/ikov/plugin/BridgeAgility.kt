@@ -10,6 +10,7 @@ import core.game.world.map.Location
 import core.game.world.map.zone.ZoneBorders
 
 class BridgeAgility : MapArea {
+
     companion object {
         private fun checkWeightOrFailBridge(entity: Entity) {
             if (entity is Player && entity.settings.weight > 0) {
@@ -28,18 +29,11 @@ class BridgeAgility : MapArea {
         checkWeightOrFailBridge(entity)
     }
 
-    override fun areaLeave(
-        entity: Entity,
-        logout: Boolean,
-    ) {
+    override fun areaLeave(entity: Entity, logout: Boolean) {
         checkWeightOrFailBridge(entity)
     }
 
-    override fun entityStep(
-        entity: Entity,
-        location: Location,
-        lastLocation: Location,
-    ) {
+    override fun entityStep(entity: Entity, location: Location, lastLocation: Location) {
         checkWeightOrFailBridge(entity)
     }
 }

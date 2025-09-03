@@ -19,15 +19,14 @@ class ArdougneBakerDialogue(player: Player? = null) : Dialogue(player) {
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> options("Let's see what you have.", "No thank you.").also { stage++ }
-            1 ->
-                when (buttonId) {
-                    1 -> {
-                        end()
-                        openNpcShop(player, npc.id)
-                    }
-
-                    2 -> end()
+            1 -> when (buttonId) {
+                1 -> {
+                    end()
+                    openNpcShop(player, npc.id)
                 }
+
+                2 -> end()
+            }
         }
         return true
     }

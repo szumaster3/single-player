@@ -24,12 +24,7 @@ class TownCrierDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
-            1 -> options(
-                "Tell me about Player Moderators.",
-                "Tell me about the Rules of " + settings!!.name + ".",
-                "Can you give me a handy tip please?",
-                "Bye!",
-            ).also { stage++ }
+            1 -> options("Tell me about Player Moderators.", "Tell me about the Rules of " + settings!!.name + ".", "Can you give me a handy tip please?", "Bye!").also { stage++ }
             2 -> when (buttonId) {
                 1 -> player("Tell me about Player Moderators.").also { stage = 50 }
                 2 -> player("Tell me about the Rules of " + settings!!.name + ".").also { stage = 70 }
@@ -38,19 +33,14 @@ class TownCrierDialogue(player: Player? = null) : Dialogue(player) {
             }
             3 -> npc("Nice meeting you.").also { stage = END_DIALOGUE }
             50 -> npc("Of course. What would you like to know?").also { stage++ }
-            51 -> options(
-                "What is a Player Moderator?",
-                "What can Player Moderators do?",
-                "How do I become a Player Moderator?",
-                "What can Player Moderators not do?",
-            ).also { stage++ }
-
+            51 -> options("What is a Player Moderator?", "What can Player Moderators do?", "How do I become a Player Moderator?", "What can Player Moderators not do?").also { stage++ }
             52 -> when (buttonId) {
                 1 -> player("What is a Player Moderator?").also { stage = 150 }
                 2 -> npc("What can Player Moderators do?").also { stage = 160 }
                 3 -> player("How do I become a Player Moderator?").also { stage = 170 }
                 4 -> player("What can Player Moderators not do?").also { stage = 180 }
             }
+
             70 -> npc("At once. Take a look at my book here.").also { stage++ }
             71 -> {
                 end()
@@ -63,10 +53,10 @@ class TownCrierDialogue(player: Player? = null) : Dialogue(player) {
                 }
             }
             100 -> when ((0..4).random()) {
-                1 -> npc("If the chat window is moving too quickly to report a", "player accurately, run to a quiet spot and review the chat", "at your leisure!").also { stage = 1 }
-                2 -> npc("If you're lost and have no idea where to go, use the Home", "Teleporter spell for free!").also { stage = 1 }
-                3 -> npc("Make your recovery questions and answers hard to guess", "but easy to remember.").also { stage = 1 }
-                4 -> npc("Beware of players trying to lue you into the wilderness.", "Your items cannot be returned if you lose them!").also { stage = 1 }
+                0 -> npc("If the chat window is moving too quickly to report a", "player accurately, run to a quiet spot and review the chat", "at your leisure!").also { stage = 1 }
+                1 -> npc("If you're lost and have no idea where to go, use the Home", "Teleporter spell for free!").also { stage = 1 }
+                2 -> npc("Make your recovery questions and answers hard to guess", "but easy to remember.").also { stage = 1 }
+                3 -> npc("Beware of players trying to lue you into the wilderness.", "Your items cannot be returned if you lose them!").also { stage = 1 }
                 else -> npc("" + settings!!.name + " will never email you asking for your log-in details.").also { stage = 1 }
             }
             150 -> npc("Player Moderators are normal players of the game, just", "like you. However, since they have shown themselves to be", "trustworthy and active reporters, they have been invited", "by Jagex to monitor the game and take appropriate").also { stage++ }

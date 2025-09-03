@@ -12,12 +12,7 @@ import core.game.node.entity.player.Player
 import shared.consts.NPCs
 
 class DragonHeadNPC : NPCBehavior(*DRAGON_HEAD) {
-    override fun canBeAttackedBy(
-        self: NPC,
-        attacker: Entity,
-        style: CombatStyle,
-        shouldSendMessage: Boolean,
-    ): Boolean {
+    override fun canBeAttackedBy(self: NPC, attacker: Entity, style: CombatStyle, shouldSendMessage: Boolean): Boolean {
         if (attacker !is Player) return false
 
         if (style != CombatStyle.MAGIC) {
@@ -33,18 +28,11 @@ class DragonHeadNPC : NPCBehavior(*DRAGON_HEAD) {
         return true
     }
 
-    override fun afterDamageReceived(
-        self: NPC,
-        attacker: Entity,
-        state: BattleState,
-    ) {
+    override fun afterDamageReceived(self: NPC, attacker: Entity, state: BattleState) {
         transformNpc(self, NPCs.DRAGON_HEAD_8426, 100)
     }
 
-    override fun onDeathStarted(
-        self: NPC,
-        killer: Entity,
-    ) {
+    override fun onDeathStarted(self: NPC, killer: Entity) {
         self.configureMovementPath(location(1820, 5279, 0))
     }
 

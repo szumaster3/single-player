@@ -23,7 +23,7 @@ class SeamanDialogue(player: Player? = null) : Dialogue(player) {
         if (args.size > 1 && isQuestComplete(player, Quests.PIRATES_TREASURE)) {
             if (player.equipment[EquipmentContainer.SLOT_RING] != null && player.equipment[EquipmentContainer.SLOT_RING].id == Items.RING_OF_CHAROSA_6465) {
                 travel()
-            } else if (isDiaryComplete(player, DiaryType.KARAMJA, 0)) {
+            } else if (isDiaryComplete(player, DiaryType.KARAMJA, 0) || player!!.achievementDiaryManager.hasGlove()) {
                 pay(15)
             } else {
                 pay(30)
@@ -55,7 +55,7 @@ class SeamanDialogue(player: Player? = null) : Dialogue(player) {
             2 -> when (buttonId) {
                 1 -> {
                     player(FaceAnim.HALF_GUILTY, "Yes, please.")
-                    stage = if (isDiaryComplete(player, DiaryType.KARAMJA, 0)) {
+                    stage = if (isDiaryComplete(player, DiaryType.KARAMJA, 0) || player!!.achievementDiaryManager.hasGlove()) {
                         9
                     } else {
                         11
@@ -89,7 +89,11 @@ class SeamanDialogue(player: Player? = null) : Dialogue(player) {
             player(FaceAnim.HALF_GUILTY, "Sorry, I don't have enough coins for that.")
             stage = 20
         } else {
-            sendMessage(player, "You pay $price coins and board the ship.")
+            if(isDiaryComplete(player, DiaryType.KARAMJA, 0) || player!!.achievementDiaryManager.hasGlove()) {
+                sendMessages(player, "The Seaman smiles as he recognises you as having earned Karamja gloves", "and lets you pass for half price - 15 coins.")
+            } else {
+                sendMessage(player, "You pay 30 coins and board the ship.")
+            }
             travel()
         }
     }
@@ -99,6 +103,5 @@ class SeamanDialogue(player: Player? = null) : Dialogue(player) {
         Charter.PORT_SARIM_TO_KARAMJA.sail(player)
     }
 
-    override fun getIds(): IntArray =
-        intArrayOf(NPCs.CAPTAIN_TOBIAS_376, NPCs.SEAMAN_LORRIS_377, NPCs.SEAMAN_THRESNOR_378)
+    override fun getIds(): IntArray = intArrayOf(NPCs.CAPTAIN_TOBIAS_376, NPCs.SEAMAN_LORRIS_377, NPCs.SEAMAN_THRESNOR_378)
 }

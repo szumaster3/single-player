@@ -66,23 +66,10 @@ private class IrwinFeaselbaumAboutTornPagesDialogue : DialogueFile() {
     override fun handle(componentID: Int, buttonID: Int) {
         npc = NPC(NPCs.IRWIN_FEASELBAUM_2066)
         when (stage) {
-            0 -> playerl(
-                FaceAnim.HALF_ASKING,
-                "I found this torn page, do you know anything about it?",
-            ).also { stage++ }
-
-            1 -> npcl(
-                "Hey...I hope you didn't rip that page out of one of those books, they'll be trouble if it was.",
-            ).also {
-                stage++
-            }
-
+            0 -> playerl(FaceAnim.HALF_ASKING, "I found this torn page, do you know anything about it?").also { stage++ }
+            1 -> npcl("Hey...I hope you didn't rip that page out of one of those books, they'll be trouble if it was.").also { stage++ }
             2 -> playerl("No, it wasn't actually, I got it from somewhere else, do you recognise it?").also { stage++ }
-            3 -> npcl(
-                "Hmm, well it certainly looks like text from one of the books. Have you checked at the wizards' guild in Yanille? We sometime loan books to them.",
-            ).also {
-                stage = END_DIALOGUE
-            }
+            3 -> npcl("Hmm, well it certainly looks like text from one of the books. Have you checked at the wizards' guild in Yanille? We sometime loan books to them.").also { stage = END_DIALOGUE }
         }
     }
 }
@@ -92,23 +79,9 @@ private class IrwinFeaselbaumAboutNecromancyBookDialogue : DialogueFile() {
         npc = NPC(NPCs.IRWIN_FEASELBAUM_2066)
         when (stage) {
             0 -> playerl(FaceAnim.HALF_ASKING, "Hi, do you know anything about this book?").also { stage++ }
-            1 -> npcl(
-                "Hey...that book has been loaned to the wizards' guild in Yanille, I hope you're not returning it in a damaged condition!",
-            ).also {
-                stage++
-            }
-
-            2 -> playerl(
-                "Well, I was just wondering where the book came from actually and try to get some more information about it.",
-            ).also {
-                stage++
-            }
-
-            3 -> npcl(
-                "Well, that book looks as if it's been through the wars...you're not going to return it in that condition. You take it back to the wizards at Yanille, they borrowed it, so it's their responsibility.",
-            ).also {
-                stage = END_DIALOGUE
-            }
+            1 -> npcl("Hey...that book has been loaned to the wizards' guild in Yanille, I hope you're not returning it in a damaged condition!").also { stage++ }
+            2 -> playerl("Well, I was just wondering where the book came from actually and try to get some more information about it.").also { stage++ }
+            3 -> npcl("Well, that book looks as if it's been through the wars...you're not going to return it in that condition. You take it back to the wizards at Yanille, they borrowed it, so it's their responsibility.").also { stage = END_DIALOGUE }
         }
     }
 }

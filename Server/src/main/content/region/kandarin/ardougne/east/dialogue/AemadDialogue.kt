@@ -17,11 +17,7 @@ class AemadDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
-        npc(
-            FaceAnim.HAPPY,
-            "Hello, you look like a bold adventurer. You've come to the",
-            "right place for adventurers' equipment.",
-        )
+        npc(FaceAnim.HAPPY, "Hello, you look like a bold adventurer. You've come to the", "right place for adventurers' equipment.")
         return true
     }
 

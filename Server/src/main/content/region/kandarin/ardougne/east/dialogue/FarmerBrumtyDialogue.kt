@@ -28,26 +28,9 @@ class FarmerBrumtyDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
-            0 ->
-                npcl(
-                    FaceAnim.HALF_GUILTY,
-                    "I have all the bad luck. My sheep all run off somewhere, and then those mourners tell me they're infected!",
-                ).also {
-                    stage++
-                }
-            1 ->
-                playerl(FaceAnim.HALF_GUILTY, "Well, I hope things start to look up for you.").also {
-                    stage =
-                        END_DIALOGUE
-                }
-            2 ->
-                npcl(
-                    FaceAnim.HALF_GUILTY,
-                    "That's alright. It had to be done for the sake of the town. I just hope none of my other livestock get infected.",
-                ).also {
-                    stage =
-                        END_DIALOGUE
-                }
+            0 -> npcl(FaceAnim.HALF_GUILTY, "I have all the bad luck. My sheep all run off somewhere, and then those mourners tell me they're infected!").also { stage++ }
+            1 -> playerl(FaceAnim.HALF_GUILTY, "Well, I hope things start to look up for you.").also { stage = END_DIALOGUE }
+            2 -> npcl(FaceAnim.HALF_GUILTY, "That's alright. It had to be done for the sake of the town. I just hope none of my other livestock get infected.").also { stage = END_DIALOGUE }
         }
         return true
     }

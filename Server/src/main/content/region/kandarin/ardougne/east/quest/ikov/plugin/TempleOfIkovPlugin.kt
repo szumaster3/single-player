@@ -184,8 +184,7 @@ class TempleOfIkovPlugin : InteractionListener {
                 DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
             } else {
                 if (getAttribute(player, GameAttributes.QUEST_IKOV_WARRIOR_INST, null) == null) {
-                    val npc =
-                        FireWarriorOfLesarkusNPC(NPCs.FIRE_WARRIOR_OF_LESARKUS_277, player, Location(2646, 9866, 0))
+                    val npc = FireWarriorOfLesarkusNPC(NPCs.FIRE_WARRIOR_OF_LESARKUS_277, player, Location(2646, 9866, 0))
                     npc.init()
                     npc.isRespawn = false
                     npc.isWalks = false
@@ -195,7 +194,6 @@ class TempleOfIkovPlugin : InteractionListener {
                         player,
                         object : Pulse() {
                             var counter = 0
-
                             override fun pulse(): Boolean {
                                 when (counter++) {
                                     0 -> {
@@ -226,13 +224,7 @@ class TempleOfIkovPlugin : InteractionListener {
         }
 
         on(Items.STAFF_OF_ARMADYL_84, IntType.GROUND_ITEM, "take") { player, node ->
-            if (getQuestStage(player, Quests.TEMPLE_OF_IKOV) >= 6 &&
-                getAttribute(
-                    player,
-                    GameAttributes.QUEST_IKOV_SELECTED_END,
-                    0,
-                ) == 1
-            ) {
+            if (getQuestStage(player, Quests.TEMPLE_OF_IKOV) >= 6 && getAttribute(player, GameAttributes.QUEST_IKOV_SELECTED_END, 0) == 1) {
                 sendMessage(player, "You decide not to steal the staff as you have agreed to help the Guardians")
             }
             val npcID = findLocalNPCs(player, intArrayOf(NPCs.GUARDIAN_OF_ARMADYL_274, NPCs.GUARDIAN_OF_ARMADYL_275), 4)

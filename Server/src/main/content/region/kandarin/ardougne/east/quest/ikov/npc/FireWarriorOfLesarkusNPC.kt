@@ -17,18 +17,10 @@ import core.game.world.map.Location
 import shared.consts.NPCs
 import shared.consts.Quests
 
-class FireWarriorOfLesarkusNPC(
-    id: Int = 0,
-    val player: Player?,
-    location: Location? = null,
-) : AbstractNPC(id, location) {
+class FireWarriorOfLesarkusNPC(id: Int = 0, val player: Player?, location: Location? = null) : AbstractNPC(id, location) {
     var clearTime = 0
 
-    override fun construct(
-        id: Int,
-        location: Location,
-        vararg objects: Any,
-    ): AbstractNPC = FireWarriorOfLesarkusNPC(id, null, location)
+    override fun construct(id: Int, location: Location, vararg objects: Any): AbstractNPC = FireWarriorOfLesarkusNPC(id, null, location)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.FIRE_WARRIOR_OF_LESARKUS_277)
 
@@ -41,11 +33,7 @@ class FireWarriorOfLesarkusNPC(
         }
     }
 
-    override fun isAttackable(
-        entity: Entity,
-        style: CombatStyle,
-        message: Boolean,
-    ): Boolean {
+    override fun isAttackable(entity: Entity, style: CombatStyle, message: Boolean, ): Boolean {
         val attackable = super.isAttackable(entity, style, message)
         val player = entity.asPlayer()
         return attackable
@@ -66,12 +54,7 @@ class FireWarriorOfLesarkusNPC(
                 state.secondaryHit = 0
             }
             runTask(player, 0) {
-                sendNPCDialogue(
-                    player,
-                    opponent.id,
-                    "Your puny weapons do nothing against me human! Come back when you can give me a real fight!",
-                    FaceAnim.ANGRY,
-                )
+                sendNPCDialogue(player, opponent.id, "Your puny weapons do nothing against me human! Come back when you can give me a real fight!", FaceAnim.ANGRY)
             }
         }
     }

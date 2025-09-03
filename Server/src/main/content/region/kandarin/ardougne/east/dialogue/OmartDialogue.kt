@@ -1,9 +1,11 @@
 package content.region.kandarin.ardougne.east.dialogue
 
 import content.region.kandarin.ardougne.east.quest.biohazard.dialogue.OmartBiohazardDialogue
+import core.api.getQuestStage
 import core.api.openDialogue
 import core.api.isQuestInProgress
 import core.game.dialogue.Dialogue
+import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.plugin.Initializable
@@ -19,18 +21,25 @@ class OmartDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
-        if (isQuestInProgress(player, Quests.BIOHAZARD, 2, 100)) {
-            end().also { openDialogue(player, OmartBiohazardDialogue()) }
-        } else {
-            npc("Hello.").also { stage = END_DIALOGUE }
+        val questStage = getQuestStage(player, Quests.BIOHAZARD)
+        when (questStage) {
+            in 2..99 -> end().also { openDialogue(player, OmartBiohazardDialogue()) }
+            100 ->  player("Hello Omart.").also { stage = 3 }
+            else -> player("Hello there.")
         }
         return true
     }
 
-    override fun handle(
-        interfaceId: Int,
-        buttonId: Int,
-    ): Boolean = true
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+        when(stage) {
+            0 -> npc("Hello.").also { stage++ }
+            1 -> player(FaceAnim.HALF_ASKING, "How are you?").also { stage++ }
+            2 -> npc(FaceAnim.HAPPY, "Fine thanks.").also { stage = END_DIALOGUE }
+            3 -> npcl(FaceAnim.FRIENDLY, "Hello Adventurer.").also { stage++ }
+            4 -> npcl(FaceAnim.FRIENDLY, "I'm afraid it's too risky to use the ladder again, but I believe that Edmond's working on another tunnel.").also { stage = END_DIALOGUE }
+        }
+        return true
+    }
 
     override fun newInstance(player: Player?): Dialogue = OmartDialogue(player)
 
