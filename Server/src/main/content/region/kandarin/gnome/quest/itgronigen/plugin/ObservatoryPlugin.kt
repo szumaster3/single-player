@@ -42,23 +42,6 @@ class ObservatoryPlugin : InteractionListener {
     }
 
     override fun defineListeners() {
-        on(OBSERVATORY_ASSISTANT, IntType.NPC, "Talk-to") { player, _ ->
-            val plankItem = Items.PLANK_960
-            val amountOfPlanks = amountInInventory(player, plankItem)
-
-            when (getQuestStage(player, Quests.OBSERVATORY_QUEST)) {
-                0 -> openDialogue(player, ObservatoryAssistantDialogue())
-                2 -> openDialogue(player, AssistantTalkAboutPlanksDialogue(amountOfPlanks))
-                4 -> openDialogue(player, AssistantTalkAboutBronzeBarDialogue())
-                6 -> openDialogue(player, AssistantTalkAboutMoltenGlassDialogue())
-                8 -> openDialogue(player, AssistantTalkAboutTheMouldDialogue())
-                11 -> openDialogue(player, AssistantTalkAboutObservatoryLensDialogue())
-                12 -> openDialogue(player, AssistantTalkAboutObservatoryDialogue())
-                else -> sendDialogue(player, "Observatory assistant seems too busy to talk.")
-            }
-            return@on true
-        }
-
         on(DUNGEON_STAIRS_UP, IntType.SCENERY, "climb up") { player, node ->
             val questStage = getQuestStage(player, Quests.OBSERVATORY_QUEST)
             if (node.location.x == 2335 && node.location.y == 9351) {

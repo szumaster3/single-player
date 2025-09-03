@@ -414,4 +414,7 @@ internal object GameAttributes {
 
     // Fight Arena quest.
     const val FIGHT_ARENA_OPTIONAL_KILL = "/save:quest:arena-optional-task"
+
+    // Observatory quest.
+    const val RECEIVED_JUG_OF_WINE = "/save:observatory:assistant-gift"
 }
