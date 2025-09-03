@@ -146,6 +146,7 @@ enum class Consumables {
     FRIED_MUSHROOMS(Food(intArrayOf(Items.FRIED_MUSHROOMS_7082, Items.BOWL_1923), HealingEffect(5))),
     BLACK_MUSHROOM(FakeConsumable(Items.BLACK_MUSHROOM_4620, "Eugh! It tastes horrible, and stains your fingers black.")),
     CHOPPED_TOMATO(Food(intArrayOf(Items.CHOPPED_TOMATO_1869, Items.BOWL_1923), HealingEffect(2))),
+    SPICY_TOMATO(Food(intArrayOf(Items.SPICY_TOMATO_9994, Items.BOWL_1923), HealingEffect(2))),
     ONION_AND_TOMATO(Food(intArrayOf(Items.ONION_AND_TOMATO_1875, Items.BOWL_1923), HealingEffect(2))),
     POTATO_WITH_CHEESE(Food(intArrayOf(Items.POTATO_WITH_CHEESE_6705), HealingEffect(16))),
     EGG_POTATO(Food(intArrayOf(Items.EGG_POTATO_7056), HealingEffect(11))),

@@ -1290,7 +1290,7 @@ object Animations {
     const val ANIMATION_1188 = 1188
     const val ANIMATION_1189 = 1189
     const val ANIMATION_1190 = 1190
-    const val RUNNING_1191 = 1191
+    const val EAT_BANANA_1191 = 1191
     const val HUMAN_FRUIT_CUTTING_1192 = 1192
     const val SLICE_BANANA_1192 = 1192
     const val FISHING_KARAMBWAN_1193 = 1193

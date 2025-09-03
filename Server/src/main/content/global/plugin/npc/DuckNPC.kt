@@ -1,28 +1,36 @@
 package content.global.plugin.npc
 
 import core.api.sendChat
-import core.game.node.entity.npc.NPC
-import core.game.node.entity.npc.NPCBehavior
+import core.game.node.entity.npc.AbstractNPC
+import core.game.world.map.Location
+import core.plugin.Initializable
 import core.tools.RandomFunction
 import shared.consts.NPCs
 
-/**
- * Handles the Duck NPC.
- */
-class DuckNPC : NPCBehavior(NPCs.DUCK_46, NPCs.DUCK_2693, NPCs.DUCK_6113) {
+@Initializable
+class DuckNPC(id: Int = 0, location: Location? = null) : AbstractNPC(id, location) {
+
     private val forceChat = arrayOf("Eep!", "Quack!")
     private var tickDelay = 0
     private val TICK_INTERVAL = 30
 
-    override fun tick(self: NPC): Boolean {
+    override fun construct(id: Int, location: Location, vararg objects: Any): AbstractNPC = DuckNPC(id, location)
+
+    override fun handleTickActions() {
+        super.handleTickActions()
+
         tickDelay++
-        if (tickDelay < TICK_INTERVAL) return super.tick(self)
+        if (tickDelay < TICK_INTERVAL) return
         tickDelay = 0
 
         if (RandomFunction.roll(2)) {
-            sendChat(self, forceChat.random())
+            sendChat(this, forceChat.random())
         }
+    }
 
-        return super.tick(self)
+    override fun getIds(): IntArray = ID
+
+    companion object {
+        private val ID = intArrayOf(NPCs.DUCK_46, NPCs.DUCK_2693, NPCs.DUCK_6113)
     }
 }
