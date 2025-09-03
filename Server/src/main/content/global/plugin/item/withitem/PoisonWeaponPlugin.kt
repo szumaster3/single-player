@@ -95,12 +95,8 @@ class PoisonWeaponPlugin : InteractionListener {
         RUNE_HASTA(base = Items.RUNE_HASTA_11377, kp = Items.RUNE_HASTAKP_11416);
 
         companion object {
-            // base ID -> enum
             val itemMap = values().associateBy { it.base }
-
-            // poisoned ID -> base ID
             private val poisonedToBase = values().associate { it.kp to it.base }
-
             fun getBase(poisoned: Int): Int? = poisonedToBase[poisoned]
         }
     }
@@ -464,7 +460,7 @@ class PoisonWeaponPlugin : InteractionListener {
             base = Items.RUNE_HASTA_11377,
             p = Items.RUNE_HASTAP_11414,
             pp = Items.RUNE_HASTAP_PLUS_11417,
-            ppp = Items.RUNE_HASTAP_PLUS_PLUS_11419,
+            ppp = Items.RUNE_HASTAP_PLUS_PLUS_11419
         ),
         ;
 

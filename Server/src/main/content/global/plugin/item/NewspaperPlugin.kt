@@ -47,7 +47,7 @@ class NewspaperPlugin : InteractionListener {
             openInterface(player, NEWSPAPER_INTERFACE_530)
             sendString(player, leftPageContent, NEWSPAPER_INTERFACE_530, 7)
             sendString(player, rightPageContent, NEWSPAPER_INTERFACE_530, 8)
-            true
+            return@on true
         }
 
         on(Items.AL_KHARID_FLYER_7922, IntType.ITEM, "read") { player, _ ->
@@ -58,7 +58,7 @@ class NewspaperPlugin : InteractionListener {
                 "merchant for money off your next purchase,",
                 "courtesy of Ali Morrisane!",
             )
-            true
+            return@on true
         }
     }
 }

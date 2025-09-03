@@ -54,11 +54,7 @@ class SatchelPlugin : InteractionListener {
     /**
      * Adds a food item to the satchel.
      */
-    private fun add(
-        player: Player,
-        used: Item,
-        satchelItem: Item,
-    ) {
+    private fun add(player: Player, used: Item, satchelItem: Item) {
         val chargesAmount = getCharge(satchelItem)
         val baseChargeAmount = BASE_CHARGE_AMOUNT
 
@@ -84,18 +80,12 @@ class SatchelPlugin : InteractionListener {
     /**
      * Checks if the satchel is full based on current and base charge values.
      */
-    private fun isFull(
-        charges: Int,
-        base: Int,
-    ) = charges >= 10816 + base
+    private fun isFull(charges: Int, base: Int) = charges >= 10816 + base
 
     /**
      * Inspects the satchel and displays its contents to the player in a dialogue.
      */
-    private fun inspect(
-        player: Player,
-        item: Item,
-    ) {
+    private fun inspect(player: Player, item: Item) {
         val itemName = getItemName(item.id).lowercase().removePrefix("triangle ").trim()
         val itemIds = chargeItemMapping[getCharge(item)]?.distinct() ?: emptyList()
         val message =
@@ -113,10 +103,7 @@ class SatchelPlugin : InteractionListener {
     /**
      * Empties the contents of the satchel into the player's inventory.
      */
-    private fun empty(
-        player: Player,
-        item: Item,
-    ) {
+    private fun empty(player: Player, item: Item) {
         if (freeSlots(player) == 0) {
             sendMessage(player, "You don't have enough inventory space.")
             return
@@ -135,12 +122,7 @@ class SatchelPlugin : InteractionListener {
     /**
      * Checks if the satchel already contains the specific food item or is at target charge.
      */
-    private fun check(
-        item: Item,
-        charges: Int,
-        targetCharge: Int,
-        checkId: Int,
-    ): Boolean {
+    private fun check(item: Item, charges: Int, targetCharge: Int, checkId: Int): Boolean {
         val potentialItems =
             setOf(
                 Items.CAKE_1891 + targetCharge,
@@ -153,10 +135,7 @@ class SatchelPlugin : InteractionListener {
     /**
      * Empties the satchel's contents on the ground when dropped and notifies the player.
      */
-    private fun drop(
-        player: Player,
-        satchel: Item,
-    ) {
+    private fun drop(player: Player, satchel: Item) {
         setCharge(satchel, 1000)
         sendMessage(player, "The contents of the satchel fell out as you dropped it!")
         DropListener.drop(player, satchel)

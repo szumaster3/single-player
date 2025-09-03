@@ -80,19 +80,23 @@ class PetshopOwnerDialogue(player: Player? = null) : Dialogue(player) {
                 1 -> player(FaceAnim.FRIENDLY, "Okay, I'll take the $dogName.").also { stage = 707 }
                 2 -> end()
             }
-
             707 -> {
                 if (freeSlots(player) == 0) {
                     npc(FaceAnim.ASKING, "Where are you going to put it, on your head? You can't", "buy a puppy unless you have space to hold it.")
                     sendMessage(player, "You don't have enough inventory space.")
                     return true
                 }
-                if (!removeItem(player, (Item(Items.COINS_995, 500)))) {
-                    sendMessage(player, "You don't the required coins in order to do this.")
-                } else {
-                    addItem(player, puppy!!.id)
-                    npc(FaceAnim.HAPPY, "There you go! I hope you two get on.")
+
+                val coins = Item(Items.COINS_995, 500)
+                val puppyId = puppy?.id ?: return true
+
+                if (!removeItem(player, coins)) {
+                    sendMessage(player, "You don't have the required coins in order to do this.")
+                    return true
                 }
+
+                addItem(player, puppyId)
+                npc(FaceAnim.HAPPY, "There you go! I hope you two get on.")
                 stage = 708
             }
             708 -> end()

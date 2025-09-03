@@ -139,29 +139,21 @@ class CookingDialogue(vararg val args: Any) : DialogueFile() {
      * Displays the cooking interface, showing the item and repositioning components.
      */
     fun display() {
-        repositionChild(player!!, Components.SKILL_COOKMANY_307, 2, 215, 27)
-        sendItemZoomOnInterface(player!!, Components.SKILL_COOKMANY_307, 2, initial, 160)
+        val p = player ?: return
 
-        val item = getItemName(initial)
-        sendString(player!!, "<br><br><br><br>    $item", Components.SKILL_COOKMANY_307, 6)
+        repositionChild(p, Components.SKILL_COOKMANY_307, 2, 215, 27)
+        sendItemZoomOnInterface(p, Components.SKILL_COOKMANY_307, 2, initial, 160)
+        sendString(p, "<br><br><br><br>    ${getItemName(initial)}", Components.SKILL_COOKMANY_307, 6)
 
-        /*
-         * Swords sprite.
-         */
-        repositionChild(player!!, Components.SKILL_COOKMANY_307, 0, 12, 15)
-        repositionChild(player!!, Components.SKILL_COOKMANY_307, 1, 431, 15)
-        /*
-         * "How many would you like to cook?".
-         */
-        repositionChild(player!!, Components.SKILL_COOKMANY_307, 7, 0, 12)
-        /*
-         * Right click context menu boxes.
-         */
-        repositionChild(player!!, Components.SKILL_COOKMANY_307, 3, 58, 27)
-        repositionChild(player!!, Components.SKILL_COOKMANY_307, 4, 58, 27)
-        repositionChild(player!!, Components.SKILL_COOKMANY_307, 5, 58, 27)
-        repositionChild(player!!, Components.SKILL_COOKMANY_307, 6, 58, 27)
-        openChatbox(player!!, Components.SKILL_COOKMANY_307)
+        val indices = intArrayOf(0, 1, 7, 3, 4, 5, 6)
+        val xs = intArrayOf(12, 431, 0, 58, 58, 58, 58)
+        val ys = intArrayOf(15, 15, 12, 27, 27, 27, 27)
+
+        for (i in indices.indices) {
+            repositionChild(p, Components.SKILL_COOKMANY_307, indices[i], xs[i], ys[i])
+        }
+
+        openChatbox(p, Components.SKILL_COOKMANY_307)
         stage = 1
     }
 }

@@ -10,15 +10,13 @@ import shared.consts.Items
 
 @Initializable
 class GnomeCopterPlugin : Plugin<Any> {
+
     override fun newInstance(arg: Any?): Plugin<Any> {
         ItemDefinition.forId(Items.GNOMECOPTER_12842).handlers["equipment"] = this
         return this
     }
 
-    override fun fireEvent(
-        identifier: String,
-        vararg args: Any,
-    ): Any {
+    override fun fireEvent(identifier: String, vararg args: Any): Any {
         val player = args[0] as Player
         val item = args[1] as Item
         when (identifier) {

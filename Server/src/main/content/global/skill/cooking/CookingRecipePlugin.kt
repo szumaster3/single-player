@@ -4,7 +4,6 @@ import core.api.*
 import core.game.interaction.Clocks
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import core.game.interaction.QueueStrength
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
 import core.game.world.update.flag.context.Animation
@@ -12,7 +11,6 @@ import core.tools.Log
 import core.tools.RandomFunction
 import shared.consts.Animations
 import shared.consts.Items
-import kotlin.math.min
 
 /**
  * Handles cooking recipe interactions and processing.
@@ -41,11 +39,7 @@ class CookingRecipePlugin : InteractionListener {
 
     companion object {
         /**
-         * Checks if the player meets the requirements to prepare a recipe.
-         *
-         * @param player The player attempting the recipe.
-         * @param recipe The recipe to validate.
-         * @return true if the player can prepare the recipe; false otherwise.
+         * Checks if the player meets all requirements to cook the recipe.
          */
         private fun hasRequirements(player: Player, recipe: CookingRecipe): Boolean {
             if (!hasLevelDyn(player, Skills.COOKING, recipe.requiredLevel)) {
@@ -53,91 +47,84 @@ class CookingRecipePlugin : InteractionListener {
                 log(this::class.java, Log.WARN, "Player level too low for recipe ${recipe.name}")
                 return false
             }
+
             if (recipe.requiresKnife && !inInventory(player, Items.KNIFE_946)) {
                 sendMessage(player, "You need a knife to prepare this recipe.")
                 log(this::class.java, Log.WARN, "Missing knife for recipe ${recipe.name}")
                 return false
             }
-            val hasIngredient = recipe.ingredientIds.any { inInventory(player, it) }
-            if (!hasIngredient || !inInventory(player, recipe.secondaryId)) {
+
+            if (!(recipe.ingredientIds + recipe.secondaryId).all { inInventory(player, it) }) {
                 sendMessage(player, "You don't have the required ingredients.")
                 log(this::class.java, Log.WARN, "Missing ingredients for recipe ${recipe.name}")
                 return false
             }
+
             return true
         }
 
         /**
-         * Calculates the maximum number of times the player can prepare the recipe.
-         *
-         * @param player The player preparing the recipe.
-         * @param recipe The recipe being prepared.
-         * @return Maximum possible number of items that can be prepared.
+         * Gets the maximum amount of times the player can cook this recipe.
          */
-        private fun getMaxRecipeAmount(player: Player, recipe: CookingRecipe): Int {
-            val availableIngredient = recipe.ingredientIds.firstOrNull { inInventory(player, it) } ?: return 0
-            val ingredientCount = amountInInventory(player, availableIngredient)
-            val secondaryCount = amountInInventory(player, recipe.secondaryId)
-            return min(ingredientCount, secondaryCount)
-        }
+        private fun getMaxRecipeAmount(player: Player, recipe: CookingRecipe): Int =
+            (recipe.ingredientIds + recipe.secondaryId)
+                .minOfOrNull { amountInInventory(player, it) } ?: 0
 
         /**
-         * Handles prepare a recipe.
-         *
-         * @param player The player preparing the recipe.
-         * @param recipe The recipe being prepared.
-         * @param used The id of the ingredient used.
-         * @param with The id of the secondary ingredient.
+         * Handles cooking a recipe.
          */
         fun handle(player: Player, recipe: CookingRecipe, used: Int, with: Int) {
             if (!hasRequirements(player, recipe)) return
 
-            var maxAmount = getMaxRecipeAmount(player, recipe)
-            if (!recipe.ingredientIds.contains(used) || with != recipe.secondaryId || maxAmount <= 0) {
+            val maxAmount = getMaxRecipeAmount(player, recipe)
+            if (maxAmount <= 0 || !recipe.ingredientIds.contains(used) || with != recipe.secondaryId) {
                 sendMessage(player, "You don't have the required ingredients.")
                 log(this::class.java, Log.WARN, "Invalid ingredients used for ${recipe.name}")
                 return
             }
 
-            fun processNext(remaining: Int) {
-                if (remaining <= 0) return
+            fun process(amount: Int) {
+                if (!clockReady(player, Clocks.SKILLING)) return
 
-                maxAmount = getMaxRecipeAmount(player, recipe)
-                if (maxAmount <= 0) {
-                    log(this::class.java, Log.WARN, "Ingredients ran out during processing ${recipe.name}")
+                val neededSlots = listOfNotNull(recipe.productId, recipe.returnsContnainer).size
+                if (freeSlots(player) < neededSlots) {
+                    sendMessage(player, "Your inventory is full, cannot finish the recipe.")
+                    log(this::class.java, Log.WARN, "Inventory full for ${recipe.name}")
                     return
                 }
 
-                processRecipe(player, recipe, used, with, 1)
-
-                val inventory = recipe.productId?.let { freeSlots(player) < 1 } ?: false
-                if (inventory) {
-                    log(this::class.java, Log.WARN, "Inventory full while processing ${recipe.name}")
-                    return
+                recipe.animation?.let {
+                    lock(player, 1)
+                    animate(player, it)
                 }
 
-                queueScript(player, 2, QueueStrength.NORMAL) {
-                    processNext(remaining - 1)
-                    true
+                repeat(amount) {
+                    (recipe.ingredientIds + recipe.secondaryId).forEach { removeIngredients(player, it) }
                 }
+
+                recipe.productId?.let { addItem(player, it, amount) }
+                recipe.returnsContnainer?.let { addItemOrDrop(player, it, amount) }
+                recipe.xpReward?.let { rewardXP(player, Skills.COOKING, it * amount) }
+                recipe.message?.let { sendMessage(player, it) }
+
+                recipe.animation?.let { animate(player, Animation.RESET) }
+                delayClock(player, Clocks.SKILLING, 2)
             }
 
             if (maxAmount == 1) {
-                processNext(1)
+                process(1)
                 return
             }
 
             sendSkillDialogue(player) {
                 recipe.productId?.let { withItems(it) }
-                create { _, amount -> processNext(amount) }
+                create { _, amount -> process(amount) }
                 calculateMaxAmount { maxAmount }
             }
         }
 
         /**
-         * Handles making a special Kebab recipe.
-         *
-         * @param player The player preparing the kebab.
+         * Handles the special kebab recipe.
          */
         fun handleSpecialRecipe(player: Player) {
             if (!hasLevelDyn(player, Skills.COOKING, 58)) {
@@ -145,11 +132,13 @@ class CookingRecipePlugin : InteractionListener {
                 log(this::class.java, Log.WARN, "Level too low for special kebab")
                 return
             }
+
             if (!inInventory(player, Items.PITTA_BREAD_1865) || !inInventory(player, Items.KEBAB_MIX_1881)) {
                 sendMessage(player, "You don't have the required ingredients.")
                 log(this::class.java, Log.WARN, "Missing ingredients for special kebab")
                 return
             }
+
             if (freeSlots(player) < 1) {
                 sendMessage(player, "You don't have enough space in your inventory.")
                 log(this::class.java, Log.WARN, "Inventory full for special kebab")
@@ -171,45 +160,11 @@ class CookingRecipePlugin : InteractionListener {
         }
 
         /**
-         * Processes a single recipe.
-         *
-         * @param player The player preparing the recipe.
-         * @param recipe The recipe being prepared.
-         * @param used The id of the ingredient used.
-         * @param with The id of the secondary ingredient.
-         * @param amount The number of times to process the recipe.
+         * Removes an ingredient from the inventory.
          */
-        private fun processRecipe(player: Player, recipe: CookingRecipe, used: Int, with: Int, amount: Int) {
-            if (!clockReady(player, Clocks.SKILLING)) {
-                log(this::class.java, Log.WARN, "Clock not ready for ${recipe.name}")
-                return
-            }
-
-            recipe.animation?.let {
-                lock(player, 1)
-                animate(player, it)
-            }
-
-            repeat(amount) {
-                if (amountInInventory(player, used) > 0) removeItem(player, used)
-                else log(this::class.java, Log.WARN, "Ingredient $used missing mid-process for ${recipe.name}")
-
-                if (amountInInventory(player, with) > 0) removeItem(player, with)
-                else log(this::class.java, Log.WARN, "Secondary ingredient $with missing mid-process for ${recipe.name}")
-            }
-
-            if (recipe.productId != null && freeSlots(player) < 1) {
-                sendMessage(player, "Your inventory is full, cannot finish the recipe.")
-                log(this::class.java, Log.WARN, "Inventory full before adding product ${recipe.productId}")
-                return
-            }
-
-            recipe.productId?.let { addItem(player, it, amount) }
-            recipe.returnsContnainer?.let { addItemOrDrop(player, it, amount) }
-            recipe.xpReward?.let { rewardXP(player, Skills.COOKING, it * amount) }
-            recipe.message?.let { sendMessage(player, it) }
-            recipe.animation?.let { animate(player, Animation.RESET) }
-            delayClock(player, Clocks.SKILLING, 2)
+        private fun removeIngredients(player: Player, itemId: Int) {
+            if (amountInInventory(player, itemId) > 0) removeItem(player, itemId)
+            else log(this::class.java, Log.WARN, "Ingredient $itemId missing mid-process")
         }
     }
 

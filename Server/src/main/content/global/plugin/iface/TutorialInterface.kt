@@ -11,10 +11,13 @@ import shared.consts.Components
 class TutorialInterface : InterfaceListener {
     override fun defineInterfaceListeners() {
         onOpen(Components.TUTORIAL_TEXT_372) { player, _ ->
-            repositionChild(player, Components.TUTORIAL_TEXT_372, 1, 10, 35)
-            repositionChild(player, Components.TUTORIAL_TEXT_372, 2, 10, 50)
-            repositionChild(player, Components.TUTORIAL_TEXT_372, 3, 10, 65)
-            repositionChild(player, Components.TUTORIAL_TEXT_372, 4, 10, 80)
+            val indices = intArrayOf(1, 2, 3, 4)
+            val xs = intArrayOf(10, 10, 10, 10)
+            val ys = intArrayOf(35, 50, 65, 80)
+
+            for (i in indices.indices) {
+                repositionChild(player, Components.TUTORIAL_TEXT_372, indices[i], xs[i], ys[i])
+            }
             return@onOpen true
         }
 

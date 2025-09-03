@@ -11,12 +11,8 @@ import core.tools.StringUtils
 import shared.consts.Items
 
 @Initializable
-class GodswordHiltAttachHandler : UseWithHandler(
-    Items.ARMADYL_HILT_11702,
-    Items.BANDOS_HILT_11704,
-    Items.SARADOMIN_HILT_11706,
-    Items.ZAMORAK_HILT_11708
-) {
+class GodswordHiltAttachHandler : UseWithHandler(Items.ARMADYL_HILT_11702, Items.BANDOS_HILT_11704, Items.SARADOMIN_HILT_11706, Items.ZAMORAK_HILT_11708) {
+
     override fun newInstance(arg: Any?): Plugin<Any> {
         addHandler(Items.GODSWORD_BLADE_11690, ITEM_TYPE, this)
         return this
@@ -30,22 +26,15 @@ class GodswordHiltAttachHandler : UseWithHandler(
             return false
         }
         if (player.inventory.replace(null, item.slot, false) !== item ||
-            player.inventory.replace(
-                null,
-                baseItem.slot,
-                false,
-            ) !== baseItem
-        ) {
+            player.inventory.replace(null, baseItem.slot, false) !== baseItem) {
             player.inventory.update()
             return false
         }
+
         item = Item(item.id - 8)
         player.inventory.add(item)
         val name = getItemName(item.id)
-        sendMessage(
-            player,
-            "You attach the hilt to the blade and make a" + (if (StringUtils.isPlusN(name)) "n " else " ") + name + ".",
-        )
+        sendMessage(player, "You attach the hilt to the blade and make a" + (if (StringUtils.isPlusN(name)) "n " else " ") + name + ".")
         return true
     }
 }

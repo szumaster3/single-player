@@ -105,9 +105,7 @@ class FishbowlOptionPlugin : OptionHandler() {
     /**
      * Dialogue for fishbowl.
      */
-    inner class FishbowlDialogue(
-        player: Player? = null,
-    ) : Dialogue(player) {
+    inner class FishbowlDialogue(player: Player? = null) : Dialogue(player) {
         private var fishbowl: Item? = null
         private var option: String? = null
 
@@ -153,10 +151,7 @@ class FishbowlOptionPlugin : OptionHandler() {
             return true
         }
 
-        override fun handle(
-            interfaceId: Int,
-            buttonId: Int,
-        ): Boolean {
+        override fun handle(interfaceId: Int, buttonId: Int): Boolean {
             when (stage) {
                 999 -> end()
                 1 -> {

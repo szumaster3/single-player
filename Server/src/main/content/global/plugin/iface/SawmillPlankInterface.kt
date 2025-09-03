@@ -18,99 +18,65 @@ import shared.consts.Items
  */
 @Initializable
 class SawmillPlankInterface : ComponentPlugin() {
+
+    private val buttonMap = listOf(
+        102..107 to PlankType.WOOD,
+        109..113 to PlankType.OAK,
+        115..119 to PlankType.TEAK,
+        121..125 to PlankType.MAHOGANY
+    )
+
     override fun newInstance(arg: Any?): Plugin<Any> {
         ComponentDefinition.put(Components.POH_SAWMILL_403, this)
         return this
     }
 
-    override fun handle(
-        player: Player,
-        component: Component,
-        opcode: Int,
-        button: Int,
-        slot: Int,
-        itemId: Int,
-    ): Boolean {
-        val planks: PlankType? =
-            when (button) {
-                in 102..107 -> PlankType.WOOD
-                in 109..113 -> PlankType.OAK
-                in 115..119 -> PlankType.TEAK
-                in 121..125 -> PlankType.MAHOGANY
-                else -> null
-            }
-
-        var amount = -1
-        val fullIndex =
-            if (planks == PlankType.WOOD) {
-                107
-            } else if (planks == PlankType.OAK) {
-                113
-            } else if (planks == PlankType.TEAK) {
-                119
-            } else {
-                125
-            }
-
-        val difference =
-            if (planks != PlankType.WOOD) {
-                fullIndex - button
-            } else {
-                fullIndex - button - if (button != 107) 1 else 0
-            }
-
-        when (difference) {
-            0 -> amount = 1
-            1 -> amount = 5
-            2 -> amount = 10
-            3 -> amount = 69
-            4 -> amount = player.inventory.getAmount(planks?.log!!)
+    override fun handle(player: Player, component: Component, opcode: Int, button: Int, slot: Int, itemId: Int): Boolean {
+        val plank = buttonMap.firstOrNull { button in it.first }?.second ?: return true
+        val difference = buttonMap.first { button in it.first }.first.last - button
+        val amount = when (difference) {
+            0 -> 1
+            1 -> 5
+            2 -> 10
+            3 -> -1
+            4 -> player.inventory.getAmount(plank.log)
+            else -> 0
         }
-        if (amount == 69) {
-            val planks = planks
+
+        if (amount == -1) {
             sendInputDialogue(player, true, "Enter the amount:") { value ->
-                createPlank(player, planks!!, value as Int)
+                createPlank(player, plank, value as Int)
             }
-            return true
+        } else if (amount > 0) {
+            createPlank(player, plank, amount)
         }
-        if (planks != null) {
-            createPlank(player, planks, amount)
-        }
+
         return true
     }
 
-    private fun createPlank(
-        player: Player,
-        plank: PlankType,
-        amount: Int,
-    ) {
+    private fun createPlank(player: Player, plank: PlankType, requestedAmount: Int) {
         closeInterface(player)
-        var amount = amount
-        if (amount > amountInInventory(player, plank.log)) {
-            amount = amountInInventory(player, plank.log)
-        }
-        if (!inInventory(player, plank.log)) {
+        val availableLogs = amountInInventory(player, plank.log)
+        if (availableLogs <= 0) {
             sendMessage(player, "You are not carrying any logs to cut into planks.")
             return
         }
+
+        val amount = requestedAmount.coerceAtMost(availableLogs)
+
         if (!inInventory(player, Items.COINS_995, plank.price * amount)) {
             sendDialogue(player, "Sorry, I don't have enough coins to pay for that.")
             return
         }
-        if (removeItem(player, Item(Items.COINS_995, plank.price * amount))) {
-            if (plank == PlankType.WOOD) {
-                finishDiaryTask(player, DiaryType.VARROCK, 0, 3)
-            }
-            if (plank == PlankType.MAHOGANY && amount >= 20) {
-                finishDiaryTask(player, DiaryType.VARROCK, 1, 15)
-            }
-            val remove = plank.log.asItem()
-            remove.amount = amount
-            if (removeItem(player = player, item = remove)) {
-                val planks = plank.plank.asItem()
-                planks.amount = amount
-                player.inventory.add(planks)
-            }
+
+        removeItem(player, Item(Items.COINS_995, plank.price * amount))
+
+        when {
+            plank == PlankType.WOOD -> finishDiaryTask(player, DiaryType.VARROCK, 0, 3)
+            plank == PlankType.MAHOGANY && amount >= 20 -> finishDiaryTask(player, DiaryType.VARROCK, 1, 15)
         }
+
+        removeItem(player, plank.log.asItem().also { it.amount = amount })
+        player.inventory.add(plank.plank.asItem().also { it.amount = amount })
     }
 }

@@ -82,14 +82,7 @@ class BoltEnchantInterface : InterfaceListener {
      * @property exp Experience gained from enchanting.
      * @property enchanted The enchanted bolt item id.
      */
-    enum class Bolts(
-        val button: Int,
-        val bolt: Int,
-        val level: Int,
-        val runes: Array<Item>,
-        val exp: Double,
-        val enchanted: Int,
-    ) {
+    enum class Bolts(val button: Int, val bolt: Int, val level: Int, val runes: Array<Item>, val exp: Double, val enchanted: Int) {
         OPAL(14, Items.OPAL_BOLTS_879, 4, arrayOf(Item(Runes.COSMIC_RUNE.id, 1), Item(Runes.AIR_RUNE.id, 2)), 9.0, Items.OPAL_BOLTS_E_9236),
         SAPPHIRE(29, Items.SAPPHIRE_BOLTS_9337, 7, arrayOf(Item(Runes.COSMIC_RUNE.id, 1), Item(Runes.MIND_RUNE.id, 1), Item(Runes.WATER_RUNE.id, 1)), 17.0, Items.SAPPHIRE_BOLTS_E_9240),
         JADE(18, Items.JADE_BOLTS_9335, 14, arrayOf(Item(Runes.COSMIC_RUNE.id, 1), Item(Runes.EARTH_RUNE.id, 2)), 19.0, Items.JADE_BOLTS_E_9237),

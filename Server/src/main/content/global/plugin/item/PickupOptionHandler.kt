@@ -13,16 +13,13 @@ import core.plugin.Plugin
 
 @Initializable
 class PickupOptionHandler : OptionHandler() {
+
     override fun newInstance(arg: Any?): Plugin<Any> {
         ItemDefinition.setOptionHandler("take", this)
         return this
     }
 
-    override fun handle(
-        player: Player,
-        node: Node,
-        option: String,
-    ): Boolean {
+    override fun handle(player: Player, node: Node, option: String): Boolean {
         if (player.attributes.containsKey("pickup")) return false
 
         val handleResult = PickupHandler.take(player, (node as GroundItem))
@@ -30,8 +27,5 @@ class PickupOptionHandler : OptionHandler() {
         return handleResult
     }
 
-    override fun getDestination(
-        node: Node,
-        item: Node,
-    ): Location? = null
+    override fun getDestination(node: Node, item: Node): Location? = null
 }

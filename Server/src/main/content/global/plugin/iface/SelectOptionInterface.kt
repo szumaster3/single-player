@@ -8,14 +8,16 @@ import shared.consts.Components
  * Handles the server-side repositioning of the interface for selecting options.
  */
 class SelectOptionInterface : InterfaceListener {
+
     override fun defineInterfaceListeners() {
         onOpen(Components.SELECT_AN_OPTION_140) { player, _ ->
-            repositionChild(player, Components.SELECT_AN_OPTION_140, 0, 23, 5)
-            repositionChild(player, Components.SELECT_AN_OPTION_140, 2, 31, 32)
-            repositionChild(player, Components.SELECT_AN_OPTION_140, 3, 234, 32)
-            repositionChild(player, Components.SELECT_AN_OPTION_140, 4, 24, 3)
-            repositionChild(player, Components.SELECT_AN_OPTION_140, 5, 123, 36)
-            repositionChild(player, Components.SELECT_AN_OPTION_140, 6, 334, 36)
+            val indices = intArrayOf(0, 2, 3, 4, 5, 6)
+            val xs = intArrayOf(23, 31, 234, 24, 123, 334)
+            val ys = intArrayOf(5, 32, 32, 3, 36, 36)
+
+            for (i in indices.indices) {
+                repositionChild(player, Components.SELECT_AN_OPTION_140, indices[i], xs[i], ys[i])
+            }
             return@onOpen true
         }
     }
