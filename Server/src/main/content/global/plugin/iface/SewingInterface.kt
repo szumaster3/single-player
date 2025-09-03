@@ -12,6 +12,7 @@ import shared.consts.Items
  * @author szu
  */
 class SewingInterface : InterfaceListener {
+
     override fun defineInterfaceListeners() {
         on(Components.SEW_INTERFACE_419) { player, _, opcode, button, _, _ ->
             val pirateStock = PirateClothes.fromButtonId(button) ?: return@on false
@@ -20,25 +21,23 @@ class SewingInterface : InterfaceListener {
         }
     }
 
-    private fun create(
-        player: Player,
-        stock: PirateClothes,
-    ) {
+    private fun create(player: Player, stock: PirateClothes) {
+        val cost = 500
+
         when {
-            freeSlots(player) < 1 -> sendMessage(player, "You don't have enough inventory space for this.")
-            amountInInventory(player, Items.COINS_995) < 500 -> sendMessage(player, "You can't afford that.")
-            !inInventory(
-                player,
-                stock.firstItem,
-            ) ||
-                !inInventory(
-                    player,
-                    stock.secondItem,
-                ) -> sendMessage(player, "You don't have required items in your inventory.")
+            freeSlots(player) < 1 ->
+                sendMessage(player, "You don't have enough inventory space for this.")
+
+            amountInInventory(player, Items.COINS_995) < cost ->
+                sendMessage(player, "You can't afford that.")
+
+            !inInventory(player, stock.firstItem) || !inInventory(player, stock.secondItem) ->
+                sendMessage(player, "You don't have required items in your inventory.")
+
             else -> {
                 removeItem(player, stock.firstItem, Container.INVENTORY)
                 removeItem(player, stock.secondItem, Container.INVENTORY)
-                removeItem(player, Item(Items.COINS_995, 500), Container.INVENTORY)
+                removeItem(player, Item(Items.COINS_995, cost), Container.INVENTORY)
                 addItem(player, stock.product, 1)
                 sendMessage(player, "Your items have been combined.")
             }
@@ -47,12 +46,7 @@ class SewingInterface : InterfaceListener {
 }
 
 enum class PirateClothes(val firstItem: Int, val secondItem: Int, val product: Int, val buttonId: Int) {
-    WHITE_RIGHT_EYE(
-        firstItem = Items.PIRATE_BANDANA_7112,
-        secondItem = Items.EYE_PATCH_1025,
-        product = Items.BANDANA_AND_EYEPATCH_8924,
-        buttonId = 38,
-    ),
+    WHITE_RIGHT_EYE(Items.PIRATE_BANDANA_7112, Items.EYE_PATCH_1025, Items.BANDANA_AND_EYEPATCH_8924, 38),
     WHITE_DOUBLE_EYE(Items.PIRATE_BANDANA_7112, Items.DOUBLE_EYEPATCHES_13353, Items.BANDANA_AND_EYEPATCHES_13340, 66),
     WHITE_LEFT_EYE(Items.PIRATE_BANDANA_7112, Items.LEFT_EYEPATCH_13355, Items.BANDANA_AND_EYEPATCH_13339, 68),
     RED_RIGHT_EYE(Items.PIRATE_BANDANA_7124, Items.EYE_PATCH_1025, Items.BANDANA_AND_EYEPATCH_8925, 40),
@@ -83,8 +77,7 @@ enum class PirateClothes(val firstItem: Int, val secondItem: Int, val product: I
     ;
 
     companion object {
-        private val buttonMap = values().associateBy { it.buttonId }
-
-        fun fromButtonId(buttonId: Int) = buttonMap[buttonId]
+        private val buttonMap: Map<Int, PirateClothes> = values().associateBy { it.buttonId }
+        fun fromButtonId(buttonId: Int): PirateClothes? = buttonMap[buttonId]
     }
 }
