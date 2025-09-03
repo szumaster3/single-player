@@ -10,8 +10,9 @@ import shared.consts.Items
 
 class DragonfireShieldPulse(
     player: Player?,
-    val item: Item,
+    private val item: Item,
 ) : SkillPulse<Item>(player, null) {
+
     private var tick = 0
 
     override fun checkRequirements(): Boolean {
@@ -27,20 +28,17 @@ class DragonfireShieldPulse(
     }
 
     override fun animate() {
+
     }
 
     override fun reward(): Boolean {
-        when (tick++) {
+        when (tick) {
             0 -> {
                 lock(player, 10)
                 animate(player, Animations.HUMAN_ANVIL_HAMMER_SMITHING_898)
-                tick++
             }
 
-            5 -> {
-                animate(player, Animations.HUMAN_ANVIL_HAMMER_SMITHING_898)
-                tick++
-            }
+            5 -> animate(player, Animations.HUMAN_ANVIL_HAMMER_SMITHING_898)
 
             9 -> {
                 sendPlainDialogue(
@@ -49,24 +47,21 @@ class DragonfireShieldPulse(
                     "Even for an experienced armourer it is not an easy task, but",
                     "eventually it is ready. You have crafted the",
                     "draconic visage and anti-dragonbreath shield into a",
-                    "dragonfire shield.",
+                    "dragonfire shield."
                 )
-                addDialogueAction(player) { player, button ->
-                    if (button >= 2) {
-                        if (removeItem(player, Items.ANTI_DRAGON_SHIELD_1540) &&
-                            removeItem(
-                                player,
-                                Items.DRACONIC_VISAGE_11286,
-                            )
-                        ) {
-                            addItem(player, Items.DRAGONFIRE_SHIELD_11284, 1)
-                            rewardXP(player, Skills.SMITHING, 2000.0)
-                        }
+                addDialogueAction(player) { _, button ->
+                    if (button >= 2 &&
+                        removeItem(player, Items.ANTI_DRAGON_SHIELD_1540) &&
+                        removeItem(player, Items.DRACONIC_VISAGE_11286)
+                    ) {
+                        addItem(player, Items.DRAGONFIRE_SHIELD_11284, 1)
+                        rewardXP(player, Skills.SMITHING, 2000.0)
                     }
                     return@addDialogueAction
                 }
             }
         }
+        tick++
         return false
     }
 

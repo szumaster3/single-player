@@ -4,7 +4,7 @@ import content.data.GameAttributes
 import content.region.kandarin.ardougne.west.dialogue.WomanDialogue
 import content.region.kandarin.ardougne.west.quest.elena.dialogue.HeadMournerDialogue
 import content.region.kandarin.ardougne.west.quest.elena.dialogue.ManRehnisonDialogue
-import content.region.kandarin.ardougne.west.quest.elena.dialogue.MournerWestDialogue
+import content.region.kandarin.ardougne.west.quest.elena.dialogue.MournerArdougneDialogue
 import core.api.*
 import core.api.getQuestStage
 import core.api.isQuestComplete
@@ -21,7 +21,9 @@ import core.game.node.entity.npc.NPC
 import core.game.system.task.Pulse
 import core.game.world.map.Direction
 import core.game.world.map.Location
+import core.game.world.map.RegionManager
 import core.game.world.map.RegionManager.getObject
+import core.tools.END_DIALOGUE
 import shared.consts.*
 
 /**
@@ -37,7 +39,8 @@ class PlagueCityPlugin : InteractionListener {
         const val TIED_ROPE_VARBIT = Vars.VARP_QUEST_PLAGUE_CITY_TIED_ROPE_1787
         const val MUD_PATCH_VARBIT = Vars.VARP_QUEST_PLAGUE_CITY_MUD_PATCH_1785
         val MANS = intArrayOf(NPCs.MAN_728, NPCs.MAN_729, NPCs.MAN_351)
-        val WOMANS = intArrayOf(NPCs.WOMAN_352, NPCs.WOMAN_353, NPCs.WOMAN_354, NPCs.WOMAN_360, NPCs.WOMAN_362, NPCs.WOMAN_363)
+        val WOMANS =
+            intArrayOf(NPCs.WOMAN_352, NPCs.WOMAN_353, NPCs.WOMAN_354, NPCs.WOMAN_360, NPCs.WOMAN_362, NPCs.WOMAN_363)
     }
 
     override fun defineListeners() {
@@ -48,6 +51,15 @@ class PlagueCityPlugin : InteractionListener {
 
         on(NPCs.BILLY_REHNISON_723, IntType.NPC, "talk-to") { player, _ ->
             sendMessage(player, "Billy isn't interested in talking.")
+            return@on true
+        }
+
+        /*
+         * Handles talk with mourner near south-eastern house with black crosses on the doors.
+         */
+
+        on(NPCs.MOURNER_3216, IntType.NPC, "talk-to") { player, _ ->
+            openDialogue(player, PlagueCityDoorDialogue())
             return@on true
         }
 
@@ -157,7 +169,7 @@ class PlagueCityPlugin : InteractionListener {
             removeItem(player, Items.A_MAGIC_SCROLL_1505)
             sendMessage(player, "The scroll crumbles to dust.")
 
-            if(getAttribute(player, GameAttributes.ARDOUGNE_TELEPORT, false)) {
+            if (getAttribute(player, GameAttributes.ARDOUGNE_TELEPORT, false)) {
                 visualize(player, -1, core.game.world.update.flag.context.Graphics(Graphics.FIRE_WAVE_IMPACT_157, 50))
                 player.impactHandler.manualHit(player, 0, ImpactHandler.HitsplatType.MISS)
             } else {
@@ -166,7 +178,8 @@ class PlagueCityPlugin : InteractionListener {
                     setAttribute(player, GameAttributes.ARDOUGNE_TELEPORT, true)
                     sendDialogueLines(
                         player,
-                        "You can now cast the Ardougne Teleport spell provided you have the", "required runes and magic level.",
+                        "You can now cast the Ardougne Teleport spell provided you have the",
+                        "required runes and magic level.",
                     )
                 }
             }
@@ -178,7 +191,8 @@ class PlagueCityPlugin : InteractionListener {
          */
 
         on(Items.A_SCRUFFY_NOTE_1508, IntType.ITEM, "read") { player, _ ->
-            val instruction = "Got a bncket of nnilk<br>Tlen grind sorne lhoculate<br>vnith a pestal and rnortar<br>ald the grourd dlocolate to tho milt<br>finales add 5cme snape gras5"
+            val instruction =
+                "Got a bncket of nnilk<br>Tlen grind sorne lhoculate<br>vnith a pestal and rnortar<br>ald the grourd dlocolate to tho milt<br>finales add 5cme snape gras5"
             openInterface(player, Components.BLANK_SCROLL_222)
             sendString(player, instruction, Components.BLANK_SCROLL_222, 4)
             sendMessage(player, "You guess it really says something slightly different.")
@@ -193,20 +207,24 @@ class PlagueCityPlugin : InteractionListener {
             val questStage = getQuestStage(player, Quests.PLAGUE_CITY)
 
             when {
-                questStage < 11 -> {
-                    sendDialogueLines(player, "The door won't open.", "You notice a black cross on the door.")
+                questStage < 11 || questStage == 16 -> {
+                    if(node.asScenery().location.x != 2540) {
+                        sendNPCDialogueLines(player, NPCs.MOURNER_3216, FaceAnim.NEUTRAL, false, "I'd stand away from there. That black cross means that", "house has been pouched by plague.")
+                    } else {
+                        openDialogue(player, PlagueCityDoorDialogue())
+                    }
                 }
+
                 questStage == 11 -> {
                     openDialogue(player, HeadMournerDialogue())
                 }
-                questStage == 16 -> {
-                    openDialogue(player, PlagueCityDoorDialogue())
-                }
+
                 questStage in 17..100 -> {
                     DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
                 }
+
                 else -> {
-                    openDialogue(player, MournerWestDialogue())
+                    openDialogue(player, MournerArdougneDialogue())
                 }
             }
 
@@ -261,7 +279,11 @@ class PlagueCityPlugin : InteractionListener {
 
         onUseWith(IntType.SCENERY, Items.BUCKET_OF_WATER_1929, Scenery.MUD_PATCH_11418) { player, _, _ ->
             val bucketUses = getAttribute(player, BUCKET_USES_ATTRIBUTE, 0)
-            if (bucketUses > 3 || !removeItem(player, Items.BUCKET_OF_WATER_1929) || getVarbit(player, MUD_PATCH_VARBIT) == 1) {
+            if (bucketUses > 3 || !removeItem(player, Items.BUCKET_OF_WATER_1929) || getVarbit(
+                    player,
+                    MUD_PATCH_VARBIT
+                ) == 1
+            ) {
                 sendMessage(player, "Nothing interesting happens.")
                 return@onUseWith true
             }
@@ -275,8 +297,13 @@ class PlagueCityPlugin : InteractionListener {
                     sendDialogueLines(player, "You pour water onto the soil.", "The soil softens slightly.")
                     player.incrementAttribute(BUCKET_USES_ATTRIBUTE, 1)
                 }
+
                 3 -> {
-                    sendDialogueLines(player, "You pour water onto the soil.", "The soil is now soft enough to dig into.")
+                    sendDialogueLines(
+                        player,
+                        "You pour water onto the soil.",
+                        "The soil is now soft enough to dig into."
+                    )
                     setVarbit(player, MUD_PATCH_VARBIT, 1, true)
                 }
             }
@@ -441,7 +468,12 @@ class PlagueCityPlugin : InteractionListener {
          * Handles walking up or down the spooky stairs.
          */
 
-        on(intArrayOf(Scenery.SPOOKY_STAIRS_2522, Scenery.SPOOKY_STAIRS_2523), IntType.SCENERY, "walk-down", "walk-up",) { player, node ->
+        on(
+            intArrayOf(Scenery.SPOOKY_STAIRS_2522, Scenery.SPOOKY_STAIRS_2523),
+            IntType.SCENERY,
+            "walk-down",
+            "walk-up",
+        ) { player, node ->
             if (node.id == Scenery.SPOOKY_STAIRS_2522) {
                 sendMessage(player, "You walk down the stairs...")
                 teleport(player, Location(2537, 9671))
@@ -477,7 +509,7 @@ class PlagueCityPlugin : InteractionListener {
             }
             val npc = NPC(NPCs.ELENA_3215)
             sendMessage(player, "The door is locked.")
-            openDialogue(player, ElenaDialogue() , npc)
+            openDialogue(player, ElenaDialogue(), npc)
             return@on true
         }
     }
@@ -489,11 +521,8 @@ class PlagueCityPlugin : InteractionListener {
                 1 -> playerl(FaceAnim.FRIENDLY, "I would do but I don't have a key.").also { stage++ }
                 2 -> npcl(FaceAnim.SAD, "I think there may be one around somewhere. I'm sure I heard them stashing it somewhere.").also { stage++ }
                 3 -> options("What do you say?", "Have you caught the plague?", "Okay, I'll look for it.").also { stage++ }
-                4 -> when(buttonID) {
-                    1 -> {
-                        playerl(FaceAnim.FRIENDLY, "Have you caught the plague?")
-                        stage = 6
-                    }
+                4 -> when (buttonID) {
+                    1 -> playerl(FaceAnim.FRIENDLY, "Have you caught the plague?").also { stage = 6}
                     2 -> playerl(FaceAnim.FRIENDLY, "Okay, I'll look for it.").also { stage++ }
                 }
                 5 -> end()
@@ -521,6 +550,139 @@ class PlagueCityPlugin : InteractionListener {
         }
     }
 
+    inner class PlagueCityDoorDialogue : DialogueFile() {
+
+        init {
+            stage = 0
+        }
+
+        override fun handle(componentID: Int, buttonID: Int) {
+            npc = RegionManager.getLocalNpcs(Location.create(2539, 3273, 0), 3)
+                .firstOrNull { it.id == NPCs.MOURNER_3216 }
+
+            when (stage) {
+                0 -> {
+                    sendDialogueLines(player!!, "The door won't open.", "You notice a black cross on the door.")
+                    stage = 1
+                }
+
+                1 -> {
+                    if (npc != null) {
+                        face(player!!, npc!!.location)
+                        npc("I'd stand away from there. That black cross means that", "house has been touched by the plague.")
+                    } else {
+                        player("The mourner doesn't seem to be here right now.")
+                        end()
+                    }
+                    stage = 2
+                }
+
+                2 -> {
+                    if (getQuestStage(player!!, Quests.PLAGUE_CITY) < 11) {
+                        options("But I think a kidnap victim is in here.", "I fear not a mere plague.", "Thanks for the warning.")
+                        stage = 3
+                    } else {
+                        player("I have a warrant from Bravek to enter here.")
+                        stage = 13
+                    }
+                }
+
+                3 -> when (buttonID) {
+                    1 -> {
+                        player("But I think a kidnap victim is in here.")
+                        stage = 4
+                    }
+                    2 -> {
+                        player("I fear not a mere plague.")
+                        stage = 11
+                    }
+                    3 -> {
+                        player("Thanks for the warning.")
+                        stage = 12
+                    }
+                }
+
+                4 -> {
+                    npc("Sounds unlikely, even kidnappers wouldn't go in there.", "Even if someone is in there, they're probably dead by", "now.")
+                    stage = 5
+                }
+
+                5 -> {
+                    options("Good point.", "I want to check anyway.")
+                    stage = 6
+                }
+
+                6 -> when (buttonID) {
+                    1 -> end()
+                    2 -> {
+                        player("I want to check anyway.")
+                        stage = 7
+                    }
+                }
+
+                7 -> {
+                    npc("You don't have clearance to go in there.")
+                    stage = 8
+                }
+
+                8 -> {
+                    player("How do I get clearance?")
+                    stage = 9
+                }
+
+                9 -> {
+                    npc("Well you'd need to apply to the head mourner,", "or I suppose Bravek the city warder.")
+                    stage = 10
+                }
+
+                10 -> {
+                    npc("I wouldn't get your hopes up though.")
+                    stage = END_DIALOGUE
+                }
+
+                11 -> {
+                    npc("That's irrelevant. You don't have clearance to go in", "there.")
+                    stage = 8
+                }
+
+                12 -> end()
+
+                13 -> {
+                    npc("This is highly irregular. Please wait...")
+                    stage = 14
+                }
+
+                14 -> {
+                    if (npc?.location == Location.create(2539, 3273, 0)) {
+                        npc?.sendChat("Hey... I got someone here with a warrant from Bravek, what should we do?")
+                        npc?.faceLocation(location(2536, 3273, 0))
+                    }
+                    end()
+                    submitIndividualPulse(
+                        player!!,
+                        object : Pulse(3, player) {
+                            override fun pulse(): Boolean {
+                                val secondMourner = RegionManager.getLocalNpcs(Location.create(2534, 3273, 0), 6)
+                                    .firstOrNull { it.id == NPCs.MOURNER_3216 }
+                                if (secondMourner != null) {
+                                    secondMourner.faceLocation(location(2537, 3273, 0))
+                                    secondMourner.sendChat("Well, you can't let them in...")
+                                    setQuestStage(player!!, Quests.PLAGUE_CITY, 17)
+                                    sendDialogueLines(player!!, "You wait until the mourner's back is turned and sneak into the building.")
+                                    getObject(location(2540, 3273, 0))?.asScenery()?.let {
+                                        DoorActionHandler.handleAutowalkDoor(player!!, it)
+                                    }
+                                    return true
+                                }
+                                return false
+                            }
+                        }
+                    )
+                }
+            }
+        }
+    }
+
     override fun defineDestinationOverrides() {
         setDest(IntType.SCENERY, Scenery.GRILL_11423) { _, _ ->
             return@setDest Location.create(
@@ -542,59 +704,6 @@ class PlagueCityPlugin : InteractionListener {
                 3304,
                 0,
             )
-        }
-    }
-
-    inner class PlagueCityDoorDialogue : DialogueFile() {
-
-        init { stage = 0 }
-
-        override fun handle(componentID: Int, buttonID: Int) {
-            when(stage) {
-                0 -> {
-                    sendPlayerDialogue(player!!, "I have a warrant from Bravek to enter here.")
-                    stage = 1
-                }
-                1 -> {
-                    sendNPCDialogue(player!!, NPCs.MOURNER_3216, "This is highly irregular. Please wait...", FaceAnim.ANNOYED)
-                    stage = 2
-                }
-                2 -> {
-                    end()
-                    lock(player!!, 6)
-                    lockInteractions(player!!, 6)
-                    queueScript(player!!, 1, QueueStrength.SOFT) { stageIndex: Int ->
-                        when(stageIndex) {
-                            0 -> {
-                                findLocalNPC(player!!, NPCs.MOURNER_717)?.apply {
-                                    sendChat("Hey... I got someone here with a warrant from Bravek, what should we do?")
-                                    faceLocation(location(2536, 3273, 0))
-                                }
-                                delayScript(player!!, 1)
-                            }
-                            1 -> {
-                                findLocalNPC(player!!, NPCs.MOURNER_3216)?.apply {
-                                    sendChat("Well, you can't let them in...", 1)
-                                    faceLocation(location(2537, 3273, 0))
-                                }
-                                delayScript(player!!, 1)
-                            }
-                            2 -> {
-                                getObject(location(2540, 3273, 0))?.asScenery()?.let {
-                                    DoorActionHandler.handleAutowalkDoor(player!!, it)
-                                }
-                                delayScript(player!!, 3)
-                            }
-                            3 -> {
-                                setQuestStage(player!!, Quests.PLAGUE_CITY, 17)
-                                sendDialogueLines(player!!, "You wait until the mourner's back is turned and sneak into the building.")
-                                return@queueScript stopExecuting(player!!)
-                            }
-                            else -> return@queueScript stopExecuting(player!!)
-                        }
-                    }
-                }
-            }
         }
     }
 }
