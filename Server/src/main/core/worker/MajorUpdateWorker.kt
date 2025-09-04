@@ -20,15 +20,33 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.system.exitProcess
 
+/**
+ * Responsible for executing the main server update loop.
+ *
+ * Handles ticking of the game world, processing packets, disconnections,
+ * daily/weekly resets, and scheduled server restarts.
+ */
 class MajorUpdateWorker {
+
     companion object {
         private const val ENABLE_DEBUG_LOGGING = false
         private const val CYCLE_TIME_NANOSECONDS = 600_000_000L
         private const val SPINWAIT_TIME_NANOSECONDS = 20_000_000L
         private const val ONE_MILLISECOND_IN_NANOSECONDS = 1_000_000L
 
+        /**
+         * Formats a Long value with commas for readability.
+         */
         private fun Long.format(): String = "%,d".format(this)
 
+        /**
+         * Performs a spin-wait loop to maintain consistent tick timing.
+         *
+         * @param deviation The deviation from previous cycles.
+         * @param start Cycle start time in nanoseconds.
+         * @param end Cycle end time in nanoseconds.
+         * @return [ElapsedCycle] containing timing information.
+         */
         private fun spinwait(deviation: Long, start: Long, end: Long): ElapsedCycle {
             val consumed = max(0, (end - start) + deviation)
             if (consumed >= CYCLE_TIME_NANOSECONDS) {
@@ -63,6 +81,9 @@ class MajorUpdateWorker {
             }
         }
 
+        /**
+         * Represents timing details of a single update cycle.
+         */
         private data class ElapsedCycle(
             val startNs: Long,
             val endNs: Long,
@@ -95,12 +116,31 @@ class MajorUpdateWorker {
         }
     }
 
+    /**
+     * Check the worker loop is currently running.
+     */
     var running: Boolean = false
+
+    /**
+     * Check the worker thread has started.
+     */
     var started = false
+
     private var deviation: Long = 0
+
+    /**
+     * Sequence of updates executed each tick.
+     */
     val sequence = UpdateSequence()
+
+    /**
+     * Date formatter for checking daily resets.
+     */
     val sdf = SimpleDateFormat("HHmmss")
 
+    /**
+     * The main worker thread executing the update loop.
+     */
     val worker = Thread {
         Thread.currentThread().name = "Major Update Worker"
         started = true
@@ -116,6 +156,10 @@ class MajorUpdateWorker {
             } else {
                 tickOffline()
             }
+
+            /*
+             * Disconnect inactive players.
+             */
 
             for (player in Repository.players.filter { !it.isArtificial }) {
                 if (System.currentTimeMillis() - player.session.getLastPing() > 20000L) {
@@ -135,11 +179,14 @@ class MajorUpdateWorker {
                 }
             }
 
+            /*
+             * Daily / weekly resets.
+             */
+
             if (sdf.format(Date()).toInt() == 0) {
                 if (GameWorld.checkDay() == 1) {
                     ServerStore.clearWeeklyEntries()
                 }
-
                 ServerStore.clearDailyEntries()
                 if (ServerConstants.DAILY_RESTART) {
                     for (player in Repository.players.filter { !it.isArtificial }) {
@@ -179,11 +226,21 @@ class MajorUpdateWorker {
         log(this::class.java, Log.FINE, "Update worker stopped.")
     }
 
+    /**
+     * Performs minimal ticking when offline (no network).
+     */
     fun tickOffline() {
         Repository.disconnectionQueue.update()
         GameWorld.pulse()
     }
 
+    /**
+     * Handles a full server tick.
+     *
+     * Processes packets, updates the world, sequences, and managers.
+     *
+     * @param skipPulseUpdate If true, skips the world pulse update.
+     */
     fun handleTickActions(skipPulseUpdate: Boolean = false) {
         try {
             val packetStart = System.currentTimeMillis()
@@ -212,6 +269,9 @@ class MajorUpdateWorker {
         }
     }
 
+    /**
+     * Starts the update worker thread.
+     */
     fun start() {
         if (!started) {
             running = true
@@ -219,6 +279,9 @@ class MajorUpdateWorker {
         }
     }
 
+    /**
+     * Stops the update worker thread.
+     */
     fun stop() {
         running = false
         worker.interrupt()
