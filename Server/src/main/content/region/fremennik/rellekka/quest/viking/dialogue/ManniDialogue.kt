@@ -97,7 +97,7 @@ class ManniDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
-            0 -> npc("Hello Outlander. I overheard your conversation with", "Brundt just now. You wish to become a member of the", "Fremennik?").also { stage++ }
+            0 -> npc("Hello outerlander. I overheard your conversation with", "Brundt just now. You wish to become a member of the", "Fremennik?").also { stage++ }
             1 -> player("That's right! Why, are you on the counsel?").also { stage++ }
             2 -> npc("Do not let my drink-ssussed appearance fool you, I", "earnt my place on the council many years past.I am", "always glad to see new blood enter our tribe, and will", "happily vote for you.").also { stage++ }
             3 -> player("Great!").also { stage++ }
@@ -122,7 +122,7 @@ class ManniDialogue(player: Player? = null) : Dialogue(player) {
                 1 -> player("Yes, let's start this drinking contest!").also { stage++ }
                 2 -> player("No, I don't think I am.").also { stage = END_DIALOGUE }
             }
-            103 -> npc("As you wish Outlander; I will drink first, then you will", "drink.").also { stage++ }
+            103 -> npc("As you wish outerlander; I will drink first, then you will", "drink.").also { stage++ }
             104 -> {
                 sendMessage(player, "The Fremennik drinks his tankard first. He staggers a little bit.")
                 Pulser.submit(DrinkingPulse(player, findLocalNPC(player, npc.id), getAttribute(player, GameAttributes.QUEST_VIKING_MANI_KEG, false)))
@@ -131,7 +131,7 @@ class ManniDialogue(player: Player? = null) : Dialogue(player) {
             150 -> npcl(FaceAnim.HAPPY, "As a matter of fact, I do. I have one right here. I earnt my place here at the longhall for surviving over 5000 battles and raiding parties.").also { stage++ }
             151 -> npcl(FaceAnim.HAPPY, "Due to my contribution to the tribe, I am now permitted to spend my days here in the longhall listening to the epic tales of the bard, and drinking beer.").also { stage++ }
             152 -> playerl(FaceAnim.HAPPY, "Cool. That sounds pretty sweet! So I guess you don't want to give it away?").also { stage++ }
-            153 -> npcl(FaceAnim.SAD, "I think it sounds better than it actually is Outlander. I miss my glory days of combat on the battlefield.").also { stage++ }
+            153 -> npcl(FaceAnim.SAD, "I think it sounds better than it actually is outerlander. I miss my glory days of combat on the battlefield.").also { stage++ }
             154 -> npcl(FaceAnim.SAD, "And to tell you the truth, the beer here isn't great, and the bards' music is lousy. I would happily give up my token if it were not for the one thing that keeps me here.").also { stage++ }
             155 -> npcl(FaceAnim.HAPPY, "Our barkeep is one of the best in the world, and has worked in taverns across the land. When she was younger, she experimented a lot with her drinks").also { stage++ }
             156 -> npcl(FaceAnim.HAPPY, "and invented a cocktail so alcoholic and tasty that it has become something of a legend to all who enjoy a drink.").also { stage++ }
@@ -155,7 +155,7 @@ class ManniDialogue(player: Player? = null) : Dialogue(player) {
                 addItemOrDrop(player, Items.CHAMPIONS_TOKEN_3706, 1)
                 stage++
             }
-            171 -> npcl(FaceAnim.HAPPY, "Here Outlander, you may take my token. I will happily give up my place at the longhalls table of champions just for a taste of this exquisite beverage!").also { stage++ }
+            171 -> npcl(FaceAnim.HAPPY, "Here outerlander, you may take my token. I will happily give up my place at the longhalls table of champions just for a taste of this exquisite beverage!").also { stage++ }
             172 -> playerl(FaceAnim.ASKING, "It's just a drink...").also { stage++ }
             173 -> npcl(FaceAnim.HAPPY, "No, it is an artform. A drink such as this should be appreciated, and admired.").also { stage++ }
             174 -> npcl(FaceAnim.HAPPY, "It is like a fine painting, or a tasteful sculpture. If what I hear is true, then all other drinks become like unpalatable water in comparison to this!").also { stage++ }
@@ -175,7 +175,7 @@ class ManniDialogue(player: Player? = null) : Dialogue(player) {
                 stage = END_DIALOGUE
             }
 
-            200 -> npcl(FaceAnim.HAPPY, "Do not think me rude Outlander, but our customs forbid me talking to you. All contact with outlanders must be vetted by our chieftain, Brundt.").also { stage++ }
+            200 -> npcl(FaceAnim.HAPPY, "Do not think me rude outerlander, but our customs forbid me talking to you. All contact with outlanders must be vetted by our chieftain, Brundt.").also { stage++ }
             201 -> playerl(FaceAnim.ASKING, "Where is this Brundt?").also { stage++ }
             202 -> npcl(FaceAnim.HAPPY, "He is standing just over there. He will speak for the tribe.").also {
                 stage = END_DIALOGUE

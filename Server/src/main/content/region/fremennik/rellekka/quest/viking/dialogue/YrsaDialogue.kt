@@ -96,7 +96,7 @@ class YrsaDialogue(player: Player? = null) : Dialogue(player) {
                 player.incrementAttribute(GameAttributes.QUEST_VIKING_SIGMUND_PROGRESS, 1)
                 stage = END_DIALOGUE
             }
-            10 -> npcl(FaceAnim.NEUTRAL, "Yes I do Outlander. Only the Chieftain may permit such a thing. Talk to him.").also { stage = END_DIALOGUE }
+            10 -> npcl(FaceAnim.NEUTRAL, "Yes I do outerlander. Only the Chieftain may permit such a thing. Talk to him.").also { stage = END_DIALOGUE }
             15 -> npcl(FaceAnim.HAPPY, "Certainly! Let me have a look at what he has written here, just give me a moment...").also {
                 removeItem(player, Items.FISCAL_STATEMENT_3708)
                 addItemOrDrop(player, Items.STURDY_BOOTS_3700, 1)
@@ -127,7 +127,7 @@ class YrsaDialogue(player: Player? = null) : Dialogue(player) {
                     npc("I don't feel comfortable helping you try on shoes when", "you are wielding something. Please remove what you", "are holding first.")
                 }
             }
-            35 -> npcl(FaceAnim.HAPPY, "I'm sorry Outlander, I cannot sell you any clothes. Our customs forbid it.").also { stage = END_DIALOGUE }
+            35 -> npcl(FaceAnim.HAPPY, "I'm sorry outerlander, I cannot sell you any clothes. Our customs forbid it.").also { stage = END_DIALOGUE }
             36 -> {
                 end()
                 openNpcShop(player, NPCs.YRSA_1301)

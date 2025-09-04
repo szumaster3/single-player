@@ -70,7 +70,7 @@ class OlafTheBardDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             player.questRepository.hasStarted(Quests.THE_FREMENNIK_TRIALS) -> {
-                npc("Hello? Yes? You want something Outlander?")
+                npc("Hello? Yes? You want something outerlander?")
                 stage = 0
             }
 
@@ -85,18 +85,18 @@ class OlafTheBardDialogue(player: Player? = null) : Dialogue(player) {
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> player("Are you a member of the council?").also { stage++ }
-            1 -> npc("Why, indeed I am, Outlander! My talents as an", "exemplary musician made it difficult for them not to", "accept me! Why do you wish to know this?").also { stage++ }
+            1 -> npc("Why, indeed I am, outerlander! My talents as an", "exemplary musician made it difficult for them not to", "accept me! Why do you wish to know this?").also { stage++ }
             2 -> player("Well, I ask because I am currently doing the", "Fremennik trials so as to join you clan. I need seven", "of the twelve council of elders to vote for me.").also { stage++ }
             3 -> npc("Ahhh... and you wish to earn my vote? I will gladly", "accept you as a Fremennik should you be able to prove", "yourself to have a little musical ability!").also { stage++ }
             4 -> player("So how would I do that?").also { stage++ }
             5 -> npc("Why, by playing in our longhall! All you need to do is", "impress the revellers there with a few verses of an epic", "of your own creation!").also { stage++ }
-            6 -> npc("So what say you Outlander? Are you up for the", "challenge?").also { stage++ }
+            6 -> npc("So what say you outerlander? Are you up for the", "challenge?").also { stage++ }
             7 -> options("Yes", "No").also { stage++ }
             8 -> when (buttonId) {
                 1 -> player("Sure! This certainly sounds pretty easy to accomplish.", "I'll have your vote in no time!").also { stage++ }
                 2 -> player("No, that sounds like too much work.").also { stage = 1000 }
             }
-            9 -> npc("That is great news Outlander! We always need more", "music lovers here!").also {
+            9 -> npc("That is great news outerlander! We always need more", "music lovers here!").also {
                 stage++
                 setAttribute(player, GameAttributes.QUEST_VIKING_OLAF_START, true)
             }
@@ -118,7 +118,7 @@ class OlafTheBardDialogue(player: Player? = null) : Dialogue(player) {
             25 -> npc("When you have crafted your lyre and been blessed by", "Fossegrimen, then you will finally be ready to make", "your performance to the revellers at the longhall.").also { stage++ }
             26 -> npc("Head past the bouncers and onto the stage, and then", "begin to play. If all goes well, you should find the music", "spring to your mind and sing your own epic on the", "spot").also { stage++ }
             27 -> npc("I will observe both you and the audience, and if you", "show enough talent, I will happily vote in your favour at", "the council of elders.").also { stage++ }
-            28 -> npc("Is that clear enough, Outlander? Would you like me", "to repeat anything?").also { stage++ }
+            28 -> npc("Is that clear enough, outerlander? Would you like me", "to repeat anything?").also { stage++ }
             29 -> player("No thanks. I think I've got it.").also { stage = 1000 }
             40 -> npcl(FaceAnim.HAPPY, "You have a truly poetic soul! Anyone who can compose such a beautiful epic, and then perform it so flawlessly can only bring good to our clan!").also { stage++ }
             41 -> playerl(FaceAnim.THINKING, "Erm... so that's a yes, then?").also { stage++ }
@@ -138,15 +138,15 @@ class OlafTheBardDialogue(player: Player? = null) : Dialogue(player) {
                 player.incrementAttribute(GameAttributes.QUEST_VIKING_SIGMUND_PROGRESS, 1)
                 stage = 1000
             }
-            60 -> npcl(FaceAnim.ANNOYED, "I'm sorry Outlander... If I did, I would not trouble you to go and find them for me, would I?").also { stage = 1000 }
-            65 -> npcl(FaceAnim.HAPPY, "That depends Outlander... Do you have some new boots for me? My feet get so tired roaming the land...").also { stage++ }
+            60 -> npcl(FaceAnim.ANNOYED, "I'm sorry outerlander... If I did, I would not trouble you to go and find them for me, would I?").also { stage = 1000 }
+            65 -> npcl(FaceAnim.HAPPY, "That depends outerlander... Do you have some new boots for me? My feet get so tired roaming the land...").also { stage++ }
             66 -> playerl(FaceAnim.HAPPY, "As a matter of fact - I do!").also {
                 removeItem(player, Items.STURDY_BOOTS_3700)
                 addItemOrDrop(player, Items.FREMENNIK_BALLAD_3699, 1)
                 stage++
             }
             67 -> npcl(FaceAnim.HAPPY, "Oh! Superb! Those are great! They're just what I was looking for! Here, take this song with my compliments! It is one of my finest works yet!").also { stage = 1000 }
-            70 -> npcl(FaceAnim.HAPPY, "Ahhh.... Outlander... it is the most beautiful romantic ballad I have ever been inspired to write...").also { stage++ }
+            70 -> npcl(FaceAnim.HAPPY, "Ahhh.... outerlander... it is the most beautiful romantic ballad I have ever been inspired to write...").also { stage++ }
             71 -> npcl(FaceAnim.HAPPY, "Only a woman with a heart of icy stone could fail be to be moved by its beauty!").also { stage++ }
             72 -> playerl(FaceAnim.HAPPY, "Thanks! That sounds perfect!").also { stage = 1000 }
             75 -> npcl(FaceAnim.HAPPY, "Only if it's a new pair of boots.").also { stage = 1000 }

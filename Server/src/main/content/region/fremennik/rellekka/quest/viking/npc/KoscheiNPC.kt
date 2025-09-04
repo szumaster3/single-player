@@ -130,7 +130,7 @@ class KoscheiNPC(
      */
     enum class KoscheiType(var npcId: Int, var appearMessage: String?, vararg var appearDialogues: String?) {
         FIRST_FORM(NPCs.KOSCHEI_THE_DEATHLESS_1290, "You must prove yourself... now!"),
-        SECOND_FORM(NPCs.KOSCHEI_THE_DEATHLESS_1291, "This is only the beginning; you can't beat me!", "It seems you have some idea of combat after all,", "Outlander! I will not hold back so much this time!"),
+        SECOND_FORM(NPCs.KOSCHEI_THE_DEATHLESS_1291, "This is only the beginning; you can't beat me!", "It seems you have some idea of combat after all,", "outerlander! I will not hold back so much this time!"),
         THIRD_FORM(NPCs.KOSCHEI_THE_DEATHLESS_1292, "Foolish mortal; I am unstoppable.", "Impressive start... But now we fight for real!"),
         FOURTH_FORM(NPCs.KOSCHEI_THE_DEATHLESS_1293, "Aaaaaaaarrgghhhh! The power!", "You show some skill at combat... I will hold back no", "longer! This time you lose your prayer however, and", "fight like a warrior!"),
         ;

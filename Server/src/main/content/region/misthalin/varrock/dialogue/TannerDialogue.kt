@@ -1,6 +1,6 @@
 package content.region.misthalin.varrock.dialogue
 
-import content.global.skill.crafting.Tanning
+import content.global.skill.crafting.TanningProduct
 import core.api.inInventory
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
@@ -30,7 +30,7 @@ class TannerDialogue : Dialogue {
         when (stage) {
             0 -> {
                 var hasHides = false
-                for (tanningProduct in Tanning.values()) {
+                for (tanningProduct in TanningProduct.values()) {
                     if (inInventory(player, tanningProduct.item, 1)) {
                         hasHides = true
                         break
@@ -64,7 +64,7 @@ class TannerDialogue : Dialogue {
 
             12 -> {
                 end()
-                Tanning.open(player, NPCs.TANNER_804)
+                TanningProduct.open(player, NPCs.TANNER_804)
             }
 
             13 -> {
@@ -90,7 +90,8 @@ class TannerDialogue : Dialogue {
 
             22 -> {
                 npc(
-                    FaceAnim.NOD_YES, "Normal leather may be quite weak, but it's very cheap -",
+                    FaceAnim.NOD_YES,
+                    "Normal leather may be quite weak, but it's very cheap -",
                     "I make it from cowhides for only 1 gp per hide - and",
                     "it's so easy to craft that anyone can work with it."
                 )
@@ -99,7 +100,8 @@ class TannerDialogue : Dialogue {
 
             23 -> {
                 npc(
-                    FaceAnim.HALF_THINKING, "Alternatively you could try hard leather. It's not so",
+                    FaceAnim.HALF_THINKING,
+                    "Alternatively you could try hard leather. It's not so",
                     "easy to craft, but I only charge 3gp per cowhide to",
                     "prepare it, and it makes much studier armour."
                 )
@@ -108,7 +110,8 @@ class TannerDialogue : Dialogue {
 
             24 -> {
                 npc(
-                    FaceAnim.HAPPY, "I can also tan snake hides and dragonhides, suitable for",
+                    FaceAnim.HAPPY,
+                    "I can also tan snake hides and dragonhides, suitable for",
                     "crafting into the highest quality armour for rangers."
                 )
                 stage++

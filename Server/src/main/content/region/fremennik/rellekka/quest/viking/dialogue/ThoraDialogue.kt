@@ -78,7 +78,7 @@ class ThoraDialogue(player: Player? = null) : Dialogue(player) {
             10 -> playerl(FaceAnim.ASKING, "Can you make me your legendary cocktail then?").also { stage++ }
             11 -> npcl(FaceAnim.SAD, "I would rather not; it is a reminder of a life I left behind when I came back.").also { stage++ }
             12 -> playerl(FaceAnim.ASKING, "Any way I could change your mind?").also { stage++ }
-            13 -> npcl(FaceAnim.THINKING, "You need this to become a Fremennik, right? Well, you seem okay for an Outlander, it would be a shame to see you fail. You know Askeladden?").also { stage++ }
+            13 -> npcl(FaceAnim.THINKING, "You need this to become a Fremennik, right? Well, you seem okay for an outerlander, it would be a shame to see you fail. You know Askeladden?").also { stage++ }
             14 -> playerl(FaceAnim.THINKING, "That kid outside? Sure.").also { stage++ }
             15 -> npcl(FaceAnim.ANGRY, "He is nothing but a pest. He keeps sneaking in and stealing beer.").also { stage++ }
             16 -> npcl(FaceAnim.ANGRY, "I shudder to think what he will be like when he has passed his trial of manhood, and is allowed in here legitimately.").also { stage++ }
@@ -105,7 +105,7 @@ class ThoraDialogue(player: Player? = null) : Dialogue(player) {
             38 -> npcl(FaceAnim.SAD, "Sometimes I feel as though we Fremennik live in a prison that we have constructed for ourselves,").also { stage++ }
             39 -> npcl(FaceAnim.SAD, "and that WE are the outlanders, out here on the edge of the world...").also { stage++ }
             40 -> npcl(FaceAnim.SAD, "I'm sorry, I think it is part of the job of Longhall barkeep to get philosophical about things ocassionally.").also { stage++ }
-            41 -> npcl(FaceAnim.HAPPY, "I wish you all the best of luck with your trials, Outlander.").also { stage++ }
+            41 -> npcl(FaceAnim.HAPPY, "I wish you all the best of luck with your trials, outerlander.").also { stage++ }
             42 -> npcl(FaceAnim.HAPPY, "When you have finished, perhaps you will come back here, and we can share a drink over tales of the outside world?").also { stage++ }
             43 -> playerl(FaceAnim.HAPPY, "Thanks, I'd like that.").also { stage = 1000 }
             50 -> playerl(FaceAnim.THINKING, "Scam? Oh... You mean his promise to not come in here anymore?").also { stage++ }
@@ -116,12 +116,12 @@ class ThoraDialogue(player: Player? = null) : Dialogue(player) {
                 2 -> playerl(FaceAnim.HAPPY, "No thanks.").also { stage++ }
             }
             54 -> npcl(FaceAnim.HAPPY, "Okay then.").also { stage = 1000 }
-            60 -> npcl(FaceAnim.HAPPY, "Hello yourself, Outlander. A little out of the way up here, aren't you?").also { stage++ }
+            60 -> npcl(FaceAnim.HAPPY, "Hello yourself, outerlander. A little out of the way up here, aren't you?").also { stage++ }
             61 -> npcl(FaceAnim.HAPPY, "I would love to stop and chat with you, but unfortunately we have a custom that no Fremennik may speak with the outlanders without the permission of our chieftain. Don't take it personally.").also { stage++ }
             62 -> npcl(FaceAnim.HAPPY, "The Chieftain is stood just over there, his name is Brundt. I suggest you go and introduce yourself.").also { stage++ }
             63 -> npcl(FaceAnim.ASKING, "You wouldn't want to go making any enemies because you weren't aware of our customs now, would you?").also { stage++ }
             64 -> playerl(FaceAnim.THINKING, "No, I guess not. Thanks anyway.").also { stage++ }
-            65 -> npcl(FaceAnim.HAPPY, "Not a problem, Outlander. It's always nice to see a new face in the long hall; it happens so rarely.").also { stage = 1000 }
+            65 -> npcl(FaceAnim.HAPPY, "Not a problem, outerlander. It's always nice to see a new face in the long hall; it happens so rarely.").also { stage = 1000 }
             66 -> {
                 end()
                 openNpcShop(player, NPCs.THORA_THE_BARKEEP_1300)

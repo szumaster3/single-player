@@ -11,7 +11,7 @@ import shared.consts.NPCs
 import shared.consts.Quests
 
 /**
- * Represents the Outlander dialogue.
+ * Represents the outerlander dialogue.
  */
 @Initializable
 class OutlanderDialogue(player: Player? = null) : Dialogue(player) {
@@ -19,7 +19,7 @@ class OutlanderDialogue(player: Player? = null) : Dialogue(player) {
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (!isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS)) {
-            npcl(FaceAnim.ANNOYED, "I cannot speak to you Outlander! Talk to Brundt, the Chieftain!").also { stage = END_DIALOGUE }
+            npcl(FaceAnim.ANNOYED, "I cannot speak to you outerlander! Talk to Brundt, the Chieftain!").also { stage = END_DIALOGUE }
         } else {
             player(FaceAnim.FRIENDLY, "Hello.")
         }

@@ -54,22 +54,22 @@ class ChieftanBrundtDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             getAttribute(player, GameAttributes.QUEST_VIKING_VOTES, 0) >= 7 -> {
-                npcl(FaceAnim.HAPPY, "Greetings again Outlander! How goes your attempts to gain votes with the council of elders?")
+                npcl(FaceAnim.HAPPY, "Greetings again outerlander! How goes your attempts to gain votes with the council of elders?")
                 stage = 545
             }
 
             getAttribute(player, GameAttributes.QUEST_VIKING_VOTES, 0) in 3..6 -> {
-                npcl(FaceAnim.HAPPY, "Greetings again Outlander! How goes your attempts to gain votes with the council of elders?")
+                npcl(FaceAnim.HAPPY, "Greetings again outerlander! How goes your attempts to gain votes with the council of elders?")
                 stage = 540
             }
 
             getAttribute(player, GameAttributes.QUEST_VIKING_VOTES, 0) == 1 -> {
-                npcl(FaceAnim.HAPPY, "Greetings again Outlander! How goes your attempts to gain votes with the council of elders?")
+                npcl(FaceAnim.HAPPY, "Greetings again outerlander! How goes your attempts to gain votes with the council of elders?")
                 stage = 535
             }
 
             getAttribute(player, GameAttributes.QUEST_VIKING_VOTES, -1) == 0 -> {
-                npcl(FaceAnim.HAPPY, "Greetings again Outlander! How goes your attempts to gain votes with the council of elders?")
+                npcl(FaceAnim.HAPPY, "Greetings again outerlander! How goes your attempts to gain votes with the council of elders?")
                 stage = 530
             }
 
@@ -92,24 +92,24 @@ class ChieftanBrundtDialogue(player: Player? = null) : Dialogue(player) {
                 3 -> player("Do you have any quests?").also { stage = 300 }
                 4 -> playerl(FaceAnim.HAPPY, "Nice hat!").also { stage = 15 }
             }
-            2 -> npcl(FaceAnim.HAPPY, "This place? Why, this is Relleka! Homeland of all Fremennik! I do not recognise your face Outlander; Where do you come from?").also { stage++ }
-            3 -> playerl(FaceAnim.HAPPY, "Hmmm... I will not press the issue then Outlander. How may my tribe and I help you?").also { stage = 0 }
-            5 -> npcl(FaceAnim.HAPPY, "Do not take it personally, Outlander! We are a simple people, and it is our experience that keeping ourselves to ourselves is best.").also { stage++ }
+            2 -> npcl(FaceAnim.HAPPY, "This place? Why, this is Relleka! Homeland of all Fremennik! I do not recognise your face outerlander; Where do you come from?").also { stage++ }
+            3 -> playerl(FaceAnim.HAPPY, "Hmmm... I will not press the issue then outerlander. How may my tribe and I help you?").also { stage = 0 }
+            5 -> npcl(FaceAnim.HAPPY, "Do not take it personally, outerlander! We are a simple people, and it is our experience that keeping ourselves to ourselves is best.").also { stage++ }
             6 -> npcl(FaceAnim.HAPPY, "This is why speaking to outlanders is forbidden.").also { stage++ }
             7 -> npcl(FaceAnim.HAPPY, "We do not wish to enter war with the outlanders and their strange magics, so we limit all unauthorised communication.").also { stage++ }
             8 -> playerl(FaceAnim.ASKING, "Then how come you're talking to me?").also { stage++ }
             9 -> npcl(FaceAnim.HAPPY, "Ah, this is because I am the chieftan. I am the one who authorised contact. You will not find many of my tribe so forthcoming with you, as I.").also { stage++ }
             10 -> playerl(FaceAnim.ASKING, "Is there a way for you to authorise your tribe to talk to me then?").also { stage++ }
             11 -> npcl(FaceAnim.HAPPY, "Well, there is one way... but I doubt it is of any interest to you.").also { stage = 0 }
-            15 -> npcl(FaceAnim.ANNOYED, "Don't mock me Outlander; this helm has saved my life more times than I care to recall right now.").also { stage = END_DIALOGUE }
+            15 -> npcl(FaceAnim.ANNOYED, "Don't mock me outerlander; this helm has saved my life more times than I care to recall right now.").also { stage = END_DIALOGUE }
             300 -> npc("Quests, you say outlander? Well, I would not call it a", "quest as such, but if you are brave of heart and strong", "of body, perhaps...").also { stage++ }
-            301 -> npc("No, you would not be interested. Forget I said", "anything, Outlander.").also { stage++ }
+            301 -> npc("No, you would not be interested. Forget I said", "anything, outerlander.").also { stage++ }
             302 -> options("Yes, I am interested.", "No, I'm not interested.").also { stage++ }
             303 -> when (buttonId) {
                 1 -> player("Actually, I would be very interested to hear what you", "have to offer.").also { stage = 310 }
                 2 -> player("No, I'm not interested.").also { stage = END_DIALOGUE }
             }
-            310 -> npc("You would? These are unusual sentiments to hear from", "an Outlander! My suggestion was going to be that if", "you crave adventure and battle,").also { stage++ }
+            310 -> npc("You would? These are unusual sentiments to hear from", "an outerlander! My suggestion was going to be that if", "you crave adventure and battle,").also { stage++ }
             311 -> npc("and your heart sings for glory, then perhaps you would", "be interested in joining our clan, and becoming a", "Fremennik yourself?").also { stage++ }
             312 -> player("What would that involve exactly?").also { stage++ }
             313 -> npc("Well, there are two ways to become a member of our", "clan and call yourself a Fremennik: be born a", "Fremennik, or be voted in by our council of elders.").also { stage++ }
@@ -122,11 +122,11 @@ class ChieftanBrundtDialogue(player: Player? = null) : Dialogue(player) {
                 1 -> player("I think I would enjoy the challenge of becoming an", "honorary Fremennik. Where and how do I start?").also { stage = 320 }
                 2 -> player("That sounds too complicated to me.").also { stage = 322 }
             }
-            320 -> npc("As I say Outlander, you must find and speak to the", "twelve members of the council of elders, and see what", "tasks they might set you.").also { stage++ }
+            320 -> npc("As I say outerlander, you must find and speak to the", "twelve members of the council of elders, and see what", "tasks they might set you.").also { stage++ }
             321 -> npc("If you can gain the support of seven of the twelve, then", "you will be accepted as one of us without question.").also { startQuest(player, Quests.THE_FREMENNIK_TRIALS); stage = END_DIALOGUE }
-            322 -> npc("Well, that's what I expect from an Outlander.").also { stage = END_DIALOGUE }
+            322 -> npc("Well, that's what I expect from an outerlander.").also { stage = END_DIALOGUE }
 
-            500 -> npcl(FaceAnim.THINKING, "A reduction on sales taxes? Why, I am the only one in the Fremennik who may authorise such a thing. What does an Outlander want with that?").also { stage++ }
+            500 -> npcl(FaceAnim.THINKING, "A reduction on sales taxes? Why, I am the only one in the Fremennik who may authorise such a thing. What does an outerlander want with that?").also { stage++ }
             501 -> playerl(FaceAnim.HAPPY, "Actually, it's not for me. I need to get it as part of my trials").also { stage++ }
             502 -> npcl(FaceAnim.THINKING, "Hmmm. Interesting. Your trials seem to be very different to those I took as a young lad.").also { stage++ }
             503 -> npcl(FaceAnim.NEUTRAL, "Well, I am not adverse in principle to giving a slight tax break to our shops.").also { stage++ }
@@ -139,14 +139,14 @@ class ChieftanBrundtDialogue(player: Player? = null) : Dialogue(player) {
                 player.incrementAttribute(GameAttributes.QUEST_VIKING_SIGMUND_PROGRESS, 1)
                 stage = END_DIALOGUE
             }
-            510 -> npcl(FaceAnim.ANNOYED, "Ah, Outlander... if you wish to become a Fremennik you should try and pay more attention to what people tell you... ").also { stage++ }
+            510 -> npcl(FaceAnim.ANNOYED, "Ah, outerlander... if you wish to become a Fremennik you should try and pay more attention to what people tell you... ").also { stage++ }
             511 -> npcl(FaceAnim.ANNOYED, "Sigli the hunter is the only one who knows of such hunting grounds. Go and request his knowledge.").also { stage = END_DIALOGUE }
-            515 -> npcl(FaceAnim.HAPPY, "Excellent work Outlander! And so quickly, too! Here, you may take my financial report promising reduced sales taxes on all goods.").also {
+            515 -> npcl(FaceAnim.HAPPY, "Excellent work outerlander! And so quickly, too! Here, you may take my financial report promising reduced sales taxes on all goods.").also {
                 removeItem(player, Items.TRACKING_MAP_3701)
                 addItemOrDrop(player, Items.FISCAL_STATEMENT_3708, 1)
                 stage = END_DIALOGUE
             }
-            520 -> npcl(FaceAnim.HAPPY, "Not at all Outlander; now that we have Sigli's map we can increase the amount of hunts we run, and make up any shortfall that way.").also { stage = END_DIALOGUE }
+            520 -> npcl(FaceAnim.HAPPY, "Not at all outerlander; now that we have Sigli's map we can increase the amount of hunts we run, and make up any shortfall that way.").also { stage = END_DIALOGUE }
             525 -> npcl(FaceAnim.ANNOYED, "Not unless it's a map of the hunting grounds.").also { stage = END_DIALOGUE }
             530 -> playerl(FaceAnim.HAPPY, "I don't have any votes yet.").also { stage++ }
             531 -> npcl(FaceAnim.HAPPY, "Go and speak to the twelve members of the council of elders who live in this village. I am sure at least a few will be prepared to vote for you.").also { stage = 550 }
@@ -154,16 +154,16 @@ class ChieftanBrundtDialogue(player: Player? = null) : Dialogue(player) {
             536 -> npcl(FaceAnim.HAPPY, "Hmmm... well that is certainly a good start I would say. Keep up the good work!").also { stage++ }
             537 -> npcl(FaceAnim.HAPPY, "Remember: You need to get at least seven council votes to be accepted as a member of the Fremennik.").also { stage = 550 }
             540 -> playerl(FaceAnim.HAPPY, "I only have ${getAttribute(player, GameAttributes.QUEST_VIKING_VOTES, 0)} votes so far.").also { stage++ }
-            541 -> npcl(FaceAnim.HAPPY, "Hmmm... you are doing very well so far, Outlander. Keep up the good work!").also { stage = 537 }
+            541 -> npcl(FaceAnim.HAPPY, "Hmmm... you are doing very well so far, outerlander. Keep up the good work!").also { stage = 537 }
             545 -> playerl(FaceAnim.HAPPY, "I have seven members of the council prepared to vote in my favour now!").also { stage++ }
-            546 -> npcl(FaceAnim.HAPPY, "I know Outlander, for I have been closely monitoring your progress so far!").also { stage++ }
+            546 -> npcl(FaceAnim.HAPPY, "I know outerlander, for I have been closely monitoring your progress so far!").also { stage++ }
             547 -> npcl(FaceAnim.HAPPY, "Then let us put the formality aside, and let me personally welcome you into the Fremennik! May you bring us honour!").also {
                 setAttribute(player, "/save:fremennikname", generateFremennikName())
                 stage = 560
             }
             548 -> sendDialogue("You require 10 free spaces in your backpack to claim your reward.").also { stage = END_DIALOGUE }
             550 -> npcl(FaceAnim.HAPPY, "If you need any help with your trials, I suggest you speak to Askeladden. He is currently doing his own trials of manhood to become a true Fremennik.").also { stage = END_DIALOGUE }
-            560 -> npcl(FaceAnim.HAPPY, "From this day onward, you are Outlander no more! In honour of your acceptance into the Fremennik, you gain a new name: ${FremennikTrials.getFremennikName(player)}.",).also {
+            560 -> npcl(FaceAnim.HAPPY, "From this day onward, you are outerlander no more! In honour of your acceptance into the Fremennik, you gain a new name: ${FremennikTrials.getFremennikName(player)}.",).also {
                 cleanupAttributes(player)
                 finishQuest(player, Quests.THE_FREMENNIK_TRIALS)
                 stage = END_DIALOGUE
@@ -193,7 +193,7 @@ class ChieftanBrundtDialogue(player: Player? = null) : Dialogue(player) {
             621 -> playerl(FaceAnim.ASKING, "So how exactly did you find him?").also { stage++ }
             622 -> npcl(FaceAnim.HAPPY, "Well, it was a raiding party like any other. We had just struck one of the smaller northern islands to harvest supplies by combat, as our laws allow,").also { stage++ }
             623 -> npcl(FaceAnim.HAPPY, "when we saw a figure in the icey waters. As we were at least a 3 week sail from any port, and saw no other ships nearby, he must have been there some time.").also { stage++ }
-            624 -> npcl(FaceAnim.HAPPY, "We could not leave someone to the cold death of the ocean, even an Outlander, so we fished him aboard. He muttered continually, but his words made no sense.").also { stage++ }
+            624 -> npcl(FaceAnim.HAPPY, "We could not leave someone to the cold death of the ocean, even an outerlander, so we fished him aboard. He muttered continually, but his words made no sense.").also { stage++ }
             625 -> npcl(FaceAnim.HAPPY, "He had no clothes or possessions with him, and seemed to have been burnt somehow before he had landed in the water. I cannot help but wonder what burnt him,").also { stage++ }
             626 -> npcl(FaceAnim.HAPPY, "for as you may have seen, he is incredibly powerful and resistant to damage by any means I know of! Anyway, we decided to bring him back to Rellekka,").also { stage++ }
             627 -> npcl(FaceAnim.HAPPY, "for he did not seem of good health or sound mind, and simply repeated the word Koschei over and over. Yrsa tended to him for many weeks, until one day it was as though a new soul had entered his burnt and broken body.").also { stage++ }

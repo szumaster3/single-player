@@ -1,6 +1,6 @@
 package content.region.desert.alkharid.dialogue
 
-import content.global.skill.crafting.Tanning
+import content.global.skill.crafting.TanningProduct
 import core.api.inInventory
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
@@ -26,7 +26,7 @@ class EllisDialogue(player: Player? = null) : Dialogue(player) {
         when (stage) {
             0 -> {
                 var hasHides = false
-                for (tanningProduct in Tanning.values()) {
+                for (tanningProduct in TanningProduct.values()) {
                     if (inInventory(player, tanningProduct.item)) {
                         hasHides = true
                         break
@@ -43,7 +43,7 @@ class EllisDialogue(player: Player? = null) : Dialogue(player) {
                 1 -> playerl(FaceAnim.HAPPY, "Yes please.").also { stage = 12 }
                 2 -> playerl(FaceAnim.NEUTRAL, "No thanks.").also { stage = 13 }
             }
-            12 -> end().also { Tanning.open(player, NPCs.ELLIS_2824) }
+            12 -> end().also { TanningProduct.open(player, NPCs.ELLIS_2824) }
             13 -> npcl(FaceAnim.FRIENDLY, "Very well, @g[sir,madam], as you wish.").also { stage = END_DIALOGUE }
             20 -> when (buttonId) {
                 1 -> playerl(FaceAnim.ASKING, "Can I buy some leather?").also { stage = 21 }

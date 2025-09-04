@@ -32,7 +32,7 @@ class BjornAndEldgrimDialogue(player: Player? = null) : Dialogue(player) {
             2 -> npcl(FaceAnim.DRUNK, "That guy over there by that stuff! (hic) Yeh, abshoultely! He's da bosh!").also { stage = 16 }
             10 -> player(FaceAnim.ASKING, "${player.name}?").also { stage++ }
             11 -> npcl(FaceAnim.DRUNK, "Nah nah nah, not them, the other one, whatshyerfashe!").also { stage++ }
-            12 -> player(FaceAnim.ASKING, "${player.getAttribute("fremennikname", "fremmyname") ?: "Outlander"}?").also { stage++ }
+            12 -> player(FaceAnim.ASKING, "${player.getAttribute("fremennikname", "fremmyname") ?: "outerlander"}?").also { stage++ }
             13 -> npc(FaceAnim.DRUNK, "Thatsh what I said diddle I?").also { stage++ }
             14 -> player(FaceAnim.ASKING, "Um.... okay. I'll leave you to your drinking.").also { stage++ }
             15 -> npc(FaceAnim.DRUNK, "Thanksh pal! You're alright!").also { stage = 16 }

@@ -20,7 +20,7 @@ class IngridHradsonDialogue(player: Player? = null) : Dialogue(player) {
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (!isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS)) {
-            npcl(FaceAnim.ANNOYED, "Outlander, I have work to be getting on with... Please stop bothering me.").also { stage = END_DIALOGUE }
+            npcl(FaceAnim.ANNOYED, "Outerlander, I have work to be getting on with... Please stop bothering me.").also { stage = END_DIALOGUE }
         } else if (isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS) && !hasRequirement(player, Quests.OLAFS_QUEST, false)) {
             npc(FaceAnim.FRIENDLY, "Good afternoon! How do you like our village?").also { stage = 0 }
         } else if (isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS) && hasRequirement(player, Quests.OLAFS_QUEST, false)) {

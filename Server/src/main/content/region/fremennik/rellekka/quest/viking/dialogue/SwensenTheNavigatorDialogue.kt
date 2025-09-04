@@ -42,17 +42,17 @@ class SwensenTheNavigatorDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             getAttribute(player, GameAttributes.QUEST_VIKING_SIGMUND_PROGRESS, 0) == 9 -> {
-                npcl(FaceAnim.HAPPY, "Greetings Outlander.")
+                npcl(FaceAnim.HAPPY, "Greetings outerlander.")
                 stage = 115
             }
 
             getAttribute(player, GameAttributes.QUEST_VIKING_SIGMUND_PROGRESS, 0) == 8 -> {
-                npcl(FaceAnim.HAPPY, "Greetings Outlander.")
+                npcl(FaceAnim.HAPPY, "Greetings outerlander.")
                 stage = 105
             }
 
             getAttribute(player, GameAttributes.QUEST_VIKING_SWENSEN_MAZE, false) -> {
-                npc("Outlander! You have finished my maze!", "I am genuinely impressed!")
+                npc("Outerlander! You have finished my maze!", "I am genuinely impressed!")
                 stage = 100
             }
 
@@ -94,7 +94,7 @@ class SwensenTheNavigatorDialogue(player: Player? = null) : Dialogue(player) {
 
             1 -> {
                 npc(
-                    "You wish to stop being an Outlander? I can",
+                    "You wish to stop being an outerlander? I can",
                     "understand that! I have no reason why I would prevent",
                     "you becoming a Fremennik...",
                 )
@@ -176,7 +176,7 @@ class SwensenTheNavigatorDialogue(player: Player? = null) : Dialogue(player) {
 
             12 -> {
                 npc(
-                    "I will warn you Outlander, this maze was designed by",
+                    "I will warn you outerlander, this maze was designed by",
                     "myself, and is of the most fiendish complexity!",
                 )
                 stage++
@@ -201,7 +201,7 @@ class SwensenTheNavigatorDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             101 -> {
-                npc("Of course Outlander! I am nothing if not a man of", "my word!")
+                npc("Of course outerlander! I am nothing if not a man of", "my word!")
                 stage++
             }
 
@@ -232,7 +232,7 @@ class SwensenTheNavigatorDialogue(player: Player? = null) : Dialogue(player) {
             107 -> playerl(FaceAnim.HAPPY, "Great! Can I have it?").also { stage++ }
             108 -> npcl(
                 FaceAnim.ANNOYED,
-                "Have it? Just like that? I think not Outlander. This map shows all of the prime fishing locations nearby. It is very valuable to our clan. I am afraid I can not just give it away.",
+                "Have it? Just like that? I think not outerlander. This map shows all of the prime fishing locations nearby. It is very valuable to our clan. I am afraid I can not just give it away.",
             ).also { stage++ }
 
             109 -> playerl(FaceAnim.THINKING, "Perhaps I can trade you something for it?").also { stage++ }
@@ -263,14 +263,14 @@ class SwensenTheNavigatorDialogue(player: Player? = null) : Dialogue(player) {
             116 -> npcl(FaceAnim.ANNOYED, "Uh... from the Seer perhaps?").also { stage = 1000 }
             120 -> npcl(
                 FaceAnim.ANNOYED,
-                "I have already told you Outlander; I will not exchange it for anything other than a divination on the weather from our seer himself!",
+                "I have already told you outerlander; I will not exchange it for anything other than a divination on the weather from our seer himself!",
             ).also { stage++ }
 
             121 -> playerl(FaceAnim.HAPPY, "What, like this one I have here?").also { stage++ }
             122 -> npcl(FaceAnim.AMAZED, "W-what...? I don't believe it! How did you...?").also { stage++ }
             123 -> npcl(
                 FaceAnim.HAPPY,
-                "I suppose it doesn't matter, you have my gratitude Outlander! With this forecast I will be able to plan a safe course for our next raiding expedition!",
+                "I suppose it doesn't matter, you have my gratitude outerlander! With this forecast I will be able to plan a safe course for our next raiding expedition!",
             ).also {
                 removeItem(player, Items.WEATHER_FORECAST_3705)
                 addItemOrDrop(player, Items.SEA_FISHING_MAP_3704, 1)
@@ -279,7 +279,7 @@ class SwensenTheNavigatorDialogue(player: Player? = null) : Dialogue(player) {
 
             124 -> npcl(
                 FaceAnim.HAPPY,
-                "Here, Outlander; you may take my map of local fishing patterns with my gratitude!",
+                "Here, outerlander; you may take my map of local fishing patterns with my gratitude!",
             ).also { stage = 1000 }
 
             125 -> npcl(
@@ -303,13 +303,13 @@ class SwensenTheNavigatorDialogue(player: Player? = null) : Dialogue(player) {
             142 -> npcl(FaceAnim.HAPPY, "I am fine too!").also { stage = 1000 }
             145 -> npcl(
                 FaceAnim.HAPPY,
-                "Hello Outlander. This is my home, I would be grateful if you would leave.",
+                "Hello outerlander. This is my home, I would be grateful if you would leave.",
             ).also { stage++ }
 
             146 -> playerl(FaceAnim.THINKING, "Oh. Okay.").also { stage++ }
             147 -> npcl(
                 FaceAnim.HAPPY,
-                "I am sorry Outlander, I will not offer you hospitality until my Chieftain has vouched for your honesty. This is our way.",
+                "I am sorry outerlander, I will not offer you hospitality until my Chieftain has vouched for your honesty. This is our way.",
             ).also { stage = 1000 }
 
             1000 -> end()

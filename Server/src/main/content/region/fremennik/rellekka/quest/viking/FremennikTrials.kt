@@ -106,7 +106,7 @@ class FremennikTrials : Quest(Quests.THE_FREMENNIK_TRIALS, 64, 63, 3, Vars.VARP_
 
     companion object {
         fun getFremennikName(player: Player): String {
-            return player.getAttribute("fremennikname", "fremmyname") ?: "Outlander"
+            return player.getAttribute("fremennikname", "fremmyname") ?: "outerlander"
         }
     }
 }
