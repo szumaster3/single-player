@@ -18,35 +18,11 @@ import shared.consts.Scenery
 
 class DeathPlateauPlugin : InteractionListener, MapArea {
 
-    companion object {
-        val stoneBalls = intArrayOf(
-            Items.STONE_BALL_3109,
-            Items.STONE_BALL_3110,
-            Items.STONE_BALL_3111,
-            Items.STONE_BALL_3112,
-            Items.STONE_BALL_3113
-        )
-        val stoneMechanisms = intArrayOf(
-            Scenery.STONE_MECHANISM_3676,
-            Scenery.STONE_MECHANISM_3677
-        )
-        val combinationScroll = arrayOf(
-            "",
-            "Red is North of Blue. Yellow is South of Purple.",
-            "Green is North of Purple. Blue is West of",
-            "Yellow. Purple is East of Red.",
-            ""
-        )
-    }
-
     override fun defineAreaBorders(): Array<ZoneBorders> = arrayOf(ZoneBorders(2866, 3609, 2866, 3609))
 
     override fun areaEnter(entity: Entity) {
         if (entity is Player && getQuestStage(entity, Quests.DEATH_PLATEAU) == 25) {
-            sendPlayerDialogue(
-                entity,
-                "I think this is far enough, I can see Death Plateau and it looks like the trolls haven't found the path. I'd better go and tell Denulth.",
-            )
+            sendPlayerDialogue(entity, "I think this is far enough, I can see Death Plateau and it looks like the trolls haven't found the path. I'd better go and tell Denulth.")
             sendMessage(entity, "You can see that there are no trolls on the secret path")
             sendMessage(entity, "You should go and speak to Denulth")
             setQuestStage(entity, Quests.DEATH_PLATEAU, 26)
@@ -77,6 +53,7 @@ class DeathPlateauPlugin : InteractionListener, MapArea {
 
         on(Items.IOU_3103, ITEM, "read") { player, _ ->
             if(getQuestStage(player, Quests.DEATH_PLATEAU) in 15..16) {
+                openDialogue(player, ScrollDialogue())
             }
             return@on true
         }
@@ -87,11 +64,7 @@ class DeathPlateauPlugin : InteractionListener, MapArea {
             return@on true
         }
 
-        onUseWith(
-            IntType.SCENERY,
-            stoneBalls,
-            *stoneMechanisms,
-        ) { player, used, with ->
+        onUseWith(IntType.SCENERY, stoneBalls, *stoneMechanisms) { player, used, with ->
             val stoneBall = used.asItem()
             val stoneMechanism = with.asScenery()
 
@@ -115,12 +88,18 @@ class DeathPlateauPlugin : InteractionListener, MapArea {
 
         on(Scenery.LARGE_DOOR_3743, SCENERY, "open") { player, node ->
             if (getQuestStage(player, Quests.DEATH_PLATEAU) > 16) {
-                DoorActionHandler.handleAutowalkDoor(player, node as core.game.node.scenery.Scenery)
+                DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
             } else {
                 sendMessage(player, "The door is locked.")
             }
             return@on true
         }
+    }
+
+    companion object {
+        val stoneBalls = intArrayOf(Items.STONE_BALL_3109, Items.STONE_BALL_3110, Items.STONE_BALL_3111, Items.STONE_BALL_3112, Items.STONE_BALL_3113)
+        val stoneMechanisms = intArrayOf(Scenery.STONE_MECHANISM_3676, Scenery.STONE_MECHANISM_3677)
+        val combinationScroll = arrayOf("", "Red is North of Blue. Yellow is South of Purple.", "Green is North of Purple. Blue is West of", "Yellow. Purple is East of Red.", "")
     }
 
     inner class ScrollDialogue : DialogueFile() {
@@ -136,7 +115,8 @@ class DeathPlateauPlugin : InteractionListener, MapArea {
                         addItemOrDrop(player!!, Items.COMBINATION_3102)
                         setQuestStage(player!!, Quests.DEATH_PLATEAU, 16)
                         sendItemDialogue(player!!, Items.COMBINATION_3102, "You have found the combination!")
-                        runTask(player!!, 1) {
+                        lockInteractions(player!!, 3)
+                        runTask(player!!, 3) {
                             end()
                             sendMessage(player!!, "You have found the combination!")
                             openInterface(player!!, Components.BLANK_SCROLL_222)

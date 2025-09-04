@@ -62,36 +62,38 @@ class TrollStrongholdPlugin : InteractionListener {
             return@on true
         }
 
-        on(NPCs.TWIG_1128, IntType.NPC, "pickpocket") { player, node ->
-            val npc = node.asNpc()
-            player.lock()
-            submitWorldPulse(
-                object : Pulse() {
-                    var counter = 0
+        pickpocketNPCs.forEach { data ->
+            val npcId = data[0] as Int
+            val failTransform = data[1] as Int
+            val keyItem = data[2] as Int
 
+            on(npcId, IntType.NPC, "pickpocket") { player, node ->
+                val npc = node.asNpc()
+                player.lock()
+                submitWorldPulse(object : Pulse() {
+                    var counter = 0
                     override fun pulse(): Boolean {
                         when (counter++) {
                             0 -> {
                                 if (hasLevelDyn(player, Skills.THIEVING, 30)) {
                                     animate(player, Animation(881))
                                 } else {
-                                    sendMessage(player, "You need to be a level 30 thief to pickpocket Twig.")
+                                    sendMessage(player, "You need to be a level 30 thief to pickpocket ${npc.name}.")
                                     return true
                                 }
                             }
-
                             3 -> {
-                                val success: Boolean = success(player, Skills.THIEVING)
+                                val success = success(player, Skills.THIEVING)
                                 if (success) {
                                     if (isQuestInProgress(player, Quests.TROLL_STRONGHOLD, 8, 10)) {
-                                        addItem(player, Items.CELL_KEY_1_3136)
-                                        sendMessage(player, "You find a small key on Twig.")
+                                        addItem(player, keyItem)
+                                        sendMessage(player, "You find a small key on ${npc.name}.")
                                     } else {
-                                        sendMessage(player, "You find nothing on Twig.")
+                                        sendMessage(player, "You find nothing on ${npc.name}.")
                                     }
                                 } else {
                                     sendChat(npc, "What you think you doing?")
-                                    transformNpc(npc, NPCs.TWIG_1126, 50)
+                                    transformNpc(npc, failTransform, 50)
                                     npc.attack(player)
                                 }
                                 player.unlock()
@@ -100,227 +102,27 @@ class TrollStrongholdPlugin : InteractionListener {
                         }
                         return false
                     }
-                },
-            )
-            return@on true
-        }
-
-        on(NPCs.BERRY_1129, IntType.NPC, "pickpocket") { player, node ->
-            val npc = node.asNpc()
-            player.lock()
-            submitWorldPulse(
-                object : Pulse() {
-                    var counter = 0
-
-                    override fun pulse(): Boolean {
-                        when (counter++) {
-                            0 -> {
-                                if (hasLevelDyn(player, Skills.THIEVING, 30)) {
-                                    animate(player, Animation(881))
-                                } else {
-                                    sendMessage(player, "You need to be a level 30 thief to pickpocket Berry.")
-                                    return true
-                                }
-                            }
-
-                            3 -> {
-                                val success: Boolean = success(player, Skills.THIEVING)
-                                if (success) {
-                                    if (isQuestInProgress(player, Quests.TROLL_STRONGHOLD, 8, 10)) {
-                                        addItem(player, Items.CELL_KEY_2_3137)
-                                        sendMessage(player, "You find a small key on Berry.")
-                                    } else {
-                                        sendMessage(player, "You find nothing on Berry.")
-                                    }
-                                } else {
-                                    sendChat(npc, "What you think you doing?")
-                                    transformNpc(npc, NPCs.BERRY_1127, 50)
-                                    npc.attack(player)
-                                }
-                                player.unlock()
-                                return true
-                            }
-                        }
-                        return false
-                    }
-                },
-            )
-            return@on true
-        }
-
-        fun unlockMadEadgarCellDoor(
-            player: Player,
-            node: Node,
-        ) {
-            if (inInventory(player, Items.CELL_KEY_1_3136)) {
-                sendMessage(player, "You unlock the cell door.")
-                if (getQuestStage(player, Quests.TROLL_STRONGHOLD) == 8) {
-                    setQuestStage(player, Quests.TROLL_STRONGHOLD, 9)
-                } else if (getQuestStage(player, Quests.TROLL_STRONGHOLD) == 10) {
-                    setQuestStage(player, Quests.TROLL_STRONGHOLD, 11)
-                }
-
-                val npc = findNPC(NPCs.EADGAR_1113)!!
-                sendNPCDialogue(player, NPCs.EADGAR_1113, "Thanks! I'm off back home!")
-                npc.walkRadius = 40
-                submitWorldPulse(
-                    object : Pulse(0) {
-                        var count = 0
-                        var stage = 0
-                        var trigger = true
-                        var targetLocation = Location(0, 0, 0)
-
-                        override fun pulse(): Boolean {
-                            if (npc.location.equals(targetLocation)) {
-                                stage++
-                                trigger = true
-                            }
-                            if (trigger) {
-                                trigger = false
-                                when (stage) {
-                                    0 ->
-                                        forceWalk(npc, Location(2831, 10082, 0), "dumb").also {
-                                            npc.walkRadius = 11
-                                            npc.isWalks = false
-                                            targetLocation = Location(2831, 10082, 0)
-                                        }
-
-                                    1 ->
-                                        DoorActionHandler
-                                            .handleAutowalkDoor(npc, node.asScenery())
-                                            .also { targetLocation = Location(2832, 10082, 0) }
-
-                                    4 ->
-                                        forceWalk(npc, Location(2836, 10082, 0), "dumb").also {
-                                            targetLocation = Location(2836, 10082, 0)
-                                        }
-
-                                    5 ->
-                                        forceWalk(npc, Location(2836, 10061, 0), "dumb").also {
-                                            targetLocation = Location(2836, 10061, 0)
-                                        }
-
-                                    6 ->
-                                        forceWalk(npc, Location(2824, 10050, 0), "dumb").also {
-                                            targetLocation = Location(2824, 10050, 0)
-                                        }
-
-                                    7 -> {
-                                        npc.teleport(Location(2823, 10035, 0))
-                                        npc.startDeath(null)
-                                        npc.isWalks = true
-                                        return true
-                                    }
-                                }
-                            }
-
-                            if (count > 100) {
-                                npc.startDeath(null)
-                                npc.isWalks = true
-                                return true
-                            }
-                            return false
-                        }
-                    },
-                )
-            } else {
-                sendMessage(player, "The cell door is locked.")
+                })
+                return@on true
             }
         }
+
         onUseWith(IntType.SCENERY, Items.CELL_KEY_1_3136, Scenery.CELL_DOOR_3765) { player, _, with ->
-            unlockMadEadgarCellDoor(player, with)
+            unlockCellDoor(player, with, Items.CELL_KEY_1_3136, NPCs.EADGAR_1113, mapOf(8 to 9, 10 to 11), "Thanks! I'm off back home!")
             return@onUseWith true
         }
+
         on(Scenery.CELL_DOOR_3765, IntType.SCENERY, "unlock") { player, node ->
-            unlockMadEadgarCellDoor(player, node)
+            unlockCellDoor(player, node, Items.CELL_KEY_1_3136, NPCs.EADGAR_1113, mapOf(8 to 9, 10 to 11), "Thanks! I'm off back home!")
             return@on true
         }
 
-        fun unlockGodricCellDoor(
-            player: Player,
-            node: Node,
-        ) {
-            if (inInventory(player, Items.CELL_KEY_2_3137)) {
-                sendMessage(player, "You unlock the cell door.")
-                if (getQuestStage(player, Quests.TROLL_STRONGHOLD) == 8) {
-                    setQuestStage(player, Quests.TROLL_STRONGHOLD, 10)
-                } else if (getQuestStage(player, Quests.TROLL_STRONGHOLD) == 9) {
-                    setQuestStage(player, Quests.TROLL_STRONGHOLD, 11)
-                }
-
-                val npc = findNPC(NPCs.GODRIC_1114)!!
-                sendNPCDialogue(player, NPCs.GODRIC_1114, "Thank you, my friend.")
-                submitWorldPulse(
-                    object : Pulse(0) {
-                        var count = 0
-                        var stage = 0
-                        var trigger = true
-                        var targetLocation = Location(0, 0, 0)
-
-                        override fun pulse(): Boolean {
-                            if (npc.location.equals(targetLocation)) {
-                                stage++
-                                trigger = true
-                            }
-                            if (trigger) {
-                                trigger = false
-                                when (stage) {
-                                    0 ->
-                                        forceWalk(npc, Location(2831, 10078, 0), "dumb").also {
-                                            npc.walkRadius = 11
-                                            npc.isWalks = false
-                                            targetLocation = Location(2831, 10078, 0)
-                                        }
-
-                                    1 ->
-                                        DoorActionHandler
-                                            .handleAutowalkDoor(npc, node.asScenery())
-                                            .also { targetLocation = Location(2832, 10078, 0) }
-
-                                    4 ->
-                                        forceWalk(npc, Location(2836, 10078, 0), "dumb").also {
-                                            targetLocation = Location(2836, 10078, 0)
-                                        }
-
-                                    5 ->
-                                        forceWalk(npc, Location(2836, 10061, 0), "dumb").also {
-                                            targetLocation = Location(2836, 10061, 0)
-                                        }
-
-                                    6 ->
-                                        forceWalk(npc, Location(2824, 10050, 0), "dumb").also {
-                                            targetLocation = Location(2824, 10050, 0)
-                                        }
-
-                                    7 -> {
-                                        npc.teleport(Location(2823, 10035, 0))
-                                        npc.startDeath(null)
-                                        npc.isWalks = true
-                                        return true
-                                    }
-                                }
-                            }
-
-                            count++
-                            if (count > 100) {
-                                npc.startDeath(null)
-                                npc.isWalks = true
-                                return true
-                            }
-                            return false
-                        }
-                    },
-                )
-            } else {
-                sendMessage(player, "The cell door is locked.")
-            }
-        }
         onUseWith(IntType.SCENERY, Items.CELL_KEY_2_3137, Scenery.CELL_DOOR_3767) { player, _, with ->
-            unlockGodricCellDoor(player, with)
+            unlockCellDoor(player, with, Items.CELL_KEY_2_3137, NPCs.GODRIC_1114, mapOf(8 to 10, 9 to 11), "Thank you, my friend.")
             return@onUseWith true
         }
         on(Scenery.CELL_DOOR_3767, IntType.SCENERY, "unlock") { player, node ->
-            unlockGodricCellDoor(player, node)
+            unlockCellDoor(player, node, Items.CELL_KEY_2_3137, NPCs.GODRIC_1114, mapOf(8 to 10, 9 to 11), "Thank you, my friend.")
             return@on true
         }
 
@@ -339,14 +141,87 @@ class TrollStrongholdPlugin : InteractionListener {
         }
     }
 
-    fun success(
-        player: Player,
-        skill: Int,
-    ): Boolean {
+    private fun success(player: Player, skill: Int): Boolean {
         val level = player.getSkills().getLevel(skill).toDouble()
         val req = 30.0
         val successChance = ceil((level * 50 - req) / req / 3 * 4)
         val roll = RandomFunction.random(99)
         return successChance >= roll
+    }
+
+    private fun unlockCellDoor(player: Player, node: Node, keyItem: Int, npcId: Int, questStageMapping: Map<Int, Int>, npcMessage: String) {
+        if (!inInventory(player, keyItem)) {
+            sendMessage(player, "The cell door is locked.")
+            return
+        }
+
+        sendMessage(player, "You unlock the cell door.")
+
+        val currentStage = getQuestStage(player, Quests.TROLL_STRONGHOLD)
+        questStageMapping[currentStage]?.let { setQuestStage(player, Quests.TROLL_STRONGHOLD, it) }
+
+        val npc = findNPC(npcId)!!
+        sendNPCDialogue(player, npcId, npcMessage)
+        npc.walkRadius = 40
+
+        submitWorldPulse(object : Pulse(1) {
+            var count = 0
+            var stage = 0
+            var trigger = true
+            var targetLocation = Location(0, 0, 0)
+
+            override fun pulse(): Boolean {
+                if (npc.location == targetLocation) {
+                    stage++
+                    trigger = true
+                }
+
+                if (trigger) {
+                    trigger = false
+                    when (stage) {
+                        0 -> {
+                            forceWalk(npc, Location(2831, if (npcId == NPCs.EADGAR_1113) 10082 else 10078, 0), "dumb")
+                            npc.walkRadius = 11
+                            npc.isWalks = false
+                            targetLocation = Location(2831, if (npcId == NPCs.EADGAR_1113) 10082 else 10078, 0)
+                        }
+                        1 -> {
+                            DoorActionHandler.handleAutowalkDoor(npc, node.asScenery())
+                            targetLocation = Location(2832, if (npcId == NPCs.EADGAR_1113) 10082 else 10078, 0)
+                        }
+                        4 -> {
+                            forceWalk(npc, Location(2836, if (npcId == NPCs.EADGAR_1113) 10082 else 10078, 0), "dumb")
+                            targetLocation = Location(2836, if (npcId == NPCs.EADGAR_1113) 10082 else 10078, 0)
+                        }
+                        5 -> {
+                            forceWalk(npc, Location(2836, 10061, 0), "")
+                            targetLocation = Location(2836, 10061, 0)
+                        }
+                        6 -> {
+                            forceWalk(npc, Location(2824, 10050, 0), "")
+                            targetLocation = Location(2824, 10050, 0)
+                        }
+                        7 -> {
+                            npc.teleport(Location(2823, 10035, 0))
+                            npc.startDeath(null)
+                            npc.isWalks = true
+                            return true
+                        }
+                    }
+                }
+
+                if (count++ > 100) {
+                    npc.startDeath(null)
+                    npc.isWalks = true
+                    return true
+                }
+                return false
+            }
+        })
+    }
+
+
+    companion object {
+        val pickpocketNPCs = listOf(listOf(NPCs.TWIG_1128, NPCs.TWIG_1126, Items.CELL_KEY_1_3136), listOf(NPCs.BERRY_1129, NPCs.BERRY_1127, Items.CELL_KEY_2_3137))
     }
 }
