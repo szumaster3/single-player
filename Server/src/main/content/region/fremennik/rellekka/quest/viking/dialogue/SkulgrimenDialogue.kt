@@ -25,6 +25,8 @@ import shared.consts.Quests
 @Initializable
 class SkulgrimenDialogue(player: Player? = null) : Dialogue(player) {
 
+    private var selectedArmour: RockShellArmour? = null
+
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         when {
@@ -117,78 +119,63 @@ class SkulgrimenDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             102 -> when (buttonId) {
-                1 -> playerl(FaceAnim.HALF_ASKING, "Hello there. I have these shards of rock crab shell, and believe you might be able to make them into armour for me...?").also { stage++ }
+                1 -> playerl(FaceAnim.HALF_ASKING, "Hello there. I have these shards of rock crab shell, and believe you might be able to make them into armour for me...?").also { stage = 103 }
+                2 -> { end(); openNpcShop(player, NPCs.SKULGRIMEN_1303) }
+            }
+
+            103 -> npcl(FaceAnim.FRIENDLY, "No problem, ${FremennikTrials.getFremennikName(player)}. What armour do you want?").also { stage = 104 }
+
+            104 -> options("A fine helm", "Sturdy bodyarmour", "Powerful leg armour", "Nothing").also { stage = 105 }
+
+            105 -> {
+                selectedArmour = when (buttonId) {
+                    1 -> RockShellArmour.HELM
+                    2 -> RockShellArmour.TOP
+                    3 -> RockShellArmour.LEGS
+                    4 -> null
+                    else -> null
+                }
+
+                if (selectedArmour != null) {
+                    npcl(FaceAnim.HALF_ASKING, "It'll cost ${selectedArmour!!.coinAmount} coins. That ok?").also { stage = 106 }
+                } else {
+                    npcl(FaceAnim.FRIENDLY, "As you wish.").also { stage = END_DIALOGUE }
+                }
+            }
+
+            106 -> options("YES", "NO").also { stage = 107 }
+            107 -> when (buttonId) {
+                1 -> {
+                    val armour = selectedArmour!!
+                    val hasMaterials = player!!.inventory.containsItems(
+                        Item(Items.COINS_995, armour.coinAmount),
+                        Item(Items.DAGANNOTH_HIDE_6155, armour.hideAmount),
+                        Item(armour.shellItem, 1)
+                    )
+
+                    if (!hasMaterials) {
+                        npcl(FaceAnim.HALF_GUILTY, "Sorry. You need ${armour.hideAmount} daggermouth hides, 1 ${getItemName(armour.shellItem).lowercase()}, and ${armour.coinAmount} coins. Come back when you got it.").also { stage = END_DIALOGUE }
+                    } else {
+                        removeItem(player!!, Item(Items.COINS_995, armour.coinAmount))
+                        removeItem(player!!, Item(Items.DAGANNOTH_HIDE_6155, armour.hideAmount))
+                        removeItem(player!!, Item(armour.shellItem, 1))
+                        addItemOrDrop(player!!, armour.product)
+                        npcl(FaceAnim.FRIENDLY, "There you go. ${armour.name.lowercase().replace('_',' ')}. You want another?").also { stage = 104 }
+                    }
+                }
                 2 -> {
-                    end()
-                    openNpcShop(player, NPCs.SKULGRIMEN_1303)
+                    npcl(FaceAnim.FRIENDLY, "As you wish. What kind of armour do you want?").also { stage = 104 }
                 }
-            }
-            103 -> npcl(FaceAnim.FRIENDLY, "No problem, ${FremennikTrials.getFremennikName(player)}. What armour you want?").also { stage++ }
-            104 -> options("A fine helm", "Sturdy bodyarmour", "Powerful leg armour", "Nothing").also { stage++ }
-            105 -> when (buttonId) {
-                1 -> npcl(FaceAnim.HALF_ASKING, "It'll cost 5,000 coins. That ok?").also { stage += 2 }
-                2 -> npcl(FaceAnim.HALF_ASKING, "It'll cost 10,000 coins. That ok?").also { stage += 4 }
-                3 -> npcl(FaceAnim.HALF_ASKING, "It'll cost 7,500 coins. That ok?").also { stage += 6 }
-                4 -> playerl(FaceAnim.HAPPY, "Actually, I don't want anything.").also { stage++ }
-            }
-
-            106 -> npcl(FaceAnim.FRIENDLY, "AS you wish.").also { stage = END_DIALOGUE }
-            107 -> options("YES", "NO").also { stage++ }
-            108 -> when (buttonId) {
-                1 -> {
-                    if (!player.inventory.containsItems(Item(Items.COINS_995, 5000), Item(Items.DAGANNOTH_HIDE_6155, 1), Item(Items.ROCK_SHELL_CHUNK_6157, 1))) {
-                        npcl(FaceAnim.HALF_GUILTY, "Sorry. Need 1 piece of dark daggermouth hide, 1 rock-shell chunk and 5,000 coins to make you helmet. Come back when you got it.").also { stage = END_DIALOGUE }
-                    } else {
-                        removeItem(player, Item(Items.COINS_995, 5000))
-                        removeItem(player, Item(Items.DAGANNOTH_HIDE_6155, 1))
-                        removeItem(player, Item(Items.ROCK_SHELL_CHUNK_6157, 1))
-                        addItemOrDrop(player, Items.ROCK_SHELL_HELM_6128)
-                        npc("There you go. Fine helm. You want another?")
-                        stage = 107
-                    }
-                }
-
-                2 -> npcl(FaceAnim.FRIENDLY, "AS you wish.").also { stage = END_DIALOGUE }
-            }
-
-            109 -> options("YES", "NO").also { stage++ }
-            110 -> when (buttonId) {
-                1 -> {
-                    if (!player.inventory.containsItems(Item(Items.COINS_995, 10000), Item(Items.DAGANNOTH_HIDE_6155, 3), Item(Items.ROCK_SHELL_SHARD_6159, 1))) {
-                        npcl(FaceAnim.HALF_GUILTY, "Apologies. Need 3 pieces of dark daggermouth hide, 1 rock-shell shard and 10,000 coins to make you strong armour. Come back when you got it.").also { stage = END_DIALOGUE }
-                    } else {
-                        removeItem(player, Item(Items.COINS_995, 10000))
-                        removeItem(player, Item(Items.DAGANNOTH_HIDE_6155, 3))
-                        removeItem(player, Item(Items.ROCK_SHELL_SHARD_6159, 1))
-                        addItemOrDrop(player, Items.ROCK_SHELL_PLATE_6129)
-                        npc("There you go. Sturdy armour. You need another piece?")
-                        stage = 109
-                    }
-                }
-
-                2 -> npcl(FaceAnim.FRIENDLY, "AS you wish.").also { stage = END_DIALOGUE }
-            }
-
-            111 -> options("YES", "NO").also { stage++ }
-            112 -> when (buttonId) {
-                1 -> {
-                    if (!player.inventory.containsItems(Item(Items.COINS_995, 7500), Item(Items.DAGANNOTH_HIDE_6155, 2), Item(Items.ROCK_SHELL_SPLINTER_6161, 1))) {
-                        npcl(FaceAnim.HALF_GUILTY, "Apologies. Need 2 pieces of dark daggermouth hide, 1 rock-shell splinter and 7,500 coins to make you leg armour. Come back when you got it.").also { stage = END_DIALOGUE }
-                    } else {
-                        removeItem(player, Item(Items.COINS_995, 7500))
-                        removeItem(player, Item(Items.DAGANNOTH_HIDE_6155, 2))
-                        removeItem(player, Item(Items.ROCK_SHELL_SPLINTER_6161, 1))
-                        addItemOrDrop(player, Items.ROCK_SHELL_LEGS_6130)
-                        npc("There you go. Sturdy legs. You need another piece?")
-                        stage = 111
-                    }
-                }
-
-                2 -> npcl(FaceAnim.FRIENDLY, "AS you wish.").also { stage = END_DIALOGUE }
             }
         }
         return true
     }
 
     override fun getIds(): IntArray = intArrayOf(NPCs.SKULGRIMEN_1303)
+}
+
+private enum class RockShellArmour(val product: Int, val hideAmount: Int, val shellItem: Int, val coinAmount: Int) {
+    HELM(Items.ROCK_SHELL_HELM_6128, 1, Items.ROCK_SHELL_CHUNK_6157, 5000),
+    TOP(Items.ROCK_SHELL_PLATE_6129, 3, Items.ROCK_SHELL_SHARD_6159, 10000),
+    LEGS(Items.ROCK_SHELL_LEGS_6130, 2, Items.ROCK_SHELL_SPLINTER_6161, 7500)
 }
