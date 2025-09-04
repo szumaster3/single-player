@@ -1,17 +1,15 @@
 package content.global.skill.fletching.items.crossbow
 
 import core.api.*
+import core.game.interaction.Clocks
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.SkillPulse
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import shared.consts.Items
 
-class GrapplePulse(
-    player: Player?,
-    node: Item?,
-    private var amount: Int,
-) : SkillPulse<Item?>(player, node) {
+class GrapplePulse(player: Player?, node: Item?, private var amount: Int) : SkillPulse<Item?>(player, node) {
+
     override fun checkRequirements(): Boolean {
         val inventoryAmount = amountInInventory(player, Items.MITH_GRAPPLE_TIP_9416)
         if (amount > inventoryAmount) {
@@ -33,10 +31,9 @@ class GrapplePulse(
     }
 
     override fun reward(): Boolean {
-        if (delay == 1) {
-            delay = 3
-            return false
-        }
+        if (!clockReady(player, Clocks.SKILLING)) return false
+        delayClock(player, Clocks.SKILLING, 3)
+
         if (removeItem(player, Items.MITH_GRAPPLE_TIP_9416) && removeItem(player, Items.MITHRIL_BOLTS_9142)) {
             addItem(player, Items.MITH_GRAPPLE_9418)
             rewardXP(player, Skills.FLETCHING, 5.0)

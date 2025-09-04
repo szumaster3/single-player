@@ -92,7 +92,6 @@ enum class SummoningPouch(val slot: Int, val pouchId: Int, val requiredLevel: In
     SACRED_CLAY_POUCH_4(-1, Items.SACRED_CLAY_POUCH_CLASS_4_14428, 60, 0.0, NPCs.CLAY_FAMILIAR_CLASS_4_8246, 0.0, 7, false, Item(Items.SACRED_CLAY_CLASS_4_14188)),
     SACRED_CLAY_POUCH_5(-1, Items.SACRED_CLAY_POUCH_CLASS_5_14430, 80, 0.0, NPCs.CLAY_FAMILIAR_CLASS_5_8248, 0.0, 9, false, Item(Items.SACRED_CLAY_CLASS_5_14190));
 
-
     val items: Array<Item> = items as Array<Item>
     var abyssal: Boolean = false
 
@@ -101,19 +100,15 @@ enum class SummoningPouch(val slot: Int, val pouchId: Int, val requiredLevel: In
     }
 
     companion object {
-        val POUCH_IDS = values().map { it.pouchId }.toIntArray()
-        private val POUCHES: Map<Int, SummoningPouch> = values().associateBy { it.pouchId }
-        private val SLOT_MAP: Map<Int, SummoningPouch> = values().associateBy { it.slot }
+        private val valuesList = values()
+        private val POUCH_MAP: Map<Int, SummoningPouch> = valuesList.associateBy { it.pouchId }
+        private val SLOT_MAP: Map<Int, SummoningPouch> = valuesList.filter { it.slot >= 0 }.associateBy { it.slot }
 
-        /**
-         * Gets [SummoningPouch] by pouchId or null if not found.
-         */
+        val POUCH_IDS: IntArray = valuesList.map { it.pouchId }.toIntArray()
+
         @JvmStatic
-        fun get(pouchId: Int): SummoningPouch? = POUCHES[pouchId]
+        fun get(pouchId: Int): SummoningPouch? = POUCH_MAP[pouchId]
 
-        /**
-         * Gets [SummoningPouch] by slot or null if not found.
-         */
         @JvmStatic
         fun forSlot(slot: Int): SummoningPouch? = SLOT_MAP[slot]
     }

@@ -2,6 +2,7 @@ package content.global.skill.crafting.glassblowing
 
 import core.api.*
 import core.game.event.ResourceProducedEvent
+import core.game.interaction.Clocks
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
 import core.game.system.task.Pulse
@@ -27,6 +28,9 @@ class GlassblowingPulse(
     private var amount: Int,
 ) : Pulse() {
     override fun pulse(): Boolean {
+        if (!clockReady(player, Clocks.SKILLING)) return false
+        delayClock(player, Clocks.SKILLING, 3)
+
         if (amount < 1) {
             return true
         }
@@ -53,7 +57,6 @@ class GlassblowingPulse(
             return true
         }
         amount--
-        delay = 3
         return false
     }
 }

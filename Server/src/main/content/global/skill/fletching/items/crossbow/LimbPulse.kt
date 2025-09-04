@@ -1,6 +1,9 @@
 package content.global.skill.fletching.items.crossbow
 
+import core.api.clockReady
+import core.api.delayClock
 import core.api.playAudio
+import core.game.interaction.Clocks
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.SkillPulse
 import core.game.node.entity.skill.Skills
@@ -8,12 +11,8 @@ import core.game.node.item.Item
 import core.game.world.update.flag.context.Animation
 import shared.consts.Sounds
 
-class LimbPulse(
-    player: Player?,
-    node: Item,
-    private val limb: Limb,
-    private var amount: Int,
-) : SkillPulse<Item?>(player, node) {
+class LimbPulse(player: Player?, node: Item, private val limb: Limb, private var amount: Int) : SkillPulse<Item?>(player, node) {
+
     override fun checkRequirements(): Boolean {
         if (player.skills.getLevel(Skills.FLETCHING) < limb.level) {
             player.dialogueInterpreter.sendDialogue(
@@ -38,10 +37,9 @@ class LimbPulse(
     }
 
     override fun reward(): Boolean {
-        if (delay == 1) {
-            super.setDelay(6)
-            return false
-        }
+        if (!clockReady(player, Clocks.SKILLING)) return false
+        delayClock(player, Clocks.SKILLING, 6)
+
         if (player.inventory.remove(Item(limb.stock), Item(limb.limb))) {
             player.inventory.add(Item(limb.product))
             player.skills.addExperience(Skills.FLETCHING, limb.experience, true)

@@ -2,6 +2,7 @@ package content.global.skill.thieving
 
 import core.api.*
 import core.game.event.ResourceProducedEvent
+import core.game.interaction.Clocks
 import core.game.node.entity.combat.ImpactHandler
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.SkillPulse
@@ -66,18 +67,14 @@ class StallThiefPulse(
 
     override fun reward(): Boolean {
         val goods = stall?.message ?: "goods"
-
-        if (ticks == 0) {
-            animate(player, ANIMATION)
-            lockInteractions(player, 2)
-            if (node?.id != 2793) {
-                sendMessage(player, "You attempt to steal some $goods from the stall.")
-            }
+        animate(player, ANIMATION)
+        lockInteractions(player, 2)
+        if (node?.id != 2793) {
+            sendMessage(player, "You attempt to steal some $goods from the stall.")
         }
 
-        if (++ticks % 3 != 0) {
-            return false
-        }
+        if (!clockReady(player, Clocks.SKILLING)) return false
+        delayClock(player, Clocks.SKILLING, 3)
 
         val success = success()
         if (success) {

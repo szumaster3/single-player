@@ -2,6 +2,7 @@ package content.global.skill.smithing
 
 import core.api.*
 import core.game.event.ResourceProducedEvent
+import core.game.interaction.Clocks
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.entity.skill.SkillPulse
@@ -71,10 +72,9 @@ class SmithingPulse(
     }
 
     override fun reward(): Boolean {
-        if (delay == 1) {
-            delay = 4
-            return false
-        }
+        if (!clockReady(player, Clocks.SKILLING)) return false
+        delayClock(player, Clocks.SKILLING, 4)
+
         player.lock(4)
         player.inventory.remove(Item(bar.barType.barType, bar.smithingType.required))
         val item = Item(node!!.id, bar.smithingType.productAmount)

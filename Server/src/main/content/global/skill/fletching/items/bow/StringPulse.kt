@@ -1,6 +1,9 @@
 package content.global.skill.fletching.items.bow
 
+import core.api.clockReady
+import core.api.delayClock
 import core.api.playAudio
+import core.game.interaction.Clocks
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.entity.skill.SkillPulse
@@ -39,6 +42,9 @@ class StringPulse(player: Player?, node: Item?, private val bow: Strings, privat
     }
 
     override fun reward(): Boolean {
+        if (!clockReady(player, Clocks.SKILLING)) return false
+        delayClock(player, Clocks.SKILLING, 2)
+
         if (player.inventory.remove(Item(bow.unfinished), Item(bow.string))) {
             player.inventory.add(Item(bow.product))
             player.getSkills().addExperience(Skills.FLETCHING, bow.experience, true)

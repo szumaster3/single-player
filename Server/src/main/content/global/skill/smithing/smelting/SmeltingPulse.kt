@@ -4,6 +4,7 @@ import content.global.skill.smithing.Bar
 import core.api.*
 import core.game.container.impl.EquipmentContainer
 import core.game.event.ResourceProducedEvent
+import core.game.interaction.Clocks
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.entity.skill.SkillPulse
@@ -83,15 +84,15 @@ class SmeltingPulse : SkillPulse<Item?> {
     }
 
     override fun reward(): Boolean {
-        if (!superHeat && ++ticks % 5 != 0) {
-            return false
-        }
         if (!superHeat) {
             sendMessage(
                 player,
                 "You place a lump of " + StringUtils.formatDisplayName(bar.toString()).lowercase() + " in the furnace.",
             )
+            if (!clockReady(player, Clocks.SKILLING)) return false
+            delayClock(player, Clocks.SKILLING, 5)
         }
+
         for (i in bar!!.ores) {
             if (!removeItem(player, i)) {
                 return true

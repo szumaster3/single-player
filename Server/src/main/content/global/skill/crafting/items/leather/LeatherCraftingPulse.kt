@@ -1,6 +1,7 @@
 package content.global.skill.crafting.items.leather
 
 import core.api.*
+import core.game.interaction.Clocks
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.SkillPulse
 import core.game.node.entity.skill.Skills
@@ -54,7 +55,8 @@ class LeatherCraftingPulse(player: Player?, node: Item?, private val craft: Leat
     }
 
     override fun reward(): Boolean {
-        if (++ticks % 5 != 0) return false
+        if (!clockReady(player, Clocks.SKILLING)) return false
+        delayClock(player, Clocks.SKILLING, 5)
 
         var removed = removeItem(player, Item(craft.input, craft.amount))
         if (craft.studded) {

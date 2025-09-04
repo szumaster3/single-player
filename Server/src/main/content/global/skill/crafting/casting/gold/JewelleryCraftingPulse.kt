@@ -1,9 +1,7 @@
 package content.global.skill.crafting.casting.gold
 
-import core.api.animate
-import core.api.getStatLevel
-import core.api.playAudio
-import core.api.rewardXP
+import core.api.*
+import core.game.interaction.Clocks
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.SkillPulse
 import core.game.node.entity.skill.Skills
@@ -28,9 +26,9 @@ class JewelleryCraftingPulse(player: Player?, node: Item?, val type: Jewellery.J
     }
 
     override fun reward(): Boolean {
-        if (++ticks % 5 != 0) {
-            return false
-        }
+        if (!clockReady(player, Clocks.SKILLING)) return false
+        delayClock(player, Clocks.SKILLING, 5)
+
         if (player.inventory.remove(*items)) {
             val item = Item(type.sendItem)
             player.inventory.add(item)

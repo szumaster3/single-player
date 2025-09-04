@@ -1,6 +1,7 @@
 package content.global.skill.crafting.rawmaterial
 
 import core.api.*
+import core.game.interaction.Clocks
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.SkillPulse
 import core.game.node.item.Item
@@ -40,7 +41,9 @@ class GraniteCutPulse(player: Player, node: Item, var amount: Int) : SkillPulse<
     }
 
     override fun reward(): Boolean {
-        if (++ticks % 2 != 0) return false
+        if (!clockReady(player, Clocks.SKILLING)) return false
+        delayClock(player, Clocks.SKILLING, 2)
+
         if (amount < 1) return true
 
         if (removeItem(player, Item(node.id, 1))) {

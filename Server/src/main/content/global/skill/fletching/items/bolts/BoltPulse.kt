@@ -1,10 +1,8 @@
 package content.global.skill.fletching.items.bolts
 
 import content.global.skill.slayer.SlayerManager.Companion.getInstance
-import core.api.getStatLevel
-import core.api.hasSpaceFor
-import core.api.inInventory
-import core.api.sendDialogue
+import core.api.*
+import core.game.interaction.Clocks
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.SkillPulse
 import core.game.node.entity.skill.Skills
@@ -12,20 +10,9 @@ import core.game.node.item.Item
 import shared.consts.Items
 
 /**
- * The type Bolt pulse.
+ * Handles fletching bolts.
  */
-class BoltPulse
-/**
- * Instantiates a new Bolt pulse.
- *
- * @param player  the player
- * @param node    the node
- * @param bolt    the bolt
- * @param feather the feather
- * @param sets    the sets
- */(player: Player?, node: Item?, private val bolt: Bolt, private val feather: Item, private var sets: Int) :
-    SkillPulse<Item?>(player, node) {
-    private val useSets = false
+class BoltPulse(player: Player?, node: Item?, private val bolt: Bolt, private val feather: Item, private var sets: Int) : SkillPulse<Item?>(player, node) {
 
     override fun checkRequirements(): Boolean {
         if (bolt.unfinished == Items.BROAD_BOLTS_UNF_13279) {
@@ -56,11 +43,11 @@ class BoltPulse
     }
 
     override fun reward(): Boolean {
+        if (!clockReady(player, Clocks.SKILLING)) return false
+        delayClock(player, Clocks.SKILLING, 3)
+
         val featherAmount = player.inventory.getAmount(feather)
         val boltAmount = player.inventory.getAmount(bolt.unfinished)
-        if (delay == 1) {
-            super.setDelay(3)
-        }
         val unfinished = Item(bolt.unfinished)
         if (featherAmount >= 10 && boltAmount >= 10) {
             feather.amount = 10

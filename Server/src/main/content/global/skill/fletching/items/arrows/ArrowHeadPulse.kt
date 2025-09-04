@@ -1,10 +1,8 @@
 package content.global.skill.fletching.items.arrows
 
 import content.global.skill.slayer.SlayerManager.Companion.getInstance
-import core.api.getItemName
-import core.api.getStatLevel
-import core.api.hasSpaceFor
-import core.api.sendDialogue
+import core.api.*
+import core.game.interaction.Clocks
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.SkillPulse
 import core.game.node.entity.skill.Skills
@@ -39,9 +37,9 @@ class ArrowHeadPulse(
     }
 
     override fun reward(): Boolean {
-        if (delay == 1) {
-            super.setDelay(3)
-        }
+        if (!clockReady(player, Clocks.SKILLING)) return false
+        delayClock(player, Clocks.SKILLING, 3)
+
         val tip = Item(arrow.unfinished)
         val tipAmount = player.inventory.getAmount(arrow.unfinished)
         val shaftAmount = player.inventory.getAmount(HEADLESS_ARROW)

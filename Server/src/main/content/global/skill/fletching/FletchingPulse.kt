@@ -1,6 +1,7 @@
 package content.global.skill.fletching
 
 import core.api.*
+import core.game.interaction.Clocks
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.entity.skill.SkillPulse
@@ -13,10 +14,9 @@ import core.tools.StringUtils
 import shared.consts.Animations
 import shared.consts.Items
 import shared.consts.Quests
-import shared.consts.Sounds
 
 /**
- * Represents the fletching skill pulse.
+ * Represents a fletching skill pulse.
  */
 class FletchingPulse(
     player: Player,
@@ -44,12 +44,11 @@ class FletchingPulse(
             return false
         }
 
-        if (amount > amountInInventory(player, node!!.id)) {
-            amount = amountInInventory(player, node!!.id)
+        if (amount > amountInInventory(player, node.id)) {
+            amount = amountInInventory(player, node.id)
         }
 
-        if (
-            fletch == Fletching.FletchingItems.OGRE_ARROW_SHAFT &&
+        if (fletch == Fletching.FletchingItems.OGRE_ARROW_SHAFT &&
             getQuestStage(player, Quests.BIG_CHOMPY_BIRD_HUNTING) == 0
         ) {
             sendMessage(player, "You must have started Big Chompy Bird Hunting to make those.")
@@ -66,6 +65,7 @@ class FletchingPulse(
                 return false
             }
         }
+
         return true
     }
 
@@ -74,14 +74,14 @@ class FletchingPulse(
     }
 
     override fun reward(): Boolean {
+        if (!clockReady(player, Clocks.SKILLING)) return false
+        delayClock(player, Clocks.SKILLING, 3)
+
         if (bankZone.insideBorder(player) && fletch == Fletching.FletchingItems.MAGIC_SHORTBOW) {
             player.achievementDiaryManager.finishTask(player, DiaryType.SEERS_VILLAGE, 2, 2)
         }
 
-        if (delay == 1) {
-            setDelay(4)
-            return false
-        }
+        if (!player.inventory.contains(node.id, node.amount)) return true
 
         if (player.inventory.remove(node)) {
             val item = Item(fletch.id, fletch.amount)
@@ -93,7 +93,7 @@ class FletchingPulse(
                 }
                 Fletching.FletchingItems.OGRE_COMPOSITE_BOW -> {
                     if (!player.inventory.contains(Items.WOLF_BONES_2859, 1)) return false
-                    else player.inventory.remove(Item(Items.WOLF_BONES_2859))
+                    player.inventory.remove(Item(Items.WOLF_BONES_2859))
                 }
                 else -> {}
             }
@@ -102,8 +102,7 @@ class FletchingPulse(
             player.skills.addExperience(Skills.FLETCHING, fletch.experience, true)
             player.packetDispatch.sendMessage(getMessage())
 
-            if (
-                fletch.id == Fletching.FletchingItems.MAGIC_SHORTBOW.id &&
+            if (fletch.id == Fletching.FletchingItems.MAGIC_SHORTBOW.id &&
                 (ZoneBorders(2721, 3489, 2724, 3493, 0).insideBorder(player) ||
                         ZoneBorders(2727, 3487, 2730, 3490, 0).insideBorder(player)) &&
                 !player.achievementDiaryManager.hasCompletedTask(DiaryType.SEERS_VILLAGE, 2, 2)

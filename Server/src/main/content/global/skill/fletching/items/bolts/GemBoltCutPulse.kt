@@ -1,13 +1,13 @@
 package content.global.skill.fletching.items.bolts
 
-import core.api.getStatLevel
-import core.api.hasSpaceFor
-import core.api.sendDialogue
+import core.api.*
+import core.game.interaction.Clocks
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.SkillPulse
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import shared.consts.Items
+import shared.consts.Sounds
 
 class GemBoltCutPulse(player: Player?, node: Item?, private val gem: GemBolt, private var amount: Int) : SkillPulse<Item?>(player, node) {
 
@@ -38,13 +38,14 @@ class GemBoltCutPulse(player: Player?, node: Item?, private val gem: GemBolt, pr
     override fun animate() {
         if (ticks % 6 == 0) {
             player.animate(animation)
+            playAudio(player, Sounds.CHISEL_2586)
         }
     }
 
     override fun reward(): Boolean {
-        if (++ticks % 5 != 0) {
-            return false
-        }
+        if (!clockReady(player, Clocks.SKILLING)) return false
+        delayClock(player, Clocks.SKILLING, 4)
+
         val reward =
             when (gem.gem) {
                 Items.OYSTER_PEARLS_413, Items.ONYX_6573 -> Item(gem.tip, 24)

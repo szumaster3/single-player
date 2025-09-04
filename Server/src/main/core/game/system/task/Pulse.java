@@ -136,7 +136,6 @@ public abstract class Pulse implements Runnable {
         checks[index] = node;
     }
 
-
     /**
      * Gets the node at the specified index.
      *

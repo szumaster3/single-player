@@ -1,22 +1,16 @@
 package content.global.skill.fletching.items.arrows
 
-import core.api.hasSpaceFor
-import core.api.playAudio
-import core.api.sendDialogue
+import core.api.*
+import core.game.interaction.Clocks
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.SkillPulse
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import shared.consts.Items
-import shared.consts.Sounds
 import kotlin.math.min
 
-class HeadlessArrowPulse(
-    player: Player?,
-    node: Item?,
-    private val feather: Item?,
-    private var sets: Int,
-) : SkillPulse<Item?>(player, node) {
+class HeadlessArrowPulse(player: Player?, node: Item?, private val feather: Item?, private var sets: Int) : SkillPulse<Item?>(player, node) {
+
     private val HEADLESS_ARROW = Item(Items.HEADLESS_ARROW_53)
     private val ARROW_SHAFT = Item(Items.ARROW_SHAFT_52)
     private var useSets = false
@@ -30,12 +24,9 @@ class HeadlessArrowPulse(
             player.dialogueInterpreter.sendDialogue("You don't have any feathers.")
             return false
         }
-        useSets =
-            if (player.inventory.contains(ARROW_SHAFT.id, 15) && player.inventory.contains(feather.id, 15)) {
-                true
-            } else {
-                false
-            }
+
+        useSets = player.inventory.contains(ARROW_SHAFT.id, 15) && player.inventory.contains(feather.id, 15)
+
         if (!hasSpaceFor(player, HEADLESS_ARROW.asItem())) {
             sendDialogue(player, "You do not have enough inventory space.")
             return false
@@ -47,11 +38,12 @@ class HeadlessArrowPulse(
     }
 
     override fun reward(): Boolean {
+        if (!clockReady(player, Clocks.SKILLING)) return false
+        delayClock(player, Clocks.SKILLING, 3)
+
         val featherAmount = player.inventory.getAmount(feather)
         val shaftAmount = player.inventory.getAmount(ARROW_SHAFT)
-        if (delay == 1) {
-            super.setDelay(3)
-        }
+
         if (featherAmount >= 15 && shaftAmount >= 15) {
             feather!!.amount = 15
             ARROW_SHAFT.amount = 15
@@ -87,28 +79,5 @@ class HeadlessArrowPulse(
     }
 
     override fun message(type: Int) {
-    }
-
-    private fun getFeather(): Item? {
-        val length = FEATHER.size
-        for (i in 0 until length) {
-            val f = FEATHER[i]
-            if (player.inventory.containsItem(f)) {
-                return f
-            }
-        }
-        return null
-    }
-
-    companion object {
-        private val FEATHER =
-            arrayOf(
-                Item(Items.FEATHER_314),
-                Item(Items.STRIPY_FEATHER_10087),
-                Item(Items.RED_FEATHER_10088),
-                Item(Items.BLUE_FEATHER_10089),
-                Item(Items.YELLOW_FEATHER_10090),
-                Item(Items.ORANGE_FEATHER_10091),
-            )
     }
 }

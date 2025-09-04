@@ -44,6 +44,8 @@ enum class RepairItem(
     ;
 
     companion object {
+        private val BY_ITEM_ID: Map<Int, RepairItem> = values().associateBy { it.item.id }
+
         /**
          * Finds a [RepairItem] by item id.
          *
@@ -51,6 +53,6 @@ enum class RepairItem(
          * @return The repaired item or null if not found.
          */
         @JvmStatic
-        fun forId(id: Int): RepairItem? = values().find { it.item.id == id }
+        fun forId(id: Int): RepairItem? = BY_ITEM_ID[id]
     }
 }

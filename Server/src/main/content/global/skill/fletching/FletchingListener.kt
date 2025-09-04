@@ -11,7 +11,6 @@ import core.game.dialogue.SkillDialogueHandler
 import core.game.dialogue.SkillDialogueHandler.SkillDialogue
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import core.game.node.entity.impl.PulseType
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import shared.consts.Components
@@ -25,21 +24,8 @@ class FletchingListener : InteractionListener {
          * Handles fletch logs using knife.
          */
 
-        onUseWith(
-            IntType.ITEM,
-            Items.KNIFE_946,
-            Items.LOGS_1511,
-            Items.OAK_LOGS_1521,
-            Items.WILLOW_LOGS_1519,
-            Items.MAPLE_LOGS_1517,
-            Items.YEW_LOGS_1515,
-            Items.MAGIC_LOGS_1513,
-            Items.ACHEY_TREE_LOGS_2862,
-            Items.MAHOGANY_LOGS_6332,
-            Items.TEAK_LOGS_6333
-        ) { player, _, base ->
+        onUseWith(IntType.ITEM, Items.KNIFE_946, *FLETCH_LOGS) { player, _, base ->
             val items = Fletching.getItems(base.id)!!
-
             val dialogueType = when (items.size) {
                 2 -> SkillDialogue.TWO_OPTION
                 3 -> SkillDialogue.THREE_OPTION
@@ -49,8 +35,11 @@ class FletchingListener : InteractionListener {
 
             val handler = object : SkillDialogueHandler(player, dialogueType, *items) {
                 override fun create(amount: Int, index: Int) {
-                    val item = Fletching.getEntries(base.id)?.get(index)
-                    player.pulseManager.run(FletchingPulse(player, base.asItem(), amount, item!!))
+                    val item = Fletching.getEntries(base.id)?.get(index) ?: return
+                    submitIndividualPulse(
+                        entity = player,
+                        pulse = FletchingPulse(player, base.asItem(), amount, item)
+                    )
                 }
 
                 override fun getAll(index: Int): Int {
@@ -58,7 +47,11 @@ class FletchingListener : InteractionListener {
                 }
             }
 
-            handler.open()
+            if (items.size == 1) {
+                handler.create(handler.getAll(0), 0)
+            } else {
+                handler.open()
+            }
             return@onUseWith true
         }
 
@@ -77,8 +70,7 @@ class FletchingListener : InteractionListener {
                 create { _, amount ->
                     submitIndividualPulse(
                         entity = player,
-                        pulse = StringPulse(player, Item(string.id), enum, amount),
-                        type = PulseType.STANDARD
+                        pulse = StringPulse(player, Item(string.id), enum, amount)
                     )
                 }
                 calculateMaxAmount {
@@ -104,8 +96,7 @@ class FletchingListener : InteractionListener {
                 ) {
                     submitIndividualPulse(
                         entity = player,
-                        pulse = HeadlessArrowPulse(player, Item(shaft.id), Item(feather.id), amount),
-                        type = PulseType.STANDARD
+                        pulse = HeadlessArrowPulse(player, Item(shaft.id), Item(feather.id), amount)
                     )
                 }
 
@@ -132,8 +123,7 @@ class FletchingListener : InteractionListener {
                 ) {
                     submitIndividualPulse(
                         entity = player,
-                        pulse = ArrowHeadPulse(player, Item(shaft.id), arrowHead, amount),
-                        type = PulseType.STANDARD
+                        pulse = ArrowHeadPulse(player, Item(shaft.id), arrowHead, amount)
                     )
                 }
 
@@ -239,8 +229,7 @@ class FletchingListener : InteractionListener {
                 create { _, amount ->
                     submitIndividualPulse(
                         entity = player,
-                        pulse = LimbPulse(player, Item(stock.id), limbEnum, amount),
-                        type = PulseType.STANDARD
+                        pulse = LimbPulse(player, Item(stock.id), limbEnum, amount)
                     )
                 }
                 calculateMaxAmount {
@@ -267,8 +256,7 @@ class FletchingListener : InteractionListener {
                 ) {
                     submitIndividualPulse(
                         entity = player,
-                        pulse = GemBoltCutPulse(player, Item(with.id), gem, amount),
-                        type = PulseType.STANDARD
+                        pulse = GemBoltCutPulse(player, Item(with.id), gem, amount)
                     )
                 }
 
@@ -320,8 +308,7 @@ class FletchingListener : InteractionListener {
                 ) {
                     submitIndividualPulse(
                         entity = player,
-                        pulse = KebbitBoltPulse(player, Item(base.id), KebbitBolt.forId(base.asItem())!!, amount),
-                        type = PulseType.STANDARD
+                        pulse = KebbitBoltPulse(player, Item(base.id), KebbitBolt.forId(base.asItem())!!, amount)
                     )
                 }
 
@@ -446,8 +433,7 @@ class FletchingListener : InteractionListener {
                 ) {
                     submitIndividualPulse(
                         entity = player,
-                        pulse = BrutalArrowPulse(player, Item(used.id), brutalArrow, amount),
-                        type = PulseType.STANDARD
+                        pulse = BrutalArrowPulse(player, Item(used.id), brutalArrow, amount)
                     )
                 }
 
@@ -456,5 +442,19 @@ class FletchingListener : InteractionListener {
             handler.open()
             return@onUseWith true
         }
+    }
+
+    companion object {
+        val FLETCH_LOGS = intArrayOf(
+            Items.LOGS_1511,
+            Items.OAK_LOGS_1521,
+            Items.WILLOW_LOGS_1519,
+            Items.MAPLE_LOGS_1517,
+            Items.YEW_LOGS_1515,
+            Items.MAGIC_LOGS_1513,
+            Items.ACHEY_TREE_LOGS_2862,
+            Items.MAHOGANY_LOGS_6332,
+            Items.TEAK_LOGS_6333
+        )
     }
 }

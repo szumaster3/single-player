@@ -1,21 +1,17 @@
 package content.global.skill.fletching.items.arrows
 
 import core.api.*
+import core.game.interaction.Clocks
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.SkillPulse
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import shared.consts.Items
 
-class BrutalArrowPulse(
-    player: Player?,
-    node: Item?,
-    private val arrow: BrutalArrow,
-    sets: Int,
-) : SkillPulse<Item?>(player, node) {
+class BrutalArrowPulse(player: Player?, node: Item?, private val arrow: BrutalArrow, sets: Int) : SkillPulse<Item?>(player, node) {
+
     private val base = Items.FLIGHTED_OGRE_ARROW_2865
     private var sets = 0
-    private var ticks = 0
 
     init {
         this.sets = sets
@@ -49,9 +45,9 @@ class BrutalArrowPulse(
     }
 
     override fun reward(): Boolean {
-        if (++ticks % 3 != 0) {
-            return false
-        }
+        if (!clockReady(player, Clocks.SKILLING)) return false
+        delayClock(player, Clocks.SKILLING, 3)
+
         val baseAmount: Int = amountInInventory(player, base)
         val nailAmount: Int = amountInInventory(player, arrow.base)
         val base = Item(base)
@@ -70,22 +66,16 @@ class BrutalArrowPulse(
         if (removeItem(player, Item(base.id, nail.amount)) && removeItem(player, Item(arrow.base, nail.amount))) {
             addItem(player, product.id, product.amount)
             rewardXP(player, Skills.FLETCHING, arrow.experience * product.amount)
-            sendMessage(
-                player,
-                if (product.amount ==
-                    1
-                ) {
-                    "You attach the " + getItemName(arrow.base).lowercase() + "to the flighted ogre arrow."
-                } else {
-                    "You fletch " +
-                        product.amount +
-                        " " +
-                        getItemName(
-                            arrow.product,
-                        ).lowercase() + " arrows."
-                },
-            )
+
+            val message = if (product.amount == 1) {
+                "You attach the ${getItemName(arrow.base).lowercase()} to the flighted ogre arrow."
+            } else {
+                "You fletch ${product.amount} ${getItemName(arrow.product).lowercase()} arrows."
+            }
+
+            sendMessage(player, message)
         }
+
         sets--
         return sets <= 0
     }

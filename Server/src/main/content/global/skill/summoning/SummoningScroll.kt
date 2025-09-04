@@ -97,9 +97,10 @@ enum class SummoningScroll(val slotId: Int, val itemId: Int, val xp: Double, val
         get() = items[0]
 
     companion object {
-        private val BY_SLOT_ID = values().associateBy { it.slotId }
-        private val BY_ITEM_ID = values().associateBy { it.itemId }
-        private val BY_POUCH = values().associateBy { it.pouch }
+        private val valuesList = values()
+        private val BY_SLOT_ID: Map<Int, SummoningScroll> = valuesList.associateBy { it.slotId }
+        private val BY_ITEM_ID: Map<Int, SummoningScroll> = valuesList.associateBy { it.itemId }
+        private val BY_POUCH: Map<Int, SummoningScroll> = valuesList.associateBy { it.pouch }
 
         /**
          * Get scroll by slot id, or `null` if not found.
@@ -112,7 +113,7 @@ enum class SummoningScroll(val slotId: Int, val itemId: Int, val xp: Double, val
         fun forItemId(id: Int): SummoningScroll? = BY_ITEM_ID[id]
 
         /**
-         * Get scroll by pouch if, or `null` if not found.
+         * Get scroll by pouch id, or `null` if not found.
          */
         @JvmStatic
         fun forPouch(pouchId: Int): SummoningScroll? = BY_POUCH[pouchId]

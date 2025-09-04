@@ -33,6 +33,7 @@ class CutFruitPlugin : InteractionListener {
                 val productID = if (button == 2) sliceID else chunkID
                 val productAmount = if (button == 2 && with.id in intArrayOf(Items.PINEAPPLE_2114, Items.TENTI_PINEAPPLE_1851)) 4 else 1
                 val productName = if (button == 2) "slices" else "chunks"
+                val product = Item(productID, productAmount)
 
                 sendSkillDialogue(player) {
                     withItems(productID)
@@ -40,7 +41,14 @@ class CutFruitPlugin : InteractionListener {
                         runTask(player, 1, amount) {
                             if (amount < 1) return@runTask
                             if (removeItem(player, Item(with.id))) {
-                                addItem(player, productID, productAmount, Container.INVENTORY)
+                                player.animate(Animation(Animations.CRAFT_KNIFE_5244))
+
+                                if (!hasSpaceFor(player, product)) {
+                                    sendMessage(player, "You don't have enough inventory space to do this.")
+                                    return@runTask
+                                }
+
+                                player.inventory.add(product)
                                 sendMessage(player, "You cut the $fruitName into $productName.")
                             }
                         }
@@ -55,18 +63,29 @@ class CutFruitPlugin : InteractionListener {
          * Handles cutting the watermelon.
          */
 
-        onUseWith(IntType.ITEM, Items.KNIFE_946, Items.WATERMELON_5982) { player, _, _ ->
-            if (!removeItem(player, Items.WATERMELON_5982)) return@onUseWith true
+        onUseWith(IntType.ITEM, Items.KNIFE_946, Items.WATERMELON_5982) { player, _, with ->
+            val productID = Item(Items.WATERMELON_SLICE_5984, 3)
+            if (!inInventory(player, Items.WATERMELON_5982)) return@onUseWith true
+            sendSkillDialogue(player) {
+                withItems(with.id)
+                create { _, amount ->
+                    runTask(player, 1, amount) {
+                        if (amount < 1) return@runTask
+                        if (removeItem(player, Item(with.id))) {
 
-            animate(player, Animations.CUT_WATERMELON_2269)
-            val duration = animationDuration(Animation(Animations.CUT_WATERMELON_2269))
+                            if (!hasSpaceFor(player, productID)) {
+                                sendMessage(player, "You don't have enough inventory space to do this.")
+                                return@runTask
+                            }
 
-            queueScript(player, duration) {
-                addItemOrDrop(player, Items.WATERMELON_SLICE_5984, 3)
-                sendMessage(player, "You slice the watermelon into three slices.")
-                return@queueScript stopExecuting(player)
+                            player.animate(Animation(Animations.CUT_WATERMELON_2269))
+                            player.inventory.add(productID)
+                            sendMessage(player, "You slice the watermelon into three slices.")
+                        }
+                    }
+                }
+                calculateMaxAmount { amountInInventory(player, with.id) }
             }
-
             return@onUseWith true
         }
 
@@ -74,15 +93,29 @@ class CutFruitPlugin : InteractionListener {
          * Handles cutting the red banana.
          */
 
-        onUseWith(IntType.ITEM, Items.KNIFE_946, Items.RED_BANANA_7572) { player, _, _ ->
-            if (!removeItem(player, Items.RED_BANANA_7572)) return@onUseWith true
+        onUseWith(IntType.ITEM, Items.KNIFE_946, Items.RED_BANANA_7572) { player, _, with ->
+            val productID = Item(Items.SLICED_RED_BANANA_7574, 1)
+            if (!inInventory(player, Items.RED_BANANA_7572)) return@onUseWith true
+            sendSkillDialogue(player) {
+                withItems(with.id)
+                create { _, amount ->
+                    runTask(player, 1, amount) {
+                        if (amount < 1) return@runTask
+                        if (removeItem(player, Item(with.id))) {
 
-            queueScript(player, 2) {
-                addItemOrDrop(player, Items.SLICED_RED_BANANA_7574, 1)
-                sendMessage(player, "You cut the red banana into slices.")
-                return@queueScript stopExecuting(player)
+                            if (!hasSpaceFor(player, productID)) {
+                                sendMessage(player, "You don't have enough inventory space to do this.")
+                                return@runTask
+                            }
+
+                            player.animate(Animation(Animations.CRAFT_KNIFE_5244))
+                            player.inventory.add(productID)
+                            sendMessage(player, "You cut the red banana into slices.")
+                        }
+                    }
+                }
+                calculateMaxAmount { amountInInventory(player, with.id) }
             }
-
             return@onUseWith true
         }
     }

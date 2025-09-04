@@ -37,47 +37,35 @@ enum class LightSource(val level: Int, val raw: Item, val product: Item, val ope
         }
 
     /**
-     * Returns the name of the light source.
+     * Gets the name of the light source.
      */
     fun getName(): String = name.lowercase().replace("_", " ")
 
     companion object {
-        /**
-         * Checks if the player has an active light source.
-         */
+        private val BY_RAW_ID: Map<Int, LightSource> = values().associateBy { it.raw.id }
+        private val BY_PRODUCT_ID: Map<Int, LightSource> = values().associateBy { it.product.id }
+
+        @JvmStatic
+        fun forId(id: Int): LightSource? = BY_RAW_ID[id]
+
+        @JvmStatic
+        fun forProductId(id: Int): LightSource? = BY_PRODUCT_ID[id]
+
+        @JvmStatic
+        fun getRawIds(): IntArray = BY_RAW_ID.keys.toIntArray()
+
         @JvmStatic
         fun hasActiveLightSource(player: Player): Boolean = getActiveLightSource(player) != null
 
-        /**
-         * Gets the active light source of the player.
-         */
         @JvmStatic
         fun getActiveLightSource(player: Player): LightSource? {
             for (item in player.inventory.toArray()) {
-                item?.let { it -> forProductId(it.id)?.let { return it } }
+                item?.let { BY_PRODUCT_ID[it.id]?.let { return it } }
             }
             for (item in player.equipment.toArray()) {
-                item?.let { it -> forProductId(it.id)?.let { return it } }
+                item?.let { BY_PRODUCT_ID[it.id]?.let { return it } }
             }
             return null
         }
-
-        /**
-         * Gets the light source for item id.
-         */
-        @JvmStatic
-        fun forId(id: Int): LightSource? = values().firstOrNull { it.raw.id == id }
-
-        /**
-         * Get light source for product id.
-         */
-        @JvmStatic
-        fun forProductId(id: Int): LightSource? = values().firstOrNull { it.product.id == id }
-
-        /**
-         * Get raw ids.
-         */
-        @JvmStatic
-        fun getRawIds(): IntArray = values().map { it.raw.id }.toIntArray()
     }
 }

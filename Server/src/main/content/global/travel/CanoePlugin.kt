@@ -118,19 +118,7 @@ class CanoePlugin :
             }
         }
 
-        enum class Canoes(
-            val level: Int,
-            val experience: Double,
-            val maxDistance: Int,
-            val baseLow: Double,
-            val baseHigh: Double,
-            val tierModLow: Double,
-            val tierModHigh: Double,
-            val treeShaped: CanoeStationSceneries,
-            val canoePushing: CanoeStationSceneries,
-            val canoeFloating: CanoeStationSceneries,
-            val canoeSinking: CanoeStationSceneries,
-        ) {
+        enum class Canoes(val level: Int, val experience: Double, val maxDistance: Int, val baseLow: Double, val baseHigh: Double, val tierModLow: Double, val tierModHigh: Double, val treeShaped: CanoeStationSceneries, val canoePushing: CanoeStationSceneries, val canoeFloating: CanoeStationSceneries, val canoeSinking: CanoeStationSceneries, ) {
             LOG(12, 30.0, 1, 32.0, 100.0, 16.0, 50.0, CanoeStationSceneries.TREE_SHAPED_LOG, CanoeStationSceneries.CANOE_PUSHING_LOG, CanoeStationSceneries.CANOE_FLOATING_LOG, CanoeStationSceneries.CANOE_SINKING_LOG),
             DUGOUT(27, 60.0, 2, 16.0, 50.0, 8.0, 25.0, CanoeStationSceneries.TREE_SHAPED_DUGOUT, CanoeStationSceneries.CANOE_PUSHING_DUGOUT, CanoeStationSceneries.CANOE_FLOATING_DUGOUT, CanoeStationSceneries.CANOE_SINKING_DUGOUT),
             STABLE_DUGOUT(42, 90.0, 3, 8.0, 25.0, 4.0, 12.5, CanoeStationSceneries.TREE_SHAPED_STABLE_DUGOUT, CanoeStationSceneries.CANOE_PUSHING_STABLE_DUGOUT, CanoeStationSceneries.CANOE_FLOATING_STABLE_DUGOUT, CanoeStationSceneries.CANOE_SINKING_STABLE_DUGOUT),
@@ -143,16 +131,7 @@ class CanoePlugin :
             }
         }
 
-        enum class CanoeStationLocations(
-            val region: Int,
-            val varbit: Int,
-            val chopLocation: Location,
-            val floatLocation: Location,
-            val facingLocation: Location,
-            val sinkLocation: Location,
-            val destination: Location,
-            val locationName: String,
-        ) {
+        enum class CanoeStationLocations(val region: Int, val varbit: Int, val chopLocation: Location, val floatLocation: Location, val facingLocation: Location, val sinkLocation: Location, val destination: Location, val locationName: String, ) {
             LUMBRIDGE(12850, 1839, Location(3243, 3235), Location(3243, 3237), Location(-1, 0), Location.create(3239, 3242, 0), Location(3240, 3242, 0), "Lumbridge"),
             CHAMPIONS(12852, 1840, Location(3204, 3343), Location(3202, 3343), Location(0, -1), Location.create(3199, 3344, 0), Location(3199, 3344, 0), "the Champion's Guild"),
             BARBARIAN(12341, 1841, Location(3112, 3409), Location(3112, 3411), Location(-1, 0), Location.create(3109, 3411, 0), Location(3109, 3415), "Barbarian Village"),

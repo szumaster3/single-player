@@ -1,19 +1,15 @@
 package content.global.skill.fletching.items.bolts
 
 import core.api.*
+import core.game.interaction.Clocks
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.SkillPulse
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
-import core.game.world.GameWorld.ticks
 import shared.consts.Animations
 
-class KebbitBoltPulse(
-    player: Player?,
-    node: Item,
-    private val bolts: KebbitBolt,
-    private var amount: Int,
-) : SkillPulse<Item?>(player, node) {
+class KebbitBoltPulse(player: Player?, node: Item, private val bolts: KebbitBolt, private var amount: Int) : SkillPulse<Item?>(player, node) {
+
     override fun checkRequirements(): Boolean {
         if (getStatLevel(player, Skills.FLETCHING) < bolts.level) {
             sendDialogue(player, "You need a fletching level of " + bolts.level + " to do this.")
@@ -36,9 +32,9 @@ class KebbitBoltPulse(
     }
 
     override fun reward(): Boolean {
-        if (++ticks % 3 != 0) {
-            return false
-        }
+        if (!clockReady(player, Clocks.SKILLING)) return false
+        delayClock(player, Clocks.SKILLING, 3)
+
         val base = Item(bolts.base, 1)
         val product = bolts.product
         if (removeItem(player, base)) {
@@ -46,7 +42,7 @@ class KebbitBoltPulse(
             rewardXP(player, Skills.FLETCHING, bolts.experience)
         }
         amount--
-        return amount == 0
+        return amount <= 0
     }
 
     override fun message(type: Int) {}

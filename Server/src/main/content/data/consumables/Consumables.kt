@@ -390,48 +390,29 @@ enum class Consumables {
     }
 
     companion object {
-
-        /**
-         * Mapping of item ids to their corresponding consumables.
-         */
-        @JvmStatic val consumables: MutableMap<Int, Consumables> = HashMap()
-
-        /**
-         * List of all item ids that are potions.
-         */
-        @JvmStatic val potions: MutableList<Int> = ArrayList()
-
-        /**
-         * Retrieves the consumable entry by its item id.
-         *
-         * @param itemId The id of the item.
-         * @return The corresponding [Consumables] entry, or null if not found.
-         */
         @JvmStatic
-        fun getConsumableById(itemId: Int): Consumables? = consumables[itemId]
-
-        /**
-         * Adds a new consumable entry and indexes it by all its associated item IDs.
-         *
-         * @param consumable The consumable entry to add.
-         */
+        val consumables: Map<Int, Consumables>
         @JvmStatic
-        fun add(consumable: Consumables) {
-            for (id in consumable.consumable.ids) {
-                consumables.putIfAbsent(id, consumable)
-            }
-        }
+        val potions: List<Int>
 
-        /**
-         * Initializes the static maps by indexing all enum values.
-         */
         init {
+            val consumablesMap = HashMap<Int, Consumables>()
+            val potionsList = ArrayList<Int>()
+
             for (consumable in values()) {
-                add(consumable)
+                for (id in consumable.consumable.ids) {
+                    consumablesMap[id] = consumable
+                }
                 if (consumable.consumable is Potion) {
-                    potions.addAll(consumable.consumable.ids.toList())
+                    potionsList.addAll(consumable.consumable.ids)
                 }
             }
+
+            consumables = consumablesMap
+            potions = potionsList
         }
+
+        @JvmStatic
+        fun getConsumableById(itemId: Int): Consumables? = consumables[itemId]
     }
 }

@@ -1,9 +1,7 @@
 package content.global.skill.fletching.items.bolts
 
-import core.api.getStatLevel
-import core.api.hasSpaceFor
-import core.api.inInventory
-import core.api.sendDialogue
+import core.api.*
+import core.game.interaction.Clocks
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.SkillPulse
 import core.game.node.entity.skill.Skills
@@ -20,11 +18,6 @@ class GemBoltPulse(player: Player?, node: Item?, private val bolt: GemBolt, sets
      * Represents the sets to make.
      */
     private var sets = 0
-
-    /**
-     * Represents the ticks passed.
-     */
-    private var ticks = 0
 
     init {
         this.sets = sets
@@ -49,9 +42,9 @@ class GemBoltPulse(player: Player?, node: Item?, private val bolt: GemBolt, sets
     }
 
     override fun reward(): Boolean {
-        if (++ticks % 3 != 0) {
-            return false
-        }
+        if (!clockReady(player, Clocks.SKILLING)) return false
+        delayClock(player, Clocks.SKILLING, 3)
+
         val baseAmount = player.inventory.getAmount(bolt.base)
         val tipAmount = player.inventory.getAmount(bolt.tip)
         if (baseAmount <= 0 || tipAmount <= 0) {
