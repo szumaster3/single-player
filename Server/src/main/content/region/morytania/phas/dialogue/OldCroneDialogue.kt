@@ -3,7 +3,7 @@ package content.region.morytania.phas.dialogue
 import content.data.GameAttributes
 import content.region.misthalin.draynor.quest.anma.dialogue.OldCroneAnimalDialogue
 import content.region.misthalin.draynor.quest.swept.plugin.SweptUtils
-import content.region.morytania.phas.quest.ahoy.dialogue.OldCroneAhoyDialogueFile
+import content.region.morytania.phas.quest.ahoy.dialogue.OldCroneAhoyDialogue
 import core.api.*
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
@@ -45,7 +45,7 @@ class OldCroneDialogue(player: Player? = null) : Dialogue(player) {
             // Ghosts Ahoy >= 3 and Animal Magnetism started or complete
             ghostsAhoy >= QUEST_STAGE_GHOSTS_AHOY_REQUIRED &&
                     (animalMagnetism < QUEST_COMPLETE || isQuestComplete(player, Quests.ANIMAL_MAGNETISM)) -> {
-                openDialogue(player, OldCroneAhoyDialogueFile())
+                openDialogue(player, OldCroneAhoyDialogue())
             }
 
             // Both quests in progress
@@ -94,7 +94,7 @@ class OldCroneDialogue(player: Player? = null) : Dialogue(player) {
                 }
 
                 2 -> end().also {
-                    openDialogue(player, OldCroneAhoyDialogueFile())
+                    openDialogue(player, OldCroneAhoyDialogue())
                 }
 
                 3 -> end()

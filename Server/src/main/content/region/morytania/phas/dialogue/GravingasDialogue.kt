@@ -1,5 +1,6 @@
 package content.region.morytania.phas.dialogue
 
+import content.region.morytania.phas.quest.ahoy.dialogue.GravingasAhoyDialogue
 import core.api.getQuestStage
 import core.api.inEquipment
 import core.api.openDialogue
@@ -24,7 +25,7 @@ class GravingasDialogue(player: Player? = null) : Dialogue(player) {
             // If the player has the bedsheet and has completed the quest.
             inEquipment(player, Items.BEDSHEET_4285) && getQuestStage(player, Quests.GHOSTS_AHOY) >= 1 -> {
                 end()
-                openDialogue(player, GravingasDialogue())
+                openDialogue(player, GravingasAhoyDialogue())
                 return true
             }
 

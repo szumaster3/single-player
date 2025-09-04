@@ -1,6 +1,6 @@
 package content.region.morytania.phas.dialogue
 
-import content.region.morytania.phas.quest.ahoy.dialogue.NecrovarusDialogueFile
+import content.region.morytania.phas.quest.ahoy.dialogue.NecrovarusAhoyDialogue
 import core.api.hasRequirement
 import core.api.inEquipment
 import core.api.isQuestComplete
@@ -27,7 +27,7 @@ class NecrovarusDialogue(player: Player? = null) : Dialogue(player) {
         }
         if (hasRequirement(player, Quests.GHOSTS_AHOY) && !isQuestComplete(player, Quests.GHOSTS_AHOY)) {
             end()
-            openDialogue(player, NecrovarusDialogueFile())
+            openDialogue(player, NecrovarusAhoyDialogue())
             return true
         }
         if (isQuestComplete(player, Quests.GHOSTS_AHOY)) {

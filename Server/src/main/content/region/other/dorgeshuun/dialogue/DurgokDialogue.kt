@@ -27,11 +27,10 @@ class DurgokDialogue(player: Player? = null) : Dialogue(player) {
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> options("Yes, please.", "No, thanks.").also { stage++ }
-            1 ->
-                when (buttonId) {
-                    1 -> player(FaceAnim.FRIENDLY, "Yes please!").also { stage++ }
-                    2 -> player(FaceAnim.FRIENDLY, "No thanks.").also { stage = END_DIALOGUE }
-                }
+            1 -> when (buttonId) {
+                1 -> player(FaceAnim.FRIENDLY, "Yes please!").also { stage++ }
+                2 -> player(FaceAnim.FRIENDLY, "No thanks.").also { stage = END_DIALOGUE }
+            }
 
             2 -> {
                 if (!removeItem(player, Item(Items.COINS_995, 10))) {

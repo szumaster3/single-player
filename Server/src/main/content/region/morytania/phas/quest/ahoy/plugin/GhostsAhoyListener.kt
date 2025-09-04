@@ -14,9 +14,8 @@ import core.game.world.map.Location
 import core.tools.END_DIALOGUE
 import shared.consts.*
 
-class GhostsAhoyListener :
-    InteractionListener,
-    InterfaceListener {
+class GhostsAhoyListener : InteractionListener, InterfaceListener {
+
     override fun defineListeners() {
         on(Scenery.DOOR_5244, IntType.SCENERY, "open") { player, node ->
             if (node.location == Location(3461, 3555, 0)) {
@@ -29,42 +28,21 @@ class GhostsAhoyListener :
                     sendMessage(player, "You unlock the door.")
                 }
             } else {
-                openDialogue(
-                    player,
-                    object : DialogueFile() {
-                        override fun handle(
-                            componentID: Int,
-                            buttonID: Int,
-                        ) {
-                            npc = NPC(NPCs.GHOST_DISCIPLE_1686)
-                            when (stage) {
-                                0 ->
-                                    if (!inEquipment(player, Items.GHOSTSPEAK_AMULET_552)) {
-                                        npc("Woooo wooooo woooo").also { stage = 3 }
-                                    } else {
-                                        npc("What are you doing going in there?").also { stage++ }
-                                    }
-                                1 -> player("Err, I was just curious...").also { stage++ }
-                                2 ->
-                                    npc(
-                                        "Inside that room is a coffin, inside which lie",
-                                        "the mortal remains of our most glorious master,",
-                                        "Necrovarus. None may enter.",
-                                    ).also {
-                                        stage =
-                                            END_DIALOGUE
-                                    }
-                                3 ->
-                                    sendDialogue(
-                                        player,
-                                        "You get the general impression that the ghost doesn't want you to open the door.",
-                                    ).also {
-                                        stage =
-                                            END_DIALOGUE
-                                    }
+                openDialogue(player, object : DialogueFile() {
+                    override fun handle(componentID: Int, buttonID: Int) {
+                        npc = NPC(NPCs.GHOST_DISCIPLE_1686)
+                        when (stage) {
+                            0 -> if (!inEquipment(player, Items.GHOSTSPEAK_AMULET_552)) {
+                                npc("Woooo wooooo woooo").also { stage = 3 }
+                            } else {
+                                npc("What are you doing going in there?").also { stage++ }
                             }
+                            1 -> player("Err, I was just curious...").also { stage++ }
+                            2 -> npc("Inside that room is a coffin, inside which lie", "the mortal remains of our most glorious master,", "Necrovarus. None may enter.").also { stage = END_DIALOGUE }
+                            3 -> sendDialogue(player, "You get the general impression that the ghost doesn't want you to open the door.").also { stage = END_DIALOGUE }
                         }
-                    },
+                    }
+                }
                 )
             }
             return@on false

@@ -1,5 +1,6 @@
 package content.region.morytania.phas.dialogue
 
+import content.region.morytania.phas.quest.ahoy.dialogue.AkharanuAhoyDialogue
 import core.api.getQuestStage
 import core.api.inInventory
 import core.api.openDialogue
@@ -24,7 +25,7 @@ class AkharanuDialogue(player: Player? = null) : Dialogue(player) {
         npc = args[0] as NPC
         if (inInventory(player!!, Items.SIGNED_OAK_BOW_4236) || getQuestStage(player, Quests.GHOSTS_AHOY) >= 5) {
             end()
-            openDialogue(player, content.region.morytania.phas.quest.ahoy.dialogue.AkharanuDialogueFile())
+            openDialogue(player, AkharanuAhoyDialogue())
         } else {
             npc(FaceAnim.FRIENDLY, "Hello, there, friend!")
         }

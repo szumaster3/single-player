@@ -15,81 +15,52 @@ import shared.consts.Components
 import shared.consts.Scenery
 
 @Initializable
-class WindSpeedInterface :
-    InterfaceListener,
-    InteractionListener,
-    EventHook<TickEvent>,
-    MapArea {
-    override fun defineAreaBorders(): Array<ZoneBorders> = arrayOf(ZoneBorders(3616, 3545, 3622, 3539, 2))
+class WindSpeedInterface : InterfaceListener, InteractionListener, EventHook<TickEvent>, MapArea {
+
+    override fun defineAreaBorders(): Array<ZoneBorders> =
+        arrayOf(ZoneBorders(3616, 3545, 3622, 3539, 2))
 
     override fun areaEnter(entity: Entity) {
-        openInterface(entity.asPlayer(), Components.AHOY_WINDSPEED_10)
-        setAttribute(entity.asPlayer(), GhostsAhoyUtils.windSpeed, 0)
-        entity.asPlayer().hook(Event.Tick, this)
+        val player = entity.asPlayer()
+        openInterface(player, Components.AHOY_WINDSPEED_10)
+        setAttribute(player, GhostsAhoyUtils.windSpeed, 0)
+        player.hook(Event.Tick, this)
     }
 
-    override fun areaLeave(
-        entity: Entity,
-        logout: Boolean,
-    ) {
-        entity.asPlayer().unhook(this)
-        entity.asPlayer().interfaceManager.close(Component(Components.AHOY_WINDSPEED_10))
-        removeAttribute(entity.asPlayer(), GhostsAhoyUtils.windSpeed)
+    override fun areaLeave(entity: Entity, logout: Boolean) {
+        val player = entity.asPlayer()
+        player.unhook(this)
+        player.interfaceManager.close(Component(Components.AHOY_WINDSPEED_10))
+        removeAttribute(player, GhostsAhoyUtils.windSpeed)
     }
 
     override fun defineInterfaceListeners() {
-        on(Components.AHOY_WINDSPEED_10) { _, _, _, _, _, _ ->
-            return@on true
-        }
+        on(Components.AHOY_WINDSPEED_10) { _, _, _, _, _, _ -> true }
     }
 
     override fun defineListeners() {
         on(Scenery.MAST_5274, IntType.SCENERY, "search") { player, _ ->
-
-            if (getAttribute(player, GhostsAhoyUtils.windSpeed, 0) == 0) {
-                sendDialogue(
-                    player,
-                    "You can see a tattered flag blowing in the wind. The wind is blowing too hard to make out any details.",
-                )
-            }
-
-            if (getAttribute(player, GhostsAhoyUtils.windSpeed, 0) == 1) {
-                sendDialogue(
-                    player,
-                    "You can see a tattered flag blowing in the wind. The top half of the flag is coloured red.",
-                )
-            }
-
-            if (getAttribute(player, GhostsAhoyUtils.windSpeed, 0) == 2) {
-                sendDialogue(
-                    player,
-                    "You can see a tattered flag blowing in the wind. The bottom half of the flag is coloured blue.",
-                )
-            }
-
-            if (getAttribute(player, GhostsAhoyUtils.windSpeed, 0) == 3) {
-                sendDialogue(
-                    player,
-                    "You can see a tattered flag blowing in the wind. The skull emblem is coloured blue.",
-                )
+            when (getAttribute(player, GhostsAhoyUtils.windSpeed, 0)) {
+                0 -> sendDialogue(player, "You can see a tattered flag blowing in the wind. The wind is blowing too hard to make out any details.")
+                1 -> sendDialogue(player, "You can see a tattered flag blowing in the wind. The top half of the flag is coloured red.")
+                2 -> sendDialogue(player, "You can see a tattered flag blowing in the wind. The bottom half of the flag is coloured blue.")
+                3 -> sendDialogue(player, "You can see a tattered flag blowing in the wind. The skull emblem is coloured blue.")
             }
             return@on true
         }
     }
 
-    override fun process(
-        entity: Entity,
-        event: TickEvent,
-    ) {
-        if (RandomFunction.random(1, 10) == 1) setAttribute(entity.asPlayer(), GhostsAhoyUtils.windSpeed, 0)
-        if (RandomFunction.random(1, 10) == 2) setAttribute(entity.asPlayer(), GhostsAhoyUtils.windSpeed, 1)
-        if (RandomFunction.random(1, 10) == 3) setAttribute(entity.asPlayer(), GhostsAhoyUtils.windSpeed, 2)
-        if (RandomFunction.random(1, 10) == 4) setAttribute(entity.asPlayer(), GhostsAhoyUtils.windSpeed, 3)
-        sendString(
-            entity.asPlayer(),
-            if (getAttribute(entity.asPlayer(), GhostsAhoyUtils.windSpeed, 0) == 1) " Low" else " High",
-            Components.AHOY_WINDSPEED_10,
-            2,
-        )
+    override fun process(entity: Entity, event: TickEvent) {
+        val player = entity.asPlayer()
+        val wind = RandomFunction.random(0, 3)
+        setAttribute(player, GhostsAhoyUtils.windSpeed, wind)
+        val windText = when (wind) {
+            0 -> "High"
+            1 -> "Low"
+            2 -> "Medium"
+            3 -> "Very High"
+            else -> "High"
+        }
+        sendString(player, windText, Components.AHOY_WINDSPEED_10, 2)
     }
 }

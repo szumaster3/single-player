@@ -1,6 +1,6 @@
 package content.region.morytania.phas.dialogue
 
-import content.region.morytania.phas.quest.ahoy.dialogue.OldManGADialogue
+import content.region.morytania.phas.quest.ahoy.dialogue.OldManAhoyDialogue
 import core.api.getQuestStage
 import core.api.isQuestComplete
 import core.api.openDialogue
@@ -23,7 +23,7 @@ class OldManDialogue(player: Player? = null) : Dialogue(player) {
         npc = args[0] as NPC
         when {
             isQuestComplete(player, Quests.GHOSTS_AHOY) -> player("How is it going?").also { stage = 5 }
-            getQuestStage(player, Quests.GHOSTS_AHOY) >= 4 -> openDialogue(player, OldManGADialogue())
+            getQuestStage(player, Quests.GHOSTS_AHOY) >= 4 -> openDialogue(player, OldManAhoyDialogue())
             else -> player("What are you doing on this shipwreck?")
         }
         return true

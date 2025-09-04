@@ -2,6 +2,7 @@ package content.region.wilderness.dialogue
 
 import core.api.openNpcShop
 import core.game.dialogue.Dialogue
+import core.game.dialogue.Topic
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.plugin.Initializable
@@ -22,34 +23,18 @@ class CapeMerchantDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
-            0 -> options("What's so special about your capes?", "Yes please!", "No thanks.").also { stage++ }
-            1 -> when (buttonId) {
-                1 -> player("What's so special about your capes?").also { stage++ }
-                2 -> player("Yes please!").also { stage = 4 }
-                3 -> player("No thanks.").also { stage = END_DIALOGUE }
-            }
-
-            2 -> npc(
-                "Ahh well they make it less likely that you'll accidently",
-                "attack anyone wearing the same cape as you and easier",
-                "to attack everyone else. They also make it easier to",
-                "distinguish people who're wearing the same cape as you",
-            ).also {
-                stage++
-            }
-
-            3 -> npc(
-                "from everyone else. They're very useful when out in",
-                "the wilderness with friends or anyone else you don't",
-                "want to harm.",
-            ).also {
-                stage = END_DIALOGUE
-            }
-
-            4 -> {
+            0 -> showTopics(
+                Topic("What's so special about your capes?", 1, false),
+                Topic("Yes please!", 3, false),
+                Topic("No thanks.", 4, false)
+            )
+            1 -> npc("Ahh well they make it less likely that you'll accidently", "attack anyone wearing the same cape as you and easier", "to attack everyone else. They also make it easier to", "distinguish people who're wearing the same cape as you").also { stage++ }
+            2 -> npc("from everyone else. They're very useful when out in", "the wilderness with friends or anyone else you don't", "want to harm.").also { stage = END_DIALOGUE }
+            3 -> {
                 end()
                 openNpcShop(player, npc.id)
             }
+            4 -> end()
         }
         return true
     }

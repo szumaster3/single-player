@@ -10,19 +10,14 @@ import core.game.world.GameWorld
 import core.game.world.map.Location
 import shared.consts.NPCs
 
-class GiantLobsterNPC(
-    id: Int = 0,
-    location: Location? = null,
-) : AbstractNPC(id, location) {
-    override fun construct(
-        id: Int,
-        location: Location,
-        vararg objects: Any,
-    ): AbstractNPC = GiantLobsterNPC(id, location)
+class GiantLobsterNPC(id: Int = 0, location: Location? = null) : AbstractNPC(id, location) {
+
+    override fun construct(id: Int, location: Location, vararg objects: Any): AbstractNPC = GiantLobsterNPC(id, location)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.GIANT_LOBSTER_1693)
 
     companion object {
+        @JvmStatic
         fun spawnGiantLobster(player: Player) {
             val giantLobster =
                 GiantLobsterNPC(NPCs.GIANT_LOBSTER_1693)

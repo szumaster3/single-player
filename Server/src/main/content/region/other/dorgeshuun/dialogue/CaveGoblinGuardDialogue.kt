@@ -19,11 +19,7 @@ class CaveGoblinGuardDialogue(player: Player? = null) : Dialogue(player) {
         when ((0..2).random()) {
             0 -> npc(FaceAnim.OLD_NORMAL, "Have a nice day!").also { stage = END_DIALOGUE }
             1 -> npc(FaceAnim.OLD_NORMAL, "I'm keeping an eye on you, surface-dweller.").also { stage = END_DIALOGUE }
-            2 -> npc(
-                FaceAnim.OLD_NORMAL,
-                "Surface-dweller! You will never find your way into the city of ",
-                "Dorgesh-Kaan!",
-            )
+            2 -> npc(FaceAnim.OLD_NORMAL, "Surface-dweller! You will never find your way into the city of", "Dorgesh-Kaan!")
         }
         return true
     }

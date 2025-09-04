@@ -32,27 +32,14 @@ class BarlakDialogue(player: Player? = null) : Dialogue(player) {
         npc = args[0] as NPC
         val playerMeetsBoneReqs = getDynLevel(player, Skills.CONSTRUCTION) >= 30 && hasHouse(player)
         if (!playerMeetsBoneReqs) {
-            sendDialogue(
-                player,
-                "You require at least level 30 construction and a house to speak to Barlak about bones.",
-            )
+            sendDialogue(player, "You require at least level 30 construction and a house to speak to Barlak about bones.")
         }
         if (playerMeetsBoneReqs && inInventory(player, Items.LONG_BONE_10976, 1)) {
             curItem = 0
-            npcl(
-                FaceAnim.OLD_HAPPY,
-                "Those bones! Those are exactly the sort of thing I need! Will you sell them?",
-            ).also {
-                stage = 0
-            }
+            npcl(FaceAnim.OLD_HAPPY, "Those bones! Those are exactly the sort of thing I need! Will you sell them?")
         } else if (playerMeetsBoneReqs && inInventory(player, Items.CURVED_BONE_10977, 1)) {
             curItem = 1
-            npcl(
-                FaceAnim.OLD_HAPPY,
-                "Those bones! Those are exactly the sort of thing I need! Will you sell them?",
-            ).also {
-                stage = 0
-            }
+            npcl(FaceAnim.OLD_HAPPY, "Those bones! Those are exactly the sort of thing I need! Will you sell them?")
         } else if (inInventory(player, Items.PERFECT_SHELL_10995, 1)) {
             curItem = 5
             npc(FaceAnim.OLD_CALM_TALK2, "That giant shell... what is it?").also { stage = 120 }

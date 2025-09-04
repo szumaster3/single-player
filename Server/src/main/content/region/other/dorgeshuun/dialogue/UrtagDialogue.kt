@@ -23,17 +23,12 @@ class UrtagDialogue(player: Player? = null) : Dialogue(player) {
             1 -> if (getAttribute(player, foodPermission, false)) {
                 options("What can I do in the city?", "Why did you decide to open the city?").also { stage++ }
             } else {
-                options(
-                    "What can I do in the city?",
-                    "Why did you decide to open the city?",
-                    "May I have permission to sell food in the market?",
-                ).also { stage++ }
+                options("What can I do in the city?", "Why did you decide to open the city?", "May I have permission to sell food in the market?").also { stage++ }
             }
-
             2 -> when (buttonId) {
-                1 -> player("What can I do in the city?").also { stage = 7 }
-                2 -> player("Why did you decide to open the city?").also { stage = 5 }
-                3 -> player("May I have permission to sell food in the market?").also { stage = 3 }
+                1 -> player(FaceAnim.HALF_ASKING, "What can I do in the city?").also { stage = 7 }
+                2 -> player(FaceAnim.HALF_ASKING, "Why did you decide to open the city?").also { stage = 5 }
+                3 -> playerl(FaceAnim.HALF_ASKING, "May I have permission to sell food in the market?").also { stage = 3 }
             }
             3 -> npcl(FaceAnim.OLD_NORMAL, "Of course you can.").also { stage++ }
             4 -> {

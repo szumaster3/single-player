@@ -118,10 +118,7 @@ object GhostsAhoyUtils {
         }
     }
 
-    fun handleDyeSelection(
-        player: Player,
-        buttonID: Int,
-    ) {
+    fun handleDyeSelection(player: Player, buttonID: Int) {
         val dyeColor =
             mapOf(
                 1 to { color: String ->
@@ -144,11 +141,7 @@ object GhostsAhoyUtils {
         }
     }
 
-    fun dyeFlag(
-        player: Player,
-        color: String,
-        attribute: String,
-    ) {
+    private fun dyeFlag(player: Player, color: String, attribute: String) {
         sendItemDialogue(player, shipModel, "You dye the flag $color.")
         setAttribute(player, attribute, color)
     }

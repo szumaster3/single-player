@@ -25,7 +25,6 @@ class GundikDialogue(player: Player? = null) : Dialogue(player) {
                 1 -> playerl(FaceAnim.FRIENDLY, "Yes please.").also { stage++ }
                 2 -> playerl(FaceAnim.NEUTRAL, "No thanks.").also { stage = 4 }
             }
-
             3 -> {
                 end()
                 if (freeSlots(player) == 0) {
@@ -38,7 +37,6 @@ class GundikDialogue(player: Player? = null) : Dialogue(player) {
                     addItem(player, Items.BAT_SHISH_10964)
                 }
             }
-
             4 -> npcl(FaceAnim.OLD_NORMAL, "Have a good day!").also { stage = END_DIALOGUE }
         }
         return true

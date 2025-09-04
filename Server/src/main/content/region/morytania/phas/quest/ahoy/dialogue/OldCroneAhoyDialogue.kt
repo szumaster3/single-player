@@ -11,11 +11,8 @@ import shared.consts.Items
 import shared.consts.NPCs
 import shared.consts.Quests
 
-class OldCroneAhoyDialogueFile : DialogueFile() {
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
+class OldCroneAhoyDialogue : DialogueFile() {
+    override fun handle(componentID: Int, buttonID: Int) {
         val questStage = getQuestStage(player!!, Quests.GHOSTS_AHOY)
         npc = NPC(NPCs.OLD_CRONE_1695)
         when {
@@ -31,7 +28,6 @@ class OldCroneAhoyDialogueFile : DialogueFile() {
                         player("Here's some tea for you, like you asked.").also { stage = 6 }
                     }
                 }
-
                 5 -> npc("I believe they grow wild in the Haunted Forest.").also { stage = END_DIALOGUE }
                 6 -> npc("Yes, but it's not in my special cup! I only ever drink", "from my special cup!").also { stage++ }
                 7 -> player("I see. Can I have this special cup, then?").also { stage++ }
@@ -72,6 +68,7 @@ class OldCroneAhoyDialogueFile : DialogueFile() {
                 } else {
                     player("Yes, I'm wearing one right now.").also { stage++ }
                 }
+
                 12 -> if (!inEquipment(player!!, Items.GHOSTSPEAK_AMULET_552)) {
                     npc("Well, that's bad luck.").also { stage++ }
                 } else {
@@ -114,9 +111,7 @@ class OldCroneAhoyDialogueFile : DialogueFile() {
                 }
                 4 -> npc("There is an enchantment that I can perform on such", "an amulet that will give it the power of command over", "ghosts. It will work only once, but it will enable you to", "command Necrovarus to let the ghosts pass on.").also { stage = END_DIALOGUE }
                 5 -> npc("Necrovarus had a magical robe for which he must have", "no more use. Only these robes hold the power needed", "to perform the enchantment.").also { stage++ }
-                6 -> npc("All his rituals come from a book written by an ancient", "sorcerer from the East called Haricanto. Bring me this", "strange book.").also {
-                    stage++
-                }
+                6 -> npc("All his rituals come from a book written by an ancient", "sorcerer from the East called Haricanto. Bring me this", "strange book.").also { stage++ }
                 7 -> npc("I cannot read the strange letters of the eastern lands.", "I will need something to help me translate the book.").also { stage = END_DIALOGUE }
             }
 
