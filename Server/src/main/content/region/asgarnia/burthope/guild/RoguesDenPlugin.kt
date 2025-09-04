@@ -76,7 +76,7 @@ class RoguesDenPlugin : InteractionListener {
                         playAudio(player, SOUNDS_EFFECTS[2])
                         sendMessage(player, "You slip and trigger a trap!")
                         impact(player, RandomFunction.random(2, 6), ImpactHandler.HitsplatType.NORMAL)
-                        player.skills.drainLevel(Skills.THIEVING, 0.05, 0.05)
+                        drainStatLevel(player, Skills.THIEVING, 0.05, 0.05)
                         player.animate(Animation.RESET, 1)
                     }
                     return@queueScript stopExecuting(player)

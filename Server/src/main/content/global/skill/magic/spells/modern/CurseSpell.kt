@@ -1,5 +1,6 @@
 package content.global.skill.magic.spells.modern
 
+import core.api.drainStatLevel
 import core.game.node.entity.Entity
 import core.game.node.entity.combat.BattleState
 import core.game.node.entity.combat.spell.CombatSpell
@@ -38,14 +39,19 @@ class CurseSpell private constructor(
     override fun fireEffect(entity: Entity, victim: Entity, state: BattleState) {
         if (state.estimatedHit == -1) return
         state.estimatedHit = -2
-        when (definition.type) {
-            SpellType.CONFUSE -> victim.getSkills().drainLevel(Skills.ATTACK, 0.05, 0.05)
-            SpellType.WEAKEN -> victim.getSkills().drainLevel(Skills.STRENGTH, 0.05, 0.05)
-            SpellType.CURSE -> victim.getSkills().drainLevel(Skills.DEFENCE, 0.05, 0.05)
-            SpellType.VULNERABILITY -> victim.getSkills().drainLevel(Skills.DEFENCE, 0.10, 0.10)
-            SpellType.ENFEEBLE -> victim.getSkills().drainLevel(Skills.STRENGTH, 0.10, 0.10)
-            SpellType.STUN -> victim.getSkills().drainLevel(Skills.ATTACK, 0.10, 0.10)
-            else -> {}
+
+        val effect = when (definition.type) {
+            SpellType.CONFUSE -> Skills.ATTACK to 0.05
+            SpellType.WEAKEN -> Skills.STRENGTH to 0.05
+            SpellType.CURSE -> Skills.DEFENCE to 0.05
+            SpellType.VULNERABILITY -> Skills.DEFENCE to 0.10
+            SpellType.ENFEEBLE -> Skills.STRENGTH to 0.10
+            SpellType.STUN -> Skills.ATTACK to 0.10
+            else -> null
+        }
+
+        effect?.let { (skill, percent) ->
+            drainStatLevel(victim, skill, percent, percent)
         }
     }
 

@@ -1,5 +1,6 @@
 package content.global.plugin.item
 
+import core.api.drainStatLevel
 import core.api.impact
 import core.api.sendChat
 import core.api.sendGraphics
@@ -66,7 +67,7 @@ class ZamorakWinePlugin : InteractionListener {
             val drainAmount = if (staticLevel > 40) 3 else 1
             val percentage = drainAmount.toDouble() / dynamicLevel
 
-            player.skills.drainLevel(stat, percentage, 0.075)
+            drainStatLevel(player, stat, percentage, 0.075)
         }
     }
 }

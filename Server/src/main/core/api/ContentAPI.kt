@@ -2320,6 +2320,23 @@ fun adjustLevel(
 }
 
 /**
+ * Drains a skill level of an entity by a percentage.
+ *
+ * @param entity The entity whose skill to drain.
+ * @param skill The skill id.
+ * @param drainPercentage The percentage to drain from the current dynamic level (0.0 - 1.0).
+ * @param maximumDrainPercentage The maximum allowable drain from the static level (0.0 - 1.0).
+ */
+fun drainStatLevel(
+    entity: Entity,
+    skill: Int,
+    drainPercentage: Double,
+    maximumDrainPercentage: Double
+) {
+    entity.skills.drainLevel(skill, drainPercentage, maximumDrainPercentage)
+}
+
+/**
  * Removes all instances of a specified item from the player's specified container (Inventory, Equipment, Bank).
  *
  * @param player The player from whose container the item will be removed.

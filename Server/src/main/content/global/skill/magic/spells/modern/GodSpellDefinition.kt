@@ -30,7 +30,7 @@ enum class GodSpellDefinition(val staffId: Int, val requiredCasts: Int = 100, va
         endGraphics = Graphics.create(Graphic.CLAWS_OF_GUTHIX_77),
         projectile = null,
         runes = arrayOf(Runes.BLOOD_RUNE.getItem(2), Runes.FIRE_RUNE.getItem(1), Runes.AIR_RUNE.getItem(4)),
-        effect = { _, victim -> victim.getSkills().drainLevel(Skill.DEFENCE, 0.05, 0.05) }
+        effect = { _, victim -> core.api.drainStatLevel(victim, Skill.DEFENCE, 0.05, 0.05) }
     ),
     ZAMORAK(
         staffId = Items.ZAMORAK_STAFF_2417,
@@ -39,7 +39,7 @@ enum class GodSpellDefinition(val staffId: Int, val requiredCasts: Int = 100, va
         endGraphics = Graphics.create(Graphic.FLAMES_OF_ZAMORAK_78),
         projectile = null,
         runes = arrayOf(Runes.BLOOD_RUNE.getItem(2), Runes.FIRE_RUNE.getItem(4), Runes.AIR_RUNE.getItem(1)),
-        effect = { _, victim -> victim.getSkills().drainLevel(Skill.MAGIC, 0.05, 0.05) }
+        effect = { _, victim -> core.api.drainStatLevel(victim, Skill.MAGIC, 0.05, 0.05) }
     );
 
     companion object {
