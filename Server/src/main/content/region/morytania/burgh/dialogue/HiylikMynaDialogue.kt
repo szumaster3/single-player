@@ -12,7 +12,7 @@ import shared.consts.NPCs
  * Represents the Hiylik Myna dialogue.
  */
 @Initializable
-class HiylikMynaDialogue(player: Player? = null, ) : Dialogue(player) {
+class HiylikMynaDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC

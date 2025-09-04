@@ -14,7 +14,7 @@ import shared.consts.NPCs
  * Represents the Fyiona Fray dialogue.
  */
 @Initializable
-class FyionaFrayDialogue(player: Player? = null, ) : Dialogue(player) {
+class FyionaFrayDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC

@@ -17,7 +17,7 @@ import shared.consts.Quests
  * - [GeneralShadow]
  */
 @Initializable
-class FaladorScoutDialogue(player: Player? = null, ) : Dialogue(player) {
+class FaladorScoutDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         return when {

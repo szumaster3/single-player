@@ -12,7 +12,7 @@ import shared.consts.NPCs
  * Represents the Anton dialogue.
  */
 @Initializable
-class AntonDialogue(player: Player? = null, ) : Dialogue(player) {
+class AntonDialogue(player: Player? = null) : Dialogue(player) {
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npcl(FaceAnim.ASKING, "Ahhh, hello there. How can I help?")

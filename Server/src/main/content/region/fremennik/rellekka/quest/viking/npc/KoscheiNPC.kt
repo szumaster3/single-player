@@ -167,7 +167,7 @@ class KoscheiNPC(
     /**
      * Pulse that handles Koschei's spawn intro sequence.
      */
-    class KoscheiSpawnPulse(val player: Player?, val koschei: KoscheiNPC, ) : Pulse() {
+    class KoscheiSpawnPulse(val player: Player?, val koschei: KoscheiNPC) : Pulse() {
         var counter = 0
 
         override fun pulse(): Boolean {
@@ -202,7 +202,7 @@ class KoscheiNPC(
     /**
      * Pulse that triggers when the fight ends due to player's near-death in fourth form.
      */
-    class FightEndPulse(val player: Player?, val koschei: KoscheiNPC, ) : Pulse() {
+    class FightEndPulse(val player: Player?, val koschei: KoscheiNPC) : Pulse() {
         var counter = 0
 
         override fun pulse(): Boolean {

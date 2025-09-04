@@ -17,7 +17,7 @@ import shared.consts.Graphics
 import shared.consts.NPCs
 
 @Initializable
-class MetalDragonNPC(id: Int = 0, location: Location? = null, ) : AbstractNPC(id, location) {
+class MetalDragonNPC(id: Int = 0, location: Location? = null) : AbstractNPC(id, location) {
 
     private val combatAction: CombatSwingHandler =
         MultiSwingHandler(true, SwitchAttack(CombatStyle.MELEE.swingHandler, Animation(80, Priority.HIGH)), SwitchAttack(CombatStyle.MELEE.swingHandler, Animation(91, Priority.HIGH)), DRAGONFIRE)

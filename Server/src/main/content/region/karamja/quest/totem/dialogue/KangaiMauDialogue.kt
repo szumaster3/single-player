@@ -11,7 +11,7 @@ import shared.consts.NPCs
 import shared.consts.Quests
 
 @Initializable
-class KangaiMauDialogue(player: Player? = null, ) : Dialogue(player) {
+class KangaiMauDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         when {

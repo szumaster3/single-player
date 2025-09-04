@@ -13,7 +13,7 @@ import shared.consts.NPCs
  * Represents the Del Monty dialogue.
  */
 @Initializable
-class DelMontyDialogue(player: Player? = null, ) : Dialogue(player) {
+class DelMontyDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC

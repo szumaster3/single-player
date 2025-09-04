@@ -14,7 +14,7 @@ import shared.consts.NPCs
  * Represents the Dalcian Fang dialogue.
  */
 @Initializable
-class DalcianFangDialogue(player: Player? = null, ) : Dialogue(player) {
+class DalcianFangDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC

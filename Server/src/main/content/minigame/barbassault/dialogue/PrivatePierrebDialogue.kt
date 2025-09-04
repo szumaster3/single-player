@@ -15,7 +15,7 @@ import shared.consts.Sounds
  * Represents the Private Pierreb dialogue.
  */
 @Initializable
-class PrivatePierrebDialogue(player: Player? = null, ) : Dialogue(player) {
+class PrivatePierrebDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC

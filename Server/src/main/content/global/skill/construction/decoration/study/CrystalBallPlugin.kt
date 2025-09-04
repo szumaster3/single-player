@@ -69,7 +69,7 @@ class CrystalBallPlugin : InteractionListener {
              * @param element the element contained in the staffs name.
              * @return the matching staff id.
              */
-            fun getProduct(type: StaffType, element: String, ): Int? = VALUES.firstOrNull { it.type == type && it.name.contains(element, ignoreCase = true) }?.staffId
+            fun getProduct(type: StaffType, element: String): Int? = VALUES.firstOrNull { it.type == type && it.name.contains(element, ignoreCase = true) }?.staffId
 
             /**
              * Gets the cost item for the given staff id.

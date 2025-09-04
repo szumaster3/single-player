@@ -9,7 +9,7 @@ import shared.consts.NPCs
 import shared.consts.Quests
 
 @Initializable
-class HoracioDialogue(player: Player? = null, ) : Dialogue(player) {
+class HoracioDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         if (player.questRepository.hasStarted(Quests.TRIBAL_TOTEM)) {

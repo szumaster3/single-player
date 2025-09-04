@@ -13,7 +13,7 @@ import shared.consts.NPCs
 /**
  * Represents the Merlin NPC that spawns after the final wave of the miniquest.
  */
-class MerlinKnightWavesNPC(id: Int = 0, location: Location? = null, ) : AbstractNPC(id, location) {
+class MerlinKnightWavesNPC(id: Int = 0, location: Location? = null) : AbstractNPC(id, location) {
     private var cleanTime = 0
     private var player: Player? = null
 

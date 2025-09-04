@@ -9,7 +9,7 @@ import core.game.node.item.Item
 import shared.consts.Animations
 import shared.consts.Sounds
 
-class JewelleryCraftingPulse(player: Player?, node: Item?, val type: Jewellery.JewelleryItem, var amount: Int, ) : SkillPulse<Item?>(player, node) {
+class JewelleryCraftingPulse(player: Player?, node: Item?, val type: Jewellery.JewelleryItem, var amount: Int) : SkillPulse<Item?>(player, node) {
     companion object {
         private const val ANIMATION = Animations.HUMAN_FURNACE_SMELT_3243
     }

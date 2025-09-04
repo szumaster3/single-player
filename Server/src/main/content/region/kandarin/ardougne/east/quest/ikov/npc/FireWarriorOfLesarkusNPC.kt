@@ -33,7 +33,7 @@ class FireWarriorOfLesarkusNPC(id: Int = 0, val player: Player?, location: Locat
         }
     }
 
-    override fun isAttackable(entity: Entity, style: CombatStyle, message: Boolean, ): Boolean {
+    override fun isAttackable(entity: Entity, style: CombatStyle, message: Boolean): Boolean {
         val attackable = super.isAttackable(entity, style, message)
         val player = entity.asPlayer()
         return attackable

@@ -65,6 +65,7 @@ class GhostBouncerNPC(id: Int = 0, location: Location? = null) : AbstractNPC(id,
     override fun getIds(): IntArray = intArrayOf(NPCs.BOUNCER_5564)
 
     companion object {
+        @JvmStatic
         fun spawnGhostBouncer(player: Player) {
             val ghostBouncer = GhostBouncerNPC(NPCs.BOUNCER_5564)
             ghostBouncer.location = Location(1761, 4705, 0)

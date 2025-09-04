@@ -14,7 +14,7 @@ import shared.consts.Quests
  * Represents the Longhall Bouncer dialogue.
  */
 @Initializable
-class LonghallBouncerDialogue(player: Player? = null, ) : Dialogue(player) {
+class LonghallBouncerDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC

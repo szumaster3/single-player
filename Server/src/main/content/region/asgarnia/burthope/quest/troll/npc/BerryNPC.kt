@@ -14,7 +14,7 @@ import shared.consts.NPCs
 import shared.consts.Quests
 
 @Initializable
-class BerryNPC(id: Int = 0, location: Location? = null, ) : AbstractNPC(id, location) {
+class BerryNPC(id: Int = 0, location: Location? = null) : AbstractNPC(id, location) {
 
     override fun construct(id: Int, location: Location, vararg objects: Any): AbstractNPC = BerryNPC(id, location)
 

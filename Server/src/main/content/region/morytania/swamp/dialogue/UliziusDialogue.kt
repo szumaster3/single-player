@@ -12,7 +12,7 @@ import shared.consts.NPCs
  * Represents the Ulizius dialogue.
  */
 @Initializable
-class UliziusDialogue(player: Player? = null, ) : Dialogue(player) {
+class UliziusDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC

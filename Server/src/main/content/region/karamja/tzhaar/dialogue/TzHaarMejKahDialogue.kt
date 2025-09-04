@@ -9,7 +9,7 @@ import core.tools.END_DIALOGUE
 import shared.consts.NPCs
 
 @Initializable
-class TzHaarMejKahDialogue(player: Player? = null, ) : Dialogue(player) {
+class TzHaarMejKahDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC

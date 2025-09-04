@@ -9,7 +9,7 @@ import core.game.world.map.Location
 import shared.consts.Components
 import shared.consts.NPCs
 
-class DungeonPlanWithAwowogeiCutscene(player: Player, ) : Cutscene(player) {
+class DungeonPlanWithAwowogeiCutscene(player: Player) : Cutscene(player) {
 
     override fun setup() {
         setExit(player.location.transform(Location.create(2805, 2760, 0)))

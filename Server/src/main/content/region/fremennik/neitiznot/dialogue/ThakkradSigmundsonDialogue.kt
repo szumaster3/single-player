@@ -8,7 +8,7 @@ import core.tools.END_DIALOGUE
 import shared.consts.NPCs
 
 @Initializable
-class ThakkradSigmundsonDialogue(player: Player? = null, ) : Dialogue(player) {
+class ThakkradSigmundsonDialogue(player: Player? = null) : Dialogue(player) {
     override fun open(vararg args: Any?): Boolean {
         npcl(FaceAnim.FRIENDLY, "Greetings! I can cure your Yak Hides if you'd like!")
         return true

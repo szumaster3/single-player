@@ -19,7 +19,7 @@ import shared.consts.Quests
  * - [GeneralShadow]
  */
 @Initializable
-class DesertScoutDialogue(player: Player? = null, ) : Dialogue(player) {
+class DesertScoutDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         return when {

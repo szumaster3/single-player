@@ -12,7 +12,7 @@ import shared.consts.NPCs
  * Represents the Squire Type dialogue.
  */
 @Initializable
-class SquireTypeDialogue(player: Player? = null, ) : Dialogue(player) {
+class SquireTypeDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC

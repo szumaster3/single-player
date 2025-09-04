@@ -9,7 +9,7 @@ import shared.consts.NPCs
  * Represents the Shop NPCs.
  */
 @Initializable
-class ShopNPC(id: Int = 0, location: Location? = null, ) : AbstractNPC(id, location) {
+class ShopNPC(id: Int = 0, location: Location? = null) : AbstractNPC(id, location) {
 
     override fun construct(id: Int, location: Location, vararg objects: Any): AbstractNPC = ShopNPC(id, location)
 

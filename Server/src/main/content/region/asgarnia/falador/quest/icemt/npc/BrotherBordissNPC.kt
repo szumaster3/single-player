@@ -6,7 +6,7 @@ import core.plugin.Initializable
 import shared.consts.NPCs
 
 @Initializable
-class BrotherBordissNPC(id: Int = 0, location: Location? = null, ) : AbstractNPC(id, location) {
+class BrotherBordissNPC(id: Int = 0, location: Location? = null) : AbstractNPC(id, location) {
     override fun construct(id: Int, location: Location, vararg objects: Any): AbstractNPC =
         BrotherBordissNPC(id, location)
 

@@ -15,7 +15,7 @@ import shared.consts.NPCs
 import shared.consts.Quests
 
 @Initializable
-class CaptainShanksDialogue(player: Player? = null, ) : Dialogue(player) {
+class CaptainShanksDialogue(player: Player? = null) : Dialogue(player) {
 
     private var coins: Item? = null
 

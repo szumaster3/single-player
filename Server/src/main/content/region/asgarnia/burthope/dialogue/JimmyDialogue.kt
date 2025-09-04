@@ -14,7 +14,7 @@ import shared.consts.NPCs
  * Represents the Jimmy dialogue.
  */
 @Initializable
-class JimmyDialogue(player: Player? = null, ) : Dialogue(player) {
+class JimmyDialogue(player: Player? = null) : Dialogue(player) {
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(FaceAnim.DRUNK, "'Ello there.")

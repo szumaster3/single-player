@@ -11,7 +11,7 @@ import core.tools.END_DIALOGUE
 import shared.consts.Items
 import shared.consts.NPCs
 
-class CapnIzzyDialogue(private val it: Int, ) : DialogueFile() {
+class CapnIzzyDialogue(private val it: Int) : DialogueFile() {
 
     override fun handle(componentID: Int, buttonID: Int) {
         when (it) {

@@ -13,7 +13,7 @@ import shared.consts.NPCs
  *  Represents the Radimus Erke dialogue.
  */
 @Initializable
-class RadimusErkeDialogue(player: Player? = null, ) : Dialogue(player) {
+class RadimusErkeDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC

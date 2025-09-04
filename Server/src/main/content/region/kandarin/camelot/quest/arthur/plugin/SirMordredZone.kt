@@ -22,7 +22,7 @@ class SirMordredZone : MapZone("SirMordredZone", true), Plugin<Any?> {
         super.register(ZoneBorders(Location.create(2759, 3394, 2), Location.create(2777, 3413, 2)))
     }
 
-    override fun fireEvent(identifier: String?, vararg args: Any?, ): Any = Unit
+    override fun fireEvent(identifier: String?, vararg args: Any?): Any = Unit
 
     override fun startDeath(e: Entity, killer: Entity): Boolean = !(e != null && e is NPC && e.asNpc().id == NPCs.SIR_MORDRED_247)
 }

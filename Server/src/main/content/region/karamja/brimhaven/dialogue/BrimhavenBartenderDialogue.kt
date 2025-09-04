@@ -14,7 +14,7 @@ import shared.consts.Items
 import shared.consts.NPCs
 
 @Initializable
-class BrimhavenBartenderDialogue(player: Player? = null, ) : Dialogue(player) {
+class BrimhavenBartenderDialogue(player: Player? = null) : Dialogue(player) {
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(FaceAnim.HAPPY, "Yohoho me hearty what would you like to drink?")

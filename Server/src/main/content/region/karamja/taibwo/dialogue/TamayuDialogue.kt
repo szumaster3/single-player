@@ -13,7 +13,7 @@ import shared.consts.NPCs
  * Represents the Tamayu dialogue.
  */
 @Initializable
-class TamayuDialogue(player: Player? = null, ) : Dialogue(player) {
+class TamayuDialogue(player: Player? = null) : Dialogue(player) {
 
     private val randomConversation = arrayOf("Get out of my way! Argh! I'm hunting!", "Move, lest I slay not the beast but you!", "Die! Die!!")
 

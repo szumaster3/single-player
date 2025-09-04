@@ -15,7 +15,7 @@ import shared.consts.NPCs
 import shared.consts.Quests
 
 @Initializable
-class KhazardOgreNPC(id: Int = 0, location: Location? = null, ) : AbstractNPC(id, location) {
+class KhazardOgreNPC(id: Int = 0, location: Location? = null) : AbstractNPC(id, location) {
     override fun construct(
         id: Int,
         location: Location,

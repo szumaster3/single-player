@@ -9,7 +9,7 @@ import core.tools.END_DIALOGUE
 import shared.consts.NPCs
 
 @Initializable
-class LubufuDialogue(player: Player? = null, ) : Dialogue(player) {
+class LubufuDialogue(player: Player? = null) : Dialogue(player) {
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc(FaceAnim.HALF_GUILTY, "Watch where you're going, young whippersnapper!")

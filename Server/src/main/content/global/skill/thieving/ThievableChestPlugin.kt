@@ -72,7 +72,7 @@ class ThievableChestPlugin : OptionHandler() {
 
         private var currentRespawn = 0
 
-        constructor(objectId: Int, level: Int, experience: Double, rewards: Array<Item>, respawn: Int, ) : this(intArrayOf(objectId), level, experience, rewards, respawn)
+        constructor(objectId: Int, level: Int, experience: Double, rewards: Array<Item>, respawn: Int) : this(intArrayOf(objectId), level, experience, rewards, respawn)
 
         /**
          * Opens the chest.

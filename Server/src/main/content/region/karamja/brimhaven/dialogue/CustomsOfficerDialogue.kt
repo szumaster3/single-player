@@ -16,7 +16,7 @@ import shared.consts.NPCs
 import shared.consts.Quests
 
 @Initializable
-class CustomsOfficerDialogue(player: Player? = null, ) : Dialogue(player) {
+class CustomsOfficerDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC

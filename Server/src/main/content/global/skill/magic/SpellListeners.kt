@@ -63,7 +63,7 @@ object SpellListeners {
      * @param book the spellbook name
      * @return a pair of the spells range and method
      */
-    fun get(spellID: Int, type: Int, book: String, ): Pair<Int, ((Player, Node?) -> Unit)?> {
+    fun get(spellID: Int, type: Int, book: String): Pair<Int, ((Player, Node?) -> Unit)?> {
         log(this::class.java, Log.FINE, "Getting $book:$spellID:$type")
         return Pair(spellRanges["$book:$spellID:$type"] ?: 10, castMap["$book:$spellID:$type"])
     }
@@ -77,7 +77,7 @@ object SpellListeners {
      * @param book the spellbook name.
      * @return a pair of the spells range and method.
      */
-    fun get(spellID: Int, type: Int, id: Int, book: String, ): Pair<Int, ((Player, Node?) -> Unit)?> {
+    fun get(spellID: Int, type: Int, id: Int, book: String): Pair<Int, ((Player, Node?) -> Unit)?> {
         log(this::class.java, Log.FINE, "Getting $book:$spellID:$type:$id")
         return Pair(spellRanges["$book:$spellID:$type:$id"] ?: 10, castMap["$book:$spellID:$type:$id"])
     }

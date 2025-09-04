@@ -13,7 +13,7 @@ import shared.consts.NPCs
  *  Represents the Siegfried Erkle dialogue.
  */
 @Initializable
-class SiegfriedErkleDialogue(player: Player? = null, ) : Dialogue(player) {
+class SiegfriedErkleDialogue(player: Player? = null) : Dialogue(player) {
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npcl(FaceAnim.HALF_GUILTY, "Hello there and welcome to the shop of useful items. Can I help you at all?")

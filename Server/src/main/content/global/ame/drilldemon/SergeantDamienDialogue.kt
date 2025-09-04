@@ -15,7 +15,7 @@ import shared.consts.NPCs
  * Represents the Sergeant Damien random event dialogue.
  * @author Ceikry
  */
-class SergeantDamienDialogue(var isCorrect: Boolean = false, var eventStart: Boolean = false, ) : DialogueFile() {
+class SergeantDamienDialogue(var isCorrect: Boolean = false, var eventStart: Boolean = false) : DialogueFile() {
 
     override fun handle(componentID: Int, buttonID: Int) {
         npc = NPC(NPCs.SERGEANT_DAMIEN_2790)

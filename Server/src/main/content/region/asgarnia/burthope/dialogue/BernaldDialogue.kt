@@ -11,7 +11,7 @@ import shared.consts.NPCs
  * Represents the Bernald dialogue.
  */
 @Initializable
-class BernaldDialogue(player: Player? = null, ) : Dialogue(player) {
+class BernaldDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {

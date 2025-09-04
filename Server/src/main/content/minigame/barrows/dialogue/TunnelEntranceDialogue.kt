@@ -12,7 +12,7 @@ import core.plugin.Initializable
  * Represents the Tunnel entrance dialogue.
  */
 @Initializable
-class TunnelEntranceDialogue(player: Player? = null, ) : Dialogue(player) {
+class TunnelEntranceDialogue(player: Player? = null) : Dialogue(player) {
 
     private var index = 0
 

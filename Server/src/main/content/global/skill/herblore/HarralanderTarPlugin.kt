@@ -63,7 +63,7 @@ class HarralanderTarPlugin : InteractionListener {
     }
 }
 
-private class HarralanderTarPulse(player: Player?, node: Item?, val tar: TarItem, private var amount: Int, ) : SkillPulse<Item?>(player, node) {
+private class HarralanderTarPulse(player: Player?, node: Item?, val tar: TarItem, private var amount: Int) : SkillPulse<Item?>(player, node) {
 
     override fun checkRequirements(): Boolean {
         if (!isQuestComplete(player, Quests.DRUIDIC_RITUAL)) {

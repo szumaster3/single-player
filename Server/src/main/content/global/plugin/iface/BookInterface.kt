@@ -307,4 +307,4 @@ class Page(vararg lines: BookLine) {
     val lines: Array<BookLine> = lines as Array<BookLine>
 }
 
-class BookLine(val message: String, val child: Int, )
+class BookLine(val message: String, val child: Int)

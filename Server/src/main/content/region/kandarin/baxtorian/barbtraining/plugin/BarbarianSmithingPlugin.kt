@@ -38,7 +38,7 @@ private enum class BarbarianWeapon(val requiredWood: Int, val requiredBar: Int, 
     }
 }
 
-private class BarbarianSmithingPulse(player: Player?, val weapon: BarbarianWeapon, var amount: Int, var button: Int, ) : SkillPulse<Item>(player, null) {
+private class BarbarianSmithingPulse(player: Player?, val weapon: BarbarianWeapon, var amount: Int, var button: Int) : SkillPulse<Item>(player, null) {
     val hasta = weapon.hastaId
     val spear = weapon.spearId
 

@@ -11,7 +11,7 @@ import core.plugin.Initializable
 import shared.consts.NPCs
 
 @Initializable
-class HighwayManNPC(id: Int = 0, location: Location? = null, ) : AbstractNPC(id, location) {
+class HighwayManNPC(id: Int = 0, location: Location? = null) : AbstractNPC(id, location) {
 
     override fun construct(id: Int, location: Location, vararg objects: Any): AbstractNPC = HighwayManNPC(id, location)
 

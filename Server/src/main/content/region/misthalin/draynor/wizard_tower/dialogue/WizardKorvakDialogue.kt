@@ -44,7 +44,7 @@ import shared.consts.NPCs
 //===================================================================
 */
 @Initializable
-class WizardKorvakDialogue(player: Player? = null, ) : Dialogue(player) {
+class WizardKorvakDialogue(player: Player? = null) : Dialogue(player) {
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npcl(FaceAnim.HAPPY, "AAAAAAAAAAH!")
@@ -53,7 +53,9 @@ class WizardKorvakDialogue(player: Player? = null, ) : Dialogue(player) {
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         // Constants
-        val hasMediumPouch = hasAnItem(player, Items.MEDIUM_POUCH_5510).container != null || hasAnItem(player, Items.MEDIUM_POUCH_5511).container != null
+        val hasMediumPouch = hasAnItem(player, Items.MEDIUM_POUCH_5510).container != null || hasAnItem(
+            player, Items.MEDIUM_POUCH_5511
+        ).container != null
         val hasOmniItem = inInventory(player, Items.OMNI_TALISMAN_13649) || inInventory(player, Items.OMNI_TIARA_13655)
         val hasOmniTalisman = inInventory(player, Items.OMNI_TALISMAN_13649)
         val hasBlankTiara = inInventory(player, Items.TIARA_5525)
@@ -63,24 +65,22 @@ class WizardKorvakDialogue(player: Player? = null, ) : Dialogue(player) {
         when (stage) {
             0 -> npc("Don't sneak up on me like that.").also { stage++ }
             1 -> player("Uh, sorry.").also { stage++ }
-            2 ->
-                if (!hasMediumPouch) {
-                    player("I've lost my medium-sized pouch.", "Could you replace it?").also { stage = 35 }
-                } else {
-                    showTopics(
-                        Topic("Can you help me with my essence pouches?", 18),
-                        IfTopic(
-                            "I've got an omni-talisman that I would like to attach to a tiara or staff.",
-                            3,
-                            hasOmniItem,
-                        ),
-                        Topic("Why are you so jumpy?", 7),
-                        Topic("Never mind.", END_DIALOGUE),
-                    )
-                }
+            2 -> if (!hasMediumPouch) {
+                player("I've lost my medium-sized pouch.", "Could you replace it?").also { stage = 35 }
+            } else {
+                showTopics(
+                    Topic("Can you help me with my essence pouches?", 18),
+                    IfTopic(
+                        "I've got an omni-talisman that I would like to attach to a tiara or staff.",
+                        3,
+                        hasOmniItem,
+                    ),
+                    Topic("Why are you so jumpy?", 7),
+                    Topic("Never mind.", END_DIALOGUE),
+                )
+            }
 
-            3 -> {
-                /*
+            3 -> {/*
                  * There's no earlier check for these items, so both options always shows.
                  */
                 setTitle(player, 2)
@@ -88,15 +88,12 @@ class WizardKorvakDialogue(player: Player? = null, ) : Dialogue(player) {
                 stage++
             }
 
-            4 ->
-                when (buttonId) {
-                    1, 2 ->
-                        player(
-                            "I'd like to attach my omni-talisman to a " +
-                                if (buttonId == 1) "tiara." else "staff." + " Do you",
-                            "know how to do that?",
-                        ).also { stage++ }
-                }
+            4 -> when (buttonId) {
+                1, 2 -> player(
+                    "I'd like to attach my omni-talisman to a " + if (buttonId == 1) "tiara." else "staff." + " Do you",
+                    "know how to do that?",
+                ).also { stage++ }
+            }
 
             5 -> {
                 if (!hasOmniTalisman) {
@@ -119,8 +116,7 @@ class WizardKorvakDialogue(player: Player? = null, ) : Dialogue(player) {
                 }
             }
 
-            100 -> {
-                /*
+            100 -> {/*
                  * Talisman + tiara.
                  */
                 if (!anyInInventory(player, Items.OMNI_TALISMAN_13649, Items.TIARA_5525)) {
@@ -128,8 +124,7 @@ class WizardKorvakDialogue(player: Player? = null, ) : Dialogue(player) {
                     stage = 36
                     return true
                 }
-                if (removeItem(player, Item(Items.OMNI_TALISMAN_13649, 1)) &&
-                    removeItem(
+                if (removeItem(player, Item(Items.OMNI_TALISMAN_13649, 1)) && removeItem(
                         player,
                         Item(Items.TIARA_5525, 1),
                     )
@@ -140,8 +135,7 @@ class WizardKorvakDialogue(player: Player? = null, ) : Dialogue(player) {
                 }
             }
 
-            200 -> {
-                /*
+            200 -> {/*
                  * Talisman + staff.
                  */
                 if (!anyInInventory(player, Items.OMNI_TALISMAN_13649, Items.RUNECRAFTING_STAFF_13629)) {
@@ -149,8 +143,7 @@ class WizardKorvakDialogue(player: Player? = null, ) : Dialogue(player) {
                     stage = 36
                     return true
                 }
-                if (removeItem(player, Item(Items.OMNI_TALISMAN_13649, 1)) &&
-                    removeItem(
+                if (removeItem(player, Item(Items.OMNI_TALISMAN_13649, 1)) && removeItem(
                         player,
                         Item(Items.RUNECRAFTING_STAFF_13629, 1),
                     )
@@ -162,44 +155,40 @@ class WizardKorvakDialogue(player: Player? = null, ) : Dialogue(player) {
             }
 
             7 -> npc("I am not jumpy! I am insane. There is a difference.").also { stage++ }
-            8 ->
-                player(
-                    "If you are insane, wouldn't you think you were sane",
-                    "and so be insensible to the insanity that is you?",
-                ).also { stage++ }
+            8 -> player(
+                "If you are insane, wouldn't you think you were sane",
+                "and so be insensible to the insanity that is you?",
+            ).also { stage++ }
 
             9 -> npc("Yebno.").also { stage++ }
             10 -> player("Beg your pardon?").also { stage++ }
-            11 ->
-                npc(
-                    "Yebno. It's a fast way of saying Yes Maybe No. Since",
-                    "I didn't know the answer to your question I gave you",
-                    "all of the answers.",
-                ).also {
-                    stage++
-                }
+            11 -> npc(
+                "Yebno. It's a fast way of saying Yes Maybe No. Since",
+                "I didn't know the answer to your question I gave you",
+                "all of the answers.",
+            ).also {
+                stage++
+            }
 
             12 -> player("How did you end up in your rather peculiar mindset?").also { stage++ }
-            13 ->
-                npc(
-                    FaceAnim.SAD,
-                    "They sent me to the place. They knew the dark",
-                    "wizards were there and someone had betrayed them.",
-                    "Us. So they send me to spy. To the place.",
-                    "They sent me and would not let me come back.",
-                ).also {
-                    stage++
-                }
+            13 -> npc(
+                FaceAnim.SAD,
+                "They sent me to the place. They knew the dark",
+                "wizards were there and someone had betrayed them.",
+                "Us. So they send me to spy. To the place.",
+                "They sent me and would not let me come back.",
+            ).also {
+                stage++
+            }
 
             14 -> player("who sent you? What betrayal?").also { stage++ }
-            15 ->
-                npc(
-                    "He sits there with the spinning light, always thinking.",
-                    "One of us led them to the place where the pickaxe",
-                    "hammers and so the betrayal happened.",
-                ).also {
-                    stage++
-                }
+            15 -> npc(
+                "He sits there with the spinning light, always thinking.",
+                "One of us led them to the place where the pickaxe",
+                "hammers and so the betrayal happened.",
+            ).also {
+                stage++
+            }
 
             16 -> npc(FaceAnim.SAD, "Please don't make me talk about it.").also { stage++ }
             17 -> player("Okay, we don't have to talk about it.").also { stage = END_DIALOGUE }
@@ -230,38 +219,34 @@ class WizardKorvakDialogue(player: Player? = null, ) : Dialogue(player) {
             }
 
             19 -> player("Uh, what kind of a price?").also { stage++ }
-            20 ->
-                npc(
-                    "Whatever the voices tell me to ask for.",
-                    "Currently, they require 9.000 gp for a large pouch",
-                    "and 12,000 gp for a giant pouch.",
-                ).also {
-                    stage++
-                }
+            20 -> npc(
+                "Whatever the voices tell me to ask for.",
+                "Currently, they require 9.000 gp for a large pouch",
+                "and 12,000 gp for a giant pouch.",
+            ).also {
+                stage++
+            }
 
-            21 ->
-                npc(
-                    "Shhhh, don't tell any one else: I have a connection",
-                    "on the inside and I can sell you pouches too.",
-                    "For a mere 25,000 gp, you can have a large pouch.",
-                ).also {
-                    stage++
-                }
+            21 -> npc(
+                "Shhhh, don't tell any one else: I have a connection",
+                "on the inside and I can sell you pouches too.",
+                "For a mere 25,000 gp, you can have a large pouch.",
+            ).also {
+                stage++
+            }
 
             22 -> npc("A reasonable 50,000 gp will get you a giant pouch.").also { stage++ }
-            23 ->
-                options(
-                    "I'd like to have a pouch repaired.",
-                    "I'd like to buy a pouch.",
-                    "Never mind.",
-                ).also { stage++ }
+            23 -> options(
+                "I'd like to have a pouch repaired.",
+                "I'd like to buy a pouch.",
+                "Never mind.",
+            ).also { stage++ }
 
-            24 ->
-                when (buttonId) {
-                    1 -> player("I'd like to have a pouch repaired.").also { stage++ }
-                    2 -> player("I'd like to buy a pouch.").also { stage = 30 }
-                    3 -> player("Never mind.").also { stage = END_DIALOGUE }
-                }
+            24 -> when (buttonId) {
+                1 -> player("I'd like to have a pouch repaired.").also { stage++ }
+                2 -> player("I'd like to buy a pouch.").also { stage = 30 }
+                3 -> player("Never mind.").also { stage = END_DIALOGUE }
+            }
 
             25 -> npc("Very well. Let's have a look at it.").also { stage++ }
             26 -> {
@@ -276,12 +261,11 @@ class WizardKorvakDialogue(player: Player? = null, ) : Dialogue(player) {
                 stage++
             }
 
-            27 ->
-                when (buttonId) {
-                    1 -> player("Repair large pouch for 9,000 gp.").also { stage++ }
-                    2 -> player("Repair giant pouch for 12,000 gp.").also { stage = 29 }
-                    3 -> player("Never mind.").also { stage = END_DIALOGUE }
-                }
+            27 -> when (buttonId) {
+                1 -> player("Repair large pouch for 9,000 gp.").also { stage++ }
+                2 -> player("Repair giant pouch for 12,000 gp.").also { stage = 29 }
+                3 -> player("Never mind.").also { stage = END_DIALOGUE }
+            }
 
             28 -> {
                 if (amountInInventory(player, Items.COINS_995) < 9000) {
@@ -338,15 +322,13 @@ class WizardKorvakDialogue(player: Player? = null, ) : Dialogue(player) {
                 stage++
             }
 
-            32 ->
-                when (buttonId) {
-                    1 -> player("Buy a large pouch for 25,000 gp.").also { stage++ }
-                    2 -> player("Buy a giant pouch for 50,000 gp.").also { stage = 34 }
-                    3 -> player("Never mind.").also { stage = END_DIALOGUE }
-                }
+            32 -> when (buttonId) {
+                1 -> player("Buy a large pouch for 25,000 gp.").also { stage++ }
+                2 -> player("Buy a giant pouch for 50,000 gp.").also { stage = 34 }
+                3 -> player("Never mind.").also { stage = END_DIALOGUE }
+            }
 
-            33 -> {
-                /*
+            33 -> {/*
                  * Handles buy the Large pouch.
                  */
                 if (!removeItem(player, Item(Items.COINS_995, 25000))) {
@@ -359,8 +341,7 @@ class WizardKorvakDialogue(player: Player? = null, ) : Dialogue(player) {
                 }
             }
 
-            34 -> {
-                /*
+            34 -> {/*
                  * Handles buy the Giant pouch.
                  */
                 if (!removeItem(player, Item(Items.COINS_995, 50000))) {
@@ -400,13 +381,12 @@ class WizardKorvakDialogue(player: Player? = null, ) : Dialogue(player) {
         player.pouchManager.pouches.forEach { (id: Int, pouch: PouchManager.Pouches) ->
             pouch.currentCap = pouch.capacity
             val newCharges: Int
-            newCharges =
-                when (id) {
-                    Items.MEDIUM_POUCH_5510 -> 264
-                    Items.LARGE_POUCH_5512 -> 186
-                    Items.GIANT_POUCH_5514 -> 140
-                    else -> 3
-                }
+            newCharges = when (id) {
+                Items.MEDIUM_POUCH_5510 -> 264
+                Items.LARGE_POUCH_5512 -> 186
+                Items.GIANT_POUCH_5514 -> 140
+                else -> 3
+            }
             pouch.charges = newCharges
             var essence: Item? = null
             if (!pouch.container.isEmpty) {

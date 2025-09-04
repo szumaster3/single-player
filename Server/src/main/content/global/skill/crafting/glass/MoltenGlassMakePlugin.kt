@@ -63,7 +63,7 @@ class MoltenGlassMakePlugin : InteractionListener {
 /**
  * Handles crafting molten glass.
  */
-private class GlassMakePulse(private val player: Player, val product: Int, private var amount: Int, ) : Pulse() {
+private class GlassMakePulse(private val player: Player, val product: Int, private var amount: Int) : Pulse() {
 
     private val SAND_SOURCES = intArrayOf(Items.BUCKET_OF_SAND_1783, Items.SANDBAG_9943)
 

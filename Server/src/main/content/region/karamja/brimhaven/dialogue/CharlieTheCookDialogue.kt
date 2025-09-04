@@ -16,7 +16,7 @@ import shared.consts.NPCs
 import shared.consts.Quests
 
 @Initializable
-class CharlieTheCookDialogue(player: Player? = null, ) : Dialogue(player) {
+class CharlieTheCookDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC

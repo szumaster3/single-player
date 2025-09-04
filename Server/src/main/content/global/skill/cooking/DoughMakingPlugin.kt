@@ -26,7 +26,7 @@ class DoughMakingPlugin : InteractionListener {
         }
     }
 
-    private class DoughMakeDialogue(private val waterContainer: Item, private val flourContainer: Item, ) : DialogueFile() {
+    private class DoughMakeDialogue(private val waterContainer: Item, private val flourContainer: Item) : DialogueFile() {
         companion object {
             private const val STAGE_PRESENT_OPTIONS = 0
             private const val STAGE_PROCESS_OPTION = 1

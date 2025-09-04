@@ -12,7 +12,7 @@ import shared.consts.NPCs
  * Represents the Kelyn dialogue.
  */
 @Initializable
-class KelynDialogue(player: Player? = null, ) : Dialogue(player) {
+class KelynDialogue(player: Player? = null) : Dialogue(player) {
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         player(FaceAnim.FRIENDLY, "Hello.")

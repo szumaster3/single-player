@@ -55,7 +55,7 @@ sealed class OutgoingContext(override val player: Player, open val login: Boolea
         constructor(player: Player, interfaceId: Int, childId: Int, containerId: Int, ids: IntArray) : this(player, interfaceId, childId, containerId, items = null, ids = ids, length = ids.size, split = false, slots = null, clear = false)
         constructor(player: Player, interfaceId: Int, childId: Int, containerId: Int, items: Array<Item>, split: Boolean, vararg slots: Int) : this(player, interfaceId, childId, containerId, items = items, ids = null, length = items.size, split = split, slots = if (slots.isNotEmpty()) slots else null, clear = false)
     }
-    data class DisplayModel(override val player: Player, val type: ModelType = ModelType.PLAYER, val nodeId: Int = -1, var amount: Int = 0, val interfaceId: Int, val childId: Int, var zoom: Int = 0, ) : OutgoingContext(player) {
+    data class DisplayModel(override val player: Player, val type: ModelType = ModelType.PLAYER, val nodeId: Int = -1, var amount: Int = 0, val interfaceId: Int, val childId: Int, var zoom: Int = 0) : OutgoingContext(player) {
         enum class ModelType { PLAYER, NPC, ITEM, MODEL }
     }
     data class HintIcon(override val player: Player, val slot: Int, var arrowId: Int, var targetType: Int, val modelId: Int, val height: Int = 0, val index: Int, val location: Location?) : OutgoingContext(player) {
@@ -82,7 +82,7 @@ sealed class OutgoingContext(override val player: Player, open val login: Boolea
             const val CLAN_MESSAGE = 54
         }
     }
-    data class PositionedGraphic(override val player: Player, val graphic: Graphics, val location: Location, val offsetX: Int, val offsetY: Int, ) : OutgoingContext(player) {
+    data class PositionedGraphic(override val player: Player, val graphic: Graphics, val location: Location, val offsetX: Int, val offsetY: Int) : OutgoingContext(player) {
         val sceneX: Int = location.getSceneX(player.playerFlags.lastSceneGraph)
         val sceneY: Int = location.getSceneY(player.playerFlags.lastSceneGraph)
     }

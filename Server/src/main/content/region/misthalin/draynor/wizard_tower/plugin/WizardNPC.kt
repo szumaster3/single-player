@@ -12,7 +12,7 @@ import shared.consts.NPCs
  * Handles WizardNPC at Wizard Tower.
  */
 @Initializable
-class WizardNPC(id: Int = 0, location: Location? = null, ) : AbstractNPC(id, location) {
+class WizardNPC(id: Int = 0, location: Location? = null) : AbstractNPC(id, location) {
 
     override fun construct(id: Int, location: Location, vararg objects: Any): AbstractNPC = WizardNPC(id, location)
 

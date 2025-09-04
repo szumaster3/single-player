@@ -23,7 +23,7 @@ class LogBalanceShortcut : AgilityShortcut {
     private var start: Location
     private var end: Location
 
-    constructor(ids: IntArray, level: Int, experience: Double, start: Location, end: Location, vararg options: String, ) : super(ids, level, experience, *options) {
+    constructor(ids: IntArray, level: Int, experience: Double, start: Location, end: Location, vararg options: String) : super(ids, level, experience, *options) {
         this.start = start
         this.end = end
     }
