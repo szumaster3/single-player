@@ -85,16 +85,9 @@ class FremennikTrials : Quest(Quests.THE_FREMENNIK_TRIALS, 64, 63, 3, Vars.VARP_
         drawReward(player, "Hitpoints, Fishing, Thieving,", ln++)
         drawReward(player, "Agility,Crafting, Fletching,", ln++)
         drawReward(player, "Woodcutting", ln)
-        rewardXP(player, Skills.STRENGTH, 2812.4)
-        rewardXP(player, Skills.DEFENCE, 2812.4)
-        rewardXP(player, Skills.ATTACK, 2812.4)
-        rewardXP(player, Skills.HITPOINTS, 2812.4)
-        rewardXP(player, Skills.FISHING, 2812.4)
-        rewardXP(player, Skills.THIEVING, 2812.4)
-        rewardXP(player, Skills.AGILITY, 2812.4)
-        rewardXP(player, Skills.CRAFTING, 2812.4)
-        rewardXP(player, Skills.FLETCHING, 2812.4)
-        rewardXP(player, Skills.WOODCUTTING, 2812.4)
+        listOf(Skills.STRENGTH, Skills.DEFENCE, Skills.ATTACK, Skills.HITPOINTS, Skills.FISHING, Skills.THIEVING, Skills.AGILITY, Skills.CRAFTING, Skills.FLETCHING, Skills.WOODCUTTING).forEach { skill ->
+            rewardXP(player, skill, 2812.4)
+        }
     }
 
     override fun newInstance(`object`: Any?): Quest {

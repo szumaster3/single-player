@@ -70,14 +70,10 @@ class SigliTheHuntsmanDialogue(player: Player? = null) : Dialogue(player) {
 
             player.questRepository.hasStarted(Quests.THE_FREMENNIK_TRIALS) -> {
                 npc("What do you want outerlander?")
-                stage = 0
             }
 
             else -> {
-                npcl(
-                    FaceAnim.HAPPY,
-                    "I do not speak to outlanders. If you have anything of import to say, go and speak to the Chieftain."
-                )
+                npcl(FaceAnim.HAPPY, "I do not speak to outlanders. If you have anything of import to say, go and speak to the Chieftain.")
                 stage = 1000
             }
         }
@@ -123,11 +119,7 @@ class SigliTheHuntsmanDialogue(player: Player? = null) : Dialogue(player) {
             100 -> player("Thanks!").also {
                 removeAttribute(player, GameAttributes.QUEST_VIKING_SIGLI_DRAUGEN_KILL)
                 setAttribute(player, GameAttributes.QUEST_VIKING_SIGLI_VOTE, true)
-                setAttribute(
-                    player,
-                    GameAttributes.QUEST_VIKING_VOTES,
-                    getAttribute(player, GameAttributes.QUEST_VIKING_VOTES, 0) + 1
-                )
+                setAttribute(player, GameAttributes.QUEST_VIKING_VOTES, getAttribute(player, GameAttributes.QUEST_VIKING_VOTES, 0) + 1)
                 removeItem(player, Items.HUNTERS_TALISMAN_3697)
                 stage = 1000
             }

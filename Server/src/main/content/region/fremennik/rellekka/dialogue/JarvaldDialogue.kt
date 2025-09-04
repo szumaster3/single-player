@@ -99,18 +99,15 @@ class JarvaldDialogue(player: Player? = null) : Dialogue(player) {
             28 -> sendDialogueOptions(player, "Leave island?", "YES", "NO").also { stage++ }
             29 -> when (buttonId) {
                 1 -> {
-                    sail(player, Travel.WATERBIRTH_TO_RELLEKKA)
-                    npcl(FaceAnim.FRIENDLY, if (isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS)) {
-                        "Of course, " + player.username + "! Your presence is more than welcome on this cull! You wish to leave now?"
-                    } else {
-                        "So do you have the 1000 coins for my service, and are you ready to leave?"
-                    })
+                    npcl(FaceAnim.FRIENDLY, "Then let us away; There will be death to bring here another day!")
+                    end().also { sail(player, Travel.WATERBIRTH_TO_RELLEKKA) }
                 }
-                2 -> end()
+                2 -> npcl(FaceAnim.LOUDLY_LAUGHING, "Ha Ha Ha! A true huntsman at heart!").also { stage = 33 }
             }
             30 -> playerl(FaceAnim.HALF_GUILTY, "Actually, I don't think I have anything to speak to you about...").also { stage = 31 }
             31 -> playerl(FaceAnim.HALF_GUILTY, "Wow, you Fremenniks sure know how to party. Well, see ya around.").also { stage++ }
             32 -> end()
+            33 -> npcl(FaceAnim.HAPPY, "I myself have killed over a hundred of the daggermouths, and did not think it too many!").also { stage = 31 }
         }
         return true
     }

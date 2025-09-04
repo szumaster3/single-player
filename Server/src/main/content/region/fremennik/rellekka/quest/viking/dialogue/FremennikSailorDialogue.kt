@@ -77,10 +77,11 @@ class FremennikSailorDialogue(player: Player? = null) : Dialogue(player) {
                 stage = END_DIALOGUE
             }
             10 -> npcl(FaceAnim.NEUTRAL, "Well, the only musician I know of in these parts would be that terrible bard Olaf... Ask him.").also { stage = END_DIALOGUE }
-            15 -> npcl(FaceAnim.HAPPY, "Oh. It's by Olaf? Hmm. Well, a deal's a deal. I just hope it's better than the usual rubbish he comes up with, or my chances are worse than ever.").also {
+            15 -> {
+                end()
+                npcl(FaceAnim.HAPPY, "Oh. It's by Olaf? Hmm. Well, a deal's a deal. I just hope it's better than the usual rubbish he comes up with, or my chances are worse than ever.")
                 removeItem(player, Items.FREMENNIK_BALLAD_3699)
                 addItemOrDrop(player, Items.EXOTIC_FLOWER_3698, 1)
-                stage = END_DIALOGUE
             }
             20 -> npcl(FaceAnim.HAPPY, "It's Thora, the longhall barkeep. Please don't tell her though. She's not like the rest of the Fremennik girls, she has a secret desire to see the world.").also { stage++ }
             21 -> npcl(FaceAnim.HAPPY, "Being a sailor, I can really relate to that.").also { stage = END_DIALOGUE }

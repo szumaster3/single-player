@@ -50,12 +50,12 @@ class ThorvalDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             args.size > 1 -> {
-                npcl(FaceAnim.FRIENDLY, "Hahaha! Well fought outerlander! Now come down from there, you have passed my trial with flying colours!")
+                npcl(FaceAnim.LAUGH, "Hahaha! Well fought outerlander! Now come down from there, you have passed my trial with flying colours!")
                 stage = 150
             }
 
             isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS) -> {
-                playerl(FaceAnim.FRIENDLY, "Howdy Thorvald!")
+                playerl(FaceAnim.HAPPY, "Howdy Thorvald!")
             }
 
             getAttribute(player, GameAttributes.QUEST_VIKING_THORVALD_VOTE, false) -> {
@@ -87,7 +87,7 @@ class ThorvalDialogue(player: Player? = null) : Dialogue(player) {
             0 -> npcl(FaceAnim.FRIENDLY, "And greetings to you too. It is good to see new blood entering the Fremennik; we gain our strength by bringing new warriors into the tribe.").also { stage = END_DIALOGUE }
             60 -> npcl(FaceAnim.NEUTRAL, "Hello yourself, outerlander. What brings you to dare speak to a mighty Fremennik warrior such as myself?").also { stage++ }
             61 -> playerl(FaceAnim.HALF_ASKING, "Erm... are you a member of the council?").also { stage++ }
-            62 -> npcl(FaceAnim.NEUTRAL, "The Fremennik council of elders? Why, of course I am. I am recognised as one the clans mightiest warriors.").also { stage++ }
+            62 -> npcl(FaceAnim.HALF_THINKING, "The Fremennik council of elders? Why, of course I am. I am recognised as one the clans mightiest warriors.").also { stage++ }
             63 -> npcl(FaceAnim.HALF_ASKING, "What is it to you outerlander?").also { stage++ }
             64 -> playerl(FaceAnim.NEUTRAL, "Well... I was wondering if you could vote for me to become a Fremennik.").also { stage++ }
             65 -> npcl(FaceAnim.LAUGH, "An outerlander wishes to become a Fremennik!?!? Ha! That is priceless!").also { stage++ }
@@ -106,15 +106,15 @@ class ThorvalDialogue(player: Player? = null) : Dialogue(player) {
                 }
                 2 -> playerl(FaceAnim.NEUTRAL, "No thanks, I'm pretty sure that I can find someone else to vote for me.").also { stage = 90 }
             }
-            80 -> npcl(FaceAnim.LAUGH, "Hahahahaha! I'm beginning to like you already, outerlander!").also { stage++ }
+            80 -> npcl(FaceAnim.LOUDLY_LAUGHING, "Hahahahaha! I'm beginning to like you already, outerlander!").also { stage++ }
             81 -> npcl(FaceAnim.NEUTRAL, "Then allow me to present you with my challenge; This ladder here will take you to a place of combat. I have placed a special warrior down there to challenge you.").also { stage++ }
             82 -> npcl(FaceAnim.NEUTRAL, "Battle him to the death, and you will pass my challenge. If at any point you wish to leave combat, simply climb back up the ladder, to leave that place. If you leave you will of course fail the test.").also { stage++ }
             83 -> npcl(FaceAnim.NEUTRAL, "You may retry my test in the future if you fail, but you must stay down there until the death if you wish for my vote at the council. You must defeat him three times to prove that you are worthy.").also { stage++ }
             84 -> npcl(FaceAnim.NEUTRAL, "The fourth time that you fight him will be to the death, so do not show cowardice.").also { stage++ }
-            85 -> playerl(FaceAnim.EVIL_LAUGH, "Is that all? It will be easy!").also { stage++ }
+            85 -> playerl(FaceAnim.ASKING, "Is that all? It will be easy!").also { stage++ }
             86 -> npcl(FaceAnim.NEUTRAL, "No, there is one more important rule; You may not enter the battleground with any armour or weaponry of any kind.").also { stage++ }
             87 -> npcl(FaceAnim.NEUTRAL, "If you need to place your equipment into your bank account, I recommend that you speak to the seer, who knows a spell that will do that for you.").also { stage = END_DIALOGUE }
-            90 -> npcl(FaceAnim.NEUTRAL, "Hmm, not so brave after all, outerlander? Perhaps it is for the best. I doubt you have what it takes to pass my challenge.").also { stage = END_DIALOGUE }
+            90 -> npcl(FaceAnim.HALF_THINKING, "Hmm, not so brave after all, outerlander? Perhaps it is for the best. I doubt you have what it takes to pass my challenge.").also { stage = END_DIALOGUE }
             100 -> when (buttonId) {
                 1 -> playerl(FaceAnim.HALF_ASKING, "So what do I have to do to earn your vote at the council again?").also { stage = 110 }
                 2 -> playerl(FaceAnim.HALF_ASKING, "So, who is my opponent?").also { stage = 120 }
@@ -145,10 +145,10 @@ class ThorvalDialogue(player: Player? = null) : Dialogue(player) {
             150 -> playerl(FaceAnim.NEUTRAL, "But... I don't understand... I did not manage to beat Koschei...").also { stage++ }
             151 -> npcl(FaceAnim.NEUTRAL, "I did not say you had to, outerlander! All I asked was that you fought to the death! And you did! The death was your own!").also { stage++ }
             152 -> npcl(FaceAnim.NEUTRAL, "I was not interested in how strong you are! I was interested in how BRAVE you are!").also { stage++ }
-            153 -> npcl(FaceAnim.NEUTRAL, "You fought a superior enemy to your very last breath - THAT is bravery.").also { stage++ }
-            154 -> npcl(FaceAnim.NEUTRAL, "I would be honoured to represent you to the council as worthy of being a Fremennik after watching that superb battle!").also { stage = END_DIALOGUE }
-            160 -> npcl(FaceAnim.NEUTRAL, "Absolutely! I watched the entire battle, and was extremely impressed with your bravery in combat!").also { stage = END_DIALOGUE }
-            200 -> npcl(FaceAnim.ANNOYED, "Know you not who I am outerlander? There are none more brave or powerful than me amongst all the Fremennik!").also { stage++ }
+            153 -> npcl(FaceAnim.HAPPY, "You fought a superior enemy to your very last breath - THAT is bravery.").also { stage++ }
+            154 -> npcl(FaceAnim.FRIENDLY, "I would be honoured to represent you to the council as worthy of being a Fremennik after watching that superb battle!").also { stage = END_DIALOGUE }
+            160 -> npcl(FaceAnim.FRIENDLY, "Absolutely! I watched the entire battle, and was extremely impressed with your bravery in combat!").also { stage = END_DIALOGUE }
+            200 -> npcl(FaceAnim.ASKING, "Know you not who I am outerlander? There are none more brave or powerful than me amongst all the Fremennik!").also { stage++ }
             201 -> npcl(FaceAnim.ANGRY, "The role of bodyguard is below me, as a noble warrior. You might as well ask me to babysit the children!").also { stage++ }
             202 -> playerl(FaceAnim.THINKING, "Is there no way you would do this for me?").also { stage++ }
             203 -> npcl(FaceAnim.ANNOYED, "There is but one way outerlander. Since I was steeled in battle, I have dreamt of earning my place at the Champions Table in the Long Hall.").also { stage++ }
@@ -158,7 +158,7 @@ class ThorvalDialogue(player: Player? = null) : Dialogue(player) {
             207 -> playerl(FaceAnim.THINKING, "So you want me to go kill one of them off for you? Make it look like an accident?").also { stage++ }
             208 -> npcl(FaceAnim.EXTREMELY_SHOCKED, "WHAT? No, no, not at all! I am shocked you would suggest such a thing!").also { stage++ }
             209 -> npcl(FaceAnim.THINKING, "If you can persuade one of the Revellers to give up their Champions' Token to you so that I might take their place, you may have my contract as a bodyguard.").also { stage++ }
-            210 -> playerl(FaceAnim.HAPPY, "Okay, I'll see what I can do.").also {
+            210 -> playerl(FaceAnim.NEUTRAL, "Okay, I'll see what I can do.").also {
                 player.incrementAttribute(GameAttributes.QUEST_VIKING_SIGMUND_PROGRESS, 1)
                 stage = END_DIALOGUE
             }

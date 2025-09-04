@@ -2436,7 +2436,7 @@ object NPCs {
     const val RED_AXE_HENCHMAN_2432 = 2432
     const val RED_AXE_HENCHMAN_2433 = 2433
     const val OGRE_SHAMAN_2434 = 2434
-    const val OGRE_SHAMAN_2435 = 2435
+    const val NULL_2435 = 2435
     const val JARVALD_2436 = 2436
     const val JARVALD_2437 = 2437
     const val JARVALD_2438 = 2438

@@ -156,7 +156,6 @@ class LalliDialogue(player: Player? = null) : Dialogue(player) {
                     115
                 }
             }
-
             105 -> options("Pay", "Don't pay").also { stage++ }
             106 -> when (buttonId) {
                 1 -> playerl(FaceAnim.HAPPY, "Is that all? Here you go!").also {
@@ -166,11 +165,11 @@ class LalliDialogue(player: Player? = null) : Dialogue(player) {
                 }
                 2 -> npcl(FaceAnim.OLD_HAPPY, "You no pay, then you go! You no get any golden apples!").also { stage = END_DIALOGUE }
             }
-            107 -> npcl(FaceAnim.OLD_HAPPY, "Ha! Stupid human think he buy golden apples, but he actually get stupid wool! Hahaha!").also { stage = END_DIALOGUE }
+            107 -> npcl(FaceAnim.OLD_LAUGH1, "Ha! Stupid human think he buy golden apples, but he actually get stupid wool! Hahaha!").also { stage = END_DIALOGUE }
             115 -> playerl(FaceAnim.THINKING, "I don't even have that much cash on me...").also { stage++ }
             116 -> npcl(FaceAnim.OLD_NORMAL, "Well stupid bad trade human don't get no wool then! Or any golden apples!").also { stage = END_DIALOGUE }
             200 -> npc(FaceAnim.OLD_SNEAKY, "Bah! Puny humans always try steal Lalli's golden", "apples! You go away now!").also { stage++ }
-            201 -> player("Uh.... okay...").also { stage = END_DIALOGUE }
+            201 -> player(FaceAnim.HALF_THINKING, "Uh.... okay...").also { stage = END_DIALOGUE }
         }
         return true
     }

@@ -32,17 +32,12 @@ class YrsaDialogue(player: Player? = null) : Dialogue(player) {
         npc = args[0] as NPC
         when {
             inInventory(player, Items.FISCAL_STATEMENT_3708, 1) -> {
-                playerl(
-                    FaceAnim.HAPPY,
-                    "Hello. Can I have those boots now? Here is a written statement from Brundt outlining future tax burdens upon Fremennik merchants and shopkeepers for the year."
-                )
+                playerl(FaceAnim.HAPPY, "Hello. Can I have those boots now? Here is a written statement from Brundt outlining future tax burdens upon Fremennik merchants and shopkeepers for the year.")
                 stage = 15
             }
 
             inInventory(player, Items.STURDY_BOOTS_3700, 1) -> {
-                playerl(
-                    FaceAnim.ASKING, "Hey, these shoes look pretty comfy. Think you could make me a pair like them?"
-                )
+                playerl(FaceAnim.ASKING, "Hey, these shoes look pretty comfy. Think you could make me a pair like them?")
                 stage = 20
             }
 
@@ -52,26 +47,17 @@ class YrsaDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             getAttribute(player, GameAttributes.QUEST_VIKING_SIGMUND_PROGRESS, 0) == 4 -> {
-                playerl(
-                    FaceAnim.ASKING,
-                    "I don't suppose you have any idea where I could find a guarantee of a reduction on sales taxes, do you?"
-                )
+                playerl(FaceAnim.ASKING, "I don't suppose you have any idea where I could find a guarantee of a reduction on sales taxes, do you?")
                 stage = 10
             }
 
             getAttribute(player, GameAttributes.QUEST_VIKING_SIGMUND_PROGRESS, 0) == 3 -> {
-                playerl(
-                    FaceAnim.ASKING,
-                    "I don't suppose you have any idea where I could find some custom sturdy boots, do you?"
-                )
+                playerl(FaceAnim.ASKING, "I don't suppose you have any idea where I could find some custom sturdy boots, do you?")
                 stage = 1
             }
 
             isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS) -> {
-                npcl(
-                    FaceAnim.HAPPY,
-                    "Welcome to my clothes shop. I can change your shoes, or I've got a fine selection of clothes for sale."
-                )
+                npcl(FaceAnim.HAPPY, "Welcome to my clothes shop. I can change your shoes, or I've got a fine selection of clothes for sale.")
                 stage = 30
             }
 

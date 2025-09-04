@@ -235,15 +235,9 @@ class ChieftanBrundtDialogue(player: Player? = null) : Dialogue(player) {
             1202 -> npcl(FaceAnim.HAPPY, "Very well, ${FremennikTrials.getFremennikName(player!!)}! Let me look you over and see if you're strong enough for this boon.").also { stage++ }
             1203 -> {
                 if (player!!.hasItem(Item(Items.SEAL_OF_PASSAGE_9083))) {
-                    npcl(
-                        FaceAnim.HALF_GUILTY,
-                        "I'm sorry, ${FremennikTrials.getFremennikName(player!!)}. You just don't have the experience needed for this gift. Please come back when you've learned more."
-                    ).also { stage = END_DIALOGUE }
+                    npcl(FaceAnim.HALF_GUILTY, "I'm sorry, ${FremennikTrials.getFremennikName(player!!)}. You just don't have the experience needed for this gift. Please come back when you've learned more.").also { stage = END_DIALOGUE }
                 } else {
-                    npcl(
-                        FaceAnim.HAPPY,
-                        "Yes, yes... I see it. You've got the strength and wisdom for this gift. Please, take this. For now."
-                    ).also { stage++ }
+                    npcl(FaceAnim.HAPPY, "Yes, yes... I see it. You've got the strength and wisdom for this gift. Please, take this. For now.").also { stage++ }
                 }
             }
 

@@ -73,7 +73,8 @@ class FremennikFishermanDialogue : DialogueFile() {
                 stage = 1000
             }
             10 -> npcl(FaceAnim.ANNOYED, "You should pay attention when I speak! I already told you, that rip off navigator has it, and I want it!").also { stage = 1000 }
-            15 -> npcl(FaceAnim.HAPPY, "Great work outerlander! With this, I can finally catch enough fish to make an honest living from it! Here, have the stupid fish.").also {
+            15 -> {
+                npcl(FaceAnim.HAPPY, "Great work outerlander! With this, I can finally catch enough fish to make an honest living from it! Here, have the stupid fish.")
                 removeItem(player!!, Items.SEA_FISHING_MAP_3704)
                 addItemOrDrop(player!!, Items.UNUSUAL_FISH_3703, 1)
                 stage = 1000

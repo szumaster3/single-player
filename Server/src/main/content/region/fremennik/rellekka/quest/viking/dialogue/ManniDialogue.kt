@@ -174,21 +174,17 @@ class ManniDialogue(player: Player? = null) : Dialogue(player) {
             191 -> npcl(FaceAnim.HAPPY, "There ya go! Anyone who can drink like you earns my respect!").also {
                 stage = END_DIALOGUE
             }
-
             200 -> npcl(FaceAnim.HAPPY, "Do not think me rude outerlander, but our customs forbid me talking to you. All contact with outlanders must be vetted by our chieftain, Brundt.").also { stage++ }
             201 -> playerl(FaceAnim.ASKING, "Where is this Brundt?").also { stage++ }
-            202 -> npcl(FaceAnim.HAPPY, "He is standing just over there. He will speak for the tribe.").also {
-                stage = END_DIALOGUE
-            }
+            202 -> npcl(FaceAnim.HAPPY, "He is standing just over there. He will speak for the tribe.").also { stage = END_DIALOGUE }
         }
         return true
     }
 
-    class DrinkingPulse(
-        val player: Player?,
-        val npc: NPC?,
-        private val lowAlcohol: Boolean? = false,
-    ) : Pulse() {
+    /**
+     * Represents pulse used to drinking the keg in Fremennik trials.
+     */
+    private class DrinkingPulse(val player: Player?, val npc: NPC?, private val lowAlcohol: Boolean? = false) : Pulse() {
         var counter = 0
 
         override fun pulse(): Boolean {
@@ -211,21 +207,8 @@ class ManniDialogue(player: Player? = null) : Dialogue(player) {
                         player?.inventory?.remove(Item(Items.KEG_OF_BEER_3711))
                         sendMessage(player!!, "You drink from your keg. You feel extremely drunk...")
                     }
-
-                    7 -> player?.dialogueInterpreter?.sendDialogues(
-                        player,
-                        FaceAnim.DRUNK,
-                        "Ish no fair!! I canna drink another drop! I alsho",
-                        "feel veddy, veddy ill...",
-                    )
-
-                    15 -> player?.dialogueInterpreter?.sendDialogues(
-                        npc,
-                        FaceAnim.DRUNK,
-                        "I guessh I win then ouddaladder! (hic) Niche try,",
-                        "anyway!",
-                    )
-
+                    7 -> player?.dialogueInterpreter?.sendDialogues(player, FaceAnim.DRUNK, "Ish no fair!! I canna drink another drop! I alsho", "feel veddy, veddy ill...")
+                    15 -> player?.dialogueInterpreter?.sendDialogues(npc, FaceAnim.DRUNK, "I guessh I win then ouddaladder! (hic) Niche try,", "anyway!")
                     16 -> {
                         player?.unlock()
                         npc?.unlock()
@@ -255,50 +238,22 @@ class ManniDialogue(player: Player? = null) : Dialogue(player) {
                         sendMessage(player!!, "You drink from your keg. You don't feel at all drunk.")
                     }
 
-                    7 -> player?.dialogueInterpreter?.sendDialogues(
-                        player,
-                        FaceAnim.HAPPY,
-                        "Aaaah, lovely stuff. So you want to get the next round",
-                        "in, or shall I? You don't look so good there!",
-                    )
-
-                    15 -> player?.dialogueInterpreter?.sendDialogues(
-                        npc,
-                        FaceAnim.DRUNK,
-                        "Wassha? Guh? You drank that whole keg! But it dinnna",
-                        "affect you at all! I conshede! You can probably",
-                        "outdrink me!",
-                    )
-
-                    21 -> player?.dialogueInterpreter?.sendDialogues(
-                        npc,
-                        FaceAnim.DRUNK,
-                        "I jusht can't (hic) believe it! Thatsh shome might fine",
-                        "drinking legs you got! Anyone who can drink like",
-                        "THAT getsh my vote atta somsh.... coumah... gets my",
-                        "vote!",
-                    )
+                    7 -> player?.dialogueInterpreter?.sendDialogues(player, FaceAnim.HAPPY, "Aaaah, lovely stuff. So you want to get the next round", "in, or shall I? You don't look so good there!")
+                    15 -> player?.dialogueInterpreter?.sendDialogues(npc, FaceAnim.DRUNK, "Wassha? Guh? You drank that whole keg! But it dinnna", "affect you at all! I conshede! You can probably", "outdrink me!")
+                    21 -> player?.dialogueInterpreter?.sendDialogues(npc, FaceAnim.DRUNK, "I jusht can't (hic) believe it! Thatsh shome might fine", "drinking legs you got! Anyone who can drink like", "THAT getsh my vote atta somsh.... coumah... gets my", "vote!")
 
                     22 -> {
                         player?.unlock()
                         npc?.unlock()
                         player?.face(player)
                         npc?.face(npc)
-                        npc?.isNeverWalks = false/*
+                        npc?.isNeverWalks = false
+                        /*
                          * End of Revellers trial.
                          */
-                        removeAttributes(
-                            player!!,
-                            GameAttributes.QUEST_VIKING_MANI_BOMB,
-                            GameAttributes.QUEST_VIKING_MANI_START,
-                            GameAttributes.QUEST_VIKING_MANI_KEG
-                        )
+                        removeAttributes(player!!, GameAttributes.QUEST_VIKING_MANI_BOMB, GameAttributes.QUEST_VIKING_MANI_START, GameAttributes.QUEST_VIKING_MANI_KEG)
                         setAttribute(player, GameAttributes.QUEST_VIKING_MANI_VOTE, true)
-                        setAttribute(
-                            player,
-                            GameAttributes.QUEST_VIKING_VOTES,
-                            getAttribute(player, GameAttributes.QUEST_VIKING_VOTES, 0) + 1
-                        )
+                        setAttribute(player, GameAttributes.QUEST_VIKING_VOTES, getAttribute(player, GameAttributes.QUEST_VIKING_VOTES, 0) + 1)
                         sendMessage(player, "Congratulations! You have completed the Revellers' trial.")
                         return true
                     }

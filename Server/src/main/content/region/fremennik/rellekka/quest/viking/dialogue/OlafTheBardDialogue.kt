@@ -39,10 +39,7 @@ class OlafTheBardDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             getAttribute(player, GameAttributes.QUEST_VIKING_SIGMUND_PROGRESS, 0) == 3 -> {
-                playerl(
-                    FaceAnim.ASKING,
-                    "I don't suppose you have any idea where I could find some custom sturdy boots, do you?"
-                )
+                playerl(FaceAnim.ASKING, "I don't suppose you have any idea where I could find some custom sturdy boots, do you?")
                 stage = 60
             }
 
@@ -57,21 +54,17 @@ class OlafTheBardDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             getAttribute(player, GameAttributes.QUEST_VIKING_OLAF_START, false) -> {
-                npc("I can't wait to see your performance.")
+                npc(FaceAnim.HAPPY, "I can't wait to see your performance.")
                 stage = 1000
             }
 
             isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS) -> {
-                npcl(
-                    FaceAnim.HAPPY,
-                    "Hello again to you, ${FremennikTrials.getFremennikName(player)}. Us bards should stick together, what can I do for you?"
-                )
+                npcl(FaceAnim.HAPPY, "Hello again to you, ${FremennikTrials.getFremennikName(player)}. Us bards should stick together, what can I do for you?")
                 stage = 98
             }
 
             player.questRepository.hasStarted(Quests.THE_FREMENNIK_TRIALS) -> {
-                npc("Hello? Yes? You want something outerlander?")
-                stage = 0
+                npc(FaceAnim.HALF_ASKING, "Hello? Yes? You want something outerlander?")
             }
 
             else -> {
@@ -84,41 +77,41 @@ class OlafTheBardDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
-            0 -> player("Are you a member of the council?").also { stage++ }
-            1 -> npc("Why, indeed I am, outerlander! My talents as an", "exemplary musician made it difficult for them not to", "accept me! Why do you wish to know this?").also { stage++ }
-            2 -> player("Well, I ask because I am currently doing the", "Fremennik trials so as to join you clan. I need seven", "of the twelve council of elders to vote for me.").also { stage++ }
-            3 -> npc("Ahhh... and you wish to earn my vote? I will gladly", "accept you as a Fremennik should you be able to prove", "yourself to have a little musical ability!").also { stage++ }
-            4 -> player("So how would I do that?").also { stage++ }
-            5 -> npc("Why, by playing in our longhall! All you need to do is", "impress the revellers there with a few verses of an epic", "of your own creation!").also { stage++ }
-            6 -> npc("So what say you outerlander? Are you up for the", "challenge?").also { stage++ }
+            0 -> player(FaceAnim.HALF_ASKING, "Are you a member of the council?").also { stage++ }
+            1 -> npc(FaceAnim.FRIENDLY,"Why, indeed I am, outerlander! My talents as an", "exemplary musician made it difficult for them not to", "accept me! Why do you wish to know this?").also { stage++ }
+            2 -> player(FaceAnim.HALF_GUILTY, "Well, I ask because I am currently doing the", "Fremennik trials so as to join you clan. I need seven", "of the twelve council of elders to vote for me.").also { stage++ }
+            3 -> npc(FaceAnim.HALF_ASKING,"Ahhh... and you wish to earn my vote? I will gladly", "accept you as a Fremennik should you be able to prove", "yourself to have a little musical ability!").also { stage++ }
+            4 -> player(FaceAnim.HALF_ASKING,"So how would I do that?").also { stage++ }
+            5 -> npc(FaceAnim.ASKING,"Why, by playing in our longhall! All you need to do is", "impress the revellers there with a few verses of an epic", "of your own creation!").also { stage++ }
+            6 -> npc(FaceAnim.HALF_ASKING, "So what say you outerlander? Are you up for the", "challenge?").also { stage++ }
             7 -> options("Yes", "No").also { stage++ }
             8 -> when (buttonId) {
-                1 -> player("Sure! This certainly sounds pretty easy to accomplish.", "I'll have your vote in no time!").also { stage++ }
-                2 -> player("No, that sounds like too much work.").also { stage = 1000 }
+                1 -> player(FaceAnim.HAPPY, "Sure! This certainly sounds pretty easy to accomplish.", "I'll have your vote in no time!").also { stage++ }
+                2 -> player(FaceAnim.NEUTRAL, "No, that sounds like too much work.").also { stage = 1000 }
             }
-            9 -> npc("That is great news outerlander! We always need more", "music lovers here!").also {
+            9 -> npc(FaceAnim.HAPPY,"That is great news outerlander! We always need more", "music lovers here!").also {
                 stage++
                 setAttribute(player, GameAttributes.QUEST_VIKING_OLAF_START, true)
             }
-            10 -> player("So how would I go about writing this epic?").also { stage++ }
-            11 -> npc("Well, first of all you are going to need an instrument.", "Like all true bards you are going to have to make this", "yourself.").also { stage++ }
-            12 -> player("How do I make an instrument?").also { stage++ }
-            13 -> npc("Well, it is a long and drawn-out process. Just east of", "this village there is an unusually musical tree that can", "be used to make very high quality instruments.").also { stage++ }
-            14 -> npc("Cut a piece from it, and then carve it into a special", "shape that will allow you to string it. Using a knife as", "you would craft any other wooden object would be best", "for this.").also { stage++ }
-            15 -> player("Then what do I need to do?").also { stage++ }
-            16 -> npc("Next you will need to string your lyre. There is a troll", "to the South-east who has some golden wool. I would", "not recommend using anything else to string your lyre", "with.").also { stage++ }
-            17 -> player("Anything else?").also { stage++ }
-            18 -> npc("Well, when you have crafted your lyre you will need", "the blessing of the Fossegrimen to tune your lyre to", "perfection before you even consider a public", "performance.").also { stage++ }
-            19 -> player("Who or what is Fossegrimen?").also { stage++ }
-            20 -> npc("Fossegrimen is a lake spirit that lives just a little way", "South-west of this village. Make her an offering of fish,", "and you will then be ready for your performance.").also { stage++ }
-            21 -> npc("Make sure you give her a suitable offering however. If", "the offering is found to be unworthy, then you may", "find yourself unable to play your lyre with any skill at", "all!").also { stage++ }
-            22 -> player("So what would be a worthy offering?").also { stage++ }
-            23 -> npc("A raw shark, manta ray, or sea turtle should be", "sufficient as an offering.").also { stage++ }
-            24 -> player("Ok, what else do I need to do?").also { stage++ }
-            25 -> npc("When you have crafted your lyre and been blessed by", "Fossegrimen, then you will finally be ready to make", "your performance to the revellers at the longhall.").also { stage++ }
-            26 -> npc("Head past the bouncers and onto the stage, and then", "begin to play. If all goes well, you should find the music", "spring to your mind and sing your own epic on the", "spot").also { stage++ }
-            27 -> npc("I will observe both you and the audience, and if you", "show enough talent, I will happily vote in your favour at", "the council of elders.").also { stage++ }
-            28 -> npc("Is that clear enough, outerlander? Would you like me", "to repeat anything?").also { stage++ }
+            10 -> player(FaceAnim.HALF_ASKING,"So how would I go about writing this epic?").also { stage++ }
+            11 -> npc(FaceAnim.HALF_THINKING,"Well, first of all you are going to need an instrument.", "Like all true bards you are going to have to make this", "yourself.").also { stage++ }
+            12 -> player(FaceAnim.HALF_ASKING,"How do I make an instrument?").also { stage++ }
+            13 -> npc(FaceAnim.HALF_THINKING,"Well, it is a long and drawn-out process. Just east of", "this village there is an unusually musical tree that can", "be used to make very high quality instruments.").also { stage++ }
+            14 -> npc(FaceAnim.NEUTRAL,"Cut a piece from it, and then carve it into a special", "shape that will allow you to string it. Using a knife as", "you would craft any other wooden object would be best", "for this.").also { stage++ }
+            15 -> player(FaceAnim.HALF_ASKING,"Then what do I need to do?").also { stage++ }
+            16 -> npc(FaceAnim.FRIENDLY,"Next you will need to string your lyre. There is a troll", "to the South-east who has some golden wool. I would", "not recommend using anything else to string your lyre", "with.").also { stage++ }
+            17 -> player(FaceAnim.HALF_ASKING,"Anything else?").also { stage++ }
+            18 -> npc(FaceAnim.HALF_THINKING,"Well, when you have crafted your lyre you will need", "the blessing of the Fossegrimen to tune your lyre to", "perfection before you even consider a public", "performance.").also { stage++ }
+            19 -> player(FaceAnim.HALF_ASKING,"Who or what is Fossegrimen?").also { stage++ }
+            20 -> npc(FaceAnim.FRIENDLY,"Fossegrimen is a lake spirit that lives just a little way", "South-west of this village. Make her an offering of fish,", "and you will then be ready for your performance.").also { stage++ }
+            21 -> npc(FaceAnim.FRIENDLY,"Make sure you give her a suitable offering however. If", "the offering is found to be unworthy, then you may", "find yourself unable to play your lyre with any skill at", "all!").also { stage++ }
+            22 -> player(FaceAnim.HALF_ASKING,"So what would be a worthy offering?").also { stage++ }
+            23 -> npc(FaceAnim.FRIENDLY,"A raw shark, manta ray, or sea turtle should be", "sufficient as an offering.").also { stage++ }
+            24 -> player(FaceAnim.HALF_ASKING,"Ok, what else do I need to do?").also { stage++ }
+            25 -> npc(FaceAnim.FRIENDLY,"When you have crafted your lyre and been blessed by", "Fossegrimen, then you will finally be ready to make", "your performance to the revellers at the longhall.").also { stage++ }
+            26 -> npc(FaceAnim.FRIENDLY,"Head past the bouncers and onto the stage, and then", "begin to play. If all goes well, you should find the music", "spring to your mind and sing your own epic on the", "spot").also { stage++ }
+            27 -> npc(FaceAnim.FRIENDLY,"I will observe both you and the audience, and if you", "show enough talent, I will happily vote in your favour at", "the council of elders.").also { stage++ }
+            28 -> npc(FaceAnim.HALF_ASKING, "Is that clear enough, outerlander? Would you like me", "to repeat anything?").also { stage++ }
             29 -> player("No thanks. I think I've got it.").also { stage = 1000 }
             40 -> npcl(FaceAnim.HAPPY, "You have a truly poetic soul! Anyone who can compose such a beautiful epic, and then perform it so flawlessly can only bring good to our clan!").also { stage++ }
             41 -> playerl(FaceAnim.THINKING, "Erm... so that's a yes, then?").also { stage++ }
