@@ -29,12 +29,7 @@ class NedDialogueFile(val questStage: Int) : DialogueFile() {
             }
 
             2 -> npc("I am sure I can. What are you thinking of?").also { stage++ }
-            3 -> options(
-                "Could you knit me a sweater?",
-                "How about some sort of wig?",
-                "Could you repair the arrow holes in the back of my shirt?"
-            ).also { stage++ }
-
+            3 -> options("Could you knit me a sweater?", "How about some sort of wig?", "Could you repair the arrow holes in the back of my shirt?").also { stage++ }
             4 -> when (buttonID) {
                 1 -> player("Could you knit me a sweater?").also { stage = STAGE_KNIT_SWEATER }
                 2 -> player("How about some sort of wig?").also { stage = STAGE_KNIT_WIG }

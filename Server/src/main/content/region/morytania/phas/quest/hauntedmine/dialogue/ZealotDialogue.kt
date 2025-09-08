@@ -15,10 +15,7 @@ class ZealotDialogue(player: Player? = null) : Dialogue(player) {
         return true
     }
 
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ): Boolean {
+    override fun handle(componentID: Int, buttonID: Int): Boolean {
         npc("State thy allegiance stranger.")
         end()
         return true

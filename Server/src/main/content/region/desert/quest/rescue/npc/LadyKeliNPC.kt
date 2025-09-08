@@ -6,15 +6,8 @@ import core.game.world.GameWorld.ticks
 import core.game.world.map.Location
 import shared.consts.NPCs
 
-class LadyKeliNPC(
-    id: Int = 0,
-    location: Location? = null,
-) : AbstractNPC(id, location) {
-    override fun construct(
-        id: Int,
-        location: Location,
-        vararg objects: Any,
-    ): AbstractNPC = LadyKeliNPC(id, location)
+class LadyKeliNPC(id: Int = 0, location: Location? = null, ) : AbstractNPC(id, location) {
+    override fun construct(id: Int, location: Location, vararg objects: Any, ): AbstractNPC = LadyKeliNPC(id, location)
 
     override fun isHidden(player: Player): Boolean = player.getAttribute("keli-gone", 0) > ticks
 

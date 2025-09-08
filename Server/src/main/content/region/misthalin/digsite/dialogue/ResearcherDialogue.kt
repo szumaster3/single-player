@@ -15,14 +15,7 @@ class ResearcherDialogue(player: Player? = null) : Dialogue(player) {
         when (stage) {
             START_DIALOGUE -> npcl(FaceAnim.FRIENDLY, "Hello there. What are you doing here?").also { stage++ }
             1 -> playerl(FaceAnim.FRIENDLY, "Just looking around at the moment.").also { stage++ }
-            2 ->
-                npcl(
-                    FaceAnim.FRIENDLY,
-                    "Well, feel free to talk to me should you come across anything you can't figure out.",
-                ).also {
-                    stage =
-                        END_DIALOGUE
-                }
+            2 -> npcl(FaceAnim.FRIENDLY, "Well, feel free to talk to me should you come across anything you can't figure out.").also { stage = END_DIALOGUE }
         }
         return true
     }

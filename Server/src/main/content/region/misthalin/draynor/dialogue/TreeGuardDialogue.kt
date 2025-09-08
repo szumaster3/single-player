@@ -26,6 +26,7 @@ class TreeGuardDialogue : DialogueFile() {
             } else {
                 npcl("Yes, what do you do... I say, is that stew for me?").also { stage = 17 }
             }
+
             1 -> playerl("Well, it's not every day you see a man up a tree.").also { stage++ }
             2 -> npcl("I'm trying to observe a suspect. Leave me alone!").also { stage++ }
             3 -> options("This is about the bank robbery, right?", "You're not being very subtle up there.", "Can I do anything to help?").also { stage++ }
@@ -34,6 +35,7 @@ class TreeGuardDialogue : DialogueFile() {
                 2 -> playerl("You're not being very subtle up there.").also { stage = 9 }
                 3 -> playerl("Can I do anything to help?").also { stage = 13 }
             }
+
             5 -> npcl("Yes, that's right. We're keeping the suspect under tight observation for the moment.").also { stage++ }
             6 -> playerl("Can't you just... I dunno.... arrest him?").also { stage++ }
             7 -> npcl("I'm not meant to discuss the case. You know what confidentiality rules are like.").also { stage++ }
@@ -54,6 +56,7 @@ class TreeGuardDialogue : DialogueFile() {
                 1 -> playerl("Okay, take the stew.").also { stage++ }
                 2 -> playerl("No, I want to keep this stew!").also { stage = 20 }
             }
+
             19 -> {
                 sendNPCDialogue(player!!, NPCs.GUARD_345, "Gosh, that's very kind of you! Here, have a few coins for your trouble.", FaceAnim.HAPPY)
                 end()

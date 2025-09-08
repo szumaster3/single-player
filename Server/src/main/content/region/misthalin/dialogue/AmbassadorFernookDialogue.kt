@@ -21,14 +21,7 @@ class AmbassadorFernookDialogue(player: Player? = null) : Dialogue(player) {
         when (stage) {
             0 -> npc(FaceAnim.OLD_DEFAULT, "Well, in theory, but he always seems to be busy.").also { stage++ }
             1 -> player(FaceAnim.HALF_GUILTY, "You don't seem that upset by that, though...").also { stage++ }
-            2 ->
-                npc(
-                    FaceAnim.OLD_DEFAULT,
-                    "Oh no, I like travelling, and if you become a diplomat",
-                    "patience is a vital skill.",
-                ).also {
-                    stage++
-                }
+            2 -> npc(FaceAnim.OLD_DEFAULT, "Oh no, I like travelling, and if you become a diplomat", "patience is a vital skill.").also { stage++ }
             3 -> player(FaceAnim.HALF_GUILTY, "I'll try to remember that.").also { stage = END_DIALOGUE }
         }
         return true
