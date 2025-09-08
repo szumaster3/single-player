@@ -30,7 +30,6 @@ class LoweDialogue(player: Player? = null) : Dialogue(player) {
                         end()
                         openNpcShop(player, NPCs.LOWE_550)
                     }
-
                     2 -> player(FaceAnim.EVIL_LAUGH, "No, I prefer to bash things close up.").also { stage++ }
                 }
 

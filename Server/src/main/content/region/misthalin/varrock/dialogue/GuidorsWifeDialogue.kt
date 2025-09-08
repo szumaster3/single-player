@@ -26,13 +26,7 @@ class GuidorsWifeDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
-            0 ->
-                npc(
-                    FaceAnim.HALF_GUILTY,
-                    "Oh hello, I can't chat now. I have to keep an eye on my",
-                    "husband. He's very ill!",
-                ).also { stage++ }
-
+            0 -> npc(FaceAnim.HALF_GUILTY, "Oh hello, I can't chat now. I have to keep an eye on my", "husband. He's very ill!").also { stage++ }
             1 -> playerl(FaceAnim.HALF_GUILTY, "I'm sorry to hear that!").also { stage = END_DIALOGUE }
             2 -> npc("Hello there. I fear Guidor may not be long for", "this world!").also { stage = END_DIALOGUE }
         }

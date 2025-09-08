@@ -16,7 +16,7 @@ import shared.consts.Quests
  */
 @Initializable
 class ApothecaryDialogue(player: Player? = null) : Dialogue(player) {
-    
+
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (player.getQuestRepository().getQuest(Quests.ROMEO_JULIET).getStage(player) == 40) {
@@ -67,28 +67,27 @@ class ApothecaryDialogue(player: Player? = null) : Dialogue(player) {
                 stage = 2
             }
 
-            2 ->
-                when (buttonId) {
-                    1 -> {
-                        player("Can you make a strength potion?")
-                        stage = 10
-                    }
-
-                    2 -> {
-                        player("Do you know a potion to make hair fall out?")
-                        stage = 20
-                    }
-
-                    3 -> {
-                        player("Have you got any good potions to give away?")
-                        stage = 140
-                    }
-
-                    4 -> {
-                        player("Can you make a potion that makes it seems like I'm dead?")
-                        stage = 40
-                    }
+            2 -> when (buttonId) {
+                1 -> {
+                    player("Can you make a strength potion?")
+                    stage = 10
                 }
+
+                2 -> {
+                    player("Do you know a potion to make hair fall out?")
+                    stage = 20
+                }
+
+                3 -> {
+                    player("Have you got any good potions to give away?")
+                    stage = 140
+                }
+
+                4 -> {
+                    player("Can you make a potion that makes it seems like I'm dead?")
+                    stage = 40
+                }
+            }
 
             10 -> {
                 if (player.inventory.containItems(223, 225)) {
@@ -113,12 +112,11 @@ class ApothecaryDialogue(player: Player? = null) : Dialogue(player) {
                 stage = 51
             }
 
-            51 ->
-                if (player.inventory.remove(*POTION_ITEMS)) {
-                    player.inventory.add(POTION)
-                    end()
-                    player.achievementDiaryManager.finishTask(player, DiaryType.VARROCK, 1, 0)
-                }
+            51 -> if (player.inventory.remove(*POTION_ITEMS)) {
+                player.inventory.add(POTION)
+                end()
+                player.achievementDiaryManager.finishTask(player, DiaryType.VARROCK, 1, 0)
+            }
 
             11 -> {
                 player("So what are the ingredients?")

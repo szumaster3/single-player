@@ -13,11 +13,7 @@ import shared.consts.NPCs
 class IffieDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
-        npc(
-            "Sorry, dearie, if I stop to chat I'll lose count.",
-            "Talk to my sister instead; she likes to chat.",
-            "You'll find her upstairs in the Varrock Church.",
-        ).also { stage = END_DIALOGUE }
+        npc("Sorry, dearie, if I stop to chat I'll lose count.", "Talk to my sister instead; she likes to chat.", "You'll find her upstairs in the Varrock Church.").also { stage = END_DIALOGUE }
         return true
     }
 

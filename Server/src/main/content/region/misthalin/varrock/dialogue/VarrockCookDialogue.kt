@@ -35,26 +35,25 @@ class VarrockCookDialogue(player: Player? = null) : Dialogue(player) {
                 ).also { stage++ }
             }
 
-            1 ->
-                when (buttonId) {
-                    1 -> {
-                        player(FaceAnim.HALF_GUILTY, "Can you sell me any food?")
-                        stage = 10
-                    }
-
-                    2 -> {
-                        player(FaceAnim.HALF_GUILTY, "Can you give me any free food?")
-                        stage = 20
-                    }
-
-                    3 -> {
-                        player(
-                            FaceAnim.HALF_GUILTY,
-                            "I don't want anything from this horrible kitchen.",
-                        )
-                        stage = 30
-                    }
+            1 -> when (buttonId) {
+                1 -> {
+                    player(FaceAnim.HALF_GUILTY, "Can you sell me any food?")
+                    stage = 10
                 }
+
+                2 -> {
+                    player(FaceAnim.HALF_GUILTY, "Can you give me any free food?")
+                    stage = 20
+                }
+
+                3 -> {
+                    player(
+                        FaceAnim.HALF_GUILTY,
+                        "I don't want anything from this horrible kitchen.",
+                    )
+                    stage = 30
+                }
+            }
 
             10 -> {
                 npc(
@@ -74,18 +73,17 @@ class VarrockCookDialogue(player: Player? = null) : Dialogue(player) {
                 stage = 12
             }
 
-            12 ->
-                when (buttonId) {
-                    1 -> {
-                        player(FaceAnim.HALF_GUILTY, "Alright, I'll buy a cabbage.")
-                        stage = 150
-                    }
-
-                    2 -> {
-                        player(FaceAnim.HALF_GUILTY, "No thanks, I don't like cabbage.")
-                        stage = 160
-                    }
+            12 -> when (buttonId) {
+                1 -> {
+                    player(FaceAnim.HALF_GUILTY, "Alright, I'll buy a cabbage.")
+                    stage = 150
                 }
+
+                2 -> {
+                    player(FaceAnim.HALF_GUILTY, "No thanks, I don't like cabbage.")
+                    stage = 160
+                }
+            }
 
             20 -> {
                 npc(FaceAnim.HALF_GUILTY, "Can you give me any free money?")
@@ -129,19 +127,18 @@ class VarrockCookDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             33 -> end()
-            150 ->
-                if (removeItem(player, Item(Items.COINS_995, 1))) {
-                    addItem(player, Items.CABBAGE_1965, 1)
-                    npc(
-                        FaceAnim.HALF_GUILTY,
-                        "It's a deal. Now, make sure you eat it all up. Cabbage is",
-                        "good for you.",
-                    )
-                    stage = 151
-                } else {
-                    end()
-                    sendMessage(player, "You need one coin to buy a cabbage.")
-                }
+            150 -> if (removeItem(player, Item(Items.COINS_995, 1))) {
+                addItem(player, Items.CABBAGE_1965, 1)
+                npc(
+                    FaceAnim.HALF_GUILTY,
+                    "It's a deal. Now, make sure you eat it all up. Cabbage is",
+                    "good for you.",
+                )
+                stage = 151
+            } else {
+                end()
+                sendMessage(player, "You need one coin to buy a cabbage.")
+            }
 
             151 -> end()
             160 -> {

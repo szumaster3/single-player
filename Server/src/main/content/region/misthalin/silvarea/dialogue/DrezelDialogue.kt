@@ -108,22 +108,21 @@ class DrezelDialogue(player: Player? = null) : Dialogue(player) {
                 stage = 7
             }
 
-            7 ->
-                when (buttonId) {
-                    1 -> {
-                        player(
-                            FaceAnim.HALF_GUILTY,
-                            "Tell me anyway. I'd like to know the full facts before",
-                            "acting any further.",
-                        )
-                        stage = 8
-                    }
-
-                    2 -> {
-                        player(FaceAnim.HALF_GUILTY, "You're right, we don't.")
-                        stage = 500
-                    }
+            7 -> when (buttonId) {
+                1 -> {
+                    player(
+                        FaceAnim.HALF_GUILTY,
+                        "Tell me anyway. I'd like to know the full facts before",
+                        "acting any further.",
+                    )
+                    stage = 8
                 }
+
+                2 -> {
+                    player(FaceAnim.HALF_GUILTY, "You're right, we don't.")
+                    stage = 500
+                }
+            }
 
             8 -> {
                 npc(
@@ -378,27 +377,26 @@ class DrezelDialogue(player: Player? = null) : Dialogue(player) {
                 stage = 31
             }
 
-            503 ->
-                when (buttonId) {
-                    1 -> {
-                        player(
-                            FaceAnim.HALF_GUILTY,
-                            "Yes, of course. Any threat to Misthalin must be",
-                            "neutralised immediately. So what can I do to help?",
-                        )
-                        stage = 506
-                    }
-
-                    2 -> {
-                        player(
-                            FaceAnim.HALF_GUILTY,
-                            "HA! NO! You can rot in there for all I care you",
-                            "stupid priest! All hail mighty Zamorak! Death to puny",
-                            "Misthalin!",
-                        )
-                        stage = 504
-                    }
+            503 -> when (buttonId) {
+                1 -> {
+                    player(
+                        FaceAnim.HALF_GUILTY,
+                        "Yes, of course. Any threat to Misthalin must be",
+                        "neutralised immediately. So what can I do to help?",
+                    )
+                    stage = 506
                 }
+
+                2 -> {
+                    player(
+                        FaceAnim.HALF_GUILTY,
+                        "HA! NO! You can rot in there for all I care you",
+                        "stupid priest! All hail mighty Zamorak! Death to puny",
+                        "Misthalin!",
+                    )
+                    stage = 504
+                }
+            }
 
             504 -> {
                 npc(
@@ -601,23 +599,21 @@ class DrezelDialogue(player: Player? = null) : Dialogue(player) {
                 stage = 702
             }
 
-            702 ->
-                stage =
-                    if (player.inventory.contains(2953, 1)) {
-                        player(
-                            FaceAnim.HALF_GUILTY,
-                            "I have some water from the Salve. It seems to have",
-                            "been desecrated though. Do you think you could bless",
-                            "it for me?",
-                        )
-                        703
-                    } else {
-                        player(
-                            FaceAnim.HALF_GUILTY,
-                            "Do you have any idea about dealing with vampire?",
-                        )
-                        730
-                    }
+            702 -> stage = if (player.inventory.contains(2953, 1)) {
+                player(
+                    FaceAnim.HALF_GUILTY,
+                    "I have some water from the Salve. It seems to have",
+                    "been desecrated though. Do you think you could bless",
+                    "it for me?",
+                )
+                703
+            } else {
+                player(
+                    FaceAnim.HALF_GUILTY,
+                    "Do you have any idea about dealing with vampire?",
+                )
+                730
+            }
 
             703 -> {
                 npc(

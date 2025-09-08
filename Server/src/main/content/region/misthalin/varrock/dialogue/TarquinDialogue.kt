@@ -31,22 +31,17 @@ class TarquinDialogue(player: Player? = null) : Dialogue(player) {
                 stage = 2
             }
 
-            2 ->
-                when (buttonId) {
-                    1 -> {
-                        player(FaceAnim.HALF_GUILTY, "Who are you?")
-                        stage = 10
-                    }
-
-                    2 -> {
-                        npc(
-                            FaceAnim.HALF_GUILTY,
-                            "It's really quite simple. Just walk down to that tree on",
-                            "the water bank and chop it down.",
-                        )
-                        stage = 24
-                    }
+            2 -> when (buttonId) {
+                1 -> {
+                    player(FaceAnim.HALF_GUILTY, "Who are you?")
+                    stage = 10
                 }
+
+                2 -> {
+                    npc(FaceAnim.HALF_GUILTY, "It's really quite simple. Just walk down to that tree on", "the water bank and chop it down.")
+                    stage = 24
+                }
+            }
 
             10 -> {
                 npc(FaceAnim.HALF_GUILTY, "My name is Tarquin Marjoribanks.")
@@ -62,10 +57,7 @@ class TarquinDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             12 -> {
-                player(
-                    FaceAnim.HALF_GUILTY,
-                    "Why would I have heard of you Mr. Marjoribanks?",
-                )
+                player(FaceAnim.HALF_GUILTY, "Why would I have heard of you Mr. Marjoribanks?")
                 stage = 13
             }
 
@@ -75,11 +67,7 @@ class TarquinDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             14 -> {
-                npc(
-                    FaceAnim.HALF_GUILTY,
-                    "You should know of me because I am a member of the",
-                    "royal family of Misthalin!",
-                )
+                npc(FaceAnim.HALF_GUILTY, "You should know of me because I am a member of the", "royal family of Misthalin!")
                 stage = 15
             }
 
@@ -94,27 +82,17 @@ class TarquinDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             17 -> {
-                npc(
-                    FaceAnim.HALF_GUILTY,
-                    "I'm his 4th cousin, once removed on his mothers side.",
-                )
+                npc(FaceAnim.HALF_GUILTY, "I'm his 4th cousin, once removed on his mothers side.")
                 stage = 18
             }
 
             18 -> {
-                player(
-                    FaceAnim.HALF_GUILTY,
-                    "Er... Okay. What are you doing here then?",
-                )
+                player(FaceAnim.HALF_GUILTY, "Er... Okay. What are you doing here then?")
                 stage = 19
             }
 
             19 -> {
-                npc(
-                    FaceAnim.HALF_GUILTY,
-                    "I'm canoeing on the river! It's enormous fun! Would",
-                    "you like to know how?",
-                )
+                npc(FaceAnim.HALF_GUILTY, "I'm canoeing on the river! It's enormous fun! Would", "you like to know how?")
                 stage = 20
             }
 
@@ -123,34 +101,22 @@ class TarquinDialogue(player: Player? = null) : Dialogue(player) {
                 stage = 21
             }
 
-            21 ->
-                when (buttonId) {
-                    1 -> {
-                        npc(
-                            FaceAnim.HALF_GUILTY,
-                            "It's really quite simple. Just walk down to that tree on",
-                            "the water bank and chop it down.",
-                        )
-                        stage = 24
-                    }
-
-                    2 -> end()
+            21 -> when (buttonId) {
+                1 -> {
+                    npc(FaceAnim.HALF_GUILTY, "It's really quite simple. Just walk down to that tree on", "the water bank and chop it down.")
+                    stage = 24
                 }
 
+                2 -> end()
+            }
+
             24 -> {
-                npc(
-                    FaceAnim.HALF_GUILTY,
-                    "Then take your axe to it and shape it how you like!",
-                )
+                npc(FaceAnim.HALF_GUILTY, "Then take your axe to it and shape it how you like!")
                 stage = 26
             }
 
             26 -> {
-                npc(
-                    FaceAnim.HALF_GUILTY,
-                    "You look like you know your way around a tree,",
-                    "you can make many canoes.",
-                )
+                npc(FaceAnim.HALF_GUILTY, "You look like you know your way around a tree,", "you can make many canoes.")
                 stage = 27
             }
 
