@@ -205,7 +205,7 @@ class WatchTowerPlugin : InteractionListener {
          */
 
         on(Items.SKAVID_MAP_2376, IntType.ITEM, "read") { player, _ ->
-            openInterface(player, 479)
+            openInterface(player, Components.SKAVID_MAP_479)
             return@on true
         }
 
@@ -847,10 +847,7 @@ class WatchTowerPlugin : InteractionListener {
                 }
 
                 5 -> {
-                    npcl(
-                        FaceAnim.OLD_DEFAULT,
-                        "A wise choice, little thing."
-                    )
+                    npcl(FaceAnim.OLD_DEFAULT, "A wise choice, little thing.")
                     stage++
                 }
 

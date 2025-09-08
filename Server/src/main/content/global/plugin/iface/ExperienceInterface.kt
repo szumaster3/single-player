@@ -25,14 +25,7 @@ class ExperienceInterface : ComponentPlugin() {
         return this
     }
 
-    override fun handle(
-        player: Player,
-        component: Component,
-        opcode: Int,
-        button: Int,
-        slot: Int,
-        itemId: Int,
-    ): Boolean {
+    override fun handle(player: Player, component: Component, opcode: Int, button: Int, slot: Int, itemId: Int): Boolean {
         if (button == 2) {
             val confirmedSkill = getAttribute(player, "exp_interface:skill", -1)
             if (confirmedSkill == -1) {
@@ -97,7 +90,7 @@ class ExperienceInterface : ComponentPlugin() {
         return true
     }
 
-    private fun checkHerblore(player: Player): Boolean = (isQuestComplete(player, Quests.DRUIDIC_RITUAL))
+    private fun checkHerblore(player: Player): Boolean = isQuestComplete(player, Quests.DRUIDIC_RITUAL)
 
     private fun checkSummoning(player: Player): Boolean = isQuestComplete(player, Quests.WOLF_WHISTLE)
 

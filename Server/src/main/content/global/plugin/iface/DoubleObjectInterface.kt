@@ -7,7 +7,7 @@ import shared.consts.Components
 /**
  * Handles repositioning of text on the dialogue interface.
  */
-class DialogueInterface : InterfaceListener {
+class DoubleObjectInterface : InterfaceListener {
     override fun defineInterfaceListeners() {
         onOpen(Components.DOUBLEOBJBOX_131) { player, _ ->
             repositionChild(player, Components.DOUBLEOBJBOX_131, 1, 96, 25)

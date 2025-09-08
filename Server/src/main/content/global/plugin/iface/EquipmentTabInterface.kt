@@ -203,7 +203,10 @@ class EquipmentTabInterface : ComponentPlugin() {
                         }
 
                         override fun refresh(c: Container?) {
-                            PacketRepository.send(ContainerPacket::class.java, OutgoingContext.Container(p, -1, -1, 98, c!!, false),)
+                            PacketRepository.send(
+                                ContainerPacket::class.java,
+                                OutgoingContext.Container(p, -1, -1, 98, c!!, false),
+                            )
                         }
                     }
                     p.interfaceManager.openComponent(Components.EQUIP_SCREEN2_667)
