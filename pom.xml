@@ -11,7 +11,7 @@
 
     <modules>
         <module>Constants</module>
-        <module>Server</module>
+        <module>Emulator</module>
     </modules>
 
     <properties>
