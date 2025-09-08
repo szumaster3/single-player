@@ -15,7 +15,7 @@
     </parent>
 
     <groupId>org.rsps</groupId>
-    <artifactId>Server</artifactId>
+    <artifactId>Emulator</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
