@@ -1,8 +1,7 @@
 package core.game.world.map.zone.impl
 
-import content.region.island.tutorial.plugin.TutorialStage
-import core.api.getRegionBorders
-import core.api.inBorders
+import content.data.GameAttributes
+import core.api.getAttribute
 import core.game.node.Node
 import core.game.node.entity.Entity
 import core.game.node.entity.player.Player
@@ -35,15 +34,7 @@ class TutorialZone : MapZone("tutorial", true), Plugin<Any?> {
             if (entity.rights == Rights.ADMINISTRATOR) {
                 return super.teleport(entity, type, node)
             }
-
-            val stage = entity.getAttribute(TutorialStage.TUTORIAL_STAGE, -1)
-
-            // Don't allow teleport if still in tutorial.
-            if (stage < 71) return false
-
-            // Block teleport from inside final tutorial area unless it's completed.
-            val lastStage = inBorders(entity, getRegionBorders(12592))
-            if (lastStage && stage != 72) return false
+            if (!getAttribute(entity, GameAttributes.TUTORIAL_COMPLETE, false)) return false
         }
         return super.teleport(entity, type, node)
     }

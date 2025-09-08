@@ -1,5 +1,6 @@
 package core.net.packet
 
+import content.data.GameAttributes
 import content.global.plugin.iface.ge.StockMarket
 import content.global.skill.magic.SpellListener
 import content.global.skill.magic.SpellListeners
@@ -321,17 +322,17 @@ object PacketProcessor {
             }
 
             is Packet.ItemExamine -> {
-                val tutorialStage = pkt.player.getAttribute(TutorialStage.TUTORIAL_STAGE, 0)
+                val tutorialStage = pkt.player.getAttribute(GameAttributes.TUTORIAL_COMPLETE, false)
                 val def = ItemDefinition.forId(pkt.id) ?: return
                 pkt.player.debug("[ITEM] ID: ${pkt.id} Value: ${def.value} Model: ${def.interfaceModelId}")
                 when {
-                    tutorialStage < 73 -> sendTutorialMessage(pkt.player, def.examine)
+                    !tutorialStage -> sendTutorialMessage(pkt.player, def.examine)
                     else -> pkt.player.sendMessage(def.examine)
                 }
             }
 
             is Packet.SceneryExamine -> {
-                val tutorialStage = pkt.player.getAttribute(TutorialStage.TUTORIAL_STAGE, 0)
+                val tutorialStage = pkt.player.getAttribute(GameAttributes.TUTORIAL_COMPLETE, false)
                 val def = SceneryDefinition.forId(pkt.id) ?: return
                 pkt.player.debug("[SCENERY]---------------------")
                 pkt.player.debug("ID: ${pkt.id}")
@@ -340,13 +341,13 @@ object PacketProcessor {
                 }
                 pkt.player.debug("------------------------------")
                 when {
-                    tutorialStage < 73 -> sendTutorialMessage(pkt.player, def.examine)
+                    !tutorialStage -> sendTutorialMessage(pkt.player, def.examine)
                     else -> pkt.player.sendMessage(def.examine)
                 }
             }
 
             is Packet.NpcExamine -> {
-                val tutorialStage = pkt.player.getAttribute(TutorialStage.TUTORIAL_STAGE, 0)
+                val tutorialStage = pkt.player.getAttribute(GameAttributes.TUTORIAL_COMPLETE, false)
                 val def = NPCDefinition.forId(pkt.id)
                 pkt.player.debug("[NPC]-------------------------")
                 pkt.player.debug("ID: ${pkt.id}")
@@ -355,7 +356,7 @@ object PacketProcessor {
                 }
                 pkt.player.debug("------------------------------")
                 when {
-                    tutorialStage < 73 -> sendTutorialMessage(pkt.player, def.examine!!)
+                    !tutorialStage -> sendTutorialMessage(pkt.player, def.examine!!)
                     else -> pkt.player.sendMessage(def.examine)
                 }
             }

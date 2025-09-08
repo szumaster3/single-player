@@ -1,8 +1,6 @@
 package content.global.plugin.iface
 
 import content.data.GameAttributes
-import content.region.island.tutorial.plugin.TutorialStage
-import content.region.island.tutorial.plugin.TutorialStage.TUTORIAL_STAGE
 import core.api.getAttribute
 import core.api.getVarbit
 import core.api.setVarbit
@@ -30,8 +28,7 @@ class WorldMapInterface : InterfaceListener {
             when (buttonID) {
                 3 -> {
                     if (!getAttribute(player, GameAttributes.TUTORIAL_COMPLETE, false)) {
-                        val currentStage = getAttribute(player, TUTORIAL_STAGE, -1)
-                        TutorialStage.load(player, currentStage)
+                        return@on true
                     }
                     openWorldMapWindow(player)
                 }

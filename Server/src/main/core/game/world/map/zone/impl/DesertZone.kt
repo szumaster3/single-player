@@ -64,7 +64,7 @@ class DesertZone : MapZone(DESERT_ZONE, true), Plugin<Any?> {
     override fun enter(e: Entity): Boolean {
         if (e is Player) {
             val player = e
-            if (player.getAttribute(TUTORIAL_STAGE, 0) > 71) {
+            if (!getAttribute(player, GameAttributes.TUTORIAL_COMPLETE, false)) {
                 return true
             }
             player.setAttribute(DESERT_DELAY, ticks + getDelay(player))

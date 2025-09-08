@@ -74,7 +74,7 @@ class WoodcuttingPlugin : InteractionListener {
         }
 
         if (state == 0) {
-            if (getAttribute(player, GameAttributes.TUTORIAL_STAGE, -1) < 4) {
+            if (!getAttribute(player, GameAttributes.TUTORIAL_COMPLETE, false)) {
                 if (resource == WoodcuttingNode.STANDARD_TREE_10) {
                     sendNPCDialogue(
                         player,
@@ -125,9 +125,7 @@ class WoodcuttingPlugin : InteractionListener {
                 player.getSkills().addExperience(Skills.WOODCUTTING, experience, true)
 
                 if (!getAttribute(player, GameAttributes.TUTORIAL_COMPLETE, false)) {
-                    if (getAttribute(player, GameAttributes.TUTORIAL_STAGE, -1) < 4) {
-                        sendItemDialogue(player, Items.LOGS_1511, "You get some logs.")
-                    }
+                    sendItemDialogue(player, Items.LOGS_1511, "You get some logs.")
                 }
 
                 if (resource == WoodcuttingNode.DRAMEN_TREE) {

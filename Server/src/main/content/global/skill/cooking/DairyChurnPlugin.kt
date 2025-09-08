@@ -34,7 +34,7 @@ class DairyChurnPlugin : InteractionListener {
     )
 
     companion object {
-        private const val DIALOGUE_ID = 984374
+        const val DIALOGUE_ID = 984374
     }
 
     private fun checkIngredients(player: Player): Boolean {
@@ -73,15 +73,9 @@ class DairyChurnPlugin : InteractionListener {
  */
 class DairyChurnDialogue(player: Player? = null) : Dialogue(player) {
 
-    companion object {
-        private const val FALLBACK_INTERFACE_ID = -1
-    }
-
     override fun open(vararg args: Any?): Boolean {
         val interfaceId = when {
-            inInventory(player, Items.BUCKET_OF_MILK_1927) || inInventory(player, Items.PAT_OF_BUTTER_6697) ->
-                Components.COOKING_CHURN_OP3_74
-
+            inInventory(player, Items.BUCKET_OF_MILK_1927) || inInventory(player, Items.PAT_OF_BUTTER_6697) -> Components.COOKING_CHURN_OP3_74
             inInventory(player, Items.POT_OF_CREAM_2130) -> Components.COOKING_CHURN_OP2_73
             else -> return false
         }
@@ -111,7 +105,7 @@ class DairyChurnDialogue(player: Player? = null) : Dialogue(player) {
             5 to ChurnOption(Items.POT_OF_CREAM_2130, DairyProduct.PAT_OF_BUTTER, 5),
             4 to ChurnOption(Items.POT_OF_CREAM_2130, DairyProduct.PAT_OF_BUTTER, 10)
         ),
-        FALLBACK_INTERFACE_ID to mapOf(
+        Components.COOKING_CHURN_OP1_72 to mapOf(
             5 to ChurnOption(Items.PAT_OF_BUTTER_6697, DairyProduct.CHEESE, 1),
             4 to ChurnOption(Items.PAT_OF_BUTTER_6697, DairyProduct.CHEESE, 5),
             3 to ChurnOption(Items.PAT_OF_BUTTER_6697, DairyProduct.CHEESE, 10)
@@ -119,14 +113,14 @@ class DairyChurnDialogue(player: Player? = null) : Dialogue(player) {
     )
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
-        val id = if (churnOptions.containsKey(interfaceId)) interfaceId else FALLBACK_INTERFACE_ID
+        val id = if (churnOptions.containsKey(interfaceId)) interfaceId else Components.COOKING_CHURN_OP1_72
         val option = churnOptions[id]?.get(buttonId) ?: return false
         player.pulseManager.run(DairyChurnPulse(player, Item(option.input), option.product, option.amount))
         return true
     }
 
     override fun newInstance(player: Player?) = DairyChurnDialogue(player)
-    override fun getIds() = intArrayOf(984374)
+    override fun getIds() = intArrayOf(DairyChurnPlugin.DIALOGUE_ID)
 }
 
 /**
@@ -158,7 +152,7 @@ private class DairyChurnPulse(
         }
 
         if (getStatLevel(player, Skills.COOKING) < dairy.level) {
-            sendMessage(player, "You need a cooking level of ${dairy.level} to process this item.")
+            sendMessage(player, "You need a Cooking level of ${dairy.level} to process this item.")
             return false
         }
 

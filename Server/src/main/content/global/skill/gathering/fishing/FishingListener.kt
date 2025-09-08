@@ -2,7 +2,6 @@ package content.global.skill.gathering.fishing
 
 import content.data.GameAttributes
 import content.global.plugin.item.equipment.gloves.FOGGlovesListener
-import content.region.island.tutorial.plugin.TutorialStage
 import core.api.*
 import core.game.event.ResourceProducedEvent
 import core.game.interaction.Clocks
@@ -58,15 +57,8 @@ class FishingListener : InteractionListener {
         }
 
         if (!getAttribute(player, GameAttributes.TUTORIAL_COMPLETE, false)) {
-            if (getAttribute(player, TutorialStage.TUTORIAL_STAGE, -1) < 12 &&
-                !inInventory(player, Items.SMALL_FISHING_NET_303) &&
-                npc.id == NPCs.TUTORIAL_FISHING_SPOT_952
-            ) {
-                sendNPCDialogue(
-                    player,
-                    NPCs.SURVIVAL_EXPERT_943,
-                    "Hang on a minute! Let's first make sure you know how to make a fire to cook those.",
-                )
+            if (!inInventory(player, Items.SMALL_FISHING_NET_303) && npc.id == NPCs.TUTORIAL_FISHING_SPOT_952) {
+                sendNPCDialogue(player, NPCs.SURVIVAL_EXPERT_943, "Hang on a minute! Let's first make sure you know how to make a fire to cook those.")
             }
         }
 
