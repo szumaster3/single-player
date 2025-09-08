@@ -60,7 +60,7 @@ class StorageBoxInterface : InterfaceListener {
                 StorableType.THREE_SETS_OF_ARMOUR -> it.type in magicTiers.take(3)
                 StorableType.FOUR_SETS_OF_ARMOUR -> it.type in magicTiers.take(4)
                 StorableType.FIVE_SETS_OF_ARMOUR -> it.type in magicTiers.take(5)
-                StorableType.SIX_SETS_OF_ARMOUR -> it.type in magicTiers.take(6)
+                StorableType.SIX_SETS_OF_ARMOUR -> it.type in magicTiers
                 StorableType.ALL_SETS_OF_ARMOUR -> it.type in magicTiers
 
                 StorableType.TWO_SETS_ARMOUR_CASE -> it.type in armourTiers.take(1)
@@ -77,71 +77,79 @@ class StorageBoxInterface : InterfaceListener {
         val allItems = getRelevantItems(type)
         val pageIndex = container.getPageIndex(type)
         val pageItems = allItems.drop(pageIndex * PAGE_SIZE).take(PAGE_SIZE).toMutableList<Any>()
+        val slots = MutableList<Any?>(TOTAL_SLOTS) { null }
 
-        val hasNext = allItems.size > (pageIndex + 1) * PAGE_SIZE
         val hasPrev = pageIndex > 0
-        if (hasNext) pageItems.add("MORE")
-        if (hasPrev) pageItems.add("BACK")
+        val hasNext = allItems.size > (pageIndex + 1) * PAGE_SIZE
 
-        when {
-            id in 56..(56 + (TOTAL_SLOTS - 1) * 2) step 2 -> {
-                val clicked = pageItems.getOrNull((id - 56) / 2)
-                when (clicked) {
-                    "MORE" -> {
-                        container.nextPage(type, allItems.size, PAGE_SIZE)
-                        openInterface(player, INTERFACE)
-                        renderPage(player, type)
-                    }
-                    "BACK" -> {
-                        container.prevPage(type)
-                        openInterface(player, INTERFACE)
-                        renderPage(player, type)
-                    }
-                    is Storable -> {
-                        val storedItems = container.getItems(type).toSet()
-                        val actualItemId = clicked.takeIds.firstOrNull() ?: clicked.displayId
-                        val boxName = when {
-                            type.name.contains("TRAILS") -> "Treasure chest"
-                            type.name.contains("SET_OF_ARMOUR") -> "Magic wardrobe"
-                            type.name.contains("ARMOUR_CASE") -> "Armour case"
-                            else -> type.name.lowercase()
-                        }
+        var itemIndex = 0
+        for (item in pageItems) {
+            if (itemIndex >= TOTAL_SLOTS) break
+            slots[itemIndex++] = item
+        }
 
-                        if (actualItemId in storedItems) {
-                            if (freeSlots(player) <= 0) {
-                                sendMessage(player, "You don't have enough inventory space.")
-                                return
-                            }
-                            sendMessage(player, "You take the item from the $boxName box.")
-                            addItem(player, actualItemId, 1)
-                            container.withdraw(type, clicked)
-                        } else {
-                            sendMessage(player, "That isn't currently stored in the $boxName box.")
-                        }
-                        renderPage(player, type)
-                    }
-                }
+        val buttonsStartIndex = itemIndex.coerceAtMost(TOTAL_SLOTS - 1)
+        if (hasNext && hasPrev) {
+            if (buttonsStartIndex < TOTAL_SLOTS - 1) {
+                slots[buttonsStartIndex] = "MORE"
+                slots[buttonsStartIndex + 1] = "BACK"
+            } else {
+                slots[TOTAL_SLOTS - 2] = "MORE"
+                slots[TOTAL_SLOTS - 1] = "BACK"
             }
+        } else if (hasNext) {
+            slots[buttonsStartIndex] = "MORE"
+        } else if (hasPrev) {
+            slots[buttonsStartIndex] = "BACK"
+        }
 
-            id in 165..223 step 2 -> {
-                val index = (id - 165) / 2
-                val clicked = pageItems.getOrNull(index)
-                if (clicked is Storable) {
-                    val storedItems = container.getItems(type).toSet()
-                    val actualItemId = clicked.takeIds.firstOrNull() ?: clicked.displayId
-                    if (actualItemId !in storedItems) {
-                        if (player.inventory.contains(actualItemId, 1)) {
-                            sendMessage(player, "You put the item into the box.")
-                            removeItem(player, Item(actualItemId))
-                            container.addItem(type, actualItemId)
-                            renderPage(player, type)
-                        } else {
-                            sendMessage(player, "You don't have that item in your inventory.")
-                        }
+        val slotIndex = when {
+            id in 56..(56 + (TOTAL_SLOTS - 1) * 2) step 2 -> (id - 56) / 2
+            id in 165..223 step 2 -> (id - 165) / 2
+            else -> return
+        }
+
+        val clicked = slots.getOrNull(slotIndex) ?: return
+
+        when (clicked) {
+            "MORE" -> {
+                container.nextPage(type, allItems.size, PAGE_SIZE)
+                openInterface(player, INTERFACE)
+                renderPage(player, type)
+            }
+            "BACK" -> {
+                container.prevPage(type)
+                openInterface(player, INTERFACE)
+                renderPage(player, type)
+            }
+            is Storable -> {
+                val storedItems = container.getItems(type).toSet()
+                val actualItemId = clicked.takeIds.firstOrNull() ?: clicked.displayId
+
+                if (actualItemId in storedItems) {
+                    if (freeSlots(player) <= 0) {
+                        sendMessage(player, "You don't have enough inventory space.")
+                        return
+                    }
+                    val boxName = when {
+                        type.name.contains("TRAILS") -> "Treasure chest"
+                        type.name.contains("SET_OF_ARMOUR") -> "Magic wardrobe"
+                        type.name.contains("ARMOUR_CASE") -> "Armour case"
+                        else -> type.name.lowercase()
+                    }
+                    sendMessage(player, "You take the item from the $boxName box.")
+                    addItem(player, actualItemId, 1)
+                    container.withdraw(type, clicked)
+                } else {
+                    if (player.inventory.contains(actualItemId, 1)) {
+                        sendMessage(player, "You put the item into the box.")
+                        removeItem(player, Item(actualItemId))
+                        container.addItem(type, actualItemId)
                     } else {
-                        sendMessage(player, "That item is already stored.")
+                        sendMessage(player, "You don't have that item in your inventory.")
                     }
                 }
+                renderPage(player, type)
             }
         }
     }
@@ -151,13 +159,32 @@ class StorageBoxInterface : InterfaceListener {
         val allItems = getRelevantItems(type)
         val stored = container.getItems(type).toSet()
         val pageIndex = container.getPageIndex(type)
-
         val pageItems = allItems.drop(pageIndex * PAGE_SIZE).take(PAGE_SIZE).toMutableList<Any>()
+        val slots = MutableList<Any?>(TOTAL_SLOTS) { null }
 
-        val hasNext = allItems.size > (pageIndex + 1) * PAGE_SIZE
         val hasPrev = pageIndex > 0
-        if (hasNext) pageItems.add("MORE")
-        if (hasPrev) pageItems.add("BACK")
+        val hasNext = allItems.size > (pageIndex + 1) * PAGE_SIZE
+
+        var itemIndex = 0
+        for (item in pageItems) {
+            if (itemIndex >= TOTAL_SLOTS) break
+            slots[itemIndex++] = item
+        }
+
+        val buttonsStartIndex = itemIndex.coerceAtMost(TOTAL_SLOTS - 1)
+        if (hasNext && hasPrev) {
+            if (buttonsStartIndex < TOTAL_SLOTS - 1) {
+                slots[buttonsStartIndex] = "MORE"
+                slots[buttonsStartIndex + 1] = "BACK"
+            } else {
+                slots[TOTAL_SLOTS - 2] = "MORE"
+                slots[TOTAL_SLOTS - 1] = "BACK"
+            }
+        } else if (hasNext) {
+            slots[buttonsStartIndex] = "MORE"
+        } else if (hasPrev) {
+            slots[buttonsStartIndex] = "BACK"
+        }
 
         val title = when {
             type.name.contains("TRAILS") -> "Treasure chest"
@@ -165,11 +192,10 @@ class StorageBoxInterface : InterfaceListener {
             type.name.contains("ARMOUR_CASE") -> "Armour case"
             else -> type.name.lowercase().replaceFirstChar(Char::titlecase) + " box"
         }
-
         sendString(player, title, INTERFACE, 225)
 
-        val itemsArray = Array<Item?>(TOTAL_SLOTS) { index ->
-            when (val obj = pageItems.getOrNull(index)) {
+        val itemsArray = slots.map { obj ->
+            when (obj) {
                 is Storable -> Item(obj.displayId)
                 "MORE" -> Item(BUTTON_MORE)
                 "BACK" -> Item(BUTTON_BACK)
@@ -187,7 +213,7 @@ class StorageBoxInterface : InterfaceListener {
             val iconComponent = 165 + index * 2
             val hiddenIconComponent = 166 + index * 2
 
-            val obj = pageItems.getOrNull(index)
+            val obj = slots[index]
 
             val (name, hidden) = when (obj) {
                 is Storable -> getItemName(obj.takeIds.firstOrNull() ?: obj.displayId) to ((obj.takeIds.firstOrNull() ?: obj.displayId) !in stored)
@@ -219,13 +245,7 @@ class StorageBoxInterface : InterfaceListener {
     companion object {
         lateinit var instance: StorageBoxInterface
             private set
-        
-        /**
-         * Open the storage box interface.
-         *
-         * @param player The player.
-         * @param type The storage type.
-         */
+
         fun openStorage(player: Player, type: StorableType) {
             instance.openStorageInterface(player, type)
         }

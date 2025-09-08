@@ -30,7 +30,7 @@ class PortalChamberDialogue(
                             "Camelot",
                             "Ardougne",
                             "Yanille",
-                            "Kharyrll",
+                            "Kharyrll"
                         )
                         stage++
                     }
@@ -48,10 +48,7 @@ class PortalChamberDialogue(
     }
 
     private fun directPortal(portal: String) {
-        PortalChamberPlugin.direct(
-            player,
-            portal.uppercase(),
-        )
+        PortalChamberPlugin.direct(player, portal.uppercase())
         end()
     }
 
