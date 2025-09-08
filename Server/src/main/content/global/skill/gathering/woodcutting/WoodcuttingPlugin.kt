@@ -74,7 +74,7 @@ class WoodcuttingPlugin : InteractionListener {
         }
 
         if (state == 0) {
-            if (!getAttribute(player, GameAttributes.TUTORIAL_COMPLETE, false)) {
+            if (getAttribute(player, GameAttributes.TUTORIAL_STAGE, -1) < 4) {
                 if (resource == WoodcuttingNode.STANDARD_TREE_10) {
                     sendNPCDialogue(
                         player,
