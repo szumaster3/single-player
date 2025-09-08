@@ -22,26 +22,9 @@ class CraftingTutorDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
-            0 ->
-                npc(
-                    FaceAnim.HALF_GUILTY,
-                    "Firstly, you should know that not all places associated",
-                    "with crafting will be marked on your mini map. Some",
-                    "take quite a bit of hunting down to find, don't lose",
-                    "heart!",
-                ).also {
-                    stage++
-                }
+            0 -> npc(FaceAnim.HALF_GUILTY, "Firstly, you should know that not all places associated", "with crafting will be marked on your mini map. Some", "take quite a bit of hunting down to find, don't lose", "heart!").also { stage++ }
             1 -> player(FaceAnim.HALF_GUILTY, "I see... so where should I start?").also { stage++ }
-            2 ->
-                npc(
-                    FaceAnim.HALF_GUILTY,
-                    "When you have a full inventory, take it to the bank,",
-                    "you can find it on the roof of this very castle.",
-                ).also {
-                    stage =
-                        END_DIALOGUE
-                }
+            2 -> npc(FaceAnim.HALF_GUILTY, "When you have a full inventory, take it to the bank,", "you can find it on the roof of this very castle.").also { stage = END_DIALOGUE }
         }
         return true
     }

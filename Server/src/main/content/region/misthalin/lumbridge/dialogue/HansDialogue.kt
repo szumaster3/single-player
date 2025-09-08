@@ -33,12 +33,7 @@ class HansDialogue(player: Player? = null) : Dialogue(player) {
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> {
-                options(
-                    "I'm looking for whoever is in charge of this place.",
-                    "I have come to kill everyone in this castle!",
-                    "I don't know. I'm lost. Where am I?",
-                    "Have you been here as long as me?",
-                ).also { stage++ }
+                options("I'm looking for whoever is in charge of this place.", "I have come to kill everyone in this castle!", "I don't know. I'm lost. Where am I?", "Have you been here as long as me?").also { stage++ }
             }
 
             1 -> {
@@ -47,15 +42,18 @@ class HansDialogue(player: Player? = null) : Dialogue(player) {
                         npc(FaceAnim.NEUTRAL, "Who, the Duke? He's in his study, on the first floor.")
                         stage = END_DIALOGUE
                     }
+
                     2 -> {
                         sendChat(npc, "Help! Help!")
                         forceWalk(npc, npc.location.transform(npc!!.direction.opposite, 1), "dumb")
                         end()
                     }
+
                     3 -> {
                         npc(FaceAnim.NEUTRAL, "You are in Lumbridge Castle.")
                         stage = END_DIALOGUE
                     }
+
                     4 -> {
                         npcl(FaceAnim.NEUTRAL, "I've been patrolling this castle for years, I remember you...")
                         stage++

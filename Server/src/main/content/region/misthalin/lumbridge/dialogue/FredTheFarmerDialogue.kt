@@ -28,28 +28,19 @@ class FredTheFarmerDialogue(player: Player? = null) : Dialogue(player) {
         if (getQuestStage(player, Quests.SHEEP_SHEARER) in 1..99) {
             openDialogue(player, FredTheFarmerDialogue(getQuestStage(player, Quests.SHEEP_SHEARER)), npc)
         } else {
-            npc(
-                FaceAnim.ANGRY,
-                "What are you doing on my land? You're not the one",
-                "who keeps leaving all my gates open and letting out all",
-                "my sheep are you?",
-            ).also {
-                stage =
-                    START_DIALOGUE
-            }
+            npc(FaceAnim.ANGRY, "What are you doing on my land? You're not the one", "who keeps leaving all my gates open and letting out all", "my sheep are you?").also { stage = START_DIALOGUE }
         }
         return true
     }
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
-            START_DIALOGUE ->
-                showTopics(
-                    IfTopic(FaceAnim.NEUTRAL, "I'm looking for a quest.", 1000, getQuestStage(player!!, Quests.SHEEP_SHEARER) == 0),
-                    Topic(FaceAnim.HALF_GUILTY, "I'm looking for something to kill.", 100),
-                    Topic(FaceAnim.HALF_GUILTY, "I'm lost.", 200),
-                    IfTopic(FaceAnim.FRIENDLY, "Fred! Fred! I've seen 'The Thing'!", 300, getAttribute(player,GameAttributes.FRED_SEEN_THE_THING, false))
-                )
+            START_DIALOGUE -> showTopics(
+                IfTopic(FaceAnim.NEUTRAL, "I'm looking for a quest.", 1000, getQuestStage(player!!, Quests.SHEEP_SHEARER) == 0),
+                Topic(FaceAnim.HALF_GUILTY, "I'm looking for something to kill.", 100),
+                Topic(FaceAnim.HALF_GUILTY, "I'm lost.", 200),
+                IfTopic(FaceAnim.FRIENDLY, "Fred! Fred! I've seen 'The Thing'!", 300, getAttribute(player,GameAttributes.FRED_SEEN_THE_THING, false))
+            )
             100 -> npc(FaceAnim.HALF_GUILTY, "What, on my land? Leave my livestock alone you", "scoundrel!").also { stage = END_DIALOGUE }
             200 -> npc(FaceAnim.HALF_GUILTY, "How can you be lost? Just follow the road east and", "south. You'll end up in Lumbridge fairly quickly.").also { stage = END_DIALOGUE }
             300 -> npcl(FaceAnim.EXTREMELY_SHOCKED, "You... you actually saw it? Run for the hills! Player, grab as many chickens as you can! We have to...").also { stage++ }

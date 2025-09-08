@@ -22,15 +22,7 @@ class LumbridgeSwampWizardDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
-            0 ->
-                npc(
-                    FaceAnim.HALF_GUILTY,
-                    "Hahaha you dare talk to a mighty wizard such as",
-                    "myself? I bet you can't even cast windstrike yet",
-                    "amateur!",
-                ).also {
-                    stage++
-                }
+            0 -> npc(FaceAnim.HALF_GUILTY, "Hahaha you dare talk to a mighty wizard such as", "myself? I bet you can't even cast windstrike yet", "amateur!").also { stage++ }
             1 -> player(FaceAnim.HALF_GUILTY, "...You're an idiot.").also { stage = END_DIALOGUE }
         }
         return true

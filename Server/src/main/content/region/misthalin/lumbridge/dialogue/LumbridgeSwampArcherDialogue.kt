@@ -23,14 +23,7 @@ class LumbridgeSwampArcherDialogue(player: Player? = null) : Dialogue(player) {
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> npc(FaceAnim.HALF_GUILTY, "(ahem)...'Guys'?").also { stage++ }
-            1 ->
-                player(
-                    FaceAnim.HALF_GUILTY,
-                    "Uh... yeah, sorry about that. Why are you all standing",
-                    "around out here?",
-                ).also {
-                    stage++
-                }
+            1 -> player(FaceAnim.HALF_GUILTY, "Uh... yeah, sorry about that. Why are you all standing", "around out here?").also { stage++ }
             2 -> npc(FaceAnim.HALF_GUILTY, "Well, that's really none of your business.").also { stage = END_DIALOGUE }
         }
         return true
