@@ -2,6 +2,7 @@ package content.global.plugin.scenery
 
 import core.api.animate
 import core.api.playAudio
+import core.api.replaceScenery
 import core.api.sendMessage
 import core.cache.def.impl.SceneryDefinition
 import core.game.global.action.DoorActionHandler
@@ -12,6 +13,7 @@ import core.game.node.scenery.Scenery
 import core.game.node.scenery.SceneryBuilder
 import core.game.world.map.Location
 import core.game.world.map.RegionManager
+import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
 import core.plugin.Plugin
 import shared.consts.Animations
@@ -49,41 +51,59 @@ class ObjectManagerPlugin : OptionHandler() {
                 "open" -> {
                     when {
                         name.contains("drawers") -> {
-                            animate(player, 546, false)
+                            player.animate(Animation(546))
                             playAudio(player, Sounds.DRAWER_OPEN_64)
+                            player.packetDispatch.sendMessages("You open the drawers.")
                         }
                         name.contains("wardrobe") -> {
-                            animate(player, Animations.OPEN_WARDROBE_545, false)
+                            player.animate(Animation(Animations.OPEN_WARDROBE_545))
                             playAudio(player, Sounds.WARDROBE_OPEN_96)
+                            player.packetDispatch.sendMessages("You open the wardrobe.")
                         }
                         name.contains("cupboard") -> {
-                            animate(player, 542, false)
+                            if(scenery.id >= 33502) {
+                                player.animate(Animation(542))
+                            } else {
+                                player.animate(Animation(535))
+                            }
                             playAudio(player, Sounds.CUPBOARD_OPEN_58)
+                            player.packetDispatch.sendMessages("You open the cupboard.")
                         }
                     }
+                    replaceScenery(node, node.id + 1, -1)
+                    return true
                 }
+
                 "go-through" -> {
                     if (scenery.isActive) {
-                        SceneryBuilder.replace(scenery, scenery.transform(scenery.id + 1), 80)
+                        SceneryBuilder.replace(node, node.transform(node.getId() + 1), 80)
                     }
                     return true
                 }
                 "close", "shut" -> {
                     when {
                         name.contains("drawers") -> {
+                            player.animate(Animation(547))
                             animate(player, 547, false)
                             playAudio(player, Sounds.DRAWER_CLOSE_63)
+                            player.packetDispatch.sendMessages("You close the drawers.")
                         }
                         name.contains("wardrobe") -> {
-                            animate(player, 546, false)
+                            player.animate(Animation(546))
                             playAudio(player, Sounds.WARDROBE_CLOSE_95)
+                            player.packetDispatch.sendMessages("You close the wardrobe.")
                         }
                         name.contains("cupboard") -> {
-                            animate(player, 541, false)
+                            if(scenery.id >= 33502) {
+                                player.animate(Animation(541))
+                            } else {
+                                player.animate(Animation(536))
+                            }
                             playAudio(player, Sounds.CUPBOARD_CLOSE_57)
+                            player.packetDispatch.sendMessages("You close the cupboard.")
                         }
                     }
-                    SceneryBuilder.replace(scenery, scenery.transform(scenery.id - 1))
+                    replaceScenery(node, node.id - 1, -1)
                     return true
                 }
             }
