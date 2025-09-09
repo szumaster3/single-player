@@ -38,9 +38,7 @@ class CarolineDialogue(player: Player? = null) : Dialogue(player) {
         when (stage) {
             0 -> npc(FaceAnim.FRIENDLY, "Hello traveller, how are you?").also { stage++ }
             1 -> player(FaceAnim.FRIENDLY, "Not bad thanks, yourself?").also { stage++ }
-            2 -> npcl(
-                FaceAnim.FRIENDLY, "I'm good. Busy as always looking after Kent and Kennith but no complaints."
-            ).also { stage = END_DIALOGUE }
+            2 -> npcl(FaceAnim.FRIENDLY, "I'm good. Busy as always looking after Kent and Kennith but no complaints.").also { stage = END_DIALOGUE }
         }
         return true
     }

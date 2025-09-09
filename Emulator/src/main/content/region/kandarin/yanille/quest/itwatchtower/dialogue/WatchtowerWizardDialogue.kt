@@ -476,17 +476,35 @@ class WatchtowerWizardDialogue(player: Player? = null) : Dialogue(player) {
             Items.OLD_ROBE_2385,
             Items.UNUSUAL_ARMOUR_2386,
         )
+
         @JvmStatic
-        private fun spawnShamanNPC(player : Player) {
-            val shamanNPC = arrayOf(5183,5180,5175,5186,5192,5189)
-            NPC.create(shamanNPC[0], Location.create(2592,9436,0)).init()
-            NPC.create(shamanNPC[1], Location.create(2582,9437,0)).init()
-            NPC.create(shamanNPC[2], Location.create(2577,9451,0)).init()
-            NPC.create(shamanNPC[3], Location.create(2599,9461,0)).init()
-            NPC.create(shamanNPC[4], Location.create(2607,9451,0)).init()
-            NPC.create(shamanNPC[5], Location.create(2606,9438,0)).init()
+        private fun spawnShamanNPC(player: Player) {
+            val shamanNPCIds = arrayOf(5183, 5180, 5175, 5186, 5192, 5189)
+            val locations = arrayOf(
+                Location.create(2592, 9436, 0),
+                Location.create(2582, 9437, 0),
+                Location.create(2577, 9451, 0),
+                Location.create(2599, 9461, 0),
+                Location.create(2607, 9451, 0),
+                Location.create(2606, 9438, 0)
+            )
+
+            val spawnedNpcs = mutableListOf<NPC>()
+
+            for (i in shamanNPCIds.indices) {
+                val npc = NPC.create(shamanNPCIds[i], locations[i])
+                npc.init()
+                spawnedNpcs.add(npc)
+            }
+
             setAttribute(player, GameAttributes.WATCHTOWER_SHAMAN_SPAWN, true)
             setAttribute(player, GameAttributes.WATCHTOWER_OGRE_DESTROY_COUNT, 0)
+
+            registerLogoutListener(player, "shaman_spawn") {
+                for (npc in spawnedNpcs) {
+                    npc.clear()
+                }
+            }
         }
     }
 }
