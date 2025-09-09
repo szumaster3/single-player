@@ -1,4 +1,4 @@
-package content.region.misthalin.edge.dialogue
+package content.region.misthalin.edgeville.dialogue
 
 import core.api.openNpcShop
 import core.game.dialogue.Dialogue

@@ -1,4 +1,4 @@
-package content.region.misthalin.edge.monastery.plugin
+package content.region.misthalin.edgeville.monastery.plugin
 
 import core.api.sendMessage
 import core.game.global.action.ClimbActionHandler

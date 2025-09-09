@@ -1,4 +1,4 @@
-package content.region.misthalin.edge.dialogue
+package content.region.misthalin.edgeville.dialogue
 
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim

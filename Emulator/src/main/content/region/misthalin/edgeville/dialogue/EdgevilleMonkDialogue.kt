@@ -1,4 +1,4 @@
-package content.region.misthalin.edge.dialogue
+package content.region.misthalin.edgeville.dialogue
 
 import core.api.*
 import core.game.dialogue.Dialogue

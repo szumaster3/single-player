@@ -1,4 +1,4 @@
-package content.region.misthalin.edge.plugin
+package content.region.misthalin.edgeville.plugin
 
 import core.api.*
 import core.game.global.action.ClimbActionHandler

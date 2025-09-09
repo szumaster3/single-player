@@ -1,4 +1,4 @@
-package content.region.misthalin.edge.dialogue
+package content.region.misthalin.edgeville.dialogue
 
 import content.global.skill.summoning.pet.Pet
 import core.api.hasRequirement

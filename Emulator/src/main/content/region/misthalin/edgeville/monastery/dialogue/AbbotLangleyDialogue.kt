@@ -1,4 +1,4 @@
-package content.region.misthalin.edge.monastery.dialogue
+package content.region.misthalin.edgeville.monastery.dialogue
 
 import content.global.activity.ttrail.ClueScroll
 import content.global.activity.ttrail.TreasureTrailManager.Companion.getInstance
