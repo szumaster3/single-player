@@ -259,29 +259,28 @@ class KharaziDungeonPlugin : InteractionListener {
                     sendDialogueOptions(player!!, "Crawl into hole?", "Yes, I'll crawl through. I'm very athletic.", "No, I'm pretty scared of enclosed areas.")
                     stage++
                 }
-                1 -> if (buttonID == 1) {
-                    /* Fail:
-                     * sendMessage(player, "You get cramped into a tiny space and start to suffocate.")
-                     * sendMessage(player, "You wriggle and wriggle but you cannot get out.")
-                     * sendMessage(player, "Eventually you manage to break free.")
-                     * sendMessage(player, "But you scrape yourself very badly as you force your way out.")
-                     * sendMessage(player, "... and you're totally exhausted from the experience.")
-                     * sendMessage(player, "You try to crawl through...")
-                     */
+                1 -> {
+                    end()
+                    if (buttonID == 1) {
+                        /* Fail:
+                         * sendMessage(player, "You get cramped into a tiny space and start to suffocate.")
+                         * sendMessage(player, "You wriggle and wriggle but you cannot get out.")
+                         * sendMessage(player, "Eventually you manage to break free.")
+                         * sendMessage(player, "But you scrape yourself very badly as you force your way out.")
+                         * sendMessage(player, "... and you're totally exhausted from the experience.")
+                         * sendMessage(player, "You try to crawl through...")
+                         */
 
-                    // Success:
-                    teleport(player!!, Location.create(2772, 9341, 0), TeleportManager.TeleportType.INSTANT)
-                    sendMessage(player!!, "You contort your body to fit the crevice.")
-                    sendMessage(player!!, "You adroitly squeeze serpent like into the crevice.", 1)
-                    sendMessage(player!!, "You find a small narrow tunnel that goes for some distance.", 1)
-                    sendMessage(player!!, "After some time, you find a small cave opening... and walk through.", 2)
-                    stage = 2
-                } else {
-                    sendDialogue(player!!, "You decide against forcing yourself into the tiny crevice. And realise that you have much better things to do. Like visit inns and mine ore.")
-                    stage = 2
+                        // Success:
+                        teleport(player!!, Location.create(2772, 9341, 0), TeleportManager.TeleportType.INSTANT)
+                        sendMessage(player!!, "You contort your body to fit the crevice.")
+                        sendMessage(player!!, "You adroitly squeeze serpent like into the crevice.", 1)
+                        sendMessage(player!!, "You find a small narrow tunnel that goes for some distance.", 1)
+                        sendMessage(player!!, "After some time, you find a small cave opening... and walk through.", 2)
+                    } else {
+                        sendDialogue(player!!, "You decide against forcing yourself into the tiny crevice. And realise that you have much better things to do. Like visit inns and mine ore.")
+                    }
                 }
-
-                2 -> end()
             }
         }
     }
