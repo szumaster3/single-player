@@ -20,7 +20,7 @@ import core.game.world.map.zone.ZoneRestriction
 import core.tools.Log
 import shared.consts.*
 
-private data class ShopItem(
+data class ShopItem(
     val id: Int,
     val price: Int,
     val amount: Int,
@@ -78,12 +78,19 @@ class RunecraftingGuildPlugin : InteractionListener, InterfaceListener, MapArea 
             Items.DEATH_TALISMAN_1456 to 47,
             Items.COSMIC_TALISMAN_1454 to 48,
         )
+
+        val hatToggleMap = mapOf(
+            Items.RUNECRAFTER_HAT_13626 to Items.RUNECRAFTER_HAT_13625,
+            Items.RUNECRAFTER_HAT_13625 to Items.RUNECRAFTER_HAT_13626,
+            Items.RUNECRAFTER_HAT_13621 to Items.RUNECRAFTER_HAT_13620,
+            Items.RUNECRAFTER_HAT_13620 to Items.RUNECRAFTER_HAT_13621,
+            Items.RUNECRAFTER_HAT_13616 to Items.RUNECRAFTER_HAT_13615,
+            Items.RUNECRAFTER_HAT_13615 to Items.RUNECRAFTER_HAT_13616,
+        )
     }
 
     override fun defineAreaBorders(): Array<ZoneBorders> = arrayOf(ZoneBorders.forRegion(6741))
-    override fun getRestrictions(): Array<ZoneRestriction> = arrayOf(
-        ZoneRestriction.CANNON, ZoneRestriction.RANDOM_EVENTS, ZoneRestriction.GRAVES, ZoneRestriction.FIRES
-    )
+    override fun getRestrictions(): Array<ZoneRestriction> = arrayOf(ZoneRestriction.CANNON, ZoneRestriction.RANDOM_EVENTS, ZoneRestriction.GRAVES, ZoneRestriction.FIRES)
 
     override fun defineListeners() {/*
          * Handles interactions with various objects inside the guild.
@@ -111,8 +118,8 @@ class RunecraftingGuildPlugin : InteractionListener, InterfaceListener, MapArea 
         }
 
         /*
- * Handles the interaction with the map table scenery to open the study interface.
- */
+         * Handles the interaction with the map table scenery to open the study interface.
+         */
 
         on(Scenery.MAP_TABLE_38315, IntType.SCENERY, "Study") { player, _ ->
             openInterface(player, Components.RCGUILD_MAP_780)
@@ -161,12 +168,7 @@ class RunecraftingGuildPlugin : InteractionListener, InterfaceListener, MapArea 
                 openInterface(player, Components.RCGUILD_MAP_780)
                 for (componentID in altarComponents) {
                     setComponentVisibility(player, Components.RCGUILD_MAP_780, componentID, false).also {
-                        sendString(
-                            player,
-                            "All the altars of " + GameWorld.settings!!.name + ".",
-                            Components.RCGUILD_MAP_780,
-                            33,
-                        )
+                        sendString(player, "All the altars of " + GameWorld.settings!!.name + ".", Components.RCGUILD_MAP_780, 33)
                     }
                 }
             }
@@ -211,15 +213,7 @@ class RunecraftingGuildPlugin : InteractionListener, InterfaceListener, MapArea 
          */
 
         on(RC_HAT, IntType.ITEM, "Goggles") { player, node ->
-            val newHatId = when (node.id) {
-                13626 -> 13625
-                13625 -> 13626
-                13621 -> 13620
-                13620 -> 13621
-                13616 -> 13615
-                13615 -> 13616
-                else -> return@on false
-            }
+            val newHatId = hatToggleMap[node.id] ?: return@on false
             replaceSlot(player, node.asItem().slot, Item(newHatId))
             return@on true
         }
@@ -276,12 +270,7 @@ class RunecraftingGuildPlugin : InteractionListener, InterfaceListener, MapArea 
             if (inEquipment(player, Items.OMNI_TALISMAN_STAFF_13642) || inEquipment(player, Items.OMNI_TIARA_13655)) {
                 for (rune in altarComponents) {
                     setComponentVisibility(player, Components.RCGUILD_MAP_780, rune, false).also {
-                        sendString(
-                            player,
-                            "All the altars of " + GameWorld.settings!!.name + ".",
-                            Components.RCGUILD_MAP_780,
-                            33,
-                        )
+                        sendString(player, "All the altars of " + GameWorld.settings!!.name + ".", Components.RCGUILD_MAP_780, 33)
                     }
                 }
             }
@@ -302,59 +291,17 @@ class RunecraftingGuildPlugin : InteractionListener, InterfaceListener, MapArea 
          */
 
         on(Components.RCGUILD_REWARDS_779) { player, _, opcode, button, _, _ ->
-            var choice: ShopItem
-            when (button) {
-                6 -> choice = airTalisman
-                13 -> choice = mindTalisman
-                15 -> choice = waterTalisman
-                10 -> choice = earthTalisman
-                11 -> choice = fireTalisman
-                7 -> choice = bodyTalisman
-                9 -> choice = cosmicTalisman
-                8 -> choice = chaosTalisman
-                14 -> choice = natureTalisman
-                12 -> choice = lawTalisman
-                36 -> choice = blueRCHat
-                37 -> choice = yellowRCHat
-                38 -> choice = greenRCHat
-                39 -> choice = blueRCRobe
-                40 -> choice = yellowRCRobe
-                41 -> choice = greenRCRobe
-                42 -> choice = blueRCBottom
-                43 -> choice = yellowRCBottom
-                44 -> choice = greenRCBottom
-                45 -> choice = blueRCGloves
-                46 -> choice = yellowRCGloves
-                47 -> choice = greenRCGloves
-                72 -> choice = airTablet
-                80 -> choice = mindTablet
-                83 -> choice = waterTablet
-                77 -> choice = earthTablet
-                78 -> choice = fireTablet
-                73 -> choice = bodyTablet
-                75 -> choice = cosmicTablet
-                74 -> choice = chaosTablet
-                81 -> choice = astralTablet
-                82 -> choice = natureTablet
-                79 -> choice = lawTablet
-                76 -> choice = deathTablet
-                84 -> choice = bloodTablet
-                85 -> choice = guildTablet
-                114 -> choice = rcStaff
-                115 -> choice = pureEssence
-                else -> log(
-                    this::class.java,
-                    Log.WARN,
-                    "Unhandled button ID for RC shop interface: $button",
-                ).also { return@on true }
+            val choice = RcShopItem.fromButton(button)?.shopItem ?: run {
+                log(this::class.java, Log.WARN, "Unhandled button ID for RC shop interface: $button")
+                return@on true
             }
 
             handleOpcode(choice, opcode, player)
-            if (opcode == 155) {
-                when (button) {
-                    163 -> sendMessage(player, "You must select something to buy before you can confirm your purchase")
-                }
+
+            if (opcode == 155 && button == 163) {
+                sendMessage(player, "You must select something to buy before you can confirm your purchase")
             }
+
             sendItem(choice, choice.amount, player)
             return@on true
         }
@@ -405,12 +352,7 @@ class RunecraftingGuildPlugin : InteractionListener, InterfaceListener, MapArea 
      * Sends the current token balance to the player.
      */
     private fun sendTokens(player: Player) {
-        sendString(
-            player,
-            "Tokens: ${amountInInventory(player, Items.RUNECRAFTING_GUILD_TOKEN_13650)}",
-            Components.RCGUILD_REWARDS_779,
-            135
-        )
+        sendString(player, "Tokens: ${amountInInventory(player, Items.RUNECRAFTING_GUILD_TOKEN_13650)}", Components.RCGUILD_REWARDS_779, 135)
     }
 
     /**
@@ -420,42 +362,59 @@ class RunecraftingGuildPlugin : InteractionListener, InterfaceListener, MapArea 
         sendString(player, "${getItemName(item.id)}($amount)", Components.RCGUILD_REWARDS_779, 136)
     }
 
-    private val airTalisman = ShopItem(Items.AIR_TALISMAN_1438, 50, 1)
-    private val mindTalisman = ShopItem(Items.MIND_TALISMAN_1448, 50, 1)
-    private val waterTalisman = ShopItem(Items.WATER_TALISMAN_1444, 50, 1)
-    private val earthTalisman = ShopItem(Items.EARTH_TALISMAN_1440, 50, 1)
-    private val fireTalisman = ShopItem(Items.FIRE_TALISMAN_1442, 50, 1)
-    private val bodyTalisman = ShopItem(Items.BODY_TALISMAN_1446, 50, 1)
-    private val cosmicTalisman = ShopItem(Items.COSMIC_TALISMAN_1454, 125, 1)
-    private val chaosTalisman = ShopItem(Items.CHAOS_TALISMAN_1452, 125, 1)
-    private val natureTalisman = ShopItem(Items.NATURE_TALISMAN_1462, 125, 1)
-    private val lawTalisman = ShopItem(Items.LAW_TALISMAN_1458, 125, 1)
-    private val blueRCHat = ShopItem(Items.RUNECRAFTER_HAT_13626, 1000, 1)
-    private val yellowRCHat = ShopItem(Items.RUNECRAFTER_HAT_13616, 1000, 1)
-    private val greenRCHat = ShopItem(Items.RUNECRAFTER_HAT_13621, 1000, 1)
-    private val blueRCRobe = ShopItem(Items.RUNECRAFTER_ROBE_13624, 1000, 1)
-    private val yellowRCRobe = ShopItem(Items.RUNECRAFTER_ROBE_13614, 1000, 1)
-    private val greenRCRobe = ShopItem(Items.RUNECRAFTER_ROBE_13619, 1000, 1)
-    private val blueRCBottom = ShopItem(Items.RUNECRAFTER_SKIRT_13627, 1000, 1)
-    private val yellowRCBottom = ShopItem(Items.RUNECRAFTER_SKIRT_13617, 1000, 1)
-    private val greenRCBottom = ShopItem(Items.RUNECRAFTER_SKIRT_13622, 1000, 1)
-    private val blueRCGloves = ShopItem(Items.RUNECRAFTER_GLOVES_13628, 1000, 1)
-    private val yellowRCGloves = ShopItem(Items.RUNECRAFTER_GLOVES_13618, 1000, 1)
-    private val greenRCGloves = ShopItem(Items.RUNECRAFTER_GLOVES_13623, 1000, 1)
-    private val rcStaff = ShopItem(Items.RUNECRAFTING_STAFF_13629, 10000, 1)
-    private val pureEssence = ShopItem(Items.PURE_ESSENCE_7937, 100, 1)
-    private val airTablet = ShopItem(Items.AIR_ALTAR_TP_13599, 30, 1)
-    private val mindTablet = ShopItem(Items.MIND_ALTAR_TP_13600, 32, 1)
-    private val waterTablet = ShopItem(Items.WATER_ALTAR_TP_13601, 34, 1)
-    private val earthTablet = ShopItem(Items.EARTH_ALTAR_TP_13602, 36, 1)
-    private val fireTablet = ShopItem(Items.FIRE_ALTAR_TP_13603, 37, 1)
-    private val bodyTablet = ShopItem(Items.BODY_ALTAR_TP_13604, 38, 1)
-    private val cosmicTablet = ShopItem(Items.COSMIC_ALTAR_TP_13605, 39, 1)
-    private val chaosTablet = ShopItem(Items.CHAOS_ALTAR_TP_13606, 40, 1)
-    private val astralTablet = ShopItem(Items.ASTRAL_ALTAR_TP_13611, 41, 1)
-    private val natureTablet = ShopItem(Items.NATURE_ALTAR_TP_13607, 42, 1)
-    private val lawTablet = ShopItem(Items.LAW_ALTAR_TP_13608, 43, 1)
-    private val deathTablet = ShopItem(Items.DEATH_ALTAR_TP_13609, 44, 1)
-    private val bloodTablet = ShopItem(Items.BLOOD_ALTAR_TP_13610, 45, 1)
-    private val guildTablet = ShopItem(Items.RUNECRAFTING_GUILD_TP_13598, 15, 1)
+    enum class RcShopItem(val buttonId: Int, val shopItem: ShopItem) {
+        // Talismans
+        AIR_TALISMAN(6, ShopItem(Items.AIR_TALISMAN_1438, 50, 1)),
+        MIND_TALISMAN(13, ShopItem(Items.MIND_TALISMAN_1448, 50, 1)),
+        WATER_TALISMAN(15, ShopItem(Items.WATER_TALISMAN_1444, 50, 1)),
+        EARTH_TALISMAN(10, ShopItem(Items.EARTH_TALISMAN_1440, 50, 1)),
+        FIRE_TALISMAN(11, ShopItem(Items.FIRE_TALISMAN_1442, 50, 1)),
+        BODY_TALISMAN(7, ShopItem(Items.BODY_TALISMAN_1446, 50, 1)),
+        COSMIC_TALISMAN(9, ShopItem(Items.COSMIC_TALISMAN_1454, 125, 1)),
+        CHAOS_TALISMAN(8, ShopItem(Items.CHAOS_TALISMAN_1452, 125, 1)),
+        NATURE_TALISMAN(14, ShopItem(Items.NATURE_TALISMAN_1462, 125, 1)),
+        LAW_TALISMAN(12, ShopItem(Items.LAW_TALISMAN_1458, 125, 1)),
+
+        // RC Guild robes
+        BLUE_RC_HAT(36, ShopItem(Items.RUNECRAFTER_HAT_13626, 1000, 1)),
+        YELLOW_RC_HAT(37, ShopItem(Items.RUNECRAFTER_HAT_13616, 1000, 1)),
+        GREEN_RC_HAT(38, ShopItem(Items.RUNECRAFTER_HAT_13621, 1000, 1)),
+
+        BLUE_RC_ROBE(39, ShopItem(Items.RUNECRAFTER_ROBE_13624, 1000, 1)),
+        YELLOW_RC_ROBE(40, ShopItem(Items.RUNECRAFTER_ROBE_13614, 1000, 1)),
+        GREEN_RC_ROBE(41, ShopItem(Items.RUNECRAFTER_ROBE_13619, 1000, 1)),
+
+        BLUE_RC_BOTTOM(42, ShopItem(Items.RUNECRAFTER_SKIRT_13627, 1000, 1)),
+        YELLOW_RC_BOTTOM(43, ShopItem(Items.RUNECRAFTER_SKIRT_13617, 1000, 1)),
+        GREEN_RC_BOTTOM(44, ShopItem(Items.RUNECRAFTER_SKIRT_13622, 1000, 1)),
+
+        BLUE_RC_GLOVES(45, ShopItem(Items.RUNECRAFTER_GLOVES_13628, 1000, 1)),
+        YELLOW_RC_GLOVES(46, ShopItem(Items.RUNECRAFTER_GLOVES_13618, 1000, 1)),
+        GREEN_RC_GLOVES(47, ShopItem(Items.RUNECRAFTER_GLOVES_13623, 1000, 1)),
+
+        // Staff + Essence
+        RC_STAFF(114, ShopItem(Items.RUNECRAFTING_STAFF_13629, 10000, 1)),
+        PURE_ESSENCE(115, ShopItem(Items.PURE_ESSENCE_7937, 100, 1)),
+
+        // Teleport tablets
+        AIR_TABLET(72, ShopItem(Items.AIR_ALTAR_TP_13599, 30, 1)),
+        MIND_TABLET(80, ShopItem(Items.MIND_ALTAR_TP_13600, 32, 1)),
+        WATER_TABLET(83, ShopItem(Items.WATER_ALTAR_TP_13601, 34, 1)),
+        EARTH_TABLET(77, ShopItem(Items.EARTH_ALTAR_TP_13602, 36, 1)),
+        FIRE_TABLET(78, ShopItem(Items.FIRE_ALTAR_TP_13603, 37, 1)),
+        BODY_TABLET(73, ShopItem(Items.BODY_ALTAR_TP_13604, 38, 1)),
+        COSMIC_TABLET(75, ShopItem(Items.COSMIC_ALTAR_TP_13605, 39, 1)),
+        CHAOS_TABLET(74, ShopItem(Items.CHAOS_ALTAR_TP_13606, 40, 1)),
+        ASTRAL_TABLET(81, ShopItem(Items.ASTRAL_ALTAR_TP_13611, 41, 1)),
+        NATURE_TABLET(82, ShopItem(Items.NATURE_ALTAR_TP_13607, 42, 1)),
+        LAW_TABLET(79, ShopItem(Items.LAW_ALTAR_TP_13608, 43, 1)),
+        DEATH_TABLET(76, ShopItem(Items.DEATH_ALTAR_TP_13609, 44, 1)),
+        BLOOD_TABLET(84, ShopItem(Items.BLOOD_ALTAR_TP_13610, 45, 1)),
+        GUILD_TABLET(85, ShopItem(Items.RUNECRAFTING_GUILD_TP_13598, 15, 1));
+
+        companion object {
+            private val byButton = values().associateBy { it.buttonId }
+            fun fromButton(id: Int): RcShopItem? = byButton[id]
+        }
+    }
 }

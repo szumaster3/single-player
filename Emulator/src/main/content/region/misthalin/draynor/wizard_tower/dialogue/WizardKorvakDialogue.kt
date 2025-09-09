@@ -70,11 +70,7 @@ class WizardKorvakDialogue(player: Player? = null) : Dialogue(player) {
             } else {
                 showTopics(
                     Topic("Can you help me with my essence pouches?", 18),
-                    IfTopic(
-                        "I've got an omni-talisman that I would like to attach to a tiara or staff.",
-                        3,
-                        hasOmniItem,
-                    ),
+                    IfTopic("I've got an omni-talisman that I would like to attach to a tiara or staff.", 3, hasOmniItem),
                     Topic("Why are you so jumpy?", 7),
                     Topic("Never mind.", END_DIALOGUE),
                 )
@@ -89,10 +85,7 @@ class WizardKorvakDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             4 -> when (buttonId) {
-                1, 2 -> player(
-                    "I'd like to attach my omni-talisman to a " + if (buttonId == 1) "tiara." else "staff." + " Do you",
-                    "know how to do that?",
-                ).also { stage++ }
+                1, 2 -> player("I'd like to attach my omni-talisman to a " + if (buttonId == 1) "tiara." else "staff." + " Do you", "know how to do that?").also { stage++ }
             }
 
             5 -> {
@@ -124,11 +117,7 @@ class WizardKorvakDialogue(player: Player? = null) : Dialogue(player) {
                     stage = 36
                     return true
                 }
-                if (removeItem(player, Item(Items.OMNI_TALISMAN_13649, 1)) && removeItem(
-                        player,
-                        Item(Items.TIARA_5525, 1),
-                    )
-                ) {
+                if (removeItem(player, Item(Items.OMNI_TALISMAN_13649, 1)) && removeItem(player, Item(Items.TIARA_5525, 1))) {
                     npc("There! A pretty tiara for a pretty lady.") // No gender check.
                     addItemOrDrop(player, Items.OMNI_TIARA_13655, 1)
                     stage = END_DIALOGUE
@@ -153,111 +142,38 @@ class WizardKorvakDialogue(player: Player? = null) : Dialogue(player) {
                     addItemOrDrop(player, Items.OMNI_TALISMAN_STAFF_13642, 1)
                 }
             }
-
             7 -> npc("I am not jumpy! I am insane. There is a difference.").also { stage++ }
-            8 -> player(
-                "If you are insane, wouldn't you think you were sane",
-                "and so be insensible to the insanity that is you?",
-            ).also { stage++ }
-
+            8 -> player("If you are insane, wouldn't you think you were sane", "and so be insensible to the insanity that is you?").also { stage++ }
             9 -> npc("Yebno.").also { stage++ }
             10 -> player("Beg your pardon?").also { stage++ }
-            11 -> npc(
-                "Yebno. It's a fast way of saying Yes Maybe No. Since",
-                "I didn't know the answer to your question I gave you",
-                "all of the answers.",
-            ).also {
-                stage++
-            }
-
+            11 -> npc("Yebno. It's a fast way of saying Yes Maybe No. Since", "I didn't know the answer to your question I gave you", "all of the answers.").also { stage++ }
             12 -> player("How did you end up in your rather peculiar mindset?").also { stage++ }
-            13 -> npc(
-                FaceAnim.SAD,
-                "They sent me to the place. They knew the dark",
-                "wizards were there and someone had betrayed them.",
-                "Us. So they send me to spy. To the place.",
-                "They sent me and would not let me come back.",
-            ).also {
-                stage++
-            }
-
+            13 -> npc(FaceAnim.SAD, "They sent me to the place. They knew the dark", "wizards were there and someone had betrayed them.", "Us. So they send me to spy. To the place.", "They sent me and would not let me come back.").also { stage++ }
             14 -> player("who sent you? What betrayal?").also { stage++ }
-            15 -> npc(
-                "He sits there with the spinning light, always thinking.",
-                "One of us led them to the place where the pickaxe",
-                "hammers and so the betrayal happened.",
-            ).also {
-                stage++
-            }
-
+            15 -> npc("He sits there with the spinning light, always thinking.", "One of us led them to the place where the pickaxe", "hammers and so the betrayal happened.").also { stage++ }
             16 -> npc(FaceAnim.SAD, "Please don't make me talk about it.").also { stage++ }
             17 -> player("Okay, we don't have to talk about it.").also { stage = END_DIALOGUE }
             18 -> {
-                if (!anyInInventory(
-                        player,
-                        Items.SMALL_POUCH_5509,
-                        Items.MEDIUM_POUCH_5510,
-                        Items.MEDIUM_POUCH_5511,
-                        Items.LARGE_POUCH_5512,
-                        Items.LARGE_POUCH_5513,
-                        Items.GIANT_POUCH_5514,
-                        Items.GIANT_POUCH_5515,
-                    )
-                ) {
-                    npc(
-                        "You don't have any pouches that need repair...I",
-                        "could sell you a pouch, but only if you don't tell!",
-                    ).also {
-                        stage = 31
-                    }
+                if (!anyInInventory(player, Items.SMALL_POUCH_5509, Items.MEDIUM_POUCH_5510, Items.MEDIUM_POUCH_5511, Items.LARGE_POUCH_5512, Items.LARGE_POUCH_5513, Items.GIANT_POUCH_5514, Items.GIANT_POUCH_5515)) {
+                    npc("You don't have any pouches that need repair...I", "could sell you a pouch, but only if you don't tell!").also { stage = 31 }
                 } else {
-                    npc(
-                        "I can restore them for a price - for a",
-                        "price, indeed. Muahahahahaahaha!",
-                    ).also { stage++ }
+                    npc("I can restore them for a price - for a", "price, indeed. Muahahahahaahaha!").also { stage++ }
                 }
             }
-
             19 -> player("Uh, what kind of a price?").also { stage++ }
-            20 -> npc(
-                "Whatever the voices tell me to ask for.",
-                "Currently, they require 9.000 gp for a large pouch",
-                "and 12,000 gp for a giant pouch.",
-            ).also {
-                stage++
-            }
-
-            21 -> npc(
-                "Shhhh, don't tell any one else: I have a connection",
-                "on the inside and I can sell you pouches too.",
-                "For a mere 25,000 gp, you can have a large pouch.",
-            ).also {
-                stage++
-            }
-
+            20 -> npc("Whatever the voices tell me to ask for.", "Currently, they require 9.000 gp for a large pouch", "and 12,000 gp for a giant pouch.").also { stage++ }
+            21 -> npc("Shhhh, don't tell any one else: I have a connection", "on the inside and I can sell you pouches too.", "For a mere 25,000 gp, you can have a large pouch.").also { stage++ }
             22 -> npc("A reasonable 50,000 gp will get you a giant pouch.").also { stage++ }
-            23 -> options(
-                "I'd like to have a pouch repaired.",
-                "I'd like to buy a pouch.",
-                "Never mind.",
-            ).also { stage++ }
-
+            23 -> options("I'd like to have a pouch repaired.", "I'd like to buy a pouch.", "Never mind.").also { stage++ }
             24 -> when (buttonId) {
                 1 -> player("I'd like to have a pouch repaired.").also { stage++ }
                 2 -> player("I'd like to buy a pouch.").also { stage = 30 }
                 3 -> player("Never mind.").also { stage = END_DIALOGUE }
             }
-
             25 -> npc("Very well. Let's have a look at it.").also { stage++ }
             26 -> {
                 setTitle(player, 3)
-                sendDialogueOptions(
-                    player,
-                    "Which pouch would you like to repair?",
-                    "Repair large pouch for 9,000 gp.",
-                    "Repair giant pouch for 12,000 gp.",
-                    "Never mind.",
-                )
+                sendDialogueOptions(player, "Which pouch would you like to repair?", "Repair large pouch for 9,000 gp.", "Repair giant pouch for 12,000 gp.", "Never mind.")
                 stage++
             }
 
@@ -281,11 +197,7 @@ class WizardKorvakDialogue(player: Player? = null) : Dialogue(player) {
                 end()
                 repair()
                 removeItem(player, Item(Items.COINS_995, 9000))
-                npc(
-                    "Magic makes me happy, magic makes me glad, magic",
-                    "makes the voices quiet, and nothing rhymes with",
-                    "purple.",
-                )
+                npc("Magic makes me happy, magic makes me glad, magic", "makes the voices quiet, and nothing rhymes with", "purple.")
             }
 
             29 -> {
@@ -302,23 +214,13 @@ class WizardKorvakDialogue(player: Player? = null) : Dialogue(player) {
                 end()
                 repair()
                 removeItem(player, Item(Items.COINS_995, 12000))
-                npc(
-                    "Ahhh, the simple act of a transformation spell.",
-                    "So, soothing. It makes the voices quiet.",
-                    "Your pouch is repaired.",
-                )
+                npc("Ahhh, the simple act of a transformation spell.", "So, soothing. It makes the voices quiet.", "Your pouch is repaired.")
             }
 
             30 -> npc("Ah, coins to fund my rock collection.").also { stage++ }
             31 -> {
                 setTitle(player, 3)
-                sendDialogueOptions(
-                    player,
-                    "Which pouch would you like to buy?",
-                    "Buy a large pouch for 25,000 gp.",
-                    "Buy a giant pouch for 50,000 gp.",
-                    "Never mind.",
-                )
+                sendDialogueOptions(player, "Which pouch would you like to buy?", "Buy a large pouch for 25,000 gp.", "Buy a giant pouch for 50,000 gp.", "Never mind.")
                 stage++
             }
 
@@ -328,7 +230,8 @@ class WizardKorvakDialogue(player: Player? = null) : Dialogue(player) {
                 3 -> player("Never mind.").also { stage = END_DIALOGUE }
             }
 
-            33 -> {/*
+            33 -> {
+                /*
                  * Handles buy the Large pouch.
                  */
                 if (!removeItem(player, Item(Items.COINS_995, 25000))) {
@@ -341,7 +244,8 @@ class WizardKorvakDialogue(player: Player? = null) : Dialogue(player) {
                 }
             }
 
-            34 -> {/*
+            34 -> {
+                /*
                  * Handles buy the Giant pouch.
                  */
                 if (!removeItem(player, Item(Items.COINS_995, 50000))) {
@@ -355,11 +259,7 @@ class WizardKorvakDialogue(player: Player? = null) : Dialogue(player) {
 
             35 -> {
                 end()
-                npc(
-                    "Lost it, did you? Or did they take it back?",
-                    "CLAIM IT BACK! Quick, better have another before",
-                    "the spoons come.",
-                )
+                npc("Lost it, did you? Or did they take it back?", "CLAIM IT BACK! Quick, better have another before", "the spoons come.")
                 addItemOrDrop(player, Items.MEDIUM_POUCH_5511, 1)
             }
 

@@ -1,5 +1,6 @@
 package content.region.misthalin.draynor.dialogue
 
+import content.region.misthalin.draynor.quest.vampire.dialogue.MorganVampireDialogue
 import core.api.openDialogue
 import core.api.getQuest
 import core.api.getQuestStage
@@ -24,7 +25,7 @@ class MorganDialogue(player: Player? = null) : Dialogue(player) {
         npc = args[0] as NPC
         if (getQuestStage(player, Quests.VAMPIRE_SLAYER) > 1) {
             end()
-            openDialogue(player, MorganDialogue())
+            openDialogue(player, MorganVampireDialogue())
         } else {
             npc(FaceAnim.HALF_GUILTY, "Please please help us, bold adventurer!")
         }

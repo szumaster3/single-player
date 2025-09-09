@@ -22,31 +22,23 @@ class TzhaarMejJalDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
-            0 ->
-                sendDialogueOptions(
-                    player,
-                    "Sell your fire cape?",
-                    "Yes, sell it for 8,000 TokKul.",
-                    "No, keep it.",
-                ).also { stage++ }
-
-            1 ->
-                when (buttonId) {
-                    1 -> {
-                        end()
-                        if (!removeItem(player, Item(Items.FIRE_CAPE_6570))) {
-                            npc(FaceAnim.CHILD_NORMAL, "You not have firecape, JalYt.")
-                            return true
-                        } else {
-                            npc(FaceAnim.CHILD_NORMAL, "Hand your cape here, young JalYte.")
-                            Item(Items.TOKKUL_6529).amount = 8000
-                            player.inventory.add(Item(Items.TOKKUL_6529))
-                            Item(Items.TOKKUL_6529).amount = 1
-                        }
+            0 -> sendDialogueOptions(player, "Sell your fire cape?", "Yes, sell it for 8,000 TokKul.", "No, keep it.").also { stage++ }
+            1 -> when (buttonId) {
+                1 -> {
+                    end()
+                    if (!removeItem(player, Item(Items.FIRE_CAPE_6570))) {
+                        npc(FaceAnim.CHILD_NORMAL, "You not have firecape, JalYt.")
+                        return true
+                    } else {
+                        npc(FaceAnim.CHILD_NORMAL, "Hand your cape here, young JalYte.")
+                        Item(Items.TOKKUL_6529).amount = 8000
+                        player.inventory.add(Item(Items.TOKKUL_6529))
+                        Item(Items.TOKKUL_6529).amount = 1
                     }
-
-                    2 -> end()
                 }
+
+                2 -> end()
+            }
         }
         return true
     }

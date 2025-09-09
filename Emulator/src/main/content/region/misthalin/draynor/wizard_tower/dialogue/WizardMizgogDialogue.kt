@@ -114,12 +114,7 @@ class WizardMizgogDialogue(player: Player? = null) : Dialogue(player) {
                                 6 -> {
                                     playAudio(player!!, Sounds.CURSE_LIFT_1634, 0, 0, player.location)
                                     replaceScenery(
-                                        toReplace = Scenery(
-                                            shared.consts.Scenery.TABLE_16169,
-                                            Location(3102, 3163, 2),
-                                            10,
-                                            1
-                                        ),
+                                        toReplace = Scenery(shared.consts.Scenery.TABLE_16169, Location(3102, 3163, 2), 10, 1),
                                         with = shared.consts.Scenery.TABLE_16170,
                                         forTicks = 80
                                     )

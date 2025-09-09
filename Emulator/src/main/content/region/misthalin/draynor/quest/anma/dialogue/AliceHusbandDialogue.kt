@@ -12,7 +12,7 @@ import shared.consts.NPCs
 import shared.consts.Quests
 
 class AliceHusbandDialogue(player: Player? = null) : Dialogue(player) {
-    
+
     private lateinit var quest: Quest
 
     override fun open(vararg args: Any?): Boolean {

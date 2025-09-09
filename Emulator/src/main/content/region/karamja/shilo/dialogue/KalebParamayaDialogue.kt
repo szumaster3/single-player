@@ -29,12 +29,7 @@ class KalebParamayaDialogue(player: Player? = null) : Dialogue(player) {
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> npc("Hello, Bwana, what can I do for you today?").also { stage++ }
-            1 -> options(
-                "Can you tell me a bit about this place?",
-                "Have you anything for sale?",
-                "I have a question about my Achievement Diary.",
-                "I'm fine, thanks."
-            ).also { stage++ }
+            1 -> options("Can you tell me a bit about this place?", "Have you anything for sale?", "I have a question about my Achievement Diary.", "I'm fine, thanks.").also { stage++ }
             2 -> when (buttonId) {
                 1 -> player("Can you tell me a bit about this place?").also { stage++ }
                 2 -> player("Have you anything for sale?").also { stage = 8 }

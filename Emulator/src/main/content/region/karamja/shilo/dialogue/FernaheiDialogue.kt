@@ -24,17 +24,14 @@ class FernaheiDialogue(player: Player? = null) : Dialogue(player) {
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> options("Yes please!", "No, but thanks for the offer.").also { stage++ }
-            1 ->
-                when (buttonId) {
-                    1 -> player(FaceAnim.FRIENDLY, "Yes, please.").also { stage = 10 }
-                    2 -> player(FaceAnim.FRIENDLY, "No, but thanks for the offer.").also { stage = 20 }
-                }
-
+            1 -> when (buttonId) {
+                1 -> player(FaceAnim.FRIENDLY, "Yes, please.").also { stage = 10 }
+                2 -> player(FaceAnim.FRIENDLY, "No, but thanks for the offer.").also { stage = 20 }
+            }
             10 -> {
                 end()
                 openNpcShop(player, NPCs.FERNAHEI_517)
             }
-
             20 -> npc(FaceAnim.FRIENDLY, "That's fine, and thanks for your interest.").also { stage = END_DIALOGUE }
         }
         return true

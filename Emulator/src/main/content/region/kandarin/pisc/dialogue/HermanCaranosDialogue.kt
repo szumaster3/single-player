@@ -28,10 +28,7 @@ class HermanCaranosDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             1 -> {
-                npcl(
-                    FaceAnim.ANNOYED,
-                    "Lovely? If you say so... But I'm afraid I don't have time to chat about the weather.",
-                )
+                npcl(FaceAnim.ANNOYED, "Lovely? If you say so... But I'm afraid I don't have time to chat about the weather.")
                 stage++
             }
 
@@ -51,10 +48,7 @@ class HermanCaranosDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             5 -> {
-                npcl(
-                    FaceAnim.WORRIED,
-                    "They're sea-dwelling trolls! They feed on the monkfish in these waters, but recently they've started attacking my colony!",
-                )
+                npcl(FaceAnim.WORRIED, "They're sea-dwelling trolls! They feed on the monkfish in these waters, but recently they've started attacking my colony!")
                 stage++
             }
 
@@ -64,18 +58,12 @@ class HermanCaranosDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             7 -> {
-                npcl(
-                    FaceAnim.FRIENDLY,
-                    "Yes, I do. I've researched this, and I believe our best hope is to find an experienced adventurer.",
-                )
+                npcl(FaceAnim.FRIENDLY, "Yes, I do. I've researched this, and I believe our best hope is to find an experienced adventurer.")
                 stage++
             }
 
             8 -> {
-                npcl(
-                    FaceAnim.FRIENDLY,
-                    "In the legends I've read, adventurers can deal with any monster that threatens a helpless settlement!",
-                )
+                npcl(FaceAnim.FRIENDLY, "In the legends I've read, adventurers can deal with any monster that threatens a helpless settlement!")
                 stage++
             }
 
@@ -85,10 +73,7 @@ class HermanCaranosDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             10 -> {
-                npcl(
-                    FaceAnim.FRIENDLY,
-                    "Yes! I've done extensive research! I always make important decisions based on careful analysis. For example, I chose this site for the colony because records show this part of the sea is perfect for monkfish fishing. I don't just stumble along blindly!",
-                )
+                npcl(FaceAnim.FRIENDLY, "Yes! I've done extensive research! I always make important decisions based on careful analysis. For example, I chose this site for the colony because records show this part of the sea is perfect for monkfish fishing. I don't just stumble along blindly!")
                 stage++
             }
 
@@ -113,18 +98,12 @@ class HermanCaranosDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             15 -> {
-                npcl(
-                    FaceAnim.NEUTRAL,
-                    "Well... you're not quite what I had in mind. But, I see you've earned quite a few Quest Points. Maybe you're up for the task after all...",
-                )
+                npcl(FaceAnim.NEUTRAL, "Well... you're not quite what I had in mind. But, I see you've earned quite a few Quest Points. Maybe you're up for the task after all...")
                 stage++
             }
 
             16 -> {
-                npcl(
-                    FaceAnim.HAPPY,
-                    "Alright then, the Piscatoris Fishing Colony would be grateful for your help. Once the colony is safe, you will be handsomely rewarded.",
-                )
+                npcl(FaceAnim.HAPPY, "Alright then, the Piscatoris Fishing Colony would be grateful for your help. Once the colony is safe, you will be handsomely rewarded.")
                 stage++
             }
 
@@ -134,18 +113,12 @@ class HermanCaranosDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             18 -> {
-                npcl(
-                    FaceAnim.ANNOYED,
-                    "Well, as much as I admire your enthusiasm, I still believe we need a truly expert adventurer if the colony stands any chance.",
-                )
+                npcl(FaceAnim.ANNOYED, "Well, as much as I admire your enthusiasm, I still believe we need a truly expert adventurer if the colony stands any chance.")
                 stage++
             }
 
             19 -> {
-                playerl(
-                    FaceAnim.FRIENDLY,
-                    "An expert adventurer? I've had more adventures than you've had pickled gherkins!",
-                )
+                playerl(FaceAnim.FRIENDLY, "An expert adventurer? I've had more adventures than you've had pickled gherkins!")
                 stage++
             }
 
@@ -160,18 +133,12 @@ class HermanCaranosDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             22 -> {
-                npcl(
-                    FaceAnim.FRIENDLY,
-                    "Fine, let me tell you what I've read about one of the greatest adventurers of all time.",
-                )
+                npcl(FaceAnim.FRIENDLY, "Fine, let me tell you what I've read about one of the greatest adventurers of all time.")
                 stage++
             }
 
             23 -> {
-                npcl(
-                    FaceAnim.FRIENDLY,
-                    "In far-off Misthalin, there lives a legendary adventurer. His name is lost to time, but you shouldn't have trouble finding the Wise Old Man in Draynor Village.",
-                )
+                npcl(FaceAnim.FRIENDLY, "In far-off Misthalin, there lives a legendary adventurer. His name is lost to time, but you shouldn't have trouble finding the Wise Old Man in Draynor Village.")
                 stage++
             }
 
@@ -181,18 +148,12 @@ class HermanCaranosDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             25 -> {
-                npcl(
-                    FaceAnim.HALF_ASKING,
-                    "Do you know him? He's a bit... eccentric, but he's one of the greatest adventurers to ever live!",
-                )
+                npcl(FaceAnim.HALF_ASKING, "Do you know him? He's a bit... eccentric, but he's one of the greatest adventurers to ever live!")
                 stage++
             }
 
             26 -> {
-                playerl(
-                    FaceAnim.FRIENDLY,
-                    "Yes! He's mad! Didn't he smash his way into a bank and steal a bunch of stuff?",
-                )
+                playerl(FaceAnim.FRIENDLY, "Yes! He's mad! Didn't he smash his way into a bank and steal a bunch of stuff?")
                 stage++
             }
 
@@ -207,10 +168,7 @@ class HermanCaranosDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             29 -> {
-                npcl(
-                    FaceAnim.FRIENDLY,
-                    "Yes, that's right. But watch out for those sea trolls, and be careful when you speak to him.",
-                )
+                npcl(FaceAnim.FRIENDLY, "Yes, that's right. But watch out for those sea trolls, and be careful when you speak to him.")
                 stage++
             }
 
@@ -222,10 +180,7 @@ class HermanCaranosDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             31 -> {
-                playerl(
-                    FaceAnim.FRIENDLY,
-                    "Right... so you want me to fetch this old man who used to be a great adventurer?",
-                )
+                playerl(FaceAnim.FRIENDLY, "Right... so you want me to fetch this old man who used to be a great adventurer?")
                 stage++
             }
 
@@ -255,10 +210,7 @@ class HermanCaranosDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             37 -> {
-                npcl(
-                    FaceAnim.FRIENDLY,
-                    "Reward? Well... we've got to discuss the Colony's defenses now. Perhaps you could make yourself useful around here? My brother, Franklin, could use some help. Also, Arnold, the storemaster, needed an extra pair of hands. He's in one of the big storage sheds.",
-                )
+                npcl(FaceAnim.FRIENDLY, "Reward? Well... we've got to discuss the Colony's defenses now. Perhaps you could make yourself useful around here? My brother, Franklin, could use some help. Also, Arnold, the storemaster, needed an extra pair of hands. He's in one of the big storage sheds.")
                 stage++
             }
 
@@ -298,18 +250,12 @@ class HermanCaranosDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             45 -> {
-                npcl(
-                    FaceAnim.FRIENDLY,
-                    "The Wise Old Man and I have discussed the situation. He's come up with a plan...",
-                )
+                npcl(FaceAnim.FRIENDLY, "The Wise Old Man and I have discussed the situation. He's come up with a plan...")
                 stage++
             }
 
             46 -> {
-                npcl(
-                    FaceAnim.FRIENDLY,
-                    "Yes, that's right. The sheer number of trolls means our best hope is to gather our forces and wipe out all the trolls at once.",
-                )
+                npcl(FaceAnim.FRIENDLY, "Yes, that's right. The sheer number of trolls means our best hope is to gather our forces and wipe out all the trolls at once.")
                 stage++
             }
 
@@ -334,10 +280,7 @@ class HermanCaranosDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             51 -> {
-                npcl(
-                    FaceAnim.FRIENDLY,
-                    "I sent most of the colonists away for their safety when the trolls began attacking the Colony.",
-                )
+                npcl(FaceAnim.FRIENDLY, "I sent most of the colonists away for their safety when the trolls began attacking the Colony.")
                 stage++
             }
 
@@ -352,10 +295,7 @@ class HermanCaranosDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             54 -> {
-                npcl(
-                    FaceAnim.CALM,
-                    "In the Wizards' Guild in Yanille, Wizard Frumscone always seems to have a limitless supply of zombies and similar creatures. If you can persuade him to lend us an army, we should be able to defeat these trolls.",
-                )
+                npcl(FaceAnim.CALM, "In the Wizards' Guild in Yanille, Wizard Frumscone always seems to have a limitless supply of zombies and similar creatures. If you can persuade him to lend us an army, we should be able to defeat these trolls.")
                 stage++
             }
 

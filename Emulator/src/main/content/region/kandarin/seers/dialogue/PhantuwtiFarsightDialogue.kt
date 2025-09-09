@@ -41,12 +41,7 @@ class PhantuwtiFarsightDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             10 -> {
-                npc(
-                    FaceAnim.NEUTRAL,
-                    "This is Seers Village! We're an organisation of mystically",
-                    "gifted people with the power of foresight...we see things",
-                    "that have yet to come to pass.",
-                )
+                npc(FaceAnim.NEUTRAL, "This is Seers Village! We're an organisation of mystically", "gifted people with the power of foresight...we see things", "that have yet to come to pass.")
                 stage = 11
             }
 
@@ -56,21 +51,12 @@ class PhantuwtiFarsightDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             20 -> {
-                npc(
-                    FaceAnim.NEUTRAL,
-                    "A lot of our time is spent addressing everyday sorts of",
-                    "things, plus we meditate a lot and enhance our",
-                    "powers of mystical foresight.",
-                )
+                npc(FaceAnim.NEUTRAL, "A lot of our time is spent addressing everyday sorts of", "things, plus we meditate a lot and enhance our", "powers of mystical foresight.")
                 stage = 31
             }
 
             30 -> {
-                npc(
-                    FaceAnim.HALF_GUILTY,
-                    "Unfortunately no, sorry, but if adventure is what you",
-                    "seek, try checking through your quest list!",
-                )
+                npc(FaceAnim.HALF_GUILTY, "Unfortunately no, sorry, but if adventure is what you", "seek, try checking through your quest list!")
                 stage = 31
             }
 

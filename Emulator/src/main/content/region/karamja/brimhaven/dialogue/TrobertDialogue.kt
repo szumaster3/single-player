@@ -13,17 +13,14 @@ import shared.consts.Quests
 
 @Initializable
 class TrobertDialogue(player: Player? = null) : Dialogue(player) {
-    
+
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         openDialogue(player, TrobertDialogueFile(), npc)
         return true
     }
 
-    override fun handle(
-        interfaceId: Int,
-        buttonId: Int,
-    ): Boolean = true
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean = true
 
     override fun newInstance(player: Player?): Dialogue = TrobertDialogue(player)
 

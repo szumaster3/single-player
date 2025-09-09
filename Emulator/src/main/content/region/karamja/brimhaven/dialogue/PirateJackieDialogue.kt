@@ -27,7 +27,6 @@ class PirateJackieDialogue : DialogueFile() {
             ).also {
                 stage++
             }
-
             3 -> when (buttonID) {
                 1 -> playerl(FaceAnim.NEUTRAL, "What is this place?").also { stage++ }
                 2 -> playerl(FaceAnim.NEUTRAL, "What do you do?").also { stage = 6 }
@@ -35,24 +34,15 @@ class PirateJackieDialogue : DialogueFile() {
                 4 -> playerl(FaceAnim.NEUTRAL, "I have a question about my Achievement Diary.").also { stage = 9 }
                 5 -> playerl(FaceAnim.NEUTRAL, "See you later.").also { stage = END_DIALOGUE }
             }
-
             4 -> npcl(FaceAnim.NEUTRAL, "Welcome to the Brimhaven Agility Arena!").also { stage++ }
-            5 -> npcl(FaceAnim.NEUTRAL, "If ye want to know more talk to Cap'n Izzy, he found it!").also {
-                stage = END_DIALOGUE
-            }
-
-            6 -> npcl(
-                FaceAnim.NEUTRAL,
-                "I be the Jack o' tickets. I exchange the tickets ye collect in the Agility Arena for " + "more stuff. Ye can obtain more agility experience or some items ye won't find anywhere else!",
-            ).also { stage++ }
-
+            5 -> npcl(FaceAnim.NEUTRAL, "If ye want to know more talk to Cap'n Izzy, he found it!").also { stage = END_DIALOGUE }
+            6 -> npcl(FaceAnim.NEUTRAL, "I be the Jack o' tickets. I exchange the tickets ye collect in the Agility Arena for " + "more stuff. Ye can obtain more agility experience or some items ye won't find anywhere else!").also { stage++ }
             7 -> playerl(FaceAnim.NEUTRAL, "Sounds good!").also { stage = END_DIALOGUE }
             8 -> {
                 npcl(FaceAnim.NEUTRAL, "Aye, ye be on the right track.").also { stage = END_DIALOGUE }
                 end()
                 openInterface(player!!, Components.AGILITYARENA_TRADE_6)
             }
-
             9 -> {
                 end()
                 openDialogue(player!!, PirateJackieDiaryDialogue())

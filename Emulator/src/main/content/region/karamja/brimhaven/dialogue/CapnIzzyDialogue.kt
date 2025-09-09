@@ -35,7 +35,6 @@ class CapnIzzyDialogue(private val it: Int) : DialogueFile() {
                     4 -> playerl(FaceAnim.HALF_ASKING, "May I buy a Skillcape of Agility, please?").also { stage = 40 }
                     5 -> playerl(FaceAnim.NEUTRAL, "See you later.").also { stage = END_DIALOGUE }
                 }
-
                 7 -> when (buttonID) {
                     1 -> playerl(FaceAnim.NEUTRAL, "What is this place?").also { stage = 10 }
                     2 -> playerl(FaceAnim.NEUTRAL, "What do I do in the arena?").also { stage = 20 }
@@ -76,11 +75,7 @@ class CapnIzzyDialogue(private val it: Int) : DialogueFile() {
                         npcl(FaceAnim.NEUTRAL, "Avast there, ye've already paid!").also { stage = END_DIALOGUE }
                     }
                 }
-
-                40 -> npcl(FaceAnim.NEUTRAL, "Most certainly, I think it'll really suit you. All that remains to be done is pay me 99000 gold!").also {
-                    stage++
-                }
-
+                40 -> npcl(FaceAnim.NEUTRAL, "Most certainly, I think it'll really suit you. All that remains to be done is pay me 99000 gold!").also { stage++ }
                 41 -> options("I'm afraid I can't afford that.", "Certainly, here you go.").also { stage++ }
                 42 -> when (buttonID) {
                     1 -> playerl(FaceAnim.NEUTRAL, "I'm afraid I can't afford that.").also { stage++ }
@@ -105,12 +100,10 @@ class CapnIzzyDialogue(private val it: Int) : DialogueFile() {
                 50 -> sendNormalDialogue(NPC(NPCs.CAPN_IZZY_NO_BEARD_437), FaceAnim.NEUTRAL, "Aye, to be sure! The Skillcape of Agility be the symbol", "of the master of dexterity! One who wears it can climb", "like a cat, run like the wind and jump like...err, well", "jump like a jumping thing!").also { stage++ }
                 51 -> npcl(FaceAnim.NEUTRAL, "Now, be there anything else ye'd like to know?").also { stage = 5 }
             }
-
             1 -> when (stage) {
                 0 -> npcl(NPCs.PARROT_4535, FaceAnim.OLD_CALM_TALK2, "Clap him in irons!").also { stage++ }
                 1 -> npcl(NPCs.CAPN_IZZY_NO_BEARD_437, FaceAnim.NEUTRAL, "Ahoy there! Pay up first!").also { stage = END_DIALOGUE }
             }
-
             2 -> {
                 if (!getAttribute(player!!, "capn_izzy", false)) {
                     if (inInventory(player!!, Items.COINS_995, 200) && removeItem(player!!, Item(Items.COINS_995, 200))) {
@@ -121,9 +114,7 @@ class CapnIzzyDialogue(private val it: Int) : DialogueFile() {
                         sendMessage(player!!, "You don't have the 200 coin entrance fee.")
                     }
                 } else {
-                    npcl(NPCs.CAPN_IZZY_NO_BEARD_437, FaceAnim.NEUTRAL, "Avast there, ye've already paid!").also {
-                        stage = END_DIALOGUE
-                    }
+                    npcl(NPCs.CAPN_IZZY_NO_BEARD_437, FaceAnim.NEUTRAL, "Avast there, ye've already paid!").also { stage = END_DIALOGUE }
                 }
             }
         }

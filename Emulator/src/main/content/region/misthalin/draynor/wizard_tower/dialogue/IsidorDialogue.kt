@@ -25,11 +25,7 @@ class IsidorDialogue(player: Player? = null) : Dialogue(player) {
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> {
-                player(
-                    "I'm a friend of Explorer Jack and need teleporting",
-                    "somewhere. The phrase is 'Ectosum glissendo'. Could",
-                    "you help me, please?",
-                )
+                player("I'm a friend of Explorer Jack and need teleporting", "somewhere. The phrase is 'Ectosum glissendo'. Could", "you help me, please?")
                 stage = 1
             }
 
