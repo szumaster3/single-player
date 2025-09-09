@@ -648,8 +648,12 @@ class WatchTowerPlugin : InteractionListener {
          * Handles exit from ogres enclave.
          */
 
-        on(Scenery.CAVE_EXIT_32494, IntType.SCENERY, "exit") { player, _ ->
-            teleport(player, Location.create(2541, 3054, 0))
+        on(Scenery.CAVE_EXIT_32494, IntType.SCENERY, "exit") { player, node ->
+            if(node.location.x == 2598 && node.location.y == 9470) {
+                teleport(player, Location.create(2541, 3054, 0), TeleportManager.TeleportType.INSTANT)
+            } else {
+                teleport(player, Location.create(2781, 2935, 0), TeleportManager.TeleportType.INSTANT)
+            }
             return@on true
         }
 
