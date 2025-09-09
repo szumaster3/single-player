@@ -141,12 +141,7 @@ class KaramjaPlugin : InteractionListener {
 
             when {
                 ess == 0 -> {
-                    sendNPCDialogue(
-                        player,
-                        NPCs.JIMINUA_560,
-                        "You don't have any essence for me to un-note.",
-                        FaceAnim.HALF_GUILTY,
-                    )
+                    sendNPCDialogue(player, NPCs.JIMINUA_560, "You don't have any essence for me to un-note.", FaceAnim.HALF_GUILTY)
                     return@onUseWith false
                 }
 
@@ -156,12 +151,7 @@ class KaramjaPlugin : InteractionListener {
                 }
 
                 coins <= 1 -> {
-                    sendNPCDialogue(
-                        player,
-                        NPCs.JIMINUA_560,
-                        "I charge 2 gold coins to un-note each pure essence.",
-                        FaceAnim.HALF_GUILTY,
-                    )
+                    sendNPCDialogue(player, NPCs.JIMINUA_560, "I charge 2 gold coins to un-note each pure essence.", FaceAnim.HALF_GUILTY)
                     return@onUseWith false
                 }
 

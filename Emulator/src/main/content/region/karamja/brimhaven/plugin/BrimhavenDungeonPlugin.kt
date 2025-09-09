@@ -58,13 +58,9 @@ class BrimhavenDungeonPlugin : InteractionListener {
             }
 
             if (node.id == Scenery.LOG_BALANCE_5088) {
-                AgilityHandler.walk(
-                    player, -1, player.location, Location.create(2687, 9506, 0), Animation.create(155), 0.0, null
-                )
+                AgilityHandler.walk(player, -1, player.location, Location.create(2687, 9506, 0), Animation.create(155), 0.0, null)
             } else {
-                AgilityHandler.walk(
-                    player, -1, player.location, Location.create(2682, 9506, 0), Animation.create(155), 0.0, null
-                )
+                AgilityHandler.walk(player, -1, player.location, Location.create(2682, 9506, 0), Animation.create(155), 0.0, null)
             }
             return@on true
         }

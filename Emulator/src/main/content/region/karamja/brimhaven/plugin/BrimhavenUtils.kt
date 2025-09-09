@@ -17,10 +17,7 @@ import core.game.world.update.flag.context.Animation
 
 object BrimhavenUtils {
     @JvmStatic
-    fun getVineDestination(
-        player: Player,
-        node: Scenery,
-    ): Location {
+    fun getVineDestination(player: Player, node: Scenery): Location {
         if (node.rotation % 2 != 0) {
             if (player.location.x > node.location.x) {
                 return node.location.transform(-1, 0, 0)
@@ -36,10 +33,7 @@ object BrimhavenUtils {
     }
 
     @JvmStatic
-    fun handleStairs(
-        node: Scenery,
-        player: Player,
-    ) {
+    fun handleStairs(node: Scenery, player: Player) {
         when (node.id) {
             5094 -> ClimbActionHandler.climb(player, null, Location.create(2643, 9594, 2))
             5096 -> ClimbActionHandler.climb(player, null, Location.create(2649, 9591, 0))
@@ -49,10 +43,7 @@ object BrimhavenUtils {
     }
 
     @JvmStatic
-    fun handleSteppingStones(
-        player: Player,
-        node: Scenery,
-    ) {
+    fun handleSteppingStones(player: Player, node: Scenery) {
         if (getStatLevel(player, Skills.AGILITY) < 12) {
             sendMessage(player, "You need an agility level of 12 to cross this.")
             return
@@ -113,10 +104,7 @@ object BrimhavenUtils {
     }
 
     @JvmStatic
-    fun handleVines(
-        player: Player,
-        node: Scenery,
-    ) {
+    fun handleVines(player: Player, node: Scenery) {
         val level: Int = 10 + (node.id - 5103) * 6
         if (player.skills.getLevel(Skills.WOODCUTTING) < level) {
             sendMessage(player, "You need a woodcutting level of $level to chop down this vine.")
