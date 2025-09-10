@@ -1,13 +1,3 @@
-<div style="text-align: center;">
-
-## OpenScape  
-<img src="https://imgur.com/QVmKMXf.png" alt="?">
-
-OpenScape is a fork of [2009scape](https://gitlab.com/2009scape/2009scape), a successor of arios project.
-</div>
-
----
-
 ### Prerequisites
 
 Before setting up the project, make sure you have the following installed:
