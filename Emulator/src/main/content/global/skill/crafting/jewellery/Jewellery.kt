@@ -2,6 +2,7 @@ package content.global.skill.crafting.jewellery
 
 import core.api.*
 import core.game.component.Component
+import core.game.interaction.Clocks
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
@@ -153,6 +154,7 @@ object Jewellery {
      */
     @JvmStatic
     fun make(player: Player, data: JewelleryItem, amount: Int) {
+        if (!clockReady(player, Clocks.SKILLING)) return
         var amount = amount
         var length = 0
         var amt = 0
@@ -192,6 +194,7 @@ object Jewellery {
             items[index] = Item(data.items[i], 1 * amount)
         }
         closeInterface(player)
+        delayClock(player, Clocks.SKILLING, 5)
         submitIndividualPulse(player, JewelleryCraftingPulse(player, null, data, amount))
     }
 

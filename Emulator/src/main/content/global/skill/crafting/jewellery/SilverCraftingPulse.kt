@@ -16,7 +16,6 @@ class SilverCraftingPulse(val player: Player, val product: SilverProduct, val fu
 
     override fun pulse(): Boolean {
         if (!clockReady(player, Clocks.SKILLING)) return false
-        delayClock(player, Clocks.SKILLING, 5)
         if (amount < 1) return true
 
         if (!inInventory(player, product.required) || !inInventory(player, Items.SILVER_BAR_2355)) {

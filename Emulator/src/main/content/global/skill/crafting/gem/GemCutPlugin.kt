@@ -2,6 +2,7 @@ package content.global.skill.crafting.gem
 
 import core.api.*
 import core.game.dialogue.SkillDialogueHandler
+import core.game.interaction.Clocks
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.player.Player
@@ -42,10 +43,12 @@ class GemCutPlugin : InteractionListener {
          */
 
         onUseWith(IntType.ITEM, Items.CHISEL_1755, *UNCUT_GEMS) { player, used, with ->
+            if (!clockReady(player, Clocks.SKILLING)) return@onUseWith true
             val gem = Gems.forId(if (used.id == Items.CHISEL_1755) with.asItem() else used.asItem())
             val handler: SkillDialogueHandler =
                 object : SkillDialogueHandler(player, SkillDialogue.ONE_OPTION, gem!!.gem) {
                     override fun create(amount: Int, index: Int) {
+                        delayClock(player, Clocks.SKILLING, 1)
                         player.pulseManager.run(GemCutPulse(player, gem!!.uncut, amount, gem))
                     }
 

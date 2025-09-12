@@ -27,8 +27,6 @@ class JewelleryCraftingPulse(player: Player?, node: Item?, val type: Jewellery.J
 
     override fun reward(): Boolean {
         if (!clockReady(player, Clocks.SKILLING)) return false
-        delayClock(player, Clocks.SKILLING, 5)
-
         if (player.inventory.remove(*items)) {
             val item = Item(type.sendItem)
             player.inventory.add(item)

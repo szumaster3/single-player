@@ -6,8 +6,10 @@ import content.global.skill.fletching.items.bolts.GemBolt
 import content.global.skill.fletching.items.darts.Dart
 import content.global.skill.fletching.items.darts.DartPulse
 import core.api.amountInInventory
+import core.api.clockReady
 import core.api.submitIndividualPulse
 import core.game.dialogue.SkillDialogueHandler
+import core.game.interaction.Clocks
 import core.game.interaction.NodeUsageEvent
 import core.game.interaction.UseWithHandler
 import core.game.node.item.Item
@@ -45,8 +47,8 @@ class FletchingPlugin : UseWithHandler(*BASE) {
     }
 
     private fun handleDart(event: NodeUsageEvent): Boolean {
+        if (!clockReady(event.player, Clocks.SKILLING)) return false
         val dart = Dart.product[event.usedItem.id] ?: return false
-
         val handler = object : SkillDialogueHandler(event.player, SkillDialogue.MAKE_SET_ONE_OPTION, Item(dart.finished)) {
             override fun create(amount: Int, index: Int) {
                 submitIndividualPulse(
@@ -65,6 +67,7 @@ class FletchingPlugin : UseWithHandler(*BASE) {
     }
 
     private fun handleBolt(event: NodeUsageEvent): Boolean {
+        if (!clockReady(event.player, Clocks.SKILLING)) return false
         val bolt = Bolt.product[event.usedItem.id] ?: Bolt.product[event.usedWith.id] ?: return false
 
         val featherId = if (Bolt.isBolt(event.usedItem.id)) event.usedWith.id else event.usedItem.id

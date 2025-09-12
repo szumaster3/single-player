@@ -2,6 +2,7 @@ package content.global.skill.crafting.jewellery
 
 import content.global.skill.slayer.SlayerManager
 import core.api.*
+import core.game.interaction.Clocks
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.interaction.InterfaceListener
@@ -105,6 +106,7 @@ class JewelleryCraftingPlugin : InteractionListener , InterfaceListener {
 
     override fun defineInterfaceListeners() {
         on(Components.CRAFTING_GOLD_446) { player, _, opcode, buttonID, _, itemID ->
+            if (!clockReady(player, Clocks.SKILLING)) return@on true
             var amount = 0
             var data: Jewellery.JewelleryItem? = null
             when (buttonID) {

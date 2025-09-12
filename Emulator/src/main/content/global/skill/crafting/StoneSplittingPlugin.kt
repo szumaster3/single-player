@@ -24,10 +24,13 @@ class StoneSplittingPlugin : InteractionListener {
          */
 
         onUseWith(IntType.ITEM, Items.STONE_SLAB_13245, Items.CHISEL_1755) { player, used, _ ->
+            if (!clockReady(player, Clocks.SKILLING)) return@onUseWith true
             if (!hasLevel(player, Skills.CRAFTING, 20)) return@onUseWith true
             if (!hasTool(player, Items.HAMMER_2347)) return@onUseWith true
+            if (!inInventory(player, used.id)) return@onUseWith true
 
             runTask(player, 2) {
+                delayClock(player, Clocks.SKILLING, 2)
                 playAudio(player, Sounds.HAMMER_STONE_2100)
                 animate(player, Animations.USE_HAMMER_CHISEL_11041)
                 if (removeItem(player, used.id)) {
@@ -44,14 +47,11 @@ class StoneSplittingPlugin : InteractionListener {
          */
 
         onUseWith(IntType.ITEM, Items.CHISEL_1755, *GRANITE_IDS) { player, _, with ->
+            if (!clockReady(player, Clocks.SKILLING)) return@onUseWith true
             if (!hasTool(player, Items.CHISEL_1755)) return@onUseWith true
+
             setTitle(player, 2)
-            sendDialogueOptions(
-                player,
-                "What would you like to do?",
-                "Split the block into smaller pieces.",
-                "Nothing."
-            )
+            sendDialogueOptions(player, "What would you like to do?", "Split the block into smaller pieces.", "Nothing.")
 
             addDialogueAction(player) { _, button ->
                 if (button == 2) {
@@ -67,11 +67,13 @@ class StoneSplittingPlugin : InteractionListener {
          */
 
         onUseWith(IntType.ITEM, Items.LIMESTONE_3211, Items.CHISEL_1755) { player, used, _ ->
+            if (!clockReady(player, Clocks.SKILLING)) return@onUseWith true
             if (!hasLevel(player, Skills.CRAFTING, 12) || !hasTool(player, Items.CHISEL_1755)) return@onUseWith true
 
             sendSkillDialogue(player) {
                 withItems(Items.LIMESTONE_BRICK_3420)
                 create { _, amount ->
+                    delayClock(player, Clocks.SKILLING, 2)
                     player.pulseManager.run(object : Pulse(1, player) {
                         var remaining = amount
 

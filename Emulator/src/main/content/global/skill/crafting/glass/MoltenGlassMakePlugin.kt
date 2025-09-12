@@ -2,6 +2,7 @@ package content.global.skill.crafting.glass
 
 import core.api.*
 import core.game.event.ResourceProducedEvent
+import core.game.interaction.Clocks
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.player.Player
@@ -24,6 +25,8 @@ class MoltenGlassMakePlugin : InteractionListener {
 
     override fun defineListeners() {
         onUseWith(IntType.SCENERY, INPUTS, *FURNACES) { player, _, _ ->
+            if (!clockReady(player, Clocks.SKILLING)) return@onUseWith true
+
             if (!inInventory(player, SODA_ASH, 1)) {
                 sendMessage(player, "You need at least one heap of soda ash to do this.")
                 return@onUseWith true
@@ -45,10 +48,8 @@ class MoltenGlassMakePlugin : InteractionListener {
             sendSkillDialogue(player) {
                 withItems(MOLTEN_GLASS)
                 create { id, amount ->
-                    submitIndividualPulse(
-                        player,
-                        GlassMakePulse(player, id, amount)
-                    )
+                    delayClock(player, Clocks.SKILLING, 3)
+                    submitIndividualPulse(player, GlassMakePulse(player, id, amount))
                 }
                 calculateMaxAmount { _ ->
                     min(amountInInventory(player, SODA_ASH), SAND_SOURCES.sumOf { amountInInventory(player, it) })
@@ -88,7 +89,6 @@ private class GlassMakePulse(private val player: Player, val product: Int, priva
 
         amount--
         delay = 3
-
         return false
     }
 

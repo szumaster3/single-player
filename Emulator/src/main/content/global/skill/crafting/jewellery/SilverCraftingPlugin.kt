@@ -3,6 +3,7 @@ package content.global.skill.crafting.jewellery
 import core.api.*
 import core.game.dialogue.InputType
 import core.game.event.ResourceProducedEvent
+import core.game.interaction.Clocks
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.interaction.InterfaceListener
@@ -99,6 +100,7 @@ class SilverCraftingPlugin : InteractionListener, InterfaceListener {
 
     private fun make(player: Player, product: SilverProduct, amount: Int) {
         closeInterface(player)
+        delayClock(player, Clocks.SKILLING, 5)
         submitIndividualPulse(player, pulse = SilverCraftingPulse(player, product, getAttribute(player, "crafting:silver:furnace_id", core.game.node.scenery.Scenery(-1, -1, 0)), amount))
     }
 }
