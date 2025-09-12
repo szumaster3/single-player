@@ -11,7 +11,7 @@ import shared.consts.NPCs
  */
 class ChurchNPC : NPCBehavior(NPCs.MARTINA_SCORSBY_3326, NPCs.JEREMY_CLERKSIN_3327) {
 
-    private var tickDelay = 0
+    private var tickDelay = RandomFunction.random(30)
 
     override fun onCreation(self: NPC) {
         self.isWalks = false

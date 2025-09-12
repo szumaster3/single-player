@@ -16,7 +16,7 @@ class CowNPC : NPCBehavior(
     NPCs.COW_1767,
     NPCs.COW_3309
 ) {
-    private var tickDelay = 0
+    private var tickDelay = RandomFunction.random(30)
     private val TICK_INTERVAL = 50
 
     override fun tick(self: NPC): Boolean {

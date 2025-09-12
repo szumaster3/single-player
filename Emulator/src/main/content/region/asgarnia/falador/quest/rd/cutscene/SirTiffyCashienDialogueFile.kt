@@ -305,7 +305,7 @@ class InitTest(
                             }
 
                             1 -> {
-                                forceWalk(player, firstStage.destination, "dumb")
+                                forceWalk(player, firstStage.destination, "DUMB")
                                 return@queueScript delayScript(player, 2)
                             }
 

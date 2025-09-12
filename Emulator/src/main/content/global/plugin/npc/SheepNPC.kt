@@ -61,7 +61,7 @@ private val sheepIds =
  */
 class SheepNPC : NPCBehavior(*sheepIds), InteractionListener {
 
-    private var tickDelay = 0
+    private var tickDelay = RandomFunction.random(30)
     private val TICK_INTERVAL = 5
 
     override fun tick(self: NPC): Boolean {
@@ -140,6 +140,6 @@ class SheepNPC : NPCBehavior(*sheepIds), InteractionListener {
         val sheepWalkToLocation = Location(xWalkLocation, yWalkLocation, sheepLocation.z)
         sendMessage(player, messagePlayer)
         unlock(sheep)
-        forceWalk(sheep, sheepWalkToLocation, "dumb")
+        forceWalk(sheep, sheepWalkToLocation, "DUMB")
     }
 }

@@ -6,6 +6,7 @@ import core.game.world.map.Location
 import core.game.world.map.RegionManager
 import core.game.world.repository.Repository
 import core.plugin.Initializable
+import core.tools.RandomFunction
 import shared.consts.NPCs
 
 /**
@@ -14,7 +15,7 @@ import shared.consts.NPCs
 @Initializable
 class IceTrollNPC : AbstractNPC {
 
-    private var tickDelay = 0
+    private var tickDelay = RandomFunction.random(30)
 
     constructor() : super(NPCs.ICE_TROLL_MALE_5474, null, true)
     private constructor(id: Int, location: Location) : super(id, location)

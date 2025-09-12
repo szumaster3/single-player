@@ -18,7 +18,7 @@ class TownCrierNPC : NPCBehavior(NPCs.TOWN_CRIER_6135, NPCs.TOWN_CRIER_6136, NPC
     )
     private val forceChat = forceChatAnimation.entries.toList()
 
-    private var tickDelay = 0
+    private var tickDelay = RandomFunction.random(30)
     private val TICK_INTERVAL = 30
 
     override fun tick(self: NPC): Boolean {

@@ -165,7 +165,7 @@ class AbandonedMinePlugin : InteractionListener, MapArea {
 
                         override fun pulse(): Boolean {
                             when (count++) {
-                                0 -> forceWalk(player, player.location.transform(0, 4, 0), "dumb")
+                                0 -> forceWalk(player, player.location.transform(0, 4, 0), "DUMB")
                                 4 -> {
                                     animate(player, Animations.CROSS_WATER_776)
                                     teleport(player, Location(2807, 4493, 0))

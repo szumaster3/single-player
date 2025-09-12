@@ -11,7 +11,7 @@ import shared.consts.NPCs
 class DuckNPC(id: Int = 0, location: Location? = null) : AbstractNPC(id, location) {
 
     private val forceChat = arrayOf("Eep!", "Quack!")
-    private var tickDelay = 0
+    private var tickDelay = RandomFunction.random(30)
     private val TICK_INTERVAL = 30
 
     override fun construct(id: Int, location: Location, vararg objects: Any): AbstractNPC = DuckNPC(id, location)

@@ -180,7 +180,7 @@ class TrollStrongholdPlugin : InteractionListener {
                     trigger = false
                     when (stage) {
                         0 -> {
-                            forceWalk(npc, Location(2831, if (npcId == NPCs.EADGAR_1113) 10082 else 10078, 0), "dumb")
+                            forceWalk(npc, Location(2831, if (npcId == NPCs.EADGAR_1113) 10082 else 10078, 0), "DUMB")
                             npc.walkRadius = 11
                             npc.isWalks = false
                             targetLocation = Location(2831, if (npcId == NPCs.EADGAR_1113) 10082 else 10078, 0)
@@ -190,7 +190,7 @@ class TrollStrongholdPlugin : InteractionListener {
                             targetLocation = Location(2832, if (npcId == NPCs.EADGAR_1113) 10082 else 10078, 0)
                         }
                         4 -> {
-                            forceWalk(npc, Location(2836, if (npcId == NPCs.EADGAR_1113) 10082 else 10078, 0), "dumb")
+                            forceWalk(npc, Location(2836, if (npcId == NPCs.EADGAR_1113) 10082 else 10078, 0), "DUMB")
                             targetLocation = Location(2836, if (npcId == NPCs.EADGAR_1113) 10082 else 10078, 0)
                         }
                         5 -> {

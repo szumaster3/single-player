@@ -45,7 +45,7 @@ class HansDialogue(player: Player? = null) : Dialogue(player) {
 
                     2 -> {
                         sendChat(npc, "Help! Help!")
-                        forceWalk(npc, npc.location.transform(npc!!.direction.opposite, 1), "dumb")
+                        forceWalk(npc, npc.location.transform(npc!!.direction.opposite, 1), "DUMB")
                         end()
                     }
 

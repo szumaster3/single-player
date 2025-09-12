@@ -10,7 +10,7 @@ import shared.consts.NPCs
 @Initializable
 class HonourGuardNPC : AbstractNPC {
 
-    private var tickDelay = 0
+    private var tickDelay = RandomFunction.random(30)
 
     constructor() : super(NPCs.HONOUR_GUARD_5514, null, true)
     private constructor(id: Int, location: Location) : super(id, location)

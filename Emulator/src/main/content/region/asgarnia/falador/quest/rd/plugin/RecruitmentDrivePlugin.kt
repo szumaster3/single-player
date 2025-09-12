@@ -133,7 +133,7 @@ class RecruitmentDrivePlugin :
                         }
 
                         2 -> {
-                            forceWalk(player, currentStageEnum.destination, "dumb")
+                            forceWalk(player, currentStageEnum.destination, "DUMB")
                             return@queueScript delayScript(player, 1)
                         }
 
@@ -190,7 +190,7 @@ class RecruitmentDrivePlugin :
                         }
 
                         2 -> {
-                            forceWalk(player, currentStageEnum.destination, "dumb")
+                            forceWalk(player, currentStageEnum.destination, "DUMB")
                             return@queueScript delayScript(player, 1)
                         }
 
