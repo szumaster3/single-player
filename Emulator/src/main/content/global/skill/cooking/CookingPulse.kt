@@ -230,6 +230,7 @@ open class CookingPulse(
             product.id == Items.MEAT_PIE_2327 && !burned -> "You successfully bake a tasty meat pie."
             product.id == Items.APPLE_PIE_2323 && !burned -> "You successfully bake a traditional apple pie."
             product.id == Items.MUD_PIE_7170 && !burned -> "You successfully bake a mucky mud pie."
+            product.id == Items.SCRAMBLED_EGG_7078 && !burned -> "You successfully scramble the egg."
             product.id in listOf(Items.BOWL_OF_HOT_WATER_4456, Items.CUP_OF_HOT_WATER_4460) -> if (burned) "You accidentally let the water boil over." else "You boil the water."
 
             CookableItems.intentionalBurn(food.id) -> "You deliberately burn the perfectly good piece of meat."
