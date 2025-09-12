@@ -35,8 +35,8 @@ class FeatherHeaddressMakePlugin : InteractionListener {
             sendSkillDialogue(player) {
                 withItems(item.product)
                 create { _, amount ->
-                    if (amount < 1) return@create
-                    runTask(player, delay = 1, repeatTimes = amount) {
+                    runTask(player, 1, amount) {
+                        if (amount < 1) return@runTask
                         if (removeItem(player, Item(item.base, 20))) {
                             addItem(player, item.product, 1)
                             rewardXP(player, Skills.CRAFTING, 50.0)

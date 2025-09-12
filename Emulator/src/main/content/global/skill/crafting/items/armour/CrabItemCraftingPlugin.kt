@@ -42,8 +42,8 @@ class CrabItemCraftingPlugin : InteractionListener {
             sendSkillDialogue(player) {
                 withItems(productId)
                 create { _, amount ->
-                    if (amount < 1) return@create
-                    runTask(player, delay = 1, repeatTimes = amount) {
+                    runTask(player, 1, amount) {
+                        if (amount < 1) return@runTask
                         if (removeItem(player, used.id)) {
                             addItem(player, productId)
                             rewardXP(player, Skills.CRAFTING, xp)
