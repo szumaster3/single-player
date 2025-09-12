@@ -1,10 +1,12 @@
 package content.global.skill.cooking
 
 import core.api.*
+import core.game.dialogue.SkillDialogueHandler
 import core.game.interaction.Clocks
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.player.Player
+import core.game.node.entity.skill.SkillPulse
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.tools.RandomFunction
@@ -21,23 +23,19 @@ class CookingRecipeHandler : InteractionListener {
 
     override fun defineListeners() {
         onUseWith(IntType.ITEM, firstIngredient, *secondIngredient) { player, used, with ->
-            val product = CookingRecipe.forId(used.id) ?: return@onUseWith true
+            val recipe = CookingRecipe.forId(used.id) ?: return@onUseWith true
 
-            if (!hasLevelDyn(player, Skills.COOKING, product.requiredLevel)) {
-                sendMessage(player, "You need a Cooking level of at least ${product.requiredLevel} to make this.")
+            if (!hasLevelDyn(player, Skills.COOKING, recipe.requiredLevel)) {
+                sendMessage(player, "You need a Cooking level of at least ${recipe.requiredLevel} to make this.")
                 return@onUseWith true
             }
 
-            if (product.requiresKnife && !inInventory(player, Items.KNIFE_946)) {
+            if (recipe.requiresKnife && !inInventory(player, Items.KNIFE_946)) {
                 sendMessage(player, "You need a knife to prepare this recipe.")
                 return@onUseWith true
             }
 
-            if (!inInventory(player, product.ingredientID)) {
-                return@onUseWith true
-            }
-
-            if (!inInventory(player, product.secondaryID)) {
+            if (!inInventory(player, recipe.ingredientID) || !inInventory(player, recipe.secondaryID)) {
                 return@onUseWith true
             }
 
@@ -45,60 +43,57 @@ class CookingRecipeHandler : InteractionListener {
             val secondaryAmount = amountInInventory(player, with.id)
             val maxAmount = min(ingredientAmount, secondaryAmount)
 
-            if (maxAmount == 1) {
-                val ingredientItem = player.inventory.getItem(used.asItem()) ?: return@onUseWith true
-                player.inventory.replace(Item(product.productID, 1), ingredientItem.slot)
+            val handler: SkillDialogueHandler = object : SkillDialogueHandler(player, SkillDialogue.ONE_OPTION, Item(recipe.ingredientID)) {
+                override fun create(amount: Int, index: Int) {
+                    player.pulseManager.run(object : SkillPulse<Item?>(player, Item(recipe.ingredientID)) {
+                        private var remaining = amount
 
-                if (product.secondaryID != Items.KNIFE_946) {
-                    player.inventory.getItem(with.asItem())?.let { secondaryItem ->
-                        product.returnsContainer?.let { container ->
-                            player.inventory.replace(Item(container, 1), secondaryItem.slot)
+                        override fun checkRequirements(): Boolean {
+                            return inInventory(player, recipe.ingredientID) && inInventory(player, recipe.secondaryID)
                         }
-                    }
-                } else {
-                    product.returnsContainer?.let { addItemOrDrop(player, it, 1) }
+
+                        override fun animate() {
+                            recipe.animation?.let { animate(player, it) }
+                        }
+
+                        override fun reward(): Boolean {
+                            val ingredientItem = player.inventory.getItem(used.asItem()) ?: return true
+                            player.inventory.replace(Item(recipe.productID, 1), ingredientItem.slot)
+
+                            if (recipe.secondaryID != Items.KNIFE_946) {
+                                player.inventory.get(recipe.secondaryID)?.let { secondaryItem ->
+                                    recipe.returnsContainer?.let { container ->
+                                        player.inventory.replace(Item(container, 1), secondaryItem.slot)
+                                    }
+                                }
+                            } else {
+                                recipe.returnsContainer?.let { addItemOrDrop(player, it, 1) }
+                            }
+
+                            recipe.xpReward?.let { rewardXP(player, Skills.COOKING, it) }
+                            recipe.message?.let { sendMessage(player, it) }
+
+                            delayClock(player, Clocks.SKILLING, 2)
+                            remaining--
+                            return remaining <= 0
+                        }
+                    })
                 }
 
-                product.xpReward?.let { rewardXP(player, Skills.COOKING, it) }
-                product.message?.let { sendMessage(player, it) }
-                product.animation?.let { animate(player, it) }
-                delayClock(player, Clocks.SKILLING, 2)
-                return@onUseWith true
+                override fun getAll(index: Int): Int {
+                    return min(amountInInventory(player, recipe.ingredientID), amountInInventory(player, recipe.secondaryID))
+                }
             }
 
-            sendSkillDialogue(player) {
-                withItems(product.productID)
-                create { _, amount ->
-                    runTask(player, 2, amount) {
-                        if (amount < 1) return@runTask
-
-                        val ingredientItem = player.inventory.getItem(used.asItem()) ?: return@runTask
-                        player.inventory.replace(Item(product.productID, 1), ingredientItem.slot)
-
-                        if (product.secondaryID != Items.KNIFE_946) {
-                            player.inventory.get(product.secondaryID)?.let { secondaryItem ->
-                                product.returnsContainer?.let { container ->
-                                    player.inventory.replace(Item(container, 1), secondaryItem.slot)
-                                }
-                            }
-                        } else {
-                            product.returnsContainer?.let { addItemOrDrop(player, it, 1) }
-                        }
-
-                        product.xpReward?.let { rewardXP(player, Skills.COOKING, it) }
-                        product.message?.let { sendMessage(player, it) }
-                        product.animation?.let { animate(player, it) }
-                        delayClock(player, Clocks.SKILLING, 2)
-                    }
-                }
-
-                calculateMaxAmount { _ ->
-                    min(amountInInventory(player, product.ingredientID), amountInInventory(player, product.secondaryID))
-                }
+            if (maxAmount == 1) {
+                handler.create(1, 1)
+            } else {
+                handler.open()
             }
 
             return@onUseWith true
         }
+
 
 
         onUseWith(IntType.ITEM, Items.PITTA_BREAD_1865, Items.KEBAB_MIX_1881) { player, _, _ ->
