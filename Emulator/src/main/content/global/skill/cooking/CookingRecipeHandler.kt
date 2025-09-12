@@ -58,8 +58,12 @@ class CookingRecipeHandler : InteractionListener {
             if (!clockReady(player, Clocks.SKILLING)) return@onUseWith true
 
             val ingredientAmount = amountInInventory(player, recipe.ingredientID)
-            val secondaryAmount = if (recipe.requiresKnife) Int.MAX_VALUE else amountInInventory(player, recipe.secondaryID)
+            val secondaryAmount = amountInInventory(player, recipe.secondaryID)
             val maxAmount = min(ingredientAmount, secondaryAmount)
+            if (maxAmount <= 0) {
+                sendMessage(player, "You do not have the required ingredients to make this.")
+                return@onUseWith true
+            }
 
             val handler = object : SkillDialogueHandler(player, SkillDialogue.ONE_OPTION, Item(recipe.productID)) {
                 override fun create(amount: Int, index: Int) {
