@@ -429,32 +429,17 @@ class CacheCommandSet : CommandSet(Privilege.ADMIN) {
          */
 
         define(
-            name = "dumpicons",
-            privilege = Privilege.ADMIN,
-            usage = "::dumpicons",
-            description = "Shows all icons available with ids.",
-        ) { p, _ ->
-            val maxIconId = 4
-            for (iconId in 0..maxIconId) {
-                p.debug("Icon sprite: <img=$iconId> Icon ID: $iconId")
-            }
-        }
-
-        /*
-         * Dumps detailed info about interface.
-         */
-
-        define(
             name = "dumpiface",
             privilege = Privilege.ADMIN,
             usage = "::dumpiface <id>",
             description = "Dumps interface definitions as JSON to a file.",
         ) { p, args ->
+
             val gson = GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create()
             val dumps = File("dumps")
             if (!dumps.exists()) dumps.mkdirs()
 
-            if (args.isEmpty()) {
+            if (args.size < 2) {
                 p.debug("Usage: ::dumpiface <id>")
                 return@define
             }
@@ -471,55 +456,180 @@ class CacheCommandSet : CommandSet(Privilege.ADMIN) {
                 return@define
             }
 
-            fun dumpMap(c: IfaceDefinition): Map<String, Any?> {
-                val map = mutableMapOf<String, Any?>(
-                    "childId" to c.id,
-                    "type" to c.type?.name,
-                    "baseX" to c.baseX,
-                    "baseY" to c.baseY,
-                    "baseWidth" to c.baseWidth,
-                    "baseHeight" to c.baseHeight,
-                    "overlayer" to c.overlayer,
-                    "spriteId" to c.spriteId
-                )
-                if (!c.ops.isNullOrEmpty()) map["ops"] = c.ops!!.filterNotNull()
-                c.scripts?.let { s ->
-                    val scr = mutableMapOf<String, Any>()
-                    s.unknown?.let { scr["unknown"] = listOf(it.id, it.args) }
-                    s.onMouseOver?.let { scr["onMouseOver"] = listOf(it.id, it.args) }
-                    s.onMouseLeave?.let { scr["onMouseLeave"] = listOf(it.id, it.args) }
-                    s.onUseWith?.let { scr["onUseWith"] = listOf(it.id, it.args) }
-                    s.onUse?.let { scr["onUse"] = listOf(it.id, it.args) }
-                    s.onVarpTransmit?.let { scr["onVarpTransmit"] = listOf(it.id, it.args) }
-                    s.onInvTransmit?.let { scr["onInvTransmit"] = listOf(it.id, it.args) }
-                    s.onStatTransmit?.let { scr["onStatTransmit"] = listOf(it.id, it.args) }
-                    s.onTimer?.let { scr["onTimer"] = listOf(it.id, it.args) }
-                    s.onOptionClick?.let { scr["onOptionClick"] = listOf(it.id, it.args) }
-                    s.onMouseRepeat?.let { scr["onMouseRepeat"] = listOf(it.id, it.args) }
-                    s.onClickRepeat?.let { scr["onClickRepeat"] = listOf(it.id, it.args) }
-                    s.onDrag?.let { scr["onDrag"] = listOf(it.id, it.args) }
-                    s.onRelease?.let { scr["onRelease"] = listOf(it.id, it.args) }
-                    s.onHold?.let { scr["onHold"] = listOf(it.id, it.args) }
-                    s.onDragStart?.let { scr["onDragStart"] = listOf(it.id, it.args) }
-                    s.onDragRelease?.let { scr["onDragRelease"] = listOf(it.id, it.args) }
-                    s.onScroll?.let { scr["onScroll"] = listOf(it.id, it.args) }
-                    s.onVarcTransmit?.let { scr["onVarcTransmit"] = listOf(it.id, it.args) }
-                    s.onVarcstrTransmit?.let { scr["onVarcstrTransmit"] = listOf(it.id, it.args) }
-                    if (scr.isNotEmpty()) map["scripts"] = scr
+            fun dumpIface(def: IfaceDefinition, isRoot: Boolean = false): Map<String, Any?>? {
+                val map = mutableMapOf<String, Any?>()
+
+                fun <T> addIfNotNull(key: String, value: T?) {
+                    when (value) {
+                        null -> return
+                        is Int -> if (value == 0) return
+                        is Boolean -> if (!value) return
+                        is String -> if (value.isEmpty()) return
+                        is IntArray -> {
+                            val filtered = value.filter { it != 0 }
+                            if (filtered.isEmpty()) return
+                            map[key] = filtered
+                            return
+                        }
+                        is Array<*> -> {
+                            val filtered = value.mapNotNull {
+                                when (it) {
+                                    is IfaceDefinition -> dumpIface(it)
+                                    is IntArray -> it.filter { v -> v != 0 }.takeIf { it.isNotEmpty() }
+                                    is String -> if (it.isEmpty()) null else it
+                                    else -> it
+                                }
+                            }.filterNotNull()
+                            if (filtered.isEmpty()) return
+                            map[key] = filtered
+                            return
+                        }
+                    }
+                    map[key] = value
                 }
-                return map
+
+                if (isRoot) {
+                    addIfNotNull("id", def.id)
+                    addIfNotNull("parent", def.parent)
+                }
+
+                addIfNotNull("type", def.type?.name)
+                addIfNotNull("version", def.version)
+                addIfNotNull("clientCode", def.clientCode)
+                addIfNotNull("baseX", def.baseX)
+                addIfNotNull("baseY", def.baseY)
+                addIfNotNull("baseWidth", def.baseWidth)
+                addIfNotNull("baseHeight", def.baseHeight)
+                addIfNotNull("dynWidth", def.dynWidth)
+                addIfNotNull("dynHeight", def.dynHeight)
+                addIfNotNull("xMode", def.xMode)
+                addIfNotNull("yMode", def.yMode)
+                addIfNotNull("overlayer", def.overlayer)
+                addIfNotNull("hidden", def.hidden)
+                addIfNotNull("scrollMaxH", def.scrollMaxH)
+                addIfNotNull("scrollMaxV", def.scrollMaxV)
+                addIfNotNull("noClickThrough", def.noClickThrough)
+                addIfNotNull("spriteId", def.spriteId)
+                addIfNotNull("activeSpriteId", def.activeSpriteId)
+                addIfNotNull("angle2d", def.angle2d)
+                addIfNotNull("hasAlpha", def.hasAlpha)
+                addIfNotNull("spriteTiling", def.spriteTiling)
+                addIfNotNull("alpha", def.alpha)
+                addIfNotNull("outlineThickness", def.outlineThickness)
+                addIfNotNull("shadowColor", def.shadowColor)
+                addIfNotNull("hFlip", def.hFlip)
+                addIfNotNull("vFlip", def.vFlip)
+                addIfNotNull("modelType", def.modelType)
+                addIfNotNull("activeModelType", def.activeModelType)
+                addIfNotNull("modelId", def.modelId)
+                addIfNotNull("activeModelId", def.activeModelId)
+                addIfNotNull("unknownModelProp_1", def.unknownModelProp_1)
+                addIfNotNull("unknownModelProp_2", def.unknownModelProp_2)
+                addIfNotNull("modelXAngle", def.modelXAngle)
+                addIfNotNull("modelYAngle", def.modelYAngle)
+                addIfNotNull("modelYOffset", def.modelYOffset)
+                addIfNotNull("modelZoom", def.modelZoom)
+                addIfNotNull("modelAnimId", def.modelAnimId)
+                addIfNotNull("activeModelAnimId", def.activeModelAnimId)
+                addIfNotNull("modelOrtho", def.modelOrtho)
+                addIfNotNull("unknownModelProp_3", def.unknownModelProp_3)
+                addIfNotNull("unknownModelProp_4", def.unknownModelProp_4)
+                addIfNotNull("unknownModelProp_5", def.unknownModelProp_5)
+                addIfNotNull("unknownModelProp_6", def.unknownModelProp_6)
+                addIfNotNull("unknownModelProp_7", def.unknownModelProp_7)
+                addIfNotNull("font", def.font)
+                addIfNotNull("text", def.text)
+                addIfNotNull("activeText", def.activeText)
+                addIfNotNull("vPadding", def.vPadding)
+                addIfNotNull("halign", def.halign)
+                addIfNotNull("valign", def.valign)
+                addIfNotNull("shadowed", def.shadowed)
+                addIfNotNull("color", def.color)
+                addIfNotNull("activeColor", def.activeColor)
+                addIfNotNull("overColor", def.overColor)
+                addIfNotNull("unknownColor", def.unknownColor)
+                addIfNotNull("filled", def.filled)
+                addIfNotNull("lineWidth", def.lineWidth)
+                addIfNotNull("unknownProp_8", def.unknownProp_8)
+                addIfNotNull("unknownIntArray_1", def.unknownIntArray_1)
+                addIfNotNull("unknownIntArray_2", def.unknownIntArray_2)
+                addIfNotNull("unknownByteArray_1", def.unknownByteArray_1)
+                addIfNotNull("unknownByteArray_2", def.unknownByteArray_2)
+                addIfNotNull("optionBase", def.optionBase)
+                addIfNotNull("ops", def.ops)
+                addIfNotNull("dragDeadzone", def.dragDeadzone)
+                addIfNotNull("dragDeadtime", def.dragDeadtime)
+                addIfNotNull("dragRenderBehavior", def.dragRenderBehavior)
+                addIfNotNull("opCircumfix", def.opCircumfix)
+                addIfNotNull("opSuffix", def.opSuffix)
+                addIfNotNull("option", def.option)
+                addIfNotNull("unknownProp_9", def.unknownProp_9)
+                addIfNotNull("unknownProp_10", def.unknownProp_10)
+                addIfNotNull("unknownProp_11", def.unknownProp_11)
+                addIfNotNull("cs1ComparisonOperands", def.cs1ComparisonOperands)
+                addIfNotNull("cs1ComparisonOpcodes", def.cs1ComparisonOpcodes)
+                addIfNotNull("cs1Scripts", def.cs1Scripts)
+                addIfNotNull("objCounts", def.objCounts)
+                addIfNotNull("objTypes", def.objTypes)
+                addIfNotNull("invMarginX", def.invMarginX)
+                addIfNotNull("invMarginY", def.invMarginY)
+                addIfNotNull("invOffsetX", def.invOffsetX)
+                addIfNotNull("invOffsetY", def.invOffsetY)
+                addIfNotNull("invSprite", def.invSprite)
+                addIfNotNull("buttonType", def.buttonType)
+                addIfNotNull("invOptions", def.invOptions)
+
+                def.scripts?.let { s ->
+                    val sMap = mutableMapOf<String, Any?>()
+                    s.unknown?.let { sMap["unknown"] = listOf(it.id, it.args) }
+                    s.onMouseOver?.let { sMap["onMouseOver"] = listOf(it.id, it.args) }
+                    s.onMouseLeave?.let { sMap["onMouseLeave"] = listOf(it.id, it.args) }
+                    s.onUseWith?.let { sMap["onUseWith"] = listOf(it.id, it.args) }
+                    s.onUse?.let { sMap["onUse"] = listOf(it.id, it.args) }
+                    s.onVarpTransmit?.let { sMap["onVarpTransmit"] = listOf(it.id, it.args) }
+                    s.onInvTransmit?.let { sMap["onInvTransmit"] = listOf(it.id, it.args) }
+                    s.onStatTransmit?.let { sMap["onStatTransmit"] = listOf(it.id, it.args) }
+                    s.onTimer?.let { sMap["onTimer"] = listOf(it.id, it.args) }
+                    s.onOptionClick?.let { sMap["onOptionClick"] = listOf(it.id, it.args) }
+                    s.onMouseRepeat?.let { sMap["onMouseRepeat"] = listOf(it.id, it.args) }
+                    s.onClickRepeat?.let { sMap["onClickRepeat"] = listOf(it.id, it.args) }
+                    s.onDrag?.let { sMap["onDrag"] = listOf(it.id, it.args) }
+                    s.onRelease?.let { sMap["onRelease"] = listOf(it.id, it.args) }
+                    s.onHold?.let { sMap["onHold"] = listOf(it.id, it.args) }
+                    s.onDragStart?.let { sMap["onDragStart"] = listOf(it.id, it.args) }
+                    s.onDragRelease?.let { sMap["onDragRelease"] = listOf(it.id, it.args) }
+                    s.onScroll?.let { sMap["onScroll"] = listOf(it.id, it.args) }
+                    s.onVarcTransmit?.let { sMap["onVarcTransmit"] = listOf(it.id, it.args) }
+                    s.onVarcstrTransmit?.let { sMap["onVarcstrTransmit"] = listOf(it.id, it.args) }
+                    if (sMap.isNotEmpty()) map["scripts"] = sMap
+                }
+
+                def.triggers?.let { t ->
+                    val tMap = mutableMapOf<String, Any?>()
+                    t.varpTriggers?.let { tMap["varpTriggers"] = it }
+                    t.inventoryTriggers?.let { tMap["inventoryTriggers"] = it }
+                    t.statTriggers?.let { tMap["statTriggers"] = it }
+                    t.varcTriggers?.let { tMap["varcTriggers"] = it }
+                    t.varcstrTriggers?.let { tMap["varcstrTriggers"] = it }
+                    if (tMap.isNotEmpty()) map["triggers"] = tMap
+                }
+
+                def.children?.let { children ->
+                    val childMap = children.mapNotNull { it?.let { dumpIface(it) } }
+                    if (childMap.isNotEmpty()) map["children"] = childMap
+                }
+
+                return if (map.isEmpty()) null else map
             }
 
-            val c = mutableListOf<Map<String, Any?>>()
-            c.add(dumpMap(iface))
-            iface.children
-                ?.filter { it != null && (it.spriteId != 0 || it.baseWidth != 0 || it.baseHeight != 0 || !it.ops.isNullOrEmpty() || it.scripts != null) }
-                ?.forEach { it?.let { it1 -> dumpMap(it1) }?.let { it2 -> c.add(it2) } }
-
-            val dump = File(dumps, "$i.json")
-            dump.writeText(gson.toJson(c))
-
-            p.debug("Iface id=$i dumped to $dump.")
+            val dumpMap = dumpIface(iface, isRoot = true)
+            if (dumpMap != null) {
+                val dump = File(dumps, "$i.json")
+                dump.writeText(gson.toJson(dumpMap))
+                p.debug("Iface id=$i dumped to $dump.")
+            } else {
+                p.debug("Iface id=$i has no dumpable data.")
+            }
         }
 
         /*
