@@ -30,6 +30,7 @@ class ScoutDialogue(player: Player? = null) : Dialogue(player) {
 class ScoutDialogueFile : DialogueFile() {
     override fun handle(componentID: Int, buttonID: Int) {
         val progress = GeneralShadow.getShadowProgress(player!!)
+        val receivedLeg = getAttribute(player!!, GeneralShadow.GS_RECEIVED_SEVERED_LEG, false)
         when (stage) {
             0 -> when {
                 !GeneralShadow.hasGhostlySet(player!!) -> {
@@ -45,6 +46,10 @@ class ScoutDialogueFile : DialogueFile() {
                         4 to 5577 -> 301
                         else -> 100
                     }
+                }
+                !GeneralShadow.isComplete(player!!) && receivedLeg -> {
+                    playerl(FaceAnim.FRIENDLY, "The General said I would find my reward near where the fish-men gather. I don't know what he means!")
+                    stage = 401
                 }
                 GeneralShadow.isComplete(player!!) -> {
                     player("Hello again.")
@@ -168,6 +173,8 @@ class ScoutDialogueFile : DialogueFile() {
                 end()
                 GeneralShadow.setShadowProgress(player!!, 4)
             }
+
+            401 -> npcl(FaceAnim.NEUTRAL, "The General is a bit...cliche. Fish-men are fishermen. Now, away with you!").also { stage = END_DIALOGUE }
         }
     }
 }

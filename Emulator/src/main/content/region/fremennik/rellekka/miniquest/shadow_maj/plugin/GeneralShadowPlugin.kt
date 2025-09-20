@@ -77,7 +77,7 @@ class GeneralShadowPlugin : InteractionListener {
                 }
 
                 else -> {
-                    sendMessage(player, "You have a bad feeling about crawling into the next cavern.")
+                    sendMessage(player, "Nothing interesting happens.")
                     return@on false
                 }
             }
