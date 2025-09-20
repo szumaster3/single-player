@@ -10,7 +10,7 @@ import shared.consts.Components
 import shared.consts.Quests
 import shared.consts.Sounds
 
-class StrangeWallInterface : InterfaceListener {
+class HorrorMetalDoorInterface : InterfaceListener {
     override fun defineInterfaceListeners() {
         onOpen(Components.HORROR_METALDOOR_142) { player, _ ->
             val questComplete = isQuestComplete(player, Quests.HORROR_FROM_THE_DEEP)
