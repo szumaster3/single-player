@@ -29,6 +29,7 @@ class ScoutDialogue(player: Player? = null) : Dialogue(player) {
 
 class ScoutDialogueFile : DialogueFile() {
     override fun handle(componentID: Int, buttonID: Int) {
+        val progress = GeneralShadow.getShadowProgress(player!!)
         when (stage) {
             0 -> when {
                 !GeneralShadow.hasGhostlySet(player!!) -> {
@@ -37,12 +38,12 @@ class ScoutDialogueFile : DialogueFile() {
                 }
                 getAttribute(player!!, GeneralShadow.GS_TRUSTWORTHY, false) -> {
                     player("Hello there! General Khazard sent me.")
-                    when(GeneralShadow.getShadowProgress(player!!)) {
-                        0   -> stage = 1
-                        1   -> stage = 101
-                        2   -> stage = 201
-                        3,4 -> stage = 301
-                        else -> sendDialogue(player!!, "The Scout is too busy to talk.")
+                    stage = when (progress to npc?.id) {
+                        1 to 5574 -> 1
+                        2 to 5575 -> 101
+                        3 to 5576 -> 201
+                        4 to 5577 -> 301
+                        else -> 100
                     }
                 }
                 GeneralShadow.isComplete(player!!) -> {
@@ -84,7 +85,7 @@ class ScoutDialogueFile : DialogueFile() {
             18 -> npc("Hmm. I left one of them near a haunted wood - the", "trees kept trying to hit us. One scout headed for a", "jungle and the other for the gnomes.").also { stage++ }
             19 -> {
                 end()
-                GeneralShadow.setShadowProgress(player!!, 1)
+                GeneralShadow.setShadowProgress(player!!, 2)
             }
             100 -> npc("I can't speak to you; I must continue on my mission.").also { stage++ }
 
@@ -106,7 +107,7 @@ class ScoutDialogueFile : DialogueFile() {
             112 -> npc(FaceAnim.FRIENDLY, "One headed this direction with me seeking the place of heat and sand, another sought a place of moisture and growth and the last sought gnomes.").also { stage++ }
             113 -> {
                 end()
-                GeneralShadow.setShadowProgress(player!!, 2)
+                GeneralShadow.setShadowProgress(player!!, 3)
             }
 
             201 -> npc("You must be a great mage to be able to see me, ", "human.").also { stage++ }
@@ -134,7 +135,7 @@ class ScoutDialogueFile : DialogueFile() {
             215 -> npc("I was told to go south, so here I am. I know one was", "to investigate the gnomes. I believe one headed towards", "Asgarnia. Another was told to go to a place of great", "heat, but that they would have to sneak through a pass.").also { stage++ }
             216 -> {
                 end()
-                GeneralShadow.setShadowProgress(player!!, 3)
+                GeneralShadow.setShadowProgress(player!!, 4)
             }
 
             301 -> npc("What news, skinbag?").also { stage++ }

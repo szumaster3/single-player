@@ -64,7 +64,7 @@ class GeneralKhazardDialogueFile: DialogueFile() {
 
                 // Handle dialogue while progressing.
                 when {
-                    GeneralShadow.getShadowProgress(player!!) == 0 -> {
+                    GeneralShadow.getShadowProgress(player!!) == 1 -> {
                         player("Err, what was I supposed to do again?")
                         stage = 22
                     }
@@ -112,7 +112,7 @@ class GeneralKhazardDialogueFile: DialogueFile() {
             20 -> npcl(FaceAnim.OLD_NORMAL, "It's a long story, and I do not have the time to tell it.").also { stage++ }
             21 -> {
                 end()
-                GeneralShadow.setShadowProgress(player!!, 0)
+                GeneralShadow.setShadowProgress(player!!, 1)
             }
             22 -> npc(FaceAnim.OLD_NORMAL, "You goldfish! Go find the Sin Seer - she will determine if", "you are trustworthy. She lives in Seer's village to the", "south of here.").also { stage++ }
             23 -> end()

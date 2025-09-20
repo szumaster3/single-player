@@ -30,7 +30,7 @@ class SinSeerDialogue(player: Player? = null) : Dialogue(player) {
                 true
             }
 
-            GeneralShadow.getShadowProgress(player) >= 0 -> {
+            GeneralShadow.getShadowProgress(player) >= 1 -> {
                 player("I'm looking for the Sin Seer.")
                 true
             }

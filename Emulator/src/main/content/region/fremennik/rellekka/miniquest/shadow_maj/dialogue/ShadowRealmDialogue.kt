@@ -3,6 +3,7 @@ package content.region.fremennik.rellekka.miniquest.shadow_maj.dialogue
 import content.region.fremennik.rellekka.miniquest.shadow_maj.plugin.GeneralShadow
 import core.api.addItemOrDrop
 import core.api.hasAnItem
+import core.api.inEquipment
 import core.api.sendDialogue
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
@@ -23,7 +24,7 @@ class ShadowRealmDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         return when {
-            !GeneralShadow.hasGhostlySet(player) -> {
+            !GeneralShadow.hasGhostlySet(player) && !inEquipment(player, Items.RING_OF_VISIBILITY_4657) -> {
                 npc("Whoooo wooo Whooooooooo")
                 stage = END_DIALOGUE
                 true
