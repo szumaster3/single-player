@@ -114,7 +114,6 @@ class SmeltingPlugin : InteractionListener {
                         "ore you wish to smelt then click on the furnace you would like to",
                         "use.",
                     )
-                    TutorialStage.rollback(player)
                     return@on true
                 }
                 if (!inInventory(player, Items.TIN_ORE_438) || !inInventory(player, Items.COPPER_ORE_436)) {
@@ -124,7 +123,6 @@ class SmeltingPlugin : InteractionListener {
                         "You do not have the required ores to make this bar.",
                         "",
                     )
-                    TutorialStage.rollback(player)
                 } else {
                     sendPlainDialogue(player,
                         false,
@@ -132,7 +130,6 @@ class SmeltingPlugin : InteractionListener {
                         "ore you wish to smelt then click on the furnace you would like to",
                         "use.",
                     )
-                    TutorialStage.rollback(player)
                 }
             } else if (!isDiaryComplete(player, DiaryType.VARROCK, 0)) {
                 sendMessage(
@@ -182,7 +179,6 @@ class SmeltingPlugin : InteractionListener {
                     "You do not have the required ores to make this bar.",
                     "",
                 )
-                TutorialStage.rollback(player)
                 return@onUseWith false
             }
             if (removeItem(player, Item(Items.TIN_ORE_438, 1)) && removeItem(player, Item(Items.COPPER_ORE_436, 1))) {

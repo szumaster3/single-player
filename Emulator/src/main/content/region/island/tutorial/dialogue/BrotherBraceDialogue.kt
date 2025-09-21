@@ -68,7 +68,7 @@ class BrotherBraceDialogue(player: Player? = null) : Dialogue(player) {
                 8 -> npcl(FaceAnim.FRIENDLY, "Your friends list shows the online status of your friends. Friends in red are offline, friends in green are online and on the same world and friends in yellow are online, but on a different world.").also { stage++ }
                 9 -> npcl(FaceAnim.FRIENDLY, "Do you need anything else?").also { stage = 0 }
                 10 -> npcl(FaceAnim.FRIENDLY, "Okay then.").also { stage++ }
-                11 -> TutorialStage.rollback(player!!)
+                11 -> end()
             }
         }
         return true

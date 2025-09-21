@@ -70,13 +70,11 @@ class MagicInstructorDialogue(player: Player? = null) : Dialogue(player) {
                 if (!inInventory(player!!, Items.AIR_RUNE_556)) {
                     sendItemDialogue(player, Items.AIR_RUNE_556, "Terrova gives you five <col=08088A>air runes</col>!")
                     addItemOrDrop(player, Items.AIR_RUNE_556, 5)
-                    TutorialStage.rollback(player)
                     return true
                 }
                 if (!inInventory(player!!, Items.MIND_RUNE_558)) {
                     addItemOrDrop(player, Items.MIND_RUNE_558, 5)
                     sendItemDialogue(player, Items.MIND_RUNE_558, "Terrova gives you five <col=08088A>mind runes</col>!")
-                    TutorialStage.rollback(player)
                     return true
                 }
             }

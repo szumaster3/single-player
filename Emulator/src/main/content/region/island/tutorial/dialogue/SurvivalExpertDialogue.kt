@@ -34,10 +34,7 @@ class SurvivalExpertDialogue(player: Player? = null) : Dialogue(player) {
                 return false
             }
 
-            8 -> npcl(FaceAnim.FRIENDLY, "Light the logs in your backpack to make a fire.").also {
-                TutorialStage.rollback(player)
-                stage = END_DIALOGUE
-            }
+            8 -> npcl(FaceAnim.FRIENDLY, "Light the logs in your backpack to make a fire.").also { stage = END_DIALOGUE }
 
             12 -> if (!inInventory(player, Items.SMALL_FISHING_NET_303)) {
                 Component.setUnclosable(player, interpreter.sendItemMessage(Items.SMALL_FISHING_NET_303, "The Survival Guide gives you a <col=08088A>net</col>!"),)
@@ -91,7 +88,7 @@ class SurvivalExpertDialogue(player: Player? = null) : Dialogue(player) {
                 }
                 2 -> npcl(FaceAnim.FRIENDLY, "For now, right-click the logs and left-click Light.").also { stage = 4 }
                 3 -> npcl(FaceAnim.FRIENDLY, "Then use the shrimp on the fire.").also { stage = 4 }
-                4 -> TutorialStage.rollback(player!!)
+                4 -> end()
             }
         }
         return true

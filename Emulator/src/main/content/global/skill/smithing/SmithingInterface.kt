@@ -54,17 +54,5 @@ class SmithingInterface : InterfaceListener {
             submitIndividualPulse(player, SmithingPulse(player, Item(item, amount), Bars.forId(item)!!, amount), type = PulseType.STANDARD)
             return@on true
         }
-
-        /*
-         * Handles closing the interface if player is still in tutorial island
-         * and showing the tutorial stage dialogue.
-         */
-
-        onClose(Components.SMITHING_NEW_300) { player, _ ->
-            if (!getAttribute(player, GameAttributes.TUTORIAL_COMPLETE, false)) {
-                TutorialStage.rollback(player)
-            }
-            return@onClose true
-        }
     }
 }

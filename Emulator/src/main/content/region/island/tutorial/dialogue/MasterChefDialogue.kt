@@ -108,9 +108,9 @@ class MasterChefDialogue(player: Player? = null) : Dialogue(player) {
                 0 -> when (buttonId) {
                     1 -> sendNPCDialogue(player!!, npc!!.id, "This is the base for many of the meals. To make dough we must mix flour and water. First, right click the bucket of water and select use, then left click on the pot of flour.").also { stage = 3 }
                     2 -> sendNPCDialogue(player!!, npc!!.id, "To cook the dough, use it with the range shown by the arrow.").also { stage = 3 }
-                    3 -> TutorialStage.rollback(player)
+                    3 -> end()
                 }
-                3 -> TutorialStage.rollback(player)
+                3 -> end()
             }
 
         }

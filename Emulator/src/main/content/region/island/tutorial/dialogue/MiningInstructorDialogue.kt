@@ -108,7 +108,7 @@ class MiningInstructorDialogue(player: Player? = null) : Dialogue(player) {
                     0 -> when (buttonId) {
                         0 -> player("Tell me about prospecting again.").also { stage = 1 }
                         1 -> player("Tell me about Mining again.").also { stage = 2 }
-                        2 -> TutorialStage.rollback(player!!)
+                        2 -> end()
                     }
                     1 -> {
                         sendNPCDialogue(player!!, npc!!.id, "To prospect a mineable rock, just right click it and select the 'prospect rock' option. This will tell you the type of ore you can mine from it. Try it now on one of the rocks indicated.")
@@ -118,7 +118,7 @@ class MiningInstructorDialogue(player: Player? = null) : Dialogue(player) {
                         sendNPCDialogue(player!!, npc!!.id, "It's quite simple really. All you need to do is right click on the rock and select 'mine' You can only mine when you have a pickaxe. So give it a try: first mine one tin ore.")
                         stage = 3
                     }
-                    3 -> TutorialStage.rollback(player!!)
+                    3 -> end()
                 }
 
             }

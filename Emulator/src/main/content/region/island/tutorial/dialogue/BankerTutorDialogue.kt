@@ -41,7 +41,7 @@ class BankerTutorDialogue(player: Player? = null) : Dialogue(player) {
             30 -> npc("The PIN - Personal Identification Number - can be", "set on your bank account to protect the items there in", "case someone finds out your account password. It", "consists of four numbers that you remember and tell").also { stage++ }
             31 -> npc("no one.").also { stage++ }
             32 -> npc("So if someone did manage to get your password they", "couldn't steal your items if they were in the bank.").also { stage = 33 }
-            33 -> TutorialStage.rollback(player!!)
+            33 -> end()
         }
         return true
     }

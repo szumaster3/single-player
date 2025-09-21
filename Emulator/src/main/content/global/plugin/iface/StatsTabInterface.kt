@@ -28,18 +28,12 @@ class StatsTabInterface : InterfaceListener {
                 setVarp(player, Vars.VARP_ADVANCED_CONFIG_965, config.configID)
                 setAttribute(player, "skillMenu", config.configID)
             }
-            if (!getAttribute(player, GameAttributes.TUTORIAL_COMPLETE, false)) {
-                TutorialStage.rollback(player)
-            }
             return@on true
         }
 
         on(Components.SKILL_GUIDE_V2_499) { player, _, _, buttonID, _, _ ->
             setVarbit(player, Vars.VARBIT_SKILL_MENU_BUTTON_3288, getAttribute(player, "skillMenu", -1))
             setVarbit(player, Vars.VARBIT_SKILL_MENU_BUTTON_3289, buttonID - 10)
-            if (!getAttribute(player, GameAttributes.TUTORIAL_COMPLETE, false)) {
-                TutorialStage.rollback(player)
-            }
             return@on true
         }
 

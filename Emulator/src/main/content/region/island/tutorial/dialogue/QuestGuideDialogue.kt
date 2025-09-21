@@ -12,6 +12,7 @@ import core.tools.END_DIALOGUE
 import shared.consts.Components
 import shared.consts.Items
 import shared.consts.NPCs
+import shared.consts.Vars
 
 @Initializable
 class QuestGuideDialogue(player: Player? = null) : Dialogue(player) {
@@ -32,7 +33,7 @@ class QuestGuideDialogue(player: Player? = null) : Dialogue(player) {
             27 -> {
                 sendUnclosablePlainDialogue(player, true, "${core.tools.BLUE}Open the Quest Journal.", "", "Click on the flashing icon next to your inventory.")
                 TutorialStage.removeHintIcon(player)
-                setVarbit(player, 3756, 3)
+                setVarbit(player, Vars.VARBIT_FLASHING_TAB_ICON_3756, 3)
                 player.interfaceManager.openTab(Component(Components.QUESTJOURNAL_V2_274))
             }
             28 -> when (stage) {
@@ -59,7 +60,7 @@ class QuestGuideDialogue(player: Player? = null) : Dialogue(player) {
                 6 -> npcl(FaceAnim.FRIENDLY, "The quests themselves can vary greatly from collecting beads to hunting down dragons. Completing quests will reward you with all sorts of things, such as new areas and better weapons!").also { stage++ }
                 7 -> npcl(FaceAnim.FRIENDLY, "There's not a lot more I can tell you about questing. You have to experience the thrill of it yourself to fully understand.").also { stage = END_DIALOGUE }
                 8 -> npcl(FaceAnim.FRIENDLY, "Okay then.").also { stage++ }
-                9 -> TutorialStage.rollback(player!!)
+                9 -> end()
             }
         }
         return true
