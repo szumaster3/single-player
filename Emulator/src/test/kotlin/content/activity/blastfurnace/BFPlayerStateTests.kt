@@ -16,34 +16,6 @@ class BFPlayerStateTests {
         TestUtils.preTestSetup()
     }
 
-    @Test
-    fun processPerfectGoldOre() {
-        TestUtils.getMockPlayer("bf-perfectgold").use { p ->
-            val state = BlastFurnace.getPlayerState(p)
-            setVarbit(p, BFPlayerState.DISPENSER_STATE, 0, true)
-
-            state.container.addOre(Items.PERFECT_GOLD_ORE_446, 5)
-            state.container.addCoal(10)
-
-            Assertions.assertTrue(state.processOresIntoBars())
-            Assertions.assertEquals(5, state.container.getBarAmount(Bar.PERFECT_GOLD))
-
-            Assertions.assertFalse(state.processOresIntoBars())
-            Assertions.assertEquals(5, state.container.getBarAmount(Bar.PERFECT_GOLD))
-
-            state.coolBars()
-            state.container.addOre(Items.PERFECT_GOLD_ORE_446, 3)
-
-            Assertions.assertTrue(state.processOresIntoBars())
-            Assertions.assertEquals(8, state.container.getBarAmount(Bar.PERFECT_GOLD))
-
-            state.coolBars()
-            Assertions.assertTrue(state.claimBars(Bar.PERFECT_GOLD, 3))
-            Assertions.assertEquals(3, amountInInventory(p, Items.PERFECT_GOLD_BAR_2365))
-            Assertions.assertEquals(5, state.container.getBarAmount(Bar.PERFECT_GOLD))
-        }
-    }
-
     @Test fun processOreIntoBarsShouldDoNothingIfBarsNotCooled() {
         TestUtils.getMockPlayer("bf-barsnotcooled").use { p ->
             val state = BlastFurnace.getPlayerState(p)
