@@ -1,9 +1,10 @@
 package content.region.karamja.brimhaven.dialogue
 
-import content.global.travel.ship.Charter
+import content.global.travel.ship.CharterShip
 import core.api.*
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
+import core.game.dialogue.Topic
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
@@ -19,95 +20,104 @@ class CaptainShanksDialogue(player: Player? = null) : Dialogue(player) {
 
     private var coins: Item? = null
 
+    companion object {
+        private const val HAS_TICKET = 0
+        private const val NO_TICKET = 1
+        private const val SELECT_DESTINATION = 2
+        private const val CANCEL = 3
+        private const val SAIL_KHAZARD = 4
+        private const val SAIL_SARIM = 5
+        private const val CONFIRM_PURCHASE = 6
+        private const val PURCHASE_CHECK = 8
+        private const val POST_PURCHASE = 9
+    }
+
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
+
         if (!hasRequirement(player, Quests.SHILO_VILLAGE, false)) {
-            npcl(FaceAnim.HALF_GUILTY, "Oh dear, this ship is in a terrible state. And I just can't get the items I need to repair it because Shilo village is overrun with zombies.")
+            npcl(
+                FaceAnim.HALF_GUILTY,
+                "Oh dear, this ship is in a terrible state. And I just can't get the items I need to repair it because Shilo village is overrun with zombies."
+            )
             return true
         }
+
         npcl(FaceAnim.HALF_ASKING, "Hello there shipmate! I sail to Khazard Port and to Port Sarim. Where are you bound?")
-        stage = if (!inInventory(player, Items.SHIP_TICKET_621)) {
-            -1
-        } else {
-            0
-        }
+        stage = if (inInventory(player, Items.SHIP_TICKET_621)) HAS_TICKET else NO_TICKET
         return true
     }
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
-            -1 -> npc(FaceAnim.HALF_ASKING, "I see you don't have a ticket for the ship, my colleague", "normally only sells them in Shilo village. But I could sell", "you one for a small additional charge.").also { stage = 3 }
-            0 -> {
+
+            HAS_TICKET -> {
                 setTitle(player, 3)
-                sendDialogueOptions(player, "Captain Shanks asks, 'Where are you bound?", "Khazard Port please.", "Port Sarim please.", "Nowhere just at the moment thanks.").also { stage++ }
+                showTopics(
+                    "Captain Shanks asks, 'Where are you bound?'",
+                    Topic("Khazard Port please.", SAIL_KHAZARD),
+                    Topic("Port Sarim please.", SAIL_SARIM),
+                    Topic("Nowhere just at the moment thanks.", CANCEL)
+                )
+                stage = SELECT_DESTINATION
             }
-            1 -> when (buttonId) {
-                1 -> {
-                    player("Khazard Port please.")
-                    stage = if (!inInventory(player, Items.SHIP_TICKET_621)) {
-                        -1
-                    } else {
-                        10
-                    }
+
+            NO_TICKET -> {
+                coins = Item(Items.COINS_995, RandomFunction.random(20, 50))
+                npcl(FaceAnim.ASKING, "I see you don't have a ticket. Shall we say ${coins!!.amount} gold pieces?")
+                stage = CONFIRM_PURCHASE
+            }
+
+            CANCEL -> {
+                npcl(FaceAnim.HALF_GUILTY, "Very well then me old shipmate, Just let me know if you change your mind.")
+                stage = END_DIALOGUE
+            }
+
+            SAIL_KHAZARD -> {
+                end()
+                if (removeItem(player, Items.SHIP_TICKET_621)) {
+                    CharterShip.sail(player, CharterShip.CAIRN_ISLAND_TO_PORT_KHAZARD)
                 }
-                2 -> {
-                    player("Port Sarim please.")
-                    stage = if (!inInventory(player, Items.SHIP_TICKET_621)) {
-                        -1
-                    } else {
-                        20
-                    }
+            }
+
+            SAIL_SARIM -> {
+                end()
+                if (removeItem(player, Items.SHIP_TICKET_621)) {
+                    CharterShip.sail(player, CharterShip.PORT_SARIM)
                 }
-                3 -> player("Nowhere just at the moment thanks.").also { stage++ }
             }
-            2 -> npcl(FaceAnim.HALF_GUILTY, "Very well then me old shipmate, Just let me know if you change your mind.").also { stage = END_DIALOGUE }
-            3 -> {
-                coins = Item(995, RandomFunction.random(20, 50))
-                npcl(FaceAnim.ASKING, "Shall we say " + coins!!.amount + " gold pieces?").also { stage++ }
-            }
-            4 -> {
+
+            CONFIRM_PURCHASE -> {
                 setTitle(player, 2)
-                sendDialogueOptions(player, "Buy a ticket for " + coins!!.amount + " gold pieces.", "Yes, I'll buy a ticket for the ship.", "No thanks, not just at the moment.").also {
-                    stage++
+                showTopics(
+                    "Buy a ticket for ${coins!!.amount} gold pieces?",
+                    Topic("Yes, I'll buy a ticket.", PURCHASE_CHECK),
+                    Topic("No thanks, not just at the moment.", CANCEL)
+                )
+            }
+
+            PURCHASE_CHECK -> {
+                when {
+                    !inInventory(player, coins!!.amount) -> {
+                        npcl(FaceAnim.HALF_GUILTY, "Sorry me old ship mate, you seem to be financially challenged. Come back when your coffers are full!")
+                        stage = END_DIALOGUE
+                    }
+                    freeSlots(player) == 0 -> {
+                        npcl(FaceAnim.HALF_GUILTY, "Sorry me old ship mate, you don't have enough space for a ticket. Come back later.")
+                        stage = END_DIALOGUE
+                    }
+                    else -> {
+                        npcl(FaceAnim.HALF_GUILTY, "It's a good deal and no mistake. Here you go, here's your ticket.")
+                        removeItem(player, coins)
+                        addItem(player, Items.SHIP_TICKET_621)
+                        stage = POST_PURCHASE
+                    }
                 }
             }
-            5 -> when (buttonId) {
-                1 -> player("Yes, I'll buy a ticket for the ship.").also { stage = 7 }
-                2 -> player("No thanks, not just at the moment.").also { stage++ }
-            }
-            6 -> npcl(FaceAnim.HALF_GUILTY, "Very well me old shipmate, come back if you change your mind now.").also { stage = END_DIALOGUE }
-            7 -> {
-                if (!inInventory(player, coins!!.amount)) {
-                    npcl(FaceAnim.HALF_GUILTY, "Sorry me old ship mate, but you seem to be financially challenged at the moment. Come back when your coffers are full!")
-                    stage = END_DIALOGUE
-                } else if (freeSlots(player) == 0) {
-                    npcl(FaceAnim.HALF_GUILTY, "Sorry me old ship mate, it looks like you haven't got enough space for a ticket. Come back when you've got rid of some of that junk.")
-                    stage = END_DIALOGUE
-                } else {
-                    npcl(FaceAnim.HALF_GUILTY, "It's a good deal and no mistake. Here you go me old shipmate, here's your ticket.")
-                    removeItem(player, coins)
-                    addItem(player, Items.SHIP_TICKET_621)
-                    stage++
-                }
-            }
-            8 -> npcl(FaceAnim.HALF_ASKING, "Ok, now you have your ticket, do you want to sail anywhere?").also { stage++ }
-            9 -> {
-                setTitle(player, 3)
-                sendDialogueOptions(player, "Captain Shanks asks, 'Do you want to sail anywhere?'", "Khazard Port please.", "Port Sarim please.", "Nowhere just at the moment thanks.").also { stage = 1 }
-            }
-            10 -> npcl(FaceAnim.HAPPY, "Very well then me old shipmate, I'll just take your ticket and then we'll set sail.").also { stage++ }
-            11 -> {
-                end()
-                if (removeItem(player, Items.SHIP_TICKET_621)) {
-                    Charter.sail(player, Charter.CAIRN_ISLAND_TO_PORT_KHAZARD)
-                }
-            }
-            20 -> npcl(FaceAnim.HAPPY, "Very well then me old shipmate, I'll just take your ticket and then we'll set sail.").also { stage++ }
-            21 -> {
-                end()
-                if (removeItem(player, Items.SHIP_TICKET_621)) {
-                    Charter.sail(player, Charter.PORT_SARIM)
-                }
+
+            POST_PURCHASE -> {
+                npcl(FaceAnim.HALF_ASKING, "Ok, now you have your ticket, do you want to sail anywhere?")
+                stage = HAS_TICKET
             }
         }
         return true

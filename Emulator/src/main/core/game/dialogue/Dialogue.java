@@ -386,4 +386,14 @@ public abstract class Dialogue implements Plugin<Player> {
             return false;
         }
     }
+
+    /**
+     * Overloaded version with default title "Select an Option:".
+     *
+     * @param topics Dialogue topics to show.
+     * @return true if no valid topics were shown, false otherwise.
+     */
+    public boolean showTopics(String title, Topic<?>... topics) {
+        return showTopics(title, topics);
+    }
 }
