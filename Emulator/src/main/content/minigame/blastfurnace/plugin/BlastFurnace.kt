@@ -289,6 +289,7 @@ class BlastFurnace : MapArea, PersistPlayer, TickListener {
         fun getBarForOreId(id: Int, coalAmount: Int, level: Int): Bar? = when (id) {
             Items.COPPER_ORE_436, Items.TIN_ORE_438 -> Bar.BRONZE
             Items.IRON_ORE_440 -> if (coalAmount >= 1 && level >= Bar.STEEL.level) Bar.STEEL else Bar.IRON
+            Items.PERFECT_GOLD_ORE_446 -> Bar.PERFECT_GOLD
             else -> Bar.forOre(id)
         }
 
