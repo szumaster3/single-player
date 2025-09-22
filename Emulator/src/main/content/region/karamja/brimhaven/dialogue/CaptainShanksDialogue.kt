@@ -1,6 +1,6 @@
 package content.region.karamja.brimhaven.dialogue
 
-import content.global.travel.ship.Charter
+import content.global.travel.ship.CharterShip
 import core.api.*
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
@@ -99,14 +99,14 @@ class CaptainShanksDialogue(player: Player? = null) : Dialogue(player) {
             11 -> {
                 end()
                 if (removeItem(player, Items.SHIP_TICKET_621)) {
-                    Charter.sail(player, Charter.CAIRN_ISLAND_TO_PORT_KHAZARD)
+                    CharterShip.sail(player, CharterShip.CAIRN_ISLAND_TO_PORT_KHAZARD)
                 }
             }
             20 -> npcl(FaceAnim.HAPPY, "Very well then me old shipmate, I'll just take your ticket and then we'll set sail.").also { stage++ }
             21 -> {
                 end()
                 if (removeItem(player, Items.SHIP_TICKET_621)) {
-                    Charter.sail(player, Charter.PORT_SARIM)
+                    CharterShip.sail(player, CharterShip.PORT_SARIM)
                 }
             }
         }
