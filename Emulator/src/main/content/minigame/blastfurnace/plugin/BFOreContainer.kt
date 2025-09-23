@@ -46,7 +46,7 @@ class BFOreContainer {
      */
     fun addCoal(player: Player, amount: Int): Int {
         val coalRemaining = coalAmount(player)
-        val coalLimit = BlastUtils.COAL_LIMIT
+        val coalLimit = getVarbit(player, BlastUtils.COAL_LIMIT)
         val maxAdd = coalLimit - coalRemaining
         val toAdd = amount.coerceAtMost(maxAdd)
         setVarbit(player, BlastUtils.COAL_LIMIT, coalRemaining + toAdd, true)
@@ -205,7 +205,7 @@ class BFOreContainer {
      * @return The number of slots available for the ore.
      */
     fun getAvailableSpace(player: Player, ore: Int, level: Int = 99): Int {
-        if (ore == Items.COAL_453) return BlastUtils.COAL_LIMIT - coalAmount(player)
+        if (ore == Items.COAL_453) return getVarbit(player, BlastUtils.COAL_LIMIT) - coalAmount(player)
 
         var freeSlots = 0
         val bar = getBarForOreId(ore, coalAmount(player), level)!!
