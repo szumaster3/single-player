@@ -17,6 +17,7 @@ import core.game.world.GameWorld.settings
 import core.net.packet.OutgoingContext
 import core.net.packet.PacketRepository
 import core.net.packet.out.ContainerPacket
+import shared.consts.Components
 import shared.consts.Vars
 
 /**
@@ -74,7 +75,22 @@ class BankContainer(player: Player) : Container(SIZE, ContainerType.ALWAYS_STACK
             true
         }
         player.interfaceManager.removeTabs(0, 1, 2, 3, 4, 5, 6)
-        refreshDepositBoxInterface()
+        InterfaceContainer.generateItems(
+            player,
+            player.inventory.toArray(),
+            arrayOf(
+                "Deposit-1",
+                "Deposit-5",
+                "Deposit-10",
+                "Deposit-${getVarp(player, 1249)}",
+                "Deposit-X",
+                "Deposit-All"
+            ),
+            11,
+            15,
+            5,
+            7
+        )
     }
 
     /**
@@ -82,22 +98,17 @@ class BankContainer(player: Player) : Container(SIZE, ContainerType.ALWAYS_STACK
      * forcing the client to re-draw the items
      */
     fun refreshDepositBoxInterface() {
-        val currentX = getVarp(player, 1249)
-
-        val setOptions = buildList {
-            add("Examine")
-            add("Deposit-X")
-            if (currentX != -1) add("Deposit-$currentX")
-            add("Deposit-All")
-            add("Deposit-10")
-            add("Deposit-5")
-            add("Deposit-1")
-        }.toTypedArray()
-
         InterfaceContainer.generateItems(
             player,
             player.inventory.toArray(),
-            setOptions,
+            arrayOf(
+                "Deposit-1",
+                "Deposit-5",
+                "Deposit-10",
+                "Deposit-${getVarp(player, 1249)}",
+                "Deposit-X",
+                "Deposit-All"
+            ),
             11,
             15,
             5,
@@ -346,6 +357,7 @@ class BankContainer(player: Player) : Container(SIZE, ContainerType.ALWAYS_STACK
             val slot = freeSlot()
             replace(tempTabItems[i], slot, false)
         }
+        setVarbit(player, 4893, tabStartSlot[tabId])
         refresh() //We only refresh once.
     }
 
@@ -432,14 +444,14 @@ class BankContainer(player: Player) : Container(SIZE, ContainerType.ALWAYS_STACK
                 if (event != null) {
                     PacketRepository.send(
                         ContainerPacket::class.java,
-                        OutgoingContext.Container(player, 762, 64000, 95, event.items, false, *event.slots)
+                        OutgoingContext.Container(player, BANK_V2_MAIN, 64000, 95, event.items, false, *event.slots)
                     )
                 }
             } else {
                 if (event != null) {
                     PacketRepository.send(
                         ContainerPacket::class.java,
-                        OutgoingContext.Container(player, 763, 64000, 93, event.items, false, *event.slots)
+                        OutgoingContext.Container(player, BANK_V2_MAIN_SIDE, 64000, 93, event.items, false, *event.slots)
                     )
                 }
             }
@@ -451,12 +463,12 @@ class BankContainer(player: Player) : Container(SIZE, ContainerType.ALWAYS_STACK
             if (c is BankContainer) {
                 PacketRepository.send(
                     ContainerPacket::class.java,
-                    OutgoingContext.Container(player, 762, 64000, 95, c.toArray(), c.capacity(), false)
+                    OutgoingContext.Container(player, BANK_V2_MAIN, 64000, 95, c.toArray(), c.capacity(), false)
                 )
             } else {
                 val items: Array<Item> = c?.toArray()?.copyOf() ?: emptyArray()
                 PacketRepository.send(
-                    ContainerPacket::class.java, OutgoingContext.Container(player, 763, 64000, 93, items, 28, false)
+                    ContainerPacket::class.java, OutgoingContext.Container(player, BANK_V2_MAIN_SIDE, 64000, 93, items, 28, false)
                 )
             }
             player.bank.setTabConfigurations()
@@ -465,6 +477,16 @@ class BankContainer(player: Player) : Container(SIZE, ContainerType.ALWAYS_STACK
     }
 
     companion object {
+        /**
+         * The main bank interface id.
+         */
+        const val BANK_V2_MAIN = Components.BANK_V2_MAIN_762
+
+        /**
+         * The bank side interface id.
+         */
+        const val BANK_V2_MAIN_SIDE = Components.BANK_V2_SIDE_763
+
         /**
          * The bank container size.
          */
