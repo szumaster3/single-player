@@ -408,8 +408,8 @@ class VisualCommand : CommandPlugin() {
 // 					PacketRepository.send(Interface.class, new InterfaceContext(player, 548, 77, id, false));
                             InterfaceContainer.generateItems(
                                 player!!,
-                                arrayOf(Item(4151), Item(410)),
-                                arrayOf("E"),
+                                listOf(Item(4151), Item(410)),
+                                listOf("E"),
                                 367,
                                 id,
                                 5,

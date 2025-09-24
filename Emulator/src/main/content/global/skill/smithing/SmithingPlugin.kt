@@ -5,6 +5,7 @@ import content.global.skill.smithing.special.DragonfireShieldPulse
 import core.api.*
 import core.game.component.Component
 import core.game.container.access.InterfaceContainer
+import core.game.container.access.InterfaceContainer.generateItems
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.impl.PulseType
@@ -82,7 +83,10 @@ class SmithingPlugin : InteractionListener {
                         bars[i]!!.smithingType.displayName + 1
                     )
                 }
-                InterfaceContainer.generateItems(player, arrayOf(Item(bars[i]!!.product, bars[i]!!.smithingType.productAmount)), arrayOf(""), Components.SMITHING_NEW_300, bars[i]!!.smithingType.child - 1)
+                player.generateItems(
+                    listOf(Item(bars[i]!!.product, bars[i]!!.smithingType.productAmount)),
+                    Components.SMITHING_NEW_300,bars[i]!!.smithingType.child - 1
+                )
             }
             player.packetDispatch.sendString(type.barName, Components.SMITHING_NEW_300, 14)
             player.interfaceManager.open(Component(Components.SMITHING_NEW_300))

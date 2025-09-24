@@ -10,7 +10,7 @@ import core.game.component.ComponentDefinition
 import core.game.component.ComponentPlugin
 import core.game.container.Container
 import core.game.container.ContainerEvent
-import core.game.container.access.InterfaceContainer
+import core.game.container.access.InterfaceContainer.generateItems
 import core.game.container.impl.EquipmentContainer
 import core.game.global.action.EquipHandler.Companion.unequip
 import core.game.interaction.IntType
@@ -219,15 +219,13 @@ class EquipmentTabInterface : ComponentPlugin() {
                     p.setAttribute("equip_stats_open", true)
                     EquipmentContainer.update(p)
                     p.interfaceManager.openSingleTab(Component(Components.INVENTORY_WEAR2_670))
-                    InterfaceContainer.generateItems(
-                        p,
-                        p.inventory.toArray(),
-                        arrayOf("Equip"),
+                    p.generateItems(
                         Components.INVENTORY_WEAR2_670,
                         0,
+                        listOf("Equip"),
                         7,
                         4,
-                        93,
+                        93
                     )
                     p.inventory.listeners.add(listener)
                     p.inventory.refresh()

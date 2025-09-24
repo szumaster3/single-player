@@ -13,6 +13,7 @@ import core.game.node.item.Item
 import core.net.packet.OutgoingContext
 import core.net.packet.PacketRepository
 import core.net.packet.out.ContainerPacket
+import shared.consts.Components
 
 class StakeContainer(
     private val player: Player,
@@ -27,8 +28,8 @@ class StakeContainer(
 
     fun open() {
         player.interfaceManager.openSingleTab(OVERLAY)
-        player.packetDispatch.sendRunScript(150, "IviiiIssssssss", *INVY_PARAMS)
-        player.packetDispatch.sendIfaceSettings(1278, 0, 336, 0, 27)
+        player.packetDispatch.sendRunScript(150, "IviiiIssssssss", INVY_PARAMS)
+        player.packetDispatch.sendIfaceSettings(1278, 0, Components.TRADESIDE_336, 0, 27)
         PacketRepository.send(ContainerPacket::class.java, OutgoingContext.Container(player, -1, 2, 93, player.inventory, false))
     }
 
@@ -103,33 +104,22 @@ class StakeContainer(
     }
 
     inner class StakeListener : ContainerListener {
-        override fun update(
-            c: Container?,
-            event: ContainerEvent?,
-        ) {
-            InterfaceContainer.generateItems(player, c!!.toArray(), WITHDRAW_OPTIONS, 631, 103, 12, 3)
-            InterfaceContainer.generateItems(
-                player,
-                session.getOppositeContainer(player)!!.toArray(),
-                WITHDRAW_OPTIONS,
-                631,
-                104,
-                12,
-                3,
-            )
+        override fun update(c: Container?, event: ContainerEvent?) {
+            InterfaceContainer.generateItems(player, c!!.toList(), WITHDRAW_OPTIONS, Components.DUEL2_STAKE_631, 103, 12, 3)
+            InterfaceContainer.generateItems(player, session.getOppositeContainer(player)!!.toList(), WITHDRAW_OPTIONS, Components.DUEL2_STAKE_631, 104, 12, 3)
         }
 
         override fun refresh(c: Container?) {
             PacketRepository.send(
                 ContainerPacket::class.java,
-                OutgoingContext.Container(player, -1, 2, 93, player.inventory, false),
+                OutgoingContext.Container(player, -1, 2, 93, player.inventory, false)
             )
         }
     }
 
     companion object {
         private val INVY_PARAMS =
-            arrayOf<Any>(
+            listOf<Any>(
                 "",
                 "",
                 "",
@@ -145,7 +135,7 @@ class StakeContainer(
                 93,
                 336 shl 16,
             )
-        private val WITHDRAW_OPTIONS = arrayOf("Remove-X", "Remove-All", "Remove-10", "Remove-5", "Remove")
-        val OVERLAY = Component(336)
+        private val WITHDRAW_OPTIONS = listOf("Remove-X", "Remove-All", "Remove-10", "Remove-5", "Remove")
+        val OVERLAY = Component(Components.TRADESIDE_336)
     }
 }

@@ -2,7 +2,7 @@ package content.global.activity.ttrail
 
 import core.api.*
 import core.game.component.Component
-import core.game.container.access.InterfaceContainer
+import core.game.container.access.InterfaceContainer.generateItems
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.game.system.config.ClueRewardParser
@@ -82,7 +82,15 @@ enum class ClueLevel(
                     sendMessage(player,"<col=990000>Your clue is worth approximately $rewardValue gold coins!</col>")
                     val clueIfaceSettings = IfaceSettingsBuilder().enableAllOptions().build()
                     player.packetDispatch.sendIfaceSettings(clueIfaceSettings, 4, Components.TRAIL_REWARD_364, 0, 6)
-                    InterfaceContainer.generateItems(player, rewards.toTypedArray(), arrayOf(""), Components.TRAIL_REWARD_364, 4, 3, 3)
+                    player.generateItems(
+                        rewards,
+                        Components.TRAIL_REWARD_364,
+                        4,
+                        emptyList(),
+                        3,
+                        3
+
+                    )
                 }
                 return
             }

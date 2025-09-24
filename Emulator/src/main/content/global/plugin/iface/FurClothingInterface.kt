@@ -37,11 +37,11 @@ private val GLOVES_OF_SILENCE = Item(Items.GLOVES_OF_SILENCE_10075)
 private val SPOTTED_CAPE = Item(Items.SPOTTED_CAPE_10069)
 private val SPOTTIER_CAPE = Item(Items.SPOTTIER_CAPE_10071)
 
-private val OPTIONS = arrayOf("Buy 10", "Buy 5", "Buy 1", "Value")
+private val OPTIONS = listOf("Buy 10", "Buy 5", "Buy 1", "Value")
 private const val FUR_CLOTHING_COMPONENT_ID = Components.CUSTOM_FUR_CLOTHING_477
 
 private val ITEMS =
-    arrayOf(
+    listOf(
         POLAR_CAMO_TOP, POLAR_CAMO_LEGS, null, WOOD_CAMO_TOP, WOOD_CAMO_LEGS, null, JUNGLE_CAMO_TOP, JUNGLE_CAMO_LEGS, null, DESERT_CAMO_TOP, DESERT_CAMO_LEGS,
         null, null, null, null, null, null, null, null, null, null, null,
         LARUPIA_HAT, LARUPIA_TOP, LARUPIA_LEGS, null, GRAAHK_HEADDRESS, GRAAHK_TOP, GRAAHK_LEGS, null, KYATT_HAT, KYATT_TOP, KYATT_LEGS,

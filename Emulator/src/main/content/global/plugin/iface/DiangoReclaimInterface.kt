@@ -9,6 +9,8 @@ import core.game.component.Component
 import core.game.component.ComponentDefinition
 import core.game.component.ComponentPlugin
 import core.game.container.access.InterfaceContainer
+import core.game.container.access.InterfaceContainer.generateItems
+import core.game.container.impl.BankContainer.Companion.DEPOSIT_BOX
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.plugin.Initializable
@@ -83,14 +85,13 @@ class DiangoReclaimInterface : ComponentPlugin() {
             val reclaimable = getEligibleItems(player)
             setAttribute(player, "diango-reclaimables", reclaimable)
             if (reclaimable!!.isNotEmpty()) {
-                InterfaceContainer.generateItems(
-                    player,
-                    reclaimable as Array<Item>,
-                    arrayOf("Take"),
+                player.generateItems(
+                    reclaimable.toList(),
                     COMPONENT_ID,
                     2,
+                    listOf("Take"),
                     8,
-                    8,
+                    8
                 )
             }
             openInterface(player, COMPONENT_ID)
