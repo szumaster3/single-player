@@ -4,6 +4,7 @@ import core.api.*
 import core.game.component.Component
 import core.game.dialogue.InputType
 import core.game.interaction.InterfaceListener
+import core.game.interaction.QueueStrength
 import core.game.node.entity.player.Player
 import shared.consts.Animations
 import shared.consts.Components
@@ -42,7 +43,7 @@ class BankDepositBoxInterface : InterfaceListener {
             return true
         }
 
-        runWorldTask {
+        queueScript(player, 0, QueueStrength.SOFT) {
             when (opcode) {
                 OP_AMOUNT_ONE -> player.bank.addItem(slot, 1)
                 OP_AMOUNT_FIVE -> player.bank.addItem(slot, 5)
@@ -51,7 +52,9 @@ class BankDepositBoxInterface : InterfaceListener {
                 OP_AMOUNT_ALL -> player.bank.addItem(slot, player.inventory.getAmount(item))
                 else -> player.debug("Unknown deposit box menu opcode $opcode")
             }
+            return@queueScript stopExecuting(player)
         }
+
         player.bank.refreshDepositBoxInterface()
         animate(player, Animations.HUMAN_BANK_DEPOSIT_BOX_834)
         return true

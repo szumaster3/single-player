@@ -620,12 +620,12 @@ enum class ItemSet(val itemId: Int, vararg val components: Int) {
 
     companion object {
         private val ITEM_SETS = mutableMapOf<Int, ItemSet>()
-        private val itemArray = mutableListOf<Item?>()
+        private val itemList = mutableListOf<Item?>()
 
         init {
             values().forEach { set ->
                 val item = if (set.itemId == -1) Item() else Item(set.itemId)
-                itemArray.add(item)
+                itemList.add(item)
                 ITEM_SETS[set.itemId] = set
             }
         }
@@ -633,7 +633,10 @@ enum class ItemSet(val itemId: Int, vararg val components: Int) {
         @JvmStatic
         fun forId(setId: Int): ItemSet? = ITEM_SETS[setId]
 
+        /**
+         * Gets a copy of the item list.
+         */
         @JvmStatic
-        fun getItemArray(): Array<Item?> = itemArray.toTypedArray()
+        fun getItemList(): List<Item?> = itemList.toList()
     }
 }

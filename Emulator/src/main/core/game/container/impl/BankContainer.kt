@@ -8,7 +8,7 @@ import core.game.container.Container
 import core.game.container.ContainerEvent
 import core.game.container.ContainerType
 import core.game.container.SortType
-import core.game.container.access.InterfaceContainer
+import core.game.container.access.InterfaceContainer.generateItems
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.IronmanMode
 import core.game.node.item.Item
@@ -83,12 +83,10 @@ class BankContainer(player: Player) : Container(SIZE, ContainerType.ALWAYS_STACK
      * forcing the client to re-draw the items
      */
     fun refreshDepositBoxInterface() {
-        InterfaceContainer.generateItems(
-            player,
-            player.inventory.toArray(),
-            arrayOf("Deposit-X", "Deposit-All", "Deposit-10", "Deposit-5", "Deposit-1"),
+        player.generateItems(
             DEPOSIT_BOX,
             15,
+            listOf("Deposit-X", "Deposit-All", "Deposit-10", "Deposit-5", "Deposit-1"),
             5,
             7
         )

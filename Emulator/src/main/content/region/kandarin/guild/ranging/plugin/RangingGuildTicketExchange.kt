@@ -5,6 +5,7 @@ import core.api.itemDefinition
 import core.api.removeItem
 import core.api.sendMessage
 import core.game.container.access.InterfaceContainer
+import core.game.container.access.InterfaceContainer.generateItems
 import core.game.interaction.InterfaceListener
 import core.game.node.item.Item
 import shared.consts.Components
@@ -44,54 +45,48 @@ enum class RangingGuildTicketExchange(
 }
 
 class TicketExchangeInterfaceListener : InterfaceListener {
-    private val itemIds =
-        intArrayOf(
-            Items.BARB_BOLTTIPS_47,
-            Items.STUDDED_BODY_1133,
-            Items.RUNE_ARROW_892,
-            Items.COIF_1169,
-            Items.GREEN_DHIDE_BODY_1135,
-            Items.ADAMANT_JAVELIN_829,
-        )
-
     override fun defineInterfaceListeners() {
         onOpen(Components.RANGING_GUILD_TICKET_EXCHANGE_278) { player, _ ->
-            InterfaceContainer.generateItems(
-                player,
-                arrayOf(
-                    Item(Items.BARB_BOLTTIPS_47, 30),
-                    Item(Items.STUDDED_BODY_1133, 1),
-                    Item(Items.RUNE_ARROW_892, 50),
-                    Item(Items.COIF_1169, 1),
-                    Item(Items.GREEN_DHIDE_BODY_1135, 1),
-                    Item(Items.ADAMANT_JAVELIN_829, 20),
-                ),
-                arrayOf("Buy", "Value"),
+            val items = RangingGuildTicketExchange.values().map { it.item }
+            player.generateItems(
+                items,
                 Components.RANGING_GUILD_TICKET_EXCHANGE_278,
                 16,
+                listOf("Buy", "Value"),
                 3,
-                6,
+                6
             )
             return@onOpen true
         }
 
-        on(Components.RANGING_GUILD_TICKET_EXCHANGE_278) { player, _, op, _, slot, _ ->
+        on(Components.RANGING_GUILD_TICKET_EXCHANGE_278) { player, _, opcode, _, slot, _ ->
             val exchange = RangingGuildTicketExchange.itemsMap[slot]
-            var tickets = RangingGuildTicketExchange.values().map { it.tickets }.toIntArray()
-            when (op) {
-                9 -> sendMessage(player, itemDefinition(itemIds[slot]).examine)
-                155 -> sendMessage(player, exchange!!.value)
+
+            if (exchange == null) {
+                sendMessage(player, "Invalid exchange slot.")
+                return@on true
+            }
+
+            when (opcode) {
+                9 -> {
+                    // Examine item.
+                    sendMessage(player, itemDefinition(exchange.item.id).examine)
+                }
+                155 -> {
+                    // Show value.
+                    sendMessage(player, exchange.value)
+                }
                 196 -> {
+                    // Exchange tickets for item.
+                    val requiredTickets = exchange.tickets
                     if (freeSlots(player) < 1) {
                         sendMessage(player, "You don't have enough inventory space.")
-                        return@on true
-                    }
-                    if (!removeItem(player, Item(Items.ARCHERY_TICKET_1464, tickets[slot]))) {
+                    } else if (!removeItem(player, Item(Items.ARCHERY_TICKET_1464, requiredTickets))) {
                         sendMessage(player, "You don't have enough Archery Tickets.")
                     } else {
-                        player.inventory.add(exchange!!.item)
+                        player.inventory.add(exchange.item)
+                        sendMessage(player, "You have received ${exchange.item.amount} x ${itemDefinition(exchange.item.id).name}.")
                     }
-                    return@on true
                 }
             }
             return@on true

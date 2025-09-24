@@ -5,7 +5,7 @@ import core.api.sendMessage
 import core.game.component.CloseEvent
 import core.game.component.Component
 import core.game.container.Container
-import core.game.container.access.InterfaceContainer
+import core.game.container.access.InterfaceContainer.generateItems
 import core.game.node.entity.combat.equipment.WeaponInterface
 import core.game.node.entity.player.Player
 import core.game.node.item.GroundItem
@@ -192,22 +192,16 @@ abstract class BurdenBeast : Familiar {
 
         container.shift()
         owner.interfaceManager.openSingleTab(Component(Components.LORE_BANK_SIDE_665))
-        InterfaceContainer.generateItems(
-            owner,
-            owner.inventory.toArray(),
-            arrayOf("Store-X", "Store-All", "Store-10", "Store-5", "Store-1"),
-            Components.LORE_BANK_SIDE_665,
-            0,
+        owner.generateItems(
+            Components.LORE_BANK_SIDE_665, 0,
+            listOf("Store-X", "Store-All", "Store-10", "Store-5", "Store-1"),
             7,
             4,
             93
         )
-        InterfaceContainer.generateItems(
-            owner,
-            container.toArray(),
-            arrayOf("Withdraw-X", "Withdraw-All", "Withdraw-10", "Withdraw-5", "Withdraw-1"),
-            Components.LORE_BANK_671,
-            27,
+        owner.generateItems(
+            Components.LORE_BANK_671, 27,
+            listOf("Withdraw-X", "Withdraw-All", "Withdraw-10", "Withdraw-5", "Withdraw-1"),
             5,
             6,
             30

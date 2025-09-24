@@ -147,7 +147,13 @@ class DuelSession(
             getContainer(player)!!.release()
             val targetContainer = getOppositeContainer(player)
             if (targetContainer!!.itemCount() > 0) {
-                InterfaceContainer.generateItems(player, targetContainer.toArray(), arrayOf("Examine"), 634, 33)
+                InterfaceContainer.generateItems(
+                    player,
+                    targetContainer.toArray().toList(),
+                    listOf("Examine"),
+                    634,
+                    33
+                )
             }
             val c = core.game.container.Container(28, ContainerType.ALWAYS_STACK)
             c.addAll(targetContainer)
@@ -215,24 +221,7 @@ class DuelSession(
                 val interfaceId = if (session.staked) 626 else 639
                 val childs =
                     if (staked) {
-                        intArrayOf(
-                            28,
-                            29,
-                            30,
-                            31,
-                            34,
-                            35,
-                            36,
-                            37,
-                            38,
-                            39,
-                            40,
-                            41,
-                            42,
-                            43,
-                            44,
-                            45,
-                        )
+                        intArrayOf(28, 29, 30, 31, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45)
                     } else {
                         intArrayOf(16, 17, 18, 19, 20, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32)
                     }
@@ -277,13 +266,7 @@ class DuelSession(
                         if (session.getContainer(player)!!.isEmpty) {
                             "Absolutely nothing!"
                         } else {
-                            getDisplayMessage(
-                                session
-                                    .getContainer(
-                                        player,
-                                    )!!
-                                    .toArray(),
-                            )
+                            getDisplayMessage(session.getContainer(player)!!.toArray())
                         },
                         626,
                         25,
@@ -292,13 +275,7 @@ class DuelSession(
                         if (session.getOppositeContainer(player)!!.isEmpty) {
                             "Absolutely nothing!"
                         } else {
-                            getDisplayMessage(
-                                session
-                                    .getOppositeContainer(
-                                        player,
-                                    )!!
-                                    .toArray(),
-                            )
+                            getDisplayMessage(session.getOppositeContainer(player,)!!.toArray())
                         },
                         626,
                         26,
@@ -322,13 +299,7 @@ class DuelSession(
                         if (session.getOppositeContainer(other!!)!!.isEmpty) {
                             "Absolutely nothing!"
                         } else {
-                            getDisplayMessage(
-                                session
-                                    .getOppositeContainer(
-                                        other,
-                                    )!!
-                                    .toArray(),
-                            )
+                            getDisplayMessage(session.getOppositeContainer(other)!!.toArray())
                         },
                         626,
                         26,

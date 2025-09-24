@@ -5,14 +5,13 @@ import core.api.utils.BossKillCounter
 import core.api.utils.WeightBasedTable
 import core.api.utils.WeightedItem
 import core.game.component.Component
-import core.game.container.access.InterfaceContainer
+import core.game.container.access.InterfaceContainer.generateItems
 import core.game.node.entity.player.Player
 import core.game.node.item.GroundItemManager
 import core.game.node.item.Item
 import core.tools.RandomFunction
 import shared.consts.Components
 import shared.consts.Items
-import shared.consts.NPCs
 
 object RewardChest {
     private val REGULAR_DROPS = WeightBasedTable.create(
@@ -62,9 +61,13 @@ object RewardChest {
                 rewards.add(drop)
             }
         }
-
-        InterfaceContainer.generateItems(
-            player, rewards.toTypedArray(), null, Components.TRAIL_REWARD_364, 4, 3, 4
+        player.generateItems(
+            rewards,
+            Components.TRAIL_REWARD_364,
+            4,
+            emptyList(),
+            3,
+            4
         )
         player.interfaceManager.open(Component(Components.TRAIL_REWARD_364))
         BossKillCounter.addToBarrowsCount(player)

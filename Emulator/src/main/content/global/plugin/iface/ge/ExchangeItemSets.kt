@@ -8,6 +8,7 @@ import core.game.component.Component
 import core.game.container.Container
 import core.game.container.ContainerEvent
 import core.game.container.access.InterfaceContainer
+import core.game.container.access.InterfaceContainer.generateItems
 import core.game.ge.ItemSet
 import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.Player
@@ -71,15 +72,14 @@ class ExchangeItemSets : InterfaceListener {
          * @param player The player.
          */
         private fun createContainers(player: Player) {
-            setAttribute(player, "container-key", InterfaceContainer.generateItems(player, player.inventory.toArray(), arrayOf("Exchange", "Components"), Components.EXCHANGE_SETS_SIDE_644, 0, 7, 4),)
-            InterfaceContainer.generateItems(
-                player,
-                ItemSet.getItemArray() as Array<Item>,
-                arrayOf("Exchange", "Components"),
+            setAttribute(player, "container-key", player.generateItems(ItemSet.getItemList(), Components.EXCHANGE_SETS_SIDE_644, 0, listOf("Exchange", "Components"), 7, 4))
+            player.generateItems(
+                ItemSet.getItemList(),
                 Components.EXCHANGE_ITEMSETS_645,
                 16,
+                listOf("Exchange", "Components"),
                 14,
-                10,
+                10
             )
         }
     }

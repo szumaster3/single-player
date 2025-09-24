@@ -6,6 +6,7 @@ import core.game.component.Component
 import core.game.container.Container
 import core.game.container.ContainerType
 import core.game.container.access.InterfaceContainer
+import core.game.container.access.InterfaceContainer.generateItems
 import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
@@ -55,12 +56,10 @@ class MTAShopPlugin : InterfaceListener {
     private fun update() {
         for (player in viewers) {
             if (!player.isActive) continue
-            InterfaceContainer.generateItems(
-                player,
-                container.toArray(),
-                arrayOf("Buy", "Value"),
-                Components.MAGICTRAINING_SHOP_197,
-                16,
+            player.generateItems(
+                container.toList(),
+                Components.MAGICTRAINING_SHOP_197,16,
+                listOf("Buy", "Value"),
                 4,
                 7
             )

@@ -1102,6 +1102,15 @@ public class Container {
     }
 
     /**
+     * Returns a list representing this container.
+     *
+     * @return The items list.
+     */
+    public List<Item> toList() {
+        return Collections.unmodifiableList(Arrays.asList(items));
+    }
+
+    /**
      * Gets the listeners.
      *
      * @return The listeners.
