@@ -70,27 +70,12 @@ class BankContainer(player: Player) : Container(SIZE, ContainerType.ALWAYS_STACK
      * Method used to open the deposit box.
      */
     fun openDepositBox() {
-        player.interfaceManager.open(Component(11))!!.closeEvent = CloseEvent { player: Player, c: Component? ->
+        player.interfaceManager.open(Component(DEPOSIT_BOX))!!.closeEvent = CloseEvent { player: Player, c: Component? ->
             player.interfaceManager.openDefaultTabs()
             true
         }
         player.interfaceManager.removeTabs(0, 1, 2, 3, 4, 5, 6)
-        InterfaceContainer.generateItems(
-            player,
-            player.inventory.toArray(),
-            arrayOf(
-                "Deposit-1",
-                "Deposit-5",
-                "Deposit-10",
-                "Deposit-${getVarp(player, 1249)}",
-                "Deposit-X",
-                "Deposit-All"
-            ),
-            11,
-            15,
-            5,
-            7
-        )
+        refreshDepositBoxInterface()
     }
 
     /**
@@ -101,15 +86,8 @@ class BankContainer(player: Player) : Container(SIZE, ContainerType.ALWAYS_STACK
         InterfaceContainer.generateItems(
             player,
             player.inventory.toArray(),
-            arrayOf(
-                "Deposit-1",
-                "Deposit-5",
-                "Deposit-10",
-                "Deposit-${getVarp(player, 1249)}",
-                "Deposit-X",
-                "Deposit-All"
-            ),
-            11,
+            arrayOf("Deposit-X", "Deposit-All", "Deposit-10", "Deposit-5", "Deposit-1"),
+            DEPOSIT_BOX,
             15,
             5,
             7
@@ -130,17 +108,17 @@ class BankContainer(player: Player) : Container(SIZE, ContainerType.ALWAYS_STACK
             player.bankPinManager.openType(1)
             return
         }
-        player.interfaceManager.openComponent(762)!!.closeEvent = CloseEvent { player: Player?, c: Component? ->
+        player.interfaceManager.openComponent(BANK_V2_MAIN)!!.closeEvent = CloseEvent { player: Player?, c: Component? ->
             this@BankContainer.close()
             true
         }
-        player.interfaceManager.openSingleTab(Component(763))
+        player.interfaceManager.openSingleTab(Component(BANK_V2_MAIN_SIDE))
         super.refresh()
         player.inventory.refresh()
         player.inventory.listeners.add(listener)
         setVarp(player, 1249, lastAmountX)
         val settings = IfaceSettingsBuilder().enableOptions(IntRange(0, 5)).enableExamine().enableSlotSwitch().build()
-        player.packetDispatch.sendIfaceSettings(settings, 0, 763, 0, 27)
+        player.packetDispatch.sendIfaceSettings(settings, 0, BANK_V2_MAIN_SIDE, 0, 27)
         isOpen = true
     }
 
@@ -155,18 +133,18 @@ class BankContainer(player: Player) : Container(SIZE, ContainerType.ALWAYS_STACK
             player.bankPinManager.openType(1)
             return
         }
-        player.interfaceManager.openComponent(762)!!.closeEvent = CloseEvent { player1: Player?, c: Component? ->
+        player.interfaceManager.openComponent(BANK_V2_MAIN)!!.closeEvent = CloseEvent { player1: Player?, c: Component? ->
             this@BankContainer.close()
             true
         }
         refresh(listener)
-        player.interfaceManager.openSingleTab(Component(763))
+        player.interfaceManager.openSingleTab(Component(BANK_V2_MAIN_SIDE))
         player.inventory.listeners.add(player.bank.listener)
         player.inventory.refresh()
         setVarp(player, 1249, lastAmountX)
-        player.packetDispatch.sendIfaceSettings(1278, 73, 762, 0, SIZE)
+        player.packetDispatch.sendIfaceSettings(1278, 73, BANK_V2_MAIN, 0, SIZE)
         val settings = IfaceSettingsBuilder().enableOptions(IntRange(0, 5)).enableExamine().enableSlotSwitch().build()
-        player.packetDispatch.sendIfaceSettings(settings, 0, 763, 0, 27)
+        player.packetDispatch.sendIfaceSettings(settings, 0, BANK_V2_MAIN_SIDE, 0, 27)
         player.packetDispatch.sendRunScript(1451, "")
         isOpen = true
     }
@@ -472,6 +450,11 @@ class BankContainer(player: Player) : Container(SIZE, ContainerType.ALWAYS_STACK
     }
 
     companion object {
+        /**
+         * The deposit box interface id.
+         */
+        const val DEPOSIT_BOX = Components.BANK_DEPOSIT_BOX_11
+
         /**
          * The main bank interface id.
          */
