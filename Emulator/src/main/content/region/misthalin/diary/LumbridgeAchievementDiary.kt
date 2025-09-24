@@ -383,6 +383,7 @@ class LumbridgeAchievementDiary : DiaryEventHookBase(DiaryType.LUMBRIDGE) {
         event: InteractionEvent,
     ) {
         when (player.viewport.region!!.id) {
+            /*
             12337 ->
                 if (event.target.id == Scenery.RAILING_37668 && event.option == "taunt-through") {
                     finishTask(
@@ -391,6 +392,8 @@ class LumbridgeAchievementDiary : DiaryEventHookBase(DiaryType.LUMBRIDGE) {
                         EasyTasks.WIZARDS_TOWER_TAUNT_DEMON,
                     )
                 }
+
+            */
 
             12849 ->
                 if (event.target.id == Scenery.DOOR_2406 &&

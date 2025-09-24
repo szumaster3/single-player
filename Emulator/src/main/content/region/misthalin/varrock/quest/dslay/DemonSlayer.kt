@@ -9,12 +9,10 @@ import content.region.misthalin.varrock.quest.dslay.dialogue.TraibornDialogue
 import content.region.misthalin.varrock.quest.dslay.plugin.DemonSlayerDrainPlugin
 import content.region.misthalin.varrock.quest.dslay.plugin.DemonSlayerPlugin
 import content.region.misthalin.varrock.quest.dslay.plugin.DemonSlayerUtils
-import core.api.inInventory
-import core.api.updateQuestTab
-import core.api.removeAttributes
-import core.api.sendItemZoomOnInterface
+import core.api.*
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest
+import core.game.node.item.Item
 import core.plugin.ClassScanner
 import core.plugin.Initializable
 import shared.consts.Components
@@ -23,26 +21,12 @@ import shared.consts.Vars
 
 @Initializable
 class DemonSlayer : Quest(Quests.DEMON_SLAYER, 16, 15, 3, Vars.VARP_QUEST_DEMON_SLAYER_PROGRESS_222, 0, 1, 3) {
-    override fun newInstance(`object`: Any?): Quest {
-        ClassScanner.definePlugins(
-            DemonSlayerPlugin(),
-            DemonSlayerDrainPlugin(),
-            DemonSlayerCutscenePlugin(),
-            WallyCutscenePlugin(),
-            GypsyArisDialogue(),
-            SirPyrsinDialogue(),
-            TraibornDialogue(),
-            CaptainRovinDialogue(),
-        )
-        return this
-    }
 
-    override fun drawJournal(
-        player: Player,
-        stage: Int,
-    ) {
+    override fun drawJournal(player: Player, stage: Int) {
         super.drawJournal(player, stage)
         var line = 12
+        val items = intArrayOf(DemonSlayerUtils.FIRST_KEY.id, DemonSlayerUtils.SECOND_KEY.id, DemonSlayerUtils.THIRD_KEY.id)
+
         if (stage >= 0) {
             line(player, "I can start this quest by speaking to the !!Gypsy?? in the !!tent??", line++)
             line(player, "in !!Varrock's?? main square", line++)
@@ -63,55 +47,25 @@ class DemonSlayer : Quest(Quests.DEMON_SLAYER, 16, 15, 3, Vars.VARP_QUEST_DEMON_
             line(player, "destroyed Varrock over 150 years ago.", line++, stage >= 30)
             line(player, "To defeat the !!demon?? I need the magical sword !!Silverlight??.", line++, stage >= 30)
             line(player, "!!Sir Prysin?? needs !!3 keys?? before he can give me !!Silverlight??.", line++, stage >= 30)
-            if (inInventory(player, DemonSlayerUtils.FIRST_KEY.id) &&
-                inInventory(
-                    player,
-                    DemonSlayerUtils.SECOND_KEY.id,
-                ) &&
-                inInventory(player, DemonSlayerUtils.THIRD_KEY.id)
-            ) {
+            if (allInInventory(player, *items)) {
                 line(player, "Now I have !!all 3 keys?? I should go and speak to !!Sir Prysin??", line++, stage >= 30)
                 line(player, "and collect the magical sword !!Silverlight?? from him.", line++, stage >= 30)
             } else {
-                line(
-                    player,
-                    if (player.hasItem(
-                            DemonSlayerUtils.FIRST_KEY,
-                        )
-                    ) {
-                        "I have the 1st Key with me."
-                    } else {
-                        "The !!1st Key?? was dropped down the palace kitchen drains."
-                    },
-                    line++,
-                    stage >= 30,
+                val names = arrayOf("1st Key", "2nd Key", "3rd Key")
+                val message = arrayOf(
+                    "was dropped down the palace kitchen drains.",
+                    "is with Captain Rovin in Varrock Palace.",
+                    "is with the Wizard Traiborn at the Wizards' Tower."
                 )
-                line(
-                    player,
-                    if (player.hasItem(
-                            DemonSlayerUtils.SECOND_KEY,
-                        )
-                    ) {
-                        "I have the 2nd Key with me."
+
+                for (i in items.indices) {
+                    val msg = if (player.hasItem(Item(items[i]))) {
+                        "I have the ${names[i]} with me."
                     } else {
-                        "The !!2nd Key?? is with Captain Rovin in Varrock Palace."
-                    },
-                    line++,
-                    stage >= 30,
-                )
-                line(
-                    player,
-                    if (player.hasItem(
-                            DemonSlayerUtils.THIRD_KEY,
-                        )
-                    ) {
-                        "I Have the 3rd key with me."
-                    } else {
-                        "The !!3rd Key?? is with the Wizard Traiborn at the Wizards' Tower."
-                    },
-                    line++,
-                    stage >= 30,
-                )
+                        "The !!${names[i]}?? ${message[i]}"
+                    }
+                    line(player, msg, line++, stage >= 30)
+                }
                 if (player.getAttribute("demon-slayer:traiborn", false)) {
                     line(player, "The !!3rd Key?? is with Wizard Traiborn at the Wizards' Tower.", line++, stage >= 30)
                     line(player, "!!Traiborn?? needs !!25?? more !!bones??.", line++, stage >= 30)
@@ -154,5 +108,19 @@ class DemonSlayer : Quest(Quests.DEMON_SLAYER, 16, 15, 3, Vars.VARP_QUEST_DEMON_
             "demon-slayer:received",
         )
         updateQuestTab(player)
+    }
+
+    override fun newInstance(`object`: Any?): Quest {
+        ClassScanner.definePlugins(
+            DemonSlayerPlugin(),
+            DemonSlayerDrainPlugin(),
+            DemonSlayerCutscenePlugin(),
+            WallyCutscenePlugin(),
+            GypsyArisDialogue(),
+            SirPyrsinDialogue(),
+            TraibornDialogue(),
+            CaptainRovinDialogue(),
+        )
+        return this
     }
 }
