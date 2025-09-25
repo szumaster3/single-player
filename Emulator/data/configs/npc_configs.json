@@ -14789,7 +14789,7 @@
     "attack_level": "17"
   },
   {
-    "examine": "",
+    "examine": "An apocolyptic demon./A freshly summoned demon.",
     "melee_animation": "64",
     "attack_speed": "4",
     "magic_level": "1",
@@ -14807,7 +14807,7 @@
     "attack_level": "1"
   },
   {
-    "examine": "",
+    "examine": "An apocolyptic demon./A freshly summoned demon.",
     "name": "Weakened Delrith",
     "defence_level": "1",
     "safespot": null,

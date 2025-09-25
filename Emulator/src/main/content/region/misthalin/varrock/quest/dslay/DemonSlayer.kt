@@ -6,8 +6,6 @@ import content.region.misthalin.varrock.quest.dslay.dialogue.CaptainRovinDialogu
 import content.region.misthalin.varrock.quest.dslay.dialogue.GypsyArisDialogue
 import content.region.misthalin.varrock.quest.dslay.dialogue.SirPyrsinDialogue
 import content.region.misthalin.varrock.quest.dslay.dialogue.TraibornDialogue
-import content.region.misthalin.varrock.quest.dslay.plugin.DemonSlayerDrainPlugin
-import content.region.misthalin.varrock.quest.dslay.plugin.DemonSlayerPlugin
 import content.region.misthalin.varrock.quest.dslay.plugin.DemonSlayerUtils
 import core.api.*
 import core.game.node.entity.player.Player
@@ -30,64 +28,78 @@ class DemonSlayer : Quest(Quests.DEMON_SLAYER, 16, 15, 3, Vars.VARP_QUEST_DEMON_
         var line = 12
         val items = intArrayOf(DemonSlayerUtils.FIRST_KEY.id, DemonSlayerUtils.SECOND_KEY.id, DemonSlayerUtils.THIRD_KEY.id)
 
-        if (stage >= 0) {
-            line(player, "I can start this quest by speaking to the !!Gypsy?? in the !!tent??", line++, stage>=1)
-            line(player, "in !!Varrock's main square??.", line++, stage>=1)
-            line++
-            line(player, "I must be able to defeat a level 27 !!apocalyptic demon??!", line++, stage>=1)
-            limitScrolling(player, line, true)
-        }
-
-        if (stage >= 10) {
-            line(player, "I spoke to the Gypsy in Varrock Square who saw my future.", line++, stage>=20)
-            line(player, "Unfortunately it involved killing a demon who nearly", line++, stage>=20)
-            line(player, "destroyed Varrock over 150 years ago.", line++, stage>=20)
-            line++
-            line(player, "To defeat the !!demon?? I need the magical sword !!Silverlight??.", line++, stage>=20)
-            line(player, "I should ask !!Sir Prysin?? in !!Varrock Palace?? where it is.", line++, stage>=20)
-        }
-
-        if (stage >= 20) {
-            if (allInInventory(player, *items)) {
-                line(player, "Now I have !!all 3 keys?? I should go and speak to !!Sir Prysin??", line++, stage>=30)
-                line(player, "and collect the magical sword !!Silverlight?? from him.", line++, stage>=30)
-            } else {
-                val names = arrayOf("1st Key", "2nd Key", "3rd Key")
-                val message = arrayOf(
-                    "was dropped down the palace kitchen drains.",
-                    "is with Captain Rovin in Varrock Palace.",
-                    "is with the Wizard Traiborn at the Wizards' Tower."
-                )
-
-                for (i in items.indices) {
-                    val msg = if (player.hasItem(Item(items[i]))) {
-                        "I have the ${names[i]} with me."
-                    } else {
-                        "The !!${names[i]}?? ${message[i]}"
+        when (stage) {
+            in 0..9 -> {
+                line(player, "I can start this quest by speaking to the !!Gypsy?? in the !!tent??", line++)
+                line(player, "in !!Varrock's main square??.", line++)
+                line++
+                line(player, "I must be able to defeat a level 27 !!apocalyptic demon??!", line++)
+                limitScrolling(player, line, true)
+            }
+            in 10..19 -> {
+                line(player, "I spoke to the Gypsy in Varrock Square who saw my future.", line++)
+                line(player, "Unfortunately it involved killing a demon who nearly", line++)
+                line(player, "destroyed Varrock over 150 years ago.", line++)
+                line++
+                line(player, "To defeat the !!demon?? I need the magical sword !!Silverlight??.", line++)
+                line(player, "I should ask !!Sir Prysin?? in !!Varrock Palace?? where it is.", line)
+            }
+            20 -> {
+                line(player, "I spoke to the Gypsy in Varrock Square who saw my future.", line++, true)
+                line(player, "Unfortunately it involved killing a demon who nearly", line++, true)
+                line(player, "destroyed Varrock over 150 years ago.", line++, true)
+                line++
+                line(player, "To defeat the !!demon?? I need the magical sword !!Silverlight??.", line++, true)
+                line(player, "!!Sir Prysin?? needs !!3 keys?? before he can give me !!Silverlight??.", line++, true)
+                line++
+                line(player, "To defeat the !!demon?? I need the magical sword !!Silverlight??.", line++)
+                line(player, "!!Sir Prysin?? needs !!3 keys?? before he can give me !!Silverlight??.", line++)
+                line++
+                if (allInInventory(player, *items)) {
+                    line(player, "Now I have !!all 3 keys?? I should go and speak to !!Sir Prysin??", line++)
+                    line(player, "and collect the magical sword !!Silverlight?? from him.", line)
+                } else {
+                    val names = arrayOf("1st Key", "2nd Key", "3rd Key")
+                    val message = arrayOf(
+                        "was dropped down the palace kitchen drains.",
+                        "is with Captain Rovin in Varrock Palace.",
+                        "is with the Wizard Traiborn at the Wizards' Tower."
+                    )
+                    for (i in items.indices) {
+                        val msg = if (player.hasItem(Item(items[i]))) {
+                            "I have the ${names[i]} with me."
+                        } else {
+                            "The !!${names[i]}?? ${message[i]}"
+                        }
+                        line(player, msg, line++)
                     }
-                    line(player, msg, line++, stage>=30)
-                }
-                if (player.getAttribute("demon-slayer:traiborn", false)) {
-                    line(player, "The !!3rd Key?? is with Wizard Traiborn at the Wizards' Tower.", line++, stage>=30)
-                    line(player, "!!Traiborn?? needs !!25?? more !!bones??.", line++, stage>=30)
+                    if (player.getAttribute("demon-slayer:traiborn", false)) {
+                        line(player, "The !!3rd Key?? is with Wizard Traiborn at the Wizards' Tower.", line++)
+                        line(player, "!!Traiborn?? needs !!25?? more !!bones??.", line)
+                    }
                 }
             }
-        }
-
-        if (stage >= 30) {
-            line++
-            line(player, "I reclaimed the magical sword Silverlight from Sir Prysin.", line++, stage>=100)
-            line(player, "Now I should go to the stone circle south of the city and", line++, stage>=100)
-            line(player, "destroy !!Delrith?? using !!Silverlight??!", line++, stage>=100)
-            line++
-        }
-
-        if (stage == 100) {
-            line(player, "Using its power I managed to destroy the demon Delrith", line++, true)
-            line(player, "like the great hero Wally did many years before.", line++, true)
-            line++
-            line(player, "<col=FF0000>QUEST COMPLETE!", line)
-            limitScrolling(player, line, false)
+            30 -> {
+                line(player, "I spoke to the Gypsy in Varrock Square who saw my future.", line++, true)
+                line(player, "Unfortunately it involved killing a demon who nearly", line++, true)
+                line(player, "destroyed Varrock over 150 years ago.", line++, true)
+                line++
+                line(player, "I reclaimed the magical sword Silverlight from Sir Prysin.", line++)
+                line(player, "Now I should go to the stone circle south of the city and", line++)
+                line(player, "destroy !!Delrith?? using !!Silverlight??!", line)
+            }
+            100 -> {
+                line(player, "I spoke to the Gypsy in Varrock Square who saw my future.", line++, true)
+                line(player, "Unfortunately it involved killing a demon who nearly", line++, true)
+                line(player, "destroyed Varrock over 150 years ago.", line++, true)
+                line++
+                line(player, "I reclaimed the magical sword Silverlight from Sir Prysin.", line++, true)
+                line(player, "Using its power I managed to destroy the demon Delrith", line++, true)
+                line(player, "like the great hero Wally did many years before.", line++, true)
+                line++
+                line(player, "<col=FF0000>QUEST COMPLETE!", line++)
+                limitScrolling(player, line, false)
+            }
         }
     }
 
@@ -103,8 +115,6 @@ class DemonSlayer : Quest(Quests.DEMON_SLAYER, 16, 15, 3, Vars.VARP_QUEST_DEMON_
 
     override fun newInstance(`object`: Any?): Quest {
         ClassScanner.definePlugins(
-            DemonSlayerPlugin(),
-            DemonSlayerDrainPlugin(),
             DemonSlayerCutscenePlugin(),
             WallyCutscenePlugin(),
             GypsyArisDialogue(),
