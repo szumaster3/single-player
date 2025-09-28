@@ -5,7 +5,7 @@ import core.game.event.FairyRingDialEvent
 import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.TeleportManager
-import content.global.plugin.iface.warning.WarningManager
+import content.global.plugin.iface.warning.WarningListener
 import content.global.plugin.iface.warning.Warnings
 import core.game.system.task.Pulse
 import core.game.world.GameWorld
@@ -135,8 +135,8 @@ class FairyRingInterface : InterfaceListener {
             null
         }
 
-        if (ring == FairyRing.AJQ && !WarningManager.isDisabled(player, Warnings.FAIRY_RING_TO_DORGESH_KAAN)) {
-            WarningManager.openWarning(player, Warnings.FAIRY_RING_TO_DORGESH_KAAN)
+        if (ring == FairyRing.AJQ && !WarningListener.isDisabled(player, Warnings.FAIRY_RING_TO_DORGESH_KAAN)) {
+            WarningListener.openWarning(player, Warnings.FAIRY_RING_TO_DORGESH_KAAN)
             return
         }
 

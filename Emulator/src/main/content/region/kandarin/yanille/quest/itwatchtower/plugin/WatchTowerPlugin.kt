@@ -3,7 +3,7 @@ package content.region.kandarin.yanille.quest.itwatchtower.plugin
 import content.data.GameAttributes
 import content.data.LightSource
 import content.data.items.SkillingTool
-import content.global.plugin.iface.warning.WarningManager
+import content.global.plugin.iface.warning.WarningListener
 import content.global.plugin.iface.warning.Warnings
 import content.region.kandarin.yanille.quest.itwatchtower.cutscene.EnclaveCutscene
 import content.region.kandarin.yanille.quest.itwatchtower.dialogue.BattlementDialogue
@@ -35,18 +35,6 @@ import core.tools.END_DIALOGUE
 import shared.consts.*
 
 class WatchTowerPlugin : InteractionListener {
-
-    companion object {
-        val OGRE_CITY_NW_GATE = intArrayOf(Scenery.CITY_GATE_2788, Scenery.CITY_GATE_2789)
-        val OGRE_CITY_SE_GATE = intArrayOf(Scenery.CITY_GATE_2786, Scenery.CITY_GATE_2787)
-        val SKAVID_CAVE_ENTRANCE = (Scenery.CAVE_ENTRANCE_2805..Scenery.CAVE_ENTRANCE_2810).toIntArray()
-        val SKAVID_CAVE_EXIT = (Scenery.CAVE_EXIT_2817..Scenery.CAVE_EXIT_2822).toIntArray()
-        val ENTRANCE_LOCATION = arrayOf(Location(2563, 3024, 0), Location(2524, 3070, 0), Location(2541, 3054, 0), Location(2554, 3054, 0), Location(2552, 3035, 0), Location(2529, 3012, 0))
-        val OGRE_POTIONS = intArrayOf(Items.POTION_2394,Items.VIAL_2389, Items.VIAL_2390)
-        val OGRE_SHAMAN = intArrayOf(5183,5180,5175,5186,5192,5189)
-        val CRYSTALS = intArrayOf(Items.CRYSTAL_2383,Items.CRYSTAL_2382,Items.CRYSTAL_2381,Items.CRYSTAL_2380)
-        val PILLARS = intArrayOf(Scenery.PILLAR_21546,Scenery.PILLAR_20022,Scenery.PILLAR_20026,Scenery.PILLAR_20030)
-    }
 
     override fun defineListeners() {
 
@@ -458,8 +446,8 @@ class WatchTowerPlugin : InteractionListener {
         onUseWith(IntType.NPC, Items.CAVE_NIGHTSHADE_2398, NPCs.ENCLAVE_GUARD_870) { player, _, npc ->
             sendNPCDialogueLines(player, npc.id, FaceAnim.OLD_DEFAULT, false, "What is this? Arrrrgh! I cannot stand this plant! Argh,", "it burns! It burns!")
             addDialogueAction(player) { _, _ ->
-                if (!WarningManager.isDisabled(player, Warnings.WATCHTOWER_SHAMAN_CAVE)) {
-                    WarningManager.openWarning(player, Warnings.WATCHTOWER_SHAMAN_CAVE)
+                if (!WarningListener.isDisabled(player, Warnings.WATCHTOWER_SHAMAN_CAVE)) {
+                    WarningListener.openWarning(player, Warnings.WATCHTOWER_SHAMAN_CAVE)
                     return@addDialogueAction
                 }
                 passEnclaveGuard(player)
@@ -880,60 +868,59 @@ class WatchTowerPlugin : InteractionListener {
         }
     }
 
-    /**
-     * Searches a bush for a quest-related item.
-     */
-    private fun searchBush(player: Player, item: Pair<Int, String>?): Boolean {
-        when {
-            item == null || getQuestStage(player, Quests.WATCHTOWER) < 1 -> sendPlayerDialogue(player, "Hmmm, nothing here.", FaceAnim.NEUTRAL)
-            !inInventory(player, item.first) -> {
-                sendPlayerDialogue(player, item.second, FaceAnim.NEUTRAL)
-                addItem(player, item.first)
+    companion object {
+        val OGRE_CITY_NW_GATE = intArrayOf(Scenery.CITY_GATE_2788, Scenery.CITY_GATE_2789)
+        val OGRE_CITY_SE_GATE = intArrayOf(Scenery.CITY_GATE_2786, Scenery.CITY_GATE_2787)
+        val SKAVID_CAVE_ENTRANCE = (Scenery.CAVE_ENTRANCE_2805..Scenery.CAVE_ENTRANCE_2810).toIntArray()
+        val SKAVID_CAVE_EXIT = (Scenery.CAVE_EXIT_2817..Scenery.CAVE_EXIT_2822).toIntArray()
+        val ENTRANCE_LOCATION = arrayOf(Location(2563, 3024, 0), Location(2524, 3070, 0), Location(2541, 3054, 0), Location(2554, 3054, 0), Location(2552, 3035, 0), Location(2529, 3012, 0))
+        val OGRE_POTIONS = intArrayOf(Items.POTION_2394,Items.VIAL_2389, Items.VIAL_2390)
+        val OGRE_SHAMAN = intArrayOf(5183,5180,5175,5186,5192,5189)
+        val CRYSTALS = intArrayOf(Items.CRYSTAL_2383,Items.CRYSTAL_2382,Items.CRYSTAL_2381,Items.CRYSTAL_2380)
+        val PILLARS = intArrayOf(Scenery.PILLAR_21546,Scenery.PILLAR_20022,Scenery.PILLAR_20026,Scenery.PILLAR_20030)
+
+
+        /**
+         * Searches a bush for a quest-related item.
+         */
+        private fun searchBush(player: Player, item: Pair<Int, String>?): Boolean {
+            when {
+                item == null || getQuestStage(player, Quests.WATCHTOWER) < 1 -> sendPlayerDialogue(player, "Hmmm, nothing here.", FaceAnim.NEUTRAL)
+                !inInventory(player, item.first) -> {
+                    sendPlayerDialogue(player, item.second, FaceAnim.NEUTRAL)
+                    addItem(player, item.first)
+                }
+                else -> sendPlayerDialogue(player, "I have already searched this place.", FaceAnim.NEUTRAL)
             }
-            else -> sendPlayerDialogue(player, "I have already searched this place.", FaceAnim.NEUTRAL)
-        }
-        return true
-    }
-
-    /**
-     * Handles the player interacting with Tobans chest.
-     */
-    private fun handleTobansChest(player: Player, scenery: core.game.node.scenery.Scenery? = null) {
-        if (!inInventory(player, Items.TOBANS_KEY_2378)) {
-            sendMessage(player, "The chest is locked.")
-            sendPlayerDialogue(player, "I think I need a key of some sort...")
-            return
+            return true
         }
 
-        if (inInventory(player, Items.TOBANS_GOLD_2393)) {
-            sendMessage(player, "I don't need another one of these.")
-            return
-        }
+        /**
+         * Handles the player interacting with Tobans chest.
+         */
+        private fun handleTobansChest(player: Player, scenery: core.game.node.scenery.Scenery? = null) {
+            if (!inInventory(player, Items.TOBANS_KEY_2378)) {
+                sendMessage(player, "The chest is locked.")
+                sendPlayerDialogue(player, "I think I need a key of some sort...")
+                return
+            }
 
-        sendMessage(player, "You use the key Og gave you.")
-        scenery?.let { replaceScenery(it, 2828, 3) }
-        sendItemDialogue(player, Items.TOBANS_GOLD_2393, "You find a stash of gold inside.")
+            if (inInventory(player, Items.TOBANS_GOLD_2393)) {
+                sendMessage(player, "I don't need another one of these.")
+                return
+            }
 
-        addDialogueAction(player) { _, _ ->
-            if (freeSlots(player) == 0) {
-                sendDialogue(player, "You don't have enough inventory space for that.")
-            } else {
-                addItem(player, Items.TOBANS_GOLD_2393, 1)
+            sendMessage(player, "You use the key Og gave you.")
+            scenery?.let { replaceScenery(it, 2828, 3) }
+            sendItemDialogue(player, Items.TOBANS_GOLD_2393, "You find a stash of gold inside.")
+
+            addDialogueAction(player) { _, _ ->
+                if (freeSlots(player) == 0) {
+                    sendDialogue(player, "You don't have enough inventory space for that.")
+                } else {
+                    addItem(player, Items.TOBANS_GOLD_2393, 1)
+                }
             }
         }
-    }
-
-    /**
-     * Handles the player passing the enclave guard after distracting him.
-     */
-    private fun passEnclaveGuard(player: Player) {
-        if (isQuestComplete(player, Quests.WATCHTOWER)) {
-            teleport(player, Location.create(2588, 9410, 0), TeleportManager.TeleportType.INSTANT)
-        } else {
-            runTask(player, 3) {
-                EnclaveCutscene(player).start(true)
-            }
-        }
-        sendMessage(player, "You run past the guard while he's busy.")
     }
 }

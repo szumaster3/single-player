@@ -1,6 +1,6 @@
 package content.global.plugin.iface
 
-import content.global.plugin.iface.warning.WarningManager
+import content.global.plugin.iface.warning.WarningListener
 import content.global.plugin.iface.warning.Warnings
 import core.api.getVarbit
 import core.api.sendMessage
@@ -32,8 +32,8 @@ class DoomsayerInterface : InterfaceListener {
                     return@on true
                 }
 
-                val wasDisabled = WarningManager.isDisabled(player, warning)
-                WarningManager.toggleWarning(player, warning)
+                val wasDisabled = WarningListener.isDisabled(player, warning)
+                WarningListener.toggleWarning(player, warning)
                 sendMessage(player, "You have ${if (!wasDisabled) "disabled" else "enabled"} the warning.")
             }
             return@on true

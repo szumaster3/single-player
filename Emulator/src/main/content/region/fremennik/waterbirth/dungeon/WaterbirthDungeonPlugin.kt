@@ -1,6 +1,6 @@
 package content.region.fremennik.waterbirth.dungeon
 
-import content.global.plugin.iface.warning.WarningManager
+import content.global.plugin.iface.warning.WarningListener
 import content.global.plugin.iface.warning.Warnings
 import core.api.*
 import core.cache.def.impl.SceneryDefinition
@@ -84,8 +84,8 @@ class WaterbirthDungeonPlugin : OptionHandler() {
             }
 
             10230 -> {
-                if (!WarningManager.isDisabled(player, Warnings.DAGANNOTH_KINGS_LADDER)) {
-                    WarningManager.openWarning(player, Warnings.DAGANNOTH_KINGS_LADDER)
+                if (!WarningListener.isDisabled(player, Warnings.DAGANNOTH_KINGS_LADDER)) {
+                    WarningListener.openWarning(player, Warnings.DAGANNOTH_KINGS_LADDER)
                 } else {
                     teleport(player, Location.create(2899, 4449, 0))
                 }

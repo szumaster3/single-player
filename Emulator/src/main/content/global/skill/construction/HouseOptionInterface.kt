@@ -1,6 +1,6 @@
 package content.global.skill.construction
 
-import content.global.plugin.iface.warning.WarningManager
+import content.global.plugin.iface.warning.WarningListener
 import content.global.plugin.iface.warning.Warnings
 import core.api.sendMessage
 import core.game.interaction.InterfaceListener
@@ -14,8 +14,8 @@ class HouseOptionInterface : InterfaceListener {
         on(Components.POH_HOUSE_OPTIONS_398) { player, _, _, buttonID, _, _ ->
             when (buttonID) {
                 14 -> {
-                    if (player.houseManager.isInHouse(player) && !WarningManager.isDisabled(player, Warnings.PLAYER_OWNED_HOUSES)) {
-                        WarningManager.openWarning(
+                    if (player.houseManager.isInHouse(player) && !WarningListener.isDisabled(player, Warnings.PLAYER_OWNED_HOUSES)) {
+                        WarningListener.openWarning(
                             player,
                             Warnings.PLAYER_OWNED_HOUSES,
                         )

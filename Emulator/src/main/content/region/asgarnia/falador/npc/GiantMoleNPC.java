@@ -1,7 +1,7 @@
 package content.region.asgarnia.falador.npc;
 
 import content.data.LightSource;
-import content.global.plugin.iface.warning.WarningManager;
+import content.global.plugin.iface.warning.WarningListener;
 import content.global.plugin.iface.warning.Warnings;
 import core.api.utils.BossKillCounter;
 import core.cache.def.impl.SceneryDefinition;
@@ -197,8 +197,8 @@ public final class GiantMoleNPC extends AbstractNPC {
                     player.getPacketDispatch().sendMessage("It's going to be dark down there, I should bring a light source.");
                     return;
                 }
-                if (!WarningManager.isDisabled(player, Warnings.FALADOR_MOLE_LAIR)) {
-                    WarningManager.openWarning(player, Warnings.FALADOR_MOLE_LAIR);
+                if (!WarningListener.isDisabled(player, Warnings.FALADOR_MOLE_LAIR)) {
+                    WarningListener.openWarning(player, Warnings.FALADOR_MOLE_LAIR);
                 } else {
                     player.getProperties().setTeleportLocation(Location.create(1752, 5237, 0));
                     playAudio(player, Sounds.ROOF_COLLAPSE_1384);

@@ -1,6 +1,6 @@
 package content.region.misthalin.barbvillage.plugin;
 
-import content.global.plugin.iface.warning.WarningManager;
+import content.global.plugin.iface.warning.WarningListener;
 import content.global.plugin.iface.warning.Warnings;
 import content.region.misthalin.barbvillage.dialogue.CradleOfLifeDialogue;
 import core.cache.def.impl.SceneryDefinition;
@@ -113,21 +113,21 @@ public final class StrongholdPlugin extends MapZone implements Plugin<Object> {
                     player.getPacketDispatch().sendMessage("You climb up the ladder to the level above.");
                     return true;
                 case 16149: // Ladder from Level 1 to Level 2 (Flesh crawlers)
-                    if (!WarningManager.isDisabled(player, Warnings.STRONGHOLD_OF_SECURITY_LADDERS)) {
+                    if (!WarningListener.isDisabled(player, Warnings.STRONGHOLD_OF_SECURITY_LADDERS)) {
                         openComponent(player, Location.create(2042, 5245, 0));
                     } else {
                         ClimbActionHandler.climb(player, new Animation(Animations.USE_LADDER_828), Location.create(2042, 5245, 0));
                     }
                     return true;
                 case 16081: // Ladder from Level 2 to Level 3 (Poison spiders)
-                    if (!WarningManager.isDisabled(player, Warnings.STRONGHOLD_OF_SECURITY_LADDERS)) {
+                    if (!WarningListener.isDisabled(player, Warnings.STRONGHOLD_OF_SECURITY_LADDERS)) {
                         openComponent(player, Location.create(2123, 5252, 0));
                     } else {
                         ClimbActionHandler.climb(player, new Animation(Animations.USE_LADDER_828), Location.create(2123, 5252, 0));
                     }
                     return true;
                 case 16115: // Ladder from Level 3 to Level 4 (Shades)
-                    if (!WarningManager.isDisabled(player, Warnings.STRONGHOLD_OF_SECURITY_LADDERS)) {
+                    if (!WarningListener.isDisabled(player, Warnings.STRONGHOLD_OF_SECURITY_LADDERS)) {
                         openComponent(player, Location.create(2358, 5215, 0));
                     } else {
                         ClimbActionHandler.climb(player, new Animation(Animations.USE_LADDER_828), Location.create(2358, 5215, 0));
