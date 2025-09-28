@@ -1,6 +1,5 @@
-package content.global.plugin.iface.warning
+package content.global.plugin.iface
 
-import content.global.plugin.iface.FairyRing
 import content.region.kandarin.yanille.quest.itwatchtower.cutscene.EnclaveCutscene
 import core.api.*
 import core.game.component.Component
@@ -15,11 +14,12 @@ import shared.consts.*
 import core.game.dialogue.FaceAnim
 import core.game.event.FairyRingDialEvent
 import core.game.global.action.ClimbActionHandler.climb
+import core.game.interaction.IntType
+import core.game.interaction.QueueStrength
 import core.game.node.entity.player.link.TeleportManager
 import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.item.Item
 import core.game.world.GameWorld
-import core.game.world.map.RegionManager.getLocalNpcs
 
 enum class Warnings(val varbit: Int, val component: Int, val buttonId: Int, val action: (Player) -> Unit) {
     DAGANNOTH_KINGS_LADDER(Vars.VARBIT_CWS_WARNING_1_3851, Components.CWS_WARNING_1_574, 50, { teleport(it, Location.create(2899, 4449, 0)) }),
@@ -28,7 +28,7 @@ enum class Warnings(val varbit: Int, val component: Int, val buttonId: Int, val 
     STRONGHOLD_OF_SECURITY_LADDERS(Vars.VARBIT_CWS_WARNING_4_3854, Components.CWS_WARNING_4_579, 52, { WarningListener.handleStrongholdLadderWarning(it) }),
     PLAYER_OWNED_HOUSES(Vars.VARBIT_CWS_WARNING_5_3855, Components.CWS_WARNING_5_563, 55, { it.houseManager.toggleBuildingMode(it, true) }),
     DROPPED_ITEMS_IN_RANDOM_EVENTS(Vars.VARBIT_CWS_WARNING_6_3856, Components.CWS_WARNING_6_566, 54, {}),
-    WILDERNESS_DITCH(Vars.VARBIT_WILDERNESS_WARNING_382_3857, Components.WILDERNESS_WARNING_382, 67, { WarningListener.handleWildernessDitchWarning(it) }),
+    WILDERNESS_DITCH(Vars.VARBIT_WILDERNESS_WARNING_382_3857, Components.WILDERNESS_WARNING_382, 67, { WarningListener.handleWildernessWarnings(it) }),
     TROLLHEIM_WILDERNESS_ENTRANCE(Vars.VARBIT_CWS_WARNING_13_3858, Components.CWS_WARNING_13_572, 66, {}),
     OBSERVATORY_STAIRS(Vars.VARBIT_CWS_WARNING_9_3859, Components.CWS_WARNING_9_560, 62, { teleport(it, Location(2355, 9394, 0)) }),
     SHANTAY_PASS(Vars.VARBIT_CWS_WARNING_10_3860, Components.CWS_WARNING_10_565, 63, { WarningListener.handleShantayPassWarning(it) }),
@@ -63,7 +63,7 @@ class WarningListener : InteractionListener, InterfaceListener {
     override fun defineInterfaceListeners() {
         onOpen(Components.CWS_WARNING_24_581) { player, component ->
             increment(player, component.id)
-            true
+            return@onOpen true
         }
 
         Warnings.values.forEach { warning ->
@@ -77,30 +77,84 @@ class WarningListener : InteractionListener, InterfaceListener {
     }
 
     private fun handleInterfaceAction(player: Player, warning: Warnings, buttonId: Int) {
+        closeOverlay(player)
+        closeInterface(player)
         when (buttonId) {
-            18 -> handleConfirm(player, warning)
+            17 -> handleConfirm(player, warning)
+            18 -> handle(player, warning.component)
             20, 28 -> toggle(player, warning.component)
-            17 -> warning.action(player)
-            else -> {
-                closeOverlay(player)
-                closeInterface(player)
-            }
+            else -> return
         }
     }
 
     private fun handleConfirm(player: Player, warning: Warnings) {
-        closeOverlay(player)
-        closeInterface(player)
         warning.action(player)
         increment(player, warning.component)
     }
 
+    private val cwsWarnings = mapOf(
+        Components.CWS_WARNING_24_581 to Vars.VARBIT_CWS_WARNING_24_3872,
+        Components.CWS_WARNING_26_627 to Vars.VARBIT_CWS_WARNING_26_4132
+    )
+
+    fun handle(player: Player, component: Int) {
+        when (component) {
+            Components.WILDERNESS_WARNING_382 -> handleWilderness(player)
+            else -> handleCws(player, component)
+        }
+    }
+
+    private fun handleWilderness(player: Player) {
+        player.interfaceManager.close()
+        player.getAttribute<core.game.node.scenery.Scenery>("wildy_ditch")
+            ?.let { handleWildernessWarnings(player) }
+        increment(player, Components.WILDERNESS_WARNING_382)
+    }
+
+    private fun handleCws(player: Player, component: Int) {
+        val varbit = cwsWarnings[component]
+        if (varbit != null && getVarbit(player, varbit) >= 6) {
+            toggle(player, component)
+        } else {
+            increment(player, component)
+        }
+    }
+
+    private fun handleScenery(player: Player, warning: Warnings, node: core.game.node.scenery.Scenery) {
+        when (warning) {
+            Warnings.MORT_MYRE -> player.setAttribute("myre_gate", node)
+            Warnings.WILDERNESS_DITCH -> player.setAttribute("wildy_gate", node)
+            else -> {}
+        }
+        if (!isDisabled(player, warning)) openWarning(player, warning)
+        else warning.action(player)
+    }
+
+    override fun defineListeners() {
+        sceneryWarnings.forEach { (sceneryID, warning) ->
+            on(sceneryID, IntType.SCENERY, "go-through","climb-down","climb","open","climb-up","cross") { player, node ->
+                if ((sceneryID == 3506 || sceneryID == 3507) && player.location.y < 3458) {
+                    DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
+                    return@on true
+                }
+
+                handleScenery(player, warning, node.asScenery())
+                return@on true
+            }
+        }
+    }
+
     companion object {
-        private val towerDirections = mapOf(
-            NPCs.TOWER_ADVISOR_684 to "north",
-            NPCs.TOWER_ADVISOR_685 to "east",
-            NPCs.TOWER_ADVISOR_686 to "south",
-            NPCs.TOWER_ADVISOR_687 to "west"
+        private val sceneryWarnings = listOf(
+            Scenery.PASSAGE_37929 to Warnings.CORPOREAL_BEAST_DANGEROUS,
+            Scenery.PASSAGE_38811 to Warnings.CORPOREAL_BEAST_DANGEROUS,
+            Scenery.STAIRS_25432 to Warnings.OBSERVATORY_STAIRS,
+            Scenery.CLIMBING_ROPE_5946 to Warnings.LUMBRIDGE_SWAMP_CAVE_ROPE,
+            Scenery.DARK_HOLE_5947 to Warnings.LUMBRIDGE_SWAMP_CAVE_ROPE,
+            Scenery.GATE_3506 to Warnings.MORT_MYRE,
+            Scenery.GATE_3507 to Warnings.MORT_MYRE,
+            Scenery.TOWER_LADDER_2511 to Warnings.RANGING_GUILD,
+            Scenery.WILDERNESS_DITCH_23271 to Warnings.WILDERNESS_DITCH
         )
 
         private val ladderZones = listOf(
@@ -117,12 +171,15 @@ class WarningListener : InteractionListener, InterfaceListener {
         }
 
         @JvmStatic
+        fun isDisabled(player: Player, warning: Warnings): Boolean {
+            return getVarbit(player, warning.varbit) == 7
+        }
+
         fun toggle(player: Player, componentId: Int) {
             val warning = Warnings.values().find { it.component == componentId } ?: return
             toggleWarning(player, warning)
         }
 
-        @JvmStatic
         fun toggleWarning(player: Player, warning: Warnings) {
             val current = getVarbit(player, warning.varbit)
             if (current == 6) {
@@ -136,7 +193,6 @@ class WarningListener : InteractionListener, InterfaceListener {
             }
         }
 
-        @JvmStatic
         fun increment(player: Player, varbitId: Int) {
             Warnings.values().find { it.varbit == varbitId }?.let { warning ->
                 val currentStatus = getVarbit(player, warning.varbit)
@@ -154,7 +210,6 @@ class WarningListener : InteractionListener, InterfaceListener {
             }
         }
 
-        @JvmStatic
         private fun enableToggleButton(player: Player, warning: Warnings) {
             val toggleButton = when (warning.component) {
                 Components.WILDERNESS_WARNING_382 -> 26
@@ -164,83 +219,61 @@ class WarningListener : InteractionListener, InterfaceListener {
             sendInterfaceConfig(player, warning.component, toggleButton, false)
         }
 
-        @JvmStatic
-        fun isDisabled(player: Player, warning: Warnings): Boolean {
-            return getVarbit(player, warning.varbit) == 7
-        }
+        fun handleWildernessWarnings(player: Player) {
+            val ditch = player.getAttribute<core.game.node.scenery.Scenery>("wildy_ditch")
+            if (ditch != null) {
+                player.removeAttribute("wildy_ditch")
 
-        @JvmStatic
-        fun handleWildDitchJump(player: Player, ditch: core.game.node.scenery.Scenery) {
-            player.removeAttribute("wildy_ditch")
-            val (start, end) = getDitchLocations(player.location, ditch.location, ditch.rotation)
-            forceMove(player, start, end, 0, 60, null, Animations.JUMP_OVER_OBSTACLE_6132)
-            playAudio(player, Sounds.JUMP2_2462, 3)
-        }
-
-        @JvmStatic
-        fun handleGate(player: Player) {
-            val gate = player.getAttribute<core.game.node.scenery.Scenery>("wildy_gate") ?: return
-            player.removeAttribute("wildy_gate")
-            DoorActionHandler.handleAutowalkDoor(player, gate)
-        }
-
-        @JvmStatic
-        private fun getDitchLocations(
-            playerLocation: Location, ditchLocation: Location, rotation: Int
-        ): Pair<Location, Location> {
-            val (x, y) = playerLocation.x to playerLocation.y
-            return if (rotation % 2 == 0) {
-                if (y <= ditchLocation.y) Location.create(x, ditchLocation.y - 1, 0) to Location.create(
-                    x, ditchLocation.y + 2, 0
-                )
-                else Location.create(x, ditchLocation.y + 2, 0) to Location.create(x, ditchLocation.y - 1, 0)
-            } else {
-                if (x > ditchLocation.x) Location.create(
-                    ditchLocation.x + 2, y, 0
-                ) to Location.create(ditchLocation.x - 1, y, 0)
-                else Location.create(ditchLocation.x - 1, y, 0) to Location.create(ditchLocation.x + 2, y, 0)
+                val (start, end) = getDitchLocations(player.location, ditch.location, ditch.rotation)
+                if (player.location.getDistance(ditch.location) < 3) {
+                    forceMove(player, start, end, 0, 60, null, Animations.JUMP_OVER_OBSTACLE_6132)
+                    playAudio(player, Sounds.JUMP2_2462, 3)
+                } else {
+                    queueScript(player, 0, QueueStrength.NORMAL) {
+                        forceMove(player, start, end, 0, 60, null, Animations.JUMP_OVER_OBSTACLE_6132)
+                        playAudio(player, Sounds.JUMP2_2462, 3)
+                        return@queueScript stopExecuting(player)
+                    }
+                }
+                return
             }
         }
 
-        @JvmStatic
+        private fun getDitchLocations(playerLocation: Location, ditchLocation: Location, rotation: Int): Pair<Location, Location> {
+            val (x, y) = playerLocation.x to playerLocation.y
+            return if (rotation % 2 == 0) {
+                if (y <= ditchLocation.y) Location.create(x, ditchLocation.y - 1, 0) to Location.create(x, ditchLocation.y + 2, 0) else Location.create(x, ditchLocation.y + 2, 0) to Location.create(x, ditchLocation.y - 1, 0)
+            } else {
+                if (x > ditchLocation.x) Location.create(ditchLocation.x + 2, y, 0) to Location.create(ditchLocation.x - 1, y, 0) else Location.create(ditchLocation.x - 1, y, 0) to Location.create(ditchLocation.x + 2, y, 0)
+            }
+        }
+
         fun handleCorporalBeastWarning(player: Player) {
-            if (hasRequirement(player, Quests.SUMMERS_END) && player.getAttribute(
-                    "corp-beast-cave-delay", 0
-                ) <= GameWorld.ticks
-            ) {
+            if (hasRequirement(player, Quests.SUMMERS_END) && player.getAttribute("corp-beast-cave-delay", 0) <= GameWorld.ticks) {
                 player.properties.teleportLocation = player.location.transform(4, 0, 0)
                 player.setAttribute("corp-beast-cave-delay", GameWorld.ticks + 5)
             }
         }
 
-        @JvmStatic
         fun handleRaningGuildWarning(player: Player) {
-            climb(
-                player,
-                core.game.world.update.flag.context.Animation(Animations.USE_LADDER_828),
-                Location(2668, 3427, 2)
-            )
-            getLocalNpcs(Location.create(2668, 3427, 2)).forEach { n ->
-                towerDirections[n.id]?.let { dir -> sendChat(n, "The $dir tower is occupied, get them!") }
+            climb(player, core.game.world.update.flag.context.Animation(Animations.USE_LADDER_828), Location.create(2668, 3427, 1))
+        }
+
+        fun handleMortMyreGateWarning(player: Player) {
+            val gate = player.getAttribute<core.game.node.scenery.Scenery>("myre_gate")
+            if (gate != null) {
+                player.removeAttribute("myre_gate")
+            DoorActionHandler.handleAutowalkDoor(player, gate.asScenery())
+            sendMessage(player, "You walk into the gloomy atmosphere of Mort Myre.", 3)
             }
         }
 
-        @JvmStatic
-        fun handleMortMyreGateWarning(player: Player) {
-            val targetScenery =
-                if (player.location.x > 3443) getScenery(3444, 3458, 0)!! else getScenery(3443, 3458, 0)!!
-            DoorActionHandler.handleAutowalkDoor(player, targetScenery)
-            sendMessage(player, "You walk into the gloomy atmosphere of Mort Myre.", 3)
-        }
-
-        @JvmStatic
         fun handleFairyRingWarning(player: Player) {
             player.dispatch(FairyRingDialEvent(FairyRing.AJQ))
             teleport(player, FairyRing.AJQ.tile!!, TeleportManager.TeleportType.FAIRY_RING)
             if (!player.savedData.globalData.hasTravelLog(2)) player.savedData.globalData.setTravelLog(2)
         }
 
-        @JvmStatic
         fun handleSwampCaveWarning(player: Player) {
             if (!player.getSavedData().globalData.hasTiedLumbridgeRope()) {
                 sendDialogue(player, "There is a sheer drop below the hole. You will need a rope.")
@@ -253,34 +286,12 @@ class WarningListener : InteractionListener, InterfaceListener {
             }
         }
 
-        @JvmStatic
         fun handleShantayPassWarning(player: Player) {
             if (!removeItem(player, Item(Items.SHANTAY_PASS_1854, 1))) {
-                sendNPCDialogue(
-                    player,
-                    NPCs.SHANTAY_GUARD_838,
-                    "You need a Shantay pass to get through this gate. See Shantay, he will sell you one for a very reasonable price.",
-                    FaceAnim.NEUTRAL
-                )
+                sendNPCDialogue(player, NPCs.SHANTAY_GUARD_838, "You need a Shantay pass to get through this gate. See Shantay, he will sell you one for a very reasonable price.", FaceAnim.NEUTRAL)
             } else {
                 sendMessage(player, "You go through the gate.")
-                forceMove(
-                    player,
-                    player.location,
-                    player.location.transform(0, if (player.location.y > 3116) -2 else 2, 0),
-                    30,
-                    120,
-                    null
-                )
-            }
-        }
-
-        @JvmStatic
-        fun handleWildernessDitchWarning(player: Player) {
-            player.getAttribute<core.game.node.scenery.Scenery>("wildy_ditch")?.let {
-                handleWildDitchJump(player, it)
-            } ?: player.getAttribute<core.game.node.scenery.Scenery>("wildy_gate")?.let {
-                handleGate(player)
+                forceMove(player, player.location, player.location.transform(0, if (player.location.y > 3116) -2 else 2, 0), 30, 120, null)
             }
         }
 
@@ -309,7 +320,7 @@ class WarningListener : InteractionListener, InterfaceListener {
                 EnclaveCutscene(player).start(true)
             }
             sendMessage(player, "You run past the guard while he's busy.")
-
         }
     }
 }
+

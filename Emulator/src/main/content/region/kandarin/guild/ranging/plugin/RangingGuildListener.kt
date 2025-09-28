@@ -5,11 +5,53 @@ import core.game.container.impl.EquipmentContainer
 import core.game.dialogue.FaceAnim
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
+import core.game.node.entity.Entity
+import core.game.node.entity.player.Player
+import core.game.world.map.Location
+import core.game.world.map.RegionManager
+import core.game.world.map.RegionManager.getLocalNpcs
+import core.game.world.map.zone.ZoneBorders
 import shared.consts.Items
 import shared.consts.NPCs
+import shared.consts.Regions
 import shared.consts.Scenery
 
-class RangingGuildListener : InteractionListener {
+class RangingGuildListener : InteractionListener, MapArea {
+
+    override fun defineAreaBorders(): Array<ZoneBorders> {
+        return arrayOf(ZoneBorders.forRegion(Regions.RANGING_GUILD_10549))
+    }
+
+    override fun areaEnter(entity: Entity) {
+        if (entity !is Player) return
+
+        val player = entity
+        val players = RegionManager.getLocalPlayers(player)
+
+        val inAreaPlayers = players.filter { p ->
+            defineAreaBorders().any { zone -> inBorders(p, zone) }
+        }
+
+        if (inAreaPlayers.size > 1) {
+            return
+        }
+
+        getLocalNpcs(Location.create(2668, 3427, 2)).forEach { n ->
+            towerDirections[n.id]?.let { dir ->
+                sendChat(n, "The $dir tower is occupied, get them!")
+            }
+        }
+    }
+
+    companion object {
+        private val towerDirections = mapOf(
+            NPCs.TOWER_ADVISOR_684 to "north",
+            NPCs.TOWER_ADVISOR_685 to "east",
+            NPCs.TOWER_ADVISOR_686 to "south",
+            NPCs.TOWER_ADVISOR_687 to "west"
+        )
+    }
+
     override fun defineListeners() {
 
         on(NPCs.RANGING_GUILD_DOORMAN_679, IntType.NPC, "talk-to") { player, node ->
