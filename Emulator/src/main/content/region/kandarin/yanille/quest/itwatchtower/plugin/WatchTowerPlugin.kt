@@ -3,9 +3,8 @@ package content.region.kandarin.yanille.quest.itwatchtower.plugin
 import content.data.GameAttributes
 import content.data.LightSource
 import content.data.items.SkillingTool
-import content.global.plugin.iface.warning.WarningListener
-import content.global.plugin.iface.warning.Warnings
-import content.region.kandarin.yanille.quest.itwatchtower.cutscene.EnclaveCutscene
+import content.global.plugin.iface.WarningListener
+import content.global.plugin.iface.Warnings
 import content.region.kandarin.yanille.quest.itwatchtower.dialogue.BattlementDialogue
 import content.region.kandarin.yanille.quest.itwatchtower.dialogue.CityGuardDialogue
 import content.region.kandarin.yanille.quest.itwatchtower.dialogue.OgreGuardNorthWestGateDialogue
@@ -450,7 +449,7 @@ class WatchTowerPlugin : InteractionListener {
                     WarningListener.openWarning(player, Warnings.WATCHTOWER_SHAMAN_CAVE)
                     return@addDialogueAction
                 }
-                passEnclaveGuard(player)
+                WarningListener.handleWatchTowerWarning(player)
             }
             return@onUseWith true
         }
@@ -667,78 +666,31 @@ class WatchTowerPlugin : InteractionListener {
     }
 
     /**
-     * Lever Dialogue (Watchtower Quest reward)
+     * Lever Dialogue (Watchtower Quest reward).
      */
     inner class LeverDialogue : DialogueFile() {
 
         override fun handle(componentID: Int, buttonID: Int) {
             when (stage) {
-                0 -> {
-                    npc(
-                        FaceAnim.HAPPY,
-                        "Marvellous!, It works! The town will now be safe."
-                    )
-                    stage++
-                }
-
-                1 -> {
-                    npc(
-                        FaceAnim.HAPPY,
-                        "Your help was invaluable. Take this payment as a token",
-                        "of my gratitude."
-                    )
-                    stage++
-                }
-
-                2 -> {
-                    npcl(
-                        FaceAnim.HAPPY,
-                        "Also, let me improve your Magic level for you."
-                    )
-                    stage++
-                }
-
-                3 -> {
-                    npc(
-                        FaceAnim.HAPPY,
-                        "Here is a special item for you - it's a new spell. Read",
-                        "the scroll and you will be able to teleport yourself here."
-                    )
-                    stage++
-                }
-
-                4 -> {
-                    end()
-                    finishQuest(player!!, Quests.WATCHTOWER)
-                }
+                0 -> npc(FaceAnim.HAPPY, "Marvellous!, It works! The town will now be safe.").also { stage++ }
+                1 -> npc(FaceAnim.HAPPY, "Your help was invaluable. Take this payment as a token", "of my gratitude.").also { stage++ }
+                2 -> npcl(FaceAnim.HAPPY, "Also, let me improve your Magic level for you.").also { stage++ }
+                3 -> npc(FaceAnim.HAPPY, "Here is a special item for you - it's a new spell. Read", "the scroll and you will be able to teleport yourself here.").also { stage++ }
+                4 -> end().also { finishQuest(player!!, Quests.WATCHTOWER) }
             }
         }
     }
 
     /**
-     * Represents the ogre guard dialogue. (Wall passage with rock cake bribe)
+     * Represents the ogre guard dialogue.
+     * (Wall passage with rock cake bribe).
      */
     inner class OgreGuardDialogue : DialogueFile() {
 
         override fun handle(componentID: Int, buttonID: Int) {
             when (stage) {
-                0 -> {
-                    player(
-                        FaceAnim.HALF_THINKING,
-                        "How about this?"
-                    )
-                    stage++
-                }
-
-                1 -> {
-                    npc(
-                        FaceAnim.OLD_DEFAULT,
-                        "Well, well, look at this. My favourite: rock cake! Okay,",
-                        "we will let it through."
-                    )
-                    stage++
-                }
-
+                0 -> player(FaceAnim.HALF_THINKING, "How about this?").also { stage++ }
+                1 -> npc(FaceAnim.OLD_DEFAULT, "Well, well, look at this. My favourite: rock cake! Okay,", "we will let it through.").also { stage++ }
                 2 -> {
                     end ()
                     val startLocation = Location.create(2506, 3012, 0)
@@ -751,44 +703,29 @@ class WatchTowerPlugin : InteractionListener {
     }
 
     /**
-     * Skavid Entrance Dialogue (Cave entrance check for light source)
+     * Represents the skavid entrance dialogue.
+     * (Cave entrance check for light source).
      */
-    class SkavidEntranceDialogue(private val location: Location? = null) : DialogueFile() {
+    inner class SkavidEntranceDialogue(private val location: Location? = null) : DialogueFile() {
 
         override fun handle(componentID: Int, buttonID: Int) {
             when (stage) {
-                0 -> {
-                    sendDialogueLines(player!!,
-                        "If your light source goes out down there you'll be in trouble! Are",
-                        "you sure you want to go in without a tinderbox?"
-                    )
-                    stage++
-                }
-
-                1 -> {
-                    options(
-                        "I'll be fine without a tinderbox.",
-                        "I'll come back with a tinderbox."
-                    )
-                }
-
+                0 -> sendDialogueLines(player!!, "If your light source goes out down there you'll be in trouble! Are", "you sure you want to go in without a tinderbox?").also { stage++ }
+                1 -> options("I'll be fine without a tinderbox.", "I'll come back with a tinderbox.").also { stage++ }
                 2 -> {
-                    if (buttonID == 1) {
-                        if (location != null) {
-                            if (!LightSource.hasActiveLightSource(player!!)) {
-                                teleport(player!!, Location(2498, 9451, 0), TeleportManager.TeleportType.INSTANT)
-                                registerLogoutListener(player!!, "skavid_cave") {
-                                    removeAttribute(player!!, GameAttributes.WATCHTOWER_DARK_AREA)
-                                }
-                            } else {
-                                teleport(player!!, location, TeleportManager.TeleportType.INSTANT)
-                            }
-                            sendMessage(player!!, "You enter the cave...")
-                        }
+                    if (buttonID != 1 || location == null) {
                         end()
+                        return
                     }
-                    if (buttonID == 2) {
-                        end()
+                    val p = player ?: return
+                    if (!LightSource.hasActiveLightSource(p)) {
+                        teleport(p, Location(2498, 9451, 0), TeleportManager.TeleportType.INSTANT)
+                        registerLogoutListener(p, "skavid_cave") {
+                            removeAttribute(p, GameAttributes.WATCHTOWER_DARK_AREA)
+                        }
+                    } else {
+                        teleport(p, location, TeleportManager.TeleportType.INSTANT)
+                        sendMessage(p, "You enter the cave...")
                     }
                 }
             }
@@ -796,54 +733,28 @@ class WatchTowerPlugin : InteractionListener {
     }
 
     /**
-     * Represents the gap dialogue (bridge crossing with toll payment)
+     * Represents the gap dialogue.
+     * (bridge crossing with toll payment).
      */
     inner class GapDialogue : DialogueFile() {
 
         override fun handle(componentID: Int, buttonID: Int) {
             when (stage) {
-                0 -> {
-                    npc(FaceAnim.OLD_DEFAULT, "Oi! Little thing. If you want to cross here, you must", "pay me 20 gold pieces first!")
-                    stage++
-                }
-
-                1 -> {
-                    player(FaceAnim.HALF_ASKING, "You want me to give you 20 gold pieces to let me", "jump off a bridge?")
-                    stage++
-                }
-
-                2 -> {
-                    npcl(FaceAnim.OLD_DEFAULT, "That's what I said, like it or lump it.")
-                    stage++
-                }
-
-                3 -> {
-                    options("Okay, I'll pay it.", "Forget it, I'm not paying.")
-                    stage++
-                }
-
-                4 -> {
-                    if (buttonID == 1) {
-                        // Pay attempt
-                        if (inInventory(player!!, Items.COINS_995, 20)) {
-                            removeItem(player!!, Item(Items.COINS_995, 20))
-                            player(FaceAnim.HALF_ASKING, "Okay, I'll pay it.")
-                            stage = 5
-                        } else {
-                            npcl(FaceAnim.OLD_DEFAULT, "You don't have enough gold pieces!")
-                            stage = END_DIALOGUE
-                        }
-                    } else if (buttonID == 2) {
-                        playerl(FaceAnim.HALF_ASKING, "Forget it, I'm not paying.")
-                        stage = 6
+                0 -> npc(FaceAnim.OLD_DEFAULT, "Oi! Little thing. If you want to cross here, you must", "pay me 20 gold pieces first!").also { stage++ }
+                1 -> player(FaceAnim.HALF_ASKING, "You want me to give you 20 gold pieces to let me", "jump off a bridge?").also { stage++ }
+                2 -> npcl(FaceAnim.OLD_DEFAULT, "That's what I said, like it or lump it.").also { stage++ }
+                3 -> options("Okay, I'll pay it.", "Forget it, I'm not paying.").also { stage++ }
+                4 -> when (buttonID) {
+                    1 -> if (!removeItem(player!!, Item(Items.COINS_995, 20))){
+                        npcl(FaceAnim.OLD_DEFAULT, "You don't have enough gold pieces!")
+                        stage = END_DIALOGUE
+                    } else {
+                        player(FaceAnim.HALF_ASKING, "Okay, I'll pay it.").also { stage = 5 }
                     }
-                }
+                    2 -> playerl(FaceAnim.HALF_ASKING, "Forget it, I'm not paying.").also { stage = 6 }
 
-                5 -> {
-                    npcl(FaceAnim.OLD_DEFAULT, "A wise choice, little thing.")
-                    stage++
                 }
-
+                5 -> npcl(FaceAnim.OLD_DEFAULT, "A wise choice, little thing.").also { stage++ }
                 6 -> {
                     if (buttonID == 2) {
                         end()
@@ -852,13 +763,7 @@ class WatchTowerPlugin : InteractionListener {
                     } else {
                         end ()
                         val dx = if (player!!.location.x >= 2531) -1 else 1
-                        forceMove(
-                            player!!,
-                            player!!.location,
-                            player!!.location.transform(dx, 3, 0),
-                            0, 90, null,
-                            Animations.JUMP_OBSTACLE_5355
-                        ) {
+                        forceMove(player!!, player!!.location, player!!.location.transform(dx, 3, 0), 0, 90, null, Animations.JUMP_OBSTACLE_5355) {
                             sendPlayerDialogue(player!!, "Phew! I just made it.")
                             sendMessage(player!!, "You daringly jump across the chasm.")
                         }
@@ -879,19 +784,22 @@ class WatchTowerPlugin : InteractionListener {
         val CRYSTALS = intArrayOf(Items.CRYSTAL_2383,Items.CRYSTAL_2382,Items.CRYSTAL_2381,Items.CRYSTAL_2380)
         val PILLARS = intArrayOf(Scenery.PILLAR_21546,Scenery.PILLAR_20022,Scenery.PILLAR_20026,Scenery.PILLAR_20030)
 
-
         /**
          * Searches a bush for a quest-related item.
          */
         private fun searchBush(player: Player, item: Pair<Int, String>?): Boolean {
-            when {
-                item == null || getQuestStage(player, Quests.WATCHTOWER) < 1 -> sendPlayerDialogue(player, "Hmmm, nothing here.", FaceAnim.NEUTRAL)
-                !inInventory(player, item.first) -> {
-                    sendPlayerDialogue(player, item.second, FaceAnim.NEUTRAL)
-                    addItem(player, item.first)
-                }
-                else -> sendPlayerDialogue(player, "I have already searched this place.", FaceAnim.NEUTRAL)
+            if (item == null || getQuestStage(player, Quests.WATCHTOWER) < 1) {
+                sendPlayerDialogue(player, "Hmmm, nothing here.", FaceAnim.NEUTRAL)
+                return true
             }
+
+            if (!inInventory(player, item.first)) {
+                sendPlayerDialogue(player, item.second, FaceAnim.NEUTRAL)
+                addItem(player, item.first)
+                return true
+            }
+
+            sendPlayerDialogue(player, "I have already searched this place.", FaceAnim.NEUTRAL)
             return true
         }
 
