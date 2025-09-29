@@ -1,21 +1,21 @@
-<p align="center">
-  <img src="" alt="Logo" width="200">
-</p>
+<div align="center">
 
-<p align="center">
-  A fork of <a href="https://gitlab.com/2009scape/2009scape">2009Scape</a> with AGPL-3.0 licensing.
-</p>
+<img src="" alt="Logo" width="200">
 
-<p align="center">
-  <a href="#prerequisites">Prerequisites</a> •
-  <a href="#fork--clone">Fork & Clone</a> •
-  <a href="#import-project-in-intellij">Import Project</a> •
-  <a href="#setup-git--ssh">Git & SSH</a> •
-  <a href="#build-project">Build</a> •
-  <a href="#run-project">Run</a> •
-  <a href="#contributing">Contributing</a> •
-  <a href="#license">License</a>
-</p>
+</div>
+<div align="center">
+A fork of <a href="https://gitlab.com/2009scape/2009scape">2009Scape</a> with AGPL-3.0 licensing.
+</div>
+<div align="center">
+<a href="#prerequisites">Prerequisites</a> •
+<a href="#fork--clone">Fork & Clone</a> •
+<a href="#import-project-in-intellij">Import Project</a> •
+<a href="#setup-git--ssh">Git & SSH</a> •
+<a href="#build-project">Build</a> •
+<a href="#run-project">Run</a> •
+<a href="#contributing">Contributing</a> •
+<a href="#license">License</a>
+</div>
 
 ---
 
