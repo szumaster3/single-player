@@ -1,35 +1,45 @@
-This project is a **fork** of [2009Scape](https://gitlab.com/2009scape/2009scape).
+<p align="center">
+  <img src="" alt="Logo" width="200">
+</p>
 
-This fork is licensed under the **GNU Affero General Public License v3.0 (AGPL-3.0)**.  
-You are free to use, modify, and distribute this software under the terms of the AGPL-3.0.
+<p align="center">
+  A fork of <a href="https://gitlab.com/2009scape/2009scape">2009Scape</a> with AGPL-3.0 licensing.
+</p>
 
-All changes made in this fork are also licensed under the AGPL-3.0.  
-For the full license text, see the [LICENSE](./LICENSE) file or visit [gnu.org](https://www.gnu.org/licenses/agpl-3.0.html).
-
-***
-
-### Prerequisites
-
-Before setting up the project, make sure you have the following installed:
-
-* **Java 11**: Download from [Oracle](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html)
-  or [AdoptOpenJDK](https://adoptium.net/temurin/releases/?version=11).
-* **IntelliJ IDEA**: Download from [JetBrains](https://www.jetbrains.com/idea/download/).
-
-> *Windows users:* Enable **Developer Mode** in Windows settings before proceeding.
+<p align="center">
+  <a href="#prerequisites">Prerequisites</a> •
+  <a href="#fork--clone">Fork & Clone</a> •
+  <a href="#import-project-in-intellij">Import Project</a> •
+  <a href="#setup-git--ssh">Git & SSH</a> •
+  <a href="#build-project">Build</a> •
+  <a href="#run-project">Run</a> •
+  <a href="#contributing">Contributing</a> •
+  <a href="#license">License</a>
+</p>
 
 ---
 
-### Fork & Clone
+## Prerequisites
 
-1. Fork the repository on GitLab to your own account.
-2. Clone **your forked repository** to your local machine:
+Before setting up the project, ensure the following:
+
+- **Java 11** – Download from [Oracle](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html) or [Adoptium](https://adoptium.net/temurin/releases/?version=11)
+- **IntelliJ IDEA** – Download from [JetBrains](https://www.jetbrains.com/idea/download/)
+
+> Windows users: Enable **Developer Mode** before proceeding.
+
+---
+
+## Fork & Clone
+
+1. Fork the repository on GitLab.
+2. Clone your fork:
 
 ```bash
 git clone <your-fork-ssh-or-https-url>
 ```
 
-3. Navigate to the cloned directory:
+3. Navigate into the folder:
 
 ```bash
 cd <your-project-folder>
@@ -37,62 +47,56 @@ cd <your-project-folder>
 
 ---
 
-### Import Project in IntelliJ
+## Import Project in IntelliJ
 
 1. Open IntelliJ IDEA.
-2. Select `File` > `Open...`.
-3. Navigate to the folder where you cloned the repository (project root).
-4. Click `OK` to open the project.
-5. IntelliJ should detect the `pom.xml` file and import the Maven project automatically.
-6. Set **Project SDK** to Java 11 or higher if not set automatically.
+2. Select `File` > `Open...` and choose the project root.
+3. IntelliJ should detect `pom.xml` and import the Maven project automatically.
+4. Set Project SDK to **Java 11** or higher.
 
 ---
 
-### Setup Git & SSH
+## Setup Git & SSH
 
-* Generate a new SSH key if you don't have one:
+- Generate SSH key if you don't have one:
 
 ```bash
-ssh-keygen -t ed25519 -C "<your-email-or-comment>"
+ssh-keygen -t ed25519 -C "<example@example.eu>"
 ```
 
-* Add your SSH public key to your GitLab account.
-* Configure your Git identity:
+- Add your public key to GitLab.
+- Configure Git:
 
 ```bash
-git config --global user.name "user"
-git config --global user.email "your_email@example.com"
+git config --global user.name "example"
+git config --global user.email "example@example.eu"
 ```
 
 ---
 
-### Build Project
+## Build Project
 
-From the root of the project directory, run:
+Run from the project root:
 
 ```bash
 mvn clean install
 ```
 
-This will compile the project and package all necessary files.
+This compiles and packages all files.
 
 ---
 
-### Run Project
-
-Run the server/client using the Maven exec plugin:
+## Run Project
 
 ```bash
 mvn exec:java -f pom.xml
 ```
 
-> Tip: If you want to run from IntelliJ, right-click `pom.xml` > `Run 'exec:java'`.
+> Tip: Run via IntelliJ by right-clicking `pom.xml` > `Run 'exec:java'`.
 
 ---
 
-### Contributing
-
-We welcome contributions! Please follow these steps:
+## Contributing
 
 1. Fork the repository.
 2. Create a feature branch:
@@ -101,26 +105,27 @@ We welcome contributions! Please follow these steps:
 git checkout -b feature/my-feature
 ```
 
-3. Make your changes and commit:
+3. Commit changes:
 
 ```bash
-git commit -am "text"
+git commit -am "Changes"
 ```
 
-4. Push your branch and open a merge request.
+4. Push and open a merge request.
 
 ---
 
-### Troubleshooting
+## Troubleshooting
 
-* **Java version mismatch**: Ensure `java -version` returns **11** or higher.
-* **Maven issues**: Run `mvn -version` to verify Maven is installed correctly.
-* **IDE errors**: Reimport the Maven project or invalidate IntelliJ caches (`File > Invalidate Caches / Restart`).
-* **SSH issues**: Make sure your public key is correctly added to GitLab.
+- **Java version mismatch**: `java -version` should be 11+.
+- **Maven issues**: Check with `mvn -version`.
+- **IDE errors**: Reimport Maven project or invalidate caches (`File > Invalidate Caches / Restart`).
+- **SSH issues**: Ensure public key is added to GitLab.
 
 ---
 
-### License
+## License
 
-This project is licensed under the **AGPL-3.0**. See the [LICENSE](./LICENSE) file
-or [gnu.org](https://www.gnu.org/licenses/agpl-3.0.html) for details.
+This project is licensed under **AGPL-3.0**. See [LICENSE](./LICENSE) or [gnu.org](https://www.gnu.org/licenses/agpl-3.0.html).
+
+
