@@ -79,10 +79,10 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
-        <!-- jetbrains://idea/navigate/reference?project=530-server&path=Constants -->
+        <!-- jetbrains://idea/navigate/reference?project=openscape&path=Config -->
         <dependency>
             <groupId>org.rsps</groupId>
-            <artifactId>Constants</artifactId>
+            <artifactId>Config</artifactId>
             <version>1.0.0</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.mysql/mysql-connector -->
