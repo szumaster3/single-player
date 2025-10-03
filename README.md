@@ -1,4 +1,8 @@
 <div align="center">
+<img src="https://imgur.com/yGvSk2X.png" />
+</div>
+
+<div align="center">
 A fork of <a href="https://gitlab.com/2009scape/2009scape">2009Scape</a> with AGPL-3.0 licensing.
 </div>
 <div align="center">

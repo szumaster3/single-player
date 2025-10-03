@@ -10,8 +10,8 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>Constants</module>
-        <module>Emulator</module>
+        <module>Config</module>
+        <module>Server</module>
     </modules>
 
     <properties>
