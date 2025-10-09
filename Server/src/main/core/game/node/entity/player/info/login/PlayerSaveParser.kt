@@ -192,8 +192,37 @@ class PlayerSaveParser(val player: Player) {
     }
 
     fun parseFarming() {
-        // Implement if needed
+        /*
+        val farmingData = saveFile?.getAsJsonObject("farming") ?: return
+
+        // Equipment
+        farmingData.getAsJsonArray("equipment")?.let { equipmentData ->
+            player.farmingManager.equipment.container.parse(equipmentData)
+        }
+
+        // Compost bins
+        farmingData.getAsJsonArray("bins")?.let { compostData ->
+            player.farmingManager.compostManager.parse(compostData)
+        }
+
+        // Wrappers
+        farmingData.getAsJsonArray("wrappers")?.let { wrapperData ->
+            player.farmingManager.parseWrappers(wrapperData)
+        }
+
+        // Seedlings
+        farmingData.getAsJsonArray("seedlings")?.let { seedlingData ->
+            player.farmingManager.seedlingManager.parse(seedlingData)
+        }
+
+        // Farming amulet wrapper
+        farmingData.get("farmingAmuletWrapperID")?.let { wrapperId ->
+            val id = wrapperId.asInt
+            player.farmingManager.amuletBoundWrapper = player.farmingManager.getPatchWrapper(id)
+        }
+        */
     }
+
 
     fun parseConfigs() {
         val configs = saveFile?.getAsJsonArray("configs") ?: return
@@ -268,7 +297,6 @@ class PlayerSaveParser(val player: Player) {
             val s = stat.asJsonObject
             val index = s.get("index")?.asString?.toIntOrNull() ?: continue
             val value = s.get("value")?.asString?.toIntOrNull() ?: continue
-            // TODO: process stats as needed
         }
     }
 

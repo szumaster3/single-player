@@ -410,7 +410,6 @@ public class Player extends Entity {
         }
         Repository.getDisconnectionQueue().remove(getName());
         Repository.getDisconnectionQueue().add(this, true);
-        // updateDetails(this.details);
         details.save();
     }
 
@@ -419,7 +418,6 @@ public class Player extends Entity {
      */
     public void finishClear() {
         if (!isArtificial()) GameWorld.getLogoutListeners().forEach((it) -> it.logout(this));
-        //updatePlayTime();
 
         setPlaying(false);
         getWalkingQueue().reset();
@@ -1034,26 +1032,6 @@ public class Player extends Entity {
         details.getSession().setObject(this);
         this.details = details;
     }
-
-    /**
-     * Update play time.
-     */
-    //private void updatePlayTime() {
-    //    if (this.details == null || this.details.getUsername() == null) {
-    //        this.details = PlayerDetails.getDetails(this.getUsername());
-    //    }
-//
-    //    long currentTime = System.currentTimeMillis();
-    //    long sessionStart = this.details.getLastLogin();
-//
-    //    if (sessionStart > 0) {
-    //        long playedThisSession = currentTime - sessionStart;
-    //        long totalPlayed = this.details.getTimePlayed() + playedThisSession;
-    //        this.details.setTimePlayed(totalPlayed);
-    //    }
-//
-    //    this.details.save();
-    //}
 
     /**
      * Allow removal boolean.

@@ -10,9 +10,12 @@ import shared.consts.Items
 
 @Initializable
 class ItemKitsCommandSet : CommandSet(Privilege.ADMIN) {
-    private val farmKitItems = arrayListOf(Items.RAKE_5341, Items.SPADE_952, Items.SEED_DIBBER_5343, Items.WATERING_CAN8_5340, Items.SECATEURS_5329, Items.GARDENING_TROWEL_5325)
-    private val runeKitItems = Runes.values().map { it.id }.toIntArray()
-    private val talismanKitItems = Talisman.values().map { it.item.id }.toIntArray()
+    private val farmKit = arrayListOf(Items.RAKE_5341, Items.SPADE_952, Items.SEED_DIBBER_5343, Items.WATERING_CAN8_5340, Items.SECATEURS_5329, Items.GARDENING_TROWEL_5325)
+    private val talismanKit = Talisman.values().map { it.item.id }.toIntArray()
+    private val runeKit = Runes.values()
+        .filter { "STAFF" !in it.name }
+        .map { it.id }
+        .toIntArray()
 
     override fun defineCommands() {
 
@@ -26,7 +29,7 @@ class ItemKitsCommandSet : CommandSet(Privilege.ADMIN) {
             usage = "::talismankit",
             description = "Provides a set of talisman items.",
         ) { player, _ ->
-            for (item in talismanKitItems) {
+            for (item in talismanKit) {
                 player.inventory.add(Item(item))
             }
             return@define
@@ -42,7 +45,7 @@ class ItemKitsCommandSet : CommandSet(Privilege.ADMIN) {
             usage = "::farmkit",
             description = "Provides a kit of various farming equipment.",
         ) { player, _ ->
-            for (item in farmKitItems) {
+            for (item in farmKit) {
                 player.inventory.add(Item(item))
             }
             return@define
@@ -58,7 +61,7 @@ class ItemKitsCommandSet : CommandSet(Privilege.ADMIN) {
             usage = "::runekit",
             description = "Gives 1k of each Rune type.",
         ) { player, _ ->
-            for (item in runeKitItems) {
+            for (item in runeKit) {
                 addItem(player, item, 1000)
             }
             return@define

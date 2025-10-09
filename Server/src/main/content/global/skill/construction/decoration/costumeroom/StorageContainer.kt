@@ -4,85 +4,45 @@ import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 
 class StorageContainer {
-    private val stored: MutableMap<StorableType, MutableList<Int>> = mutableMapOf()
-    private val currentPage: MutableMap<StorableType, Int> = mutableMapOf()
+    private val stored = mutableMapOf<StorableType, MutableList<Int>>()
+    private val currentPage = mutableMapOf<StorableType, Int>()
 
-    val storedItems: List<Int>
-        get() = stored.values.flatten()
-
-    fun addItem(type: StorableType, itemId: Int) {
-        stored.getOrPut(type) { mutableListOf() }.add(itemId)
-    }
+    fun addItem(type: StorableType, id: Int) = stored.getOrPut(type) { mutableListOf() }.add(id)
 
     fun withdraw(type: StorableType, item: Storable) {
         val id = item.takeIds.firstOrNull() ?: item.displayId
         stored[type]?.remove(id)
     }
 
-    fun contains(type: StorableType, itemId: Int): Boolean {
-        return stored[type]?.contains(itemId) == true
-    }
+    fun contains(type: StorableType, id: Int) = id in (stored[type] ?: emptyList())
 
-    fun getItems(type: StorableType): List<Int> {
-        return stored[type]?.toList() ?: emptyList()
-    }
+    fun getItems(type: StorableType) = stored[type]?.toList() ?: emptyList()
 
-    fun getPageIndex(type: StorableType): Int = currentPage.getOrDefault(type, 0)
+    fun getPageIndex(type: StorableType) = currentPage.getOrDefault(type, 0)
 
     fun nextPage(type: StorableType, totalItems: Int, pageSize: Int) {
-        val page = currentPage.getOrDefault(type, 0)
-        if ((page + 1) * pageSize < totalItems) {
-            currentPage[type] = page + 1
-        }
+        currentPage[type] =
+            (getPageIndex(type) + 1).takeIf { it * pageSize < totalItems } ?: getPageIndex(type)
     }
 
     fun prevPage(type: StorableType) {
-        val page = currentPage.getOrDefault(type, 0)
-        if (page > 0) {
-            currentPage[type] = page - 1
-        }
+        currentPage[type] = (getPageIndex(type) - 1).coerceAtLeast(0)
     }
 
-    fun resetPage(type: StorableType) {
-        currentPage[type] = 0
-    }
-
-    fun hasNextPage(type: StorableType, pageSize: Int): Boolean {
-        val total = getItems(type).size
-        return (getPageIndex(type) + 1) * pageSize < total
-    }
-
-    fun hasPrevPage(type: StorableType): Boolean {
-        return getPageIndex(type) > 0
-    }
-
-    fun store(type: StorableType, storable: Storable) {
-        val id = storable.takeIds.firstOrNull() ?: storable.displayId
-        stored.getOrPut(type) { mutableListOf() }.add(id)
-    }
-
-    fun toJson(): JsonObject {
-        val obj = JsonObject()
-        for ((type, list) in stored) {
-            val jsonArray = JsonArray()
-            for (item in list) {
-                jsonArray.add(item)
+    fun toJson(): JsonObject =
+        JsonObject().apply {
+            stored.forEach { (type, list) ->
+                add(type.name.lowercase(), JsonArray().apply { list.forEach(::add) })
             }
-            obj.add(type.name.lowercase(), jsonArray)
         }
-        return obj
-    }
 
     companion object {
-        fun fromJson(json: JsonObject): StorageContainer {
-            val container = StorageContainer()
-            for (key in json.keySet()) {
-                val type = StorableType.valueOf(key.uppercase())
-                val jsonArray = json.getAsJsonArray(key)
-                val list = jsonArray.map { it.asLong.toInt() }.toMutableList()
-                container.stored[type] = list
+        fun fromJson(json: JsonObject) =
+            StorageContainer().apply {
+                json.entrySet().forEach { (key, value) ->
+                    val type = StorableType.valueOf(key.uppercase())
+                    stored[type] = value.asJsonArray.map { it.asInt }.toMutableList()
+                }
             }
-            return container
-        }
     }
 }
