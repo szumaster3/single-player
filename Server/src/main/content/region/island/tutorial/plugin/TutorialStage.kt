@@ -21,6 +21,7 @@ import core.tools.BLUE
 import core.worker.ManagementEvents
 import shared.consts.*
 import proto.management.JoinClanRequest
+import java.util.*
 
 object TutorialStage {
     const val TUTORIAL_STAGE = GameAttributes.TUTORIAL_STAGE
@@ -1362,10 +1363,10 @@ object TutorialStage {
             player.unhook(TutorialButtonReceiver)
 
             if (settings!!.enable_default_clan) {
-                player.communication.currentClan = ServerConstants.SERVER_NAME.toLowerCase()
+                player.communication.currentClan = ServerConstants.SERVER_NAME.lowercase(Locale.getDefault())
 
                 val clanJoin = JoinClanRequest.newBuilder()
-                    .setClanName(ServerConstants.SERVER_NAME.toLowerCase())
+                    .setClanName(ServerConstants.SERVER_NAME.lowercase(Locale.getDefault()))
                     .setUsername(player.name)
                     .build()
 
