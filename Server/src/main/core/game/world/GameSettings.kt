@@ -82,10 +82,10 @@ class GameSettings internal constructor(
                 worldId,
                 countryId,
                 activity,
-                true,  // ??? hardcoded true? Jeśli tak, zostaw
+                true,
                 pvpWorld,
-                false, // hardcoded false
-                false, // hardcoded false
+                false,
+                false,
                 msip,
                 default_xp_rate,
                 enable_default_clan,

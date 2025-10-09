@@ -1,7 +1,7 @@
 package content.region.asgarnia.trollheim.plugin
 
-import content.global.plugin.iface.WarningListener
-import content.global.plugin.iface.Warnings
+import core.game.node.entity.player.link.WarningManager
+import core.game.node.entity.player.link.Warnings
 import core.api.*
 import core.cache.def.impl.NPCDefinition
 import core.cache.def.impl.SceneryDefinition
@@ -742,10 +742,10 @@ class TrollheimPlugin : OptionHandler() {
         override fun enter(entity: Entity): Boolean {
             if (entity is Player) {
                 val player = entity.asPlayer()
-                if (player.walkingQueue.footPrint.y < 3592 && !WarningListener.isDisabled(player, Warnings.DEATH_PLATEAU)) {
+                if (player.walkingQueue.footPrint.y < 3592 && !WarningManager.isDisabled(player, Warnings.DEATH_PLATEAU)) {
                     player.walkingQueue.reset()
                     player.pulseManager.clear()
-                    WarningListener.openWarning(player, Warnings.DEATH_PLATEAU)
+                    WarningManager.openWarning(player, Warnings.DEATH_PLATEAU)
                 } else {
                     return false
                 }

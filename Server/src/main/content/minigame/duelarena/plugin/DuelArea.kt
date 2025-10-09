@@ -1,7 +1,7 @@
 package content.minigame.duelarena.plugin
 
-import content.global.plugin.iface.WarningListener
-import content.global.plugin.iface.Warnings
+import core.game.node.entity.player.link.WarningManager
+import core.game.node.entity.player.link.Warnings
 import content.global.skill.summoning.familiar.Familiar
 import core.api.inBorders
 import core.api.setAttribute
@@ -266,8 +266,8 @@ class DuelArea
         override fun enter(e: Entity): Boolean {
             if (e is Player) {
                 val p = e.asPlayer()
-                if (!WarningListener.isDisabled(p, Warnings.DUEL_ARENA) && inBorders(p, 3312, 3233, 3313, 3236)) {
-                    WarningListener.openWarning(p, Warnings.DUEL_ARENA)
+                if (!WarningManager.isDisabled(p, Warnings.DUEL_ARENA) && inBorders(p, 3312, 3233, 3313, 3236)) {
+                    WarningManager.openWarning(p, Warnings.DUEL_ARENA)
                 }
             }
             if (e.isPlayer) {

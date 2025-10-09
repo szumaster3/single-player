@@ -3,8 +3,8 @@ package content.region.kandarin.yanille.quest.itwatchtower.plugin
 import content.data.GameAttributes
 import content.data.LightSource
 import content.data.items.SkillingTool
-import content.global.plugin.iface.WarningListener
-import content.global.plugin.iface.Warnings
+import core.game.node.entity.player.link.WarningManager
+import core.game.node.entity.player.link.Warnings
 import content.region.kandarin.yanille.quest.itwatchtower.dialogue.BattlementDialogue
 import content.region.kandarin.yanille.quest.itwatchtower.dialogue.CityGuardDialogue
 import content.region.kandarin.yanille.quest.itwatchtower.dialogue.OgreGuardNorthWestGateDialogue
@@ -445,11 +445,11 @@ class WatchTowerPlugin : InteractionListener {
         onUseWith(IntType.NPC, Items.CAVE_NIGHTSHADE_2398, NPCs.ENCLAVE_GUARD_870) { player, _, npc ->
             sendNPCDialogueLines(player, npc.id, FaceAnim.OLD_DEFAULT, false, "What is this? Arrrrgh! I cannot stand this plant! Argh,", "it burns! It burns!")
             addDialogueAction(player) { _, _ ->
-                if (!WarningListener.isDisabled(player, Warnings.WATCHTOWER_SHAMAN_CAVE)) {
-                    WarningListener.openWarning(player, Warnings.WATCHTOWER_SHAMAN_CAVE)
+                if (!WarningManager.isDisabled(player, Warnings.WATCHTOWER_SHAMAN_CAVE)) {
+                    WarningManager.openWarning(player, Warnings.WATCHTOWER_SHAMAN_CAVE)
                     return@addDialogueAction
                 }
-                WarningListener.handleWatchTowerWarning(player)
+                WarningManager.handleWatchTowerWarning(player)
             }
             return@onUseWith true
         }
