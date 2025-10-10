@@ -53,8 +53,7 @@ open class NPCBehavior(vararg val ids: Int = intArrayOf()) : ContentInterface {
     open fun onDropTableRolled(self: NPC, killer: Entity, drops: ArrayList<Item>) {}
 
     open fun canBeAttackedBy(self: NPC, attacker: Entity, style: CombatStyle, shouldSendMessage: Boolean): Boolean {
-        if (attacker is Player && !self.definition.hasAction("attack")) return false
-        return true
+        return !(attacker is Player && !self.definition.hasAction("attack"))
     }
 
     open fun shouldIgnoreMultiRestrictions(self: NPC, victim: Entity) = false
