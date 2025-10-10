@@ -136,7 +136,7 @@ class FishbowlOptionPlugin : OptionHandler() {
                         lock(player, ANIM_FEED.duration)
                         animate(player, ANIM_FEED)
                         sendMessage(player, "You feed your fish.")
-                    } else if (anyInInventory(player, Items.POISONED_FISH_FOOD_274)) {
+                    } else if (inInventory(player, Items.POISONED_FISH_FOOD_274)) {
                         sendMessage(player,"You can't poison your own pet!")
                     } else {
                         sendMessage(player,"You don't have any fish food.")
