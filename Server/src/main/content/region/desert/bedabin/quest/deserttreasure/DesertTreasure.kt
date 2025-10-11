@@ -416,20 +416,14 @@ class DesertTreasure : Quest(Quests.DESERT_TREASURE, 45, 44, 3, 440, 0, 1, 15) {
     override fun finish(player: Player) {
         var ln = 10
         super.finish(player)
-        player.packetDispatch.sendString("You have completed the Desert Treasure Quest!", 277, 4)
-        player.packetDispatch.sendItemZoomOnInterface(Items.ANCIENT_STAFF_4675, 240, 277, 5)
-
+        displayQuestItem(player, Items.ANCIENT_STAFF_4675)
         drawReward(player, "3 Quest Points", ln++)
         drawReward(player, "20,000 Magic XP", ln++)
         drawReward(player, "Ancient Magicks", ln)
-
-        player.skills.addExperience(Skills.MAGIC, 20000.0)
+        rewardXP(player, Skills.MAGIC, 20000.0)
     }
 
-    override fun setStage(
-        player: Player,
-        stage: Int,
-    ) {
+    override fun setStage(player: Player, stage: Int) {
         super.setStage(player, stage)
         this.updateVarps(player)
     }

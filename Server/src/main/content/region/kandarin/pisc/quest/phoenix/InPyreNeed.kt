@@ -267,17 +267,13 @@ class InPyreNeed : Quest(Quests.IN_PYRE_NEED, 162, 161, 1, PROGRESS, 0, 1, 30) {
     override fun finish(player: Player) {
         super.finish(player)
         var ln = 10
-
-        sendItemZoomOnInterface(player, Components.QUEST_COMPLETE_SCROLL_277, 5, Items.PHOENIX_QUILL_14616, 240)
-        sendString(player, "You have completed In Pyre Need!", Components.QUEST_COMPLETE_SCROLL_277, 4)
-
+        displayQuestItem(player, Items.PHOENIX_QUILL_14616)
         drawReward(player, "1 Quest Point", ln++)
         drawReward(player, "14,400 Firemaking xp", ln++)
         drawReward(player, "12,500 Fletching xp", ln++)
         drawReward(player, "11,556 Crafting xp", ln++)
         drawReward(player, "Access to the pheonix lair", ln++)
         drawReward(player, "once per day", ln)
-
         rewardXP(player, Skills.FIREMAKING, 14400.0)
         rewardXP(player, Skills.FLETCHING, 12500.0)
         rewardXP(player, Skills.CRAFTING, 11556.0)

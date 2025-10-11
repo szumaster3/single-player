@@ -86,10 +86,7 @@ class SmokeDungeonPlugin : MapZone("smoke dungeon", true), Plugin<Any?> {
         return true
     }
 
-    override fun leave(
-        e: Entity,
-        logout: Boolean,
-    ): Boolean {
+    override fun leave(e: Entity, logout: Boolean): Boolean {
         if (e is Player) {
             val player = e.asPlayer()
             closeOverlay(player)

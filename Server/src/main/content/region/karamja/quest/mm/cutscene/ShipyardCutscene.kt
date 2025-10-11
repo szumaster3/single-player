@@ -1,5 +1,6 @@
 package content.region.karamja.quest.mm.cutscene
 
+import core.api.displayQuestItem
 import core.api.openOverlay
 import core.game.activity.Cutscene
 import core.game.component.Component
@@ -33,7 +34,7 @@ class ShipyardCutscene(
             0 -> {
                 openOverlay(player, Components.FADE_TO_BLACK_120)
                 player.interfaceManager.open(Component(interfaceId))
-                player.packetDispatch.sendItemZoomOnInterface(Items.MSPEAK_AMULET_4022, 230, interfaceId, 5)
+                displayQuestItem(player, Items.MSPEAK_AMULET_4022)
                 for (i in 0..17) {
                     when (i) {
                         9 -> player.packetDispatch.sendString("Meanwhile, far away in Karamja...", interfaceId, i)

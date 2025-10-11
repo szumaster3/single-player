@@ -15,9 +15,6 @@ import shared.consts.Items
 import shared.consts.Sounds
 
 class SpellTablet : InteractionListener {
-    val B2B_TABLET = Items.BONES_TO_BANANAS_8014
-    val B2P_TABLET = Items.BONES_TO_PEACHES_8015
-
     override fun defineListeners() {
         on(B2B_TABLET, IntType.ITEM, "break") { player, node ->
             breakTablet(player)
@@ -39,5 +36,10 @@ class SpellTablet : InteractionListener {
         player.animator.forceAnimation(Animation(Animations.BREAK_SPELL_TABLET_A_4069))
         player.lock(5)
         setAttribute(player, "tablet-spell", true)
+    }
+
+    companion object{
+        private const val B2B_TABLET = Items.BONES_TO_BANANAS_8014
+        private const val B2P_TABLET = Items.BONES_TO_PEACHES_8015
     }
 }

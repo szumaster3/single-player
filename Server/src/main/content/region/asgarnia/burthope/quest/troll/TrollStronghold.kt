@@ -12,10 +12,8 @@ import shared.consts.Vars
 
 @Initializable
 class TrollStronghold : Quest(Quests.TROLL_STRONGHOLD, 128, 127, 1, Vars.VARP_QUEST_TROLL_SRONGHOLD_PROGRESS_317, 0, 1, 50) {
-    override fun drawJournal(
-        player: Player,
-        stage: Int,
-    ) {
+
+    override fun drawJournal(player: Player, stage: Int) {
         super.drawJournal(player, stage)
         var line = 12
         var stage = getStage(player)
@@ -85,12 +83,10 @@ class TrollStronghold : Quest(Quests.TROLL_STRONGHOLD, 128, 127, 1, Vars.VARP_QU
     override fun finish(player: Player) {
         var ln = 10
         super.finish(player)
-        sendItemZoomOnInterface(player, Components.QUEST_COMPLETE_SCROLL_277, 5, Items.MYSTERIOUS_LAMP_13227, 240)
-
+        displayQuestItem(player, Items.MYSTERIOUS_LAMP_13227)
         drawReward(player, "1 Quest Point", ln++)
         drawReward(player, "2 Reward lamps giving 10,000", ln++)
         drawReward(player, "XP each", ln)
-
         addItemOrDrop(player, Items.MYSTERIOUS_LAMP_13227, 2)
     }
 

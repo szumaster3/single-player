@@ -66,15 +66,15 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
             description = "Calculates and prints your current chance to hit a given NPC.",
         ) { player, args ->
             val handler = player.getSwingHandler(false)
-            player.sendMessage("handler type: ${handler.type}")
-            player.sendMessage("calculateAccuracy: ${handler.calculateAccuracy(player)}")
+            sendMessage(player, "handler type: ${handler.type}")
+            sendMessage(player, "calculateAccuracy: ${handler.calculateAccuracy(player)}")
 
             if (args.size > 1) {
                 val npcId: Int = args[1].toInt()
                 val npc = NPC(npcId)
                 npc.initConfig()
-                player.sendMessage("npc: ${npc.name}. npc defence: ${npc.skills.getLevel(Skills.DEFENCE)}")
-                player.sendMessage("calculateDefence: ${handler.calculateDefence(npc, player)}")
+                sendMessage(player, "npc: ${npc.name}. npc defence: ${npc.skills.getLevel(Skills.DEFENCE)}")
+                sendMessage(player, "calculateDefence: ${handler.calculateDefence(npc, player)}")
             }
         }
 
@@ -89,7 +89,7 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
             var obj: Scenery? = null
             notify(
                 player,
-                "Absolute: " + l + ", regional: [" + l.getLocalX() + ", " + l.getLocalY() + "], chunk: [" + l.chunkOffsetX + ", " +
+                "Absolute: " + l + ", regional: [" + l.localX + ", " + l.localY + "], chunk: [" + l.chunkOffsetX + ", " +
                     l.chunkOffsetY +
                     "], flag: [" +
                     RegionManager.isTeleportPermitted(l) +
@@ -101,38 +101,23 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
             )
             notify(
                 player,
-                "Region: [id=" + l.getRegionId() + ", active=" + r!!.isActive + ", instanced=" + (r is DynamicRegion) +
+                "Region: [id=" + l.regionId + ", active=" + r!!.isActive + ", instanced=" + (r is DynamicRegion) +
                     "], obj=" +
                     RegionManager.getObject(l) +
                     ".",
             )
-            notify(player, "Jagex: ${l.z}_${l.getRegionId() shr 8}_${l.getRegionId() and 0xFF}_${l.getLocalX()}_${l.getLocalY()}")
+            notify(player, "Jagex: ${l.z}_${l.regionId shr 8}_${l.regionId and 0xFF}_${l.localX}_${l.localY}")
             notify(player, "Object: " + RegionManager.getObject(l).also { obj = it } + ".")
-            notify(
-                player,
-                "Object Varp: " + obj?.definition?.configFile?.varpId + " offset: " +
-                    obj?.definition?.configFile?.startBit +
-                    " size: " +
-                    (
-                        obj
-                            ?.definition
-                            ?.configFile
-                            ?.startBit
-                            ?.minus(obj?.definition?.configFile?.startBit!!)
-                    ),
+            notify(player, "Object Varp: " + obj?.definition?.configFile?.varpId + " offset: " + obj?.definition?.configFile?.startBit + " size: " + (obj
+                ?.definition
+                ?.configFile
+                ?.startBit
+                ?.minus(obj?.definition?.configFile?.startBit!!
+                ))
             )
-            log(
-                this::class.java,
-                Log.FINE,
-                "Viewport: " + l.getSceneX(player.playerFlags.lastSceneGraph) + "," +
-                    l.getSceneY(player.playerFlags.lastSceneGraph),
-            )
+            log(this::class.java, Log.FINE, "Viewport: " + l.getSceneX(player.playerFlags.lastSceneGraph) + "," + l.getSceneY(player.playerFlags.lastSceneGraph))
             val loc = "Location.create(" + l.x + ", " + l.y + ", " + l.z + ")"
-            log(
-                this::class.java,
-                Log.FINE,
-                loc + "; " + player.playerFlags.lastSceneGraph + ", " + l.getLocalX() + ", " + l.getLocalY(),
-            )
+            log(this::class.java, Log.FINE, loc + "; " + player.playerFlags.lastSceneGraph + ", " + l.localX + ", " + l.localY)
             try {
                 val stringSelection = StringSelection(loc)
                 val clpbrd = Toolkit.getDefaultToolkit().systemClipboard
@@ -500,7 +485,7 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
             player.setAttribute("/save:ft-rolls", rolls)
             val container = FishingTrawlerContainer(player)
             container.open()
-            player.sendMessage("Opened Fishing Trawler reward interface with $rolls rolls.")
+            sendMessage(player, "Opened Fishing Trawler reward interface with $rolls rolls.")
         }
 
         define(

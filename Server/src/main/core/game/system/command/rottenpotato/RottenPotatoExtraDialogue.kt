@@ -1,6 +1,7 @@
 package core.game.system.command.rottenpotato
 
 import core.api.sendInputDialogue
+import core.api.sendMessage
 import core.game.dialogue.Dialogue
 import core.game.dialogue.InputType
 import core.game.node.entity.npc.NPC
@@ -81,7 +82,7 @@ class RottenPotatoExtraDialogue(player: Player? = null) : Dialogue(player) {
                 sendInputDialogue(player, InputType.STRING_SHORT, "Enter player name:") { value ->
                     val other = Repository.getPlayerByName(value.toString().lowercase().replace(" ", "_"))
                     if (other == null) {
-                        player.sendMessage(colorize("%RInvalid player name."))
+                        sendMessage(player, colorize("%RInvalid player name."))
                     }
                 }
             }

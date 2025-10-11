@@ -2,6 +2,7 @@ package content.global.skill.magic
 
 import core.api.playAudio
 import core.api.playGlobalAudio
+import core.api.sendMessage
 import core.api.setAttribute
 import core.cache.def.impl.ItemDefinition
 import core.game.interaction.Listener
@@ -58,20 +59,20 @@ abstract class SpellListener(
         if (player.getAttribute("tablet-spell", false)) return
 
         if (player.skills.getLevel(Skills.MAGIC) < magicLevel) {
-            player.sendMessage("You need a magic level of $magicLevel to cast this spell.")
+            sendMessage(player, "You need a magic level of $magicLevel to cast this spell.")
             throw IllegalStateException("Insufficient magic level.")
         }
 
         for (rune in runes) {
             if (!SpellUtils.hasRune(player, rune)) {
-                player.sendMessage("You don't have enough ${rune.definition.name.lowercase()}s to cast this spell.")
+                sendMessage(player, "You don't have enough ${rune.definition.name.lowercase()}s to cast this spell.")
                 throw IllegalStateException("Not enough runes.")
             }
         }
 
         for (item in specialEquipment) {
             if (!player.equipment.contains(item, 1)) {
-                player.sendMessage("You need a ${ItemDefinition.forId(item).name} to cast this.")
+                sendMessage(player, "You need a ${ItemDefinition.forId(item).name} to cast this.")
                 throw IllegalStateException("Missing special equipment.")
             }
         }

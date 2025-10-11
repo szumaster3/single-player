@@ -15,8 +15,7 @@ import shared.consts.Items
 import kotlin.math.atan2
 
 /**
- * Listener for the Hunter's Talisman item used in the [FremennikTrials][content.region.fremennik.quest.viking.FremennikTrials] quest.
- * Handles the "locate" interaction which guides the player towards the [DraugenNPC][content.region.fremennik.quest.viking.handlers.DraugenNPC].
+ * Listener for the Hunters Talisman item used in the Fremennik Trials quest.
  */
 class HunterTalismanPlugin : InteractionListener {
 

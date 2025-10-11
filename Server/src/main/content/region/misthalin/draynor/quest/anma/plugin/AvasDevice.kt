@@ -18,9 +18,8 @@ import shared.consts.Quests
 /**
  * Handles functionality related to Ava's devices.
  */
-class AvasDevice :
-    InteractionListener,
-    EventHook<TickEvent> {
+class AvasDevice : InteractionListener, EventHook<TickEvent> {
+
     override fun defineListeners() {
         onEquip(devices) { player, _ ->
             if (!isQuestComplete(player, Quests.ANIMAL_MAGNETISM)) {
@@ -60,10 +59,7 @@ class AvasDevice :
         }
     }
 
-    override fun process(
-        entity: Entity,
-        event: TickEvent,
-    ) {
+    override fun process(entity: Entity, event: TickEvent) {
         if (entity !is Player) {
             entity.unhook(this)
             return
@@ -82,15 +78,14 @@ class AvasDevice :
 
         val wornId = getItemFromEquipment(entity, EquipmentSlot.CAPE)?.id ?: -1
 
-        val reward =
-            when (wornId) {
-                Items.AVAS_ACCUMULATOR_10499 -> ACCUMULATOR_REWARDS
-                Items.AVAS_ATTRACTOR_10498 -> ATTRACTOR_REWARDS
-                else -> {
-                    entity.unhook(this)
-                    return
-                }
-            }.random()
+        val reward = when (wornId) {
+            Items.AVAS_ACCUMULATOR_10499 -> ACCUMULATOR_REWARDS
+            Items.AVAS_ATTRACTOR_10498 -> ATTRACTOR_REWARDS
+            else -> {
+                entity.unhook(this)
+                return
+            }
+        }.random()
 
         if (equipSlot(reward) == EquipmentSlot.AMMO) {
             val equippedId = getItemFromEquipment(entity, EquipmentSlot.AMMO)?.id ?: -1
@@ -100,11 +95,13 @@ class AvasDevice :
             }
         }
 
-        if (!getAttribute(entity, GameAttributes.ITEM_AVA_DEVICE, false) &&
-            entity.houseManager.isInHouse(entity) &&
-            entity.houseManager.isBuildingMode &&
-            entity.equipment[EquipmentContainer.SLOT_ARROWS] != null &&
-            freeSlots(entity) == 0
+        if (!getAttribute(
+                entity,
+                GameAttributes.ITEM_AVA_DEVICE,
+                false
+            ) && entity.houseManager.isInHouse(entity) && entity.houseManager.isBuildingMode && entity.equipment[EquipmentContainer.SLOT_ARROWS] != null && freeSlots(
+                entity
+            ) == 0
         ) {
             sendMessage(entity, "Ava's contraption makes an odd burping sound.")
             setAttribute(entity, GameAttributes.ITEM_AVA_DEVICE, true)
@@ -131,33 +128,31 @@ class AvasDevice :
         val attractDelay = secondsToTicks(180)
 
         // https://runescape.wiki/w/Ava%27s_attractor?oldid=1976444
-        val ATTRACTOR_REWARDS =
-            arrayOf(
-                Items.IRON_ORE_440,
-                Items.IRON_MED_HELM_1137,
-                Items.IRON_DART_807,
-                Items.IRON_KNIFE_863,
-                Items.IRON_BAR_2351,
-                Items.IRON_BOLTS_9140,
-                Items.IRON_ARROWTIPS_40,
-                Items.TOY_MOUSE_7767,
-            )
+        val ATTRACTOR_REWARDS = arrayOf(
+            Items.IRON_ORE_440,
+            Items.IRON_MED_HELM_1137,
+            Items.IRON_DART_807,
+            Items.IRON_KNIFE_863,
+            Items.IRON_BAR_2351,
+            Items.IRON_BOLTS_9140,
+            Items.IRON_ARROWTIPS_40,
+            Items.TOY_MOUSE_7767,
+        )
 
         // https://runescape.wiki/w/Ava%27s_accumulator?oldid=1965161
-        val ACCUMULATOR_REWARDS =
-            arrayOf(
-                Items.IRON_ORE_440,
-                Items.STEEL_MED_HELM_1141,
-                Items.STEEL_DART_808,
-                Items.STEEL_KNIFE_865,
-                Items.STEEL_BAR_2353,
-                Items.STEEL_NAILS_1539,
-                Items.STEEL_ARROWTIPS_41,
-                Items.STEEL_ARROW_886,
-                Items.STEEL_BOLTS_9141,
-                Items.STEEL_AXE_1353,
-                Items.STEEL_2H_SWORD_1311,
-                Items.TOY_MOUSE_7767,
-            )
+        val ACCUMULATOR_REWARDS = arrayOf(
+            Items.IRON_ORE_440,
+            Items.STEEL_MED_HELM_1141,
+            Items.STEEL_DART_808,
+            Items.STEEL_KNIFE_865,
+            Items.STEEL_BAR_2353,
+            Items.STEEL_NAILS_1539,
+            Items.STEEL_ARROWTIPS_41,
+            Items.STEEL_ARROW_886,
+            Items.STEEL_BOLTS_9141,
+            Items.STEEL_AXE_1353,
+            Items.STEEL_2H_SWORD_1311,
+            Items.TOY_MOUSE_7767,
+        )
     }
 }

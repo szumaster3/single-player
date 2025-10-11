@@ -297,7 +297,7 @@ object LoginConfiguration {
                         false,
                     )
                 ) {
-                    player.sendMessage(
+                    sendMessage(player,
                         colorize(
                             "%RYou had items equipped in the wrong slots. They were moved out into your inventory.",
                         ),
@@ -313,12 +313,12 @@ object LoginConfiguration {
         if (currentSpellBook == SpellBookManager.SpellBook.ANCIENT &&
             !isQuestComplete(player, Quests.DESERT_TREASURE)
         ) {
-            player.sendMessage(colorize("%RAs you can no longer use Ancient Magic, you have been set back to Modern."))
+            sendMessage(player, colorize("%RAs you can no longer use Ancient Magic, you have been set back to Modern."))
             player.spellBookManager.spellBook = 0
         } else if (currentSpellBook == SpellBookManager.SpellBook.LUNAR &&
             !hasRequirement(player, Quests.LUNAR_DIPLOMACY)
         ) {
-            player.sendMessage(colorize("%RAs you can no longer use Lunar Magic, you have been set back to Modern."))
+            sendMessage(player, colorize("%RAs you can no longer use Lunar Magic, you have been set back to Modern."))
             player.spellBookManager.spellBook = 0
         }
         player.spellBookManager.update(player)

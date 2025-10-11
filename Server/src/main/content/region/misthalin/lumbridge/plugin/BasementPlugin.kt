@@ -1,5 +1,6 @@
 package content.region.misthalin.lumbridge.plugin
 
+import core.api.sendMessage
 import core.cache.def.impl.SceneryDefinition
 import core.game.interaction.OptionHandler
 import core.game.node.Node
@@ -74,7 +75,7 @@ class BasementPlugin : OptionHandler() {
                         dir = if (player.location.x >= 3221) Direction.WEST else Direction.EAST
                     }
                 }
-                player.sendMessage("You squeeze through the hole.")
+                sendMessage(player, "You squeeze through the hole.")
                 ForceMovement.run(player, player.location, to, ANIMATION, ANIMATION, dir, 20).endAnimation =
                     Animation.RESET
                 return true
@@ -109,7 +110,7 @@ class BasementPlugin : OptionHandler() {
                             if (counter == 3) {
                                 player.unlock()
                                 ForceMovement.run(player, player.location, second, JUMP_ANIMATION, 20)
-                                player.sendMessage("You leap across with a mighty leap!")
+                                sendMessage(player, "You leap across with a mighty leap!")
                                 return true
                             } else if (counter == 1) {
                                 ForceMovement.run(player, player.location, first, JUMP_ANIMATION, 20)

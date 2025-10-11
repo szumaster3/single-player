@@ -11,6 +11,7 @@ import core.game.node.entity.skill.Skills
 import core.plugin.ClassScanner.definePlugin
 import core.plugin.Initializable
 import shared.consts.Components
+import shared.consts.Items
 import shared.consts.Quests
 import shared.consts.Vars
 
@@ -66,7 +67,7 @@ class JunglePotion : Quest(Quests.JUNGLE_POTION, 81, 80, 1, Vars.VARP_QUEST_JUNG
     override fun finish(player: Player) {
         super.finish(player)
         var ln = 10
-        sendItemZoomOnInterface(player, Components.QUEST_COMPLETE_SCROLL_277, 5, HerbItem.VOLENCIA_MOSS.product.id)
+        displayQuestItem(player, HerbItem.VOLENCIA_MOSS.product.id)
         drawReward(player, "1 Quest Point", ln++)
         drawReward(player, "775 Herblore XP", ln)
         rewardXP(player, Skills.HERBLORE, 775.0)

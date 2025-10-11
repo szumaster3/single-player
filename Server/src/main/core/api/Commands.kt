@@ -24,7 +24,7 @@ interface Commands : ContentInterface {
         vararg message: String,
     ) {
         for (msg in message) {
-            player.sendMessage(colorize("-->%R$msg"))
+            sendMessage(player, colorize("-->%R$msg"))
         }
         throw IllegalStateException()
     }
@@ -42,7 +42,7 @@ interface Commands : ContentInterface {
         logToConsole: Boolean = false,
     ) {
         if (logToConsole) log(this::class.java, Log.DEBUG, message)
-        player.sendMessage(colorize("-->$message"))
+        sendMessage(player, colorize("-->$message"))
     }
 
     /**

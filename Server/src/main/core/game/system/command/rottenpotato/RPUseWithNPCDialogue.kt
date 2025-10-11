@@ -1,5 +1,6 @@
 package core.game.system.command.rottenpotato
 
+import core.api.sendMessage
 import core.game.dialogue.Dialogue
 import core.game.node.entity.combat.ImpactHandler
 import core.game.node.entity.player.Player
@@ -25,19 +26,19 @@ class RPUseWithNPCDialogue(player: Player? = null) : Dialogue(player) {
                 end()
                 npc.isRespawn = false
                 npc.clear()
-                player.sendMessage(colorize("%RNPC Cleared."))
+                sendMessage(player, colorize("%RNPC Cleared."))
             }
             // Enable Respawn
             2 -> {
                 end()
                 npc.isRespawn = true
-                player.sendMessage(colorize("%RNPC Respawn Enabled."))
+                sendMessage(player, colorize("%RNPC Respawn Enabled."))
             }
             // Disable Respawn
             3 -> {
                 end()
                 npc.isRespawn = false
-                player.sendMessage(colorize("%RNPC Respawn Disabled."))
+                sendMessage(player, colorize("%RNPC Respawn Disabled."))
             }
             // Kill
             4 -> {

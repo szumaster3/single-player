@@ -29,7 +29,7 @@ class ZanarisPlugin : InteractionListener {
          * Checks requirements to use rings.
          */
         private fun fairyMagic(player: Player): Boolean {
-            if (!core.api.hasRequirement(player, Quests.FAIRYTALE_I_GROWING_PAINS) ||
+            if (!hasRequirement(player, Quests.FAIRYTALE_I_GROWING_PAINS) ||
                 !anyInEquipment(player, Items.DRAMEN_STAFF_772, Items.LUNAR_STAFF_9084)
             ) {
                 sendMessage(player, "The fairy ring only works for those who weld fairy magic.")
@@ -77,7 +77,7 @@ class ZanarisPlugin : InteractionListener {
          * Handles opening the magic doors.
          */
 
-        on(intArrayOf(12045, 12047), IntType.SCENERY, "open") { player, node ->
+        on(intArrayOf(Scenery.MAGIC_DOOR_12045, Scenery.MAGIC_DOOR_12047), IntType.SCENERY, "open") { player, node ->
             val isMagicDoorAAtLocation =
                 node.id == Scenery.MAGIC_DOOR_12045 && node.location == Location(2469, 4438, 0)
 
@@ -138,7 +138,7 @@ class ZanarisPlugin : InteractionListener {
          */
 
         on(Scenery.PORTAL_12260, IntType.SCENERY, "use") { player, _ ->
-            teleport(player, Location(2453, 4476, 0))
+            teleport(player, Location(2453, 4476, 0), TeleportManager.TeleportType.INSTANT)
             return@on true
         }
 

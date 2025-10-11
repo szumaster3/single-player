@@ -2,11 +2,7 @@ package content.region.asgarnia.gobvillage.quest.gobdip
 
 import content.region.asgarnia.gobvillage.quest.gobdip.dialogue.GrubfootDialogue
 import content.region.asgarnia.gobvillage.quest.gobdip.cutscene.GoblinDiplomacyCutscene
-import core.api.addItemOrDrop
-import core.api.inInventory
-import core.api.updateQuestTab
-import core.api.rewardXP
-import core.api.sendItemZoomOnInterface
+import core.api.*
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest
 import core.game.node.entity.skill.Skills
@@ -104,13 +100,11 @@ class GoblinDiplomacy : Quest(Quests.GOBLIN_DIPLOMACY, 20, 19, 5, Vars.VARP_QUES
     override fun finish(player: Player) {
         super.finish(player)
         var line = 10
-
+        displayQuestItem(player, Items.GOBLIN_MAIL_288)
         drawReward(player, "5 Quests Points", line++)
         drawReward(player, "200 Crafting XP", line++)
         drawReward(player, "A gold bar", line++)
         drawReward(player, "You have completed the Goblin Diplomacy Quest!", line)
-
-        sendItemZoomOnInterface(player, Components.QUEST_COMPLETE_SCROLL_277, 5, Items.GOBLIN_MAIL_288, 230)
         rewardXP(player, Skills.CRAFTING, 200.0)
         addItemOrDrop(player, Items.GOLD_BAR_2357, 1)
         updateQuestTab(player)

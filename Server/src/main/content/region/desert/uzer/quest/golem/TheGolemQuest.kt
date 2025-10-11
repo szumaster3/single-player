@@ -82,7 +82,7 @@ class TheGolemQuest : Quest(Quests.THE_GOLEM, 70, 69, 1, Vars.VARBIT_QUEST_THE_G
         super.finish(player)
         player ?: return
         var ln = 10
-        player.packetDispatch.sendItemZoomOnInterface(Items.STATUETTE_4618, 230, 277, 5)
+        displayQuestItem(player, Items.STATUETTE_4618)
         drawReward(player, "1 quest point", ln++)
         drawReward(player, "1,000 Crafting XP", ln++)
         drawReward(player, "1,000 Theiving XP", ln)

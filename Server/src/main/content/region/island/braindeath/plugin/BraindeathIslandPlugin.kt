@@ -14,7 +14,7 @@ import shared.consts.Scenery
 
 class BraindeathIslandPlugin : InteractionListener {
 
-    val ZOMBIE_SWAB_ID = intArrayOf(
+    private val zombieNPC = intArrayOf(
         NPCs.ZOMBIE_SWAB_2843,
         NPCs.ZOMBIE_SWAB_2844,
         NPCs.ZOMBIE_SWAB_2845,
@@ -32,7 +32,7 @@ class BraindeathIslandPlugin : InteractionListener {
         on(Scenery.GATE_10172, IntType.SCENERY, "open") { player, node ->
             val lukeNPC = findLocalNPC(player, NPCs.LUKE_50PERCENT_2828)
             faceLocation(lukeNPC!!, player.location)
-            if(player.location.y > 5098) {
+            if (player.location.y > 5098) {
                 openDialogue(player, LukeFiftyPercentDialogue(node))
                 return@on true
             }
@@ -44,16 +44,16 @@ class BraindeathIslandPlugin : InteractionListener {
          * Handles talking to Zombie swab NPC.
          */
 
-        on(ZOMBIE_SWAB_ID, IntType.NPC, "talk-to") {player, _ ->
+        on(zombieNPC, IntType.NPC, "talk-to") { player, _ ->
             sendMessage(player, "I don't think he wants to talk to you.")
             return@on true
         }
     }
 
-    inner class LukeFiftyPercentDialogue(val n : Node) : DialogueFile() {
+    inner class LukeFiftyPercentDialogue(val n: Node) : DialogueFile() {
         override fun handle(componentID: Int, buttonID: Int) {
-            when(stage) {
-                0 -> sendNPCDialogueLines(player!!, NPCs.LUKE_50PERCENT_2828, FaceAnim.OLD_DEFAULT, false,"Hey! What are you doing out there?").also { stage++ }
+            when (stage) {
+                0 -> sendNPCDialogueLines(player!!, NPCs.LUKE_50PERCENT_2828, FaceAnim.OLD_DEFAULT, false, "Hey! What are you doing out there?").also { stage++ }
                 1 -> player("Nothing.")
                 2 -> sendNPCDialogueLines(player!!, NPCs.LUKE_50PERCENT_2828, FaceAnim.OLD_DEFAULT, false, "Well Cap'n Donnie said no livin' landlubbers were", "allowed out of the compound.").also { stage++ }
                 3 -> sendNPCDialogueLines(player!!, NPCs.LUKE_50PERCENT_2828, FaceAnim.OLD_DEFAULT, false, "So get yerself back in here, or yer for it!").also { stage++ }
@@ -65,7 +65,7 @@ class BraindeathIslandPlugin : InteractionListener {
         }
     }
 
-    inner class LukeDistractionDialogue(val n : Node) : DialogueFile() {
+    inner class LukeDistractionDialogue(val n: Node) : DialogueFile() {
         override fun handle(componentID: Int, buttonID: Int) {
             val distractionDialogue = arrayOf(
                 "Hey you! Look over there!",
@@ -78,8 +78,8 @@ class BraindeathIslandPlugin : InteractionListener {
 
             val index = distractionDialogue.random()
 
-            when(stage) {
-                0 -> sendNPCDialogueLines(player!!, NPCs.LUKE_50PERCENT_2828, FaceAnim.OLD_DEFAULT, false,"Arr! Tryin' ter get away eh? Well ye'll never sneak", "past me, I'm the best lookout this crew has ever seen!").also { stage++ }
+            when (stage) {
+                0 -> sendNPCDialogueLines(player!!, NPCs.LUKE_50PERCENT_2828, FaceAnim.OLD_DEFAULT, false, "Arr! Tryin' ter get away eh? Well ye'll never sneak", "past me, I'm the best lookout this crew has ever seen!").also { stage++ }
                 1 -> playerl(FaceAnim.FRIENDLY, index)
                 4 -> {
                     val npc = NPC(NPCs.LUKE_50PERCENT_2828)
@@ -87,8 +87,8 @@ class BraindeathIslandPlugin : InteractionListener {
                     sendChat(npc, "Where?", 1)
                     end()
                     runTask(player!!, 1) {
-                    DoorActionHandler.handleAutowalkDoor(player!!, n.asScenery())
-                        }
+                        DoorActionHandler.handleAutowalkDoor(player!!, n.asScenery())
+                    }
                 }
             }
         }

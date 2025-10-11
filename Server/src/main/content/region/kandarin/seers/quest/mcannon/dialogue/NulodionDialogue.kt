@@ -1,5 +1,6 @@
 package content.region.kandarin.seers.quest.mcannon.dialogue
 
+import core.api.sendMessage
 import core.api.setVarp
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
@@ -71,7 +72,7 @@ class NulodionDialogue(player: Player? = null) : Dialogue(player) {
                     7 -> {
                         setVarp(player, 0, 10)
                         quest!!.setStage(player, 80)
-                        player.sendMessage("The Cannon Engineer gives you some notes and a mould.")
+                        sendMessage(player, "The Cannon Engineer gives you some notes and a mould.")
                         player.inventory.add(content.region.kandarin.seers.quest.mcannon.DwarfCannon.NULODION_NOTES, player)
                         player.inventory.add(content.region.kandarin.seers.quest.mcannon.DwarfCannon.MOULD, player)
                         end()
@@ -110,7 +111,7 @@ class NulodionDialogue(player: Player? = null) : Dialogue(player) {
                     }
 
                     101 -> {
-                        player.sendMessage("The Cannon Engineer gives you some more notes.")
+                        sendMessage(player, "The Cannon Engineer gives you some more notes.")
                         player.inventory.add(content.region.kandarin.seers.quest.mcannon.DwarfCannon.NULODION_NOTES, player)
                         end()
                     }
@@ -121,7 +122,7 @@ class NulodionDialogue(player: Player? = null) : Dialogue(player) {
                     }
 
                     103 -> {
-                        player.sendMessage("The Cannon Engineer gives you another mould.")
+                        sendMessage(player, "The Cannon Engineer gives you another mould.")
                         player.inventory.add(content.region.kandarin.seers.quest.mcannon.DwarfCannon.MOULD, player)
                         end()
                     }

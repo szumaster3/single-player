@@ -1,10 +1,7 @@
 package content.region.fremennik.rellekka.quest.viking.plugin
 
 import content.data.GameAttributes
-import core.api.getAttribute
-import core.api.removeAttribute
-import core.api.sendMessage
-import core.api.setAttribute
+import core.api.*
 import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.Player
 import shared.consts.Components
@@ -57,8 +54,8 @@ class SeerLockInterface : InterfaceListener {
     }
 
     private fun resetPlayerAttributes(player: Player) {
-        (618..621).forEach { player.packetDispatch.sendVarcUpdate(it.toShort(), 0) }
-        player.packetDispatch.sendIfaceSettings(0, 2, 298, 0, 1)
+        (618..621).forEach { setVarc(player, it, 0) }
+        sendIfaceSettings(player, 0, 2, doorLockInterface, 0, 1)
         (1..4).forEach { setAttribute(player, "riddle-letter-$it", 0) }
     }
 
@@ -96,6 +93,6 @@ class SeerLockInterface : InterfaceListener {
         } else {
             sendMessage(player, "You have failed to solve the riddle.")
         }
-        player.interfaceManager.close()
+        closeInterface(player)
     }
 }

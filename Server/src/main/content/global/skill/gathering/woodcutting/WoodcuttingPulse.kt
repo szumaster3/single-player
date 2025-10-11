@@ -86,8 +86,8 @@ class WoodcuttingPulse(private val player: Player, private val node: Scenery) : 
     }
 
     fun checkRequirements(): Boolean {
-        if (getStatLevel(player, Skills.WOODCUTTING) < resource!!.getLevel()) {
-            sendMessage(player, "You need a woodcutting level of " + resource!!.getLevel() + " to chop this tree.")
+        if (getStatLevel(player, Skills.WOODCUTTING) < resource!!.level) {
+            sendMessage(player, "You need a woodcutting level of " + resource!!.level + " to chop this tree.")
             return false
         }
         if (getAxe(player) == null) {
@@ -97,7 +97,7 @@ class WoodcuttingPulse(private val player: Player, private val node: Scenery) : 
         if (freeSlots(player) < 1) {
             sendDialogue(
                 player,
-                "Your inventory is too full to hold any more " + forId(resource!!.getReward()).name.lowercase(Locale.getDefault()) + "."
+                "Your inventory is too full to hold any more " + forId(resource!!.reward).name.lowercase(Locale.getDefault()) + "."
             )
             return false
         }
@@ -143,13 +143,13 @@ class WoodcuttingPulse(private val player: Player, private val node: Scenery) : 
             sendMessage(player, "You chop some logs. The heat of the inferno adze incinerates them.")
             Projectile.create(player, null, 1776, 35, 30, 20, 25)
                 .transform(player, Location(player.location.x + 2, player.location.y), true, 25, 25).send()
-            rewardXP(player, Skills.WOODCUTTING, resource!!.getExperience())
-            rewardXP(player, Skills.FIREMAKING, resource!!.getExperience())
+            rewardXP(player, Skills.WOODCUTTING, resource!!.experience)
+            rewardXP(player, Skills.FIREMAKING, resource!!.experience)
             return rollDepletion()
         }
 
         // Actual reward calculations
-        var reward = resource!!.getReward()
+        var reward = resource!!.reward
         var rewardAmount = 0
         if (reward > 0) {
             reward = calculateReward(reward) // Calculate rewards
@@ -196,7 +196,7 @@ class WoodcuttingPulse(private val player: Player, private val node: Scenery) : 
         // OSRS and RS3 Wikis both agree: All trees present in 2009 are a 1/8 fell chance, aside from normal trees/dead trees which are 100%
         // OSRS: https://oldschool.runescape.wiki/w/Woodcutting scroll down to the mechanics section
         // RS3 : https://runescape.wiki/w/Woodcutting scroll down to the mechanics section, and expand the tree felling chances table
-        if (resource!!.getRespawnRate() > 0) {
+        if (resource!!.respawnRate > 0) {
             if (RandomFunction.roll(8) || resource!!.identifier.toInt() == 1 || resource!!.identifier.toInt() == 2 || resource!!.identifier.toInt() == 3 || resource!!.identifier.toInt() == 6) {
                 if (resource!!.isFarming) {
                     val fPatch = forObject(node.asScenery())
@@ -240,7 +240,7 @@ class WoodcuttingPulse(private val player: Player, private val node: Scenery) : 
 
     private fun calculateExperience(reward: Int, amount: Int): Double {
         var amount = amount
-        var experience = resource!!.getExperience()
+        var experience = resource!!.experience
 
         if (player.location.regionId == 10300) {
             return 1.0

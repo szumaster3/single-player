@@ -20,9 +20,8 @@ import shared.consts.NPCs
 import shared.consts.Quests
 
 @Initializable
-class SlayerMasterDialogue(
-    player: Player? = null,
-) : Dialogue(player) {
+class SlayerMasterDialogue(player: Player? = null) : Dialogue(player) {
+
     private var master: SlayerMaster? = null
     private var quest: Quest? = null
     private var isDiary = false
@@ -43,20 +42,16 @@ class SlayerMasterDialogue(
             }
         } else {
             interpreter.sendDialogues(master!!.npc, getExpression(master), "'Ello, and what are you after, then?")
-            stage =
-                if (master == SlayerMaster.VANNAKA) {
-                    -1
-                } else {
-                    0
-                }
+            stage = if (master == SlayerMaster.VANNAKA) {
+                -1
+            } else {
+                0
+            }
         }
         return true
     }
 
-    override fun handle(
-        interfaceId: Int,
-        buttonId: Int,
-    ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         if (isDiary) {
             when (stage) {
                 999 -> end()
@@ -70,28 +65,27 @@ class SlayerMasterDialogue(
                     stage++
                 }
 
-                0 ->
-                    when (buttonId) {
-                        1 -> {
-                            player("What is the Achievement Diary?")
-                            stage = 410
-                        }
-
-                        2 -> {
-                            player("What are the rewards?")
-                            stage = 420
-                        }
-
-                        3 -> {
-                            player("How do I claim the rewards?")
-                            stage = 430
-                        }
-
-                        4 -> {
-                            player("See you later.")
-                            stage = 999
-                        }
+                0 -> when (buttonId) {
+                    1 -> {
+                        player("What is the Achievement Diary?")
+                        stage = 410
                     }
+
+                    2 -> {
+                        player("What are the rewards?")
+                        stage = 420
+                    }
+
+                    3 -> {
+                        player("How do I claim the rewards?")
+                        stage = 430
+                    }
+
+                    4 -> {
+                        player("See you later.")
+                        stage = 999
+                    }
+                }
 
                 440 -> {
                     npc(
@@ -208,24 +202,23 @@ class SlayerMasterDialogue(
         }
         when (stage) {
             999 -> end()
-            -1 ->
-                if (!getInstance(player).hasStarted()) {
-                    options(
-                        "Who are you?",
-                        "Do you have anything for trade?",
-                        "Er...nothing...",
-                        "I have a question about my Achievement Diary.",
-                    )
-                    stage = 1
-                } else {
-                    options(
-                        "I need another assignment.",
-                        "Do you have anything for trade?",
-                        "Er...nothing...",
-                        "I have a question about my Achievement Diary.",
-                    )
-                    stage = 690
-                }
+            -1 -> if (!getInstance(player).hasStarted()) {
+                options(
+                    "Who are you?",
+                    "Do you have anything for trade?",
+                    "Er...nothing...",
+                    "I have a question about my Achievement Diary.",
+                )
+                stage = 1
+            } else {
+                options(
+                    "I need another assignment.",
+                    "Do you have anything for trade?",
+                    "Er...nothing...",
+                    "I have a question about my Achievement Diary.",
+                )
+                stage = 690
+            }
 
             0 -> {
                 if (master == SlayerMaster.TURAEL) {
@@ -256,46 +249,38 @@ class SlayerMasterDialogue(
                 }
             }
 
-            1 ->
-                when (buttonId) {
-                    1 -> {
-                        player("Who are you?")
-                        stage = 10
-                    }
-
-                    2 -> {
-                        player("Do you have anything for trade?")
-                        stage = 20
-                    }
-
-                    3 -> {
-                        player("Er...nothing...")
-                        stage = 999
-                    }
-
-                    4 -> {
-                        player("I have a question about my Achievement Diary.")
-                        stage = 691
-                    }
+            1 -> when (buttonId) {
+                1 -> {
+                    player("Who are you?")
+                    stage = 10
                 }
+
+                2 -> {
+                    player("Do you have anything for trade?")
+                    stage = 20
+                }
+
+                3 -> {
+                    player("Er...nothing...")
+                    stage = 999
+                }
+
+                4 -> {
+                    player("I have a question about my Achievement Diary.")
+                    stage = 691
+                }
+            }
 
             10 -> {
                 interpreter.sendDialogues(
                     master!!.npc,
                     getExpression(master),
-                    "I'm " +
-                        (
-                            if (master!!.npc ==
-                                8273
-                            ) {
-                                "the lowest level Slayer Master available."
-                            } else {
-                                "one of the elite Slayer Masters."
-                            }
-                        ),
-                    if (master!!.npc ==
-                        8273
-                    ) {
+                    "I'm " + (if (master!!.npc == 8273) {
+                        "the lowest level Slayer Master available."
+                    } else {
+                        "one of the elite Slayer Masters."
+                    }),
+                    if (master!!.npc == 8273) {
                         "The other Slayer Masters are spread around the world."
                     } else {
                         "I can teach you about the ways of the Slayer."
@@ -309,18 +294,17 @@ class SlayerMasterDialogue(
                 stage = 12
             }
 
-            12 ->
-                when (buttonId) {
-                    1 -> {
-                        player("What's a Slayer?")
-                        stage = 100
-                    }
-
-                    2 -> {
-                        player("Never heard of you...")
-                        stage = 2000
-                    }
+            12 -> when (buttonId) {
+                1 -> {
+                    player("What's a Slayer?")
+                    stage = 100
                 }
+
+                2 -> {
+                    player("Never heard of you...")
+                    stage = 2000
+                }
+            }
 
             20 -> {
                 interpreter.sendDialogues(
@@ -374,18 +358,17 @@ class SlayerMasterDialogue(
                 stage = 105
             }
 
-            105 ->
-                when (buttonId) {
-                    1 -> {
-                        player("Wow, can you teach me?")
-                        stage = 500
-                    }
-
-                    2 -> {
-                        player("Sounds useless to me.")
-                        stage = 1000
-                    }
+            105 -> when (buttonId) {
+                1 -> {
+                    player("Wow, can you teach me?")
+                    stage = 500
                 }
+
+                2 -> {
+                    player("Sounds useless to me.")
+                    stage = 1000
+                }
+            }
 
             500 -> {
                 interpreter.sendDialogues(master!!.npc, getExpression(master), "Hmmm, well, I'm not so sure...")
@@ -423,21 +406,20 @@ class SlayerMasterDialogue(
                 stage = 504
             }
 
-            504 ->
-                if (player.inventory.freeSlots() == 0) {
-                    player("Sorry, I don't have enough inventory space.")
-                    stage = 999
-                } else {
-                    player.inventory.add(GEM)
-                    getInstance(player).generate(master!!)
-                    interpreter.sendDialogues(
-                        master!!.npc,
-                        getExpression(master),
-                        "We'll start you off hunting " + getInstance(player).taskName + "'s, you'll need to",
-                        "kill " + getInstance(player).amount + " of them.",
-                    )
-                    stage = 510
-                }
+            504 -> if (player.inventory.freeSlots() == 0) {
+                player("Sorry, I don't have enough inventory space.")
+                stage = 999
+            } else {
+                player.inventory.add(GEM)
+                getInstance(player).generate(master!!)
+                interpreter.sendDialogues(
+                    master!!.npc,
+                    getExpression(master),
+                    "We'll start you off hunting " + getInstance(player).taskName + "'s, you'll need to",
+                    "kill " + getInstance(player).amount + " of them.",
+                )
+                stage = 510
+            }
 
             510 -> {
                 interpreter.sendDialogues(
@@ -470,59 +452,56 @@ class SlayerMasterDialogue(
                 stage = 999
             }
 
-            690 ->
-                when (buttonId) {
-                    1 -> {
-                        player("I need another assignment.")
-                        stage = 701
-                    }
-
-                    2 -> {
-                        player("Do you have anything for trade?")
-                        stage = 20
-                    }
-
-                    3 -> {
-                        player("Er...nothing...")
-                        stage = 30
-                    }
-
-                    4 -> {
-                        player("I have a question about my Achievement Diary.")
-                        stage = 691
-                    }
+            690 -> when (buttonId) {
+                1 -> {
+                    player("I need another assignment.")
+                    stage = 701
                 }
+
+                2 -> {
+                    player("Do you have anything for trade?")
+                    stage = 20
+                }
+
+                3 -> {
+                    player("Er...nothing...")
+                    stage = 30
+                }
+
+                4 -> {
+                    player("I have a question about my Achievement Diary.")
+                    stage = 691
+                }
+            }
 
             691 -> sendDiaryDialogue()
-            700 ->
-                when (buttonId) {
-                    1 -> {
-                        player("I need another assignment.")
-                        stage = 701
-                    }
-
-                    2 -> {
-                        player("Do you have anything for trade?")
-                        stage = 20
-                    }
-
-                    3 -> {
-                        player("Er...nothing...")
-                        stage = 30
-                    }
-
-                    4 ->
-                        if (quest!!.getStage(player) == 30) {
-                            player(
-                                "I'm here about a quest. Ava said she saw you hanging",
-                                "around the moving trees near Draynor Manor.",
-                            )
-                            stage = 8000
-                        } else if (quest!!.getStage(player) == 31) {
-                            player("Hello, I'm here about those trees again.")
-                            stage = 8006
-                        }
+            700 -> when (buttonId) {
+                1 -> {
+                    player("I need another assignment.")
+                    stage = 701
                 }
+
+                2 -> {
+                    player("Do you have anything for trade?")
+                    stage = 20
+                }
+
+                3 -> {
+                    player("Er...nothing...")
+                    stage = 30
+                }
+
+                4 -> if (quest!!.getStage(player) == 30) {
+                    player(
+                        "I'm here about a quest. Ava said she saw you hanging",
+                        "around the moving trees near Draynor Manor.",
+                    )
+                    stage = 8000
+                } else if (quest!!.getStage(player) == 31) {
+                    player("Hello, I'm here about those trees again.")
+                    stage = 8006
+                }
+            }
 
             8000 -> {
                 npc(
@@ -673,18 +652,17 @@ class SlayerMasterDialogue(
                 stage++
             }
 
-            845 ->
-                when (buttonId) {
-                    1 -> {
-                        player("Got any tips for me?")
-                        stage = 860
-                    }
-
-                    2 -> {
-                        player("Okay, great!")
-                        stage = 999
-                    }
+            845 -> when (buttonId) {
+                1 -> {
+                    player("Got any tips for me?")
+                    stage = 860
                 }
+
+                2 -> {
+                    player("Okay, great!")
+                    stage = 999
+                }
+            }
 
             860 -> {
                 interpreter.sendDialogues(master!!.npc, getExpression(master), *getInstance(player).task!!.tip)
@@ -696,22 +674,21 @@ class SlayerMasterDialogue(
                 stage = 999
             }
 
-            900 ->
-                when (buttonId) {
-                    1 -> {
-                        player("Can I buy a Skillcape of Slayer?")
-                        stage = 901
-                    }
-
-                    2 -> {
-                        interpreter.sendDialogues(
-                            master!!.npc,
-                            FaceAnim.HALF_GUILTY,
-                            "'Ello, and what are you after, then?",
-                        )
-                        stage = 0
-                    }
+            900 -> when (buttonId) {
+                1 -> {
+                    player("Can I buy a Skillcape of Slayer?")
+                    stage = 901
                 }
+
+                2 -> {
+                    interpreter.sendDialogues(
+                        master!!.npc,
+                        FaceAnim.HALF_GUILTY,
+                        "'Ello, and what are you after, then?",
+                    )
+                    stage = 0
+                }
+            }
 
             901 -> {
                 interpreter.sendDialogues(
@@ -727,15 +704,14 @@ class SlayerMasterDialogue(
                 stage = 903
             }
 
-            903 ->
-                when (buttonId) {
-                    1 -> {
-                        player("Okay, here you go.")
-                        stage = 904
-                    }
-
-                    2 -> end()
+            903 -> when (buttonId) {
+                1 -> {
+                    player("Okay, here you go.")
+                    stage = 904
                 }
+
+                2 -> end()
+            }
 
             904 -> {
                 if (purchase(player, Skills.SLAYER)) {
@@ -745,22 +721,21 @@ class SlayerMasterDialogue(
                 stage = 999
             }
 
-            906 ->
-                when (buttonId) {
-                    1 -> {
-                        player("May I buy a Quest Point cape?")
-                        stage = 907
-                    }
-
-                    2 -> {
-                        interpreter.sendDialogues(
-                            master!!.npc,
-                            FaceAnim.HALF_GUILTY,
-                            "'Ello, and what are you after, then?",
-                        )
-                        stage = 0
-                    }
+            906 -> when (buttonId) {
+                1 -> {
+                    player("May I buy a Quest Point cape?")
+                    stage = 907
                 }
+
+                2 -> {
+                    interpreter.sendDialogues(
+                        master!!.npc,
+                        FaceAnim.HALF_GUILTY,
+                        "'Ello, and what are you after, then?",
+                    )
+                    stage = 0
+                }
+            }
 
             907 -> {
                 npc(getExpression(master), "You bet, " + player.username + "! Right when you give me 99000 coins.")
@@ -772,15 +747,14 @@ class SlayerMasterDialogue(
                 stage = 909
             }
 
-            909 ->
-                when (buttonId) {
-                    1 -> {
-                        player("Okay, here you go.")
-                        stage = 910
-                    }
-
-                    2 -> end()
+            909 -> when (buttonId) {
+                1 -> {
+                    player("Okay, here you go.")
+                    stage = 910
                 }
+
+                2 -> end()
+            }
 
             910 -> {
                 if (player.inventory.freeSlots() < 2) {
@@ -836,17 +810,16 @@ class SlayerMasterDialogue(
 
     override fun newInstance(player: Player?): Dialogue = SlayerMasterDialogue(player)
 
-    override fun getIds(): IntArray =
-        intArrayOf(
-            NPCs.CHAELDAR_1598,
-            NPCs.SANIBOCH_1596,
-            NPCs.VANNAKA_1597,
-            NPCs.CHAELDAR_1599,
-            NPCs.SUMONA_7780,
-            NPCs.DURADEL_8275,
-            NPCs.TURAEL_8273,
-            NPCs.MAZCHNA_8274,
-        )
+    override fun getIds(): IntArray = intArrayOf(
+        NPCs.CHAELDAR_1598,
+        NPCs.SANIBOCH_1596,
+        NPCs.VANNAKA_1597,
+        NPCs.CHAELDAR_1599,
+        NPCs.SUMONA_7780,
+        NPCs.DURADEL_8275,
+        NPCs.TURAEL_8273,
+        NPCs.MAZCHNA_8274,
+    )
 
     companion object {
         private val GEM = Item(Items.ENCHANTED_GEM_4155, 1)

@@ -18,8 +18,7 @@ import shared.consts.NPCs
 import shared.consts.Sounds
 import kotlin.math.max
 
-class ZygomiteNPC :
-    NPCBehavior(NPCs.FUNGI_3344, NPCs.FUNGI_3345, NPCs.ZYGOMITE_3346, NPCs.ZYGOMITE_3347),
+class ZygomiteNPC : NPCBehavior(NPCs.FUNGI_3344, NPCs.FUNGI_3345, NPCs.ZYGOMITE_3346, NPCs.ZYGOMITE_3347),
     InteractionListener {
     override fun defineListeners() {
         on(intArrayOf(NPCs.FUNGI_3344, NPCs.FUNGI_3345), IntType.NPC, "pick") { player, node ->
@@ -33,10 +32,10 @@ class ZygomiteNPC :
             submitWorldPulse(
                 object : Pulse() {
                     override fun pulse(): Boolean {
-                                animate(entity = fungi, anim = SECOND_ANIMATION)
-                                transformNpc(fungi, fungi.id + 2, 500)
-                                fungi.impactHandler.disabledTicks = 1
-                                fungi.attack(player)
+                        animate(entity = fungi, anim = SECOND_ANIMATION)
+                        transformNpc(fungi, fungi.id + 2, 500)
+                        fungi.impactHandler.disabledTicks = 1
+                        fungi.attack(player)
                         return true
                     }
                 },

@@ -2,6 +2,7 @@ package content.region.misthalin.draynor.quest.swept
 
 import content.data.GameAttributes
 import core.api.addItemOrDrop
+import core.api.displayQuestItem
 import core.api.getAttribute
 import core.api.setVarbit
 import core.game.node.entity.player.Player
@@ -16,10 +17,8 @@ import shared.consts.Vars
  */
 @Initializable
 class SweptAway : Quest(Quests.SWEPT_AWAY, 160, 159, 1, Vars.VARBIT_QUEST_SWEPT_AWAY_PROGRESS_5448, 0, 1, 50) {
-    override fun drawJournal(
-        player: Player,
-        stage: Int,
-    ) {
+
+    override fun drawJournal(player: Player, stage: Int) {
         super.drawJournal(player, stage)
         var line = 11
         if (stage == 0) {
@@ -40,7 +39,7 @@ class SweptAway : Quest(Quests.SWEPT_AWAY, 160, 159, 1, Vars.VARBIT_QUEST_SWEPT_
                 line++,
                 getAttribute(player, GameAttributes.QUEST_SWEPT_AWAY_HETTY_ENCH, false) ||
                     getAttribute(player, GameAttributes.QUEST_SWEPT_AWAY_LABELS_COMPLETE, false) ||
-                    stage > 4,
+                    stage > 4
             )
             line(player, "!!Betty?? in !!Port Sarim?? and", line++, stage > 4)
             line(player, "!!Aggie?? in !!Draynor??.", line++, stage > 4)
@@ -74,7 +73,7 @@ class SweptAway : Quest(Quests.SWEPT_AWAY, 160, 159, 1, Vars.VARBIT_QUEST_SWEPT_
     override fun finish(player: Player) {
         super.finish(player)
         var ln = 10
-        player.packetDispatch.sendItemZoomOnInterface(Items.BROOMSTICK_14057, 230, 277, 5)
+        displayQuestItem(player, Items.BROOMSTICK_14057, 230)
         drawReward(player, "1 Quest Point", ln++)
         drawReward(player, "A broom", ln++)
         drawReward(player, "Access to 10 portions of", ln++)

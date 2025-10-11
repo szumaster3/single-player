@@ -200,13 +200,12 @@ class HeroesQuest : Quest(Quests.HEROES_QUEST, 75, 74, 1, Vars.VARP_QUEST_HEROES
     override fun finish(player: Player) {
         var ln = 10
         super.finish(player)
-        player.packetDispatch.sendString("You have completed the Heroes Quest!", 277, 4)
-        player.packetDispatch.sendItemZoomOnInterface(Items.DRAGON_BATTLEAXE_1377, 240, 277, 5)
+        displayQuestItem(player, Items.DRAGON_BATTLEAXE_1377)
 
         drawReward(player, "1 Quest Point", ln++)
         drawReward(player, "Access to the Heroes' Guild", ln++)
         drawReward(player, "A total of 29,232 XP spread", ln++)
-        drawReward(player, "over twelve skills", ln++)
+        drawReward(player, "over twelve skills", ln)
 
         rewardXP(player, Skills.ATTACK, 3075.0)
         rewardXP(player, Skills.DEFENCE, 3075.0)

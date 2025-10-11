@@ -2,6 +2,7 @@ package content.global.skill.hunter
 
 import content.global.skill.hunter.NetTrapSetting.NetTrap
 import core.api.log
+import core.api.sendMessage
 import core.game.node.Node
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
@@ -11,10 +12,7 @@ import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.tools.Log
 
-enum class Traps(
-    @JvmField val settings: TrapSetting,
-    vararg nodes: TrapNode,
-) {
+enum class Traps(@JvmField val settings: TrapSetting, vararg nodes: TrapNode) {
     BIRD_SNARE(
         TrapSetting(10006, intArrayOf(19175), intArrayOf(), "lay", 19174, Animation.create(5208), Animation.create(5207), 1),
         TrapNode(intArrayOf(5073), 1, 34.0, intArrayOf(19179, 19180), arrayOf(Item(10088, 8), Item(9978), Item(526))),
@@ -22,9 +20,7 @@ enum class Traps(
         TrapNode(intArrayOf(5076), 9, 61.0, intArrayOf(19185, 19186), arrayOf(Item(10091, 8), Item(9978), Item(526))),
         TrapNode(intArrayOf(5074), 11, 64.7, intArrayOf(19181, 19182), arrayOf(Item(10089, 8), Item(9978), Item(526))),
         TrapNode(intArrayOf(5072), 19, 95.2, intArrayOf(19177, 19178), arrayOf(Item(10087, 8), Item(9978), Item(526))),
-        object : TrapNode(
-            intArrayOf(7031), 39, 167.0, intArrayOf(28931, 28930), arrayOf(Item(11525, 8), Item(9978), Item(526))
-        ) {
+        object : TrapNode(intArrayOf(7031), 39, 167.0, intArrayOf(28931, 28930), arrayOf(Item(11525, 8), Item(9978), Item(526))) {
             override fun canCatch(
                 wrapper: TrapWrapper,
                 npc: NPC,
@@ -44,9 +40,6 @@ enum class Traps(
         BoxTrapNode(intArrayOf(8654), 73, 315.0, arrayOf(Item(14861)), 1),
         object : BoxTrapNode(intArrayOf(7010, 7011), 77, 0.0, arrayOf(Item(12539, 1)), 1) {
             override fun canCatch(wrapper: TrapWrapper, npc: NPC): Boolean {
-                wrapper.player.sendMessage(
-                    "Note: Giving 0 xp for grenwalls until this area and its requirements are implemented.",
-                )
                 return super.canCatch(wrapper, npc)
             }
         },
@@ -73,28 +66,23 @@ enum class Traps(
         TrapNode(intArrayOf(6921), 29, 152.0, intArrayOf(), arrayOf(Item(12130))),
         TrapNode(intArrayOf(5115), 59, 272.0, intArrayOf(), arrayOf(Item(10147))),
         TrapNode(intArrayOf(5116), 67, 304.0, intArrayOf(), arrayOf(Item(10148))),
-    ), ;
+    ),
+    ;
 
     private val hooks: MutableList<TrapHook> = ArrayList(5)
 
     @JvmField
     val nodes: Array<TrapNode> = nodes as Array<TrapNode>
 
-    fun create(
-        player: Player,
-        node: Node,
-    ) {
+    fun create(player: Player, node: Node) {
         player.pulseManager.run(TrapCreatePulse(player, node, this))
     }
 
-    fun dismantle(
-        player: Player,
-        scenery: Scenery,
-    ) {
+    fun dismantle(player: Player, scenery: Scenery) {
         val instance = HunterManager.getInstance(player)
 
         if (!instance.isOwner(scenery)) {
-            player.sendMessage("This isn't your trap!")
+            sendMessage(player, "This isn't your trap!")
             return
         }
         if (instance.getWrapper(scenery) == null) {
@@ -105,17 +93,11 @@ enum class Traps(
         player.pulseManager.run(TrapDismantlePulse(player, scenery, instance.getWrapper(scenery)!!))
     }
 
-    fun investigate(
-        player: Player,
-        scenery: Scenery,
-    ) {
+    fun investigate(player: Player, scenery: Scenery) {
         settings.investigate(player, scenery)
     }
 
-    fun catchNpc(
-        wrapper: TrapWrapper,
-        npc: NPC,
-    ) {
+    fun catchNpc(wrapper: TrapWrapper, npc: NPC) {
         val trapNode = forNpc(npc)
         if (trapNode == null || !trapNode.canCatch(wrapper, npc) || !settings.canCatch(wrapper, npc)) {
             return

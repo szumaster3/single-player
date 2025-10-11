@@ -47,11 +47,7 @@ class FremennikDungeonPlugin : MapZone("fremennik", true, ZoneRestriction.CANNON
         return super.interact(entity, target, option)
     }
 
-    private fun handlePyrefiendArea(
-        player: Player,
-        scenery: Scenery,
-        direction: Direction,
-    ): Boolean {
+    private fun handlePyrefiendArea(player: Player, scenery: Scenery, direction: Direction): Boolean {
         if (getStatLevel(player, Skills.AGILITY) < 81) {
             sendMessage(player, "You need an agility level of at least 81 to do this.")
             return true
@@ -112,25 +108,13 @@ class FremennikDungeonPlugin : MapZone("fremennik", true, ZoneRestriction.CANNON
         }
     }
 
-    private fun handleNarrowCrevice(
-        player: Player,
-        sceneryScenery: Scenery,
-        dir: Direction,
-    ): Boolean {
+    private fun handleNarrowCrevice(player: Player, sceneryScenery: Scenery, dir: Direction): Boolean {
         if (getStatLevel(player, Skills.AGILITY) < 62) {
             sendMessage(player, "You need an agility level of at least 62 to do this.")
             return true
         }
         val end = sceneryScenery.location.transform(dir, 4)
-        AgilityHandler.walk(
-            player,
-            -1,
-            player.location,
-            end,
-            Animation.create(156),
-            10.0,
-            "You climb your way through the narrow crevice.",
-        )
+        AgilityHandler.walk(player, -1, player.location, end, Animation.create(156), 10.0, "You climb your way through the narrow crevice.")
         return true
     }
 

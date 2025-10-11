@@ -513,13 +513,9 @@ class AliceHusbandDialogue(player: Player? = null) : Dialogue(player) {
     }
 
     private fun buy(amount: Int) {
-        val tokens = Item(4278, amount * 10)
+        val tokens = Item(Items.ECTO_TOKEN_4278, amount * 10)
         if (!player.inventory.containsItem(tokens)) {
-            npc(
-                "I'm not a charity here, ya know. Bad enough all you",
-                "cow-killing folks are a'slaughterin' me beasts. Come back",
-                "when ya have enough tokens.",
-            )
+            npc("I'm not a charity here, ya know. Bad enough all you", "cow-killing folks are a'slaughterin' me beasts. Come back", "when ya have enough tokens.")
             return
         }
         if (player.inventory.freeSlots() < amount) {
@@ -527,7 +523,7 @@ class AliceHusbandDialogue(player: Player? = null) : Dialogue(player) {
             return
         }
         if (player.inventory.remove(tokens)) {
-            player.inventory.add(Item(10487, amount), player)
+            player.inventory.add(Item(Items.UNDEAD_CHICKEN_10487, amount), player)
             npc("Great! I'm laying away me tokens for some killer cows.", "That'll learn them bones rustlers.")
         }
     }

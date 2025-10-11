@@ -45,8 +45,7 @@ class DoricsQuest : Quest(Quests.DORICS_QUEST, 17, 16, 1, Vars.VARP_QUEST_DORICS
     override fun finish(player: Player) {
         super.finish(player)
         var line = 10
-
-        sendItemZoomOnInterface(player, Components.QUEST_COMPLETE_SCROLL_277, 5, Items.STEEL_PICKAXE_1269)
+        displayQuestItem(player, Items.STEEL_PICKAXE_1269)
         drawReward(player, "1 Quest Point", line++)
         drawReward(player, "1300 Mining XP", line++)
         drawReward(player, "180 Coins", line++)

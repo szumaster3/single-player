@@ -59,7 +59,7 @@ class WaterfallPlugin : OptionHandler() {
         val id = node.id
         val quest = player.getQuestRepository().getQuest(Quests.WATERFALL_QUEST)
         if (quest == null) {
-            player.sendMessage("Error! Waterfall quest cannot be found.")
+            sendMessage(player, "Error! Waterfall quest cannot be found.")
             return true
         }
         when (id) {

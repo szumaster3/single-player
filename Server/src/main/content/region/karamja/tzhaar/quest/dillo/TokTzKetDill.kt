@@ -1,12 +1,11 @@
 package content.region.karamja.tzhaar.quest.dillo
 
+import core.api.displayQuestItem
 import core.api.rewardXP
-import core.api.sendItemZoomOnInterface
 import core.api.setVarbit
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest
 import core.game.node.entity.skill.Skills
-import shared.consts.Components
 import shared.consts.Items
 import shared.consts.Quests
 import shared.consts.Vars
@@ -48,8 +47,7 @@ class TokTzKetDill : Quest(Quests.TOKTZ_KET_DILL, 152, 151, 1, Vars.VARBIT_QUEST
     override fun finish(player: Player) {
         super.finish(player)
         var ln = 10
-        sendItemZoomOnInterface(player, Components.QUEST_COMPLETE_SCROLL_277, 5, Items.PILLAR_13246)
-
+        displayQuestItem(player, Items.PILLAR_13246)
         drawReward(player, "1 Quest Point", ln++)
         drawReward(player, "5,000 Attack XP", ln++)
         drawReward(player, "5,000 Strength XP", ln++)

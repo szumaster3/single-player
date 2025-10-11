@@ -1,5 +1,6 @@
 package content.global.skill.crafting.glass
 
+import content.global.skill.crafting.CraftingObjects
 import core.api.*
 import core.game.event.ResourceProducedEvent
 import core.game.interaction.Clocks
@@ -10,21 +11,21 @@ import core.game.node.entity.skill.Skills
 import core.game.system.task.Pulse
 import shared.consts.Animations
 import shared.consts.Items
-import shared.consts.Scenery
 import kotlin.math.min
 
 class MoltenGlassMakePlugin : InteractionListener {
 
-    private val SODA_ASH = Items.SODA_ASH_1781
-    private val BUCKET_OF_SAND = Items.BUCKET_OF_SAND_1783
-    private val SANDBAG = Items.SANDBAG_9943
-    private val MOLTEN_GLASS = Items.MOLTEN_GLASS_1775
-    private val INPUTS = intArrayOf(SODA_ASH, BUCKET_OF_SAND, SANDBAG)
-    private val FURNACES = intArrayOf(Scenery.FURNACE_4304, Scenery.FURNACE_6189, Scenery.LAVA_FORGE_9390, Scenery.FURNACE_11010, Scenery.FURNACE_11666, Scenery.FURNACE_12100, Scenery.FURNACE_12809, Scenery.FURNACE_18497, Scenery.FURNACE_26814, Scenery.FURNACE_30021, Scenery.FURNACE_30510, Scenery.FURNACE_36956, Scenery.FURNACE_37651)
-    private val SAND_SOURCES = intArrayOf(BUCKET_OF_SAND, SANDBAG)
+    companion object {
+        const val SODA_ASH = Items.SODA_ASH_1781
+        const val BUCKET_OF_SAND = Items.BUCKET_OF_SAND_1783
+        const val SANDBAG = Items.SANDBAG_9943
+        const val MOLTEN_GLASS = Items.MOLTEN_GLASS_1775
+        val INPUTS = intArrayOf(SODA_ASH, BUCKET_OF_SAND, SANDBAG)
+        val SAND_SOURCES = intArrayOf(BUCKET_OF_SAND, SANDBAG)
+    }
 
     override fun defineListeners() {
-        onUseWith(IntType.SCENERY, INPUTS, *FURNACES) { player, _, _ ->
+        onUseWith(IntType.SCENERY, INPUTS, *CraftingObjects.FURNACES) { player, _, _ ->
             if (!clockReady(player, Clocks.SKILLING)) return@onUseWith true
 
             if (!inInventory(player, SODA_ASH, 1)) {
@@ -66,12 +67,12 @@ class MoltenGlassMakePlugin : InteractionListener {
  */
 private class GlassMakePulse(private val player: Player, val product: Int, private var amount: Int) : Pulse() {
 
-    private val SAND_SOURCES = intArrayOf(Items.BUCKET_OF_SAND_1783, Items.SANDBAG_9943)
+    private val SAND_SOURCES = MoltenGlassMakePlugin.SAND_SOURCES
 
     override fun pulse(): Boolean {
         if (amount < 1) return true
 
-        if (!inInventory(player, Items.SODA_ASH_1781) || !anyInInventory(player, *SAND_SOURCES)) {
+        if (!inInventory(player, MoltenGlassMakePlugin.SODA_ASH) || !anyInInventory(player, *SAND_SOURCES)) {
             return true
         }
 
@@ -79,8 +80,8 @@ private class GlassMakePulse(private val player: Player, val product: Int, priva
         animate(player, Animations.USE_FURNACE_3243)
         sendMessage(player, "You heat the sand and soda ash in the furnace to make glass.")
 
-        if (removeItem(player, Items.SODA_ASH_1781) && removeSand(player)) {
-            addItem(player, Items.MOLTEN_GLASS_1775)
+        if (removeItem(player, MoltenGlassMakePlugin.SODA_ASH) && removeSand(player)) {
+            addItem(player, MoltenGlassMakePlugin.MOLTEN_GLASS)
             rewardXP(player, Skills.CRAFTING, 20.0)
             player.dispatch(ResourceProducedEvent(product, amount, player))
         } else {
@@ -97,14 +98,14 @@ private class GlassMakePulse(private val player: Player, val product: Int, priva
      */
     private fun removeSand(player: Player): Boolean {
         return when {
-            inInventory(player, Items.BUCKET_OF_SAND_1783) -> {
-                if (removeItem(player, Items.BUCKET_OF_SAND_1783)) {
+            inInventory(player, MoltenGlassMakePlugin.BUCKET_OF_SAND) -> {
+                if (removeItem(player, MoltenGlassMakePlugin.BUCKET_OF_SAND)) {
                     addItem(player, Items.BUCKET_1925)
                     true
                 } else false
             }
-            inInventory(player, Items.SANDBAG_9943) -> {
-                if (removeItem(player, Items.SANDBAG_9943)) {
+            inInventory(player, MoltenGlassMakePlugin.SANDBAG) -> {
+                if (removeItem(player, MoltenGlassMakePlugin.SANDBAG)) {
                     addItem(player, Items.EMPTY_SACK_5418)
                     true
                 } else false

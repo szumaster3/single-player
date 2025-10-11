@@ -1,6 +1,7 @@
 package core.game.system.command.rottenpotato
 
 import core.api.removeItem
+import core.api.sendMessage
 import core.cache.def.impl.ItemDefinition
 import core.game.interaction.OptionHandler
 import core.game.node.Node
@@ -36,7 +37,7 @@ class RottenPotatoOptionHandler : OptionHandler() {
 
         when (option) {
             "rs hd" -> player.dialogueInterpreter.open(RottenPotatoRSHDDialogue().ID)
-            "heal" -> player.fullRestore().also { player.sendMessage(colorize("%RAll healed!")) }
+            "heal" -> player.fullRestore().also { sendMessage(player, colorize("%RAll healed!")) }
             "extra" -> player.dialogueInterpreter.open(RottenPotatoExtraDialogue().ID)
             "commands" -> {
                 CommandSystem.commandSystem.parse(player, "commands")

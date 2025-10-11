@@ -57,11 +57,11 @@ class TheDigSitePlugin : InteractionListener {
         ) { player, node ->
 
             if (getStatLevel(player, Skills.THIEVING) < 25) {
-                player.sendMessage("You need a Thieving level of 25 to do that.")
+                sendMessage(player, "You need a Thieving level of 25 to do that.")
                 return@on true
             }
             if (!workmanPickpocketingTable.canRoll(player)) {
-                player.sendMessage("You don't have enough inventory space to do that.")
+                sendMessage(player, "You don't have enough inventory space to do that.")
                 return@on true
             }
             sendMessage(player, "You attempt to pick the workman's pocket...")

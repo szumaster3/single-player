@@ -32,7 +32,7 @@ class RovingElvesPlugin : OptionHandler() {
     override fun handle(player: Player, node: Node, option: String): Boolean {
         val quest = player.getQuestRepository().getQuest(Quests.ROVING_ELVES)
         if (quest == null) {
-            player.sendMessage("Error! RovingElves quest cannot be found, please contact an admin!")
+            sendMessage(player, "Error! RovingElves quest cannot be found, please contact an admin!")
             return true
         }
         when (node.id) {

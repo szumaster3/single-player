@@ -3,6 +3,7 @@ package content.region.asgarnia.taverley.quest.ball.plugin
 import content.minigame.mta.plugin.TelekineticGrabSpell
 import content.region.asgarnia.taverley.quest.ball.npc.WitchExperimentNPC
 import core.api.inInventory
+import core.api.sendMessage
 import core.game.interaction.MovementPulse
 import core.game.interaction.Option
 import core.game.interaction.PluginInteraction
@@ -54,14 +55,14 @@ class BallPlugin : PluginInteraction() {
     fun handleBall(player: Player) {
         if (player.getAttribute<Boolean>("witchs_house:experiment_killed", false)) {
             if (inInventory(player, Items.BALL_2407)) {
-                player.sendMessage("You already have the ball.")
+                sendMessage(player, "You already have the ball.")
                 handled = true
             } else {
                 handled = false
             }
         } else {
             if (player.getAttribute("witchs-experiment:npc_spawned", false)) {
-                player.sendMessage("Finish fighting the experiment first!")
+                sendMessage(player, "Finish fighting the experiment first!")
                 return
             }
             val skillsToDecrease =

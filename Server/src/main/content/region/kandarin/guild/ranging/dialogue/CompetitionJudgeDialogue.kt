@@ -33,7 +33,7 @@ class CompetitionJudgeDialogue(player: Player? = null) : Dialogue(player) {
             player.archeryTotal = 0
             if (!player.inventory.add(Item(Items.ARCHERY_TICKET_1464, reward))) {
                 player.bank.add(Item(Items.ARCHERY_TICKET_1464, reward))
-                player.sendMessage("Your reward was sent to your bank.")
+                sendMessage(player, "Your reward was sent to your bank.")
             }
             stage = 999
         }
@@ -57,7 +57,7 @@ class CompetitionJudgeDialogue(player: Player? = null) : Dialogue(player) {
                 )
                 if (!player.inventory.add(Item(Items.ARCHERY_TICKET_1464, reward))) {
                     player.bank.add(Item(Items.ARCHERY_TICKET_1464, reward))
-                    player.sendMessage("Your reward was sent to your bank.")
+                    sendMessage(player, "Your reward was sent to your bank.")
                 }
                 stage = 999
             }

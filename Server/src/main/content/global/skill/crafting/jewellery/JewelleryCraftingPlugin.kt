@@ -1,5 +1,6 @@
 package content.global.skill.crafting.jewellery
 
+import content.global.skill.crafting.CraftingObjects
 import content.global.skill.slayer.SlayerManager
 import core.api.*
 import core.game.interaction.Clocks
@@ -12,12 +13,10 @@ import core.tools.StringUtils
 import shared.consts.Components
 import shared.consts.Items
 import shared.consts.Quests
-import shared.consts.Scenery
 
 class JewelleryCraftingPlugin : InteractionListener , InterfaceListener {
 
     private val barId = intArrayOf(Items.GOLD_BAR_2357, Items.PERFECT_GOLD_BAR_2365)
-    private val furnaceId = intArrayOf(Scenery.FURNACE_4304, Scenery.FURNACE_6189, Scenery.FURNACE_11010, Scenery.FURNACE_11666, Scenery.FURNACE_12100, Scenery.FURNACE_12809, Scenery.FURNACE_18497, Scenery.FURNACE_26814, Scenery.FURNACE_30021, Scenery.FURNACE_30510, Scenery.FURNACE_36956, Scenery.FURNACE_37651)
     private val amuletId = intArrayOf(Items.GOLD_AMULET_1673, Items.SAPPHIRE_AMULET_1675, Items.EMERALD_AMULET_1677, Items.RUBY_AMULET_1679, Items.DIAMOND_AMULET_1681, Items.DRAGONSTONE_AMMY_1683, Items.ONYX_AMULET_6579)
 
     override fun defineListeners() {
@@ -26,7 +25,7 @@ class JewelleryCraftingPlugin : InteractionListener , InterfaceListener {
          * Handles crafting interface.
          */
 
-        onUseWith(IntType.SCENERY, barId, *furnaceId) { player, used, _ ->
+        onUseWith(IntType.SCENERY, barId, *CraftingObjects.FURNACES) { player, used, _ ->
             if (used.id == Items.PERFECT_GOLD_BAR_2365) {
                 if (isQuestComplete(player, Quests.FAMILY_CREST)) {
                     sendMessage(player, "You can no longer smelt this.")
@@ -84,7 +83,7 @@ class JewelleryCraftingPlugin : InteractionListener , InterfaceListener {
          * Handles crafting salve amulet.
          */
 
-        onUseWith(IntType.ITEM, Items.SALVE_SHARD_4082, Items.BALL_OF_WOOL_1759) { player, used, with ->
+        onUseWith(IntType.ITEM, Items.SALVE_SHARD_4082, Items.BALL_OF_WOOL_1759) { player, used, _ ->
             if (removeItem(player, Item(used.id, 1), Container.INVENTORY)) {
                 addItem(player, Items.SALVE_AMULET_4081, 1)
                 sendMessage(player, "You carefully string the shard of crystal.")
@@ -96,7 +95,7 @@ class JewelleryCraftingPlugin : InteractionListener , InterfaceListener {
          * Handles enchanting salve amulet.
          */
 
-        onUseWith(IntType.ITEM, Items.SALVE_AMULET_4081, Items.TARNS_DIARY_10587) { player, used, with ->
+        onUseWith(IntType.ITEM, Items.SALVE_AMULET_4081, Items.TARNS_DIARY_10587) { player, used, _ ->
             if (removeItem(player, Item(used.id, 1), Container.INVENTORY)) {
                 addItem(player, Items.SALVE_AMULETE_10588, 1)
             }

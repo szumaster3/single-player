@@ -1,5 +1,6 @@
 package core.game.system.command.sets
 
+import core.api.sendMessage
 import core.game.node.entity.player.Player
 import core.game.system.command.Command
 import core.game.system.command.CommandMapping
@@ -20,13 +21,13 @@ abstract class CommandSet(val defaultPrivilege: Privilege) : Plugin<Any?> {
 
     fun reject(player: Player, vararg message: String) {
         for (msg in message) {
-            player.sendMessage(colorize("-->%R$msg"))
+            sendMessage(player, colorize("-->%R$msg"))
         }
         throw IllegalStateException()
     }
 
     fun notify(player: Player, message: String) {
-        player.sendMessage(colorize("-->$message"))
+        sendMessage(player, colorize("-->$message"))
     }
 
     fun define(

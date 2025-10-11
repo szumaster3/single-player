@@ -386,10 +386,7 @@ enum class BNetTypes(
         ),
     ), ;
 
-    fun handle(
-        player: Player,
-        npc: NPC,
-    ) {
+    fun handle(player: Player, npc: NPC) {
         player.pulseManager.run(BNetPulse(player, npc, node))
     }
 
@@ -397,49 +394,33 @@ enum class BNetTypes(
         private val implings = mutableListOf<ImplingNode>()
 
         /**
-         * Retrieves the first node associated with the player's inventory reward item.
-         *
-         * @param player The player to check for the associated node.
-         * @return The first node found or null if no matching node is found.
+         * Returns the first [ImplingNode] matching the players inventory, or null.
          */
         @JvmStatic
-        fun getImpling(player: Player): ImplingNode? = implings.firstOrNull { player.inventory.containsItem(it.reward) }
+        fun getImpling(player: Player): ImplingNode? =
+            implings.firstOrNull { player.inventory.containsItem(it.reward) }
 
         /**
-         * Retrieves the BNetTypes associated with the given npc based on the npc id.
-         *
-         * @param npc The NPC to check for a matching BNetType.
-         * @return The BNetTypes that match the npc id or null if no match is found.
+         * Returns the [BNetTypes] matching the given NPC, or null.
          */
         @JvmStatic
-        fun forNpc(npc: NPC): BNetTypes? = values().firstOrNull { type ->
-            type.node.npcs.contains(npc.id)
-        }
+        fun forNpc(npc: NPC): BNetTypes? =
+            values().firstOrNull { type -> type.node.npcs.contains(npc.id) }
 
         /**
-         * Retrieves the BNetNode associated with the given item based on the item id.
-         *
-         * @param item The item to check for a matching BNetNode.
-         * @return The BNetNode that matches the item id or null if no match is found.
+         * Returns the [BNetNode] matching the given item, or null.
          */
         @JvmStatic
-        fun forItem(item: Item): BNetNode? = values().firstOrNull { type ->
-            type.node.reward.id == item.id
-        }?.node
+        fun forItem(item: Item): BNetNode? =
+            values().firstOrNull { type -> type.node.reward.id == item.id }?.node
 
         /**
-         * Retrieves the list of all ImplingNodes.
-         *
-         * @return A list containing all ImplingNodes.
+         * Returns all [ImplingNodes].
          */
         fun getImplings(): List<ImplingNode> = implings
 
         init {
-            implings.addAll(
-                values().mapNotNull { type ->
-                    type.node as? ImplingNode
-                }
-            )
+            implings.addAll(values().mapNotNull { type -> type.node as? ImplingNode })
         }
     }
 }

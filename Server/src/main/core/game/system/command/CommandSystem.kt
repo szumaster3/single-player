@@ -1,5 +1,6 @@
 package core.game.system.command
 
+import core.api.sendMessage
 import core.game.node.entity.player.Player
 import core.tools.colorize
 
@@ -22,11 +23,11 @@ class CommandSystem {
         if (command == null) {
             for (set in CommandSet.values()) {
                 if (set.interpret(player, arguments[0], *arguments)) {
-                    player.sendMessage(colorize("-->%Y${arguments[0]}: Deprecated command"))
+                    sendMessage(player, colorize("-->%Y${arguments[0]}: Deprecated command"))
                     return true
                 }
             }
-            player.sendMessage(colorize("-->%R${arguments[0]}: command not found"))
+            sendMessage(player, colorize("-->%R${arguments[0]}: command not found"))
         } else {
             try {
                 command.attemptHandling(player, arguments)

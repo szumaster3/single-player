@@ -71,22 +71,15 @@ class DruidicRitual : Quest(Quests.DRUIDIC_RITUAL, 48, 47, 4, 80, 0, 3, 4) {
     override fun finish(player: Player) {
         var ln = 10
         super.finish(player)
-        sendString(player, "You have completed the ${Quests.DRUIDIC_RITUAL} quest!", 277, 4)
-        sendItemZoomOnInterface(player, Components.QUEST_COMPLETE_SCROLL_277, 5, Items.CLEAN_GUAM_249, 240)
-
+        displayQuestItem(player, Items.CLEAN_GUAM_249)
         drawReward(player, "4 Quest Points", ln++)
         drawReward(player, "250 Herblore XP", ln++)
-        drawReward(player, "Access to Herblore skill", ln++)
-
+        drawReward(player, "Access to Herblore skill", ln)
         rewardXP(player, Skills.HERBLORE, 250.0)
-
-        player.interfaceManager.closeChatbox()
+        closeChatBox(player)
     }
 
-    override fun questCloseEvent(
-        player: Player?,
-        component: Component?,
-    ) {
+    override fun questCloseEvent(player: Player?, component: Component?) {
         queueScript(player!!, 1, QueueStrength.SOFT) {
             openDialogue(player, NPCs.KAQEMEEX_455, NPC.create(NPCs.KAQEMEEX_455, player.location), true)
             return@queueScript stopExecuting(player)

@@ -2,6 +2,7 @@ package content.region.fremennik.waterbirth.dungeon
 
 import content.region.fremennik.waterbirth.npc.DagannothKingNPC
 import content.region.fremennik.waterbirth.npc.SpinolypNPC
+import core.api.sendMessage
 import core.cache.def.impl.NPCDefinition
 import core.cache.def.impl.SceneryDefinition
 import core.game.interaction.OptionHandler
@@ -180,7 +181,7 @@ class WaterbirthDungeon : MapZone("Waterbirth dungeon", true, ZoneRestriction.RA
                                 node.location.transform(-1, 2, 0),
                             )
                         ) {
-                            player.sendMessage("You cannot see a way to open this door...")
+                            sendMessage(player, "You cannot see a way to open this door...")
                             return true
                         }
                     }
@@ -202,7 +203,7 @@ class WaterbirthDungeon : MapZone("Waterbirth dungeon", true, ZoneRestriction.RA
                         canAttack = false
                     }
                     if (!canAttack) {
-                        player.sendMessage("The door is propped securely shut from this side...")
+                        sendMessage(player, "The door is propped securely shut from this side...")
                         return true
                     }
                     player.attack(node)
@@ -290,7 +291,7 @@ class WaterbirthDungeon : MapZone("Waterbirth dungeon", true, ZoneRestriction.RA
                 if (entity is Player) {
                     val player = entity.asPlayer()
                     if (message) {
-                        player.sendMessage("The door is propped securely shut from this side...")
+                        sendMessage(player, "The door is propped securely shut from this side...")
                     }
                 }
                 return false

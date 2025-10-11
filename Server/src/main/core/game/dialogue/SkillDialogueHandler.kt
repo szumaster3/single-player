@@ -1,10 +1,8 @@
 package core.game.dialogue
 
-import core.api.clockReady
 import core.api.repositionChild
 import core.api.sendItemZoomOnInterface
 import core.api.sendString
-import core.game.interaction.Clocks
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.game.world.map.Point
@@ -26,7 +24,7 @@ open class SkillDialogueHandler(
     val type: SkillDialogue?,
     vararg data: Any,
 ) {
-    val data: Array<Any>
+    val data: Array<out Any>
 
     /**
      * Opens the skill dialogue interface for the player.
@@ -125,13 +123,12 @@ open class SkillDialogueHandler(
             override fun getAmount(
                 handler: SkillDialogueHandler,
                 buttonId: Int,
-            ): Int =
-                when (buttonId) {
-                    5 -> 1
-                    4 -> 5
-                    3 -> -1
-                    else -> handler.getAll(getIndex(handler, buttonId))
-                }
+            ): Int = when (buttonId) {
+                5 -> 1
+                4 -> 5
+                3 -> -1
+                else -> handler.getAll(getIndex(handler, buttonId))
+            }
         },
 
         /**
@@ -160,37 +157,20 @@ open class SkillDialogueHandler(
                 repositionChild(player, Components.SKILL_MULTI1_SMALL_582, 5, 60, 35)
             }
 
-            /**
-             * Gets the amount for a button press.
-             *
-             * @param handler The skill dialogue handler.
-             * @param buttonId The ID of the button pressed.
-             * @return The amount associated with the button.
-             */
             override fun getAmount(
                 handler: SkillDialogueHandler,
                 buttonId: Int,
-            ): Int =
-                when (buttonId) {
-                    5 -> 1
-                    4 -> 1
-                    3 -> 5
-                    2 -> 10
-                    else -> 10
-                }
+            ): Int = when (buttonId) {
+                5 -> 1
+                4 -> 1
+                3 -> 5
+                2 -> 10
+                else -> 10
+            }
         },
 
         TWO_OPTION(Components.SKILL_MAKE_303, 7, 2) {
-            /**
-             * Displays the dialogue for two options.
-             *
-             * @param player The player interacting with the dialogue.
-             * @param handler The skill dialogue handler.
-             */
-            override fun display(
-                player: Player,
-                handler: SkillDialogueHandler,
-            ) {
+            override fun display(player: Player, handler: SkillDialogueHandler) {
                 var item: Item
                 for (i in handler.data.indices) {
                     item = handler.data[i] as Item
@@ -207,17 +187,7 @@ open class SkillDialogueHandler(
                 }
             }
 
-            /**
-             * Gets the index for a button press.
-             *
-             * @param handler The skill dialogue handler.
-             * @param buttonId The ID of the button pressed.
-             * @return The index associated with the button.
-             */
-            override fun getIndex(
-                handler: SkillDialogueHandler?,
-                buttonId: Int,
-            ): Int {
+            override fun getIndex(handler: SkillDialogueHandler?, buttonId: Int): Int {
                 when (buttonId) {
                     6, 5, 4, 3 -> return 0
                     10, 9, 8, 7 -> return 1
@@ -225,17 +195,7 @@ open class SkillDialogueHandler(
                 return 1
             }
 
-            /**
-             * Gets the amount for a button press.
-             *
-             * @param handler The skill dialogue handler.
-             * @param buttonId The ID of the button pressed.
-             * @return The amount associated with the button.
-             */
-            override fun getAmount(
-                handler: SkillDialogueHandler,
-                buttonId: Int,
-            ): Int {
+            override fun getAmount(handler: SkillDialogueHandler, buttonId: Int): Int {
                 when (buttonId) {
                     6, 10 -> return 1
                     5, 9 -> return 5
@@ -247,16 +207,7 @@ open class SkillDialogueHandler(
         },
 
         THREE_OPTION(Components.SKILL_MAKE_304, 8, 3) {
-            /**
-             * Displays the dialogue for three options.
-             *
-             * @param player The player interacting with the dialogue.
-             * @param handler The skill dialogue handler.
-             */
-            override fun display(
-                player: Player,
-                handler: SkillDialogueHandler,
-            ) {
+            override fun display(player: Player, handler: SkillDialogueHandler) {
                 var item: Item? = null
                 for (i in 0..2) {
                     item = handler.data[i] as Item
@@ -264,24 +215,12 @@ open class SkillDialogueHandler(
                     repositionChild(player, Components.SKILL_MAKE_304, 1, 431, 13)
                     player.packetDispatch.sendItemZoomOnInterface(item.id, 170, Components.SKILL_MAKE_304, 2 + i)
                     player.packetDispatch.sendString(
-                        "<br><br><br><br>" + item.name,
-                        Components.SKILL_MAKE_304,
-                        304 - 296 + i * 4,
+                        "<br><br><br><br>" + item.name, Components.SKILL_MAKE_304, 304 - 296 + i * 4
                     )
                 }
             }
 
-            /**
-             * Gets the index for a button press.
-             *
-             * @param handler The skill dialogue handler.
-             * @param buttonId The ID of the button pressed.
-             * @return The index associated with the button.
-             */
-            override fun getIndex(
-                handler: SkillDialogueHandler?,
-                buttonId: Int,
-            ): Int {
+            override fun getIndex(handler: SkillDialogueHandler?, buttonId: Int): Int {
                 when (buttonId) {
                     7, 6, 5, 4 -> return 0
                     11, 10, 9, 8 -> return 1
@@ -290,17 +229,7 @@ open class SkillDialogueHandler(
                 return 1
             }
 
-            /**
-             * Gets the amount for a button press.
-             *
-             * @param handler The skill dialogue handler.
-             * @param buttonId The ID of the button pressed.
-             * @return The amount associated with the button.
-             */
-            override fun getAmount(
-                handler: SkillDialogueHandler,
-                buttonId: Int,
-            ): Int {
+            override fun getAmount(handler: SkillDialogueHandler, buttonId: Int): Int {
                 when (buttonId) {
                     7, 11, 15 -> return 1
                     6, 10, 14 -> return 5
@@ -312,16 +241,7 @@ open class SkillDialogueHandler(
         },
 
         FOUR_OPTION(Components.SKILL_MAKE_305, 9, 4) {
-            /**
-             * Displays the dialogue for four options.
-             *
-             * @param player The player interacting with the dialogue.
-             * @param handler The skill dialogue handler.
-             */
-            override fun display(
-                player: Player,
-                handler: SkillDialogueHandler,
-            ) {
+            override fun display(player: Player, handler: SkillDialogueHandler) {
                 var item: Item? = null
                 for (i in 0..3) {
                     item = handler.data[i] as Item
@@ -332,17 +252,7 @@ open class SkillDialogueHandler(
                 }
             }
 
-            /**
-             * Gets the index for a button press.
-             *
-             * @param handler The skill dialogue handler.
-             * @param buttonId The ID of the button pressed.
-             * @return The index associated with the button.
-             */
-            override fun getIndex(
-                handler: SkillDialogueHandler?,
-                buttonId: Int,
-            ): Int {
+            override fun getIndex(handler: SkillDialogueHandler?, buttonId: Int): Int {
                 when (buttonId) {
                     5, 8, 6, 7 -> return 0
                     9, 10, 11, 12 -> return 1
@@ -352,17 +262,7 @@ open class SkillDialogueHandler(
                 return 0
             }
 
-            /**
-             * Gets the amount for a button press.
-             *
-             * @param handler The skill dialogue handler.
-             * @param buttonId The ID of the button pressed.
-             * @return The amount associated with the button.
-             */
-            override fun getAmount(
-                handler: SkillDialogueHandler,
-                buttonId: Int,
-            ): Int {
+            override fun getAmount(handler: SkillDialogueHandler, buttonId: Int): Int {
                 when (buttonId) {
                     8, 12, 16, 20 -> return 1
                     7, 11, 15, 19 -> return 5
@@ -374,60 +274,30 @@ open class SkillDialogueHandler(
         },
 
         FIVE_OPTION(Components.SKILL_MAKE_306, 7, 5) {
-            private val positions =
-                arrayOf(
-                    intArrayOf(10, 30),
-                    intArrayOf(117, 10),
-                    intArrayOf(217, 20),
-                    intArrayOf(317, 15),
-                    intArrayOf(408, 15),
-                )
+            private val positions = arrayOf(
+                intArrayOf(10, 30),
+                intArrayOf(117, 10),
+                intArrayOf(217, 20),
+                intArrayOf(317, 15),
+                intArrayOf(408, 15),
+            )
 
-            /**
-             * Displays the dialogue for five options.
-             *
-             * @param player The player interacting with the dialogue.
-             * @param handler The skill dialogue handler.
-             */
-            override fun display(
-                player: Player,
-                handler: SkillDialogueHandler,
-            ) {
+            override fun display(player: Player, handler: SkillDialogueHandler) {
                 var item: Item
                 player.interfaceManager.openChatbox(Components.SKILL_MAKE_306)
                 for (i in handler.data.indices) {
                     item = handler.data[i] as Item
                     sendString(
-                        player,
-                        "<br><br><br><br>" + handler.getName(item),
-                        Components.SKILL_MAKE_306,
-                        10 + 4 * i,
+                        player, "<br><br><br><br>" + handler.getName(item), Components.SKILL_MAKE_306, 10 + 4 * i
                     )
                     player.packetDispatch.sendItemZoomOnInterface(item.id, 160, Components.SKILL_MAKE_306, 2 + i)
-                    PacketRepository.send(
-                        RepositionChild::class.java,
-                        OutgoingContext.ChildPosition(
-                            player,
-                            Components.SKILL_MAKE_306,
-                            2 + i, Point(positions[i][0], positions[i][1])
-                        ),
-                    )
+                    PacketRepository.send(RepositionChild::class.java, OutgoingContext.ChildPosition(player, Components.SKILL_MAKE_306, 2 + i, Point(positions[i][0], positions[i][1])))
                 }
                 repositionChild(player, Components.SKILL_MAKE_306, 0, 12, 15)
                 repositionChild(player, Components.SKILL_MAKE_306, 1, 431, 15)
             }
 
-            /**
-             * Gets the index for a button press.
-             *
-             * @param handler The skill dialogue handler.
-             * @param buttonId The ID of the button pressed.
-             * @return The index associated with the button.
-             */
-            override fun getIndex(
-                handler: SkillDialogueHandler?,
-                buttonId: Int,
-            ): Int {
+            override fun getIndex(handler: SkillDialogueHandler?, buttonId: Int): Int {
                 when (buttonId) {
                     9, 8, 7, 6 -> return 0
                     13, 12, 11, 10 -> return 1
@@ -438,17 +308,7 @@ open class SkillDialogueHandler(
                 return 0
             }
 
-            /**
-             * Gets the amount for a button press.
-             *
-             * @param handler The skill dialogue handler.
-             * @param buttonId The ID of the button pressed.
-             * @return The amount associated with the button.
-             */
-            override fun getAmount(
-                handler: SkillDialogueHandler,
-                buttonId: Int,
-            ): Int {
+            override fun getAmount(handler: SkillDialogueHandler, buttonId: Int): Int {
                 when (buttonId) {
                     9, 13, 17, 21, 25 -> return 1
                     8, 12, 16, 20, 24 -> return 5
@@ -459,41 +319,18 @@ open class SkillDialogueHandler(
             }
         }, ;
 
-        /**
-         * Displays the skill dialogue for this type.
-         *
-         * @param player The player interacting with the dialogue.
-         * @param handler The skill dialogue handler.
-         */
-        open fun display(
-            player: Player,
-            handler: SkillDialogueHandler,
-        ) {
-        }
+        open fun display(player: Player, handler: SkillDialogueHandler) {}
 
-        /**
-         * Gets the amount of items associated with a button press.
-         *
-         * @param handler The skill dialogue handler.
-         * @param buttonId The ID of the button pressed.
-         * @return The amount of items to be handled.
-         */
-        open fun getAmount(
-            handler: SkillDialogueHandler,
-            buttonId: Int,
-        ): Int {
+        open fun getAmount(handler: SkillDialogueHandler, buttonId: Int): Int {
             for (k in 0..3) {
                 for (i in 0 until length) {
-                    val `val` = baseButton - k + 4 * i
-                    if (`val` == buttonId) {
-                        return if (k == 13) {
-                            1
-                        } else if (k == 8) {
-                            5
-                        } else if (k == 7) {
-                            10
-                        } else {
-                            6
+                    val value = baseButton - k + 4 * i
+                    if (value == buttonId) {
+                        return when (baseButton - buttonId) {
+                            13 -> 1
+                            8 -> 5
+                            7 -> 10
+                            else -> 6
                         }
                     }
                 }
@@ -501,47 +338,18 @@ open class SkillDialogueHandler(
             return -1
         }
 
-        /**
-         * Gets the index associated with a button press.
-         *
-         * @param handler The skill dialogue handler.
-         * @param buttonId The ID of the button pressed.
-         * @return The index of the button.
-         */
-        open fun getIndex(
-            handler: SkillDialogueHandler?,
-            buttonId: Int,
-        ): Int {
+        open fun getIndex(handler: SkillDialogueHandler?, buttonId: Int): Int {
             var index = 0
-            for (k in 0..3) {
-                for (i in 1 until length) {
-                    val `val` = baseButton + k + 4 * i
-                    if (`val` == buttonId) {
-                        return index + 1
-                    } else if (`val` <= buttonId) {
-                        index++
+            for (i in 1 until length) {
+                for (k in 0..3) {
+                    val value = baseButton + k + 4 * i
+                    if (value == buttonId) {
+                        return index
                     }
+                    index++
                 }
-                index = 0
             }
-            return index
-        }
-
-        companion object {
-            /**
-             * Finds the dialogue type for a specific length.
-             *
-             * @param length2 The length of the dialogue options.
-             * @return The corresponding skill dialogue type.
-             */
-            fun forLength(length2: Int): SkillDialogue? {
-                for (dial in values()) {
-                    if (dial.length == length2) {
-                        return dial
-                    }
-                }
-                return null
-            }
+            return -1
         }
     }
 
@@ -550,6 +358,6 @@ open class SkillDialogueHandler(
     }
 
     init {
-        this.data = data as Array<Any>
+        this.data = data
     }
 }

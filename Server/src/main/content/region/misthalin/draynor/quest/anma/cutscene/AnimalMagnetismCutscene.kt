@@ -11,9 +11,8 @@ import shared.consts.Animations
 import shared.consts.NPCs
 import shared.consts.Quests
 
-class AnimalMagnetismCutscene(
-    player: Player,
-) : Cutscene(player) {
+class AnimalMagnetismCutscene(player: Player) : Cutscene(player) {
+
     override fun setup() {
         setExit(player.location.transform(0, 0, 0))
         loadRegion(14391)

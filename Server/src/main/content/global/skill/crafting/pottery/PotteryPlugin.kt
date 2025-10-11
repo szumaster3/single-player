@@ -18,8 +18,8 @@ import shared.consts.Quests
 import shared.consts.Scenery
 import java.util.*
 
-val SOFT_CLAY = Items.SOFT_CLAY_1761
-val UNFIRED_POTTERY_ID = intArrayOf(Items.UNFIRED_POT_1787, Items.UNFIRED_PIE_DISH_1789, Items.UNFIRED_BOWL_1791, Items.UNFIRED_PLANT_POT_5352, Items.UNFIRED_POT_LID_4438)
+private const val SOFT_CLAY = Items.SOFT_CLAY_1761
+private val UNFIRED_POTTERY_ID = intArrayOf(Items.UNFIRED_POT_1787, Items.UNFIRED_PIE_DISH_1789, Items.UNFIRED_BOWL_1791, Items.UNFIRED_PLANT_POT_5352, Items.UNFIRED_POT_LID_4438)
 
 @Initializable
 class PotteryPlugin : UseWithHandler(SOFT_CLAY) {
@@ -38,7 +38,7 @@ class PotteryPlugin : UseWithHandler(SOFT_CLAY) {
 
     override fun handle(event: NodeUsageEvent): Boolean {
         val player = event.player
-        object : SkillDialogueHandler(player, SkillDialogueHandler.SkillDialogue.FIVE_OPTION, *getPottery(false)) {
+        object : SkillDialogueHandler(player, SkillDialogue.FIVE_OPTION, *getPottery(false)) {
             override fun create(amount: Int, index: Int) {
                 player.pulseManager.run(PotteryCraftingPulse(player, event.usedItem, amount, Pottery.values()[index]))
             }

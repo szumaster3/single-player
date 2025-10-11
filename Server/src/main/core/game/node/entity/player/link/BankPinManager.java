@@ -22,8 +22,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import static core.api.ContentAPIKt.playAudio;
-import static core.api.ContentAPIKt.setVarp;
+import static core.api.ContentAPIKt.*;
 
 /**
  * The type Bank pin manager.
@@ -320,7 +319,7 @@ public class BankPinManager {
                 if (!tempPin.equals(pin)) {
                     playAudio(player, Sounds.PILLORY_WRONG_2277);
                     player.getInterfaceManager().close();
-                    player.sendMessage("The PIN you entered is incorrect.");
+                    sendMessage(player, "The PIN you entered is incorrect.", 0);
                     if (setTries(getTries() + 1) >= 2) {
                         setTryLock();
                     }
@@ -339,7 +338,7 @@ public class BankPinManager {
                 }
                 unlock();
                 playAudio(player, Sounds.PILLORY_SUCCESS_2274);
-                player.sendMessage("You have correctly entered your PIN.");
+                sendMessage(player, "You have correctly entered your PIN.", 0);
             }
             return;
         } else if (stage == 8) {
