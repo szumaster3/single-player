@@ -1,5 +1,6 @@
 package content.region.other.zanaris.quest.lostcity.plugin
 
+import core.api.displayQuestItem
 import core.api.hasLevelStat
 import core.api.sendItemZoomOnInterface
 import core.game.node.entity.player.Player
@@ -107,7 +108,7 @@ class LostCity: Quest(Quests.LOST_CITY, 83, 82, 3, Vars.VARP_QUEST_LOST_CITY_PRO
     override fun finish(player: Player) {
         super.finish(player)
         var line = 10
-        sendItemZoomOnInterface(player, Components.QUEST_COMPLETE_SCROLL_277, 5, Items.DRAMEN_STAFF_772, 235)
+        displayQuestItem(player, Items.DRAMEN_STAFF_772)
         drawReward(player, "3 Quest points", line++)
         drawReward(player, "Access to Zanaris", line)
     }

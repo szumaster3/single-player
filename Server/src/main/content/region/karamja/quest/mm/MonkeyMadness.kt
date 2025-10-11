@@ -1,6 +1,7 @@
 package content.region.karamja.quest.mm
 
 import core.api.addItemOrDrop
+import core.api.displayQuestItem
 import core.api.sendItemZoomOnInterface
 import core.api.updateQuestTab
 import core.game.node.entity.player.Player
@@ -99,7 +100,7 @@ class MonkeyMadness : Quest(Quests.MONKEY_MADNESS, 88, 87, 3, Vars.VARP_QUEST_MO
     override fun finish(player: Player) {
         super.finish(player)
         var ln = 10
-        sendItemZoomOnInterface(player, Components.QUEST_COMPLETE_SCROLL_277, 5, Items.MSPEAK_AMULET_4022)
+        displayQuestItem(player, Items.MSPEAK_AMULET_4022)
         drawReward(player, "3 Quest Points", ln++)
         drawReward(player, "10,000 coins", ln++)
         drawReward(player, "3 diamonds", ln)

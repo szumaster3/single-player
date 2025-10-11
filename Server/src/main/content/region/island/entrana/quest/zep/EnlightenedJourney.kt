@@ -135,10 +135,8 @@ class EnlightenedJourney :
 
     override fun finish(player: Player) {
         super.finish(player)
-        player ?: return
         var ln = 10
-        sendItemZoomOnInterface(player, Components.QUEST_COMPLETE_SCROLL_277, 5, Items.BOMBER_CAP_9945)
-
+        displayQuestItem(player, Items.BOMBER_CAP_9945)
         drawReward(player, "1 Quest Point, 2K Crafting, 3k", ln++)
         drawReward(player, "Farming, 1,5k Woodcutting, 4k", ln++)
         drawReward(player, "Firemaking,", ln++)

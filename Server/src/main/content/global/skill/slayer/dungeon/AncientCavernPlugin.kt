@@ -34,7 +34,36 @@ import shared.consts.NPCs
 class AncientCavernPlugin : MapZone("ancient cavern", true, ZoneRestriction.CANNON), Plugin<Any?> {
 
     companion object {
-        private val LOOTS = arrayOf(Item(Items.BONES_526), Item(Items.MANGLED_BONES_11337), Item(Items.ANCIENT_PAGE_11341), Item(Items.ANCIENT_PAGE_11342), Item(Items.ANCIENT_PAGE_11343), Item(Items.ANCIENT_PAGE_11344), Item(Items.ANCIENT_PAGE_11345), Item(Items.ANCIENT_PAGE_11346), Item(Items.ANCIENT_PAGE_11347), Item(Items.ANCIENT_PAGE_11348), Item(Items.ANCIENT_PAGE_11349), Item(Items.ANCIENT_PAGE_11350), Item(Items.ANCIENT_PAGE_11351), Item(Items.ANCIENT_PAGE_11352), Item(Items.ANCIENT_PAGE_11353), Item(Items.ANCIENT_PAGE_11354), Item(Items.ANCIENT_PAGE_11355), Item(Items.ANCIENT_PAGE_11356), Item(Items.ANCIENT_PAGE_11357), Item(Items.ANCIENT_PAGE_11358), Item(Items.ANCIENT_PAGE_11359), Item(Items.ANCIENT_PAGE_11360), Item(Items.ANCIENT_PAGE_11361), Item(Items.ANCIENT_PAGE_11362), Item(Items.ANCIENT_PAGE_11363), Item(Items.ANCIENT_PAGE_11364), Item(Items.ANCIENT_PAGE_11365), Item(Items.ANCIENT_PAGE_11366))
+        private val LOOTS = arrayOf(
+            Item(Items.BONES_526),
+            Item(Items.MANGLED_BONES_11337),
+            Item(Items.ANCIENT_PAGE_11341),
+            Item(Items.ANCIENT_PAGE_11342),
+            Item(Items.ANCIENT_PAGE_11343),
+            Item(Items.ANCIENT_PAGE_11344),
+            Item(Items.ANCIENT_PAGE_11345),
+            Item(Items.ANCIENT_PAGE_11346),
+            Item(Items.ANCIENT_PAGE_11347),
+            Item(Items.ANCIENT_PAGE_11348),
+            Item(Items.ANCIENT_PAGE_11349),
+            Item(Items.ANCIENT_PAGE_11350),
+            Item(Items.ANCIENT_PAGE_11351),
+            Item(Items.ANCIENT_PAGE_11352),
+            Item(Items.ANCIENT_PAGE_11353),
+            Item(Items.ANCIENT_PAGE_11354),
+            Item(Items.ANCIENT_PAGE_11355),
+            Item(Items.ANCIENT_PAGE_11356),
+            Item(Items.ANCIENT_PAGE_11357),
+            Item(Items.ANCIENT_PAGE_11358),
+            Item(Items.ANCIENT_PAGE_11359),
+            Item(Items.ANCIENT_PAGE_11360),
+            Item(Items.ANCIENT_PAGE_11361),
+            Item(Items.ANCIENT_PAGE_11362),
+            Item(Items.ANCIENT_PAGE_11363),
+            Item(Items.ANCIENT_PAGE_11364),
+            Item(Items.ANCIENT_PAGE_11365),
+            Item(Items.ANCIENT_PAGE_11366)
+        )
         private val SKELETONS = intArrayOf(NPCs.SKELETON_HERO_6103, NPCs.SKELETON_HEAVY_6106)
     }
 
@@ -47,11 +76,7 @@ class AncientCavernPlugin : MapZone("ancient cavern", true, ZoneRestriction.CANN
                     return this
                 }
 
-                override fun handle(
-                    player: Player,
-                    node: Node,
-                    option: String,
-                ): Boolean {
+                override fun handle(player: Player, node: Node, option: String): Boolean {
                     lock(player, 30)
                     AgilityHandler.forceWalk(
                         player,
@@ -101,25 +126,17 @@ class AncientCavernPlugin : MapZone("ancient cavern", true, ZoneRestriction.CANN
                     return true
                 }
 
-                override fun getDestination(
-                    node: Node,
-                    n: Node,
-                ): Location =
-                    if (node.location.x <= 2511) {
-                        Location.create(2511, 3516, 0)
-                    } else {
-                        Location.create(2512, 3516, 0)
-                    }
+                override fun getDestination(node: Node, n: Node): Location = if (node.location.x <= 2511) {
+                    Location.create(2511, 3516, 0)
+                } else {
+                    Location.create(2512, 3516, 0)
+                }
             },
         )
         return this
     }
 
-    override fun interact(
-        e: Entity,
-        target: Node,
-        option: Option,
-    ): Boolean {
+    override fun interact(e: Entity, target: Node, option: Option): Boolean {
         if (e is Player) {
             return when (target.id) {
                 25216 -> {
@@ -180,10 +197,7 @@ class AncientCavernPlugin : MapZone("ancient cavern", true, ZoneRestriction.CANN
         )
     }
 
-    private fun rummageSkeleton(
-        player: Player,
-        obj: Scenery,
-    ) {
+    private fun rummageSkeleton(player: Player, obj: Scenery) {
         val random = RandomFunction.random(0, 2)
         sendMessage(player, "You rummage in the sharp, slimy pile of bones in search of something useful...")
         when (random) {
@@ -212,10 +226,7 @@ class AncientCavernPlugin : MapZone("ancient cavern", true, ZoneRestriction.CANN
         }
     }
 
-    private fun removeSkeleton(
-        obj: Scenery,
-        spawn: NPC,
-    ) {
+    private fun removeSkeleton(obj: Scenery, spawn: NPC) {
         SceneryBuilder.remove(obj)
         GameWorld.Pulser.submit(
             object : Pulse(200) {
@@ -230,10 +241,7 @@ class AncientCavernPlugin : MapZone("ancient cavern", true, ZoneRestriction.CANN
         )
     }
 
-    override fun fireEvent(
-        identifier: String,
-        vararg args: Any?,
-    ): Any? = this
+    override fun fireEvent(identifier: String, vararg args: Any?): Any? = this
 
     override fun configure() {
         register(ZoneBorders(1723, 5296, 1831, 5394))

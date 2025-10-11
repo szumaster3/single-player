@@ -8,6 +8,7 @@ import core.game.node.entity.combat.CombatStyle
 import core.game.node.entity.combat.equipment.WeaponInterface
 import core.game.node.entity.npc.AbstractNPC
 import core.game.node.entity.player.Player
+import core.game.node.entity.player.link.TeleportManager
 import core.game.node.entity.skill.Skills
 import core.game.system.task.Pulse
 import core.game.world.GameWorld
@@ -123,7 +124,7 @@ class ChampionChallengeNPC(id: Int = 0, location: Location? = null) : AbstractNP
                 override fun pulse(): Boolean {
                     if (npcId == NPC_ID && player.hasPrayerItems()) {
                         sendNPCDialogue(player, NPCs.LARXUS_3050, "For this fight you're not allowed to use prayers!")
-                        teleport(player, Location.create(3182, 9758, 0))
+                        teleport(player, Location.create(3182, 9758, 0), TeleportManager.TeleportType.INSTANT)
                     } else {
                         champion.init()
                         registerHintIcon(player, champion)

@@ -1,5 +1,6 @@
 package core.net.amsc
 
+import core.api.sendMessage
 import core.game.node.entity.player.Player
 import core.game.system.communication.ClanRank
 import core.net.packet.IoBuffer
@@ -61,7 +62,7 @@ object MSPacketRepository {
         if (session != null) {
             session.write(buffer)
         } else {
-            player.sendMessage("Privacy settings unavailable at the moment. Please try again later.")
+            sendMessage(player, "Privacy settings unavailable at the moment. Please try again later.")
         }
     }
 }

@@ -228,7 +228,7 @@ class Shop(val title: String, val stock: Array<ShopItem>, val general: Boolean =
         val item = cont[slot]
 
         if (item == null) {
-            player.sendMessage("That item doesn't appear to be there anymore. Please try again.")
+            sendMessage(player, "That item doesn't appear to be there anymore. Please try again.")
             return Item(-1, -1)
         }
 
@@ -259,7 +259,7 @@ class Shop(val title: String, val stock: Array<ShopItem>, val general: Boolean =
 
         if (item == null) {
             player.debug("Inventory slot $slot does not contain an item!")
-            player.sendMessage("That item doesn't seem to be there anymore. Please try again.")
+            sendMessage(player, "That item doesn't seem to be there anymore. Please try again.")
             return Pair(null, Item(-1, -1))
         }
 

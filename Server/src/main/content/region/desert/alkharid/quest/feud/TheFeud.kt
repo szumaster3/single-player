@@ -46,9 +46,7 @@ class TheFeud : Quest(Quests.THE_FEUD, 60, 59, 1, Vars.VARBIT_THE_FEUD_PROGRESS_
     override fun finish(player: Player) {
         super.finish(player)
         var ln = 10
-
-        sendItemZoomOnInterface(player, Components.QUEST_COMPLETE_SCROLL_277, 5, Items.DESERT_DISGUISE_4611)
-
+        displayQuestItem(player, Items.DESERT_DISGUISE_4611)
         drawReward(player, "1 Quest Point", ln++)
         drawReward(player, "15,000 Thieving XP", ln)
 

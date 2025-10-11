@@ -2,6 +2,7 @@ package content.global.skill.hunter
 
 import core.api.lock
 import core.api.playAudio
+import core.api.sendMessage
 import core.game.node.Node
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.SkillPulse
@@ -14,11 +15,7 @@ import core.game.world.map.Location
 import core.game.world.map.RegionManager.getObject
 import shared.consts.Sounds
 
-class TrapCreatePulse(
-    player: Player,
-    node: Node,
-    val trap: Traps,
-) : SkillPulse<Node?>(player, node) {
+class TrapCreatePulse(player: Player, node: Node, val trap: Traps) : SkillPulse<Node?>(player, node) {
     private val startLocation: Location = if (node is GroundItem) node.getLocation() else player.location
     private var groundItem: GroundItem? = null
     private var ticks = 0
@@ -29,17 +26,9 @@ class TrapCreatePulse(
             when (trap) {
                 Traps.BIRD_SNARE -> playAudio(player, Sounds.HUNTING_SETNOOSE_2646, 40)
                 Traps.BOX_TRAP -> playAudio(player, Sounds.HUNTING_LAYBOXTRAP_2636, 20)
-                Traps.NET_TRAP -> {
-                    lock(player, 3)
-                    playAudio(player, Sounds.HUNTING_SET_TWITCHNET_2644)
-                }
-
+                Traps.NET_TRAP -> playAudio(player, Sounds.HUNTING_SET_TWITCHNET_2644).also { lock(player, 3) }
                 Traps.RABBIT_SNARE -> playAudio(player, Sounds.HUNTING_SETSNARE_2647)
-                Traps.DEAD_FALL -> {
-                    lock(player, 6)
-                    playAudio(player, Sounds.HUNTING_SETDEADFALL_2645, 130)
-                }
-
+                Traps.DEAD_FALL -> playAudio(player, Sounds.HUNTING_SETDEADFALL_2645, 130).also { lock(player, 6) }
                 Traps.IMP_BOX -> playAudio(player, Sounds.HUNTING_BOXTRAP_2627)
             }
         }
@@ -47,19 +36,18 @@ class TrapCreatePulse(
 
     override fun checkRequirements(): Boolean {
         if (player.skills.getStaticLevel(Skills.HUNTER) < trap.settings.level) {
-            player.sendMessage(
-                "You need a Hunter level of at least " + trap.settings.level + " in order to setup a " +
-                        node!!.name.lowercase() +
-                        ".",
+            sendMessage(
+                player,
+                "You need a Hunter level of at least " + trap.settings.level + " in order to setup a " + node!!.name.lowercase() + ".",
             )
             return false
         }
         if (instance.exceedsTrapLimit(trap)) {
-            player.sendMessage(trap.settings.getLimitMessage(player))
+            sendMessage(player, trap.settings.getLimitMessage(player))
             return false
         }
         if (getObject(player.location) != null) {
-            player.sendMessage("You can't lay a trap here.")
+            sendMessage(player, "You can't lay a trap here.")
             return false
         }
         if (player.location != startLocation) {
@@ -75,11 +63,7 @@ class TrapCreatePulse(
     }
 
     override fun reward(): Boolean {
-        if (++ticks % (
-                    trap.settings.setupAnimation.definition
-                        .getDurationTicks()
-                    ) != 0
-        ) {
+        if (++ticks % (trap.settings.setupAnimation.definition.getDurationTicks()) != 0) {
             return false
         }
         var `object` = trap.settings.buildObject(player, node)

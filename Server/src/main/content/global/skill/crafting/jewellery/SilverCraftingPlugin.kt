@@ -1,15 +1,14 @@
 package content.global.skill.crafting.jewellery
 
+import content.global.skill.crafting.CraftingObjects
 import core.api.*
 import core.game.dialogue.InputType
-import core.game.event.ResourceProducedEvent
 import core.game.interaction.Clocks
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
-import core.game.system.task.Pulse
 import shared.consts.*
 
 /**
@@ -17,7 +16,6 @@ import shared.consts.*
  */
 class SilverCraftingPlugin : InteractionListener, InterfaceListener {
 
-    private val FURNACE_ID = intArrayOf(Scenery.FURNACE_2966, Scenery.FURNACE_3044, Scenery.FURNACE_3294, Scenery.FURNACE_4304, Scenery.FURNACE_6189, Scenery.FURNACE_11009, Scenery.FURNACE_11010, Scenery.FURNACE_11666, Scenery.FURNACE_12100, Scenery.FURNACE_12809, Scenery.FURNACE_18497, Scenery.FURNACE_18525, Scenery.FURNACE_18526, Scenery.FURNACE_21879, Scenery.FURNACE_22721, Scenery.FURNACE_26814, Scenery.FURNACE_28433, Scenery.FURNACE_28434, Scenery.FURNACE_30021, Scenery.FURNACE_30510, Scenery.FURNACE_36956, Scenery.FURNACE_37651)
     private val UNSTRUNG_ID = intArrayOf(Items.UNSTRUNG_SYMBOL_1714, Items.UNSTRUNG_EMBLEM_1720)
 
     private val OP_MAKE_ONE = 155
@@ -31,7 +29,7 @@ class SilverCraftingPlugin : InteractionListener, InterfaceListener {
          * Handles use silver bar on furnace.
          */
 
-        onUseWith(IntType.SCENERY, Items.SILVER_BAR_2355, *FURNACE_ID) { player, _, with ->
+        onUseWith(IntType.SCENERY, Items.SILVER_BAR_2355, *CraftingObjects.FURNACES) { player, _, with ->
             setAttribute(player, "crafting:silver:furnace_id", with)
             openInterface(player, Components.CRAFTING_SILVER_CASTING_438)
             return@onUseWith true

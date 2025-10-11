@@ -54,11 +54,7 @@ class GlassInterface : InteractionListener, InterfaceListener {
         }
     }
 
-    private fun make(
-        player: Player,
-        product: GlassProduct,
-        amount: Int,
-    ) {
+    private fun make(player: Player, product: GlassProduct, amount: Int) {
         closeInterface(player)
         submitIndividualPulse(player, GlassblowingPulse(player, product, amount))
     }

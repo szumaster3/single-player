@@ -13,10 +13,8 @@ import shared.consts.Vars
 
 @Initializable
 class VampireSlayer : Quest(Quests.VAMPIRE_SLAYER, 30, 29, 3, Vars.VARP_QUEST_VAMPIRE_SLAYER_PROGRESS_178, 0, 1, 3) {
-    override fun drawJournal(
-        player: Player,
-        stage: Int,
-    ) {
+
+    override fun drawJournal(player: Player, stage: Int) {
         super.drawJournal(player, stage)
         var line = 11
 

@@ -89,18 +89,15 @@ class ZooknockDialogueFile(val it: Int) : DialogueFile() {
                 stage = 14
             }
             14 -> {
-                val componentID = Components.QUEST_COMPLETE_SCROLL_277
-                player!!.interfaceManager.open(Component(componentID))
-                sendItemZoomOnInterface(player!!, Components.QUEST_COMPLETE_SCROLL_277,5, Items.MSPEAK_AMULET_4022
-
-                )
-
+                val componentId = Components.QUEST_COMPLETE_SCROLL_277
+                player!!.interfaceManager.open(Component(componentId))
+                displayQuestItem(player!!, Items.MSPEAK_AMULET_4022)
                 for (i in 0..17) {
                     when (i) {
-                        3 -> sendString(player!!, "Monkey Madness: Chapter 3", componentID, i)
-                        9 -> sendString(player!!, "In which our ${if (player!!.isMale) "hero finds himself" else "heroine finds herself"} contending with life as a", componentID, i)
-                        10 -> sendString(player!!, "monkey.", componentID, i)
-                        else -> sendString(player!!, "", componentID, i)
+                        3 -> sendString(player!!, "Monkey Madness: Chapter 3", componentId, i)
+                        9 -> sendString(player!!, "In which our ${if (player!!.isMale) "hero finds himself" else "heroine finds herself"} contending with life as a", componentId, i)
+                        10 -> sendString(player!!, "monkey.", componentId, i)
+                        else -> sendString(player!!, "", componentId, i)
                     }
                 }
                 stage = 99

@@ -1,21 +1,39 @@
 package content.global.skill.crafting.spinning
 
+import content.global.skill.crafting.CraftingObjects
 import core.api.*
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.interaction.InterfaceListener
 import core.game.node.item.Item
+import shared.consts.Animations
 import shared.consts.Components
-import shared.consts.Scenery
+import shared.consts.Items
 
 class SpinningPlugin : InteractionListener, InterfaceListener {
 
-    private val SPINNING_WHEEL = intArrayOf(Scenery.SPINNING_WHEEL_2644, Scenery.SPINNING_WHEEL_4309, Scenery.SPINNING_WHEEL_8748, Scenery.SPINNING_WHEEL_20365, Scenery.SPINNING_WHEEL_21304, Scenery.SPINNING_WHEEL_25824, Scenery.SPINNING_WHEEL_26143, Scenery.SPINNING_WHEEL_34497, Scenery.SPINNING_WHEEL_36970, Scenery.SPINNING_WHEEL_37476)
-
     override fun defineListeners() {
-        on(SPINNING_WHEEL, IntType.SCENERY, "spin") { player, _ ->
+
+        /*
+         * Handles interaction with spinning wheel.
+         */
+
+        on(CraftingObjects.SPINNING_WHEEL, IntType.SCENERY, "spin") { player, _ ->
             openInterface(player, Components.CRAFTING_SPINNING_459)
             return@on true
+        }
+
+        /*
+         * Handles creating golden wool.
+         */
+
+        onUseWith(IntType.SCENERY, Items.GOLDEN_FLEECE_3693, *CraftingObjects.SPINNING_WHEEL) { player, _, _ ->
+            if (removeItem(player, Items.GOLDEN_FLEECE_3693)) {
+                addItem(player, Items.GOLDEN_WOOL_3694)
+                animate(player, Animations.HUMAN_COOKING_RANGE_896)
+                sendDialogue(player, "You spin the Golden Fleece into a ball of Golden Wool.")
+            }
+            return@onUseWith true
         }
     }
 

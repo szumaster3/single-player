@@ -118,20 +118,16 @@ class PiratesTreasure : Quest(
 
     override fun finish(player: Player) {
         super.finish(player)
-
         var line = 10
-
-        sendItemZoomOnInterface(player, Components.QUEST_COMPLETE_SCROLL_277, 5, Items.CASKET_7956)
+        displayQuestItem(player, Items.CASKET_7956)
         drawReward(player, "2 Quest Points", line++)
         drawReward(player, "One-Eyed Hector's Treasure", line++)
         drawReward(player, "Chest", line++)
         drawReward(player, "You can also use the Pay-", line++)
         drawReward(player, "fare option to go to and from", line++)
         drawReward(player, "Karamja", line)
-
         removeAttribute(player, "gardener-attack")
         removeAttribute(player, "pirate-read")
-
         addItemOrDrop(player, CASKET)
         updateQuestTab(player)
     }

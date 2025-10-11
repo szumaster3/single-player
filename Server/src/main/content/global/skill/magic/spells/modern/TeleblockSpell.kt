@@ -113,9 +113,10 @@ class TeleblockSpell : CombatSpell {
     }
 
     override fun fireEffect(entity: Entity, victim: Entity, state: BattleState) {
-        if (!hasTimerActive(victim, GameAttributes.TELEBLOCK_TIMER)
-            && victim is Player
-            && state.style.swingHandler.isAccurateImpact(entity, victim)
+        if (!hasTimerActive(
+                victim,
+                GameAttributes.TELEBLOCK_TIMER
+            ) && victim is Player && state.style.swingHandler.isAccurateImpact(entity, victim)
         ) {
             var ticks = 500
             if (victim.prayer[PrayerType.PROTECT_FROM_MAGIC]) {

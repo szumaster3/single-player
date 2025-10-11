@@ -4,6 +4,7 @@ import content.global.skill.herblore.herbs.HerbItem
 import core.api.addItem
 import core.api.replaceScenery
 import core.api.sendItemDialogue
+import core.api.sendMessage
 import core.game.node.Node
 import core.game.node.entity.player.Player
 import core.game.system.task.Pulse
@@ -23,7 +24,7 @@ enum class JungleObjective(val objectId: Int, val herb: HerbItem, val stage: Int
             player.pulseManager.run(object : Pulse(anim.duration, player, scenery) {
                 override fun pulse(): Boolean {
                     if (RandomFunction.random(3) == 1) {
-                        player.sendMessage("You search the vine...")
+                        sendMessage(player, "You search the vine...")
                         replaceScenery(scenery.asScenery())
                         reward(player)
                         return true

@@ -106,8 +106,7 @@ object SpellListeners {
             method = next.second ?: return
         }
 
-        if (type in
-            intArrayOf(
+        if (type in intArrayOf(
                 SpellListener.NPC,
                 SpellListener.OBJECT,
                 SpellListener.PLAYER,
@@ -130,8 +129,7 @@ object SpellListeners {
                         if (player.location.withinMaxnormDistance(
                                 node!!.centerLocation,
                                 range,
-                            ) &&
-                            hasLineOfSight(player, node)
+                            ) && hasLineOfSight(player, node)
                         ) {
                             player.faceLocation(node.getFaceLocation(player.location))
                             player.walkingQueue.reset()

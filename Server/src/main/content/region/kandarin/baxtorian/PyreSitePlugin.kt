@@ -5,6 +5,8 @@ import content.global.skill.firemaking.Log
 import content.region.kandarin.baxtorian.barbtraining.BarbarianTraining
 import core.api.sendDialogue
 import core.api.sendDialogueLines
+import core.api.sendMessage
+import core.api.sendMessages
 import core.cache.def.impl.SceneryDefinition
 import core.game.interaction.OptionHandler
 import core.game.node.Node
@@ -29,6 +31,7 @@ import core.plugin.Plugin
 import core.tools.RandomFunction
 import shared.consts.Items
 import shared.consts.NPCs
+import shared.consts.Scenery as Objects
 
 @Initializable
 class PyreSitePlugin : OptionHandler() {
@@ -43,7 +46,7 @@ class PyreSitePlugin : OptionHandler() {
     override fun handle(player: Player, node: Node, option: String): Boolean {
         for (location in USED_LOCATIONS) {
             if (location.withinDistance(node.location, 3)) {
-                player.sendMessage("This pyre site is in use currently.")
+                sendMessage(player, "This pyre site is in use currently.")
                 return true
             }
         }
@@ -61,28 +64,28 @@ class PyreSitePlugin : OptionHandler() {
         }
 
         if (!player.inventory.containsItem(CHEWED_BONES) && !player.inventory.containsItem(MANGLED_BONES)) {
-            player.sendMessage("You need chewed bones or mangled bones in order to do this.")
+            sendMessage(player, "You need chewed bones or mangled bones in order to do this.")
             return true
         }
 
         if (!player.inventory.contains(590, 1)) {
-            player.sendMessage("You need a tinderbox in order to do this.")
+            sendMessage(player, "You need a tinderbox in order to do this.")
             return true
         }
 
         val tool = SkillingTool.getAxe(player)
         if (tool == null) {
-            player.sendMessage("You need an axe in order to do this.")
+            sendMessage(player, "You need an axe in order to do this.")
             return true
         }
 
         val type = LogType.getType(player) ?: run {
-            player.sendMessage("You don't have any logs.")
+            sendMessage(player, "You don't have any logs.")
             return true
         }
 
         if (player.getAttribute("barb", null) != null && (player.getAttribute("barb") as NPC).isActive) {
-            player.sendMessage("You must defeat the barbarian spirit first.")
+            sendMessage(player, "You must defeat the barbarian spirit first.")
             return true
         }
 
@@ -110,15 +113,15 @@ class PyreSitePlugin : OptionHandler() {
 
         return object : Pulse(1, player) {
             var count = 0
-            var objectId = 25288
+            var objectId = Objects.CARVED_LOG_25288
 
             override fun pulse(): Boolean {
-                if ((count % 6 == 0 || count == 0) && count <= 10 && objectId <= 25291) {
+                if ((count % 6 == 0 || count == 0) && count <= 10 && objectId <= Objects.PYRE_BOAT_25291) {
                     player.animate(getAnimation(tool))
                     player.faceLocation(scenery.location)
                 }
                 if (count % 4 == 0) {
-                    if (objectId == 25291) {
+                    if (objectId == Objects.PYRE_BOAT_25291) {
                         if (player.inventory.remove(Item(logType.log.logId), bones)) {
                             player.animator.reset()
                             player.skills.addExperience(Skills.CRAFTING, logType.experiences[0])
@@ -126,13 +129,13 @@ class PyreSitePlugin : OptionHandler() {
 
                             if (bones.id == CHEWED_BONES.id) {
                                 player.inventory.add(getRandomItem(player), player)
-                                player.sendMessages(
+                                sendMessages(player,
                                     "The ancient barbarian is laid to rest. Your future prayer training is blessed,",
                                     "as his spirit ascends to a glorious afterlife. Spirits drop an object into your",
                                     "pack.",
                                 )
                             } else {
-                                val barb = NPC.create(752, scenery.location.transform(scenery.direction, 1))
+                                val barb = NPC.create(NPCs.FEROCIOUS_BARBARIAN_SPIRIT_752, scenery.location.transform(scenery.direction, 1))
                                 (barb as FerociousBarbarianNPC).target = player
                                 barb.init()
                                 barb.moveStep()
@@ -142,7 +145,7 @@ class PyreSitePlugin : OptionHandler() {
                         }
                     }
 
-                    if (objectId == 25295) {
+                    if (objectId == Objects.PYRE_BOAT_25295) {
                         return true
                     }
 
@@ -159,7 +162,7 @@ class PyreSitePlugin : OptionHandler() {
                     player.savedData.activityData.isBarbarianFiremakingPyre = true
                     sendDialogueLines(player, "You feel you have learned more of barbarian ways. Otto might wish", "to talk to you more.")
                 }
-                replace(25286, scenery, player)
+                replace(Objects.PYRE_SITE_25286, scenery, player)
                 USED_LOCATIONS.remove(scenery.location)
             }
         }

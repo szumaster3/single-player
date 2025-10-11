@@ -54,11 +54,7 @@ class SmeltingInterface : InterfaceListener {
         }
     }
 
-    enum class BarButton(
-        val button: Int,
-        val bar: Bar,
-        val amount: Int,
-    ) {
+    enum class BarButton(val button: Int, val bar: Bar, val amount: Int) {
         BRONZE_1(16, Bar.BRONZE, 1),
         BRONZE_5(15, Bar.BRONZE, 5),
         BRONZE_10(14, Bar.BRONZE, 10),

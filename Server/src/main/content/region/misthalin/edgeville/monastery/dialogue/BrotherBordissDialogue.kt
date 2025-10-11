@@ -81,7 +81,7 @@ class BrotherBordissDialogue(player: Player? = null) : Dialogue(player) {
                     val blessedShield = Item(Items.BLESSED_SPIRIT_SHIELD_13736, 1)
 
                     if (!player.inventory.contains(sigil.id, 1) || !player.inventory.containsItem(coins) || !player.inventory.contains(blessedShield.id, 1)) {
-                        player.sendMessage("You don't have the required items to combine.")
+                        sendMessage(player, "You don't have the required items to combine.")
                         return true
                     }
 

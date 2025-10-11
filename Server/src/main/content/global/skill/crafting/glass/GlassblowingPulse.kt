@@ -12,21 +12,9 @@ import shared.consts.Sounds
 
 /**
  * Represents Glassblowing pulse.
- *
- * @property player the player.
- * @property product the product.
- * @property amount the amount.
  */
-/*
- * TODO:
- *  [ ] - Find easter egg sounds.
- *  [ ] - Find at what point they were used.
- */
-class GlassblowingPulse(
-    private val player: Player,
-    private val product: GlassProduct,
-    private var amount: Int,
-) : Pulse() {
+class GlassblowingPulse(private val player: Player, private val product: GlassProduct, private var amount: Int) : Pulse() {
+
     override fun pulse(): Boolean {
         if (!clockReady(player, Clocks.SKILLING)) return false
         delayClock(player, Clocks.SKILLING, 3)

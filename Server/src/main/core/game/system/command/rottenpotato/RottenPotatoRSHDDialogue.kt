@@ -33,13 +33,13 @@ class RottenPotatoRSHDDialogue(player: Player? = null) : Dialogue(player) {
                 when (buttonId) {
                     1 -> {
                         AIRepository.clearAllBots()
-                        player.sendMessage(colorize("%RBots wiped."))
+                        sendMessage(player, colorize("%RBots wiped."))
                         end()
                     }
 
                     2 -> {
                         ImmerseWorld.spawnBots()
-                        player.sendMessage(colorize("%RBots Respawning."))
+                        sendMessage(player, colorize("%RBots Respawning."))
                         end()
                     }
 

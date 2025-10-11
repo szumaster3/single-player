@@ -1,5 +1,6 @@
 package core.game.system.command.sets
 
+import core.api.sendMessage
 import core.game.bots.GeneralBotCreator
 import core.game.bots.PlayerScripts
 import core.game.bots.Script
@@ -77,8 +78,8 @@ class BottingCommandSet : CommandSet(Privilege.ADMIN) {
             }
             player.interfaceManager.close()
             GeneralBotCreator(script!!.clazz.newInstance() as Script, player, true)
-            player.sendMessage(colorize("%RStarting script..."))
-            player.sendMessage(colorize("%RTo stop the script, do ::stopscript or log out."))
+            sendMessage(player, colorize("%RStarting script..."))
+            sendMessage(player, colorize("%RTo stop the script, do ::stopscript or log out."))
         }
 
         define(name = "stopscript", Privilege.ADMIN) { player, _ ->

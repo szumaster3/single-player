@@ -2,6 +2,7 @@ package core.game.world.repository
 
 import content.region.wilderness.npc.revenants.RevenantNPC
 import core.ServerConstants
+import core.api.sendMessage
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.world.map.Location
@@ -68,7 +69,7 @@ object Repository {
         val size = players.size
         for (i in 0 until size) {
             val player = players[i] as Player ?: continue
-            player.sendMessage("<img=" + icon + ">" + color + "Market Update: " + string)
+            sendMessage(player, "<img=" + icon + ">" + color + "Market Update: " + string)
         }
     }
 
@@ -83,7 +84,7 @@ object Repository {
         val size = players.size
         for (i in 0 until size) {
             val player = players[i] as Player ?: continue
-            player.sendMessage("<img=$icon><col=$color>News: $string")
+            sendMessage(player, "<img=$icon><col=$color>News: $string")
         }
     }
 

@@ -55,7 +55,6 @@ class FeatherHeaddressMakePlugin : InteractionListener {
 
 }
 
-
 private enum class FeatherHeaddress(val base: Int, val product: Int) {
     FEATHER_HEADDRESS_BLUE(Items.BLUE_FEATHER_10089, Items.FEATHER_HEADDRESS_12210),
     FEATHER_HEADDRESS_ORANGE(Items.ORANGE_FEATHER_10091, Items.FEATHER_HEADDRESS_12222),

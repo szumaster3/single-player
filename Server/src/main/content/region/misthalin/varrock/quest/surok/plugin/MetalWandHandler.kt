@@ -21,7 +21,7 @@ class MetalWandHandler : UseWithHandler(WhatLiesBelowListener.WAND) {
     override fun handle(event: NodeUsageEvent): Boolean {
         val player = event.player
         if (!inInventory(player, WhatLiesBelowListener.CHAOS_RUNES, 15)) {
-            player.sendMessage("You need 15 chaos runes.")
+            sendMessage(player, "You need 15 chaos runes.")
             return true
         }
 

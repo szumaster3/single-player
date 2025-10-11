@@ -43,8 +43,9 @@ class VisualCommand : CommandPlugin() {
         when (name) {
             "invisible", "invis", "seti" -> {
                 player!!.isInvisible = !player.isInvisible
-                player.sendMessage(
-                    "You are now " + (if (player.isInvisible) "invisible" else "rendering") + " for other players.",
+                sendMessage(
+                    player,
+                    "You are now " + (if (player.isInvisible) "invisible" else "rendering") + " for other players."
                 )
                 return true
             }
@@ -57,27 +58,26 @@ class VisualCommand : CommandPlugin() {
                 }
                 val names = arrayOf("Ahrim", "Dharok", "Guthan", "Karil", "Torag", "Verac")
                 player!!.savedData.activityData.barrowKills = 50
-                player.packetDispatch.sendMessage(
-                    "Flagged all barrow brothers killed and 50 catacomb kills, current entrance: " +
-                        names[player.savedData.activityData.barrowTunnelIndex] +
-                        ".",
+                sendMessage(
+                    player,
+                    "Flagged all barrow brothers killed and 50 catacomb kills, current entrance: " + names[player.savedData.activityData.barrowTunnelIndex] + ".",
                 )
                 return true
             }
 
             "1hko" -> {
                 player!!.setAttribute("1hko", !player.getAttribute("1hko", false))
-                player.packetDispatch.sendMessage(
-                    "1-hit KO mode " +
-                        if (player.getAttribute(
-                                "1hko",
-                                false,
-                            )
-                        ) {
-                            "on."
-                        } else {
-                            "off."
-                        },
+                sendMessage(
+                    player,
+                    "1-hit KO mode " + if (player.getAttribute(
+                            "1hko",
+                            false,
+                        )
+                    ) {
+                        "on."
+                    } else {
+                        "off."
+                    },
                 )
                 return true
             }
@@ -101,7 +101,7 @@ class VisualCommand : CommandPlugin() {
                     player!!.appearance.setAnimations(Animation.create(args[1]!!.toInt()))
                     refreshAppearance(player)
                 } catch (e: NumberFormatException) {
-                    player!!.packetDispatch.sendMessage("Use: ::remote id")
+                    sendMessage(player!!, "Use: ::remote id")
                 }
                 return true
             }
@@ -172,11 +172,7 @@ class VisualCommand : CommandPlugin() {
                 npc.init()
                 npc.isWalks = args.size > 2
                 val npcString =
-                    "{" + npc.location.x + "," + npc.location.y + "," + npc.location.z + "," +
-                        (if (npc.isWalks) "1" else "0") +
-                        "," +
-                        npc.direction.ordinal +
-                        "}"
+                    "{" + npc.location.x + "," + npc.location.y + "," + npc.location.z + "," + (if (npc.isWalks) "1" else "0") + "," + npc.direction.ordinal + "}"
                 val clpbrd = Toolkit.getDefaultToolkit().systemClipboard
                 clpbrd.setContents(StringSelection(npcString), null)
                 println(npcString)
@@ -192,12 +188,11 @@ class VisualCommand : CommandPlugin() {
                 var sizeY = 3
                 if (args.size > 2) {
                     sizeX = toInteger(args[2]!!)
-                    sizeY =
-                        if (args.size > 3) {
-                            toInteger(args[3]!!)
-                        } else {
-                            sizeX
-                        }
+                    sizeY = if (args.size > 3) {
+                        toInteger(args[3]!!)
+                    } else {
+                        sizeX
+                    }
                 }
                 val aggressive = args.size > 4
                 var x = 0
@@ -245,16 +240,15 @@ class VisualCommand : CommandPlugin() {
                     player!!.debug("syntax error: x y id")
                     return true
                 }
-                location =
-                    if (args.size > 2) {
-                        Location.create(
-                            args[1]!!.toInt(),
-                            args[2]!!.toInt(),
-                            player!!.location.z,
-                        )
-                    } else {
-                        player!!.location
-                    }
+                location = if (args.size > 2) {
+                    Location.create(
+                        args[1]!!.toInt(),
+                        args[2]!!.toInt(),
+                        player!!.location.z,
+                    )
+                } else {
+                    player!!.location
+                }
                 scenery = RegionManager.getObject(location!!)
                 if (scenery == null) {
                     player.debug("error: object not found in region cache.")
@@ -296,8 +290,7 @@ class VisualCommand : CommandPlugin() {
                 val hidden = if (args.size > 3) java.lang.Boolean.parseBoolean(args[3]) else true
                 player!!.packetDispatch.sendInterfaceConfig(toInteger(args[1]!!), toInteger(args[2]!!), hidden)
                 player.packetDispatch.sendMessage(
-                    "Interface child (id=" + args[1] + ", child=" + args[2] + ") is " +
-                        if (hidden) "hidden." else "visible.",
+                    "Interface child (id=" + args[1] + ", child=" + args[2] + ") is " + if (hidden) "hidden." else "visible.",
                 )
                 return true
             }
@@ -331,7 +324,7 @@ class VisualCommand : CommandPlugin() {
 
                             override fun pulse(): Boolean {
                                 setVarp(player!!, cfg_index, value shl pos)
-                                player.sendMessage("$pos")
+                                sendMessage(player, "$pos")
                                 return pos++ >= 32
                             }
                         },
@@ -509,8 +502,7 @@ class VisualCommand : CommandPlugin() {
                         var id = s
 
                         override fun pulse(): Boolean {
-                            Projectile
-                                .create(
+                            Projectile.create(
                                     player!!.location,
                                     player.location.transform(0, 3, 0),
                                     id,
@@ -565,7 +557,7 @@ class VisualCommand : CommandPlugin() {
 
             "disabledisease" -> {
                 player!!.setAttribute("stop-disease", !player.getAttribute("stop-disease", false))
-                player.sendMessage("Disable disease=" + player.getAttribute("stop-disease", false))
+                sendMessage(player, "Disable disease=" + player.getAttribute("stop-disease", false))
                 return true
             }
         }

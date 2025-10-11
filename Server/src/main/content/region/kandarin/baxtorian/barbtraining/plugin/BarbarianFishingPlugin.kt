@@ -69,7 +69,7 @@ private class BarbFishingPulse(player: Player) : SkillPulse<NPC>(player, NPC(NPC
             return false
         }
         if (getStatLevel(player, Skills.AGILITY) < 15 || getStatLevel(player, Skills.STRENGTH) < 15) {
-            player.sendMessages("You need a ", if (getStatLevel(player, Skills.AGILITY) < 15 && getStatLevel(player, Skills.STRENGTH) < 15
+            sendMessages(player, "You need a ", if (getStatLevel(player, Skills.AGILITY) < 15 && getStatLevel(player, Skills.STRENGTH) < 15
                 ) {
                     "agility and strength"
                 } else if (getStatLevel(player, Skills.AGILITY) < 15) {

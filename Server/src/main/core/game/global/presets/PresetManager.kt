@@ -1,5 +1,6 @@
 package core.game.global.presets
 
+import core.api.sendMessage
 import core.game.node.entity.player.Player
 import java.util.*
 
@@ -25,9 +26,9 @@ class PresetManager {
         val size = currentPresets.size
         player!!.sendMessage("You have used " + size + "/" + maxSize() + " available setups.")
         if (size > 0) {
-            player.sendMessage("<col=ff0000>Your available setups are:")
+            sendMessage(player, "<col=ff0000>Your available setups are:")
             for (key in currentPresets.keys) {
-                player.sendMessage(key)
+                sendMessage(player, key)
             }
         }
     }

@@ -1,17 +1,19 @@
 package content.region.asgarnia.burthope.quest.death
 
 import core.api.addItemOrDrop
+import core.api.displayQuestItem
 import core.api.getAttribute
+import core.api.rewardXP
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest
 import core.game.node.entity.skill.Skills
 import core.plugin.Initializable
-import shared.consts.Components
 import shared.consts.Items
 import shared.consts.Quests
+import shared.consts.Vars
 
 @Initializable
-class DeathPlateau : Quest(Quests.DEATH_PLATEAU, 44, 43, 1, 314, 0, 1, 80) {
+class DeathPlateau : Quest(Quests.DEATH_PLATEAU, 44, 43, 1, Vars.VARBIT_QUEST_DEATH_PLATEAU_PROGRESS_314, 0, 1, 80) {
 
     override fun drawJournal(player: Player, stage: Int) {
         super.drawJournal(player, stage)
@@ -207,25 +209,13 @@ class DeathPlateau : Quest(Quests.DEATH_PLATEAU, 44, 43, 1, 314, 0, 1, 80) {
     override fun finish(player: Player) {
         var ln = 10
         super.finish(player)
-        player.packetDispatch.sendString(
-            "You have completed the Death Plateau Quest!",
-            Components.QUEST_COMPLETE_SCROLL_277,
-            4,
-        )
-        player.packetDispatch.sendItemZoomOnInterface(
-            Items.STEEL_CLAWS_3097,
-            240,
-            Components.QUEST_COMPLETE_SCROLL_277,
-            5,
-        )
-
+        displayQuestItem(player, Items.STEEL_CLAWS_3097)
         drawReward(player, "1 Quest Point", ln++)
         drawReward(player, "3,000 Attack XP", ln++)
         drawReward(player, "Some Steel Claws", ln++)
         drawReward(player, "Ability to make Claws", ln)
-
+        rewardXP(player, Skills.ATTACK, 3000.0)
         addItemOrDrop(player, Items.STEEL_CLAWS_3097, 1)
-        player.skills.addExperience(Skills.ATTACK, 3000.0)
     }
 
     override fun newInstance(`object`: Any?): Quest = this

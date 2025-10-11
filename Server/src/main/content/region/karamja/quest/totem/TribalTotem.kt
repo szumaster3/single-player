@@ -62,7 +62,7 @@ class TribalTotem : Quest(Quests.TRIBAL_TOTEM, 126, 125, 1, Vars.VARP_QUEST_TRIB
     override fun finish(player: Player) {
         super.finish(player)
         var ln = 10
-        sendItemZoomOnInterface(player, Components.QUEST_COMPLETE_SCROLL_277, 5, Items.TOTEM_1857)
+        displayQuestItem(player, Items.TOTEM_1857)
         drawReward(player, "1 Quest point", ln++)
         drawReward(player, "1,775 Thieving XP", ln++)
         drawReward(player, "5 Swordfish", ln)

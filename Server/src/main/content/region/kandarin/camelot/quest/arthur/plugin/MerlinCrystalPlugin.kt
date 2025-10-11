@@ -133,7 +133,7 @@ class MerlinCrystalPlugin : InteractionListener {
             if (getQuestStage(player, Quests.MERLINS_CRYSTAL) >= 30) {
                 openDialogue(player, CrateDialogue())
             } else {
-                player.sendMessage("You have no reason to do that...")
+                sendMessage(player, "You have no reason to do that...")
             }
             return@on true
         }

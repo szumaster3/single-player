@@ -2,6 +2,7 @@ package content.global.skill.hunter
 
 import core.api.lock
 import core.api.playAudio
+import core.api.sendMessage
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.SkillPulse
 import core.game.node.entity.skill.Skills
@@ -50,7 +51,7 @@ class TrapDismantlePulse(
 
     override fun checkRequirements(): Boolean {
         if (!instance.isOwner(node)) {
-            player.sendMessage("This isn't your trap!")
+            sendMessage(player, "This isn't your trap!")
             return false
         }
         val itemCount = wrapper.items.size + (if (wrapper.type.settings.isObjectTrap) 0 else 1)

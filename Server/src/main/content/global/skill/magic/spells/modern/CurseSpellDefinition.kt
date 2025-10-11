@@ -13,18 +13,7 @@ import shared.consts.Graphics as Gfx
 /**
  * Represents configuration of curse spells.
  */
-enum class CurseSpellDefinition(
-    val type: SpellType,
-    val buttonId: Int,
-    val level: Int,
-    val xp: Double,
-    val castSound: Int,
-    val impactSound: Int,
-    val start: Graphics,
-    val projectile: Projectile,
-    val end: Graphics,
-    val runes: Array<Item>
-) {
+enum class CurseSpellDefinition(val type: SpellType, val buttonId: Int, val level: Int, val xp: Double, val castSound: Int, val impactSound: Int, val start: Graphics, val projectile: Projectile, val end: Graphics, val runes: Array<Item>) {
     CONFUSE(SpellType.CONFUSE, ModernSpells.CONFUSE, 3, 13.0, Sounds.CONFUSE_CAST_AND_FIRE_119, Sounds.CONFUSE_HIT_121, Graphics(Gfx.CONFUSE_CAST_102, 96), SpellProjectile.create(Gfx.CONFUSE_PROJECTILE_103), Graphics(Gfx.CONFUSE_IMPACT_104, 96), arrayOf(Runes.BODY_RUNE.getItem(1), Runes.EARTH_RUNE.getItem(2), Runes.WATER_RUNE.getItem(3))),
     WEAKEN(SpellType.WEAKEN, ModernSpells.WEAKEN, 11, 21.0, Sounds.WEAKEN_CAST_AND_FIRE_3011, Sounds.WEAKEN_HIT_3010, Graphics(Gfx.WEAKEN_CAST_105, 96), SpellProjectile.create(Gfx.WEAKEN_PROJECTILE_106), Graphics(Gfx.WEAKEN_IMPACT_107, 96), arrayOf(Runes.BODY_RUNE.getItem(1), Runes.EARTH_RUNE.getItem(2), Runes.WATER_RUNE.getItem(3))),
     CURSE(SpellType.CURSE, ModernSpells.CURSE, 19, 29.0, Sounds.CURSE_CAST_AND_FIRE_127, Sounds.CURSE_HIT_126, Graphics(Gfx.CURSE_CAST_108, 96), SpellProjectile.create(Gfx.CURSE_PROJECTILE_109), Graphics(Gfx.CURSE_IMPACT_110, 96), arrayOf(Runes.BODY_RUNE.getItem(1), Runes.EARTH_RUNE.getItem(3), Runes.WATER_RUNE.getItem(2))),

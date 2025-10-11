@@ -135,11 +135,11 @@ class HunterPlugin : OptionHandler() {
             val scenery = if (event.usedWith is Scenery) event.usedWith as Scenery else (event.used as Scenery)
             val item = event.usedItem
             if (HunterManager.getInstance(player).isOwner(scenery)) {
-                player.sendMessage("This isn't your trap!")
+                sendMessage(player, "This isn't your trap!")
                 return true
             }
             val wrapper = HunterManager.getInstance(player).getWrapper(scenery)
-            if (item.id == 594) {
+            if (item.id == Items.LIT_TORCH_594) {
                 wrapper.smoke()
             } else {
                 wrapper.bait(item)

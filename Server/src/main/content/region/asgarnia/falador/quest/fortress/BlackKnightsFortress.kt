@@ -2,15 +2,11 @@ package content.region.asgarnia.falador.quest.fortress
 
 import content.data.GameAttributes
 import content.region.asgarnia.falador.quest.fortress.dialogue.SirAmikVarzeDialogue
-import core.api.getAttribute
-import core.api.removeAttribute
-import core.api.sendItemZoomOnInterface
-import core.api.sendString
+import core.api.*
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest
 import core.plugin.ClassScanner.definePlugins
 import core.plugin.Initializable
-import shared.consts.Components
 import shared.consts.Items
 import shared.consts.Quests
 import shared.consts.Vars
@@ -81,10 +77,9 @@ class BlackKnightsFortress : Quest(Quests.BLACK_KNIGHTS_FORTRESS, 14, 13, 3, Var
     override fun finish(player: Player) {
         super.finish(player)
         var line = 10
-        sendString(player, "You have completed the Black Knights' Fortress!", Components.QUEST_COMPLETE_SCROLL_277, 4)
+        displayQuestItem(player, Items.BROKEN_CAULDRON_9591)
         drawReward(player, "3 Quests Points", line++)
         drawReward(player, "2500 Coins", line)
-        sendItemZoomOnInterface(player, Components.QUEST_COMPLETE_SCROLL_277, 5, Items.BROKEN_CAULDRON_9591, 240)
         removeAttribute(player, GameAttributes.QUEST_BKF_DOSSIER_INTER)
     }
 

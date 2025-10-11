@@ -341,7 +341,7 @@ class Shops : StartupListener, TickListener, InteractionListener, InterfaceListe
 
             val itemInSlot = player.inventory[slot]
             if (itemInSlot == null) {
-                player.sendMessage("That item doesn't appear to be there anymore. Please try again.")
+                sendMessage(player, "That item doesn't appear to be there anymore. Please try again.")
                 return@on true
             }
 

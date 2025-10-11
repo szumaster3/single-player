@@ -81,10 +81,7 @@ import core.game.world.update.flag.context.ForceMoveCtx
 import core.game.world.update.flag.context.Graphics
 import core.net.packet.OutgoingContext
 import core.net.packet.PacketRepository
-import core.net.packet.out.AudioPacket
-import core.net.packet.out.MinimapState
-import core.net.packet.out.MusicPacket
-import core.net.packet.out.RepositionChild
+import core.net.packet.out.*
 import core.tools.Log
 import core.tools.SystemLogger
 import core.tools.colorize
@@ -2243,26 +2240,36 @@ fun teleport(
 }
 
 /**
- * Teleports the given entity to the specified location after the specified number of ticks.
+ * Teleports the entity to a specified location, optionally after a delay.
  *
- * @param entity The entity that should be teleported.
- * @param location The location to which the entity should be teleported.
- * @param ticks The number of ticks after which the teleportation should occur.
+ * @param entity The entity to teleport.
+ * @param loc The location to teleport to.
+ * @param type The type of teleportation (default is instant).
+ * @param ticks Optional number of ticks to delay the teleport (default = null, instant).
+ * @return True if teleportation was successful immediately, false if delayed.
  */
 fun teleport(
     entity: Entity,
-    location: Location,
+    loc: Location,
     type: TeleportManager.TeleportType = TeleportManager.TeleportType.INSTANT,
-    ticks: Int,
-) {
-    GameWorld.Pulser.submit(
-        object : Pulse(ticks) {
+    ticks: Int? = null
+): Boolean {
+    return if (ticks == null || ticks <= 0) {
+        entity.properties.teleportLocation = loc
+        true
+    } else {
+        GameWorld.Pulser.submit(object : Pulse(ticks) {
             override fun pulse(): Boolean {
-                teleport(entity, location, type)
+                if (type == TeleportManager.TeleportType.INSTANT) {
+                    entity.properties.teleportLocation = loc
+                } else {
+                    entity.teleporter.send(loc, type)
+                }
                 return true
             }
-        },
-    )
+        })
+        false
+    }
 }
 
 /**
@@ -5036,6 +5043,47 @@ fun getOrStartTimer(
     val existing = getTimer(entity, identifier)
     if (existing != null) return existing
     return spawnTimer(identifier, *args).also { registerTimer(entity, it) }
+}
+
+/**
+ * Sends interface settings (access masks) to the player.
+ *
+ * @param player The player to whom the settings will be sent.
+ * @param settingsHash The hash representing the settings.
+ * @param childId The child id of the interface component.
+ * @param interfaceId The id of the interface.
+ * @param offset The offset within the component.
+ * @param length The length of the settings block.
+ */
+fun sendIfaceSettings(
+    player: Player,
+    settingsHash: Int,
+    childId: Int,
+    interfaceId: Int,
+    offset: Int,
+    length: Int
+) {
+    PacketRepository.send(AccessMask::class.java, OutgoingContext.AccessMask(player, settingsHash, childId, interfaceId, offset, length))
+}
+
+/**
+ * Displays a quest reward item model on the quest completion interface.
+ *
+ * @param player The player to display the item to.
+ * @param itemId The item id to display.
+ * @param zoom The zoom level for the item model (default = 240).
+ */
+fun displayQuestItem(
+    player: Player,
+    itemId: Int,
+    zoom: Int = 240
+) {
+    player.packetDispatch.sendItemZoomOnInterface(
+        itemId,
+        zoom,
+        Components.QUEST_COMPLETE_SCROLL_277,
+        5
+    )
 }
 
 private class ContentAPI

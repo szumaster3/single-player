@@ -137,7 +137,7 @@ class FremennikAchievementDiary : DiaryEventHookBase(DiaryType.FREMENNIK) {
     ) {
         when (event.dialogue) {
             is ChieftanBrundtDialogue -> {
-                if (event.currentStage == 615) {
+                if (event.currentStage == 632) {
                     finishTask(
                         player,
                         DiaryLevel.MEDIUM,

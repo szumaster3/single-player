@@ -1,5 +1,6 @@
 package content.region.kandarin.seers.quest.mcannon.dialogue
 
+import core.api.sendMessage
 import core.api.setVarp
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
@@ -410,7 +411,7 @@ class CaptainLawgofDialogue(player: Player? = null) : Dialogue(player) {
 
                     4 -> {
                         end()
-                        player.sendMessage("The Dwarf Captain gives you another toolkit.")
+                        sendMessage(player, "The Dwarf Captain gives you another toolkit.")
                         player.inventory.add(content.region.kandarin.seers.quest.mcannon.DwarfCannon.TOOL_KIT, player)
                     }
                 }
@@ -515,7 +516,7 @@ class CaptainLawgofDialogue(player: Player? = null) : Dialogue(player) {
 
                     13 -> {
                         player.inventory.remove(content.region.kandarin.seers.quest.mcannon.DwarfCannon.TOOL_KIT)
-                        player.sendMessage("You give the toolkit back to Captain Lawgof.")
+                        sendMessage(player, "You give the toolkit back to Captain Lawgof.")
                         setVarp(player, 0, 9, true)
                         quest!!.setStage(player, 70)
                         end()

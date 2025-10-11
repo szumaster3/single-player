@@ -21,10 +21,7 @@ class HarralanderTarPlugin : InteractionListener {
             var tar = TarItem.forId(used.id)
             val handler: SkillDialogueHandler =
                 object : SkillDialogueHandler(player, SkillDialogue.ONE_OPTION, Item(tar!!.product)) {
-                    override fun create(
-                        amount: Int,
-                        index: Int,
-                    ) {
+                    override fun create(amount: Int, index: Int) {
                         player.pulseManager.run(
                             HarralanderTarPulse(player, null, tar!!, amount),
                         )
@@ -54,10 +51,7 @@ private enum class TarItem(val ingredient: Int, val level: Int, val experience: 
         private val mapByIngredient = values().associateBy { it.ingredient }
 
         /**
-         * Finds a [TarItem] by its ingredient ID.
-         *
-         * @param id The ingredient item ID to look up.
-         * @return The corresponding [TarItem], or null if no match is found.
+         * Finds a [TarItem] by its ingredient id.
          */
         fun forId(id: Int): TarItem? = mapByIngredient[id]
     }

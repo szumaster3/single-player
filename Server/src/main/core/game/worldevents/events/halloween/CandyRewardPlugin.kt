@@ -1,5 +1,6 @@
 package core.game.worldevents.events.halloween
 
+import core.api.sendMessage
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
 import core.game.node.item.GroundItemManager
@@ -19,7 +20,7 @@ class CandyRewardPlugin : ExperiencePlugin() {
             if (!player.inventory.add(candy)) {
                 GroundItemManager.create(candy, player)
             }
-            player.sendMessage(colorize("%OYou receive a candy while training ${Skills.SKILL_NAME[skill]}!"))
+            sendMessage(player, colorize("%OYou receive a candy while training ${Skills.SKILL_NAME[skill]}!"))
         }
     }
 

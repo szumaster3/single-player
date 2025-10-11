@@ -71,17 +71,14 @@ class PerilsOfIceMountain :
     override fun finish(player: Player) {
         super.finish(player)
         var ln = 10
-
         sendString(player, "Perils of Ice Mountain", Components.QUEST_COMPLETE_SCROLL_277, 4)
-
-        sendItemZoomOnInterface(player, Components.QUEST_COMPLETE_SCROLL_277, 5, Items.PLANS_13233)
+        displayQuestItem(player, Items.PLANS_13233)
         drawReward(player, "1 Quest Point", ln++)
         drawReward(player, "500 Construction, Farming,", ln++)
         drawReward(player, "Hunter and Thieving XP", ln++)
         drawReward(player, "Ability to smith pickaxes", ln++)
         drawReward(player, "Permission to use the power", ln++)
         drawReward(player, "station ladder.", ln++)
-
         rewardXP(player, Skills.CONSTRUCTION, 500.0)
         rewardXP(player, Skills.FARMING, 500.0)
         rewardXP(player, Skills.HUNTER, 500.0)

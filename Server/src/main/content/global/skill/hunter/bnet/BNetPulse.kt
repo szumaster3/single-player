@@ -11,18 +11,15 @@ import core.game.world.GameWorld
 import core.game.world.update.flag.context.Animation
 import core.tools.RandomFunction
 import core.tools.StringUtils
+import shared.consts.Items
 import shared.consts.NPCs
 import shared.consts.Quests
 import shared.consts.Sounds
 import kotlin.random.Random
 
-class BNetPulse(
-    player: Player?,
-    node: NPC?,
-    private val type: BNetNode,
-) : SkillPulse<NPC?>(player, node) {
-    private var success = false
+class BNetPulse(player: Player?, node: NPC?, private val type: BNetNode) : SkillPulse<NPC?>(player, node) {
 
+    private var success = false
     private var ticks = 0
 
     fun updateLumbridgeImplingTask(player: Player): Boolean = player.zoneMonitor.isInZone("puro puro")
@@ -46,20 +43,10 @@ class BNetPulse(
             sendMessage(player, "Your hands need to be free.")
             return false
         } else if (!type.hasNet(player)) {
-            sendMessage(
-                player,
-                "You need to be wielding a butterfly net to catch " +
-                        (if (type is ImplingNode) "implings" else "butterflies") +
-                        ".",
-            )
+            sendMessage(player, "You need to be wielding a butterfly net to catch " + (if (type is ImplingNode) "implings" else "butterflies") + ".")
             return false
         } else if (!type.hasJar(player)) {
-            sendMessage(
-                player,
-                "You need to have a" + (if (StringUtils.isPlusN(type.jar!!.name)) "n" else "") + " " +
-                        type.jar!!.name.lowercase() +
-                        ".",
-            )
+            sendMessage(player, "You need to have a" + (if (StringUtils.isPlusN(type.jar!!.name)) "n" else "") + " " + type.jar!!.name.lowercase() + ".",)
             return false
         }
         return !node!!.isInvisible && !DeathTask.isDead(node!!)
@@ -110,7 +97,7 @@ class BNetPulse(
             val level = type.level
             if (type.hasNet(player)) {
                 val net = player.equipment[EquipmentContainer.SLOT_WEAPON]
-                if (net != null && net.id == 11259) {
+                if (net != null && net.id == Items.MAGIC_BUTTERFLY_NET_11259) {
                     huntingLevel += 5
                 }
             } else {

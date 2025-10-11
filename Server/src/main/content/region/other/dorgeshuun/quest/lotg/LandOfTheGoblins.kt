@@ -1,5 +1,6 @@
 package content.region.other.dorgeshuun.quest.lotg
 
+import core.api.displayQuestItem
 import core.api.rewardXP
 import core.api.setVarbit
 import core.game.node.entity.player.Player
@@ -27,15 +28,12 @@ class LandOfTheGoblins :
         super.finish(player)
         player ?: return
         var ln = 10
-
-        player.packetDispatch.sendItemZoomOnInterface(Items.ZANIK_8870, 230, 277, 5)
-
+        displayQuestItem(player, Items.ZANIK_8870)
         drawReward(player, "1 Quest Point", ln++)
         drawReward(player, "3,000 Agility, Herblore,", ln++)
         drawReward(player, "Thieving,Fishing and Strength", ln++)
         drawReward(player, "XP", ln++)
-        drawReward(player, "2,000 Prayer XP", ln++)
-
+        drawReward(player, "2,000 Prayer XP", ln)
         rewardXP(player, Skills.AGILITY, 3000.0)
         rewardXP(player, Skills.HERBLORE, 3000.0)
         rewardXP(player, Skills.THIEVING, 3000.0)

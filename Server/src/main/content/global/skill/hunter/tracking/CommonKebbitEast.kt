@@ -10,135 +10,68 @@ import shared.consts.Animations
 import shared.consts.Items
 import shared.consts.Scenery
 
+/**
+ * Common Kebbit East Hunter plugin.
+ */
 @Initializable
 class CommonKebbitEast : HunterTracking() {
-    init {
-        initialMap =
-            hashMapOf(
-                19439 to
-                        arrayListOf(
-                            TrailDefinition(
-                                varbit = 2974,
-                                type = TrailType.LINKING,
-                                inverted = false,
-                                startLocation = Location.create(2354, 3595, 0),
-                                endLocation = Location.create(2360, 3602, 0),
-                            ),
-                            TrailDefinition(
-                                varbit = 2975,
-                                type = TrailType.LINKING,
-                                inverted = false,
-                                startLocation = Location.create(2354, 3595, 0),
-                                endLocation = Location.create(2355, 3601, 0),
-                            ),
-                            TrailDefinition(
-                                varbit = 2976,
-                                type = TrailType.LINKING,
-                                inverted = false,
-                                startLocation = Location.create(2354, 3594, 0),
-                                endLocation = Location.create(2349, 3604, 0),
-                            ),
-                        ),
-                19440 to
-                        arrayListOf(
-                            TrailDefinition(
-                                varbit = 2980,
-                                type = TrailType.LINKING,
-                                inverted = true,
-                                startLocation = Location.create(2361, 3611, 0),
-                                endLocation = Location.create(2360, 3602, 0),
-                            ),
-                            TrailDefinition(
-                                varbit = 2981,
-                                type = TrailType.LINKING,
-                                inverted = true,
-                                startLocation = Location.create(2360, 3612, 0),
-                                endLocation = Location.create(2357, 3607, 0),
-                            ),
-                        ),
-            )
 
-        linkingTrails =
-            arrayListOf(
-                TrailDefinition(
-                    varbit = 2982,
-                    type = TrailType.LINKING,
-                    inverted = false,
-                    startLocation = Location.create(2357, 3607, 0),
-                    endLocation = Location.create(2354, 3609, 0),
-                    triggerObjectLocation = Location.create(2355, 3608, 0),
-                ),
-                TrailDefinition(
-                    varbit = 2983,
-                    type = TrailType.LINKING,
-                    inverted = false,
-                    startLocation = Location.create(2354, 3609, 0),
-                    endLocation = Location.create(2349, 3604, 0),
-                    triggerObjectLocation = Location.create(2351, 3608, 0),
-                ),
-                TrailDefinition(
-                    varbit = 2977,
-                    type = TrailType.LINKING,
-                    inverted = false,
-                    startLocation = Location.create(2360, 3602, 0),
-                    endLocation = Location.create(2355, 3601, 0),
-                    triggerObjectLocation = Location.create(2358, 3599, 0),
-                ),
-                TrailDefinition(
-                    varbit = 2978,
-                    type = TrailType.LINKING,
-                    inverted = false,
-                    startLocation = Location.create(2355, 3601, 0),
-                    endLocation = Location.create(2349, 3604, 0),
-                    triggerObjectLocation = Location.create(2352, 3603, 0),
-                ),
-                TrailDefinition(
-                    varbit = 2979,
-                    type = TrailType.LINKING,
-                    inverted = false,
-                    startLocation = Location.create(2360, 3602, 0),
-                    endLocation = Location.create(2357, 3607, 0),
-                    triggerObjectLocation = Location.create(2358, 3603, 0),
-                ),
-            )
-        experience = 36.0
-        varp = 919
+    init {
         trailLimit = 3
         attribute = "hunter:tracking:commontrail"
         indexAttribute = "hunter:tracking:commonIndex"
-        rewards = arrayOf(Item(Items.COMMON_KEBBIT_FUR_10121), Item(Items.BONES_526), Item(Items.RAW_BEAST_MEAT_9986))
-        KEBBIT_ANIM = Animation(Animations.CATCH_KEBBIT_NOOSE_WAND_5259)
+        rewards = arrayOf(
+            Item(Items.COMMON_KEBBIT_FUR_10121),
+            Item(Items.BONES_526),
+            Item(Items.RAW_BEAST_MEAT_9986)
+        )
+        catchingKebbitAnimation = Animation(Animations.CATCH_KEBBIT_NOOSE_WAND_5259)
+        experience = 36.0
+        varp = 919
+
+        initialMap = hashMapOf(
+            19439 to arrayListOf(
+                TrailDefinition(2974, TrailType.LINKING, false, Location.create(2354, 3595, 0), Location.create(2360, 3602, 0)),
+                TrailDefinition(2975, TrailType.LINKING, false, Location.create(2354, 3595, 0), Location.create(2355, 3601, 0)),
+                TrailDefinition(2976, TrailType.LINKING, false, Location.create(2354, 3594, 0), Location.create(2349, 3604, 0))
+            ),
+            19440 to arrayListOf(
+                TrailDefinition(2980, TrailType.LINKING, true, Location.create(2361, 3611, 0), Location.create(2360, 3602, 0)),
+                TrailDefinition(2981, TrailType.LINKING, true, Location.create(2360, 3612, 0), Location.create(2357, 3607, 0))
+            )
+        )
+
+        linkingTrails = arrayListOf(
+            TrailDefinition(2982, TrailType.LINKING, false, Location.create(2357, 3607, 0), Location.create(2354, 3609, 0), Location.create(2355, 3608, 0)),
+            TrailDefinition(2983, TrailType.LINKING, false, Location.create(2354, 3609, 0), Location.create(2349, 3604, 0), Location.create(2351, 3608, 0)),
+            TrailDefinition(2977, TrailType.LINKING, false, Location.create(2360, 3602, 0), Location.create(2355, 3601, 0), Location.create(2358, 3599, 0)),
+            TrailDefinition(2978, TrailType.LINKING, false, Location.create(2355, 3601, 0), Location.create(2349, 3604, 0), Location.create(2352, 3603, 0)),
+            TrailDefinition(2979, TrailType.LINKING, false, Location.create(2360, 3602, 0), Location.create(2357, 3607, 0), Location.create(2358, 3603, 0))
+        )
     }
 
     override fun newInstance(arg: Any?): Plugin<Any> {
-        if (!linkingTrails.contains(initialMap.values.random()[0])) {
-            addExtraTrails()
+        if (!linkingTrails.contains(initialMap.values.random()[0])) addExtraTrails()
+
+        val inspectScenery = listOf(
+            Scenery.PLANT_19356, Scenery.PLANT_19357, Scenery.PLANT_19358, Scenery.PLANT_19359, Scenery.PLANT_19360,
+            Scenery.PLANT_19361, Scenery.PLANT_19362, Scenery.PLANT_19363, Scenery.PLANT_19364, Scenery.PLANT_19365,
+            Scenery.PLANT_19372, Scenery.PLANT_19373, Scenery.PLANT_19374, Scenery.PLANT_19375, Scenery.PLANT_19376,
+            Scenery.PLANT_19377, Scenery.PLANT_19378, Scenery.PLANT_19379, Scenery.PLANT_19380,
+            Scenery.BURROW_19439, Scenery.BURROW_19440
+        )
+
+        inspectScenery.forEach { id -> SceneryDefinition.forId(id).handlers["option:inspect"] = this }
+
+        val actionScenery = listOf(
+            Scenery.BUSH_19428
+        )
+
+        actionScenery.forEach {
+            val def = SceneryDefinition.forId(it)
+            def.handlers["option:attack"] = this
+            def.handlers["option:search"] = this
         }
-        SceneryDefinition.forId(Scenery.PLANT_19356).handlers["option:inspect"] = this
-        SceneryDefinition.forId(Scenery.PLANT_19357).handlers["option:inspect"] = this
-        SceneryDefinition.forId(Scenery.PLANT_19358).handlers["option:inspect"] = this
-        SceneryDefinition.forId(Scenery.PLANT_19359).handlers["option:inspect"] = this
-        SceneryDefinition.forId(Scenery.PLANT_19360).handlers["option:inspect"] = this
-        SceneryDefinition.forId(Scenery.PLANT_19361).handlers["option:inspect"] = this
-        SceneryDefinition.forId(Scenery.PLANT_19362).handlers["option:inspect"] = this
-        SceneryDefinition.forId(Scenery.PLANT_19363).handlers["option:inspect"] = this
-        SceneryDefinition.forId(Scenery.PLANT_19364).handlers["option:inspect"] = this
-        SceneryDefinition.forId(Scenery.PLANT_19365).handlers["option:inspect"] = this
-        SceneryDefinition.forId(Scenery.PLANT_19372).handlers["option:inspect"] = this
-        SceneryDefinition.forId(Scenery.PLANT_19373).handlers["option:inspect"] = this
-        SceneryDefinition.forId(Scenery.PLANT_19374).handlers["option:inspect"] = this
-        SceneryDefinition.forId(Scenery.PLANT_19375).handlers["option:inspect"] = this
-        SceneryDefinition.forId(Scenery.PLANT_19376).handlers["option:inspect"] = this
-        SceneryDefinition.forId(Scenery.PLANT_19377).handlers["option:inspect"] = this
-        SceneryDefinition.forId(Scenery.PLANT_19378).handlers["option:inspect"] = this
-        SceneryDefinition.forId(Scenery.PLANT_19379).handlers["option:inspect"] = this
-        SceneryDefinition.forId(Scenery.PLANT_19380).handlers["option:inspect"] = this
-
-        SceneryDefinition.forId(Scenery.BURROW_19439).handlers["option:inspect"] = this
-        SceneryDefinition.forId(Scenery.BURROW_19440).handlers["option:inspect"] = this
-
-        SceneryDefinition.forId(Scenery.BUSH_19428).handlers["option:attack"] = this
-        SceneryDefinition.forId(Scenery.BUSH_19428).handlers["option:search"] = this
 
         return this
     }

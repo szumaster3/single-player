@@ -17,11 +17,8 @@ import shared.consts.Items
 import shared.consts.NPCs
 import shared.consts.Quests
 
-class DagannothMotherNPC(
-    id: Int = 0,
-    location: Location? = null,
-    session: DagannothSession? = null,
-) : AbstractNPC(id, location) {
+class DagannothMotherNPC(id: Int = 0, location: Location? = null, session: DagannothSession? = null) : AbstractNPC(id, location) {
+
     private val airSpells = intArrayOf(1, 10, 24, 45)
     private val waterSpells = intArrayOf(4, 14, 27, 48)
     private val earthSpells = intArrayOf(6, 17, 33, 52)
@@ -42,7 +39,7 @@ class DagannothMotherNPC(
 
     override fun init() {
         super.init()
-        if (session?.player?.location?.getRegionId() == 10056) {
+        if (session?.player?.location?.regionId == 10056) {
             Pulser.submit(DagannothTransform(session.player, this))
         } else {
             session?.close()
@@ -71,109 +68,38 @@ class DagannothMotherNPC(
     }
 
     override fun checkImpact(state: BattleState) {
-        if (state.attacker is Player) {
-            if (state.victim is NPC) {
-                if (type!!.npcId == NPCs.DAGANNOTH_MOTHER_1351) {
-                    if (state.style != CombatStyle.MAGIC) {
-                        state.neutralizeHits()
-                        return
-                    }
-                    if (state.spell == null) {
-                        state.neutralizeHits()
-                        return
-                    }
-                    val spell = state.spell
-                    for (id in airSpells) {
-                        if (id == spell.spellId) {
-                            state.estimatedHit = state.maximumHit
-                            return
-                        }
-                    }
-                    state.neutralizeHits()
-                }
+        val attacker = state.attacker
+        val victim = state.victim
 
-                if (type!!.npcId == NPCs.DAGANNOTH_MOTHER_1352) {
-                    if (state.style != CombatStyle.MAGIC) {
-                        state.neutralizeHits()
-                        return
-                    }
-                    if (state.spell == null) {
-                        state.neutralizeHits()
-                        return
-                    }
-                    val spell = state.spell
-                    for (id in waterSpells) {
-                        if (id == spell.spellId) {
-                            state.estimatedHit = state.maximumHit
-                            return
-                        }
-                    }
-                    state.neutralizeHits()
-                }
+        if (attacker !is Player || victim !is NPC) return
 
-                if (type!!.npcId == NPCs.DAGANNOTH_MOTHER_1353) {
-                    if (state.style != CombatStyle.MAGIC) {
-                        state.neutralizeHits()
-                        return
-                    }
-                    if (state.spell == null) {
-                        state.neutralizeHits()
-                        return
-                    }
-                    val spell = state.spell
-                    for (id in fireSpells) {
-                        if (id == spell.spellId) {
-                            state.estimatedHit = state.maximumHit
-                            return
-                        }
-                    }
-                    state.neutralizeHits()
-                }
+        val npcId = type?.npcId ?: return
 
-                if (type!!.npcId == NPCs.DAGANNOTH_MOTHER_1354) {
-                    if (state.style != CombatStyle.MAGIC) {
-                        state.neutralizeHits()
-                        return
-                    }
-                    if (state.spell == null) {
-                        state.neutralizeHits()
-                        return
-                    }
-                    val spell = state.spell
-                    for (id in earthSpells) {
-                        if (id == spell.spellId) {
-                            state.estimatedHit = state.maximumHit
-                            return
-                        }
-                    }
-                    state.neutralizeHits()
-                }
+        val dagannothPhases = mapOf(
+            NPCs.DAGANNOTH_MOTHER_1351 to (CombatStyle.MAGIC to airSpells),
+            NPCs.DAGANNOTH_MOTHER_1352 to (CombatStyle.MAGIC to waterSpells),
+            NPCs.DAGANNOTH_MOTHER_1353 to (CombatStyle.MAGIC to fireSpells),
+            NPCs.DAGANNOTH_MOTHER_1354 to (CombatStyle.MAGIC to earthSpells),
+            NPCs.DAGANNOTH_MOTHER_1355 to (CombatStyle.RANGE to null),
+            NPCs.DAGANNOTH_MOTHER_1356 to (CombatStyle.MELEE to null)
+        )
 
-                if (type!!.npcId == NPCs.DAGANNOTH_MOTHER_1355) {
-                    if (state.style != CombatStyle.RANGE) {
-                        state.neutralizeHits()
-                        return
-                    }
-                    if (state.style == CombatStyle.RANGE) {
-                        state.estimatedHit = state.maximumHit
-                        return
-                    }
-                    state.neutralizeHits()
-                }
+        val (requiredStyle, allowedSpells) = dagannothPhases[npcId] ?: return
 
-                if (type!!.npcId == NPCs.DAGANNOTH_MOTHER_1356) {
-                    if (state.style != CombatStyle.MELEE) {
-                        state.neutralizeHits()
-                        return
-                    }
-                    if (state.style == CombatStyle.MELEE) {
-                        state.estimatedHit = state.maximumHit
-                        return
-                    }
-                    state.neutralizeHits()
-                }
+        if (state.style != requiredStyle) {
+            state.neutralizeHits()
+            return
+        }
+
+        if (requiredStyle == CombatStyle.MAGIC) {
+            val spellId = state.spell?.spellId
+            if (spellId == null || allowedSpells?.contains(spellId) == false) {
+                state.neutralizeHits()
+                return
             }
         }
+
+        state.estimatedHit = state.maximumHit
     }
 
     override fun finalizeDeath(killer: Entity?) {
@@ -197,17 +123,9 @@ class DagannothMotherNPC(
         super.finalizeDeath(killer)
     }
 
-    override fun construct(
-        id: Int,
-        location: Location,
-        vararg objects: Any,
-    ): AbstractNPC = DagannothMotherNPC(id, location, null)
+    override fun construct(id: Int, location: Location, vararg objects: Any): AbstractNPC = DagannothMotherNPC(id, location, null)
 
-    override fun isAttackable(
-        entity: Entity,
-        style: CombatStyle,
-        message: Boolean,
-    ): Boolean {
+    override fun isAttackable(entity: Entity, style: CombatStyle, message: Boolean): Boolean {
         if (session == null) {
             return false
         }
@@ -233,11 +151,7 @@ class DagannothMotherNPC(
             NPCs.DAGANNOTH_MOTHER_1356,
         )
 
-    enum class DagannothType(
-        var npcId: Int,
-        var sendChat: String?,
-        var sendMessage: String?,
-    ) {
+    enum class DagannothType(var npcId: Int, var sendChat: String?, var sendMessage: String?) {
         WHITE(NPCs.DAGANNOTH_MOTHER_1351, "Tktktktktktkt", null),
         BLUE(NPCs.DAGANNOTH_MOTHER_1352, "Krrrrrrk", "the dagannoth changes to blue..."),
         RED(NPCs.DAGANNOTH_MOTHER_1353, "Sssssrrrkkkkk", "the dagannoth changes to red..."),
@@ -246,10 +160,7 @@ class DagannothMotherNPC(
         ORANGE(NPCs.DAGANNOTH_MOTHER_1356, "Chkhkhkhkhk", "the dagannoth changes to orange..."),
         ;
 
-        fun transform(
-            dagannoth: DagannothMotherNPC,
-            player: Player,
-        ) {
+        fun transform(dagannoth: DagannothMotherNPC, player: Player) {
             val newType = next()
             val oldHp = dagannoth.getSkills().lifepoints
             dagannoth.type = newType
@@ -273,17 +184,14 @@ class DagannothMotherNPC(
         }
     }
 
-    class DagannothTransform(
-        val player: Player?,
-        val dagannoth: DagannothMotherNPC,
-    ) : Pulse() {
+    class DagannothTransform(val player: Player?, val dagannoth: DagannothMotherNPC) : Pulse() {
         var counter = 0
 
         override fun pulse(): Boolean {
             when (counter++) {
                 0 -> {
                     registerHintIcon(player!!, dagannoth)
-                    player.sendMessage(dagannoth.type?.sendMessage)
+                    dagannoth.type?.sendMessage?.let { sendMessage(player, it) }
                     dagannoth.attack(player).also { dagannoth.sendChat(dagannoth.type?.sendChat) }
                 }
             }
