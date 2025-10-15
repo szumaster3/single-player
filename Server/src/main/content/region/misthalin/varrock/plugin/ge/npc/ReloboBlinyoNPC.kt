@@ -25,7 +25,7 @@ class ReloboBlinyoNPC : NPCBehavior(NPCs.RELOBO_BLINYO_LOGS_6526) {
     }
 
     override fun tick(self: NPC): Boolean {
-        if (RandomFunction.random(100) < 15) {
+        if (RandomFunction.random(100) < 10) {
             sendChat(self, forceChat.random())
         }
         return true

@@ -29,9 +29,8 @@ class GreenDragonKiller(val style: CombatStyle) : Script() {
     companion object {
         val westDragons = ZoneBorders(2971, 3606, 2991, 3628)
         val wildernessLine = ZoneBorders(3078, 3523, 3096, 3523)
-        val edgevilleLine = ZoneBorders(3078, 3520, 3096, 3520)
         val bankZone = ZoneBorders(3092, 3489, 3094, 3493)
-        val trashTalkLines = arrayOf(
+        val forceChat = arrayOf(
             "Bro, seriously?", "Ffs.", "Jesus christ.", "????", "Friendly!", "Get a life dude",
             "Do you mind??? lol", "Lol.", "Kek.", "One sec burying all the bones.", "Yikes.", "Yeet",
             "Ah shit, here we go again.", "Cmonnnn", "Plz", "Do you have nothing better to do?",
@@ -50,7 +49,7 @@ class GreenDragonKiller(val style: CombatStyle) : Script() {
     var state = State.TO_BANK
     var handler: CombatSwingHandler? = null
     var lootDelay = 0
-    var trashTalkDelay = 0
+    var nextTalk = 0
     var offerMade = false
     var avoidPlayer = false
     var food =
@@ -73,7 +72,6 @@ class GreenDragonKiller(val style: CombatStyle) : Script() {
 
         checkFoodStockAndEat()
         sendTrashTalk()
-        attemptToBuryBone()
 
         when (state) {
             State.KILLING -> killingState()
@@ -250,9 +248,9 @@ class GreenDragonKiller(val style: CombatStyle) : Script() {
     }
 
     private fun sendTrashTalk() {
-        if (trashTalkDelay-- <= 0) {
-            scriptAPI.sendChat(trashTalkLines.random())
-            trashTalkDelay = RandomFunction.random(10, 30)
+        if (nextTalk-- <= 0) {
+            scriptAPI.sendChat(forceChat.random())
+            nextTalk = RandomFunction.random(10, 30)
         }
     }
 

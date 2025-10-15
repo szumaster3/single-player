@@ -44,6 +44,7 @@ class ImmerseWorld : StartupListener {
                     immerseSeersAndCatherby()
                     immerseLumbridgeDraynor()
                     immerseBarbarianVillage()
+                    immerseGnomeStronghold()
                     immerseVarrock()
                     immerseWilderness()
                     immerseFishingGuild()
@@ -137,7 +138,23 @@ class ImmerseWorld : StartupListener {
                 CowKiller(),
                 assembler.produce(
                     CombatBotAssembler.Type.MELEE,
-                    CombatBotAssembler.Tier.MED,
+                    CombatBotAssembler.Tier.LOW,
+                    Location.create(3257, 3267, 0),
+                ),
+            )
+            GeneralBotCreator(
+                CowKiller(),
+                assembler.produce(
+                    CombatBotAssembler.Type.RANGE,
+                    CombatBotAssembler.Tier.LOW,
+                    Location.create(3252, 3287, 0),
+                ),
+            )
+            GeneralBotCreator(
+                CowKiller(),
+                assembler.produce(
+                    CombatBotAssembler.Type.RANGE,
+                    CombatBotAssembler.Tier.LOW,
                     Location.create(3257, 3267, 0),
                 ),
             )
@@ -152,9 +169,17 @@ class ImmerseWorld : StartupListener {
             GeneralBotCreator(
                 GoblinKiller(),
                 assembler.produce(
+                    CombatBotAssembler.Type.RANGE,
+                    CombatBotAssembler.Tier.LOW,
+                    Location.create(3264, 3234, 0),
+                ),
+            )
+            GeneralBotCreator(
+                GoblinKiller(),
+                assembler.produce(
                     CombatBotAssembler.Type.MELEE,
                     CombatBotAssembler.Tier.LOW,
-                    Location.create(3260, 3231, 0),
+                    Location.create(3247, 3246, 0),
                 ),
             )
             GeneralBotCreator(
@@ -262,6 +287,13 @@ class ImmerseWorld : StartupListener {
             GeneralBotCreator(
                 CannonballSmelter(),
                 skillingBotAssembler.produce(SkillingBotAssembler.Wealth.AVERAGE, Location.create(3013, 3356, 0)),
+            )
+        }
+
+        fun immerseGnomeStronghold() {
+            GeneralBotCreator(
+                GnomeAgility(),
+                skillingBotAssembler.produce(SkillingBotAssembler.Wealth.POOR, Location.create(2475, 3439, 0)),
             )
         }
 
