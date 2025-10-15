@@ -2,19 +2,15 @@ package content.global.bots
 
 import core.game.bots.CombatBotAssembler
 import core.game.bots.Script
-import core.game.interaction.IntType
-import core.game.interaction.InteractionListeners
-import core.game.node.item.Item
-import core.game.system.task.Pulse
 import core.game.world.map.zone.ZoneBorders
 import core.tools.RandomFunction
-import shared.consts.Items
 
 class GoblinKiller : Script() {
     var state = State.KILLING
-    var spawnZone = ZoneBorders(3243, 3244, 3263, 3235)
-    var goblinZone = ZoneBorders(3240, 3228, 3264, 3254)
-    var delay = 0
+    private var spawnZone = ZoneBorders(3243, 3244, 3263, 3235)
+    private var goblinZone = ZoneBorders(3240, 3228, 3264, 3254)
+    private var waitTicks = 0
+    private var delay = 0
 
     val forceChat = arrayOf(
         "i kill u next",
@@ -41,42 +37,27 @@ class GoblinKiller : Script() {
         when (state) {
             State.KILLING -> {
                 scriptAPI.attackNpcInRadius(bot, "Goblin", 10)
-                state = State.LOOTING
+                state = State.WAITING
+                waitTicks = 5
             }
 
-            State.LOOTING -> {
-                bot.pulseManager.run(
-                    object : Pulse(4) {
-                        override fun pulse(): Boolean {
-                            scriptAPI.takeNearestGroundItem(Items.BONES_526)
-                            buryBones()
-                            state = State.KILLING
-                            return true
-                        }
-                    },
-                )
+            State.WAITING -> {
+                if (waitTicks-- <= 0) {
+                    state = State.KILLING
+                }
             }
         }
     }
 
     enum class State {
         KILLING,
-        LOOTING
+        WAITING
     }
 
     private fun dialogue() {
         if (delay-- <= 0) {
             scriptAPI.sendChat(forceChat.random())
             delay = RandomFunction.random(10, 30)
-        }
-    }
-
-    private fun buryBones() {
-        if (bot.inventory.containsAtLeastOneItem(Items.BONES_526)) {
-            InteractionListeners.run(
-                Items.BONES_526, IntType.ITEM, "bury",
-                bot, bot.inventory.get(Item(Items.BONES_526))
-            )
         }
     }
 
