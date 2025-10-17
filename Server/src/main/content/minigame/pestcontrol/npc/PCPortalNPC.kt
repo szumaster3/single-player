@@ -12,10 +12,7 @@ import core.game.world.update.flag.context.Animation
 import core.tools.RandomFunction
 import shared.consts.NPCs
 
-class PCPortalNPC(
-    id: Int = NPCs.PORTAL_6142,
-    l: Location? = null,
-) : AbstractNPC(id, l) {
+class PCPortalNPC(id: Int = NPCs.PORTAL_6142, l: Location? = null) : AbstractNPC(id, l) {
     var updateLifepoints = true
     private var session: PestControlSession? = null
     private val spinners = arrayOfNulls<PCSpinnerNPC>(3)
@@ -92,12 +89,11 @@ class PCPortalNPC(
                             break
                         }
                     }
-                    ids =
-                        if (spawn) {
-                            SPINNERS[index]
-                        } else {
-                            TORCHERS[index]
-                        }
+                    ids = if (spawn) {
+                        SPINNERS[index]
+                    } else {
+                        TORCHERS[index]
+                    }
                 }
 
                 4 -> ids = TORCHERS[index]
@@ -110,12 +106,11 @@ class PCPortalNPC(
                             break
                         }
                     }
-                    ids =
-                        if (spawn) {
-                            BRAWLERS[index]
-                        } else {
-                            DEFILERS[index]
-                        }
+                    ids = if (spawn) {
+                        BRAWLERS[index]
+                    } else {
+                        DEFILERS[index]
+                    }
                 }
             }
             var x = dir.stepX * 3
@@ -179,7 +174,7 @@ class PCPortalNPC(
 
     override fun getIds(): IntArray = PORTAL
 
-    val difficultyIndex: Int
+    private val difficultyIndex: Int
         get() {
             if (id > 7550) {
                 return 2
@@ -190,7 +185,8 @@ class PCPortalNPC(
                 0
             }
         }
-    val portalIndex: Int
+
+    private val portalIndex: Int
         get() {
             if (id > 7550) {
                 return (id - 7551) % 4
@@ -203,138 +199,130 @@ class PCPortalNPC(
         }
 
     companion object {
-        private val SPLATTERS =
-            arrayOf(
-                intArrayOf(NPCs.SPLATTER_3727, NPCs.SPLATTER_3728, NPCs.SPLATTER_3729),
-                intArrayOf(NPCs.SPLATTER_3728, NPCs.SPLATTER_3729, NPCs.SPLATTER_3730),
-                intArrayOf(NPCs.SPLATTER_3729, NPCs.SPLATTER_3730, NPCs.SPLATTER_3731),
-            )
-        private val SHIFTERS =
-            arrayOf(
-                intArrayOf(
-                    NPCs.SHIFTER_3732,
-                    NPCs.SHIFTER_3733,
-                    NPCs.SHIFTER_3734,
-                    NPCs.SHIFTER_3735,
-                    NPCs.SHIFTER_3736,
-                    NPCs.SHIFTER_3737,
-                ),
-                intArrayOf(
-                    NPCs.SHIFTER_3734,
-                    NPCs.SHIFTER_3735,
-                    NPCs.SHIFTER_3736,
-                    NPCs.SHIFTER_3737,
-                    NPCs.SHIFTER_3738,
-                    NPCs.SHIFTER_3739,
-                ),
-                intArrayOf(
-                    NPCs.SHIFTER_3736,
-                    NPCs.SHIFTER_3737,
-                    NPCs.SHIFTER_3738,
-                    NPCs.SHIFTER_3739,
-                    NPCs.SHIFTER_3740,
-                    NPCs.SHIFTER_3741,
-                ),
-            )
-        private val RAVAGERS =
-            arrayOf(
-                intArrayOf(NPCs.RAVAGER_3742, NPCs.RAVAGER_3743, NPCs.RAVAGER_3744),
-                intArrayOf(NPCs.RAVAGER_3743, NPCs.RAVAGER_3744, NPCs.RAVAGER_3745),
-                intArrayOf(NPCs.RAVAGER_3744, NPCs.RAVAGER_3745, NPCs.RAVAGER_3746),
-            )
-        private val SPINNERS =
-            arrayOf(
-                intArrayOf(NPCs.SPINNER_3747, NPCs.SPINNER_3748, NPCs.SPINNER_3749),
-                intArrayOf(NPCs.SPINNER_3748, NPCs.SPINNER_3749, NPCs.SPINNER_3750),
-                intArrayOf(NPCs.SPINNER_3749, NPCs.SPINNER_3750, NPCs.SPINNER_3751),
-            )
-        private val TORCHERS =
-            arrayOf(
-                intArrayOf(
-                    NPCs.TORCHER_3752,
-                    NPCs.TORCHER_3753,
-                    NPCs.TORCHER_3754,
-                    NPCs.TORCHER_3755,
-                    NPCs.TORCHER_3756,
-                    NPCs.TORCHER_3757,
-                ),
-                intArrayOf(
-                    NPCs.TORCHER_3754,
-                    NPCs.TORCHER_3755,
-                    NPCs.TORCHER_3756,
-                    NPCs.TORCHER_3757,
-                    NPCs.TORCHER_3758,
-                    NPCs.TORCHER_3759,
-                ),
-                intArrayOf(
-                    NPCs.TORCHER_3756,
-                    NPCs.TORCHER_3757,
-                    NPCs.TORCHER_3758,
-                    NPCs.TORCHER_3759,
-                    NPCs.TORCHER_3760,
-                    NPCs.TORCHER_3761,
-                ),
-            )
-        private val DEFILERS =
-            arrayOf(
-                intArrayOf(
-                    NPCs.DEFILER_3762,
-                    NPCs.DEFILER_3763,
-                    NPCs.DEFILER_3764,
-                    NPCs.DEFILER_3765,
-                    NPCs.DEFILER_3766,
-                    NPCs.DEFILER_3767,
-                ),
-                intArrayOf(
-                    NPCs.DEFILER_3764,
-                    NPCs.DEFILER_3765,
-                    NPCs.DEFILER_3766,
-                    NPCs.DEFILER_3767,
-                    NPCs.DEFILER_3768,
-                    NPCs.DEFILER_3769,
-                ),
-                intArrayOf(
-                    NPCs.DEFILER_3766,
-                    NPCs.DEFILER_3767,
-                    NPCs.DEFILER_3768,
-                    NPCs.DEFILER_3769,
-                    NPCs.DEFILER_3770,
-                    NPCs.DEFILER_3771,
-                ),
-            )
-        private val BRAWLERS =
-            arrayOf(
-                intArrayOf(NPCs.BRAWLER_3772, NPCs.BRAWLER_3773, NPCs.BRAWLER_3774),
-                intArrayOf(NPCs.BRAWLER_3773, NPCs.BRAWLER_3774, NPCs.BRAWLER_3775),
-                intArrayOf(NPCs.BRAWLER_3774, NPCs.BRAWLER_3775, NPCs.BRAWLER_3776),
-            )
-
-        val PORTAL =
+        private val SPLATTERS = arrayOf(
+            intArrayOf(NPCs.SPLATTER_3727, NPCs.SPLATTER_3728, NPCs.SPLATTER_3729),
+            intArrayOf(NPCs.SPLATTER_3728, NPCs.SPLATTER_3729, NPCs.SPLATTER_3730),
+            intArrayOf(NPCs.SPLATTER_3729, NPCs.SPLATTER_3730, NPCs.SPLATTER_3731),
+        )
+        private val SHIFTERS = arrayOf(
             intArrayOf(
-                NPCs.PORTAL_6142,
-                NPCs.PORTAL_6143,
-                NPCs.PORTAL_6144,
-                NPCs.PORTAL_6145,
-                NPCs.PORTAL_6146,
-                NPCs.PORTAL_6147,
-                NPCs.PORTAL_6148,
-                NPCs.PORTAL_6149,
-                NPCs.PORTAL_6150,
-                NPCs.PORTAL_6151,
-                NPCs.PORTAL_6152,
-                NPCs.PORTAL_6153,
-                NPCs.PORTAL_6154,
-                NPCs.PORTAL_6155,
-                NPCs.PORTAL_6156,
-                NPCs.PORTAL_6157,
-                NPCs.PORTAL_7551,
-                NPCs.PORTAL_7552,
-                NPCs.PORTAL_7553,
-                NPCs.PORTAL_7554,
-                NPCs.PORTAL_7555,
-                NPCs.PORTAL_7556,
-                NPCs.PORTAL_7557,
-                NPCs.PORTAL_7558,
-            )
+                NPCs.SHIFTER_3732,
+                NPCs.SHIFTER_3733,
+                NPCs.SHIFTER_3734,
+                NPCs.SHIFTER_3735,
+                NPCs.SHIFTER_3736,
+                NPCs.SHIFTER_3737,
+            ),
+            intArrayOf(
+                NPCs.SHIFTER_3734,
+                NPCs.SHIFTER_3735,
+                NPCs.SHIFTER_3736,
+                NPCs.SHIFTER_3737,
+                NPCs.SHIFTER_3738,
+                NPCs.SHIFTER_3739,
+            ),
+            intArrayOf(
+                NPCs.SHIFTER_3736,
+                NPCs.SHIFTER_3737,
+                NPCs.SHIFTER_3738,
+                NPCs.SHIFTER_3739,
+                NPCs.SHIFTER_3740,
+                NPCs.SHIFTER_3741,
+            ),
+        )
+        private val RAVAGERS = arrayOf(
+            intArrayOf(NPCs.RAVAGER_3742, NPCs.RAVAGER_3743, NPCs.RAVAGER_3744),
+            intArrayOf(NPCs.RAVAGER_3743, NPCs.RAVAGER_3744, NPCs.RAVAGER_3745),
+            intArrayOf(NPCs.RAVAGER_3744, NPCs.RAVAGER_3745, NPCs.RAVAGER_3746),
+        )
+        private val SPINNERS = arrayOf(
+            intArrayOf(NPCs.SPINNER_3747, NPCs.SPINNER_3748, NPCs.SPINNER_3749),
+            intArrayOf(NPCs.SPINNER_3748, NPCs.SPINNER_3749, NPCs.SPINNER_3750),
+            intArrayOf(NPCs.SPINNER_3749, NPCs.SPINNER_3750, NPCs.SPINNER_3751),
+        )
+        private val TORCHERS = arrayOf(
+            intArrayOf(
+                NPCs.TORCHER_3752,
+                NPCs.TORCHER_3753,
+                NPCs.TORCHER_3754,
+                NPCs.TORCHER_3755,
+                NPCs.TORCHER_3756,
+                NPCs.TORCHER_3757,
+            ),
+            intArrayOf(
+                NPCs.TORCHER_3754,
+                NPCs.TORCHER_3755,
+                NPCs.TORCHER_3756,
+                NPCs.TORCHER_3757,
+                NPCs.TORCHER_3758,
+                NPCs.TORCHER_3759,
+            ),
+            intArrayOf(
+                NPCs.TORCHER_3756,
+                NPCs.TORCHER_3757,
+                NPCs.TORCHER_3758,
+                NPCs.TORCHER_3759,
+                NPCs.TORCHER_3760,
+                NPCs.TORCHER_3761,
+            ),
+        )
+        private val DEFILERS = arrayOf(
+            intArrayOf(
+                NPCs.DEFILER_3762,
+                NPCs.DEFILER_3763,
+                NPCs.DEFILER_3764,
+                NPCs.DEFILER_3765,
+                NPCs.DEFILER_3766,
+                NPCs.DEFILER_3767,
+            ),
+            intArrayOf(
+                NPCs.DEFILER_3764,
+                NPCs.DEFILER_3765,
+                NPCs.DEFILER_3766,
+                NPCs.DEFILER_3767,
+                NPCs.DEFILER_3768,
+                NPCs.DEFILER_3769,
+            ),
+            intArrayOf(
+                NPCs.DEFILER_3766,
+                NPCs.DEFILER_3767,
+                NPCs.DEFILER_3768,
+                NPCs.DEFILER_3769,
+                NPCs.DEFILER_3770,
+                NPCs.DEFILER_3771,
+            ),
+        )
+        private val BRAWLERS = arrayOf(
+            intArrayOf(NPCs.BRAWLER_3772, NPCs.BRAWLER_3773, NPCs.BRAWLER_3774),
+            intArrayOf(NPCs.BRAWLER_3773, NPCs.BRAWLER_3774, NPCs.BRAWLER_3775),
+            intArrayOf(NPCs.BRAWLER_3774, NPCs.BRAWLER_3775, NPCs.BRAWLER_3776),
+        )
+
+        val PORTAL = intArrayOf(
+            NPCs.PORTAL_6142,
+            NPCs.PORTAL_6143,
+            NPCs.PORTAL_6144,
+            NPCs.PORTAL_6145,
+            NPCs.PORTAL_6146,
+            NPCs.PORTAL_6147,
+            NPCs.PORTAL_6148,
+            NPCs.PORTAL_6149,
+            NPCs.PORTAL_6150,
+            NPCs.PORTAL_6151,
+            NPCs.PORTAL_6152,
+            NPCs.PORTAL_6153,
+            NPCs.PORTAL_6154,
+            NPCs.PORTAL_6155,
+            NPCs.PORTAL_6156,
+            NPCs.PORTAL_6157,
+            NPCs.PORTAL_7551,
+            NPCs.PORTAL_7552,
+            NPCs.PORTAL_7553,
+            NPCs.PORTAL_7554,
+            NPCs.PORTAL_7555,
+            NPCs.PORTAL_7556,
+            NPCs.PORTAL_7557,
+            NPCs.PORTAL_7558,
+        )
     }
 }

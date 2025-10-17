@@ -1,12 +1,12 @@
 package core.game.bots
 
-import content.minigame.pestcontrol.bots.PestControlIntermediateBot
-import content.minigame.pestcontrol.bots.PestControlNoviceBot
+import content.minigame.pestcontrol.bots.PestControlScript
+import content.minigame.pestcontrol.plugin.PCUtils
 import core.game.world.map.Location
 
 class PvMBotsBuilder {
     companion object {
-        var botsSpawned = 0
+        private var botsSpawned = 0
 
         fun create(l: Location?): PvMBots {
             botsSpawned++
@@ -14,15 +14,21 @@ class PvMBotsBuilder {
         }
 
         @JvmStatic
-        fun createPestControlTestBot2(l: Location?): PestControlIntermediateBot {
+        fun createNovicePCBots(l: Location?): PestControlScript {
             botsSpawned++
-            return PestControlIntermediateBot(l!!)
+            return PestControlScript(l!!, PCUtils.LanderZone.NOVICE)
         }
 
         @JvmStatic
-        fun createPestControlTestBot(l: Location?): PestControlNoviceBot {
+        fun createIntermediatePCBots(l: Location?): PestControlScript {
             botsSpawned++
-            return PestControlNoviceBot(l!!)
+            return PestControlScript(l!!, PCUtils.LanderZone.INTERMEDIATE)
+        }
+
+        @JvmStatic
+        fun createVeteranPCBots(l: Location?): PestControlScript {
+            botsSpawned++
+            return PestControlScript(l!!, PCUtils.LanderZone.VETERAN)
         }
     }
 }

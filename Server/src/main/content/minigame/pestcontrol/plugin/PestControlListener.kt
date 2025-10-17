@@ -12,69 +12,87 @@ import core.game.world.map.RegionManager.getLocalNpcs
 import core.game.world.update.flag.context.Graphics
 import core.tools.RandomFunction
 import shared.consts.Animations
+import shared.consts.Graphics as Gfx
 import shared.consts.Items
 import shared.consts.NPCs
-import shared.consts.Scenery
+import shared.consts.Regions
 
 class PestControlListener : InteractionListener {
+
     override fun defineListeners() {
+
+        /*
+         * Handles interaction with Void seal.
+         */
+
         on(VOID_SEAL, IntType.ITEM, "rub", "operate") { player, node ->
             val operate = getUsedOption(player) == "operate"
 
-            if (player.viewport.region!!.regionId != 10536) {
+            if (player.viewport.region?.regionId != Regions.PEST_CONTROL_10536) {
                 sendMessage(player, "You can only use the seal in Pest Control.")
                 return@on true
             }
 
-            lock(player, 1)
-
             val item = node as Item
+            val isLastSeal = item.id == Items.VOID_SEAL1_11673
 
-            var replace: Item? = null
-            if (item.id != Items.VOID_SEAL1_11673) {
-                replace = Item(item.id + 1)
-                sendMessage(player, "You unleash the power of the Void Knights!")
-            } else {
+            if (isLastSeal) {
                 sendMessage(player, "The seal dissolves as the least of its power is unleashed.")
                 removeItem(player, item)
-            }
-
-            if (operate) {
-                player.equipment.replace(replace, item.slot)
             } else {
-                player.inventory.replace(replace, item.slot)
+                sendMessage(player, "You unleash the power of the Void Knights!")
+                val replacement = Item(item.id + 1)
+                val container = if (operate) player.equipment else player.inventory
+                container.replace(replacement, item.slot)
             }
 
+            visualize(player, Animations.HANDS_TOGETHER_709, Gfx.GREEN_CIRCLE_WAVES_1177)
             animate(player, Animations.HANDS_TOGETHER_709)
-            player.graphics(Graphics.create(shared.consts.Graphics.GREEN_CIRCLE_WAVES_1177))
 
-            for (npc in getLocalNpcs(player, 2)) {
-                if (npc is PCDefilerNPC ||
-                    npc is PCRavagerNPC ||
-                    npc is PCShifterNPC ||
-                    npc is PCSpinnerNPC ||
-                    npc is PCSplatterNPC ||
-                    npc is PCTorcherNPC ||
-                    npc is PCBrawlerNPC
-                ) {
-                    npc.impactHandler.manualHit(player, 7 + RandomFunction.randomize(5), HitsplatType.NORMAL, 1)
-                    npc.graphics(Graphics.create(shared.consts.Graphics.RED_CIRCLE_WAVES_1176))
+            lock(player, 1)
+            getLocalNpcs(player, 2)
+                .filter {
+                    it is PCDefilerNPC ||
+                            it is PCRavagerNPC ||
+                            it is PCShifterNPC ||
+                            it is PCSpinnerNPC ||
+                            it is PCSplatterNPC ||
+                            it is PCTorcherNPC ||
+                            it is PCBrawlerNPC
                 }
-            }
+                .forEach { npc ->
+                    npc.impactHandler.manualHit(
+                        player,
+                        7 + RandomFunction.randomize(5),
+                        HitsplatType.NORMAL,
+                        1
+                    )
+                    npc.graphics(Graphics.create(Gfx.RED_CIRCLE_WAVES_1176))
+                }
 
             return@on true
         }
+
+        /*
+         * Handles opening pest control interface with rewards.
+         */
 
         on(VOID_KNIGHT, IntType.NPC, "exchange") { player, _ ->
             PCRewardInterface.open(player)
             return@on true
         }
 
+        /*
+         * Handles Squire NPC options near boat.
+         */
+
         on(SQUIRE, IntType.NPC, "talk-to", "leave") { player, node ->
             val session =
-                node.asNpc().getExtension<PestControlSession>(
-                    PestControlSession::class.java,
-                )
+                node
+                    .asNpc()
+                    .getExtension<PestControlSession>(
+                        PestControlSession::class.java,
+                    )
             when (getUsedOption(player)) {
                 "talk-to" -> {
                     if (session == null) {
@@ -85,7 +103,6 @@ class PestControlListener : InteractionListener {
                         openDialogue(player, SQUIRE, node, true)
                     }
                 }
-
                 "leave" -> {
                     if (session == null) {
                         CharterShip.PEST_TO_PORT_SARIM.sail(player)
@@ -101,7 +118,7 @@ class PestControlListener : InteractionListener {
     companion object {
         const val SQUIRE = NPCs.SQUIRE_3781
 
-        val VOID_SEAL =
+        private val VOID_SEAL =
             intArrayOf(
                 Items.VOID_SEAL8_11666,
                 Items.VOID_SEAL7_11667,
@@ -110,20 +127,14 @@ class PestControlListener : InteractionListener {
                 Items.VOID_SEAL4_11670,
                 Items.VOID_SEAL3_11671,
                 Items.VOID_SEAL2_11672,
-                Items.VOID_SEAL1_11673,
+                Items.VOID_SEAL1_11673
             )
-        val VOID_KNIGHT =
+        private val VOID_KNIGHT =
             intArrayOf(
                 NPCs.VOID_KNIGHT_3786,
                 NPCs.VOID_KNIGHT_3788,
                 NPCs.VOID_KNIGHT_3789,
                 NPCs.VOID_KNIGHT_5956,
-            )
-        val LADDER =
-            intArrayOf(
-                Scenery.LADDER_14314,
-                Scenery.LADDER_25629,
-                Scenery.LADDER_25630,
             )
     }
 }

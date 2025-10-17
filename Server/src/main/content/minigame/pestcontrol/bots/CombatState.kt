@@ -1,7 +1,9 @@
 package content.minigame.pestcontrol.bots
 
-import content.minigame.pestcontrol.plugin.PCHelper.GATE_ENTRIES
-import content.minigame.pestcontrol.plugin.PCHelper.getMyPestControlSession1
+import content.minigame.pestcontrol.plugin.PCUtils
+import content.minigame.pestcontrol.plugin.PestControlSession
+import core.game.interaction.IntType
+import core.game.interaction.InteractionListeners
 import core.game.interaction.MovementPulse
 import core.game.node.Node
 import core.game.node.entity.npc.NPC
@@ -10,114 +12,164 @@ import core.game.world.map.Location
 import core.game.world.map.RegionManager
 import core.game.world.map.path.Pathfinder
 import core.tools.RandomFunction
-import java.util.*
+import kotlin.random.Random
 
-class CombatState(
-    val bot: PestControlNoviceBot,
-) {
-    private val Random = Random()
-    val randomtype = Random().nextInt(100)
+/**
+ * Represents the combat controller for Pest control script.
+ * @property bot The [PestControlScript] instance using this combat controller.
+ */
+class CombatState(private val bot: PestControlScript) {
 
-    fun handlePortal() {
-        bot.customState = "I'm at portals."
-        val gate = bot.getClosestNodeWithEntry(75, GATE_ENTRIES)
-        val sesh = getMyPestControlSession1(bot)
+    private val random = Random(System.nanoTime())
 
-        var portal: Node? = null
-        if (sesh != null && sesh.aportals.isNotEmpty()) {
-            val removeList = ArrayList<NPC>()
-            for (port in sesh.aportals) {
-                if (!port.isActive) {
-                    removeList.add(port)
-                } else {
-                    portal = port
-                    break
-                }
-            }
-            sesh.aportals.removeAll(removeList)
+    /**
+     * The combat-related states.
+     */
+    enum class State {
+        MOVING_TO_PORTAL,
+        ATTACKING_PORTAL,
+        ATTACKING_SPINNER,
+        ATTACKING_NPC,
+        OPENING_GATE,
+    }
+
+    /**
+     * Main offensive logic.
+     */
+    fun handleCombat() {
+        val session = PCUtils.getMyPestControlSession(bot)
+        val gate = bot.getClosestNodeWithEntry(75, PCUtils.GATE_ENTRIES)
+        val portal = session?.aportals?.firstOrNull { it.isActive }
+
+        when {
+            bot.start -> startRound(session)
+            gate != null && session?.aportals?.isEmpty() == true -> openGate(gate)
+            portal != null -> attackOrMoveToPortal(portal)
+            else -> fallbackToNearbyNPCs()
         }
+    }
 
-        if (bot.pulseManager.hasPulseRunning() && portal == null) {
-            return
-        }
+    /**
+     * Defensive logic used primarily for bots assigned to protect the squire.
+     */
+    fun handleDefense() {
+        bot.customState = State.ATTACKING_NPC.name
+        bot.AttackNpcsInRadius(aggressionRange())
+        if (bot.skills.lifepoints < bot.skills.maximumLifepoints * 0.6) bot.eat(379)
+    }
 
-        if (bot.justStartedGame) {
-            bot.customState = "Walking randomly"
-            bot.justStartedGame = false
-            bot.randomWalkAroundPoint(getMyPestControlSession1(bot)?.squire?.location ?: bot.location, 15)
-            bot.movetimer = Random.nextInt(7) + 6
-            return
-        }
+    /**
+     * Initializes the bots behavior.
+     *
+     * @param session The current [PestControlSession] the bot belongs to.
+     */
+    private fun startRound(session: PestControlSession?) {
+        bot.customState = "Starting round"
+        bot.start = false
+        val squireLoc = session?.squire?.location ?: bot.location
+        bot.randomWalkAroundPoint(squireLoc, 10)
+        bot.moveTimer = random.nextInt(5, 10)
+    }
 
-        if (gate != null && sesh?.aportals?.isEmpty() == true) {
-            bot.customState = "Interacting gate ID " + gate.id
-            bot.interact(gate)
-            bot.openedGate = true
-            if (Random.nextInt(4) == 1 && randomtype < 40) {
-                bot.movetimer = Random.nextInt(2) + 1
-            }
-            return
-        }
+    /**
+     * Attempts to open a nearby gate if one is found within range.
+     *
+     * @param gate The gate [Node] to interact with.
+     */
+    private fun openGate(gate: Node) {
+        bot.customState = "${State.OPENING_GATE} (${gate.id})"
+        InteractionListeners.run(gate.id, IntType.SCENERY, "open", bot, gate)
+        bot.openedGate = true
+        bot.moveTimer = random.nextInt(3, 6)
+    }
 
-        if (portal != null) {
-            if (bot.location.withinDistance(portal.location, 10) && portal.isActive) {
-                val spinners = ArrayList<NPC>()
-                RegionManager.getLocalNpcs(bot).forEach {
-                    if (it.name.lowercase() == "spinner" && it.location.withinDistance(bot.location, 10)) {
-                        spinners.add(
-                            it,
-                        )
-                    }
-                }
-                if (spinners.isNotEmpty()) {
-                    bot.attack(spinners.random())
-                } else {
-                    bot.attack(portal)
-                }
-            } else {
-                randomWalkTo(portal.location, 5)
-            }
-            bot.movetimer = Random().nextInt(10) + 5
-            return
+    /**
+     * Handles approaching and attacking Pest Control portals.
+     *
+     * @param portal The portal [Node] to engage with.
+     */
+    private fun attackOrMoveToPortal(portal: Node) {
+        if (bot.location.withinDistance(portal.location, aggressionRange())) {
+            val spinner = findSpinnerNPC()
+            if (spinner != null) attack(spinner, State.ATTACKING_SPINNER)
+            else attack(portal, State.ATTACKING_PORTAL)
         } else {
-            bot.AttackNpcsInRadius(50)
+            move(portal.location)
         }
-
-        bot.customState = "Absolutely nothing. Everything is dead"
+        bot.moveTimer = random.nextInt(5, 12)
     }
 
-    fun handleAttack() {
-        bot.customState = "Fight NPCs"
-        bot.AttackNpcsInRadius(8)
-        bot.eat(379)
-
-        if (!bot.inCombat()) {
-        }
+    /**
+     * Fallback behavior when no portals are available.
+     */
+    fun fallbackToNearbyNPCs() {
+        bot.customState = State.ATTACKING_NPC.name
+        bot.AttackNpcsInRadius(aggressionRange())
+        if (random.nextInt(100) < 30) bot.eat(379)
     }
 
-    fun randomWalkTo(
-        loc: Location,
-        radius: Int,
-    ) {
-        var newloc =
-            loc.transform(
-                RandomFunction.random(radius, -radius),
-                RandomFunction.random(radius, -radius),
-                0,
-            )
-        if (!bot.walkingQueue.isMoving) {
-            walkToIterator(newloc)
-        }
-    }
+    /**
+     * Finds the nearest spinner NPC within 10 tiles of the bot.
+     *
+     * @return The [NPC] instance if found, otherwise null.
+     */
+    private fun findSpinnerNPC(): NPC? =
+        RegionManager.getLocalNpcs(bot)
+            .firstOrNull {
+                it.name.equals("spinner", ignoreCase = true) &&
+                        it.location.withinDistance(bot.location, 10)
+            }
 
-    private fun walkToIterator(loc: Location) {
-        var diffX = loc.x - bot.location.x
-        var diffY = loc.y - bot.location.y
-
-        GameWorld.Pulser.submit(
-            object : MovementPulse(bot, bot.location.transform(diffX, diffY, 0), Pathfinder.SMART) {
-                override fun pulse(): Boolean = true
-            },
+    /**
+     * Moves the bot toward a specified location.
+     *
+     * @param target The [Location] to move toward.
+     * @param radius Optional random offset radius for more natural movement.
+     */
+    fun move(target: Location, radius: Int = moveRadius()) {
+        bot.customState = State.MOVING_TO_PORTAL.name
+        val dest = Location(
+            target.x + RandomFunction.random(-radius, radius),
+            target.y + RandomFunction.random(-radius, radius),
+            target.z
         )
+        if (!bot.walkingQueue.isMoving) {
+            GameWorld.Pulser.submit(object : MovementPulse(bot, dest, Pathfinder.SMART) {
+                override fun pulse(): Boolean = true
+            })
+        }
+    }
+
+    /**
+     * Performs a direct attack on a given target.
+     *
+     * @param target The target [Node] (NPC or portal).
+     * @param action The current [State] describing the type of attack.
+     */
+    fun attack(target: Node, action: State) {
+        bot.customState = action.name
+        bot.attack(target)
+    }
+
+    /**
+     * Defines the bot combat aggression range based on its lander type.
+     *
+     * @return The attack range (in tiles).
+     */
+    private fun aggressionRange(): Int = when (bot.lander) {
+        PCUtils.LanderZone.NOVICE -> 8
+        PCUtils.LanderZone.INTERMEDIATE -> 10
+        PCUtils.LanderZone.VETERAN -> 12
+    }
+
+    /**
+     * Defines how far the bot will move when navigating randomly or repositioning.
+     *
+     * @return The movement radius (in tiles).
+     */
+    private fun moveRadius(): Int = when (bot.lander) {
+        PCUtils.LanderZone.NOVICE -> 5
+        PCUtils.LanderZone.INTERMEDIATE -> 7
+        PCUtils.LanderZone.VETERAN -> 9
     }
 }

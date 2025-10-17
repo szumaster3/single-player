@@ -33,6 +33,31 @@ import shared.consts.Items
 class DevelopmentCommandSet : CommandSet(Privilege.ADMIN) {
 
     override fun defineCommands() {
+
+        /*
+         * Command to receive pest control points.
+         */
+
+        define(
+            name = "setpcpoints",
+            privilege = Privilege.ADMIN,
+            usage = "::setpcpoints <amount>",
+            description = "Adds pest control points."
+        ) { p, args ->
+            if (args.size < 2) {
+                reject(p, "Usage: ::setpcpoints amount")
+            }
+
+            val amount = args[1].toIntOrNull()
+            if (amount == null) {
+                reject(p, "Amount needs to be a valid integer!")
+            }
+
+            p.savedData.activityData.increasePestPoints(amount!!)
+            p.debug("Set Pest Control points to $amount.")
+
+        }
+
         define(
             name = "setdeco",
             privilege = Privilege.ADMIN,

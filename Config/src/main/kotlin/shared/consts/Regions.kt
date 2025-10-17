@@ -93,4 +93,5 @@ object Regions {
     const val SCAPE_RUNE_13642 = 13642
     const val FISHING_PLATFORM_11059 = 11059
     const val WITCHAVEN_10803 = 10803
+    const val PEST_CONTROL_10536 = 10536
 }
