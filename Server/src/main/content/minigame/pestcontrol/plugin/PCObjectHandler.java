@@ -25,10 +25,6 @@ import java.util.ArrayList;
  * @author Sir Kermit & Emperor
  */
 public final class PCObjectHandler extends OptionHandler {
-
-    //public boolean pcbotsSpawned = false;
-    public boolean PCnBotsSpawned = false;
-    public boolean PCiBotsSpawned = false;
     public ArrayList<String> playersJoined = new ArrayList<>(20);
 
     @Override
@@ -107,7 +103,7 @@ public final class PCObjectHandler extends OptionHandler {
                     if (!GameWorld.getPCnBotsSpawned() && !player.isArtificial()) { //First person to join gets bots to play with
                         GameWorld.setPCnBotsSpawned(true);
                         for (pestBotsAmount = 0; pestBotsAmount <= 35; pestBotsAmount++) {
-                            PvMBotsBuilder.createPestControlTestBot(new Location(2657, 2640));
+                            PvMBotsBuilder.createIntermediatePCBots(new Location(2657, 2640));
                         }
                     }
                     if (!playersJoined.contains(player.getUsername()) && !player.isArtificial()) { //You also get +1 bot for every friend
@@ -120,7 +116,7 @@ public final class PCObjectHandler extends OptionHandler {
                     if (!GameWorld.getPCiBotsSpawned() && !player.isArtificial()) { //First person to join gets bots to play with
                         GameWorld.setPCiBotsSpawned(true);
                         for (pestBots2Amount = 0; pestBots2Amount <= 50; pestBots2Amount++) {
-                            PvMBotsBuilder.createPestControlTestBot2(new Location(2644, 2644));
+                            PvMBotsBuilder.createNovicePCBots(new Location(2644, 2644));
                         }
                     }
                     if (!playersJoined.contains(player.getUsername()) && !player.isArtificial()) { //You also get +1 bot for every friend
@@ -255,7 +251,7 @@ public final class PCObjectHandler extends OptionHandler {
      * @param object The object.
      * @return The rotation.
      */
-    private static final int getRotation(Scenery object) {
+    private static int getRotation(Scenery object) {
         int id = object.getId();
         if (id > 14236) {
             id -= 4;
