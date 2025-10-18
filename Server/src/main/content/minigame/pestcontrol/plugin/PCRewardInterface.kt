@@ -72,41 +72,54 @@ class PCRewardInterface : ComponentPlugin() {
     }
 
     private fun confirm(player: Player) {
-        if (!hasReward(player)) {
-            sendMessage(player, "Please choose a reward.")
+        val reward = getReward(player)
+        if (reward == null) {
+            sendMessage(player, "Please choose a reward first.")
             return
         }
-        val reward = getReward(player) ?: return
+
         val option = getCachedOption(player)
-        if ((!reward.isSkillReward || reward.isCharm) && freeSlots(player) == 0) {
-            sendMessage(player, "You don't have enough inventory space.")
+        if (option < 0) {
+            sendMessage(player, "Please choose a reward first.")
             return
         }
+
         val points = reward.getPoints(option)
-        closeInterface(player)
+        val ttlpoints = player.getSavedData().activityData.pestPoints
 
-        if (player.getSavedData().activityData.pestPoints >= points) {
-            player.getSavedData().activityData.decreasePestPoints(points)
+        if (ttlpoints < points) {
+            sendMessage(player, "You don't have enough commendation points.")
+            return
+        }
 
-            val message =
-                if (reward.isSkillReward) {
-                    val experience = calculateExperience(player, reward.skill!!, points)
-                    rewardXP(player, reward.skill, experience.toDouble())
-                    "The Void Knight has granted you $experience ${reward.text}."
-                } else {
-                    if (!reward.checkItemRequirement(player, option)) return
-                    reward.giveToPlayer(player, option)
-                    "The Void Knight has given you a ${reward.text}."
-                }
+        if (!reward.isSkillReward && freeSlots(player) < 1) {
+            sendDialogue(player, "You need at least one free inventory slot.")
+            return
+        }
+
+        lock(player, 1)
+        player.getSavedData().activityData.decreasePestPoints(points)
+        if (reward.isSkillReward && reward.skill != null) {
+            val xp = calculateExperience(player, reward.skill, points)
+            rewardXP(player, reward.skill, xp.toDouble())
             sendDialogueLines(
                 player,
-                message,
-                "<col=571D07>Remaining Void Knight Commendation Points: ${player.getSavedData().activityData.pestPoints}"
+                "The Void Knight has granted you $xp ${Skills.SKILL_NAME[reward.skill]} experience.",
+                "<col=571D07>Remaining points: ${player.getSavedData().activityData.pestPoints}"
             )
-            clear(player)
         } else {
-            sendMessages(player, "You don't have enough points.")
+            if (!reward.checkItemRequirement(player, option)) return
+            reward.giveToPlayer(player, option)
+            sendDialogueLines(
+                player,
+                "The Void Knight has given you ${reward.text}.",
+                "<col=571D07>Remaining points: ${player.getSavedData().activityData.pestPoints}"
+            )
         }
+
+        removeAttribute(player, "pc-reward")
+        removeAttribute(player, "pc-reward:option")
+        clear(player)
     }
 
     enum class Reward(
@@ -447,25 +460,35 @@ class PCRewardInterface : ComponentPlugin() {
         }
 
         private fun constructPack(): Array<Item> {
-            val build =
-                if (this == SEED_PACK || this == HERB_PACK)
-                    RandomFunction.random(MIN_BUILD, MAX_BUILD)
-                else RandomFunction.random(38, 43)
+            val build = if (this == SEED_PACK || this == HERB_PACK)
+                RandomFunction.random(MIN_BUILD, MAX_BUILD)
+            else
+                RandomFunction.random(38, 43)
+
             var left = build
             val pack = ArrayList<Item>(20)
-            for (i in items?.indices!!) {
-                var amt =
-                    if (this == SEED_PACK || this == HERB_PACK) RandomFunction.random(1, 5)
-                    else RandomFunction.random(16, 25)
+
+            for (i in items!!.indices) {
+                val itemId = items[i]
+                var amt = if (this == SEED_PACK || this == HERB_PACK)
+                    RandomFunction.random(1, 5)
+                else
+                    RandomFunction.random(16, 25)
+
                 if (amt > left) amt = left
                 if (amt < 1) continue
+
                 val itemToAdd =
-                    if (this != SEED_PACK) Item(ItemDefinition.forId(i).noteId, amt)
-                    else Item(i, amt)
+                    if (this != SEED_PACK)
+                        Item(ItemDefinition.forId(itemId).noteId, amt)
+                    else
+                        Item(itemId, amt)
+
                 pack.add(itemToAdd)
                 left -= amt
                 if (left <= 0) break
             }
+
             return pack.toTypedArray()
         }
 
@@ -503,6 +526,8 @@ class PCRewardInterface : ComponentPlugin() {
 
         fun open(player: Player) {
             removeAttribute(player, "pc-reward")
+            removeAttribute(player, "pc-reward:option")
+
             sendString(player, "Points: ${player.getSavedData().activityData.pestPoints}", 105)
             clear(player)
             openInterface(player, Components.PEST_REWARDS_267)
@@ -525,7 +550,8 @@ class PCRewardInterface : ComponentPlugin() {
         }
 
         private fun sendString(player: Player, string: String, child: Int) {
-            player.packetDispatch.sendString(string, 267, child)
+            if (player.isActive && player.interfaceManager.opened?.id == Components.PEST_REWARDS_267)
+            player.packetDispatch.sendString(string, Components.PEST_REWARDS_267, child)
         }
 
         fun clear(player: Player) {
@@ -580,10 +606,6 @@ class PCRewardInterface : ComponentPlugin() {
 
         fun getReward(player: Player): Reward? {
             return player.getAttribute("pc-reward", null)
-        }
-
-        fun hasReward(player: Player): Boolean {
-            return getReward(player) != null
         }
 
         fun getCachedOption(player: Player): Int {

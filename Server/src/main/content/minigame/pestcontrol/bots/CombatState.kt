@@ -38,13 +38,13 @@ class CombatState(private val bot: PestControlScript) {
      */
     fun handleCombat() {
         val session = PCUtils.getMyPestControlSession(bot)
-        val gate = bot.getClosestNodeWithEntry(75, PCUtils.GATE_ENTRIES)
+        val gate = bot.getClosestNodeWithEntry(75, PCUtils.GATE_ENTRIES.toMutableList())
         val portal = session?.aportals?.firstOrNull { it.isActive }
 
         when {
             bot.start -> startRound(session)
-            gate != null && session?.aportals?.isEmpty() == true -> openGate(gate)
             portal != null -> attackOrMoveToPortal(portal)
+            gate != null && session?.aportals?.isEmpty() == true -> openGate(gate)
             else -> fallbackToNearbyNPCs()
         }
     }
@@ -77,6 +77,7 @@ class CombatState(private val bot: PestControlScript) {
      * @param gate The gate [Node] to interact with.
      */
     private fun openGate(gate: Node) {
+        if (bot.openedGate) return
         bot.customState = "${State.OPENING_GATE} (${gate.id})"
         InteractionListeners.run(gate.id, IntType.SCENERY, "open", bot, gate)
         bot.openedGate = true
@@ -114,11 +115,8 @@ class CombatState(private val bot: PestControlScript) {
      * @return The [NPC] instance if found, otherwise null.
      */
     private fun findSpinnerNPC(): NPC? =
-        RegionManager.getLocalNpcs(bot)
-            .firstOrNull {
-                it.name.equals("spinner", ignoreCase = true) &&
-                        it.location.withinDistance(bot.location, 10)
-            }
+        RegionManager.getLocalNpcs(bot, 10)
+            .firstOrNull { it.name.equals("spinner", ignoreCase = true) }
 
     /**
      * Moves the bot toward a specified location.
@@ -127,17 +125,18 @@ class CombatState(private val bot: PestControlScript) {
      * @param radius Optional random offset radius for more natural movement.
      */
     fun move(target: Location, radius: Int = moveRadius()) {
+        if (bot.walkingQueue.isMoving) return
+
         bot.customState = State.MOVING_TO_PORTAL.name
         val dest = Location(
             target.x + RandomFunction.random(-radius, radius),
             target.y + RandomFunction.random(-radius, radius),
             target.z
         )
-        if (!bot.walkingQueue.isMoving) {
-            GameWorld.Pulser.submit(object : MovementPulse(bot, dest, Pathfinder.SMART) {
-                override fun pulse(): Boolean = true
-            })
-        }
+
+        GameWorld.Pulser.submit(object : MovementPulse(bot, dest, Pathfinder.SMART) {
+            override fun pulse(): Boolean = true
+        })
     }
 
     /**
