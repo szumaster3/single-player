@@ -239,17 +239,17 @@ class PestControlActivityPlugin @JvmOverloads constructor(val type: BoatType = B
 
     /** Opens the lander waiting interface for a player. */
     private fun openLanderInterface(p: Player) {
-        p.interfaceManager.openOverlay(Component(407))
+        p.interfaceManager.openOverlay(Component(Components.PEST_LANDER_OVERLAY_407))
         updateTime(p)
         updatePlayerCount()
         sendString(
-            player,
+            p,
             "Points: ${p.savedData.activityData.pestPoints}",
             Components.PEST_LANDER_OVERLAY_407,
             16
         )
         sendString(
-            player,
+            p,
             StringUtils.formatDisplayName(type.name),
             Components.PEST_LANDER_OVERLAY_407,
             3
@@ -270,13 +270,17 @@ class PestControlActivityPlugin @JvmOverloads constructor(val type: BoatType = B
 
     /** Notify all waiting players about current queue size. */
     private fun updatePlayerCount() {
+        if (waitingPlayers.isEmpty()) {
+            sendString(player, "Players Ready: 0", Components.PEST_LANDER_OVERLAY_407, 14)
+            return
+        }
         for (p in waitingPlayers) {
-            sendString(player, "Players Ready: ${waitingPlayers.size}", 407, 14)
+            sendString(player, "Players Ready: ${waitingPlayers.size}", Components.PEST_LANDER_OVERLAY_407, 14)
         }
     }
 
     override fun death(e: Entity, killer: Entity?): Boolean {
-        if (e is Player && e.viewport.region!!.regionId == 10536) {
+        if (e is Player && e.viewport.region!!.regionId == Regions.PEST_CONTROL_10536) {
             val session: PestControlSession? =
                 e.getExtension<PestControlSession>(PestControlSession::class.java)
             if (session != null) {
@@ -298,7 +302,7 @@ class PestControlActivityPlugin @JvmOverloads constructor(val type: BoatType = B
     override fun getSpawnLocation(): Location = ServerConstants.HOME_LOCATION!!
 
     override fun configure() {
-        registerRegion(10536)
+        registerRegion(Regions.PEST_CONTROL_10536)
     }
 
     /**

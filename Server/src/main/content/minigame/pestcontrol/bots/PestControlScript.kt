@@ -59,6 +59,8 @@ class PestControlScript(location: Location, val lander: PCUtils.LanderZone) :
 
     private fun handleInGame() {
         start = true
+
+        // Jeśli bot przypadkiem znalazł się poza polem bitwy — wracamy
         if (PCUtils.isOutsideGangplank(getLocation(), lander)) {
             PestControlActivityPlugin().leave(this, false)
             getClosestNodeWithEntry(50, lander.ladderId)?.let {
@@ -68,19 +70,17 @@ class PestControlScript(location: Location, val lander: PCUtils.LanderZone) :
 
         walkingQueue.isRunning = true
 
-        if (role == "attack_portals") {
-            val portal = PCUtils.getClosestActivePortal(this, 20)
-            if (portal != null) {
-                attack(portal)
-                customState = "Attacking closest portal"
-            } else {
+        when (role) {
+            "attack_portals" -> {
+                combatHandler.handleCombat()
+            }
+
+            "defend_squire" -> {
+                moveTimer = RandomFunction.random(2, 10)
+                val squireLoc = PCUtils.getMyPestControlSession(this)?.squire?.location ?: location
+                randomWalkAroundPoint(squireLoc, 5)
                 combatHandler.handleDefense()
             }
-        } else {
-            moveTimer = RandomFunction.random(2, 10)
-            val squireLoc = PCUtils.getMyPestControlSession(this)?.squire?.location ?: location
-            randomWalkAroundPoint(squireLoc, 5)
-            combatHandler.fallbackToNearbyNPCs()
         }
     }
 
@@ -147,8 +147,7 @@ class PestControlScript(location: Location, val lander: PCUtils.LanderZone) :
             else ->
                 when (lander) {
                     PCUtils.LanderZone.NOVICE -> assembler.rangeBotNovice(this, rangeMode)
-                    PCUtils.LanderZone.INTERMEDIATE ->
-                        assembler.rangeBotIntermediate(this, rangeMode)
+                    PCUtils.LanderZone.INTERMEDIATE -> assembler.rangeBotIntermediate(this, rangeMode)
                     PCUtils.LanderZone.VETERAN -> assembler.rangeBotIntermediate(this, rangeMode)
                 }
         }

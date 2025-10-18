@@ -9,20 +9,23 @@ import core.game.world.map.Location;
 import core.game.world.map.Point;
 import core.game.world.map.RegionPlane;
 import core.game.world.map.build.DynamicRegion;
+import core.tools.Log;
 import core.tools.RandomFunction;
+import shared.consts.Components;
+import shared.consts.Music;
+import shared.consts.NPCs;
 
 import java.util.*;
 
-import static core.api.ContentAPIKt.setAttribute;
-import static core.api.ContentAPIKt.setVarp;
+import static core.api.ContentAPIKt.*;
 
 /**
- * The type Pest control session.
+ * Pest control session.
  */
 public final class PestControlSession {
 
     /**
-     * The constant INVALID_OBJECT_IDS.
+     * Represents the invalid objects ids.
      */
     public static final int[] INVALID_OBJECT_IDS = {
         14230, 14231, 14232,
@@ -77,7 +80,7 @@ public final class PestControlSession {
                 int index = (ticks / 50) - 1;
                 removePortalShield(ids[index]);
                 return false;
-            case 20_00:
+            case 2000:
                 activity.end(this, true);
                 return true;
         }
@@ -170,7 +173,10 @@ public final class PestControlSession {
         }
         squire.sendChat(message);
         NPC portal = portals[index];
-
+        if (portal == null) {
+            log(this.getClass(), Log.WARN, "[PestControl] portal=(" + index + ") is null during shield removal");
+            return;
+        }
         portal.reTransform();
         aportals.add(portal);
     }
@@ -181,40 +187,48 @@ public final class PestControlSession {
      * @param waitingPlayers the waiting players
      */
     public void startGame(PriorityQueue<Player> waitingPlayers) {
+        if (waitingPlayers == null || waitingPlayers.isEmpty()) {
+            return;
+        }
+
         region.flagActive();
-        initBarricadesList();
-        List<Integer> list = new ArrayList<>(20);
-        for (int i = 0; i < 4; i++) {
-            list.add(i);
-        }
-        Collections.shuffle(list, RandomFunction.RANDOM);
         region.toggleMulticombat();
-        region.setMusicId(588);
-        ids = list.toArray(new Integer[4]);
-        int count = 0;
-        String portalHealth = "<col=00FF00>" + (activity.getType().ordinal() == 0 ? 200 : 250);
+        region.setMusicId(Music.PEST_CONTROL_588);
+        initBarricadesList();
 
-        List<Player> remainingPlayers = new ArrayList<>();
-        for (Player p = waitingPlayers.poll(); p != null; p = waitingPlayers.poll()) {
-            if (p.getSession().isActive()) {
-                if (++count > PestControlActivityPlugin.MAX_TEAM_SIZE) {
-                    remainingPlayers.add(p);
-                    continue;
-                }
-                addPlayer(p, portalHealth);
+        List<Integer> portalOrder = Arrays.asList(0, 1, 2, 3);
+        Collections.shuffle(portalOrder, RandomFunction.RANDOM);
+        ids = portalOrder.toArray(new Integer[0]);
+        int baseHealth = (activity.getType().ordinal() == 0) ? 200 : 250;
+        String portalHealthText = "<col=00FF00>" + baseHealth;
+
+        List<Player> overflowPlayers = new ArrayList<>();
+        int joinedCount = 0;
+
+        while (!waitingPlayers.isEmpty()) {
+            Player player = waitingPlayers.poll();
+            if (player == null || !player.getSession().isActive()) {
+                continue;
             }
+
+            if (joinedCount >= PestControlActivityPlugin.MAX_TEAM_SIZE) {
+                overflowPlayers.add(player);
+                continue;
+            }
+
+            addPlayer(player, portalHealthText);
+            joinedCount++;
         }
 
-        for (Player p : remainingPlayers) {
-            int priority = p.getAttribute("pc_prior", 0) + 1;
-            p.getPacketDispatch().sendMessage("You have been given priority level " + priority + " over other players in joining the next");
-            p.getPacketDispatch().sendMessage("game.");
-            p.setAttribute("pc_prior", priority);
+        for (Player p : overflowPlayers) {
+            int newPriority = p.getAttribute("pc_prior", 0) + 1;
+            p.getPacketDispatch().sendMessage(
+                    "You have been given priority level " + newPriority + " over other players in joining the next game."
+            );
+            p.setAttribute("pc_prior", newPriority);
             waitingPlayers.add(p);
         }
-
         spawnNPCs();
-
     }
 
     private void addPlayer(Player p, String portalHealth) {
@@ -222,16 +236,16 @@ public final class PestControlSession {
         p.setAttribute("pc_zeal", 0);
         p.removeAttribute("pc_prior");
         p.addExtension(PestControlSession.class, this);
-        p.getInterfaceManager().openOverlay(new Component(408));
-        p.getPacketDispatch().sendString("200", 408, 1);
+        p.getInterfaceManager().openOverlay(new Component(Components.PEST_STATUS_OVERLAY_408));
+        p.getPacketDispatch().sendString("200", Components.PEST_STATUS_OVERLAY_408, 1);
         for (int i = 0; i < 4; i++) {
-            p.getPacketDispatch().sendString(portalHealth, 408, 13 + i);
+            p.getPacketDispatch().sendString(portalHealth, Components.PEST_STATUS_OVERLAY_408, 13 + i);
         }
         Random r = RandomFunction.RANDOM;
         Location l = region.getBaseLocation();
         p.getProperties().setTeleportLocation(l.transform(32 + r.nextInt(4), 49 + r.nextInt(6), 0));
         setVarp(p, 1147, 0);
-        p.getDialogueInterpreter().sendDialogues(3781, FaceAnim.ANGRY, "You must defend the Void Knight while the portals are", "unsummoned. The ritual takes twenty minutes though,", "so you can help out by destroying them yourselves!", "Now GO GO GO!");
+        p.getDialogueInterpreter().sendDialogues(NPCs.SQUIRE_3781, FaceAnim.ANGRY, "You must defend the Void Knight while the portals are", "unsummoned. The ritual takes twenty minutes though,", "so you can help out by destroying them yourselves!", "Now GO GO GO!");
     }
 
     private void initBarricadesList() {
@@ -253,12 +267,12 @@ public final class PestControlSession {
         portals[1] = NPC.create(baseId + 1, l.transform(56, 28, 0));
         portals[2] = NPC.create(baseId + 2, l.transform(45, 10, 0));
         portals[3] = NPC.create(baseId + 3, l.transform(21, 9, 0));
-        addNPC(squire = NPC.create(3782 + (RandomFunction.RANDOM.nextBoolean() ? 3 : 0), l.transform(32, 32, 0)));
+        addNPC(squire = NPC.create(NPCs.VOID_KNIGHT_3782 + (RandomFunction.RANDOM.nextBoolean() ? 3 : 0), l.transform(32, 32, 0)));
         for (NPC npc : portals) {
             addNPC(npc);
             npc.transform(npc.getId() + 4);
         }
-        addNPC(NPC.create(3781, l.transform(30, 47, 0)));
+        addNPC(NPC.create(NPCs.SQUIRE_3781, l.transform(30, 47, 0)));
     }
 
     /**
