@@ -233,17 +233,17 @@ class PestControlActivityPlugin @JvmOverloads constructor(val type: BoatType = B
         waitingPlayers.add(p)
         openLanderInterface(p)
 
-        registerLogoutListener(player, "pc_logout") { player ->
+        registerLogoutListener(p, "pc_logout") { p ->
             val landerLoc = leaveLocation
-            player.location = landerLoc
-            player.properties.teleportLocation = landerLoc
+            p.location = landerLoc
+            p.properties.teleportLocation = landerLoc
         }
         return true
     }
 
     /** Opens the lander waiting interface for a player. */
     private fun openLanderInterface(p: Player) {
-        openOverlay(player, Components.PEST_LANDER_OVERLAY_407)
+        openOverlay(p, Components.PEST_LANDER_OVERLAY_407)
         updateTime(p)
         updatePlayerCount()
         sendString(p, "Points: ${p.savedData.activityData.pestPoints}", Components.PEST_LANDER_OVERLAY_407, 16)
