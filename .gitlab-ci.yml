@@ -1,12 +1,18 @@
 variables:
   MAVEN_OPTS: "-Dhttps.protocols=TLSv1.2 -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN -Dorg.slf4j.simpleLogger.showDateTime=true -Djava.awt.headless=true -Xmx4g"
   MAVEN_CLI_OPTS: "--batch-mode --errors --fail-fast --show-version"
+  GIT_SUBMODULE_STRATEGY: none
 
 image: maven:3-openjdk-11-slim
 
 workflow:
   rules:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+    - changes:
+        - "**/*"
+        - "!Client/**/*"
+      when: always
+    - when: never
 
 before_script:
   - 'free -mh'
@@ -25,6 +31,10 @@ verify:jdk11:
   except:
     variables:
       - $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  rules:
+    - changes:
+        - "**/*"
+        - "!Client/**/*"
 
 test:json:
   stage: test
@@ -34,3 +44,7 @@ test:json:
   except:
     variables:
       - $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  rules:
+    - changes:
+        - "**/*"
+        - "!Client/**/*"
