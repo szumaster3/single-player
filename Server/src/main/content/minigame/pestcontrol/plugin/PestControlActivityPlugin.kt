@@ -168,7 +168,7 @@ class PestControlActivityPlugin @JvmOverloads constructor(val type: BoatType = B
             }
             waitingPlayers.remove(p)
             updatePlayerCount()
-            clearLogoutListener(player, "pc_logout")
+            clearLogoutListener(p, "pc_logout")
         }
         return super.leave(e, logout)
     }
