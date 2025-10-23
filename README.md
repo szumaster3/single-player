@@ -1,112 +1,107 @@
-<div align="center">
-<img src="https://imgur.com/yGvSk2X.png" />
-</div>
-
-<div align="center">
 A fork of <a href="https://gitlab.com/2009scape/2009scape">2009Scape</a> with AGPL-3.0 licensing.
-</div>
-<div align="center">
-<a href="#prerequisites">Prerequisites</a> •
-<a href="#fork--clone">Fork & Clone</a> •
-<a href="#import-project-in-intellij">Import Project</a> •
-<a href="#setup-git--ssh">Git & SSH</a> •
-<a href="#build-project">Build</a> •
-<a href="#run-project">Run</a> •
-<a href="#contributing">Contributing</a> •
-<a href="#license">License</a>
-</div>
+<ul>
+<ol><a href="#prerequisites">Prerequisites</a></ol>
+<ol><a href="#fork--clone">Fork & Clone</a></ol>
+<ol><a href="#import-project-in-intellij">Import Project</a></ol>
+<ol><a href="#setup-git--ssh">Git & SSH</a></ol>
+<ol><a href="#build-project">Build</a></ol>
+<ol><a href="#run-project">Run</a></ol>
+<ol><a href="#contributing">Contributing</a></ol>
+<ol><a href="#license">License</a></ol>
+</ul>
 
-___
+<h1>Prerequisites</h1>
+<p>Before setting up the project, ensure the following:</p>
 
-# Prerequisites
+<ul>
+  <li><strong>Java 11</strong> – Download from <a href="https://www.oracle.com/java/technologies/javase-jdk11-downloads.html" target="_blank">Oracle</a> or <a href="https://adoptium.net/temurin/releases/?version=11" target="_blank">Adoptium</a></li>
+  <li><strong>IntelliJ IDEA</strong> – Download from <a href="https://www.jetbrains.com/idea/download/" target="_blank">JetBrains</a></li>
+</ul>
 
-Before setting up the project, ensure the following:
+<blockquote>Windows users: Enable <strong>Developer Mode</strong> before proceeding.</blockquote>
 
-- **Java 11** – Download from [Oracle](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html) or [Adoptium](https://adoptium.net/temurin/releases/?version=11)
-- **IntelliJ IDEA** – Download from [JetBrains](https://www.jetbrains.com/idea/download/)
+<h1>Fork &amp; Clone</h1>
 
-> Windows users: Enable **Developer Mode** before proceeding.
+<ol>
+  <li>Fork the repository on GitLab.</li>
+  <li>Clone your fork:</li>
+</ol>
 
-# Fork & Clone
+<pre><code>git clone &lt;your-fork-ssh-or-https-url&gt;</code></pre>
 
-1. Fork the repository on GitLab.
-2. Clone your fork:
+<ol start="3">
+  <li>Navigate into the folder:</li>
+</ol>
 
-```bash
-git clone <your-fork-ssh-or-https-url>
-```
+<pre><code>cd &lt;your-project-folder&gt;</code></pre>
 
-3. Navigate into the folder:
+<h1>Import Project in IntelliJ</h1>
 
-```bash
-cd <your-project-folder>
-```
+<ol>
+  <li>Open IntelliJ IDEA.</li>
+  <li>Select <code>File &gt; Open...</code> and choose the project root.</li>
+  <li>IntelliJ should detect <code>pom.xml</code> and import the Maven project automatically.</li>
+  <li>Set Project SDK to <strong>Java 11</strong> or higher.</li>
+</ol>
 
-# Import Project in IntelliJ
+<h1>Setup Git &amp; SSH</h1>
 
-1. Open IntelliJ IDEA.
-2. Select `File` > `Open...` and choose the project root.
-3. IntelliJ should detect `pom.xml` and import the Maven project automatically.
-4. Set Project SDK to **Java 11** or higher.
+<p>Generate SSH key if you don't have one:</p>
 
-# Setup Git & SSH
+<pre><code>ssh-keygen -t ed25519 -C "&lt;example@example.eu&gt;"</code></pre>
 
-- Generate SSH key if you don't have one:
+<ul>
+  <li>Add your public key to GitLab.</li>
+  <li>Configure Git:</li>
+</ul>
 
-```bash
-ssh-keygen -t ed25519 -C "<example@example.eu>"
-```
+<pre><code>git config --global user.name "example"
+t config --global user.email "example@example.eu"</code></pre>
 
-- Add your public key to GitLab.
-- Configure Git:
+<h1>Build Project</h1>
 
-```bash
-git config --global user.name "example"
-git config --global user.email "example@example.eu"
-```
+<p>Run from the project root:</p>
 
-# Build Project
+<pre><code>mvn clean install</code></pre>
 
-Run from the project root:
+<p>This compiles and packages all files.</p>
 
-```bash
-mvn clean install
-```
+<h1>Run Project</h1>
 
-This compiles and packages all files.
+<pre><code>mvn exec:java -f pom.xml</code></pre>
 
-# Run Project
+<blockquote>Tip: Run via IntelliJ by right-clicking <code>pom.xml</code> &gt; <code>Run 'exec:java'</code>.</blockquote>
 
-```bash
-mvn exec:java -f pom.xml
-```
+<h1>Contributing</h1>
 
-> Tip: Run via IntelliJ by right-clicking `pom.xml` > `Run 'exec:java'`.
+<ol>
+  <li>Fork the repository.</li>
+  <li>Create a feature branch:</li>
+</ol>
 
-# Contributing
+<pre><code>git checkout -b feature/my-feature</code></pre>
 
-1. Fork the repository.
-2. Create a feature branch:
+<ol start="3">
+  <li>Commit changes:</li>
+</ol>
 
-```bash
-git checkout -b feature/my-feature
-```
+<pre><code>git commit -am "Changes"</code></pre>
 
-3. Commit changes:
+<ol start="4">
+  <li>Push and open a merge request.</li>
+</ol>
 
-```bash
-git commit -am "Changes"
-```
+<h1>Troubleshooting</h1>
 
-4. Push and open a merge request.
+<ul>
+  <li><strong>Java version mismatch</strong>: <code>java -version</code> should be 11+.</li>
+  <li><strong>Maven issues</strong>: Check with <code>mvn -version</code>.</li>
+  <li><strong>IDE errors</strong>: Reimport Maven project or invalidate caches (<code>File &gt; Invalidate Caches / Restart</code>).</li>
+  <li><strong>SSH issues</strong>: Ensure public key is added to GitLab.</li>
+</ul>
 
-# Troubleshooting
+<h1>License</h1>
 
-- **Java version mismatch**: `java -version` should be 11+.
-- **Maven issues**: Check with `mvn -version`.
-- **IDE errors**: Reimport Maven project or invalidate caches (`File > Invalidate Caches / Restart`).
-- **SSH issues**: Ensure public key is added to GitLab.
-
-# License
-
-This project is licensed under **AGPL-3.0**. See [LICENSE](./LICENSE) or [gnu.org](https://www.gnu.org/licenses/agpl-3.0.html).
+<p>This project is licensed under <strong>AGPL-3.0</strong>. See 
+<a href="./LICENSE" target="_blank">LICENSE</a> or 
+<a href="https://www.gnu.org/licenses/agpl-3.0.html" target="_blank">gnu.org</a>.</p>
