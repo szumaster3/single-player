@@ -1,7 +1,6 @@
 package content.region.island.tutorial.dialogue
 
 import content.region.island.tutorial.plugin.TutorialStage
-import core.api.getAttribute
 import core.api.setAttribute
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
@@ -22,11 +21,9 @@ class BankerGuideDialogue: DialogueFile() {
             2 -> when (buttonID) {
                 1 -> {
                     end()
+                    setAttribute(player!!, TutorialStage.TUTORIAL_STAGE, 57)
+                    TutorialStage.load(player!!, 57)
                     player?.bank?.open()
-                    if(getAttribute(player!!, TutorialStage.TUTORIAL_STAGE, 0) == 56) {
-                        setAttribute(player!!, TutorialStage.TUTORIAL_STAGE, 57)
-                        TutorialStage.load(player!!, 57)
-                    }
                 }
                 2 -> end()
             }

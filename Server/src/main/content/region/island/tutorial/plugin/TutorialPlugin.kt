@@ -234,10 +234,18 @@ class TutorialPlugin : InteractionListener {
 
         on(GIANT_RAT_GATE, IntType.SCENERY, "open") { player, node ->
             val stage = getAttribute(player, TutorialStage.TUTORIAL_STAGE, 0)
+            if(stage == 54) {
+                player.dialogueInterpreter.sendDialogues(
+                    NPCs.COMBAT_INSTRUCTOR_944,
+                    FaceAnim.ANNOYED,
+                    "No, don't enter the pit. Range the rats from outside the cage."
+                )
+                return@on false
+            }
             if (stage !in 50..53) {
                 player.dialogueInterpreter.sendDialogues(
                     NPCs.COMBAT_INSTRUCTOR_944,
-                    FaceAnim.NEUTRAL,
+                    FaceAnim.ANNOYED,
                     "Oi, get away from there!",
                     "Don't enter my rat pen unless I say so!",
                 )

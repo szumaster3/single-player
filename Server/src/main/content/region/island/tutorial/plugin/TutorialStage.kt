@@ -631,7 +631,7 @@ object TutorialStage {
             41 -> {
                 hideTabs(player, login)
                 removeHintIcon(player)
-                registerHintIcon(player, Location.create(3084, 9499)!!)
+                registerHintIcon(player, Location.create(3084, 9499)!!, 50)
                 player.dialogueInterpreter.sendPlaneMessageWithBlueTitle(
                     "Smithing a dagger",
                     "To smith you'll need a hammer - like the one you were given by",
@@ -851,6 +851,7 @@ object TutorialStage {
 
             57 -> {
                 hideTabs(player, login)
+                removeHintIcon(player)
                 registerHintIcon(player, Location.create(3125, 3124)!!, 100) // FINANCIAL DOOR
                 player.dialogueInterpreter.sendPlaneMessageWithBlueTitle(
                     "This is your bank box.",
@@ -864,6 +865,7 @@ object TutorialStage {
             58 -> {
                 hideTabs(player, login)
                 removeHintIcon(player)
+                registerHintIcon(player, Repository.findNPC(NPCs.FINANCIAL_ADVISOR_947)!!)
                 player.dialogueInterpreter.sendPlaneMessageWithBlueTitle(
                     "Financial advice",
                     "",

@@ -156,8 +156,9 @@ object LoginConfiguration {
     @JvmStatic
     fun welcome(player: Player) {
         if (player.isArtificial) return
-        sendMessages(player, "Welcome to ${ServerConstants.SERVER_NAME}.")
-
+        if(getVarp(player, 281) >= 1000) {
+            sendMessage(player, "Welcome to ${ServerConstants.SERVER_NAME}.")
+        }
         GlobalStore.check(player)
 
         if (player.details.isMuted) {

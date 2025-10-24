@@ -72,7 +72,7 @@ public final class GnomeStrongholdPlugin extends OptionHandler {
                 if (GRAND_TREE.insideBorder(player)) {
                     openTreeDoor(player, scenery);
                 } else {
-                    sendMessages(player, "I can't reach that.");
+                    player.getPacketDispatch().sendMessage("I can't reach that.");
                 }
                 return true;
             case 190:

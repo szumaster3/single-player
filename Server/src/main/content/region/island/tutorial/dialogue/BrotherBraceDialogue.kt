@@ -2,6 +2,7 @@ package content.region.island.tutorial.dialogue
 
 import content.region.island.tutorial.plugin.TutorialStage
 import core.api.getAttribute
+import core.api.sendDialogue
 import core.api.setAttribute
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
@@ -34,6 +35,11 @@ class BrotherBraceDialogue(player: Player? = null) : Dialogue(player) {
                     setAttribute(player, TutorialStage.TUTORIAL_STAGE, 61)
                     TutorialStage.load(player, 61)
                 }
+            }
+
+            61 -> {
+                end()
+                sendDialogue(player!!, "You should open the indicated menu to continue.")
             }
 
             62 -> when (stage++) {
