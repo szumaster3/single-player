@@ -28,14 +28,17 @@ class HellKittenDialogue : Dialogue {
                 playerl(FaceAnim.HALF_ASKING, "How are you doing?")
                 stage++
             }
+
             1 -> {
                 npcl(FaceAnim.CHILD_NORMAL, "Great, I'm ready for action!")
                 stage++
             }
+
             2 -> {
                 playerl(FaceAnim.FRIENDLY, "How old are you now?")
                 stage++
             }
+
             3 -> {
                 npcl(FaceAnim.CHILD_NORMAL, "Still young and fresh, not like you at all.")
                 stage = END_DIALOGUE

@@ -25,19 +25,22 @@ class LazyHellcatDialogue : Dialogue {
     }
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
-        when(stage) {
+        when (stage) {
             0 -> {
                 playerl(FaceAnim.HALF_ASKING, "How are you doing?")
                 stage++
             }
+
             1 -> {
                 npcl(FaceAnim.CHILD_NORMAL, "Old, but still ready to scratch your cheeky face!")
                 stage++
             }
+
             2 -> {
                 playerl(FaceAnim.FRIENDLY, "How old are you now?")
                 stage++
             }
+
             3 -> {
                 npcl(FaceAnim.CHILD_NORMAL, "Old enough to take life slow, young whippersnapper.")
                 stage = END_DIALOGUE
