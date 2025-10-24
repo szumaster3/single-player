@@ -199,13 +199,6 @@ class ImpetuousImpulses : MapZone("puro puro", true), Plugin<Any> {
         }
 
         /**
-         * Resets scenery objects based on their locations.
-         */
-        fun setScenery() {
-            for (i in locations.indices) scenery[i] = getObject(locations[i])
-        }
-
-        /**
          * Schedules the next whilt tick randomly.
          */
         fun setNextWhilt() {

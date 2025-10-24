@@ -80,7 +80,7 @@ class ShootingStarBot : Script() {
     }
 
     companion object {
-        val spawnLoc = Location.create(2230, 3339, 0)
+        val spawnLoc = Location.create(3221, 3219, 0)
 
         fun new(): ShootingStarBot {
             val script = ShootingStarBot()

@@ -27104,16 +27104,8 @@
     "examine": "A cloth-covered altar with a mounted symbol of unknown origin."
   },
   {
-    "ids": "29944",
-    "examine": "Who disturbs my slumber?"
-  },
-  {
-    "ids": "29945",
-    "examine": "Who disturbed their slumber? Lost their head too"
-  },
-  {
-    "ids": "29946",
-    "examine": "Someone should really put that back."
+    "ids": "29944,29945,29946",
+    "examine": "Contains traces of Summoning energy."
   },
   {
     "ids": "29947,29948",

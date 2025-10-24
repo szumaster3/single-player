@@ -971,23 +971,6 @@ public class Player extends Entity {
     }
 
     /**
-     * Can spawn boolean.
-     *
-     * @return the boolean
-     */
-    public boolean canSpawn() {
-        if (!spawnZone()) {
-            sendMessage("You can only spawn items inside the Edgeville bank.");
-            return true;
-        }
-        if (inCombat() || getLocks().isInteractionLocked() || getSkullManager().isWilderness() || getAttribute("activity", null) != null) {
-            sendMessage("<col=FF0000>You can't spawn items at the moment.");
-            return true;
-        }
-        return false;
-    }
-
-    /**
      * Send message.
      *
      * @param message the message

@@ -21,7 +21,7 @@ class ShootingStarPlugin :
     StartupListener {
     override fun login(player: Player) {
         if (star.isSpawned && !star.spriteSpawned) {
-            sendMessage(
+            sendMessages(
                 player,
                 "<col=CC6600>News: A shooting star (Level ${star.level.ordinal + 1}) has just crashed near the ${star.location}!",
             )

@@ -156,7 +156,7 @@ object LoginConfiguration {
     @JvmStatic
     fun welcome(player: Player) {
         if (player.isArtificial) return
-        sendMessage(player, "Welcome to ${ServerConstants.SERVER_NAME}.")
+        sendMessages(player, "Welcome to ${ServerConstants.SERVER_NAME}.")
 
         GlobalStore.check(player)
 
