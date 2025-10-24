@@ -32,7 +32,7 @@ class BulldogDialogue(player: Player? = null) : Dialogue(player) {
             1 -> playerl(FaceAnim.FRIENDLY, "Well, I could carry you if you like.").also { stage++ }
             2 -> npcl(FaceAnim.CHILD_NORMAL, "Whurfwhurf, whurf. (That'd be grand, like.)").also { stage++ }
             3 -> playerl(FaceAnim.FRIENDLY, "You know, you won't grow up to be big and strong if you keep getting carried everywhere.").also { stage++ }
-            4 -> npc(FaceAnim.CHILD_NORMAL, "Whurf, whurf. (Alright, "+if (player.isMale) "lad" else "lass"+": I know, I know.)").also { stage = END_DIALOGUE }
+            4 -> npc(FaceAnim.CHILD_NORMAL, "Whurf, whurf. (Alright, ${if (player.isMale) "lad" else "lass"}: I know, I know.)").also { stage = END_DIALOGUE }
 
             5  -> playerl(FaceAnim.FRIENDLY, "I'm not giving you tea. You might get sick!").also { stage++ }
             6  -> npcl(FaceAnim.CHILD_NORMAL, "['Ow will we know if we don't try?]").also { stage++ }
