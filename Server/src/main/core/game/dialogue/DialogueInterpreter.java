@@ -218,7 +218,9 @@ public final class DialogueInterpreter {
                 player.getPacketDispatch().sendRunScript(101, "");
             }
         } else {
-            TutorialStage.load(player, Math.max(tutorialStage, 0), false);
+            if (!player.isArtificial()) {
+                TutorialStage.load(player, Math.max(tutorialStage, 0), false);
+            }
         }
 
         activeTopics.clear();

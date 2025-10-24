@@ -214,7 +214,9 @@ class InterfaceManager(
             val tutorialComplete = player.getAttribute(GameAttributes.TUTORIAL_COMPLETE, false)
             val tutorialStage = player.getAttribute(TutorialStage.TUTORIAL_STAGE, -1)
             if (!tutorialComplete && tutorialStage < 72) {
-                TutorialStage.load(player, max(tutorialStage, 0), false)
+                if (!player.isArtificial) {
+                    TutorialStage.load(player, max(tutorialStage, 0), false)
+                }
             } else {
                 if (player.getAttribute<Any?>("runscript", null) != null) {
                     player.removeAttribute("runscript")
