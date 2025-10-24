@@ -17,6 +17,8 @@ import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.game.node.scenery.Scenery
 import core.game.system.task.Pulse
+import core.game.world.GameWorld
+import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import shared.consts.Animations
 import shared.consts.Components
@@ -101,9 +103,9 @@ class LumbridgePlugin : InteractionListener {
         on(shared.consts.Scenery.SIGNPOST_31299, IntType.SCENERY, "read") { player, _ ->
             val deaths = GlobalStatistics.getDailyDeaths()
             if (deaths > 0) {
-                sendDialogue(player, "So far today $deaths unlucky adventurers have died on RuneScape and been sent to their respawn location. Be careful out there.")
+                sendDialogue(player, "So far today $deaths unlucky adventurers have died on ${GameWorld.settings?.name} and been sent to their respawn location. Be careful out there.")
             } else {
-                sendDialogue(player, "So far today not a single adventurer on RuneScape has met their end grisly or otherwise. Either the streets are getting safer or adventurers are getting warier.")
+                sendDialogue(player, "So far today not a single adventurer on ${GameWorld.settings?.name} has met their end grisly or otherwise. Either the streets are getting safer or adventurers are getting warier.")
             }
             return@on true
         }
@@ -235,6 +237,12 @@ class LumbridgePlugin : InteractionListener {
             addItem(player, Items.SPADE_952)
             replaceScenery(node.asScenery(), 10373, 300)
             return@on true
+        }
+    }
+
+    override fun defineDestinationOverrides() {
+        setDest(IntType.NPC, intArrayOf(NPCs.BANK_TUTOR_7961), "talk-to") { _, _ ->
+            return@setDest Location.create(3208, 3220, 2)
         }
     }
 

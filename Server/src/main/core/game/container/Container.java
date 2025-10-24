@@ -22,7 +22,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class Container {
 
     /**
-     * The item array. A crystalline
+     * The item array.
      */
     private Item[] items;
 

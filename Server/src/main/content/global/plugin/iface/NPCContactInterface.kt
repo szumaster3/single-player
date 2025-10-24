@@ -186,7 +186,7 @@ class NPCContactInterface : InterfaceListener {
                     0 -> playerl(FaceAnim.FRIENDLY, "Hello again!").also { stage++ }
                     1 -> npcl(FaceAnim.FRIENDLY, "That's funny, I was just talking about you.").also { stage++ }
                     2 -> playerl(FaceAnim.FRIENDLY, "You were?").also { stage++ }
-                    3 -> npcl(FaceAnim.FRIENDLY, "Yes, I've been arranging various leaders of Runescape to discuss some political issues. It seems you've certainly been around a bit!").also { stage++ }
+                    3 -> npcl(FaceAnim.FRIENDLY, "Yes, I've been arranging various leaders of ${GameWorld.settings?.name} to discuss some political issues. It seems you've certainly been around a bit!").also { stage++ }
                     4 -> playerl(FaceAnim.FRIENDLY, "I suppose I have. What issues are you suppose to discuss in this meeting? Who will be there?").also { stage++ }
                     5 -> npcl(FaceAnim.FRIENDLY, "Sorry, that's top secret information.").also { stage++ }
                     6 -> playerl(FaceAnim.FRIENDLY, "That's fine, I understand.").also { stage = END_DIALOGUE }

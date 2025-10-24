@@ -7,6 +7,7 @@ import content.global.plugin.iface.PageSet
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.player.Player
+import core.game.world.GameWorld
 import core.tools.RED
 import shared.consts.Items
 
@@ -172,7 +173,7 @@ class GoblinBook : InteractionListener {
                         BookLine("Commander to lead you.", 74),
                         BookLine("Under new Commander", 75),
                         BookLine("goblins will conquer all of", 76),
-                        BookLine("RuneScape, every race and", 77),
+                        BookLine("${GameWorld.settings?.name}, every race and", 77),
                         BookLine("every god! And then Big", 78),
                         BookLine("High War God will return", 79),
                         BookLine("and sit on throne of bronze", 80),

@@ -3167,7 +3167,7 @@ fun dumpContainer(
                 }
 
                 container.remove(item)
-                bank.add(unnote(item), false)
+                bank.add(unnote(item), true)
                 dumpedCount++
             }
         }

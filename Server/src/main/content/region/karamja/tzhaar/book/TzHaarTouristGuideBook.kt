@@ -9,6 +9,7 @@ import core.game.dialogue.DialogueFile
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.player.Player
+import core.game.world.GameWorld
 import shared.consts.Components
 import shared.consts.Items
 
@@ -87,7 +88,7 @@ class TzHaarTouristGuideBook : InteractionListener {
                     BookLine("with the locals and other", 39),
                     BookLine("tourists await you.", 40),
                     BookLine("Thousands of people from all", 41),
-                    BookLine("over RuneScape visit this", 42),
+                    BookLine("over ${GameWorld.settings?.name} visit this", 42),
                     BookLine("glorious city every day,", 43),
                     BookLine("so you will never be alone!", 44),
                     BookLine("", 45),
@@ -130,7 +131,7 @@ class TzHaarTouristGuideBook : InteractionListener {
                     BookLine("the Play Pit* and Play", 46),
                     BookLine("Cave*. In the Play Pit*,", 47),
                     BookLine("tourists from around", 48),
-                    BookLine("RuneScape can compete", 49),
+                    BookLine("${GameWorld.settings?.name} can compete", 49),
                     BookLine("against each other for fine", 50),
                     BookLine("prizes. The Play Cave* is a", 51),
                     BookLine("fantastic attraction where you", 52),

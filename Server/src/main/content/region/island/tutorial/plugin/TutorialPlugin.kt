@@ -348,6 +348,12 @@ class TutorialPlugin : InteractionListener {
         }
     }
 
+    override fun defineDestinationOverrides() {
+        setDest(IntType.NPC, intArrayOf(NPCs.BANKER_953), "talk-to") { _, _ ->
+            return@setDest Location.create(3122, 3123, 0)
+        }
+    }
+
     companion object {
         private const val RS_GUIDE_DOOR = Scenery.DOOR_3014
         private const val COOK_GUIDE_DOOR = Scenery.DOOR_3017

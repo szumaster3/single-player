@@ -5,6 +5,7 @@ import core.api.*
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.interaction.InterfaceListener
+import core.game.world.GameWorld
 import core.game.world.map.Location
 import shared.consts.Components
 import shared.consts.Items
@@ -152,7 +153,7 @@ class MuseumDisplayInterface :
             "Taverley is the site of the only known example",
             "of a surviving druidic stone circle, but the",
             "druids of Guthix speak of many others",
-            "scattered around RuneScape in the past. Our",
+            "scattered around ${GameWorld.settings?.name} in the past. Our",
             "best dating techniques place them in the 4th",
             "Age. The druids built them to worship Guthix all",
             "across the world. The Druids claim to be keeping",
@@ -181,7 +182,7 @@ class MuseumDisplayInterface :
             "",
             "What little we know of gnomish history is mainly",
             "learned from the glider pilots scattered around",
-            "RuneScape. They did mention that an old gnome",
+            "${GameWorld.settings?.name}. They did mention that an old gnome",
             "engineer called Oaknock used to make model",
             "gliders for his children. Oaknock's son, ",
             "Yewnock, ended up creating this method of",
@@ -239,12 +240,12 @@ class MuseumDisplayInterface :
             "",
             "Here, you can see a tablet displaying an artist's",
             "impression of the portal through which humans",
-            "first stepped on to RuneScape. It was said that",
+            "first stepped on to ${GameWorld.settings?.name}. It was said that",
             "Guthix himself walked among humans, providing",
             "rune stones, after which man first named this",
             "world. Guthix supposedly created the portal to",
             "bring humans from another world to populate",
-            "RuneScape, at a time when he was the only god",
+            "${GameWorld.settings?.name}, at a time when he was the only god",
             "interested in developing Gielinor.",
         )
 
@@ -286,7 +287,7 @@ class MuseumDisplayInterface :
             "1st - 2nd Ages",
             "",
             "The 1st Age is thought to have been 4,000",
-            "years long. The world of RuneScape is said to",
+            "years long. The world of ${GameWorld.settings?.name} is said to",
             "have been created by the gods Saradomin, ",
             "Zamorak, and Guthix at the start of the 1st Age.",
             "However, recent evidence from a brave",
@@ -377,7 +378,7 @@ class MuseumDisplayInterface :
             "the power of the runes humans started to",
             "become more dominant within the world. The human",
             "kingdoms of Misthalin and Asgarnia quickly grew",
-            "to become the RuneScape kingdoms and cities",
+            "to become the ${GameWorld.settings?.name} kingdoms and cities",
             "we know today. The mages who discovered the",
             "rune essence rock (modelled here) set up a",
             "great tower of wizardry in southern Misthalin.",

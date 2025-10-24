@@ -968,7 +968,7 @@ public class IoBuffer {
     }
 
     /**
-     * Reads a JAG-compliant string (used in RuneScape protocol).
+     * Reads a JAG-compliant string.
      * First byte is a prefix, then string bytes follow.
      *
      * @return The decoded JAG string.

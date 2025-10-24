@@ -24,11 +24,7 @@ import shared.consts.Vars
  * Represents the bank container.
  * @author Emperor
  */
-class BankContainer(player: Player) : Container(SIZE, ContainerType.ALWAYS_STACK, SortType.HASH) {
-    /**
-     * The player reference.
-     */
-    private val player: Player
+class BankContainer(private val player: Player) : Container(SIZE, ContainerType.ALWAYS_STACK, SortType.HASH) {
 
     /**
      * The bank listener.
@@ -55,23 +51,83 @@ class BankContainer(player: Player) : Container(SIZE, ContainerType.ALWAYS_STACK
     /**
      * The tab start indexes.
      */
-    val tabStartSlot: IntArray = IntArray(TAB_SIZE)
+    val tabStartSlot = IntArray(TAB_SIZE)
 
     /**
      * Construct a new `BankContainer` `Object`.
      * @param player The player reference.
      */
     init {
-        super.register(BankListener(player).also { listener = it })
-        this.player = player
+        register(BankListener(player).also { listener = it })
     }
 
     /**
-     * Method used to open the deposit box.
+     * Opens the bank interface for the player.
+     */
+    fun open() = open(player) {
+        player.interfaceManager.openSingleTab(Component(BANK_V2_MAIN_SIDE))
+        player.inventory.refresh()
+        player.inventory.listeners.add(listener)
+        player.packetDispatch.sendIfaceSettings(
+            IfaceSettingsBuilder()
+                .enableOptions(IntRange(0, 5))
+                .enableExamine()
+                .enableSlotSwitch()
+                .build(),
+            0, BANK_V2_MAIN_SIDE, 0, 27
+        )
+        setVarp(player, 1249, lastAmountX)
+    }
+
+    /**
+     * Opens the bank interface for a player.
+     */
+    fun open(p: Player) = open(p) {
+        refresh(listener)
+        p.interfaceManager.openSingleTab(Component(BANK_V2_MAIN_SIDE))
+        p.inventory.listeners.add(p.bank.listener)
+        p.inventory.refresh()
+        setVarp(p, 1249, lastAmountX)
+        p.packetDispatch.sendIfaceSettings(1278, 73, BANK_V2_MAIN, 0, SIZE)
+        p.packetDispatch.sendIfaceSettings(
+            IfaceSettingsBuilder()
+                .enableOptions(IntRange(0, 5))
+                .enableExamine()
+                .enableSlotSwitch()
+                .build(),
+            0, BANK_V2_MAIN_SIDE, 0, 27
+        )
+        p.packetDispatch.sendRunScript(1451, "")
+    }
+
+    /**
+     * Internal helper to handle opening logic and restrictions.
+     */
+    private inline fun open(p: Player, extra: () -> Unit) {
+        if (isOpen) return
+        if (p.ironmanManager.checkRestriction(IronmanMode.ULTIMATE)) return
+        if (!p.bankPinManager.isUnlocked && !settings!!.isDevMode) {
+            p.bankPinManager.openType(1)
+            return
+        }
+
+        p.interfaceManager.openComponent(BANK_V2_MAIN)!!.closeEvent = CloseEvent { _: Player?, _: Component? ->
+            this@BankContainer.close()
+            true
+        }
+
+        super.refresh()
+        p.inventory.refresh()
+        extra()
+        isOpen = true
+    }
+
+    /**
+     * Opens the deposit box interface.
      */
     fun openDepositBox() {
-        player.interfaceManager.open(Component(DEPOSIT_BOX))!!.closeEvent = CloseEvent { player: Player, c: Component? ->
-            player.interfaceManager.openDefaultTabs()
+        player.interfaceManager.open(Component(DEPOSIT_BOX))!!.closeEvent = CloseEvent { p: Player, _: Component? ->
+            p.interfaceManager.openDefaultTabs()
             true
         }
         player.interfaceManager.removeTabs(0, 1, 2, 3, 4, 5, 6)
@@ -79,72 +135,10 @@ class BankContainer(player: Player) : Container(SIZE, ContainerType.ALWAYS_STACK
     }
 
     /**
-     * Invalidates the visual state of deposit box interface
-     * forcing the client to re-draw the items
+     * Refreshes deposit box interface buttons.
      */
     fun refreshDepositBoxInterface() {
-        player.generateItems(
-            DEPOSIT_BOX,
-            15,
-            listOf("Deposit-X", "Deposit-All", "Deposit-10", "Deposit-5", "Deposit-1"),
-            5,
-            7
-        )
-    }
-
-    /**
-     * Open the bank.
-     */
-    fun open() {
-        if (isOpen) {
-            return
-        }
-        if (player.ironmanManager.checkRestriction(IronmanMode.ULTIMATE)) {
-            return
-        }
-        if (!player.bankPinManager.isUnlocked && !settings!!.isDevMode) {
-            player.bankPinManager.openType(1)
-            return
-        }
-        player.interfaceManager.openComponent(BANK_V2_MAIN)!!.closeEvent = CloseEvent { player: Player?, c: Component? ->
-            this@BankContainer.close()
-            true
-        }
-        player.interfaceManager.openSingleTab(Component(BANK_V2_MAIN_SIDE))
-        super.refresh()
-        player.inventory.refresh()
-        player.inventory.listeners.add(listener)
-        setVarp(player, 1249, lastAmountX)
-        val settings = IfaceSettingsBuilder().enableOptions(IntRange(0, 5)).enableExamine().enableSlotSwitch().build()
-        player.packetDispatch.sendIfaceSettings(settings, 0, BANK_V2_MAIN_SIDE, 0, 27)
-        isOpen = true
-    }
-
-    fun open(player: Player) {
-        if (isOpen) {
-            return
-        }
-        if (player.ironmanManager.checkRestriction(IronmanMode.ULTIMATE)) {
-            return
-        }
-        if (!player.bankPinManager.isUnlocked && !settings!!.isDevMode) {
-            player.bankPinManager.openType(1)
-            return
-        }
-        player.interfaceManager.openComponent(BANK_V2_MAIN)!!.closeEvent = CloseEvent { player1: Player?, c: Component? ->
-            this@BankContainer.close()
-            true
-        }
-        refresh(listener)
-        player.interfaceManager.openSingleTab(Component(BANK_V2_MAIN_SIDE))
-        player.inventory.listeners.add(player.bank.listener)
-        player.inventory.refresh()
-        setVarp(player, 1249, lastAmountX)
-        player.packetDispatch.sendIfaceSettings(1278, 73, BANK_V2_MAIN, 0, SIZE)
-        val settings = IfaceSettingsBuilder().enableOptions(IntRange(0, 5)).enableExamine().enableSlotSwitch().build()
-        player.packetDispatch.sendIfaceSettings(settings, 0, BANK_V2_MAIN_SIDE, 0, 27)
-        player.packetDispatch.sendRunScript(1451, "")
-        isOpen = true
+        player.generateItems(DEPOSIT_BOX, 15, listOf("Deposit-X", "Deposit-All", "Deposit-10", "Deposit-5", "Deposit-1"), 5, 7)
     }
 
     /**
@@ -161,51 +155,44 @@ class BankContainer(player: Player) : Container(SIZE, ContainerType.ALWAYS_STACK
     /**
      * Adds an item to the bank container.
      * @param slot The item slot.
-     * @param amount The amount.
+     * @param amt The amount.
      */
-    fun addItem(slot: Int, amount: Int) {
-        var amount = amount
-        if (slot < 0 || slot > player.inventory.capacity() || amount < 1) {
-            return
-        }
-        var item = player.inventory[slot] ?: return
+    fun addItem(slot: Int, amt: Int) {
+        var amount = amt
+        if (slot < 0 || slot > player.inventory.capacity() || amount < 1) return
+        val invItem = player.inventory[slot] ?: return
 
-        if (!item.definition.getConfiguration(ItemConfigParser.BANKABLE, true)) {
+        if (!invItem.definition.getConfiguration(ItemConfigParser.BANKABLE, true)) {
             sendMessage(player, "A magical force prevents you from banking this item.")
             return
         }
 
-        val maximum = player.inventory.getAmount(item)
-        if (amount > maximum) {
-            amount = maximum
-        }
+        val maximum = player.inventory.getAmount(invItem)
+        if (amount > maximum) amount = maximum
 
-        item = Item(item.id, amount, item.charge)
-        val unnote = !item.definition.isUnnoted()
+        val itemToRemove = Item(invItem.id, amount, invItem.charge)
+        val unnote = !invItem.definition.isUnnoted()
+        var add = if (unnote) Item(invItem.definition.getNoteId(), amount, invItem.charge) else itemToRemove
+        if (unnote && !add.definition.isUnnoted()) add = itemToRemove
 
-        var add = if (unnote) Item(item.definition.getNoteId(), amount, item.charge) else item
-        if (unnote && !add.definition.isUnnoted()) {
-            add = item
-        }
-
-        val maxCount = super.getMaximumAdd(add)
+        val maxCount = getMaximumAdd(add)
         if (amount > maxCount) {
             add.amount = maxCount
-            item.amount = maxCount
+            itemToRemove.amount = maxCount
             if (maxCount < 1) {
                 player.packetDispatch.sendMessage("There is not enough space left in your bank.")
                 return
             }
         }
 
-        if (player.inventory.remove(item, slot, false)) {
+        if (player.inventory.remove(itemToRemove, slot, false)) {
             var preferredSlot = -1
-            if (tabIndex != 0 && tabIndex != 10 && !super.contains(add.id, 1)) {
+            if (tabIndex != 0 && tabIndex != 10 && !contains(add.id, 1)) {
                 preferredSlot = tabStartSlot[tabIndex] + getItemsInTab(tabIndex)
                 insert(freeSlot(), preferredSlot, false)
                 increaseTabStartSlots(tabIndex)
             }
-            super.add(add, true, preferredSlot)
+            add(add, true, preferredSlot)
             player.inventory.update()
         }
     }
@@ -214,18 +201,15 @@ class BankContainer(player: Player) : Container(SIZE, ContainerType.ALWAYS_STACK
      * Takes a item from the bank container and adds one to the inventory
      * container.
      * @param slot The slot.
-     * @param amount The amount.
+     * @param amt The amount.
      */
-    fun takeItem(slot: Int, amount: Int) {
-        var amount = amount
-        if (slot < 0 || slot > super.capacity() || amount <= 0) {
-            return
-        }
-        var item = get(slot) ?: return
-        if (amount > item.amount) {
-            amount = item.amount // It always stacks in the bank.
-        }
-        item = Item(item.id, amount, item.charge)
+    fun takeItem(slot: Int, amt: Int) {
+        var amount = amt
+        if (slot < 0 || slot > capacity() || amount <= 0) return
+        val bankItem = get(slot) ?: return
+        if (amount > bankItem.amount) amount = bankItem.amount
+        val item = Item(bankItem.id, amount, bankItem.charge)
+
         val noteId = item.definition.getNoteId()
         var add = if (isNoteItems && noteId > 0) Item(noteId, amount, item.charge) else item
         val maxCount = player.inventory.getMaximumAdd(add)
@@ -233,22 +217,26 @@ class BankContainer(player: Player) : Container(SIZE, ContainerType.ALWAYS_STACK
             item.amount = maxCount
             add.amount = maxCount
             if (maxCount < 1) {
-                player.packetDispatch.sendMessage("Not enough space in your inventory.")
+                sendMessage(player, "Not enough space in your inventory.")
                 return
             }
         }
+
         if (isNoteItems && noteId < 0) {
-            player.packetDispatch.sendMessage("This item can't be withdrawn as a note.")
+            sendMessage(player, "This item can't be withdrawn as a note.")
             add = item
         }
-        if (super.remove(item, slot, false)) {
+
+        if (remove(item, slot, false)) {
             player.inventory.add(add, false)
         }
+
         if (get(slot) == null) {
             val tabId = getTabByItemSlot(slot)
             decreaseTabStartSlots(tabId)
             shift()
         } else update()
+
         player.inventory.update()
     }
 
@@ -257,7 +245,7 @@ class BankContainer(player: Player) : Container(SIZE, ContainerType.ALWAYS_STACK
      * @param amount The amount to set.
      */
     fun updateLastAmountX(amount: Int) {
-        this.lastAmountX = amount
+        lastAmountX = amount
         setVarp(player, 1249, amount)
     }
 
@@ -267,13 +255,20 @@ class BankContainer(player: Player) : Container(SIZE, ContainerType.ALWAYS_STACK
      * @return The tab index.
      */
     fun getTabByItemSlot(itemSlot: Int): Int {
-        var tabId = 0
-        for (i in tabStartSlot.indices) {
-            if (itemSlot >= tabStartSlot[i]) {
-                tabId = i
+        var low = 0
+        var high = tabStartSlot.size - 1
+        var result = 0
+
+        while (low <= high) {
+            val mid = (low + high) / 2
+            if (itemSlot >= tabStartSlot[mid]) {
+                result = mid
+                low = mid + 1
+            } else {
+                high = mid - 1
             }
         }
-        return tabId
+        return result
     }
 
     /**
@@ -281,9 +276,7 @@ class BankContainer(player: Player) : Container(SIZE, ContainerType.ALWAYS_STACK
      * @param startId The start id.
      */
     fun increaseTabStartSlots(startId: Int) {
-        for (i in startId + 1 until tabStartSlot.size) {
-            tabStartSlot[i]++
-        }
+        for (i in startId + 1 until tabStartSlot.size) tabStartSlot[i]++
     }
 
     /**
@@ -291,15 +284,9 @@ class BankContainer(player: Player) : Container(SIZE, ContainerType.ALWAYS_STACK
      * @param startId The start id.
      */
     fun decreaseTabStartSlots(startId: Int) {
-        if (startId == 10) {
-            return
-        }
-        for (i in startId + 1 until tabStartSlot.size) {
-            tabStartSlot[i]--
-        }
-        if (getItemsInTab(startId) == 0) {
-            collapseTab(startId)
-        }
+        if (startId == 10) return
+        for (i in startId + 1 until tabStartSlot.size) tabStartSlot[i]--
+        if (getItemsInTab(startId) == 0) collapseTab(startId)
     }
 
     /**
@@ -315,19 +302,20 @@ class BankContainer(player: Player) : Container(SIZE, ContainerType.ALWAYS_STACK
      */
     fun collapseTab(tabId: Int) {
         val size = getItemsInTab(tabId)
-        val tempTabItems = arrayOfNulls<Item>(size)
-        for (i in 0 until size) {
-            tempTabItems[i] = get(tabStartSlot[tabId] + i)
-            replace(null, tabStartSlot[tabId] + i, false)
-        }
+        if (size <= 0) return
+
+        val temp = Array<Item?>(size) { i -> get(tabStartSlot[tabId] + i) }
+        for (i in 0 until size) replace(null, tabStartSlot[tabId] + i, false)
         shift()
+
         for (i in tabId until tabStartSlot.size - 1) {
             tabStartSlot[i] = tabStartSlot[i + 1] - size
         }
-        tabStartSlot[10] = tabStartSlot[10] - size
+        tabStartSlot[10] -= size
+
         for (i in 0 until size) {
-            val slot = freeSlot()
-            replace(tempTabItems[i], slot, false)
+            val s = freeSlot()
+            replace(temp[i], s, false)
         }
         refresh() //We only refresh once.
     }
@@ -336,9 +324,7 @@ class BankContainer(player: Player) : Container(SIZE, ContainerType.ALWAYS_STACK
      * Sets the tab configs.
      */
     fun setTabConfigurations() {
-        for (i in 0..7) {
-            setVarbit(player, 4885 + i, getItemsInTab(i + 1))
-        }
+        for (i in 0..7) setVarbit(player, 4885 + i, getItemsInTab(i + 1))
     }
 
     /**
@@ -346,18 +332,14 @@ class BankContainer(player: Player) : Container(SIZE, ContainerType.ALWAYS_STACK
      * @param tabId The tab index.
      * @return The amount of items in this tab.
      */
-    fun getItemsInTab(tabId: Int): Int {
-        return tabStartSlot[tabId + 1] - tabStartSlot[tabId]
-    }
+    fun getItemsInTab(tabId: Int): Int = tabStartSlot[tabId + 1] - tabStartSlot[tabId]
 
     /**
      * Checks if the item can be added.
      * @param item the item.
      * @return `True` if so.
      */
-    fun canAdd(item: Item): Boolean {
-        return item.definition.getConfiguration(ItemConfigParser.BANKABLE, true)
-    }
+    fun canAdd(item: Item): Boolean = item.definition.getConfiguration(ItemConfigParser.BANKABLE, true)
 
     var isNoteItems: Boolean
         /**
@@ -371,15 +353,13 @@ class BankContainer(player: Player) : Container(SIZE, ContainerType.ALWAYS_STACK
          */
         set(noteItems) {
             setVarbit(player, Vars.VARBIT_BANK_WITHDRAW_MODE_3958, if (noteItems) 1 else 0, true)
-        }//var115
+        }
 
     /**
      * Gets the tabIndex value.
      * @return The tabIndex.
      */
-    fun getTabIndex(): Int {
-        return tabIndex
-    }
+    fun getTabIndex(): Int = tabIndex
 
     /**
      * Sets the tabIndex value.
@@ -401,47 +381,51 @@ class BankContainer(player: Player) : Container(SIZE, ContainerType.ALWAYS_STACK
          * Sets the insert items value.
          * @param insertItems The insert items value.
          */
-        set(insertItems) {
-            setVarp(player, Vars.VARP_IFACE_BANK_INSERT_MODE_304, if (insertItems) 1 else 0)
-        }
+        set(insertItems) = setVarp(player, Vars.VARP_IFACE_BANK_INSERT_MODE_304, if (insertItems) 1 else 0)
 
     /**
      * Listens to the bank container.
      * @author Emperor
      */
-    private class BankListener(private val player: Player) : ContainerListener {
+    private inner class BankListener(private val p: Player) : ContainerListener {
         override fun update(c: Container?, event: ContainerEvent?) {
-            if (c is BankContainer) {
-                if (event != null) {
-                    PacketRepository.send(
-                        ContainerPacket::class.java,
-                        OutgoingContext.Container(player, BANK_V2_MAIN, 64000, 95, event.items, false, *event.slots)
-                    )
-                }
-            } else {
-                if (event != null) {
-                    PacketRepository.send(
-                        ContainerPacket::class.java,
-                        OutgoingContext.Container(player, BANK_V2_MAIN_SIDE, 64000, 93, event.items, false, *event.slots)
-                    )
-                }
-            }
-            player.bank.setTabConfigurations()
-            player.bank.sendBankSpace()
+            if (event == null) return
+            val isMain = c is BankContainer
+            val iface = if (isMain) BANK_V2_MAIN else BANK_V2_MAIN_SIDE
+            val containerType = if (isMain) MAIN_CONTAINER_TYPE else SIDE_CONTAINER_TYPE
+
+            sendForUpdate(iface, containerType, event.items, *event.slots)
+            refreshBankState()
         }
 
         override fun refresh(c: Container?) {
-            if (c is BankContainer) {
-                PacketRepository.send(
-                    ContainerPacket::class.java,
-                    OutgoingContext.Container(player, BANK_V2_MAIN, 64000, 95, c.toArray(), c.capacity(), false)
-                )
-            } else {
-                val items: Array<Item> = c?.toArray()?.copyOf() ?: emptyArray()
-                PacketRepository.send(
-                    ContainerPacket::class.java, OutgoingContext.Container(player, BANK_V2_MAIN_SIDE, 64000, 93, items, 28, false)
-                )
-            }
+            val isMain = c is BankContainer
+            val iface = if (isMain) BANK_V2_MAIN else BANK_V2_MAIN_SIDE
+            val containerType = if (isMain) MAIN_CONTAINER_TYPE else SIDE_CONTAINER_TYPE
+            val items = c?.toArray()?.copyOf() ?: emptyArray()
+            val length = if (isMain) c?.capacity() ?: 0 else SIDE_DEFAULT_CAPACITY
+
+            sendForRefresh(iface, containerType, items, length)
+            refreshBankState()
+        }
+
+        private fun sendForUpdate(iface: Int, containerType: Int, items: Array<Item>, vararg slots: Int) {
+            // constructor: (player, interfaceId, childId, containerId, items, split, vararg slots)
+            PacketRepository.send(
+                ContainerPacket::class.java,
+                OutgoingContext.Container(p, iface, BANK_CHILD_ID, containerType, items, false, *slots)
+            )
+        }
+
+        private fun sendForRefresh(iface: Int, containerType: Int, items: Array<Item>, length: Int) {
+            // constructor: (player, interfaceId, childId, containerId, items, length, split)
+            PacketRepository.send(
+                ContainerPacket::class.java,
+                OutgoingContext.Container(p, iface, BANK_CHILD_ID, containerType, items, length, false)
+            )
+        }
+
+        private fun refreshBankState() {
             player.bank.setTabConfigurations()
             player.bank.sendBankSpace()
         }
@@ -464,6 +448,11 @@ class BankContainer(player: Player) : Container(SIZE, ContainerType.ALWAYS_STACK
         const val BANK_V2_MAIN_SIDE = Components.BANK_V2_SIDE_763
 
         /**
+         * The bank child id.
+         */
+        private const val BANK_CHILD_ID = 64000
+
+        /**
          * The bank container size.
          */
         val SIZE: Int = ServerConstants.BANK_SIZE
@@ -472,6 +461,21 @@ class BankContainer(player: Player) : Container(SIZE, ContainerType.ALWAYS_STACK
          * The maximum amount of bank tabs
          */
         const val TAB_SIZE: Int = 11
+
+        /**
+         * The main inv size.
+         */
+        private const val MAIN_CONTAINER_TYPE = 95
+
+        /**
+         * The side inv size.
+         */
+        private const val SIDE_CONTAINER_TYPE = 93
+
+        /**
+         * The inv size
+         */
+        private const val SIDE_DEFAULT_CAPACITY = 28
 
         /**
          * Gets the array index for a tab.

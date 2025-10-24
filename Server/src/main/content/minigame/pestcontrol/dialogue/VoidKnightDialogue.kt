@@ -5,6 +5,7 @@ import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.node.item.GroundItemManager
 import core.game.node.item.Item
+import core.game.world.GameWorld
 import core.game.world.GameWorld.settings
 import core.plugin.Initializable
 import shared.consts.NPCs
@@ -50,7 +51,7 @@ class VoidKnightDialogue(player: Player? = null) : Dialogue(player) {
                 stage = 11
             }
             11 -> {
-                options("Wow, can I join?", "What kind of work?", "What's 'RuneScape'?", "Uh huh, sure.")
+                options("Wow, can I join?", "What kind of work?", "What's '${GameWorld.settings?.name}'?", "Uh huh, sure.")
                 stage = 12
             }
             12 -> when (buttonId) {
@@ -65,7 +66,7 @@ class VoidKnightDialogue(player: Player? = null) : Dialogue(player) {
                 }
 
                 3 -> {
-                    player("What's 'RuneScape'?")
+                    player("What's '${GameWorld.settings?.name}'?")
                     stage = 15
                 }
 
@@ -88,7 +89,7 @@ class VoidKnightDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             18 -> {
-                options("Yeah ok, what's the problem?", "What's 'RuneScape'?", "I'd rather not, sorry.")
+                options("Yeah ok, what's the problem?", "What's '${GameWorld.settings?.name}'?", "I'd rather not, sorry.")
                 stage = 19
             }
 
@@ -99,7 +100,7 @@ class VoidKnightDialogue(player: Player? = null) : Dialogue(player) {
                 }
 
                 2 -> {
-                    player("What's 'RuneScape'?")
+                    player("What's '${GameWorld.settings?.name}'?")
                     stage = 15
                 }
 

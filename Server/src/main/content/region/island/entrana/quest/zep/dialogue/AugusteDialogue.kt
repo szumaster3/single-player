@@ -441,35 +441,14 @@ class AugusteDialogue(player: Player? = null) : Dialogue(player) {
 }
 
 private class AugusteDialogueFile : DialogueFile() {
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
+    override fun handle(componentID: Int, buttonID: Int) {
         npc = NPC(NPCs.AUGUSTE_5049)
         when (stage) {
             0 -> playerl(FaceAnim.FRIENDLY, "So what are you going to do now?").also { stage++ }
-            1 -> npcl(
-                FaceAnim.FRIENDLY,
-                "I am considering starting a balloon enterprise. People all over Runescape will be able to travel in a new, exciting way.",
-            ).also {
-                stage++
-            }
-
-            2 -> npcl(
-                FaceAnim.FRIENDLY,
-                "As my first assistant, you will always be welcome to use a balloon. You'll have to bring your own fuel, though.",
-            ).also {
-                stage++
-            }
-
+            1 -> npcl(FaceAnim.FRIENDLY, "I am considering starting a balloon enterprise. People all over ${GameWorld.settings?.name} will be able to travel in a new, exciting way.").also { stage++ }
+            2 -> npcl(FaceAnim.FRIENDLY, "As my first assistant, you will always be welcome to use a balloon. You'll have to bring your own fuel, though.").also { stage++ }
             3 -> playerl(FaceAnim.FRIENDLY, "Thanks!").also { stage++ }
-            4 -> npcl(
-                FaceAnim.FRIENDLY,
-                "I will base my operations in Entrana. If you'd like to travel to new places, come see me there.",
-            ).also {
-                stage++
-            }
-
+            4 -> npcl(FaceAnim.FRIENDLY, "I will base my operations in Entrana. If you'd like to travel to new places, come see me there.").also { stage++ }
             5 -> {
                 end()
                 finishQuest(player!!, Quests.ENLIGHTENED_JOURNEY)
