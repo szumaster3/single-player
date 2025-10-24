@@ -1,6 +1,7 @@
 package content.region.misthalin.lumbridge.plugin
 
 import content.data.GameAttributes
+import content.region.misthalin.lumbridge.dialogue.BankTutorDialogue
 import core.GlobalStatistics
 import core.api.*
 import core.game.activity.ActivityManager
@@ -25,10 +26,21 @@ import kotlin.math.floor
 
 class LumbridgePlugin : InteractionListener {
 
-    val CMB_TUTOR = intArrayOf(NPCs.MAGIC_TUTOR_4707, NPCs.RANGED_TUTOR_1861)
-    var flagInUse: Boolean = false
+    companion object {
+        val COMBAT_TUTORS = intArrayOf(NPCs.MAGIC_TUTOR_4707, NPCs.RANGED_TUTOR_1861)
+        var flagInUse: Boolean = false
+    }
 
     override fun defineListeners() {
+        /*
+         * Handles bank guide dialogue.
+         */
+
+        on(NPCs.BANK_TUTOR_7961, IntType.NPC, "talk-to") { player, node ->
+            openDialogue(player, BankTutorDialogue(), node.id)
+            return@on true
+        }
+
         /*
          * Handles warning toggles.
          */
@@ -42,7 +54,7 @@ class LumbridgePlugin : InteractionListener {
          * Handles claiming interactions with combat tutors.
          */
 
-        on(CMB_TUTOR, IntType.NPC, "claim") { player, node ->
+        on(COMBAT_TUTORS, IntType.NPC, "claim") { player, node ->
             val npc = node as NPC
             openDialogue(player, npc.id, npc, true)
             return@on true

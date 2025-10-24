@@ -96,7 +96,7 @@ object LevelUp {
         val skillName = Skills.SKILL_NAME[slot]
         sendString(player, "<col=00008B>Congratulations, you've just advanced a $skillName level!", Components.GAME_INTERFACE_740, 0)
         sendString(player, "Your $skillName level is now ${player.getSkills().getStaticLevel(slot)}.", Components.GAME_INTERFACE_740, 1)
-        sendMessage(player, "You've just advanced a $skillName level! You have reached level ${player.getSkills().getStaticLevel(slot)}.")
+        sendMessage(player, "You've just advanced an $skillName level! You have reached level ${player.getSkills().getStaticLevel(slot)}.")
 
         if (slot == Skills.PRAYER) {
             player.getSkills().incrementPrayerPoints(1.0)

@@ -64,5 +64,5 @@ class GiantRatNPC : AbstractNPC {
         }
     }
 
-    override fun getIds(): IntArray = intArrayOf(NPCs.GIANT_RAT_86)
+    override fun getIds(): IntArray = intArrayOf(NPCs.GIANT_RAT_86, NPCs.GIANT_RAT_950)
 }

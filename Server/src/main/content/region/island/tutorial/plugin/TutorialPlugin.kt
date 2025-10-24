@@ -1,6 +1,7 @@
 package content.region.island.tutorial.plugin
 
 import content.data.GameAttributes
+import content.region.misthalin.lumbridge.dialogue.BankTutorDialogue
 import core.api.*
 import core.game.dialogue.FaceAnim
 import core.game.global.action.ClimbActionHandler
@@ -110,7 +111,6 @@ class TutorialPlugin : InteractionListener {
                 stage < 21 -> {
                     player.dialogueInterpreter.sendPlainMessage(
                         false,
-                        "",
                         "You need to finish the Master Chef's tasks first.",
                         "",
                     )
@@ -144,7 +144,6 @@ class TutorialPlugin : InteractionListener {
             if (getAttribute(player, TutorialStage.TUTORIAL_STAGE, 0) != 26) {
                 player.dialogueInterpreter.sendPlainMessage(
                     false,
-                    "",
                     "You need to finish the Master Chef's tasks first.",
                     "",
                 )
@@ -207,7 +206,6 @@ class TutorialPlugin : InteractionListener {
             if (stage < 42) {
                 player.dialogueInterpreter.sendPlainMessage(
                     false,
-                    "",
                     "You need to finish with Mining and Smithing first.",
                     "",
                 )
@@ -259,7 +257,6 @@ class TutorialPlugin : InteractionListener {
             if (getAttribute(player, TutorialStage.TUTORIAL_STAGE, 0) != 55) {
                 player.dialogueInterpreter.sendPlainMessage(
                     false,
-                    "",
                     "You're not ready to continue yet. You need to know",
                     "about combat before you go on.",
                 )
@@ -280,6 +277,15 @@ class TutorialPlugin : InteractionListener {
         on(Scenery.LADDER_3031, IntType.SCENERY, "climb-down") { player, _ ->
             sendMessage(player, "You've already done that. Perhaps you should move on.")
             return@on false
+        }
+
+        /*
+         * Handles bank guide dialogue.
+         */
+
+        on(NPCs.BANKER_953, IntType.NPC, "talk-to") { player, node ->
+            openDialogue(player, BankTutorDialogue(), node.id)
+            return@on true
         }
 
         /*
@@ -321,7 +327,6 @@ class TutorialPlugin : InteractionListener {
             if (getAttribute(player, TutorialStage.TUTORIAL_STAGE, 0) != 66) {
                 player.dialogueInterpreter.sendPlainMessage(
                     false,
-                    "",
                     "You need to finish Brother Brace's tasks before you",
                     "are allowed to proceed through this door.",
                 )
@@ -353,7 +358,6 @@ class TutorialPlugin : InteractionListener {
         private const val COMBAT_LADDER = Scenery.LADDER_3030
         private const val BANK_GUIDE_DOOR = Scenery.DOOR_3024
         private const val FINANCE_GUIDE_DOOR = Scenery.DOOR_3025
-        private val CHURCH_DOORS = intArrayOf(Scenery.CHURCH_DOOR_36999, Scenery.CHURCH_DOOR_37000)
         private const val CHURCH_DOOR_EXIT = Scenery.DOOR_3026
         private const val BRONZE_AXE = Items.BRONZE_AXE_1351
         private const val BRONZE_PICKAXE = Items.BRONZE_PICKAXE_1265

@@ -47,6 +47,7 @@ class SurvivalExpertDialogue(player: Player? = null) : Dialogue(player) {
                 setTitle(player!!, 5)
                 sendOptions(player!!, title = "What would you like to hear more about?", "Crafting the logs.", "Light a fire.", "Netting a Fishing spot.", "Cooking shrimp.", "Nothing, thanks.")
             }
+            else -> sendDialogue(player, "You should complete your objective before talking to Brynna.").also { stage =  END_DIALOGUE }
         }
         return true
     }

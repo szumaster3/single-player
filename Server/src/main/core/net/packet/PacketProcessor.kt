@@ -321,17 +321,13 @@ object PacketProcessor {
             }
 
             is Packet.ItemExamine -> {
-                val tutorialStage = pkt.player.getAttribute(GameAttributes.TUTORIAL_COMPLETE, false)
                 val def = ItemDefinition.forId(pkt.id) ?: return
                 pkt.player.debug("[ITEM] ID: ${pkt.id} Value: ${def.value} Model: ${def.interfaceModelId}")
-                when {
-                    !tutorialStage -> sendTutorialMessage(pkt.player, def.examine)
-                    else -> pkt.player.sendMessage(def.examine)
-                }
+                sendMessage(pkt.player, def.examine)
+
             }
 
             is Packet.SceneryExamine -> {
-                val tutorialStage = pkt.player.getAttribute(GameAttributes.TUTORIAL_COMPLETE, false)
                 val def = SceneryDefinition.forId(pkt.id) ?: return
                 pkt.player.debug("[SCENERY]---------------------")
                 pkt.player.debug("ID: ${pkt.id}")
@@ -339,14 +335,10 @@ object PacketProcessor {
                     pkt.player.debug("Varbit: ${def.configFile!!.id}")
                 }
                 pkt.player.debug("------------------------------")
-                when {
-                    !tutorialStage -> sendTutorialMessage(pkt.player, def.examine)
-                    else -> pkt.player.sendMessage(def.examine)
-                }
+                sendMessage(pkt.player, def.examine)
             }
 
             is Packet.NpcExamine -> {
-                val tutorialStage = pkt.player.getAttribute(GameAttributes.TUTORIAL_COMPLETE, false)
                 val def = NPCDefinition.forId(pkt.id)
                 pkt.player.debug("[NPC]-------------------------")
                 pkt.player.debug("ID: ${pkt.id}")
@@ -354,10 +346,7 @@ object PacketProcessor {
                     pkt.player.debug("Varbit: ${def.varbitId}")
                 }
                 pkt.player.debug("------------------------------")
-                when {
-                    !tutorialStage -> sendTutorialMessage(pkt.player, def.examine!!)
-                    else -> pkt.player.sendMessage(def.examine)
-                }
+                sendMessage(pkt.player, def.examine.toString())
             }
 
             else -> log(this::class.java, Log.WARN, "Unprocessed Packet: ${pkt::class.java.simpleName}")

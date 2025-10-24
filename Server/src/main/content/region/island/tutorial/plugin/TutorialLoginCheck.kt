@@ -17,7 +17,7 @@ class TutorialLoginCheck : LoginListener {
                 (player.skills.totalLevel > 33 || player.bank.itemCount() > 0 || player.inventory.itemCount() > 0)
             ) {
                 setAttribute(player, "/save:${GameAttributes.TUTORIAL_COMPLETE}", true)
-                setVarbit(player, 4895, 0)
+                setVarbit(player, 4895, 0, true)
                 return
             }
             GameWorld.Pulser.submit(

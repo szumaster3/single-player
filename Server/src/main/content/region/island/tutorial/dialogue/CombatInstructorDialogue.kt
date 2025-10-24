@@ -29,9 +29,7 @@ class CombatInstructorDialogue(player: Player? = null) : Dialogue(player) {
                 if (!inInventory(player, Items.SHORTBOW_841) && !inEquipment(player, Items.SHORTBOW_841)) {
                     addItem(player, Items.SHORTBOW_841)
                 }
-                if (!inInventory(player, Items.BRONZE_ARROW_882) && !inEquipment(player, Items.BRONZE_ARROW_882)) {
-                    addItem(player, Items.BRONZE_ARROW_882, 30)
-                }
+                addItem(player, Items.BRONZE_ARROW_882, 30)
             }
 
             in 55..100 -> npcl(FaceAnim.FRIENDLY, "Do you need something?")

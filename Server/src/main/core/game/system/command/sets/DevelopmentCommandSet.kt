@@ -6,17 +6,21 @@ import content.data.setRespawnLocation
 import content.global.activity.jobs.JobManager
 import content.minigame.mta.plugin.MTAZone
 import content.region.island.tutorial.plugin.TutorialStage
+import content.region.island.tutorial.plugin.TutorialStage.TUTORIAL_HINT
 import content.region.kandarin.baxtorian.barbtraining.BarbarianTraining
 import core.api.*
 import core.cache.def.impl.NPCDefinition
 import core.cache.def.impl.VarbitDefinition
+import core.game.node.Node
 import core.game.node.entity.combat.ImpactHandler.HitsplatType
 import core.game.node.entity.player.Player
+import core.game.node.entity.player.link.HintIconManager
 import core.game.node.entity.player.link.SpellBookManager
 import core.game.node.entity.player.link.diary.DiaryType
 import core.game.system.command.Privilege
 import core.game.system.task.Pulse
 import core.game.world.map.Location
+import core.game.world.repository.Repository
 import core.net.packet.OutgoingContext
 import core.net.packet.PacketWriteQueue
 import core.net.packet.out.ResetInterface
@@ -270,19 +274,79 @@ class DevelopmentCommandSet : CommandSet(Privilege.ADMIN) {
         }
 
         /*
+         * Command to register a hint icon on a node or at a location.
+         */
+
+        define(
+            name = "hinticon",
+            privilege = Privilege.ADMIN,
+            usage = "::hinticon <npcId> | <x> <y> <height>",
+            description = "Register a hint icon on a node or at a location."
+        ) { player, args ->
+            when (args.size - 1) {
+                1 -> { // node
+                    val nodeId = args[1].toIntOrNull() ?: reject(player, "Please provide a valid npc ID")
+                    val node = Repository.findNPC(nodeId as Int) ?: reject(player, "Node not found for ID $nodeId")
+                    setAttribute(player, TUTORIAL_HINT, HintIconManager.registerHintIcon(player, node as Node))
+                    player.debug("Registered hint icon on node $nodeId")
+                }
+                3 -> { // location
+                    val x = args[1].toIntOrNull() ?: reject(player, "Invalid x coord")
+                    val y = args[2].toIntOrNull() ?: reject(player, "Invalid y coord")
+                    val height = args[3].toIntOrNull() ?: reject(player, "Invalid height")
+                    val location = Location.create(x as Int, y  as Int, height as Int)
+                    setAttribute(player, TUTORIAL_HINT, HintIconManager.registerHintIcon(player, location, 1, -1, player.hintIconManager.freeSlot(), height, 3))
+                    player.debug("Registered hint icon at location $x,$y,$height")
+                }
+                else -> reject(player, "Invalid usage. Use ::hinticon <npcId> or ::hinticon <x> <y> <height>")
+            }
+        }
+
+        /*
+         * Command to remove all active hint icons for a player.
+         */
+
+        define(
+            name = "hintclear",
+            privilege = Privilege.ADMIN,
+            usage = "::hintclear",
+            description = "Removes all active hint icons."
+        ) { player, _ ->
+            player.hintIconManager.clear()
+            player.debug("All hint icons have been removed.")
+        }
+
+        /*
          * Command for setting tutorial stages.
+         */
+
+        define(
+            name = "settutorialstage",
+            privilege = Privilege.ADMIN,
+            usage = "::settutorialstage <stage>",
+            description = "Set tutorial stage."
+        ) { player, args ->
+            if (args.size < 2) {
+                reject(player, "Usage: ::tutorialstage <stage>")
+            }
+
+            val stage = args[1].toIntOrNull() ?: reject(player, "Please use a valid integer.")
+            setAttribute(player, GameAttributes.TUTORIAL_STAGE, stage)
+            player.debug("Stage set to [${getAttribute(player, GameAttributes.TUTORIAL_STAGE, 0)}]")
+        }
+
+        /*
+         * Command for check tutorial stage.
          */
 
         define(
             name = "tutorialstage",
             privilege = Privilege.ADMIN,
             usage = "::tutorialstage",
-            description = "Set tutorial stage.",
-        ) { player, args ->
-            val stage = args[1].toIntOrNull() ?: reject(player, "Please use a valid int.")
-            setAttribute(player, GameAttributes.TUTORIAL_STAGE, stage)
-            player.debug("Stage set to [${getAttribute(player, GameAttributes.TUTORIAL_STAGE, 0)}]")
-            return@define
+            description = "Check which tutorial stage you on."
+        ) { player, _ ->
+            getAttribute(player, GameAttributes.TUTORIAL_STAGE, -1)
+            player.debug("Tutorial stage=${getAttribute(player, GameAttributes.TUTORIAL_STAGE, 0)}")
         }
 
         /*

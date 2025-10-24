@@ -1,30 +1,20 @@
-package content.region.island.tutorial.dialogue
+package content.region.misthalin.lumbridge.dialogue
 
-import core.game.dialogue.Dialogue
+import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
-import core.game.node.entity.npc.NPC
-import core.game.node.entity.player.Player
-import core.plugin.Initializable
-import shared.consts.NPCs
 
-@Initializable
-class BankerTutorDialogue(player: Player? = null) : Dialogue(player) {
+class BankTutorDialogue: DialogueFile() {
 
-    override fun open(vararg args: Any?): Boolean {
-        npc = args[0] as NPC
-        npc("Good day, would you like to access your bank account?")
-        return true
-    }
-
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(componentID: Int, buttonID: Int) {
         when (stage) {
-            0 -> options("How do I use the bank?", "I'd like to access my bank account please.", "I'd like to check my PIN settings.").also { stage++ }
-            1 -> when (buttonId) {
-                1 -> options("Using the bank itself.", "Using Bank deposit boxes.", "What's this PIN thing that people keep talking about?", "Goodbye.").also { stage = 9 }
-                2 -> end().also { player.bank.open() }
-                3 -> end().also { player.bankPinManager.openSettings() }
+            0 -> npc("Good day, would you like to access your bank account?").also { stage++ }
+            1 -> options("How do I use the bank?", "I'd like to access my bank account please.", "I'd like to check my PIN settings.").also { stage++ }
+            2 -> when (buttonID) {
+                1 -> options("Using the bank itself.", "Using Bank deposit boxes.", "What's this PIN thing that people keep talking about?", "Goodbye.").also { stage++ }
+                2 -> end().also { player?.bank?.open() }
+                3 -> end().also { player?.bankPinManager?.openSettings() }
             }
-            9 -> when (buttonId) {
+            3 -> when (buttonID) {
                 1 -> player("Using the bank itself. I'm not sure how....?").also { stage++ }
                 2 -> player("Using Bank deposit boxes.... what are they?").also { stage = 20 }
                 3 -> playerl(FaceAnim.HALF_ASKING, "What's this PIN thing that people keep talking about?").also { stage = 30 }
@@ -44,10 +34,5 @@ class BankerTutorDialogue(player: Player? = null) : Dialogue(player) {
             32 -> npc("So if someone did manage to get your password they", "couldn't steal your items if they were in the bank.").also { stage = 33 }
             33 -> end()
         }
-        return true
     }
-
-    override fun newInstance(player: Player?): Dialogue = BankerTutorDialogue(player)
-
-    override fun getIds(): IntArray = intArrayOf(NPCs.BANK_TUTOR_4907)
 }

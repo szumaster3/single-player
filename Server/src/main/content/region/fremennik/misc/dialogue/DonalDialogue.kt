@@ -27,8 +27,7 @@ class DonalDialogue(player: Player? = null) : Dialogue(player) {
         return true
     }
 
-    override fun newInstance(player: Player?): Dialogue =
-        content.region.fremennik.misc.dialogue.DonalDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = DonalDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.DONAL_3938)
 }

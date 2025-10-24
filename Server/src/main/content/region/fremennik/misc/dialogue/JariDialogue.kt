@@ -13,7 +13,7 @@ class JariDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
-        npc(FaceAnim.OLD_DEFAULT, "Good day, sir.")
+        npc(FaceAnim.OLD_DEFAULT, "Good day, ${if(player!!.isMale) "sir" else "madam"}.")
         return true
     }
 

@@ -1,12 +1,14 @@
 package core.api
 
 import com.moandjiezana.toml.Toml
+import content.data.GameAttributes
 import content.data.God
 import content.data.consumables.Consumables
 import content.data.items.SkillingTool
 import content.global.plugin.iface.ge.StockMarket
 import content.global.skill.slayer.SlayerManager
 import content.global.skill.slayer.Tasks
+import content.region.island.tutorial.plugin.TutorialStage
 import core.ServerConstants
 import core.api.SecondaryBankAccountActivationResult.*
 import core.api.utils.PlayerCamera
@@ -1036,7 +1038,11 @@ fun sendMessage(
     if (ticks != null) {
         player.sendMessages(ticks, *lines)
     } else {
-        player.sendMessages(*lines)
+        if (getVarp(player, 281) == 1000 || player.getAttribute(GameAttributes.TUTORIAL_COMPLETE, false)) {
+            player.sendMessages(*lines)
+        } else {
+            player.dialogueInterpreter.sendBoldInput(message)
+        }
     }
 }
 
