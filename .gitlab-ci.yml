@@ -11,6 +11,7 @@ workflow:
     - changes:
         - "**/*"
         - "!Client/**/*"
+        - "!Cache/**/*"
       when: always
     - when: never
 
