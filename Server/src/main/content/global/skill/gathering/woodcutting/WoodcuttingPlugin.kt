@@ -24,6 +24,7 @@ import core.game.node.scenery.SceneryBuilder
 import core.game.system.command.sets.STATS_BASE
 import core.game.system.command.sets.STATS_LOGS
 import core.game.world.map.RegionManager
+import core.game.world.update.flag.context.Animation
 import core.tools.RandomFunction
 import shared.consts.Animations
 import shared.consts.Items
@@ -71,22 +72,15 @@ class WoodcuttingPlugin : InteractionListener {
         val resource = WoodcuttingNode.forId(node.id)
         val tool = SkillingTool.getAxe(player)
 
-        if (!finishedMoving(player)) {
+        if (!finishedMoving(player))
             return restartScript(player)
-        }
+
 
         if (state == 0) {
-            if (getAttribute(player, GameAttributes.TUTORIAL_STAGE, -1) < 4) {
-                if (resource == WoodcuttingNode.STANDARD_TREE_10) {
-                    sendNPCDialogue(
-                        player,
-                        NPCs.SURVIVAL_EXPERT_943,
-                        "I admire your enthusiasm, but let's first have a quick chat.",
-                    )
-                }
+            if (getAttribute(player, GameAttributes.TUTORIAL_STAGE, -1) < 4 && resource == WoodcuttingNode.STANDARD_TREE_10) {
+                sendNPCDialogue(player, NPCs.SURVIVAL_EXPERT_943, "I admire your enthusiasm, but let's first have a quick chat.",)
                 return clearScripts(player)
             }
-
             if (!checkWoodcuttingRequirements(player, resource!!, node)) {
                 return clearScripts(player)
             }
@@ -217,9 +211,9 @@ class WoodcuttingPlugin : InteractionListener {
         return hostRatio < clientRatio
     }
 
-    private fun animateWoodcutting(player: Player) {
+    fun animateWoodcutting(player: Player) {
         if (!player.animator.isAnimating) {
-            animate(player, SkillingTool.getAxe(player)!!.animation)
+            player.animate(SkillingTool.getAxe(player)?.let { Animation(it.animation) })
             val playersAroundMe = RegionManager
                 .getLocalPlayers(player, 2)
                 .filter { it.username != player.username }
@@ -230,6 +224,7 @@ class WoodcuttingPlugin : InteractionListener {
             }
         }
     }
+
 
     private fun checkWoodcuttingRequirements(
         player: Player,

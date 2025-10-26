@@ -8,6 +8,7 @@ import core.game.interaction.InterfaceListener
 import shared.consts.Components
 import shared.consts.NPCs
 import shared.consts.Quests
+import shared.consts.Vars
 
 class GliderPlugin : InteractionListener, InterfaceListener {
 
@@ -47,7 +48,7 @@ class GliderPlugin : InteractionListener, InterfaceListener {
          */
 
         onOpen(Components.GLIDERMAP_138) { player, _ ->
-            setVarp(player, 153, 0)
+            setVarp(player, Vars.VARP_IFACE_GLIDER_CONFIG_153, 0)
             return@onOpen true
         }
 

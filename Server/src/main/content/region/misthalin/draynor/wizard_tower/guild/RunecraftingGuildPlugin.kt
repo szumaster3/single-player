@@ -1,6 +1,7 @@
 package content.region.misthalin.draynor.wizard_tower.guild
 
 import content.global.skill.runecrafting.Talisman
+import content.region.misthalin.draynor.wizard_tower.guild.RunecraftingGuildPlugin.ShopItem
 import core.api.*
 import core.api.isQuestComplete
 import core.api.closeDialogue
@@ -20,12 +21,6 @@ import core.game.world.map.zone.ZoneRestriction
 import core.tools.Log
 import shared.consts.*
 
-data class ShopItem(
-    val id: Int,
-    val price: Int,
-    val amount: Int,
-)
-
 /*
  * TODO CHECKLIST
  * [ ] - Entering the portal in the Dagon'Hai caves now works with an omni-talisman. 26 November 2008
@@ -35,6 +30,9 @@ data class ShopItem(
  * [ ] - Access to all Elriss dialogues requires Ring of Charos (a) and a set of Runecrafter robes (any colour) equipped.
  */
 class RunecraftingGuildPlugin : InteractionListener, InterfaceListener, MapArea {
+
+    data class ShopItem(val id: Int, val price: Int, val amount: Int)
+
     companion object {
         private val RC_HAT = intArrayOf(
             Items.RUNECRAFTER_HAT_13626,
@@ -291,19 +289,49 @@ class RunecraftingGuildPlugin : InteractionListener, InterfaceListener, MapArea 
          */
 
         on(Components.RCGUILD_REWARDS_779) { player, _, opcode, button, _, _ ->
-            val choice = RcShopItem.fromButton(button)?.shopItem ?: run {
+            val choice = RcShopStock.fromButton(button)?.itemId ?: run {
                 log(this::class.java, Log.WARN, "Unhandled button ID for RC shop interface: $button")
                 return@on true
             }
 
-            handleOpcode(choice, opcode, player)
+            when (opcode) {
+                155 -> {
+                    player.attributes["rc-selected-item"] = choice
+                    player.attributes["rc-selected-amount"] = 1
+                    selectObject(choice, 1, player)
+                }
+                196 -> {
+                    sendInputDialogue(player, InputType.AMOUNT, "Enter the amount to buy:") { value ->
+                        val amt = value.toString().toIntOrNull()
+                        if (amt == null || amt <= 0) {
+                            sendDialogue(player, "Please enter a valid amount greater than zero.")
+                            return@sendInputDialogue
+                        }
+                        player.attributes["rc-selected-item"] = choice
+                        player.attributes["rc-selected-amount"] = amt
+                        selectObject(choice, amt, player)
+                    }
+                }
+                163 -> {
+                    val selected = player.attributes["rc-selected-item"] as? ShopItem
+                    val amount = player.attributes["rc-selected-amount"] as? Int ?: 1
 
-            if (opcode == 155 && button == 163) {
-                sendMessage(player, "You must select something to buy before you can confirm your purchase")
+                    if (selected == null) {
+                        sendMessage(player, "You must select something to buy before you can confirm your purchase")
+                    } else {
+                        handleBuyOption(selected, amount, player)
+                        player.attributes.remove("rc-selected-item")
+                        player.attributes.remove("rc-selected-amount")
+                    }
+                }
             }
-
-            sendItem(choice, choice.amount, player)
             return@on true
+        }
+
+        onClose(Components.RCGUILD_REWARDS_779) { player, _ ->
+            player.attributes.remove("rc-selected-item")
+            player.attributes.remove("rc-selected-amount")
+            return@onClose true
         }
     }
 
@@ -329,26 +357,6 @@ class RunecraftingGuildPlugin : InteractionListener, InterfaceListener, MapArea 
     }
 
     /**
-     * Handles the opcode for the selected item.
-     */
-    private fun handleOpcode(item: ShopItem, opcode: Int, player: Player) {
-        when (opcode) {
-            155 -> handleBuyOption(item, 1, player)
-            196 -> {
-                sendInputDialogue(player, InputType.AMOUNT, "Enter the amount to buy:") { value ->
-                    val amt = value.toString().toIntOrNull()
-                    if (amt == null || amt <= 0) {
-                        sendDialogue(player, "Please enter a valid amount greater than zero.")
-                        return@sendInputDialogue
-                    } else {
-                        handleBuyOption(item, amt, player)
-                    }
-                }
-            }
-        }
-    }
-
-    /**
      * Sends the current token balance to the player.
      */
     private fun sendTokens(player: Player) {
@@ -356,65 +364,67 @@ class RunecraftingGuildPlugin : InteractionListener, InterfaceListener, MapArea 
     }
 
     /**
-     * Sends an item display to the player.
+     * Select an item display to the player.
      */
-    private fun sendItem(item: ShopItem, amount: Int, player: Player) {
+    private fun selectObject(item: ShopItem, amount: Int, player: Player) {
         sendString(player, "${getItemName(item.id)}($amount)", Components.RCGUILD_REWARDS_779, 136)
     }
+}
 
-    enum class RcShopItem(val buttonId: Int, val shopItem: ShopItem) {
-        // Talismans
-        AIR_TALISMAN(6, ShopItem(Items.AIR_TALISMAN_1438, 50, 1)),
-        MIND_TALISMAN(13, ShopItem(Items.MIND_TALISMAN_1448, 50, 1)),
-        WATER_TALISMAN(15, ShopItem(Items.WATER_TALISMAN_1444, 50, 1)),
-        EARTH_TALISMAN(10, ShopItem(Items.EARTH_TALISMAN_1440, 50, 1)),
-        FIRE_TALISMAN(11, ShopItem(Items.FIRE_TALISMAN_1442, 50, 1)),
-        BODY_TALISMAN(7, ShopItem(Items.BODY_TALISMAN_1446, 50, 1)),
-        COSMIC_TALISMAN(9, ShopItem(Items.COSMIC_TALISMAN_1454, 125, 1)),
-        CHAOS_TALISMAN(8, ShopItem(Items.CHAOS_TALISMAN_1452, 125, 1)),
-        NATURE_TALISMAN(14, ShopItem(Items.NATURE_TALISMAN_1462, 125, 1)),
-        LAW_TALISMAN(12, ShopItem(Items.LAW_TALISMAN_1458, 125, 1)),
+private enum class RcShopStock(val buttonId: Int, val itemId: ShopItem) {
+    // Talismans
+    AIR_TALISMAN(6, ShopItem(Items.AIR_TALISMAN_1438, 50, 1)),
+    MIND_TALISMAN(13, ShopItem(Items.MIND_TALISMAN_1448, 50, 1)),
+    WATER_TALISMAN(15, ShopItem(Items.WATER_TALISMAN_1444, 50, 1)),
+    EARTH_TALISMAN(10, ShopItem(Items.EARTH_TALISMAN_1440, 50, 1)),
+    FIRE_TALISMAN(11, ShopItem(Items.FIRE_TALISMAN_1442, 50, 1)),
+    BODY_TALISMAN(7, ShopItem(Items.BODY_TALISMAN_1446, 50, 1)),
+    COSMIC_TALISMAN(9, ShopItem(Items.COSMIC_TALISMAN_1454, 125, 1)),
+    CHAOS_TALISMAN(8, ShopItem(Items.CHAOS_TALISMAN_1452, 125, 1)),
+    NATURE_TALISMAN(14, ShopItem(Items.NATURE_TALISMAN_1462, 125, 1)),
+    LAW_TALISMAN(12, ShopItem(Items.LAW_TALISMAN_1458, 125, 1)),
 
-        // RC Guild robes
-        BLUE_RC_HAT(36, ShopItem(Items.RUNECRAFTER_HAT_13626, 1000, 1)),
-        YELLOW_RC_HAT(37, ShopItem(Items.RUNECRAFTER_HAT_13616, 1000, 1)),
-        GREEN_RC_HAT(38, ShopItem(Items.RUNECRAFTER_HAT_13621, 1000, 1)),
+    // Runecrafting clothes
+    BLUE_RC_HAT(36, ShopItem(Items.RUNECRAFTER_HAT_13626, 1000, 1)),
+    YELLOW_RC_HAT(37, ShopItem(Items.RUNECRAFTER_HAT_13616, 1000, 1)),
+    GREEN_RC_HAT(38, ShopItem(Items.RUNECRAFTER_HAT_13621, 1000, 1)),
 
-        BLUE_RC_ROBE(39, ShopItem(Items.RUNECRAFTER_ROBE_13624, 1000, 1)),
-        YELLOW_RC_ROBE(40, ShopItem(Items.RUNECRAFTER_ROBE_13614, 1000, 1)),
-        GREEN_RC_ROBE(41, ShopItem(Items.RUNECRAFTER_ROBE_13619, 1000, 1)),
+    BLUE_RC_ROBE(39, ShopItem(Items.RUNECRAFTER_ROBE_13624, 1000, 1)),
+    YELLOW_RC_ROBE(40, ShopItem(Items.RUNECRAFTER_ROBE_13614, 1000, 1)),
+    GREEN_RC_ROBE(41, ShopItem(Items.RUNECRAFTER_ROBE_13619, 1000, 1)),
 
-        BLUE_RC_BOTTOM(42, ShopItem(Items.RUNECRAFTER_SKIRT_13627, 1000, 1)),
-        YELLOW_RC_BOTTOM(43, ShopItem(Items.RUNECRAFTER_SKIRT_13617, 1000, 1)),
-        GREEN_RC_BOTTOM(44, ShopItem(Items.RUNECRAFTER_SKIRT_13622, 1000, 1)),
+    BLUE_RC_BOTTOM(42, ShopItem(Items.RUNECRAFTER_SKIRT_13627, 1000, 1)),
+    YELLOW_RC_BOTTOM(43, ShopItem(Items.RUNECRAFTER_SKIRT_13617, 1000, 1)),
+    GREEN_RC_BOTTOM(44, ShopItem(Items.RUNECRAFTER_SKIRT_13622, 1000, 1)),
 
-        BLUE_RC_GLOVES(45, ShopItem(Items.RUNECRAFTER_GLOVES_13628, 1000, 1)),
-        YELLOW_RC_GLOVES(46, ShopItem(Items.RUNECRAFTER_GLOVES_13618, 1000, 1)),
-        GREEN_RC_GLOVES(47, ShopItem(Items.RUNECRAFTER_GLOVES_13623, 1000, 1)),
+    BLUE_RC_GLOVES(45, ShopItem(Items.RUNECRAFTER_GLOVES_13628, 1000, 1)),
+    YELLOW_RC_GLOVES(46, ShopItem(Items.RUNECRAFTER_GLOVES_13618, 1000, 1)),
+    GREEN_RC_GLOVES(47, ShopItem(Items.RUNECRAFTER_GLOVES_13623, 1000, 1)),
 
-        // Staff + Essence
-        RC_STAFF(114, ShopItem(Items.RUNECRAFTING_STAFF_13629, 10000, 1)),
-        PURE_ESSENCE(115, ShopItem(Items.PURE_ESSENCE_7937, 100, 1)),
+    // Staff
+    RC_STAFF(114, ShopItem(Items.RUNECRAFTING_STAFF_13629, 10000, 1)),
 
-        // Teleport tablets
-        AIR_TABLET(72, ShopItem(Items.AIR_ALTAR_TP_13599, 30, 1)),
-        MIND_TABLET(80, ShopItem(Items.MIND_ALTAR_TP_13600, 32, 1)),
-        WATER_TABLET(83, ShopItem(Items.WATER_ALTAR_TP_13601, 34, 1)),
-        EARTH_TABLET(77, ShopItem(Items.EARTH_ALTAR_TP_13602, 36, 1)),
-        FIRE_TABLET(78, ShopItem(Items.FIRE_ALTAR_TP_13603, 37, 1)),
-        BODY_TABLET(73, ShopItem(Items.BODY_ALTAR_TP_13604, 38, 1)),
-        COSMIC_TABLET(75, ShopItem(Items.COSMIC_ALTAR_TP_13605, 39, 1)),
-        CHAOS_TABLET(74, ShopItem(Items.CHAOS_ALTAR_TP_13606, 40, 1)),
-        ASTRAL_TABLET(81, ShopItem(Items.ASTRAL_ALTAR_TP_13611, 41, 1)),
-        NATURE_TABLET(82, ShopItem(Items.NATURE_ALTAR_TP_13607, 42, 1)),
-        LAW_TABLET(79, ShopItem(Items.LAW_ALTAR_TP_13608, 43, 1)),
-        DEATH_TABLET(76, ShopItem(Items.DEATH_ALTAR_TP_13609, 44, 1)),
-        BLOOD_TABLET(84, ShopItem(Items.BLOOD_ALTAR_TP_13610, 45, 1)),
-        GUILD_TABLET(85, ShopItem(Items.RUNECRAFTING_GUILD_TP_13598, 15, 1));
+    // Essences
+    PURE_ESSENCE(115, ShopItem(Items.PURE_ESSENCE_7937, 100, 1)),
 
-        companion object {
-            private val byButton = values().associateBy { it.buttonId }
-            fun fromButton(id: Int): RcShopItem? = byButton[id]
-        }
+    // Teleport tablets
+    AIR_TABLET(72, ShopItem(Items.AIR_ALTAR_TP_13599, 30, 1)),
+    MIND_TABLET(80, ShopItem(Items.MIND_ALTAR_TP_13600, 32, 1)),
+    WATER_TABLET(83, ShopItem(Items.WATER_ALTAR_TP_13601, 34, 1)),
+    EARTH_TABLET(77, ShopItem(Items.EARTH_ALTAR_TP_13602, 36, 1)),
+    FIRE_TABLET(78, ShopItem(Items.FIRE_ALTAR_TP_13603, 37, 1)),
+    BODY_TABLET(73, ShopItem(Items.BODY_ALTAR_TP_13604, 38, 1)),
+    COSMIC_TABLET(75, ShopItem(Items.COSMIC_ALTAR_TP_13605, 39, 1)),
+    CHAOS_TABLET(74, ShopItem(Items.CHAOS_ALTAR_TP_13606, 40, 1)),
+    ASTRAL_TABLET(81, ShopItem(Items.ASTRAL_ALTAR_TP_13611, 41, 1)),
+    NATURE_TABLET(82, ShopItem(Items.NATURE_ALTAR_TP_13607, 42, 1)),
+    LAW_TABLET(79, ShopItem(Items.LAW_ALTAR_TP_13608, 43, 1)),
+    DEATH_TABLET(76, ShopItem(Items.DEATH_ALTAR_TP_13609, 44, 1)),
+    BLOOD_TABLET(84, ShopItem(Items.BLOOD_ALTAR_TP_13610, 45, 1)),
+    GUILD_TABLET(85, ShopItem(Items.RUNECRAFTING_GUILD_TP_13598, 15, 1));
+
+    companion object {
+        private val byButton = values().associateBy { it.buttonId }
+        fun fromButton(id: Int): RcShopStock? = byButton[id]
     }
 }

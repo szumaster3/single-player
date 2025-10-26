@@ -10,6 +10,7 @@ import core.tools.END_DIALOGUE
 import shared.consts.Items
 import shared.consts.NPCs
 import shared.consts.Quests
+import shared.consts.Vars
 
 /**
  * Represents the Mage Of Zamorak dialogue at Wilderness.
@@ -20,7 +21,7 @@ class MageOfZamorakDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
-        varrockMage = npc.id == 2261 || npc.id == 2260
+        varrockMage = npc.id == NPCs.MAGE_OF_ZAMORAK_2261 || npc.id == NPCs.MAGE_OF_ZAMORAK_2260
         if (!isQuestComplete(player, Quests.RUNE_MYSTERIES)) {
             end()
             sendMessage(player, "The mage doesn't seem interested in talking to you.")
@@ -36,7 +37,6 @@ class MageOfZamorakDialogue(player: Player? = null) : Dialogue(player) {
             when (getStage()) {
                 0 -> npc("I am in no mood to talk to you", "stranger!")
                 1 -> npc("Ah, you again.", "What was it you wanted?", "The wilderness is hardly the appropriate place for a", "conversation now, is it?")
-
                 2 -> npc("Well?", "Have you managed to use my scrying orb to obtain the", "information yet?")
                 3 -> player("So... that's my end of the deal upheld.", "What do I get in return?")
                 4 -> options("So what is this 'abyss' stuff?", "Is this abyss dangerous?", "Can you teleport me there now?")
@@ -103,7 +103,7 @@ class MageOfZamorakDialogue(player: Player? = null) : Dialogue(player) {
                     223 -> {
                         end()
                         setStage(2)
-                        player.inventory.add(ORBS[0], player)
+                        addItemOrDrop(player, ORBS[0].id, 1)
                         npc("Here, take this scrying orb.", "I have cast a standard cypher spell upon it, so that it", "will absorb mystical energies that it is exposed to.")
                     }
                     30 -> end()
@@ -112,10 +112,10 @@ class MageOfZamorakDialogue(player: Player? = null) : Dialogue(player) {
                 }
                 2 -> when (stage) {
                     0 -> {
-                        if (!player.hasItem(ORBS[0]) && !player.inventory.containsItem(ORBS[1])) {
+                        if (!player.hasItem(ORBS[0]) && !inInventory(player, ORBS[1].id)) {
                             player("Uh...", "No...", "I kinda lost that orb thingy that you gave me.").also { stage++ }
                         }
-                        if (!player.inventory.containsItem(ORBS[1])) {
+                        if (!inInventory(player, (ORBS[1].id))) {
                             player("No...", "Actually, I had something I wanted to ask you...").also { stage = 3 }
                         } else {
                             player("Yes I have! I've got it right here!").also { stage = 50 }
@@ -123,7 +123,7 @@ class MageOfZamorakDialogue(player: Player? = null) : Dialogue(player) {
                     }
                     1 -> {
                         end()
-                        player.inventory.add(ORBS[0], player)
+                        addItemOrDrop(player, ORBS[0].id, 1)
                         npc("What?", "Incompetent fool. Take this.", "And do not make me regret allying myself with you.")
                     }
                     3 -> npc("I assume the task to be self-explanatory.", "What is it you wish to know?").also { stage++ }
@@ -151,9 +151,9 @@ class MageOfZamorakDialogue(player: Player? = null) : Dialogue(player) {
                     4 -> npc("Your final gift is that of movement", "I will from now on offer you a teleport to the abyss", "whenever you should require it.").also { stage++ }
                     5 -> {
                         setStage(4)
+                        rewardXP(player, Skills.RUNECRAFTING, 1000.0)
                         addItem(player, Items.ABYSSAL_BOOK_5520)
                         addItem(player, Items.SMALL_POUCH_5509)
-                        rewardXP(player, Skills.RUNECRAFTING, 1000.0)
                         player("Huh?", "Abyss?", "What are you talking about?", "You told me that you would help me with")
                         stage++
                     }
@@ -178,7 +178,7 @@ class MageOfZamorakDialogue(player: Player? = null) : Dialogue(player) {
     }
 
     override fun getIds(): IntArray = intArrayOf(
-        2257,
+        NPCs.MAGE_OF_ZAMORAK_2257,
         NPCs.MAGE_OF_ZAMORAK_2258,
         NPCs.MAGE_OF_ZAMORAK_2259,
         NPCs.MAGE_OF_ZAMORAK_2260,
@@ -186,10 +186,10 @@ class MageOfZamorakDialogue(player: Player? = null) : Dialogue(player) {
     )
 
     override fun setStage(stage: Int) {
-        setVarp(player, 492, stage, true)
+        setVarp(player, Vars.VARP_ENTER_THE_ABYSS_PROGRESS_492, stage, true)
     }
 
-    fun getStage(): Int = getVarp(player, 492)
+    fun getStage(): Int = getVarp(player, Vars.VARP_ENTER_THE_ABYSS_PROGRESS_492)
 
     companion object {
         private val ORBS = arrayOf(Item(Items.SCRYING_ORB_5519), Item(Items.SCRYING_ORB_5518))

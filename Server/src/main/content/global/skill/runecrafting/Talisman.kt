@@ -48,11 +48,6 @@ enum class Talisman(val item: Item, private val ruin: MysteriousRuins?) {
     }
 
     /**
-     * Returns the associated [MysteriousRuins], or null if none.
-     */
-    fun getRuin(): MysteriousRuins? = ruin
-
-    /**
      * Gets the matching [Tiara] by enum name, if any.
      */
     val tiara: Tiara?

@@ -12,6 +12,7 @@ import core.net.packet.PacketRepository
 import core.net.packet.out.CameraViewPacket
 import shared.consts.Components
 import shared.consts.NPCs
+import shared.consts.Vars
 
 /**
  * Represents the glider transportation.
@@ -30,7 +31,7 @@ enum class Glider(val button: Int, val location: Location, val config: Int, val 
         fun sendConfig(npc: NPC, player: Player) {
             val g = forNpc(npc.id)
             if (g != null) {
-                setVarp(player, 153, g.config)
+                setVarp(player, Vars.VARP_IFACE_GLIDER_CONFIG_153, g.config)
             }
         }
 
@@ -78,7 +79,7 @@ class GliderPulse(
     override fun pulse(): Boolean {
         val crash = glider == Glider.LEMANTO_ADRA
         if (count == 1) {
-            setVarp(player, 153, glider.config)
+            setVarp(player, Vars.VARP_IFACE_GLIDER_CONFIG_153, glider.config)
             setMinimapState(player, 2)
         } else if (count == 2 && crash) {
             PacketRepository.send(
@@ -105,7 +106,7 @@ class GliderPulse(
                 closeOverlay(player)
                 closeInterface(player)
                 setMinimapState(player, 0)
-                setVarp(player, 153, 0)
+                setVarp(player, Vars.VARP_IFACE_GLIDER_CONFIG_153, 0)
                 if (!crash && glider == Glider.GANDIUS) {
                     finishDiaryTask(player, DiaryType.KARAMJA, 1, 11)
                 }

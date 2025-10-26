@@ -51,19 +51,19 @@ class RunecraftPulse(
         if (altar == Altar.BLOOD) {
             if (!hasRequirement(player, Quests.LEGACY_OF_SEERGAZE)) return false
         }
-        if (altar.isOurania && !inInventory(player, PURE_ESSENCE)) {
+        if (altar.isOurania() && !inInventory(player, PURE_ESSENCE)) {
             sendMessage(player, "You need pure essence to craft this rune.")
             return false
         }
-        if (!altar.isOurania && !rune.isNormal && !inInventory(player, PURE_ESSENCE)) {
+        if (!altar.isOurania() && !rune.isNormal && !inInventory(player, PURE_ESSENCE)) {
             sendMessage(player, "You need pure essence to craft this rune.")
             return false
         }
-        if (!altar.isOurania && getStatLevel(player, Skills.RUNECRAFTING) < rune.level) {
+        if (!altar.isOurania() && getStatLevel(player, Skills.RUNECRAFTING) < rune.level) {
             sendMessage(player, "You need a runecrafting level of at least " + rune.level + " to craft this rune.")
             return false
         }
-        if (!altar.isOurania && rune.isNormal && !inInventory(player, PURE_ESSENCE) && !inInventory(
+        if (!altar.isOurania() && rune.isNormal && !inInventory(player, PURE_ESSENCE) && !inInventory(
                 player, RUNE_ESSENCE
             )
         ) {
@@ -127,7 +127,7 @@ class RunecraftPulse(
         val item = Item(essence.id, essenceAmount)
         val amount = player.inventory.getAmount(item)
 
-        if (!altar.isOurania) {
+        if (!altar.isOurania()) {
             val hasExplorerRing = inEquipment(player, Items.EXPLORERS_RING_2_13561, 1)
             var total = 0
 
@@ -246,7 +246,7 @@ class RunecraftPulse(
      */
     private val essenceAmount: Int
         get() {
-            if (altar.isOurania && inInventory(player, Items.PURE_ESSENCE_7936)) {
+            if (altar.isOurania() && inInventory(player, Items.PURE_ESSENCE_7936)) {
                 return amountInInventory(player, Items.PURE_ESSENCE_7936)
             }
             return if (!rune.isNormal && inInventory(player, Items.PURE_ESSENCE_7936)) {
@@ -264,7 +264,7 @@ class RunecraftPulse(
      */
     private val essence: Item
         get() {
-            if (altar.isOurania && inInventory(player, Items.PURE_ESSENCE_7936)) {
+            if (altar.isOurania() && inInventory(player, Items.PURE_ESSENCE_7936)) {
                 return Item(PURE_ESSENCE)
             }
             return if (!rune.isNormal && inInventory(player, Items.PURE_ESSENCE_7936)) {
@@ -283,7 +283,7 @@ class RunecraftPulse(
      */
     val multiplier: Int
         get() {
-            if (altar.isOurania) {
+            if (altar.isOurania()) {
                 return 1
             }
             val rcLevel = getStatLevel(player, Skills.RUNECRAFTING)
@@ -294,7 +294,7 @@ class RunecraftPulse(
     /**
      * @return true if the player has a Binding Necklace equipped.
      */
-    fun hasBindingNecklace(): Boolean = inEquipment(player, BINDING_NECKLACE)
+    private fun hasBindingNecklace(): Boolean = inEquipment(player, BINDING_NECKLACE)
 
     companion object {
         private const val RUNE_ESSENCE = Items.RUNE_ESSENCE_1436

@@ -16,15 +16,17 @@ class DarkMageDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
+
         if (args.size >= 2) {
             if (repair()) {
-                npc("There, I have repaired your pouches.", "Now leave me alone. I'm concentrating.").also { stage = 30 }
-                return true
+                npc("There, I have repaired your pouches.", "Now leave me alone. I'm concentrating.")
             } else {
-                npc("You don't seem to have any pouches in need of repair.", "Leave me alone.").also { stage = 30 }
-                return true
+                npc("You don't seem to have any pouches in need of repair.", "Leave me alone.")
             }
+            stage = 30
+            return true
         }
+
         player("Hello there.")
         return true
     }

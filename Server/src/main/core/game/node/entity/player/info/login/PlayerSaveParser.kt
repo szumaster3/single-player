@@ -133,13 +133,13 @@ class PlayerSaveParser(val player: Player) {
     }
 
     fun parseSkills() {
-        val skillData = saveFile?.getAsJsonArray("skills") ?: return
-        player.skills.parse(skillData)
-        player.skills.experienceGained = saveFile?.get("totalEXP")?.asDouble ?: 0.0
-        player.skills.experienceMultiplier = saveFile?.get("exp_multiplier")?.asDouble ?: 1.0
-
-        if (GameWorld.settings?.default_xp_rate != 1.0) {
-            player.skills.experienceMultiplier = GameWorld.settings?.default_xp_rate!!
+        val data = saveFile?.getAsJsonArray("skills")
+        if (data != null) {
+            player.skills.parse(data)
+            player.skills.experienceGained = saveFile?.get("totalEXP")?.asDouble ?: 0.0
+            player.skills.experienceMultiplier = saveFile?.get("exp_multiplier")?.asDouble ?: 1.0
+        } else {
+            player.skills.experienceMultiplier = GameWorld.settings?.default_xp_rate ?: 1.0
         }
 
         if (saveFile?.has("milestone") == true) {
@@ -148,6 +148,7 @@ class PlayerSaveParser(val player: Player) {
             player.skills.skillMilestone = milestone?.get("skillMilestone")?.asInt ?: 0
         }
     }
+
 
     fun parseSettings() {
         val settingsData = saveFile?.getAsJsonObject("settings") ?: return

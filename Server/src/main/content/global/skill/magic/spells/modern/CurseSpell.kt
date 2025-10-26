@@ -26,7 +26,7 @@ class CurseSpell private constructor(
     definition.xp,
     definition.castSound,
     definition.impactSound,
-    if (definition.type.ordinal <= SpellType.CURSE.ordinal) LOW_ANIMATION else HIGH_ANIMATION,
+    definition.animation,
     definition.start,
     definition.projectile,
     definition.end,
@@ -64,10 +64,5 @@ class CurseSpell private constructor(
             SpellBook.MODERN.register(it.buttonId, CurseSpell(it))
         }
         return this
-    }
-
-    companion object {
-        private val LOW_ANIMATION = Animation(716, Priority.HIGH)
-        private val HIGH_ANIMATION = Animation(Animations.CAST_SPELL_B_729, Priority.HIGH)
     }
 }

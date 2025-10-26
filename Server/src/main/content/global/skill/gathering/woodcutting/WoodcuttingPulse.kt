@@ -13,7 +13,6 @@ import core.game.node.entity.impl.Projectile
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.entity.skill.Skills
-import core.game.node.item.Item
 import core.game.node.scenery.Scenery
 import core.game.node.scenery.SceneryBuilder
 import core.game.system.command.sets.STATS_BASE
@@ -106,7 +105,7 @@ class WoodcuttingPulse(private val player: Player, private val node: Scenery) : 
 
     fun animate() {
         if (!player.animator.isAnimating) {
-            player.animate(Animation.create(getAxe(player)!!.animation))
+            player.animate(SkillingTool.getAxe(player)?.let { Animation(it.animation) })
 
             val playersAroundMe = getLocalPlayers(player, 2)
                 .stream()
@@ -116,10 +115,11 @@ class WoodcuttingPulse(private val player: Player, private val node: Scenery) : 
             val soundIndex = RandomFunction.random(0, woodcuttingSounds.size)
 
             for (p in playersAroundMe) {
-                playAudio(p, woodcuttingSounds[soundIndex])
+                playAudio(p!!, woodcuttingSounds[soundIndex])
             }
         }
     }
+
 
     fun reward(): Boolean {
         if (++ticks % 4 != 0) {

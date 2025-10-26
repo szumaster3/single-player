@@ -41,7 +41,7 @@ class DesertWallShortcut : OptionHandler() {
                 START_LOCATION,
                 scenery.location,
                 CLIMB_DOWN,
-                Animation(Animations.HUMAN_TURNS_INVISIBLE_2590),
+                Animation(Animations.TURNS_INVISIBLE_2590),
                 node.direction
             )
             submitIndividualPulse(

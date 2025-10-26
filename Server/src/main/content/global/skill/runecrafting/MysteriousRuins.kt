@@ -26,11 +26,5 @@ enum class MysteriousRuins(val `object`: IntArray, val base: Location, @JvmField
          */
         fun forObject(scenery: Scenery): MysteriousRuins? =
             values().find { ruin -> scenery.id in ruin.`object` }
-
-        /**
-         * Returns [MysteriousRuins] linked to the given talisman, or null if none.
-         */
-        fun forTalisman(talisman: Talisman): MysteriousRuins? =
-            values().find { it.talisman == talisman }
     }
 }

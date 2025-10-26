@@ -1,5 +1,7 @@
 package content.global.skill.magic.spells
 
+// Spell Animations & Graphics: https://www.youtube.com/watch?v=1ObSraRFOtg
+
 object ModernSpells {
     const val HOME_TELEPORT = 0
     const val AIR_STRIKE = 1

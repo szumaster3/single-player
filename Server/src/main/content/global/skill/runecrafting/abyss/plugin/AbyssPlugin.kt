@@ -41,15 +41,27 @@ class AbyssPlugin : InteractionListener {
         definePlugin(DarkMageDialogue())
         definePlugin(MageOfZamorakDialogue())
 
+        /*
+         * Handles teleport interaction with the Mage of Zamorak NPC.
+         */
+
         on(NPCs.MAGE_OF_ZAMORAK_2259, IntType.NPC, "teleport") { player, node ->
             teleport(player, node as NPC)
             return@on true
         }
 
+        /*
+         * Opens the repair pouches dialogue with the Dark Mage NPC.
+         */
+
         on(NPCs.DARK_MAGE_2262, IntType.NPC, "repair-pouches") { player, node ->
             player.dialogueInterpreter.open(node.id, node, true)
             return@on true
         }
+
+        /*
+         * Handles exiting through an altar scenery object.
+         */
 
         on(IntType.SCENERY, "exit-through") { player, node ->
             val altar = Altar.forScenery(node as core.game.node.scenery.Scenery)
@@ -57,10 +69,19 @@ class AbyssPlugin : InteractionListener {
             return@on true
         }
 
+        /*
+         * Handles moving through a passage into the inner ring.
+         */
+
         on(Scenery.PASSAGE_7154, IntType.SCENERY, "go-through") { player, node ->
             player.properties.teleportLocation = innerRing(node)
             return@on true
         }
+
+        /*
+         * Handles mining a rock obstacle.
+         * Requires a pickaxe in the inventory.
+         */
 
         on(Scenery.ROCK_7158, IntType.SCENERY, "mine") { player, node ->
             val tool: SkillingTool? = getTool(player, true)
@@ -82,6 +103,11 @@ class AbyssPlugin : InteractionListener {
             )
         }
 
+        /*
+         * Handles chopping tendrils obstacle.
+         * Requires an axe in the inventory.
+         */
+
         on(Scenery.TENDRILS_7161, IntType.SCENERY, "chop") { player, node ->
             val tool: SkillingTool? = getTool(player, false)
             if (tool == null) {
@@ -102,6 +128,11 @@ class AbyssPlugin : InteractionListener {
             )
         }
 
+        /*
+         * Handles burning down the boil obstacle.
+         * Requires a tinderbox in the inventory.
+         */
+
         on(Scenery.BOIL_7165, IntType.SCENERY, "burn-down") { player, node ->
             if (!inInventory(player, Items.TINDERBOX_590)) {
                 sendMessage(player, "You don't have a tinderbox to burn it.")
@@ -121,6 +152,10 @@ class AbyssPlugin : InteractionListener {
             )
         }
 
+        /*
+         * Handles distracting magical eyes using thieving skill.
+         */
+
         on(Scenery.EYES_7168, IntType.SCENERY, "distract") { player, node ->
             val distractEmote = Animation(distractEmotes[RandomFunction.random(0, distractEmotes.size)])
             return@on handleObstacle(
@@ -137,6 +172,10 @@ class AbyssPlugin : InteractionListener {
             )
         }
 
+        /**
+         * Handles squeezing through a gap obstacle.
+         * Plays an audio effect when attempting.
+         */
         on(Scenery.GAP_7164, IntType.SCENERY, "squeeze-through") { player, node ->
             playAudio(player, Sounds.ABYSSAL_SQUEEZETHROUGH_2709)
             return@on handleObstacle(

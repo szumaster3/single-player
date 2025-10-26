@@ -122,10 +122,14 @@ class TouristTrapPlugin : OptionHandler() {
 
         definePlugin(BedabinKeyHandler())
         definePlugin(BedabinAnvilHandler())
+        definePlugin(BarrelDialogue())
+        definePlugin(WinchDialogue())
+        definePlugin(MineCartDialogue())
         definePlugin(AnnaCartHandler())
         definePlugin(AnnaCartCutscene())
         definePlugin(AnnaWinchHandler())
         definePlugin(WinchCutscene())
+        definePlugin(CartDialogue())
         return this
     }
 

@@ -72,12 +72,13 @@ class DraynorWillows : Script(){
     }
 
     init {
-        inventory.add(Item(Items.ADAMANT_AXE_1357))
         skills[Skills.WOODCUTTING] = 35
+        inventory.add(Item(Items.ADAMANT_AXE_1357))
     }
 
     override fun newInstance(): Script {
         val script = DraynorWillows()
+        script.bot = SkillingBotAssembler().produce(SkillingBotAssembler.Wealth.POOR, bot.startLocation)
         return script
     }
 

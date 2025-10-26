@@ -5,6 +5,7 @@ import core.game.bots.CombatBotAssembler
 import core.game.bots.Script
 import core.game.interaction.DestinationFlag
 import core.game.interaction.MovementPulse
+import core.game.node.entity.combat.CombatStyle
 import core.game.node.item.Item
 import core.game.system.task.Pulse
 import core.game.world.map.Location
@@ -197,6 +198,7 @@ class LumbridgeGoblinKiller : Script() {
         inventory.add(Item(Items.MIND_RUNE_558, 9000))
 
         bot.properties.spell!!.spellId = ModernSpells.AIR_STRIKE
+        bot.properties.combatPulse.style = CombatStyle.MAGIC
 
         script.bot = bot
         script.state = State.KILLING

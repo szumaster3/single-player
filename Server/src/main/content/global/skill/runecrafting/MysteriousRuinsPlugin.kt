@@ -18,7 +18,7 @@ import shared.consts.Items
  */
 class MysteriousRuinsPlugin : InteractionListener {
     private val sceneryIDs = allRuins()
-    private val stavesIDs = Staves.values().map { it.item }.toIntArray()
+    private val stavesIDs = RunecraftingStaff.values().map { it.staffId }.toIntArray()
     private val talismanIDs = arrayOf(
         Items.AIR_TALISMAN_1438,
         Items.MIND_TALISMAN_1448,

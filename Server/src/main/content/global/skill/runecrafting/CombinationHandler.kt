@@ -1,6 +1,5 @@
 package content.global.skill.runecrafting
 
-import content.global.skill.runecrafting.Altar.forScenery
 import core.game.interaction.NodeUsageEvent
 import core.game.interaction.UseWithHandler
 import core.game.node.scenery.Scenery
@@ -21,7 +20,7 @@ class CombinationHandler :
 
     override fun handle(event: NodeUsageEvent): Boolean {
         val player = event.player
-        val altar = forScenery((event.usedWith as Scenery))
+        val altar = Altar.forScenery((event.usedWith as Scenery))
         val combo = CombinationRune.forAltar(altar!!, event.usedItem) ?: return false
         player.pulseManager.run(RunecraftPulse(player, event.usedItem, altar, true, combo))
         return true
