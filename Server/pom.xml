@@ -9,7 +9,7 @@
 
     <parent>
         <groupId>org.rsps</groupId>
-        <artifactId>530-server</artifactId>
+        <artifactId>530-Source</artifactId>
         <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
