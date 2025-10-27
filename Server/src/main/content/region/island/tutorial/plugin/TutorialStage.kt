@@ -17,7 +17,6 @@ import core.game.world.GameWorld.Pulser
 import core.game.world.GameWorld.settings
 import core.game.world.map.Location
 import core.game.world.repository.Repository
-import core.tools.BLUE
 import core.worker.ManagementEvents
 import proto.management.JoinClanRequest
 import shared.consts.*

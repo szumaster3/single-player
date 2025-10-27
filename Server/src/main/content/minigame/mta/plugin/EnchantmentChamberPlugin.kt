@@ -1,7 +1,6 @@
 package content.minigame.mta.plugin
 
 import core.api.*
-import core.api.sendInterfaceConfig
 import core.game.interaction.Option
 import core.game.node.Node
 import core.game.node.entity.Entity

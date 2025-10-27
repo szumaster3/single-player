@@ -9,7 +9,10 @@ import core.game.node.Node
 import core.game.node.entity.player.Player
 import core.game.world.map.Location
 import core.game.world.repository.Repository.findNPC
-import shared.consts.*
+import shared.consts.Components
+import shared.consts.NPCs
+import shared.consts.Quests
+import shared.consts.Scenery
 
 class CharterOptionPlugin : InteractionListener, InterfaceListener {
 

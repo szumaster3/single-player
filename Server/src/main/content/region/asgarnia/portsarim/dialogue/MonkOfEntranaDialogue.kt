@@ -1,15 +1,12 @@
 package content.region.asgarnia.portsarim.dialogue
 
 import content.global.travel.ship.CharterShip
-import core.api.finishDiaryTask
-import core.api.hasDiaryTaskComplete
 import core.api.sendDialogue
 import core.cache.def.impl.ItemDefinition
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
-import core.game.node.entity.player.link.diary.DiaryType
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import shared.consts.NPCs

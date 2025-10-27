@@ -1,8 +1,8 @@
 package content.global.activity.penguinhns
 
-import core.api.log
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
+import core.api.log
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.world.map.Location

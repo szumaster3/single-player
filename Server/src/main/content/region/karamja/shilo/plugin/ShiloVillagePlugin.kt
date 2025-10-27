@@ -2,8 +2,6 @@ package content.region.karamja.shilo.plugin
 
 import content.region.karamja.shilo.dialogue.ShiloTravelDialogue
 import core.api.*
-import core.game.dialogue.DialogueFile
-import core.game.dialogue.FaceAnim
 import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener

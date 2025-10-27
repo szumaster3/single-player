@@ -2,7 +2,9 @@ package content.region.asgarnia.falador.quest.fortress
 
 import content.data.GameAttributes
 import content.region.asgarnia.falador.quest.fortress.dialogue.SirAmikVarzeDialogue
-import core.api.*
+import core.api.displayQuestItem
+import core.api.getAttribute
+import core.api.removeAttribute
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest
 import core.plugin.ClassScanner.definePlugins

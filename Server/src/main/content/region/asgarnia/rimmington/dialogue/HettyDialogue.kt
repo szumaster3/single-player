@@ -1,11 +1,6 @@
 package content.region.asgarnia.rimmington.dialogue
 
-import core.api.inInventory
-import core.api.finishQuest
-import core.api.getQuestStage
-import core.api.updateQuestTab
-import core.api.replaceSlot
-import core.api.sendDialogueLines
+import core.api.*
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.player.Player

@@ -9,7 +9,8 @@ import core.game.interaction.InteractionListener
 import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
-import shared.consts.*
+import shared.consts.Components
+import shared.consts.Items
 
 /**
  * Handles crafting silver products.

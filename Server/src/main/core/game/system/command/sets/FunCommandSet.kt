@@ -26,7 +26,6 @@ import shared.consts.Sounds
 import java.awt.HeadlessException
 import java.awt.Toolkit
 import java.awt.datatransfer.StringSelection
-import kotlin.streams.toList
 
 @Initializable
 class FunCommandSet : CommandSet(Privilege.ADMIN) {

@@ -2,12 +2,10 @@ package content.region.karamja.quest.mm
 
 import core.api.addItemOrDrop
 import core.api.displayQuestItem
-import core.api.sendItemZoomOnInterface
 import core.api.updateQuestTab
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest
 import core.game.node.item.Item
-import shared.consts.Components
 import shared.consts.Items
 import shared.consts.Quests
 import shared.consts.Vars

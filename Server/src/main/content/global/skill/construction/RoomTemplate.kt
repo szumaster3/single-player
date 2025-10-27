@@ -1,7 +1,5 @@
 package content.global.skill.construction
 
-import content.global.skill.construction.RoomProperties
-
 class RoomTemplate(properties: RoomProperties) {
     var hotspots: MutableList<Hotspot> = ArrayList<Hotspot>()
 

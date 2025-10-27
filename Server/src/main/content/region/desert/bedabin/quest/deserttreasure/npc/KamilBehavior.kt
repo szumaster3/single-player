@@ -4,7 +4,10 @@ import content.region.desert.bedabin.quest.deserttreasure.DTUtils
 import content.region.desert.bedabin.quest.deserttreasure.DesertTreasure
 import core.api.*
 import core.game.node.entity.Entity
-import core.game.node.entity.combat.*
+import core.game.node.entity.combat.BattleState
+import core.game.node.entity.combat.CombatStyle
+import core.game.node.entity.combat.CombatSwingHandler
+import core.game.node.entity.combat.MultiSwingHandler
 import core.game.node.entity.combat.equipment.SwitchAttack
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.npc.NPCBehavior

@@ -5,17 +5,17 @@ import content.region.kandarin.yanille.quest.itwatchtower.cutscene.EnclaveCutsce
 import core.api.*
 import core.game.dialogue.FaceAnim
 import core.game.event.FairyRingDialEvent
+import core.game.global.action.ClimbActionHandler.climb
+import core.game.global.action.DoorActionHandler
+import core.game.interaction.QueueStrength
 import core.game.node.entity.player.Player
+import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.item.Item
 import core.game.world.GameWorld
 import core.game.world.map.Location
 import core.game.world.map.zone.ZoneBorders
-import shared.consts.*
-import core.game.global.action.ClimbActionHandler.climb
-import core.game.global.action.DoorActionHandler
-import core.game.interaction.QueueStrength
-import core.game.node.entity.player.link.diary.DiaryType
 import core.game.world.update.flag.context.Animation
+import shared.consts.*
 
 object WarningActions {
     private val ladderZones = listOf(

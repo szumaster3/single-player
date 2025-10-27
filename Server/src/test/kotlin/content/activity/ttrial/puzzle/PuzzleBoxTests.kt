@@ -1,11 +1,11 @@
 package content.activity.ttrial.puzzle
 
 import TestUtils
+import content.global.activity.ttrail.plugin.PuzzleBoxPlugin
 import core.api.getAttribute
 import core.api.setAttribute
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import content.global.activity.ttrail.plugin.PuzzleBoxPlugin
 
 class PuzzleBoxTests {
     private val p = TestUtils.getMockPlayer("puzzleSessionTest")

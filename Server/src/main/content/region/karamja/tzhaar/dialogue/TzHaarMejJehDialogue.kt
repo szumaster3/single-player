@@ -1,6 +1,9 @@
 package content.region.karamja.tzhaar.dialogue
 
-import core.api.*
+import core.api.getAttribute
+import core.api.inInventory
+import core.api.removeItem
+import core.api.setAttribute
 import core.game.dialogue.*
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player

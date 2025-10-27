@@ -1,5 +1,6 @@
 package content.activity.blastfurnace
 
+import TestUtils
 import content.minigame.blastfurnace.plugin.BFSceneryController
 import core.api.getScenery
 import org.junit.jupiter.api.Assertions

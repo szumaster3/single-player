@@ -6,7 +6,6 @@ import core.game.dialogue.Topic
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.plugin.Initializable
-import core.tools.END_DIALOGUE
 import shared.consts.NPCs
 
 /**

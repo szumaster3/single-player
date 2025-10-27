@@ -4,8 +4,8 @@ import content.minigame.allfiredup.plugin.AFUBeacon
 import content.minigame.allfiredup.plugin.AFUSession
 import content.minigame.allfiredup.plugin.BeaconState
 import core.api.getStatLevel
-import core.api.sendOptions
 import core.api.sendMessage
+import core.api.sendOptions
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

@@ -1,7 +1,5 @@
 package content.minigame.duelarena.plugin
 
-import core.game.node.entity.player.link.WarningManager
-import core.game.node.entity.player.link.Warnings
 import content.global.skill.summoning.familiar.Familiar
 import core.api.inBorders
 import core.api.setAttribute
@@ -17,6 +15,8 @@ import core.game.node.entity.combat.equipment.WeaponInterface
 import core.game.node.entity.impl.PulseManager
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.HintIconManager
+import core.game.node.entity.player.link.WarningManager
+import core.game.node.entity.player.link.Warnings
 import core.game.node.entity.player.link.prayer.PrayerType
 import core.game.node.item.GroundItem
 import core.game.node.item.GroundItemManager

@@ -1,5 +1,6 @@
 package core.game.world.map.zone
 
+import TestUtils
 import core.api.hasTimerActive
 import core.api.registerTimer
 import core.game.node.entity.player.Player

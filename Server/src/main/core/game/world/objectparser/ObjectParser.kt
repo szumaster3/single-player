@@ -2,10 +2,8 @@ package core.game.world.objectparser
 
 import core.ServerConstants
 import core.api.StartupListener
-import core.api.log
 import core.game.node.scenery.Scenery
 import core.game.world.map.build.LandscapeParser
-import core.tools.Log
 import org.w3c.dom.Element
 import org.w3c.dom.Node
 import java.io.File

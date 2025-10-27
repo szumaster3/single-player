@@ -1,8 +1,6 @@
 package core.game.dialogue
 
-import core.api.clockReady
 import core.api.sendInputDialogue
-import core.game.interaction.Clocks
 import core.game.node.entity.player.Player
 import core.plugin.Initializable
 

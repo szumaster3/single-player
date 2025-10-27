@@ -1,9 +1,7 @@
 package content.region.island.tutorial.plugin
 
 import content.data.GameAttributes
-import content.global.dialogue.BankerDialogue
 import content.region.island.tutorial.dialogue.BankerGuideDialogue
-import content.region.misthalin.lumbridge.dialogue.BankTutorDialogue
 import core.api.*
 import core.game.dialogue.FaceAnim
 import core.game.global.action.ClimbActionHandler

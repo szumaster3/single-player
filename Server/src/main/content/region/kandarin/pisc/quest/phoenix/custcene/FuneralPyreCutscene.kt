@@ -9,7 +9,6 @@ import core.game.node.entity.player.link.TeleportManager
 import core.game.world.map.Direction
 import core.game.world.map.Location
 import shared.consts.NPCs
-import shared.consts.Vars
 
 class FuneralPyreCutscene(player: Player) : Cutscene(player) {
 

@@ -3,12 +3,10 @@ package content.region.kandarin.pisc.quest.phoenix.plugin
 import content.data.GameAttributes
 import content.region.kandarin.pisc.quest.phoenix.InPyreNeed
 import core.api.*
-import core.api.isQuestComplete
 import core.game.node.entity.Entity
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.node.scenery.Scenery
-import core.game.world.map.Direction
 import core.game.world.map.Location
 import core.game.world.map.zone.ZoneBorders
 import core.game.world.map.zone.ZoneRestriction

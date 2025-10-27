@@ -2,8 +2,8 @@ package content.global.plugin.item
 
 import content.data.EnchantedJewellery
 import core.api.addDialogueAction
-import core.api.sendOptions
 import core.api.sendMessage
+import core.api.sendOptions
 import core.api.setTitle
 import core.cache.def.impl.ItemDefinition
 import core.game.interaction.OptionHandler

@@ -5,7 +5,6 @@ import core.game.component.CloseEvent
 import core.game.component.Component
 import core.game.container.Container
 import core.game.container.ContainerType
-import core.game.container.access.InterfaceContainer
 import core.game.container.access.InterfaceContainer.generateItems
 import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.Player

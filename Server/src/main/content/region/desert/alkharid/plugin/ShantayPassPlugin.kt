@@ -1,16 +1,15 @@
 package content.region.desert.alkharid.plugin
 
-import core.game.node.entity.player.link.WarningManager
-import core.game.node.entity.player.link.Warnings
 import content.global.skill.agility.AgilityHandler
 import core.api.*
 import core.game.dialogue.FaceAnim
 import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
+import core.game.node.entity.player.link.WarningManager
+import core.game.node.entity.player.link.Warnings
 import core.game.node.item.Item
 import core.tools.DARK_RED
-import shared.consts.Components
 import shared.consts.Items
 import shared.consts.NPCs
 import shared.consts.Scenery

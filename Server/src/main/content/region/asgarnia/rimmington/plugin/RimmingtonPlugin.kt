@@ -1,17 +1,11 @@
 package content.region.asgarnia.rimmington.plugin
 
-import content.global.plugin.iface.BookInterface
-import content.global.plugin.iface.BookLine
-import content.global.plugin.iface.Page
-import content.global.plugin.iface.PageSet
 import content.region.asgarnia.rimmington.dialogue.CustomsSergeantDialogue
 import core.api.openDialogue
-import core.api.replaceScenery
 import core.api.sendMessage
 import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import core.game.node.entity.player.Player
 import shared.consts.Scenery
 
 class RimmingtonPlugin : InteractionListener {

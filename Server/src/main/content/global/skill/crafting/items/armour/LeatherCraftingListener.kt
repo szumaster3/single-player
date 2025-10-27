@@ -7,9 +7,9 @@ import core.game.interaction.InteractionListener
 import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
-import kotlin.math.max
 import shared.consts.Components
 import shared.consts.Items
+import kotlin.math.max
 
 /**
  * Handles leather crafting.

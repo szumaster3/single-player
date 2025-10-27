@@ -1,6 +1,6 @@
 package content.global.skill.construction.decoration.diningroom
 
-import core.api.*
+import core.api.playAudio
 import core.cache.def.impl.SceneryDefinition
 import core.game.interaction.OptionHandler
 import core.game.node.Node

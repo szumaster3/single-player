@@ -7,9 +7,7 @@ import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.Player
-import core.game.node.entity.player.link.WarningActions.getDitchLocations
 import core.tools.DARK_PURPLE
-import shared.consts.Animations
 import shared.consts.Components
 import shared.consts.Scenery
 import shared.consts.Vars

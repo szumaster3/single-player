@@ -1,16 +1,11 @@
 package content.minigame.bountyhunter.dialogue
 
-import core.api.hasIronmanRestriction
-import core.api.hasAwaitingGrandExchangeCollections
-import core.api.openBankAccount
-import core.api.openBankPinSettings
-import core.api.openGrandExchangeCollectionBox
+import core.api.*
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.dialogue.Topic
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.IronmanMode
-import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import core.tools.START_DIALOGUE
 import shared.consts.NPCs

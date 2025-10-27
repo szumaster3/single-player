@@ -1,16 +1,14 @@
 package content.global.skill.crafting.jewellery
 
 import core.api.*
-import core.game.dialogue.InputType
 import core.game.event.ResourceProducedEvent
 import core.game.interaction.Clocks
-import core.game.interaction.IntType
-import core.game.interaction.InteractionListener
-import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
 import core.game.system.task.Pulse
-import shared.consts.*
+import shared.consts.Animations
+import shared.consts.Items
+import shared.consts.Sounds
 
 class SilverCraftingPulse(val player: Player, val product: SilverProduct, val furnace: core.game.node.scenery.Scenery, var amount: Int) : Pulse() {
 

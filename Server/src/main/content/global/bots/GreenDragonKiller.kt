@@ -1,7 +1,9 @@
 package content.global.bots
 
 import core.api.forceMove
-import core.game.bots.*
+import core.game.bots.AIRepository
+import core.game.bots.CombatBotAssembler
+import core.game.bots.Script
 import core.game.interaction.DestinationFlag
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListeners
@@ -20,9 +22,9 @@ import core.game.world.map.zone.ZoneBorders
 import core.game.world.map.zone.impl.WildernessZone
 import core.tools.RandomFunction
 import shared.consts.Animations
-import kotlin.random.Random
 import shared.consts.Items
 import shared.consts.Scenery
+import kotlin.random.Random
 
 class GreenDragonKiller(val style: CombatStyle) : Script() {
 

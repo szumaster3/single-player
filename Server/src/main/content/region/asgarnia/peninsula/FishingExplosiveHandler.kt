@@ -1,11 +1,9 @@
 package content.region.asgarnia.peninsula
 
 import content.global.skill.slayer.npc.MogreNPC
-import core.game.interaction.UseWithHandler
-import core.game.world.update.flag.context.Animation
-import shared.consts.Items
 import core.api.*
 import core.game.interaction.NodeUsageEvent
+import core.game.interaction.UseWithHandler
 import core.game.node.Node
 import core.game.node.entity.combat.ImpactHandler
 import core.game.node.entity.impl.Projectile
@@ -16,6 +14,7 @@ import core.game.node.scenery.Scenery
 import core.game.system.task.Pulse
 import core.game.world.GameWorld
 import core.game.world.map.Location
+import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
 import core.plugin.Initializable
 import core.plugin.Plugin

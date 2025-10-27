@@ -1,15 +1,15 @@
 package content.global.skill.crafting.items.armour
 
+import content.global.skill.construction.items.NailType
 import core.api.*
+import core.game.dialogue.DialogueFile
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
+import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import shared.consts.Animations
 import shared.consts.Items
-import content.global.skill.construction.items.NailType
-import core.game.dialogue.DialogueFile
-import core.game.node.entity.player.Player
 import kotlin.math.min
 
 class BroodooShieldMakePlugin : InteractionListener {

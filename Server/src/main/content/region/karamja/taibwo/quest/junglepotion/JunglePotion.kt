@@ -10,8 +10,6 @@ import core.game.node.entity.player.link.quest.Quest
 import core.game.node.entity.skill.Skills
 import core.plugin.ClassScanner.definePlugin
 import core.plugin.Initializable
-import shared.consts.Components
-import shared.consts.Items
 import shared.consts.Quests
 import shared.consts.Vars
 

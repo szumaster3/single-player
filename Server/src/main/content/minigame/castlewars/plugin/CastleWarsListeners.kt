@@ -4,7 +4,6 @@ import content.global.skill.agility.AgilityHandler
 import content.global.skill.summoning.familiar.BurdenBeast
 import content.minigame.castlewars.plugin.areas.CastleWarsWaitingArea
 import core.api.*
-import core.api.openNpcShop
 import core.cache.def.impl.ItemDefinition
 import core.game.container.Container
 import core.game.interaction.IntType

@@ -3,7 +3,6 @@ package content.minigame.sorceressgarden.plugin
 import content.minigame.sorceressgarden.dialogue.SorceressApprenticeDialogue
 import content.minigame.sorceressgarden.plugin.SorceressGardenPlugin.SeasonDefinitions.Companion.forGateId
 import core.api.*
-import core.api.setMinimapState
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.global.action.DoorActionHandler

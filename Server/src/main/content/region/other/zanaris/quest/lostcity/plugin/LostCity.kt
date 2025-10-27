@@ -2,13 +2,11 @@ package content.region.other.zanaris.quest.lostcity.plugin
 
 import core.api.displayQuestItem
 import core.api.hasLevelStat
-import core.api.sendItemZoomOnInterface
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.plugin.Initializable
-import shared.consts.Components
 import shared.consts.Items
 import shared.consts.Quests
 import shared.consts.Vars

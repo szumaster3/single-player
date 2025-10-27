@@ -1,14 +1,13 @@
 package content.region.asgarnia.gobvillage.quest.gobdip
 
-import content.region.asgarnia.gobvillage.quest.gobdip.dialogue.GrubfootDialogue
 import content.region.asgarnia.gobvillage.quest.gobdip.cutscene.GoblinDiplomacyCutscene
+import content.region.asgarnia.gobvillage.quest.gobdip.dialogue.GrubfootDialogue
 import core.api.*
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest
 import core.game.node.entity.skill.Skills
 import core.plugin.ClassScanner.definePlugins
 import core.plugin.Initializable
-import shared.consts.Components
 import shared.consts.Items
 import shared.consts.Quests
 import shared.consts.Vars

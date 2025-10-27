@@ -14,9 +14,9 @@ import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
-import kotlin.math.min
 import shared.consts.Components
 import shared.consts.Items
+import kotlin.math.min
 
 class FletchingListener : InteractionListener {
     override fun defineListeners() {

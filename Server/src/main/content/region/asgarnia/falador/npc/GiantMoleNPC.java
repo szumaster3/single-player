@@ -1,8 +1,6 @@
 package content.region.asgarnia.falador.npc;
 
 import content.data.LightSource;
-import core.game.node.entity.player.link.WarningManager;
-import core.game.node.entity.player.link.Warnings;
 import core.api.utils.BossKillCounter;
 import core.cache.def.impl.SceneryDefinition;
 import core.game.global.action.DigAction;
@@ -16,6 +14,8 @@ import core.game.node.entity.impl.Animator.Priority;
 import core.game.node.entity.impl.Projectile;
 import core.game.node.entity.npc.AbstractNPC;
 import core.game.node.entity.player.Player;
+import core.game.node.entity.player.link.WarningManager;
+import core.game.node.entity.player.link.Warnings;
 import core.game.node.entity.player.link.diary.DiaryType;
 import core.game.node.item.Item;
 import core.game.system.task.Pulse;

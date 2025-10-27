@@ -3,7 +3,6 @@ package content.minigame.mta.dialogue
 import content.minigame.mta.plugin.MTAZone
 import content.minigame.mta.plugin.ProgressHat
 import core.api.addItem
-import core.api.getVarbit
 import core.api.hasAnItem
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim

@@ -1,6 +1,9 @@
 package content.global.activity.ttrail.plugin
 
-import core.api.*
+import core.api.IfaceSettingsBuilder
+import core.api.getCharge
+import core.api.setAttribute
+import core.api.setCharge
 import core.game.component.Component
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
@@ -13,7 +16,6 @@ import core.net.packet.out.ContainerPacket
 import shared.consts.Components
 import shared.consts.Items
 import shared.consts.Scenery
-import kotlin.math.abs
 
 /**
  * Plugin handling interactions and interface logic for Treasure Trails puzzle boxes.

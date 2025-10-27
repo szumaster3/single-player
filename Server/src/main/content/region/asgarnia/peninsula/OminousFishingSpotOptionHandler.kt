@@ -1,13 +1,12 @@
 package content.region.asgarnia.peninsula
 
-import core.api.*
+import core.api.sendMessage
 import core.cache.def.impl.SceneryDefinition
 import core.game.interaction.OptionHandler
 import core.game.node.Node
 import core.game.node.entity.player.Player
 import core.plugin.Initializable
 import core.plugin.Plugin
-import shared.consts.*
 import shared.consts.Scenery as Objects
 
 val OMINOUS_FISHING_SPOTS = intArrayOf(

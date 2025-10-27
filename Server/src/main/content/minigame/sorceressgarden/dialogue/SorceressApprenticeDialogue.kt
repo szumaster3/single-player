@@ -3,8 +3,6 @@ package content.minigame.sorceressgarden.dialogue
 import content.data.GameAttributes
 import content.region.misthalin.draynor.quest.swept.plugin.SweptUtils
 import core.api.*
-import core.api.hasRequirement
-import core.api.isQuestComplete
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.impl.Projectile

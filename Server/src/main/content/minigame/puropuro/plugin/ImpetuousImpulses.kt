@@ -1,7 +1,6 @@
 package content.minigame.puropuro.plugin
 
 import core.api.*
-import core.api.setMinimapState
 import core.game.interaction.Option
 import core.game.node.Node
 import core.game.node.entity.Entity
@@ -12,7 +11,6 @@ import core.game.system.task.Pulse
 import core.game.world.GameWorld.Pulser
 import core.game.world.GameWorld.ticks
 import core.game.world.map.Location
-import core.game.world.map.RegionManager.getObject
 import core.game.world.map.zone.MapZone
 import core.game.world.map.zone.ZoneBuilder
 import core.game.world.map.zone.ZoneType

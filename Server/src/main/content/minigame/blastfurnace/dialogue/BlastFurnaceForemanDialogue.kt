@@ -6,7 +6,6 @@ import core.game.dialogue.FaceAnim
 import core.game.dialogue.Topic
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
-import core.game.node.entity.player.link.IronmanMode
 import core.game.node.item.Item
 import core.game.system.task.Pulse
 import core.plugin.Initializable

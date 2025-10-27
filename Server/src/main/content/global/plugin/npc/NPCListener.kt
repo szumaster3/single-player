@@ -22,7 +22,6 @@ import core.game.worldevents.events.HolidayRandomEventNPC
 import core.game.worldevents.events.HolidayRandomEvents
 import core.game.worldevents.events.HolidayRandoms
 import shared.consts.Components
-import shared.consts.Items
 import shared.consts.NPCs
 
 class NPCListener : InteractionListener {

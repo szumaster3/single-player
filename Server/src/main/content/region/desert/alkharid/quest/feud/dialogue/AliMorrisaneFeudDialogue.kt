@@ -1,6 +1,7 @@
 package content.region.desert.alkharid.quest.feud.dialogue
 
-import core.api.*
+import core.api.sendMessage
+import core.api.setVarbit
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

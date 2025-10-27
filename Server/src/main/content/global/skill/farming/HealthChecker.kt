@@ -1,9 +1,9 @@
 package content.global.skill.farming
 
+import core.api.finishDiaryTask
 import core.api.log
 import core.api.rewardXP
 import core.api.sendMessage
-import core.api.finishDiaryTask
 import core.cache.def.impl.SceneryDefinition
 import core.game.interaction.OptionHandler
 import core.game.node.Node

@@ -11,8 +11,8 @@ import core.game.node.scenery.Scenery
 import core.plugin.Initializable
 import core.plugin.Plugin
 import shared.consts.Animations
-import shared.consts.Scenery as Obj
 import shared.consts.Sounds
+import shared.consts.Scenery as Obj
 
 @Initializable
 class StorageBoxPlugin : OptionHandler() {

@@ -1,11 +1,10 @@
 package content.global.skill.construction.servants;
 
+import com.google.gson.JsonObject;
 import core.game.node.entity.npc.NPC;
 import core.game.node.item.Item;
 
 import java.nio.ByteBuffer;
-
-import com.google.gson.JsonObject;
 
 public final class Servant extends NPC {
 

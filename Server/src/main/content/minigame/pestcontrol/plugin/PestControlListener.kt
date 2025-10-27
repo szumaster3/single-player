@@ -12,10 +12,10 @@ import core.game.world.map.RegionManager.getLocalNpcs
 import core.game.world.update.flag.context.Graphics
 import core.tools.RandomFunction
 import shared.consts.Animations
-import shared.consts.Graphics as Gfx
 import shared.consts.Items
 import shared.consts.NPCs
 import shared.consts.Regions
+import shared.consts.Graphics as Gfx
 
 class PestControlListener : InteractionListener {
 

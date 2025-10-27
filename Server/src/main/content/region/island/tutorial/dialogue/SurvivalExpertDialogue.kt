@@ -2,7 +2,6 @@ package content.region.island.tutorial.dialogue
 
 import content.region.island.tutorial.plugin.TutorialStage
 import core.api.*
-import core.game.component.Component
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC

@@ -16,7 +16,6 @@ import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
 import shared.consts.Animations
-import shared.consts.Components
 import shared.consts.Items
 import shared.consts.Scenery
 

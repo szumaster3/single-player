@@ -7,10 +7,6 @@ import content.region.kandarin.pisc.quest.phoenix.custcene.GetLostCutscene
 import content.region.kandarin.pisc.quest.phoenix.custcene.WoundedPhoenixCutscene
 import content.region.kandarin.pisc.quest.phoenix.dialogue.PhoenixEgglingDialogue
 import core.api.*
-import core.api.getSceneryName
-import core.api.allInInventory
-import core.api.isQuestComplete
-import core.api.closeDialogue
 import core.api.utils.PlayerCamera
 import core.game.dialogue.FaceAnim
 import core.game.interaction.IntType

@@ -1,7 +1,7 @@
 package content.region.karamja.plugin
 
-import content.global.skill.gathering.SkillReward
 import content.data.items.SkillingTool
+import content.global.skill.gathering.SkillReward
 import content.global.skill.gathering.woodcutting.WoodcuttingNode
 import core.api.*
 import core.game.dialogue.FaceAnim

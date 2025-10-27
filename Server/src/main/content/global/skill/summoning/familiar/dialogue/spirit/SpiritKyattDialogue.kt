@@ -2,8 +2,8 @@ package content.global.skill.summoning.familiar.dialogue.spirit
 
 import content.global.skill.summoning.familiar.Familiar
 import core.api.openDialogue
-import core.api.sendOptions
 import core.api.sendMessage
+import core.api.sendOptions
 import core.api.teleport
 import core.game.dialogue.Dialogue
 import core.game.node.entity.npc.NPC

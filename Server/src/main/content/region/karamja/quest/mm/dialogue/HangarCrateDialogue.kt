@@ -1,8 +1,8 @@
 package content.region.karamja.quest.mm.dialogue
 
 import core.api.addItemOrDrop
-import core.api.sendOptions
 import core.api.sendItemDialogue
+import core.api.sendOptions
 import core.api.setTitle
 import core.game.dialogue.DialogueFile
 import shared.consts.Items

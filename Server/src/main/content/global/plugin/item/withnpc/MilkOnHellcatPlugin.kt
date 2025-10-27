@@ -1,13 +1,16 @@
 package content.global.plugin.item.withnpc
 
-import core.api.*
+import content.global.skill.summoning.objectpets.Pet
+import core.api.animate
+import core.api.removeItem
+import core.api.sendChat
+import core.api.sendMessage
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
+import core.game.node.item.Item
 import shared.consts.Animations
 import shared.consts.Items
 import shared.consts.NPCs
-import content.global.skill.summoning.objectpets.Pet
-import core.game.node.item.Item
 
 class MilkOnHellcatPlugin : InteractionListener {
 

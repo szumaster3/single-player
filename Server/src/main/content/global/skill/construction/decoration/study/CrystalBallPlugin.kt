@@ -1,8 +1,8 @@
 package content.global.skill.construction.decoration.study
 
 import core.api.addDialogueAction
-import core.api.sendOptions
 import core.api.sendMessage
+import core.api.sendOptions
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.player.Player

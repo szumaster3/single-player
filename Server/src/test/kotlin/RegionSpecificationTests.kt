@@ -1,5 +1,8 @@
-import core.api.regionspec.*
+import core.api.regionspec.RegionSpecification
 import core.api.regionspec.contracts.FillChunkContract
+import core.api.regionspec.copyOf
+import core.api.regionspec.fillWith
+import core.api.regionspec.using
 import core.game.world.map.BuildRegionChunk
 import core.game.world.map.Region
 import core.game.world.map.RegionChunk

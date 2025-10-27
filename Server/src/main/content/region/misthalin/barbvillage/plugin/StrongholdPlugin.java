@@ -1,7 +1,5 @@
 package content.region.misthalin.barbvillage.plugin;
 
-import core.game.node.entity.player.link.WarningManager;
-import core.game.node.entity.player.link.Warnings;
 import content.region.misthalin.barbvillage.dialogue.CradleOfLifeDialogue;
 import core.cache.def.impl.SceneryDefinition;
 import core.game.component.Component;
@@ -16,6 +14,8 @@ import core.game.interaction.OptionHandler;
 import core.game.node.Node;
 import core.game.node.entity.Entity;
 import core.game.node.entity.player.Player;
+import core.game.node.entity.player.link.WarningManager;
+import core.game.node.entity.player.link.Warnings;
 import core.game.node.scenery.Scenery;
 import core.game.system.task.Pulse;
 import core.game.world.GameWorld;

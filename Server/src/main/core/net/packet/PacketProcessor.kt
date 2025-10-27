@@ -1,6 +1,5 @@
 package core.net.packet
 
-import content.data.GameAttributes
 import content.global.plugin.iface.ge.StockMarket
 import content.global.skill.magic.SpellListener
 import content.global.skill.magic.SpellListeners

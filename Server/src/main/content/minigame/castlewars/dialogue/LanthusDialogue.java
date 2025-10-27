@@ -9,7 +9,6 @@ import shared.consts.Items;
 import shared.consts.NPCs;
 
 import static core.api.ContentAPIKt.openNpcShop;
-import static core.api.ContentAPIKt.sendMessage;
 import static core.tools.DialogueHelperKt.END_DIALOGUE;
 
 /**

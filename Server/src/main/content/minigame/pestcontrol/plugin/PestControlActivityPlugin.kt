@@ -24,12 +24,11 @@ import core.plugin.ClassScanner
 import core.plugin.Initializable
 import core.tools.RandomFunction
 import core.tools.StringUtils
-import java.util.PriorityQueue
-import kotlin.collections.ArrayList
 import shared.consts.Components
 import shared.consts.Items
 import shared.consts.NPCs
 import shared.consts.Regions
+import java.util.*
 
 /**
  * Represents the pest control activity plugin.

@@ -4,7 +4,10 @@ import content.global.plugin.iface.BookInterface
 import content.global.plugin.iface.BookLine
 import content.global.plugin.iface.Page
 import content.global.plugin.iface.PageSet
-import core.api.*
+import core.api.openDialogue
+import core.api.openInterface
+import core.api.sendDialogueLines
+import core.api.setTitle
 import core.game.dialogue.DialogueFile
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener

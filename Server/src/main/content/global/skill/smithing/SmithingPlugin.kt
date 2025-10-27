@@ -4,7 +4,6 @@ import content.global.skill.smithing.special.DragonShieldPulse
 import content.global.skill.smithing.special.DragonfireShieldPulse
 import core.api.*
 import core.game.component.Component
-import core.game.container.access.InterfaceContainer
 import core.game.container.access.InterfaceContainer.generateItems
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener

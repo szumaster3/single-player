@@ -1,6 +1,8 @@
 package content.global.plugin.item.withitem
 
-import core.api.*
+import core.api.removeItem
+import core.api.replaceSlot
+import core.api.sendMessage
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.item.Item

@@ -1,9 +1,9 @@
 package content.global.skill.construction
 
-import core.game.node.entity.player.link.WarningManager
-import core.game.node.entity.player.link.Warnings
 import core.api.sendMessage
 import core.game.interaction.InterfaceListener
+import core.game.node.entity.player.link.WarningManager
+import core.game.node.entity.player.link.Warnings
 import shared.consts.Components
 
 /**

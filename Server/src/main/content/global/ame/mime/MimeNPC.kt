@@ -9,7 +9,6 @@ import core.game.interaction.QueueStrength
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.link.TeleportManager
 import core.game.system.timer.impl.AntiMacro
-import core.tools.RandomFunction
 import shared.consts.Music
 import shared.consts.NPCs
 

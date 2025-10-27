@@ -1,7 +1,6 @@
 package content.global.travel.glider
 
 import core.api.*
-import core.game.dialogue.FaceAnim
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.interaction.InterfaceListener

@@ -8,9 +8,7 @@ import core.api.setAttribute
 import core.game.component.Component
 import core.game.component.ComponentDefinition
 import core.game.component.ComponentPlugin
-import core.game.container.access.InterfaceContainer
 import core.game.container.access.InterfaceContainer.generateItems
-import core.game.container.impl.BankContainer.Companion.DEPOSIT_BOX
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.plugin.Initializable

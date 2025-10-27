@@ -1,7 +1,10 @@
 package content.global.skill.construction;
 
 
+import core.game.dialogue.Dialogue;
+import core.game.dialogue.DialogueInterpreter;
 import core.game.node.entity.player.Player;
+import core.game.node.entity.skill.Skills;
 import core.game.node.item.Item;
 import core.game.node.scenery.Scenery;
 import core.game.node.scenery.SceneryBuilder;
@@ -9,9 +12,6 @@ import core.game.world.map.Direction;
 import core.game.world.map.Location;
 import core.game.world.map.RegionChunk;
 import core.plugin.Initializable;
-import core.game.dialogue.DialogueInterpreter;
-import core.game.dialogue.Dialogue;
-import core.game.node.entity.skill.Skills;
 import shared.consts.Items;
 
 import java.awt.*;
