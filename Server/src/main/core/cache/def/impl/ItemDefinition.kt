@@ -199,7 +199,7 @@ class ItemDefinition : Definition<Item?>() {
     private val excludedKeywords = listOf(
         "(class", "camo ", "larupia", "kyatt", " stole", "moonclan", "villager ", "tribal", "spirit ", "gauntlets"
     )
-    private val allowedSubstrings = listOf("satchel", "naval", " partyhat")
+    private val allowedSubstrings = listOf("satchel", "naval", " partyhat", " afro")
 
     /**
      * Checks if the item is allowed to be taken to Entrana.
@@ -217,7 +217,7 @@ class ItemDefinition : Definition<Item?>() {
             if (excludedKeywords.any { it in name }) return false
             if (equipSlot(id) == EquipmentSlot.AMMO) return true
             if (allowedSubstrings.any { it in name }) return true
-            if (name.startsWith("afro") || name.startsWith("ring") || name.startsWith("amulet")) return true
+            if (name.startsWith("ring") || name.startsWith("amulet")) return true
 
             val bonuses = getConfiguration<IntArray>(ItemConfigParser.BONUS)
             return bonuses?.all { it == 0 } ?: true
