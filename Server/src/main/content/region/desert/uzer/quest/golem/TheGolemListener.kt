@@ -9,118 +9,31 @@ import core.game.global.action.SpecialLadder
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.interaction.InterfaceListener
-import core.game.node.entity.npc.AbstractNPC
 import core.game.node.entity.player.Player
-import core.game.node.entity.player.link.quest.Quest
-import core.game.node.entity.skill.Skills
+import core.game.node.entity.player.link.TeleportManager
 import core.game.node.item.Item
 import core.game.world.map.Location
-import core.plugin.Initializable
 import core.tools.RandomFunction
 import shared.consts.*
 
-@Initializable
-class TheGolemQuest : Quest(Quests.THE_GOLEM, 70, 69, 1, Vars.VARBIT_QUEST_THE_GOLEM_PROGRESS_346, 0, 1, 10) {
-    override fun drawJournal(
-        player: Player,
-        stage: Int,
-    ) {
-        super.drawJournal(player, stage)
-        var ln = 11
-        if (stage == 0) {
-            line(player, "I can start this quest by talking to !!the golem?? who is in the:", ln++, false)
-            line(player, "Ruined city of !!Uzer??, which is in the desert to the east of", ln++, false)
-            line(player, "the !!Shantay Pass.", ln++, false)
-            line(player, "I will need to have !!level 20 crafting?? and !!level 25 thieving", ln++, false)
-        }
-        if (stage >= 1) {
-            line(player, "I've found !!the golem??, and offered to !!repair?? it.", ln++, stage > 1)
-        }
-        if (stage >= 2) {
-            line(player, "I've !!repaired?? the golem with some !!soft clay??.", ln++, stage > 2)
-        }
-        if (stage >= 3) {
-            line(player, "The golem wants me to open a portal to help it defeat", ln++, stage > 3)
-            line(player, "the demon that attacked its city.", ln++, stage > 3)
-        }
-        val readLetter = getAttribute(player, "the-golem:read-elissa-letter", false)
-        val readBook = getAttribute(player, "the-golem:varmen-notes-read", false)
-        if (readLetter) {
-            line(player, "I've found a letter that mentions !!The Digsite", ln++, readBook)
-        }
-        if (readBook) {
-            line(player, "I've found a !!book?? that mentions that golems are !!programmed by??", ln++, stage > 7)
-            line(player, "!!writing instructions?? on !!papyrus?? with a !!phoenix quill pen??.", ln++, stage > 7)
-        }
-        val hasStatuette = TheGolemListeners.hasStatuette(player)
-        val doorOpen = getAttribute(player, "the-golem:door-open", false)
-        if (hasStatuette) {
-            line(player, "I've acquired a statuette that fits a !!mechanism?? in the !!ruins??", ln++, doorOpen)
-            line(player, "of !!Uzer?? from the !!Varrock museum??.", ln++, doorOpen)
-        }
-        val seenDemon = getAttribute(player, "the-golem:seen-demon", false)
-        if (doorOpen) {
-            line(player, "I've opened the portal in the !!ruins of Uzer??.", ln++, seenDemon)
-        }
-        if (seenDemon) {
-            line(player, "It turns out that !!the demon?? is !!already dead??!", ln++, stage > 4)
-            line(player, "I should tell the golem the good news.", ln++, stage > 4)
-        }
-        if (stage > 4) {
-            line(player, "The demon doesn't think its task is complete.", ln++, stage > 7)
-        }
-        if (stage >= 100) {
-            ln++
-            line(player, "<col=FF0000>QUEST COMPLETE!</col>", ln, false)
-        }
-    }
+class TheGolemListener : InteractionListener, InterfaceListener {
 
-    override fun hasRequirements(player: Player?): Boolean =
-        getStatLevel(player!!, Skills.CRAFTING) >= 20 && getStatLevel(player, Skills.THIEVING) >= 25
-
-    override fun finish(player: Player) {
-        super.finish(player)
-        player ?: return
-        var ln = 10
-        displayQuestItem(player, Items.STATUETTE_4618)
-        drawReward(player, "1 quest point", ln++)
-        drawReward(player, "1,000 Crafting XP", ln++)
-        drawReward(player, "1,000 Theiving XP", ln)
-        rewardXP(player, Skills.CRAFTING, 1000.0)
-        rewardXP(player, Skills.THIEVING, 1000.0)
-    }
-
-    override fun newInstance(`object`: Any?): Quest = this
-
-    override fun updateVarps(player: Player?) {
-        TheGolemListeners.updateVarps(player!!)
-    }
-}
-
-@Initializable
-class ClayGolemNPC : AbstractNPC {
-    constructor() : super(NPCs.BROKEN_CLAY_GOLEM_1908, null, true)
-    private constructor(id: Int, location: Location) : super(id, location)
-
-    override fun construct(
-        id: Int,
-        location: Location,
-        vararg objects: Any?,
-    ): AbstractNPC = ClayGolemNPC(id, location)
-
-    override fun getIds(): IntArray =
-        intArrayOf(
-            NPCs.TOUGH_GUY_1907,
-            NPCs.BROKEN_CLAY_GOLEM_1908,
-            NPCs.DAMAGED_CLAY_GOLEM_1909,
-            NPCs.CLAY_GOLEM_1910,
-        )
-}
-
-class TheGolemListeners :
-    InteractionListener,
-    InterfaceListener {
     companion object {
+        val LETTER_LINES = arrayOf(
+            "",
+            "",
+            "Dearest Varmen,",
+            "I hope this finds you well. Here are the books you asked for",
+            "There has been an exciting development closer to home --",
+            "another city from the same period has been discovered east",
+            "of Varrock, and we are starting a huge excavation project",
+            "here. I don't know if the museum will be able to finance your",
+            "expedition as well as this one, so I fear your current trip will be",
+            "the last.",
+            "May Saradomin grant you a safe journey home",
+            "Your loving Elissa.",
+        )
+
         @JvmStatic
         fun hasStatuette(player: Player): Boolean =
             player.inventory.containsAtLeastOneItem(Items.STATUETTE_4618) ||
@@ -188,7 +101,7 @@ class TheGolemListeners :
         }
     }
 
-    fun checkDoor(player: Player) {
+    private fun checkDoor(player: Player) {
         if (!player.getAttribute("the-golem:door-open", false)) {
             val rotation0 = player.getAttribute("the-golem:statuette-rotation:0", 0)
             val rotation1 = player.getAttribute("the-golem:statuette-rotation:1", 0)
@@ -216,8 +129,8 @@ class TheGolemListeners :
          * Handles using the soft clay on Golem NPC.
          */
 
-        onUseWith(IntType.NPC, Items.SOFT_CLAY_1761, NPCs.TOUGH_GUY_1907) { player, used, _ ->
-            if (player.questRepository.getStage(Quests.THE_GOLEM) == 1) {
+        onUseWith(IntType.NPC, Items.SOFT_CLAY_1761, NPCs.CLAY_GOLEM_1907) { player, used, _ ->
+            if (getQuestStage(player, Quests.THE_GOLEM) == 1) {
                 var clayUsed = player.getAttribute("the-golem:clay-used", 0)
                 val msg =
                     when (clayUsed) {
@@ -247,7 +160,7 @@ class TheGolemListeners :
          * Handles climbing down the staircase.
          */
 
-        on(shared.consts.Scenery.STAIRCASE_34978, IntType.SCENERY, "climb-down") { player, node ->
+        on(Scenery.STAIRCASE_34978, IntType.SCENERY, "climb-down") { player, node ->
             ClimbActionHandler.climb(
                 player,
                 null,
@@ -260,7 +173,7 @@ class TheGolemListeners :
          * Handles climbing up the staircase.
          */
 
-        on(shared.consts.Scenery.STAIRCASE_6372, IntType.SCENERY, "climb-up") { player, node ->
+        on(Scenery.STAIRCASE_6372, IntType.SCENERY, "climb-up") { player, node ->
             ClimbActionHandler.climb(player, null, SpecialLadder.getDestination(node.location)!!)
             return@on true
         }
@@ -280,7 +193,7 @@ class TheGolemListeners :
          * Handles searching a bookcase.
          */
 
-        on(shared.consts.Scenery.BOOKCASE_35226, IntType.SCENERY, "search") { player, _ ->
+        on(Scenery.BOOKCASE_35226, IntType.SCENERY, "search") { player, _ ->
             val notes = hasAnItem(player, Items.VARMENS_NOTES_4616).container != null
             val readLetter = player.getAttribute("the-golem:read-elissa-letter", false)
 
@@ -300,7 +213,7 @@ class TheGolemListeners :
          * Handles opening a door.
          */
 
-        on(shared.consts.Scenery.DOOR_6363, IntType.SCENERY, "open") { player, _ ->
+        on(Scenery.DOOR_6363, IntType.SCENERY, "open") { player, _ ->
             sendMessage(player, "The door doesn't open.")
             return@on true
         }
@@ -309,7 +222,7 @@ class TheGolemListeners :
          * Handles entering a (portal) for first time.
          */
 
-        on(shared.consts.Scenery.DOOR_6364, IntType.SCENERY, "enter") { player, _ ->
+        on(Scenery.DOOR_6364, IntType.SCENERY, "enter") { player, _ ->
             sendMessage(player, "You step into the portal.")
             if (!player.getAttribute("the-golem:seen-demon", false)) {
                 sendMessage(player, "The room is dominated by a colossal horned skeleton!")
@@ -317,7 +230,7 @@ class TheGolemListeners :
                 setQuestStage(player, Quests.THE_GOLEM, 4)
                 playGlobalAudio(player.location, Sounds.GOLEM_DEMONDOOR_1848)
             }
-            teleport(player, Location.create(3552, 4948, 0))
+            teleport(player, Location.create(3552, 4948, 0), TeleportManager.TeleportType.INSTANT)
             return@on true
         }
 
@@ -325,10 +238,10 @@ class TheGolemListeners :
          * Handles entering portal.
          */
 
-        on(shared.consts.Scenery.PORTAL_6282, IntType.SCENERY, "enter") { player, _ ->
+        on(Scenery.PORTAL_6282, IntType.SCENERY, "enter") { player, _ ->
             sendMessage(player, "You step into the portal.")
             playGlobalAudio(player.location, Sounds.GOLEM_TP_1851)
-            teleport(player, Location.create(2722, 4911, 0))
+            teleport(player, Location.create(2722, 4911, 0), TeleportManager.TeleportType.INSTANT)
             return@on true
         }
 
@@ -406,21 +319,12 @@ class TheGolemListeners :
 
         onUseWith(IntType.ITEM, Items.PESTLE_AND_MORTAR_233, Items.BLACK_MUSHROOM_4620) { player, _, with ->
             if (!inInventory(player, Items.VIAL_229)) {
-                sendMessage(
-                    player,
-                    "You crush the mushroom, but you have no vial to put the ink in and it goes everywhere!",
-                )
+                sendMessage(player, "You crush the mushroom, but you have no vial to put the ink in and it goes everywhere!")
                 removeItem(player, Item(Items.BLACK_MUSHROOM_4620, 1))
                 return@onUseWith true
             }
-            if (removeItem(player, with.asItem(), Container.INVENTORY) &&
-                removeItem(player, Items.VIAL_229, Container.INVENTORY)
-            ) {
-                sendItemDialogue(
-                    player,
-                    Items.BLACK_MUSHROOM_INK_4622,
-                    "You crush the mushroom and pour the juice into a vial.",
-                )
+            if (removeItem(player, with.asItem(), Container.INVENTORY) && removeItem(player, Items.VIAL_229, Container.INVENTORY)) {
+                sendItemDialogue(player, Items.BLACK_MUSHROOM_INK_4622, "You crush the mushroom and pour the juice into a vial.")
                 addItem(player, Items.BLACK_MUSHROOM_INK_4622, 1)
             }
             return@onUseWith true
@@ -458,7 +362,7 @@ class TheGolemListeners :
          * Handles inserting the strange implement into the golem's skull.
          */
 
-        onUseWith(IntType.NPC, Items.STRANGE_IMPLEMENT_4619, NPCs.TOUGH_GUY_1907) { player, _, _ ->
+        onUseWith(IntType.NPC, Items.STRANGE_IMPLEMENT_4619, NPCs.CLAY_GOLEM_1907) { player, _, _ ->
             val questStage = getQuestStage(player, Quests.THE_GOLEM)
             if (!player.getAttribute("the-golem:varmen-notes-read", false)) {
                 sendMessage(player, "You can't see a way to put the instructions in the golem's skull.")
@@ -476,9 +380,9 @@ class TheGolemListeners :
          * Handles use golem program on the golem's skull.
          */
 
-        onUseWith(IntType.NPC, Items.GOLEM_PROGRAM_4624, NPCs.TOUGH_GUY_1907) { player, _, with ->
+        onUseWith(IntType.NPC, Items.GOLEM_PROGRAM_4624, NPCs.CLAY_GOLEM_1907) { player, _, with ->
             playGlobalAudio(player.location, Sounds.GOLEM_PROGRAM_1849)
-            player.dialogueInterpreter.open(ClayGolemProgramDialogueFile(), with)
+            openDialogue(player, with.id, with.id)
             return@onUseWith true
         }
 
@@ -490,12 +394,7 @@ class TheGolemListeners :
             if (getAttribute(player, "the-golem:varmen-notes-read", false)) {
                 lock(player, 1000)
                 val lootTable =
-                    PickpocketPlugin.pickpocketRoll(
-                        player = player,
-                        low = 90.0,
-                        high = 240.0,
-                        table = WeightBasedTable.create(WeightedItem(Items.PHOENIX_FEATHER_4621, 1, 1, 1.0, true)),
-                    )
+                    PickpocketPlugin.pickpocketRoll(player = player, low = 90.0, high = 240.0, table = WeightBasedTable.create(WeightedItem(Items.PHOENIX_FEATHER_4621, 1, 1, 1.0, true)))
                 if (lootTable != null) {
                     sendMessage(player, "You attempt to grab the pheonix's tail-feather.")
                     animate(player, Animations.HUMAN_PICKPOCKETING_881)

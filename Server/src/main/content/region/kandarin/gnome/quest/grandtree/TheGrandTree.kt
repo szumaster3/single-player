@@ -1,10 +1,7 @@
 package content.region.kandarin.gnome.quest.grandtree
 
 import content.region.kandarin.gnome.quest.grandtree.plugin.TheGrandTreeUtils
-import core.api.hasLevelStat
-import core.api.removeAttributes
-import core.api.rewardXP
-import core.api.sendItemZoomOnInterface
+import core.api.*
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest
 import core.game.node.entity.skill.Skills
@@ -22,23 +19,16 @@ import shared.consts.Vars
  */
 @Initializable
 class TheGrandTree : Quest(Quests.THE_GRAND_TREE, 71, 70, 5, Vars.VARP_QUEST_THE_GRAND_TREE_PROGRESS_150, 0, 1, 160) {
-    override fun drawJournal(
-        player: Player,
-        stage: Int,
-    ) {
+
+    override fun drawJournal(player: Player, stage: Int) {
         super.drawJournal(player, stage)
         var line = 12
-        player ?: return
         line(player, "I can start this quest at the !!Grand Tree?? in the !!Gnome??", line++, stage > 0)
         line(player, "!!Stronghold?? by speaking to !!King Narnode Shareen??.", line++, stage > 0)
         line++
         if (stage == 0) {
             line(player, "I must have:", line++)
-            line(
-                player,
-                if (hasLevelStat(player, Skills.AGILITY, 25)) "---Level 25 Agility./--" else "!!Level 25 Agility.??",
-                line++,
-            )
+            line(player, if (hasLevelStat(player, Skills.AGILITY, 25)) "---Level 25 Agility./--" else "!!Level 25 Agility.??", line++)
             line(player, "!!High enough combat to defeat a level 172 demon.??", line++)
             line++
         }
@@ -46,12 +36,7 @@ class TheGrandTree : Quest(Quests.THE_GRAND_TREE, 71, 70, 5, Vars.VARP_QUEST_THE
             line(player, "!!King Narnode Shareen?? suspects sabotage on the !!Grand Tree?? and", line++, stage > 10)
             line(player, "wants to confirm it by consulting with !!Hazelmere??.", line++, stage > 10)
             line++
-            line(
-                player,
-                "!!Hazelmere's dwelling?? is located on a !!towering hill??, on an !!island??",
-                line++,
-                stage > 10,
-            )
+            line(player, "!!Hazelmere's dwelling?? is located on a !!towering hill??, on an !!island??", line++, stage > 10)
             line(player, "!!east?? of !!Yanille??.", line++, stage > 10)
             line++
         }
@@ -65,12 +50,7 @@ class TheGrandTree : Quest(Quests.THE_GRAND_TREE, 71, 70, 5, Vars.VARP_QUEST_THE
             line++
         }
         if (stage >= 45) {
-            line(
-                player,
-                "!!Glough?? says the humans are going to !!invade!?? Report back to !!the king??.",
-                line++,
-                stage > 45,
-            )
+            line(player, "!!Glough?? says the humans are going to !!invade!?? Report back to !!the king??.", line++, stage > 45)
             line++
         }
         if (stage >= 46) {
@@ -111,9 +91,8 @@ class TheGrandTree : Quest(Quests.THE_GRAND_TREE, 71, 70, 5, Vars.VARP_QUEST_THE
 
     override fun finish(player: Player) {
         super.finish(player)
-        player ?: return
         var ln = 10
-        sendItemZoomOnInterface(player, Components.QUEST_COMPLETE_SCROLL_277, 5, Items.DACONIA_ROCK_793, 230)
+        displayQuestItem(player, Items.DACONIA_ROCK_793)
         drawReward(player, "5 Quest Points", ln++)
         drawReward(player, "7900 Agility XP", ln++)
         drawReward(player, "18,400 Attack XP", ln++)
@@ -121,16 +100,7 @@ class TheGrandTree : Quest(Quests.THE_GRAND_TREE, 71, 70, 5, Vars.VARP_QUEST_THE
         rewardXP(player, Skills.AGILITY, 7900.0)
         rewardXP(player, Skills.ATTACK, 18400.0)
         rewardXP(player, Skills.MAGIC, 2150.0)
-        removeAttributes(
-            player,
-            TheGrandTreeUtils.DRACONIA_ROCK,
-            TheGrandTreeUtils.FEMI_HELP_TRUE,
-            TheGrandTreeUtils.FEMI_TALK,
-            TheGrandTreeUtils.TWIG_0,
-            TheGrandTreeUtils.TWIG_1,
-            TheGrandTreeUtils.TWIG_2,
-            TheGrandTreeUtils.TWIG_3,
-        )
+        removeAttributes(player, TheGrandTreeUtils.DRACONIA_ROCK, TheGrandTreeUtils.FEMI_HELP_TRUE, TheGrandTreeUtils.FEMI_TALK, TheGrandTreeUtils.TWIG_0, TheGrandTreeUtils.TWIG_1, TheGrandTreeUtils.TWIG_2, TheGrandTreeUtils.TWIG_3)
     }
 
     override fun newInstance(`object`: Any?): Quest = this
