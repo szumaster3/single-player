@@ -89,7 +89,7 @@ class BiohazardPlugin : InteractionListener {
         }
 
         on(Scenery.CUPBOARD_2056, IntType.SCENERY, "open") { player, node ->
-            animate(player, Animations.OPEN_WARDROBE_542)
+            animate(player, Animations.HUMAN_OPEN_WARDROBE_542)
             playAudio(player, Sounds.CUPBOARD_OPEN_58)
             replaceScenery(node.asScenery(), Scenery.CUPBOARD_2057, -1)
             sendMessage(player, "You open the cupboard.")

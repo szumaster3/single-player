@@ -628,7 +628,7 @@ class LockedDiary : InteractionListener {
          */
 
         on(Scenery.SANDY_S_DESK_10805, IntType.SCENERY, "search") { player, _ ->
-            player.animate(Animation(Animations.MULTI_TAKE_832))
+            player.animate(Animation(Animations.HUMAN_MULTI_USE_832))
             sendMessage(
                 player,
                 "You search through the papers on the table and find a locked diary."

@@ -310,7 +310,7 @@ class FremennikTrialsPlugin : InteractionListener {
             if (player.getExtension<Any?>(KoscheiSession::class.java) != null) {
                 KoscheiSession.getSession(player).close()
             }
-            ClimbActionHandler.climb(player, Animation(Animations.USE_LADDER_828), Location.create(2671, 10099, 2))
+            ClimbActionHandler.climb(player, Animation(Animations.HUMAN_CLIMB_STAIRS_828), Location.create(2671, 10099, 2))
             Pulser.submit(KoscheiPulse(player))
             return@on true
         }
@@ -323,7 +323,7 @@ class FremennikTrialsPlugin : InteractionListener {
             if (player.getExtension<Any?>(KoscheiSession::class.java) != null) {
                 KoscheiSession.getSession(player).close()
             }
-            ClimbActionHandler.climb(player, Animation(Animations.USE_LADDER_828), Location.create(2666, 3694, 0))
+            ClimbActionHandler.climb(player, Animation(Animations.HUMAN_CLIMB_STAIRS_828), Location.create(2666, 3694, 0))
             return@on true
         }
 
@@ -393,7 +393,7 @@ class BranchFletchingPulse(val player: Player) : Pulse() {
 
     override fun pulse(): Boolean {
         when (counter++) {
-            0 -> animate(player, Animation(Animations.HUMAN_FLETCHING_LOGS_1248)).also { player.lock() }
+            0 -> animate(player, Animation(Animations.FLETCH_LOGS_1248)).also { player.lock() }
             3 -> {
                 if (removeItem(player, Items.BRANCH_3692)) {
                     addItem(player, Items.UNSTRUNG_LYRE_3688)

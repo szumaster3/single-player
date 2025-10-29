@@ -21,7 +21,7 @@ class NpcContactSpell : SpellListener("lunar") {
                 removeRunes(player)
                 addXP(player, 63.0)
                 setDelay(player, false)
-                visualizeSpell(player, Animations.LUNAR_NPC_CONTACT_4413, 728, 130, 3618)
+                visualizeSpell(player, Animations.FERTILE_SPELL_4413, 728, 130, 3618)
             }
         }
     }

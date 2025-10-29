@@ -81,7 +81,7 @@ class GrindItemPlugin : InteractionListener {
     }
 
     companion object {
-        private val ANIMATION = Animation(Animations.PESTLE_MORTAR_364)
+        private val ANIMATION = Animation(Animations.HUMAN_USE_PESTLE_AND_MORTAR_364)
         private const val FISHING_BAIT = Items.FISHING_BAIT_313
     }
 }

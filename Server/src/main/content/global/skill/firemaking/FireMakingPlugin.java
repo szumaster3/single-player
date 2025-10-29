@@ -25,7 +25,7 @@ import static core.api.ContentAPIKt.replaceSlot;
  */
 public final class FireMakingPlugin extends SkillPulse<Item> {
 
-    private static final Animation ANIMATION = new Animation(Animations.TINDERBOX_733);
+    private static final Animation ANIMATION = new Animation(Animations.HUMAN_LIGHT_FIRE_WITH_TINDERBOX_733);
 
     private static final Item TINDERBOX = new Item(Items.TINDERBOX_590);
 

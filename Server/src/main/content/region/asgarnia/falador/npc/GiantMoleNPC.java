@@ -226,7 +226,7 @@ public final class GiantMoleNPC extends AbstractNPC {
 
             @Override
             public boolean handle(final Player player, Node node, String option) {
-                player.animate(Animation.create(Animations.USE_LADDER_828));
+                player.animate(Animation.create(Animations.HUMAN_CLIMB_STAIRS_828));
                 player.lock(2);
                 GameWorld.getPulser().submit(new Pulse(1, player) {
                     @Override

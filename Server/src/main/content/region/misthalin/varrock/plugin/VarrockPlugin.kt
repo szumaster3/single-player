@@ -478,7 +478,7 @@ class VarrockPlugin : InteractionListener {
 
         on(Scenery.LADDER_1749, IntType.SCENERY, "climb-down") { player, _ ->
             val location = if (player.location.z == 2) Location.create(3097, 3432, 1) else Location.create(3096, 3432, 0)
-            ClimbActionHandler.climb(player, Animation(Animations.MULTI_BEND_OVER_827), location)
+            ClimbActionHandler.climb(player, Animation(Animations.HUMAN_BURYING_BONES_827), location)
             return@on true
         }
 

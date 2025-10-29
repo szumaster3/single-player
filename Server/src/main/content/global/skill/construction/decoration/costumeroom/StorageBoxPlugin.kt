@@ -180,7 +180,7 @@ class StorageBoxPlugin : OptionHandler() {
 
         private fun open(player: Player, obj: Scenery) {
             playAudio(player, Sounds.CHEST_OPEN_52)
-            animate(player, Animations.OPEN_CHEST_536)
+            animate(player, Animations.HUMAN_OPEN_CHEST_536)
             replaceScenery(obj, obj.id + 1, -1)
         }
 

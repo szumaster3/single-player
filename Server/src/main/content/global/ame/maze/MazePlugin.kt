@@ -89,7 +89,7 @@ class MazePlugin : InteractionListener {
             val chestsOpened = getAttribute(player, GameAttributes.MAZE_ATTRIBUTE_CHESTS_OPEN, 0)
 
             if (ticksLeft > 0 && chestsOpened < 10) {
-                animate(player, Animations.OPEN_CHEST_536)
+                animate(player, Animations.HUMAN_OPEN_CHEST_536)
                 val reward = mazeDropTable.roll().first()
                 val rewardName = getItemName(reward.id).lowercase()
                 val message = when (reward.id) {

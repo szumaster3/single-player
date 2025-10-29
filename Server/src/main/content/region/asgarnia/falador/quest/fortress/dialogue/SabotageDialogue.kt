@@ -20,7 +20,7 @@ class SabotageDialogue(player: Player? = null) : Dialogue(player) {
     override fun open(vararg args: Any?): Boolean {
         if (args.size == 2) {
             sendNPCDialogueLines(player, NPCs.WITCH_611, FaceAnim.NEUTRAL, false, "Where has Greldo got to with that magic cabbage!")
-            player.animate(Animation(Animations.MULTI_TAKE_832))
+            player.animate(Animation(Animations.HUMAN_MULTI_USE_832))
             playAudio(player, Sounds.BK_THROW_CABBAGE_1420)
             stage = 10
             return true

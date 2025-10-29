@@ -162,7 +162,7 @@ class KharaziDungeonPlugin : InteractionListener {
                 2 -> {
                     end()
                     if (buttonID == 1) {
-                        animate(player!!, Animations.HUMAN_CRAWLS_844)
+                        animate(player!!, Animations.CRAWL_844)
                         teleport(player!!, Location.create(2800, 9340, 0), TeleportManager.TeleportType.INSTANT, 1)
                         sendMessage(player!!, "You successfully squeeze through the crevice into a small tunnel.")
                     } else {
@@ -338,7 +338,7 @@ class KharaziDungeonPlugin : InteractionListener {
         else
             boulder.location.transform(0, 1, 0)
 
-        forceMove(player, player.location, target, 0, 90, null, Animations.WALK_819) {
+        forceMove(player, player.location, target, 0, 90, null, Animations.HUMAN_WALK_SHORT_819) {
             sendMessage(player, "Another boulder drops down behind you.", 1)
             delayClock(player, Clocks.SKILLING, 3)
             clearScripts(player)

@@ -43,11 +43,11 @@ class BakePieSpell : SpellListener("lunar") {
                         if (counter ==
                             0
                         ) {
-                            delay = Animation(Animations.LUNAR_BAKE_PIE_4413).definition.getDurationTicks() + 1
+                            delay = Animation(Animations.FERTILE_SPELL_4413).definition.getDurationTicks() + 1
                         }
                         val item = playerPies[0]
                         val pie = CookableItems.forId(item.id)
-                        visualizeSpell(player, Animations.LUNAR_BAKE_PIE_4413, 746, 75, Sounds.LUNAR_BAKE_PIE_2879)
+                        visualizeSpell(player, Animations.FERTILE_SPELL_4413, 746, 75, Sounds.LUNAR_BAKE_PIE_2879)
                         addXP(player, 60.0)
                         player.skills.addExperience(Skills.COOKING, pie!!.experience)
                         setDelay(player, false)

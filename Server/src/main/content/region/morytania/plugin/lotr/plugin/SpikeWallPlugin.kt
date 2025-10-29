@@ -23,7 +23,7 @@ class SpikeWallPlugin: OptionHandler() {
     override fun handle(player: Player?, node: Node?, option: String?): Boolean {
         if (player == null || node !is Scenery || option != "search") return false
 
-        val anim = Animation(Animations.PICK_POCKET_881)
+        val anim = Animation(Animations.HUMAN_PICKPOCKETING_881)
         val animDuration = animationDuration(anim)
         val floorTrap = FloorTrap.getFromCoords(player.location.x, player.location.y)
 

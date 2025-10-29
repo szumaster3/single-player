@@ -31,7 +31,7 @@ class IgnatiusVulcanNPC(id: Int = 0, location: Location? = null) : AbstractNPC(i
     override fun getIds(): IntArray = intArrayOf(NPCs.IGNATIUS_VULCAN_4946)
 
     companion object {
-        private val ANIMATION = Animation(Animations.TINDERBOX_733, Priority.HIGH)
+        private val ANIMATION = Animation(Animations.HUMAN_LIGHT_FIRE_WITH_TINDERBOX_733, Priority.HIGH)
 
         fun createFire(
             npc: NPC,

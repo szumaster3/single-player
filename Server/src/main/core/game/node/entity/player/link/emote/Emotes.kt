@@ -25,11 +25,11 @@ enum class Emotes(
 ) {
     YES(
         buttonId = 2,
-        animation = Animations.NOD_HEAD_855
+        animation = Animations.HUMAN_SHAKE_HEAD_YES_855
     ),
     NO(
         buttonId = 3,
-        animation = Animations.SHAKE_HEAD_856
+        animation = Animations.HUMAN_SHAKE_HEAD_NO_856
     ),
     BOW(
         buttonId = 4,
@@ -51,7 +51,7 @@ enum class Emotes(
         override fun play(player: Player) {
             val hat = player.equipment[EquipmentContainer.SLOT_HAT]
             if (hat?.id == Items.A_POWDERED_WIG_10392) {
-                forceEmote(player, Animation(Animations.POWDERED_WIG_ANGRY_EMOTE_E_5315), Graphics(-1))
+                forceEmote(player, Animation(Animations.HUMAN_ANGRY_ENHANCED_5315), Graphics(-1))
             } else {
                 super.play(player)
             }
@@ -59,11 +59,11 @@ enum class Emotes(
     },
     THINK(
         buttonId = 6,
-        animation = Animations.THINK_857
+        animation = Animations.HUMAN_THINK_857
     ),
     WAVE(
         buttonId = 7,
-        animation = Animations.WAVE_863
+        animation = Animations.HUMAN_WAVE_863
     ) {
         override fun play(player: Player) {
             val weapon = player.equipment[EquipmentContainer.SLOT_WEAPON]
@@ -76,7 +76,7 @@ enum class Emotes(
     },
     SHRUG(
         buttonId = 8,
-        animation = Animations.SHRUG_2113
+        animation = Animations.HUMAN_SHRUG_2113
     ),
     CHEER(
         buttonId = 9,
@@ -107,15 +107,15 @@ enum class Emotes(
     },
     JUMP_FOR_JOY(
         buttonId = 11,
-        animation = Animations.JUMP_FOR_JOY_2109
+        animation = Animations.HUMAN_JUMP_FOR_JOY_2109
     ),
     LAUGH(
         buttonId = 12,
-        animation = Animations.LAUGH_861
+        animation = Animations.HUMAN_LAUGH_861
     ),
     YAWN(
         buttonId = 13,
-        animation = Animations.YAWN_2111
+        animation = Animations.HUMAN_YAWN_2111
     ) {
         override fun play(player: Player) {
             val hat = player.equipment[EquipmentContainer.SLOT_HAT]
@@ -133,7 +133,7 @@ enum class Emotes(
         override fun play(player: Player) {
             val legs = player.equipment[EquipmentContainer.SLOT_LEGS]
             if (legs?.id == Items.FLARED_TROUSERS_10394) {
-                forceEmote(player, Animation(Animations.HUMAN_DANCE_ENHANCED_5316), Graphics(-1))
+                forceEmote(player, Animation(Animations.FLARED_TROUSERS_DANCE_EMOTE_E_5316), Graphics(-1))
             } else {
                 super.play(player)
             }
@@ -141,7 +141,7 @@ enum class Emotes(
     },
     JIG(
         buttonId = 15,
-        animation = Animations.JIG_EMOTE_2106
+        animation = Animations.HUMAN_JIG_2106
     ),
     SPIN(
         buttonId = 16,
@@ -162,11 +162,11 @@ enum class Emotes(
     ),
     PANIC(
         buttonId = 20,
-        animation = Animations.PANIC_2105
+        animation = Animations.HUMAN_PANIC_2105
     ),
     RASPBERRY(
         buttonId = 21,
-        animation = Animations.RASPBERRY_2110
+        animation = Animations.HUMAN_BLOW_RASPBERRY_2110
     ),
     CLAP(
         buttonId = 22,
@@ -183,11 +183,11 @@ enum class Emotes(
     },
     SALUTE(
         buttonId = 23,
-        animation = Animations.SALUTE_2112
+        animation = Animations.HUMAN_SALUTE_2112
     ) {
         override fun play(player: Player) {
             if (isEligibleForSalute(player)) {
-                forceEmote(player, Animation(Animations.SALUTE_2112), Graphics(-1))
+                forceEmote(player, Animation(Animations.HUMAN_SALUTE_2112), Graphics(-1))
                 finishDiaryTask(player, DiaryType.FALADOR, 1, 8)
             } else {
                 super.play(player)
@@ -232,12 +232,12 @@ enum class Emotes(
     ),
     LEAN_ON_AIR(
         buttonId = 28,
-        animation = Animations.LEAN_EMOTE_1129,
+        animation = Animations.HUMAN_LEAN_1129,
         lockedMessage = "This emote can be unlocked during the Mime random event.",
     ),
     GLASS_WALL(
         buttonId = 29,
-        animation = Animations.HUMAN_GLASS_WALL_1128,
+        animation = Animations.GLASS_WALL_EMOTE_1128,
         lockedMessage = "This emote can be unlocked during the Mime random event.",
     ),
     IDEA(
@@ -258,7 +258,7 @@ enum class Emotes(
     ) {
         override fun play(player: Player) {
             if (isWearingChickenOutfit(player)) {
-                forceEmote(player, Animation(Animations.HUMAN_FLAP_ENHANCED_3859), Graphics(-1))
+                forceEmote(player, Animation(Animations.CHICKEN_SUIT_FLAP_EMOTE_E_3859), Graphics(-1))
             } else {
                 super.play(player)
             }
@@ -292,7 +292,7 @@ enum class Emotes(
     ),
     BUNNY_HOP(
         buttonId = 38,
-        animation = Animations.HUMAN_BUNNY_HOP_6111,
+        animation = Animations.BUNNY_HOP_EMOTE_E_6111,
         lockedMessage = "This emote can be unlocked by playing an Easter holiday event.",
     ),
     SKILLCAPE(
@@ -366,7 +366,7 @@ enum class Emotes(
                             1 -> forceEmote(
                                 player,
                                 Animation(Animations.GIVE_THANKS_BEGIN_10994),
-                                Graphics(shared.consts.Graphics.RANDOM_EVENT_PUFF_OF_SMOKE_86),
+                                Graphics(shared.consts.Graphics.RE_PUFF_86),
                             )
 
                             3 -> player.appearance.transformNPC(NPCs.THANKSGIVING_TURKEY_8499).also {
@@ -378,7 +378,7 @@ enum class Emotes(
                                 forceEmote(
                                     player,
                                     Animation(Animations.GIVE_THANKS_END_10995),
-                                    Graphics(shared.consts.Graphics.RANDOM_EVENT_PUFF_OF_SMOKE_86),
+                                    Graphics(shared.consts.Graphics.RE_PUFF_86),
                                 )
                             }
                         }

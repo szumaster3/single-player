@@ -27,7 +27,7 @@ class ChargeSpell : MagicSpell(
     SpellBook.MODERN,
     80,
     180.0,
-    Animation(Animations.NS_CHARGE_SPELL_811),
+    Animation(Animations.HUMAN_CAST_SPELL_LONG_811),
     Graphics(6, 96),
     Audio(Sounds.CHARGE_1651),
     arrayOf(Runes.FIRE_RUNE.getItem(3), Runes.BLOOD_RUNE.getItem(3), Runes.AIR_RUNE.getItem(3))

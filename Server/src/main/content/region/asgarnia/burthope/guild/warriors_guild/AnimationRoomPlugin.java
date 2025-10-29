@@ -132,7 +132,7 @@ public final class AnimationRoomPlugin extends MapZone implements Plugin<java.la
             return;
         }
         player.lock(10);
-        player.animate(Animation.create(Animations.MULTI_BEND_OVER_827));
+        player.animate(Animation.create(Animations.HUMAN_BURYING_BONES_827));
         player.getDialogueInterpreter().sendPlainMessage(true, "You place your armour on the platform where it", "disappears...");
         GameWorld.getPulser().submit(new Pulse(5, player) {
             boolean spawn;

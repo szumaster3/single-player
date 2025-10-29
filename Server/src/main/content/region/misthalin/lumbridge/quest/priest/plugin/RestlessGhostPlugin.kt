@@ -109,7 +109,7 @@ class RestlessGhostPlugin : InteractionListener {
             entity = player,
             anim =
                 if (closedCoffin) {
-                    Animation(Animations.OPEN_CHEST_536)
+                    Animation(Animations.HUMAN_OPEN_CHEST_536)
                 } else {
                     Animation(Animations.OPEN_POH_WARDROBE_535)
                 },
@@ -118,7 +118,7 @@ class RestlessGhostPlugin : InteractionListener {
         if (closedCoffin) {
             playAudio(player, Sounds.COFFIN_CLOSE_53)
         } else {
-            playAudio(player, Sounds.COFFIN_OPEN_54)
+            playAudio(player, Sounds.OPEN_HEAVY_54)
         }
 
         replaceScenery(

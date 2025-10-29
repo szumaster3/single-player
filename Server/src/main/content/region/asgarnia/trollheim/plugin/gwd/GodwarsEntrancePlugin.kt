@@ -41,7 +41,7 @@ class GodwarsEntrancePlugin : InteractionListener {
             }
             lock(player, 2)
             sendMessage(player, "You climb down the rope.")
-            animate(player, Animations.USE_LADDER_828)
+            animate(player, Animations.HUMAN_CLIMB_STAIRS_828)
             GameWorld.Pulser.submit(
                 object : Pulse(1, player) {
                     override fun pulse(): Boolean {

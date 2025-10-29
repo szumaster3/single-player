@@ -114,7 +114,7 @@ private class WendyRegularCatDialogueExtension : DialogueFile() {
                 if (newFamiliar != null) {
                     runTask(player!!, 1) {
                         player?.face(newFamiliar)
-                        player?.animate(Animation(Animations.MULTI_BEND_OVER_827))
+                        player?.animate(Animation(Animations.HUMAN_BURYING_BONES_827))
                         newFamiliar.graphics(core.game.world.update.flag.context.Graphics(Graphics.PUFF_OF_GREY_1276), 1)
                         newFamiliar.sendChat("Miaow!", 1)
                     }

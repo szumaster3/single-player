@@ -169,8 +169,8 @@ class ToysOptionPlugin : InteractionListener {
         private val SNOWGLOBE_HOLDFACE = Animation(Animations.SNOWGLOBE_HOLD_FACE_7536)
         private val SNOWGLOBE_INTERFACE = Components.SNOWGLOBE_INTERFACE_659
 
-        private val SPINNING_PLATE_SPIN = Animation(Animations.SPINNING_PLATE_1902)
-        private val SPINNING_PLATE_PUT_DOWN = Animation(Animations.PLATE_1904)
+        private val SPINNING_PLATE_SPIN = Animation(Animations.HUMAN_SPINNING_PLATE_START_1902)
+        private val SPINNING_PLATE_PUT_DOWN = Animation(Animations.HUMAN_SPINNING_PLATE_SUCCESS_1904)
 
         private val TOY_KITE_FLY = Animation(Animations.FLY_KITE_8990)
 

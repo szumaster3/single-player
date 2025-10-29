@@ -58,7 +58,7 @@ public abstract class Familiar extends NPC implements Plugin<Object> {
     /**
      * The constant special graphics.
      */
-    protected static final Graphics SPECIAL_GRAPHICS = Graphics.create(shared.consts.Graphics.FRUIT_BAT_SPECIAL_1316);
+    protected static final Graphics SPECIAL_GRAPHICS = Graphics.create(shared.consts.Graphics.ABYSSAL_TITAN_GFX_1_1316);
 
     /**
      * The Owner.

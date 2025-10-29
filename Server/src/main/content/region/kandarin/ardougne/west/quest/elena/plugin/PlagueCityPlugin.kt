@@ -123,7 +123,7 @@ class PlagueCityPlugin : InteractionListener {
             if (isQuestInProgress(player, Quests.BIOHAZARD, 1, 100)) {
                 sendMessage(player, "The trapdoor is bolted on the other side.")
             } else {
-                animate(player, Animations.MULTI_BEND_OVER_827)
+                animate(player, Animations.HUMAN_BURYING_BONES_827)
                 queueScript(player, 2, QueueStrength.SOFT) {
                     teleport(player, Location(2514, 9739, 0))
                     sendMessage(player, "You climb down through the manhole.")
@@ -152,7 +152,7 @@ class PlagueCityPlugin : InteractionListener {
          */
 
         on(Scenery.MUD_PILE_2533, IntType.SCENERY, "climb") { player, _ ->
-            animate(player, Animations.USE_LADDER_828)
+            animate(player, Animations.HUMAN_CLIMB_STAIRS_828)
             queueScript(player, 2, QueueStrength.SOFT) {
                 teleport(player, Location(2566, 3333, 0))
                 sendDialogue(player, "You climb up the mud pile.")
@@ -458,7 +458,7 @@ class PlagueCityPlugin : InteractionListener {
                 sendMessage(player, "You don't find anything interesting.")
                 return@on true
             }
-            animate(player, Animations.SEARCHING_CRATES_6840)
+            animate(player, Animations.HUMAN_SEARCH_CRATE_6840)
             sendItemDialogue(player, Items.KEY_423, "You find a small key in the barrel.")
             addItem(player, Items.KEY_423)
             return@on true

@@ -125,7 +125,7 @@ class TheGrandTreePlugin : InteractionListener {
                     Scenery(2437, Location(2482, 3462, 1)),
                     2,
                 )
-                player.animator.animate(Animation(Animations.TAKE_FROM_CHEST_538))
+                player.animator.animate(Animation(Animations.HUMAN_CLOSE_CHEST_538))
                 sendItemDialogue(player, Items.INVASION_PLANS_794, "You found a scroll!")
                 addItemOrDrop(player, Items.INVASION_PLANS_794)
                 if (getQuestStage(player, Quests.THE_GRAND_TREE) < 60) {

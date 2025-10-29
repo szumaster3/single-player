@@ -94,7 +94,7 @@ object PilloryUtils {
             sendInterfaceConfig(player, INTERFACE, 16 + getAttribute(player, GameAttributes.RE_PILLORY_SCORE, 1), false)
         } else {
             closeDialogue(player)
-            playAudio(player, Sounds.PILLORY_WRONG_2268)
+            playAudio(player, Sounds.INTERFACE_WRONG_2268)
             if (getAttribute(player, GameAttributes.RE_PILLORY_CORRECT, 0) < 6) {
                 setAttribute(player, GameAttributes.RE_PILLORY_CORRECT, getAttribute(player, GameAttributes.RE_PILLORY_CORRECT, 0) + 1)
             }

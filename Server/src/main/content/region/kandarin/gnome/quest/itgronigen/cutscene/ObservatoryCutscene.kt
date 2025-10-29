@@ -148,7 +148,7 @@ class ObservatoryCutscene(
             }
 
             25 -> {
-                animate(getNPC(PROFESSOR)!!, Animations.HUMAN_CHEER_862)
+                animate(getNPC(PROFESSOR)!!, Animations.CHEER_862)
                 timedUpdate(3)
             }
 

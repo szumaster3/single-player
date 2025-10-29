@@ -17,7 +17,7 @@ import shared.consts.Scenery
 class MiningGuildPlugin : InteractionListener {
 
     private val REQUIRED_MINING_LEVEL = 60
-    private val animation = Animation(Animations.USE_LADDER_828)
+    private val animation = Animation(Animations.HUMAN_CLIMB_STAIRS_828)
 
     private val ladderMap = mapOf(
         Location.create(3019, 3340, 0) to Location.create(3019, 9741, 0),

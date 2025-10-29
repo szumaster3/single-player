@@ -156,12 +156,12 @@ class ZanarisPlugin : InteractionListener {
         }
 
         on(Scenery.TUNNEL_ENTRANCE_12254, IntType.SCENERY, "climb-down") { player, _ ->
-            ClimbActionHandler.climb(player, Animation(Animations.MULTI_BEND_OVER_827), Location(2441, 4381, 0))
+            ClimbActionHandler.climb(player, Animation(Animations.HUMAN_BURYING_BONES_827), Location(2441, 4381, 0))
             return@on true
         }
 
         on(Scenery.ROPE_12255, IntType.SCENERY, "climb-up") { player, _ ->
-            ClimbActionHandler.climb(player, Animation(Animations.MULTI_BEND_OVER_827), Location(2457, 4380, 0))
+            ClimbActionHandler.climb(player, Animation(Animations.HUMAN_BURYING_BONES_827), Location(2457, 4380, 0))
             return@on true
         }
     }

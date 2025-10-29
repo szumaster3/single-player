@@ -15,13 +15,13 @@ class SophanemPlugin : InteractionListener {
 
     override fun defineListeners() {
         on(LADDER_UP, IntType.SCENERY, "climb-up") { player, _ ->
-            ClimbActionHandler.climb(player, Animation(Animations.USE_LADDER_828), Location(3315, 2796, 0))
+            ClimbActionHandler.climb(player, Animation(Animations.HUMAN_CLIMB_STAIRS_828), Location(3315, 2796, 0))
             return@on true
         }
 
         on(LADDER_DOWN, IntType.SCENERY, "climb-down") { player, _ ->
             if (!hasRequirement(player, Quests.CONTACT)) return@on true
-            ClimbActionHandler.climb(player, Animation(Animations.MULTI_BEND_OVER_827), Location(2799, 5160, 0))
+            ClimbActionHandler.climb(player, Animation(Animations.HUMAN_BURYING_BONES_827), Location(2799, 5160, 0))
             return@on true
         }
 

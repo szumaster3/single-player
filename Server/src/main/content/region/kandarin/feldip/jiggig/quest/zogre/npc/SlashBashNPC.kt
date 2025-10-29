@@ -50,7 +50,7 @@ class SlashBashNPC(
         fun spawnSlashBash(player: Player) {
             val boss = SlashBashNPC(NPCs.SLASH_BASH_2060)
             val spawnGraphics =
-                core.game.world.update.flag.context.Graphics(Graphics.RANDOM_EVENT_PUFF_OF_SMOKE_86)
+                core.game.world.update.flag.context.Graphics(Graphics.RE_PUFF_86)
             boss.location = Location.getRandomLocation(Location(2480, 9445, 0), 2, true)
             boss.isWalks = true
             boss.isAggressive = true

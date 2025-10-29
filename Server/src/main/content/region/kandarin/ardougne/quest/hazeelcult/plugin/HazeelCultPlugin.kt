@@ -164,7 +164,7 @@ class HazeelCultPlugin : InteractionListener {
         }
 
         onUseWith(IntType.SCENERY, CHEST_KEY, Scenery.CHEST_2856) { player, _, _ ->
-            animate(player, Animations.OPEN_CHEST_536)
+            animate(player, Animations.HUMAN_OPEN_CHEST_536)
             addScenery(Scenery.CHEST_2857,CHEST_LOCATION, 2, 10)
             removeScenery(core.game.node.scenery.Scenery(Scenery.CHEST_2856, Location(2565, 3272, 2)))
             return@onUseWith true

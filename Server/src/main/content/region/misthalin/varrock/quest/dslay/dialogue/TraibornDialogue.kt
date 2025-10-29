@@ -121,7 +121,7 @@ class TraibornDialogue(player: Player? = null) : Dialogue(player) {
                 }
             }
             16 -> {
-                npc.animate(Animation(Animations.TRAIBORN_SUMMON_CABINET_4602))
+                npc.animate(Animation(Animations.LIFT_BIG_THING_CAST_EPLL_WITH_IT_4602))
                 npc("Wings of dark and colour too,", "Spreading in the morning dew;", "Locked away I have a key;", "Return it now, please, unto me.")
                 stage++
             }
@@ -230,7 +230,7 @@ class TraibornDialogue(player: Player? = null) : Dialogue(player) {
 
     companion object {
         private val BONES = arrayOf(Item(Items.BONES_526, 25), Item(Items.BONES_2530, 25))
-        private val ANIMATION = Animation(Animations.OPEN_CHEST_536)
+        private val ANIMATION = Animation(Animations.HUMAN_OPEN_CHEST_536)
         private const val TOTAL_BONES = "demon-slayer:traiborn:bones"
         private const val LAST_GIVEN_BONES = "last-given"
         private const val TOTAL_BONES_NEEDED = 25

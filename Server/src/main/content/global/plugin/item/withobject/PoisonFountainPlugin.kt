@@ -25,7 +25,7 @@ class PoisonFountainPlugin : InteractionListener {
                 return@onUseWith false
             }
             lock(player, 5)
-            animate(player, Animations.PICK_POCKET_881)
+            animate(player, Animations.HUMAN_PICKPOCKETING_881)
             sendMessage(player, "You pour the poisoned fish food into the fountain.")
             setAttribute(player, "/save:piranhas-killed", true)
             submitIndividualPulse(

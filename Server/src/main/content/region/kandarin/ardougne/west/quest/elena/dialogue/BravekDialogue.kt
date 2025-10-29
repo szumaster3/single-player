@@ -74,7 +74,7 @@ class BravekDialogue(player: Player? = null) : Dialogue(player) {
                 }
                 2 -> {
                     sendItemDialogue(player!!, Items.HANGOVER_CURE_1504, "You give Bravek the hangover cure.")
-                    animate(npc!!, Animations.HUMAN_DRINK_KEG_OF_BEER_1330)
+                    animate(npc!!, Animations.DRINK_KEG_1330)
                     sendChat(npc!!, "Grruurgh!", 1)
                     stage++
                 }

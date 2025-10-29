@@ -21,7 +21,7 @@ object FrogUtils {
     const val FROG_PRINCE_NPC = NPCs.FROG_PRINCE_2474
     const val FROG_PRINCESS_NPC = NPCs.FROG_PRINCESS_2475
 
-    const val TRANSFORM_INTO_FROG = Animations.GET_INTO_FROG_POSITION_2377
+    const val TRANSFORM_INTO_FROG = Animations.MORPH_TO_FROG_2377
     const val TRANSFORM_INTO_HUMAN = 2375
 
     const val FROG_KISS_ANIM = 2374

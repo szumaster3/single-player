@@ -52,7 +52,7 @@ class GravediggerPlugin : InteractionListener {
         private const val COFFIN_INTERFACE = Components.GRAVEDIGGER_COFFIN_141
         private const val GRAVESTONE_INTERFACE = Components.GRAVEDIGGER_GRAVE_143
         private const val MAUSOLEUM = Scenery.MAUSOLEUM_12731
-        private val ANIMATION = Animation(Animations.MULTI_BEND_OVER_827)
+        private val ANIMATION = Animation(Animations.HUMAN_BURYING_BONES_827)
 
         private val COFFIN_SETS = CoffinSet.values()
         private val COFFIN_MAP = COFFIN_SETS.associateBy { it.coffinId }

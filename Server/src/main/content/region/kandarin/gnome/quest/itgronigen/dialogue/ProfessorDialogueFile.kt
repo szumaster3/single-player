@@ -312,7 +312,7 @@ class ProfessorConstellationsDialogue : DialogueFile() {
 
             16 -> npc("That's exactly it!").also { stage++ }
             17 -> {
-                animate(player!!, Animations.HUMAN_CHEER_862)
+                animate(player!!, Animations.CHEER_862)
                 player("Yes! Woo hoo!").also { stage++ }
             }
 

@@ -54,7 +54,7 @@ class GertrudesCatListener : InteractionListener {
         onUseWith(IntType.NPC, Items.BUCKET_OF_MILK_1927, NPCs.GERTRUDES_CAT_2997) { player, used, with ->
             if (getQuestStage(player, Quests.GERTRUDES_CAT) == 20 && removeItem(player, used.asItem())) {
                 addItem(player, Items.BUCKET_1925)
-                animate(player, Animations.MULTI_BEND_OVER_827)
+                animate(player, Animations.HUMAN_BURYING_BONES_827)
                 sendChat(with.asNpc(), "Mew!")
                 setQuestStage(player, Quests.GERTRUDES_CAT, 30)
             }
@@ -67,7 +67,7 @@ class GertrudesCatListener : InteractionListener {
                         return@onUseWith true
             }
             if(removeItem(player, used.asItem())) {
-                animate(player, Animations.MULTI_BEND_OVER_827)
+                animate(player, Animations.HUMAN_BURYING_BONES_827)
                 sendChat(with.asNpc(), "Mew!")
                 playAudio(player, Sounds.KITTENS_MEW_339)
                 setQuestStage(player, Quests.GERTRUDES_CAT, 40)

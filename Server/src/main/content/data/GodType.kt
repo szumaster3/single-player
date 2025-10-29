@@ -55,7 +55,7 @@ enum class GodType(val cape: Item, val staff: Item, val statueId: Int, val npcId
 
                                 sendGraphics(
                                     Graphics(
-                                        shared.consts.Graphics.RANDOM_EVENT_PUFF_OF_SMOKE_86,
+                                        shared.consts.Graphics.RE_PUFF_86,
                                         0,
                                         0,
                                     ),

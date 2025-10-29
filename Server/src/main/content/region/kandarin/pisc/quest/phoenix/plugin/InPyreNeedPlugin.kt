@@ -238,7 +238,7 @@ class InPyreNeedPlugin : InteractionListener {
             }
             if (getVarbit(player, Vars.VARBIT_QUEST_IN_PYRE_NEED_PROGRESS_5761) >= 5) {
                 lock(player, 3)
-                animate(player, Animations.TINDERBOX_733)
+                animate(player, Animations.HUMAN_LIGHT_FIRE_WITH_TINDERBOX_733)
                 FuneralPyreCutscene(player).start()
             }
             return@onUseWith true

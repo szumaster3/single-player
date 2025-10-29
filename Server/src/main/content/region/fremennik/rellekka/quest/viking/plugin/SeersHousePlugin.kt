@@ -297,7 +297,7 @@ class SeersHousePlugin : InteractionListener {
                 if (inInventory(player, EMPTYJUG, 1)) {
                     sendMessage(player, "You find nothing of interest.")
                 } else {
-                    animate(player, Animations.HUMAN_TAKE_FROM_CHEST_539)
+                    animate(player, Animations.CLOSE_CHEST_539)
                     sendMessage(player, "You find a jug with a number three painted on it")
                     addItem(player, EMPTYJUG)
                 }

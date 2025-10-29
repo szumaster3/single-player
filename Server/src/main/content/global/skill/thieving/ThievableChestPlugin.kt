@@ -97,7 +97,7 @@ class ThievableChestPlugin : OptionHandler() {
                 return
             }
             if (getStatLevel(player, Skills.THIEVING) < level) {
-                animate(player, Animations.OPEN_CHEST_536, false)
+                animate(player, Animations.HUMAN_OPEN_CHEST_536, false)
                 lock(player, 2)
                 sendMessage(player, "You search the chest for traps.")
                 sendMessage(player, "You find nothing.", 1)
@@ -108,7 +108,7 @@ class ThievableChestPlugin : OptionHandler() {
                 return
             }
             lock(player, 6)
-            animate(player, Animations.OPEN_CHEST_536, false)
+            animate(player, Animations.HUMAN_OPEN_CHEST_536, false)
             sendMessage(player, "You find a trap on the chest...")
             player.impactHandler.disabledTicks = 6
             Pulser.submit(
@@ -119,7 +119,7 @@ class ThievableChestPlugin : OptionHandler() {
                         when (++counter) {
                             2 -> sendMessage(player, "You disable the trap.")
                             4 -> {
-                                animate(player, Animation.create(Animations.OPEN_CHEST_536))
+                                animate(player, Animation.create(Animations.HUMAN_OPEN_CHEST_536))
                                 player.faceLocation(scenery.location)
                                 sendMessage(player, "You open the chest.")
                             }

@@ -59,7 +59,7 @@ class PotteryCraftingPulse(player: Player?, node: Item?, var amount: Int, val po
     }
 
     companion object {
-        private const val ANIMATION = Animations.SPIN_POTTER_WHEEL_883
+        private const val ANIMATION = Animations.HUMAN_MAKE_PIZZA_883
         private const val SOFT_CLAY = Items.SOFT_CLAY_1761
     }
 }

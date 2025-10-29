@@ -40,7 +40,7 @@ class DreamSpell : SpellListener("lunar") {
                         if (stage.mod(10) == 0) {
                             heal(player, 1)
                             if (player.skills.lifepoints >= getStatLevel(player, Skills.HITPOINTS)) {
-                                animate(player, Animations.LUNAR_DREAM_END_6297)
+                                animate(player, Animations.GET_UP_FROM_SLEEPING_DREAM_SPELL_6297)
                                 return@queueScript stopExecuting(player)
                             }
                         }

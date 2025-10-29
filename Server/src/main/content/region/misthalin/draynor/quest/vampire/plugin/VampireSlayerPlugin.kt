@@ -12,7 +12,7 @@ import shared.consts.*
 class VampireSlayerPlugin: InteractionListener {
     override fun defineListeners() {
         on(Scenery.CUPBOARD_33502, IntType.SCENERY, "open") { player, node ->
-            animate(player, Animations.OPEN_WARDROBE_542)
+            animate(player, Animations.HUMAN_OPEN_WARDROBE_542)
             playAudio(player, Sounds.CUPBOARD_OPEN_58)
             sendMessage(player, "You open the cupboard.")
             replaceScenery(node.asScenery(),  Scenery.CUPBOARD_33503, -1)
@@ -44,8 +44,8 @@ class VampireSlayerPlugin: InteractionListener {
                 sendMessage(player, "The coffin is sealed shut.")
                 return@on true
             }
-            animate(player, Animations.MULTI_TAKE_832)
-            playAudio(player, Sounds.COFFIN_OPEN_54)
+            animate(player, Animations.HUMAN_MULTI_USE_832)
+            playAudio(player, Sounds.OPEN_HEAVY_54)
             if (getQuestStage(player, Quests.VAMPIRE_SLAYER) == 30) {
                 replaceScenery(node.asScenery(), Scenery.COFFIN_11208, 6)
                 runTask(player, 3) {

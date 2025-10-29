@@ -39,7 +39,7 @@ class LostTribePlugin : InteractionListener {
 
                     override fun pulse(): Boolean {
                         when (counter++) {
-                            0 -> player.animator.animate(Animation(Animations.PICK_POCKET_881))
+                            0 -> player.animator.animate(Animation(Animations.HUMAN_PICKPOCKETING_881))
                             3 -> {
                                 if (getQuestStage(player, Quests.THE_LOST_TRIBE) == 47 &&
                                     !inInventory(

@@ -77,7 +77,7 @@ private class GlassMakePulse(private val player: Player, val product: Int, priva
         }
 
         lock(player, 3)
-        animate(player, Animations.USE_FURNACE_3243)
+        animate(player, Animations.HUMAN_FURNACE_SMELT_3243)
         sendMessage(player, "You heat the sand and soda ash in the furnace to make glass.")
 
         if (removeItem(player, MoltenGlassMakePlugin.SODA_ASH) && removeSand(player)) {

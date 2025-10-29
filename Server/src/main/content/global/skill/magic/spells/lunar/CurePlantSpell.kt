@@ -51,7 +51,7 @@ class CurePlantSpell : SpellListener("lunar") {
             patch.cureDisease()
             removeRunes(player)
             addXP(player, 60.0)
-            visualizeSpell(player, Animations.LUNAR_CURE_PLANT_4409, 748, 100, Sounds.LUNAR_CURE_GROUP_2882)
+            visualizeSpell(player, Animations.HEAL_GROUP_4409, 748, 100, Sounds.LUNAR_CURE_GROUP_2882)
             setDelay(player, false)
         }
     }

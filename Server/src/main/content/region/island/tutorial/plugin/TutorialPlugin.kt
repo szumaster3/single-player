@@ -273,7 +273,7 @@ class TutorialPlugin : InteractionListener {
 
             setAttribute(player, TutorialStage.TUTORIAL_STAGE, 56)
             TutorialStage.load(player, 56)
-            animate(player, Animations.USE_LADDER_828)
+            animate(player, Animations.HUMAN_CLIMB_STAIRS_828)
             teleport(player, Location.create(3111, 3127, 0), TeleportManager.TeleportType.INSTANT, 2)
             return@on true
         }

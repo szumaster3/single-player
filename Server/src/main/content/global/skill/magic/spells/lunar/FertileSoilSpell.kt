@@ -48,7 +48,7 @@ class FertileSoilSpell : SpellListener("lunar") {
                     ),
                 )
                 removeRunes(player, true)
-                animate(player, Animations.LUNAR_FERTILE_SOIL_4413)
+                animate(player, Animations.FERTILE_SPELL_4413)
                 sendGraphics(724, node.location)
                 playGlobalAudio(node.location, Sounds.LUNAR_FERTILIZE_2891)
                 patch.compost = CompostType.SUPER_COMPOST

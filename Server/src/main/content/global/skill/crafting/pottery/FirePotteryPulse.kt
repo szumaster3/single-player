@@ -83,6 +83,6 @@ class FirePotteryPulse(player: Player?, node: Item?, val pottery: Pottery, var a
     }
 
     companion object {
-        private const val ANIMATION = Animations.USE_FURNACE_3243
+        private const val ANIMATION = Animations.HUMAN_FURNACE_SMELT_3243
     }
 }

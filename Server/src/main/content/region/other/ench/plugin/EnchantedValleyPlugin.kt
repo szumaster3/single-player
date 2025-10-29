@@ -57,7 +57,7 @@ class EnchantedValleyPlugin : InteractionListener {
             }
             if (player.viewport.region!!.id == 12102) {
                 spawnEvent(player, getNpcFor(player, RIVER_TROLL_IDS)) { npc ->
-                    visualize(npc, Animations.NET_FISHING_621, Graphics.RANDOM_EVENT_PUFF_OF_SMOKE_86)
+                    visualize(npc, Animations.NET_FISHING_621, Graphics.RE_PUFF_86)
                     val message = if (hasRequirement(player, Quests.SWAN_SONG)) {
                         "You killed da Sea Troll Queen - you die now!"
                     } else "Fishies be mine, leave dem fishies!"
@@ -81,7 +81,7 @@ class EnchantedValleyPlugin : InteractionListener {
             }
             if (inBorders(player, 3023, 4491, 3029, 4494)) {
                 spawnEvent(player, getNpcFor(player, ROCK_GOLEM_IDS)) { npc ->
-                    visualize(npc, tool.animation, Graphics.RANDOM_EVENT_PUFF_OF_SMOKE_86)
+                    visualize(npc, tool.animation, Graphics.RE_PUFF_86)
                     sendChat(npc, "Gerroff da rock!")
                 }
             } else {

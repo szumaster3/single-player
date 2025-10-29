@@ -19,7 +19,7 @@ open class Drink : Consumable {
      * @param messages Optional custom messages.
      */
     constructor(ids: IntArray?, effect: ConsumableEffect?, vararg messages: String?) : super(ids, effect, *messages) {
-        animation = Animation(Animations.HUMAN_DRINKING_1327)
+        animation = Animation(Animations.DRINK_BEER_1327)
     }
 
     /**

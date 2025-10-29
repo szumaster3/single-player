@@ -88,7 +88,7 @@ class LunarIsleMineShortcut : InteractionListener {
     }
 
     companion object {
-        val CRAWL_START: Animation = Animation.create(Animations.HUMAN_STAY_IN_CRAWL_POSITION_845)
-        val CRAWL_THROUGH: Animation = Animation.create(Animations.HUMAN_TURNS_INVISIBLE_2590)
+        val CRAWL_START: Animation = Animation.create(Animations.CRAWL_MUD_CAVE_845)
+        val CRAWL_THROUGH: Animation = Animation.create(Animations.CRAWL_UNDER_WALL_B_2590)
     }
 }

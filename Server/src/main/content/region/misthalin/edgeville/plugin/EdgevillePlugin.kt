@@ -25,7 +25,7 @@ class EdgevillePlugin : InteractionListener {
         }
 
         on(Scenery.TRAPDOOR_12267, IntType.SCENERY, "open") { player, _ ->
-            animate(player, Animations.OPEN_CHEST_536)
+            animate(player, Animations.HUMAN_OPEN_CHEST_536)
             setVarbit(player, 1888, 1)
             return@on true
         }
@@ -36,7 +36,7 @@ class EdgevillePlugin : InteractionListener {
         }
 
         on(Scenery.OPEN_TRAPDOOR_12268, IntType.SCENERY, "go-down") { player, _ ->
-            ClimbActionHandler.climb(player, Animation(Animations.MULTI_BEND_OVER_827), Location(3077, 9893, 0))
+            ClimbActionHandler.climb(player, Animation(Animations.HUMAN_BURYING_BONES_827), Location(3077, 9893, 0))
             return@on true
         }
 
@@ -64,7 +64,7 @@ class EdgevillePlugin : InteractionListener {
         }
 
         on(Scenery.TRAPDOOR_26933, IntType.SCENERY, "open") { player, node ->
-            animate(player, Animations.OPEN_CHEST_536)
+            animate(player, Animations.HUMAN_OPEN_CHEST_536)
             sendMessage(player, "The trapdoor opens...")
             replaceScenery(node.asScenery(), node.id + 1, -1)
             return@on true

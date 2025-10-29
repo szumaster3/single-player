@@ -64,7 +64,7 @@ class SuperglassMakeSpell : SpellListener("lunar") {
 
             if (index == size && size != 0) {
                 removeRunes(player, true)
-                visualizeSpell(player, Animations.LUNAR_SUPERGLASS_MAKE_4413, 729, 120, Sounds.LUNAR_HEATGLASS_2896)
+                visualizeSpell(player, Animations.FERTILE_SPELL_4413, 729, 120, Sounds.LUNAR_HEATGLASS_2896)
                 rewardXP(player, Skills.CRAFTING, 10.0)
                 addXP(player, 78.0)
             }

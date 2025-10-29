@@ -23,7 +23,7 @@ class CatBasketPlugin : InteractionListener {
                 return@onUseWith false
             }
             lock(player, 1)
-            animate(player, Animation(Animations.MULTI_BEND_OVER_827))
+            animate(player, Animation(Animations.HUMAN_BURYING_BONES_827))
             if (Pets.forId(item.id) != null) {
                 player.familiarManager.morphPet(item, !player.isAdmin, scenery.location)
             }

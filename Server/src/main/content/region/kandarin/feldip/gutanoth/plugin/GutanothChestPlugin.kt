@@ -46,7 +46,7 @@ private class ChestPulse(
         when (ticks++) {
             0 -> {
                 lock(player, 3)
-                animate(player, Animations.OPEN_CHEST_536)
+                animate(player, Animations.HUMAN_OPEN_CHEST_536)
                 SceneryBuilder.replace(
                     chest,
                     Scenery(2828, chest.location, chest.rotation),

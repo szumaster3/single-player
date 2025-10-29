@@ -32,7 +32,7 @@ object Regions {
     const val KARAMJA_10801 = 10801
 
     const val DESERT_12589 = 12589
-    const val DESERT_12590 = 12590
+    const val DESERT_BANDITS_12590 = 12590
     const val DESERT_12591 = 12591
     const val DESERT_12843 = 12843
     const val DESERT_12844 = 12844
@@ -79,7 +79,6 @@ object Regions {
     const val ABYSS_12107 = 12107
     const val VARROCK_CHAMPIONS_GUILD_12596 = 12596
     const val VARROCK_LEPTOC_MANSION_12597 = 12597
-    const val DESERT_BANDITS_12590 = 12590
     const val THZAAR_CAVE_12610 = 12610
     const val LUMBRIDGE_12850 = 12850
     const val VARROCK_STONE_CIRCLE_12852 = 12852

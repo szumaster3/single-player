@@ -31,7 +31,7 @@ class SawmillWorkerNPC : NPCBehavior(NPCs.WILL_7737, NPCs.WILL_7738) {
             self.location == movementPath[0] -> {
                 if (!finishedMoving(self)) {
                     self.sendChat("Erf!", 1)
-                    self.animate(Animation.create(Animations.MULTI_BEND_OVER_827))
+                    self.animate(Animation.create(Animations.HUMAN_BURYING_BONES_827))
                     self.transform(NPCs.WILL_7737)
                     self.resetWalk()
                 }

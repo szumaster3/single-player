@@ -29,7 +29,7 @@ class BlamishSnailSlimePlugin: InteractionListener {
                 return@onUseWith false
             } else {
                 if (removeItem(player, used.asItem()) && removeItem(player, with.asItem())) {
-                    animate(player, Animations.PESTLE_MORTAR_364)
+                    animate(player, Animations.HUMAN_USE_PESTLE_AND_MORTAR_364)
                     sendMessage(player, "You grind the blamish snail up into slimy pulp.")
                     replaceSlot(player, used.asItem().slot, Item(Items.BLAMISH_SNAIL_SLIME_1581, 1))
                 } else {

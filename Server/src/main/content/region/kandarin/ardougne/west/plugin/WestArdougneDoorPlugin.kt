@@ -61,7 +61,7 @@ class WestArdougneDoorPlugin : OptionHandler() {
         player.lock(1)
 
         queueScript(player, ticks, QueueStrength.WEAK) {
-            playAudio(player, Sounds.BIG_WOODEN_DOOR_OPEN_44)
+            playAudio(player, Sounds.OPEN_CABINET_44)
             val doorsToOpen = listOfNotNull(door, pairedDoor)
             doorsToOpen.forEach {
                 val newScenery = when (it.id) {

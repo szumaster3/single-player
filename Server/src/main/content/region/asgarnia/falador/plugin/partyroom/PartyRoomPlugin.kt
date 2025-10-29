@@ -38,7 +38,7 @@ class PartyRoomPlugin : OptionHandler() {
     ): Boolean {
         when (node.id) {
             CLOSED_CHEST -> {
-                animate(player, Animations.OPEN_CHEST_536)
+                animate(player, Animations.HUMAN_OPEN_CHEST_536)
                 replaceScenery(node.asScenery(), OPEN_CHEST, -1)
             }
 

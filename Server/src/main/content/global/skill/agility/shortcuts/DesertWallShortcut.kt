@@ -41,7 +41,7 @@ class DesertWallShortcut : OptionHandler() {
                 START_LOCATION,
                 scenery.location,
                 CLIMB_DOWN,
-                Animation(Animations.HUMAN_TURNS_INVISIBLE_2590),
+                Animation(Animations.CRAWL_UNDER_WALL_B_2590),
                 node.direction
             )
             submitIndividualPulse(
@@ -75,7 +75,7 @@ class DesertWallShortcut : OptionHandler() {
         val START_LOCATION: Location = Location.create(3320, 2796, 0)
         val END_LOCATION: Location = Location.create(3324, 2796, 0)
         val CLIMB_DOWN: Animation = Animation.create(Animations.CRAWL_UNDER_WALL_A_2589)
-        val CRAWL_THROUGH: Animation = Animation.create(Animations.HUMAN_TURNS_INVISIBLE_2590)
+        val CRAWL_THROUGH: Animation = Animation.create(Animations.CRAWL_UNDER_WALL_B_2590)
         val CLIMB_UP: Animation = Animation.create(Animations.CRAWL_UNDER_WALL_C_2591)
     }
 }

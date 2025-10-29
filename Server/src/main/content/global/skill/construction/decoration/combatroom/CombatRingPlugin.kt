@@ -55,7 +55,7 @@ class CombatRingPlugin : InteractionListener {
             inEquipment(
                 player,
                 Items.BOXING_GLOVES_7673,
-            ) -> Animations.JUMP_OVER_BOXING_RING_FENCE_WITH_BLUE_GLOVES_3690
+            ) -> Animations.HUMAN_JUMP_RING_BLUE_GLOVES_3690
             else -> Animations.HUMAN_JUMP_BOXING_RING_3688
         }
 }

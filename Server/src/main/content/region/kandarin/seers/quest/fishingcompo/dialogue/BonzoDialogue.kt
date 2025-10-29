@@ -197,7 +197,7 @@ class BonzoDialogue(player: Player? = null) : Dialogue(player) {
                                         }
                                     }
 
-                                    animate(player, Animations.MULTI_PUT_833)
+                                    animate(player, Animations.HUMAN_WITHDRAW_833)
                                     sendDialogue(player, "You hand over your catch.")
                                 } else {
                                     sendDialogue(player, "You haven't caught anything worth handing in.")

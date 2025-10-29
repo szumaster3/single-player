@@ -116,7 +116,7 @@ private class HarralanderTarPulse(player: Player?, node: Item?, val tar: TarItem
     override fun message(type: Int) {}
 
     companion object {
-        private const val ANIMATION = Animations.PESTLE_MORTAR_364
+        private const val ANIMATION = Animations.HUMAN_USE_PESTLE_AND_MORTAR_364
         private const val PESTLE_AND_MORTAR = Items.PESTLE_AND_MORTAR_233
     }
 }

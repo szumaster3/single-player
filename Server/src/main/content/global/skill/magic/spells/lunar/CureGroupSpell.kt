@@ -19,7 +19,7 @@ class CureGroupSpell : SpellListener("lunar") {
                 arrayOf(Item(Items.ASTRAL_RUNE_9075, 2), Item(Items.LAW_RUNE_563, 2), Item(Items.COSMIC_RUNE_564, 2)),
             )
             removeRunes(player, true)
-            visualizeSpell(player, Animations.LUNAR_CURE_GROUP_4409, 744, 130, Sounds.LUNAR_CURE_GROUP_2882)
+            visualizeSpell(player, Animations.HEAL_GROUP_4409, 744, 130, Sounds.LUNAR_CURE_GROUP_2882)
             curePoison(player)
             for (acct in RegionManager.getLocalPlayers(player, 1)) {
                 if (!acct.isActive || acct.locks.isInteractionLocked()) {

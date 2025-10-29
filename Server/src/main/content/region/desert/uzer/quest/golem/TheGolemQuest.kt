@@ -498,7 +498,7 @@ class TheGolemListeners :
                     )
                 if (lootTable != null) {
                     sendMessage(player, "You attempt to grab the pheonix's tail-feather.")
-                    animate(player, Animations.PICK_POCKET_881)
+                    animate(player, Animations.HUMAN_PICKPOCKETING_881)
                     runTask(player, 3) {
                         lootTable.forEach {
                             player.inventory.add(it)

@@ -365,12 +365,12 @@ class SorceressGardenPlugin : InteractionListener {
         }
 
         companion object {
-            private val CRUSH_ITEM = Animation(Animations.PESTLE_MORTAR_364)
+            private val CRUSH_ITEM = Animation(Animations.HUMAN_USE_PESTLE_AND_MORTAR_364)
         }
     }
 
     companion object {
-        private val ANIMATION = Animation(Animations.MULTI_BEND_OVER_827)
+        private val ANIMATION = Animation(Animations.HUMAN_BURYING_BONES_827)
         private val DRINK_ANIM = Animation(Animations.SORCERESS_GARDEN_DRINK_WATER_5796)
         private val TELE = Animation(714)
         private val PICK_FRUIT = Animation(Animations.PICK_FROM_FRUIT_TREE_2280)

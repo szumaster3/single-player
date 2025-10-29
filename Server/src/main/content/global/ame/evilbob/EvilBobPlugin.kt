@@ -145,7 +145,7 @@ class EvilBobPlugin :
 
                         1 -> {
                             player.faceLocation(Location.create(3421, 4777, 0))
-                            animate(player, Animations.RASPBERRY_2110)
+                            animate(player, Animations.HUMAN_BLOW_RASPBERRY_2110)
                             sendChat(player, "Be seeing you!")
                             return@queueScript delayScript(player, 2)
                         }

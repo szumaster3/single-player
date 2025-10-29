@@ -46,7 +46,7 @@ class EnergyTransferSpell : SpellListener("lunar") {
                 player.face(p)
                 visualizeSpell(
                     player,
-                    Animations.LUNAR_ENERGY_TRANSFER_4411,
+                    Animations.LUNAR_CURE_ME_4411,
                     738,
                     90,
                     Sounds.LUNAR_ENERGY_TRANSFER_2885,

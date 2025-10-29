@@ -29,7 +29,7 @@ import static core.api.ContentAPIKt.playGlobalAudio;
  */
 @Initializable
 public class StatRestoreSpell extends MagicSpell {
-    private static final Animation ANIMATION = new Animation(Animations.LUNAR_STAT_RESTORE_SHARE_4413);
+    private static final Animation ANIMATION = new Animation(Animations.FERTILE_SPELL_4413);
     private static final Graphics GRAPHICS = new Graphics(733, 130);
     private static final Consumables[] acceptedPotions = new Consumables[]{Consumables.RESTORE, Consumables.SUPER_RESTO, Consumables.PRAYER, Consumables.ENERGY, Consumables.SUPER_ENERGY};
 

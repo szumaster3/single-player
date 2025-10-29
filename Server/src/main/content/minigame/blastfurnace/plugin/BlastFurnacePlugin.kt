@@ -361,7 +361,7 @@ class BlastFurnacePlugin : InteractionListener {
         on(BlastUtils.SINK, SCENERY, "fill-bucket") { player, _ ->
             if (removeItem(player, Items.BUCKET_1925)) {
                 queueScript(player, 1, QueueStrength.SOFT) {
-                    animate(player, Animations.MULTI_TAKE_832)
+                    animate(player, Animations.HUMAN_MULTI_USE_832)
                     sendMessage(player, "You fill the bucket from the sink.")
                     addItemOrDrop(player, Items.BUCKET_OF_WATER_1929)
                     return@queueScript stopExecuting(player)

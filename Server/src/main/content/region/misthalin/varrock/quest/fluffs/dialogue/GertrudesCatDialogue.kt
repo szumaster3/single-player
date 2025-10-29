@@ -18,7 +18,7 @@ import shared.consts.Quests
 @Initializable
 class GertrudesCatDialogue(player: Player? = null) : Dialogue(player) {
 
-    private val BEND_DOWN = Animation.create(Animations.MULTI_BEND_OVER_827)
+    private val BEND_DOWN = Animation.create(Animations.HUMAN_BURYING_BONES_827)
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC

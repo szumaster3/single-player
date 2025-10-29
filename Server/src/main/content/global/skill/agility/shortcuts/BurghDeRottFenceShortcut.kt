@@ -28,7 +28,7 @@ class BurghDeRottFenceShortcut : AgilityShortcut(intArrayOf(12776), 25, 0.0, "ju
                     -1,
                     player.location,
                     destination,
-                    Animation(Animations.JUMP_OVER_OBSTACLE_6132),
+                    Animation(Animations.HUMAN_JUMP_FENCE_6132),
                     10,
                     0.0,
                     null

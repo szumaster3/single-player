@@ -136,7 +136,7 @@ class EnchantmentChamberPlugin :
             return
         }
         val amount = amountInInventory(player, ORB.id)
-        animate(player, Animations.MULTI_TAKE_832)
+        animate(player, Animations.HUMAN_MULTI_USE_832)
         removeItem(player, Item(ORB.id, amount))
         playAudio(player, Sounds.MTA_DEPOSIT_ORB_1664)
 

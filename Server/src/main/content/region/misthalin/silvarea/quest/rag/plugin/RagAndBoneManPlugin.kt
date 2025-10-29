@@ -8,6 +8,7 @@ import core.game.system.task.Pulse
 import shared.consts.Animations
 import shared.consts.Items
 import shared.consts.Scenery
+import shared.consts.Vars
 
 class RagAndBoneManPlugin : InteractionListener {
     override fun defineListeners() {
@@ -42,7 +43,7 @@ class RagAndBoneManPlugin : InteractionListener {
         ) { player, used, _ ->
             if (removeItem(player, used)) {
                 sendMessage(player, "You place the logs into the grate.")
-                setVarbit(player, 2046, 1)
+                setVarbit(player, Vars.VARBIT_RAG_AND_BONE_POT_BOILER_2046, 1)
             }
             return@onUseWith true
         }
@@ -52,7 +53,7 @@ class RagAndBoneManPlugin : InteractionListener {
             if ((removeItem(player, potOfVinegar))) {
                 setAttribute(player, ATTRIBUTE_ACTIVE_POT_OF_VINEGAR, potOfVinegar)
                 sendMessage(player, "You place the pot on the pot boiler.")
-                setVarbit(player, 2046, 2)
+                setVarbit(player, Vars.VARBIT_RAG_AND_BONE_POT_BOILER_2046, 2)
             }
             return@onUseWith true
         }
@@ -64,7 +65,7 @@ class RagAndBoneManPlugin : InteractionListener {
                 addItemOrDrop(player, potOfVinegar)
                 sendMessage(player, "You remove the pot from the pot boiler.")
             }
-            setVarbit(player, 2046, 1)
+            setVarbit(player, Vars.VARBIT_RAG_AND_BONE_POT_BOILER_2046, 1)
             return@on true
         }
 
@@ -73,12 +74,12 @@ class RagAndBoneManPlugin : InteractionListener {
             animate(player, Animations.HUMAN_LIGHT_FIRE_WITH_TINDERBOX_733)
             runTask(player, 3) {
                 animate(player, -1, true)
-                setVarbit(player, 2046, 3)
+                setVarbit(player, Vars.VARBIT_RAG_AND_BONE_POT_BOILER_2046, 3)
 
                 player.pulseManager.run(
                     object : Pulse(20) {
                         override fun pulse(): Boolean {
-                            setVarbit(player, 2046, 4)
+                            setVarbit(player, Vars.VARBIT_RAG_AND_BONE_POT_BOILER_2046, 4)
                             return true
                         }
                     },
@@ -97,7 +98,7 @@ class RagAndBoneManPlugin : InteractionListener {
                 addItemOrDrop(player, Items.EMPTY_POT_1931)
                 sendMessage(player, "You retrieve a polished " + boneBoiler.boneDescription + " from the pot.")
             }
-            setVarbit(player, 2046, 0)
+            setVarbit(player, Vars.VARBIT_RAG_AND_BONE_POT_BOILER_2046, 0)
             return@on true
         }
     }

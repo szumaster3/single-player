@@ -75,7 +75,7 @@ class PrisonPetePlugin : InteractionListener, MapArea {
                     }
 
                     1 -> {
-                        animate(player, Animations.MULTI_BEND_OVER_827)
+                        animate(player, Animations.HUMAN_BURYING_BONES_827)
                         addItem(player, Items.PRISON_KEY_6966)
                         node.asNpc().clear()
                         findNPC(NPCs.PRISON_PETE_3118)?.location?.let { face(player, it) }

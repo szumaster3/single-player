@@ -57,7 +57,7 @@ class WaterSourcePlugin : InteractionListener {
                 object : Pulse(1) {
                     override fun pulse(): Boolean {
                         if (removeItem(player, used.id)) {
-                            animate(player, Animations.MULTI_TAKE_832)
+                            animate(player, Animations.HUMAN_MULTI_USE_832)
                             addItemOrDrop(player, vessel.output)
                         }
                         return !vessel.autofill || amountInInventory(player, used.id) == 0

@@ -21,7 +21,7 @@ class WolfWhistlePlugin : InteractionListener {
             ) {
                 openDialogue(player, StikkletrixDialogue())
             } else {
-                animate(player, Animations.MULTI_BEND_OVER_827)
+                animate(player, Animations.HUMAN_BURYING_BONES_827)
                 sendDialogue(player, "You rifle the pockets of the dead druid and find nothing.")
             }
             return@on true

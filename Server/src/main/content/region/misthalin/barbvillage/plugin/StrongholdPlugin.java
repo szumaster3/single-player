@@ -116,21 +116,21 @@ public final class StrongholdPlugin extends MapZone implements Plugin<Object> {
                     if (!WarningManager.isWarningDisabled(player, Warnings.STRONGHOLD_OF_SECURITY_LADDERS)) {
                         openComponent(player, Location.create(2042, 5245, 0));
                     } else {
-                        ClimbActionHandler.climb(player, new Animation(Animations.USE_LADDER_828), Location.create(2042, 5245, 0));
+                        ClimbActionHandler.climb(player, new Animation(Animations.HUMAN_CLIMB_STAIRS_828), Location.create(2042, 5245, 0));
                     }
                     return true;
                 case 16081: // Ladder from Level 2 to Level 3 (Poison spiders)
                     if (!WarningManager.isWarningDisabled(player, Warnings.STRONGHOLD_OF_SECURITY_LADDERS)) {
                         openComponent(player, Location.create(2123, 5252, 0));
                     } else {
-                        ClimbActionHandler.climb(player, new Animation(Animations.USE_LADDER_828), Location.create(2123, 5252, 0));
+                        ClimbActionHandler.climb(player, new Animation(Animations.HUMAN_CLIMB_STAIRS_828), Location.create(2123, 5252, 0));
                     }
                     return true;
                 case 16115: // Ladder from Level 3 to Level 4 (Shades)
                     if (!WarningManager.isWarningDisabled(player, Warnings.STRONGHOLD_OF_SECURITY_LADDERS)) {
                         openComponent(player, Location.create(2358, 5215, 0));
                     } else {
-                        ClimbActionHandler.climb(player, new Animation(Animations.USE_LADDER_828), Location.create(2358, 5215, 0));
+                        ClimbActionHandler.climb(player, new Animation(Animations.HUMAN_CLIMB_STAIRS_828), Location.create(2358, 5215, 0));
                     }
                     return true;
                 case 16150:
@@ -168,7 +168,7 @@ public final class StrongholdPlugin extends MapZone implements Plugin<Object> {
      * @param destination the destination.
      */
     private void ladder(final Player player, final Location destination) {
-        ClimbActionHandler.climb(player, new Animation(Animations.USE_LADDER_828), destination);
+        ClimbActionHandler.climb(player, new Animation(Animations.HUMAN_CLIMB_STAIRS_828), destination);
     }
 
     /**

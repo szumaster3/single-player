@@ -27,7 +27,7 @@ class MonsterExamineSpell : SpellListener("lunar") {
             faceLocation(player, npc.location)
             visualizeSpell(
                 player,
-                Animations.LUNAR_MONSTER_EXAMINE_6293,
+                Animations.HUMAN_SPY_STAT_6293,
                 Graphics.STAT_SPY_GFX_1060,
                 soundID = Sounds.LUNAR_STAT_SPY_3620,
             )

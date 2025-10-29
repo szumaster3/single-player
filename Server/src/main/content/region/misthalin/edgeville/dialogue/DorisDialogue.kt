@@ -78,7 +78,7 @@ class DorisDialogue(player: Player? = null) : Dialogue(player) {
             22 -> {
                 end()
                 npc("Here puss...")
-                npc.animate(Animation(Animations.MULTI_BEND_OVER_827))
+                npc.animate(Animation(Animations.HUMAN_BURYING_BONES_827))
                 val familiar = player.familiarManager.familiar
                 if (familiar is Pet) {
                     val itemId = familiar.itemId

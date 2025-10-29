@@ -29,7 +29,7 @@ import static core.api.ContentAPIKt.playGlobalAudio;
  */
 @Initializable
 public final class StatBoostSpell extends MagicSpell {
-    private static final Animation ANIMATION = new Animation(Animations.LUNAR_BOOST_POT_SHARE_4413);
+    private static final Animation ANIMATION = new Animation(Animations.FERTILE_SPELL_4413);
     private static final Graphics GRAPHICS = new Graphics(733, 130);
 
     /**

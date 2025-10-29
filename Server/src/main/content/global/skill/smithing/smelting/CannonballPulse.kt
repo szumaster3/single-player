@@ -41,7 +41,7 @@ class CannonballPulse(
             0 -> {
                 playAudio(player, Sounds.FURNACE_2725)
                 sendMessage(player, "You heat the steel bar into a liquid state.")
-                animate(player, Animations.USE_FURNACE_3243)
+                animate(player, Animations.HUMAN_FURNACE_SMELT_3243)
             }
 
             3 -> {

@@ -41,7 +41,7 @@ class DragonSlayerListener : InteractionListener {
          */
 
         on(Scenery.CLIMBING_ROPE_25213, IntType.SCENERY, "climb") { player, _ ->
-            ClimbActionHandler.climb(player, Animation(Animations.USE_LADDER_828), Location(2834, 3258, 0))
+            ClimbActionHandler.climb(player, Animation(Animations.HUMAN_CLIMB_STAIRS_828), Location(2834, 3258, 0))
             finishDiaryTask(player, DiaryType.KARAMJA, 1, 2)
             return@on true
         }

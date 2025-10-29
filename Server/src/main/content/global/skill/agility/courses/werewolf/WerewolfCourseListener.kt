@@ -40,7 +40,7 @@ class WerewolfCourseListener : InteractionListener {
                     sendMessage(player, "You climb down through the trapdoor.")
                     ClimbActionHandler.climb(
                         player,
-                        Animation(Animations.MULTI_BEND_OVER_827),
+                        Animation(Animations.HUMAN_BURYING_BONES_827),
                         Location(3549, 9865, 0),
                     )
                 }

@@ -58,7 +58,7 @@ class WizardTowerListener : InteractionListener {
                     when (counter++) {
                         0 -> {
                             face(player, demon, 3)
-                            player.animate(Animation(Animations.RASPBERRY_2110))
+                            player.animate(Animation(Animations.HUMAN_BLOW_RASPBERRY_2110))
                         }
                         1 -> {
                             stopWalk(demon)

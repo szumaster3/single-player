@@ -96,7 +96,7 @@ class ShotPutRoomPlugin(player: Player? = null) : Dialogue(player) {
                             return true
                         }
                         player.lock(4)
-                        player.animate(Animation.create(Animations.MULTI_BEND_OVER_827))
+                        player.animate(Animation.create(Animations.HUMAN_BURYING_BONES_827))
                         Pulser.submit(
                             object : Pulse(2) {
                                 override fun pulse(): Boolean {

@@ -50,7 +50,7 @@ public final class WildernessDitchPlugin extends OptionHandler {
                 return true;
             }
 
-            forceMove(player, start, end, 0, 60, null, Animations.JUMP_OVER_OBSTACLE_6132,
+            forceMove(player, start, end, 0, 60, null, Animations.HUMAN_JUMP_FENCE_6132,
                     () -> {
                         return kotlin.Unit.INSTANCE;
                     }

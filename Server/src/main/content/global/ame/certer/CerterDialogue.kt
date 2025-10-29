@@ -74,7 +74,7 @@ class CerterDialogue(
         super.end()
         if (player!!.getAttribute(GameAttributes.CERTER_REWARD, false)) {
             npc!!.pulseManager.clear(PulseType.STANDARD)
-            animate(npc!!, Animations.WAVE_863)
+            animate(npc!!, Animations.HUMAN_WAVE_863)
             AntiMacro.terminateEventNpc(player!!)
         } else {
             player!!.setAttribute(GameAttributes.RE_PAUSE, false)

@@ -38,7 +38,7 @@ class FaladorMineCreviceShortcut : AgilityShortcut(intArrayOf(30868), 42, 0.0, "
                     -1,
                     player.location,
                     destination,
-                    Animation.create(Animations.HUMAN_TURNS_INVISIBLE_2590),
+                    Animation.create(Animations.CRAWL_UNDER_WALL_B_2590),
                     10,
                     0.0,
                     null,

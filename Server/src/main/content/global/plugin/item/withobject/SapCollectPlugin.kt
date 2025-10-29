@@ -31,7 +31,7 @@ class SapCollectPlugin : InteractionListener {
                 object : Pulse(2) {
                     override fun pulse(): Boolean {
                         if (removeItem(player, Items.BUCKET_1925)) {
-                            animate(player, Animations.HUMAN_FILL_BUCKET_WITH_SAP_2009)
+                            animate(player, Animations.BUCKET_AND_KNIFE_TREE_WAX_2009)
                             playAudio(player, Sounds.COLLECT_SAP_1896)
                             sendMessage(player, "You cut the tree and allow its sap to drip down into your bucket.")
                             addItem(player, Items.BUCKET_OF_SAP_4687)

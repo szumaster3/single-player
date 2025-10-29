@@ -89,7 +89,7 @@ class MageArenaPlugin: InteractionListener {
                                         0,
                                         30,
                                         Direction.NORTH,
-                                        Animations.JUMP_INTO_WATER_7269,
+                                        Animations.HUMAN_JUMP_WATER_7269,
                                     )
                                     return@queueScript keepRunning(player)
                                 }
@@ -130,7 +130,7 @@ class MageArenaPlugin: InteractionListener {
                                 0,
                                 30,
                                 Direction.SOUTH,
-                                Animations.JUMP_INTO_WATER_7269,
+                                Animations.HUMAN_JUMP_WATER_7269,
                             )
                             return@queueScript keepRunning(player)
                         }

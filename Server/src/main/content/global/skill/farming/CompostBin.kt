@@ -38,7 +38,7 @@ class CompostBin(
     fun close() {
         isClosed = true
         sendMessage(player, "You close the compost bin.")
-        animate(player, Animations.PUSH_COMPOST_BIN_810)
+        animate(player, Animations.HUMAN_PUSH_FORWARD_810)
         playAudio(player, Sounds.COMPOST_CLOSE_2428)
         sendMessage(player, "The contents have begun to rot.", 1)
         finishedTime = System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(RandomFunction.random(35, 50).toLong())
@@ -47,7 +47,7 @@ class CompostBin(
 
     fun open() {
         isClosed = false
-        animate(player, Animations.PUSH_COMPOST_BIN_810)
+        animate(player, Animations.HUMAN_PUSH_FORWARD_810)
         playAudio(player, Sounds.COMPOST_OPEN_2429)
         sendMessage(player, "You open the compost bin.")
         updateBit()

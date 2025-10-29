@@ -40,7 +40,7 @@ class HideoutPlugin : InteractionListener {
                                 setVarp(player, 346, 272731282)
                                 ClimbActionHandler.climb(
                                     player,
-                                    Animation(Animations.MULTI_BEND_OVER_827),
+                                    Animation(Animations.HUMAN_BURYING_BONES_827),
                                     Location(3149, 9652, 0),
                                 )
                                 submitIndividualPulse(
@@ -70,13 +70,13 @@ class HideoutPlugin : InteractionListener {
 
                         "pick-lock" -> {
                             lock(player, 3)
-                            animate(player, Animations.MULTI_BEND_OVER_827)
+                            animate(player, Animations.HUMAN_BURYING_BONES_827)
                             sendMessage(player, "You attempt to pick the lock on the trap door.")
                             submitIndividualPulse(
                                 player,
                                 object : Pulse(2) {
                                     override fun pulse(): Boolean {
-                                        animate(player, Animations.MULTI_BEND_OVER_827)
+                                        animate(player, Animations.HUMAN_BURYING_BONES_827)
                                         sendMessage(player, "You attempt to pick the lock on the trap door.")
                                         val success = RandomFunction.random(3) == 1
                                         sendMessage(

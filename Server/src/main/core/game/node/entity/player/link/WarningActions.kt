@@ -36,11 +36,11 @@ object WarningActions {
         val (start, end) = getDitchLocations(player.location, ditch.location, ditch.rotation)
 
         if (player.location.getDistance(ditch.location) < 3) {
-            forceMove(player, start, end, 0, 60, null, Animations.JUMP_OVER_OBSTACLE_6132)
+            forceMove(player, start, end, 0, 60, null, Animations.HUMAN_JUMP_FENCE_6132)
             playAudio(player, Sounds.JUMP2_2462)
         } else {
             queueScript(player, 0, QueueStrength.NORMAL) {
-                forceMove(player, start, end, 0, 60, null, Animations.JUMP_OVER_OBSTACLE_6132)
+                forceMove(player, start, end, 0, 60, null, Animations.HUMAN_JUMP_FENCE_6132)
                 playAudio(player, Sounds.JUMP2_2462, 1)
                 return@queueScript stopExecuting(player)
             }
@@ -82,7 +82,7 @@ object WarningActions {
      */
 
     fun handleRangingGuild(player: Player) {
-        climb(player, Animation(Animations.USE_LADDER_828), Location.create(2668, 3427, 1))
+        climb(player, Animation(Animations.HUMAN_CLIMB_STAIRS_828), Location.create(2668, 3427, 1))
     }
 
     /*
@@ -118,7 +118,7 @@ object WarningActions {
         } else {
             climb(
                 player,
-                Animation(Animations.MULTI_BEND_OVER_827),
+                Animation(Animations.HUMAN_BURYING_BONES_827),
                 Location.create(3168, 9572, 0)
             )
         }
@@ -149,7 +149,7 @@ object WarningActions {
 
     fun handleStrongholdLadder(player: Player) {
         ladderZones.firstOrNull { (zone, _) -> inBorders(player, zone) }?.second?.let {
-            climb(player, Animation(Animations.MULTI_BEND_OVER_827), it)
+            climb(player, Animation(Animations.HUMAN_BURYING_BONES_827), it)
         }
     }
 

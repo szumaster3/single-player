@@ -36,7 +36,7 @@ class KingNarnodeDialogue : DialogueFile() {
     val closedTrapDoor = Scenery(2446, Location(2463, 3497, 0), 22, 0)
     val openedTrapDoor = Scenery(2445, Location(2463, 3497, 0), 22, 0)
     val tunnels = Location(2464, 9897, 0)
-    val ladderClimbAnimation = Animation(Animations.USE_LADDER_828)
+    val ladderClimbAnimation = Animation(Animations.HUMAN_CLIMB_STAIRS_828)
 
     fun leadDownLadder() {
         /*

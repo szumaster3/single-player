@@ -56,7 +56,7 @@ class PhasmatysPlugin : MapZone("Port phasmatys", true), Plugin<Any?> {
             when (target.id) {
                 5267 -> {
                     val scenery = target as Scenery
-                    animate(player, Animations.OPEN_CHEST_536)
+                    animate(player, Animations.HUMAN_OPEN_CHEST_536)
                     sendMessage(player, "The trapdoor opens...")
                     SceneryBuilder.replace(scenery, scenery.transform(5268))
                     return true

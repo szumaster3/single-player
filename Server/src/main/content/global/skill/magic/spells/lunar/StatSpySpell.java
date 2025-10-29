@@ -28,7 +28,7 @@ import static core.api.ContentAPIKt.playAudio;
 @Initializable
 public final class StatSpySpell extends MagicSpell {
 
-    private final static Animation ANIMATION = new Animation(Animations.LUNAR_STATSPY_6293);
+    private final static Animation ANIMATION = new Animation(Animations.HUMAN_SPY_STAT_6293);
     private static final Graphics GRAPHICS = new Graphics(734, 120);
     private static final Graphics EYE = new Graphics(shared.consts.Graphics.STAT_SPY_GFX_1059);
     private static final Component COMPONENT = new Component(Components.DREAM_PLAYER_STATS_523);

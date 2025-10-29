@@ -251,7 +251,7 @@ class MerlinCrystalPlugin : InteractionListener {
                 2 -> {
                     when(buttonID) {
                         1 -> {
-                            player!!.animate(Animation.create(Animations.MULTI_BEND_OVER_827))
+                            player!!.animate(Animation.create(Animations.HUMAN_BURYING_BONES_827))
                             sendDialogue(player!!, "You climb inside the crate and wait.")
                             stage = 3
                         }

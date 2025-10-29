@@ -140,6 +140,6 @@ class StallThiefPulse(
     }
 
     companion object {
-        private const val ANIMATION = Animations.MULTI_TAKE_832
+        private const val ANIMATION = Animations.HUMAN_MULTI_USE_832
     }
 }

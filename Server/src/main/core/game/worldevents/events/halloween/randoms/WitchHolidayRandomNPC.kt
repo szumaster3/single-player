@@ -38,7 +38,7 @@ class WitchHolidayRandomNPC : HolidayRandomEventNPC(NPCs.WITCH_611) {
 
                         2 -> {
                             sendChat(this, "That was not right...")
-                            visualize(this, Animations.THINK_857, -1)
+                            visualize(this, Animations.HUMAN_THINK_857, -1)
                             HolidayRandoms.terminateEventNpc(player)
                             return@queueScript stopExecuting(this)
                         }
@@ -97,7 +97,7 @@ class WitchHolidayRandomNPC : HolidayRandomEventNPC(NPCs.WITCH_611) {
                         }
 
                         2 -> {
-                            visualize(this, Animations.LAUGH_861, -1)
+                            visualize(this, Animations.HUMAN_LAUGH_861, -1)
                             playGlobalAudio(this.location, Sounds.HUMAN_LAUGH_1_3071)
                             HolidayRandoms.terminateEventNpc(player)
                             return@queueScript stopExecuting(this)

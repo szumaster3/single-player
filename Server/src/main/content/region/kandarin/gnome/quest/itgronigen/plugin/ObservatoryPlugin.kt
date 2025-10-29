@@ -80,7 +80,7 @@ class ObservatoryPlugin : InteractionListener {
         on(KEY_CHEST, IntType.SCENERY, "open") { player, node ->
             val random = (0..3).random()
             if (!isQuestComplete(player, Quests.OBSERVATORY_QUEST)) {
-                animate(player, Animations.HUMAN_OPEN_CHEST_536)
+                animate(player, Animations.CLOSE_CHEST_539)
                 replaceScenery(node.asScenery(), node.id + 1, 80)
                 sendMessage(player, "You open the chest.")
                 setAttribute(player, "/save:$KEY_ATTRIBUTE", random)
@@ -95,7 +95,7 @@ class ObservatoryPlugin : InteractionListener {
         }
 
         on(KEY_CHEST_OPEN, IntType.SCENERY, "search") { player, _ ->
-            animate(player, Animations.HUMAN_TAKE_FROM_CHEST_539)
+            animate(player, Animations.CLOSE_CHEST_539)
             sendMessage(player, "You search the chest.")
             when (getAttribute(player, KEY_ATTRIBUTE, -1)) {
                 0 -> {
@@ -156,7 +156,7 @@ class ObservatoryPlugin : InteractionListener {
         on(GOBLIN_STOVE, IntType.SCENERY, "inspect") { player, _ ->
             sendDialogueLines(player, "The goblins appear to have been using the lens mould to cook their", "stew!")
             addDialogueAction(player) { _, _ ->
-                animate(player, Animations.HUMAN_TAKE_FROM_CHEST_539)
+                animate(player, Animations.CLOSE_CHEST_539)
                 sendDialogue(player, "You shake out its contents and take it with you.")
                 addItemOrDrop(player, Items.LENS_MOULD_602)
                 runTask(player, 3) {

@@ -76,7 +76,7 @@ class PartyPeteDialogue(player: Player? = null) : Dialogue(player) {
             65 -> npc(FaceAnim.HALF_GUILTY, "I've won the Dance Trophy at the Kandarin Ball three", "years in a trot!").also { stage++ }
             66 -> player(FaceAnim.HALF_GUILTY, "Show me your moves Pete!").also { stage++ }
             67 -> {
-                animate(npc, Animation(Animations.PARTY_PETE_NOD_DANCE_784))
+                animate(npc, Animation(Animations.NOD_HEAD_TWIRL_784))
                 end()
             }
         }

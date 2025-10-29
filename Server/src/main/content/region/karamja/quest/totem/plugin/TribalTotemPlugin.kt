@@ -129,7 +129,7 @@ class TribalTotemPlugin : InteractionListener {
          */
 
         on(Scenery.CHEST_2709, IntType.SCENERY, "Open") { player, node ->
-            animate(player, Animations.OPEN_CHEST_536)
+            animate(player, Animations.HUMAN_OPEN_CHEST_536)
             sendMessage(player, "You open the chest.")
             replaceScenery(node.asScenery(), node.id + 1, -1)
             return@on true

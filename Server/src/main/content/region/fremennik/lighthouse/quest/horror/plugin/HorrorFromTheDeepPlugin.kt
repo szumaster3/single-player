@@ -61,7 +61,7 @@ class HorrorFromTheDeepPlugin : InteractionListener {
                 }
 
             if (teleportLocation != null) {
-                animate(player, Animations.MULTI_BEND_OVER_827)
+                animate(player, Animations.HUMAN_BURYING_BONES_827)
                 queueScript(player, 1, QueueStrength.SOFT) {
                     teleport(player, teleportLocation)
                     return@queueScript stopExecuting(player)
@@ -197,7 +197,7 @@ class HorrorFromTheDeepPlugin : InteractionListener {
             val questStage = getQuestStage(player, Quests.HORROR_FROM_THE_DEEP)
             if (questStage >= 50) {
                 openDoor(player, node.asScenery())
-                playAudio(player, Sounds.STRANGEDOOR_OPEN_1626)
+                playAudio(player, Sounds.SCRAPE_1626)
                 playAudio(player, Sounds.STRANGEDOOR_CLOSE_1625, 2)
                 if (!isQuestComplete(player, Quests.HORROR_FROM_THE_DEEP)) {
                     setQuestStage(player, Quests.HORROR_FROM_THE_DEEP, 55)
@@ -286,7 +286,7 @@ class HorrorFromTheDeepPlugin : InteractionListener {
             }
             when (bridgeUnlock) {
                 1 -> {
-                    player.animate(Animation(Animations.JUMP_BRIDGE_769), 1)
+                    player.animate(Animation(Animations.HUMAN_JUMP_BRIDGE_769), 1)
                     forceWalk(player, destination.transform(1, 0, 0), "")
                     teleport(player, destination, TeleportManager.TeleportType.INSTANT, 2)
                     runTask(player, 3) { forceWalk(player, destination.transform(1, 0, 0), "") }

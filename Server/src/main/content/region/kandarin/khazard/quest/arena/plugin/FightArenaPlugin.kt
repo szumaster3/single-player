@@ -86,7 +86,7 @@ class FightArenaPlugin : InteractionListener {
 
             val scenery = FULL_ARMOR_STAND_1!!.asScenery()
 
-            animate(player, Animations.MULTI_TAKE_832)
+            animate(player, Animations.HUMAN_MULTI_USE_832)
 
             if (freeSlots(player) > 1 && !hasArmor && !hasHelmet) {
                 replaceScenery(scenery, node.id + 18, 10)
@@ -117,7 +117,7 @@ class FightArenaPlugin : InteractionListener {
             face(player, location(2618, 3144, 0))
             setVarbit(player, 5627, 3, true)
             sendGraphics(Graphics.SLEEPING_ZZZ_1056, Location.create(2617, 3144, 0))
-            animate(player, Animations.MULTI_TAKE_832)
+            animate(player, Animations.HUMAN_MULTI_USE_832)
             addItemOrDrop(player, CELL_KEY, 1)
             setQuestStage(player, Quests.FIGHT_ARENA, 68)
             sendMessage(player, "You pick up the keys from the table.")

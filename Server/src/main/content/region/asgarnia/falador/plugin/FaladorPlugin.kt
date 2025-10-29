@@ -57,7 +57,7 @@ class FaladorPlugin : InteractionListener {
 
         on(CUPBOARD_CLOSED, IntType.SCENERY, "open") { player, node ->
             face(player, node)
-            animate(player, Animations.OPEN_WARDROBE_542)
+            animate(player, Animations.HUMAN_OPEN_WARDROBE_542)
             playAudio(player, Sounds.CUPBOARD_OPEN_58)
             replaceScenery(node.asScenery(), CUPBOARD_OPEN, -1)
             return@on true

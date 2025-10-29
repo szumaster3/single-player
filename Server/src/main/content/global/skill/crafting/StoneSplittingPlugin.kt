@@ -84,7 +84,7 @@ class StoneSplittingPlugin : InteractionListener {
                                 return true
                             }
 
-                            animate(player, Animations.HUMAN_CHISEL_LIMESTONE_4470)
+                            animate(player, Animations.CHISEL_OYSTER_PEARL_4470)
 
                             if (removeItem(player, used.id)) {
                                 val successProbability =

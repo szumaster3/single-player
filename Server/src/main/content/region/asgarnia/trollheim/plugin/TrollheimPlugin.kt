@@ -849,7 +849,7 @@ class TrollheimPlugin : OptionHandler() {
         }
 
         companion object {
-            private val THROW = Animation(Animations.MOUNTAIN_TROLL_THROW_ROCK_1142)
+            private val THROW = Animation(Animations.IDLE_1142)
             private val TROLL_LOCATION = Location(2851, 3598, 0)
         }
     }

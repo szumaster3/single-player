@@ -105,7 +105,7 @@ class DemonSlayerListener : InteractionListener {
 
             if (player.inventory.remove(BUCKET_OF_WATER)) {
                 player.inventory.add(BUCKET)
-                playAudio(player, Sounds.DS_DRAIN_2982)
+                playAudio(player, Sounds.WATER_BEING_POURED_2982)
                 player.animate(ANIMATION)
                 sendMessage(player, "You pour the liquid down the drain.")
 
@@ -119,7 +119,7 @@ class DemonSlayerListener : InteractionListener {
                     !player.hasItem(DemonSlayerUtils.FIRST_KEY) &&
                     !player.getSavedData().questData.demonSlayer[0]
                 ) {
-                    playAudio(player, Sounds.DS_KEY_FALL_2983)
+                    playAudio(player, Sounds.KEY_DROPPING_DOWN_DRAIN_2983)
                     sendPlayerDialogue(
                         player,
                         "OK, I think I've washed the key down into the sewer. I'd better go down and get it!",
@@ -136,7 +136,7 @@ class DemonSlayerListener : InteractionListener {
 
     companion object {
         private val SEWER_LOCATION = Location(3237, 9858, 0)
-        private val ANIMATION = Animation(Animations.MULTI_BEND_OVER_827)
+        private val ANIMATION = Animation(Animations.HUMAN_BURYING_BONES_827)
         private val BUCKET_OF_WATER = Item(Items.BUCKET_OF_WATER_1929)
         private val BUCKET = Item(Items.BUCKET_1925)
     }
