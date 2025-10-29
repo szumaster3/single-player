@@ -51,7 +51,7 @@ object InterfaceContainer {
         scriptArgs[options.size + 3] = y
         scriptArgs[options.size + 4] = key
         scriptArgs[options.size + 5] = interfaceIndex shl 16 or childIndex
-        scriptArgs[options.size + 6] = 0
+//      scriptArgs[options.size + 6] = 0
 
         player.packetDispatch.sendRunScript(
             CLIENT_SCRIPT_INDEX,
@@ -59,9 +59,10 @@ object InterfaceContainer {
             *scriptArgs
         )
 
+        val itemArray = Array(items.size) { i -> items[i] ?: Item() }
         val settings = IfaceSettingsBuilder().enableAllOptions().build()
         player.packetDispatch.sendIfaceSettings(settings, childIndex, interfaceIndex, 0, items.size)
-        PacketRepository.send(ContainerPacket::class.java, OutgoingContext.Container(player, -1, -2, key, items.filterNotNull().toTypedArray(), items.size, false))
+        PacketRepository.send(ContainerPacket::class.java, OutgoingContext.Container(player, -1, -2, key, itemArray, items.size, false))
         return increment()
     }
 

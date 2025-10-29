@@ -7,15 +7,15 @@ import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.Player
 import core.game.system.task.Pulse
 import core.tools.Log
+import shared.consts.Components
 
 /**
  * Handles the Generic Item Select interface in the Grand Exchange.
  */
 class GenericItemSelect : InterfaceListener {
-    val GENERIC_ITEM_SELECT_IFACE = 12
 
     override fun defineInterfaceListeners() {
-        onOpen(GENERIC_ITEM_SELECT_IFACE) { player, _ ->
+        onOpen(Components.ITEM_SELECT_12) { player, _ ->
             player.pulseManager.run(
                 object : Pulse() {
                     override fun pulse(): Boolean = false
@@ -29,12 +29,12 @@ class GenericItemSelect : InterfaceListener {
             return@onOpen true
         }
 
-        on(GENERIC_ITEM_SELECT_IFACE) { player, _, opcode, _, slot, _ ->
+        on(Components.ITEM_SELECT_12) { player, _, opcode, _, slot, _ ->
             processResponse(player, opcode, slot)
             return@on true
         }
 
-        onClose(GENERIC_ITEM_SELECT_IFACE) { player, _ ->
+        onClose(Components.ITEM_SELECT_12) { player, _ ->
             removeAttribute(player, "itemselect-callback")
             removeAttribute(player, "itemselect-keepalive")
             return@onClose true
