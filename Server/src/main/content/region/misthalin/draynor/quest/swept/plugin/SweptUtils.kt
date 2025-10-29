@@ -173,12 +173,7 @@ internal object SweptUtils {
     @JvmStatic
     fun sweepLines(player: Player, lineData: Map<Int, LineScenery>) {
         lineData.values.forEach { removeScenery(Scenery(it.sceneryId, it.location)) }
-
-        GlobalScope.launch {
-            delay(30_000)
-            lineData.values.forEach { addScenery(it.sceneryId, it.location, it.rotation, it.type) }
-        }
-
+        lineData.values.forEach { addScenery(it.sceneryId, it.location, it.rotation, it.type) }
         sweepInteraction(player)
         checkAggieTask(player)
     }

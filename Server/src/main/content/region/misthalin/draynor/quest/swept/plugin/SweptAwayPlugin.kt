@@ -13,12 +13,8 @@ import core.game.interaction.InterfaceListener
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.emote.Emotes
-import core.game.world.map.Location
 import core.tools.END_DIALOGUE
 import core.tools.RandomFunction
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import shared.consts.*
 
 class SweptAwayPlugin : InteractionListener, InterfaceListener {
@@ -391,15 +387,15 @@ class SweptAwayPlugin : InteractionListener, InterfaceListener {
             when (stage) {
                 0 -> npc(FaceAnim.SAD, "Eh? Something looks very wrong. Not all the creatures", "are there!").also { stage++ }
                 1 -> npc(FaceAnim.SAD, "I'll just put things back to how they were and have a", "look for the missing critters.").also { stage++ }
-                2 -> GlobalScope.launch {
+                2 -> {
                     openInterface(player!!, Components.FADE_TO_BLACK_120)
-                    delay(4000)
                     openInterface(player!!, Components.FADE_FROM_BLACK_170)
                     SweptUtils.resetBettyBasementNPCs()
                     SweptUtils.Pen.values().mapNotNull { if (it.itemId != -1) it.itemId else null }
                         .forEach { id -> if (inInventory(player!!, id)) removeAll(player!!, id) }
+                    stage++
                 }
-                3 -> npc(FaceAnim.HAPPY, "Not to worry - I found everyone! All the critters are", "accounted for, you're fine to start over.").also { stage++ }
+                3 -> npc(FaceAnim.HAPPY, "Not to worry - I found everyone! All the critters are", "accounted for, you're fine to start over.").also { stage = END_DIALOGUE }
             }
         }
     }

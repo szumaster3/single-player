@@ -82,9 +82,13 @@ class GhastNPC : AbstractNPC {
 
     fun attemptLifeSiphon(player: Player) {
         if (NSUtils.activatePouch(player, this)) return
-        val inventoryItems = player.inventory.toArray().filterNotNull()
 
-        val foodInInventory = inventoryItems.firstOrNull { item ->
+        val allItems = buildList {
+            addAll(player.inventory.toArray().filterNotNull())
+            addAll(player.equipment.toArray().filterNotNull())
+        }
+
+        val foodInInventory = player.inventory.toArray().filterNotNull().firstOrNull { item ->
             val consumable = Consumables.getConsumableById(item.id)
             consumable?.consumable is Food
         }
@@ -97,20 +101,22 @@ class GhastNPC : AbstractNPC {
             return
         }
 
-        val foodInSatchel = inventoryItems.firstOrNull { item ->
-            item.id in SatchelPlugin.SATCHEL_IDS && getCharge(item) >= BASE_CHARGE_AMOUNT
+        val foodInSatchel = allItems.firstOrNull { item ->
+            item.id in SatchelPlugin.SATCHEL_IDS && getCharge(item) > SatchelPlugin.BASE_CHARGE_AMOUNT
         }
 
         if (foodInSatchel != null) {
-            val chargesAmount = getCharge(foodInSatchel)
-            val foodFound = SatchelPlugin.SATCHEL_RESOURCES.firstOrNull { foodId ->
-                chargesAmount >= (foodId + BASE_CHARGE_AMOUNT)
-            }
+            val mask = getCharge(foodInSatchel) - SatchelPlugin.BASE_CHARGE_AMOUNT
+            val contents = SatchelPlugin.getItemsFromMask(mask)
 
-            if (foodFound != null) {
-                addItem(player, Items.ROTTEN_FOOD_2959, 1)
-                adjustCharge(foodInSatchel, -(foodFound + BASE_CHARGE_AMOUNT))
+            if (contents.isNotEmpty()) {
+                val foodToRot = contents.random()
+                val newMask = mask and SatchelPlugin.getMaskFor(foodToRot).inv()
+
+                setCharge(foodInSatchel, SatchelPlugin.BASE_CHARGE_AMOUNT + newMask)
+                addItem(player, Items.ROTTEN_FOOD_2959)
                 sendMessage(player, "You feel something attacking your satchel, and smell a terrible stench.")
+                playAudio(player, Sounds.FOOD_ROT_1494)
                 return
             }
         }
