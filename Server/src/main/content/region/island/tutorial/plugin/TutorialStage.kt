@@ -29,6 +29,7 @@ object TutorialStage {
 
     @JvmField
     val STARTER_BANK = Item(Items.COINS_995, 25)
+
     @JvmField
     val STARTER_PACK = arrayOf(
         Item(Items.BRONZE_AXE_1351, 1),
@@ -120,6 +121,7 @@ object TutorialStage {
             2 -> {
                 hideTabs(player, login)
                 setVarbit(player, FLASHING_ICON, 0)
+                removeHintIcon(player)
                 player.dialogueInterpreter.sendPlaneMessageWithBlueTitle(
                     "Game Options",
                     "In the interface, you can now see a variety of options such as screen",
@@ -132,7 +134,7 @@ object TutorialStage {
 
             3 -> {
                 hideTabs(player, login)
-                clearHintIcon(player)
+                removeHintIcon(player)
                 registerHintIcon(player, Location(3098, 3107, 0), 100) // DOOR (RS GUIDE EXIT)
                 player.dialogueInterpreter.sendPlaneMessageWithBlueTitle(
                     "Interacting with scenery",
@@ -321,7 +323,7 @@ object TutorialStage {
             17 -> {
                 hideTabs(player, login)
                 removeHintIcon(player)
-                registerHintIcon(player, Location(3079, 3084,0), 100) // DOOR (COOKING)
+                registerHintIcon(player, Location(3079, 3084, 0), 100) // DOOR (COOKING)
                 player.dialogueInterpreter.sendPlaneMessageWithBlueTitle(
                     "Find your next instructor",
                     "Follow the path until you get to the door with the yellow arrow",
@@ -1122,7 +1124,7 @@ object TutorialStage {
         if (slot < 0 || slot >= HintIconManager.MAXIMUM_SIZE) {
             return
         }
-        removeAttribute(player, TUTORIAL_HINT)
+        player.removeAttribute(TUTORIAL_HINT)
         HintIconManager.removeHintIcon(player, slot)
     }
 
@@ -1131,12 +1133,9 @@ object TutorialStage {
     }
 
     private fun registerHintIcon(player: Player, location: Location, height: Int) {
-        setAttribute(
-            player,
-            TUTORIAL_HINT,
-            HintIconManager.registerHintIcon(player, location, 1, -1, player.hintIconManager.freeSlot(), height, 3),
-        )
+        setAttribute(player, TUTORIAL_HINT, HintIconManager.registerHintIcon(player, location, 1, -1, player.hintIconManager.freeSlot(), height, 3))
     }
+
 
     fun completeTutorial(player: Player) {
         if (player.rights != Rights.ADMINISTRATOR) {
