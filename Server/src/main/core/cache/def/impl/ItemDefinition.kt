@@ -28,47 +28,47 @@ import kotlin.math.round
  * The type Item definition.
  */
 class ItemDefinition : Definition<Item?>() {
-    private var interfaceModelId = 0
-    private var modelZoom = 0
-    private var modelRotationX = 0
-    private var modelRotationY = 0
-    private var modelOffset1: Int = 0
-    private var modelOffset2: Int = 0
-    private var stackable = false
-    private var value = 1
-    private var membersOnly = false
-    private var maleWornModelId1 = -1
-    private var femaleWornModelId1 = -1
-    private var maleWornModelId2 = -1
-    private var femaleWornModelId2 = -1
-    private var maleWornModelId3: Int = -1
-    private var femaleWornModelId3: Int = -1
-    private var maleWornModelId4: Int = -1
-    private var femaleWornModelId4: Int = -1
-    private var groundOptions: Array<String?>
-    private var originalModelColors: ShortArray? = null
-    private var modifiedModelColors: ShortArray? = null
-    private var textureColour1: ShortArray? = null
-    private var textureColour2: ShortArray? = null
-    private var unknownArray1: ByteArray? = null
-    private var unknownArray2: IntArray? = null
-    private val unknownArray3: Array<IntArray>? = null
-    private var unnoted = true
-    private var colourEquip1 = -1
-    private var colourEquip2 = 0
-    private var noteId = -1
-    private var noteTemplateId = -1
-    private var stackIds: IntArray? = null
-    private var stackAmounts: IntArray? = null
-    private var teamId = 0
-    private var lendId = -1
-    private var lendTemplateId = -1
-    private var recolourId: Int = -1
-    private var recolourTemplateId: Int = -1
-    private var equipId = 0
-    private var itemRequirements: HashMap<Int, Int>? = null
-    private var clientScriptData: HashMap<Int, Any>? = null
-    private var itemType = 0
+    @JvmField var interfaceModelId = 0
+    @JvmField var modelZoom = 0
+    @JvmField var modelRotationX = 0
+    @JvmField var modelRotationY = 0
+    @JvmField var modelOffset1: Int = 0
+    @JvmField var modelOffset2: Int = 0
+    @JvmField var stackable = false
+    @JvmField var value = 1
+    @JvmField var membersOnly = false
+    @JvmField var maleWornModelId1 = -1
+    @JvmField var femaleWornModelId1 = -1
+    @JvmField var maleWornModelId2 = -1
+    @JvmField var femaleWornModelId2 = -1
+    @JvmField var maleWornModelId3: Int = -1
+    @JvmField var femaleWornModelId3: Int = -1
+    @JvmField var maleWornModelId4: Int = -1
+    @JvmField var femaleWornModelId4: Int = -1
+    @JvmField var groundOptions: Array<String?>
+    @JvmField var originalModelColors: ShortArray? = null
+    @JvmField var modifiedModelColors: ShortArray? = null
+    @JvmField var textureColour1: ShortArray? = null
+    @JvmField var textureColour2: ShortArray? = null
+    @JvmField var unknownArray1: ByteArray? = null
+    @JvmField var unknownArray2: IntArray? = null
+    @JvmField val unknownArray3: Array<IntArray>? = null
+    @JvmField var unnoted = true
+    @JvmField var colourEquip1 = -1
+    @JvmField var colourEquip2 = 0
+    @JvmField var noteId = -1
+    @JvmField var noteTemplateId = -1
+    @JvmField var stackIds: IntArray? = null
+    @JvmField var stackAmounts: IntArray? = null
+    @JvmField var teamId = 0
+    @JvmField var lendId = -1
+    @JvmField var lendTemplateId = -1
+    @JvmField var recolourId: Int = -1
+    @JvmField var recolourTemplateId: Int = -1
+    @JvmField var equipId = 0
+    @JvmField var itemRequirements: HashMap<Int, Int>? = null
+    @JvmField var clientScriptData: HashMap<Int, Any>? = null
+    @JvmField var itemType = 0
 
     /**
      * Transfer note definition.

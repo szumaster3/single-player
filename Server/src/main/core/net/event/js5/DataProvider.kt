@@ -17,7 +17,7 @@ interface DataProvider {
                 ) = if (index == 255) {
                     cache.index255?.readArchiveSector(archive)?.data
                 } else {
-                    cache.index(index).readArchiveSector(archive)?.data
+                    cache.index(index)?.readArchiveSector(archive)?.data
                 }
             }
     }
