@@ -1,5 +1,7 @@
 package content.minigame.gnomecook.plugin.cocktails
 
+import core.api.inInventory
+import core.api.sendDialogue
 import core.cache.def.impl.ItemDefinition
 import core.game.interaction.OptionHandler
 import core.game.node.Node
@@ -10,15 +12,15 @@ import core.plugin.Initializable
 import core.plugin.Plugin
 import shared.consts.Items
 
-private const val WIZ_BLIZ_MIX = 9566
-private const val SGG_MIX = 9567
-private const val F_BLAST_MIX = 9568
-private const val P_PUNCH_MIX = 9569
-private const val BLU_SPEC_MIX = 9570
-private const val CHOC_SAT_MIX = 9571
-private const val DRUNK_DRAG_MIX = 9574
-private val mixers =
-    arrayOf(WIZ_BLIZ_MIX, SGG_MIX, F_BLAST_MIX, P_PUNCH_MIX, BLU_SPEC_MIX, CHOC_SAT_MIX, DRUNK_DRAG_MIX)
+private val mixers = arrayOf(
+    Items.MIXED_BLIZZARD_9566,
+    Items.MIXED_SGG_9567,
+    Items.MIXED_BLAST_9568,
+    Items.MIXED_PUNCH_9569,
+    Items.MIXED_BLURBERRY_SPECIAL_9570,
+    Items.MIXED_SATURDAY_9571,
+    Items.MIXED_DRAGON_9574
+)
 
 /**
  * Handles the pouring of mixed drinks into cocktail glasses.
@@ -38,20 +40,20 @@ class PourMixerPlugin : OptionHandler() {
         player ?: return false
         node ?: return false
         when (node.id) {
-            WIZ_BLIZ_MIX -> attemptMake(PouredDrink.WIZ_BLIZZ, player, node)
-            SGG_MIX -> attemptMake(PouredDrink.SHORT_G_G, player, node)
-            F_BLAST_MIX -> attemptMake(PouredDrink.FRUIT_BLAST, player, node)
-            P_PUNCH_MIX -> attemptMake(PouredDrink.PINE_PUNCH, player, node)
-            BLU_SPEC_MIX -> attemptMake(PouredDrink.BLUR_SPEC, player, node)
-            CHOC_SAT_MIX -> attemptMake(PouredDrink.CHOC_SAT, player, node)
-            DRUNK_DRAG_MIX -> attemptMake(PouredDrink.DRUNK_DRAG, player, node)
+            Items.MIXED_BLIZZARD_9566 -> attemptMake(PouredDrink.WIZ_BLIZZ, player, node)
+            Items.MIXED_SGG_9567 -> attemptMake(PouredDrink.SHORT_G_G, player, node)
+            Items.MIXED_BLAST_9568 -> attemptMake(PouredDrink.FRUIT_BLAST, player, node)
+            Items.MIXED_PUNCH_9569 -> attemptMake(PouredDrink.PINE_PUNCH, player, node)
+            Items.MIXED_BLURBERRY_SPECIAL_9570 -> attemptMake(PouredDrink.BLUR_SPEC, player, node)
+            Items.MIXED_SATURDAY_9571 -> attemptMake(PouredDrink.CHOC_SAT, player, node)
+            Items.MIXED_DRAGON_9574 -> attemptMake(PouredDrink.DRUNK_DRAG, player, node)
         }
         return true
     }
 
     private fun attemptMake(drink: PouredDrink, player: Player, node: Node) {
-        if (!player.inventory.containsItem(Item(Items.COCKTAIL_GLASS_2026))) {
-            player.dialogueInterpreter.sendDialogue("You need a glass to pour this into.")
+        if (!inInventory(player,Items.COCKTAIL_GLASS_2026)) {
+            sendDialogue(player, "You need a glass to pour this into.")
             return
         }
 
@@ -63,7 +65,7 @@ class PourMixerPlugin : OptionHandler() {
         }
 
         if (!hasAll) {
-            player.dialogueInterpreter.sendDialogue("You don't have the garnishes for this.")
+            sendDialogue(player, "You don't have the garnishes for this.")
             return
         }
 
@@ -76,13 +78,13 @@ class PourMixerPlugin : OptionHandler() {
     }
 
     internal enum class PouredDrink(val product: Int, val requiredItems: Array<Item>) {
-        FRUIT_BLAST(9514, arrayOf(Item(Items.LEMON_SLICES_2106))),
-        PINE_PUNCH(9512, arrayOf(Item(Items.LIME_CHUNKS_2122), Item(Items.PINEAPPLE_CHUNKS_2116), Item(Items.ORANGE_SLICES_2112))),
-        WIZ_BLIZZ(9508, arrayOf(Item(Items.PINEAPPLE_CHUNKS_2116), Item(Items.LIME_SLICES_2124))),
-        SHORT_G_G(9510, arrayOf(Item(Items.LIME_SLICES_2124), Item(Items.EQUA_LEAVES_2128))),
-        DRUNK_DRAG(9575, arrayOf()),
-        CHOC_SAT(9572, arrayOf()),
-        BLUR_SPEC(9520, arrayOf(Item(Items.LEMON_CHUNKS_2104), Item(Items.ORANGE_CHUNKS_2110), Item(Items.EQUA_LEAVES_2128), Item(Items.LIME_SLICES_2124))
+        FRUIT_BLAST(Items.FRUIT_BLAST_9514, arrayOf(Item(Items.LEMON_SLICES_2106))),
+        PINE_PUNCH(Items.PINEAPPLE_PUNCH_9512, arrayOf(Item(Items.LIME_CHUNKS_2122), Item(Items.PINEAPPLE_CHUNKS_2116), Item(Items.ORANGE_SLICES_2112))),
+        WIZ_BLIZZ(Items.WIZARD_BLIZZARD_9508, arrayOf(Item(Items.PINEAPPLE_CHUNKS_2116), Item(Items.LIME_SLICES_2124))),
+        SHORT_G_G(Items.SHORT_GREEN_GUY_9510, arrayOf(Item(Items.LIME_SLICES_2124), Item(Items.EQUA_LEAVES_2128))),
+        DRUNK_DRAG(Items.MIXED_DRAGON_9575, arrayOf()),
+        CHOC_SAT(Items.MIXED_SATURDAY_9572, arrayOf()),
+        BLUR_SPEC(Items.BLURBERRY_SPECIAL_9520, arrayOf(Item(Items.LEMON_CHUNKS_2104), Item(Items.ORANGE_CHUNKS_2110), Item(Items.EQUA_LEAVES_2128), Item(Items.LIME_SLICES_2124))
         ),
     }
 

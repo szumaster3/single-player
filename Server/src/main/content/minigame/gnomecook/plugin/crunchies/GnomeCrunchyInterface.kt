@@ -10,12 +10,6 @@ import core.plugin.Initializable
 import core.plugin.Plugin
 import shared.consts.Items
 
-private const val TOAD_CRUNCHIES = 9538
-private const val SPICE_CRUNCHIES = 9540
-private const val CHOC_CHIP_CRUNCHIES = 9544
-private const val WORM_CRUNCHIES = 9542
-private const val HALF_BAKED_CRUNCHY = 2201
-
 /**
  * Handles the gnome crunchy interface.
  *
@@ -24,9 +18,7 @@ private const val HALF_BAKED_CRUNCHY = 2201
 @Initializable
 class GnomeCrunchyInterface : ComponentPlugin() {
 
-    override fun handle(
-        player: Player?, component: Component?, opcode: Int, button: Int, slot: Int, itemId: Int
-    ): Boolean {
+    override fun handle(player: Player?, component: Component?, opcode: Int, button: Int, slot: Int, itemId: Int): Boolean {
         player ?: return false
         when (button) {
             3 -> attemptMake(HalfMadeCrunchy.TOAD, player)
@@ -63,7 +55,7 @@ class GnomeCrunchyInterface : ComponentPlugin() {
         }
 
         player.inventory.remove(*crunchy.requiredItems)
-        player.inventory.remove(Item(HALF_BAKED_CRUNCHY))
+        player.inventory.remove(Item(Items.HALF_BAKED_CRUNCHY_2201))
         player.inventory.add(Item(crunchy.product))
         player.skills.addExperience(Skills.COOKING, 30.0)
         player.interfaceManager.close()
@@ -74,10 +66,10 @@ class GnomeCrunchyInterface : ComponentPlugin() {
         component ?: return
         super.open(player, component)
 
-        player.packetDispatch.sendItemOnInterface(TOAD_CRUNCHIES, 1, component.id, 3)
-        player.packetDispatch.sendItemOnInterface(SPICE_CRUNCHIES, 1, component.id, 10)
-        player.packetDispatch.sendItemOnInterface(WORM_CRUNCHIES, 1, component.id, 17)
-        player.packetDispatch.sendItemOnInterface(CHOC_CHIP_CRUNCHIES, 1, component.id, 26)
+        player.packetDispatch.sendItemOnInterface(Items.TOAD_CRUNCHIES_9538, 1, component.id, 3)
+        player.packetDispatch.sendItemOnInterface(Items.SPICY_CRUNCHIES_9540, 1, component.id, 10)
+        player.packetDispatch.sendItemOnInterface(Items.WORM_CRUNCHIES_9542, 1, component.id, 17)
+        player.packetDispatch.sendItemOnInterface(Items.CHOCCHIP_CRUNCHIES_9544, 1, component.id, 26)
     }
 
     override fun newInstance(arg: Any?): Plugin<Any> {
@@ -86,10 +78,10 @@ class GnomeCrunchyInterface : ComponentPlugin() {
     }
 
     internal enum class HalfMadeCrunchy(val product: Int, val reqLevel: Int, val requiredItems: Array<Item>) {
-        CHOCCHIP(9577, 16, arrayOf(Item(Items.CHOCOLATE_BAR_1973, 2))),
-        SPICY(9579, 12, arrayOf(Item(Items.EQUA_LEAVES_2128, 2))),
-        TOAD(9581, 10, arrayOf(Item(Items.TOADS_LEGS_2152, 2))),
-        WORM(9583, 14, arrayOf(Item(Items.EQUA_LEAVES_2128), Item(Items.KING_WORM_2162, 2)))
+        CHOCCHIP(Items.HALF_MADE_CRUNCHY_9577, 16, arrayOf(Item(Items.CHOCOLATE_BAR_1973, 2))),
+        SPICY(Items.HALF_MADE_CRUNCHY_9579, 12, arrayOf(Item(Items.EQUA_LEAVES_2128, 2))),
+        TOAD(Items.HALF_MADE_CRUNCHY_9581, 10, arrayOf(Item(Items.TOADS_LEGS_2152, 2))),
+        WORM(Items.HALF_MADE_CRUNCHY_9583, 14, arrayOf(Item(Items.EQUA_LEAVES_2128), Item(Items.KING_WORM_2162, 2)))
     }
 
 }

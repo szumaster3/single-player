@@ -10,14 +10,6 @@ import core.plugin.Initializable
 import core.plugin.Plugin
 import shared.consts.Items
 
-private const val WIZARD_BLIZZARD = 2054
-private const val SHORT_GREEN_GUY = 2080
-private const val FRUIT_BLAST = 2084
-private const val PINEAPPLE_PUNCH = 2048
-private const val DRUNK_DRAGON = 2092
-private const val CHOC_SATURDAY = 2074
-private const val BLURBERRY_SPECIAL = 2064
-
 /**
  * Handles the gnome cocktail interface.
  *
@@ -30,13 +22,13 @@ class GnomeCocktailInterface : ComponentPlugin() {
         player ?: return
         component ?: return
         super.open(player, component)
-        player.packetDispatch.sendItemOnInterface(WIZARD_BLIZZARD, 1, component.id, 3)
-        player.packetDispatch.sendItemOnInterface(SHORT_GREEN_GUY, 1, component.id, 16)
-        player.packetDispatch.sendItemOnInterface(FRUIT_BLAST, 1, component.id, 23)
-        player.packetDispatch.sendItemOnInterface(PINEAPPLE_PUNCH, 1, component.id, 32)
-        player.packetDispatch.sendItemOnInterface(DRUNK_DRAGON, 1, component.id, 41)
-        player.packetDispatch.sendItemOnInterface(CHOC_SATURDAY, 1, component.id, 50)
-        player.packetDispatch.sendItemOnInterface(BLURBERRY_SPECIAL, 1, component.id, 61)
+        player.packetDispatch.sendItemOnInterface(Items.WIZARD_BLIZZARD_2054, 1, component.id, 3)
+        player.packetDispatch.sendItemOnInterface(Items.SHORT_GREEN_GUY_2080, 1, component.id, 16)
+        player.packetDispatch.sendItemOnInterface(Items.FRUIT_BLAST_2084, 1, component.id, 23)
+        player.packetDispatch.sendItemOnInterface(Items.PINEAPPLE_PUNCH_2048, 1, component.id, 32)
+        player.packetDispatch.sendItemOnInterface(Items.DRUNK_DRAGON_2092, 1, component.id, 41)
+        player.packetDispatch.sendItemOnInterface(Items.CHOC_SATURDAY_2074, 1, component.id, 50)
+        player.packetDispatch.sendItemOnInterface(Items.BLURBERRY_SPECIAL_2064, 1, component.id, 61)
     }
 
     override fun handle(

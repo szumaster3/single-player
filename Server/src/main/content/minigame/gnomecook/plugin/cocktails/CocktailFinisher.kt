@@ -55,10 +55,8 @@ class CocktailFinisher : OptionHandler() {
     }
 
     internal enum class FinishedDrinks(val product: Int, val requiredItems: Array<Item>) {
-        FIN_CHOC_SAT(2074, arrayOf(Item(Items.CHOCOLATE_DUST_1975), Item(Items.POT_OF_CREAM_2130))), FIN_DRUN_DRA(
-            9576,
-            arrayOf(Item(Items.PINEAPPLE_CHUNKS_2116), Item(Items.POT_OF_CREAM_2130))
-        )
+        FIN_CHOC_SAT(Items.CHOC_SATURDAY_2074, arrayOf(Item(Items.CHOCOLATE_DUST_1975), Item(Items.POT_OF_CREAM_2130))),
+        FIN_DRUN_DRA(Items.MIXED_DRAGON_9576, arrayOf(Item(Items.PINEAPPLE_CHUNKS_2116), Item(Items.POT_OF_CREAM_2130)))
     }
 
 }
