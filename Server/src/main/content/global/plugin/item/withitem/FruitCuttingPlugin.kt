@@ -108,7 +108,7 @@ class FruitCuttingPlugin : InteractionListener {
                                 return@runTask
                             }
 
-                            player.animate(Animation(Animations.CRAFT_KNIFE_5244))
+                            player.animate(Animation(3495))
                             player.inventory.add(productID)
                             sendMessage(player, "You cut the red banana into slices.")
                         }
