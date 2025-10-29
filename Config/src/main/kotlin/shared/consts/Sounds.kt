@@ -18,7 +18,6 @@ object Sounds {
     const val STEEL_MAIL_14 = 14
     const val STEEL_15 = 15
     const val ANVIL_SINGLE_2_16 = 16
-    const val BIG_BAR_16 = 16
     const val BIG_BAR_MAIL_17 = 17
     const val SWORDCLASH4_MAIL_18 = 18
     const val DRAGON_ARMOUR_19 = 19
@@ -28,7 +27,6 @@ object Sounds {
     const val BLADE3_23 = 23
     const val LEATHER_HIT_24 = 24
     const val STEEL2_25 = 25
-    const val STEEL2_1_25 = 25
     const val STEEL2_MAIL_26 = 26
     const val SWORDCLASH3_MAIL_27 = 27
     const val BLADE2_MAIL_28 = 28
@@ -48,7 +46,6 @@ object Sounds {
     const val BOOKCASE_OPEN_AND_CLOSE_42 = 42
     const val BIG_WOODEN_DOOR_CLOSE_43 = 43
     const val OPEN_CABINET_44 = 44
-    const val BIG_WOODEN_DOOR_OPEN_44 = 44
     const val BIGDOOR_CLOSE_45 = 45
     const val BIGDOOR_OPEN_46 = 46
     const val BONE_DOOR_CLOSE_47 = 47
@@ -59,7 +56,6 @@ object Sounds {
     const val CHEST_OPEN_52 = 52
     const val COFFIN_CLOSE_53 = 53
     const val OPEN_HEAVY_54 = 54
-    const val COFFIN_OPEN_54 = 54
     const val SMALL_CREAKY_DOOR_CLOSE_55 = 55
     const val CREAKYDOOR_OPEN_56 = 56
     const val CUPBOARD_CLOSE_57 = 57
@@ -95,7 +91,6 @@ object Sounds {
     const val STONE_DOOR_LOCKED_87 = 87
     const val TRAP_DOOR_CLOSE_88 = 88
     const val TRAP_DOOR_OPEN_89 = 89
-    const val TRAPDOOR_OPEN_89 = 89
     const val TRAP_DOOR_CLOSE_90 = 90
     const val TRAP_DOOR_OPEN_91 = 91
     const val TREEDOOR_CLOSE_92 = 92
@@ -266,7 +261,6 @@ object Sounds {
     const val TZHAAR_KET_HIT_257 = 257
     const val TZHAAR_KET_HIT_SHIELD_258 = 258
     const val GRANITE_SHIELD_1_259 = 259
-    const val TZHAAR_KET_HIT_SHIELD2_259 = 259
     const val TZHAAR_MEJ_ATTACK_260 = 260
     const val TZHAAR_MEJ_ATTACK_PUNCH_261 = 261
     const val TZHAAR_MEJ_ATTACK_STAFF_262 = 262
@@ -289,14 +283,12 @@ object Sounds {
     const val ANIMATED_DEATH2_279 = 279
     const val ANIMATED_DEATH_280 = 280
     const val ANIMATED_HIT_281 = 281
-    const val SWORD_HIT_281 = 281
     const val BANSHEE_ATTACK_282 = 282
     const val BANSHEE_ATTACK_EARMUFFS_283 = 283
     const val BANSHEE_ATTACK_NORMAL_284 = 284
     const val BANSHEE_DEATH_285 = 285
     const val BANSHEE_HIT_286 = 286
     const val BASILISK_ATTACK_287 = 287
-    const val BASILISK_HIT_287 = 287
     const val BASILISK_ATTACK2_288 = 288
     const val BASILISK_DEATH_289 = 289
     const val SOUND_290 = 290
@@ -311,7 +303,6 @@ object Sounds {
     const val ANGER_BEAR_HIT_299 = 299
     const val BEAR_ATTACK_300 = 300
     const val BEAR_DEATH_301 = 301
-    const val HUNTINGBEAST_DEATH_301 = 301
     const val BEAR_HIT_302 = 302
     const val BEARMAN_ATTACK_303 = 303
     const val BEARMAN_DEATH_304 = 304
@@ -547,7 +538,6 @@ object Sounds {
     const val IMP_ATTACK_534 = 534
     const val IMP_DEATH_535 = 535
     const val II_IMP_FAIL_536 = 536
-    const val IMP_HIT_536 = 536
     const val INSECT_ATTACK_537 = 537
     const val INSECT_DEATH_538 = 538
     const val INSECT_HIT_539 = 539
@@ -800,7 +790,6 @@ object Sounds {
     const val SLIME_HIT_786 = 786
     const val SNAIL_DEATH_787 = 787
     const val SNAIL_ATTACK_788 = 788
-    const val SNAIL_SPIT2_788 = 788
     const val SNAIL_HIT_789 = 789
     const val SNAIL_SPIT_790 = 790
     const val BIG_SEASNAKE_ATTACK_791 = 791
@@ -854,11 +843,9 @@ object Sounds {
     const val GIANT_TOAD_DEATH_839 = 839
     const val GIANT_TOAD_HIT_840 = 840
     const val TOAD2_841 = 841
-    const val TOAD_HIT_841 = 841
     const val TOAD_ATTACK_842 = 842
     const val TOAD_DEATH_843 = 843
     const val TOAD2_844 = 844
-    const val TOAD_HIT_844 = 844
     const val TORCHER_ATTACK_845 = 845
     const val TORCHER_DEATH_846 = 846
     const val TORCHER_FIRE_847 = 847
@@ -955,7 +942,6 @@ object Sounds {
     const val POH_BUILD_WOOD_938 = 938
     const val POH_CHANGE_HAIR_939 = 939
     const val POH_CLAY_HIT_940 = 940
-    const val POH_HIT_CLAY_940 = 940
     const val POH_CLOCKWORK_941 = 941
     const val POH_CLOTH_942 = 942
     const val POH_DART_LAND_943 = 943
@@ -1074,7 +1060,6 @@ object Sounds {
     const val BF_PEDAL_LOOP_1056 = 1056
     const val BF_PIPEBREAKS_1057 = 1057
     const val BF_PUMP_LOOP_1058 = 1058
-    const val BREW_PUMP_1058 = 1058
     const val BF_REFUEL_STOVE_1059 = 1059
     const val BF_REPAIR_1060 = 1060
     const val BF_SMELT_1061 = 1061
@@ -1176,7 +1161,6 @@ object Sounds {
     const val WHISTLE2_1157 = 1157
     const val WHISTLE3_1158 = 1158
     const val COLLECT_SAP_1159 = 1159
-    const val CUTWRIST_1159 = 1159
     const val BOIL_OFF_1160 = 1160
     const val CAT_ANGRY_1161 = 1161
     const val ICS_SPECTRE_APPEAR_1162 = 1162
@@ -1279,7 +1263,6 @@ object Sounds {
     const val SE_WATERDOOR_UNLOCK_1259 = 1259
     const val SE_WATERPOUR_1260 = 1260
     const val BANANA_SLICING_1261 = 1261
-    const val FLETCH_ONCE_1261 = 1261
     const val BEAST_ATTACK_1262 = 1262
     const val BEAST_DEATH_1263 = 1263
     const val BEAST_HIT_1264 = 1264
@@ -1456,9 +1439,7 @@ object Sounds {
     const val CF_STRIKE_1435 = 1435
     const val CF_SWIM_1436 = 1436
     const val CF_SWINGACROSS_1437 = 1437
-    const val CF_SWINGACROSS_SUCESS_1437 = 1437
     const val CF_SWINGACROSS_1438 = 1438
-    const val CF_SWINGACROSS_SUCESS_1438 = 1438
     const val CF_TIEROPE_1439 = 1439
     const val CASTLEWARS_CATAPULT_FIRE_1440 = 1440
     const val CASTLEWARS_BUTTON_1441 = 1441
@@ -1647,7 +1628,6 @@ object Sounds {
     const val MEGANOTH_SPINES_1624 = 1624
     const val STRANGEDOOR_CLOSE_1625 = 1625
     const val SCRAPE_1626 = 1626
-    const val STRANGEDOOR_OPEN_1626 = 1626
     const val STRANGEDOOR_SOUND_1627 = 1627
     const val FOUND_ICE_ARROWS_1628 = 1628
     const val FIRE_TP_1629 = 1629
@@ -1797,7 +1777,6 @@ object Sounds {
     const val BANE_TOLNA_FINAL_DEATH_1773 = 1773
     const val BANE_ATTACH_ROPE_1774 = 1774
     const val BANE_DOOR_OPEN_1775 = 1775
-    const val SMALL_CREAKY_DOOR_OPEN_1775 = 1775
     const val BANE_FIRE_LOOP_1776 = 1776
     const val BANE_OPENING_CLOSE_1777 = 1777
     const val BANE_REAPER_ATTACK_1778 = 1778
@@ -1838,7 +1817,6 @@ object Sounds {
     const val TREK_SWIM_BOG_1813 = 1813
     const val TREK_TENTACLE_HEAD_APPEAR_1814 = 1814
     const val SLICE_LADDER_1815 = 1815
-    const val TREK_WALKAWAY_1815 = 1815
     const val TREK_WALKTOWARD_1816 = 1816
     const val CAMELSNAKE_1817 = 1817
     const val CHARMFLUTE_ASHARP_1818 = 1818
@@ -1882,7 +1860,6 @@ object Sounds {
     const val WRITING_1856 = 1856
     const val TRADEFLOOR_ORE_1857 = 1857
     const val LEAK_1858 = 1858
-    const val LEAK_1_1858 = 1858
     const val SLIDE_PUZZLE_1859 = 1859
     const val ICEGATE_OPEN_1860 = 1860
     const val BLIZZARD_1861 = 1861
@@ -1904,14 +1881,11 @@ object Sounds {
     const val BREW_DRAIN_WATER_1877 = 1877
     const val BREW_FILL_HOPPER_1878 = 1878
     const val BREW_MONKEY_CLIMB_1879 = 1879
-    const val BREW_MONKEYCLIMB_1879 = 1879
     const val BREW_MONKEY_COMBAT_1880 = 1880
     const val BREW_MONKEY_TALK_1881 = 1881
     const val BREW_MONKEY_CLIMB_1882 = 1882
-    const val BREW_MONKEYCLIMB_1882 = 1882
     const val BREW_PLACE_LOGS_1883 = 1883
     const val BF_PUMP_LOOP_1884 = 1884
-    const val BREW_PUMP_1884 = 1884
     const val BREW_PUMP_SINGLE_1885 = 1885
     const val BREW_REFUEL_BOILER_1886 = 1886
     const val BREW_REFUEL_EMPTY_1887 = 1887
@@ -1924,7 +1898,6 @@ object Sounds {
     const val CUT_COFFIN_VAMPIRE_1894 = 1894
     const val GARLIC_GROW_1895 = 1895
     const val COLLECT_SAP_1896 = 1896
-    const val CUTWRIST_1896 = 1896
     const val REGULAR_VAMPIRE_APPEAR_1897 = 1897
     const val VAMPIRE_BATS_APPEAR_1898 = 1898
     const val VAMPIRE_SUMMON_1899 = 1899
@@ -2000,21 +1973,14 @@ object Sounds {
     const val ZYGOMITE_DEATH_1969 = 1969
     const val ZYGOMITE_HIT_1970 = 1970
     const val SWORDCLASH5_1971 = 1971
-    const val SWORDCLASH5_1_1971 = 1971
     const val BLADE5_1972 = 1972
-    const val BLADE5_1_1972 = 1972
     const val BRASSCLASH_1973 = 1973
-    const val BRASSCLASH_1_1973 = 1973
     const val DRAGON_SHIELD_1974 = 1974
     const val SWORDCLASH3_1975 = 1975
-    const val SWORDCLASH3_1_1975 = 1975
     const val BRASSCLASH2_1976 = 1976
-    const val BRASSCLASH2_1_1976 = 1976
     const val SWORDCLASH2_1977 = 1977
     const val SWORDCLASH6_1978 = 1978
-    const val SWORDCLASH6_1_1978 = 1978
     const val BLADE4_1979 = 1979
-    const val BLADE4_1_1979 = 1979
     const val WOOD_ARMOUR3_1980 = 1980
     const val EYEGLO_CREATURE_DEATH_1981 = 1981
     const val PROTECT_ITEMS_1982 = 1982
@@ -2057,7 +2023,6 @@ object Sounds {
     const val WARBLER_1_2019 = 2019
     const val WARBLER_2_2020 = 2020
     const val BANK_DRAWER_2021 = 2021
-    const val DRAWER_OPEN_2021 = 2021
     const val BANK_BELL_2022 = 2022
     const val BANK_SHUFFLING_1_2023 = 2023
     const val BANK_LOCKING_2024 = 2024
@@ -2162,7 +2127,6 @@ object Sounds {
     const val MORYTANIA_CREATURE_3_2123 = 2123
     const val MORYTANIA_WIND_LOOP_1_2124 = 2124
     const val WEREWOLF_CALL_1_2125 = 2125
-    const val ZOMBIE_ATMOSPHERIC1_2125 = 2125
     const val WEREWOLF_CALL_2_2126 = 2126
     const val GLASS_BREAK_2127 = 2127
     const val GLASS_BREAK2_2128 = 2128
@@ -2172,7 +2136,6 @@ object Sounds {
     const val PUB_FILLUP_2132 = 2132
     const val PUB_JINGLE_1_2133 = 2133
     const val POUR_TEA_2134 = 2134
-    const val PUB_POURLIQUID_2134 = 2134
     const val SWAMP_FART_1_2135 = 2135
     const val SWAMP_FART_2_2136 = 2136
     const val SWAMP_FART_3_2137 = 2137
@@ -2307,7 +2270,6 @@ object Sounds {
     const val INTERFACE_SELECT1_2266 = 2266
     const val INTERFACE_WAIT_2267 = 2267
     const val INTERFACE_WRONG_2268 = 2268
-    const val PILLORY_WRONG_2268 = 2268
     const val INTERFACE_WRONG2_2269 = 2269
     const val TWIN_MOVE_CRANE_LOOP_2270 = 2270
     const val TWIN_CRANE_DROP_2271 = 2271
@@ -2367,7 +2329,6 @@ object Sounds {
     const val EW2_EXTRACTOR_LOOP2_2325 = 2325
     const val EW2_DIAL_SPIN_2326 = 2326
     const val DAGGANOTH_PLATE_BODY_2327 = 2327
-    const val DAGGANOTH_PLATE_BODY_1_2327 = 2327
     const val DAGGANOTH_PLATE_BODY_2_2328 = 2328
     const val DAGGANOTH_PLATE_BODY_3_2329 = 2329
     const val SOUND_2330 = 2330
@@ -2393,14 +2354,12 @@ object Sounds {
     const val FIRE_WAVE_FAIL_2350 = 2350
     const val DAGGANOTH_SHELL_BODY_5_2351 = 2351
     const val GUTHAN_BREASTPLATE_2352 = 2352
-    const val GUTHAN_BREASTPLATE_1_2352 = 2352
     const val SOUND_2353 = 2353
     const val GUTHAN_BREASTPLATE_2_2354 = 2354
     const val GUTHAN_BREASTPLATE_3_2355 = 2355
     const val GUTHAN_BREASTPLATE_4_2356 = 2356
     const val GUTHAN_BREASTPLATE_5_2357 = 2357
     const val KARIL_SPIKEBODY_2358 = 2358
-    const val KARIL_SPIKEBODY_1_2358 = 2358
     const val KARIL_SPIKEBODY_2_2359 = 2359
     const val KARIL_SPIKEBODY_3_2360 = 2360
     const val WATER_STRIKE_FAIL_2361 = 2361
@@ -2443,7 +2402,6 @@ object Sounds {
     const val GRIM_REAPER_APPEAR_2398 = 2398
     const val ICE_TROLL_ATTACK_2399 = 2399
     const val PULL_LEVER_GENERAL_2400 = 2400
-    const val LEVER_2400 = 2400
     const val LIQUID_2401 = 2401
     const val LOCKED_2402 = 2402
     const val LOVELY_LAZER_2403 = 2403
@@ -2649,7 +2607,6 @@ object Sounds {
     const val NET_2603 = 2603
     const val FLETCH_ONCE_2604 = 2604
     const val FLETCH_2605 = 2605
-    const val SHEAR_ONCE_2605 = 2605
     const val STRING_BOW_2606 = 2606
     const val DRAGON_POTION_FINISHED_2607 = 2607
     const val GRIND_2608 = 2608
@@ -2658,7 +2615,6 @@ object Sounds {
     const val VIAL_MIX_2611 = 2611
     const val VIAL_MIX_SMOKEPUFF_2612 = 2612
     const val VIAL_POUR_2613 = 2613
-    const val VIALPOUR_2613 = 2613
     const val VIALPOUR_2614 = 2614
     const val WELL_FILL_2615 = 2615
     const val EAGLE_FLAP_LOOP_2616 = 2616
@@ -2780,7 +2736,6 @@ object Sounds {
     const val CANOE_SINK_2732 = 2732
     const val REMOVE_AXE_2733 = 2733
     const val TREE_FALLING_2734 = 2734
-    const val TREE_FALL_2734 = 2734
     const val WOODCHOP_2735 = 2735
     const val WOODCHOP_4_2736 = 2736
     const val ANOTHERCRY_2737 = 2737
@@ -2793,13 +2748,11 @@ object Sounds {
     const val HARPIEBUGSWARM_DEATH_2744 = 2744
     const val HARPIEBUGSWARM_HIT_2745 = 2745
     const val SWORDCLASH6_2746 = 2746
-    const val SWORDCLASH6_1_2746 = 2746
     const val SWORDCLASH6_2_2747 = 2747
     const val SWORDCLASH6_3_2748 = 2748
     const val SWORDCLASH6_4_2749 = 2749
     const val SWORDCLASH6_5_2750 = 2750
     const val BLADE4_2751 = 2751
-    const val BLADE4_1_2751 = 2751
     const val BLADE4_2_2752 = 2752
     const val BLADE4_3_2753 = 2753
     const val BLADE4_4_2754 = 2754
@@ -2831,7 +2784,6 @@ object Sounds {
     const val STEEL_5_2780 = 2780
     const val BIG_BAR_MAIL_1_2781 = 2781
     const val ANVIL_SINGLE_2_2782 = 2782
-    const val BIG_BAR_1_2782 = 2782
     const val BIG_BAR_2_2783 = 2783
     const val BIG_BAR_3_2784 = 2784
     const val BIG_BAR_4_2785 = 2785
@@ -2903,7 +2855,6 @@ object Sounds {
     const val BRASSCLASH_4_2851 = 2851
     const val BRASSCLASH_5_2852 = 2852
     const val BRASSCLASH2_2853 = 2853
-    const val BRASSCLASH2_1_2853 = 2853
     const val BRASSCLASH2_2_2854 = 2854
     const val BRASSCLASH2_3_2855 = 2855
     const val BRASSCLASH2_4_2856 = 2856
@@ -2918,11 +2869,8 @@ object Sounds {
     const val COSMIC_ENTITY_HIT_2865 = 2865
     const val FAIRY_DEATH_2866 = 2866
     const val GORAK_ATTACK_2867 = 2867
-    const val GRAAHK_ATTACK_2867 = 2867
     const val GORAK_DEATH_2868 = 2868
-    const val GRAAHK_DEATH_2868 = 2868
     const val GORAK_HIT_2869 = 2869
-    const val GRAAHK_HIT_2869 = 2869
     const val FT_FAIRY_APPEAR_2870 = 2870
     const val SOUND_2871 = 2871
     const val FT_SHOOTING_STAR_2872 = 2872
@@ -2954,7 +2902,6 @@ object Sounds {
     const val LUNAR_INITIAL_CASTING_2898 = 2898
     const val LUNAR_STAT_SHARE_2899 = 2899
     const val LUNAR_CURE_OTHER_INDIVIDUAL_2900 = 2900
-    const val LUNAR_STATHEAL_OTHER_2900 = 2900
     const val LUNAR_STRENGTH_SHARE_2901 = 2901
     const val LUNAR_STRENGTH_SHARE2_2902 = 2902
     const val LUNAR_STRING_AMULET_2903 = 2903
@@ -3028,7 +2975,6 @@ object Sounds {
     const val DS_CRYSTAL_BALL_ANIM_2971 = 2971
     const val DS_BIG_DOOR_UNLOCK_2972 = 2972
     const val TRAIBORN_SUMMON_WARDROBE_2973 = 2973
-    const val DS_BONE_SPELL_2973 = 2973
     const val DS_BREAK_TABLE_2974 = 2974
     const val DS_CRYSTAL_BALL_END_2975 = 2975
     const val DS_CRYSTAL_BALL_START_2976 = 2976
@@ -3038,9 +2984,7 @@ object Sounds {
     const val DS_DELRITH_APPEAR_2980 = 2980
     const val DS_DELRITH_BANISHED_2981 = 2981
     const val WATER_BEING_POURED_2982 = 2982
-    const val DS_DRAIN_2982 = 2982
     const val KEY_DROPPING_DOWN_DRAIN_2983 = 2983
-    const val DS_KEY_FALL_2983 = 2983
     const val DS_PORTAL_CLOSE_2984 = 2984
     const val DS_PORTAL_OPEN_2985 = 2985
     const val DS_REPLACE_TABLE_2986 = 2986
@@ -3048,7 +2992,6 @@ object Sounds {
     const val DS_TABLE_EXPLOSION_2988 = 2988
     const val DS_WALLY_SWORD_2989 = 2989
     const val RECEIVE_SILVERLIGHT_2990 = 2990
-    const val EQUIP_SILVERLIGHT_2990 = 2990
     const val VAMPIRE_ARRIVES_2991 = 2991
     const val VAMPIRE_FLAP_LOOP_2992 = 2992
     const val VAMPIRE_FLIES_AWAY_2993 = 2993
@@ -3096,7 +3039,6 @@ object Sounds {
     const val SLUG_PRINCE_DEATH_3035 = 3035
     const val SLUG_PRINCE_HIT_3036 = 3036
     const val WOODCUTTING_HIT_3037 = 3037
-    const val WOODCHOP1_3037 = 3037
     const val WOODCUTTING_HIT_3038 = 3038
     const val WOODCUTTING_HIT_3039 = 3039
     const val WOODCUTTING_HIT_3040 = 3040
@@ -3136,7 +3078,6 @@ object Sounds {
     const val AQUARIUM_3074 = 3074
     const val AIR_BUBBLES_LOOP_1_3075 = 3075
     const val AIR_BUBBLES_LOOP_2_3076 = 3076
-    const val UNDERWATER_MACRO_BUBBLES_3076 = 3076
     const val BUBBLING_LOOP_4_3077 = 3077
     const val BUBBLING_STREAM_2_3078 = 3078
     const val DRAIN_LOOP_1_3079 = 3079
@@ -3152,9 +3093,7 @@ object Sounds {
     const val UNDERWATER_LOOP_1_3089 = 3089
     const val LAVA_FIRE_LOOP_1_3090 = 3090
     const val BREEZE_LOOP_3_3091 = 3091
-    const val BREEZE_LOOP_4_3091 = 3091
     const val BREEZE_LOOP_3_3092 = 3092
-    const val BREEZE_LOOP_4_3092 = 3092
     const val CAVE_WIND_LOOP_3093 = 3093
     const val COASTAL_WIND_LOOP_3094 = 3094
     const val SWAMP_WIND_LOOP_3095 = 3095
@@ -3183,7 +3122,6 @@ object Sounds {
     const val BUBBLING_VIALS_3118 = 3118
     const val DEAL_CONTROL_SHAKE_3119 = 3119
     const val CLOCK_TICK_1_3120 = 3120
-    const val II_CLOCK_TICK_3120 = 3120
     const val RAT_WHEEL_3121 = 3121
     const val RAIN_1_3122 = 3122
     const val DESERTTREASURE_WALL_CRUSHER_3123 = 3123
@@ -3261,7 +3199,6 @@ object Sounds {
     const val GIANT_ROC_PECK_ATTACK_3195 = 3195
     const val MY_ARM_SEALOOP_FINISH_3196 = 3196
     const val MY_ARM_SEALOOP_3197 = 3197
-    const val MYARM_SEALOOP_3197 = 3197
     const val MYARM_BUBBLING_CAULDREN_3198 = 3198
     const val MYARM_ARMOUR_THROWN_3199 = 3199
     const val MYARM_MALE_SCREAM_3200 = 3200
@@ -3273,7 +3210,6 @@ object Sounds {
     const val MYARM_ROC_AKKA_ONCE_3206 = 3206
     const val MYARM_ROC_SQUEEK_3207 = 3207
     const val MY_ARM_SEALOOP_3208 = 3208
-    const val MYARM_SEALOOP_3208 = 3208
     const val MYARM_SPATULA_3209 = 3209
     const val MYARM_TEAR_BUSH_3210 = 3210
     const val MYARM_TROLL_JUMPING_3211 = 3211
@@ -3499,7 +3435,6 @@ object Sounds {
     const val TOL_NEWTROOST_DEATH_3431 = 3431
     const val TOL_NEWTROOST_HIT_3432 = 3432
     const val EW2_PLACE_PIPE_3433 = 3433
-    const val TOL_PLACE_PIPE_3433 = 3433
     const val TOL_PUMPING_LIQUID_3434 = 3434
     const val TOL_ROOSTER_SYNTH_3435 = 3435
     const val TOL_VALVE_3436 = 3436
@@ -3727,7 +3662,6 @@ object Sounds {
     const val VM_MECHANISM_1_3658 = 3658
     const val VM_MECHANISM_2_3659 = 3659
     const val MOLE_BURROW_DOWN_3660 = 3660
-    const val VM_MOLE_BURROW_DOWN_3660 = 3660
     const val VM_MOLE_BURROW_UP_3661 = 3661
     const val VM_MONKEY_3662 = 3662
     const val VM_PENGUIN_3663 = 3663
@@ -3792,7 +3726,6 @@ object Sounds {
     const val II_IMPLING_SPAWN_3722 = 3722
     const val II_IMP_DISGUST_3723 = 3723
     const val II_IMP_FAIL_3724 = 3724
-    const val IMP_HIT_3724 = 3724
     const val II_IMP_KICK_3725 = 3725
     const val II_JAR_GENERATOR_3726 = 3726
     const val II_LONGWAVE_3727 = 3727
@@ -3819,7 +3752,6 @@ object Sounds {
     const val DRAGONSLAYER_DEMON_HIT_3748 = 3748
     const val DRAGONSLAYER_DRAGONBALL_3749 = 3749
     const val DRAGONSLAYER_DRAGONBREATH_3750 = 3750
-    const val TWOCATS_FRY_NOOB_3750 = 3750
     const val DRAGONSLAYER_DRAGONSCREAM_3751 = 3751
     const val DRAGONSLAYER_DRAGONSTOMP3_3752 = 3752
     const val DRAGONSLAYER_DRAGONWALK_3753 = 3753
@@ -4226,7 +4158,6 @@ object Sounds {
     const val DISSOLVE_CAST_4154 = 4154
     const val COMPOST_4155 = 4155
     const val PUPPY_WHINE_4156 = 4156
-    const val WOLF_WHINE_4156 = 4156
     const val GECKO_4157 = 4157
     const val COCKATRICE_3_HIT_4158 = 4158
     const val WOLF_BARK_QUESTION_4159 = 4159
@@ -4247,7 +4178,6 @@ object Sounds {
     const val DREADFOWL_SPECIAL_4174 = 4174
     const val PACK_YAK_HIT_4175 = 4175
     const val BABYDRAGON_DEATH_4176 = 4176
-    const val DRAGONBABY_DEATH_4176 = 4176
     const val MONKEY_4177 = 4177
     const val KALPHITE_4178 = 4178
     const val KARAMTHULHU_ATTACK_4179 = 4179
@@ -4317,7 +4247,6 @@ object Sounds {
     const val WOLPERTINGER_DEATH_4243 = 4243
     const val GECKO3_HISS_4244 = 4244
     const val FRUIT_BAT_4245 = 4245
-    const val VAMPIRE_BAT_4245 = 4245
     const val RAVEN_4246 = 4246
     const val ABYSSAL_LURKER_4247 = 4247
     const val KARAMTHULHU_SPECIAL_IMPACT_4248 = 4248
@@ -4365,7 +4294,6 @@ object Sounds {
     const val EVILFLAMES_4290 = 4290
     const val DAGGANOTH_DEATH_4291 = 4291
     const val SNAKE_4292 = 4292
-    const val SNAKE_DEATH_4292 = 4292
     const val DUST_DEVIL_4293 = 4293
     const val ENT_DEFEND_4294 = 4294
     const val ENT_DEATH_4295 = 4295
@@ -4443,7 +4371,6 @@ object Sounds {
     const val DUST_CLOUD_4367 = 4367
     const val TOAD_BARK_4368 = 4368
     const val FRUIT_BAT_4369 = 4369
-    const val VAMPIRE_BAT_4369 = 4369
     const val NESTING_CAST_4370 = 4370
     const val POISONOUS_BLAST_4371 = 4371
     const val HEALING_AURA_4372 = 4372
@@ -4680,7 +4607,6 @@ object Sounds {
     const val IMMENSE_HEAT_4603 = 4603
     const val FIRE_TITAN_HIT_4604 = 4604
     const val GORAK_ATTACK_4605 = 4605
-    const val GRAAHK_ATTACK_4605 = 4605
     const val SHIFTER_HIT_4606 = 4606
     const val MOSS_TITAN_HIT_4607 = 4607
     const val OBSIDIAN_THUNDER_4608 = 4608
@@ -4728,7 +4654,6 @@ object Sounds {
     const val KYATT_ATTACK_4650 = 4650
     const val TORCHER_HIT_4651 = 4651
     const val GORAK_DEATH_4652 = 4652
-    const val GRAAHK_DEATH_4652 = 4652
     const val STEEL_TITAN_SPECIAL_IMPACT_4653 = 4653
     const val LAVA_TITAN_ATTACK_4654 = 4654
     const val RAVAGER_DIG_4655 = 4655
@@ -4779,7 +4704,6 @@ object Sounds {
     const val INFERNO_4700 = 4700
     const val FAMINE_4701 = 4701
     const val GORAK_HIT_4702 = 4702
-    const val GRAAHK_HIT_4702 = 4702
     const val TZKIH_DEATH_4703 = 4703
     const val STEEL_TITAN_HIT_4704 = 4704
     const val SWAMP_TITAN_TIMER_4705 = 4705

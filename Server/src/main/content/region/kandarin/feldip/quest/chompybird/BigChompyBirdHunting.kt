@@ -183,7 +183,7 @@ class BigChompyBirdHunting :
                 lock(player, 5)
                 playAudio(player, Sounds.SPIT_ROAST_1456)
                 setVarbit(player, Vars.VARBIT_QUEST_CHOMPY_SPITROAST_1770, 1)
-                animate(player, Animations.HUMAN_COOKING_RANGE_896)
+                animate(player, Animations.OLD_COOK_RANGE_896)
                 sendMessage(player, "You carefully place the chompy bird on the spit-roast.")
                 sendMessage(player, "You add the other ingredients and cook the food.")
                 runTask(player, 4) {

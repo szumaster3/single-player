@@ -78,7 +78,7 @@ class BlessSpiritShieldPlugin : InteractionListener {
                         if (removeItem(player, used) && removeItem(player, Items.BLESSED_SPIRIT_SHIELD_13736)) {
                             val product = Item(SIGIL_MAP[used.id]!!)
                             addItem(player, product.id)
-                            animate(player, Animations.HUMAN_ANVIL_HAMMER_SMITHING_898)
+                            animate(player, Animations.SMITH_HAMMER_898)
                             sendItemDialogue(
                                 player,
                                 product.id,

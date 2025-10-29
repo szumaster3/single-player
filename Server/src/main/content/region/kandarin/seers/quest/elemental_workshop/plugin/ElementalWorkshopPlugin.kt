@@ -50,7 +50,7 @@ class ElementalWorkshopPlugin : InteractionListener {
     private val fillStoneBowlAnimation = Animation(Animations.HUMAN_FILL_STONE_BOWL_4862)
     private val fixBellowsAnimation = Animation(Animations.HUMAN_FILL_STONE_BOWL_4862)
     private val smeltElementalBar = Animation(Animations.HUMAN_FURNACE_SMELT_3243)
-    private val smithElementalShield = Animation(Animations.HUMAN_COOKING_RANGE_896)
+    private val smithElementalShield = Animation(Animations.OLD_COOK_RANGE_896)
 
     private val fillStoneBowlSFX = Sounds.FILL_STONE_BOWL_1537
     private val fillFurnaceWithLavaSFX = Sounds.FILL_FURNACE_WITH_LAVA_1538

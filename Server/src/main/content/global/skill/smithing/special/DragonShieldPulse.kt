@@ -35,10 +35,10 @@ class DragonShieldPulse(
         when (tick) {
             0 -> {
                 lock(player, 10)
-                animate(player, Animations.HUMAN_ANVIL_HAMMER_SMITHING_898)
+                animate(player, Animations.SMITH_HAMMER_898)
             }
 
-            5 -> animate(player, Animations.HUMAN_ANVIL_HAMMER_SMITHING_898)
+            5 -> animate(player, Animations.SMITH_HAMMER_898)
 
             9 -> {
                 sendPlainDialogue(player, false, "Even for an experienced armourer it is not an easy task, but", "eventually it is ready. You have restored the dragon square shield to", "its former glory.")

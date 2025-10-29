@@ -159,10 +159,10 @@ class ToysOptionPlugin : InteractionListener {
 
         private val horseyMap =
             mapOf(
-                Items.TOY_HORSEY_2520 to Animations.HUMAN_PLAY_WITH_BROWN_HORSE_918,
-                Items.TOY_HORSEY_2522 to Animations.HUMAN_PLAY_WITH_WHITE_HORSE_919,
-                Items.TOY_HORSEY_2524 to Animations.HUMAN_PLAY_WITH_BLACK_HORSE_920,
-                Items.TOY_HORSEY_2526 to Animations.HUMAN_PLAY_WITH_GRAY_HORSE_921,
+                Items.TOY_HORSEY_2520 to Animations.PLAY_WITH_BROWN_HORSE_918,
+                Items.TOY_HORSEY_2522 to Animations.PLAY_WITH_WHITE_HORSE_919,
+                Items.TOY_HORSEY_2524 to Animations.PLAY_WITH_BLACK_HORSE_920,
+                Items.TOY_HORSEY_2526 to Animations.PLAY_WITH_GRAY_HORSE_921,
             )
 
         private val SNOWGLOBE_SHAKE = Animation(Animations.SNOWGLOBE_SHAKE_7535)

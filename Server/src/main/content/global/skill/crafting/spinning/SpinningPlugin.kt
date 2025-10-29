@@ -30,7 +30,7 @@ class SpinningPlugin : InteractionListener, InterfaceListener {
         onUseWith(IntType.SCENERY, Items.GOLDEN_FLEECE_3693, *CraftingObjects.SPINNING_WHEEL) { player, _, _ ->
             if (removeItem(player, Items.GOLDEN_FLEECE_3693)) {
                 addItem(player, Items.GOLDEN_WOOL_3694)
-                animate(player, Animations.HUMAN_COOKING_RANGE_896)
+                animate(player, Animations.OLD_COOK_RANGE_896)
                 sendDialogue(player, "You spin the Golden Fleece into a ball of Golden Wool.")
             }
             return@onUseWith true

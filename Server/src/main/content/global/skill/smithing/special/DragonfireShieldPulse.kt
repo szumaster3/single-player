@@ -35,10 +35,10 @@ class DragonfireShieldPulse(
         when (tick) {
             0 -> {
                 lock(player, 10)
-                animate(player, Animations.HUMAN_ANVIL_HAMMER_SMITHING_898)
+                animate(player, Animations.SMITH_HAMMER_898)
             }
 
-            5 -> animate(player, Animations.HUMAN_ANVIL_HAMMER_SMITHING_898)
+            5 -> animate(player, Animations.SMITH_HAMMER_898)
 
             9 -> {
                 sendPlainDialogue(
