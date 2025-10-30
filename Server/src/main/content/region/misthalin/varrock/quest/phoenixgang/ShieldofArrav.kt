@@ -302,8 +302,9 @@ class ShieldofArrav : Quest(Quests.SHIELD_OF_ARRAV, 29, 28, 1, Vars.VARP_QUEST_S
         super.finish(player)
         removeAttribute(player, "blackarm-mission")
         removeAttribute(player, "phoenix-mission")
-        player.packetDispatch.sendString("1 Quest Point", 277, 10)
-        player.packetDispatch.sendString("600 Coins", 277, 11)
+        drawReward(player, "1 Quest Point", 10)
+        drawReward(player,"600 Coins", 11)
+
         player.packetDispatch.sendItemZoomOnInterface(Items.PHOENIX_CROSSBOW_767, 1, 230, 277, 5)
         setVarbit(player, Vars.VARBIT_SCENERY_MUSEUM_DISPLAY_24_5394, 1, true)
     }

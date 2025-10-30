@@ -26,6 +26,7 @@ import shared.consts.Sounds
 import java.awt.HeadlessException
 import java.awt.Toolkit
 import java.awt.datatransfer.StringSelection
+import java.util.stream.Collectors
 
 @Initializable
 class FunCommandSet : CommandSet(Privilege.ADMIN) {
@@ -218,7 +219,7 @@ class FunCommandSet : CommandSet(Privilege.ADMIN) {
                     .getLocalPlayers(player, radius)
                     .stream()
                     .filter { p: Player -> p.username != player.username }
-                    .toList()
+                    .collect(Collectors.toList())
             animate(player, 1978)
             playGlobalAudio(player.location, Sounds.ICE_CAST_171)
             for (p in nearbyPlayers) {

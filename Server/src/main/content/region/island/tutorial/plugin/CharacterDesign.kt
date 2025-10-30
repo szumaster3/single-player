@@ -97,7 +97,8 @@ object CharacterDesign {
             362 -> { confirm(player, true); return true }
         }
         COLOR_MAPPINGS.find { (_, _, range) -> buttonId in range }?.let { (index, colors, range) ->
-            changeColor(player, index, colors, range.first, buttonId)
+            val startId = if (index == 4) range.last else range.first
+            changeColor(player, index, colors, startId, buttonId)
         }
         return false
     }

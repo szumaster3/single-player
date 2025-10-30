@@ -1,6 +1,5 @@
 package content.region.kandarin.feldip.jiggig.quest.zogre.npc
 
-import content.region.kandarin.feldip.jiggig.quest.zogre.dialogue.ZavisticRarveDialogueFiles
 import content.region.kandarin.feldip.jiggig.quest.zogre.plugin.ZogreUtils
 import core.api.openDialogue
 import core.api.poofClear
@@ -16,7 +15,7 @@ class ZavisticRarveNPC(
     id: Int = 0,
     location: Location? = null,
 ) : AbstractNPC(id, location) {
-    var clearTime = 0
+    private var clearTime = 0
     private val player: Player? = null
 
     override fun construct(
@@ -55,7 +54,7 @@ class ZavisticRarveNPC(
                     override fun pulse(): Boolean {
                         wizard.init()
                         setAttribute(player, ZogreUtils.NPC_ACTIVE, true)
-                        openDialogue(player, ZavisticRarveDialogueFiles())
+                        openDialogue(player, NPCs.ZAVISTIC_RARVE_2059, wizard.id)
                         return true
                     }
                 },

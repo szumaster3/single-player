@@ -17,6 +17,7 @@ import core.game.system.task.Pulse;
 import core.game.world.GameWorld;
 import core.plugin.PluginManifest;
 import core.plugin.PluginType;
+import shared.consts.Components;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -149,7 +150,7 @@ public final class DialogueInterpreter {
 
         if ((player.getDialogueInterpreter().getDialogue().file != null && player.getDialogueInterpreter().getDialogue().file.getCurrentStage() == END_DIALOGUE) || player.getDialogueInterpreter().getDialogue().stage == END_DIALOGUE) {
             player.getInterfaceManager().closeChatbox();
-            player.getInterfaceManager().openChatbox(137);
+            player.getInterfaceManager().openChatbox(Components.CHATDEFAULT_137);
             player.getDialogueInterpreter().dialogue.finished = true;
             close();
             return;
@@ -291,10 +292,10 @@ public final class DialogueInterpreter {
         for (int i = 0; i < messages.length; i++) {
             if (messages.length > 5)
                 throw new IllegalArgumentException("Invalid message length, should be between 1 and 5, and it is:" + messages[i]);
-            player.getPacketDispatch().sendString(messages[i], 214, i + 1);
+            player.getPacketDispatch().sendString(messages[i], Components.MESSAGE5_214, i + 1);
         }
 
-        player.getInterfaceManager().openChatbox(214);
+        player.getInterfaceManager().openChatbox(Components.MESSAGE5_214);
         return player.getInterfaceManager().chatbox;
     }
 
@@ -333,11 +334,11 @@ public final class DialogueInterpreter {
             }
             text = sb.toString();
         }
-        player.getPacketDispatch().sendString(text, 94, 7);
-        player.getPacketDispatch().sendString(ItemDefinition.forId(id).getName(), 94, 8);
-        player.getPacketDispatch().sendItemOnInterface(id, 1, 94, 9);
+        player.getPacketDispatch().sendString(text, Components.CONFIRM_DESTROY_94, 7);
+        player.getPacketDispatch().sendString(ItemDefinition.forId(id).getName(), Components.CONFIRM_DESTROY_94, 8);
+        player.getPacketDispatch().sendItemOnInterface(id, 1, Components.CONFIRM_DESTROY_94, 9);
 
-        player.getInterfaceManager().openChatbox(94);
+        player.getInterfaceManager().openChatbox(Components.CONFIRM_DESTROY_94);
         return player.getInterfaceManager().chatbox;
     }
 
@@ -349,11 +350,11 @@ public final class DialogueInterpreter {
      * @return the component
      */
     public Component sendPlaneMessageWithBlueTitle(String title, String... messages) {
-        player.getPacketDispatch().sendString(title, 372, 0);
+        player.getPacketDispatch().sendString(title, Components.TUTORIAL_TEXT_372, 0);
         for (int i = 0; i < messages.length; i++) {
-            player.getPacketDispatch().sendString(messages[i], 372, i + 1);
+            player.getPacketDispatch().sendString(messages[i], Components.TUTORIAL_TEXT_372, i + 1);
         }
-        player.getInterfaceManager().openChatbox(372);
+        player.getInterfaceManager().openChatbox(Components.TUTORIAL_TEXT_372);
         return player.getInterfaceManager().chatbox;
     }
 
@@ -366,13 +367,13 @@ public final class DialogueInterpreter {
      */
     public Component sendScrollMessageWithBlueTitle(String title, String... messages) {
         for (int i = 0; i < 11; i++) {
-            player.getPacketDispatch().sendString(" ", 421, i + 2);
+            player.getPacketDispatch().sendString(" ", Components.TUTORIAL_TEXT2_421, i + 2);
         }
-        player.getPacketDispatch().sendString(title, 421, 1);
+        player.getPacketDispatch().sendString(title, Components.TUTORIAL_TEXT2_421, 1);
         for (int i = 0; i < messages.length; i++) {
-            player.getPacketDispatch().sendString(messages[i], 421, i + 2);
+            player.getPacketDispatch().sendString(messages[i], Components.TUTORIAL_TEXT2_421, i + 2);
         }
-        player.getInterfaceManager().openChatbox(421);
+        player.getInterfaceManager().openChatbox(Components.TUTORIAL_TEXT2_421);
         return player.getInterfaceManager().chatbox;
     }
 
@@ -390,17 +391,17 @@ public final class DialogueInterpreter {
 
         String combinedMessage = String.join("<br>", messages);
 
-        player.getInterfaceManager().openChatbox(131);
-        player.getPacketDispatch().sendString(combinedMessage, 131, 1);
+        player.getInterfaceManager().openChatbox(Components.DOUBLEOBJBOX_131);
+        player.getPacketDispatch().sendString(combinedMessage, Components.DOUBLEOBJBOX_131, 1);
 
         ItemDefinition itemDef = ItemDefinition.forId(itemId);
         if (itemDef == null) {
             throw new IllegalArgumentException("Invalid itemId: " + itemId);
         }
 
-        player.getPacketDispatch().sendItemOnInterface(itemId, 1, 131, 2);
+        player.getPacketDispatch().sendItemOnInterface(itemId, 1, Components.DOUBLEOBJBOX_131, 2);
 
-        player.getPacketDispatch().sendAngleOnInterface(131, 2, (int) (itemDef.getModelZoom() / 1.1337), itemDef.getModelRotationX(), itemDef.getModelRotationY());
+        player.getPacketDispatch().sendAngleOnInterface(Components.DOUBLEOBJBOX_131, 2, (int) (itemDef.getModelZoom() / 1.1337), itemDef.getModelRotationX(), itemDef.getModelRotationY());
 
         return player.getInterfaceManager().chatbox;
     }
@@ -425,10 +426,10 @@ public final class DialogueInterpreter {
      * @return the component
      */
     public Component sendDoubleItemMessage(int first, int second, String message) {
-        player.getInterfaceManager().openChatbox(131);
-        player.getPacketDispatch().sendString(message, 131, 1);
-        player.getPacketDispatch().sendItemOnInterface(first, 1, 131, 0);
-        player.getPacketDispatch().sendItemOnInterface(second, 1, 131, 2);
+        player.getInterfaceManager().openChatbox(Components.DOUBLEOBJBOX_131);
+        player.getPacketDispatch().sendString(message, Components.DOUBLEOBJBOX_131, 1);
+        player.getPacketDispatch().sendItemOnInterface(first, 1, Components.DOUBLEOBJBOX_131, 0);
+        player.getPacketDispatch().sendItemOnInterface(second, 1, Components.DOUBLEOBJBOX_131, 2);
         return player.getInterfaceManager().chatbox;
     }
 
@@ -442,10 +443,10 @@ public final class DialogueInterpreter {
      * @return the component
      */
     public Component sendDoubleItemMessage(int first, int second, int zoom, String message) {
-        player.getInterfaceManager().openChatbox(131);
-        player.getPacketDispatch().sendString(message, 131, 1);
-        player.getPacketDispatch().sendItemZoomOnInterface(first, zoom, 131, 0);
-        player.getPacketDispatch().sendItemZoomOnInterface(second, zoom, 131, 2);
+        player.getInterfaceManager().openChatbox(Components.DOUBLEOBJBOX_131);
+        player.getPacketDispatch().sendString(message, Components.DOUBLEOBJBOX_131, 1);
+        player.getPacketDispatch().sendItemZoomOnInterface(first, zoom, Components.DOUBLEOBJBOX_131, 0);
+        player.getPacketDispatch().sendItemZoomOnInterface(second, zoom, Components.DOUBLEOBJBOX_131, 2);
         return player.getInterfaceManager().chatbox;
     }
 
@@ -458,10 +459,10 @@ public final class DialogueInterpreter {
      * @return the component
      */
     public Component sendDoubleItemMessage(Item first, Item second, String message) {
-        player.getInterfaceManager().openChatbox(131);
-        player.getPacketDispatch().sendString(message, 131, 1);
-        player.getPacketDispatch().sendItemOnInterface(first.getId(), first.getAmount(), 131, 0);
-        player.getPacketDispatch().sendItemOnInterface(second.getId(), second.getAmount(), 131, 2);
+        player.getInterfaceManager().openChatbox(Components.DOUBLEOBJBOX_131);
+        player.getPacketDispatch().sendString(message, Components.DOUBLEOBJBOX_131, 1);
+        player.getPacketDispatch().sendItemOnInterface(first.getId(), first.getAmount(), Components.DOUBLEOBJBOX_131, 0);
+        player.getPacketDispatch().sendItemOnInterface(second.getId(), second.getAmount(), Components.DOUBLEOBJBOX_131, 2);
         return player.getInterfaceManager().chatbox;
     }
 

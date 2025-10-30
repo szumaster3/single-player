@@ -12,115 +12,65 @@ import core.game.node.entity.skill.Skills
 import core.game.world.map.Location
 import shared.consts.*
 
+data class Obelisk(val id: Int, val diamond: Int, val varbit: Int, val attr: String)
+
 class DesertTreasurePlugin : InteractionListener {
     var temp = 6517
 
     override fun defineListeners() {
-        val ladderMapping =
-            mapOf(
-                Scenery.LADDER_6497 to Pair(Location(2913, 4954, 3), Location(3233, 2898, 0)),
-                Scenery.LADDER_6498 to Pair(Location(2846, 4964, 2), Location(2909, 4963, 3)),
-                Scenery.LADDER_6499 to Pair(Location(2782, 4972, 1), Location(2845, 4973, 2)),
-                Scenery.LADDER_6500 to Pair(Location(3233, 9293, 0), Location(2783, 4941, 1)),
-            )
 
-        ladderMapping.forEach { (ladder, locations) ->
-            on(ladder, SCENERY, "climb-down") { player, _ ->
-                teleport(player, locations.first)
-                return@on true
-            }
-            on(ladder, SCENERY, "climb-up") { player, _ ->
-                teleport(player, locations.second)
-                return@on true
+        listOf(
+            Scenery.LADDER_6497 to (Location(2913, 4954, 3) to Location(3233, 2898, 0)),
+            Scenery.LADDER_6498 to (Location(2846, 4964, 2) to Location(2909, 4963, 3)),
+            Scenery.LADDER_6499 to (Location(2782, 4972, 1) to Location(2845, 4973, 2)),
+            Scenery.LADDER_6500 to (Location(3233, 9293, 0) to Location(2783, 4941, 1))
+        ).forEach { (id, locs) ->
+            val (down, up) = locs
+            on(id, SCENERY, "climb-down") { p, _ -> teleport(p, down); true }
+            on(id, SCENERY, "climb-up") { p, _ -> teleport(p, up); true }
+        }
+
+        mapOf(
+            Scenery.MYSTICAL_MIRROR_6423 to SouthMirrorLookCutscene::class,
+            Scenery.MYSTICAL_MIRROR_6425 to SouthWestMirrorLookCutscene::class,
+            Scenery.MYSTICAL_MIRROR_6427 to NorthWestMirrorLookCutscene::class,
+            Scenery.MYSTICAL_MIRROR_6429 to NorthMirrorLookCutscene::class,
+            Scenery.MYSTICAL_MIRROR_6431 to NorthEastMirrorLookCutscene::class,
+            Scenery.MYSTICAL_MIRROR_6433 to SouthEastMirrorLookCutscene::class
+        ).forEach { (id, cutscene) ->
+            on(id, SCENERY, "look-into") { p, _ ->
+                cutscene.java.getConstructor(Player::class.java).newInstance(p).start()
+                sendMessage(p, "You gaze into the mirror...")
+                true
             }
         }
 
-        val mirrorCutscenes =
-            mapOf(
-                Scenery.MYSTICAL_MIRROR_6423 to SouthMirrorLookCutscene::class,
-                Scenery.MYSTICAL_MIRROR_6425 to SouthWestMirrorLookCutscene::class,
-                Scenery.MYSTICAL_MIRROR_6427 to NorthWestMirrorLookCutscene::class,
-                Scenery.MYSTICAL_MIRROR_6429 to NorthMirrorLookCutscene::class,
-                Scenery.MYSTICAL_MIRROR_6431 to NorthEastMirrorLookCutscene::class,
-                Scenery.MYSTICAL_MIRROR_6433 to SouthEastMirrorLookCutscene::class,
-            )
-
-        mirrorCutscenes.forEach { (sceneryId, cutsceneClass) ->
-            on(sceneryId, SCENERY, "look-into") { player, _ ->
-                cutsceneClass.java
-                    .getConstructor(Player::class.java)
-                    .newInstance(player)
-                    .start()
-                sendMessage(player, "You gaze into the mirror...")
-                return@on true
-            }
-        }
-
-        val obeliskMapping =
-            mapOf(
-                Scenery.OBELISK_6483 to
-                    Triple(
-                        Items.BLOOD_DIAMOND_4670,
-                        DesertTreasure.varbitBloodObelisk,
-                        DesertTreasure.bloodDiamond,
-                    ),
-                Scenery.OBELISK_6486 to
-                    Triple(
-                        Items.SMOKE_DIAMOND_4672,
-                        DesertTreasure.varbitSmokeObelisk,
-                        DesertTreasure.smokeDiamond,
-                    ),
-                Scenery.OBELISK_6489 to
-                    Triple(
-                        Items.ICE_DIAMOND_4671,
-                        DesertTreasure.varbitIceObelisk,
-                        DesertTreasure.iceDiamond,
-                    ),
-                Scenery.OBELISK_6492 to
-                    Triple(
-                        Items.SHADOW_DIAMOND_4673,
-                        DesertTreasure.varbitShadowObelisk,
-                        DesertTreasure.shadowDiamond,
-                    ),
-            )
-
-        obeliskMapping.forEach { (obelisk, diamondData) ->
-            val diamond = diamondData.first
-            val varbit = diamondData.second
-            val attribute = diamondData.third
-
-            onUseWith(IntType.SCENERY, intArrayOf(diamond), obelisk) { player, used, _ ->
-                if (getDynLevel(player, Skills.MAGIC) > 50) {
-                    if (removeItem(player, used)) {
-                        sendMessage(player, "The diamond is absorbed into the pillar.")
-                        setVarbit(player, varbit, 1)
-                        setAttribute(player, attribute, 1)
-
-                        if (DTUtils.allDiamondsInserted(player)) {
-                            sendMessage(player, "The force preventing access to the Pyramid has now vanished.")
-                            if (getQuestStage(player, Quests.DESERT_TREASURE) == 9) {
-                                setQuestStage(player, Quests.DESERT_TREASURE, 10)
-                            }
-                        }
-                    }
-                } else {
-                    sendMessage(player, "You are not a powerful enough mage to breach the protective aura.")
-                    sendMessage(player, "You need a magic level of at least 50 to enter the Pyramid.")
+        listOf(
+            Obelisk(Scenery.OBELISK_6483, Items.BLOOD_DIAMOND_4670, DesertTreasure.varbitBloodObelisk, DesertTreasure.bloodDiamond),
+            Obelisk(Scenery.OBELISK_6486, Items.SMOKE_DIAMOND_4672, DesertTreasure.varbitSmokeObelisk, DesertTreasure.smokeDiamond),
+            Obelisk(Scenery.OBELISK_6489, Items.ICE_DIAMOND_4671, DesertTreasure.varbitIceObelisk, DesertTreasure.iceDiamond),
+            Obelisk(Scenery.OBELISK_6492, Items.SHADOW_DIAMOND_4673, DesertTreasure.varbitShadowObelisk, DesertTreasure.shadowDiamond)
+        ).forEach { obelisk ->
+            onUseWith(IntType.SCENERY, obelisk.diamond, obelisk.id) { p, used, _ ->
+                if (getDynLevel(p, Skills.MAGIC) < 50) {
+                    sendMessages(p,
+                        "You are not a powerful enough mage to breach the protective aura.",
+                        "You need a Magic level of at least 50 to enter the Pyramid."
+                    )
+                    return@onUseWith true
                 }
-                return@onUseWith true
-            }
 
-            onUseWith(
-                IntType.SCENERY,
-                intArrayOf(
-                    Items.BLOOD_DIAMOND_4670,
-                    Items.ICE_DIAMOND_4671,
-                    Items.SMOKE_DIAMOND_4672,
-                    Items.SHADOW_DIAMOND_4673,
-                ),
-                obelisk,
-            ) { player, _, _ ->
-                sendMessage(player, "That doesn't appear to be the correct diamond...")
+                if (removeItem(p, used)) {
+                    sendMessage(p, "The diamond is absorbed into the pillar.")
+                    setVarbit(p, obelisk.varbit, 1)
+                    setAttribute(p, obelisk.attr, 1)
+
+                    if (DTUtils.allDiamondsInserted(p)) {
+                        sendMessage(p, "The force preventing access to the Pyramid has now vanished.")
+                        if (getQuestStage(p, Quests.DESERT_TREASURE) == 9)
+                            setQuestStage(p, Quests.DESERT_TREASURE, 10)
+                    }
+                }
                 return@onUseWith true
             }
         }

@@ -3,6 +3,7 @@ package content.region.desert.pollniveach.quest.smki_miniquest.plugin
 import core.api.sendMessages
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
+import core.game.node.entity.player.link.TeleportManager
 import core.game.world.map.Location
 import shared.consts.Scenery
 
@@ -17,7 +18,7 @@ class DragonSlayerDungeonPlugin : InteractionListener {
          */
 
         on(Scenery.WELL_31359, IntType.SCENERY, "climb-down") { player, _ ->
-            player.teleporter.send(Location.create(3358, 9354, 0))
+            player.teleporter.send(Location.create(3358, 9354, 0), TeleportManager.TeleportType.INSTANT)
             sendMessages(player, "You descend into the somewhat smoky depths of the well, to the accompaniment of", "eery wails.")
             return@on true
         }
@@ -27,7 +28,7 @@ class DragonSlayerDungeonPlugin : InteractionListener {
          */
 
         on(Scenery.BUCKET_ROPE_31316, IntType.SCENERY, "climb-up") { player, _ ->
-            player.teleporter.send(Location.create(3358, 2970, 0))
+            player.teleporter.send(Location.create(3358, 2970, 0), TeleportManager.TeleportType.INSTANT)
             return@on true
         }
     }

@@ -1,5 +1,6 @@
 package content.global.plugin.item.book.diary
 
+import content.data.GameAttributes
 import content.global.plugin.iface.BookInterface
 import content.global.plugin.iface.BookLine
 import content.global.plugin.iface.Page
@@ -613,7 +614,6 @@ class LockedDiary : InteractionListener {
                 if (success) {
                     sendMessage(player, "You carefully unlock the diary.")
                     addItemOrDrop(player, Items.UNLOCKED_DIARY_11762, 1)
-                    BookInterface.openBook(player, BookInterface.FANCY_BOOK_3_49, ::display)
                 } else {
                     sendMessage(player, "You fail to open the diary.")
                     val damage = (getDynLevel(player, Skills.HITPOINTS) * 0.5).toInt()
@@ -628,12 +628,13 @@ class LockedDiary : InteractionListener {
          */
 
         on(Scenery.SANDY_S_DESK_10805, IntType.SCENERY, "search") { player, _ ->
-            player.animate(Animation(Animations.HUMAN_MULTI_USE_832))
-            sendMessage(
-                player,
-                "You search through the papers on the table and find a locked diary."
-            )
-            addItemOrDrop(player, Items.LOCKED_DIARY_11761, 1)
+            if(!inInventory(player, Items.LOCKED_DIARY_11761) && getAttribute(player, GameAttributes.RETURNING_CLARENCE_CHECKPOINT, false)) {
+                player.animate(Animation(Animations.HUMAN_MULTI_USE_832))
+                sendMessage(player, "You search through the papers on the table and find a locked diary.")
+                addItemOrDrop(player, Items.LOCKED_DIARY_11761, 1)
+            } else {
+                sendMessage(player, "You search through the papers on the table and find nothing.")
+            }
             return@on true
         }
     }

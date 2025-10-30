@@ -1,6 +1,7 @@
 package content.region.island.tutorial.dialogue
 
 import content.region.island.tutorial.plugin.TutorialStage
+import content.region.island.tutorial.plugin.TutorialStage.removeHintIcon
 import core.api.setAttribute
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
