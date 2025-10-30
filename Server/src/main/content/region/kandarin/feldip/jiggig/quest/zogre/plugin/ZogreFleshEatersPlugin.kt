@@ -82,14 +82,63 @@ class ZogreFleshEatersPlugin : InteractionListener {
             return@on true
         }
 
-        onUseWith(IntType.SCENERY, ZogreUtils.QUEST_ITEMS, SITHIK) { player, _, _ ->
-            openDialogue(player, NPCs.SITHIK_INTS_2061, NPCs.SITHIK_INTS_2061)
-            return@onUseWith true
+        on(SITHIK, IntType.SCENERY, "talk-to") { player, _ ->
+            val dialogue = when {
+                getAttribute(player, ZogreUtils.SITHIK_DIALOGUE_UNLOCK, false) -> SithikQuestDialogueFile()
+                inInventory(player, ZogreUtils.STRANGE_POTION) -> SithikIntsStrangePotionDialogueFile()
+                getAttribute(player, ZogreUtils.TALK_WITH_ZAVISTIC_DONE, false) -> SithikDialogue()
+                getVarbit(player, Vars.VARBIT_QUEST_ZORGE_FLESH_EATERS_PROGRESS_487) == 0 -> SithikPermissionDialogueFile()
+                else -> SithikDialogue()
+            }
+            openDialogue(player, dialogue)
+            return@on true
         }
 
         on(SITHIK_OGRE, IntType.SCENERY, "talk-to") { player, _ ->
-            openDialogue(player, NPCs.SITHIK_INTS_2062, NPCs.SITHIK_INTS_2062)
+            val dialogue = if (
+                getVarbit(player, Vars.VARBIT_QUEST_SITHIK_OGRE_TRANSFORMATION_495) == 1 &&
+                getAttribute(player, ZogreUtils.TALK_WITH_SITHIK_OGRE_DONE, false)
+            ) {
+                SithikTalkAgainAfterTransformDialogueFile()
+            } else {
+                SithikIntsAfterTransformDialogueFile()
+            }
+            openDialogue(player, dialogue)
             return@on true
+        }
+
+        onUseWith(IntType.SCENERY, ZogreUtils.QUEST_ITEMS, SITHIK) { player, used, _ ->
+            val item = used.id
+
+            if (item == Items.PAPYRUS_970) {
+                if (!inInventory(player, Items.CHARCOAL_973)) {
+                    sendDialogue(player, "You have no charcoal with which to sketch this subject.")
+                } else {
+                    animate(player, Animations.HUMAN_PAINT_ON_ITEM_909)
+                    openDialogue(player, SithikIntsPortraitDialogueFile())
+                }
+                return@onUseWith true
+            }
+
+            val dialogueFile = when (item) {
+                ZogreUtils.PORTRAI_BOOK -> SithikIntsPortraitureBookDialogueFile()
+                ZogreUtils.HAM_BOOK -> SithikIntsHamBookDialogueFile()
+                ZogreUtils.NECROMANCY_BOOK -> if (getAttribute(player, ZogreUtils.TORN_PAGE_ON_NECRO_BOOK, false)) SithikIntsNecromancyBookDialogueFile() else null
+                Items.TORN_PAGE_4809 -> SithikIntsTornPageDialogueFile()
+                Items.BLACK_PRISM_4808 -> SithikIntsBlackPrismDialogueFile()
+                Items.DRAGON_INN_TANKARD_4811 -> SithikIntsDragonTankardDialogueFile()
+                ZogreUtils.REALIST_PORTRAIT, ZogreUtils.UNREALIST_PORTRAIT -> SithikIntsUsedPortraitDialogueFile()
+                ZogreUtils.SIGNED_PORTRAIT -> SithikIntsSignedPortraitDialogueFile()
+                ZogreUtils.STRANGE_POTION -> SithikIntsStrangePotionDialogueFile()
+                else -> null
+            }
+
+            if (dialogueFile != null) {
+                openDialogue(player, dialogueFile)
+            } else {
+                sendMessage(player, "Nothing interesting happens.")
+            }
+            return@onUseWith true
         }
 
         on(Scenery.BELL_6847, IntType.SCENERY, "ring") { player, _ ->
