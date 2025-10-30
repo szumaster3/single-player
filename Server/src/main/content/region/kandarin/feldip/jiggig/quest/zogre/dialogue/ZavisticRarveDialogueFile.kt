@@ -2,49 +2,33 @@ package content.region.kandarin.feldip.jiggig.quest.zogre.dialogue
 
 import content.data.GameAttributes
 import content.region.kandarin.feldip.jiggig.quest.zogre.plugin.ZogreUtils
+import content.region.kandarin.yanille.quest.handsand2.FurnealCutscene
 import core.api.*
-import core.game.dialogue.Dialogue
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.game.dialogue.Topic
 import core.game.node.entity.npc.NPC
-import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.TeleportManager
+import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.game.world.map.Location
 import core.game.world.repository.Repository
 import core.game.world.update.flag.context.Animation
-import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import core.tools.START_DIALOGUE
 import shared.consts.*
 
 /**
- * Represents the Zavistic Rarve dialogue.
+ * Represents the Zavistic Rarve dialogue file (Zogre flesh eaters).
  */
-@Initializable
-class ZavisticRarveDialogue(player: Player? = null) : Dialogue(player) {
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
-        openDialogue(player, ZavisticRarveDialogueFile(), npc)
-        return false
-    }
-    override fun newInstance(player: Player?): Dialogue = ZavisticRarveDialogue(player)
-    override fun getIds(): IntArray = intArrayOf(NPCs.ZAVISTIC_RARVE_2059)
-}
-
-private class ZavisticRarveDialogueFile : DialogueFile() {
-
-    companion object {
-        private const val DEFAULT = 5
-    }
-
+class ZavisticRarveDialogueFile : DialogueFile() {
     override fun handle(componentID: Int, buttonID: Int) {
         val p = player!!
         npc = NPC(NPCs.ZAVISTIC_RARVE_2059)
         val questComplete = getVarbit(p, Vars.VARBIT_QUEST_ZORGE_FLESH_EATERS_PROGRESS_487) == 13 || getQuestStage(p, Quests.ZOGRE_FLESH_EATERS) == 100
         val zogreProgress = isQuestInProgress(p, Quests.ZOGRE_FLESH_EATERS, 1, 99)
         val canStartMiniQuest = getVarbit(p, Vars.VARBIT_QUEST_ZORGE_FLESH_EATERS_PROGRESS_487) == 13 || getQuestStage(p, Quests.ZOGRE_FLESH_EATERS) == 100 && hasRequirement(p, Quests.THE_HAND_IN_THE_SAND, false)
-        val miniquestComplete = getAttribute(player!!, GameAttributes.RETURNING_CLARENCE_COMPLETE, false)
+        val miniquestComplete = getVarbit(p, Vars.VARBIT_MINIQUEST_RETURNING_CLARENCE_PROGRESS_4054) == 1
         val hasMiniQuestDiaryItem = inInventory(p, Items.UNLOCKED_DIARY_11762)
         val hasBlackPrism = inInventory(p, Items.BLACK_PRISM_4808) && !getAttribute(p, ZogreUtils.TALK_ABOUT_BLACK_PRISM, false)
         val hasTornPage = inInventory(p, Items.TORN_PAGE_4809) && !getAttribute(p, ZogreUtils.TALK_ABOUT_TORN_PAGE, false)
@@ -55,7 +39,7 @@ private class ZavisticRarveDialogueFile : DialogueFile() {
         when (stage) {
             START_DIALOGUE -> if(getAttribute(player!!, ZogreUtils.NPC_ACTIVE, false)) {
                 if (hasRequirement(player!!, Quests.THE_HAND_IN_THE_SAND, false)) {
-                    npcl(FaceAnim.NEUTRAL, "What are you doing... Oh, it's you... sorry... didn't realise... what can I do for you?"). also { stage = DEFAULT }
+                    npcl(FaceAnim.NEUTRAL, "What are you doing... Oh, it's you... sorry... didn't realise... what can I do for you?"). also { stage = 2 }
                 } else {
                     npcl(FaceAnim.NEUTRAL, "What are you doing ringing that bell?! Don't you think some of us have work to do?").also { stage = 1 }
                 }
@@ -65,23 +49,79 @@ private class ZavisticRarveDialogueFile : DialogueFile() {
             1 -> playerl("I thought you were here to help?").also { stage = 3 }
             2 -> playerl("But I was told to ring the bell if I wanted some attention.").also { stage = 4 }
 
-            3 -> npcl("Well... I am, I suppose, anyway... we're very busy here, hurry up, what do you want?").also { stage = DEFAULT }
-            4 -> npcl("Well...anyway...we're very busy here, hurry up what do you want?").also { stage = DEFAULT }
+            3 -> npcl("Well... I am, I suppose, anyway... we're very busy here, hurry up, what do you want?").also { stage = 5 }
+            4 -> npcl("Well...anyway...we're very busy here, hurry up what do you want?").also { stage = 5 }
+            5 -> when {
 
-            DEFAULT -> return when {
-                canStartMiniQuest -> stage = 12
-                hasMiniQuestDiaryItem -> stage = 55
-                zogreProgress -> stage = 69
-                hasOrLostStrangePotion -> stage = 103
-                usedTankard -> stage = 108
-                hasBlackPrism && hasTornPage -> stage = 111
-                hasBlackPrism -> stage = 127
-                saleBlackPrism -> stage = 133
-                hasTornPage -> stage = 141
-                else -> stage = 6
+                canStartMiniQuest -> showTopics(
+                    Topic("I'm here about the sicks...err Zogres", 13, true),
+                    if (miniquestComplete) {
+                        Topic("I have a rather sandy problem that I'd like to palm off on you.",  18)
+                    } else {
+                        Topic("I have a rather sandy problem that I'd like to palm off on you.",  16)
+                    }
+                )
+
+                hasMiniQuestDiaryItem -> {
+                    player(FaceAnim.HALF_ASKING, "I have a rather sandy problem that I'd like to palm off on you.")
+                    stage = 57
+                }
+
+                zogreProgress -> {
+                    val opts = if (getAttribute(player!!, ZogreUtils.TALK_ABOUT_SIGN_PORTRAIT, false)) {
+                        listOf("What did you say I should do?", "Where is Sithik?", "I have some items that I'd like you to look at.", "I want to ask about the Magic Guild.", "Sorry, I have to go.")
+                    } else {
+                        listOf("What did you say I should do?", "Where is Sithik?", "I want to ask about the Magic Guild.", "Sorry, I have to go.")
+                    }
+                    options(*opts.toTypedArray())
+                    stage = 70
+                }
+
+                usedTankard -> {
+                    player(FaceAnim.HALF_GUILTY, "Well, I found this...")
+                    stage = 109
+                }
+
+                hasBlackPrism && hasTornPage -> {
+                    playerl(FaceAnim.HALF_GUILTY, "There's some undead ogre activity over at Jiggig, I've found some clues, I wondered if you'd have a look at them.")
+                    stage = 112
+                }
+
+                hasBlackPrism -> if (getAttribute(player!!, ZogreUtils.TALK_WITH_ZAVISTIC_DONE, false)) {
+                    playerl(FaceAnim.FRIENDLY, "I found this black prism at Jiggig where the undead ogre activity was happening?")
+                    stage = 131
+                } else {
+                    playerl(FaceAnim.HALF_GUILTY, "There's some undead ogre activity over at 'Jiggig', and the ogres have asked me to look into it. I think I've found a clue and I wonder if you could take a look at it for me?")
+                    stage = 128
+                }
+
+                saleBlackPrism -> {
+                    sendDialogue(player!!, "You show the black prism to Zavistic.")
+                    stage = 134
+                }
+
+                hasTornPage -> {
+                    playerl(FaceAnim.HALF_GUILTY, "There's some undead ogre activity over at Jiggig, I've found a clue that you may be able to help with.")
+                    stage = 142
+                }
+
+                hasOrLostStrangePotion -> if (!inInventory(player!!, ZogreUtils.STRANGE_POTION)) {
+                    playerl(FaceAnim.FRIENDLY, "Well, actually, I've lost it, could I have another one please?")
+                    stage = 104
+                } else {
+                    playerl(FaceAnim.FRIENDLY, "No, not yet, what was I supposed to do again?")
+                    stage = 106
+                }
+
+                else -> options(
+                    "What is there to do in the Wizards' Guild?",
+                    "What are the requirements to get in the Wizards' Guild?",
+                    "What do you do in the Guild?",
+                    "Ok, thanks."
+                ).also { stage = 7 }
             }
 
-            6 -> options("What is there to do in the Wizards' Guild?", "What are the requirements to get in the Wizards' Guild?", "What do you do in the Guild?", "Ok, thanks.").also { stage++ }
+            // 6 -> options("What is there to do in the Wizards' Guild?", "What are the requirements to get in the Wizards' Guild?", "What do you do in the Guild?", "Ok, thanks.").also { stage++ }
 
             7 -> when (buttonID) {
                 1 -> playerl(FaceAnim.HALF_GUILTY, "What is there to do in the Wizards' Guild?").also { stage++ }
@@ -95,15 +135,15 @@ private class ZavisticRarveDialogueFile : DialogueFile() {
             10 -> npcl(FaceAnim.HALF_GUILTY, "You need a magic level of 66, the high magic energy level is too dangerous for anyone below that level.").also { stage = 6 }
             11 -> npcl(FaceAnim.HALF_GUILTY, "I'm the Grand Secretary for the Wizards' Guild, I have lots of correspondence to keep up with, as well as attending to the discipline of the more problematic guild members.").also { stage = 6 }
 
-            12 -> showTopics(
-                Topic("I'm here about the sicks...err Zogres", 13, true),
-                Topic("I have a rather sandy problem that I'd like to palm off on you.",
-                    if(miniquestComplete) 18 else 16, true
-                )
-            )
+            // 12 -> showTopics(
+            //     Topic("I'm here about the sicks...err Zogres", 13, true),
+            //     Topic("I have a rather sandy problem that I'd like to palm off on you.",
+            //         if(miniquestComplete) 18 else 16, true
+            //     )
+            // )
             13 -> npcl(FaceAnim.FRIENDLY, "Don't you worry about Sithik, he's not likely to be moving from his bed for a long time. When he eventually does get better, he's going to be sent before a disciplinary tribunal, then we'll sort out what's what.").also { stage++ }
             14 -> playerl(FaceAnim.FRIENDLY, "Thank you for your help with all of this.").also { stage++ }
-            15 -> npcl(FaceAnim.FRIENDLY, "Ooohh, no thanks required. It's I who should be thanking you my friend...your investigative mind has shown how vigilant we really should be for this type of evil use of the magical arts.").also { stage = DEFAULT }
+            15 -> npcl(FaceAnim.FRIENDLY, "Ooohh, no thanks required. It's I who should be thanking you my friend...your investigative mind has shown how vigilant we really should be for this type of evil use of the magical arts.").also { stage = 5 }
             16 -> if(!inInventory(player!!, Items.HAND_11763)) {
                 npc(FaceAnim.FRIENDLY, "Thank you so much for helping to bring Clarence home", "and lock up his murderer! I only wish we could find", "the rest of him to truly put him to rest.").also { stage++ }
             } else if(getVarbit(player!!, Vars.VARBIT_QUEST_BACK_TO_MY_ROOTS_PROGRESS_4055) == 35) {
@@ -113,7 +153,7 @@ private class ZavisticRarveDialogueFile : DialogueFile() {
             } else {
                 player("I think...that I might have found something.").also { stage = 26 }
             }
-            17 -> player(FaceAnim.HALF_ASKING, "I'll see what I can do, I'm sure I saw a hand", "somewhere...If I find it I'll give it to you.").also { stage = DEFAULT }
+            17 -> player(FaceAnim.HALF_ASKING, "I'll see what I can do, I'm sure I saw a hand", "somewhere...If I find it I'll give it to you.").also { stage = 5 }
             18 -> npcl(FaceAnim.FRIENDLY, "It's so good to have Clarence back in mostly one piece.").also { stage++ }
             19 -> player(FaceAnim.HALF_ASKING, "Back?").also { stage++ }
             20 -> npcl(FaceAnim.FRIENDLY, "Yes indeed: he may not be alive, but he is buried in the grounds of the Wizards' Guild here. So he is back with us. All thanks to you.").also { stage++ }
@@ -121,7 +161,7 @@ private class ZavisticRarveDialogueFile : DialogueFile() {
             22 -> npcl(FaceAnim.FRIENDLY, "That was an incredibly bad pun. You know that puns are the lowest form of wheat?").also { stage++ }
             23 -> player(FaceAnim.HALF_ASKING, "Sorry, I don't seem to be able to help myself... I appear to have lost my head.").also { stage++ }
             24 -> npcl(FaceAnim.FRIENDLY, "ARG! Another! Away with you!").also { stage++ }
-            25 -> player(FaceAnim.HALF_ASKING, "But...").also { stage = DEFAULT }
+            25 -> player(FaceAnim.HALF_ASKING, "But...").also { stage = 5 }
             26 -> npcl(FaceAnim.FRIENDLY, "Oh? What's that?").also { stage++ }
             27 -> {
                 val items = listOf(
@@ -169,7 +209,7 @@ private class ZavisticRarveDialogueFile : DialogueFile() {
                 setVarbit(player!!, Vars.VARBIT_QUEST_BACK_TO_MY_ROOTS_PROGRESS_4055, 35)
                 stage = END_DIALOGUE
             } else end()
-            41 -> player("I'll see what I can do, I'm sure I saw some other body", "parts somewhere...If I find any I'll give them to you.").also { stage = DEFAULT }
+            41 -> player("I'll see what I can do, I'm sure I saw some other body", "parts somewhere...If I find any I'll give them to you.").also { stage = 5 }
 
             42 -> npcl(FaceAnim.FRIENDLY, "Than you so much for returning Clarence to us. Despite the lack of his foot we shall go ahead with the burial soon. We must find some more evidence against that scoundrel Sandy first, though. Take a look around his office, would you? See what you can dig up.").also { stage++ }
             43 -> player(FaceAnim.HALF_ASKING, "You're welcome ... but why on earth do we need more evidence? Surely we solved that when he got arrested?").also { stage++ }
@@ -194,8 +234,8 @@ private class ZavisticRarveDialogueFile : DialogueFile() {
                 teleport(player!!, Location.create(2789, 3175, 0), TeleportManager.TeleportType.RANDOM_EVENT_OLD, 2)
             }
 
-            55 -> npcl(FaceAnim.FRIENDLY, "What are you doing... Oh, it's you ... sorry ... didn't realise. What can I do for you?").also { stage++ }
-            56  -> player(FaceAnim.HALF_ASKING, "I have a rather sandy problem that I'd like to palm off on you.").also { stage++ }
+            // 55 -> npcl(FaceAnim.FRIENDLY, "What are you doing... Oh, it's you ... sorry ... didn't realise. What can I do for you?").also { stage++ }
+            // 56  -> player(FaceAnim.HALF_ASKING, "I have a rather sandy problem that I'd like to palm off on you.").also { stage++ }
             57  -> npcl(FaceAnim.FRIENDLY, "Do you have anything we can use against that rotten murderer Sandy?").also { stage++ }
             58  -> player(FaceAnim.HALF_ASKING, "I'm sure I could find a sword somewhere ...").also { stage++ }
             59  -> npcl(FaceAnim.FRIENDLY, "No, no. I mean evidence!").also { stage++ }
@@ -214,14 +254,21 @@ private class ZavisticRarveDialogueFile : DialogueFile() {
                 2 -> player("I'll be back in a bit.").also { stage = END_DIALOGUE }
             }
 
-            68 -> {}
-
-
-            69 -> if (getAttribute(player!!, ZogreUtils.TALK_ABOUT_SIGN_PORTRAIT, false)) {
-                options("What did you say I should do?", "Where is Sithik?", "I have some items that I'd like you to look at.", "I want to ask about the Magic Guild.", "Sorry, I have to go.").also { stage++ }
-            } else {
-                options("What did you say I should do?", "Where is Sithik?", "I want to ask about the Magic Guild.", "Sorry, I have to go.").also { stage++ }
+            68 -> {
+                if(!getAttribute(player!!, GameAttributes.RETURNING_CLARENCE_COMPLETE, false)) {
+                    setAttribute(player!!, GameAttributes.RETURNING_CLARENCE_COMPLETE, true)
+                    rewardXP(player!!, Skills.MAGIC, 10000.0)
+                    addItemOrBank(player!!, Items.BLOOD_RUNE_565, 200)
+                    addItemOrBank(player!!, Items.LAW_RUNE_563, 100)
+                }
+                FurnealCutscene(player!!).start(true)
             }
+
+            // 69 -> if (getAttribute(player!!, ZogreUtils.TALK_ABOUT_SIGN_PORTRAIT, false)) {
+            //     options("What did you say I should do?", "Where is Sithik?", "I have some items that I'd like you to look at.", "I want to ask about the Magic Guild.", "Sorry, I have to go.").also { stage++ }
+            // } else {
+            //     options("What did you say I should do?", "Where is Sithik?", "I want to ask about the Magic Guild.", "Sorry, I have to go.").also { stage++ }
+            // }
 
             70 -> if (getAttribute(player!!, ZogreUtils.TALK_ABOUT_SIGN_PORTRAIT, false)) {
                 when (buttonID) {
@@ -369,11 +416,12 @@ private class ZavisticRarveDialogueFile : DialogueFile() {
                 setAttribute(player!!, ZogreUtils.TALK_AGAIN_3, true)
                 stage = 75
             }
-            103 -> if (!inInventory(player!!, ZogreUtils.STRANGE_POTION)) {
-                playerl(FaceAnim.FRIENDLY, "Well, actually, I've lost it, could I have another one please?").also { stage++ }
-            } else {
-                playerl(FaceAnim.FRIENDLY, "No, not yet, what was I supposed to do again?").also { stage = 106 }
-            }
+
+            // 103 -> if (!inInventory(player!!, ZogreUtils.STRANGE_POTION)) {
+            //     playerl(FaceAnim.FRIENDLY, "Well, actually, I've lost it, could I have another one please?").also { stage++ }
+            // } else {
+            //     playerl(FaceAnim.FRIENDLY, "No, not yet, what was I supposed to do again?").also { stage = 106 }
+            // }
 
             104 -> npcl(FaceAnim.HALF_GUILTY, "Sure, but don't lose it this time.").also { stage++ }
             105 -> {
@@ -387,14 +435,18 @@ private class ZavisticRarveDialogueFile : DialogueFile() {
             }
 
             106 -> npcl(FaceAnim.FRIENDLY, "Try to use the potion on Sithik somehow, he should undergo an interesting transformation, though you'll probably want to leave the house in case there are any side effects. Then go back and question Sithik and tell").also { stage++ }
-            107 -> npcl(FaceAnim.FRIENDLY, "him the effects won't wear off until he tells the truth. In fact, that's not exactly true, but I'm sure it'll be an extra incentive to get him to be honest.").also { stage = DEFAULT }
-            108 -> player(FaceAnim.HALF_GUILTY, "Well, I found this...").also { stage++ }
+            107 -> npcl(FaceAnim.FRIENDLY, "him the effects won't wear off until he tells the truth. In fact, that's not exactly true, but I'm sure it'll be an extra incentive to get him to be honest.").also { stage = 5 }
+
+            // 108 -> player(FaceAnim.HALF_GUILTY, "Well, I found this...").also { stage++ }
+
             109 -> sendDoubleItemDialogue(player!!, -1, Items.DRAGON_INN_TANKARD_4811, "You show the tankard to Zavistic.").also { stage++ }
             110 -> npcl(FaceAnim.THINKING, "Hmmm, no, that's not really associated with this to be honest.").also {
                 setAttribute(player!!, ZogreUtils.TALK_ABOUT_TANKARD, true)
-                stage = DEFAULT
+                stage = 5
             }
-            111 -> playerl(FaceAnim.HALF_GUILTY, "There's some undead ogre activity over at Jiggig, I've found some clues, I wondered if you'd have a look at them.").also { stage++ }
+
+            // 111 -> playerl(FaceAnim.HALF_GUILTY, "There's some undead ogre activity over at Jiggig, I've found some clues, I wondered if you'd have a look at them.").also { stage++ }
+
             112 -> sendDoubleItemDialogue(player!!, Items.BLACK_PRISM_4808, Items.TORN_PAGE_4809, "You show the prism and the necromantic half page to the aged wizard.").also { stage++ }
             113 -> npcl(FaceAnim.HALF_GUILTY, "Hmmm, now this is interesting! Where did you get these from?").also { stage++ }
             114 -> playerl(FaceAnim.HALF_GUILTY, "I got them from a nearby Ogre tomb, it's recently been infested with zombie ogres and I'm trying to work out what happened there.").also { stage++ }
@@ -411,7 +463,7 @@ private class ZavisticRarveDialogueFile : DialogueFile() {
                 setAttribute(player!!, ZogreUtils.TALK_ABOUT_TORN_PAGE, true)
 
                 if (inInventory(player!!, Items.DRAGON_INN_TANKARD_4811)) {
-                    npcl(FaceAnim.HALF_ASKING, "Did you find anything else there?").also { stage = 108 }
+                    npcl(FaceAnim.HALF_ASKING, "Did you find anything else there?").also { stage = 5 }
                 } else {
                     playerl(FaceAnim.HALF_GUILTY, "Not really").also { stage++ }
                 }
@@ -419,13 +471,13 @@ private class ZavisticRarveDialogueFile : DialogueFile() {
             123 -> npcl(FaceAnim.HALF_GUILTY, "I don't know what to say then, there isn't enough to go on with the clues you've shown me so far.").also { stage++ }
             124 -> npcl(FaceAnim.THINKING, "I'd suggest going back to search a bit more, but you may just be wasting your time? Hmm, but this prism does seem to have some magical protection.").also { stage++ }
             125 -> npcl(FaceAnim.HALF_GUILTY, "Once you've finished with this item, bring it back to me would you? I may have a reward for you!").also { stage++ }
-            126 -> playerl(FaceAnim.HALF_GUILTY, "Sure...I mean, I'll try if I remember.").also { stage = DEFAULT }
+            126 -> playerl(FaceAnim.HALF_GUILTY, "Sure...I mean, I'll try if I remember.").also { stage = 5 }
 
-            127 -> if (getAttribute(player!!, ZogreUtils.TALK_WITH_ZAVISTIC_DONE, false)) {
-                playerl(FaceAnim.FRIENDLY, "I found this black prism at Jiggig where the undead ogre activity was happening?").also { stage = 131 }
-            } else {
-                playerl(FaceAnim.HALF_GUILTY, "There's some undead ogre activity over at 'Jiggig', and the ogres have asked me to look into it. I think I've found a clue and I wonder if you could take a look at it for me?").also { stage++ }
-            }
+            // 127 -> if (getAttribute(player!!, ZogreUtils.TALK_WITH_ZAVISTIC_DONE, false)) {
+            //     playerl(FaceAnim.FRIENDLY, "I found this black prism at Jiggig where the undead ogre activity was happening?").also { stage = 131 }
+            // } else {
+            //     playerl(FaceAnim.HALF_GUILTY, "There's some undead ogre activity over at 'Jiggig', and the ogres have asked me to look into it. I think I've found a clue and I wonder if you could take a look at it for me?").also { stage++ }
+            // }
 
             128 -> sendDoubleItemDialogue(player!!, -1, Items.BLACK_PRISM_4808, "You show the black prism to the aged wizard.").also { stage++ }
             129 -> npcl(FaceAnim.FRIENDLY, "Hmmm, well this is an uncommon spell component. On it's own it's useless, but with certain necromantic spells it can be very powerful.").also { stage++ }
@@ -438,7 +490,7 @@ private class ZavisticRarveDialogueFile : DialogueFile() {
                     inInventory(player!!, Items.DRAGON_INN_TANKARD_4811) &&
                             !getAttribute(player!!, ZogreUtils.SITHIK_DIALOGUE_UNLOCK, false) -> 0
 
-                    else -> DEFAULT
+                    else -> 5
                 }
             }
             131 -> sendDoubleItemDialogue(player!!, -1, Items.BLACK_PRISM_4808, "You show the black prism to the aged wizard.").also { stage++ }
@@ -465,7 +517,9 @@ private class ZavisticRarveDialogueFile : DialogueFile() {
                     npc("Thanks!")
                 }
             }
-            141 -> playerl(FaceAnim.HALF_GUILTY, "There's some undead ogre activity over at Jiggig, I've found a clue that you may be able to help with.").also { stage++ }
+
+            // 141 -> playerl(FaceAnim.HALF_GUILTY, "There's some undead ogre activity over at Jiggig, I've found a clue that you may be able to help with.").also { stage++ }
+
             142 -> sendDoubleItemDialogue(player!!, -1, Items.TORN_PAGE_4809, "You show the necromantic half page to the aged wizard.").also { stage++ }
             143 -> npcl(FaceAnim.HALF_ASKING, "Hmm, this is a half torn spell page, it requires another spell component to be effective.").also { stage++ }
             144 -> {
@@ -473,7 +527,7 @@ private class ZavisticRarveDialogueFile : DialogueFile() {
                 stage = when {
                     inInventory(player!!, Items.BLACK_PRISM_4808) &&
                             !getAttribute(player!!, ZogreUtils.SITHIK_DIALOGUE_UNLOCK, false) -> 133
-                    else -> DEFAULT
+                    else -> 5
                 }
             }
         }

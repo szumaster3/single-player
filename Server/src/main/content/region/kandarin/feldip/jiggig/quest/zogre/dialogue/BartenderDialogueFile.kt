@@ -2,13 +2,10 @@ package content.region.kandarin.feldip.jiggig.quest.zogre.dialogue
 
 import content.region.kandarin.feldip.jiggig.quest.zogre.plugin.ZogreUtils
 import core.api.*
-import core.game.dialogue.Dialogue
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
-import core.game.node.entity.player.Player
 import core.game.node.item.Item
-import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import core.tools.START_DIALOGUE
 import shared.consts.Items
@@ -16,20 +13,9 @@ import shared.consts.NPCs
 import shared.consts.Vars
 
 /**
- * Represents the Bartender dialogue (Yanille).
+ * Represents the Bartender dialogue file (Zogre flesh eaters).
  */
-@Initializable
-class BartenderDialogue(player: Player? = null) : Dialogue(player) {
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
-        openDialogue(player, BartenderDialogueFile(), npc)
-        return false
-    }
-
-    override fun newInstance(player: Player?): Dialogue = BartenderDialogue(player)
-    override fun getIds(): IntArray = intArrayOf(NPCs.BARTENDER_739)
-}
-
-private class BartenderDialogueFile : DialogueFile() {
+class BartenderDialogueFile : DialogueFile() {
 
     companion object {
         private const val DEFAULT = 1
