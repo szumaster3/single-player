@@ -613,7 +613,6 @@ class LockedDiary : InteractionListener {
                 if (success) {
                     sendMessage(player, "You carefully unlock the diary.")
                     addItemOrDrop(player, Items.UNLOCKED_DIARY_11762, 1)
-                    BookInterface.openBook(player, BookInterface.FANCY_BOOK_3_49, ::display)
                 } else {
                     sendMessage(player, "You fail to open the diary.")
                     val damage = (getDynLevel(player, Skills.HITPOINTS) * 0.5).toInt()
@@ -628,9 +627,11 @@ class LockedDiary : InteractionListener {
          */
 
         on(Scenery.SANDY_S_DESK_10805, IntType.SCENERY, "search") { player, _ ->
-            player.animate(Animation(Animations.HUMAN_MULTI_USE_832))
-            sendMessage(player, "You search through the papers on the table and find a locked diary.")
-            addItemOrDrop(player, Items.LOCKED_DIARY_11761, 1)
+            if(!inInventory(player, Items.LOCKED_DIARY_11761)) {
+                player.animate(Animation(Animations.HUMAN_MULTI_USE_832))
+                sendMessage(player, "You search through the papers on the table and find a locked diary.")
+                addItemOrDrop(player, Items.LOCKED_DIARY_11761, 1)
+            }
             return@on true
         }
     }

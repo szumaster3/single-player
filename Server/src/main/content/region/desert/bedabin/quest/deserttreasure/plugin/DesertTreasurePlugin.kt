@@ -12,6 +12,8 @@ import core.game.node.entity.skill.Skills
 import core.game.world.map.Location
 import shared.consts.*
 
+data class Obelisk(val id: Int, val diamond: Int, val varbit: Int, val attr: String)
+
 class DesertTreasurePlugin : InteractionListener {
     var temp = 6517
 
@@ -43,13 +45,15 @@ class DesertTreasurePlugin : InteractionListener {
             }
         }
 
+        data class Obelisk(val id: Int, val diamond: Int, val varbit: Int, val attr: Int)
+
         listOf(
-            arrayOf(Scenery.OBELISK_6483, Items.BLOOD_DIAMOND_4670, DesertTreasure.varbitBloodObelisk, DesertTreasure.bloodDiamond),
-            arrayOf(Scenery.OBELISK_6486, Items.SMOKE_DIAMOND_4672, DesertTreasure.varbitSmokeObelisk, DesertTreasure.smokeDiamond),
-            arrayOf(Scenery.OBELISK_6489, Items.ICE_DIAMOND_4671, DesertTreasure.varbitIceObelisk, DesertTreasure.iceDiamond),
-            arrayOf(Scenery.OBELISK_6492, Items.SHADOW_DIAMOND_4673, DesertTreasure.varbitShadowObelisk, DesertTreasure.shadowDiamond)
+            Obelisk(Scenery.OBELISK_6483, Items.BLOOD_DIAMOND_4670, DesertTreasure.varbitBloodObelisk, DesertTreasure.bloodDiamond),
+            Obelisk(Scenery.OBELISK_6486, Items.SMOKE_DIAMOND_4672, DesertTreasure.varbitSmokeObelisk, DesertTreasure.smokeDiamond),
+            Obelisk(Scenery.OBELISK_6489, Items.ICE_DIAMOND_4671, DesertTreasure.varbitIceObelisk, DesertTreasure.iceDiamond),
+            Obelisk(Scenery.OBELISK_6492, Items.SHADOW_DIAMOND_4673, DesertTreasure.varbitShadowObelisk, DesertTreasure.shadowDiamond)
         ).forEach { (id, diamond, varbit, attr) ->
-            onUseWith(IntType.SCENERY, diamond as Int, id as Int) { p, used, _ ->
+            onUseWith(IntType.SCENERY, diamond, id) { p, used, _ ->
                 if (getDynLevel(p, Skills.MAGIC) < 50) {
                     sendMessages(p,
                         "You are not a powerful enough mage to breach the protective aura.",
@@ -60,8 +64,8 @@ class DesertTreasurePlugin : InteractionListener {
 
                 if (removeItem(p, used)) {
                     sendMessage(p, "The diamond is absorbed into the pillar.")
-                    setVarbit(p, varbit as Int, 1)
-                    setAttribute(p, (attr as Int).toString(), 1)
+                    setVarbit(p, varbit, 1)
+                    setAttribute(p, attr, 1)
 
                     if (DTUtils.allDiamondsInserted(p)) {
                         sendMessage(p, "The force preventing access to the Pyramid has now vanished.")

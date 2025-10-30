@@ -28,7 +28,6 @@ class JadeVineMazePlugin : InteractionListener {
         on(Scenery.VINE_27151, IntType.SCENERY, "climb-up") { player, node ->
             when(node.location.y) {
                 2982 -> forceMove(player, player.location, Location.create(2892, 2982, 3), 0, 60, null, 3599)
-                2980 ->
             }
             return@on true
         }
