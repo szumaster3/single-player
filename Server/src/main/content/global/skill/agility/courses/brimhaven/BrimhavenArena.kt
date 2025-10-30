@@ -53,29 +53,31 @@ class BrimhavenArena : MapZone("Brimhaven agility arena", true), Plugin<Any?> {
         setAttribute(
             player,
             "brim-icon",
-            HintIconManager.registerHeightHintIcon(
-                player,
-                DISPENSERS[index],
-                50,
-            ),
+            DISPENSERS[index]?.let {
+                HintIconManager.registerHeightHintIcon(
+                    player,
+                    it,
+                    50,
+                )
+            },
         )
     }
 
-    override fun enter(entity: Entity): Boolean {
-        if (entity is Player) {
-            val player = entity
+    override fun enter(e: Entity): Boolean {
+        if (e is Player) {
+            val player = e
             player.interfaceManager.openOverlay(OVERLAY)
             setDispenser(player)
         }
-        return super.enter(entity)
+        return super.enter(e)
     }
 
     override fun leave(
-        entity: Entity,
+        e: Entity,
         logout: Boolean,
     ): Boolean {
-        if (entity is Player && !logout) {
-            val player = entity
+        if (e is Player && !logout) {
+            val player = e
             player.interfaceManager.closeOverlay()
             removeAttribute(player, "brim-tag")
             removeAttribute(player, "brim-tagcount")
@@ -85,7 +87,7 @@ class BrimhavenArena : MapZone("Brimhaven agility arena", true), Plugin<Any?> {
                 removeAttribute(player, "brim-icon")
             }
         }
-        return super.enter(entity)
+        return super.enter(e)
     }
 
     override fun interact(
@@ -102,9 +104,7 @@ class BrimhavenArena : MapZone("Brimhaven agility arena", true), Plugin<Any?> {
             if (`object`.id == 3608 || `object`.id == 3581) {
                 val player = entity as Player
                 if (`object`.location != DISPENSERS[player.getAttribute("brim-tag", 0)]) {
-                    player.packetDispatch.sendMessage(
-                        "Tag the pillar indicated by the yellow arrow to get an Agility ticket.",
-                    )
+                    player.packetDispatch.sendMessage("Tag the pillar indicated by the yellow arrow to get an Agility ticket.")
                     return true
                 }
                 if (player.getAttribute("brim-tagged", false)) {

@@ -1907,8 +1907,8 @@ object NPCs {
     const val ALI_THE_OPERATOR_1903 = 1903
     const val MENAPHITE_THUG_1904 = 1904
     const val MENAPHITE_THUG_1905 = 1905
-    const val TOUGH_GUY_1906 = 1906
-    const val TOUGH_GUY_1907 = 1907
+    const val CLAY_GOLEM_1906 = 1906
+    const val CLAY_GOLEM_1907 = 1907
     const val BROKEN_CLAY_GOLEM_1908 = 1908
     const val DAMAGED_CLAY_GOLEM_1909 = 1909
     const val CLAY_GOLEM_1910 = 1910

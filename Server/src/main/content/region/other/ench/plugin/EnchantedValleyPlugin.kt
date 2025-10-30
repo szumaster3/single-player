@@ -7,6 +7,7 @@ import core.game.interaction.InteractionListener
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.system.task.Pulse
+import core.game.world.update.flag.context.Animation
 import shared.consts.*
 import kotlin.math.ceil
 
@@ -51,13 +52,15 @@ class EnchantedValleyPlugin : InteractionListener {
          */
 
         on(ENCHANTED_V_FISH, IntType.SCENERY, "net") { player, _ ->
-            if (!inInventory(player, Items.SMALL_FISHING_NET_303)) {
+            if (!inInventory(player, Items.SMALL_FISHING_NET_303))
                 sendDialogue(player, "You need a small net to catch these fish.")
-                return@on true
-            }
+             else
+                sendMessage(player, "You cast out your net...")
+
             if (player.viewport.region!!.id == 12102) {
+                player.animate(Animation(Animations.NET_FISHING_621))
                 spawnEvent(player, getNpcFor(player, RIVER_TROLL_IDS)) { npc ->
-                    visualize(npc, Animations.NET_FISHING_621, Graphics.RE_PUFF_86)
+                    visualize(npc, -1, Graphics.RE_PUFF_86)
                     val message = if (hasRequirement(player, Quests.SWAN_SONG)) {
                         "You killed da Sea Troll Queen - you die now!"
                     } else "Fishies be mine, leave dem fishies!"
@@ -77,11 +80,17 @@ class EnchantedValleyPlugin : InteractionListener {
             val tool = SkillingTool.getPickaxe(player)
             if (tool == null) {
                 sendMessage(player, "You lack a pickaxe which you have the Mining level to use.")
-                return@on true
-            }
+            } else
+                 if(getUsedOption(player) != "prospect") {
+                     sendMessage(player, "You swing your pickaxe at the rock.")
+                     player.animate(Animation(tool.animation))
+                 }
+             else
+                 sendMessage(player, "You examine the rock for ores...")
+
             if (inBorders(player, 3023, 4491, 3029, 4494)) {
                 spawnEvent(player, getNpcFor(player, ROCK_GOLEM_IDS)) { npc ->
-                    visualize(npc, tool.animation, Graphics.RE_PUFF_86)
+                    visualize(npc, -1, Graphics.RE_PUFF_86)
                     sendChat(npc, "Gerroff da rock!")
                 }
             } else {
@@ -100,7 +109,14 @@ class EnchantedValleyPlugin : InteractionListener {
                 sendMessage(player, "You lack an axe which you have the Woodcutting level to use.")
                 return@on true
             }
-            spawnEvent(player, getNpcFor(player, TREE_SPIRIT_IDS))
+
+            sendMessage(player, "You swing your axe at the tree.")
+            player.animate(Animation(tool.animation))
+
+            spawnEvent(player, getNpcFor(player, TREE_SPIRIT_IDS)) { npc ->
+                visualize(npc, -1, Graphics.RE_PUFF_86)
+            }
+
             return@on true
         }
     }

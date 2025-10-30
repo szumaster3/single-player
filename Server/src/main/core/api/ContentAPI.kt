@@ -1165,6 +1165,21 @@ fun sendPlainDialogue(
 }
 
 /**
+ * Sends a plain dialogue message to the player, with an option to hide the continue button.
+ *
+ * @param player The player to send the dialogue to.
+ * @param hideContinue Whether to hide the continue button. Defaults to false.
+ * @param message The dialogue message.
+ */
+fun sendPlainDialogue(
+    player: Player,
+    hideContinue: Boolean = false,
+    message: String,
+) {
+    player.dialogueInterpreter.sendPlainMessage(hideContinue, *splitLines(message))
+}
+
+/**
  * Sends a plain dialogue message that cannot be closed, with an option to hide the continue button.
  *
  * @param player The player to send the dialogue to.
@@ -1177,19 +1192,6 @@ fun sendUnclosablePlainDialogue(
     vararg message: String,
 ) {
     Component.setUnclosable(player, player.dialogueInterpreter.sendPlainMessage(hideContinue, *message))
-}
-
-/**
- * Sends a set of unclosable dialogue messages to the player.
- *
- * @param player The player to send the dialogue to.
- * @param message The dialogue messages.
- */
-fun sendUnclosableDialogue(
-    player: Player,
-    vararg message: String,
-) {
-    Component.setUnclosable(player, player.dialogueInterpreter.sendDialogues(*message))
 }
 
 /**

@@ -27,15 +27,19 @@ class TutorialPlugin : InteractionListener {
             val tutorialStage = getAttribute(player, TutorialStage.TUTORIAL_STAGE, 0)
 
             if (tutorialStage != 3) {
-                player.dialogueInterpreter.sendPlainMessage(
-                    false,
-                    "",
-                    "You need to talk to the ${GameWorld.settings?.name ?: "Gielinor"} Guide before you are allowed to",
-                    "proceed through this door.",
-                    ""
-                )
+                if(player.location.x < 3097) {
+                    sendPlainDialogue(player,false,
+                        "",
+                        "You need to talk to the ${GameWorld.settings?.name ?: "Gielinor"} Guide before you are allowed to",
+                        "proceed through this door.",
+                        ""
+                    )
+                } else {
+                    sendDialogue(player, "You've already done that. Perhaps you should move on.")
+                }
                 return@on false
             }
+
 
             setAttribute(player, TutorialStage.TUTORIAL_STAGE, 4)
             TutorialStage.load(player, 4)
@@ -56,8 +60,7 @@ class TutorialPlugin : InteractionListener {
 
         on(WOODEN_GATE, IntType.SCENERY, "open") { player, node ->
             if (getAttribute(player, TutorialStage.TUTORIAL_STAGE, 0) != 16) {
-                player.dialogueInterpreter.sendPlainMessage(
-                    false,
+                sendPlainDialogue(player,false,
                     "",
                     "You need to talk to the Survival Guide and",
                     "complete her tasks before you are allowed to",
@@ -86,12 +89,7 @@ class TutorialPlugin : InteractionListener {
 
         on(COOK_GUIDE_DOOR, IntType.SCENERY, "open") { player, node ->
             if (getAttribute(player, TutorialStage.TUTORIAL_STAGE, 0) != 17) {
-                player.dialogueInterpreter.sendPlainMessage(
-                    false,
-                    "",
-                    "You may not pass this door yet. Try following the instructions.",
-                    "",
-                )
+                sendPlainDialogue(player,false, "You may not pass this door yet. Try following the instructions.")
                 return@on false
             }
             setAttribute(player, TutorialStage.TUTORIAL_STAGE, 18)
@@ -109,11 +107,7 @@ class TutorialPlugin : InteractionListener {
 
             when {
                 stage < 21 -> {
-                    player.dialogueInterpreter.sendPlainMessage(
-                        false,
-                        "You need to finish the Master Chef's tasks first.",
-                        "",
-                    )
+                    sendPlainDialogue(player,false, "You need to finish the Master Chef's tasks first.")
                     return@on false
                 }
 
@@ -125,12 +119,7 @@ class TutorialPlugin : InteractionListener {
                 }
 
                 else -> {
-                    player.dialogueInterpreter.sendPlainMessage(
-                        false,
-                        "",
-                        "Follow the path to the home of the quest guide.",
-                        "",
-                    )
+                    sendPlainDialogue(player, false, "Follow the path to the home of the quest guide.")
                     return@on false
                 }
             }
@@ -142,11 +131,7 @@ class TutorialPlugin : InteractionListener {
 
         on(QUEST_GUIDE_DOOR, IntType.SCENERY, "open") { player, node ->
             if (getAttribute(player, TutorialStage.TUTORIAL_STAGE, 0) != 26) {
-                player.dialogueInterpreter.sendPlainMessage(
-                    false,
-                    "You need to finish the Master Chef's tasks first.",
-                    "",
-                )
+                sendPlainDialogue(player,false, "You need to finish the Master Chef's tasks first.")
                 return@on false
             }
             setAttribute(player, TutorialStage.TUTORIAL_STAGE, 27)
@@ -161,12 +146,7 @@ class TutorialPlugin : InteractionListener {
 
         on(QUEST_LADDER_DOWN, IntType.SCENERY, "climb-down") { player, node ->
             if (getAttribute(player, TutorialStage.TUTORIAL_STAGE, 0) < 29) {
-                sendNPCDialogue(
-                    player,
-                    NPCs.QUEST_GUIDE_949,
-                    "I don't think you're ready to go down there yet.",
-                    FaceAnim.HALF_GUILTY
-                )
+                sendNPCDialogue(player, NPCs.QUEST_GUIDE_949, "I don't think you're ready to go down there yet.", FaceAnim.HALF_GUILTY)
                 return@on false
             }
 
@@ -204,20 +184,11 @@ class TutorialPlugin : InteractionListener {
         on(COMBAT_GATE, IntType.SCENERY, "open") { player, node ->
             val stage = getAttribute(player, TutorialStage.TUTORIAL_STAGE, -1)
             if (stage < 42) {
-                player.dialogueInterpreter.sendPlainMessage(
-                    false,
-                    "You need to finish with Mining and Smithing first.",
-                    "",
-                )
+                sendPlainDialogue(player,false, "You need to finish with Mining and Smithing first.")
                 return@on false
             }
             if (stage >= 44) {
-                player.dialogueInterpreter.sendPlainMessage(
-                    false,
-                    "",
-                    "Follow the path to the Combat Instructor.",
-                    "",
-                )
+                sendPlainDialogue(player,false, "Follow the path to the Combat Instructor.")
                 return@on false
             }
             setAttribute(player, TutorialStage.TUTORIAL_STAGE, 44)
@@ -233,20 +204,11 @@ class TutorialPlugin : InteractionListener {
         on(GIANT_RAT_GATE, IntType.SCENERY, "open") { player, node ->
             val stage = getAttribute(player, TutorialStage.TUTORIAL_STAGE, 0)
             if(stage == 54) {
-                player.dialogueInterpreter.sendDialogues(
-                    NPCs.COMBAT_INSTRUCTOR_944,
-                    FaceAnim.ANNOYED,
-                    "No, don't enter the pit. Range the rats from outside the cage."
-                )
+                sendNPCDialogueLines(player, NPCs.COMBAT_INSTRUCTOR_944, FaceAnim.ANNOYED, false, "No, don't enter the pit. Range the rats from outside the cage.")
                 return@on false
             }
             if (stage !in 50..53) {
-                player.dialogueInterpreter.sendDialogues(
-                    NPCs.COMBAT_INSTRUCTOR_944,
-                    FaceAnim.ANNOYED,
-                    "Oi, get away from there!",
-                    "Don't enter my rat pen unless I say so!",
-                )
+                sendNPCDialogueLines(player, NPCs.COMBAT_INSTRUCTOR_944, FaceAnim.ANNOYED, false, "Oi, get away from there!", "Don't enter my rat pen unless I say so!")
                 return@on false
             }
             if (stage == 50) {
@@ -263,8 +225,7 @@ class TutorialPlugin : InteractionListener {
 
         on(COMBAT_LADDER, IntType.SCENERY, "climb-up") { player, _ ->
             if (getAttribute(player, TutorialStage.TUTORIAL_STAGE, 0) != 55) {
-                player.dialogueInterpreter.sendPlainMessage(
-                    false,
+                sendPlainDialogue(player,false,
                     "You're not ready to continue yet. You need to know",
                     "about combat before you go on.",
                 )
@@ -283,7 +244,7 @@ class TutorialPlugin : InteractionListener {
          */
 
         on(Scenery.LADDER_3031, IntType.SCENERY, "climb-down") { player, _ ->
-            sendMessage(player, "You've already done that. Perhaps you should move on.")
+            sendDialogue(player, "You've already done that. Perhaps you should move on.")
             return@on false
         }
 
@@ -311,11 +272,11 @@ class TutorialPlugin : InteractionListener {
 
         on(BANK_GUIDE_DOOR, IntType.SCENERY, "open") { player, node ->
             if (getAttribute(player, TutorialStage.TUTORIAL_STAGE, 0) != 57) {
-                player.dialogueInterpreter.sendPlainMessage(false, "", "You need to open your bank first.", "")
+                sendPlainDialogue(player,false, "", "You need to open your bank first.", "")
                 return@on false
             }
             if(getAttribute(player, TutorialStage.TUTORIAL_STAGE, 0) == 58) {
-                player.dialogueInterpreter.sendPlainMessage(false, "", "You've already done that. Perhaps you should move on.")
+                sendPlainDialogue(player,false, "", "You've already done that. Perhaps you should move on.")
                 return@on false
             }
             setAttribute(player, TutorialStage.TUTORIAL_STAGE, 58)
@@ -330,8 +291,7 @@ class TutorialPlugin : InteractionListener {
 
         on(FINANCE_GUIDE_DOOR, IntType.SCENERY, "open") { player, node ->
             if (getAttribute(player, TutorialStage.TUTORIAL_STAGE, 0) != 59) {
-                player.dialogueInterpreter.sendPlainMessage(
-                    false,
+                sendPlainDialogue(player,false,
                     "You should complete your objective before",
                     "talking to Finance Advisor."
                 )
@@ -350,8 +310,7 @@ class TutorialPlugin : InteractionListener {
 
         on(CHURCH_DOOR_EXIT, IntType.SCENERY, "open") { player, node ->
             if (getAttribute(player, TutorialStage.TUTORIAL_STAGE, 0) != 66) {
-                player.dialogueInterpreter.sendPlainMessage(
-                    false,
+                sendPlainDialogue(player,false,
                     "You need to finish Brother Brace's tasks before you",
                     "are allowed to proceed through this door.",
                 )
