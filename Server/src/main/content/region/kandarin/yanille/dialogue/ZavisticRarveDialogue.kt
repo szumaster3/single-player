@@ -1,6 +1,6 @@
 package content.region.kandarin.yanille.dialogue
 
-import content.region.kandarin.feldip.jiggig.quest.zogre.dialogue.ZavisticRarveDialogueFile
+import content.region.kandarin.feldip.jiggig.quest.zogre.dialogue.ZavisticRarveDialogues
 import core.api.openDialogue
 import core.game.dialogue.Dialogue
 import core.game.node.entity.player.Player
@@ -13,7 +13,7 @@ import shared.consts.NPCs
 @Initializable
 class ZavisticRarveDialogue(player: Player? = null) : Dialogue(player) {
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
-        openDialogue(player, ZavisticRarveDialogueFile(), npc)
+        openDialogue(player, ZavisticRarveDialogues(), npc)
         return false
     }
     override fun newInstance(player: Player?): Dialogue = ZavisticRarveDialogue(player)

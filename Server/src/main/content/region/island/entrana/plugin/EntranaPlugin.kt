@@ -3,7 +3,6 @@ package content.region.island.entrana.plugin
 import core.api.*
 import core.cache.def.impl.ItemDefinition
 import core.game.bots.AIPlayer
-import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
@@ -86,23 +85,13 @@ class EntranaPlugin : InteractionListener, MapArea {
             return@on true
         }
 
-        val dialogues = listOf(
-            "Nice weather we're having today!",
-            "Please leave me alone, a parrot stole my banana."
-        )
-
         on(NPCs.MAZION_3114, IntType.NPC, "talk-to") { player, node ->
             val randomDialogue = (1..3).random()
             when (randomDialogue) {
-                1 -> sendNPCDialogue(player, node.id, dialogues[0])
+                1 -> sendNPCDialogue(player, node.id, "Nice weather we're having today!")
                 2 -> sendNPCDialogue(player, node.id, "Hello ${player.name}, fine day today!")
-                3 -> sendNPCDialogue(player, node.id, dialogues[1])
+                3 -> sendNPCDialogue(player, node.id, "Please leave me alone, a parrot stole my banana.")
             }
-            return@on true
-        }
-
-        on(NPCs.FRINCOS_578, IntType.NPC, "talk-to") { player, node ->
-            openDialogue(player, FrincosDialogue(), node.id)
             return@on true
         }
 
@@ -151,28 +140,6 @@ class EntranaPlugin : InteractionListener, MapArea {
                     }
                 },
             )
-        }
-    }
-
-    inner class FrincosDialogue : DialogueFile() {
-        override fun handle(componentID: Int, buttonID: Int) {
-            when (stage) {
-                0 -> npcl(FaceAnim.HALF_GUILTY, "Hello, how can I help you?").also { stage++ }
-                1 -> options(
-                    "What are you selling?",
-                    "You can't; I'm beyond help.",
-                    "I'm okay, thank you."
-                ).also { stage++ }
-                2 -> when (buttonID) {
-                    1 -> playerl(FaceAnim.HALF_GUILTY, "What are you selling?").also {
-                        end()
-                        openNpcShop(player!!, NPCs.FRINCOS_578)
-                    }
-                    2 -> playerl(FaceAnim.HALF_GUILTY, "You can't; I'm beyond help.").also { stage++ }
-                    3 -> playerl(FaceAnim.HALF_GUILTY, "I'm okay, thank you.").also { stage++ }
-                }
-                3 -> end()
-            }
         }
     }
 }

@@ -21,7 +21,7 @@ import shared.consts.*
 /**
  * Represents the Zavistic Rarve dialogue file (Zogre flesh eaters).
  */
-class ZavisticRarveDialogueFile : DialogueFile() {
+class ZavisticRarveDialogues : DialogueFile() {
     override fun handle(componentID: Int, buttonID: Int) {
         val p = player!!
         npc = NPC(NPCs.ZAVISTIC_RARVE_2059)
@@ -206,7 +206,7 @@ class ZavisticRarveDialogueFile : DialogueFile() {
             39 -> player!!.dialogueInterpreter.sendItemMessage(Items.HAND_11763, "You hand over the hand and get a weird sense of déja", "vu.").also { stage++ }
             40 -> if(removeItem(player!!, Items.HAND_11763)) {
                 npc("Thank you for helping us, please see if you can find", "any more of him.")
-                setVarbit(player!!, Vars.VARBIT_QUEST_BACK_TO_MY_ROOTS_PROGRESS_4055, 35)
+                setVarbit(player!!, Vars.VARBIT_QUEST_BACK_TO_MY_ROOTS_PROGRESS_4055, 35, true)
                 stage = END_DIALOGUE
             } else end()
             41 -> player("I'll see what I can do, I'm sure I saw some other body", "parts somewhere...If I find any I'll give them to you.").also { stage = 5 }

@@ -6,7 +6,6 @@ import content.data.setRespawnLocation
 import content.global.activity.jobs.JobManager
 import content.minigame.mta.plugin.MTAZone
 import content.region.island.tutorial.plugin.TutorialStage
-import content.region.island.tutorial.plugin.TutorialStage.TUTORIAL_HINT
 import content.region.kandarin.baxtorian.barbtraining.BarbarianTraining
 import core.api.*
 import core.cache.def.impl.NPCDefinition
@@ -287,7 +286,7 @@ class DevelopmentCommandSet : CommandSet(Privilege.ADMIN) {
                 1 -> { // node
                     val nodeId = args[1].toIntOrNull() ?: reject(player, "Please provide a valid npc ID")
                     val node = Repository.findNPC(nodeId as Int) ?: reject(player, "Node not found for ID $nodeId")
-                    setAttribute(player, TUTORIAL_HINT, HintIconManager.registerHintIcon(player, node as Node))
+                    setAttribute(player, "tutorial:hinticon", HintIconManager.registerHintIcon(player, node as Node))
                     player.debug("Registered hint icon on node $nodeId")
                 }
                 3 -> { // location
@@ -295,7 +294,7 @@ class DevelopmentCommandSet : CommandSet(Privilege.ADMIN) {
                     val y = args[2].toIntOrNull() ?: reject(player, "Invalid y coord")
                     val height = args[3].toIntOrNull() ?: reject(player, "Invalid height")
                     val location = Location.create(x as Int, y  as Int, height as Int)
-                    setAttribute(player, TUTORIAL_HINT, HintIconManager.registerHintIcon(player, location, 1, -1, player.hintIconManager.freeSlot(), height, 3))
+                    setAttribute(player, "tutorial:hinticon", HintIconManager.registerHintIcon(player, location, 1, -1, player.hintIconManager.freeSlot(), height, 3))
                     player.debug("Registered hint icon at location $x,$y,$height")
                 }
                 else -> reject(player, "Invalid usage. Use ::hinticon <npcId> or ::hinticon <x> <y> <height>")

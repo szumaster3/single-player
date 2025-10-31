@@ -23,7 +23,7 @@ class ThakiTheDeliveryDwarfDialogue(player: Player? = null) : Dialogue(player) {
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> player(FaceAnim.HAPPY, "Hi little fellow.").also { stage++ }
-            1 -> npc(FaceAnim.OLD_NORMAL, "What did you just say to me!?").also { stage++ }
+            1 -> npc(FaceAnim.OLD_ANGRY1, "What did you just say to me!?").also { stage++ }
             2 -> player(FaceAnim.GUILTY, "Arrr! nothing, nothing at all..").also { stage = END_DIALOGUE }
         }
         return true

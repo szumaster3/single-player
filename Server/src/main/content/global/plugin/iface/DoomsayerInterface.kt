@@ -28,7 +28,7 @@ class DoomsayerInterface : InterfaceListener {
 
             val timesSeen = getVarbit(player, warning.varbit)
             if (timesSeen < 6) {
-                sendMessages(
+                sendMessage(
                     player,
                     "You cannot toggle this warning screen on or off. You need to go to the area it is linked to enough times to have the option to do so."
                 )

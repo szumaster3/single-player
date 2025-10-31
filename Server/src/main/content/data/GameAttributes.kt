@@ -424,4 +424,11 @@ internal object GameAttributes {
     // Returning Clarence miniquest.
     const val RETURNING_CLARENCE_COMPLETE = "/save:hansand2:complete"
     const val RETURNING_CLARENCE_CHECKPOINT = "/save:handsand2:checkpoint"
+
+    // Cooks Assistant quest.
+    const val EGG_SUBMITTED = "cooks_assistant:egg_submitted"
+    const val FLOUR_SUBMITTED = "cooks_assistant:flour_submitted"
+    const val MILK_SUBMITTED = "cooks_assistant:milk_submitted"
+    const val ALL_SUBMITTED = "cooks_assistant:all_submitted"
+    const val PART_SUBMITTED = "cooks_assistant:submitted_some_items"
 }

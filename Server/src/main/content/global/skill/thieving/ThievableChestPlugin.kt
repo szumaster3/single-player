@@ -160,6 +160,7 @@ class ThievableChestPlugin : OptionHandler() {
             /**
              * Calculates the damage for trap.
              */
+            @JvmStatic
             protected fun getHitAmount(player: Player): Int {
                 var hit = player.getSkills().lifepoints / 12
                 if (hit < 2) {
@@ -171,6 +172,7 @@ class ThievableChestPlugin : OptionHandler() {
             /**
              * Finds a chest by its object id.
              */
+            @JvmStatic
             fun forId(id: Int): Chest? {
                 for (chest in values()) {
                     for (i in chest.objectIds) {

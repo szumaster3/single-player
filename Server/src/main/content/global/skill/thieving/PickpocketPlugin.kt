@@ -83,14 +83,17 @@ class PickpocketPlugin : InteractionListener {
 
                 if (getStatLevel(player, Skills.THIEVING) >= 40) {
                     when {
-                        inBorders(player, ZoneBorders(3201, 3456, 3227, 3468)) && npc.id == NPCs.GUARD_5920
-                        -> {
+                        inBorders(player, ZoneBorders(3201, 3456, 3227, 3468)) && npc.id == NPCs.GUARD_5920 -> {
                             finishDiaryTask(player, DiaryType.VARROCK, 1, 12)
                         }
 
                         inBorders(player, ZoneBorders(2934, 3399, 3399, 3307)) &&
-                            npc.id in intArrayOf(NPCs.GUARD_9, NPCs.GUARD_3230, NPCs.GUARD_3228, NPCs.GUARD_3229)
-                        -> {
+                            npc.id in intArrayOf(
+                            NPCs.GUARD_9,
+                            NPCs.GUARD_3230,
+                            NPCs.GUARD_3228,
+                            NPCs.GUARD_3229
+                        ) -> {
                             finishDiaryTask(player, DiaryType.FALADOR, 1, 6)
                         }
                     }
@@ -107,6 +110,7 @@ class PickpocketPlugin : InteractionListener {
         val PICKPOCKET_ANIM = Animation(Animations.HUMAN_PICKPOCKETING_881, Animator.Priority.HIGH)
         val NPC_ANIM = Animation(Animations.PUNCH_422)
 
+        @JvmStatic
         fun pickpocketRoll(player: Player, low: Double, high: Double, table: WeightBasedTable): ArrayList<Item>? {
             var successMod = 0.0
             if (inInventory(player, Items.GLOVES_OF_SILENCE_10075, 1)) {

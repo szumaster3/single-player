@@ -36,19 +36,20 @@ class ZogreFleshEatersPlugin : InteractionListener {
 
                     override fun pulse(): Boolean {
                         when (counter++) {
-                            0 ->
+                            0 -> {
                                 forceMove(
                                     player,
                                     player.location,
                                     player.location.transform(
                                         if (player.location.x < 2457) Direction.EAST else Direction.WEST,
-                                        2,
+                                        2
                                     ),
                                     20,
                                     60,
                                     null,
                                     10980,
                                 )
+                            }
 
                             1 -> {
                                 resetAnimator(player)
@@ -62,8 +63,12 @@ class ZogreFleshEatersPlugin : InteractionListener {
             return@on true
         }
 
-        onUseWith(IntType.NPC, ZogreUtils.QUEST_ITEMS, NPCs.GRISH_2038) { player, _, with ->
-            openDialogue(player, NPCs.GRISH_2038, with.id)
+        onUseWith(IntType.NPC, ZogreUtils.QUEST_ITEMS, NPCs.GRISH_2038) { player, used, _ ->
+            when (used.id) {
+                Items.DRAGON_INN_TANKARD_4811 -> openDialogue(player, GrishDialogues())
+                Items.BLACK_PRISM_4808 -> openDialogue(player, GrishBlackPrismDialogueFile())
+                Items.TORN_PAGE_4809 -> openDialogue(player, GrishTornPageDialogueFile())
+            }
             return@onUseWith true
         }
 

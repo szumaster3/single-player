@@ -51,7 +51,7 @@ class AugusteDialogue(player: Player? = null) : Dialogue(player) {
                         player("Yes! Sign me up.").also { stage++ }
                     } else {
                         end()
-                        sendMessage(player, RED + "You do not meet the requirements to start : 'Enlightened Journey'.")
+                        sendMessage(player, RED + "You do not meet the requirements to start: 'Enlightened Journey'.")
                         stage = END_DIALOGUE
                     }
 

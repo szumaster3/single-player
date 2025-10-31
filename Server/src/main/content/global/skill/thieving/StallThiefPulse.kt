@@ -1,8 +1,10 @@
 package content.global.skill.thieving
 
-import core.api.*
+import core.api.impact
+import core.api.isQuestComplete
+import core.api.sendDialogue
+import core.api.stun
 import core.game.event.ResourceProducedEvent
-import core.game.interaction.Clocks
 import core.game.node.entity.combat.ImpactHandler
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.SkillPulse
@@ -11,22 +13,22 @@ import core.game.node.scenery.Scenery
 import core.game.node.scenery.SceneryBuilder
 import core.game.world.GameWorld
 import core.game.world.map.RegionManager.getLocalNpcs
+import core.game.world.update.flag.context.Animation
 import core.tools.RandomFunction
-import core.tools.StringUtils
+import core.tools.StringUtils.isPlusN
 import shared.consts.Animations
 import shared.consts.Items
-import shared.consts.NPCs
 import shared.consts.Quests
+import java.util.*
 
 /**
- * A pulse that handles the interaction logic for stealing from a stall.
+ * Represents the pulse used to thieve a stall.
+ * @author Vexia
  */
-class StallThiefPulse(
-    player: Player?,
-    node: Scenery?,
-    private val stall: Stall?
-) : SkillPulse<Scenery?>(player, node) {
-
+class StallThiefPulse(player: Player?, node: Scenery?, private val stall: Stall?) : SkillPulse<Scenery?>(player, node) {
+    /**
+     * Represents the ticks passed.
+     */
     private var ticks = 0
 
     override fun start() {
@@ -39,75 +41,66 @@ class StallThiefPulse(
             return false
         }
         if (player.inCombat()) {
-            sendMessage(player, "You can't steal from the market stall during combat!")
+            player.packetDispatch.sendMessage("You cant steal from the market stall during combat!")
             return false
         }
-        if (getStatLevel(player, Skills.THIEVING) < stall.level) {
-            sendDialogue(player, "You need to be level " + stall.level + " to steal from the " + node!!.name.lowercase() + ".")
+        if (player.getSkills().getLevel(Skills.THIEVING) < stall.level) {
+            player.packetDispatch.sendMessage("You need to be level " + stall.level + " to steal from the " + node!!.name.lowercase(Locale.getDefault()) + ".")
             return false
         }
-        if (freeSlots(player) == 0) {
-            sendMessage(player, "You don't have enough inventory space.")
+        if (player.inventory.freeSlots() == 0) {
+            player.packetDispatch.sendMessage("You don't have enough inventory space.")
             return false
         }
-        if (inBorders(player, getRegionBorders(10553)) && !isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS)) {
-            sendDialogue(player, "The ${if (stall.fullIDs.contains(4278)) "fur trader" else "fishmonger"} is staring at you suspiciously. You cannot steal from his stall while he distrusts you.")
+        if (player.location.isInRegion(10553) && !isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS) && stall.fullIDs.contains(4278)) {
+            sendDialogue(player, "The fur trader is staring at you suspiciously. You cannot steal from his stall while he distrusts you.")
+            return false
+        }
+
+        if (player.location.isInRegion(10553) && !isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS) && stall.fullIDs.contains(4277)) {
+            sendDialogue(player, "The fishmonger is staring at you suspiciously. You cannot steal from his stall while he distrusts you.")
             return false
         }
         return true
     }
 
-    override fun hasInactiveNode(): Boolean = if (player.getAttribute("thieveDelay", 0) <= GameWorld.ticks) {
-        false
-    } else {
-        super.hasInactiveNode()
+    override fun hasInactiveNode(): Boolean {
+        if (player.getAttribute("thieveDelay", 0) <= GameWorld.ticks) {
+            return false
+        }
+        return super.hasInactiveNode()
     }
 
-    override fun animate() {}
+    override fun animate() {
+    }
 
     override fun reward(): Boolean {
-        val goods = stall?.message ?: "goods"
-        animate(player, ANIMATION)
-        lockInteractions(player, 2)
-        if (node?.id != 2793) {
-            sendMessage(player, "You attempt to steal some $goods from the stall.")
+        if (ticks == 0) {
+            player.animate(ANIMATION)
+            player.locks.lockInteractions(2)
         }
-
-        if (!clockReady(player, Clocks.SKILLING)) return false
-        delayClock(player, Clocks.SKILLING, 3)
-
+        if (++ticks % 3 != 0) {
+            return false
+        }
         val success = success()
         if (success) {
             if (stall == Stall.SILK_STALL) {
-                player.getSavedData().globalData.setSilkSteal(System.currentTimeMillis() + 1200000)
-            }
-            if (stall == Stall.TEA_STALL) {
-                player.getSavedData().globalData.setTeaSteal(System.currentTimeMillis() + 1200000)
+                player.getSavedData().globalData.setSilkSteal(System.currentTimeMillis() + 1800000)
             }
             if (node!!.isActive) {
                 SceneryBuilder.replace(node, node!!.transform(stall!!.getEmpty(node!!.id)), stall.delay)
             }
             val item = stall!!.randomLoot
             player.inventory.add(item)
-            rewardXP(player, Skills.THIEVING, stall.experience)
+            player.getSkills().addExperience(Skills.THIEVING, stall.experience, true)
             if (item.id == Items.GRAPES_1987) {
-                sendMessage(player, "You steal grapes from the grape stall.")
-                return true
-            }
-            if (item.id == Items.ROCK_CAKE_2379) {
-                sendMessage(player, "You cautiously grab a cake from the stall.")
+                player.packetDispatch.sendMessage("You steal grapes from the grape stall.")
                 return true
             }
             if (stall == Stall.CANDLES) {
                 return true
             }
-            sendMessage(
-                player, "You steal " + (if (StringUtils.isPlusN(item.name)) {
-                    "an "
-                } else {
-                    "a "
-                }) + getItemName(item.id).lowercase() + "."
-            )
+            player.packetDispatch.sendMessage("You steal " + (if (isPlusN(item.name)) "an" else "a") + " " + item.name.lowercase(Locale.getDefault()) + " from the " + stall.name.lowercase(Locale.getDefault()).replace('_', ' ') + ".")
             player.dispatch(ResourceProducedEvent(item.id, item.amount, node!!, 0))
         }
         return true
@@ -117,19 +110,26 @@ class StallThiefPulse(
         if (stall == Stall.CANDLES) {
             return
         }
+        if (type == 0) {
+            player.packetDispatch.sendMessage(("You attempt to steal some " + stall?.message).toString() + " from the " + stall!!.name.lowercase(Locale.getDefault()).replace('_', ' '))
+        }
     }
 
+    /**
+     * Checks if the thief is successful.
+     * @return `True` if so.
+     */
     private fun success(): Boolean {
         val mod = 0
         if (RandomFunction.random(15 + mod) < 4) {
             if (stall == Stall.CANDLES) {
                 stun(player, 15, false)
                 impact(player, 3, ImpactHandler.HitsplatType.NORMAL)
-                sendMessage(player, "A higher power smites you.")
+                player.sendMessage("A higher power smites you.")
                 return false
             }
             for (npc in getLocalNpcs(player.location, 8)) {
-                if (!npc.properties.combatPulse.isAttacking && (npc.id == NPCs.GUARD_32 || npc.id == NPCs.MARKET_GUARD_2236)) {
+                if (!npc.properties.combatPulse.isAttacking && (npc.id == 32 || npc.id == 2236)) {
                     npc.sendChat("Hey! Get your hands off there!")
                     npc.properties.combatPulse.attack(player)
                     return false
@@ -140,6 +140,9 @@ class StallThiefPulse(
     }
 
     companion object {
-        private const val ANIMATION = Animations.HUMAN_MULTI_USE_832
+        /**
+         * Represents the stealing animation.
+         */
+        private val ANIMATION = Animation(Animations.HUMAN_MULTI_USE_832)
     }
 }

@@ -96,8 +96,8 @@ class DragonSlayerListener : InteractionListener {
                     player,
                     player.location,
                     player.location.transform(if (player.location.x == 2845) 2 else -2, 0, 0),
-                    10,
-                    60,
+                    30,
+                    90,
                     null,
                     Animations.CLIMB_OVER_ROCK_10573
                 )

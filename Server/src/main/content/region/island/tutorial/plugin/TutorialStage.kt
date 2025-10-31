@@ -78,9 +78,9 @@ object TutorialStage {
         when (stage) {
             0 -> {
                 player.lock()
-                setMinimapState(player, 2)
                 teleport(player, Location.create(3094, 3107, 0))
                 hideTabs(player, login)
+                setMinimapState(player, 2)
                 CharacterDesign.open(player)
                 player.dialogueInterpreter.sendPlaneMessageWithBlueTitle(
                     "Getting started",
@@ -108,6 +108,7 @@ object TutorialStage {
             1 -> {
                 player.interfaceManager.removeTabs(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13)
                 player.interfaceManager.openTab(Component(Components.OPTIONS_261))
+                removeHintIcon(player)
                 setVarbit(player, FLASHING_ICON, 12)
                 player.dialogueInterpreter.sendPlaneMessageWithBlueTitle(
                     "Game Options",
@@ -120,8 +121,9 @@ object TutorialStage {
 
             2 -> {
                 hideTabs(player, login)
-                setVarbit(player, FLASHING_ICON, 0)
                 removeHintIcon(player)
+                setVarbit(player, FLASHING_ICON, 0)
+                registerHintIcon(player, Repository.findNPC(NPCs.RUNESCAPE_GUIDE_945)!!)
                 player.dialogueInterpreter.sendPlaneMessageWithBlueTitle(
                     "Game Options",
                     "In the interface, you can now see a variety of options such as screen",
@@ -1120,20 +1122,20 @@ object TutorialStage {
     }
 
     fun removeHintIcon(player: Player) {
-        val slot = player.getAttribute(TUTORIAL_HINT, -1)
+        val slot = player.getAttribute("tutorial:hinticon", -1)
         if (slot < 0 || slot >= HintIconManager.MAXIMUM_SIZE) {
             return
         }
-        player.removeAttribute(TUTORIAL_HINT)
+        player.removeAttribute("tutorial:hinticon")
         HintIconManager.removeHintIcon(player, slot)
     }
 
     private fun registerHintIcon(player: Player, node: Node) {
-        setAttribute(player, TUTORIAL_HINT, HintIconManager.registerHintIcon(player, node))
+        setAttribute(player, "tutorial:hinticon", HintIconManager.registerHintIcon(player, node))
     }
 
     private fun registerHintIcon(player: Player, location: Location, height: Int) {
-        setAttribute(player, TUTORIAL_HINT, HintIconManager.registerHintIcon(player, location, 1, -1, player.hintIconManager.freeSlot(), height, 3))
+        setAttribute(player, "tutorial:hinticon", HintIconManager.registerHintIcon(player, location, 1, -1, player.hintIconManager.freeSlot(), height, 3))
     }
 
 

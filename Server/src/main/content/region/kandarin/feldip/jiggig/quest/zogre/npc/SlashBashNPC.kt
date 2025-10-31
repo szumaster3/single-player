@@ -18,11 +18,7 @@ import shared.consts.NPCs
 import shared.consts.Vars
 
 @Initializable
-class SlashBashNPC(
-    id: Int = 0,
-    location: Location? = null,
-    private val owner: Player? = null
-) : AbstractNPC(id, location) {
+class SlashBashNPC(id: Int = 0, location: Location? = null, private val owner: Player? = null) : AbstractNPC(id, location) {
 
     private var despawnTime = 0
 

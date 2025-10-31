@@ -1,13 +1,14 @@
 package content.region.island.tutorial.dialogue
 
 import content.region.island.tutorial.plugin.TutorialStage
-import content.region.island.tutorial.plugin.TutorialStage.removeHintIcon
+import core.api.getAttribute
 import core.api.setAttribute
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.plugin.Initializable
+import core.tools.END_DIALOGUE
 import shared.consts.NPCs
 
 @Initializable
@@ -15,27 +16,28 @@ class RSGuideDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
-        val tutStage = player?.getAttribute(TutorialStage.TUTORIAL_STAGE, 0) ?: 0
-        if (tutStage == 39) {
-            npc(FaceAnim.HAPPY, "Greetings! I see you are a new arrival to this land. My", "job is to welcome all new visitors. So welcome!")
-            stage = 0
-            return true
+        val tutStage = getAttribute(player, TutorialStage.TUTORIAL_STAGE, 0)
+
+        when {
+            tutStage == 39 -> {
+                npc(FaceAnim.HAPPY, "Greetings! I see you are a new arrival to this land. My", "job is to welcome all new visitors. So welcome!")
+                stage = 0
+            }
+            tutStage == 2 -> {
+                npc(FaceAnim.NEUTRAL, "I'm glad you're making progress!")
+                stage = 6
+            }
+            tutStage < 2 -> {
+                npc(FaceAnim.NEUTRAL, "You will notice a flashing icon of a spanner; please click", "on this to continue the tutorial.")
+                stage = END_DIALOGUE
+            }
+            else -> {
+                npc(FaceAnim.HALF_GUILTY, "Please follow the onscreen instructions!")
+                stage = END_DIALOGUE
+            }
         }
-        if (tutStage == 2) {
-            npc(FaceAnim.NEUTRAL, "I'm glad you're making progress!")
-            stage = 6
-            return true
-        }
-        if (tutStage < 2) {
-            end()
-            npc(FaceAnim.NEUTRAL, "You will notice a flashing icon of a spanner; please click", "on this to continue the tutorial.")
-            return false
-        } else {
-            end()
-            npc(FaceAnim.HALF_GUILTY, "Please follow the onscreen instructions!")
-            TutorialStage.load(player, tutStage)
-            return false
-        }
+
+        return true
     }
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
@@ -53,7 +55,6 @@ class RSGuideDialogue(player: Player? = null) : Dialogue(player) {
             6 -> npc(FaceAnim.NEUTRAL, "To continue the tutorial go through that door over", "there and speak to your first instructor!").also { stage++ }
             7 -> {
                 end()
-                npc.unlock()
                 setAttribute(player, TutorialStage.TUTORIAL_STAGE, 3)
                 TutorialStage.load(player, 3)
             }

@@ -9,7 +9,7 @@ import shared.consts.Items
 import shared.consts.Quests
 import shared.consts.Vars
 
-@Initializable
+//@Initializable
 class TheFeud : Quest(Quests.THE_FEUD, 60, 59, 1, Vars.VARBIT_THE_FEUD_PROGRESS_334, 0, 1, 28) {
 
     override fun drawJournal(player: Player, stage: Int) {

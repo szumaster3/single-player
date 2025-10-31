@@ -55,11 +55,7 @@ class PickableDoorPlugin : OptionHandler() {
     /**
      * Handles the interaction for opening or picking the lock on a door.
      */
-    override fun handle(
-        player: Player,
-        node: Node,
-        option: String,
-    ): Boolean {
+    override fun handle(player: Player, node: Node, option: String): Boolean {
         door = forDoor(node.location)
         if (option == "open") {
             if (door == null) {
@@ -83,10 +79,7 @@ class PickableDoorPlugin : OptionHandler() {
     /**
      * Gets the destination location of a door when it is interacted with.
      */
-    override fun getDestination(
-        node: Node,
-        n: Node,
-    ): Location? {
+    override fun getDestination(node: Node, n: Node): Location? {
         if (n is Scenery) {
             val `object` = n
             if (`object`.definition.hasAction("pick-lock")) {
@@ -141,10 +134,7 @@ class PickableDoorPlugin : OptionHandler() {
          * @param player The player attempting to pick the lock.
          * @param door The door being unlocked.
          */
-        fun pickLock(
-            player: Player,
-            door: Scenery,
-        ) {
+        fun pickLock(player: Player, door: Scenery) {
             val success = RandomFunction.random(12) >= 4
             if (isInside(player, door.asScenery()) != flipped) {
                 sendMessage(player, "The door is already unlocked.")
@@ -177,10 +167,7 @@ class PickableDoorPlugin : OptionHandler() {
          * @param door The door being interacted with.
          * @return True if the player is inside the door, otherwise false.
          */
-        private fun isInside(
-            player: Player,
-            door: Scenery,
-        ): Boolean {
+        private fun isInside(player: Player, door: Scenery): Boolean {
             var inside = false
             val dir = Direction.getLogicalDirection(player.location, door.location)
             val direction = door.direction
@@ -214,6 +201,35 @@ class PickableDoorPlugin : OptionHandler() {
     companion object {
         private val LOCK_PICK = Items.LOCKPICK_1523
         private val pickableDoors: MutableList<PickableDoor> = ArrayList(20)
-        private val DOORS = intArrayOf(2550, 2551, 2554, 2555, 2556, 2557, 2558, 2559, 5501, 7246, 9565, 13314, 13317, 13320, 13323, 13326, 13344, 13345, 13346, 13347, 13348, 13349, 15759, 34005, 34805, 34806, 34812, 40186, 42028)
+        private val DOORS = intArrayOf(
+            shared.consts.Scenery.DOOR_2550,
+            shared.consts.Scenery.DOOR_2551,
+            shared.consts.Scenery.DOOR_2554,
+            shared.consts.Scenery.DOOR_2555,
+            shared.consts.Scenery.DOOR_2556,
+            shared.consts.Scenery.DOOR_2557,
+            shared.consts.Scenery.DOOR_2558,
+            shared.consts.Scenery.DOOR_2559,
+            shared.consts.Scenery.DOOR_5501,
+            shared.consts.Scenery.DOOR_7246,
+            shared.consts.Scenery.DOOR_9565,
+            shared.consts.Scenery.DOOR_13314,
+            shared.consts.Scenery.DOOR_13317,
+            shared.consts.Scenery.DOOR_13320,
+            shared.consts.Scenery.DOOR_13323,
+            shared.consts.Scenery.DOOR_13326,
+            shared.consts.Scenery.DOOR_13344,
+            shared.consts.Scenery.DOOR_13345,
+            shared.consts.Scenery.DOOR_13346,
+            shared.consts.Scenery.DOOR_13347,
+            shared.consts.Scenery.DOOR_13348,
+            shared.consts.Scenery.DOOR_13349,
+            shared.consts.Scenery.DOOR_15759,
+            shared.consts.Scenery.DOOR_34005,
+            shared.consts.Scenery.DOOR_34805,
+            shared.consts.Scenery.DOOR_34806,
+            shared.consts.Scenery.DOOR_34812,
+            shared.consts.Scenery.CELL_DOOR_40186
+        )
     }
 }

@@ -11,11 +11,19 @@ import core.tools.minutesToTicks
 import shared.consts.NPCs
 
 class ZogreNPC : NPCBehavior(*IDS) {
+
     override fun onCreation(self: NPC) {
         self.isWalks = true
         self.isNeverWalks = false
         self.isAggressive = true
         self.task.undead = true
+    }
+
+    override fun beforeAttackFinalized(self: NPC, victim: Entity, state: BattleState) {
+        super.beforeAttackFinalized(self, victim, state)
+        if (RandomFunction.roll(10)) {
+            registerTimer(victim, spawnTimer("disease", minutesToTicks(15)))
+        }
     }
 
     companion object {
@@ -37,16 +45,5 @@ class ZogreNPC : NPCBehavior(*IDS) {
                 NPCs.SKOGRE_2056,
                 NPCs.SKOGRE_2057,
             )
-    }
-
-    override fun beforeAttackFinalized(
-        self: NPC,
-        victim: Entity,
-        state: BattleState,
-    ) {
-        super.beforeAttackFinalized(self, victim, state)
-        if (RandomFunction.roll(10)) {
-            registerTimer(victim, spawnTimer("disease", minutesToTicks(15)))
-        }
     }
 }

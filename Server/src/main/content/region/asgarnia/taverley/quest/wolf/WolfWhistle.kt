@@ -126,6 +126,7 @@ class WolfWhistle : Quest(Quests.WOLF_WHISTLE, 146, 145, 1) {
 
             if (stage >= 100) {
                 line(player, "I have been given access to the secrets of Summoning.", line++, true)
+                line++
                 line(player, "<col=FF0000>QUEST COMPLETE!</col>", line++)
                 line(player, "!!Reward:??", line++)
                 line(player, "1 Quest Point,", line++)

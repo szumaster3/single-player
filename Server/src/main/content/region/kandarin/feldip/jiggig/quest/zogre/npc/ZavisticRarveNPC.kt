@@ -11,18 +11,11 @@ import core.game.world.GameWorld
 import core.game.world.map.Location
 import shared.consts.NPCs
 
-class ZavisticRarveNPC(
-    id: Int = 0,
-    location: Location? = null,
-) : AbstractNPC(id, location) {
+class ZavisticRarveNPC(id: Int = 0, location: Location? = null) : AbstractNPC(id, location) {
     private var clearTime = 0
     private val player: Player? = null
 
-    override fun construct(
-        id: Int,
-        location: Location,
-        vararg objects: Any,
-    ): AbstractNPC = ZavisticRarveNPC(id, location)
+    override fun construct(id: Int, location: Location, vararg objects: Any): AbstractNPC = ZavisticRarveNPC(id, location)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.ZAVISTIC_RARVE_2059)
 

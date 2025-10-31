@@ -1,13 +1,14 @@
 package content.global.bots
+
 import core.game.bots.*
 import core.game.component.Component
 import core.game.interaction.DestinationFlag
-import core.game.interaction.IntType
-import core.game.interaction.InteractionListeners
 import core.game.interaction.MovementPulse
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.game.world.map.zone.ZoneBorders
+import core.game.interaction.IntType
+import core.game.interaction.InteractionListeners
 import core.tools.colorize
 import shared.consts.Items
 
@@ -38,7 +39,7 @@ class DraynorWillows : Script(){
                 if (!willowZone.insideBorder(bot))
                     scriptAPI.walkTo(willowZone.randomLoc)
                 else {
-                    val willowtree = scriptAPI.getNearestNode(5553, true)
+                    val willowtree = scriptAPI.getNearestNode("willow", true)
                     bot.interfaceManager.close()
                     willowtree?.let { InteractionListeners.run(willowtree.id,
                         IntType.SCENERY,"Chop down",bot,willowtree) }
@@ -68,17 +69,19 @@ class DraynorWillows : Script(){
                     }
                 }
             }
+
+
+
         }
     }
 
     init {
+        inventory.add(Item(Items.BRONZE_AXE_1351))
         skills[Skills.WOODCUTTING] = 35
-        inventory.add(Item(Items.ADAMANT_AXE_1357))
     }
 
     override fun newInstance(): Script {
         val script = DraynorWillows()
-        script.bot = SkillingBotAssembler().produce(SkillingBotAssembler.Wealth.POOR, bot.startLocation)
         return script
     }
 

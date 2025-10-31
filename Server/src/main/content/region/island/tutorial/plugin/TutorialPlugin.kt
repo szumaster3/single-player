@@ -44,13 +44,8 @@ class TutorialPlugin : InteractionListener {
             setAttribute(player, TutorialStage.TUTORIAL_STAGE, 4)
             TutorialStage.load(player, 4)
 
-            playAudio(player, Sounds.GATE_OPEN_67)
-
             val door = node as? core.game.node.scenery.Scenery ?: return@on false
-
-            DoorActionHandler.handleAutowalkDoor(
-                player, door, Location.create(3098, 3107, 0)
-            )
+            DoorActionHandler.handleAutowalkDoor(player, door, Location.create(3098, 3107, 0))
             return@on true
         }
 
