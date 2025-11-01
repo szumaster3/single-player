@@ -5,6 +5,7 @@ import content.region.misthalin.draynor.wizard_tower.guild.RunecraftingGuildPlug
 import core.api.*
 import core.api.isQuestComplete
 import core.api.closeDialogue
+import core.cache.def.impl.ItemDefinition
 import core.game.dialogue.FaceAnim
 import core.game.dialogue.InputType
 import core.game.interaction.IntType
@@ -18,7 +19,6 @@ import core.game.world.GameWorld
 import core.game.world.map.Location
 import core.game.world.map.zone.ZoneBorders
 import core.game.world.map.zone.ZoneRestriction
-import core.tools.Log
 import shared.consts.*
 
 /*
@@ -58,7 +58,7 @@ class RunecraftingGuildPlugin : InteractionListener, InterfaceListener, MapArea 
         private val altarComponents = intArrayOf(35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 47, 48)
 
         // Item IDs of all talismans. In-game command [::talismankit] add all talisman items to inventory :).
-        val talismanIDs = Talisman.values().map { it.item.id }.toIntArray()
+        val talismanIDs = Talisman.values().map { it.item }.toIntArray()
 
         // Map to link talisman item IDs with interface component IDs.
         // (The component 45 and 46 IDs was for: Elemental talisman [ID: 5516] and Soul talisman [ID: 1460]).
@@ -90,27 +90,25 @@ class RunecraftingGuildPlugin : InteractionListener, InterfaceListener, MapArea 
     override fun defineAreaBorders(): Array<ZoneBorders> = arrayOf(ZoneBorders.forRegion(6741))
     override fun getRestrictions(): Array<ZoneRestriction> = arrayOf(ZoneRestriction.CANNON, ZoneRestriction.RANDOM_EVENTS, ZoneRestriction.GRAVES, ZoneRestriction.FIRES)
 
-    override fun defineListeners() {/*
+    override fun defineListeners() {
+
+        /*
          * Handles interactions with various objects inside the guild.
          */
 
-        on(Scenery.CONTAINMENT_UNIT_38327, IntType.SCENERY, "activate") { player, node ->
-            lockInteractions(player, 1)
+        on(Scenery.CONTAINMENT_UNIT_38327, IntType.SCENERY, "activate") { _, node ->
             animateScenery(node.asScenery(), 10193)
             return@on true
         }
-        on(Scenery.GLASS_SPHERES_38331, IntType.SCENERY, "activate") { player, node ->
-            lockInteractions(player, 1)
-            animateScenery(node.asScenery(), 10128)
+        on(Scenery.GLASS_SPHERES_38331, IntType.SCENERY, "activate") { _, node ->
+            animateScenery(node.asScenery(), 10129)
             return@on true
         }
-        on(Scenery.GYROSCOPE_38330, IntType.SCENERY, "activate") { player, node ->
-            lockInteractions(player, 1)
+        on(Scenery.GYROSCOPE_38330, IntType.SCENERY, "activate") { _, node ->
             animateScenery(node.asScenery(), 10127)
             return@on true
         }
-        on(Scenery.RUNESTONE_ACCELERATOR_38329, IntType.SCENERY, "activate") { player, node ->
-            lockInteractions(player, 1)
+        on(Scenery.RUNESTONE_ACCELERATOR_38329, IntType.SCENERY, "activate") { _, node ->
             animateScenery(node.asScenery(), 10196)
             return@on true
         }
@@ -289,39 +287,65 @@ class RunecraftingGuildPlugin : InteractionListener, InterfaceListener, MapArea 
          */
 
         on(Components.RCGUILD_REWARDS_779) { player, _, opcode, button, _, _ ->
-            val choice = RcShopStock.fromButton(button)?.itemId ?: run {
-                log(this::class.java, Log.WARN, "Unhandled button ID for RC shop interface: $button")
-                return@on true
-            }
-
+            val stock = RcShopStock.fromButton(button)
             when (opcode) {
                 155 -> {
-                    player.attributes["rc-selected-item"] = choice
-                    player.attributes["rc-selected-amount"] = 1
-                    selectObject(choice, 1, player)
-                }
-                196 -> {
-                    sendInputDialogue(player, InputType.AMOUNT, "Enter the amount to buy:") { value ->
-                        val amt = value.toString().toIntOrNull()
-                        if (amt == null || amt <= 0) {
-                            sendDialogue(player, "Please enter a valid amount greater than zero.")
-                            return@sendInputDialogue
+                    if (stock != null) {
+                        val shopItem = stock.itemId
+                        player.setAttribute("rc-selected-item", shopItem)
+                        player.setAttribute("rc-selected-amount", 1)
+                        selectObject(shopItem, 1, player)
+                    }
+
+                    if (button == 163) {
+                        val selected = player.getAttribute<ShopItem>("rc-selected-item")
+                        val amount = player.getAttribute<Int>("rc-selected-amount") ?: 1
+
+                        if (selected != null) {
+                            /* [Variant for buy as much as we can.]
+
+                            val isStackable = ItemDefinition.forId(selected.id).isStackable()
+                            val amt = if (isStackable) {
+                                amount
+                            } else {
+                                val free = freeSlots(player)
+                                if (free <= 0) {
+                                    sendMessage(player, "You don't have enough space in your inventory.")
+                                    return@on true
+                                }
+                                if (amount > free) free else amount
+                            }
+                            */
+
+                            val isStackable = ItemDefinition.forId(selected.id).isStackable()
+                            if (!isStackable && amount > freeSlots(player)) {
+                                sendMessage(player, "You don't have enough space in your inventory.")
+                                return@on true
+                            }
+
+                            handleBuyOption(selected, amount, player)
+                            player.removeAttribute("rc-selected-item")
+                            player.removeAttribute("rc-selected-amount")
+                        } else {
+                            sendMessage(player, "You must select something to buy before you can confirm your purchase.")
                         }
-                        player.attributes["rc-selected-item"] = choice
-                        player.attributes["rc-selected-amount"] = amt
-                        selectObject(choice, amt, player)
                     }
                 }
-                163 -> {
-                    val selected = player.attributes["rc-selected-item"] as? ShopItem
-                    val amount = player.attributes["rc-selected-amount"] as? Int ?: 1
 
-                    if (selected == null) {
-                        sendMessage(player, "You must select something to buy before you can confirm your purchase")
-                    } else {
-                        handleBuyOption(selected, amount, player)
-                        player.attributes.remove("rc-selected-item")
-                        player.attributes.remove("rc-selected-amount")
+                196 -> {
+                    if (stock != null) {
+                        val shopItem = stock.itemId
+                        sendInputDialogue(player, InputType.AMOUNT, "Enter the amount to buy:") { value ->
+                            val amt = value.toString().toIntOrNull()
+                            if (amt == null || amt <= 0) {
+                                sendDialogue(player, "Please enter a valid amount greater than zero.")
+                                return@sendInputDialogue
+                            }
+
+                            player.setAttribute("rc-selected-item", shopItem)
+                            player.setAttribute("rc-selected-amount", amt)
+                            selectObject(shopItem, amt, player)
+                        }
                     }
                 }
             }
@@ -405,6 +429,7 @@ private enum class RcShopStock(val buttonId: Int, val itemId: ShopItem) {
     RC_STAFF(114, ShopItem(Items.RUNECRAFTING_STAFF_13629, 10000, 1)),
 
     // Essences
+    // TODO: DROP PRICE TO 1 AFTER IMPL MINI_GAME.
     PURE_ESSENCE(115, ShopItem(Items.PURE_ESSENCE_7937, 100, 1)),
 
     // Teleport tablets
