@@ -326,12 +326,7 @@ open class SkillDialogueHandler(
                 for (i in 0 until length) {
                     val value = baseButton - k + 4 * i
                     if (value == buttonId) {
-                        return when (baseButton - buttonId) {
-                            13 -> 1
-                            8 -> 5
-                            7 -> 10
-                            else -> 6
-                        }
+                        return if (k == 13) 1 else if (k == 8) 5 else if (k == 7) 10 else 6
                     }
                 }
             }
@@ -340,16 +335,18 @@ open class SkillDialogueHandler(
 
         open fun getIndex(handler: SkillDialogueHandler?, buttonId: Int): Int {
             var index = 0
-            for (i in 1 until length) {
-                for (k in 0..3) {
+            for (k in 0..3) {
+                for (i in 1 until length) {
                     val value = baseButton + k + 4 * i
                     if (value == buttonId) {
-                        return index
+                        return index + 1
+                    } else if (value <= buttonId) {
+                        index++
                     }
-                    index++
                 }
+                index = 0
             }
-            return -1
+            return index
         }
     }
 
