@@ -85,12 +85,12 @@ class FletchingListener : InteractionListener {
          * Handles attaching feathers to arrow shafts to create headless arrows.
          */
 
-        onUseWith(IntType.ITEM, Fletching.arrowShaftId, *Fletching.featherIds) { player, shaft, feather ->
+        onUseWith(IntType.ITEM, Fletching.ARROW_SHAFT, *Fletching.featherIds) { player, shaft, feather ->
             if (!clockReady(player, Clocks.SKILLING)) return@onUseWith true
 
             val handler =
                 object :
-                    SkillDialogueHandler(player, SkillDialogue.MAKE_SET_ONE_OPTION, Item(Fletching.fletchedShaftId)) {
+                    SkillDialogueHandler(player, SkillDialogue.MAKE_SET_ONE_OPTION, Item(Fletching.HEADLESS_ARROW)) {
                     override fun create(amount: Int, index: Int) {
                         submitIndividualPulse(
                             entity = player,
@@ -108,7 +108,7 @@ class FletchingListener : InteractionListener {
          * Handles attaching arrowheads to headless arrows to create arrows.
          */
 
-        onUseWith(IntType.ITEM, Fletching.fletchedShaftId, *Fletching.unfinishedArrows) { player, shaft, unfinished ->
+        onUseWith(IntType.ITEM, Fletching.HEADLESS_ARROW, *Fletching.unfinishedArrows) { player, shaft, unfinished ->
             if (!clockReady(player, Clocks.SKILLING)) return@onUseWith true
             val arrowHead = ArrowHead.getByUnfinishedId(unfinished.id) ?: return@onUseWith false
 
@@ -376,7 +376,7 @@ class FletchingListener : InteractionListener {
             fun process() {
                 val amount = min(4, getMaxAmount())
                 if (removeItem(player, Item(used.id, amount)) && removeItem(player, Item(with.id, amount))) {
-                    addItem(player, Fletching.fligtedOgreArrowId, amount)
+                    addItem(player, Fletching.FLIGHTED_OGRE_ARROW, amount)
                     rewardXP(player, Skills.FLETCHING, 5.4)
                     sendMessage(player, "You attach $amount feathers to the ogre arrow shafts.")
                 }
@@ -387,7 +387,7 @@ class FletchingListener : InteractionListener {
                     SkillDialogueHandler(
                         player,
                         SkillDialogue.MAKE_SET_ONE_OPTION,
-                        Item(Fletching.fligtedOgreArrowId)
+                        Item(Fletching.FLIGHTED_OGRE_ARROW)
                     ) {
                     override fun create(amount: Int, index: Int) {
                         if (!clockReady(player, Clocks.SKILLING)) return
@@ -405,7 +405,7 @@ class FletchingListener : InteractionListener {
          * Handles attaching nails to arrow shafts to create brutal arrows.
          */
 
-        onUseWith(IntType.ITEM, Fletching.fligtedOgreArrowId, *Fletching.nailIds) { player, used, with ->
+        onUseWith(IntType.ITEM, Fletching.FLIGHTED_OGRE_ARROW, *Fletching.nailIds) { player, used, with ->
             if (!clockReady(player, Clocks.SKILLING)) return@onUseWith true
             val brutalArrow = BrutalArrow.product[with.id] ?: return@onUseWith false
 
