@@ -2,6 +2,7 @@ package core.game.node.entity.player.link
 
 import content.global.plugin.iface.FairyRing
 import content.region.kandarin.yanille.quest.itwatchtower.cutscene.EnclaveCutscene
+import content.region.wilderness.plugin.ChaosTunnelPlugin
 import core.api.*
 import core.game.dialogue.FaceAnim
 import core.game.event.FairyRingDialEvent
@@ -17,7 +18,7 @@ import core.game.world.map.zone.ZoneBorders
 import core.game.world.update.flag.context.Animation
 import shared.consts.*
 
-object WarningActions {
+object WarningHandler {
     private val ladderZones = listOf(
         ZoneBorders(1836, 5174, 1930, 5257) to Location.create(2042, 5245, 0),
         ZoneBorders(1977, 5176, 2066, 5265) to Location.create(2123, 5252, 0),
@@ -177,5 +178,31 @@ object WarningActions {
             EnclaveCutscene(player).start(true)
         }
         sendMessage(player, "You run past the guard while he's busy.")
+    }
+
+    /*
+     * Handles Chaos tunnels warning interaction.
+     */
+
+    fun handleChaosTunnels(player: Player): Boolean {
+        var data: Array<Any>? = null
+        var i = 0
+        while (i < ChaosTunnelPlugin.ENTRANCE_DATA.size) {
+            val entry = ChaosTunnelPlugin.ENTRANCE_DATA[i]
+            val enterLoc = entry[3] as Location
+            if (player.location.withinDistance(enterLoc)) {
+                data = entry
+                break
+            }
+            i++
+        }
+
+        if (data == null) {
+            return false
+        }
+
+        val destination = data[1] as Location
+        player.teleport(destination)
+        return true
     }
 }

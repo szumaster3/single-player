@@ -25,7 +25,7 @@ import core.game.node.entity.combat.ImpactHandler
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.TeleportManager
-import core.game.node.entity.player.link.WarningActions
+import core.game.node.entity.player.link.WarningHandler
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.game.world.map.Location
@@ -450,7 +450,7 @@ class WatchTowerPlugin : InteractionListener {
                     WarningManager.openWarningInterface(player, Warnings.WATCHTOWER_SHAMAN_CAVE)
                     return@addDialogueAction
                 } else {
-                    WarningActions.handleWatchtower(player)
+                    WarningHandler.handleWatchtower(player)
                 }
             }
             return@onUseWith true

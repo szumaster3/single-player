@@ -91,7 +91,7 @@ class ZygomiteNPC : NPCBehavior(NPCs.FUNGI_3344, NPCs.FUNGI_3345, NPCs.ZYGOMITE_
             sendMessage(player, "The zygomite isn't weak enough to be affected by the fungicide.")
         } else {
             sendMessage(player, "The zygomite is covered in fungicide. It bubbles away to nothing!")
-            replaceSlot(player, used.asItem().slot, Item(used.id + 1))
+            replaceSlot(player, used.asItem().index, Item(used.id + 1))
             playAudio(player, Sounds.ZYGO_SPRAY_1967)
             with.startDeath(player)
         }

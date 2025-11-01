@@ -14,6 +14,8 @@ import core.game.node.Node
 import core.game.node.entity.Entity
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
+import core.game.node.entity.player.link.WarningManager
+import core.game.node.entity.player.link.Warnings
 import core.game.node.scenery.Scenery
 import core.game.world.GameWorld.settings
 import core.game.world.GameWorld.ticks
@@ -59,8 +61,23 @@ class ChaosTunnelPlugin : MapZone("Chaos tunnel", true, ZoneRestriction.CANNON),
                         "enter", "climb-up" ->
                             when (node.id) {
                                 28891, 28893, 28892, 28782 -> {
+                                    val WARNING_MAP = mapOf(
+                                        28891 to Warnings.CHAOS_TUNNELS_WEST,
+                                        28892 to Warnings.CHAOS_TUNNELS_CENTRAL,
+                                        28893 to Warnings.CHAOS_TUNNELS_EAST
+                                    )
                                     if (option == "enter" && player.inCombat()) {
                                         sendMessage(player, "You can't enter the rift when you've recently been in combat.")
+                                        return true
+                                    }
+                                    WARNING_MAP[node.id]?.let { warning ->
+                                        if(option == "enter") {
+                                            if (WarningManager.isWarningDisabled(player, warning)) {
+                                                warning.action(player)
+                                            } else {
+                                                WarningManager.openWarningInterface(player, warning)
+                                            }
+                                        }
                                         return true
                                     }
                                     var i = 0
@@ -319,7 +336,7 @@ class ChaosTunnelPlugin : MapZone("Chaos tunnel", true, ZoneRestriction.CANNON),
         @JvmStatic
         fun getBorkStoreFile(): JsonObject = getArchive("daily-bork-killed")
 
-        private val ENTRANCE_DATA =
+        internal val ENTRANCE_DATA =
             arrayOf(
                 arrayOf(28891, Location(3182, 5471, 0), 28782, Location(3059, 3549, 0)),
                 arrayOf(28893, Location(3248, 5489, 0), 28782, Location(3120, 3571, 0)),

@@ -28,28 +28,34 @@ class AnimationCommandSet : CommandSet(Privilege.ADMIN) {
         define(
             name = "loopanim",
             privilege = Privilege.ADMIN,
-            usage = "::loopanim <lt>Animation ID<gt> <lt>Times<gt>",
-            description = "Plays the animation with the given ID the given number of times",
+            usage = "::loopanim <lt>startID<gt> <lt>endID<gt> <lt>delay<gt>",
+            description = "Plays the animation with the given ID range.",
         ) { player, args ->
             if (args.size < 2) {
-                reject(player, "Syntax error: ::loopanim <Animation ID> <Loop Amount>")
+                reject(player, "Syntax error: ::loopanim <start ID> <end ID> <delay>")
+                return@define
             }
-            val start = toInteger(args[1])
-            var end = toInteger((args[2]))
-            if (end > 25) {
-                notify(player, "Really...? $end times...? Looping 25 times instead.")
-                end = 25
-            }
-            GameWorld.Pulser.submit(
-                object : Pulse(3, player) {
-                    var id = start
 
-                    override fun pulse(): Boolean {
-                        player.animate(Animation.create(id))
-                        return ++id >= end
+            val start = toInteger(args[1])
+            val end = if (args.size > 2) toInteger(args[2]) else 11154
+            val delay = if (args.size > 3) toInteger(args[3]) else 3
+
+            GameWorld.Pulser.submit(
+                object : Pulse(delay, player) {
+                var animId = start
+
+                override fun pulse(): Boolean {
+                    if (delay == 1) {
+                        refreshAppearance(player)
                     }
-                },
-            )
+
+                    player.animate(Animation.create(animId))
+                    player.debug("Animation id: $animId")
+
+                    animId++
+                    return animId >= end
+                }
+            })
         }
 
         define(

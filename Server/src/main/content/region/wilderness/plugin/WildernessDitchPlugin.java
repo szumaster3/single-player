@@ -7,7 +7,7 @@ import core.game.interaction.OptionHandler;
 import core.game.node.Node;
 import core.game.node.entity.impl.PulseType;
 import core.game.node.entity.player.Player;
-import core.game.node.entity.player.link.WarningActions;
+import core.game.node.entity.player.link.WarningHandler;
 import core.game.node.entity.player.link.WarningManager;
 import core.game.node.entity.player.link.Warnings;
 import core.game.node.scenery.Scenery;
@@ -36,7 +36,7 @@ public final class WildernessDitchPlugin extends OptionHandler {
     @Override
     public boolean handle(final Player player, final Node node, String option) {
         if (player.isArtificial()) {
-            Pair<Location, Location> locations = WarningActions.getDitchLocations(player.getLocation(), node.getLocation(), 0);
+            Pair<Location, Location> locations = WarningHandler.getDitchLocations(player.getLocation(), node.getLocation(), 0);
             Location start = locations.getFirst();
             Location end = locations.getSecond();
 
@@ -100,7 +100,7 @@ public final class WildernessDitchPlugin extends OptionHandler {
             }
         }
 
-        WarningActions.handleWildernessJump(player);
+        WarningHandler.handleWildernessJump(player);
     }
 
     @Override
