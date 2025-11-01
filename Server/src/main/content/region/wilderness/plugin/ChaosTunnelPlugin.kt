@@ -30,7 +30,7 @@ import shared.consts.Scenery as Objects
 /**
  * Handles all teleportation and area interactions within the Chaos Tunnels region.
  */
-class ChaosTunnelsListener : MapArea, InteractionListener {
+class ChaosTunnelPlugin : MapArea, InteractionListener {
     override fun defineListeners() {
 
         /*

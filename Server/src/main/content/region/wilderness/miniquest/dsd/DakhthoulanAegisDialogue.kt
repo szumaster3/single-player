@@ -1,4 +1,4 @@
-package content.region.misthalin.varrock.miniquest.dsd
+package content.region.wilderness.miniquest.dsd
 
 import core.game.dialogue.Dialogue
 import core.game.node.entity.npc.NPC

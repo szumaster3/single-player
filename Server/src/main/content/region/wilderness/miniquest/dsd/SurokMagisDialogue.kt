@@ -1,4 +1,4 @@
-package content.region.misthalin.varrock.miniquest.dsd
+package content.region.wilderness.miniquest.dsd
 
 import core.api.getVarbit
 import core.game.activity.ActivityPlugin
