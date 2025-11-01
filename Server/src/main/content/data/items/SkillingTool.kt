@@ -163,11 +163,11 @@ enum class SkillingTool(val id: Int, val level: Int, val ratio: Double, val anim
             var tool: SkillingTool? = null
             val harpoonPriority =
                 arrayOf(
-                    BUTTERFLY_NET_CLASS5,
-                    BUTTERFLY_NET_CLASS4,
-                    BUTTERFLY_NET_CLASS3,
-                    BUTTERFLY_NET_CLASS2,
-                    BUTTERFLY_NET_CLASS1,
+                    HARPOON_CLASS5,
+                    HARPOON_CLASS4,
+                    HARPOON_CLASS3,
+                    HARPOON_CLASS2,
+                    HARPOON_CLASS1,
                 )
             for (harpoon in harpoonPriority) {
                 if (checkTool(player, Skills.FISHING, harpoon)) {
