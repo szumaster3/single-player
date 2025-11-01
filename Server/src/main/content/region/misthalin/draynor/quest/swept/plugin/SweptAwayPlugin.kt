@@ -332,6 +332,19 @@ class SweptAwayPlugin : InteractionListener, InterfaceListener {
             }
             return@on true
         }
+
+        /*
+         * Handles use broomstick on kardia.
+         */
+
+        onUseWith(IntType.NPC, Items.BROOMSTICK_14057, NPCs.KARDIA_992) { player, used, with ->
+            if(inInventory(player, used.id) && getAttribute(player, GameAttributes.QUEST_SWEPT_AWAY_KARDIA_ENCH_RECEIVED, false)) {
+                sendPlayerDialogue(player, "Oh, right - I already had this enchanted here. Sorry to bother you.")
+            } else {
+                openDialogue(player, with.id, with.id)
+            }
+            return@onUseWith true
+        }
     }
 
     override fun defineInterfaceListeners() {

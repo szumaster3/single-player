@@ -33,7 +33,7 @@ class SweptAway : Quest(Quests.SWEPT_AWAY, 160, 159, 1, Vars.VARBIT_QUEST_SWEPT_
             line(player, "I have agreed to help Maggie prepare a batch of the 'good stuff'", line++, true)
             line(player, "that she is concocting in her pauldron.", line++, true)
             line(player, "Maggie gave me a broom which I've had enchanted by", line++, stage > 4)
-            line(player, "!!Hetty?? in !!Rimmington??,", line++, getAttribute(player, GameAttributes.QUEST_SWEPT_AWAY_HETTY_ENCH, false) || getAttribute(player, GameAttributes.QUEST_SWEPT_AWAY_LABELS_COMPLETE, false) || stage > 4)
+            line(player, "!!Hetty?? in !!Rimmington??,", line++, getAttribute(player, GameAttributes.QUEST_SWEPT_AWAY_BROOM_POTION, false) || getAttribute(player, GameAttributes.QUEST_SWEPT_AWAY_LABELS_COMPLETE, false) || stage > 4)
             line(player, "!!Betty?? in !!Port Sarim?? and", line++, stage > 4)
             line(player, "!!Aggie?? in !!Draynor??.", line++, stage > 4)
             line++
@@ -54,11 +54,10 @@ class SweptAway : Quest(Quests.SWEPT_AWAY, 160, 159, 1, Vars.VARBIT_QUEST_SWEPT_
             line++
             line(player, "I can get further rewards if I take my broom to:", line++, false)
             line(player, "The !!Sorceress's apprentice?? in !!Al Kharid??", line++, getAttribute(player, GameAttributes.BROOM_ENCHANTMENT_TP, false))
-            line(player, "!!Ali the Hag?? in !!Pollnivneach??", line++, getAttribute(player, GameAttributes.QUEST_SWEPT_AWAY_ALI_THE_HAG_ENCH_RECEIVED, false))
+            line(player, "!!Ali the Hag?? in !!Pollnivneach?? (with level 33 Magic)", line++, getAttribute(player, GameAttributes.QUEST_SWEPT_AWAY_ALI_THE_HAG_ENCH_RECEIVED, false))
             line(player, "The !!Old Crone?? near the !!Slayer Tower?? (with level 53 Magic)", line++, getAttribute(player, GameAttributes.QUEST_SWEPT_AWAY_OLD_CRONE_ENCH_RECEIVED, false))
-            line(player, "!!Baba Yaga?? of !!Lunar Isle?? (with level 73 Magic)", line++, getAttribute(player, GameAttributes.QUEST_SWEPT_AWAY_BETTY_ENCH_RECEIVED, false))
-            // TODO
-            line(player, "!!Kardia?? in the !!Underground Pass?? (with level 93 Magic)", line++, false)
+            line(player, "!!Baba Yaga?? of !!Lunar Isle?? (with level 73 Magic)", line++, getAttribute(player, GameAttributes.QUEST_SWEPT_AWAY_BABA_YAGA_ENCH_RECEIVED, false))
+            line(player, "!!Kardia?? in the !!Underground Pass?? (with level 93 Magic)", line++, getAttribute(player, GameAttributes.QUEST_SWEPT_AWAY_KARDIA_ENCH_RECEIVED, false))
             line++
             line(player, "I should talk to these !!witches?? for more information.", line, false)
         }

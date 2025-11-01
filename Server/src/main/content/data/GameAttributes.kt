@@ -131,14 +131,13 @@ internal object GameAttributes {
 
     // Swept away quest.
     const val QUEST_SWEPT_AWAY = "quest:swept-away"
-    const val QUEST_SWEPT_AWAY_HETTY_ENCH = "/save:quest:swept-away:hetty-enchantment"
+    const val QUEST_SWEPT_AWAY_BROOM_POTION = "/save:quest:swept-away:hetty-enchantment"
     const val QUEST_SWEPT_AWAY_BETTY_ENCH = "/save:quest:swept-away:betty-enchantment"
 
-    const val QUEST_SWEPT_AWAY_BETTY_ENCH_RECEIVED = "/save:quest:swept-away:betty-enchantment-completed"
+    const val QUEST_SWEPT_AWAY_BABA_YAGA_ENCH_RECEIVED = "/save:quest:swept-away:betty-enchantment-completed"
     const val QUEST_SWEPT_AWAY_OLD_CRONE_ENCH_RECEIVED = "/save:quest:swept-away:old-crone-completed"
     const val QUEST_SWEPT_AWAY_ALI_THE_HAG_ENCH_RECEIVED = "/save:quest:swept-away:ali-the-hag-completed"
-    // TODO
-    const val QUEST_SWEPT_AWAY_SORCERESS_APPRENTICE_RECEIVED = "/save:quest:swept-away:sorceress-apprentice-completed"
+    const val QUEST_SWEPT_AWAY_KARDIA_ENCH_RECEIVED = "/save:quest:swept-away:kardia-completed"
 
     const val QUEST_SWEPT_AWAY_BETTY_WAND = "quest:swept-away:item"
     const val QUEST_SWEPT_AWAY_CREATURE_INTER = "/save:quest:sweep-away:creature_interactions"

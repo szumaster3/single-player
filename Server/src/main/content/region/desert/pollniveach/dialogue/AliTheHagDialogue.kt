@@ -22,7 +22,7 @@ class AliTheHagDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
-        if (isQuestComplete(player, Quests.SWEPT_AWAY) && getDynLevel(player, Skills.MAGIC) > 33 && inInventory(player, Items.BROOMSTICK_14057) && getAttribute(player, GameAttributes.QUEST_SWEPT_AWAY_HETTY_ENCH, false)) {
+        if (isQuestComplete(player, Quests.SWEPT_AWAY) && getDynLevel(player, Skills.MAGIC) > 33 && inInventory(player, Items.BROOMSTICK_14057) && !getAttribute(player, GameAttributes.QUEST_SWEPT_AWAY_ALI_THE_HAG_ENCH_RECEIVED, false)) {
             options("Good day, Ali.", "Could you enchant this broom for me?")
             stage = 10
         } else if (hasRequirement(player, Quests.THE_FEUD)) {
@@ -62,7 +62,7 @@ class AliTheHagDialogue(player: Player? = null) : Dialogue(player) {
                 end()
                 lock(player, 1)
                 visualize(player, -1, SweptUtils.BROOM_ENCHANTMENT_GFX)
-                removeAttribute(player, GameAttributes.QUEST_SWEPT_AWAY_HETTY_ENCH)
+                setAttribute(player, GameAttributes.QUEST_SWEPT_AWAY_ALI_THE_HAG_ENCH_RECEIVED, true)
                 sendDoubleItemDialogue(player, -1, Items.BROOMSTICK_14057, "You receive 1,997 Magic experience.")
                 rewardXP(player, Skills.MAGIC, 1997.0)
             }

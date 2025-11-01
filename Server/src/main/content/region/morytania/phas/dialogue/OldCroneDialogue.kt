@@ -39,7 +39,7 @@ class OldCroneDialogue(player: Player? = null) : Dialogue(player) {
         val hasBroomstick = inInventory(player, Items.BROOMSTICK_14057)
         val labelsComplete = getAttribute(player, GameAttributes.QUEST_SWEPT_AWAY_LABELS_COMPLETE, false)
 
-        val sweptAwayReady = sweptAwayComplete && hasBroomstick && magicLevel >= MIN_MAGIC_LEVEL_FOR_BROOM && labelsComplete
+        val sweptAwayReady = sweptAwayComplete && hasBroomstick && magicLevel >= MIN_MAGIC_LEVEL_FOR_BROOM && labelsComplete && !getAttribute(player, GameAttributes.QUEST_SWEPT_AWAY_OLD_CRONE_ENCH_RECEIVED, false)
 
         when {
             // Ghosts Ahoy >= 3 and Animal Magnetism started or complete

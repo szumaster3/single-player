@@ -29,7 +29,7 @@ class SorceressApprenticeDialogue(player: Player? = null) : Dialogue(player) {
         if (player.getSavedData().globalData.hasSpokenToApprentice()) {
             player(FaceAnim.HALF_GUILTY, "Hey apprentice, do you want to try out", "your teleport skills again?")
         } else {
-            if (isQuestComplete(player, Quests.SWEPT_AWAY) && inInventory(player, Items.BROOMSTICK_14057)) {
+            if (isQuestComplete(player, Quests.SWEPT_AWAY) && inInventory(player, Items.BROOMSTICK_14057) && !getAttribute(player, GameAttributes.BROOM_ENCHANTMENT_TP, false)) {
                 options("Hello. What are you doing?", "Could you enchant this broom for me?")
                 stage = 100
             }
