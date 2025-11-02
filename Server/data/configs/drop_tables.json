@@ -57807,27 +57807,6 @@
     "default": [
       {
         "minAmount": "1",
-        "weight": "100.0",
-        "id": "526",
-        "maxAmount": "1"
-      }
-    ],
-    "charm": [],
-    "ids": "1904,6368,6367,912,913,914,253,254,255,256,258,27,34,35,689,690,691,3814,3816,4402,4403",
-    "description": "Menaphite Thug (level: 55)",
-    "main": [
-      {
-        "minAmount": "4",
-        "weight": "50.0",
-        "id": "995",
-        "maxAmount": "34"
-      }
-    ]
-  },
-  {
-    "default": [
-      {
-        "minAmount": "1",
         "weight": "1.0",
         "id": "526",
         "maxAmount": "1"
@@ -59612,5 +59591,50 @@
     "ids": "645",
     "description": "Jonny the beard (level: 2)",
     "main": []
+  },
+  {
+    "default": [],
+    "charm": [
+      {
+        "minAmount": "1",
+        "weight": "67.0",
+        "id": "0",
+        "maxAmount": "1"
+      },
+      {
+        "minAmount": "1",
+        "weight": "8.0",
+        "id": "12158",
+        "maxAmount": "1"
+      },
+      {
+        "minAmount": "1",
+        "weight": "18.0",
+        "id": "12159",
+        "maxAmount": "1"
+      },
+      {
+        "minAmount": "1",
+        "weight": "5.0",
+        "id": "12160",
+        "maxAmount": "1"
+      },
+      {
+        "minAmount": "1",
+        "weight": "2.0",
+        "id": "12163",
+        "maxAmount": "1"
+      }
+    ],
+    "ids": "58",
+    "description": "Shadow spider (level: 52)",
+    "main": [
+      {
+        "minAmount": "1",
+        "weight": "1.0",
+        "id": "0",
+        "maxAmount": "1"
+      }
+    ]
   }
 ]
