@@ -19,7 +19,7 @@ BEGIN {
         id = m[1]
         x = m[2]
         y = m[3]
-        # jeśli już istnieje ten npc_id, dopisujemy nową lokację
+        # If npc id is same, we add only new location.
         npc[id] = npc[id] sprintf("{%s,%s,%d,1,0}-", x, y, plane)
         $0 = substr($0, RSTART + RLENGTH)
     }
