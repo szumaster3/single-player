@@ -1,6 +1,7 @@
 package content.region.kandarin.ardougne.quest.drunkmonk
 
 import core.api.addItemOrDrop
+import core.api.displayQuestItem
 import core.api.rewardXP
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest
@@ -12,13 +13,10 @@ import shared.consts.Vars
 
 @Initializable
 class MonksFriend : Quest(Quests.MONKS_FRIEND, 89, 88, 1, Vars.VARP_QUEST_MONKS_FRIEND_PROGRESS_30, 0, 1, 80) {
-    override fun drawJournal(
-        player: Player,
-        stage: Int,
-    ) {
+
+    override fun drawJournal(player: Player, stage: Int) {
         super.drawJournal(player, stage)
         var line = 11
-        player ?: return
         if (stage == 0) {
             line(player, "I can start this quest by speaking to !!Brother Omad?? in the", line++)
             line(player, "!!Monastery?? south of !!Ardougne??.", line++)
@@ -53,9 +51,8 @@ class MonksFriend : Quest(Quests.MONKS_FRIEND, 89, 88, 1, Vars.VARP_QUEST_MONKS_
 
     override fun finish(player: Player) {
         super.finish(player)
-        player ?: return
         var ln = 10
-        player.packetDispatch.sendItemZoomOnInterface(Items.LAW_RUNE_563, 230, 277, 5)
+        displayQuestItem(player, Items.LAW_RUNE_6434)
         drawReward(player, "1 Quest Point", ln++)
         drawReward(player, "8 Law Runes", ln++)
         drawReward(player, "2000 Woodcutting XP", ln)

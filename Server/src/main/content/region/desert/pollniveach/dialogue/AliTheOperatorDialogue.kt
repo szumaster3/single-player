@@ -24,12 +24,7 @@ class AliTheOperatorDialogue(player: Player? = null) : Dialogue(player) {
             0 -> npc(FaceAnim.ANNOYED, "What do you want?").also { stage++ }
             1 -> player(FaceAnim.HALF_ASKING, "I'm just new in town and have a few questions.").also { stage++ }
             2 -> npc(FaceAnim.ASKING, "What do you want to know?").also { stage++ }
-            3 -> options(
-                "Tell me about yourself.",
-                "Tell me about the other people in the town.",
-                "I'm looking for Ali.",
-            ).also { stage++ }
-
+            3 -> options("Tell me about yourself.", "Tell me about the other people in the town.", "I'm looking for Ali.").also { stage++ }
             4 -> when (buttonId) {
                 1 -> npc(FaceAnim.ANNOYED, "That information is available on a need to know basis", "and right now, you don't need to know.").also { stage = 10 }
                 2 -> npc(FaceAnim.SUSPICIOUS, "Sheep, ready for the slau...", "hang on I shouldn't be saying...,", "listen I don't want to talk about them.").also { stage = 10 }
