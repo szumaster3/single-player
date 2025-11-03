@@ -14,7 +14,7 @@ class GarthDialogue : DialogueFile() {
     override fun handle(componentID: Int, buttonID: Int) {
         npc = NPC(NPCs.GARTH_2330)
         when(stage) {
-            0 -> if(getQuestStage(player!!, Quests.BACK_TO_MY_ROOTS) == 6) {
+            0 -> if(getQuestStage(player!!, Quests.BACK_TO_MY_ROOTS) == 5) {
                 playerl(FaceAnim.FRIENDLY, "Horacio has told me that you know a lot about taking root cuttings.").also { stage++ }
             } else if(getQuestStage(player!!, Quests.BACK_TO_MY_ROOTS) == 7) {
                 player("Hello, Garth.").also { stage = 32 }
