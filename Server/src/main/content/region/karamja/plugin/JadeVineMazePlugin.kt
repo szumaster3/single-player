@@ -458,7 +458,7 @@ class JadeVineMazePlugin : MapArea, InteractionListener {
             }
 
             if(removeItem(player, used.asItem()) && removeItem(player, with.asItem())) {
-                removeItem(player, Items.POT_LID_4441)
+                removeItem(player, Items.POT_LID_4440)
                 addItemOrDrop(player, Items.SEALED_POT_11777)
                 // setVarbit(player, 4062, 3)
                 setQuestStage(player, Quests.BACK_TO_MY_ROOTS, 7)
