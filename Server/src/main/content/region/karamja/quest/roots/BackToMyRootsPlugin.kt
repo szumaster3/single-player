@@ -13,6 +13,11 @@ class BackToMyRootsPlugin : InteractionListener {
 
     override fun defineListeners() {
 
+        /*
+         * Handles taking a hand from smelly packet
+         * Outside the RPDT in East Ardougne.
+         */
+
         on(Scenery.SMELLY_PACKAGE_27055, IntType.SCENERY, "open") { player, _ ->
             player.animate(Animation(Animations.HUMAN_WITHDRAW_833))
             val npcId = Repository.findNPC(NPCs.RPDT_EMPLOYEE_843)

@@ -425,26 +425,19 @@ class JadeVineMazePlugin : MapArea, InteractionListener {
 
         onUseWith(IntType.ITEM, ROOT_CUTTINGS, Items.PLANT_POT_5357) { player, used, with ->
             if (removeItem(player, used.id) && removeItem(player, with.id)) {
-                player.dialogueInterpreter.sendItemMessage(
-                    Items.POTTED_ROOT_11776,
-                    "You carefully plant the cutting in the pot. Now to wait",
-                    "and see if it grows!"
-                )
+                player.dialogueInterpreter.sendItemMessage(Items.POTTED_ROOT_11776, "You carefully plant the cutting in the pot. Now to wait", "and see if it grows!")
                 addItem(player, Items.POTTED_ROOT_11776, 1)
             }
-
             queueScript(player, 3, QueueStrength.SOFT) {
+                lock(player, 3)
                 val rand = RandomFunction.random(4060, 4064)
                 if (rand == 4062) {
                     sendDialogue(player, "Your cutting seems to have taken successfully.")
-                    setVarbit(player, 4062, 2)
+                    setVarbit(player, 4062, 2, true)
                 } else {
                     removeItem(player, Items.POTTED_ROOT_11776)
-                    sendDialogueLines(
-                        player,
-                        "The cutting fails to take properly and wilts. You remove it from the",
-                        "plant pot"
-                    )
+                    sendDialogueLines(player, "The cutting fails to take properly and wilts. You remove it from the", "plant pot.")
+                    sendMessage(player, "The cutting fails to take properly and wilts. You remove it from the plant pot.")
                     addItem(player, Items.PLANT_POT_5357)
                     addItem(player, Items.WILTED_CUTTING_11775)
                 }
@@ -454,18 +447,22 @@ class JadeVineMazePlugin : MapArea, InteractionListener {
         }
 
         /*
-         * Handles creating sealed pot?
+         * Handles creating sealed pot.
+         * If lost re-take after speak to Garth.
          */
 
-        onUseWith(IntType.ITEM, Items.POTTED_ROOT_11776, Items.POT_LID_4440) { player, used, with ->
-            if (getVarbit(player, 4062) != 2 || getQuestStage(player, Quests.BACK_TO_MY_ROOTS) < 6) {
+        onUseWith(IntType.ITEM, Items.POTTED_ROOT_11776, Items.EMPTY_POT_1931) { player, used, with ->
+            if(!inInventory(player, Items.POT_LID_4440)) {
+                sendMessage(player, "You don't have required item to do this.")
                 return@onUseWith false
             }
 
-            removeItem(player, used.asItem())
-            removeItem(player, with.asItem())
-            addItemOrDrop(player, Items.SEALED_POT_11777)
-            setVarbit(player, 4062, 3)
+            if(removeItem(player, used.asItem()) && removeItem(player, with.asItem())) {
+                removeItem(player, Items.POT_LID_4441)
+                addItemOrDrop(player, Items.SEALED_POT_11777)
+                // setVarbit(player, 4062, 3)
+                setQuestStage(player, Quests.BACK_TO_MY_ROOTS, 7)
+            }
             return@onUseWith true
         }
     }
