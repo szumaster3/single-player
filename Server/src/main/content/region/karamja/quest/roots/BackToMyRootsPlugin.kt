@@ -59,7 +59,7 @@ class BackToMyRootsPlugin : InteractionListener {
         on(Scenery.WILD_JADE_VINE_27062, IntType.SCENERY, "attack") { player, _ ->
             val horacio = HoracioNPC()
             val wildJade = WildJadeVineNPC()
-            lock(player, 10)
+            player.lock()
             openOverlay(player, Components.FADE_TO_BLACK_120)
 
             region.add(player)
@@ -84,7 +84,9 @@ class BackToMyRootsPlugin : InteractionListener {
                 horacio.properties.teleportLocation =
                     region.baseLocation.transform(12, 49, 0)
                 wildJade.properties.teleportLocation =
-                    region.baseLocation.transform(15, 51, 0)
+                    region.baseLocation.transform(14, 50, 0)
+
+                horacio.face(wildJade)
             }
             return@on true
         }

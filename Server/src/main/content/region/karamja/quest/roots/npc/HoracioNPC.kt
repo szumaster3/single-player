@@ -5,7 +5,7 @@ import core.game.node.entity.player.Player
 import core.game.world.map.Location
 import shared.consts.NPCs
 
-class HoracioNPC(id: Int = 0,location: Location? = null) : AbstractNPC(id, location) {
+class HoracioNPC(id: Int = NPCs.HORACIO_845,location: Location? = Location.create(2639, 3313, 2)) : AbstractNPC(id, location) {
     var target: Player? = null
 
     override fun construct(id: Int, location: Location, vararg objects: Any): AbstractNPC = HoracioNPC(id, location)
