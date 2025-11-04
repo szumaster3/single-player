@@ -33,9 +33,7 @@ object NPCRenderer {
             if (npc.isHidden(player) || !withinDistance || npc.properties.isTeleporting) {
                 buffer.putBits(1, 1).putBits(2, 3)
                 toRemove.add(npc)
-                if (!withinDistance && npc.aggressiveHandler != null) {
-                    npc.aggressiveHandler.removeTolerance(player.index)
-                }
+                npc.aggressiveHandler?.removeTolerance(player.index)
             } else if (npc.walkingQueue.runDir != -1) {
                 buffer.putBits(1, 1).putBits(2, 2).putBits(3, npc.walkingQueue.walkDir).putBits(3, npc.walkingQueue.runDir)
                 flagMaskUpdate(player, buffer, maskBuffer, npc, false)
@@ -57,7 +55,8 @@ object NPCRenderer {
             if (localNPCs.contains(npc) || npc.isHidden(player)) {
                 continue
             }
-            buffer.putBits(15, npc.index).putBits(1, if (npc.properties.isTeleporting) 1 else 0).putBits(3, npc.direction.ordinal)
+            val dir = npc.direction?.ordinal ?: 0
+            buffer.putBits(15, npc.index).putBits(1, if (npc.properties.isTeleporting) 1 else 0).putBits(3, dir)
             flagMaskUpdate(player, buffer, maskBuffer, npc, true)
             var offsetX = npc.location.x - player.location.x
             var offsetY = npc.location.y - player.location.y
@@ -89,8 +88,11 @@ object NPCRenderer {
 
     /**
      * Sets the mask update flag.
+     * @param player The player.
      * @param buffer The buffer to write on.
+     * @param maskBuffer The mask buffer for NPC updates.
      * @param npc The NPC.
+     * @param sync Whether this update is during synchronization.
      */
     private fun flagMaskUpdate(player: Player, buffer: IoBuffer, maskBuffer: IoBuffer, npc: NPC, sync: Boolean) {
         if (npc.updateMasks.isUpdateRequired) {
@@ -103,6 +105,7 @@ object NPCRenderer {
 
     /**
      * Writes the mask updates.
+     * @param player The player.
      * @param maskBuffer The mask buffer to write on.
      * @param npc The NPC to update.
      * @param sync If called upon synchronization.
