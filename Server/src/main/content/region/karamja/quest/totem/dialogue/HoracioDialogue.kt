@@ -132,3 +132,112 @@ class HoracioDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun getIds(): IntArray = intArrayOf(NPCs.HORACIO_845)
 }
+
+//// Pay / Protect vine
+//100 -> {
+//    if (isVineFullyGrown()) {
+//        npc("The vine is already fully grown! I don't know what you want me to do with it!").also { stage = END_DIALOGUE }
+//    } else if (hasPaidForProtection()) {
+//        npc("I'm already looking after your vine! You have ears like corn!").also { stage = END_DIALOGUE }
+//    } else if (isVineGrowing()) {
+//        npc("Yes, of course, but it will cost you. My thyme is valuable.").also { stage = 101 }
+//    } else {
+//        npc("Err... you haven't planted a vine yet!").also { stage = END_DIALOGUE }
+//    }
+//}
+//
+//101 -> showTopics(
+//    Topic("How much?", 102, false),
+//    Topic("No thanks.", 104, false)
+//)
+//
+//102 -> npc("I'll want 10 wildblood hops so that I can brew myself some tasty beer.").also { stage = 103 }
+//
+//103 -> {
+//    if (!hasWildbloodHops()) {
+//        player("I don't have enough of those. I guess I'll come back later.").also { stage = END_DIALOGUE }
+//    } else {
+//        showTopics(
+//            Topic("Okay, it's a deal.", 105, false),
+//            Topic("No, that's too much.", 107, false)
+//        )
+//    }
+//}
+//
+//105 -> player("Okay, it's a deal.").also { stage = 106 }
+//106 -> {
+//    player.inventory.remove("wildblood hops", 10)
+//    npc("That'll do nicely. Never fear, Horacio is here, your vine shall grow safely in my hands.").also {
+//        setVarbit(player, Vars.VARBIT_VINE_PROTECTION_PAID, 1, true)
+//        stage = END_DIALOGUE
+//    }
+//}
+//
+//107 -> player("No, that's too much.").also { stage = 108 }
+//108 -> npc("Well, I'm not risking my life for free.").also { stage = END_DIALOGUE }
+//
+//// Clear wild vine patch
+//310 -> {
+//    if (!hasWildJadeVine()) {
+//        npc("You've got a fine young vine growing there. Probably best not to disturb it. Wait till it's grown.").also { stage = 311 }
+//    } else {
+//        npc("ARG! Not again! Would you like me to remove it for you?").also { stage = 312 }
+//    }
+//}
+//311 -> player("Okay. I'll wait then.").also { stage = END_DIALOGUE }
+//312 -> showTopics(
+//    Topic("Yes, please!", 313, false),
+//    Topic("No, thanks - I can handle it.", END_DIALOGUE, false)
+//)
+//313 -> npc("Okay, but I'm not doing it for nothing. Five coconuts and five watermelons to do that.").also { stage = 314 }
+//314 -> {
+//    if (player.inventory.count("coconuts") < 5 || player.inventory.count("watermelon") < 5) {
+//        player("I don't have that - I guess I'll come back, or deal with it by myself.").also { stage = END_DIALOGUE }
+//    } else {
+//        showTopics(
+//            Topic("Okay, it's a deal.", 315, false)
+//        )
+//    }
+//}
+//315 -> player("Okay, it's a deal.").also { stage = 316 }
+//316 -> {
+//    player.inventory.remove("coconuts", 5)
+//    player.inventory.remove("watermelon", 5)
+//    setVarbit(player, Vars.VARBIT_WILD_JADE_VINE_PRESENT, 0, true)
+//    npc("There, all done for you.").also { stage = 317 }
+//}
+//317 -> player("Thanks!").also { stage = END_DIALOGUE }
+//
+//// Learn about jade vine history
+//320 -> showTopics(
+//    Topic("Tell me about propagation.", 321, false),
+//    Topic("Can you tell me anything about its history?", 325, false)
+//)
+//321 -> player("Tell me about propagation.").also { stage = 322 }
+//322 -> npc("These plants have gender, the same as you or I, and need one of each gender to propagate the species by seed, which is why we didn't get seeds until you successfully grew another vine in my patch. They are usually pollinated by nocturnal bats which can fly vast distances.").also { stage = 323 }
+//323 -> player("So, the one on Karamja would never have given seed until we had another of a different gender growing?").also { stage = 324 }
+//324 -> npc("Maybe, maybe not, but it would never have grown, even if it had given seed. Needs the other gender to be fertile.").also { stage = END_DIALOGUE }
+//
+//325 -> player("Can you tell me anything about its history?").also { stage = 326 }
+//326 -> npc("The jade vine, or 'strongylodon macrobotrys' was once thought hunted to extinction by the Slayer Masters when they thought them the best thing to train on without needing an assignment. As we have found out, there seems to have been one that slipped through the net and grew on its own, undisturbed on Karamja. It can be a formidable opponent when fully wild - I don't think I'd have liked killing it for fun!").also { stage = 327 }
+//327 -> player("It wasn't that hard.").also { stage = END_DIALOGUE }
+//
+//// Sell items (2022+)
+//340 -> player("Can you sell me something?").also { stage = 341 }
+//341 -> npc("That depends on what I have to sell. What is it that you're looking for?").also { stage = 342 }
+//342 -> openShop(player, "Farmer's Supplies").also { stage = END_DIALOGUE }
+//
+//// Retrieve seed
+//200 -> {
+//    when {
+//        hasPlantedVine() -> npc("I don't have any seeds to give you? Hope you're having fun growing your vine, mine is looking particularly fine.").also { stage = END_DIALOGUE }
+//        hasJadeVineSeed() -> npc("I have already gave you a seed. Maybe you have stored it somewhere?").also { stage = END_DIALOGUE }
+//        else -> {
+//            npc("Here you go.").also { stage = 201 }
+//        }
+//    }
+//}
+//201 -> {
+//    player.inventory.add("jade vine seed", 1)
+//    stage = END_DIALOGUE
+//}
