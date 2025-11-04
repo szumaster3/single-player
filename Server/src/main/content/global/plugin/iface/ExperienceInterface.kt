@@ -33,15 +33,15 @@ class ExperienceInterface : ComponentPlugin() {
             } else {
                 removeAttribute(player, "exp_interface:skill")
                 when (confirmedSkill) {
-                    Skills.HERBLORE -> if (!checkHerblore(player)) {
+                    Skills.HERBLORE -> if (!isQuestComplete(player, Quests.DRUIDIC_RITUAL)) {
                         sendMessage(player, "You need to have completed ${Quests.DRUIDIC_RITUAL} for this.").also { return true }
                     }
 
-                    Skills.RUNECRAFTING -> if (!checkRunecrafting(player)) {
+                    Skills.RUNECRAFTING -> if (!isQuestComplete(player, Quests.RUNE_MYSTERIES)) {
                         sendMessage(player, "You need to have completed Rune Mysteries for this.").also { return true }
                     }
 
-                    Skills.SUMMONING -> if (!checkSummoning(player)) {
+                    Skills.SUMMONING -> if (!isQuestComplete(player, Quests.WOLF_WHISTLE)) {
                         sendMessage(player, "You need to have completed ${Quests.WOLF_WHISTLE} for this.").also { return true }
                     }
                 }
@@ -89,12 +89,6 @@ class ExperienceInterface : ComponentPlugin() {
         }
         return true
     }
-
-    private fun checkHerblore(player: Player): Boolean = isQuestComplete(player, Quests.DRUIDIC_RITUAL)
-
-    private fun checkSummoning(player: Player): Boolean = isQuestComplete(player, Quests.WOLF_WHISTLE)
-
-    private fun checkRunecrafting(player: Player): Boolean = isQuestComplete(player, Quests.RUNE_MYSTERIES)
 
     companion object {
         private const val SOUND = Sounds.TBCU_FINDGEM_1270
