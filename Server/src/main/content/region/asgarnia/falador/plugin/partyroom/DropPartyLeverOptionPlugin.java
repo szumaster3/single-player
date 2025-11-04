@@ -5,11 +5,8 @@ import core.game.interaction.OptionHandler;
 import core.game.node.Node;
 import core.game.node.entity.player.Player;
 import core.game.node.scenery.Scenery;
-import core.game.system.task.Pulse;
 import core.game.world.GameWorld;
-import core.game.world.update.flag.context.Animation;
 import core.plugin.Plugin;
-import shared.consts.Animations;
 
 /**
  * Represents the plugin used for the drop party lever.
@@ -17,11 +14,6 @@ import shared.consts.Animations;
  * @author Vexia
  */
 public final class DropPartyLeverOptionPlugin extends OptionHandler {
-
-    /**
-     * Represents the animation to use.
-     */
-    private static final Animation ANIMATION = new Animation(Animations.HUMAN_PARTY_ROOM_LEVER_6933);
 
     @Override
     public Plugin<Object> newInstance(Object arg) throws Throwable {
@@ -37,13 +29,6 @@ public final class DropPartyLeverOptionPlugin extends OptionHandler {
         player.lock(2);
         player.faceLocation(object.getLocation());
         player.getDialogueInterpreter().open(1 << 16 | 2);
-        GameWorld.getPulser().submit(new Pulse(1, player) {
-            @Override
-            public boolean pulse() {
-                player.animate(ANIMATION);
-                return true;
-            }
-        });
         return true;
     }
 

@@ -29,6 +29,7 @@ import core.game.world.update.flag.context.Animation;
 import core.plugin.Plugin;
 import core.plugin.Initializable;
 import core.plugin.ClassScanner;
+import shared.consts.Animations;
 import shared.consts.Components;
 
 /**
@@ -68,6 +69,12 @@ public final class PartyRoomPlugin extends OptionHandler {
      * If the knight dance is commenced.
      */
     private static boolean dancing;
+
+    /**
+     * Represents the animation to use.
+     */
+    private static final Animation ANIMATION = new Animation(Animations.HUMAN_PARTY_ROOM_LEVER_6933);
+
 
     @Override
     public Plugin<Object> newInstance(Object arg) throws Throwable {
@@ -203,7 +210,6 @@ public final class PartyRoomPlugin extends OptionHandler {
     private void handleLever(Player player, Scenery object) {
         player.lock(3);
         player.faceLocation(object.getLocation());
-        player.animate(Animation.create(6933), 1);
         player.getDialogueInterpreter().sendOptions("Select an Option", "Ballon Bonanza (1000 coins).", "Nightly Dance (500 coins).", "No reward.");
         player.getDialogueInterpreter().addAction(new DialogueAction() {
             @Override
@@ -217,6 +223,8 @@ public final class PartyRoomPlugin extends OptionHandler {
                         } else if (player.getInventory().contains(995, 1000)) {
                             balloonManager.start();
                             player.getInventory().remove(new Item(995, 1000));
+                            animateScenery(player, object, 9386,true);
+                            player.animate(ANIMATION, 1);
                         } else {
                             player.getDialogueInterpreter().sendDialogue("Balloon Bonanza costs 1000 coins.");
                         }
@@ -227,6 +235,8 @@ public final class PartyRoomPlugin extends OptionHandler {
                         } else if (player.getInventory().contains(995, 500)) {
                             commenceDance();
                             player.getInventory().remove(new Item(995, 500));
+                            animateScenery(player, object, 9386,true);
+                            player.animate(ANIMATION, 1);
                         } else {
                             player.getDialogueInterpreter().sendDialogue("Nightly Dance costs 500 coins.");
                         }
