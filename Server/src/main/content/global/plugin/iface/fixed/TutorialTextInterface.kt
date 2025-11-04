@@ -1,14 +1,10 @@
-package content.global.plugin.iface
+package content.global.plugin.iface.fixed
 
-import core.api.closeDialogue
 import core.api.repositionChild
 import core.game.interaction.InterfaceListener
 import shared.consts.Components
 
-/**
- * Handles reposition ui for tutorial interface server sided.
- */
-class TutorialInterface : InterfaceListener {
+class TutorialTextInterface : InterfaceListener {
     override fun defineInterfaceListeners() {
         onOpen(Components.TUTORIAL_TEXT_372) { player, _ ->
             val indices = intArrayOf(1, 2, 3, 4)
@@ -21,14 +17,11 @@ class TutorialInterface : InterfaceListener {
             return@onOpen true
         }
 
-        on(Components.MESSAGE5_214) { player, _, _, buttonID, _, _ ->
-            if (buttonID == 6) closeDialogue(player)
-            return@on true
-        }
-
         onOpen(Components.TUTORIAL_TEXT2_421) { player, _ ->
             repositionChild(player, Components.TUTORIAL_TEXT2_421, 0, 19, 21)
             return@onOpen true
         }
     }
+
+
 }

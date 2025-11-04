@@ -1,14 +1,10 @@
-package content.global.plugin.iface
+package content.global.plugin.iface.fixed
 
 import core.api.repositionChild
 import core.game.interaction.InterfaceListener
 import shared.consts.Components
 
-/**
- * Handles the server-side repositioning of the interface for selecting options.
- */
-class OptionInterface : InterfaceListener {
-
+class SelectAnOptionInterface : InterfaceListener {
     override fun defineInterfaceListeners() {
         onOpen(Components.SELECT_AN_OPTION_140) { player, _ ->
             val indices = intArrayOf(0, 2, 3, 4, 5, 6)
@@ -18,12 +14,6 @@ class OptionInterface : InterfaceListener {
             for (i in indices.indices) {
                 repositionChild(player, Components.SELECT_AN_OPTION_140, indices[i], xs[i], ys[i])
             }
-            return@onOpen true
-        }
-
-        onOpen(Components.DOUBLEOBJBOX_131) { player, _ ->
-            repositionChild(player, Components.DOUBLEOBJBOX_131, 1, 96, 25)
-            repositionChild(player, Components.DOUBLEOBJBOX_131, 3, 96, 98)
             return@onOpen true
         }
     }
