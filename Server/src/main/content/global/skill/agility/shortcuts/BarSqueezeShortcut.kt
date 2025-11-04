@@ -28,28 +28,17 @@ class BarSqueezeShortcut : AgilityShortcut(intArrayOf(9334, 9337, 2186), 66, 1.0
         val direction = when (obj.id) {
             9334 -> Direction.WEST
             9337 -> if (player.location.y < obj.location.y) Direction.NORTH else Direction.SOUTH
-            2186 -> if (player.location.y >= 3161) Direction.SOUTH else Direction.getLogicalDirection(
-                player.location,
-                obj.location
-            )
-
+            2186 -> if (player.location.y >= 3161) Direction.SOUTH else Direction.getLogicalDirection(player.location, obj.location)
             else -> Direction.getLogicalDirection(player.location, obj.location)
         }
 
         val start = if (obj.id == 9334) Location(3424, 3476, 0) else player.location
+        val end = start.transform(direction, 1)
+
         player.lock(3)
         GameWorld.Pulser.submit(object : Pulse(1, player) {
             override fun pulse(): Boolean {
-                AgilityHandler.forceWalk(
-                    player,
-                    -1,
-                    start,
-                    start.transform(direction, 1),
-                    Animation(Animations.DUCK_UNDER_2240),
-                    10,
-                    0.0,
-                    null
-                )
+                AgilityHandler.forceWalk(player, -1, start, end, Animation(Animations.DUCK_UNDER_2240), 10, 0.0, null)
                 return true
             }
         })

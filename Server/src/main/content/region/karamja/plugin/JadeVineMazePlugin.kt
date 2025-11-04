@@ -54,6 +54,7 @@ class JadeVineMazePlugin : MapArea, InteractionListener {
          * - Value: The location player will arrive at when climbing up.
          */
         private val CLIMB_UP_DESTINATION = mapOf(
+            2990 to Location.create(2900, 2989, 2),
             2998 to Location.create(2896, 2998, 2),
             2978 to Location.create(2907, 2978, 2),
             2975 to Location.create(2917, 2975, 2),
@@ -181,15 +182,7 @@ class JadeVineMazePlugin : MapArea, InteractionListener {
         on(Scenery.VINE_27151, IntType.SCENERY, "climb-up") { player, node ->
             when (node.location.y) {
                 2982 -> forceMove(player, player.location, Location.create(2892, 2982, 3), 0, 60, null, 3599)
-                2987 -> forceMove(
-                    player,
-                    player.location,
-                    Location.create(2894, 2987, 2),
-                    0,
-                    60,
-                    null,
-                    3599
-                ).also { player.moveStep() }
+                2987 -> forceMove(player, player.location, Location.create(2894, 2987, 2), 0, 60, null, 3599).also { player.moveStep() }
             }
             return@on true
         }
@@ -213,53 +206,25 @@ class JadeVineMazePlugin : MapArea, InteractionListener {
         }
 
         on(Scenery.VINE_27129, IntType.SCENERY, "climb-down") { player, node ->
+            when (player.location.y) {
+                2978 -> forceMove(player, player.location, Location.create(2906, 2978, 1), 0, 60, null, 819)
+                2998 -> forceMove(player, player.location, Location.create(2896, 2997, 1), 0, 60, null, 819)
+
+            }
             val destination = CLIMB_DOWN_DESTINATION[node.location.y] ?: Location.create(2896, 2997, 1)
             forceMove(player, player.location, destination, 0, 60, null, Animations.JUMP_OVER_7268)
             return@on true
         }
 
         on(Scenery.VINE_27130, IntType.SCENERY, "climb-down") { player, node ->
-            when (node.location.y) {
-                3006 -> forceMove(
-                    player,
-                    player.location,
-                    Location.create(2888, 3007, 0),
-                    0,
-                    30,
-                    null,
-                    Animations.JUMP_OVER_7268
-                )
+            val destinations = mapOf(
+                3006 to Location.create(2888, 3007, 0),
+                3000 to Location.create(2889, 3000, 0),
+                2988 to Location.create(2897, 2988, 0)
+            )
 
-                3000 -> forceMove(
-                    player,
-                    player.location,
-                    Location.create(2889, 3000, 0),
-                    0,
-                    30,
-                    null,
-                    Animations.JUMP_OVER_7268
-                )
-
-                2988 -> forceMove(
-                    player,
-                    player.location,
-                    Location.create(2897, 2988, 0),
-                    0,
-                    30,
-                    null,
-                    Animations.JUMP_OVER_7268
-                )
-
-                else -> forceMove(
-                    player,
-                    player.location,
-                    Location.create(2898, 2992, 0),
-                    0,
-                    30,
-                    null,
-                    Animations.JUMP_OVER_7268
-                )
-            }
+            val destination = destinations[node.location.y] ?: Location.create(2898, 2992, 0)
+            forceMove(player, player.location, destination, 0, 30, null, Animations.JUMP_OVER_7268)
             return@on true
         }
 
@@ -305,15 +270,7 @@ class JadeVineMazePlugin : MapArea, InteractionListener {
         on(Scenery.VINE_27180, IntType.SCENERY, "swing-on") { player, _ ->
             lock(player, 3)
             playAudio(player, Sounds.SWING_ACROSS_2494)
-            forceMove(
-                player,
-                player.location,
-                Location.create(2901, 2985, 2),
-                30,
-                90,
-                null,
-                Animations.SWING_ACROSS_OBSTACLE_3130
-            ) {
+            forceMove(player, player.location, Location.create(2901, 2985, 2), 30, 90, null, Animations.SWING_ACROSS_OBSTACLE_3130) {
                 sendMessage(player, "You skillfully swing across.")
             }
             return@on true
@@ -324,42 +281,28 @@ class JadeVineMazePlugin : MapArea, InteractionListener {
          */
 
         on(Scenery.VINE_27185, IntType.SCENERY, "cross") { player, node ->
-            val dir = Direction.getDirection(player.location, node.location)
-            val destination = player.location.transform(dir, 5)
-            val fail = AgilityHandler.hasFailed(player, 1, failChance = 0.3)
 
+            val xOffset = when (node.location.x) {
+                2911 -> 5
+                2915 -> -5
+                else -> {
+                    sendMessage(player, "I can't reach that!")
+                    return@on false
+                }
+            }
+
+            val destination = Location.create(node.location.x + xOffset, node.location.y, 2)
+            val fail = AgilityHandler.hasFailed(player, 1, failChance = 0.3)
             lock(player, 8)
+
             if (!fail) {
-                AgilityHandler.walk(
-                    player,
-                    -1,
-                    player.location,
-                    destination,
-                    Animation.create(762),
-                    0.0,
-                    "You skillfully cross the vine."
-                )
+                AgilityHandler.walk(player, -1, player.location, destination, Animation.create(155), 0.0, "You skillfully cross the vine.")
             } else {
-                AgilityHandler.walk(player, -1, player.location, destination, Animation.create(762), 0.0, null)
-                AgilityHandler.fail(
-                    player,
-                    0,
-                    Location.create(2913, 2979, 0),
-                    Animation.create(Animations.FALL_BALANCE_764),
-                    0,
-                    "You lose your footing and fall into the water."
-                )
-                runTask(player, 3) {
+                AgilityHandler.walk(player, -1, player.location, destination, Animation.create(155), 0.0, null)
+                AgilityHandler.fail(player, 0, Location.create(2913, 2979, 0), Animation.create(Animations.FALL_BALANCE_764), 0, "You lose your footing and fall into the water.")
+                runTask(player, 4) {
                     player.animate(Animation.create(Animations.DROWN_765))
-                    forceMove(
-                        player,
-                        player.location,
-                        Location.create(2912, 2980, 0),
-                        0,
-                        90,
-                        null,
-                        Animations.CLIMB_UP_OUT_OF_WATER_7273
-                    ) {
+                    forceMove(player, player.location, Location.create(2912, 2980, 0), 0, 90, null, Animations.CLIMB_UP_OUT_OF_WATER_7273) {
                         sendMessage(player, "You scramble out of the water before the crocodiles take an interest.")
                     }
                 }
