@@ -6,6 +6,7 @@ import content.region.kandarin.yanille.quest.handsand2.FuneralCutscene
 import core.api.*
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
+import core.game.dialogue.IfTopic
 import core.game.dialogue.Topic
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.link.TeleportManager
@@ -27,7 +28,7 @@ class ZavisticRarveDialogues : DialogueFile() {
         npc = NPC(NPCs.ZAVISTIC_RARVE_2059)
         val questComplete = getVarbit(p, Vars.VARBIT_QUEST_ZORGE_FLESH_EATERS_PROGRESS_487) == 13 || getQuestStage(p, Quests.ZOGRE_FLESH_EATERS) == 100
         val zogreProgress = isQuestInProgress(p, Quests.ZOGRE_FLESH_EATERS, 1, 99)
-        val canStartMiniQuest = getVarbit(p, Vars.VARBIT_QUEST_ZORGE_FLESH_EATERS_PROGRESS_487) == 13 || getQuestStage(p, Quests.ZOGRE_FLESH_EATERS) == 100 && hasRequirement(p, Quests.THE_HAND_IN_THE_SAND, false)
+        val canStartMiniQuest = getVarbit(p, Vars.VARBIT_QUEST_ZORGE_FLESH_EATERS_PROGRESS_487) == 13 || getQuestStage(p, Quests.ZOGRE_FLESH_EATERS) == 100 && isQuestComplete(player!!, Quests.THE_HAND_IN_THE_SAND)
         val miniquestComplete = getVarbit(p, Vars.VARBIT_MINIQUEST_RETURNING_CLARENCE_PROGRESS_4054) == 1
         val hasMiniQuestDiaryItem = inInventory(p, Items.UNLOCKED_DIARY_11762)
         val hasBlackPrism = inInventory(p, Items.BLACK_PRISM_4808) && !getAttribute(p, ZogreUtils.TALK_ABOUT_BLACK_PRISM, false)
@@ -35,11 +36,14 @@ class ZavisticRarveDialogues : DialogueFile() {
         val usedTankard = inInventory(p, Items.DRAGON_INN_TANKARD_4811) && !getAttribute(p, ZogreUtils.TALK_ABOUT_TANKARD, false)
         val hasOrLostStrangePotion = getAttribute(p, ZogreUtils.TALK_WITH_ZAVISTIC_DONE, false)
         val saleBlackPrism = questComplete && inInventory(p, Items.BLACK_PRISM_4808)
+        val handProgress = getQuestStage(player!!, Quests.THE_HAND_IN_THE_SAND)
+        val handVarbit = getVarbit(player!!, Vars.VARBIT_QUEST_THE_HAND_IN_THE_SAND_PROGRESS_1527)
+        val hasScryingOrb = inInventory(player!!, Items.MAGICAL_ORB_6950) && inBank(player!!, Items.MAGICAL_ORB_6950)
 
         when (stage) {
             START_DIALOGUE -> if(getAttribute(player!!, ZogreUtils.NPC_ACTIVE, false)) {
-                if (hasRequirement(player!!, Quests.THE_HAND_IN_THE_SAND, false)) {
-                    npcl(FaceAnim.NEUTRAL, "What are you doing... Oh, it's you... sorry... didn't realise... what can I do for you?"). also { stage = 2 }
+                if (isQuestComplete(player!!, Quests.THE_HAND_IN_THE_SAND)) {
+                    npcl(FaceAnim.NEUTRAL, "What are you doing... Oh, it's you... sorry... didn't realise... what can I do for you?"). also { stage = 3 }
                 } else {
                     npcl(FaceAnim.NEUTRAL, "What are you doing ringing that bell?! Don't you think some of us have work to do?").also { stage = 1 }
                 }
@@ -61,6 +65,28 @@ class ZavisticRarveDialogues : DialogueFile() {
                         Topic("I have a rather sandy problem that I'd like to palm off on you.",  16)
                     }
                 )
+
+                handProgress == 2 -> if(!inInventory(player!!, Items.BEER_SOAKED_HAND_6946)){
+                    sendDialogue(player!!, "Maybe you should have the hand with you before speaking to Zavistic.").also { stage = END_DIALOGUE }
+                } else {
+                    sendItemDialogue(player!!, Items.BEER_SOAKED_HAND_6946, "You wave the hand at the wizard.")
+                    stage = 145
+                }
+
+                handProgress == 3 -> {
+                    npcl(FaceAnim.HALF_GUILTY, "Did you find out who killed Clarence yet?")
+                    stage = 156
+                }
+
+                handProgress == 6 || handVarbit == 3 -> {
+                    if(!hasScryingOrb) {
+                        player("I've lost my magical scrying orb!")
+                        stage = 165
+                    } else {
+                        playerl(FaceAnim.NEUTRAL, "I talked to Bert and found something very strange about his hours.")
+                        stage = 157
+                    }
+                }
 
                 hasMiniQuestDiaryItem -> {
                     player(FaceAnim.HALF_ASKING, "I have a rather sandy problem that I'd like to palm off on you.")
@@ -113,27 +139,30 @@ class ZavisticRarveDialogues : DialogueFile() {
                     stage = 106
                 }
 
-                else -> options(
-                    "What is there to do in the Wizards' Guild?",
-                    "What are the requirements to get in the Wizards' Guild?",
-                    "What do you do in the Guild?",
-                    "Ok, thanks."
-                ).also { stage = 7 }
+                else -> {
+                    showTopics(
+                        Topic("What is there to do in the Wizards' Guild?", 8, false),
+                        Topic("What are the requirements to get in the Wizards' Guild?", 10, false),
+                        Topic("What do you do in the Guild?", 11, false),
+                        IfTopic(FaceAnim.HALF_ASKING, "Can you help me more?", 166, handProgress == 7, false),
+                        Topic("Ok, thanks.", END_DIALOGUE, false)
+                    )
+                }
             }
 
             // 6 -> options("What is there to do in the Wizards' Guild?", "What are the requirements to get in the Wizards' Guild?", "What do you do in the Guild?", "Ok, thanks.").also { stage++ }
 
             7 -> when (buttonID) {
                 1 -> playerl(FaceAnim.HALF_GUILTY, "What is there to do in the Wizards' Guild?").also { stage++ }
-                2 -> playerl(FaceAnim.HALF_GUILTY, "What are the requirements to get in the Wizards' Guild?").also { stage = 8 }
-                3 -> playerl(FaceAnim.HALF_GUILTY, "What do you do in the Guild?").also { stage = 9 }
+                2 -> playerl(FaceAnim.HALF_GUILTY, "What are the requirements to get in the Wizards' Guild?").also { stage = 10 }
+                3 -> playerl(FaceAnim.HALF_GUILTY, "What do you do in the Guild?").also { stage = 11 }
                 4 -> playerl(FaceAnim.HALF_GUILTY, "Ok, thanks.").also { stage = END_DIALOGUE }
             }
 
             8 -> npcl(FaceAnim.HALF_GUILTY, "This is the finest wizards' establishment in the land. We have magic portals to the other towers of wizardry around Gielinor. We have a particularly wide collection of runes in our rune shop.").also { stage++ }
-            9 -> npcl(FaceAnim.HALF_GUILTY, "We sell some of the finest mage robes in the land and we have a training area full of zombies for you to practice your magic on.").also { stage = 6 }
-            10 -> npcl(FaceAnim.HALF_GUILTY, "You need a magic level of 66, the high magic energy level is too dangerous for anyone below that level.").also { stage = 6 }
-            11 -> npcl(FaceAnim.HALF_GUILTY, "I'm the Grand Secretary for the Wizards' Guild, I have lots of correspondence to keep up with, as well as attending to the discipline of the more problematic guild members.").also { stage = 6 }
+            9 -> npcl(FaceAnim.HALF_GUILTY, "We sell some of the finest mage robes in the land and we have a training area full of zombies for you to practice your magic on.").also { stage = 5 }
+            10 -> npcl(FaceAnim.HALF_GUILTY, "You need a magic level of 66, the high magic energy level is too dangerous for anyone below that level.").also { stage = 5 }
+            11 -> npcl(FaceAnim.HALF_GUILTY, "I'm the Grand Secretary for the Wizards' Guild, I have lots of correspondence to keep up with, as well as attending to the discipline of the more problematic guild members.").also { stage = 5 }
 
             // 12 -> showTopics(
             //     Topic("I'm here about the sicks...err Zogres", 13, true),
@@ -274,14 +303,14 @@ class ZavisticRarveDialogues : DialogueFile() {
                     1 -> playerl(FaceAnim.HALF_GUILTY, "What did you say I should do?").also { stage++ }
                     2 -> playerl(FaceAnim.HALF_GUILTY, "Where is Sithik?").also { stage = 71 }
                     3 -> player("I have some items that I'd like you to look at.").also { stage = 75 }
-                    4 -> playerl(FaceAnim.HALF_GUILTY, "I want to ask about the Magic Guild.").also { stage = 6 }
+                    4 -> playerl(FaceAnim.HALF_GUILTY, "I want to ask about the Magic Guild.").also { stage = 5 }
                     5 -> playerl(FaceAnim.HALF_GUILTY, "Sorry, I have to go.").also { stage = END_DIALOGUE }
                 }
             } else {
                 when (buttonID) {
                     1 -> playerl(FaceAnim.HALF_GUILTY, "What did you say I should do?").also { stage++ }
                     2 -> playerl(FaceAnim.HALF_GUILTY, "Where is Sithik?").also { stage = 71 }
-                    3 -> playerl(FaceAnim.HALF_GUILTY, "I want to ask about the Magic Guild.").also { stage = 6 }
+                    3 -> playerl(FaceAnim.HALF_GUILTY, "I want to ask about the Magic Guild.").also { stage = 5 }
                     4 -> playerl(FaceAnim.HALF_GUILTY, "Sorry, I have to go.").also { stage = END_DIALOGUE }
                 }
             }
@@ -528,6 +557,69 @@ class ZavisticRarveDialogues : DialogueFile() {
                             !getAttribute(player!!, ZogreUtils.SITHIK_DIALOGUE_UNLOCK, false) -> 133
                     else -> 5
                 }
+            }
+
+            145 -> player("Ummm... Do you have all your wizards?").also { stage++ }
+            146 -> npcl(FaceAnim.HALF_ASKING, "All my.... whatever do you mean...?").also { stage++ }
+            147 -> playerl(FaceAnim.FRIENDLY, "The Guard Captain asked me to see if you have any... missing... wizards.").also { stage++ }
+            148 -> npcl(FaceAnim.HALF_ASKING, "That's silly! No one would kill a wizard... would they?").also { stage++ }
+            149 -> playerl(FaceAnim.FRIENDLY, "Erm... no...").also { stage++ }
+            150 -> playerl(FaceAnim.FRIENDLY, "Well.. maybe, you see Bert found this hand and it might belong to.. a wizard!").also { stage++ }
+            151 -> npcl(FaceAnim.HALF_ASKING, "Bert? Ahh yes, the sandman who seems to have been working very long hours recently. Let's see that hand...").also { stage++ }
+            152 -> sendItemDialogue(player!!, Items.BEER_SOAKED_HAND_6946, "You hand it over.").also {
+                removeItem(player!!, Items.BEER_SOAKED_HAND_6946)
+                setQuestStage(player!!, Quests.THE_HAND_IN_THE_SAND, 3)
+                stage++
+            }
+            153 -> npcl(FaceAnim.HALF_ASKING, "Oh my! This is most definitely Clarence, my most able student! You must find out who did this!").also { stage++ }
+            154 -> playerl(FaceAnim.FRIENDLY, "Do you have any input as to the matter at hand?").also { stage++ }
+            155 -> npcl(FaceAnim.HALF_ASKING, "Well.... Ask Bert about the long hours he's been working, that sounds suspicious to me. Digging things up at all hours of the day isn't natural.").also { stage = END_DIALOGUE }
+
+            156 -> player("Not yet, but don't lose your head over it.").also { stage = END_DIALOGUE }
+            157 -> npcl(FaceAnim.HALF_ASKING, "Oh? Did he kill Clarence?").also { stage++ }
+            158 -> player(FaceAnim.HALF_ASKING, "No, but he doesn't remember changing his hours, and his rota and the original that his boss Sandy had, are different!").also { stage++ }
+            159 -> player(FaceAnim.HALF_ASKING, "... oh, and this scroll appeared when they changed - he gave it to me.").also { stage++ }
+            160 -> npcl(FaceAnim.HALF_ASKING, "I recognise that type of scroll! It's used in a mind altering spell of some sort. Did you speak to this... Sandy guy? Perhaps he has a hand in this.").also { stage++ }
+            161 -> player(FaceAnim.HALF_ASKING, "I took a look around his office. I don't know about a hand in it, I think he has both hands and feet in it!").also { stage++ }
+            162 -> npcl(FaceAnim.HALF_ASKING, "Even more suspicious! Here, take this magical scrying orb and get some Truth Serum from Betty in Port Sarim, she owes me a favour, just tell her I sent you if she complains.").also { stage++ }
+            163 -> npcl(FaceAnim.HALF_ASKING, "Then you will be equipped to ask Sandy a few questions. Oh Clarence, I will find your murderer!").also { stage++ }
+            164 -> {
+                if(!removeItem(player!!, Items.A_MAGIC_SCROLL_6949)) {
+                    end()
+                } else {
+                    sendItemDialogue(player!!, Items.MAGICAL_ORB_6950,"You exchange the scroll for the magical scrying orb. Perhaps Zavistic can give you even more of a hand to find the murderer?")
+                    setVarbit(player!!, Vars.VARBIT_QUEST_THE_HAND_IN_THE_SAND_PROGRESS_1527, 3, true)
+                    setQuestStage(player!!, Quests.THE_HAND_IN_THE_SAND, 7)
+                    addItem(player!!, Items.MAGICAL_ORB_6950)
+                    stage = END_DIALOGUE
+                }
+            }
+            165 -> if(freeSlots(player!!) == 0) {
+                npcl(FaceAnim.NEUTRAL, "I'd give you another magical scrying orb if you had some space in your inventory.").also { stage = END_DIALOGUE }
+            } else {
+                addItem(player!!, Items.MAGICAL_ORB_6950)
+                npcl(FaceAnim.FRIENDLY, "No matter, here, have another and please hurry, whoever killed Clarence must pay!").also { stage = END_DIALOGUE }
+            }
+
+            166 -> npcl(FaceAnim.FRIENDLY, "Bring me a vial and I'll help you a little more.").also { stage++ }
+            167 -> if(!inInventory(player!!, Items.VIAL_229)) {
+                end()
+                stage = END_DIALOGUE
+            } else {
+                player("I have a vial here for you.").also { stage++ }
+            }
+            168 -> npcl(FaceAnim.FRIENDLY, "Ok, would you like me to transport you to Port Sarim? I'm sticking my neck out a bit helping you like this and can only do it once though!").also { stage++ }
+            169 -> showTopics(
+                Topic("Yes, that would be great!", 171, false),
+                Topic("No, I prefer using my legs, thanks all the same.", 170, false)
+            )
+            170 -> npcl(FaceAnim.NEUTRAL, "Ok, suit yourself!").also { stage = END_DIALOGUE }
+            171 -> npcl(FaceAnim.FRIENDLY, "Off you go then, break a leg!").also { stage++ }
+            172 -> {
+                end()
+                npc!!.animate(Animation(Animations.CAST_SPELL_707))
+                teleport(player!!, Location.create(3014, 3259, 0), TeleportManager.TeleportType.RANDOM_EVENT_OLD)
+                stage = END_DIALOGUE
             }
         }
     }

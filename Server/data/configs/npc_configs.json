@@ -50079,19 +50079,19 @@
     "attack_level": "1"
   },
   {
-    "examine": "",
+    "examine": "Angry and stressed, he doesn't seem to have time for anything other than sand.",
     "name": "null",
     "safespot": null,
     "id": "3111"
   },
   {
-    "examine": "",
+    "examine": "He seems to be distracted, looking out of the window at something.",
     "name": "Sandy",
     "safespot": null,
     "id": "3112"
   },
   {
-    "examine": "*Angry and stressed, he doesn't seem to have time for anything other than sand.",
+    "examine": "Angry and stressed, he doesn't seem to have time for anything other than sand.",
     "name": "Sandy",
     "defence_level": "1",
     "safespot": null,

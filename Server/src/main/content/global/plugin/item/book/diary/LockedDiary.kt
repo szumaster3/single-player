@@ -14,9 +14,7 @@ import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.game.world.update.flag.context.Animation
-import shared.consts.Animations
-import shared.consts.Items
-import shared.consts.Scenery
+import shared.consts.*
 
 class LockedDiary : InteractionListener {
     /*
@@ -628,6 +626,21 @@ class LockedDiary : InteractionListener {
          */
 
         on(Scenery.SANDY_S_DESK_10805, IntType.SCENERY, "search") { player, _ ->
+            if(getQuestStage(player, Quests.THE_HAND_IN_THE_SAND) == 5 || getVarbit(player, Vars.VARBIT_QUEST_THE_HAND_IN_THE_SAND_PROGRESS_1527) == 2) {
+                if(freeSlots(player) == 0) {
+                    sendDialogue(player, "I'd better make room in my inventory first!")
+                    return@on false
+                }
+                if(inInventory(player, Items.SANDYS_ROTA_6948)) {
+                    sendDialogue(player, "You already have Sandy's original work rota.")
+                    return@on false
+                }
+
+                sendDialogue(player, "You quickly sift through some of the papers on Sandy's desk and find a work rota for Bert.")
+                addItem(player, Items.SANDYS_ROTA_6948)
+                return@on true
+            }
+
             if(!inInventory(player, Items.LOCKED_DIARY_11761) && getAttribute(player, GameAttributes.RETURNING_CLARENCE_CHECKPOINT, false)) {
                 player.animate(Animation(Animations.HUMAN_MULTI_USE_832))
                 sendMessage(player, "You search through the papers on the table and find a locked diary.")
