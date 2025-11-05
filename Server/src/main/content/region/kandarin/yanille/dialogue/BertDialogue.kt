@@ -1,10 +1,13 @@
 package content.region.kandarin.yanille.dialogue
 
+import com.google.gson.JsonObject
+import core.ServerStore
 import core.api.*
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.dialogue.Topic
 import core.game.node.entity.player.Player
+import core.game.node.item.Item
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import shared.consts.Items
@@ -19,6 +22,11 @@ import shared.consts.Vars
 class BertDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
+        val store = getStoreFile()
+        val username = player?.username?.lowercase() ?: ""
+        val alreadyClaimed = store[username]?.asBoolean ?: false
+        val hasBankSpace = hasSpaceFor(player, Item(Items.BUCKET_OF_SAND_1783, 1)) ?: false
+
         if(getQuestStage(player, Quests.THE_HAND_IN_THE_SAND) == 1) {
             npcl(FaceAnim.HALF_ASKING, "Did ye see yon Guard Capt'n 'bout hand?").also { stage = 11}
         } else if(getQuestStage(player, Quests.THE_HAND_IN_THE_SAND) == 3) {
@@ -32,12 +40,22 @@ class BertDialogue(player: Player? = null) : Dialogue(player) {
         } else {
             npcl(FaceAnim.SAD, "Eeee, wha' shall I do! I'll mos' certainly lose tha job...")
         }
+
+        // if (alreadyClaimed) {
+        //     npc("'Ello there, ${player?.username}! Hope yer be havin' fun. I be a wee bi' busy to 'elp wit' yon sand. Come back tomorrow.")
+        //     stage = END_DIALOGUE
+        // } else if (!hasBankSpace) {
+        //     npc("Eeee, ye've go' no free space in yon bank, ${player?.username}. Make some room 'tween the fishes 'n boots fore ye come back ta me.")
+        //     stage = END_DIALOGUE
+        // } else {
+        //     npc("'Ello again ${player?.username}!")
+        //     stage = 0
+        // }
         return true
     }
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         val hasBertRota = inInventory(player, Items.BERTS_ROTA_6947) || inBank(player, Items.BERTS_ROTA_6947)
-
         when(stage) {
             0 -> player(FaceAnim.HALF_ASKING, "Lose your job? What's wrong, why?").also { stage++ }
             1 -> npcl(FaceAnim.SAD, "I w-w-work...over yon sand pit...and weeell...I found...this...hand! T'were buried in't Sand!").also { stage++ }
@@ -144,4 +162,15 @@ class BertDialogue(player: Player? = null) : Dialogue(player) {
     override fun newInstance(player: Player?): Dialogue = BertDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.BERT_3108)
+
+    private fun rewardSand(amount: Int) {
+        player?.bank?.add(Item(Items.BUCKET_OF_SAND_1783, amount))
+        val store = getStoreFile()
+        val username = player?.username?.lowercase() ?: return
+        store.addProperty(username, true)
+        player?.sendMessages("Thanks for the sand Bert!")
+        stage = END_DIALOGUE
+    }
+
+    private fun getStoreFile(): JsonObject = ServerStore.getArchive("daily-sand")
 }

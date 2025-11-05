@@ -146,7 +146,7 @@ class TheHandintheSandPlugin : InteractionListener {
         }
 
         on(Scenery.DOOR_40108, IntType.SCENERY, "open") { player, node ->
-            DoorActionHandler.handleDoor(player, node.asScenery())
+            DoorActionHandler.handleDoor(player, node.asScenery()!!)
             return@on true
         }
 
