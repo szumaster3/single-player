@@ -101,15 +101,6 @@ class BrimhavenPlugin : InteractionListener {
         }
 
         /*
-         * Handles Sandy NPC small-talk.
-         */
-
-        on(SANDY, IntType.NPC, "talk-to") { player, node ->
-            sendNPCDialogue(player, node.id, "Nice day for sand isn't it?", FaceAnim.FURIOUS)
-            return@on true
-        }
-
-        /*
          * Handles random pirate NPC greetings.
          */
 
@@ -130,7 +121,6 @@ class BrimhavenPlugin : InteractionListener {
         private const val TICKET_EXCHANGE = Components.AGILITYARENA_TRADE_6
         private const val RESTAURANT_REAR_DOOR = Scenery.DOOR_1591
         private const val KARAMBWAN_FISHING_SPOT = NPCs.FISHING_SPOT_1178
-        private val SANDY = intArrayOf(3110, NPCs.SANDY_3112, NPCs.SANDY_3113)
         private val PIRATE = intArrayOf(NPCs.PIRATE_183, NPCs.PIRATE_6349, NPCs.PIRATE_6350, NPCs.PIRATE_6346, NPCs.PIRATE_6347, NPCs.PIRATE_6348, NPCs.PIRATE_GUARD_799)
 
         @JvmStatic

@@ -5,14 +5,16 @@ import content.region.misthalin.draynor.quest.swept.plugin.SweptUtils
 import core.api.*
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
+import core.game.dialogue.IfTopic
+import core.game.dialogue.Topic
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
+import core.game.world.map.Location
+import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
-import shared.consts.Items
-import shared.consts.NPCs
-import shared.consts.Quests
+import shared.consts.*
 
 /**
  * Represents the Betty dialogue.
@@ -22,24 +24,27 @@ class BettyDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
-        npc("Welcome to the magic emporium.")
+        if(getQuestStage(player, Quests.THE_HAND_IN_THE_SAND) >= 7 && getVarbit(player, Vars.VARBIT_QUEST_THE_HAND_IN_THE_SAND_PROGRESS_1527) == 4 && !inInventory(player, Items.ROSE_TINTED_LENS_6956)) {
+            npcl(FaceAnim.HALF_ASKING, "Hello deary! Have you managed to make that lens yet?").also { stage = 38 }
+        } else {
+            npc("Welcome to the magic emporium.")
+        }
         return true
     }
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+        val hasBottle = inInventory(player, Items.BOTTLED_WATER_6953) && inBank(player, Items.BOTTLED_WATER_6953)
+
         when (stage) {
             0 -> if (getQuestStage(player, Quests.SWEPT_AWAY) >= 1) {
-                options(
-                    "Talk to Betty about Swept Away.",
-                    "Talk to Betty about her shop.",
-                    "Talk to Betty about pink dye.",
-                ).also { stage = 10 }
-            } else if (hasRequirement(player, Quests.THE_HAND_IN_THE_SAND, false)) {
-                options(
-                    "Can I see your wares?",
-                    "Sorry, I'm not into magic.",
-                    "Talk to Betty about pink dye.",
-                ).also { stage++ }
+                options("Talk to Betty about Swept Away.", "Talk to Betty about her shop.", "Talk to Betty about pink dye.").also { stage = 10 }
+            } else if (isQuestComplete(player, Quests.THE_HAND_IN_THE_SAND)) {
+                options("Can I see your wares?", "Sorry, I'm not into magic.", "Talk to Betty about pink dye.").also { stage++ }
+            } else if(isQuestInProgress(player, Quests.THE_HAND_IN_THE_SAND, 1, 99)) {
+                showTopics(
+                    IfTopic("Talk to Betty about the Hand in the Sand.", 34, getQuestStage(player, Quests.THE_HAND_IN_THE_SAND) >= 7, true),
+                    Topic("Talk to Betty about her shop.", 33, true)
+                )
             } else {
                 options("Can I see your wares?", "Sorry, I'm not into magic.").also { stage++ }
             }
@@ -102,6 +107,52 @@ class BettyDialogue(player: Player? = null) : Dialogue(player) {
             }
             31 -> npc("There you go! I'm sure t hat's just the spice that", "Maggie's looking for.").also { stage++ }
             32 -> player("Many thanks.").also { stage = END_DIALOGUE }
+            33 -> options("Can I see your wares?", "Sorry, I'm not into magic.").also { stage = 1 }
+            34 -> if(getAttribute(player, GameAttributes.HAND_SAND_BETTY_POTION, false)) {
+                npcl(FaceAnim.FRIENDLY, "Wonderful deary. When you're ready, just stand in the open doorway and focus the light on the empty vial on my desk and I'll pour the serum into it.").also { stage = 40 }
+            } else {
+                playerl(FaceAnim.HALF_ASKING, "I've come from Yanille, the wizard says you can make Truth Serum?").also { stage++ }
+            }
+            35 -> npcl(FaceAnim.FRIENDLY, "This is true deary, I'll need an empty vial.").also { stage++ }
+            36 -> if(!removeItem(player, Items.VIAL_229)) {
+                playerl(FaceAnim.HAPPY, "I'll have to go find one then, I'll be back!").also { stage = END_DIALOGUE }
+            } else {
+                player("I have one here!").also { stage++ }
+            }
+            37 -> {
+                npcl(FaceAnim.FRIENDLY, "That's good, now you'll need to make a rose tinted lens. Pink dye can be made from red berries in this bottle to make redberry juice, then add white berries. Just use that on a bullseye lens.")
+                setVarbit(player, Vars.VARBIT_QUEST_THE_HAND_IN_THE_SAND_PROGRESS_1527, 4, true)
+                addItem(player, Items.BOTTLED_WATER_6953, 1)
+                stage = END_DIALOGUE
+            }
+            38 -> showTopics(
+                Topic("I'm still working on it.", END_DIALOGUE, false),
+                Topic("I'm afraid I've forgotten how!", 39, false),
+                // Inauthentic.
+                IfTopic("Ask about bottled water.", 42, !hasBottle && freeSlots(player) >= 1, true)
+            )
+            39 -> npcl(FaceAnim.FRIENDLY, "Pink dye can be made from red berries in the bottle I gave you. Add white berries to make the pink dye and then you just need to use that on a bullseye lens. Good luck!").also { stage = END_DIALOGUE }
+            40 -> player("Ok, what does that do?").also { stage++ }
+            41 -> npcl(FaceAnim.FRIENDLY, "Why it makes the person who drinks it unable to hide in the shadow of lies. The light of truth will shine!").also {
+                end()
+                player.lock(3)
+                npc.walkingQueue.reset(false)
+                runTask(player, 1) {
+                    forceWalk(npc.asNpc(), Location(3012, 3258, 0), "")
+                    npc.faceLocation(Location(3014, 3258, 0))
+                    npc.animate(Animation(Animations.HUMAN_MULTI_USE_832))
+                    runTask(player, 2) {
+                        setVarbit(player, Vars.VARBIT_BETTY_DESK_1537, 1)
+                        sendItemDialogue(player, Items.VIAL_229, "Betty places a vial on her counter.")
+                    }
+                }
+            }
+            42 -> {
+                end()
+                addItem(player, Items.BOTTLED_WATER_6953, 1)
+            }
+
+
         }
         return true
     }
