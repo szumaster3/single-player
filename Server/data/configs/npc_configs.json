@@ -3068,7 +3068,7 @@
     "attack_level": "32"
   },
   {
-    "examine": "A  sea bird.",
+    "examine": "A sea bird.",
     "melee_animation": "0",
     "range_animation": "0",
     "magic_level": "1",
@@ -3122,7 +3122,7 @@
     "attack_level": "1"
   },
   {
-    "examine": "A  sea bird.",
+    "examine": "A sea bird.",
     "name": "Gull",
     "defence_level": "1",
     "safespot": null,
@@ -3134,7 +3134,7 @@
     "attack_level": "1"
   },
   {
-    "examine": "A  sea bird.",
+    "examine": "A sea bird.",
     "name": "Gull",
     "defence_level": "1",
     "safespot": null,
@@ -3146,7 +3146,7 @@
     "attack_level": "1"
   },
   {
-    "examine": "",
+    "examine": "No flies on me.",
     "name": "Fly trap",
     "defence_level": "1",
     "safespot": null,
@@ -8225,7 +8225,7 @@
     "attack_level": "22"
   },
   {
-    "examine": "A  sea bird.",
+    "examine": "A sea bird.",
     "name": "Gull",
     "water_npc": "true",
     "defence_level": "1",
@@ -8238,7 +8238,7 @@
     "attack_level": "1"
   },
   {
-    "examine": "A  sea bird.",
+    "examine": "A sea bird.",
     "name": "Gull",
     "water_npc": "true",
     "defence_level": "1",
@@ -19794,7 +19794,7 @@
     "attack_level": "1"
   },
   {
-    "examine": "A  sea bird.",
+    "examine": "A sea bird.",
     "name": "Gull",
     "water_npc": "true",
     "defence_level": "1",
@@ -22256,7 +22256,7 @@
     "attack_level": "1"
   },
   {
-    "examine": "A  sea bird.",
+    "examine": "A sea bird.",
     "name": "Gull",
     "defence_level": "1",
     "safespot": null,
@@ -22268,7 +22268,7 @@
     "attack_level": "1"
   },
   {
-    "examine": "A  sea bird.",
+    "examine": "A sea bird.",
     "name": "Gull",
     "defence_level": "1",
     "safespot": null,
@@ -22280,7 +22280,7 @@
     "attack_level": "1"
   },
   {
-    "examine": "A  sea bird.",
+    "examine": "A sea bird.",
     "name": "Gull",
     "defence_level": "1",
     "safespot": null,
@@ -22292,7 +22292,7 @@
     "attack_level": "1"
   },
   {
-    "examine": "A  sea bird.",
+    "examine": "A sea bird.",
     "name": "Gull",
     "defence_level": "1",
     "safespot": null,
@@ -23525,7 +23525,7 @@
     "attack_level": "1"
   },
   {
-    "examine": "A  sea bird.",
+    "examine": "A sea bird.",
     "name": "Gull",
     "defence_level": "1",
     "safespot": null,
@@ -44348,7 +44348,7 @@
     "attack_level": "1"
   },
   {
-    "examine": "A  sea bird.",
+    "examine": "A sea bird.",
     "name": "Gull",
     "water_npc": "true",
     "defence_level": "1",
@@ -44361,7 +44361,7 @@
     "attack_level": "1"
   },
   {
-    "examine": "A  sea bird.",
+    "examine": "A sea bird.",
     "name": "Gull",
     "defence_level": "1",
     "safespot": null,
@@ -51217,7 +51217,7 @@
     "attack_level": "1"
   },
   {
-    "examine": "A  sea bird.",
+    "examine": "A sea bird.",
     "name": "Gull",
     "defence_level": "1",
     "safespot": null,
@@ -121994,7 +121994,7 @@
     "attack_level": "1"
   },
   {
-    "examine": "A  sea bird.",
+    "examine": "A sea bird.",
     "name": "Gull",
     "defence_level": "1",
     "safespot": null,

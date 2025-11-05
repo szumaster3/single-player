@@ -31,6 +31,7 @@ import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
 import core.plugin.Plugin
 import core.tools.RandomFunction
+import shared.consts.Items
 
 @Initializable
 class BrimhavenArena : MapZone("Brimhaven agility arena", true), Plugin<Any?> {
@@ -72,10 +73,7 @@ class BrimhavenArena : MapZone("Brimhaven agility arena", true), Plugin<Any?> {
         return super.enter(e)
     }
 
-    override fun leave(
-        e: Entity,
-        logout: Boolean,
-    ): Boolean {
+    override fun leave(e: Entity, logout: Boolean): Boolean {
         if (e is Player && !logout) {
             val player = e
             player.interfaceManager.closeOverlay()
@@ -90,11 +88,7 @@ class BrimhavenArena : MapZone("Brimhaven agility arena", true), Plugin<Any?> {
         return super.enter(e)
     }
 
-    override fun interact(
-        entity: Entity,
-        node: Node,
-        option: Option,
-    ): Boolean {
+    override fun interact(entity: Entity, node: Node, option: Option): Boolean {
         if (node is Scenery) {
             val `object` = node
             if (`object`.id == 3610) {
@@ -125,24 +119,15 @@ class BrimhavenArena : MapZone("Brimhaven agility arena", true), Plugin<Any?> {
                     player.packetDispatch.sendMessage("You have received an Agility Arena Ticket!")
                     return true
                 }
-                player.packetDispatch.sendMessage(
-                    "You get tickets by tagging more than one pillar in a row, tag the next pillar!",
-                )
-                player.dialogueInterpreter.sendDialogue(
-                    "You get tickets by tagging more than one pillar in a row. <col=C04000>Tag the",
-                    "<col=C04000>next pillar for a ticket!</col>",
-                )
+                player.packetDispatch.sendMessage("You get tickets by tagging more than one pillar in a row, tag the next pillar!")
+                player.dialogueInterpreter.sendDialogue("You get tickets by tagging more than one pillar in a row. <col=C04000>Tag the", "<col=C04000>next pillar for a ticket!</col>")
                 return true
             }
         }
         return false
     }
 
-    override fun move(
-        e: Entity,
-        loc: Location,
-        dest: Location,
-    ): Boolean {
+    override fun move(e: Entity, loc: Location, dest: Location): Boolean {
         if (!e.locks.isMovementLocked() && e is Player) {
             val hook = LOCATION_TRAPS[loc]
             if (hook != null) {
@@ -153,10 +138,7 @@ class BrimhavenArena : MapZone("Brimhaven agility arena", true), Plugin<Any?> {
         return super.move(e, loc, dest)
     }
 
-    override fun locationUpdate(
-        e: Entity,
-        last: Location,
-    ) {
+    override fun locationUpdate(e: Entity, last: Location) {
         if (!e.locks.isMovementLocked() && e is Player) {
             val hook = LOCATION_TRAPS[e.getLocation()]
             if (hook != null) {
@@ -259,26 +241,15 @@ class BrimhavenArena : MapZone("Brimhaven agility arena", true), Plugin<Any?> {
         )
     }
 
-    private enum class PlankSet(
-        var entrance: Array<Location>,
-        var exit: Array<Location>,
-    ) {
+    private enum class PlankSet(var entrance: Array<Location>, var exit: Array<Location>) {
         FIRST(
             arrayOf(Location.create(2797, 9591, 3), Location.create(2797, 9590, 3), Location.create(2797, 9589, 3)),
-            arrayOf(
-                Location.create(2802, 9591, 3),
-                Location.create(2802, 9590, 3),
-                Location.create(2802, 9589, 3),
-            ),
+            arrayOf(Location.create(2802, 9591, 3), Location.create(2802, 9590, 3), Location.create(2802, 9589, 3)),
         ),
 
         SECOND(
             arrayOf(Location.create(2764, 9558, 3), Location.create(2764, 9557, 3), Location.create(2764, 9556, 3)),
-            arrayOf(
-                Location.create(2769, 9558, 3),
-                Location.create(2769, 9557, 3),
-                Location.create(2769, 9556, 3),
-            ),
+            arrayOf(Location.create(2769, 9558, 3), Location.create(2769, 9557, 3), Location.create(2769, 9556, 3)),
         ),
     }
 
@@ -288,19 +259,13 @@ class BrimhavenArena : MapZone("Brimhaven agility arena", true), Plugin<Any?> {
         return this
     }
 
-    override fun fireEvent(
-        identifier: String,
-        vararg args: Any,
-    ): Any? = null
+    override fun fireEvent(identifier: String, vararg args: Any): Any? = null
 
     companion object {
         private val LOCATION_TRAPS: MutableMap<Location, MovementHook> = HashMap()
-
         private val OVERLAY = Component(5)
-
         private val DISPENSERS = arrayOfNulls<Location>(24)
-
-        private val TICKET = Item(2996)
+        private val TICKET = Item(Items.AGILITY_ARENA_TICKET_2996)
 
         @JvmField
         var sawBladeActive: Boolean = false
