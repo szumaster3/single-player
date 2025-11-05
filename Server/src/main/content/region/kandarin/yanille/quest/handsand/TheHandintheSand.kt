@@ -26,18 +26,27 @@ class TheHandintheSand : Quest(Quests.THE_HAND_IN_THE_SAND, 72, 71, 1, Vars.VARB
             line(player, "!!Have level 17 Thieving??.", line++, hasLevelStat(player, Skills.THIEVING, 17))
             line(player, "!!Have level 49 Crafting??.", line++, hasLevelStat(player, Skills.THIEVING, 49))
         }
+        if(stage == 1) {
+            line(player, "I should speak to the Guard Captain.", line++)
+        }
         if(stage == 2) {
-            line(player, "I have spoken to the Guard Captain.", line++)
+            line(player, "I have spoken to the Guard Captain.", line++, true)
+            line(player, "I need to show the hand to the !!Wizards?? in !!Yanille??.", line++)
+
         }
         if(stage == 3) {
-            line(player, "I have shown the hand to the Wizards in Yanille.", line++)
+            line(player, "I have shown the hand to the Wizards in Yanille.", line++, true)
         }
         if(stage == 4) {
             line(player, "I have Bert's copy of the Rota.", line++)
         }
         if(stage == 5) {
             line(player, "I have Sandy's copy of the Rota.", line++)
+        }
+        if(stage == 6) {
             line(player, "I have taken the scroll to Zavistic Rarve.", line++)
+        }
+        if(stage == 7) {
             line(player, "I have distracted Sandy successfully.", line++)
             line(player, "I have drugged Sandy's coffee.", line++)
             line(player, "I have interrogated Sandy.", line++)

@@ -36,6 +36,7 @@ class ZavisticRarveDialogues : DialogueFile() {
         val hasOrLostStrangePotion = getAttribute(p, ZogreUtils.TALK_WITH_ZAVISTIC_DONE, false)
         val saleBlackPrism = questComplete && inInventory(p, Items.BLACK_PRISM_4808)
         val handProgress = getQuestStage(player!!, Quests.THE_HAND_IN_THE_SAND)
+        val handVarbit = getVarbit(player!!, Vars.VARBIT_QUEST_THE_HAND_IN_THE_SAND_PROGRESS_1527)
 
         when (stage) {
             START_DIALOGUE -> if(getAttribute(player!!, ZogreUtils.NPC_ACTIVE, false)) {
@@ -73,6 +74,16 @@ class ZavisticRarveDialogues : DialogueFile() {
                 handProgress == 3 -> {
                     npcl(FaceAnim.HALF_GUILTY, "Did you find out who killed Clarence yet?")
                     stage = 156
+                }
+
+                handProgress == 6 && handVarbit == 3 -> {
+                    if(!inInventory(player!!, Items.MAGICAL_ORB_6950) && !inBank(player!!, Items.MAGICAL_ORB_6950)) {
+                        player("I've lost my magical scrying orb!")
+                        stage = 165
+                    } else {
+                        playerl(FaceAnim.NEUTRAL, "I talked to Bert and found something very strange about his hours.")
+                        stage = 157
+                    }
                 }
 
                 hasMiniQuestDiaryItem -> {
@@ -560,7 +571,29 @@ class ZavisticRarveDialogues : DialogueFile() {
             155 -> npcl(FaceAnim.HALF_ASKING, "Well.... Ask Bert about the long hours he's been working, that sounds suspicious to me. Digging things up at all hours of the day isn't natural.").also { stage = END_DIALOGUE }
 
             156 -> player("Not yet, but don't lose your head over it.").also { stage = END_DIALOGUE }
-
+            157 -> npcl(FaceAnim.HALF_ASKING, "Oh? Did he kill Clarence?").also { stage++ }
+            158 -> player(FaceAnim.HALF_ASKING, "No, but he doesn't remember changing his hours, and his rota and the original that his boss Sandy had, are different!").also { stage++ }
+            159 -> player(FaceAnim.HALF_ASKING, "... oh, and this scroll appeared when they changed - he gave it to me.").also { stage++ }
+            160 -> npcl(FaceAnim.HALF_ASKING, "I recognise that type of scroll! It's used in a mind altering spell of some sort. Did you speak to this... Sandy guy? Perhaps he has a hand in this.").also { stage++ }
+            161 -> player(FaceAnim.HALF_ASKING, "I took a look around his office. I don't know about a hand in it, I think he has both hands and feet in it!").also { stage++ }
+            162 -> npcl(FaceAnim.HALF_ASKING, "Even more suspicious! Here, take this magical scrying orb and get some Truth Serum from Betty in Port Sarim, she owes me a favour, just tell her I sent you if she complains.").also { stage++ }
+            163 -> npcl(FaceAnim.HALF_ASKING, "Then you will be equipped to ask Sandy a few questions. Oh Clarence, I will find your murderer!").also { stage++ }
+            164 -> {
+                if(!removeItem(player!!, Items.A_MAGIC_SCROLL_6949)) {
+                    end()
+                } else {
+                    sendItemDialogue(player!!, Items.MAGICAL_ORB_6950,"You exchange the scroll for the magical scrying orb. Perhaps Zavistic can give you even more of a hand to find the murderer?")
+                    setVarbit(player!!, Vars.VARBIT_QUEST_THE_HAND_IN_THE_SAND_PROGRESS_1527, 3, true)
+                    addItem(player!!, Items.MAGICAL_ORB_6950)
+                    stage = END_DIALOGUE
+                }
+            }
+            165 -> if(freeSlots(player!!) == 0) {
+                npcl(FaceAnim.NEUTRAL, "I'd give you another magical scrying orb if you had some space in your inventory.").also { stage = END_DIALOGUE }
+            } else {
+                addItem(player!!, Items.MAGICAL_ORB_6950)
+                npcl(FaceAnim.FRIENDLY, "No matter, here, have another and please hurry, whoever killed Clarence must pay!").also { stage = END_DIALOGUE }
+            }
         }
     }
 }

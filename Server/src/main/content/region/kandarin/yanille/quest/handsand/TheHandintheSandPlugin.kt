@@ -1,14 +1,12 @@
 package content.region.kandarin.yanille.quest.handsand
 
-import core.api.openInterface
-import core.api.sendNPCDialogue
-import core.api.sendString
+import core.api.*
 import core.game.dialogue.FaceAnim
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import shared.consts.Components
-import shared.consts.Items
-import shared.consts.NPCs
+import core.game.world.update.flag.context.Animation
+import core.tools.RandomFunction
+import shared.consts.*
 
 /**
  * Handles all interactions in The Hand in the Sand quest.
@@ -17,6 +15,7 @@ class TheHandintheSandPlugin : InteractionListener {
 
     companion object {
         val BEER_IDS = intArrayOf(Items.GREENMANS_ALE_1909, Items.DRAGON_BITTER_1911)
+        private val SANDY = intArrayOf(3110, 3111, NPCs.SANDY_3112, NPCs.SANDY_3113)
 
         val fakeContent = arrayOf(
             "Sandy's Sand Corp - Brimhaven",
@@ -72,7 +71,7 @@ class TheHandintheSandPlugin : InteractionListener {
 
         on(Items.BERTS_ROTA_6947, IntType.ITEM, "Read") { player, _ ->
             openInterface(player, Components.BLANK_SCROLL_222)
-            sendString(player, fakeContent.joinToString("<br>"), Components.BLANK_SCROLL_222, 5)
+            sendString(player, fakeContent.joinToString("<br>"), Components.BLANK_SCROLL_222, 1)
             return@on true
         }
 
@@ -82,7 +81,25 @@ class TheHandintheSandPlugin : InteractionListener {
 
         on(Items.SANDYS_ROTA_6948, IntType.ITEM, "Read") { player, _ ->
             openInterface(player, Components.BLANK_SCROLL_222)
-            sendString(player, originalContent.joinToString("<br>"), Components.BLANK_SCROLL_222, 5)
+            sendString(player, originalContent.joinToString("<br>"), Components.BLANK_SCROLL_222, 1)
+            return@on true
+        }
+
+        on(SANDY, IntType.NPC, "Pickpocket") { player, _ ->
+            player.animate(Animation(Animations.HUMAN_PICKPOCKETING_881))
+            if(freeSlots(player) == 0) {
+                sendDialogue(player, "I'd better make room in my inventory first!")
+                return@on false
+            }
+
+            val random = RandomFunction.random(1,5)
+            if(random == 1) {
+                sendDialogue(player, "You rummage around in Sandy's pockets.....")
+                sendMessage(player, "You find a small amount of sand.")
+                addItem(player, Items.SAND_6958)
+            } else {
+                sendDialogue(player, "You felt something but it slipped through your fingers...")
+            }
             return@on true
         }
 
