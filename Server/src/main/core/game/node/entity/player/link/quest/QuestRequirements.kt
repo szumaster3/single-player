@@ -71,42 +71,35 @@ enum class QuestRequirements(
     val questName: String,
     vararg val requirements: Requirements,
 ) {
-    COOK_ASSIST(questName = Quests.COOKS_ASSISTANT),
-    DEMON_SLAYER(questName = Quests.DEMON_SLAYER),
-    DORIC_QUEST(questName = Quests.DORICS_QUEST),
+    COOK_ASSIST(questName = Quests.COOKS_ASSISTANT), DEMON_SLAYER(questName = Quests.DEMON_SLAYER), DORIC_QUEST(
+        questName = Quests.DORICS_QUEST
+    ),
     DRAGON_SLAYER(
         Quests.DRAGON_SLAYER,
         QPReq(32),
     ),
-    ERNEST(questName = Quests.ERNEST_THE_CHICKEN),
-    GOBLIN_DIP(questName = Quests.GOBLIN_DIPLOMACY),
-    IMP_CATCHER(questName = Quests.IMP_CATCHER),
-    KNIGHT_SWORD(
-        Quests.THE_KNIGHTS_SWORD,
-        SkillReq(Skills.MINING, 10, true),
-    ),
-    PIRATE_T(questName = Quests.PIRATES_TREASURE),
-    ALI_RESCUE(questName = Quests.PRINCE_ALI_RESCUE),
-    RESTLESS_GHOST(questName = Quests.THE_RESTLESS_GHOST),
-    ROMEO(questName = Quests.ROMEO_JULIET),
-    SHEEP(questName = Quests.SHEEP_SHEARER),
-    ARRAV(questName = Quests.SHIELD_OF_ARRAV),
-    VAMPIRE(questName = Quests.VAMPIRE_SLAYER),
-    DORIC(questName = Quests.DORICS_QUEST),
-    RUNE_MYSTERIES(questName = Quests.RUNE_MYSTERIES),
-    BLACK_KNIGHT(
-        Quests.BLACK_KNIGHTS_FORTRESS,
-        QPReq(12),
-    ),
-    WITCH_POTION(questName = Quests.WITCHS_POTION),
-    DRUIDIC_RITUAL(questName = Quests.DRUIDIC_RITUAL),
+    ERNEST(Quests.ERNEST_THE_CHICKEN), GOBLIN_DIP(Quests.GOBLIN_DIPLOMACY),
+    IMP_CATCHER(Quests.IMP_CATCHER),
+    KNIGHT_SWORD(Quests.THE_KNIGHTS_SWORD, SkillReq(Skills.MINING, 10, true),),
+    PIRATE_T(Quests.PIRATES_TREASURE),
+    ALI_RESCUE(Quests.PRINCE_ALI_RESCUE),
+    RESTLESS_GHOST(Quests.THE_RESTLESS_GHOST),
+    ROMEO(Quests.ROMEO_JULIET),
+    SHEEP(Quests.SHEEP_SHEARER),
+    ARRAV(Quests.SHIELD_OF_ARRAV),
+    VAMPIRE(Quests.VAMPIRE_SLAYER),
+    DORIC(Quests.DORICS_QUEST),
+    RUNE_MYSTERIES(Quests.RUNE_MYSTERIES),
+    BLACK_KNIGHT(Quests.BLACK_KNIGHTS_FORTRESS, QPReq(12),),
+    WITCH_POTION(Quests.WITCHS_POTION),
+    DRUIDIC_RITUAL(Quests.DRUIDIC_RITUAL),
     LOST_CITY(
         Quests.LOST_CITY,
         SkillReq(Skills.CRAFTING, 31, true),
         SkillReq(Skills.WOODCUTTING, 36, true),
     ),
-    WITCH_HOUSE(questName = Quests.WITCHS_HOUSE),
-    MERLIN(questName = Quests.MERLINS_CRYSTAL),
+    WITCH_HOUSE(Quests.WITCHS_HOUSE),
+    MERLIN(Quests.MERLINS_CRYSTAL),
     HERO(
         Quests.HEROES_QUEST,
         QPReq(55),
@@ -130,61 +123,22 @@ enum class QuestRequirements(
         SkillReq(Skills.MAGIC, 59, true),
         SkillReq(Skills.CRAFTING, 40, true),
     ),
-    FISHING_CONTEST(
-        Quests.FISHING_CONTEST,
-        SkillReq(Skills.FISHING, 10),
-    ),
-    TOTEM(
-        Quests.TRIBAL_TOTEM,
-        SkillReq(Skills.THIEVING, 21),
-    ),
-    MONK(questName = Quests.MONKS_FRIEND),
-    IKOV(
-        Quests.TEMPLE_OF_IKOV,
-        SkillReq(Skills.THIEVING, 42, true),
-        SkillReq(Skills.RANGE, 40),
-    ),
-    CLOCK_TOWER(questName = Quests.CLOCK_TOWER),
-    GRAIL(
-        Quests.HOLY_GRAIL,
-        QuestReq(MERLIN),
-        SkillReq(Skills.ATTACK, 20),
-    ),
-    GNOME_VILLAGE(questName = Quests.TREE_GNOME_VILLAGE),
-    FIGHT_ARENA(questName = Quests.FIGHT_ARENA),
-    HAZEEL(questName = Quests.HAZEEL_CULT),
-    SHEEP_HERDER(questName = Quests.SHEEP_HERDER),
-    PLAGUE_CITY(questName = Quests.PLAGUE_CITY),
-    SEA_SLUG(
-        Quests.SEA_SLUG,
-        SkillReq(Skills.FIREMAKING, 30, true),
-    ),
-    WATERFALL(questName = Quests.WATERFALL_QUEST),
-    POTION(
-        Quests.JUNGLE_POTION,
-        SkillReq(Skills.HERBLORE, 3, true),
-        QuestReq(DRUIDIC_RITUAL),
-    ),
-    GRAND_TREE(
-        Quests.THE_GRAND_TREE,
-        SkillReq(Skills.AGILITY, 25, true),
-    ),
-    BIOHAZARD(
-        Quests.BIOHAZARD,
-        QuestReq(PLAGUE_CITY),
-    ),
-    UNDERGROUND_PASS(
-        Quests.UNDERGROUND_PASS,
-        SkillReq(Skills.RANGE, 25),
-        QuestReq(BIOHAZARD),
-        QuestReq(PLAGUE_CITY),
-    ),
-    OBSERVATORY(questName = Quests.OBSERVATORY_QUEST),
-    TOURIST(
-        Quests.THE_TOURIST_TRAP,
-        SkillReq(Skills.FLETCHING, 10, true),
-        SkillReq(Skills.SMITHING, 20, true),
-    ),
+    FISHING_CONTEST(Quests.FISHING_CONTEST, SkillReq(Skills.FISHING, 10)),
+    TOTEM(Quests.TRIBAL_TOTEM, SkillReq(Skills.THIEVING, 21)),
+    MONK(Quests.MONKS_FRIEND), IKOV(Quests.TEMPLE_OF_IKOV, SkillReq(Skills.THIEVING, 42, true), SkillReq(Skills.RANGE, 40)),
+    CLOCK_TOWER(Quests.CLOCK_TOWER), GRAIL(Quests.HOLY_GRAIL, QuestReq(MERLIN), SkillReq(Skills.ATTACK, 20)),
+    GNOME_VILLAGE(Quests.TREE_GNOME_VILLAGE),
+    FIGHT_ARENA(Quests.FIGHT_ARENA),
+    HAZEEL(Quests.HAZEEL_CULT),
+    SHEEP_HERDER(Quests.SHEEP_HERDER),
+    PLAGUE_CITY(Quests.PLAGUE_CITY), SEA_SLUG(Quests.SEA_SLUG, SkillReq(Skills.FIREMAKING, 30, true)),
+    WATERFALL(Quests.WATERFALL_QUEST),
+    POTION(Quests.JUNGLE_POTION, SkillReq(Skills.HERBLORE, 3, true), QuestReq(DRUIDIC_RITUAL)),
+    GRAND_TREE(Quests.THE_GRAND_TREE, SkillReq(Skills.AGILITY, 25, true)),
+    BIOHAZARD(Quests.BIOHAZARD, QuestReq(PLAGUE_CITY)),
+    UNDERGROUND_PASS(Quests.UNDERGROUND_PASS, SkillReq(Skills.RANGE, 25), QuestReq(BIOHAZARD), QuestReq(PLAGUE_CITY)),
+    OBSERVATORY(Quests.OBSERVATORY_QUEST),
+    TOURIST(Quests.THE_TOURIST_TRAP, SkillReq(Skills.FLETCHING, 10, true), SkillReq(Skills.SMITHING, 20, true)),
     WATCHTOWER(
         Quests.WATCHTOWER,
         SkillReq(Skills.MAGIC, 14, true),
@@ -193,15 +147,14 @@ enum class QuestRequirements(
         SkillReq(Skills.HERBLORE, 14, true),
         SkillReq(Skills.MINING, 40, true),
     ),
-    DWARF_CANNON(questName = Quests.DWARF_CANNON),
-    MURDER_MYS(questName = Quests.MURDER_MYSTERY),
-    DIG_SITE(
+    DWARF_CANNON(Quests.DWARF_CANNON),
+    MURDER_MYS(Quests.MURDER_MYSTERY), DIG_SITE(
         Quests.THE_DIG_SITE,
         SkillReq(Skills.AGILITY, 10, true),
         SkillReq(Skills.HERBLORE, 10, true),
         SkillReq(Skills.THIEVING, 25, true),
     ),
-    GERTRUDE(questName = Quests.GERTRUDES_CAT),
+    GERTRUDE(Quests.GERTRUDES_CAT),
     SHILO(
         Quests.SHILO_VILLAGE,
         QuestReq(POTION),
@@ -227,7 +180,7 @@ enum class QuestRequirements(
         QuestReq(UNDERGROUND_PASS),
         QuestReq(WATERFALL),
     ),
-    DEATH_PLATEAU(questName = Quests.DEATH_PLATEAU),
+    DEATH_PLATEAU(Quests.DEATH_PLATEAU),
     TROLL_STRONGHOLD(
         Quests.DEATH_PLATEAU,
         QuestReq(DEATH_PLATEAU),
@@ -251,7 +204,7 @@ enum class QuestRequirements(
         SkillReq(Skills.SMITHING, 20, true),
         SkillReq(Skills.CRAFTING, 20, true),
     ),
-    PRIEST(questName = Quests.PRIEST_IN_PERIL),
+    PRIEST(Quests.PRIEST_IN_PERIL),
     NATURE_SPIRIT(
         Quests.NATURE_SPIRIT,
         QuestReq(PRIEST),
@@ -517,12 +470,10 @@ enum class QuestRequirements(
         SkillReq(Skills.AGILITY, 42),
         SkillReq(Skills.CRAFTING, 45),
         SkillReq(Skills.SMITHING, 50),
-        SkillReq(Skills.RANGE, 40),
+        SkillReq(Skills.RANGE, 40)
     ),
     FAIRYTALE_1(
-        Quests.FAIRYTALE_I_GROWING_PAINS,
-        QuestReq(LOST_CITY),
-        QuestReq(NATURE_SPIRIT),
+        Quests.FAIRYTALE_I_GROWING_PAINS, QuestReq(LOST_CITY), QuestReq(NATURE_SPIRIT)
     ),
     RFD(
         Quests.RECIPE_FOR_DISASTER,
@@ -552,7 +503,7 @@ enum class QuestRequirements(
         QuestReq(LEGEND),
         QuestReq(MONKEY),
         QuestReq(DESERT),
-        QuestReq(HORROR_DEEP),
+        QuestReq(HORROR_DEEP)
     ),
     AID_MYREQUE(
         Quests.IN_AID_OF_THE_MYREQUE,
@@ -560,11 +511,9 @@ enum class QuestRequirements(
         SkillReq(Skills.AGILITY, 25, true),
         SkillReq(Skills.CRAFTING, 25),
         SkillReq(Skills.MINING, 15),
-        SkillReq(Skills.MAGIC, 7, true),
+        SkillReq(Skills.MAGIC, 7, true)
     ),
-    SOUL_BANE(questName = Quests.A_SOULS_BANE),
-    BONE_MAN_1(questName = Quests.RAG_AND_BONE_MAN),
-    SWAN(
+    SOUL_BANE(Quests.A_SOULS_BANE), BONE_MAN_1(Quests.RAG_AND_BONE_MAN), SWAN(
         Quests.SWAN_SONG,
         QPReq(100),
         SkillReq(Skills.MAGIC, 66, true),
@@ -574,26 +523,23 @@ enum class QuestRequirements(
         SkillReq(Skills.FIREMAKING, 42, true),
         SkillReq(Skills.CRAFTING, 40, true),
         QuestReq(FAVOR),
-        QuestReq(GARDEN),
+        QuestReq(GARDEN)
     ),
     ROYAL_TROUBLE(
-        Quests.ROYAL_TROUBLE,
-        SkillReq(Skills.AGILITY, 40, true),
-        SkillReq(Skills.SLAYER, 40, true),
-        QuestReq(THRONE),
+        Quests.ROYAL_TROUBLE, SkillReq(Skills.AGILITY, 40, true), SkillReq(Skills.SLAYER, 40, true), QuestReq(THRONE)
     ),
     DEATH_DORGESHUUN(
         Quests.DEATH_TO_THE_DORGESHUUN,
         QuestReq(LOST_TRIBE),
         SkillReq(Skills.AGILITY, 23, true),
-        SkillReq(Skills.THIEVING, 23, true),
+        SkillReq(Skills.THIEVING, 23, true)
     ),
     FAIRYTALE_2(
         Quests.FAIRYTALE_II_CURE_A_QUEEN,
         QuestReq(FAIRYTALE_1),
         SkillReq(Skills.THIEVING, 40),
         SkillReq(Skills.FARMING, 49, true),
-        SkillReq(Skills.HERBLORE, 57, true),
+        SkillReq(Skills.HERBLORE, 57, true)
     ),
     LUNAR_DIPLOMACY(
         Quests.LUNAR_DIPLOMACY,
@@ -607,7 +553,7 @@ enum class QuestRequirements(
         SkillReq(Skills.FIREMAKING, 49),
         SkillReq(Skills.MAGIC, 65),
         SkillReq(Skills.MINING, 60),
-        SkillReq(Skills.WOODCUTTING, 55),
+        SkillReq(Skills.WOODCUTTING, 55)
     ),
     GLOUPHRIE(
         Quests.THE_EYES_OF_GLOUPHRIE,
@@ -745,7 +691,7 @@ enum class QuestRequirements(
         SkillReq(Skills.CONSTRUCTION, 10),
     ),
     BONE_MAN_2(
-        "Rag and Bone Man II",
+        Quests.RAG_AND_BONE_MAN,
         SkillReq(Skills.SLAYER, 40, true),
         SkillReq(Skills.DEFENCE, 20),
         QuestReq(BONE_MAN_1),
