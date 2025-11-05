@@ -150,11 +150,10 @@ class TheHandintheSandPlugin : InteractionListener {
          * Handles making the truth serum
          */
 
-        onUseWithAt(
+        onUseWith(
             IntType.SCENERY,
             Items.ROSE_TINTED_LENS_6956,
             Scenery.COUNTER_10813,
-            Location.create(3016, 3259, 0)
         ) { player, used, _ ->
             lock(player, 3)
             queueScript(player, 1, QueueStrength.SOFT) {
@@ -170,7 +169,13 @@ class TheHandintheSandPlugin : InteractionListener {
                 }
                 return@queueScript stopExecuting(player)
             }
-            return@onUseWithAt true
+            return@onUseWith true
+        }
+    }
+
+    override fun defineDestinationOverrides() {
+        setDest(IntType.SCENERY, intArrayOf(Scenery.COUNTER_10813), "use") { player, node ->
+            return@setDest Location.create(3016, 3259, 0)
         }
     }
 }
