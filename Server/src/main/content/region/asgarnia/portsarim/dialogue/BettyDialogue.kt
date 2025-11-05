@@ -66,7 +66,6 @@ class BettyDialogue(player: Player? = null) : Dialogue(player) {
                 1 -> player("No thanks, Betty.").also { stage = END_DIALOGUE }
                 2 -> player("Yes, please!").also { stage++ }
             }
-
             5 -> {
                 end()
                 if (freeSlots(player) == 0) {
@@ -110,16 +109,31 @@ class BettyDialogue(player: Player? = null) : Dialogue(player) {
             31 -> npc("There you go! I'm sure t hat's just the spice that", "Maggie's looking for.").also { stage++ }
             32 -> player("Many thanks.").also { stage = END_DIALOGUE }
             33 -> options("Can I see your wares?", "Sorry, I'm not into magic.").also { stage = 1 }
-            34 -> if(getAttribute(player, GameAttributes.HAND_SAND_BETTY_POTION, false)) {
-                npcl(FaceAnim.FRIENDLY, "Wonderful deary. When you're ready, just stand in the open doorway and focus the light on the empty vial on my desk and I'll pour the serum into it.").also { stage = 40 }
-            } else if(getQuestStage(player, Quests.THE_HAND_IN_THE_SAND) == 8) {
-                npcl(FaceAnim.FRIENDLY, "Ok, now the last ingredient, something personal from the person you need to tell the truth, else it won't work!").also { stage = 44 }
-            } else if(handProgress == 5) {
-                npcl(FaceAnim.HAPPY, "Hello deary! How did the serum work?").also { stage = 48 }
-            } else if(getQuestStage(player, Quests.THE_HAND_IN_THE_SAND) == 10) {
-                npcl(FaceAnim.FRIENDLY, "Hello again deary. Come back and tell me what happened when all the fuss is over.").also { stage = 56 }
-            } else {
-                playerl(FaceAnim.HALF_ASKING, "I've come from Yanille, the wizard says you can make Truth Serum?").also { stage++ }
+            34 -> when {
+                getAttribute(player, GameAttributes.HAND_SAND_BETTY_POTION, false) -> {
+                    npcl(FaceAnim.FRIENDLY, "Wonderful deary. When you're ready, just stand in the open doorway and focus the light on the empty vial on my desk and I'll pour the serum into it.")
+                    stage = 40
+                }
+
+                handProgress == 8 -> {
+                    npcl(FaceAnim.FRIENDLY, "Ok, now the last ingredient, something personal from the person you need to tell the truth, else it won't work!")
+                    stage = 44
+                }
+
+                handProgress == 5 -> {
+                    npcl(FaceAnim.HAPPY, "Hello deary! How did the serum work?")
+                    stage = 48
+                }
+
+                handProgress == 10 -> {
+                    npcl(FaceAnim.FRIENDLY, "Hello again deary. Come back and tell me what happened when all the fuss is over.")
+                    stage = 56
+                }
+
+                else -> {
+                    playerl(FaceAnim.HALF_ASKING, "I've come from Yanille, the wizard says you can make Truth Serum?")
+                    stage++
+                }
             }
             35 -> npcl(FaceAnim.FRIENDLY, "This is true deary, I'll need an empty vial.").also { stage++ }
             36 -> if(!removeItem(player, Items.VIAL_229)) {

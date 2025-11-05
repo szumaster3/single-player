@@ -125,6 +125,10 @@ class ZavisticRarveDialogues : DialogueFile() {
                 handProgress == 13 -> if(!hasVisitedEntrana) {
                     npcl(FaceAnim.HALF_ASKING, "Did you visit the Entrana sandpit yet? Ask the worker there if he's found an arm or a leg.")
                     stage = 182
+                } else {
+                    removeItem(player!!, Items.WIZARDS_HEAD_6957)
+                    sendItemDialogue(player!!, Items.WIZARDS_HEAD_6957, "You show the wizard the head.")
+                    stage = 183
                 }
 
                 // ZOGRE FLESH EATERS & RETURNING CLARENCE
@@ -673,6 +677,12 @@ class ZavisticRarveDialogues : DialogueFile() {
                 SandpitCutscene(player!!).start(true)
             }
             182 -> playerl(FaceAnim.HALF_GUILTY, "Not yet no. I've been running around like a headless chicken, but I'll get to it!").also { stage = END_DIALOGUE }
+            183 -> npcl(FaceAnim.HAPPY, "Alas poor Clarence. I knew him, ${player!!.username}.").also { stage++ }
+            184 -> npcl(FaceAnim.FRIENDLY, "Thank you - we shall bury him today. I have sent word for the guards to arrest Sandy, so no one will ever see him again!").also { stage++ }
+            185 -> {
+                end()
+                finishQuest(player!!, Quests.THE_HAND_IN_THE_SAND)
+            }
 
         }
     }

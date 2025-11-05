@@ -24,21 +24,35 @@ class SandyDialogue(player: Player? = null) : Dialogue(player) {
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         val handProgress = getVarbit(player, Vars.VARBIT_QUEST_THE_HAND_IN_THE_SAND_PROGRESS_1527)
+        val questStage = getQuestStage(player, Quests.THE_HAND_IN_THE_SAND)
 
-        if (getQuestStage(player, Quests.THE_HAND_IN_THE_SAND) == 4) {
-            player(FaceAnim.HALF_ASKING, "Hello Sir, do you run the Sand Corp?")
-        } else if (inInventory(player, Items.SANDYS_ROTA_6948)) {
-            sendDialogue(player, "You already have the rota, perhaps you should take both rotas back to Bert in Yanille.").also { stage = END_DIALOGUE }
-        } else if(handProgress == 5) {
-            npcl(FaceAnim.NEUTRAL, "I don't have time to talk to you. Go away!").also { stage = 7 }
-        } else if(inInventory(player, Items.MAGICAL_ORB_6950) && getQuestStage(player, Quests.THE_HAND_IN_THE_SAND) == 9){
-            sendDialogue(player, "You need to activate the magical scrying orb, obtained from the wizard in Yanille, to capture the conversation with Sandy!")
-        } else if(inInventory(player, Items.MAGICAL_ORB_A_6951)) {
-            player("Now, I'm going to ask you some questions and I want", "you to answer me truthfully...").also { stage = 9 }
-        } else if(getQuestStage(player, Quests.THE_HAND_IN_THE_SAND) == 10){
-            npcl(FaceAnim.NEUTRAL, "I don't have time to talk to you. Go away!").also { stage = END_DIALOGUE }
-        } else {
-            npcl(FaceAnim.NEUTRAL, "Sand is yellow,").also { stage = 4 }
+        when {
+            questStage == 4 -> {
+                player(FaceAnim.HALF_ASKING, "Hello Sir, do you run the Sand Corp?")
+            }
+            inInventory(player, Items.SANDYS_ROTA_6948) -> {
+                sendDialogue(player, "You already have the rota, perhaps you should take both rotas back to Bert in Yanille.")
+                stage = END_DIALOGUE
+            }
+            handProgress == 5 -> {
+                npcl(FaceAnim.NEUTRAL, "I don't have time to talk to you. Go away!")
+                stage = 7
+            }
+            inInventory(player, Items.MAGICAL_ORB_6950) && questStage == 9 -> {
+                sendDialogue(player, "You need to activate the magical scrying orb, obtained from the wizard in Yanille, to capture the conversation with Sandy!")
+            }
+            inInventory(player, Items.MAGICAL_ORB_A_6951) -> {
+                player("Now, I'm going to ask you some questions and I want", "you to answer me truthfully...")
+                stage = 9
+            }
+            questStage == 10 -> {
+                npcl(FaceAnim.NEUTRAL, "I don't have time to talk to you. Go away!")
+                stage = END_DIALOGUE
+            }
+            else -> {
+                npcl(FaceAnim.NEUTRAL, "Sand is yellow,")
+                stage = 4
+            }
         }
         return true
     }
