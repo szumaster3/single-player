@@ -3,7 +3,7 @@ package content.region.karamja.plugin
 import content.data.items.SkillingTool
 import content.global.skill.agility.AgilityHandler
 import core.api.*
-import core.cache.def.impl.VarbitDefinition
+import core.cache.def.impl.SceneryDefinition
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.interaction.QueueStrength
@@ -21,12 +21,7 @@ import shared.consts.*
 import kotlin.math.sqrt
 
 /**
- * Handles player interactions primarily related to quests in the Jade Vine Maze.
- *
- * Quest chronology:
- * 1. The Hand in the Sand  - prequel quest
- * 2. Back to my Roots      - main quest
- * 3. One Foot in the Grave - miniquest / sequel
+ * Handles jade vine maze interactions.
  */
 class JadeVineMazePlugin : MapArea, InteractionListener {
 
@@ -49,34 +44,6 @@ class JadeVineMazePlugin : MapArea, InteractionListener {
         private const val STRIKE_RANGE = 1.0
 
         /**
-         * The locations for climbing up vines.
-         * - Key: The Y-coordinate of the vine.
-         * - Value: The location player will arrive at when climbing up.
-         */
-        private val CLIMB_UP_DESTINATION = mapOf(
-            2990 to Location.create(2900, 2989, 2),
-            2998 to Location.create(2896, 2998, 2),
-            2978 to Location.create(2907, 2978, 2),
-            2975 to Location.create(2917, 2975, 2),
-            2973 to Location.create(2908, 2973, 2)
-        )
-
-        /**
-         * Destination locations for climbing down vines.
-         * - Key: The Y-coordinate of the vine.
-         * - Value: The location player will arrive at when climbing down.
-         */
-        private val CLIMB_DOWN_DESTINATION = mapOf(
-            3004 to Location.create(2892, 3004, 2),
-            2990 to Location.create(2900, 2991, 1),
-            2987 to Location.create(2894, 2988, 1),
-            2980 to Location.create(2894, 2979, 1),
-            2982 to Location.create(2894, 2982, 2),
-            2978 to Location.create(2918, 2978, 1),
-            2973 to Location.create(2909, 2973, 1)
-        )
-
-        /**
          * The predefined locations for transport to another random vine
          * or hole within the maze via Hole (jade vine maze).
          */// https://runescape.wiki/w/Hole_(jade_vine_maze)
@@ -90,18 +57,8 @@ class JadeVineMazePlugin : MapArea, InteractionListener {
         )
 
         /**
-         * Root object locations used in Back to my Roots.
+         * The quest items.
          */
-        private val ROOTS_LOCATIONS = mapOf(
-            27059 to listOf( // Roots
-                Location.create(2904, 2973),
-                Location.create(2905, 2975),
-                Location.create(2908, 2975),
-                Location.create(2903, 2971),
-                Location.create(2907, 2976)
-            ),
-        )
-
         private val ROOT_CUTTINGS = intArrayOf(
             Items.ROOT_CUTTING_11770,
             Items.ROOT_CUTTING_11771,
@@ -115,12 +72,6 @@ class JadeVineMazePlugin : MapArea, InteractionListener {
         return arrayOf(getRegionBorders(Regions.JADE_VINE_MAZE_11566))
     }
 
-    /**
-     * The movement watcher in this area.
-     *
-     * Checks if the player is within striking range of any Tree (snake).
-     * A nearby snake may strike, potentially poisoning the player.
-     */
     /* Hit chance decreases with Agility (1 = 99% hit, 99 = 0% hit).
      * ╔═════════╦════════════════╗
      * ║ Agility ║ chanceToHit (%)║
@@ -131,6 +82,10 @@ class JadeVineMazePlugin : MapArea, InteractionListener {
      * ║ 75      ║ 24.24          ║
      * ║ 99      ║ 0              ║
      * ╚═════════╩════════════════╝
+     */
+    /**
+     * Checks if the player is within striking range of any Tree (snake).
+     * A nearby snake may strike, potentially poisoning the player.
      */
     override fun entityStep(entity: Entity, location: Location, lastLocation: Location) {
         super.entityStep(entity, location, lastLocation)
@@ -167,64 +122,123 @@ class JadeVineMazePlugin : MapArea, InteractionListener {
     override fun defineListeners() {
 
         /*
-         * Handles enter to vine maze.
+         * Handles climb up the vines (5 + entrance interaction).
          */
 
         on(Scenery.VINE_27126, IntType.SCENERY, "climb-up") { player, node ->
             when (node.location.y) {
-                2987 -> forceMove(player, player.location, Location.create(2885, 2987, 1), 0, 60, null, 3599)
-                else -> forceMove(player, player.location, Location.create(2888, 3005, 1), 0, 60, null)
+                2987 -> forceMove(player, player.location, Location.create(2885, 2987, 1), 0, 30, null, 3599)
+                2980 -> forceMove(player, player.location, Location.create(2921, 2981, 1), 0, 30, null, 3599)
+                2978 -> forceMove(player, player.location, Location.create(2906, 2978, 1), 0, 30, null, 3599)
+                2974 -> forceMove(player, player.location, Location.create(2926, 2974, 1), 0, 30, null, 3599)
+                2971 -> forceMove(player, player.location, Location.create(2909, 2971, 1), 0, 30, null, 3599)
+                else -> forceMove(player, player.location, Location.create(2888, 3005, 1), 0, 30, null, 3599)
 
             }
             return@on true
         }
+
+        /*
+         * Handles climb up the vines (4 interactions).
+         */
+
+        on(Scenery.VINE_27128, IntType.SCENERY, "climb-up") { player, node ->
+            when (node.location.y) {
+                2990 -> forceMove(player, player.location, Location.create(2903, 2991, 1), 0, 30, null, 3599)
+                2988 -> forceMove(player, player.location, Location.create(2895, 2988, 1), 0, 30, null, 3599)
+                2993 -> forceMove(player, player.location, Location.create(2898, 2994, 1), 0, 30, null, 3599)
+                else -> forceMove(player, player.location, Location.create(2891, 3000, 1), 0, 30, null, 3599)
+            }
+            return@on true
+        }
+
+        /*
+         * Handles climb down the vine (14 interactions).
+         */
+
+        on(Scenery.VINE_27129, IntType.SCENERY, "climb-down") { player, node ->
+            when (node.location.y) {
+                3004 -> forceMove(player, player.location, Location.create(2890, 3004, 1), 0, 30, null, Animations.JUMP_OVER_7268)
+                2998 -> forceMove(player, player.location, Location.create(2896, 2997, 1), 0, 30, null, Animations.JUMP_OVER_7268)
+                2990 -> forceMove(player, player.location, Location.create(2900, 2991, 1), 0, 30, null, Animations.JUMP_OVER_7268)
+                2987 -> forceMove(player, player.location, Location.create(2894, 2988, 1), 0, 30, null, Animations.JUMP_OVER_7268)
+                2985 -> forceMove(player, player.location, Location.create(2884, 2986, 1), 0, 30, null, Animations.JUMP_OVER_7268)
+                2983 -> forceMove(player, player.location, Location.create(2884, 2984, 2), 0, 30, null, Animations.JUMP_OVER_7268)
+                2982 -> forceMove(player, player.location, Location.create(2894, 2982, 2), 0, 30, null, Animations.JUMP_OVER_7268)
+                2980 -> forceMove(player, player.location, Location.create(2894, 2979, 1), 0, 30, null, Animations.JUMP_OVER_7268)
+                2978 -> if(node.location.x == 2907) {
+                    forceMove(player, player.location, Location.create(2906, 2978, 1), 0, 30, null, Animations.JUMP_OVER_7268)
+                } else {
+                    forceMove(player, player.location, Location.create(2918, 2978, 0), 0, 30, null, Animations.JUMP_OVER_7268)
+                }
+                2975 -> forceMove(player, player.location, Location.create(2918, 2975, 1), 0, 30, null, Animations.JUMP_OVER_7268)
+                2973 -> forceMove(player, player.location, Location.create(2909, 2973, 1), 0, 30, null, Animations.JUMP_OVER_7268)
+                2972 -> if(node.location.x == 2919) {
+                    forceMove(player, player.location, Location.create(2918, 2972, 1), 0, 30, null, Animations.JUMP_OVER_7268)
+                } else {
+                    forceMove(player, player.location, Location.create(2923, 2972, 1), 0, 30, null, Animations.JUMP_OVER_7268)
+                }
+            }
+            return@on true
+        }
+
+        /*
+         * Handles climb down the vine (10 interactions).
+         */
+
+        on(Scenery.VINE_27130, IntType.SCENERY, "climb-down") { player, node ->
+            when (node.location.y) {
+                3006 -> forceMove(player, player.location, Location.create(2888, 3007, 0), 0, 30, null, Animations.JUMP_OVER_7268)
+                3000 -> forceMove(player, player.location, Location.create(2889, 3000, 0), 0, 30, null, Animations.JUMP_OVER_7268)
+                2993 -> forceMove(player, player.location, Location.create(2898, 2992, 0), 0, 30, null, Animations.JUMP_OVER_7268)
+                2990 -> forceMove(player, player.location, Location.create(2903, 2989, 0), 0, 30, null, Animations.JUMP_OVER_7268)
+                2988 -> forceMove(player, player.location, Location.create(2897, 2988, 0), 0, 30, null, Animations.JUMP_OVER_7268)
+                2987 -> forceMove(player, player.location, Location.create(2887, 2987, 0), 0, 30, null, Animations.JUMP_OVER_7268)
+                2980 -> forceMove(player, player.location, Location.create(2921, 2979, 0), 0, 30, null, Animations.JUMP_OVER_7268)
+                2978 -> forceMove(player, player.location, Location.create(2904, 2978, 0), 0, 30, null, Animations.JUMP_OVER_7268)
+                2974 -> forceMove(player, player.location, Location.create(2924, 2974, 0), 0, 30, null, Animations.JUMP_OVER_7268)
+                2971 -> forceMove(player, player.location, Location.create(2907, 2971, 0), 0, 30, null, Animations.JUMP_OVER_7268)
+            }
+            return@on true
+        }
+
+        /*
+         * Handles climb up the vines (4 interactions)
+         */
 
         on(Scenery.VINE_27151, IntType.SCENERY, "climb-up") { player, node ->
             when (node.location.y) {
-                2982 -> forceMove(player, player.location, Location.create(2892, 2982, 3), 0, 60, null, 3599)
-                2987 -> forceMove(player, player.location, Location.create(2894, 2987, 2), 0, 60, null, 3599).also { player.moveStep() }
+                2987 -> forceMove(player, player.location, Location.create(2894, 2987, 2), 0, 30, null, 3599) { player.moveStep() }
+                2983 -> forceMove(player, player.location, Location.create(2884, 2983, 3), 0, 30, null, 3599) { player.moveStep() }
+                2982 -> forceMove(player, player.location, Location.create(2892, 2982, 3), 0, 30, null, 3599) { player.moveStep() }
+                2980 -> forceMove(player, player.location, Location.create(2894, 2980, 2), 0, 30, null, 3599) { player.moveStep() }
             }
             return@on true
         }
+
+        /*
+         * Handles climb up the vines (10 interactions).
+         */
 
         on(Scenery.VINE_27152, IntType.SCENERY, "climb-up") { player, node ->
-            val destination = CLIMB_UP_DESTINATION[node.location.y]
-            if (destination != null) {
-                forceMove(player, player.location, destination, 0, 60, null, 3599)
-                player.moveStep()
+            when (node.location.y) {
+                3004 -> forceMove(player, player.location, Location.create(2891, 3004, 2), 0, 30, null, 3599) { player.moveStep() }
+                2998 -> forceMove(player, player.location, Location.create(2896, 2998, 2), 0, 30, null, 3599) { player.moveStep() }
+                2990 -> forceMove(player, player.location, Location.create(2900, 2990, 2), 0, 30, null, 3599) { player.moveStep() }
+                2985 -> forceMove(player, player.location, Location.create(2884, 2985, 2), 0, 30, null, 3599) { player.moveStep() }
+                2978 -> if(node.location.x == 2917) {
+                    forceMove(player, player.location, Location.create(2917, 2978, 2), 0, 30, null, 3599) { player.moveStep() }
+                } else {
+                    forceMove(player, player.location, Location.create(2907, 2978, 2), 0, 30, null, 3599) { player.moveStep() }
+                }
+                2975 -> forceMove(player, player.location, Location.create(2917, 2975, 2), 0, 30, null, 3599) { player.moveStep() }
+                2973 -> forceMove(player, player.location, Location.create(2908, 2973, 2), 0, 30, null, 3599) { player.moveStep() }
+                2972 -> if(node.location.x == 2919) {
+                    forceMove(player, player.location, Location.create(2919, 2972, 2), 0, 30, null, 3599) { player.moveStep() }
+                } else {
+                    forceMove(player, player.location, Location.create(2922, 2972, 2), 0, 30, null, 3599) { player.moveStep() }
+                }
             }
-            return@on true
-        }
-
-        on(Scenery.VINE_27128, IntType.SCENERY, "climb-up") { player, _ ->
-            when (player.location.y) {
-                2988 -> forceMove(player, player.location, Location.create(2895, 2988, 1), 0, 60, null, 819)
-                2993 -> forceMove(player, player.location, Location.create(2898, 2994, 1), 0, 60, null, 819)
-                else -> forceMove(player, player.location, Location.create(2891, 3000, 1), 0, 60, null, 819)
-            }
-            return@on true
-        }
-
-        on(Scenery.VINE_27129, IntType.SCENERY, "climb-down") { player, node ->
-            when (player.location.y) {
-                2978 -> forceMove(player, player.location, Location.create(2906, 2978, 1), 0, 60, null, 819)
-                2998 -> forceMove(player, player.location, Location.create(2896, 2997, 1), 0, 60, null, 819)
-
-            }
-            val destination = CLIMB_DOWN_DESTINATION[node.location.y] ?: Location.create(2896, 2997, 1)
-            forceMove(player, player.location, destination, 0, 60, null, Animations.JUMP_OVER_7268)
-            return@on true
-        }
-
-        on(Scenery.VINE_27130, IntType.SCENERY, "climb-down") { player, node ->
-            val destinations = mapOf(
-                3006 to Location.create(2888, 3007, 0),
-                3000 to Location.create(2889, 3000, 0),
-                2988 to Location.create(2897, 2988, 0)
-            )
-
-            val destination = destinations[node.location.y] ?: Location.create(2898, 2992, 0)
-            forceMove(player, player.location, destination, 0, 30, null, Animations.JUMP_OVER_7268)
             return@on true
         }
 
@@ -243,11 +257,14 @@ class JadeVineMazePlugin : MapArea, InteractionListener {
             lock(player, 3)
             player.animate(Animation(tool.animation, Animator.Priority.HIGH))
             runTask(player, 3) {
-                replaceScenery(node.asScenery(), node.id + 1, 6)
+                replaceScenery(node.asScenery(), Scenery.CUT_VINES_27174, 6)
             }
-
             return@on true
         }
+
+        /*
+         * Handles crawl through the vines.
+         */
 
         on(Scenery.CUT_VINES_27174, IntType.SCENERY, "crawl-through") { player, node ->
             val dir = Direction.getDirection(player.location, node.location)
@@ -255,6 +272,10 @@ class JadeVineMazePlugin : MapArea, InteractionListener {
             forceMove(player, player.location, destination, 0, 60, null, Animations.CRAWLING_2796)
             return@on true
         }
+
+        /*
+         * Handles squeeze through the vines.
+         */
 
         on(Scenery.VINES_27175, IntType.SCENERY, "squeeze-through") { player, node ->
             val dir = Direction.getDirection(player.location, node.location)
@@ -281,7 +302,6 @@ class JadeVineMazePlugin : MapArea, InteractionListener {
          */
 
         on(Scenery.VINE_27185, IntType.SCENERY, "cross") { player, node ->
-
             val xOffset = when (node.location.x) {
                 2911 -> 5
                 2915 -> -5
@@ -301,8 +321,8 @@ class JadeVineMazePlugin : MapArea, InteractionListener {
                 AgilityHandler.walk(player, -1, player.location, destination, Animation.create(155), 0.0, null)
                 AgilityHandler.fail(player, 0, Location.create(2913, 2979, 0), Animation.create(Animations.FALL_BALANCE_764), 0, "You lose your footing and fall into the water.")
                 runTask(player, 4) {
-                    player.animate(Animation.create(Animations.DROWN_765))
-                    forceMove(player, player.location, Location.create(2912, 2980, 0), 0, 90, null, Animations.CLIMB_UP_OUT_OF_WATER_7273) {
+                    player.animate(Animation.create(3641))
+                    forceMove(player, player.location, Location.create(2912, 2980, 0), 0, 60, null, 7267) {
                         sendMessage(player, "You scramble out of the water before the crocodiles take an interest.")
                     }
                 }
@@ -312,12 +332,17 @@ class JadeVineMazePlugin : MapArea, InteractionListener {
         }
 
         /*
-         * Handles travel through jade vine maze.
+         * Handles random travel around jade vine maze and outside.
          */
 
         on(Scenery.HOLE_27186, IntType.SCENERY, "enter") { player, _ ->
-            val randomTravelLocation = HOLE_LOCATIONS.random()
-            player.teleport(randomTravelLocation)
+            val destinations = HOLE_LOCATIONS.filter { it != player.location }
+            val destination = destinations.random()
+
+            lock(player, 3)
+            player.animate(Animation(3593))
+            player.teleport(destination, 1)
+            player.animate(Animation(3592), 1)
             return@on true
         }
 
@@ -345,20 +370,39 @@ class JadeVineMazePlugin : MapArea, InteractionListener {
          * Handles player interaction with Loose Soil in the "Back to my Roots" quest.
          */
 
-        on(27194, IntType.SCENERY, "dig", "cut") { player, _ ->
-            val opt = getUsedOption(player)
-            if (opt == "dig") {
-                if (!inInventory(player, Items.SPADE_952)) {
-                    sendDialogue(player, "You need a spade to do that.")
-                } else {
-                    sendDialogue(player, "You dig at the soil and expose the Vine's root.")
+        on(intArrayOf(Scenery.LOOSE_SOIL_27058, Scenery.ROOTS_27059), IntType.SCENERY, "dig", "cut") { player, node ->
+            val option = getUsedOption(player)
+            val objectData = SceneryDefinition.forId(node.id)
+
+            when (option) {
+                "dig" -> {
+                    if (!inInventory(player, Items.SPADE_952)) {
+                        sendDialogue(player, "You need a spade to do that.")
+                        return@on true
+                    }
+
+                    lock(player, 2)
+                    setVarbit(player, objectData.varbitID, 1)
+                    player.animate(Animation(Animations.DIG_SPADE_830))
+                    sendDialogue(player, "You dig at the soil and expose the vine's root.")
+                }
+
+                "cut" -> {
+                    if (!inInventory(player, Items.TROWEL_676)) {
+                        sendDialogue(player, "You need a trowel to do that.")
+                        return@on true
+                    }
+
+                    if(getVarbit(player, objectData.varbitID) == 1) {
+                        lock(player, 2)
+                        setVarbit(player, objectData.varbitID, 2)
+                        player.animate(Animation(Animations.GARDENING_TROWEL_2272))
+                        sendDialogue(player, "You carefully take a root cutting.")
+                        addItem(player, Items.ROOT_CUTTING_11770)
+                    }
                 }
             }
-            if (opt == "cut" && inInventory(player, Items.TROWEL_676)) {
-                player.animate(Animation(Animations.GARDENING_TROWEL_2272))
-                sendDialogue(player, "You carefully take a root cutting.")
-                addItem(player, Items.ROOT_CUTTING_11770)
-            }
+
             return@on true
         }
 
@@ -367,25 +411,31 @@ class JadeVineMazePlugin : MapArea, InteractionListener {
          */
 
         onUseWith(IntType.ITEM, ROOT_CUTTINGS, Items.PLANT_POT_5357) { player, used, with ->
+            if (!inInventory(player, used.id) || !inInventory(player, with.id))
+                return@onUseWith false
+
             if (removeItem(player, used.id) && removeItem(player, with.id)) {
-                player.dialogueInterpreter.sendItemMessage(Items.POTTED_ROOT_11776, "You carefully plant the cutting in the pot. Now to wait", "and see if it grows!")
                 addItem(player, Items.POTTED_ROOT_11776, 1)
-            }
-            queueScript(player, 3, QueueStrength.SOFT) {
-                lock(player, 3)
-                val rand = RandomFunction.random(4060, 4064)
-                if (rand == 4062) {
-                    sendDialogue(player, "Your cutting seems to have taken successfully.")
-                    setVarbit(player, 4062, 2, true)
-                } else {
-                    removeItem(player, Items.POTTED_ROOT_11776)
-                    sendDialogueLines(player, "The cutting fails to take properly and wilts. You remove it from the", "plant pot.")
-                    sendMessage(player, "The cutting fails to take properly and wilts. You remove it from the plant pot.")
-                    addItem(player, Items.PLANT_POT_5357)
-                    addItem(player, Items.WILTED_CUTTING_11775)
+                player.dialogueInterpreter.sendItemMessage(Items.POTTED_ROOT_11776, "You carefully plant the cutting in the pot. Now to wait", "and see if it grows!")
+
+                queueScript(player, 6, QueueStrength.SOFT) {
+                    val successChance = RandomFunction.random(1, 5)
+                    val success = successChance == 3
+
+                    if (success) {
+                        sendDialogue(player, "Your cutting seems to have taken successfully.")
+                    } else {
+                        removeItem(player, Items.POTTED_ROOT_11776)
+                        sendDialogueLines(player, "The cutting fails to take properly and wilts. You remove it from the", "plant pot.")
+                        sendMessage(player, "The cutting fails to take properly and wilts. You remove it from the plant pot.")
+                        addItemOrDrop(player, Items.PLANT_POT_5357, 1)
+                        addItemOrDrop(player, Items.WILTED_CUTTING_11775, 1)
+                    }
+
+                    return@queueScript stopExecuting(player)
                 }
-                return@queueScript stopExecuting(player)
             }
+
             return@onUseWith true
         }
 
