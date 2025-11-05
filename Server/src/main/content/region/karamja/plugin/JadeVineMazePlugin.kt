@@ -368,6 +368,7 @@ class JadeVineMazePlugin : MapArea, InteractionListener {
 
         /*
          * Handles player interaction with Loose Soil in the "Back to my Roots" quest.
+         * The player has up to 5 root cuttings available in total to use for next interaction.
          */
 
         on(intArrayOf(Scenery.LOOSE_SOIL_27058, Scenery.ROOTS_27059), IntType.SCENERY, "dig", "cut") { player, node ->
@@ -382,7 +383,7 @@ class JadeVineMazePlugin : MapArea, InteractionListener {
                     }
 
                     lock(player, 2)
-                    setVarbit(player, objectData.varbitID, 1)
+                    setVarbit(player, objectData.varbitID, 1) // Replace scenery (+1) and enable cut option.
                     player.animate(Animation(Animations.DIG_SPADE_830))
                     sendDialogue(player, "You dig at the soil and expose the vine's root.")
                 }
@@ -395,7 +396,7 @@ class JadeVineMazePlugin : MapArea, InteractionListener {
 
                     if(getVarbit(player, objectData.varbitID) == 1) {
                         lock(player, 2)
-                        setVarbit(player, objectData.varbitID, 2)
+                        setVarbit(player, objectData.varbitID, 2) // Removes options.
                         player.animate(Animation(Animations.GARDENING_TROWEL_2272))
                         sendDialogue(player, "You carefully take a root cutting.")
                         addItem(player, Items.ROOT_CUTTING_11770)
@@ -407,24 +408,36 @@ class JadeVineMazePlugin : MapArea, InteractionListener {
         }
 
         /*
-         * Handles getting potted root.
+         * Handles planting root cuttings into a plant pot.
+         * Player has a 1/5 chance for success, but the 5th attempt is guaranteed to succeed.
+         * The number of failed attempts is tracked until success.
          */
 
         onUseWith(IntType.ITEM, ROOT_CUTTINGS, Items.PLANT_POT_5357) { player, used, with ->
             if (!inInventory(player, used.id) || !inInventory(player, with.id))
                 return@onUseWith false
 
+            val fails = "root_fail_count"
+            val failCount = player.getAttribute(fails, 0)
+
             if (removeItem(player, used.id) && removeItem(player, with.id)) {
                 addItem(player, Items.POTTED_ROOT_11776, 1)
-                player.dialogueInterpreter.sendItemMessage(Items.POTTED_ROOT_11776, "You carefully plant the cutting in the pot. Now to wait", "and see if it grows!")
+                player.dialogueInterpreter.sendItemMessage(
+                    Items.POTTED_ROOT_11776,
+                    "You carefully plant the cutting in the pot. Now to wait",
+                    "and see if it grows!"
+                )
 
                 queueScript(player, 6, QueueStrength.SOFT) {
-                    val successChance = RandomFunction.random(1, 5)
-                    val success = successChance == 3
+                    val guaranteedSuccess = failCount >= 4
+                    val randomSuccess = RandomFunction.random(1, 5) == 1
+                    val success = guaranteedSuccess || randomSuccess
 
                     if (success) {
+                        player.removeAttribute(fails)
                         sendDialogue(player, "Your cutting seems to have taken successfully.")
                     } else {
+                        player.setAttribute(fails, failCount + 1)
                         removeItem(player, Items.POTTED_ROOT_11776)
                         sendDialogueLines(player, "The cutting fails to take properly and wilts. You remove it from the", "plant pot.")
                         sendMessage(player, "The cutting fails to take properly and wilts. You remove it from the plant pot.")
