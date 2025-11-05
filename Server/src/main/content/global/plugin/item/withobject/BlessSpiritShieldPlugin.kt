@@ -75,6 +75,7 @@ class BlessSpiritShieldPlugin : InteractionListener {
             addDialogueAction(player) { _, buttonId ->
                 when (buttonId) {
                     2 -> {
+                        closeDialogue(player)
                         if (removeItem(player, used) && removeItem(player, Items.BLESSED_SPIRIT_SHIELD_13736)) {
                             val product = Item(SIGIL_MAP[used.id]!!)
                             addItem(player, product.id)
@@ -82,8 +83,9 @@ class BlessSpiritShieldPlugin : InteractionListener {
                             sendItemDialogue(
                                 player,
                                 product.id,
-                                "You successfully attach the " + used.name.lowercase() +
-                                    " to the blessed spirit shield.",
+                                "You successfully attach the "
+                                        + used.name.lowercase() +
+                                        " to the blessed spirit shield."
                             )
                         }
                     }

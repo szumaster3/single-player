@@ -3,7 +3,6 @@ package content.global.plugin.item.withobject
 import core.api.*
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import core.game.system.task.Pulse
 import shared.consts.Animations
 import shared.consts.Items
 import shared.consts.Scenery
@@ -24,28 +23,12 @@ class PoisonFountainPlugin : InteractionListener {
             if (!removeItem(player, used)) {
                 return@onUseWith false
             }
-            lock(player, 5)
+            lock(player, 3)
             animate(player, Animations.HUMAN_PICKPOCKETING_881)
             sendMessage(player, "You pour the poisoned fish food into the fountain.")
             setAttribute(player, "/save:piranhas-killed", true)
-            submitIndividualPulse(
-                player,
-                object : Pulse(1) {
-                    var counter = 0
-
-                    override fun pulse(): Boolean {
-                        when (counter++) {
-                            1 -> sendMessage(player, "The piranhas start eating the food...")
-                            2 -> {
-                                sendMessage(player, "... then die and float to the surface.")
-                                unlock(player)
-                                return true
-                            }
-                        }
-                        return false
-                    }
-                },
-            )
+            sendMessage(player, "The piranhas start eating the food...", 1)
+            sendMessage(player, "... then die and float to the surface.", 2)
             return@onUseWith true
         }
     }

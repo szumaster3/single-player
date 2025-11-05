@@ -79,7 +79,7 @@ enum class GodType(val cape: Item, val staff: Item, val statueId: Int, val npcId
         /**
          * Gets the god type for a player based on the cape they possess.
          */
-        fun getCape(player: Player, inv: Boolean): GodType? =
+        private fun getCape(player: Player, inv: Boolean): GodType? =
             values().find { cape ->
                 if (inv) {
                     player.inventory.containsItems(cape.cape)

@@ -24,7 +24,6 @@ import java.util.*
 
 object TutorialStage {
     const val TUTORIAL_STAGE = GameAttributes.TUTORIAL_STAGE
-    const val TUTORIAL_HINT = "tutorial:hinticon"
     const val FLASHING_ICON = Vars.VARBIT_FLASHING_TAB_ICON_3756
 
     @JvmField
@@ -95,7 +94,6 @@ object TutorialStage {
                 player.unlock()
                 setMinimapState(player, 0)
                 player.interfaceManager.removeTabs(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13)
-                registerHintIcon(player, Repository.findNPC(NPCs.RUNESCAPE_GUIDE_945)!!)
                 player.dialogueInterpreter.sendPlaneMessageWithBlueTitle(
                     "Getting started",
                     "To start the tutorial use your left mouse button to click on the",

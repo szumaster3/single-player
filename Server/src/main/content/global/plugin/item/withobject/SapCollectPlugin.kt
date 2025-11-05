@@ -25,6 +25,7 @@ class SapCollectPlugin : InteractionListener {
         onUseWith(IntType.SCENERY, Items.KNIFE_946, *treeIDs) { player, _, _ ->
             if (!inInventory(player, Items.BUCKET_1925)) {
                 sendMessage(player, "You need a bucket to do that.")
+                return@onUseWith true
             }
             submitIndividualPulse(
                 player,

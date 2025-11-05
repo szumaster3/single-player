@@ -1,6 +1,5 @@
 package content.region.island.tutorial.plugin
 
-import content.data.GameAttributes
 import content.global.skill.gathering.fishing.FishingSpot
 import content.global.skill.gathering.mining.MiningNode
 import content.global.skill.gathering.woodcutting.WoodcuttingNode
@@ -21,12 +20,12 @@ object TutorialButtonReceiver : EventHook<ButtonClickEvent> {
         val player = entity.asPlayer()
         when (getAttribute(player, TutorialStage.TUTORIAL_STAGE, 0)) {
             0 -> if (event.iface == Components.APPEARANCE_771 && event.buttonId == 362) {
-                setAttribute(player, "/save:${GameAttributes.TUTORIAL_STAGE}", 39)
+                setAttribute(player, TutorialStage.TUTORIAL_STAGE, 39)
                 TutorialStage.load(player, 39)
             }
 
             1 -> if ((event.iface == Components.TOPLEVEL_548 && event.buttonId == 24) || (event.iface == Components.TOPLEVEL_FULLSCREEN_746 && event.buttonId == 52)) {
-                setAttribute(player, "/save:${GameAttributes.TUTORIAL_STAGE}", 2)
+                setAttribute(player, TutorialStage.TUTORIAL_STAGE, 2)
                 TutorialStage.load(player, 2)
             }
 

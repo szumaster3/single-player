@@ -9,6 +9,7 @@ import shared.consts.Items
  * Represents a skilling tool items.
  */
 enum class SkillingTool(val id: Int, val level: Int, val ratio: Double, val animation: Int) {
+    // Axes.
     BRONZE_AXE(Items.BRONZE_AXE_1351, 1, 0.05, Animations.BRONZE_AXE_879),
     IRON_AXE(Items.IRON_AXE_1349, 1, 0.1, Animations.IRON_AXE_877),
     STEEL_AXE(Items.STEEL_AXE_1353, 6, 0.2, Animations.STEEL_AXE_ALT3_875),
@@ -23,7 +24,7 @@ enum class SkillingTool(val id: Int, val level: Int, val ratio: Double, val anim
     AXE_CLASS3(Items.AXE_CLASS_3_14136, 40, 0.65, Animations.NULL_10605),
     AXE_CLASS4(Items.AXE_CLASS_4_14138, 60, 0.85, Animations.NULL_10606),
     AXE_CLASS5(Items.AXE_CLASS_5_14140, 80, 1.0, Animations.NULL_10607),
-
+    // Pickaxes.
     BRONZE_PICKAXE(Items.BRONZE_PICKAXE_1265, 1, 0.05, Animations.MINING_BRONZE_PICKAXE_625),
     IRON_PICKAXE(Items.IRON_PICKAXE_1267, 1, 0.1, Animations.MINING_IRON_PICKAXE_626),
     STEEL_PICKAXE(Items.STEEL_PICKAXE_1269, 6, 0.2, Animations.MINING_STEEL_PICKAXE_627),
@@ -36,19 +37,19 @@ enum class SkillingTool(val id: Int, val level: Int, val ratio: Double, val anim
     PICKAXE_CLASS3(Items.PICKAXE_CLASS_3_14126, 40, 0.65, Animations.NULL_10610),
     PICKAXE_CLASS4(Items.PICKAXE_CLASS_4_14128, 60, 0.85, Animations.NULL_10611),
     PICKAXE_CLASS5(Items.PICKAXE_CLASS_5_14130, 80, 1.0, Animations.NULL_10613),
-
+    // Harpoons.
     HARPOON_CLASS1(Items.HARPOON_CLASS_1_14142, 1, 0.1, Animations.NULL_10613),
     HARPOON_CLASS2(Items.HARPOON_CLASS_2_14144, 20, 0.3, Animations.NULL_10614),
     HARPOON_CLASS3(Items.HARPOON_CLASS_3_14146, 40, 0.65, Animations.NULL_10615),
     HARPOON_CLASS4(Items.HARPOON_CLASS_4_14148, 60, 0.85, Animations.NULL_10616),
     HARPOON_CLASS5(Items.HARPOON_CLASS_5_14150, 80, 1.0, Animations.NULL_10617),
-
+    // Butterfly nets.
     BUTTERFLY_NET_CLASS1(Items.BUTTERFLY_NET_CLASS_1_14152, 1, 0.1, Animations.SC_BUTTERFLY_NET_CLASS_1_10618),
     BUTTERFLY_NET_CLASS2(Items.BUTTERFLY_NET_CLASS_2_14154, 20, 0.3, Animations.SC_BUTTERFLY_NET_CLASS_2_10619),
     BUTTERFLY_NET_CLASS3(Items.BUTTERFLY_NET_CLASS_3_14156, 40, 0.65, Animations.SC_BUTTERFLY_NET_CLASS_3_10620),
     BUTTERFLY_NET_CLASS4(Items.BUTTERFLY_NET_CLASS_4_14158, 60, 0.85, Animations.SC_BUTTERFLY_NET_CLASS_4_10621),
     BUTTERFLY_NET_CLASS5(Items.BUTTERFLY_NET_CLASS_5_14160, 80, 1.0, Animations.SC_BUTTERFLY_NET_CLASS_5_10622),
-
+    // Firemaking (barbarian) tools.
     TRAINING_BOW(Items.TRAINING_BOW_9705, 1, 0.1, Animations.LIGHT_FIRE_WITH_BOW_6713),
     LONGBOW(Items.LONGBOW_839, 1, 0.1, Animations.LIGHT_FIRE_WITH_BOW_6714),
     SHORTBOW(Items.SHORTBOW_841, 1, 0.1, Animations.LIGHT_FIRE_WITH_BOW_6714),
@@ -64,7 +65,7 @@ enum class SkillingTool(val id: Int, val level: Int, val ratio: Double, val anim
     MAGIC_LONGBOW(Items.MAGIC_LONGBOW_859, 1, 0.85, Animations.LIGHT_FIRE_WITH_MAGIC_BOW_6719),
     SEERCULL(Items.SEERCULL_6724, 1, 0.85, Animations.LIGHT_FIRE_WITH_BOW_6720),
     SACRED_CLAY_BOW(Items.SACRED_CLAY_BOW_14121, 1, 1.00, Animations.LIGHT_FIRE_WITH_SC_BOW_10990),
-
+    // Machetes.
     MACHETE(Items.MACHETE_975, 1, 0.24, Animations.SWIPE_WITH_MACHETE_TAI_BWO_WANNAI_CLEANUP_2382),
     OPAL_MACHETE(Items.OPAL_MACHETE_6313, 1, 0.26, Animations.SWING_WITH_OPAL_MACHETE_6085),
     JADE_MACHETE(Items.JADE_MACHETE_6315, 1, 0.32, Animations.SWING_WITH_JADE_MACHETE_6086),
@@ -92,21 +93,7 @@ enum class SkillingTool(val id: Int, val level: Int, val ratio: Double, val anim
         fun getAxe(player: Player): SkillingTool? {
             var tool: SkillingTool? = null
             val hatchetPriority =
-                arrayOf(
-                    AXE_CLASS5,
-                    AXE_CLASS4,
-                    DRAGON_AXE,
-                    AXE_CLASS3,
-                    RUNE_AXE,
-                    ADAMANT_AXE,
-                    AXE_CLASS2,
-                    MITHRIL_AXE,
-                    BLACK_AXE,
-                    STEEL_AXE,
-                    AXE_CLASS1,
-                    IRON_AXE,
-                    BRONZE_AXE,
-                )
+                arrayOf(AXE_CLASS5, AXE_CLASS4, DRAGON_AXE, AXE_CLASS3, RUNE_AXE, ADAMANT_AXE, AXE_CLASS2, MITHRIL_AXE, BLACK_AXE, STEEL_AXE, AXE_CLASS1, IRON_AXE, BRONZE_AXE)
             for (hatchet in hatchetPriority) {
                 if (checkTool(player, Skills.WOODCUTTING, hatchet)) {
                     tool = hatchet
@@ -128,19 +115,7 @@ enum class SkillingTool(val id: Int, val level: Int, val ratio: Double, val anim
         fun getPickaxe(player: Player): SkillingTool? {
             var tool: SkillingTool? = null
             val pickaxePriority =
-                arrayOf(
-                    PICKAXE_CLASS5,
-                    PICKAXE_CLASS4,
-                    RUNE_PICKAXE,
-                    PICKAXE_CLASS3,
-                    ADAMANT_PICKAXE,
-                    PICKAXE_CLASS2,
-                    MITHRIL_PICKAXE,
-                    STEEL_PICKAXE,
-                    PICKAXE_CLASS1,
-                    IRON_PICKAXE,
-                    BRONZE_PICKAXE,
-                )
+                arrayOf(PICKAXE_CLASS5, PICKAXE_CLASS4, RUNE_PICKAXE, PICKAXE_CLASS3, ADAMANT_PICKAXE, PICKAXE_CLASS2, MITHRIL_PICKAXE, STEEL_PICKAXE, PICKAXE_CLASS1, IRON_PICKAXE, BRONZE_PICKAXE)
             for (pickaxe in pickaxePriority) {
                 if (checkTool(player, Skills.MINING, pickaxe)) {
                     tool = pickaxe
@@ -162,13 +137,7 @@ enum class SkillingTool(val id: Int, val level: Int, val ratio: Double, val anim
         fun getHarpoon(player: Player): SkillingTool? {
             var tool: SkillingTool? = null
             val harpoonPriority =
-                arrayOf(
-                    HARPOON_CLASS5,
-                    HARPOON_CLASS4,
-                    HARPOON_CLASS3,
-                    HARPOON_CLASS2,
-                    HARPOON_CLASS1,
-                )
+                arrayOf(HARPOON_CLASS5, HARPOON_CLASS4, HARPOON_CLASS3, HARPOON_CLASS2, HARPOON_CLASS1)
             for (harpoon in harpoonPriority) {
                 if (checkTool(player, Skills.FISHING, harpoon)) {
                     tool = harpoon
@@ -185,13 +154,7 @@ enum class SkillingTool(val id: Int, val level: Int, val ratio: Double, val anim
         fun getButterflyNet(player: Player): SkillingTool? {
             var tool: SkillingTool? = null
             val butterflyNetPriority =
-                arrayOf(
-                    BUTTERFLY_NET_CLASS5,
-                    BUTTERFLY_NET_CLASS4,
-                    BUTTERFLY_NET_CLASS3,
-                    BUTTERFLY_NET_CLASS2,
-                    BUTTERFLY_NET_CLASS1,
-                )
+                arrayOf(BUTTERFLY_NET_CLASS5, BUTTERFLY_NET_CLASS4, BUTTERFLY_NET_CLASS3, BUTTERFLY_NET_CLASS2, BUTTERFLY_NET_CLASS1)
             for (butterflyNet in butterflyNetPriority) {
                 if (checkTool(player, Skills.HUNTER, butterflyNet)) {
                     tool = butterflyNet
@@ -208,23 +171,7 @@ enum class SkillingTool(val id: Int, val level: Int, val ratio: Double, val anim
         fun getFiremakingTool(player: Player): SkillingTool? {
             var tool: SkillingTool? = null
             val bowPriority =
-                arrayOf(
-                    SACRED_CLAY_BOW,
-                    SEERCULL,
-                    MAGIC_SHORTBOW,
-                    MAGIC_LONGBOW,
-                    YEW_SHORTBOW,
-                    YEW_LONGBOW,
-                    MAPLE_SHORTBOW,
-                    MAPLE_LONGBOW,
-                    WILLOW_SHORTBOW,
-                    WILLOW_LONGBOW,
-                    OAK_LONGBOW,
-                    OAK_SHORTBOW,
-                    SHORTBOW,
-                    LONGBOW,
-                    TRAINING_BOW,
-                )
+                arrayOf(SACRED_CLAY_BOW, SEERCULL, MAGIC_SHORTBOW, MAGIC_LONGBOW, YEW_SHORTBOW, YEW_LONGBOW, MAPLE_SHORTBOW, MAPLE_LONGBOW, WILLOW_SHORTBOW, WILLOW_LONGBOW, OAK_LONGBOW, OAK_SHORTBOW, SHORTBOW, LONGBOW, TRAINING_BOW)
             for (bowId in bowPriority) {
                 if (checkTool(player, Skills.FIREMAKING, bowId)) {
                     tool = bowId
@@ -241,12 +188,7 @@ enum class SkillingTool(val id: Int, val level: Int, val ratio: Double, val anim
         fun getMachete(player: Player?): SkillingTool? {
             var tool: SkillingTool? = null
             val machetePriority =
-                arrayOf(
-                    RED_TOPAZ_MACHETE,
-                    JADE_MACHETE,
-                    OPAL_MACHETE,
-                    MACHETE,
-                )
+                arrayOf(RED_TOPAZ_MACHETE, JADE_MACHETE, OPAL_MACHETE, MACHETE)
             for (machete in machetePriority) {
                 if (checkTool(player!!, Skills.WOODCUTTING, machete)) {
                     tool = machete
