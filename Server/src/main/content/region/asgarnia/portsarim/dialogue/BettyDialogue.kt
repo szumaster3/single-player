@@ -5,6 +5,8 @@ import content.region.misthalin.draynor.quest.swept.plugin.SweptUtils
 import core.api.*
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
+import core.game.dialogue.IfTopic
+import core.game.dialogue.Topic
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
@@ -13,6 +15,7 @@ import core.tools.END_DIALOGUE
 import shared.consts.Items
 import shared.consts.NPCs
 import shared.consts.Quests
+import shared.consts.Vars
 
 /**
  * Represents the Betty dialogue.
@@ -22,24 +25,25 @@ class BettyDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
-        npc("Welcome to the magic emporium.")
+        if(getQuestStage(player, Quests.THE_HAND_IN_THE_SAND) >= 7 && getVarbit(player, Vars.VARBIT_QUEST_THE_HAND_IN_THE_SAND_PROGRESS_1527) == 4 && !inInventory(player, Items.ROSE_TINTED_LENS_6956)) {
+            npcl(FaceAnim.HALF_ASKING, "Hello deary! Have you managed to make that lens yet?").also { stage = 38 }
+        } else {
+            npc("Welcome to the magic emporium.")
+        }
         return true
     }
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> if (getQuestStage(player, Quests.SWEPT_AWAY) >= 1) {
-                options(
-                    "Talk to Betty about Swept Away.",
-                    "Talk to Betty about her shop.",
-                    "Talk to Betty about pink dye.",
-                ).also { stage = 10 }
+                options("Talk to Betty about Swept Away.", "Talk to Betty about her shop.", "Talk to Betty about pink dye.").also { stage = 10 }
             } else if (isQuestComplete(player, Quests.THE_HAND_IN_THE_SAND)) {
-                options(
-                    "Can I see your wares?",
-                    "Sorry, I'm not into magic.",
-                    "Talk to Betty about pink dye.",
-                ).also { stage++ }
+                options("Can I see your wares?", "Sorry, I'm not into magic.", "Talk to Betty about pink dye.").also { stage++ }
+            } else if(isQuestInProgress(player, Quests.THE_HAND_IN_THE_SAND, 1, 99)) {
+                showTopics(
+                    IfTopic("Talk to Betty about the Hand in the Sand.", 34, getQuestStage(player, Quests.THE_HAND_IN_THE_SAND) >= 7, true),
+                    Topic("Talk to Betty about her shop.", 33, true)
+                )
             } else {
                 options("Can I see your wares?", "Sorry, I'm not into magic.").also { stage++ }
             }
@@ -102,6 +106,25 @@ class BettyDialogue(player: Player? = null) : Dialogue(player) {
             }
             31 -> npc("There you go! I'm sure t hat's just the spice that", "Maggie's looking for.").also { stage++ }
             32 -> player("Many thanks.").also { stage = END_DIALOGUE }
+            33 -> options("Can I see your wares?", "Sorry, I'm not into magic.").also { stage = 1 }
+            34 -> playerl(FaceAnim.HALF_ASKING, "I've come from Yanille, the wizard says you can make Truth Serum?").also { stage++ }
+            35 -> npcl(FaceAnim.FRIENDLY, "This is true deary, I'll need an empty vial.").also { stage++ }
+            36 -> if(!removeItem(player, Items.VIAL_229)) {
+                playerl(FaceAnim.HAPPY, "I'll have to go find one then, I'll be back!").also { stage = END_DIALOGUE }
+            } else {
+                player("I have one here!").also { stage++ }
+            }
+            37 -> {
+                npcl(FaceAnim.FRIENDLY, "That's good, now you'll need to make a rose tinted lens. Pink dye can be made from red berries in this bottle to make redberry juice, then add white berries. Just use that on a bullseye lens.")
+                setVarbit(player, Vars.VARBIT_QUEST_THE_HAND_IN_THE_SAND_PROGRESS_1527, 4, true)
+                addItem(player, Items.BOTTLED_WATER_6953, 1)
+                stage = END_DIALOGUE
+            }
+            38 -> showTopics(
+                Topic("I'm still working on it.", END_DIALOGUE, false),
+                Topic("I'm afraid I've forgotten how!", 39, false)
+            )
+            39 -> npcl(FaceAnim.FRIENDLY, "Pink dye can be made from red berries in the bottle I gave you. Add white berries to make the pink dye and then you just need to use that on a bullseye lens. Good luck!").also { stage = END_DIALOGUE }
         }
         return true
     }

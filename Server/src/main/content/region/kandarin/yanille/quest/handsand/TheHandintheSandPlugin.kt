@@ -85,6 +85,10 @@ class TheHandintheSandPlugin : InteractionListener {
             return@on true
         }
 
+        /*
+         * Handles pickpocket the Sandy for original rot.
+         */
+
         on(SANDY, IntType.NPC, "Pickpocket") { player, _ ->
             player.animate(Animation(Animations.HUMAN_PICKPOCKETING_881))
             if(freeSlots(player) == 0) {
@@ -103,6 +107,29 @@ class TheHandintheSandPlugin : InteractionListener {
             return@on true
         }
 
+        /*
+         * Handles making pink dye.
+         */
+
+        onUseWith(IntType.ITEM, Items.REDBERRIES_1951, Items.BOTTLED_WATER_6953) { player, used, with ->
+            if(removeItem(player, used.asItem()) && removeItem(player, with.asItem())) {
+                sendMessage(player, "Now you just need to add the white berries to make the pink dye.")
+                addItem(player, Items.PINK_DYE_6955, 1)
+            }
+            return@onUseWith true
+        }
+
+        /*
+         * Handles making pink lens.
+         */
+
+        onUseWith(IntType.ITEM, Items.PINK_DYE_6955, Items.LANTERN_LENS_4542) { player, used, with ->
+            if(removeItem(player, used.asItem()) && removeItem(player, with.asItem())) {
+                sendItemDialogue(player, Items.ROSE_TINTED_LENS_6956, "You have successfully made the rose tinted lens!")
+                addItem(player, Items.ROSE_TINTED_LENS_6956, 1)
+            }
+            return@onUseWith true
+        }
     }
 
 }
