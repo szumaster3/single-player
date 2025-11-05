@@ -1,7 +1,7 @@
 package content.region.kandarin.yanille.dialogue
 
-import com.google.gson.JsonObject
-import core.ServerStore
+import content.data.GameAttributes
+import content.region.kandarin.yanille.quest.handsand.TheHandintheSand
 import core.api.*
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
@@ -22,7 +22,7 @@ import shared.consts.Vars
 class BertDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
-        val store = getStoreFile()
+        val store = TheHandintheSand.getStoreFile()
         val username = player?.username?.lowercase() ?: ""
         val alreadyClaimed = store[username]?.asBoolean ?: false
         val hasBankSpace = hasSpaceFor(player, Item(Items.BUCKET_OF_SAND_1783, 1)) ?: false
@@ -269,12 +269,11 @@ class BertDialogue(player: Player? = null) : Dialogue(player) {
 
     private fun rewardSand(amount: Int) {
         player?.bank?.add(Item(Items.BUCKET_OF_SAND_1783, amount))
-        val store = getStoreFile()
+        val store = TheHandintheSand.getStoreFile()
         val username = player?.username?.lowercase() ?: return
         store.addProperty(username, true)
+        player.setAttribute(GameAttributes.HAND_SAND_LAST_SAND_CLAIM, System.currentTimeMillis())
         player?.sendMessages("Thanks for the sand Bert!")
         stage = END_DIALOGUE
     }
-
-    private fun getStoreFile(): JsonObject = ServerStore.getArchive("daily-sand")
 }

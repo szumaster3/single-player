@@ -1,5 +1,8 @@
 package content.region.kandarin.yanille.quest.handsand
 
+import com.google.gson.JsonObject
+import content.data.GameAttributes
+import core.ServerStore
 import core.api.displayQuestItem
 import core.api.hasLevelStat
 import shared.consts.Vars
@@ -127,17 +130,31 @@ class TheHandintheSand : Quest(Quests.THE_HAND_IN_THE_SAND, 72, 71, 1, Vars.VARB
             line(player, "I have retrieved the head of a wizard.", line++, true)
             line(player, "The dead wizard has been buried and Sandy arrested for murder.", line++, true)
         }
+        val store = getStoreFile()
+        val username = player?.username?.lowercase() ?: ""
+        val alreadyClaimed = store[username]?.asBoolean ?: false
+        val lastClaim = player.getAttribute<Long>(GameAttributes.HAND_SAND_LAST_SAND_CLAIM) ?: 0L
+        val now = System.currentTimeMillis()
+
+        val cooldown = 24 * 60 * 60 * 1000L
+        val timeLeft = (lastClaim + cooldown) - now
 
         if (stage == 100) {
             line++
             line(player, "<col=FF0000>QUEST COMPLETE!", line, false)
             line++
             line(player, "Every day I may ask Bert to transport some sand to my bank.", line++)
-            line(
-                player,
-                "You can collect your sand now.",
-                line
-            ) // "You'll need to wait about X hours to collect your sand."
+            line++
+            if (alreadyClaimed) {
+                line(player, "You've already collected your sand today. Come back tomorrow!", line)
+            } else {
+                if (timeLeft <= 0) {
+                    line(player, "You can collect your sand now.", line)
+                } else {
+                    val hoursLeft = (timeLeft / (1000 * 60 * 60.0)).coerceAtLeast(0.0)
+                    line(player, "You'll need to wait about ${"%.1f".format(hoursLeft)} hours to collect your sand.", line)
+                }
+            }
         }
     }
 
@@ -156,6 +173,14 @@ class TheHandintheSand : Quest(Quests.THE_HAND_IN_THE_SAND, 72, 71, 1, Vars.VARB
 
     override fun newInstance(`object`: Any?): Quest {
         return this
+    }
+
+    companion object {
+        /**
+         * The bert secret reward.
+         */
+        @JvmStatic
+        fun getStoreFile(): JsonObject = ServerStore.getArchive("daily-sand")
     }
 
 }
