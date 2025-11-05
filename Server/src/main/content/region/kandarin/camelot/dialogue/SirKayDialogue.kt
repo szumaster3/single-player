@@ -91,7 +91,7 @@ class SirKayDialogue(player: Player? = null) : Dialogue(player) {
                     return true
                 }
                 if (!Diary.flagRewarded(player, DiaryType.SEERS_VILLAGE, diaryLevel)) return true
-                sendItemDialogue(player, Diary.getRewards(DiaryType.SEERS_VILLAGE, diaryLevel)[0], "You hand Sir Kay your headband and he concentrates for a moment. Some mysterious knightly energy passes through his hands and he gives the headband back to you, along with an old lamp.").also { stage++ }
+                sendItemDialogue(player, Diary.getRewards(DiaryType.SEERS_VILLAGE, diaryLevel)[0], "You hand Sir Kay your headband and he concentrates for a moment. Some mysterious knightly energy passes through his hands and he gives the headband back to you, along with an old lamp.").also { stage = 19 }
             }
             19 -> npcl(FaceAnim.NEUTRAL, "You will find that your headband now blesses you with the power to spin fabrics at extreme speed in Seers' Village. I will also instruct Geoff-erm-Flax to offer you a far larger flax allowance. Use your new powers").also { stage++ }
             20 -> npcl(FaceAnim.NEUTRAL, "wisely.").also { stage++ }

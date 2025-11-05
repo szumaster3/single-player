@@ -13,7 +13,7 @@ class FenitasDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
-        npc(FaceAnim.HAPPY, "Would you like to buy some cooking equipment?").also { stage = 0 }
+        npc(FaceAnim.HAPPY, "Would you like to buy some cooking equipment?")
         return true
     }
 

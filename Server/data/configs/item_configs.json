@@ -63843,7 +63843,7 @@
     "id": "6926"
   },
   {
-    "destroy_message": "You can reclaim this item from the place you found it.",
+    "destroy_message": "Speak to Bert in Yanille to get another sandy hand.",
     "examine": "A severed hand covered with sand.",
     "durability": null,
     "name": "Sandy hand",
