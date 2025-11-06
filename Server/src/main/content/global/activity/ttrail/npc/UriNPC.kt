@@ -19,7 +19,7 @@ import shared.consts.NPCs
 
 /**
  * Represents the Uri Molotov NPC.
- * @author Vexia, szu
+ * @author Vexia
  */
 class UriNPC : AbstractNPC {
     /**

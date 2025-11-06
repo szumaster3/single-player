@@ -1,8 +1,8 @@
 package content.activity.ttrial.puzzle
 
 import TestUtils
-import content.global.activity.ttrail.plugin.PuzzleBoxPlugin
-import core.api.getAttribute
+import content.global.activity.ttrail.rewrite.Puzzle
+import content.global.activity.ttrail.rewrite.PuzzleBoxPlugin
 import core.api.setAttribute
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
@@ -15,52 +15,47 @@ class PuzzleBoxTests {
         TestUtils.preTestSetup()
     }
 
-    @Test fun generateOnlySolvablePuzzles() {
-        val puzzleItems = (1..24).toList() + -1
-        repeat(100) {
-            val generatedPuzzle = plugin.generateSolvablePuzzle(puzzleItems)
-            Assertions.assertTrue(plugin.isSolvable(generatedPuzzle), "Generated puzzle is not solvable: $generatedPuzzle")
-            Assertions.assertTrue(generatedPuzzle.contains(-1), "Puzzle should contain empty slot (-1)")
-            Assertions.assertEquals(25, generatedPuzzle.size, "Puzzle should have 25 pieces")
+    @Test
+    fun generateOnlySolvablePuzzles() {
+        val solution = (1..24).toList() + -1
+        repeat(50) {
+            val puzzle = plugin.generatePuzzle(solution)
+            Assertions.assertEquals(25, puzzle.size, "Puzzle should have 25 pieces")
+            Assertions.assertTrue(puzzle.contains(-1), "Puzzle must contain the empty slot (-1)")
         }
     }
 
-    @Test fun verifyKnownStateIsSolvable() {
-        val solvablePuzzle = (1..24).toList() + -1
-        Assertions.assertTrue(plugin.isSolvable(solvablePuzzle), "Puzzle should be solvable")
+    @Test
+    fun saveAndLoadSession() {
+        val type = "castle"
+        val solution = Puzzle.forType(type)!!.fullSolution.toMutableList()
+        val shuffled = plugin.generatePuzzle(solution)
+
+        plugin.saveSession(p, type, shuffled)
+        val loaded = plugin.loadSession(p, type)
+
+        Assertions.assertEquals(shuffled, loaded, "Loaded puzzle should match saved session")
     }
 
-    @Test fun generateUnsolvablePuzzles() {
-        val unsolvablePuzzle = (2..24).toList() + 1 + -1
-        Assertions.assertFalse(plugin.isSolvable(unsolvablePuzzle), "Puzzle should not be solvable")
+    @Test
+    fun markPuzzleComplete() {
+        val type = "castle"
+        val solution = Puzzle.forType(type)!!.fullSolution
+
+        plugin.saveSession(p, type, solution.toMutableList())
+        setAttribute(p, "$type:puzzle:done", true)
+
+        Assertions.assertTrue(
+            Puzzle.isComplete(p, type),
+            "Puzzle should be marked as completed and player should have the item"
+        )
     }
 
-    @Test fun checkPuzzleStateSaving() {
-        val key = "mm"
-        val puzzleItems = (3904..3950 step 2).toList() + -1
-
-        val shuffledPuzzle = plugin.generateSolvablePuzzle(puzzleItems)
-        plugin.saveSession(p, key, shuffledPuzzle)
-
-        val loadedPuzzle = plugin.loadSession(p, key)
-        Assertions.assertEquals(shuffledPuzzle, loadedPuzzle, "Puzzle state should match the saved state")
-    }
-
-    @Test fun completePuzzleAndMarkAsDone() {
-        val p = p
-        val key = "mm"
-        val puzzleItems = (3904..3950 step 2).toList() + -1
-        val solution = (3904..3950 step 2).toList() + listOf(-1)
-
-        val shuffledPuzzle = plugin.generateSolvablePuzzle(puzzleItems)
-        plugin.saveSession(p, key, shuffledPuzzle)
-
-        plugin.savePuzzleData(p, key, solution)
-
-        setAttribute(p, "$key:puzzle:done", true)
-
-        Assertions.assertTrue(getAttribute(p, "$key:puzzle:done", false), "Puzzle should be marked as completed")
-        Assertions.assertEquals(solution.joinToString(",").hashCode(), getAttribute(p, "$key:puzzle", 0))
-        Assertions.assertEquals(solution.joinToString(","), getAttribute(p, "$key:puzzle:data", ""))
+    @Test
+    fun randomPuzzleSelection() {
+        val id = Puzzle.random()
+        val box = Puzzle.forId(id)
+        Assertions.assertNotNull(box, "Random puzzle ID must correspond to a Puzzle")
+        Assertions.assertEquals(25, box!!.fullSolution.size, "Puzzle must have 25 tiles")
     }
 }

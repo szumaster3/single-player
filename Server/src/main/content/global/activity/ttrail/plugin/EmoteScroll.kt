@@ -11,6 +11,7 @@ import core.game.world.map.zone.ZoneBorders
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
 import shared.consts.Animations
+import shared.consts.Components
 import shared.consts.NPCs
 
 /**
@@ -27,7 +28,7 @@ abstract class EmoteScroll(
     private val clue: String?,
     vararg borders: ZoneBorders?
 ) : ClueScroll(
-    name, clueId, level, 345, borders.filterNotNull().toTypedArray()
+    name, clueId, level, Components.TRAIL_MAP09_345, borders.filterNotNull().toTypedArray()
 ) {
 
     /**

@@ -13,7 +13,6 @@ import shared.consts.NPCs
 
 /**
  * Represents the Penda NPC.
- * @author szu
  */
 @Initializable
 class PendaNPC(
