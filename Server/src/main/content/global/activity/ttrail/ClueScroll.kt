@@ -33,7 +33,7 @@ abstract class ClueScroll(
     /**
      * Rewards the player with a casket.
      * @param player the player.
-     * @param casket if we give a ckaset.
+     * @param casket if we give a casket.
      */
     fun reward(player: Player, casket: Boolean) {
         val clue = player.inventory.getItem(Item(clueId)) ?: return
