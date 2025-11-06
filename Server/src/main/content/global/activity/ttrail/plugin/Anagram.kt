@@ -1,7 +1,6 @@
 package content.global.activity.ttrail.plugin
 
 import content.global.activity.ttrail.ClueLevel
-import content.global.activity.ttrail.rewrite.Puzzle
 import core.plugin.Plugin
 import shared.consts.Items
 import shared.consts.NPCs

@@ -1,8 +1,8 @@
 package content.activity.ttrial.puzzle
 
 import TestUtils
-import content.global.activity.ttrail.rewrite.Puzzle
-import content.global.activity.ttrail.rewrite.PuzzleBoxPlugin
+import content.global.activity.ttrail.plugin.Puzzle
+import content.global.activity.ttrail.plugin.PuzzleBoxPlugin
 import core.api.addItem
 import core.api.setAttribute
 import org.junit.jupiter.api.Assertions
@@ -44,7 +44,7 @@ class PuzzleBoxTests {
         val solution = Puzzle.forType(type)!!.fullSolution
 
         plugin.saveSession(p, type, solution.toMutableList())
-        addItem(p,Puzzle.forType(type)!!.id)
+        addItem(p, Puzzle.forType(type)!!.id)
         setAttribute(p, "$type:puzzle:done", true)
 
         Assertions.assertTrue(

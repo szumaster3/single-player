@@ -3,8 +3,6 @@ package content.global.activity.ttrail.plugin
 import content.global.activity.ttrail.ClueLevel
 import content.global.activity.ttrail.ClueScroll
 import content.global.activity.ttrail.TreasureTrailManager
-import content.global.activity.ttrail.rewrite.Puzzle
-import content.global.activity.ttrail.rewrite.PuzzleBox
 import core.api.*
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
@@ -55,8 +53,14 @@ abstract class AnagramScroll(
                 ?.let { return it }
 
             val clueId = getAttribute(player, "anagram_clue_active", -1)
-            val fromAttr = getClueScrolls()[clueId]
-            return (fromAttr as? AnagramScroll)?.takeIf { it.npcId == npc.id }
+            val activeClue = getClueScrolls()[clueId] as? AnagramScroll
+
+            return if (activeClue != null && activeClue.npcId == npc.id && inInventory(player, activeClue.clueId)) {
+                activeClue
+            } else {
+                removeAttribute(player, "anagram_clue_active")
+                null
+            }
         }
 
         /**
@@ -87,12 +91,12 @@ abstract class AnagramScroll(
         /**
          * Handles puzzle box logic.
          */
-        private fun handlePuzzleBox(player: Player, npc: NPC, clue: AnagramScroll, puzzle: PuzzleBox, facial: FaceAnim): Boolean {
+        private fun handlePuzzleBox(player: Player, npc: NPC, clue: AnagramScroll, puzzle: PuzzleBox, chatAnim: FaceAnim): Boolean {
             val hasPuzzle = inInventory(player, puzzle.id)
             val isComplete = Puzzle.isComplete(player, puzzle.type)
 
             if (hasPuzzle && !isComplete) {
-                sendNPCDialogue(player, npc.id, "You haven't completed the puzzle yet!", facial)
+                sendNPCDialogue(player, npc.id, "You haven't completed the puzzle yet!", chatAnim)
                 return true
             }
 
@@ -100,7 +104,7 @@ abstract class AnagramScroll(
                 if (!removeItem(player, clue.clueId)) return false
                 setAttribute(player, "anagram_clue_active", clue.clueId)
                 addItem(player, puzzle.id)
-                sendNPCDialogue(player, npc.id, getPuzzleDialogue(npc.id), facial)
+                sendNPCDialogue(player, npc.id, getPuzzleDialogue(npc.id), chatAnim)
                 addDialogueAction(player) { p, _ ->
                     sendItemDialogue(p, puzzle.id, "${npc.name} has given you a puzzle box!")
                 }
@@ -109,12 +113,10 @@ abstract class AnagramScroll(
 
             if (!removeItem(player, puzzle.id)) return false
             removeAttributes(player, "${puzzle.type}:puzzle:done", "anagram_clue_active")
-            sendNPCDialogue(player, npc.id, getPuzzleCompleteDialogue(npc.id), facial)
-
+            sendNPCDialogue(player, npc.id, getPuzzleCompleteDialogue(npc.id), chatAnim)
             addDialogueAction(player) { p, _ ->
                 val manager = TreasureTrailManager.getInstance(p)
                 getClueScrolls()[clue.clueId]?.reward(p)
-
                 if (manager.isCompleted) {
                     sendItemDialogue(p, Items.CASKET_405, "You've found a casket!")
                     manager.clearTrail()
@@ -139,9 +141,9 @@ abstract class AnagramScroll(
             openDialogue(player, object : DialogueFile() {
                 override fun handle(componentID: Int, buttonID: Int) {
                     when (stage) {
-                        0 -> sendNPCDialogue(player, npc.id, "Ah! Here you go!", chatAnim).also { stage++ }
-                        1 -> { player("What?"); stage++ }
-                        2 -> sendNPCDialogue(player, npc.id, "I need you to answer this for me.", chatAnim).also { stage++ }
+                        0 -> npc(chatAnim, "Ah! Here you go!").also { stage++ }
+                        1 -> player("What?").also { stage++ }
+                        2 -> npc(chatAnim, "I need you to answer this for me.").also { stage++ }
                         3 -> {
                             end()
                             setAttribute(player, "anagram_clue_active", challengeId)

@@ -1,4 +1,4 @@
-package content.global.activity.ttrail.rewrite
+package content.global.activity.ttrail.plugin
 
 import core.api.*
 import core.game.interaction.IntType
