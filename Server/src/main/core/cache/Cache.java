@@ -5,6 +5,8 @@ import core.cache.def.impl.*;
 import core.tools.Log;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 
@@ -33,7 +35,7 @@ public final class Cache {
      */
     private Cache(String location) {
         try {
-            init(location);
+            init(location, false);
         } catch (Throwable e) {
             e.printStackTrace();
         }
@@ -45,27 +47,47 @@ public final class Cache {
      * @param path The cache path.x
      * @throws Throwable When an exception occurs.
      */
-    public static void init(String path) throws Throwable {
+    public static void init(String path, boolean writable) throws Throwable {
         log(Cache.class, Log.FINE, "Initializing cache...");
+
+        String mode = writable ? "rw" : "r";
         byte[] cacheFileBuffer = new byte[520];
-        RandomAccessFile containersInformFile = new RandomAccessFile(path + File.separator + "main_file_cache.idx255", "r");
-        RandomAccessFile dataFile = new RandomAccessFile(path + File.separator + "main_file_cache.dat2", "r");
-        referenceFile = new CacheFile(255, containersInformFile, dataFile, 500000, cacheFileBuffer);
+
+        File r = new File(path, "main_file_cache.idx255");
+        File data = new File(path, "main_file_cache.dat2");
+
+        if (!r.exists() || !data.exists()) {
+            throw new FileNotFoundException("Cache files not found in: " + path);
+        }
+
+        RandomAccessFile containersInformFile = new RandomAccessFile(r, mode);
+        RandomAccessFile dataAccessFile = new RandomAccessFile(data, mode);
+
+        referenceFile = new CacheFile(255, containersInformFile, dataAccessFile, 500000, cacheFileBuffer);
+
         int length = (int) (containersInformFile.length() / 6);
         cacheFileManagers = new CacheFileManager[length];
+
         for (int i = 0; i < length; i++) {
-            File f = new File(path + File.separator + "main_file_cache.idx" + i);
+            File f = new File(path, "main_file_cache.idx" + i);
             if (f.exists() && f.length() > 0) {
-                CacheFile cacheFile = new CacheFile(i, new RandomAccessFile(f, "r"), dataFile, 1000000, cacheFileBuffer);
-                cacheFileManagers[i] = new CacheFileManager(cacheFile, true);
-                if (cacheFileManagers[i].getInformation() == null) {
-                    log(Cache.class, Log.ERR, "Error loading cache index " + i + ": no information.");
-                    cacheFileManagers[i] = null;
+                try {
+                    CacheFile cacheFile = new CacheFile(i, new RandomAccessFile(f, mode), dataAccessFile, 1000000, cacheFileBuffer);
+                    cacheFileManagers[i] = new CacheFileManager(cacheFile, true);
+
+                    if (cacheFileManagers[i].getInformation() == null) {
+                        log(Cache.class, Log.ERR, "Error loading cache index " + i + ": no information.");
+                        cacheFileManagers[i] = null;
+                    }
+                } catch (IOException e) {
+                    log(Cache.class, Log.ERR, "Failed to load cache index " + i + ": " + e.getMessage());
                 }
             }
         }
+
         ItemDefinition.parse();
         SceneryDefinition.parse();
+        log(Cache.class, Log.FINE, "Cache initialization complete. Writable=" + writable);
     }
 
     /**
@@ -73,7 +95,7 @@ public final class Cache {
      */
     public static void init() {
         try {
-            init(ServerConstants.CACHE_PATH);
+            init(ServerConstants.CACHE_PATH, false);
         } catch (Throwable e) {
             e.printStackTrace();
         }

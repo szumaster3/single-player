@@ -134,6 +134,170 @@ public final class CacheFile {
     }
 
     /**
+     * Reads a container from the cache file.
+     */
+    public final byte[] read(int containerId, int[] xteaKeys) {
+        synchronized (dataFile) {
+            try {
+                if (indexFile.length() < 6L * (containerId + 1)) {
+                    return null;
+                }
+
+                indexFile.seek(6L * containerId);
+                indexFile.readFully(cacheFileBuffer, 0, 6);
+
+                int containerSize = ((cacheFileBuffer[0] & 0xFF) << 16)
+                        | ((cacheFileBuffer[1] & 0xFF) << 8)
+                        | (cacheFileBuffer[2] & 0xFF);
+
+                int firstSector = ((cacheFileBuffer[3] & 0xFF) << 16)
+                        | ((cacheFileBuffer[4] & 0xFF) << 8)
+                        | (cacheFileBuffer[5] & 0xFF);
+
+                if (firstSector <= 0 || containerSize <= 0) {
+                    return null;
+                }
+
+                byte[] data = new byte[containerSize];
+                int offset = 0;
+                int sector = firstSector;
+                int sectorIndex = 0;
+
+                while (offset < containerSize) {
+                    dataFile.seek(520L * sector);
+
+                    int chunkSize = Math.min(512, containerSize - offset);
+
+                    if (dataFile.read(cacheFileBuffer, 0, chunkSize + 8) != chunkSize + 8) {
+                        return null;
+                    }
+
+                    int readContainerId =
+                            ((cacheFileBuffer[0] & 0xFF) << 8) | (cacheFileBuffer[1] & 0xFF);
+                    int readSectorIndex =
+                            ((cacheFileBuffer[2] & 0xFF) << 8) | (cacheFileBuffer[3] & 0xFF);
+                    int nextSector =
+                            ((cacheFileBuffer[4] & 0xFF) << 16)
+                                    | ((cacheFileBuffer[5] & 0xFF) << 8)
+                                    | (cacheFileBuffer[6] & 0xFF);
+                    int readIndexFileId = cacheFileBuffer[7] & 0xFF;
+
+                    if (readContainerId != containerId || readSectorIndex != sectorIndex || readIndexFileId != indexFileId) {
+                        return null;
+                    }
+
+                    System.arraycopy(cacheFileBuffer, 8, data, offset, chunkSize);
+
+                    offset += chunkSize;
+                    sector = nextSector;
+                    sectorIndex++;
+
+                    if (sector == 0 && offset < containerSize) {
+                        return null;
+                    }
+                }
+
+                if (xteaKeys != null && (xteaKeys[0] != 0 || xteaKeys[1] != 0 || xteaKeys[2] != 0 || xteaKeys[3] != 0)) {
+                    ByteBuffer buffer = ByteBuffer.wrap(data);
+                    XTEACryption.decrypt(xteaKeys, buffer, 0, containerSize);
+                }
+
+                return data;
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+    }
+
+    /**
+     * Writes a container to the cache file.
+     */
+    public final boolean write(int containerId, byte[] data, int[] xteaKeys) {
+        synchronized (dataFile) {
+            try {
+                if (xteaKeys != null && (xteaKeys[0] != 0 || xteaKeys[1] != 0 || xteaKeys[2] != 0 || xteaKeys[3] != 0)) {
+                    ByteBuffer buffer = ByteBuffer.wrap(data);
+                    XTEACryption.encrypt(xteaKeys, buffer, 0, data.length);
+                }
+
+                int containerSize = data.length;
+                int numSectors = (containerSize + 511) / 512;
+
+
+                int firstSector = 0;
+                if (indexFile.length() >= 6L * (containerId + 1)) {
+                    indexFile.seek(6L * containerId);
+                    indexFile.readFully(cacheFileBuffer, 0, 6);
+                    firstSector = ((cacheFileBuffer[3] & 0xFF) << 16)
+                            | ((cacheFileBuffer[4] & 0xFF) << 8)
+                            | (cacheFileBuffer[5] & 0xFF);
+                }
+
+
+                int[] sectors = new int[numSectors];
+                if (firstSector > 0 && dataFile.length() / 520L >= firstSector) {
+                    int sector = firstSector;
+                    for (int i = 0; i < numSectors; i++) {
+                        sectors[i] = sector;
+                        dataFile.seek(520L * sector);
+                        if (dataFile.read(cacheFileBuffer, 0, 8) != 8) break;
+                        int next = ((cacheFileBuffer[4] & 0xFF) << 16)
+                                | ((cacheFileBuffer[5] & 0xFF) << 8)
+                                | (cacheFileBuffer[6] & 0xFF);
+                        sector = next != 0 ? next : (int) (dataFile.length() / 520L + 1);
+                    }
+                } else {
+                    long totalSectors = dataFile.length() / 520L;
+                    for (int i = 0; i < numSectors; i++) {
+                        sectors[i] = (int) (totalSectors + i + 1);
+                    }
+                }
+
+
+                indexFile.seek(6L * containerId);
+                indexFile.write((containerSize >> 16) & 0xFF);
+                indexFile.write((containerSize >> 8) & 0xFF);
+                indexFile.write(containerSize & 0xFF);
+                int first = sectors[0];
+                indexFile.write((first >> 16) & 0xFF);
+                indexFile.write((first >> 8) & 0xFF);
+                indexFile.write(first & 0xFF);
+
+                int offset = 0;
+                for (int i = 0; i < numSectors; i++) {
+                    int sector = sectors[i];
+                    int chunkSize = Math.min(512, containerSize - offset);
+
+                    dataFile.seek(520L * sector);
+
+                    cacheFileBuffer[0] = (byte) (containerId >> 8);
+                    cacheFileBuffer[1] = (byte) containerId;
+                    cacheFileBuffer[2] = (byte) (i >> 8);
+                    cacheFileBuffer[3] = (byte) i;
+
+                    int nextSector = (i < numSectors - 1) ? sectors[i + 1] : 0;
+                    cacheFileBuffer[4] = (byte) (nextSector >> 16);
+                    cacheFileBuffer[5] = (byte) (nextSector >> 8);
+                    cacheFileBuffer[6] = (byte) nextSector;
+
+                    cacheFileBuffer[7] = (byte) indexFileId;
+
+                    System.arraycopy(data, offset, cacheFileBuffer, 8, chunkSize);
+
+                    dataFile.write(cacheFileBuffer, 0, chunkSize + 8);
+                    offset += chunkSize;
+                }
+
+                return true;
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+    }
+
+    /**
      * Get the index file id.
      *
      * @return
