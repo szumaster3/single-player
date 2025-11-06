@@ -74,7 +74,7 @@ public final class ClothDefinition {
      */
     public static void main(String... args) {
         try {
-            Cache.init(ServerConstants.CACHE_PATH);
+            Cache.init(ServerConstants.CACHE_PATH, false);
         } catch (Throwable e) {
             e.printStackTrace();
         }
