@@ -17,9 +17,7 @@
 - [List_1](530/graphics.txt) `Graphics`
 - [List_2](530/linked-anims.txt) `Linked animations`
 - [List_3](530/synth_debug_names.txt) `synth_debug_names`
-
-# 562 Configs
-- [List_0](562/562_interface_configs.txt) `Interface configs`
+- [List_4](530/varbits_dump.txt) `Configs`
 
 # 530 Scripts (Author: Joshua-F)
 
