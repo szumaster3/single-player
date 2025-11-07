@@ -108,7 +108,7 @@ class OdovacarDialogue(player: Player? = null) : Dialogue(player) {
             }
             13 -> npcl(FaceAnim.HALF_GUILTY, "Please come again, when you have 100 gold to cover the fee.").also { stage = END_DIALOGUE }
             14 -> npcl(FaceAnim.FRIENDLY, "This is a branch of the Bank of Gielinor. We have branches in many towns.").also { stage++ }
-            15 -> options("And what do you do?", "Didn't you used to be called the Bank of Varrock?")
+            15 -> options("And what do you do?", "Didn't you used to be called the Bank of Varrock?").also { stage++ }
             16 -> when (buttonId) {
                 1 -> npcl(FaceAnim.HALF_GUILTY, "We will look after your items and money for you. Leave your valuables with us if you want to keep them safe.").also { stage = END_DIALOGUE }
                 2 -> npcl(FaceAnim.HALF_GUILTY, "Yes we did, but people kept on coming into our branches outside of Varrock and telling us that our signs were wrong.").also { stage++ }
