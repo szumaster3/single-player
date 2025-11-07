@@ -1,6 +1,7 @@
 package content.data
 
-import core.api.hasRequirement
+import core.api.isQuestComplete
+import core.api.removeItem
 import core.api.sendMessage
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
@@ -8,7 +9,7 @@ import shared.consts.Items
 import shared.consts.Quests
 
 /**
- * Represents the different types of God Books.
+ * God Books.
  */
 enum class GodBook(val bookName: String, val book: Item, val damagedBook: Item, val blessItem: Array<Item>, val pages: Array<Item>) {
     HOLY_BOOK("Holy Book of Saradomin", Item(Items.HOLY_BOOK_3840), Item(Items.DAMAGED_BOOK_3839), arrayOf(Item(Items.HOLY_SYMBOL_1718)), arrayOf(Item(Items.SARADOMIN_PAGE_1_3827), Item(Items.SARADOMIN_PAGE_2_3828), Item(Items.SARADOMIN_PAGE_3_3829), Item(Items.SARADOMIN_PAGE_4_3830)),),
@@ -25,12 +26,15 @@ enum class GodBook(val bookName: String, val book: Item, val damagedBook: Item, 
      * Inserts a page into the given God Book.
      */
     fun insertPage(player: Player, book: Item, page: Item) {
-        if (!hasRequirement(player, Quests.HORROR_FROM_THE_DEEP)) return
+        if (!isQuestComplete(player, Quests.HORROR_FROM_THE_DEEP)) {
+            sendMessage(player, "You need to complete The Horror from the Deep quest to do this.")
+            return
+        }
         if (hasPage(player, book, page)) {
             sendMessage(player, "The book already has that page.")
             return
         }
-        if (player.inventory.remove(Item(page.id, 1))) {
+        if (removeItem(player, page.id)) {
             setPageHash(player, book, getPageIndex(page))
             sendMessage(player, "You add the page to the book...")
             if (isComplete(player, book)) {

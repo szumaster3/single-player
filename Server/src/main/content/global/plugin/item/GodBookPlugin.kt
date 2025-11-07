@@ -12,13 +12,14 @@ import core.game.world.update.flag.context.Animation
 import shared.consts.Animations
 import shared.consts.Items
 import core.game.node.entity.skill.Skills
+import shared.consts.Quests
 
 class GodBookPlugin : InteractionListener {
 
     private val books = mapOf(
-        Items.HOLY_BOOK_3840 to BookType.SARADOMIN,
-        Items.UNHOLY_BOOK_3842 to BookType.ZAMORAK,
-        Items.BOOK_OF_BALANCE_3844 to BookType.GUTHIX
+        Items.HOLY_BOOK_3840        to BookType.SARADOMIN,
+        Items.UNHOLY_BOOK_3842      to BookType.ZAMORAK,
+        Items.BOOK_OF_BALANCE_3844  to BookType.GUTHIX
     )
 
     override fun defineListeners() {
@@ -32,6 +33,22 @@ class GodBookPlugin : InteractionListener {
                 openDialogue(player, HolyDialogue(type))
                 return@on true
             }
+        }
+
+        onEquip(intArrayOf(
+                Items.HOLY_BOOK_3840,
+                Items.UNHOLY_BOOK_3842,
+                Items.BOOK_OF_BALANCE_3844)) { player, node ->
+            val type = books[node.id] ?: return@onEquip true
+            if(!isQuestComplete(player, Quests.HORROR_FROM_THE_DEEP)) {
+                sendMessage(player, "You need to complete The Horror from the Deep quest to equip this.")
+                return@onEquip false
+            }
+            if (getStatLevel(player, Skills.PRAYER) < 30) {
+                sendMessage(player, "You need a Prayer level of at least 30 to wield the ${type.name.lowercase()}.")
+                return@onEquip false
+            }
+            return@onEquip true
         }
 
         /*
