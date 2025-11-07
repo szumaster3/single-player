@@ -42,7 +42,7 @@ class RebornWarriorNPC : AbstractNPC {
 
         if (InPyreNeed.NON_HOSTILE_IDS.contains(this.id)) {
             ticks++
-            if (ticks >= 20) {
+            if (ticks >= 10) {
                 ticks = 0
                 if (RandomFunction.random(10) < 3) {
                     sendChat(this, forceChat.random())

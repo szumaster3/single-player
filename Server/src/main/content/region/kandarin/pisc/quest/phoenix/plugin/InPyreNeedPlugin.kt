@@ -17,7 +17,6 @@ import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
-import core.plugin.ClassScanner
 import shared.consts.*
 
 class InPyreNeedPlugin : InteractionListener {
@@ -36,7 +35,7 @@ class InPyreNeedPlugin : InteractionListener {
                         player,
                         familiar.id,
                         "${player.username}, this is my lair. You must dismiss my summoned form if you wish to enter; I will only duel you when I am at full strength.",
-                        FaceAnim.CHILD_NORMAL
+                        FaceAnim.NEW_NEUTRAL
                     )
                     return@on true
                 }
@@ -45,7 +44,7 @@ class InPyreNeedPlugin : InteractionListener {
                         player,
                         familiar.id,
                         "Why am you bringing me here? I no want to see you fight my mummy! Put me in your bag if you want to go in.",
-                        FaceAnim.CHILD_NORMAL
+                        FaceAnim.NEW_NEUTRAL
                     )
                     return@on true
                 }

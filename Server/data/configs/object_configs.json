@@ -58601,5 +58601,9 @@
   {
     "ids": "26194",
     "examine": "Pull me."
+  },
+  {
+    "ids": "28716",
+    "examine": "Glowing with barely-suppressed energies."
   }
 ]

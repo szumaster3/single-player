@@ -51,10 +51,11 @@ class PhoenixNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPCs
 
         if (node is GroundItem) {
             teleport(node.asItem().location)
+            visualize(Animation.create(11108), /*Graphics(1983)*/ Graphics(-1))
             sendMessage(player, "The Phoenix rises from the ashes!")
             node.isRemoved = true
             GroundItemManager.destroy(node)
-            visualize(Animation.create(11078), Graphics(1983))
+            // visualize(Animation.create(11078), Graphics(1983))
         }
 
 
