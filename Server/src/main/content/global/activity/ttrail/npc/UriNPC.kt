@@ -1,7 +1,7 @@
 package content.global.activity.ttrail.npc
 
 import content.global.activity.ttrail.ClueScroll
-import content.global.activity.ttrail.plugin.EmoteScroll
+import content.global.activity.ttrail.scroll.EmoteScroll
 import core.api.removeAttribute
 import core.api.sendItemDialogue
 import core.game.dialogue.Dialogue

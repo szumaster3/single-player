@@ -110,20 +110,18 @@ class TreasureTrailManager :
     }
 
     /**
-     * Starts a new treasure trail based on the provided clue scroll.
+     * Starts a new treasure trail with the given clue scroll.
      *
-     * @param clue the clue scroll plugin representing the new trail.
+     * @param clue the clue scroll to initiate the trail.
      */
     fun startTrail(clue: ClueScroll) {
         setClue(clue)
-        trailLength = RandomFunction.random(clue.level!!.minSteps, clue.level!!.maxSteps)
+        trailLength = RandomFunction.random(clue.level!!.minSteps, clue.level.maxSteps)
         trailStage = 0
     }
 
     /**
-     * Clears the current treasure trail state.
-     *
-     * Resets clue id, difficulty level, trail length, and stage.
+     * Resets the current treasure trail state.
      */
     fun clearTrail() {
         clueId = 0
@@ -133,9 +131,9 @@ class TreasureTrailManager :
     }
 
     /**
-     * Sets the current clue scroll for this trail manager.
+     * Sets the active clue scroll for this trail.
      *
-     * @param clue the clue scroll plugin to set.
+     * @param clue the clue scroll to set.
      */
     fun setClue(clue: ClueScroll) {
         clueId = clue.clueId
@@ -143,9 +141,9 @@ class TreasureTrailManager :
     }
 
     /**
-     * Checks if the player currently has any clue scroll or related trail item.
+     * Checks if the player has any clue scroll or trail-related item.
      *
-     * @return true if the player has a clue or trail item; false otherwise.
+     * @return true if a clue scroll or trail item is present.
      */
     fun hasClue(): Boolean {
         if (player == null) {
@@ -166,41 +164,37 @@ class TreasureTrailManager :
     }
 
     /**
-     * Increments the current trail stage by one.
+     * Advances the trail by one stage.
      */
     fun incrementStage() {
         trailStage += 1
     }
 
     /**
-     * Checks if the treasure trail is completed.
-     *
-     * Returns true if the trail has started and the current stage is at least the trail length.
+     * Checks whether the current trail is completed.
      */
     val isCompleted: Boolean
         get() = trailStage != 0 && trailLength != 0 && trailStage >= trailLength
 
     /**
-     * Checks if there is an active treasure trail.
-     *
-     * Returns true if clue id, level, trail length, and stage are all set and non-zero.
+     * Checks f a treasure trail is currently active.
      */
     fun hasTrail(): Boolean = clueId != 0 && (level != null) and (trailLength != 0) && trailStage != 0
 
     /**
-     * Increments the count of completed clues for the specified difficulty level.
+     * Increments the number of completed clues for the specified difficulty.
      *
-     * @param level the difficulty level for which to increment completed clues.
+     * @param level the difficulty level.
      */
     fun incrementClues(level: ClueLevel) {
         completedClues[level.ordinal]++
     }
 
     /**
-     * Gets the number of completed clues for the specified difficulty level.
+     * Gets the number of completed clues for a given difficulty level.
      *
-     * @param level the difficulty level to query.
-     * @return the count of completed clues for that level.
+     * @param level the difficulty level.
+     * @return count of completed clues.
      */
     fun getCompletedClues(level: ClueLevel): Int = completedClues[level.ordinal]
 
@@ -306,10 +300,10 @@ class TreasureTrailManager :
         }
 
         /**
-         * Gets the instance of [TreasureTrailManager] associated with the player.
+         * Gets the [TreasureTrailManager] associated with a player.
          *
-         * @param player The player for whom to get the treasure trail manager.
-         * @return The [TreasureTrailManager] instance tied to the player.
+         * @param player the player whose trail manager to fetch.
+         * @return the player's [TreasureTrailManager] instance.
          */
         @JvmStatic
         fun getInstance(player: Player): TreasureTrailManager = player.getAttribute("tt-manager", TreasureTrailManager())

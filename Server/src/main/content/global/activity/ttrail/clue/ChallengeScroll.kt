@@ -1,40 +1,18 @@
-package content.global.activity.ttrail.plugin
+package content.global.activity.ttrail.clue
 
 import content.global.activity.ttrail.ClueLevel
+import content.global.activity.ttrail.scroll.ChallengeClueScroll
 import core.plugin.Plugin
 import shared.consts.Items
 import shared.consts.NPCs
 
 /**
  * Represents the challenge scroll clues.
- * @author szu
  */
 open class ChallengeScroll : ChallengeClueScroll {
-
     constructor() : super(null, -1, null, null, null, null)
+    constructor(name: String, clueId: Int, level: ClueLevel, question: String, npc: Int, answer: Int) : super(name, clueId, level, question, npc, answer)
 
-    /**
-     * Constructs a challenge clue scroll.
-     *
-     * @param name      the internal name of the clue
-     * @param clueId    the item ID representing the clue scroll
-     * @param level     the difficulty level of the clue
-     * @param question  the question text the player must answer
-     * @param npc       the NPC associated with this clue
-     * @param answer    the correct answer to the challenge
-     */
-    constructor(name: String, clueId: Int, level: ClueLevel, question: String, npc: Int, answer: Int) : super(
-        name,
-        clueId,
-        level,
-        question,
-        npc,
-        answer,
-    )
-
-    /**
-     * Register the challenge clues.
-     */
     @Throws(Throwable::class)
     override fun newInstance(arg: Any?): Plugin<Any> {
         register(ChallengeScroll("zoo_keeper", Items.CHALLENGE_SCROLL_2842, ClueLevel.HARD, "How many animals<br>are in the Ardougne Zoo?", NPCs.ZOO_KEEPER_28, 40))

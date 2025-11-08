@@ -1,5 +1,6 @@
 package content.global.activity.ttrail.plugin
 
+import content.global.activity.ttrail.clue.PuzzleBox
 import core.api.*
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
@@ -9,57 +10,18 @@ import core.game.node.item.Item
 import core.net.packet.PacketRepository
 import core.net.packet.context.ContainerContext
 import core.net.packet.out.ContainerPacket
-import kotlin.math.absoluteValue
 import shared.consts.Components
-import shared.consts.Items
 import shared.consts.Scenery
+import kotlin.math.absoluteValue
 
-data class PuzzleBox(val type: String, val id: Int, val tiles: List<Int>) {
-    val fullSolution: List<Int> = tiles + -1
-}
-
-object Puzzle {
-    val all =
-        listOf(
-            PuzzleBox(
-                "troll",
-                Items.PUZZLE_BOX_3571,
-                (Items.SLIDING_PIECE_3643..Items.SLIDING_PIECE_3666).toList()
-            ),
-            PuzzleBox(
-                "castle",
-                Items.PUZZLE_BOX_2795,
-                (Items.SLIDING_PIECE_2749..Items.SLIDING_PIECE_2772).toList()
-            ),
-            PuzzleBox(
-                "tree",
-                Items.PUZZLE_BOX_3565,
-                (Items.SLIDING_PIECE_3619..Items.SLIDING_PIECE_3642).toList()
-            ),
-            PuzzleBox(
-                "glider",
-                Items.SPARE_CONTROLS_4002,
-                (Items.SLIDING_BUTTON_3904..Items.SLIDING_BUTTON_3950 step 2).plus(-1)
-            )
-        )
-
-    fun forType(type: String) = all.firstOrNull { it.type == type }
-
-    fun forId(itemId: Int) = all.firstOrNull { it.id == itemId }
-
-    fun random() = all.random().id
-
-    /**
-     * Checking whether the player has already completed the puzzle.
-     */
-    fun isComplete(player: Player, type: String): Boolean {
-        val box = forType(type) ?: return false
-        return getAttribute(player, "$type:puzzle:done", false) && inInventory(player, box.id, 1)
-    }
-}
-
+/**
+ * Handles puzzle box interactions and interfaces.
+ */
 class PuzzleBoxPlugin : InteractionListener, InterfaceListener {
-    private val sessionState = mutableMapOf<Player, Pair<String, MutableList<Int>>>()
+    /**
+     * Tracks active puzzle sessions.
+     */
+    private val sessionState = mutableMapOf<Player, Pair<PuzzleBox, MutableList<Int>>>()
 
     override fun defineListeners() {
 
@@ -67,69 +29,67 @@ class PuzzleBoxPlugin : InteractionListener, InterfaceListener {
          * Handles interaction with puzzle boxes.
          */
 
-        Puzzle.all.forEach { box ->
-            on(box.id, IntType.ITEM, "open", "view") { player, _ ->
-                openPuzzle(player, box.type)
+        PuzzleBox.values().forEach { puzzle ->
+            on(puzzle.id, IntType.ITEM, "open", "view") { player, _ ->
+                openPuzzle(player, puzzle)
                 return@on true
             }
         }
 
         /*
-         * Handles hint for monkey madness.
+         * Handles hint for monkey madness puzzles.
          */
 
-        on(Scenery.REINITIALISATION_PANEL_4871, IntType.SCENERY, "Operate") { player, _ ->
+        on(Scenery.REINITIALISATION_PANEL_4871, IntType.SCENERY, "operate") { player, _ ->
+            val puzzle = PuzzleBox.GLIDER
             if (getAttribute(player, "glider:puzzle:done", false)) {
                 sendMessage(player, "You have already solved the puzzle.")
                 return@on true
             }
-
-            val box = Puzzle.forType("glider") ?: return@on true
-            openPuzzleInterface(player)
-            sendPuzzle(player, "glider", box.fullSolution.toMutableList())
+            openPuzzle(player, puzzle)
             return@on true
         }
     }
 
     override fun defineInterfaceListeners() {
-
-        /*
-         * Handles button interaction.
-         */
-
         on(Components.TRAIL_PUZZLE_363) { player, _, _, buttonID, slot, _ ->
-            val (type, puzzle) = sessionState[player] ?: return@on true
-            val solution = Puzzle.forType(type)?.fullSolution ?: return@on true
+            val (puzzleEnum, puzzle) = sessionState[player] ?: return@on true
+            val solution = puzzleEnum.fullSolution
 
             when (buttonID) {
-                6 ->
-                    if (clickTile(puzzle, slot)) {
-                        sessionState[player] = type to puzzle
-                        sendPuzzle(player, type)
-                        if (puzzle == solution)
-                            sendMessage(player, "Congratulations! You've solved the puzzle!")
-                    }
-                0 -> sendPuzzle(player, type, solution.toMutableList())
+                6 -> if (clickTile(puzzle, slot)) {
+                    sessionState[player] = puzzleEnum to puzzle
+                    sendPuzzle(player, puzzleEnum)
+                    if (puzzle == solution) sendMessage(player, "Congratulations! You've solved the puzzle!")
+                }
+                0 -> sendPuzzle(player, puzzleEnum, solution.toMutableList())
             }
-            return@on true
+            true
         }
     }
 
-    private fun openPuzzle(player: Player, type: String) {
-        Puzzle.forType(type)?.let { box ->
-            openPuzzleInterface(player)
-            val puzzle = generatePuzzle(box.fullSolution)
-            sessionState[player] = type to puzzle
-            sendPuzzle(player, type)
-        }
+    /**
+     * Opens a new puzzle session.
+     */
+    private fun openPuzzle(player: Player, puzzleEnum: PuzzleBox) {
+        val puzzle = generatePuzzle(puzzleEnum.fullSolution)
+        sessionState[player] = puzzleEnum to puzzle
+        openPuzzleInterface(player)
+        sendPuzzle(player, puzzleEnum)
     }
 
+    /**
+     * Opens the puzzle interface.
+     */
     private fun openPuzzleInterface(player: Player) {
         val settings = IfaceSettingsBuilder().enableAllOptions().build()
         sendIfaceSettings(player, settings, 6, Components.TRAIL_PUZZLE_363, 0, 25)
         openInterface(player, Components.TRAIL_PUZZLE_363)
     }
 
+    /**
+     * Handles tile clicks.
+     */
     private fun clickTile(puzzle: MutableList<Int>, slot: Int): Boolean {
         val emptyIndex = puzzle.indexOf(-1)
         val rowDiff = slot / 5 - emptyIndex / 5
@@ -142,7 +102,10 @@ class PuzzleBoxPlugin : InteractionListener, InterfaceListener {
         return false
     }
 
-    private fun sendPuzzle(player: Player, type: String, data: List<Int>? = null) {
+    /**
+     * Sends the current puzzle state to the player interface.
+     */
+    private fun sendPuzzle(player: Player, puzzleEnum: PuzzleBox, data: List<Int>? = null) {
         val puzzle = data ?: sessionState[player]?.second ?: return
         PacketRepository.send(
             ContainerPacket::class.java,
@@ -150,6 +113,9 @@ class PuzzleBoxPlugin : InteractionListener, InterfaceListener {
         )
     }
 
+    /**
+     * Generate a puzzle based on the solution.
+     */
     fun generatePuzzle(solution: List<Int>): MutableList<Int> {
         val puzzle = solution.filter { it != -1 }.toMutableList().apply { add(-1) }
         var emptyIndex = puzzle.lastIndex
@@ -157,7 +123,6 @@ class PuzzleBoxPlugin : InteractionListener, InterfaceListener {
         repeat(200) {
             val emptyRow = emptyIndex / 5
             val emptyCol = emptyIndex % 5
-
             var moved = false
             while (!moved) {
                 val move = (0..3).random()
@@ -167,10 +132,8 @@ class PuzzleBoxPlugin : InteractionListener, InterfaceListener {
                     2 -> emptyIndex - 1
                     else -> emptyIndex + 1
                 }
-
                 val targetRow = target / 5
                 val targetCol = target % 5
-
                 if (target in 0..24 && (targetRow == emptyRow || targetCol == emptyCol)) {
                     puzzle[emptyIndex] = puzzle[target]
                     puzzle[target] = -1
@@ -196,17 +159,17 @@ class PuzzleBoxPlugin : InteractionListener, InterfaceListener {
     }
 
     /**
-     * Saves the puzzle session.
+     * Saves the current puzzle session.
      */
-    fun saveSession(player: Player, type: String, puzzle: MutableList<Int>) {
-        sessionState[player] = type to puzzle
+    fun saveSession(player: Player, puzzleEnum: PuzzleBox, puzzle: MutableList<Int>) {
+        sessionState[player] = puzzleEnum to puzzle
     }
 
     /**
-     * Loads the puzzle session.
+     * Loads the saved puzzle session.
      */
-    fun loadSession(player: Player, type: String): MutableList<Int>? {
-        val (sessionType, puzzle) = sessionState[player] ?: return null
-        return if (sessionType == type) puzzle else null
+    fun loadSession(player: Player, puzzleEnum: PuzzleBox): MutableList<Int>? {
+        val (type, puzzle) = sessionState[player] ?: return null
+        return if (type == puzzleEnum) puzzle else null
     }
 }

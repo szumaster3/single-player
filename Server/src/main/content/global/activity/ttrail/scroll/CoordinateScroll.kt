@@ -1,4 +1,4 @@
-package content.global.activity.ttrail.plugin
+package content.global.activity.ttrail.scroll
 
 import content.global.activity.ttrail.ClueLevel
 import core.api.sendString

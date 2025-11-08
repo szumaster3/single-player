@@ -1,6 +1,7 @@
-package content.global.activity.ttrail.plugin
+package content.global.activity.ttrail.clue
 
 import content.global.activity.ttrail.ClueLevel
+import content.global.activity.ttrail.scroll.CrypticScroll
 import core.game.world.map.Location
 import core.game.world.map.zone.ZoneBorders
 import core.plugin.Plugin
@@ -10,28 +11,12 @@ import shared.consts.Scenery
 
 /**
  * Represents the cryptic clues.
- * @author szu
  */
 class CrypticClue : CrypticScroll {
-
-    /**
-     * Constructs a new Cryptic clue plugin.
-     */
     constructor() : this(null, -1, null, null, null)
-
-    /**
-     * Constructs a cryptic clue with basic parameters.
-     */
     constructor(name: String?, clueId: Int, level: ClueLevel?, clue: String?, location: Location?) : super(name, clueId, level, clue, location)
-
-    /**
-     * Constructs a cryptic clue with additional object and zone data.
-     */
     constructor(name: String, clueId: Int, level: ClueLevel, clue: String, location: Location, `object`: Int, vararg borders: ZoneBorders) : super(name, clueId, level, clue, location, `object`, *borders)
 
-    /**
-     * Registers all known cryptic clue scrolls
-     */
     @Throws(Throwable::class)
     override fun newInstance(arg: Any?): Plugin<Any> {
         register(CrypticClue("etceteria-evergreen", Items.CLUE_SCROLL_10190, ClueLevel.HARD, "And so on, and so on, and so on.<br>Walking from the land of many<br>unimportant things leads to a choice<br>of<br>paths.", Location.create(2591, 3879, 0)))

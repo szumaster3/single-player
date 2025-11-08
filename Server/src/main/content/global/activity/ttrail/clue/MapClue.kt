@@ -1,6 +1,7 @@
-package content.global.activity.ttrail.plugin
+package content.global.activity.ttrail.clue
 
 import content.global.activity.ttrail.ClueLevel
+import content.global.activity.ttrail.scroll.MapClueScroll
 import core.game.world.map.Location
 import core.game.world.map.zone.ZoneBorders
 import core.plugin.Plugin
@@ -13,24 +14,8 @@ import shared.consts.Scenery
  * @author Vexia
  */
 class MapClue : MapClueScroll {
-
-    /**
-     * Instantiates a new Map clue plugin.
-     */
     @JvmOverloads
     constructor(name: String? = null, clueId: Int = -1, level: ClueLevel? = null, interfaceId: Int = -1, location: Location? = null) : super(name, clueId, level, interfaceId, location, 0)
-
-    /**
-     * Instantiates a new Map clue plugin.
-     *
-     * @param name        the name
-     * @param clueId      the clue id
-     * @param level       the level
-     * @param interfaceId the interface id
-     * @param location    the location
-     * @param object      the object
-     * @param borders     the borders
-     */
     constructor(name: String, clueId: Int, level: ClueLevel, interfaceId: Int, location: Location?, `object`: Int, vararg borders: ZoneBorders?) : super(name, clueId, level, interfaceId, location, `object`, *borders.filterNotNull().toTypedArray())
 
     @Throws(Throwable::class)

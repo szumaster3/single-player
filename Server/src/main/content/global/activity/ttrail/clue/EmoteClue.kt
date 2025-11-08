@@ -1,7 +1,8 @@
-package content.global.activity.ttrail.plugin
+package content.global.activity.ttrail.clue
 
 import content.global.activity.ttrail.ClueLevel
 import content.global.activity.ttrail.npc.UriNPC
+import content.global.activity.ttrail.scroll.EmoteScroll
 import core.game.node.entity.player.link.emote.Emotes
 import core.game.world.map.zone.ZoneBorders
 import core.plugin.ClassScanner.definePlugin
@@ -13,29 +14,9 @@ import shared.consts.Items
  * @author Vexia
  */
 class EmoteClue : EmoteScroll {
-
     constructor() : super(null, -1, null, null, null, null, null)
-
-    constructor(
-        name: String,
-        clueId: Int,
-        level: ClueLevel,
-        emote: Emotes,
-        commenceEmote: Emotes?,
-        equipment: Array<IntArray>,
-        clue: String,
-        vararg borders: ZoneBorders
-    ) : super(name, clueId, level, emote, commenceEmote, equipment, clue, *borders)
-
-    constructor(
-        name: String,
-        clueId: Int,
-        level: ClueLevel,
-        emote: Emotes,
-        equipment: Array<IntArray>,
-        clue: String,
-        vararg borders: ZoneBorders
-    ) : super(name, clueId, level, emote, null, equipment, clue, *borders)
+    constructor(name: String, clueId: Int, level: ClueLevel, emote: Emotes, commenceEmote: Emotes?, equipment: Array<IntArray>, clue: String, vararg borders: ZoneBorders) : super(name, clueId, level, emote, commenceEmote, equipment, clue, *borders)
+    constructor(name: String, clueId: Int, level: ClueLevel, emote: Emotes, equipment: Array<IntArray>, clue: String, vararg borders: ZoneBorders) : super(name, clueId, level, emote, null, equipment, clue, *borders)
 
     @Throws(Throwable::class)
     override fun newInstance(arg: Any?): Plugin<Any> {

@@ -82,15 +82,7 @@ enum class ClueLevel(
                     sendMessage(player,"<col=990000>Your clue is worth approximately $rewardValue gold coins!</col>")
                     val clueIfaceSettings = IfaceSettingsBuilder().enableAllOptions().build()
                     player.packetDispatch.sendIfaceSettings(clueIfaceSettings, 4, Components.TRAIL_REWARD_364, 0, 6)
-                    player.generateItems(
-                        rewards,
-                        Components.TRAIL_REWARD_364,
-                        4,
-                        emptyList(),
-                        3,
-                        3
-
-                    )
+                    player.generateItems(rewards, Components.TRAIL_REWARD_364, 4, emptyList(), 3, 3)
                 }
                 return
             }
