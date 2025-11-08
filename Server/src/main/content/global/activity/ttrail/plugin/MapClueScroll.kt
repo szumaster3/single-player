@@ -1,4 +1,4 @@
-package content.global.activity.ttrail.scroll
+package content.global.activity.ttrail.plugin
 
 import content.global.activity.ttrail.ClueLevel
 import content.global.activity.ttrail.ClueScroll

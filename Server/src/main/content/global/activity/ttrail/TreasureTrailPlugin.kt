@@ -1,9 +1,8 @@
 package content.global.activity.ttrail
 
-import content.global.activity.ttrail.clue.*
 import content.global.activity.ttrail.npc.SaradominWizardNPC
 import content.global.activity.ttrail.npc.ZamorakWizardNPC
-import content.global.activity.ttrail.scroll.CoordinateScroll
+import content.global.activity.ttrail.plugin.*
 import core.api.sendMessage
 import core.cache.def.impl.ItemDefinition
 import core.game.interaction.OptionHandler

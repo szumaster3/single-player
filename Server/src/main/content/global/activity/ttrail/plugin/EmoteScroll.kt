@@ -1,4 +1,4 @@
-package content.global.activity.ttrail.scroll
+package content.global.activity.ttrail.plugin
 
 import content.global.activity.ttrail.ClueLevel
 import content.global.activity.ttrail.ClueScroll
@@ -23,7 +23,7 @@ abstract class EmoteScroll(
     clueId: Int,
     level: ClueLevel?,
     val emote: Emotes?,
-    private val commenceEmote: Emotes?,
+    val commenceEmote: Emotes?,
     val equipment: Array<IntArray>?,
     private val clue: String?,
     vararg borders: ZoneBorders?
@@ -108,6 +108,11 @@ abstract class EmoteScroll(
         }
     }
 
+    /**
+     * Checks if this clue scroll has a commence emote defined.
+     *
+     * @return True if a commence emote is set, false otherwise.
+     */
     fun hasCommencedEmote(): Boolean {
         return commenceEmote != null
     }

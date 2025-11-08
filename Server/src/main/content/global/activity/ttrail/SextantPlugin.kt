@@ -1,4 +1,4 @@
-package content.global.activity.ttrail.plugin
+package content.global.activity.ttrail
 
 import core.api.openInterface
 import core.api.sendMessage
@@ -35,7 +35,7 @@ class SextantPlugin : InterfaceListener, InteractionListener {
          * Handles sextant interface interaction.
          */
 
-        on(Components.TRAIL_SEXTANT_365) { player, _, _, buttonID, _, _ ->
+        on(Components.TRAIL_SEXTANT_365) { player, component, opcode, buttonID, slot, itemID ->
             when(buttonID) {
                 11 -> sendMessage(player, "You need to get the horizon in the middle of the eye piece.")
                 else -> sendMessage(player, "Nothing interesting happens.")
