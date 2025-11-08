@@ -1,7 +1,7 @@
-package content.activity.ttrail.puzzle
+package content.activity.ttrail
 
 import TestUtils
-import content.global.activity.ttrail.clue.PuzzleBox
+import content.global.activity.ttrail.plugin.Puzzle
 import content.global.activity.ttrail.plugin.PuzzleBoxPlugin
 import core.api.addItem
 import core.api.setAttribute
@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
 class PuzzleBoxTests {
-    private val player = TestUtils.getMockPlayer("puzzleSessionTest")
+    private val p = TestUtils.getMockPlayer("puzzleSessionTest")
     private val plugin = PuzzleBoxPlugin()
 
     init {
@@ -21,57 +21,43 @@ class PuzzleBoxTests {
         val solution = (1..24).toList() + -1
         repeat(50) {
             val puzzle = plugin.generatePuzzle(solution)
-            Assertions.assertEquals(
-                25, puzzle.size,
-                "Puzzle should have 25 pieces"
-            )
-            Assertions.assertTrue(
-                puzzle.contains(-1),
-                "Puzzle must contain the empty slot (-1)"
-            )
+            Assertions.assertEquals(25, puzzle.size, "Puzzle should have 25 pieces")
+            Assertions.assertTrue(puzzle.contains(-1), "Puzzle must contain the empty slot (-1)")
         }
     }
 
     @Test
     fun saveAndLoadSession() {
-        val puzzleEnum = PuzzleBox.CASTLE
-        val solution = puzzleEnum.fullSolution.toMutableList()
+        val type = "castle"
+        val solution = Puzzle.forType(type)!!.fullSolution.toMutableList()
         val shuffled = plugin.generatePuzzle(solution)
 
-        plugin.saveSession(player, puzzleEnum, shuffled)
-        val loaded = plugin.loadSession(player, puzzleEnum)
+        plugin.saveSession(p, type, shuffled)
+        val loaded = plugin.loadSession(p, type)
 
-        Assertions.assertEquals(
-            shuffled, loaded,
-            "Loaded puzzle should match saved session"
-        )
+        Assertions.assertEquals(shuffled, loaded, "Loaded puzzle should match saved session")
     }
 
     @Test
     fun markPuzzleComplete() {
-        val puzzleEnum = PuzzleBox.CASTLE
-        val solution = puzzleEnum.fullSolution.toMutableList()
+        val type = "castle"
+        val solution = Puzzle.forType(type)!!.fullSolution
 
-        plugin.saveSession(player, puzzleEnum, solution)
-        addItem(player, puzzleEnum.id)
-        setAttribute(player, "${puzzleEnum.name.lowercase()}:puzzle:done", true)
+        plugin.saveSession(p, type, solution.toMutableList())
+        addItem(p, Puzzle.forType(type)!!.id)
+        setAttribute(p, "$type:puzzle:done", true)
 
         Assertions.assertTrue(
-            PuzzleBox.isComplete(player, puzzleEnum.name.lowercase()),
+            Puzzle.isComplete(p, type),
             "Puzzle should be marked as completed and player should have the item"
         )
     }
 
     @Test
     fun randomPuzzleSelection() {
-        val randomEnum = PuzzleBox.values().random()
-        val id = randomEnum.id
-        val box = PuzzleBox.forId(id)
-
-        Assertions.assertNotNull(box, "Random puzzle ID must correspond to a PuzzleBox enum")
-        Assertions.assertEquals(
-            25, box!!.fullSolution.size,
-            "PuzzleBox must have 25 tiles"
-        )
+        val id = Puzzle.random()
+        val box = Puzzle.forId(id)
+        Assertions.assertNotNull(box, "Random puzzle ID must correspond to a Puzzle")
+        Assertions.assertEquals(25, box!!.fullSolution.size, "Puzzle must have 25 tiles")
     }
 }
