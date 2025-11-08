@@ -1,23 +1,9 @@
-# 498 Configs
-- [List_0](498/498_interface_dump.txt) `Interface dump`
-- [List_1](498/498_interface_scripts.txt) `Interface scripts`
-- [List_2](498/498_item_dump.txt) `Item dump`
-- [List_3](498/498_npc_configs.txt) `NPC configs`
-- [List_4](498/498_npc_dump.txt) `NPC dump`
-- [List_5](498/498_object_anims.txt) `Object animations`
-- [List_6](498/498_object_configs.txt) `Object configs`
-- [List_7](498/498_object_dump.txt) `Object dump`
-- [List_8](498/498_clothing_dump.txt) `Clothing dump`
-- [List_9](498/498_hidden_child_dump.txt) `Hidden child dump`
-- [List_10](498/498_interface_configs.txt) `Interface configs`
-- [List_11](498/498_interface_containers.txt) `Interface containers`
-
 # 530 Configs
-- [List_0](530/animations.txt) `Animations`
-- [List_1](530/graphics.txt) `Graphics`
-- [List_2](530/linked-anims.txt) `Linked animations`
-- [List_3](530/synth_debug_names.txt) `synth_debug_names`
-- [List_4](530/varbits_dump.txt) `Configs`
+- [List_0](animations.txt) `Animations`
+- [List_1](graphics.txt) `Graphics`
+- [List_2](linked-anims.txt) `Linked animations`
+- [List_3](synth_debug_names.txt) `synth_debug_names`
+- [List_4](varbits_dump.txt) `Configs`
 
 # 530 Scripts (Author: Joshua-F)
 
