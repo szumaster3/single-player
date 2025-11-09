@@ -26,7 +26,7 @@ private val skinColorButtons = (93..100)
  * @author Ceikry
  */
 @Initializable
-class MakeOverInterface : ComponentPlugin() {
+class MakeoverMageInterface : ComponentPlugin() {
 
     override fun open(player: Player?, component: Component?) {
         component ?: return
