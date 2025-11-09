@@ -6,6 +6,7 @@ import core.game.container.ContainerEvent;
 import core.game.interaction.InteractionListeners;
 import core.game.node.entity.combat.equipment.WeaponInterface;
 import core.game.node.entity.player.Player;
+import core.game.node.entity.skill.Skills;
 import core.game.node.item.Item;
 import core.game.system.config.ItemConfigParser;
 import core.net.packet.PacketRepository;
@@ -13,6 +14,7 @@ import core.net.packet.context.ContainerContext;
 import core.net.packet.out.ContainerPacket;
 import core.plugin.Plugin;
 import org.jetbrains.annotations.Nullable;
+import shared.consts.Components;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -351,14 +353,15 @@ public final class EquipmentContainer extends Container {
             if (item != null) {
                 int[] bonus = item.getDefinition().getConfiguration(ItemConfigParser.BONUS, new int[15]);
                 for (int i = 0; i < bonus.length; i++) {
-                    if (i == 14 && bonuses[i] != 0) {
-                        continue;
-                    }
                     bonuses[i] += bonus[i];
                 }
             }
         }
-
+        Item weapon = player.getEquipment().get(SLOT_WEAPON);
+        if (weapon != null && weapon.getDefinition().getRequirement(Skills.STRENGTH) > 0) {
+            int[] bonus = weapon.getDefinition().getConfiguration(ItemConfigParser.BONUS, new int[15]);
+            bonuses[11] += Math.ceil(bonus[11] * 0.20);
+        }
         Item shield = player.getEquipment().get(SLOT_SHIELD);
         if (shield != null && shield.getId() == 11283) {
             int increase = shield.getCharge() / 20;
@@ -370,7 +373,9 @@ public final class EquipmentContainer extends Container {
         }
 
         player.getProperties().setBonuses(bonuses);
-        update(player);
+        if (player.getInterfaceManager().hasMainComponent(Components.EQUIP_SCREEN2_667)) {
+            update(player);
+        }
     }
 
     /**
@@ -379,9 +384,6 @@ public final class EquipmentContainer extends Container {
      * @param player The player to update for.
      */
     public static void update(Player player) {
-        if (!player.getInterfaceManager().hasMainComponent(667)) {
-            return;
-        }
         int index = 0;
         int[] bonuses = player.getProperties().getBonuses();
         for (int i = 36; i < 50; i++) {
@@ -392,16 +394,7 @@ public final class EquipmentContainer extends Container {
             String bonusValue = bonus > -1 ? ("+" + bonus) : Integer.toString(bonus);
             player.getPacketDispatch().sendString(BONUS_NAMES[index++] + bonusValue, 667, i);
         }
+        player.getSettings().updateWeight();
         player.getPacketDispatch().sendString("Attack bonus", 667, 34);
-    }
-
-    public Set<Integer> ids() {
-        Set<Integer> ids = new HashSet<>();
-        for (Item item : toArray()) {
-            if (item != null) {
-                ids.add(item.getId());
-            }
-        }
-        return ids;
     }
 }

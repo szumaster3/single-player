@@ -1734,32 +1734,6 @@ public class ItemDefinition extends Definition<Item> {
     };
 
     /**
-     * Updates the player's equipment stats display.
-     *
-     * @param player the player whose stats should be updated
-     */
-    public static void refreshEquipmentBonuses(Player player) {
-        if (!player.getAttribute("equip_stats_open", false)) {
-            return;
-        }
-
-        int index = 0;
-        int[] bonuses = player.getProperties().getBonuses();
-
-        for (int i = 36; i <= 49; i++) {
-            if (i == 47) {
-                continue;
-            }
-
-            int bonus = bonuses[index];
-            String bonusValue = bonus > -1 ? ("+" + bonus) : Integer.toString(bonus);
-            sendString(player, BONUS_NAMES[index++] + bonusValue, Components.EQUIP_SCREEN2_667, i);
-        }
-
-        sendString(player, "Attack bonus", Components.EQUIP_SCREEN2_667, 34);
-    }
-
-    /**
      * Checks if it has a plugin.
      *
      * @return {@code True} if so.

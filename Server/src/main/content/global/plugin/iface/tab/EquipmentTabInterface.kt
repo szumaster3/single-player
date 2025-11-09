@@ -14,27 +14,43 @@ import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.prayer.PrayerType
 import core.tools.Log
 import shared.consts.Components
-import shared.consts.Items
 
 class EquipmentTabInterface : InterfaceListener {
     override fun defineInterfaceListeners() {
         onOpen(ITEMS_KEPT_ON_DEATH_102) { player, component ->
             val zoneType = player.zoneMonitor.type
-            val itemsKeptOnDeath = DeathTask.getContainers(player)[0]
-            val amountKeptOnDeath = if (!player.skullManager.isSkulled && itemsKeptOnDeath!!.itemCount() < 3) {
+            val itemsKeptOnDeath = DeathTask.getContainers(player).getOrNull(0)
+
+            val amountKeptOnDeath = if (!player.skullManager.isSkulled && (itemsKeptOnDeath?.itemCount() ?: 0) < 3) {
                 if (player.prayer[PrayerType.PROTECT_ITEMS]) 4 else 3
             } else {
-                itemsKeptOnDeath!!.itemCount()
+                itemsKeptOnDeath?.itemCount() ?: 0
             }
-            val slot0 = itemsKeptOnDeath.getId(0)
-            val slot1 = itemsKeptOnDeath.getId(1)
-            val slot2 = itemsKeptOnDeath.getId(2)
-            val slot3 = itemsKeptOnDeath.getId(3)
+
+            val slot0 = itemsKeptOnDeath?.getId(0) ?: 0
+            val slot1 = itemsKeptOnDeath?.getId(1) ?: 0
+            val slot2 = itemsKeptOnDeath?.getId(2) ?: 0
+            val slot3 = itemsKeptOnDeath?.getId(3) ?: 0
+
             val hasSkull = if (player.skullManager.isSkulled) 1 else 0
-            val beast: BurdenBeast? = if (player.familiarManager.hasFamiliar() && player.familiarManager.familiar.isBurdenBeast) player.familiarManager.familiar as BurdenBeast else null
+
+            val beast: BurdenBeast? = if (player.familiarManager.hasFamiliar() && player.familiarManager.familiar.isBurdenBeast)
+                player.familiarManager.familiar as BurdenBeast else null
+
             val hasBob = if (beast != null && !beast.container.isEmpty) 1 else 0
             val message = "You are skulled."
-            val cs2Args = arrayOf<Any>(hasBob, hasSkull, slot3, slot2, slot1, slot0, amountKeptOnDeath, zoneType, message)
+
+            val cs2Args = arrayOf<Any>(
+                hasBob,
+                hasSkull,
+                slot3,
+                slot2,
+                slot1,
+                slot0,
+                amountKeptOnDeath,
+                zoneType,
+                message
+            )
 
             if (amountKeptOnDeath > 4 && zoneType == 0) {
                 log(this::class.java, Log.ERR, "Items kept on death interface should not contain more than 4 items when not in a safe zone!")
@@ -43,14 +59,13 @@ class EquipmentTabInterface : InterfaceListener {
             player.packetDispatch.sendRunScript(118, "siiooooii", *cs2Args)
 
             val settings = IfaceSettingsBuilder().enableAllOptions().build()
-            if (itemsKeptOnDeath != null) {
-                player.packetDispatch.sendIfaceSettings(settings, 18, component.id, 0, itemsKeptOnDeath.itemCount())
-            }
-            DeathTask.getContainers(player)[1]?.let { player.packetDispatch.sendIfaceSettings(settings, 21, component.id, 0, it.itemCount()) }
+            player.packetDispatch.sendIfaceSettings(settings, 18, component.id, 0, itemsKeptOnDeath?.itemCount() ?: 0)
+            player.packetDispatch.sendIfaceSettings(settings, 21, component.id, 0, DeathTask.getContainers(player).getOrNull(1)?.itemCount() ?: 0)
+
             return@onOpen true
         }
 
-        on(Components.WORNITEMS_387) { player, _, opcode, buttonID, slot, itemID ->
+        on(Components.WORNITEMS_387) { player, component, opcode, buttonID, slot, itemID ->
             when (buttonID) {
                 28 -> {
                     if (opcode == 81) EquipHandler.unequip(player, slot, itemID)
@@ -87,7 +102,7 @@ class EquipmentTabInterface : InterfaceListener {
         }
 
         onOpen(Components.INVENTORY_WEAR2_670) { player, component ->
-            InterfaceContainer.generateItems(player, player.inventory.toList(), listOf("Equip"), component.id, 0, 7, 4, 93)
+            InterfaceContainer.generateItems(player, player.inventory.toArray().toList(), listOf("Equip"), component.id, 0, 7, 4, 93)
             return@onOpen true
         }
 
@@ -101,7 +116,7 @@ class EquipmentTabInterface : InterfaceListener {
     private fun equipItem(player: Player, slot: Int) {
         val item = player.inventory.get(slot) ?: return
 
-        if (item.definition.options.any { it in arrayOf("Equip", "Wield", "Wear") } || item.id == Items.BEER_1917) {
+        if (item.definition.options.any { it in arrayOf("Equip", "Wield", "Wear") }) {
             InteractionListeners.run(item.id, IntType.ITEM, "equip", player, item)
         } else {
             sendMessage(player, "You can't wear that.")
