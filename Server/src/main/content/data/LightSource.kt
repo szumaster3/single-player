@@ -36,22 +36,22 @@ enum class LightSource(
     /**
      * Candle - purchasable at Catherby candle shop.
      */
-    CANDLE(1, Items.CANDLE_36, Items.LIT_CANDLE_33, true, Components.DARKNESS_DARK_96),
+    CANDLE(1, Items.CANDLE_36, Items.LIT_CANDLE_33, true, Components.DARKNESS_MEDIUM_98),
 
     /**
      * Black candle - used during Merlin's Crystal quest.
      */
-    BLACK_CANDLE(1, Items.BLACK_CANDLE_38, Items.LIT_BLACK_CANDLE_32, true, Components.DARKNESS_DARK_96),
+    BLACK_CANDLE(1, Items.BLACK_CANDLE_38, Items.LIT_BLACK_CANDLE_32, true, Components.DARKNESS_MEDIUM_98),
 
     /**
      * Torch - can be lit underwater in Haunted Mine.
      */
-    TORCH(1, Items.UNLIT_TORCH_596, Items.LIT_TORCH_594, true, Components.DARKNESS_DARK_96),
+    TORCH(1, Items.UNLIT_TORCH_596, Items.LIT_TORCH_594, true, Components.DARKNESS_MEDIUM_98),
 
     /**
      * Candle lantern - crafted or bought.
      */
-    WHITE_CANDLE_LANTERN(4, Items.CANDLE_LANTERN_4527, Items.CANDLE_LANTERN_4531, false, Components.DARKNESS_DARK_96),
+    WHITE_CANDLE_LANTERN(4, Items.CANDLE_LANTERN_4527, Items.CANDLE_LANTERN_4531, false, Components.DARKNESS_MEDIUM_98),
 
     /**
      * Black candle lantern - moderate light output.
@@ -63,56 +63,49 @@ enum class LightSource(
     /**
      * Oil lamp - moderate light output.
      */
-    OIL_LAMP(12, Items.OIL_LAMP_4522, Items.OIL_LAMP_4524, true, Components.DARKNESS_MEDIUM_98),
+    OIL_LAMP(12, Items.OIL_LAMP_4522, Items.OIL_LAMP_4524, true, Components.DARKNESS_LIGHT_97),
 
     /**
      * Oil lantern - moderate light output.
      */
-    OIL_LANTERN(26, Items.OIL_LANTERN_4535, Items.OIL_LANTERN_4539, false, Components.DARKNESS_MEDIUM_98),
+    OIL_LANTERN(26, Items.OIL_LANTERN_4535, Items.OIL_LANTERN_4539, false, Components.DARKNESS_LIGHT_97),
 
     /**
      * Sapphire lantern - used in Tears of Guthix.
      */
-    SAPPHIRE_LANTERN(49, Items.SAPPHIRE_LANTERN_4701, Items.SAPPHIRE_LANTERN_4702, false, Components.DARKNESS_MEDIUM_98),
+    SAPPHIRE_LANTERN(49, Items.SAPPHIRE_LANTERN_4701, Items.SAPPHIRE_LANTERN_4702, false, -1),
 
     /**
      * Mining helmet - can be disabled underwater.
      */
-    MINING_HELMET(65, Items.MINING_HELMET_5014, Items.MINING_HELMET_5013, false, Components.DARKNESS_MEDIUM_98),
+    MINING_HELMET(65, Items.MINING_HELMET_5014, Items.MINING_HELMET_5013, false, Components.DARKNESS_LIGHT_97),
 
     // Brightness level 3 (bright)
 
     /**
      * Bullseye lantern.
      */
-    BULLSEYE_LANTERN(49, Items.BULLSEYE_LANTERN_4548, Items.BULLSEYE_LANTERN_4550, false, Components.DARKNESS_LIGHT_97),
+    BULLSEYE_LANTERN(49, Items.BULLSEYE_LANTERN_4548, Items.BULLSEYE_LANTERN_4550, false, -1),
 
     /**
      * Emerald lantern - used during Lunar Diplomacy.
      */
-    EMERALD_LANTERN(49, Items.EMERALD_LANTERN_9064, Items.EMERALD_LANTERN_9065, false, Components.DARKNESS_LIGHT_97),
-
-    // Special and permanent sources
-
-    /**
-     * Bug lantern (Not valid light source).
-     */
-    BUG_LANTERN(33, Items.UNLIT_BUG_LANTERN_7051, Items.LIT_BUG_LANTERN_7053, false, Components.DARKNESS_LIGHT_97),
+    EMERALD_LANTERN(49, Items.EMERALD_LANTERN_9064, Items.EMERALD_LANTERN_9065, false, -1),
 
     /**
      * Seers' Headband 1 - permanent dim light source.
      */
-    HEADBAND_1(1, -1, Items.SEERS_HEADBAND_1_14631, false, Components.DARKNESS_DARK_96),
+    HEADBAND_1(1, -1, Items.SEERS_HEADBAND_1_14631, false, Components.DARKNESS_MEDIUM_98),
 
     /**
      * Seers' Headband 2 - permanent medium light source.
      */
-    HEADBAND_2(1, -1, Items.SEERS_HEADBAND_2_14640, false, Components.DARKNESS_MEDIUM_98),
+    HEADBAND_2(1, -1, Items.SEERS_HEADBAND_2_14640, false, Components.DARKNESS_LIGHT_97),
 
     /**
      * Seers' Headband 3 - permanent bright light source.
      */
-    HEADBAND_3(1, -1, Items.SEERS_HEADBAND_3_14641, false, Components.DARKNESS_LIGHT_97),
+    HEADBAND_3(1, -1, Items.SEERS_HEADBAND_3_14641, false, -1),
 
     /**
      * Glowing fungus - works only in Abandoned Mine.
@@ -125,15 +118,14 @@ enum class LightSource(
      * - 1 dim
      * - 2 medium
      * - 3 bright
-     * - 0 nothing
      */
     val strength: Int
         get() =
             when (interfaceId) {
-                Components.DARKNESS_DARK_96 -> 1
+                Components.DARKNESS_LIGHT_97 -> 1
                 Components.DARKNESS_MEDIUM_98 -> 2
-                Components.DARKNESS_LIGHT_97 -> 3
-                else -> 0
+                -1 -> 3
+                else -> Components.DARKNESS_DARK_96
             }
 
     companion object {
