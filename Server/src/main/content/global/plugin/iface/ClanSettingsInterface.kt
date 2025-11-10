@@ -21,7 +21,7 @@ class ClanSettingsInterface : InterfaceListener {
         on(Components.CLANJOIN_589) { player, _, _, buttonID, _, _ ->
             if (buttonID == 9) {
                 if (player.interfaceManager.opened != null) {
-                    sendMessage(player, "Please close the interface you have open before using 'Clan Setup'")
+                    sendMessage(player, "Please close the interface you have open before using your 'Clan Setup'")
                 } else {
                     openSettings(player)
                 }

@@ -7,7 +7,6 @@ import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.player.Player
 import core.game.system.task.Pulse
-import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import shared.consts.*

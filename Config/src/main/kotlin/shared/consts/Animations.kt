@@ -2057,7 +2057,7 @@ object Animations {
     const val FALL_DIE_2241 = 2241
     const val THROWN_BACK_AND_FALL_ON_BACK_2242 = 2242
     const val CLAP_GLITCHY_2243 = 2243
-    const val CLEAN_SOMETHING_ON_GROUND_2244 = 2244
+    const val DISARM_TRAP_2244 = 2244
     const val ANIMATION_2245 = 2245
     const val OPEN_DOOR_2246 = 2246
     const val SAFE_CRACK_2247 = 2247
