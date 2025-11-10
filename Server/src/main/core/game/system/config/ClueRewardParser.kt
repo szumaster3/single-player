@@ -30,7 +30,7 @@ class ClueRewardParser {
             val rawData = gson.fromJson(reader, JsonObject::class.java)
 
             easyTable = parseClueTable(rawData.getAsJsonArray("easy"))
-            medTable = parseClueTable(rawData.getAsJsonArray("medium"))
+            medTable  = parseClueTable(rawData.getAsJsonArray("medium"))
             hardTable = parseClueTable(rawData.getAsJsonArray("hard"))
             rareTable = parseClueTable(rawData.getAsJsonArray("rare"))
         }

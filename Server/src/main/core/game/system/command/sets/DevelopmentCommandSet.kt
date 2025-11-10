@@ -37,11 +37,15 @@ class DevelopmentCommandSet : CommandSet(Privilege.ADMIN) {
 
     override fun defineCommands() {
 
+        /*
+         * Command for spawning items for summoning pouches creation.
+         */
+
         define(
             name = "additempouch",
             privilege = Privilege.ADMIN,
             usage = "::additempouch <lt>slot id<gt>",
-            description = "Adds all items needed to create pouch for interface slot id."
+            description = "Adds all items needed to create summoning pouches for interface slot id."
         ) { player, args ->
             if (args.size < 2) {
                 sendMessage(player, "Usage: ::additempouch slotId")
@@ -66,73 +70,8 @@ class DevelopmentCommandSet : CommandSet(Privilege.ADMIN) {
             }
         }
 
-        define(
-            name = "rope",
-            privilege = Privilege.ADMIN,
-            usage = "",
-            description = ""
-        ) { p, _ ->
-           addItem(p, Items.ROPE_954)
-        }
-
-        define(
-            name = "spade",
-            privilege = Privilege.ADMIN,
-            usage = "",
-            description = ""
-        ) { p, _ ->
-            addItem(p, Items.SPADE_952)
-        }
-
-        define(
-            name = "knife",
-            privilege = Privilege.ADMIN,
-            usage = "",
-            description = ""
-        ) { p, _ ->
-            addItem(p, Items.KNIFE_946)
-        }
-
-        define(
-            name = "sandpit",
-            privilege = Privilege.ADMIN,
-            usage = "",
-            description = ""
-        ) { p, _ ->
-            SandpitCutscene(p).start(true)
-        }
-
-        define(
-            name = "unlock",
-            privilege = Privilege.ADMIN,
-            usage = "::unlock",
-            description = ""
-        ) { p, _ ->
+        define(name = "unlock", privilege = Privilege.ADMIN, usage = "::unlock", description = "") { p, _ ->
             p.unlock()
-        }
-
-        /*
-         * Command to receive pest control points.
-         */
-
-        define(
-            name = "setpcpoints",
-            privilege = Privilege.ADMIN,
-            usage = "::setpcpoints <lt>amount<gt>",
-            description = "Adds pest control points."
-        ) { p, args ->
-            if (args.size < 2) {
-                reject(p, "Usage: ::setpcpoints amount")
-            }
-
-            val amount = args[1].toIntOrNull()
-            if (amount == null) {
-                reject(p, "Amount needs to be a valid integer!")
-            }
-
-            p.savedData.activityData.increasePestPoints(amount!!)
-            p.debug("Set Pest Control points to $amount.")
-
         }
 
         /*
@@ -192,7 +131,7 @@ class DevelopmentCommandSet : CommandSet(Privilege.ADMIN) {
         define(
             name = "model",
             privilege = Privilege.ADMIN,
-            usage = "::model <lt>interfaceId<lt> <lt>componentId<lt> <lt>modelId<lt> <lt>zoom<lt>",
+            usage = "::model <lt>interfaceId<gt> <lt>componentId<gt> <lt>modelId<gt> <lt>zoom<gt>",
             description = "Send a model on the interface component."
         ) { player, args ->
             if (args.size < 4) {
@@ -777,23 +716,6 @@ class DevelopmentCommandSet : CommandSet(Privilege.ADMIN) {
         }
 
         /*
-         * Command for visualizing chathead animations using a specified expression ID.
-         */
-
-        define(
-            name = "expression",
-            privilege = Privilege.ADMIN,
-            usage = "::expression id",
-            description = "Visualizes chathead animations from ID.",
-        ) { player, args ->
-            if (args.size != 2) {
-                reject(player, "Usage: ::expression id")
-            }
-            val id = args[1].toIntOrNull() ?: 9804
-            player.dialogueInterpreter.sendDialogues(player, id, "Expression ID: $id")
-        }
-
-        /*
          * Command for printing out the player's active and new timers.
          */
 
@@ -820,19 +742,6 @@ class DevelopmentCommandSet : CommandSet(Privilege.ADMIN) {
         define(name = "overlay", privilege = Privilege.ADMIN, usage = "::overlay <lt>Overlay ID<gt>") { player, args ->
             val overlayInt = args[1].toInt()
             openOverlay(player, overlayInt)
-        }
-
-        /*
-         * Command for opening an interface using a specified ID.
-         */
-
-        define(
-            name = "interface",
-            privilege = Privilege.ADMIN,
-            usage = "::interface <lt>Interface ID<gt>",
-        ) { player, args ->
-            val interfaceInt = args[1].toInt()
-            openInterface(player, interfaceInt)
         }
 
         /*

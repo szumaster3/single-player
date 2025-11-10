@@ -175,65 +175,6 @@ class CacheCommandSet : CommandSet(Privilege.ADMIN) {
         }
 
         /*
-         * Command for finding all objects in-game.
-         */
-
-        define(
-            name = "findobjects_all_csv",
-            privilege = Privilege.ADMIN,
-            usage = "::findobjects_all_csv",
-            description = ""
-        ) { player, _ ->
-
-            val objectOptions = arrayOf("activate", "add", "adjust-temperature", "admire", "ascend", "attack", "bait", "bang", "bank", "block", "board", "board ( pay 10 )", "break", "build", "buy", "call", "capture", "cast", "cast-alchemy", "cast-teleport", "change", "check", "choose", "chop", "chop down", "chop-down", "churn", "climb", "climb down", "climb up", "climb-across", "climb-down", "climb-into", "climb-off", "climb-on", "climb-out", "climb-over", "climb-through", "climb-under", "climb-up", "close", "collapse", "collect", "collect-from", "construct", "continue-trek", "control", "convert", "count", "count-plunder", "crack", "craft", "craft-rune", "crawl", "crawl-down", "crawl-through", "crawl-under", "cross", "cross-bridge", "cut", "cut down", "cut-branch", "cut-down", "cut-wood", "deposit", "deposit-all", "descend", "destroy", "dig", "dig-below", "dig-up", "dip-egg", "dive", "dive in", "drink from", "drink-from", "dunk", "empty", "enter", "enter-cloud", "escape", "escape-event", "evade-event", "examine", "exchange", "exit", "exit-cave", "exit-room", "exit-through", "fill", "fill-bucket", "fill-buckets", "fire", "fire-at", "fish-in", "fix", "flag", "flush", "fly", "follow", "forfeit", "free", "get in", "get-spikes", "go-down", "go-through", "go-through-wall", "go-up", "grab", "grapple", "guide", "hack", "hidden", "hide-behind", "hide-in", "history", "hit", "infuse-pouch", "inspect", "investigate", "j-mod options", "jump", "jump off", "jump-across", "jump-down", "jump-from", "jump-on", "jump-onto", "jump-over", "jump-through", "jump-to", "jump-up", "knock", "knock-at", "lean against", "leave", "leave through", "leave tomb", "leave-warren", "levitate", "light", "listen-at", "listen-to", "load", "look", "look at", "look in", "look-at", "look-in", "look-inside", "look-into", "look-over", "look-under", "look-up", "loot", "lure", "make-canoe", "make-wish", "milk", "mine", "mine-through", "move", "move-creature", "net", "observe", "open", "operate", "paint-bauble", "pan", "pass", "pass-through", "pay-fare", "pay-toll(10gp)", "pay-toll(2-ecto)", "pedal", "peek-in", "pick", "pick-from", "pick-fruit", "pick-leaf", "pick-lock", "pick-up", "play", "plunder", "pray", "pray at", "pray-at", "press", "process", "prod", "prospect", "pull", "pull up", "pull-down", "pump", "push", "push through", "push-through", "push-up", "put-inside", "put-ore-on", "quick-leave", "quick-pass", "quick-pay(100)", "raise", "reach", "read", "read-book", "read-plaque on", "refuel", "remove-coal", "renew-points", "repair", "return", "return-to-burgh", "revert-crystal", "ride", "ring", "ring-bell", "rotate", "rummage", "say-name", "search", "search for traps", "set-trap", "sets", "shake", "shoot", "shoot-at", "shout-in", "shout-through", "shut", "sing-glass", "slash", "slide", "slide-down", "smash", "smash-to-bits", "smelt", "smelt-ore", "spectate", "spin", "squeeze-past", "squeeze-through", "squeeze-under", "status", "steal", "steal from", "steal-cowbell", "steal-from", "step", "step-into", "step-off", "step-on", "step-over", "stock-up", "store", "store-plunder", "study", "swim", "swim to", "swing", "swing across", "swing-across", "swing-on", "tag", "take", "take from", "take treasure", "take-armour", "take-arrows", "take-axe", "take-barrier", "take-beam", "take-beer", "take-bow", "take-bowl", "take-bucket", "take-clay", "take-coffin", "take-crackers", "take-decoration", "take-egg", "take-food", "take-from", "take-honey", "take-log", "take-meat", "take-potion", "take-pouch", "take-powder", "take-pulley-beam", "take-rock", "take-rope", "take-runes", "take-seed", "take-sigil", "take-stone", "take-tofu", "take-tool", "take-vial", "take-weapon", "take-worms", "talk to", "talk-into", "talk-through", "talk-to", "taunt-through", "teeth-grip", "teleport", "throw", "touch", "travel", "tread-softly", "turn", "turn-left", "turn-right", "unlock", "untie", "use", "use-quickly", "vent", "view", "view-game", "walk through", "walk-across", "walk-down", "walk-here", "walk-on", "walk-through", "walk-up", "watch", "weave", "wind", "worship")
-
-
-            val exportDir = File("dumps")
-            if (!exportDir.exists()) exportDir.mkdirs()
-
-            GlobalScope.launch {
-                val optionMap = objectOptions.associateWith { mutableListOf<List<String>>() }.toMutableMap()
-
-                for (region in RegionManager.regionCache.values) {
-                    for (z in 0..3) {
-                        val plane = region.planes[z] ?: continue
-                        val grid = plane.objects ?: continue
-                        for (x in 0 until RegionPlane.REGION_SIZE) {
-                            for (y in 0 until RegionPlane.REGION_SIZE) {
-                                val scenery = grid[x][y] ?: continue
-                                val def = SceneryDefinition.forId(scenery.id) ?: continue
-                                def.options?.filterNotNull()?.forEach { option ->
-                                    val lowerOption = option.trim().lowercase()
-                                    if (optionMap.containsKey(lowerOption)) {
-                                        val loc = scenery.location
-                                        val row = listOf(scenery.id.toString(), loc.x.toString(), loc.y.toString(), loc.z.toString(), region.id.toString(), def.name)
-                                        optionMap[lowerOption]?.add(row)
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-
-                optionMap.forEach { (option, rows) ->
-                    if (rows.isNotEmpty()) {
-                        // val timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM_HH-mm"))
-                        val dump = File(exportDir, "objects_list_opt=${option}_[2009scape].csv")
-                        dump.bufferedWriter().use { writer ->
-                            writer.write("id,x,y,z,region,name\n")
-                            rows.forEach { row ->
-                                writer.write(row.joinToString(",") + "\n")
-                            }
-                        }
-                        // player.debug("Saved ${rows.size} objects with option '$option' -> ${dump.path}")
-                    }
-                }
-
-                player.debug("Finished scanning regions.")
-            }
-        }
-
-        /*
          * Command for finding objects with given option.
          */
 

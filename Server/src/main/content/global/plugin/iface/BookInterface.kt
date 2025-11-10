@@ -247,6 +247,21 @@ class BookInterface : InterfaceListener {
         }
 
         /**
+         * Displays an NPC with animation on a page of the book.
+         */
+        fun setNpcOnPage(player: Player, pageSet: Int, npcId: Int, componentId: Int, enableLineId: Int, drawLineId: Int, animationId: Int, zoom: Int = 700) {
+            val currentPage = getAttribute(player, CURRENT_PAGE_ATTRIBUTE, 0)
+            if (pageSet == currentPage) {
+                sendInterfaceConfig(player, componentId, enableLineId, false)
+                sendNpcOnInterface(player, npcId, componentId, drawLineId)
+                sendAnimationOnInterface(player, animationId, componentId, drawLineId)
+                sendAngleOnInterface(player, componentId, drawLineId, zoom, 0, 0)
+            } else {
+                sendInterfaceConfig(player, componentId, enableLineId, true)
+            }
+        }
+
+        /**
          * Checks if given page is the last one.
          */
         fun isLastPage(pageNum: Int, totalPages: Int): Boolean = pageNum == totalPages - 1

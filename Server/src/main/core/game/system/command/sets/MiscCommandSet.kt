@@ -90,34 +90,45 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
             notify(
                 player,
                 "Absolute: " + l + ", regional: [" + l.localX + ", " + l.localY + "], chunk: [" + l.chunkOffsetX + ", " +
-                    l.chunkOffsetY +
-                    "], flag: [" +
-                    RegionManager.isTeleportPermitted(l) +
-                    ", " +
-                    RegionManager.getClippingFlag(l) +
-                    ", " +
-                    RegionManager.isLandscape(l) +
-                    "].",
+                        l.chunkOffsetY +
+                        "], flag: [" +
+                        RegionManager.isTeleportPermitted(l) +
+                        ", " +
+                        RegionManager.getClippingFlag(l) +
+                        ", " +
+                        RegionManager.isLandscape(l) +
+                        "].",
             )
             notify(
                 player,
                 "Region: [id=" + l.regionId + ", active=" + r!!.isActive + ", instanced=" + (r is DynamicRegion) +
-                    "], obj=" +
-                    RegionManager.getObject(l) +
-                    ".",
+                        "], obj=" +
+                        RegionManager.getObject(l) +
+                        ".",
             )
             notify(player, "Jagex: ${l.z}_${l.regionId shr 8}_${l.regionId and 0xFF}_${l.localX}_${l.localY}")
             notify(player, "Object: " + RegionManager.getObject(l).also { obj = it } + ".")
-            notify(player, "Object Varp: " + obj?.definition?.configFile?.varpId + " offset: " + obj?.definition?.configFile?.startBit + " size: " + (obj
-                ?.definition
-                ?.configFile
-                ?.startBit
-                ?.minus(obj?.definition?.configFile?.startBit!!
-                ))
+            notify(
+                player,
+                "Object Varp: " + obj?.definition?.configFile?.varpId + " offset: " + obj?.definition?.configFile?.startBit + " size: " + (obj
+                    ?.definition
+                    ?.configFile
+                    ?.startBit
+                    ?.minus(
+                        obj?.definition?.configFile?.startBit!!
+                    ))
             )
-            log(this::class.java, Log.FINE, "Viewport: " + l.getSceneX(player.playerFlags.lastSceneGraph) + "," + l.getSceneY(player.playerFlags.lastSceneGraph))
+            log(
+                this::class.java,
+                Log.FINE,
+                "Viewport: " + l.getSceneX(player.playerFlags.lastSceneGraph) + "," + l.getSceneY(player.playerFlags.lastSceneGraph)
+            )
             val loc = "Location.create(" + l.x + ", " + l.y + ", " + l.z + ")"
-            log(this::class.java, Log.FINE, loc + "; " + player.playerFlags.lastSceneGraph + ", " + l.localX + ", " + l.localY)
+            log(
+                this::class.java,
+                Log.FINE,
+                loc + "; " + player.playerFlags.lastSceneGraph + ", " + l.localX + ", " + l.localY
+            )
             try {
                 val stringSelection = StringSelection(loc)
                 val clpbrd = Toolkit.getDefaultToolkit().systemClipboard
@@ -126,14 +137,6 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
             } catch (e: HeadlessException) {
                 reject(player, "NOTE: Paste will not be available due to remote server.")
             }
-        }
-
-        define(name = "pos", privilege = Privilege.ADMIN) { player, _ ->
-            notify(player, "Do you mean ::loc?")
-        }
-
-        define(name = "coords", privilege = Privilege.ADMIN) { player, _ ->
-            notify(player, "Do you mean ::loc?")
         }
 
         define(
@@ -195,13 +198,13 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
                     sendString(
                         player,
                         red + "<img=" + (Rights.getChatIcon(p) - 1) + ">" + p.username +
-                            if (rights >
-                                0
-                            ) {
-                                " [ip=" + p.details.ipAddress + ", name=" + p.details.compName + "]"
-                            } else {
-                                ""
-                            },
+                                if (rights >
+                                    0
+                                ) {
+                                    " [ip=" + p.details.ipAddress + ", name=" + p.details.compName + "]"
+                                } else {
+                                    ""
+                                },
                         275,
                         lineStart++,
                     )
@@ -303,11 +306,21 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
                 sendString(player, title, Components.QUESTJOURNAL_SCROLL_275, lineid++)
 
                 if (command.usage.isNotEmpty()) {
-                    sendString(player, "<col=454545> Usage:</col> <img=3> <col=ffffff>${command.usage}</col>", Components.QUESTJOURNAL_SCROLL_275, lineid++)
+                    sendString(
+                        player,
+                        "<col=454545> Usage:</col> <img=3> <col=ffffff>${command.usage}</col>",
+                        Components.QUESTJOURNAL_SCROLL_275,
+                        lineid++
+                    )
                 }
 
                 if (command.description.isNotEmpty()) {
-                    sendString(player, "<col=454545> Info:</col> <img=2> <col=ffffff>${command.description}</col>", Components.QUESTJOURNAL_SCROLL_275, lineid++)
+                    sendString(
+                        player,
+                        "<col=454545> Info:</col> <img=2> <col=ffffff>${command.description}</col>",
+                        Components.QUESTJOURNAL_SCROLL_275,
+                        lineid++
+                    )
                 }
 
                 sendString(player, "", Components.QUESTJOURNAL_SCROLL_275, lineid++)
@@ -742,9 +755,9 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
         }
 
         define(
-            name = "agro",
+            name = "aggro",
             privilege = Privilege.ADMIN,
-            usage = "agro true | false",
+            usage = "aggro true | false",
             description = "Toggle NPCs aggroing on you",
         ) { player, args ->
             val usageStr = "Usage: ::agro true | false"
@@ -760,38 +773,7 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
                 "false" -> player.setAttribute("/save:allow_admin_aggression", false)
                 else -> reject(player, usageStr)
             }
-            notify(player, "Setting aggro ${args[1]}")
-        }
-
-        define(
-            name = "setplaqueread",
-            privilege = Privilege.ADMIN,
-            usage = "setplaqueread <true/false>",
-            description = "Set the plaques in the player safety stronghold to read or not read.",
-        ) { player, args ->
-            if (args.size == 1) {
-                notify(
-                    player,
-                    "Currently the plaques ${if (player.savedData.globalData.hasReadPlaques()) "have" else "have not"} been read",
-                )
-                return@define
-            }
-
-            when (args[1]) {
-                "true" -> setPlaqueReadStatus(player, true)
-                "false" -> setPlaqueReadStatus(player, false)
-                else -> reject(player, "Only true or false can be used")
-            }
-            notify(player, "Setting plaques read to: ${args[1]}")
-        }
-    }
-
-    fun setPlaqueReadStatus(
-        player: Player,
-        status: Boolean,
-    ) {
-        for (i in 0 until player.savedData.globalData.readPlaques.size) {
-            player.savedData.globalData.readPlaques[i] = status
+            notify(player, "Setting aggro=${args[1]}")
         }
     }
 
@@ -1012,11 +994,7 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
 
         closeInterface(player)
 
-        fun display(
-            player: Player,
-            pageNum: Int,
-            buttonID: Int,
-        ): Boolean {
+        fun display(player: Player, pageNum: Int, buttonID: Int): Boolean {
             BookInterface.pageSetup(player, BookInterface.FANCY_BOOK_26, title, contents.toTypedArray())
             return true
         }

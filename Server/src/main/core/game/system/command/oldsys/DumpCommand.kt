@@ -8,115 +8,80 @@ import core.game.system.command.CommandPlugin
 import core.game.system.command.CommandSet
 import core.plugin.Initializable
 import core.plugin.Plugin
-import java.io.BufferedWriter
 import java.io.File
 
 @Initializable
 class DumpCommand : CommandPlugin() {
 
     override fun parse(player: Player?, name: String?, args: Array<String?>?): Boolean {
-        when (name) {
-            "make" -> handleMake(player, args?.toList() as List<String>?).also { return true }
-        }
-        return false
+        if (name != "make") return false
+
+        handleMake(player, args?.filterNotNull() ?: emptyList())
+        return true
     }
 
-    private fun handleMake(player: Player?, args: List<String>?) {
-        val dataType = args?.getOrNull(1)
-        val outputType = args?.getOrNull(2)
+    private fun handleMake(player: Player?, args: List<String>) {
+        if (args.size < 3) {
+            player?.sendMessage("Usage: ::make item|object|npc list|doc")
+            return
+        }
 
-        if (dataType == null || outputType == null) player?.sendMessage("Usage: ::make item|object|npc list|doc")
+        val dataType = args[1].lowercase()
+        val outputType = args[2].lowercase()
 
         when (outputType) {
-            "list" -> makeDumpList(dataType!!).also { player?.sendMessage("Creating $dataType dump list...") }
-            "doc" -> makeDumpDoc(dataType!!).also { player?.sendMessage("Creating $dataType dump doc...") }
+            "list" -> {
+                player?.sendMessage("Creating $dataType dump list...")
+                makeDumpList(dataType)
+            }
+            "doc" -> {
+                player?.sendMessage("Creating $dataType dump doc...")
+                makeDumpDoc(dataType)
+            }
+            else -> player?.sendMessage("Unknown output type: $outputType. Use 'list' or 'doc'.")
         }
     }
 
     private fun makeDumpList(type: String) {
-        val f = File(System.getProperty("user.dir") + File.separator + "${type}list.txt")
-        val writer = f.bufferedWriter()
-        when (type) {
-            "item" -> for (i in ItemDefinition.getDefinitions().values) {
-                writer.writeLn("${i.name}(${i.id}) - ${i.examine}")
-            }
-
-            "object" -> for (i in SceneryDefinition.getDefinitions().values) {
-                writer.writeLn("${i.name}(${i.id}) - ${i.examine}")
-            }
-
-            "npc" -> for (i in NPCDefinition.getDefinitions().values) {
-                writer.writeLn("${i.name}(${i.id}) - ${i.examine}")
+        val file = File("${System.getProperty("user.dir")}${File.separator}${type}list.txt")
+        file.bufferedWriter().use { writer ->
+            getDefinitions(type).forEach { def ->
+                writer.writeLn("${def.name}(${def.id}) - ${def.examine}")
             }
         }
-        writer.close()
     }
 
     private fun makeDumpDoc(type: String) {
-        val f = File(System.getProperty("user.dir") + File.separator + "${type}list.html")
-        println(f.absolutePath)
-        val writer = f.bufferedWriter()
+        val file = File("${System.getProperty("user.dir")}${File.separator}${type}list.html")
+        file.bufferedWriter().use { writer ->
+            writer.writeLn("<head>")
+            writer.writeLn("<style>")
+            writer.writeLn("""
+                td { border-right: 1px solid black; border-bottom: 1px solid black; }
+                tr { border-bottom: 1px solid black; }
+                th { border: 1px solid black; }
+                .item-id { color: #FF0004; }
+                table { width: 100%; border-collapse: collapse; }
+            """.trimIndent())
+            writer.writeLn("</style>")
+            writer.writeLn("</head>")
+            writer.writeLn("<table>")
+            writer.writeLn("<tr><th>$type name</th><th>$type ID</th><th>Examine Text</th></tr>")
 
-        writer.writeLn("<head>")
-        writer.writeLn("<style>")
-        writer.writeLn("""
-        td {
-            border-right: 1px solid black;
-            border-bottom: 1px solid black;
-        }
-
-        tr {
-            border-bottom: 1px solid black;
-        }
-
-        th {
-            border: 1px solid black;
-        }
-
-        .item-id {
-            color: #FF0004;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-    """.trimIndent())
-        writer.writeLn("</style>")
-        writer.writeLn("</head>")
-
-        writer.writeLn("<table>")
-        writer.writeLn("<tr>")
-        writer.writeLn("<th>$type name</th>")
-        writer.writeLn("<th>$type ID</th>")
-        writer.writeLn("<th>Examine Text</th>")
-        writer.writeLn("</tr>")
-
-        when (type) {
-            "item" -> for (i in ItemDefinition.getDefinitions().values) {
-                writer.writeLn("<tr>")
-                writer.writeLn("<td>${i.name}</td>")
-                writer.writeLn("<td class=\"item-id\">${i.id}</td>")
-                writer.writeLn("<td>${i.examine}</td>")
-                writer.writeLn("</tr>")
+            getDefinitions(type).forEach { def ->
+                writer.writeLn("<tr><td>${def.name}</td><td class=\"item-id\">${def.id}</td><td>${def.examine}</td></tr>")
             }
-            "object" -> for (i in SceneryDefinition.getDefinitions().values) {
-                writer.writeLn("<tr>")
-                writer.writeLn("<td>${i.name}</td>")
-                writer.writeLn("<td class=\"item-id\">${i.id}</td>")
-                writer.writeLn("<td>${i.examine}</td>")
-                writer.writeLn("</tr>")
-            }
-            "npc" -> for (i in NPCDefinition.getDefinitions().values) {
-                writer.writeLn("<tr>")
-                writer.writeLn("<td>${i.name}</td>")
-                writer.writeLn("<td class=\"item-id\">${i.id}</td>")
-                writer.writeLn("<td>${i.examine}</td>")
-                writer.writeLn("</tr>")
-            }
+
+            writer.writeLn("</table>")
         }
-        writer.writeLn("</table>")
-        writer.close()
+        println("HTML dump created at: ${file.absolutePath}")
+    }
+
+    private fun getDefinitions(type: String) = when (type) {
+        "item" -> ItemDefinition.getDefinitions().values
+        "object" -> SceneryDefinition.getDefinitions().values
+        "npc" -> NPCDefinition.getDefinitions().values
+        else -> emptyList()
     }
 
     override fun newInstance(arg: Any?): Plugin<Any?> {
@@ -124,7 +89,7 @@ class DumpCommand : CommandPlugin() {
         return this
     }
 
-    private fun BufferedWriter.writeLn(line: String) {
+    private fun java.io.BufferedWriter.writeLn(line: String) {
         this.write(line)
         this.newLine()
     }
