@@ -1,4 +1,4 @@
-package content.region.kandarin.witch.quest.seaslug.dialogue
+package content.region.kandarin.witchaven.quest.seaslug.dialogue
 
 import core.api.finishQuest
 import core.api.getQuestStage
@@ -14,7 +14,7 @@ import shared.consts.Quests
  * Represents the Caroline dialogue extension.
  *
  * # Relations
- * - [Sea Slug quest][content.region.kandarin.witch.quest.seaslug.SeaSlug]
+ * - [Sea Slug quest][content.region.kandarin.witchaven.quest.seaslug.SeaSlugQuest]
  */
 class CarolineDialogueFile : DialogueFile() {
     override fun handle(

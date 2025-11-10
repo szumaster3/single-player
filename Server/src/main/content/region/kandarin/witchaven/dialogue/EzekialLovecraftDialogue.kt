@@ -1,4 +1,4 @@
-package content.region.kandarin.witch.dialogue
+package content.region.kandarin.witchaven.dialogue
 
 import core.api.openNpcShop
 import core.game.dialogue.Dialogue

@@ -1,4 +1,4 @@
-package content.region.kandarin.witch.quest.seaslug.cutscene
+package content.region.kandarin.witchaven.quest.seaslug.cutscene
 
 import core.api.*
 import core.game.activity.Cutscene
@@ -13,7 +13,7 @@ import shared.consts.Scenery
  * Represents saving Kennith cutscene.
  *
  * # Relations
- * - [Sea Slug quest][content.region.kandarin.witch.quest.seaslug.SeaSlug]
+ * - [Sea Slug quest][content.region.kandarin.witchaven.quest.seaslug.SeaSlugQuest]
  */
 class KennithCutscene(
     player: Player,

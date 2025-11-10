@@ -1,13 +1,12 @@
-package content.region.kandarin.witch.quest.seaslug
+package content.region.kandarin.witchaven.quest.seaslug
 
 import core.api.addItemOrDrop
+import core.api.displayQuestItem
 import core.api.rewardXP
-import core.api.sendItemOnInterface
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest
 import core.game.node.entity.skill.Skills
 import core.plugin.Initializable
-import shared.consts.Components
 import shared.consts.Items
 import shared.consts.Quests
 import shared.consts.Vars
@@ -21,7 +20,7 @@ import shared.consts.Vars
  * - [YouTube #3](https://www.youtube.com/watch?v=Xh-tE6Bdv1U)
  */
 @Initializable
-class SeaSlug : Quest(Quests.SEA_SLUG, 109, 108, 1, Vars.VARP_QUEST_SEA_SLUG_PROGRESS_159, 0, 1, 13) {
+class SeaSlugQuest : Quest(Quests.SEA_SLUG, 109, 108, 1, Vars.VARP_QUEST_SEA_SLUG_PROGRESS_159, 0, 1, 13) {
 
     override fun drawJournal(
         player: Player,
@@ -177,7 +176,7 @@ class SeaSlug : Quest(Quests.SEA_SLUG, 109, 108, 1, Vars.VARP_QUEST_SEA_SLUG_PRO
     override fun finish(player: Player) {
         super.finish(player)
         var ln = 10
-        sendItemOnInterface(player, Components.QUEST_COMPLETE_SCROLL_277, 5, Items.SEA_SLUG_1466)
+        displayQuestItem(player, Items.SEA_SLUG_1466)
         drawReward(player, "1 Quest Point", ln++)
         drawReward(player, "7175 Fishing XP", ln++)
         drawReward(player, "Oyster pearls", ln)

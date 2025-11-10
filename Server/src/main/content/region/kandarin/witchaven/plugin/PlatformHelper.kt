@@ -1,4 +1,4 @@
-package content.region.kandarin.witch.plugin
+package content.region.kandarin.witchaven.plugin
 
 import core.api.*
 import core.game.node.entity.player.Player

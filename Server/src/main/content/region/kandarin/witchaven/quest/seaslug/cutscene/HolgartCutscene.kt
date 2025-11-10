@@ -1,4 +1,4 @@
-package content.region.kandarin.witch.quest.seaslug.cutscene
+package content.region.kandarin.witchaven.quest.seaslug.cutscene
 
 import core.api.animate
 import core.api.face
@@ -16,7 +16,7 @@ import shared.consts.Quests
  * Represents repair boat cutscene.
  *
  * # Relations
- * - [Sea Slug quest][content.region.kandarin.witch.quest.seaslug.SeaSlug]
+ * - [Sea Slug quest][content.region.kandarin.witchaven.quest.seaslug.SeaSlugQuest]
  */
 class HolgartCutscene(
     player: Player,

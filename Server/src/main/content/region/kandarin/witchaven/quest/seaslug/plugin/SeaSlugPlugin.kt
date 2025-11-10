@@ -1,7 +1,7 @@
-package content.region.kandarin.witch.quest.seaslug.plugin
+package content.region.kandarin.witchaven.quest.seaslug.plugin
 
-import content.region.kandarin.witch.quest.seaslug.cutscene.KennithCutscene
-import content.region.kandarin.witch.quest.seaslug.dialogue.KennithDialogueFile
+import content.region.kandarin.witchaven.quest.seaslug.cutscene.KennithCutscene
+import content.region.kandarin.witchaven.quest.seaslug.dialogue.KennithDialogueFile
 import core.api.*
 import core.game.global.action.ClimbActionHandler
 import core.game.interaction.IntType
@@ -15,6 +15,7 @@ import core.tools.Log
 import shared.consts.*
 
 class SeaSlugPlugin : InteractionListener {
+
     private fun getSmack(player: Player) {
         lock(player, 7)
         animate(player, LADDER_FAIL)
@@ -111,17 +112,19 @@ class SeaSlugPlugin : InteractionListener {
             lock(player, 4)
             animate(player, KICK_ANIM)
             playAudio(player, Sounds.SLUG_KICK_PANEL_3024)
-
             sendMessage(player, "You kick the loose panel.")
 
-            if(getQuestStage(player, Quests.SEA_SLUG) < 20) {
+            val questStage = getQuestStage(player, Quests.SEA_SLUG)
+
+            if (questStage < 20) {
                 sendMessage(player, "But nothing interesting happens.")
-            } else {
-                sendMessage(player, "The wood is rotten and crumbles away...", 1)
-                sendMessage(player, "...leaving an opening big enough for Kenneth to climb through.", 2)
-                replaceScenery(node.asScenery(), BROKEN_WALL, -1)
-                setQuestStage(player, Quests.SEA_SLUG, 25)
+                return@on true
             }
+
+            sendMessage(player, "The wood is rotten and crumbles away...", 1)
+            sendMessage(player, "...leaving an opening big enough for Kenneth to climb through.", 2)
+            replaceScenery(node.asScenery(), BROKEN_WALL, -1)
+            setQuestStage(player, Quests.SEA_SLUG, 25)
             return@on true
         }
 
@@ -146,21 +149,27 @@ class SeaSlugPlugin : InteractionListener {
         on(LADDER, IntType.SCENERY, "climb-up") { player, node ->
             sendMessage(player, "You attempt to climb up the ladder.")
 
-            // Before speak with Kent.
-            if (getQuestStage(player, Quests.SEA_SLUG) in 5..10) {
+            val questStage = getQuestStage(player, Quests.SEA_SLUG)
+            val hasTorch = inInventory(player, Items.LIT_TORCH_594)
+
+            // Before speaking with Kent.
+            if (questStage in 5..10) {
                 ClimbActionHandler.climbLadder(player, node.asScenery(), "climb-up")
                 return@on true
             }
 
-            // After speak with Kent with/without torch.
-            if (inInventory(player, Items.LIT_TORCH_594) && getQuestStage(player, Quests.SEA_SLUG) >= 20) {
+            // After speaking with Kent.
+            if (questStage >= 20) {
                 ClimbActionHandler.climbLadder(player, node.asScenery(), "climb-up")
-                sendMessage(player, "The fishermen seem afraid of your torch.", 1)
-
-            } else {
-                getSmack(player)
+                if (hasTorch) {
+                    sendMessage(player, "The fishermen seem afraid of your torch.", 1)
+                } else {
+                    getSmack(player)
+                }
+                return@on true
             }
 
+            getSmack(player)
             return@on true
         }
 
@@ -195,11 +204,13 @@ class SeaSlugPlugin : InteractionListener {
                 playAudio(player, Sounds.SLUG_SMEAR_PASTE_3026)
                 sendMessage(player, "You mix the flour with the swamp tar.")
                 sendMessage(player, "It mixes into a paste.")
+
                 replaceSlot(player, used.index, Item(EMPTY_POT, 1))
                 addItem(player, RAW_SWAMP_PASTE, 1)
             } else {
-                log(this.javaClass, Log.ERR, "Failed to remove item [id=${with.id}] from player [id=${player.id}, name=${player.name}] inventory.")
+                sendMessage(player, "You cannot use that right now.")
             }
+
             return@onUseWith true
         }
     }
@@ -215,27 +226,22 @@ class SeaSlugPlugin : InteractionListener {
 
     companion object {
         const val KENNITH = NPCs.KENNITH_4863
-
         const val LADDER = Scenery.LADDER_18324
         const val CRANE = Scenery.CRANE_18327
         const val WALL = Scenery.BADLY_REPAIRED_WALL_18381
         const val BROKEN_WALL = Scenery.BROKEN_WALL_18380
-
         const val DRY_STICK = Items.DRY_STICKS_1468
         const val DAMP_STICK = Items.DAMP_STICKS_1467
         const val BROKEN_GLASS = Items.BROKEN_GLASS_1469
         const val UNLIT_TORCH = Items.UNLIT_TORCH_596
         const val LIT_TORCH = Items.LIT_TORCH_594
         const val SEA_SLUG = NPCs.SEA_SLUG_1006
-
         const val KICK_ANIM = Animations.SEA_SLUG_KICK_WALL_4804
         const val LADDER_FAIL = Animations.SEA_SLUG_PLATFORM_LADDER_4785
-
         private const val EMPTY_POT = Items.EMPTY_POT_1931
         private const val POT_OF_FLOUR = Items.POT_OF_FLOUR_1933
         private const val SWAMP_TAR = Items.SWAMP_TAR_1939
         private const val RAW_SWAMP_PASTE = Items.RAW_SWAMP_PASTE_1940
-
-        val FISHERMAN = intArrayOf(NPCs.FISHERMAN_702, NPCs.FISHERMAN_703, NPCs.FISHERMAN_704)
+        private val FISHERMAN = intArrayOf(NPCs.FISHERMAN_702, NPCs.FISHERMAN_703, NPCs.FISHERMAN_704)
     }
 }

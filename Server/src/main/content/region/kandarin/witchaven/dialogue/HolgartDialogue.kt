@@ -1,7 +1,7 @@
-package content.region.kandarin.witch.dialogue
+package content.region.kandarin.witchaven.dialogue
 
-import content.region.kandarin.witch.plugin.PlatformHelper
-import content.region.kandarin.witch.quest.seaslug.dialogue.HolgartDialogueFile
+import content.region.kandarin.witchaven.plugin.PlatformHelper
+import content.region.kandarin.witchaven.quest.seaslug.dialogue.HolgartDialogueFile
 import core.api.isQuestComplete
 import core.api.isQuestInProgress
 import core.api.openDialogue

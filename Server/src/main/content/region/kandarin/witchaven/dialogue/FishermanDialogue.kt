@@ -1,4 +1,4 @@
-package content.region.kandarin.witch.dialogue
+package content.region.kandarin.witchaven.dialogue
 
 import core.api.sendDialogue
 import core.game.dialogue.Dialogue

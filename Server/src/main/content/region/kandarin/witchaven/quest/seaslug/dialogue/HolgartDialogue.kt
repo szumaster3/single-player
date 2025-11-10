@@ -1,6 +1,6 @@
-package content.region.kandarin.witch.quest.seaslug.dialogue
+package content.region.kandarin.witchaven.quest.seaslug.dialogue
 
-import content.region.kandarin.witch.plugin.PlatformHelper
+import content.region.kandarin.witchaven.plugin.PlatformHelper
 import core.api.getQuestStage
 import core.api.isQuestComplete
 import core.api.sendDialogue
@@ -17,7 +17,7 @@ import shared.consts.Quests
  * Represents the Holgart dialogue.
  *
  * # Relations
- * - [Sea Slug quest][content.region.kandarin.witch.quest.seaslug.SeaSlug]
+ * - [Sea Slug quest][content.region.kandarin.witchaven.quest.seaslug.SeaSlugQuest]
  */
 @Initializable
 class HolgartDialogue(player: Player? = null) : Dialogue(player) {

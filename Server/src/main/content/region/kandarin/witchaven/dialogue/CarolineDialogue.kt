@@ -1,6 +1,6 @@
-package content.region.kandarin.witch.dialogue
+package content.region.kandarin.witchaven.dialogue
 
-import content.region.kandarin.witch.quest.seaslug.dialogue.CarolineDialogueFile
+import content.region.kandarin.witchaven.quest.seaslug.dialogue.CarolineDialogueFile
 import core.api.isQuestComplete
 import core.api.openDialogue
 import core.game.dialogue.Dialogue
@@ -16,7 +16,7 @@ import shared.consts.Quests
  * Represents the Caroline dialogue.
  *
  * # Relations
- * - [Sea Slug quest][content.region.kandarin.witch.quest.seaslug.SeaSlug]
+ * - [Sea Slug quest][content.region.kandarin.witchaven.quest.seaslug.SeaSlugQuest]
  */
 @Initializable
 class CarolineDialogue(player: Player? = null) : Dialogue(player) {

@@ -1,7 +1,7 @@
-package content.region.kandarin.witch.quest.seaslug.dialogue
+package content.region.kandarin.witchaven.quest.seaslug.dialogue
 
-import content.region.kandarin.witch.plugin.PlatformHelper
-import content.region.kandarin.witch.quest.seaslug.cutscene.HolgartCutscene
+import content.region.kandarin.witchaven.plugin.PlatformHelper
+import content.region.kandarin.witchaven.quest.seaslug.cutscene.HolgartCutscene
 import core.api.*
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
@@ -15,7 +15,7 @@ import shared.consts.Quests
  * Represents the Holgart dialogue extension.
  *
  * # Relations
- * - [Sea Slug quest][content.region.kandarin.witch.quest.seaslug.SeaSlug]
+ * - [Sea Slug quest][content.region.kandarin.witchaven.quest.seaslug.SeaSlugQuest]
  */
 class HolgartDialogueFile : DialogueFile() {
     override fun handle(

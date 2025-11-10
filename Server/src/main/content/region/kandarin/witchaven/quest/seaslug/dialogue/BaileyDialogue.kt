@@ -1,4 +1,4 @@
-package content.region.kandarin.witch.quest.seaslug.dialogue
+package content.region.kandarin.witchaven.quest.seaslug.dialogue
 
 import core.api.*
 import core.game.dialogue.Dialogue
@@ -15,7 +15,7 @@ import shared.consts.Quests
  * Represents the Bailey dialogue.
  *
  * # Relations
- * - [Sea Slug quest][content.region.kandarin.witch.quest.seaslug.SeaSlug]
+ * - [Sea Slug quest][content.region.kandarin.witchaven.quest.seaslug.SeaSlugQuest]
  */
 @Initializable
 class BaileyDialogue(player: Player? = null) : Dialogue(player) {

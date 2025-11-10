@@ -1,6 +1,6 @@
-package content.region.kandarin.witch.dialogue
+package content.region.kandarin.witchaven.dialogue
 
-import content.region.kandarin.witch.plugin.PlatformHelper
+import content.region.kandarin.witchaven.plugin.PlatformHelper
 import core.api.isQuestComplete
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim

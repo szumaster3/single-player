@@ -1,4 +1,4 @@
-package content.region.kandarin.witch.dialogue
+package content.region.kandarin.witchaven.dialogue
 
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim

@@ -1,4 +1,4 @@
-package content.region.kandarin.witch.quest.seaslug.dialogue
+package content.region.kandarin.witchaven.quest.seaslug.dialogue
 
 import content.data.GameAttributes
 import core.api.*
@@ -18,7 +18,7 @@ import shared.consts.Sounds
  * Represents the Kent dialogue.
  *
  * # Relations
- * - [Sea Slug quest][content.region.kandarin.witch.quest.seaslug.SeaSlug]
+ * - [Sea Slug quest][content.region.kandarin.witchaven.quest.seaslug.SeaSlugQuest]
  */
 @Initializable
 class KentDialogue(player: Player? = null) : Dialogue(player) {
