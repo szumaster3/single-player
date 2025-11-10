@@ -215,6 +215,22 @@ class DarkZone : MapZone("Dark zone", true), EventHook<UseWithEvent> {
             })
         }
 
+        /*
+         * fun updateOverlay(player: Player) {
+         *     val localPlayers = RegionManager.getLocalPlayers(player, 15)
+         *     val activeLightCount = localPlayers.count { LightSource.hasActiveLightSource(it) || alwaysLit(it) }
+         *
+         *     val overlayId = when {
+         *         activeLightCount >= 3 -> Components.DARKNESS_LIGHT_97
+         *         activeLightCount == 2 -> Components.DARKNESS_MEDIUM_98
+         *         activeLightCount == 1 -> Components.DARKNESS_DARK_96
+         *         else -> DARKNESS_OVERLAY.id
+         *     }
+         *
+         *     player.interfaceManager.openOverlay(Component(overlayId))
+         * }
+         */
+
         /**
          * The darkness overlay component shown when no light is active.
          */
