@@ -259,6 +259,16 @@ class ImmerseWorld : StartupListener {
                 NonBankingMiner(),
                 skillingBotAssembler.produce(SkillingBotAssembler.Wealth.POOR, Location.create(3182, 3374, 0)),
             )
+
+            GeneralBotCreator(
+                MinotaurKiller(),
+                Location.create(1900, 5208, 0),
+            )
+
+            GeneralBotCreator(
+                MinotaurKiller(),
+                Location.create(1901, 5194, 0),
+            )
         }
 
         fun immerseWilderness() {
