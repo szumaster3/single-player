@@ -122,10 +122,10 @@ public final class GiantMoleNPC extends AbstractNPC {
             LightSource s = LightSource.getActiveLightSource(p);
             if (s == null || s.getOpen()) {
                 if (s != null) {
-                    p.getPacketDispatch().sendMessage("Your " + s.getName() + " seems to have been extinguished by the mud.");
-                    int slot = p.getInventory().getSlot(s.getProduct());
+                    p.getPacketDispatch().sendMessage("Your " + s.name() + " seems to have been extinguished by the mud.");
+                    int slot = p.getInventory().getSlot(new Item(s.getProduct(), 1));
                     if (slot > -1) {
-                        p.getInventory().replace(new Item(s.getRaw().getId()), slot);
+                        p.getInventory().replace(new Item(s.getRaw()), slot);
                     }
                 }
                 DarkZone.Companion.checkDarkArea(p);
