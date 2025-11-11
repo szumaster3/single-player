@@ -620,16 +620,16 @@ class ChampionScrollsDropHandler : ChampionScrollsEventHookBase() {
         private val ZAKLN = NPCs.ZAKLN_GRITCH_6206
 
         val SCROLLS = intArrayOf(
-            Items.CHAMPION_SCROLL_6803,
-            Items.CHAMPION_SCROLL_6801,
-            Items.CHAMPION_SCROLL_6806,
-            Items.CHAMPION_SCROLL_6807,
-            Items.CHAMPION_SCROLL_6800,
-            Items.CHAMPION_SCROLL_6802,
-            Items.CHAMPION_SCROLL_6799,
             Items.CHAMPION_SCROLL_6798,
+            Items.CHAMPION_SCROLL_6799,
+            Items.CHAMPION_SCROLL_6800,
+            Items.CHAMPION_SCROLL_6801,
+            Items.CHAMPION_SCROLL_6802,
+            Items.CHAMPION_SCROLL_6803,
             Items.CHAMPION_SCROLL_6804,
             Items.CHAMPION_SCROLL_6805,
+            Items.CHAMPION_SCROLL_6806,
+            Items.CHAMPION_SCROLL_6807,
         )
 
         val idMap = HashMap<Int, Int>()

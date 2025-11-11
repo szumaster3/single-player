@@ -120,41 +120,23 @@ class ChampionChallengePlugin : InteractionListener, MapArea {
          */
 
         on(Scenery.PORTCULLIS_10553, IntType.SCENERY, "open") { player, node ->
-            getStart(player, node)
+            handlePortcullisInteraction(player, node)
             return@on true
-        }
-    }
-
-    /**
-     * Spawns a champion NPC or Leon boss based on player's scrolls.
-     */
-    private fun startActivity(player: Player) {
-        val scroll = ChampionScrollsDropHandler.SCROLLS.firstOrNull { inInventory(player, it) }
-        val defeatAll = getAttribute(player, GameAttributes.ACTIVITY_CHAMPIONS_CHALLENGE_DEFEAT_ALL, false)
-
-        if (scroll != null) {
-            val entry = ChampionDefinition.fromScroll(scroll)
-            if (entry != null) {
-                ChampionChallengeNPC.spawnChampion(player, entry.scrollId)
-            }
-            return
-        }
-
-        if (defeatAll) {
-            if (freeSlots(player) != 28) {
-                sendNPCDialogue(player, NPCs.LARXUS_3050, "His special rule is that no items in inventory can be brought to arena, only equipped items are allowed.")
-                return
-            }
-            removeAttribute(player, GameAttributes.ACTIVITY_CHAMPIONS_CHALLENGE_DEFEAT_ALL)
-            ChampionChallengeNPC.spawnChampion(player, ChampionDefinition.LEON.scrollId)
         }
     }
 
     /**
      * Handles the player interaction when opening the portcullis gate.
      */
-    private fun getStart(player: Player, node: Node) {
-        val scrollId = getAttribute(player, GameAttributes.ACTIVITY_CHAMPION_CHALLENGE, 0)
+    private fun handlePortcullisInteraction(player: Player, node: Node) {
+        var scrollId = 0
+        for (id in ChampionScrollsDropHandler.SCROLLS) {
+            val item = player.inventory.get(id)
+            if (item != null && item.charge == id) {
+                scrollId = id
+                break
+            }
+        }
 
         if (player.location.x == 3181 && player.location.y == 9758) {
             DoorActionHandler.handleDoor(player, node.asScenery())
@@ -163,12 +145,11 @@ class ChampionChallengePlugin : InteractionListener, MapArea {
             return
         }
 
-        if (scrollId == 0 || !inInventory(player, scrollId, 1)) {
+        val item = player.inventory.get(scrollId)
+        if (scrollId == 0 || item == null || item.charge != scrollId) {
             sendNPCDialogue(player, NPCs.LARXUS_3050, "You need to arrange a challenge with me before you enter the arena.")
             return
         }
-
-        removeAttribute(player, GameAttributes.ACTIVITY_CHAMPION_CHALLENGE)
 
         if (!player.musicPlayer.hasUnlocked(Music.VICTORY_IS_MINE_528)) {
             player.musicPlayer.unlock(Music.VICTORY_IS_MINE_528, true)
@@ -184,7 +165,7 @@ class ChampionChallengePlugin : InteractionListener, MapArea {
                     return@queueScript delayScript(player, 2)
                 }
                 1 -> {
-                    startActivity(player)
+                    initChampionSpawn(player)
                     return@queueScript stopExecuting(player)
                 }
 
@@ -194,7 +175,28 @@ class ChampionChallengePlugin : InteractionListener, MapArea {
     }
 
     /**
-     * Display content of the champion scroll.
+     * Spawns a champion NPC or Leon boss based on players scrolls.
+     */
+    private fun initChampionSpawn(player: Player) {
+        val scrollId = getActiveChampionScroll(player)
+        val defeatAll = getAttribute(player, GameAttributes.ACTIVITY_CHAMPIONS_CHALLENGE_DEFEAT_ALL, false)
+
+        val entry = when {
+            scrollId != null -> ChampionDefinition.fromScroll(scrollId)
+            defeatAll -> ChampionDefinition.LEON
+            else -> null
+        } ?: return
+
+        if ((entry == ChampionDefinition.GHOUL || entry == ChampionDefinition.LEON) && freeSlots(player) != 28) {
+            sendNPCDialogue(player, NPCs.LARXUS_3050, "His special rule is that no items in inventory can be brought to arena, only equipped items are allowed.")
+            return
+        }
+
+        ChampionChallengeNPC.spawnChampion(player, entry)
+    }
+
+    /**
+     * Show content of the champion scroll.
      */
     private fun displayScroll(player: Player, item: Item) {
         val content = championScrollsContent[item.id] ?: return
@@ -223,7 +225,23 @@ class ChampionChallengePlugin : InteractionListener, MapArea {
             Items.CHAMPION_SCROLL_6805 to arrayOf("Come to the Champion's Guild so I can banish", "you mortal!", "", "Champion of Lesser Demons"),
             Items.CHAMPION_SCROLL_6806 to arrayOf("I'll be waiting at the Champions' Guild to collect", "your bones.", "", "Champion of Skeletons"),
             Items.CHAMPION_SCROLL_6807 to arrayOf("You come to Champions' Guild, you fight me, I", "squish you, I get brains!", "", "Champion of Zombies"),
-//          Items.CHAMPION_SCROLL_6808 to arrayOf("I challenge you to a fight! Meet me at the", "Champions' Guild so we can wrap this up.", "", "Champion of Mummies") // November.
         )
+
+        /**
+         * Gets th Champion scroll used on npc.
+         *
+         * @param player the player.
+         * @return the scroll id.
+         */
+        @JvmStatic
+        fun getActiveChampionScroll(player: Player): Int? {
+            for (id in ChampionScrollsDropHandler.SCROLLS) {
+                val item = player.inventory.get(id)
+                if (item != null && item.charge == id) {
+                    return id
+                }
+            }
+            return null
+        }
     }
 }

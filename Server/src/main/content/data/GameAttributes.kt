@@ -382,8 +382,7 @@ internal object GameAttributes {
     const val LABEL_THORMAC_INTERACTION = "/save:scorpcatcher:thormac_talk_label"
 
     // Champions challenge.
-    const val ACTIVITY_CHAMPION_CHALLENGE = "championsarena:start"
-    const val ACTIVITY_CHAMPIONS_CHALLENGE_DEFEAT_ALL = "championsarena:boss"
+    const val ACTIVITY_CHAMPIONS_CHALLENGE_DEFEAT_ALL = "championsarena:final_boss"
 
     // Smoking kills miniquest.
     const val MINIQUEST_SMKI_GUARDIANS = "/save:quest:smki-guardians"

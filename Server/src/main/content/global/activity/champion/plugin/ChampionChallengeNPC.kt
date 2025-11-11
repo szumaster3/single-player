@@ -24,6 +24,7 @@ import shared.consts.Vars
  */
 @Initializable
 class ChampionChallengeNPC(id: Int = 0, location: Location? = null) : AbstractNPC(id, location) {
+    private var lastTick = 0
 
     override fun construct(id: Int, location: Location, vararg objects: Any): AbstractNPC = ChampionChallengeNPC(id, location)
 
@@ -32,29 +33,49 @@ class ChampionChallengeNPC(id: Int = 0, location: Location? = null) : AbstractNP
     override fun checkImpact(state: BattleState) {
         super.checkImpact(state)
         val player = state.attacker as? Player ?: return
-
         val currentTick = GameWorld.ticks
-        val lastMsgTick = getAttribute(player, GameAttributes.ACTIVITY_CHAMPIONS_RULE_MSG_TICK, 0)
 
-        if (id == NPCs.IMP_CHAMPION_3062) {
-            val specialAttack = player.getExtension<WeaponInterface>(WeaponInterface::class.java)
-            if (specialAttack.isSpecialBar) {
-                state.neutralizeHits()
-                if (currentTick - lastMsgTick > 10) {
-                    sendMessage(player, styleRules[id]?.message ?: "", currentTick)
+        styleRules[id]?.let { rule ->
+            if (id == NPCs.IMP_CHAMPION_3062) {
+                val specialAttack = player.getExtension<WeaponInterface>(WeaponInterface::class.java)
+                if (specialAttack.isSpecialBar) {
+                    state.neutralizeHits()
+                    if (currentTick - lastTick > 10) {
+                        sendMessage(player, rule.message, currentTick)
+                        lastTick = currentTick
+                    }
+                    return
                 }
-                return
+            }
+
+            if (rule.banned?.contains(state.style) == true || (rule.allowed != null && !rule.allowed.contains(state.style))) {
+                state.neutralizeHits()
+                if (currentTick - lastTick > 10) {
+                    sendMessage(player, rule.message, currentTick)
+                    lastTick = currentTick
+                }
             }
         }
 
-        /*
-         * Enforce allowed/banned combat styles.
-         */
-        styleRules[id]?.let { rule ->
-            if (rule.banned?.contains(state.style) == true || (rule.allowed != null && !rule.allowed.contains(state.style))) {
-                state.neutralizeHits()
-                if (currentTick - lastMsgTick > 10) {
-                    sendMessage(player, rule.message, currentTick)
+        when (id) {
+            NPCs.GHOUL_CHAMPION_3059, NPCs.LEON_DCOUR_3067 -> {
+                if (freeSlots(player) != 28) {
+                    state.neutralizeHits()
+                    if (currentTick - lastTick > 10) {
+                        sendMessage(player, styleRules[id]?.message
+                            ?: "You can only fight with weapons, no inventory items.", currentTick)
+                        lastTick = currentTick
+                    }
+                }
+            }
+            NPCs.LESSER_DEMON_CHAMPION_3064 -> {
+                if (freeSlots(player) != 28) {
+                    state.neutralizeHits()
+                    if (currentTick - lastTick > 10) {
+                        sendMessage(player, styleRules[id]?.message
+                            ?: "You cannot wear armour or weapons; only inventory items allowed.", currentTick)
+                        lastTick = currentTick
+                    }
                 }
             }
         }
@@ -68,7 +89,6 @@ class ChampionChallengeNPC(id: Int = 0, location: Location? = null) : AbstractNP
         openInterface(killer, Components.CHAMPIONS_SCROLL_63)
 
         val config = ChampionDefinition.values().firstOrNull { it.npcId == id } ?: return
-        val scrollId = config.scrollId
 
         /*
          * "Note that if you leave a challenge at any time during the battle, you will not lose your scroll.
@@ -76,7 +96,10 @@ class ChampionChallengeNPC(id: Int = 0, location: Location? = null) : AbstractNP
          * The scroll will automatically disappear once you've defeated the champion, however."
          */
 
-        removeItem(killer, scrollId)
+        val scrollId = ChampionChallengePlugin.getActiveChampionScroll(killer)
+        if (scrollId != null && scrollId == config.scrollId) {
+            removeItem(killer, scrollId)
+        }
 
         sendString(killer, "Well done, you defeated the ${getNPCName(id)}!", Components.CHAMPIONS_SCROLL_63, 2)
         sendItemZoomOnInterface(killer, Components.CHAMPIONS_SCROLL_63, 3, config.scrollId, 260)
@@ -121,10 +144,9 @@ class ChampionChallengeNPC(id: Int = 0, location: Location? = null) : AbstractNP
          * Handles spawn of champion npc.
          *
          * @param player The challenger.
-         * @param scrollId The champion scroll id.
+         * @param entry The npc id.
          */
-        fun spawnChampion(player: Player, scrollId: Int) {
-            val entry = ChampionDefinition.fromScroll(scrollId) ?: return
+        fun spawnChampion(player: Player, entry: ChampionDefinition) {
             val champion = ChampionChallengeNPC(entry.npcId).apply {
                 location = location(3170, 9758, 0)
                 isWalks = true
@@ -158,40 +180,81 @@ class ChampionChallengeNPC(id: Int = 0, location: Location? = null) : AbstractNP
             inventory.containsAtLeastOneItem(prayerItems) || equipment.containsAtLeastOneItem(prayerItems)
 
         private val styleRules = mapOf(
+            // Only Melee.
             NPCs.GIANT_CHAMPION_3058 to StyleRule(
-                setOf(CombatStyle.MELEE),
-                setOf(CombatStyle.MAGIC, CombatStyle.RANGE),
-                "Larxus said you could use only Melee in this duel."
+                allowed = setOf(CombatStyle.MELEE),
+                banned = setOf(CombatStyle.MAGIC, CombatStyle.RANGE),
+                message = "Larxus said you could use only Melee in this duel."
             ),
+
+            // Only Magic.
             NPCs.GOBLIN_CHAMPION_3060 to StyleRule(
-                setOf(CombatStyle.MAGIC),
-                setOf(CombatStyle.MELEE, CombatStyle.RANGE),
-                "Larxus said you could use only Spells in this duel."
+                allowed = setOf(CombatStyle.MAGIC),
+                banned = setOf(CombatStyle.MELEE, CombatStyle.RANGE),
+                message = "Larxus said you could use only Spells in this duel."
             ),
+
+            // No Melee.
             NPCs.HOBGOBLIN_CHAMPION_3061 to StyleRule(
-                setOf(CombatStyle.MAGIC, CombatStyle.RANGE),
-                setOf(CombatStyle.MELEE),
-                "Larxus said you couldn't use Melee in this duel."
+                allowed = setOf(CombatStyle.MAGIC, CombatStyle.RANGE),
+                banned = setOf(CombatStyle.MELEE),
+                message = "Larxus said you couldn't use Melee in this duel."
             ),
+
+            // No Special Attacks.
             NPCs.IMP_CHAMPION_3062 to StyleRule(
-                setOf(CombatStyle.MELEE, CombatStyle.MAGIC, CombatStyle.RANGE),
-                null,
-                "Larxus said you couldn't use Special Attacks in this duel."
+                allowed = setOf(CombatStyle.MELEE, CombatStyle.MAGIC, CombatStyle.RANGE),
+                banned = null,
+                message = "Larxus said you couldn't use Special Attacks in this duel."
             ),
+
+            // No Ranged.
             NPCs.JOGRE_CHAMPION_3063 to StyleRule(
-                setOf(CombatStyle.MAGIC, CombatStyle.MELEE),
-                setOf(CombatStyle.RANGE),
-                "Larxus said you couldn't use Ranged Weapons."
+                allowed = setOf(CombatStyle.MAGIC, CombatStyle.MELEE),
+                banned = setOf(CombatStyle.RANGE),
+                message = "Larxus said you couldn't use Ranged Weapons."
             ),
+
+            // No Magic.
             NPCs.ZOMBIES_CHAMPION_3066 to StyleRule(
-                setOf(CombatStyle.MELEE, CombatStyle.RANGE),
-                setOf(CombatStyle.MAGIC),
-                "Larxus said you couldn't use Spells in this duel."
+                allowed = setOf(CombatStyle.MELEE, CombatStyle.RANGE),
+                banned = setOf(CombatStyle.MAGIC),
+                message = "Larxus said you couldn't use Spells in this duel."
             ),
+
+            // Only Ranged.
             NPCs.SKELETON_CHAMPION_3065 to StyleRule(
-                setOf(CombatStyle.RANGE),
-                setOf(CombatStyle.MAGIC, CombatStyle.MELEE),
-                "Larxus said you could use only Ranged Weapons in this duel."
+                allowed = setOf(CombatStyle.RANGE),
+                banned = setOf(CombatStyle.MELEE, CombatStyle.MAGIC),
+                message = "Larxus said you could use only Ranged Weapons in this duel."
+            ),
+
+            // Ghoul - weapons only - no inventory (handled separately)
+            NPCs.GHOUL_CHAMPION_3059 to StyleRule(
+                allowed = null,
+                banned = null,
+                message = "You can only fight with weapons, no inventory items."
+            ),
+
+            // Leon - weapons only - no inventory (handled separately)
+            NPCs.LEON_DCOUR_3067 to StyleRule(
+                allowed = null,
+                banned = null,
+                message = "You can only fight with weapons, no inventory items."
+            ),
+
+            // Lesser Demon no armour/weapons - only inventory (handled separately)
+            NPCs.LESSER_DEMON_CHAMPION_3064 to StyleRule(
+                allowed = null,
+                banned = null,
+                message = "You cannot wear armour or weapons; only inventory items allowed."
+            ),
+
+            // Earth Warrior - no prayers (handled separately)
+            NPCs.EARTH_WARRIOR_CHAMPION_3057 to StyleRule(
+                allowed = null,
+                banned = null,
+                message = "For this fight you're not allowed to use prayers!"
             )
         )
     }

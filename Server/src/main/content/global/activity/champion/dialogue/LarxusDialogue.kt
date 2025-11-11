@@ -1,12 +1,14 @@
 package content.global.activity.champion.dialogue
 
 import content.data.GameAttributes
+import content.global.activity.champion.plugin.ChampionChallengePlugin
 import content.global.activity.champion.plugin.ChampionDefinition
 import content.global.activity.champion.plugin.ChampionScrollsDropHandler
 import core.api.*
 import core.game.dialogue.*
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
+import core.game.node.item.Item
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import core.tools.START_DIALOGUE
@@ -21,7 +23,7 @@ class LarxusDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         npc = NPC(NPCs.LARXUS_3050)
-
+        val scrollItem = ChampionChallengePlugin.getActiveChampionScroll(player)
         val defeatAll = getAttribute(player, GameAttributes.ACTIVITY_CHAMPIONS_CHALLENGE_DEFEAT_ALL, false)
 
         showTopics(
@@ -41,8 +43,7 @@ class LarxusDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             1 -> {
-                val hasScroll = anyInInventory(player, *ChampionScrollsDropHandler.SCROLLS)
-                if (hasScroll) {
+                if (scrollItem != null) {
                     options("I was given a challenge, what now?", "What is this place?", "Nothing thanks.")
                     stage = 2
                 } else {
@@ -61,7 +62,7 @@ class LarxusDialogue(player: Player? = null) : Dialogue(player) {
             4 -> npcl(FaceAnim.NEUTRAL, "This is the champions' arena, the champions of various races use it to duel those they deem worthy of the honour.").also { stage = END_DIALOGUE }
             5 -> {
                 end()
-                openDialogue(player, LarxusDialogueFile())
+                openDialogue(player, LarxusDialogueFile(false, scrollItem?.asItem()))
             }
             6 -> when (buttonId) {
                 1 -> playerl(FaceAnim.HALF_ASKING, "What is this place?").also { stage = 4 }
@@ -77,7 +78,10 @@ class LarxusDialogue(player: Player? = null) : Dialogue(player) {
 /**
  * Handles dialogue for starting the challenge or showing scroll info.
  */
-class LarxusDialogueFile(private val challengeStart: Boolean = false) : DialogueFile() {
+class LarxusDialogueFile(
+    private val challengeStart: Boolean = false,
+    private val scrollItem: Item? = null
+) : DialogueFile() {
 
     override fun handle(componentID: Int, buttonID: Int) {
         npc = NPC(NPCs.LARXUS_3050)
@@ -97,16 +101,28 @@ class LarxusDialogueFile(private val challengeStart: Boolean = false) : Dialogue
                 }
 
                 val scrollMessage = when (scrollId) {
+                    // Earth Warrior.
                     Items.CHAMPION_SCROLL_6798 -> "$prefix this fight you're not allowed to use any Prayer's. Do you still want to proceed?"
+                    // Ghoul.
                     Items.CHAMPION_SCROLL_6799 -> "$prefix this fight you're only allowed to take Weapons, no other items are allowed. Do you still want to proceed?"
+                    // Giant.
                     Items.CHAMPION_SCROLL_6800 -> "$prefix this fight you're only allowed to use Melee attacks, no Ranged or Magic. Do you still want to proceed?"
+                    // Goblin.
                     Items.CHAMPION_SCROLL_6801 -> "$prefix this fight you're only allowed to use Magic attacks, no Melee or Ranged. Do you still want to proceed?"
+                    // Hobgoblin.
                     Items.CHAMPION_SCROLL_6802 -> "$prefix this fight you're not allowed to use any Melee attacks. Do you still want to proceed?"
+                    // Imp.
                     Items.CHAMPION_SCROLL_6803 -> "$prefix this fight you're not allowed to use any Special Attacks. Do you still want to proceed?"
+                    // Jogre.
                     Items.CHAMPION_SCROLL_6804 -> "$prefix this fight you're not allowed to use any Ranged attacks. Do you still want to proceed?"
+                    // Lesser Demon.
                     Items.CHAMPION_SCROLL_6805 -> "$prefix this fight you're allowed to use any Weapons or Armour. Do you still want to proceed?"
+                    // Skeleton.
                     Items.CHAMPION_SCROLL_6806 -> "$prefix this fight you're only allowed to use Ranged attacks, no Melee or Magic. Do you still want to proceed?"
+                    // Zombie.
                     Items.CHAMPION_SCROLL_6807 -> "$prefix this fight you're not allowed to use any Magic attacks. Do you still want to proceed?"
+                    // Leon d'Cour.
+//                  Items.CHAMPION_SCROLL_6808 -> "$prefix For this fight, you may only bring weapons; no other inventory items are allowed. Do you still want to proceed?"
                     else -> null
                 }
 
@@ -130,7 +146,7 @@ class LarxusDialogueFile(private val challengeStart: Boolean = false) : Dialogue
             3 -> npcl(FaceAnim.HAPPY, "Your challenger is ready, please go down through the trapdoor when you're ready.").also { stage = 4 }
             4 -> {
                 end()
-                setAttribute(player!!, GameAttributes.ACTIVITY_CHAMPION_CHALLENGE, entry?.scrollId)
+                scrollItem?.let { setCharge(it, it.id) }
             }
         }
     }
