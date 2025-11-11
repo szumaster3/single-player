@@ -34,7 +34,7 @@ class LarxusDialogue(player: Player? = null) : Dialogue(player) {
         when (stage) {
             START_DIALOGUE -> npcl(FaceAnim.NEUTRAL, "Is there something I can help you with?").also { stage++ }
             1 -> showTopics(
-                IfTopic(FaceAnim.HALF_ASKING,"I've defeated all the chmpions, what now?", 5, activityComplete),
+                IfTopic(FaceAnim.HALF_ASKING,"I've defeated all the champions, what now?", 5, activityComplete),
                 IfTopic(FaceAnim.HALF_ASKING,"I was given a challenge, what now?", 2, hasScroll(player) && !activityComplete),
                 Topic(FaceAnim.HALF_ASKING,"What is this place?", 3),
                 Topic(FaceAnim.NEUTRAL,"Nothing thanks.",END_DIALOGUE)
@@ -103,7 +103,7 @@ class LarxusDialogueFile(private val challengeStart: Boolean = false, private va
                     else -> null
                 }
 
-                scrollMessage?.let { npcl(it) }
+                scrollMessage?.let { npcl(FaceAnim.NEUTRAL, it) }
                 stage = 1
             }
             1 -> showTopics(
@@ -113,7 +113,7 @@ class LarxusDialogueFile(private val challengeStart: Boolean = false, private va
             2 -> {
                 npcl(FaceAnim.NEUTRAL, "Your challenger is ready, please go down through the trapdoor when you're ready.")
                 val trapdoorLoc = getScenery(Location.create(3184, 9758, 0))
-                replaceScenery(trapdoorLoc!!.asScenery(), Scenery.TRAPDOOR_10559, 100)
+                replaceScenery(trapdoorLoc!!.asScenery(), Scenery.CHAMPION_STATUE_10557, 100)
                 scrollItem.let { item ->
                     val usedScroll = player!!.inventory.getItem(item)
                     usedScroll?.let { setCharge(it, it.id) }

@@ -29,30 +29,6 @@ class ChampionChallengePlugin : InteractionListener, MapArea {
     override fun getRestrictions(): Array<ZoneRestriction> =
         arrayOf(ZoneRestriction.CANNON, ZoneRestriction.FIRES, ZoneRestriction.RANDOM_EVENTS)
 
-    override fun areaEnter(entity: Entity) {
-        if (entity !is Player) return
-        /*
-         * val activityComplete = !getAttribute(entity, GameAttributes.ACTIVITY_CHAMPIONS_COMPLETE, false)
-         * val leon = findNPC(Location(3168,9766,0), NPCs.MYSTERY_FIGURE_3051)
-         * if(activityComplete) { leon?.isHidden(entity.asPlayer()) }
-         */
-        val insideChallengeZone = inBorders(entity, 3158, 9752, 3181, 9764)
-
-        if(insideChallengeZone) {
-            registerLogoutListener(entity, "challenge") {
-                val exit = Location(3182, 9758, 0)
-                entity.location = exit
-                entity.properties.teleportLocation = exit
-            }
-        }
-    }
-
-    override fun areaLeave(entity: Entity, logout: Boolean) {
-        if (entity is Player) {
-            clearLogoutListener(entity, "challenge")
-        }
-    }
-
     override fun defineListeners() {
 
         /*
@@ -60,6 +36,18 @@ class ChampionChallengePlugin : InteractionListener, MapArea {
          */
 
         on(Scenery.CHAMPION_STATUE_10557, IntType.SCENERY, "climb-down") { player, _ ->
+            val activeScroll = getActiveChampionScroll(player)
+
+            if (activeScroll == null) {
+                sendNPCDialogue(player, NPCs.LARXUS_3050, "You need to arrange a challenge with me before you enter the arena.", FaceAnim.NEUTRAL)
+                return@on true
+            }
+
+            if (activeScroll == Items.CHAMPION_SCROLL_6805 && player.equipment.toArray().any { it != null }) {
+                sendNPCDialogue(player, NPCs.LARXUS_3050, "For this fight you're not allowed to wear armour or weapons; only inventory items allowed.", FaceAnim.NEUTRAL)
+                return@on true
+            }
+
             teleport(player, Location.create(3182, 9758, 0), TeleportManager.TeleportType.INSTANT)
             return@on true
         }
@@ -83,20 +71,20 @@ class ChampionChallengePlugin : InteractionListener, MapArea {
         }
 
         /*
-         * Handles opening the trapdoor.
+         * Handles trapdoor to champions guild basement.
          */
 
-        on(Scenery.TRAPDOOR_10558, IntType.SCENERY, "open") { player, _ ->
-            sendNPCDialogue(player, NPCs.LARXUS_3050, "You need to arrange a challenge with me before you enter the arena.", FaceAnim.NEUTRAL)
+        on(Scenery.TRAPDOOR_10558, IntType.SCENERY, "open") { _, node ->
+            replaceScenery(node.asScenery(), Scenery.TRAPDOOR_10559, 100, node.location)
             return@on true
         }
 
         /*
-         * Handles closing the trapdoor.
+         * Handles closing the champions guild trapdoor.
          */
 
-        on(Scenery.TRAPDOOR_10559, IntType.SCENERY, "close") { player, _ ->
-            sendNPCDialogue(player, NPCs.LARXUS_3050, "You need to arrange a challenge with me before you enter the arena.", FaceAnim.NEUTRAL)
+        on(Scenery.TRAPDOOR_10559, IntType.SCENERY, "close") { player, node ->
+            replaceScenery(node.asScenery(), Scenery.TRAPDOOR_10558, -1, node.location)
             return@on true
         }
 
@@ -113,8 +101,8 @@ class ChampionChallengePlugin : InteractionListener, MapArea {
          * Handles opening the champion statue.
          */
 
-        on(Scenery.CHAMPION_STATUE_10556, IntType.SCENERY, "open") { _, node ->
-            replaceScenery(node.asScenery(), Scenery.CHAMPION_STATUE_10557, 100, node.location)
+        on(Scenery.CHAMPION_STATUE_10556, IntType.SCENERY, "open") { player, _ ->
+            sendNPCDialogue(player, NPCs.LARXUS_3050, "You need to arrange a challenge with me before you enter the arena.", FaceAnim.NEUTRAL)
             return@on true
         }
 
@@ -132,18 +120,11 @@ class ChampionChallengePlugin : InteractionListener, MapArea {
      * Handles passing through the gate and initiating the challenge.
      */
     private fun handlePortcullisInteraction(player: Player, node: Node) {
-        val activeScroll = getActiveChampionScroll(player)
-
         if (player.location.x == 3181 && player.location.y == 9758) {
             player.impactHandler.disabledTicks = 3
             animateScenery(node.asScenery(), 2976)
             playAudio(player, Sounds.PORTCULLIS_OPEN_83)
-            forceMove(player, player.location, Location(3182, 9758, 0), 0, 30, Direction.EAST)
-            return
-        }
-
-        if (activeScroll == null) {
-            sendNPCDialogue(player, NPCs.LARXUS_3050, "You need to arrange a challenge with me before you enter the arena.", FaceAnim.NEUTRAL)
+            forceMove(player, player.location, Location(3182, 9758, 0), 0, 30, Direction.EAST, 819)
             return
         }
 
@@ -155,7 +136,7 @@ class ChampionChallengePlugin : InteractionListener, MapArea {
         player.impactHandler.disabledTicks = 3
         animateScenery(node.asScenery(), 2976)
         playAudio(player, Sounds.PORTCULLIS_OPEN_83)
-        forceMove(player, player.location, Location.create(3180, 9758, 0), 0, 60, Direction.WEST)
+        forceMove(player, player.location, Location.create(3180, 9758, 0), 0, 60, Direction.WEST, 819)
         initChampionSpawn(player)
     }
 

@@ -4,7 +4,6 @@ import content.data.GameAttributes
 import core.api.*
 import core.game.container.impl.EquipmentContainer
 import core.game.dialogue.FaceAnim
-import core.game.interaction.InteractionListeners
 import core.game.node.entity.Entity
 import core.game.node.entity.combat.BattleState
 import core.game.node.entity.combat.CombatStyle
@@ -37,9 +36,9 @@ class ChampionChallengeNPC(id: Int = 0, location: Location? = null) : AbstractNP
         super.checkImpact(state)
         val player = state.attacker as? Player ?: return
         val rule = styleRules[id] ?: return
-        val now = GameWorld.ticks
 
-        fun blockAction(message: String) {
+        val now = GameWorld.ticks
+        fun block(message: String) {
             state.neutralizeHits()
             if (now - lastTick > 10) {
                 sendMessage(player, message, now)
@@ -48,35 +47,28 @@ class ChampionChallengeNPC(id: Int = 0, location: Location? = null) : AbstractNP
         }
 
         when (id) {
-            NPCs.IMP_CHAMPION_3062 -> {
-                val weapon = player.equipment[EquipmentContainer.SLOT_WEAPON]
-                val hasSpecial = weapon?.definition?.getConfiguration(ItemConfigParser.HAS_SPECIAL, false) ?: false
-                if (weapon != null && hasSpecial) return blockAction(rule.message)
-            }
+            NPCs.IMP_CHAMPION_3062 -> player.equipment[EquipmentContainer.SLOT_WEAPON]
+                ?.takeIf { it.definition.getConfiguration(ItemConfigParser.HAS_SPECIAL, false) }
+                ?.let { return block(rule.message) }
 
             NPCs.GHOUL_CHAMPION_3059, NPCs.LEON_DCOUR_3067 -> {
                 val used = getUsedOption(player)
-                if (freeSlots(player) != 28 || used in listOf("pick", "take"))
-                    return blockAction(rule.message)
+                if (freeSlots(player) != 28 || used in listOf("pick", "take")) return block(rule.message)
             }
 
             NPCs.LESSER_DEMON_CHAMPION_3064 -> {
-                val used = getUsedOption(player)
-                if (player.equipment.toList().isNotEmpty() || used in listOf("equip", "wield", "wear", "hold")) {
-                    enforceEquipmentRestriction(player, id, true)
-                    return blockAction(rule.message)
-                }
+                if (getUsedOption(player) in listOf("equip", "wield", "wear", "hold")) return block(rule.message)
             }
 
             NPCs.EARTH_WARRIOR_CHAMPION_3057 -> {
-                player.prayer.reset()
+                player.prayer?.reset()
                 return sendMessage(player, rule.message, now)
             }
         }
 
         val style = state.style
         if (rule.banned?.contains(style) == true || (rule.allowed != null && style !in rule.allowed))
-            blockAction(rule.message)
+            block(rule.message)
     }
 
     /**
@@ -88,47 +80,47 @@ class ChampionChallengeNPC(id: Int = 0, location: Location? = null) : AbstractNP
 
 
     override fun finalizeDeath(killer: Entity?) {
-        if (killer !is Player) return
-        removeAttributes(killer, ACTIVE_CHAMPION_KEY, GameAttributes.PRAYER_LOCK)
-        lock(killer, 2)
-        playJingle(killer, 85)
-        openInterface(killer, Components.CHAMPIONS_SCROLL_63)
+        if (killer is Player) {
+            removeAttributes(killer, ACTIVE_CHAMPION_KEY, GameAttributes.PRAYER_LOCK)
+            lock(killer, 2)
+            playJingle(killer, 85)
+            openInterface(killer, Components.CHAMPIONS_SCROLL_63)
 
-        val config = ChampionDefinition.values().firstOrNull { it.npcId == id } ?: return
-        val defeatAll =
-            getAttribute(killer, GameAttributes.ACTIVITY_CHAMPIONS_CHALLENGE_DEFEAT_ALL, false)
+            val config = ChampionDefinition.values().firstOrNull { it.npcId == id } ?: return
+            val defeatAll =
+                getAttribute(killer, GameAttributes.ACTIVITY_CHAMPIONS_CHALLENGE_DEFEAT_ALL, false)
 
-        // Removing the scroll after the fight.
-        val scrollId = ChampionChallengePlugin.getActiveChampionScroll(killer)
-        if (scrollId != null && scrollId == config.scrollId) {
-            removeItem(killer, scrollId)
+            // Removing the scroll after the fight.
+            val scrollId = ChampionChallengePlugin.getActiveChampionScroll(killer)
+            if (scrollId != null && scrollId == config.scrollId) {
+                removeItem(killer, scrollId)
+            }
+
+            sendString(killer, "Well done, you defeated the ${getNPCName(id)}!", Components.CHAMPIONS_SCROLL_63, 2)
+            sendItemZoomOnInterface(killer, Components.CHAMPIONS_SCROLL_63, 3, config.scrollId, 260)
+            sendString(killer, "${config.xp.toInt()} Slayer Xp", Components.CHAMPIONS_SCROLL_63, 6)
+            sendString(killer, "${config.xp.toInt()} Hitpoint Xp", Components.CHAMPIONS_SCROLL_63, 7)
+
+            // Reward and placement of banners on the wall.
+            config.varbitId?.let { setVarbit(killer, it, 1, true) }
+            rewardXP(killer, Skills.HITPOINTS, config.xp)
+            rewardXP(killer, Skills.SLAYER, config.xp)
+
+            // Checking if the player has defeated all champions and can start last fight.
+            if ((Vars.VARBIT_CHAMPIONS_CHALLENGE_EARTH_WARRIOR_1452..Vars.VARBIT_CHAMPIONS_CHALLENGE_ZOMBIE_1461)
+                    .all { getVarbit(killer, it) == 1 && !defeatAll }
+            ) {
+                setAttribute(killer, GameAttributes.ACTIVITY_CHAMPIONS_CHALLENGE_DEFEAT_ALL, true)
+                sendNPCDialogueLines(killer, NPCs.LEON_DCOUR_3067, FaceAnim.NEUTRAL, false, "You have done well brave adventurer, but I would test", "your mettle now. You may arrange the fight with", "Larxus at your leisure.")
+            }
+
+            // Complete activity.
+            if (config.npcId == NPCs.LEON_DCOUR_3067) {
+                removeAttribute(killer, GameAttributes.ACTIVITY_CHAMPIONS_CHALLENGE_DEFEAT_ALL)
+                setAttribute(killer, GameAttributes.ACTIVITY_CHAMPIONS_COMPLETE, true)
+            }
+            clearHintIcon(killer)
         }
-
-        sendString(killer, "Well done, you defeated the ${getNPCName(id)}!", Components.CHAMPIONS_SCROLL_63, 2)
-        sendItemZoomOnInterface(killer, Components.CHAMPIONS_SCROLL_63, 3, config.scrollId, 260)
-        sendString(killer, "${config.xp.toInt()} Slayer Xp", Components.CHAMPIONS_SCROLL_63, 6)
-        sendString(killer, "${config.xp.toInt()} Hitpoint Xp", Components.CHAMPIONS_SCROLL_63, 7)
-
-        // Reward and placement of banners on the wall.
-        config.varbitId?.let { setVarbit(killer, it, 1, true) }
-        rewardXP(killer, Skills.HITPOINTS, config.xp)
-        rewardXP(killer, Skills.SLAYER, config.xp)
-
-        // Checking if the player has defeated all champions and can start last fight.
-        if ((Vars.VARBIT_CHAMPIONS_CHALLENGE_EARTH_WARRIOR_1452..Vars.VARBIT_CHAMPIONS_CHALLENGE_ZOMBIE_1461)
-                .all { getVarbit(killer, it) == 1 && !defeatAll })
-        {
-            setAttribute(killer, GameAttributes.ACTIVITY_CHAMPIONS_CHALLENGE_DEFEAT_ALL, true)
-            sendNPCDialogueLines(killer, NPCs.LEON_DCOUR_3067, FaceAnim.NEUTRAL, false, "You have done well brave adventurer, but I would test", "your mettle now. You may arrange the fight with", "Larxus at your leisure.")
-        }
-
-        // Complete activity.
-        if (config.npcId == NPCs.LEON_DCOUR_3067) {
-            removeAttribute(killer, GameAttributes.ACTIVITY_CHAMPIONS_CHALLENGE_DEFEAT_ALL)
-            setAttribute(killer, GameAttributes.ACTIVITY_CHAMPIONS_COMPLETE, true)
-        }
-
-        clearHintIcon(killer)
         clear()
         super.finalizeDeath(killer)
     }
@@ -178,8 +170,10 @@ class ChampionChallengeNPC(id: Int = 0, location: Location? = null) : AbstractNP
                 isActive = false
             }
 
-            if (champion.asNpc() != null && champion.isActive)
-                champion.properties.teleportLocation = champion.properties.spawnLocation
+            champion.properties?.let {
+                if (champion.asNpc() != null && champion.isActive)
+                    it.teleportLocation = it.spawnLocation
+            }
 
             setAttribute(player, ACTIVE_CHAMPION_KEY, champion)
             champion.isActive = true
@@ -194,21 +188,6 @@ class ChampionChallengeNPC(id: Int = 0, location: Location? = null) : AbstractNP
          */
         private fun Player.hasPrayerItems(): Boolean =
             inventory.containsAtLeastOneItem(prayerItems) || equipment.containsAtLeastOneItem(prayerItems)
-
-        /**
-         * Validates and enforces equipment restrictions for specific challenges.
-         *
-         * @param player The player being checked.
-         * @param npc The NPC ID enforcing the rule.
-         * @param isEquip Whether this check is triggered by an equip action.
-         * @return `true` if all equipment is allowed, `false` otherwise.
-         */
-        fun enforceEquipmentRestriction(player: Player, npc: Int, isEquip: Boolean): Boolean =
-            player.equipment.toArray().all { item ->
-                val allowed = InteractionListeners.run(item.id, player, item, isEquip)
-                if (!allowed) styleRules[npc]?.message?.let { sendMessage(player, it) }
-                allowed
-            }
 
         /**
          * Configuration of combat rules for each Champion NPC.
