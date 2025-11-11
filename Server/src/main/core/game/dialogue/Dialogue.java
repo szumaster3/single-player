@@ -361,41 +361,31 @@ public abstract class Dialogue implements Plugin<Player> {
      * @param topics dialogue topics to show
      * @return true if no valid topics were shown, false otherwise
      */
-    /**
-     * Displays selectable dialogue topics in dialogue.
-     *
-     * @param topics dialogue topics to show
-     * @return true if no valid topics were shown, false otherwise
-     */
     public boolean showTopics(Topic<?>... topics) {
         ArrayList<String> validTopics = new ArrayList<>();
-        for (Topic<?> topic : topics) {
-            if (topic instanceof IfTopic && !((IfTopic<?>) topic).getShowCondition()) continue;
+        for(Topic<?> topic : topics)
+        {
+            if(topic instanceof IfTopic && !((IfTopic<?>) topic).getShowCondition()) continue;
             interpreter.activeTopics.add(topic);
             validTopics.add(topic.getText());
         }
-
-        if (validTopics.isEmpty()) {
+        if(validTopics.size() == 0) {
             return true;
-        } else if (validTopics.size() == 1) {
-            Topic<?> topic = interpreter.activeTopics.get(0);
-
-            if (topic.getToStage() instanceof DialogueFile) {
+        }
+        else if (validTopics.size() == 1) {
+            Topic topic = interpreter.activeTopics.get(0);
+            if(topic.getToStage() instanceof DialogueFile) {
                 DialogueFile topicFile = (DialogueFile) topic.getToStage();
                 interpreter.getDialogue().loadFile(topicFile);
-            } else if (topic.getToStage() instanceof Integer) {
+            }
+            else if(topic.getToStage() instanceof Integer) {
                 stage = (Integer) topic.getToStage();
             }
-
-            Entity speaker = topic.getSpeaker() != null ? topic.getSpeaker() : npc != null ? npc : player;
-            if (speaker instanceof Player) {
-                player(topic.getText());
-            } else if (speaker instanceof NPC) {
-                npc(((NPC) speaker).getId(), topic.getText());
-            }
+            player(topic.getText());
             interpreter.activeTopics.clear();
             return false;
-        } else {
+        }
+        else {
             options(validTopics.toArray(new String[0]));
             return false;
         }

@@ -159,37 +159,29 @@ abstract class DialogueFile {
      * Displays selectable dialogue topics.
      * @return true if no topics are available, otherwise false.
      */
-    fun showTopics(vararg topics: Topic<*>, title: String = "Select an Option:"): Boolean {
+    fun showTopics(vararg topics: Topic<*>, title: String = "Select an Option"): Boolean {
         val validTopics = ArrayList<String>()
-        topics.filter { if (it is IfTopic) it.showCondition else true }.forEach { topic ->
-            interpreter!!.activeTopics.add(topic)
+        topics.filter { if(it is IfTopic) it.showCondition else true }.forEach {
+                topic -> interpreter!!.activeTopics.add(topic)
             validTopics.add(topic.text)
         }
-
-        when (validTopics.size) {
-            0 -> return true
-            1 -> {
-                val topic = interpreter!!.activeTopics[0]
-                if (topic.toStage is DialogueFile) {
-                    interpreter!!.dialogue.loadFile(topic.toStage)
-                } else if (topic.toStage is Int) {
-                    stage = topic.toStage
-                }
-
-                val speaker = topic.speaker ?: npc
-                if (speaker is Player) {
-                    player(topic.text)
-                } else if (speaker is NPC) {
-                    npc(speaker.id, topic.expr, topic.text)
-                }
-
-                interpreter!!.activeTopics.clear()
-                return false
+        if(validTopics.size == 0) {
+            return true
+        }
+        else if (validTopics.size == 1) {
+            val topic = topics.filter { it.text  == validTopics[0] }[0]
+            if(topic.toStage is DialogueFile) {
+                val topicFile = topic.toStage as DialogueFile
+                interpreter!!.dialogue.loadFile(topicFile)
+            } else if(topic.toStage is Int) {
+                stage = topic.toStage as Int
             }
-            else -> {
-                options(*validTopics.toTypedArray(), title = title)
-                return false
-            }
+            player(topic.text)
+            interpreter!!.activeTopics.clear()
+            return false
+        }
+        else { options(*validTopics.toTypedArray(), title = title)
+            return false
         }
     }
 }
