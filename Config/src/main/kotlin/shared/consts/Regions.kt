@@ -95,4 +95,5 @@ object Regions {
     const val PEST_CONTROL_10536 = 10536
     const val WIZARDS_GUILD_10288 = 10288
     const val JADE_VINE_MAZE_11566 = 11566
+    const val CHAMPION_CHALLENGE_12696 = 12696
 }

@@ -361,6 +361,12 @@ public abstract class Dialogue implements Plugin<Player> {
      * @param topics dialogue topics to show
      * @return true if no valid topics were shown, false otherwise
      */
+    /**
+     * Displays selectable dialogue topics in dialogue.
+     *
+     * @param topics dialogue topics to show
+     * @return true if no valid topics were shown, false otherwise
+     */
     public boolean showTopics(Topic<?>... topics) {
         ArrayList<String> validTopics = new ArrayList<>();
         for (Topic<?> topic : topics) {
@@ -368,17 +374,25 @@ public abstract class Dialogue implements Plugin<Player> {
             interpreter.activeTopics.add(topic);
             validTopics.add(topic.getText());
         }
-        if (validTopics.size() == 0) {
+
+        if (validTopics.isEmpty()) {
             return true;
         } else if (validTopics.size() == 1) {
-            Topic topic = interpreter.activeTopics.get(0);
+            Topic<?> topic = interpreter.activeTopics.get(0);
+
             if (topic.getToStage() instanceof DialogueFile) {
                 DialogueFile topicFile = (DialogueFile) topic.getToStage();
                 interpreter.getDialogue().loadFile(topicFile);
             } else if (topic.getToStage() instanceof Integer) {
                 stage = (Integer) topic.getToStage();
             }
-            player(topic.getText());
+
+            Entity speaker = topic.getSpeaker() != null ? topic.getSpeaker() : npc != null ? npc : player;
+            if (speaker instanceof Player) {
+                player(topic.getText());
+            } else if (speaker instanceof NPC) {
+                npc(((NPC) speaker).getId(), topic.getText());
+            }
             interpreter.activeTopics.clear();
             return false;
         } else {

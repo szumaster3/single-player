@@ -2,6 +2,7 @@ package content.global.activity.champion.plugin
 
 import content.data.GameAttributes
 import core.api.*
+import core.game.dialogue.FaceAnim
 import core.game.node.entity.Entity
 import core.game.node.entity.combat.BattleState
 import core.game.node.entity.combat.CombatStyle
@@ -25,6 +26,9 @@ import shared.consts.Vars
 @Initializable
 class ChampionChallengeNPC(id: Int = 0, location: Location? = null) : AbstractNPC(id, location) {
 
+    /**
+     * The tick counter for automatic remove NPCs.
+     */
     private var clearTicks = 0
 
     override fun construct(id: Int, location: Location, vararg objects: Any): AbstractNPC = ChampionChallengeNPC(id, location)
@@ -40,6 +44,10 @@ class ChampionChallengeNPC(id: Int = 0, location: Location? = null) : AbstractNP
         super.checkImpact(state)
         val player = state.attacker as? Player ?: return
 
+        /*
+         * Special rules for Imp Champion (disables special attacks)
+         */
+
         if (id == NPCs.IMP_CHAMPION_3062) {
             val specialAttack = player.getExtension<WeaponInterface>(WeaponInterface::class.java)
 
@@ -49,6 +57,10 @@ class ChampionChallengeNPC(id: Int = 0, location: Location? = null) : AbstractNP
                 return
             }
         }
+
+        /*
+         * Enforce allowed/banned combat styles.
+         */
 
         styleRules[id]?.let { rule ->
             if (rule.banned?.contains(state.style) == true) {
@@ -71,7 +83,7 @@ class ChampionChallengeNPC(id: Int = 0, location: Location? = null) : AbstractNP
                 playJingle(killer, 85)
                 openInterface(killer, Components.CHAMPIONS_SCROLL_63)
 
-                val meta = championMeta[id] ?: return@runTask
+                val meta = championConfig[id] ?: return@runTask
 
                 sendString(killer, "Well done, you defeated the ${getNPCName(id)}!", Components.CHAMPIONS_SCROLL_63, 2)
                 sendItemZoomOnInterface(killer, Components.CHAMPIONS_SCROLL_63, 3, meta.scrollId, 260)
@@ -80,7 +92,12 @@ class ChampionChallengeNPC(id: Int = 0, location: Location? = null) : AbstractNP
                 meta.varbitId?.let { setVarbit(killer, it, 1, true) }
                 rewardXP(killer, Skills.HITPOINTS, meta.xp)
                 rewardXP(killer, Skills.SLAYER, meta.xp)
-                ChampionChallengePlugin.tryStartFinalBattle(killer)
+
+                if ((Vars.VARBIT_CHAMPIONS_CHALLENGE_EARTH_WARRIOR_1452..Vars.VARBIT_CHAMPIONS_CHALLENGE_ZOMBIE_1461).all { getVarbit(killer, it) == 1 }) {
+                    setAttribute(killer, GameAttributes.ACTIVITY_CHAMPIONS_CHALLENGE_DEFEAT_ALL, true)
+                    sendNPCDialogueLines(killer, NPCs.LEON_DCOUR_3067, FaceAnim.NEUTRAL, false, "You have done well brave adventurer, but I would test", "your mettle now. You may arrange the fight with", "Larxus at your leisure.")
+                }
+
             }
             clearHintIcon(killer)
             removeAttributes(killer, GameAttributes.ACTIVITY_CHAMPION_CHALLENGE, GameAttributes.PRAYER_LOCK)
@@ -92,8 +109,15 @@ class ChampionChallengeNPC(id: Int = 0, location: Location? = null) : AbstractNP
     companion object {
         const val NPC_ID = NPCs.EARTH_WARRIOR_CHAMPION_3057
         const val SCROLL_ID = Items.CHAMPION_SCROLL_6798
+
+        /**
+         * The varbit id represents the banner.
+         */
         private const val VARBIT_ID = Vars.VARBIT_SCENERY_CHAMPIONS_CHALLENGE_EARTH_WARRIOR_BANNER_1452
 
+        /**
+         * The list of items considered prayer items that may be banned in challenges.
+         */
         private val prayerItems = intArrayOf(
             Items.PRAYER_POTION1_143, Items.PRAYER_POTION1_144, Items.PRAYER_POTION2_141, Items.PRAYER_POTION2_142,
             Items.PRAYER_POTION3_139, Items.PRAYER_POTION3_140, Items.PRAYER_POTION4_2434, Items.PRAYER_POTION4_2435,
@@ -107,10 +131,17 @@ class ChampionChallengeNPC(id: Int = 0, location: Location? = null) : AbstractNP
             Items.SUP_RESTORE_MIX1_11495, Items.SUP_RESTORE_MIX1_11496, Items.SUP_RESTORE_MIX2_11493, Items.SUP_RESTORE_MIX2_11494
         )
 
+        /**
+         * Spawns a Champion NPC.
+         *
+         * @param player The challenger.
+         * @param npcId The champion npc id.
+         */
         fun spawnChampion(player: Player, npcId: Int) {
             val champion = ChampionChallengeNPC(npcId).apply {
                 location = location(3170, 9758, 0)
                 isWalks = true
+                isNeverWalks = false
                 isAggressive = true
                 isActive = false
             }
@@ -135,12 +166,18 @@ class ChampionChallengeNPC(id: Int = 0, location: Location? = null) : AbstractNP
             })
         }
 
+        /**
+         * Checks if player has any prayer items in inventory or equipment.
+         */
         private fun Player.hasPrayerItems(): Boolean {
             return inventory.containsAtLeastOneItem(prayerItems) || equipment.containsAtLeastOneItem(prayerItems)
         }
 
-        private val championMeta = (NPC_ID..NPCs.LEON_DCOUR_3067).associateWith { npcId ->
-            ChampionMeta(
+        /**
+         * Champion rewards map.
+         */
+        private val championConfig = (NPC_ID..NPCs.LEON_DCOUR_3067).associateWith { npcId ->
+            ChampionConfig(
                 xp = when (npcId) {
                     NPCs.EARTH_WARRIOR_CHAMPION_3057 -> 432.0
                     NPCs.GIANT_CHAMPION_3058 -> 280.0
@@ -160,18 +197,21 @@ class ChampionChallengeNPC(id: Int = 0, location: Location? = null) : AbstractNP
             )
         }
 
+        /**
+         * The rules for each fight.
+         */
         private val styleRules = mapOf(
-            NPCs.GIANT_CHAMPION_3058 to StyleRule(setOf(CombatStyle.MELEE), setOf(CombatStyle.MAGIC, CombatStyle.RANGE), "Larxus said you could use only Melee in this duel."),
-            NPCs.GOBLIN_CHAMPION_3060 to StyleRule(setOf(CombatStyle.MAGIC), setOf(CombatStyle.MELEE, CombatStyle.RANGE), "Larxus said you could use only Spells in this duel."),
+            NPCs.GIANT_CHAMPION_3058     to StyleRule(setOf(CombatStyle.MELEE), setOf(CombatStyle.MAGIC, CombatStyle.RANGE), "Larxus said you could use only Melee in this duel."),
+            NPCs.GOBLIN_CHAMPION_3060    to StyleRule(setOf(CombatStyle.MAGIC), setOf(CombatStyle.MELEE, CombatStyle.RANGE), "Larxus said you could use only Spells in this duel."),
             NPCs.HOBGOBLIN_CHAMPION_3061 to StyleRule(setOf(CombatStyle.MAGIC, CombatStyle.RANGE), setOf(CombatStyle.MELEE), "Larxus said you couldn't use Melee in this duel."),
-            NPCs.IMP_CHAMPION_3062 to StyleRule(setOf(CombatStyle.MELEE, CombatStyle.MAGIC, CombatStyle.RANGE), null, "Larxus said you couldn't use Special Attacks in this duel."),
-            NPCs.JOGRE_CHAMPION_3063 to StyleRule(setOf(CombatStyle.MAGIC, CombatStyle.MELEE), setOf(CombatStyle.RANGE), "Larxus said you couldn't use Ranged Weapons."),
-            NPCs.ZOMBIES_CHAMPION_3066 to StyleRule(setOf(CombatStyle.MELEE, CombatStyle.RANGE), setOf(CombatStyle.MAGIC), "Larxus said you couldn't use Spells in this duel."),
-            NPCs.SKELETON_CHAMPION_3065 to StyleRule(setOf(CombatStyle.RANGE), setOf(CombatStyle.MAGIC, CombatStyle.MELEE), "Larxus said you could use only Ranged Weapons in this duel.")
+            NPCs.IMP_CHAMPION_3062       to StyleRule(setOf(CombatStyle.MELEE, CombatStyle.MAGIC, CombatStyle.RANGE), null, "Larxus said you couldn't use Special Attacks in this duel."),
+            NPCs.JOGRE_CHAMPION_3063     to StyleRule(setOf(CombatStyle.MAGIC, CombatStyle.MELEE), setOf(CombatStyle.RANGE), "Larxus said you couldn't use Ranged Weapons."),
+            NPCs.ZOMBIES_CHAMPION_3066   to StyleRule(setOf(CombatStyle.MELEE, CombatStyle.RANGE), setOf(CombatStyle.MAGIC), "Larxus said you couldn't use Spells in this duel."),
+            NPCs.SKELETON_CHAMPION_3065  to StyleRule(setOf(CombatStyle.RANGE), setOf(CombatStyle.MAGIC, CombatStyle.MELEE), "Larxus said you could use only Ranged Weapons in this duel.")
         )
     }
 }
 
 private data class StyleRule(val allowed: Set<CombatStyle>? = null, val banned: Set<CombatStyle>? = null, val message: String)
 
-private data class ChampionMeta(val xp: Double, val scrollId: Int, val varbitId: Int?)
+private data class ChampionConfig(val xp: Double, val scrollId: Int, val varbitId: Int?)

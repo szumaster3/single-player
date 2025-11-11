@@ -49237,7 +49237,7 @@
     "lifepoints": "32",
     "strength_level": "1",
     "id": "3060",
-    "aggressive": "false",
+    "aggressive": "true",
     "range_level": "1",
     "attack_level": "10"
   },

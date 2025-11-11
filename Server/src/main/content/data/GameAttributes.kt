@@ -383,7 +383,7 @@ internal object GameAttributes {
 
     // Champions challenge.
     const val ACTIVITY_CHAMPION_CHALLENGE = "championsarena:start"
-    const val ACTIVITY_CHAMPION_BOSS_CHALLENGE = "championsarena:boss"
+    const val ACTIVITY_CHAMPIONS_CHALLENGE_DEFEAT_ALL = "championsarena:boss"
 
     // Smoking kills miniquest.
     const val MINIQUEST_SMKI_GUARDIANS = "/save:quest:smki-guardians"
