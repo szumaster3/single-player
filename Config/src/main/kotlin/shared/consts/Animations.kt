@@ -2789,7 +2789,7 @@ object Animations {
     const val ANIMATION_2973 = 2973
     const val ANIMATION_2974 = 2974
     const val ANIMATION_2975 = 2975
-    const val ANIMATION_2976 = 2976
+    const val PORTCULLIS_2976 = 2976
     const val ANIMATION_2977 = 2977
     const val ANIMATION_2978 = 2978
     const val ANIMATION_2979 = 2979

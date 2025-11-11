@@ -427,7 +427,7 @@ class PlagueCityPlugin : InteractionListener {
         }
 
         /*
-         * Handles trying to open Ted Rehnison’s door.
+         * Handles trying to open Ted Rehnisons door.
          */
 
         on(Scenery.DOOR_2537, IntType.SCENERY, "open") { player, node ->
@@ -481,7 +481,7 @@ class PlagueCityPlugin : InteractionListener {
         }
 
         /*
-         * Handles using the key on Elena’s basement door.
+         * Handles using the key on Elenas basement door.
          */
 
         onUseWith(IntType.SCENERY, Items.KEY_423, Scenery.DOOR_2526) { player, _, _ ->
@@ -495,7 +495,7 @@ class PlagueCityPlugin : InteractionListener {
         }
 
         /*
-         * Handles trying to open the locked door to Elena’s cell.
+         * Handles trying to open the locked door to Elenas cell.
          */
 
         on(Scenery.DOOR_2526, IntType.SCENERY, "open") { player, node ->

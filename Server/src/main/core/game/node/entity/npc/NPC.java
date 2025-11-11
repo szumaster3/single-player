@@ -315,10 +315,10 @@ public class NPC extends Entity {
     }
 
     /**
-     * Is hidden boolean.
+     * Checks whether this entity is hidden from the given player.
      *
-     * @param player the player
-     * @return the boolean
+     * @param player the player to check visibility against.
+     * @return {@code true} if the entity is hidden, {@code false} otherwise
      */
     public boolean isHidden(Player player) {
         return isInvisible();

@@ -84,7 +84,7 @@ class RoguesJewelleryPlugin : InteractionListener {
                                 addItem(player, Items.COINS_995, invAmount * price)
                                 sendNPCDialogue(player, NPCs.ROGUE_8122, "It was a pleasure doing business with you. Come back if you have more jewellery to sell.")
                             } else {
-                                sendNPCDialogue(player, NPCs.ROGUE_8122, "Sorry, I can’t seem to take those from you. Make sure it's unenchanted gold jewellery, and not noted.")
+                                sendNPCDialogue(player, NPCs.ROGUE_8122, "Sorry, I can't seem to take those from you. Make sure it's unenchanted gold jewellery, and not noted.")
                             }
                         }
 

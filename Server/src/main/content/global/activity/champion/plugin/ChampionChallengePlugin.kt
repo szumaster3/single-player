@@ -3,15 +3,15 @@ package content.global.activity.champion.plugin
 import content.data.GameAttributes
 import content.global.activity.champion.dialogue.LarxusDialogueFile
 import core.api.*
-import core.game.global.action.DoorActionHandler
+import core.game.dialogue.FaceAnim
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import core.game.interaction.QueueStrength
 import core.game.node.Node
 import core.game.node.entity.Entity
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.TeleportManager
 import core.game.node.item.Item
+import core.game.world.map.Direction
 import core.game.world.map.Location
 import core.game.world.map.zone.ZoneBorders
 import core.game.world.map.zone.ZoneRestriction
@@ -24,18 +24,21 @@ import shared.consts.*
  */
 class ChampionChallengePlugin : InteractionListener, MapArea {
 
-    private val regionID = Regions.CHAMPION_CHALLENGE_12696
-
-    override fun defineAreaBorders(): Array<ZoneBorders> = arrayOf(getRegionBorders(regionID))
+    override fun defineAreaBorders(): Array<ZoneBorders> = arrayOf(getRegionBorders(CHAMPION_CHALLENGE_REGION))
 
     override fun getRestrictions(): Array<ZoneRestriction> =
         arrayOf(ZoneRestriction.CANNON, ZoneRestriction.FIRES, ZoneRestriction.RANDOM_EVENTS)
 
     override fun areaEnter(entity: Entity) {
         if (entity !is Player) return
-        val inChallengeArea = inBorders(entity, 3158, 9752, 3181, 9764)
+        /*
+         * val activityComplete = !getAttribute(entity, GameAttributes.ACTIVITY_CHAMPIONS_COMPLETE, false)
+         * val leon = findNPC(Location(3168,9766,0), NPCs.MYSTERY_FIGURE_3051)
+         * if(activityComplete) { leon?.isHidden(entity.asPlayer()) }
+         */
+        val insideChallengeZone = inBorders(entity, 3158, 9752, 3181, 9764)
 
-        if(inChallengeArea) {
+        if(insideChallengeZone) {
             registerLogoutListener(entity, "challenge") {
                 val exit = Location(3182, 9758, 0)
                 entity.location = exit
@@ -83,8 +86,8 @@ class ChampionChallengePlugin : InteractionListener, MapArea {
          * Handles opening the trapdoor.
          */
 
-        on(Scenery.TRAPDOOR_10558, IntType.SCENERY, "open") { _, node ->
-            replaceScenery(node.asScenery(), Scenery.TRAPDOOR_10559, 100, node.location)
+        on(Scenery.TRAPDOOR_10558, IntType.SCENERY, "open") { player, _ ->
+            sendNPCDialogue(player, NPCs.LARXUS_3050, "You need to arrange a challenge with me before you enter the arena.", FaceAnim.NEUTRAL)
             return@on true
         }
 
@@ -92,8 +95,8 @@ class ChampionChallengePlugin : InteractionListener, MapArea {
          * Handles closing the trapdoor.
          */
 
-        on(Scenery.TRAPDOOR_10559, IntType.SCENERY, "close") { _, node ->
-            replaceScenery(node.asScenery(), Scenery.TRAPDOOR_10558, -1, node.location)
+        on(Scenery.TRAPDOOR_10559, IntType.SCENERY, "close") { player, _ ->
+            sendNPCDialogue(player, NPCs.LARXUS_3050, "You need to arrange a challenge with me before you enter the arena.", FaceAnim.NEUTRAL)
             return@on true
         }
 
@@ -101,8 +104,8 @@ class ChampionChallengePlugin : InteractionListener, MapArea {
          * Handles using champion scroll on Larxus NPC to start dialogue.
          */
 
-        onUseWith(IntType.NPC, ChampionScrollsDropHandler.SCROLLS, NPCs.LARXUS_3050) { player, _, _ ->
-            openDialogue(player, LarxusDialogueFile(true))
+        onUseWith(IntType.NPC, ChampionScrollsDropHandler.SCROLLS, NPCs.LARXUS_3050) { player, scroll, _ ->
+            openDialogue(player, LarxusDialogueFile(true, scroll.asItem()))
             return@onUseWith true
         }
 
@@ -126,28 +129,21 @@ class ChampionChallengePlugin : InteractionListener, MapArea {
     }
 
     /**
-     * Handles the player interaction when opening the portcullis gate.
+     * Handles passing through the gate and initiating the challenge.
      */
     private fun handlePortcullisInteraction(player: Player, node: Node) {
-        var scrollId = 0
-        for (id in ChampionScrollsDropHandler.SCROLLS) {
-            val item = player.inventory.get(id)
-            if (item != null && item.charge == id) {
-                scrollId = id
-                break
-            }
-        }
+        val activeScroll = getActiveChampionScroll(player)
 
         if (player.location.x == 3181 && player.location.y == 9758) {
-            DoorActionHandler.handleDoor(player, node.asScenery())
+            player.impactHandler.disabledTicks = 3
+            animateScenery(node.asScenery(), 2976)
             playAudio(player, Sounds.PORTCULLIS_OPEN_83)
-            playAudio(player, Sounds.PORTCULLIS_CLOSE_82, 3)
+            forceMove(player, player.location, Location(3182, 9758, 0), 0, 30, Direction.EAST)
             return
         }
 
-        val item = player.inventory.get(scrollId)
-        if (scrollId == 0 || item == null || item.charge != scrollId) {
-            sendNPCDialogue(player, NPCs.LARXUS_3050, "You need to arrange a challenge with me before you enter the arena.")
+        if (activeScroll == null) {
+            sendNPCDialogue(player, NPCs.LARXUS_3050, "You need to arrange a challenge with me before you enter the arena.", FaceAnim.NEUTRAL)
             return
         }
 
@@ -155,27 +151,17 @@ class ChampionChallengePlugin : InteractionListener, MapArea {
             player.musicPlayer.unlock(Music.VICTORY_IS_MINE_528, true)
         }
 
-        lock(player, 3)
-        playAudio(player, Sounds.PORTCULLIS_CLOSE_82, 3)
-        queueScript(player, 1, QueueStrength.SOFT) { stage ->
-            when(stage) {
-                0 -> {
-                    playAudio(player, Sounds.PORTCULLIS_OPEN_83)
-                    DoorActionHandler.handleDoor(player, node.asScenery())
-                    return@queueScript delayScript(player, 2)
-                }
-                1 -> {
-                    initChampionSpawn(player)
-                    return@queueScript stopExecuting(player)
-                }
-
-                else -> return@queueScript stopExecuting(player)
-            }
-        }
+        player.lock(3)
+        player.impactHandler.disabledTicks = 3
+        animateScenery(node.asScenery(), 2976)
+        playAudio(player, Sounds.PORTCULLIS_OPEN_83)
+        forceMove(player, player.location, Location.create(3180, 9758, 0), 0, 60, Direction.WEST)
+        initChampionSpawn(player)
     }
 
     /**
-     * Spawns a champion NPC or Leon boss based on players scrolls.
+     * Spawns a champion NPC based on scroll.
+     * @see getActiveChampionScroll
      */
     private fun initChampionSpawn(player: Player) {
         val scrollId = getActiveChampionScroll(player)
@@ -196,7 +182,7 @@ class ChampionChallengePlugin : InteractionListener, MapArea {
     }
 
     /**
-     * Show content of the champion scroll.
+     * Show text for each of the champion scroll.
      */
     private fun displayScroll(player: Player, item: Item) {
         val content = championScrollsContent[item.id] ?: return
@@ -211,6 +197,11 @@ class ChampionChallengePlugin : InteractionListener, MapArea {
     }
 
     companion object {
+        /**
+         * The location of activity.
+         */
+        private const val CHAMPION_CHALLENGE_REGION = Regions.CHAMPION_CHALLENGE_12696
+
         /**
          * Displays the champion scroll content.
          */
@@ -228,7 +219,7 @@ class ChampionChallengePlugin : InteractionListener, MapArea {
         )
 
         /**
-         * Gets th Champion scroll used on npc.
+         * Checking if a scroll has the same number of charges as its id.
          *
          * @param player the player.
          * @return the scroll id.
@@ -236,7 +227,7 @@ class ChampionChallengePlugin : InteractionListener, MapArea {
         @JvmStatic
         fun getActiveChampionScroll(player: Player): Int? {
             for (id in ChampionScrollsDropHandler.SCROLLS) {
-                val item = player.inventory.get(id)
+                val item = player.inventory.getItem(id.asItem())
                 if (item != null && item.charge == id) {
                     return id
                 }

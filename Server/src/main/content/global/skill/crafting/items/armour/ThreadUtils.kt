@@ -15,7 +15,7 @@ object ThreadUtils {
     fun isLastThread(player: Player): Boolean = getThread(player)?.charge?.let { it >= 1004 } ?: false
 
     /**
-     * Increases the thread’s charge by 1 if present.
+     * Increases the thread's charge by 1 if present.
      */
     @JvmStatic
     fun decayThread(player: Player) {

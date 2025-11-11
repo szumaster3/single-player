@@ -605,7 +605,7 @@ public class TeleportManager {
             }
         },
 
-        ENTRANA_MAGIC_DOOR(new TeleportSettings(10100, 9013, 1745, 1747)) { //
+        ENTRANA_MAGIC_DOOR(new TeleportSettings(10100, 9013, 1745, 1747)) {
 
             @Override
             public Pulse getPulse(final Entity entity, final Location location) {

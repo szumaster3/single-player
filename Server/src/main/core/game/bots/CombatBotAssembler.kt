@@ -497,7 +497,7 @@ class CombatBotAssembler {
     }
 
     /**
-     * Equips the best-fitting item from a given set based on the bot’s stats.
+     * Equips the best-fitting item from a given set based on the bot's stats.
      *
      * @param bot target bot
      * @param set array of item IDs to choose from

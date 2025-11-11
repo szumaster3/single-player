@@ -58,7 +58,7 @@ class SirVyvinDialogue(player: Player? = null) : Dialogue(player) {
                 }
             }
             11 -> playerl(FaceAnim.ASKING, "And how can I do that?").also { stage++ }
-            12 -> npcl(FaceAnim.HALF_GUILTY,"Kill Black Knights and make sure you don’t kill any White Knights!").also { stage++ }
+            12 -> npcl(FaceAnim.HALF_GUILTY,"Kill Black Knights and make sure you don't kill any White Knights!").also { stage++ }
             13 -> playerl(FaceAnim.HALF_GUILTY,"Well, okay then.").also { stage = END_DIALOGUE }
 
             15 -> {

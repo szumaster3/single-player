@@ -92,4 +92,7 @@
     <ObjectAction mode="remove" id="5347" x="2085" y="4472" z="0"/>
     <ObjectAction mode="remove" id="5348" x="2078" y="4464" z="0"/>
 
+    <!-- Mystery statue - Leon d'Cour throne. -->
+    <ObjectAction mode="add" id="10561" x="3168" y="9766" z="0" type="10" direction="e"/>
+
 </parsing>

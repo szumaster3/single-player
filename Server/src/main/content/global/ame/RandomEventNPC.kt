@@ -29,7 +29,7 @@ abstract class RandomEventNPC(
     lateinit var player: Player
     abstract var loot: WeightBasedTable?
     var spawnLocation: Location? = null
-    val SMOKE_Graphics = Graphics(shared.consts.Graphics.RE_PUFF_86)
+    private val smokeGraphics = Graphics(shared.consts.Graphics.RE_PUFF_86)
     var initialized = false
     var finalized = false
     var timerPaused = false
@@ -128,7 +128,7 @@ abstract class RandomEventNPC(
         } else {
             teleport(player, Location.create(3212, 9620, 0))
         }
-        player.graphics(SMOKE_Graphics)
+        player.graphics(smokeGraphics)
     }
 
     override fun clear() {

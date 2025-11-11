@@ -14637,9 +14637,9 @@
     "examine": "Big and ugly looking.",
     "melee_animation": "359",
     "range_animation": "359",
+    "combat_audio": "448,451,450",
     "attack_speed": "4",
     "magic_level": "0",
-	"combat_audio": "448,451,450",
     "respawn_delay": "60",
     "defence_animation": "360",
     "weakness": "7",
@@ -49154,6 +49154,7 @@
     "attack_level": "1"
   },
   {
+    "agg_radius": "20",
     "examine": "Champion of the earth warriors.",
     "melee_animation": "2951",
     "range_animation": "0",
@@ -49175,9 +49176,11 @@
     "attack_level": "55"
   },
   {
+    "agg_radius": "20",
     "examine": "Champion of the giants.",
     "melee_animation": "6368",
     "range_animation": "0",
+    "combat_audio": "445,451,450",
     "attack_speed": "5",
     "magic_level": "1",
     "respawn_delay": "60",
@@ -49197,6 +49200,7 @@
     "attack_level": "40"
   },
   {
+    "agg_radius": "20",
     "examine": "Champion of the ghouls.",
     "melee_animation": "422",
     "range_animation": "0",
@@ -49222,31 +49226,38 @@
   },
   {
     "examine": "Champion of the goblins.",
+    "combat_style": "2",
+    "start_gfx": "164",
     "melee_animation": "6188",
-    "range_animation": "0",
-    "combat_audio": "469,472,471",
     "attack_speed": "5",
-    "magic_level": "20",
-    "defence_animation": "0",
     "weakness": "10",
-    "magic_animation": "0",
+    "magic_animation": "6184",
     "death_animation": "6190",
-    "name": "Goblin Champion",
-    "defence_level": "20",
-    "safespot": null,
     "lifepoints": "32",
-    "strength_level": "1",
     "id": "3060",
     "aggressive": "true",
+    "prj_height": "92",
+    "agg_radius": "20",
+    "range_animation": "0",
+    "combat_audio": "470,472,471",
+    "magic_level": "26",
+    "end_gfx": "166",
+    "defence_animation": "6183",
+    "name": "Goblin Champion",
+    "defence_level": "14",
+    "safespot": null,
+    "strength_level": "1",
+    "projectile": "165",
     "range_level": "1",
-    "attack_level": "10"
+    "attack_level": "1"
   },
   {
+    "agg_radius": "20",
     "examine": "Champion of the hobgoblins.",
     "combat_style": "1",
     "melee_animation": "164",
     "range_animation": "164",
-    "combat_audio": "469,472,471",
+    "combat_audio": "469,473,471",
     "attack_speed": "5",
     "magic_level": "35",
     "respawn_delay": "60",
@@ -49261,10 +49272,13 @@
     "strength_level": "48",
     "id": "3061",
     "aggressive": "true",
+    "projectile": "206",
     "range_level": "35",
+    "prj_height": "40",
     "attack_level": "15"
   },
   {
+    "agg_radius": "20",
     "examine": "Champion of the imps.",
     "melee_animation": "5285",
     "range_animation": "0",
@@ -49286,6 +49300,7 @@
     "attack_level": "10"
   },
   {
+    "agg_radius": "20",
     "examine": "Champion of the jogres.",
     "melee_animation": "2936",
     "range_animation": "2936",
@@ -49308,6 +49323,7 @@
     "attack_level": "70"
   },
   {
+    "agg_radius": "20",
     "examine": "Champion of the lesser demons.",
     "melee_animation": "64",
     "range_animation": "0",
@@ -49331,6 +49347,7 @@
     "attack_level": "80"
   },
   {
+    "agg_radius": "20",
     "examine": "Champion of the skeletons.",
     "melee_animation": "5485",
     "range_animation": "5493",
@@ -49353,6 +49370,7 @@
     "attack_level": "10"
   },
   {
+    "agg_radius": "20",
     "examine": "Champion of the zombies.",
     "melee_animation": "5581",
     "range_animation": "0",
@@ -49374,6 +49392,7 @@
     "attack_level": "26"
   },
   {
+    "agg_radius": "20",
     "examine": "A mysterious watcher...",
     "melee_animation": "7049",
     "attack_speed": "5",
