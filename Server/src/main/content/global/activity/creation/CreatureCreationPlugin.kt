@@ -81,6 +81,7 @@ class CreatureCreationPlugin : InteractionListener {
         /*
          * Handles add the resources to symbol of life
          */
+
         onUseWith(IntType.SCENERY, allMaterialIds, Scenery.SYMBOL_OF_LIFE_21893) { player, used, with ->
             val item = used.asItem()
             val altar = with.asScenery()
@@ -159,8 +160,8 @@ class CreatureCreationPlugin : InteractionListener {
      * Spawns the npc for the given symbol.
      */
     private fun spawnCreature(player: Player, symbol: CreatureCreation) {
-        val spawnLocation = if (symbol.location == CreatureCreation.UNICOW_SPAWN_BASE)
-            Location.getRandomLocation(CreatureCreation.UNICOW_SPAWN_RANDOM_BASE, 2, true)
+        val spawnLocation = if (symbol.location == UNICOW_SPAWN_BASE)
+            Location.getRandomLocation(UNICOW_SPAWN_RANDOM_BASE, 2, true)
         else
             Location.create(symbol.location.x - 1, symbol.location.y - 3, 0)
 
@@ -175,43 +176,35 @@ class CreatureCreationPlugin : InteractionListener {
             creature.attack(player)
         }
     }
-}
 
+    companion object {
+        private val UNICOW_SPAWN_BASE = Location(3018, 4410, 0)
+        private val UNICOW_SPAWN_RANDOM_BASE = Location(3022, 4403, 0)
+    }
+}
 
 /**
  * Represents the creature creation combinations.
  */
-private enum class CreatureCreation(val npcId: Int, val location: Location, val materials: Set<Int>, val description: String,) {
+private enum class CreatureCreation(
+    val npcId: Int,
+    val location: Location,
+    val materials: Set<Int>,
+    val description: String
+) {
     NEWROOST(   NPCs.NEWTROOST_5597,  Location(3058, 4410, 0), setOf(Items.FEATHER_314, Items.EYE_OF_NEWT_221), "Feather of chicken and eye of newt"),
-    UNICOW(     NPCs.UNICOW_5603,     Location(3018, 4410, 0), setOf(Items.COWHIDE_1739, Items.UNICORN_HORN_237), "Horn of unicorn and hide of cow",),
-    SPIDINE(    NPCs.SPIDINE_5594,    Location(3043, 4361, 0), setOf(Items.RED_SPIDERS_EGGS_223, Items.RAW_SARDINE_327), "Red spiders' eggs and a sardine raw",),
-    SWORDCHICK( NPCs.SWORDCHICK_5595, Location(3034, 4361, 0), setOf(Items.RAW_SWORDFISH_371, Items.RAW_CHICKEN_2138), "Swordfish raw and chicken uncooked",),
+    UNICOW(     NPCs.UNICOW_5603,     Location(3018, 4410, 0), setOf(Items.COWHIDE_1739, Items.UNICORN_HORN_237), "Horn of unicorn and hide of cow"),
+    SPIDINE(    NPCs.SPIDINE_5594,    Location(3043, 4361, 0), setOf(Items.RED_SPIDERS_EGGS_223, Items.RAW_SARDINE_327), "Red spiders' eggs and a sardine raw"),
+    SWORDCHICK( NPCs.SWORDCHICK_5595, Location(3034, 4361, 0), setOf(Items.RAW_SWORDFISH_371, Items.RAW_CHICKEN_2138), "Swordfish raw and chicken uncooked"),
     JUBSTER(    NPCs.JUBSTER_5596,    Location(3066, 4380, 0), setOf(Items.RAW_JUBBLY_7566, Items.RAW_LOBSTER_377), "Raw meat of jubbly bird and a lobster raw"),
     FROGEEL(    NPCs.FROGEEL_5593,    Location(3012, 4380, 0), setOf(Items.GIANT_FROG_LEGS_4517, Items.RAW_CAVE_EEL_5001), "Legs of giant frog and a cave eel uncooked");
 
     companion object {
-        private val byLocation: Map<Location, CreatureCreation>
-        private val byItemId: Map<Int, CreatureCreation>
-
-        init {
-            val locationMap = mutableMapOf<Location, CreatureCreation>()
-            val itemMap = mutableMapOf<Int, CreatureCreation>()
-
-            for (c in values()) {
-                locationMap[c.location] = c
-                for (item in c.materials) {
-                    itemMap[item] = c
-                }
-            }
-
-            byLocation = locationMap
-            byItemId = itemMap
+        fun forItemId(itemId: Int): CreatureCreation? {
+            return values().firstOrNull { itemId in it.materials }
         }
-
-        fun forLocation(location: Location): CreatureCreation? = byLocation[location]
-        fun forItemId(itemId: Int): CreatureCreation? = byItemId[itemId]
-
-        val UNICOW_SPAWN_BASE = Location(3018, 4410, 0)
-        val UNICOW_SPAWN_RANDOM_BASE = Location(3022, 4403, 0)
+        fun forLocation(location: Location): CreatureCreation? {
+            return values().firstOrNull { it.location == location }
+        }
     }
 }
