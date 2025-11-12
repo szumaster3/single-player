@@ -1,6 +1,6 @@
 package content.region.kandarin.gnome.dialogue
 
-import content.region.kandarin.plugin.RowingBoatHelper
+import content.region.kandarin.plugin.RowboatTransportation
 import core.api.*
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
@@ -92,7 +92,7 @@ class KathyCorkatDialogue(player: Player? = null) : Dialogue(player) {
             16 -> npcl(FaceAnim.FRIENDLY, "Then you can find your own way north, dearie!").also { stage = END_DIALOGUE }
             17 -> {
                 end()
-                RowingBoatHelper.sail(player, NPC(NPCs.KATHY_CORKAT_3830))
+                RowboatTransportation.sail(player, NPC(NPCs.KATHY_CORKAT_3830))
             }
 
             18 -> options("Yes please.", "No thanks.").also { stage++ }
@@ -109,7 +109,7 @@ class KathyCorkatDialogue(player: Player? = null) : Dialogue(player) {
 
             22 -> {
                 end()
-                RowingBoatHelper.sail(player!!, NPC(NPCs.KATHY_CORKAT_3831))
+                RowboatTransportation.sail(player!!, NPC(NPCs.KATHY_CORKAT_3831))
             }
 
             23 -> {

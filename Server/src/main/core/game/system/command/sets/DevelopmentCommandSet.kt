@@ -6,8 +6,7 @@ import content.data.setRespawnLocation
 import content.global.activity.jobs.JobManager
 import content.global.skill.summoning.SummoningPouch
 import content.region.island.tutorial.plugin.TutorialStage
-import content.region.kandarin.baxtorian.barbtraining.BarbarianTraining
-import content.region.kandarin.yanille.quest.handsand.SandpitCutscene
+import content.region.kandarin.baxtorian.barbarian_training.BarbarianTraining
 import core.api.*
 import core.cache.def.impl.NPCDefinition
 import core.cache.def.impl.VarbitDefinition

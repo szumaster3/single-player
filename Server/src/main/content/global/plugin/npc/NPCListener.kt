@@ -1,8 +1,8 @@
 package content.global.plugin.npc
 
-import content.global.activity.ttrail.plugin.AnagramScroll
-import content.global.activity.ttrail.plugin.ChallengeClueScroll
-import content.global.ame.RandomEvents
+import content.global.activity.trails.plugin.AnagramScroll
+import content.global.activity.trails.plugin.ChallengeClueScroll
+import content.global.random_events.RandomEvents
 import content.minigame.gnomecook.dialogue.GCCompletionDialogue
 import content.minigame.gnomecook.plugin.GC_BASE_ATTRIBUTE
 import content.minigame.gnomecook.plugin.GC_JOB_COMPLETE

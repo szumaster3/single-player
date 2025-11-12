@@ -1,6 +1,6 @@
 package content.region.kandarin.witchaven.dialogue
 
-import content.region.kandarin.witchaven.plugin.PlatformHelper
+import content.region.kandarin.witchaven.plugin.FishingPlatformTransportation
 import core.api.isQuestComplete
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
@@ -31,7 +31,7 @@ class JebDialogue(player: Player? = null) : Dialogue(player) {
             2 -> npc("Board the boat and we shall depart.").also { stage++ }
             3 -> {
                 end()
-                PlatformHelper.sail(player!!, PlatformHelper.Travel.WITCHAVEN_TO_FISHING_PLATFORM)
+                FishingPlatformTransportation.sail(player!!, FishingPlatformTransportation.Travel.WITCHAVEN_TO_FISHING_PLATFORM)
             }
         }
         return true

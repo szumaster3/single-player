@@ -1,6 +1,6 @@
 package content.region.fremennik.rellekka.miniquest.shadow_maj.dialogue
 
-import content.region.fremennik.rellekka.miniquest.shadow_maj.plugin.GeneralShadow
+import content.region.fremennik.rellekka.miniquest.shadow_maj.GeneralShadow
 import core.api.addItemOrDrop
 import core.api.hasAnItem
 import core.api.inEquipment

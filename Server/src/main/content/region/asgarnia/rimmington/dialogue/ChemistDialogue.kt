@@ -1,7 +1,7 @@
 package content.region.asgarnia.rimmington.dialogue
 
-import content.region.asgarnia.falador.dialogue.ChemistDiaryDialogue
-import content.region.kandarin.ardougne.east.quest.biohazard.dialogue.ChemistBiohazardDialogue
+import content.region.asgarnia.falador.diary.ChemistDiaryDialogue
+import content.region.kandarin.west_ardougne.east.quest.biohazard.dialogue.ChemistBiohazardDialogue
 import core.api.*
 import core.game.dialogue.Dialogue
 import core.game.node.entity.player.Player
@@ -16,7 +16,7 @@ import shared.consts.Quests
  * Represents the Chemist dialogue.
  *
  * # Relations
- * - [Biohazard][content.region.kandarin.ardougne.east.quest.biohazard.Biohazard]
+ * - [Biohazard][content.region.kandarin.west_ardougne.east.quest.biohazard.Biohazard]
  */
 @Initializable
 class ChemistDialogue(player: Player? = null) : Dialogue(player) {

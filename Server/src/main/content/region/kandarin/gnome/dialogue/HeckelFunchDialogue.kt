@@ -13,7 +13,7 @@ import shared.consts.NPCs
  * Represents The Heckel Funch dialogue.
  *
  * # Relations
- * - [CrypticClue][content.global.activity.ttrail.clues.CrypticClue]
+ * - [CrypticClue][content.global.activity.trails.clues.CrypticClue]
  */
 @Initializable
 class HeckelFunchDialogue(player: Player? = null) : Dialogue(player) {

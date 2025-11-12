@@ -1,6 +1,6 @@
 package core.game.node.entity.player.link.request.trade
 
-import content.global.bots.DoublingMoney
+import content.global.scripts.DoublingMoney
 import core.api.sendString
 import core.api.setVarp
 import core.game.bots.AIRepository

@@ -1,6 +1,6 @@
 package content.region.kandarin.yanille.dialogue
 
-import content.region.kandarin.feldip.jiggig.quest.zogre.dialogue.ZavisticRarveDialogues
+import content.region.kandarin.feldip.quest.zogre.dialogue.ZavisticRarveDialogues
 import core.api.openDialogue
 import core.game.dialogue.Dialogue
 import core.game.node.entity.player.Player

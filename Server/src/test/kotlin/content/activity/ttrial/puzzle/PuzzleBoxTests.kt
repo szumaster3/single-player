@@ -1,8 +1,8 @@
 package content.activity.ttrail
 
 import TestUtils
-import content.global.activity.ttrail.plugin.Puzzle
-import content.global.activity.ttrail.plugin.PuzzleBoxPlugin
+import content.global.activity.trails.plugin.Puzzle
+import content.global.activity.trails.plugin.PuzzleBoxPlugin
 import core.api.addItem
 import core.api.setAttribute
 import org.junit.jupiter.api.Assertions

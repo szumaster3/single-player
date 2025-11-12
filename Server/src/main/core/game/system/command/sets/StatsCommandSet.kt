@@ -1,11 +1,11 @@
 package core.game.system.command.sets
 
-import content.global.activity.ttrail.TreasureTrailManager
+import content.global.activity.trails.TreasureTrailManager
 import content.global.plugin.iface.BookInterface
 import content.global.plugin.iface.Page
 import content.global.plugin.iface.PageSet
 import content.global.skill.slayer.SlayerManager
-import content.region.asgarnia.falador.plugin.wkrank.plugin.WhiteKnightRankManager
+import content.global.plugin.item.equipment.WhiteKnightRankManager
 import core.api.setAttribute
 import core.api.utils.BossKillCounter
 import core.api.utils.PlayerStatsCounter

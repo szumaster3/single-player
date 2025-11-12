@@ -1,8 +1,8 @@
 package core.game.system.timer.impl
 
 import com.google.gson.JsonObject
-import content.global.ame.RandomEventNPC
-import content.global.ame.RandomEvents
+import content.global.random_events.RandomEventNPC
+import content.global.random_events.RandomEvents
 import core.api.*
 import core.game.node.entity.Entity
 import core.game.node.entity.player.Player

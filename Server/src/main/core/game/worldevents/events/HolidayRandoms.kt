@@ -1,7 +1,7 @@
 package core.game.worldevents.events
 
 import com.google.gson.JsonObject
-import content.global.ame.RandomEventNPC
+import content.global.random_events.RandomEventNPC
 import core.ServerConstants
 import core.api.*
 import core.game.node.entity.Entity

@@ -41,7 +41,17 @@ class BogrogPlugin : InteractionListener {
             }
 
             sendMessage(player, "Pick the pouches and scrolls you wish to trade for shards.")
-            sendItemSelect(player, "Value", "Swap 1", "Swap 5", "Swap 10", "Swap X", "Swap All", "Examine", keepAlive = true) { slot, index ->
+            sendItemSelect(
+                player,
+                "Value",
+                "Swap 1",
+                "Swap 5",
+                "Swap 10",
+                "Swap X",
+                "Swap All",
+                "Examine",
+                keepAlive = true
+            ) { slot, index ->
                 BogrogPouchUtils.handle(player, index, slot)
             }
         }

@@ -1,7 +1,7 @@
 package content.region.kandarin.baxtorian.dialogue
 
 import content.data.GameAttributes
-import content.region.kandarin.baxtorian.barbtraining.BarbarianTraining
+import content.region.kandarin.baxtorian.barbarian_training.BarbarianTraining
 import core.api.*
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim

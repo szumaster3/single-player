@@ -1,6 +1,6 @@
 package content.region.fremennik.jatizso.dialogue
 
-import content.region.fremennik.plugin.FremennikShipHelper
+import content.region.fremennik.plugin.FremennikTransportation
 import content.region.fremennik.plugin.Travel
 import core.api.requireQuest
 import core.game.dialogue.Dialogue
@@ -41,7 +41,7 @@ class MordGunnarsDialogue(player: Player? = null) : Dialogue(player) {
                 if (!requireQuest(player, Quests.THE_FREMENNIK_TRIALS, "")) {
                     return true
                 } else {
-                    FremennikShipHelper.sail(
+                    FremennikTransportation.sail(
                         player,
                         if (npc.id == NPCs.MORD_GUNNARS_5481) {
                             Travel.RELLEKKA_TO_JATIZSO

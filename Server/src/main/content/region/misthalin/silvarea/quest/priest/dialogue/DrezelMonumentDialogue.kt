@@ -1,7 +1,7 @@
 package content.region.misthalin.silvarea.quest.priest.dialogue
 
 import content.data.GameAttributes
-import content.region.morytania.swamp.quest.druidspirit.dialogue.DrezelDialogueFile
+import content.region.morytania.mort_myre.quest.druidspirit.dialogue.DrezelDialogueFile
 import core.api.*
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim

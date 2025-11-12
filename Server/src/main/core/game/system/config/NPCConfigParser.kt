@@ -2,7 +2,7 @@ package core.game.system.config
 
 import com.google.gson.Gson
 import com.google.gson.JsonArray
-import content.global.activity.ttrail.ClueLevel
+import content.global.activity.trails.ClueLevel
 import core.ServerConstants
 import core.api.log
 import core.cache.def.impl.NPCDefinition
@@ -101,7 +101,6 @@ class NPCConfigParser {
                         }
 
                         "combat_audio", "bonuses" -> {
-                            // Zakładam, że format jest np. "1,2,3"
                             val arr = valueStr.split(",").map { it.toInt() }.toIntArray()
                             configs[key] = arr
                         }

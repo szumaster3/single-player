@@ -1,6 +1,6 @@
 package content.region.kandarin.witchaven.dialogue
 
-import content.region.kandarin.witchaven.plugin.PlatformHelper
+import content.region.kandarin.witchaven.plugin.FishingPlatformTransportation
 import content.region.kandarin.witchaven.quest.seaslug.dialogue.HolgartDialogueFile
 import core.api.isQuestComplete
 import core.api.isQuestInProgress
@@ -45,7 +45,7 @@ class HolgartDialogue(player: Player? = null) : Dialogue(player) {
             10 -> npc(FaceAnim.FRIENDLY, "Hold on tight!").also { stage++ }
             11 -> {
                 end()
-                PlatformHelper.sail(player, PlatformHelper.Travel.WITCHAVEN_TO_FISHING_PLATFORM)
+                FishingPlatformTransportation.sail(player, FishingPlatformTransportation.Travel.WITCHAVEN_TO_FISHING_PLATFORM)
             }
         }
         return true

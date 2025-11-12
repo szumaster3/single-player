@@ -2,7 +2,7 @@ package content.global.skill.gathering.mining
 
 import content.data.GameAttributes
 import content.data.items.SkillingTool
-import content.global.activity.shootingstar.ShootingStarBonus
+import content.global.activity.star.ShootingStarBonus
 import core.api.*
 import core.game.event.ResourceProducedEvent
 import core.game.interaction.IntType

@@ -1,6 +1,6 @@
 package content.region.kandarin.gnome.quest.makinghistory.dialogue
 
-import content.region.kandarin.ardougne.east.quest.biohazard.dialogue.KingLathasBiohazardDialogue
+import content.region.kandarin.west_ardougne.east.quest.biohazard.dialogue.KingLathasBiohazardDialogue
 import content.region.kandarin.gnome.quest.makinghistory.MHUtils
 import core.api.*
 import core.game.dialogue.Dialogue

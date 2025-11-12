@@ -1,6 +1,6 @@
 package content.global.skill.construction.decoration.study
 
-import content.global.activity.shootingstar.ShootingStarPlugin
+import content.global.activity.star.ShootingStarPlugin
 import core.api.*
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener

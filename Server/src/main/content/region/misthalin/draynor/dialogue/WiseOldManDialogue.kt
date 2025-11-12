@@ -1,6 +1,6 @@
 package content.region.misthalin.draynor.dialogue
 
-import content.global.activity.oldman.WomDialogue
+import content.global.activity.wom_tasks.WomDeliveryDialogue
 import core.api.*
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
@@ -68,7 +68,7 @@ class WiseOldManDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             1 -> when (buttonId) {
-                1 -> openDialogue(player, WomDialogue())
+                1 -> openDialogue(player, WomDeliveryDialogue())
                 2 -> options("Could you check my bank for junk, please?", "Could you check my inventory for junk, please?").also { stage++ }
                 3 -> player("I've got something I'd like you to look at.").also { stage = 4 }
                 4 -> player("I'd just like to ask you something.").also { stage = 40 }

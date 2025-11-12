@@ -1,6 +1,6 @@
 package core.game.node.entity.combat
 
-import content.global.ame.RandomEventNPC
+import content.global.random_events.RandomEventNPC
 import core.api.hasTimerActive
 import core.api.playGlobalAudio
 import core.api.playHurtAudio

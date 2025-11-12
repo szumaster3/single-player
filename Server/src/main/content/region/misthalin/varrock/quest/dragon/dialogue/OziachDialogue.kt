@@ -15,7 +15,7 @@ import shared.consts.Quests
  * Represents The Oziach Langley dialogue.
  *
  * # Relations
- * - [CrypticClue][content.global.activity.ttrail.plugin.CrypticClue]
+ * - [CrypticClue][content.global.activity.trails.plugin.CrypticClue]
  * - [DragonSlayer]
  */
 class OziachDialogue(player: Player? = null) : Dialogue(player) {

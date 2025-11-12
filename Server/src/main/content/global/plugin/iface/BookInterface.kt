@@ -54,7 +54,7 @@ import shared.consts.Sounds
  *
  * In-game command to view models `::models`
  *
- * Example book: [Ultimate Guide to Glassblowing][content.global.plugin.item.book.guide.GlassblowingGuide]
+ * Example book: [Ultimate Guide to Glassblowing][content.global.plugin.item.books_and_scrolls.guide.GlassblowingGuide]
  *
  * @see [core.game.system.command.sets.ModelViewerCommandSet]
  *
