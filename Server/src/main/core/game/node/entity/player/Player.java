@@ -1,5 +1,6 @@
 package core.game.node.entity.player;
 
+import content.data.RespawnPoint;
 import content.global.plugins.item.equipment.EquipmentDegrade;
 import content.global.plugins.item.equipment.bolt_pouch.BoltPouchManager;
 import content.global.skill.construction.HouseManager;
@@ -397,7 +398,7 @@ public class Player extends Entity {
     public void init() {
         if (!artificial) log(this.getClass(), Log.INFO, getUsername() + " initialising...");
         if (!artificial) {
-            // getProperties().setSpawnLocation(ServerConstants.HOME_LOCATION);
+            getProperties().setSpawnLocation(getRespawnLocation());
             getDetails().getSession().setObject(this);
         }
         super.init();
@@ -462,6 +463,21 @@ public class Player extends Entity {
             ManagementEvents.publish(event.build());
         }
     }
+
+    public void setRespawnLocation(RespawnPoint respawnPoint) {
+        Location newLocation = respawnPoint.getLocation();
+        setAttribute("/save:spawnLocation", newLocation);
+        this.getProperties().setSpawnLocation(newLocation);
+    }
+
+    public Location getRespawnLocation() {
+        Object loc = getAttribute("/save:spawnLocation");
+        if (loc instanceof Location) {
+            return (Location) loc;
+        }
+        return RespawnPoint.LUMBRIDGE.getLocation();
+    }
+
 
     /**
      * Toggle wardrobe.

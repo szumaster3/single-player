@@ -99,7 +99,7 @@ class ModeratorZone : MapZone("Moderator Zone", true) {
          */
         @JvmStatic
         fun home(player: Player) {
-            player.teleporter.send(ServerConstants.HOME_LOCATION, TeleportType.NORMAL)
+            player.teleporter.send(player.getRespawnLocation(), TeleportType.NORMAL)
         }
 
         /**

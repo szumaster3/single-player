@@ -1,5 +1,6 @@
 package core.game.activity
 
+import content.data.getRespawnLocation
 import core.ServerConstants
 import core.api.*
 import core.api.utils.CameraShakeType
@@ -398,7 +399,7 @@ abstract class Cutscene(val player: Player) {
                     player.removeAttribute(ATTRIBUTE_CUTSCENE)
                     player.removeAttribute(ATTRIBUTE_CUTSCENE_STAGE)
                     player.properties.isSafeZone = false
-                    player.properties.safeRespawn = ServerConstants.HOME_LOCATION
+                    player.properties.safeRespawn = player.getRespawnLocation()
                     player.interfaceManager.restoreTabs()
                     player.unlock()
                     clearNPCs()
@@ -448,7 +449,7 @@ abstract class Cutscene(val player: Player) {
                     player.removeAttribute(ATTRIBUTE_CUTSCENE)
                     player.removeAttribute(ATTRIBUTE_CUTSCENE_STAGE)
                     player.properties.isSafeZone = false
-                    player.properties.safeRespawn = ServerConstants.HOME_LOCATION
+                    player.properties.safeRespawn = player.getRespawnLocation()
                     player.interfaceManager.restoreTabs()
                     player.unlock()
                     clearNPCs()
@@ -500,7 +501,7 @@ abstract class Cutscene(val player: Player) {
                     player.removeAttribute(ATTRIBUTE_CUTSCENE)
                     player.removeAttribute(ATTRIBUTE_CUTSCENE_STAGE)
                     player.properties.isSafeZone = false
-                    player.properties.safeRespawn = ServerConstants.HOME_LOCATION
+                    player.properties.safeRespawn = player.getRespawnLocation()
                     player.interfaceManager.restoreTabs()
                     player.unlock()
                     clearNPCs()

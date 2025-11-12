@@ -1,5 +1,6 @@
 package content.minigame.mage_training.plugin
 
+import content.data.getRespawnLocation
 import core.ServerConstants
 import core.api.*
 import core.game.interaction.Option
@@ -70,7 +71,7 @@ open class MTAZone(name: String?, val items: Array<Item>) : MapZone(name.toStrin
             if (logout) {
                 player.location = Location(3363, 3302, 0)
             } else {
-                player.properties.spawnLocation = ServerConstants.HOME_LOCATION
+                player.properties.spawnLocation = player.getRespawnLocation()
             }
             cleanItems(player)
             closeOverlay(player)

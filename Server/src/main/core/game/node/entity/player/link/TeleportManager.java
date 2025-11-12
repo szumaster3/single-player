@@ -65,7 +65,15 @@ public class TeleportManager {
      */
     public TeleportManager(Entity entity) {
         this.entity = entity;
-        lastTeleport = TeleportType.HOME.getPulse(entity, ServerConstants.HOME_LOCATION);
+
+        Location defaultLocation = ServerConstants.HOME_LOCATION;
+
+        if (entity instanceof Player) {
+            Player player = (Player) entity;
+            defaultLocation = player.getRespawnLocation();
+        }
+
+        lastTeleport = TeleportType.HOME.getPulse(entity, defaultLocation);
     }
 
     /**

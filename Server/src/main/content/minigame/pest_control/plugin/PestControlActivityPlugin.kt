@@ -1,5 +1,6 @@
 package content.minigame.pest_control.plugin
 
+import content.data.getRespawnLocation
 import content.minigame.pest_control.npc.*
 import core.ServerConstants
 import core.api.*
@@ -289,7 +290,7 @@ class PestControlActivityPlugin @JvmOverloads constructor(val type: BoatType = B
 
     override fun newInstance(p: Player): ActivityPlugin = this
 
-    override fun getSpawnLocation(): Location = ServerConstants.HOME_LOCATION!!
+    override fun getSpawnLocation(): Location = player.getRespawnLocation()
 
     override fun configure() {
         registerRegion(Regions.PEST_CONTROL_10536)

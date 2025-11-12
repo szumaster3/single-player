@@ -152,14 +152,15 @@ public abstract class ActivityPlugin extends MapZone implements Plugin<Player> {
     @Override
     public boolean leave(Entity e, boolean logout) {
         if (e instanceof Player) {
-            e.getProperties().setSpawnLocation(ServerConstants.HOME_LOCATION);
+            Player player = (Player) e;
+            player.getProperties().setSpawnLocation(player.getRespawnLocation());
         }
         Location l;
         if (instanced && logout && (l = getSpawnLocation()) != null) {
             e.setLocation(l);
         }
         e.getProperties().setSafeZone(false);
-        e.getProperties().setSafeRespawn(ServerConstants.HOME_LOCATION);
+        e.getProperties().setSafeRespawn(player.getRespawnLocation());
         e.removeAttribute("activity");
         return super.leave(e, logout);
     }
@@ -263,5 +264,6 @@ public abstract class ActivityPlugin extends MapZone implements Plugin<Player> {
     public void setBase(Location base) {
         this.base = base;
     }
+
 
 }

@@ -200,7 +200,7 @@ class TeleportCommandSet : CommandSet(Privilege.ADMIN) {
             usage = "",
             description = "Teleports to HOME_LOCATION",
         ) { player, _ ->
-            player.properties.teleportLocation = ServerConstants.HOME_LOCATION
+            player.properties.teleportLocation = player.getRespawnLocation()
         }
 
         define(

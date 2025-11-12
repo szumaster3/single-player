@@ -1,6 +1,7 @@
 package content.global.skill.magic.spells.teleport
 
 import content.data.GameAttributes
+import content.data.getRespawnLocation
 import content.global.skill.magic.SpellListener
 import content.global.skill.magic.TeleportMethod
 import content.global.skill.magic.spells.ModernSpells
@@ -30,7 +31,7 @@ class ModernSpellbookTeleport : SpellListener("modern") {
             if (!getAttribute(player, GameAttributes.TUTORIAL_COMPLETE, false)) {
                 player.teleporter.send(Location.create(3233, 3230, 0), TeleportManager.TeleportType.HOME)
             } else {
-                player.teleporter.send(ServerConstants.HOME_LOCATION, TeleportManager.TeleportType.HOME)
+                player.teleporter.send(player.getRespawnLocation(), TeleportManager.TeleportType.HOME)
             }
             setDelay(player, true)
         }
