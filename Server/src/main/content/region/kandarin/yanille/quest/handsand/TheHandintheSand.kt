@@ -141,10 +141,9 @@ class TheHandintheSand : Quest(Quests.THE_HAND_IN_THE_SAND, 72, 71, 1, Vars.VARB
 
         if (stage == 100) {
             line++
-            line(player, "<col=FF0000>QUEST COMPLETE!", line, false)
+            line(player, "<col=FF0000>QUEST COMPLETE!", line++, false)
             line++
-            line(player, "Every day I may ask Bert to transport some sand to my bank.", line++)
-            line++
+            line(player, "Every day I may ask !!Bert?? to transport !!some sand?? to my bank.", line++)
             if (alreadyClaimed) {
                 line(player, "You've already collected your sand today. Come back tomorrow!", line)
             } else {

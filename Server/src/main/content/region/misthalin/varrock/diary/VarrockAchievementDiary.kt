@@ -7,7 +7,7 @@ import content.global.skill.prayer.Bones
 import content.global.travel.CanoePlugin
 import content.region.misthalin.varrock.dialogue.BennyDialogue
 import content.region.misthalin.varrock.dialogue.ElsieDialogue
-import content.region.misthalin.varrock.plugin.museum.dialogue.OrlandoSmithDialogue
+import content.region.misthalin.varrock.museum.dialogue.OrlandoSmithDialogue
 import content.region.misthalin.varrock.quest.crest.dialogue.DimintheisDialogue
 import content.region.misthalin.varrock.quest.phoenixgang.dialogue.CuratorHaigHalenDialogue
 import core.api.*

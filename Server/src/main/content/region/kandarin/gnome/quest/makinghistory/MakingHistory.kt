@@ -1,6 +1,6 @@
 package content.region.kandarin.gnome.quest.makinghistory
 
-import content.region.kandarin.gnome.quest.makinghistory.plugin.EnchKeyTreasurePlugin
+import content.region.kandarin.gnome.quest.makinghistory.plugin.EnchantedKeyTreasures
 import core.api.*
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest
@@ -51,8 +51,8 @@ class MakingHistory : Quest(Quests.MAKING_HISTORY, 86, 85, 3, Vars.VARBIT_QUEST_
             line++
             line(player, "<col=FF0000>QUEST COMPLETE!", line, false)
             line++
-            if (getAttribute(player, EnchKeyTreasurePlugin.ENCHANTED_KEY_ATTR, -1) >= 0) {
-                line(player, "I Should see what else I can find with the help of the key.", line, getAttribute(player, EnchKeyTreasurePlugin.ENCHANTED_KEY_ATTR, -1) >= 10)
+            if (getAttribute(player, EnchantedKeyTreasures.ENCHANTED_KEY_ATTR, -1) >= 0) {
+                line(player, "I Should see what else I can find with the help of the key.", line, getAttribute(player, EnchantedKeyTreasures.ENCHANTED_KEY_ATTR, -1) >= 10)
             }
         }
     }

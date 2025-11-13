@@ -1,7 +1,7 @@
 package content.global.random
 
 import content.data.GameAttributes
-import content.global.random.surprise_exam.PatternRecognitionNPC
+import content.global.random.event.surprise_exam.PatternRecognitionNPC
 import core.api.*
 import core.api.utils.WeightBasedTable
 import core.game.interaction.MovementPulse

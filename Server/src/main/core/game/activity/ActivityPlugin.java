@@ -160,7 +160,7 @@ public abstract class ActivityPlugin extends MapZone implements Plugin<Player> {
             e.setLocation(l);
         }
         e.getProperties().setSafeZone(false);
-        e.getProperties().setSafeRespawn(player.getRespawnLocation());
+        e.getProperties().setSafeRespawn(ServerConstants.HOME_LOCATION);
         e.removeAttribute("activity");
         return super.leave(e, logout);
     }
