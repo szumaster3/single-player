@@ -33,7 +33,9 @@ import core.plugin.Plugin
 import core.tools.RandomFunction
 import shared.consts.*
 
-/** The Animal magnetism plugin. */
+/**
+ * The Animal magnetism plugin.
+ */
 @Initializable
 class AnimalMagnetismPlugin : OptionHandler() {
 
@@ -176,13 +178,8 @@ class AnimalMagnetismPlugin : OptionHandler() {
     /**
      * The undead tree plugin.
      */
-    class UndeadTreePlugin :
-        UseWithHandler(
-            Items.MITHRIL_AXE_1355,
-            Items.ADAMANT_AXE_1357,
-            Items.RUNE_AXE_1359,
-            Items.DRAGON_AXE_6739
-        ) {
+    class UndeadTreePlugin : UseWithHandler(Items.MITHRIL_AXE_1355, Items.ADAMANT_AXE_1357, Items.RUNE_AXE_1359, Items.DRAGON_AXE_6739) {
+
         override fun newInstance(arg: Any?): Plugin<Any> {
             definePlugin(
                 object : OptionHandler() {
@@ -200,11 +197,7 @@ class AnimalMagnetismPlugin : OptionHandler() {
                         if (quest.getStage(player) <= 28) {
                             val tool = getAxe(player)
                             if (tool == null || tool.ordinal < 4) {
-                                sendMessage(
-                                    player,
-                                    "You don't have the required axe in order to do that.",
-                                    null
-                                )
+                                sendMessage(player, "You don't have the required axe in order to do that.")
                                 return true
                             }
                             val animation = getAnimation(tool.animation)
@@ -212,16 +205,7 @@ class AnimalMagnetismPlugin : OptionHandler() {
                             if (quest.getStage(player) == 28) {
                                 quest.setStage(player, 29)
                             }
-                            sendMessage(
-                                player,
-                                "The axe bounces off the undead wood." +
-                                        (if (
-                                            quest.getStage(player) == 28 || quest.getStage(player) == 29
-                                        )
-                                            " I should report this to Ava."
-                                        else ""),
-                                null
-                            )
+                            sendMessage(player, "The axe bounces off the undead wood." + (if (quest.getStage(player) == 28 || quest.getStage(player) == 29) " I should report this to Ava." else ""))
                             return true
                         }
                         if (freeSlots(player) < 1) {
@@ -232,21 +216,13 @@ class AnimalMagnetismPlugin : OptionHandler() {
                             !inInventory(player, Items.BLESSED_AXE_10491, 1) &&
                             !inEquipment(player, Items.BLESSED_AXE_10491, 1)
                         ) {
-                            sendMessage(
-                                player,
-                                "You don't have an axe which could possibly affect this wood.",
-                                null
-                            )
+                            sendMessage(player, "You don't have an axe which could possibly affect this wood.")
                             return true
                         }
                         val animation = getAnimation(Items.MITHRIL_AXE_1355)
                         lock(player, animation!!.definition.getDurationTicks())
                         if (RandomFunction.random(10) < 3) {
-                            sendMessage(
-                                player,
-                                "You almost remove a suitable twig, but you don't quite manage it.",
-                                null
-                            )
+                            sendMessage(player, "You almost remove a suitable twig, but you don't quite manage it.")
                         } else {
                             addItem(player, Items.UNDEAD_TWIGS_10490, 1, Container.INVENTORY)
                             sendMessage(player, "You cut some undead twigs.", null)
@@ -271,14 +247,7 @@ class AnimalMagnetismPlugin : OptionHandler() {
             if (quest.getStage(player) == 28) {
                 quest.setStage(player, 29)
             }
-            sendMessage(
-                player,
-                "The axe bounces off the undead wood." +
-                        (if (quest.getStage(player) == 28 || quest.getStage(player) == 29)
-                            " I should report this to Ava."
-                        else ""),
-                null
-            )
+            sendMessage(player, "The axe bounces off the undead wood." + (if (quest.getStage(player) == 28 || quest.getStage(player) == 29) " I should report this to Ava." else ""))
             return true
         }
 
@@ -311,14 +280,7 @@ class AnimalMagnetismPlugin : OptionHandler() {
             return this
         }
 
-        override fun handle(
-            player: Player,
-            component: Component,
-            opcode: Int,
-            button: Int,
-            slot: Int,
-            itemId: Int
-        ): Boolean {
+        override fun handle(player: Player, component: Component, opcode: Int, button: Int, slot: Int, itemId: Int): Boolean {
             if (player.getAttribute("note-disabled", false)) {
                 return true
             }
@@ -411,9 +373,13 @@ class AnimalMagnetismPlugin : OptionHandler() {
         }
     }
 
-    /** The type Container handler. */
+    /**
+     * The type Container handler.
+     */
     class ContainerHandler
-    /** Instantiates a new Container handler. */
+    /**
+     * Instantiates a new Container handler.
+     */
         : UseWithHandler(Items.POLISHED_BUTTONS_10496, Items.HARD_LEATHER_1743) {
         override fun newInstance(arg: Any?): Plugin<Any> {
             addHandler(AnimalMagnetism.PATTERN.id, ITEM_TYPE, this)

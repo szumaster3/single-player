@@ -18,7 +18,7 @@ import shared.consts.Items
 import shared.consts.Quests
 
 /**
- * The type Animal magnetism.
+ * The Animal magnetism quest journal.
  */
 @Initializable
 class AnimalMagnetism : Quest(Quests.ANIMAL_MAGNETISM, 33, 32, 1) {
