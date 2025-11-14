@@ -3,6 +3,8 @@ package content.global.random.event.pinball
 import content.data.GameAttributes
 import content.data.RandomEvent
 import core.api.*
+import core.api.utils.CameraShakeType
+import core.api.utils.PlayerCamera
 import core.game.interaction.QueueStrength
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
@@ -10,91 +12,102 @@ import core.game.node.scenery.Scenery
 import core.game.system.timer.impl.AntiMacro
 import core.game.world.map.Location
 import core.game.world.map.zone.ZoneBorders
-import shared.consts.Components
-import shared.consts.Items
-import shared.consts.NPCs
-import shared.consts.Sounds
+import shared.consts.*
+import shared.consts.Scenery as Objects
 
 /**
- * Utils for Pinball random event.
+ * Utils for pinball random event.
  */
 object PinballUtils {
-    val VARBIT_PINBALL_SCORE = 2121
-    val PINBALL_EVENT_LOCATION = Location.create(1972, 5046, 0)
-    val PINBALL_EVENT_ZONE_BORDERS = ZoneBorders(1961, 5033, 1982, 5054)
-    val PINBALL_EVENT_WRONG_SCENERY_IDs = intArrayOf(15001, 15003, 15005, 15007, 15009)
-    val PINBALL_EVENT_SCENERY_IDs = intArrayOf(15000, 15001, 15002, 15004, 15005, 15006, 15007, 15008, 15009)
-    val PINBALL_EVENT_CAVE_EXIT_SCENERY_ID = 15010
-    val PINBALL_EVENT_GUARD_NPCs = intArrayOf(NPCs.FLIPPA_3912, NPCs.TILT_3913)
+    /**
+     * The random event npc.
+     */
     val PINBALL_EVENT_MYSTERIOUS_OLD_MAN = NPC(NPCs.MYSTERIOUS_OLD_MAN_410, Location.create(1971, 5046, 0))
 
-    val PINBALL_REWARD = intArrayOf(
+    /**
+     * The varbit storing the current score.
+     */
+    const val VARBIT_PINBALL_SCORE = Vars.VARBIT_RE_PINBALL_SCORE_2121
+
+    /**
+     * The zone borders of the event area.
+     */
+    val PINBALL_EVENT_ZONE_BORDERS = ZoneBorders(1961, 5033, 1982, 5054)
+
+    /**
+     * The pillar object ids.
+     */
+    val PILLAR_OBJECTS = intArrayOf(
+        Objects.PINBALL_POST_15001,
+        Objects.PINBALL_POST_15003,
+        Objects.PINBALL_POST_15005,
+        Objects.PINBALL_POST_15007,
+        Objects.PINBALL_POST_15009
+    )
+
+    /**
+     * The reward item ids for this event.
+     */
+    private val PINBALL_REWARD = intArrayOf(
         Items.UNCUT_DIAMOND_1618,
         Items.UNCUT_RUBY_1620,
         Items.UNCUT_EMERALD_1622,
         Items.UNCUT_SAPPHIRE_1624,
     )
 
-    private val PILLAR_MAP = arrayOf(
-        Scenery(15001, Location(1967, 5046, 0)),
-        Scenery(15003, Location(1969, 5049, 0)),
-        Scenery(15005, Location(1972, 5050, 0)),
-        Scenery(15007, Location(1975, 5049, 0)),
-        Scenery(15009, Location(1977, 5046, 0)),
+    /**
+     * The list of pillars used in the event.
+     */
+    val PINBALL_PILLARS = listOf(
+        Scenery(Objects.PINBALL_POST_15001, Location(1967, 5046, 0)),
+        Scenery(Objects.PINBALL_POST_15003, Location(1969, 5049, 0)),
+        Scenery(Objects.PINBALL_POST_15005, Location(1972, 5050, 0)),
+        Scenery(Objects.PINBALL_POST_15007, Location(1975, 5049, 0)),
+        Scenery(Objects.PINBALL_POST_15009, Location(1977, 5046, 0))
     )
 
-    private val SCENERY_REPLACEMENTS = arrayOf(
-        Pair(15000, Location(1967, 5046, 0)),
-        Pair(15002, Location(1969, 5049, 0)),
-        Pair(15004, Location(1972, 5050, 0)),
-        Pair(15006, Location(1975, 5049, 0)),
-        Pair(15008, Location(1977, 5046, 0)),
-    )
+    /**
+     * Randomly selects the next pillar for the player to tag.
+     *
+     * @param player The player.
+     * @return The new pillar.
+     */
+    fun getTag(player: Player): Int {
+        val oldIndex = getAttribute(player, GameAttributes.RE_PINBALL_INTER, -1)
+        val newIndex = PINBALL_PILLARS.indices.random()
 
-    fun generateTag(player: Player): Boolean {
-        val score = getAttribute(player, GameAttributes.RE_PINBALL_OBJ, -1)
-        if (score >= 10) return true
-        for (i in 0..4) {
-            if (getAttribute(player, GameAttributes.RE_PINBALL_OBJ, -1) == i) {
-                replaceScenery(PILLAR_MAP[i], PILLAR_MAP[i].id - 1, -1)
-                setAttribute(player, GameAttributes.RE_PINBALL_INTER, i)
-                playAudio(player, Sounds.PILLARTAG_PINBALL_2278)
-            }
+        if (oldIndex in PINBALL_PILLARS.indices) {
+            animateScenery(PINBALL_PILLARS[oldIndex], Animations.RESET_PILLAR_ANIMATION_4006)
         }
-        return false
+
+        animateScenery(PINBALL_PILLARS[newIndex], Animations.ANIMATE_PILLAR_4005)
+        setAttribute(player, GameAttributes.RE_PINBALL_INTER, newIndex)
+        setAttribute(player, GameAttributes.RE_PINBALL_OBJ, newIndex)
+
+        PlayerCamera(player).shake(CameraShakeType.values().random(), 0, 0, 128, 2)
+        return newIndex
     }
 
-    fun replaceTag(player: Player) {
-        val index = getAttribute(player, GameAttributes.RE_PINBALL_INTER, -1)
-        if (index in 0..4) {
-            val (newId, location) = SCENERY_REPLACEMENTS[index]
-            replaceScenery(Scenery(newId, location), PILLAR_MAP[index].id, -1, location)
-        }
-    }
-
+    /**
+     * Cleanup.
+     */
     fun cleanup(player: Player) {
         player.properties.teleportLocation = getAttribute(player, RandomEvent.save(), null)
         clearLogoutListener(player, RandomEvent.logout())
-        restoreTabs(player)
+        PlayerCamera(player).reset()
+        openInterface(player, Components.CHATDEFAULT_137)
         closeOverlay(player)
         closeInterface(player)
-        removeAttributes(
-            player,
-            RandomEvent.save(),
-            GameAttributes.RE_PINBALL_START,
-            GameAttributes.RE_PINBALL_OBJ,
-            GameAttributes.RE_PINBALL_INTER,
-        )
-        openInterface(player, Components.CHATDEFAULT_137)
+        restoreTabs(player)
+        removeAttributes(player, RandomEvent.save(), GameAttributes.RE_PINBALL_START, GameAttributes.RE_PINBALL_OBJ, GameAttributes.RE_PINBALL_INTER)
         setMinimapState(player, 0)
     }
 
+    /**
+     * Give the reward for the player.
+     */
     fun reward(player: Player) {
-        queueScript(
-            player,
-            2,
-            QueueStrength.STRONG, // TOUGH
-        ) {
+        queueScript(player, 2, QueueStrength.SOFT) {
             AntiMacro.terminateEventNpc(player)
             setVarbit(player, VARBIT_PINBALL_SCORE, 0)
             addItemOrDrop(
@@ -109,4 +122,31 @@ object PinballUtils {
             return@queueScript stopExecuting(player)
         }
     }
+
+    /**
+     * Resets the player's Pinball score to zero.
+     *
+     * @param player The player whose score is being reset.
+     */
+    fun resetScore(player: Player) {
+        setVarbit(player, VARBIT_PINBALL_SCORE, 0)
+    }
+
+    /**
+     * Increments the score by one.
+     *
+     * @param player The player.
+     */
+    fun incrementScore(player: Player) {
+        val points = getVarbit(player, VARBIT_PINBALL_SCORE) + 1
+        setVarbit(player, VARBIT_PINBALL_SCORE, points)
+    }
+
+    /**
+     * Checks if player tag 10 pillars.
+     *
+     * @param player The player.
+     * @return True if the score is 10 or more, false otherwise.
+     */
+    fun isComplete(player: Player) = getVarbit(player, VARBIT_PINBALL_SCORE) >= 10
 }

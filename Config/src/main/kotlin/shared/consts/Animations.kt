@@ -3818,8 +3818,8 @@ object Animations {
     const val ANIMATION_4002 = 4002
     const val MOVE_CRANE_4003 = 4003
     const val MOVE_CRANE_FORWARD_TO_GRAB_4004 = 4004
-    const val ANIMATION_4005 = 4005
-    const val ANIMATION_4006 = 4006
+    const val ANIMATE_PILLAR_4005 = 4005
+    const val RESET_PILLAR_ANIMATION_4006 = 4006
     const val ANIMATION_4007 = 4007
     const val HIT_WITH_DRAGON_AXE_4008 = 4008
     const val ANIMATION_4009 = 4009
