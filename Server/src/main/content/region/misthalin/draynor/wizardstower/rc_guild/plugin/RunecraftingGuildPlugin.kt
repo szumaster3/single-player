@@ -1,4 +1,4 @@
-package content.region.misthalin.draynor.wizardstower.rc_guild
+package content.region.misthalin.draynor.wizardstower.rc_guild.plugin
 
 import content.global.skill.runecrafting.Talisman
 import core.api.*

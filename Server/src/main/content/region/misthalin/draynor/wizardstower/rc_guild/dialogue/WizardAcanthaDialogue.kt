@@ -1,4 +1,4 @@
-package content.region.misthalin.draynor.wizardstower.dialogue
+package content.region.misthalin.draynor.wizardstower.rc_guild.dialogue
 
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim

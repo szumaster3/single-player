@@ -1,4 +1,4 @@
-package content.region.misthalin.draynor.wizardstower.dialogue
+package content.region.misthalin.draynor.wizardstower.rc_guild.dialogue
 
 import content.data.GameAttributes
 import core.api.*

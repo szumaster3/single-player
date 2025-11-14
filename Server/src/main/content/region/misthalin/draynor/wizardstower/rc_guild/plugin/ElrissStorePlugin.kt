@@ -1,4 +1,4 @@
-package content.region.misthalin.draynor.wizardstower.rc_guild
+package content.region.misthalin.draynor.wizardstower.rc_guild.plugin
 
 import core.api.*
 import core.cache.def.impl.ItemDefinition
