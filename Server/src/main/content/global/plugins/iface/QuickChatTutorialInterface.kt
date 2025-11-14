@@ -10,14 +10,14 @@ import shared.consts.Vars
  * Handles quick chat tutorial.
  * @author szu
  */
-class TutorialQCInterface : InterfaceListener {
+class QuickChatTutorialInterface : InterfaceListener {
     override fun defineInterfaceListeners() {
         onOpen(Components.QUICKCHAT_TUTORIAL_157) { player, _ ->
-            setVarbit(player, 4762, 1)
+            setVarbit(player, Vars.VARBIT_IFACE_QUICKCHAT_TUTORIAL_4762, 1)
             return@onOpen true
         }
         onClose(Components.QUICKCHAT_TUTORIAL_157) { player, _ ->
-            setVarbit(player, 4762, 0)
+            setVarbit(player, Vars.VARBIT_IFACE_QUICKCHAT_TUTORIAL_4762, 0)
             return@onClose true
         }
 
