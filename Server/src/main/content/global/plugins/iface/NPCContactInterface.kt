@@ -185,7 +185,7 @@ class NPCContactInterface : InterfaceListener {
                     3 -> npcl(FaceAnim.HALF_ASKING, "Be away wit' ya!").also { stage++ }
                     4 -> playerl(FaceAnim.FRIENDLY, "Just kidding, I'm using magic to talk to you. I'm totally 'armless.").also { stage++ }
                     5 -> if (inBorders(player!!, getRegionBorders(10032))) { // nearby the Dragon Inn.
-                        npcl(FaceAnim.HALF_ASKING, "Oh ar. Hey, then why ya standon' so close? Speak in person please!").also { stage++ }
+                        npcl(FaceAnim.HALF_ASKING, "Oh ar. Hey, then why ya standon' so close? Speak in person please!").also { stage = END_DIALOGUE }
                     } else {
                         end()
                     }
