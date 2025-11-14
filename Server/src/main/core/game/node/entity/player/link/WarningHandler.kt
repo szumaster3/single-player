@@ -171,12 +171,12 @@ object WarningHandler {
      */
 
     fun handleWatchtower(player: Player) {
-        if (isQuestComplete(player, Quests.WATCHTOWER) || getQuestStage(player, Quests.WATCHTOWER) >= 60) {
+        if (isQuestComplete(player, Quests.WATCHTOWER)) {
             teleport(player, Location.create(2588, 9410, 0), TeleportManager.TeleportType.INSTANT)
+            sendMessage(player, "You run past the guard while he's busy.")
         } else {
             EnclaveCutscene(player).start(true)
         }
-        sendMessage(player, "You run past the guard while he's busy.")
     }
 
 }

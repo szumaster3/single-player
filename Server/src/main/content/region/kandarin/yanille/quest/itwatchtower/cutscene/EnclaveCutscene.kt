@@ -70,12 +70,7 @@ class EnclaveCutscene(player: Player) : Cutscene(player) {
                 animate(getNPC(NPCs.BLUE_DRAGON_5178)!!, 92)
                 timedUpdate(1)
             }
-            9 -> {
-                end {
-                    setQuestStage(player, Quests.WATCHTOWER, 60)
-                }
-            }
-
+            9 -> end{}
         }
     }
 
