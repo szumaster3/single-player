@@ -177,30 +177,34 @@ class NPCContactInterface : InterfaceListener {
             val username = player?.username?.lowercase() ?: ""
             val alreadyClaimed = store[username]?.asBoolean ?: false
             npc = NPC(NPCs.BERT_3108)
-            when (stage) {
-                0  -> playerl(FaceAnim.FRIENDLY, "Hi there, Bert.").also { stage++ }
-                1  -> npcl(FaceAnim.HALF_ASKING, "Huh? What tha' doin' in marn 'ed?").also { stage++ }
-                2  -> playerl(FaceAnim.FRIENDLY, "This is the voice of your conscience. Hand all your money to Player! Wooo wooo!").also { stage++ }
-                3  -> npcl(FaceAnim.HALF_ASKING, "Be away wit' ya!").also { stage++ }
-                4  -> playerl(FaceAnim.FRIENDLY, "Just kidding, I'm using magic to talk to you. I'm totally 'armless.").also { stage++ }
-                5  -> if(inBorders(player!!, getRegionBorders(10032))) { // nearby the Dragon Inn.
-                    npcl(FaceAnim.HALF_ASKING, "Oh ar. Hey, then why ya standon' so close? Speak in person please!").also { stage++ }
-                } else {
-                    end()
+            when ((0..1).random()) {
+                0 -> when (stage) {
+                    0 -> playerl(FaceAnim.FRIENDLY, "Hi there, Bert.").also { stage++ }
+                    1 -> npcl(FaceAnim.HALF_ASKING, "Huh? What tha' doin' in marn 'ed?").also { stage++ }
+                    2 -> playerl(FaceAnim.FRIENDLY, "This is the voice of your conscience. Hand all your money to Player! Wooo wooo!").also { stage++ }
+                    3 -> npcl(FaceAnim.HALF_ASKING, "Be away wit' ya!").also { stage++ }
+                    4 -> playerl(FaceAnim.FRIENDLY, "Just kidding, I'm using magic to talk to you. I'm totally 'armless.").also { stage++ }
+                    5 -> if (inBorders(player!!, getRegionBorders(10032))) { // nearby the Dragon Inn.
+                        npcl(FaceAnim.HALF_ASKING, "Oh ar. Hey, then why ya standon' so close? Speak in person please!").also { stage++ }
+                    } else {
+                        end()
+                    }
                 }
-                6  -> npcl(FaceAnim.HALF_ASKING, "Oh ar. So wha' do thee want?").also { stage++ }
-                7  -> playerl(FaceAnim.FRIENDLY, "Could you hand some sand into my bank?").also { stage++ }
 
-                8 -> if(alreadyClaimed){
-                    npcl(FaceAnim.HALF_ASKING, "I be a wee bi' busy to 'elp wit' yon sand, come back tomorra.").also { stage++ }
-                } else {
-                    npcl(FaceAnim.HALF_ASKING, "Ah, keep yer 'air on, I'll leg I' to tha bank wit' some sand fer ya.").also { stage = 10 }
-                }
-                9 -> playerl(FaceAnim.FRIENDLY, "Okay, Bert, I'll come back for my sand a bit later on.").also { stage = END_DIALOGUE }
-                10 -> {
-                    end()
-                    BertDialogue.rewardSand(player!!,84)
-                    stage = END_DIALOGUE
+                1 -> when (stage) {
+                    0  -> npcl(FaceAnim.HALF_ASKING, "Oh ar. So wha' do thee want?").also { stage++ }
+                    1  -> playerl(FaceAnim.FRIENDLY, "Could you hand some sand into my bank?").also { stage++ }
+                    2 -> if(alreadyClaimed){
+                        npcl(FaceAnim.HALF_ASKING, "I be a wee bi' busy to 'elp wit' yon sand, come back tomorra.").also { stage++ }
+                    } else {
+                        npcl(FaceAnim.HALF_ASKING, "Ah, keep yer 'air on, I'll leg I' to tha bank wit' some sand fer ya.").also { stage = 4 }
+                    }
+                    3 -> playerl(FaceAnim.FRIENDLY, "Okay, Bert, I'll come back for my sand a bit later on.").also { stage = END_DIALOGUE }
+                    4 -> {
+                        end()
+                        BertDialogue.rewardSand(player!!,84)
+                        stage = END_DIALOGUE
+                    }
                 }
             }
         }
