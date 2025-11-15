@@ -52,7 +52,7 @@ class CerterInterface : InterfaceListener {
             val correctAnswer = player.getAttribute(GameAttributes.CERTER_INDEX, 0)
             setAttribute(player, GameAttributes.CERTER_CORRECT, correctAnswer == answer)
             player.interfaceManager.close()
-            player.dialogueInterpreter.open(CerterDialogue(false), AntiMacro.getEventNpc(player))
+            player.dialogueInterpreter.open(CerterBrothersDialogue(false), AntiMacro.getEventNpc(player))
             return@on true
         }
 

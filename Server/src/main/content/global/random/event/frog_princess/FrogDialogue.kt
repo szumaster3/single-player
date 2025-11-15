@@ -20,13 +20,11 @@ class FrogDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         val p = player ?: return false
-        val gender = if (p.isMale) "Princess" else "Prince"
+        val royalNPC = if (p.isMale) "Princess" else "Prince"
         val failRandom = getAttribute(player, GameAttributes.KTF_KISS_FAIL, -1)
-        if (failRandom == 1) {
-            if (stage == 0) {
-                npcl(FaceAnim.OLD_ANGRY1, "Don't talk to me! Speak to the frog $gender!")
-                stage = END_DIALOGUE
-            }
+        if (stage == 0 && failRandom == 1) {
+            npcl(FaceAnim.OLD_ANGRY1, "Don't talk to me! Speak to the frog $royalNPC!")
+            stage = END_DIALOGUE
         } else {
             when (stage) {
                 0 -> sendNPCDialogue(p, NPCs.FROG_2471, "Well, we'll see how you like being a frog!", FaceAnim.OLD_NORMAL).also { stage++ }

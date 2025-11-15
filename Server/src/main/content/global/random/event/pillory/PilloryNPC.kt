@@ -8,7 +8,6 @@ import core.api.utils.WeightBasedTable
 import core.game.interaction.QueueStrength
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.link.TeleportManager
-import core.game.system.task.Pulse
 import core.game.system.timer.impl.AntiMacro
 import shared.consts.NPCs
 

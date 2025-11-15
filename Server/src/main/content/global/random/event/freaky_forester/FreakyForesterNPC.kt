@@ -9,9 +9,7 @@ import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.link.TeleportManager
 import core.game.system.timer.impl.AntiMacro
 import core.game.world.map.Location
-import core.game.world.update.flag.context.Graphics
 import shared.consts.NPCs
-import shared.consts.Sounds
 
 /**
  * Represents the Freaky forester npc.

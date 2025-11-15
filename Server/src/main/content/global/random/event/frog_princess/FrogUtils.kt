@@ -15,7 +15,6 @@ import shared.consts.*
  * Utils for Frog random event.
  */
 object FrogUtils {
-    const val FROG_NPC = NPCs.FROG_2469
     const val FROG_APPEARANCE_NPC = NPCs.FROG_2473
     private const val FROG_PRINCE_NPC = NPCs.FROG_PRINCE_2474
     private const val FROG_PRINCESS_NPC = NPCs.FROG_PRINCESS_2475
@@ -25,50 +24,57 @@ object FrogUtils {
     private const val HUMAN_KISS_ANIM = Animations.HUMAN_BLOW_KISS_1374
     private const val HUMAN_KISS_GFX = Graphics.KISS_EMOTE_ORIGINAL_1702
 
+    /**
+     * Cleans up the event.
+     *
+     * @param player The player.
+     */
     fun cleanup(player: Player) {
         player.properties.teleportLocation = getAttribute(player, RandomEvent.save(), null)
+        clearLogoutListener(player, RandomEvent.logout())
         restoreTabs(player)
         resetAnimator(player)
         clearLogoutListener(player, RandomEvent.logout())
         removeAttributes(player, GameAttributes.KTF_KISS_FAIL)
     }
 
+    /**
+     * Handles kiss the frog interaction.
+     *
+     * @param player The player.
+     * @param node The npc.
+     */
     fun kissTheFrog(player: Player, node: Node) {
         val npc = node as NPC
-        val transformation = if (player.isMale) FROG_PRINCESS_NPC else FROG_PRINCE_NPC
+        val royalCouple = if (player.isMale) FROG_PRINCESS_NPC else FROG_PRINCE_NPC
         fun visualize() = visualize(npc, HUMAN_KISS_ANIM, HUMAN_KISS_GFX)
 
-        player.lock(16)
+        player.lock(18)
         submitIndividualPulse(player, object : Pulse(1, player) {
             var counter = 0
             override fun pulse(): Boolean {
                 when (counter++) {
                     1 -> {
-                        face(player, npc)
-                        face(npc, player)
+                        face(player, npc, 3)
+                        face(npc, player, 3)
                         npc.animate(Animation(FROG_KISS_ANIM))
+                        player.animate(Animation(2376))
                     }
-
-                    2 -> {
-                        npc.animate(Animation(TRANSFORM_INTO_HUMAN))
-                        sendGraphics(Graphics.SPELL_SPLASH_85, npc.location)
-                    }
-
-                    3 -> findLocalNPC(player, FROG_NPC)!!.transform(transformation)
-                    5 -> player.dialogueInterpreter.sendDialogues(
-                        transformation,
-                        FaceAnim.HAPPY,
+                    4 -> visualize(npc,TRANSFORM_INTO_HUMAN,Graphics.SPELL_SPLASH_85)
+                    6 -> transformNpc(npc, royalCouple, 100)
+                    8 -> sendNPCDialogueLines(player,
+                        royalCouple,
+                        FaceAnim.HAPPY,false,
                         "Thank you so much, ${player.username}.",
                         "I must return to my fairy tale kingdom now, but I will",
                         "leave you a reward for your kindness."
                     )
-
-                    6, 8, 9 -> {
+                    9,12,14 -> {
                         visualize()
-                        if (counter == 10) openInterface(player, Components.FADE_TO_BLACK_120)
+                        if (counter == 16) openInterface(player, Components.FADE_TO_BLACK_120)
                     }
 
-                    14 -> {
+                    16 -> {
                         npc.reTransform()
                         cleanup(player)
                         openInterface(player, Components.FADE_FROM_BLACK_170)

@@ -22,26 +22,40 @@ class EvilBobDialogue(val rewardDialogue: Boolean = false, val rewardXpSkill: In
         npc = NPC(NPCs.EVIL_BOB_2479)
         if (getAttribute(player!!, GameAttributes.RE_BOB_ZONE, "none") == "none") giveEventFishingSpot(player!!)
         when (stage) {
-            0 -> if (rewardDialogue) {
-                sendPlayerDialogue(player!!, "That was the strangest dream I've ever had! Assuming it was a dream...", FaceAnim.HALF_ASKING)
-                stage = if (rewardXpSkill == Skills.FISHING) 900 else 901
-            } else if (getAttribute(player!!, GameAttributes.RE_BOB_COMPLETE, false)) {
-                sendDialogue(player!!, "Evil Bob appears to be sleeping, best not to wake him up.").also { stage = END_DIALOGUE }
-            } else if (removeItem(player!!, Items.RAW_FISHLIKE_THING_6200)) {
-                setAttribute(player!!, GameAttributes.RE_BOB_SCORE, false)
-                playerl(FaceAnim.NEUTRAL, "Here, I've brought you some fish.").also { stage = 500 }
-            } else if (removeItem(player!!, Items.RAW_FISHLIKE_THING_6204)) {
-                setAttribute(player!!, GameAttributes.RE_BOB_SCORE, false)
-                setAttribute(player!!, GameAttributes.RE_BOB_ALERT, true)
-                setAttribute(player!!, GameAttributes.RE_BOB_DIAL_INDEX, true)
-                playerl(FaceAnim.NEUTRAL, "Here, I've brought you some fish.").also { stage = 600 }
-            } else if (inInventory(player!!, Items.FISHLIKE_THING_6202) || inInventory(player!!, Items.FISHLIKE_THING_6206)) {
-                npcl(FaceAnim.CHILD_NORMAL, "What, are you giving me cooked fish? What am I going to do with that? Uncook it first!").also { stage = 700 }
-            } else if (!getAttribute(player!!, GameAttributes.RE_BOB_START, false)) {
-                playerl(FaceAnim.ASKING, "Huh?").also { stage = 800 }
-                setAttribute(player!!, GameAttributes.RE_BOB_START, true)
-            } else {
-                playerl(FaceAnim.ANNOYED, "Let me out of here!").also { stage++ }
+            0 -> when {
+                rewardDialogue -> {
+                    sendPlayerDialogue(player!!, "That was the strangest dream I've ever had! Assuming it was a dream...", FaceAnim.HALF_ASKING)
+                    stage = if (rewardXpSkill == Skills.FISHING) 900 else 901
+                }
+                getAttribute(player!!, GameAttributes.RE_BOB_COMPLETE, false) -> {
+                    sendDialogue(player!!, "Evil Bob appears to be sleeping, best not to wake him up.")
+                    stage = END_DIALOGUE
+                }
+                removeItem(player!!, Items.RAW_FISHLIKE_THING_6200) -> {
+                    setAttribute(player!!, GameAttributes.RE_BOB_SCORE, false)
+                    playerl(FaceAnim.NEUTRAL, "Here, I've brought you some fish.")
+                    stage = 500
+                }
+                removeItem(player!!, Items.RAW_FISHLIKE_THING_6204) -> {
+                    setAttribute(player!!, GameAttributes.RE_BOB_SCORE, false)
+                    setAttribute(player!!, GameAttributes.RE_BOB_ALERT, true)
+                    setAttribute(player!!, GameAttributes.RE_BOB_DIAL_INDEX, true)
+                    playerl(FaceAnim.NEUTRAL, "Here, I've brought you some fish.")
+                    stage = 600
+                }
+                inInventory(player!!, Items.FISHLIKE_THING_6202) || inInventory(player!!, Items.FISHLIKE_THING_6206) -> {
+                    npcl(FaceAnim.CHILD_NORMAL, "What, are you giving me cooked fish? What am I going to do with that? Uncook it first!")
+                    stage = 700
+                }
+                !getAttribute(player!!, GameAttributes.RE_BOB_START, false) -> {
+                    playerl(FaceAnim.ASKING, "Huh?")
+                    stage = 800
+                    setAttribute(player!!, GameAttributes.RE_BOB_START, true)
+                }
+                else -> {
+                    playerl(FaceAnim.ANNOYED, "Let me out of here!")
+                    stage++
+                }
             }
             1 -> npcl(FaceAnim.CHILD_NORMAL, "I will never let you go, ${player!!.username}!").also { stage++ }
             2 -> options("Why not?", "What's it all about?", "How is it possible that you're talking?", "What did you do to Bob?").also { stage++ }

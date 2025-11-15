@@ -15,7 +15,7 @@ import shared.consts.Components
  * Represents the Certer dialogue.
  * @author Ceikry (March 18, 2021)
  */
-class CerterDialogue(val initial: Boolean) : DialogueFile() {
+class CerterBrothersDialogue(val initial: Boolean) : DialogueFile() {
     companion object {
         private const val MACRO_CERTERS_IFACE = Components.MACRO_CERTER_IDENTIFY_AN_OBJECT_184
     }

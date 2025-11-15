@@ -5,9 +5,9 @@ import core.api.*
 import core.game.component.Component
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
+import core.game.interaction.QueueStrength
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.link.emote.Emotes
-import core.game.system.task.Pulse
 import core.tools.END_DIALOGUE
 import shared.consts.Components
 import shared.consts.Items
@@ -65,42 +65,39 @@ class LeoDialogue : DialogueFile() {
             14 -> {
                 end()
                 GravediggerPlugin.cleanup(player!!)
-                val rewardID = listOf(Items.ZOMBIE_MASK_7594, Items.ZOMBIE_SHIRT_7592, Items.ZOMBIE_TROUSERS_7593, Items.ZOMBIE_GLOVES_7595, Items.ZOMBIE_BOOTS_7596)
-                player!!.pulseManager.run(
-                    object : Pulse(2) {
-                        override fun pulse(): Boolean {
-                            val item = rewardID.filter { hasAnItem(player!!, it).container == null }.randomOrNull()
-
-                            if (item != null) {
-                                addItemOrDrop(player!!, item, 1)
-                                return true
-                            }
-
-                            addItemOrDrop(player!!, Items.COINS_995, 500)
-                            if (!hasEmote(player!!, Emotes.ZOMBIE_DANCE)) {
-                                unlockEmote(player!!, Emotes.ZOMBIE_DANCE)
-                            }
-                            if (!hasEmote(player!!, Emotes.ZOMBIE_WALK)) {
-                                unlockEmote(player!!, Emotes.ZOMBIE_WALK)
-                            }
-                            return true
-                        }
-                    }
+                val rewardIds = listOf(
+                    Items.ZOMBIE_MASK_7594,
+                    Items.ZOMBIE_SHIRT_7592,
+                    Items.ZOMBIE_TROUSERS_7593,
+                    Items.ZOMBIE_GLOVES_7595,
+                    Items.ZOMBIE_BOOTS_7596
                 )
+                queueScript(player!!, 2, QueueStrength.SOFT) {
+                    val missingItem = rewardIds
+                        .firstOrNull { hasAnItem(player!!, it).container == null }
+
+                    if (missingItem != null) {
+                        addItemOrDrop(player!!, missingItem, 1)
+                    } else {
+                        addItemOrDrop(player!!, Items.COINS_995, 500)
+                        if (!hasEmote(player!!, Emotes.ZOMBIE_DANCE)) unlockEmote(player!!, Emotes.ZOMBIE_DANCE)
+                        if (!hasEmote(player!!, Emotes.ZOMBIE_WALK)) unlockEmote(player!!, Emotes.ZOMBIE_WALK)
+                    }
+
+                    return@queueScript stopExecuting(player!!)
+                }
             }
             15 -> npcl("Try looking in the coffins to get a better idea of who is in them, and then read the gravestones to find who needs to be in there.",).also { stage++ }
             16 -> playerl("All right, I'll give it another shot.").also { stage++ }
             17 -> npcl("Don't forget to store any items that you don't need in the mausoleum. I'll take them to the bank while you work.").also { stage = END_DIALOGUE }
             18 -> {
                 end()
-                player!!.pulseManager.run(
-                    object : Pulse(2) {
-                        override fun pulse(): Boolean {
-                            GravediggerPlugin.cleanup(player!!)
-                            return true
-                        }
-                    }
-                )
+                queueScript(player!!, 2, QueueStrength.SOFT) {
+                    GravediggerPlugin.cleanup(player!!)
+                    return@queueScript stopExecuting(player!!)
+                }
+
+
             }
         }
     }

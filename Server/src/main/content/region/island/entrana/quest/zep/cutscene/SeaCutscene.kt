@@ -1,14 +1,11 @@
 package content.region.island.entrana.quest.zep.cutscene
 
-import core.api.location
 import core.game.activity.Cutscene
 import core.game.node.entity.player.Player
 
-class SeaCutscene(
-    player: Player,
-) : Cutscene(player) {
+class SeaCutscene(player: Player) : Cutscene(player) {
     override fun setup() {
-        setExit(location(0, 0, 0))
+        setExit(player.location.transform(0, 0, 0))
         if (player.settings.isRunToggled) {
             player.settings.toggleRun()
         }

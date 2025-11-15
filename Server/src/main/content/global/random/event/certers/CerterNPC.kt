@@ -36,7 +36,7 @@ class CerterNPC(override var loot: WeightBasedTable? = null) : RandomEventNPC(ce
     }
 
     override fun talkTo(npc: NPC) {
-        player.dialogueInterpreter.open(CerterDialogue(true), npc)
+        player.dialogueInterpreter.open(CerterBrothersDialogue(true), npc)
     }
 
     override fun init() {

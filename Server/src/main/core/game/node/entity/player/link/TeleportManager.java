@@ -921,8 +921,8 @@ public class TeleportManager {
         setVarbit(player, TutorialStage.FLASHING_ICON, 0);
         setVarp(player, 281, 1000, true);
         setVarbit(player, 4895, 0, true);
-        setAttribute(player, "/save:tutorial:complete", true);
-        setAttribute(player, "/save:tutorial:stage", 73);
+        setAttribute(player, GameAttributes.TUTORIAL_COMPLETE, true);
+        setAttribute(player, GameAttributes.TUTORIAL_STAGE, 73);
 
         player.unhook(TutorialCastReceiver.INSTANCE);
         player.unhook(TutorialKillReceiver.INSTANCE);

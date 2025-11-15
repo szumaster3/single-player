@@ -4,6 +4,7 @@ object Animations {
     const val GHOST_WALK_13 = 13
     const val PUSH_WITH_HANDS_14 = 14
     const val GHOST_IDLE_15 = 15
+    const val DWARF_WAVE_105 = 105
     const val GNOME_WALK_189 = 189
     const val GNOME_RANGE_190 = 190
     const val GNOME_HIT_191 = 191
@@ -2189,9 +2190,9 @@ object Animations {
     const val ANIMATION_2373 = 2373
     const val FROG_KISS_2374 = 2374
     const val MORPH_FROM_FROG_2375 = 2375
-    const val ABOUT_TO_JUMP_2376 = 2376
+    const val HUMAN_KISS_THE_FROG_2376 = 2376
     const val MORPH_TO_FROG_2377 = 2377
-    const val SITTING_IN_THERAPIST_CHAIR_FROM_RANDOM_EVENT_2378 = 2378
+    const val QUIZMASTER_CHAIR_2378 = 2378
     const val ANIMATION_2379 = 2379
     const val ANIMATION_2380 = 2380
     const val ANIMATION_2381 = 2381

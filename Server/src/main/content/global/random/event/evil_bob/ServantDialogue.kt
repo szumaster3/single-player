@@ -19,23 +19,34 @@ class ServantDialogue : DialogueFile() {
     override fun handle(componentID: Int, buttonID: Int) {
         npc = NPC(NPCs.SERVANT_2481)
         when (stage) {
-            0 -> if (getAttribute(player!!, GameAttributes.RE_BOB_COMPLETE, false)) {
-                playerl(FaceAnim.NEUTRAL, "Evil Bob has fallen asleep, come quickly!").also { stage = 2 }
-            } else if (!getAttribute(player!!, GameAttributes.RE_BOB_DIAL, false)) {
-                playerl(FaceAnim.ANGRY, "I need help, I've been kidnapped by an evil cat!").also { stage = 200 }
-            } else if (getAttribute(player!!, GameAttributes.RE_BOB_DIAL_INDEX, false)) {
-                npcl(FaceAnim.SAD, "Look... over t-t-there! That fishing spot c-c-contains the f-f-f-fish he likes.").also { stage = 1 }
-            } else {
-                npcl(FaceAnim.SAD, "F-f-f-fish... give him the f-f-f-fish he likes and he might f- f-f-fall asleep.").also { stage = END_DIALOGUE }
+            0 -> when {
+                getAttribute(player!!, GameAttributes.RE_BOB_COMPLETE, false) -> {
+                    playerl(FaceAnim.NEUTRAL, "Evil Bob has fallen asleep, come quickly!")
+                    stage = 2
+                }
+
+                !getAttribute(player!!, GameAttributes.RE_BOB_DIAL, false) -> {
+                    playerl(FaceAnim.ANGRY, "I need help, I've been kidnapped by an evil cat!")
+                    stage = 200
+                }
+
+                getAttribute(player!!, GameAttributes.RE_BOB_DIAL_INDEX, false) -> {
+                    npcl(FaceAnim.SAD, "Look... over t-t-there! That fishing spot c-c-contains the f-f-f-fish he likes.")
+                    stage = 1
+                }
+                else -> {
+                    npcl(FaceAnim.SAD, "F-f-f-fish... give him the f-f-f-fish he likes and he might f- f-f-fall asleep.")
+                    END_DIALOGUE
+                }
             }
             1 -> {
                 end()
                 setAttribute(player!!, GameAttributes.RE_BOB_DIAL_INDEX, false)
-                when (getAttribute(player!!, GameAttributes.RE_BOB_ZONE, EvilBobUtils.northFishingZone.toString())) {
-                    EvilBobUtils.northFishingZone.toString() -> ServantCutsceneN(player!!).start()
-                    EvilBobUtils.southFishingZone.toString() -> ServantCutsceneS(player!!).start()
-                    EvilBobUtils.eastFishingZone.toString() -> ServantCutsceneE(player!!).start()
-                    EvilBobUtils.westFishingZone.toString() -> ServantCutsceneW(player!!).start()
+                when (getAttribute(player!!, GameAttributes.RE_BOB_ZONE, EvilBobUtils.NORTH_FISHING_ZONE.toString())) {
+                    EvilBobUtils.NORTH_FISHING_ZONE.toString() -> ServantCutscene(player!!, ServantDirection.N).start()
+                    EvilBobUtils.SOUTH_FISHING_ZONE.toString() -> ServantCutscene(player!!, ServantDirection.S).start()
+                    EvilBobUtils.EAST_FISHING_ZONE.toString()  -> ServantCutscene(player!!, ServantDirection.E).start()
+                    EvilBobUtils.WEST_FISHING_ZONE.toString()  -> ServantCutscene(player!!, ServantDirection.W).start()
                 }
             }
             2 -> npcl(FaceAnim.SAD, "Come? Come where?").also { stage++ }

@@ -20,13 +20,15 @@ import shared.consts.NPCs
 class FrogPrincessDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
-        val event = getAttribute(player, GameAttributes.KTF_KISS_FAIL, -1)
+        val event = getAttribute(player, GameAttributes.KTF_KISS_FAIL, 0)
         if (event == 0) {
             when (stage) {
                 0 -> npc(FaceAnim.OLD_SAD, "${player!!.username}, you must help me! I have been turned", "into a frog by a well-meaning wizard who suffers from", "an unfortunate obsession with frogs.").also { stage++ }
                 1 -> npc(FaceAnim.OLD_NORMAL, "The only thing that will restore my true form is a kiss.").also { stage++ }
-                2 -> player(FaceAnim.LAUGH, "Excuses, excuses!", "Okay, if that's what you want...").also {
+                2 -> player(FaceAnim.LAUGH, "Excuses, excuses!", "Okay, if that's what you want...").also { stage ++ }
+                3 -> {
                     end()
+                    npc.locks.lockMovement(20)
                     FrogUtils.kissTheFrog(player, npc)
                     stage = END_DIALOGUE
                 }

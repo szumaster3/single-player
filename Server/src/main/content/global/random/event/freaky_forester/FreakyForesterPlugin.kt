@@ -25,6 +25,11 @@ class FreakyForesterPlugin : InteractionListener, MapArea {
         private val PHEASANT_NPC_IDS = intArrayOf(NPCs.PHEASANT_2459, NPCs.PHEASANT_2460, NPCs.PHEASANT_2461, NPCs.PHEASANT_2462)
     }
     override fun defineListeners() {
+
+        /*
+         * Handles talk with event npc.
+         */
+
         on(NPC_ID, IntType.NPC, "talk-to") { player, node ->
             if (!inBorders(player, FreakyForesterUtils.freakArea)) {
                 sendDialogue(player, "Freaky Forester is not interested in talking.")
@@ -39,6 +44,10 @@ class FreakyForesterPlugin : InteractionListener, MapArea {
             return@on true
         }
 
+        /*
+         * Handles attack the pheasant npc.
+         */
+
         on(PHEASANT_NPC_IDS, IntType.NPC, "attack") { player, node ->
             if (hasComplete(player) || hasRawPheasant(player)) {
                 sendDialogue(player, "You don't need to attack any more pheasants.")
@@ -48,10 +57,14 @@ class FreakyForesterPlugin : InteractionListener, MapArea {
             return@on true
         }
 
+        /*
+         * Handles exit from the event area.
+         */
+
         on(EXIT_ID, IntType.SCENERY, "enter") { player, _ ->
             if (getAttribute(player, GameAttributes.RE_FREAK_COMPLETE, false)) {
                 FreakyForesterUtils.cleanup(player)
-                queueScript(player, 6, QueueStrength.SOFT) {
+                queueScript(player, 2, QueueStrength.SOFT) {
                     FreakyForesterUtils.reward(player)
                     return@queueScript stopExecuting(player)
                 }

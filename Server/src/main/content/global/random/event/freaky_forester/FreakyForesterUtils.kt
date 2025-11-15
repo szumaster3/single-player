@@ -5,7 +5,6 @@ import content.data.RandomEvent
 import core.api.*
 import core.game.node.entity.player.Player
 import core.game.world.map.zone.ZoneBorders
-import core.tools.RandomFunction
 import shared.consts.Items
 import shared.consts.NPCs
 
@@ -30,6 +29,11 @@ object FreakyForesterUtils {
         openDialogue(player, FreakyForesterDialogue(), FREAK_NPC)
     }
 
+    /**
+     * Cleans up the event.
+     *
+     * @param player The player.
+     */
     fun cleanup(player: Player) {
         player.locks.unlockTeleport()
         player.properties.teleportLocation = getAttribute(player, RandomEvent.save(), null)
@@ -38,7 +42,7 @@ object FreakyForesterUtils {
             RandomEvent.save(),
             GameAttributes.RE_FREAK_TASK,
             GameAttributes.RE_FREAK_COMPLETE,
-            GameAttributes.RE_FREAK_KILLS,
+            GameAttributes.RE_FREAK_KILLS
         )
         removeAll(player, Items.RAW_PHEASANT_6178)
         removeAll(player, Items.RAW_PHEASANT_6178, Container.BANK)

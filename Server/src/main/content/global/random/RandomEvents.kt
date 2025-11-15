@@ -10,7 +10,6 @@ import content.global.random.event.freaky_forester.FreakyForesterNPC
 import content.global.random.event.frog_princess.FrogHeraldNPC
 import content.global.random.event.genie.GenieNPC
 import content.global.random.event.gravedigger.LeoNPC
-import content.global.random.event.lostandfound.LostAndFoundNPC
 import content.global.random.event.maze.MazeNPC
 import content.global.random.event.mime.MimeNPC
 import content.global.random.event.pinball.PinballNPC

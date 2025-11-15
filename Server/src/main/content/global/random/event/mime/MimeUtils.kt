@@ -76,78 +76,87 @@ object MimeUtils {
     }
 
     fun getEmote(player: Player) {
-        val npc = findNPC(NPCs.MIME_1056)
-        var emoteId = getAttribute(player, GameAttributes.RE_MIME_EMOTE, -1)
-        sendUnclosablePlainDialogue(player, true, "", "Watch the Mime.", "See what emote he performs.")
-        submitIndividualPulse(
-            npc!!,
-            object : Pulse() {
-                var counter = 0
+        val npc = findNPC(NPCs.MIME_1056) ?: return
+        val emoteId = getAttribute(player, GameAttributes.RE_MIME_EMOTE, -1)
 
-                override fun pulse(): Boolean {
-                    when (counter++) {
-                        0 -> npc.faceLocation(location(2011, 4759, 0))
-                        1 -> replaceScenery(Scenery(SPOTLIGHT_ON, PLAYER_LOCATION), SPOTLIGHT_OFF, -1)
-                        3 -> {
-                            when (emoteId) {
-                                2 -> animate(npc, Emotes.THINK.animation)
-                                3 -> animate(npc, Emotes.CRY.animation)
-                                4 -> animate(npc, Emotes.LAUGH.animation)
-                                5 -> animate(npc, Emotes.DANCE.animation)
-                                6 -> animate(npc, Emotes.CLIMB_ROPE.animation)
-                                7 -> animate(npc, Emotes.LEAN_ON_AIR.animation)
-                                8 -> animate(npc, Emotes.GLASS_BOX.animation)
-                                9 -> animate(npc, Emotes.GLASS_WALL.animation)
-                            }
-                            setAttribute(player, GameAttributes.RE_MIME_INDEX, emoteId)
-                        }
-                        10 -> npc.faceLocation(player.location)
-                        11 -> animate(npc, Emotes.BOW.animation)
-                        14 -> replaceScenery(Scenery(SPOTLIGHT_ON, SCENERY_LOCATION), SPOTLIGHT_OFF, -1)
-                        15 -> {
-                            replaceScenery(Scenery(SPOTLIGHT_OFF, PLAYER_LOCATION), SPOTLIGHT_ON, -1)
-                            openInterface(player, Components.MACRO_MIME_EMOTES_188)
-                            return true
-                        }
-                    }
-                    return false
-                }
-            },
+        sendUnclosablePlainDialogue(player, true, "", "Watch the Mime.", "See what emote he performs.")
+
+        val emoteAnimations = mapOf(
+            2 to Emotes.THINK.animation,
+            3 to Emotes.CRY.animation,
+            4 to Emotes.LAUGH.animation,
+            5 to Emotes.DANCE.animation,
+            6 to Emotes.CLIMB_ROPE.animation,
+            7 to Emotes.LEAN_ON_AIR.animation,
+            8 to Emotes.GLASS_BOX.animation,
+            9 to Emotes.GLASS_WALL.animation,
         )
+
+        submitIndividualPulse(npc, object : Pulse() {
+            var tick = 0
+
+            override fun pulse(): Boolean = when (tick++) {
+
+                0 -> npc.faceLocation(location(2011, 4759, 0)).let { false }
+
+                1 -> replaceScenery(Scenery(SPOTLIGHT_ON, PLAYER_LOCATION), SPOTLIGHT_OFF, -1).let { false }
+
+                3 -> {
+                    emoteAnimations[emoteId]?.let { animate(npc, it) }
+                    setAttribute(player, GameAttributes.RE_MIME_INDEX, emoteId)
+                    false
+                }
+
+                10 -> npc.faceLocation(player.location).let { false }
+
+                11 -> animate(npc, Emotes.BOW.animation).let { false }
+
+                14 -> replaceScenery(Scenery(SPOTLIGHT_ON, SCENERY_LOCATION), SPOTLIGHT_OFF, -1).let { false }
+
+                15 -> {
+                    replaceScenery(Scenery(SPOTLIGHT_OFF, PLAYER_LOCATION), SPOTLIGHT_ON, -1)
+                    openInterface(player, Components.MACRO_MIME_EMOTES_188)
+                    true
+                }
+
+                else -> false
+            }
+        })
     }
 
     fun getContinue(player: Player) {
-        submitIndividualPulse(
-            player,
-            object : Pulse() {
-                var counter = 0
+        submitIndividualPulse(player, object : Pulse() {
+            var tick = 0
 
-                override fun pulse(): Boolean {
-                    when (counter++) {
-                        4 -> {
-                            if (getAttribute(player, GameAttributes.RE_MIME_CORRECT, -1) == 2) {
-                                cleanup(player)
-                                openInterface(player, Components.CHATDEFAULT_137)
-                                queueScript(player, 2, QueueStrength.STRONG) {
-                                    reward(player)
-                                    return@queueScript stopExecuting(player)
-                                }
-                            } else {
-                                if (getAttribute(player, GameAttributes.RE_MIME_WRONG, -1) == 1) {
-                                    setAttribute(player, GameAttributes.RE_MIME_EMOTE, (2..9).random())
-                                    removeAttribute(player, GameAttributes.RE_MIME_WRONG)
-                                    openInterface(player, Components.CHATDEFAULT_137)
-                                    replaceScenery(Scenery(SPOTLIGHT_ON, PLAYER_LOCATION), SPOTLIGHT_OFF, -1)
-                                    replaceScenery(Scenery(SPOTLIGHT_OFF, SCENERY_LOCATION), SPOTLIGHT_ON, -1)
-                                    sendUnclosablePlainDialogue(player, true, "", "Watch the Mime.", "See what emote he performs.")
-                                    getEmote(player)
-                                }
-                            }
-                        }
+            override fun pulse(): Boolean {
+                if (tick++ != 4) return false
+
+                val correct = getAttribute(player, GameAttributes.RE_MIME_CORRECT, -1)
+                if (correct == 2) {
+                    cleanup(player)
+                    openInterface(player, Components.CHATDEFAULT_137)
+                    queueScript(player, 2, QueueStrength.STRONG) {
+                        reward(player)
+                        stopExecuting(player)
                     }
                     return false
                 }
-            },
-        )
+
+                val wrong = getAttribute(player, GameAttributes.RE_MIME_WRONG, -1)
+                if (wrong == 1) {
+                    setAttribute(player, GameAttributes.RE_MIME_EMOTE, (2..9).random())
+                    removeAttribute(player, GameAttributes.RE_MIME_WRONG)
+
+                    openInterface(player, Components.CHATDEFAULT_137)
+                    replaceScenery(Scenery(SPOTLIGHT_ON, PLAYER_LOCATION), SPOTLIGHT_OFF, -1)
+                    replaceScenery(Scenery(SPOTLIGHT_OFF, SCENERY_LOCATION), SPOTLIGHT_ON, -1)
+
+                    sendUnclosablePlainDialogue(player, true, "", "Watch the Mime.", "See what emote he performs.")
+                    getEmote(player)
+                }
+
+                return false
+            }
+        })
     }
 }

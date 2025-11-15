@@ -23,10 +23,10 @@ class LeoNPC(override var loot: WeightBasedTable? = null) : RandomEventNPC(NPCs.
         sendChat("Can I borrow you for a minute, ${player.username}?")
         lock(player, 5)
         teleport(player, Location.create(1928, 5002, 0), TeleportManager.TeleportType.NORMAL)
+        setAttribute(player, RandomEvent.save(), player.location)
         registerLogoutListener(player, RandomEvent.logout()) { p ->
             p.location = getAttribute(p, RandomEvent.save(), player.location)
         }
-        setAttribute(player, RandomEvent.save(), player.location)
         queueScript(player, 5, QueueStrength.SOFT)
         {
             setMinimapState(player, 2)

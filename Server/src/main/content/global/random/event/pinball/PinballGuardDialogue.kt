@@ -1,6 +1,8 @@
 package content.global.random.event.pinball
 
-import core.api.*
+import core.api.getVarbit
+import core.api.sendPlainDialogue
+import core.api.unlock
 import core.game.component.Component
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
