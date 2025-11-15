@@ -58609,5 +58609,13 @@
   {
     "ids": "41904,41905,41906,41907",
     "examine": "It is growing, against the odds, in this cave."
+  },
+  {
+    "ids": "33174",
+    "examine": "Enter if you dare..."
+  },
+  {
+    "ids": "33173",
+    "examine": "Emergency exit."
   }
 ]
