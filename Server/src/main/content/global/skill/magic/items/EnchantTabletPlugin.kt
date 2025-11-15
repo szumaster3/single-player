@@ -1,4 +1,4 @@
-package content.global.plugins.item.withitem
+package content.global.skill.magic.items
 
 import content.data.GameAttributes
 import core.api.*

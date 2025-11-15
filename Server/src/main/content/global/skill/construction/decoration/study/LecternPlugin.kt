@@ -1,7 +1,7 @@
 package content.global.skill.construction.decoration.study
 
 import content.data.GameAttributes
-import content.global.plugins.item.TeleportTablet
+import content.global.skill.magic.items.TeleportTablet
 import content.global.skill.construction.Decoration
 import core.api.*
 import core.cache.def.impl.SceneryDefinition
@@ -17,7 +17,6 @@ import core.game.node.item.Item
 import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
 import core.plugin.Plugin
-import shared.consts.Animations
 import shared.consts.Components
 import shared.consts.Items
 import shared.consts.Scenery

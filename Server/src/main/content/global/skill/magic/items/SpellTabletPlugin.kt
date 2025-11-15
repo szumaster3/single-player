@@ -14,7 +14,7 @@ import shared.consts.Animations
 import shared.consts.Items
 import shared.consts.Sounds
 
-class SpellTablet : InteractionListener {
+class SpellTabletPlugin : InteractionListener {
     override fun defineListeners() {
         on(B2B_TABLET, IntType.ITEM, "break") { player, node ->
             breakTablet(player)
