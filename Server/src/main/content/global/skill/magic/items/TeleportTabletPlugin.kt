@@ -80,7 +80,7 @@ class TeleportTabletOption : InteractionListener {
                     val teleportRequirements: Map<Int, (Player) -> Boolean> = mapOf(
                         Items.ARDOUGNE_TP_8011      to { p -> getAttribute(p, GameAttributes.ARDOUGNE_TELEPORT, false) },
                         Items.WATCHTOWER_TPORT_8012 to { p -> getAttribute(p, GameAttributes.WATCHTOWER_TELEPORT, false) },
-                        Items.ASTRAL_ALTAR_TP_13611 to { p -> hasRequirement(p, QuestReq(QuestRequirements.LUNAR_DIPLOMACY), false) },
+                        Items.ASTRAL_ALTAR_TP_13611 to { p -> hasRequirement(p, QuestReq(QuestRequirements.LUNAR_DIPLOMACY)) },
                         Items.COSMIC_ALTAR_TP_13605 to { p -> isQuestComplete(p, Quests.LOST_CITY) },
                         Items.DEATH_ALTAR_TP_13609  to { p -> hasRequirement(p, QuestReq(QuestRequirements.MEP_2)) },
                         Items.BLOOD_ALTAR_TP_13610  to { p -> hasRequirement(p, QuestReq(QuestRequirements.SEERGAZE)) }
