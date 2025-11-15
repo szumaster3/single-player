@@ -9,9 +9,11 @@ import core.game.node.Node
 import core.game.node.entity.player.Player
 import core.game.node.scenery.Scenery
 import core.game.node.scenery.SceneryBuilder
+import core.game.world.map.Direction
+import core.game.world.map.RegionManager
 import core.plugin.Initializable
 import core.plugin.Plugin
-import core.game.world.map.Location
+import java.awt.Point
 
 @Initializable
 class DoorPlugin : OptionHandler() {
@@ -33,27 +35,19 @@ class DoorPlugin : OptionHandler() {
         val door = node as? Scenery ?: return true
 
         try {
-            val x = door.location.chunkOffsetX
-            val y = door.location.chunkOffsetY
-
-            val secondDoor = when {
-                y == 0 || y == 7 -> when (x) {
-                    3 -> Scenery(door.id, Location.create(door.location.x + 1, door.location.y, door.location.z), door.type, door.rotation)
-                    4 -> Scenery(door.id, Location.create(door.location.x - 1, door.location.y, door.location.z), door.type, door.rotation)
-                    else -> null
-                }
-                x == 0 || x == 7 -> when (y) {
-                    3 -> Scenery(door.id, Location.create(door.location.x, door.location.y + 1, door.location.z), door.type, door.rotation)
-                    4 -> Scenery(door.id, Location.create(door.location.x, door.location.y - 1, door.location.z), door.type, door.rotation)
-                    else -> null
-                }
-                else -> null
-            }
+            val secondDoor = getSecondDoor(door)
             if (secondDoor != null) {
-                DoorActionHandler.open(door, secondDoor, door.id + 2, secondDoor.id + 2,true,-1, false)
+                DoorActionHandler.open(
+                    door,
+                    secondDoor,
+                    door.id + 2,
+                    secondDoor.id + 2,
+                    true,
+                    -1,
+                    false
+                )
             }
-            handleDoor(door, secondDoor)
-
+            handleDoorState(door, secondDoor)
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -61,7 +55,7 @@ class DoorPlugin : OptionHandler() {
         return true
     }
 
-    private fun handleDoor(door: Scenery, second: Scenery?) {
+    private fun handleDoorState(door: Scenery, second: Scenery?) {
         val replaceId = getReplaceId(door)
         val secondReplaceId = second?.let { getReplaceId(it) } ?: -1
 
@@ -73,27 +67,85 @@ class DoorPlugin : OptionHandler() {
     }
 
     private fun openDoor(door: Scenery, second: Scenery?, replaceId: Int, secondReplaceId: Int) {
-        val (offsetX, offsetY, newRot) = getOpenOffset(door)
-        val newDoor = Scenery(replaceId, door.location.transform(offsetX, offsetY, 0), door.type, newRot)
-        SceneryBuilder.replace(door, newDoor)
-
-        second?.let {
-            val (sOffsetX, sOffsetY, sRot) = getOpenOffset(it)
-            val newSecond = Scenery(secondReplaceId, it.location.transform(sOffsetX, sOffsetY, 0), it.type, sRot)
-            SceneryBuilder.replace(it, newSecond)
+        if (second == null) {
+            val (offsetX, offsetY, newRot) = getOpenOffset(door)
+            val newDoor =
+                Scenery(replaceId, door.location.transform(offsetX, offsetY, 0), door.type, newRot)
+            SceneryBuilder.replace(door, newDoor)
+            return
         }
+
+        var obj = door
+        var sec = second
+        val mod = if (obj.type == 9) -1 else 1
+
+        var firstDir = (obj.rotation + ((mod + 4) % 4)) % 4
+        val p = DoorActionHandler.getRotationPoint(obj.rotation) ?: Point(0, 0)
+        var firstLoc = obj.location.transform(p.x * mod, p.y * mod, 0)
+
+        val offsetDir =
+            Direction.getDirection(sec.location.x - obj.location.x, sec.location.y - obj.location.y)
+        var secondDir = (sec.rotation + mod) % 4
+
+        if (firstDir == 1 && offsetDir == Direction.NORTH) {
+            firstDir = 3
+        } else if (firstDir == 2 && offsetDir == Direction.EAST) {
+            firstDir = 0
+        } else if (firstDir == 3 && offsetDir == Direction.SOUTH) {
+            firstDir = 1
+        } else if (firstDir == 0 && offsetDir == Direction.WEST) {
+            firstDir = 2
+        }
+
+        if (firstDir == secondDir) {
+            secondDir = (secondDir + 2) % 4
+        }
+
+        val secondLoc = sec.location.transform(p.x, p.y, 0)
+
+        SceneryBuilder.replace(obj, obj.transform(replaceId, firstDir, firstLoc))
+        SceneryBuilder.replace(sec, sec.transform(secondReplaceId, secondDir, secondLoc))
     }
 
     private fun closeDoor(door: Scenery, second: Scenery?, replaceId: Int, secondReplaceId: Int) {
-        val (offsetX, offsetY, newRot) = getCloseOffset(door)
-        val newDoor = Scenery(replaceId - 2, door.location.transform(offsetX, offsetY, 0), door.type, newRot)
-        SceneryBuilder.replace(door, newDoor)
-
-        second?.let {
-            val (sOffsetX, sOffsetY, sRot) = getCloseOffset(it)
-            val newSecond = Scenery(secondReplaceId - 2, it.location.transform(sOffsetX, sOffsetY, 0), it.type, sRot)
-            SceneryBuilder.replace(it, newSecond)
+        if (second == null) {
+            val (offsetX, offsetY, newRot) = getCloseOffset(door)
+            val newDoor =
+                Scenery(replaceId - 2, door.location.transform(offsetX, offsetY, 0), door.type, newRot)
+            SceneryBuilder.replace(door, newDoor)
+            return
         }
+
+        var obj = door
+        var sec = second
+        val mod = if (obj.type == 9) -1 else 1
+
+        var firstDir = (obj.rotation + ((mod + 4) % 4)) % 4
+        val p = DoorActionHandler.getRotationPoint(obj.rotation) ?: Point(0, 0)
+        var firstLoc = obj.location.transform(p.x * mod, p.y * mod, 0)
+
+        val offsetDir =
+            Direction.getDirection(sec.location.x - obj.location.x, sec.location.y - obj.location.y)
+        var secondDir = (sec.rotation + mod) % 4
+
+        if (firstDir == 1 && offsetDir == Direction.NORTH) {
+            firstDir = 3
+        } else if (firstDir == 2 && offsetDir == Direction.EAST) {
+            firstDir = 0
+        } else if (firstDir == 3 && offsetDir == Direction.SOUTH) {
+            firstDir = 1
+        } else if (firstDir == 0 && offsetDir == Direction.WEST) {
+            firstDir = 2
+        }
+
+        if (firstDir == secondDir) {
+            secondDir = (secondDir + 2) % 4
+        }
+
+        val secondLoc = sec.location.transform(p.x, p.y, 0)
+
+        SceneryBuilder.replace(obj, obj.transform(replaceId - 2, firstDir, firstLoc))
+        SceneryBuilder.replace(sec, sec.transform(secondReplaceId - 2, secondDir, secondLoc))
     }
 
     private fun getOpenOffset(door: Scenery): Triple<Int, Int, Int> {
@@ -131,20 +183,47 @@ class DoorPlugin : OptionHandler() {
     private fun getReplaceId(door: Scenery): Int = REPLACEMENT_MAP[door.id] ?: (door.id + 2)
     private val CLOSED_IDS = REPLACEMENT_MAP.keys
 
+    private fun getSecondDoor(door: Scenery): Scenery? {
+        val possibleIds = setOf(door.id, door.id + 1, door.id - 1)
+
+        val directions =
+            listOf(0 to 0, 1 to 0, -1 to 0, 0 to 1, 0 to -1, 1 to 1, -1 to 1, 1 to -1, -1 to -1)
+
+        for ((dx, dy) in directions) {
+            val loc = door.location.transform(dx, dy, 0)
+
+            for (slot in 0 until 4) {
+                val obj =
+                    try {
+                        RegionManager.getObject(loc.z, loc.x, loc.y, slot)
+                    } catch (e: Exception) {
+                        null
+                    }
+
+                if (obj != null && obj.id in possibleIds && obj != door) {
+                    return obj
+                }
+            }
+        }
+
+        return null
+    }
+
     companion object {
-        private val REPLACEMENT_MAP = mapOf(
-            13100 to 13102,
-            13101 to 13103,
-            13006 to 13008,
-            13007 to 13008,
-            13015 to 13017,
-            13016 to 13018,
-            13094 to 13095,
-            13096 to 13097,
-            13109 to 13110,
-            13107 to 13108,
-            13118 to 13120,
-            13119 to 13121
-        )
+        private val REPLACEMENT_MAP =
+            mapOf(
+                13100 to 13102,
+                13101 to 13103,
+                13006 to 13008,
+                13007 to 13008,
+                13015 to 13017,
+                13016 to 13018,
+                13094 to 13095,
+                13096 to 13097,
+                13109 to 13110,
+                13107 to 13108,
+                13118 to 13120,
+                13119 to 13121
+            )
     }
 }
