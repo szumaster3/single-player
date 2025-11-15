@@ -60,11 +60,6 @@ class CerterInterface : InterfaceListener {
             generateOptions(player)
             return@onOpen true
         }
-
-        onClose(CERTER_INTERFACE) { player, _ ->
-            setAttribute(player, GameAttributes.RE_PAUSE, false)
-            return@onClose true
-        }
     }
 
     private fun generateOptions(player: Player) {

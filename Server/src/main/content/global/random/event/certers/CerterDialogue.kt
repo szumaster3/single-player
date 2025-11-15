@@ -15,37 +15,21 @@ import shared.consts.Components
  * Represents the Certer dialogue.
  * @author Ceikry (March 18, 2021)
  */
-class CerterDialogue(
-    val initial: Boolean,
-) : DialogueFile() {
-    val CERTER_INTERFACE = Components.MACRO_CERTER_IDENTIFY_AN_OBJECT_184
+class CerterDialogue(val initial: Boolean) : DialogueFile() {
+    companion object {
+        private const val MACRO_CERTERS_IFACE = Components.MACRO_CERTER_IDENTIFY_AN_OBJECT_184
+    }
 
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
+    override fun handle(componentID: Int, buttonID: Int) {
         if (initial && !player!!.getAttribute(GameAttributes.CERTER_REWARD, false)) {
             when (stage) {
-                0 ->
-                    npc(
-                        "Ah, hello, ${player!!.username.replaceFirstChar {
-                            if (it.isLowerCase()) {
-                                it.titlecase()
-                            } else {
-                                it
-                                    .toString()
-                            }
-                        }}. Could you",
-                        "please help me identify this?",
-                    ).also { stage++ }
-
+                0 -> npc("Ah, hello, ${player!!.username.replaceFirstChar { it.titlecaseChar() }}. Could you", "please help me identify this?").also { stage++ }
                 1 -> {
                     end()
-                    player!!.interfaceManager.open(Component(CERTER_INTERFACE))
+                    player!!.interfaceManager.open(Component(MACRO_CERTERS_IFACE))
                 }
             }
         } else {
-            player!!.setAttribute(GameAttributes.RE_PAUSE, true)
             val isCorrect = player!!.getAttribute(GameAttributes.CERTER_CORRECT, false)
             val receivedReward = player!!.getAttribute(GameAttributes.CERTER_REWARD, false)
             if (receivedReward == true) {
@@ -76,8 +60,6 @@ class CerterDialogue(
             npc!!.pulseManager.clear(PulseType.STANDARD)
             animate(npc!!, Animations.HUMAN_WAVE_863)
             AntiMacro.terminateEventNpc(player!!)
-        } else {
-            player!!.setAttribute(GameAttributes.RE_PAUSE, false)
         }
     }
 }
