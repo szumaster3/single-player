@@ -8,6 +8,7 @@ import content.global.skill.slayer.SlayerManager
 import content.global.plugins.item.equipment.WhiteKnightRankManager
 import core.api.setAttribute
 import content.data.BossKillCounter
+import content.data.GameAttributes
 import core.api.utils.PlayerStatsCounter
 import core.game.node.entity.player.Player
 import core.game.system.command.Privilege
@@ -162,6 +163,10 @@ class StatsCommandSet : CommandSet(Privilege.STANDARD) {
                     3 -> when (i) {
                         97 -> sendLine(player, "White Knight rank: ${WhiteKnightRankManager.getRank(queryPlayer).name.lowercase()}", i)
                         68 -> sendLine(player, "Black Knights: ${PlayerStatsCounter.getKills(queryPlayer, BLACK_KNIGHT_IDS)}", i)
+                        69 -> {
+                            val crest = queryPlayer.getAttribute(GameAttributes.FAMILY_CREST, -1)
+                            sendLine(player, "Family Crest: ${if (crest == -1) "not set" else crest}", i)
+                        }
                         else -> sendLine(player, "", i)
                     }
                 }
