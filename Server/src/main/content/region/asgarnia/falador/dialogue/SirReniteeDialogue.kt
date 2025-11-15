@@ -157,7 +157,7 @@ class SirReniteeDialogue(player: Player? = null) : Dialogue(player) {
                     end()
                     if (failMessage.isNotEmpty()) npcl(FaceAnim.HALF_GUILTY, failMessage)
                 }
-                stage = 16
+                stage = 15
                 return true
             }
             35 -> npc(FaceAnim.ASKING, "Would you like a portrait or an, mmm, a landscape?", "Or a map, maybe?").also { stage++ }
