@@ -166,7 +166,7 @@ class StatsCommandSet : CommandSet(Privilege.STANDARD) {
                         68 -> sendLine(player, "Black Knights: ${PlayerStatsCounter.getKills(queryPlayer, BLACK_KNIGHT_IDS)}", i)
                         69 -> {
                             val crest = player.getAttribute(GameAttributes.FAMILY_CREST, -1)
-                            sendLine(player, "Family Crest: ${CrestType.values().getOrNull(crest - 1)?.symbol ?: "not set"}", i)
+                            sendLine(player, "Crest: ${CrestType.values().getOrNull(crest - 1)?.symbol ?: "not set"}", i)
                         }
                         else -> sendLine(player, "", i)
                     }
