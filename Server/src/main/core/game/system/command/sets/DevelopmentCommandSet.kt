@@ -2,7 +2,6 @@ package core.game.system.command.sets
 
 import content.data.GameAttributes
 import content.data.RespawnPoint
-import content.data.setRespawnLocation
 import content.global.activity.jobs.JobManager
 import content.global.skill.summoning.SummoningPouch
 import content.region.island.tutorial.plugin.TutorialStage

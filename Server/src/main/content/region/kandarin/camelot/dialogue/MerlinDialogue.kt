@@ -2,7 +2,6 @@ package content.region.kandarin.camelot.dialogue
 
 import content.data.GameAttributes
 import content.data.RespawnPoint
-import content.data.setRespawnLocation
 import content.region.kandarin.camelot.quest.arthur.dialogue.MerlinDialogueFile
 import core.ServerConstants
 import core.api.*
