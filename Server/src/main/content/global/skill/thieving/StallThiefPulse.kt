@@ -1,9 +1,6 @@
 package content.global.skill.thieving
 
-import core.api.impact
-import core.api.isQuestComplete
-import core.api.sendDialogue
-import core.api.stun
+import core.api.*
 import core.game.event.ResourceProducedEvent
 import core.game.node.entity.combat.ImpactHandler
 import core.game.node.entity.player.Player
@@ -41,15 +38,15 @@ class StallThiefPulse(player: Player?, node: Scenery?, private val stall: Stall?
             return false
         }
         if (player.inCombat()) {
-            player.packetDispatch.sendMessage("You cant steal from the market stall during combat!")
+            sendMessage(player, "You cant steal from the market stall during combat!")
             return false
         }
-        if (player.getSkills().getLevel(Skills.THIEVING) < stall.level) {
-            player.packetDispatch.sendMessage("You need to be level " + stall.level + " to steal from the " + node!!.name.lowercase(Locale.getDefault()) + ".")
+        if (getStatLevel(player, Skills.THIEVING) < stall.level) {
+            sendMessage(player, "You need to be level " + stall.level + " to steal from the " + node!!.name.lowercase(Locale.getDefault()) + ".")
             return false
         }
         if (player.inventory.freeSlots() == 0) {
-            player.packetDispatch.sendMessage("You don't have enough inventory space.")
+            sendMessage(player, "You don't have enough inventory space.")
             return false
         }
         if (player.location.isInRegion(10553) && !isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS) && stall.fullIDs.contains(4278)) {
@@ -94,13 +91,13 @@ class StallThiefPulse(player: Player?, node: Scenery?, private val stall: Stall?
             player.inventory.add(item)
             player.getSkills().addExperience(Skills.THIEVING, stall.experience, true)
             if (item.id == Items.GRAPES_1987) {
-                player.packetDispatch.sendMessage("You steal grapes from the grape stall.")
+                sendMessage(player, "You steal grapes from the grape stall.")
                 return true
             }
             if (stall == Stall.CANDLES) {
                 return true
             }
-            player.packetDispatch.sendMessage("You steal " + (if (isPlusN(item.name)) "an" else "a") + " " + item.name.lowercase(Locale.getDefault()) + " from the " + stall.name.lowercase(Locale.getDefault()).replace('_', ' ') + ".")
+            sendMessage(player, "You steal " + (if (isPlusN(item.name)) "an" else "a") + " " + item.name.lowercase(Locale.getDefault()) + " from the " + stall.name.lowercase(Locale.getDefault()).replace('_', ' ') + ".")
             player.dispatch(ResourceProducedEvent(item.id, item.amount, node!!, 0))
         }
         return true
