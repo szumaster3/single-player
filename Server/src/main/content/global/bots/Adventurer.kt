@@ -60,7 +60,6 @@ class Adventurer(val style: CombatStyle) : Script() {
         inventory.add(Item(1271))
         skills[Skills.MINING] = 90
         skills[Skills.SLAYER] = 90
-        setVarp(bot, 427, 1)
     }
 
     override fun toString(): String =
