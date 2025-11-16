@@ -20,7 +20,7 @@ class MinotaurDialogue : Dialogue {
     constructor()
     constructor(player: Player?) : super(player)
 
-    private var branch = 0
+    private var branch = -1
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC

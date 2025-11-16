@@ -25,8 +25,6 @@ class SpiritZamatriceDialogue : Dialogue {
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
-
-
         if (inEquipment(player, Items.MIRROR_SHIELD_4156, 1)) {
             npcl(FaceAnim.OLD_NORMAL, "You know, I'm sensing some trust issues here.")
             stage = 0

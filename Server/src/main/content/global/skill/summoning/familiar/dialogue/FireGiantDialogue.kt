@@ -15,7 +15,7 @@ import shared.consts.NPCs
  */
 @Initializable
 class FireGiantDialogue : Dialogue {
-    private var branch: Int = 0
+    private var branch: Int = -1
 
     override fun newInstance(player: Player?) = FireGiantDialogue(player)
 

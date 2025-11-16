@@ -26,13 +26,14 @@ class SpiritWolfDialogue : Dialogue {
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as? NPC ?: return false
 
-        if (anyInInventory(player, *bones.stream().mapToInt { it.toInt() }.toArray())) {
+        if (anyInInventory(player, *bones.toIntArray())) {
             npc(FaceAnim.CHILD_NORMAL, "Whuff-Whuff! Arf!", "(Throw the bone! I want to chase it!)")
             stage = 0
+            branch = -1
             return true
         }
 
-        if (branch == -1) branch = (Math.random() * 4).toInt()
+        branch = (0..3).random()
 
         stage = when (branch) {
             0 -> 1
@@ -54,18 +55,21 @@ class SpiritWolfDialogue : Dialogue {
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (branch) {
-            0 -> when (stage) {
-                1 -> { playerl(FaceAnim.FRIENDLY, "Oh, just some... biped things. I'm sure it would bore you."); stage = END_DIALOGUE }
+            0 -> if (stage == 1) {
+                playerl(FaceAnim.FRIENDLY, "Oh, just some... biped things. I'm sure it would bore you.")
+                stage = END_DIALOGUE
             }
             1 -> when (stage) {
                 2 -> { playerl(FaceAnim.FRIENDLY, "Where?!"); stage++ }
                 3 -> { npc(FaceAnim.CHILD_NORMAL, "Whiiiine...", "(False alarm...)"); stage = END_DIALOGUE }
             }
-            2 -> when (stage) {
-                4 -> { playerl(FaceAnim.FRIENDLY, "We can go hunting in a moment. I just have to take care of something first."); stage = END_DIALOGUE }
+            2 -> if (stage == 4) {
+                playerl(FaceAnim.FRIENDLY, "We can go hunting in a moment. I just have to take care of something first.")
+                stage = END_DIALOGUE
             }
-            3 -> when (stage) {
-                5 -> { playerl(FaceAnim.FRIENDLY, "Oh, I'm sure we'll find something for you in a bit."); stage = END_DIALOGUE }
+            3 -> if (stage == 5) {
+                playerl(FaceAnim.FRIENDLY, "Oh, I'm sure we'll find something for you in a bit.")
+                stage = END_DIALOGUE
             }
         }
 
@@ -77,12 +81,6 @@ class SpiritWolfDialogue : Dialogue {
     override fun getIds(): IntArray = intArrayOf(NPCs.SPIRIT_WOLF_6829, NPCs.SPIRIT_WOLF_6830)
 
     companion object {
-        private val bones: MutableList<Int> = ArrayList()
-
-        init {
-            for (bone in Bones.values()) {
-                bones.add(bone.itemId)
-            }
-        }
+        private val bones: MutableList<Int> = Bones.values().map { it.itemId }.toMutableList()
     }
 }

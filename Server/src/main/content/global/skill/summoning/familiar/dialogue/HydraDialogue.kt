@@ -7,13 +7,14 @@ import core.game.node.entity.player.Player
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import shared.consts.NPCs
+import kotlin.random.Random
 
 /**
  * Represents the Hydra familiar dialogue.
  */
 @Initializable
 class HydraDialogue : Dialogue {
-    private var branch: Int = 0
+    private var branch: Int = -1
 
     override fun newInstance(player: Player?) = HydraDialogue(player)
 
@@ -24,37 +25,41 @@ class HydraDialogue : Dialogue {
         npc = args[0] as NPC
         branch = (0..3).random()
         stage = 0
+
+        when (branch) {
+            0 -> playerl(FaceAnim.FRIENDLY, "Not really!")
+            1 -> npc(FaceAnim.CHILD_NORMAL, "Raaasp ssssss raaaasp.", "(That's easy for you to say.)")
+            2 -> npc(FaceAnim.CHILD_NORMAL, "Raaaasp rassssp sssssp....", "(Unless you're the one doing all the heavy thinking....)")
+            3 -> npc(FaceAnim.CHILD_NORMAL, "Raasp raasp raaaaasp?", "(What's up this time?)")
+        }
+
         return true
     }
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (branch) {
             0 -> when (stage) {
-                0 -> { playerl(FaceAnim.FRIENDLY, "Not really!"); stage++ }
-                1 -> { npc(FaceAnim.CHILD_NORMAL, "Raaasp raaaaap raaaasp?", "(Well I suppose you work with what you got, right?)"); stage++ }
-                2 -> { npc(FaceAnim.CHILD_NORMAL, "Raaaaaasp raaaasp raaaasp.", "(At least he doesn't have someone whittering in their ear all the time.)"); stage++ }
-                3 -> { npc(FaceAnim.CHILD_NORMAL, "Raaaaaaasp!", "(Quiet, you!)"); stage = END_DIALOGUE }
+                0 -> { npc(FaceAnim.CHILD_NORMAL, "Raaasp raaaaap raaaasp?", "(Well I suppose you work with what you got, right?)"); stage++ }
+                1 -> { npc(FaceAnim.CHILD_NORMAL, "Raaaaaasp raaaasp raaaasp.", "(At least he doesn't have someone whittering in their ear all the time.)"); stage++ }
+                2 -> { npc(FaceAnim.CHILD_NORMAL, "Raaaaaaasp!", "(Quiet, you!)"); stage = END_DIALOGUE }
             }
 
             1 -> when (stage) {
-                0 -> { npc(FaceAnim.CHILD_NORMAL, "Raaasp ssssss raaaasp.", "(That's easy for you to say.)"); stage++ }
-                1 -> { playerl(FaceAnim.HALF_ASKING, "What's up?"); stage++ }
-                2 -> { npc(FaceAnim.CHILD_NORMAL, "Raaa....", "(well...)"); stage++ }
-                3 -> { npc(FaceAnim.CHILD_NORMAL, "Raaaaasp sss rassssp.", "(Don't pay any attention, they are just feeling whiny.)"); stage++ }
-                4 -> { playerl(FaceAnim.HALF_ASKING, "But they're you, aren't they?"); stage++ }
-                5 -> { npc(FaceAnim.CHILD_NORMAL, "Raaaasp raasp rasssp!", "(Don't remind me!)"); stage = END_DIALOGUE }
+                0 -> { playerl(FaceAnim.HALF_ASKING, "What's up?"); stage++ }
+                1 -> { npc(FaceAnim.CHILD_NORMAL, "Raaa....", "(well...)"); stage++ }
+                2 -> { npc(FaceAnim.CHILD_NORMAL, "Raaaaasp sss rassssp.", "(Don't pay any attention, they are just feeling whiny.)"); stage++ }
+                3 -> { playerl(FaceAnim.HALF_ASKING, "But they're you, aren't they?"); stage++ }
+                4 -> { npc(FaceAnim.CHILD_NORMAL, "Raaaasp raasp rasssp!", "(Don't remind me!)"); stage = END_DIALOGUE }
             }
 
             2 -> when (stage) {
-                0 -> { npc(FaceAnim.CHILD_NORMAL, "Raaaasp rassssp sssssp....", "(Unless you're the one doing all the heavy thinking....)"); stage++ }
-                1 -> { playerl(FaceAnim.FRIENDLY, "I think I'll stick to one for now, thanks."); stage = END_DIALOGUE }
+                0 -> { playerl(FaceAnim.FRIENDLY, "I think I'll stick to one for now, thanks."); stage = END_DIALOGUE }
             }
 
             3 -> when (stage) {
-                0 -> { npc(FaceAnim.CHILD_NORMAL, "Raasp raasp raaaaasp?", "(What's up this time?)"); stage++ }
-                1 -> { playerl(FaceAnim.HALF_ASKING, "Can I help?"); stage++ }
-                2 -> { npc(FaceAnim.CHILD_NORMAL, "Rasssp ssssssp? raaaaasp raaaasp.", "(Do you mind? This is a private conversation.)"); stage++ }
-                3 -> { playerl(FaceAnim.FRIENDLY, "Well, excu-u-use me."); stage = END_DIALOGUE }
+                0 -> { playerl(FaceAnim.HALF_ASKING, "Can I help?"); stage++ }
+                1 -> { npc(FaceAnim.CHILD_NORMAL, "Rasssp ssssssp? raaaaasp raaaasp.", "(Do you mind? This is a private conversation.)"); stage++ }
+                2 -> { playerl(FaceAnim.FRIENDLY, "Well, excu-u-use me."); stage = END_DIALOGUE }
             }
         }
         return true

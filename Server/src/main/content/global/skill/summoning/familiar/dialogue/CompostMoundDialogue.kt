@@ -12,13 +12,14 @@ import core.game.node.entity.skill.Skills
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import shared.consts.NPCs
-import java.util.*
+import kotlin.random.Random
 
 /**
  * Represents the Compost Mound familiar dialogue.
  */
 @Initializable
 class CompostMoundDialogue : Dialogue {
+
     override fun newInstance(player: Player?): Dialogue = CompostMoundDialogue(player)
 
     constructor()
@@ -27,6 +28,7 @@ class CompostMoundDialogue : Dialogue {
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         options("Chat", "Withdraw", "Farming boost")
+        stage = 0
         return true
     }
 
@@ -34,34 +36,31 @@ class CompostMoundDialogue : Dialogue {
         when (stage) {
             0 -> when (buttonId) {
                 1 -> {
-                    when (Random().nextInt(6)) {
+                    stage = (0..5).random()
+                    when (stage) {
                         0 -> {
-                            npc(
-                                FaceAnim.CHILD_NORMAL,
-                                "Schlorp, splort, splort, splutter shclorp?",
-                                "(What we be doin' 'ere, zur?)"
-                            )
+                            npc(FaceAnim.CHILD_NORMAL, "Schlorp, splort, splort, splutter shclorp?", "(What we be doin' 'ere, zur?)")
                             stage = 124
                         }
-
                         1 -> {
-                            npcl(FaceAnim.CHILD_NORMAL, "Oi've gotta braand new comboine 'aarvester!"); stage = 100
+                            npcl(FaceAnim.CHILD_NORMAL, "Oi've gotta braand new comboine 'aarvester!")
+                            stage = 100
                         }
-
                         2 -> {
-                            npcl(FaceAnim.CHILD_NORMAL, "What we be doin' 'ere, zur?"); stage = 104
+                            npcl(FaceAnim.CHILD_NORMAL, "What we be doin' 'ere, zur?")
+                            stage = 104
                         }
-
                         3 -> {
-                            npcl(FaceAnim.CHILD_NORMAL, "Errr...are ye gonna eat that?"); stage = 106
+                            npcl(FaceAnim.CHILD_NORMAL, "Errr...are ye gonna eat that?")
+                            stage = 106
                         }
-
                         4 -> {
-                            npcl(FaceAnim.CHILD_NORMAL, "Sigh..."); stage = 113
+                            npcl(FaceAnim.CHILD_NORMAL, "Sigh...")
+                            stage = 113
                         }
-
                         5 -> {
-                            npcl(FaceAnim.CHILD_NORMAL, "Oi wus just a-wonderin'..."); stage = 117
+                            npcl(FaceAnim.CHILD_NORMAL, "Oi wus just a-wonderin'...")
+                            stage = 117
                         }
                     }
                 }
@@ -79,21 +78,18 @@ class CompostMoundDialogue : Dialogue {
 
             30 -> {
                 npc("Schlup glorp sputter!", "(Oi do believe oi can!)")
-                stage++
+                stage = 31
             }
 
             31 -> {
                 if (getDynLevel(player, Skills.FARMING) > getStatLevel(player, Skills.FARMING)) {
                     sendMessage(player, "Your stat cannot be boosted this way right now.")
-                    end()
-                    return true
                 } else {
                     val newLevel = (1 + (getStatLevel(player, Skills.FARMING) * 0.02)).toInt()
                     player.getSkills().updateLevel(Skills.FARMING, newLevel)
                     sendMessage(player, "The Compost mound has boosted your Farming stat.")
-                    end()
-                    return true
                 }
+                end()
             }
 
             100 -> playerl(FaceAnim.HALF_ASKING, "A what?").also { stage++ }

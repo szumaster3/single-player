@@ -33,42 +33,34 @@ class DismissDialogue : Dialogue {
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (branch) {
-            /*
-             * Pet.
-             */
 
-            0 -> {
-                when (stage) {
-                    0 -> {
-                        if (buttonId == 1) {
-                            sendDialogue("Run along; I'm setting you free.")
-                            val pet = player.familiarManager.familiar as Pet
-                            player.familiarManager.removeDetails(pet.itemIdHash)
-                            player.familiarManager.dismiss()
-                            stage = 1
-                        } else if (buttonId == 2) {
-                            end()
-                        }
+            0 -> when (stage) {
+                0 -> {
+                    if (buttonId == 1) {
+                        sendDialogue("Run along; I'm setting you free.")
+                        val pet = player.familiarManager.familiar as Pet
+                        player.familiarManager.removeDetails(pet.itemIdHash)
+                        player.familiarManager.dismiss()
+                        stage = 1
+                    } else if (buttonId == 2) {
+                        end()
                     }
-                    1 -> end()
                 }
+                1 -> end()
             }
 
-            /*
-             * Familiar.
-             */
-            1 -> {
-                when (stage) {
-                    0 -> {
-                        if (buttonId == 1) {
-                            player.familiarManager.dismiss()
-                            stage = 1
-                        } else if (buttonId == 2) {
-                            end()
-                        }
+
+            1 -> when (stage) {
+                0 -> {
+                    if (buttonId == 1) {
+                        player.familiarManager.dismiss()
+                        sendDialogue("Your familiar has been dismissed.")
+                        stage = 1
+                    } else if (buttonId == 2) {
+                        end()
                     }
-                    1 -> end()
                 }
+                1 -> end()
             }
         }
         return true

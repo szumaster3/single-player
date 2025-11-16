@@ -15,7 +15,7 @@ import kotlin.random.Random
 @Initializable
 class MossTitanDialogue : Dialogue {
 
-    private var branch: Int = 0
+    private var branch: Int = -1
 
     override fun newInstance(player: Player?) = MossTitanDialogue(player)
 
@@ -26,6 +26,14 @@ class MossTitanDialogue : Dialogue {
         npc = args[0] as NPC
         branch = Random.nextInt(4)
         stage = 0
+
+        when (branch) {
+            0 -> playerl(FaceAnim.FRIENDLY, "It's quite a large bug.")
+            1 -> npcl(FaceAnim.CHILD_NORMAL, "When you punch 'em, humies go squish.")
+            2 -> playerl(FaceAnim.FRIENDLY, "Are you quite finished?")
+            3 -> playerl(FaceAnim.FRIENDLY, "Let's just wait and see.")
+        }
+
         return true
     }
 
@@ -33,7 +41,6 @@ class MossTitanDialogue : Dialogue {
         when (branch) {
             0 -> {
                 when (stage) {
-                    0 -> { playerl(FaceAnim.FRIENDLY, "It's quite a large bug."); stage++ }
                     1 -> { npcl(FaceAnim.CHILD_NORMAL, "He's so cute! I wanna keep him."); stage++ }
                     2 -> { playerl(FaceAnim.FRIENDLY, "Well, be careful."); stage++ }
                     3 -> { npcl(FaceAnim.CHILD_NORMAL, "I'm gonna call him Buggie and I'm gonna keep him in a box."); stage++ }
@@ -47,7 +54,6 @@ class MossTitanDialogue : Dialogue {
 
             1 -> {
                 when (stage) {
-                    0 -> { npcl(FaceAnim.CHILD_NORMAL, "When you punch 'em, humies go squish."); stage++ }
                     1 -> { playerl(FaceAnim.FRIENDLY, "..."); stage++ }
                     2 -> { npcl(FaceAnim.CHILD_NORMAL, "When you push 'em, humies go squish."); stage++ }
                     3 -> { playerl(FaceAnim.FRIENDLY, "..."); stage++ }
@@ -66,7 +72,6 @@ class MossTitanDialogue : Dialogue {
 
             2 -> {
                 when (stage) {
-                    0 -> { playerl(FaceAnim.FRIENDLY, "Are you quite finished?"); stage++ }
                     1 -> { npcl(FaceAnim.CHILD_NORMAL, "Stampy stampy stampy stampy stampy stampy, I've got big hands."); stage++ }
                     2 -> { playerl(FaceAnim.FRIENDLY, "Done yet?"); stage++ }
                     3 -> { npcl(FaceAnim.CHILD_NORMAL, "Stampy stampy stampy stampy stampy stampy, I've got big chest."); stage++ }
@@ -79,7 +84,6 @@ class MossTitanDialogue : Dialogue {
 
             3 -> {
                 when (stage) {
-                    0 -> { playerl(FaceAnim.FRIENDLY, "Let's just wait and see."); stage++ }
                     1 -> { npcl(FaceAnim.CHILD_NORMAL, "I want to do some squishing of tiny things!"); stage++ }
                     2 -> { playerl(FaceAnim.FRIENDLY, "Preferably not me."); stage++ }
                     3 -> { npcl(FaceAnim.CHILD_NORMAL, "Even if only a little bit, like your foot or something?"); stage++ }

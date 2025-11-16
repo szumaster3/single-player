@@ -15,7 +15,7 @@ import kotlin.random.Random
 @Initializable
 class BloatedLeechDialogue : Dialogue {
 
-    private var branch: Int = 0
+    private var branch: Int = -1
 
     override fun newInstance(player: Player?) = BloatedLeechDialogue(player)
 

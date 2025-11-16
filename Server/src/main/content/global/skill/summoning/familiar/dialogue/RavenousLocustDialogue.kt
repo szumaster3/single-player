@@ -24,10 +24,10 @@ class RavenousLocustDialogue : Dialogue {
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
-        if (hasHandsFree(player)) {
-            branch = 0
+        branch = if (hasHandsFree(player)) {
+            0
         } else {
-            branch = (Math.random() * 3).toInt() + 1
+            (Math.random() * 3).toInt() + 1
         }
         stage = 0
 

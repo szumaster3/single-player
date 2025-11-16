@@ -13,7 +13,8 @@ import shared.consts.NPCs
  */
 @Initializable
 class EvilTurnipDialogue : Dialogue {
-    private var branch: Int = 0
+
+    private var branch: Int = -1
 
     override fun newInstance(player: Player?) = EvilTurnipDialogue(player)
 
@@ -22,7 +23,8 @@ class EvilTurnipDialogue : Dialogue {
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
-        branch = (0..3).random()
+
+        if (branch == -1) branch = (0..3).random()
         stage = 0
 
         when (branch) {
@@ -42,22 +44,17 @@ class EvilTurnipDialogue : Dialogue {
                 1 -> { playerl(FaceAnim.ASKING, "You mean some THING you ate?"); stage++ }
                 2 -> { npcl(FaceAnim.OLD_NORMAL, "Hur hur hur. Yah, sure, why not."); stage = END_DIALOGUE }
             }
-
-            1 -> when (stage) {
-                0 -> { playerl(FaceAnim.FRIENDLY, "Well, as sinister as it's chuckling is, at least it's happy. That's a good thing, right?"); stage = END_DIALOGUE }
-            }
-
+            1 -> stage = END_DIALOGUE
             2 -> when (stage) {
                 0 -> { playerl(FaceAnim.FRIENDLY, "Soon enough."); stage++ }
                 1 -> { npcl(FaceAnim.OLD_NORMAL, "Hur hur hur. I gets the fighting."); stage = END_DIALOGUE }
             }
-
-            3 -> when (stage) {
-                0 -> { playerl(FaceAnim.FRIENDLY, "I'm glad it's on my side... and not behind me."); stage = END_DIALOGUE }
-            }
+            3 -> stage = END_DIALOGUE
         }
+
         return true
     }
 
-    override fun getIds(): IntArray = intArrayOf(NPCs.EVIL_TURNIP_6833, NPCs.EVIL_TURNIP_6834)
+    override fun getIds(): IntArray =
+        intArrayOf(NPCs.EVIL_TURNIP_6833, NPCs.EVIL_TURNIP_6834)
 }

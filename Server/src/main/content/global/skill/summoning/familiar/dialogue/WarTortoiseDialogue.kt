@@ -25,14 +25,7 @@ class WarTortoiseDialogue : Dialogue {
         npc = args[0] as NPC
 
         branch = (0..3).random()
-
-        stage = when (branch) {
-            0 -> 0
-            1 -> 4
-            2 -> 10
-            3 -> 16
-            else -> 0
-        }
+        stage = 0
 
         when (branch) {
             0 -> npc(FaceAnim.OLD_NORMAL, "*The tortoise waggles its head about.*", "What are we doing in this dump?")
@@ -54,29 +47,29 @@ class WarTortoiseDialogue : Dialogue {
             }
 
             1 -> when (stage) {
-                4 -> { playerl(FaceAnim.FRIENDLY, "What do you want?"); stage++ }
-                5 -> { npc(FaceAnim.OLD_NORMAL, "*The tortoise bobs its head sadly.*", "For you to slow down!"); stage++ }
-                6 -> { playerl(FaceAnim.FRIENDLY, "Well, I've stopped now."); stage++ }
-                7 -> { npcl(FaceAnim.OLD_NORMAL, "Yes, but you'll soon start up again, won't you?"); stage++ }
-                8 -> { playerl(FaceAnim.FRIENDLY, "Probably."); stage++ }
-                9 -> { npc(FaceAnim.OLD_NORMAL, "*The tortoise waggles its head despondently.*", "I don't believe it...."); stage = END_DIALOGUE }
+                0 -> { playerl(FaceAnim.FRIENDLY, "What do you want?"); stage++ }
+                1 -> { npc(FaceAnim.OLD_NORMAL, "*The tortoise bobs its head sadly.*", "For you to slow down!"); stage++ }
+                2 -> { playerl(FaceAnim.FRIENDLY, "Well, I've stopped now."); stage++ }
+                3 -> { npcl(FaceAnim.OLD_NORMAL, "Yes, but you'll soon start up again, won't you?"); stage++ }
+                4 -> { playerl(FaceAnim.FRIENDLY, "Probably."); stage++ }
+                5 -> { npc(FaceAnim.OLD_NORMAL, "*The tortoise waggles its head despondently.*", "I don't believe it...."); stage = END_DIALOGUE }
             }
 
             2 -> when (stage) {
-                10 -> { playerl(FaceAnim.FRIENDLY, "I pay you plenty of attention!"); stage++ }
-                11 -> { npcl(FaceAnim.OLD_NORMAL, "Only when you want me to carry those heavy things of yours."); stage++ }
-                12 -> { playerl(FaceAnim.FRIENDLY, "I don't ask you to carry anything heavy."); stage++ }
-                13 -> { npcl(FaceAnim.OLD_NORMAL, "What about those lead ingots?"); stage++ }
-                14 -> { playerl(FaceAnim.HALF_ASKING, "What lead ingots?"); stage++ }
-                15 -> { npc(FaceAnim.OLD_NORMAL, "*The tortoise droops its head.*", "Well, that's what it felt like....", "*grumble grumble*"); stage = END_DIALOGUE }
+                0 -> { playerl(FaceAnim.FRIENDLY, "I pay you plenty of attention!"); stage++ }
+                1 -> { npcl(FaceAnim.OLD_NORMAL, "Only when you want me to carry those heavy things of yours."); stage++ }
+                2 -> { playerl(FaceAnim.FRIENDLY, "I don't ask you to carry anything heavy."); stage++ }
+                3 -> { npcl(FaceAnim.OLD_NORMAL, "What about those lead ingots?"); stage++ }
+                4 -> { playerl(FaceAnim.HALF_ASKING, "What lead ingots?"); stage++ }
+                5 -> { npc(FaceAnim.OLD_NORMAL, "*The tortoise droops its head.*", "Well, that's what it felt like....", "*grumble grumble*"); stage = END_DIALOGUE }
             }
 
             3 -> when (stage) {
-                16 -> { playerl(FaceAnim.FRIENDLY, "Only for as long as I have the energy to."); stage++ }
-                17 -> { npcl(FaceAnim.OLD_NORMAL, "Oh. I'm glad that my not being able to keep up with you brings you such great amusement."); stage++ }
-                18 -> { playerl(FaceAnim.FRIENDLY, "I didn't mean it like that."); stage++ }
-                19 -> { npc(FaceAnim.OLD_NORMAL, "*The tortoise waggles its head disapprovingly.*", "Well, when you are QUITE finished laughing at my expense,", "how about you pick up a rock larger than your body", "and go crawling about with it?"); stage++ }
-                20 -> { npcl(FaceAnim.OLD_NORMAL, "We'll see how energetic you are after an hour or two of that."); stage = END_DIALOGUE }
+                0 -> { playerl(FaceAnim.FRIENDLY, "Only for as long as I have the energy to."); stage++ }
+                1 -> { npcl(FaceAnim.OLD_NORMAL, "Oh. I'm glad that my not being able to keep up with you brings you such great amusement."); stage++ }
+                2 -> { playerl(FaceAnim.FRIENDLY, "I didn't mean it like that."); stage++ }
+                3 -> { npc(FaceAnim.OLD_NORMAL, "*The tortoise waggles its head disapprovingly.*", "Well, when you are QUITE finished laughing at my expense,", "how about you pick up a rock larger than your body", "and go crawling about with it?"); stage++ }
+                4 -> { npcl(FaceAnim.OLD_NORMAL, "We'll see how energetic you are after an hour or two of that."); stage = END_DIALOGUE }
             }
         }
         return true

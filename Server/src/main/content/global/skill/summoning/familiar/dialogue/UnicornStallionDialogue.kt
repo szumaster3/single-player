@@ -24,15 +24,7 @@ class UnicornStallionDialogue : Dialogue {
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         branch = (0..4).random()
-
-        stage = when (branch) {
-            0 -> 0
-            1 -> 5
-            2 -> 7
-            3 -> 9
-            4 -> 11
-            else -> 0
-        }
+        stage = 0
 
         when (branch) {
             0 -> npc(FaceAnim.CHILD_NORMAL, "Neigh neigh neighneigh snort?", "(Isn't everything so awesomely wonderful?)")
@@ -55,26 +47,26 @@ class UnicornStallionDialogue : Dialogue {
             }
 
             1 -> when (stage) {
-                5 -> { stage++; playerl(FaceAnim.FRIENDLY, "I can't do that! I barely even know you.") }
-                6 ->   stage = END_DIALOGUE.also { npc(FaceAnim.CHILD_NORMAL, "Whicker...", "(Bipeds...)") }
+                0 -> { stage++; playerl(FaceAnim.FRIENDLY, "I can't do that! I barely even know you.") }
+                1 -> stage = END_DIALOGUE.also { npc(FaceAnim.CHILD_NORMAL, "Whicker...", "(Bipeds...)") }
             }
 
             2 -> when (stage) {
-                7 -> { stage++; playerl(FaceAnim.HALF_ASKING, "Okay... Hang on. Seeing as I summoned you here, wouldn't that mean you are physically projecting instead?") }
-                8 ->   stage = END_DIALOGUE.also { npc(FaceAnim.CHILD_NORMAL, "Whicker whicker whicker.", "(You're, like, no fun at all, man.)") }
+                0 -> { stage++; playerl(FaceAnim.HALF_ASKING, "Okay... Hang on. Seeing as I summoned you here, wouldn't that mean you are physically projecting instead?") }
+                1 -> stage = END_DIALOGUE.also { npc(FaceAnim.CHILD_NORMAL, "Whicker whicker whicker.", "(You're, like, no fun at all, man.)") }
             }
 
             3 -> when (stage) {
-                9 -> { stage++; playerl(FaceAnim.HALF_ASKING, "Happy day? Is that some sort of holiday or something?") }
-                10 ->  stage = END_DIALOGUE.also { npc(FaceAnim.CHILD_NORMAL, "Snuggle whicker", "(Man, you're totally, like, uncosmic, ${player?.username}.)") }
+                0 -> { stage++; playerl(FaceAnim.HALF_ASKING, "Happy day? Is that some sort of holiday or something?") }
+                1 -> stage = END_DIALOGUE.also { npc(FaceAnim.CHILD_NORMAL, "Snuggle whicker", "(Man, you're totally, like, uncosmic, ${player?.username}.)") }
             }
 
             4 -> when (stage) {
-                11 -> { stage++; playerl(FaceAnim.FRIENDLY, "Yes, please do!") }
-                12 -> { stage++; npc(FaceAnim.CHILD_NORMAL, "Snuffle whicker whicker neigh neigh...", "(Okay, we'll begin with acupuncture and some reiki, then I'll get my crystals...)") }
-                13 -> { stage++; playerl(FaceAnim.FRIENDLY, "Or you could use some sort of magic...like the other unicorns...") }
-                14 -> { stage++; npc(FaceAnim.CHILD_NORMAL, "Whicker whinny whinny neigh.", "(Yes, but I believe in alternative medicine.)") }
-                15 ->   stage = END_DIALOGUE.also { playerl(FaceAnim.FRIENDLY, "Riiight. Don't worry about it, then; I'll be fine.") }
+                0 -> { stage++; playerl(FaceAnim.FRIENDLY, "Yes, please do!") }
+                1 -> { stage++; npc(FaceAnim.CHILD_NORMAL, "Snuffle whicker whicker neigh neigh...", "(Okay, we'll begin with acupuncture and some reiki, then I'll get my crystals...)") }
+                2 -> { stage++; playerl(FaceAnim.FRIENDLY, "Or you could use some sort of magic...like the other unicorns...") }
+                3 -> { stage++; npc(FaceAnim.CHILD_NORMAL, "Whicker whinny whinny neigh.", "(Yes, but I believe in alternative medicine.)") }
+                4 -> stage = END_DIALOGUE.also { playerl(FaceAnim.FRIENDLY, "Riiight. Don't worry about it, then; I'll be fine.") }
             }
         }
 

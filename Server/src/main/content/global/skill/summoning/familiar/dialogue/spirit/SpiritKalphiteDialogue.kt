@@ -54,7 +54,7 @@ class SpiritKalphiteDialogue : Dialogue {
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (branch) {
-            0 -> { // Keris dialogue
+            0 -> {
                 when (stage) {
                     0 -> { npcl(FaceAnim.CHILD_NORMAL, "That weapon offends us!"); stage++ }
                     1 -> { playerl(FaceAnim.HALF_ASKING, "What weapon?"); stage++ }
@@ -62,26 +62,26 @@ class SpiritKalphiteDialogue : Dialogue {
                     3 -> { playerl(FaceAnim.FRIENDLY, "Awkward."); stage = END_DIALOGUE }
                 }
             }
-            1 -> { // Branch 1
+            1 -> {
                 when (stage) {
                     4 -> { playerl(FaceAnim.FRIENDLY, "Well, you'll just have to put up with it for now."); stage++ }
                     5 -> { npcl(FaceAnim.CHILD_NORMAL, "We would not have to 'put up' with this in the hive."); stage = END_DIALOGUE }
                 }
             }
-            2 -> { // Branch 2
+            2 -> {
                 when (stage) {
                     6 -> { playerl(FaceAnim.FRIENDLY, "Well, I haven't quite decided yet."); stage++ }
                     7 -> { npcl(FaceAnim.CHILD_NORMAL, "There is no indecision in the hive."); stage++ }
                     8 -> { playerl(FaceAnim.FRIENDLY, "Or a sense of humour or patience, it seems."); stage = END_DIALOGUE }
                 }
             }
-            3 -> { // Branch 3
+            3 -> {
                 when (stage) {
                     9 -> { playerl(FaceAnim.FRIENDLY, "Maybe I find you wasteful..."); stage++ }
                     10 -> { npcl(FaceAnim.CHILD_NORMAL, "We would not face this form of abuse in the hive."); stage = END_DIALOGUE }
                 }
             }
-            4 -> { // Branch 4
+            4 -> {
                 when (stage) {
                     11 -> { playerl(FaceAnim.FRIENDLY, "What antics? I'm just getting on with my day."); stage++ }
                     12 -> { npcl(FaceAnim.CHILD_NORMAL, "In an inefficient way. In the hive, you would be replaced."); stage++ }

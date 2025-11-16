@@ -13,7 +13,7 @@ import shared.consts.NPCs
  */
 @Initializable
 class DreadfowlDialogue : Dialogue {
-    private var branch: Int = 0
+    private var branch: Int = -1
 
     override fun newInstance(player: Player?) = DreadfowlDialogue(player)
 

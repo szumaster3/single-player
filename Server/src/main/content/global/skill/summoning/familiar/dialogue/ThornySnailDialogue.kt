@@ -27,21 +27,10 @@ class ThornySnailDialogue : Dialogue {
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
 
-        branch = if (anyInInventory(player, *snelmID) || anyInEquipment(player, *snelmID)) {
-            0
-        } else {
-            (1..4).random()
-        }
+        branch = if (anyInInventory(player, *snelmID) || anyInEquipment(player, *snelmID)) 0
+        else (1..4).random()
 
-        stage = when (branch) {
-            0 -> 0
-            1 -> 7
-            2 -> 12
-            3 -> 15
-            4 -> 20
-            else -> 0
-        }
-
+        stage = 0
         when (branch) {
             0 -> npcl(FaceAnim.OLD_NORMAL, "...")
             1 -> npcl(FaceAnim.OLD_NORMAL, "All this running around the place is fun!")
@@ -66,30 +55,30 @@ class ThornySnailDialogue : Dialogue {
             }
 
             1 -> when (stage) {
-                7 -> { playerl(FaceAnim.FRIENDLY, "I'll bet it's a step up from your usually sedentary lifestyle!"); stage++ }
-                8 -> { npcl(FaceAnim.OLD_NORMAL, "True, but it's mostly seeing the sort of sights you don't get at home."); stage++ }
-                9 -> { playerl(FaceAnim.FRIENDLY, "Such as?"); stage++ }
-                10 -> { npcl(FaceAnim.OLD_NORMAL, "Living things for a start."); stage++ }
-                11 -> { playerl(FaceAnim.FRIENDLY, "Those are in short supply in Mort Myre, I admit."); stage = END_DIALOGUE }
+                0 -> { playerl(FaceAnim.FRIENDLY, "I'll bet it's a step up from your usually sedentary lifestyle!"); stage++ }
+                1 -> { npcl(FaceAnim.OLD_NORMAL, "True, but it's mostly seeing the sort of sights you don't get at home."); stage++ }
+                2 -> { playerl(FaceAnim.FRIENDLY, "Such as?"); stage++ }
+                3 -> { npcl(FaceAnim.OLD_NORMAL, "Living things for a start."); stage++ }
+                4 -> { playerl(FaceAnim.FRIENDLY, "Those are in short supply in Mort Myre, I admit."); stage = END_DIALOGUE }
             }
 
             2 -> when (stage) {
-                12 -> { playerl(FaceAnim.FRIENDLY, "Your stomach? How do you know how it's feeling?"); stage++ }
-                13 -> { npcl(FaceAnim.OLD_NORMAL, "I am walking on it, you know..."); stage++ }
-                14 -> { playerl(FaceAnim.FRIENDLY, "Urrgh..."); stage = END_DIALOGUE }
+                0 -> { playerl(FaceAnim.FRIENDLY, "Your stomach? How do you know how it's feeling?"); stage++ }
+                1 -> { npcl(FaceAnim.OLD_NORMAL, "I am walking on it, you know..."); stage++ }
+                2 -> { playerl(FaceAnim.FRIENDLY, "Urrgh..."); stage = END_DIALOGUE }
             }
 
             3 -> when (stage) {
-                15 -> { playerl(FaceAnim.HALF_ASKING, "You mean my legs?"); stage++ }
-                16 -> { npcl(FaceAnim.OLD_NORMAL, "Yes, those. How are you supposed to eat anything through them?"); stage++ }
-                17 -> { playerl(FaceAnim.FRIENDLY, "Well, we don't. That's what our mouths are for."); stage++ }
-                18 -> { npcl(FaceAnim.OLD_NORMAL, "Oh, right! I thought those were for expelling waste gas and hot air!"); stage++ }
-                19 -> { playerl(FaceAnim.HALF_ASKING, "Well, for a lot of people they are."); stage = END_DIALOGUE }
+                0 -> { playerl(FaceAnim.HALF_ASKING, "You mean my legs?"); stage++ }
+                1 -> { npcl(FaceAnim.OLD_NORMAL, "Yes, those. How are you supposed to eat anything through them?"); stage++ }
+                2 -> { playerl(FaceAnim.FRIENDLY, "Well, we don't. That's what our mouths are for."); stage++ }
+                3 -> { npcl(FaceAnim.OLD_NORMAL, "Oh, right! I thought those were for expelling waste gas and hot air!"); stage++ }
+                4 -> { playerl(FaceAnim.HALF_ASKING, "Well, for a lot of people they are."); stage = END_DIALOGUE }
             }
 
             4 -> when (stage) {
-                20 -> { playerl(FaceAnim.FRIENDLY, "Are we going too fast for you?"); stage++ }
-                21 -> { npcl(FaceAnim.OLD_NORMAL, "I bet if you had to run on your internal organs you'd want a break now and then!"); stage = END_DIALOGUE }
+                0 -> { playerl(FaceAnim.FRIENDLY, "Are we going too fast for you?"); stage++ }
+                1 -> { npcl(FaceAnim.OLD_NORMAL, "I bet if you had to run on your internal organs you'd want a break now and then!"); stage = END_DIALOGUE }
             }
         }
 
@@ -116,7 +105,7 @@ class ThornySnailDialogue : Dialogue {
             Items.BLAMISH_BLUE_SHELL_3361,
             Items.BRUISE_BLUE_SNELM_3343,
             Items.BLAMISH_BARK_SHELL_3353,
-            Items.BROKEN_BARK_SNELM_3335,
+            Items.BROKEN_BARK_SNELM_3335
         )
     }
 }

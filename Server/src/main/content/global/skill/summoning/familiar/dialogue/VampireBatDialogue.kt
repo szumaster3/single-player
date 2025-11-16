@@ -27,13 +27,7 @@ class VampireBatDialogue : Dialogue {
 
         branch = if (inBorders(player, 3139, 9535, 3306, 9657)) 0 else (1..3).random()
 
-        stage = when (branch) {
-            0 -> 0
-            1 -> 3
-            2 -> 4
-            3 -> 5
-            else -> 0
-        }
+        stage = 0
 
         when (branch) {
             0 -> npc(FaceAnim.CHILD_NORMAL, "Ze creatures ov ze dark; vat vonderful music zey make.")
@@ -48,14 +42,34 @@ class VampireBatDialogue : Dialogue {
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (branch) {
             0 -> when (stage) {
-                0 -> { stage++; playerl(FaceAnim.FRIENDLY, "Riiight.") }
-                1 -> { stage++; npc(FaceAnim.CHILD_NORMAL, "I like it down here. Let's stay and eat moths!") }
-                2 -> stage = END_DIALOGUE.also { playerl(FaceAnim.FRIENDLY, "I think I'll pass, thanks.") }
+                0 -> {
+                    playerl(FaceAnim.FRIENDLY, "Riiight.")
+                    stage++
+                }
+                1 -> {
+                    npc(FaceAnim.CHILD_NORMAL, "I like it down here. Let's stay and eat moths!")
+                    stage++
+                }
+                2 -> {
+                    playerl(FaceAnim.FRIENDLY, "I think I'll pass, thanks.")
+                    stage = END_DIALOGUE
+                }
             }
 
-            1 -> stage = END_DIALOGUE.also { playerl(FaceAnim.FRIENDLY, "No!") }
-            2 -> stage = END_DIALOGUE.also { playerl(FaceAnim.FRIENDLY, "Well for a start, I'm not giving you any of my blood.") }
-            3 -> stage = END_DIALOGUE.also { playerl(FaceAnim.FRIENDLY, "Just as soon as I find something to attack.") }
+            1 -> {
+                playerl(FaceAnim.FRIENDLY, "No!")
+                stage = END_DIALOGUE
+            }
+
+            2 -> {
+                playerl(FaceAnim.FRIENDLY, "Well for a start, I'm not giving you any of my blood.")
+                stage = END_DIALOGUE
+            }
+
+            3 -> {
+                playerl(FaceAnim.FRIENDLY, "Just as soon as I find something to attack.")
+                stage = END_DIALOGUE
+            }
         }
 
         return true

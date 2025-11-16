@@ -17,7 +17,7 @@ import kotlin.random.Random
 @Initializable
 class SwampTitanDialogue : Dialogue {
 
-    private var branch: Int = 0
+    private var branch: Int = -1
 
     override fun newInstance(player: Player?) = SwampTitanDialogue(player)
 
@@ -26,12 +26,17 @@ class SwampTitanDialogue : Dialogue {
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
-        branch = if (inInventory(player, Items.SWAMP_TAR_1939, 1)) {
-            0
-        } else {
-            Random.nextInt(1, 4)
-        }
+        branch = if (inInventory(player, Items.SWAMP_TAR_1939, 1)) 0 else Random.nextInt(1, 4)
         stage = 0
+
+        when (branch) {
+            0 -> npcl(FaceAnim.CHILD_NORMAL, "Do you smell that? Swamp tar, master. I LOVE the smell of swamp tar in the morning. Smells like...victorin.")
+            1 -> npcl(FaceAnim.CHILD_NORMAL, "I'm alone, all alone I say.")
+            2 -> playerl(FaceAnim.FRIENDLY, "Oh, not again. Look, I'll be your friend.")
+            3 -> playerl(FaceAnim.FRIENDLY, "Cheer up, it might never happen!")
+        }
+
+        stage++
         return true
     }
 
@@ -39,7 +44,6 @@ class SwampTitanDialogue : Dialogue {
         when (branch) {
             0 -> {
                 when (stage) {
-                    0 -> { npcl(FaceAnim.CHILD_NORMAL, "Do you smell that? Swamp tar, master. I LOVE the smell of swamp tar in the morning. Smells like...victorin."); stage++ }
                     1 -> { playerl(FaceAnim.FRIENDLY, "You actually LIKE the smell of this stuff? It's gross."); stage++ }
                     2 -> { npcl(FaceAnim.CHILD_NORMAL, "Of course! I am made of swamp, after all."); stage++ }
                     3 -> { playerl(FaceAnim.FRIENDLY, "Oh, I'm sorry. I didn't mean...I meant the swamp tar itself smells gross, not you. You smell like lavender. Yes, lavender."); stage++ }
@@ -49,20 +53,18 @@ class SwampTitanDialogue : Dialogue {
 
             1 -> {
                 when (stage) {
-                    0 -> { npcl(FaceAnim.CHILD_NORMAL, "I'm alone, all alone I say."); stage++ }
-                    1 -> { playerl(FaceAnim.FRIENDLY, "Oh, stop being so melodramatic."); stage++ }
-                    2 -> { npcl(FaceAnim.CHILD_NORMAL, "It's not easy being greenery...well, decomposing greenery."); stage++ }
-                    3 -> { playerl(FaceAnim.HALF_ASKING, "Surely, you're not the only swamp...thing in the world? What about the other swamp titans?"); stage++ }
-                    4 -> { npcl(FaceAnim.CHILD_NORMAL, "They're not my friends...they pick on me...they're so mean..."); stage++ }
-                    5 -> { playerl(FaceAnim.ASKING, "Why would they do that?"); stage++ }
-                    6 -> { npcl(FaceAnim.CHILD_NORMAL, "They think I DON'T smell."); stage++ }
-                    7 -> { playerl(FaceAnim.FRIENDLY, "Oh, yes. That is, er, mean..."); stage = END_DIALOGUE }
+                    1 -> {playerl(FaceAnim.FRIENDLY, "Oh, stop being so melodramatic."); stage++ }
+                    2 -> {npcl(FaceAnim.CHILD_NORMAL, "It's not easy being greenery...well, decomposing greenery."); stage++ }
+                    3 -> {playerl(FaceAnim.HALF_ASKING, "Surely, you're not the only swamp...thing in the world? What about the other swamp titans?"); stage++ }
+                    4 -> {npcl(FaceAnim.CHILD_NORMAL, "They're not my friends...they pick on me...they're so mean..."); stage++ }
+                    5 -> {playerl(FaceAnim.ASKING, "Why would they do that?"); stage++ }
+                    6 -> {npcl(FaceAnim.CHILD_NORMAL, "They think I DON'T smell."); stage++ }
+                    7 -> {playerl(FaceAnim.FRIENDLY, "Oh, yes. That is, er, mean..."); stage = END_DIALOGUE }
                 }
             }
 
             2 -> {
                 when (stage) {
-                    0 -> { playerl(FaceAnim.FRIENDLY, "Oh, not again. Look, I'll be your friend."); stage++ }
                     1 -> { npcl(FaceAnim.CHILD_NORMAL, "You'll be my friend, master?"); stage++ }
                     2 -> { playerl(FaceAnim.FRIENDLY, "Yeah, sure, why not."); stage++ }
                     3 -> { npcl(FaceAnim.CHILD_NORMAL, "Really?"); stage++ }
@@ -79,7 +81,6 @@ class SwampTitanDialogue : Dialogue {
 
             3 -> {
                 when (stage) {
-                    0 -> { playerl(FaceAnim.FRIENDLY, "Cheer up, it might never happen!"); stage++ }
                     1 -> { npcl(FaceAnim.CHILD_NORMAL, "Oh, why did you have to go and say something like that?"); stage++ }
                     2 -> { playerl(FaceAnim.FRIENDLY, "Like what? I'm trying to cheer you up."); stage++ }
                     3 -> { npcl(FaceAnim.CHILD_NORMAL, "There's no hope for me, oh woe, oh woe."); stage++ }

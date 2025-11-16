@@ -26,10 +26,10 @@ class SpiritJellyDialogue : Dialogue {
 
         branch = (Math.random() * 4).toInt()
         stage = when (branch) {
-            0 -> 0   // "Play play play"
-            1 -> 4   // "It's playtime now"
-            2 -> 8   // "Go over there please"
-            3 -> 14  // "What game are we playing"
+            0 -> 0
+            1 -> 4
+            2 -> 8
+            3 -> 14
             else -> 0
         }
 
@@ -45,7 +45,7 @@ class SpiritJellyDialogue : Dialogue {
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (branch) {
-            0 -> { // Play play play
+            0 -> {
                 when (stage) {
                     0 -> { playerl(FaceAnim.FRIENDLY, "The only game I have time to play is the 'Staying Very Still' game."); stage++ }
                     1 -> { npcl(FaceAnim.OLD_NORMAL, "But that game is soooooo booooooring..."); stage++ }
@@ -53,7 +53,7 @@ class SpiritJellyDialogue : Dialogue {
                     3 -> { npcl(FaceAnim.OLD_NORMAL, "Happy happy! I love new games!"); stage = END_DIALOGUE }
                 }
             }
-            1 -> { // It's playtime now
+            1 -> {
                 when (stage) {
                     4 -> { playerl(FaceAnim.FRIENDLY, "Okay, how about we play the 'Staying Very Still' game."); stage++ }
                     5 -> { npcl(FaceAnim.OLD_NORMAL, "But that game is booooooring..."); stage++ }
@@ -61,7 +61,7 @@ class SpiritJellyDialogue : Dialogue {
                     7 -> { npcl(FaceAnim.OLD_NORMAL, "Happy happy!"); stage = END_DIALOGUE }
                 }
             }
-            2 -> { // Can we go over there
+            2 -> {
                 when (stage) {
                     8 -> { playerl(FaceAnim.FRIENDLY, "Go over where?"); stage++ }
                     9 -> { npcl(FaceAnim.OLD_NORMAL, "I dunno, someplace fun, pleasepleaseplease!"); stage++ }
@@ -71,7 +71,7 @@ class SpiritJellyDialogue : Dialogue {
                     13 -> { npcl(FaceAnim.OLD_NORMAL, "Happy happy!"); stage = END_DIALOGUE }
                 }
             }
-            3 -> { // What game are we playing
+            3 -> {
                 when (stage) {
                     14 -> { playerl(FaceAnim.FRIENDLY, "It's called the 'Staying Very Still' game."); stage++ }
                     15 -> { npcl(FaceAnim.OLD_NORMAL, "This game is booooooring..."); stage++ }

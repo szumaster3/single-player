@@ -17,7 +17,7 @@ import kotlin.random.Random
 @Initializable
 class BeaverDialogue : Dialogue {
 
-    private var branch: Int = 0
+    private var branch: Int = -1
 
     override fun newInstance(player: Player?) = BeaverDialogue(player)
 

@@ -34,10 +34,10 @@ class SpiritGuthatriceDialogue : Dialogue {
 
         branch = (Math.random() * 4).toInt()
         stage = when (branch) {
-            0 -> 11 // "fun"
-            1 -> 15 // "hypnotist"
-            2 -> 23 // "staring contest"
-            3 -> 27 // "not good friends"
+            0 -> 11
+            1 -> 15
+            2 -> 23
+            3 -> 27
             else -> 11
         }
 
