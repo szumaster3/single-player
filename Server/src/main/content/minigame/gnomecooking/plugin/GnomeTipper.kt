@@ -7,9 +7,9 @@ import shared.consts.Items
 
 object GnomeTipper {
     private val easyTips = arrayListOf(
-        WeightedChanceItem(995, 50, 100, 30),
-        WeightedChanceItem(995, 23, 76, 50),
-        WeightedChanceItem(995, 10, 250, 20)
+        WeightedChanceItem(Items.COINS_995, 50, 100, 30),
+        WeightedChanceItem(Items.COINS_995, 23, 76, 50),
+        WeightedChanceItem(Items.COINS_995, 10, 250, 20)
     )
 
     private val hardTips = arrayListOf(
@@ -47,12 +47,9 @@ object GnomeTipper {
         WeightedChanceItem(Items.BIRDS_NEST_5072, 1, 2),
         WeightedChanceItem(Items.YEW_SEED_5315, 1, 6),
         WeightedChanceItem(Items.CALQUAT_TREE_SEED_5290, 1, 6)
-
     )
 
-    enum class LEVEL {
-        EASY, HARD
-    }
+    enum class LEVEL { EASY, HARD }
 
     @JvmStatic
     fun getTip(level: LEVEL): Item {
