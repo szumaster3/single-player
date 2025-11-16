@@ -97,6 +97,8 @@ class ModelViewerCommandSet : CommandSet(Privilege.ADMIN) {
         private const val MALE_NPC_ID = 1
         private const val FEMALE_NPC_ID = 5
 
+        var NPC_ID: Int? = null
+
         private val MALE_IMAGE_ENABLE_ID = BookInterface.FANCY_BOOK_3_49_IMAGE_ENABLE_DRAW_IDS[4]
         private val MALE_IMAGE_DRAW_ID = BookInterface.FANCY_BOOK_3_49_IMAGE_DRAW_IDS[4]
 
@@ -117,14 +119,14 @@ class ModelViewerCommandSet : CommandSet(Privilege.ADMIN) {
 
         @Suppress("UNUSED_PARAMETER")
         fun show(player: Player, pageNum: Int, buttonID: Int): Boolean {
-            BookInterface.pageSetup(player, BookInterface.FANCY_BOOK_3_49, "Expressions", CONTENTS)
+            BookInterface.pageSetup(player, BookInterface.FANCY_BOOK_3_49, "Face expressions", CONTENTS)
 
             val anim = EXPRESSIONS.getOrNull(pageNum)
             if (anim != null) {
                 BookInterface.setNpcOnPage(
                     player,
                     pageNum,
-                    MALE_NPC_ID,
+                    NPC_ID ?: MALE_NPC_ID,
                     BookInterface.FANCY_BOOK_3_49,
                     MALE_IMAGE_ENABLE_ID,
                     MALE_IMAGE_DRAW_ID,
@@ -157,11 +159,20 @@ class ModelViewerCommandSet : CommandSet(Privilege.ADMIN) {
         }
 
         define("showexpression", Privilege.ADMIN) { player, args ->
-            if (args.size > 1) {
-                reject(player, "Usage: ::showexpression")
+            if (args.size != 2) {
+                reject(player, "Usage: ::showexpression npcId")
                 return@define
             }
-            BookInterface.openBook(player, BookInterface.FANCY_BOOK_3_49, ::display)
+
+            val id = args[1].toIntOrNull()
+            if (id == null) {
+                reject(player, "Invalid npcId")
+                return@define
+            }
+
+            NPC_ID = id
+
+            BookInterface.openBook(player, BookInterface.FANCY_BOOK_3_49, ::show)
         }
     }
 }
