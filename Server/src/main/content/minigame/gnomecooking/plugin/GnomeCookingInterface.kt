@@ -135,7 +135,6 @@ class GnomeCookingInterface : InterfaceListener {
         }
 
         on(Components.GNOME_RESTAURANT_BATTAS_434) { player, component, _, buttonID, _, _ ->
-            updateBattaInterface(player, component)
             battaMap[buttonID]?.let { attemptMake(player, it) }
             return@on true
         }
@@ -150,7 +149,6 @@ class GnomeCookingInterface : InterfaceListener {
         }
 
         on(Components.GNOME_RESTAURANT_BOWL_435) { player, component, _, buttonID, _, _ ->
-            updateBowlInterface(player, component)
             bowlMap[buttonID]?.let { attemptMake(player, it) }
             return@on true
         }
@@ -165,7 +163,6 @@ class GnomeCookingInterface : InterfaceListener {
         }
 
         on(Components.GNOME_RESTAURANT_COCKTAIL_436) { player, component, _, buttonID, _, _ ->
-            updateCocktailInterface(player, component)
             cocktailMap[buttonID]?.let { attemptMake(player, it) }
             return@on true
         }
@@ -180,7 +177,6 @@ class GnomeCookingInterface : InterfaceListener {
         }
 
         on(Components.GNOME_RESTAURANT_CRUNCHY_437) { player, component, _, buttonID, _, _ ->
-            updateCrunchyInterface(player, component)
             crunchyMap[buttonID]?.let { attemptMake(player, it) }
             return@on true
         }
