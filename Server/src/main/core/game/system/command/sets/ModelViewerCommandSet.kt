@@ -106,8 +106,8 @@ class ModelViewerCommandSet : CommandSet(Privilege.ADMIN) {
         private val FEMALE_IMAGE_DRAW_ID = BookInterface.FANCY_BOOK_3_49_IMAGE_DRAW_IDS[15]
 
         private val EXPRESSIONS = enumValues<FaceAnim>()
-            .filterNot { it.name.startsWith("OLD_") }
-            .filterNot { it.name.startsWith("CHILD_") }
+//            .filterNot { it.name.startsWith("OLD_") }
+//            .filterNot { it.name.startsWith("CHILD_") }
             .filterNot { it.name.startsWith("NEW_") }
             .toTypedArray()
 
