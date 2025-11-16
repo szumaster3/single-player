@@ -53,9 +53,14 @@ class GnomeCookingInterface : InterfaceListener {
          */
 
         onOpen(Components.GNOME_RESTAURANT_BATTAS_434) { player, component ->
-            battaMap.forEach { (button, data) -> sendItemOnInterface(player, component.id, button, data.productId) }
+            sendItemOnInterface(player, component.id, 3,  Items.PREMADE_FRT_BATTA_2225    )
+            sendItemOnInterface(player, component.id, 14, Items.PREMADE_TD_BATTA_2221     )
+            sendItemOnInterface(player, component.id, 25, Items.PREMADE_WM_BATTA_2219     )
+            sendItemOnInterface(player, component.id, 34, Items.PREMADE_VEG_BATTA_2227    )
+            sendItemOnInterface(player, component.id, 47, Items.PREMADE_C_PLUST_BATTA_2223)
             return@onOpen true
         }
+
         on(Components.GNOME_RESTAURANT_BATTAS_434) { player, _, _, buttonID, _, _ ->
             battaMap[buttonID]?.let { attemptMake(player, it) }
             return@on true
@@ -65,10 +70,6 @@ class GnomeCookingInterface : InterfaceListener {
          * Bowls.
          */
 
-        onOpen(Components.GNOME_RESTAURANT_BOWL_435) { player, component ->
-            bowlMap.forEach { (button, data) -> sendItemOnInterface(player, component.id, button, data.productId) }
-            return@onOpen true
-        }
         on(Components.GNOME_RESTAURANT_BOWL_435) { player, _, _, buttonID, _, _ ->
             bowlMap[buttonID]?.let { attemptMake(player, it) }
             return@on true
@@ -79,9 +80,16 @@ class GnomeCookingInterface : InterfaceListener {
          */
 
         onOpen(Components.GNOME_RESTAURANT_COCKTAIL_436) { player, component ->
-            cocktailMap.forEach { (button, data) -> sendItemOnInterface(player, component.id, button, data.productId) }
+            sendItemOnInterface(player, component.id, 3 , Items.WIZARD_BLIZZARD_2054  )
+            sendItemOnInterface(player, component.id, 16, Items.SHORT_GREEN_GUY_2080  )
+            sendItemOnInterface(player, component.id, 23, Items.FRUIT_BLAST_2084,     )
+            sendItemOnInterface(player, component.id, 32, Items.PINEAPPLE_PUNCH_2048  )
+            sendItemOnInterface(player, component.id, 41, Items.DRUNK_DRAGON_2092,    )
+            sendItemOnInterface(player, component.id, 50, Items.CHOC_SATURDAY_2074,   )
+            sendItemOnInterface(player, component.id, 61, Items.BLURBERRY_SPECIAL_2064)
             return@onOpen true
         }
+
         on(Components.GNOME_RESTAURANT_COCKTAIL_436) { player, _, _, buttonID, _, _ ->
             cocktailMap[buttonID]?.let { attemptMake(player, it) }
             return@on true
@@ -92,9 +100,13 @@ class GnomeCookingInterface : InterfaceListener {
          */
 
         onOpen(Components.GNOME_RESTAURANT_CRUNCHY_437) { player, component ->
-            crunchyMap.forEach { (button, data) -> sendItemOnInterface(player, component.id, button, data.productId) }
+            sendItemOnInterface(player, component.id, 3 , Items.TOAD_CRUNCHIES_9538    )
+            sendItemOnInterface(player, component.id, 10, Items.SPICY_CRUNCHIES_9540   )
+            sendItemOnInterface(player, component.id, 17, Items.WORM_CRUNCHIES_9542    )
+            sendItemOnInterface(player, component.id, 26, Items.CHOCCHIP_CRUNCHIES_9544)
             return@onOpen true
         }
+
         on(Components.GNOME_RESTAURANT_CRUNCHY_437) { player, _, _, buttonID, _, _ ->
             crunchyMap[buttonID]?.let { attemptMake(player, it) }
             return@on true

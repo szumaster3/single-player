@@ -7,6 +7,7 @@ import core.game.dialogue.FaceAnim
 import core.game.node.item.Item
 import core.tools.END_DIALOGUE
 import core.tools.colorize
+import shared.consts.Items
 
 /**
  * Represents the Gnome competition completion dialogue.
@@ -25,7 +26,7 @@ class GCCompletionDialogue(val job: GnomeCookingJob) : DialogueFile() {
                     var curPoints = player!!.getAttribute("$GC_BASE_ATTRIBUTE:$GC_POINTS", 0)
                     curPoints += 3
                     if (curPoints == 12) {
-                        player!!.inventory.add(Item(9474))
+                        player!!.inventory.add(Item(Items.REWARD_TOKEN_9474))
                         player!!.sendMessage(colorize("%RYou have been granted a food delivery token. Use it to have food delivered."))
                     } else if (curPoints % 12 == 0) {
                         var curRedeems = player!!.getAttribute("$GC_BASE_ATTRIBUTE:$GC_REDEEMABLE_FOOD", 0)
