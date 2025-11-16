@@ -14,6 +14,9 @@ import shared.consts.Components
 import shared.consts.Items
 import shared.consts.Scenery
 
+// TODO:
+//  You just need to bake these crunchies and garnish with chocolate dust to complete.
+
 class GnomeCookingListener : InteractionListener {
 
     private val cookLoc = intArrayOf(Scenery.GNOME_COOKER_17131, Scenery.RANGE_2728)
@@ -221,7 +224,7 @@ class GnomeCookingListener : InteractionListener {
                 val requiredCream = Item(Items.POT_OF_CREAM_2130, 2)
                 val requiredChocDust = Item(Items.CHOCOLATE_DUST_1975)
                 if (!inInventory(player, requiredCream.id, requiredCream.amount) || !inInventory(player, requiredChocDust.id)) {
-                    sendDialogue(player, "You don't have enough ingredients to finish that.")
+                    sendDialogueLines(player, "You just need to pour this into an empty cocktail glass, heat it and", "garnish with chocolate dust and cream before serving.")
                     return@onUseWith true
                 }
                 removeItem(player, requiredCream)

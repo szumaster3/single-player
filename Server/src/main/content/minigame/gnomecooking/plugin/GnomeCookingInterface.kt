@@ -1,6 +1,7 @@
 package content.minigame.gnomecooking.plugin
 
 import core.api.*
+import core.game.component.Component
 import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
@@ -8,6 +9,9 @@ import core.game.node.item.Item
 import shared.consts.Components
 import shared.consts.Items
 
+/**
+ * Represents gnome cooking interfaces.
+ */
 class GnomeCookingInterface : InterfaceListener {
 
     private data class ProductData(val productId: Int, val levelReq: Int, val experience: Double = 0.0, val requiredItems: Array<Item>, val needsSpice: Boolean = false, val isBowl: Boolean = false, val isBatta: Boolean = false, val isCocktail: Boolean = false, val isCrunchy: Boolean = false)
@@ -21,21 +25,21 @@ class GnomeCookingInterface : InterfaceListener {
         )
 
         private val battaMap = mapOf(
-            3  to ProductData(Items.HALF_MADE_BATTA_9480, 25, 40.0, arrayOf(Item(Items.EQUA_LEAVES_2128, 4), Item(Items.LIME_CHUNKS_2122), Item(Items.ORANGE_CHUNKS_2110), Item(Items.PINEAPPLE_CHUNKS_2116)), needsSpice = false, isBatta = true),
-            14 to ProductData(Items.HALF_MADE_BATTA_9482, 26, 40.0, arrayOf(Item(Items.EQUA_LEAVES_2128), Item(Items.CHEESE_1985), Item(Items.TOADS_LEGS_2152)), needsSpice = true, isBatta = true),
+            3  to ProductData(Items.HALF_MADE_BATTA_9480, 25, 40.0, arrayOf(Item(Items.PINEAPPLE_CHUNKS_2116), Item(Items.ORANGE_CHUNKS_2110), Item(Items.LIME_CHUNKS_2122), Item(Items.EQUA_LEAVES_2128, 4)), needsSpice = false, isBatta = true),
+            14 to ProductData(Items.HALF_MADE_BATTA_9482, 26, 40.0, arrayOf(Item(Items.EQUA_LEAVES_2128), Item(Items.TOADS_LEGS_2152), Item(Items.CHEESE_1985)), needsSpice = true, isBatta = true),
             25 to ProductData(Items.HALF_MADE_BATTA_9485, 27, 40.0, arrayOf(Item(Items.KING_WORM_2162), Item(Items.CHEESE_1985)), needsSpice = true, isBatta = true),
-            34 to ProductData(Items.HALF_MADE_BATTA_9483, 28, 40.0, arrayOf(Item(Items.TOMATO_1982, 2), Item(Items.CHEESE_1985), Item(Items.DWELLBERRIES_2126), Item(Items.ONION_1957), Item(Items.CABBAGE_1965)), isBatta = true),
+            34 to ProductData(Items.HALF_MADE_BATTA_9483, 28, 40.0, arrayOf(Item(Items.TOMATO_1982, 2), Item(Items.ONION_1957), Item(Items.CABBAGE_1965), Item(Items.DWELLBERRIES_2126), Item(Items.CHEESE_1985)), isBatta = true),
             47 to ProductData(Items.HALF_MADE_BATTA_9478, 29, 40.0, arrayOf(Item(Items.TOMATO_1982), Item(Items.CHEESE_1985)), isBatta = true)
         )
 
         private val cocktailMap = mapOf(
-            3  to ProductData(Items.MIXED_BLIZZARD_9566, 18, 110.0, arrayOf(Item(Items.VODKA_2015, 2), Item(Items.GIN_2019), Item(Items.LIME_2120), Item(Items.LEMON_2102), Item(Items.ORANGE_2108)), isCocktail = true),
+            3  to ProductData(Items.MIXED_BLIZZARD_9566, 18, 110.0, arrayOf(Item(Items.VODKA_2015, 2), Item(Items.GIN_2019), Item(Items.ORANGE_2108), Item(Items.LIME_2120), Item(Items.LEMON_2102)), isCocktail = true),
             16 to ProductData(Items.MIXED_SGG_9567, 20, 120.0, arrayOf(Item(Items.VODKA_2015), Item(Items.LIME_2120, 3)), isCocktail = true),
             23 to ProductData(Items.MIXED_BLAST_9568, 6, 50.0, arrayOf(Item(Items.PINEAPPLE_2114), Item(Items.LEMON_2102), Item(Items.ORANGE_2108)), isCocktail = true),
-            32 to ProductData(Items.MIXED_PUNCH_9569, 8, 70.0, arrayOf(Item(Items.PINEAPPLE_2114, 2), Item(Items.LEMON_2102), Item(Items.ORANGE_2108)), isCocktail = true),
+            32 to ProductData(Items.MIXED_PUNCH_9569, 8, 70.0, arrayOf(Item(Items.PINEAPPLE_2114, 2), Item(Items.ORANGE_2108), Item(Items.LEMON_2102)), isCocktail = true),
             41 to ProductData(Items.MIXED_DRAGON_9574, 32, 160.0, arrayOf(Item(Items.VODKA_2015), Item(Items.GIN_2019), Item(Items.DWELLBERRIES_2126)), isCocktail = true),
-            50 to ProductData(Items.MIXED_SATURDAY_9571, 33, 170.0, arrayOf(Item(Items.WHISKY_2017), Item(Items.CHOCOLATE_BAR_1973), Item(Items.EQUA_LEAVES_2128), Item(Items.BUCKET_OF_MILK_1927)), isCocktail = true),
-            61 to ProductData(Items.MIXED_BLURBERRY_SPECIAL_9570, 37, 180.0, arrayOf(Item(Items.VODKA_2015), Item(Items.BRANDY_2021), Item(Items.GIN_2019), Item(Items.LEMON_2102, 2), Item(Items.ORANGE_2108)), isCocktail = true)
+            50 to ProductData(Items.MIXED_SATURDAY_9571, 33, 170.0, arrayOf(Item(Items.WHISKY_2017), Item(Items.EQUA_LEAVES_2128), Item(Items.BUCKET_OF_MILK_1927), Item(Items.CHOCOLATE_BAR_1973)), isCocktail = true),
+            61 to ProductData(Items.MIXED_BLURBERRY_SPECIAL_9570, 37, 180.0, arrayOf(Item(Items.VODKA_2015), Item(Items.BRANDY_2021), Item(Items.GIN_2019), Item(Items.ORANGE_2108), Item(Items.LEMON_2102, 2)), isCocktail = true)
         )
 
         private val crunchyMap = mapOf(
@@ -44,6 +48,79 @@ class GnomeCookingInterface : InterfaceListener {
             17 to ProductData(Items.HALF_MADE_CRUNCHY_9583, 14, 30.0, arrayOf(Item(Items.EQUA_LEAVES_2128), Item(Items.KING_WORM_2162, 2)), needsSpice = true, isCrunchy = true),
             26 to ProductData(Items.HALF_MADE_CRUNCHY_9577, 16, 30.0, arrayOf(Item(Items.CHOCOLATE_BAR_1973, 2)), needsSpice = true, isCrunchy = true)
         )
+
+        /**
+         * Updates the cocktail interface for the player.
+         */
+        fun updateCocktailInterface(player: Player, component: Component) {
+            cocktailMap.forEach { (buttonID, productData) ->
+                val itemId = if (productData.requiredItems.all { player.inventory.containsItem(it) })
+                {
+                    productData.productId
+                } else {
+                    9489
+                }
+                sendItemOnInterface(player, component.id, buttonID, itemId)
+            }
+        }
+
+        /**
+         * Updates the batta interface for the player.
+         */
+        fun updateBattaInterface(player: Player, component: Component) {
+            battaMap.forEach { (buttonID, productData) ->
+                val itemID = if (productData.requiredItems.all { player.inventory.containsItem(it) })
+                {
+                    when (buttonID) {
+                        3  -> Items.PICTURE_2275
+                        14 -> Items.PICTURE_2193
+                        25 -> Items.PICTURE_2251
+                        34 -> Items.PICTURE_2179
+                        47 -> Items.PICTURE_2257
+                        else -> Items.NULL_9526
+                    }
+                } else {
+                    Items.NULL_9526
+                }
+                sendItemOnInterface(player, component.id, buttonID, itemID)
+            }
+        }
+
+        /**
+         * Updates the bowl interface for the player.
+         */
+        fun updateBowlInterface(player: Player, component: Component) {
+            bowlMap.forEach { (buttonID, productData) ->
+                val itemID = if (productData.requiredItems.all { player.inventory.containsItem(it) })
+                {
+                    when (buttonID) {
+                        3  -> Items.PICTURE_2189
+                        12 -> Items.PICTURE_2193
+                        21 -> Items.PICTURE_2193
+                        34 -> Items.PICTURE_2181
+                        else -> 2888
+                    }
+                } else {
+                    2888
+                }
+                sendItemOnInterface(player, component.id, buttonID, itemID)
+            }
+        }
+
+        /**
+         * Updates the crunchy interface for the player.
+         */
+        fun updateCrunchyInterface(player: Player, component: Component) {
+            crunchyMap.forEach { (buttonID, productData) ->
+                val itemID = if (productData.requiredItems.all { player.inventory.containsItem(it) })
+                {
+                    productData.productId
+                } else {
+                    Items.NULL_9537
+                }
+                sendItemOnInterface(player, component.id, buttonID, itemID)
+            }
+        }
     }
 
     override fun defineInterfaceListeners() {
@@ -53,15 +130,12 @@ class GnomeCookingInterface : InterfaceListener {
          */
 
         onOpen(Components.GNOME_RESTAURANT_BATTAS_434) { player, component ->
-            sendItemOnInterface(player, component.id, 3,  Items.PREMADE_FRT_BATTA_2225    )
-            sendItemOnInterface(player, component.id, 14, Items.PREMADE_TD_BATTA_2221     )
-            sendItemOnInterface(player, component.id, 25, Items.PREMADE_WM_BATTA_2219     )
-            sendItemOnInterface(player, component.id, 34, Items.PREMADE_VEG_BATTA_2227    )
-            sendItemOnInterface(player, component.id, 47, Items.PREMADE_C_PLUST_BATTA_2223)
+            updateBattaInterface(player, component)
             return@onOpen true
         }
 
-        on(Components.GNOME_RESTAURANT_BATTAS_434) { player, _, _, buttonID, _, _ ->
+        on(Components.GNOME_RESTAURANT_BATTAS_434) { player, component, _, buttonID, _, _ ->
+            updateBattaInterface(player, component)
             battaMap[buttonID]?.let { attemptMake(player, it) }
             return@on true
         }
@@ -70,7 +144,13 @@ class GnomeCookingInterface : InterfaceListener {
          * Bowls.
          */
 
-        on(Components.GNOME_RESTAURANT_BOWL_435) { player, _, _, buttonID, _, _ ->
+        onOpen(Components.GNOME_RESTAURANT_BOWL_435) { player, component ->
+            updateBowlInterface(player, component)
+            return@onOpen true
+        }
+
+        on(Components.GNOME_RESTAURANT_BOWL_435) { player, component, _, buttonID, _, _ ->
+            updateBowlInterface(player, component)
             bowlMap[buttonID]?.let { attemptMake(player, it) }
             return@on true
         }
@@ -80,17 +160,12 @@ class GnomeCookingInterface : InterfaceListener {
          */
 
         onOpen(Components.GNOME_RESTAURANT_COCKTAIL_436) { player, component ->
-            sendItemOnInterface(player, component.id, 3 , Items.WIZARD_BLIZZARD_2054  )
-            sendItemOnInterface(player, component.id, 16, Items.SHORT_GREEN_GUY_2080  )
-            sendItemOnInterface(player, component.id, 23, Items.FRUIT_BLAST_2084,     )
-            sendItemOnInterface(player, component.id, 32, Items.PINEAPPLE_PUNCH_2048  )
-            sendItemOnInterface(player, component.id, 41, Items.DRUNK_DRAGON_2092,    )
-            sendItemOnInterface(player, component.id, 50, Items.CHOC_SATURDAY_2074,   )
-            sendItemOnInterface(player, component.id, 61, Items.BLURBERRY_SPECIAL_2064)
+            updateCocktailInterface(player, component)
             return@onOpen true
         }
 
-        on(Components.GNOME_RESTAURANT_COCKTAIL_436) { player, _, _, buttonID, _, _ ->
+        on(Components.GNOME_RESTAURANT_COCKTAIL_436) { player, component, _, buttonID, _, _ ->
+            updateCocktailInterface(player, component)
             cocktailMap[buttonID]?.let { attemptMake(player, it) }
             return@on true
         }
@@ -100,14 +175,12 @@ class GnomeCookingInterface : InterfaceListener {
          */
 
         onOpen(Components.GNOME_RESTAURANT_CRUNCHY_437) { player, component ->
-            sendItemOnInterface(player, component.id, 3 , Items.TOAD_CRUNCHIES_9538    )
-            sendItemOnInterface(player, component.id, 10, Items.SPICY_CRUNCHIES_9540   )
-            sendItemOnInterface(player, component.id, 17, Items.WORM_CRUNCHIES_9542    )
-            sendItemOnInterface(player, component.id, 26, Items.CHOCCHIP_CRUNCHIES_9544)
+            updateCrunchyInterface(player, component)
             return@onOpen true
         }
 
-        on(Components.GNOME_RESTAURANT_CRUNCHY_437) { player, _, _, buttonID, _, _ ->
+        on(Components.GNOME_RESTAURANT_CRUNCHY_437) { player, component, _, buttonID, _, _ ->
+            updateCrunchyInterface(player, component)
             crunchyMap[buttonID]?.let { attemptMake(player, it) }
             return@on true
         }
@@ -130,6 +203,9 @@ class GnomeCookingInterface : InterfaceListener {
         }
 
         data.requiredItems.forEach { removeItem(player, it) }
+
+        if(data.productId == Items.MIXED_SATURDAY_9571)
+            addItem(player, Items.BUCKET_1925)
 
         when {
             data.isBowl     -> removeItem(player, Items.HALF_BAKED_BOWL_2177)

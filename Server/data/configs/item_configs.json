@@ -81651,6 +81651,27 @@
     "id": "9570"
   },
   {
+    "examine": "This Choc Saturday needs pouring, heating and cream and chocolate dust.",
+    "durability": null,
+    "name": "Mixed saturday",
+    "archery_ticket_price": "0",
+    "id": "9571"
+  },
+  {
+    "examine": "This Choc Saturday needs cream and chocolate dust to finish.",
+    "durability": null,
+    "name": "Mixed saturday",
+    "archery_ticket_price": "0",
+    "id": "9573"
+  },
+  {
+    "examine": "This Drunk Dragon needs pineapple chunks, cream and heating.",
+    "durability": null,
+    "name": "Mixed dragon",
+    "archery_ticket_price": "0",
+    "id": "9575"
+  },
+  {
     "examine": "This choco chip crunchy needs baking and garnishing with chocolate dust.",
     "durability": null,
     "name": "Half made crunchy",
