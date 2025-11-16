@@ -17,7 +17,7 @@ class LavaTitanOptionPlugin : OptionHandler() {
     }
 
     override fun handle(player: Player, node: Node, option: String): Boolean {
-        player.dialogueInterpreter.open(8700, node.asNpc())
+        player.dialogueInterpreter.open(NPCs.LAVA_TITAN_7341, node.asNpc())
         return true
     }
 }
