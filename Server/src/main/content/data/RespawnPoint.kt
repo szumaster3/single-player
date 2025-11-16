@@ -1,9 +1,7 @@
 package content.data
 
 import core.ServerConstants
-import core.api.setAttribute
 import core.game.node.entity.Entity
-import core.game.node.entity.player.Player
 import core.game.world.map.Location
 
 /**
