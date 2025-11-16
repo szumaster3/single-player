@@ -576,7 +576,7 @@ public class SceneryDefinition extends Definition<Scenery> {
      */
     public static void parse() throws Throwable {
         for (int objectId = 0; objectId < Cache.getObjectDefinitionsSize(); objectId++) {
-            byte[] data = Cache.getIndexes()[16].getFileData(getContainerId(objectId), objectId & 0xff);
+            byte[] data = Cache.getIndexes()[16].getFileData(getContainerId(objectId), objectId & 0xff, null);
             if (data == null) {
                 SceneryDefinition.getDefinitions().put(objectId, new SceneryDefinition());
                 //SystemLogger.logErr("Could not load object definitions for id " + objectId + " - no data!");

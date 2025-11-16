@@ -337,7 +337,7 @@ public class Region {
                 //plane.getProjectileFlags().setClippingFlags(new int[SIZE][SIZE]);
             }
             if (mapscapeId > -1) {
-                ByteBuffer mapscape = ByteBuffer.wrap(Cache.getIndexes()[5].getCacheFile().getContainerUnpackedData(mapscapeId));
+                ByteBuffer mapscape = ByteBuffer.wrap(Cache.getIndexes()[5].getCacheFile().getContainerUnpackedData(mapscapeId,null));
                 MapscapeParser.parse(region, mapscapeData, mapscape);
             }
             region.hasFlags = dynamic;

@@ -67,7 +67,7 @@ public class DataMap {
         if (def != null) {
             return def;
         }
-        byte[] data = Cache.getIndexes()[17].getFileData(id >>> 8, id & 0xFF);
+        byte[] data = Cache.getIndexes()[17].getFileData(id >>> 8, id & 0xFF, null);
         def = parse(id, data);
         definitions.put(id, def);
         return def;

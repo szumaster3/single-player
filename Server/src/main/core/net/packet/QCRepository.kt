@@ -339,6 +339,6 @@ object QCRepository {
     }
 
     private fun getQCString(index: Int): String {
-        return ByteBufferUtils.getString(ByteBuffer.wrap(quickChatIndex.getFileData(1, index)))
+        return ByteBufferUtils.getString(ByteBuffer.wrap(quickChatIndex?.getFileData(1, index)))
     }
 }

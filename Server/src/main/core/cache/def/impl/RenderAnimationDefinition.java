@@ -69,7 +69,7 @@ public class RenderAnimationDefinition {
 		if (animId == -1) {
 			return null;
 		}
-		byte[] data = Cache.getIndexes()[2].getFileData(32, animId);
+		byte[] data = Cache.getIndexes()[2].getFileData(32, animId, null);
 		RenderAnimationDefinition defs = new RenderAnimationDefinition();
 		if (data != null) {
 			defs.parse(ByteBuffer.wrap(data));

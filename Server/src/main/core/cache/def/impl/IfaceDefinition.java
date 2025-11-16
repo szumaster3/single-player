@@ -122,7 +122,7 @@ public class IfaceDefinition {
         def.parent = id;
         defCache.put(def.id, def);
 
-        byte[] dataRaw = Cache.getIndexes()[3].getFileData(id, childIndex);
+        byte[] dataRaw = Cache.getIndexes()[3].getFileData(id, childIndex, null);
         if (dataRaw == null) return def;
 
         IoBuffer data = new IoBuffer(-1, PacketHeader.NORMAL, ByteBuffer.wrap(dataRaw));

@@ -256,7 +256,7 @@ public class ItemDefinition extends Definition<Item> {
      */
     public static void parse() {
         for (int itemId = 0; itemId < Cache.getItemDefinitionsSize(); itemId++) {
-            byte[] data = Cache.getIndexes()[19].getFileData(itemId >>> 8, itemId & 0xFF);
+            byte[] data = Cache.getIndexes()[19].getFileData(itemId >>> 8, itemId & 0xFF, null);
             if (data == null) {
                 ItemDefinition.getDefinitions().put(itemId, new ItemDefinition());
                 continue;

@@ -1,4 +1,4 @@
-package core.cache.gzip;
+package core.cache.util.gzip;
 
 import java.nio.ByteBuffer;
 import java.util.zip.Inflater;

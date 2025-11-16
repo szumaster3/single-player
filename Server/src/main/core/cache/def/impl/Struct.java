@@ -50,7 +50,7 @@ public class Struct {
         if (def != null) {
             return def;
         }
-        byte[] data = Cache.getIndexes()[2].getFileData(26, id);
+        byte[] data = Cache.getIndexes()[2].getFileData(26, id, null);
         def = parse(id, data);
 
         definitions.put(id, def);

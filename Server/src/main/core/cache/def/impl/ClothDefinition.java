@@ -60,7 +60,7 @@ public final class ClothDefinition {
      */
     public static ClothDefinition forId(int clothId) {
         ClothDefinition def = new ClothDefinition();
-        byte[] bs = Cache.getIndexes()[2].getFileData(3, clothId);
+        byte[] bs = Cache.getIndexes()[2].getFileData(3, clothId, null);
         if (bs != null) {
             def.load(ByteBuffer.wrap(bs));
         }

@@ -107,7 +107,7 @@ public final class CS2Mapping {
             return mapping;
         }
         mapping = new CS2Mapping(scriptId);
-        byte[] bs = Cache.getIndexes()[17].getFileData(scriptId >>> 8, scriptId & 0xFF);
+        byte[] bs = Cache.getIndexes()[17].getFileData(scriptId >>> 8, scriptId & 0xFF, null);
         if (bs != null) {
             mapping.load(ByteBuffer.wrap(bs));
         } else {

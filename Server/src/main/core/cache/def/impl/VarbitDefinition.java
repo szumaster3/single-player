@@ -98,7 +98,7 @@ public final class VarbitDefinition {
         }
 
         def = new VarbitDefinition(id);
-        byte[] bs = Cache.getIndexes()[22].getFileData(id >>> 10, id & 0x3ff);
+        byte[] bs = Cache.getIndexes()[22].getFileData(id >>> 10, id & 0x3ff, null);
         if (bs != null) {
             ByteBuffer buffer = ByteBuffer.wrap(bs);
             int opcode = 0;

@@ -198,7 +198,7 @@ public final class NPCDefinition extends Definition<NPC> {
         NPCDefinition def = DEFINITIONS.get(id);
         if (def == null) {
             def = new NPCDefinition(id);
-            byte[] data = Cache.getIndexes()[18].getFileData(id >>> 7, id & 0x7f);
+            byte[] data = Cache.getIndexes()[18].getFileData(id >>> 7, id & 0x7f,null);
             if (data == null) {
                 if (id != -1) {
 

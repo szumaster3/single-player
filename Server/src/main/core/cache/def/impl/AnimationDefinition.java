@@ -48,7 +48,7 @@ public final class AnimationDefinition {
             if (defs != null) {
                 return defs;
             }
-            byte[] data = Cache.getIndexes()[20].getFileData(emoteId >>> 7, emoteId & 0x7f);
+            byte[] data = Cache.getIndexes()[20].getFileData(emoteId >>> 7, emoteId & 0x7f, null);
             defs = new AnimationDefinition();
             if (data != null) {
                 defs.readValueLoop(ByteBuffer.wrap(data));
