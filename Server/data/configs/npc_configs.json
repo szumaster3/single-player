@@ -15977,7 +15977,7 @@
     "attack_level": "1"
   },
   {
-    "examine": "",
+    "examine": "I can see fish swimming in the water.",
     "name": "Fishing spot",
     "defence_level": "1",
     "safespot": null,
@@ -15989,7 +15989,7 @@
     "attack_level": "1"
   },
   {
-    "examine": "",
+    "examine": "He can look after my money.",
     "name": "Banker",
     "defence_level": "1",
     "safespot": null,
