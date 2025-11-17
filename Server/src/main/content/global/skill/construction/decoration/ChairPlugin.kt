@@ -44,7 +44,6 @@ class ChairPlugin : OptionHandler() {
 
         player.pulseManager.run(object : Pulse(2) {
             override fun pulse(): Boolean {
-                player.animate(Animation.create(animID))
                 replaceScenery(node.asScenery(),83,-1)
                 return false
             }
