@@ -1,4 +1,4 @@
-package content.region.kandarin.baxtorian.barbarian_training
+package content.region.kandarin.baxtorian.plugin.barbarian_training
 
 import core.game.node.entity.npc.NPC
 import core.game.world.map.Location

@@ -1,6 +1,7 @@
-package content.region.kandarin.baxtorian.barbarian_training
+package content.region.kandarin.baxtorian.plugin.barbarian_training
 
 import content.global.skill.herblore.potions.BarbarianMix
+import content.region.kandarin.baxtorian.plugin.BarbarianTraining
 import core.api.*
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener

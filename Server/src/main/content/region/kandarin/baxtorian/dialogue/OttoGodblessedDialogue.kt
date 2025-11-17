@@ -1,7 +1,7 @@
 package content.region.kandarin.baxtorian.dialogue
 
 import content.data.GameAttributes
-import content.region.kandarin.baxtorian.barbarian_training.BarbarianTraining
+import content.region.kandarin.baxtorian.plugin.BarbarianTraining
 import core.api.*
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
@@ -73,7 +73,8 @@ class OttoGodblessedDialogue(player: Player? = null) : Dialogue(player) {
                     "Choose an option:",
                     "Please, supply me details of your cunning with harpoons.",
                     if (player.savedData.activityData.isBarbarianFishingRod) "What was that secret knowledge of Herblore we talked of?" else "Are there any ways to use a fishing rod which I might learn?",
-                    if (player.savedData.activityData.isBarbarianFiremakingBow) "I have completed Firemaking with a bow. What follows this?" else if(player.getAttribute(BarbarianTraining.PYRESHIP_START, false) && !player.savedData.activityData.isBarbarianFiremakingPyre) "Could you tell me more of these spirits you continually refer to?" else "My mind is ready for your Firemaking wisdom, please instruct me.",
+                    if (player.savedData.activityData.isBarbarianFiremakingBow) "I have completed Firemaking with a bow. What follows this?" else if(player.getAttribute(
+                            BarbarianTraining.PYRESHIP_START, false) && !player.savedData.activityData.isBarbarianFiremakingPyre) "Could you tell me more of these spirits you continually refer to?" else "My mind is ready for your Firemaking wisdom, please instruct me.",
                     if (player.savedData.activityData.isBarbarianSmithingSpear) "I've created a spear!" else "Tell me more about the use of spears."
                 )
                 setAttribute(player, BarbarianTraining.BARBARIAN_TRAINING, true)
@@ -104,7 +105,8 @@ class OttoGodblessedDialogue(player: Player? = null) : Dialogue(player) {
                 4 -> if (player.savedData.activityData.isBarbarianSmithingSpear) {
                     npc(FaceAnim.NEUTRAL, "The manufacture of spears is now yours as a speciality.", "Use your skill well.")
                     stage = 300
-                } else if(player.savedData.activityData.isBarbarianSmithingSpear && player.getAttribute(BarbarianTraining.FISHING_FULL, false)) {
+                } else if(player.savedData.activityData.isBarbarianSmithingSpear && player.getAttribute(
+                        BarbarianTraining.FISHING_FULL, false)) {
                     player(FaceAnim.HALF_ASKING,"What of the one handed spears of which you spoke?")
                     stage = 308
                 } else {

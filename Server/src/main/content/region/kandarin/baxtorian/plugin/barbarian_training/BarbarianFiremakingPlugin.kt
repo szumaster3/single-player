@@ -1,8 +1,10 @@
-package content.region.kandarin.baxtorian.barbarian_training
+package content.region.kandarin.baxtorian.plugin.barbarian_training
 
 import content.data.skill.SkillingTool
+import content.global.skill.firemaking.FireMakingPlugin
 import content.global.skill.firemaking.Log
 import content.global.skill.firemaking.Log.Companion.forId
+import content.region.kandarin.baxtorian.plugin.BarbarianTraining
 import core.api.*
 import core.game.event.LitFireEvent
 import core.game.interaction.IntType
@@ -187,20 +189,28 @@ private class BarbFiremakingPulse(
         return true
     }
 
-    private fun createFire() {
-        if (!groundItem!!.isActive) return
-
+    fun createFire() {
+        if (!groundItem!!.isActive) {
+            return
+        }
+        val o = Scenery(83, player.location)
+        val `object` = getObject(o.location)
         val scenery = Scenery(fire!!.fireId, player.location)
-        SceneryBuilder.add(scenery, fire.life, getAsh(player, fire, scenery))
+        SceneryBuilder.add(scenery, fire.life) {
+            GroundItemManager.create(FireMakingPlugin.getAsh(player, fire, scenery))
+            if (`object` != null) {
+                SceneryBuilder.add(`object`)
+            }
+        }
+
         GroundItemManager.destroy(groundItem)
         player.moveStep()
+
         player.faceLocation(scenery.getFaceLocation(player.location))
-        player.skills.addExperience(Skills.FIREMAKING, fire.xp)
+        player.getSkills().addExperience(Skills.FIREMAKING, fire.xp)
 
         setLastFire()
         player.dispatch(LitFireEvent(fire.logId))
-        player.graphics(Graphics(-1))
-
         if (getAttribute(player, BarbarianTraining.FM_BASE, false)) {
             removeAttribute(player, BarbarianTraining.FM_BASE)
             player.savedData.activityData.isBarbarianFiremakingBow = true

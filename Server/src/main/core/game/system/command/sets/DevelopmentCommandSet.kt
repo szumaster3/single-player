@@ -5,7 +5,7 @@ import content.data.RespawnPoint
 import content.global.activity.jobs.JobManager
 import content.global.skill.summoning.SummoningPouch
 import content.region.island.tutorial.plugin.TutorialStage
-import content.region.kandarin.baxtorian.barbarian_training.BarbarianTraining
+import content.region.kandarin.baxtorian.plugin.BarbarianTraining
 import core.api.*
 import core.cache.def.impl.NPCDefinition
 import core.cache.def.impl.VarbitDefinition

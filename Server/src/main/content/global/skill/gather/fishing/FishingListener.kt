@@ -3,7 +3,7 @@ package content.global.skill.gather.fishing
 import content.data.GameAttributes
 import content.global.plugins.item.equipment.gloves.FOGGlovesListener
 import content.global.skill.summoning.familiar.Forager
-import content.region.kandarin.baxtorian.barbarian_training.BarbarianTraining
+import content.region.kandarin.baxtorian.plugin.BarbarianTraining
 import core.api.*
 import core.game.event.ResourceProducedEvent
 import core.game.interaction.Clocks
