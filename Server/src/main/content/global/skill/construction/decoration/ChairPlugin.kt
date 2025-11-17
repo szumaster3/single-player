@@ -33,7 +33,6 @@ class ChairPlugin : OptionHandler() {
         val animID = if (scenery.type == SceneryType.CentrepieceDiagonal) chair.anim + 1 else chair.anim
         val sitAnimID = chair.sitAnim
 
-        // Always north, the rest is handled by animation.
         forceMove(player, player.location, scenery.location, 0, 30, Direction.NORTH, sitAnimID)
 
         player.locks.lockInteractions(600_000)
@@ -44,6 +43,7 @@ class ChairPlugin : OptionHandler() {
 
         player.pulseManager.run(object : Pulse(2) {
             override fun pulse(): Boolean {
+                player.animate(Animation.create(animID))
                 replaceScenery(node.asScenery(),83,-1)
                 return false
             }
