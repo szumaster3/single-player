@@ -16,6 +16,7 @@ import shared.consts.NPCs
 import shared.consts.Scenery
 
 class WerewolfCourseListener : InteractionListener {
+
     override fun defineListeners() {
         on(TRAPDOOR, IntType.SCENERY, "open") { player, node ->
             sendMessage(player, "The trapdoor opens...")
@@ -29,43 +30,63 @@ class WerewolfCourseListener : InteractionListener {
         }
 
         on(OPEN_TRAPDOOR, IntType.SCENERY, "climb-down") { player, node ->
-            findLocalNPC(player, NPCs.WEREWOLF_1665)?.let { face(player, it) }
-            findLocalNPC(player, NPCs.WEREWOLF_1665)?.let { face(it, player, 1) }
-            if (!anyInEquipment(player, Items.RING_OF_CHAROS_4202, Items.RING_OF_CHAROSA_6465) || getStatLevel(player, Skills.AGILITY) < 60) {
-                sendNPCDialogueLines(player, NPCs.WEREWOLF_1665, FaceAnim.CHILD_NORMAL, false, "You can't go down there human. If it wasn't my duty", "to guard this trapdoor, I would be relieving you of the", "burden of your life right now.")
+            val werewolf = findLocalNPC(player, NPCs.WEREWOLF_1665)
+            werewolf?.let {
+                face(player, it)
+                face(it, player, 1)
+            }
+
+            if (!anyInEquipment(player, Items.RING_OF_CHAROS_4202, Items.RING_OF_CHAROSA_6465)
+                || getStatLevel(player, Skills.AGILITY) < 60) {
+                sendNPCDialogueLines(
+                    player,
+                    NPCs.WEREWOLF_1665,
+                    FaceAnim.CHILD_NORMAL,
+                    false,
+                    "You can't go down there human. If it wasn't my duty",
+                    "to guard this trapdoor, I would be relieving you of the",
+                    "burden of your life right now."
+                )
             } else {
-                sendNPCDialogueLines(player, NPCs.WEREWOLF_1665, FaceAnim.CHILD_NORMAL, false, "Good luck down there, my friend. Remember, to the", "west is the main agility course, while to the east is a", "skullball course.")
+                sendNPCDialogueLines(
+                    player,
+                    NPCs.WEREWOLF_1665,
+                    FaceAnim.CHILD_NORMAL,
+                    false,
+                    "Good luck down there, my friend. Remember, to the",
+                    "west is the main agility course, while to the east is a",
+                    "skullball course."
+                )
+
                 addDialogueAction(player) { _, _ ->
                     face(player, node)
                     sendMessage(player, "You climb down through the trapdoor.")
                     ClimbActionHandler.climb(
                         player,
                         Animation(Animations.HUMAN_BURYING_BONES_827),
-                        Location(3549, 9865, 0),
+                        Location(3549, 9865, 0)
                     )
                 }
             }
+
             return@on true
         }
 
         on(AGILITY_TRAINER, IntType.NPC, "Give-Stick") { player, node ->
-            val isOnCourse = getAttribute(player, "werewolf-agility-course", false)
-            if (!isOnCourse) return@on true
-
-            val stickAmount = amountInInventory(player, Items.STICK_4179)
-            if (stickAmount > 0) {
+            val stick = player.inventory.toArray().firstOrNull { it != null && it.id == Items.STICK_4179 }
+            if (stick != null && stick.charge == 2005) {
+                val stickAmount = amountInInventory(player, Items.STICK_4179)
                 removeAll(player, Item(Items.STICK_4179, stickAmount), Container.INVENTORY)
                 rewardXP(player, Skills.AGILITY, 190.0)
                 sendMessage(player, "You give the stick to the werewolf.")
             } else {
                 openDialogue(player, AgilityTrainerDialogue(), node.asNpc())
             }
-            removeAttribute(player, "werewolf-agility-course")
             return@on true
         }
     }
 
-    inner class AgilityTrainerDialogue : DialogueFile() {
+    private class AgilityTrainerDialogue : DialogueFile() {
         override fun handle(componentID: Int, buttonID: Int) {
             when(stage) {
                 0 -> npcl(FaceAnim.CHILD_NORMAL, "Have you brought the stick yet?").also { stage++ }
@@ -75,6 +96,7 @@ class WerewolfCourseListener : InteractionListener {
             }
         }
     }
+
     override fun defineDestinationOverrides() {
         setDest(IntType.SCENERY, ZIP_LINE, "teeth-grip") { _, _ ->
             return@setDest Location(3528, 9910, 0)

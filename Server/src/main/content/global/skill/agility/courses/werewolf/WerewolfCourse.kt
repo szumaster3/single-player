@@ -9,6 +9,7 @@ import core.game.dialogue.FaceAnim
 import core.game.node.Node
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
+import core.game.node.item.Item
 import core.game.node.scenery.Scenery
 import core.game.system.task.Pulse
 import core.game.world.GameWorld
@@ -16,61 +17,59 @@ import core.game.world.map.Direction
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
-import core.tools.RandomFunction
 import shared.consts.Animations
 import shared.consts.Items
 import shared.consts.NPCs
+import shared.consts.Scenery as Objects
 
 @Initializable
 class WerewolfCourse : AgilityCourse {
 
     constructor() : super(null, 5, 0.0)
-
     constructor(player: Player?) : super(player, 5, 0.0)
+
+    override fun createInstance(player: Player): AgilityCourse = WerewolfCourse(player)
 
     override fun handle(p: Player, node: Node, option: String): Boolean {
         getCourse(p)
-        val n = node as Scenery
-        when (n.id) {
-            shared.consts.Scenery.STEPPING_STONE_35996 -> steppingStoneObstacle(p, n)
-            shared.consts.Scenery.HURDLE_5133, shared.consts.Scenery.HURDLE_5134, shared.consts.Scenery.HURDLE_5135 -> jumpHurdleObstacle(
-                p, n
-            )
+        val scenery = node as? Scenery ?: return false
+        return when (scenery.id) {
+            Objects.STEPPING_STONE_35996 -> steppingStoneObstacle(p, scenery)
+            Objects.HURDLE_5133, Objects.HURDLE_5134, Objects.HURDLE_5135 -> jumpHurdleObstacle(p, scenery)
+            Objects.PIPE_5152 -> squeezeThroughPipeObstacle(p, scenery)
+            Objects.SKULL_SLOPE_5136 -> climbSkullSlopeObstacle(p, scenery)
+            Objects.ZIP_LINE_5139, Objects.ZIP_LINE_5140, Objects.ZIP_LINE_5141 -> zipLineObstacle(p, scenery)
+            else -> false
+        }
+    }
 
-            shared.consts.Scenery.PIPE_5152 -> squeezeThroughPipeObstacle(p, n)
-            shared.consts.Scenery.SKULL_SLOPE_5136 -> climbSkullSlopeObstacle(p, n)
-            shared.consts.Scenery.ZIP_LINE_5139, shared.consts.Scenery.ZIP_LINE_5140, shared.consts.Scenery.ZIP_LINE_5141 -> zipLineObstacle(
-                p, n
-            )
+    private fun checkRequirements(p: Player, level: Int = 60): Boolean {
+        if (getStatLevel(p, Skills.AGILITY) < level) {
+            sendMessage(p, "You need an agility level of $level to do this.")
+            return false
+        }
+        if (!anyInEquipment(p, Items.RING_OF_CHAROS_4202, Items.RING_OF_CHAROSA_6465)) {
+            sendNPCDialogue(p, NPCs.AGILITY_TRAINER_1663, "Grrr - you don't belong in here, human!", FaceAnim.CHILD_NORMAL)
+            return false
         }
         return true
     }
 
-    fun steppingStoneObstacle(
-        p: Player,
-        n: Scenery,
-    ) {
+    /**
+     * Handles steeping stone obstacle.
+     */
+    private fun steppingStoneObstacle(p: Player, scenery: Scenery): Boolean {
+        if (!checkRequirements(p)) return true
+
         val loc = p.location
-        val dir = Vector.betweenLocs(loc, n.location).toDirection()
-        if (getStatLevel(p, Skills.AGILITY) < 60) {
-            sendMessage(p, "You need an agility level of 60 to cross this.")
-            return
-        }
-        if (!anyInEquipment(p, Items.RING_OF_CHAROS_4202, Items.RING_OF_CHAROSA_6465)) {
-            sendNPCDialogue(
-                p,
-                NPCs.AGILITY_TRAINER_1663,
-                "Grrr - you don't belong in here, human!",
-                FaceAnim.CHILD_NORMAL,
-            )
-            return
-        }
+        val dir = Vector.betweenLocs(loc, scenery.location).toDirection()
+
         if (loc == Location(3538, 9873, 0)) {
             findLocalNPC(p, NPCs.AGILITY_BOSS_1661)?.let { face(it, p, 3) }
-            findLocalNPC(p, NPCs.AGILITY_BOSS_1661)!!.sendChat("FETCH!!!!!")
+            findLocalNPC(p, NPCs.AGILITY_BOSS_1661)?.sendChat("FETCH!!!!!")
             findLocalNPC(p, NPCs.AGILITY_BOSS_1661)?.let { animate(it, Animations.WEREWOLF_FETCH_6536) }
-            setAttribute(p, "werewolf-agility-course", true)
         }
+
         GameWorld.Pulser.submit(
             object : Pulse() {
                 override fun pulse(): Boolean {
@@ -79,194 +78,123 @@ class WerewolfCourse : AgilityCourse {
                 }
             },
         )
+        return true
     }
 
-    fun jumpHurdleObstacle(
-        p: Player,
-        n: Scenery,
-    ) {
+    /**
+     * Handles jump hurdle obstacle
+     */
+    private fun jumpHurdleObstacle(p: Player, scenery: Scenery): Boolean {
         val loc = p.location
-        if (loc.y in arrayOf(9894, 9897, 9900)) return sendMessage(p, "You can't do that from here.")
+        if (loc.y in arrayOf(9894, 9897, 9900)) {
+            sendMessage(p, "You can't do that from here.")
+            return false
+        }
+
         AgilityHandler.forceWalk(p, -1, loc, loc.transform(Direction.NORTH, 2), Animation.create(1603), 10, 25.0, null)
-        runTask(p, 2) {
-            p.faceLocation(loc.transform(Direction.SOUTH))
-        }
-        return
+        runTask(p, 2) { p.faceLocation(loc.transform(Direction.SOUTH)) }
+        return true
     }
 
-    fun squeezeThroughPipeObstacle(
-        p: Player,
-        n: Node,
-    ) {
+    /**
+     * Handles squeeze through pipe obstacle.
+     */
+    private fun squeezeThroughPipeObstacle(p: Player, scenery: Scenery): Boolean {
         val loc = p.location
-        if (loc.y > 9908) return sendMessage(p, "You can't do that from here.")
+        if (loc.y > 9908) {
+            sendMessage(p, "You can't do that from here.")
+            return false
+        }
+
         if (loc.x in arrayOf(3538, 3541, 3544)) {
-            if (getAttribute(p, "werewolf-agility-course", false)) {
-                produceGroundItem(p, Items.STICK_4179, 1, stickRandomLocation.location)
-            }
-            GameWorld.Pulser.submit(
-                object : Pulse(1, p) {
-                    override fun pulse(): Boolean {
-                        lock(p, 6)
-                        AgilityHandler.forceWalk(
-                            p,
-                            -1,
-                            loc,
-                            loc.transform(Direction.NORTH, 5),
-                            Animation.create(Animations.CLIMB_THROUGH_OBSTACLE_10580),
-                            10,
-                            20.0,
-                            null,
-                        )
-                        p.animate(Animation(Animations.CRAWL_844), 3)
-                        p.animate(Animation(Animations.CLIMB_OUT_OF_OBSTACLE_10579), 4)
-                        return true
-                    }
-                },
-            )
+            val stick = Item(Items.STICK_4179, 1, 2005)
+            produceGroundItem(p, stick.id, 1, stickRandomLocation.location)
         }
+
+        GameWorld.Pulser.submit(object : Pulse(1, p) {
+            override fun pulse(): Boolean {
+                lock(p, 6)
+                AgilityHandler.forceWalk(
+                    p, -1, loc, loc.transform(Direction.NORTH, 5),
+                    Animation.create(Animations.CLIMB_THROUGH_OBSTACLE_10580), 10, 20.0, null
+                )
+                p.animate(Animation(Animations.CRAWL_844), 3)
+                p.animate(Animation(Animations.CLIMB_OUT_OF_OBSTACLE_10579), 4)
+                return true
+            }
+        })
+        return true
     }
 
-    fun climbSkullSlopeObstacle(
-        p: Player,
-        n: Node,
-    ) {
+    /**
+     * Handles skull slope obstacle
+     */
+    private fun climbSkullSlopeObstacle(p: Player, scenery: Scenery): Boolean {
         val loc = p.location
-        if (loc.x == 3530) return sendMessage(p, "You can't do that from here.")
-        GameWorld.Pulser.submit(
-            object : Pulse() {
-                override fun pulse(): Boolean {
-                    lock(p, 3)
-                    AgilityHandler.forceWalk(
-                        p,
-                        -1,
-                        loc,
-                        loc.transform(Direction.WEST, 3),
-                        Animation.create(Animations.CLIMB_DOWN_B_740),
-                        15,
-                        25.0,
-                        null,
-                    )
-                    p.animate(Animation(-1), 2)
-                    return true
-                }
-            },
-        )
+        if (loc.x == 3530) {
+            sendMessage(p, "You can't do that from here.")
+            return false
+        }
+
+        GameWorld.Pulser.submit(object : Pulse() {
+            override fun pulse(): Boolean {
+                lock(p, 3)
+                AgilityHandler.forceWalk(p, -1, loc, loc.transform(Direction.WEST, 3), Animation.create(Animations.CLIMB_DOWN_B_740), 15, 25.0, null)
+                p.animate(Animation(-1), 2)
+                return true
+            }
+        })
+        return true
     }
 
-    fun zipLineObstacle(
-        p: Player,
-        n: Node,
-    ) {
+    /**
+     * Handles zip line obstacle
+     */
+    private fun zipLineObstacle(p: Player, scenery: Scenery): Boolean {
         val loc = p.location
         val helmet = getItemFromEquipment(p, EquipmentSlot.HEAD)
 
         if (helmet != null) {
-            val messages = listOf("That headgear won't help you here, human! Take it off!", "You need to take your headgear off before you try the Deathslide, otherwise you won't be able to get a good enough grip with your teeth.")
-            val message = messages[RandomFunction.random(0, 1)]
-            sendNPCDialogue(p, NPCs.AGILITY_TRAINER_1664, message)
-            return
+            val messages = listOf(
+                "That headgear won't help you here, human! Take it off!",
+                "You need to take your headgear off before you try the Deathslide, otherwise you won't be able to get a good enough grip with your teeth."
+            )
+            sendNPCDialogue(p, NPCs.AGILITY_TRAINER_1664, messages.random())
+            return true
         }
 
-        if (!finishedMoving(p)) {
-            lock(p, 16)
-        }
+        if (!finishedMoving(p)) lock(p, 16)
         face(p, loc.transform(Direction.SOUTH))
         animate(p, Animations.WEREWOLF_ZIPLINE_1601)
-        replaceScenery(n.asScenery(), shared.consts.Scenery.ZIP_LINE_5142, 6)
+        replaceScenery(scenery, shared.consts.Scenery.ZIP_LINE_5142, 6)
         sendMessage(p, "You bravely cling on to the death slide by your teeth.")
-        GameWorld.Pulser.submit(
-            object : Pulse() {
-                override fun pulse(): Boolean {
-                    sendChat(p, "WAAAAAARRRGGGHHHH!!!!!!", 4)
-                    AgilityHandler.forceWalk(
-                        p,
-                        -1,
-                        loc,
-                        Location.create(3528, 9874, 0),
-                        Animation(1602),
-                        30,
-                        0.0,
-                        null,
-                        1,
-                    )
 
-                    p.sendMessage("... and land safely on your feet.", 14)
-                    p.animate(Animation(-1), 14)
-                    runTask(p, 14) {
-                        rewardXP(p, Skills.AGILITY, 180.0)
-                    }
-                    return true
-                }
-            },
-        )
+        GameWorld.Pulser.submit(object : Pulse() {
+            override fun pulse(): Boolean {
+                sendChat(p, "WAAAAAARRRGGGHHHH!!!!!!", 4)
+                AgilityHandler.forceWalk(
+                    p, -1, loc, Location.create(3528, 9874, 0),
+                    Animation(1602), 30, 0.0, null, 1
+                )
+                p.sendMessage("... and land safely on your feet.", 14)
+                p.animate(Animation(-1), 14)
+                runTask(p, 14) { rewardXP(p, Skills.AGILITY, 180.0) }
+                return true
+            }
+        })
+        return true
     }
 
     override fun configure() {
         SceneryDefinition.forId(shared.consts.Scenery.STEPPING_STONE_35996).handlers["option:jump-to"] = this
-        for (i in intArrayOf(
-            shared.consts.Scenery.HURDLE_5133,
-            shared.consts.Scenery.HURDLE_5134,
-            shared.consts.Scenery.HURDLE_5135,
-        )) {
-            SceneryDefinition.forId(i).handlers["option:jump"] = this
-        }
+        arrayOf(5133, 5134, 5135).forEach { SceneryDefinition.forId(it).handlers["option:jump"] = this }
         SceneryDefinition.forId(shared.consts.Scenery.PIPE_5152).handlers["option:squeeze-through"] = this
         SceneryDefinition.forId(shared.consts.Scenery.SKULL_SLOPE_5136).handlers["option:climb-up"] = this
-        for (i in intArrayOf(
-            shared.consts.Scenery.ZIP_LINE_5139,
-            shared.consts.Scenery.ZIP_LINE_5140,
-            shared.consts.Scenery.ZIP_LINE_5141,
-        )) {
-            SceneryDefinition.forId(i).handlers["option:teeth-grip"] = this
-        }
+        arrayOf(5139, 5140, 5141).forEach { SceneryDefinition.forId(it).handlers["option:teeth-grip"] = this }
     }
-
-    override fun getDestination(
-        n: Node?,
-        node: Node,
-    ): Location? {
-        val scenery = node as Scenery
-        if (scenery.id == shared.consts.Scenery.STEPPING_STONE_35996) {
-            when (scenery.location.x) {
-                3538 -> return scenery.location.transform(0, -2, 0)
-                3540 -> return if (scenery.location.y == 9877) {
-                    scenery.location.transform(
-                        -2,
-                        0,
-                        0,
-                    )
-                } else {
-                    scenery.location.transform(0, -2, 0)
-                }
-            }
-        }
-        if (scenery.location.y in intArrayOf(9893, 9896, 9899)) {
-            when (scenery.id) {
-                shared.consts.Scenery.HURDLE_5133, shared.consts.Scenery.HURDLE_5135 -> return scenery.location.transform(
-                    1,
-                    -1,
-                    0,
-                )
-
-                shared.consts.Scenery.HURDLE_5134 -> return if (scenery.location.x == 3543) {
-                    scenery.location.transform(
-                        -1,
-                        -1,
-                        0,
-                    )
-                } else {
-                    scenery.location.transform(0, -1, 0)
-                }
-            }
-        }
-        return null
-    }
-
-    override fun createInstance(player: Player): AgilityCourse = WerewolfCourse(player)
 
     companion object {
-        private val stickLocation = location(3542, 9912, 0)
+        private val stickLocation = Location.create(3542, 9912, 0)
         val stickRandomLocation: Location = Location.getRandomLocation(stickLocation, 2, true)
     }
 }

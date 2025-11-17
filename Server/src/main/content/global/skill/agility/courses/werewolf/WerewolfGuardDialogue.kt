@@ -1,6 +1,6 @@
 package content.global.skill.agility.courses.werewolf
 
-import core.api.inEquipment
+import core.api.anyInEquipment
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
@@ -11,9 +11,8 @@ import shared.consts.Items
 import shared.consts.NPCs
 
 @Initializable
-class WerewolfGuardDialogue(
-    player: Player? = null,
-) : Dialogue(player) {
+class WerewolfGuardDialogue(player: Player? = null) : Dialogue(player) {
+
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         playerl(FaceAnim.HALF_ASKING, "What's beneath the trapdoor?")
@@ -21,12 +20,10 @@ class WerewolfGuardDialogue(
     }
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+        val charmDialogue = anyInEquipment(player, Items.RING_OF_CHAROS_4202, Items.RING_OF_CHAROSA_6465)
         when (stage) {
             0 -> {
-                val hasCharos = inEquipment(player, Items.RING_OF_CHAROS_4202, 1)
-                val hasCharosA = inEquipment(player, Items.RING_OF_CHAROSA_6465, 1)
-
-                if (!hasCharos && !hasCharosA) {
+                if (!charmDialogue) {
                     npcl(FaceAnim.CHILD_NORMAL, "That's none of your business, human, and I'll never tell.").also { stage++ }
                 } else {
                     npcl(FaceAnim.CHILD_NORMAL, "It's an agility course designed for lycanthropes like ourselves, my friend.").also { stage = END_DIALOGUE }

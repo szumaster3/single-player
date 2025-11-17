@@ -1,8 +1,8 @@
 package content.global.skill.agility.courses.werewolf
 
+import core.api.anyInEquipment
 import core.api.face
 import core.api.findLocalNPC
-import core.api.inEquipment
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
@@ -18,11 +18,8 @@ class AgilityBossDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
-
-        val hasCharos = inEquipment(player, Items.RING_OF_CHAROS_4202, 1)
-        val hasCharosA = inEquipment(player, Items.RING_OF_CHAROSA_6465, 1)
-
-        if (!hasCharos && !hasCharosA) {
+        val charmDialogue = anyInEquipment(player, Items.RING_OF_CHAROS_4202, Items.RING_OF_CHAROSA_6465)
+        if (!charmDialogue) {
             npc(FaceAnim.CHILD_NORMAL, "Grrr - you don't belong in here, human!")
             stage = END_DIALOGUE
             return true
