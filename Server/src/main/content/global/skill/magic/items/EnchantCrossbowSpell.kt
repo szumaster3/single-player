@@ -18,10 +18,7 @@ class EnchantCrossbowSpell : MagicSpell(SpellBook.MODERN, 4, 0.0, null, null, nu
         SpellBook.MODERN.register(3, this)
     }
 
-    override fun cast(
-        entity: Entity,
-        target: Node,
-    ): Boolean {
+    override fun cast(entity: Entity, target: Node): Boolean {
         val player = entity as Player
         player.interfaceManager.open(Component(Components.XBOWS_ENCHANT_BOLT_432))
 
@@ -40,13 +37,7 @@ class EnchantCrossbowSpell : MagicSpell(SpellBook.MODERN, 4, 0.0, null, null, nu
             )
 
         for ((key, value) in boltData) {
-            player.packetDispatch.sendItemZoomOnInterface(
-                value,
-                10,
-                270,
-                Components.XBOWS_ENCHANT_BOLT_432,
-                key,
-            )
+            player.packetDispatch.sendItemZoomOnInterface(value, 10, 270, Components.XBOWS_ENCHANT_BOLT_432, key)
         }
 
         return true

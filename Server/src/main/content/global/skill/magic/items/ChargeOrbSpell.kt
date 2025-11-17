@@ -187,11 +187,13 @@ class ChargeOrbSpell : SpellListener("modern") {
         }
     }
 
-    private fun removeRunes(player: Player, spell: ChargeOrb) {
-        for (i in spell.requiredRunes.indices) {
-            val runeId = spell.requiredRunes[i]
-            val amount = spell.requiredAmount[i]
-            removeItem(player, Item(runeId, amount))
+    companion object {
+        private fun removeRunes(player: Player, spell: ChargeOrb) {
+            for (i in spell.requiredRunes.indices) {
+                val runeId = spell.requiredRunes[i]
+                val amount = spell.requiredAmount[i]
+                removeItem(player, Item(runeId, amount))
+            }
         }
     }
 }
