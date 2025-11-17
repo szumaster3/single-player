@@ -3459,7 +3459,7 @@ object Animations {
     const val ANIMATION_3642 = 3642
     const val ANIMATION_3643 = 3643
     const val ANIMATION_3644 = 3644
-    const val HANDS_UP_THEN_TOGETHER_3645 = 3645
+    const val DIRECT_PORTAL_3645 = 3645
     const val ANIMATION_3646 = 3646
     const val ANIMATION_3647 = 3647
     const val ANIMATION_3648 = 3648

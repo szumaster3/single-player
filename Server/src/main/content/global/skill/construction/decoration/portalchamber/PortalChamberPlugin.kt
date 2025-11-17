@@ -80,7 +80,7 @@ class PortalChamberPlugin : OptionHandler() {
                 }
 
                 player.inventory.remove(*location.runes)
-                player.animate(Animation.create(Animations.MAKING_TELE_TAB_3705))
+                player.animate(Animation.create(Animations.DIRECT_PORTAL_3645))
                 h.decorationIndex = h.hotspot.getDecorationIndex(Decoration.forName("${prefix}_${identifier}_PORTAL"))
                 player.houseManager.reload(player, player.houseManager.isBuildingMode)
             }
