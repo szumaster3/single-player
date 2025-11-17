@@ -5,6 +5,7 @@ import core.cache.misc.ContainersInformation
 import java.io.IOException
 import java.io.RandomAccessFile
 import java.nio.ByteBuffer
+import kotlin.math.min
 
 class CacheFile(
     val indexFileId: Int,
@@ -73,6 +74,85 @@ class CacheFile(
         }
     }
 
+    /**
+     * Reads a container from the cache file.
+     */
+    fun read(containerId: Int, xteaKeys: IntArray?): ByteArray? {
+        synchronized(dataFile) {
+            try {
+                if (indexFile.length() < 6L * (containerId + 1)) {
+                    return null
+                }
+
+                indexFile.seek(6L * containerId)
+                indexFile.readFully(cacheFileBuffer, 0, 6)
+
+                val containerSize = (((cacheFileBuffer[0].toInt() and 0xFF) shl 16)
+                        or ((cacheFileBuffer[1].toInt() and 0xFF) shl 8)
+                        or (cacheFileBuffer[2].toInt() and 0xFF))
+
+                val firstSector = (((cacheFileBuffer[3].toInt() and 0xFF) shl 16)
+                        or ((cacheFileBuffer[4].toInt() and 0xFF) shl 8)
+                        or (cacheFileBuffer[5].toInt() and 0xFF))
+
+                if (firstSector <= 0 || containerSize <= 0) {
+                    return null
+                }
+
+                val data = ByteArray(containerSize)
+                var offset = 0
+                var sector = firstSector
+                var sectorIndex = 0
+
+                while (offset < containerSize) {
+                    dataFile.seek(520L * sector)
+
+                    val chunkSize = min(512.0, (containerSize - offset).toDouble()).toInt()
+
+                    if (dataFile.read(cacheFileBuffer, 0, chunkSize + 8) != chunkSize + 8) {
+                        return null
+                    }
+
+                    val readContainerId =
+                        ((cacheFileBuffer[0]
+                            .toInt() and 0xFF) shl 8) or (cacheFileBuffer[1].toInt() and 0xFF)
+                    val readSectorIndex =
+                        ((cacheFileBuffer[2]
+                            .toInt() and 0xFF) shl 8) or (cacheFileBuffer[3].toInt() and 0xFF)
+                    val nextSector =
+                        (((cacheFileBuffer[4].toInt() and 0xFF) shl 16)
+                                or ((cacheFileBuffer[5].toInt() and 0xFF) shl 8)
+                                or (cacheFileBuffer[6].toInt() and 0xFF))
+                    val readIndexFileId = cacheFileBuffer[7].toInt() and 0xFF
+
+                    if (readContainerId != containerId || readSectorIndex != sectorIndex || readIndexFileId != indexFileId) {
+                        return null
+                    }
+
+                    System.arraycopy(cacheFileBuffer, 8, data, offset, chunkSize)
+
+                    offset += chunkSize
+                    sector = nextSector
+                    sectorIndex++
+
+                    if (sector == 0 && offset < containerSize) {
+                        return null
+                    }
+                }
+
+                if (xteaKeys != null && (xteaKeys[0] != 0 || xteaKeys[1] != 0 || xteaKeys[2] != 0 || xteaKeys[3] != 0)
+                ) {
+                    val buffer = ByteBuffer.wrap(data)
+                    XTEACryption.decrypt(xteaKeys, buffer, 0, containerSize)
+                }
+
+                return data
+            } catch (e: IOException) {
+                e.printStackTrace()
+                return null
+            }
+        }
+    }
     fun write(containerId: Int, data: ByteArray, xteaKeys: IntArray? = null): Boolean = synchronized(dataFile) {
         try {
             val encryptedData = data.copyOf()

@@ -1,227 +1,165 @@
 package core.cache
 
-import core.cache.misc.Container
-import core.cache.misc.ContainersInformation
-import core.cache.misc.FilesContainer
+import core.cache.misc.buffer.InputStream
 import core.cache.misc.buffer.OutputStream
-import java.util.*
 
-class ReferenceTable(private val info: ContainersInformation) {
-    private var revision: Int = info.revision
-    private var named: Boolean = info.filesNamed
-    private var usesWhirpool: Boolean = info.whirpool
-    private var archives: Array<FilesContainer?> = info.containers.copyOf().map { it as FilesContainer? }.toTypedArray()
-    private var validArchiveIds: IntArray = info.containersIndexes
+class ReferenceTable(data: ByteArray, expectedCrc: Int) {
+    var revision: Int = 0
+        private set
 
-    private var updatedRevision = false
-    private var needsArchivesSort = false
-    private var needsFilesSort: BooleanArray = BooleanArray(archives.size) { false }
+    var validArchiveIds: IntArray = intArrayOf()
+        private set
+
+    var archiveCRCs: IntArray = intArrayOf()
+    var archiveRevisions: IntArray = intArrayOf()
+    var archiveFileCounts: IntArray = intArrayOf()
+    var validFileIds: Array<IntArray?> = arrayOf()
+    var archiveNameHashes: IntArray? = null
+    var fileNameHashes: Array<IntArray?>? = null
+
+    var archiveLookup: LookupTable? = null
+    var fileLookup: Array<LookupTable?>? = null
 
     init {
-        decodeHeader()
-    }
+        decode(data)
+        archiveNameHashes?.let { archiveLookup = LookupTable(it) }
 
-    fun sortArchives() {
-        Arrays.sort(validArchiveIds)
-        needsArchivesSort = false
-    }
-
-    fun addEmptyArchive(archiveId: Int) {
-        needsArchivesSort = true
-        val newValidIds = IntArray(validArchiveIds.size + 1)
-        System.arraycopy(validArchiveIds, 0, newValidIds, 0, validArchiveIds.size)
-        newValidIds[newValidIds.size - 1] = archiveId
-        validArchiveIds = newValidIds
-
-        val reference: FilesContainer
-        if (archives.size <= archiveId) {
-            val newArchives = arrayOfNulls<FilesContainer>(archiveId + 1)
-            System.arraycopy(archives, 0, newArchives, 0, archives.size)
-            reference = FilesContainer()
-            newArchives[archiveId] = reference
-            archives = newArchives
-        } else {
-            reference = FilesContainer()
-            archives[archiveId] = reference
-        }
-        needsFilesSort = BooleanArray(archives.size) { false }
-    }
-
-    fun addEmptyFile(archiveId: Int, fileId: Int) {
-        val archive = archives.getOrNull(archiveId) ?: return
-        if (archive.files == null) archive.files = emptyArray()
-        val filesList = archive.files!!.toMutableList()
-        while (filesList.size <= fileId) filesList.add(Container())
-        archive.files = filesList.toTypedArray()
-        needsFilesSort[archiveId] = true
-    }
-
-    fun sortTable() {
-        if (needsArchivesSort) sortArchives()
-        for (id in validArchiveIds) {
-            if (needsFilesSort.getOrElse(id) { false }) sortFiles(id)
+        if (fileNameHashes != null) {
+            val tmp = Array(validArchiveIds.maxOrNull()!! + 1) { null as LookupTable? }
+            for (archiveId in validArchiveIds) {
+                val hashes = fileNameHashes!![archiveId]
+                if (hashes != null) tmp[archiveId] = LookupTable(hashes)
+            }
+            fileLookup = tmp
         }
     }
 
-    private fun sortFiles(archiveId: Int) {
-        val archive = archives[archiveId] ?: return
-        val files = archive.files ?: return
-        archive.files = files.sortedBy { it.nameHash }.toTypedArray()
-        needsFilesSort[archiveId] = false
-    }
+    private fun decode(data: ByteArray) {
+        val buffer = InputStream(data)
+        val format = buffer.readUnsignedByte()
+        require(format == 5 || format == 6) { "Unexpected ReferenceTable format $format" }
 
-    fun setRevision(rev: Int) {
-        revision = rev
-        updatedRevision = true
-    }
+        revision = if (format >= 6) buffer.readInt() else 0
+        val flags = buffer.readUnsignedByte()
+        val named = flags and 0x1 != 0
 
-    fun updateRevision() {
-        if (!updatedRevision) {
-            revision++
-            updatedRevision = true
+        val archiveCount = buffer.readUnsignedShort()
+        validArchiveIds = IntArray(archiveCount)
+        var last = 0
+        for (i in 0 until archiveCount) {
+            val offset = buffer.readUnsignedShort()
+            last += offset
+            validArchiveIds[i] = last
         }
-    }
 
-    fun getRevision() = revision
-
-    fun getArchives(): Array<FilesContainer?> = archives
-
-    fun getValidArchiveIds(): IntArray = validArchiveIds
-
-    fun isNamed() = named
-
-    fun usesWhirpool() = usesWhirpool
-
-    fun getProtocol(): Int {
-        if (archives.size > 65535) return 7
-        for (id in validArchiveIds) {
-            val archive = archives[id] ?: continue
-            val filesCount = archive.files?.size ?: 0
-            if (filesCount > 65535) return 7
-        }
-        return if (revision == 0) 5 else 6
-    }
-
-    fun encodeHeader(): ByteArray {
-        val stream = OutputStream()
-        val protocol = getProtocol()
-
-        stream.writeByte(protocol)
-        if (protocol >= 6) stream.writeInt(revision)
-        stream.writeByte((if (named) 0x1 else 0) or (if (usesWhirpool) 0x2 else 0))
-
-        if (protocol >= 7) stream.writeBigSmart(validArchiveIds.size)
-        else stream.writeShort(validArchiveIds.size)
-
-        var lastArchive = 0
-        for (id in validArchiveIds) {
-            val offset = id - lastArchive
-            if (protocol >= 7) stream.writeBigSmart(offset) else stream.writeShort(offset)
-            lastArchive = id
-        }
+        archiveCRCs = IntArray(validArchiveIds.maxOrNull()!! + 1)
+        archiveRevisions = IntArray(validArchiveIds.maxOrNull()!! + 1)
+        archiveFileCounts = IntArray(validArchiveIds.maxOrNull()!! + 1)
+        validFileIds = Array(archiveCRCs.size) { null }
 
         if (named) {
+            archiveNameHashes = IntArray(archiveCRCs.size) { -1 }
             for (id in validArchiveIds) {
-                val archive = archives[id] ?: continue
-                stream.writeInt(archive.nameHash)
+                archiveNameHashes!![id] = buffer.readInt()
             }
         }
 
         for (id in validArchiveIds) {
-            val archive = archives[id] ?: continue
-            stream.writeInt(archive.crc)
-        }
-        for (id in validArchiveIds) {
-            val archive = archives[id] ?: continue
-            stream.writeInt(archive.version)
+            archiveCRCs[id] = buffer.readInt()
         }
 
         for (id in validArchiveIds) {
-            val archive = archives[id] ?: continue
-            val filesCount = archive.files?.size ?: 0
-            if (protocol >= 7) stream.writeBigSmart(filesCount) else stream.writeShort(filesCount)
+            archiveRevisions[id] = buffer.readInt()
         }
 
         for (id in validArchiveIds) {
-            val archive = archives[id] ?: continue
-            val files = archive.files ?: continue
+            archiveFileCounts[id] = buffer.readUnsignedShort()
+        }
+
+        for (archiveId in validArchiveIds) {
+            val fileCount = archiveFileCounts[archiveId]
+            if (fileCount == 0) continue
+            val fileIds = IntArray(fileCount)
             var lastFile = 0
-            for ((fileId, _) in files.withIndex()) {
+            for (i in 0 until fileCount) {
+                val offset = buffer.readUnsignedShort()
+                lastFile += offset
+                fileIds[i] = lastFile
+            }
+            validFileIds[archiveId] = fileIds
+        }
+
+        if (named) {
+            fileNameHashes = Array(archiveCRCs.size) { null }
+            for (archiveId in validArchiveIds) {
+                val files = validFileIds[archiveId]
+                if (files == null || files.isEmpty()) continue
+                val fileHashes = IntArray(files.size) { -1 }
+                for (i in files.indices) {
+                    fileHashes[i] = buffer.readInt()
+                }
+                fileNameHashes!![archiveId] = fileHashes
+            }
+        }
+    }
+
+    fun encode(): ByteArray {
+        val stream = OutputStream()
+        val protocol = if (revision == 0) 5 else 6
+        stream.writeByte(protocol)
+        if (protocol >= 6) stream.writeInt(revision)
+        val namedFlag = if (archiveNameHashes != null) 0x1 else 0
+        stream.writeByte(namedFlag)
+
+        stream.writeShort(validArchiveIds.size)
+        var lastArchive = 0
+        for (id in validArchiveIds) {
+            val offset = id - lastArchive
+            stream.writeShort(offset)
+            lastArchive = id
+        }
+
+        if (archiveNameHashes != null) {
+            for (id in validArchiveIds) {
+                stream.writeInt(archiveNameHashes!![id])
+            }
+        }
+
+        for (id in validArchiveIds) stream.writeInt(archiveCRCs[id])
+        for (id in validArchiveIds) stream.writeInt(archiveRevisions[id])
+        for (id in validArchiveIds) stream.writeShort(archiveFileCounts[id])
+
+        for (archiveId in validArchiveIds) {
+            val files = validFileIds[archiveId] ?: continue
+            var lastFile = 0
+            for (fileId in files) {
                 val offset = fileId - lastFile
-                if (protocol >= 7) stream.writeBigSmart(offset) else stream.writeShort(offset)
+                stream.writeShort(offset)
                 lastFile = fileId
             }
         }
 
-        if (named) {
-            for (id in validArchiveIds) {
-                val archive = archives[id] ?: continue
-                val files = archive.files ?: continue
-                for (file in files) {
-                    stream.writeInt(file.nameHash)
+        if (fileNameHashes != null) {
+            for (archiveId in validArchiveIds) {
+                val files = validFileIds[archiveId] ?: continue
+                val hashes = fileNameHashes!![archiveId] ?: continue
+                for (i in files.indices) {
+                    stream.writeInt(hashes[i])
                 }
             }
         }
 
-        val data = ByteArray(stream.offset)
-        stream.setOffset(0)
-        stream.getBytes(data, 0, data.size)
-        return data
+        return stream.toByteArray()
     }
 
-    private fun decodeHeader() {
-        named = info.filesNamed
-        usesWhirpool = info.whirpool
-        archives = info.containers.copyOf().map { it as FilesContainer? }.toTypedArray()
-        validArchiveIds = info.containersIndexes
-        needsFilesSort = BooleanArray(archives.size) { false }
-    }
+    fun getArchiveIndexByNameHash(hash: Int): Int? = archiveLookup?.getIndex(hash)
 
-    companion object ReferenceTableAdapter {
+    fun getFileIndexByNameHash(archiveId: Int, hash: Int): Int? =
+        fileLookup?.getOrNull(archiveId)?.getIndex(hash)
+}
 
-        fun loadReferenceTableForIndex(indexId: Int): ReferenceTable? {
-            val refFile = Cache.getReferenceFile() ?: return null
-            val packed = refFile.getContainerData(indexId) ?: return null
-            val unpacked = ContainersInformation.unpackCacheContainer(packed) ?: return null
-            val info = ContainersInformation(unpacked)
-            return ReferenceTable(info)
-        }
+class LookupTable(private val hashes: IntArray) {
+    private val hashMap: Map<Int, Int> = hashes.mapIndexed { i, h -> h to i }.toMap()
 
-        fun writeReferenceTableForIndex(indexId: Int, refTable: ReferenceTable): Boolean {
-            val refFile = Cache.getReferenceFile() ?: return false
-
-            val body = refTable.encodeHeader()
-            val container = buildUncompressedContainer(body)
-            val wrote = refFile.write(indexId, container, null)
-            if (!wrote) return false
-
-            val managers = Cache.getIndexes()
-            if (indexId in managers.indices) {
-                val manager = managers[indexId]
-                if (manager != null) {
-                    val newPacked = refFile.getContainerData(indexId)
-                    if (newPacked != null) {
-                        try {
-                            val info = ContainersInformation(newPacked)
-                            manager.setInformation(info)
-                        } catch (_: Throwable) {}
-                    }
-                }
-            }
-
-            return true
-        }
-
-        private fun buildUncompressedContainer(body: ByteArray): ByteArray {
-            val out = ByteArray(1 + 4 + body.size)
-            out[0] = 0
-            val len = body.size
-            out[1] = ((len shr 24) and 0xFF).toByte()
-            out[2] = ((len shr 16) and 0xFF).toByte()
-            out[3] = ((len shr 8) and 0xFF).toByte()
-            out[4] = (len and 0xFF).toByte()
-            System.arraycopy(body, 0, out, 5, body.size)
-            return out
-        }
-    }
+    fun getIndex(hash: Int): Int? = hashMap[hash]
 }
