@@ -64,11 +64,7 @@ class WoodcuttingPlugin : InteractionListener {
         )
     }
 
-    private fun handleWoodcutting(
-        player: Player,
-        node: Node,
-        state: Int,
-    ): Boolean {
+    private fun handleWoodcutting(player: Player, node: Node, state: Int): Boolean {
         val resource = WoodcuttingNode.forId(node.id)
         val tool = SkillingTool.getAxe(player)
 
@@ -135,7 +131,7 @@ class WoodcuttingPlugin : InteractionListener {
                         if (player.location.y > it.y) it.transform(0, -1, 0) else it.transform(0, 1, 0)
                     }
                     targetLocation?.let { target ->
-                        forceMove(player, player.location, target, 0, 60, null, Animations.HUMAN_WALK_SHORT_819) {
+                        forceMove(player, player.location, target, 0, 45, null, Animations.HUMAN_WALK_SHORT_819) {
                             sendMessage(player, "You hack your way through the tree.")
                             sendMessage(player, "You move deeper into the jungle.")
                         }
@@ -167,11 +163,7 @@ class WoodcuttingPlugin : InteractionListener {
         return keepRunning(player)
     }
 
-    private fun rollDepletion(
-        player: Player,
-        node: Scenery,
-        resource: WoodcuttingNode,
-    ): Boolean {
+    private fun rollDepletion(player: Player, node: Scenery, resource: WoodcuttingNode): Boolean {
         if (resource.respawnRate > 0) {
             if (RandomFunction.roll(8) || listOf(1, 2, 3, 4, 6, 19).contains(resource.identifier.toInt())) {
                 if (resource.isFarming) {
@@ -195,11 +187,7 @@ class WoodcuttingPlugin : InteractionListener {
         return false
     }
 
-    private fun checkReward(
-        player: Player,
-        resource: WoodcuttingNode,
-        tool: SkillingTool,
-    ): Boolean {
+    private fun checkReward(player: Player, resource: WoodcuttingNode, tool: SkillingTool): Boolean {
         val skill = Skills.WOODCUTTING
         val level: Int = player.getSkills().getLevel(skill) + player.familiarManager.getBoost(skill)
         val hostRatio = RandomFunction.randomDouble(100.0)
@@ -226,11 +214,7 @@ class WoodcuttingPlugin : InteractionListener {
     }
 
 
-    private fun checkWoodcuttingRequirements(
-        player: Player,
-        resource: WoodcuttingNode,
-        node: Node,
-    ): Boolean {
+    private fun checkWoodcuttingRequirements(player: Player, resource: WoodcuttingNode, node: Node): Boolean {
         var regionId = player.location.regionId
         if (regionId == 10300 || regionId == 10044) {
             var npc = if (regionId == 10300) NPCs.CARPENTER_KJALLAK_3916 else NPCs.LUMBERJACK_LEIF_1395
@@ -238,9 +222,7 @@ class WoodcuttingPlugin : InteractionListener {
             return false
         }
         if (getStatLevel(player, Skills.WOODCUTTING) < resource.level) {
-            sendMessage(player,
-                "You need a woodcutting level of " + resource.level + " to chop this tree.",
-            )
+            sendMessage(player, "You need a woodcutting level of " + resource.level + " to chop this tree.")
             return false
         }
         if (SkillingTool.getAxe(player) == null) {
@@ -258,10 +240,7 @@ class WoodcuttingPlugin : InteractionListener {
         return node.isActive
     }
 
-    private fun calculateRewardAmount(
-        player: Player,
-        reward: Int,
-    ): Int {
+    private fun calculateRewardAmount(player: Player, reward: Int): Int {
         var amount = 1
 
         if (reward == Items.BARK_3239 && RandomFunction.random(100) >= 10) {
@@ -269,23 +248,15 @@ class WoodcuttingPlugin : InteractionListener {
         }
 
         if (reward == Items.LOGS_1511 &&
-            isDiaryComplete(
-                player,
-                DiaryType.SEERS_VILLAGE,
-                1,
-            ) &&
-            player.viewport.region!!.id == 10806
-        ) {
+            isDiaryComplete(player, DiaryType.SEERS_VILLAGE, 1) &&
+            player.viewport.region!!.id == 10806)
+        {
             amount = 2
         }
         return amount
     }
 
-    private fun calculateExperience(
-        player: Player,
-        resource: WoodcuttingNode,
-        amount: Int,
-    ): Double {
+    private fun calculateExperience(player: Player, resource: WoodcuttingNode, amount: Int): Double {
         var amount = amount
         var experience: Double = resource.experience
         val reward = resource.reward

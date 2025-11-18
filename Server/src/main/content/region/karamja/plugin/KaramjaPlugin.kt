@@ -198,12 +198,11 @@ class KaramjaPlugin : InteractionListener {
 
         if (machete == null) {
             sendMessage(player, "You need a machete to cut your way through this dense jungle bush.")
-            return true
+            return clearScripts(player)
         }
 
         if (!finishedMoving(player) || !clockReady(player, Clocks.SKILLING)) {
-            clearScripts(player)
-            return true
+            return clearScripts(player)
         }
 
         if (state == 0) {
@@ -236,7 +235,7 @@ class KaramjaPlugin : InteractionListener {
         else
             bush.location.transform(0, 1, 0)
 
-        forceMove(player, player.location, target, 0, 90, null, Animations.HUMAN_WALK_SHORT_819) {
+        forceMove(player, player.location, target, 0, 45, null, Animations.HUMAN_WALK_SHORT_819) {
             sendMessage(player, "You hack your way through the jungle bush.")
             delayClock(player, Clocks.SKILLING, 3)
             clearScripts(player)
