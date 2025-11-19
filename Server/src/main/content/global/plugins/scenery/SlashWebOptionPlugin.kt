@@ -22,17 +22,19 @@ import shared.consts.Sounds
 
 @Initializable
 class SlashWebOptionPlugin : OptionHandler() {
-    private val sceneryIDs =
-        intArrayOf(
-            shared.consts.Scenery.WEB_733,
-            shared.consts.Scenery.WEB_1810,
-            shared.consts.Scenery.WEB_11400,
-            shared.consts.Scenery.WEB_33237,
-        )
-    private val baseAnimation = Animation(Animations.PICK_OBJECT_GROUND_451)
-    private val cutSpiderWebAnimation = Animation(Animations.CUT_SPIDER_WEB_911)
-    private val cutSpiderWebSoundEffect = Sounds.STABSWORD_SLASH_2548
-    private val knifeID = Items.KNIFE_946
+    companion object {
+        private val sceneryIDs =
+            intArrayOf(
+                shared.consts.Scenery.WEB_733,
+                shared.consts.Scenery.WEB_1810,
+                shared.consts.Scenery.WEB_11400,
+                shared.consts.Scenery.WEB_33237,
+            )
+        private val baseAnimation = Animation(Animations.PICK_OBJECT_GROUND_451)
+        private val cutSpiderWebAnimation = Animation(Animations.CUT_WITH_KNIFE_3747)
+        private const val CUT_WEB_SFX = Sounds.STABSWORD_SLASH_2548
+        private const val KNIFE_ITEM_ID = Items.KNIFE_946
+    }
 
     override fun newInstance(arg: Any?): Plugin<Any> {
         for (objectId in sceneryIDs) {
@@ -43,27 +45,23 @@ class SlashWebOptionPlugin : OptionHandler() {
         return this
     }
 
-    override fun handle(
-        player: Player,
-        node: Node,
-        option: String,
-    ): Boolean {
+    override fun handle(player: Player, node: Node, option: String): Boolean {
         val scenery = node as Scenery
         var weapon = getWeapon(player, player.equipment)
         if (weapon == null) {
             weapon = getWeapon(player, player.inventory)
             if (weapon == null) {
-                if (!inInventory(player, knifeID)) {
+                if (!inInventory(player, KNIFE_ITEM_ID)) {
                     sendMessage(player, "Only a sharp blade can cut through this sticky web.")
                     return true
                 }
-                weapon = Item(knifeID)
+                weapon = Item(KNIFE_ITEM_ID)
             }
         }
         val success = RandomFunction.random(2) == 1
         lock(player, 2)
-        playAudio(player, cutSpiderWebSoundEffect)
-        animate(player, if (weapon == Item(knifeID)) cutSpiderWebAnimation else baseAnimation)
+        playAudio(player, CUT_WEB_SFX)
+        animate(player, if (weapon == Item(KNIFE_ITEM_ID)) cutSpiderWebAnimation else baseAnimation)
         if (success) {
             sendMessage(player, "You slash the web apart.")
             SceneryBuilder.replace(
@@ -96,10 +94,7 @@ class SlashWebOptionPlugin : OptionHandler() {
         return true
     }
 
-    private fun getWeapon(
-        player: Player,
-        container: Container,
-    ): Item? {
+    private fun getWeapon(player: Player, container: Container): Item? {
         var item: Item? = if (container is EquipmentContainer) container.get(EquipmentContainer.SLOT_WEAPON) else null
         if (container is EquipmentContainer) {
             return checkEquipmentWeapon(player, item)
@@ -120,10 +115,7 @@ class SlashWebOptionPlugin : OptionHandler() {
         return item
     }
 
-    private fun checkEquipmentWeapon(
-        player: Player,
-        item: Item?,
-    ): Item? {
+    private fun checkEquipmentWeapon(player: Player, item: Item?): Item? {
         if (item != null) {
             val inter = WeaponInterface.getWeaponInterface(item) ?: return null
             var success = false
