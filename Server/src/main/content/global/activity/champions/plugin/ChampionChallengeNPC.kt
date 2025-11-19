@@ -145,7 +145,7 @@ class ChampionChallengeNPC(id: Int = 0, location: Location? = null) : AbstractNP
         )
 
         /**
-         * Spawns a champion NPC for the player’s current challenge.
+         * Spawns a champion NPC for the player's current challenge.
          *
          * @param player The challenger.
          * @param entry The [ChampionDefinition] entry to spawn.

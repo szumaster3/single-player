@@ -334,7 +334,7 @@ class WomDeliveryListener : InteractionListener {
 
             val rewards = rewardTable.roll(player, RandomFunction.random(1, 3))
             if (rewards.isEmpty()) {
-                sendNPCDialogue(player, npc.id, "Hmm, it seems luck wasn’t on your side this time. Maybe next time!", FaceAnim.HALF_GUILTY)
+                sendNPCDialogue(player, npc.id, "Hmm, it seems luck wasn't on your side this time. Maybe next time!", FaceAnim.HALF_GUILTY)
                 return
             }
 
@@ -343,7 +343,7 @@ class WomDeliveryListener : InteractionListener {
                     sendItemDialogue(player, reward.id, "You received: ${reward.amount} × ${getItemName(reward.id)}!")
                 } else {
                     GroundItemManager.create(GroundItem(reward, player.location, player))
-                    sendItemDialogue(player, reward.id, "You couldn’t carry your reward, so it has been dropped on the ground.")
+                    sendItemDialogue(player, reward.id, "You couldn't carry your reward, so it has been dropped on the ground.")
                 }
             }
             sendMessage(player, "You have been rewarded for helping ${getNPCName(npc.id)}!")
@@ -370,7 +370,7 @@ class WomDeliveryListener : InteractionListener {
                     rollNpcReward(player, npc)
                     finishTask(player)
                 } else {
-                    sendNPCDialogue(player, npc.id, "You haven’t brought everything I asked for yet.", FaceAnim.HALF_GUILTY)
+                    sendNPCDialogue(player, npc.id, "You haven't brought everything I asked for yet.", FaceAnim.HALF_GUILTY)
                 }
             } else {
                 if (!removeItem(player, OLD_MAN_MESSAGE)) {
