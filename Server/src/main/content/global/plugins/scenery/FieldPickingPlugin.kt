@@ -10,6 +10,7 @@ import core.game.node.entity.combat.ImpactHandler.HitsplatType
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.game.node.scenery.SceneryBuilder
+import core.game.node.scenery.SceneryType
 import core.game.system.task.Pulse
 import core.game.world.GameWorld.Pulser
 import core.game.world.GameWorld.ticks
@@ -93,11 +94,12 @@ class FieldPickingPlugin : OptionHandler() {
                         SceneryBuilder.replace(scenery, full)
                     }
                     if (!isBloomPlant) {
-                        SceneryBuilder.replace(
-                            if (plant == PickingPlant.BANANA_TREE_4) full else scenery,
-                            scenery.transform(if (banana) plant.respawn else 83),
-                            if (banana) 300 else plant.respawn,
-                        )
+                        if (banana) {
+                            val targetScenery = if (plant == PickingPlant.BANANA_TREE_4) full else scenery
+                            SceneryBuilder.replace(targetScenery, scenery.transform(plant.respawn), 300)
+                        } else {
+                            SceneryBuilder.remove(scenery, plant.respawn)
+                        }
                     }
                     if (plant.name.startsWith("MORT", true)) {
                         sendMessage(player, "You pick a mushroom from the log.")
@@ -127,7 +129,7 @@ class FieldPickingPlugin : OptionHandler() {
         if (charge > 1000 + RandomFunction.random(2, 8)) {
             scenery.isActive = false
             scenery.charge = 1000
-            SceneryBuilder.replace(scenery, scenery.transform(83), plant.respawn)
+            SceneryBuilder.remove(scenery, plant.respawn)
             return
         }
         scenery.charge = charge + 1
