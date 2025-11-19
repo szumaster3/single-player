@@ -792,12 +792,15 @@ object TutorialStage {
             52 -> {
                 hideTabs(player, login)
                 removeHintIcon(player)
-                player.dialogueInterpreter.sendPlaneMessageWithBlueTitle(
+                Component.setUnclosable(
+                    player,
+                    player.dialogueInterpreter.sendPlaneMessageWithBlueTitle(
                     "Sit back and watch.",
                     "While you are fighting you will see a bar over your head. The",
                     "bar shows how much health you have left. Your opponent will",
                     "have one too. You will continue to attack the rat until it's dead",
                     "or you do something else.",
+                        )
                 )
             }
 
@@ -817,12 +820,15 @@ object TutorialStage {
                 hideTabs(player, login)
                 removeHintIcon(player)
                 registerHintIcon(player, Repository.findNPC(NPCs.GIANT_RAT_950)!!)
+                Component.setUnclosable(
+                    player,
                 player.dialogueInterpreter.sendPlaneMessageWithBlueTitle(
                     "Rat ranging",
                     "Now you have a bow and some arrows. Before you can use",
                     "them you'll need to equip them. Once equipped with the",
                     "ranging gear try killing another rat. Remember: to attack, right",
                     "click on the monster and select attack.",
+                    )
                 )
             }
 
