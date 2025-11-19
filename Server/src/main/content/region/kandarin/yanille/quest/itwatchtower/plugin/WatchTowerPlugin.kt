@@ -112,7 +112,7 @@ class WatchTowerPlugin : InteractionListener {
                 return@on true
             }
 
-            openDialogue(player, SkavidEntranceDialogue())
+            openDialogue(player, SkavidEntranceDialogue(location))
             return@on true
         }
 
@@ -242,16 +242,14 @@ class WatchTowerPlugin : InteractionListener {
          */
 
         on(OGRE_CITY_NW_GATE, IntType.SCENERY, "open") { player, node ->
-            if (!getAttribute(player, GameAttributes.WATCHTOWER_GATE_UNLOCK, false)) {
+            if(isQuestComplete(player, Quests.WATCHTOWER) || getAttribute(player, GameAttributes.WATCHTOWER_GATE_UNLOCK, false)) {
+                if (player.location.x < 2504) {
+                    sendNPCDialogue(player, NPCs.OGRE_GUARD_859, "It's the small creature; you may pass.", FaceAnim.OLD_DEFAULT)
+                }
+                DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
+            } else {
                 openDialogue(player, OgreGuardNorthWestGateDialogue())
-                return@on true
             }
-
-            if (player.location.x < 2504) {
-                sendNPCDialogue(player, NPCs.OGRE_GUARD_859, "It's the small creature; you may pass.", FaceAnim.OLD_DEFAULT)
-            }
-
-            DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
             return@on true
         }
 
@@ -260,11 +258,11 @@ class WatchTowerPlugin : InteractionListener {
          */
 
         on(OGRE_CITY_SE_GATE, IntType.SCENERY, "open") { player, node ->
-            if (!getAttribute(player, GameAttributes.WATCHTOWER_GOLD_GATE_UNLOCK, false)) {
+            if(isQuestComplete(player, Quests.WATCHTOWER) || getAttribute(player, GameAttributes.WATCHTOWER_GOLD_GATE_UNLOCK, false)) {
+                DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
+            } else {
                 openDialogue(player, OgreGuardSouthEastGateDialogue())
-                return@on true
             }
-            DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
             return@on true
         }
 
@@ -328,9 +326,10 @@ class WatchTowerPlugin : InteractionListener {
 
             if (removeItem(player, Items.ROCK_CAKE_2379)) {
                 sendMessage(player, "You give the guard a rock cake.")
+                openDialogue(player, OgreGuardDialogue(), with.id)
+            } else {
+                sendMessage(player, "You don't have a rock cake.")
             }
-
-            openDialogue(player, OgreGuardDialogue(), with.id)
             return@onUseWith true
         }
 
@@ -710,21 +709,15 @@ class WatchTowerPlugin : InteractionListener {
             when (stage) {
                 0 -> sendDialogueLines(player!!, "If your light source goes out down there you'll be in trouble! Are", "you sure you want to go in without a tinderbox?").also { stage++ }
                 1 -> options("I'll be fine without a tinderbox.", "I'll come back with a tinderbox.").also { stage++ }
-                2 -> {
-                    if (buttonID != 1 || location == null) {
+                2 -> when(buttonID) {
+                    1 -> {
                         end()
-                        return
-                    }
-                    val p = player ?: return
-                    if (!LightSource.hasActiveLightSource(p)) {
-                        teleport(p, Location(2498, 9451, 0), TeleportManager.TeleportType.INSTANT)
-                        registerLogoutListener(p, "skavid_cave") {
-                            removeAttribute(p, GameAttributes.WATCHTOWER_DARK_AREA)
+                        if (location != null) {
+                            teleport(player!!, location, TeleportManager.TeleportType.INSTANT)
+                            sendMessage(player!!, "You enter the cave...")
                         }
-                    } else {
-                        teleport(p, location, TeleportManager.TeleportType.INSTANT)
-                        sendMessage(p, "You enter the cave...")
                     }
+                    2 -> end()
                 }
             }
         }
@@ -749,23 +742,22 @@ class WatchTowerPlugin : InteractionListener {
                     } else {
                         player(FaceAnim.HALF_ASKING, "Okay, I'll pay it.").also { stage = 5 }
                     }
-                    2 -> playerl(FaceAnim.HALF_ASKING, "Forget it, I'm not paying.").also { stage = 6 }
+                    2 -> playerl(FaceAnim.HALF_ASKING, "Forget it, I'm not paying.").also { stage = 7 }
 
                 }
                 5 -> npcl(FaceAnim.OLD_DEFAULT, "A wise choice, little thing.").also { stage++ }
                 6 -> {
-                    if (buttonID == 2) {
-                        end()
-                        npcl(FaceAnim.OLD_DEFAULT, "In that case you're not crossing.")
-                        sendMessage(player!!, "The guard blocks your path.")
-                    } else {
-                        end ()
-                        val dx = if (player!!.location.x >= 2531) -1 else 1
-                        forceMove(player!!, player!!.location, player!!.location.transform(dx, 3, 0), 0, 90, null, Animations.JUMP_OBSTACLE_5355) {
-                            sendPlayerDialogue(player!!, "Phew! I just made it.")
-                            sendMessage(player!!, "You daringly jump across the chasm.")
-                        }
+                    end ()
+                    val dx = if (player!!.location.x >= 2531) -1 else 1
+                    forceMove(player!!, player!!.location, player!!.location.transform(dx, 3, 0), 0, 90, null, Animations.JUMP_OBSTACLE_5355) {
+                        sendMessage(player!!, "You daringly jump across the chasm.")
+                        sendPlayerDialogue(player!!, "Phew! I just made it.")
                     }
+                }
+                7 -> {
+                    end()
+                    npcl(FaceAnim.OLD_DEFAULT, "In that case you're not crossing.")
+                    sendMessage(player!!, "The guard blocks your path.")
                 }
             }
         }
@@ -823,6 +815,7 @@ class WatchTowerPlugin : InteractionListener {
             addDialogueAction(player) { _, _ ->
                 if (freeSlots(player) == 0) {
                     sendDialogue(player, "You don't have enough inventory space for that.")
+                    return@addDialogueAction
                 } else {
                     addItem(player, Items.TOBANS_GOLD_2393, 1)
                 }

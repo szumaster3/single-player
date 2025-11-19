@@ -13,6 +13,7 @@ import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.TeleportManager
 import core.game.world.map.Location
+import core.game.world.update.flag.context.Graphics
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import shared.consts.*
@@ -203,25 +204,24 @@ class OgreGuardSouthEastGateDialogue : DialogueFile() {
  * @param openGate boolean.
  */
 private fun handleGatePassage(player: Player, loc: Location, openGate: Boolean) {
-    teleport(player, loc, TeleportManager.TeleportType.INSTANT)
-
     if (openGate) {
         val scenery = getScenery(2504, 3063, 0)
         scenery?.asScenery()?.let { DoorActionHandler.handleAutowalkDoor(player, it) }
     } else {
         lock(player, 9)
         openInterface(player, Components.FADE_TO_BLACK_115)
-        val max = player.skills.maximumLifepoints
-        val damage = (max * 0.05).toInt().coerceAtLeast(1)
-        queueScript(player, 1, QueueStrength.SOFT) { stage : Int ->
+        queueScript(player, 5, QueueStrength.SOFT) { stage : Int ->
             when(stage) {
                 0 -> {
+                    teleport(player, loc, TeleportManager.TeleportType.INSTANT)
                     openInterface(player, Components.FADE_FROM_BLACK_170)
                     return@queueScript delayScript(player, 6)
                 }
                 1 -> {
+                    val max = player.skills.maximumLifepoints
+                    val damage = (max * 0.05).toInt().coerceAtLeast(1)
                     impact(player, damage, ImpactHandler.HitsplatType.NORMAL)
-                    sendGraphics(Graphics.STUN_BIRDIES_ABOVE_HEAD_80, player.location)
+                    visualize(player, -1, Graphics(shared.consts.Graphics.STUN_BIRDIES_ABOVE_HEAD_80, 96))
                     return@queueScript delayScript(player, 3)
                 }
                 2 -> {
