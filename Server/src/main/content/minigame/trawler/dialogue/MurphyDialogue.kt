@@ -94,17 +94,13 @@ class MurphyDialogue(player: Player? = null) : Dialogue(player) {
                     npcl(FaceAnim.NEUTRAL, "You don't have enough space for the sextant. Come back to me when you do.")
                     return true
                 }
+                addItem(player, Items.SEXTANT_2574, 1)
                 sendItemDialogue(player, Items.SEXTANT_2574, "Murphy has given you his old sextant.")
                 stage++
             }
-            40 -> {
-                addItem(player, Items.SEXTANT_2574, 1)
-                stage++
-            }
-            41 -> player(FaceAnim.THINKING, "Don't you still need it?").also { stage++ }
-            42 -> npc(FaceAnim.FRIENDLY, "I can tell from the taste of the sea spray where I am,", "m'hearty!").also { stage++ }
-            43 -> player(FaceAnim.HAPPY, "Wow!").also { stage = 50 }
-
+            40 -> player(FaceAnim.THINKING, "Don't you still need it?").also { stage++ }
+            41 -> npc(FaceAnim.FRIENDLY, "I can tell from the taste of the sea spray where I am,", "m'hearty!").also { stage++ }
+            42 -> player(FaceAnim.HAPPY, "Wow!").also { stage = 50 }
             50 -> end()
         }
         return true
