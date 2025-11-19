@@ -50,8 +50,8 @@ class ImmerseWorld : StartupListener {
                     immerseFishingGuild()
                     immerseAdventurer()
                     immerseFalador()
-                    immerseArdougne()
-                    // immerseGE()
+                    // immerseArdougne()
+                    immerseGE()
                 }
             }
         }
@@ -277,7 +277,7 @@ class ImmerseWorld : StartupListener {
         fun immerseWilderness() {
             val wilderness = Location.create(3092, 3493, 0)
 
-            repeat(6) {
+            repeat(5) {
                 GeneralBotCreator(
                     GreenDragonKiller(CombatStyle.MELEE),
                     assembler.assembleMeleeDragonBot(CombatBotAssembler.Tier.HIGH, wilderness),
