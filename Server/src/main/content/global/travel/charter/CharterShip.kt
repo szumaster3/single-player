@@ -1,4 +1,4 @@
-package content.global.travel.charterships
+package content.global.travel.charter
 
 import core.api.*
 import core.game.node.entity.player.Player

@@ -1,4 +1,4 @@
-package content.region.kandarin.feldip.ogre_enclave.dialogue
+package content.region.kandarin.feldip.gutanoth.dialogue
 
 import content.region.kandarin.feldip.quest.zogre.dialogue.GrishFinishDialogue
 import content.region.kandarin.feldip.quest.zogre.plugin.ZogreUtils

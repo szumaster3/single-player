@@ -172,7 +172,7 @@ class CrompertyDialogue(player: Player? = null) : Dialogue(player) {
     override fun getIds(): IntArray = intArrayOf(844)
 
     /**
-     * Handles teleport the player to Lord Handelmort mansion
+     * Handles teleport the player to Lord Handelmort mansion.
      */
     private fun questTeleport(player: Player, npc: NPC) {
         val LOCATIONS = arrayOf(Location.create(2649, 3272, 0), Location.create(2638, 3321, 0))

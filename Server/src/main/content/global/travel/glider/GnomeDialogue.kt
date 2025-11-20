@@ -1,4 +1,4 @@
-package content.global.travel.gnome_glider
+package content.global.travel.glider
 
 import core.api.isQuestComplete
 import core.api.openInterface

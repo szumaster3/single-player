@@ -1,4 +1,4 @@
-package content.region.kandarin.feldip.ogre_enclave
+package content.region.kandarin.feldip.gutanoth.plugin
 
 import core.api.utils.WeightBasedTable
 import core.api.utils.WeightedItem

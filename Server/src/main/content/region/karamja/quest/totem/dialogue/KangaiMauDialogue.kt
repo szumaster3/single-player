@@ -50,8 +50,7 @@ class KangaiMauDialogue(player: Player? = null) : Dialogue(player) {
             20 -> playerl(FaceAnim.THINKING, "How can I find Handlemoret's house? Ardougne IS a big place...").also { stage++ }
             21 -> npcl(FaceAnim.ANNOYED, "I don't know Ardougne. You tell me.").also { stage++ }
             22 -> playerl(FaceAnim.HAPPY, "Ok, I will get it back.").also {
-                player.questRepository.getQuest(Quests.TRIBAL_TOTEM).start(player)
-                player.questRepository.getQuest(Quests.TRIBAL_TOTEM).setStage(player, 10)
+                setQuestStage(player, Quests.TRIBAL_TOTEM, 10)
                 stage++
             }
             23 -> npcl(FaceAnim.HAPPY, "Best of luck with that adventurer").also { stage = END_DIALOGUE }

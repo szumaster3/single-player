@@ -149,7 +149,7 @@ class KharaziDungeonPlugin : InteractionListener {
         override fun handle(componentID: Int, buttonID: Int) {
             when (stage) {
                 0 -> {
-                    player!!.dialogueInterpreter.sendDialogue("After perusing the empty bookcase for a while, you decide to check", "behind it. There's a crevice in the wall! You might just be able to", "force your way through if you were in any way athletic.")
+                    sendDialogueLines(player!!, "After perusing the empty bookcase for a while, you decide to check", "behind it. There's a crevice in the wall! You might just be able to", "force your way through if you were in any way athletic.")
                     stage++
                 }
 

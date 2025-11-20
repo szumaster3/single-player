@@ -1,4 +1,4 @@
-package content.global.travel.charterships
+package content.global.travel.charter
 
 import core.api.inInventory
 import core.api.openNpcShop
@@ -19,13 +19,13 @@ import shared.consts.NPCs
 @Initializable
 class TraderCrewmemberDialogue(player: Player? = null) : Dialogue(player) {
 
-    private var destination: CharterShipTransportation.Destination? = null
+    private var destination: CharterShipUtils.Destination? = null
     private var cost = 0
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (args.size > 1) {
-            destination = (args[1] as CharterShipTransportation.Destination)
+            destination = (args[1] as CharterShipUtils.Destination)
             cost = args[2] as Int
             core.api.sendDialogue(player, "To sail to " + StringUtils.formatDisplayName(destination!!.name) + " from here will cost you " + cost + " gold. Are you sure you want to pay that?")
             stage = 14
@@ -66,7 +66,7 @@ class TraderCrewmemberDialogue(player: Player? = null) : Dialogue(player) {
             12 -> npc(FaceAnim.HAPPY, "Certainly sir, where would you like to go?").also { stage++ }
             13 -> {
                 end()
-                CharterShipTransportation.open(player)
+                CharterShipUtils.open(player)
             }
 
             14 -> options("Ok", "Choose again", "No").also { stage++ }
@@ -89,7 +89,7 @@ class TraderCrewmemberDialogue(player: Player? = null) : Dialogue(player) {
 
                 2 -> {
                     end()
-                    CharterShipTransportation.open(player)
+                    CharterShipUtils.open(player)
                 }
 
                 3 -> end()

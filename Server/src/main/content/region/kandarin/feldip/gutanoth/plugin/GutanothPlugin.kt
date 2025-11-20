@@ -4,7 +4,6 @@ import content.global.skill.thieving.PickpocketPlugin
 import content.region.kandarin.feldip.quest.zogre.npc.BrentleVahnNPC
 import content.region.kandarin.feldip.quest.zogre.npc.SlashBashNPC
 import content.region.kandarin.feldip.quest.zogre.plugin.ZogreUtils
-import content.region.kandarin.feldip.ogre_enclave.OgreCoffin
 import core.api.*
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim

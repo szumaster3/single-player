@@ -1,4 +1,4 @@
-package content.global.travel.charterships
+package content.global.travel.charter
 
 import core.api.*
 import core.game.interaction.IntType
@@ -23,7 +23,7 @@ class CharterOptionPlugin : InteractionListener, InterfaceListener {
          */
 
         on(SAILORS, IntType.NPC, "charter") { player, _ ->
-            CharterShipTransportation.open(player)
+            CharterShipUtils.open(player)
             return@on true
         }
 
@@ -129,7 +129,7 @@ class CharterOptionPlugin : InteractionListener, InterfaceListener {
 
     override fun defineInterfaceListeners() {
         on(Components.SAILING_TRANSPORT_WORLD_MAP_95) { player, _, _, buttonID, _, _ ->
-            CharterShipTransportation.handle(player, buttonID)
+            CharterShipUtils.handle(player, buttonID)
             return@on true
         }
     }

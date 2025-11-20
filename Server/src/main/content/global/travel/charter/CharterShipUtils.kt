@@ -1,4 +1,4 @@
-package content.global.travel.charterships
+package content.global.travel.charter
 
 import core.api.*
 import core.game.component.Component
@@ -17,7 +17,7 @@ import shared.consts.Quests
 /**
  * Utility for charter ship travel.
  */
-object CharterShipTransportation {
+object CharterShipUtils {
     private const val MAX_SAFE_DISTANCE = 30
     // Charter map.
     val component = Component(Components.SAILING_TRANSPORT_WORLD_MAP_95)

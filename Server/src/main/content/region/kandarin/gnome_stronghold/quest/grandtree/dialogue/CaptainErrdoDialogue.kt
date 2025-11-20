@@ -1,6 +1,6 @@
 package content.region.kandarin.gnome_stronghold.quest.grandtree.dialogue
 
-import content.global.travel.gnome_glider.Glider
+import content.global.travel.glider.Glider
 import core.api.getQuestStage
 import core.api.openInterface
 import core.api.teleport

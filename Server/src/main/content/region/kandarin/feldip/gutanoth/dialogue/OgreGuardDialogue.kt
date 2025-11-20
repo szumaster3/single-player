@@ -1,4 +1,4 @@
-package content.region.kandarin.feldip.ogre_enclave.dialogue
+package content.region.kandarin.feldip.gutanoth.dialogue
 
 import core.api.*
 import core.game.dialogue.Dialogue

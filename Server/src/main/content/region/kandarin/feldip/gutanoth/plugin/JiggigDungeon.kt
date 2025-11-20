@@ -1,4 +1,4 @@
-package content.region.kandarin.feldip.ogre_enclave
+package content.region.kandarin.feldip.gutanoth.plugin
 
 import content.region.kandarin.feldip.quest.zogre.plugin.ZogreUtils
 import core.api.*
