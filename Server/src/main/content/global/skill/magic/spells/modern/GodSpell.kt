@@ -1,7 +1,6 @@
 package content.global.skill.magic.spells.modern
 
 import content.global.skill.magic.spells.ModernSpells
-import content.global.skill.magic.spells.modern.def.GodSpellDefinition
 import core.api.playGlobalAudio
 import core.api.sendMessage
 import core.cache.def.impl.ItemDefinition

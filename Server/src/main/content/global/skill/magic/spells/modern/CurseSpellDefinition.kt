@@ -1,4 +1,4 @@
-package content.global.skill.magic.spells.modern.def
+package content.global.skill.magic.spells.modern
 
 import content.global.skill.magic.spells.ModernSpells
 import content.global.skill.magic.spells.SpellProjectile

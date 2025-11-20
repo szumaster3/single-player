@@ -1,6 +1,5 @@
 package content.global.skill.magic.spells.modern
 
-import content.global.skill.magic.spells.modern.def.CurseSpellDefinition
 import core.api.drainStatLevel
 import core.game.node.entity.Entity
 import core.game.node.entity.combat.BattleState

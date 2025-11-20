@@ -1,4 +1,4 @@
-package content.global.skill.magic.spells.modern.def
+package content.global.skill.magic.spells.modern
 
 import core.game.node.entity.Entity
 import core.game.node.entity.combat.spell.Runes

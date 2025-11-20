@@ -24,20 +24,12 @@ class AlchemySpell : SpellListener("modern") {
     override fun defineListeners() {
         onCast(ModernSpells.LOW_ALCHEMY, ITEM) { player, node ->
             val item = node?.asItem() ?: return@onCast
-            requires(
-                player = player,
-                magicLevel = 21,
-                runes = arrayOf(Item(Items.FIRE_RUNE_554, 3), Item(Items.NATURE_RUNE_561))
-            )
+            requires(player = player, magicLevel = 21, runes = arrayOf(Item(Items.FIRE_RUNE_554, 3), Item(Items.NATURE_RUNE_561)))
             alchemize(player, item, high = false)
         }
         onCast(ModernSpells.HIGH_ALCHEMY, ITEM) { player, node ->
             val item = node?.asItem() ?: return@onCast
-            requires(
-                player = player,
-                magicLevel = 55,
-                runes = arrayOf(Item(Items.FIRE_RUNE_554, 5), Item(Items.NATURE_RUNE_561, 1))
-            )
+            requires(player = player, magicLevel = 55, runes = arrayOf(Item(Items.FIRE_RUNE_554, 5), Item(Items.NATURE_RUNE_561, 1)))
             alchemize(player, item, high = true)
         }
     }
@@ -99,13 +91,15 @@ class AlchemySpell : SpellListener("modern") {
         return true
     }
 
-    private val lowAlchemyAnimation = Animation(9623, Animator.Priority.HIGH)
-    private val lowAlchemyGraphics = Graphics(Graphic.LOW_ALCHEMY_BY_HAND_763)
-    private val lowAlchemyStaffAnimation = Animation(Animations.HUMAN_CAST_LOW_ALCH_SPELL_9625, Animator.Priority.HIGH)
-    private val lowAlchemyStaffGraphics = Graphics(Graphic.LOW_ALCH_WITH_STAFF_1692)
+    companion object {
+        private val lowAlchemyAnimation = Animation(9623, Animator.Priority.HIGH)
+        private val lowAlchemyGraphics = Graphics(Graphic.LOW_ALCHEMY_BY_HAND_763)
+        private val lowAlchemyStaffAnimation = Animation(Animations.HUMAN_CAST_LOW_ALCH_SPELL_9625, Animator.Priority.HIGH)
+        private val lowAlchemyStaffGraphics = Graphics(Graphic.LOW_ALCH_WITH_STAFF_1692)
 
-    private val highAlchemyAnimation = Animation(9631, Animator.Priority.HIGH)
-    private val highAlchemyGraphics = Graphics(Graphic.ALCH_1691)
-    private val highAlchemyStaffAnimation = Animation(Animations.ALCH_WITH_STAFF_9633, Animator.Priority.HIGH)
-    private val highAlchemyStaffGraphics = Graphics(Graphic.HIGH_ALCH_WITH_STAFF_1693)
+        private val highAlchemyAnimation = Animation(9631, Animator.Priority.HIGH)
+        private val highAlchemyGraphics = Graphics(Graphic.ALCH_1691)
+        private val highAlchemyStaffAnimation = Animation(Animations.ALCH_WITH_STAFF_9633, Animator.Priority.HIGH)
+        private val highAlchemyStaffGraphics = Graphics(Graphic.HIGH_ALCH_WITH_STAFF_1693)
+    }
 }

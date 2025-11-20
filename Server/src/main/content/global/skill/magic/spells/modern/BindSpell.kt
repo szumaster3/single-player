@@ -1,7 +1,6 @@
 package content.global.skill.magic.spells.modern
 
 import content.global.skill.magic.spells.SpellProjectile
-import content.global.skill.magic.spells.modern.def.BindSpellDefinition
 import core.game.node.entity.Entity
 import core.game.node.entity.combat.BattleState
 import core.game.node.entity.combat.spell.CombatSpell
