@@ -10,6 +10,9 @@ import core.game.world.update.flag.context.Graphics
 import shared.consts.Sounds
 import shared.consts.Graphics as Gfx
 
+/**
+ * Configuration of modern elemental spells.
+ */
 enum class ElementalSpellDefinition(val element: Element, val tier: Tier, val type: SpellType, val button: Int, val level: Int, val xp: Double, val sound: Int, val start: Graphics, val projectile: Projectile, val end: Graphics, val runes: Array<Item>) {
     AIR_STRIKE   (Element.AIR, Tier.STRIKE, SpellType.STRIKE, ModernSpells.AIR_STRIKE, 1, 5.5,   Sounds.WINDSTRIKE_CAST_AND_FIRE_220,     Graphics(Gfx.WIND_STRIKE_CAST_90,96),  SpellProjectile.create(Gfx.WIND_STRIKE_PROJECTILE_91),  Graphics(Gfx.WIND_STRIKE_IMPACT_92,96),  arrayOf(Runes.MIND_RUNE.getItem(1),  Runes.AIR_RUNE.getItem(1))),
     AIR_BOLT     (Element.AIR, Tier.BOLT,   SpellType.BOLT,   ModernSpells.AIR_BOLT,   17, 13.5, Sounds.WINDBOLT_CAST_AND_FIRE_218,       Graphics(Gfx.WIND_BOLT_CAST_117,96),   SpellProjectile.create(Gfx.WIND_BOLT_PROJECTILE_118),   Graphics(Gfx.WIND_BOLT_IMPACT_119,96),   arrayOf(Runes.CHAOS_RUNE.getItem(1), Runes.AIR_RUNE.getItem(2))),
