@@ -10,6 +10,7 @@ import content.data.BossKillCounter
 import content.data.GameAttributes
 import content.global.skill.construction.CrestType
 import content.region.asgarnia.falador.plugin.temple_knights.WhiteKnightRankManager
+import core.api.getAttribute
 import core.api.utils.PlayerStatsCounter
 import core.game.node.entity.player.Player
 import core.game.system.command.Privilege
@@ -168,6 +169,7 @@ class StatsCommandSet : CommandSet(Privilege.STANDARD) {
                             val crest = player.getAttribute(GameAttributes.FAMILY_CREST, -1)
                             sendLine(player, "Crest: ${CrestType.values().getOrNull(crest - 1)?.symbol ?: "not set"}", i)
                         }
+                        70 -> sendLine(player, "Chompy kills: ${player.getAttribute("chompy-kills", 0)}", i)
                         else -> sendLine(player, "", i)
                     }
                 }

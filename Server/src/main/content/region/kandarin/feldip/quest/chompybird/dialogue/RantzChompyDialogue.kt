@@ -45,42 +45,23 @@ class RantzChompyDialogue(player: Player? = null) : Dialogue(player) {
         return true
     }
 
-    override fun handle(
-        componentId: Int,
-        buttonId: Int,
-    ): Boolean {
+    override fun handle(componentId: Int, buttonId: Int): Boolean {
         when (stage) {
-            0 -> npcl(
-                FaceAnim.OLD_NORMAL,
-                "Creature done good, cooking da chompy. Maybe you wants a free hatsie? Rantz got lots of hatsies for chompy shooters.",
-            ).also {
-                stage++
-            }
-
+            0 -> npcl(FaceAnim.OLD_NORMAL, "Creature done good, cooking da chompy. Maybe you wants a free hatsie? Rantz got lots of hatsies for chompy shooters.").also { stage++ }
             1 -> options("What are these 'hatsies'?", "Okay, show me your 'hatsies'.", "No thanks.").also { stage++ }
             2 -> when (buttonId) {
                 1 -> playerl(FaceAnim.FRIENDLY, "What are these 'hatsies'?").also { stage = 3 }
                 2 -> playerl(FaceAnim.FRIENDLY, "Okay, show me your 'hatsies'.").also { stage = 100 }
                 3 -> playerl(FaceAnim.FRIENDLY, "No thanks.").also { stage = END_DIALOGUE }
             }
-
-            3 -> npcl(
-                FaceAnim.OLD_NORMAL,
-                "Creature stupid? Hatsies to wear on head, make you look good. Huh huh huh.",
-            ).also {
-                stage++
-            }
-
+            3 -> npcl(FaceAnim.OLD_NORMAL, "Creature stupid? Hatsies to wear on head, make you look good. Huh huh huh.").also { stage++ }
             4 -> playerl(FaceAnim.FRIENDLY, "Ah, I see, you're offering me hats.").also { stage++ }
             5 -> npcl(FaceAnim.OLD_NORMAL, "Dat's what Rantz said. You want hatsies or not?").also { stage = 1 }
             100 -> {
                 val hasBow = inInventory(player, Items.OGRE_BOW_2883) || inEquipment(player, Items.OGRE_BOW_2883)
 
                 if (!hasBow) {
-                    npcl(
-                        FaceAnim.OLD_NORMAL,
-                        "Stupid creature. Me need bow to see how many chompy creature kill. Bring bow.",
-                    )
+                    npcl(FaceAnim.OLD_NORMAL, "Stupid creature. Me need bow to see how many chompy creature kill. Bring bow.")
                     stage = 200
                     return true
                 }
@@ -92,16 +73,10 @@ class RantzChompyDialogue(player: Player? = null) : Dialogue(player) {
                     val spaces = freeSlots(player)
                     if (spaces < hats.size) {
                         for (i in 0 until spaces) addItem(player, hats[i])
-                        npcl(
-                            FaceAnim.OLD_NORMAL,
-                            "There all hats you can fit, creature. Come back when have more room for hatsies.",
-                        )
+                        npcl(FaceAnim.OLD_NORMAL, "There all hats you can fit, creature. Come back when have more room for hatsies.")
                     } else {
                         for (hat in hats) addItem(player, hat)
-                        npcl(
-                            FaceAnim.OLD_NORMAL,
-                            "There all hats, creature. Come back when kill more chompy. Unless you kill all chompy already.",
-                        )
+                        npcl(FaceAnim.OLD_NORMAL, "There all hats, creature. Come back when kill more chompy. Unless you kill all chompy already.")
                     }
                 }
                 stage = END_DIALOGUE
@@ -125,14 +100,9 @@ class RantzChompyDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             207 -> showTopics(
-                IfTopic(
-                    "Okay.",
-                    208,
-                    amountInInventory(player, Items.COINS_995) >= getAttribute(player, "chompybird:new-bow-cost", 500),
-                ),
+                IfTopic("Okay.", 208, amountInInventory(player, Items.COINS_995) >= getAttribute(player, "chompybird:new-bow-cost", 500)),
                 Topic("No thank you...", END_DIALOGUE),
             )
-
             208 -> {
                 if (removeItem(player, Item(Items.COINS_995, getAttribute(player, "chompybird:new-bow-cost", 500)))) {
                     addItemOrDrop(player, Items.OGRE_BOW_2883)

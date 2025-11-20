@@ -31,11 +31,7 @@ class BloatedToadNPC : AbstractNPC {
     var ticksToLive = 100
     var chompySpawned = false
 
-    override fun construct(
-        id: Int,
-        location: Location,
-        vararg objects: Any?,
-    ): AbstractNPC {
+    override fun construct(id: Int, location: Location, vararg objects: Any?): AbstractNPC {
         val npc = BloatedToadNPC(id, location)
         npc.isWalks = false
         npc.isNeverWalks = true
@@ -89,7 +85,7 @@ class BloatedToadListeners :
     StartupListener,
     Commands {
     lateinit var borders: ZoneBorders
-    val extraBorders = ArrayList<ZoneBorders>()
+    private val extraBorders = ArrayList<ZoneBorders>()
 
     override fun startup() {
         borders = ZoneBorders(2368, 2944, 2687, 3071)
@@ -99,7 +95,7 @@ class BloatedToadListeners :
     }
 
     override fun defineCommands() {
-        define("toadzone", Privilege.MODERATOR, "", "Toad inflation.") { player, _ ->
+        define("toadzone", Privilege.ADMIN, "", "Toad inflation.") { player, _ ->
             val swloc = player.location.transform(-15, -15, 0)
             val neloc = player.location.transform(15, 15, 0)
             val newBorders = ZoneBorders(swloc.x, swloc.y, neloc.x, neloc.y)
@@ -113,7 +109,7 @@ class BloatedToadListeners :
             }
         }
 
-        define("toadbomb", Privilege.ADMIN, "", "Toad detoadation.") { player, _ ->
+        define("toadbomb", Privilege.ADMIN, "", "Toad detonation.") { player, _ ->
             val swloc = player.location.transform(-5, -5, 0)
             val neloc = player.location.transform(5, 5, 0)
             for (x in swloc.x until neloc.x) {

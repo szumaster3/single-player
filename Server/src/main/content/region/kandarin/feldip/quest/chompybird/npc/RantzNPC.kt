@@ -21,11 +21,7 @@ class RantzNPC : AbstractNPC {
     constructor() : super(NPCs.RANTZ_1010, null, true)
     private constructor(id: Int, location: Location) : super(id, location)
 
-    override fun construct(
-        id: Int,
-        location: Location,
-        vararg objects: Any?,
-    ): AbstractNPC = RantzNPC(id, location)
+    override fun construct(id: Int, location: Location, vararg objects: Any?): AbstractNPC = RantzNPC(id, location)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.RANTZ_1010)
 

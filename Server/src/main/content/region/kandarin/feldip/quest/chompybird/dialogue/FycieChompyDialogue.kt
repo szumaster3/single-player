@@ -37,48 +37,27 @@ class FycieChompyDialogue(player: Player? = null) : Dialogue(player) {
         return true
     }
 
-    override fun handle(
-        componentId: Int,
-        buttonId: Int,
-    ): Boolean = true
+    override fun handle(componentId: Int, buttonId: Int): Boolean = true
 
     override fun getIds(): IntArray = intArrayOf(NPCs.FYCIE_1011)
 }
 
-class FycieChompyDialogueFile(
-    val quest: Quest,
-) : DialogueFile() {
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
-        when (quest.getStage(player)) {
-            in 0 until 70 -> npcl(
-                FaceAnim.OLD_NORMAL,
-                "You's better talk to Dad, We not talk to wierdly 'umans.",
-            ).also { stage = END_DIALOGUE }
+class FycieChompyDialogueFile(val quest: Quest) : DialogueFile() {
 
+    override fun handle(componentID: Int, buttonID: Int) {
+        when (quest.getStage(player)) {
+            in 0 until 70 -> npcl(FaceAnim.OLD_NORMAL, "You's better talk to Dad, We not talk to wierdly 'umans.").also { stage = END_DIALOGUE }
             in 70 until 90 -> handleIngredientDialogue(player, buttonID)
         }
     }
 
-    private fun handleIngredientDialogue(
-        player: Player?,
-        buttonId: Int,
-    ) {
+    private fun handleIngredientDialogue(player: Player?, buttonId: Int) {
         val fycieIngredient = getAttribute(player!!, BigChompyBirdHunting.ATTR_ING_FYCIE, -1)
         when (stage) {
-            0 -> npcl(
-                FaceAnim.OLD_NORMAL,
-                "Dad say's you's roasting da chompy for us! Slurp! Me's wants ${
-                    getItemName(
-                        fycieIngredient,
-                    )
-                } wiv mine! Yummy can't wait to eats it.",
-            ).also {
+            0 -> npcl(FaceAnim.OLD_NORMAL, "Dad say's you's roasting da chompy for us! Slurp! Me's wants ${getItemName(fycieIngredient)} wiv mine! Yummy can't wait to eats it.",).also {
+                setAttribute(player, BigChompyBirdHunting.ATTR_FYCIE_ASKED, true)
                 stage = END_DIALOGUE
             }
         }
-        setAttribute(player, BigChompyBirdHunting.ATTR_FYCIE_ASKED, true)
     }
 }

@@ -187,7 +187,7 @@ class ChompyBirdNPC :
             return@on true
         }
 
-        on(Items.OGRE_BOW_2883, IntType.ITEM, "check kills") { player, _ ->
+        on(Items.OGRE_BOW_2883, IntType.ITEM, "check kills", "operate") { player, _ ->
             val amount = player.getAttribute("chompy-kills", 0)
             sendDialogue(player, "You have killed $amount chompy birds.")
             return@on true
