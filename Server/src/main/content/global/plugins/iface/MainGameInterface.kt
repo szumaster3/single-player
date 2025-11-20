@@ -33,7 +33,11 @@ class MainGameInterface : InterfaceListener {
 
         on(TOPLEVEL_FS){player, _, _, buttonID, _, _ ->
             if (buttonID == 110)
-                configureWorldMap(player)
+                if(!getAttribute(player, GameAttributes.TUTORIAL_COMPLETE, false)) {
+                    openInterface(player, 764)
+                } else {
+                    configureWorldMap(player)
+                }
             return@on true
         }
 
