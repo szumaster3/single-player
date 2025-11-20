@@ -17,6 +17,7 @@ import core.game.world.map.RegionManager;
 import core.game.world.map.zone.impl.WildernessZone;
 import core.game.world.update.flag.context.Animation;
 import core.game.world.update.flag.context.Graphics;
+import shared.consts.NPCs;
 import shared.consts.Sounds;
 
 import java.util.ArrayList;
@@ -120,23 +121,6 @@ public abstract class CombatSpell extends MagicSpell {
      * @param max    The max amount of victims.
      * @return The list of targets.
      */
-    /*
-    public List<Entity> getMultihitTargets(Entity entity, Entity target, int max) {
-        List<Entity> list = new ArrayList<>(20);
-        list.add(target);
-        boolean npc = target instanceof NPC;
-        for (Entity e : npc ? RegionManager.getSurroundingNPCs(target) : RegionManager.getSurroundingPlayers(target)) {
-            if (e != target && e != entity && CombatStyle.MAGIC.getSwingHandler().canSwing(entity, e) != InteractionType.NO_INTERACT) {
-                list.add(e);
-            }
-            if (--max < 1) {
-                break;
-            }
-        }
-        return list;
-    }
-     */
-
     public List<Entity> getMultihitTargets(Entity entity, Entity target, int max) {
         List<Entity> victims = new ArrayList<>(20);
         victims.add(target);
@@ -149,9 +133,15 @@ public abstract class CombatSpell extends MagicSpell {
             if (e == target || e == entity) {
                 continue;
             }
+
+            if ((e instanceof Player && ((Player) e).isArtificial()) || (e instanceof NPC && ((NPC) e).getId() == NPCs.VOID_KNIGHT_3785)) {
+                continue;
+            }
+
             if (CombatStyle.MAGIC.getSwingHandler().canSwing(entity, e) == InteractionType.NO_INTERACT) {
                 continue;
             }
+
             if (e instanceof Familiar) {
                 Player owner = ((Familiar) e).getOwner();
                 if (owner != entity && WildernessZone.Companion.getInstance().continueAttack(entity, owner, CombatStyle.MAGIC, true)) {
@@ -160,10 +150,12 @@ public abstract class CombatSpell extends MagicSpell {
             } else {
                 victims.add(e);
             }
+
             if (--max < 1) {
                 break;
             }
         }
+
         return victims;
     }
 
