@@ -17,6 +17,7 @@ import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.interaction.QueueStrength
 import core.game.node.entity.combat.ImpactHandler
+import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
 import core.game.world.map.Location
 import core.game.world.map.zone.ZoneBorders
@@ -27,53 +28,29 @@ import shared.consts.*
 class TheDigSitePlugin : InteractionListener {
 
     override fun defineListeners() {
-        on(NPCs.NISHA_4648, IntType.NPC, "talk-to") { player, _ ->
+        on(NPCs.NISHA_4648, IntType.NPC, "talk-to") { _, _ ->
             //Panning_archaeologist_(female)?oldid=1169942
             return@on false
         }
 
         /*
-         * Handles inspecting the Level 1 Certificate item.
+         * Handles inspecting the certificate items.
          * Displays a certificate interface with the player name.
          */
 
-        on(Items.LEVEL_1_CERTIFICATE_691, ITEM, "look-at") { player, _ ->
-            openInterface(player, 440)
-            sendString(player, player.username, 440, 5)
-            return@on true
-        }
-
-        /*
-         * Handles inspecting the Level 2 Certificate item.
-         * Displays a certificate interface with the player name.
-         */
-
-        on(Items.LEVEL_2_CERTIFICATE_692, ITEM, "look-at") { player, _ ->
-            openInterface(player, 441)
-            sendString(player, player.username, 441, 5)
-            return@on true
-        }
-
-        /*
-         * Handles inspecting the Level 3 Certificate item.
-         * Displays a certificate interface with the player name.
-         */
-
-        on(Items.LEVEL_3_CERTIFICATE_693, ITEM, "look-at") { player, _ ->
-            openInterface(player, 444)
-            sendString(player, player.username, 444, 5)
-            return@on true
+        certificates.forEach { (item, interfaceId) ->
+            on(item, ITEM, "look-at") { player, _ ->
+                openInterface(player, interfaceId)
+                sendString(player, player.username, interfaceId, 5)
+                return@on true
+            }
         }
 
         /*
          * Handles stealing from Digsite Workmen NPCs.
          */
 
-        on(intArrayOf(NPCs.DIGSITE_WORKMAN_613, NPCs.DIGSITE_WORKMAN_4564, NPCs.DIGSITE_WORKMAN_4565),
-            IntType.NPC,
-            "steal-from"
-        ) { player, node ->
-
+        on(intArrayOf(NPCs.DIGSITE_WORKMAN_613, NPCs.DIGSITE_WORKMAN_4564, NPCs.DIGSITE_WORKMAN_4565), IntType.NPC, "steal-from") { player, node ->
             if (getStatLevel(player, Skills.THIEVING) < 25) {
                 sendMessage(player, "You need a Thieving level of 25 to do that.")
                 return@on true
@@ -95,7 +72,7 @@ class TheDigSitePlugin : InteractionListener {
 
             val roll = PickpocketPlugin.pickpocketRoll(player, 84.0, 240.0, table)
 
-            fun applyFail() {
+            fun handleFail() {
                 val npc = node.asNpc()
                 npc.face(player)
                 npc.animator.animate(PickpocketPlugin.NPC_ANIM)
@@ -104,11 +81,11 @@ class TheDigSitePlugin : InteractionListener {
                 sendMessage(player, "You have been stunned.")
                 playHurtAudio(player, 20)
                 stun(player, 3)
-                player.impactHandler.manualHit(npc, 1, ImpactHandler.HitsplatType.NORMAL)
+                impact(npc, 1, ImpactHandler.HitsplatType.NORMAL)
                 npc.face(null)
             }
 
-            fun applySuccess() {
+            fun handleSuccess() {
                 queueScript(player, PickpocketPlugin.PICKPOCKET_ANIM.duration, QueueStrength.NORMAL) { stage ->
                     if (stage == 0) {
                         val loot = roll!!
@@ -127,7 +104,7 @@ class TheDigSitePlugin : InteractionListener {
                     } else return@queueScript stopExecuting(player)
                 }
             }
-            if (roll == null) applyFail() else applySuccess()
+            if (roll == null) handleFail() else handleSuccess()
             return@on true
         }
 
@@ -137,7 +114,6 @@ class TheDigSitePlugin : InteractionListener {
 
         on(NPCs.STUDENT_617, NPC, "pickpocket") { player, _ ->
             sendDialogue(player, "I don't think I should try to steal from this poor student.")
-
             return@on true
         }
 
@@ -157,10 +133,8 @@ class TheDigSitePlugin : InteractionListener {
         on(Scenery.BUSH_2358, SCENERY, "search") { player, _ ->
             if(inInventory(player, Items.TEDDY_673)) return@on false
             sendPlayerDialogue(player, "Hey, something has been dropped here...")
-            runTask(player, 3){
-                sendItemDialogue(player, Items.TEDDY_673, "You find... something.")
-                addItemOrDrop(player, Items.TEDDY_673)
-            }
+            sendItemDialogue(player, Items.TEDDY_673, "You find... something.")
+            addItemOrDrop(player, Items.TEDDY_673)
             return@on true
         }
 
@@ -184,7 +158,7 @@ class TheDigSitePlugin : InteractionListener {
 
         onUseWith(SCENERY, Items.PANNING_TRAY_677, Scenery.PANNING_POINT_2363) { player, used, _ ->
             if (getAttribute(player, TheDigSite.attributePanningGuideTea, false)) {
-                queueScript(player, 0, QueueStrength.NORMAL) { stage: Int ->
+                queueScript(player, 1, QueueStrength.NORMAL) { stage: Int ->
                     when (stage) {
                         0 -> {
                             animate(player, PANNING_ANIMATION)
@@ -215,39 +189,42 @@ class TheDigSitePlugin : InteractionListener {
          */
 
         on(Scenery.PANNING_POINT_2363, SCENERY, "pan") { player, _ ->
-            if (getAttribute(player, TheDigSite.attributePanningGuideTea, false)) {
-                if (inInventory(player, Items.PANNING_TRAY_677)) {
-                    queueScript(player, 0, QueueStrength.NORMAL) { stage: Int ->
+            if (!getAttribute(player, TheDigSite.attributePanningGuideTea, false)) {
+                openDialogue(player, PanningGuideDialogue(), findNPC(NPCs.PANNING_GUIDE_620)!!)
+                return@on true
+            }
+
+            when {
+                inInventory(player, Items.PANNING_TRAY_677) -> {
+                    queueScript(player, 1, QueueStrength.NORMAL) { stage ->
                         when (stage) {
                             0 -> {
                                 playAudio(player, Sounds.DIGSITE_PANNING_2377)
                                 animate(player, PANNING_ANIMATION)
+                                lock(player, PANNING_ANIMATION.duration)
                                 return@queueScript delayScript(player, PANNING_ANIMATION.duration)
                             }
-
                             1 -> {
-                                sendItemDialogue(
-                                    player,
-                                    Items.PANNING_TRAY_679,
-                                    "You lift the full tray from the water.",
-                                )
+                                sendItemDialogue(player, Items.PANNING_TRAY_679, "You lift the full tray from the water.")
                                 if (removeItem(player, Items.PANNING_TRAY_677)) {
                                     addItemOrDrop(player, Items.PANNING_TRAY_679)
                                 }
                                 return@queueScript stopExecuting(player)
                             }
-
-                            else -> return@queueScript stopExecuting(player)
+                            else -> stopExecuting(player)
                         }
                     }
-                } else if (inInventory(player, Items.PANNING_TRAY_679)) {
+                }
+
+                inInventory(player, Items.PANNING_TRAY_679) -> {
                     sendPlayerDialogue(player, "I already have a full panning tray; perhaps I should search it first.")
-                } else {
+                }
+
+                else -> {
                     sendMessage(player, "I need a panning tray to pan the panning point.")
                 }
-            } else {
-                openDialogue(player, PanningGuideDialogue(), findNPC(NPCs.PANNING_GUIDE_620)!!)
             }
+
             return@on true
         }
 
@@ -266,168 +243,77 @@ class TheDigSitePlugin : InteractionListener {
 
         on(Items.PANNING_TRAY_679, ITEM, "search") { player, used ->
             sendMessage(player, "You search the contents of the tray.")
-            if (removeItem(player, used)) {
-                addItemOrDrop(player, Items.PANNING_TRAY_677)
-                val tableRoll = panningTable.roll()
-                if (tableRoll.size > 0) {
-                    addItemOrDrop(player, tableRoll[0].id)
-                    when (tableRoll[0].id) {
-                        Items.COINS_995 -> sendItemDialogue(player, Items.COINS_995, "You find some coins within the mud.")
-                        Items.NUGGETS_680 -> sendItemDialogue(player, Items.PANNING_TRAY_678, "You find some gold nuggets within the mud.")
-                        Items.OYSTER_407 -> sendItemDialogue(player, Items.OYSTER_407, "You find an oyster within the mud.")
-                        Items.UNCUT_OPAL_1625 -> sendItemDialogue(player, Items.UNCUT_OPAL_1625, "You find a gem within the mud!")
-                        Items.UNCUT_JADE_1627 -> sendItemDialogue(player, Items.UNCUT_JADE_1627, "You find a gem within the mud!")
-                        Items.SPECIAL_CUP_672 -> sendItemDialogue(player, Items.SPECIAL_CUP_672, "You find a shiny cup covered in mud.")
-                    }
-                } else {
-                    sendItemDialogue(player, Items.PANNING_TRAY_679, "The tray contains only plain mud.")
-                }
+            if (!removeItem(player, used)) return@on true
+
+            addItemOrDrop(player, Items.PANNING_TRAY_677)
+
+            val tableRoll = panningTable.roll()
+            if (tableRoll.isEmpty()) {
+                sendItemDialogue(player, Items.PANNING_TRAY_679, "The tray contains only plain mud.")
+                return@on true
             }
+
+            val loot = tableRoll[0]
+            addItemOrDrop(player, loot.id)
+
+            val lootMessages = mapOf(
+                Items.COINS_995       to "You find some coins within the mud.",
+                Items.NUGGETS_680     to "You find some gold nuggets within the mud.",
+                Items.OYSTER_407      to "You find an oyster within the mud.",
+                Items.UNCUT_OPAL_1625 to "You find a gem within the mud!",
+                Items.UNCUT_JADE_1627 to "You find a gem within the mud!",
+                Items.SPECIAL_CUP_672 to "You find a shiny cup covered in mud."
+            )
+
+            sendItemDialogue(player, loot.id, lootMessages[loot.id] ?: "You find something in the mud.")
             return@on true
         }
 
-        /*
-          * Handles digging in soil spots using a trowel at different Digsite levels.
-          */
-
         onUseWith(SCENERY, Items.TROWEL_676, Scenery.SOIL_2376, Scenery.SOIL_2377, Scenery.SOIL_2378) { player, _, _ ->
-            val level3DigRight = ZoneBorders(3370, 3437, 3377, 3442)
-            val level3DigLeft = ZoneBorders(3350, 3404, 3357, 3412)
-            if (level3DigRight.insideBorder(player.location) || level3DigLeft.insideBorder(player.location)) {
-                if (getQuestStage(player, Quests.THE_DIG_SITE) >= 6) {
-                    queueScript(player, 0, QueueStrength.NORMAL) { stage: Int ->
-                        when (stage) {
-                            0 -> {
-                                sendMessage(player, "You dig through the earth...")
-                                playAudio(player, Sounds.DIGSITE_DIG_TROWEL_2376)
-                                animate(player, TROWEL_ANIMATION)
-                                lock(player, TROWEL_ANIMATION.duration)
-                                return@queueScript delayScript(player, TROWEL_ANIMATION.duration)
-                            }
+            val stage = getQuestStage(player, Quests.THE_DIG_SITE)
+            val loc = player.location
 
-                            1 -> {
-                                val tableRoll = level3DigTable.roll()
-                                sendMessage(player, "You carefully clean your find with the specimen brush.")
-                                if (tableRoll.size > 0) {
-                                    addItemOrDrop(player, tableRoll[0].id)
-                                    sendMessage(player, "You find a ${tableRoll[0].name.lowercase()}.")
-                                }
-                                return@queueScript stopExecuting(player)
-                            }
-
-                            else -> return@queueScript stopExecuting(player)
-                        }
-                    }
+            // Level 3.
+            val lvl3 = listOf(ZoneBorders(3370, 3437, 3377, 3442), ZoneBorders(3350, 3404, 3357, 3412))
+            if (lvl3.any { it.insideBorder(loc) }) {
+                if (stage >= 6) {
+                    return@onUseWith doDig(player, level3DigTable)
                 } else {
-                    sendNPCDialogue(
-                        player,
-                        NPCs.DIGSITE_WORKMAN_613,
-                        "Oi! What do you think you're doing? There's fragile specimens around here!",
-                        FaceAnim.ANGRY,
-                    )
+                    warnWorkman(player)
+                    return@onUseWith true
                 }
             }
 
-            val level2Dig = ZoneBorders(3350, 3424, 3363, 3430)
-            if (level2Dig.insideBorder(player.location)) {
-                if (getQuestStage(player, Quests.THE_DIG_SITE) >= 5) {
-                    lock(player, TROWEL_ANIMATION.duration)
-                    queueScript(player, 0, QueueStrength.NORMAL) { stage: Int ->
-                        when (stage) {
-                            0 -> {
-                                sendMessage(player, "You dig through the earth...")
-                                playAudio(player, Sounds.DIGSITE_DIG_TROWEL_2376)
-                                animate(player, TROWEL_ANIMATION)
-                                return@queueScript delayScript(player, TROWEL_ANIMATION.duration)
-                            }
-
-                            1 -> {
-                                val tableRoll = level2DigTable.roll()
-                                sendMessage(player, "You carefully clean your find with the specimen brush.")
-                                if (tableRoll.size > 0) {
-                                    addItemOrDrop(player, tableRoll[0].id)
-                                    sendMessage(player, "You find a ${tableRoll[0].name.lowercase()}.")
-                                }
-                                return@queueScript stopExecuting(player)
-                            }
-
-                            else -> return@queueScript stopExecuting(player)
-                        }
-                    }
+            // Level 2.
+            val lvl2 = listOf(ZoneBorders(3350, 3424, 3363, 3430))
+            if (lvl2.any { it.insideBorder(loc) }) {
+                if (stage >= 5) {
+                    return@onUseWith doDig(player, level2DigTable)
                 } else {
-                    sendNPCDialogue(
-                        player,
-                        NPCs.DIGSITE_WORKMAN_613,
-                        "Oi! What do you think you're doing? There's fragile specimens around here!",
-                        FaceAnim.ANGRY,
-                    )
+                    warnWorkman(player)
+                    return@onUseWith true
                 }
             }
 
-            val level1DigCentre = ZoneBorders(3360, 3402, 3363, 3414)
-            val level1DigRight = ZoneBorders(3367, 3403, 3372, 3414)
-            if (level1DigCentre.insideBorder(player.location) || level1DigRight.insideBorder(player.location)) {
-                if (getQuestStage(player, Quests.THE_DIG_SITE) >= 4) {
-                    lock(player, TROWEL_ANIMATION.duration)
-                    queueScript(player, 0, QueueStrength.NORMAL) { stage: Int ->
-                        when (stage) {
-                            0 -> {
-                                sendMessage(player, "You dig through the earth...")
-                                playAudio(player, Sounds.DIGSITE_DIG_TROWEL_2376)
-                                animate(player, TROWEL_ANIMATION)
-                                return@queueScript delayScript(player, TROWEL_ANIMATION.duration)
-                            }
-
-                            1 -> {
-                                val tableRoll = level1DigTable.roll()
-                                sendMessage(player, "You carefully clean your find with the specimen brush.")
-                                if (tableRoll.size > 0) {
-                                    addItemOrDrop(player, tableRoll[0].id)
-                                    sendMessage(player, "You find a ${tableRoll[0].name.lowercase()}.")
-                                }
-                                return@queueScript stopExecuting(player)
-                            }
-
-                            else -> return@queueScript stopExecuting(player)
-                        }
-                    }
+            // Level 1.
+            val lvl1 = listOf(ZoneBorders(3360, 3402, 3363, 3414), ZoneBorders(3367, 3403, 3372, 3414))
+            if (lvl1.any { it.insideBorder(loc) }) {
+                if (stage >= 4) {
+                    return@onUseWith doDig(player, level1DigTable)
                 } else {
-                    sendNPCDialogue(
-                        player,
-                        NPCs.DIGSITE_WORKMAN_613,
-                        "Oi! What do you think you're doing? There's fragile specimens around here!",
-                        FaceAnim.ANGRY,
-                    )
+                    warnWorkman(player)
+                    return@onUseWith true
                 }
             }
 
-            val trainingDigLeft = ZoneBorders(3352, 3396, 3357, 3400)
-            val trainingDigRight = ZoneBorders(3367, 3397, 3372, 3400)
-            if (trainingDigLeft.insideBorder(player.location) || trainingDigRight.insideBorder(player.location)) {
-                if (getQuestStage(player, Quests.THE_DIG_SITE) >= 3) {
-                    lock(player, TROWEL_ANIMATION.duration)
-                    queueScript(player, 0, QueueStrength.NORMAL) { stage: Int ->
-                        when (stage) {
-                            0 -> {
-                                sendMessage(player, "You dig through the earth...")
-                                playAudio(player, Sounds.DIGSITE_DIG_TROWEL_2376)
-                                animate(player, TROWEL_ANIMATION)
-                                return@queueScript delayScript(player, TROWEL_ANIMATION.duration)
-                            }
-
-                            1 -> {
-                                val tableRoll = trainingDigTable.roll()
-                                sendMessage(player, "You carefully clean your find with the specimen brush.")
-                                if (tableRoll.size > 0) {
-                                    addItemOrDrop(player, tableRoll[0].id)
-                                    sendMessage(player, "You find a ${tableRoll[0].name.lowercase()}.")
-                                }
-                                return@queueScript stopExecuting(player)
-                            }
-
-                            else -> return@queueScript stopExecuting(player)
-                        }
-                    }
+            // Training.
+            val training = listOf(ZoneBorders(3352, 3396, 3357, 3400), ZoneBorders(3367, 3397, 3372, 3400))
+            if (training.any { it.insideBorder(loc) }) {
+                if (stage >= 3) {
+                    return@onUseWith doDig(player, trainingDigTable)
+                } else {
+                    warnWorkman(player)
+                    return@onUseWith true
                 }
             }
 
@@ -438,41 +324,46 @@ class TheDigSitePlugin : InteractionListener {
          * Handles operating the winch in the Digsite area.
          */
 
-        on(Scenery.WINCH_2350, SCENERY, "operate") { player, _ ->
-            if (getQuestStage(player, Quests.THE_DIG_SITE) >= 11) {
-                sendMessage(player, "You try to climb down the rope...")
-                sendMessage(player, "You lower yourself into the shaft...")
-                teleport(player, Location(3369, 9763))
-                sendMessage(player, "You find yourself in a cavern...")
-            } else if (getQuestStage(player, Quests.THE_DIG_SITE) >= 8) {
-                if (getAttribute(player, TheDigSite.attributeRopeNorthEastWinch, false)) {
-                    sendMessage(player, "You try to climb down the rope...")
-                    sendMessage(player, "You lower yourself into the shaft...")
-                    teleport(player, Location(3369, 9827))
-                    sendMessage(player, "You find yourself in a cavern...")
-                } else {
-                    sendMessage(player, "You operate the winch...")
-                    queueScript(player, 2, QueueStrength.NORMAL) {
-                        sendPlayerDialogue(player, "Hey, I think I could fit down here. I need something to help me get all the way down.")
-                        sendMessage(player, "The bucket descends, but does not reach the bottom.")
-                        return@queueScript stopExecuting(player)
-                    }
-                }
-            } else {
-                openDialogue(
-                    player,
-                    object : DialogueFile() {
-                        override fun handle(componentID: Int, buttonID: Int) {
-                            when (stage) {
-                                0 -> npc(NPCs.DIGSITE_WORKMAN_613, "Sorry; this area is private. The only way you'll get to", "use these is by impressing the archaeological expert up", "at the center.").also { stage++ }
-                                1 -> npc(NPCs.DIGSITE_WORKMAN_613, "Find something worthwhile and he might let you use the", "winches. Until then, get lost!").also { stage = END_DIALOGUE }
+        val winches = listOf(
+            Triple(Scenery.WINCH_2350, TheDigSite.attributeRopeNorthEastWinch, Pair(Location(3369, 9763), Location(3369, 9827))),
+            Triple(Scenery.WINCH_2351, TheDigSite.attributeRopeWestWinch, Pair(Location(3352, 9753), Location(3352, 9818)))
+        )
+
+        winches.forEach { (winchId, attribute, locations) ->
+            on(winchId, SCENERY, "operate") { player, _ ->
+                val questStage = getQuestStage(player, Quests.THE_DIG_SITE)
+
+                when {
+                    questStage >= 11 -> descendRope(player, locations.first)
+                    questStage >= 8 -> {
+                        if (getAttribute(player, attribute, false)) {
+                            descendRope(player, locations.second)
+                        } else {
+                            sendMessage(player, "You operate the winch...")
+                            queueScript(player, 2, QueueStrength.NORMAL) {
+                                sendPlayerDialogue(player, "Hey, I think I could fit down here. I need something to help me get all the way down.")
+                                sendMessage(player, "The bucket descends, but does not reach the bottom.")
+                                return@queueScript stopExecuting(player)
                             }
                         }
-                    },
-                )
-            }
+                    }
+                    else -> openDialogue(player, object : DialogueFile() {
+                        override fun handle(componentID: Int, buttonID: Int) {
+                            when (stage) {
+                                0 -> npc(NPCs.DIGSITE_WORKMAN_613,
+                                    "Sorry; this area is private. The only way you'll get to",
+                                    "use these is by impressing the archaeological expert up",
+                                    "at the center.").also { stage++ }
+                                1 -> npc(NPCs.DIGSITE_WORKMAN_613,
+                                    "Find something worthwhile and he might let you use the",
+                                    "winches. Until then, get lost!").also { stage = END_DIALOGUE }
+                            }
+                        }
+                    })
+                }
 
-            return@on true
+                return@on true
+            }
         }
 
         /*
@@ -481,26 +372,32 @@ class TheDigSitePlugin : InteractionListener {
          * Otherwise, a workman blocks access.
          */
 
-        onUseWith(IntType.SCENERY, Items.ROPE_954, Scenery.WINCH_2350) { player, used, _ ->
-            if (removeItem(player, used)) {
+        ropeWinches.forEach { (winchId, attribute) ->
+            onUseWith(IntType.SCENERY, Items.ROPE_954, winchId) { player, used, _ ->
+                if (!removeItem(player, used)) return@onUseWith true
+
                 if (getQuestStage(player, Quests.THE_DIG_SITE) >= 8) {
-                    setAttribute(player, TheDigSite.attributeRopeNorthEastWinch, true)
+                    setAttribute(player, attribute, true)
                     sendMessage(player, "You tie the rope to the bucket.")
                 } else {
-                    openDialogue(
-                        player,
-                        object : DialogueFile() {
-                            override fun handle(componentID: Int, buttonID: Int) {
-                                when (stage) {
-                                    0 -> npc(NPCs.DIGSITE_WORKMAN_613, "Sorry; this area is private. The only way you'll get to", "use these is by impressing the archaeological expert up", "at the center.").also { stage++ }
-                                    1 -> npc(NPCs.DIGSITE_WORKMAN_613, "Find something worthwhile and he might let you use the", "winches. Until then, get lost!").also { stage = END_DIALOGUE }
-                                }
+                    openDialogue(player, object : DialogueFile() {
+                        override fun handle(componentID: Int, buttonID: Int) {
+                            when (stage) {
+                                0 -> npc(NPCs.DIGSITE_WORKMAN_613,
+                                    "Sorry; this area is private. The only way you'll get to",
+                                    "use these is by impressing the archaeological expert up",
+                                    "at the center.").also { stage++ }
+
+                                1 -> npc(NPCs.DIGSITE_WORKMAN_613,
+                                    "Find something worthwhile and he might let you use the",
+                                    "winches. Until then, get lost!").also { stage = END_DIALOGUE }
                             }
-                        },
-                    )
+                        }
+                    })
                 }
+
+                return@onUseWith true
             }
-            return@onUseWith true
         }
 
         /*
@@ -510,75 +407,6 @@ class TheDigSitePlugin : InteractionListener {
         on(Scenery.ROPE_2352, SCENERY, "climb-up") { player, _ ->
             teleport(player, Location(3370, 3427))
             return@on true
-        }
-
-        /*
-         * Handles operating the west winch.
-         */
-
-        on(Scenery.WINCH_2351, SCENERY, "operate") { player, _ ->
-            if (getQuestStage(player, Quests.THE_DIG_SITE) >= 11) {
-                sendMessage(player, "You try to climb down the rope...")
-                sendMessage(player, "You lower yourself into the shaft...")
-                teleport(player, Location(3352, 9753))
-                sendMessage(player, "You find yourself in a cavern...")
-            } else if (getQuestStage(player, Quests.THE_DIG_SITE) >= 8) {
-                if (getAttribute(player, TheDigSite.attributeRopeWestWinch, false)) {
-                    sendMessage(player, "You try to climb down the rope...")
-                    sendMessage(player, "You lower yourself into the shaft...")
-                    teleport(player, Location(3352, 9818))
-                    sendMessage(player, "You find yourself in a cavern...")
-                } else {
-                    sendMessage(player, "You operate the winch...")
-                    queueScript(player, 2, QueueStrength.NORMAL) {
-                        sendPlayerDialogue(
-                            player,
-                            "Hey, I think I could fit down here. I need something to help me get all the way down.",
-                        )
-                        sendMessage(player, "The bucket descends, but does not reach the bottom.")
-                        return@queueScript stopExecuting(player)
-                    }
-                }
-            } else {
-                openDialogue(
-                    player,
-                    object : DialogueFile() {
-                        override fun handle(componentID: Int, buttonID: Int) {
-                            when (stage) {
-                                0 -> npc(NPCs.DIGSITE_WORKMAN_613, "Sorry; this area is private. The only way you'll get to", "use these is by impressing the archaeological expert up", "at the center.").also { stage++ }
-                                1 -> npc(NPCs.DIGSITE_WORKMAN_613, "Find something worthwhile and he might let you use the", "winches. Until then, get lost!").also { stage = END_DIALOGUE }
-                            }
-                        }
-                    },
-                )
-            }
-            return@on true
-        }
-
-        /*
-         * Handles using a rope on the west winch.
-         */
-
-        onUseWith(IntType.SCENERY, Items.ROPE_954, Scenery.WINCH_2351) { player, used, _ ->
-            if (removeItem(player, used)) {
-                if (getQuestStage(player, Quests.THE_DIG_SITE) >= 8) {
-                    setAttribute(player, TheDigSite.attributeRopeWestWinch, true)
-                    sendMessage(player, "You tie the rope to the bucket.")
-                } else {
-                    openDialogue(
-                        player,
-                        object : DialogueFile() {
-                            override fun handle(componentID: Int, buttonID: Int) {
-                                when (stage) {
-                                    0 -> npc(NPCs.DIGSITE_WORKMAN_613, "Sorry; this area is private. The only way you'll get to", "use these is by impressing the archaeological expert up", "at the center.").also { stage++ }
-                                    1 -> npc(NPCs.DIGSITE_WORKMAN_613, "Find something worthwhile and he might let you use the", "winches. Until then, get lost!").also { stage = END_DIALOGUE }
-                                }
-                            }
-                        },
-                    )
-                }
-            }
-            return@onUseWith true
         }
 
         /*
@@ -890,44 +718,14 @@ class TheDigSitePlugin : InteractionListener {
          * causing them to explode and damage the player.
          */
 
-        on(Items.UNIDENTIFIED_LIQUID_702, ITEM, "drop") { player, node ->
-            removeItem(player, node)
-            impact(player, 25)
-            sendChat(player, "Ow! The liquid exploded!")
-            sendMessage(player, "You were injured by the burning liquid.")
-            return@on true
-        }
-
-        on(Items.NITROGLYCERIN_703, ITEM, "drop") { player, node ->
-            removeItem(player, node)
-            impact(player, 35)
-            sendChat(player, "Ow! The nitroglycerin exploded!")
-            sendMessage(player, "You were injured by the burning liquid.")
-            return@on true
-        }
-
-        on(Items.MIXED_CHEMICALS_705, ITEM, "drop") { player, node ->
-            removeItem(player, node)
-            impact(player, 45)
-            sendChat(player, "Ow! The liquid exploded!")
-            sendMessage(player, "You were injured by the burning liquid.")
-            return@on true
-        }
-
-        on(Items.MIXED_CHEMICALS_706, ITEM, "drop") { player, node ->
-            removeItem(player, node)
-            impact(player, 55)
-            sendChat(player, "Ow! The liquid exploded!")
-            sendMessage(player, "You were injured by the burning liquid.")
-            return@on true
-        }
-
-        on(Items.CHEMICAL_COMPOUND_707, ITEM, "drop") { player, node ->
-            removeItem(player, node)
-            impact(player, 65)
-            sendChat(player, "Ow! The liquid exploded!")
-            sendMessage(player, "You were injured by the burning liquid.")
-            return@on true
+        explosiveItems.forEach { (itemId, damage) ->
+            on(itemId, ITEM, "drop") { player, node ->
+                removeItem(player, node)
+                impact(player, damage)
+                sendChat(player, "Ow! The liquid exploded!")
+                sendMessage(player, "You were injured by the burning liquid.")
+                return@on true
+            }
         }
 
         /*
@@ -972,41 +770,18 @@ class TheDigSitePlugin : InteractionListener {
          * Handles reading the various signposts around the Digsite.
          */
 
-        on(Scenery.SIGNPOST_2366, SCENERY, "read") { player, _ ->
-            sendMessage(player, "This site is for training purposes only.")
-            return@on true
-        }
-
-        on(Scenery.SIGNPOST_2367, SCENERY, "read") { player, _ ->
-            sendMessage(player, "Level 1 digs only.")
-            return@on true
-        }
-
-        on(Scenery.SIGNPOST_2368, SCENERY, "read") { player, _ ->
-            sendMessage(player, "Level 2 digs only.")
-            return@on true
-        }
-
-        on(Scenery.SIGNPOST_2369, SCENERY, "read") { player, _ ->
-            sendMessage(player, "Level 3 digs only.")
-            return@on true
-        }
-
-        on(Scenery.SIGNPOST_2370, SCENERY, "read") { player, _ ->
-            sendMessage(player, "Private dig.")
-            return@on true
-        }
-
-        on(Scenery.SIGNPOST_2371, SCENERY, "read") { player, _ ->
-            sendMessage(player, "Digsite educational centre.")
-            return@on true
+        signMessages.forEach { (id, message) ->
+            on(id, SCENERY, "read") { player, _ ->
+                sendMessage(player, message)
+                return@on true
+            }
         }
     }
 
     companion object {
-        val BENDING_DOWN_ANIMATION = Animation(827)
-        val TROWEL_ANIMATION = Animation(2272)
-        val PANNING_ANIMATION = Animation(4593)
+        val BENDING_DOWN_ANIMATION = Animation(Animations.HUMAN_BURYING_BONES_827)
+        val TROWEL_ANIMATION = Animation(Animations.GARDENING_TROWEL_2272)
+        val PANNING_ANIMATION = Animation(Animations.PANNING_TRAY_4593)
 
         val trainingDigTable =
             WeightBasedTable.create(
@@ -1114,5 +889,79 @@ class TheDigSitePlugin : InteractionListener {
                 WeightedItem(Items.UNCUT_JADE_1627, 1, 1, 3.0, false),
                 WeightedItem(Items.SPECIAL_CUP_672, 1, 1, 3.0, false),
             )
+
+        val signMessages = mapOf(
+            Scenery.SIGNPOST_2366 to "This site is for training purposes only.",
+            Scenery.SIGNPOST_2367 to "Level 1 digs only.",
+            Scenery.SIGNPOST_2368 to "Level 2 digs only.",
+            Scenery.SIGNPOST_2369 to "Level 3 digs only.",
+            Scenery.SIGNPOST_2370 to "Private dig.",
+            Scenery.SIGNPOST_2371 to "Digsite educational centre."
+        )
+
+        val explosiveItems = mapOf(
+            Items.UNIDENTIFIED_LIQUID_702 to 25,
+            Items.NITROGLYCERIN_703 to 35,
+            Items.MIXED_CHEMICALS_705 to 45,
+            Items.MIXED_CHEMICALS_706 to 55,
+            Items.CHEMICAL_COMPOUND_707 to 65
+        )
+
+        val ropeWinches = mapOf(
+            Scenery.WINCH_2350 to TheDigSite.attributeRopeNorthEastWinch,
+            Scenery.WINCH_2351 to TheDigSite.attributeRopeWestWinch
+        )
+
+        val certificates = listOf(
+            Items.LEVEL_1_CERTIFICATE_691 to Components.LEVEL_1_CERTIFICATE_440,
+            Items.LEVEL_2_CERTIFICATE_692 to Components.LEVEL_2_CERTIFICATE_441,
+            Items.LEVEL_3_CERTIFICATE_693 to Components.LEVEL_3_CERTIFICATE_444
+        )
+
+        private fun warnWorkman(player: Player) {
+            sendNPCDialogue(
+                player,
+                NPCs.DIGSITE_WORKMAN_613,
+                "Oi! What do you think you're doing? There's fragile specimens around here!",
+                FaceAnim.ANGRY
+            )
+        }
+
+        private fun doDig(player: Player, table: WeightBasedTable): Boolean {
+            queueScript(player, 0, QueueStrength.NORMAL) { stage ->
+                when (stage) {
+                    0 -> {
+                        sendMessage(player, "You dig through the earth...")
+                        playAudio(player, Sounds.DIGSITE_DIG_TROWEL_2376)
+                        animate(player, TROWEL_ANIMATION)
+                        lock(player, TROWEL_ANIMATION.duration)
+                        return@queueScript delayScript(player, TROWEL_ANIMATION.duration)
+                    }
+
+                    1 -> {
+                        val roll = table.roll()
+                        sendMessage(player, "You carefully clean your find with the specimen brush.")
+
+                        if (roll.isNotEmpty()) {
+                            val item = roll[0]
+                            addItemOrDrop(player, item.id)
+                            sendMessage(player, "You find a ${item.name.lowercase()}.")
+                        }
+
+                        return@queueScript stopExecuting(player)
+                    }
+
+                    else -> stopExecuting(player)
+                }
+            }
+            return true
+        }
+
+        private fun descendRope(player: Player, destination: Location) {
+            sendMessage(player, "You try to climb down the rope...")
+            sendMessage(player, "You lower yourself into the shaft...")
+            teleport(player, destination)
+            sendMessage(player, "You find yourself in a cavern...")
+        }
     }
 }
