@@ -36,6 +36,6 @@ class SceneryConfigParser {
             }
         }
 
-        log(this::class.java, Log.FINE, "Parsed $count object configs.")
+        log(this::class.java, Log.INFO, "Parsed $count object configs.")
     }
 }

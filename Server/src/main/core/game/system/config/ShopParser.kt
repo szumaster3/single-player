@@ -27,6 +27,6 @@ class ShopParser {
             }
         }
 
-        log(this::class.java, Log.DEBUG, "Parsed $count shops.")
+        log(this::class.java, Log.INFO, "Parsed $count shops.")
     }
 }

@@ -71,11 +71,11 @@ class BackToMyRootsPlugin : InteractionListener {
                 return@on false
             }
 
+            lock(player, 10)
             openOverlay(player, Components.FADE_TO_BLACK_120)
             setAttribute(player, GameAttributes.VINE_FIGHT, player.location)
             registerLogoutListener(player, GameAttributes.VINE_FIGHT) { p ->
                 p.location = getAttribute(p, GameAttributes.VINE_FIGHT, player.location)
-                removeAttribute(p, GameAttributes.VINE_FIGHT)
             }
 
             runTask(player, 8) {

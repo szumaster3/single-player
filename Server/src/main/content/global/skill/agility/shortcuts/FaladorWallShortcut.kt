@@ -6,6 +6,7 @@ import core.game.node.entity.player.Player
 import core.game.node.scenery.Scenery
 import core.game.world.map.Direction
 import core.plugin.Initializable
+import shared.consts.Animations
 
 /**
  * Handles the crumbling wall shortcut in Falador.
@@ -24,7 +25,7 @@ class FaladorWallShortcut : AgilityShortcut(intArrayOf(11844), 5, 0.0, "climb-ov
             0,
             60,
             null,
-            10980
+            Animations.WALK_OVER_STILE_10980
         )
     }
 }

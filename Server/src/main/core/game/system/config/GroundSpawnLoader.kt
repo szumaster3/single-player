@@ -53,7 +53,7 @@ class GroundSpawnLoader {
                 }
             }
         }
-        log(this::class.java, Log.DEBUG, "Initialized $count ground items.")
+        log(this::class.java, Log.INFO, "Initialized $count ground items.")
     }
 
     class GroundSpawn(

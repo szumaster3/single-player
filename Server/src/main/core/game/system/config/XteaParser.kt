@@ -33,6 +33,6 @@ class XteaParser {
                 }
             }
         }
-        log(this::class.java, Log.DEBUG, "Parsed $count region keys.")
+        log(this::class.java, Log.INFO, "Parsed $count region keys.")
     }
 }

@@ -218,7 +218,7 @@ public class Player extends Entity {
      */
     private final PacketDispatch packetDispatch = new PacketDispatch(this);
 
-    public Boolean isAfkLogout;
+    private  Boolean isAfkLogout;
 
     private StorageState costumeRoomState;
 

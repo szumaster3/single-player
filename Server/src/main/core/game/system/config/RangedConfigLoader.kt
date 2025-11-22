@@ -84,6 +84,6 @@ class RangedConfigLoader {
             }
         }
 
-        log(this::class.java, Log.DEBUG, "Parsed $count ranged weapon configs.")
+        log(this::class.java, Log.INFO, "Parsed $count ranged weapon configs.")
     }
 }

@@ -8,7 +8,9 @@ import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.net.packet.PacketRepository
+import core.net.packet.context.ConfigContext
 import core.net.packet.context.ContainerContext
+import core.net.packet.out.Config
 import core.net.packet.out.ContainerPacket
 import core.tools.Log
 import core.tools.SystemLogger
@@ -426,8 +428,8 @@ class StockMarket : InterfaceListener {
          * Returns to the main interface.
          */
         fun toMainInterface(player: Player) {
-            setVarbit(player, 1112, -1)
-            setVarbit(player, 1113, -1)
+            PacketRepository.send(Config::class.java, ConfigContext(player, 1112, -1))
+            PacketRepository.send(Config::class.java, ConfigContext(player, 1112, -1))
             closeChatBox(player)
             closeSingleTab(player)
             setAttribute(player, "ge-index", -1)
