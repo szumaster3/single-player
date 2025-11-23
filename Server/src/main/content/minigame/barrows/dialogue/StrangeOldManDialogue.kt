@@ -21,7 +21,7 @@ class StrangeOldManDialogue(player: Player? = null) : Dialogue(player) {
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         if (inInventory(player, Items.SPADE_952)) {
             when (conversationNum) {
-                1 -> when (stage) {
+                0 -> when (stage) {
                     0 -> npcl(FaceAnim.ASKING, "Pst, wanna hear a secret?").also { stage++ }
                     1 -> options("Sure!", "No, thanks.").also { stage++ }
                     2 -> when (buttonId) {
@@ -31,14 +31,14 @@ class StrangeOldManDialogue(player: Player? = null) : Dialogue(player) {
                     3 -> npcl(FaceAnim.LAUGH, "They're not normal!").also { stage = END_DIALOGUE }
                 }
 
-                2 -> when (stage) {
+                1 -> when (stage) {
                     0 -> npcl(FaceAnim.NEUTRAL, "Knock, knock.").also { stage++ }
                     1 -> playerl(FaceAnim.ASKING, "Who's there?").also { stage++ }
                     2 -> npcl(FaceAnim.LAUGH, "A big scary monster, HAHAHAHAHAHAHAHAHAHA!").also { stage++ }
                     3 -> playerl(FaceAnim.HALF_ROLLING_EYES, "Okay...").also { stage = END_DIALOGUE }
                 }
 
-                3 -> when (stage) {
+                2 -> when (stage) {
                     0 -> npcl(FaceAnim.HALF_ASKING, "What? I didn't ask for a book!").also { stage++ }
                     1 -> {
                         end()
@@ -46,7 +46,7 @@ class StrangeOldManDialogue(player: Player? = null) : Dialogue(player) {
                     }
                 }
 
-                4 -> when (stage) {
+                3 -> when (stage) {
                     0 -> npcl(FaceAnim.FURIOUS, "AAAAAAAAARRRRRRGGGGGHHHHHHHH!").also { stage++ }
                     1 -> options("What's wrong?", "I'll leave you to it, then...").also { stage++ }
                     2 -> when (buttonId) {
