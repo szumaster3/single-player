@@ -1,6 +1,6 @@
 package content.region.asgarnia.taverley.quest.ball.plugin
 
-import content.minigame.mage_training.plugin.TelekineticGrabSpell
+import content.global.skill.magic.spells.modern.TelekineticGrabSpell
 import content.region.asgarnia.taverley.quest.ball.npc.WitchExperimentNPC
 import core.api.inInventory
 import core.api.sendMessage

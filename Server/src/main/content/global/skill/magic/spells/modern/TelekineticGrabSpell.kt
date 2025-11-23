@@ -1,5 +1,6 @@
-package content.minigame.mage_training.plugin
+package content.global.skill.magic.spells.modern
 
+import content.minigame.mage_training.plugin.TelekineticTheatrePlugin
 import core.api.*
 import core.game.global.action.PickupHandler.canTake
 import core.game.node.Node
