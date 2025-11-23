@@ -54,7 +54,7 @@ enum class TeleportTablet(val item: Int, val location: Location, val exp: Double
 /**
  * Handles the break option on teleport tablets.
  */
-class TeleportTabletOption : InteractionListener {
+class TabletOptionHandler : InteractionListener {
 
     companion object {
         /**
@@ -69,11 +69,6 @@ class TeleportTabletOption : InteractionListener {
             val tabEnum = TeleportTablet.forId(tab)
 
             if (tabEnum != null && inInventory(player, tab)) {
-                if (!isQuestComplete(player, Quests.RUNE_MYSTERIES)) {
-                    sendMessage(player, "You need complete the Rune Mysteries quest in order to use this.")
-                    return@on true
-                }
-
                 val tabloc = tabEnum.location
 
                 if (inInventory(player, tab)) {

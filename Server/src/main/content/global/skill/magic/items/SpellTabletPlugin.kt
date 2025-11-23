@@ -41,5 +41,6 @@ class SpellTabletPlugin : InteractionListener {
     companion object{
         private const val B2B_TABLET = Items.BONES_TO_BANANAS_8014
         private const val B2P_TABLET = Items.BONES_TO_PEACHES_8015
+        private const val TGS_TABLET = Items.TELEKINETIC_GRAB_8022
     }
 }
