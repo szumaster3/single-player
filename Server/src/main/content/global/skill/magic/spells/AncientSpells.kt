@@ -21,4 +21,13 @@ object AncientSpells {
     const val MIASMIC_BURST = 17
     const val MIASMIC_BLITZ = 18
     const val MIASMIC_BARRAGE = 19
+    const val PADDEWWA_TELEPORT = 20
+    const val SENNTISTEN_TELEPORT = 21
+    const val KHARYRLL_TELEPORT = 22
+    const val LASSAR_TELEPORT = 23
+    const val DAREEYAK_TELEPORT = 24
+    const val CARRALLANGER_TELEPORT = 25
+    const val ANNAKARL_TELEPORT = 26
+    const val GHORROCK_TELEPORT = 27
+    const val EDGEVILLE_TELEPORT = 28
 }
