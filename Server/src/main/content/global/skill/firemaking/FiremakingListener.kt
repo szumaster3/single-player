@@ -1,12 +1,14 @@
 package content.global.skill.firemaking
 
 import core.api.*
+import core.game.interaction.Clocks
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import core.game.node.entity.impl.Projectile
+import core.game.node.entity.impl.Projectile.getLocation
 import core.game.node.entity.skill.Skills
 import core.game.node.item.GroundItem
 import core.game.node.item.Item
+import core.game.world.map.Location
 import shared.consts.Animations
 import shared.consts.Items
 import shared.consts.Quests
@@ -108,23 +110,27 @@ class FiremakingListener : InteractionListener {
         }
 
         onUseWith(IntType.ITEM, Items.TINDERBOX_590, *balloonIDs) { player, _, with ->
-            val gfx = Origami.forBalloon(with.id)
+            if (!clockReady(player, Clocks.SKILLING)) return@onUseWith true
+            if (!removeItem(player, with.asItem())) return@onUseWith true
 
-            if (removeItem(player, with.asItem())) {
-                visualize(player, RELEASE_A_BALLOON_ANIMATION, gfx!!.graphic)
-                sendMessage(player, "You light the origami ${getItemName(with.id).lowercase()}.")
-                rewardXP(player, Skills.FIREMAKING, 20.00)
-                spawnProjectile(
-                    source = Projectile.getLocation(player),
-                    dest = player.location.transform(player.direction, 10),
-                    projectile = gfx.graphic + 2,
-                    startHeight = 0,
-                    endHeight = 0,
-                    delay = 6,
-                    speed = 1000,
-                    angle = 0,
-                )
-            }
+            val gfx = Origami.forBalloon(with.id) ?: return@onUseWith true
+
+            visualize(player, RELEASE_A_BALLOON_ANIMATION, -1)
+            sendMessage(player, "You light the origami ${getItemName(with.id).lowercase()}.")
+            delayClock(player, Clocks.SKILLING, 3)
+            rewardXP(player, Skills.FIREMAKING, 20.0)
+
+            spawnProjectile(
+                source = player.location,
+                dest = player.location.transform(player.direction, 6),
+                projectile = gfx.graphic + 2,
+                startHeight = 0,
+                endHeight = 0,
+                delay = 8,
+                speed = 1000,
+                angle = 0
+            )
+
             return@onUseWith true
         }
     }

@@ -78,14 +78,6 @@ object WarningHandler {
     }
 
     /*
-     * Handles Ranging Guild warning interaction.
-     */
-
-    fun handleRangingGuild(player: Player) {
-        climb(player, Animation(Animations.HUMAN_CLIMB_STAIRS_828), Location.create(2668, 3427, 1))
-    }
-
-    /*
      * Handles Mort Myre Gate warning interaction.
      */
 

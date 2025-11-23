@@ -30,7 +30,7 @@ enum class Warnings(
     FAIRY_RING_TO_DORGESH_KAAN(Vars.VARBIT_CWS_WARNING_15_3865, Components.CWS_WARNING_15_578, 59, WarningHandler::handleFairyRing),
     MORT_MYRE(Vars.VARBIT_CWS_WARNING_20_3870, Components.CWS_WARNING_20_580, 61, WarningHandler::handleMortMyreGate),
     DORGESH_KAAN_CITY_EXIT(Vars.VARBIT_CWS_WARNING_16_3869, Components.CWS_WARNING_16_569, 68, {}),
-    RANGING_GUILD(Vars.VARBIT_CWS_WARNING_23_3871, Components.CWS_WARNING_23_564, 70, WarningHandler::handleRangingGuild),
+    RANGING_GUILD(Vars.VARBIT_CWS_WARNING_23_3871, Components.CWS_WARNING_23_564, 70, { core.game.global.action.ClimbActionHandler.climb(it, core.game.world.update.flag.context.Animation(shared.consts.Animations.HUMAN_CLIMB_STAIRS_828), Location.create(2668, 3427, 1)) }),
     DAGANNOTH_KINGS_LADDER(Vars.VARBIT_CWS_WARNING_1_3851, Components.CWS_WARNING_1_574, 50, { teleport(it, Location.create(2899, 4449, 0)) }),
     CONTACT_DUNGEON_LADDER(Vars.VARBIT_CWS_WARNING_2_3852, Components.CWS_WARNING_2_562, 56, {}),
     FALADOR_MOLE_LAIR(Vars.VARBIT_CWS_WARNING_3_3853, Components.CWS_WARNING_3_568, 53, WarningHandler::handleMoleTunnel),
@@ -46,9 +46,9 @@ enum class Warnings(
     PLAYER_OWNED_HOUSES(Vars.VARBIT_CWS_WARNING_5_3855, Components.CWS_WARNING_5_563, 55, { it.houseManager.toggleBuildingMode(it, true) }),
     DROPPED_ITEMS_IN_RANDOM_EVENTS(Vars.VARBIT_CWS_WARNING_6_3856, Components.CWS_WARNING_6_566, 54, {}),
     ICY_PATH_AREA(Vars.VARBIT_ICY_PATH_AREA_3861, Components.CWS_WARNING_11_327, 57, {}),
-    CHAOS_TUNNELS_EAST(Vars.VARBIT_CHAOS_TUNNELS_EAST_4307, Components.CWS_WARNING_27_676, 75, {}),
-    CHAOS_TUNNELS_CENTRAL(Vars.VARBIT_CHAOS_TUNNELS_CENTRAL_4308, Components.CWS_WARNING_28_677, 76, {}),
-    CHAOS_TUNNELS_WEST(Vars.VARBIT_CHAOS_TUNNELS_WEST_4309, Components.CWS_WARNING_29_678, 77, {});
+    CHAOS_TUNNELS_EAST(Vars.VARBIT_CHAOS_TUNNELS_EAST_4307, Components.CWS_WARNING_27_676, 75, { teleport(it, Location(3248, 5489, 0)) }),
+    CHAOS_TUNNELS_CENTRAL(Vars.VARBIT_CHAOS_TUNNELS_CENTRAL_4308, Components.CWS_WARNING_28_677, 76, { teleport(it, Location(3292, 5479, 0)) }),
+    CHAOS_TUNNELS_WEST(Vars.VARBIT_CHAOS_TUNNELS_WEST_4309, Components.CWS_WARNING_29_678, 77, { teleport (it, Location(3182, 5471, 0)) });
 
     companion object {
         val values = enumValues<Warnings>()

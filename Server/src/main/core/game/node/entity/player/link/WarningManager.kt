@@ -122,7 +122,7 @@ class WarningManager : InteractionListener, InterfaceListener {
         private fun isWarningUnlocked(player: Player, warning: Warnings): Boolean =
             getVarbit(player, warning.varbit) >= 6
 
-        fun incrementWarning(player: Player, warning: Warnings) {
+        private fun incrementWarning(player: Player, warning: Warnings) {
             val current = getVarbit(player, warning.varbit)
             val next = (current + 1).coerceAtMost(6)
 
