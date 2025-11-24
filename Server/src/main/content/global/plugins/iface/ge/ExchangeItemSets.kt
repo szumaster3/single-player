@@ -66,7 +66,7 @@ class ExchangeItemSets : InterfaceListener {
          * @param player The player.
          */
         private fun createContainers(player: Player) {
-            setAttribute(player, "container-key", player.generateItems(ItemSet.getItemList(), Components.EXCHANGE_SETS_SIDE_644, 0, listOf("Exchange", "Components"), 7, 4))
+            setAttribute(player, "container-key", player.generateItems(player.inventory.toList(), Components.EXCHANGE_SETS_SIDE_644, 0, listOf("Exchange", "Components"), 7, 4))
             player.generateItems(
                 ItemSet.getItemList(),
                 Components.EXCHANGE_ITEMSETS_645,
