@@ -252,6 +252,12 @@ class EmptyOptionPlugin: InteractionListener {
             Items.FISHBOWL_6667,
             "You empty the contents of the fishbowl onto the floor."
         ),
+        FIREWORK(
+            Items.FIREWORK_3006,
+            Items.VIAL_229,
+            "You empty the vial.",
+            Sounds.LIQUID_2401
+        ),
         VIAL_OF_COCONUT(
             Items.COCONUT_MILK_5935,
             Items.VIAL_229,
