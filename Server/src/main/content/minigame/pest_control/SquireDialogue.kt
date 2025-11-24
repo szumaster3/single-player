@@ -1,4 +1,4 @@
-package content.minigame.pest_control.dialogue
+package content.minigame.pest_control
 
 import content.global.travel.charter.CharterShip
 import core.api.playJingle

@@ -1,4 +1,4 @@
-package content.minigame.pest_control.plugin;
+package content.minigame.pest_control.reward;
 
 import content.global.skill.herblore.herbs.HerbItem;
 import core.cache.def.impl.ItemDefinition;
@@ -9,7 +9,6 @@ import core.game.node.entity.player.Player;
 import core.game.node.entity.skill.Skills;
 import core.game.node.item.GroundItemManager;
 import core.game.node.item.Item;
-import core.plugin.Initializable;
 import core.plugin.Plugin;
 import core.tools.RandomFunction;
 
@@ -22,7 +21,6 @@ import static core.api.ContentAPIKt.getStatLevel;
  * Represents the pest control reward interface.
  * @author Vexia
  */
-@Initializable
 public final class PCRewardInterface extends ComponentPlugin {
 
 	/**
@@ -74,18 +72,18 @@ public final class PCRewardInterface extends ComponentPlugin {
 	@Override
 	public boolean handle(Player player, Component component, int opcode, int button, int slot, int itemId) {
 		switch (button) {
-		case 96:
-			confirm(player);
-			return true;
-		default:
-			if (button >= 34 && button <= 86) {
-				if (player.getSavedData().activityData.getPestPoints() == 0) {
-					player.getPacketDispatch().sendMessage("You don't have enough points.");
-					return true;
+			case 96:
+				confirm(player);
+				return true;
+			default:
+				if (button >= 34 && button <= 86) {
+					if (player.getSavedData().activityData.getPestPoints() == 0) {
+						player.getPacketDispatch().sendMessage("You don't have enough points.");
+						return true;
+					}
+					select(player, button);
 				}
-				select(player, button);
-			}
-			break;
+				break;
 		}
 		return true;
 	}
@@ -453,7 +451,7 @@ public final class PCRewardInterface extends ComponentPlugin {
 		/**
 		 * Constructs a new {@code PCRewardInterface} {@code Object}.
 		 * @param childs the childs.
-         */
+		 */
 		Reward(final int[] childs) {
 			this.childs = childs;
 		}

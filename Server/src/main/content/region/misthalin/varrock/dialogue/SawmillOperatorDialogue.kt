@@ -21,8 +21,7 @@ class SawmillOperatorDialogue : DialogueFile() {
         when (stage) {
             0 -> npc(FaceAnim.NEUTRAL, "Do you want me to make some planks for you? Or", "would you be interested in some other housing supplies?").also { stage++ }
             1 -> showTopics(
-                IfTopic("I have some questions about a cat.", 30,
-                    getQuestStage(player!!, Quests.GERTRUDES_CAT) in 1..99),
+                IfTopic("I have some questions about a cat.", 30, getQuestStage(player!!, Quests.GERTRUDES_CAT) in 1..99),
                 Topic("Planks please!", 10),
                 Topic("What kind of planks can you make?", 20),
                 Topic("Can I buy some housing supplies?", 12),
@@ -34,7 +33,7 @@ class SawmillOperatorDialogue : DialogueFile() {
                 val logs = intArrayOf(Items.LOGS_1511, Items.OAK_LOGS_1521, Items.TEAK_LOGS_6333, Items.MAHOGANY_LOGS_6332)
                 if (!anyInInventory(p, *logs)) {
                     end()
-                    sendDialogue(p, "You are not carrying any logs to cut into planks.")
+                    sendMessage(p, "You are not carrying any logs to cut into planks.")
                 } else {
                     end()
                     openInterface(p, Components.POH_SAWMILL_403)

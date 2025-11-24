@@ -8,18 +8,18 @@ import core.game.world.map.RegionManager
 import core.game.world.map.path.Pathfinder
 import core.tools.RandomFunction
 import content.minigame.pest_control.PestControlHelper.GATE_ENTRIES
-import content.minigame.pest_control.PestControlHelper.getMyPestControlSession1
+import content.minigame.pest_control.PestControlHelper.getMyPestControlSession2
 import core.game.world.GameWorld
 import java.util.*
 
-class CombatState(val bot: PestControlTestBot) {
+class CombatStateIntermediate(val bot: PestControlTestBot2) {
     private val Random = Random()
     val randomtype = Random().nextInt(100)
 
     fun goToPortals() {
         bot.customState = "I'm at portals."
         val gate = bot.getClosestNodeWithEntry(75, GATE_ENTRIES)
-        val sesh = getMyPestControlSession1(bot)
+        val sesh = getMyPestControlSession2(bot)
 
         var portal: Node? = null
         if(sesh != null && sesh.aportals.isNotEmpty()){
@@ -42,7 +42,7 @@ class CombatState(val bot: PestControlTestBot) {
         if (bot.justStartedGame) {
             bot.customState = "Walking randomly"
             bot.justStartedGame = false
-            bot.randomWalkAroundPoint(getMyPestControlSession1(bot)?.squire?.location ?: bot.location, 15)
+            bot.randomWalkAroundPoint(getMyPestControlSession2(bot)?.squire?.location ?: bot.location, 15)
             bot.movetimer = Random.nextInt(7) + 6
             return
         }
@@ -94,6 +94,7 @@ class CombatState(val bot: PestControlTestBot) {
         }
     }
 
+    //Functions
     fun randomWalkTo(loc: Location, radius: Int) {
         var newloc = loc.transform(RandomFunction.random(radius, -radius),
             RandomFunction.random(radius, -radius), 0)
