@@ -242,7 +242,7 @@ class SlayerManager(
             flags.setPoints(slayerPoints)
         }
 
-    val removed: List<Tasks>
+    val removed: MutableList<Tasks>
         get() = flags.removed
 
     val isCanEarnPoints: Boolean

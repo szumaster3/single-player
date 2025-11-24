@@ -1,6 +1,5 @@
 package content.region.desert.pollniveach.plugin
 
-import content.region.desert.pollniveach.dialogue.AliTheBarmanDialogue
 import core.api.*
 import core.game.dialogue.FaceAnim
 import core.game.interaction.IntType
@@ -21,15 +20,6 @@ class PollnivneahPlugin : InteractionListener {
 
         on(NPCs.ALI_THE_CAMEL_1873, IntType.NPC, "talk-to") { player, node ->
             openDialogue(player, NPCs.ALI_THE_CAMEL_1873, node)
-            return@on true
-        }
-
-        /*
-         * Handles talking to barman.
-         */
-
-        on(NPCs.ALI_THE_BARMAN_1864, IntType.NPC, "talk-to") { player, _ ->
-            openDialogue(player, AliTheBarmanDialogue())
             return@on true
         }
 
