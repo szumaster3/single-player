@@ -1,5 +1,6 @@
-package content.global.skill.herblore.herbs
+package content.global.skill.herblore
 
+import content.global.skill.herblore.herbs.HerbItem
 import core.api.*
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
@@ -28,15 +29,12 @@ class HerbCleaningPlugin : InteractionListener {
             replaceSlot(player, node.asItem().slot, herb.product, node.asItem())
             rewardXP(player, Skills.HERBLORE, exp)
             playAudio(player, 5153)
-            sendMessage(
-                player,
-                "You clean the dirt from the " +
+            sendMessage(player, "You clean the dirt from the " +
                         herb.product.name
                             .lowercase()
                             .replace("clean", "")
                             .trim { it <= ' ' } +
-                        " leaf.",
-            )
+                        " leaf.",)
             return@on true
         }
     }

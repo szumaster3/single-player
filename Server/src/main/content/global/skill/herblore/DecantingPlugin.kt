@@ -1,4 +1,4 @@
-package content.global.skill.herblore.assistance
+package content.global.skill.herblore
 
 import content.data.consumables.Consumables
 import core.api.*

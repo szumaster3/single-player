@@ -20,7 +20,7 @@ class GenericPotion(
             ingredient = potion.ingredient,
             level = potion.level,
             experience = 0.0,
-            product = potion.potion,
+            product = potion.product,
         )
 
         /**
@@ -30,11 +30,11 @@ class GenericPotion(
          * @return The generic potion.
          */
         fun transform(potion: FinishedPotion): GenericPotion = GenericPotion(
-            base = potion.unfinished.potion,
+            base = potion.base.product,
             ingredient = potion.ingredient,
             level = potion.level,
-            experience = potion.experience,
-            product = potion.potion,
+            experience = potion.xp,
+            product = potion.product,
         )
     }
 }

@@ -1,5 +1,6 @@
-package content.global.skill.herblore.herbs
+package content.global.skill.herblore
 
+import content.global.skill.herblore.herbs.TarItem
 import core.api.*
 import core.game.dialogue.SkillDialogueHandler
 import core.game.interaction.IntType
@@ -13,9 +14,7 @@ import shared.consts.Components
 import shared.consts.Items
 import shared.consts.Quests
 
-class HarralanderTarPlugin : InteractionListener {
-    val tar = TarItem.values().map(TarItem::ingredient).toIntArray()
-
+class HarralanderTarMakePlugin : InteractionListener {
     override fun defineListeners() {
         onUseWith(IntType.ITEM, tar, Items.SWAMP_TAR_1939) { player, used, _ ->
             var tar = TarItem.forId(used.id)
@@ -34,26 +33,9 @@ class HarralanderTarPlugin : InteractionListener {
             return@onUseWith true
         }
     }
-}
 
-/**
- * Enum representing different types of herb tars used in Herblore.
- */
-private enum class TarItem(val ingredient: Int, val level: Int, val experience: Double, val product: Int) {
-    GUAM_TAR(HerbItem.GUAM.product.id, 19, 30.0, Items.GUAM_TAR_10142),
-    GROUND_GUAM_TAR(Items.GROUND_GUAM_6681, 19, 30.0, Items.GUAM_TAR_10142),
-    MARRENTILL_TAR(HerbItem.MARRENTILL.product.id, 31, 42.5, Items.MARRENTILL_TAR_10143),
-    TARROMIN_TAR(HerbItem.TARROMIN.product.id, 39, 55.0, Items.TARROMIN_TAR_10144),
-    HARRALANDER_TAR(HerbItem.HARRALANDER.product.id, 44, 72.5, Items.HARRALANDER_TAR_10145),
-    ;
-
-    companion object {
-        private val mapByIngredient = values().associateBy { it.ingredient }
-
-        /**
-         * Finds a [TarItem] by its ingredient id.
-         */
-        fun forId(id: Int): TarItem? = mapByIngredient[id]
+    companion object{
+        val tar = TarItem.values().map(TarItem::ingredient).toIntArray()
     }
 }
 

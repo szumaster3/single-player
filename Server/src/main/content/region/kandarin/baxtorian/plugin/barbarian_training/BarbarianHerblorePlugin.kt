@@ -21,7 +21,7 @@ class BarbarianHerblorePlugin : InteractionListener {
                  * Handle cases where both items are needed.
                  */
 
-                onUseWith(IntType.ITEM, potion.item, Items.ROE_11324) { player, used, with ->
+                onUseWith(IntType.ITEM, potion.base, Items.ROE_11324) { player, used, with ->
                     handle(player, used, with)
                     return@onUseWith true
                 }
@@ -31,7 +31,7 @@ class BarbarianHerblorePlugin : InteractionListener {
              * Handle cases where one of the items is caviar.
              */
 
-            onUseWith(IntType.ITEM, potion.item, Items.CAVIAR_11326) { player, used, with ->
+            onUseWith(IntType.ITEM, potion.base, Items.CAVIAR_11326) { player, used, with ->
                 handle(player, used, with)
                 return@onUseWith true
             }
@@ -51,18 +51,18 @@ class BarbarianHerblorePlugin : InteractionListener {
             sendMessage(player, "You need a Herblore level of ${potion.level} to make this mix.")
             return true
         }
-        if (!removeItem(player, potion.item)) {
+        if (!removeItem(player, potion.base)) {
             return false
         }
 
         if (!removeItem(player, egg.id)) {
-            addItem(player, potion.item)
+            addItem(player, potion.base)
             return false
         }
 
         animate(player, Animations.HUMAN_USE_PESTLE_AND_MORTAR_364)
         addItem(player, potion.product)
-        rewardXP(player, Skills.HERBLORE, potion.exp)
+        rewardXP(player, Skills.HERBLORE, potion.xp)
         sendMessage(player, "You combine your potion with the ${getItemName(egg.id).lowercase()}.")
 
         if (!getAttribute(player, BarbarianTraining.HERBLORE_FULL, false)) {

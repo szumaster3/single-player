@@ -1,9 +1,6 @@
 package content.global.skill.herblore
 
-import core.api.addItem
-import core.api.removeItem
-import core.api.replaceSlot
-import core.api.sendMessage
+import core.api.*
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.item.Item
@@ -26,7 +23,7 @@ class CoconutPlugin : InteractionListener {
             val itemSlot = with.asItem().index
             if (removeItem(player, Item(used.id, 1))) {
                 replaceSlot(player, itemSlot, Item(Items.COCONUT_MILK_5935))
-                addItem(player, Items.COCONUT_SHELL_5978, 1)
+                addItemOrDrop(player, Items.COCONUT_SHELL_5978, 1)
                 sendMessage(player, "You overturn the coconut into a vial.")
             }
             return@onUseWith true
