@@ -39,7 +39,7 @@ class SlayerHelmPlugin : InteractionListener {
             return
         }
         if (!anyInInventory(player, *INGREDIENTS)) {
-            sendMessage(player, "You need all required ingredients to craft a Slayer helm.")
+            sendMessage(player, "You need all required items to craft a Slayer helm.")
             return
         }
         player.lock(1)
