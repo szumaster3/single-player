@@ -73,30 +73,6 @@ class TearsOfGuthixListener : InteractionListener {
             return@on true
         }
 
-        // Please note: part of this is already done in craftBullseyeLantern() except for the swapping out which is here.
-        onUseWith(ITEM, Items.BULLSEYE_LANTERN_4548, Items.SAPPHIRE_1607) { player, used, with ->
-            sendMessage(player, "You swap the lantern's lens for a sapphire.")
-            if (removeItem(player, with) && removeItem(player, used)) {
-                addItemOrDrop(player, Items.SAPPHIRE_LANTERN_4701)
-                addItemOrDrop(player, Items.LANTERN_LENS_4542)
-            }
-            return@onUseWith true
-        }
-
-        onUseWith(ITEM, Items.SAPPHIRE_LANTERN_4701, Items.LANTERN_LENS_4542) { player, used, with ->
-            if (removeItem(player, with) && removeItem(player, used)) {
-                addItemOrDrop(player, Items.BULLSEYE_LANTERN_4548)
-                addItemOrDrop(player, Items.SAPPHIRE_1607)
-                sendMessage(player, "You swap the lantern's sapphire for a lens.")
-            }
-            return@onUseWith true
-        }
-
-        onUseWith(ITEM, Items.SAPPHIRE_1607, Items.BULLSEYE_LANTERN_4549, Items.BULLSEYE_LANTERN_4550, Items.LANTERN_LENS_4542) { player, _, _ ->
-            sendMessage(player, "The lantern is too hot to do that while it is lit.")
-            return@onUseWith true
-        }
-
         onUseWith(ITEM, Items.CHISEL_1755, Items.MAGIC_STONE_4703) { player, _, with ->
             if (removeItem(player, with.asItem())) {
                 sendMessage(player, "You make a stone bowl.")

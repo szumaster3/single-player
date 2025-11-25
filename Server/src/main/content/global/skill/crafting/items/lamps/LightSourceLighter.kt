@@ -8,12 +8,10 @@ import core.game.interaction.IntType
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
-import core.plugin.Initializable
 import core.tools.Log
 import shared.consts.Items
 import shared.consts.Regions
 
-@Initializable
 class LightSourceLighter : InteractionListener {
 
     override fun defineListeners() {

@@ -9,7 +9,7 @@ import shared.consts.Animations
 import shared.consts.Items
 
 /**
- * Handles the crafting of dragon shields.
+ * Handles crafting of dragon shields.
  */
 @Initializable
 class DragonShieldDialogue : Dialogue {
@@ -20,6 +20,7 @@ class DragonShieldDialogue : Dialogue {
     override fun newInstance(player: Player): Dialogue = DragonShieldDialogue(player)
 
     override fun open(vararg args: Any): Boolean {
+        val player = player ?: return false
         val type = args.getOrNull(0) as? Int ?: return false
 
         if (!inInventory(player, Items.HAMMER_2347)) {
@@ -34,7 +35,11 @@ class DragonShieldDialogue : Dialogue {
                     return false
                 }
 
-                sendDialogueLines(player, "You set to work trying to fix the ancient shield. It's seen some", "heavy action and needs some serious work doing to it.")
+                sendDialogueLines(
+                    player,
+                    "You set to work trying to fix the ancient shield. It's seen some",
+                    "heavy action and needs some serious work doing to it."
+                )
                 stage = 0
             }
 
@@ -48,7 +53,13 @@ class DragonShieldDialogue : Dialogue {
                     return false
                 }
 
-                sendDialogueLines(player, "You set to work, trying to attach the ancient draconic", "visage to your anti-dragonbreath shield. It's not easy to", "work with the ancient artifact and it takes all of your", "skills as a master smith.")
+                sendDialogueLines(
+                    player,
+                    "You set to work, trying to attach the ancient draconic",
+                    "visage to your anti-dragonbreath shield. It's not easy to",
+                    "work with the ancient artifact and it takes all of your",
+                    "skills as a master smith."
+                )
                 stage = 10
             }
 
@@ -58,12 +69,19 @@ class DragonShieldDialogue : Dialogue {
     }
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+        val player = player ?: return false
+
         when (stage) {
             0 -> {
                 lock(player, 5)
                 animate(player, Animations.SMITH_HAMMER_898)
                 if (removeItem(player, Items.SHIELD_RIGHT_HALF_2368) && removeItem(player, Items.SHIELD_LEFT_HALF_2366)) {
-                    sendDialogueLines(player, "Even for an experienced armourer it is not an easy task, but", "eventually it is ready. You have restored the dragon square shield to", "its former glory.")
+                    sendDialogueLines(
+                        player,
+                        "Even for an experienced armourer it is not an easy task, but",
+                        "eventually it is ready. You have restored the dragon square shield to",
+                        "its former glory."
+                    )
                     addItem(player, Items.DRAGON_SQ_SHIELD_1187)
                     rewardXP(player, Skills.SMITHING, 75.0)
                 }
@@ -74,15 +92,24 @@ class DragonShieldDialogue : Dialogue {
                 lock(player, 5)
                 animate(player, Animations.SMITH_HAMMER_898)
                 if (removeItem(player, Items.ANTI_DRAGON_SHIELD_1540) && removeItem(player, Items.DRACONIC_VISAGE_11286)) {
-                    sendDialogueLines(player, "Even for an experienced armourer it is not an easy task, but", "eventually it is ready. You have crafted the", "draconic visage and anti-dragonbreath shield into a", "dragonfire shield.")
+                    sendDialogueLines(
+                        player,
+                        "Even for an experienced armourer it is not an easy task, but",
+                        "eventually it is ready. You have crafted the",
+                        "draconic visage and anti-dragonbreath shield into a",
+                        "dragonfire shield."
+                    )
                     addItem(player, Items.DRAGONFIRE_SHIELD_11284)
                     rewardXP(player, Skills.SMITHING, 2000.0)
                 }
                 stage = 1
             }
 
-            1 -> end()
+            1 -> {
+                end()
+            }
         }
+
         return true
     }
 
