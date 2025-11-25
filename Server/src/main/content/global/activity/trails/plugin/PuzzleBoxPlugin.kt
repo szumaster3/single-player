@@ -26,15 +26,23 @@ class PuzzleBoxPlugin : InteractionListener, InterfaceListener {
         val fullSolution: List<Int> = tiles + -1
     }
 
-    /**
-     * All available puzzle boxes.
-     */
-    private val puzzles = listOf(
-        PuzzleBox("troll", Items.PUZZLE_BOX_3571, (Items.SLIDING_PIECE_3643..Items.SLIDING_PIECE_3666).toList()),
-        PuzzleBox("castle", Items.PUZZLE_BOX_2795, (Items.SLIDING_PIECE_2749..Items.SLIDING_PIECE_2772).toList()),
-        PuzzleBox("tree", Items.PUZZLE_BOX_3565, (Items.SLIDING_PIECE_3619..Items.SLIDING_PIECE_3642).toList()),
-        PuzzleBox("glider", Items.SPARE_CONTROLS_4002, (Items.SLIDING_BUTTON_3904..Items.SLIDING_BUTTON_3950 step 2).toList())
-    )
+    companion object {
+        /**
+         * All available puzzle boxes.
+         */
+        private val puzzles = listOf(
+            PuzzleBox("troll", Items.PUZZLE_BOX_3571, (Items.SLIDING_PIECE_3643..Items.SLIDING_PIECE_3666).toList()),
+            PuzzleBox("castle", Items.PUZZLE_BOX_2795, (Items.SLIDING_PIECE_2749..Items.SLIDING_PIECE_2772).toList()),
+            PuzzleBox("tree", Items.PUZZLE_BOX_3565, (Items.SLIDING_PIECE_3619..Items.SLIDING_PIECE_3642).toList()),
+            PuzzleBox(
+                "glider",
+                Items.SPARE_CONTROLS_4002,
+                (Items.SLIDING_BUTTON_3904..Items.SLIDING_BUTTON_3950 step 2).toList()
+            )
+        )
+
+        fun random() = puzzles.random().id
+    }
 
     /**
      * Active puzzle sessions per player.
