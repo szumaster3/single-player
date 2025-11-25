@@ -62,10 +62,11 @@ class DarkZone : MapZone("Dark zone", true), EventHook<UseWithEvent> {
         val player = entity.asPlayer()
         val product = LightSources.forLitId(target.id) ?: return false
         val action = option.name.lowercase(Locale.getDefault())
+        val itemName = getItemName(product.litId).lowercase()
 
         val op = action.equalsAny("drop", "extinguish", "destroy")
         if(op){
-            sendMessage(player, "Destroying the ${product.name.lowercase()} would leave you without a light source.")
+            sendMessage(player, "Destroying the $itemName would leave you without a light source.")
             return true
         }
 
