@@ -75,7 +75,7 @@ abstract class AnagramScroll(
                 return true
             }
 
-            val puzzle = clue.challenge?.let { Puzzle.forId(it) }
+            val puzzle = clue.challenge?.let { PuzzleBoxPlugin.forId(it) }
             return if (puzzle != null) {
                 handlePuzzleBox(player, npc, clue, puzzle, facial)
             } else {
@@ -91,9 +91,9 @@ abstract class AnagramScroll(
         /**
          * Handles puzzle box logic.
          */
-        private fun handlePuzzleBox(player: Player, npc: NPC, clue: AnagramScroll, puzzle: PuzzleBox, chatAnim: FaceAnim): Boolean {
+        private fun handlePuzzleBox(player: Player, npc: NPC, clue: AnagramScroll, puzzle: PuzzleBoxPlugin.PuzzleBox, chatAnim: FaceAnim): Boolean {
             val hasPuzzle = inInventory(player, puzzle.id)
-            val isComplete = Puzzle.isComplete(player, puzzle.type)
+            val isComplete = PuzzleBoxPlugin.isComplete(player, puzzle.type)
 
             if (hasPuzzle && !isComplete) {
                 sendNPCDialogue(player, npc.id, "You haven't completed the puzzle yet!", chatAnim)

@@ -42,30 +42,30 @@ class PuzzleBoxPlugin : InteractionListener, InterfaceListener {
         )
 
         fun random() = puzzles.random().id
+
+        /**
+         * Finds a puzzle by type.
+         */
+        fun forType(type: String) = puzzles.firstOrNull { it.type == type }
+
+        /**
+         * Finds a puzzle by item id
+         */
+        fun forId(itemId: Int) = puzzles.firstOrNull { it.id == itemId }
+
+        /**
+         * Checks if player has completed a puzzle.
+         */
+        fun isComplete(player: Player, type: String): Boolean {
+            val box = forType(type) ?: return false
+            return getAttribute(player, "$type:puzzle:done", false) && inInventory(player, box.id, 1)
+        }
     }
 
     /**
      * Active puzzle sessions per player.
      */
     private val sessionState = mutableMapOf<Player, Pair<String, MutableList<Int>>>()
-
-    /**
-     * Finds a puzzle by type.
-     */
-    fun forType(type: String) = puzzles.firstOrNull { it.type == type }
-
-    /**
-     * Finds a puzzle by item id
-     */
-    fun forId(itemId: Int) = puzzles.firstOrNull { it.id == itemId }
-
-    /**
-     * Checks if player has completed a puzzle.
-     */
-    fun isComplete(player: Player, type: String): Boolean {
-        val box = forType(type) ?: return false
-        return getAttribute(player, "$type:puzzle:done", false) && inInventory(player, box.id, 1)
-    }
 
     override fun defineListeners() {
 

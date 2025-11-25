@@ -26,7 +26,7 @@ class PuzzleBoxPluginTests {
     @Test fun saveAndLoadSession() {
         TestUtils.getMockPlayer("puzzle-save-load").use { p ->
             val type = "castle"
-            val solution = plugin.forType(type)!!.fullSolution.toMutableList()
+            val solution = PuzzleBoxPlugin.forType(type)!!.fullSolution.toMutableList()
             val shuffled = plugin.generatePuzzle(solution)
 
             plugin.saveSession(p, type, shuffled)
@@ -39,7 +39,7 @@ class PuzzleBoxPluginTests {
     @Test fun markPuzzleComplete() {
         TestUtils.getMockPlayer("puzzle-complete").use { p ->
             val type = "castle"
-            val box = plugin.forType(type)!!
+            val box = PuzzleBoxPlugin.forType(type)!!
             val solution = box.fullSolution
 
             plugin.saveSession(p, type, solution.toMutableList())
@@ -47,7 +47,7 @@ class PuzzleBoxPluginTests {
             setAttribute(p, "$type:puzzle:done", true)
 
             Assertions.assertTrue(
-                plugin.isComplete(p, type),
+                PuzzleBoxPlugin.isComplete(p, type),
                 "Puzzle should be marked as completed and player should have the item"
             )
         }
@@ -56,13 +56,13 @@ class PuzzleBoxPluginTests {
     @Test fun randomPuzzleSelection() {
         TestUtils.getMockPlayer("puzzle-random").use { _ ->
             val allIds = listOf(
-                plugin.forType("troll")!!.id,
-                plugin.forType("castle")!!.id,
-                plugin.forType("tree")!!.id,
-                plugin.forType("glider")!!.id
+                PuzzleBoxPlugin.forType("troll")!!.id,
+                PuzzleBoxPlugin.forType("castle")!!.id,
+                PuzzleBoxPlugin.forType("tree")!!.id,
+                PuzzleBoxPlugin.forType("glider")!!.id
             )
             val randomId = allIds.random()
-            val box = plugin.forId(randomId)
+            val box = PuzzleBoxPlugin.forId(randomId)
             Assertions.assertNotNull(box, "Random puzzle ID must correspond to a Puzzle")
             Assertions.assertEquals(25, box!!.fullSolution.size, "Puzzle must have 25 tiles")
         }
