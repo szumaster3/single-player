@@ -1,5 +1,14 @@
 package content.global.skill.fletching
 
+import content.global.skill.fletching.arrows.ArrowHead
+import content.global.skill.fletching.arrows.BrutalArrow
+import content.global.skill.fletching.bolts.Bolt
+import content.global.skill.fletching.bolts.GemBolt
+import content.global.skill.fletching.bolts.KebbitBolt
+import content.global.skill.fletching.bow.Strings
+import content.global.skill.fletching.crossbow.Limb
+import content.global.skill.fletching.darts.Dart
+import content.global.skill.slayer.SlayerManager.Companion.getInstance
 import core.api.*
 import core.game.dialogue.SkillDialogueHandler
 import core.game.dialogue.SkillDialogueHandler.SkillDialogue
@@ -12,34 +21,25 @@ import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.game.world.map.zone.ZoneBorders
 import core.game.world.update.flag.context.Animation
-import content.global.skill.fletching.arrows.ArrowHead
-import content.global.skill.fletching.arrows.BrutalArrow
-import content.global.skill.fletching.bolts.GemBolt
-import content.global.skill.fletching.bolts.KebbitBolt
-import content.global.skill.fletching.bow.Strings
-import content.global.skill.fletching.crossbow.Limb
-import content.global.skill.slayer.SlayerManager.Companion.getInstance
-import shared.consts.Animations
-import shared.consts.Components
-import shared.consts.Items
-import shared.consts.Sounds
-import core.tools.StringUtils
 import core.tools.RandomFunction
+import core.tools.StringUtils
 import kotlin.math.min
+import shared.consts.*
 
 class FletchingListener : InteractionListener {
     override fun defineListeners() {
 
         /*
-         * Handles fletch logs using knife.
+         * Handles fletching logs using a knife.
          */
 
-        onUseWith(IntType.ITEM, Items.KNIFE_946, *FLETCH_LOGS) { player, _, with ->
+        onUseWith(IntType.ITEM, Items.KNIFE_946, *Fletching.FLETCH_LOGS) { player, _, with ->
             if (!clockReady(player, Clocks.SKILLING)) return@onUseWith true
+            val options = Fletching.getItems(with.id) ?: return@onUseWith true
 
-            val items = Fletching.getItems(with.id) ?: return@onUseWith true
             val dialogueType =
-                when (items.size) {
+                when (options.size) {
+                    1 -> SkillDialogue.ONE_OPTION
                     2 -> SkillDialogue.TWO_OPTION
                     3 -> SkillDialogue.THREE_OPTION
                     4 -> SkillDialogue.FOUR_OPTION
@@ -47,51 +47,51 @@ class FletchingListener : InteractionListener {
                 }
 
             val handler =
-                object : SkillDialogueHandler(player, dialogueType, *items) {
+                object : SkillDialogueHandler(player, dialogueType, *options) {
+
                     override fun create(amount: Int, index: Int) {
-                        val fletch = Fletching.getEntries(with.id)?.get(index) ?: return
+                        val entry = Fletching.getEntries(with.id)?.get(index) ?: return
                         var remaining = amount
-                        queueScript(player, 0, QueueStrength.WEAK) {
-                            if (remaining <= 0) return@queueScript stopExecuting(player)
 
-                            if (getStatLevel(player, Skills.FLETCHING) < fletch.level) {
-                                val name = getItemName(fletch.id).replace("(u)", "").trim()
-                                sendDialogue(
-                                    player,
-                                    "You need a fletching skill of ${fletch.level} or above to make " +
-                                            (if (StringUtils.isPlusN(name)) "an" else "a") +
-                                            " $name"
-                                )
+                        queueScript(player, 1, QueueStrength.WEAK) {
+                            if (remaining <= 0 || amountInInventory(player, with.id) <= 0) return@queueScript stopExecuting(player)
+
+                            if (getStatLevel(player, Skills.FLETCHING) < entry.level) {
+                                val name = getItemName(entry.id).replace("(u)", "").trim()
+                                sendDialogue(player, "You need a Fletching level of ${entry.level} to make " + (if (StringUtils.isPlusN(name)) "an " else "a ") + name + ".")
                                 return@queueScript stopExecuting(player)
                             }
 
-                            if (amountInInventory(player, with.id) <= 0) {
-                                sendMessage(player, "You have run out of logs.")
-                                return@queueScript stopExecuting(player)
+                            when (entry.id) {
+                                Items.UNSTRUNG_COMP_BOW_4825 -> {
+                                    if (amountInInventory(player, Items.WOLF_BONES_2859) <= 0) {
+                                        sendMessage(player, "You need wolf bones to craft this bow.")
+                                        return@queueScript stopExecuting(player)
+                                    }
+                                }
                             }
 
-                            val animationId =
+                            val anim =
                                 if (with.id == Items.MAGIC_LOGS_1513) Animation(Animations.CUT_MAGIC_LOGS_7211)
                                 else Animation(Animations.FLETCH_LOGS_1248)
-                            player.animate(animationId)
 
-                            if (!player.inventory.remove(Item(with.id))) return@queueScript stopExecuting(player)
+                            player.animate(anim)
 
-                            val item = Item(fletch.id, fletch.amount)
-                            when (fletch.id) {
+                            if (!removeItem(player, with.id)) return@queueScript stopExecuting(player)
+
+                            val product = Item(entry.id, entry.amount)
+                            when (entry.id) {
                                 Items.OGRE_ARROW_SHAFT_2864 -> {
-                                    val finalAmount = RandomFunction.random(2, 6)
-                                    item.amount = finalAmount
-                                    sendMessage(player, "You carefully cut the logs into $finalAmount arrow shafts.")
+                                    val amt = RandomFunction.random(2, 6)
+                                    product.amount = amt
+                                    sendMessage(player, "You carefully cut the logs into $amt arrow shafts.")
                                 }
-                                Items.COMP_OGRE_BOW_4827 -> {
-                                    if (!player.inventory.contains(Items.WOLF_BONES_2859, 1))
-                                        return@queueScript stopExecuting(player)
-                                    player.inventory.remove(Item(Items.WOLF_BONES_2859))
-                                    sendMessage(player, "You carefully cut the logs into composite ogre bow.")
+                                Items.UNSTRUNG_COMP_BOW_4825 -> {
+                                    removeItem(player, Items.WOLF_BONES_2859)
+                                    sendMessage(player, "You carefully craft a composite ogre bow.")
                                 }
                                 else -> {
-                                    val name = getItemName(fletch.id).replace("(u)", "").trim()
+                                    val name = getItemName(entry.id).replace("(u)", "").trim()
                                     sendMessage(
                                         player,
                                         "You carefully cut the logs into ${if (StringUtils.isPlusN(name)) "an" else "a"} $name."
@@ -99,17 +99,16 @@ class FletchingListener : InteractionListener {
                                 }
                             }
 
-                            player.inventory.add(item)
-                            player.skills.addExperience(Skills.FLETCHING, fletch.exp, true)
+                            addItem(player, entry.id, entry.amount)
+                            rewardXP(player, Skills.FLETCHING, entry.exp)
 
                             val bankZone = ZoneBorders(2721, 3493, 2730, 3487)
-                            if (bankZone.insideBorder(player) && fletch.id == Items.MAGIC_SHORTBOW_U_72) {
+                            if (bankZone.insideBorder(player) && entry.id == Items.MAGIC_SHORTBOW_U_72) {
                                 finishDiaryTask(player, DiaryType.SEERS_VILLAGE, 2, 2)
                             }
 
                             remaining--
-                            if (remaining <= 0 || amountInInventory(player, with.id) <= 0)
-                                return@queueScript stopExecuting(player)
+                            if (remaining <= 0 || amountInInventory(player, with.id) <= 0) return@queueScript stopExecuting(player)
 
                             delayScript(player, 2)
                         }
@@ -120,11 +119,7 @@ class FletchingListener : InteractionListener {
                     }
                 }
 
-            if (items.size == 1) {
-                handler.create(handler.getAll(0), 0)
-            } else {
-                handler.open()
-            }
+            if (options.size == 1) handler.create(handler.getAll(0), 0) else handler.open()
 
             return@onUseWith true
         }
@@ -133,14 +128,9 @@ class FletchingListener : InteractionListener {
          * Handles attaching a string to an unstrung bow.
          */
 
-        onUseWith(IntType.ITEM, Fletching.stringIds, *Fletching.unstrungBows) { player, used, with ->
+        onUseWith(IntType.ITEM, Fletching.STRING_IDS, *Fletching.UNF_BOW_IDS) { player, used, with ->
             if (!clockReady(player, Clocks.SKILLING)) return@onUseWith true
-
             val enum = Strings.product[with.id] ?: return@onUseWith false
-            if (enum.string != used.id) {
-                sendMessage(player, "That's not the right kind of string for this.")
-                return@onUseWith true
-            }
 
             sendSkillDialogue(player) {
                 withItems(enum.product)
@@ -149,18 +139,19 @@ class FletchingListener : InteractionListener {
                     var remaining = amount
                     queueScript(player, 0, QueueStrength.WEAK) {
                         if (remaining <= 0) return@queueScript stopExecuting(player)
-
+                        if (enum.string != used.id) {
+                            sendMessage(player, "That's not the right kind of string for this.")
+                            return@queueScript stopExecuting(player)
+                        }
                         if (getStatLevel(player, Skills.FLETCHING) < enum.level) {
                             sendDialogue(player, "You need a Fletching level of ${enum.level} to string this bow.")
                             return@queueScript stopExecuting(player)
                         }
-
-                        if (!player.inventory.containsItem(Item(enum.unfinished))) {
+                        if (amountInInventory(player, enum.unfinished) <= 0) {
                             sendDialogue(player, "You have run out of bows to string.")
                             return@queueScript stopExecuting(player)
                         }
-
-                        if (!player.inventory.containsItem(Item(enum.string))) {
+                        if (amountInInventory(player, enum.string) <= 0) {
                             sendDialogue(player, "You seem to have run out of bow strings.")
                             return@queueScript stopExecuting(player)
                         }
@@ -168,10 +159,10 @@ class FletchingListener : InteractionListener {
                         player.animate(Animation.create(enum.animation))
                         playAudio(player, Sounds.STRING_BOW_2606)
 
-                        if (player.inventory.remove(Item(enum.unfinished), Item(enum.string))) {
-                            player.inventory.add(Item(enum.product))
-                            player.getSkills().addExperience(Skills.FLETCHING, enum.experience, true)
-                            player.packetDispatch.sendMessage("You add a string to the bow.")
+                        if (removeItem(player, enum.unfinished) && removeItem(player, enum.string)) {
+                            addItem(player, enum.product)
+                            rewardXP(player, Skills.FLETCHING, enum.experience)
+                            sendMessage(player, "You add a string to the bow.")
 
                             // Diary check (Seers)
                             if (
@@ -186,9 +177,7 @@ class FletchingListener : InteractionListener {
 
                         remaining--
                         if (
-                            remaining <= 0 ||
-                            !player.inventory.containsItem(Item(enum.string)) ||
-                            !player.inventory.containsItem(Item(enum.unfinished))
+                            remaining <= 0 || amountInInventory(player, enum.string) <= 0 || amountInInventory(player, enum.unfinished) <= 0
                         ) {
                             return@queueScript stopExecuting(player)
                         }
@@ -206,25 +195,28 @@ class FletchingListener : InteractionListener {
          * Handles attaching feathers to arrow shafts to create headless arrows.
          */
 
-        onUseWith(IntType.ITEM, Fletching.ARROW_SHAFT, *Fletching.featherIds) { player, used, with ->
+        onUseWith(IntType.ITEM, Fletching.ARROW_SHAFT, *Fletching.FEATHER_IDS) { player, used, with ->
             if (!clockReady(player, Clocks.SKILLING)) return@onUseWith true
 
-            val maxSets = min(amountInInventory(player, used.id), amountInInventory(player, with.id))
-            if (maxSets <= 0) {
-                sendDialogue(player, "You do not have enough materials to make headless arrows.")
-                return@onUseWith true
-            }
+            val handler = object : SkillDialogueHandler(player, SkillDialogue.MAKE_SET_ONE_OPTION, Item(Fletching.HEADLESS_ARROW)) {
 
-            sendSkillDialogue(player) {
-                withItems(Item(Fletching.HEADLESS_ARROW))
-
-                calculateMaxAmount { maxSets }
-
-                create { _, amount ->
+                override fun create(amount: Int, index: Int) {
                     var remaining = amount
 
                     queueScript(player, 0, QueueStrength.WEAK) { stage ->
                         if (remaining <= 0 || !clockReady(player, Clocks.SKILLING)) return@queueScript stopExecuting(player)
+                        if (!inInventory(player, Fletching.ARROW_SHAFT)) {
+                            sendMessage(player, "You don't have any arrow shafts.")
+                            return@queueScript stopExecuting(player)
+                        }
+                        if (!anyInInventory(player, *Fletching.FEATHER_IDS)) {
+                            sendMessage(player, "You don't have any feathers.")
+                            return@queueScript stopExecuting(player)
+                        }
+                        val shaftAmount = amountInInventory(player, used.id)
+                        val featherAmount = amountInInventory(player, with.id)
+
+                        if (shaftAmount <= 0 || featherAmount <= 0) return@queueScript stopExecuting(player)
 
                         when (stage) {
                             0 -> {
@@ -232,27 +224,21 @@ class FletchingListener : InteractionListener {
                                 delayScript(player, 2)
                             }
                             else -> {
-                                val shaftAmount = player.inventory.getAmount(used.id)
-                                val featherAmount = player.inventory.getAmount(with.id)
-                                if (shaftAmount <= 0 || featherAmount <= 0) return@queueScript stopExecuting(player)
-
                                 val batch = min(15, min(shaftAmount, featherAmount))
+                                val realBatch = min(batch, remaining)
 
-                                val shaftItem = Item(used.id, batch)
-                                val featherItem = Item(with.id, batch)
+                                if (removeItem(player, Item(used.id, realBatch)) && removeItem(player, Item(with.id, realBatch))) {
+                                    addItem(player, Fletching.HEADLESS_ARROW, realBatch)
+                                    rewardXP(player, Skills.FLETCHING, realBatch.toDouble())
 
-                                if (player.inventory.remove(shaftItem, featherItem)) {
-                                    val headless = Item(Fletching.HEADLESS_ARROW, batch)
-                                    player.inventory.add(headless)
-                                    player.getSkills().addExperience(Skills.FLETCHING, batch.toDouble(), true)
-
-                                    val msg =
-                                        if (batch == 1) "You attach a feather to a shaft."
-                                        else "You attach feathers to $batch arrow shafts."
-                                    sendMessage(player, msg)
+                                    val message = if (realBatch == 1)
+                                        "You attach a feather to a shaft."
+                                    else
+                                        "You attach feathers to $realBatch arrow shafts."
+                                    sendMessage(player, message)
                                 }
 
-                                remaining -= batch
+                                remaining -= realBatch
 
                                 if (remaining > 0) {
                                     setCurrentScriptState(player, 0)
@@ -264,7 +250,14 @@ class FletchingListener : InteractionListener {
                         }
                     }
                 }
+
+                override fun getAll(index: Int): Int {
+                    return min(amountInInventory(player, used.id), amountInInventory(player, with.id))
+                }
             }
+
+            val maxAmount = min(amountInInventory(player, used.id), amountInInventory(player, with.id))
+            if (maxAmount <= 1) handler.create(maxAmount, 0) else handler.open()
 
             return@onUseWith true
         }
@@ -273,33 +266,40 @@ class FletchingListener : InteractionListener {
          * Handles attaching arrowheads to headless arrows to create arrows.
          */
 
-        onUseWith(IntType.ITEM, Fletching.HEADLESS_ARROW, *Fletching.unfinishedArrows) { player, used, with ->
+        onUseWith(IntType.ITEM, Fletching.HEADLESS_ARROW, *Fletching.UNF_ARROW_IDS) { player, used, with ->
             if (!clockReady(player, Clocks.SKILLING)) return@onUseWith true
-
             val arrowHead = ArrowHead.getByUnfinishedId(with.id) ?: return@onUseWith false
-            val maxSets = min(amountInInventory(player, used.id), amountInInventory(player, arrowHead.unfinished))
-            if (arrowHead.unfinished == Items.BROAD_BOLTS_UNF_13279) {
-                if (!getInstance(player).flags.isBroadsUnlocked()) {
-                    sendDialogue(player, "You need to unlock the ability to create broad bolts.")
-                    return@onUseWith true
-                }
-            }
 
-            if (maxSets <= 0) {
-                sendDialogue(player, "You do not have enough materials to make arrows.")
-                return@onUseWith true
-            }
+            val handler = object : SkillDialogueHandler(player, SkillDialogue.MAKE_SET_ONE_OPTION, Item(arrowHead.finished)) {
 
-            sendSkillDialogue(player) {
-                withItems(Item(arrowHead.finished))
-
-                calculateMaxAmount { maxSets }
-
-                create { _, amount ->
+                override fun create(amount: Int, index: Int) {
                     var remaining = amount
 
                     queueScript(player, 0, QueueStrength.WEAK) { stage ->
                         if (remaining <= 0 || !clockReady(player, Clocks.SKILLING)) return@queueScript stopExecuting(player)
+                        if (arrowHead.unfinished == Items.BROAD_ARROW_4160) {
+                            if (!getInstance(player).flags.isBroadsUnlocked()) {
+                                player.dialogueInterpreter.sendDialogue("You need to unlock the ability to create broad arrows.")
+                                return@queueScript stopExecuting(player)
+                            }
+                        }
+                        if (getStatLevel(player, Skills.FLETCHING) < arrowHead.level) {
+                            sendDialogue(player, "You need a Fletching level of ${arrowHead.level} to do this.")
+                            return@queueScript stopExecuting(player)
+                        }
+                        if (!hasSpaceFor(player, Item(arrowHead.finished))) {
+                            sendDialogue(player, "You do not have enough inventory space.")
+                            return@queueScript stopExecuting(player)
+                        }
+                        if(!inInventory(player, with.id) || !inInventory(player, used.id)) {
+                            sendMessage(player, "You do not have enough materials to make this.")
+                            return@queueScript stopExecuting(player)
+                        }
+
+                        val tipAmount = amountInInventory(player, arrowHead.unfinished)
+                        val shaftAmount = amountInInventory(player, used.id)
+
+                        if (tipAmount <= 0 || shaftAmount <= 0) return@queueScript stopExecuting(player)
 
                         when (stage) {
                             0 -> {
@@ -307,27 +307,24 @@ class FletchingListener : InteractionListener {
                                 delayScript(player, 2)
                             }
                             else -> {
-                                val tipAmount = player.inventory.getAmount(arrowHead.unfinished)
-                                val shaftAmount = player.inventory.getAmount(Fletching.HEADLESS_ARROW)
-                                if (tipAmount <= 0 || shaftAmount <= 0) return@queueScript stopExecuting(player)
-
                                 val batch = min(15, min(tipAmount, shaftAmount))
+                                val realBatch = min(batch, remaining)
 
-                                val tip = Item(arrowHead.unfinished, batch)
-                                val shaftBatch = Item(Fletching.HEADLESS_ARROW, batch)
+                                if (
+                                    removeItem(player, Item(Fletching.HEADLESS_ARROW, realBatch)) &&
+                                    removeItem(player, Item(arrowHead.unfinished, realBatch))
+                                ) {
+                                    addItem(player, arrowHead.finished, realBatch)
+                                    rewardXP(player, Skills.FLETCHING, arrowHead.experience * realBatch)
 
-                                if (player.inventory.remove(shaftBatch, tip)) {
-                                    val product = Item(arrowHead.finished, batch)
-                                    player.inventory.add(product)
-                                    player.getSkills().addExperience(Skills.FLETCHING, arrowHead.experience * batch, true)
-
-                                    val msg =
-                                        if (batch == 1) "You attach an arrow head to an arrow shaft."
-                                        else "You attach arrow heads to $batch arrow shafts."
-                                    sendMessage(player, msg)
+                                    val message = if (realBatch == 1)
+                                        "You attach an arrow head to an arrow shaft."
+                                    else
+                                        "You attach arrow heads to $realBatch arrow shafts."
+                                    sendMessage(player, message)
                                 }
 
-                                remaining -= batch
+                                remaining -= realBatch
 
                                 if (remaining > 0) {
                                     setCurrentScriptState(player, 0)
@@ -339,76 +336,14 @@ class FletchingListener : InteractionListener {
                         }
                     }
                 }
-            }
 
-            return@onUseWith true
-        }
-
-        /*
-         * Handles attaching wolfbone arrow tips to flighted ogre arrows to create ogre arrows.
-         */
-
-        onUseWith(IntType.ITEM, Items.WOLFBONE_ARROWTIPS_2861, Items.FLIGHTED_OGRE_ARROW_2865) { player, _, _ ->
-            if (!clockReady(player, Clocks.SKILLING)) return@onUseWith true
-
-            if (freeSlots(player) == 0) {
-                sendDialogue(player, "You do not have enough inventory space.")
-                return@onUseWith true
-            }
-
-            val maxAmount =
-                min(
-                    amountInInventory(player, Items.WOLFBONE_ARROWTIPS_2861),
-                    amountInInventory(player, Items.FLIGHTED_OGRE_ARROW_2865)
-                )
-
-            if (maxAmount <= 0) {
-                sendDialogue(player, "You do not have enough materials to make ogre arrows.")
-                return@onUseWith true
-            }
-
-            sendSkillDialogue(player) {
-                withItems(Item(Items.OGRE_ARROW_2866, 5))
-
-                calculateMaxAmount { maxAmount }
-
-                create { _, amount ->
-                    var remaining = amount
-                    queueScript(player, 0, QueueStrength.WEAK) { stage ->
-                        if (remaining <= 0 || !clockReady(player, Clocks.SKILLING)) return@queueScript stopExecuting(player)
-
-                        when (stage) {
-                            0 -> {
-                                delayClock(player, Clocks.SKILLING, 2)
-                                delayScript(player, 2)
-                            }
-                            else -> {
-                                val batch =
-                                    min(6, min(
-                                        amountInInventory(player, Items.WOLFBONE_ARROWTIPS_2861),
-                                        amountInInventory(player, Items.FLIGHTED_OGRE_ARROW_2865)
-                                    ))
-                                if (batch <= 0) return@queueScript stopExecuting(player)
-
-                                removeItem(player, Item(Items.WOLFBONE_ARROWTIPS_2861, batch))
-                                removeItem(player, Item(Items.FLIGHTED_OGRE_ARROW_2865, batch))
-                                addItem(player, Items.OGRE_ARROW_2866, batch)
-                                rewardXP(player, Skills.FLETCHING, 6.0 * batch)
-                                sendMessage(player, "You make $batch ogre arrows.")
-
-                                remaining -= batch
-
-                                if (remaining > 0) {
-                                    setCurrentScriptState(player, 0)
-                                    delayScript(player, 2)
-                                } else {
-                                    stopExecuting(player)
-                                }
-                            }
-                        }
-                    }
+                override fun getAll(index: Int): Int {
+                    return min(amountInInventory(player, Fletching.HEADLESS_ARROW), amountInInventory(player, arrowHead.unfinished))
                 }
             }
+
+            val maxAmount = min(amountInInventory(player, used.id), amountInInventory(player, arrowHead.unfinished))
+            if (maxAmount <= 1) handler.create(maxAmount, 0) else handler.open()
 
             return@onUseWith true
         }
@@ -419,9 +354,10 @@ class FletchingListener : InteractionListener {
 
         onUseWith(IntType.ITEM, Items.MITHRIL_BOLTS_9142, Items.MITH_GRAPPLE_TIP_9416) { player, used, with ->
             if (getStatLevel(player, Skills.FLETCHING) < 59) {
-                sendMessage(player, "You need a fletching level of 59 to make this.")
+                sendMessage(player, "You need a Fletching level of 59 to make this.")
                 return@onUseWith true
             }
+
             if (removeItem(player, used.asItem()) && removeItem(player, with.asItem())) {
                 addItem(player, Items.MITH_GRAPPLE_9418, 1)
                 sendMessage(player, "You attach the grapple tip to the bolt.")
@@ -437,9 +373,10 @@ class FletchingListener : InteractionListener {
 
         onUseWith(IntType.ITEM, Items.ROPE_954, Items.MITH_GRAPPLE_9418) { player, used, with ->
             if (getStatLevel(player, Skills.FLETCHING) < 59) {
-                sendMessage(player, "You need a fletching level of 59 to make this.")
+                sendMessage(player, "You need a Fletching level of 59 to make this.")
                 return@onUseWith true
             }
+
             if (removeItem(player, used.asItem()) && removeItem(player, with.asItem())) {
                 addItem(player, Items.MITH_GRAPPLE_9419, 1)
                 sendMessage(player, "You tie the rope to the grapple.")
@@ -453,14 +390,9 @@ class FletchingListener : InteractionListener {
          * Handles attaching a crossbow limb to a stock to create an unstrung crossbow.
          */
 
-        onUseWith(IntType.ITEM, Fletching.limbIds, *Fletching.stockIds) { player, used, with ->
+        onUseWith(IntType.ITEM, Fletching.LIMB_IDS, *Fletching.STOCK_IDS) { player, used, with ->
             if (!clockReady(player, Clocks.SKILLING)) return@onUseWith true
-
             val limbEnum = Limb.product[with.id] ?: return@onUseWith true
-            if (limbEnum.limb != used.id) {
-                sendMessage(player, "That's not the right limb to attach to that stock.")
-                return@onUseWith true
-            }
 
             sendSkillDialogue(player) {
                 withItems(limbEnum.product)
@@ -469,37 +401,30 @@ class FletchingListener : InteractionListener {
                     var remaining = amount
                     queueScript(player, 0, QueueStrength.WEAK) {
                         if (remaining <= 0) return@queueScript stopExecuting(player)
-
                         if (getStatLevel(player, Skills.FLETCHING) < limbEnum.level) {
-                            sendDialogue(player, "You need a fletching level of ${limbEnum.level} to attach these limbs.")
+                            sendDialogue(player, "You need a Fletching level of ${limbEnum.level} to attach these limbs.")
                             return@queueScript stopExecuting(player)
                         }
-
-                        if (
-                            !player.inventory.containsItem(Item(limbEnum.limb)) ||
-                            !player.inventory.containsItem(Item(limbEnum.stock))
-                        ) {
-                            sendMessage(player, "You do not have the required stock or limb.")
+                        if(!inInventory(player, with.id) || !inInventory(player, used.id)) {
+                            sendMessage(player, "You do not have enough materials to make this.")
                             return@queueScript stopExecuting(player)
                         }
+                        val limbAmount = amountInInventory(player, limbEnum.limb)
+                        val stockAmount = amountInInventory(player, limbEnum.stock)
+                        val batch = min(1, min(limbAmount, stockAmount))
+                        if (batch <= 0) return@queueScript stopExecuting(player)
 
                         player.animate(Animation.create(limbEnum.animation))
                         playAudio(player, Sounds.STRING_CROSSBOW_2924)
 
-                        if (player.inventory.remove(Item(limbEnum.stock), Item(limbEnum.limb))) {
-                            player.inventory.add(Item(limbEnum.product))
-                            player.skills.addExperience(Skills.FLETCHING, limbEnum.experience, true)
+                        if (removeItem(player, Item(limbEnum.limb, batch)) && removeItem(player, Item(limbEnum.stock, batch))) {
+                            addItem(player, limbEnum.product)
+                            rewardXP(player, Skills.FLETCHING, limbEnum.experience)
                             sendMessage(player, "You attach the metal limbs to the stock.")
                         }
 
-                        remaining--
-                        if (
-                            remaining <= 0 ||
-                            !player.inventory.containsItem(Item(limbEnum.limb)) ||
-                            !player.inventory.containsItem(Item(limbEnum.stock))
-                        )
-                            return@queueScript stopExecuting(player)
-
+                        remaining -= batch
+                        if (remaining <= 0 || limbAmount <= 0 || stockAmount <= 0) return@queueScript stopExecuting(player)
                         delayScript(player, 2)
                     }
                 }
@@ -514,37 +439,41 @@ class FletchingListener : InteractionListener {
          * Handles chiseling gems into bolt tips.
          */
 
-        onUseWith(IntType.ITEM, Items.CHISEL_1755, *Fletching.gemIds) { player, _, with ->
+        onUseWith(IntType.ITEM, Items.CHISEL_1755, *Fletching.BOLT_GEM_IDS) { player, _, with ->
             if (!clockReady(player, Clocks.SKILLING)) return@onUseWith true
 
             val gem = GemBolt.gemToBolt[with.id] ?: return@onUseWith true
-            val maxAmount = amountInInventory(player, with.id)
-            if (maxAmount <= 0) {
-                sendMessage(player, "You don't have any of that gem to cut.")
-                return@onUseWith true
-            }
 
             sendString(player, "How many gems would you like to cut into bolt tips?", Components.SKILL_MULTI1_309, 7)
 
             sendSkillDialogue(player) {
-                withItems(Item(gem.tip))
+                withItems(gem.tip)
 
                 create { _, amount ->
                     var remaining = amount
-                    queueScript(player, 0, QueueStrength.WEAK) { stage ->
-                        if (remaining <= 0 || !clockReady(player, Clocks.SKILLING)) return@queueScript stopExecuting(
-                            player
-                        )
 
+                    queueScript(player, 0, QueueStrength.WEAK) { stage ->
+                        val currentAmount = amountInInventory(player, gem.gem)
+                        if (remaining <= 0 || currentAmount <= 0 || !clockReady(player, Clocks.SKILLING))
+                            return@queueScript stopExecuting(player)
+
+                        if (getStatLevel(player, Skills.FLETCHING) < gem.level) {
+                            sendDialogue(player, "You need a fletching level of ${gem.level} or above to do that.")
+                            return@queueScript stopExecuting(player)
+                        }
+                        if(!inInventory(player, with.id)) {
+                            sendMessage(player, "You do not have enough materials to make this.")
+                            return@queueScript stopExecuting(player)
+                        }
                         when (stage) {
                             0 -> {
                                 animate(player, gem.animation)
                                 playAudio(player, Sounds.CHISEL_2586)
                                 delayScript(player, 5)
                             }
-
                             else -> {
                                 delayClock(player, Clocks.SKILLING, 5)
+
                                 val rewardAmount =
                                     when (gem.gem) {
                                         Items.OYSTER_PEARLS_413,
@@ -553,9 +482,9 @@ class FletchingListener : InteractionListener {
                                         else -> 12
                                     }
 
-                                if (player.inventory.remove(Item(gem.gem))) {
-                                    player.inventory.add(Item(gem.tip, rewardAmount))
-                                    player.skills.addExperience(Skills.FLETCHING, gem.experience, true)
+                                if (removeItem(player, gem.gem)) {
+                                    addItem(player, gem.tip, rewardAmount)
+                                    rewardXP(player, Skills.FLETCHING, gem.experience)
                                     sendMessage(player, "You use your chisel to fetch small bolt tips.")
                                     remaining--
                                 }
@@ -578,61 +507,63 @@ class FletchingListener : InteractionListener {
          * Handles attaching gem bolt tips to bolt bases to create gem-tipped bolts.
          */
 
-        onUseWith(IntType.ITEM, Fletching.boltBaseIds, *Fletching.boltTipIds) { player, used, with ->
+        onUseWith(IntType.ITEM, Fletching.GEM_BOLT_IDS, *Fletching.GEM_BOLT_TIPS_IDS) { player, used, with ->
             if (!clockReady(player, Clocks.SKILLING)) return@onUseWith true
             val bolt = GemBolt.forId(with.id) ?: return@onUseWith true
             if (used.id != bolt.base || with.id != bolt.tip) return@onUseWith true
 
-            sendSkillDialogue(player) {
-                withItems(Item(bolt.product))
+            val handler = object : SkillDialogueHandler(player, SkillDialogue.MAKE_SET_ONE_OPTION, Item(bolt.product)) {
 
-                create { _, amount ->
+                override fun create(amount: Int, index: Int) {
                     var remaining = amount
+
                     queueScript(player, 0, QueueStrength.WEAK) {
-                        if (remaining <= 0) return@queueScript stopExecuting(player)
+                        val baseAmount = amountInInventory(player, bolt.base)
+                        val tipAmount = amountInInventory(player, bolt.tip)
+
+                        if (remaining <= 0 || baseAmount <= 0 || tipAmount <= 0) return@queueScript stopExecuting(player)
 
                         if (getStatLevel(player, Skills.FLETCHING) < bolt.level) {
                             sendDialogue(player, "You need a Fletching level of ${bolt.level} or above to do that.")
                             return@queueScript stopExecuting(player)
                         }
-
-                        val baseAmount = player.inventory.getAmount(bolt.base)
-                        val tipAmount = player.inventory.getAmount(bolt.tip)
-                        if (baseAmount <= 0 || tipAmount <= 0) {
-                            val missing = if (baseAmount <= 0) bolt.base else bolt.tip
-                            sendMessage(player, "You do not have any more $missing to fletch.")
+                        if (!hasSpaceFor(player, Item(bolt.product))) {
+                            return@queueScript stopExecuting(player)
+                        }
+                        if(!inInventory(player, with.id) || !inInventory(player, used.id)) {
+                            sendMessage(player, "You do not have enough materials to make this.")
                             return@queueScript stopExecuting(player)
                         }
 
                         val batchAmount = min(10, min(baseAmount, tipAmount))
-                        val baseItem = Item(bolt.base, batchAmount)
-                        val tipItem = Item(bolt.tip, batchAmount)
-                        val productItem = Item(bolt.product, batchAmount)
+                        val realBatch = min(batchAmount, remaining)
 
-                        if (player.inventory.remove(baseItem, tipItem)) {
-                            player.inventory.add(productItem)
-                            player.skills.addExperience(Skills.FLETCHING, bolt.experience * batchAmount, true)
-                            sendMessage(
-                                player,
-                                if (batchAmount == 1) "You attach the tip to the bolt." else "You fletch $batchAmount bolts."
-                            )
+                        if (removeItem(player, Item(bolt.base, realBatch)) && removeItem(player, Item(bolt.tip, realBatch))) {
+                            addItem(player, bolt.product, realBatch)
+                            rewardXP(player, Skills.FLETCHING, bolt.experience * realBatch)
+
+                            val message = if (realBatch == 1) "You attach the tip to the bolt."
+                            else "You fletch $realBatch bolts."
+                            sendMessage(player, message)
+                            remaining -= realBatch
                         }
 
-                        remaining--
-
-                        if (remaining <= 0 ||
-                            !player.inventory.containsItem(Item(bolt.base)) ||
-                            !player.inventory.containsItem(Item(bolt.tip))
-                        ) return@queueScript stopExecuting(player)
-
-                        delayScript(player, 2)
+                        if (remaining > 0) {
+                            setCurrentScriptState(player, 0)
+                            delayScript(player, 2)
+                        } else {
+                            stopExecuting(player)
+                        }
                     }
                 }
 
-                calculateMaxAmount {
-                    min(amountInInventory(player, used.id), amountInInventory(player, with.id))
+                override fun getAll(index: Int): Int {
+                    return min(amountInInventory(player, bolt.base), amountInInventory(player, bolt.tip))
                 }
             }
+
+            val maxAmount = min(amountInInventory(player, bolt.base), amountInInventory(player, bolt.tip))
+            if (maxAmount <= 1) handler.create(maxAmount, 0) else handler.open()
 
             return@onUseWith true
         }
@@ -641,48 +572,45 @@ class FletchingListener : InteractionListener {
          * Handles attaching kebbit spikes to create kebbit bolts.
          */
 
-        onUseWith(IntType.ITEM, Items.CHISEL_1755, *Fletching.kebbitSpikeIds) { player, _, base ->
+        onUseWith(IntType.ITEM, Items.CHISEL_1755, *Fletching.KEBBIT_SPIKE_IDS) { player, _, base ->
             if (!clockReady(player, Clocks.SKILLING)) return@onUseWith true
             val kebbit = KebbitBolt.forId(base.asItem()) ?: return@onUseWith true
-            if (!hasSpaceFor(player, Item(kebbit.product))) {
-                sendDialogue(player, "You do not have enough inventory space.")
-                return@onUseWith true
-            }
-            if (!inInventory(player, kebbit.base)) {
-                sendDialogue(player, "You don't have the required items in your inventory.")
-                return@onUseWith true
-            }
-
-            var remaining = amountInInventory(player, base.id)
 
             sendSkillDialogue(player) {
-                withItems(Item(kebbit.product))
+                withItems(kebbit.product)
 
                 create { _, amount ->
                     var remaining = amount
-
                     queueScript(player, 0, QueueStrength.WEAK) {
-                        if (remaining <= 0 || freeSlots(player) == 0) return@queueScript false
-
+                        if (remaining <= 0 || freeSlots(player) == 0) return@queueScript stopExecuting(player)
                         if (getStatLevel(player, Skills.FLETCHING) < kebbit.level) {
                             sendDialogue(player, "You need a Fletching level of ${kebbit.level} to do this.")
                             return@queueScript stopExecuting(player)
                         }
+                        if (!hasSpaceFor(player, Item(kebbit.product))) {
+                            sendDialogue(player, "You do not have enough inventory space.")
+                            return@queueScript stopExecuting(player)
+                        }
+                        if (!inInventory(player, kebbit.base)) {
+                            sendMessage(player, "You do not have enough materials to make kebbit bolts.")
+                            return@queueScript stopExecuting(player)
+                        }
 
-                        animate(player, Animations.FLETCH_LOGS_4433)
-                        val baseItem = Item(kebbit.base, 1)
-                        if (removeItem(player, baseItem)) {
+                        val batch = 1
+                        player.animate(Animation(Animations.FLETCH_LOGS_4433))
+                        if (removeItem(player, Item(kebbit.base, batch))) {
                             addItem(player, kebbit.product, 6)
                             rewardXP(player, Skills.FLETCHING, kebbit.experience)
                             sendMessage(player, "You fletch 6 ${getItemName(kebbit.product).lowercase()}s.")
                         }
 
-                        remaining--
+                        remaining -= batch
                         delayScript(player, 2)
                         true
                     }
                 }
             }
+
             return@onUseWith true
         }
 
@@ -692,57 +620,45 @@ class FletchingListener : InteractionListener {
 
         onUseWith(IntType.ITEM, Items.BARB_BOLTTIPS_47, Items.BRONZE_BOLTS_877) { player, used, with ->
             if (!clockReady(player, Clocks.SKILLING)) return@onUseWith true
-            fun getMaxAmount(): Int {
-                val tips = amountInInventory(player, used.id)
-                val bolts = amountInInventory(player, with.id)
-                return min(tips, bolts)
-            }
+            val handler = object : SkillDialogueHandler(player, SkillDialogue.MAKE_SET_ONE_OPTION, Item(Items.BARBED_BOLTS_881)) {
 
-            sendSkillDialogue(player) {
-                withItems(Items.BARBED_BOLTS_881)
+                fun getMaxAmount(): Int {
+                    return min(amountInInventory(player, used.id), amountInInventory(player, with.id))
+                }
 
-                create { _, amount ->
+                override fun create(amount: Int, index: Int) {
                     var remaining = amount
+
                     queueScript(player, 0, QueueStrength.WEAK) {
-                        if (remaining <= 0 || freeSlots(player) == 0) return@queueScript false
-                        if (getStatLevel(player, Skills.FLETCHING) < 51) {
-                            sendMessage(player, "You need a fletching level of 51 to do this.")
-                            return@queueScript stopExecuting(player)
-                        }
-                        if (freeSlots(player) == 0) {
-                            sendDialogue(player, "You do not have enough inventory space.")
-                            return@queueScript stopExecuting(player)
-                        }
-                        if (!inInventory(player, used.id) || !inInventory(player, with.id)) {
-                            sendDialogue(player, "You don't have required items in your inventory.")
-                            return@queueScript stopExecuting(player)
-                        }
-
                         val currentAmount = min(10, getMaxAmount())
-                        if (currentAmount <= 0) return@queueScript false
-
-                        if (
-                            removeItem(player, Item(used.id, currentAmount)) &&
-                            removeItem(player, Item(with.id, currentAmount))
-                        ) {
-                            addItem(player, Items.BARBED_BOLTS_881, currentAmount)
-                            rewardXP(player, Skills.FLETCHING, 9.5)
-                            sendMessage(player, "You attach $currentAmount barbed tips to the bronze bolts.")
+                        if (currentAmount <= 0) return@queueScript stopExecuting(player)
+                        if (getStatLevel(player, Skills.FLETCHING) < 51) {
+                            sendMessage(player, "You need a Fletching level of 51 to do this.")
+                            return@queueScript stopExecuting(player)
                         }
 
-                        remaining--
+                        val realBatch = min(currentAmount, remaining)
+                        if (removeItem(player, Item(used.id, realBatch)) && removeItem(player, Item(with.id, realBatch))) {
+                            addItem(player, Items.BARBED_BOLTS_881, realBatch)
+                            rewardXP(player, Skills.FLETCHING, 9.5 * realBatch)
+                            sendMessage(player, "You attach $realBatch barbed tips to the bronze bolts.")
+                            remaining -= realBatch
+                        }
+
                         if (remaining > 0) {
+                            setCurrentScriptState(player, 0)
                             delayScript(player, 2)
-                            true
                         } else {
-                            false
+                            stopExecuting(player)
                         }
                     }
                 }
 
-                calculateMaxAmount { getMaxAmount() }
+                override fun getAll(index: Int): Int = getMaxAmount()
             }
 
+            val maxAmount = handler.getAll(0)
+            if (maxAmount <= 1) handler.create(maxAmount, 0) else handler.open()
             return@onUseWith true
         }
 
@@ -750,55 +666,134 @@ class FletchingListener : InteractionListener {
          * Handles attaching the ogre arrow shafts and feathers to create flighted ogre arrows.
          */
 
-        onUseWith(IntType.ITEM, Items.OGRE_ARROW_SHAFT_2864, *Fletching.featherIds) { player, used, with ->
+        onUseWith(IntType.ITEM, Fletching.OGRE_ARROW_SHAFT, *Fletching.FEATHER_IDS) { player, used, _ ->
             if (!clockReady(player, Clocks.SKILLING)) return@onUseWith true
+            val handler = object : SkillDialogueHandler(player, SkillDialogue.MAKE_SET_ONE_OPTION, Item(Fletching.FLIGHTED_OGRE_ARROW)) {
 
-            fun getMaxAmount(): Int {
-                val tips = amountInInventory(player, Items.OGRE_ARROW_SHAFT_2864)
-                val feathers = Fletching.featherIds.sumOf { amountInInventory(player, it) }
-                return min(tips, feathers)
-            }
+                fun getMaxAmount(): Int {
+                    val shafts = amountInInventory(player, used.id)
+                    val feathers = Fletching.FEATHER_IDS.sumOf { amountInInventory(player, it) }
+                    return min(shafts, feathers)
+                }
 
-            sendSkillDialogue(player) {
-                withItems(Fletching.FLIGHTED_OGRE_ARROW)
-
-                create { _, amount ->
+                override fun create(amount: Int, index: Int) {
                     var remaining = amount
+
                     queueScript(player, 0, QueueStrength.WEAK) {
-                        if (remaining <= 0 || freeSlots(player) == 0) return@queueScript stopExecuting(player)
+                        if (remaining <= 0) return@queueScript stopExecuting(player)
                         if (getStatLevel(player, Skills.FLETCHING) < 5) {
-                            sendDialogue(player, "You need a fletching level of 5 to do this.")
+                            sendDialogue(player, "You need a Fletching level of 5 to do this.")
                             return@queueScript stopExecuting(player)
                         }
-                        if (freeSlots(player) == 0) {
-                            sendDialogue(player, "You do not have enough inventory space.")
+                        if (!inInventory(player, Fletching.OGRE_ARROW_SHAFT)) {
+                            sendMessage(player, "You don't have any ogre arrow shafts.")
                             return@queueScript stopExecuting(player)
                         }
+                        if (!anyInInventory(player, *Fletching.FEATHER_IDS)) {
+                            sendMessage(player, "You don't have any feathers.")
+                            return@queueScript stopExecuting(player)
+                        }
+                        val batch = min(4, getMaxAmount())
+                        val realBatch = min(batch, remaining)
+                        if (realBatch <= 0) return@queueScript stopExecuting(player)
 
-                        val currentAmount = min(4, getMaxAmount())
-                        if (currentAmount <= 0) return@queueScript stopExecuting(player)
+                        val featherId = Fletching.FEATHER_IDS.firstOrNull { amountInInventory(player, it) > 0 }
+                            ?: return@queueScript stopExecuting(player)
 
-                        if (
-                            removeItem(player, Item(used.id, currentAmount)) &&
-                            removeItem(player, Item(with.id, currentAmount))
+                        if (removeItem(player, Item(used.id, realBatch)) &&
+                            removeItem(player, Item(featherId, realBatch))
                         ) {
-                            addItem(player, Fletching.FLIGHTED_OGRE_ARROW, currentAmount)
-                            rewardXP(player, Skills.FLETCHING, 5.4)
-                            sendMessage(player, "You attach $currentAmount feathers to the ogre arrow shafts.")
+                            addItem(player, Fletching.FLIGHTED_OGRE_ARROW, realBatch)
+                            rewardXP(player, Skills.FLETCHING, 5.4 * realBatch)
+                            sendMessage(player, "You attach $realBatch feathers to the ogre arrow shafts.")
+                            remaining -= realBatch
                         }
 
-                        remaining--
                         if (remaining > 0) {
+                            setCurrentScriptState(player, 0)
                             delayScript(player, 2)
-                            true
                         } else {
-                            false
+                            stopExecuting(player)
                         }
                     }
                 }
 
-                calculateMaxAmount { getMaxAmount() }
+                override fun getAll(index: Int): Int = getMaxAmount()
             }
+
+            val maxAmount = handler.getAll(0)
+            if (maxAmount <= 1) handler.create(maxAmount, 0) else handler.open()
+            return@onUseWith true
+        }
+
+        /*
+         * Handles attaching wolfbone arrow tips to flighted ogre arrows to create ogre arrows.
+         */
+
+        onUseWith(IntType.ITEM, Fletching.WOLFBONE_ARROWTIP, Fletching.FLIGHTED_OGRE_ARROW) { player, used, with ->
+            if (!clockReady(player, Clocks.SKILLING)) return@onUseWith true
+
+            val handler = object : SkillDialogueHandler(player, SkillDialogue.MAKE_SET_ONE_OPTION, Item(Items.OGRE_ARROW_2866, 5)) {
+
+                fun getMaxAmount(): Int {
+                    return min(
+                        amountInInventory(player, used.id),
+                        amountInInventory(player, with.id)
+                    )
+                }
+
+                override fun create(amount: Int, index: Int) {
+                    var remaining = amount
+
+                    queueScript(player, 0, QueueStrength.WEAK) { stage ->
+                        if (remaining <= 0 || !clockReady(player, Clocks.SKILLING)) return@queueScript stopExecuting(player)
+                        if (getStatLevel(player, Skills.FLETCHING) < 5) {
+                            sendDialogue(player, "You need a Fletching level of 5 to do this.")
+                            return@queueScript stopExecuting(player)
+                        }
+
+                        val maxAvailable = getMaxAmount()
+                        if (maxAvailable <= 0) {
+                            sendMessage(player, "You do not have enough materials to make ogre arrows.")
+                            return@queueScript stopExecuting(player)
+                        }
+
+                        when (stage) {
+                            0 -> {
+                                delayClock(player, Clocks.SKILLING, 2)
+                                delayScript(player, 2)
+                            }
+                            else -> {
+                                val batch = min(6, maxAvailable)
+                                if (batch <= 0) return@queueScript stopExecuting(player)
+
+                                val tipItem = Item(used.id, batch)
+                                val flightedArrowItem = Item(with.id, batch)
+
+                                if (removeItem(player, tipItem) && removeItem(player, flightedArrowItem)) {
+                                    addItem(player, Fletching.OGRE_ARROW, batch)
+                                    rewardXP(player, Skills.FLETCHING, 6.0 * batch)
+                                    sendMessage(player, "You make $batch ogre arrows.")
+                                }
+
+                                remaining -= batch
+
+                                if (remaining > 0) {
+                                    setCurrentScriptState(player, 0)
+                                    delayScript(player, 2)
+                                } else {
+                                    stopExecuting(player)
+                                }
+                            }
+                        }
+                    }
+                }
+
+                override fun getAll(index: Int): Int = getMaxAmount()
+            }
+
+            val maxAmount = handler.getAll(0)
+            if (maxAmount <= 1) handler.create(1, 0) else handler.open()
 
             return@onUseWith true
         }
@@ -807,81 +802,206 @@ class FletchingListener : InteractionListener {
          * Handles attaching nails to arrow shafts to create brutal arrows.
          */
 
-        onUseWith(IntType.ITEM, Fletching.FLIGHTED_OGRE_ARROW, *Fletching.nailIds) { player, _, with ->
+        onUseWith(IntType.ITEM, Fletching.FLIGHTED_OGRE_ARROW, *Fletching.NAIL_IDS) { player, _, with ->
             if (!clockReady(player, Clocks.SKILLING)) return@onUseWith true
             val brutalArrow = BrutalArrow.product[with.id] ?: return@onUseWith true
             val baseId = Items.FLIGHTED_OGRE_ARROW_2865
             val nailId = with.id
-            val maxAmount = min(amountInInventory(player, baseId), amountInInventory(player, nailId))
 
-            if (!inInventory(player, Items.HAMMER_2347)) {
-                sendMessage(player, "You need a hammer to attach nails to these arrows.")
-                return@onUseWith true
-            }
+            val handler = object : SkillDialogueHandler(player, SkillDialogue.MAKE_SET_ONE_OPTION, Item(brutalArrow.product)) {
 
-            if (!hasSpaceFor(player, Item(brutalArrow.product))) {
-                sendDialogue(player, "You do not have enough inventory space.")
-                return@onUseWith true
-            }
+                fun getMaxAmount(): Int {
+                    return min(amountInInventory(player, baseId), amountInInventory(player, nailId))
+                }
 
-            sendSkillDialogue(player) {
-                withItems(brutalArrow.product)
-
-                create { _, amount ->
+                override fun create(amount: Int, index: Int) {
                     var remaining = amount
 
                     queueScript(player, 0, QueueStrength.WEAK) {
-                        if (remaining <= 0 || freeSlots(player) == 0) return@queueScript false
+                        if (remaining <= 0 || freeSlots(player) == 0) return@queueScript stopExecuting(player)
                         if (getStatLevel(player, Skills.FLETCHING) < brutalArrow.level) {
-                            sendDialogue(player, "You need a fletching level of ${brutalArrow.level} to do this.")
+                            sendDialogue(player, "You need a Fletching level of ${brutalArrow.level} to do this.")
+                            return@queueScript stopExecuting(player)
+                        }
+                        if (!hasSpaceFor(player, Item(brutalArrow.product))) {
+                            sendDialogue(player, "You do not have enough inventory space.")
+                            return@queueScript stopExecuting(player)
+                        }
+                        if (!inInventory(player, Items.HAMMER_2347)) {
+                            sendMessage(player, "You need a hammer to attach nails to these arrows.")
                             return@queueScript stopExecuting(player)
                         }
 
-                        val baseAmount = min(6, amountInInventory(player, baseId))
-                        val nailAmount = min(6, amountInInventory(player, nailId))
-                        val batchAmount = min(baseAmount, nailAmount)
+                        val batchAmount = min(6, getMaxAmount())
+                        if (batchAmount <= 0) return@queueScript stopExecuting(player)
 
                         val baseItem = Item(baseId, batchAmount)
                         val nailItem = Item(nailId, batchAmount)
-                        val productItem = Item(brutalArrow.product, batchAmount)
 
                         if (removeItem(player, baseItem) && removeItem(player, nailItem)) {
-                            addItem(player, productItem.id)
+                            addItem(player, brutalArrow.product, batchAmount)
                             rewardXP(player, Skills.FLETCHING, brutalArrow.experience * batchAmount)
-                            val message = if (batchAmount == 1) {
-                                "You attach the ${getItemName(nailId).lowercase()} to the flighted ogre arrow."
-                            } else {
-                                "You fletch $batchAmount ${getItemName(brutalArrow.product).lowercase()} arrows."
-                            }
-
+                            val message =
+                                if (batchAmount == 1) "You attach the ${getItemName(nailId).lowercase()} to the flighted ogre arrow."
+                                else "You fletch $batchAmount ${getItemName(brutalArrow.product).lowercase()} arrows."
                             sendMessage(player, message)
                         }
 
                         remaining -= batchAmount
+                        if (remaining <= 0) return@queueScript stopExecuting(player)
                         delayScript(player, 2)
-                        true
                     }
                 }
 
-                calculateMaxAmount { maxAmount }
+                override fun getAll(index: Int): Int = getMaxAmount()
             }
 
+            val maxAmount = handler.getAll(0)
+            if (maxAmount <= 1) handler.create(1, 0) else handler.open()
             return@onUseWith true
         }
-    }
 
-    companion object {
-        val FLETCH_LOGS =
-            intArrayOf(
-                Items.LOGS_1511,
-                Items.OAK_LOGS_1521,
-                Items.WILLOW_LOGS_1519,
-                Items.MAPLE_LOGS_1517,
-                Items.YEW_LOGS_1515,
-                Items.MAGIC_LOGS_1513,
-                Items.ACHEY_TREE_LOGS_2862,
-                Items.MAHOGANY_LOGS_6332,
-                Items.TEAK_LOGS_6333
-            )
+        /*
+         * Handles attaching feathers to darts to create darts.
+         */
+
+        onUseWith(IntType.ITEM, Fletching.FEATHER_IDS, *Fletching.UNF_DARTS) { player, used, with ->
+            if (!clockReady(player, Clocks.SKILLING)) return@onUseWith true
+            val dart = Dart.product[used.id] ?: Dart.product[with.id] ?: return@onUseWith true
+
+            val handler = object : SkillDialogueHandler(player, SkillDialogue.MAKE_SET_ONE_OPTION, Item(dart.finished)) {
+
+                fun getMaxAmount(): Int {
+                    return min(amountInInventory(player, dart.unfinished), Fletching.getFeatherAmount(player))
+                }
+
+                override fun create(amount: Int, index: Int) {
+                    var remaining = amount
+
+                    queueScript(player, 0, QueueStrength.WEAK) {
+                        if (remaining <= 0) return@queueScript stopExecuting(player)
+                        if (getStatLevel(player, Skills.FLETCHING) < dart.level) {
+                            sendDialogue(player, "You need a Fletching level of ${dart.level} to do this.")
+                            return@queueScript stopExecuting(player)
+                        }
+                        if (!isQuestComplete(player, Quests.THE_TOURIST_TRAP)) {
+                            sendDialogue(player, "You need to have completed Tourist Trap to fletch darts.")
+                            return@queueScript stopExecuting(player)
+                        }
+                        if (!anyInInventory(player, *Fletching.UNF_DARTS)) {
+                            sendMessage(player, "You don't have any darts.")
+                            return@queueScript stopExecuting(player)
+                        }
+                        if (!anyInInventory(player, *Fletching.FEATHER_IDS)) {
+                            sendMessage(player, "You don't have any feathers.")
+                            return@queueScript stopExecuting(player)
+                        }
+
+                        val unfinishedAmount = amountInInventory(player, dart.unfinished)
+                        val featherAmount = Fletching.getFeatherAmount(player)
+                        val batch = min(10, min(unfinishedAmount, featherAmount))
+                        val realBatch = min(batch, remaining)
+                        if (realBatch <= 0) return@queueScript stopExecuting(player)
+
+                        var toRemove = realBatch
+                        for (id in Fletching.getFeatherPriorityOrder()) {
+                            if (toRemove <= 0) break
+                            val have = amountInInventory(player, id)
+                            if (have > 0) {
+                                val removeCount = min(have, toRemove)
+                                removeItem(player, Item(id, removeCount))
+                                toRemove -= removeCount
+                            }
+                        }
+
+                        if (removeItem(player, Item(dart.unfinished, realBatch))) {
+                            addItem(player, dart.finished, realBatch)
+                            rewardXP(player, Skills.FLETCHING, dart.experience * realBatch)
+                        }
+
+                        remaining -= realBatch
+                        if (remaining <= 0 || Fletching.getFeatherAmount(player) <= 0 || amountInInventory(player, dart.unfinished) <= 0)
+                            return@queueScript stopExecuting(player)
+
+                        delayScript(player, 1)
+                    }
+                }
+
+                override fun getAll(index: Int): Int = getMaxAmount()
+            }
+
+            val maxAmount = handler.getAll(0)
+            if (maxAmount <= 1) handler.create(maxAmount, 0) else handler.open()
+            return@onUseWith true
+        }
+
+        /*
+         * Handles attaching feathers to bolts to create bolts.
+         */
+
+        onUseWith(IntType.ITEM, Fletching.UNF_BOLTS, *Fletching.FEATHER_IDS) { player, used, with ->
+            if (!clockReady(player, Clocks.SKILLING)) return@onUseWith true
+            val bolt = Bolt.product[used.id] ?: Bolt.product[with.id] ?: return@onUseWith true
+            val featherId = if (used.id in Fletching.FEATHER_IDS) used.id else with.id
+
+            val handler = object : SkillDialogueHandler(player, SkillDialogue.MAKE_SET_ONE_OPTION, Item(bolt.finished)) {
+
+                fun getMaxAmount(): Int {
+                    return min(amountInInventory(player, bolt.unfinished), amountInInventory(player, featherId))
+                }
+
+                override fun create(amount: Int, index: Int) {
+                    var remaining = amount
+
+                    queueScript(player, 0, QueueStrength.WEAK) {
+                        if (remaining <= 0) return@queueScript stopExecuting(player)
+                        if (bolt.unfinished == Items.BROAD_BOLTS_UNF_13279 && !getInstance(player).flags.isBroadsUnlocked()) {
+                            sendDialogue(player, "You need to unlock the ability to create broad bolts.")
+                            return@queueScript stopExecuting(player)
+                        }
+                        if (getStatLevel(player, Skills.FLETCHING) < bolt.level) {
+                            sendDialogue(player, "You need a Fletching level of ${bolt.level} or above to do that.")
+                            return@queueScript stopExecuting(player)
+                        }
+                        if (!anyInInventory(player, *Fletching.UNF_BOLTS)) {
+                            sendMessage(player, "You don't have any bolts.")
+                            return@queueScript stopExecuting(player)
+                        }
+                        if (!anyInInventory(player, *Fletching.FEATHER_IDS)) {
+                            sendMessage(player, "You don't have any feathers.")
+                            return@queueScript stopExecuting(player)
+                        }
+                        if (!hasSpaceFor(player, Item(bolt.finished))) {
+                            sendDialogue(player, "You do not have enough inventory space.")
+                            return@queueScript stopExecuting(player)
+                        }
+
+                        val baseAmount = amountInInventory(player, bolt.unfinished)
+                        val tipAmount = amountInInventory(player, featherId)
+                        val batchAmount = min(10, min(baseAmount, tipAmount))
+                        val realBatch = min(batchAmount, remaining)
+                        if (realBatch <= 0) return@queueScript stopExecuting(player)
+
+                        if (removeItem(player, Item(bolt.unfinished, realBatch)) && removeItem(player, Item(featherId, realBatch))) {
+                            addItem(player, bolt.finished, realBatch)
+                            rewardXP(player, Skills.FLETCHING, bolt.experience * realBatch)
+                            sendMessage(player, if (realBatch == 1) "You attach the tip to the bolt." else "You fletch $realBatch bolts.")
+                        }
+
+                        remaining -= realBatch
+                        if (remaining <= 0 || amountInInventory(player, bolt.unfinished) <= 0 || amountInInventory(player, featherId) <= 0)
+                            return@queueScript stopExecuting(player)
+
+                        delayScript(player, 2)
+                    }
+                }
+
+                override fun getAll(index: Int): Int = getMaxAmount()
+            }
+
+            val maxAmount = handler.getAll(0)
+            if (maxAmount <= 1) handler.create(1, 0) else handler.open()
+            return@onUseWith true
+        }
     }
 }

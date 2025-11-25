@@ -24,7 +24,7 @@ open class SkillDialogueHandler(
     val type: SkillDialogue?,
     vararg data: Any,
 ) {
-    val data: Array<out Any>
+    val data: Array<Any>
 
     /**
      * Opens the skill dialogue interface for the player.
@@ -51,10 +51,7 @@ open class SkillDialogueHandler(
      * @param amount The amount of the item to interact with.
      * @param index The index of the item to be interacted with.
      */
-    open fun create(
-        amount: Int,
-        index: Int,
-    ) {
+    open fun create(amount: Int, index: Int) {
 
     }
 
@@ -81,11 +78,7 @@ open class SkillDialogueHandler(
      * @param baseButton The base button ID for the options in the dialogue.
      * @param length The number of options available in the dialogue.
      */
-    enum class SkillDialogue(
-        val interfaceId: Int,
-        private val baseButton: Int,
-        private val length: Int,
-    ) {
+    enum class SkillDialogue(val interfaceId: Int, private val baseButton: Int, private val length: Int) {
         /**
          * A one-option skill dialogue with an item.
          */
@@ -178,9 +171,9 @@ open class SkillDialogueHandler(
                     repositionChild(player, Components.SKILL_MAKE_303, 1, 431, 15)
 
                     if (i == 0) {
-                        sendString(player, "<br><br><br><br><br>" + handler.getName(item), 303, 7)
+                        sendString(player, "<br><br><br><br><br>" + handler.getName(item), Components.SKILL_MAKE_303, 7)
                     } else if (i == 1) {
-                        sendString(player, "<br><br><br><br><br>" + handler.getName(item), 303, 11)
+                        sendString(player, "<br><br><br><br><br>" + handler.getName(item), Components.SKILL_MAKE_303, 11)
                     }
 
                     player.packetDispatch.sendItemZoomOnInterface(item.id, 180, Components.SKILL_MAKE_303, 2 + i)
@@ -355,6 +348,6 @@ open class SkillDialogueHandler(
     }
 
     init {
-        this.data = data
+        this.data = data as Array<Any>
     }
 }

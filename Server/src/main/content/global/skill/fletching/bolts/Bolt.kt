@@ -19,13 +19,5 @@ enum class Bolt(val unfinished: Int, val finished: Int, val level: Int, val expe
 
     companion object {
         val product = enumValues<Bolt>().associateBy { it.unfinished }
-
-        /**
-         * Checks if the given item id matches an unfinished bolt.
-         *
-         * @param id The item id to check.
-         * @return `true` if the item id matches a bolt, otherwise `false`.
-         */
-        fun isBolt(id: Int): Boolean = product.containsKey(id)
     }
 }
