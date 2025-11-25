@@ -2,18 +2,14 @@ package content.region.misthalin.lumbridge.quest.tog.plugin
 
 import content.region.misthalin.lumbridge.quest.tog.npc.LightCreatureBehavior
 import core.api.*
+import core.game.dialogue.FaceAnim
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import core.game.node.entity.impl.ForceMovement
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.world.map.Direction
 import core.game.world.map.Location
-import core.game.world.update.flag.context.Animation
-import shared.consts.Items
-import shared.consts.NPCs
-import shared.consts.Quests
-import shared.consts.Scenery
+import shared.consts.*
 
 class TearsOfGuthixListener : InteractionListener {
 
@@ -23,7 +19,7 @@ class TearsOfGuthixListener : InteractionListener {
          * Handles quest dialogue with Juna NPC.
          */
 
-        on(Scenery.JUNA_31302, SCENERY, "talk-to") { player, node ->
+        on(Scenery.JUNA_31302, IntType.SCENERY, "talk-to") { player, node ->
             openDialogue(player, NPCs.JUNA_2023, node.location)
             return@on true
         }
@@ -32,48 +28,44 @@ class TearsOfGuthixListener : InteractionListener {
          * Handles talk with Juna NPC after quest.
          */
 
-        on(Scenery.JUNA_31303, SCENERY, "talk-to", "tell-story") { player, node ->
+        on(Scenery.JUNA_31303, IntType.SCENERY, "talk-to", "tell-story") { player, node ->
             openDialogue(player, NPCs.JUNA_2023, node.location)
             return@on true
         }
 
-        on(Scenery.ROCKS_6673, SCENERY, "climb") { player, _ ->
-            val dx = if (player.location.x > 3240) -2 else 2
-            val destination = Location.create(player.location).transform(dx, 0, 0)
+        /*
+         * Handles using the magic stone on Juna.
+         */
 
-            ForceMovement.run(
-                player,
-                player.location,
-                destination,
-                Animation(1148),
-                Animation(1148),
-                Direction.WEST,
-                13
-            ).endAnimation = Animation.RESET
-
-            return@on true
+        onUseWith(IntType.SCENERY,  Items.MAGIC_STONE_4703, Scenery.JUNA_31303, Scenery.JUNA_31302) { player, _, _ ->
+            sendNPCDialogue(player, NPCs.JUNA_2023, "Perhaps you should use it with a chisel, rather than with my face.", FaceAnim.OLD_NORMAL)
+            return@onUseWith true
         }
 
-        on(Scenery.ROCKS_6672, SCENERY, "climb") { player, _ ->
-            if (player.location.x > 3239) {
-                sendMessage(player, "You could climb down here, but it is too uneven to climb up.")
-            } else {
-                val destination = Location.create(player.location).transform(2, 0, 0)
-                ForceMovement.run(
-                    player,
-                    player.location,
-                    destination,
-                    Animation(1148),
-                    Animation(1148),
-                    Direction.WEST,
-                    13
-                ).endAnimation = Animation.RESET
+        on(Scenery.ROCKS_6673, IntType.SCENERY, "climb") { player, _ ->
+            val dx = if (player.location.x > 3240) -2 else 2
+            val destination = Location.create(player.location).transform(dx, 0, 0)
+            forceMove(player, player.location, destination, 30, 90, Direction.WEST, Animations.WALK_BACKWARDS_CLIMB_1148) {
+                resetAnimator(player)
                 sendMessage(player, "You leap across with a mighty leap!")
             }
             return@on true
         }
 
-        onUseWith(ITEM, Items.CHISEL_1755, Items.MAGIC_STONE_4703) { player, _, with ->
+        on(Scenery.ROCKS_6672, IntType.SCENERY, "climb") { player, _ ->
+            if (player.location.x > 3239) {
+                sendMessage(player, "You could climb down here, but it is too uneven to climb up.")
+            } else {
+                val destination = Location.create(player.location).transform(2, 0, 0)
+                forceMove(player, player.location, destination, 30, 90, Direction.WEST, Animations.WALK_BACKWARDS_CLIMB_1148) {
+                    resetAnimator(player)
+                    sendMessage(player, "You leap across with a mighty leap!")
+                }
+            }
+            return@on true
+        }
+
+        onUseWith(IntType.ITEM, Items.CHISEL_1755, Items.MAGIC_STONE_4703) { player, _, with ->
             if (removeItem(player, with.asItem())) {
                 sendMessage(player, "You make a stone bowl.")
                 addItemOrDrop(player, Items.STONE_BOWL_4704)
@@ -81,7 +73,7 @@ class TearsOfGuthixListener : InteractionListener {
             return@onUseWith true
         }
 
-        onUseWith(NPC, Items.SAPPHIRE_LANTERN_4702, NPCs.LIGHT_CREATURE_2021) { player, _, npc ->
+        onUseWith(IntType.NPC, Items.SAPPHIRE_LANTERN_4702, NPCs.LIGHT_CREATURE_2021) { player, _, npc ->
             val target = npc as NPC
 
             if (!hasRequirement(player, Quests.WHILE_GUTHIX_SLEEPS)) {
