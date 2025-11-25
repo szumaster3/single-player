@@ -150,6 +150,12 @@
     "tabIndex": "-1"
   },
   {
+    "id": "97",
+    "interfaceType": "1",
+    "walkable": "true",
+    "tabIndex": "-1"
+  },
+  {
     "id": "98",
     "interfaceType": "1",
     "walkable": "true",

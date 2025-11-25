@@ -24,6 +24,7 @@ class LumbridgeCellarPlugin : OptionHandler() {
         SceneryDefinition.forId(6898).handlers["option:squeeze-through"] = this
         SceneryDefinition.forId(6905).handlers["option:squeeze-through"] = this
         SceneryDefinition.forId(6912).handlers["option:squeeze-through"] = this
+        SceneryDefinition.forId(5948).handlers["option:jump-across"] = this
         SceneryDefinition.forId(5949).handlers["option:jump-across"] = this
         SceneryDefinition.forId(6658).handlers["option:enter"] = this
         SceneryDefinition.forId(32944).handlers["option:enter"] = this
@@ -37,137 +38,130 @@ class LumbridgeCellarPlugin : OptionHandler() {
         return this
     }
 
-    override fun handle(
-        player: Player,
-        node: Node,
-        option: String,
-    ): Boolean {
+    override fun handle(player: Player, node: Node, option: String): Boolean {
         when (option) {
+
             "squeeze-through" -> {
-                var dir: Direction? = null
-                var to: Location? = null
+                val targetLocation: Location
+                val direction: Direction
+
                 when (node.id) {
                     6912 -> {
-                        to =
-                            if (node.location.y == 9603) {
-                                Location.create(3224, 9601, 0)
-                            } else {
-                                Location.create(
-                                    3224,
-                                    9603,
-                                    0,
-                                )
-                            }
-                        dir = if (node.location.y == 9603) Direction.SOUTH else Direction.NORTH
+                        if (node.location.y == 9603) {
+                            targetLocation = Location.create(3224, 9601, 0)
+                            direction = Direction.SOUTH
+                        } else {
+                            targetLocation = Location.create(3224, 9603, 0)
+                            direction = Direction.NORTH
+                        }
                     }
 
                     else -> {
-                        to =
-                            if (player.location.x >= 3221) {
-                                Location.create(3219, 9618, 0)
-                            } else {
-                                Location.create(
-                                    3222,
-                                    9618,
-                                    0,
-                                )
-                            }
-                        dir = if (player.location.x >= 3221) Direction.WEST else Direction.EAST
+                        if (player.location.x >= 3221) {
+                            targetLocation = Location.create(3219, 9618, 0)
+                            direction = Direction.WEST
+                        } else {
+                            targetLocation = Location.create(3222, 9618, 0)
+                            direction = Direction.EAST
+                        }
                     }
                 }
+
                 sendMessage(player, "You squeeze through the hole.")
-                ForceMovement.run(player, player.location, to, ANIMATION, ANIMATION, dir, 20).endAnimation =
-                    Animation.RESET
+                ForceMovement.run(player, player.location, targetLocation, ANIMATION, ANIMATION, direction, 20)
+                    .endAnimation = Animation.RESET
                 return true
             }
 
             "jump-across" -> {
-                var f: Location? = null
-                var s: Location? = null
+                val first: Location
+                val second: Location
+
                 when (node.id) {
                     5949 -> {
-                        f = Location.create(3221, 9554, 0)
-                        s =
-                            if (player.location.y >= 9556) {
-                                Location.create(3221, 9552, 0)
-                            } else {
-                                Location.create(
-                                    3221,
-                                    9556,
-                                    0,
-                                )
-                            }
+                        first = Location.create(3221, 9554, 0)
+                        second = if (player.location.y >= 9556) {
+                            Location.create(3221, 9552, 0)
+                        } else {
+                            Location.create(3221, 9556, 0)
+                        }
                     }
-                }
-                val first = f
-                val second = s
-                player.lock()
-                GameWorld.Pulser.submit(
-                    object : Pulse(2, player) {
-                        var counter: Int = 1
 
-                        override fun pulse(): Boolean {
-                            if (counter == 3) {
+                    5948 -> {
+                        first = Location.create(3206, 9572, 0)
+                        second = if (player.location.x >= 3208) {
+                            Location.create(3204, 9572, 0)
+                        } else {
+                            Location.create(3208, 9572, 0)
+                        }
+                    }
+
+                    else -> return true
+                }
+
+                player.lock()
+                GameWorld.Pulser.submit(object : Pulse(2, player) {
+                    var counter = 1
+
+                    override fun pulse(): Boolean {
+                        when (counter) {
+                            1 -> ForceMovement.run(player, player.location, first, JUMP_ANIMATION, 20)
+                            3 -> {
                                 player.unlock()
                                 ForceMovement.run(player, player.location, second, JUMP_ANIMATION, 20)
                                 sendMessage(player, "You leap across with a mighty leap!")
                                 return true
-                            } else if (counter == 1) {
-                                ForceMovement.run(player, player.location, first, JUMP_ANIMATION, 20)
                             }
-                            counter++
-                            return false
                         }
-                    },
-                )
+                        counter++
+                        return false
+                    }
+                })
             }
 
-            "enter" ->
+            "enter" -> {
                 when (node.id) {
-                    32944 ->
-
-                        player.teleport(Location.create(3219, 9532, 2))
-
-                    6658 ->
-
-                        player.teleport(Location.create(3226, 9542, 0))
+                    32944 -> player.teleport(Location.create(3219, 9532, 2))
+                    6658  -> player.teleport(Location.create(3226, 9542, 0))
                 }
+            }
 
-            "climb-up" ->
+            "climb-up" -> {
                 when (node.id) {
-                    40261 -> player.teleport(player.location.transform(0, -1, 1))
+                    40261,
                     40262 -> player.teleport(player.location.transform(0, -1, 1))
                 }
+            }
 
-            "jump-down" ->
-                when (node.id) {
-                    40849 -> player.teleport(player.location.transform(0, 1, -1))
-                }
+            "jump-down" -> {
+                if (node.id == 40849) player.teleport(player.location.transform(0, 1, -1))
+            }
 
-            "climb-through" ->
-                when (node.id) {
-                    40260 -> player.teleport(Location.create(2525, 5810, 0))
-                }
+            "climb-through" -> {
+                if (node.id == 40260) player.teleport(Location.create(2525, 5810, 0))
+            }
 
-            "crawl-through" ->
-                when (node.id) {
-                    41077 -> player.teleport(Location.create(2527, 5830, 2))
-                }
+            "crawl-through" -> {
+                if (node.id == 41077) player.teleport(Location.create(2527, 5830, 2))
+            }
         }
+
         return true
     }
 
-    override fun getDestination(
-        node: Node,
-        n: Node,
-    ): Location? {
+    override fun getDestination(node: Node, n: Node): Location? {
         if (n is Scenery) {
-            if (n.getId() == 5949) {
-                return if (node.location.y >= 9555) Location.create(3221, 9556, 0) else Location.create(3221, 9552, 0)
-            } else if (n.getId() == 40262) {
-                return n.getLocation().transform(0, 1, 0)
-            } else if (n.getId() == 40261) {
-                return n.getLocation().transform(0, 1, 0)
+            return when (n.getId()) {
+                5949 -> {
+                    if (node.location.y >= 9555) Location.create(3221, 9556, 0)
+                    else Location.create(3221, 9552, 0)
+                }
+                5948 -> {
+                    if (node.location.x >= 3208) Location.create(3208, 9572, 0)
+                    else Location.create(3204, 9572, 0)
+                }
+                40261, 40262 -> n.getLocation().transform(0, 1, 0)
+                else -> null
             }
         }
         return null
