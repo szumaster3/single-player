@@ -63,6 +63,12 @@ public final class PortalOptionPlugin extends OptionHandler {
         }
 
         /**
+         * The house location.
+         */
+        private HouseLocation location;
+
+
+        /**
          * Instantiates a new Portal dialogue.
          *
          * @param player the player
@@ -130,6 +136,10 @@ public final class PortalOptionPlugin extends OptionHandler {
                                 }
                                 if (p.getHouseManager().isLocked()) {
                                     player.getPacketDispatch().sendMessage("The other player has locked their house.");
+                                    return Unit.INSTANCE;
+                                }
+                                if (p.getHouseManager().getLocation() != location) {
+                                    player.sendMessage("That friend's house is not located here.");
                                     return Unit.INSTANCE;
                                 }
                                 player.getLocks().lockComponent(6);
