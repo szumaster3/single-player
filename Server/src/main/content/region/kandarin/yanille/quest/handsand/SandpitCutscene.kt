@@ -62,7 +62,6 @@ private class SandpitCutsceneEndDialogue : DialogueFile() {
         when(stage) {
             0 ->npcl(FaceAnim.HAPPY, "There, the sand pit will now magically refill. No more work for Bert!").also { stage++ }
             1 ->npcl(FaceAnim.FRIENDLY, "We must find the rest of Clarence, I've sent some wizards out to some of the sandpits, would you please check the Entrana sandpit?").also {
-                setQuestStage(player!!, Quests.THE_HAND_IN_THE_SAND, 12)
                 stage = END_DIALOGUE
             }
         }

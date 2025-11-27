@@ -675,6 +675,7 @@ class ZavisticRarveDialogues : DialogueFile() {
             181 -> {
                 end()
                 SandpitCutscene(player!!).start(true)
+                setQuestStage(player!!, Quests.THE_HAND_IN_THE_SAND, 12)
             }
             182 -> playerl(FaceAnim.HALF_GUILTY, "Not yet no. I've been running around like a headless chicken, but I'll get to it!").also { stage = END_DIALOGUE }
             183 -> npcl(FaceAnim.HAPPY, "Alas poor Clarence. I knew him, ${player!!.username}.").also { stage++ }
