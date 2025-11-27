@@ -1,15 +1,10 @@
 package content.region.misthalin.dig_site.dialogue
 
+import content.region.misthalin.varrock.museum.plugin.MuseumPlugin
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
-import core.game.global.action.DoorActionHandler.getEndLocation
-import core.game.global.action.DoorActionHandler.handleAutowalkDoor
 import core.game.node.entity.npc.NPC
-import core.game.world.map.Location
-import core.game.world.map.RegionManager.getObject
-import core.game.world.update.flag.context.Animation
 import core.tools.END_DIALOGUE
-import shared.consts.Animations
 import shared.consts.NPCs
 
 class GateGuardDialogue : DialogueFile() {
@@ -31,14 +26,7 @@ class GateGuardDialogue : DialogueFile() {
 
             3 -> {
                 end()
-                val doorLocation = Location(3261, 3446, 0)
-                val door = getObject(doorLocation)
-                if (getEndLocation(player!!, door!!).y > player!!.location.y) {
-                    Animation(Animations.HANDS_BEHIND_BACK_SIDEWAYS_DO_A_MOTION_6391)
-                } else {
-                    Animation(Animations.HANDS_BEHIND_BACK_SIDEWAYS_DO_A_MOTION_6392)
-                }
-                handleAutowalkDoor(player!!, door)
+                MuseumPlugin.openMuseumGate(player!!)
             }
         }
     }

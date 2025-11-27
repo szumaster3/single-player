@@ -7,6 +7,7 @@ import core.tools.RandomFunction
 import shared.consts.NPCs
 
 private val guardsNPCs = intArrayOf(NPCs.MUSEUM_GUARD_5941, NPCs.MUSEUM_GUARD_5942, NPCs.MUSEUM_GUARD_5943)
+
 /**
  * Handles the Museum Guard NPC.
  */

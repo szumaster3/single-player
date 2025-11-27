@@ -451,4 +451,7 @@ internal object GameAttributes {
 
     // Varrock Museum.
     const val NATURAL_HISTORIAN_FIRST_TALK = "/save:varrock_museum:natural-historian-meet"
+    const val MUSEUM_FLOOR_MAP_ATTRIBUTE = "iface:527:floor"
+    const val MUSEUM_INTERFACE_534_MODEL = "iface:534:model"
+    const val MUSEUM_ARTIFACT_MODEL = "small$MUSEUM_INTERFACE_534_MODEL"
 }

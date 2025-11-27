@@ -7,6 +7,7 @@ import core.tools.RandomFunction
 import shared.consts.NPCs
 
 private val archelogistsNPCs = intArrayOf(NPCs.BARNABUS_HURMA_5932, NPCs.THIAS_LEACKE_5935, NPCs.MARIUS_GISTE_5933, NPCs.TINSE_TORPE_5937, NPCs.CADEN_AZRO_5934, NPCs.SINCO_DOAR_5936)
+
 /**
  * Handles the Museum Worker NPC.
  */
