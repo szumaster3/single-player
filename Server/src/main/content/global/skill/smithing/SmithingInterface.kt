@@ -1,6 +1,8 @@
 package content.global.skill.smithing
 
 import content.data.GameAttributes
+import content.global.skill.smithing.items.BarType
+import content.global.skill.smithing.items.Bars
 import core.api.getAttribute
 import core.api.sendInputDialogue
 import core.api.sendInterfaceConfig

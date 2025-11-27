@@ -1,6 +1,7 @@
 package content.global.skill.firemaking;
 
 import content.global.skill.firemaking.items.Log;
+import content.region.kandarin.baxtorian.BarbarianTraining;
 import core.api.Container;
 import core.game.event.LitFireEvent;
 import core.game.node.entity.player.Player;
@@ -14,27 +15,24 @@ import core.game.node.scenery.SceneryBuilder;
 import core.game.world.GameWorld;
 import core.game.world.map.RegionManager;
 import core.game.world.update.flag.context.Animation;
+import core.game.world.update.flag.context.Graphics;
 import core.tools.RandomFunction;
-import shared.consts.Animations;
 import shared.consts.Items;
 
-import static core.api.ContentAPIKt.inInventory;
-import static core.api.ContentAPIKt.replaceSlot;
+import static core.api.ContentAPIKt.*;
 
 /**
- * Represents making fire plugin.
+ * Represents making fire plugin (standard and barbarian firemaking).
  */
 public final class FireMakingPlugin extends SkillPulse<Item> {
 
-    private static final Animation ANIMATION = new Animation(Animations.HUMAN_LIGHT_FIRE_WITH_TINDERBOX_733);
-
-    private static final Item TINDERBOX = new Item(Items.TINDERBOX_590);
-
     private final Log fire;
-
-    private final GroundItem groundItem;
-
+    private GroundItem groundItem;
     private int ticks;
+
+    private final Animation animation;
+    private final Graphics graphics;
+    private final boolean barbarianMode;
 
     /**
      * Instantiates a new Firemaking pulse.
@@ -43,9 +41,13 @@ public final class FireMakingPlugin extends SkillPulse<Item> {
      * @param node       the node
      * @param groundItem the ground item
      */
-    public FireMakingPlugin(Player player, Item node, GroundItem groundItem) {
+    public FireMakingPlugin(Player player, Item node, GroundItem groundItem, Animation animation, Graphics graphics, boolean barbarianMode) {
         super(player, node);
         this.fire = Log.forId(node.getId());
+        this.animation = animation;
+        this.graphics = graphics;
+        this.barbarianMode = barbarianMode;
+
         if (groundItem == null) {
             this.groundItem = new GroundItem(node, player.getLocation(), player);
             player.setAttribute("remove-log", true);
@@ -64,44 +66,62 @@ public final class FireMakingPlugin extends SkillPulse<Item> {
      * @return the ash
      */
     public static GroundItem getAsh(final Player player, Log fire, final Scenery scenery) {
-        final GroundItem ash = new GroundItem(new Item(Items.ASHES_592), scenery.getLocation(), player);
+        GroundItem ash = new GroundItem(new Item(Items.ASHES_592), scenery.getLocation(), player);
         ash.setDecayTime(fire.getLife() + 200);
         return ash;
     }
 
     @Override
     public boolean checkRequirements() {
-        if (fire == null) {
-            return false;
+        if (fire == null) return false;
+
+
+        if (barbarianMode) {
+            if (!player.getSavedData().activityData.isBarbarianFiremakingBow() && getAttribute(player, BarbarianTraining.INSTANCE.getFM_START(), false)) {
+                sendDialogue(player, "You must begin the relevant section of Otto Godblessed's barbarian training.");
+                return false;
+            }
+        } else {
+            if (player.getIronmanManager().isIronman() && !groundItem.droppedBy(player)) {
+                player.getPacketDispatch().sendMessage("You can't do that as an Ironman.");
+                return false;
+            }
         }
-        if (player.getIronmanManager().isIronman() && !groundItem.droppedBy(player)) {
-            player.getPacketDispatch().sendMessage("You can't do that as an Ironman.");
-            return false;
-        }
+
         if (RegionManager.getObject(player.getLocation()) != null || player.getZoneMonitor().isInZone("bank")) {
             player.getPacketDispatch().sendMessage("You can't light a fire here.");
             return false;
         }
-        if (!player.getInventory().containsItem(TINDERBOX)) {
+
+        if (!inInventory(player, Items.TINDERBOX_590, 1) && !barbarianMode) {
             player.getPacketDispatch().sendMessage("You do not have the required items to light this.");
             return false;
         }
-        if (player.getSkills().getLevel(Skills.FIREMAKING) < fire.getDefaultLevel()) {
-            player.getPacketDispatch().sendMessage("You need a firemaking level of " + fire.getDefaultLevel() + " to light this log.");
+
+        int requiredLevel = barbarianMode ? fire.getBarbarianLevel() : fire.getDefaultLevel();
+        if (player.getSkills().getLevel(Skills.FIREMAKING) < requiredLevel) {
+            player.getPacketDispatch().sendMessage("You need a firemaking level of " + requiredLevel + " to light this log.");
             return false;
         }
+
         if (player.getAttribute("remove-log", false)) {
             player.removeAttribute("remove-log");
             if (inInventory(player, node.getId(), 1)) {
-                replaceSlot(player, node.getSlot(), new Item(node.getId(), (node.getAmount() - 1)), node, Container.INVENTORY);
+                replaceSlot(player, node.getSlot(), new Item(node.getId(), node.getAmount() - 1), node, Container.INVENTORY);
                 GroundItemManager.create(groundItem);
             }
         }
+
         return true;
+
+
     }
 
     @Override
     public void animate() {
+        if (ticks == 0 && barbarianMode) {
+            visualize(player, animation, graphics);
+        }
     }
 
     @Override
@@ -110,37 +130,30 @@ public final class FireMakingPlugin extends SkillPulse<Item> {
             createFire();
             return true;
         }
-        if (ticks == 0) {
-            player.animate(ANIMATION);
-        }
-        if (++ticks % 3 != 0) {
-            return false;
-        }
-        if (ticks % 12 == 0) {
-            player.animate(ANIMATION);
-        }
-        if (!success()) {
-            return false;
-        }
+
+
+        if (ticks == 0 && !barbarianMode) player.animate(animation);
+        if (++ticks % 3 != 0) return false;
+        if (ticks % 12 == 0 && !barbarianMode) player.animate(animation);
+
+        if (!success()) return false;
+
         createFire();
         return true;
+
+
     }
 
-    /**
-     * Create fire.
-     */
     public void createFire() {
-        if (!groundItem.isActive()) {
-            return;
-        }
-        final Scenery o = new Scenery(83, player.getLocation());
-        final Scenery object = RegionManager.getObject(o.getLocation());
-        final Scenery scenery = new Scenery(fire.getFireId(), player.getLocation());
+        if (!groundItem.isActive()) return;
+
+        Scenery o = new Scenery(83, player.getLocation());
+        Scenery object = RegionManager.getObject(o.getLocation());
+        Scenery scenery = new Scenery(fire.getFireId(), player.getLocation());
+
         SceneryBuilder.add(scenery, fire.getLife(), () -> {
             GroundItemManager.create(getAsh(player, fire, scenery));
-            if (object != null) {
-                SceneryBuilder.add(object);
-            }
+            if (object != null) SceneryBuilder.add(object);
         });
 
         GroundItemManager.destroy(groundItem);
@@ -150,6 +163,13 @@ public final class FireMakingPlugin extends SkillPulse<Item> {
 
         setLastFire();
         player.dispatch(new LitFireEvent(fire.getLogId()));
+
+        if (barbarianMode && getAttribute(player, BarbarianTraining.INSTANCE.getFM_BASE(), false)) {
+            removeAttribute(player, BarbarianTraining.INSTANCE.getFM_BASE());
+            player.getSavedData().activityData.setBarbarianFiremakingBow(true);
+            sendDialogueLines(player, "You feel you have learned more of barbarian ways. Otto might wish", "to talk to you more.");
+        }
+
     }
 
     @Override
@@ -183,9 +203,8 @@ public final class FireMakingPlugin extends SkillPulse<Item> {
 
     private boolean success() {
         int level = 1 + player.getSkills().getLevel(Skills.FIREMAKING);
-        double req = fire.getDefaultLevel();
+        double req = barbarianMode ? fire.getBarbarianLevel() : fire.getDefaultLevel();
         double successChance = Math.ceil((level * 50 - req * 15) / req / 3 * 4);
-        int roll = RandomFunction.random(99);
-        return successChance >= roll;
+        return successChance >= RandomFunction.random(99);
     }
 }

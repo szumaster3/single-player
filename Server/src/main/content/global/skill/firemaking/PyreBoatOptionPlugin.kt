@@ -1,8 +1,8 @@
-package content.region.kandarin.baxtorian.plugin.barbarian_training
+package content.global.skill.firemaking
 
 import content.data.skill.SkillingTool
 import content.global.skill.firemaking.items.Log
-import content.region.kandarin.baxtorian.plugin.BarbarianTraining
+import content.region.kandarin.baxtorian.BarbarianTraining
 import core.api.sendDialogue
 import core.api.sendDialogueLines
 import core.api.sendMessage
@@ -34,7 +34,7 @@ import shared.consts.NPCs
 import shared.consts.Scenery as Objects
 
 @Initializable
-class BarbarianPyreBoatPlugin : OptionHandler() {
+class PyreBoatOptionPlugin : OptionHandler() {
 
     @Throws(Throwable::class)
     override fun newInstance(arg: Any?): Plugin<Any> {
@@ -237,10 +237,7 @@ class BarbarianPyreBoatPlugin : OptionHandler() {
 
     inner class FerociousBarbarianNPC
         @JvmOverloads
-        constructor(
-            id: Int = -1,
-            location: Location? = null,
-        ) : AbstractNPC(id, location) {
+        constructor(id: Int = -1, location: Location? = null) : AbstractNPC(id, location) {
             var target: Player? = null
 
             init {

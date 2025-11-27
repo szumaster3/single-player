@@ -1,7 +1,7 @@
 package content.minigame.blastfurnace.plugin
 
 import com.google.gson.JsonObject
-import content.global.skill.smithing.Bar
+import content.global.skill.smithing.items.Bar
 import core.api.*
 import core.game.node.entity.Entity
 import core.game.node.entity.player.Player

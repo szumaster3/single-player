@@ -1,7 +1,7 @@
 package content.global.bots
 
 import content.global.skill.gather.mining.MiningNode
-import content.global.skill.smithing.Bar
+import content.global.skill.smithing.items.Bar
 import content.global.skill.smithing.smelting.SmeltingPulse
 import core.api.amountInBank
 import core.api.amountInInventory

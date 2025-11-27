@@ -1,10 +1,9 @@
-package content.region.kandarin.baxtorian.plugin.barbarian_training
+package content.region.kandarin.baxtorian
 
 import content.global.plugins.item.books_and_scrolls.BookInterface
 import content.global.plugins.item.books_and_scrolls.BookLine
 import content.global.plugins.item.books_and_scrolls.Page
 import content.global.plugins.item.books_and_scrolls.PageSet
-import content.region.kandarin.baxtorian.plugin.BarbarianTraining
 import core.api.getAttribute
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener

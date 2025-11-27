@@ -1,5 +1,8 @@
 package content.global.skill.smithing
 
+import content.global.skill.smithing.items.Bar
+import content.global.skill.smithing.items.BarType
+import content.global.skill.smithing.items.Bars
 import content.global.skill.smithing.special.DragonShieldPulse
 import content.global.skill.smithing.special.DragonfireShieldPulse
 import core.api.*

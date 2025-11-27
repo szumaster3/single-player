@@ -1,6 +1,6 @@
 package content.global.skill.smithing.smelting
 
-import content.global.skill.smithing.Bar
+import content.global.skill.smithing.items.Bar
 import core.api.*
 import core.game.dialogue.FaceAnim
 import core.game.dialogue.SkillDialogueHandler

@@ -2,7 +2,7 @@ package content.activity.blastfurnace
 
 import TestUtils
 import com.google.gson.JsonObject
-import content.global.skill.smithing.Bar
+import content.global.skill.smithing.items.Bar
 import content.minigame.blastfurnace.plugin.BlastFurnace
 import content.minigame.blastfurnace.plugin.BlastFurnacePlugin
 import content.minigame.blastfurnace.plugin.BlastUtils

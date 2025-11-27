@@ -1,5 +1,6 @@
 package content.global.skill.smithing
 
+import content.global.skill.smithing.items.Bars
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
 

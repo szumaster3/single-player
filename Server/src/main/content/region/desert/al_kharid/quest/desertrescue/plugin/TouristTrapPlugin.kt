@@ -1,6 +1,6 @@
 package content.region.desert.al_kharid.quest.desertrescue.plugin
 
-import content.global.skill.smithing.Bar
+import content.global.skill.smithing.items.Bar
 import content.region.desert.al_kharid.quest.desertrescue.TouristTrap
 import content.region.desert.al_kharid.quest.desertrescue.plugin.TouristTrapPlugin.AnnaCartHandler.AnnaCartCutscene
 import content.region.desert.al_kharid.quest.desertrescue.plugin.TouristTrapPlugin.BedabinAnvilHandler.AnnaWinchHandler

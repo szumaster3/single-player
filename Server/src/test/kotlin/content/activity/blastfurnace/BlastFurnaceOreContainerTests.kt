@@ -1,6 +1,6 @@
 package content.activity.blastfurnace
 
-import content.global.skill.smithing.Bar
+import content.global.skill.smithing.items.Bar
 import content.minigame.blastfurnace.plugin.BFOreContainer
 import content.minigame.blastfurnace.plugin.BlastUtils
 import org.junit.jupiter.api.Assertions

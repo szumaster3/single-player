@@ -1,4 +1,4 @@
-package content.global.skill.smithing
+package content.global.skill.smithing.items
 
 import core.game.node.item.Item
 import shared.consts.Items

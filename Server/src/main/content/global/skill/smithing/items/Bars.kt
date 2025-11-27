@@ -1,5 +1,6 @@
-package content.global.skill.smithing
+package content.global.skill.smithing.items
 
+import content.global.skill.smithing.SmithingType
 import core.game.node.entity.player.Player
 import shared.consts.Items
 

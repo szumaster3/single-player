@@ -2,7 +2,7 @@ package content.minigame.blastfurnace.plugin
 
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
-import content.global.skill.smithing.Bar
+import content.global.skill.smithing.items.Bar
 import content.minigame.blastfurnace.plugin.BlastFurnace.Companion.getBarForOreId
 import content.minigame.blastfurnace.plugin.BlastFurnace.Companion.getNeededCoal
 import content.minigame.blastfurnace.plugin.BlastUtils.BAR_LIMIT

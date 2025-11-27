@@ -1,7 +1,7 @@
 package content.activity.blastfurnace
 
 import TestUtils
-import content.global.skill.smithing.Bar
+import content.global.skill.smithing.items.Bar
 import content.minigame.blastfurnace.plugin.BlastFurnace
 import core.api.addItem
 import core.api.amountInInventory

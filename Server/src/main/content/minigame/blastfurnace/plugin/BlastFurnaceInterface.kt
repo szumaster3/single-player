@@ -1,6 +1,6 @@
 package content.minigame.blastfurnace.plugin
 
-import content.global.skill.smithing.Bar
+import content.global.skill.smithing.items.Bar
 import core.api.animateInterface
 import core.api.setComponentVisibility
 import core.api.submitIndividualPulse
