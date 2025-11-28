@@ -16,6 +16,7 @@ import core.game.node.item.Item
 import core.game.system.task.Pulse
 import core.game.world.GameWorld.Pulser
 import core.game.world.map.zone.MapZone
+import core.game.world.map.zone.ZoneBorders
 import shared.consts.Components
 import shared.consts.Regions
 import java.util.*
@@ -51,6 +52,8 @@ class DarkZone : MapZone("Dark zone", true), EventHook<UseWithEvent> {
         register(GENIE_CAVE_13457)
         register(DORGESH_KAAN_SOUTH_DUNGEON_10833)
         register(TEMPLE_OF_IKOV_10648)
+
+        DORGESHUUN_MINE_13206.addException(ZoneBorders(3310, 9601,3327, 9656))
     }
 
     override fun continueAttack(entity: Entity, target: Node, style: CombatStyle, message: Boolean): Boolean {
