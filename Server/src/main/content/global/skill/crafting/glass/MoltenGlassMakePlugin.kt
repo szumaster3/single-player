@@ -1,6 +1,6 @@
 package content.global.skill.crafting.glass
 
-import content.global.skill.crafting.CraftingObjects
+import content.global.skill.crafting.CraftingObject
 import core.api.*
 import core.game.event.ResourceProducedEvent
 import core.game.interaction.Clocks
@@ -25,7 +25,7 @@ class MoltenGlassMakePlugin : InteractionListener {
     }
 
     override fun defineListeners() {
-        onUseWith(IntType.SCENERY, INPUTS, *CraftingObjects.FURNACES) { player, _, _ ->
+        onUseWith(IntType.SCENERY, INPUTS, *CraftingObject.FURNACES) { player, _, _ ->
             if (!clockReady(player, Clocks.SKILLING)) return@onUseWith true
 
             if (!inInventory(player, SODA_ASH, 1)) {

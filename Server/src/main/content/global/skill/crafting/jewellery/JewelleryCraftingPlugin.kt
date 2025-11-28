@@ -1,6 +1,6 @@
 package content.global.skill.crafting.jewellery
 
-import content.global.skill.crafting.CraftingObjects
+import content.global.skill.crafting.CraftingObject
 import content.global.skill.slayer.SlayerManager
 import core.api.*
 import core.game.interaction.Clocks
@@ -25,7 +25,7 @@ class JewelleryCraftingPlugin : InteractionListener , InterfaceListener {
          * Handles crafting interface.
          */
 
-        onUseWith(IntType.SCENERY, barId, *CraftingObjects.FURNACES) { player, used, _ ->
+        onUseWith(IntType.SCENERY, barId, *CraftingObject.FURNACES) { player, used, _ ->
             if (used.id == Items.PERFECT_GOLD_BAR_2365) {
                 if (isQuestComplete(player, Quests.FAMILY_CREST)) {
                     sendMessage(player, "You can no longer smelt this.")

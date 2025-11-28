@@ -22,9 +22,9 @@ class GemCutPlugin : InteractionListener {
          * Handles cutting gems using chisel.
          */
 
-        onUseWith(IntType.ITEM, Items.CHISEL_1755, *UNCUT_GEMS) { player, used, with ->
+        onUseWith(IntType.ITEM, Items.CHISEL_1755, *UNCUT_Gem) { player, used, with ->
             if (!clockReady(player, Clocks.SKILLING)) return@onUseWith true
-            val gem = Gems.forId(if (used.id == Items.CHISEL_1755) with.asItem() else used.asItem()) ?: return@onUseWith true
+            val gem = Gem.forId(if (used.id == Items.CHISEL_1755) with.asItem() else used.asItem()) ?: return@onUseWith true
 
             val handler = object : SkillDialogueHandler(player, SkillDialogue.ONE_OPTION, gem.gem) {
                 override fun create(amount: Int, index: Int) {
@@ -46,7 +46,7 @@ class GemCutPlugin : InteractionListener {
          * Patch: 27 January 2009
          */
 
-        onUseWith(IntType.ITEM, Items.HAMMER_2347, *SEMIPRECIOUS_GEMS) { player, used, with ->
+        onUseWith(IntType.ITEM, Items.HAMMER_2347, *SEMIPRECIOUS_Gem) { player, used, with ->
             if (!clockReady(player, Clocks.SKILLING)) return@onUseWith true
             val gemId = if (used.id == Items.HAMMER_2347) with.id else used.id
 
@@ -94,21 +94,21 @@ class GemCutPlugin : InteractionListener {
     }
 
     companion object {
-        private val UNCUT_GEMS = intArrayOf(
-            Gems.OPAL.uncut.id,
-            Gems.JADE.uncut.id,
-            Gems.RED_TOPAZ.uncut.id,
-            Gems.SAPPHIRE.uncut.id,
-            Gems.EMERALD.uncut.id,
-            Gems.RUBY.uncut.id,
-            Gems.DIAMOND.uncut.id,
-            Gems.DRAGONSTONE.uncut.id,
-            Gems.ONYX.uncut.id,
+        private val UNCUT_Gem = intArrayOf(
+            Gem.OPAL.uncut.id,
+            Gem.JADE.uncut.id,
+            Gem.RED_TOPAZ.uncut.id,
+            Gem.SAPPHIRE.uncut.id,
+            Gem.EMERALD.uncut.id,
+            Gem.RUBY.uncut.id,
+            Gem.DIAMOND.uncut.id,
+            Gem.DRAGONSTONE.uncut.id,
+            Gem.ONYX.uncut.id,
         )
-        private val SEMIPRECIOUS_GEMS = intArrayOf(
-            Gems.OPAL.uncut.id,
-            Gems.JADE.uncut.id,
-            Gems.RED_TOPAZ.uncut.id
+        private val SEMIPRECIOUS_Gem = intArrayOf(
+            Gem.OPAL.uncut.id,
+            Gem.JADE.uncut.id,
+            Gem.RED_TOPAZ.uncut.id
         )
     }
 }
@@ -116,7 +116,7 @@ class GemCutPlugin : InteractionListener {
 /**
  * Handles pulse used to cut a gem.
  */
-private class GemCutPulse(player: Player?, item: Item?, var amount: Int, val gem: Gems) : SkillPulse<Item?>(player, item) {
+private class GemCutPulse(player: Player?, item: Item?, var amount: Int, val gem: Gem) : SkillPulse<Item?>(player, item) {
     private var ticks = 0
 
     init {

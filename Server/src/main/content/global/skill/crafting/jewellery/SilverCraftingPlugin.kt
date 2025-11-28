@@ -1,6 +1,6 @@
 package content.global.skill.crafting.jewellery
 
-import content.global.skill.crafting.CraftingObjects
+import content.global.skill.crafting.CraftingObject
 import core.api.*
 import core.game.dialogue.InputType
 import core.game.interaction.Clocks
@@ -30,7 +30,7 @@ class SilverCraftingPlugin : InteractionListener, InterfaceListener {
          * Handles use silver bar on furnace.
          */
 
-        onUseWith(IntType.SCENERY, Items.SILVER_BAR_2355, *CraftingObjects.FURNACES) { player, _, with ->
+        onUseWith(IntType.SCENERY, Items.SILVER_BAR_2355, *CraftingObject.FURNACES) { player, _, with ->
             setAttribute(player, "crafting:silver:furnace_id", with)
             openInterface(player, Components.CRAFTING_SILVER_CASTING_438)
             return@onUseWith true

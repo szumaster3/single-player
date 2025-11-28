@@ -2,7 +2,7 @@ package content.global.skill.crafting
 
 import shared.consts.Scenery
 
-object CraftingObjects {
+object CraftingObject {
     val FURNACES = intArrayOf(
         Scenery.FURNACE_4304, Scenery.FURNACE_6189, Scenery.LAVA_FORGE_9390, Scenery.FURNACE_11010,
         Scenery.FURNACE_11666, Scenery.FURNACE_12100, Scenery.FURNACE_12809, Scenery.FURNACE_18497,
@@ -13,6 +13,13 @@ object CraftingObjects {
     val POTTERY_OVENS = intArrayOf(
         Scenery.POTTERY_OVEN_2643, Scenery.POTTERY_OVEN_4308,
         Scenery.POTTERY_OVEN_11601, Scenery.POTTERY_OVEN_34802
+    )
+
+    val POTTERY_WHEELS = intArrayOf(
+        Scenery.POTTER_S_WHEEL_2642,
+        Scenery.POTTER_S_WHEEL_4310,
+        Scenery.POTTER_S_WHEEL_20375,
+        Scenery.POTTER_S_WHEEL_34801
     )
 
     val RANGE = intArrayOf(

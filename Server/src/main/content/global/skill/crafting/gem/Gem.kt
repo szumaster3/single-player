@@ -8,7 +8,7 @@ import shared.consts.Items
 /**
  * Represents different types of gems that can be cut.
  */
-enum class Gems(val uncut: Item, val gem: Item, val level: Int, val animation: Animation, val exp: Double) {
+enum class Gem(val uncut: Item, val gem: Item, val level: Int, val animation: Animation, val exp: Double) {
     OPAL(Item(Items.UNCUT_OPAL_1625), Item(Items.OPAL_1609), 1, Animation(Animations.CUT_OPAL_890), 10.0),
     JADE(Item(Items.UNCUT_JADE_1627), Item(Items.JADE_1611), 13, Animation(Animations.CUT_JADE_891), 20.0),
     RED_TOPAZ(Item(Items.UNCUT_RED_TOPAZ_1629), Item(Items.RED_TOPAZ_1613), 16, Animation(Animations.CUT_TOPAZ_892), 25.0),
@@ -22,9 +22,9 @@ enum class Gems(val uncut: Item, val gem: Item, val level: Int, val animation: A
 
     companion object {
         /**
-         * Gets the [Gems] for a given cut [Item].
+         * Gets the [Gem] for a given cut [Item].
          */
-        fun forItem(item: Item): Gems? {
+        fun forItem(item: Item): Gem? {
             for (gem in values()) {
                 if (gem.gem.id == item.id) {
                     return gem
@@ -34,10 +34,10 @@ enum class Gems(val uncut: Item, val gem: Item, val level: Int, val animation: A
         }
 
         /**
-         * Gets the [Gems] for a given uncut [Item].
+         * Gets the [Gem] for a given uncut [Item].
          */
-        fun forId(item: Item): Gems? {
-            for (gem in Gems.values()) {
+        fun forId(item: Item): Gem? {
+            for (gem in Gem.values()) {
                 if (gem.uncut.id == item.id) {
                     return gem
                 }

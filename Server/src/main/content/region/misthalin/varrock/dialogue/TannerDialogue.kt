@@ -1,6 +1,6 @@
 package content.region.misthalin.varrock.dialogue
 
-import content.global.skill.crafting.TanningProduct
+import content.global.skill.crafting.TanningPlugin.Tan
 import core.api.inInventory
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
@@ -30,7 +30,7 @@ class TannerDialogue : Dialogue {
         when (stage) {
             0 -> {
                 var hasHides = false
-                for (tanningProduct in TanningProduct.values()) {
+                for (tanningProduct in Tan.values()) {
                     if (inInventory(player, tanningProduct.item, 1)) {
                         hasHides = true
                         break
@@ -64,7 +64,7 @@ class TannerDialogue : Dialogue {
 
             12 -> {
                 end()
-                TanningProduct.open(player, NPCs.TANNER_804)
+                Tan.open(player, NPCs.TANNER_804)
             }
 
             13 -> {
