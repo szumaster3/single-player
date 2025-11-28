@@ -1,8 +1,8 @@
 package core.game.node.entity.player.link
 
 import content.data.GameAttributes
-import content.region.island.tutorial.plugin.TutorialStage
-import content.region.island.tutorial.plugin.TutorialStage.hideTabs
+import content.region.other.tutorial_island.plugin.TutorialStage
+import content.region.other.tutorial_island.plugin.TutorialStage.hideTabs
 import core.api.isQuestComplete
 import core.api.log
 import core.api.setVarp
@@ -23,7 +23,6 @@ import core.net.packet.out.WindowsPane
 import core.tools.Log
 import shared.consts.Components
 import shared.consts.Quests
-import kotlin.math.max
 
 /**
  * Manages interface components for a player.

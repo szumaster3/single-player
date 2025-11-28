@@ -1,6 +1,6 @@
 package content.global.plugins.interaction.with_npc
 
-import content.region.island.ape_atoll.dialogue.ZooknockDialogueFile
+import content.region.other.ape_atoll.dialogue.ZooknockDialogueFile
 import core.api.openDialogue
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener

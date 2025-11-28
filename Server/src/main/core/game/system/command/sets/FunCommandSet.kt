@@ -3,7 +3,7 @@ package core.game.system.command.sets
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import content.global.plugins.item.SpadeDigUtils
-import content.region.island.tutorial.plugin.CharacterDesign
+import content.region.other.tutorial_island.plugin.CharacterDesign
 import core.api.*
 import core.game.dialogue.DialogueFile
 import core.game.node.entity.combat.ImpactHandler

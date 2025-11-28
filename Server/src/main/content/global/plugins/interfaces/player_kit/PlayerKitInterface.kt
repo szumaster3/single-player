@@ -1,6 +1,6 @@
 package content.global.plugins.interfaces.player_kit
 
-import content.region.island.tutorial.plugin.CharacterDesign
+import content.region.other.tutorial_island.plugin.CharacterDesign
 import core.api.*
 import core.game.component.Component
 import core.game.dialogue.DialogueFile

@@ -1,7 +1,6 @@
 package core.game.world.map.zone.impl
 
 import content.data.GameAttributes
-import content.region.island.tutorial.plugin.TutorialStage
 import core.api.getAttribute
 import core.game.node.Node
 import core.game.node.entity.Entity

@@ -1,6 +1,6 @@
 package core.game.bots;
 
-import content.region.island.tutorial.plugin.CharacterDesign;
+import content.region.other.tutorial_island.plugin.CharacterDesign;
 import core.ServerConstants;
 import core.game.interaction.DestinationFlag;
 import core.game.interaction.MovementPulse;

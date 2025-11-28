@@ -1,6 +1,6 @@
 package content.global.activity.mogre
 
-import content.region.island.tutorial.plugin.TutorialStage
+import content.region.other.tutorial_island.plugin.TutorialStage
 import core.api.*
 import core.game.dialogue.Dialogue
 import core.game.dialogue.DialogueFile

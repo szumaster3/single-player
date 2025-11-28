@@ -1,7 +1,7 @@
 package core.game.dialogue;
 
 import content.data.GameAttributes;
-import content.region.island.tutorial.plugin.TutorialStage;
+import content.region.other.tutorial_island.plugin.TutorialStage;
 import core.cache.def.impl.ItemDefinition;
 import core.cache.def.impl.NPCDefinition;
 import core.game.component.Component;

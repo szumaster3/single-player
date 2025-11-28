@@ -1,6 +1,6 @@
 package core.game.system.command.oldsys
 
-import content.region.island.tutorial.plugin.CharacterDesign
+import content.region.other.tutorial_island.plugin.CharacterDesign
 import core.api.refreshAppearance
 import core.api.sendMessage
 import core.api.setVarp

@@ -1,7 +1,7 @@
 package core.game.node.entity.player.link;
 
 import content.data.GameAttributes;
-import content.region.island.tutorial.plugin.*;
+import content.region.other.tutorial_island.plugin.*;
 import core.ServerConstants;
 import core.game.node.entity.Entity;
 import core.game.node.entity.impl.Animator.Priority;
