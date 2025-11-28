@@ -53,9 +53,6 @@ class SilverCraftingPlugin : InteractionListener, InterfaceListener {
 
     override fun defineInterfaceListeners() {
         onOpen(Components.CRAFTING_SILVER_CASTING_438) { player, _ ->
-            itemsToSend.forEach { (item, index) ->
-                sendItemOnInterface(player, Components.CRAFTING_SILVER_CASTING_438, index, item)
-            }
             return@onOpen true
         }
 
@@ -148,16 +145,6 @@ class SilverCraftingPlugin : InteractionListener, InterfaceListener {
     }
 
     companion object {
-        val itemsToSend = listOf(
-            Items.HOLY_SYMBOL_1718 to 17,
-            Items.UNHOLY_SYMBOL_1724 to 24,
-            Items.SILVER_SICKLE_2961 to 31,
-            Items.CONDUCTOR_4201 to 38,
-            Items.TIARA_5525 to 45,
-            Items.SILVTHRILL_ROD_7637 to 53,
-            Items.DEMONIC_SIGIL_6748 to 60,
-            Items.SILVER_BOLTS_UNF_9382 to 67,
-            Items.SILVTHRIL_CHAIN_13154 to 74
-        )
+
     }
 }
