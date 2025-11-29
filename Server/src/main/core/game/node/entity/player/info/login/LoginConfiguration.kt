@@ -86,10 +86,7 @@ object LoginConfiguration {
         Repository.lobbyPlayers.removeIf { it.name == player.name }
         Repository.lobbyPlayers.add(player)
 
-        if (isTutorialCompleted(player)) {
-            sendString(player, "Welcome to ${GameWorld.settings?.name}", lobbyInterface.id, 115)
-        }
-
+        sendString(player, "Welcome to ${GameWorld.settings?.name}", lobbyInterface.id, 115)
         sendString(player, getLastLogin(player), lobbyInterface.id, 116)
 
         player.interfaceManager.openWindowsPane(lobbyPane)
@@ -151,7 +148,9 @@ object LoginConfiguration {
     @JvmStatic
     fun welcome(player: Player) {
         if (player.isArtificial) return
-        sendMessage(player, "Welcome to ${ServerConstants.SERVER_NAME}.")
+        if(isTutorialCompleted(player)){
+            sendMessage(player, "Welcome to ${ServerConstants.SERVER_NAME}.")
+        }
         GlobalStore.check(player)
 
         if (player.details.isMuted) {
