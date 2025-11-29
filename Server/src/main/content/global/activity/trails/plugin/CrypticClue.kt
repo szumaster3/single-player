@@ -1,6 +1,7 @@
 package content.global.activity.trails.plugin
 
 import content.global.activity.trails.ClueLevel
+import core.api.getRegionBorders
 import core.game.world.map.Location
 import core.game.world.map.zone.ZoneBorders
 import core.plugin.Plugin
@@ -59,7 +60,7 @@ class CrypticClue : CrypticScroll {
         register(CrypticClue("lumbridge-crates", Items.CLUE_SCROLL_10234, ClueLevel.HARD, "You will need to under-cook<br>to solve this one.", Location.create(3219, 9617, 0), Scenery.CRATE_357, ZoneBorders(3218, 9616, 3220, 9618)))
         register(CrypticClue("dunstan-burthorpe", Items.CLUE_SCROLL_10236, ClueLevel.MEDIUM, "Go to the village being<br>attacked by trolls, search the<br>drawers while you are there.", Location.create(2921, 3577, 0), Scenery.DRAWERS_351, ZoneBorders(2920, 3576, 2922, 3578)))
         register(CrypticClue("dungeon-chest", Items.CLUE_SCROLL_10238, ClueLevel.MEDIUM, "This temple is rather sluggish.<br>The chest just inside the entrance,<br>however,<br>is filled with goodies.", Location.create(2698, 9684, 0), Scenery.CHEST_18321, ZoneBorders(2697, 9683, 2699, 9685)))
-        register(CrypticClue("abbot-langley", Items.CLUE_SCROLL_10240, ClueLevel.MEDIUM, "'A bag belt only?'<br>he asked his balding<br>brothers.", Location.create(3058, 3485, 0), NPCs.ABBOT_LANGLEY_801, ZoneBorders(3053, 3481, 3062, 3500)))
+        register(CrypticClue("abbot-langley", Items.CLUE_SCROLL_10240, ClueLevel.MEDIUM, "'A bag belt only?'<br>he asked his balding<br>brothers.", Location.create(3058, 3485, 0), NPCs.ABBOT_LANGLEY_801, getRegionBorders(12086)))
         register(CrypticClue("oziac-armor-seller", Items.CLUE_SCROLL_10242, ClueLevel.HARD, "A strange little man who sells armour<br>only to those who've proven<br>themselves to be unafraid of dragons.", Location.create(3069, 3516, 0), NPCs.OZIACH_747, ZoneBorders(3066, 3514, 3070, 3518)))
         register(CrypticClue("zanaris-forge", Items.CLUE_SCROLL_10244, ClueLevel.MEDIUM, "After a hard slays spraying<br>back the vegetation, why not<br>pop off to the nearby forge and<br>search the crates?", Location.create(2399, 4476, 0), Scenery.CRATE_12105, ZoneBorders(2398, 4475, 2400, 4477)))
         register(CrypticClue("port-khazard-anvil", Items.CLUE_SCROLL_10246, ClueLevel.MEDIUM, "After trawling for bars,<br>go to the nearest place and smith<br>them and dig by the door.", Location.create(2656, 3161, 0)))

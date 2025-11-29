@@ -63,7 +63,7 @@ class GodBookPreachOptionPlugin : InteractionListener {
                     sendMessage(player, "You need at least 4 Prayer points to do this.")
                 else -> {
                     sendMessage(player, "You bless the ${item.asItem().name.lowercase()}.")
-                    player.skills.decrementPrayerPoints(4.0)
+                    player.skills.decrementPrayerPoints(40.0)
                     replaceSlot(player, item.asItem().index, Item(resultId), item.asItem())
                 }
             }

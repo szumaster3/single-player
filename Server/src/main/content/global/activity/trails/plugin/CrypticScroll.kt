@@ -52,15 +52,15 @@ abstract class CrypticScroll(
      * Handles using an item with a node (e.g. using clue scroll on fire for burning clue).
      */
     override fun handleUseWith(player: Player, used: Item, with: Node): Boolean {
-        return if (
-            player.inventory.contains(clueId, 1) &&
-            with.asScenery().id == Scenery.FIRE_2732 &&
-            inBorders(player, 2968, 2974, 2970, 2976)
-        ) {
-            handleReward(player)
-        } else {
-            super.handleUseWith(player, used, with)
+        if (with.id == Scenery.FIRE_2732)
+        {
+            if (player.inventory.contains(clueId, 1) && inBorders(player, 2968, 2974, 2970, 2976))
+            {
+                return handleReward(player)
+            }
         }
+
+        return super.handleUseWith(player, used, with)
     }
 
     /**
@@ -69,10 +69,14 @@ abstract class CrypticScroll(
     override fun interact(e: Entity, target: Node, option: Option): Boolean {
         val player = e as? Player ?: return super.interact(e, target, option)
 
-        val checkInteraction = target.id == obj &&
-            (option.name == "Search" || option.name == "Talk-to")
+        val targetId = target.id
 
-        if (!checkInteraction) return super.interact(player, target, option)
+        val checkInteraction = targetId == obj &&
+                (option.name.equals("Search", true) || option.name.equals("Talk-to", true))
+
+        if (!checkInteraction) {
+            return super.interact(player, target, option)
+        }
 
         if (!inInventory(player, clueId, 1) || target.location != location) {
             player.sendMessage("Nothing interesting happens.")

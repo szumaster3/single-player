@@ -195,7 +195,7 @@ class SmeltingPlugin : InteractionListener {
                             original = if (used.id != Items.TIN_ORE_438) Items.COPPER_ORE_436 else Items.TIN_ORE_438,
                         ),
                     )
-                    sendMessage(player, "You retrieve a bar of bronze.")
+                    sendMessage(player, "You retrieve a bar of bronze from the furnace.")
                     return@queueScript stopExecuting(player)
                 }
             }

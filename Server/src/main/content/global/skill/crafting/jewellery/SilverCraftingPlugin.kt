@@ -3,23 +3,17 @@ package content.global.skill.crafting.jewellery
 import content.global.skill.crafting.CraftingObject
 import core.api.*
 import core.game.dialogue.InputType
+import core.game.event.ResourceProducedEvent
 import core.game.interaction.*
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
-import shared.consts.Components
-import shared.consts.Items
-import core.game.event.ResourceProducedEvent
-import shared.consts.Animations
-import shared.consts.Sounds
 import core.game.node.scenery.Scenery
+import shared.consts.*
 
 /**
  * Handles crafting silver products.
  */
 class SilverCraftingPlugin : InteractionListener, InterfaceListener {
-
-    private val UNSTRUNG_ID = intArrayOf(Items.UNSTRUNG_SYMBOL_1714, Items.UNSTRUNG_EMBLEM_1720)
-
     private val OP_MAKE_ONE = 155
     private val OP_MAKE_FIVE = 196
     private val OP_MAKE_ALL = 124
@@ -32,6 +26,11 @@ class SilverCraftingPlugin : InteractionListener, InterfaceListener {
          */
 
         onUseWith(IntType.SCENERY, Items.SILVER_BAR_2355, *CraftingObject.FURNACES) { player, _, with ->
+            val hasLevel = getStatLevel(player, Skills.CRAFTING) >= 16
+            if (!hasLevel) {
+                sendDialogue(player, "You need a Crafting level of at least 16 to do this.")
+                return@onUseWith true
+            }
             setAttribute(player, "crafting:silver:furnace", with)
             openInterface(player, Components.CRAFTING_SILVER_CASTING_438)
             return@onUseWith true
@@ -41,110 +40,158 @@ class SilverCraftingPlugin : InteractionListener, InterfaceListener {
          * Handles stringing silver jewellery.
          */
 
-        onUseWith(IntType.ITEM, Items.BALL_OF_WOOL_1759, *UNSTRUNG_ID) { player, used, with ->
-            Silver.forId(with.id)?.let {
-                if (removeItem(player, with.id) && removeItem(player, used.id)) {
-                    addItem(player, it.strung)
-                }
+        onUseWith(
+            IntType.ITEM,
+            Items.BALL_OF_WOOL_1759,
+            Items.UNSTRUNG_SYMBOL_1714,
+            Items.UNPOWERED_SYMBOL_1722
+        ) { player, used, with ->
+            if (!inInventory(player, used.id, 1))
+            {
+                sendMessage(player, "You don't have the required item to do that.")
+                return@onUseWith true
+            }
+
+            if (!inInventory(player, with.id, 1))
+            {
+                sendMessage(player, "You don't have the item to attach the wool to.")
+                return@onUseWith true
+            }
+
+            val product = if(with.id == Items.UNSTRUNG_SYMBOL_1714) Items.UNBLESSED_SYMBOL_1716 else Items.UNHOLY_SYMBOL_1724
+            val removedUsed = removeItem(player, used.id, Container.INVENTORY)
+            val removedWith = removeItem(player, with.id, Container.INVENTORY)
+
+            if (removedUsed && removedWith) {
+                addItem(player, product, 1)
+                rewardXP(player, Skills.CRAFTING, 4.0)
+                sendMessage(player, "You carefully attach the wool to the symbol.")
             }
             return@onUseWith true
         }
     }
 
     override fun defineInterfaceListeners() {
-        onOpen(Components.CRAFTING_SILVER_CASTING_438) { player, _ ->
+        onOpen(Components.CRAFTING_SILVER_CASTING_438) { p, c ->
+            val slots = listOf(
+                17 to Silver.HOLY,
+                24 to Silver.UNHOLY,
+                31 to Silver.SICKLE,
+                38 to Silver.LIGHTNING_ROD,
+                45 to Silver.TIARA,
+                53 to Silver.SILVTHRILL_ROD,
+                60 to Silver.DEMONIC_SIGIL,
+                67 to Silver.CROSSBOW_BOLTS,
+                74 to Silver.SILVTHRIL_CHAIN
+            )
+
+            slots.forEach { (slot, silver) ->
+                val hasBar = inInventory(p, Items.SILVER_BAR_2355)
+                val hasMithrilBar = inInventory(p, Items.MITHRIL_BAR_2359)
+                val hasMould = inInventory(p, silver.required)
+
+                val itemId = if (hasMould) silver.product else silver.required
+                sendItemOnInterface(p, c.id, slot, itemId, 1)
+
+                val hasMaterials = hasBar && hasMould
+                val hasRequiredLevel = getStatLevel(p, Skills.CRAFTING) >= silver.level
+
+                if (!hasRequiredLevel) {
+                    sendInterfaceConfig(p, c.id, slot - 1, true)
+                }
+                if (!hasMaterials) {
+                    if(!hasMithrilBar && !hasRequirement(p, Quests.LEGACY_OF_SEERGAZE, false)) {
+                        sendInterfaceConfig(p, c.id, 72, true)
+                    }
+                    if (slot != 74) {
+                        sendInterfaceConfig(p, c.id, slot + 1, true)
+                    }
+                    sendInterfaceConfig(p, c.id, slot + 2, false)
+                }
+                /* adj
+                 * sendString(p, "<col=ffaa44>You need a<br><col=ffaa44>chain mould<br><col=ffaa44>to make<br><col=ffaa44>this item.", c.id, 75)
+                 */
+            }
             return@onOpen true
         }
 
         on(Components.CRAFTING_SILVER_CASTING_438) { player, _, opcode, buttonID, _, _ ->
+            if (!clockReady(player, Clocks.SKILLING)) return@on true
             val product = Silver.forButton(buttonID) ?: return@on true
-
-            if (!inInventory(player, product.required)) {
-                sendMessage(player, "You need a ${getItemName(product.required).lowercase()} to make this item.")
+            val productName = getItemName(product.product).lowercase()
+            if (!inInventory(player, Items.SILVER_BAR_2355)) {
+                sendDialogue(player, "You need silver bar to make $productName.")
                 return@on true
             }
-
-            if (!hasLevelDyn(player, Skills.CRAFTING, product.level)) {
-                sendMessage(player, "You need a crafting level of ${product.level} to make this.")
+            if (product.product == Items.SILVTHRIL_CHAIN_13154 && !inInventory(player, Items.MITHRIL_BAR_2359)) {
+                sendMessage(player, "You need silver bar to make chain.")
                 return@on true
             }
-
-            val amount = when (opcode) {
-                OP_MAKE_ONE -> 1
-                OP_MAKE_FIVE -> 5
-                OP_MAKE_ALL -> amountInInventory(player, Items.SILVER_BAR_2355)
-                OP_MAKE_X -> {
-                    sendInputDialogue(player, InputType.AMOUNT, "Enter the amount:") { value ->
-                        handleSilverCrafting(player, product, value.toString().toIntOrNull() ?: 1)
+            val amount =
+                when (opcode) {
+                    OP_MAKE_ONE -> 1
+                    OP_MAKE_FIVE -> 5
+                    OP_MAKE_ALL -> amountInInventory(player, Items.SILVER_BAR_2355)
+                    OP_MAKE_X -> {
+                        sendInputDialogue(player, InputType.AMOUNT, "Enter the amount:") { value ->
+                            val amount = value.toString().toIntOrNull() ?: 1
+                            handleSilverCrafting(player, product, amount)
+                        }
+                        return@on true
                     }
-                    return@on true
+                    else -> return@on true
                 }
-                else -> return@on true
-            }
-
             handleSilverCrafting(player, product, amount)
             return@on true
         }
     }
 
     private fun handleSilverCrafting(player: Player, product: Silver, amount: Int) {
-        closeInterface(player)
-
-        val furnace = getAttribute(player, "crafting:silver:furnace", Scenery(-1, -1, 0))
         var remaining = amount
-
-        queueScript(player, 0, QueueStrength.WEAK) { stage ->
-            if (remaining <= 0) {
-                stopExecuting(player)
-                return@queueScript false
+        closeInterface(player)
+        queueScript(player, 0, QueueStrength.WEAK) {
+            if (remaining <= 0) return@queueScript stopExecuting(player)
+            if (getStatLevel(player, Skills.CRAFTING) < product.level) {
+                sendMessage(player, "You need a crafting level of ${product.level} to make this.")
+                return@queueScript stopExecuting(player)
             }
 
-            when (stage) {
-                0 -> {
-                    animate(player, Animations.HUMAN_FURNACE_SMELT_3243)
-                    playAudio(player, Sounds.FURNACE_2725)
-                    delayClock(player, Clocks.SKILLING, 3)
-                    delayScript(player, 3)
-                }
+            val barsInInventory = amountInInventory(player, Items.SILVER_BAR_2355)
+            if (barsInInventory <= 0) {
+                sendMessage(player, "You have run out of silver bars.")
+                return@queueScript stopExecuting(player)
+            }
+            if (product.product == Items.SILVTHRIL_CHAIN_13154 && !removeItem(player, Items.MITHRIL_BAR_2359)) {
+                sendMessage(player, "You have run out of mithril bars.")
+                return@queueScript stopExecuting(player)
+            }
+            if (removeItem(player, Items.SILVER_BAR_2355)) {
+                animate(player, Animations.HUMAN_FURNACE_SMELT_3243)
+                playAudio(player, Sounds.FURNACE_2725)
+                rewardXP(player, Skills.CRAFTING, product.experience)
 
-                else -> {
-                    if (!inInventory(player, product.required) || !inInventory(player, Items.SILVER_BAR_2355)) {
-                        sendMessage(player, "You have run out of silver bars.")
-                        stopExecuting(player)
-                        return@queueScript false
-                    }
+                addItem(player, product.product)
 
-                    if (removeItem(player, Items.SILVER_BAR_2355)) {
-                        addItem(player, product.product, product.amount)
-                        rewardXP(player, Skills.CRAFTING, product.experience)
+                val furnace = getAttribute(player, "crafting:silver:furnace", Scenery(-1, -1, 0))
+                player.dispatch(
+                    ResourceProducedEvent(
+                        itemId = product.product,
+                        amount = product.amount,
+                        source = furnace,
+                        original = Items.SILVER_BAR_2355
+                    )
+                )
+            }
 
-                        player.dispatch(
-                            ResourceProducedEvent(
-                                itemId = product.product,
-                                amount = product.amount,
-                                source = furnace,
-                                original = Items.SILVER_BAR_2355,
-                            )
-                        )
-                    }
-
-                    remaining--
-
-                    if (remaining > 0) {
-                        setCurrentScriptState(player, 0)
-                        delayScript(player, 3)
-                    } else {
-                        stopExecuting(player)
-                        return@queueScript false
-                    }
-                }
+            remaining--
+            if (remaining > 0 && amountInInventory(player, Items.SILVER_BAR_2355) > 0) {
+                setCurrentScriptState(player, 0)
+                delayScript(player, 5)
+            } else {
+                return@queueScript stopExecuting(player)
             }
 
             return@queueScript true
         }
-    }
-
-    companion object {
-
     }
 }

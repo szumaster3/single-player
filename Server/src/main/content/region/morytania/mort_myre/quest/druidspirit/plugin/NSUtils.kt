@@ -86,42 +86,45 @@ object NSUtils {
 
     @JvmStatic
     fun castBloom(player: Player): Boolean {
-        var success = false
         if (player.skills.prayerPoints < 1) {
             sendMessage(player, "You need to recharge your Prayer at an altar.")
             return false
         }
+
         lock(player, 1)
         handleVisuals(player)
+
         val locs = player.location.getSurroundingTiles()
+        var success = false
+
         for (o in locs) {
-            val obj = RegionManager.getObject(o)
-            if (obj != null) {
-                if (obj.name.equals("Rotting log", ignoreCase = true) && player.skills.prayerPoints >= 1) {
-                    if (player.location.withinDistance(obj.location, 2)) {
-                        SceneryBuilder.replace(obj, obj.transform(3509))
-                        playAudio(player, Sounds.BLOOM_MUSHROOM_1491)
-                        success = true
-                    }
+            val obj = RegionManager.getObject(o) ?: continue
+
+            if (!player.location.withinDistance(obj.location, 2)) continue
+
+            when (obj.name.lowercase()) {
+                "rotting log" -> {
+                    SceneryBuilder.replace(obj, obj.transform(3509))
+                    playAudio(player, Sounds.BLOOM_MUSHROOM_1491)
+                    success = true
                 }
-                if (obj.name.equals("Rotting branch", ignoreCase = true) && player.skills.prayerPoints >= 1) {
-                    if (player.location.withinDistance(obj.location, 2)) {
-                        SceneryBuilder.replace(obj, obj.transform(3511))
-                        playAudio(player, Sounds.BLOOM_BRANCH_1489)
-                        success = true
-                    }
+                "rotting branch" -> {
+                    SceneryBuilder.replace(obj, obj.transform(3511))
+                    playAudio(player, Sounds.BLOOM_BRANCH_1489)
+                    success = true
                 }
-                if (obj.name.equals("A small bush", ignoreCase = true) && player.skills.prayerPoints >= 1) {
-                    if (player.location.withinDistance(obj.location, 2)) {
-                        SceneryBuilder.replace(obj, obj.transform(3513))
-                        playAudio(player, Sounds.BLOOM_PEARS_1492)
-                        success = true
-                    }
+                "a small bush" -> {
+                    SceneryBuilder.replace(obj, obj.transform(3513))
+                    playAudio(player, Sounds.BLOOM_PEARS_1492)
+                    success = true
                 }
-            } else {
-                sendMessage(player, "There is no suitable material to be affected in this area.")
             }
         }
+
+        if (!success) {
+            sendMessage(player, "There is no suitable material to be affected in this area.")
+        }
+
         return success
     }
 

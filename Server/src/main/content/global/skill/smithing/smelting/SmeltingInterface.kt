@@ -14,21 +14,22 @@ class SmeltingInterface : InterfaceListener {
          * Handles drawing the components.
          */
 
-        onOpen(Components.SMELTING_311) { player, _ ->
+        onOpen(Components.SMELTING_311) { player, c ->
+            val bars = listOf(Bar.BRONZE, Bar.BLURITE, Bar.IRON, Bar.SILVER, Bar.STEEL, Bar.GOLD, Bar.MITHRIL, Bar.ADAMANT, Bar.RUNITE)
+
             sendItemZoomOnInterface(player, Components.SMELTING_311, 4, Bar.BRONZE.product.id, 150)
 
             if (isQuestComplete(player, Quests.THE_KNIGHTS_SWORD)) {
                 sendString(player, "<br><br><br><br><col=000000>Blurite", Components.SMELTING_311, 20)
             }
 
-            sendItemZoomOnInterface(player, Components.SMELTING_311, 5, Bar.BLURITE.product.id, 150)
-            sendItemZoomOnInterface(player, Components.SMELTING_311, 6, Bar.IRON.product.id, 150)
-            sendItemZoomOnInterface(player, Components.SMELTING_311, 7, Bar.SILVER.product.id, 150)
-            sendItemZoomOnInterface(player, Components.SMELTING_311, 8, Bar.STEEL.product.id, 150)
-            sendItemZoomOnInterface(player, Components.SMELTING_311, 9, Bar.GOLD.product.id, 150)
-            sendItemZoomOnInterface(player, Components.SMELTING_311, 10, Bar.MITHRIL.product.id, 150)
-            sendItemZoomOnInterface(player, Components.SMELTING_311, 11, Bar.ADAMANT.product.id, 150)
-            sendItemZoomOnInterface(player, Components.SMELTING_311, 12, Bar.RUNITE.product.id, 150)
+            bars.forEachIndexed { index, bar ->
+                val componentIndex = 4 + index
+                sendItemZoomOnInterface(player, c.id, componentIndex, bar.product.id, 160)
+            }
+            //repositionChild(player, c.id, 0, 15, 22)
+            //repositionChild(player, c.id, 1, 440, 22)
+            //repositionChild(player, c.id, 2, 15, 22)
             return@onOpen true
         }
 

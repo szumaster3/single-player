@@ -86,7 +86,10 @@ object LoginConfiguration {
         Repository.lobbyPlayers.removeIf { it.name == player.name }
         Repository.lobbyPlayers.add(player)
 
-        sendString(player, "Welcome to ${GameWorld.settings?.name}", lobbyInterface.id, 115)
+        if (isTutorialCompleted(player)) {
+            sendString(player, "Welcome to ${GameWorld.settings?.name}", lobbyInterface.id, 115)
+        }
+
         sendString(player, getLastLogin(player), lobbyInterface.id, 116)
 
         player.interfaceManager.openWindowsPane(lobbyPane)

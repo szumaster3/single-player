@@ -58,8 +58,9 @@ class SmeltingPulse : SkillPulse<Item?> {
         }
 
         for (item in bar.ores) {
+            val itemName = getItemName(item.id).lowercase()
             if (!player.inventory.contains(item.id, item.amount)) {
-                sendMessage(player, "You do not have the required ores to make this bar.")
+                sendMessage(player, "You have run out of $itemName to smelt.")
                 return false
             }
         }
@@ -132,7 +133,7 @@ class SmeltingPulse : SkillPulse<Item?> {
                     "You retrieve a bar of " +
                             bar.product.name
                                 .lowercase()
-                                .replace(" bar", ".")
+                                .replace(" bar", " from the furnace.")
                 )
             }
         } else {
