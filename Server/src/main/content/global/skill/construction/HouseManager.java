@@ -158,7 +158,7 @@ public final class HouseManager {
             this.buildingMode = buildingMode;
             construct();
         }
-
+        player.getLocks().lockComponent(10);
         player.setAttribute("poh_entry", HouseManager.this);
         player.setAttribute("/save:original-loc", location.getExitLocation());
         player.debug("House location: " + houseRegion.getBaseLocation() + ", entry: " + getEnterLocation());
