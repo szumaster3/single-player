@@ -19,12 +19,12 @@ enum class NailType(
         itemId = Items.IRON_NAILS_4820,
         bendRate = 7,
     ),
-    BLACK(
-        itemId = Items.BLACK_NAILS_4821,
-        bendRate = 8,
-    ),
     STEEL(
         itemId = Items.STEEL_NAILS_1539,
+        bendRate = 8,
+    ),
+    BLACK(
+        itemId = Items.BLACK_NAILS_4821,
         bendRate = 10,
     ),
     MITHRIL(

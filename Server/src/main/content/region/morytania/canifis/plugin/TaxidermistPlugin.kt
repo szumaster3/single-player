@@ -30,37 +30,60 @@ class TaxidermistPlugin : InteractionListener {
     }
 
     /**
-     * Represents taxidermist dialogue (stuffed trophy preservation)
+     * Represents taxidermist dialogue (stuffed trophy preservation).
      */
-    inner class TaxidermistDialogue(private val stuffed: StuffedItem? = null, private val used: Item) : DialogueFile() {
+    inner class TaxidermistDialogue(private val stuffed: StuffedItem?, private val used: Item) : DialogueFile() {
 
         override fun handle(componentID: Int, buttonID: Int) {
+            val player = player ?: return end()
+            val stuffed = stuffed ?: return end()
             when (stage) {
-                0 -> npc(FaceAnim.OLD_DEFAULT, stuffed?.message).also { stage++ }
-                1 -> player(FaceAnim.HALF_ASKING, "I want to preserve this item.").also { stage++ }
-                2 -> npcl(FaceAnim.OLD_DEFAULT, "I can preserve that for you for ${stuffed?.price} coins.").also { stage++ }
-                3 -> options("Yes please.", "No thanks.").also { stage++ }
-                4 -> {
-                    if (buttonID == 1) {
-                        if (stuffed!!.dropId != used.id) {
-                            npcl(FaceAnim.OLD_DEFAULT, "Don't be silly, I can't preserve that!")
-                            stage = END_DIALOGUE
-                        } else if (!inInventory(player!!, Items.COINS_995, stuffed.price)) {
-                            npcl(FaceAnim.OLD_DEFAULT, "You don't have enough coins in order to do that.")
-                            stage = END_DIALOGUE
-                        } else {
-                            removeItem(player!!, Item(Items.COINS_995, stuffed.price))
-                            replaceSlot(player!!, used.index, Item(stuffed.stuffedId, 1))
-                            npc(FaceAnim.OLD_DEFAULT, "There you go!")
-                            stage = END_DIALOGUE
-                        }
-                    } else if (buttonID == 2) {
-                        npcl(FaceAnim.OLD_DEFAULT, "All right, come back if you change your mind, eh?")
-                        stage = END_DIALOGUE
-                    } else {
-                        end()
-                    }
+                0 -> {
+                    npcl(FaceAnim.FRIENDLY, stuffed.message)
+                    stage = 1
                 }
+
+                1 -> {
+                    player(FaceAnim.FRIENDLY, "I want to preserve this item.")
+                    stage = 2
+                }
+
+                2 -> {
+                    npcl(FaceAnim.HALF_THINKING, "I can preserve that for you for ${stuffed.price} coins.")
+                    stage = 3
+                }
+
+                3 -> {
+                    options("Yes please.", "No thanks.")
+                    stage = 4
+                }
+
+                4 -> when (buttonID) {
+                    1 -> {
+                        if (stuffed.dropId != used.id) {
+                            npcl(FaceAnim.HALF_THINKING, "Don't be silly, I can't preserve that!")
+                            stage = END_DIALOGUE
+                            return
+                        }
+                        if (!inInventory(player, Items.COINS_995, stuffed.price)) {
+                            npcl(FaceAnim.HALF_THINKING, "You don't have enough coins in order to do that.")
+                            stage = END_DIALOGUE
+                            return
+                        }
+                        removeItem(player, Item(Items.COINS_995, stuffed.price))
+                        replaceSlot(player, used.slot, Item(stuffed.stuffedId, 1))
+                        npc(FaceAnim.FRIENDLY, "There you go!")
+                        stage = END_DIALOGUE
+                    }
+
+                    2 -> {
+                        npcl(FaceAnim.HAPPY, "All right, come back if you change your mind, eh?")
+                        stage = END_DIALOGUE
+                    }
+
+                    else -> end()
+                }
+
             }
         }
     }

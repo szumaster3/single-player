@@ -53505,11 +53505,7 @@
     "examine": "A nicely carved oak larder to keep food cool."
   },
   {
-    "ids": "13568",
-    "examine": "It's got beer in it."
-  },
-  {
-    "ids": "13569",
+    "ids": "13568,13569",
     "examine": "It's got beer in it."
   },
   {
@@ -53529,7 +53525,7 @@
     "examine": "An oak barrel of Chef's Delight."
   },
   {
-    "ids": "13574",
+    "ids": "13574,13580",
     "examine": "A place for your pet to sleep."
   },
   {
@@ -53553,10 +53549,6 @@
     "examine": "A nice teak dining table."
   },
   {
-    "ids": "13580",
-    "examine": "A place for your pet to sleep."
-  },
-  {
     "ids": "13581",
     "examine": "It's not the best chair but you think it would take your weight."
   },
@@ -53565,103 +53557,35 @@
     "examine": "The ideal thing to sit on."
   },
   {
-    "ids": "13583",
+    "ids": "13583,13584,13585,13586,13587",
     "examine": "A comfortable seat."
   },
   {
-    "ids": "13584",
-    "examine": "A comfortable seat."
-  },
-  {
-    "ids": "13585",
-    "examine": "A comfortable seat."
-  },
-  {
-    "ids": "13586",
-    "examine": "A comfortable seat."
-  },
-  {
-    "ids": "13587",
-    "examine": "A comfortable seat."
-  },
-  {
-    "ids": "13588",
+    "ids": "13588,13589,13590",
     "examine": "It's an ugly rug, but better than a bare floor."
   },
   {
-    "ids": "13589",
-    "examine": "It's an ugly rug, but better than a bare floor."
-  },
-  {
-    "ids": "13590",
-    "examine": "It's an ugly rug, but better than a bare floor."
-  },
-  {
-    "ids": "13591",
+    "ids": "13591,13592,13593",
     "examine": "The handkerchief of giants!"
   },
   {
-    "ids": "13592",
-    "examine": "The handkerchief of giants!"
-  },
-  {
-    "ids": "13593",
-    "examine": "The handkerchief of giants!"
-  },
-  {
-    "ids": "13594",
+    "ids": "13594,13595,13596",
     "examine": "An opulent rug woven with gold leaf."
   },
   {
-    "ids": "13595",
-    "examine": "An opulent rug woven with gold leaf."
-  },
-  {
-    "ids": "13596",
-    "examine": "An opulent rug woven with gold leaf."
-  },
-  {
-    "ids": "13597",
+    "ids": "13597,13598,13599",
     "examine": "A good source of books!"
   },
   {
-    "ids": "13598",
-    "examine": "A good source of books!"
-  },
-  {
-    "ids": "13599",
-    "examine": "A good source of books!"
-  },
-  {
-    "ids": "13600",
+    "ids": "13600,13601,13602",
     "examine": "A good source of scrolls!"
   },
   {
-    "ids": "13601",
-    "examine": "A good source of scrolls!"
-  },
-  {
-    "ids": "13602",
-    "examine": "A good source of scrolls!"
-  },
-  {
-    "ids": "13603",
+    "ids": "13603,13604,13605",
     "examine": "The curtain is open."
   },
   {
-    "ids": "13604",
-    "examine": "The curtain is open."
-  },
-  {
-    "ids": "13605",
-    "examine": "The curtain is open."
-  },
-  {
-    "ids": "13606",
-    "examine": "???"
-  },
-  {
-    "ids": "13607",
+    "ids": "13606,13607",
     "examine": "???"
   },
   {
@@ -53669,7 +53593,7 @@
     "examine": "Your house logo in mahogany."
   },
   {
-    "ids": "13609",
+    "ids": "13609,13611,13613",
     "examine": "You can light a fire here."
   },
   {
@@ -53678,126 +53602,48 @@
     "render_anim": "3105"
   },
   {
-    "ids": "13611",
-    "examine": "You can light a fire here."
-  },
-  {
-    "ids": "13612",
+    "ids": "13612,13614",
     "examine": "A fire burns cosily in the grate.",
     "render_anim": "477"
   },
   {
-    "ids": "13613",
-    "examine": "You can light a fire here."
-  },
-  {
-    "ids": "13614",
-    "examine": "A fire burns cosily in the grate.",
-    "render_anim": "477"
-  },
-  {
-    "ids": "13615",
-    "examine": "A gateway to Varrock",
+    "ids": "13615,13622",
+    "examine": "A gateway to Varrock.",
     "render_anim": "3174"
   },
   {
-    "ids": "13616",
-    "examine": "A gateway to Lumbridge",
+    "ids": "13616,13623,13630",
+    "examine": "A gateway to Lumbridge.",
     "render_anim": "3174"
   },
   {
-    "ids": "13617",
-    "examine": "A gateway to Falador",
+    "ids": "13617,13624,13631",
+    "examine": "A gateway to Falador.",
     "render_anim": "3174"
   },
   {
-    "ids": "13618",
-    "examine": "A gateway to Camelot",
+    "ids": "13618,13625,13632",
+    "examine": "A gateway to Camelot.",
     "render_anim": "3174"
   },
   {
-    "ids": "13619",
-    "examine": "A gateway to Ardougne",
+    "ids": "13619,13626,13633",
+    "examine": "A gateway to Ardougne.",
     "render_anim": "3174"
   },
   {
-    "ids": "13620",
-    "examine": "A gateway to the Yanille watchtower",
+    "ids": "13620,13627,13634",
+    "examine": "A gateway to the Yanille watchtower.",
     "render_anim": "3174"
   },
   {
-    "ids": "13621",
-    "examine": "A gateway to Trollheim",
-    "render_anim": "3174"
-  },
-  {
-    "ids": "13622",
-    "examine": "A gateway to Varrock",
-    "render_anim": "3174"
-  },
-  {
-    "ids": "13623",
-    "examine": "A gateway to Lumbridge",
-    "render_anim": "3174"
-  },
-  {
-    "ids": "13624",
-    "examine": "A gateway to Falador",
-    "render_anim": "3174"
-  },
-  {
-    "ids": "13625",
-    "examine": "A gateway to Camelot",
-    "render_anim": "3174"
-  },
-  {
-    "ids": "13626",
-    "examine": "A gateway to Ardougne",
-    "render_anim": "3174"
-  },
-  {
-    "ids": "13627",
-    "examine": "A gateway to the Yanille watchtower",
-    "render_anim": "3174"
-  },
-  {
-    "ids": "13628",
-    "examine": "A gateway to Trollheim",
+    "ids": "13621,13628,13635",
+    "examine": "A gateway to Kharyrll.",
     "render_anim": "3174"
   },
   {
     "ids": "13629",
-    "examine": "A gateway to Varrock",
-    "render_anim": "3174"
-  },
-  {
-    "ids": "13630",
-    "examine": "A gateway to Lumbridge",
-    "render_anim": "3174"
-  },
-  {
-    "ids": "13631",
-    "examine": "A gateway to Falador",
-    "render_anim": "3174"
-  },
-  {
-    "ids": "13632",
-    "examine": "A gateway to Camelot",
-    "render_anim": "3174"
-  },
-  {
-    "ids": "13633",
-    "examine": "A gateway to Ardougne",
-    "render_anim": "3174"
-  },
-  {
-    "ids": "13634",
-    "examine": "A gateway to the Yanille watchtower",
-    "render_anim": "3174"
-  },
-  {
-    "ids": "13635",
-    "examine": "A gateway to Trollheim",
+    "examine": "A gateway to Varrock.",
     "render_anim": "3174"
   },
   {
