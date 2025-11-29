@@ -36,38 +36,35 @@ class PortalChamberPlugin : OptionHandler() {
     /**
      * Supported portal destinations together with required runes.
      */
-    private enum class Locations(val location: Location, vararg val runes: Item) {
-        VARROCK(
-            Location.create(3213, 3428, 0),
-            Item(Rune.FIRE.rune.id, 100),
-            Item(Rune.AIR.rune.id, 300),
-            Item(Rune.LAW.rune.id, 100)
-        ),
-        LUMBRIDGE(
-            Location.create(3222, 3217, 0),
-            Item(Rune.EARTH.rune.id, 100),
-            Item(Rune.AIR.rune.id, 300),
-            Item(Rune.LAW.rune.id, 100)
-        ),
-        FALADOR(
-            Location.create(2965, 3380, 0),
-            Item(Rune.WATER.rune.id, 100),
-            Item(Rune.AIR.rune.id, 300),
-            Item(Rune.LAW.rune.id, 100)
-        ),
-        CAMELOT(Location.create(2730, 3485, 0), Item(Rune.AIR.rune.id, 500), Item(Rune.LAW.rune.id, 100)), ARDOUGNE(
-            Location.create(2663, 3305, 0),
-            Item(Rune.WATER.rune.id, 200),
-            Item(Rune.LAW.rune.id, 200)
-        ),
-        YANILLE(Location.create(2554, 3114, 0), Item(Rune.EARTH.rune.id, 200), Item(Rune.LAW.rune.id, 200)), KHARYRLL(
-            Location.create(3493, 3474, 0),
-            Item(Rune.BLOOD.rune.id, 100),
-            Item(Rune.LAW.rune.id, 200)
-        )
+    enum class Locations(val location: Location, vararg val runes: Item) {
+        VARROCK(Location.create(3213, 3428, 0), Item(Rune.FIRE.rune.id, 100), Item(Rune.AIR.rune.id, 300), Item(Rune.LAW.rune.id, 100)),
+        LUMBRIDGE(Location.create(3222, 3217, 0), Item(Rune.EARTH.rune.id, 100), Item(Rune.AIR.rune.id, 300), Item(Rune.LAW.rune.id, 100)),
+        FALADOR(Location.create(2965, 3380, 0), Item(Rune.WATER.rune.id, 100), Item(Rune.AIR.rune.id, 300), Item(Rune.LAW.rune.id, 100)),
+        CAMELOT(Location.create(2730, 3485, 0), Item(Rune.AIR.rune.id, 500), Item(Rune.LAW.rune.id, 100)),
+        ARDOUGNE(Location.create(2663, 3305, 0), Item(Rune.WATER.rune.id, 200), Item(Rune.LAW.rune.id, 200)),
+        YANILLE(Location.create(2554, 3114, 0), Item(Rune.EARTH.rune.id, 200), Item(Rune.LAW.rune.id, 200)),
+        KHARYRLL(Location.create(3493, 3474, 0), Item(Rune.BLOOD.rune.id, 100), Item(Rune.LAW.rune.id, 200))
     }
 
     companion object {
+
+        /**
+         * Return an alternative location based on the player achievements.
+         */
+        fun getAlternativeLocation(player: Player, loc: Locations): Location {
+            return when (loc) {
+                Locations.VARROCK -> {
+                    val alt = getAttribute(player, GameAttributes.ATTRIBUTE_VARROCK_ALT_TELE, false)
+                    if (alt) Location.create(3165, 3472, 0) else loc.location
+                }
+                Locations.CAMELOT -> {
+                    val alt = getAttribute(player, GameAttributes.ATTRIBUTE_CAMELOT_ALT_TELE, false)
+                    if (alt) Location.create(2731, 3485, 0) else loc.location
+                }
+                else -> loc.location
+            }
+        }
+
         /**
          * Redirects a selected portal hotspot to a new teleport destination.
          *
@@ -163,11 +160,10 @@ class PortalChamberPlugin : OptionHandler() {
             }
 
             "enter" -> {
-                Locations.values().firstOrNull {
-                    scenery.name.contains(it.name, true)
-                }?.let {
+                Locations.values().firstOrNull { scenery.name.contains(it.name, true) }?.let { loc ->
                     playAudio(player, Sounds.POH_TP_984)
-                    teleport(player, it.location, TeleportManager.TeleportType.INSTANT)
+                    val destination = getAlternativeLocation(player, loc)
+                    teleport(player, destination, TeleportManager.TeleportType.INSTANT)
                 }
                 return true
             }
