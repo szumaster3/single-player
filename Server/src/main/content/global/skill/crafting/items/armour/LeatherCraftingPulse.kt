@@ -15,10 +15,10 @@ import shared.consts.Items
  *
  * @param player Player
  * @param node   Source item (leather or base piece), may be null
- * @param craft  Recipe from [LeatherProduct]
+ * @param craft  Recipe from [Leather]
  * @param amount How many crafts to attempt
  */
-class LeatherCraftingPulse(player: Player?, node: Item?, private val craft: LeatherProduct, private var amount: Int) : SkillPulse<Item?>(player, node) {
+class LeatherCraftingPulse(player: Player?, node: Item?, private val craft: Leather, private var amount: Int) : SkillPulse<Item?>(player, node) {
     private var ticks = 0
 
     override fun checkRequirements(): Boolean {

@@ -101,7 +101,7 @@ class ItemDyeOptionPlugin : InteractionListener {
             sendMessage(player, "You mix the two dyes and make $article ${mix.name.lowercase()} dye.")
             addItemOrDrop(player, mix.id)
         }
-        
+
         return true
     }
 

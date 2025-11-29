@@ -19,9 +19,9 @@ class LeatherCraftingListener : InteractionListener, InterfaceListener {
     override fun defineListeners() {
         onUseWith(IntType.ITEM, TOOLS, *LEATHER) { player, used, with ->
             if (!clockReady(player, Clocks.SKILLING)) return@onUseWith true
-            val craft = LeatherProduct.forInput(with.id).firstOrNull() ?: return@onUseWith true
+            val craft = Leather.forInput(with.id).firstOrNull() ?: return@onUseWith true
             val requiredTool =
-                if (craft.type == LeatherProduct.Type.STUDDED) Items.STEEL_STUDS_2370 else Items.NEEDLE_1733
+                if (craft.type == Leather.Type.STUDDED) Items.STEEL_STUDS_2370 else Items.NEEDLE_1733
 
             if (used.id != requiredTool) {
                 sendMessage(
@@ -45,8 +45,8 @@ class LeatherCraftingListener : InteractionListener, InterfaceListener {
     /**
      * Opens the leather crafting interface.
      */
-    private fun openLeatherInterface(player: Player, type: LeatherProduct.Type, inputId: Int) {
-        if (type == LeatherProduct.Type.SOFT) {
+    private fun openLeatherInterface(player: Player, type: Leather.Type, inputId: Int) {
+        if (type == Leather.Type.SOFT) {
             openInterface(player, Components.LEATHER_CRAFTING_154)
             return
         }
@@ -59,7 +59,7 @@ class LeatherCraftingListener : InteractionListener, InterfaceListener {
             withItems(*items)
 
             create { id, amount ->
-                val craft = LeatherProduct.forProduct(id)
+                val craft = Leather.forProduct(id)
                 if (craft != null) {
                     submitIndividualPulse(player, LeatherCraftingPulse(player, Item(craft.input), craft, amount))
                 }
@@ -72,7 +72,7 @@ class LeatherCraftingListener : InteractionListener, InterfaceListener {
     override fun defineInterfaceListeners() {
         on(Components.LEATHER_CRAFTING_154) { player, _, opcode, buttonID, _, _ ->
             val productId = SOFT_LEATHER_BUTTONS[buttonID] ?: return@on true
-            val craft = LeatherProduct.forProduct(productId) ?: return@on true
+            val craft = Leather.forProduct(productId) ?: return@on true
             var amount = 0
             when (opcode) {
                 155 -> amount = 1
@@ -101,7 +101,7 @@ class LeatherCraftingListener : InteractionListener, InterfaceListener {
         /**
          * The leather type.
          */
-        val LEATHER = LeatherProduct.values().map { it.input }.toIntArray()
+        val LEATHER = Leather.values().map { it.input }.toIntArray()
 
         /**
          * Represents buttons map for soft leather crafting.
@@ -120,7 +120,7 @@ class LeatherCraftingListener : InteractionListener, InterfaceListener {
         /**
          * Represents lookup table for leather crafting.
          */
-        private val LOOKUP_TABLE: Map<LeatherProduct.Type, Map<Int, List<LeatherProduct>>> =
-            LeatherProduct.values().groupBy { it.type }.mapValues { (_, crafts) -> crafts.groupBy { it.input } }
+        private val LOOKUP_TABLE: Map<Leather.Type, Map<Int, List<Leather>>> =
+            Leather.values().groupBy { it.type }.mapValues { (_, crafts) -> crafts.groupBy { it.input } }
     }
 }

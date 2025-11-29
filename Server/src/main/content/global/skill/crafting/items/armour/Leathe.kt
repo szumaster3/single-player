@@ -6,7 +6,7 @@ import shared.consts.Items
 /**
  * Represents leather products
  */
-enum class LeatherProduct(val input: Int, val product: Int, val amount: Int, val level: Int, val xp: Double, val studded: Boolean = false, val pair: Boolean = false, val diary: DiaryTask? = null, val type: Type = Type.SOFT) {
+enum class Leather(val input: Int, val product: Int, val amount: Int, val level: Int, val xp: Double, val studded: Boolean = false, val pair: Boolean = false, val diary: DiaryTask? = null, val type: Type = Type.SOFT) {
     LEATHER_BODY(Items.LEATHER_1741, Items.LEATHER_BODY_1129, 1, 14, 25.0, type = Type.SOFT),
     LEATHER_GLOVES(Items.LEATHER_1741, Items.LEATHER_GLOVES_1059, 1, 1, 13.8, pair = true, diary = DiaryTask(DiaryType.LUMBRIDGE, 1, 3), type = Type.SOFT),
     LEATHER_BOOTS(Items.LEATHER_1741, Items.LEATHER_BOOTS_1061, 1, 7, 16.0, pair = true, type = Type.SOFT),
