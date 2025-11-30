@@ -9,25 +9,25 @@ import core.game.dialogue.FaceAnim
 class SirReenItchoodDialogue(private val dialogueNum: Int = 0) : DialogueFile() {
 
     companion object {
-        const val ATTRIBUTE_CLUE = "rd:cluenumber"
+        const val ATTRIBUTE_TEST = "rd:cluenumber"
     }
 
     override fun handle(componentID: Int, buttonID: Int) {
         when {
-            dialogueNum in 0..1 && !getAttribute(player!!, RecruitmentDrive.stageFail, false) -> handleClueDialogue()
+            dialogueNum in 0..1 && !getAttribute(player!!, RecruitmentDrive.stageFail, false) -> handleTestDialogue()
             dialogueNum == 2 || getAttribute(player!!, RecruitmentDrive.stageFail, false) -> handleFailDialogue()
         }
     }
 
-    private fun handleClueDialogue() {
+    private fun handleTestDialogue() {
         if (stage == 0) {
-            if (getAttribute(player!!, ATTRIBUTE_CLUE, 6) == 6) {
-                setAttribute(player!!, ATTRIBUTE_CLUE, (0..5).random())
+            if (getAttribute(player!!, ATTRIBUTE_TEST, 6) == 6) {
+                setAttribute(player!!, ATTRIBUTE_TEST, (0..5).random())
             }
             stage++
         }
 
-        val clueValue = getAttribute(player!!, ATTRIBUTE_CLUE, 0)
+        val clueValue = getAttribute(player!!, ATTRIBUTE_TEST, 0)
 
         when (stage) {
             1 -> npc(FaceAnim.FRIENDLY, "Greetings friend, and welcome here,", "you'll find my puzzle not so clear.", "Hidden amongst my words, it's true,", "the password for the door as a clue.").also { stage++ }
@@ -69,7 +69,7 @@ class SirReenItchoodDialogue(private val dialogueNum: Int = 0) : DialogueFile() 
             }
             1 -> {
                 lock(player!!, 10)
-                removeAttribute(player!!, ATTRIBUTE_CLUE)
+                removeAttribute(player!!, ATTRIBUTE_TEST)
                 setAttribute(player!!, RecruitmentDrive.stagePass, false)
                 setAttribute(player!!, RecruitmentDrive.stageFail, false)
                 runTask(player!!, 3) {

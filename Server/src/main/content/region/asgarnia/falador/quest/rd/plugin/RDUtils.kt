@@ -24,8 +24,6 @@ object RDUtils {
     const val VARBIT_GRAIN_EAST = 684
     const val VARBIT_GRAIN_WEST = 685
 
-    const val ATTRIBUTE_NPC_SPAWN = "rd:generatedsirleye"
-
     fun getLocationForScenery(node: Node): Location =
         when (node.asScenery().id) {
             Scenery.CRATE_7347 -> Location(2476, 4943)

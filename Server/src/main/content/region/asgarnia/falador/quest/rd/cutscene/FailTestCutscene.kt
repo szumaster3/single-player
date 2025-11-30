@@ -1,6 +1,6 @@
 package content.region.asgarnia.falador.quest.rd.cutscene
 
-import content.region.asgarnia.falador.quest.rd.plugin.SirLeyeNPC
+import content.region.asgarnia.falador.quest.rd.plugin.RecruitmentDrivePlugin
 import core.api.*
 import core.game.activity.Cutscene
 import core.game.dialogue.FaceAnim
@@ -25,7 +25,7 @@ class FailTestCutscene(player: Player) : Cutscene(player) {
             }
 
             1 -> {
-                var clearBoss = getAttribute(player, SirLeyeNPC.init(player).toString(), NPC(0))
+                var clearBoss = getAttribute(player, RecruitmentDrivePlugin.SirLeyeNPC.init(player).toString(), NPC(0))
                 if (clearBoss.id != 0) {
                     clearBoss.clear()
                 }

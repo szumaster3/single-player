@@ -60,7 +60,7 @@ class LadyTableDialogue(private val state: Int = 0) : DialogueFile() {
                     1 -> {
                         end()
                         lock(player!!, 10)
-                        removeAttribute(player!!, SirReenItchoodDialogue.ATTRIBUTE_CLUE)
+                        removeAttribute(player!!, SirReenItchoodDialogue.ATTRIBUTE_TEST)
                         setAttribute(player!!, RecruitmentDrive.stagePass, false)
                         setAttribute(player!!, RecruitmentDrive.stageFail, false)
                         runTask(player!!, 3) {

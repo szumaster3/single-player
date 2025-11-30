@@ -12,6 +12,7 @@ import core.game.dialogue.FaceAnim
 import core.tools.END_DIALOGUE
 
 class SirSpishyusDialogue(private val dialogueNum: Int = 0) : DialogueFile() {
+
     override fun handle(componentID: Int, buttonID: Int) {
         when {
             getAttribute(player!!, RecruitmentDrive.stagePass, false) -> {

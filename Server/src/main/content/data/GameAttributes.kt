@@ -459,4 +459,5 @@ internal object GameAttributes {
 
     // Recruitment drive
     const val RECRUITMENT_DRIVE_TEST_OF_PATIENCE = "rd:test_of_patience"
+    const val RECRUITMENT_DRIVE_NPC_SPAWN = "rd:generatedsirleye"
 }

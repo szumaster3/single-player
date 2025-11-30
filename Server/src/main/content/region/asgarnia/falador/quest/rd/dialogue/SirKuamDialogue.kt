@@ -1,7 +1,7 @@
 package content.region.asgarnia.falador.quest.rd.dialogue
 
 import content.region.asgarnia.falador.quest.rd.RecruitmentDrive
-import content.region.asgarnia.falador.quest.rd.plugin.SirLeyeNPC
+import content.region.asgarnia.falador.quest.rd.plugin.RecruitmentDrivePlugin
 import core.api.getAttribute
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
@@ -9,13 +9,8 @@ import core.tools.END_DIALOGUE
 
 class SirKuamDialogue(private val dialogueNum: Int = 0) : DialogueFile() {
 
-    companion object {
-        const val spawnSirLeye = "rd:generatedsirleye"
-    }
-
     override fun handle(componentID: Int, buttonID: Int) {
         val player = player ?: return
-
         when (dialogueNum) {
             1 -> {
                 if(getAttribute(player, RecruitmentDrive.stagePass, false)) {
@@ -28,7 +23,7 @@ class SirKuamDialogue(private val dialogueNum: Int = 0) : DialogueFile() {
                 1 -> npc("If you are having problems, remember", "A true warrior uses his wits as much as his brawn.", "Fight smarter, not harder.").also { stage++ }
                 2 -> {
                     end()
-                    SirLeyeNPC.init(player)
+                    RecruitmentDrivePlugin.SirLeyeNPC.init(player)
                     stage = END_DIALOGUE
                 }
 

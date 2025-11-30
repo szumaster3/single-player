@@ -1,5 +1,6 @@
 package content.region.asgarnia.falador.quest.rd.plugin
 
+import content.data.GameAttributes
 import content.region.asgarnia.falador.dialogue.KnightNotesDialogue
 import content.region.asgarnia.falador.quest.rd.RecruitmentDrive
 import content.region.asgarnia.falador.quest.rd.cutscene.FailTestCutscene
@@ -429,7 +430,7 @@ class RecruitmentDrivePlugin : InteractionListener, InterfaceListener {
     private fun validateAnswer(player: Player) {
         val answer = lockArray.joinToString("") { getAttribute(player, it, INITIAL_VALUE).toChar().toString() }
         closeInterface(player)
-        if (answers[getAttribute(player, SirReenItchoodDialogue.ATTRIBUTE_CLUE, 0)] == answer) {
+        if (answers[getAttribute(player, SirReenItchoodDialogue.ATTRIBUTE_TEST, 0)] == answer) {
             if (!getAttribute(player, RecruitmentDrive.stageFail, false)) {
                 setAttribute(player, RecruitmentDrive.stagePass, true)
             }
@@ -480,7 +481,7 @@ class RecruitmentDrivePlugin : InteractionListener, InterfaceListener {
                 NPCs.SIR_TINLEY_2286 -> openDialogue(player, SirTinleyDialogue(1), NPC(npc))
                 NPCs.SIR_REN_ITCHOOD_2287 -> openDialogue(player, SirReenItchoodDialogue(1), NPC(npc))
                 NPCs.MISS_CHEEVERS_2288 -> openDialogue(player, MissCheeversDialogue(1), NPC(npc))
-                NPCs.MS_HYNN_TERPRETT_2289 -> openDialogue(player, HynnTerprettDialogue(1), NPC(npc))
+                NPCs.MS_HYNN_TERPRETT_2289 -> openDialogue(player, HynnTerprettDialogue(), NPC(npc))
             }
         }
 
@@ -556,7 +557,7 @@ class RecruitmentDrivePlugin : InteractionListener, InterfaceListener {
                 clearHintIcon(killer)
                 setAttribute(killer, RecruitmentDrive.stagePass, true)
                 openDialogue(killer, SirKuamDialogue(1), NPC(NPCs.SIR_KUAM_FERENTSE_2284))
-                removeAttribute(killer, SirKuamDialogue.spawnSirLeye)
+                removeAttribute(killer, GameAttributes.RECRUITMENT_DRIVE_NPC_SPAWN)
             }
         }
 
@@ -575,13 +576,13 @@ class RecruitmentDrivePlugin : InteractionListener, InterfaceListener {
                 }
                 boss.isActive = true
                 GameWorld.Pulser.submit(
-                    object : Pulse(0, boss) {
+                    object : Pulse(1, boss) {
                         override fun pulse(): Boolean {
                             boss.init()
                             sendChat(boss, "No man may defeat me!")
                             registerHintIcon(player, boss)
                             boss.attack(player)
-                            setAttribute(player, RDUtils.ATTRIBUTE_NPC_SPAWN, true)
+                            setAttribute(player, GameAttributes.RECRUITMENT_DRIVE_NPC_SPAWN, true)
                             return true
                         }
                     },
