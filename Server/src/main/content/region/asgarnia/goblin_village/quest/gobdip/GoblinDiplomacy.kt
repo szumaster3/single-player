@@ -109,18 +109,15 @@ class GoblinDiplomacy : Quest(Quests.GOBLIN_DIPLOMACY, 20, 19, 5, Vars.VARP_QUES
         updateQuestTab(player)
     }
 
-    override fun getConfig(
-        player: Player,
-        stage: Int,
-    ): IntArray {
+    override fun getConfig(player: Player, stage: Int): IntArray {
         if (stage == 0) {
             return intArrayOf(Vars.VARP_QUEST_GOBLIN_DIPLOMACY_QUEST_PROGRESS_62, 0)
         }
         return when (stage) {
-            10 -> intArrayOf(Vars.VARP_QUEST_GOBLIN_DIPLOMACY_QUEST_PROGRESS_62, 1)
-            20 -> intArrayOf(Vars.VARP_QUEST_GOBLIN_DIPLOMACY_QUEST_PROGRESS_62, 4)
-            30 -> intArrayOf(Vars.VARP_QUEST_GOBLIN_DIPLOMACY_QUEST_PROGRESS_62, 5)
-            100 -> intArrayOf(Vars.VARP_QUEST_GOBLIN_DIPLOMACY_QUEST_PROGRESS_62, 6)
+             10  -> intArrayOf(Vars.VARP_QUEST_GOBLIN_DIPLOMACY_QUEST_PROGRESS_62, 1)
+             20  -> intArrayOf(Vars.VARP_QUEST_GOBLIN_DIPLOMACY_QUEST_PROGRESS_62, 4)
+             30  -> intArrayOf(Vars.VARP_QUEST_GOBLIN_DIPLOMACY_QUEST_PROGRESS_62, 5)
+            100  -> intArrayOf(Vars.VARP_QUEST_GOBLIN_DIPLOMACY_QUEST_PROGRESS_62, 6)
             else -> intArrayOf(Vars.VARP_QUEST_GOBLIN_DIPLOMACY_QUEST_PROGRESS_62, 0)
         }
     }
