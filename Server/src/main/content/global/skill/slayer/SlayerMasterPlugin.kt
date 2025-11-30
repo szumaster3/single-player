@@ -9,7 +9,7 @@ import core.game.node.entity.player.Player
 import shared.consts.Components
 import shared.consts.Quests
 
-class SlayerMasterListener : InteractionListener {
+class SlayerMasterPlugin : InteractionListener {
 
     override fun defineListeners() {
         for (master in SlayerMaster.values()) {

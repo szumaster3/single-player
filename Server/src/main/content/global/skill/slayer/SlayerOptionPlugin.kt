@@ -14,7 +14,7 @@ import shared.consts.Quests
 import shared.consts.Scenery
 import shared.consts.Sounds
 
-class SlayerPlugin : InteractionListener {
+class SlayerOptionPlugin : InteractionListener {
 
     companion object {
         private const val FADE_START = Components.FADE_TO_BLACK_115
