@@ -4,6 +4,7 @@ import core.api.*
 import core.game.dialogue.FaceAnim
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
+import core.game.interaction.QueueStrength
 import core.game.node.entity.player.link.TeleportManager
 import core.game.node.entity.skill.Skills
 import core.game.system.task.Pulse
@@ -43,14 +44,7 @@ class GodwarsEntrancePlugin : InteractionListener {
             lock(player, 2)
             sendMessage(player, "You climb down the rope.")
             animate(player, Animations.HUMAN_CLIMB_STAIRS_828)
-            GameWorld.Pulser.submit(
-                object : Pulse(1, player) {
-                    override fun pulse(): Boolean {
-                        teleport(player, Location.create(2882, 5311, 2), TeleportManager.TeleportType.INSTANT)
-                        return true
-                    }
-                },
-            )
+            teleport(player, Location.create(2882, 5311, 2), TeleportManager.TeleportType.INSTANT)
             return@on true
         }
 
@@ -72,15 +66,11 @@ class GodwarsEntrancePlugin : InteractionListener {
 
             lock(player, 6)
             openOverlay(player, Components.FADE_TO_BLACK_115)
-            submitWorldPulse(
-                object : Pulse(6, player) {
-                    override fun pulse(): Boolean {
-                        openOverlay(player, Components.FADE_FROM_BLACK_170)
-                        teleport(player, destination)
-                        return true
-                    }
-                },
-            )
+            queueScript(player, 6, QueueStrength.SOFT){
+                teleport(player, destination)
+                openOverlay(player, Components.FADE_FROM_BLACK_170)
+                return@queueScript stopExecuting(player)
+            }
             return@on true
         }
 
