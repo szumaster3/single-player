@@ -13,6 +13,7 @@ class SlayerTowerPlugin : InteractionListener {
     companion object {
         private val SLAYER_DOOR_IDS = intArrayOf(Scenery.DOOR_4490, Scenery.DOOR_4487, Scenery.DOOR_4491, Scenery.DOOR_4492)
         private val SLAYER_DOOR_FIRST_FLOOR_IDS = intArrayOf(Scenery.DOOR_10527,Scenery.DOOR_10528)
+        private val SPIKEY_CHAIN_IDS = intArrayOf(Scenery.SPIKEY_CHAIN_9319,Scenery.SPIKEY_CHAIN_9320)
     }
 
     enum class GargoyleStatues(val x: Int, val y: Int, val z: Int) {
@@ -49,7 +50,7 @@ class SlayerTowerPlugin : InteractionListener {
             return@on true
         }
 
-        on(Scenery.SPIKEY_CHAIN_9319, IntType.SCENERY, "climb-up", "climb-down") { player, node ->
+        on(SPIKEY_CHAIN_IDS, IntType.SCENERY, "climb-up", "climb-down") { player, node ->
             val level = if (player.location.z == 0) 61 else 71
             if (node.id == Scenery.SPIKEY_CHAIN_9319 && getStatLevel(player, Skills.AGILITY) < level) {
                 sendMessage(player, "You need an agility level of at least $level in order to do this.")
