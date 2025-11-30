@@ -3,18 +3,15 @@ package content.region.kandarin.gnome_stronghold.npc
 import core.api.sendChat
 import core.api.spawnProjectile
 import core.game.node.entity.Entity
-import core.game.node.entity.combat.BattleState
-import core.game.node.entity.combat.CombatStyle
-import core.game.node.entity.combat.CombatSwingHandler
-import core.game.node.entity.combat.MultiSwingHandler
+import core.game.node.entity.combat.*
 import core.game.node.entity.combat.equipment.SwitchAttack
-import core.game.world.update.flag.context.Animation
 import core.game.node.entity.npc.AbstractNPC
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.world.GameWorld
 import core.game.world.map.Direction
 import core.game.world.map.Location
+import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
 import core.tools.RandomUtils
 import shared.consts.NPCs
@@ -28,46 +25,72 @@ class TortoiseNPC(id: Int = 0, location: Location? = null) : AbstractNPC(id, loc
     private val DESPAWN_DELAY = 80
     private val gnomeDespawnTicks = mutableMapOf<NPC, Int>()
     private val spawnedGnomes = mutableListOf<NPC>()
-    private val driverChat = listOf("You Beast!", "This is for Dobbie!", "Tortoise Murderer!")
-    private val isMultiZone = this.properties.isMultiZone
+    private val driverChat = listOf(
+        "You Beast!", "This is for Dobbie!", "Tortoise Murderer!"
+    )
 
-    private fun getGnomePositions(): Triple<Location, Location, Location> {
-        val baseX = location.x
-        val baseY = location.y
-        val z = location.z
+    private fun center(): Location = location.transform(1, 1, 0)
 
-        val centerX = baseX + 1
-        val centerY = baseY + 1
+    private fun getProjectileOffset(style: CombatStyle, target: Location): Location {
+        val c = center()
+        val dx = target.x - c.x
+        val dy = target.y - c.y
 
-        val magePos = Location(centerX - 1, centerY, z)
-        val driverPos = Location(centerX, centerY, z)
-        val rangerPos = Location(centerX + 1, centerY, z)
-        return Triple(magePos, driverPos, rangerPos)
+        var offsetX = 0
+        var offsetY = 0
+
+        if (dx == 0 && dy == 0) return c
+
+        if (Math.abs(dx) >= Math.abs(dy)) {
+            offsetX = 0
+            offsetY = if (style == CombatStyle.MAGIC) -1 else 1
+            if (dx < 0) offsetY = -offsetY
+        } else {
+            offsetX = if (style == CombatStyle.MAGIC) -1 else 1
+            if (dy < 0) offsetX = -offsetX
+            offsetY = 0
+        }
+
+        return c.transform(offsetX, offsetY, 0)
+    }
+
+    private fun spawnGnome(id: Int, pos: Location, facing: Direction, target: Player): NPC {
+        val npc = NPC.create(id, pos)
+        npc.direction = facing
+        npc.isRespawn = false
+        npc.init()
+        npc.setAttribute("parentTortoise", this)
+        npc.setAttribute("target", target)
+
+        spawnedGnomes.add(npc)
+        gnomeDespawnTicks[npc] = GameWorld.ticks + DESPAWN_DELAY
+        return npc
     }
 
     private val combatHandler = object : MultiSwingHandler(
         false,
-        SwitchAttack(CombatStyle.MELEE.swingHandler, Animation(if (isMultiZone) 3957 else 3960)),
-        SwitchAttack(CombatStyle.RANGE.swingHandler, Animation(if (isMultiZone) 3956 else 3954)),
-        SwitchAttack(CombatStyle.MAGIC.swingHandler, Animation(if (isMultiZone) 3956 else 3955))
+        SwitchAttack(CombatStyle.MELEE.swingHandler, Animation(3960)),
+        SwitchAttack(CombatStyle.RANGE.swingHandler, Animation(3954)),
+        SwitchAttack(CombatStyle.MAGIC.swingHandler, Animation(3955))
     ) {
         override fun visualize(entity: Entity, victim: Entity?, state: BattleState?) {
             val style = state?.style ?: return
-            val speed = (46 + entity.location.getDistance(victim!!.location) * 10).toInt()
-            val facing = Direction.getDirection(entity.location, victim.location)
-            when (style) {
-                CombatStyle.RANGE -> {
-                    spawnProjectile(entity.location.transform(facing, 1), victim.location, 20, 36, 21, 1, speed, 15)
-                    entity.visualize(Animation(if (isMultiZone) 3956 else 3954), null)
-                }
+            val target = victim ?: return
 
-                CombatStyle.MAGIC -> {
-                    spawnProjectile(entity.location.transform(facing, -1), victim.location, 500, 36, 21, 1, speed, 15)
-                    entity.visualize(Animation(if (isMultiZone) 3956 else 3955), null)
-                }
+            val start = getProjectileOffset(style, target.location)
+            val speed = (46 + center().getDistance(target.location) * 10).toInt()
 
-                else -> entity.animate(Animation(if (isMultiZone) 3957 else 3960))
+            val (gfx, anim) = when (style) {
+                CombatStyle.RANGE -> 10 to 3954
+                CombatStyle.MAGIC -> 500 to 3955
+                else -> null to 3960
             }
+
+            if (gfx != null) {
+                spawnProjectile(start, target.location, gfx, 60, 30, 1, speed, 15)
+            }
+
+            entity.animate(Animation(anim))
         }
     }
 
@@ -75,29 +98,23 @@ class TortoiseNPC(id: Int = 0, location: Location? = null) : AbstractNPC(id, loc
 
     init {
         isAggressive = false
+        setSize(3)
     }
 
     override fun finalizeDeath(killer: Entity) {
         super.finalizeDeath(killer)
-        if (killer !is Player) return
-        val player = killer
+        val player = killer as? Player ?: return
 
         val facing = Direction.getDirection(location, player.location)
-        val (magePos, driverPos, rangerPos) = getGnomePositions()
+        val c = center()
 
-        val driver = NPC.create(NPCs.GNOME_DRIVER_3815, driverPos)
-        val mage = NPC.create(NPCs.GNOME_MAGE_3816, magePos)
-        val archer = NPC.create(NPCs.GNOME_ARCHER_3814, rangerPos)
+        val magePos = c.transform(-1, 0, 0)
+        val rangerPos = c.transform(1, 0, 0)
+        val driverPos = c
 
-        for (npc in listOf(driver, archer, mage)) {
-            npc.direction = facing
-            npc.isRespawn = false
-            npc.init()
-            npc.setAttribute("parentTortoise", this)
-            npc.setAttribute("target", player)
-            spawnedGnomes.add(npc)
-            gnomeDespawnTicks[npc] = GameWorld.ticks + DESPAWN_DELAY
-        }
+        val driver = spawnGnome(NPCs.GNOME_DRIVER_3815, driverPos, facing, player)
+        val mage = spawnGnome(NPCs.GNOME_MAGE_3816, magePos, facing, player)
+        val archer = spawnGnome(NPCs.GNOME_ARCHER_3814, rangerPos, facing, player)
 
         sendChat(driver, "Nooooo! Dobbie's dead!")
         sendChat(archer, "Argh!")
@@ -106,11 +123,12 @@ class TortoiseNPC(id: Int = 0, location: Location? = null) : AbstractNPC(id, loc
 
     override fun tick() {
         super.tick()
+
         val iterator = spawnedGnomes.iterator()
         while (iterator.hasNext()) {
             val gnome = iterator.next()
-            val despawnTick = gnomeDespawnTicks[gnome] ?: continue
-            if (GameWorld.ticks >= despawnTick) {
+
+            if (GameWorld.ticks >= (gnomeDespawnTicks[gnome] ?: 0)) {
                 gnome.clear()
                 iterator.remove()
                 gnomeDespawnTicks.remove(gnome)
@@ -118,34 +136,18 @@ class TortoiseNPC(id: Int = 0, location: Location? = null) : AbstractNPC(id, loc
             }
 
             val target = gnome.getAttribute<Player>("target") ?: continue
-            val singleCombat = !gnome.properties.isMultiZone
+            val driver = spawnedGnomes.firstOrNull { it.id == NPCs.GNOME_DRIVER_3815 }
+            val archer = spawnedGnomes.firstOrNull { it.id == NPCs.GNOME_ARCHER_3814 }
 
-            if (singleCombat) {
-                when (gnome.id) {
-                    NPCs.GNOME_DRIVER_3815 -> {
-                        gnome.attack(target)
-                        if (RandomUtils.random(9) == 0) gnome.sendChat(RandomUtils.randomChoice(driverChat))
-                    }
-
-                    NPCs.GNOME_ARCHER_3814 -> {
-                        val driverDead =
-                            (spawnedGnomes.firstOrNull { it.id == NPCs.GNOME_DRIVER_3815 }?.skills?.lifepoints
-                                ?: 0) <= 0
-                        if (driverDead) gnome.attack(target)
-                    }
-
-                    NPCs.GNOME_MAGE_3816 -> {
-                        val archerDead =
-                            (spawnedGnomes.firstOrNull { it.id == NPCs.GNOME_ARCHER_3814 }?.skills?.lifepoints
-                                ?: 0) <= 0
-                        if (archerDead) gnome.attack(target)
-                    }
+            when (gnome.id) {
+                NPCs.GNOME_DRIVER_3815 -> {
+                    gnome.attack(target)
+                    if (RandomUtils.random(9) == 0) gnome.sendChat(RandomUtils.randomChoice(driverChat))
                 }
-            } else {
-                gnome.attack(target)
-                if (gnome.id == NPCs.GNOME_DRIVER_3815 && RandomUtils.random(9) == 0) {
-                    sendChat(gnome, RandomUtils.randomChoice(driverChat))
-                }
+
+                NPCs.GNOME_ARCHER_3814 -> if ((driver?.skills?.lifepoints ?: 0) <= 0) gnome.attack(target)
+                NPCs.GNOME_MAGE_3816 -> if ((archer?.skills?.lifepoints ?: 0) <= 0) gnome.attack(target)
+                else -> gnome.attack(target)
             }
         }
     }
