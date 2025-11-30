@@ -26,10 +26,7 @@ class RecruitmentDrive : Quest(Quests.RECRUITMENT_DRIVE, 103, 102, 1, 496, 0, 1,
         val stageArray = arrayOf(stage0, stage1, stage2, stage3, stage4)
     }
 
-    override fun drawJournal(
-        player: Player,
-        stage: Int,
-    ) {
+    override fun drawJournal(player: Player, stage: Int) {
         super.drawJournal(player, stage)
         var line = 11
         var stage = getStage(player)
@@ -50,12 +47,7 @@ class RecruitmentDrive : Quest(Quests.RECRUITMENT_DRIVE, 103, 102, 1, 496, 0, 1,
                 line(player, "I have to completed the !!${Quests.DRUIDIC_RITUAL} Quest??,", line++)
             }
             if (isQuestComplete(player, Quests.BLACK_KNIGHTS_FORTRESS)) {
-                line(
-                    player,
-                    "and since I have completed the ${Quests.BLACK_KNIGHTS_FORTRESS}.",
-                    line++,
-                    isQuestComplete(player, Quests.BLACK_KNIGHTS_FORTRESS),
-                )
+                line(player, "and since I have completed the ${Quests.BLACK_KNIGHTS_FORTRESS}.", line++, isQuestComplete(player, Quests.BLACK_KNIGHTS_FORTRESS))
             } else {
                 line(player, "and I have to completed the !!${Quests.BLACK_KNIGHTS_FORTRESS}??.", line++)
             }

@@ -1,5 +1,6 @@
 package content.region.asgarnia.falador.quest.rd.cutscene
 
+import content.region.asgarnia.falador.quest.rd.dialogue.SirTiffyCashienDialogueFile
 import core.api.*
 import core.game.activity.Cutscene
 import core.game.interaction.QueueStrength
@@ -9,9 +10,7 @@ import core.game.world.map.Location
 import shared.consts.NPCs
 import shared.consts.Quests
 
-class FinishCutscene(
-    player: Player,
-) : Cutscene(player) {
+class FinishTestCutscene(player: Player) : Cutscene(player) {
     override fun setup() {
         setExit(Location(2996, 3375))
     }
@@ -28,7 +27,6 @@ class FinishCutscene(
                 setMinimapState(player, 2)
                 timedUpdate(6)
             }
-
             1 -> {
                 clearInventory(player)
                 queueScript(player, 1, QueueStrength.SOFT) { stage ->
@@ -37,16 +35,13 @@ class FinishCutscene(
                             fadeFromBlack()
                             return@queueScript delayScript(player, 2)
                         }
-
                         1 -> {
                             openDialogue(player, SirTiffyCashienDialogueFile(), NPC(NPCs.SIR_TIFFY_CASHIEN_2290))
                             return@queueScript stopExecuting(player)
                         }
-
                         else -> return@queueScript stopExecuting(player)
                     }
                 }
-
                 endWithoutFade {
                     face(player, findLocalNPC(player, NPCs.SIR_TIFFY_CASHIEN_2290)!!)
                     player.interfaceManager.restoreTabs()

@@ -456,4 +456,7 @@ internal object GameAttributes {
     const val MUSEUM_FLOOR_MAP_ATTRIBUTE = "iface:527:floor"
     const val MUSEUM_INTERFACE_534_MODEL = "iface:534:model"
     const val MUSEUM_ARTIFACT_MODEL = "small$MUSEUM_INTERFACE_534_MODEL"
+
+    // Recruitment drive
+    const val RECRUITMENT_DRIVE_TEST_OF_PATIENCE = "rd:test_of_patience"
 }

@@ -1,17 +1,11 @@
-package content.region.asgarnia.falador.quest.rd.cutscene
+package content.region.asgarnia.falador.quest.rd.dialogue
 
-import content.region.asgarnia.falador.quest.rd.RecruitmentDrive
+import content.region.asgarnia.falador.quest.rd.cutscene.StartTestCutscene
 import content.region.asgarnia.falador.quest.rd.plugin.RDUtils
-import content.region.asgarnia.falador.quest.rd.plugin.RecruitmentDrivePlugin
-import content.region.asgarnia.falador.quest.rd.plugin.RecruitmentDrivePlugin.Companion.initRoomStage
 import core.api.*
-import core.game.activity.Cutscene
 import core.game.dialogue.DialogueBuilder
 import core.game.dialogue.DialogueBuilderFile
 import core.game.dialogue.FaceAnim
-import core.game.interaction.QueueStrength
-import core.game.node.entity.player.Player
-import shared.consts.NPCs
 import shared.consts.Quests
 
 class SirTiffyCashienDialogueFile : DialogueBuilderFile() {
@@ -21,7 +15,7 @@ class SirTiffyCashienDialogueFile : DialogueBuilderFile() {
             .playerl(FaceAnim.FRIENDLY, "Sir Amik Varze sent me to meet you here for some sort of testing...")
             .npcl(
                 FaceAnim.FRIENDLY,
-                "Ah, @name! Amik told me all about you, dontchaknow! Spliffing job you you did with the old Black Knights there, absolutely first class.",
+                "Ah, ${player?.username}! Amik told me all about you, dontchaknow! Spliffing job you you did with the old Black Knights there, absolutely first class.",
             ).playerl(FaceAnim.GUILTY, "...Thanks I think.")
             .npcl(FaceAnim.FRIENDLY, "Well, not in those exact words, but you get my point, what?")
             .npcl(
@@ -174,7 +168,7 @@ class SirTiffyCashienDialogueFile : DialogueBuilderFile() {
                     setQuestStage(player, Quests.RECRUITMENT_DRIVE, 2)
                 }
                 RDUtils.shuffleTask(player)
-                InitTest(player).start()
+                StartTestCutscene(player).start()
             }
 
         b
@@ -210,7 +204,7 @@ class SirTiffyCashienDialogueFile : DialogueBuilderFile() {
                     .npc(FaceAnim.FRIENDLY, "Jolly good show!", "Now the training grounds location is a secret, so...")
                     .endWith { _, player ->
                         RDUtils.shuffleTask(player)
-                        InitTest(player).start()
+                        StartTestCutscene(player).start()
                     }
                 optionBuilder
                     .option("No, I've changed my mind.")
@@ -229,98 +223,5 @@ class SirTiffyCashienDialogueFile : DialogueBuilderFile() {
             ).endWith { _, player ->
                 finishQuest(player, Quests.RECRUITMENT_DRIVE)
             }
-    }
-}
-
-class SirTiffyCashienFailedDialogueFile : DialogueBuilderFile() {
-    override fun create(b: DialogueBuilder) {
-        b
-            .onPredicate { _ -> true }
-            .npc(FaceAnim.SAD, "Oh, jolly bad luck, what?", "Not quite the brainbox you thought you were, eh?")
-            .npc(
-                FaceAnim.HAPPY,
-                "Well, never mind!",
-                "You have an open invitation to join our organization, so",
-                "when you're feeling a little smarter, come back and talk",
-                "to me again.",
-            )
-    }
-}
-
-class InitTest(
-    player: Player,
-) : Cutscene(player) {
-    override fun setup() {
-        val currentStage = getAttribute(player, RecruitmentDrive.stageArray[0], 0)
-        setExit(
-            RecruitmentDrivePlugin.Companion.Rooms.index[currentStage]!!
-                .location,
-        )
-    }
-
-    override fun runStage(stage: Int) {
-        when (stage) {
-            0 -> {
-                fadeToBlack()
-                setMinimapState(player, 2)
-                timedUpdate(6)
-            }
-
-            1 -> {
-                dialogueLinesUpdate(NPCs.SIR_TIFFY_CASHIEN_2290, FaceAnim.HAPPY, "Here we go!", "Mind your head!")
-                timedUpdate(3)
-            }
-
-            2 -> {
-                dialogueLinesUpdate(
-                    NPCs.SIR_TIFFY_CASHIEN_2290,
-                    FaceAnim.HAPPY,
-                    "Oops. Ignore the smell!",
-                    "Nearly there!",
-                )
-                timedUpdate(3)
-            }
-
-            3 -> {
-                dialogueLinesUpdate(
-                    NPCs.SIR_TIFFY_CASHIEN_2290,
-                    FaceAnim.HAPPY,
-                    "And...",
-                    "Here we are!",
-                    "Best of luck!",
-                )
-                timedUpdate(3)
-            }
-
-            4 -> {
-                clearInventory(player)
-                endWithoutFade {
-                    val currentStage = getAttribute(player, RecruitmentDrive.stageArray[0], 0)
-                    val firstStage = RecruitmentDrivePlugin.Companion.Rooms.index[currentStage]!!
-                    queueScript(player, 0, QueueStrength.SOFT) { stage: Int ->
-                        when (stage) {
-                            0 -> {
-                                fadeFromBlack()
-                                return@queueScript delayScript(player, 3)
-                            }
-
-                            1 -> {
-                                forceWalk(player, firstStage.destination, "DUMB")
-                                return@queueScript delayScript(player, 2)
-                            }
-
-                            2 -> {
-                                unlock(player)
-                                closeDialogue(player)
-                                initRoomStage(player, firstStage.npc)
-                                return@queueScript stopExecuting(player)
-                            }
-
-                            else -> return@queueScript stopExecuting(player)
-                        }
-                    }
-                }
-            }
-        }
     }
 }

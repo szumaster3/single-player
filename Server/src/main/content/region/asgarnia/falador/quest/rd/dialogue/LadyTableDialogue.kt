@@ -1,7 +1,7 @@
-package content.region.asgarnia.falador.quest.rd.plugin
+package content.region.asgarnia.falador.quest.rd.dialogue
 
 import content.region.asgarnia.falador.quest.rd.RecruitmentDrive
-import content.region.asgarnia.falador.quest.rd.cutscene.FailCutscene
+import content.region.asgarnia.falador.quest.rd.cutscene.FailTestCutscene
 import core.api.*
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
@@ -21,7 +21,7 @@ class LadyTableDialogue(private val state: Int = 0) : DialogueFile() {
                     player!!.faceLocation(location(2458, 4980, 0))
                     setAttribute(player!!, "rd:statues", (1..12).random())
                     setVarbit(player!!, 658, getAttribute(player!!, "rd:statues", 0))
-                    npcl(FaceAnim.FRIENDLY, "Welcome, @name. This room will test your observation skills.").also { stage++ }
+                    npcl(FaceAnim.FRIENDLY, "Welcome, ${player?.username}. This room will test your observation skills.").also { stage++ }
                 }
                 1 -> npcl(FaceAnim.FRIENDLY, "Study the statues closely. There is one missing statue in this room.").also { stage++ }
                 2 -> npcl(FaceAnim.FRIENDLY, "We will also mix the order up a little, to make things interesting for you!").also { stage++ }
@@ -32,14 +32,12 @@ class LadyTableDialogue(private val state: Int = 0) : DialogueFile() {
                     GameWorld.Pulser.submit(
                         object : Pulse() {
                             var counter = 0
-
                             override fun pulse(): Boolean = when (counter++) {
                                 16 -> {
                                     openOverlay(player!!, Components.FADE_TO_BLACK_120)
                                     sendNPCDialogueLines(player!!, NPCs.LADY_TABLE_2283, FaceAnim.FRIENDLY, true, "We will now dim the lights and bring the missing statue", "back in.")
                                     false
                                 }
-
                                 23 -> {
                                     setVarbit(player!!, 658, 0)
                                     openOverlay(player!!, Components.FADE_FROM_BLACK_170)
@@ -62,11 +60,11 @@ class LadyTableDialogue(private val state: Int = 0) : DialogueFile() {
                     1 -> {
                         end()
                         lock(player!!, 10)
-                        removeAttribute(player!!, SirReenItchoodPlugin.ATTRIBUTE_CLUE)
+                        removeAttribute(player!!, SirReenItchoodDialogue.ATTRIBUTE_CLUE)
                         setAttribute(player!!, RecruitmentDrive.stagePass, false)
                         setAttribute(player!!, RecruitmentDrive.stageFail, false)
                         runTask(player!!, 3) {
-                            FailCutscene(player!!).start()
+                            FailTestCutscene(player!!).start()
                             return@runTask
                         }
                     }

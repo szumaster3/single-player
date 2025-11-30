@@ -1,17 +1,16 @@
 package content.region.asgarnia.falador.quest.rd.cutscene
 
-import content.region.asgarnia.falador.quest.rd.plugin.SirKuamPlugin
+import content.region.asgarnia.falador.quest.rd.plugin.SirLeyeNPC
 import core.api.*
 import core.game.activity.Cutscene
+import core.game.dialogue.FaceAnim
 import core.game.interaction.QueueStrength
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.world.map.Location
 import shared.consts.NPCs
 
-class FailCutscene(
-    player: Player,
-) : Cutscene(player) {
+class FailTestCutscene(player: Player) : Cutscene(player) {
     override fun setup() {
         setExit(Location(2996, 3375))
     }
@@ -26,7 +25,7 @@ class FailCutscene(
             }
 
             1 -> {
-                var clearBoss = getAttribute(player, SirKuamPlugin.spawnSirLeye, NPC(0))
+                var clearBoss = getAttribute(player, SirLeyeNPC.init(player).toString(), NPC(0))
                 if (clearBoss.id != 0) {
                     clearBoss.clear()
                 }
@@ -39,9 +38,16 @@ class FailCutscene(
                         }
 
                         1 -> {
-                            openDialogue(player, SirTiffyCashienFailedDialogueFile(), NPC(NPCs.SIR_TIFFY_CASHIEN_2290))
+                            sendNPCDialogue(player, NPCs.SIR_TIFFY_CASHIEN_2290, "Oh, jolly bad luck, what? Not quite the brainbox you thought you were, eh?", FaceAnim.SAD)
+                                addDialogueAction(player) { _, button ->
+                                    if(button > 0)
+                                        sendNPCDialogue(player, NPCs.SIR_TIFFY_CASHIEN_2290, "Well, never mind! You have an open invitation to join our organization, so when you're feeling a little smarter, come back and talk to me again.", FaceAnim.HAPPY)
+                                }
+
+
                             return@queueScript stopExecuting(player)
                         }
+
 
                         else -> return@queueScript stopExecuting(player)
                     }

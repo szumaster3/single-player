@@ -1,7 +1,7 @@
 package content.region.asgarnia.falador.dialogue
 
 import content.data.RespawnPoint
-import content.region.asgarnia.falador.quest.rd.cutscene.SirTiffyCashienDialogueFile
+import content.region.asgarnia.falador.quest.rd.dialogue.SirTiffyCashienDialogueFile
 import core.ServerConstants
 import core.api.isQuestComplete
 import core.api.isQuestInProgress
