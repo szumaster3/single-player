@@ -4,6 +4,7 @@ import core.api.*
 import core.game.dialogue.SkillDialogueHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
+import core.game.interaction.QueueStrength
 import core.game.node.item.Item
 import core.game.world.update.flag.context.Animation
 import shared.consts.Animations
@@ -16,11 +17,34 @@ class GrindItemPlugin : InteractionListener {
 
     override fun defineListeners() {
 
-        onUseWith(IntType.ITEM, Items.PESTLE_AND_MORTAR_233, *GRIND_ITEM_IDS) { player, _, with ->
-
+        onUseWith(IntType.ITEM, Items.PESTLE_AND_MORTAR_233, *GRIND_ITEM_IDS) { player, used, with ->
             val grind = GrindItem.forID(with.id) ?: return@onUseWith false
             val sourceId = with.id
             val productId = grind.product
+
+            val invAmount = amountInInventory(player, sourceId)
+
+            if (invAmount == 1) {
+                queueScript(player, 0, QueueStrength.WEAK) { stage ->
+                    when (stage) {
+                        0 -> {
+                            player.animate(Animation.create(Animations.HUMAN_USE_PESTLE_AND_MORTAR_364))
+                            delayScript(player, 2)
+                        }
+
+                        else -> {
+                            if (removeItem(player, Item(sourceId, 1))) {
+                                addItem(player, productId, 1)
+                                sendMessage(player, grind.message)
+
+                            }
+                            stopExecuting(player)
+                        }
+                    }
+                }
+
+                return@onUseWith true
+            }
 
             val handler = object : SkillDialogueHandler(player, SkillDialogue.ONE_OPTION, Item(productId)) {
 
@@ -34,10 +58,8 @@ class GrindItemPlugin : InteractionListener {
                         remaining = remaining.coerceAtMost(max)
                     }
 
-                    queueScript(player, 0) { stage ->
-
+                    queueScript(player, 0, QueueStrength.WEAK) { stage ->
                         if (remaining <= 0) return@queueScript stopExecuting(player)
-
                         val currentSource = amountInInventory(player, sourceId)
                         if (currentSource <= 0) return@queueScript stopExecuting(player)
 
@@ -54,16 +76,12 @@ class GrindItemPlugin : InteractionListener {
 
                                     if (removeItem(player, Item(sourceId, removeQty))) {
                                         addItem(player, productId, removeQty)
-                                    } else {
-                                        return@queueScript stopExecuting(player)
-                                    }
+                                    } else return@queueScript stopExecuting(player)
 
                                 } else {
                                     if (removeItem(player, Item(sourceId, 1))) {
                                         addItem(player, productId, 1)
-                                    } else {
-                                        return@queueScript stopExecuting(player)
-                                    }
+                                    } else return@queueScript stopExecuting(player)
                                 }
                                 sendMessage(player, grind.message)
 
@@ -80,10 +98,9 @@ class GrindItemPlugin : InteractionListener {
 
                 override fun getAll(index: Int): Int {
                     val invAmount = amountInInventory(player, with.id)
-
-                    return if (with.id == FISHING_BAIT) {
+                    return if (with.id == FISHING_BAIT)
                         ceil(invAmount.toDouble() / 10).roundToInt()
-                    } else invAmount
+                    else invAmount
                 }
             }
 
