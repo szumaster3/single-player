@@ -1,7 +1,6 @@
 package content.region.misthalin.dig_site.quest.itexam.plugin
 
 import content.global.skill.thieving.ThievingDefinition
-import content.global.skill.thieving.ThievingOptionPlugin
 import content.region.misthalin.dig_site.quest.itexam.TheDigSite
 import content.region.misthalin.dig_site.quest.itexam.dialogue.DigsiteWorkmanDialogueFile
 import content.region.misthalin.dig_site.quest.itexam.dialogue.PanningGuideDialogue

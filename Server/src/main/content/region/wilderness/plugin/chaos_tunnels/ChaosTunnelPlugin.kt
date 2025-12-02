@@ -40,10 +40,10 @@ class ChaosTunnelPlugin : MapArea, InteractionListener {
         on(Objects.EXIT_28782, IntType.SCENERY, "climb-up") { player, _ ->
             val loc = when {
                 player.location.withinDistance(Location(3182, 5471, 0)) -> Location(3059, 3549, 0)
-                player.location.withinDistance(Location(3292, 5479, 0)) -> Location(3166, 3561, 0)
-                player.location.withinDistance(Location(3248, 5489, 0)) -> Location(3120, 3571, 0)
-                player.location.withinDistance(Location(3234, 5558, 0)) -> Location(3107, 3640, 0)
-                player.location.withinDistance(Location(3290, 5538, 0)) -> Location(3165, 3617, 0)
+                player.location.withinDistance(Location(3292, 5479, 0)) -> Location(3166, 3618, 0)
+                player.location.withinDistance(Location(3248, 5489, 0)) -> Location(3108, 3639, 0)
+                player.location.withinDistance(Location(3234, 5558, 0)) -> Location(3120, 3571, 0)
+                player.location.withinDistance(Location(3290, 5538, 0)) -> Location(3166, 3561, 0)
                 else -> null
             }
 
