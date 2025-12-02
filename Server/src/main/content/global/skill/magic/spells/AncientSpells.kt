@@ -18,8 +18,8 @@ object AncientSpells {
     const val SHADOW_BLITZ = 13
     const val SHADOW_BARRAGE = 15
     const val MIASMIC_RUSH = 16
-    const val MIASMIC_BURST = 17
-    const val MIASMIC_BLITZ = 18
+    const val MIASMIC_BURST = 18
+    const val MIASMIC_BLITZ = 17
     const val MIASMIC_BARRAGE = 19
     const val PADDEWWA_TELEPORT = 20
     const val SENNTISTEN_TELEPORT = 21

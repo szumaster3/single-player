@@ -357,7 +357,7 @@ class FremennikTrialsPlugin : InteractionListener {
          * Handles exit from swensen maze.
          */
 
-        on(shared.consts.Scenery.ESCAPE_ROPE_4161, IntType.SCENERY, "climb") { player, _ ->
+        on(intArrayOf(Objects.LADDER_4159, Objects.ESCAPE_ROPE_4161), IntType.SCENERY, "climb-up") { player, _ ->
             teleport(player, Location.create(2644, 3658, 0), TeleportManager.TeleportType.INSTANT)
             removeAttribute(player, GameAttributes.QUEST_VIKING_SWENSEN_START)
             return@on true

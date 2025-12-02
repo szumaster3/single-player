@@ -20,64 +20,78 @@ import shared.consts.NPCs
 import shared.consts.Sounds
 
 class SeersHousePlugin : InteractionListener {
-    private val WESTDOOR = 4165
-    private val EASTDOOR = 4166
-    private val WESTLADDER = 4163
-    private val EASTLADDER = 4164
-    private val WESTTRAPDOOR = getScenery(2631, 3663, 2)!!
-    private val EASTTRAPDOOR = getScenery(2636, 3663, 2)!!
-    private val TAP = 4176
-    private val COOKINGRANGE = 4172
-    private val DRAIN = 4175
-    private val CUPBOARD_CLOSED = 4177
-    private val CUPBOARD_OPENED = 4178
-    private val BALANCECHEST = 4170
-    private val UNICORNHEAD = 4181
-    private val SOUTHBOXES = 4183
-    private val CHEST = intArrayOf(4167, 4168)
-    private val SOUTHCRATES = 4186
-    private val EASTCRATES = 4185
-    private val EASTBOXES = 4184
-    private val FROZENTABLE = 4169
-    private val BOOKCASE = 4171
-    private val BULLSHEAD = 4182
-    private val MURAL = 4179
+    companion object {
+        private val WESTDOOR = 4165
+        private val EASTDOOR = 4166
+        private val WESTLADDER = 4163
+        private val EASTLADDER = 4164
+        private val WESTTRAPDOOR = getScenery(2631, 3663, 2)!!
+        private val EASTTRAPDOOR = getScenery(2636, 3663, 2)!!
+        private val TAP = 4176
+        private val COOKINGRANGE = 4172
+        private val DRAIN = 4175
+        private val CUPBOARD_CLOSED = 4177
+        private val CUPBOARD_OPENED = 4178
+        private val BALANCECHEST = 4170
+        private val UNICORNHEAD = 4181
+        private val SOUTHBOXES = 4183
+        private val CHEST = intArrayOf(4167, 4168)
+        private val SOUTHCRATES = 4186
+        private val EASTCRATES = 4185
+        private val EASTBOXES = 4184
+        private val FROZENTABLE = 4169
+        private val BOOKCASE = 4171
+        private val BULLSHEAD = 4182
+        private val MURAL = 4179
 
-    private val OLDREDDISK = Items.OLD_RED_DISK_9947
-    private val WOODENDISK = Items.WOODEN_DISK_3744
-    private val REDHERRING = Items.RED_HERRING_3742
-    private val BLUETHREAD = Items.THREAD_3719
-    private val PICK = Items.PICK_3720
-    private val SHIPTOY = Items.TOY_BOAT_3721
-    private val MAGNET = Items.MAGNET_3718
-    private val REDGOOP = Items.STICKY_RED_GOOP_3746
-    private val REDDISK = Items.RED_DISK_3743
-    private val VASELID = Items.VASE_LID_3737
-    private val VASE = Items.VASE_3734
-    private val FULLVASE = Items.VASE_OF_WATER_3735
-    private val FROZENVASE = Items.FROZEN_VASE_3736
-    private val SEALEDEMPTYVASE = Items.SEALED_VASE_3738
-    private val SEALEDFULLVASE = Items.SEALED_VASE_3739
-    private val FROZENKEY = Items.FROZEN_KEY_3741
-    private val SEERSKEY = Items.SEERS_KEY_3745
-    private val EMPTYBUCKET = Items.EMPTY_BUCKET_3727
-    private val ONEFIFTHBUCKET = Items.ONE_5THS_FULL_BUCKET_3726
-    private val TWOFIFTHBUCKET = Items.TWO_5THS_FULL_BUCKET_3725
-    private val THREEFIFTHBUCKET = Items.THREE_5THS_FULL_BUCKET_3724
-    private val FOURFIFTHBUCKET = Items.FOUR_5THS_FULL_BUCKET_3723
-    private val FULLBUCKET = Items.FULL_BUCKET_3722
-    private val FROZENBUCKET = Items.FROZEN_BUCKET_3728
-    private val EMPTYJUG = Items.EMPTY_JUG_3732
-    private val ONETHIRDJUG = Items.ONE_THIRDRDS_FULL_JUG_3731
-    private val TWOTHIRDJUG = Items.TWO_THIRDSRDS_FULL_JUG_3730
-    private val FULLJUG = Items.FULL_JUG_3729
-    private val FROZENJUG = Items.FROZEN_JUG_3733
+        private const val OLDREDDISK = Items.OLD_RED_DISK_9947
+        private const val WOODENDISK = Items.WOODEN_DISK_3744
+        private const val REDHERRING = Items.RED_HERRING_3742
+        private const val BLUETHREAD = Items.THREAD_3719
+        private const val PICK = Items.PICK_3720
+        private const val SHIPTOY = Items.TOY_BOAT_3721
+        private const val MAGNET = Items.MAGNET_3718
+        private const val REDGOOP = Items.STICKY_RED_GOOP_3746
+        private const val REDDISK = Items.RED_DISK_3743
+        private const val VASELID = Items.VASE_LID_3737
+        private const val VASE = Items.VASE_3734
+        private const val FULLVASE = Items.VASE_OF_WATER_3735
+        private const val FROZENVASE = Items.FROZEN_VASE_3736
+        private const val SEALEDEMPTYVASE = Items.SEALED_VASE_3738
+        private const val SEALEDFULLVASE = Items.SEALED_VASE_3739
+        private const val FROZENKEY = Items.FROZEN_KEY_3741
+        private const val SEERSKEY = Items.SEERS_KEY_3745
+        private const val EMPTYBUCKET = Items.EMPTY_BUCKET_3727
+        private const val ONEFIFTHBUCKET = Items.ONE_5THS_FULL_BUCKET_3726
+        private const val TWOFIFTHBUCKET = Items.TWO_5THS_FULL_BUCKET_3725
+        private const val THREEFIFTHBUCKET = Items.THREE_5THS_FULL_BUCKET_3724
+        private const val FOURFIFTHBUCKET = Items.FOUR_5THS_FULL_BUCKET_3723
+        private const val FULLBUCKET = Items.FULL_BUCKET_3722
+        private const val FROZENBUCKET = Items.FROZEN_BUCKET_3728
+        private const val EMPTYJUG = Items.EMPTY_JUG_3732
+        private const val ONETHIRDJUG = Items.ONE_THIRDRDS_FULL_JUG_3731
+        private const val TWOTHIRDJUG = Items.TWO_THIRDSRDS_FULL_JUG_3730
+        private const val FULLJUG = Items.FULL_JUG_3729
+        private const val FROZENJUG = Items.FROZEN_JUG_3733
 
-    private val JUGS = intArrayOf(Items.EMPTY_JUG_3732, Items.ONE_THIRDRDS_FULL_JUG_3731, Items.TWO_THIRDSRDS_FULL_JUG_3730, Items.FULL_JUG_3729)
-    private val BUCKETS = intArrayOf(Items.EMPTY_BUCKET_3727, Items.ONE_5THS_FULL_BUCKET_3726, Items.TWO_5THS_FULL_BUCKET_3725, Items.THREE_5THS_FULL_BUCKET_3724, Items.FOUR_5THS_FULL_BUCKET_3723, Items.FULL_BUCKET_3722)
-    private val DISKS = intArrayOf(Items.OLD_RED_DISK_9947, Items.RED_DISK_3743)
-    private val EASTZONE = ZoneBorders(2635, 3662, 2637, 3664, 2)
-    private val WESTZONE = ZoneBorders(2630, 3662, 2632, 3664, 2)
+        private val JUGS = intArrayOf(
+            Items.EMPTY_JUG_3732,
+            Items.ONE_THIRDRDS_FULL_JUG_3731,
+            Items.TWO_THIRDSRDS_FULL_JUG_3730,
+            Items.FULL_JUG_3729
+        )
+        private val BUCKETS = intArrayOf(
+            Items.EMPTY_BUCKET_3727,
+            Items.ONE_5THS_FULL_BUCKET_3726,
+            Items.TWO_5THS_FULL_BUCKET_3725,
+            Items.THREE_5THS_FULL_BUCKET_3724,
+            Items.FOUR_5THS_FULL_BUCKET_3723,
+            Items.FULL_BUCKET_3722
+        )
+        private val DISKS = intArrayOf(Items.OLD_RED_DISK_9947, Items.RED_DISK_3743)
+        private val EASTZONE = ZoneBorders(2635, 3662, 2637, 3664, 2)
+        private val WESTZONE = ZoneBorders(2630, 3662, 2632, 3664, 2)
+    }
 
     override fun defineListeners() {
         on(WESTDOOR, IntType.SCENERY, "open") { player, node ->
@@ -1167,9 +1181,7 @@ private class UnicornHeadDialogue : DialogueFile() {
     }
 }
 
-private class DoorRiddleDialogue(
-    player: Player,
-) : DialogueFile() {
+private class DoorRiddleDialogue(player: Player) : DialogueFile() {
     private val RIDDLEONE =
         arrayOf(
             "My first is in the well, but not at sea.",
@@ -1207,7 +1219,6 @@ private class DoorRiddleDialogue(
             "My whole helps to make bread, let birds fly and boats sail.",
             "What am I?",
         )
-    private val RIDDLEANSWER = arrayOf("LIFE", "MIND", "TIME", "WIND")
 
     val p = player
 
@@ -1222,21 +1233,13 @@ private class DoorRiddleDialogue(
 
     var init = true
 
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
+    override fun handle(componentID: Int, buttonID: Int) {
         if (init) {
             stage = 1
             init = false
         }
         when (stage) {
-            1 ->
-                sendDialogue(
-                    player!!,
-                    "There is a combination lock on this door. Above the lock you can see that there is a metal plaque with a riddle on it.",
-                ).also { stage = 5 }
-
+            1 -> sendDialogue(player!!, "There is a combination lock on this door. Above the lock you can see that there is a metal plaque with a riddle on it.").also { stage = 5 }
             5 -> options("Read the riddle", "Solve the riddle", "Forget it").also { stage = 10 }
             10 ->
                 when (buttonID) {
@@ -1245,22 +1248,17 @@ private class DoorRiddleDialogue(
                         openInterface(p, 298)
                         end()
                     }
-
                     3 -> end()
                 }
-
             15 -> {
                 dialogue(riddle[0], riddle[1], riddle[2], riddle[3])
                 stage = 20
             }
-
-            20 ->
-                if (riddle.contentEquals(RIDDLETHREE)) {
-                    dialogue(riddle[4], riddle[5], riddle[6]).also { stage = 1000 }
-                } else {
-                    dialogue(riddle[4], riddle[5]).also { stage = 1000 }
-                }
-
+            20 -> if (riddle.contentEquals(RIDDLETHREE)) {
+                dialogue(riddle[4], riddle[5], riddle[6]).also { stage = 1000 }
+            } else {
+                dialogue(riddle[4], riddle[5]).also { stage = 1000 }
+            }
             1000 -> end()
         }
     }
