@@ -196,7 +196,7 @@ object ThievingDefinition {
     @JvmStatic
     fun pickpocketRoll(player: Player, low: Double, high: Double, table: WeightBasedTable): ArrayList<Item>? {
         var successMod = 0.0
-        if (inInventory(player, Items.GLOVES_OF_SILENCE_10075, 1)) {
+        if (inEquipment(player, Items.GLOVES_OF_SILENCE_10075)) {
             successMod += 3
         }
         val chance = RandomFunction.randomDouble(1.0, 100.0)
