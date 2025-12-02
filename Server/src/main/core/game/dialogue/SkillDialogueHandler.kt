@@ -5,7 +5,6 @@ import core.api.sendItemZoomOnInterface
 import core.api.sendString
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
-import core.game.world.map.Point
 import core.net.packet.PacketRepository
 import core.net.packet.context.ChildPositionContext
 import core.net.packet.out.RepositionChild
