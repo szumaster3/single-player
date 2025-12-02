@@ -8,6 +8,7 @@ import core.game.node.item.Item
 import core.net.packet.PacketRepository
 import core.net.packet.context.ChildPositionContext
 import core.net.packet.out.RepositionChild
+import core.tools.DARK_RED
 import core.tools.StringUtils
 import shared.consts.Components
 
@@ -18,11 +19,7 @@ import shared.consts.Components
  * @param type The type of skill dialogue to display.
  * @param data Additional data associated with the dialogue (e.g., items).
  */
-open class SkillDialogueHandler(
-    val player: Player,
-    val type: SkillDialogue?,
-    vararg data: Any,
-) {
+open class SkillDialogueHandler(val player: Player, val type: SkillDialogue?, vararg data: Any) {
     val data: Array<Any>
 
     /**
@@ -88,13 +85,10 @@ open class SkillDialogueHandler(
              * @param player The player interacting with the dialogue.
              * @param handler The skill dialogue handler.
              */
-            override fun display(
-                player: Player,
-                handler: SkillDialogueHandler,
-            ) {
+            override fun display(player: Player, handler: SkillDialogueHandler) {
                 val item = handler.data[0] as Item
-                repositionChild(player, Components.SKILL_MULTI1_309, 7, 8, 12)
-                sendString(player, "<br><br><br><br>${item.name}", 309, 6)
+
+                sendString(player, "<br><br><br><br>${item.name}", Components.SKILL_MULTI1_309, 6)
                 sendItemZoomOnInterface(player, Components.SKILL_MULTI1_309, 2, item.id, 160)
                 repositionChild(player, Components.SKILL_MULTI1_309, 0, 12, 15)
                 repositionChild(player, Components.SKILL_MULTI1_309, 1, 431, 15)
@@ -103,6 +97,8 @@ open class SkillDialogueHandler(
                 repositionChild(player, Components.SKILL_MULTI1_309, 4, 60, 35)
                 repositionChild(player, Components.SKILL_MULTI1_309, 5, 60, 35)
                 repositionChild(player, Components.SKILL_MULTI1_309, 6, 60, 35)
+                repositionChild(player, Components.SKILL_MULTI1_309, 7, 8, 12)
+                sendString(player, "${DARK_RED}How many would you like to make?", Components.SKILL_MULTI1_309, 7)
             }
 
             /**
@@ -112,10 +108,7 @@ open class SkillDialogueHandler(
              * @param buttonId The ID of the button pressed.
              * @return The amount associated with the button.
              */
-            override fun getAmount(
-                handler: SkillDialogueHandler,
-                buttonId: Int,
-            ): Int = when (buttonId) {
+            override fun getAmount(handler: SkillDialogueHandler, buttonId: Int): Int = when (buttonId) {
                 5 -> 1
                 4 -> 5
                 3 -> -1
@@ -133,26 +126,21 @@ open class SkillDialogueHandler(
              * @param player The player interacting with the dialogue.
              * @param handler The skill dialogue handler.
              */
-            override fun display(
-                player: Player,
-                handler: SkillDialogueHandler,
-            ) {
+            override fun display(player: Player, handler: SkillDialogueHandler) {
                 val item = handler.data[0] as Item
                 sendItemZoomOnInterface(player, Components.SKILL_MULTI1_SMALL_582, 2, item.id, 160)
                 sendString(player, "<br><br><br><br>${item.name}", Components.SKILL_MULTI1_SMALL_582, 5)
                 repositionChild(player, Components.SKILL_MULTI1_SMALL_582, 0, 12, 15)
                 repositionChild(player, Components.SKILL_MULTI1_SMALL_582, 1, 431, 15)
-                repositionChild(player, Components.SKILL_MULTI1_SMALL_582, 6, 6, 16)
                 repositionChild(player, Components.SKILL_MULTI1_SMALL_582, 2, 207, 23)
                 repositionChild(player, Components.SKILL_MULTI1_SMALL_582, 3, 60, 35)
                 repositionChild(player, Components.SKILL_MULTI1_SMALL_582, 4, 60, 35)
                 repositionChild(player, Components.SKILL_MULTI1_SMALL_582, 5, 60, 35)
+                repositionChild(player, Components.SKILL_MULTI1_SMALL_582, 6, 8, 12)
+                sendString(player, "${DARK_RED}How many would you like to make?", Components.SKILL_MULTI1_SMALL_582, 6)
             }
 
-            override fun getAmount(
-                handler: SkillDialogueHandler,
-                buttonId: Int,
-            ): Int = when (buttonId) {
+            override fun getAmount(handler: SkillDialogueHandler, buttonId: Int): Int = when (buttonId) {
                 5 -> 1
                 4 -> 1
                 3 -> 5
