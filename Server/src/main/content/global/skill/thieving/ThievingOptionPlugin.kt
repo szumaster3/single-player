@@ -1,16 +1,13 @@
 package content.global.skill.thieving
 
 import core.api.*
-import core.api.utils.WeightBasedTable
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.combat.DeathTask
 import core.game.node.entity.combat.ImpactHandler
 import core.game.node.entity.impl.Animator
-import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.entity.skill.Skills
-import core.game.node.item.Item
 import core.game.node.scenery.Scenery
 import core.game.world.map.zone.ZoneBorders
 import core.game.world.update.flag.context.Animation
@@ -28,9 +25,9 @@ class ThievingOptionPlugin : InteractionListener {
          */
 
         on(IntType.SCENERY, "steal-from", "steal from", "steal") { player, node ->
-            val scenery = node as? Scenery ?: return@on true // rzutowanie
-            val stall = Stall.values().firstOrNull { scenery.id in it.fullIDs } ?: return@on true
-            Stall.handleStall(player, scenery, stall)
+            val scenery = node as? Scenery ?: return@on true
+            val stall = ThievingDefinition.Stall.values().firstOrNull { scenery.id in it.fullIDs } ?: return@on true
+            ThievingDefinition.Stall.stealFromStall(player, scenery, stall)
             lockInteractions(player, 6)
             return@on true
         }
@@ -48,8 +45,8 @@ class ThievingOptionPlugin : InteractionListener {
          * Handles opening thieving chests.
          */
 
-        on(ChestsDefinition.allObjectIds, IntType.SCENERY, "open") { player, node ->
-            ChestsDefinition.forId(node.id)?.open(player, node as Scenery)
+        on(ThievingDefinition.Chests.OBJECT_IDS, IntType.SCENERY, "open") { player, node ->
+            ThievingDefinition.Chests.forId(node.id)?.open(player, node as Scenery)
             return@on true
         }
 
@@ -57,14 +54,17 @@ class ThievingOptionPlugin : InteractionListener {
          * Handles searching for traps.
          */
 
-        on(ChestsDefinition.allObjectIds, IntType.SCENERY, "search for traps") { player, node ->
-            ChestsDefinition.forId(node.id)?.searchTraps(player, node as Scenery)
+        on(ThievingDefinition.Chests.OBJECT_IDS, IntType.SCENERY, "search for traps") { player, node ->
+            ThievingDefinition.Chests.forId(node.id)?.searchTraps(player, node as Scenery)
             return@on true
         }
 
+        /*
+         * Handles pickpocket NPCs.
+         */
 
         on(IntType.NPC, "pickpocket", "pick-pocket") { player, node ->
-            val pocketData = Pickpocket.forID(node.id) ?: return@on false
+            val pocketData = ThievingDefinition.Pickpocket.forID(node.id) ?: return@on false
             val npc = node.asNpc()
             val npcName = npc.name.lowercase()
             val cabinetKey = hasAnItem(player, Items.DISPLAY_CABINET_KEY_4617).container != null
@@ -101,7 +101,7 @@ class ThievingOptionPlugin : InteractionListener {
 
             animate(player, PICKPOCKET_ANIM)
             sendMessage(player, "You attempt to pick the $npcName pocket.")
-            val lootTable = pickpocketRoll(player, pocketData.low, pocketData.high, pocketData.table)
+            val lootTable = ThievingDefinition.pickpocketRoll(player, pocketData.low, pocketData.high, pocketData.table)
 
             if (lootTable == null) {
                 npc.face(player)
@@ -126,14 +126,7 @@ class ThievingOptionPlugin : InteractionListener {
                         inBorders(player, ZoneBorders(3201, 3456, 3227, 3468)) && npc.id == NPCs.GUARD_5920 -> {
                             finishDiaryTask(player, DiaryType.VARROCK, 1, 12)
                         }
-
-                        inBorders(player, ZoneBorders(2934, 3399, 3399, 3307)) &&
-                                npc.id in intArrayOf(
-                            NPCs.GUARD_9,
-                            NPCs.GUARD_3230,
-                            NPCs.GUARD_3228,
-                            NPCs.GUARD_3229
-                        ) -> {
+                        inBorders(player, ZoneBorders(2934, 3399, 3399, 3307)) && npc.id in intArrayOf(NPCs.GUARD_9, NPCs.GUARD_3230, NPCs.GUARD_3228, NPCs.GUARD_3229) -> {
                             finishDiaryTask(player, DiaryType.FALADOR, 1, 6)
                         }
                     }
@@ -144,26 +137,26 @@ class ThievingOptionPlugin : InteractionListener {
             }
             return@on true
         }
+
+        /*
+         * Handles opening locked doors and chests.
+         */
+
+        on(ThievingDefinition.Doors.DOOR_IDS, IntType.SCENERY, "open", "pick-lock") { player, node ->
+            val door = ThievingDefinition.Doors.forLocation(node.location) ?: return@on true
+            val obj = node as Scenery
+            val opt = getUsedOption(player)
+            when (opt) {
+                "open" -> door.open(player, obj)
+                "pick-lock" -> door.pickLock(player, obj)
+            }
+            return@on true
+        }
+
     }
 
     companion object {
         val PICKPOCKET_ANIM = Animation(Animations.HUMAN_PICKPOCKETING_881, Animator.Priority.HIGH)
         val NPC_ANIM = Animation(Animations.PUNCH_422)
-
-        @JvmStatic
-        fun pickpocketRoll(player: Player, low: Double, high: Double, table: WeightBasedTable): ArrayList<Item>? {
-            var successMod = 0.0
-            if (inInventory(player, Items.GLOVES_OF_SILENCE_10075, 1)) {
-                successMod += 3
-            }
-            val chance = RandomFunction.randomDouble(1.0, 100.0)
-            val failThreshold =
-                RandomFunction.getSkillSuccessChance(low, high, getStatLevel(player, Skills.THIEVING)) + successMod
-            if (chance > failThreshold) {
-                return null
-            } else {
-                return table.roll()
-            }
-        }
     }
 }

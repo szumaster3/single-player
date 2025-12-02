@@ -86,6 +86,9 @@ object FletchingDefinition {
         }
     }
 
+    /**
+     * Represents the types of arrows.
+     */
     enum class ArrowHead(val unfinished: Int, val finished: Int, val level: Int, val experience: Double) {
         BRONZE_ARROW(Items.BRONZE_ARROWTIPS_39, Items.BRONZE_ARROW_882, 1, 1.3),
         IRON_ARROW(Items.IRON_ARROWTIPS_40, Items.IRON_ARROW_884, 15, 2.5),
